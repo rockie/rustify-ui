@@ -1,8 +1,11 @@
 #[cfg(target_arch = "wasm32")]
+mod object_grid;
+#[cfg(target_arch = "wasm32")]
 mod object_region;
 
 #[cfg(target_arch = "wasm32")]
 mod app {
+    use super::object_grid::GridCell;
     use super::object_region::{ObjectRegion, SelectionAction, SelectionProps};
     use leptos::prelude::*;
     use leptos::wasm_bindgen::prelude::*;
@@ -11,8 +14,7 @@ mod app {
     use std::cell::RefCell;
     use std::collections::BTreeMap;
     use std::marker::PhantomData;
-
-    pub use rustify_ui::makepad_widgets;
+    use std::sync::Arc;
 
     /// Stable business identity. Ids are assigned once and never reused, so a
     /// selection survives renames, reordering and deletions of other objects.
@@ -65,18 +67,38 @@ mod app {
             })
         });
 
+        // Rebuilt only when the objects change, so moving the selection does
+        // not rebuild a thousand cells.
+        let cells = Memo::new(move |_| {
+            Arc::new(objects.with(|objects| {
+                objects
+                    .iter()
+                    .map(|o| GridCell {
+                        id: o.id.0,
+                        color: o.color,
+                    })
+                    .collect::<Vec<_>>()
+            }))
+        });
+
         let props = Signal::derive(move || {
             let (index, total) = position.get();
+            let cells = cells.get();
+            let selected = selected.get().map(|id| id.0);
             match current.get() {
                 Some(object) => SelectionProps {
                     name: object.name,
                     position: format!("{} / {}", index.map(|i| i + 1).unwrap_or(0), total),
                     color: object.color,
+                    cells,
+                    selected,
                 },
                 None => SelectionProps {
                     name: "no selection".to_string(),
                     position: format!("0 / {total}"),
                     color: 0x101828,
+                    cells,
+                    selected,
                 },
             }
         });
@@ -147,6 +169,7 @@ mod app {
         let on_action = move |action| match action {
             SelectionAction::SelectPrevious => step(-1),
             SelectionAction::SelectNext => step(1),
+            SelectionAction::Pick(id) => selected.set(Some(ObjectId(id))),
         };
 
         view! {

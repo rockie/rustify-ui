@@ -1,5 +1,7 @@
+use crate::object_grid::{GridCell, ObjectGrid};
 use rustify_ui::makepad_widgets::*;
 use rustify_ui::RegionApp;
+use std::sync::Arc;
 
 /// What the region shows: the current selection, projected out of the
 /// application's objects. The region never holds the object list itself.
@@ -9,16 +11,22 @@ pub struct SelectionProps {
     pub position: String,
     /// `0xRRGGBB`; the region turns it into a colour when it draws.
     pub color: u32,
+    /// Every object, in the application's order. Shared rather than copied:
+    /// it only changes when the objects do, not when the selection moves.
+    pub cells: Arc<Vec<GridCell>>,
+    pub selected: Option<u32>,
 }
 
 #[derive(Debug)]
 pub enum SelectionAction {
     SelectPrevious,
     SelectNext,
+    Pick(u32),
 }
 
 script_mod! {
     use mod.prelude.widgets.*
+    use mod.widgets.*
 
     startup() do #(ObjectRegion::script_component(vm)){
         ui: Root{
@@ -28,29 +36,33 @@ script_mod! {
                         width: Fill
                         height: Fill
                         flow: Down
-                        spacing: 12
-                        padding: 16
-                        align: Center
+                        spacing: 8
+                        padding: 8
 
-                        swatch := RoundedView{
-                            width: 140
-                            height: 140
-                        }
-                        name_label := Label{
-                            text: "no selection"
-                            draw_text.text_style.font_size: 20
-                        }
-                        position_label := Label{
-                            text: "0 / 0"
-                        }
                         View{
-                            width: Fit
+                            width: Fill
                             height: Fit
                             flow: Right
                             spacing: 8
+                            align: Center
 
+                            swatch := RoundedView{
+                                width: 32
+                                height: 32
+                            }
+                            name_label := Label{
+                                text: "no selection"
+                                draw_text.text_style.font_size: 16
+                            }
+                            position_label := Label{
+                                text: "0 / 0"
+                            }
                             previous_button := Button{ text: "previous" }
                             next_button := Button{ text: "next" }
+                        }
+                        grid := ObjectGrid{
+                            width: Fill
+                            height: Fill
                         }
                     }
                 }
@@ -71,6 +83,7 @@ impl RegionApp for ObjectRegion {
 
     fn script_mod(vm: &mut ScriptVm) -> ScriptValue {
         rustify_ui::makepad_widgets::script_mod(vm);
+        crate::object_grid::script_mod(vm);
         self::script_mod(vm)
     }
 
@@ -90,6 +103,9 @@ impl RegionApp for ObjectRegion {
                 color: #(color)
             }
         });
+        if let Some(mut grid) = self.ui.widget(cx, ids!(grid)).borrow_mut::<ObjectGrid>() {
+            grid.set_cells(cx, props.cells.as_ref().clone(), props.selected);
+        }
         self.ui.redraw(cx);
     }
 
@@ -103,5 +119,15 @@ impl RegionApp for ObjectRegion {
             }
         }
         self.ui.handle_event(cx, event, &mut Scope::empty());
+        // Polled after the tree has seen the event, so a click is reported in
+        // the same pump that handled it.
+        let picked = self
+            .ui
+            .widget(cx, ids!(grid))
+            .borrow_mut::<ObjectGrid>()
+            .and_then(|mut grid| grid.take_picked());
+        if let Some(id) = picked {
+            outbox.push(SelectionAction::Pick(id));
+        }
     }
 }

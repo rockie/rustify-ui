@@ -1,0 +1,188 @@
+//! A grid of every object, drawn as one quad each and picked by clicking.
+//!
+//! The grid holds no business data: it is handed a projection of the objects
+//! before each draw and reports which cell the pointer chose. The application
+//! decides what a pick means.
+
+use rustify_ui::makepad_widgets::widget::*;
+use rustify_ui::makepad_widgets::*;
+
+script_mod! {
+    use mod.prelude.widgets_internal.*
+
+    mod.widgets.ObjectGridBase = #(ObjectGrid::register_widget(vm))
+
+    mod.widgets.ObjectGrid = set_type_default() do mod.widgets.ObjectGridBase{
+        width: Fill
+        height: Fill
+        draw_bg +: {
+            color: #x0c111d
+        }
+        draw_cell +: {
+            color: #x475467
+        }
+        draw_marker +: {
+            color: #xffffff
+        }
+    }
+}
+
+/// One object as the grid needs to draw it.
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub struct GridCell {
+    pub id: u32,
+    /// `0xRRGGBB`.
+    pub color: u32,
+}
+
+#[derive(Script, ScriptHook, Widget)]
+pub struct ObjectGrid {
+    #[uid]
+    uid: WidgetUid,
+    #[source]
+    source: ScriptObjectRef,
+    #[walk]
+    walk: Walk,
+    #[layout]
+    layout: Layout,
+    #[redraw]
+    #[live]
+    draw_bg: DrawColor,
+    #[live]
+    draw_cell: DrawColor,
+    #[live]
+    draw_marker: DrawColor,
+    #[rust]
+    cells: Vec<GridCell>,
+    #[rust]
+    selected: Option<u32>,
+    /// Where the cells ended up in the last draw, so a click can be resolved
+    /// against what the user actually saw.
+    #[rust]
+    layout_grid: Option<Grid>,
+    /// The last cell the pointer chose, taken by the application.
+    #[rust]
+    picked: Option<u32>,
+}
+
+#[derive(Clone, Copy, Debug)]
+struct Grid {
+    origin: DVec2,
+    cell: DVec2,
+    columns: usize,
+}
+
+impl Grid {
+    fn rect(&self, index: usize) -> Rect {
+        let column = index % self.columns;
+        let row = index / self.columns;
+        Rect {
+            pos: dvec2(
+                self.origin.x + column as f64 * self.cell.x,
+                self.origin.y + row as f64 * self.cell.y,
+            ),
+            size: dvec2(self.cell.x - 1.0, self.cell.y - 1.0),
+        }
+    }
+
+    fn index_at(&self, point: DVec2, len: usize) -> Option<usize> {
+        let column = ((point.x - self.origin.x) / self.cell.x).floor();
+        let row = ((point.y - self.origin.y) / self.cell.y).floor();
+        if column < 0.0 || row < 0.0 || column >= self.columns as f64 {
+            return None;
+        }
+        let index = row as usize * self.columns + column as usize;
+        (index < len).then_some(index)
+    }
+}
+
+impl ObjectGrid {
+    pub fn set_cells(&mut self, cx: &mut Cx, cells: Vec<GridCell>, selected: Option<u32>) {
+        if self.cells != cells || self.selected != selected {
+            self.cells = cells;
+            self.selected = selected;
+            self.redraw(cx);
+        }
+    }
+
+    pub fn take_picked(&mut self) -> Option<u32> {
+        self.picked.take()
+    }
+}
+
+fn cell_color(rgb: u32) -> Vec4f {
+    Vec4f::from_u32(rgb << 8 | 0xff)
+}
+
+impl Widget for ObjectGrid {
+    fn handle_event(&mut self, cx: &mut Cx, event: &Event, _scope: &mut Scope) {
+        let Some(grid) = self.layout_grid else {
+            return;
+        };
+        if let Hit::FingerUp(fe) = event.hits(cx, self.draw_bg.area()) {
+            if !fe.is_over || !fe.is_primary_hit() {
+                return;
+            }
+            if let Some(index) = grid.index_at(fe.abs, self.cells.len()) {
+                self.picked = Some(self.cells[index].id);
+            }
+        }
+    }
+
+    fn draw_walk(&mut self, cx: &mut Cx2d, _scope: &mut Scope, walk: Walk) -> DrawStep {
+        let pane = cx.walk_turtle(walk);
+        self.draw_bg.draw_abs(cx, pane);
+        self.layout_grid = None;
+        if self.cells.is_empty() || pane.size.x < 8.0 || pane.size.y < 8.0 {
+            return DrawStep::done();
+        }
+
+        // Square-ish cells: enough columns that every object fits the pane.
+        let count = self.cells.len() as f64;
+        let ratio = pane.size.x / pane.size.y;
+        let columns = (count * ratio).sqrt().ceil().max(1.0);
+        let rows = (count / columns).ceil().max(1.0);
+        let cell = dvec2(pane.size.x / columns, pane.size.y / rows);
+        let grid = Grid {
+            origin: pane.pos,
+            cell,
+            columns: columns as usize,
+        };
+
+        for (index, entry) in self.cells.iter().enumerate() {
+            let rect = grid.rect(index);
+            self.draw_cell.color = cell_color(entry.color);
+            self.draw_cell.draw_abs(cx, rect);
+        }
+        if let Some(selected) = self.selected {
+            if let Some(index) = self.cells.iter().position(|c| c.id == selected) {
+                let rect = grid.rect(index);
+                // A ring around the selected cell, drawn as four thin quads so
+                // the cell's own colour stays visible.
+                let thickness = (cell.x.min(cell.y) * 0.25).clamp(1.0, 4.0);
+                for edge in [
+                    Rect {
+                        pos: rect.pos,
+                        size: dvec2(rect.size.x, thickness),
+                    },
+                    Rect {
+                        pos: dvec2(rect.pos.x, rect.pos.y + rect.size.y - thickness),
+                        size: dvec2(rect.size.x, thickness),
+                    },
+                    Rect {
+                        pos: rect.pos,
+                        size: dvec2(thickness, rect.size.y),
+                    },
+                    Rect {
+                        pos: dvec2(rect.pos.x + rect.size.x - thickness, rect.pos.y),
+                        size: dvec2(thickness, rect.size.y),
+                    },
+                ] {
+                    self.draw_marker.draw_abs(cx, edge);
+                }
+            }
+        }
+        self.layout_grid = Some(grid);
+        DrawStep::done()
+    }
+}

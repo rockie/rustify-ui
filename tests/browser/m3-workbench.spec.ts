@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { capture, differingPixels, settle, waitForReady } from "./support";
+import { capture, differingPixels, litPixels, settle, waitForReady } from "./support";
 
 const snapshot = (page: import("@playwright/test").Page) =>
     page.evaluate(() => window.__property_workbench.snapshot());
@@ -17,6 +17,12 @@ test.describe("M3 V2: one authoritative state behind a DOM panel and a GPU view"
         await expect(page.getByTestId("object-count")).toHaveText("1000");
         await expect(page.getByTestId("selected-id")).toHaveText("1");
         expect(await page.evaluate(() => window.__property_workbench.live_regions())).toBe(1);
+        // The grid is on screen without any interaction: the first projection
+        // of application state has to survive the pump that creates the region,
+        // otherwise the region draws its empty defaults until something else
+        // changes.
+        const drawn = await settle(page.getByTestId("workbench-gpu"));
+        expect(litPixels(drawn)).toBeGreaterThan(10_000);
     });
 
     test("renaming and recolouring in the DOM changes what the GPU draws", async ({ page }) => {
@@ -44,9 +50,9 @@ test.describe("M3 V2: one authoritative state behind a DOM panel and a GPU view"
         const region = page.getByTestId("workbench-gpu");
         await settle(region);
         const box = (await region.boundingBox())!;
-        // The region centres a column of swatch, labels and buttons; `next` is
-        // the right-hand button of the pair at the bottom of that column.
-        const next = { x: box.x + box.width * 0.556, y: box.y + box.height * 0.885 };
+        // The region puts swatch, name, position and the two buttons in one
+        // header row above the grid.
+        const next = { x: box.x + box.width * 0.77, y: box.y + box.height * 0.085 };
         await page.mouse.click(next.x, next.y);
         await expect(page.getByTestId("selected-id")).toHaveText("2");
         expect(await snapshot(page)).toMatchObject({ selected: 2, position: 2, name: "object-0002" });
@@ -69,6 +75,29 @@ test.describe("M3 V2: one authoritative state behind a DOM panel and a GPU view"
             selected: 1 + rounds - 5,
             position: 1 + rounds - 5,
             name: `object-${String(1 + rounds - 5).padStart(4, "0")}`,
+        });
+    });
+
+    test("clicking a cell in the GPU grid selects that object in the DOM", async ({ page }) => {
+        await waitForReady(page);
+        const region = page.getByTestId("workbench-gpu");
+        await settle(region);
+        const box = (await region.boundingBox())!;
+        const cell = { x: box.x + box.width * 0.5, y: box.y + box.height * 0.7 };
+        await page.mouse.click(cell.x, cell.y);
+        await expect(page.getByTestId("selected-id")).not.toHaveText("1");
+        const picked = await snapshot(page);
+        expect(picked.selected).not.toBeNull();
+        expect(picked.name).toBe(`object-${String(picked.selected).padStart(4, "0")}`);
+        // The same cell is the same object: identity comes from the id, not
+        // from where the pointer landed.
+        await page.mouse.click(cell.x, cell.y);
+        expect(await snapshot(page)).toMatchObject({ selected: picked.selected });
+        // And the panel edits the object the grid chose.
+        await page.getByTestId("name-input").fill("picked on the GPU");
+        expect(await snapshot(page)).toMatchObject({
+            selected: picked.selected,
+            name: "picked on the GPU",
         });
     });
 

@@ -106,15 +106,18 @@ impl Cx {
         self.process_to_wasm_with(msg_ptr, |_| {})
     }
 
-    /// Like `process_to_wasm`, but runs `before` first, inside the same
+    /// Like `process_to_wasm`, but also runs `host_work` inside the same
     /// outgoing-message frame, so host-driven mutations (state projected into
     /// widgets) get their platform ops and redraws flushed by this pump.
-    pub fn process_to_wasm_with(&mut self, msg_ptr: u32, before: impl FnOnce(&mut Cx)) -> u32 {
+    ///
+    /// It runs after the incoming batch is dispatched, not before: the first
+    /// batch of a region carries `ToWasmInit`, which is what creates the
+    /// application, and work queued before that would find nothing to apply to.
+    pub fn process_to_wasm_with(&mut self, msg_ptr: u32, host_work: impl FnOnce(&mut Cx)) -> u32 {
         let _current = self.enter_current_action_sender();
         let mut to_wasm_msg = ToWasmMsg::take_ownership(msg_ptr);
         let mut network_responses = Vec::new();
         self.os.from_wasm = Some(FromWasmMsg::new());
-        before(self);
         let mut to_wasm = to_wasm_msg.as_ref();
         let mut is_animation_frame = None;
         while !to_wasm.was_last_block() {
@@ -554,6 +557,8 @@ impl Cx {
             };
             to_wasm.block_skip(skip);
         }
+
+        host_work(self);
 
         if let Some(time) = is_animation_frame {
             if self.need_redrawing() {
