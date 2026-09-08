@@ -85,11 +85,16 @@ declare global {
                 regions: number;
                 timers: number;
                 animation_frames: number;
+                tasks: number;
                 errors: number;
                 memory: number;
                 pumps: number;
             };
-            hooks: { runtime: { errors: string[]; enter_fatal(error: unknown): void } };
+            hooks: {
+                regions: Map<number, { new_from_wasm(ptr: number): unknown }>;
+                defer(callback: () => void): void;
+                runtime: { errors: string[]; enter_fatal(error: unknown): void };
+            };
         };
         __fusion_basic: {
             mount(container_id: string): number;
@@ -100,6 +105,7 @@ declare global {
                 regions: number;
                 timers: number;
                 animation_frames: number;
+                tasks: number;
                 errors: number;
                 memory: number;
                 pumps: number;

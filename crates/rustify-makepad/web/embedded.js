@@ -10,7 +10,7 @@ export class EmbeddedRegion extends WasmWebGL {
         this.runtime = runtime;
         this.pump_scheduled = false;
         this.pump_depth = 0;
-        this.destroy_when_idle = false;
+        this.pending_release = null;
     }
 
     report_startup_failure(error) {
@@ -21,15 +21,17 @@ export class EmbeddedRegion extends WasmWebGL {
         return !this.runtime.fatal;
     }
 
-    // Called once this region's pump has left the JS stack. Until then the
-    // pump still reads this instance's views into wasm memory, which destroy()
-    // drops.
-    destroy_when_pump_returns() {
-        if (this.pump_depth === 0) {
-            this.destroy();
+    // Ends the region once its pump has left the JS stack: until then the pump
+    // still reads this instance's views into wasm memory, and the batch it
+    // returned still points into buffers the Cx owns. `release` drops that Cx,
+    // so it runs last.
+    destroy_when_pump_returns(release) {
+        if (this.pump_depth > 0) {
+            this.pending_release = release;
             return;
         }
-        this.destroy_when_idle = true;
+        this.destroy();
+        release();
     }
 
     // Rust asks for a pump after it queued work for this region; several
@@ -63,9 +65,15 @@ export class EmbeddedRegion extends WasmWebGL {
             this.runtime.enter_fatal(error);
         } finally {
             this.pump_depth -= 1;
-            if (this.pump_depth === 0 && this.destroy_when_idle) {
-                this.destroy_when_idle = false;
-                this.destroy();
+            const release = this.pending_release;
+            if (this.pump_depth === 0 && release) {
+                this.pending_release = null;
+                try {
+                    this.destroy();
+                    release();
+                } catch (error) {
+                    this.runtime.enter_fatal(error);
+                }
             }
         }
     }
@@ -76,6 +84,10 @@ export class EmbeddedRegion extends WasmWebGL {
 // that killed the runtime, after every region's browser resources are released.
 export function create_host_hooks(wasm, msg_class, on_fatal) {
     const regions = new Map();
+    // Browser tasks the SDK asked for, by timer id. The host owns them because
+    // their callbacks are wasm code: a runtime that has failed drops them
+    // instead of letting them re-enter a module nothing can trust.
+    const tasks = new Set();
     let signal_pump_scheduled = false;
 
     // Makepad's UI/action signals are process-wide flags, so one read per
@@ -142,6 +154,7 @@ export function create_host_hooks(wasm, msg_class, on_fatal) {
                 regions: regions.size,
                 timers,
                 animation_frames,
+                tasks: tasks.size,
                 errors: runtime.errors.length,
                 // Linear memory never shrinks, so a leak shows up as growth
                 // that keeps pace with the number of rounds.
@@ -154,6 +167,10 @@ export function create_host_hooks(wasm, msg_class, on_fatal) {
                 return;
             }
             runtime.fatal = error;
+            for (const id of tasks) {
+                window.clearTimeout(id);
+            }
+            tasks.clear();
             const live = [...regions.values()];
             regions.clear();
             for (const host of live) {
@@ -190,9 +207,16 @@ export function create_host_hooks(wasm, msg_class, on_fatal) {
             if (host) {
                 regions.delete(region);
                 // An application can close a region from inside the action
-                // callback its own pump is delivering, so the browser side of
-                // the region outlives the Rust side by the rest of that pump.
-                host.destroy_when_pump_returns();
+                // callback its own pump is delivering, so both halves of the
+                // region outlive that call: the browser resources until the
+                // pump leaves the stack, the Cx until the batch that pump
+                // returned has been drawn and freed.
+                host.destroy_when_pump_returns(() => {
+                    if (runtime.fatal) {
+                        return;
+                    }
+                    wasm.exports.rustify_region_release(region);
+                });
             }
         },
         request_pump(region) {
@@ -203,6 +227,20 @@ export function create_host_hooks(wasm, msg_class, on_fatal) {
         },
         request_signal_pump() {
             schedule_signal_pump();
+        },
+        defer(callback) {
+            if (runtime.fatal) {
+                return;
+            }
+            const id = window.setTimeout(() => {
+                tasks.delete(id);
+                try {
+                    callback();
+                } catch (error) {
+                    runtime.enter_fatal(error);
+                }
+            }, 0);
+            tasks.add(id);
         },
     };
 }

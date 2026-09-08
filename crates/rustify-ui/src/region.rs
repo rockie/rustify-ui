@@ -152,18 +152,16 @@ fn drain_soon(sink: ActionSink) {
     }
 }
 
+/// The turn is taken through the runtime host rather than `setTimeout`: a
+/// runtime that fails between two batches has to be able to drop what is
+/// still scheduled, and only the host can.
 #[cfg(target_arch = "wasm32")]
 fn next_turn(sink: ActionSink) {
-    use leptos::wasm_bindgen::closure::Closure;
-    use leptos::wasm_bindgen::JsCast;
-
-    let resume = Closure::once_into_js(move || {
+    rustify_makepad::defer(move || {
         if sink.drain_once() {
-            next_turn(sink.clone());
+            next_turn(sink);
         }
     });
-    let _ = leptos::prelude::window()
-        .set_timeout_with_callback_and_timeout_and_arguments_0(resume.unchecked_ref(), 0);
 }
 
 #[cfg(not(target_arch = "wasm32"))]

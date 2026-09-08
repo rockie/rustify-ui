@@ -24,6 +24,9 @@ extern "C" {
 
     #[wasm_bindgen(method)]
     fn request_signal_pump(this: &HostHooks);
+
+    #[wasm_bindgen(method)]
+    fn defer(this: &HostHooks, callback: &JsValue);
 }
 
 type Deferred = Box<dyn FnOnce(&mut Cx)>;
@@ -60,6 +63,16 @@ fn on_signal() {
 
 fn with_hooks<R>(f: impl FnOnce(&HostHooks) -> R) -> Option<R> {
     HOOKS.with(|slot| slot.borrow().as_ref().map(f))
+}
+
+/// Runs `f` on a fresh browser task, giving the browser its turn in between.
+///
+/// The host owns the task rather than `setTimeout` here, so a runtime that has
+/// failed can drop it: the callback is wasm code, and a trapped module must
+/// not be re-entered.
+pub fn defer(f: impl FnOnce() + 'static) {
+    let callback = Closure::once_into_js(f);
+    with_hooks(|hooks| hooks.defer(&callback));
 }
 
 /// Creates a region: its own `Cx`, script VM and widget tree, drawn into
@@ -125,25 +138,31 @@ pub fn apply<A: RegionApp>(id: RegionId, f: impl FnOnce(&mut Cx, &mut A) + 'stat
     queued
 }
 
-/// Tears the region down: JS resources first, then the `Cx`. When called from
-/// inside the region's own pump the teardown completes once the pump returns.
+/// Tears the region down. The region stops accepting work here; the host
+/// decides when the rest is safe, because it knows when the pump it is running
+/// has finished with what that pump produced.
 pub fn destroy_region(id: RegionId) {
-    let idle = REGIONS.with(|regions| {
+    let notify = REGIONS.with(|regions| {
         let mut regions = regions.borrow_mut();
-        let Some(region) = regions.get_mut(id) else {
-            return None;
-        };
-        region.disposing = true;
-        Some(region.cx.is_some())
+        match regions.get_mut(id) {
+            Some(region) if !region.disposing => {
+                region.disposing = true;
+                true
+            }
+            _ => false,
+        }
     });
-    if idle == Some(true) {
-        finish_destroy(id);
+    if notify {
+        with_hooks(|hooks| hooks.destroy_region(id.raw()));
     }
 }
 
-fn finish_destroy(id: RegionId) {
-    with_hooks(|hooks| hooks.destroy_region(id.raw()));
-    let removed = REGIONS.with(|regions| regions.borrow_mut().remove(id));
+/// Drops the region's `Cx`. Called by the host once it has released its own
+/// resources and consumed the last batch the region produced: that batch
+/// points straight into buffers the `Cx` owns.
+#[export_name = "rustify_region_release"]
+pub unsafe extern "C" fn rustify_region_release(region: u32) {
+    let removed = REGIONS.with(|regions| regions.borrow_mut().remove(RegionId::from_raw(region)));
     drop(removed);
 }
 
@@ -160,6 +179,9 @@ pub unsafe extern "C" fn rustify_region_process(region: u32, msg_ptr: u32) -> u3
     let taken = REGIONS.with(|regions| {
         let mut regions = regions.borrow_mut();
         let region = regions.get_mut(id)?;
+        if region.disposing {
+            return None;
+        }
         let cx = region.cx.take()?;
         Some((
             cx,
@@ -176,20 +198,18 @@ pub unsafe extern "C" fn rustify_region_process(region: u32, msg_ptr: u32) -> u3
             f(cx);
         }
     });
-    let disposing = REGIONS.with(|regions| {
+    let orphan = REGIONS.with(|regions| {
         let mut regions = regions.borrow_mut();
         match regions.get_mut(id) {
             Some(region) => {
                 region.cx = Some(cx);
-                region.disposing
+                None
             }
-            None => true,
+            None => Some(cx),
         }
     });
+    drop(orphan);
     deliver();
-    if disposing {
-        finish_destroy(id);
-    }
     out
 }
 

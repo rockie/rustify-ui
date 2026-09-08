@@ -189,13 +189,14 @@ test.describe("M2 V3: teardown and host coexistence", () => {
         const failures: string[] = [];
         page.on("pageerror", (error) => failures.push(String(error)));
         await waitForReady(page);
-        const { regions, timers, animation_frames, errors } = await page.evaluate(() =>
+        const { regions, timers, animation_frames, tasks, errors } = await page.evaluate(() =>
             window.__fusion_basic.stats()
         );
-        expect({ regions, timers, animation_frames, errors }).toEqual({
+        expect({ regions, timers, animation_frames, tasks, errors }).toEqual({
             regions: 4,
             timers: 0,
             animation_frames: 0,
+            tasks: 0,
             errors: 0,
         });
         // The allocator reaches its high-water mark once, at a round that
@@ -227,7 +228,13 @@ test.describe("M2 V3: teardown and host coexistence", () => {
         });
         expect(after.errors).toEqual([]);
         expect(after.canvases).toBe(2);
-        expect(after.stats).toMatchObject({ regions: 2, timers: 0, animation_frames: 0, errors: 0 });
+        expect(after.stats).toMatchObject({
+            regions: 2,
+            timers: 0,
+            animation_frames: 0,
+            tasks: 0,
+            errors: 0,
+        });
         expect(after.stats.memory).toBe(after.warm.memory);
         expect(failures).toEqual([]);
         await page.evaluate(() => window.__fusion_basic.mount("scope-a"));

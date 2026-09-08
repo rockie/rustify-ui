@@ -298,6 +298,74 @@ test.describe("M3: a scope that closes while its region is running", () => {
         expect(failures).toEqual([]);
     });
 
+    test("the batch a closing region produced is drawn before its Cx goes", async ({ page }) => {
+        const failures: string[] = [];
+        page.on("pageerror", (error) => failures.push(String(error)));
+        await waitForReady(page);
+        const region = page.getByTestId("workbench-gpu");
+        await settle(region);
+        const box = (await region.boundingBox())!;
+        const observed = await page.evaluate(
+            async (point) => {
+                const api = window.__property_workbench;
+                const host = [...api.hooks.regions.values()][0];
+                const live: number[] = [];
+                const original = host.new_from_wasm.bind(host);
+                // Every batch the region produces is handed over here, and its
+                // draw calls read uniform buffers by pointer into memory the Cx
+                // owns. Nothing may be handed over after that Cx is gone.
+                host.new_from_wasm = (ptr: number) => {
+                    live.push(api.live_regions());
+                    return original(ptr);
+                };
+                api.close_on_next_action();
+                const canvas = document.querySelector('[data-testid="workbench-gpu"]')!;
+                for (const type of ["pointerdown", "pointerup"]) {
+                    canvas.dispatchEvent(
+                        new PointerEvent(type, {
+                            bubbles: true,
+                            cancelable: true,
+                            clientX: point.x,
+                            clientY: point.y,
+                            pointerId: 1,
+                            pointerType: "mouse",
+                            button: 0,
+                            buttons: type === "pointerdown" ? 1 : 0,
+                            isPrimary: true,
+                        })
+                    );
+                }
+                await new Promise((r) => setTimeout(r, 300));
+                return { live, regions: api.live_regions() };
+            },
+            { x: box.x + box.width * 0.77, y: box.y + box.height * 0.085 }
+        );
+        expect(observed.live.length).toBeGreaterThan(0);
+        expect(observed.live.filter((count) => count === 0)).toEqual([]);
+        expect(observed.regions).toBe(0);
+        expect(failures).toEqual([]);
+    });
+
+    test("a fatal drops the work the runtime had already scheduled", async ({ page }) => {
+        await waitForReady(page);
+        const outcome = await page.evaluate(async () => {
+            const api = window.__property_workbench;
+            let ran = false;
+            // The SDK gives the browser its turn between action batches through
+            // this same entry, so what is cancelled here is a queued action on
+            // its way back into a module that has trapped.
+            api.hooks.defer(() => {
+                ran = true;
+            });
+            const scheduled = api.stats().tasks;
+            api.hooks.runtime.enter_fatal(new Error("injected trap"));
+            await new Promise((r) => setTimeout(r, 200));
+            return { scheduled, ran, tasks: api.stats().tasks };
+        });
+        expect(outcome).toEqual({ scheduled: 1, ran: false, tasks: 0 });
+        await expect(page.getByTestId("status")).toHaveAttribute("data-status", "fatal");
+    });
+
     test("a trapped runtime takes its controls off the page", async ({ page }) => {
         await waitForReady(page);
         await expect(page.getByTestId("name-input")).toHaveCount(1);
