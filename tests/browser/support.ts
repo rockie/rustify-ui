@@ -64,6 +64,26 @@ export async function settle(locator: Locator, attempts = 20): Promise<Pixels> {
 
 declare global {
     interface Window {
+        __property_workbench: {
+            mount(): number;
+            dispose(): boolean;
+            live_regions(): number;
+            snapshot(): {
+                count: number;
+                position: number;
+                selected: number | null;
+                name: string | null;
+                color: string;
+            };
+            stats(): {
+                regions: number;
+                timers: number;
+                animation_frames: number;
+                errors: number;
+                memory: number;
+                pumps: number;
+            };
+        };
         __fusion_basic: {
             mount(container_id: string): number;
             dispose(container_id: string): boolean;

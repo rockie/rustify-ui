@@ -31,6 +31,7 @@ flowchart TD
 | `web/loader.js`, `web/runtime.css` | Page-side boot: wasm instantiation, bridge fingerprint check, host hooks, static failure notice. |
 | `xtask` | `doctor`, `build-web`, `serve`, `sources verify`. |
 | `examples/fusion-basic` | Two mount scopes, each with a DOM counter and two GPU regions bound to the same signal. |
+| `examples/property-workbench` | A thousand objects with stable ids: a DOM property panel renames, recolours and deletes the selection, a GPU region draws it, and both sides move the selection through the same rule. |
 | `tests/browser` | Playwright probes run against the release build. |
 
 ## Runtime contracts

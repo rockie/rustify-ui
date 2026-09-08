@@ -1379,6 +1379,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "property-workbench"
+version = "0.1.0"
+dependencies = [
+ "leptos",
+ "rustify-makepad",
+ "rustify-ui",
+ "wasm-bindgen",
+]
+
+[[package]]
 name = "pulldown-cmark"
 version = "0.12.2"
 dependencies = [

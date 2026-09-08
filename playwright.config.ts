@@ -1,10 +1,11 @@
 import { defineConfig, devices } from "@playwright/test";
 
-const port = 4173;
+const fusionPort = 4173;
+const workbenchPort = 4174;
 
 export default defineConfig({
     testDir: "./tests/browser",
-    // A cold page compiles a 7.7 MB wasm module and boots four regions; the
+    // A cold page compiles a 7.7 MB wasm module and boots its regions; the
     // 30 s default leaves the shorter probes no headroom over that.
     timeout: 120_000,
     fullyParallel: false,
@@ -12,14 +13,35 @@ export default defineConfig({
     retries: 0,
     reporter: [["list"], ["json", { outputFile: "test-results/browser.json" }]],
     use: {
-        baseURL: `http://127.0.0.1:${port}/`,
         trace: "retain-on-failure",
         ...devices["Desktop Chrome"],
     },
-    webServer: {
-        command: `cargo xtask serve --example fusion-basic --release --port ${port}`,
-        url: `http://127.0.0.1:${port}/`,
-        reuseExistingServer: false,
-        timeout: 120_000,
-    },
+    // One project per example: each has its own build directory and its own
+    // static server, so a spec always talks to the app it was written for.
+    projects: [
+        {
+            name: "fusion-basic",
+            testMatch: ["m1-probes.spec.ts", "m2-runtime.spec.ts", "m3-state.spec.ts"],
+            use: { baseURL: `http://127.0.0.1:${fusionPort}/` },
+        },
+        {
+            name: "property-workbench",
+            testMatch: ["m3-workbench.spec.ts"],
+            use: { baseURL: `http://127.0.0.1:${workbenchPort}/` },
+        },
+    ],
+    webServer: [
+        {
+            command: `cargo xtask serve --example fusion-basic --release --port ${fusionPort}`,
+            url: `http://127.0.0.1:${fusionPort}/`,
+            reuseExistingServer: false,
+            timeout: 120_000,
+        },
+        {
+            command: `cargo xtask serve --example property-workbench --release --port ${workbenchPort}`,
+            url: `http://127.0.0.1:${workbenchPort}/`,
+            reuseExistingServer: false,
+            timeout: 120_000,
+        },
+    ],
 });

@@ -4,6 +4,7 @@ members = [
     "crates/rustify-ui",
     "crates/rustify-makepad",
     "examples/fusion-basic",
+    "examples/property-workbench",
     "xtask",
 ]
 exclude = ["makepad", "ref"]

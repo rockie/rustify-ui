@@ -12,6 +12,7 @@
 
 ```sh
 cargo xtask build-web --example fusion-basic --release
+cargo xtask build-web --example property-workbench --release
 cargo xtask serve --example fusion-basic --release          # prints http://127.0.0.1:<port>/
 cargo xtask serve --example fusion-basic --release --base /tools/demo/ --port 4173
 cargo xtask serve --example fusion-basic --release --csp no-wasm   # negative test: wasm must fail visibly

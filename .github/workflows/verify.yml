@@ -40,6 +40,8 @@ jobs:
         continue-on-error: true
       - name: Build fusion-basic
         run: cargo xtask build-web --example fusion-basic --release
+      - name: Build property-workbench
+        run: cargo xtask build-web --example property-workbench --release
       - name: Install pinned Playwright
         run: npm ci && npx playwright install --with-deps chromium
       - name: Browser probes (Playwright Chromium; not the macOS Chrome pass gate)
@@ -51,3 +53,4 @@ jobs:
           path: |
             test-results
             target/makepad-wasm-app/release/fusion-basic/build-manifest.json
+            target/makepad-wasm-app/release/property-workbench/build-manifest.json

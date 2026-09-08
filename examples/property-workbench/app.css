@@ -1,0 +1,81 @@
+body {
+    margin: 0;
+    padding: 24px;
+    font: 15px/1.5 system-ui, sans-serif;
+    color: #1d2939;
+    background: #f9fafb;
+}
+
+.workbench {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 16px;
+    align-items: start;
+    max-width: 900px;
+}
+
+.workbench .panel {
+    display: grid;
+    gap: 8px;
+    padding: 12px;
+    border: 1px solid #d0d5dd;
+    border-radius: 6px;
+    background: #fff;
+}
+
+.workbench .panel label {
+    display: grid;
+    gap: 4px;
+    font-size: 13px;
+    color: #475467;
+}
+
+.workbench input[type="text"] {
+    font: inherit;
+    padding: 6px 8px;
+    border: 1px solid #d0d5dd;
+    border-radius: 4px;
+}
+
+.workbench .gpu-region {
+    width: 100%;
+    height: 320px;
+    border: 1px solid #d0d5dd;
+    border-radius: 6px;
+    background: #101828;
+}
+
+.workbench .swatches {
+    display: flex;
+    gap: 6px;
+}
+
+.workbench .swatches button {
+    width: 28px;
+    height: 28px;
+    border: 2px solid transparent;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* The release policy is `style-src 'self'`, so the palette lives in this
+   stylesheet rather than in an inline style attribute. */
+.swatch-2e90fa { background: #2e90fa; }
+.swatch-12b76a { background: #12b76a; }
+.swatch-f79009 { background: #f79009; }
+.swatch-f04438 { background: #f04438; }
+.swatch-7a5af8 { background: #7a5af8; }
+.swatch-475467 { background: #475467; }
+
+.workbench .swatches button[aria-pressed="true"] {
+    border-color: #1d2939;
+}
+
+.workbench .region-error {
+    margin: 0;
+    padding: 8px 12px;
+    border: 1px solid #f97066;
+    border-radius: 6px;
+    color: #b42318;
+    background: #fef3f2;
+}
