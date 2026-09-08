@@ -1,3 +1,4 @@
+use crate::binding::ActionSink;
 use crate::diagnostics::UiError;
 use leptos::prelude::*;
 use leptos::wasm_bindgen::JsCast;
@@ -47,7 +48,11 @@ where
         .map_err(|_| UiError::InvalidContainer)?;
     let owner = Owner::new();
     let target = container.clone().unchecked_into::<HtmlElement>();
-    let unmount = owner.with(|| leptos::mount::mount_to(target, view));
+    let unmount = owner.with(|| {
+        // Every region in this scope shares one acceptance order.
+        provide_context(ActionSink::new());
+        leptos::mount::mount_to(target, view)
+    });
     Ok(AppHandle {
         container,
         owner: Some(owner),

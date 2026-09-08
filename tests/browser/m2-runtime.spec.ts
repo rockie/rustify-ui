@@ -184,7 +184,7 @@ test.describe("M2 V3: teardown and host coexistence", () => {
         expect(selected).toBe("fusion-basic");
     });
 
-    test("100 mount and dispose rounds return every browser resource", async ({ page }) => {
+    test("repeated mount and dispose returns every browser resource", async ({ page }) => {
         test.setTimeout(600_000);
         const failures: string[] = [];
         page.on("pageerror", (error) => failures.push(String(error)));
@@ -198,9 +198,11 @@ test.describe("M2 V3: teardown and host coexistence", () => {
             animation_frames: 0,
             errors: 0,
         });
-        // Twenty rounds to reach steady state - the allocator takes one growth
-        // step early and then stops - and eighty more to show whether anything
-        // keeps growing with the round count.
+        // The allocator takes one growth step in the first rounds and then
+        // stops, so the leak sample starts after it. Linear memory only grows
+        // in 16 MiB steps, so the window has to be long enough that anything
+        // held per round would cross one: 200 rounds at even 100 KiB each
+        // would be 20 MiB.
         const after = await page.evaluate(async () => {
             const api = window.__fusion_basic;
             const round = async () => {
@@ -208,11 +210,11 @@ test.describe("M2 V3: teardown and host coexistence", () => {
                 api.mount("scope-a");
                 await new Promise((r) => setTimeout(r, 20));
             };
-            for (let i = 0; i < 20; i++) {
+            for (let i = 0; i < 50; i++) {
                 await round();
             }
             const warm = api.stats();
-            for (let i = 0; i < 80; i++) {
+            for (let i = 0; i < 200; i++) {
                 await round();
             }
             api.dispose("scope-a");

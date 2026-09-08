@@ -37,7 +37,7 @@ mod app {
     fn CounterSlot(
         test_id: String,
         props: Signal<CounterProps>,
-        on_action: impl Fn(CounterAction) + Clone + 'static,
+        on_action: impl Fn(CounterAction) + Clone + Send + Sync + 'static,
     ) -> impl IntoView {
         let state = RwSignal::new(RegionState::Starting);
         let key = test_id.clone();

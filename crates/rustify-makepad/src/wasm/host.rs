@@ -63,10 +63,11 @@ fn with_hooks<R>(f: impl FnOnce(&HostHooks) -> R) -> Option<R> {
 }
 
 /// Creates a region: its own `Cx`, script VM and widget tree, drawn into
-/// `canvas`. Actions the app emits are handed to `on_action` after each pump.
+/// `canvas`. Everything the app emitted during a pump is handed to
+/// `on_actions` in one call, after the pump has returned to a safe point.
 pub fn create_region<A: RegionApp>(
     canvas: &web_sys::HtmlCanvasElement,
-    on_action: impl Fn(A::Action) + 'static,
+    on_actions: impl Fn(Vec<A::Action>) + 'static,
 ) -> Option<RegionId> {
     let app: AppCell<A> = Rc::new(RefCell::new(None));
     let outbox: Outbox<A> = Rc::new(RefCell::new(Vec::new()));
@@ -75,8 +76,8 @@ pub fn create_region<A: RegionApp>(
 
     let deliver: Rc<dyn Fn()> = Rc::new(move || {
         let pending: Vec<A::Action> = outbox.borrow_mut().drain(..).collect();
-        for action in pending {
-            on_action(action);
+        if !pending.is_empty() {
+            on_actions(pending);
         }
     });
     let id = REGIONS.with(|regions| {

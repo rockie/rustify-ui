@@ -1,3 +1,5 @@
+#[cfg(target_arch = "wasm32")]
+use crate::binding::ActionSink;
 use crate::diagnostics::UiError;
 use leptos::prelude::*;
 use std::marker::PhantomData;
@@ -27,7 +29,7 @@ pub enum RegionState {
 pub fn GpuRegion<A>(
     app: PhantomData<A>,
     props: Signal<A::Props>,
-    on_action: impl Fn(A::Action) + Clone + 'static,
+    on_action: impl Fn(A::Action) + Clone + Send + Sync + 'static,
     /// Written by the region as it starts, fails or is disposed.
     #[prop(optional, into)]
     state: Option<RwSignal<RegionState>>,
@@ -37,7 +39,9 @@ pub fn GpuRegion<A>(
 where
     A: rustify_makepad::RegionApp,
     A::Props: Clone + Send + Sync,
+    A::Action: Send,
 {
+    use crate::scheduler::Pace;
     use leptos::html::Canvas;
     use rustify_makepad::RegionId;
     use std::sync::{Arc, Mutex};
@@ -56,6 +60,16 @@ where
         if let Some(state) = state {
             state.set(next);
         }
+    };
+    // One order per mount scope; a region rendered outside one orders only
+    // against itself.
+    let sink = use_context::<ActionSink>().unwrap_or_default();
+    let deliver_actions = move |actions: Vec<A::Action>| {
+        for action in actions {
+            let on_action = on_action.clone();
+            sink.submit(Pace::Discrete, move || on_action(action));
+        }
+        drain_soon(sink.clone());
     };
     let canvas = NodeRef::<Canvas>::new();
     // Kept outside the reactive arena so the cleanup closure can still reach
@@ -76,7 +90,7 @@ where
             if !matches!(*slot, Slot::Pending) {
                 return;
             }
-            match rustify_makepad::create_region::<A>(&canvas, on_action.clone()) {
+            match rustify_makepad::create_region::<A>(&canvas, deliver_actions.clone()) {
                 Some(id) => {
                     *slot = Slot::Live(id);
                     publish(RegionState::Ready);
@@ -108,6 +122,33 @@ where
     });
 
     view! { <canvas node_ref=canvas class=class data-testid=test_id /> }
+}
+
+/// Delivers the pending actions, giving the browser a turn between batches so
+/// a flood of input cannot hold the frame. The first batch runs immediately:
+/// the caller is already at a safe point and the common case is one action.
+#[cfg(target_arch = "wasm32")]
+fn drain_soon(sink: ActionSink) {
+    if !sink.arm() {
+        return;
+    }
+    if sink.drain_once() {
+        next_turn(sink);
+    }
+}
+
+#[cfg(target_arch = "wasm32")]
+fn next_turn(sink: ActionSink) {
+    use leptos::wasm_bindgen::closure::Closure;
+    use leptos::wasm_bindgen::JsCast;
+
+    let resume = Closure::once_into_js(move || {
+        if sink.drain_once() {
+            next_turn(sink.clone());
+        }
+    });
+    let _ = leptos::prelude::window()
+        .set_timeout_with_callback_and_timeout_and_arguments_0(resume.unchecked_ref(), 0);
 }
 
 #[cfg(not(target_arch = "wasm32"))]

@@ -28,15 +28,18 @@
 
 ### 恢复快照
 
-- 最近更新：2026-09-08，**M2 已关闭**；下一会话从 M3 开始。
+- 最近更新：2026-09-08，M2 已关闭，**M3 实施中**；下一会话从本节的「M3 现状」继续。
 - 当前进度：2/8 个里程碑完成。
-- 代码基线：`3f8e5c3`（M1 首轮）→ `6bb15a1`（M1 收尾并关闭）→ 本会话的 M2 提交（`git log -1`）。工作区 clean。
-- 已通过的验证（2026-09-08 本机）：`cargo xtask doctor` 8/8；`cargo test --workspace --lib` 3；`cargo test -p xtask` 10；`cd makepad && cargo test` 13（cargo-makepad 10、wasm_bridge 3）；`cargo clippy --workspace --all-targets -- -D warnings` 无警告；`cargo fmt --all -- --check` 通过；`cargo xtask build-web --example fusion-basic --release` 通过；`npx playwright test m1-probes` **8/8**；`npx playwright test m2-runtime` **11/11**。
-- M2 退出条件对照：全部满足，逐条证据见 `docs/validation/p1/m2-runtime.md`。V1 的正常/缺失/重复容器与 20 轮关闭再挂载 ✔；2 挂载×2 区域关闭一个其余可操作（DOM 与两个 GPU 区域都验）✔；旧句柄与迟到消息无回调 ✔；100 轮资源与宿主操作无功能泄漏（区域/计时器/动画帧回到基线，线性内存第 20 轮与第 100 轮相同）✔。
+- 代码基线：`3f8e5c3`（M1 首轮）→ `6bb15a1`（M1 收尾并关闭）→ `8427bff`（M2 关闭）→ 本会话的 M3 首个提交（`git log -1`）。工作区 clean。
+- 已通过的验证（2026-09-08 本机）：`cargo xtask doctor` 8/8；`cargo test --workspace --lib` 12（registry 3、scheduler 5、binding 4）；`cargo test -p xtask` 10；`cd makepad && cargo test` 13（cargo-makepad 10、wasm_bridge 3）；`cargo clippy --workspace --all-targets -- -D warnings` 无警告；`cargo fmt --all -- --check` 通过；`cargo xtask build-web --example fusion-basic --release` 通过；`npx playwright test m1-probes` **8/8**；`npx playwright test m2-runtime` **11/11**；`npx playwright test m3-state` **2/2**。
+- M2 退出条件对照：全部满足，逐条证据见 `docs/validation/p1/m2-runtime.md`。V1 的正常/缺失/重复容器与 20 轮关闭再挂载 ✔；2 挂载×2 区域关闭一个其余可操作（DOM 与两个 GPU 区域都验）✔；旧句柄与迟到消息无回调 ✔；100 轮以上资源与宿主操作无功能泄漏（区域/计时器/动画帧回到基线；线性内存在第 50 轮取样后再跑 200 轮完全不变）✔。
 - M2 的实现变更：`GpuRegion` 增加可选 `RwSignal<RegionState>`，产出 Ready/Failed/Disposed；拿不到 WebGL2 上下文的区域进入 `Failed(GpuUnavailable)`、记录一条有界错误、该作用域的 DOM 部分继续可用（测试用把 `getContext("webgl2")` 置空来真正走这条路径）；`SignalToUI` 增加钩子（`makepad/platform/network/src/ui_signal.rs`），信号由 Rust 推给宿主、每个微任务读一次标志并广播，删掉每运行时 16 ms 轮询；宿主导出区域/计时器/动画帧/错误/泵次数/线性内存计数，供销毁后与基线对照。
 - M2 的设计决定：不对外提供 `RegionHandle`（理由与重审条件写在 §5.1）。
 - 基线数字（无预算承诺，替换 M1 的对应项）：空闲 4 区域 3 s 内 0 次泵（此前 16 ms 轮询下约 1 次/s）、0 帧；两区域作用域反复挂载/卸载的线性内存在第 10 轮 125,173,760 B，第 20 轮前一次性涨到 142,016,512 B，之后到第 200 轮每 10 轮取样都相同（分配器高水位，不是每轮泄漏）；100 轮后浏览器侧资源回到 2 区域/0 计时器/0 动画帧/2 canvas/0 错误。release 产物：wasm 7,716,985 B、JS 163,025 B、CSS 885 B、字体 51,187,844 B。
-- 下一步（M3）：binding/scheduler、自定义可选对象 Widget、稳定 ID、property-workbench 示例基础；退出条件为 V2 全项、DOM 与 GPU 双向往返、应用只有一份权威业务 state、重入与批量错误回归通过。调度器的工程默认值见 §4.3（每作用域 1,024 个离散动作、每任务 64 个后让出）。
+- **M3 现状**：已完成调度与投递骨架，尚未开始第二份示例。
+  - 已做：`crates/rustify-ui/src/scheduler.rs`（按到达顺序编号、队列上限 1,024、每批 64、满则返回 Backpressure 且不占用序号、连续动作独立存放只留最新且保持相对位置，5 个单测）；`crates/rustify-ui/src/binding.rs`（每个挂载作用域一个 `ActionSink`，由 `mount` 通过 context 提供；回调内提交的动作进入下一批而不是就地递归；批与批之间用 `setTimeout(0)` 把执行机会还给浏览器，第一批仍同步跑完，4 个单测）；`create_region` 的回调改为一次收下整批动作（`Fn(Vec<A::Action>)`），使批处理真正成立；浏览器用例 `tests/browser/m3-state.spec.ts` 2 项通过（40 次 DOM/GPU 交错动作各恰好生效一次、同作用域两个区域显示同一当前值且像素一致）。
+  - 未做：稳定 key 与重复 key 的开发期报告（§5.3）；GPU 侧自定义可选对象 Widget；`examples/property-workbench`（1,000 个固定 ID 对象、DOM 属性面板、GPU 选择视图）；V2 的完整规模（1,000 项、10,000 个带序号动作、100 项批量、120 Hz 移动夹杂点击、反序与增删、重复 ID）。`Pace::Continuous` 已实现并有单测，但还没有真实生产者，property-workbench 的拖拽会是第一个。
+  - 退出条件不变：V2 全项、DOM 与 GPU 双向往返、应用只有一份权威业务 state、重入与批量错误回归通过。调度器的工程默认值见 §4.3。
 - 待办（不阻塞 M3）：审计每区域重复加载字体的内存（`IBMPlexSans-Text.ttf` 每区域各取一次，4 区域线性内存 124 MB）。
 - 已知环境事实：headless 探针跑在 SwiftShader 软件 WebGL 上；Playwright 进程测到的挂载/卸载耗时比页内测量大 10–30 倍，属于测试夹具开销，不计入 A-6 的测量合同。本机内存紧张时整套浏览器用例会被系统杀掉，分文件运行（`npx playwright test m1-probes` / `m2-runtime`）更稳。
 - 当前阻塞：无。A-1/A-2/A-3/A-4/A-5/A-6 全部解除，计划状态为 Ready。
