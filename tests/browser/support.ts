@@ -61,3 +61,23 @@ export async function settle(locator: Locator, attempts = 20): Promise<Pixels> {
     }
     return previous;
 }
+
+declare global {
+    interface Window {
+        __fusion_basic: {
+            mount(container_id: string): number;
+            dispose(container_id: string): boolean;
+            live_regions(): number;
+            errors(): string[];
+            stats(): {
+                regions: number;
+                timers: number;
+                animation_frames: number;
+                errors: number;
+                memory: number;
+                pumps: number;
+            };
+            region_states(): Record<string, string>;
+        };
+    }
+}

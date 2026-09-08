@@ -28,23 +28,24 @@
 
 ### 恢复快照
 
-- 最近更新：2026-09-08，**M1 已关闭**；下一会话从 M2 开始。
-- 当前进度：1/8 个里程碑完成。
-- 代码基线：`60828a7`（Makepad 闭包原样导入）→ `0e5c1af`（裁剪为 Web 后端与构建工具）→ `3f8e5c3`（M1 首轮：SDK、示例、xtask、探针、文档）→ 本会话的 M1 收尾提交（`git log -1`）。工作区 clean。
-- 已通过的验证（2026-09-08 本机）：`cargo xtask doctor` 8/8 通过；`cargo test --workspace --lib` 3 通过；`cargo test -p xtask` 10 通过；`cd makepad && cargo test` 13 通过（cargo-makepad 10、wasm_bridge 3）；`cargo clippy --workspace --all-targets -- -D warnings` 无警告；`cargo fmt --all -- --check` 通过（`makepad/rustfmt.toml` 禁用 fork 格式化）；`cargo xtask sources verify` 输出 19 改/4 增/212 删（均为本期提交）；`cargo xtask build-web --example fusion-basic --release` 通过；`npm run test:browser` **8/8 通过**。
-- M1 退出条件对照：全部满足。新检出不读 ref 可重建 ✔；nightly/CLI/依赖锁定 ✔；路径成员 resources 定位 ✔；导入/裁剪清单随提交 ✔；DOM 按钮改变真实 GPU 内容 ✔（探针 1–3）；双区域互不干扰并能释放 ✔（探针 4–7）；发布探针无 `new Function` ✔（探针 8）；严格 CSP 且 `crossOriginIsolated=false` ✔；报告与 ADR 更新 ✔（`docs/validation/p1/m1-probes.md`）；A-5/A-6 已由用户 2026-09-08 登记 ✔。
-- 本会话修复的缺陷：`ToWasmMsgRef::block_skip` 把游标移到 `base + len - 1`，而 JS 写入端把 `len` 记成「从消息起点到本块末尾」的 u64 长度，与 Rust 游标同源。单块消息里错误偏移越过末尾后被 `was_last_block` 吞掉，所以上游从未暴露；从第二块起游标落在块头长度字上，读出垃圾 live id 后越界，即偶发的 `to_wasm.rs:181 index out of bounds`。嵌入场景常产生多块批次（`ResizeObserver` 与 `ToWasmInit`、信号轮询与排队的宿主变更），所以只在这里出现。修复在 `makepad/libs/wasm_bridge/src/to_wasm.rs`，同文件新增单测按 JS 写入布局构造多块消息，旧算术下必失败。
-- 同时补上的运行保障：wasm trap 后 Rust 状态不可信（该次泵的 `Cx` 已被移出注册表且无法归还），因此 `EmbeddedRegion.do_wasm_pump` 与信号轮询捕获 trap，停止一切进入 wasm 的调用、不重入模块地释放各区域浏览器资源，并把错误交给宿主 `on_fatal`；`fusion-basic` 在状态元素显示 `RuntimeFatal` 并说明需重载、内存中未保存数据会丢失（D9 边界，不是按实例的 trap 隔离）。区域拿不到 WebGL2 上下文原本静默失败，现由宿主记录（上限 64 条）并被探针 7 每轮断言。
-- 基线数字（无预算承诺）：release wasm 7,682,601 B；JS 161,338 B；字体 51,187,844 B（按需加载，首绘只取 IBMPlexSans-Text 181,792 B）；4 区域页面 ready 3.5 s 冷启、0.9 s 热启（headless）；4 区域线性内存 123,994,112 B，6 轮挂载/卸载不增长；空闲 1 pump/s、0 帧/s；页内测得的一轮挂载/卸载：dispose 2–26 ms、mount 调用 <1 ms、两个区域在 353–363 ms 内就绪。headless 探针跑在 SwiftShader 软件 WebGL 上，不是本机 GPU。
-- 下一步（M2）：完善 `AppHandle`/`RegionHandle`、embedded 模式、监听/observer/计时器/GL/Cx 释放、代际与错误状态；退出条件为 V1/V3 全部普通行为、2 挂载×2 区域关闭一个其余可操作、旧句柄/迟到消息无回调、100 轮资源与宿主操作检查无功能泄漏。进入前先把 16 ms 信号轮询改为推送（`SignalToUI` 钩子），并审计每区域重复加载字体的内存（4 区域 124 MB 线性内存，`IBMPlexSans-Text.ttf` 每区域各取一次）。
-- 本期判断（已写入代码与文档）：Leptos 发布版与参考树在 islands/forms/async derived/stores/macro 内部有代码差异，但 F2/F3/F4 所依赖的文件完全一致，且无需修改 Leptos，按用户「不改代码则用 0.8.20」决定锁定发布版，不切 0.9.0-beta（记录于 `sources.lock.json`）；字体全部保留（`docs/compatibility.md`）；cargo-makepad 裁剪为仅 `wasm build`（去掉 run/热重载服务器、split/brotli/threads/`--small-fonts`），`wasm run` 由 `cargo xtask serve` 替代，index.html 由 xtask 生成；静态桥用 `wasmi` 在构建期执行 wasm 导出生成（§4.1 第 6 条允许的替代）；`makepad/libs/wasm_bridge` 加入 `makepad/` 工具 workspace，使 fork 的宿主单测有一个固定入口。
-- Makepad Web 后端在 fork 内修复的上游缺陷（多 Cx 才暴露）：`ToWasmInit` 在窗口创建前索引 `windows[id_zero]` 触发 panic；多桥共享一个 wasm 时 typed-array 视图在内存增长后失效，写入静默丢失（前三个区域收不到 Init）；`ACTION_SENDER_GLOBAL` 只指向最后创建的 Cx；`clear_memory_refs` 置空共享实例的 `_memory`；销毁后的 fetch 回调访问已释放宿主；`ToWasmMsgRef::block_skip` 的多块偏移。
+- 最近更新：2026-09-08，**M2 已关闭**；下一会话从 M3 开始。
+- 当前进度：2/8 个里程碑完成。
+- 代码基线：`3f8e5c3`（M1 首轮）→ `6bb15a1`（M1 收尾并关闭）→ 本会话的 M2 提交（`git log -1`）。工作区 clean。
+- 已通过的验证（2026-09-08 本机）：`cargo xtask doctor` 8/8；`cargo test --workspace --lib` 3；`cargo test -p xtask` 10；`cd makepad && cargo test` 13（cargo-makepad 10、wasm_bridge 3）；`cargo clippy --workspace --all-targets -- -D warnings` 无警告；`cargo fmt --all -- --check` 通过；`cargo xtask build-web --example fusion-basic --release` 通过；`npx playwright test m1-probes` **8/8**；`npx playwright test m2-runtime` **11/11**。
+- M2 退出条件对照：全部满足，逐条证据见 `docs/validation/p1/m2-runtime.md`。V1 的正常/缺失/重复容器与 20 轮关闭再挂载 ✔；2 挂载×2 区域关闭一个其余可操作（DOM 与两个 GPU 区域都验）✔；旧句柄与迟到消息无回调 ✔；100 轮资源与宿主操作无功能泄漏（区域/计时器/动画帧回到基线，线性内存第 20 轮与第 100 轮相同）✔。
+- M2 的实现变更：`GpuRegion` 增加可选 `RwSignal<RegionState>`，产出 Ready/Failed/Disposed；拿不到 WebGL2 上下文的区域进入 `Failed(GpuUnavailable)`、记录一条有界错误、该作用域的 DOM 部分继续可用（测试用把 `getContext("webgl2")` 置空来真正走这条路径）；`SignalToUI` 增加钩子（`makepad/platform/network/src/ui_signal.rs`），信号由 Rust 推给宿主、每个微任务读一次标志并广播，删掉每运行时 16 ms 轮询；宿主导出区域/计时器/动画帧/错误/泵次数/线性内存计数，供销毁后与基线对照。
+- M2 的设计决定：不对外提供 `RegionHandle`（理由与重审条件写在 §5.1）。
+- 基线数字（无预算承诺，替换 M1 的对应项）：空闲 4 区域 3 s 内 0 次泵（此前 16 ms 轮询下约 1 次/s）、0 帧；两区域作用域反复挂载/卸载的线性内存在第 10 轮 125,173,760 B，第 20 轮前一次性涨到 142,016,512 B，之后到第 200 轮每 10 轮取样都相同（分配器高水位，不是每轮泄漏）；100 轮后浏览器侧资源回到 2 区域/0 计时器/0 动画帧/2 canvas/0 错误。release 产物：wasm 7,716,985 B、JS 163,025 B、CSS 885 B、字体 51,187,844 B。
+- 下一步（M3）：binding/scheduler、自定义可选对象 Widget、稳定 ID、property-workbench 示例基础；退出条件为 V2 全项、DOM 与 GPU 双向往返、应用只有一份权威业务 state、重入与批量错误回归通过。调度器的工程默认值见 §4.3（每作用域 1,024 个离散动作、每任务 64 个后让出）。
+- 待办（不阻塞 M3）：审计每区域重复加载字体的内存（`IBMPlexSans-Text.ttf` 每区域各取一次，4 区域线性内存 124 MB）。
+- 已知环境事实：headless 探针跑在 SwiftShader 软件 WebGL 上；Playwright 进程测到的挂载/卸载耗时比页内测量大 10–30 倍，属于测试夹具开销，不计入 A-6 的测量合同。本机内存紧张时整套浏览器用例会被系统杀掉，分文件运行（`npx playwright test m1-probes` / `m2-runtime`）更稳。
 - 当前阻塞：无。A-1/A-2/A-3/A-4/A-5/A-6 全部解除，计划状态为 Ready。
 
 ### 完成记录
 
 | Milestone | 完成时间 | 准确完成摘要 | 验证证据 | 代码基线 |
 | --- | --- | --- | --- | --- |
+| M2 | 2026-09-08 | 可嵌入与可销毁运行时：区域状态（Ready/Failed/Disposed）与应用可见的失败出口、拿不到 WebGL2 上下文的区域可见失败且不影响同作用域 DOM、信号由轮询改为推送、宿主资源计数；V1/V3 的普通行为、旧句柄与迟到消息、100 轮资源与宿主操作检查全部通过。未做：Suspended（M4 几何）、完整诊断环（M7）、实例间 trap 隔离（ADR-1 保持不做）。 | `docs/validation/p1/m2-runtime.md`；`npx playwright test m2-runtime` 11/11；`npx playwright test m1-probes` 8/8 回归；宿主检查同上 | 本会话的 M2 提交 |
 | M1 | 2026-09-08 | 固定工程与三项技术探针：Makepad wasm 构建闭包硬分叉进 `makepad/` 并裁剪、Leptos 锁 crates.io 0.8.20、`sources.lock.json`、doctor/build-web/serve/sources 四个 xtask 入口、release 构建与浏览器入口；探针①CSR 与 Makepad 合并且无跨源隔离，②同 wasm 双作用域各两区域的分派与对称销毁（含 F15 全局清单逐项结论），③构建期生成的静态消息桥在严格 CSP 下运行；A-5/A-6 登记完成。未做：M2 起的运行时完善、性能预算承诺。 | `docs/validation/p1/m1-probes.md`；`npm run test:browser` 8/8；`cargo xtask doctor` 8/8；`cargo test --workspace --lib` 3；`cd makepad && cargo test` 13；`cargo test -p xtask` 10；clippy 无警告；fmt 通过 | 本会话的 M1 收尾提交 |
 
 ## 0. 需求、范围与决策
@@ -256,7 +257,7 @@ F6–F12、F15 引用的上游路径在导入后加 `makepad/` 前缀即为修�
 | 模块 | 调用者 | 入口与不变量 | 接缝/隐藏复杂度 | 依赖及验证面 |
 | --- | --- | --- | --- | --- |
 | mount | 应用/宿主 | `mount(container, config, view_factory) -> Result<AppHandle, MountError>`；容器必须存在、可使用、未占用；返回后 DOM 已建立，GPU 可能仍在 Starting | AppHandle 持有 Leptos UnmountHandle、区域及清理集合；`dispose()` 幂等，Drop 兜底 | 进程内；V1/V3 通过公开挂载/销毁观察 |
-| region | Leptos GPU 区域组件 | `GpuRegion` 接受稳定 region key、适配组件、受控 props 和动作 callback；状态为 Starting/Ready/Suspended/Failed/Disposed | 每个区域一个 Cx/画布；不向应用公开裸指针或 JS bridge | 私有 Makepad 接口；真实浏览器 V1/V8 |
+| region | Leptos GPU 区域组件 | `GpuRegion` 接受适配组件、受控 props、动作 callback 和可选 `RwSignal<RegionState>`；M2 产出 Starting/Ready/Failed/Disposed，Suspended 随 M4 的几何工作加入 | 每个区域一个 Cx/画布；不向应用公开裸指针、`RegionId` 或 JS bridge | 私有 Makepad 接口；真实浏览器 V1/V8 |
 | binding/scheduler | 多个基础组件及自定义控件 | `ReadSignal<Props>` 驱动投影；`on_action(Action)` 只提议修改；`BindingHandle` 随 Owner 清理 | 代际、动作顺序、重入、dirty 合并；不重新包装所有 Leptos signal API | 进程内；独立期望序列 V2 |
 | makepad 集成 | region | `create_region / apply_props / drain_actions / resize / suspend / destroy_region`；使用受检句柄并携带 generation | 对称释放、消息泵、WebGL 资源及 Widget 差异；平台桥仅此处接触 unsafe | 本地上游，使用真实实现；生命周期纯状态逻辑可单测 |
 | focus/overlay/text | 组件 | 焦点项含稳定 key、角色、名称、disabled/readOnly、DOM 所属；浮层按栈拥有输入 | 原生控件编辑、IME、退出恢复、几何重定位、语义重复控制 | 浏览器真实 DOM；V4/V5/V6 |
@@ -332,7 +333,9 @@ F6–F12、F15 引用的上游路径在导入后加 `makepad/` 前缀即为修�
 
 闸门顺序固定为：容器有效/未占用 → 同步保留占用权 → 创建 Leptos Owner 与 DOM 状态出口 → 检查浏览器/GPU能力 → 装载资源/建 Cx → 首次完整绘制。前两步失败不修改已有实例；后续失败释放本次部分资源并显示区域错误，仍可使用独立 DOM 功能。
 
-AppHandle 与 RegionHandle 均幂等关闭。关闭顺序：标记 Disposing 并增加 generation → 取消订阅、输入捕获和异步票据 → 关闭浮层/编辑会话 → 结束该 Cx 消息泵并释放 Rust/JS/GPU 资源 → 卸载 Leptos DOM/Owner → 释放容器占用。若关闭发生在事件回调内部，先失效，待当前调用退出再回收 Cx；不得在栈上仍有引用时释放。
+AppHandle 幂等关闭。关闭顺序：标记 Disposing 并增加 generation → 取消订阅、输入捕获和异步票据 → 关闭浮层/编辑会话 → 结束该 Cx 消息泵并释放 Rust/JS/GPU 资源 → 卸载 Leptos DOM/Owner → 释放容器占用。若关闭发生在事件回调内部，先失效，待当前调用退出再回收 Cx；不得在栈上仍有引用时释放。
+
+M2 决定：不对外提供 RegionHandle。区域的生存期就是 `GpuRegion` 组件在视图中的生存期，销毁由 Leptos `on_cleanup` 触发，应用通过 `RegionState` 观察结果；`RegionId` 单调分配且永不复用，作为代际使用，旧 id 的消息与延迟回调一律被注册表拒绝。理由：再给应用一条独立关闭区域的路径就会出现两个所有者，而 P1 没有需要它的场景（重建区域用改变视图结构表达）。若 M7 的 GPU 故障重建证明视图结构不足以表达，再按本节重审。
 
 零尺寸/隐藏区域进入 Suspended，暂停无业务需要的主动绘制；恢复时重取尺寸和最新 props。销毁与上下文丢失不是同一个状态，不通过隐藏维持已销毁对象。Makepad当前start_signal_poll有16 ms轮询，尺寸/DPR变化只靠window的resize与orientationchange监听（web.js第1361–1362行）；embedded模式改用容器ResizeObserver，按启用能力审计轮询是否需要，暂停时停止不必要轮询，销毁时全部撤销，不能只停rAF。
 

@@ -21,6 +21,9 @@ extern "C" {
 
     #[wasm_bindgen(method)]
     fn request_pump(this: &HostHooks, region: u32);
+
+    #[wasm_bindgen(method)]
+    fn request_signal_pump(this: &HostHooks);
 }
 
 type Deferred = Box<dyn FnOnce(&mut Cx)>;
@@ -44,6 +47,15 @@ thread_local! {
 pub fn rustify_makepad_boot(hooks: HostHooks) {
     Cx::init_log();
     HOOKS.with(|slot| *slot.borrow_mut() = Some(hooks));
+    SignalToUI::set_signal_hook(Some(on_signal));
+}
+
+/// Makepad's UI and action signals are process-wide flags. Raising one wakes
+/// the host, which reads the flags once and hands them to every live region;
+/// without this the host would have to poll for an edge that is almost never
+/// there.
+fn on_signal() {
+    with_hooks(|hooks| hooks.request_signal_pump());
 }
 
 fn with_hooks<R>(f: impl FnOnce(&HostHooks) -> R) -> Option<R> {

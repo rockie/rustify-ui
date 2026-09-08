@@ -1,7 +1,7 @@
 use std::sync::{
     atomic::{AtomicBool, Ordering},
     mpsc::{channel, Receiver, RecvError, SendError, Sender, TryRecvError},
-    Arc,
+    Arc, Mutex,
 };
 
 #[derive(Clone, Debug, Default)]
@@ -9,14 +9,35 @@ pub struct SignalToUI(Arc<AtomicBool>);
 
 static UI_SIGNAL: AtomicBool = AtomicBool::new(false);
 static ACTION_SIGNAL: AtomicBool = AtomicBool::new(false);
+static SIGNAL_HOOK: Mutex<Option<fn()>> = Mutex::new(None);
 
 impl SignalToUI {
+    /// Registers a callback run whenever a signal is raised, so an embedding
+    /// host can wake the event loop on the edge instead of polling for it.
+    /// The callback runs on the thread that raised the signal.
+    pub fn set_signal_hook(hook: Option<fn()>) {
+        if let Ok(mut slot) = SIGNAL_HOOK.lock() {
+            *slot = hook;
+        }
+    }
+
+    fn notify() {
+        // Copied out before the call: the hook is free to raise further
+        // signals, and holding the lock across it would deadlock.
+        let hook = SIGNAL_HOOK.lock().ok().and_then(|slot| *slot);
+        if let Some(hook) = hook {
+            hook();
+        }
+    }
+
     pub fn set_ui_signal() {
-        UI_SIGNAL.store(true, Ordering::SeqCst)
+        UI_SIGNAL.store(true, Ordering::SeqCst);
+        Self::notify();
     }
 
     pub fn set_action_signal() {
-        ACTION_SIGNAL.store(true, Ordering::SeqCst)
+        ACTION_SIGNAL.store(true, Ordering::SeqCst);
+        Self::notify();
     }
 
     pub fn check_and_clear_ui_signal() -> bool {

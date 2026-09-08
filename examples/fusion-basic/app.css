@@ -18,3 +18,12 @@ body {
     border-radius: 6px;
     background: #101828;
 }
+
+.fusion-basic .region-error {
+    margin: 0;
+    padding: 8px 12px;
+    border: 1px solid #f97066;
+    border-radius: 6px;
+    color: #b42318;
+    background: #fef3f2;
+}

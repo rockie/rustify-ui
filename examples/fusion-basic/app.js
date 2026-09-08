@@ -36,6 +36,12 @@ boot({ wasm_url: new URL("./fusion-basic.wasm", import.meta.url), on_fatal: runt
             errors() {
                 return hooks.runtime.errors;
             },
+            stats() {
+                return hooks.runtime.stats();
+            },
+            region_states() {
+                return JSON.parse(app.fusion_basic_region_states());
+            },
         };
         api.mount("scope-a");
         api.mount("scope-b");

@@ -34,6 +34,7 @@ export class EmbeddedRegion extends WasmWebGL {
         if (this.runtime.fatal) {
             return;
         }
+        this.runtime.pumps += 1;
         try {
             super.do_wasm_pump();
         } catch (error) {
@@ -47,13 +48,14 @@ export class EmbeddedRegion extends WasmWebGL {
 // that killed the runtime, after every region's browser resources are released.
 export function create_host_hooks(wasm, msg_class, on_fatal) {
     const regions = new Map();
-    let signal_timer = null;
+    let signal_pump_scheduled = false;
 
-    // Makepad's UI/action signals are process-wide flags, so one poll per
-    // runtime reads them and every live region gets the signal event. The
-    // poll only runs while regions exist.
-    const poll_signals = () => {
-        if (runtime.fatal) {
+    // Makepad's UI/action signals are process-wide flags, so one read per
+    // runtime serves every live region. Rust raises the flags and calls
+    // `request_signal_pump`, so nothing polls for an edge that is almost
+    // never there.
+    const drain_signals = () => {
+        if (runtime.fatal || regions.size === 0) {
             return;
         }
         let flags;
@@ -73,36 +75,57 @@ export function create_host_hooks(wasm, msg_class, on_fatal) {
             }
         }
     };
-    const stop_signal_poll = () => {
-        if (signal_timer !== null) {
-            window.clearInterval(signal_timer);
-            signal_timer = null;
+    // Signals are raised inside a pump as often as an action is posted; the
+    // read is deferred to one microtask so a pump wakes the runtime once.
+    const schedule_signal_pump = () => {
+        if (signal_pump_scheduled || runtime.fatal || regions.size === 0) {
+            return;
         }
-    };
-    const update_signal_poll = () => {
-        if (regions.size > 0 && signal_timer === null && !runtime.fatal) {
-            signal_timer = window.setInterval(poll_signals, 16);
-        } else if (regions.size === 0) {
-            stop_signal_poll();
-        }
+        signal_pump_scheduled = true;
+        queueMicrotask(() => {
+            signal_pump_scheduled = false;
+            drain_signals();
+        });
     };
 
     const runtime = {
         fatal: null,
         // Bounded: a runtime that keeps failing must not grow an unbounded log.
         errors: [],
+        pumps: 0,
         record_error(message) {
             if (runtime.errors.length < 64) {
                 runtime.errors.push(message);
             }
             console.error(`[rustify] ${message}`);
         },
+        // What this runtime currently holds on the browser's side, so a host
+        // can compare teardown against the baseline it started from.
+        stats() {
+            let timers = 0;
+            let animation_frames = 0;
+            for (const host of regions.values()) {
+                timers += host.timers.length;
+                if (host.req_anim_frame_id) {
+                    animation_frames += 1;
+                }
+            }
+            return {
+                regions: regions.size,
+                timers,
+                animation_frames,
+                errors: runtime.errors.length,
+                // Linear memory never shrinks, so a leak shows up as growth
+                // that keeps pace with the number of rounds.
+                memory: wasm._memory.buffer.byteLength,
+                pumps: runtime.pumps,
+            };
+        },
         enter_fatal(error) {
             if (runtime.fatal) {
                 return;
             }
             runtime.fatal = error;
-            stop_signal_poll();
             const live = [...regions.values()];
             regions.clear();
             for (const host of live) {
@@ -130,7 +153,8 @@ export function create_host_hooks(wasm, msg_class, on_fatal) {
                 return false;
             }
             regions.set(region, host);
-            update_signal_poll();
+            // Flags raised before this region existed still need a reader.
+            schedule_signal_pump();
             return true;
         },
         destroy_region(region) {
@@ -139,13 +163,15 @@ export function create_host_hooks(wasm, msg_class, on_fatal) {
                 regions.delete(region);
                 host.destroy();
             }
-            update_signal_poll();
         },
         request_pump(region) {
             const host = regions.get(region);
             if (host) {
                 host.request_pump();
             }
+        },
+        request_signal_pump() {
+            schedule_signal_pump();
         },
     };
 }

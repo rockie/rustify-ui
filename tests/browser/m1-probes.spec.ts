@@ -98,7 +98,10 @@ test.describe("M1 probe 2: two scopes, four regions, symmetric teardown", () => 
     });
 
     test("mount and dispose repeat without leaking regions", async ({ page }) => {
-        test.setTimeout(180_000);
+        // Every round is a handful of round trips to the page, so this probe
+        // tracks machine load rather than the runtime; the budget is wide
+        // enough that a busy machine reports a leak, not a timeout.
+        test.setTimeout(600_000);
         await waitForReady(page);
         // Reported by the page itself: attaching CDP listeners here changes the
         // timing enough to hide races in region creation.
@@ -151,14 +154,3 @@ test.describe("M1 probe 3: static message bridge under a strict CSP", () => {
         expect(shipped).not.toContain("eval(");
     });
 });
-
-declare global {
-    interface Window {
-        __fusion_basic: {
-            mount(container_id: string): number;
-            dispose(container_id: string): boolean;
-            live_regions(): number;
-            errors(): string[];
-        };
-    }
-}

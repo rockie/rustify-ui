@@ -7,7 +7,7 @@ pub mod region;
 
 pub use diagnostics::UiError;
 pub use mount::{mount, AppHandle, MountConfig};
-pub use region::GpuRegion;
+pub use region::{GpuRegion, RegionState};
 pub use rustify_makepad::RegionId;
 
 #[cfg(target_arch = "wasm32")]
