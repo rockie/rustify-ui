@@ -1,5 +1,5 @@
 #[cfg(target_arch = "wasm32")]
-use crate::binding::ActionSink;
+use crate::binding::{ActionSink, Binding};
 use crate::diagnostics::UiError;
 use leptos::prelude::*;
 use std::marker::PhantomData;
@@ -33,6 +33,11 @@ pub fn GpuRegion<A>(
     /// Written by the region as it starts, fails or is disposed.
     #[prop(optional, into)]
     state: Option<RwSignal<RegionState>>,
+    /// Raised by the number of actions the scope refused because its queue was
+    /// full. A refused action did not run and changed nothing, so the
+    /// application can report it as not executed and let the user retry.
+    #[prop(optional, into)]
+    refused: Option<RwSignal<usize>>,
     #[prop(optional, into)] class: String,
     #[prop(optional, into)] test_id: String,
 ) -> impl IntoView
@@ -41,7 +46,7 @@ where
     A::Props: Clone + Send + Sync,
     A::Action: Send,
 {
-    use crate::scheduler::Pace;
+    use crate::binding::submit_all;
     use leptos::html::Canvas;
     use rustify_makepad::RegionId;
     use std::sync::{Arc, Mutex};
@@ -64,12 +69,21 @@ where
     // One order per mount scope; a region rendered outside one orders only
     // against itself.
     let sink = use_context::<ActionSink>().unwrap_or_default();
-    let deliver_actions = move |actions: Vec<A::Action>| {
-        for action in actions {
-            let on_action = on_action.clone();
-            sink.submit(Pace::Discrete, move || on_action(action));
+    // Closed on cleanup: actions still queued for this region hold its
+    // callback directly, and the application must not be called for a region
+    // it has already taken out of the view.
+    let binding = Binding::new();
+    let deliver_actions = {
+        let binding = binding.clone();
+        move |actions: Vec<A::Action>| {
+            let denied = submit_all(&sink, &binding, actions, on_action.clone());
+            if denied > 0 {
+                if let Some(refused) = refused {
+                    refused.update(|count| *count += denied);
+                }
+            }
+            drain_soon(sink.clone());
         }
-        drain_soon(sink.clone());
     };
     let canvas = NodeRef::<Canvas>::new();
     // Kept outside the reactive arena so the cleanup closure can still reach
@@ -114,6 +128,7 @@ where
     });
 
     on_cleanup(move || {
+        binding.close();
         let previous = std::mem::replace(&mut *slot.lock().unwrap(), Slot::Closed);
         if let Slot::Live(id) = previous {
             rustify_makepad::destroy_region(id);

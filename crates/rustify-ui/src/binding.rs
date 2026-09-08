@@ -8,6 +8,7 @@
 use crate::scheduler::{Admission, Pace, Scheduler};
 use std::collections::HashSet;
 use std::hash::Hash;
+use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::{Arc, Mutex};
 
 /// The first key that appears twice, if any.
@@ -19,6 +20,45 @@ use std::sync::{Arc, Mutex};
 pub fn duplicate_key<K: Eq + Hash + Clone>(keys: impl IntoIterator<Item = K>) -> Option<K> {
     let mut seen = HashSet::new();
     keys.into_iter().find(|key| !seen.insert(key.clone()))
+}
+
+/// One component's right to have its actions delivered.
+///
+/// A delivery already queued holds the component's callback directly, so
+/// dropping the component is not enough to stop it: the binding is what the
+/// queued item checks when its turn finally comes.
+#[derive(Clone)]
+pub struct Binding(Arc<AtomicBool>);
+
+impl Binding {
+    pub fn new() -> Self {
+        Self(Arc::new(AtomicBool::new(true)))
+    }
+
+    /// Ends the binding. Every delivery still queued for it is skipped.
+    pub fn close(&self) {
+        self.0.store(false, Ordering::Relaxed);
+    }
+
+    pub fn is_open(&self) -> bool {
+        self.0.load(Ordering::Relaxed)
+    }
+
+    /// Wraps `deliver` so it runs only while the binding is still open.
+    pub fn guard(&self, deliver: impl FnOnce() + Send + 'static) -> impl FnOnce() + Send + 'static {
+        let binding = self.clone();
+        move || {
+            if binding.is_open() {
+                deliver();
+            }
+        }
+    }
+}
+
+impl Default for Binding {
+    fn default() -> Self {
+        Self::new()
+    }
 }
 
 /// A typed action already bound to the callback that will receive it. The
@@ -98,6 +138,32 @@ impl ActionSink {
     }
 }
 
+/// Queues one pump's worth of a component's actions and returns how many the
+/// scope refused.
+///
+/// A refused action was never given a place in the order and never runs, so
+/// the count is the caller's answer to the user: that many actions did not
+/// happen and can be tried again.
+pub fn submit_all<A: Send + 'static>(
+    sink: &ActionSink,
+    binding: &Binding,
+    actions: Vec<A>,
+    on_action: impl Fn(A) + Clone + Send + 'static,
+) -> usize {
+    let mut refused = 0;
+    for action in actions {
+        let on_action = on_action.clone();
+        let deliver = binding.guard(move || on_action(action));
+        if matches!(
+            sink.submit(Pace::Discrete, deliver),
+            Admission::Backpressure
+        ) {
+            refused += 1;
+        }
+    }
+    refused
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -166,6 +232,49 @@ mod tests {
         assert_eq!(read(&log), vec![0]);
         assert!(!sink.drain_once());
         assert_eq!(read(&log), vec![0, 1]);
+    }
+
+    fn append(log: &Log) -> impl Fn(u32) + Clone + Send {
+        let log = log.clone();
+        move |value| log.lock().unwrap().push(value)
+    }
+
+    #[test]
+    fn actions_queued_before_a_binding_closed_do_not_reach_the_application_after() {
+        let sink = ActionSink::new();
+        let log: Log = Log::default();
+        let binding = Binding::new();
+        assert_eq!(
+            submit_all(&sink, &binding, (0..100).collect(), append(&log)),
+            0
+        );
+        assert!(sink.drain_once());
+        assert_eq!(read(&log).len(), crate::scheduler::BATCH);
+        // The component goes away between two batches. Every queued item holds
+        // its callback directly, so only the binding can stop them.
+        binding.close();
+        assert!(!sink.drain_once());
+        assert_eq!(
+            read(&log),
+            (0..crate::scheduler::BATCH as u32).collect::<Vec<_>>()
+        );
+    }
+
+    #[test]
+    fn the_actions_a_full_scope_refuses_are_counted_for_the_application() {
+        let sink = ActionSink::new();
+        let log: Log = Log::default();
+        let binding = Binding::new();
+        let over = 76;
+        let refused = submit_all(
+            &sink,
+            &binding,
+            (0..crate::scheduler::QUEUE_CAPACITY as u32 + over).collect(),
+            append(&log),
+        );
+        assert_eq!(refused as u32, over);
+        while sink.drain_once() {}
+        assert_eq!(read(&log).len(), crate::scheduler::QUEUE_CAPACITY);
     }
 
     #[test]

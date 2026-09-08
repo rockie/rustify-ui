@@ -1,9 +1,16 @@
 import { boot, show_fatal, StartupError } from "./loader.js";
 
+const container = "workbench";
 const status = document.getElementById("status");
 let handle = null;
 
 const runtime_fatal = (error) => {
+    // The mounted controls and their listeners live in the module that just
+    // trapped, so they have to go with it. Removing the nodes is a JS-only
+    // path: calling the application's dispose would re-enter that module.
+    if (handle !== null) {
+        document.getElementById(container)?.replaceChildren();
+    }
     handle = null;
     delete window.__property_workbench;
     status.dataset.status = "fatal";
@@ -18,7 +25,7 @@ boot({ wasm_url: new URL("./property-workbench.wasm", import.meta.url), on_fatal
         window.__property_workbench = {
             hooks,
             mount() {
-                handle = app.workbench_mount("workbench");
+                handle = app.workbench_mount(container);
                 return handle;
             },
             dispose() {
@@ -37,6 +44,9 @@ boot({ wasm_url: new URL("./property-workbench.wasm", import.meta.url), on_fatal
             },
             inject_duplicate_id() {
                 return app.workbench_inject_duplicate_id();
+            },
+            close_on_next_action() {
+                app.workbench_close_on_next_action();
             },
             stats() {
                 return hooks.runtime.stats();

@@ -198,11 +198,10 @@ test.describe("M2 V3: teardown and host coexistence", () => {
             animation_frames: 0,
             errors: 0,
         });
-        // The allocator takes one growth step in the first rounds and then
-        // stops, so the leak sample starts after it. Linear memory only grows
-        // in 16 MiB steps, so the window has to be long enough that anything
-        // held per round would cross one: 200 rounds at even 100 KiB each
-        // would be 20 MiB.
+        // The allocator reaches its high-water mark once, at a round that
+        // varies between runs, so the leak sample is the tail: a hundred more
+        // rounds that have to add nothing. Linear memory never shrinks, so
+        // even 8 KiB held per round would show up as a dozen more pages.
         const after = await page.evaluate(async () => {
             const api = window.__fusion_basic;
             const round = async () => {
@@ -210,11 +209,11 @@ test.describe("M2 V3: teardown and host coexistence", () => {
                 api.mount("scope-a");
                 await new Promise((r) => setTimeout(r, 20));
             };
-            for (let i = 0; i < 50; i++) {
+            for (let i = 0; i < 150; i++) {
                 await round();
             }
             const warm = api.stats();
-            for (let i = 0; i < 200; i++) {
+            for (let i = 0; i < 100; i++) {
                 await round();
             }
             api.dispose("scope-a");

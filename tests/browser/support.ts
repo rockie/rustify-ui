@@ -77,8 +77,10 @@ declare global {
                 first_colors: string;
                 first_ids: string;
                 accepted: number;
+                refused: number;
             };
             inject_duplicate_id(): boolean;
+            close_on_next_action(): void;
             stats(): {
                 regions: number;
                 timers: number;
@@ -87,6 +89,7 @@ declare global {
                 memory: number;
                 pumps: number;
             };
+            hooks: { runtime: { errors: string[]; enter_fatal(error: unknown): void } };
         };
         __fusion_basic: {
             mount(container_id: string): number;
@@ -102,6 +105,7 @@ declare global {
                 pumps: number;
             };
             region_states(): Record<string, string>;
+            hooks: { runtime: { errors: string[]; enter_fatal(error: unknown): void } };
         };
     }
 }

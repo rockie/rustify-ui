@@ -11,7 +11,7 @@ mod app {
     use leptos::wasm_bindgen::prelude::*;
     use leptos::wasm_bindgen::JsCast;
     use rustify_ui::{mount, AppHandle, GpuRegion, MountConfig, RegionState};
-    use std::cell::RefCell;
+    use std::cell::{Cell, RefCell};
     use std::collections::BTreeMap;
     use std::marker::PhantomData;
     use std::rc::Rc;
@@ -51,6 +51,36 @@ mod app {
         static SNAPSHOT: RefCell<String> = const { RefCell::new(String::new()) };
         /// Registered by the live scope so the page's test seam can reach it.
         static INJECT_DUPLICATE: RefCell<Option<Rc<dyn Fn()>>> = const { RefCell::new(None) };
+        /// Armed by the page for exactly one action, then spent.
+        static CLOSE_ON_ACTION: Cell<bool> = const { Cell::new(false) };
+    }
+
+    /// Drops every scope this page mounted. Called from inside an action
+    /// callback by the test seam below, which is where it is worth proving:
+    /// the region's own pump is still running at that point.
+    fn close_scopes() {
+        let live = HANDLES.with(|handles| std::mem::take(&mut *handles.borrow_mut()));
+        drop(live);
+    }
+
+    /// A JSON string literal. Names come from a text input, so quotes,
+    /// backslashes and control characters have to survive the snapshot.
+    fn json_string(value: &str) -> String {
+        let mut out = String::with_capacity(value.len() + 2);
+        out.push('"');
+        for c in value.chars() {
+            match c {
+                '"' => out.push_str("\\\""),
+                '\\' => out.push_str("\\\\"),
+                '\n' => out.push_str("\\n"),
+                '\r' => out.push_str("\\r"),
+                '\t' => out.push_str("\\t"),
+                c if (c as u32) < 0x20 => out.push_str(&format!("\\u{:04x}", c as u32)),
+                c => out.push(c),
+            }
+        }
+        out.push('"');
+        out
     }
 
     #[component]
@@ -200,6 +230,9 @@ mod app {
         on_cleanup(|| INJECT_DUPLICATE.with(|slot| *slot.borrow_mut() = None));
 
         let rejected = RwSignal::new(None::<u32>);
+        // Actions the scope refused because its queue was full. They never ran
+        // and changed nothing, so the panel says so instead of pretending.
+        let refused = RwSignal::new(0usize);
         // Counts what the application was actually handed, so a run of actions
         // can be checked for losses and duplicates rather than only for where
         // the selection ended up - the selection wraps, a count does not.
@@ -209,7 +242,7 @@ mod app {
             let (index, total) = position.get();
             let current = current.get();
             let snapshot = format!(
-                "{{\"count\":{},\"position\":{},\"selected\":{},\"name\":{},\"color\":\"{}\",\"first_colors\":\"{}\",\"first_ids\":\"{}\",\"accepted\":{}}}",
+                "{{\"count\":{},\"position\":{},\"selected\":{},\"name\":{},\"color\":\"{}\",\"first_colors\":\"{}\",\"first_ids\":\"{}\",\"accepted\":{},\"refused\":{}}}",
                 total,
                 index.map(|i| i as i64 + 1).unwrap_or(0),
                 current
@@ -219,7 +252,7 @@ mod app {
                     .unwrap_or_else(|| "null".to_string()),
                 current
                     .as_ref()
-                    .map(|o| format!("\"{}\"", o.name))
+                    .map(|o| json_string(&o.name))
                     .unwrap_or_else(|| "null".to_string()),
                 current
                     .as_ref()
@@ -242,6 +275,7 @@ mod app {
                         .join(",")
                 }),
                 accepted.get(),
+                refused.get(),
             );
             SNAPSHOT.with(|slot| *slot.borrow_mut() = snapshot);
         });
@@ -255,6 +289,9 @@ mod app {
                 SelectionAction::SelectNext => step(1),
                 SelectionAction::Pick(id) => selected.set(Some(ObjectId(id))),
                 SelectionAction::RejectedDuplicate(id) => rejected.set(Some(id)),
+            }
+            if CLOSE_ON_ACTION.with(|armed| armed.replace(false)) {
+                close_scopes();
             }
         };
 
@@ -319,6 +356,11 @@ mod app {
                             "remove 10"
                         </button>
                     </div>
+                    {move || (refused.get() > 0).then(|| view! {
+                        <p class="region-error" role="alert" data-testid="refused-actions">
+                            {move || format!("{} actions were not executed; try them again", refused.get())}
+                        </p>
+                    })}
                     {move || rejected.get().map(|id| view! {
                         <p class="region-error" role="alert" data-testid="rejected-binding">
                             {format!("object {id} appears twice; the grid kept the last unambiguous list")}
@@ -332,6 +374,7 @@ mod app {
                         props=props
                         on_action=on_action
                         state=region_state
+                        refused=refused
                         class="gpu-region"
                         test_id="workbench-gpu"
                     />
@@ -385,6 +428,14 @@ mod app {
     #[wasm_bindgen]
     pub fn workbench_snapshot() -> String {
         SNAPSHOT.with(|slot| slot.borrow().clone())
+    }
+
+    /// Arms the scope to close itself from inside its next action callback, so
+    /// a teardown that starts while the region's pump is still running can be
+    /// exercised instead of assumed.
+    #[wasm_bindgen]
+    pub fn workbench_close_on_next_action() {
+        CLOSE_ON_ACTION.with(|armed| armed.set(true));
     }
 
     /// Breaks the application's own id invariant on purpose, so the refusal of

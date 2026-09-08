@@ -14,7 +14,7 @@ M2 is **closed**. Every exit condition on the M2 row of the plan holds.
 | V1: twenty close-and-mount rounds; two scopes with two regions each | M1 probe 7, now with the failure log asserted empty every round |
 | Two mounts × two regions, closing one leaves the rest operable | `closing one scope leaves the other fully operable, DOM and GPU` — after disposing scope a, a click inside scope b's first region raises its DOM count and repaints **both** of its regions |
 | Old handles and late messages produce no callback | `a disposed handle is spent` (second dispose reports nothing to do); `events aimed at a disposed scope produce no callback and no error` (pointer, keyboard and a viewport change aimed at the removed region: no page error, the surviving scope's counter stays at 0); M1 probe 6 covers a dispose racing an in-flight message at 0/5/50 ms |
-| 100 rounds of resource and host checks, no functional leak | `repeated mount and dispose returns every browser resource`: 250 rounds; regions, timers and animation frames return to the baseline, two canvases remain, the error log is empty, no page error, and wasm linear memory sampled at round 50 is unchanged 200 rounds later. The window is that wide on purpose — linear memory only grows in 16 MiB steps, so a shorter one could not resolve a small per-round leak. The scope then re-mounts and drives both DOM and GPU again |
+| 100 rounds of resource and host checks, no functional leak | `repeated mount and dispose returns every browser resource`: 250 rounds; regions, timers and animation frames return to the baseline, two canvases remain, the error log is empty, no page error, and wasm linear memory sampled after 150 warm-up rounds is unchanged 100 rounds later. The tail is that wide on purpose — linear memory only grows in 64 KiB pages and never shrinks, so anything held per round accumulates into it. The scope then re-mounts and drives both DOM and GPU again |
 | Host page keeps working | `the host page keeps its link, scrolling and text selection`; `an embedded region takes no page-level state` (focus stays on the body, no hidden textarea, title, hash and `body.style.overflow` untouched) |
 
 ## What M2 changed
@@ -33,11 +33,11 @@ The plan's §2 sketch named a `RegionHandle` alongside `AppHandle`. M2 does not 
 | Measure | Value |
 | --- | --- |
 | Idle, four regions | 0 pumps in 3 s (was 1 pump/s under the 16 ms poll), 0 animation frames |
-| wasm linear memory, mount/dispose rounds of a two-region scope | 125,173,760 B at round 10; one allocator step to about 142 MB in the first tens of rounds; then identical at every sample through round 250 |
+| wasm linear memory, mount/dispose rounds of a two-region scope | 125,173,760 B before the step; one allocator step to 142,016,512 B at a round that varies between runs; then identical at every sample through round 260 |
 | Browser resources after 250 rounds | 2 regions, 0 timers, 0 animation frames, 2 canvases, 0 recorded errors |
 | Region denied a WebGL2 context | 2 recorded errors for the scope, both its regions `failed`, the other scope untouched |
 
-The early memory step is a one-time allocator high-water mark, not growth per round: it does not repeat over the next 200. Where exactly it falls moves with unrelated changes, which is why the leak sample starts after it rather than at a fixed round. Linear memory never shrinks, so this is the honest shape to report.
+The memory step is a one-time allocator high-water mark, not growth per round: it does not repeat over the rounds that follow. Which round it falls on varies between runs of the same build — usually within the first tens, once as late as round 250 — which is why the leak sample is the last hundred rounds rather than everything after a fixed round. Linear memory never shrinks, so this is the honest shape to report.
 
 ## Not done in M2
 

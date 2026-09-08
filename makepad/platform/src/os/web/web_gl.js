@@ -21,7 +21,7 @@ export class WasmWebGL extends WasmWebBrowser {
       return;
     }
 
-    this.load_deps();
+    this.load_deps().catch((error) => this.report_startup_failure(error));
   }
 
   // Frees every GL object this region allocated and gives the context back

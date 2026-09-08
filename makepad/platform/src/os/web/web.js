@@ -135,6 +135,11 @@ export class WasmWebBrowser extends WasmBridge {
         }
 
         await this.query_xr_capabilities();
+        // The region can be closed while this call is suspended, and destroy()
+        // has then already released everything below.
+        if (this.destroyed) {
+            return;
+        }
         this.update_window_info();
 
         this.to_wasm.ToWasmInit({
@@ -184,6 +189,18 @@ export class WasmWebBrowser extends WasmBridge {
         if (!this.embedded) {
             this.schedule_loader_fallback();
         }
+    }
+
+    // A rejected load_deps() would otherwise surface as an unhandled rejection
+    // long after the constructor that started it returned.
+    report_startup_failure(error) {
+        console.error(error);
+    }
+
+    // Whether calls into the wasm module are still allowed. A trapped module
+    // must not be re-entered, not even to hand memory back.
+    wasm_is_callable() {
+        return true;
     }
 
     unsupported(capability) {
@@ -238,6 +255,12 @@ export class WasmWebBrowser extends WasmBridge {
         if (this.audio_context) {
             this.audio_context.close();
             this.audio_context = null;
+        }
+        // The message waiting for the next pump owns an allocation inside wasm
+        // that only wasm can free; dropping the reference would leak it for
+        // the life of the page. A trapped module keeps it instead.
+        if (this.to_wasm && this.wasm_is_callable()) {
+            this.wasm_msg_free(this.to_wasm.release_ownership());
         }
         this.to_wasm = null;
         this.clear_memory_refs();

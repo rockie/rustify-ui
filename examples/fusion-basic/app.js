@@ -4,6 +4,12 @@ const status = document.getElementById("status");
 const handles = new Map();
 
 const runtime_fatal = (error) => {
+    // The mounted controls and their listeners live in the module that just
+    // trapped, so they have to go with it. Removing the nodes is a JS-only
+    // path: calling the application's dispose would re-enter that module.
+    for (const container_id of handles.keys()) {
+        document.getElementById(container_id)?.replaceChildren();
+    }
     handles.clear();
     delete window.__fusion_basic;
     status.dataset.status = "fatal";

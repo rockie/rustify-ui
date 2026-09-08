@@ -9,6 +9,27 @@ export class EmbeddedRegion extends WasmWebGL {
         super(wasm, undefined, canvas, { embedded: true, region, msg_class });
         this.runtime = runtime;
         this.pump_scheduled = false;
+        this.pump_depth = 0;
+        this.destroy_when_idle = false;
+    }
+
+    report_startup_failure(error) {
+        this.runtime.record_error(`region ${this.wasm_app}: startup failed: ${error}`);
+    }
+
+    wasm_is_callable() {
+        return !this.runtime.fatal;
+    }
+
+    // Called once this region's pump has left the JS stack. Until then the
+    // pump still reads this instance's views into wasm memory, which destroy()
+    // drops.
+    destroy_when_pump_returns() {
+        if (this.pump_depth === 0) {
+            this.destroy();
+            return;
+        }
+        this.destroy_when_idle = true;
     }
 
     // Rust asks for a pump after it queued work for this region; several
@@ -35,10 +56,17 @@ export class EmbeddedRegion extends WasmWebGL {
             return;
         }
         this.runtime.pumps += 1;
+        this.pump_depth += 1;
         try {
             super.do_wasm_pump();
         } catch (error) {
             this.runtime.enter_fatal(error);
+        } finally {
+            this.pump_depth -= 1;
+            if (this.pump_depth === 0 && this.destroy_when_idle) {
+                this.destroy_when_idle = false;
+                this.destroy();
+            }
         }
     }
 }
@@ -161,7 +189,10 @@ export function create_host_hooks(wasm, msg_class, on_fatal) {
             const host = regions.get(region);
             if (host) {
                 regions.delete(region);
-                host.destroy();
+                // An application can close a region from inside the action
+                // callback its own pump is delivering, so the browser side of
+                // the region outlives the Rust side by the rest of that pump.
+                host.destroy_when_pump_returns();
             }
         },
         request_pump(region) {

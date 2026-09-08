@@ -61,6 +61,14 @@ test.describe("M3 V2: one authoritative state behind a DOM panel and a GPU view"
         await expect(page.getByTestId("selected-id")).toHaveText("3");
     });
 
+    test("a name with quotes and backslashes reaches the application unchanged", async ({ page }) => {
+        await waitForReady(page);
+        const awkward = 'a"b\\c\td';
+        await page.getByTestId("name-input").fill(awkward);
+        await expect(page.getByTestId("name-input")).toHaveValue(awkward);
+        expect(await snapshot(page)).toMatchObject({ selected: 1, name: awkward });
+    });
+
     test("a run of selection steps from both sides lands on one expected object", async ({ page }) => {
         test.setTimeout(300_000);
         await waitForReady(page);
@@ -201,8 +209,10 @@ test.describe("M3 V2: one authoritative state behind a DOM panel and a GPU view"
             },
             { x: box.x + box.width * 0.77, y: box.y + box.height * 0.085, rounds }
         );
-        // Not one lost, not one delivered twice.
+        // Not one lost, not one delivered twice, and not one refused: this is
+        // the load the queue depth was chosen for.
         expect(result.accepted).toBe(rounds);
+        expect(result.refused).toBe(0);
         // And they were applied in order: each one advanced the selection by
         // one object, so the ring of a thousand lands back where it started.
         expect(result.position).toBe((rounds % 1000) + 1);
@@ -224,5 +234,80 @@ test.describe("M3 V2: one authoritative state behind a DOM panel and a GPU view"
         // The scope keeps working: the next object can be selected again.
         await page.getByTestId("select-next").click();
         await expect(page.getByTestId("selected-id")).toHaveText("2");
+    });
+});
+
+test.describe("M3: a scope that closes while its region is running", () => {
+    test("closing from inside a region action leaves the runtime alive", async ({ page }) => {
+        const failures: string[] = [];
+        page.on("pageerror", (error) => failures.push(String(error)));
+        await waitForReady(page);
+        const region = page.getByTestId("workbench-gpu");
+        await settle(region);
+        const box = (await region.boundingBox())!;
+        await page.evaluate(() => window.__property_workbench.close_on_next_action());
+        // The region's own "next" button: the application closes its scope
+        // from inside the callback this click delivers, while the pump that
+        // produced it is still on the JS stack.
+        await page.mouse.click(box.x + box.width * 0.77, box.y + box.height * 0.085);
+        await expect(page.getByTestId("workbench-gpu")).toHaveCount(0);
+        await page.waitForTimeout(500);
+        // The runtime is not fatal: the page still has its API and no error.
+        expect(await page.evaluate(() => window.__property_workbench !== undefined)).toBe(true);
+        await expect(page.getByTestId("status")).toHaveAttribute("data-status", "ready");
+        const state = await page.evaluate(() => ({
+            regions: window.__property_workbench.live_regions(),
+            errors: window.__property_workbench.hooks.runtime.errors,
+        }));
+        expect(state).toEqual({ regions: 0, errors: [] });
+        expect(failures).toEqual([]);
+        // And it still works: the page mounts the scope again.
+        await page.evaluate(() => window.__property_workbench.mount());
+        await expect(page.getByTestId("workbench-gpu")).toHaveCount(1);
+        await page.getByTestId("select-next").click();
+        await expect(page.getByTestId("selected-id")).toHaveText("2");
+    });
+
+    test("a scope disposed while its region is still starting leaves nothing behind", async ({ page }) => {
+        const failures: string[] = [];
+        page.on("pageerror", (error) => failures.push(String(error)));
+        page.on("console", (message) => {
+            if (message.type() === "error") {
+                failures.push(message.text());
+            }
+        });
+        await waitForReady(page);
+        // A region's startup is suspended on a microtask between its canvas
+        // being created and its first message; the dispose lands somewhere in
+        // that window, wherever the framework's own microtasks put it.
+        const state = await page.evaluate(async () => {
+            const api = window.__property_workbench;
+            api.dispose();
+            for (let ticks = 0; ticks < 8; ticks++) {
+                api.mount();
+                for (let tick = 0; tick < ticks; tick++) {
+                    await Promise.resolve();
+                }
+                api.dispose();
+                await new Promise((r) => setTimeout(r, 50));
+            }
+            await new Promise((r) => setTimeout(r, 300));
+            return { regions: api.live_regions(), errors: api.hooks.runtime.errors };
+        });
+        expect(state).toEqual({ regions: 0, errors: [] });
+        expect(failures).toEqual([]);
+    });
+
+    test("a trapped runtime takes its controls off the page", async ({ page }) => {
+        await waitForReady(page);
+        await expect(page.getByTestId("name-input")).toHaveCount(1);
+        await page.evaluate(() =>
+            window.__property_workbench.hooks.runtime.enter_fatal(new Error("injected trap"))
+        );
+        await expect(page.getByTestId("status")).toHaveAttribute("data-status", "fatal");
+        // Nothing the user can still press reaches the module that trapped.
+        await expect(page.getByTestId("name-input")).toHaveCount(0);
+        await expect(page.getByTestId("select-next")).toHaveCount(0);
+        await expect(page.getByTestId("workbench-gpu")).toHaveCount(0);
     });
 });
