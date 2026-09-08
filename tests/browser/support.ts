@@ -76,6 +76,7 @@ declare global {
                 color: string;
                 first_colors: string;
                 first_ids: string;
+                accepted: number;
             };
             inject_duplicate_id(): boolean;
             stats(): {

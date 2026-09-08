@@ -199,11 +199,17 @@ mod app {
         INJECT_DUPLICATE.with(|slot| *slot.borrow_mut() = Some(Rc::new(inject_duplicate)));
         on_cleanup(|| INJECT_DUPLICATE.with(|slot| *slot.borrow_mut() = None));
 
+        let rejected = RwSignal::new(None::<u32>);
+        // Counts what the application was actually handed, so a run of actions
+        // can be checked for losses and duplicates rather than only for where
+        // the selection ended up - the selection wraps, a count does not.
+        let accepted = RwSignal::new(0u32);
+
         Effect::new(move || {
             let (index, total) = position.get();
             let current = current.get();
             let snapshot = format!(
-                "{{\"count\":{},\"position\":{},\"selected\":{},\"name\":{},\"color\":\"{}\",\"first_colors\":\"{}\",\"first_ids\":\"{}\"}}",
+                "{{\"count\":{},\"position\":{},\"selected\":{},\"name\":{},\"color\":\"{}\",\"first_colors\":\"{}\",\"first_ids\":\"{}\",\"accepted\":{}}}",
                 total,
                 index.map(|i| i as i64 + 1).unwrap_or(0),
                 current
@@ -235,18 +241,21 @@ mod app {
                         .collect::<Vec<_>>()
                         .join(",")
                 }),
+                accepted.get(),
             );
             SNAPSHOT.with(|slot| *slot.borrow_mut() = snapshot);
         });
 
         let region_state = RwSignal::new(RegionState::Starting);
         let app = PhantomData::<ObjectRegion>;
-        let rejected = RwSignal::new(None::<u32>);
-        let on_action = move |action| match action {
-            SelectionAction::SelectPrevious => step(-1),
-            SelectionAction::SelectNext => step(1),
-            SelectionAction::Pick(id) => selected.set(Some(ObjectId(id))),
-            SelectionAction::RejectedDuplicate(id) => rejected.set(Some(id)),
+        let on_action = move |action| {
+            accepted.update(|n| *n += 1);
+            match action {
+                SelectionAction::SelectPrevious => step(-1),
+                SelectionAction::SelectNext => step(1),
+                SelectionAction::Pick(id) => selected.set(Some(ObjectId(id))),
+                SelectionAction::RejectedDuplicate(id) => rejected.set(Some(id)),
+            }
         };
 
         view! {

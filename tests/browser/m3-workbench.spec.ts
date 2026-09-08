@@ -161,6 +161,54 @@ test.describe("M3 V2: one authoritative state behind a DOM panel and a GPU view"
         expect(differingPixels(before, await capture(region))).toBe(0);
     });
 
+    test("ten thousand GPU actions arrive once each, in order", async ({ page }) => {
+        test.setTimeout(600_000);
+        await waitForReady(page);
+        const region = page.getByTestId("workbench-gpu");
+        await settle(region);
+        const box = (await region.boundingBox())!;
+        const rounds = 10_000;
+        // Driven inside the page: ten thousand round trips through the test
+        // harness would measure the harness, not the runtime. The events are
+        // the ones the region's own listeners receive.
+        const result = await page.evaluate(
+            async (args) => {
+                const api = window.__property_workbench;
+                const canvas = document.querySelector('[data-testid="workbench-gpu"]')!;
+                const fire = (type: string, buttons: number) =>
+                    canvas.dispatchEvent(
+                        new PointerEvent(type, {
+                            bubbles: true,
+                            cancelable: true,
+                            clientX: args.x,
+                            clientY: args.y,
+                            pointerId: 1,
+                            pointerType: "mouse",
+                            button: 0,
+                            buttons,
+                            isPrimary: true,
+                        })
+                    );
+                for (let i = 0; i < args.rounds; i++) {
+                    fire("pointerdown", 1);
+                    fire("pointerup", 0);
+                    if (i % 25 === 0) {
+                        await new Promise((r) => setTimeout(r, 0));
+                    }
+                }
+                await new Promise((r) => setTimeout(r, 3_000));
+                return api.snapshot();
+            },
+            { x: box.x + box.width * 0.77, y: box.y + box.height * 0.085, rounds }
+        );
+        // Not one lost, not one delivered twice.
+        expect(result.accepted).toBe(rounds);
+        // And they were applied in order: each one advanced the selection by
+        // one object, so the ring of a thousand lands back where it started.
+        expect(result.position).toBe((rounds % 1000) + 1);
+        expect(result.count).toBe(1000);
+    });
+
     test("deleting the selected object drops it and clears the selection", async ({ page }) => {
         await waitForReady(page);
         await page.getByTestId("delete-selected").click();
