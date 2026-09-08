@@ -6,7 +6,3 @@ description = "Offline hardware video file encode/decode (Media Foundation / Vid
 license = "MIT OR Apache-2.0"
 
 [dependencies]
-
-[target.'cfg(any(target_os = "macos", target_os = "ios", target_os = "tvos"))'.dependencies]
-makepad-apple-sys = { path = "../../libs/apple_sys", version = "1.0.0" }
-makepad-objc-sys = { path = "../../libs/objc-sys", version = "1.0.0" }

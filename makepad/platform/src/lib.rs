@@ -1,3 +1,6 @@
+#[cfg(not(target_arch = "wasm32"))]
+compile_error!("makepad-platform in this repository is the browser backend only; build it for wasm32-unknown-unknown");
+
 //#![cfg_attr(all(unix), feature(unix_socket_ancillary_data))]
 pub mod gl_render_bridge;
 pub mod os;
