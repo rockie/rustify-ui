@@ -3,5 +3,5 @@
 # workspace as path dependencies; only cargo-makepad builds for the host.
 [workspace]
 resolver = "2"
-members = ["tools/cargo_makepad"]
+members = ["tools/cargo_makepad", "libs/wasm_bridge"]
 exclude = ["libs", "platform", "draw", "widgets"]

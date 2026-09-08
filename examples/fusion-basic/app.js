@@ -1,9 +1,19 @@
-import { boot, show_fatal } from "./loader.js";
+import { boot, show_fatal, StartupError } from "./loader.js";
 
 const status = document.getElementById("status");
 const handles = new Map();
 
-boot({ wasm_url: new URL("./fusion-basic.wasm", import.meta.url) })
+const runtime_fatal = (error) => {
+    handles.clear();
+    delete window.__fusion_basic;
+    status.dataset.status = "fatal";
+    show_fatal(
+        status,
+        new StartupError("RuntimeFatal", `${error}; reload the page, unsaved in-memory state is lost`)
+    );
+};
+
+boot({ wasm_url: new URL("./fusion-basic.wasm", import.meta.url), on_fatal: runtime_fatal })
     .then(({ app, hooks }) => {
         const api = {
             hooks,
@@ -22,6 +32,9 @@ boot({ wasm_url: new URL("./fusion-basic.wasm", import.meta.url) })
             },
             live_regions() {
                 return app.fusion_basic_live_regions();
+            },
+            errors() {
+                return hooks.runtime.errors;
             },
         };
         api.mount("scope-a");

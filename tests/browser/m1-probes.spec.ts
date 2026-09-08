@@ -100,14 +100,28 @@ test.describe("M1 probe 2: two scopes, four regions, symmetric teardown", () => 
     test("mount and dispose repeat without leaking regions", async ({ page }) => {
         test.setTimeout(180_000);
         await waitForReady(page);
+        // Reported by the page itself: attaching CDP listeners here changes the
+        // timing enough to hide races in region creation.
+        const errors = () => page.evaluate(() => window.__fusion_basic.errors());
         const live = () => page.evaluate(() => window.__fusion_basic.live_regions());
-        for (let i = 0; i < 20; i++) {
+        const expectRegions = async (count: number, what: string) => {
+            const deadline = Date.now() + 5_000;
+            let seen = await live();
+            while (seen !== count && Date.now() < deadline) {
+                await page.waitForTimeout(25);
+                seen = await live();
+            }
+            expect(await errors(), what).toEqual([]);
+            expect(seen, what).toBe(count);
+        };
+        for (let round = 0; round < 20; round++) {
             expect(await page.evaluate(() => window.__fusion_basic.dispose("scope-a"))).toBe(true);
-            await expect.poll(live, { timeout: 5_000 }).toBe(2);
+            await expectRegions(2, `round ${round}: after dispose`);
             await page.evaluate(() => window.__fusion_basic.mount("scope-a"));
             await expect(page.getByTestId("scope-a-gpu-1")).toHaveCount(1);
-            await expect.poll(live, { timeout: 5_000 }).toBe(4);
+            await expectRegions(4, `round ${round}: after mount`);
         }
+        expect(await errors()).toEqual([]);
         const region = page.getByTestId("scope-a-gpu-1");
         const pixels = await settle(region);
         expect(litPixels(pixels)).toBeGreaterThan(50);
@@ -144,6 +158,7 @@ declare global {
             mount(container_id: string): number;
             dispose(container_id: string): boolean;
             live_regions(): number;
+            errors(): string[];
         };
     }
 }

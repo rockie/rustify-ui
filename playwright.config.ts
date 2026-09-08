@@ -4,6 +4,9 @@ const port = 4173;
 
 export default defineConfig({
     testDir: "./tests/browser",
+    // A cold page compiles a 7.7 MB wasm module and boots four regions; the
+    // 30 s default leaves the shorter probes no headroom over that.
+    timeout: 120_000,
     fullyParallel: false,
     workers: 1,
     retries: 0,

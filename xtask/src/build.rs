@@ -68,7 +68,8 @@ pub fn build(request: &BuildRequest) -> Result<PathBuf, String> {
     }
     let app = app_dir(&root, request);
     if app.exists() {
-        std::fs::remove_dir_all(&app).map_err(|e| format!("cannot clear {}: {e}", app.display()))?;
+        std::fs::remove_dir_all(&app)
+            .map_err(|e| format!("cannot clear {}: {e}", app.display()))?;
     }
     run_cargo_makepad(&root, request)?;
 

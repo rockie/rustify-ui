@@ -12,7 +12,9 @@ export class StartupError extends Error {
 
 // Loads the wasm built next to this file and wires the Makepad host into it.
 // Resolves to the application's exported functions once the runtime is ready.
-export async function boot({ wasm_url }) {
+// `on_fatal` is called if the module traps later on; every mount in this
+// runtime is dead by then and only a reload brings it back.
+export async function boot({ wasm_url, on_fatal }) {
     const env = {};
     const set_wasm = init_env(env);
     const module = await WebAssembly.compileStreaming(fetch(wasm_url));
@@ -32,7 +34,7 @@ export async function boot({ wasm_url }) {
     }
 
     const msg_class = create_message_classes(ToWasmMsg, FromWasmMsg);
-    const hooks = create_host_hooks(wasm, msg_class);
+    const hooks = create_host_hooks(wasm, msg_class, on_fatal);
     app.rustify_makepad_boot(hooks);
     return { app, wasm, hooks };
 }

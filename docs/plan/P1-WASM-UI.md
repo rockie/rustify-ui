@@ -1,6 +1,6 @@
 # P1 · Rustify UI · 融合运行基础与研发预览（Leptos CSR + Makepad Web）
 
-> **计划状态：Blocked**（M1 实施中：A-2/A-4 已由探针解除，A-3 余一项偶发缺陷，见「实施进度」）。
+> **计划状态：Ready**（M1 已关闭：A-2/A-3/A-4 由探针解除，A-5/A-6 已由用户登记，见「实施进度」）。
 >
 > 调查基线：2026-09-08 · `21f96a95f31975b39a8ef331eeab7bea319dc698` · 调查开始时工作区 clean；本次仅新增本计划，交付时工作区 dirty。参考源码来自当前被忽略的 `ref/`，不属于该 commit。
 > 输入：[PRD v0.1](../PRD-WASM-UI.md)。它仍为评审草稿，未定义“第一期”；用户 2026-09-08 已确认本计划 §0.1 的第一期范围，PRD 层面的 Q1–Q3 与建议预算仍未批准。
@@ -11,7 +11,7 @@
 > 本期独特职责：解决两套运行模型在同一页面中的状态、输入、资源及销毁协作。
 > **顶层排除：本期不是 PRD 所述完整版本，也不宣称全部“核心”需求已满足；不做透明渲染后端替换、18 类完整组件库或大数据产品。**
 >
-> 阻塞含义：第一期产品边界已由用户确认（A-1 解除）；仍阻塞于构建/多区域/CSP 的关键技术前提尚无运行证据。§10 的 M1 明确用于解除技术阻塞，实施授权后即可开始，后续里程碑以其退出证据为入口。不能把“有待验证”解释为已有兼容能力。
+> 就绪含义：M1 已给出构建、多区域与 CSP 的运行证据（`docs/validation/p1/m1-probes.md`），A-1/A-2/A-3/A-4/A-5/A-6 全部解除，M2–M8 以 M1 的退出证据为入口。Ready 只表示计划可继续实施，不表示任何功能已交付。
 
 ## 实施者定位
 
@@ -28,23 +28,24 @@
 
 ### 恢复快照
 
-- 最近更新：2026-09-08，M1 实施中；本次会话按用户要求在当前步骤末尾暂停，下一会话从本节继续。
-- 当前进度：0/8 个里程碑完成。M1 退出条件 8/10 满足，见下。
-- 代码基线：`60828a7`（Makepad 闭包原样导入）→ `0e5c1af`（裁剪为 Web 后端与构建工具）→ 本会话末尾的 M1 提交（`git log -1`，M1：SDK、示例、xtask、探针、文档）。工作区 clean。
-- 已通过的验证（2026-09-08 本机）：`cargo xtask doctor` 8/8 通过；`cargo test --workspace --lib` 3 通过；`cargo test -p xtask` 9 通过；`cd makepad && cargo test -p cargo-makepad` 10 通过；`cargo clippy --workspace --all-targets -- -D warnings` 无警告；`cargo fmt --all -- --check` 通过（`makepad/rustfmt.toml` 禁用 fork 格式化）；`cargo xtask sources verify` 输出 18 改/4 增/212 删（均为本期提交）；`cargo xtask build-web --example fusion-basic --release` 通过；`npm run test:browser` 8 项中 7 项通过。
-- M1 退出条件对照：新检出不读 ref 可重建 ✔；nightly/CLI/依赖锁定 ✔（`rust-toolchain.toml`，wasm-bindgen 0.2.128 crate 与 cli-support 一致）；路径成员 resources 定位 ✔；导入/裁剪清单随提交 ✔（`sources.lock.json`、两次提交说明）；DOM 按钮改变真实 GPU 内容 ✔（探针 1–3）；双区域互不干扰并能释放 ✔（探针 4–6）；发布探针无 `new Function` ✔（探针 8）；严格 CSP 且 `crossOriginIsolated=false` ✔；报告与 ADR 更新 ✔（`docs/validation/p1/m1-probes.md`）；**未满足**：探针 7（20 轮挂载/卸载）偶发失败，见下一条；A-5/A-6 登记待用户确认。
-- 未解决缺陷（M1 内必须修）：20 轮挂载/卸载约第 4 轮时某区域 pump 触发 `panicked at makepad/libs/wasm_bridge/src/to_wasm.rs:181: index out of bounds: the len is 10 but the index is 10`（ToWasm 批次比块声明短），该区域的 `Cx` 未归还注册表，`live_region_count` 之后多 1。加 JS 插桩改变时序后 12 轮不复现。复现方式：`dispose("scope-a")` → 轮询 live==2 → `mount("scope-a")` → 等 canvas → 轮询 live==4，循环并捕获 pageerror。待查线索：① 10 个 u64 的批次大小与 `ToWasmResizeWindow`/`ToWasmInit` 吻合，核对生成的 `reserve_u32(4 + u32_size)` 是否漏算 f64 对齐填充导致越界写坏相邻消息；② `ResizeObserver` 初次回调与 `load_deps` 的 `ToWasmInit` 在同一个 builder 上交错；③ 销毁中的宿主在 `abort()` 后仍有同步路径写入 `to_wasm`。修复后还要让 `rustify_region_process` 在 Makepad panic 时归还/清理区域（RuntimeFatal 出口，见 D9），避免注册表悬挂。
-- 下一步：根治上述 panic → `npm run test:browser` 8/8 → 在 `docs/validation/p1/m1-probes.md` 与本节「完成记录」登记 M1 完成 → 进入 M2。M2 前先把 16 ms 信号轮询改为推送（`SignalToUI` 钩子）并审计每区域重复加载字体的内存（4 区域 124 MB 线性内存）。
-- 本期判断（已写入代码与文档）：Leptos 发布版与参考树在 islands/forms/async derived/stores/macro 内部有代码差异，但 F2/F3/F4 所依赖的文件完全一致，且无需修改 Leptos，按用户「不改代码则用 0.8.20」决定锁定发布版，不切 0.9.0-beta（记录于 `sources.lock.json`）；字体全部保留（`docs/compatibility.md`）；cargo-makepad 裁剪为仅 `wasm build`（去掉 run/热重载服务器、split/brotli/threads/`--small-fonts`），`wasm run` 由 `cargo xtask serve` 替代，index.html 由 xtask 生成；静态桥用 `wasmi` 在构建期执行 wasm 导出生成（§4.1 第 6 条允许的替代）。
-- Makepad Web 后端在 fork 内修复的上游缺陷（多 Cx 才暴露）：`ToWasmInit` 在窗口创建前索引 `windows[id_zero]` 触发 panic；多桥共享一个 wasm 时 typed-array 视图在内存增长后失效，写入静默丢失（前三个区域收不到 Init）；`ACTION_SENDER_GLOBAL` 只指向最后创建的 Cx；`clear_memory_refs` 置空共享实例的 `_memory`；销毁后的 fetch 回调访问已释放宿主。
-- 基线数字（无预算承诺）：release wasm 7,682,693 B；JS 158,766 B；字体 51,187,844 B（按需加载，首绘只取 IBMPlexSans-Text 181,792 B）；4 区域页面 ready 3.5 s（headless）；4 区域线性内存 123,994,112 B，6 轮挂载/卸载不增长；空闲 1 pump/s、0 帧/s。
-- 当前阻塞：A-1 已解除；A-2 已解除（探针①）；A-4 已解除（探针③）；A-3 大部解除，仅余上述偶发缺陷；A-5（真实拼音/VoiceOver 排期）与 A-6（测量合同）待用户确认。计划状态保持 Blocked 直到 M1 关闭。
+- 最近更新：2026-09-08，**M1 已关闭**；下一会话从 M2 开始。
+- 当前进度：1/8 个里程碑完成。
+- 代码基线：`60828a7`（Makepad 闭包原样导入）→ `0e5c1af`（裁剪为 Web 后端与构建工具）→ `3f8e5c3`（M1 首轮：SDK、示例、xtask、探针、文档）→ 本会话的 M1 收尾提交（`git log -1`）。工作区 clean。
+- 已通过的验证（2026-09-08 本机）：`cargo xtask doctor` 8/8 通过；`cargo test --workspace --lib` 3 通过；`cargo test -p xtask` 10 通过；`cd makepad && cargo test` 13 通过（cargo-makepad 10、wasm_bridge 3）；`cargo clippy --workspace --all-targets -- -D warnings` 无警告；`cargo fmt --all -- --check` 通过（`makepad/rustfmt.toml` 禁用 fork 格式化）；`cargo xtask sources verify` 输出 19 改/4 增/212 删（均为本期提交）；`cargo xtask build-web --example fusion-basic --release` 通过；`npm run test:browser` **8/8 通过**。
+- M1 退出条件对照：全部满足。新检出不读 ref 可重建 ✔；nightly/CLI/依赖锁定 ✔；路径成员 resources 定位 ✔；导入/裁剪清单随提交 ✔；DOM 按钮改变真实 GPU 内容 ✔（探针 1–3）；双区域互不干扰并能释放 ✔（探针 4–7）；发布探针无 `new Function` ✔（探针 8）；严格 CSP 且 `crossOriginIsolated=false` ✔；报告与 ADR 更新 ✔（`docs/validation/p1/m1-probes.md`）；A-5/A-6 已由用户 2026-09-08 登记 ✔。
+- 本会话修复的缺陷：`ToWasmMsgRef::block_skip` 把游标移到 `base + len - 1`，而 JS 写入端把 `len` 记成「从消息起点到本块末尾」的 u64 长度，与 Rust 游标同源。单块消息里错误偏移越过末尾后被 `was_last_block` 吞掉，所以上游从未暴露；从第二块起游标落在块头长度字上，读出垃圾 live id 后越界，即偶发的 `to_wasm.rs:181 index out of bounds`。嵌入场景常产生多块批次（`ResizeObserver` 与 `ToWasmInit`、信号轮询与排队的宿主变更），所以只在这里出现。修复在 `makepad/libs/wasm_bridge/src/to_wasm.rs`，同文件新增单测按 JS 写入布局构造多块消息，旧算术下必失败。
+- 同时补上的运行保障：wasm trap 后 Rust 状态不可信（该次泵的 `Cx` 已被移出注册表且无法归还），因此 `EmbeddedRegion.do_wasm_pump` 与信号轮询捕获 trap，停止一切进入 wasm 的调用、不重入模块地释放各区域浏览器资源，并把错误交给宿主 `on_fatal`；`fusion-basic` 在状态元素显示 `RuntimeFatal` 并说明需重载、内存中未保存数据会丢失（D9 边界，不是按实例的 trap 隔离）。区域拿不到 WebGL2 上下文原本静默失败，现由宿主记录（上限 64 条）并被探针 7 每轮断言。
+- 基线数字（无预算承诺）：release wasm 7,682,601 B；JS 161,338 B；字体 51,187,844 B（按需加载，首绘只取 IBMPlexSans-Text 181,792 B）；4 区域页面 ready 3.5 s 冷启、0.9 s 热启（headless）；4 区域线性内存 123,994,112 B，6 轮挂载/卸载不增长；空闲 1 pump/s、0 帧/s；页内测得的一轮挂载/卸载：dispose 2–26 ms、mount 调用 <1 ms、两个区域在 353–363 ms 内就绪。headless 探针跑在 SwiftShader 软件 WebGL 上，不是本机 GPU。
+- 下一步（M2）：完善 `AppHandle`/`RegionHandle`、embedded 模式、监听/observer/计时器/GL/Cx 释放、代际与错误状态；退出条件为 V1/V3 全部普通行为、2 挂载×2 区域关闭一个其余可操作、旧句柄/迟到消息无回调、100 轮资源与宿主操作检查无功能泄漏。进入前先把 16 ms 信号轮询改为推送（`SignalToUI` 钩子），并审计每区域重复加载字体的内存（4 区域 124 MB 线性内存，`IBMPlexSans-Text.ttf` 每区域各取一次）。
+- 本期判断（已写入代码与文档）：Leptos 发布版与参考树在 islands/forms/async derived/stores/macro 内部有代码差异，但 F2/F3/F4 所依赖的文件完全一致，且无需修改 Leptos，按用户「不改代码则用 0.8.20」决定锁定发布版，不切 0.9.0-beta（记录于 `sources.lock.json`）；字体全部保留（`docs/compatibility.md`）；cargo-makepad 裁剪为仅 `wasm build`（去掉 run/热重载服务器、split/brotli/threads/`--small-fonts`），`wasm run` 由 `cargo xtask serve` 替代，index.html 由 xtask 生成；静态桥用 `wasmi` 在构建期执行 wasm 导出生成（§4.1 第 6 条允许的替代）；`makepad/libs/wasm_bridge` 加入 `makepad/` 工具 workspace，使 fork 的宿主单测有一个固定入口。
+- Makepad Web 后端在 fork 内修复的上游缺陷（多 Cx 才暴露）：`ToWasmInit` 在窗口创建前索引 `windows[id_zero]` 触发 panic；多桥共享一个 wasm 时 typed-array 视图在内存增长后失效，写入静默丢失（前三个区域收不到 Init）；`ACTION_SENDER_GLOBAL` 只指向最后创建的 Cx；`clear_memory_refs` 置空共享实例的 `_memory`；销毁后的 fetch 回调访问已释放宿主；`ToWasmMsgRef::block_skip` 的多块偏移。
+- 当前阻塞：无。A-1/A-2/A-3/A-4/A-5/A-6 全部解除，计划状态为 Ready。
 
 ### 完成记录
 
 | Milestone | 完成时间 | 准确完成摘要 | 验证证据 | 代码基线 |
 | --- | --- | --- | --- | --- |
-| — | — | 尚未完成任何里程碑 | — | — |
+| M1 | 2026-09-08 | 固定工程与三项技术探针：Makepad wasm 构建闭包硬分叉进 `makepad/` 并裁剪、Leptos 锁 crates.io 0.8.20、`sources.lock.json`、doctor/build-web/serve/sources 四个 xtask 入口、release 构建与浏览器入口；探针①CSR 与 Makepad 合并且无跨源隔离，②同 wasm 双作用域各两区域的分派与对称销毁（含 F15 全局清单逐项结论），③构建期生成的静态消息桥在严格 CSP 下运行；A-5/A-6 登记完成。未做：M2 起的运行时完善、性能预算承诺。 | `docs/validation/p1/m1-probes.md`；`npm run test:browser` 8/8；`cargo xtask doctor` 8/8；`cargo test --workspace --lib` 3；`cd makepad && cargo test` 13；`cargo test -p xtask` 10；clippy 无警告；fmt 通过 | 本会话的 M1 收尾提交 |
 
 ## 0. 需求、范围与决策
 
@@ -88,11 +89,11 @@
 | C-3 | PRD §7/来源记录/crates.io | 本地参考没有上游 commit；Makepad 2.0.0 未发布（crates.io 最高 1.0.0），Leptos 0.8.20 已发布；15 个文件指纹不能代替完整锁定 | ADR-2/§4，M1 | 已核实缺口 |
 | C-4 | PRD §2.4/§2.5 | SDK 不负责账号、业务授权、持久化或不受信任插件执行 | §0.5/§7 | 采用其推荐边界 |
 | A-1 | 范围假设 | 用户接受统一体验、桌面浏览器方向和 P1 研发预览范围，包括 §0.6 的延期；浏览器矩阵 Chrome 为主 | 用户 2026-09-08 确认 | 已解除 |
-| A-2 | 技术假设 | 固定参考源可构建出 Leptos CSR + Makepad 无共享内存的融合产物 | 实现负责人执行 M1；失败提供日志及 ADR 差异 | **阻塞后续实施** |
-| A-3 | 技术假设 | 同 wasm 内多个 Cx 能经最小修改正确分派与完整释放 | 实现负责人执行 M1/M2；含 `_bridge`、异步入口及 Rust 所有权审计 | **阻塞运行时选择** |
-| A-4 | 安全假设 | Makepad 消息生成可以移至构建期，运行期无需动态执行 JS 字符串 | 实现负责人执行 M1 静态桥探针；V9 再验完整产物 | **阻塞部署契约** |
-| A-5 | 验收资源 | 可取得 §9.4 的真实系统输入法和 VoiceOver；中文字体可分发 | 项目/测试负责人确认环境，M1 登记；M5 前具备 | 未满足阻塞对应验收 |
-| A-6 | 测量合同 | P1 先交真实性能基线，不将未批准的完整版本预算改写成 P1 承诺 | 用户/技术负责人确认，M1 登记；M8 前提供可测呈现方法 | **阻塞 P1 NFR 定稿** |
+| A-2 | 技术假设 | 固定参考源可构建出 Leptos CSR + Makepad 无共享内存的融合产物 | M1 探针① | 已解除 |
+| A-3 | 技术假设 | 同 wasm 内多个 Cx 能经最小修改正确分派与完整释放 | M1 探针②（F15 全局逐项结论）；M2 扩大到 100 轮 | 已解除 |
+| A-4 | 安全假设 | Makepad 消息生成可以移至构建期，运行期无需动态执行 JS 字符串 | M1 探针③；V9 在 M7 再验完整产物 | 已解除 |
+| A-5 | 验收资源 | 可取得 §9.4 的真实系统输入法和 VoiceOver；中文字体可分发 | 用户 2026-09-08 承诺 M5 前提供环境；字体 OFL 可分发 | 已登记 |
+| A-6 | 测量合同 | P1 先交真实性能基线，不将未批准的完整版本预算改写成 P1 承诺 | 用户 2026-09-08 确认只交基线；M8 方法：release 构建、headless 与 Chrome 各测、30 次启动、≥1000 交互采样 | 已登记 |
 | C-5 | 用户决定 2026-09-08 | Makepad wasm 构建闭包硬分叉并入本仓 `makepad/`，此后不再同步上游；保留 MIT 版权声明与字体许可 | ADR-2/§4.1，M1 | 已确认 |
 
 ### 0.3 决策表
@@ -110,13 +111,13 @@
 | D9 | 故障边界 | 可恢复区域错误保留业务 state；整 wasm trap 由纯 JS 宿主提示重载 | P1 不承诺共享 runtime 内其他挂载在 trap 后继续工作 | §8；A-1 已接受该阶段边界 |
 | D10 | 导航 | 本期宿主页持有 URL/标题；GPU 禁止直接改 history/title | 完整路由与导航拦截统一在后续接入；本期只验证根路径、子路径、嵌入 | R22 延期；Makepad 当前含 history 操作 |
 
-以上是设计建议；A-1 已解除，D3/D7 与浏览器矩阵为用户明确决定；其余在技术闸口未解前不标记为已接受的架构决定。
+以上 D1/D2/D8/D9 已由 M1 的运行证据支持（探针①②③），D3/D7 与浏览器矩阵为用户明确决定；D4/D5/D6/D10 的落点在 M2–M7，按各里程碑退出条件确认。
 
 ### 0.4 ADR-lite
 
 #### ADR-1：先验证单 wasm 直接共享状态
 
-- 状态：**Blocked**，待 A-2/A-3（A-1 已解除）。
+- 状态：**Accepted**（M1 探针①②给出运行证据，A-2/A-3 解除）。P1 保持方案 A；重审条件不变。
 - 驱动：R-1/R-2 要求可复用组件和单一状态；C-1 指定两套能力均起作用。
 - 共同约束：DOM 保留 Leptos，GPU 保留 Makepad，所有权、销毁及输入都需有测试。
 
@@ -146,7 +147,7 @@
 
 #### ADR-3：原生编辑器承接跨区文本与语义
 
-- 状态：Proposed，受 A-5 约束（A-1 已解除）。
+- 状态：Proposed。A-5 已登记（用户承诺 M5 前提供真实拼音与 VoiceOver 环境），实现落在 M5。
 - 备选 A：保留 Makepad TextInput + 隐藏 textarea，修复全部文本编辑、焦点及辅助技术桥；备选 B：GPU 展示态 + 定位到相同边界的原生 DOM 编辑态，并提供共享语义操作入口。
 - 建议：P1 用 B。GPU 控件在编辑期间留出绘制区域，不重复画文本/光标；DOM 控件承担真实 selection、composition 和浏览器编辑行为。
 - 正面后果：两套呈现复用受控值契约，先验证中文和辅助技术核心旅程；无需一期自研 Unicode 编辑引擎。
@@ -471,6 +472,7 @@ GPU 正确性采用真实点击、稳定样本截图/颜色区域及语义值共
 | `cargo xtask verify --suite p1` | M8：来源、静态、原生单元、release wasm及浏览器自动化汇总；人工项未交证据则报告缺口 |
 | `cargo fmt --all -- --check` | workspace自身Rust格式，vendor作为外部workspace排除 |
 | `cargo test --workspace --lib` | 可在宿主执行的纯逻辑接口测试；浏览器代码按target分离 |
+| `cd makepad && cargo test` | M1起：硬分叉内可在宿主执行的单测（cargo-makepad、wasm_bridge 消息布局）；该工具 workspace 独立于根 workspace |
 | `cargo clippy --workspace --all-targets -- -D warnings` | workspace宿主静态检查；不能替代custom wasm target的构建 |
 | `npm ci`、`npm run test:browser` | 固定Playwright安装与自动浏览器测试；浏览器可执行版本写报告 |
 | `cargo xtask report-size --example fusion-basic` | M7：六类完整产物字节总和；真实网络传输报告另行采集 |
@@ -508,11 +510,11 @@ M8对当前组件和两份示例另做适用性走查：普通文本4.5:1、大�
 
 | 项目 | 影响 | 责任/解除办法 | 最晚确认点 | 是否阻塞 |
 | --- | --- | --- | --- | --- |
-| A-2 准确来源和工具组合 | 普通部署可能无法链接/启动；非隔离是待证目标 | 实现负责人按M1固定快照及nightly/bindgen并给浏览器证据 | M1退出 | 是 |
-| A-3 多Cx及释放 | `_bridge`/全局状态、Box原始指针和Rc闭包可能导致串扰/泄漏 | 实现负责人审计所有启用入口、探针回归；不成立重审ADR-1 | M1退出，M2扩大验证 | 是 |
-| A-4 动态消息源码 | CSP不满足、构建期生成消息不完整 | 实现负责人证明静态ESM涵盖全部注册消息及ABI匹配 | M1退出 | 是 |
-| A-5 真实输入/字体资源 | 合成测试不能证明真实IME；无合法字体不能交付 | 项目负责人安排环境；实现者整理资产许可；测试负责人签实际结果 | M1登记，M5退出 | 对M5是 |
-| A-6 P1性能与支持合同 | PRD建议预算尚未批准，当前无目标硬件或真实呈现测法 | 用户确认P1基线策略；技术/测试负责人冻结夹具和测量限制 | M1登记，M8退出 | 是 |
+| A-2 准确来源和工具组合 | 普通部署可能无法链接/启动；非隔离是待证目标 | 已解除：M1 探针①，`cargo xtask build-web` + 8/8 浏览器用例 | M1退出 | 否 |
+| A-3 多Cx及释放 | `_bridge`/全局状态、Box原始指针和Rc闭包可能导致串扰/泄漏 | 已解除：M1 探针②与 F15 逐项结论；M2 扩大到 100 轮 | M1退出，M2扩大验证 | 否 |
+| A-4 动态消息源码 | CSP不满足、构建期生成消息不完整 | 已解除：M1 探针③，schema hash 与 manifest 一致，产物无 `new Function`/`eval(` | M1退出 | 否 |
+| A-5 真实输入/字体资源 | 合成测试不能证明真实IME；无合法字体不能交付 | 已登记：用户承诺 M5 前提供拼音与 VoiceOver 环境；字体 OFL | M1登记，M5退出 | 对M5是 |
+| A-6 P1性能与支持合同 | PRD建议预算尚未批准，当前无目标硬件或真实呈现测法 | 已登记：只交基线；M8 方法已冻结（release、headless 与 Chrome、30 次启动、≥1000 交互采样） | M1登记，M8退出 | 否 |
 | 硬分叉自有代码面 | 本仓承担约28 MB闭包源码的维护；上游修复不再自动获得 | M1按ADR-2导入规则裁剪并记录导入/删除清单；P1只改§4.2必需路径，不做无关重构；需要上游能力时手工移植并计入新工作 | 每个里程碑退出 | 否 |
 | Leptos参考树与发布版差异 | 若参考树含未发布改动，锁定crates.io会改变已核实事实 | M1做diff；有代码差异则Leptos改为0.9.0-beta硬分叉进本仓（ADR-2重审条件） | M1退出 | 否，M1内解决 |
 | Leptos需改代码 | 触发用户规则：转0.9.0-beta硬分叉进本仓自行维护，binding/scheduler返工 | 实施中一旦出现，先记录原因与替代方案再切换（ADR-2） | 各里程碑退出 | 否，规则已定 |
@@ -521,8 +523,8 @@ M8对当前组件和两份示例另做适用性走查：普通文本4.5:1、大�
 | SPMS项目/工具缺失 | 无法取得真实需求key | 本期只保留本地PRD工作号，不猜项目、不外部写入 | 后续需关联时 | 不阻塞本地计划 |
 | 人员/时间未知 | 无可信日历排期 | M1后按实际工作及可用资源另排 | 排期前 | 不阻塞设计 |
 
-- 最终状态：**Blocked**。范围已确认；原因是关键技术前提（A-2/A-3/A-4）与 NFR 测量合同（A-6）未决，不是文档未完成。M1 本身无前置阻塞。
-- 变为 Ready 的条件：A-6 的测量合同有明确记录，M1 完成并解除 A-2/A-3/A-4，A-5 的必要资源已安排；更新正文、ADR 和顶部快照。A-1 已于 2026-09-08 解除，M1 在实施授权后即可开始。若只是非阻塞评审未结束，可标 Proposed。
+- 最终状态：**Ready**。范围已确认，M1 已关闭并解除 A-2/A-3/A-4，A-5/A-6 已由用户登记。Ready 只表示可继续实施 M2–M8，不表示任何功能已交付。
+- 退回 Blocked 的条件：某个里程碑的退出条件反证 ADR-1 的方案 A（共享 runtime 无法隔离或释放），或 A-5 的真实环境到 M5 仍不可得，或 A-6 的测量方法在 M8 被推翻；届时更新正文、ADR 和顶部快照。
 - 本轮已做：阅读PRD及相关规则、核对上游行为、校验15个参考文件指纹、检查本机工具清单、查阅浏览器官方资料、编写并静态校验计划。2026-09-08 评审修订：逐条复核 F2–F13 与源码一致；查 crates.io 发布状态与 LICENSE；按用户决定改写 ADR-2/D3；新增 F15–F17、A-7 与 §4.2 全局归属修改域；修正 §5.1 DPR 描述。第二轮用户决定已回写：Chrome 为主（§9.4/NFR-3/V6/M5）、Leptos 不改代码锁 0.8.20 且改则转 0.9 beta（ADR-2）、M1 不拆、Rust/UI 下一期集成（§0.6）。第三轮：A-1 确认解除；Makepad 改为硬分叉并入本仓 `makepad/` 不再同步上游（ADR-2/D3/D7/§1.2/§4.1/M1），闭包约 28 MB、中文字体两字重各 18 MB 与 emoji 10 MB 已量化。
 - 文档自检：R01–R40共40条逐项映射、8个里程碑及0/8快照一致；实施者定位与骨架原文一致。路径脚本报告的10个缺失路径均在§1.2标为拟新增，所有引用的现有参考路径存在；新文件另用无索引diff检查空白格式。
 - 本轮未做：未安装依赖、未构建或运行融合应用、未作性能/浏览器/IME/辅助技术验收、未创建SPMS记录、未修改PRD范围或实现代码。计划中的V/M均为未来工作。
@@ -598,15 +600,15 @@ M8对当前组件和两份示例另做适用性走查：普通文本4.5:1、大�
 | R-1 / R-2 | §2/§5 | V1/V2/V3，M2/M3 | 有设计，待实施 |
 | R-3 / R-4 | §6、ADR-3 | V4/V5/V6，M4/M5 | 有设计，待范围及真实环境 |
 | R-5 / R-6 / R-7 | §4/§5/§6/§8 | V7/V8/V9/V10，M6–M8 | 有设计，子集明示 |
-| NFR-1 | §7/§9 | V11/V12、A-6确认 | 关键测量/预算合同未定 |
+| NFR-1 | §7/§9 | V11/V12、A-6确认 | 测量合同已定（只交基线），M1 已给首批基线 |
 | NFR-2 / NFR-3 | §5/§6/§8 | V2/V3/V5/V6/V8/V12 | 有设计，完整版本范围另验 |
-| NFR-4 / NFR-5 | §4/§7/§9 | V9/V10、M1静态桥探针 | 有设计，A-4仍阻塞 |
-| C-1 | D1/ADR-1 | M1实际融合产物 | 方向已确认，技术待证 |
+| NFR-4 / NFR-5 | §4/§7/§9 | V9/V10、M1静态桥探针 | A-4 已解除；完整产物检查在 M7 |
+| C-1 | D1/ADR-1 | M1实际融合产物 | 已由 M1 探针①证实 |
 | C-2 | §1/§10 | 新建命令不冒称已有，M1建立工程 | 已核实 |
-| C-3 | ADR-2/§4 | 硬分叉来源记录 + crates.io版本锁定，ref不可用的新检出构建 | 发布状态与许可已核实，导入在M1执行 |
+| C-3 | ADR-2/§4 | 硬分叉来源记录 + crates.io版本锁定，ref不可用的新检出构建 | 已完成：`sources.lock.json` 1455 文件，构建不读 ref |
 | C-4 | §0.5/§0.6/§7 | 网络/权限/持久化边界走查 | 建议范围已写清 |
 | A-1 | §0.1/§0.6 | 用户 2026-09-08 确认研发预览范围与 Chrome 为主矩阵 | 已解除 |
-| A-2 / A-3 / A-4 | ADR-1/§4 | M1三探针、失败保留证据并重审 | 阻塞 |
-| A-5 | ADR-3/§9.4 | 环境版本/字体许可与M5真实人工结果 | 待落实 |
-| A-6 | §7/§9 | P1基线策略/夹具/测量方法确认并执行 | 阻塞NFR定稿 |
-| C-5 | ADR-2/§4.1 | M1导入闭包、保留许可、记录来源并以新检出构建验证 | 已确认，待M1执行 |
+| A-2 / A-3 / A-4 | ADR-1/§4 | M1三探针、失败保留证据并重审 | 已解除（M1 探针①②③，8/8 浏览器用例） |
+| A-5 | ADR-3/§9.4 | 环境版本/字体许可与M5真实人工结果 | 已登记：用户 2026-09-08 承诺 M5 前提供拼音与 VoiceOver 环境 |
+| A-6 | §7/§9 | P1基线策略/夹具/测量方法确认并执行 | 已登记：只交基线；M8 方法为 release 构建、headless 与 Chrome 各测、30 次启动、≥1000 交互采样 |
+| C-5 | ADR-2/§4.1 | M1导入闭包、保留许可、记录来源并以新检出构建验证 | 已执行完毕 |

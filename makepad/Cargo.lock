@@ -159,12 +159,45 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f9f8bd3e56ce4dfc153cf470fffbfa98c7620958b312ca5c3a4b8d5181fd13c6"
 
 [[package]]
+name = "makepad-derive-wasm-bridge"
+version = "1.0.0"
+dependencies = [
+ "makepad-micro-proc-macro",
+]
+
+[[package]]
+name = "makepad-live-id"
+version = "1.0.0"
+dependencies = [
+ "makepad-live-id-macros",
+]
+
+[[package]]
+name = "makepad-live-id-macros"
+version = "1.0.0"
+dependencies = [
+ "makepad-micro-proc-macro",
+]
+
+[[package]]
+name = "makepad-micro-proc-macro"
+version = "1.0.0"
+
+[[package]]
 name = "makepad-shell"
 version = "1.0.0"
 
 [[package]]
 name = "makepad-toml-parser"
 version = "1.0.0"
+
+[[package]]
+name = "makepad-wasm-bridge"
+version = "1.0.0"
+dependencies = [
+ "makepad-derive-wasm-bridge",
+ "makepad-live-id",
+]
 
 [[package]]
 name = "makepad-wasm-strip"

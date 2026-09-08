@@ -125,9 +125,11 @@ pub struct ToWasmMsg {
     data: Vec<u64>,
 }
 
+/// End of a block, as the message length in u64 up to and including it. The
+/// JS writer stamps it into every block header so a handler that reads fewer
+/// fields than the block carries still leaves the cursor on the next block.
 pub struct ToWasmBlockSkip {
     len: usize,
-    base: usize,
 }
 
 #[derive(Clone, Default, Debug)]
@@ -186,13 +188,12 @@ impl<'a> ToWasmMsgRef<'a> {
 
     pub fn read_block_skip(&mut self) -> ToWasmBlockSkip {
         ToWasmBlockSkip {
-            base: self.u32_offset >> 1,
             len: self.read_u32() as usize,
         }
     }
 
     pub fn block_skip(&mut self, block_skip: ToWasmBlockSkip) {
-        self.u32_offset = (block_skip.base + block_skip.len - 1) << 1
+        self.u32_offset = block_skip.len << 1
     }
 
     pub fn read_f32(&mut self) -> f32 {
@@ -222,5 +223,76 @@ impl<'a> ToWasmMsgRef<'a> {
     pub fn was_last_block(&mut self) -> bool {
         self.u32_offset += self.u32_offset & 1;
         self.u32_offset >> 1 >= self.data.len()
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    /// Lays out blocks exactly like the JS in `ToWasm::to_js_code`: two u32 of
+    /// live id, one u32 holding the message length up to the end of the block,
+    /// the body, then padding to a u64 boundary.
+    fn encode(blocks: &[(u64, &[u32])]) -> Vec<u64> {
+        let mut words: Vec<u32> = vec![0, 0];
+        for (id, body) in blocks {
+            words.push(*id as u32);
+            words.push((*id >> 32) as u32);
+            let len_slot = words.len();
+            words.push(0);
+            words.extend_from_slice(body);
+            if words.len() & 1 != 0 {
+                words.push(0);
+            }
+            let len = (words.len() >> 1) as u32;
+            words[len_slot] = len;
+            words[1] = len;
+        }
+        words
+            .chunks(2)
+            .map(|pair| pair[0] as u64 | (pair[1] as u64) << 32)
+            .collect()
+    }
+
+    /// Mirrors the dispatch loop in the web backend: read the id, take the
+    /// block skip, let the handler consume `read` words, then skip.
+    fn dispatch(data: &[u64], read: usize) -> Vec<(u64, Vec<u32>)> {
+        let mut msg = ToWasmMsgRef {
+            data,
+            u32_offset: 2,
+        };
+        let mut out = Vec::new();
+        while !msg.was_last_block() {
+            let id = msg.read_u64();
+            let skip = msg.read_block_skip();
+            let body = (0..read).map(|_| msg.read_u32()).collect();
+            msg.block_skip(skip);
+            out.push((id, body));
+        }
+        out
+    }
+
+    #[test]
+    fn one_block_is_read_back() {
+        let data = encode(&[(7, &[11, 12, 13])]);
+        assert_eq!(dispatch(&data, 3), vec![(7, vec![11, 12, 13])]);
+    }
+
+    #[test]
+    fn every_block_of_a_batch_is_read_back() {
+        let data = encode(&[(7, &[11, 12, 13]), (8, &[21, 22, 23])]);
+        assert_eq!(
+            dispatch(&data, 3),
+            vec![(7, vec![11, 12, 13]), (8, vec![21, 22, 23])]
+        );
+    }
+
+    #[test]
+    fn a_block_the_handler_ignored_is_skipped() {
+        let data = encode(&[(7, &[11]), (8, &[21, 22]), (9, &[])]);
+        assert_eq!(
+            dispatch(&data, 0),
+            vec![(7, vec![]), (8, vec![]), (9, vec![])]
+        );
     }
 }

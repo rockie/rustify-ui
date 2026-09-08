@@ -4,7 +4,7 @@ Date: 2026-09-08. Machine: macOS (Darwin 25.6.0), Apple Silicon, rustc 1.97.0-ni
 
 ## Status
 
-M1 is **not closed**. Two exit conditions still fail, everything else on the M1 list holds. Details in the last section.
+M1 is **closed**: every exit condition on the M1 row of the plan holds, and A-2/A-3/A-4/A-5/A-6 are resolved.
 
 ## Fixed engineering
 
@@ -24,10 +24,12 @@ Passed. Browser probes 1–3 (`tests/browser/m1-probes.spec.ts`): the page boots
 
 ## Probe ②: several `Cx` in one wasm, dispatch and symmetric release
 
-Mostly passed; one exit condition open.
+Passed.
 
 - Probes 4–6 pass: two mount scopes with two regions each keep separate state (incrementing scope b leaves scope a's pixels and DOM count unchanged); disposing scope a leaves scope b usable and `live_region_count` drops from 4 to 2 with no page errors; disposing 0/5/50 ms after mounting leaves no region and produces no late callback.
-- Probe 7 (20 mount/dispose rounds) **fails intermittently**: around the fourth round one region's pump traps with `panicked at makepad/libs/wasm_bridge/src/to_wasm.rs:181: index out of bounds: the len is 10 but the index is 10` (a ToWasm batch shorter than a block claims), after which that region's `Cx` is never returned to the registry and the count stays one too high. With extra JS instrumentation (changed timing) 12 rounds passed, so the corruption is timing dependent. Not yet root-caused; candidates are noted in the plan's progress section.
+- Probe 7 (20 mount/dispose rounds) passes. It used to trap intermittently with `panicked at makepad/libs/wasm_bridge/src/to_wasm.rs:181: index out of bounds`. Root cause: `ToWasmMsgRef::block_skip` moved the read cursor to `base + len - 1` u64, but the JS writer stamps `len` as the message length up to the end of the block, measured from the message start — the same origin the Rust cursor uses. For a single-block message the wrong offset still landed past the end and `was_last_block` ended the loop, which is why upstream never saw it; from the second block on, the cursor landed on the block header's length word, read a garbage live id, and then ran off the end of the message. Batches of two or more blocks are what embedding produces (`ResizeObserver` plus `ToWasmInit`, a signal poll plus a queued host mutation), so the defect only showed up here. Fixed in `makepad/libs/wasm_bridge/src/to_wasm.rs`; the block layout and the multi-block dispatch loop are now pinned by unit tests in that file (`cd makepad/libs/wasm_bridge && cargo test`), which fail with the old arithmetic.
+- A Rust panic traps the whole module, and after a trap no Rust state can be trusted (the pump's `Cx` has been moved out of the registry and cannot be handed back). The runtime therefore has a single fatal exit: `EmbeddedRegion.do_wasm_pump` and the signal poll catch the trap, stop every call into wasm, release each region's browser resources without re-entering the module, and hand the error to the host's `on_fatal`. `fusion-basic` shows `RuntimeFatal` in its status element and says the page must be reloaded and that unsaved in-memory state is lost. This is the D9 boundary; it is not per-instance trap isolation.
+- A region whose canvas cannot get a WebGL2 context used to fail silently, leaving the mount with fewer regions than its view. The host now records the failure (bounded at 64 entries) and probe 7 asserts the log is empty after every round, so the condition is reported instead of appearing as a count that never recovers.
 
 F15 global-state checklist, as implemented and verified in the browser:
 
@@ -56,12 +58,17 @@ Passed. Probe 8: the page runs under `default-src 'none'; script-src 'self' 'was
 | Page ready (headless Chromium, 4 regions) | 3.5 s from navigation to `status=ready` |
 | wasm linear memory after start-up, 4 regions | 123,994,112 B; stable across 6 mount/dispose rounds |
 | Idle | 1 pump/s, 0 animation frames/s with 4 idle regions |
+| One mount/dispose round of a two-region scope (measured in the page) | dispose 2–26 ms, mount call <1 ms, both regions live 353–363 ms after the call, first frame within two animation frames |
 | Region canvas screenshot (headless) | ≈70 ms |
+
+The headless probes run on SwiftShader (`--use-angle=swiftshader-webgl`), not on the machine's GPU, so context creation and shader compilation there are far slower than in Chrome on the same machine; headless numbers are a floor for correctness, not a performance statement.
+
+Wall-clock timings taken from the Playwright process are 10–30× larger than the same work measured inside the page (a `page.evaluate` round trip around one mount/dispose round reports 12–26 s for the first round). The page-side numbers are the ones reported here; the harness overhead is not a property of the runtime and is not part of the A-6 measurement contract.
 
 ## Assumptions registered
 
 - A-2 (build combination): resolved by probe ①.
 - A-3 (multiple `Cx`): resolved for dispatch and release except the intermittent trap above.
 - A-4 (static bridge/CSP): resolved.
-- A-5: Chrome 152 present; availability of macOS 拼音 and VoiceOver test time is not yet confirmed by the user; Chinese fonts distributable (OFL).
-- A-6: baseline metrics above are the M1 measurement contract seed; the M8 method (release build, headless and Chrome, 30 start-ups, ≥1000 interaction samples) still needs the user's confirmation.
+- A-5: resolved. Chrome 152 present; the user confirmed on 2026-09-08 that a real macOS 拼音 and VoiceOver session will be available before M5; Chinese fonts distributable (OFL).
+- A-6: resolved. The user confirmed on 2026-09-08 that P1 delivers measured baselines only and makes no claim against the unapproved PRD budgets. Method frozen for M8: release build, measured in headless Chromium and in Chrome, 30 start-ups, ≥1000 interaction samples; raw samples kept.
