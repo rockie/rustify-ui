@@ -7,7 +7,7 @@ pub mod mount;
 pub mod region;
 pub mod scheduler;
 
-pub use binding::ActionSink;
+pub use binding::{duplicate_key, ActionSink};
 pub use diagnostics::UiError;
 pub use mount::{mount, AppHandle, MountConfig};
 pub use region::{GpuRegion, RegionState};

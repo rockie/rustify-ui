@@ -6,7 +6,20 @@
 //! scope a single acceptance order, whichever region produced it.
 
 use crate::scheduler::{Admission, Pace, Scheduler};
+use std::collections::HashSet;
+use std::hash::Hash;
 use std::sync::{Arc, Mutex};
+
+/// The first key that appears twice, if any.
+///
+/// A component keyed by business identity cannot be bound to two different
+/// values for the same key: whichever one wins, the other silently disappears
+/// and the user has no way to tell. Callers report the key and refuse the
+/// binding rather than guess.
+pub fn duplicate_key<K: Eq + Hash + Clone>(keys: impl IntoIterator<Item = K>) -> Option<K> {
+    let mut seen = HashSet::new();
+    keys.into_iter().find(|key| !seen.insert(key.clone()))
+}
 
 /// A typed action already bound to the callback that will receive it. The
 /// scope orders deliveries; it never inspects what they carry.
@@ -88,6 +101,18 @@ impl ActionSink {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn unique_keys_have_no_duplicate() {
+        assert_eq!(duplicate_key([1, 2, 3]), None);
+        assert_eq!(duplicate_key(Vec::<u32>::new()), None);
+    }
+
+    #[test]
+    fn the_second_appearance_of_a_key_is_reported() {
+        assert_eq!(duplicate_key([1, 2, 1, 3, 2]), Some(1));
+        assert_eq!(duplicate_key(["a", "b", "b"]), Some("b"));
+    }
 
     type Log = Arc<Mutex<Vec<u32>>>;
 

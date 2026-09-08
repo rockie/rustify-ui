@@ -7,12 +7,13 @@ const snapshot = (page: import("@playwright/test").Page) =>
 test.describe("M3 V2: one authoritative state behind a DOM panel and a GPU view", () => {
     test("a thousand objects with stable ids, the first one selected", async ({ page }) => {
         await waitForReady(page);
-        expect(await snapshot(page)).toEqual({
+        expect(await snapshot(page)).toMatchObject({
             count: 1000,
             position: 1,
             selected: 1,
             name: "object-0001",
             color: "2e90fa",
+            first_ids: "1,2,3,4",
         });
         await expect(page.getByTestId("object-count")).toHaveText("1000");
         await expect(page.getByTestId("selected-id")).toHaveText("1");
@@ -101,10 +102,69 @@ test.describe("M3 V2: one authoritative state behind a DOM panel and a GPU view"
         });
     });
 
+    test("a hundred objects change in one update and the GPU shows the result", async ({ page }) => {
+        await waitForReady(page);
+        const region = page.getByTestId("workbench-gpu");
+        const before = await settle(region);
+        expect((await snapshot(page)).first_colors).toBe("2e90fa,12b76a,f79009,f04438");
+        await page.getByTestId("recolour-batch").click();
+        // One controlled model update, one new projection: the first four
+        // objects each moved one step along the palette.
+        expect(await snapshot(page)).toMatchObject({
+            count: 1000,
+            first_colors: "12b76a,f79009,f04438,7a5af8",
+        });
+        await expect
+            .poll(async () => differingPixels(before, await capture(region)), { timeout: 5_000 })
+            .toBeGreaterThan(20);
+    });
+
+    test("reordering keeps the selection on the object, not on the position", async ({ page }) => {
+        await waitForReady(page);
+        await page.getByTestId("select-next").click();
+        await expect(page.getByTestId("selected-id")).toHaveText("2");
+        expect(await snapshot(page)).toMatchObject({ position: 2, first_ids: "1,2,3,4" });
+        await page.getByTestId("reverse-batch").click();
+        // Object 2 is now second from the end of the reversed run.
+        expect(await snapshot(page)).toMatchObject({
+            selected: 2,
+            name: "object-0002",
+            position: 99,
+            first_ids: "100,99,98,97",
+        });
+    });
+
+    test("adding and removing objects keeps every other id where it was", async ({ page }) => {
+        await waitForReady(page);
+        await page.getByTestId("add-objects").click();
+        expect(await snapshot(page)).toMatchObject({ count: 1010, selected: 1, position: 1 });
+        await expect(page.getByTestId("object-count")).toHaveText("1010");
+        await page.getByTestId("remove-objects").click();
+        expect(await snapshot(page)).toMatchObject({
+            count: 1000,
+            selected: 1,
+            position: 1,
+            first_ids: "1,2,3,4",
+        });
+    });
+
+    test("a list that names one object twice is refused, not guessed at", async ({ page }) => {
+        await waitForReady(page);
+        const region = page.getByTestId("workbench-gpu");
+        const before = await settle(region);
+        expect(await page.evaluate(() => window.__property_workbench.inject_duplicate_id())).toBe(true);
+        await expect(page.getByTestId("rejected-binding")).toHaveText(
+            "object 1 appears twice; the grid kept the last unambiguous list"
+        );
+        // The grid still shows the last list it could read unambiguously.
+        await page.waitForTimeout(500);
+        expect(differingPixels(before, await capture(region))).toBe(0);
+    });
+
     test("deleting the selected object drops it and clears the selection", async ({ page }) => {
         await waitForReady(page);
         await page.getByTestId("delete-selected").click();
-        expect(await snapshot(page)).toEqual({
+        expect(await snapshot(page)).toMatchObject({
             count: 999,
             position: 0,
             selected: null,

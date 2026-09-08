@@ -22,6 +22,9 @@ pub enum SelectionAction {
     SelectPrevious,
     SelectNext,
     Pick(u32),
+    /// The projection named the same object twice and was refused; the region
+    /// still shows the last unambiguous one.
+    RejectedDuplicate(u32),
 }
 
 script_mod! {
@@ -75,6 +78,10 @@ script_mod! {
 pub struct ObjectRegion {
     #[live]
     ui: WidgetRef,
+    /// Set while applying props, reported from the next event so the
+    /// application hears about it on its own callback path.
+    #[rust]
+    rejected: Option<u32>,
 }
 
 impl RegionApp for ObjectRegion {
@@ -104,7 +111,9 @@ impl RegionApp for ObjectRegion {
             }
         });
         if let Some(mut grid) = self.ui.widget(cx, ids!(grid)).borrow_mut::<ObjectGrid>() {
-            grid.set_cells(cx, props.cells.as_ref().clone(), props.selected);
+            self.rejected = grid
+                .set_cells(cx, props.cells.as_ref().clone(), props.selected)
+                .err();
         }
         self.ui.redraw(cx);
     }
@@ -128,6 +137,9 @@ impl RegionApp for ObjectRegion {
             .and_then(|mut grid| grid.take_picked());
         if let Some(id) = picked {
             outbox.push(SelectionAction::Pick(id));
+        }
+        if let Some(id) = self.rejected.take() {
+            outbox.push(SelectionAction::RejectedDuplicate(id));
         }
     }
 }

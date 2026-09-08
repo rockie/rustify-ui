@@ -74,7 +74,10 @@ declare global {
                 selected: number | null;
                 name: string | null;
                 color: string;
+                first_colors: string;
+                first_ids: string;
             };
+            inject_duplicate_id(): boolean;
             stats(): {
                 regions: number;
                 timers: number;

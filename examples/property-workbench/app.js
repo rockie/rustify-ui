@@ -35,6 +35,9 @@ boot({ wasm_url: new URL("./property-workbench.wasm", import.meta.url), on_fatal
             snapshot() {
                 return JSON.parse(app.workbench_snapshot());
             },
+            inject_duplicate_id() {
+                return app.workbench_inject_duplicate_id();
+            },
             stats() {
                 return hooks.runtime.stats();
             },

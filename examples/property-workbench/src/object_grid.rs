@@ -97,12 +97,24 @@ impl Grid {
 }
 
 impl ObjectGrid {
-    pub fn set_cells(&mut self, cx: &mut Cx, cells: Vec<GridCell>, selected: Option<u32>) {
+    /// Refuses a list that names the same object twice: a click could not say
+    /// which of them it meant, so the grid keeps what it already had and
+    /// reports the ambiguous id instead of picking a winner.
+    pub fn set_cells(
+        &mut self,
+        cx: &mut Cx,
+        cells: Vec<GridCell>,
+        selected: Option<u32>,
+    ) -> Result<(), u32> {
+        if let Some(duplicate) = rustify_ui::duplicate_key(cells.iter().map(|cell| cell.id)) {
+            return Err(duplicate);
+        }
         if self.cells != cells || self.selected != selected {
             self.cells = cells;
             self.selected = selected;
             self.redraw(cx);
         }
+        Ok(())
     }
 
     pub fn take_picked(&mut self) -> Option<u32> {
