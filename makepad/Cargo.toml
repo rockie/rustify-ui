@@ -1,0 +1,7 @@
+# Tool workspace for the hard-forked Makepad closure. The wasm-side crates
+# (platform/draw/widgets and libs) are consumed by the repository root
+# workspace as path dependencies; only cargo-makepad builds for the host.
+[workspace]
+resolver = "2"
+members = ["tools/cargo_makepad"]
+exclude = ["libs", "platform", "draw", "widgets"]
