@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "skills": {
+    "dev-plan": {
+      "source": "XGENT-ai/skills",
+      "sourceType": "github",
+      "skillPath": "skills/dev-plan/SKILL.md",
+      "computedHash": "7b90fe73a31f6795a0500ba4a882b6ff6d1afe0de190c211bc19e1ff116eacc3"
+    },
+    "prd": {
+      "source": "XGENT-ai/skills",
+      "sourceType": "github",
+      "skillPath": "skills/prd/SKILL.md",
+      "computedHash": "1e71ee8006d803afd8aa3addf002bf2442e1c5bb081c1d9796fd073b2c8cec2e"
+    },
+    "rust-async-patterns": {
+      "source": "wshobson/agents",
+      "sourceType": "github",
+      "skillPath": "plugins/systems-programming/skills/rust-async-patterns/SKILL.md",
+      "computedHash": "20d32ef58158c94eb4dfc4aaf19bec7ae2a025ae5d42da7b49ccfbaeda389273"
+    },
+    "rust-best-practices": {
+      "source": "apollographql/skills",
+      "sourceType": "github",
+      "skillPath": "skills/rust-best-practices/SKILL.md",
+      "computedHash": "0ac6606adb27e64a31bdc8c1ed34e446ae0c14bff1c7648867c46e106adc048f"
+    },
+    "story-points": {
+      "source": "XGENT-ai/skills",
+      "sourceType": "github",
+      "skillPath": "skills/story-points/SKILL.md",
+      "computedHash": "ed556f7d8e8cfc84664d380690f8f787b46b02e5acaebaf9c2284910b6ac29c3"
+    },
+    "test-plan": {
+      "source": "XGENT-ai/skills",
+      "sourceType": "github",
+      "skillPath": "skills/test-plan/SKILL.md",
+      "computedHash": "9388ed7b66dc5d76d9e6ae3d95e02739ba02879fbae120f614fb9a47a842100f"
+    }
+  }
+}
