@@ -1,8 +1,8 @@
 import { WasmWebBrowser } from "./web.js";
 
 export class WasmWebGL extends WasmWebBrowser {
-  constructor(wasm, dispatch, canvas) {
-    super(wasm, dispatch, canvas);
+  constructor(wasm, dispatch, canvas, options = {}) {
+    super(wasm, dispatch, canvas, options);
     if (wasm === undefined) {
       return;
     }
@@ -17,8 +17,79 @@ export class WasmWebGL extends WasmWebBrowser {
     this._gl_error_reports = new Set();
     this.video_players = {};
     this.init_webgl_context();
+    if (!this.gl) {
+      return;
+    }
 
     this.load_deps();
+  }
+
+  // Frees every GL object this region allocated and gives the context back
+  // to the browser before the page-level cleanup in the base class runs.
+  destroy() {
+    if (this.destroyed) {
+      return;
+    }
+    const gl = this.gl;
+    if (gl) {
+      for (const shader of this.draw_shaders) {
+        if (!shader || !shader.program) {
+          continue;
+        }
+        gl.deleteProgram(shader.program);
+        for (const buf of [
+          shader.pass_uniform_buf,
+          shader.draw_list_uniform_buf,
+          shader.draw_call_uniform_buf,
+          shader.user_uniform_buf,
+          shader.live_uniform_buf,
+        ]) {
+          gl.deleteBuffer(buf);
+        }
+      }
+      for (const buf of this.array_buffers) {
+        if (buf) gl.deleteBuffer(buf.gl_buf);
+      }
+      for (const buf of this.index_buffers) {
+        if (buf) gl.deleteBuffer(buf.gl_buf);
+      }
+      for (const vao of this.vaos) {
+        if (vao) gl.deleteVertexArray(vao.gl_vao);
+      }
+      for (const tex of this.textures) {
+        if (tex) gl.deleteTexture(tex);
+      }
+      for (const fb of this.framebuffers) {
+        if (fb) gl.deleteFramebuffer(fb);
+      }
+      const lose = gl.getExtension("WEBGL_lose_context");
+      if (lose) {
+        lose.loseContext();
+      }
+    }
+    this.draw_shaders = [];
+    this.array_buffers = [];
+    this.index_buffers = [];
+    this.vaos = [];
+    this.textures = [];
+    this.framebuffers = [];
+    for (const key in this.video_players) {
+      const player = this.video_players[key];
+      player.video.pause();
+      player.video.removeAttribute("src");
+      player.video.load();
+    }
+    this.video_players = {};
+    if (this.video_anim_frame_id) {
+      window.cancelAnimationFrame(this.video_anim_frame_id);
+      this.video_anim_frame_id = 0;
+    }
+    if (this.dpr_poll_timer) {
+      window.clearInterval(this.dpr_poll_timer);
+      this.dpr_poll_timer = null;
+    }
+    super.destroy();
+    this.gl = null;
   }
 
   // webGL API
@@ -149,6 +220,9 @@ export class WasmWebGL extends WasmWebBrowser {
   FromWasmXrStartPresenting(args) {
     if (this.xr !== undefined) {
       return;
+    }
+    if (this.embedded) {
+      return this.unsupported("xr");
     }
     // alright lets fire up the xr stuff
     navigator.xr
@@ -1181,11 +1255,11 @@ export class WasmWebGL extends WasmWebBrowser {
     let mqString = "(resolution: " + window.devicePixelRatio + "dppx)";
     let mq = matchMedia(mqString);
     if (mq && mq.addEventListener) {
-      mq.addEventListener("change", this.handlers.on_screen_resize);
+      mq.addEventListener("change", () => this.handlers.on_screen_resize(), { signal: this.abort.signal });
     } else {
       // poll for it. yes. its terrible
-      window.setInterval((_) => {
-        if (window.devicePixelRatio != this.dpi_factor) {
+      this.dpr_poll_timer = window.setInterval((_) => {
+        if (window.devicePixelRatio != this.window_info.dpi_factor) {
           this.handlers.on_screen_resize();
         }
       }, 1000);
@@ -1210,6 +1284,10 @@ export class WasmWebGL extends WasmWebBrowser {
     var gl = (this.gl = canvas.getContext("webgl2", options));
 
     if (!gl) {
+      if (this.embedded) {
+        // The host decides what to show in place of the region.
+        return;
+      }
       var span = document.createElement("span");
       span.style.color = "white";
       canvas.parentNode.replaceChild(span, canvas);

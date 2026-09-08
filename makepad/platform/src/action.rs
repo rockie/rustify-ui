@@ -4,9 +4,28 @@ use std::any::TypeId;
 use std::fmt;
 use std::fmt::Debug;
 
+use std::cell::RefCell;
 use std::sync::{mpsc::Sender, Mutex};
 
 pub(crate) static ACTION_SENDER_GLOBAL: Mutex<Option<Sender<ActionSend>>> = Mutex::new(None);
+
+thread_local! {
+    /// Senders of the `Cx` instances currently dispatching on this thread,
+    /// innermost last. With several `Cx` in one process the global sender
+    /// only identifies the most recently created one; an action posted while
+    /// a `Cx` is running belongs to that `Cx`.
+    static CURRENT_ACTION_SENDERS: RefCell<Vec<Sender<ActionSend>>> = const { RefCell::new(Vec::new()) };
+}
+
+pub(crate) struct CurrentActionSenderGuard;
+
+impl Drop for CurrentActionSenderGuard {
+    fn drop(&mut self) {
+        CURRENT_ACTION_SENDERS.with(|senders| {
+            senders.borrow_mut().pop();
+        });
+    }
+}
 
 pub trait ActionTrait: 'static {
     fn debug_fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result;
@@ -121,6 +140,13 @@ impl Cx {
     /// `robius-*` crate callback, etc.) racing app teardown is normal and
     /// must not panic the whole process.
     pub fn post_action(action: impl ActionTrait + Send) {
+        let current = CURRENT_ACTION_SENDERS.with(|senders| senders.borrow().last().cloned());
+        if let Some(sender) = current {
+            if sender.send(Box::new(action)).is_ok() {
+                SignalToUI::set_action_signal();
+            }
+            return;
+        }
         let Ok(mut sender_guard) = ACTION_SENDER_GLOBAL.lock() else {
             // The mutex is poisoned (a thread panicked while holding it).
             // Nothing useful we can do — drop the action.
@@ -135,6 +161,15 @@ impl Cx {
         if sender.send(Box::new(action)).is_ok() {
             SignalToUI::set_action_signal();
         }
+    }
+
+    /// Marks this `Cx` as the one running until the guard drops, so
+    /// `post_action` calls made meanwhile reach its receiver.
+    pub(crate) fn enter_current_action_sender(&self) -> CurrentActionSenderGuard {
+        CURRENT_ACTION_SENDERS.with(|senders| {
+            senders.borrow_mut().push(self.action_sender.clone());
+        });
+        CurrentActionSenderGuard
     }
 
     pub fn action(&mut self, action: impl ActionTrait) {

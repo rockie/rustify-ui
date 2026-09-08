@@ -1,0 +1,17 @@
+/* Styles the runtime relies on; application styling lives in the examples. */
+.gpu-region {
+    display: block;
+    width: 100%;
+    height: 100%;
+    touch-action: none;
+    outline: none;
+}
+
+.rustify-fatal {
+    padding: 12px 16px;
+    border: 1px solid #b42318;
+    border-radius: 6px;
+    background: #fef3f2;
+    color: #b42318;
+    font: 14px/1.4 system-ui, sans-serif;
+}

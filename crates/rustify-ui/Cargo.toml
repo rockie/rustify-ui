@@ -1,0 +1,11 @@
+[package]
+name = "rustify-ui"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+publish.workspace = true
+description = "Experimental SDK fusing Leptos CSR DOM with Makepad GPU regions"
+
+[dependencies]
+leptos.workspace = true
+rustify-makepad = { path = "../rustify-makepad" }

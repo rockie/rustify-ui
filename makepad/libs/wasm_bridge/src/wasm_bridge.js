@@ -1,9 +1,14 @@
 export function init_env(env) {
     let _wasm = null;
+    const decode = (u8_ptr, len) => {
+        let copy = new Uint8Array(len);
+        copy.set(new Uint8Array(_wasm._memory.buffer, u8_ptr, len));
+        return new TextDecoder().decode(copy);
+    };
 
-    env.js_console_log = (u8_ptr, len) => _wasm._bridge.js_console_log(u8_ptr, len);
-    env.js_console_error = (u8_ptr, len) => _wasm._bridge.js_console_error(u8_ptr, len);
-    env.js_time_now = () => _wasm._bridge.js_time_now();
+    env.js_console_log = (u8_ptr, len) => console.log(decode(u8_ptr, len));
+    env.js_console_error = (u8_ptr, len) => console.error(decode(u8_ptr, len), '');
+    env.js_time_now = () => Date.now() / 1000.0;
     env.js_open_web_socket = (id, url_ptr, url_len) => console.error("js_open_web_socket out of context");
     env.js_web_socket_send_string = (id, str_ptr, url_len) => console.error("js_web_socket_send_string out of context");
     env.js_web_socket_send_binary = (id, bin_ptr, bin_len) => console.error("js_web_socket_send_binary out of context");
@@ -21,8 +26,9 @@ export function init_env(env) {
         body_ptr,
         body_len
     ) => {
-        if (_wasm && _wasm._bridge && _wasm._bridge.js_network_http_request) {
-            _wasm._bridge.js_network_http_request(
+        const bridge = WasmBridge.current;
+        if (bridge && bridge.js_network_http_request) {
+            bridge.js_network_http_request(
                 request_id_lo,
                 request_id_hi,
                 metadata_id_lo,
@@ -41,8 +47,9 @@ export function init_env(env) {
         console.error("js_network_http_request out of context");
     };
     env.js_network_http_cancel = (request_id_lo, request_id_hi) => {
-        if (_wasm && _wasm._bridge && _wasm._bridge.js_network_http_cancel) {
-            _wasm._bridge.js_network_http_cancel(request_id_lo, request_id_hi);
+        const bridge = WasmBridge.current;
+        if (bridge && bridge.js_network_http_cancel) {
+            bridge.js_network_http_cancel(request_id_lo, request_id_hi);
             return;
         }
         console.error("js_network_http_cancel out of context");
@@ -55,8 +62,9 @@ export function init_env(env) {
         headers_ptr,
         headers_len
     ) => {
-        if (_wasm && _wasm._bridge && _wasm._bridge.js_network_ws_open) {
-            _wasm._bridge.js_network_ws_open(
+        const bridge = WasmBridge.current;
+        if (bridge && bridge.js_network_ws_open) {
+            bridge.js_network_ws_open(
                 socket_id_lo,
                 socket_id_hi,
                 url_ptr,
@@ -74,8 +82,9 @@ export function init_env(env) {
         data_ptr,
         data_len
     ) => {
-        if (_wasm && _wasm._bridge && _wasm._bridge.js_network_ws_send_binary) {
-            _wasm._bridge.js_network_ws_send_binary(
+        const bridge = WasmBridge.current;
+        if (bridge && bridge.js_network_ws_send_binary) {
+            bridge.js_network_ws_send_binary(
                 socket_id_lo,
                 socket_id_hi,
                 data_ptr,
@@ -91,8 +100,9 @@ export function init_env(env) {
         data_ptr,
         data_len
     ) => {
-        if (_wasm && _wasm._bridge && _wasm._bridge.js_network_ws_send_text) {
-            _wasm._bridge.js_network_ws_send_text(
+        const bridge = WasmBridge.current;
+        if (bridge && bridge.js_network_ws_send_text) {
+            bridge.js_network_ws_send_text(
                 socket_id_lo,
                 socket_id_hi,
                 data_ptr,
@@ -103,8 +113,9 @@ export function init_env(env) {
         console.error("js_network_ws_send_text out of context");
     };
     env.js_network_ws_close = (socket_id_lo, socket_id_hi) => {
-        if (_wasm && _wasm._bridge && _wasm._bridge.js_network_ws_close) {
-            _wasm._bridge.js_network_ws_close(socket_id_lo, socket_id_hi);
+        const bridge = WasmBridge.current;
+        if (bridge && bridge.js_network_ws_close) {
+            bridge.js_network_ws_close(socket_id_lo, socket_id_hi);
             return;
         }
         console.error("js_network_ws_close out of context");
@@ -117,50 +128,87 @@ export class WasmBridge {
     static SPLIT_DATA_VERSION = 2;
     static SPLIT_SLOT_EXPORT_PREFIX = "$s";
 
-    constructor(wasm, dispatch) {
+    // The bridge whose pump is running right now; `env` imports that need a
+    // host object resolve through this instead of a per-wasm global slot, so
+    // several bridges can share one wasm instance.
+    static current = null;
+
+    constructor(wasm, dispatch, options = {}) {
         this.wasm = wasm;
         if (wasm === undefined) {
             return console.error("Wasm object is undefined, check your URL and build output")
         }
-        this.wasm._bridge = this;
+        if (!options.msg_class) {
+            throw new Error("WasmBridge needs the statically generated message classes");
+        }
+        this.msg_class = options.msg_class;
         this.dispatch = dispatch;
         this.exports = wasm.exports;
         this.memory = wasm._memory;
         this.wasm_url = wasm._wasm_url;
-        this.buffer_ref_len_check = 0;
+        this._buffer = null;
 
         this.from_wasm_args = {};
 
         this.update_array_buffer_refs();
 
-        this.wasm_init_panic_hook();
+        if (!wasm._panic_hook_installed) {
+            wasm._panic_hook_installed = true;
+            this.wasm_init_panic_hook();
+        }
     }
 
-    create_js_message_bridge(wasm_app) {
-        let msg = new FromWasmMsg(this, this.wasm_get_js_message_bridge(wasm_app));
-        let code = msg.read_str();
-        msg.free();
-        // this class can also be loaded from file.
-        this.msg_class = new Function("ToWasmMsg", "FromWasmMsg", code)(ToWasmMsg, FromWasmMsg);
+    /// Runs `f` with this bridge as the current one, restoring the previous
+    /// bridge afterwards so nested pumps stay correctly attributed.
+    as_current(f) {
+        const previous = WasmBridge.current;
+        WasmBridge.current = this;
+        try {
+            return f();
+        } finally {
+            WasmBridge.current = previous;
+        }
     }
 
+    // Drops this bridge's views into wasm memory. The wasm instance itself
+    // is shared with other bridges and stays untouched.
     clear_memory_refs() {
         this.exports = null;
         this.memory = null;
-        this.wasm._memory = null;
-        this.f32 = null;
-        this.u32 = null;
-        this.f64 = null;
+        this._buffer = null;
+        this._f32 = null;
+        this._u32 = null;
+        this._f64 = null;
         this.wasm = null;
     }
 
+    // Any Rust code in the module can grow memory between two calls made
+    // through this bridge (another bridge's pump, the host application's own
+    // allocations), which detaches every cached view. The views are therefore
+    // re-validated on every access instead of only after this bridge's calls.
     update_array_buffer_refs() {
-        if (this.buffer_ref_len_check != this.memory.buffer.byteLength) {
-            this.f32 = new Float32Array(this.memory.buffer);
-            this.u32 = new Uint32Array(this.memory.buffer);
-            this.f64 = new Float64Array(this.memory.buffer);
-            this.buffer_ref_len_check = this.memory.buffer.byteLength;
+        const buffer = this.memory.buffer;
+        if (this._buffer !== buffer) {
+            this._buffer = buffer;
+            this._f32 = new Float32Array(buffer);
+            this._u32 = new Uint32Array(buffer);
+            this._f64 = new Float64Array(buffer);
         }
+    }
+
+    get f32() {
+        this.update_array_buffer_refs();
+        return this._f32;
+    }
+
+    get u32() {
+        this.update_array_buffer_refs();
+        return this._u32;
+    }
+
+    get f64() {
+        this.update_array_buffer_refs();
+        return this._f64;
     }
 
     new_to_wasm() {
@@ -184,12 +232,6 @@ export class WasmBridge {
 
     free_data_u8(obj) {
         this.wasm_free_data_u8(obj.ptr, obj.len, obj.capacity);
-    }
-
-    wasm_get_js_message_bridge(wasm_app) {
-        let new_ptr = this.exports.wasm_get_js_message_bridge(wasm_app);
-        this.update_array_buffer_refs();
-        return new_ptr
     }
 
     wasm_new_msg_with_u64_capacity(capacity) {
@@ -670,15 +712,4 @@ export class FromWasmMsg {
             this.u32_offset += this.u32_offset & 1; // align
         }
     }
-}
-
-function base64_to_array_buffer(base64) {
-    var bin = window.atob(base64);
-    var u8 = new Uint8Array(bin.length);
-    for (var i = 0; i < bin.length; i++) {
-        u8[i] = bin.charCodeAt(i);
-        console.log(u8[i]);
-    }
-    console.log(u8)
-    return u8.buffer;
 }

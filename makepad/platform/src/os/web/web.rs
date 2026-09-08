@@ -103,9 +103,18 @@ impl Cx {
     // incoming to_wasm. There is absolutely no other entrypoint
     // to general rust codeflow than this function. Only the allocators and init
     pub fn process_to_wasm(&mut self, msg_ptr: u32) -> u32 {
+        self.process_to_wasm_with(msg_ptr, |_| {})
+    }
+
+    /// Like `process_to_wasm`, but runs `before` first, inside the same
+    /// outgoing-message frame, so host-driven mutations (state projected into
+    /// widgets) get their platform ops and redraws flushed by this pump.
+    pub fn process_to_wasm_with(&mut self, msg_ptr: u32, before: impl FnOnce(&mut Cx)) -> u32 {
+        let _current = self.enter_current_action_sender();
         let mut to_wasm_msg = ToWasmMsg::take_ownership(msg_ptr);
         let mut network_responses = Vec::new();
         self.os.from_wasm = Some(FromWasmMsg::new());
+        before(self);
         let mut to_wasm = to_wasm_msg.as_ref();
         let mut is_animation_frame = None;
         while !to_wasm.was_last_block() {
@@ -122,16 +131,7 @@ impl Cx {
                     );
                     self.os_type = tw.browser_info.into();
                     self.xr_capabilities = tw.xr_capabilities.into();
-                    let id_zero = CxWindowPool::id_zero();
-                    let mut new_geom: WindowGeom = tw.window_info.into();
-                    {
-                        let window = &mut self.windows[id_zero];
-                        window.os_dpi_factor = Some(new_geom.dpi_factor);
-                        new_geom = window.native_window_geom_to_layout(new_geom);
-                    }
-                    self.os.window_geom = new_geom.clone();
-                    self.windows[id_zero].window_geom = new_geom;
-                    //self.default_inner_window_size = self.os.window_geom.inner_size;
+                    self.apply_canvas_geom(tw.window_info.into());
 
                     self.set_physical_keyboard_state(true);
                     self.call_event_handler(&Event::Startup);
@@ -142,20 +142,12 @@ impl Cx {
                 live_id!(ToWasmResizeWindow) => {
                     let tw = ToWasmResizeWindow::read_to_wasm(&mut to_wasm);
                     let old_geom = self.os.window_geom.clone();
-                    let mut new_geom: WindowGeom = tw.window_info.into();
-                    let id_zero = CxWindowPool::id_zero();
-                    {
-                        let window = &mut self.windows[id_zero];
-                        window.os_dpi_factor = Some(new_geom.dpi_factor);
-                        new_geom = window.native_window_geom_to_layout(new_geom);
-                    }
+                    let new_geom = self.apply_canvas_geom(tw.window_info.into());
                     if old_geom != new_geom {
-                        self.os.window_geom = new_geom.clone();
-                        self.windows[id_zero].window_geom = new_geom.clone();
                         self.call_event_handler(&Event::WindowGeomChange(WindowGeomChangeEvent {
-                            window_id: id_zero,
-                            old_geom: old_geom,
-                            new_geom: new_geom,
+                            window_id: CxWindowPool::id_zero(),
+                            old_geom,
+                            new_geom,
                         }));
                         self.redraw_all();
                     }
@@ -307,8 +299,9 @@ impl Cx {
                 }
 
                 live_id!(ToWasmPaintDirty) => {
-                    let main_pass_id = self.windows[CxWindowPool::id_zero()].main_pass_id.unwrap();
-                    self.passes[main_pass_id].paint_dirty = true;
+                    if let Some(main_pass_id) = self.main_window_pass_id() {
+                        self.passes[main_pass_id].paint_dirty = true;
+                    }
                 }
 
                 live_id!(ToWasmLiveFileChange) => {
@@ -592,6 +585,32 @@ impl Cx {
         self.os.from_wasm.take().unwrap().release_ownership()
     }
 
+    /// Records the canvas geometry the host reported. The window the widget
+    /// tree creates on startup does not exist yet at init time, so the
+    /// geometry lives on `os` until `CreateWindow` copies it over.
+    fn apply_canvas_geom(&mut self, native_geom: WindowGeom) -> WindowGeom {
+        self.os.os_dpi_factor = Some(native_geom.dpi_factor);
+        let id_zero = CxWindowPool::id_zero();
+        let geom = if self.windows.len() > 0 {
+            let window = &mut self.windows[id_zero];
+            window.os_dpi_factor = Some(native_geom.dpi_factor);
+            let geom = window.native_window_geom_to_layout(native_geom);
+            window.window_geom = geom.clone();
+            geom
+        } else {
+            native_geom
+        };
+        self.os.window_geom = geom.clone();
+        geom
+    }
+
+    fn main_window_pass_id(&self) -> Option<crate::draw_pass::DrawPassId> {
+        if self.windows.len() == 0 {
+            return None;
+        }
+        self.windows[CxWindowPool::id_zero()].main_pass_id
+    }
+
     pub fn handle_repaint(&mut self, time: f64) {
         let mut passes_todo = Vec::new();
 
@@ -634,14 +653,11 @@ impl Cx {
 
                     self.os.from_wasm(FromWasmSetDocumentTitle { title });
 
-                    // Inherit the OS-reported scale factor recorded by
-                    // ToWasmGetInfo / ToWasmResizeWindow on id_zero so the
-                    // freshly-created window's `dpi_override` machinery has
-                    // a baseline.
-                    let id_zero_os_dpi = self.windows[CxWindowPool::id_zero()].os_dpi_factor;
+                    // The canvas geometry arrived before any window existed;
+                    // hand it to the window the widget tree just created.
                     {
                         let window = &mut self.windows[window_id];
-                        window.os_dpi_factor = id_zero_os_dpi;
+                        window.os_dpi_factor = self.os.os_dpi_factor;
                         window.window_geom = self.os.window_geom.clone();
                     }
 
@@ -697,8 +713,10 @@ impl Cx {
                     // Bottom of the caret line (matches the pre-rect point); the
                     // hidden-textarea IME anchor only takes a point.
                     let pos = area.clipped_rect(self).pos + cursor_rect.pos + cursor_rect.size;
-                    let window_id = self.get_window_id_of(&area).unwrap_or(CxWindowPool::id_zero());
-                    let pos = self.windows[window_id].layout_vec2d_to_native_points(pos);
+                    let pos = match self.get_window_id_of(&area) {
+                        Some(window_id) => self.windows[window_id].layout_vec2d_to_native_points(pos),
+                        None => pos,
+                    };
                     self.os
                         .from_wasm(FromWasmShowTextIME { x: pos.x, y: pos.y });
                 }
@@ -954,104 +972,9 @@ impl CxOsApi for Cx {
         super::web_network::install_network_backend_shim();
         self.package_root = Some(String::new());
 
-        self.os.append_to_wasm_js(&[
-            ToWasmInit::to_js_code(),
-            ToWasmResizeWindow::to_js_code(),
-            ToWasmAnimationFrame::to_js_code(),
-            ToWasmTouchUpdate::to_js_code(),
-            ToWasmMouseDown::to_js_code(),
-            ToWasmMouseMove::to_js_code(),
-            ToWasmMouseUp::to_js_code(),
-            ToWasmScroll::to_js_code(),
-            ToWasmKeyDown::to_js_code(),
-            ToWasmKeyUp::to_js_code(),
-            ToWasmTextInput::to_js_code(),
-            ToWasmTextCopy::to_js_code(),
-            ToWasmTimerFired::to_js_code(),
-            ToWasmPaintDirty::to_js_code(),
-            ToWasmRedrawAll::to_js_code(),
-            ToWasmLiveFileChange::to_js_code(),
-            ToWasmLocationChange::to_js_code(),
-            ToWasmWindowGotFocus::to_js_code(),
-            ToWasmWindowLostFocus::to_js_code(),
-            ToWasmHTTPResponse::to_js_code(),
-            ToWasmHttpRequestError::to_js_code(),
-            ToWasmHttpResponseProgress::to_js_code(),
-            ToWasmHttpUploadProgress::to_js_code(),
-            ToWasmPermissionResult::to_js_code(),
-            ToWasmLocationUpdate::to_js_code(),
-            ToWasmLocationError::to_js_code(),
-            /*ToWasmWebSocketOpen::to_js_code(),
-            ToWasmWebSocketClose::to_js_code(),
-            ToWasmWebSocketError::to_js_code(),
-            ToWasmWebSocketString::to_js_code(),
-            ToWasmWebSocketBinary::to_js_code(),*/
-            ToWasmSignal::to_js_code(),
-            ToWasmAppLifecycle::to_js_code(),
-            ToWasmMidiInputData::to_js_code(),
-            ToWasmMidiPortList::to_js_code(),
-            ToWasmAudioDeviceList::to_js_code(),
-            ToWasmVideoPlaybackPrepared::to_js_code(),
-            ToWasmVideoTextureUpdated::to_js_code(),
-            ToWasmVideoPlaybackCompleted::to_js_code(),
-            ToWasmVideoPlaybackResourcesReleased::to_js_code(),
-        ]);
-
-        self.os.append_from_wasm_js(&[
-            FromWasmStartTimer::to_js_code(),
-            FromWasmStopTimer::to_js_code(),
-            FromWasmFullScreen::to_js_code(),
-            FromWasmNormalScreen::to_js_code(),
-            FromWasmRequestAnimationFrame::to_js_code(),
-            FromWasmSetDocumentTitle::to_js_code(),
-            FromWasmSetMouseCursor::to_js_code(),
-            FromWasmTextCopyResponse::to_js_code(),
-            FromWasmShowTextIME::to_js_code(),
-            FromWasmHideTextIME::to_js_code(),
-            FromWasmHTTPRequest::to_js_code(),
-            FromWasmCancelHTTPRequest::to_js_code(),
-            FromWasmCheckPermission::to_js_code(),
-            FromWasmRequestPermission::to_js_code(),
-            FromWasmStartLocationUpdates::to_js_code(),
-            FromWasmStopLocationUpdates::to_js_code(),
-            /*FromWasmWebSocketOpen::to_js_code(),
-            FromWasmWebSocketSendString::to_js_code(),
-            FromWasmWebSocketSendBinary::to_js_code(),*/
-            FromWasmXrStartPresenting::to_js_code(),
-            FromWasmXrStopPresenting::to_js_code(),
-            FromWasmCompileWebGLShader::to_js_code(),
-            FromWasmAllocArrayBuffer::to_js_code(),
-            FromWasmAllocIndexBuffer::to_js_code(),
-            FromWasmAllocVao::to_js_code(),
-            FromWasmAllocTextureImage2D_BGRAu8_32::to_js_code(),
-            FromWasmAllocTextureImage2D_Ru8::to_js_code(),
-            FromWasmAllocTextureImage2D_RGBAf32::to_js_code(),
-            FromWasmAllocTextureCube_BGRAu8_32::to_js_code(),
-            FromWasmBeginRenderTexture::to_js_code(),
-            FromWasmBeginRenderCanvas::to_js_code(),
-            FromWasmSetDefaultDepthAndBlendMode::to_js_code(),
-            FromWasmDrawCall::to_js_code(),
-            FromWasmOpenUrl::to_js_code(),
-            FromWasmBrowserUpdateUrl::to_js_code(),
-            FromWasmBrowserHistoryGo::to_js_code(),
-            FromWasmUseMidiInputs::to_js_code(),
-            FromWasmSendMidiOutput::to_js_code(),
-            FromWasmQueryAudioDevices::to_js_code(),
-            FromWasmStartAudioOutput::to_js_code(),
-            FromWasmStopAudioOutput::to_js_code(),
-            FromWasmQueryMidiPorts::to_js_code(),
-            FromWasmPrepareVideoPlayback::to_js_code(),
-            FromWasmBeginVideoPlayback::to_js_code(),
-            FromWasmPauseVideoPlayback::to_js_code(),
-            FromWasmResumeVideoPlayback::to_js_code(),
-            FromWasmMuteVideoPlayback::to_js_code(),
-            FromWasmUnmuteVideoPlayback::to_js_code(),
-            FromWasmSeekVideoPlayback::to_js_code(),
-            FromWasmCleanupVideoPlaybackResources::to_js_code(),
-        ]);
-        #[cfg(target_feature = "atomics")]
-        self.os
-            .append_from_wasm_js(&[FromWasmCreateThread::to_js_code()]);
+        let (to_wasm, from_wasm) = web_bridge_js_sources();
+        self.os.append_to_wasm_js(&to_wasm);
+        self.os.append_from_wasm_js(&from_wasm);
     }
 
     fn seconds_since_app_start(&self) -> f64 {
@@ -1186,6 +1109,7 @@ pub unsafe extern "C" fn wasm_thread_alloc_tls_and_stack(tls_size: u32) -> u32 {
 // storage buffers for graphics API related platform
 pub struct CxOs {
     pub(crate) window_geom: WindowGeom,
+    pub(crate) os_dpi_factor: Option<f64>,
 
     pub from_wasm: Option<FromWasmMsg>,
 
@@ -1203,6 +1127,7 @@ impl Default for CxOs {
     fn default() -> Self {
         Self {
             window_geom: WindowGeom::default(),
+            os_dpi_factor: None,
 
             from_wasm: Some(FromWasmMsg::new()),
 
@@ -1232,27 +1157,155 @@ impl CxOs {
     }
 }
 
-#[export_name = "wasm_get_js_message_bridge"]
-#[cfg(target_arch = "wasm32")]
-pub unsafe extern "C" fn wasm_get_js_message_bridge(cx_ptr: u32) -> u32 {
-    let cx = &mut *(cx_ptr as *mut Cx);
-    let mut msg = FromWasmMsg::new();
-    let mut out = String::new();
+/// Every message type the web backend exchanges with JS. The static message
+/// bridge shipped next to a build is generated from this list at build time,
+/// so there is exactly one definition of the protocol.
+pub fn web_bridge_js_sources() -> (Vec<String>, Vec<String>) {
+    let to_wasm = vec![
+            ToWasmInit::to_js_code(),
+            ToWasmResizeWindow::to_js_code(),
+            ToWasmAnimationFrame::to_js_code(),
+            ToWasmTouchUpdate::to_js_code(),
+            ToWasmMouseDown::to_js_code(),
+            ToWasmMouseMove::to_js_code(),
+            ToWasmMouseUp::to_js_code(),
+            ToWasmScroll::to_js_code(),
+            ToWasmKeyDown::to_js_code(),
+            ToWasmKeyUp::to_js_code(),
+            ToWasmTextInput::to_js_code(),
+            ToWasmTextCopy::to_js_code(),
+            ToWasmTimerFired::to_js_code(),
+            ToWasmPaintDirty::to_js_code(),
+            ToWasmRedrawAll::to_js_code(),
+            ToWasmLiveFileChange::to_js_code(),
+            ToWasmLocationChange::to_js_code(),
+            ToWasmWindowGotFocus::to_js_code(),
+            ToWasmWindowLostFocus::to_js_code(),
+            ToWasmHTTPResponse::to_js_code(),
+            ToWasmHttpRequestError::to_js_code(),
+            ToWasmHttpResponseProgress::to_js_code(),
+            ToWasmHttpUploadProgress::to_js_code(),
+            ToWasmPermissionResult::to_js_code(),
+            ToWasmLocationUpdate::to_js_code(),
+            ToWasmLocationError::to_js_code(),
+            /*ToWasmWebSocketOpen::to_js_code(),
+            ToWasmWebSocketClose::to_js_code(),
+            ToWasmWebSocketError::to_js_code(),
+            ToWasmWebSocketString::to_js_code(),
+            ToWasmWebSocketBinary::to_js_code(),*/
+            ToWasmSignal::to_js_code(),
+            ToWasmAppLifecycle::to_js_code(),
+            ToWasmMidiInputData::to_js_code(),
+            ToWasmMidiPortList::to_js_code(),
+            ToWasmAudioDeviceList::to_js_code(),
+            ToWasmVideoPlaybackPrepared::to_js_code(),
+            ToWasmVideoTextureUpdated::to_js_code(),
+            ToWasmVideoPlaybackCompleted::to_js_code(),
+            ToWasmVideoPlaybackResourcesReleased::to_js_code(),
+        ];
 
+    #[allow(unused_mut)]
+    let mut from_wasm = vec![
+            FromWasmStartTimer::to_js_code(),
+            FromWasmStopTimer::to_js_code(),
+            FromWasmFullScreen::to_js_code(),
+            FromWasmNormalScreen::to_js_code(),
+            FromWasmRequestAnimationFrame::to_js_code(),
+            FromWasmSetDocumentTitle::to_js_code(),
+            FromWasmSetMouseCursor::to_js_code(),
+            FromWasmTextCopyResponse::to_js_code(),
+            FromWasmShowTextIME::to_js_code(),
+            FromWasmHideTextIME::to_js_code(),
+            FromWasmHTTPRequest::to_js_code(),
+            FromWasmCancelHTTPRequest::to_js_code(),
+            FromWasmCheckPermission::to_js_code(),
+            FromWasmRequestPermission::to_js_code(),
+            FromWasmStartLocationUpdates::to_js_code(),
+            FromWasmStopLocationUpdates::to_js_code(),
+            /*FromWasmWebSocketOpen::to_js_code(),
+            FromWasmWebSocketSendString::to_js_code(),
+            FromWasmWebSocketSendBinary::to_js_code(),*/
+            FromWasmXrStartPresenting::to_js_code(),
+            FromWasmXrStopPresenting::to_js_code(),
+            FromWasmCompileWebGLShader::to_js_code(),
+            FromWasmAllocArrayBuffer::to_js_code(),
+            FromWasmAllocIndexBuffer::to_js_code(),
+            FromWasmAllocVao::to_js_code(),
+            FromWasmAllocTextureImage2D_BGRAu8_32::to_js_code(),
+            FromWasmAllocTextureImage2D_Ru8::to_js_code(),
+            FromWasmAllocTextureImage2D_RGBAf32::to_js_code(),
+            FromWasmAllocTextureCube_BGRAu8_32::to_js_code(),
+            FromWasmBeginRenderTexture::to_js_code(),
+            FromWasmBeginRenderCanvas::to_js_code(),
+            FromWasmSetDefaultDepthAndBlendMode::to_js_code(),
+            FromWasmDrawCall::to_js_code(),
+            FromWasmOpenUrl::to_js_code(),
+            FromWasmBrowserUpdateUrl::to_js_code(),
+            FromWasmBrowserHistoryGo::to_js_code(),
+            FromWasmUseMidiInputs::to_js_code(),
+            FromWasmSendMidiOutput::to_js_code(),
+            FromWasmQueryAudioDevices::to_js_code(),
+            FromWasmStartAudioOutput::to_js_code(),
+            FromWasmStopAudioOutput::to_js_code(),
+            FromWasmQueryMidiPorts::to_js_code(),
+            FromWasmPrepareVideoPlayback::to_js_code(),
+            FromWasmBeginVideoPlayback::to_js_code(),
+            FromWasmPauseVideoPlayback::to_js_code(),
+            FromWasmResumeVideoPlayback::to_js_code(),
+            FromWasmMuteVideoPlayback::to_js_code(),
+            FromWasmUnmuteVideoPlayback::to_js_code(),
+            FromWasmSeekVideoPlayback::to_js_code(),
+            FromWasmCleanupVideoPlaybackResources::to_js_code(),
+        ];
+    #[cfg(target_feature = "atomics")]
+    from_wasm.push(FromWasmCreateThread::to_js_code());
+    (to_wasm, from_wasm)
+}
+
+/// Body of the JS factory that builds the `ToWasmMsg`/`FromWasmMsg` classes.
+pub fn web_bridge_js_source() -> String {
+    let (to_wasm, from_wasm) = web_bridge_js_sources();
+    let mut out = String::new();
     out.push_str("return {\n");
     out.push_str("ToWasmMsg:class extends ToWasmMsg{\n");
-    for to_wasm in &cx.os.to_wasm_js {
-        out.push_str(to_wasm);
+    for code in &to_wasm {
+        out.push_str(code);
     }
     out.push_str("},\n");
     out.push_str("FromWasmMsg:class extends FromWasmMsg{\n");
-    for from_wasm in &cx.os.from_wasm_js {
-        out.push_str(from_wasm);
+    for code in &from_wasm {
+        out.push_str(code);
     }
     out.push_str("}\n");
     out.push_str("}");
-    msg.push_str(&out);
+    out
+}
+
+fn fnv1a64(text: &str) -> u64 {
+    let mut hash: u64 = 0xcbf2_9ce4_8422_2325;
+    for byte in text.bytes() {
+        hash ^= byte as u64;
+        hash = hash.wrapping_mul(0x0000_0100_0000_01b3);
+    }
+    hash
+}
+
+/// Build-time entry point: returns the bridge source as a `FromWasmMsg`
+/// string so a host-side generator can write the static ESM.
+#[export_name = "wasm_js_message_bridge_source"]
+#[cfg(target_arch = "wasm32")]
+pub unsafe extern "C" fn wasm_js_message_bridge_source() -> u32 {
+    let mut msg = FromWasmMsg::new();
+    msg.push_str(&web_bridge_js_source());
     msg.release_ownership()
+}
+
+/// Fingerprint the loader compares against the shipped bridge module before
+/// it drives this wasm with it.
+#[export_name = "wasm_js_message_bridge_hash"]
+#[cfg(target_arch = "wasm32")]
+pub unsafe extern "C" fn wasm_js_message_bridge_hash() -> u64 {
+    fnv1a64(&web_bridge_js_source())
 }
 
 #[export_name = "wasm_check_signal"]

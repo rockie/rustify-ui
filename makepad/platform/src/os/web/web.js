@@ -1,22 +1,19 @@
 import { WasmBridge } from "../makepad_wasm_bridge/wasm_bridge.js"
 
 export class WasmWebBrowser extends WasmBridge {
-    constructor(wasm, dispatch, canvas) {
-        super(wasm, dispatch);
+    constructor(wasm, dispatch, canvas, options = {}) {
+        super(wasm, dispatch, options);
         if (wasm === undefined) {
             return
         }
-        /*
-        window.onbeforeunload = _ => {
-            this.clear_memory_refs();
-            for (let worker of this.workers) {
-                worker.terminate();
-            }
-        }*/
+        // Embedded regions are created and owned on the Rust side and never
+        // touch page-level state; the fullpage path keeps the process-wide app.
+        this.embedded = options.embedded === true;
+        this.abort = new AbortController();
+        this.destroyed = false;
+        this.unsupported_reported = new Set();
 
-        this.wasm_app = this.wasm_create_app();
-
-        this.create_js_message_bridge(this.wasm_app);
+        this.wasm_app = this.embedded ? options.region : this.wasm_create_app();
 
         this.dispatch = dispatch;
         this.canvas = canvas;
@@ -83,6 +80,7 @@ export class WasmWebBrowser extends WasmBridge {
         this.lifecycle_is_visible = !document.hidden;
         this.lifecycle_shutdown_sent = false;
 
+        const signal = this.abort.signal;
         document.addEventListener("visibilitychange", () => {
             if (document.hidden) {
                 this.emit_app_inactive();
@@ -90,7 +88,7 @@ export class WasmWebBrowser extends WasmBridge {
                 this.emit_app_active();
             }
             this.do_wasm_pump();
-        });
+        }, { signal });
 
         window.addEventListener("pagehide", (event) => {
             this.emit_app_inactive();
@@ -98,14 +96,14 @@ export class WasmWebBrowser extends WasmBridge {
                 this.emit_app_shutdown();
             }
             this.do_wasm_pump();
-        });
+        }, { signal });
 
         window.addEventListener("pageshow", (event) => {
             if (event.persisted) {
                 this.emit_app_active();
                 this.do_wasm_pump();
             }
-        });
+        }, { signal });
 
     }
 
@@ -132,7 +130,9 @@ export class WasmWebBrowser extends WasmBridge {
 
     async load_deps() {
         this.to_wasm = this.new_to_wasm();
-        this.install_live_reload_bridge();
+        if (!this.embedded) {
+            this.install_live_reload_bridge();
+        }
 
         await this.query_xr_capabilities();
         this.update_window_info();
@@ -155,29 +155,96 @@ export class WasmWebBrowser extends WasmBridge {
         });
 
         this.do_wasm_pump();
+        if (this.destroyed) {
+            return;
+        }
         // only bind the event handlers now
         // to stop them firing into wasm early
         this.bind_mouse_and_touch();
-        this.bind_keyboard();
         this.bind_screen_resize();
         this.bind_app_lifecycle();
-        window.addEventListener("popstate", () => {
-            this.emit_location_change();
-            this.do_wasm_pump();
-        });
-        window.addEventListener("hashchange", () => {
-            this.emit_location_change();
-            this.do_wasm_pump();
-        });
-        this.focus_keyboard_input();
+        if (!this.embedded) {
+            this.bind_keyboard();
+            const signal = this.abort.signal;
+            window.addEventListener("popstate", () => {
+                this.emit_location_change();
+                this.do_wasm_pump();
+            }, { signal });
+            window.addEventListener("hashchange", () => {
+                this.emit_location_change();
+                this.do_wasm_pump();
+            }, { signal });
+            this.focus_keyboard_input();
+        }
         this.to_wasm.ToWasmRedrawAll();
-        this.start_signal_poll();
+        if (!this.embedded) {
+            this.start_signal_poll();
+        }
         this.do_wasm_pump();
-        this.schedule_loader_fallback();
+        if (!this.embedded) {
+            this.schedule_loader_fallback();
+        }
+    }
+
+    unsupported(capability) {
+        if (this.unsupported_reported.has(capability)) {
+            return;
+        }
+        this.unsupported_reported.add(capability);
+        console.warn("[makepad] capability not available in an embedded region: " + capability);
+    }
+
+    // Releases everything this instance registered with the page: listeners,
+    // timers, animation frames and observers. The Rust side owns the Cx and
+    // drops it after this returns.
+    destroy() {
+        if (this.destroyed) {
+            return;
+        }
+        this.destroyed = true;
+        this.abort.abort();
+        for (const timer of this.timers) {
+            if (timer.repeats) {
+                window.clearInterval(timer.sys_id);
+            } else {
+                window.clearTimeout(timer.sys_id);
+            }
+        }
+        this.timers.length = 0;
+        if (this.req_anim_frame_id) {
+            window.cancelAnimationFrame(this.req_anim_frame_id);
+            this.req_anim_frame_id = 0;
+        }
+        if (this.resize_observer) {
+            this.resize_observer.disconnect();
+            this.resize_observer = null;
+        }
+        if (this.poll_timer) {
+            window.clearInterval(this.poll_timer);
+            this.poll_timer = null;
+        }
+        if (this.geo_watch_id !== undefined) {
+            navigator.geolocation.clearWatch(this.geo_watch_id);
+            this.geo_watch_id = undefined;
+        }
+        for (const controller of this.network_http_requests.values()) {
+            controller.abort();
+        }
+        this.network_http_requests.clear();
+        for (const key in this.network_web_sockets) {
+            this.network_web_sockets[key].close();
+        }
+        this.network_web_sockets = {};
+        if (this.audio_context) {
+            this.audio_context.close();
+            this.audio_context = null;
+        }
+        this.to_wasm = null;
+        this.clear_memory_refs();
     }
 
     remove_canvas_loader() {
-        if (this.loader_removed) {
+        if (this.loader_removed || this.embedded) {
             return;
         }
         this.loader_removed = true;
@@ -264,6 +331,9 @@ export class WasmWebBrowser extends WasmBridge {
     }
 
     FromWasmOpenUrl(args) {
+        if (this.embedded) {
+            return this.unsupported("open_url");
+        }
         if (args.in_place) {
             window.location.href = args.url;
         }
@@ -276,6 +346,9 @@ export class WasmWebBrowser extends WasmBridge {
     }
 
     FromWasmBrowserUpdateUrl(args) {
+        if (this.embedded) {
+            return this.unsupported("browser_update_url");
+        }
         const next = new URL(args.url || "", window.location.href);
         const nextHref = next.pathname + next.search + next.hash;
         const currentHref = location.pathname + location.search + location.hash;
@@ -291,6 +364,9 @@ export class WasmWebBrowser extends WasmBridge {
     }
 
     FromWasmBrowserHistoryGo(args) {
+        if (this.embedded) {
+            return this.unsupported("browser_history_go");
+        }
         if (args.delta === -1) {
             window.history.back();
         }
@@ -391,6 +467,9 @@ export class WasmWebBrowser extends WasmBridge {
     }
 
     FromWasmFullScreen() {
+        if (this.embedded) {
+            return this.unsupported("fullscreen");
+        }
         if (document.body.requestFullscreen) {
             document.body.requestFullscreen();
             return
@@ -406,6 +485,9 @@ export class WasmWebBrowser extends WasmBridge {
     }
 
     FromWasmNormalScreen() {
+        if (this.embedded) {
+            return;
+        }
         if (this.canvas.exitFullscreen) {
             this.canvas.exitFullscreen();
             return
@@ -421,11 +503,11 @@ export class WasmWebBrowser extends WasmBridge {
     }
 
     FromWasmRequestAnimationFrame() {
-        if (this.xr !== undefined || this.req_anim_frame_id) {
+        if (this.xr !== undefined || this.req_anim_frame_id || this.destroyed) {
             return;
         }
         this.req_anim_frame_id = window.requestAnimationFrame(time => {
-            if (this.wasm == null) {
+            if (this.wasm == null || this.destroyed) {
                 return
             }
             this.req_anim_frame_id = 0;
@@ -440,12 +522,15 @@ export class WasmWebBrowser extends WasmBridge {
     }
 
     FromWasmSetDocumentTitle(args) {
+        if (this.embedded) {
+            return this.unsupported("document_title");
+        }
         document.title = args.title
     }
 
     FromWasmSetMouseCursor(args) {
-        //console.log(args);
-        document.body.style.cursor = web_cursor_map[args.web_cursor] || 'default'
+        const target = this.embedded ? this.canvas : document.body;
+        target.style.cursor = web_cursor_map[args.web_cursor] || 'default'
     }
 
     FromWasmTextCopyResponse(args) {
@@ -580,8 +665,9 @@ export class WasmWebBrowser extends WasmBridge {
             sampleRate: 48000
         });
         start_worklet().catch(err => console.error(err));
-        window.addEventListener('mousedown', user_interact_hook)
-        window.addEventListener('touchstart', user_interact_hook)
+        const signal = this.abort.signal;
+        window.addEventListener('mousedown', user_interact_hook, { signal })
+        window.addEventListener('touchstart', user_interact_hook, { signal })
     }
 
     FromWasmQueryAudioDevices(args) {
@@ -855,11 +941,17 @@ export class WasmWebBrowser extends WasmBridge {
             body,
             signal: controller.signal,
         }).then(async response => {
+            if (this.destroyed) {
+                return;
+            }
             let response_headers = "";
             response.headers.forEach((value, key) => {
                 response_headers += `${key}: ${value}\r\n`;
             });
             let response_body = new Uint8Array(await response.arrayBuffer());
+            if (this.destroyed) {
+                return;
+            }
             let headers_u8 = this.string_to_u8(response_headers);
             let body_u8 = this.array_to_u8(response_body);
             console.log("[makepad][http][res]", response.status, url, response_body.length);
@@ -875,6 +967,9 @@ export class WasmWebBrowser extends WasmBridge {
                 body_u8.len
             );
         }).catch(error => {
+            if (this.destroyed) {
+                return;
+            }
             console.error("[makepad][http][err]", method, url, "" + error);
             let message_u8 = this.string_to_u8("" + error);
             this.exports.wasm_network_http_error(
@@ -906,8 +1001,11 @@ export class WasmWebBrowser extends WasmBridge {
         web_socket.binaryType = "arraybuffer";
         this.network_web_sockets[socket_key] = web_socket;
         web_socket.onclose = _e => {
-            this.exports.wasm_network_ws_closed(socket_id_lo, socket_id_hi);
             delete this.network_web_sockets[socket_key];
+            if (this.destroyed) {
+                return;
+            }
+            this.exports.wasm_network_ws_closed(socket_id_lo, socket_id_hi);
         };
         web_socket.onerror = e => {
             let message = this.string_to_u8("" + e);
@@ -1239,26 +1337,47 @@ export class WasmWebBrowser extends WasmBridge {
 
 
     wasm_return_first_msg() {
-        let ret_ptr = this.exports.wasm_return_first_msg(this.wasm_app)
+        let ret_ptr = this.embedded
+            ? this.exports.rustify_region_first_msg(this.wasm_app)
+            : this.exports.wasm_return_first_msg(this.wasm_app);
         this.update_array_buffer_refs();
+        if (ret_ptr === 0) {
+            return null;
+        }
         return this.new_from_wasm(ret_ptr);
     }
 
     dispatch_first_msg() {
         let from_wasm = this.wasm_return_first_msg();
-        from_wasm.dispatch_on_app();
+        if (from_wasm === null) {
+            return;
+        }
+        this.as_current(() => from_wasm.dispatch_on_app());
         from_wasm.free();
     }
 
     do_wasm_pump() {
+        if (this.destroyed) {
+            return;
+        }
         let started = performance.now();
         this.buffer_upload_serial += 1;
         let to_wasm = this.to_wasm;
         this.to_wasm = this.new_to_wasm();
-        let from_wasm = this.wasm_process_msg(to_wasm);
-        from_wasm.dispatch_on_app();
-        from_wasm.free();
-        this.update_startup_loader(performance.now() - started);
+        this.as_current(() => {
+            let from_wasm = this.wasm_process_msg(to_wasm);
+            if (from_wasm === null) {
+                // The Rust side no longer knows this region: it was destroyed
+                // while a message was already in flight.
+                this.destroy();
+                return;
+            }
+            from_wasm.dispatch_on_app();
+            from_wasm.free();
+        });
+        if (!this.embedded) {
+            this.update_startup_loader(performance.now() - started);
+        }
     }
 
 
@@ -1274,8 +1393,13 @@ export class WasmWebBrowser extends WasmBridge {
         }
 
 
-        let ret_ptr = this.exports.wasm_process_msg(to_wasm.release_ownership(), this.wasm_app)
+        let ret_ptr = this.embedded
+            ? this.exports.rustify_region_process(this.wasm_app, to_wasm.release_ownership())
+            : this.exports.wasm_process_msg(to_wasm.release_ownership(), this.wasm_app);
         this.update_array_buffer_refs();
+        if (ret_ptr === 0) {
+            return null;
+        }
         return this.new_from_wasm(ret_ptr);
     }
 
@@ -1319,17 +1443,23 @@ export class WasmWebBrowser extends WasmBridge {
             }
         }
         else {
-            w = canvas.offsetWidth;
-            h = canvas.offsetHeight;
+            w = canvas.clientWidth;
+            h = canvas.clientHeight;
         }
-        var sw = canvas.width = w * dpi_factor;
-        var sh = canvas.height = h * dpi_factor;
+        var sw = Math.round(w * dpi_factor);
+        var sh = Math.round(h * dpi_factor);
+        if (canvas.width !== sw || canvas.height !== sh) {
+            canvas.width = sw;
+            canvas.height = sh;
+        }
 
-        this.gl.viewport(0, 0, sw, sh);
+        if (this.gl) {
+            this.gl.viewport(0, 0, sw, sh);
+        }
 
         this.window_info.dpi_factor = dpi_factor;
-        this.window_info.inner_width = canvas.offsetWidth;
-        this.window_info.inner_height = canvas.offsetHeight;
+        this.window_info.inner_width = w;
+        this.window_info.inner_height = h;
         this.window_info.is_fullscreen = is_fullscreen();
         this.window_info.can_fullscreen = can_fullscreen();
     }
@@ -1358,12 +1488,87 @@ export class WasmWebBrowser extends WasmBridge {
             this.do_wasm_pump();
         }
 
-        window.addEventListener('resize', _ => this.handlers.on_screen_resize())
-        window.addEventListener('orientationchange', _ => this.handlers.on_screen_resize())
+        if (this.embedded) {
+            this.resize_observer = new ResizeObserver(_ => this.handlers.on_screen_resize());
+            this.resize_observer.observe(this.canvas);
+            return;
+        }
+        const signal = this.abort.signal;
+        window.addEventListener('resize', _ => this.handlers.on_screen_resize(), { signal })
+        window.addEventListener('orientationchange', _ => this.handlers.on_screen_resize(), { signal })
+    }
+
+    // Embedded regions only ever see input that starts on their own canvas.
+    // Pointer capture keeps a drag attached to the region without any
+    // window-level listener, and coordinates are canvas-local CSS pixels.
+    bind_pointer_input() {
+        const canvas = this.canvas;
+        const signal = this.abort.signal;
+        const local_mouse = (e) => {
+            const rect = canvas.getBoundingClientRect();
+            return {
+                x: e.clientX - rect.left,
+                y: e.clientY - rect.top,
+                button: e.button < 0 ? 0 : e.button,
+                time: e.timeStamp / 1000.0,
+                modifiers: pack_key_modifier(e)
+            }
+        };
+        this.handlers.on_pointer_down = e => {
+            e.preventDefault();
+            canvas.setPointerCapture(e.pointerId);
+            this.to_wasm.ToWasmMouseDown({ mouse: local_mouse(e) });
+            this.do_wasm_pump();
+        };
+        this.handlers.on_pointer_up = e => {
+            e.preventDefault();
+            if (canvas.hasPointerCapture(e.pointerId)) {
+                canvas.releasePointerCapture(e.pointerId);
+            }
+            this.to_wasm.ToWasmMouseUp({ mouse: local_mouse(e) });
+            this.do_wasm_pump();
+        };
+        this.handlers.on_pointer_move = e => {
+            this.to_wasm.ToWasmMouseMove({ was_out: false, mouse: local_mouse(e) });
+            this.do_wasm_pump();
+        };
+        this.handlers.on_pointer_leave = e => {
+            this.to_wasm.ToWasmMouseMove({ was_out: true, mouse: local_mouse(e) });
+            this.do_wasm_pump();
+        };
+        this.handlers.on_wheel = e => {
+            e.preventDefault();
+            const mouse = local_mouse(e);
+            let fac = 1;
+            if (e.deltaMode === 1) fac = 40;
+            else if (e.deltaMode === 2) fac = canvas.clientHeight;
+            this.to_wasm.ToWasmScroll({
+                x: mouse.x,
+                y: mouse.y,
+                modifiers: mouse.modifiers,
+                is_touch: e.deltaMode === 0 && Number.isInteger(e.deltaY) === false,
+                scroll_x: e.deltaX * fac,
+                scroll_y: e.deltaY * fac,
+                time: mouse.time,
+            });
+            this.do_wasm_pump();
+        };
+        canvas.addEventListener('pointerdown', e => this.handlers.on_pointer_down(e), { signal });
+        canvas.addEventListener('pointerup', e => this.handlers.on_pointer_up(e), { signal });
+        canvas.addEventListener('pointercancel', e => this.handlers.on_pointer_up(e), { signal });
+        canvas.addEventListener('pointermove', e => this.handlers.on_pointer_move(e), { signal });
+        canvas.addEventListener('pointerleave', e => this.handlers.on_pointer_leave(e), { signal });
+        canvas.addEventListener('wheel', e => this.handlers.on_wheel(e), { signal, passive: false });
+        canvas.addEventListener('contextmenu', e => e.preventDefault(), { signal });
     }
 
     bind_mouse_and_touch() {
+        if (this.embedded) {
+            this.bind_pointer_input();
+            return;
+        }
 
+        const signal = this.abort.signal;
         var canvas = this.canvas
         /*
         TODO fix/test this
@@ -1492,10 +1697,10 @@ export class WasmWebBrowser extends WasmBridge {
             this.do_wasm_pump();
         }
 
-        canvas.addEventListener('mousedown', e => this.handlers.on_mouse_down(e))
-        window.addEventListener('mouseup', e => this.handlers.on_mouse_up(e))
-        window.addEventListener('mousemove', e => this.handlers.on_mouse_move(e));
-        window.addEventListener('mouseout', e => this.handlers.on_mouse_out(e));
+        canvas.addEventListener('mousedown', e => this.handlers.on_mouse_down(e), { signal })
+        window.addEventListener('mouseup', e => this.handlers.on_mouse_up(e), { signal })
+        window.addEventListener('mousemove', e => this.handlers.on_mouse_move(e), { signal });
+        window.addEventListener('mouseout', e => this.handlers.on_mouse_out(e), { signal });
 
         this.handlers.on_contextmenu = e => {
             e.preventDefault()
@@ -1893,20 +2098,15 @@ function is_fullscreen() {
     return (document.fullscreenElement || document.webkitFullscreenElement || document.mozFullscreenElement) ? true : false
 }
 
+// Diagnostics stay on the page: nothing is sent anywhere unless the host
+// installs its own reporter.
 function report_browser_issue(kind, data) {
     try {
         if (typeof window.makepad_report_browser_issue === "function") {
             window.makepad_report_browser_issue(kind, data);
             return;
         }
-        const payload = JSON.stringify({
-            kind,
-            href: location.href,
-            user_agent: navigator.userAgent,
-            data
-        });
-        const encoded = encodeURIComponent(payload.slice(0, 8192));
-        fetch('/$report_error?data=' + encoded, { cache: 'no-store' });
+        console.warn("[makepad] " + kind, data);
     } catch (_error) {
     }
 }

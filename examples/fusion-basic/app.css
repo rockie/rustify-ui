@@ -1,0 +1,20 @@
+body {
+    margin: 0;
+    padding: 24px;
+    font: 15px/1.5 system-ui, sans-serif;
+    color: #1d2939;
+    background: #f9fafb;
+}
+
+.fusion-basic {
+    display: grid;
+    gap: 12px;
+    max-width: 520px;
+}
+
+.fusion-basic .gpu-region {
+    height: 200px;
+    border: 1px solid #d0d5dd;
+    border-radius: 6px;
+    background: #101828;
+}

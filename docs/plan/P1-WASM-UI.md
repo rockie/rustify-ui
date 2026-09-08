@@ -1,6 +1,6 @@
 # P1 · Rustify UI · 融合运行基础与研发预览（Leptos CSR + Makepad Web）
 
-> **计划状态：Blocked**。
+> **计划状态：Blocked**（M1 实施中：A-2/A-4 已由探针解除，A-3 余一项偶发缺陷，见「实施进度」）。
 >
 > 调查基线：2026-09-08 · `21f96a95f31975b39a8ef331eeab7bea319dc698` · 调查开始时工作区 clean；本次仅新增本计划，交付时工作区 dirty。参考源码来自当前被忽略的 `ref/`，不属于该 commit。
 > 输入：[PRD v0.1](../PRD-WASM-UI.md)。它仍为评审草稿，未定义“第一期”；用户 2026-09-08 已确认本计划 §0.1 的第一期范围，PRD 层面的 Q1–Q3 与建议预算仍未批准。
@@ -28,13 +28,17 @@
 
 ### 恢复快照
 
-- 最近更新：2026-09-08，评审修订完成（三轮用户决定已回写），尚未开始实施。
-- 当前进度：0/8 个里程碑完成。
-- 当前状态：尚未开始，计划存在前置阻塞。
-- 最近完成：无。
-- 下一步：实施获授权后从 M1 开始：按 ADR-2 导入规则把 Makepad wasm 闭包硬分叉导入 `makepad/`，锁定 Leptos 0.8.20，执行三项技术探针。
-- 当前阻塞：A-2 构建组合、A-3 多区域运行与销毁（含 F15 全局清单）、A-4 CSP 静态桥未验证，均由 M1 探针解除；A-1 已确认。输入矩阵及性能测量条件按 A-5/A-6 设后续闸口。
-- 代码基线：`21f96a95f31975b39a8ef331eeab7bea319dc698`；dirty 仅本计划 `docs/plan/P1-WASM-UI.md`，无功能改动。
+- 最近更新：2026-09-08，M1 实施中；本次会话按用户要求在当前步骤末尾暂停，下一会话从本节继续。
+- 当前进度：0/8 个里程碑完成。M1 退出条件 8/10 满足，见下。
+- 代码基线：`60828a7`（Makepad 闭包原样导入）→ `0e5c1af`（裁剪为 Web 后端与构建工具）→ 本会话末尾的 M1 提交（`git log -1`，M1：SDK、示例、xtask、探针、文档）。工作区 clean。
+- 已通过的验证（2026-09-08 本机）：`cargo xtask doctor` 8/8 通过；`cargo test --workspace --lib` 3 通过；`cargo test -p xtask` 9 通过；`cd makepad && cargo test -p cargo-makepad` 10 通过；`cargo clippy --workspace --all-targets -- -D warnings` 无警告；`cargo fmt --all -- --check` 通过（`makepad/rustfmt.toml` 禁用 fork 格式化）；`cargo xtask sources verify` 输出 18 改/4 增/212 删（均为本期提交）；`cargo xtask build-web --example fusion-basic --release` 通过；`npm run test:browser` 8 项中 7 项通过。
+- M1 退出条件对照：新检出不读 ref 可重建 ✔；nightly/CLI/依赖锁定 ✔（`rust-toolchain.toml`，wasm-bindgen 0.2.128 crate 与 cli-support 一致）；路径成员 resources 定位 ✔；导入/裁剪清单随提交 ✔（`sources.lock.json`、两次提交说明）；DOM 按钮改变真实 GPU 内容 ✔（探针 1–3）；双区域互不干扰并能释放 ✔（探针 4–6）；发布探针无 `new Function` ✔（探针 8）；严格 CSP 且 `crossOriginIsolated=false` ✔；报告与 ADR 更新 ✔（`docs/validation/p1/m1-probes.md`）；**未满足**：探针 7（20 轮挂载/卸载）偶发失败，见下一条；A-5/A-6 登记待用户确认。
+- 未解决缺陷（M1 内必须修）：20 轮挂载/卸载约第 4 轮时某区域 pump 触发 `panicked at makepad/libs/wasm_bridge/src/to_wasm.rs:181: index out of bounds: the len is 10 but the index is 10`（ToWasm 批次比块声明短），该区域的 `Cx` 未归还注册表，`live_region_count` 之后多 1。加 JS 插桩改变时序后 12 轮不复现。复现方式：`dispose("scope-a")` → 轮询 live==2 → `mount("scope-a")` → 等 canvas → 轮询 live==4，循环并捕获 pageerror。待查线索：① 10 个 u64 的批次大小与 `ToWasmResizeWindow`/`ToWasmInit` 吻合，核对生成的 `reserve_u32(4 + u32_size)` 是否漏算 f64 对齐填充导致越界写坏相邻消息；② `ResizeObserver` 初次回调与 `load_deps` 的 `ToWasmInit` 在同一个 builder 上交错；③ 销毁中的宿主在 `abort()` 后仍有同步路径写入 `to_wasm`。修复后还要让 `rustify_region_process` 在 Makepad panic 时归还/清理区域（RuntimeFatal 出口，见 D9），避免注册表悬挂。
+- 下一步：根治上述 panic → `npm run test:browser` 8/8 → 在 `docs/validation/p1/m1-probes.md` 与本节「完成记录」登记 M1 完成 → 进入 M2。M2 前先把 16 ms 信号轮询改为推送（`SignalToUI` 钩子）并审计每区域重复加载字体的内存（4 区域 124 MB 线性内存）。
+- 本期判断（已写入代码与文档）：Leptos 发布版与参考树在 islands/forms/async derived/stores/macro 内部有代码差异，但 F2/F3/F4 所依赖的文件完全一致，且无需修改 Leptos，按用户「不改代码则用 0.8.20」决定锁定发布版，不切 0.9.0-beta（记录于 `sources.lock.json`）；字体全部保留（`docs/compatibility.md`）；cargo-makepad 裁剪为仅 `wasm build`（去掉 run/热重载服务器、split/brotli/threads/`--small-fonts`），`wasm run` 由 `cargo xtask serve` 替代，index.html 由 xtask 生成；静态桥用 `wasmi` 在构建期执行 wasm 导出生成（§4.1 第 6 条允许的替代）。
+- Makepad Web 后端在 fork 内修复的上游缺陷（多 Cx 才暴露）：`ToWasmInit` 在窗口创建前索引 `windows[id_zero]` 触发 panic；多桥共享一个 wasm 时 typed-array 视图在内存增长后失效，写入静默丢失（前三个区域收不到 Init）；`ACTION_SENDER_GLOBAL` 只指向最后创建的 Cx；`clear_memory_refs` 置空共享实例的 `_memory`；销毁后的 fetch 回调访问已释放宿主。
+- 基线数字（无预算承诺）：release wasm 7,682,693 B；JS 158,766 B；字体 51,187,844 B（按需加载，首绘只取 IBMPlexSans-Text 181,792 B）；4 区域页面 ready 3.5 s（headless）；4 区域线性内存 123,994,112 B，6 轮挂载/卸载不增长；空闲 1 pump/s、0 帧/s。
+- 当前阻塞：A-1 已解除；A-2 已解除（探针①）；A-4 已解除（探针③）；A-3 大部解除，仅余上述偶发缺陷；A-5（真实拼音/VoiceOver 排期）与 A-6（测量合同）待用户确认。计划状态保持 Blocked 直到 M1 关闭。
 
 ### 完成记录
 

@@ -1,1 +1,8 @@
 ref/
+/target
+/makepad/target
+/node_modules
+/test-results
+/playwright-report
+/artifacts/p1/raw
+.DS_Store

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>fusion-basic</title>
+    <link rel="stylesheet" href="./runtime.css">
+    <link rel="stylesheet" href="./app.css">
+    <link rel="modulepreload" href="./loader.js">
+    <link rel="modulepreload" href="./bindgen.js">
+    <script type="module" src="./app.js"></script>
+</head>
+<body>
+    <main>
+        <h1>fusion-basic</h1>
+        <p>Leptos DOM and Makepad GPU regions sharing one counter per mount scope.</p>
+        <section>
+            <h2>scope a</h2>
+            <div id="scope-a" data-testid="scope-a"></div>
+        </section>
+        <section>
+            <h2>scope b</h2>
+            <div id="scope-b" data-testid="scope-b"></div>
+        </section>
+        <p><a href="#anchor" data-testid="native-link">native link</a></p>
+        <p id="status" data-testid="status"></p>
+    </main>
+</body>
+</html>

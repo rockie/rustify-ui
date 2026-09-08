@@ -1,0 +1,50 @@
+name: verify
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  host:
+    name: host checks
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+      - name: Toolchain from rust-toolchain.toml
+        run: rustup show active-toolchain
+      - name: Format
+        run: cargo fmt --all -- --check
+      - name: Unit tests
+        run: cargo test --workspace --lib
+      - name: Clippy
+        run: cargo clippy --workspace --all-targets -- -D warnings
+      - name: Source record
+        run: cargo xtask sources verify
+
+  web:
+    name: release web build and browser probes
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 26
+      - name: Toolchain from rust-toolchain.toml
+        run: rustup show active-toolchain
+      - name: Doctor (reports only, installs nothing)
+        run: cargo xtask doctor
+        continue-on-error: true
+      - name: Build fusion-basic
+        run: cargo xtask build-web --example fusion-basic --release
+      - name: Install pinned Playwright
+        run: npm ci && npx playwright install --with-deps chromium
+      - name: Browser probes (Playwright Chromium; not the macOS Chrome pass gate)
+        run: npm run test:browser
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: browser-results
+          path: |
+            test-results
+            target/makepad-wasm-app/release/fusion-basic/build-manifest.json

@@ -120,6 +120,7 @@ pub struct Cx {
     pub (crate) live_file_change_sender: std::sync::mpsc::Sender<Vec<LiveFileChange >>,
     */
     pub(crate) action_receiver: std::sync::mpsc::Receiver<ActionSend>,
+    pub(crate) action_sender: std::sync::mpsc::Sender<ActionSend>,
 
     pub os: CxOs,
     // (cratethis cuts the compiletime of an end-user application in half
@@ -427,7 +428,7 @@ impl Cx {
         //let (live_file_change_sender, live_file_change_receiver) = std::sync::mpsc::channel();
         let (action_sender, action_receiver) = std::sync::mpsc::channel();
         if let Ok(mut sender) = ACTION_SENDER_GLOBAL.lock() {
-            *sender = Some(action_sender);
+            *sender = Some(action_sender.clone());
         }
         // On platforms that use a shim backend (wasm, android), install it
         // before creating the NetworkRuntime so it picks up the real backend.
@@ -508,6 +509,7 @@ impl Cx {
             triggers: Default::default(),
 
             action_receiver,
+            action_sender,
 
             os: CxOs::default(),
 
