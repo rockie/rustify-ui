@@ -1,0 +1,109 @@
+{
+  "verifiedAt": "2026-09-08",
+  "verification": "source_reading_and_official_web_sources_only",
+  "runtimeVerified": false,
+  "performanceMeasured": false,
+  "referenceDirectoriesIgnoredByGit": true,
+  "references": [
+    {
+      "path": "ref/leptos-main",
+      "localPackage": "leptos",
+      "declaredVersion": "0.8.20",
+      "declaredRustVersion": "1.88",
+      "upstream": "https://github.com/leptos-rs/leptos",
+      "commit": null
+    },
+    {
+      "path": "ref/makepad-dev",
+      "localPackage": "makepad-widgets / makepad-platform",
+      "declaredVersion": "2.0.0",
+      "upstream": "https://github.com/makepad/makepad",
+      "commit": null
+    }
+  ],
+  "fingerprintScope": "Only the cited files read in this session; not a complete archive or an upstream commit identifier.",
+  "files": [
+    {
+      "path": "ref/leptos-main/Cargo.toml",
+      "sha256": "df28ea01c824d9bc4849671268700738d89bb96cf666afbee7e30ec5f302aac1",
+      "bytes": 8555
+    },
+    {
+      "path": "ref/leptos-main/leptos/Cargo.toml",
+      "sha256": "ae4564a119ec79d19bca0bd21256c6b977aeb36fcded419203090005e4987502",
+      "bytes": 6495
+    },
+    {
+      "path": "ref/leptos-main/leptos/src/mount.rs",
+      "sha256": "e2dee4e0346dcd3088e4169a4e121e2440ce010012fd88dacd800e1a2a1b2327",
+      "bytes": 10056
+    },
+    {
+      "path": "ref/leptos-main/reactive_graph/src/lib.rs",
+      "sha256": "8aaef45f11f4b68d2663c98754ee4bd12d8f3f41178440a96ceafb5fe111e70c",
+      "bytes": 7242
+    },
+    {
+      "path": "ref/leptos-main/tachys/src/renderer/mod.rs",
+      "sha256": "c26f5358538c4d8a97fad12efc00802e2baf34c497cc75c84d8269f76007a589",
+      "bytes": 8219
+    },
+    {
+      "path": "ref/makepad-dev/examples/counter/src/main.rs",
+      "sha256": "c00c83bd1b025b4c84f67f818e6ea3a138c5cacf748ee2ca8874072869911f6a",
+      "bytes": 1884
+    },
+    {
+      "path": "ref/makepad-dev/platform/src/os/web/web.js",
+      "sha256": "c9f17ebc80bb03bbc272174c91dc3f5d56ab4cc306b4fca11e2c29bb86c084f7",
+      "bytes": 68794
+    },
+    {
+      "path": "ref/makepad-dev/platform/src/os/web/web.rs",
+      "sha256": "8be1ad8d5b7cd0191fffdc94bad14aa7adbde7d5abf39825aaa8c4971c7318e8",
+      "bytes": 54782
+    },
+    {
+      "path": "ref/makepad-dev/platform/src/os/web/web_gl.js",
+      "sha256": "e6a79292026d4eeaaa7b43486a20b331583b75f2a6942260569a31c12add6977",
+      "bytes": 40014
+    },
+    {
+      "path": "ref/makepad-dev/tools/cargo_makepad/src/wasm/compile.rs",
+      "sha256": "45e9e0536cfa61f5f8620abd718103d28d620a70b0e2f631348b9e8247673b54",
+      "bytes": 77738
+    },
+    {
+      "path": "ref/makepad-dev/tools/cargo_makepad/src/wasm/mod.rs",
+      "sha256": "270b999ce55de45cc659abd9caef6d91db68bc26a25180a97ef4dcb239e3f287",
+      "bytes": 7163
+    },
+    {
+      "path": "ref/makepad-dev/widgets/Cargo.toml",
+      "sha256": "869e67a040ae2bbbf3861020a22e8ecfe3a69a01d352bdc4afe988bdc04d5462",
+      "bytes": 1781
+    },
+    {
+      "path": "ref/makepad-dev/widgets/src/data_grid.rs",
+      "sha256": "063060d662bf5a291368cab29bcbce5fab728ef5342869ee2072e7c82563d5b8",
+      "bytes": 73665
+    },
+    {
+      "path": "ref/makepad-dev/widgets/src/dock.rs",
+      "sha256": "7ac23dce77f2a7a2c4a2a083740353f07bdcf7ab98ca370e4763db2760577654",
+      "bytes": 77127
+    },
+    {
+      "path": "ref/makepad-dev/widgets/src/widget.rs",
+      "sha256": "2345e117968303a434ef67a6e1c2fd83f184a36171b7a3a26653ce75896095ac",
+      "bytes": 61792
+    }
+  ],
+  "officialWebSources": [
+    "https://book.leptos.dev/csr_wrapping_up.html",
+    "https://book.leptos.dev/deployment/csr.html",
+    "https://developer.mozilla.org/en-US/docs/Web/API/WebGLRenderingContext/isContextLost",
+    "https://developer.mozilla.org/en-US/docs/Web/API/Window/crossOriginIsolated",
+    "https://www.w3.org/TR/WCAG22/"
+  ]
+}
