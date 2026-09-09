@@ -10,11 +10,17 @@
   }
 }
 @layer utilities {
+  .rui\:flex {
+    display: flex;
+  }
   .rui\:inline-flex {
     display: inline-flex;
   }
   .rui\:items-center {
     align-items: center;
+  }
+  .rui\:gap-2 {
+    gap: calc(var(--rui-spacing) * 2);
   }
   .rui\:rounded-lg {
     border-radius: calc(var(--radius) + 2px);
@@ -40,6 +46,12 @@
   }
   .rui\:bg-secondary {
     background-color: var(--secondary);
+  }
+  .rui\:bg-success {
+    background-color: var(--success);
+  }
+  .rui\:bg-warning {
+    background-color: var(--warning);
   }
   .rui\:p-2 {
     padding: calc(var(--rui-spacing) * 2);
@@ -72,6 +84,9 @@
   }
   .rui\:text-foreground {
     color: var(--foreground);
+  }
+  .rui\:text-muted-foreground {
+    color: var(--muted-foreground);
   }
   .rui\:text-primary-foreground {
     color: var(--primary-foreground);

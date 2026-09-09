@@ -9,6 +9,11 @@
 
 pub mod macros;
 
+/// Re-exported for the macros: a caller writes `clx!` or `variants!` without
+/// having to take a dependency on the crates their expansion happens to use.
+pub use paste;
+pub use tw_merge;
+
 /// The path the application is currently showing, for the components that need
 /// to know whether they point at it.
 ///

@@ -1,0 +1,60 @@
+import { boot, show_fatal, StartupError } from "./loader.js";
+
+const container = "catalog";
+const status = document.getElementById("status");
+let handle = null;
+
+const runtime_fatal = (error) => {
+    // The mounted controls and their listeners live in the module that just
+    // trapped, so they have to go with it. Removing the nodes is a JS-only
+    // path: calling the application's dispose would re-enter that module.
+    if (handle !== null) {
+        document.getElementById(container)?.replaceChildren();
+    }
+    handle = null;
+    delete window.__component_catalog;
+    status.dataset.status = "fatal";
+    show_fatal(
+        status,
+        new StartupError("RuntimeFatal", `${error}; reload the page, unsaved in-memory state is lost`)
+    );
+};
+
+boot({ wasm_url: new URL("./component-catalog.wasm", import.meta.url), on_fatal: runtime_fatal })
+    .then(({ app, hooks, build }) => {
+        app.catalog_identify(1, build);
+        window.__component_catalog = {
+            hooks,
+            mount() {
+                handle = app.catalog_mount(container);
+                return handle;
+            },
+            dispose() {
+                if (handle === null) {
+                    return false;
+                }
+                const spent = app.catalog_dispose(handle);
+                handle = null;
+                return spent;
+            },
+            snapshot() {
+                return JSON.parse(app.catalog_snapshot());
+            },
+            diagnostics() {
+                return JSON.parse(app.catalog_diagnostics());
+            },
+            live_regions() {
+                return app.catalog_live_regions();
+            },
+            stats() {
+                return hooks.runtime.stats();
+            },
+        };
+        window.__component_catalog.mount();
+        status.dataset.status = "ready";
+        status.textContent = "ready";
+    })
+    .catch((error) => {
+        status.dataset.status = "failed";
+        show_fatal(status, error);
+    });

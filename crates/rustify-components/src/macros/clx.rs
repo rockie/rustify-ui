@@ -26,7 +26,7 @@ macro_rules! clx {
             use ::leptos::prelude::*;
 
             let merged = $crate::macros::merge(
-                ::tw_merge::tw_join!($($base_class),+),
+                $crate::tw_merge::tw_join!($($base_class),+),
                 &class,
             );
 
@@ -57,7 +57,7 @@ macro_rules! void {
             use ::leptos::prelude::*;
 
             let merged = $crate::macros::merge(
-                ::tw_merge::tw_join!($($base_class),+),
+                $crate::tw_merge::tw_join!($($base_class),+),
                 &class,
             );
 

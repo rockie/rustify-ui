@@ -392,7 +392,10 @@ impl RegionApp for ObjectRegion {
                 cx,
                 props.theme.background,
                 props.theme.foreground,
-                props.theme.muted,
+                // The hover ring is drawn in the quiet *text* colour, not on
+                // the quiet surface: those were one token until the component
+                // classes needed to tell them apart.
+                props.theme.muted_foreground,
             );
             self.rejected = grid
                 .set_cells(

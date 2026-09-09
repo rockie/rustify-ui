@@ -5,6 +5,7 @@ const workbenchPort = 4174;
 // A third server for the deployment checks: the same build, served under a
 // sub-path, with a switch that makes it serve a broken one on request.
 const deploymentPort = 4175;
+const catalogPort = 4176;
 const deploymentBase = "/tools/demo/";
 
 export default defineConfig({
@@ -34,6 +35,11 @@ export default defineConfig({
             use: { baseURL: `http://127.0.0.1:${workbenchPort}/` },
         },
         {
+            name: "component-catalog",
+            testMatch: ["p2-catalog.spec.ts"],
+            use: { baseURL: `http://127.0.0.1:${catalogPort}/` },
+        },
+        {
             name: "deployment",
             testMatch: ["m7-deployment.spec.ts"],
             use: { baseURL: `http://127.0.0.1:${deploymentPort}${deploymentBase}` },
@@ -49,6 +55,12 @@ export default defineConfig({
         {
             command: `cargo xtask serve --example property-workbench --release --port ${workbenchPort}`,
             url: `http://127.0.0.1:${workbenchPort}/`,
+            reuseExistingServer: false,
+            timeout: 120_000,
+        },
+        {
+            command: `cargo xtask serve --example component-catalog --release --port ${catalogPort}`,
+            url: `http://127.0.0.1:${catalogPort}/`,
             reuseExistingServer: false,
             timeout: 120_000,
         },

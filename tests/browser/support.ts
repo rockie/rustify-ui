@@ -187,6 +187,45 @@ declare global {
                 runtime: { errors: string[]; enter_fatal(error: unknown): void };
             };
         };
+        __component_catalog: {
+            mount(): number;
+            dispose(): boolean;
+            live_regions(): number;
+            snapshot(): {
+                path: string;
+                theme: string;
+                locale: string;
+                categories: number;
+                region: string;
+            };
+            diagnostics(): {
+                runtime: number;
+                build: string;
+                count: number;
+                dropped: number;
+                recording: boolean;
+                suppressed: number;
+                entries: {
+                    kind: string;
+                    at_ms: number;
+                    scope: string | null;
+                    region: number | null;
+                    asset: string | null;
+                    detail: string;
+                    suggestion: string;
+                }[];
+            };
+            stats(): {
+                regions: number;
+                timers: number;
+                animation_frames: number;
+                tasks: number;
+                errors: number;
+                memory: number;
+                pumps: number;
+            };
+            hooks: { runtime: { errors: string[]; enter_fatal(error: unknown): void } };
+        };
         __fusion_basic: {
             mount(container_id: string): number;
             dispose(container_id: string): boolean;

@@ -98,6 +98,15 @@ pub fn build(request: &BuildRequest) -> Result<PathBuf, String> {
     if vendor.is_dir() {
         copy_tree(&vendor, &app.join("vendor"))?;
     }
+    // The component stylesheet, for the examples that use the components. It
+    // is committed rather than generated here, so this build needs no Node;
+    // `cargo xtask css --check` is what keeps it in step with the classes.
+    if uses_components(&example_dir)? {
+        copy(
+            &root.join("crates/rustify-components/css/rustify.css"),
+            &app.join("rustify.css"),
+        )?;
+    }
 
     let files = list_files(&app)?;
     let manifest = BuildManifest {
@@ -114,6 +123,18 @@ pub fn build(request: &BuildRequest) -> Result<PathBuf, String> {
     println!("built {} -> {}", request.example, app.display());
     println!("{}", format_size_report(&manifest.size_report));
     Ok(app)
+}
+
+/// Whether this example draws with the component crate's classes.
+///
+/// Read from its manifest rather than from a list here: an example that adds
+/// the dependency gets the stylesheet without anyone remembering to say so,
+/// and one that does not carry an unused file in its product.
+fn uses_components(example_dir: &Path) -> Result<bool, String> {
+    let manifest = example_dir.join("Cargo.toml");
+    let text =
+        std::fs::read_to_string(&manifest).map_err(|e| format!("{}: {e}", manifest.display()))?;
+    Ok(text.contains("rustify-components"))
 }
 
 fn run_cargo_makepad(root: &Path, request: &BuildRequest) -> Result<(), String> {

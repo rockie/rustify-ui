@@ -60,7 +60,7 @@ macro_rules! variants {
             }
         }
 
-        ::paste::paste! {
+        $crate::paste::paste! {
             #[::leptos::component]
             pub fn $component(
                 #[prop(into, optional)] variant: ::leptos::prelude::Signal<[<$component Variant>]>,
@@ -122,7 +122,7 @@ macro_rules! variants {
             }
         }
 
-        ::paste::paste! {
+        $crate::paste::paste! {
             #[::leptos::component]
             pub fn $component(
                 #[prop(into, optional)] variant: ::leptos::prelude::Signal<[<$component Variant>]>,
@@ -196,12 +196,12 @@ macro_rules! variants {
             }
         }
     ) => {
-        ::paste::paste! {
+        $crate::paste::paste! {
             // The glob is what the derives need: they generate code naming the
             // traits by their bare names. Whether every name in it is used
             // depends on which arm expanded, so the warning is not a finding.
             #[allow(unused_imports)]
-            use ::tw_merge::*;
+            use $crate::tw_merge::*;
 
             #[derive(TwClass, Clone, Copy)]
             #[tw(class = $base_class)]
@@ -238,9 +238,9 @@ macro_rules! variants {
             }
         }
     ) => {
-        ::paste::paste! {
+        $crate::paste::paste! {
             #[allow(unused_imports)]
-            use ::tw_merge::*;
+            use $crate::tw_merge::*;
 
             #[derive(TwClass, Clone, Copy)]
             #[tw(class = $base_class)]

@@ -24,6 +24,13 @@ jobs:
         run: cargo clippy --workspace --all-targets -- -D warnings
       - name: Source record
         run: cargo xtask sources verify
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 26
+      - name: Install pinned devDependencies
+        run: npm ci
+      - name: Component stylesheet is in step with the classes
+        run: cargo xtask css --check
 
   web:
     name: release web build and browser probes
@@ -42,6 +49,8 @@ jobs:
         run: cargo xtask build-web --example fusion-basic --release
       - name: Build property-workbench
         run: cargo xtask build-web --example property-workbench --release
+      - name: Build component-catalog
+        run: cargo xtask build-web --example component-catalog --release
       - name: Install pinned Playwright
         run: npm ci && npx playwright install --with-deps chromium
       - name: Browser probes (Playwright Chromium; not the macOS Chrome pass gate)
@@ -54,3 +63,4 @@ jobs:
             test-results
             target/makepad-wasm-app/release/fusion-basic/build-manifest.json
             target/makepad-wasm-app/release/property-workbench/build-manifest.json
+            target/makepad-wasm-app/release/component-catalog/build-manifest.json

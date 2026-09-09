@@ -1,0 +1,73 @@
+/* The page around the scope. Everything inside the scope is drawn with the
+   component classes and the scope's own tokens; this file styles the host
+   page, which is the application's business and not the SDK's. */
+body {
+    margin: 0;
+    padding: 24px;
+    font: 15px/1.5 system-ui, sans-serif;
+    color: #1d2939;
+    background: #f9fafb;
+}
+
+.catalogue {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    grid-template-areas:
+        "header header"
+        "nav main";
+    gap: 16px;
+    align-items: start;
+    max-width: 1000px;
+}
+
+.catalogue-header {
+    grid-area: header;
+    display: grid;
+    gap: 8px;
+}
+
+.catalogue-nav {
+    grid-area: nav;
+}
+
+.catalogue-nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 4px;
+}
+
+.catalogue-nav button {
+    width: 100%;
+    text-align: start;
+}
+
+.catalogue-main {
+    grid-area: main;
+}
+
+/* The region is a fixed rectangle the DOM lays out; the region draws inside
+   it and nothing else on the page moves when it redraws. */
+.catalogue-region {
+    width: 320px;
+    height: 120px;
+}
+
+.catalogue-canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.catalogue table {
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+.catalogue th,
+.catalogue td {
+    border: 1px solid var(--border, #d0d5dd);
+    padding: 4px 8px;
+    text-align: start;
+}

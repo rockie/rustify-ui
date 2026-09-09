@@ -18,6 +18,7 @@ pub fn run() -> Result<(), String> {
         sources_lock(&root),
         vendored(&root),
         licenses(&root),
+        tailwind(&root),
         node(),
         playwright(&root),
         chrome(),
@@ -175,6 +176,7 @@ fn licenses(root: &Path) -> Check {
         "makepad/LICENSE",
         "makepad/widgets/resources/FONT-LICENSES.md",
         "examples/property-workbench/vendor/nouislider/LICENSE.md",
+        "crates/rustify-components/LICENSE-RUST-UI",
     ];
     let missing: Vec<&str> = required
         .iter()
@@ -187,6 +189,34 @@ fn licenses(root: &Path) -> Check {
             Ok(required.join(", "))
         } else {
             Err(format!("missing {}", missing.join(", ")))
+        },
+    }
+}
+
+/// The Tailwind CLI, which generates the component stylesheet.
+///
+/// It is a dev dependency and never part of a build: the product is committed,
+/// so `build-web` needs no Node. What needs it is changing a class string, and
+/// `cargo xtask css --check` is what catches one that was changed without it.
+fn tailwind(root: &Path) -> Check {
+    let cli = root.join("node_modules/.bin/tailwindcss");
+    Check {
+        name: "tailwind",
+        result: if cli.is_file() {
+            capture(&cli.to_string_lossy(), &["--help"])
+                .map(|out| {
+                    out.lines()
+                        .find(|line| line.contains("tailwindcss v"))
+                        .unwrap_or("installed")
+                        .trim()
+                        .to_string()
+                })
+                .or_else(|_| Ok("installed".to_string()))
+        } else {
+            Err(
+                "not installed; `npm ci`. Only `cargo xtask css` needs it - a build does not"
+                    .to_string(),
+            )
         },
     }
 }
