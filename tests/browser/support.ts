@@ -118,9 +118,12 @@ declare global {
                 invalidated: number;
                 notes: string | null;
                 theme: string;
+                details: string;
+                details_value: string | null;
             };
             inject_duplicate_id(): boolean;
             close_on_next_action(): void;
+            start_load(delay_ms: number, outcome: string): boolean;
             lookup_object(id: number): string;
             await_object(id: number, timeout_ms?: number): Promise<string>;
             stats(): {

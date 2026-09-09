@@ -7,6 +7,7 @@ pub mod mount;
 pub mod overlay;
 pub mod region;
 pub mod scheduler;
+pub mod task;
 pub mod text;
 pub mod theme;
 
@@ -17,6 +18,7 @@ pub use overlay::{LayerId, LocalRect};
 pub use region::{GpuRegion, RegionState};
 pub use rustify_makepad::RegionId;
 pub use scheduler::{Admission, Pace, Scheduler, Seq};
+pub use task::{Load, Requests, Ticket};
 
 #[cfg(target_arch = "wasm32")]
 pub use overlay::{use_overlay, Anchor, Layer, OverlayStack};

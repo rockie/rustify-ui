@@ -42,6 +42,9 @@ boot({ wasm_url: new URL("./property-workbench.wasm", import.meta.url), on_fatal
             snapshot() {
                 return JSON.parse(app.workbench_snapshot());
             },
+            start_load(delay_ms, outcome) {
+                return app.workbench_start_load(delay_ms, outcome);
+            },
             lookup_object(id) {
                 return app.workbench_lookup_object(id);
             },

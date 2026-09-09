@@ -13,14 +13,15 @@ mod app {
     use leptos::wasm_bindgen::prelude::*;
     use leptos::wasm_bindgen::JsCast;
     use rustify_ui::{
-        mount, Anchor, AppHandle, GpuRegion, LocalRect, MountConfig, RegionState, TextEdit, Theme,
-        ThemedScope,
+        mount, Anchor, AppHandle, GpuRegion, Load, LocalRect, MountConfig, RegionState, Requests,
+        TextEdit, Theme, ThemedScope, UiError,
     };
     use std::cell::{Cell, RefCell};
     use std::collections::{BTreeMap, BTreeSet};
     use std::marker::PhantomData;
     use std::rc::Rc;
     use std::sync::Arc;
+    use std::time::Duration;
 
     /// Stable business identity. Ids are assigned once and never reused, so a
     /// selection survives renames, reordering and deletions of other objects.
@@ -72,6 +73,11 @@ mod app {
         /// Reads whether an id is in the application's current state, without
         /// selecting it.
         static EXISTS: RefCell<Option<Rc<dyn Fn(u32) -> bool>>> = const { RefCell::new(None) };
+        /// Starts one asynchronous load, so the page can order two of them.
+        /// Tagged with the scope that registered it, so a scope torn down
+        /// after its replacement mounted cannot unregister the replacement.
+        static START_LOAD: RefCell<Option<(u32, Rc<dyn Fn(i32, String)>)>> =
+            const { RefCell::new(None) };
     }
 
     /// Drops every scope this page mounted. Called from inside an action
@@ -323,6 +329,48 @@ mod app {
             }
         };
 
+        // One field loaded asynchronously, in its four states. The requests
+        // outlive nothing: a stale answer and an answer to a closed view both
+        // change what is shown by exactly nothing.
+        let details = RwSignal::new(Load::<String>::Loading);
+        let requests = Requests::new();
+        let start_load = {
+            let requests = requests.clone();
+            move |delay_ms: i32, outcome: String| {
+                let ticket = requests.issue();
+                details.set(Load::Loading);
+                set_timeout(
+                    move || {
+                        let answer = match outcome.as_str() {
+                            "empty" => Load::Empty,
+                            "error" => Load::Error(UiError::Timeout),
+                            value => Load::Ready(value.to_string()),
+                        };
+                        ticket.deliver(answer, |answer| details.set(answer));
+                    },
+                    Duration::from_millis(delay_ms.max(0) as u64),
+                );
+            }
+        };
+        let registration = NEXT_HANDLE.with(|next| {
+            let id = *next.borrow();
+            *next.borrow_mut() += 1;
+            id
+        });
+        START_LOAD.with(|slot| *slot.borrow_mut() = Some((registration, Rc::new(start_load))));
+        on_cleanup({
+            let requests = requests.clone();
+            move || {
+                requests.close();
+                START_LOAD.with(|slot| {
+                    let mut slot = slot.borrow_mut();
+                    if slot.as_ref().is_some_and(|(id, _)| *id == registration) {
+                        *slot = None;
+                    }
+                });
+            }
+        });
+
         let rejected = RwSignal::new(None::<u32>);
         // Actions the scope refused because its queue was full. They never ran
         // and changed nothing, so the panel says so instead of pretending.
@@ -340,7 +388,7 @@ mod app {
             let (index, total) = position.get();
             let current = current.get();
             let snapshot = format!(
-                "{{\"count\":{},\"position\":{},\"selected\":{},\"name\":{},\"color\":\"{}\",\"first_colors\":\"{}\",\"first_ids\":\"{}\",\"accepted\":{},\"refused\":{},\"hovered\":{},\"hovers\":{},\"editing\":{},\"invalidated\":{},\"notes\":{},\"theme\":\"{}\"}}",
+                "{{\"count\":{},\"position\":{},\"selected\":{},\"name\":{},\"color\":\"{}\",\"first_colors\":\"{}\",\"first_ids\":\"{}\",\"accepted\":{},\"refused\":{},\"hovered\":{},\"hovers\":{},\"editing\":{},\"invalidated\":{},\"notes\":{},\"theme\":\"{}\",\"details\":\"{}\",\"details_value\":{}}}",
                 total,
                 index.map(|i| i as i64 + 1).unwrap_or(0),
                 current
@@ -386,6 +434,13 @@ mod app {
                     .map(|o| json_string(&o.notes))
                     .unwrap_or_else(|| "null".to_string()),
                 theme.get().name,
+                details.with(|details| details.state()),
+                details.with(|details| {
+                    details
+                        .ready()
+                        .map(|value| json_string(value))
+                        .unwrap_or_else(|| "null".to_string())
+                }),
             );
             SNAPSHOT.with(|slot| *slot.borrow_mut() = snapshot);
         });
@@ -535,6 +590,23 @@ mod app {
                     <p role="status" aria-label="object count">
                         "objects: "
                         <span data-testid="object-count">{move || position.get().1}</span>
+                    </p>
+                    <p
+                        class="details"
+                        role="status"
+                        aria-label="details"
+                        data-testid="details"
+                        data-state=move || details.with(|details| details.state())
+                    >
+                        {move || {
+                            details
+                                .with(|details| match details {
+                                    Load::Loading => "loading…".to_string(),
+                                    Load::Empty => "nothing to show".to_string(),
+                                    Load::Ready(value) => value.clone(),
+                                    Load::Error(error) => format!("failed: {error}; try again"),
+                                })
+                        }}
                     </p>
                     <div class="find">
                         <label>
@@ -700,6 +772,20 @@ mod app {
             return "disposed".to_string();
         }
         "not_found".to_string()
+    }
+
+    /// Starts one asynchronous load that answers after `delay_ms` with
+    /// `outcome`: `empty`, `error`, or any other text as the value.
+    #[wasm_bindgen]
+    pub fn workbench_start_load(delay_ms: i32, outcome: &str) -> bool {
+        let start = START_LOAD.with(|slot| slot.borrow().as_ref().map(|(_, f)| f.clone()));
+        match start {
+            Some(start) => {
+                start(delay_ms, outcome.to_string());
+                true
+            }
+            None => false,
+        }
     }
 
     /// Breaks the application's own id invariant on purpose, so the refusal of
