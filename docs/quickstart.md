@@ -16,7 +16,16 @@ cargo xtask build-web --example property-workbench --release
 cargo xtask serve --example fusion-basic --release          # prints http://127.0.0.1:<port>/
 cargo xtask serve --example fusion-basic --release --base /tools/demo/ --port 4173
 cargo xtask serve --example fusion-basic --release --csp no-wasm   # negative test: wasm must fail visibly
+cargo xtask serve --example fusion-basic --release --fault missing:makepad_widgets/resources/IBMPlexSans-Text.ttf
+cargo xtask report-size --example fusion-basic --release           # six category totals, read off the directory
 ```
+
+`serve --fault` makes the server break the deployment in one specific way -
+`missing:<path>`, `corrupt:<path>`, `truncated:<path>` or `stale-bridge` - so a
+failure can be exercised against the running product instead of a doctored
+copy of it. A running server also takes `GET <base>__fault/<spec>` (and
+`.../none` to stop), which is how the browser tests switch between them
+without a restart.
 
 `build-web` runs the fork's `cargo-makepad` (nightly, `build-std`, single-threaded wasm, in-process wasm-bindgen), extracts the static message bridge from the built wasm with a host interpreter, copies the runtime JS and the example page, and writes `build-manifest.json` with a size report. Output lives in `target/makepad-wasm-app/release/<example>/` and is a plain static directory.
 

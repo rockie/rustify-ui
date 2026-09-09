@@ -70,6 +70,19 @@ teardown, so a rebuild can be inspected rather than assumed clean.
 | What is not supported | Anything requiring `eval`, an inline `<script>`, or a stylesheet the page cannot serve from its own origin: the release policy is `script-src 'self' 'wasm-unsafe-eval'; style-src 'self'`. A component that writes to `document.title`, the URL or history reaches the host page, not the scope - the SDK does not sandbox it. A component that installs window-level listeners is not isolated to a scope either. |
 | What is not claimed | That other versions of this component, or any other library, work. Each one is the application's own integration until it is listed here. |
 
+## Deployment
+
+| Question | Answer |
+| --- | --- |
+| Root and sub-path | Both. The build uses relative URLs throughout, and `cargo xtask serve --base /tools/demo/` runs the same directory under a sub-path; the browser tests cover it as a third project. |
+| Embedded in an existing page | Yes. A scope mounts into an element the page owns; the page's own headings, links, scrolling and text selection are untouched, and no theme or attribute is written to the document. |
+| Outbound network | Only the build's own files, same-origin and under its base. Business network calls are the application's to make. |
+| Content-Security-Policy | `default-src 'none'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self'; …`. Nothing in the shipped JS needs `unsafe-eval` or `unsafe-inline`; the theme is written through the CSSOM for that reason. |
+| Assets from two builds | Refused at start. The bridge module carries the schema hash the wasm also exports; a mismatch stops the boot with `BuildContractMismatch` and a message saying to redeploy matching assets. |
+| A missing, corrupt or truncated font | The runtime still starts and both halves keep working; what is lost is the glyphs the region cannot draw. The failure is **not** reported: the fork's own resource loader absorbs it, so `AssetLoadFailed` is registered as a class but has no producer in P1. |
+| A lost WebGL context | Recoverable. The region reports `Lost`, is torn down, and is built again with the application's current state when the browser restores the context. Verified over twenty rounds with an edit between each. |
+| A trapped wasm module | Every mount in that runtime is dead. The page's static notice says so and says that unsaved in-memory state is lost; only a reload brings it back. |
+
 ## Known limitations recorded at M1
 
 - Each region owns a full Makepad `Cx` (script VM, theme, font atlas). Four regions occupied 123,994,112 bytes of wasm linear memory after start-up on the fusion-basic page; wasm memory never shrinks. Sharing font data across regions is open work.
