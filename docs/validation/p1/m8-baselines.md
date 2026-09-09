@@ -4,7 +4,7 @@ Date: 2026-09-09. Machine: macOS (Darwin 25.6.0), Apple Silicon, rustc 1.97.0-ni
 
 ## Status
 
-M8's **automated half is complete**. Its manual half has none of its four records, and `cargo xtask verify --suite p1` prints that as a missing record rather than passing over it. M8 is therefore **not closed**, and neither are M5, M6 and M7, which have waited on the same two people-only checks since 2026-09-09.
+M8's automated half is complete **except for the two-hour endurance run, which fails**; see the section below. Its manual half has none of its four records, and `cargo xtask verify --suite p1` prints that as a missing record rather than passing over it. M8 is therefore **not closed**, and neither are M5, M6 and M7, which have waited on the same two people-only checks since 2026-09-09.
 
 **None of these numbers are the PRD's B0 or B1 loads.** They are P1's own fixture, and the plan forbids letting a small load stand in for a large one. Nothing here is claimed against R29's budgets (A-6).
 
@@ -64,7 +64,25 @@ Also new. V12 asks for a comparison with the record on and off, and until this m
 
 The two-minute memory curve is worth printing rather than summarising: `36896768, 36896768, 36896768, 36896768, 37552128, 38207488, 38862848, 39518208, 41680896, 41680896, 41680896, 41680896` - flat, a climb of 4.8 MB, then flat again for the last third. The test asserts that the last quarter is flat and prints the whole curve, because a two-minute run cannot tell a plateau from a slow climb.
 
-<!-- endurance-two-hours -->
+### The two-hour run
+
+**It failed, and the failure is the finding.** At two hours the memory curve's
+last quarter is not flat: the test asserts that the tail grows by less than 1%
+of where it started, and it grew by more.
+
+The first run's own numbers were lost - the curve and the counters are printed
+by the test, and a concurrent Playwright invocation of mine cleared the results
+directory the run was writing into, taking its report with it. That was a
+process mistake, not a product one, and it is why this section names the
+assertion rather than the megabytes. A clean re-run is under way; the curve
+goes here when it lands.
+
+What the failure does and does not say:
+
+- It does **not** say an action was lost. `accepted === sent` and `refused === 0` are asserted before the memory ones, and the run reached the memory assertion, so seven-hundred-thousand-odd actions arrived exactly once each over two hours.
+- It says the two-minute shape - flat, a 4.8 MB climb, flat again - is not the two-hour shape, which is exactly the question the plan wanted a two-hour run to answer. Whether it is a leak or a slower plateau needs the curve.
+
+Recorded as an open defect against V12 rather than as a measurement.
 
 ## A defect this milestone found
 
