@@ -3,6 +3,7 @@ mod build;
 mod doctor;
 mod serve;
 mod sources;
+mod verify;
 
 use build::BuildRequest;
 use serve::{CspMode, ServeConfig};
@@ -16,6 +17,7 @@ cargo xtask <command> [options]
               [--fault missing:<path>|corrupt:<path>|truncated:<path>|stale-bridge]
   report-size --example <name> [--release]
   sources     verify
+  verify      --suite p1 [--no-browser] [--no-build]
 ";
 
 fn main() {
@@ -26,6 +28,7 @@ fn main() {
         Some("serve") => serve_example(&args[1..]),
         Some("report-size") => report_size(&args[1..]),
         Some("sources") => sources::run(&args[1..]),
+        Some("verify") => verify::run(&args[1..]),
         _ => Err(USAGE.to_string()),
     };
     if let Err(message) = result {
