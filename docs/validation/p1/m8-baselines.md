@@ -36,7 +36,7 @@ New in this milestone (`tests/browser/m8-network.spec.ts`), because "network con
 | Ready, 12 Mbit/s, 40 ms latency | 6.6 s |
 | Ready, 3 Mbit/s, 40 ms latency | 24.3 s |
 | The first value that needs more than Latin | **29,718,416 bytes**: `LXGWWenKaiRegular.ttf` 19,074,264 and `NotoColorEmoji.ttf` 10,644,152 |
-| Whole-suite result | `--project=property-workbench` 72 tests, all passing on this build |
+| Whole-suite result | the three network tests pass on this build; the whole `--project=property-workbench` suite is re-run by `verify --suite p1` after the two-hour endurance |
 
 Two facts worth separating. The build **stores** 60 MB and a first load **fetches** 9 MB: ten font files ship and one is fetched, because until a value needs more, the Latin face is all a region draws with. And nine megabytes at 12 Mbit/s is about six seconds of transfer that the browser compiles through, so the total matches the loopback's; at a quarter of that speed the link is the whole story.
 
