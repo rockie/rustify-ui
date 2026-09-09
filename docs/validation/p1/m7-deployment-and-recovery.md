@@ -10,12 +10,12 @@ M7 is **not closed**. Most of its exit conditions have a passing automated resul
 | --- | --- |
 | `cargo xtask doctor` | 9/9 |
 | `cargo xtask sources verify` | makepad drift attributable as before; nouislider 3 files, 0 modified |
-| `cargo test --workspace --lib` | 51 (diagnostics 8 of them) |
+| `cargo test --workspace --lib` | 52 (diagnostics 9 of them) |
 | `cargo test -p xtask` | 13 (fault injection 3 of them) |
 | `cd makepad && cargo test` | 13 |
 | `cargo clippy --workspace --all-targets -- -D warnings` | no warnings |
 | `cargo fmt --all -- --check` | passes |
-| `npx playwright test --project=property-workbench` | **60/60** |
+| `npx playwright test --project=property-workbench` | **61/61** |
 | `npx playwright test --project=fusion-basic` | **45/45** |
 | `npx playwright test --project=deployment` | **6/6** |
 
@@ -53,7 +53,19 @@ The first attempt replaced the canvas element instead of waiting, on the theory 
 | Entries carry a cause and a next step, and never the user's text | `every entry carries a cause and a next step, and no user content` |
 | The ceiling holds in a browser, not only on the host | `filling it past its ceiling keeps the newest and says how many went` - 1,100 refused mounts, 1,000 kept, the rest counted |
 
-Producers wired in this release: `InvalidContainer` and `OccupiedContainer` (mount), `GpuInitFailed` (a canvas with no WebGL2), `GpuContextLost`, `Backpressure` (a scope's queue full).
+Producers wired in this release: `InvalidContainer` and `OccupiedContainer` (mount), `GpuInitFailed` (a canvas with no WebGL2), `GpuContextLost`, `Backpressure` (a scope's queue full), and `UnsupportedCapability`.
+
+### A capability a region does not get
+
+The embedded contract refuses the five things that belong to the page rather than to a region - opening a URL, changing the URL, moving through history, fullscreen, and the document title. They were already refused and warned about on the console; now they reach the record, once per capability per region, with a next step.
+
+Wiring it found something that had been happening silently on every single start: **Makepad names its window when it creates one, so every region asks to set the document title and is refused**. Nothing was wrong with the refusal - an embedded region has no document title to set - but nobody could have known it was happening. It is now the first entry in every runtime's record.
+
+| Rule | Evidence |
+| --- | --- |
+| A refusal reaches the record with a cause, a next step and the region it came from | `is refused, recorded once, and does not move the page` |
+| A region asking to open a URL does not move the page | same test: the page's URL is unchanged |
+| A region in a loop cannot fill the record with one mistake | same test: ten more requests add no entries |
 
 ### Deployment
 
@@ -70,6 +82,5 @@ Producers wired in this release: `InvalidContainer` and `OccupiedContainer` (mou
 ## What is not done
 
 - **`AssetLoadFailed` has no producer.** The fork's own resource loader absorbs a font failure, so the SDK never learns of it. The observable behaviour is verified (the region keeps working); the reporting is not. Wiring it means a hook inside the fork's loader.
-- **`UnsupportedCapability` has no producer either.** The refusals exist and warn once on the console (`makepad/platform/src/os/web/web.js`), but nothing routes them into the record, and no example asks a region for a capability, so there is nothing to test yet.
 - **`RuntimeFatal` is not recorded in the ring.** The host notice exists and is verified (`a trapped runtime takes its controls off the page`), but by then the module cannot be called, so the entry would have to be written by the page rather than the SDK.
 - **A shared-runtime trap's blast radius** is verified as "every mount in the runtime is dead and the page says so"; the plan also asks that the limit be written into the capability document, which is now done, but nothing automatic checks that claim.

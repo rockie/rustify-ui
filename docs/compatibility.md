@@ -49,7 +49,7 @@ Which font draws what, as of M5: the Latin UI and the region's own labels use IB
 | Pointer input | Pointer events on the canvas with pointer capture; coordinates are canvas-local CSS pixels; wheel is delivered as scroll. No window-level listeners. |
 | Keyboard, text input, IME | Not wired for regions yet (M4/M5). The fork's hidden textarea path is disabled in embedded mode. |
 | Cursor | Set on the canvas element only. |
-| Document title, URL/history, fullscreen, open URL | Refused; logged once as an unsupported capability. |
+| Document title, URL/history, fullscreen, open URL | Refused, and since M7 recorded once per capability per region as `UnsupportedCapability` with a next step. Note that every region asks for the document title as it starts (Makepad names its window), so that refusal is the first entry in every runtime's record. |
 | XR, audio output, MIDI, geolocation, permissions, video playback | Present in the fork's JS but not part of the P1 contract; nothing in the examples triggers them. Explicit refusal is scheduled for M7. |
 | Network initiated by GPU code | Only the fork's resource loader uses it (fonts). Responses are routed to the region that made the request and dropped after that region is destroyed. |
 | Lifecycle | Document visibility events reach every region; pagehide sends shutdown. |

@@ -20,7 +20,7 @@ pub use catalog::{Capability, Category, Entry, Presentation, Support, CATALOG};
 pub use components::snap;
 pub use diagnostics::{
     identify_runtime, note, record, report_json, with_log, Diagnostic, Diagnostics, ErrorKind,
-    UiError,
+    UiError, REFUSED_CAPABILITIES,
 };
 pub use mount::{mount, AppHandle, MountConfig, ScopeRoots};
 pub use overlay::{LayerId, LocalRect};

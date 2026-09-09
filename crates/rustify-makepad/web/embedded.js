@@ -1,5 +1,17 @@
 import { WasmWebGL } from "../makepad_platform/web_gl.js";
 
+// The capabilities an embedded region is refused, in the order the Rust side
+// reads them. Adding one here without adding it there would report a refusal
+// with nothing to say, so the two lists are checked against each other by a
+// test on the Rust side.
+const UNSUPPORTED_CODES = [
+    "open_url",
+    "browser_update_url",
+    "browser_history_go",
+    "fullscreen",
+    "document_title",
+];
+
 // One Makepad region drawn into a canvas the host page owns. The Rust side
 // creates the Cx first and hands the region id in; this object only holds
 // browser resources (GL context, listeners, timers) and releases all of them
@@ -34,6 +46,25 @@ export class EmbeddedRegion extends WasmWebGL {
             }
         };
         canvas.addEventListener("webglcontextlost", this.on_context_lost);
+    }
+
+    // The embedded contract refuses the capabilities that belong to the page
+    // rather than to a region. The base class warns once; this also puts it in
+    // the runtime's record, where whoever has to act on it will look. The code
+    // is an index rather than the name, because a diagnostic's detail is a
+    // static string on the Rust side.
+    unsupported(capability) {
+        const first = !this.unsupported_reported.has(capability);
+        super.unsupported(capability);
+        const code = UNSUPPORTED_CODES.indexOf(capability);
+        if (!first || code < 0 || this.runtime.fatal || this.destroyed) {
+            return;
+        }
+        try {
+            this.exports.rustify_note_unsupported(this.wasm_app, code);
+        } catch (error) {
+            this.runtime.enter_fatal(error);
+        }
     }
 
     // Nothing may be pumped into a context that is gone: the batch would draw

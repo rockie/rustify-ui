@@ -331,6 +331,36 @@ impl Diagnostics {
     }
 }
 
+/// The capabilities an embedded region is refused, in the order the host's
+/// codes use.
+///
+/// The host passes a code rather than a name because a diagnostic's `detail`
+/// is `&'static str`: the set of things that can be refused is fixed and known
+/// here, so nothing has to be built from a string that crossed the boundary.
+pub const REFUSED_CAPABILITIES: [&str; 5] = [
+    "a region asked to open a URL; only the host page can",
+    "a region asked to change the page's URL; only the host page can",
+    "a region asked to move through history; only the host page can",
+    "a region asked for fullscreen; only the host page can",
+    "a region asked to set the document title; only the host page can",
+];
+
+/// Called by the host when a region asked for something the embedded contract
+/// refuses. Once per capability per region: the host dedupes, so a region in a
+/// loop cannot fill the record with one mistake.
+///
+/// # Safety
+/// Called from the JS host with a region id and a capability code. An unknown
+/// code is ignored rather than trusted.
+#[cfg(target_arch = "wasm32")]
+#[export_name = "rustify_note_unsupported"]
+pub unsafe extern "C" fn note_unsupported(region: u32, capability: u32) {
+    let Some(detail) = REFUSED_CAPABILITIES.get(capability as usize) else {
+        return;
+    };
+    record(note(ErrorKind::UnsupportedCapability, detail).in_region(region));
+}
+
 thread_local! {
     /// One record per runtime, which on this platform means per wasm module.
     /// It is a thread-local rather than a value the application threads
@@ -519,6 +549,17 @@ mod tests {
             json.contains("\"suggestion\":\"run the action again; it did not happen\""),
             "{json}"
         );
+    }
+
+    #[test]
+    fn every_refusal_the_host_can_report_has_words_for_it() {
+        // The host's codes are indices into this list; a gap would be a
+        // refusal that reaches the record with nothing to say.
+        assert_eq!(REFUSED_CAPABILITIES.len(), 5);
+        for detail in REFUSED_CAPABILITIES {
+            assert!(detail.starts_with("a region asked"), "{detail}");
+            assert!(detail.contains("host page"), "{detail}");
+        }
     }
 
     #[test]

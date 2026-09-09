@@ -1,5 +1,6 @@
 use crate::name_field::NameField;
 use crate::object_grid::{GridCell, ObjectGrid};
+use rustify_ui::makepad_widgets::makepad_platform::{CxOsApi, OpenUrlInPlace};
 use rustify_ui::makepad_widgets::*;
 use rustify_ui::{LocalRect, Pace, RegionApp, RustifyCheckBox, RustifySlider, Theme};
 use std::sync::Arc;
@@ -27,6 +28,10 @@ pub struct SelectionProps {
     pub locked: bool,
     /// 0..=100 in steps of 5, the same range the panel's slider offers.
     pub size: f64,
+    /// How many times the application has asked the region to open a link.
+    /// A counter rather than a flag: the region acts on the change, and an
+    /// application that asks twice means it twice.
+    pub open_link_requests: u32,
     /// The scope's theme. One table drives both halves, so a colour cannot
     /// mean one thing in the panel and another in the region.
     pub theme: Theme,
@@ -205,6 +210,10 @@ pub struct ObjectRegion {
     /// application hears about it on its own callback path.
     #[rust]
     rejected: Option<u32>,
+    /// The last link request the region acted on, so one request opens one
+    /// link and a redraw opens none.
+    #[rust]
+    opened_links: u32,
     /// The last geometry reported, so only a change is sent.
     #[rust]
     controls: Option<(LocalRect, LocalRect)>,
@@ -233,6 +242,12 @@ impl RegionApp for ObjectRegion {
     }
 
     fn apply_props(&mut self, cx: &mut Cx, props: &SelectionProps) {
+        if props.open_link_requests > self.opened_links {
+            self.opened_links = props.open_link_requests;
+            // A region is not the page. Asking anyway is how the refusal, and
+            // the record of it, are exercised for real rather than assumed.
+            cx.open_url("https://example.invalid/", OpenUrlInPlace::No);
+        }
         // The native control shows the text while it is being edited, so the
         // region would otherwise draw a second copy of it underneath.
         let name = if props.editing_name {

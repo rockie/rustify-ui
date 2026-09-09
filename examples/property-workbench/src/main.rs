@@ -208,6 +208,11 @@ mod app {
         // How many edit sessions ended because the value moved underneath them.
         let invalidated = RwSignal::new(0u32);
         let canvas = NodeRef::<leptos::html::Canvas>::new();
+        // How many times the application has asked the region to open a link.
+        // A region is not the page, so the embedded contract refuses it; what
+        // is being exercised is that the refusal is reported rather than
+        // silently swallowed.
+        let open_link_requests = RwSignal::new(0u32);
 
         let props = Signal::derive(move || {
             let (index, total) = position.get();
@@ -231,6 +236,7 @@ mod app {
                     editing_notes,
                     locked: object.locked,
                     size: object.size,
+                    open_link_requests: open_link_requests.get(),
                     theme,
                 },
                 None => SelectionProps {
@@ -245,6 +251,7 @@ mod app {
                     editing_notes,
                     locked: false,
                     size: 0.0,
+                    open_link_requests: open_link_requests.get(),
                     theme,
                 },
             }
@@ -693,6 +700,13 @@ mod app {
                 <ThemedScope theme=theme />
                 <section class="panel" aria-label="object properties">
                     <h2>"properties"</h2>
+                    <Button
+                        test_id="open-link-from-region"
+                        aria_label="ask the region to open a link"
+                        on_click=move || open_link_requests.update(|n| *n += 1)
+                    >
+                        "open a link from the region"
+                    </Button>
                     <Button
                         test_id="toggle-theme"
                         aria_label="switch theme"

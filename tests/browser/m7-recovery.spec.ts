@@ -159,6 +159,48 @@ test.describe("M7 V8: a region that cannot start at all", () => {
     });
 });
 
+test.describe("M7 V9 / NFR-4: a capability a region does not get", () => {
+    test("is refused, recorded once, and does not move the page", async ({ page }) => {
+        await waitForReady(page);
+        const url = page.url();
+        const refusals = async () =>
+            (await diagnostics(page)).entries.filter(
+                (entry) => entry.kind === "UnsupportedCapability"
+            );
+
+        // One refusal happens before the application asks for anything:
+        // Makepad names its window on start, and an embedded region has no
+        // document title to name. It was always refused; until now it was
+        // refused silently.
+        const atBoot = await refusals();
+        expect(atBoot).toHaveLength(1);
+        expect(atBoot[0].detail).toContain("set the document title");
+
+        // The region asks the host to open a link. It is not the page, so it
+        // does not get to.
+        await page.getByRole("button", { name: "ask the region to open a link" }).click();
+        await expect.poll(async () => (await refusals()).length, { timeout: 10_000 }).toBe(2);
+
+        const entry = (await refusals())[1];
+        expect(entry.detail).toContain("open a URL");
+        expect(entry.suggestion).toContain("do it from the host page");
+        expect(entry.region).not.toBeNull();
+
+        // The page did not move, and nothing else opened.
+        expect(page.url()).toBe(url);
+        expect(await snapshot(page)).toMatchObject({ region: "ready" });
+
+        // Asked ten more times, it is still those two entries: a region in a
+        // loop cannot fill the record with one mistake.
+        for (let round = 0; round < 10; round++) {
+            await page.getByRole("button", { name: "ask the region to open a link" }).click();
+        }
+        await page.waitForTimeout(500);
+        expect(await refusals()).toHaveLength(2);
+        expect(page.url()).toBe(url);
+    });
+});
+
 test.describe("M7 V9: a bounded record that says when it is a tail", () => {
     test("the record names the runtime, the build, and what it dropped", async ({ page }) => {
         await waitForReady(page);
