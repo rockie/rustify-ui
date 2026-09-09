@@ -24,6 +24,9 @@ script_mod! {
         draw_marker +: {
             color: #xffffff
         }
+        draw_hover +: {
+            color: #x98a2b3
+        }
     }
 }
 
@@ -52,10 +55,14 @@ pub struct ObjectGrid {
     draw_cell: DrawColor,
     #[live]
     draw_marker: DrawColor,
+    #[live]
+    draw_hover: DrawColor,
     #[rust]
     cells: Vec<GridCell>,
     #[rust]
     selected: Option<u32>,
+    #[rust]
+    hovered: Option<u32>,
     /// Where the cells ended up in the last draw, so a click can be resolved
     /// against what the user actually saw.
     #[rust]
@@ -63,6 +70,11 @@ pub struct ObjectGrid {
     /// The last cell the pointer chose, taken by the application.
     #[rust]
     picked: Option<u32>,
+    /// The cell the pointer last moved over, or `None` once it left the grid.
+    /// Set on every move and taken by the application, which decides whether
+    /// it is worth acting on.
+    #[rust]
+    hover_report: Option<Option<u32>>,
 }
 
 #[derive(Clone, Copy, Debug)]
@@ -85,6 +97,30 @@ impl Grid {
         }
     }
 
+    /// The four thin quads that outline `index` without covering the cell's
+    /// own colour.
+    fn ring(&self, index: usize, thickness: f64) -> [Rect; 4] {
+        let rect = self.rect(index);
+        [
+            Rect {
+                pos: rect.pos,
+                size: dvec2(rect.size.x, thickness),
+            },
+            Rect {
+                pos: dvec2(rect.pos.x, rect.pos.y + rect.size.y - thickness),
+                size: dvec2(rect.size.x, thickness),
+            },
+            Rect {
+                pos: rect.pos,
+                size: dvec2(thickness, rect.size.y),
+            },
+            Rect {
+                pos: dvec2(rect.pos.x + rect.size.x - thickness, rect.pos.y),
+                size: dvec2(thickness, rect.size.y),
+            },
+        ]
+    }
+
     fn index_at(&self, point: DVec2, len: usize) -> Option<usize> {
         let column = ((point.x - self.origin.x) / self.cell.x).floor();
         let row = ((point.y - self.origin.y) / self.cell.y).floor();
@@ -105,13 +141,15 @@ impl ObjectGrid {
         cx: &mut Cx,
         cells: Vec<GridCell>,
         selected: Option<u32>,
+        hovered: Option<u32>,
     ) -> Result<(), u32> {
         if let Some(duplicate) = rustify_ui::duplicate_key(cells.iter().map(|cell| cell.id)) {
             return Err(duplicate);
         }
-        if self.cells != cells || self.selected != selected {
+        if self.cells != cells || self.selected != selected || self.hovered != hovered {
             self.cells = cells;
             self.selected = selected;
+            self.hovered = hovered;
             self.redraw(cx);
         }
         Ok(())
@@ -119,6 +157,15 @@ impl ObjectGrid {
 
     pub fn take_picked(&mut self) -> Option<u32> {
         self.picked.take()
+    }
+
+    pub fn take_hover_report(&mut self) -> Option<Option<u32>> {
+        self.hover_report.take()
+    }
+
+    fn cell_at(&self, grid: &Grid, point: DVec2) -> Option<u32> {
+        grid.index_at(point, self.cells.len())
+            .map(|index| self.cells[index].id)
     }
 }
 
@@ -131,13 +178,22 @@ impl Widget for ObjectGrid {
         let Some(grid) = self.layout_grid else {
             return;
         };
-        if let Hit::FingerUp(fe) = event.hits(cx, self.draw_bg.area()) {
-            if !fe.is_over || !fe.is_primary_hit() {
-                return;
+        match event.hits(cx, self.draw_bg.area()) {
+            Hit::FingerUp(fe) => {
+                if !fe.is_over || !fe.is_primary_hit() {
+                    return;
+                }
+                if let Some(id) = self.cell_at(&grid, fe.abs) {
+                    self.picked = Some(id);
+                }
             }
-            if let Some(index) = grid.index_at(fe.abs, self.cells.len()) {
-                self.picked = Some(self.cells[index].id);
+            Hit::FingerHoverIn(fe) | Hit::FingerHoverOver(fe) => {
+                self.hover_report = Some(self.cell_at(&grid, fe.abs));
             }
+            Hit::FingerHoverOut(_) => {
+                self.hover_report = Some(None);
+            }
+            _ => {}
         }
     }
 
@@ -166,32 +222,21 @@ impl Widget for ObjectGrid {
             self.draw_cell.color = cell_color(entry.color);
             self.draw_cell.draw_abs(cx, rect);
         }
-        if let Some(selected) = self.selected {
-            if let Some(index) = self.cells.iter().position(|c| c.id == selected) {
-                let rect = grid.rect(index);
-                // A ring around the selected cell, drawn as four thin quads so
-                // the cell's own colour stays visible.
-                let thickness = (cell.x.min(cell.y) * 0.25).clamp(1.0, 4.0);
-                for edge in [
-                    Rect {
-                        pos: rect.pos,
-                        size: dvec2(rect.size.x, thickness),
-                    },
-                    Rect {
-                        pos: dvec2(rect.pos.x, rect.pos.y + rect.size.y - thickness),
-                        size: dvec2(rect.size.x, thickness),
-                    },
-                    Rect {
-                        pos: rect.pos,
-                        size: dvec2(thickness, rect.size.y),
-                    },
-                    Rect {
-                        pos: dvec2(rect.pos.x + rect.size.x - thickness, rect.pos.y),
-                        size: dvec2(thickness, rect.size.y),
-                    },
-                ] {
-                    self.draw_marker.draw_abs(cx, edge);
-                }
+        let thickness = (cell.x.min(cell.y) * 0.25).clamp(1.0, 4.0);
+        let index_of =
+            |id: Option<u32>| id.and_then(|id| self.cells.iter().position(|cell| cell.id == id));
+        let hovered = index_of(self.hovered);
+        let selected = index_of(self.selected);
+        // The pointer's cell first, so the selection still reads as the
+        // stronger of the two when they are the same cell.
+        if let Some(index) = hovered {
+            for edge in grid.ring(index, thickness) {
+                self.draw_hover.draw_abs(cx, edge);
+            }
+        }
+        if let Some(index) = selected {
+            for edge in grid.ring(index, thickness) {
+                self.draw_marker.draw_abs(cx, edge);
             }
         }
         self.layout_grid = Some(grid);

@@ -114,10 +114,16 @@ mod app {
             }))
         });
 
+        // Where the pointer is, as the region reported it. Business state like
+        // any other: the region draws what the application projects back, not
+        // what its own pointer did.
+        let hovered = RwSignal::new(None::<ObjectId>);
+
         let props = Signal::derive(move || {
             let (index, total) = position.get();
             let cells = cells.get();
             let selected = selected.get().map(|id| id.0);
+            let hovered = hovered.get().map(|id| id.0);
             match current.get() {
                 Some(object) => SelectionProps {
                     name: object.name,
@@ -125,6 +131,7 @@ mod app {
                     color: object.color,
                     cells,
                     selected,
+                    hovered,
                 },
                 None => SelectionProps {
                     name: "no selection".to_string(),
@@ -132,6 +139,7 @@ mod app {
                     color: 0x101828,
                     cells,
                     selected,
+                    hovered,
                 },
             }
         });
@@ -237,12 +245,16 @@ mod app {
         // can be checked for losses and duplicates rather than only for where
         // the selection ended up - the selection wraps, a count does not.
         let accepted = RwSignal::new(0u32);
+        // Counted apart from the rest: a pointer stream is collapsed on its way
+        // here, so its count says how much of it survived, not how much of it
+        // happened.
+        let hovers = RwSignal::new(0u32);
 
         Effect::new(move || {
             let (index, total) = position.get();
             let current = current.get();
             let snapshot = format!(
-                "{{\"count\":{},\"position\":{},\"selected\":{},\"name\":{},\"color\":\"{}\",\"first_colors\":\"{}\",\"first_ids\":\"{}\",\"accepted\":{},\"refused\":{}}}",
+                "{{\"count\":{},\"position\":{},\"selected\":{},\"name\":{},\"color\":\"{}\",\"first_colors\":\"{}\",\"first_ids\":\"{}\",\"accepted\":{},\"refused\":{},\"hovered\":{},\"hovers\":{}}}",
                 total,
                 index.map(|i| i as i64 + 1).unwrap_or(0),
                 current
@@ -276,6 +288,11 @@ mod app {
                 }),
                 accepted.get(),
                 refused.get(),
+                hovered
+                    .get()
+                    .map(|id| id.0.to_string())
+                    .unwrap_or_else(|| "null".to_string()),
+                hovers.get(),
             );
             SNAPSHOT.with(|slot| *slot.borrow_mut() = snapshot);
         });
@@ -283,12 +300,27 @@ mod app {
         let region_state = RwSignal::new(RegionState::Starting);
         let app = PhantomData::<ObjectRegion>;
         let on_action = move |action| {
-            accepted.update(|n| *n += 1);
             match action {
-                SelectionAction::SelectPrevious => step(-1),
-                SelectionAction::SelectNext => step(1),
-                SelectionAction::Pick(id) => selected.set(Some(ObjectId(id))),
-                SelectionAction::RejectedDuplicate(id) => rejected.set(Some(id)),
+                SelectionAction::Hover(id) => {
+                    hovers.update(|n| *n += 1);
+                    hovered.set(id.map(ObjectId));
+                }
+                SelectionAction::SelectPrevious => {
+                    accepted.update(|n| *n += 1);
+                    step(-1);
+                }
+                SelectionAction::SelectNext => {
+                    accepted.update(|n| *n += 1);
+                    step(1);
+                }
+                SelectionAction::Pick(id) => {
+                    accepted.update(|n| *n += 1);
+                    selected.set(Some(ObjectId(id)));
+                }
+                SelectionAction::RejectedDuplicate(id) => {
+                    accepted.update(|n| *n += 1);
+                    rejected.set(Some(id));
+                }
             }
             if CLOSE_ON_ACTION.with(|armed| armed.replace(false)) {
                 close_scopes();

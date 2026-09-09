@@ -148,16 +148,15 @@ pub fn submit_all<A: Send + 'static>(
     sink: &ActionSink,
     binding: &Binding,
     actions: Vec<A>,
+    pace: impl Fn(&A) -> Pace,
     on_action: impl Fn(A) + Clone + Send + 'static,
 ) -> usize {
     let mut refused = 0;
     for action in actions {
+        let pace = pace(&action);
         let on_action = on_action.clone();
         let deliver = binding.guard(move || on_action(action));
-        if matches!(
-            sink.submit(Pace::Discrete, deliver),
-            Admission::Backpressure
-        ) {
+        if matches!(sink.submit(pace, deliver), Admission::Backpressure) {
             refused += 1;
         }
     }
@@ -239,13 +238,17 @@ mod tests {
         move |value| log.lock().unwrap().push(value)
     }
 
+    fn discrete<A>(_: &A) -> Pace {
+        Pace::Discrete
+    }
+
     #[test]
     fn actions_queued_before_a_binding_closed_do_not_reach_the_application_after() {
         let sink = ActionSink::new();
         let log: Log = Log::default();
         let binding = Binding::new();
         assert_eq!(
-            submit_all(&sink, &binding, (0..100).collect(), append(&log)),
+            submit_all(&sink, &binding, (0..100).collect(), discrete, append(&log)),
             0
         );
         assert!(sink.drain_once());
@@ -270,11 +273,59 @@ mod tests {
             &sink,
             &binding,
             (0..crate::scheduler::QUEUE_CAPACITY as u32 + over).collect(),
+            discrete,
             append(&log),
         );
         assert_eq!(refused as u32, over);
         while sink.drain_once() {}
         assert_eq!(read(&log).len(), crate::scheduler::QUEUE_CAPACITY);
+    }
+
+    /// A pointer stream and the clicks inside it, as they reach the scope
+    /// when the browser gets its turn between bursts rather than between
+    /// events.
+    #[test]
+    fn a_stream_of_moves_neither_delays_nor_crowds_out_the_clicks_between_them() {
+        const MOVES_PER_TURN: u32 = 200;
+        const TURNS: u32 = 20;
+        // Four thousand moves against a queue that holds a quarter of that.
+        assert!(MOVES_PER_TURN * TURNS > crate::scheduler::QUEUE_CAPACITY as u32);
+
+        let is_click = |value: &u32| value % 1000 == 999;
+        let pace = move |value: &u32| {
+            if is_click(value) {
+                Pace::Discrete
+            } else {
+                Pace::Continuous
+            }
+        };
+
+        let sink = ActionSink::new();
+        let log: Log = Log::default();
+        let binding = Binding::new();
+        let mut refused = 0;
+        for turn in 0..TURNS {
+            for step in 1..=MOVES_PER_TURN {
+                refused += submit_all(
+                    &sink,
+                    &binding,
+                    vec![turn * 1000 + step],
+                    pace,
+                    append(&log),
+                );
+            }
+            refused += submit_all(&sink, &binding, vec![turn * 1000 + 999], pace, append(&log));
+            while sink.drain_once() {}
+        }
+
+        // The stream used no queue capacity, so not one click was refused.
+        assert_eq!(refused, 0);
+        // Each turn delivered the pointer state it ended on, then the click
+        // that followed it: the surviving move kept its place in the order.
+        let expected: Vec<u32> = (0..TURNS)
+            .flat_map(|turn| [turn * 1000 + MOVES_PER_TURN, turn * 1000 + 999])
+            .collect();
+        assert_eq!(read(&log), expected);
     }
 
     #[test]

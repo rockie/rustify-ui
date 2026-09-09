@@ -1,13 +1,13 @@
 //! Admission and ordering for the actions one mount scope accepts.
 //!
-//! Regions hand their actions here as they arrive. Discrete actions - a click,
-//! a submit, a cancel - are queued in arrival order and never merged, because
-//! dropping or reordering one changes what the application did. Continuous
-//! actions - a pointer that keeps moving - carry no history worth replaying, so
-//! only the latest one survives, and it keeps the position it arrived at so it
-//! still lands on the correct side of the clicks around it.
+//! Regions hand their actions here as they arrive, each with the [`Pace`] its
+//! producer declared. A continuous action keeps the position it arrived at, so
+//! that even after it has replaced an older one it still lands on the correct
+//! side of the clicks around it.
 
 use std::collections::VecDeque;
+
+pub use rustify_makepad::Pace;
 
 /// Arrival order of an accepted action within a scope. Monotonic, and only
 /// spent on actions that were actually accepted.
@@ -25,14 +25,6 @@ pub enum Admission {
     /// The queue is full. The action was not accepted, has no sequence number
     /// and must be reported to the user as not executed rather than dropped.
     Backpressure,
-}
-
-#[derive(Clone, Copy, Debug, PartialEq, Eq)]
-pub enum Pace {
-    /// Queued in order and never merged.
-    Discrete,
-    /// Only the most recent one is worth delivering.
-    Continuous,
 }
 
 pub struct Scheduler<A> {

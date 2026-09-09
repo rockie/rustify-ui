@@ -1,9 +1,9 @@
 # P2 · Rustify UI · 组件目录、表单、导航与工作区（Leptos CSR + Makepad Web · Rust/UI 子集硬分叉接入）
 
-> **计划状态：Blocked**（A-1 二期范围待用户确认；A-2 一期 M4–M8 尚未关闭，本计划以一期计划承诺的交付物为入口，见 §0.2/§11）。
+> **计划状态：Blocked**（A-1 已于 2026-09-09 由用户解除；A-2 仍未解除——一期 M4–M8 尚未关闭，本计划以一期计划承诺的交付物为入口，见 §0.2/§11）。
 >
 > 调查基线：2026-09-09 · `465f18081e5bf9bd38fc4bf79d68fb1314e10c6f` · 调查开始时工作区 clean；本次仅新增本计划。参考源码来自被忽略的 `ref/`（`ref/ui-main` 18 MB、`ref/leptos-main` 12 MB、`ref/makepad-dev` 293 MB），不属于该 commit。
-> 输入：[PRD v0.1](../PRD-WASM-UI.md)（仍为评审草稿，Q1–Q3 与建议预算未批准）；[P1 计划](P1-WASM-UI.md)。**P1 实施状态：2/8 里程碑关闭（M1/M2），M3 进行中**（P1 快照 2026-09-08）；M4–M8（几何/浮层/焦点、原生文本与语义、组件子集/异步/主题、部署/恢复/诊断、验收）均未开始。本计划不把 P1 未交付的能力写成已有事实。
+> 输入：[PRD v0.1](../PRD-WASM-UI.md)（仍为评审草稿，Q1–Q3 与建议预算未批准）；[P1 计划](P1-WASM-UI.md)。**P1 实施状态：3/8 里程碑关闭（M1/M2/M3）**（P1 快照 2026-09-09）；M4–M8（几何/浮层/焦点、原生文本与语义、组件子集/异步/主题、部署/恢复/诊断、验收）均未开始。本计划不把 P1 未交付的能力写成已有事实。
 > 已读取规则：宿主根目录无 AGENTS.md/CLAUDE.md；`ref/ui-main/CLAUDE.md` 及其各 crate 的 CLAUDE.md 只约束该参考树的维护者发布流程，对本仓无约束；`ref/makepad-dev/AGENTS.md` 已在 P1 读取。采用 `.claude/skills/dev-plan/SKILL.md` 与配套骨架、架构质量参考。
 > 修订：2026-09-09 评审后核实 7 条意见全部成立并回写：ADR-6 由 leptos_router 改为 SDK 自研最小路由（页面 URL 唯一所有者、作用域内锚点拦截、`history.state` 序号计算位移，F12/F13/F26）；拖拽会话绑定查询序号与目标身份（§5.4）；提交请求绑定代际并等待异步验证（§5.3）；样式隔离改为 utilities 前缀 + 作用域限定手写 CSS，并把宿主控件样式不变纳入 V1（ADR-5/F28）；滚轮改为宿主同步边界判定，宿主桥修改列入 M6（§5.4 第 5 步/F27）；NFR-1 的 B1 对照值改为 5 s/8 MiB/2 s。
 >
@@ -26,13 +26,13 @@
 
 ### 恢复快照
 
-- 最近更新：尚未开始（计划撰写 2026-09-09）
-- 当前进度：0/8 个里程碑完成
-- 当前状态：尚未开始；计划 Blocked
-- 最近完成：无
-- 下一步：先解除 A-1（用户确认 §0.1 范围与 §0.5 延期）与 A-2（P1 进度到 8/8）；然后 M1 · 契约对齐与组件工程——退出条件为 component-catalog 在严格 CSP 下启动、产物零内联脚本/样式、主题切换同时作用于 DOM 与 GPU、Rust/UI 导入记录写入 `sources.lock.json`
-- 当前阻塞：A-1（范围未确认）；A-2（P1 M4–M8 未关闭，P2 M1 依赖 P1 M4 浮层、M5 语义、M6 受控组件/主题/异步票据、M7 诊断的实际接口）
-- 代码基线：`465f18081e5bf9bd38fc4bf79d68fb1314e10c6f`（计划调查）；实施后写最近完成里程碑的 commit SHA
+- 最近更新：2026-09-09。本计划尚未开始实施；本轮只解除 A-1 并同步前置进度。
+- 当前进度：0/8 个里程碑完成。
+- 当前状态：Blocked（A-2）。A-1 已由用户 2026-09-09 的指示解除，D1/D2/D3/D5 与 ADR-4–7 转为已接受。
+- 最近完成：无（本计划）。前置的 P1 于 2026-09-09 关闭 M3，进度 3/8，见 `P1-WASM-UI.md` 的恢复快照。
+- 下一步：**先按 P1 计划推进 M4–M8 直到 8/8**（这是 A-2 唯一的解除办法，见 §0.2/§11）；期间按 §0.7 的六条对齐建议做，可让 P2 M1 的契约对齐不必返工。P1 到 8/8 后进入 P2 M1 · 契约对齐与组件工程，退出条件为 component-catalog 在严格 CSP 下启动、产物零内联脚本/样式、主题切换同时作用于 DOM 与 GPU、Rust/UI 导入记录写入 `sources.lock.json`。
+- 当前阻塞：A-2（P1 M4–M8 未关闭，P2 M1 依赖 P1 M4 浮层、M5 语义、M6 受控组件/主题/异步票据、M7 诊断的实际接口）。
+- 代码基线：`465f18081e5bf9bd38fc4bf79d68fb1314e10c6f`（计划调查）；P1 M3 收尾后的基线见 P1 计划的恢复快照。实施后写最近完成里程碑的 commit SHA。
 
 ### 完成记录
 
@@ -80,8 +80,8 @@
 | C-3 | 用户 2026-09-08（P1 §0.6） | Rust/UI（`ref/ui-main`）本期集成；MIT 许可；registry 不是可发布 crate | ADR-4，M1 | 已确认 |
 | C-4 | PRD §2.4/§2.5 | 不做账号、业务持久化、不受信任插件；只读/禁用是本地交互语义 | §0.4/§7 | 沿用 |
 | C-5 | P1 D10；`makepad/platform/src/os/web/web.js` 356–401、548–552 | GPU 区域在嵌入模式下已拒绝改 URL/history/title；导航只能由应用发起 | §5.2 | 已核实 |
-| A-1 | 范围假设 | 用户确认 §0.1 交付形态、§0.5 延期与 §0.3 关键决策（D2 Rust/UI 接入方式、D3 CSS 管线、D5 路由方案） | 用户拍板；P2 M1 前 | **阻塞** |
-| A-2 | 前置假设 | P1 M4–M8 按 P1 计划关闭：浮层栈/锚点、焦点与命令优先级、原生编辑态与语义入口、受控组件子集与主题 token、异步票据、诊断环与错误种类 | P1 进度 8/8；P2 M1 第一项即核对实际接口并回写 §2 | **阻塞** |
+| A-1 | 范围假设 | 用户确认 §0.1 交付形态、§0.5 延期与 §0.3 关键决策（D2 Rust/UI 接入方式、D3 CSS 管线、D5 路由方案） | 用户 2026-09-09 指示「按照 docs/plan/P2-WASM-UI.md 完成开发」，即按本计划所写的建议选择实施；D1/D2/D3/D5 与 ADR-4–7 据此转为已接受 | 已解除 |
+| A-2 | 前置假设 | P1 M4–M8 按 P1 计划关闭：浮层栈/锚点、焦点与命令优先级、原生编辑态与语义入口、受控组件子集与主题 token、异步票据、诊断环与错误种类 | P1 进度 8/8；P2 M1 第一项即核对实际接口并回写 §2 | **阻塞**（P1 2026-09-09 为 3/8，M3 已关闭，M4 未开始） |
 | A-3 | 测量合同 | PRD 预算仍未批准；P2 只交 B1 基线与对照，不把 R29/R30 数字写成门 | 用户确认；M8 前 | 开放（默认沿用 P1 A-6） |
 | A-4 | 验收资源 | M8 需真实 VoiceOver+Chrome、真实拼音（表单与命令面板中文）、阿拉伯文/emoji 参考样本评审人 | 用户承诺；M7 前 | 开放 |
 | A-5 | 技术假设 | 以 `history.state` 中的 SDK 序号计算位移并 `history.go(-delta)` 反向恢复，在 Chrome 对多项跳转（`go(-3)`）、重复 URL、恢复期间连续后退均可靠且不产生重复历史项 | M4 首个探针；失败则守卫降级为只覆盖单步并写入已知限制 | 开放 |
@@ -106,13 +106,13 @@
 | D13 | 样式隔离 | Tailwind utilities 带 `rui` 前缀；变量与手写 CSS 选择器一律限定在 `[data-rustify-scope]` 之下；宿主控件计算样式在挂载前后不变作为 V1 断言 | 宿主自己的 Tailwind 类与原生控件不受影响；Rust/UI 类字符串导入时做前缀改写 | F28；R07 AC2 |
 | D14 | 滚轮消费 | 宿主 wheel 处理器按区域最近一次上报的边界状态同步决定是否 `preventDefault`：未到边界或策略为 `stop` 则消费，到边界且策略为 `propagate` 则不消费也不投递 | 需要分叉新增区域→宿主的边界上报消息；DOM 嵌套容器用 `overscroll-behavior` | F27 |
 
-D1/D2/D3/D5 需用户在 A-1 中一并确认；其余为工程决策，在对应里程碑退出时确认。
+D1/D2/D3/D5 由用户在 A-1 中一并确认，2026-09-09 已确认；其余为工程决策，在对应里程碑退出时确认。
 
 ### 0.4 ADR-lite
 
 #### ADR-4：Rust/UI 以子集硬分叉方式接入，浮层类组件在 SDK 浮层栈上重写
 
-- 状态：Proposed（待 A-1）。
+- 状态：Accepted（A-1 已于 2026-09-09 解除）。
 - 背景与驱动：C-3 要求本期集成 Rust/UI；C-2 要求零 `unsafe-inline`。核实（F3–F7）：Rust/UI 是复制粘贴式 registry 而非 crate（`ref/ui-main/README.md` 第 8 行）；`ref/ui-main/app_crates/registry/src/ui/` 89 个文件 12,316 行；其中 19 个组件用 `format!` 拼装内联 `<script>`、22 个注入 `<style>`、35 处 `style=` 属性；Dialog 无 `open` 属性、Switch/Tabs 非受控；无 `role="dialog"`/`tablist`/`tab`、无焦点陷阱与 roving tabindex；Popover/HoverCard 依赖 CSS anchor positioning。P1 M4/M5 已在 SDK 内设计浮层栈、焦点优先级与语义入口。
 - 备选 A：`ui add` 把组件复制进每个示例——三份重复、内联脚本原样进入、SDK 不拥有组件契约，淘汰。备选 B：作为 crate 依赖——registry 未发布且带 SSR/演示依赖，不可行。备选 C：子集硬分叉进 `crates/rustify-components`，纯 Rust 组件保留 class 字符串与 `data-name`，浮层类（Dialog/Menu/Select/Tooltip/Command/Popover）在 SDK 浮层栈上重写并只借用其视觉 class，缺失的受控属性与 ARIA 补齐。备选 D：不接 Rust/UI，自写 CSS——违背用户决定并放弃现成设计系统。
 - 决策：C。导入规则：只导入 §1.2 列出的文件；每个导入文件在 `sources.lock.json` 新增 `rust_ui` 节记录来源路径、导入日期、SHA-256 与「原样/重写」标记；保留 `crates/rustify-components/LICENSE-RUST-UI`（MIT，Max Wells）。`leptos_ui` 的 `clx!`/`variants!` 宏源码（`ref/ui-main/crates/leptos_ui/src/`）同样硬分叉进组件 crate，去掉对 `leptos/nightly` 特性的依赖，并把 `variants!` 的 `href` 分支从 `::leptos_router::hooks::use_location` 改为读取 SDK 的 location 上下文（ADR-6）；`ui/link.rs` 的 `<A>` 改为 SDK `Link`。`tw_merge` 0.1.21 作为 crates.io 依赖（纯 Rust，不依赖 Leptos），启用其 `prefix` 选项与 D13 一致。
@@ -122,7 +122,7 @@ D1/D2/D3/D5 需用户在 A-1 中一并确认；其余为工程决策，在对应
 
 #### ADR-5：Tailwind v4 产物提交进仓，不引入 preflight 与全局 base 层
 
-- 状态：Proposed（待 A-1）。
+- 状态：Accepted（A-1 已于 2026-09-09 解除）。
 - 背景与驱动：Rust/UI 全部样式是 Tailwind v4 类字符串（`package.json` 锁 `tailwindcss ^4.1.13`），依赖 `@theme inline`/`@utility`/`@custom-variant` 等 v4 语法；`ref/ui-main/style/tailwind.css` 第 218–291 行的 `@layer base` 设 `html { overflow: hidden; height: 100dvh }` 与 body 内边距，`@import "tailwindcss"` 默认带 preflight。去掉 preflight 仍不够：utilities 是全局类选择器，会与宿主自己的 Tailwind 构建同名冲突；Rust/UI 手写的 `ref/ui-main/style/slider.css` 第 2 行直接匹配全页 `input[type="range"]`（评审探针 2026-09-09：作用域外滑块 `appearance` 由 auto 变为 none、高度由 16 px 变为 10 px）。R07/R27 要求嵌入既有页面时宿主样式不被改写；C-2 要求样式来自同源文件。
 - 备选 A：构建期在 `build-web` 中调用 Tailwind CLI——`build-web` 从此依赖 Node，与 P1 quickstart 的构建前提冲突。备选 B：生成产物提交进仓，`cargo xtask css` 调用 `npx @tailwindcss/cli` 再生成，CI 以 `--check` 查漂移——Node 只在改动类字符串时需要。备选 C：放弃 Tailwind，手写 CSS——需重写全部 Rust/UI 类字符串，失去接入意义。
 - 决策：B，并加三层隔离（D13）。输入文件 `crates/rustify-components/css/rustify.tailwind.css` 只 `@import "tailwindcss/theme.css" layer(theme)` 与 `@import "tailwindcss/utilities.css" layer(utilities)`，不导入 preflight，不复制 Rust/UI 的 `@layer base`；utilities 以 Tailwind v4 `prefix(rui)` 生成（`rui:bg-primary`），导入 Rust/UI 类字符串时机械加前缀，`tw_merge` 以其 `prefix` 选项配置（`ref/ui-main/crates/tw_merge/tw_merge/src/lib.rs` 第 78 行）；`@source` 指向组件 crate 与三个示例的 `.rs`；token 默认值定义在 `[data-rustify-scope]` 而非 `:root`；暗色变体定义为 `@custom-variant dark (&:is([data-rustify-scope][data-theme="dark"] *))`；`ref/ui-main/style/slider.css`（140 行）等 Rust/UI 手写 CSS 并入同一输入文件时，每条选择器改写为 `[data-rustify-scope] input[type="range"]` 这类作用域后代选择器，不保留任何裸元素/属性选择器。产物 `crates/rustify-components/css/rustify.css` 由 `build-web` 复制进产物目录并计入 css 类体积。`tw-animate-css` 仅在重写后仍使用其类名时引入，M1 决定并记录。前缀在分层导入上的确切语法与 `tw_merge` 前缀合并的正确性在 M1 首个提交验证，失败则退回「无前缀 + 作用域后代选择器包裹 utilities」并记录。
@@ -133,7 +133,7 @@ D1/D2/D3/D5 需用户在 A-1 中一并确认；其余为工程决策，在对应
 
 #### ADR-6：SDK 自研最小路由，页面 URL 只有一个所有者
 
-- 状态：Proposed（待 A-1；A-5 在 M4 首个探针解除）。
+- 状态：Accepted（A-1 已于 2026-09-09 解除；A-5 仍待 M4 首个探针）。
 - 背景与驱动：R22 要求历史唯一、深链接、根/子路径与离开拦截；R07 AC2 要求宿主链接保留浏览器行为；R05 要求同页双挂载不串扰；C-1 禁止修改 Leptos 系源码。核实（F11–F14、F26）：crates.io 有 `leptos_router` 0.8.15；`Router` 硬编码 `BrowserUrl::new()`（`ref/leptos-main/router/src/components.rs` 第 87 行），location provider 不可替换；它的锚点点击监听注册在 `window`（`router/src/location/history.rs` 第 161 行），只判同源与 base（`router/src/location/mod.rs` 第 350–360 行），没有挂载容器归属判断——根路径部署时宿主页面的同源链接也会被它接管，两个作用域各挂 `Router` 时两个监听器都会导航；`popstate` 直接写入 URL 信号（`history.rs` 第 170–200 行）且 `complete_navigation` 用应用传入的 state 覆盖 `history.state`（第 226、236 行），SDK 无法给历史项打序号；浏览器历史可一次跨多项（`history.go(-3)`），URL 不能唯一标识历史项，因此没有序号就无法把被拒绝的跳转恢复到原位。Rust/UI 的 `Link` 与 `variants!` 生成的 `href` 分支调用 `::leptos_router::hooks::use_location`（`ref/ui-main/crates/leptos_ui/src/variants.rs` 第 222 行）。
 - 备选 A：`leptos_router` + 外侧守卫——宿主链接接管与多项跳转恢复两个问题都无法在其外侧解决，只能靠「宿主链接必须带 `rel="external"`」之类的宿主契约兜底，淘汰。备选 B：SDK 自研最小路由：`crates/rustify-ui/src/router.rs` 拥有 pushState/replaceState/popstate、base、路径模式匹配（静态段与 `:param`）、未匹配回退、`use_location/use_params/navigate/Link`；锚点监听挂在作用域根而非 `window`；每个 SDK 创建的历史项在 `history.state.rustify.index` 带单调序号。备选 C：自研路由但仍用 leptos_router 做匹配——`Router` 一创建就注册 `window` 监听，无法只取匹配部分，不可行。
 - 决策：B。规则：一个页面只有一个「URL 所有者」作用域（`MountConfig { url_owner: true, base }`），第二个所有者在 `mount` 前置闸失败并返回 `UiError::UrlOwnerConflict`，已运行实例不受影响；非所有者作用域（嵌入既有页面、同页第二个实例）使用内存 location，`navigate()` 只改内存信号，不写历史；宿主页面的链接与滚动不经过 SDK。守卫在 P2 只服务「离开有未提交编辑的视图」（R22 AC3）。
@@ -143,7 +143,7 @@ D1/D2/D3/D5 需用户在 A-1 中一并确认；其余为工程决策，在对应
 
 #### ADR-7：跨区拖拽由 SDK 指针会话承载，不用 HTML5 DnD
 
-- 状态：Proposed（待 A-1）。
+- 状态：Accepted（A-1 已于 2026-09-09 解除）。
 - 背景与驱动：R11 要求 DOM↔GPU 拖动 100 次每次至多 1 次提交，取消/失焦/拒绝 0 次提交。核实（F18/F19）：Makepad Web 后端不产生 `Event::Drag/Drop`（`makepad/platform/src/os/web/web.rs` 第 739–742 行 `StartExternalDragging` 直接报错），`dock.rs`/`reorder_list.rs` 的拖动实际靠指针事件；嵌入区域对 `pointerdown` 调用 `setPointerCapture`（`web.js` 第 1527–1549 行），指针离开画布后事件仍投递给该画布。
 - 备选 A：HTML5 DnD——画布不能做细粒度目标、Makepad 无消费者、拖影与 `dataTransfer` 语义不受控。备选 B：SDK 会话：起点（DOM 元素或 GPU 动作 `DragStart{payload}`）→ SDK 在 `document` 层跟踪指针（GPU 起点时先释放画布捕获）→ 每次移动用 `elementFromPoint` 命中 DOM 目标，或向指针下的区域发 `DragOver{local}` 查询、区域以动作应答 accept/reject →释放时对「最后一次确认的目标」提交恰好一次 `Drop{payload}`；Esc、`pointercancel`、窗口 `blur`、`visibilitychange` 均取消且 0 提交。
 - 决策：B。OS 文件拖入只作用于 DOM 投放区（HTML5 `drop`），不进 GPU。
@@ -514,8 +514,8 @@ flowchart TD
 
 | 项目 | 影响 | 责任/解除办法 | 最晚确认点 | 是否阻塞 |
 | --- | --- | --- | --- | --- |
-| A-1 范围与关键决策未确认 | 交付形态、第三示例、Rust/UI 接入方式、CSS 管线、路由方案 | 用户确认 §0.1/§0.3 D1–D3/D5/§0.5 | P2 M1 前 | **是** |
-| A-2 P1 未完成 | P2 M1 依赖 P1 M4–M7 接口；M6/M7 决定 GPU 适配落点与 token | P1 进度到 8/8；P2 M1 首项核对并回写 §2 | P2 M1 前 | **是** |
+| A-1 范围与关键决策未确认 | 交付形态、第三示例、Rust/UI 接入方式、CSS 管线、路由方案 | 用户 2026-09-09 确认按本计划实施 | P2 M1 前 | 否（已解除） |
+| A-2 P1 未完成 | P2 M1 依赖 P1 M4–M7 接口；M6/M7 决定 GPU 适配落点与 token | P1 进度到 8/8；P2 M1 首项核对并回写 §2 | P2 M1 前 | **是**（P1 3/8） |
 | A-3 预算未批准 | M8 只交基线与对照 | 用户确认或批准 R29/R30 作为门 | M8 前 | 否（默认沿用 P1 A-6） |
 | A-4 人工资源 | VoiceOver、拼音、阿拉伯文/emoji 参考样本与评审人 | 用户承诺 | M7 前 | 对 M7/M8 是 |
 | A-5 按序号反向恢复 | 守卫对多项跳转/重复 URL/并发后退的可靠性 | M4 探针；失败则守卫降级为单步并写入已知限制 | M4 内 | 否，M4 内解决 |
@@ -529,7 +529,7 @@ flowchart TD
 | 一期 property-workbench 用例契约变化 | 回归 | 升级时同步更新 `snapshot()` 与用例 | M3–M6 | 否 |
 | SPMS 工具缺失 | 无真实需求 key | 只用 PRD 工作号 | 后续 | 不阻塞 |
 
-- 最终状态：**Blocked**。A-1 与 A-2 未解除；解除后可进入 M1，无其他实施前置。
+- 最终状态：**Blocked**。A-1 已解除，A-2 未解除（P1 3/8，M4–M8 未交付）；A-2 解除后可进入 M1，无其他实施前置。
 - 退回 Blocked 的条件：A-5 探针失败且自研路由方案未被接受；A-4 到 M7 仍不可得；P1 M4–M7 交付接口与 §2 差异导致 D4/D7 不成立。
 - 本轮已做：读 PRD 与 P1 计划；核实 SDK 现有源码与 xtask/CI/测试基础；核实 `ref/ui-main` 结构、许可、消费模型、18 类组件、主题、CSP 冲突、受控性与语义；核实 Makepad 分叉 Widget 清单与 Web 后端在拖放/剪贴板/文件/历史/IME/上下文丢失/无障碍/wheel 上的现状；核实 leptos_router 0.8.15 的 base、`window` 锚点监听、popstate 与守卫缺口；核实 crates.io 版本（leptos_router 0.8.15、leptos_meta 0.8.6、leptos_ui 0.3.22、tw_merge 0.1.21、icons 0.18.3）；核实 web-sys/js-sys 的 Clipboard/File/Intl 绑定；核实示例 `index.html` 相对引用与 serve 无回退。2026-09-09 评审修订：核实 7 条评审意见（宿主链接接管、拖拽目标失效、提交未查异步状态、样式隔离不足、多项历史跳转、wheel 无条件 preventDefault、B1 对照值）全部成立并回写 ADR-5/ADR-6、D13/D14、§5.2–§5.4、§8、V1/V5/V6/V8、M1/M4/M6。
 - 本轮未做：未安装依赖、未构建含 tw_merge 的产物、未运行浏览器验证、未修改 P1 计划或实现代码、未创建 SPMS 记录。评审探针中的滑块样式与 `go(-3)` 观察结果来自评审方，本次未复现。

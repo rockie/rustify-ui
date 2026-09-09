@@ -4,6 +4,15 @@ import { capture, differingPixels, litPixels, settle, waitForReady } from "./sup
 const snapshot = (page: import("@playwright/test").Page) =>
     page.evaluate(() => window.__property_workbench.snapshot());
 
+// The region's own header row: swatch, name, position, then the two buttons.
+// The labels are fixed width, so the buttons stay put whatever the values are.
+const NEXT_BUTTON = { fx: 0.85, fy: 0.085 };
+
+const at = (box: { x: number; y: number; width: number; height: number }, spot: { fx: number; fy: number }) => ({
+    x: box.x + box.width * spot.fx,
+    y: box.y + box.height * spot.fy,
+});
+
 test.describe("M3 V2: one authoritative state behind a DOM panel and a GPU view", () => {
     test("a thousand objects with stable ids, the first one selected", async ({ page }) => {
         await waitForReady(page);
@@ -51,9 +60,7 @@ test.describe("M3 V2: one authoritative state behind a DOM panel and a GPU view"
         const region = page.getByTestId("workbench-gpu");
         await settle(region);
         const box = (await region.boundingBox())!;
-        // The region puts swatch, name, position and the two buttons in one
-        // header row above the grid.
-        const next = { x: box.x + box.width * 0.77, y: box.y + box.height * 0.085 };
+        const next = at(box, NEXT_BUTTON);
         await page.mouse.click(next.x, next.y);
         await expect(page.getByTestId("selected-id")).toHaveText("2");
         expect(await snapshot(page)).toMatchObject({ selected: 2, position: 2, name: "object-0002" });
@@ -207,7 +214,7 @@ test.describe("M3 V2: one authoritative state behind a DOM panel and a GPU view"
                 await new Promise((r) => setTimeout(r, 3_000));
                 return api.snapshot();
             },
-            { x: box.x + box.width * 0.77, y: box.y + box.height * 0.085, rounds }
+            { ...at(box, NEXT_BUTTON), rounds }
         );
         // Not one lost, not one delivered twice, and not one refused: this is
         // the load the queue depth was chosen for.
@@ -217,6 +224,104 @@ test.describe("M3 V2: one authoritative state behind a DOM panel and a GPU view"
         // one object, so the ring of a thousand lands back where it started.
         expect(result.position).toBe((rounds % 1000) + 1);
         expect(result.count).toBe(1000);
+    });
+
+    test("the object under the pointer is the object a click there selects", async ({ page }) => {
+        await waitForReady(page);
+        const region = page.getByTestId("workbench-gpu");
+        await settle(region);
+        const box = (await region.boundingBox())!;
+        const cell = { x: box.x + box.width * 0.4, y: box.y + box.height * 0.6 };
+        await page.mouse.move(cell.x, cell.y);
+        await expect.poll(async () => (await snapshot(page)).hovered).not.toBeNull();
+        const hovered = (await snapshot(page)).hovered;
+        await page.mouse.click(cell.x, cell.y);
+        // Two paths through the same grid geometry have to name the same
+        // object, or the highlight is pointing at something the click will not
+        // pick.
+        await expect(page.getByTestId("selected-id")).toHaveText(String(hovered));
+        expect(await snapshot(page)).toMatchObject({ selected: hovered, hovered });
+    });
+
+    test("a pointer stream loses none of the clicks and saves interleaved with it", async ({ page }) => {
+        test.setTimeout(300_000);
+        await waitForReady(page);
+        const region = page.getByTestId("workbench-gpu");
+        const before = await settle(region);
+        const box = (await region.boundingBox())!;
+        const clicks = 20;
+        const moves_per_click = 12;
+        // Driven inside the page and paced by a real timer: the stream has to
+        // be a stream, and a round trip through the harness per move would set
+        // the rate rather than measure it.
+        const result = await page.evaluate(
+            async (args) => {
+                const canvas = document.querySelector('[data-testid="workbench-gpu"]')!;
+                const input = document.querySelector('[data-testid="name-input"]') as HTMLInputElement;
+                const pointer = (type: string, x: number, y: number, buttons: number) =>
+                    canvas.dispatchEvent(
+                        new PointerEvent(type, {
+                            bubbles: true,
+                            cancelable: true,
+                            clientX: x,
+                            clientY: y,
+                            pointerId: 1,
+                            pointerType: "mouse",
+                            button: 0,
+                            buttons,
+                            isPrimary: true,
+                        })
+                    );
+                const moves = args.clicks * args.moves_per_click;
+                for (let i = 0; i < moves; i++) {
+                    // Across the grid, a cell or so at a time.
+                    pointer("pointermove", args.sweep_from + i * args.step, args.grid_y, 0);
+                    if ((i + 1) % args.moves_per_click === 0) {
+                        const click = (i + 1) / args.moves_per_click;
+                        pointer("pointerdown", args.button_x, args.button_y, 1);
+                        pointer("pointerup", args.button_x, args.button_y, 0);
+                        input.value = `save-${click}`;
+                        input.dispatchEvent(new Event("input", { bubbles: true }));
+                    }
+                    // 120 Hz.
+                    await new Promise((r) => setTimeout(r, 8));
+                }
+                await new Promise((r) => setTimeout(r, 2_000));
+                return { moves, snapshot: window.__property_workbench.snapshot() };
+            },
+            {
+                clicks,
+                moves_per_click,
+                sweep_from: box.x + box.width * 0.05,
+                step: (box.width * 0.9) / (clicks * moves_per_click),
+                grid_y: box.y + box.height * 0.6,
+                button_x: at(box, NEXT_BUTTON).x,
+                button_y: at(box, NEXT_BUTTON).y,
+            }
+        );
+        // Independent expectation: click k selected object k+1 and the save
+        // that followed it renamed that object, so the last click leaves
+        // object 21 selected under the twentieth name.
+        expect(result.snapshot).toMatchObject({
+            count: 1000,
+            accepted: clicks,
+            refused: 0,
+            position: clicks + 1,
+            selected: clicks + 1,
+            name: `save-${clicks}`,
+        });
+        // The stream itself was collapsed on the way in - that is what keeps it
+        // out of the queue the clicks use - but it did arrive.
+        expect(result.snapshot.hovers).toBeGreaterThan(0);
+        expect(result.snapshot.hovers).toBeLessThanOrEqual(result.moves);
+        // Each save landed on the object selected at the time, and none of them
+        // overwrote a neighbour.
+        await page.getByTestId("select-previous").click();
+        expect(await snapshot(page)).toMatchObject({
+            selected: clicks,
+            name: `save-${clicks - 1}`,
+        });
+        expect(differingPixels(before, await capture(region))).toBeGreaterThan(20);
     });
 
     test("deleting the selected object drops it and clears the selection", async ({ page }) => {
@@ -249,7 +354,8 @@ test.describe("M3: a scope that closes while its region is running", () => {
         // The region's own "next" button: the application closes its scope
         // from inside the callback this click delivers, while the pump that
         // produced it is still on the JS stack.
-        await page.mouse.click(box.x + box.width * 0.77, box.y + box.height * 0.085);
+        const next = at(box, NEXT_BUTTON);
+        await page.mouse.click(next.x, next.y);
         await expect(page.getByTestId("workbench-gpu")).toHaveCount(0);
         await page.waitForTimeout(500);
         // The runtime is not fatal: the page still has its API and no error.
@@ -338,7 +444,7 @@ test.describe("M3: a scope that closes while its region is running", () => {
                 await new Promise((r) => setTimeout(r, 300));
                 return { live, regions: api.live_regions() };
             },
-            { x: box.x + box.width * 0.77, y: box.y + box.height * 0.085 }
+            at(box, NEXT_BUTTON)
         );
         expect(observed.live.length).toBeGreaterThan(0);
         expect(observed.live.filter((count) => count === 0)).toEqual([]);
@@ -379,3 +485,4 @@ test.describe("M3: a scope that closes while its region is running", () => {
         await expect(page.getByTestId("workbench-gpu")).toHaveCount(0);
     });
 });
+

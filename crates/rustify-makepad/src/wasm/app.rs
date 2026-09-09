@@ -17,6 +17,14 @@ pub trait RegionApp: ScriptNew + 'static {
 
     fn apply_props(&mut self, cx: &mut Cx, props: &Self::Props);
 
+    /// How the scope should admit one of this region's actions. A region that
+    /// reports a stream of pointer states declares those continuous, so a
+    /// flood of them can neither delay nor crowd out the clicks between them.
+    fn pace(action: &Self::Action) -> crate::Pace {
+        let _ = action;
+        crate::Pace::Discrete
+    }
+
     fn handle_event(&mut self, cx: &mut Cx, event: &Event, outbox: &mut Vec<Self::Action>);
 }
 

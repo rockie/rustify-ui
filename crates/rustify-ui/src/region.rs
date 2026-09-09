@@ -76,7 +76,7 @@ where
     let deliver_actions = {
         let binding = binding.clone();
         move |actions: Vec<A::Action>| {
-            let denied = submit_all(&sink, &binding, actions, on_action.clone());
+            let denied = submit_all(&sink, &binding, actions, A::pace, on_action.clone());
             if denied > 0 {
                 if let Some(refused) = refused {
                     refused.update(|count| *count += denied);

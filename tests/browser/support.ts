@@ -78,6 +78,8 @@ declare global {
                 first_ids: string;
                 accepted: number;
                 refused: number;
+                hovered: number | null;
+                hovers: number;
             };
             inject_duplicate_id(): boolean;
             close_on_next_action(): void;
