@@ -1,6 +1,6 @@
 # P2 · Rustify UI · 组件目录、表单、导航与工作区（Leptos CSR + Makepad Web · Rust/UI 子集硬分叉接入）
 
-> **计划状态：Blocked**（A-1 已于 2026-09-09 由用户解除；A-2 仍未解除——一期 M4–M8 尚未关闭，本计划以一期计划承诺的交付物为入口，见 §0.2/§11）。
+> **计划状态：Blocked**（A-1 已于 2026-09-09 由用户解除；A-2 仍未解除——一期 4/8，M5/M6 等两项人工验证、M7/M8 未开始，本计划以一期计划承诺的交付物为入口，见 §0.2/§11）。
 >
 > 调查基线：2026-09-09 · `465f18081e5bf9bd38fc4bf79d68fb1314e10c6f` · 调查开始时工作区 clean；本次仅新增本计划。参考源码来自被忽略的 `ref/`（`ref/ui-main` 18 MB、`ref/leptos-main` 12 MB、`ref/makepad-dev` 293 MB），不属于该 commit。
 > 输入：[PRD v0.1](../PRD-WASM-UI.md)（仍为评审草稿，Q1–Q3 与建议预算未批准）；[P1 计划](P1-WASM-UI.md)。**P1 实施状态：3/8 里程碑关闭（M1/M2/M3）**（P1 快照 2026-09-09）；M4–M8（几何/浮层/焦点、原生文本与语义、组件子集/异步/主题、部署/恢复/诊断、验收）均未开始。本计划不把 P1 未交付的能力写成已有事实。
@@ -26,12 +26,12 @@
 
 ### 恢复快照
 
-- 最近更新：2026-09-09。本计划尚未开始实施；本轮只解除 A-1 并同步前置进度。
+- 最近更新：2026-09-09。本计划尚未开始实施；本轮只同步前置进度（P1 M6 收尾）。
 - 当前进度：0/8 个里程碑完成。
 - 当前状态：Blocked（A-2）。A-1 已由用户 2026-09-09 的指示解除，D1/D2/D3/D5 与 ADR-4–7 转为已接受。
-- 最近完成：无（本计划）。前置的 P1 于 2026-09-09 关闭 M3，进度 3/8，见 `P1-WASM-UI.md` 的恢复快照。
+- 最近完成：无（本计划）。前置的 P1 进度 4/8（M1–M4 关闭），M5 与 M6 的功能已全部交付并通过自动验证，两者都只差 M5 的两项人工验证（真实 macOS 拼音 20 条中文短句；VoiceOver + Chrome 五条旅程）；M7、M8 未开始。详见 `P1-WASM-UI.md` 的恢复快照。
 - 下一步：**先按 P1 计划推进 M4–M8 直到 8/8**（这是 A-2 唯一的解除办法，见 §0.2/§11）；期间按 §0.7 的六条对齐建议做，可让 P2 M1 的契约对齐不必返工。P1 到 8/8 后进入 P2 M1 · 契约对齐与组件工程，退出条件为 component-catalog 在严格 CSP 下启动、产物零内联脚本/样式、主题切换同时作用于 DOM 与 GPU、Rust/UI 导入记录写入 `sources.lock.json`。
-- 当前阻塞：A-2（P1 M4–M8 未关闭，P2 M1 依赖 P1 M4 浮层、M5 语义、M6 受控组件/主题/异步票据、M7 诊断的实际接口）。
+- 当前阻塞：A-2（P1 未到 8/8）。P2 M1 依赖的 P1 M4 浮层、M5 语义、M6 受控组件/主题/异步票据的接口都已存在且经过验证（`crates/rustify-ui/src/{overlay,text,components,gpu,theme,task,catalog}.rs`），仍缺 M7 的诊断接口；解除 A-2 的最短路径是先做 M5 的两项人工验证，再做 M7、M8。
 - 代码基线：`465f18081e5bf9bd38fc4bf79d68fb1314e10c6f`（计划调查）；P1 M3 收尾后的基线见 P1 计划的恢复快照。实施后写最近完成里程碑的 commit SHA。
 
 ### 完成记录
@@ -81,7 +81,7 @@
 | C-4 | PRD §2.4/§2.5 | 不做账号、业务持久化、不受信任插件；只读/禁用是本地交互语义 | §0.4/§7 | 沿用 |
 | C-5 | P1 D10；`makepad/platform/src/os/web/web.js` 356–401、548–552 | GPU 区域在嵌入模式下已拒绝改 URL/history/title；导航只能由应用发起 | §5.2 | 已核实 |
 | A-1 | 范围假设 | 用户确认 §0.1 交付形态、§0.5 延期与 §0.3 关键决策（D2 Rust/UI 接入方式、D3 CSS 管线、D5 路由方案） | 用户 2026-09-09 指示「按照 docs/plan/P2-WASM-UI.md 完成开发」，即按本计划所写的建议选择实施；D1/D2/D3/D5 与 ADR-4–7 据此转为已接受 | 已解除 |
-| A-2 | 前置假设 | P1 M4–M8 按 P1 计划关闭：浮层栈/锚点、焦点与命令优先级、原生编辑态与语义入口、受控组件子集与主题 token、异步票据、诊断环与错误种类 | P1 进度 8/8；P2 M1 第一项即核对实际接口并回写 §2 | **阻塞**（P1 2026-09-09 为 3/8，M3 已关闭，M4 未开始） |
+| A-2 | 前置假设 | P1 M4–M8 按 P1 计划关闭：浮层栈/锚点、焦点与命令优先级、原生编辑态与语义入口、受控组件子集与主题 token、异步票据、诊断环与错误种类 | P1 进度 8/8；P2 M1 第一项即核对实际接口并回写 §2 | **阻塞**（P1 2026-09-09 为 4/8；M4 已关闭，M5/M6 的功能已交付并通过自动验证、等 M5 的两项人工验证，M7/M8 未开始） |
 | A-3 | 测量合同 | PRD 预算仍未批准；P2 只交 B1 基线与对照，不把 R29/R30 数字写成门 | 用户确认；M8 前 | 开放（默认沿用 P1 A-6） |
 | A-4 | 验收资源 | M8 需真实 VoiceOver+Chrome、真实拼音（表单与命令面板中文）、阿拉伯文/emoji 参考样本评审人 | 用户承诺；M7 前 | 开放 |
 | A-5 | 技术假设 | 以 `history.state` 中的 SDK 序号计算位移并 `history.go(-delta)` 反向恢复，在 Chrome 对多项跳转（`go(-3)`）、重复 URL、恢复期间连续后退均可靠且不产生重复历史项 | M4 首个探针；失败则守卫降级为只覆盖单步并写入已知限制 | 开放 |
@@ -193,7 +193,7 @@ D1/D2/D3/D5 由用户在 A-1 中一并确认，2026-09-09 已确认；其余为�
 | # | 状态 | 事实与证据 | 设计后果 |
 | --- | --- | --- | --- |
 | F1 | 已核实·足够 | SDK 现有公开面：`mount/AppHandle/MountConfig`（`crates/rustify-ui/src/mount.rs`，容器属性 `data-rustify-scope`）、`GpuRegion` 带 `props/on_action/state/refused/class/test_id`（`region.rs`）、`ActionSink/Binding/submit_all`（`binding.rs`）、`Scheduler` 队列 1,024/批 64（`scheduler.rs`）、`UiError` 三个变体（`diagnostics.rs`）；私有 `RegionApp/create_region/apply/destroy_region/defer`（`crates/rustify-makepad/src/wasm/`） | P2 在此之上新增模块，不改既有签名；`RegionApp::handle_event` 的 outbox 是 GPU 侧应答拖拽/命中查询的唯一出口 |
-| F2 | 已核实·缺口 | P1 计划中的 `focus.rs/overlay.rs/text.rs/semantics.rs/components//theme.rs` 及 M7 诊断环尚不存在（工作树只有 F1 列出的文件）；P1 快照 2/8 | A-2；P2 M1 第一项是核对 P1 实际交付的接口并回写 §2，本计划引用它们时一律标「P1 待交付」 |
+| F2 | 已核实·部分交付 | 2026-09-09 复核：`overlay.rs`、`text.rs`、`components.rs`、`gpu.rs`、`theme.rs`（含 `ThemePatch`/`ThemeOverride`）、`task.rs`、`catalog.rs` 都已存在并通过验证；语义入口没有独立的 `semantics.rs`，它由 `catalog.rs` 加各控件自身的角色/名称承担；M7 的诊断环仍不存在 | A-2；P2 M1 第一项仍是核对 P1 实际交付的接口并回写 §2，引用 M7 的地方标「P1 待交付」 |
 | F3 | 已核实·缺口 | Rust/UI 为复制粘贴 registry（`ref/ui-main/README.md` 第 8 行），`app_crates/registry` 版本 0.1.0 不可发布；`leptos_ui` 0.3.22、`tw_merge` 0.1.21、`icons` 0.18.3 在 crates.io（2026-09-09 `cargo info` 核实，MIT）；`leptos_ui` 与 `icons` 的清单启用 `leptos/nightly` | ADR-4：硬分叉子集；`tw_merge` 作依赖；`leptos_ui` 宏源码分叉进组件 crate；不依赖 `icons` |
 | F4 | 已核实·缺口 | `ref/ui-main/app_crates/registry/src/ui/` 中 19 个文件输出 `format!` 拼装的内联 `<script>`（dialog/select/dropdown_menu/context_menu/menubar/command/popover/sheet/drawer/hover_card/navigation_menu/carousel/action_bar/multi_select 等）、22 个注入 `<style>`、35 处 `style=`；`dropdown_menu.rs` 第 29 行用 `document.currentScript`；8 个组件的脚本调用 `window.ScrollLock`（`ref/ui-main/app_crates/registry/src/hooks/use_scroll_lock.rs`） | 这些组件不能原样导入；浮层类在 SDK 浮层栈重写，`style=` 改为类或 CSSOM |
 | F5 | 已核实·缺口 | Rust/UI 受控性与语义（路径相对 `ref/ui-main/app_crates/registry/src/`）：`Switch` 内部 `RwSignal`（`ui/switch.rs` 第 19 行）无回调；`Tabs` 只有 `default_value`（`ui/tabs.rs` 第 40–46 行）无 `role`；`Dialog` 无 `open` 属性（`ui/dialog.rs` 第 37 行）且全库无 `role="dialog"`/`aria-modal`/焦点陷阱；`Tooltip` 无 ARIA、纯 hover；`Input` 的 `disabled/readonly` 是非响应式 `bool`（`ui/input.rs` 第 40–41 行）；`Checkbox` 是完整受控范式（`ui/checkbox.rs` 第 5–12 行） | 导入后统一为 P1 M6 受控契约：`value: Signal<T>`、`on_change: Callback<T>`、`disabled/readonly: Signal<bool>`；补 ARIA 与键盘 |
@@ -515,7 +515,7 @@ flowchart TD
 | 项目 | 影响 | 责任/解除办法 | 最晚确认点 | 是否阻塞 |
 | --- | --- | --- | --- | --- |
 | A-1 范围与关键决策未确认 | 交付形态、第三示例、Rust/UI 接入方式、CSS 管线、路由方案 | 用户 2026-09-09 确认按本计划实施 | P2 M1 前 | 否（已解除） |
-| A-2 P1 未完成 | P2 M1 依赖 P1 M4–M7 接口；M6/M7 决定 GPU 适配落点与 token | P1 进度到 8/8；P2 M1 首项核对并回写 §2 | P2 M1 前 | **是**（P1 3/8） |
+| A-2 P1 未完成 | P2 M1 依赖 P1 M4–M7 接口；M6/M7 决定 GPU 适配落点与 token | P1 进度到 8/8；P2 M1 首项核对并回写 §2 | P2 M1 前 | **是**（P1 4/8；M5/M6 只差 M5 的人工验证，M7/M8 未开始） |
 | A-3 预算未批准 | M8 只交基线与对照 | 用户确认或批准 R29/R30 作为门 | M8 前 | 否（默认沿用 P1 A-6） |
 | A-4 人工资源 | VoiceOver、拼音、阿拉伯文/emoji 参考样本与评审人 | 用户承诺 | M7 前 | 对 M7/M8 是 |
 | A-5 按序号反向恢复 | 守卫对多项跳转/重复 URL/并发后退的可靠性 | M4 探针；失败则守卫降级为单步并写入已知限制 | M4 内 | 否，M4 内解决 |
@@ -529,7 +529,7 @@ flowchart TD
 | 一期 property-workbench 用例契约变化 | 回归 | 升级时同步更新 `snapshot()` 与用例 | M3–M6 | 否 |
 | SPMS 工具缺失 | 无真实需求 key | 只用 PRD 工作号 | 后续 | 不阻塞 |
 
-- 最终状态：**Blocked**。A-1 已解除，A-2 未解除（P1 3/8，M4–M8 未交付）；A-2 解除后可进入 M1，无其他实施前置。
+- 最终状态：**Blocked**。A-1 已解除，A-2 未解除（P1 4/8；M5/M6 的功能已交付并通过自动验证，等两项人工验证，M7/M8 未开始）；A-2 解除后可进入 M1，无其他实施前置。
 - 退回 Blocked 的条件：A-5 探针失败且自研路由方案未被接受；A-4 到 M7 仍不可得；P1 M4–M7 交付接口与 §2 差异导致 D4/D7 不成立。
 - 本轮已做：读 PRD 与 P1 计划；核实 SDK 现有源码与 xtask/CI/测试基础；核实 `ref/ui-main` 结构、许可、消费模型、18 类组件、主题、CSP 冲突、受控性与语义；核实 Makepad 分叉 Widget 清单与 Web 后端在拖放/剪贴板/文件/历史/IME/上下文丢失/无障碍/wheel 上的现状；核实 leptos_router 0.8.15 的 base、`window` 锚点监听、popstate 与守卫缺口；核实 crates.io 版本（leptos_router 0.8.15、leptos_meta 0.8.6、leptos_ui 0.3.22、tw_merge 0.1.21、icons 0.18.3）；核实 web-sys/js-sys 的 Clipboard/File/Intl 绑定；核实示例 `index.html` 相对引用与 serve 无回退。2026-09-09 评审修订：核实 7 条评审意见（宿主链接接管、拖拽目标失效、提交未查异步状态、样式隔离不足、多项历史跳转、wheel 无条件 preventDefault、B1 对照值）全部成立并回写 ADR-5/ADR-6、D13/D14、§5.2–§5.4、§8、V1/V5/V6/V8、M1/M4/M6。
 - 本轮未做：未安装依赖、未构建含 tw_merge 的产物、未运行浏览器验证、未修改 P1 计划或实现代码、未创建 SPMS 记录。评审探针中的滑块样式与 `go(-3)` 观察结果来自评审方，本次未复现。

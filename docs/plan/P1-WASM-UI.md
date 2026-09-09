@@ -28,23 +28,31 @@
 
 ### 恢复快照
 
-- 最近更新：2026-09-09。M1–M4 已关闭；**M5 功能交付完成、两项人工验证挂起**；**M6 已开工，主题与异步票据两块完成**。下一会话从本节的「M5 现状」「M6 现状」继续。
-- 当前进度：4/8 个里程碑完成（M5 因人工项未做，不记为完成；M6 进行中）。
-- 代码基线：… → `7ffab2a`（M3 关闭）→ `e2ba381`、`34fb0e9`（M4 关闭）→ `e0d203d`、`da0c34a`、`c613a05`（M5）→ `1a04c6c`、`b6e6adf`（M6 主题与异步票据）。工作区 clean。
-- 已通过的验证（2026-09-09 本机）：`cargo xtask doctor` 8/8；`cargo test --workspace --lib` 28（registry 3、scheduler 5、binding 9、overlay 3、theme 3、task 5）；`cargo test -p xtask` 10；`cd makepad && cargo test` 13；`cargo clippy --workspace --all-targets -- -D warnings` 无警告；`cargo fmt --all -- --check` 通过；两个示例各 `cargo xtask build-web --release` 通过；`npx playwright test --project=property-workbench` **39/39**（m3-workbench 19、m5-text 8、m5-semantics 5、m6-theme 3、m6-async 4）；`npx playwright test --project=fusion-basic` **42/42**（最近一次完整回归在 M5 语义提交处；此后只改了 workbench 与 SDK 的 theme/task，未再全量重跑）。
+- 最近更新：2026-09-09。M1–M4 已关闭；**M5 功能交付完成、两项人工验证挂起**；**M6 功能全部交付并通过验证，因 M5 未关闭而同样不记为关闭**。下一会话从本节的「M5 现状」继续：做完 M5 的两项人工验证即可同时关闭 M5 与 M6，再进入 M7。
+- 当前进度：4/8 个里程碑完成。M5 与 M6 都只差 M5 的两项人工项，没有别的缺口。
+- 代码基线：… → `7ffab2a`（M3 关闭）→ `e2ba381`、`34fb0e9`（M4 关闭）→ `e0d203d`、`da0c34a`、`c613a05`（M5）→ `1a04c6c`、`b6e6adf`（M6 主题与异步票据）→ 本会话的 M6 收尾提交。工作区 clean。
+- 已通过的验证（2026-09-09 本机）：`cargo xtask doctor` 9/9（新增 vendored 一项）；`cargo test --workspace --lib` 43（registry 3、binding 9、catalog 7、components 4、overlay 3、scheduler 5、task 5、theme 7）；`cargo test -p xtask` 10；`cd makepad && cargo test` 13；`cargo clippy --workspace --all-targets -- -D warnings` 无警告；`cargo fmt --all -- --check` 通过；`cargo xtask sources verify` 通过（makepad 漂移可归因，nouislider 3 个文件 0 修改）；两个示例各 `cargo xtask build-web --release` 通过；`npx playwright test --project=property-workbench` **54/54**（m3-workbench 19、m5-text 8、m5-semantics 5、m6-theme 3、m6-async 4、m6-components 15）；`--project=fusion-basic` **45/45**（新增 m6-mainpath 3）。
 - **M5 现状**：功能已全部交付并通过，证据见 `docs/validation/p1/m5-text-and-semantics.md`。
-  - 已做：原生文本会话（`crates/rustify-ui/src/text.rs`）——区域交出它画文本的矩形，真正的 `input`/`textarea` 在会话期间占据它；受控、组合期间 Enter/Esc 归组合、一次组合只产出一个值、外部改值以「失效」结束会话；多行（notes）同路径且 Enter 是换行、离开才提交。语义：画布 `aria-hidden`（像素是装饰），面板 20 个可按角色+名称定位的控件，「按编号找对象」的 DOM 入口与 GPU 点击同一条规则，`UiError` 增加 `NotFound`/`Disposed`/`Timeout` 且查找在 5 秒上限内给出其一，五条纯键盘旅程。字体来源写进 `docs/compatibility.md`。
-  - **未做（只能由人做，按 §9.4 不得用合成事件替代、不得记录通过）**：① 真实 macOS 拼音 20 条中文短句；② VoiceOver + Chrome 五条旅程的名称/角色/值/状态、无重复朗读、无焦点陷阱。**这两项完成前 M5 不记为关闭。**
+  - 已做：原生文本会话（`crates/rustify-ui/src/text.rs`）——区域交出它画文本的矩形，真正的 `input`/`textarea` 在会话期间占据它；受控、组合期间 Enter/Esc 归组合、一次组合只产出一个值、外部改值以「失效」结束会话；多行（notes）同路径且 Enter 是换行、离开才提交。语义：画布 `aria-hidden`（像素是装饰），面板可按角色+名称定位的控件，「按编号找对象」的 DOM 入口与 GPU 点击同一条规则，`UiError` 增加 `NotFound`/`Disposed`/`Timeout` 且查找在 5 秒上限内给出其一，五条纯键盘旅程。字体来源写进 `docs/compatibility.md`。
+  - **未做（只能由人做，按 §9.4 不得用合成事件替代、不得记录通过）**：① 真实 macOS 拼音 20 条中文短句；② VoiceOver + Chrome 五条旅程的名称/角色/值/状态、无重复朗读、无焦点陷阱。**这两项完成前 M5 不记为关闭，M6 也不记为关闭。**
   - 未做（可自动化但未做）：会话内 Unicode 选择/删除/撤销未单独断言。
-- **M6 现状**：
-  - 已做（主题）：`crates/rustify-ui/src/theme.rs`——一张语义 token 表（sRGB），DOM 读作用域根上的 CSS 自定义属性，GPU 区域拿到同一组数字作为 props；token 名与 P2 要导入的组件库一致（`--background`/`--foreground`/`--primary`/…/`--radius`），值经 CSSOM 写入（不放宽 `style-src`），`data-theme` 落在作用域根而不是文档，所以宿主页面与第二个作用域各自为政。3 条浏览器用例：一次切换同时改变面板计算样式与区域上千像素；20 次切换回到原点且宿主颜色一动不动、文档从未带上 `data-theme`；切换后控件仍可按角色+名称定位。
-  - 已做（异步票据）：`crates/rustify-ui/src/task.rs`——`Load` 四态（`Empty` 是答案而不是 `Ready(None)`）与 `Requests`/`Ticket`；票据按序发放，新票据一发旧票据即失效，持有者关闭后全部失效。5 条宿主单测（含 100 组 A/B 反序、100 张票据在关闭后一张也不投递）+ 4 条浏览器用例（四态各自说明自己、先问的后答不覆盖后问的、20 组反序、作用域消失后迟到答案什么也碰不到且可重新挂载再取）。
-  - 未做（M6 余下）：§6.3 的组件子集与六类能力目录、受控值被拒的显示回落、局部主题覆盖、一个固定版本第三方 DOM 组件的 20 次重建（无重复订阅）、两个示例的「选择→编辑→确认」主路径对照、以及主题切换后复跑 V6 定位的 30 轮。
-- 已知限制：浮层只放在锚点下方，不翻转也不夹回视口；模态只让本作用域 inert；缩放矩阵用「设备像素比 + 相应缩小的 CSS 视口」模拟。
-- 已知坑（本轮踩到）：Label 的 `area()` 是它画出的墨迹而不是它拿到的盒子，靠它做命中一次也命中不了——要命中就自己画一个盒子；`DrawText` 的 `text_style` 用 `:` 替换会丢默认字体、一个字也不画（与 M3 的 `draw_bg` 是同一个坑）；区域头部里「值在前、控件在后」会让值变宽时把控件推走，指针和用例都会打空——控件排在行首、用例按距左边缘的像素定位；页面级注册要带上注册者的身份，否则后销毁的旧作用域会把新作用域的注册抹掉。
-- 待办（不阻塞）：审计每区域重复加载字体的内存（4 区域线性内存 124 MB）。
-- 已知环境事实：headless 跑在 SwiftShader 上；Playwright 进程测到的耗时比页内测量大 10–30 倍；按 project 分开跑更稳；重新构建产物前先确认没有用例在跑。断言应用状态用页面导出的 snapshot 而不是 DOM 文本，后者在整套用例连跑时对时序敏感。
-- 下一步：先补完 M6 余下项（组件子集与能力目录、受控值拒绝、局部主题、第三方组件、两示例主路径），再回头处理 M5 的两项人工验证；M5 未关闭前 M6 不记为完成。
+- **M6 现状**：功能全部交付并通过，证据见 `docs/validation/p1/m6-components-async-theme.md`。退出条件里没有人工项，它等的只是 M5。
+  - 已做（主题）：`crates/rustify-ui/src/theme.rs`——一张语义 token 表（sRGB），DOM 读作用域根上的 CSS 自定义属性，GPU 区域拿到同一组数字作为 props；本轮补齐 §6.3 点名的字号、间距与「减少动态效果」（后者是 0ms 过渡：结果照样到，只是不再走过去）。值经 CSSOM 写入（不放宽 `style-src`），`data-theme` 落在作用域根而不是文档。`ThemeOverride` 做局部覆盖：只写 patch 点名的属性，并移除它不再点名的——覆盖若关不掉就不是局部而是永久；其余靠继承。覆盖内的子节点也能通过 `use_theme_values` 拿到打过 patch 的表，但两个示例都没有把区域放进覆盖里，这一半只是写好并编译，未被验证（已写入 M6 报告的已知限制）。
+  - 已做（异步票据）：`crates/rustify-ui/src/task.rs`——`Load` 四态（`Empty` 是答案而不是 `Ready(None)`）与 `Requests`/`Ticket`；票据按序发放，新票据一发旧票据即失效，持有者关闭后全部失效。`LoadView` 组件把四态和一个由应用定义的重试入口摆出来，重试按钮在状态行旁边而不是里面，读状态的人听到的是状态而不是按钮名。
+  - 已做（组件子集与能力目录）：`crates/rustify-ui/src/components.rs`（DOM：Button/Label/TextField/TextArea/Checkbox/Slider/LoadView）与 `crates/rustify-ui/src/gpu.rs`（GPU：RustifyCheckBox/RustifySlider）。全部严格受控——用户做的是请求，控件随后显示的是应用的答复；被拒的值不会留在屏幕上冒充已被接受，禁用与只读控件根本不发请求。`snap` 一条规则同时管两半，两个滑块给不出对方给不出的值。`crates/rustify-ui/src/catalog.rs` 是 R18 的 18 类目录：三列呈现（DOM/GPU/跨区）加六类能力（属性、动作、主题、输入、无障碍、环境），每格都有等级和理由，类型里没有 `Unknown`；本期交付 9 类，另外 9 类（链接、图标、单选、开关、选择器、进度、提示气泡、标签页、滚动容器）在表里逐格写明「不在 P1，属 P2 M2」。`docs/components.md` 打印同一张表，宿主单测在两者不一致时失败；目录同时渲染在 property-workbench 页面上。
+  - 已做（第三方 DOM 组件）：noUiSlider 15.8.1 连许可证一起 vendor 进 `examples/property-workbench/vendor/nouislider/`，逐文件摘要写进 `sources.lock.json`，`cargo xtask sources verify` 校验、`cargo xtask doctor` 列出、构建期只复制不下载。20 次重建后文档里只有 1 个实例、shim 里只有 1 条订阅、创建数恰好比销毁数多 1，一次外部改动只回调一次（漏掉的订阅会回调两次），每轮焦点都停在原处。
+  - 已做（两示例的选择→编辑→确认主路径）：property-workbench 是「区域上点选对象 → 区域交出名字矩形给原生控件 → Enter 提交」，fusion-basic 是「区域上点选锚点 → 锚定在它上面的菜单打开模态 → apply 提交颜色」；两边都验证了放弃不改值、被拒时旧值留在两半并说明原因。对照表在 M6 报告里。
+  - 已做（主题切换后复跑 V6 定位）：30 轮切换，每轮 10 个控件按角色+名称各命中一次，最后指针路径与 DOM 路径仍指向同一个对象。
+- 已知限制：浮层只放在锚点下方，不翻转也不夹回视口；模态只让本作用域 inert；缩放矩阵用「设备像素比 + 相应缩小的 CSS 视口」模拟；18 类目录里有 9 类本期没有实现，不能据此对它们下任何结论；GPU 文本字段是「显示值 + 把编辑交给原生控件」，不是 GPU 文本编辑器；「减少动态效果」token 已发布并被读取，但两个示例里没有长到能用肉眼比较的动画。
+- 已知坑（本轮踩到）：
+  - 一个横跨整行的 `<section>` 放进 `display: grid` 容器里，会把它后面的兄弟推回第一列：区域被挤成 260 px 宽，此后任何一次 props 变化都让整块画面重排，看起来像「拒绝重复 ID 改变了画面」。把宽表移出网格才恢复。
+  - `cx.walk_turtle(walk)` 给的是对齐之前的矩形；父级 `align: Center` 在走完之后才挪动子控件，所以「控件在哪儿」必须用 `draw_bg.area().rect(cx)` 上报，否则指针照着报告点永远打空。顺带把那一行改成左对齐（`align: Align{x: 0., y: 0.5}`），免得某个值变宽时整行跟着移动。
+  - 页面级注册用单槽位撑不住两个作用域：后挂载的作用域占走槽位，它销毁时把整页的入口一起带走。改成「每个在场作用域一条记录，各自只撤回自己的那条」（M5 只给一个入口打了身份，本轮给全部入口打上）。
+  - Playwright 的 `fill()` 对 `<input type="range">` 直接报 Malformed value；要么用键盘，要么按区域上报的轨道矩形点击。
+  - Makepad 自带的 `Slider` 内嵌 `TextInput` 并会抢 key focus，与 M4「不留隐藏 textarea、不抢宿主焦点」的结论冲突，所以 GPU 滑块自己写。
+- 待办（不阻塞）：审计每区域重复加载字体的内存（4 区域线性内存 124 MB）；`first_line` 曾是死代码——区域一直画着一个永不更新的 notes 值，本轮修好，同类「写了工具函数却没接上」的地方值得再扫一遍。
+- 已知环境事实：headless 跑在 SwiftShader 上；Playwright 进程测到的耗时比页内测量大 10–30 倍，且与 cargo 抢 CPU 时还会再涨一倍；按 project 分开跑更稳；重新构建产物前先确认没有用例在跑。断言应用状态用页面导出的 snapshot 而不是 DOM 文本。
+- 下一步：M5 的两项人工验证（真实拼音 20 条中文短句；VoiceOver + Chrome 五条旅程）→ 同时关闭 M5 与 M6 → 进入 M7（部署、错误恢复与诊断）。
 - 当前阻塞：M5 的两项人工验证需要用户（真实拼音、VoiceOver）。其余无阻塞。
 
 ### 完成记录
