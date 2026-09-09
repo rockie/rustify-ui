@@ -56,7 +56,10 @@ mod app {
             }
         }
 
-        fn t(self, key: &str) -> &'static str {
+        /// The key is `&'static str` so a key with no translation can be its
+        /// own answer: the page shows the key, which is how a missing entry
+        /// gets noticed instead of leaking or panicking.
+        fn t(self, key: &'static str) -> &'static str {
             match (self, key) {
                 (Self::En, "catalogue") => "catalogue",
                 (Self::En, "status") => "support at a glance",
@@ -80,9 +83,7 @@ mod app {
                 (Self::ZhCn, "language") => "语言",
                 (Self::ZhCn, "shipped") => "本期交付",
                 (Self::ZhCn, "absent") => "本期不含",
-                // A key with no translation is a bug in this table, and saying
-                // so on the page is how it gets found.
-                (_, other) => Box::leak(format!("[{other}]").into_boxed_str()),
+                (_, other) => other,
             }
         }
     }
