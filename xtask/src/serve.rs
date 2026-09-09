@@ -53,6 +53,52 @@ pub struct ServeConfig {
     pub base: String,
     pub port: u16,
     pub csp: CspMode,
+    /// What this server is currently doing wrong on purpose. Set at start with
+    /// `--fault`, and changed at run time through `<base>__fault/<spec>`, so
+    /// one server can exercise several deployment failures without a restart.
+    pub fault: std::sync::Mutex<Option<Fault>>,
+}
+
+/// A deployment that is broken in one specific way.
+///
+/// Each of these is something a real deployment does: a file that was not
+/// copied, a file that arrived damaged, and a set of assets from two different
+/// builds. They are injected at the server rather than by editing the build,
+/// so what is under test is the running product and not a doctored copy of it.
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub enum Fault {
+    /// The named file answers 404.
+    Missing(String),
+    /// The named file answers with its bytes damaged in the middle.
+    Corrupt(String),
+    /// The named file answers with half its bytes and a truncated length.
+    Truncated(String),
+    /// The message bridge claims a schema hash the wasm does not have, which
+    /// is what a half-updated deployment looks like from the browser.
+    StaleBridge,
+}
+
+impl Fault {
+    pub fn parse(spec: &str) -> Result<Self, String> {
+        match spec.split_once(':') {
+            Some(("missing", path)) => Ok(Self::Missing(path.to_string())),
+            Some(("corrupt", path)) => Ok(Self::Corrupt(path.to_string())),
+            Some(("truncated", path)) => Ok(Self::Truncated(path.to_string())),
+            _ if spec == "stale-bridge" => Ok(Self::StaleBridge),
+            _ if spec == "none" => Err("none".to_string()),
+            other => Err(format!(
+                "unknown fault {other:?}; use missing:<path>, corrupt:<path>, truncated:<path> or stale-bridge"
+            )),
+        }
+    }
+
+    /// The file this fault concerns, if it names one.
+    fn target(&self) -> Option<&str> {
+        match self {
+            Self::Missing(path) | Self::Corrupt(path) | Self::Truncated(path) => Some(path),
+            Self::StaleBridge => Some("rustify_makepad/message_bridge.js"),
+        }
+    }
 }
 
 /// Normalizes a user supplied base path to the `/segment/.../` form.
@@ -173,8 +219,70 @@ fn handle(mut stream: TcpStream, config: &ServeConfig) -> std::io::Result<()> {
         let head = format!("HTTP/1.1 301 Moved Permanently\r\n{location}Content-Length: 0\r\nConnection: close\r\n\r\n");
         return stream.write_all(head.as_bytes());
     }
+    // The fault switch. A page reloads after setting one, so the fault applies
+    // to the whole document rather than to whatever happened to be in flight.
+    if let Some(spec) = path_only.strip_prefix(&format!("{}__fault/", config.base)) {
+        let next = match Fault::parse(spec) {
+            Ok(fault) => Some(fault),
+            Err(reason) if reason == "none" => None,
+            Err(reason) => {
+                return write_response(
+                    &mut stream,
+                    404,
+                    "text/plain",
+                    reason.as_bytes(),
+                    config,
+                    false,
+                )
+            }
+        };
+        let reply = format!("{next:?}");
+        *config.fault.lock().unwrap() = next;
+        return write_response(
+            &mut stream,
+            200,
+            "text/plain",
+            reply.as_bytes(),
+            config,
+            false,
+        );
+    }
     match resolve(&config.root, &config.base, target) {
         Some(file) => {
+            let relative = file
+                .strip_prefix(&config.root)
+                .map(|rest| rest.to_string_lossy().replace('\\', "/"))
+                .unwrap_or_default();
+            let fault = config
+                .fault
+                .lock()
+                .unwrap()
+                .clone()
+                .filter(|fault| fault.target() == Some(relative.as_str()));
+            match fault {
+                Some(Fault::Missing(_)) => {
+                    return write_response(
+                        &mut stream,
+                        404,
+                        "text/plain",
+                        b"not found",
+                        config,
+                        false,
+                    )
+                }
+                Some(fault) => {
+                    let body = damage(&fault, std::fs::read(&file)?);
+                    return write_response(
+                        &mut stream,
+                        200,
+                        mime_type(&file),
+                        &body,
+                        config,
+                        method == "HEAD",
+                    );
+                }
+                None => {}
+            }
             let body = std::fs::read(&file)?;
             write_response(
                 &mut stream,
@@ -186,6 +294,42 @@ fn handle(mut stream: TcpStream, config: &ServeConfig) -> std::io::Result<()> {
             )
         }
         None => write_response(&mut stream, 404, "text/plain", b"not found", config, false),
+    }
+}
+
+/// The bytes a broken deployment would serve.
+pub fn damage(fault: &Fault, mut body: Vec<u8>) -> Vec<u8> {
+    match fault {
+        Fault::Missing(_) => Vec::new(),
+        Fault::Corrupt(_) => {
+            // In the middle, so a reader that checks a header still gets past
+            // it and fails on the content, which is the harder case.
+            if !body.is_empty() {
+                let middle = body.len() / 2;
+                body[middle] ^= 0xff;
+            }
+            body
+        }
+        Fault::Truncated(_) => {
+            body.truncate(body.len() / 2);
+            body
+        }
+        Fault::StaleBridge => {
+            // The hash the page checks against the wasm's own. One digit is
+            // enough: what is being tested is that the two are compared.
+            let text = String::from_utf8_lossy(&body).to_string();
+            const PREFIX: &str = "export const SCHEMA_HASH = \"";
+            match text.find(PREFIX) {
+                Some(start) => {
+                    let value = start + PREFIX.len();
+                    // One digit in front of the hash: the two no longer agree,
+                    // which is the whole of what a half-updated deployment
+                    // looks like from the browser.
+                    format!("{}1{}", &text[..value], &text[value..]).into_bytes()
+                }
+                None => body,
+            }
+        }
     }
 }
 
@@ -219,6 +363,59 @@ fn write_response(
         stream.write_all(body)?;
     }
     stream.flush()
+}
+
+#[cfg(test)]
+mod fault_tests {
+    use super::*;
+
+    #[test]
+    fn a_fault_names_the_file_it_breaks() {
+        assert_eq!(
+            Fault::parse("missing:app.js"),
+            Ok(Fault::Missing("app.js".to_string()))
+        );
+        assert_eq!(
+            Fault::parse("corrupt:fonts/a.ttf"),
+            Ok(Fault::Corrupt("fonts/a.ttf".to_string()))
+        );
+        assert_eq!(
+            Fault::parse("truncated:fonts/a.ttf"),
+            Ok(Fault::Truncated("fonts/a.ttf".to_string()))
+        );
+        assert_eq!(Fault::parse("stale-bridge"), Ok(Fault::StaleBridge));
+        assert_eq!(Fault::parse("none"), Err("none".to_string()));
+        assert!(Fault::parse("explode:app.js")
+            .unwrap_err()
+            .contains("unknown fault"));
+    }
+
+    #[test]
+    fn each_kind_of_damage_is_the_one_it_says() {
+        let body = b"0123456789".to_vec();
+        assert!(damage(&Fault::Missing("x".into()), body.clone()).is_empty());
+        assert_eq!(damage(&Fault::Truncated("x".into()), body.clone()).len(), 5);
+        let corrupt = damage(&Fault::Corrupt("x".into()), body.clone());
+        assert_eq!(corrupt.len(), body.len());
+        assert_ne!(corrupt, body);
+        // The ends survive, so a reader that only checks a header is fooled.
+        assert_eq!(corrupt[0], body[0]);
+        assert_eq!(corrupt[body.len() - 1], body[body.len() - 1]);
+    }
+
+    #[test]
+    fn a_stale_bridge_claims_a_hash_the_wasm_does_not_have() {
+        let module =
+            b"// generated\nexport const SCHEMA_HASH = \"4242\";\nexport function x(){}".to_vec();
+        let stale = damage(&Fault::StaleBridge, module.clone());
+        let text = String::from_utf8(stale).expect("still javascript");
+        assert!(
+            text.contains("export const SCHEMA_HASH = \"14242\";"),
+            "{text}"
+        );
+        // Still a module: what fails is the comparison, not the parse.
+        assert!(text.contains("export function x(){}"), "{text}");
+    }
 }
 
 #[cfg(test)]

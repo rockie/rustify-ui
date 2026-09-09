@@ -13,6 +13,7 @@ cargo xtask <command> [options]
   doctor
   build-web --example <name> [--release]
   serve       --example <name> [--release] [--base /path/] [--port N] [--csp strict|no-wasm|off]
+              [--fault missing:<path>|corrupt:<path>|truncated:<path>|stale-bridge]
   report-size --example <name> [--release]
   sources     verify
 ";
@@ -94,10 +95,15 @@ fn serve_example(args: &[String]) -> Result<(), String> {
         Some(value) => value.parse().map_err(|_| format!("invalid port {value}"))?,
         None => 0,
     };
+    let fault = match option(args, "--fault") {
+        Some(spec) => Some(serve::Fault::parse(spec)?),
+        None => None,
+    };
     serve::serve(ServeConfig {
         root,
         base: serve::normalize_base(option(args, "--base").unwrap_or("/")),
         port,
         csp: CspMode::parse(option(args, "--csp").unwrap_or("strict"))?,
+        fault: std::sync::Mutex::new(fault),
     })
 }

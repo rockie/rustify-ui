@@ -2,6 +2,10 @@ import { defineConfig, devices } from "@playwright/test";
 
 const fusionPort = 4173;
 const workbenchPort = 4174;
+// A third server for the deployment checks: the same build, served under a
+// sub-path, with a switch that makes it serve a broken one on request.
+const deploymentPort = 4175;
+const deploymentBase = "/tools/demo/";
 
 export default defineConfig({
     testDir: "./tests/browser",
@@ -29,6 +33,11 @@ export default defineConfig({
             testMatch: ["m3-workbench.spec.ts", "m5-text.spec.ts", "m5-semantics.spec.ts", "m6-theme.spec.ts", "m6-async.spec.ts", "m6-components.spec.ts", "m7-recovery.spec.ts"],
             use: { baseURL: `http://127.0.0.1:${workbenchPort}/` },
         },
+        {
+            name: "deployment",
+            testMatch: ["m7-deployment.spec.ts"],
+            use: { baseURL: `http://127.0.0.1:${deploymentPort}${deploymentBase}` },
+        },
     ],
     webServer: [
         {
@@ -40,6 +49,12 @@ export default defineConfig({
         {
             command: `cargo xtask serve --example property-workbench --release --port ${workbenchPort}`,
             url: `http://127.0.0.1:${workbenchPort}/`,
+            reuseExistingServer: false,
+            timeout: 120_000,
+        },
+        {
+            command: `cargo xtask serve --example fusion-basic --release --port ${deploymentPort} --base ${deploymentBase}`,
+            url: `http://127.0.0.1:${deploymentPort}${deploymentBase}`,
             reuseExistingServer: false,
             timeout: 120_000,
         },
