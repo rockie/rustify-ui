@@ -46,6 +46,31 @@ impl CxScriptResource {
     }
 }
 
+thread_local! {
+    /// Told when a resource a script asked for did not load, with the path it
+    /// asked for and why. Installed by an embedder that reports such failures
+    /// to its own host; there is at most one, and by default there is none, so
+    /// nothing changes for a caller that does not install it.
+    ///
+    /// This is a Rustify addition to the fork: without it a failed resource is
+    /// only a log line, and an embedder cannot tell its host that an asset it
+    /// deployed did not arrive.
+    static ON_RESOURCE_FAILURE: RefCell<Option<Rc<dyn Fn(&str, &str)>>> =
+        const { RefCell::new(None) };
+}
+
+/// Installs the hook above, replacing any previous one.
+pub fn on_resource_failure(hook: Rc<dyn Fn(&str, &str)>) {
+    ON_RESOURCE_FAILURE.with(|slot| *slot.borrow_mut() = Some(hook));
+}
+
+fn report_resource_failure(path: &str, error: &str) {
+    let hook = ON_RESOURCE_FAILURE.with(|slot| slot.borrow().clone());
+    if let Some(hook) = hook {
+        hook(path, error);
+    }
+}
+
 /// Tracks an in-flight HTTP request that will populate a resource
 pub struct CxScriptHttpResource {
     pub request_id: LiveId,
@@ -189,7 +214,12 @@ impl CxScriptResources {
             self.http_resources.remove(idx);
             let mut resources = self.resources.borrow_mut();
             if let Some(res) = resources.iter_mut().find(|r| r.has_handle(handle)) {
-                res.data = CxScriptResourceData::Error(error);
+                let path = res.abs_path.clone();
+                res.data = CxScriptResourceData::Error(error.clone());
+                // Outside the borrow: the hook belongs to an embedder, and
+                // what it does with the news is its own business.
+                drop(resources);
+                report_resource_failure(&path, &error);
                 return true;
             }
         }

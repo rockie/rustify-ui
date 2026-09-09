@@ -249,3 +249,44 @@ test.describe("M2 V3: teardown and host coexistence", () => {
             .toBeGreaterThan(20);
     });
 });
+
+test.describe("M7 V8: what a trap in the shared module reaches", () => {
+    test("every mount in the runtime is dead, and the page says which", async ({ page }) => {
+        await waitForReady(page);
+        // Two scopes, two regions each: the blast radius claim is about all of
+        // them, so all of them have to be there to begin with.
+        await expect(page.getByTestId("scope-a-dom-count")).toHaveCount(1);
+        await expect(page.getByTestId("scope-b-dom-count")).toHaveCount(1);
+        expect(await page.evaluate(() => window.__fusion_basic.live_regions())).toBe(4);
+
+        await page.evaluate(() =>
+            window.__fusion_basic.hooks.runtime.enter_fatal(new Error("injected trap"))
+        );
+
+        // Not one scope: every one of them. A trap is a property of the wasm
+        // module, and every mount in this runtime shares it.
+        await expect(page.getByTestId("status")).toHaveAttribute("data-status", "fatal");
+        for (const id of [
+            "scope-a-dom-count",
+            "scope-a-dom-increment",
+            "scope-a-gpu-1",
+            "scope-a-gpu-2",
+            "scope-b-dom-count",
+            "scope-b-dom-increment",
+            "scope-b-gpu-1",
+            "scope-b-gpu-2",
+        ]) {
+            await expect(page.getByTestId(id), id).toHaveCount(0);
+        }
+
+        // The notice says what was lost and what to do, in that order.
+        const notice = page.getByRole("alert");
+        await expect(notice).toContainText("RuntimeFatal");
+        await expect(notice).toContainText("reload the page");
+        await expect(notice).toContainText("unsaved in-memory state is lost");
+
+        // And the application's own entry points are gone: nothing the page
+        // still holds can call back into the module that trapped.
+        expect(await page.evaluate(() => "__fusion_basic" in window)).toBe(false);
+    });
+});

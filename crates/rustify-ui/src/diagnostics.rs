@@ -153,6 +153,11 @@ pub struct Diagnostic {
     pub scope: Option<String>,
     /// The region's id, when one was involved.
     pub region: Option<u32>,
+    /// The asset the entry is about, when one is. This is the only field that
+    /// carries a string from outside, and it is build data - a path the
+    /// application's own resource table asked for - never anything a user
+    /// typed.
+    pub asset: Option<String>,
     pub detail: &'static str,
 }
 
@@ -163,8 +168,16 @@ impl Diagnostic {
             at_ms,
             scope: None,
             region: None,
+            asset: None,
             detail,
         }
+    }
+
+    /// Names the asset this entry is about. Only for paths that came from the
+    /// build's own resource table.
+    pub fn about_asset(mut self, asset: impl Into<String>) -> Self {
+        self.asset = Some(asset.into());
+        self
     }
 
     pub fn in_scope(mut self, scope: impl Into<String>) -> Self {
@@ -186,6 +199,7 @@ impl Diagnostic {
         std::mem::size_of::<Self>()
             + self.detail.len()
             + self.scope.as_ref().map(String::len).unwrap_or(0)
+            + self.asset.as_ref().map(String::len).unwrap_or(0)
     }
 }
 
@@ -197,6 +211,9 @@ impl fmt::Display for Diagnostic {
         }
         if let Some(region) = self.region {
             write!(f, " region={region}")?;
+        }
+        if let Some(asset) = &self.asset {
+            write!(f, " asset={asset}")?;
         }
         write!(f, ": {}; {}", self.detail, self.suggestion())
     }
@@ -287,7 +304,7 @@ impl Diagnostics {
             .iter()
             .map(|entry| {
                 format!(
-                    "{{\"kind\":\"{}\",\"at_ms\":{:.0},\"scope\":{},\"region\":{},\"detail\":\"{}\",\"suggestion\":\"{}\"}}",
+                    "{{\"kind\":\"{}\",\"at_ms\":{:.0},\"scope\":{},\"region\":{},\"asset\":{},\"detail\":\"{}\",\"suggestion\":\"{}\"}}",
                     entry.kind.name(),
                     entry.at_ms,
                     entry
@@ -298,6 +315,11 @@ impl Diagnostics {
                     entry
                         .region
                         .map(|region| region.to_string())
+                        .unwrap_or_else(|| "null".to_string()),
+                    entry
+                        .asset
+                        .as_deref()
+                        .map(|asset| format!("\"{asset}\""))
                         .unwrap_or_else(|| "null".to_string()),
                     entry.detail,
                     entry.suggestion(),
@@ -371,15 +393,42 @@ thread_local! {
         std::cell::RefCell::new(Diagnostics::new(0, "unknown"));
 }
 
-/// Names the runtime and the build every later entry belongs to. Called once
-/// by the page as it boots; before that, entries carry the unknown build,
-/// which is itself worth seeing in a report.
+/// Names the runtime and the build every later entry belongs to, and starts
+/// watching for assets that do not arrive. Called once by the page as it
+/// boots; before that, entries carry the unknown build, which is itself worth
+/// seeing in a report.
 pub fn identify_runtime(runtime: u32, build: &str) {
     LOG.with(|log| {
         let mut log = log.borrow_mut();
         *log = Diagnostics::new(runtime, build);
     });
+    watch_assets();
 }
+
+/// Reports an asset the region asked for and did not get.
+///
+/// Without this the failure is a log line inside the fork and nothing else:
+/// the region carries on drawing what it can, which is the right behaviour,
+/// but nobody is told that a file they deployed did not arrive.
+#[cfg(target_arch = "wasm32")]
+pub fn watch_assets() {
+    use rustify_makepad::makepad_widgets::makepad_platform::script::res::on_resource_failure;
+    on_resource_failure(std::rc::Rc::new(|path: &str, error: &str| {
+        // The reason is one of a fixed set the fork produces; the varying part
+        // of it is a status code, which is not worth a dynamic string here.
+        let detail = if error.contains("status") {
+            "a resource the region asked for came back as an error"
+        } else if error.contains("empty response body") {
+            "a resource the region asked for came back empty"
+        } else {
+            "a resource the region asked for did not arrive"
+        };
+        record(note(ErrorKind::AssetLoadFailed, detail).about_asset(path));
+    }));
+}
+
+#[cfg(not(target_arch = "wasm32"))]
+pub fn watch_assets() {}
 
 /// Records one entry in this runtime's bounded record.
 pub fn record(entry: Diagnostic) {
@@ -476,6 +525,13 @@ mod tests {
             entry.to_string(),
             "1234ms GpuContextLost scope=workbench region=7: a detail the SDK wrote; \
              nothing: the region is rebuilt with the current state"
+        );
+        let asset = Diagnostic::new(ErrorKind::AssetLoadFailed, 5.0, "it did not arrive")
+            .about_asset("resources/a.ttf");
+        assert_eq!(
+            asset.to_string(),
+            "5ms AssetLoadFailed asset=resources/a.ttf: it did not arrive; \
+             check the asset is deployed beside the build, then retry"
         );
     }
 

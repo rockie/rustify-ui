@@ -445,6 +445,19 @@ mod app {
             .is_some()
     }
 
+    /// Names this runtime and the build it came from, and starts watching for
+    /// assets that do not arrive.
+    #[wasm_bindgen]
+    pub fn fusion_basic_identify(runtime: u32, build: &str) {
+        rustify_ui::identify_runtime(runtime, build);
+    }
+
+    /// This runtime's bounded diagnostic record.
+    #[wasm_bindgen]
+    pub fn fusion_basic_diagnostics() -> String {
+        rustify_ui::report_json()
+    }
+
     #[wasm_bindgen]
     pub fn fusion_basic_live_regions() -> u32 {
         rustify_makepad::live_region_count() as u32

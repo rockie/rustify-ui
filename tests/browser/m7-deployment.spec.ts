@@ -70,10 +70,15 @@ test.describe("M7 V9: assets from two different builds", () => {
 const FONT = "makepad_widgets/resources/IBMPlexSans-Text.ttf";
 
 test.describe("M7 V8: an asset that does not arrive, or arrives broken", () => {
-    for (const [name, spec] of [
-        ["missing", `missing:${FONT}`],
-        ["corrupt", `corrupt:${FONT}`],
-        ["truncated", `truncated:${FONT}`],
+    // The three classes do not fail in the same place. A 404 fails the load,
+    // which the runtime hears about. Damaged bytes arrive with a 200: the load
+    // succeeds and the failure is in decoding them, which is inside the fork's
+    // font code and is not reported. Both are survivable; only one is visible,
+    // and the test says which.
+    for (const [name, spec, reported] of [
+        ["missing", `missing:${FONT}`, true],
+        ["corrupt", `corrupt:${FONT}`, false],
+        ["truncated", `truncated:${FONT}`, false],
     ] as const) {
         test(`a ${name} font costs glyphs, not the application`, async ({ page }) => {
             const failures: string[] = [];
@@ -96,6 +101,19 @@ test.describe("M7 V8: an asset that does not arrive, or arrives broken", () => {
             await settle(page.getByTestId("scope-a-gpu-1"));
             expect(failures).toEqual([]);
             expect(await page.evaluate(() => window.__fusion_basic.errors())).toEqual([]);
+
+            const log = await page.evaluate(() => window.__fusion_basic.diagnostics());
+            const assets = log.entries.filter((entry) => entry.kind === "AssetLoadFailed");
+            if (reported) {
+                // The file that did not arrive is named, with what to do.
+                expect(assets.length).toBeGreaterThan(0);
+                expect(assets[0].asset).toContain("IBMPlexSans-Text.ttf");
+                expect(assets[0].suggestion).toContain("deployed beside the build");
+            } else {
+                // Nothing reports it, and this records that rather than
+                // implying the class is covered.
+                expect(assets).toHaveLength(0);
+            }
         });
     }
 });

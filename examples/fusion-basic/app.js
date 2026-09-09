@@ -20,7 +20,8 @@ const runtime_fatal = (error) => {
 };
 
 boot({ wasm_url: new URL("./fusion-basic.wasm", import.meta.url), on_fatal: runtime_fatal })
-    .then(({ app, hooks }) => {
+    .then(({ app, hooks, build }) => {
+        app.fusion_basic_identify(1, build);
         const api = {
             hooks,
             mount(container_id) {
@@ -43,6 +44,9 @@ boot({ wasm_url: new URL("./fusion-basic.wasm", import.meta.url), on_fatal: runt
                 }
                 handles.delete(container_id);
                 return app.fusion_basic_dispose(handle);
+            },
+            diagnostics() {
+                return JSON.parse(app.fusion_basic_diagnostics());
             },
             live_regions() {
                 return app.fusion_basic_live_regions();

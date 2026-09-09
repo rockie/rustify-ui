@@ -157,6 +157,7 @@ declare global {
                     at_ms: number;
                     scope: string | null;
                     region: number | null;
+                    asset: string | null;
                     detail: string;
                     suggestion: string;
                 }[];
@@ -196,6 +197,21 @@ declare global {
                 errors: number;
                 memory: number;
                 pumps: number;
+            };
+            diagnostics(): {
+                runtime: number;
+                build: string;
+                count: number;
+                dropped: number;
+                entries: {
+                    kind: string;
+                    at_ms: number;
+                    scope: string | null;
+                    region: number | null;
+                    asset: string | null;
+                    detail: string;
+                    suggestion: string;
+                }[];
             };
             region_states(): Record<string, string>;
             mount_geometry(container_id: string): number;
