@@ -1,0 +1,130 @@
+/*! tailwindcss v4.1.13 | MIT License | https://tailwindcss.com */
+@layer properties;
+@layer theme {
+  :root, :host {
+    --rui-spacing: 0.25rem;
+    --rui-text-xs: 0.75rem;
+    --rui-text-xs--line-height: calc(1 / 0.75);
+    --rui-text-sm: 0.875rem;
+    --rui-text-sm--line-height: calc(1.25 / 0.875);
+  }
+}
+@layer utilities {
+  .rui\:inline-flex {
+    display: inline-flex;
+  }
+  .rui\:items-center {
+    align-items: center;
+  }
+  .rui\:rounded-lg {
+    border-radius: calc(var(--radius) + 2px);
+  }
+  .rui\:rounded-md {
+    border-radius: var(--radius);
+  }
+  .rui\:border {
+    border-style: var(--tw-border-style);
+    border-width: 1px;
+  }
+  .rui\:border-border {
+    border-color: var(--border);
+  }
+  .rui\:bg-card {
+    background-color: var(--card);
+  }
+  .rui\:bg-muted {
+    background-color: var(--muted);
+  }
+  .rui\:bg-primary {
+    background-color: var(--primary);
+  }
+  .rui\:bg-secondary {
+    background-color: var(--secondary);
+  }
+  .rui\:p-2 {
+    padding: calc(var(--rui-spacing) * 2);
+  }
+  .rui\:p-4 {
+    padding: calc(var(--rui-spacing) * 4);
+  }
+  .rui\:px-2 {
+    padding-inline: calc(var(--rui-spacing) * 2);
+  }
+  .rui\:px-2\.5 {
+    padding-inline: calc(var(--rui-spacing) * 2.5);
+  }
+  .rui\:px-3 {
+    padding-inline: calc(var(--rui-spacing) * 3);
+  }
+  .rui\:py-0\.5 {
+    padding-block: calc(var(--rui-spacing) * 0.5);
+  }
+  .rui\:py-1 {
+    padding-block: calc(var(--rui-spacing) * 1);
+  }
+  .rui\:text-sm {
+    font-size: var(--rui-text-sm);
+    line-height: var(--tw-leading, var(--rui-text-sm--line-height));
+  }
+  .rui\:text-xs {
+    font-size: var(--rui-text-xs);
+    line-height: var(--tw-leading, var(--rui-text-xs--line-height));
+  }
+  .rui\:text-foreground {
+    color: var(--foreground);
+  }
+  .rui\:text-primary-foreground {
+    color: var(--primary-foreground);
+  }
+  .rui\:hover\:bg-primary {
+    &:hover {
+      @media (hover: hover) {
+        background-color: var(--primary);
+      }
+    }
+  }
+  .rui\:hover\:bg-secondary {
+    &:hover {
+      @media (hover: hover) {
+        background-color: var(--secondary);
+      }
+    }
+  }
+}
+[data-rustify-scope] {
+  --background: #f9fafb;
+  --foreground: #1d2939;
+  --primary: #2e90fa;
+  --primary-foreground: #ffffff;
+  --secondary: #eaecf0;
+  --secondary-foreground: #1d2939;
+  --muted: #f2f4f7;
+  --muted-foreground: #667085;
+  --accent: #12b76a;
+  --accent-foreground: #ffffff;
+  --destructive: #d92d20;
+  --destructive-foreground: #ffffff;
+  --card: #ffffff;
+  --popover: #ffffff;
+  --success: #12b76a;
+  --warning: #f79009;
+  --border: #d0d5dd;
+  --input: #ffffff;
+  --ring: #2e90fa;
+  --radius: 6px;
+  --font-size: 15px;
+  --spacing: 8px;
+  --motion-duration: 150ms;
+}
+@property --tw-border-style {
+  syntax: "*";
+  inherits: false;
+  initial-value: solid;
+}
+@layer properties {
+  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {
+    *, ::before, ::after, ::backdrop {
+      --tw-border-style: solid;
+    }
+  }
+}

@@ -103,7 +103,7 @@
 | D10 | 表单校验 | 规则由应用以函数提供，SDK 只管理字段错误、代际与单飞；不引入 `validator` 派生 | 示例手写规则；不承诺通用表单引擎 | PRD R19 边界 |
 | D11 | 图标 | 组件 crate 提供 `Icon` 容器与目录所需的少量内联 SVG；不依赖 crates.io `icons`（强制 `leptos/nightly`） | 应用可传任意 SVG 子节点 | F6 |
 | D12 | 浏览器矩阵 | 沿用 P1：macOS Chrome 固定版本通过门，Safari 观察 | Rust/UI Popover 的 CSS anchor positioning 不被采用，矩阵不因此变化 | P1 §9.4；F7 |
-| D13 | 样式隔离 | Tailwind utilities 带 `rui` 前缀；变量与手写 CSS 选择器一律限定在 `[data-rustify-scope]` 之下；宿主控件计算样式在挂载前后不变作为 V1 断言 | 宿主自己的 Tailwind 类与原生控件不受影响；Rust/UI 类字符串导入时做前缀改写 | F28；R07 AC2 |
+| D13 | 样式隔离 | Tailwind utilities 带 `rui` 前缀；变量与手写 CSS 选择器一律限定在 `[data-rustify-scope]` 之下；宿主控件计算样式在挂载前后不变作为 V1 断言 | 宿主自己的 Tailwind 类与原生控件不受影响；Rust/UI 类字符串导入时做前缀改写。**M1 修正**：`tw_merge` 的 `prefix` 选项**不设**——v4 的 `prefix(rui)` 把前缀放在变体之前（`rui:hover:bg-x`），而该选项期待的是 v3 的位置（变体之后）。默认设置下 `rui` 被当作首个变体解析，合并结果与无前缀时一致（`crates/rustify-components/src/macros/mod.rs` 的五条单测） | F28；R07 AC2 |
 | D14 | 滚轮消费 | 宿主 wheel 处理器按区域最近一次上报的边界状态同步决定是否 `preventDefault`：未到边界或策略为 `stop` 则消费，到边界且策略为 `propagate` 则不消费也不投递 | 需要分叉新增区域→宿主的边界上报消息；DOM 嵌套容器用 `overscroll-behavior` | F27 |
 
 D1/D2/D3/D5 由用户在 A-1 中一并确认，2026-09-09 已确认；其余为工程决策，在对应里程碑退出时确认。
@@ -115,7 +115,7 @@ D1/D2/D3/D5 由用户在 A-1 中一并确认，2026-09-09 已确认；其余为�
 - 状态：Accepted（A-1 已于 2026-09-09 解除）。
 - 背景与驱动：C-3 要求本期集成 Rust/UI；C-2 要求零 `unsafe-inline`。核实（F3–F7）：Rust/UI 是复制粘贴式 registry 而非 crate（`ref/ui-main/README.md` 第 8 行）；`ref/ui-main/app_crates/registry/src/ui/` 89 个文件 12,316 行；其中 19 个组件用 `format!` 拼装内联 `<script>`、22 个注入 `<style>`、35 处 `style=` 属性；Dialog 无 `open` 属性、Switch/Tabs 非受控；无 `role="dialog"`/`tablist`/`tab`、无焦点陷阱与 roving tabindex；Popover/HoverCard 依赖 CSS anchor positioning。P1 M4/M5 已在 SDK 内设计浮层栈、焦点优先级与语义入口。
 - 备选 A：`ui add` 把组件复制进每个示例——三份重复、内联脚本原样进入、SDK 不拥有组件契约，淘汰。备选 B：作为 crate 依赖——registry 未发布且带 SSR/演示依赖，不可行。备选 C：子集硬分叉进 `crates/rustify-components`，纯 Rust 组件保留 class 字符串与 `data-name`，浮层类（Dialog/Menu/Select/Tooltip/Command/Popover）在 SDK 浮层栈上重写并只借用其视觉 class，缺失的受控属性与 ARIA 补齐。备选 D：不接 Rust/UI，自写 CSS——违背用户决定并放弃现成设计系统。
-- 决策：C。导入规则：只导入 §1.2 列出的文件；每个导入文件在 `sources.lock.json` 新增 `rust_ui` 节记录来源路径、导入日期、SHA-256 与「原样/重写」标记；保留 `crates/rustify-components/LICENSE-RUST-UI`（MIT，Max Wells）。`leptos_ui` 的 `clx!`/`variants!` 宏源码（`ref/ui-main/crates/leptos_ui/src/`）同样硬分叉进组件 crate，去掉对 `leptos/nightly` 特性的依赖，并把 `variants!` 的 `href` 分支从 `::leptos_router::hooks::use_location` 改为读取 SDK 的 location 上下文（ADR-6）；`ui/link.rs` 的 `<A>` 改为 SDK `Link`。`tw_merge` 0.1.21 作为 crates.io 依赖（纯 Rust，不依赖 Leptos），启用其 `prefix` 选项与 D13 一致。
+- 决策：C。导入规则：只导入 §1.2 列出的文件；每个导入文件在 `sources.lock.json` 新增 `rust_ui` 节记录来源路径、导入日期、SHA-256 与「原样/重写」标记；保留 `crates/rustify-components/LICENSE-RUST-UI`（MIT，Max Wells）。`leptos_ui` 的 `clx!`/`variants!` 宏源码（`ref/ui-main/crates/leptos_ui/src/`）同样硬分叉进组件 crate，去掉对 `leptos/nightly` 特性的依赖，并把 `variants!` 的 `href` 分支从 `::leptos_router::hooks::use_location` 改为读取 SDK 的 location 上下文（ADR-6）；`ui/link.rs` 的 `<A>` 改为 SDK `Link`。`tw_merge` 0.1.21 作为 crates.io 依赖（纯 Rust，不依赖 Leptos）。**M1 实测修正**：不启用它的 `prefix` 选项——它期待 v3 的前缀位置（变体之后），而 v4 的 `prefix(rui)` 在变体之前；默认设置下 `rui` 作为首个变体参与解析，冲突判定与无前缀时一致（见 D13）。
 - 正面后果：组件契约、语义与 CSP 合规由本仓拥有；一期浮层/焦点/语义投资被复用；三个示例只依赖一个组件 crate。
 - 负面/中性后果：本仓承担约 2,700 行原样代码与约 2,300 行重写代码的维护；不再跟随 Rust/UI 上游；`data-name` 与 Tailwind 类字符串成为长期约定。
 - 重新评估触发：Rust/UI 发布可依赖的受控、无内联脚本版本；或 P1 M4 的浮层栈不足以承载菜单/选择器（届时比较改用 Rust/UI 的 JS 方案与 CSP 的冲突成本）。
@@ -540,7 +540,7 @@ flowchart TD
 | A-6 `web_sys_unstable_apis` | 剪贴板实现路径 | M6 探针；失败改宿主 JS 薄封装 | M6 内 | 否 |
 | Rust/UI 重写量 | 约 2,300 行浮层类重写 + ARIA 补齐 + 前缀/RTL/作用域改写 | M1 按文件逐个「原样→重写」提交，M2 逐类验收；改写规则有单测 | M2 退出 | 否 |
 | 自研路由能力边界 | 无嵌套路由；依赖 leptos_router 的生态组件不可用 | 记入 `docs/compatibility.md`；ADR-6 重审条件 | M4 退出 | 否 |
-| Tailwind 前缀与 tw_merge | 分层导入上的前缀语法、前缀合并正确性未验证 | M1 首个提交验证；失败退回作用域包裹 utilities | M1 内 | 否 |
+| Tailwind 前缀与 tw_merge | 分层导入上的前缀语法未验证；前缀合并**已验证**（2026-09-09，D13 修正：`tw_merge` 的 `prefix` 不设，`rui` 作为首个变体参与合并） | 分层导入的前缀语法在 M1 的 CSS 提交里验证；失败退回作用域包裹 utilities | M1 内 | 否 |
 | 滚动边界上报的桥变更 | 静态桥指纹变化、`web.rs` 消息表修改 | M6 随一期 `cargo test` 与指纹校验；只加消息不改现有布局 | M6 内 | 否 |
 | Blob 下载与 CSP | 导出功能 | M6 探针；最小指令增量记录 | M6 | 否 |
 | `tw_merge!` 运行期开销 | B1 延迟基线 | M8 测量；超出时改为编译期常量类 | M8 | 否 |

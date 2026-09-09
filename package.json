@@ -3,10 +3,13 @@
   "private": true,
   "version": "0.1.0",
   "scripts": {
-    "test:browser": "playwright test"
+    "test:browser": "playwright test",
+    "css": "tailwindcss -i crates/rustify-components/css/rustify.tailwind.css -o crates/rustify-components/css/rustify.css"
   },
   "devDependencies": {
     "@playwright/test": "1.63.0",
-    "pngjs": "^7.0.0"
+    "@tailwindcss/cli": "4.1.13",
+    "pngjs": "^7.0.0",
+    "tailwindcss": "4.1.13"
   }
 }

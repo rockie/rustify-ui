@@ -1,5 +1,6 @@
 mod bridge;
 mod build;
+mod css;
 mod doctor;
 mod serve;
 mod sources;
@@ -15,6 +16,7 @@ cargo xtask <command> [options]
   build-web --example <name> [--release]
   serve       --example <name> [--release] [--base /path/] [--port N] [--csp strict|no-wasm|off]
               [--fault missing:<path>|corrupt:<path>|truncated:<path>|stale-bridge]
+  css         [--check]
   report-size --example <name> [--release] [--compressed]
   sources     verify
   verify      --suite p1 [--no-browser] [--no-build]
@@ -26,6 +28,7 @@ fn main() {
         Some("doctor") => doctor::run(),
         Some("build-web") => build_web(&args[1..]).map(|_| ()),
         Some("serve") => serve_example(&args[1..]),
+        Some("css") => css::run(&args[1..]),
         Some("report-size") => report_size(&args[1..]),
         Some("sources") => sources::run(&args[1..]),
         Some("verify") => verify::run(&args[1..]),

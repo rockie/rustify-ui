@@ -202,11 +202,17 @@ fn verify() -> Result<(), String> {
             match (file.state.as_str(), same) {
                 ("verbatim", true) => verbatim += 1,
                 ("verbatim", false) => {
-                    unmarked.push(format!("{path} changed but is still recorded as verbatim"));
+                    unmarked.push(format!(
+                        "{path} changed but is still recorded as verbatim (from {})",
+                        file.source
+                    ));
                 }
                 ("rewritten", false) => rewritten += 1,
                 ("rewritten", true) => {
-                    unmarked.push(format!("{path} is recorded as rewritten but is unchanged"));
+                    unmarked.push(format!(
+                        "{path} is recorded as rewritten but is byte-identical to {}",
+                        file.source
+                    ));
                 }
                 (other, _) => unmarked.push(format!("{path} has unknown state {other}")),
             }

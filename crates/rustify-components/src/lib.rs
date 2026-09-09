@@ -74,3 +74,58 @@ mod tests {
         assert!(!is_within("/objects", ""));
     }
 }
+
+/// The token table and the stylesheet have to name the same things.
+///
+/// The SDK writes `--primary` onto the scope root; a utility reads
+/// `var(--primary)`. Either one renamed alone leaves a component drawing with
+/// whatever the browser falls back to, which looks like a theme bug and is a
+/// spelling one. The check is here, in the crate that has both in reach.
+#[cfg(test)]
+mod stylesheet {
+    const INPUT: &str = include_str!("../css/rustify.tailwind.css");
+    const OUTPUT: &str = include_str!("../css/rustify.css");
+
+    #[test]
+    fn every_token_the_sdk_writes_is_a_token_the_stylesheet_names() {
+        for (name, _) in rustify_ui::Theme::light().properties() {
+            assert!(
+                INPUT.contains(&format!("{name}:")),
+                "{name} is written by the theme and named nowhere in the stylesheet input"
+            );
+        }
+    }
+
+    #[test]
+    fn the_stylesheet_resets_nothing_and_selects_no_bare_element() {
+        // Preflight would reset the host page's own elements; a bare element
+        // selector would restyle them. Neither is allowed into the product,
+        // and both are easy to reintroduce with one import.
+        assert!(
+            !OUTPUT.contains("@layer base"),
+            "preflight is in the product"
+        );
+        for line in OUTPUT.lines() {
+            let selector = line.trim_end_matches(" {");
+            if !line.ends_with(" {") || !selector.starts_with(char::is_alphabetic) {
+                continue;
+            }
+            // What is left is either an at-rule or a bare element selector.
+            assert!(
+                !matches!(
+                    selector,
+                    "html" | "body" | "input" | "button" | "a" | "select" | "textarea" | "*"
+                ),
+                "{selector} selects an element of the host page"
+            );
+        }
+    }
+
+    #[test]
+    fn dark_is_this_scope_in_dark_and_not_any_dark_ancestor() {
+        // A host page using the shadcn `.dark` convention must not change what
+        // a component in our scope looks like.
+        assert!(INPUT
+            .contains(r#"@custom-variant dark (&:is([data-rustify-scope][data-theme="dark"] *))"#));
+    }
+}
