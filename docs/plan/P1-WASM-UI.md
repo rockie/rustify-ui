@@ -28,22 +28,23 @@
 
 ### 恢复快照
 
-- 最近更新：2026-09-09，M4 已关闭，**M5 实施中（自动化部分已完成，人工部分未做）**；下一会话从本节的「M5 现状」继续。
-- 当前进度：4/8 个里程碑完成。
-- 代码基线：`3f8e5c3`（M1 首轮）→ `6bb15a1`（M1 收尾并关闭）→ `8427bff`（M2 关闭）→ `d086339`…`6d02836`（M3 的五个提交）→ `6d2017e`、`465f180`（两轮评审修正）→ `7ffab2a`（M3 关闭）→ `e2ba381`、`34fb0e9`（M4 关闭）→ `e0d203d`（M5 文本会话）→ 本次 M5 语义提交（`git log -1`）。工作区 clean。
-- 已通过的验证（2026-09-09 本机）：`cargo xtask doctor` 8/8；`cargo test --workspace --lib` 17（registry 3、scheduler 5、binding 9、overlay 3）；`cargo test -p xtask` 10；`cd makepad && cargo test` 13；`cargo clippy --workspace --all-targets -- -D warnings` 无警告；`cargo fmt --all -- --check` 通过；两个示例各 `cargo xtask build-web --release` 通过；`npx playwright test --project=property-workbench` **31/31**（m3-workbench 19、m5-text 7、m5-semantics 5）；`npx playwright test --project=fusion-basic` **42/42**。
-- M4 退出条件对照：全部满足，逐条证据见 `docs/validation/p1/m4-geometry.md`。
-- **M5 现状**：能不靠人验证的部分已交付并通过，逐条证据见 `docs/validation/p1/m5-text-and-semantics.md`。
-  - 已做（原生文本会话）：`crates/rustify-ui/src/text.rs` 的 `TextEdit`——区域画出文本后交出它画进去的那个矩形，真正的 `input`/`textarea` 在会话期间占据这个矩形，光标、选区、系统撤销和输入法都是浏览器的，不是重画一遍。会话是受控的：以应用持有的值打开，只提议新值；外部把同一个字段改掉时，会话以「失效」结束而不是把草稿盖上去。7 条浏览器用例，含「组合期间 Enter 不提交、Esc 不关层」「一次组合只产出一个值，不是每个事件一个」。
-  - 已做（键序）：作用域捕获阶段的 keydown 现在按 §6.2 排序——组合/原生编辑 → 栈顶浮层 → 应用命令；组合期间这两个键谁也拿不到。
-  - 已做（语义）：区域画布带 `aria-hidden`（它的像素是装饰，画出来的每个有意义的控件在 DOM 里都有入口）；工作台面板补齐 20 个可按角色+名称定位的控件；新增「按编号找对象」的 DOM 入口，与 GPU 点击走同一条选择规则；`UiError` 增加 `NotFound`/`Disposed`/`Timeout`，页面查找入口在 5 秒上限内给出这三种答案之一（已删除的对象与从未存在的对象答案不同）；五条纯键盘旅程。
-  - **未做（只能由人做，按 §9.4 不得用合成事件替代、不得记录通过）**：① 真实 macOS 拼音输入 20 条中文短句（合成的 composition 事件只覆盖事件规则，覆盖不了真实输入法自己的事件序列、候选窗与提交时机）；② VoiceOver + Chrome 五条旅程的名称/角色/值/状态、无重复朗读、无焦点陷阱。人工记录需含设备、OS、浏览器、辅助技术版本、build id、步骤、预期与结果。
-  - 未做（可自动化但尚未做）：多行编辑态（`TextEdit` 支持 `multiline`，但还没有示例用它，因此没有浏览器覆盖）；会话内的 Unicode 选择/删除/撤销未单独断言；「字体来源明确」尚未写成文档章节（来源本身已在 `sources.lock.json` 与字体许可里）。
-- 已知限制（写进报告而不是修掉）：浮层只放在锚点下方，不翻转也不夹回视口；模态只让本作用域 inert；缩放矩阵用「设备像素比 + 相应缩小的 CSS 视口」模拟。
-- 已知坑（本轮踩到，避免再踩）：Label 的 `area()` 是它画出的墨迹而不是它拿到的盒子，靠它做命中会一次也命中不了——要命中就自己画一个盒子（本轮的 `NameField`）；`DrawText` 的 `text_style` 用 `:` 替换会丢掉默认字体、一个字也不画，必须用 `+:` 合并，或者干脆让 `Label` 画字、自定义控件只拿盒子（本轮采用后者）。这与 M3 记过的 `draw_bg` 那条是同一个坑的两个位置。
-- 待办（不阻塞）：审计每区域重复加载字体的内存（`IBMPlexSans-Text.ttf` 每区域各取一次，4 区域线性内存 124 MB）。
-- 已知环境事实：headless 探针跑在 SwiftShader 软件 WebGL 上；Playwright 进程测到的挂载/卸载耗时比页内测量大 10–30 倍，属于测试夹具开销，不计入 A-6 的测量合同。本机内存紧张时整套浏览器用例会被系统杀掉，按 project 分开跑更稳；重新构建产物前先确认没有用例在跑，`serve` 正伺服同一个目录。
-- 下一步：先补 M5 剩余的可自动化项（多行编辑示例、字体来源文档），然后把人工两项交给用户；人工项未完成前 M5 不记为完成，也不能进入 M6。
+- 最近更新：2026-09-09。M1–M4 已关闭；**M5 功能交付完成、两项人工验证挂起**；**M6 已开工，主题与异步票据两块完成**。下一会话从本节的「M5 现状」「M6 现状」继续。
+- 当前进度：4/8 个里程碑完成（M5 因人工项未做，不记为完成；M6 进行中）。
+- 代码基线：… → `7ffab2a`（M3 关闭）→ `e2ba381`、`34fb0e9`（M4 关闭）→ `e0d203d`、`da0c34a`、`c613a05`（M5）→ `1a04c6c`、`b6e6adf`（M6 主题与异步票据）。工作区 clean。
+- 已通过的验证（2026-09-09 本机）：`cargo xtask doctor` 8/8；`cargo test --workspace --lib` 28（registry 3、scheduler 5、binding 9、overlay 3、theme 3、task 5）；`cargo test -p xtask` 10；`cd makepad && cargo test` 13；`cargo clippy --workspace --all-targets -- -D warnings` 无警告；`cargo fmt --all -- --check` 通过；两个示例各 `cargo xtask build-web --release` 通过；`npx playwright test --project=property-workbench` **39/39**（m3-workbench 19、m5-text 8、m5-semantics 5、m6-theme 3、m6-async 4）；`npx playwright test --project=fusion-basic` **42/42**（最近一次完整回归在 M5 语义提交处；此后只改了 workbench 与 SDK 的 theme/task，未再全量重跑）。
+- **M5 现状**：功能已全部交付并通过，证据见 `docs/validation/p1/m5-text-and-semantics.md`。
+  - 已做：原生文本会话（`crates/rustify-ui/src/text.rs`）——区域交出它画文本的矩形，真正的 `input`/`textarea` 在会话期间占据它；受控、组合期间 Enter/Esc 归组合、一次组合只产出一个值、外部改值以「失效」结束会话；多行（notes）同路径且 Enter 是换行、离开才提交。语义：画布 `aria-hidden`（像素是装饰），面板 20 个可按角色+名称定位的控件，「按编号找对象」的 DOM 入口与 GPU 点击同一条规则，`UiError` 增加 `NotFound`/`Disposed`/`Timeout` 且查找在 5 秒上限内给出其一，五条纯键盘旅程。字体来源写进 `docs/compatibility.md`。
+  - **未做（只能由人做，按 §9.4 不得用合成事件替代、不得记录通过）**：① 真实 macOS 拼音 20 条中文短句；② VoiceOver + Chrome 五条旅程的名称/角色/值/状态、无重复朗读、无焦点陷阱。**这两项完成前 M5 不记为关闭。**
+  - 未做（可自动化但未做）：会话内 Unicode 选择/删除/撤销未单独断言。
+- **M6 现状**：
+  - 已做（主题）：`crates/rustify-ui/src/theme.rs`——一张语义 token 表（sRGB），DOM 读作用域根上的 CSS 自定义属性，GPU 区域拿到同一组数字作为 props；token 名与 P2 要导入的组件库一致（`--background`/`--foreground`/`--primary`/…/`--radius`），值经 CSSOM 写入（不放宽 `style-src`），`data-theme` 落在作用域根而不是文档，所以宿主页面与第二个作用域各自为政。3 条浏览器用例：一次切换同时改变面板计算样式与区域上千像素；20 次切换回到原点且宿主颜色一动不动、文档从未带上 `data-theme`；切换后控件仍可按角色+名称定位。
+  - 已做（异步票据）：`crates/rustify-ui/src/task.rs`——`Load` 四态（`Empty` 是答案而不是 `Ready(None)`）与 `Requests`/`Ticket`；票据按序发放，新票据一发旧票据即失效，持有者关闭后全部失效。5 条宿主单测（含 100 组 A/B 反序、100 张票据在关闭后一张也不投递）+ 4 条浏览器用例（四态各自说明自己、先问的后答不覆盖后问的、20 组反序、作用域消失后迟到答案什么也碰不到且可重新挂载再取）。
+  - 未做（M6 余下）：§6.3 的组件子集与六类能力目录、受控值被拒的显示回落、局部主题覆盖、一个固定版本第三方 DOM 组件的 20 次重建（无重复订阅）、两个示例的「选择→编辑→确认」主路径对照、以及主题切换后复跑 V6 定位的 30 轮。
+- 已知限制：浮层只放在锚点下方，不翻转也不夹回视口；模态只让本作用域 inert；缩放矩阵用「设备像素比 + 相应缩小的 CSS 视口」模拟。
+- 已知坑（本轮踩到）：Label 的 `area()` 是它画出的墨迹而不是它拿到的盒子，靠它做命中一次也命中不了——要命中就自己画一个盒子；`DrawText` 的 `text_style` 用 `:` 替换会丢默认字体、一个字也不画（与 M3 的 `draw_bg` 是同一个坑）；区域头部里「值在前、控件在后」会让值变宽时把控件推走，指针和用例都会打空——控件排在行首、用例按距左边缘的像素定位；页面级注册要带上注册者的身份，否则后销毁的旧作用域会把新作用域的注册抹掉。
+- 待办（不阻塞）：审计每区域重复加载字体的内存（4 区域线性内存 124 MB）。
+- 已知环境事实：headless 跑在 SwiftShader 上；Playwright 进程测到的耗时比页内测量大 10–30 倍；按 project 分开跑更稳；重新构建产物前先确认没有用例在跑。断言应用状态用页面导出的 snapshot 而不是 DOM 文本，后者在整套用例连跑时对时序敏感。
+- 下一步：先补完 M6 余下项（组件子集与能力目录、受控值拒绝、局部主题、第三方组件、两示例主路径），再回头处理 M5 的两项人工验证；M5 未关闭前 M6 不记为完成。
 - 当前阻塞：M5 的两项人工验证需要用户（真实拼音、VoiceOver）。其余无阻塞。
 
 ### 完成记录
