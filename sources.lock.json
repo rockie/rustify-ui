@@ -1580,18 +1580,19 @@
       "crates/rustify-components/src/macros/clx.rs": {
         "source": "crates/leptos_ui/src/clx.rs",
         "sha256": "24521409d6a592f5486cd2fd551bcdbf6404c5a25e14a6120accd190e7c558fb",
-        "state": "verbatim"
-      },
-      "crates/rustify-components/src/macros/utils.rs": {
-        "source": "crates/leptos_ui/src/utils.rs",
-        "sha256": "bec9b4cc190a5fc7af74a13450995522b0292eada595eff6282f5151b15fb4e6",
-        "state": "verbatim"
+        "state": "rewritten"
       },
       "crates/rustify-components/src/macros/variants.rs": {
         "source": "crates/leptos_ui/src/variants.rs",
         "sha256": "83a4a376205452dd026c3344753be265eafd4e9ac0d030db619f4e922356c2dd",
-        "state": "verbatim"
+        "state": "rewritten"
       }
+    },
+    "rewrite": {
+      "on": "2026-09-09",
+      "clx.rs": "kept clx! and void!; dropped transition! (a view-transition name it computed and never used) and with it utils.rs, which nothing else needed; the generated components now take a test_id and pass it as data-testid; the module no longer re-exports leptos's prelude, paste and tw_merge into its callers",
+      "variants.rs": "the href arm no longer calls leptos_router::hooks::use_location; a link asks this crate for the current path and marks itself aria-current=page when the path is at or below its own, on a segment boundary. The four overlapping arms became two that generate a component (plain and link) plus two that generate only the types, with the component arms delegating to the type arms instead of repeating them. Generated components take a test_id.",
+      "not_changed": "the class-string semantics, the TwClass/TwVariant derives, the default-is-the-first-arm rule, and data-name"
     }
   }
 }

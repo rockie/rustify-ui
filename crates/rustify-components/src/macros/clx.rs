@@ -1,43 +1,40 @@
-pub use leptos::prelude::*;
-pub use paste;
-pub use tw_merge::*;
-
-pub use crate::utils::Utils;
-
-/// A macro that creates a component with tailwind class merging
+/// Declares a component that is a styled element and nothing else.
 ///
-/// # Example
+/// The base classes are the component's; the `class` prop is the caller's, and
+/// the two are merged so that a caller's `bg-*` replaces the base `bg-*`
+/// instead of fighting it in the cascade. `data-name` carries the component's
+/// own name and `data-testid` whatever the caller wants to find it by, so a
+/// test never has to address one of these by its classes.
 ///
-/// ```
-/// use leptos::prelude::*;
-/// use leptos_ui::clx;
+/// ```ignore
+/// clx! {Card, div, "rui:rounded-lg rui:p-4", "rui:bg-card"}
 ///
-/// // Define the component
-/// clx! {Card, div, "rounded-lg p-4", "bg-sky-500"} // 🩵
-///
-/// #[component]
-/// pub fn DemoCard() -> impl IntoView {
-///     view! {
-///         <Card>"Default: bg-sky-500 🩵"</Card>
-///         <Card class="bg-orange-500">"Override: bg-orange-500 🧡"</Card>
-///         // └──> 🤯 NO CLASS CONFLICT! Still using the SAME component.
-///     }
+/// view! {
+///     <Card>"the base classes"</Card>
+///     <Card class="rui:bg-muted">"which the caller can replace"</Card>
 /// }
 /// ```
 #[macro_export]
 macro_rules! clx {
     ($name:ident, $element:ident, $($base_class:expr),+ $(,)?) => {
-        #[component]
+        #[::leptos::component]
         pub fn $name(
             #[prop(into, optional)] class: String,
-            children: Children,
-        ) -> impl IntoView {
-            let merged_classes = tw_merge::tw_merge!(tw_merge::tw_join!($($base_class),+), class);
+            #[prop(into, optional)] test_id: String,
+            children: ::leptos::prelude::Children,
+        ) -> impl ::leptos::prelude::IntoView {
+            use ::leptos::prelude::*;
 
-            view! {
+            let merged = $crate::macros::merge(
+                ::tw_merge::tw_join!($($base_class),+),
+                &class,
+            );
+
+            ::leptos::view! {
                 <$element
-                    class=merged_classes
+                    class=merged
                     data-name=stringify!($name)
+                    data-testid=test_id
                 >
                     {children()}
                 </$element>
@@ -46,72 +43,30 @@ macro_rules! clx {
     };
 }
 
-/// A macro that creates self-closing components with tailwind class merging
-/// See: https://developer.mozilla.org/en-US/docs/Glossary/Void_element
+/// The same, for an element that takes no children.
 ///
-/// # Example
-///
-/// ```
-/// use leptos::prelude::*;
-/// use leptos_ui::void;
-///
-/// // Define self-closing components
-/// void! {MyImage, img, "rounded-lg border"}
-/// void! {MyInput, input, "px-3 py-2 border rounded"}
-/// void! {MyDiv, div, "w-full h-4 bg-gray-200"}
-///
-/// #[component]
-/// pub fn Demo() -> impl IntoView {
-///     view! {
-///         <MyImage attr:src="test.jpg" class="w-32" />
-///         <MyInput prop:value=move || url().to_string() attr:readonly=true class="flex-1" />
-///         <MyDiv class="bg-sky-500" />
-///     }
-/// }
-/// ```
+/// <https://developer.mozilla.org/en-US/docs/Glossary/Void_element>
 #[macro_export]
 macro_rules! void {
     ($name:ident, $element:ident, $($base_class:expr),+ $(,)?) => {
-        #[component]
+        #[::leptos::component]
         pub fn $name(
             #[prop(into, optional)] class: String,
-        ) -> impl IntoView {
-            let merged_classes = tw_merge::tw_merge!(tw_merge::tw_join!($($base_class),+), class);
+            #[prop(into, optional)] test_id: String,
+        ) -> impl ::leptos::prelude::IntoView {
+            use ::leptos::prelude::*;
 
-            view! {
+            let merged = $crate::macros::merge(
+                ::tw_merge::tw_join!($($base_class),+),
+                &class,
+            );
+
+            ::leptos::view! {
                 <$element
-                    class=merged_classes
+                    class=merged
                     data-name=stringify!($name)
+                    data-testid=test_id
                 />
-            }
-        }
-    };
-}
-
-/* ========================================================== */
-/*                     ✨ FUNCTIONS ✨                        */
-/* ========================================================== */
-
-// * Must be used with Utils::use_random_transition_name().
-#[macro_export]
-macro_rules! transition {
-    ($name:ident, $element:ident, $($base_class:expr),+ $(,)?) => {
-        #[component]
-        pub fn $name(
-            #[prop(into, optional)] class: String,
-            children: Children,
-        ) -> impl IntoView {
-            let merged_classes = tw_merge::tw_merge!(tw_merge::tw_join!($($base_class),+), class);
-
-            let random_name = Utils::use_random_transition_name();
-
-            view! {
-                <$element
-                    class=merged_classes
-                    data-name=stringify!($name)
-                >
-                    {children()}
-                </$element>
             }
         }
     };
