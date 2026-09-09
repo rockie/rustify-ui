@@ -67,8 +67,37 @@ view! {
 }
 ```
 
+## Using the DOM components
+
+The DOM half of the component subset lives in `rustify_ui::components`. Every
+control is controlled by the application: the user's action is a request, and
+what the control shows afterwards is the answer. A refused value is replaced by
+the value in force rather than left on screen as if it had been taken.
+
+```rust
+view! {
+    <TextField
+        label="name"
+        value=Signal::derive(move || current.get().map(|o| o.name).unwrap_or_default())
+        // Return without changing the signal and the field goes back to the
+        // value the application holds.
+        on_input=move |value| { rename(value); }
+        read_only=Signal::derive(move || current.get().is_some_and(|o| o.locked))
+    />
+    <Slider label="size" min=0.0 max=100.0 step=5.0 value=size on_change=move |v| set_size(v) />
+    <LoadView label="details" value=details on_retry=move || reload() />
+}
+```
+
+`ThemedScope` writes the scope's tokens onto its own root, so two scopes on one
+page hold different themes and the host page keeps its own; `ThemeOverride`
+changes part of the theme for one area and leaves the rest inherited. A region
+inside an override is handed the patched table, so both halves draw with the
+same numbers. `rustify_ui::CATALOG` (printed in `docs/components.md`) says which
+categories exist and what each of them supports.
+
 `rustify_ui::mount(container, config, view)` returns an `AppHandle`; disposing it runs the scope's cleanups (destroying its regions) and unmounts the DOM. The page loads the wasm through `web/loader.js` (`boot(...)`), which validates the bridge fingerprint and hands the host hooks to the runtime before the application's own exported entry points are called. `examples/fusion-basic/app.js` is the reference page script.
 
 ## Limits of the preview
 
-Keyboard, text editing, overlays, theming and error recovery are later milestones; see `docs/compatibility.md` for the exact capability state and `docs/plan/P1-WASM-UI.md` for progress.
+Error recovery, capability refusal and bounded diagnostics are later milestones, and nine of R18's eighteen component categories are not in this release at all. See `docs/components.md` for what each category supports, `docs/compatibility.md` for the capability state and the one third-party component that is verified, and `docs/plan/P1-WASM-UI.md` for progress.
