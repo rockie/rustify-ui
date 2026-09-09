@@ -15,3 +15,27 @@
     color: #b42318;
     font: 14px/1.4 system-ui, sans-serif;
 }
+
+/* The application's own nodes lay out exactly as they would without the
+   wrapper the scope needs in order to make them inert. */
+[data-rustify-content] {
+    display: contents;
+}
+
+/* One layer plane per scope, above the scope's content and its GPU regions.
+   The plane itself lets clicks through; only what a layer draws catches
+   them. */
+[data-rustify-overlay] {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    pointer-events: none;
+}
+
+[data-rustify-overlay] > * {
+    pointer-events: auto;
+}
+
+.rustify-layer {
+    position: fixed;
+}

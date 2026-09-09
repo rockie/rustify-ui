@@ -1563,6 +1563,8 @@ version = "0.1.0"
 dependencies = [
  "leptos",
  "rustify-makepad",
+ "send_wrapper",
+ "web-sys",
 ]
 
 [[package]]

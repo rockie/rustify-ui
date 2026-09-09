@@ -41,6 +41,10 @@ pub fn GpuRegion<A>(
     /// application can report it as not executed and let the user retry.
     #[prop(optional, into)]
     refused: Option<RwSignal<usize>>,
+    /// The region's canvas, for an application that has to anchor something
+    /// to a rectangle inside it.
+    #[prop(optional)]
+    node_ref: Option<NodeRef<leptos::html::Canvas>>,
     #[prop(optional, into)] class: String,
     #[prop(optional, into)] test_id: String,
 ) -> impl IntoView
@@ -103,7 +107,7 @@ where
             });
         }
     };
-    let canvas = NodeRef::<Canvas>::new();
+    let canvas = node_ref.unwrap_or_else(NodeRef::<Canvas>::new);
     // Kept outside the reactive arena so the cleanup closure can still reach
     // the region after the owner's nodes are gone, and so an effect that runs
     // after cleanup cannot create a region nobody will destroy.

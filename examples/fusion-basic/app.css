@@ -63,3 +63,48 @@ body {
     height: 240px;
     background: #0c111d;
 }
+
+.geometry-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+    margin-bottom: 12px;
+    max-width: 520px;
+}
+
+.geometry-controls input[readonly] {
+    width: 90px;
+}
+
+.geometry-menu {
+    min-width: 160px;
+    padding: 4px;
+    border: 1px solid #98a2b3;
+    border-radius: 6px;
+    background: #ffffff;
+    box-shadow: 0 4px 12px rgba(16, 24, 40, 0.15);
+}
+
+.geometry-menu ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.geometry-menu button {
+    display: block;
+    width: 100%;
+    text-align: left;
+}
+
+.geometry-dialog {
+    display: grid;
+    gap: 8px;
+    min-width: 260px;
+    padding: 16px;
+    border: 1px solid #98a2b3;
+    border-radius: 8px;
+    background: #ffffff;
+    box-shadow: 0 8px 24px rgba(16, 24, 40, 0.25);
+}

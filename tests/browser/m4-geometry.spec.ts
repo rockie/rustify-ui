@@ -1,14 +1,6 @@
 import { expect, Page, test } from "@playwright/test";
 import { PNG } from "pngjs";
-import { waitForReady } from "./support";
-
-interface Anchor {
-    id: number;
-    x: number;
-    y: number;
-    width: number;
-    height: number;
-}
+import { Anchor, anchorRect, geometry, mountGeometry } from "./support";
 
 /// The three CSS viewports and three zoom levels R09 names. Zoom is the device
 /// scale factor: what browser zoom actually changes for a page is how many
@@ -19,15 +11,6 @@ const VIEWPORTS = [
     { width: 1920, height: 1080 },
 ];
 const ZOOMS = [1, 1.25, 2];
-
-const geometry = (page: Page) => page.evaluate(() => window.__fusion_basic.geometry());
-
-async function mountFixture(page: Page) {
-    await waitForReady(page);
-    await page.evaluate(() => window.__fusion_basic.mount_geometry("geometry"));
-    await expect.poll(async () => (await geometry(page)).state).toBe("ready");
-    await expect.poll(async () => (await geometry(page)).anchors.length).toBe(20);
-}
 
 /// Scrolls the anchor into the middle of the inner clip box, and the clip box
 /// into the middle of the page, then reports where the region's own origin
@@ -138,6 +121,30 @@ async function checkAnchors(page: Page, label: string) {
     }
 }
 
+/// R10: a DOM menu opened from a GPU anchor lands on that anchor, in every
+/// size and zoom R09 names.
+async function checkAnchoredMenu(page: Page, label: string) {
+    await page.getByTestId("arm-menu").click();
+    const anchor = (await geometry(page)).anchors[7];
+    // The last check left the region scrolled wherever anchor 19 was.
+    await showAnchor(page, anchor);
+    const rect = await anchorRect(page, anchor);
+    await page.mouse.click(rect.x + rect.width / 2, rect.y + rect.height / 2);
+    await expect.poll(async () => (await geometry(page)).menu).toBe(7);
+
+    const expected = await anchorRect(page, anchor);
+    const menu = await page.evaluate(() => {
+        const element = document.querySelector('[data-testid="geometry-menu"]')!;
+        const box = element.getBoundingClientRect();
+        return { x: box.left, y: box.top };
+    });
+    expect(Math.abs(menu.x - expected.x), `${label} menu left`).toBeLessThanOrEqual(1);
+    expect(Math.abs(menu.y - (expected.y + expected.height)), `${label} menu top`).toBeLessThanOrEqual(1);
+
+    await page.keyboard.press("Escape");
+    await expect.poll(async () => (await geometry(page)).menu).toBeNull();
+}
+
 for (const viewport of VIEWPORTS) {
     for (const zoom of ZOOMS) {
         const label = `${viewport.width}x${viewport.height} at ${zoom * 100}%`;
@@ -146,8 +153,9 @@ for (const viewport of VIEWPORTS) {
 
             test("twenty anchors agree with the picture and with the pointer", async ({ page }) => {
                 test.setTimeout(300_000);
-                await mountFixture(page);
+                await mountGeometry(page);
                 await checkAnchors(page, label);
+                await checkAnchoredMenu(page, label);
             });
         });
     }
@@ -157,7 +165,7 @@ test.describe("M4 V4: the region follows a change of resolution", () => {
     test("the backing store matches the device pixel ratio after zooming", async ({ page }) => {
         test.setTimeout(300_000);
         const cdp = await page.context().newCDPSession(page);
-        await mountFixture(page);
+        await mountGeometry(page);
 
         const backing = () =>
             page.evaluate(() => {
@@ -206,7 +214,7 @@ test.describe("M4 V4: the clip is the same for the picture and for the pointer",
         page,
     }) => {
         test.setTimeout(600_000);
-        await mountFixture(page);
+        await mountGeometry(page);
         const before = (await geometry(page)).hits;
         let clicksOutside = 0;
         let leakChecks = 0;
@@ -303,7 +311,7 @@ test.describe("M4 V4: the clip is the same for the picture and for the pointer",
 test.describe("M4 V4: a region with no area", () => {
     test("suspends, and comes back at the size it returns to", async ({ page }) => {
         test.setTimeout(300_000);
-        await mountFixture(page);
+        await mountGeometry(page);
 
         await page.evaluate(() => {
             const canvas = document.querySelector('[data-testid="geometry-gpu"]') as HTMLElement;

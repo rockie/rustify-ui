@@ -7,13 +7,15 @@ mod counter_region;
 
 #[cfg(target_arch = "wasm32")]
 mod app {
-    use super::anchor_grid::Anchor;
+    use super::anchor_grid::Anchor as GridAnchor;
     use super::anchor_region::{AnchorAction, AnchorRegion};
     use super::counter_region::{CounterAction, CounterProps, CounterRegion};
     use leptos::prelude::*;
     use leptos::wasm_bindgen::prelude::*;
     use leptos::wasm_bindgen::JsCast;
-    use rustify_ui::{mount, AppHandle, GpuRegion, MountConfig, RegionState};
+    use rustify_ui::{
+        mount, Anchor, AppHandle, GpuRegion, Layer, LocalRect, MountConfig, RegionState,
+    };
     use std::cell::RefCell;
     use std::collections::BTreeMap;
     use std::marker::PhantomData;
@@ -101,7 +103,7 @@ mod app {
         }
     }
 
-    fn anchors_json(anchors: &[Anchor]) -> String {
+    fn anchors_json(anchors: &[GridAnchor]) -> String {
         let body: Vec<String> = anchors
             .iter()
             .map(|a| {
@@ -119,14 +121,29 @@ mod app {
     /// test lives with the code that has to survive it.
     #[component]
     fn GeometryFixture() -> impl IntoView {
-        let anchors = RwSignal::new(Vec::<Anchor>::new());
+        let anchors = RwSignal::new(Vec::<GridAnchor>::new());
         let hits = RwSignal::new(0u32);
         let last_hit = RwSignal::new(None::<(usize, f64, f64)>);
         let state = RwSignal::new(RegionState::Starting);
 
+        // The menu opens on the next anchor picked, so the ordinary hit tests
+        // are not fighting a menu that covers the next anchor.
+        let armed = RwSignal::new(false);
+        let menu = RwSignal::new(None::<usize>);
+        let dialog = RwSignal::new(false);
+        // A layer anchored to an ordinary element, and the element it is
+        // anchored to: removing the element has to end the layer.
+        let host_present = RwSignal::new(true);
+        let host_layer = RwSignal::new(false);
+        let host = NodeRef::<leptos::html::Button>::new();
+        let canvas = NodeRef::<leptos::html::Canvas>::new();
+        // The application's own Escape command. It must not also run when a
+        // layer is open: the layer owns the key while it is on the stack.
+        let commands = RwSignal::new(0u32);
+
         Effect::new(move || {
             let report = format!(
-                "{{\"anchors\":{},\"hits\":{},\"last_hit\":{},\"state\":\"{}\"}}",
+                "{{\"anchors\":{},\"hits\":{},\"last_hit\":{},\"state\":\"{}\",\"menu\":{},\"dialog\":{},\"anchored\":{},\"commands\":{}}}",
                 anchors.with(|anchors| anchors_json(anchors)),
                 hits.get(),
                 last_hit
@@ -136,6 +153,12 @@ mod app {
                     ))
                     .unwrap_or_else(|| "null".to_string()),
                 state_name(state.get()),
+                menu.get()
+                    .map(|index| index.to_string())
+                    .unwrap_or_else(|| "null".to_string()),
+                dialog.get(),
+                host_layer.get() && host_present.get(),
+                commands.get(),
             );
             GEOMETRY.with(|slot| *slot.borrow_mut() = report);
         });
@@ -145,11 +168,77 @@ mod app {
             AnchorAction::Hit(hit) => {
                 hits.update(|n| *n += 1);
                 last_hit.set(Some((hit.anchor, hit.x, hit.y)));
+                if armed.get() {
+                    armed.set(false);
+                    menu.set(Some(hit.anchor));
+                }
             }
         };
+
+        // The menu belongs to a rectangle inside the region, not to the page:
+        // it follows that rectangle when anything between them scrolls, and
+        // closes when the region itself goes.
+        let menu_anchor = Signal::derive(move || {
+            let (Some(canvas), Some(index)) = (canvas.get(), menu.get()) else {
+                return Anchor::Centred;
+            };
+            match anchors.with(|anchors| anchors.get(index).copied()) {
+                Some(anchor) => Anchor::region(
+                    &canvas.into(),
+                    LocalRect::new(anchor.x, anchor.y, anchor.width, anchor.height),
+                ),
+                None => Anchor::Centred,
+            }
+        });
+
         let app = PhantomData::<AnchorRegion>;
         let props = Signal::derive(|| ());
         view! {
+            <div
+                class="geometry-controls"
+                on:keydown=move |event| {
+                    if event.key() == "Escape" {
+                        commands.update(|n| *n += 1);
+                    }
+                }
+            >
+                <button type="button" data-testid="arm-menu" on:click=move |_| armed.set(true)>
+                    "menu on next pick"
+                </button>
+                <Show when=move || host_present.get() fallback=|| ()>
+                    <button
+                        type="button"
+                        node_ref=host
+                        data-testid="anchor-host"
+                        on:click=move |_| host_layer.set(true)
+                    >
+                        "anchored layer"
+                    </button>
+                </Show>
+                <button
+                    type="button"
+                    data-testid="drop-anchor-host"
+                    on:click=move |_| host_present.set(false)
+                >
+                    "remove the anchor"
+                </button>
+                {(1..=20)
+                    .map(|n| {
+                        let id = format!("focus-{n:02}");
+                        if n == 12 {
+                            view! {
+                                <input type="text" data-testid=id readonly value="read only" />
+                            }
+                                .into_any()
+                        } else if n == 7 {
+                            view! { <button type="button" data-testid=id disabled>{n}</button> }
+                                .into_any()
+                        } else {
+                            view! { <button type="button" data-testid=id>{n}</button> }.into_any()
+                        }
+                    })
+                    .collect_view()}
+            </div>
             <div class="geometry-outer" data-testid="geometry-outer">
                 <div class="geometry-tall">
                     <div class="geometry-inner" data-testid="geometry-inner">
@@ -159,6 +248,7 @@ mod app {
                                 props=props
                                 on_action=on_action
                                 state=state
+                                node_ref=canvas
                                 class="anchor-region"
                                 test_id="geometry-gpu"
                             />
@@ -166,6 +256,61 @@ mod app {
                     </div>
                 </div>
             </div>
+            <Show when=move || menu.get().is_some() fallback=|| ()>
+                <Layer
+                    anchor=menu_anchor
+                    on_close=move || menu.set(None)
+                    class="geometry-menu"
+                    test_id="geometry-menu"
+                >
+                    <ul role="menu">
+                        <li>
+                            <button type="button" role="menuitem" data-testid="menu-rename">
+                                "rename"
+                            </button>
+                        </li>
+                        <li>
+                            <button
+                                type="button"
+                                role="menuitem"
+                                data-testid="menu-open-dialog"
+                                on:click=move |_| dialog.set(true)
+                            >
+                                "open dialog"
+                            </button>
+                        </li>
+                    </ul>
+                </Layer>
+            </Show>
+            <Show when=move || host_layer.get() && host_present.get() fallback=|| ()>
+                <Layer
+                    anchor=Signal::derive(move || match host.get() {
+                        Some(element) => Anchor::element(&element.into()),
+                        None => Anchor::Centred,
+                    })
+                    on_close=move || host_layer.set(false)
+                    class="geometry-menu"
+                    test_id="anchor-layer"
+                >
+                    <p>"anchored to a button"</p>
+                    <button type="button" data-testid="anchor-layer-button">"inside"</button>
+                </Layer>
+            </Show>
+            <Show when=move || dialog.get() fallback=|| ()>
+                <Layer
+                    modal=true
+                    anchor=Signal::derive(|| Anchor::Centred)
+                    on_close=move || dialog.set(false)
+                    class="geometry-dialog"
+                    test_id="geometry-dialog"
+                >
+                    <h3>"a modal dialog"</h3>
+                    <input type="text" data-testid="dialog-input" />
+                    <button type="button" data-testid="dialog-close" on:click=move |_| dialog.set(false)>
+                        "close"
+                    </button>
+                </Layer>
+            </Show>
         }
     }
 

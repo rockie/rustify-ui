@@ -28,23 +28,24 @@
 
 ### 恢复快照
 
-- 最近更新：2026-09-09，**M3 已关闭**；下一会话从 M4（几何、浮层与焦点）开始。
-- 当前进度：3/8 个里程碑完成。
-- 代码基线：`3f8e5c3`（M1 首轮）→ `6bb15a1`（M1 收尾并关闭）→ `8427bff`（M2 关闭）→ `d086339`…`6d02836`（M3 的五个提交）→ `6d2017e`、`465f180`（两轮评审修正）→ 本次 M3 收尾提交（`git log -1`）。工作区 clean。
-- 已通过的验证（2026-09-09 本机）：`cargo xtask doctor` 8/8；`cargo test --workspace --lib` 17（registry 3、scheduler 5、binding 9）；`cargo test -p xtask` 10；`cd makepad && cargo test` 13（cargo-makepad 10、wasm_bridge 3）；`cargo clippy --workspace --all-targets -- -D warnings` 无警告；`cargo fmt --all -- --check` 通过；两个示例各 `cargo xtask build-web --release` 通过；`npx playwright test --project=property-workbench` **19/19**；`npx playwright test --project=fusion-basic` **21/21**（m1-probes 8、m2-runtime 11、m3-state 2）。
-- M3 退出条件对照：全部满足，逐条证据见 `docs/validation/p1/m3-state.md`。
-- M3 最后一项做了什么：调度器的 `Pace::Continuous` 从 M3 第一个提交起就有单测，但没有生产者——区域发出的每个动作都按离散准入。本次让节奏跟着动作走：`Pace` 移到 `crates/rustify-makepad/src/pace.rs`（区域与作用域之间的契约，不再是队列的内部细节），`RegionApp::pace` 默认 `Discrete`、`ObjectRegion` 对 `SelectionAction::Hover` 返回 `Continuous`，`submit_all` 逐个动作问节奏而不是一律 `Discrete`；`ObjectGrid` 每次指针移动上报所在单元格、离开时上报 `None`，应用存下这份状态再投影回去，由网格画悬停环——区域不画自己的指针状态，只画被交给它的值。
-- 顺带修掉的缺陷：区域头部的名称与位置标签原本按文本取宽，改名会把旁边两个按钮左右推走——指针正要按下的控件从底下移开了。两个标签改为固定宽度，浏览器用例改用一个常量（`tests/browser/m3-workbench.spec.ts` 的 `NEXT_BUTTON`）定位这两个按钮。
-- 已知限制（如实记录，不改实现）：浏览器里每个事件各泵一次、一次泵至多产出一个动作、作用域随即同步投递，所以连续动作的合并在端到端路径上永远碰不上——队列里同时不会有两个移动。合并由宿主单测覆盖（`a_stream_of_moves_neither_delays_nor_crowds_out_the_clicks_between_them`：4,000 个移动 + 20 次点击对一个 1,024 深的队列，一次点击都没被拒），端到端用例覆盖 V2 真正要求的那条「移动流不吞掉、不推迟、不重排其中的离散动作」。一次事件发出多个动作的场景要等 M4 的拖拽。
+- 最近更新：2026-09-09，**M4 已关闭**；下一会话从 M5（原生文本编辑与可访问旅程）开始。
+- 当前进度：4/8 个里程碑完成。
+- 代码基线：`3f8e5c3`（M1 首轮）→ `6bb15a1`（M1 收尾并关闭）→ `8427bff`（M2 关闭）→ `d086339`…`6d02836`（M3 的五个提交）→ `6d2017e`、`465f180`（两轮评审修正）→ `7ffab2a`（M3 关闭）→ `e2ba381`（M4 几何）→ 本次 M4 收尾提交（`git log -1`）。工作区 clean。
+- 已通过的验证（2026-09-09 本机）：`cargo xtask doctor` 8/8；`cargo test --workspace --lib` 17（registry 3、scheduler 5、binding 9、overlay 3）；`cargo test -p xtask` 10；`cd makepad && cargo test` 13；`cargo clippy --workspace --all-targets -- -D warnings` 无警告；`cargo fmt --all -- --check` 通过；两个示例各 `cargo xtask build-web --release` 通过；`npx playwright test --project=fusion-basic` **42/42**（m1-probes 8、m2-runtime 11、m3-state 2、m4-geometry 12、m4-overlay 9）；`npx playwright test --project=property-workbench` **19/19** 回归。
+- M4 退出条件对照：全部满足，逐条证据见 `docs/validation/p1/m4-geometry.md`。
+- M4 的夹具：`fusion-basic` 新增按需挂载的几何夹具（页面调用 `mount_geometry`，所以 M1–M3 的探针看到的还是它们自己的作用域）——两层滚动容器里一块 20 个锚点的区域（内层比区域窄且矮，两边都裁），外加 20 个焦点项、从 GPU 锚点打开的菜单和一个模态框。区域自己上报它把每个锚点画在哪、点击命中了哪一个（`examples/fusion-basic/src/anchor_grid.rs`），于是显示与命中都对着同一份声明核对，而不是对着测试里另抄一份布局。
+- M4 的实现变更：**分辨率变化要有人听**——DPR 变了但画布的 CSS 盒子一模一样，尺寸观察器不会响，后备存储就停在旧分辨率；嵌入区域改为监听当前分辨率的 media query 并在新比例上重新武装（`makepad/platform/src/os/web/web.js`）。**`RegionState::Suspended`**——被布局成 0 或被隐藏的画布既不是失败也不是销毁；宿主上报状态（`crates/rustify-makepad/web/embedded.js`），区域在没有面积时停泵，排队的工作在恢复后的那次泵里跑。**作用域的浮层栈**（`crates/rustify-ui/src/overlay.rs`）——`mount` 给作用域两个根：内容根与其上的浮层面；`Layer` 组件 portal 进浮层面，锚在 GPU 区域内的一个矩形或一个元素上，并在它们之间任何容器滚动时跟着走；模态层把内容根设为 `inert`，被盖住的控件点不到、聚不到、也读不出来；每个作用域一个捕获阶段的 keydown 监听，一次 Esc 只关一层，并在应用自己的命令看到这个键之前拦下它。**焦点回到它来的地方**——层记下打开时谁持有键盘，关闭时还回去；那个元素已经不在就交给作用域自己；而如果用户早已把焦点移到别处，层关闭时不去抢。
+- 已知限制（写进报告而不是修掉）：层只放在锚点下方，不翻转也不夹回视口——锚点靠近视口下沿时层也在那里，R09/R10 没有要求翻转；模态只让本作用域 inert，不对浏览器界面或作用域之外的宿主页面设焦点陷阱；缩放矩阵用「设备像素比 + 相应缩小的 CSS 视口」来模拟，这正是浏览器缩放对页面做的事，Chrome 的模拟在只改比例时不重算分辨率 media query，所以实时缩放用例两者一起改。
 - 待办（不阻塞）：审计每区域重复加载字体的内存（`IBMPlexSans-Text.ttf` 每区域各取一次，4 区域线性内存 124 MB）。
-- 已知环境事实：headless 探针跑在 SwiftShader 软件 WebGL 上；Playwright 进程测到的挂载/卸载耗时比页内测量大 10–30 倍，属于测试夹具开销，不计入 A-6 的测量合同。本机内存紧张时整套浏览器用例会被系统杀掉，按 project 分开跑（`--project=fusion-basic` / `--project=property-workbench`）更稳。
-- 下一步：M4 · 几何、浮层与焦点——resize/DPR/滚动/裁剪、DOM 菜单/模态栈、Tab 与命令归属、disabled/readOnly；退出条件为 V4 全项、20 个锚点/焦点项可测、无穿透与无宿主焦点抢占、不依赖默认 Makepad 隐藏 textarea。
+- 已知环境事实：headless 探针跑在 SwiftShader 软件 WebGL 上；Playwright 进程测到的挂载/卸载耗时比页内测量大 10–30 倍，属于测试夹具开销，不计入 A-6 的测量合同。本机内存紧张时整套浏览器用例会被系统杀掉，按 project 分开跑更稳；重新构建产物前先确认没有用例在跑，`serve` 正伺服同一个目录。
+- 下一步：M5 · 原生文本编辑和可访问旅程——text/semantics、单多行编辑态、语义定位与 DOM 等价入口、中文字体及人工记录；退出条件为 V5/V6 当前功能全项、真实 Chrome 拼音与 VoiceOver+Chrome 通过（Safari 为观察项）、组合不误提交、焦点可达、无重复语义、字体来源明确。**注意 V5/V6 有两项只能由人来做**（真实 macOS 拼音 20 条短句、VoiceOver+Chrome 五条旅程）：按 §9.4，无人具备对应环境时不得用合成事件替代、不得记录通过，M5 只能记为部分完成并如实标注缺口。
 - 当前阻塞：无。A-1/A-2/A-3/A-4/A-5/A-6 全部解除，计划状态为 Ready。
 
 ### 完成记录
 
 | Milestone | 完成时间 | 准确完成摘要 | 验证证据 | 代码基线 |
 | --- | --- | --- | --- | --- |
+| M4 | 2026-09-09 | 几何、浮层与焦点：三视口×三缩放下 20 个锚点的显示与命中误差均 ≤1 CSS 像素；100 轮改尺寸并滚动两层容器后裁剪外不漏像素、裁剪外点击 0 次进入区域；0 尺寸恢复后第一帧就是新尺寸；DPR 变化后后备存储跟上；从 GPU 锚点打开的 DOM 菜单在同一矩阵内锚定误差 ≤1 像素且不被区域遮挡；模态上点击 100 次底层 0 动作；两层浮层 Esc 每次只关顶层且焦点归还正确；20 项 Tab/Shift+Tab（禁用项不在序列、只读项可达不可改）；应用命令在浮层打开时不抢 Esc；挂载与启动区域不夺走宿主焦点、页面无隐藏 textarea。未做：浮层不翻转/不夹回视口，模态不对作用域之外设焦点陷阱（见报告的已知限制）。 | `docs/validation/p1/m4-geometry.md`；`npx playwright test --project=fusion-basic` 42/42；`--project=property-workbench` 19/19 回归；`cargo test --workspace --lib` 17；宿主检查同快照 | 本会话的 M4 收尾提交 |
 | M3 | 2026-09-09 | 共享状态与受控 GPU 组件：一份权威业务 state 背后的 DOM 面板与 GPU 视图；按到达顺序编号的调度与分批投递、每挂载作用域一份动作次序、卸载后不再投递、被拒动作有出口；1,000 个稳定 ID 对象的自定义 Widget、批量更新/反序/增删/重复 ID 拒绝；10,000 次 GPU 动作一次不丢一次不重；节奏跟着动作走（`RegionApp::pace`），指针流成为 `Pace::Continuous` 的第一个真实生产者，120 Hz 移动夹杂 20 次点击与 20 次保存不丢一条。未做：连续动作的合并在端到端路径上还碰不上（见快照的已知限制），等 M4 的拖拽。 | `docs/validation/p1/m3-state.md`；`npx playwright test --project=property-workbench` 19/19；`npx playwright test --project=fusion-basic` 21/21 回归；`cargo test --workspace --lib` 17；宿主检查同快照 | 本会话的 M3 收尾提交 |
 | M2 | 2026-09-08 | 可嵌入与可销毁运行时：区域状态（Ready/Failed/Disposed）与应用可见的失败出口、拿不到 WebGL2 上下文的区域可见失败且不影响同作用域 DOM、信号由轮询改为推送、宿主资源计数；V1/V3 的普通行为、旧句柄与迟到消息、100 轮资源与宿主操作检查全部通过。未做：Suspended（M4 几何）、完整诊断环（M7）、实例间 trap 隔离（ADR-1 保持不做）。 | `docs/validation/p1/m2-runtime.md`；`npx playwright test m2-runtime` 11/11；`npx playwright test m1-probes` 8/8 回归；宿主检查同上 | 本会话的 M2 提交 |
 | M1 | 2026-09-08 | 固定工程与三项技术探针：Makepad wasm 构建闭包硬分叉进 `makepad/` 并裁剪、Leptos 锁 crates.io 0.8.20、`sources.lock.json`、doctor/build-web/serve/sources 四个 xtask 入口、release 构建与浏览器入口；探针①CSR 与 Makepad 合并且无跨源隔离，②同 wasm 双作用域各两区域的分派与对称销毁（含 F15 全局清单逐项结论），③构建期生成的静态消息桥在严格 CSP 下运行；A-5/A-6 登记完成。未做：M2 起的运行时完善、性能预算承诺。 | `docs/validation/p1/m1-probes.md`；`npm run test:browser` 8/8；`cargo xtask doctor` 8/8；`cargo test --workspace --lib` 3；`cd makepad && cargo test` 13；`cargo test -p xtask` 10；clippy 无警告；fmt 通过 | 本会话的 M1 收尾提交 |

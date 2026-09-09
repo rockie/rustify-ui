@@ -9,3 +9,18 @@ description = "Experimental SDK fusing Leptos CSR DOM with Makepad GPU regions"
 [dependencies]
 leptos.workspace = true
 rustify-makepad = { path = "../rustify-makepad" }
+# DOM handles have to sit in Leptos context values, which are Send + Sync.
+send_wrapper = "0.6"
+# The overlay stack measures anchors and owns listeners, so it asks for the
+# web-sys features it uses rather than relying on what Leptos happens to enable.
+web-sys = { workspace = true, features = [
+    "AddEventListenerOptions",
+    "Document",
+    "DomRect",
+    "Element",
+    "Event",
+    "EventTarget",
+    "HtmlElement",
+    "KeyboardEvent",
+    "Window",
+] }

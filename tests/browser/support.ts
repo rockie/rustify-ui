@@ -1,6 +1,40 @@
 import { expect, Locator, Page } from "@playwright/test";
 import { PNG } from "pngjs";
 
+export interface Anchor {
+    id: number;
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+}
+
+export const geometry = (page: Page) => page.evaluate(() => window.__fusion_basic.geometry());
+
+/// Mounts the geometry fixture and waits until its region has reported the
+/// anchors it drew.
+export async function mountGeometry(page: Page) {
+    await waitForReady(page);
+    await page.evaluate(() => window.__fusion_basic.mount_geometry("geometry"));
+    await expect.poll(async () => (await geometry(page)).state).toBe("ready");
+    await expect.poll(async () => (await geometry(page)).anchors.length).toBe(20);
+}
+
+/// Where an anchor of the region sits in the viewport right now.
+export async function anchorRect(page: Page, anchor: Anchor) {
+    const origin = await page.evaluate(() => {
+        const canvas = document.querySelector('[data-testid="geometry-gpu"]') as HTMLElement;
+        const box = canvas.getBoundingClientRect();
+        return { left: box.left, top: box.top };
+    });
+    return {
+        x: origin.left + anchor.x,
+        y: origin.top + anchor.y,
+        width: anchor.width,
+        height: anchor.height,
+    };
+}
+
 export async function waitForReady(page: Page) {
     await page.goto("./");
     await expect(page.getByTestId("status")).toHaveAttribute("data-status", "ready", { timeout: 60_000 });
@@ -119,6 +153,10 @@ declare global {
                 hits: number;
                 last_hit: { anchor: number; x: number; y: number } | null;
                 state: string;
+                menu: number | null;
+                dialog: boolean;
+                anchored: boolean;
+                commands: number;
             };
             hooks: { runtime: { errors: string[]; enter_fatal(error: unknown): void } };
         };
