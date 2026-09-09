@@ -8,7 +8,8 @@ mod app {
     use leptos::wasm_bindgen::prelude::*;
     use rustify_components::{clx, provide_current_path, variants};
     use rustify_ui::{
-        mount, AppHandle, Button, GpuRegion, MountConfig, RegionState, Theme, ThemedScope, CATALOG,
+        mount, AppHandle, Button, GpuRegion, LocalRect, MountConfig, RegionState, Theme,
+        ThemedScope, CATALOG,
     };
     use std::cell::RefCell;
     use std::collections::BTreeMap;
@@ -199,7 +200,7 @@ mod app {
                             .map(|entry| {
                                 view! {
                                     <tr data-testid=format!(
-                                        "status-{}",
+                                        "status-row-{}",
                                         entry.category.name().replace(' ', "-"),
                                     )>
                                         <th scope="row">{entry.category.name()}</th>
@@ -222,6 +223,9 @@ mod app {
         let locale = RwSignal::new(Locale::En);
         let page = RwSignal::new(Page::Category(0));
         let region = RwSignal::new(RegionState::Starting);
+        // Where the region says it drew its own button, so a test can put a
+        // real pointer on it instead of guessing from the layout.
+        let region_button = RwSignal::new(None::<LocalRect>);
         provide_current_path(Signal::derive(move || page.get().path()));
 
         let switch_theme = move || {
@@ -236,8 +240,15 @@ mod app {
 
         Effect::new(move || {
             let page = page.get();
+            let button = match region_button.get() {
+                Some(rect) => format!(
+                    "{{\"x\":{:.1},\"y\":{:.1},\"width\":{:.1},\"height\":{:.1}}}",
+                    rect.x, rect.y, rect.width, rect.height
+                ),
+                None => "null".to_string(),
+            };
             let snapshot = format!(
-                "{{\"path\":\"{}\",\"theme\":\"{}\",\"locale\":\"{}\",\"categories\":{},\"region\":\"{}\"}}",
+                "{{\"path\":\"{}\",\"theme\":\"{}\",\"locale\":\"{}\",\"categories\":{},\"button\":{button},\"region\":\"{}\"}}",
                 page.path(),
                 theme.get().name,
                 locale.get().tag(),
@@ -260,6 +271,7 @@ mod app {
         let region_app = PhantomData::<ThemeRegion>;
         let on_region_action = move |action| match action {
             ThemeAction::Toggle => switch_theme(),
+            ThemeAction::Button(rect) => region_button.set(Some(rect)),
         };
 
         view! {

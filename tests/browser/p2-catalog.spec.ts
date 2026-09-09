@@ -92,9 +92,15 @@ test.describe("M1 V1: one theme, both halves", () => {
 
         // The region asks for the same switch, and the answer comes back to
         // both halves: a request from the GPU side is still the application's
-        // to grant.
+        // to grant. The pointer goes where the region says it drew the button,
+        // not where this test thinks the layout put it.
         const box = (await region.boundingBox())!;
-        await page.mouse.click(box.x + box.width * 0.5, box.y + box.height * 0.82);
+        const button = (await snapshot(page)).button!;
+        expect(button).not.toBeNull();
+        await page.mouse.click(
+            box.x + button.x + button.width / 2,
+            box.y + button.y + button.height / 2
+        );
         await expect.poll(async () => (await snapshot(page)).theme).toBe("light");
         await expect(page.locator("[data-rustify-scope]").first()).toHaveAttribute(
             "data-theme",
@@ -123,7 +129,7 @@ test.describe("M1: the catalogue answers for all eighteen categories", () => {
     test("every category has a page, and the status table has a row for each", async ({ page }) => {
         await ready(page);
         await page.getByTestId("nav-status").click();
-        const rows = page.locator('[data-testid^="status-"]');
+        const rows = page.locator('[data-testid^="status-row-"]');
         await expect(rows).toHaveCount(18);
 
         // A category page shows that category's own answers, not the first
@@ -143,14 +149,14 @@ test.describe("M1: the catalogue answers for all eighteen categories", () => {
         await page.getByTestId("nav-status").click();
         const heading = page.getByTestId("status-page").getByRole("heading");
         const english = await heading.first().textContent();
-        const rows = await page.locator('[data-testid^="status-"]').count();
+        const rows = await page.locator('[data-testid^="status-row-"]').count();
 
         await page.getByTestId("toggle-locale").click();
         expect(await snapshot(page)).toMatchObject({ locale: "zh-CN" });
         expect(await heading.first().textContent()).not.toBe(english);
         // The table is the same table: a language is words, not a different
         // set of answers.
-        expect(await page.locator('[data-testid^="status-"]').count()).toBe(rows);
+        expect(await page.locator('[data-testid^="status-row-"]').count()).toBe(rows);
     });
 });
 
@@ -199,8 +205,15 @@ test.describe("M1 V1: the host page's own controls are not ours", () => {
         await expect.poll(async () => (await snapshot(page)).region).toBe("ready");
         const withUs = await styles(page);
 
+        // The bare page carries the example's own stylesheet and not ours, so
+        // a difference is the SDK's doing rather than the application's: what
+        // is under test is `runtime.css` and `rustify.css`, not `app.css`.
         const bare = await browser.newPage();
-        await bare.setContent(`<!DOCTYPE html><html><body>${MARKUP}</body></html>`);
+        await bare.goto(new URL("./app.css", page.url()).href);
+        const appCss = await bare.evaluate(() => document.body.textContent ?? "");
+        await bare.setContent(
+            `<!DOCTYPE html><html><head><style>${appCss}</style></head><body>${MARKUP}</body></html>`
+        );
         const without = await styles(bare);
         await bare.close();
 

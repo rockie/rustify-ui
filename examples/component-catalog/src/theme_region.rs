@@ -1,5 +1,5 @@
 use rustify_ui::makepad_widgets::*;
-use rustify_ui::{RegionApp, Theme};
+use rustify_ui::{LocalRect, RegionApp, Theme};
 
 /// What the region is told: the scope's theme, and nothing else.
 ///
@@ -14,10 +14,14 @@ pub struct ThemeProps {
 
 #[derive(Debug)]
 pub enum ThemeAction {
-    /// The user clicked the region's own swatch. The catalogue answers by
+    /// The user clicked the region's own button. The catalogue answers by
     /// switching the theme, which is how a reader sees that the request came
     /// from the GPU half and the answer came back to both.
     Toggle,
+    /// Where the region drew that button, in its own local CSS pixels.
+    /// Reported when it changes, so a caller can aim a pointer at it without
+    /// keeping a second copy of the region's layout.
+    Button(LocalRect),
 }
 
 script_mod! {
@@ -61,6 +65,9 @@ script_mod! {
 pub struct ThemeRegion {
     #[live]
     ui: WidgetRef,
+    /// The last rectangle reported, so only a change is sent.
+    #[rust]
+    button: Option<LocalRect>,
 }
 
 fn colour(rgb: u32) -> Vec4f {
@@ -123,5 +130,15 @@ impl RegionApp for ThemeRegion {
             }
         }
         self.ui.handle_event(cx, event, &mut Scope::empty());
+        // Where it ended up, not where the layout walked: a parent that aligns
+        // its children moves them after the walk, and what a pointer has to be
+        // aimed at is the former.
+        let area = self.ui.widget(cx, ids!(toggle_button)).area();
+        let rect = area.rect(cx);
+        let drawn = LocalRect::new(rect.pos.x, rect.pos.y, rect.size.x, rect.size.y);
+        if drawn.width > 0.0 && self.button != Some(drawn) {
+            self.button = Some(drawn);
+            outbox.push(ThemeAction::Button(drawn));
+        }
     }
 }

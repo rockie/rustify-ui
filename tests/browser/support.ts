@@ -198,6 +198,7 @@ declare global {
                 theme: string;
                 locale: string;
                 categories: number;
+                button: { x: number; y: number; width: number; height: number } | null;
                 region: string;
             };
             diagnostics(): {
