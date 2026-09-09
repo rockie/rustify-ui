@@ -1567,5 +1567,31 @@
         "examples/property-workbench/vendor/nouislider/nouislider.min.mjs": "51f2cef94f58f92b13c105fb32c3e784bd8eba8030c60707fcd77c94b7c9734c"
       }
     }
-  ]
+  ],
+  "rust_ui": {
+    "origin": "ref/ui-main, the Rust/UI reference tree; it carries no VCS metadata, so there is no upstream commit to record",
+    "origin_version": "leptos_ui 0.3.22 (crates/leptos_ui/Cargo.toml in that tree)",
+    "imported_on": "2026-09-09",
+    "license": "MIT, Copyright (c) 2026 Max Wells; reproduced in crates/rustify-components/LICENSE-RUST-UI",
+    "import_root": "crates/rustify-components",
+    "import_rule": "only the files listed here. Each is imported verbatim in one commit and rewritten in the next, so what the fork changes reads as a diff. `state` is `verbatim` while our copy is byte-identical to what was received and `rewritten` once it is not; `sha256` is the digest of what was received either way, so provenance survives the rewrite.",
+    "not_imported": "the components that build inline <script> or <style> with format!, use_scroll_lock.rs, public/app_components/*.js, style/Animate.css, style/highlight_code.css, and charts/date_picker/carousel/sonner/data_grid/drag_and_drop",
+    "files": {
+      "crates/rustify-components/src/macros/clx.rs": {
+        "source": "crates/leptos_ui/src/clx.rs",
+        "sha256": "24521409d6a592f5486cd2fd551bcdbf6404c5a25e14a6120accd190e7c558fb",
+        "state": "verbatim"
+      },
+      "crates/rustify-components/src/macros/utils.rs": {
+        "source": "crates/leptos_ui/src/utils.rs",
+        "sha256": "bec9b4cc190a5fc7af74a13450995522b0292eada595eff6282f5151b15fb4e6",
+        "state": "verbatim"
+      },
+      "crates/rustify-components/src/macros/variants.rs": {
+        "source": "crates/leptos_ui/src/variants.rs",
+        "sha256": "83a4a376205452dd026c3344753be265eafd4e9ac0d030db619f4e922356c2dd",
+        "state": "verbatim"
+      }
+    }
+  }
 }

@@ -310,7 +310,11 @@ impl RegionApp for ObjectRegion {
             self.wide_name = true;
             self.ui.widget(cx, ids!(wide_name)).set_visible(cx, true);
         }
-        let (plain_name, wide_name) = if self.wide_name { ("", name) } else { (name, "") };
+        let (plain_name, wide_name) = if self.wide_name {
+            ("", name)
+        } else {
+            (name, "")
+        };
         self.ui.label(cx, ids!(name_label)).set_text(cx, plain_name);
         self.ui
             .label(cx, ids!(wide_name_label))
@@ -327,8 +331,14 @@ impl RegionApp for ObjectRegion {
             self.wide_notes = true;
             self.ui.widget(cx, ids!(wide_notes)).set_visible(cx, true);
         }
-        let (plain_notes, wide_notes) = if self.wide_notes { ("", notes) } else { (notes, "") };
-        self.ui.label(cx, ids!(notes_label)).set_text(cx, plain_notes);
+        let (plain_notes, wide_notes) = if self.wide_notes {
+            ("", notes)
+        } else {
+            (notes, "")
+        };
+        self.ui
+            .label(cx, ids!(notes_label))
+            .set_text(cx, plain_notes);
         self.ui
             .label(cx, ids!(wide_notes_label))
             .set_text(cx, wide_notes);

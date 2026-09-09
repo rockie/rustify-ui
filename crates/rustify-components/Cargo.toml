@@ -1,0 +1,15 @@
+[package]
+name = "rustify-components"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+publish.workspace = true
+description = "DOM components for the Rustify UI SDK, forked from Rust/UI and rewritten to be controlled, CSP-clean and reachable"
+
+[dependencies]
+leptos.workspace = true
+rustify-ui = { path = "../rustify-ui" }
+# Class-string merging. Pure Rust, no Leptos feature: the component crate
+# decides what a class list means, not the library that merges it.
+tw_merge = { version = "=0.1.21", features = ["variant"] }
+paste = "1"

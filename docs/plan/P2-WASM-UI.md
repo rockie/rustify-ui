@@ -270,7 +270,7 @@ flowchart TD
 
 ## 2. 模块、接口与依赖
 
-以下为拟定契约；标 ☐ 的入口以 P1 实际交付为准，P2 M1 核对后回写。
+以下为拟定契约；标 ☐ 的入口以 P1 实际交付为准。**§2.1 是 M1 第一项核对的结果**，与本表冲突时以 §2.1 为准。
 
 | 模块 | 调用者 | 入口与不变量 | 接缝/隐藏复杂度 | 依赖及验证面 |
 | --- | --- | --- | --- | --- |
@@ -287,6 +287,24 @@ flowchart TD
 | xtask css/catalog/build/serve | 开发者/CI | `css [--check]` 漂移即失败；`catalog --check` 文档漂移即失败；`build-web --base` 改写引用并写进 manifest；`serve --spa` 回退 `index.html`，`--base` 与 manifest 不一致时拒绝启动 | 构建期把 base 固定进产物 | xtask 单测 + V6/V12 |
 
 删除测试：删掉 components crate，三个示例各自复制 18 类组件与 ARIA；删掉 router 守卫，每个有未提交编辑的视图各自处理锚点/popstate；删掉 form 状态机，每个表单重复代际与单飞；删掉 drag 会话，DOM 与 GPU 各写一套「至多一次」。以上四处承载真实复杂度。不建立通用中间件管线、通用数据表格抽象或状态管理库。
+
+### 2.1 与 P1 实际接口的核对（M1 第一项，2026-09-09）
+
+逐个读 `crates/rustify-ui/src/` 的公开面，与上表对照。结论：**六个依赖接口全部存在**，四处与上表的假设不同，按下表处理。
+
+| P1 实际接口 | 位置 | 与 §2 假设的差异 | P2 的处理 |
+| --- | --- | --- | --- |
+| `mount(container, MountConfig { scope }, view) -> Result<AppHandle, UiError>` | `mount.rs:17,47` | `MountConfig` 只有 `scope` 一个字段，没有 `url_owner`/`base` | M4 增字段而不是换类型；`UrlOwnerConflict` 走 `mount` 现有的前置闸（容器无效/被占用之后再判所有者） |
+| `Layer{ modal, anchor: Signal<Anchor>, on_close, class, test_id, children }`；`Anchor::{Region{canvas, rect}, Element(_), Centred}`；`use_overlay() -> Option<OverlayStack>`；`OverlayStack::{overlay_root, depth, top, close_top}` | `overlay.rs:81,499,178` | 没有 `open: Signal<bool>`/`on_open_change`：层的存在与否由应用「渲染或不渲染」表达，`on_close` 是栈请求它消失 | 浮层类组件对外仍给 `open`/`on_open_change`（P2 的组件契约），内部用条件渲染 + `on_close` 映射到这个栈；不新开第二套浮层 |
+| `Theme` 15 个 token（`--background/--foreground/--primary/--primary-foreground/--secondary/--muted/--accent/--destructive/--border/--input/--ring/--radius/--font-size/--spacing/--motion-duration`），`ThemedScope`/`ThemeOverride`/`use_theme_values` | `theme.rs:15,84,252,284` | §0.7 第 1 条已被采纳，名字对得上；但 Rust/UI 的类字符串还要 `--secondary-foreground`、`--accent-foreground`、`--muted-foreground`、`--destructive-foreground`、`--card`、`--popover`、`--success`、`--warning` 及其 foreground | M1 扩表（加字段，不改已有名字），并在 `theme.rs` 的单测里断言「token 表与 `rustify.tailwind.css` 的变量名一一对应」——这条不变量本来就在 §3 |
+| `Load`/`Requests`/`Ticket` 公开；`Ticket::deliver` 只在票据仍是最新时写入 | `task.rs:18,65,104` | 与假设一致（§0.7 第 4 条已采纳） | 表单异步校验与导航后的迟到结果直接用 |
+| `ErrorKind::ALL` 10 类，每类带 `suggestion`；`Diagnostic` 的 `detail` 是 `&'static str`，可变部分是类型化字段；`Diagnostics::set_recording` 可关 | `diagnostics.rs:45,148,230` | 只有「错误」一个级别，没有信息级；P2 需要 `NavigationBlocked/NavigationBusy/DragCancelled` 不计入错误数 | M4 在 `ErrorKind` 上加一个 `severity()`（`Error`/`Info`），信息级不进错误计数也不改现有 10 类的行为；这是加法，不是改写 |
+| `TextEdit{ anchor, value, multiline, on_commit, on_cancel, on_invalidated, class, test_id }` | `text.rs:64` | 与假设一致 | 表单字段与命令面板搜索框复用它；GPU 侧文本编辑不另写 |
+| `Pace::Continuous` 已有真实生产者（区域的 Hover） | `pace.rs`、`object_region.rs` | 与假设一致（§0.7 第 6 条） | 拖拽会话共用同一投递路径 |
+| DOM 组件子集 `Button/Label/TextField/TextArea/Checkbox/Slider/LoadView`，props 形如 `label: String`、`value: Signal<T>`、`on_*`、`disabled/read_only: Signal<bool>`、`test_id` | `components.rs:39–284` | 多数没有 `class` 透传，因为 P1 不引 Tailwind | 这七个是 P1 两个示例的组件，**保持不动**；18 类目录在 `rustify-components` 里新写，`class` 与 `tw_merge` 只存在于新 crate |
+| 能力目录 `CATALOG`（18 类 × 三列 × 六类能力，无 `Unknown`），`markdown()` 生成 `docs/components.md` | `catalog.rs:114,371,379` | 两个 crate 各有一份目录会漂移 | M2 把目录**搬进** `rustify-components` 并删掉 `rustify-ui` 里的这一份；在此之前（M1）不复制第二份，`docs/components.md` 仍由 P1 的那份生成 |
+
+两条因此确定的实施顺序：`theme.rs` 的 token 扩表在 M1 与 Tailwind 输入文件同一个提交里做（否则 `css --check` 与单测会互相指责）；`catalog.rs` 的搬迁在 M2 与 18 类组件同一个提交里做（搬空的目录没有意义）。
 
 ## 3. 内存模型与兼容边界
 

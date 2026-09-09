@@ -13,6 +13,8 @@ struct SourcesLock {
     makepad: MakepadSection,
     #[serde(default)]
     vendor: Vec<VendorSection>,
+    #[serde(default)]
+    rust_ui: Option<RustUiSection>,
 }
 
 /// One fixed-version third-party browser file set, imported whole so a fresh
@@ -22,6 +24,26 @@ pub struct VendorSection {
     pub name: String,
     pub version: String,
     pub files: BTreeMap<String, String>,
+}
+
+/// The Rust/UI subset, imported file by file.
+///
+/// A file arrives verbatim and is rewritten in the commit after, so the digest
+/// recorded here is of what was *received*: it identifies the origin whether or
+/// not our copy still matches it. `state` says which of the two a file is, and
+/// only a file still claiming to be verbatim is checked against the digest -
+/// a rewritten one that matched would mean the rewrite never happened.
+#[derive(Deserialize)]
+pub struct RustUiSection {
+    pub origin: String,
+    pub files: BTreeMap<String, RustUiFile>,
+}
+
+#[derive(Deserialize)]
+pub struct RustUiFile {
+    pub source: String,
+    pub sha256: String,
+    pub state: String,
 }
 
 #[derive(Deserialize)]
@@ -168,6 +190,40 @@ fn verify() -> Result<(), String> {
             "vendored files no longer match the version they were imported at: {}",
             wrong.join(", ")
         ));
+    }
+
+    if let Some(rust_ui) = &lock.rust_ui {
+        let mut unmarked = Vec::new();
+        let (mut verbatim, mut rewritten) = (0, 0);
+        for (path, file) in &rust_ui.files {
+            let bytes = std::fs::read(root.join(path))
+                .map_err(|e| format!("{path}: {e}; an imported file is part of the checkout"))?;
+            let same = hex(&Sha256::digest(&bytes)) == file.sha256;
+            match (file.state.as_str(), same) {
+                ("verbatim", true) => verbatim += 1,
+                ("verbatim", false) => {
+                    unmarked.push(format!("{path} changed but is still recorded as verbatim"));
+                }
+                ("rewritten", false) => rewritten += 1,
+                ("rewritten", true) => {
+                    unmarked.push(format!("{path} is recorded as rewritten but is unchanged"));
+                }
+                (other, _) => unmarked.push(format!("{path} has unknown state {other}")),
+            }
+        }
+        println!(
+            "rust_ui {}: {} files, {verbatim} verbatim, {rewritten} rewritten",
+            rust_ui.origin,
+            rust_ui.files.len()
+        );
+        if !unmarked.is_empty() {
+            // The record's only job is to say which files are still the
+            // original and which are ours. A wrong mark makes it useless.
+            return Err(format!(
+                "the Rust/UI import record disagrees with the checkout: {}",
+                unmarked.join("; ")
+            ));
+        }
     }
     Ok(())
 }

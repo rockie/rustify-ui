@@ -272,8 +272,11 @@ mod tests {
         let dir = std::env::temp_dir().join(format!("rustify-size-{}", std::process::id()));
         std::fs::create_dir_all(dir.join("nested")).expect("a temporary directory");
         std::fs::write(dir.join("a.js"), "const x = 1;\n".repeat(500)).expect("a file");
-        std::fs::write(dir.join("nested/b.bin"), (0u8..=255).cycle().take(4096).collect::<Vec<u8>>())
-            .expect("a file");
+        std::fs::write(
+            dir.join("nested/b.bin"),
+            (0u8..=255).cycle().take(4096).collect::<Vec<u8>>(),
+        )
+        .expect("a file");
         let files = list_files(&dir).expect("the listing");
 
         let compressed = compressed_sizes(&dir, &files).expect("gzip");
