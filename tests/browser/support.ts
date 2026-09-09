@@ -113,6 +113,13 @@ declare global {
                 pumps: number;
             };
             region_states(): Record<string, string>;
+            mount_geometry(container_id: string): number;
+            geometry(): {
+                anchors: { id: number; x: number; y: number; width: number; height: number }[];
+                hits: number;
+                last_hit: { anchor: number; x: number; y: number } | null;
+                state: string;
+            };
             hooks: { runtime: { errors: string[]; enter_fatal(error: unknown): void } };
         };
     }

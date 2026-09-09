@@ -37,6 +37,8 @@ struct Region {
     cx: Option<Box<Cx>>,
     app: Rc<dyn Any>,
     deliver: Rc<dyn Fn()>,
+    /// Told when the region's canvas loses or regains a drawable size.
+    suspend: Rc<dyn Fn(bool)>,
     deferred: Vec<Deferred>,
     disposing: bool,
 }
@@ -81,6 +83,7 @@ pub fn defer(f: impl FnOnce() + 'static) {
 pub fn create_region<A: RegionApp>(
     canvas: &web_sys::HtmlCanvasElement,
     on_actions: impl Fn(Vec<A::Action>) + 'static,
+    on_suspended: impl Fn(bool) + 'static,
 ) -> Option<RegionId> {
     let app: AppCell<A> = Rc::new(RefCell::new(None));
     let outbox: Outbox<A> = Rc::new(RefCell::new(Vec::new()));
@@ -98,6 +101,7 @@ pub fn create_region<A: RegionApp>(
             cx: Some(cx),
             app,
             deliver,
+            suspend: Rc::new(on_suspended),
             deferred: Vec::new(),
             disposing: false,
         })
@@ -164,6 +168,23 @@ pub fn destroy_region(id: RegionId) {
 pub unsafe extern "C" fn rustify_region_release(region: u32) {
     let removed = REGIONS.with(|regions| regions.borrow_mut().remove(RegionId::from_raw(region)));
     drop(removed);
+}
+
+/// Called by the host when the region's canvas gains or loses a drawable
+/// size. A suspended region draws nothing until it has an area again.
+#[export_name = "rustify_region_suspended"]
+pub unsafe extern "C" fn rustify_region_suspended(region: u32, suspended: u32) {
+    let notify = REGIONS.with(|regions| {
+        regions
+            .borrow()
+            .get(RegionId::from_raw(region))
+            .map(|region| region.suspend.clone())
+    });
+    // Outside the borrow: the application is about to write a signal, and
+    // whatever that wakes may reach the registry again.
+    if let Some(notify) = notify {
+        notify(suspended != 0);
+    }
 }
 
 pub fn live_region_count() -> usize {

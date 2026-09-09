@@ -236,6 +236,7 @@ export class WasmWebBrowser extends WasmBridge {
             this.resize_observer.disconnect();
             this.resize_observer = null;
         }
+        this.clear_resolution_watch();
         if (this.poll_timer) {
             window.clearInterval(this.poll_timer);
             this.poll_timer = null;
@@ -1514,11 +1515,39 @@ export class WasmWebBrowser extends WasmBridge {
         if (this.embedded) {
             this.resize_observer = new ResizeObserver(_ => this.handlers.on_screen_resize());
             this.resize_observer.observe(this.canvas);
+            // Browser zoom and a move to another display change how many device
+            // pixels a CSS pixel is worth without moving the canvas box, so the
+            // size observer never fires. A media query on the current
+            // resolution does, and it is re-armed at the new ratio each time.
+            this.arm_resolution_watch();
             return;
         }
         const signal = this.abort.signal;
         window.addEventListener('resize', _ => this.handlers.on_screen_resize(), { signal })
         window.addEventListener('orientationchange', _ => this.handlers.on_screen_resize(), { signal })
+    }
+
+    arm_resolution_watch() {
+        this.clear_resolution_watch();
+        const query = window.matchMedia(`(resolution: ${window.devicePixelRatio}dppx)`);
+        const on_change = () => {
+            this.resolution_query = null;
+            if (this.destroyed) {
+                return;
+            }
+            this.arm_resolution_watch();
+            this.handlers.on_screen_resize();
+        };
+        query.addEventListener("change", on_change, {once: true});
+        this.resolution_query = query;
+        this.on_resolution_change = on_change;
+    }
+
+    clear_resolution_watch() {
+        if (this.resolution_query) {
+            this.resolution_query.removeEventListener("change", this.on_resolution_change);
+            this.resolution_query = null;
+        }
     }
 
     // Embedded regions only ever see input that starts on their own canvas.

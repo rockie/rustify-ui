@@ -21,7 +21,7 @@ export default defineConfig({
     projects: [
         {
             name: "fusion-basic",
-            testMatch: ["m1-probes.spec.ts", "m2-runtime.spec.ts", "m3-state.spec.ts"],
+            testMatch: ["m1-probes.spec.ts", "m2-runtime.spec.ts", "m3-state.spec.ts", "m4-geometry.spec.ts"],
             use: { baseURL: `http://127.0.0.1:${fusionPort}/` },
         },
         {

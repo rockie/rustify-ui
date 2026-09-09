@@ -27,3 +27,39 @@ body {
     color: #b42318;
     background: #fef3f2;
 }
+
+/* The geometry fixture: an outer scroller taller than its content box, an
+   inner one narrower and shorter than the region, so the region is clipped on
+   two edges and both levels can scroll. */
+.geometry-outer {
+    height: 300px;
+    overflow: auto;
+    border: 1px solid #d0d5dd;
+    border-radius: 6px;
+    background: #ffffff;
+}
+
+.geometry-tall {
+    height: 900px;
+    padding: 40px;
+    box-sizing: border-box;
+}
+
+.geometry-inner {
+    width: 320px;
+    height: 200px;
+    overflow: auto;
+    border: 1px solid #98a2b3;
+}
+
+.geometry-wide {
+    width: 800px;
+    height: 600px;
+}
+
+.anchor-region {
+    display: block;
+    width: 400px;
+    height: 240px;
+    background: #0c111d;
+}

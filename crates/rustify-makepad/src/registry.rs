@@ -42,6 +42,10 @@ impl<T> Registry<T> {
         id
     }
 
+    pub fn get(&self, id: RegionId) -> Option<&T> {
+        self.live.get(&id)
+    }
+
     pub fn get_mut(&mut self, id: RegionId) -> Option<&mut T> {
         self.live.get_mut(&id)
     }

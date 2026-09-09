@@ -28,6 +28,14 @@ boot({ wasm_url: new URL("./fusion-basic.wasm", import.meta.url), on_fatal: runt
                 handles.set(container_id, handle);
                 return handle;
             },
+            mount_geometry(container_id) {
+                const handle = app.fusion_basic_geometry_mount(container_id);
+                handles.set(container_id, handle);
+                return handle;
+            },
+            geometry() {
+                return JSON.parse(app.fusion_basic_geometry());
+            },
             dispose(container_id) {
                 const handle = handles.get(container_id);
                 if (handle === undefined) {

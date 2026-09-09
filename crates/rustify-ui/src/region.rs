@@ -8,12 +8,15 @@ use std::marker::PhantomData;
 ///
 /// `Starting` covers the window between the canvas existing and the region
 /// owning a `Cx`; a region that never gets there ends in `Failed` and leaves
-/// the surrounding DOM untouched.
+/// the surrounding DOM untouched. `Suspended` is a region whose canvas has no
+/// drawable area - hidden, or laid out to zero - and is not a failure: it
+/// keeps its state and draws again at the size it comes back with.
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub enum RegionState {
     #[default]
     Starting,
     Ready,
+    Suspended,
     Failed(UiError),
     Disposed,
 }
@@ -49,6 +52,7 @@ where
     use crate::binding::submit_all;
     use leptos::html::Canvas;
     use rustify_makepad::RegionId;
+    use std::sync::atomic::{AtomicBool, Ordering};
     use std::sync::{Arc, Mutex};
 
     /// `Closed` covers both "never started" and "already destroyed": either
@@ -85,6 +89,20 @@ where
             drain_soon(sink.clone());
         }
     };
+    // Written by the host before the region is even handed back, so the
+    // component knows whether it may call itself ready.
+    let suspended = Arc::new(AtomicBool::new(false));
+    let on_suspended = {
+        let suspended = suspended.clone();
+        move |now: bool| {
+            suspended.store(now, Ordering::Relaxed);
+            publish(if now {
+                RegionState::Suspended
+            } else {
+                RegionState::Ready
+            });
+        }
+    };
     let canvas = NodeRef::<Canvas>::new();
     // Kept outside the reactive arena so the cleanup closure can still reach
     // the region after the owner's nodes are gone, and so an effect that runs
@@ -104,10 +122,16 @@ where
             if !matches!(*slot, Slot::Pending) {
                 return;
             }
-            match rustify_makepad::create_region::<A>(&canvas, deliver_actions.clone()) {
+            match rustify_makepad::create_region::<A>(
+                &canvas,
+                deliver_actions.clone(),
+                on_suspended.clone(),
+            ) {
                 Some(id) => {
                     *slot = Slot::Live(id);
-                    publish(RegionState::Ready);
+                    if !suspended.load(Ordering::Relaxed) {
+                        publish(RegionState::Ready);
+                    }
                 }
                 None => {
                     *slot = Slot::Closed;

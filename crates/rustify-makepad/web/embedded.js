@@ -11,6 +11,30 @@ export class EmbeddedRegion extends WasmWebGL {
         this.pump_scheduled = false;
         this.pump_depth = 0;
         this.pending_release = null;
+        this.suspended = false;
+        this.pump_on_resume = false;
+    }
+
+    // A canvas laid out to nothing, or hidden, has no area to draw into. The
+    // region keeps its state and stops working until it has one again; the
+    // application hears about it because a hidden region is not a broken one.
+    update_window_info() {
+        super.update_window_info();
+        const empty = this.canvas.clientWidth === 0 || this.canvas.clientHeight === 0;
+        if (empty === this.suspended || this.destroyed || this.runtime.fatal) {
+            return;
+        }
+        this.suspended = empty;
+        try {
+            this.exports.rustify_region_suspended(this.wasm_app, empty ? 1 : 0);
+        } catch (error) {
+            this.runtime.enter_fatal(error);
+            return;
+        }
+        if (!empty && this.pump_on_resume) {
+            this.pump_on_resume = false;
+            this.request_pump();
+        }
     }
 
     report_startup_failure(error) {
@@ -37,6 +61,12 @@ export class EmbeddedRegion extends WasmWebGL {
     // Rust asks for a pump after it queued work for this region; several
     // requests in one task collapse into one pump on the microtask queue.
     request_pump() {
+        if (this.suspended) {
+            // Whatever asked for this pump is still queued in wasm; it runs
+            // when the region has somewhere to draw it.
+            this.pump_on_resume = true;
+            return;
+        }
         if (this.pump_scheduled || this.destroyed || this.runtime.fatal) {
             return;
         }
@@ -55,6 +85,10 @@ export class EmbeddedRegion extends WasmWebGL {
     // rather than this region alone.
     do_wasm_pump() {
         if (this.runtime.fatal) {
+            return;
+        }
+        if (this.suspended) {
+            this.pump_on_resume = true;
             return;
         }
         this.runtime.pumps += 1;
