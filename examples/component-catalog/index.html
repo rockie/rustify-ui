@@ -15,6 +15,24 @@
     <main>
         <p>The eighteen categories R18 names, what each of them supports, and where.</p>
         <div id="catalog" data-testid="catalog"></div>
+
+        <!-- The host page's own controls, and its own `dark` class. Neither is
+             the SDK's to touch: the utilities are prefixed, the dark variant is
+             bound to the SDK's own scope attribute, and no rule here selects a
+             bare element. A test compares these against the same markup on a
+             page that loads none of our stylesheets. -->
+        <section class="dark" data-testid="host-controls">
+            <h2>the page's own controls</h2>
+            <input type="range" data-testid="host-range" min="0" max="10" value="5">
+            <input type="text" data-testid="host-text" value="host">
+            <button type="button" data-testid="host-button">host button</button>
+            <a href="#host" data-testid="host-link">host link</a>
+        </section>
+
+        <!-- A second scope on the same page: two scopes, two themes, one
+             document. -->
+        <div id="catalog-second" data-testid="catalog-second"></div>
+
         <p id="status" data-testid="status"></p>
     </main>
 </body>

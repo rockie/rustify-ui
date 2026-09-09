@@ -1,8 +1,10 @@
 import { boot, show_fatal, StartupError } from "./loader.js";
 
 const container = "catalog";
+const second_container = "catalog-second";
 const status = document.getElementById("status");
 let handle = null;
+let second = null;
 
 const runtime_fatal = (error) => {
     // The mounted controls and their listeners live in the module that just
@@ -11,7 +13,11 @@ const runtime_fatal = (error) => {
     if (handle !== null) {
         document.getElementById(container)?.replaceChildren();
     }
+    if (second !== null) {
+        document.getElementById(second_container)?.replaceChildren();
+    }
     handle = null;
+    second = null;
     delete window.__component_catalog;
     status.dataset.status = "fatal";
     show_fatal(
@@ -35,6 +41,20 @@ boot({ wasm_url: new URL("./component-catalog.wasm", import.meta.url), on_fatal:
                 }
                 const spent = app.catalog_dispose(handle);
                 handle = null;
+                return spent;
+            },
+            // A second scope on the same page, for the checks that need one
+            // instance to be shown not to disturb another.
+            mount_second() {
+                second = app.catalog_mount(second_container);
+                return second;
+            },
+            dispose_second() {
+                if (second === null) {
+                    return false;
+                }
+                const spent = app.catalog_dispose(second);
+                second = null;
                 return spent;
             },
             snapshot() {

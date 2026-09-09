@@ -153,3 +153,85 @@ test.describe("M1: the catalogue answers for all eighteen categories", () => {
         expect(await page.locator('[data-testid^="status-"]').count()).toBe(rows);
     });
 });
+
+test.describe("M1 V1: the host page's own controls are not ours", () => {
+    /// The decisive comparison: the same markup, on a page that loads our
+    /// stylesheets and on one that loads nothing. Rust/UI's own CSS restyles
+    /// `input[type="range"]` through a bare element selector, which is exactly
+    /// what this catches - and what the scoping rule exists to prevent.
+    const MARKUP = `
+        <section class="dark">
+            <input type="range" data-testid="host-range" min="0" max="10" value="5">
+            <input type="text" data-testid="host-text" value="host">
+            <button type="button" data-testid="host-button">host button</button>
+            <a href="#host" data-testid="host-link">host link</a>
+        </section>`;
+
+    const PROPERTIES = [
+        "appearance",
+        "height",
+        "width",
+        "font",
+        "color",
+        "background-color",
+        "border",
+        "padding",
+        "margin",
+        "cursor",
+        "text-decoration",
+    ];
+
+    const styles = (page: Page) =>
+        page.evaluate((properties) => {
+            const out: Record<string, Record<string, string>> = {};
+            for (const id of ["host-range", "host-text", "host-button", "host-link"]) {
+                const element = document.querySelector(`[data-testid="${id}"]`)!;
+                const computed = getComputedStyle(element);
+                out[id] = Object.fromEntries(
+                    properties.map((property) => [property, computed.getPropertyValue(property)])
+                );
+            }
+            return out;
+        }, PROPERTIES);
+
+    test("they compute the same with our stylesheets as without them", async ({ page, browser }) => {
+        await ready(page);
+        await expect.poll(async () => (await snapshot(page)).region).toBe("ready");
+        const withUs = await styles(page);
+
+        const bare = await browser.newPage();
+        await bare.setContent(`<!DOCTYPE html><html><body>${MARKUP}</body></html>`);
+        const without = await styles(bare);
+        await bare.close();
+
+        expect(withUs).toEqual(without);
+    });
+
+    test("a host `dark` class does not darken a scope, and two scopes keep their own themes", async ({
+        page,
+    }) => {
+        await ready(page);
+        // The host section carries `class="dark"`, the convention a Tailwind
+        // page uses. The scope inside the page is light because its own root
+        // says so, and for no other reason.
+        expect(await snapshot(page)).toMatchObject({ theme: "light" });
+        await expect(page.locator("[data-rustify-scope]").first()).toHaveAttribute(
+            "data-theme",
+            "light"
+        );
+
+        await page.evaluate(() => window.__component_catalog.mount_second());
+        await expect(page.locator("[data-rustify-scope]")).toHaveCount(2);
+        // The first scope switches; the second keeps what it had.
+        await page.getByTestId("toggle-theme").first().click();
+        await expect(page.locator("[data-rustify-scope]").first()).toHaveAttribute(
+            "data-theme",
+            "dark"
+        );
+        await expect(page.locator("[data-rustify-scope]").nth(1)).toHaveAttribute(
+            "data-theme",
+            "light"
+        );
+        expect(await page.evaluate(() => window.__component_catalog.dispose_second())).toBe(true);
+    });
+});

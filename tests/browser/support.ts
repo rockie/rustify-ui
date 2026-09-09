@@ -190,6 +190,8 @@ declare global {
         __component_catalog: {
             mount(): number;
             dispose(): boolean;
+            mount_second(): number;
+            dispose_second(): boolean;
             live_regions(): number;
             snapshot(): {
                 path: string;
