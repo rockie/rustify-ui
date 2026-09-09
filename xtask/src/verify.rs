@@ -54,6 +54,19 @@ pub const MANUAL_RECORDS: [(&str, &str); 4] = [
     ),
 ];
 
+/// The six reports the milestone delivers, plus the requirement matrix. They
+/// are the milestone's own output rather than a person's, so a missing one is
+/// a failed step and not a note.
+pub const REPORTS: [&str; 7] = [
+    "docs/reports/p1/functional.md",
+    "docs/reports/p1/performance.md",
+    "docs/reports/p1/compatibility.md",
+    "docs/reports/p1/accessibility.md",
+    "docs/reports/p1/fault-recovery.md",
+    "docs/reports/p1/known-limitations.md",
+    "docs/reports/p1/requirements.md",
+];
+
 pub fn run(args: &[String]) -> Result<(), String> {
     let suite = args
         .iter()
@@ -99,6 +112,7 @@ pub fn run(args: &[String]) -> Result<(), String> {
         ),
         command("xtask tests", &root, "cargo", &["test", "-p", "xtask"]),
         command("fork tests", &root.join("makepad"), "cargo", &["test"]),
+        reports(&root),
     ];
 
     if !args.iter().any(|a| a == "--no-build") {
@@ -179,6 +193,18 @@ fn double_build(root: &Path, example: &str) -> Step {
                 field(second, "build_id")
             ),
         )
+    }
+}
+
+fn reports(root: &Path) -> Step {
+    let missing: Vec<&str> = REPORTS
+        .into_iter()
+        .filter(|path| !root.join(path).is_file())
+        .collect();
+    if missing.is_empty() {
+        Step::ok("reports", format!("{} delivered", REPORTS.len()))
+    } else {
+        Step::failed("reports", format!("missing: {}", missing.join(", ")))
     }
 }
 

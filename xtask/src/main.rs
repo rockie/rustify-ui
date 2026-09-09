@@ -15,7 +15,7 @@ cargo xtask <command> [options]
   build-web --example <name> [--release]
   serve       --example <name> [--release] [--base /path/] [--port N] [--csp strict|no-wasm|off]
               [--fault missing:<path>|corrupt:<path>|truncated:<path>|stale-bridge]
-  report-size --example <name> [--release]
+  report-size --example <name> [--release] [--compressed]
   sources     verify
   verify      --suite p1 [--no-browser] [--no-build]
 ";
@@ -76,6 +76,13 @@ fn report_size(args: &[String]) -> Result<(), String> {
     let report = build::size_report(&files);
     println!("{}", root.display());
     println!("{}", build::format_size_report(&report));
+    if args.iter().any(|a| a == "--compressed") {
+        let compressed = build::compressed_sizes(&root, &files)?;
+        println!(
+            "compressed with gzip -9, which is what a compressing host sends:\n{}",
+            build::format_size_report(&build::size_report(&compressed))
+        );
+    }
     println!("{} files", files.len());
     for (name, size) in &files {
         println!("  {size:>12}  {name}");

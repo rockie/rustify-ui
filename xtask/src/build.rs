@@ -180,6 +180,32 @@ pub fn list_files(dir: &Path) -> Result<BTreeMap<String, u64>, String> {
     Ok(out)
 }
 
+/// What a host that compresses would send for each of these files.
+///
+/// The size report counts bytes on disk, which is what a deployment stores; a
+/// static host with compression turned on sends fewer, and the difference is
+/// large enough for wasm and fonts that a transfer figure taken without it
+/// describes a deployment nobody would run. `gzip -9` is the floor - brotli
+/// sends less - so this is the conservative half of the answer.
+pub fn compressed_sizes(
+    dir: &Path,
+    files: &BTreeMap<String, u64>,
+) -> Result<BTreeMap<String, u64>, String> {
+    let mut out = BTreeMap::new();
+    for name in files.keys() {
+        let output = std::process::Command::new("gzip")
+            .args(["-9", "-c"])
+            .stdin(std::fs::File::open(dir.join(name)).map_err(|e| format!("{name}: {e}"))?)
+            .output()
+            .map_err(|e| format!("cannot run gzip: {e}"))?;
+        if !output.status.success() {
+            return Err(format!("gzip {name}: exit {}", output.status));
+        }
+        out.insert(name.clone(), output.stdout.len() as u64);
+    }
+    Ok(out)
+}
+
 /// Splits raw bytes into the six categories the plan reports.
 pub fn size_report(files: &BTreeMap<String, u64>) -> SizeReport {
     let mut report = SizeReport::default();
@@ -240,6 +266,27 @@ fn write(path: &Path, bytes: &[u8]) -> Result<(), String> {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn compressed_sizes_are_what_a_compressing_host_would_send() {
+        let dir = std::env::temp_dir().join(format!("rustify-size-{}", std::process::id()));
+        std::fs::create_dir_all(dir.join("nested")).expect("a temporary directory");
+        std::fs::write(dir.join("a.js"), "const x = 1;\n".repeat(500)).expect("a file");
+        std::fs::write(dir.join("nested/b.bin"), (0u8..=255).cycle().take(4096).collect::<Vec<u8>>())
+            .expect("a file");
+        let files = list_files(&dir).expect("the listing");
+
+        let compressed = compressed_sizes(&dir, &files).expect("gzip");
+        assert_eq!(
+            compressed.keys().collect::<Vec<_>>(),
+            files.keys().collect::<Vec<_>>()
+        );
+        // Repetitive text compresses; bytes that are already spread out do not
+        // compress much, and neither is allowed to be reported as zero.
+        assert!(compressed["a.js"] < files["a.js"] / 10);
+        assert!(compressed["nested/b.bin"] > 0);
+        let _ = std::fs::remove_dir_all(&dir);
+    }
 
     #[test]
     fn sizes_are_bucketed_by_extension() {

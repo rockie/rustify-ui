@@ -150,6 +150,8 @@ declare global {
                 count: number;
                 bytes: number;
                 dropped: number;
+                recording: boolean;
+                suppressed: number;
                 max_entries: number;
                 max_bytes: number;
                 entries: {
@@ -162,6 +164,7 @@ declare global {
                     suggestion: string;
                 }[];
             };
+            set_diagnostics(on: boolean): boolean;
             lose_context(test_id: string): boolean;
             restore_context(test_id: string): boolean;
             inject_duplicate_id(): boolean;

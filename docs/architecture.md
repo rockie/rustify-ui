@@ -1,4 +1,4 @@
-# Architecture (state after M1)
+# Architecture (state at the end of P1)
 
 One browser page loads one fusion wasm module. Leptos owns the DOM and the
 application's reactive state; every `GpuRegion` owns a Makepad `Cx` that draws
@@ -56,4 +56,4 @@ flowchart TD
 
 ## Deferred to later milestones
 
-Capability refusal reporting and an `AssetLoadFailed` producer (M7's remaining items, listed in `docs/plan/P1-WASM-UI.md`); performance and memory baselines (M8). The eighteen-category component catalogue is P2 M2; `docs/components.md` records which nine of the eighteen P1 ships and says plainly that the other nine are not here.
+The eighteen-category component catalogue is P2 M2; `docs/components.md` records which nine of the eighteen P1 ships and says plainly that the other nine are not here. Routing, workspaces, large data, general cross-region drag, the clipboard and file import are P2 or later. What P1 measured, and what it could not, is in `docs/reports/p1/`.

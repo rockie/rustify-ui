@@ -178,3 +178,114 @@ test.describe("M8 V12: what a long run leaves behind", () => {
         await expect.poll(async () => (await snapshot(page)).selected).not.toBe(1);
     });
 });
+
+test.describe("M8 V12: what the record itself costs", () => {
+    test("the same refusals with the record on and with it off", async ({ page }) => {
+        test.setTimeout(600_000);
+        await waitForReady(page);
+
+        // A path that writes one entry per event: mounting over an occupied
+        // container is refused, nothing is created, and the only thing that
+        // grows is the record. A thousand of them is the cost of a thousand
+        // entries, isolated from anything else the application does.
+        const refuse = (rounds: number) =>
+            page.evaluate((count) => {
+                const started = performance.now();
+                let refused = 0;
+                for (let round = 0; round < count; round++) {
+                    if (window.__property_workbench.mount_over("workbench") !== "mounted") {
+                        refused += 1;
+                    }
+                }
+                return { refused, taken: performance.now() - started };
+            }, rounds);
+
+        const rounds = 1_000;
+        const on = await refuse(rounds);
+        const kept = await page.evaluate(() => window.__property_workbench.diagnostics());
+        expect(on.refused).toBe(rounds);
+        expect(kept.recording).toBe(true);
+        expect(kept.suppressed).toBe(0);
+        expect(kept.count).toBe(kept.max_entries);
+
+        expect(await page.evaluate(() => window.__property_workbench.set_diagnostics(false))).toBe(
+            true
+        );
+        const off = await refuse(rounds);
+        const after = await page.evaluate(() => window.__property_workbench.diagnostics());
+        expect(off.refused).toBe(rounds);
+
+        // Off, the record keeps nothing new and does not pretend the entries
+        // never happened: what it turned away is counted and printed.
+        expect(after.recording).toBe(false);
+        expect(after.suppressed).toBe(rounds);
+        expect(after.count).toBe(kept.count);
+        expect(after.bytes).toBe(kept.bytes);
+        expect(after.dropped).toBe(kept.dropped);
+
+        const perEntryOn = (on.taken / rounds) * 1_000;
+        const perEntryOff = (off.taken / rounds) * 1_000;
+        console.log(
+            `diagnostics on: ${on.taken.toFixed(1)} ms for ${rounds} entries ` +
+                `(${perEntryOn.toFixed(1)} µs each), holding ${kept.bytes} bytes; ` +
+                `off: ${off.taken.toFixed(1)} ms (${perEntryOff.toFixed(1)} µs each), holding 0`
+        );
+
+        // Keeping the record is not free, and turning it off is not slower.
+        // The margin is wide because a per-entry cost measured in microseconds
+        // is measured against a scheduler; what would be a finding is off
+        // costing visibly more than on, not the two being close.
+        expect(off.taken).toBeLessThan(on.taken * 1.5);
+
+        // Back on, and the application is unharmed either way: nothing was
+        // mounted and the region is still the one that was there.
+        expect(await page.evaluate(() => window.__property_workbench.set_diagnostics(true))).toBe(
+            false
+        );
+        expect(await page.evaluate(() => window.__property_workbench.live_regions())).toBe(1);
+        expect(await snapshot(page)).toMatchObject({ region: "ready" });
+    });
+
+    test("with nothing going wrong, the record costs nothing", async ({ page }) => {
+        test.setTimeout(600_000);
+        await waitForReady(page);
+        await settle(page.getByTestId("workbench-gpu"));
+
+        // The controlled round trip of V11, run twice: once with the record on
+        // and once with it off. The happy path writes no entries, so the two
+        // figures answer whether merely having a record costs anything.
+        const typeInto = (rounds: number) =>
+            page.evaluate((count) => {
+                const field = document.querySelector(
+                    '[data-testid="name-input"]'
+                ) as HTMLInputElement;
+                const taken: number[] = [];
+                for (let round = 0; round < count; round++) {
+                    const started = performance.now();
+                    field.value = `n-${round}`;
+                    field.dispatchEvent(new Event("input", { bubbles: true }));
+                    taken.push(performance.now() - started);
+                }
+                return taken.sort((a, b) => a - b);
+            }, rounds);
+
+        const rounds = 1_000;
+        const on = await typeInto(rounds);
+        const before = await page.evaluate(() => window.__property_workbench.diagnostics());
+        await page.evaluate(() => window.__property_workbench.set_diagnostics(false));
+        const off = await typeInto(rounds);
+        const after = await page.evaluate(() => window.__property_workbench.diagnostics());
+
+        console.log(
+            `input with the record on: median ${on[500].toFixed(3)} ms, p95 ${on[950].toFixed(3)} ms; ` +
+                `off: median ${off[500].toFixed(3)} ms, p95 ${off[950].toFixed(3)} ms`
+        );
+
+        // Two thousand accepted inputs wrote nothing either way: a record only
+        // costs on a path that has something to say.
+        expect(after.count).toBe(before.count);
+        expect(after.suppressed).toBe(0);
+        await page.evaluate(() => window.__property_workbench.set_diagnostics(true));
+        expect(await snapshot(page)).toMatchObject({ name: "n-999", region: "ready" });
+    });
+});

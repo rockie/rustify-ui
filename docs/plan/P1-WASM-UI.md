@@ -28,10 +28,11 @@
 
 ### 恢复快照
 
-- 最近更新：2026-09-09。M1–M4 已关闭；**M5、M6、M7 三个里程碑的功能与自动化验证全部完成**，三者一起卡在 M5 的两项人工验证上；**M8 自动化的一半已开工**。下一会话从本节的「M8 现状」继续。
-- 当前进度：4/8 个里程碑完成。M5、M6、M7 都只差 M5 的两项人工项，没有别的缺口；M8 进行中。
-- 代码基线：… → `7ffab2a`（M3 关闭）→ `e2ba381`、`34fb0e9`（M4 关闭）→ `e0d203d`、`da0c34a`、`c613a05`（M5）→ `1a04c6c`、`b6e6adf`（M6 主题与异步票据）→ 本会话的 M6 收尾提交。工作区 clean。
-- 已通过的验证（2026-09-09 本机）：`cargo xtask doctor` 9/9（新增 vendored 一项）；`cargo test --workspace --lib` 43（registry 3、binding 9、catalog 7、components 4、overlay 3、scheduler 5、task 5、theme 7）；`cargo test -p xtask` 10；`cd makepad && cargo test` 13；`cargo clippy --workspace --all-targets -- -D warnings` 无警告；`cargo fmt --all -- --check` 通过；`cargo xtask sources verify` 通过（makepad 漂移可归因，nouislider 3 个文件 0 修改）；两个示例各 `cargo xtask build-web --release` 通过；`npx playwright test --project=property-workbench` **62/62**（m3-workbench 19、m5-text 8、m5-semantics 5、m6-theme 3、m6-async 4、m6-components 15、m7-recovery 8）；`--project=fusion-basic` **46/46**（含 m6-mainpath 3、共享 trap 影响范围 1）；`--project=deployment` **6/6**（新增，子路径 + 故障注入）。宿主单测本轮为 51（新增 diagnostics 8）、`cargo test -p xtask` 13（新增故障注入 3）。
+- 最近更新：2026-09-09（第二轮）。M1–M4 已关闭；**M5、M6、M7、M8 四个里程碑的功能与自动化验证全部完成**，四者一起卡在四份人工记录上（M5 的拼音与 VoiceOver，M8 的对比度/缩放走查与 Safari 观察）。下一会话从本节的「M8 现状」继续。
+- 当前进度：4/8 个里程碑完成。**没有任何一项自动化缺口**：剩下的全部是只能由人做的四份记录。
+- 代码基线：… → `7ffab2a`（M3 关闭）→ `e2ba381`、`34fb0e9`（M4 关闭）→ `e0d203d`、`da0c34a`、`c613a05`（M5）→ `1a04c6c`、`b6e6adf`（M6）→ `f2cdc09`、`ce33436`（M8 起步）→ 本会话的 M8 收尾提交。
+- 已通过的验证（2026-09-09 本轮）：`npx playwright test --project=property-workbench` **72 个用例**（新增 m8-network 3、m8-baseline 的诊断开关对照 2）——本轮先跑出 71 passed / 1 failed，失败的是新用例自身的两个测试缺陷（多开一个 DevTools 会话让限速失效；把「两次加载字节数相等」写成硬断言，而字体是在 `ready` 前后浮动地取的），两处都改成断言真正确定的量（wasm 字节数相等、慢链路明显更慢）后 3/3 通过。`cargo test -p rustify-ui --lib` 51（新增诊断开关 2）、`cargo test -p xtask` 14（新增压缩体积 1）。收尾的 `cargo xtask verify --suite p1` 在两小时耐久跑完后补跑。
+- 上一轮通过的验证（2026-09-09 第一轮，仍然成立）：`cargo xtask doctor` 9/9；`cargo test --workspace --lib` 52；`cd makepad && cargo test` 13；clippy 无警告；`cargo fmt --all -- --check` 通过；`cargo xtask sources verify` 通过；两个示例各 `build-web --release` 通过；`--project=fusion-basic` 46/46；`--project=deployment` 6/6。
 - 一次未能定位的偶发失败（如实记录）：批量跑三个 project 时 property-workbench 报 57 passed / 1 failed，下一个 project 启动时把 test-results 清空了，失败用例没来得及留下名字；同一份产物单独重跑该 project 得到 58/58。记为「未定位的 flake」，不记为「失败的那条其实是通过的」。当时机器同时在跑 cargo，本套件在 CPU 争用下耗时会翻倍，这一条已在「已知环境事实」里。
 - **M5 现状**：功能已全部交付并通过，证据见 `docs/validation/p1/m5-text-and-semantics.md`。
   - 已做：原生文本会话（`crates/rustify-ui/src/text.rs`）——区域交出它画文本的矩形，真正的 `input`/`textarea` 在会话期间占据它；受控、组合期间 Enter/Esc 归组合、一次组合只产出一个值、外部改值以「失效」结束会话；多行（notes）同路径且 Enter 是换行、离开才提交。语义：画布 `aria-hidden`（像素是装饰），面板可按角色+名称定位的控件，「按编号找对象」的 DOM 入口与 GPU 点击同一条规则，`UiError` 增加 `NotFound`/`Disposed`/`Timeout` 且查找在 5 秒上限内给出其一，五条纯键盘旅程。字体来源写进 `docs/compatibility.md`。
@@ -64,14 +65,18 @@
   - 已做（含脚本的普通文本）：像 `<script>…</script>` / `<img onerror=…>` 这样的文本被当作值处理——原样到达应用、原样回到控件、在作用域里不产生任何元素、什么也不执行，区域把它画成字形而不是解释它。
   - **退出条件已全部有据**（逐条对照见 M7 报告的状态表）。M7 自身不欠任何东西，和 M6 一样只是在等 M5。
   - **超出要求、没有做的两件**：① 资产失败的「损坏 / 截断」两类只有行为被验证、没有条目——它们带着 200 到达，失败发生在分叉的字体解码里；V8 要求的是「明确失败**或**可读 DOM 后备」，后备三类都验证了，所以要求本身是满足的，用例明确断言哪一类可见。② `RuntimeFatal` 进不了环，也不该进：trap 之后模块不可再调用，能写条目的只有页面，而页面的静态提示已验证。
-- **M8 现状**：自动化的一半已开工并有结果，见 `docs/validation/p1/m8-baselines.md`。
+- **M8 现状**：自动化部分已全部完成，见 `docs/validation/p1/m8-baselines.md`。
   - 已做（验收入口）：`cargo xtask verify --suite p1` 跑来源记录、doctor、fmt、clippy、三套测试、两个示例各两次干净构建、三个浏览器 project，然后列出四份人工记录里哪些交了、哪些没交。只有自动化步骤失败才非零退出；人工记录缺失会被打印出来，并明确说「缺一份人工记录，P1 就不能称作完成」。它上线后抓到的第一个缺陷是它自己的（步骤列表触发 `vec_init_then_push`）。
   - 已做（V10）：两个示例各两次干净构建的 manifest **完全一致**——build id、桥 hash、每个文件的字节数都相同。wasm 在这套源码和工具链下是可复现的，因此 build id 是「标识一次部署」而不只是「给它贴个标签」。
   - 已做（V11）：挂载到第一帧 30 次，中位 **55 ms**、最差 57 ms、无上行漂移；受控输入往返 1,000 次，中位 **< 0.1 ms**、p95 0.1 ms、最差 0.4 ms，1,000 次全部被接受、0 次被拒。全部在页内测量。
   - 已做（V12 的一部分）：100 轮挂载（20 轮预热 + 80 轮测量）线性内存**没有增长**，区域回到 1、timer 0、task 0；100 轮隐藏/恢复内存不变且区域仍能被真实指针命中；耐久夹具 10 动作/秒，两分钟发出 1,200 次、接受 1,200 次、拒绝 0 次——不丢、不重、不迟。内存曲线先平、爬升 4.8 MB、最后三分之一再平；用例断言「最后四分之一是平的」并把整条曲线打出来，因为两分钟的运行分不清「到达平台」和「缓慢爬升」。
-  - **未做（M8 余下）**：① 两小时耐久没跑（夹具支持 `RUSTIFY_ENDURANCE_MINUTES=120`），在跑之前那条曲线只是两分钟的形状。② 诊断开关对照没有开关可比。③ 网络条件与传输体积未测（回环、无限速）。④ 图形是 SwiftShader 软件光栅，所有 GPU 数字都是软件数字。⑤ 四份人工记录（拼音、VoiceOver、对比度与重排、Safari 观察）都没有。⑥ 六类报告尚未成篇。
-- 下一步：先跑两小时耐久并把结果写进 M8 报告；再补六类报告与需求矩阵。M5 的两项人工验证（真实拼音 20 条中文短句；VoiceOver + Chrome 五条旅程）随时可做，做完即同时关闭 M5 与 M6。
-- 当前阻塞：M5 的两项人工验证需要用户（真实拼音、VoiceOver）。M7 自身无阻塞。
+  - 已做（诊断开关对照，V12）：`Diagnostics::set_recording` 关掉记录，被关掉的条目计入 `suppressed` 并与 `dropped` 一起写进报告开头——关掉的记录不会看起来像「什么也没发生」。浏览器对照：1,000 次被拒的挂载，开着时每次写一条并守住 1,000 上限，关掉时一条不留、`suppressed` 恰好 1,000、`count`/`bytes`/`dropped` 不变且不比开着慢；1,000 次受控输入两种设置下都不写条目——顺路证明了「有记录」本身不花钱，花钱的是有话要说的那条路径。
+  - 已做（网络条件与传输体积，V11/V9）：新增 `tests/browser/m8-network.spec.ts`。产物 60,043,864 B，**首次加载只取 9,009,274 B**（wasm 8,596,932、js 220,413、css 9,837、字体 182,092 —— 十个字体文件只取一个）；gzip -9 全量 37,306,259 B（`report-size --compressed`）。限速：12 Mbit/s 6.6 s、3 Mbit/s 24.3 s、回环 6.7 s——9 MB 在 12 Mbit/s 上约 6 s，浏览器边下边编译，所以与回环持平；再慢四倍时链路就是全部。踩到一个测试自身的坑：网络模拟属于设置它的那个 DevTools 会话，同一页开两个会话会让限速时快时慢（一次限速跑出了回环速度）；改为每个用例一个会话复用。
+  - 已做（六类报告与需求矩阵）：`docs/reports/p1/`——功能、性能、兼容、无障碍、故障恢复、已知限制，外加 R01–R40 需求矩阵与索引。`cargo xtask verify --suite p1` 新增一步检查这七个文件存在，缺一即失败（它们是里程碑自己的产出，不是人工记录）。
+  - **M8 顺路查出并修掉的缺陷（属 M5 范围）**：区域画中文时画的是 `.notdef` 方框，CJK 字体从未被取过——`docs/compatibility.md` 与 M5 报告里「首次使用时取 LXGW WenKai」的说法在那之前是**假的**。原因：Web 上主题的默认字体族只有一个拉丁字面（中文 + emoji 合计 30 MB），带全部三个成员的族另发布为 `font_regular_i18n`。修法见 M5 报告：区域为每个要画的值备一个 i18n 字面的标签，藏着不画，直到值需要它才显示——不需要的应用一分钱不付，需要的一次付 29,718,416 B。
+  - **未做（M8 余下）**：① 两小时耐久（`RUSTIFY_ENDURANCE_MINUTES=120`）：本轮已启动，结果写进 M8 报告的 `endurance-two-hours` 位置；在它落地前那条曲线只是两分钟的形状。② 图形是 SwiftShader 软件光栅，所有 GPU 数字都是软件数字（不可在本机消除）。③ 四份人工记录（拼音、VoiceOver、对比度与重排、Safari 观察）都没有——**这是 P1 剩下的全部**。
+- 下一步：两小时耐久跑完后把曲线写进 M8 报告，再跑一次 `cargo xtask verify --suite p1` 作为收尾证据。此后 P1 的自动化部分没有任何剩余工作；四份人工记录随时可做，做完即一次关闭 M5–M8 并把进度改成 8/8。
+- 当前阻塞：四份人工记录都需要用户（真实拼音、VoiceOver、对比度与缩放走查、Safari 观察）。没有别的阻塞。
 
 ### 完成记录
 

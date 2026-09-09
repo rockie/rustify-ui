@@ -182,6 +182,9 @@ boot({ wasm_url: new URL("./property-workbench.wasm", import.meta.url), on_fatal
             diagnostics() {
                 return JSON.parse(app.workbench_diagnostics());
             },
+            set_diagnostics(on) {
+                return app.workbench_set_diagnostics(on);
+            },
             // Takes the GL context away from a region's canvas the way the
             // browser does when it reclaims one. The extension is the only
             // honest way to produce a real loss.

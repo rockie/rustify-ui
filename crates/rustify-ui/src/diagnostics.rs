@@ -235,6 +235,10 @@ pub struct Diagnostics {
     entries: std::collections::VecDeque<Diagnostic>,
     bytes: usize,
     dropped: u64,
+    /// Whether writes are kept. Off, the record costs a counter and nothing
+    /// else, which is what makes its own cost measurable.
+    recording: bool,
+    suppressed: u64,
 }
 
 impl Diagnostics {
@@ -248,6 +252,8 @@ impl Diagnostics {
             entries: std::collections::VecDeque::new(),
             bytes: 0,
             dropped: 0,
+            recording: true,
+            suppressed: 0,
         }
     }
 
@@ -260,6 +266,10 @@ impl Diagnostics {
     }
 
     pub fn record(&mut self, entry: Diagnostic) {
+        if !self.recording {
+            self.suppressed += 1;
+            return;
+        }
         self.bytes += entry.weight();
         self.entries.push_back(entry);
         while self.entries.len() > Self::MAX_ENTRIES || self.bytes > Self::MAX_BYTES {
@@ -287,6 +297,25 @@ impl Diagnostics {
 
     pub fn bytes(&self) -> usize {
         self.bytes
+    }
+
+    /// Turns writing on or off and answers what it was.
+    ///
+    /// A record is on unless someone turns it off, and turning it off is a
+    /// measurement instrument rather than a way to make a problem quiet: what
+    /// it refuses is counted and printed beside the entries it kept.
+    pub fn set_recording(&mut self, on: bool) -> bool {
+        std::mem::replace(&mut self.recording, on)
+    }
+
+    pub fn is_recording(&self) -> bool {
+        self.recording
+    }
+
+    /// How many entries the switch turned away. Above zero, the record is
+    /// missing entries nobody bounded it into missing.
+    pub fn suppressed(&self) -> u64 {
+        self.suppressed
     }
 
     pub fn entries(&self) -> impl Iterator<Item = &Diagnostic> {
@@ -327,12 +356,14 @@ impl Diagnostics {
             })
             .collect();
         format!(
-            "{{\"runtime\":{},\"build\":\"{}\",\"count\":{},\"bytes\":{},\"dropped\":{},\"max_entries\":{},\"max_bytes\":{},\"entries\":[{}]}}",
+            "{{\"runtime\":{},\"build\":\"{}\",\"count\":{},\"bytes\":{},\"dropped\":{},\"recording\":{},\"suppressed\":{},\"max_entries\":{},\"max_bytes\":{},\"entries\":[{}]}}",
             self.runtime,
             self.build,
             self.entries.len(),
             self.bytes,
             self.dropped,
+            self.recording,
+            self.suppressed,
             Self::MAX_ENTRIES,
             Self::MAX_BYTES,
             entries.join(",")
@@ -342,8 +373,13 @@ impl Diagnostics {
     /// The header a reader needs before the entries mean anything, including
     /// whether they are all of them.
     pub fn summary(&self) -> String {
+        let switch = if self.recording {
+            String::new()
+        } else {
+            format!(", recording off, {} suppressed", self.suppressed)
+        };
         format!(
-            "runtime {} build {}: {} entries, {} bytes, {} dropped",
+            "runtime {} build {}: {} entries, {} bytes, {} dropped{switch}",
             self.runtime,
             self.build,
             self.entries.len(),
@@ -433,6 +469,15 @@ pub fn watch_assets() {}
 /// Records one entry in this runtime's bounded record.
 pub fn record(entry: Diagnostic) {
     LOG.with(|log| log.borrow_mut().record(entry));
+}
+
+/// Turns this runtime's record on or off and answers what it was.
+///
+/// The reason it exists is measurement: with it off, the cost of keeping the
+/// record can be subtracted from the cost of the path that writes it. What was
+/// turned away is counted, so a report taken while it was off says so.
+pub fn set_recording(on: bool) -> bool {
+    LOG.with(|log| log.borrow_mut().set_recording(on))
 }
 
 /// Milliseconds since the page started. Off the browser there is no such
@@ -616,6 +661,55 @@ mod tests {
             assert!(detail.starts_with("a region asked"), "{detail}");
             assert!(detail.contains("host page"), "{detail}");
         }
+    }
+
+    #[test]
+    fn a_record_that_is_off_keeps_nothing_and_says_how_much_it_refused() {
+        let mut log = Diagnostics::new(5, "build-abc");
+        log.record(entry(ErrorKind::Backpressure, 1.0));
+        assert!(log.is_recording());
+        assert!(log.set_recording(false));
+        for round in 0..7 {
+            log.record(entry(ErrorKind::Backpressure, round as f64));
+        }
+        // What was already kept stays; nothing new is written, and the count
+        // of what was turned away is not a guess.
+        assert_eq!(log.len(), 1);
+        assert_eq!(log.suppressed(), 7);
+        assert_eq!(log.dropped(), 0);
+        let json = log.report_json();
+        assert!(json.contains("\"recording\":false"), "{json}");
+        assert!(json.contains("\"suppressed\":7"), "{json}");
+        assert!(log.summary().contains("recording off, 7 suppressed"));
+
+        // And back on, it writes again without forgetting what it turned away.
+        assert!(!log.set_recording(true));
+        log.record(entry(ErrorKind::Backpressure, 9.0));
+        assert_eq!(log.len(), 2);
+        assert_eq!(log.suppressed(), 7);
+        assert!(log.report_json().contains("\"recording\":true"));
+    }
+
+    #[test]
+    fn the_switch_reaches_the_runtime_record_the_same_way_writes_do() {
+        identify_runtime(11, "build-xyz");
+        assert!(set_recording(false));
+        record(entry(ErrorKind::Backpressure, 1.0));
+        with_log(|log| {
+            assert!(log.is_empty());
+            assert_eq!(log.suppressed(), 1);
+        });
+        assert!(!set_recording(true));
+        record(entry(ErrorKind::Backpressure, 2.0));
+        with_log(|log| assert_eq!(log.len(), 1));
+        // Naming a runtime starts a record that is on: a new runtime does not
+        // inherit a switch someone left off.
+        assert!(set_recording(false));
+        identify_runtime(12, "build-xyz");
+        with_log(|log| {
+            assert!(log.is_recording());
+            assert_eq!(log.suppressed(), 0);
+        });
     }
 
     #[test]

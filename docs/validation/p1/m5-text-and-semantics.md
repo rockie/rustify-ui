@@ -55,6 +55,33 @@ The object's notes are several lines; the region shows one of them and hands ove
 
 `docs/compatibility.md` now records which font draws what: IBM Plex Sans Text for the Latin UI and the region's labels, LXGW WenKai Regular for any CJK glyph a region draws, fetched on first use; text being edited is drawn by the browser's control and uses the page's font stack. Licences and notices stay in `makepad/widgets/resources/FONT-LICENSES.md`.
 
+## A defect M8 found in this work
+
+A value the region drew that needed more than Latin was drawn as `.notdef`
+boxes, and the font that covers it was never fetched. The claim in this report
+and in `docs/compatibility.md` - that a CJK glyph comes from LXGW WenKai,
+fetched on first use - was **false** for the shipped build until 2026-09-09.
+
+Cause: on the web the theme's default families name one Latin face only,
+because the Chinese and emoji faces are 30 MB together. The families that name
+all three are published separately as `font_regular_i18n` and its variants. A
+region drawing a user's value with the default family therefore has no font
+that can draw it, which the shaper reports as `.notdef` per character.
+
+Fix: the region keeps a second label for each value it draws, declared with the
+i18n family and hidden until it is needed (`examples/property-workbench/src/object_region.rs`).
+The first value that needs more than ASCII shows it, which is what fetches
+those files - measured at 29,718,416 bytes for the two faces together, against
+9,007,263 bytes for the whole first load. An invisible view draws nothing, so
+an application that never draws such a value never pays for them.
+
+Verified by `what the first Chinese glyph costs a deployment`
+(`tests/browser/m8-network.spec.ts`): before the fix no font arrived; after it,
+both faces arrive and the region draws the glyphs.
+
+This does not close either manual item below. It removes a defect the pinyin
+session would have hit on its first phrase.
+
 ## Also outstanding for M5
 
 - Unicode selection, deletion and undo inside a session rely on the native control and are not separately asserted.

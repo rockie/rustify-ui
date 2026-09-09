@@ -1176,6 +1176,13 @@ mod app {
         rustify_ui::report_json()
     }
 
+    /// Turns the record on or off and answers what it was, so the cost of
+    /// keeping it can be measured against the same path without it.
+    #[wasm_bindgen]
+    pub fn workbench_set_diagnostics(on: bool) -> bool {
+        rustify_ui::set_recording(on)
+    }
+
     /// Puts the third-party component into the view or takes it out, so a
     /// rebuild is driven from outside the application.
     #[wasm_bindgen]

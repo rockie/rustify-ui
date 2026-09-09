@@ -132,6 +132,24 @@ script_mod! {
                                     text: "no selection"
                                     draw_text.text_style.font_size: 14
                                 }
+                                // The family that covers more than Latin costs
+                                // 30 MB to fetch, so it is drawn - and thereby
+                                // fetched - only once a value needs it.
+                                wide_name := View{
+                                    width: Fill
+                                    height: Fill
+                                    align: Center
+                                    visible: false
+
+                                    wide_name_label := Label{
+                                        width: Fill
+                                        draw_text +: {
+                                            text_style: theme.font_regular_i18n{
+                                                font_size: 14
+                                            }
+                                        }
+                                    }
+                                }
                             }
                             View{
                                 width: 160
@@ -147,6 +165,21 @@ script_mod! {
                                     width: Fill
                                     text: "no notes"
                                     draw_text.text_style.font_size: 14
+                                }
+                                wide_notes := View{
+                                    width: Fill
+                                    height: Fill
+                                    align: Center
+                                    visible: false
+
+                                    wide_notes_label := Label{
+                                        width: Fill
+                                        draw_text +: {
+                                            text_style: theme.font_regular_i18n{
+                                                font_size: 14
+                                            }
+                                        }
+                                    }
                                 }
                             }
                             position_label := Label{
@@ -217,6 +250,24 @@ pub struct ObjectRegion {
     /// The last geometry reported, so only a change is sent.
     #[rust]
     controls: Option<(LocalRect, LocalRect)>,
+    /// Which values have needed more than Latin. Once one has, that label keeps
+    /// drawing with the wider family: the file is already here, and moving
+    /// back would only make the same value change shape.
+    #[rust]
+    wide_name: bool,
+    #[rust]
+    wide_notes: bool,
+}
+
+/// Whether a value needs glyphs the default family does not carry.
+///
+/// On the web the theme draws with a Latin-only family on purpose: the faces
+/// that cover CJK and emoji are 30 MB together, and most applications never
+/// draw one of their glyphs. A value that does need them says so by containing
+/// one, and only then is the label moved to the family that has them - which
+/// is when those files are fetched.
+fn needs_wide_coverage(text: &str) -> bool {
+    !text.is_ascii()
 }
 
 impl RegionApp for ObjectRegion {
@@ -255,7 +306,15 @@ impl RegionApp for ObjectRegion {
         } else {
             props.name.as_str()
         };
-        self.ui.label(cx, ids!(name_label)).set_text(cx, name);
+        if !self.wide_name && needs_wide_coverage(name) {
+            self.wide_name = true;
+            self.ui.widget(cx, ids!(wide_name)).set_visible(cx, true);
+        }
+        let (plain_name, wide_name) = if self.wide_name { ("", name) } else { (name, "") };
+        self.ui.label(cx, ids!(name_label)).set_text(cx, plain_name);
+        self.ui
+            .label(cx, ids!(wide_name_label))
+            .set_text(cx, wide_name);
         // Several lines do not fit one line of a header, so the region shows
         // the first of them; the native control gets all of them when the
         // session starts, and nothing while it is running.
@@ -264,7 +323,15 @@ impl RegionApp for ObjectRegion {
         } else {
             first_line(&props.notes)
         };
-        self.ui.label(cx, ids!(notes_label)).set_text(cx, notes);
+        if !self.wide_notes && needs_wide_coverage(notes) {
+            self.wide_notes = true;
+            self.ui.widget(cx, ids!(wide_notes)).set_visible(cx, true);
+        }
+        let (plain_notes, wide_notes) = if self.wide_notes { ("", notes) } else { (notes, "") };
+        self.ui.label(cx, ids!(notes_label)).set_text(cx, plain_notes);
+        self.ui
+            .label(cx, ids!(wide_notes_label))
+            .set_text(cx, wide_notes);
         self.ui
             .label(cx, ids!(position_label))
             .set_text(cx, &props.position);
