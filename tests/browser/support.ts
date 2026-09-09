@@ -130,6 +130,7 @@ declare global {
                     locked: { x: number; y: number; width: number; height: number };
                     size: { x: number; y: number; width: number; height: number };
                 } | null;
+                region: string;
             };
             mount_into(container_id: string): number;
             dispose_handle(id: number, container_id: string): boolean;
@@ -142,6 +143,25 @@ declare global {
                 targets: number;
                 handles: number;
             };
+            diagnostics(): {
+                runtime: number;
+                build: string;
+                count: number;
+                bytes: number;
+                dropped: number;
+                max_entries: number;
+                max_bytes: number;
+                entries: {
+                    kind: string;
+                    at_ms: number;
+                    scope: string | null;
+                    region: number | null;
+                    detail: string;
+                    suggestion: string;
+                }[];
+            };
+            lose_context(test_id: string): boolean;
+            restore_context(test_id: string): boolean;
             inject_duplicate_id(): boolean;
             close_on_next_action(): void;
             start_load(delay_ms: number, outcome: string): boolean;

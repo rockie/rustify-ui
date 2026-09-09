@@ -41,6 +41,7 @@ mod app {
             RegionState::Starting => "starting",
             RegionState::Ready => "ready",
             RegionState::Suspended => "suspended",
+            RegionState::Lost => "lost",
             RegionState::Failed(_) => "failed",
             RegionState::Disposed => "disposed",
         }

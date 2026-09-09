@@ -506,6 +506,10 @@ mod app {
         // happened.
         let hovers = RwSignal::new(0u32);
 
+        // What the region says about itself, so the page can tell a region
+        // that is rebuilding from one that failed.
+        let region_state = RwSignal::new(RegionState::Starting);
+
         // Where the region drew the controls it owns, as it reported them.
         // Business state like any other: nobody keeps a second copy of the
         // region's layout.
@@ -545,7 +549,7 @@ mod app {
             let (index, total) = position.get();
             let current = current.get();
             let snapshot = format!(
-                "{{\"count\":{},\"position\":{},\"selected\":{},\"name\":{},\"color\":\"{}\",\"first_colors\":\"{}\",\"first_ids\":\"{}\",\"accepted\":{},\"refused\":{},\"hovered\":{},\"hovers\":{},\"editing\":{},\"invalidated\":{},\"notes\":{},\"theme\":\"{}\",\"details\":\"{}\",\"details_value\":{},\"locked\":{},\"size\":{},\"refusals\":{},\"refusal\":{},\"third_party\":{},\"third_party_updates\":{},\"controls\":{}}}",
+                "{{\"count\":{},\"position\":{},\"selected\":{},\"name\":{},\"color\":\"{}\",\"first_colors\":\"{}\",\"first_ids\":\"{}\",\"accepted\":{},\"refused\":{},\"hovered\":{},\"hovers\":{},\"editing\":{},\"invalidated\":{},\"notes\":{},\"theme\":\"{}\",\"details\":\"{}\",\"details_value\":{},\"locked\":{},\"size\":{},\"refusals\":{},\"refusal\":{},\"third_party\":{},\"third_party_updates\":{},\"controls\":{},\"region\":\"{}\"}}",
                 total,
                 index.map(|i| i as i64 + 1).unwrap_or(0),
                 current
@@ -617,12 +621,19 @@ mod app {
                         )
                     })
                     .unwrap_or_else(|| "null".to_string()),
+                match region_state.get() {
+                    RegionState::Starting => "starting",
+                    RegionState::Ready => "ready",
+                    RegionState::Suspended => "suspended",
+                    RegionState::Lost => "lost",
+                    RegionState::Failed(_) => "failed",
+                    RegionState::Disposed => "disposed",
+                },
             );
             SNAPSHOT.with(|slot| *slot.borrow_mut() = snapshot);
         });
 
         let label_id = format!("third-party-label-{registration}");
-        let region_state = RwSignal::new(RegionState::Starting);
         let app = PhantomData::<ObjectRegion>;
         let on_action = move |action| {
             match action {
@@ -1136,6 +1147,19 @@ mod app {
             }
             None => false,
         }
+    }
+
+    /// Names this runtime and the build it came from, so every diagnostic
+    /// after it can be matched to a source tree.
+    #[wasm_bindgen]
+    pub fn workbench_identify(runtime: u32, build: &str) {
+        rustify_ui::identify_runtime(runtime, build);
+    }
+
+    /// This runtime's bounded diagnostic record.
+    #[wasm_bindgen]
+    pub fn workbench_diagnostics() -> String {
+        rustify_ui::report_json()
     }
 
     /// Puts the third-party component into the view or takes it out, so a

@@ -65,6 +65,9 @@ window.__rustify_third_party = third_party;
 
 const container = "workbench";
 const status = document.getElementById("status");
+// One WEBGL_lose_context per canvas, taken while the context still hands
+// extensions out.
+const lose_context_handles = new Map();
 let handle = null;
 
 const runtime_fatal = (error) => {
@@ -84,7 +87,8 @@ const runtime_fatal = (error) => {
 };
 
 boot({ wasm_url: new URL("./property-workbench.wasm", import.meta.url), on_fatal: runtime_fatal })
-    .then(({ app, hooks }) => {
+    .then(({ app, hooks, build }) => {
+        app.workbench_identify(1, build);
         window.__property_workbench = {
             hooks,
             mount() {
@@ -163,6 +167,35 @@ boot({ wasm_url: new URL("./property-workbench.wasm", import.meta.url), on_fatal
             third_party: third_party.stats,
             stats() {
                 return hooks.runtime.stats();
+            },
+            diagnostics() {
+                return JSON.parse(app.workbench_diagnostics());
+            },
+            // Takes the GL context away from a region's canvas the way the
+            // browser does when it reclaims one. The extension is the only
+            // honest way to produce a real loss.
+            lose_context(test_id) {
+                const canvas = document.querySelector(`[data-testid="${test_id}"]`);
+                const gl = canvas?.getContext("webgl2");
+                const ext = gl?.getExtension("WEBGL_lose_context");
+                if (!ext) {
+                    return false;
+                }
+                // Kept: a lost context hands out no extensions, so the only
+                // way to ask for the restore is an object taken beforehand.
+                lose_context_handles.set(test_id, ext);
+                ext.loseContext();
+                return true;
+            },
+            // A real loss is followed by the browser's own restore; the
+            // extension makes that step explicit so a test can drive it.
+            restore_context(test_id) {
+                const ext = lose_context_handles.get(test_id);
+                if (!ext) {
+                    return false;
+                }
+                ext.restoreContext();
+                return true;
             },
         };
         window.__property_workbench.mount();

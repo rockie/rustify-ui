@@ -26,7 +26,7 @@ export default defineConfig({
         },
         {
             name: "property-workbench",
-            testMatch: ["m3-workbench.spec.ts", "m5-text.spec.ts", "m5-semantics.spec.ts", "m6-theme.spec.ts", "m6-async.spec.ts", "m6-components.spec.ts"],
+            testMatch: ["m3-workbench.spec.ts", "m5-text.spec.ts", "m5-semantics.spec.ts", "m6-theme.spec.ts", "m6-async.spec.ts", "m6-components.spec.ts", "m7-recovery.spec.ts"],
             use: { baseURL: `http://127.0.0.1:${workbenchPort}/` },
         },
     ],

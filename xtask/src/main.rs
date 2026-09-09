@@ -12,8 +12,9 @@ cargo xtask <command> [options]
 
   doctor
   build-web --example <name> [--release]
-  serve     --example <name> [--release] [--base /path/] [--port N] [--csp strict|no-wasm|off]
-  sources   verify
+  serve       --example <name> [--release] [--base /path/] [--port N] [--csp strict|no-wasm|off]
+  report-size --example <name> [--release]
+  sources     verify
 ";
 
 fn main() {
@@ -22,6 +23,7 @@ fn main() {
         Some("doctor") => doctor::run(),
         Some("build-web") => build_web(&args[1..]).map(|_| ()),
         Some("serve") => serve_example(&args[1..]),
+        Some("report-size") => report_size(&args[1..]),
         Some("sources") => sources::run(&args[1..]),
         _ => Err(USAGE.to_string()),
     };
@@ -49,6 +51,32 @@ fn build_request(args: &[String]) -> Result<BuildRequest, String> {
 
 fn build_web(args: &[String]) -> Result<std::path::PathBuf, String> {
     build::build(&build_request(args)?)
+}
+
+/// Every byte of a built example, in the six categories the plan reports, read
+/// off the produced directory rather than off the build that made it: a report
+/// that describes what a build meant to write is not a report of what a
+/// deployment will serve.
+fn report_size(args: &[String]) -> Result<(), String> {
+    let request = build_request(args)?;
+    let root = build::app_dir(&build::repo_root(), &request);
+    if !root.join("index.html").is_file() {
+        return Err(format!(
+            "{} has no build; run `cargo xtask build-web --example {}{}` first",
+            root.display(),
+            request.example,
+            if request.release { " --release" } else { "" }
+        ));
+    }
+    let files = build::list_files(&root)?;
+    let report = build::size_report(&files);
+    println!("{}", root.display());
+    println!("{}", build::format_size_report(&report));
+    println!("{} files", files.len());
+    for (name, size) in &files {
+        println!("  {size:>12}  {name}");
+    }
+    Ok(())
 }
 
 fn serve_example(args: &[String]) -> Result<(), String> {

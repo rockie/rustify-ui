@@ -36,7 +36,10 @@ export async function boot({ wasm_url, on_fatal }) {
     const msg_class = create_message_classes(ToWasmMsg, FromWasmMsg);
     const hooks = create_host_hooks(wasm, msg_class, on_fatal);
     app.rustify_makepad_boot(hooks);
-    return { app, wasm, hooks };
+    // The build the runtime came from, so a diagnostic can be matched to the
+    // source it was produced by. The bridge hash is the one identifier the
+    // page and the wasm have already agreed on.
+    return { app, wasm, hooks, build: SCHEMA_HASH };
 }
 
 // Shows a static failure notice inside `container`; used when the runtime

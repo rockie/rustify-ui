@@ -22,5 +22,6 @@ web-sys = { workspace = true, features = [
     "EventTarget",
     "HtmlElement",
     "KeyboardEvent",
+    "Performance",
     "Window",
 ] }

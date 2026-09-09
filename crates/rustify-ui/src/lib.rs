@@ -18,7 +18,10 @@ pub mod theme;
 pub use binding::{duplicate_key, ActionSink};
 pub use catalog::{Capability, Category, Entry, Presentation, Support, CATALOG};
 pub use components::snap;
-pub use diagnostics::UiError;
+pub use diagnostics::{
+    identify_runtime, note, record, report_json, with_log, Diagnostic, Diagnostics, ErrorKind,
+    UiError,
+};
 pub use mount::{mount, AppHandle, MountConfig, ScopeRoots};
 pub use overlay::{LayerId, LocalRect};
 pub use region::{GpuRegion, RegionState};

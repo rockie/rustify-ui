@@ -13,6 +13,38 @@ export class EmbeddedRegion extends WasmWebGL {
         this.pending_release = null;
         this.suspended = false;
         this.pump_on_resume = false;
+        this.context_lost = false;
+        // The default action of this event is to make the loss permanent for
+        // this canvas, so it is prevented; the region is rebuilt on a new
+        // canvas either way, but a page that keeps this one can restore it.
+        this.on_context_lost = (event) => {
+            event.preventDefault();
+            if (this.context_lost || this.destroyed) {
+                return;
+            }
+            this.context_lost = true;
+            this.runtime.record_error(`region ${this.wasm_app}: WebGL context lost`);
+            if (this.runtime.fatal) {
+                return;
+            }
+            try {
+                this.exports.rustify_region_context_lost(this.wasm_app);
+            } catch (error) {
+                this.runtime.enter_fatal(error);
+            }
+        };
+        canvas.addEventListener("webglcontextlost", this.on_context_lost);
+    }
+
+    // Nothing may be pumped into a context that is gone: the batch would draw
+    // with GL objects the browser has already taken back.
+    wasm_is_callable() {
+        return !this.runtime.fatal && !this.context_lost;
+    }
+
+    destroy() {
+        this.canvas.removeEventListener("webglcontextlost", this.on_context_lost);
+        super.destroy();
     }
 
     // A canvas laid out to nothing, or hidden, has no area to draw into. The
@@ -41,10 +73,6 @@ export class EmbeddedRegion extends WasmWebGL {
         this.runtime.record_error(`region ${this.wasm_app}: startup failed: ${error}`);
     }
 
-    wasm_is_callable() {
-        return !this.runtime.fatal;
-    }
-
     // Ends the region once its pump has left the JS stack: until then the pump
     // still reads this instance's views into wasm memory, and the batch it
     // returned still points into buffers the Cx owns. `release` drops that Cx,
@@ -61,6 +89,9 @@ export class EmbeddedRegion extends WasmWebGL {
     // Rust asks for a pump after it queued work for this region; several
     // requests in one task collapse into one pump on the microtask queue.
     request_pump() {
+        if (this.context_lost) {
+            return;
+        }
         if (this.suspended) {
             // Whatever asked for this pump is still queued in wasm; it runs
             // when the region has somewhere to draw it.
@@ -84,7 +115,7 @@ export class EmbeddedRegion extends WasmWebGL {
     // out of the registry and never handed back - so the trap ends the runtime
     // rather than this region alone.
     do_wasm_pump() {
-        if (this.runtime.fatal) {
+        if (this.runtime.fatal || this.context_lost) {
             return;
         }
         if (this.suspended) {

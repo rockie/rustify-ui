@@ -158,7 +158,7 @@ fn build_id(wasm: &[u8]) -> String {
     digest.iter().take(8).map(|b| format!("{b:02x}")).collect()
 }
 
-fn list_files(dir: &Path) -> Result<BTreeMap<String, u64>, String> {
+pub fn list_files(dir: &Path) -> Result<BTreeMap<String, u64>, String> {
     let mut out = BTreeMap::new();
     let mut stack = vec![dir.to_path_buf()];
     while let Some(current) = stack.pop() {

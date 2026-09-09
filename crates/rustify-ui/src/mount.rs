@@ -1,5 +1,5 @@
 use crate::binding::ActionSink;
-use crate::diagnostics::UiError;
+use crate::diagnostics::{note, record, ErrorKind, UiError};
 use leptos::prelude::*;
 use leptos::wasm_bindgen::JsCast;
 use leptos::web_sys::HtmlElement;
@@ -55,9 +55,23 @@ where
     N::State: 'static,
 {
     if !container.is_connected() {
+        record(
+            note(
+                ErrorKind::InvalidContainer,
+                "the container is not in the document",
+            )
+            .in_scope(config.scope.clone()),
+        );
         return Err(UiError::InvalidContainer);
     }
     if container.has_attribute(MOUNTED_ATTRIBUTE) {
+        record(
+            note(
+                ErrorKind::OccupiedContainer,
+                "another scope already owns the container",
+            )
+            .in_scope(config.scope.clone()),
+        );
         return Err(UiError::OccupiedContainer);
     }
     let scope = if config.scope.is_empty() {

@@ -1,6 +1,8 @@
 #[cfg(target_arch = "wasm32")]
 use crate::binding::{ActionSink, Binding};
 use crate::diagnostics::UiError;
+#[cfg(target_arch = "wasm32")]
+use crate::diagnostics::{note, record, ErrorKind};
 use leptos::prelude::*;
 use std::marker::PhantomData;
 
@@ -17,6 +19,11 @@ pub enum RegionState {
     Starting,
     Ready,
     Suspended,
+    /// The canvas lost its GL context. Unlike `Failed`, this one is on its way
+    /// back: the region is being rebuilt on a new canvas and the application's
+    /// current state will be projected into it. No application state is lost,
+    /// because the region never held any.
+    Lost,
     Failed(UiError),
     Disposed,
 }
@@ -108,14 +115,81 @@ where
         }
     };
     let canvas = node_ref.unwrap_or_else(NodeRef::<Canvas>::new);
+    // Raised when the browser gives the canvas its context back. A region is
+    // built again only then: everything between the loss and the restore
+    // would be drawn into a context that is gone.
+    let generation = RwSignal::new(0u32);
     // Kept outside the reactive arena so the cleanup closure can still reach
     // the region after the owner's nodes are gone, and so an effect that runs
     // after cleanup cannot create a region nobody will destroy.
     let slot: Arc<Mutex<Slot>> = Arc::new(Mutex::new(Slot::Pending));
 
+    // Ends the region whose context went away and asks for a new canvas. The
+    // application hears `Lost` rather than `Failed`: nothing it owns is gone,
+    // and it is about to see the same values drawn again.
+    let on_context_lost = {
+        let slot = slot.clone();
+        move || {
+            let previous = {
+                let mut slot = slot.lock().unwrap();
+                match *slot {
+                    Slot::Live(id) => {
+                        *slot = Slot::Pending;
+                        Some(id)
+                    }
+                    _ => None,
+                }
+            };
+            let Some(id) = previous else {
+                return;
+            };
+            record(
+                note(
+                    ErrorKind::GpuContextLost,
+                    "the canvas lost its WebGL context; waiting for the browser to restore it",
+                )
+                .in_region(id.raw()),
+            );
+            // Not a failure: the application keeps its state and the region
+            // is built again as soon as the canvas has a context. Until then
+            // there is nothing to draw with, so nothing is drawn.
+            publish(RegionState::Lost);
+            rustify_makepad::destroy_region(id);
+        }
+    };
+
+    // The other half of the platform's contract: the loss is prevented from
+    // being permanent (the host's own listener does that), and the browser
+    // says when the canvas can be drawn into again.
+    Effect::new(move || {
+        let Some(element) = canvas.get() else {
+            return;
+        };
+        let target: leptos::web_sys::EventTarget = element.into();
+        let restored = leptos::wasm_bindgen::closure::Closure::wrap(Box::new(move || {
+            generation.update(|round| *round += 1);
+        }) as Box<dyn FnMut()>);
+        let _ = target.add_event_listener_with_callback(
+            "webglcontextrestored",
+            leptos::wasm_bindgen::JsCast::unchecked_ref(restored.as_ref()),
+        );
+        let holder = StoredValue::new_local(Some((target, restored)));
+        on_cleanup(move || {
+            if let Some((target, restored)) = holder.try_update_value(Option::take).flatten() {
+                let _ = target.remove_event_listener_with_callback(
+                    "webglcontextrestored",
+                    leptos::wasm_bindgen::JsCast::unchecked_ref(restored.as_ref()),
+                );
+            }
+        });
+    });
+
     Effect::new({
         let slot = slot.clone();
         move || {
+            // Both are dependencies: the canvas appearing starts the first
+            // region, a restored context starts the next one.
+            generation.get();
             if !matches!(*slot.lock().unwrap(), Slot::Pending) {
                 return;
             }
@@ -130,15 +204,26 @@ where
                 &canvas,
                 deliver_actions.clone(),
                 on_suspended.clone(),
+                on_context_lost.clone(),
             ) {
                 Some(id) => {
                     *slot = Slot::Live(id);
+                    // The region starts at whatever its script declares, so
+                    // the current projection is applied before anything is
+                    // drawn. A rebuilt region needs this: the props signal has
+                    // not changed, so its own effect will not run.
+                    let current = props.get_untracked();
+                    rustify_makepad::apply::<A>(id, move |cx, app| app.apply_props(cx, &current));
                     if !suspended.load(Ordering::Relaxed) {
                         publish(RegionState::Ready);
                     }
                 }
                 None => {
                     *slot = Slot::Closed;
+                    record(note(
+                        ErrorKind::GpuInitFailed,
+                        "the canvas gave no WebGL2 context",
+                    ));
                     publish(RegionState::Failed(UiError::GpuUnavailable));
                 }
             }

@@ -160,6 +160,14 @@ pub fn submit_all<A: Send + 'static>(
             refused += 1;
         }
     }
+    if refused > 0 {
+        // The application is told the count so it can offer a retry; the
+        // record is for whoever has to work out why the queue filled.
+        crate::diagnostics::record(crate::diagnostics::note(
+            crate::diagnostics::ErrorKind::Backpressure,
+            "the scope's queue was full; the actions did not run",
+        ));
+    }
     refused
 }
 

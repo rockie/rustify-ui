@@ -39,6 +39,10 @@ struct Region {
     deliver: Rc<dyn Fn()>,
     /// Told when the region's canvas loses or regains a drawable size.
     suspend: Rc<dyn Fn(bool)>,
+    /// Told when the canvas lost its GL context. Unlike a suspend, this one
+    /// ends the region: the `Cx` and every GL object it holds belong to a
+    /// context that no longer exists.
+    context_lost: Rc<dyn Fn()>,
     deferred: Vec<Deferred>,
     disposing: bool,
 }
@@ -84,6 +88,7 @@ pub fn create_region<A: RegionApp>(
     canvas: &web_sys::HtmlCanvasElement,
     on_actions: impl Fn(Vec<A::Action>) + 'static,
     on_suspended: impl Fn(bool) + 'static,
+    on_context_lost: impl Fn() + 'static,
 ) -> Option<RegionId> {
     let app: AppCell<A> = Rc::new(RefCell::new(None));
     let outbox: Outbox<A> = Rc::new(RefCell::new(Vec::new()));
@@ -102,6 +107,7 @@ pub fn create_region<A: RegionApp>(
             app,
             deliver,
             suspend: Rc::new(on_suspended),
+            context_lost: Rc::new(on_context_lost),
             deferred: Vec::new(),
             disposing: false,
         })
@@ -184,6 +190,27 @@ pub unsafe extern "C" fn rustify_region_suspended(region: u32, suspended: u32) {
     // whatever that wakes may reach the registry again.
     if let Some(notify) = notify {
         notify(suspended != 0);
+    }
+}
+
+/// Called by the host when the canvas lost its WebGL context.
+///
+/// The region is told once. Everything it drew with belongs to a context that
+/// is gone, so the application's answer is to end this region and start
+/// another on a new canvas; what it must not do is keep drawing into the one
+/// that failed.
+#[export_name = "rustify_region_context_lost"]
+pub unsafe extern "C" fn rustify_region_context_lost(region: u32) {
+    let notify = REGIONS.with(|regions| {
+        regions
+            .borrow()
+            .get(RegionId::from_raw(region))
+            .map(|region| region.context_lost.clone())
+    });
+    // Outside the borrow: the application is about to tear this region down,
+    // which reaches the registry again.
+    if let Some(notify) = notify {
+        notify();
     }
 }
 
