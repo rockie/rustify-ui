@@ -1,6 +1,6 @@
 # M8 report: baselines and the acceptance suite
 
-Date: 2026-09-09. Machine: macOS (Darwin 25.6.0), Apple Silicon, rustc 1.97.0-nightly (2026-05-19), Node 26.1.0, Playwright 1.63.0 (bundled Chromium, **SwiftShader** WebGL - a software rasteriser, so every GPU-side figure here is a software figure and not a device one). Fixture: property-workbench, one scope, one region, a thousand objects.
+Date: 2026-09-09 and 2026-09-10 (the two-hour runs cross midnight). Machine: macOS (Darwin 25.6.0), Apple Silicon, rustc 1.97.0-nightly (2026-05-19), Node 26.1.0, Playwright 1.63.0 (bundled Chromium, **SwiftShader** WebGL - a software rasteriser, so every GPU-side figure here is a software figure and not a device one). Fixture: property-workbench, one scope, one region, a thousand objects.
 
 ## Status
 
@@ -12,7 +12,7 @@ M8's automated half is complete **except for the two-hour endurance run, which f
 
 ### V10: two clean builds of each example
 
-`cargo xtask verify --suite p1` builds each example twice from scratch and compares the manifests. Both examples produce **identical** manifests - same build id, same bridge hash, same bytes per file. The wasm is reproducible from this source and toolchain, which means a build id identifies a deployment rather than merely labelling one.
+`cargo xtask verify --suite p1` builds each example twice from scratch and compares the manifests. Both examples produced **identical** manifests - same build id, same bridge hash, same bytes per file - when the suite was last run in full, before this milestone's own changes; the closing run repeats it on the build these figures come from. The wasm is reproducible from this source and toolchain, which means a build id identifies a deployment rather than merely labelling one.
 
 ### V11: what a start and an interaction cost
 
