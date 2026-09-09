@@ -60,6 +60,8 @@ impl LocalRect {
 pub struct LayerId(u64);
 
 #[cfg(target_arch = "wasm32")]
+pub(crate) use dom::EditSession;
+#[cfg(target_arch = "wasm32")]
 pub use dom::{use_overlay, Anchor, Layer, OverlayStack};
 
 #[cfg(target_arch = "wasm32")]
@@ -105,7 +107,7 @@ mod dom {
         /// The anchor rectangle in viewport coordinates. `None` means the
         /// thing it was anchored to has left the document; `Some(None)` means
         /// it is not anchored to anything.
-        fn viewport_rect(&self) -> Option<Option<LocalRect>> {
+        pub(crate) fn viewport_rect(&self) -> Option<Option<LocalRect>> {
             let element = match self {
                 Self::Centred => return Some(None),
                 Self::Region { canvas, .. } => canvas,
@@ -147,10 +149,19 @@ mod dom {
         moved: Closure<dyn FnMut(Event)>,
     }
 
+    /// A native editing session. It outranks the layer stack: a key pressed
+    /// while text is being composed belongs to the composition and to nothing
+    /// else.
+    pub(crate) struct EditSession {
+        pub(crate) composing: Arc<dyn Fn() -> bool + Send + Sync>,
+        pub(crate) cancel: Arc<dyn Fn() + Send + Sync>,
+    }
+
     struct Inner {
         roots: SendWrapper<Roots>,
         layers: Vec<LayerRecord>,
         next: u64,
+        edit: Option<EditSession>,
         watchers: Option<SendWrapper<Watchers>>,
     }
 
@@ -179,6 +190,7 @@ mod dom {
                     }),
                     layers: Vec::new(),
                     next: 1,
+                    edit: None,
                     watchers: None,
                 })),
                 moved: RwSignal::new(0),
@@ -210,8 +222,30 @@ mod dom {
             }
         }
 
-        fn moved(&self) -> RwSignal<u32> {
+        pub(crate) fn moved(&self) -> RwSignal<u32> {
             self.moved
+        }
+
+        /// Registers the scope's one native editing session. Ends any session
+        /// still registered, so a scope never has two.
+        pub(crate) fn begin_edit(&self, session: EditSession) {
+            self.lock().edit = Some(session);
+            self.arm();
+        }
+
+        pub(crate) fn end_edit(&self) {
+            let empty = {
+                let mut inner = self.lock();
+                inner.edit = None;
+                inner.layers.is_empty()
+            };
+            if empty {
+                self.disarm();
+            }
+        }
+
+        pub(crate) fn fallback_element(&self) -> Element {
+            self.fallback()
         }
 
         fn push(
@@ -271,14 +305,17 @@ mod dom {
             // drop everything.
             let weak = Arc::downgrade(&self.inner);
             let escape = Closure::<dyn FnMut(KeyboardEvent)>::new(move |event: KeyboardEvent| {
-                if event.key() != "Escape" {
+                let key = event.key();
+                if key != "Escape" && key != "Enter" {
                     return;
                 }
-                // One key press closes one layer: the listener belongs to the
-                // scope, not to each layer.
-                if close_top_of(&weak) {
-                    event.prevent_default();
-                    event.stop_propagation();
+                match route(&weak, &key) {
+                    // Nothing above the application wanted it.
+                    Routed::Ignored => {}
+                    Routed::Taken => {
+                        event.prevent_default();
+                        event.stop_propagation();
+                    }
                 }
             });
             let moved = self.moved;
@@ -351,23 +388,52 @@ mod dom {
         }
     }
 
-    fn close_top_of(weak: &Weak<Mutex<Inner>>) -> bool {
+    enum Routed {
+        Taken,
+        Ignored,
+    }
+
+    /// The command order of §6.2, in the one place that can enforce it:
+    /// composition and native editing first, then the top layer, then whatever
+    /// the application does with the key.
+    fn route(weak: &Weak<Mutex<Inner>>, key: &str) -> Routed {
         let Some(inner) = weak.upgrade() else {
-            return false;
+            return Routed::Ignored;
         };
-        let close = inner
-            .lock()
-            .expect("overlay stack is never held across a panic")
-            .layers
-            .last()
-            .map(|layer| layer.close.clone());
-        match close {
-            Some(close) => {
-                close();
-                true
+        let (composing, cancel, close_top) = {
+            let inner = inner
+                .lock()
+                .expect("overlay stack is never held across a panic");
+            let edit = inner.edit.as_ref();
+            (
+                edit.map(|edit| edit.composing.clone()),
+                edit.map(|edit| edit.cancel.clone()),
+                inner.layers.last().map(|layer| layer.close.clone()),
+            )
+        };
+        if let Some(composing) = composing {
+            if composing() {
+                // The key is part of what is being typed. It commits nothing
+                // and closes nothing.
+                return Routed::Taken;
             }
-            None => false,
+            if key == "Escape" {
+                if let Some(cancel) = cancel {
+                    cancel();
+                    return Routed::Taken;
+                }
+            }
+            // Enter outside a composition belongs to the field itself, which
+            // sees it on the way down.
+            return Routed::Ignored;
         }
+        if key == "Escape" {
+            if let Some(close) = close_top {
+                close();
+                return Routed::Taken;
+            }
+        }
+        Routed::Ignored
     }
 
     fn set_inert(element: &Element, inert: bool) {

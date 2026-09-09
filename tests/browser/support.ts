@@ -114,6 +114,8 @@ declare global {
                 refused: number;
                 hovered: number | null;
                 hovers: number;
+                editing: boolean;
+                invalidated: number;
             };
             inject_duplicate_id(): boolean;
             close_on_next_action(): void;

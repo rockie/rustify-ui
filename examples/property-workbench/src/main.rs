@@ -1,4 +1,6 @@
 #[cfg(target_arch = "wasm32")]
+mod name_field;
+#[cfg(target_arch = "wasm32")]
 mod object_grid;
 #[cfg(target_arch = "wasm32")]
 mod object_region;
@@ -10,7 +12,9 @@ mod app {
     use leptos::prelude::*;
     use leptos::wasm_bindgen::prelude::*;
     use leptos::wasm_bindgen::JsCast;
-    use rustify_ui::{mount, AppHandle, GpuRegion, MountConfig, RegionState};
+    use rustify_ui::{
+        mount, Anchor, AppHandle, GpuRegion, LocalRect, MountConfig, RegionState, TextEdit,
+    };
     use std::cell::{Cell, RefCell};
     use std::collections::BTreeMap;
     use std::marker::PhantomData;
@@ -118,12 +122,19 @@ mod app {
         // any other: the region draws what the application projects back, not
         // what its own pointer did.
         let hovered = RwSignal::new(None::<ObjectId>);
+        // The rectangle the region drew the name into, while a native control
+        // is editing it. The application decides when the session exists.
+        let editing = RwSignal::new(None::<LocalRect>);
+        // How many edit sessions ended because the value moved underneath them.
+        let invalidated = RwSignal::new(0u32);
+        let canvas = NodeRef::<leptos::html::Canvas>::new();
 
         let props = Signal::derive(move || {
             let (index, total) = position.get();
             let cells = cells.get();
             let selected = selected.get().map(|id| id.0);
             let hovered = hovered.get().map(|id| id.0);
+            let editing_name = editing.get().is_some();
             match current.get() {
                 Some(object) => SelectionProps {
                     name: object.name,
@@ -132,6 +143,7 @@ mod app {
                     cells,
                     selected,
                     hovered,
+                    editing_name,
                 },
                 None => SelectionProps {
                     name: "no selection".to_string(),
@@ -140,6 +152,7 @@ mod app {
                     cells,
                     selected,
                     hovered,
+                    editing_name,
                 },
             }
         });
@@ -254,7 +267,7 @@ mod app {
             let (index, total) = position.get();
             let current = current.get();
             let snapshot = format!(
-                "{{\"count\":{},\"position\":{},\"selected\":{},\"name\":{},\"color\":\"{}\",\"first_colors\":\"{}\",\"first_ids\":\"{}\",\"accepted\":{},\"refused\":{},\"hovered\":{},\"hovers\":{}}}",
+                "{{\"count\":{},\"position\":{},\"selected\":{},\"name\":{},\"color\":\"{}\",\"first_colors\":\"{}\",\"first_ids\":\"{}\",\"accepted\":{},\"refused\":{},\"hovered\":{},\"hovers\":{},\"editing\":{},\"invalidated\":{}}}",
                 total,
                 index.map(|i| i as i64 + 1).unwrap_or(0),
                 current
@@ -293,6 +306,8 @@ mod app {
                     .map(|id| id.0.to_string())
                     .unwrap_or_else(|| "null".to_string()),
                 hovers.get(),
+                editing.get().is_some(),
+                invalidated.get(),
             );
             SNAPSHOT.with(|slot| *slot.borrow_mut() = snapshot);
         });
@@ -316,6 +331,17 @@ mod app {
                 SelectionAction::Pick(id) => {
                     accepted.update(|n| *n += 1);
                     selected.set(Some(ObjectId(id)));
+                }
+                SelectionAction::EditName {
+                    x,
+                    y,
+                    width,
+                    height,
+                } => {
+                    accepted.update(|n| *n += 1);
+                    if current.get().is_some() {
+                        editing.set(Some(LocalRect::new(x, y, width, height)));
+                    }
                 }
                 SelectionAction::RejectedDuplicate(id) => {
                     accepted.update(|n| *n += 1);
@@ -407,9 +433,31 @@ mod app {
                         on_action=on_action
                         state=region_state
                         refused=refused
+                        node_ref=canvas
                         class="gpu-region"
                         test_id="workbench-gpu"
                     />
+                    <Show when=move || editing.get().is_some() fallback=|| ()>
+                        <TextEdit
+                            anchor=Signal::derive(move || match (canvas.get(), editing.get()) {
+                                (Some(canvas), Some(rect)) => Anchor::region(&canvas.into(), rect),
+                                _ => Anchor::Centred,
+                            })
+                            value=Signal::derive(move || {
+                                current.get().map(|o| o.name).unwrap_or_default()
+                            })
+                            on_commit=move |value| {
+                                rename(value);
+                                editing.set(None);
+                            }
+                            on_cancel=move || editing.set(None)
+                            on_invalidated=move || {
+                                invalidated.update(|n| *n += 1);
+                                editing.set(None);
+                            }
+                            test_id="gpu-name-edit"
+                        />
+                    </Show>
                     {move || match region_state.get() {
                         RegionState::Failed(error) => Some(view! {
                             <p class="region-error" role="alert" data-testid="workbench-gpu-error">

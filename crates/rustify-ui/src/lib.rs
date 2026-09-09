@@ -7,6 +7,7 @@ pub mod mount;
 pub mod overlay;
 pub mod region;
 pub mod scheduler;
+pub mod text;
 
 pub use binding::{duplicate_key, ActionSink};
 pub use diagnostics::UiError;
@@ -20,3 +21,5 @@ pub use scheduler::{Admission, Pace, Scheduler, Seq};
 pub use overlay::{use_overlay, Anchor, Layer, OverlayStack};
 #[cfg(target_arch = "wasm32")]
 pub use rustify_makepad::{makepad_widgets, RegionApp};
+#[cfg(target_arch = "wasm32")]
+pub use text::TextEdit;

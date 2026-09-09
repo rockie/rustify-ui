@@ -39,3 +39,14 @@
 .rustify-layer {
     position: fixed;
 }
+
+/* The native control takes exactly the rectangle the region drew its text
+   into, so the text does not jump when editing starts. */
+.rustify-text-edit {
+    position: fixed;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0 2px;
+    border: 1px solid #2e90fa;
+    font: inherit;
+}

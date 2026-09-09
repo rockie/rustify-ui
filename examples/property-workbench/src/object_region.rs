@@ -1,3 +1,4 @@
+use crate::name_field::NameField;
 use crate::object_grid::{GridCell, ObjectGrid};
 use rustify_ui::makepad_widgets::*;
 use rustify_ui::{Pace, RegionApp};
@@ -16,6 +17,9 @@ pub struct SelectionProps {
     pub cells: Arc<Vec<GridCell>>,
     pub selected: Option<u32>,
     pub hovered: Option<u32>,
+    /// While the name is being edited elsewhere, the region draws nothing in
+    /// its place: the native control has that rectangle.
+    pub editing_name: bool,
 }
 
 #[derive(Debug)]
@@ -26,6 +30,14 @@ pub enum SelectionAction {
     /// The object the pointer is over, or `None` once it left the grid. One
     /// per pointer move: a state, not a history.
     Hover(Option<u32>),
+    /// The user asked to edit the name the region draws, and hands over the
+    /// rectangle it drew it into, in the region's local CSS pixels.
+    EditName {
+        x: f64,
+        y: f64,
+        width: f64,
+        height: f64,
+    },
     /// The projection named the same object twice and was refused; the region
     /// still shows the last unambiguous one.
     RejectedDuplicate(u32),
@@ -59,10 +71,24 @@ script_mod! {
                             }
                             // Fixed widths: the buttons beside them must not
                             // move while the user is typing a name.
-                            name_label := Label{
+                            // The box and the glyphs are two widgets in one
+                            // place: the field owns the rectangle and the
+                            // click, the label owns the text.
+                            View{
                                 width: 220
-                                text: "no selection"
-                                draw_text.text_style.font_size: 16
+                                height: 26
+                                flow: Overlay
+                                align: Center
+
+                                name_field := NameField{
+                                    width: Fill
+                                    height: Fill
+                                }
+                                name_label := Label{
+                                    width: Fill
+                                    text: "no selection"
+                                    draw_text.text_style.font_size: 14
+                                }
                             }
                             position_label := Label{
                                 width: 90
@@ -105,14 +131,20 @@ impl RegionApp for ObjectRegion {
 
     fn script_mod(vm: &mut ScriptVm) -> ScriptValue {
         rustify_ui::makepad_widgets::script_mod(vm);
+        crate::name_field::script_mod(vm);
         crate::object_grid::script_mod(vm);
         self::script_mod(vm)
     }
 
     fn apply_props(&mut self, cx: &mut Cx, props: &SelectionProps) {
-        self.ui
-            .label(cx, ids!(name_label))
-            .set_text(cx, &props.name);
+        // The native control shows the text while it is being edited, so the
+        // region would otherwise draw a second copy of it underneath.
+        let name = if props.editing_name {
+            ""
+        } else {
+            props.name.as_str()
+        };
+        self.ui.label(cx, ids!(name_label)).set_text(cx, name);
         self.ui
             .label(cx, ids!(position_label))
             .set_text(cx, &props.position);
@@ -148,6 +180,21 @@ impl RegionApp for ObjectRegion {
             }
         }
         self.ui.handle_event(cx, event, &mut Scope::empty());
+        // The name the region draws is a display of the value; clicking it
+        // asks the application for a real text control over that rectangle.
+        let requested = self
+            .ui
+            .widget(cx, ids!(name_field))
+            .borrow_mut::<NameField>()
+            .and_then(|mut field| field.take_edit_request());
+        if let Some(rect) = requested {
+            outbox.push(SelectionAction::EditName {
+                x: rect.pos.x,
+                y: rect.pos.y,
+                width: rect.size.x,
+                height: rect.size.y,
+            });
+        }
         // Polled after the tree has seen the event, so a click is reported in
         // the same pump that handled it.
         let reported = self
