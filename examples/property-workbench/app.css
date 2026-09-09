@@ -79,3 +79,18 @@ body {
     color: #b42318;
     background: #fef3f2;
 }
+
+/* The panel reads the scope's own tokens, so a theme switch is visible in the
+   DOM half exactly when it is visible in the GPU half. */
+.workbench .panel {
+    color: var(--foreground, #1d2939);
+    background: var(--background, #f9fafb);
+    border: 1px solid var(--border, #d0d5dd);
+    border-radius: var(--radius, 6px);
+    padding: 12px;
+}
+
+.workbench .panel h2 {
+    margin: 0 0 8px;
+    font-size: 15px;
+}

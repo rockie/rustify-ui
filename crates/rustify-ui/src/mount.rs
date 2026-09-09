@@ -19,6 +19,21 @@ pub struct MountConfig {
     pub scope: String,
 }
 
+/// The scope's own elements, for the parts of the SDK that need to reach them
+/// from inside the view: the layer stack and the theme.
+#[derive(Clone)]
+pub struct ScopeRoots(
+    #[cfg(target_arch = "wasm32")] send_wrapper::SendWrapper<leptos::web_sys::HtmlElement>,
+    #[cfg(not(target_arch = "wasm32"))] std::marker::PhantomData<()>,
+);
+
+#[cfg(target_arch = "wasm32")]
+impl ScopeRoots {
+    pub fn container(&self) -> leptos::web_sys::HtmlElement {
+        (*self.0).clone()
+    }
+}
+
 /// Owns one mounted application scope. Disposing it runs the scope's reactive
 /// cleanups first (which destroys every GPU region the view created) and
 /// then unmounts the DOM.
@@ -64,9 +79,14 @@ where
         // Every region in this scope shares one acceptance order.
         provide_context(ActionSink::new());
         #[cfg(target_arch = "wasm32")]
-        provide_context(crate::overlay::OverlayStack::new(
-            &container, &content, &overlay,
-        ));
+        {
+            provide_context(crate::overlay::OverlayStack::new(
+                &container, &content, &overlay,
+            ));
+            provide_context(ScopeRoots(send_wrapper::SendWrapper::new(
+                container.clone(),
+            )));
+        }
         leptos::mount::mount_to(target, view)
     });
     Ok(AppHandle {

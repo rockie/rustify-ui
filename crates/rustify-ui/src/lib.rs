@@ -8,10 +8,11 @@ pub mod overlay;
 pub mod region;
 pub mod scheduler;
 pub mod text;
+pub mod theme;
 
 pub use binding::{duplicate_key, ActionSink};
 pub use diagnostics::UiError;
-pub use mount::{mount, AppHandle, MountConfig};
+pub use mount::{mount, AppHandle, MountConfig, ScopeRoots};
 pub use overlay::{LayerId, LocalRect};
 pub use region::{GpuRegion, RegionState};
 pub use rustify_makepad::RegionId;
@@ -23,3 +24,6 @@ pub use overlay::{use_overlay, Anchor, Layer, OverlayStack};
 pub use rustify_makepad::{makepad_widgets, RegionApp};
 #[cfg(target_arch = "wasm32")]
 pub use text::TextEdit;
+pub use theme::Theme;
+#[cfg(target_arch = "wasm32")]
+pub use theme::{use_theme, ThemedScope};

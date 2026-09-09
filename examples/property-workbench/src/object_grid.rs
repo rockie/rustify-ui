@@ -63,6 +63,9 @@ pub struct ObjectGrid {
     selected: Option<u32>,
     #[rust]
     hovered: Option<u32>,
+    /// Background, selection ring and hover ring, from the scope's theme.
+    #[rust]
+    palette: Option<(u32, u32, u32)>,
     /// Where the cells ended up in the last draw, so a click can be resolved
     /// against what the user actually saw.
     #[rust]
@@ -159,6 +162,14 @@ impl ObjectGrid {
         self.picked.take()
     }
 
+    pub fn set_palette(&mut self, cx: &mut Cx, background: u32, marker: u32, hover: u32) {
+        let next = Some((background, marker, hover));
+        if self.palette != next {
+            self.palette = next;
+            self.redraw(cx);
+        }
+    }
+
     pub fn take_hover_report(&mut self) -> Option<Option<u32>> {
         self.hover_report.take()
     }
@@ -199,6 +210,11 @@ impl Widget for ObjectGrid {
 
     fn draw_walk(&mut self, cx: &mut Cx2d, _scope: &mut Scope, walk: Walk) -> DrawStep {
         let pane = cx.walk_turtle(walk);
+        if let Some((background, marker, hover)) = self.palette {
+            self.draw_bg.color = cell_color(background);
+            self.draw_marker.color = cell_color(marker);
+            self.draw_hover.color = cell_color(hover);
+        }
         self.draw_bg.draw_abs(cx, pane);
         self.layout_grid = None;
         if self.cells.is_empty() || pane.size.x < 8.0 || pane.size.y < 8.0 {

@@ -1,7 +1,7 @@
 use crate::name_field::NameField;
 use crate::object_grid::{GridCell, ObjectGrid};
 use rustify_ui::makepad_widgets::*;
-use rustify_ui::{Pace, RegionApp};
+use rustify_ui::{Pace, RegionApp, Theme};
 use std::sync::Arc;
 
 /// What the region shows: the current selection, projected out of the
@@ -22,6 +22,9 @@ pub struct SelectionProps {
     /// its place: the native control has that rectangle.
     pub editing_name: bool,
     pub editing_notes: bool,
+    /// The scope's theme. One table drives both halves, so a colour cannot
+    /// mean one thing in the panel and another in the region.
+    pub theme: Theme,
 }
 
 /// Which piece of text the region is handing over.
@@ -194,6 +197,12 @@ impl RegionApp for ObjectRegion {
             }
         });
         if let Some(mut grid) = self.ui.widget(cx, ids!(grid)).borrow_mut::<ObjectGrid>() {
+            grid.set_palette(
+                cx,
+                props.theme.background,
+                props.theme.foreground,
+                props.theme.muted,
+            );
             self.rejected = grid
                 .set_cells(
                     cx,

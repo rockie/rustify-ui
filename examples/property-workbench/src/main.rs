@@ -13,7 +13,8 @@ mod app {
     use leptos::wasm_bindgen::prelude::*;
     use leptos::wasm_bindgen::JsCast;
     use rustify_ui::{
-        mount, Anchor, AppHandle, GpuRegion, LocalRect, MountConfig, RegionState, TextEdit,
+        mount, Anchor, AppHandle, GpuRegion, LocalRect, MountConfig, RegionState, TextEdit, Theme,
+        ThemedScope,
     };
     use std::cell::{Cell, RefCell};
     use std::collections::{BTreeMap, BTreeSet};
@@ -136,6 +137,7 @@ mod app {
         // any other: the region draws what the application projects back, not
         // what its own pointer did.
         let hovered = RwSignal::new(None::<ObjectId>);
+        let theme = RwSignal::new(Theme::light());
         // The rectangle the region drew the name into, while a native control
         // is editing it. The application decides when the session exists.
         let editing = RwSignal::new(None::<(EditField, LocalRect)>);
@@ -148,6 +150,7 @@ mod app {
             let cells = cells.get();
             let selected = selected.get().map(|id| id.0);
             let hovered = hovered.get().map(|id| id.0);
+            let theme = theme.get();
             let editing = editing.get();
             let editing_name = matches!(editing, Some((EditField::Name, _)));
             let editing_notes = matches!(editing, Some((EditField::Notes, _)));
@@ -162,6 +165,7 @@ mod app {
                     hovered,
                     editing_name,
                     editing_notes,
+                    theme,
                 },
                 None => SelectionProps {
                     name: "no selection".to_string(),
@@ -173,6 +177,7 @@ mod app {
                     hovered,
                     editing_name,
                     editing_notes,
+                    theme,
                 },
             }
         });
@@ -335,7 +340,7 @@ mod app {
             let (index, total) = position.get();
             let current = current.get();
             let snapshot = format!(
-                "{{\"count\":{},\"position\":{},\"selected\":{},\"name\":{},\"color\":\"{}\",\"first_colors\":\"{}\",\"first_ids\":\"{}\",\"accepted\":{},\"refused\":{},\"hovered\":{},\"hovers\":{},\"editing\":{},\"invalidated\":{},\"notes\":{}}}",
+                "{{\"count\":{},\"position\":{},\"selected\":{},\"name\":{},\"color\":\"{}\",\"first_colors\":\"{}\",\"first_ids\":\"{}\",\"accepted\":{},\"refused\":{},\"hovered\":{},\"hovers\":{},\"editing\":{},\"invalidated\":{},\"notes\":{},\"theme\":\"{}\"}}",
                 total,
                 index.map(|i| i as i64 + 1).unwrap_or(0),
                 current
@@ -380,6 +385,7 @@ mod app {
                     .as_ref()
                     .map(|o| json_string(&o.notes))
                     .unwrap_or_else(|| "null".to_string()),
+                theme.get().name,
             );
             SNAPSHOT.with(|slot| *slot.borrow_mut() = snapshot);
         });
@@ -428,8 +434,26 @@ mod app {
 
         view! {
             <div class="workbench">
+                <ThemedScope theme=theme />
                 <section class="panel" aria-label="object properties">
                     <h2>"properties"</h2>
+                    <button
+                        type="button"
+                        data-testid="toggle-theme"
+                        aria-label="switch theme"
+                        on:click=move |_| {
+                            theme
+                                .update(|theme| {
+                                    *theme = if theme.name == "light" {
+                                        Theme::dark()
+                                    } else {
+                                        Theme::light()
+                                    };
+                                });
+                        }
+                    >
+                        {move || format!("theme: {}", theme.get().name)}
+                    </button>
                     <p>
                         "selected: "
                         <span data-testid="selected-id">

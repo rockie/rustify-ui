@@ -117,6 +117,7 @@ declare global {
                 editing: boolean;
                 invalidated: number;
                 notes: string | null;
+                theme: string;
             };
             inject_duplicate_id(): boolean;
             close_on_next_action(): void;
