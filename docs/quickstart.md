@@ -13,11 +13,13 @@
 ```sh
 cargo xtask build-web --example fusion-basic --release
 cargo xtask build-web --example property-workbench --release
+cargo xtask build-web --example component-catalog --release
 cargo xtask serve --example fusion-basic --release          # prints http://127.0.0.1:<port>/
 cargo xtask serve --example fusion-basic --release --base /tools/demo/ --port 4173
 cargo xtask serve --example fusion-basic --release --csp no-wasm   # negative test: wasm must fail visibly
 cargo xtask serve --example fusion-basic --release --fault missing:makepad_widgets/resources/IBMPlexSans-Text.ttf
 cargo xtask report-size --example fusion-basic --release           # six category totals, read off the directory
+cargo xtask report-size --example fusion-basic --release --compressed  # and what a gzip host would send
 ```
 
 `serve --fault` makes the server break the deployment in one specific way -
@@ -33,12 +35,32 @@ without a restart.
 
 ```sh
 cargo test --workspace --lib
+cargo xtask css --check              # the component stylesheet is in step with the classes
 cargo clippy --workspace --all-targets -- -D warnings
 cargo fmt --all -- --check           # the fork under makepad/ is excluded by its rustfmt.toml
 cargo xtask sources verify           # drift of makepad/ against the import record
 npm run test:browser                 # Playwright probes against a release build
 cd makepad && cargo test -p cargo-makepad
 ```
+
+## Changing a component's classes
+
+The component crate's classes are Tailwind utilities behind a `rui:` prefix,
+and the stylesheet they need is **committed**, so building the wasm never needs
+Node:
+
+```sh
+cargo xtask css            # regenerate crates/rustify-components/css/rustify.css
+cargo xtask css --check    # fail if the committed product is not what the input produces
+```
+
+A class string added without regenerating would simply have no rule; `--check`
+is what turns that into a failure. `build-web` copies the product into any
+example whose manifest names the component crate.
+
+The prefix is what keeps a host page's own Tailwind build and ours apart, and
+`dark` is bound to the SDK's scope attribute rather than to any `.dark`
+ancestor, so a host page using that convention does not darken a scope.
 
 ## Writing a GPU region
 
@@ -109,4 +131,10 @@ categories exist and what each of them supports.
 
 ## Limits of the preview
 
-Error recovery, capability refusal and bounded diagnostics are later milestones, and nine of R18's eighteen component categories are not in this release at all. See `docs/components.md` for what each category supports, `docs/compatibility.md` for the capability state and the one third-party component that is verified, and `docs/plan/P1-WASM-UI.md` for progress.
+Nine of R18's eighteen component categories are not implemented yet; the
+component crate has the machinery and the catalogue has the pages, and the
+components themselves are P2 M2. There is no router, no workspace, no
+large-data view and no cross-region drag. See `docs/components.md` for what
+each category supports today, `docs/compatibility.md` for the capability state
+and the one third-party component that is verified, `docs/reports/p1/` for what
+P1 measured and what it could not, and `docs/plan/` for progress.
