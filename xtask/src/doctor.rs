@@ -16,6 +16,7 @@ pub fn run() -> Result<(), String> {
         wasm_bindgen_lock(&root),
         leptos_lock(&root),
         sources_lock(&root),
+        vendored(&root),
         licenses(&root),
         node(),
         playwright(&root),
@@ -130,10 +131,50 @@ fn sources_lock(root: &Path) -> Check {
     }
 }
 
+/// The third-party browser files are part of the checkout, at one version, with
+/// their licence beside them. A build never fetches them.
+fn vendored(root: &Path) -> Check {
+    let path = root.join("sources.lock.json");
+    let result = std::fs::read_to_string(&path)
+        .map_err(|e| format!("{}: {e}", path.display()))
+        .and_then(|text| {
+            serde_json::from_str::<serde_json::Value>(&text).map_err(|e| e.to_string())
+        })
+        .and_then(|value| {
+            let entries = value["vendor"]
+                .as_array()
+                .ok_or("sources.lock.json has no vendor list")?
+                .clone();
+            let mut named = Vec::new();
+            for entry in &entries {
+                let name = entry["name"].as_str().unwrap_or("?");
+                let version = entry["version"].as_str().unwrap_or("?");
+                let files = entry["files"]
+                    .as_object()
+                    .ok_or_else(|| format!("vendor {name} has no files"))?;
+                for file in files.keys() {
+                    if !root.join(file).is_file() {
+                        return Err(format!("vendor {name} {version}: {file} is missing"));
+                    }
+                }
+                named.push(format!("{name} {version}"));
+            }
+            Ok(format!(
+                "{}; run `cargo xtask sources verify` for digests",
+                named.join(", ")
+            ))
+        });
+    Check {
+        name: "vendored",
+        result,
+    }
+}
+
 fn licenses(root: &Path) -> Check {
     let required = [
         "makepad/LICENSE",
         "makepad/widgets/resources/FONT-LICENSES.md",
+        "examples/property-workbench/vendor/nouislider/LICENSE.md",
     ];
     let missing: Vec<&str> = required
         .iter()

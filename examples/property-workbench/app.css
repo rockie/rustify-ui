@@ -16,7 +16,8 @@ body {
 
 .workbench .panel {
     display: grid;
-    gap: 8px;
+    gap: var(--spacing, 8px);
+    font-size: var(--font-size, 15px);
     padding: 12px;
     border: 1px solid #d0d5dd;
     border-radius: 6px;
@@ -93,4 +94,72 @@ body {
 .workbench .panel h2 {
     margin: 0 0 8px;
     font-size: 15px;
+}
+
+/* An area with part of the theme changed. It reads exactly the same token
+   names as the panel around it; what differs is the values in force here. */
+.workbench .emphasis {
+    display: grid;
+    gap: var(--spacing, 8px);
+    padding: 8px;
+    font-size: var(--font-size, 15px);
+    color: var(--foreground, #1d2939);
+    background: var(--background, #f9fafb);
+    border: 1px solid var(--border, #d0d5dd);
+    border-radius: var(--radius, 6px);
+}
+
+.workbench .emphasis p {
+    margin: 0;
+}
+
+.workbench .third-party-slot {
+    display: grid;
+    gap: 12px;
+    padding: 8px 8px 16px;
+}
+
+.workbench .third-party-slot p {
+    margin: 0;
+    font-size: 13px;
+    color: #475467;
+}
+
+/* The third-party component draws itself; only the room it needs is ours. */
+.workbench .third-party {
+    height: 18px;
+}
+
+/* Outside the workbench grid on purpose: a wide table inside it would take a
+   column's width from the region beside it. */
+.catalogue {
+    max-width: 900px;
+    overflow-x: auto;
+}
+
+.catalogue h2 {
+    font-size: 15px;
+    margin: 16px 0 8px;
+}
+
+.catalogue table {
+    border-collapse: collapse;
+    font-size: 12px;
+    text-align: left;
+}
+
+.catalogue th,
+.catalogue td {
+    border: 1px solid #d0d5dd;
+    padding: 4px 6px;
+    vertical-align: top;
+    max-width: 240px;
+}
+
+.catalogue td[data-support="no"] {
+    color: #b42318;
+}
+
+.workbench .load-retry {
+    justify-self: start;
 }

@@ -7,8 +7,9 @@ mod counter_region;
 
 #[cfg(target_arch = "wasm32")]
 mod app {
-    use super::anchor_grid::Anchor as GridAnchor;
-    use super::anchor_region::{AnchorAction, AnchorRegion};
+    use super::anchor_grid::DEFAULT_COLOR;
+    use super::anchor_grid::{Anchor as GridAnchor, COLUMNS, ROWS};
+    use super::anchor_region::{AnchorAction, AnchorProps, AnchorRegion};
     use super::counter_region::{CounterAction, CounterProps, CounterRegion};
     use leptos::prelude::*;
     use leptos::wasm_bindgen::prelude::*;
@@ -19,6 +20,7 @@ mod app {
     use std::cell::RefCell;
     use std::collections::BTreeMap;
     use std::marker::PhantomData;
+    use std::sync::Arc;
 
     pub use rustify_ui::makepad_widgets;
 
@@ -131,6 +133,14 @@ mod app {
         let armed = RwSignal::new(false);
         let menu = RwSignal::new(None::<usize>);
         let dialog = RwSignal::new(false);
+        // The main path: an anchor is picked on the region, its colour is
+        // edited in a modal, and the edit only reaches the application when it
+        // is confirmed.
+        let selected = RwSignal::new(None::<usize>);
+        let colors = RwSignal::new(vec![DEFAULT_COLOR; COLUMNS * ROWS]);
+        let draft = RwSignal::new(String::new());
+        let refusal = RwSignal::new(None::<String>);
+        let applied = RwSignal::new(0u32);
         // A layer anchored to an ordinary element, and the element it is
         // anchored to: removing the element has to end the layer.
         let host_present = RwSignal::new(true);
@@ -143,7 +153,7 @@ mod app {
 
         Effect::new(move || {
             let report = format!(
-                "{{\"anchors\":{},\"hits\":{},\"last_hit\":{},\"state\":\"{}\",\"menu\":{},\"dialog\":{},\"anchored\":{},\"commands\":{}}}",
+                "{{\"anchors\":{},\"hits\":{},\"last_hit\":{},\"state\":\"{}\",\"menu\":{},\"dialog\":{},\"anchored\":{},\"commands\":{},\"selected\":{},\"colors\":\"{}\",\"applied\":{},\"refusal\":{}}}",
                 anchors.with(|anchors| anchors_json(anchors)),
                 hits.get(),
                 last_hit
@@ -159,6 +169,23 @@ mod app {
                 dialog.get(),
                 host_layer.get() && host_present.get(),
                 commands.get(),
+                selected
+                    .get()
+                    .map(|index| index.to_string())
+                    .unwrap_or_else(|| "null".to_string()),
+                colors.with(|colors| {
+                    colors
+                        .iter()
+                        .take(4)
+                        .map(|color| format!("{color:06x}"))
+                        .collect::<Vec<_>>()
+                        .join(",")
+                }),
+                applied.get(),
+                refusal
+                    .get()
+                    .map(|reason| format!("\"{reason}\""))
+                    .unwrap_or_else(|| "null".to_string()),
             );
             GEOMETRY.with(|slot| *slot.borrow_mut() = report);
         });
@@ -168,6 +195,7 @@ mod app {
             AnchorAction::Hit(hit) => {
                 hits.update(|n| *n += 1);
                 last_hit.set(Some((hit.anchor, hit.x, hit.y)));
+                selected.set(Some(hit.anchor));
                 if armed.get() {
                     armed.set(false);
                     menu.set(Some(hit.anchor));
@@ -191,8 +219,31 @@ mod app {
             }
         });
 
+        // The application's rule for a colour. The control cannot know it, so
+        // the control does not enforce it: it asks, and this answers.
+        let apply_colour = move || {
+            let Some(index) = selected.get() else {
+                refusal.set(Some("nothing is selected".to_string()));
+                return;
+            };
+            let text = draft.get();
+            let text = text.trim().trim_start_matches('#');
+            match u32::from_str_radix(text, 16) {
+                Ok(color) if text.len() == 6 => {
+                    refusal.set(None);
+                    colors.update(|colors| colors[index] = color);
+                    applied.update(|n| *n += 1);
+                    dialog.set(false);
+                }
+                _ => refusal.set(Some("a colour is six hexadecimal digits".to_string())),
+            }
+        };
+
         let app = PhantomData::<AnchorRegion>;
-        let props = Signal::derive(|| ());
+        let props = Signal::derive(move || AnchorProps {
+            colors: Arc::new(colors.get()),
+            selected: selected.get(),
+        });
         view! {
             <div
                 class="geometry-controls"
@@ -274,7 +325,18 @@ mod app {
                                 type="button"
                                 role="menuitem"
                                 data-testid="menu-open-dialog"
-                                on:click=move |_| dialog.set(true)
+                                on:click=move |_| {
+                                    // The draft starts at the value in force,
+                                    // so cancelling and confirming without
+                                    // typing both leave it where it was.
+                                    let current = selected
+                                        .get()
+                                        .and_then(|index| colors.with(|colors| colors.get(index).copied()))
+                                        .unwrap_or(DEFAULT_COLOR);
+                                    draft.set(format!("{current:06x}"));
+                                    refusal.set(None);
+                                    dialog.set(true);
+                                }
                             >
                                 "open dialog"
                             </button>
@@ -305,7 +367,23 @@ mod app {
                     test_id="geometry-dialog"
                 >
                     <h3>"a modal dialog"</h3>
-                    <input type="text" data-testid="dialog-input" />
+                    <label>
+                        "colour"
+                        <input
+                            type="text"
+                            data-testid="dialog-input"
+                            prop:value=move || draft.get()
+                            on:input:target=move |ev| draft.set(ev.target().value())
+                        />
+                    </label>
+                    {move || refusal.get().map(|reason| view! {
+                        <p class="region-error" role="alert" data-testid="dialog-error">
+                            {reason}
+                        </p>
+                    })}
+                    <button type="button" data-testid="dialog-apply" on:click=move |_| apply_colour()>
+                        "apply"
+                    </button>
                     <button type="button" data-testid="dialog-close" on:click=move |_| dialog.set(false)>
                         "close"
                     </button>

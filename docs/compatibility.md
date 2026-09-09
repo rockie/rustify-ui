@@ -14,6 +14,7 @@ future behaviour.
 | Makepad | hard fork in `makepad/`, declared version 2.0.0, upstream commit unknown; never synced with upstream again | `sources.lock.json` |
 | Playwright | `@playwright/test 1.63.0` with its bundled Chromium (continuous regression only) | `package.json`, `package-lock.json` |
 | Node | 26.1.0 (browser tests only; the build does not need Node) | reported by `cargo xtask doctor` |
+| noUiSlider | `15.8.1`, MIT, vendored into `examples/property-workbench/vendor/nouislider/` (the minified module and stylesheet only) | `sources.lock.json` (`vendor`), digests checked by `cargo xtask sources verify`, presence by `cargo xtask doctor` |
 | Pass-gate browser | Google Chrome 152.0.7977.77 on macOS (Darwin 25.6) | reported by `cargo xtask doctor` |
 
 ## Browser matrix
@@ -53,6 +54,21 @@ Which font draws what, as of M5: the Latin UI and the region's own labels use IB
 | Network initiated by GPU code | Only the fork's resource loader uses it (fonts). Responses are routed to the region that made the request and dropped after that region is destroyed. |
 | Lifecycle | Document visibility events reach every region; pagehide sends shutdown. |
 | Teardown | Destroying a region removes listeners, observers, timers, animation frames, in-flight requests, GL objects (context released via `WEBGL_lose_context`) and then drops the Rust `Cx`. Verified for 20 mount/dispose rounds and for dispose-immediately-after-mount. |
+
+## Third-party DOM components
+
+P1 verifies exactly one third-party DOM component and claims nothing about
+any other. noUiSlider 15.8.1 was chosen because it has real initialization and
+teardown, so a rebuild can be inspected rather than assumed clean.
+
+| Question | Answer |
+| --- | --- |
+| Where does it come from | The checkout. It is vendored with its licence and recorded with a digest per file; the build copies it and nothing fetches it at build or run time. |
+| How is it reached from Rust | The page's own module imports it and exposes a small shim; the application creates and destroys it from a Leptos component (`examples/property-workbench/src/third_party.rs`). There is no SDK wrapper: an SDK that wrapped one library would be claiming a contract for all of them. |
+| Who owns its lifetime | The application. The component is created when its element exists and destroyed on the scope's cleanup, together with the closure it subscribed with. |
+| What is verified | Twenty rebuilds leave one instance in the document and one subscription; one change produces one callback; focus is not taken across a rebuild. See `docs/validation/p1/m6-components-async-theme.md`. |
+| What is not supported | Anything requiring `eval`, an inline `<script>`, or a stylesheet the page cannot serve from its own origin: the release policy is `script-src 'self' 'wasm-unsafe-eval'; style-src 'self'`. A component that writes to `document.title`, the URL or history reaches the host page, not the scope - the SDK does not sandbox it. A component that installs window-level listeners is not isolated to a scope either. |
+| What is not claimed | That other versions of this component, or any other library, work. Each one is the application's own integration until it is listed here. |
 
 ## Known limitations recorded at M1
 

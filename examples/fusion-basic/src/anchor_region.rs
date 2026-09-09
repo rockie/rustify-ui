@@ -4,6 +4,15 @@
 use crate::anchor_grid::{Anchor, AnchorGrid, AnchorHit};
 use rustify_ui::makepad_widgets::*;
 use rustify_ui::{Pace, RegionApp};
+use std::sync::Arc;
+
+/// What the region draws: one colour per anchor and which one is selected.
+/// The region holds neither; both come from the application.
+#[derive(Clone, Debug, PartialEq)]
+pub struct AnchorProps {
+    pub colors: Arc<Vec<u32>>,
+    pub selected: Option<usize>,
+}
 
 #[derive(Debug)]
 pub enum AnchorAction {
@@ -38,7 +47,7 @@ pub struct AnchorRegion {
 }
 
 impl RegionApp for AnchorRegion {
-    type Props = ();
+    type Props = AnchorProps;
     type Action = AnchorAction;
 
     fn pace(action: &AnchorAction) -> Pace {
@@ -54,7 +63,11 @@ impl RegionApp for AnchorRegion {
         self::script_mod(vm)
     }
 
-    fn apply_props(&mut self, _cx: &mut Cx, _props: &()) {}
+    fn apply_props(&mut self, cx: &mut Cx, props: &AnchorProps) {
+        if let Some(mut grid) = self.ui.widget(cx, ids!(grid)).borrow_mut::<AnchorGrid>() {
+            grid.set_projection(cx, props.colors.as_ref(), props.selected);
+        }
+    }
 
     fn handle_event(&mut self, cx: &mut Cx, event: &Event, outbox: &mut Vec<AnchorAction>) {
         self.ui.handle_event(cx, event, &mut Scope::empty());

@@ -1,7 +1,7 @@
 use crate::name_field::NameField;
 use crate::object_grid::{GridCell, ObjectGrid};
 use rustify_ui::makepad_widgets::*;
-use rustify_ui::{Pace, RegionApp, Theme};
+use rustify_ui::{LocalRect, Pace, RegionApp, RustifyCheckBox, RustifySlider, Theme};
 use std::sync::Arc;
 
 /// What the region shows: the current selection, projected out of the
@@ -22,6 +22,11 @@ pub struct SelectionProps {
     /// its place: the native control has that rectangle.
     pub editing_name: bool,
     pub editing_notes: bool,
+    /// A locked object refuses a new name. The region draws the same value the
+    /// panel's checkbox shows, and its own checkbox asks for the same change.
+    pub locked: bool,
+    /// 0..=100 in steps of 5, the same range the panel's slider offers.
+    pub size: f64,
     /// The scope's theme. One table drives both halves, so a colour cannot
     /// mean one thing in the panel and another in the region.
     pub theme: Theme,
@@ -53,6 +58,19 @@ pub enum SelectionAction {
         width: f64,
         height: f64,
     },
+    /// Where the region drew the controls of its second row, in its own local
+    /// CSS pixels. Reported when it changes, so a caller can put a pointer on
+    /// one of them without a second copy of the layout.
+    Controls {
+        locked: LocalRect,
+        size: LocalRect,
+    },
+    /// The user asked to lock or unlock the object. A request, not a value:
+    /// the region draws whatever comes back.
+    SetLocked(bool),
+    /// The user dragged the size along its track. One per move, so only the
+    /// latest matters.
+    SetSize(f64),
     /// The projection named the same object twice and was refused; the region
     /// still shows the last unambiguous one.
     RejectedDuplicate(u32),
@@ -131,6 +149,32 @@ script_mod! {
                                 text: "0 / 0"
                             }
                         }
+
+                        // A second row, so the first one keeps the places the
+                        // pointer tests measure from its left edge.
+                        View{
+                            width: Fill
+                            height: Fit
+                            flow: Right
+                            spacing: 8
+                            // Left, not centred: a row that centres its
+                            // children moves them whenever one of them
+                            // changes width.
+                            align: Align{x: 0., y: 0.5}
+
+                            locked_box := RustifyCheckBox{}
+                            locked_label := Label{
+                                width: 70
+                                text: "locked"
+                                draw_text.text_style.font_size: 12
+                            }
+                            size_slider := RustifySlider{}
+                            size_label := Label{
+                                width: 70
+                                text: "size 0"
+                                draw_text.text_style.font_size: 12
+                            }
+                        }
                         grid := ObjectGrid{
                             width: Fill
                             height: Fill
@@ -140,6 +184,12 @@ script_mod! {
             }
         }
     }
+}
+
+/// A Makepad rectangle as the SDK's own local rectangle: the region's local
+/// CSS pixels, which is what an application anchors and aims at.
+fn local(rect: Rect) -> LocalRect {
+    LocalRect::new(rect.pos.x, rect.pos.y, rect.size.x, rect.size.y)
 }
 
 /// What a multi-line value looks like in a single line of the region.
@@ -155,6 +205,9 @@ pub struct ObjectRegion {
     /// application hears about it on its own callback path.
     #[rust]
     rejected: Option<u32>,
+    /// The last geometry reported, so only a change is sent.
+    #[rust]
+    controls: Option<(LocalRect, LocalRect)>,
 }
 
 impl RegionApp for ObjectRegion {
@@ -163,13 +216,17 @@ impl RegionApp for ObjectRegion {
 
     fn pace(action: &SelectionAction) -> Pace {
         match action {
-            SelectionAction::Hover(_) => Pace::Continuous,
+            // Both are pointer streams: what matters is where they ended up.
+            SelectionAction::Hover(_)
+            | SelectionAction::SetSize(_)
+            | SelectionAction::Controls { .. } => Pace::Continuous,
             _ => Pace::Discrete,
         }
     }
 
     fn script_mod(vm: &mut ScriptVm) -> ScriptValue {
         rustify_ui::makepad_widgets::script_mod(vm);
+        rustify_ui::gpu::script_mod(vm);
         crate::name_field::script_mod(vm);
         crate::object_grid::script_mod(vm);
         self::script_mod(vm)
@@ -184,6 +241,15 @@ impl RegionApp for ObjectRegion {
             props.name.as_str()
         };
         self.ui.label(cx, ids!(name_label)).set_text(cx, name);
+        // Several lines do not fit one line of a header, so the region shows
+        // the first of them; the native control gets all of them when the
+        // session starts, and nothing while it is running.
+        let notes = if props.editing_notes {
+            ""
+        } else {
+            first_line(&props.notes)
+        };
+        self.ui.label(cx, ids!(notes_label)).set_text(cx, notes);
         self.ui
             .label(cx, ids!(position_label))
             .set_text(cx, &props.position);
@@ -196,6 +262,39 @@ impl RegionApp for ObjectRegion {
                 color: #(color)
             }
         });
+        self.ui
+            .label(cx, ids!(size_label))
+            .set_text(cx, &format!("size {}", props.size as i64));
+        if let Some(mut locked) = self
+            .ui
+            .widget(cx, ids!(locked_box))
+            .borrow_mut::<RustifyCheckBox>()
+        {
+            // Nothing to lock while nothing is selected, so the control says
+            // so rather than offering a change that would be refused.
+            let disabled = props.selected.is_none();
+            locked.set_state(cx, props.locked, disabled, false);
+            locked.set_palette(
+                cx,
+                props.theme.input,
+                props.theme.primary,
+                props.theme.border,
+            );
+        }
+        if let Some(mut size) = self
+            .ui
+            .widget(cx, ids!(size_slider))
+            .borrow_mut::<RustifySlider>()
+        {
+            size.set_range(cx, 0.0, 100.0, 5.0);
+            size.set_state(cx, props.size, props.selected.is_none(), false);
+            size.set_palette(
+                cx,
+                props.theme.input,
+                props.theme.primary,
+                props.theme.foreground,
+            );
+        }
         if let Some(mut grid) = self.ui.widget(cx, ids!(grid)).borrow_mut::<ObjectGrid>() {
             grid.set_palette(
                 cx,
@@ -244,6 +343,36 @@ impl RegionApp for ObjectRegion {
                     width: rect.size.x,
                     height: rect.size.y,
                 });
+            }
+        }
+        let locked_box = self
+            .ui
+            .widget(cx, ids!(locked_box))
+            .borrow_mut::<RustifyCheckBox>()
+            .map(|mut locked| (locked.take_change(), locked.drawn(cx)));
+        if let Some((asked, drawn_locked)) = locked_box {
+            if let Some(locked) = asked {
+                outbox.push(SelectionAction::SetLocked(locked));
+            }
+            let size_slider = self
+                .ui
+                .widget(cx, ids!(size_slider))
+                .borrow_mut::<RustifySlider>()
+                .map(|mut size| (size.take_change(), size.drawn(cx)));
+            if let Some((asked, drawn_size)) = size_slider {
+                if let Some(size) = asked {
+                    outbox.push(SelectionAction::SetSize(size));
+                }
+                if let (Some(locked), Some(size)) = (drawn_locked, drawn_size) {
+                    let reported = (local(locked), local(size));
+                    if self.controls != Some(reported) {
+                        self.controls = Some(reported);
+                        outbox.push(SelectionAction::Controls {
+                            locked: reported.0,
+                            size: reported.1,
+                        });
+                    }
+                }
             }
         }
         // Polled after the tree has seen the event, so a click is reported in

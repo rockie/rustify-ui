@@ -1550,5 +1550,22 @@
       },
       "conclusion": "The reference tree carries post-release changes in islands/hydration, forms, async derived, stores and macro internals. None of the files behind the verified facts (mount_to and UnmountHandle, signal/effect scheduling, the fixed DOM renderer) differ, and no Leptos source needs modification, so the crates.io release stays the locked source. Any future need to modify Leptos switches to a 0.9.0-beta hard fork per ADR-2."
     }
-  }
+  },
+  "vendor": [
+    {
+      "name": "nouislider",
+      "version": "15.8.1",
+      "origin": "npm registry tarball nouislider-15.8.1.tgz, obtained with `npm pack nouislider@15.8.1`",
+      "imported_on": "2026-09-09",
+      "license": "MIT (examples/property-workbench/vendor/nouislider/LICENSE.md, Leon Gersen)",
+      "used_by": "examples/property-workbench",
+      "purpose": "the one fixed-version third-party DOM component P1 verifies: it has real initialization and teardown, so rebuilding it can be checked for duplicate instances and duplicate subscriptions",
+      "import_rule": "dist/nouislider.min.mjs and dist/nouislider.min.css only; the TypeScript sources, the UMD build and the type declarations were not imported",
+      "files": {
+        "examples/property-workbench/vendor/nouislider/LICENSE.md": "0d1fc6e9892bfb1946c780f040578a4d17060182f7721df77b8e068ac19d1ce4",
+        "examples/property-workbench/vendor/nouislider/nouislider.min.css": "9dc9155cfd6331d1f5629881ac0bc63928243fa4c1d83b17ce4921b5200be0ae",
+        "examples/property-workbench/vendor/nouislider/nouislider.min.mjs": "51f2cef94f58f92b13c105fb32c3e784bd8eba8030c60707fcd77c94b7c9734c"
+      }
+    }
+  ]
 }

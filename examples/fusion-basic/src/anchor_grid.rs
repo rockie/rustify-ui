@@ -31,8 +31,14 @@ script_mod! {
         draw_marker +: {
             color: #xffffff
         }
+        draw_ring +: {
+            color: #x12b76a
+        }
     }
 }
+
+/// The colour an anchor has until the application gives it another.
+pub const DEFAULT_COLOR: u32 = 0x475467;
 
 /// One anchor as the region drew it, in local CSS pixels.
 #[derive(Clone, Copy, Debug, PartialEq)]
@@ -68,6 +74,16 @@ pub struct AnchorGrid {
     draw_cell: DrawColor,
     #[live]
     draw_marker: DrawColor,
+    #[live]
+    draw_ring: DrawColor,
+    /// One colour per anchor, as the application projected them. Empty until
+    /// it does, which is what the default in the script is for.
+    #[rust]
+    colors: Vec<u32>,
+    /// The anchor the application says is selected. The grid does not decide
+    /// this: it reports a click and draws what comes back.
+    #[rust]
+    selected: Option<usize>,
     /// The cell grid of the last draw: a click is resolved against what the
     /// user actually saw.
     #[rust]
@@ -111,6 +127,19 @@ impl Cells {
 impl AnchorGrid {
     pub fn take_hit(&mut self) -> Option<AnchorHit> {
         self.hit.take()
+    }
+
+    pub fn set_projection(&mut self, cx: &mut Cx, colors: &[u32], selected: Option<usize>) {
+        if self.colors != colors || self.selected != selected {
+            self.colors = colors.to_vec();
+            self.selected = selected;
+            self.redraw(cx);
+        }
+    }
+
+    fn color_of(&self, id: usize) -> Vec4f {
+        let rgb = self.colors.get(id).copied().unwrap_or(DEFAULT_COLOR);
+        Vec4f::from_u32(rgb << 8 | 0xff)
     }
 
     pub fn take_layout(&mut self) -> Option<Vec<Anchor>> {
@@ -162,6 +191,7 @@ impl Widget for AnchorGrid {
         };
         let anchors: Vec<Anchor> = (0..COLUMNS * ROWS).map(|id| cells.anchor(id)).collect();
         for anchor in &anchors {
+            self.draw_cell.color = self.color_of(anchor.id);
             self.draw_cell.draw_abs(cx, rect_of(anchor));
             self.draw_marker.draw_abs(
                 cx,
@@ -173,6 +203,32 @@ impl Widget for AnchorGrid {
                     size: dvec2(MARKER, MARKER),
                 },
             );
+        }
+        // The selection is drawn last: it is the one thing on the grid that
+        // says which anchor the next command will act on.
+        if let Some(anchor) = self.selected.and_then(|id| anchors.get(id)) {
+            let rect = rect_of(anchor);
+            let thickness = 2.0;
+            for edge in [
+                Rect {
+                    pos: rect.pos,
+                    size: dvec2(rect.size.x, thickness),
+                },
+                Rect {
+                    pos: dvec2(rect.pos.x, rect.pos.y + rect.size.y - thickness),
+                    size: dvec2(rect.size.x, thickness),
+                },
+                Rect {
+                    pos: rect.pos,
+                    size: dvec2(thickness, rect.size.y),
+                },
+                Rect {
+                    pos: dvec2(rect.pos.x + rect.size.x - thickness, rect.pos.y),
+                    size: dvec2(thickness, rect.size.y),
+                },
+            ] {
+                self.draw_ring.draw_abs(cx, edge);
+            }
         }
         if self.cells != Some(cells) {
             self.cells = Some(cells);

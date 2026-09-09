@@ -91,6 +91,13 @@ pub fn build(request: &BuildRequest) -> Result<PathBuf, String> {
     for name in ["index.html", "app.js", "app.css"] {
         copy(&example_dir.join(name), &app.join(name))?;
     }
+    // Third-party browser files are part of the checkout, at one recorded
+    // version (`sources.lock.json`), so the build copies them rather than
+    // fetching anything.
+    let vendor = example_dir.join("vendor");
+    if vendor.is_dir() {
+        copy_tree(&vendor, &app.join("vendor"))?;
+    }
 
     let files = list_files(&app)?;
     let manifest = BuildManifest {
@@ -180,7 +187,8 @@ pub fn size_report(files: &BTreeMap<String, u64>) -> SizeReport {
         let ext = name.rsplit('.').next().unwrap_or("");
         let bucket = match ext {
             "wasm" => &mut report.wasm,
-            "js" => &mut report.js,
+            // A module is JavaScript; the third-party file is shipped as one.
+            "js" | "mjs" => &mut report.js,
             "css" => &mut report.css,
             "ttf" | "otf" | "woff" | "woff2" => &mut report.fonts,
             "png" | "jpg" | "jpeg" | "svg" | "webp" | "gif" => &mut report.images,
@@ -197,6 +205,23 @@ pub fn format_size_report(report: &SizeReport) -> String {
         "size report (bytes): wasm {} | js {} | css {} | fonts {} | images {} | data {} | total {}",
         report.wasm, report.js, report.css, report.fonts, report.images, report.data, report.total
     )
+}
+
+/// Copies a directory as it stands. Used for the vendored files, which are
+/// taken whole or not at all.
+fn copy_tree(from: &Path, to: &Path) -> Result<(), String> {
+    std::fs::create_dir_all(to).map_err(|e| format!("{}: {e}", to.display()))?;
+    for entry in std::fs::read_dir(from).map_err(|e| format!("{}: {e}", from.display()))? {
+        let entry = entry.map_err(|e| e.to_string())?;
+        let path = entry.path();
+        let target = to.join(entry.file_name());
+        if path.is_dir() {
+            copy_tree(&path, &target)?;
+        } else {
+            copy(&path, &target)?;
+        }
+    }
+    Ok(())
 }
 
 fn copy(from: &Path, to: &Path) -> Result<(), String> {
@@ -222,6 +247,7 @@ mod tests {
         files.insert("a.wasm".to_string(), 10);
         files.insert("b.js".to_string(), 1);
         files.insert("c/d.js".to_string(), 2);
+        files.insert("vendor/x.mjs".to_string(), 7);
         files.insert("e.css".to_string(), 3);
         files.insert("f.ttf".to_string(), 4);
         files.insert("g.png".to_string(), 5);
@@ -231,12 +257,12 @@ mod tests {
             report,
             SizeReport {
                 wasm: 10,
-                js: 3,
+                js: 10,
                 css: 3,
                 fonts: 4,
                 images: 5,
                 data: 6,
-                total: 31
+                total: 38
             }
         );
     }

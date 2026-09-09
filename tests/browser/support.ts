@@ -120,6 +120,27 @@ declare global {
                 theme: string;
                 details: string;
                 details_value: string | null;
+                locked: boolean;
+                size: number;
+                refusals: number;
+                refusal: string | null;
+                third_party: boolean;
+                third_party_updates: number;
+                controls: {
+                    locked: { x: number; y: number; width: number; height: number };
+                    size: { x: number; y: number; width: number; height: number };
+                } | null;
+            };
+            mount_into(container_id: string): number;
+            dispose_handle(id: number, container_id: string): boolean;
+            set_third_party(present: boolean): boolean;
+            nudge_third_party(value: number): number;
+            third_party(): {
+                created: number;
+                destroyed: number;
+                live: number;
+                targets: number;
+                handles: number;
             };
             inject_duplicate_id(): boolean;
             close_on_next_action(): void;
@@ -166,6 +187,10 @@ declare global {
                 dialog: boolean;
                 anchored: boolean;
                 commands: number;
+                selected: number | null;
+                colors: string;
+                applied: number;
+                refusal: string | null;
             };
             hooks: { runtime: { errors: string[]; enter_fatal(error: unknown): void } };
         };

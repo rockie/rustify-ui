@@ -4,17 +4,21 @@ mod name_field;
 mod object_grid;
 #[cfg(target_arch = "wasm32")]
 mod object_region;
+#[cfg(target_arch = "wasm32")]
+mod third_party;
 
 #[cfg(target_arch = "wasm32")]
 mod app {
     use super::object_grid::GridCell;
     use super::object_region::{EditField, ObjectRegion, SelectionAction, SelectionProps};
+    use super::third_party::ThirdPartySlider;
     use leptos::prelude::*;
     use leptos::wasm_bindgen::prelude::*;
     use leptos::wasm_bindgen::JsCast;
     use rustify_ui::{
-        mount, Anchor, AppHandle, GpuRegion, Load, LocalRect, MountConfig, RegionState, Requests,
-        TextEdit, Theme, ThemedScope, UiError,
+        mount, Anchor, AppHandle, Button, Checkbox, GpuRegion, Load, LoadView, LocalRect,
+        MountConfig, RegionState, Requests, Slider, Support, TextArea, TextEdit, TextField, Theme,
+        ThemeOverride, ThemePatch, ThemedScope, UiError, CATALOG,
     };
     use std::cell::{Cell, RefCell};
     use std::collections::{BTreeMap, BTreeSet};
@@ -37,6 +41,11 @@ mod app {
         pub notes: String,
         /// `0xRRGGBB`.
         pub color: u32,
+        /// A locked object refuses a new name. It is what makes read-only a
+        /// business rule here rather than a control attribute.
+        pub locked: bool,
+        /// 0..=100 in steps of 5.
+        pub size: f64,
     }
 
     const PALETTE: [u32; 6] = [0x2e90fa, 0x12b76a, 0xf79009, 0xf04438, 0x7a5af8, 0x475467];
@@ -49,6 +58,8 @@ mod app {
                 name: format!("object-{n:04}"),
                 notes: format!("note {n}\nsecond line"),
                 color: PALETTE[(n as usize - 1) % PALETTE.len()],
+                locked: false,
+                size: 50.0,
             })
             .collect()
     }
@@ -60,7 +71,7 @@ mod app {
         /// application's signals by an effect; never written by anything else.
         static SNAPSHOT: RefCell<String> = const { RefCell::new(String::new()) };
         /// Registered by the live scope so the page's test seam can reach it.
-        static INJECT_DUPLICATE: RefCell<Option<Rc<dyn Fn()>>> = const { RefCell::new(None) };
+        static INJECT_DUPLICATE: Seam<dyn Fn()> = const { RefCell::new(BTreeMap::new()) };
         /// Armed by the page for exactly one action, then spent.
         static CLOSE_ON_ACTION: Cell<bool> = const { Cell::new(false) };
         /// Ids the application has deleted, so a lookup can tell a name that
@@ -68,16 +79,15 @@ mod app {
         static DELETED: RefCell<BTreeSet<u32>> = const { RefCell::new(BTreeSet::new()) };
         /// Registered by the live scope: selects an object by id and reports
         /// whether it could.
-        static SELECT_BY_ID: RefCell<Option<Rc<dyn Fn(u32) -> bool>>> =
-            const { RefCell::new(None) };
+        static SELECT_BY_ID: Seam<dyn Fn(u32) -> bool> = const { RefCell::new(BTreeMap::new()) };
         /// Reads whether an id is in the application's current state, without
         /// selecting it.
-        static EXISTS: RefCell<Option<Rc<dyn Fn(u32) -> bool>>> = const { RefCell::new(None) };
+        static EXISTS: Seam<dyn Fn(u32) -> bool> = const { RefCell::new(BTreeMap::new()) };
         /// Starts one asynchronous load, so the page can order two of them.
-        /// Tagged with the scope that registered it, so a scope torn down
-        /// after its replacement mounted cannot unregister the replacement.
-        static START_LOAD: RefCell<Option<(u32, Rc<dyn Fn(i32, String)>)>> =
-            const { RefCell::new(None) };
+        static START_LOAD: Seam<dyn Fn(i32, String)> = const { RefCell::new(BTreeMap::new()) };
+        /// Registered by the live scope: puts the third-party component into
+        /// the view or takes it out, so a rebuild can be driven from the page.
+        static PRESENT: Seam<dyn Fn(bool)> = const { RefCell::new(BTreeMap::new()) };
     }
 
     /// Drops every scope this page mounted. Called from inside an action
@@ -86,6 +96,46 @@ mod app {
     fn close_scopes() {
         let live = HANDLES.with(|handles| std::mem::take(&mut *handles.borrow_mut()));
         drop(live);
+    }
+
+    /// What a support level is called in the catalogue table. Never empty:
+    /// a blank cell would be the one thing R18 asks the catalogue not to have.
+    fn support(support: Support) -> &'static str {
+        support.name()
+    }
+
+    /// One page-level seam, held by every scope that is currently mounted.
+    ///
+    /// A single slot cannot serve two scopes: whichever mounted last would
+    /// take it, and its teardown would leave the page with nothing even though
+    /// the first scope is still there. Each scope registers under its own
+    /// identity and withdraws only that one.
+    type Seam<T> = RefCell<BTreeMap<u32, Rc<T>>>;
+
+    fn publish<T: ?Sized>(
+        slot: &'static std::thread::LocalKey<Seam<T>>,
+        registration: u32,
+        value: Rc<T>,
+    ) {
+        slot.with(|slot| slot.borrow_mut().insert(registration, value));
+    }
+
+    fn withdraw<T: ?Sized>(slot: &'static std::thread::LocalKey<Seam<T>>, registration: u32) {
+        slot.with(|slot| slot.borrow_mut().remove(&registration));
+    }
+
+    /// The newest scope still mounted, which is the one a page that just
+    /// mounted means when it says "the application".
+    fn newest<T: ?Sized>(slot: &'static std::thread::LocalKey<Seam<T>>) -> Option<Rc<T>> {
+        slot.with(|slot| slot.borrow().values().next_back().cloned())
+    }
+
+    /// One reported rectangle, in the region's own local CSS pixels.
+    fn rect_json(rect: LocalRect) -> String {
+        format!(
+            "{{\"x\":{:.3},\"y\":{:.3},\"width\":{:.3},\"height\":{:.3}}}",
+            rect.x, rect.y, rect.width, rect.height
+        )
     }
 
     /// A JSON string literal. Names come from a text input, so quotes,
@@ -110,6 +160,14 @@ mod app {
 
     #[component]
     fn Workbench() -> impl IntoView {
+        // This scope's identity among the page-level registrations. Taken
+        // once, so every seam this scope registers can be withdrawn by it and
+        // by nothing else.
+        let registration = NEXT_HANDLE.with(|next| {
+            let id = *next.borrow();
+            *next.borrow_mut() += 1;
+            id
+        });
         let objects = RwSignal::new(initial_objects());
         let selected = RwSignal::new(Some(ObjectId(1)));
 
@@ -171,6 +229,8 @@ mod app {
                     hovered,
                     editing_name,
                     editing_notes,
+                    locked: object.locked,
+                    size: object.size,
                     theme,
                 },
                 None => SelectionProps {
@@ -183,6 +243,8 @@ mod app {
                     hovered,
                     editing_name,
                     editing_notes,
+                    locked: false,
+                    size: 0.0,
                     theme,
                 },
             }
@@ -203,11 +265,73 @@ mod app {
             selected.set(Some(id));
         };
 
-        let rename = move |name: String| {
-            let Some(id) = selected.get() else { return };
+        // Why a value the user asked for was not taken, or `None` when the
+        // last one was. The control shows the application's value either way;
+        // this says out loud why it is not what was typed.
+        let refusal = RwSignal::new(None::<String>);
+        let refusals = RwSignal::new(0u32);
+
+        /// The application's own rule for a name. It is deliberately not the
+        /// control's: a control cannot know that two objects may not share a
+        /// name, or that this one is locked.
+        fn check_name(objects: &[WorkbenchObject], id: ObjectId, name: &str) -> Result<(), String> {
+            let Some(object) = objects.iter().find(|o| o.id == id) else {
+                return Err("nothing is selected".to_string());
+            };
+            if object.locked {
+                return Err(format!("object {} is locked", id.0));
+            }
+            if name.trim().is_empty() {
+                return Err("a name cannot be empty".to_string());
+            }
+            if name.chars().count() > 40 {
+                return Err("a name is at most 40 characters".to_string());
+            }
+            if let Some(other) = objects
+                .iter()
+                .find(|o| o.id != id && o.name == name)
+                .map(|o| o.id.0)
+            {
+                return Err(format!("object {other} already has that name"));
+            }
+            Ok(())
+        }
+
+        // Returns whether the value was taken, so a caller that has a control
+        // to put back knows it has to.
+        let rename = move |name: String| -> bool {
+            let Some(id) = selected.get() else {
+                refusal.set(Some("nothing is selected".to_string()));
+                refusals.update(|n| *n += 1);
+                return false;
+            };
+            if let Err(reason) = objects.with(|objects| check_name(objects, id, &name)) {
+                refusal.set(Some(reason));
+                refusals.update(|n| *n += 1);
+                return false;
+            }
+            refusal.set(None);
             objects.update(|objects| {
                 if let Some(object) = objects.iter_mut().find(|o| o.id == id) {
                     object.name = name;
+                }
+            });
+            true
+        };
+        let set_locked = move |locked: bool| {
+            let Some(id) = selected.get() else { return };
+            refusal.set(None);
+            objects.update(|objects| {
+                if let Some(object) = objects.iter_mut().find(|o| o.id == id) {
+                    object.locked = locked;
+                }
+            });
+        };
+        let set_size = move |size: f64| {
+            let Some(id) = selected.get() else { return };
+            objects.update(|objects| {
+                if let Some(object) = objects.iter_mut().find(|o| o.id == id) {
+                    object.size = size;
                 }
             });
         };
@@ -258,6 +382,8 @@ mod app {
                         name: format!("object-{next:04}"),
                         notes: format!("note {next}\nsecond line"),
                         color: PALETTE[(next as usize) % PALETTE.len()],
+                        locked: false,
+                        size: 50.0,
                     });
                     next += 1;
                 }
@@ -294,8 +420,8 @@ mod app {
                 }
             });
         };
-        INJECT_DUPLICATE.with(|slot| *slot.borrow_mut() = Some(Rc::new(inject_duplicate)));
-        on_cleanup(|| INJECT_DUPLICATE.with(|slot| *slot.borrow_mut() = None));
+        publish(&INJECT_DUPLICATE, registration, Rc::new(inject_duplicate));
+        on_cleanup(move || withdraw(&INJECT_DUPLICATE, registration));
 
         // The same rule a click on the grid takes, reachable without a
         // pointer: the DOM path and the GPU path end in one place.
@@ -306,12 +432,12 @@ mod app {
             }
             known
         };
-        SELECT_BY_ID.with(|slot| *slot.borrow_mut() = Some(Rc::new(select_by_id)));
+        publish(&SELECT_BY_ID, registration, Rc::new(select_by_id));
         let exists = move |id: u32| objects.with(|objects| objects.iter().any(|o| o.id.0 == id));
-        EXISTS.with(|slot| *slot.borrow_mut() = Some(Rc::new(exists)));
-        on_cleanup(|| {
-            SELECT_BY_ID.with(|slot| *slot.borrow_mut() = None);
-            EXISTS.with(|slot| *slot.borrow_mut() = None);
+        publish(&EXISTS, registration, Rc::new(exists));
+        on_cleanup(move || {
+            withdraw(&SELECT_BY_ID, registration);
+            withdraw(&EXISTS, registration);
         });
         let find_id = RwSignal::new(String::new());
         let find_result = RwSignal::new(String::new());
@@ -352,22 +478,18 @@ mod app {
                 );
             }
         };
-        let registration = NEXT_HANDLE.with(|next| {
-            let id = *next.borrow();
-            *next.borrow_mut() += 1;
-            id
-        });
-        START_LOAD.with(|slot| *slot.borrow_mut() = Some((registration, Rc::new(start_load))));
+        // The retry the four-state view offers. It is the application's, not
+        // the component's: only the application knows what was being asked.
+        let retry_details = {
+            let start_load = start_load.clone();
+            move || start_load(60, "the details".to_string())
+        };
+        publish(&START_LOAD, registration, Rc::new(start_load));
         on_cleanup({
             let requests = requests.clone();
             move || {
                 requests.close();
-                START_LOAD.with(|slot| {
-                    let mut slot = slot.borrow_mut();
-                    if slot.as_ref().is_some_and(|(id, _)| *id == registration) {
-                        *slot = None;
-                    }
-                });
+                withdraw(&START_LOAD, registration);
             }
         });
 
@@ -384,11 +506,46 @@ mod app {
         // happened.
         let hovers = RwSignal::new(0u32);
 
+        // Where the region drew the controls it owns, as it reported them.
+        // Business state like any other: nobody keeps a second copy of the
+        // region's layout.
+        let controls = RwSignal::new(None::<(LocalRect, LocalRect)>);
+
+        // Whether the third-party component is in the view, and every callback
+        // it has made. A rebuild that left a subscription behind would show up
+        // as two callbacks for one change.
+        let third_party_present = RwSignal::new(true);
+        let third_party_updates = RwSignal::new(0u32);
+        publish(
+            &PRESENT,
+            registration,
+            Rc::new(move |present| third_party_present.set(present)) as Rc<dyn Fn(bool)>,
+        );
+        on_cleanup(move || withdraw(&PRESENT, registration));
+
+        // One area of the scope with part of the theme changed. It writes only
+        // what it names, onto its own element, so the rest of the scope and
+        // every other scope keep the values they had.
+        let emphasis = RwSignal::new(false);
+        let patch = Signal::derive(move || {
+            if emphasis.get() {
+                ThemePatch {
+                    background: Some(0xfff4ed),
+                    foreground: Some(0xb42318),
+                    font_size: Some(12.0),
+                    spacing: Some(2.0),
+                    ..ThemePatch::default()
+                }
+            } else {
+                ThemePatch::default()
+            }
+        });
+
         Effect::new(move || {
             let (index, total) = position.get();
             let current = current.get();
             let snapshot = format!(
-                "{{\"count\":{},\"position\":{},\"selected\":{},\"name\":{},\"color\":\"{}\",\"first_colors\":\"{}\",\"first_ids\":\"{}\",\"accepted\":{},\"refused\":{},\"hovered\":{},\"hovers\":{},\"editing\":{},\"invalidated\":{},\"notes\":{},\"theme\":\"{}\",\"details\":\"{}\",\"details_value\":{}}}",
+                "{{\"count\":{},\"position\":{},\"selected\":{},\"name\":{},\"color\":\"{}\",\"first_colors\":\"{}\",\"first_ids\":\"{}\",\"accepted\":{},\"refused\":{},\"hovered\":{},\"hovers\":{},\"editing\":{},\"invalidated\":{},\"notes\":{},\"theme\":\"{}\",\"details\":\"{}\",\"details_value\":{},\"locked\":{},\"size\":{},\"refusals\":{},\"refusal\":{},\"third_party\":{},\"third_party_updates\":{},\"controls\":{}}}",
                 total,
                 index.map(|i| i as i64 + 1).unwrap_or(0),
                 current
@@ -441,10 +598,30 @@ mod app {
                         .map(|value| json_string(value))
                         .unwrap_or_else(|| "null".to_string())
                 }),
+                current.as_ref().map(|o| o.locked).unwrap_or(false),
+                current.as_ref().map(|o| o.size as i64).unwrap_or(0),
+                refusals.get(),
+                refusal
+                    .get()
+                    .map(|reason| json_string(&reason))
+                    .unwrap_or_else(|| "null".to_string()),
+                third_party_present.get(),
+                third_party_updates.get(),
+                controls
+                    .get()
+                    .map(|(locked, size)| {
+                        format!(
+                            "{{\"locked\":{},\"size\":{}}}",
+                            rect_json(locked),
+                            rect_json(size)
+                        )
+                    })
+                    .unwrap_or_else(|| "null".to_string()),
             );
             SNAPSHOT.with(|slot| *slot.borrow_mut() = snapshot);
         });
 
+        let label_id = format!("third-party-label-{registration}");
         let region_state = RwSignal::new(RegionState::Starting);
         let app = PhantomData::<ObjectRegion>;
         let on_action = move |action| {
@@ -477,6 +654,19 @@ mod app {
                         editing.set(Some((field, LocalRect::new(x, y, width, height))));
                     }
                 }
+                SelectionAction::Controls { locked, size } => {
+                    controls.set(Some((locked, size)));
+                }
+                SelectionAction::SetLocked(locked) => {
+                    accepted.update(|n| *n += 1);
+                    set_locked(locked);
+                }
+                SelectionAction::SetSize(size) => {
+                    // Counted with the hovers: a drag is a stream, and what
+                    // reaches the application is what survived collapsing.
+                    hovers.update(|n| *n += 1);
+                    set_size(size);
+                }
                 SelectionAction::RejectedDuplicate(id) => {
                     accepted.update(|n| *n += 1);
                     rejected.set(Some(id));
@@ -492,11 +682,10 @@ mod app {
                 <ThemedScope theme=theme />
                 <section class="panel" aria-label="object properties">
                     <h2>"properties"</h2>
-                    <button
-                        type="button"
-                        data-testid="toggle-theme"
-                        aria-label="switch theme"
-                        on:click=move |_| {
+                    <Button
+                        test_id="toggle-theme"
+                        aria_label="switch theme"
+                        on_click=move || {
                             theme
                                 .update(|theme| {
                                     *theme = if theme.name == "light" {
@@ -508,33 +697,78 @@ mod app {
                         }
                     >
                         {move || format!("theme: {}", theme.get().name)}
-                    </button>
+                    </Button>
                     <p>
                         "selected: "
                         <span data-testid="selected-id">
                             {move || current.get().map(|o| o.id.0.to_string()).unwrap_or_else(|| "none".to_string())}
                         </span>
                     </p>
-                    <label>
-                        "name"
-                        <input
-                            type="text"
-                            data-testid="name-input"
-                            prop:value=move || current.get().map(|o| o.name).unwrap_or_default()
-                            prop:disabled=move || current.get().is_none()
-                            on:input:target=move |ev| rename(ev.target().value())
-                        />
-                    </label>
-                    <label>
-                        "notes"
-                        <textarea
-                            data-testid="notes-input"
-                            rows="2"
-                            prop:value=move || current.get().map(|o| o.notes).unwrap_or_default()
-                            prop:disabled=move || current.get().is_none()
-                            on:input:target=move |ev| renote(ev.target().value())
-                        ></textarea>
-                    </label>
+                    <TextField
+                        label="name"
+                        test_id="name-input"
+                        value=Signal::derive(move || {
+                            current.get().map(|o| o.name).unwrap_or_default()
+                        })
+                        disabled=Signal::derive(move || current.get().is_none())
+                        read_only=Signal::derive(move || {
+                            current.get().is_some_and(|o| o.locked)
+                        })
+                        on_input=move |value| {
+                            rename(value);
+                        }
+                    />
+                    // A control the user can reach and read but not change:
+                    // the identity is the application's, not theirs.
+                    <TextField
+                        label="object id"
+                        test_id="object-id"
+                        read_only=true
+                        value=Signal::derive(move || {
+                            current
+                                .get()
+                                .map(|o| o.id.0.to_string())
+                                .unwrap_or_else(|| "none".to_string())
+                        })
+                        on_input=move |_| {
+                            refusal.set(Some("an object id cannot be edited".to_string()));
+                            refusals.update(|n| *n += 1);
+                        }
+                    />
+                    <TextArea
+                        label="notes"
+                        test_id="notes-input"
+                        rows=2
+                        value=Signal::derive(move || {
+                            current.get().map(|o| o.notes).unwrap_or_default()
+                        })
+                        disabled=Signal::derive(move || current.get().is_none())
+                        on_input=move |value| renote(value)
+                    />
+                    <Checkbox
+                        label="locked"
+                        test_id="locked-input"
+                        checked=Signal::derive(move || current.get().is_some_and(|o| o.locked))
+                        disabled=Signal::derive(move || current.get().is_none())
+                        on_change=move |locked| set_locked(locked)
+                    />
+                    <Slider
+                        label="size"
+                        test_id="size-input"
+                        min=0.0
+                        max=100.0
+                        step=5.0
+                        value=Signal::derive(move || {
+                            current.get().map(|o| o.size).unwrap_or(0.0)
+                        })
+                        disabled=Signal::derive(move || current.get().is_none())
+                        on_change=move |size| set_size(size)
+                    />
+                    {move || refusal.get().map(|reason| view! {
+                        <p class="region-error" role="alert" data-testid="rejected-value">
+                            {format!("{reason}; the field shows the value in force")}
+                        </p>
+                    })}
                     <div class="swatches">
                         {PALETTE
                             .iter()
@@ -591,23 +825,12 @@ mod app {
                         "objects: "
                         <span data-testid="object-count">{move || position.get().1}</span>
                     </p>
-                    <p
-                        class="details"
-                        role="status"
-                        aria-label="details"
-                        data-testid="details"
-                        data-state=move || details.with(|details| details.state())
-                    >
-                        {move || {
-                            details
-                                .with(|details| match details {
-                                    Load::Loading => "loading…".to_string(),
-                                    Load::Empty => "nothing to show".to_string(),
-                                    Load::Ready(value) => value.clone(),
-                                    Load::Error(error) => format!("failed: {error}; try again"),
-                                })
-                        }}
-                    </p>
+                    <LoadView
+                        label="details"
+                        test_id="details"
+                        value=Signal::derive(move || details.get())
+                        on_retry=move || retry_details()
+                    />
                     <div class="find">
                         <label>
                             "go to object"
@@ -625,6 +848,69 @@ mod app {
                         <p role="status" aria-label="find result" data-testid="find-result">
                             {move || find_result.get()}
                         </p>
+                    </div>
+
+                    // One area with part of the theme changed. Everything it
+                    // does not name inherits, so the panel around it and the
+                    // region beside it keep the scope's own values.
+                    <ThemeOverride patch=patch class="emphasis" test_id="emphasis">
+                        <Button
+                            test_id="toggle-emphasis"
+                            aria_label="emphasise the summary"
+                            on_click=move || emphasis.update(|on| *on = !*on)
+                        >
+                            {move || {
+                                if emphasis.get() { "plain summary" } else { "emphasise summary" }
+                            }}
+                        </Button>
+                        <p role="status" aria-label="summary" data-testid="emphasis-summary">
+                            {move || {
+                                let (index, total) = position.get();
+                                format!(
+                                    "object {} of {total}",
+                                    index.map(|i| i + 1).unwrap_or(0),
+                                )
+                            }}
+                        </p>
+                    </ThemeOverride>
+
+                    // A component the SDK did not write, at a fixed version,
+                    // with its own initialization and teardown.
+                    // Two controls for one value on purpose: the SDK's slider
+                    // above and this one. A real application would show one;
+                    // what is being checked here is that a component the SDK
+                    // did not write can be rebuilt beside a region without
+                    // leaving anything behind. The group carries the name, so
+                    // the component's own handle is not a nameless second
+                    // slider in the tree.
+                    <div
+                        class="third-party-slot"
+                        role="group"
+                        aria-labelledby=label_id.clone()
+                    >
+                        // The id is per scope: two scopes on one page would
+                        // otherwise put the same id on two elements, and an
+                        // `aria-labelledby` resolves to whichever came first.
+                        <p id=label_id.clone()>"size, by a third-party component"</p>
+                        <Show when=move || third_party_present.get() fallback=|| ()>
+                            <ThirdPartySlider
+                                test_id="third-party-size"
+                                value=Signal::derive(move || {
+                                    current.get().map(|o| o.size).unwrap_or(0.0)
+                                })
+                                on_change=move |size| set_size(size)
+                                on_update=move || third_party_updates.update(|n| *n += 1)
+                            />
+                        </Show>
+                        <Button
+                            test_id="toggle-third-party"
+                            aria_label="rebuild the third-party component"
+                            on_click=move || {
+                                third_party_present.update(|present| *present = !*present)
+                            }
+                        >
+                            "rebuild"
+                        </Button>
                     </div>
                 </section>
                 <div>
@@ -653,6 +939,9 @@ mod app {
                                 current.get().map(|o| o.name).unwrap_or_default()
                             })
                             on_commit=move |value| {
+                                // A refused commit still ends the session; the
+                                // region goes back to drawing the name the
+                                // application holds, and the panel says why.
                                 rename(value);
                                 editing.set(None);
                             }
@@ -706,6 +995,68 @@ mod app {
                     }}
                 </div>
             </div>
+            <section class="catalogue" aria-label="component catalogue">
+                <h2>"components"</h2>
+                <table data-testid="catalogue">
+                    <thead>
+                    <tr>
+                        <th scope="col">"category"</th>
+                        <th scope="col">"DOM"</th>
+                        <th scope="col">"GPU"</th>
+                        <th scope="col">"across regions"</th>
+                        <th scope="col">"properties"</th>
+                        <th scope="col">"actions"</th>
+                        <th scope="col">"theme"</th>
+                        <th scope="col">"input"</th>
+                        <th scope="col">"accessibility"</th>
+                        <th scope="col">"environment"</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {CATALOG
+                        .iter()
+                        .map(|entry| {
+                            let cells = entry
+                                .capabilities()
+                                .into_iter()
+                                .map(|(class, capability)| {
+                                    view! {
+                                        <td data-class=class data-support=capability
+                                            .support
+                                            .name()>
+                                            {capability.note}
+                                        </td>
+                                    }
+                                })
+                                .collect_view();
+                            view! {
+                                <tr
+                                    data-testid=format!("catalogue-{}", entry.category.name())
+                                    data-shipped=entry.shipped().to_string()
+                                >
+                                    <th scope="row">{entry.category.name()}</th>
+                                    <td data-support=entry
+                                        .presentation
+                                        .dom
+                                        .name()>{support(entry.presentation.dom)}</td>
+                                    <td data-support=entry
+                                        .presentation
+                                        .gpu
+                                        .name()>{support(entry.presentation.gpu)}</td>
+                                    <td data-support=entry
+                                        .presentation
+                                        .across_regions
+                                        .name()>
+                                        {support(entry.presentation.across_regions)}
+                                    </td>
+                                    {cells}
+                                </tr>
+                            }
+                        })
+                        .collect_view()}
+                    </tbody>
+                </table>
+            </section>
         }
     }
 
@@ -761,11 +1112,10 @@ mod app {
     /// first two are final answers; only `not_found` can still change.
     #[wasm_bindgen]
     pub fn workbench_lookup_object(id: u32) -> String {
-        let known = SELECT_BY_ID.with(|slot| slot.borrow().is_some());
-        if !known {
+        let Some(exists) = newest(&EXISTS) else {
             return "not_found".to_string();
-        }
-        if EXISTS.with(|exists| exists.borrow().as_ref().is_some_and(|exists| exists(id))) {
+        };
+        if exists(id) {
             return "found".to_string();
         }
         if DELETED.with(|deleted| deleted.borrow().contains(&id)) {
@@ -778,10 +1128,24 @@ mod app {
     /// `outcome`: `empty`, `error`, or any other text as the value.
     #[wasm_bindgen]
     pub fn workbench_start_load(delay_ms: i32, outcome: &str) -> bool {
-        let start = START_LOAD.with(|slot| slot.borrow().as_ref().map(|(_, f)| f.clone()));
+        let start = newest(&START_LOAD);
         match start {
             Some(start) => {
                 start(delay_ms, outcome.to_string());
+                true
+            }
+            None => false,
+        }
+    }
+
+    /// Puts the third-party component into the view or takes it out, so a
+    /// rebuild is driven from outside the application.
+    #[wasm_bindgen]
+    pub fn workbench_set_third_party(present: bool) -> bool {
+        let set = newest(&PRESENT);
+        match set {
+            Some(set) => {
+                set(present);
                 true
             }
             None => false,
@@ -792,7 +1156,7 @@ mod app {
     /// an ambiguous binding can be exercised instead of assumed.
     #[wasm_bindgen]
     pub fn workbench_inject_duplicate_id() -> bool {
-        let inject = INJECT_DUPLICATE.with(|slot| slot.borrow().clone());
+        let inject = newest(&INJECT_DUPLICATE);
         match inject {
             Some(inject) => {
                 inject();

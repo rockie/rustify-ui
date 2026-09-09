@@ -11,6 +11,17 @@ use std::path::Path;
 #[derive(Deserialize)]
 struct SourcesLock {
     makepad: MakepadSection,
+    #[serde(default)]
+    vendor: Vec<VendorSection>,
+}
+
+/// One fixed-version third-party browser file set, imported whole so a fresh
+/// checkout builds without reaching a registry.
+#[derive(Deserialize)]
+pub struct VendorSection {
+    pub name: String,
+    pub version: String,
+    pub files: BTreeMap<String, String>,
 }
 
 #[derive(Deserialize)]
@@ -128,6 +139,35 @@ fn verify() -> Result<(), String> {
     }
     for path in &drift.removed {
         println!("  removed  {path}");
+    }
+    let mut wrong = Vec::new();
+    for vendored in &lock.vendor {
+        let mut current = BTreeMap::new();
+        for path in vendored.files.keys() {
+            let bytes = std::fs::read(root.join(path))
+                .map_err(|e| format!("{path}: {e}; a vendored file is part of the checkout"))?;
+            current.insert(path.clone(), hex(&Sha256::digest(&bytes)));
+        }
+        let changed = self::drift(&vendored.files, &current);
+        println!(
+            "vendor {} {}: {} files, {} modified",
+            vendored.name,
+            vendored.version,
+            vendored.files.len(),
+            changed.modified.len()
+        );
+        for path in &changed.modified {
+            println!("  modified {path}");
+            wrong.push(path.clone());
+        }
+    }
+    if !wrong.is_empty() {
+        // A modified fork is ordinary; a modified third-party file is not that
+        // version any more, and the version is the whole claim.
+        return Err(format!(
+            "vendored files no longer match the version they were imported at: {}",
+            wrong.join(", ")
+        ));
     }
     Ok(())
 }

@@ -21,12 +21,12 @@ export default defineConfig({
     projects: [
         {
             name: "fusion-basic",
-            testMatch: ["m1-probes.spec.ts", "m2-runtime.spec.ts", "m3-state.spec.ts", "m4-geometry.spec.ts", "m4-overlay.spec.ts"],
+            testMatch: ["m1-probes.spec.ts", "m2-runtime.spec.ts", "m3-state.spec.ts", "m4-geometry.spec.ts", "m4-overlay.spec.ts", "m6-mainpath.spec.ts"],
             use: { baseURL: `http://127.0.0.1:${fusionPort}/` },
         },
         {
             name: "property-workbench",
-            testMatch: ["m3-workbench.spec.ts", "m5-text.spec.ts", "m5-semantics.spec.ts", "m6-theme.spec.ts", "m6-async.spec.ts"],
+            testMatch: ["m3-workbench.spec.ts", "m5-text.spec.ts", "m5-semantics.spec.ts", "m6-theme.spec.ts", "m6-async.spec.ts", "m6-components.spec.ts"],
             use: { baseURL: `http://127.0.0.1:${workbenchPort}/` },
         },
     ],
