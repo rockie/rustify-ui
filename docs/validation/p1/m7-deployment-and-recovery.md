@@ -4,7 +4,24 @@ Date: 2026-09-09. Machine: macOS (Darwin 25.6.0), Apple Silicon, rustc 1.97.0-ni
 
 ## Status
 
-M7 is **not closed**. Most of its exit conditions have a passing automated result; the gaps are listed under "What is not done" and are specific, not general.
+Every exit condition in M7's milestone row now has a passing automated result. It is **not recorded as closed**, for the same reason M6 is not: the plan runs its milestones in order, and M5 is still waiting on two checks only a person can do. Nothing in M7 waits on anything.
+
+| M7 exit condition | Where it is met |
+| --- | --- |
+| V8: WebGL2 denied | `a region denied a GPU context says so and keeps its DOM half working` (M2), plus the two-second bound below |
+| V8: three classes of asset failure | `a missing / corrupt / truncated font costs glyphs, not the application` |
+| V8: twenty context losses with edits between | `twenty losses, with the state edited between them, lose nothing` |
+| V8: shared runtime trap | `every mount in the runtime is dead, and the page says which` |
+| V8: a cause and an alternative within a bound | `says so within two seconds and leaves the DOM half working` |
+| V8: the rebuilt region has the current state | `comes back with the state the application still holds` |
+| V9: root, sub-path, embedded in an existing page | `boots, draws, and leaves the page it was embedded in alone`, plus the root deployment every other project runs against |
+| V9: no cross-origin isolation, no dynamic JS | `boots without cross-origin isolation and draws into the region`, `no dynamic JS execution is needed and the bridge hash matches` (M1) |
+| V9: restricted CSP, nothing unknown outbound | `asks for nothing but its own build` |
+| V9: assets from two builds | `a bridge that claims another build stops the start and says so` |
+| V9: ordinary text that contains script | `is a value, not markup and not a script` |
+| V9: the resource total is accurate | `cargo xtask report-size --example <name> --release` |
+| V9: diagnostics bounded, truncation transparent | `filling it past its ceiling keeps the newest and says how many went` |
+| Shared-trap limits written into the capability document | `docs/compatibility.md`, "Deployment" |
 
 | Command | Result |
 | --- | --- |
@@ -15,7 +32,7 @@ M7 is **not closed**. Most of its exit conditions have a passing automated resul
 | `cd makepad && cargo test` | 13 |
 | `cargo clippy --workspace --all-targets -- -D warnings` | no warnings |
 | `cargo fmt --all -- --check` | passes |
-| `npx playwright test --project=property-workbench` | **61/61** |
+| `npx playwright test --project=property-workbench` | **62/62** |
 | `npx playwright test --project=fusion-basic` | **46/46** |
 | `npx playwright test --project=deployment` | **6/6** |
 

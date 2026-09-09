@@ -201,6 +201,42 @@ test.describe("M7 V9 / NFR-4: a capability a region does not get", () => {
     });
 });
 
+test.describe("M7 V9 / NFR-4: ordinary text that looks like code", () => {
+    test("is a value, not markup and not a script", async ({ page }) => {
+        const failures: string[] = [];
+        page.on("pageerror", (error) => failures.push(String(error)));
+        await waitForReady(page);
+
+        const name = page.getByRole("textbox", { name: "name" });
+        // Text a user might genuinely type, that a careless renderer would
+        // run. Each is short enough to pass the application's own name rule,
+        // so what is being tested is the rendering and not the validation.
+        for (const hostile of ["<script>window.x=1</script>", "<img src=x onerror=alert(1)>"]) {
+            await name.fill(hostile);
+
+            // It reached the application unchanged, and it is in the control
+            // as text.
+            expect(await snapshot(page)).toMatchObject({ name: hostile });
+            await expect(name).toHaveValue(hostile);
+
+            // It made no elements and ran nothing. The SDK's controls set
+            // values and text nodes, never `innerHTML`.
+            expect(
+                await page.evaluate(() => ({
+                    ran: (window as Record<string, unknown>).x ?? null,
+                    scripts: document.querySelectorAll("[data-rustify-scope] script").length,
+                    images: document.querySelectorAll("[data-rustify-scope] img").length,
+                }))
+            ).toEqual({ ran: null, scripts: 0, images: 0 });
+
+            // And the region draws it as glyphs rather than interpreting it.
+            await settle(page.getByTestId("workbench-gpu"));
+            expect(await snapshot(page)).toMatchObject({ name: hostile });
+        }
+        expect(failures).toEqual([]);
+    });
+});
+
 test.describe("M7 V9: a bounded record that says when it is a tail", () => {
     test("the record names the runtime, the build, and what it dropped", async ({ page }) => {
         await waitForReady(page);
