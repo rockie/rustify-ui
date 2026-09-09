@@ -16,7 +16,7 @@ mod app {
         mount, Anchor, AppHandle, GpuRegion, LocalRect, MountConfig, RegionState, TextEdit,
     };
     use std::cell::{Cell, RefCell};
-    use std::collections::BTreeMap;
+    use std::collections::{BTreeMap, BTreeSet};
     use std::marker::PhantomData;
     use std::rc::Rc;
     use std::sync::Arc;
@@ -57,6 +57,16 @@ mod app {
         static INJECT_DUPLICATE: RefCell<Option<Rc<dyn Fn()>>> = const { RefCell::new(None) };
         /// Armed by the page for exactly one action, then spent.
         static CLOSE_ON_ACTION: Cell<bool> = const { Cell::new(false) };
+        /// Ids the application has deleted, so a lookup can tell a name that
+        /// never existed from one that is gone.
+        static DELETED: RefCell<BTreeSet<u32>> = const { RefCell::new(BTreeSet::new()) };
+        /// Registered by the live scope: selects an object by id and reports
+        /// whether it could.
+        static SELECT_BY_ID: RefCell<Option<Rc<dyn Fn(u32) -> bool>>> =
+            const { RefCell::new(None) };
+        /// Reads whether an id is in the application's current state, without
+        /// selecting it.
+        static EXISTS: RefCell<Option<Rc<dyn Fn(u32) -> bool>>> = const { RefCell::new(None) };
     }
 
     /// Drops every scope this page mounted. Called from inside an action
@@ -191,6 +201,7 @@ mod app {
         let delete_selected = move || {
             let Some(id) = selected.get() else { return };
             objects.update(|objects| objects.retain(|o| o.id != id));
+            DELETED.with(|deleted| deleted.borrow_mut().insert(id.0));
             selected.set(None);
         };
 
@@ -231,6 +242,12 @@ mod app {
                     .map(|object| object.id)
                     .collect()
             });
+            DELETED.with(|deleted| {
+                let mut deleted = deleted.borrow_mut();
+                for id in &dropped {
+                    deleted.insert(id.0);
+                }
+            });
             objects.update(|objects| objects.retain(|o| !dropped.contains(&o.id)));
             if selected.get().is_some_and(|id| dropped.contains(&id)) {
                 selected.set(None);
@@ -249,6 +266,38 @@ mod app {
         };
         INJECT_DUPLICATE.with(|slot| *slot.borrow_mut() = Some(Rc::new(inject_duplicate)));
         on_cleanup(|| INJECT_DUPLICATE.with(|slot| *slot.borrow_mut() = None));
+
+        // The same rule a click on the grid takes, reachable without a
+        // pointer: the DOM path and the GPU path end in one place.
+        let select_by_id = move |id: u32| {
+            let known = objects.with(|objects| objects.iter().any(|o| o.id.0 == id));
+            if known {
+                selected.set(Some(ObjectId(id)));
+            }
+            known
+        };
+        SELECT_BY_ID.with(|slot| *slot.borrow_mut() = Some(Rc::new(select_by_id)));
+        let exists = move |id: u32| objects.with(|objects| objects.iter().any(|o| o.id.0 == id));
+        EXISTS.with(|slot| *slot.borrow_mut() = Some(Rc::new(exists)));
+        on_cleanup(|| {
+            SELECT_BY_ID.with(|slot| *slot.borrow_mut() = None);
+            EXISTS.with(|slot| *slot.borrow_mut() = None);
+        });
+        let find_id = RwSignal::new(String::new());
+        let find_result = RwSignal::new(String::new());
+        let find = move || {
+            let Ok(id) = find_id.get().trim().parse::<u32>() else {
+                find_result.set("enter an object number".to_string());
+                return;
+            };
+            if select_by_id(id) {
+                find_result.set(format!("selected object {id}"));
+            } else if DELETED.with(|deleted| deleted.borrow().contains(&id)) {
+                find_result.set(format!("object {id} has been deleted"));
+            } else {
+                find_result.set(format!("no object {id}"));
+            }
+        };
 
         let rejected = RwSignal::new(None::<u32>);
         // Actions the scope refused because its queue was full. They never ran
@@ -355,7 +404,8 @@ mod app {
 
         view! {
             <div class="workbench">
-                <div class="panel">
+                <section class="panel" aria-label="object properties">
+                    <h2>"properties"</h2>
                     <p>
                         "selected: "
                         <span data-testid="selected-id">
@@ -424,8 +474,29 @@ mod app {
                             {format!("object {id} appears twice; the grid kept the last unambiguous list")}
                         </p>
                     })}
-                    <p>"objects: " <span data-testid="object-count">{move || position.get().1}</span></p>
-                </div>
+                    <p role="status" aria-label="object count">
+                        "objects: "
+                        <span data-testid="object-count">{move || position.get().1}</span>
+                    </p>
+                    <div class="find">
+                        <label>
+                            "go to object"
+                            <input
+                                type="text"
+                                inputmode="numeric"
+                                data-testid="find-object-id"
+                                prop:value=move || find_id.get()
+                                on:input:target=move |ev| find_id.set(ev.target().value())
+                            />
+                        </label>
+                        <button type="button" data-testid="find-object" on:click=move |_| find()>
+                            "go"
+                        </button>
+                        <p role="status" aria-label="find result" data-testid="find-result">
+                            {move || find_result.get()}
+                        </p>
+                    </div>
+                </section>
                 <div>
                     <GpuRegion
                         app=app
@@ -516,6 +587,24 @@ mod app {
     #[wasm_bindgen]
     pub fn workbench_close_on_next_action() {
         CLOSE_ON_ACTION.with(|armed| armed.set(true));
+    }
+
+    /// What the application can say about one object identity right now:
+    /// `found`, `disposed` for one it has deleted, `not_found` otherwise. The
+    /// first two are final answers; only `not_found` can still change.
+    #[wasm_bindgen]
+    pub fn workbench_lookup_object(id: u32) -> String {
+        let known = SELECT_BY_ID.with(|slot| slot.borrow().is_some());
+        if !known {
+            return "not_found".to_string();
+        }
+        if EXISTS.with(|exists| exists.borrow().as_ref().is_some_and(|exists| exists(id))) {
+            return "found".to_string();
+        }
+        if DELETED.with(|deleted| deleted.borrow().contains(&id)) {
+            return "disposed".to_string();
+        }
+        "not_found".to_string()
     }
 
     /// Breaks the application's own id invariant on purpose, so the refusal of

@@ -28,18 +28,23 @@
 
 ### 恢复快照
 
-- 最近更新：2026-09-09，**M4 已关闭**；下一会话从 M5（原生文本编辑与可访问旅程）开始。
+- 最近更新：2026-09-09，M4 已关闭，**M5 实施中（自动化部分已完成，人工部分未做）**；下一会话从本节的「M5 现状」继续。
 - 当前进度：4/8 个里程碑完成。
-- 代码基线：`3f8e5c3`（M1 首轮）→ `6bb15a1`（M1 收尾并关闭）→ `8427bff`（M2 关闭）→ `d086339`…`6d02836`（M3 的五个提交）→ `6d2017e`、`465f180`（两轮评审修正）→ `7ffab2a`（M3 关闭）→ `e2ba381`（M4 几何）→ 本次 M4 收尾提交（`git log -1`）。工作区 clean。
-- 已通过的验证（2026-09-09 本机）：`cargo xtask doctor` 8/8；`cargo test --workspace --lib` 17（registry 3、scheduler 5、binding 9、overlay 3）；`cargo test -p xtask` 10；`cd makepad && cargo test` 13；`cargo clippy --workspace --all-targets -- -D warnings` 无警告；`cargo fmt --all -- --check` 通过；两个示例各 `cargo xtask build-web --release` 通过；`npx playwright test --project=fusion-basic` **42/42**（m1-probes 8、m2-runtime 11、m3-state 2、m4-geometry 12、m4-overlay 9）；`npx playwright test --project=property-workbench` **19/19** 回归。
+- 代码基线：`3f8e5c3`（M1 首轮）→ `6bb15a1`（M1 收尾并关闭）→ `8427bff`（M2 关闭）→ `d086339`…`6d02836`（M3 的五个提交）→ `6d2017e`、`465f180`（两轮评审修正）→ `7ffab2a`（M3 关闭）→ `e2ba381`、`34fb0e9`（M4 关闭）→ `e0d203d`（M5 文本会话）→ 本次 M5 语义提交（`git log -1`）。工作区 clean。
+- 已通过的验证（2026-09-09 本机）：`cargo xtask doctor` 8/8；`cargo test --workspace --lib` 17（registry 3、scheduler 5、binding 9、overlay 3）；`cargo test -p xtask` 10；`cd makepad && cargo test` 13；`cargo clippy --workspace --all-targets -- -D warnings` 无警告；`cargo fmt --all -- --check` 通过；两个示例各 `cargo xtask build-web --release` 通过；`npx playwright test --project=property-workbench` **31/31**（m3-workbench 19、m5-text 7、m5-semantics 5）；`npx playwright test --project=fusion-basic` **42/42**。
 - M4 退出条件对照：全部满足，逐条证据见 `docs/validation/p1/m4-geometry.md`。
-- M4 的夹具：`fusion-basic` 新增按需挂载的几何夹具（页面调用 `mount_geometry`，所以 M1–M3 的探针看到的还是它们自己的作用域）——两层滚动容器里一块 20 个锚点的区域（内层比区域窄且矮，两边都裁），外加 20 个焦点项、从 GPU 锚点打开的菜单和一个模态框。区域自己上报它把每个锚点画在哪、点击命中了哪一个（`examples/fusion-basic/src/anchor_grid.rs`），于是显示与命中都对着同一份声明核对，而不是对着测试里另抄一份布局。
-- M4 的实现变更：**分辨率变化要有人听**——DPR 变了但画布的 CSS 盒子一模一样，尺寸观察器不会响，后备存储就停在旧分辨率；嵌入区域改为监听当前分辨率的 media query 并在新比例上重新武装（`makepad/platform/src/os/web/web.js`）。**`RegionState::Suspended`**——被布局成 0 或被隐藏的画布既不是失败也不是销毁；宿主上报状态（`crates/rustify-makepad/web/embedded.js`），区域在没有面积时停泵，排队的工作在恢复后的那次泵里跑。**作用域的浮层栈**（`crates/rustify-ui/src/overlay.rs`）——`mount` 给作用域两个根：内容根与其上的浮层面；`Layer` 组件 portal 进浮层面，锚在 GPU 区域内的一个矩形或一个元素上，并在它们之间任何容器滚动时跟着走；模态层把内容根设为 `inert`，被盖住的控件点不到、聚不到、也读不出来；每个作用域一个捕获阶段的 keydown 监听，一次 Esc 只关一层，并在应用自己的命令看到这个键之前拦下它。**焦点回到它来的地方**——层记下打开时谁持有键盘，关闭时还回去；那个元素已经不在就交给作用域自己；而如果用户早已把焦点移到别处，层关闭时不去抢。
-- 已知限制（写进报告而不是修掉）：层只放在锚点下方，不翻转也不夹回视口——锚点靠近视口下沿时层也在那里，R09/R10 没有要求翻转；模态只让本作用域 inert，不对浏览器界面或作用域之外的宿主页面设焦点陷阱；缩放矩阵用「设备像素比 + 相应缩小的 CSS 视口」来模拟，这正是浏览器缩放对页面做的事，Chrome 的模拟在只改比例时不重算分辨率 media query，所以实时缩放用例两者一起改。
+- **M5 现状**：能不靠人验证的部分已交付并通过，逐条证据见 `docs/validation/p1/m5-text-and-semantics.md`。
+  - 已做（原生文本会话）：`crates/rustify-ui/src/text.rs` 的 `TextEdit`——区域画出文本后交出它画进去的那个矩形，真正的 `input`/`textarea` 在会话期间占据这个矩形，光标、选区、系统撤销和输入法都是浏览器的，不是重画一遍。会话是受控的：以应用持有的值打开，只提议新值；外部把同一个字段改掉时，会话以「失效」结束而不是把草稿盖上去。7 条浏览器用例，含「组合期间 Enter 不提交、Esc 不关层」「一次组合只产出一个值，不是每个事件一个」。
+  - 已做（键序）：作用域捕获阶段的 keydown 现在按 §6.2 排序——组合/原生编辑 → 栈顶浮层 → 应用命令；组合期间这两个键谁也拿不到。
+  - 已做（语义）：区域画布带 `aria-hidden`（它的像素是装饰，画出来的每个有意义的控件在 DOM 里都有入口）；工作台面板补齐 20 个可按角色+名称定位的控件；新增「按编号找对象」的 DOM 入口，与 GPU 点击走同一条选择规则；`UiError` 增加 `NotFound`/`Disposed`/`Timeout`，页面查找入口在 5 秒上限内给出这三种答案之一（已删除的对象与从未存在的对象答案不同）；五条纯键盘旅程。
+  - **未做（只能由人做，按 §9.4 不得用合成事件替代、不得记录通过）**：① 真实 macOS 拼音输入 20 条中文短句（合成的 composition 事件只覆盖事件规则，覆盖不了真实输入法自己的事件序列、候选窗与提交时机）；② VoiceOver + Chrome 五条旅程的名称/角色/值/状态、无重复朗读、无焦点陷阱。人工记录需含设备、OS、浏览器、辅助技术版本、build id、步骤、预期与结果。
+  - 未做（可自动化但尚未做）：多行编辑态（`TextEdit` 支持 `multiline`，但还没有示例用它，因此没有浏览器覆盖）；会话内的 Unicode 选择/删除/撤销未单独断言；「字体来源明确」尚未写成文档章节（来源本身已在 `sources.lock.json` 与字体许可里）。
+- 已知限制（写进报告而不是修掉）：浮层只放在锚点下方，不翻转也不夹回视口；模态只让本作用域 inert；缩放矩阵用「设备像素比 + 相应缩小的 CSS 视口」模拟。
+- 已知坑（本轮踩到，避免再踩）：Label 的 `area()` 是它画出的墨迹而不是它拿到的盒子，靠它做命中会一次也命中不了——要命中就自己画一个盒子（本轮的 `NameField`）；`DrawText` 的 `text_style` 用 `:` 替换会丢掉默认字体、一个字也不画，必须用 `+:` 合并，或者干脆让 `Label` 画字、自定义控件只拿盒子（本轮采用后者）。这与 M3 记过的 `draw_bg` 那条是同一个坑的两个位置。
 - 待办（不阻塞）：审计每区域重复加载字体的内存（`IBMPlexSans-Text.ttf` 每区域各取一次，4 区域线性内存 124 MB）。
 - 已知环境事实：headless 探针跑在 SwiftShader 软件 WebGL 上；Playwright 进程测到的挂载/卸载耗时比页内测量大 10–30 倍，属于测试夹具开销，不计入 A-6 的测量合同。本机内存紧张时整套浏览器用例会被系统杀掉，按 project 分开跑更稳；重新构建产物前先确认没有用例在跑，`serve` 正伺服同一个目录。
-- 下一步：M5 · 原生文本编辑和可访问旅程——text/semantics、单多行编辑态、语义定位与 DOM 等价入口、中文字体及人工记录；退出条件为 V5/V6 当前功能全项、真实 Chrome 拼音与 VoiceOver+Chrome 通过（Safari 为观察项）、组合不误提交、焦点可达、无重复语义、字体来源明确。**注意 V5/V6 有两项只能由人来做**（真实 macOS 拼音 20 条短句、VoiceOver+Chrome 五条旅程）：按 §9.4，无人具备对应环境时不得用合成事件替代、不得记录通过，M5 只能记为部分完成并如实标注缺口。
-- 当前阻塞：无。A-1/A-2/A-3/A-4/A-5/A-6 全部解除，计划状态为 Ready。
+- 下一步：先补 M5 剩余的可自动化项（多行编辑示例、字体来源文档），然后把人工两项交给用户；人工项未完成前 M5 不记为完成，也不能进入 M6。
+- 当前阻塞：M5 的两项人工验证需要用户（真实拼音、VoiceOver）。其余无阻塞。
 
 ### 完成记录
 

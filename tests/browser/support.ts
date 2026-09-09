@@ -119,6 +119,8 @@ declare global {
             };
             inject_duplicate_id(): boolean;
             close_on_next_action(): void;
+            lookup_object(id: number): string;
+            await_object(id: number, timeout_ms?: number): Promise<string>;
             stats(): {
                 regions: number;
                 timers: number;

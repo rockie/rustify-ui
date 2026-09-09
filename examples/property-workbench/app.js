@@ -42,6 +42,25 @@ boot({ wasm_url: new URL("./property-workbench.wasm", import.meta.url), on_fatal
             snapshot() {
                 return JSON.parse(app.workbench_snapshot());
             },
+            lookup_object(id) {
+                return app.workbench_lookup_object(id);
+            },
+            // R25's wait: bounded at five seconds, and the only outcome the
+            // deadline can produce is a timeout - found and disposed are
+            // answers the application already has.
+            async await_object(id, timeout_ms = 5000) {
+                const deadline = performance.now() + Math.min(timeout_ms, 5000);
+                for (;;) {
+                    const outcome = app.workbench_lookup_object(id);
+                    if (outcome !== "not_found") {
+                        return outcome;
+                    }
+                    if (performance.now() >= deadline) {
+                        return "timeout";
+                    }
+                    await new Promise((resolve) => setTimeout(resolve, 50));
+                }
+            },
             inject_duplicate_id() {
                 return app.workbench_inject_duplicate_id();
             },

@@ -164,7 +164,10 @@ where
         }
     });
 
-    view! { <canvas node_ref=canvas class=class data-testid=test_id /> }
+    // The pixels a region draws are decoration: every control it draws that
+    // means something has a DOM entry of its own, and a screen reader that
+    // walked the canvas would only find a second, mute copy of it.
+    view! { <canvas node_ref=canvas class=class data-testid=test_id aria-hidden="true" /> }
 }
 
 /// Delivers the pending actions, giving the browser a turn between batches so

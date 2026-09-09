@@ -26,7 +26,7 @@ export default defineConfig({
         },
         {
             name: "property-workbench",
-            testMatch: ["m3-workbench.spec.ts", "m5-text.spec.ts"],
+            testMatch: ["m3-workbench.spec.ts", "m5-text.spec.ts", "m5-semantics.spec.ts"],
             use: { baseURL: `http://127.0.0.1:${workbenchPort}/` },
         },
     ],
