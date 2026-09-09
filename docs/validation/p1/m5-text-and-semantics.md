@@ -47,8 +47,14 @@ These are exit conditions of M5 that this machine cannot produce, and they are r
 
 A record for either needs the device, OS, browser and assistive-technology versions, the build id, the steps, the expectation and the result.
 
+### Multi-line editing
+
+The object's notes are several lines; the region shows one of them and hands over its rectangle for a `textarea` tall enough to hold the rest. `several lines are edited in a control that can hold them` checks that Enter inserts a line rather than committing, that leaving the control commits, and that every line survives the round trip to the DOM panel's own textarea.
+
+### Fonts
+
+`docs/compatibility.md` now records which font draws what: IBM Plex Sans Text for the Latin UI and the region's labels, LXGW WenKai Regular for any CJK glyph a region draws, fetched on first use; text being edited is drawn by the browser's control and uses the page's font stack. Licences and notices stay in `makepad/widgets/resources/FONT-LICENSES.md`.
+
 ## Also outstanding for M5
 
-- Multi-line editing exists in `TextEdit` (`multiline`) but no example uses it yet, so it has no browser coverage.
 - Unicode selection, deletion and undo inside a session rely on the native control and are not separately asserted.
-- Chinese font provenance is recorded in `sources.lock.json` and the font licences, but M5's "font source is explicit" is not yet written up as a section of the documentation.

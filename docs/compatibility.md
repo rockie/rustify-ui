@@ -38,6 +38,8 @@ future behaviour.
 
 All fonts received with Makepad stay in `makepad/widgets/resources`; licenses and notices are in `makepad/widgets/resources/FONT-LICENSES.md` (OFL 1.1 for all text fonts, GUST Font License for New Computer Modern Math). Both LXGW WenKai weights and Noto Color Emoji pass the readability and licensing gates, so no `--small-fonts` style substitution is used; that option was removed from the fork's build tool. Fonts are fetched lazily by each region when a glyph needs them: a fresh region fetches only `IBMPlexSans-Text.ttf` (181,792 bytes) for the Latin UI; the Chinese font (19,073,964 bytes regular) is fetched on first CJK use. The size report counts every shipped font file (51,187,844 bytes); transfer measurements per journey are an M8 deliverable.
 
+Which font draws what, as of M5: the Latin UI and the region's own labels use IBM Plex Sans Text; any CJK glyph the region draws - the name and notes of an object typed in Chinese, for instance - comes from LXGW WenKai Regular, fetched on first use. Text being *edited* is drawn by the browser's own control, not by the region, so it uses the page's font stack rather than these. Each region fetches the fonts it needs independently, so two regions showing Chinese fetch the 19 MB file twice into linear memory; that is a recorded cost, not a leak, and is on the list to audit.
+
 ## Embedded region capabilities
 
 | Area | State in M1 |

@@ -15,11 +15,22 @@ pub struct SelectionProps {
     /// Every object, in the application's order. Shared rather than copied:
     /// it only changes when the objects do, not when the selection moves.
     pub cells: Arc<Vec<GridCell>>,
+    pub notes: String,
     pub selected: Option<u32>,
     pub hovered: Option<u32>,
     /// While the name is being edited elsewhere, the region draws nothing in
     /// its place: the native control has that rectangle.
     pub editing_name: bool,
+    pub editing_notes: bool,
+}
+
+/// Which piece of text the region is handing over.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum EditField {
+    /// One line.
+    Name,
+    /// Several.
+    Notes,
 }
 
 #[derive(Debug)]
@@ -30,9 +41,10 @@ pub enum SelectionAction {
     /// The object the pointer is over, or `None` once it left the grid. One
     /// per pointer move: a state, not a history.
     Hover(Option<u32>),
-    /// The user asked to edit the name the region draws, and hands over the
-    /// rectangle it drew it into, in the region's local CSS pixels.
-    EditName {
+    /// The user asked to edit text the region draws, and the region hands over
+    /// the rectangle it drew it into, in its own local CSS pixels.
+    Edit {
+        field: EditField,
         x: f64,
         y: f64,
         width: f64,
@@ -65,6 +77,11 @@ script_mod! {
                             spacing: 8
                             align: Center
 
+                            // First in the row on purpose: a control whose
+                            // position depends on the width of a value moves
+                            // out from under the pointer when the value does.
+                            previous_button := Button{ text: "previous" }
+                            next_button := Button{ text: "next" }
                             swatch := RoundedView{
                                 width: 32
                                 height: 32
@@ -90,12 +107,26 @@ script_mod! {
                                     draw_text.text_style.font_size: 14
                                 }
                             }
+                            View{
+                                width: 160
+                                height: 26
+                                flow: Overlay
+                                align: Center
+
+                                notes_field := NameField{
+                                    width: Fill
+                                    height: Fill
+                                }
+                                notes_label := Label{
+                                    width: Fill
+                                    text: "no notes"
+                                    draw_text.text_style.font_size: 14
+                                }
+                            }
                             position_label := Label{
                                 width: 90
                                 text: "0 / 0"
                             }
-                            previous_button := Button{ text: "previous" }
-                            next_button := Button{ text: "next" }
                         }
                         grid := ObjectGrid{
                             width: Fill
@@ -106,6 +137,11 @@ script_mod! {
             }
         }
     }
+}
+
+/// What a multi-line value looks like in a single line of the region.
+fn first_line(notes: &str) -> &str {
+    notes.lines().next().unwrap_or("")
 }
 
 #[derive(Script, ScriptHook)]
@@ -180,20 +216,26 @@ impl RegionApp for ObjectRegion {
             }
         }
         self.ui.handle_event(cx, event, &mut Scope::empty());
-        // The name the region draws is a display of the value; clicking it
-        // asks the application for a real text control over that rectangle.
-        let requested = self
-            .ui
-            .widget(cx, ids!(name_field))
-            .borrow_mut::<NameField>()
-            .and_then(|mut field| field.take_edit_request());
-        if let Some(rect) = requested {
-            outbox.push(SelectionAction::EditName {
-                x: rect.pos.x,
-                y: rect.pos.y,
-                width: rect.size.x,
-                height: rect.size.y,
-            });
+        // The text the region draws is a display of the value; clicking it asks
+        // the application for a real text control over that rectangle.
+        for (field, id) in [
+            (EditField::Name, ids!(name_field)),
+            (EditField::Notes, ids!(notes_field)),
+        ] {
+            let requested = self
+                .ui
+                .widget(cx, id)
+                .borrow_mut::<NameField>()
+                .and_then(|mut box_| box_.take_edit_request());
+            if let Some(rect) = requested {
+                outbox.push(SelectionAction::Edit {
+                    field,
+                    x: rect.pos.x,
+                    y: rect.pos.y,
+                    width: rect.size.x,
+                    height: rect.size.y,
+                });
+            }
         }
         // Polled after the tree has seen the event, so a click is reported in
         // the same pump that handled it.

@@ -8,7 +8,7 @@ mod object_region;
 #[cfg(target_arch = "wasm32")]
 mod app {
     use super::object_grid::GridCell;
-    use super::object_region::{ObjectRegion, SelectionAction, SelectionProps};
+    use super::object_region::{EditField, ObjectRegion, SelectionAction, SelectionProps};
     use leptos::prelude::*;
     use leptos::wasm_bindgen::prelude::*;
     use leptos::wasm_bindgen::JsCast;
@@ -30,6 +30,9 @@ mod app {
     pub struct WorkbenchObject {
         pub id: ObjectId,
         pub name: String,
+        /// Several lines of it, so the region has something a single-line
+        /// control could not hold.
+        pub notes: String,
         /// `0xRRGGBB`.
         pub color: u32,
     }
@@ -42,6 +45,7 @@ mod app {
             .map(|n| WorkbenchObject {
                 id: ObjectId(n),
                 name: format!("object-{n:04}"),
+                notes: format!("note {n}\nsecond line"),
                 color: PALETTE[(n as usize - 1) % PALETTE.len()],
             })
             .collect()
@@ -134,7 +138,7 @@ mod app {
         let hovered = RwSignal::new(None::<ObjectId>);
         // The rectangle the region drew the name into, while a native control
         // is editing it. The application decides when the session exists.
-        let editing = RwSignal::new(None::<LocalRect>);
+        let editing = RwSignal::new(None::<(EditField, LocalRect)>);
         // How many edit sessions ended because the value moved underneath them.
         let invalidated = RwSignal::new(0u32);
         let canvas = NodeRef::<leptos::html::Canvas>::new();
@@ -144,25 +148,31 @@ mod app {
             let cells = cells.get();
             let selected = selected.get().map(|id| id.0);
             let hovered = hovered.get().map(|id| id.0);
-            let editing_name = editing.get().is_some();
+            let editing = editing.get();
+            let editing_name = matches!(editing, Some((EditField::Name, _)));
+            let editing_notes = matches!(editing, Some((EditField::Notes, _)));
             match current.get() {
                 Some(object) => SelectionProps {
                     name: object.name,
+                    notes: object.notes,
                     position: format!("{} / {}", index.map(|i| i + 1).unwrap_or(0), total),
                     color: object.color,
                     cells,
                     selected,
                     hovered,
                     editing_name,
+                    editing_notes,
                 },
                 None => SelectionProps {
                     name: "no selection".to_string(),
+                    notes: String::new(),
                     position: format!("0 / {total}"),
                     color: 0x101828,
                     cells,
                     selected,
                     hovered,
                     editing_name,
+                    editing_notes,
                 },
             }
         });
@@ -187,6 +197,14 @@ mod app {
             objects.update(|objects| {
                 if let Some(object) = objects.iter_mut().find(|o| o.id == id) {
                     object.name = name;
+                }
+            });
+        };
+        let renote = move |notes: String| {
+            let Some(id) = selected.get() else { return };
+            objects.update(|objects| {
+                if let Some(object) = objects.iter_mut().find(|o| o.id == id) {
+                    object.notes = notes;
                 }
             });
         };
@@ -227,6 +245,7 @@ mod app {
                     objects.push(WorkbenchObject {
                         id: ObjectId(next),
                         name: format!("object-{next:04}"),
+                        notes: format!("note {next}\nsecond line"),
                         color: PALETTE[(next as usize) % PALETTE.len()],
                     });
                     next += 1;
@@ -316,7 +335,7 @@ mod app {
             let (index, total) = position.get();
             let current = current.get();
             let snapshot = format!(
-                "{{\"count\":{},\"position\":{},\"selected\":{},\"name\":{},\"color\":\"{}\",\"first_colors\":\"{}\",\"first_ids\":\"{}\",\"accepted\":{},\"refused\":{},\"hovered\":{},\"hovers\":{},\"editing\":{},\"invalidated\":{}}}",
+                "{{\"count\":{},\"position\":{},\"selected\":{},\"name\":{},\"color\":\"{}\",\"first_colors\":\"{}\",\"first_ids\":\"{}\",\"accepted\":{},\"refused\":{},\"hovered\":{},\"hovers\":{},\"editing\":{},\"invalidated\":{},\"notes\":{}}}",
                 total,
                 index.map(|i| i as i64 + 1).unwrap_or(0),
                 current
@@ -357,6 +376,10 @@ mod app {
                 hovers.get(),
                 editing.get().is_some(),
                 invalidated.get(),
+                current
+                    .as_ref()
+                    .map(|o| json_string(&o.notes))
+                    .unwrap_or_else(|| "null".to_string()),
             );
             SNAPSHOT.with(|slot| *slot.borrow_mut() = snapshot);
         });
@@ -381,7 +404,8 @@ mod app {
                     accepted.update(|n| *n += 1);
                     selected.set(Some(ObjectId(id)));
                 }
-                SelectionAction::EditName {
+                SelectionAction::Edit {
+                    field,
                     x,
                     y,
                     width,
@@ -389,7 +413,7 @@ mod app {
                 } => {
                     accepted.update(|n| *n += 1);
                     if current.get().is_some() {
-                        editing.set(Some(LocalRect::new(x, y, width, height)));
+                        editing.set(Some((field, LocalRect::new(x, y, width, height))));
                     }
                 }
                 SelectionAction::RejectedDuplicate(id) => {
@@ -421,6 +445,16 @@ mod app {
                             prop:disabled=move || current.get().is_none()
                             on:input:target=move |ev| rename(ev.target().value())
                         />
+                    </label>
+                    <label>
+                        "notes"
+                        <textarea
+                            data-testid="notes-input"
+                            rows="2"
+                            prop:value=move || current.get().map(|o| o.notes).unwrap_or_default()
+                            prop:disabled=move || current.get().is_none()
+                            on:input:target=move |ev| renote(ev.target().value())
+                        ></textarea>
                     </label>
                     <div class="swatches">
                         {PALETTE
@@ -508,10 +542,15 @@ mod app {
                         class="gpu-region"
                         test_id="workbench-gpu"
                     />
-                    <Show when=move || editing.get().is_some() fallback=|| ()>
+                    <Show
+                        when=move || matches!(editing.get(), Some((EditField::Name, _)))
+                        fallback=|| ()
+                    >
                         <TextEdit
                             anchor=Signal::derive(move || match (canvas.get(), editing.get()) {
-                                (Some(canvas), Some(rect)) => Anchor::region(&canvas.into(), rect),
+                                (Some(canvas), Some((_, rect))) => {
+                                    Anchor::region(&canvas.into(), rect)
+                                }
                                 _ => Anchor::Centred,
                             })
                             value=Signal::derive(move || {
@@ -527,6 +566,38 @@ mod app {
                                 editing.set(None);
                             }
                             test_id="gpu-name-edit"
+                        />
+                    </Show>
+                    <Show
+                        when=move || matches!(editing.get(), Some((EditField::Notes, _)))
+                        fallback=|| ()
+                    >
+                        <TextEdit
+                            multiline=true
+                            anchor=Signal::derive(move || match (canvas.get(), editing.get()) {
+                                (Some(canvas), Some((_, rect))) => {
+                                    // A few lines need more room than the one
+                                    // line the region showed.
+                                    Anchor::region(
+                                        &canvas.into(),
+                                        LocalRect::new(rect.x, rect.y, rect.width.max(200.0), 96.0),
+                                    )
+                                }
+                                _ => Anchor::Centred,
+                            })
+                            value=Signal::derive(move || {
+                                current.get().map(|o| o.notes).unwrap_or_default()
+                            })
+                            on_commit=move |value| {
+                                renote(value);
+                                editing.set(None);
+                            }
+                            on_cancel=move || editing.set(None)
+                            on_invalidated=move || {
+                                invalidated.update(|n| *n += 1);
+                                editing.set(None);
+                            }
+                            test_id="gpu-notes-edit"
                         />
                     </Show>
                     {move || match region_state.get() {

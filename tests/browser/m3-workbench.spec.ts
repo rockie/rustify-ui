@@ -4,12 +4,16 @@ import { capture, differingPixels, litPixels, settle, waitForReady } from "./sup
 const snapshot = (page: import("@playwright/test").Page) =>
     page.evaluate(() => window.__property_workbench.snapshot());
 
-// The region's own header row: swatch, name, position, then the two buttons.
-// The labels are fixed width, so the buttons stay put whatever the values are.
-const NEXT_BUTTON = { fx: 0.85, fy: 0.085 };
+// The region's own header row puts its buttons first, so their place depends on
+// the row's padding and nothing else: an offset in CSS pixels from the region's
+// left edge, not a fraction of a width that a value could change.
+const NEXT_BUTTON = { dx: 100, fy: 0.06 };
 
-const at = (box: { x: number; y: number; width: number; height: number }, spot: { fx: number; fy: number }) => ({
-    x: box.x + box.width * spot.fx,
+const at = (
+    box: { x: number; y: number; width: number; height: number },
+    spot: { dx: number; fy: number }
+) => ({
+    x: box.x + spot.dx,
     y: box.y + box.height * spot.fy,
 });
 

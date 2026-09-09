@@ -4,14 +4,19 @@ import { capture, differingPixels, settle, waitForReady } from "./support";
 const snapshot = (page: Page) => page.evaluate(() => window.__property_workbench.snapshot());
 
 // The name field the region draws, just right of the swatch.
-const NAME_LABEL = { fx: 0.3, fy: 0.06 };
+// Offsets from the region's own left edge, in CSS pixels. The header puts its
+// buttons first and its values after them, so these do not move when a value
+// does; they are pixels rather than fractions because the row is laid out from
+// the left, not stretched across the width.
+const NAME_LABEL = { dx: 250, fy: 0.06 };
+const NOTES_LABEL = { dx: 470, fy: 0.06 };
 
 /// Clicks the name the region draws, which asks the application for a real
 /// text control over that rectangle.
 async function startEditing(page: Page) {
     const region = page.getByTestId("workbench-gpu");
     const box = (await region.boundingBox())!;
-    await page.mouse.click(box.x + box.width * NAME_LABEL.fx, box.y + box.height * NAME_LABEL.fy);
+    await page.mouse.click(box.x + NAME_LABEL.dx, box.y + box.height * NAME_LABEL.fy);
     await expect.poll(async () => (await snapshot(page)).editing).toBe(true);
     return page.getByTestId("gpu-name-edit");
 }
@@ -35,6 +40,16 @@ async function compose(page: Page, steps: string[], final: string) {
         },
         { steps, final }
     );
+}
+
+/// Clicks the one line of notes the region shows, which asks for a control
+/// that can hold all of them.
+async function startEditingNotes(page: Page) {
+    const region = page.getByTestId("workbench-gpu");
+    const box = (await region.boundingBox())!;
+    await page.mouse.click(box.x + NOTES_LABEL.dx, box.y + box.height * NOTES_LABEL.fy);
+    await expect.poll(async () => (await snapshot(page)).editing).toBe(true);
+    return page.getByTestId("gpu-notes-edit");
 }
 
 test.describe("M5 V5: the browser's own text control edits the region's text", () => {
@@ -171,6 +186,35 @@ test.describe("M5 V5: the browser's own text control edits the region's text", (
             name: "committed by leaving",
             invalidated: 0,
         });
+    });
+
+    test("several lines are edited in a control that can hold them", async ({ page }) => {
+        await waitForReady(page);
+        await settle(page.getByTestId("workbench-gpu"));
+        // The region has room for one line; the value has two.
+        expect(await snapshot(page)).toMatchObject({ notes: "note 1\nsecond line" });
+
+        const field = await startEditingNotes(page);
+        await expect(field).toHaveValue("note 1\nsecond line");
+        const box = (await field.boundingBox())!;
+        expect(box.height).toBeGreaterThan(40);
+
+        // Enter is a new line here, not a commit.
+        await field.fill("first\nsecond");
+        await page.keyboard.press("End");
+        await page.keyboard.press("Enter");
+        await page.keyboard.type("third");
+        expect((await snapshot(page)).editing).toBe(true);
+
+        // Leaving it is the commit, and every line survives.
+        await page.getByTestId("select-next").focus();
+        await expect.poll(async () => (await snapshot(page)).editing).toBe(false);
+        expect(await snapshot(page)).toMatchObject({
+            selected: 1,
+            notes: "first\nsecond\nthird",
+            invalidated: 0,
+        });
+        await expect(page.getByTestId("notes-input")).toHaveValue("first\nsecond\nthird");
     });
 });
 

@@ -116,6 +116,7 @@ declare global {
                 hovers: number;
                 editing: boolean;
                 invalidated: number;
+                notes: string | null;
             };
             inject_duplicate_id(): boolean;
             close_on_next_action(): void;
