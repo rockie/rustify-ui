@@ -133,6 +133,7 @@ declare global {
                 region: string;
             };
             mount_into(container_id: string): number;
+            mount_over(container_id: string): string;
             dispose_handle(id: number, container_id: string): boolean;
             set_third_party(present: boolean): boolean;
             nudge_third_party(value: number): number;

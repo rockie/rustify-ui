@@ -107,6 +107,58 @@ test.describe("M7 V8: a region whose context went away", () => {
     });
 });
 
+test.describe("M7 V8: a region that cannot start at all", () => {
+    test("says so within two seconds and leaves the DOM half working", async ({ page }) => {
+        await waitForReady(page);
+        await page.evaluate(() => window.__property_workbench.dispose());
+
+        // The machine this runs on has WebGL2, so the denial has to be made:
+        // the canvas answers null for that context and for nothing else.
+        await page.evaluate(() => {
+            const original = HTMLCanvasElement.prototype.getContext;
+            HTMLCanvasElement.prototype.getContext = function (
+                this: HTMLCanvasElement,
+                type: string,
+                ...rest: unknown[]
+            ) {
+                return type === "webgl2" ? null : (original as Function).call(this, type, ...rest);
+            } as typeof original;
+        });
+
+        // Measured inside the page. A round trip through the test harness
+        // costs more than the budget being measured.
+        const elapsed = await page.evaluate(async () => {
+            const started = performance.now();
+            window.__property_workbench.mount();
+            for (;;) {
+                if (document.querySelector('[data-testid="workbench-gpu-error"]')) {
+                    return performance.now() - started;
+                }
+                if (performance.now() - started > 5_000) {
+                    return -1;
+                }
+                await new Promise((resolve) => requestAnimationFrame(resolve));
+            }
+        });
+        expect(elapsed).toBeGreaterThanOrEqual(0);
+        expect(elapsed).toBeLessThan(2_000);
+
+        await expect(page.getByTestId("workbench-gpu-error")).toHaveText(
+            "no WebGL2 context for the region canvas"
+        );
+        expect(await snapshot(page)).toMatchObject({ region: "failed" });
+        // The panel beside it is untouched: a region is a part of a page, not
+        // the page.
+        await page.getByRole("button", { name: "next" }).click();
+        expect(await snapshot(page)).toMatchObject({ selected: 2 });
+
+        const log = await diagnostics(page);
+        const failed = log.entries.filter((entry) => entry.kind === "GpuInitFailed");
+        expect(failed.length).toBe(1);
+        expect(failed[0].suggestion).toContain("use the DOM path");
+    });
+});
+
 test.describe("M7 V9: a bounded record that says when it is a tail", () => {
     test("the record names the runtime, the build, and what it dropped", async ({ page }) => {
         await waitForReady(page);
@@ -116,19 +168,45 @@ test.describe("M7 V9: a bounded record that says when it is a tail", () => {
         expect(log.build).toMatch(/^[0-9]+$/);
     });
 
+    test("filling it past its ceiling keeps the newest and says how many went", async ({ page }) => {
+        test.setTimeout(300_000);
+        await waitForReady(page);
+        const before = await diagnostics(page);
+        expect(before.dropped).toBe(0);
+
+        // Every one of these is refused, so nothing is created and the only
+        // thing that grows is the record.
+        const refusals = await page.evaluate(() => {
+            let refused = 0;
+            for (let round = 0; round < 1_100; round++) {
+                if (window.__property_workbench.mount_over("workbench") !== "mounted") {
+                    refused += 1;
+                }
+            }
+            return refused;
+        });
+        expect(refusals).toBe(1_100);
+
+        const log = await diagnostics(page);
+        // The ceiling held, and what went over it was counted rather than
+        // quietly forgotten.
+        expect(log.count).toBe(log.max_entries);
+        expect(log.dropped).toBeGreaterThanOrEqual(1_100 - log.max_entries);
+        expect(log.bytes).toBeLessThanOrEqual(log.max_bytes);
+        // What is kept is the newest end of the record.
+        expect(log.entries[log.entries.length - 1].kind).toBe("OccupiedContainer");
+        // And the page is unharmed: nothing was mounted, nothing was lost.
+        expect(await page.evaluate(() => window.__property_workbench.live_regions())).toBe(1);
+        expect(await snapshot(page)).toMatchObject({ region: "ready" });
+    });
+
     test("every entry carries a cause and a next step, and no user content", async ({ page }) => {
         await waitForReady(page);
         // A refusal the application asked for: mounting over an occupied
         // container.
-        expect(
-            await page.evaluate(() => {
-                try {
-                    return window.__property_workbench.mount_into("workbench");
-                } catch (error) {
-                    return String(error);
-                }
-            })
-        ).toContain("already mounted");
+        expect(await page.evaluate(() => window.__property_workbench.mount_over("workbench"))).toContain(
+            "already mounted"
+        );
 
         const secret = "a name nobody should log";
         await page.getByRole("textbox", { name: "name" }).fill(secret);

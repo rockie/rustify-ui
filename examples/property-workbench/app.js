@@ -114,6 +114,17 @@ boot({ wasm_url: new URL("./property-workbench.wasm", import.meta.url), on_fatal
                 document.querySelector("main").append(host);
                 return app.workbench_mount(container_id);
             },
+            // Mounts over a container that is already taken, which is a
+            // refusal the SDK records. Nothing is created either way, so this
+            // can be driven as hard as a test needs.
+            mount_over(container_id) {
+                try {
+                    app.workbench_mount(container_id);
+                    return "mounted";
+                } catch (error) {
+                    return String(error);
+                }
+            },
             dispose_handle(id, container_id) {
                 const spent = app.workbench_dispose(id);
                 document.getElementById(container_id)?.remove();

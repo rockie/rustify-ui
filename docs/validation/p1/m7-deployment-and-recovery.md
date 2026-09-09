@@ -15,7 +15,7 @@ M7 is **not closed**. Most of its exit conditions have a passing automated resul
 | `cd makepad && cargo test` | 13 |
 | `cargo clippy --workspace --all-targets -- -D warnings` | no warnings |
 | `cargo fmt --all -- --check` | passes |
-| `npx playwright test --project=property-workbench` | **58/58** |
+| `npx playwright test --project=property-workbench` | **60/60** |
 | `npx playwright test --project=fusion-basic` | **45/45** |
 | `npx playwright test --project=deployment` | **6/6** |
 
@@ -30,6 +30,7 @@ A canvas that loses its WebGL context loses everything drawn with it and nothing
 | Rule | Evidence |
 | --- | --- |
 | A loss is reported as recoverable, and the region stops rather than draws | `comes back with the state the application still holds` - the region reads `lost`, no live region remains |
+| A region that cannot start at all says so within two seconds, and the DOM half keeps working | `says so within two seconds and leaves the DOM half working` - measured inside the page, because a round trip through the harness costs more than the budget being measured |
 | The application's state is untouched by the loss | same test: the selection and the edited name are unchanged while the context is gone |
 | A restored context brings the region back with that state, drawing the same picture | same test: `ready` again, and the region's pixels match what it drew before within the settle threshold |
 | Twenty losses with an edit between each lose nothing | `twenty losses, with the state edited between them, lose nothing` - and the rebuilt region still answers a real pointer at the end |
@@ -50,6 +51,7 @@ The first attempt replaced the canvas element instead of waiting, on the theory 
 | Either ceiling keeps the newest and says how many it dropped | `the_count_ceiling_keeps_the_newest_and_says_how_many_it_dropped`, `the_byte_ceiling_holds_even_when_the_count_would_not` |
 | A report leads with what it dropped and names the runtime and build | `a_report_says_what_was_dropped_before_it_says_anything_else`, `the record names the runtime, the build, and what it dropped` |
 | Entries carry a cause and a next step, and never the user's text | `every entry carries a cause and a next step, and no user content` |
+| The ceiling holds in a browser, not only on the host | `filling it past its ceiling keeps the newest and says how many went` - 1,100 refused mounts, 1,000 kept, the rest counted |
 
 Producers wired in this release: `InvalidContainer` and `OccupiedContainer` (mount), `GpuInitFailed` (a canvas with no WebGL2), `GpuContextLost`, `Backpressure` (a scope's queue full).
 
@@ -70,6 +72,4 @@ Producers wired in this release: `InvalidContainer` and `OccupiedContainer` (mou
 - **`AssetLoadFailed` has no producer.** The fork's own resource loader absorbs a font failure, so the SDK never learns of it. The observable behaviour is verified (the region keeps working); the reporting is not. Wiring it means a hook inside the fork's loader.
 - **`UnsupportedCapability` has no producer either.** The refusals exist and warn once on the console (`makepad/platform/src/os/web/web.js`), but nothing routes them into the record, and no example asks a region for a capability, so there is nothing to test yet.
 - **`RuntimeFatal` is not recorded in the ring.** The host notice exists and is verified (`a trapped runtime takes its controls off the page`), but by then the module cannot be called, so the entry would have to be written by the page rather than the SDK.
-- **The two-second bound** on "a failed region says so within 2 s" (NFR-2) is not measured; the failure is visible but its latency is not asserted.
-- **Truncation is proven on the host, not in a browser.** Filling the ring past 1,000 entries in a page would need a producer that can be driven that hard; the ceilings themselves are covered by host tests.
 - **A shared-runtime trap's blast radius** is verified as "every mount in the runtime is dead and the page says so"; the plan also asks that the limit be written into the capability document, which is now done, but nothing automatic checks that claim.
