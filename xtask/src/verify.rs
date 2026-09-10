@@ -112,9 +112,11 @@ pub const P2_MANUAL_RECORDS: [(&str, &str); 4] = [
     ),
     (
         "docs/validation/p2/manual/contrast-and-zoom.md",
-        "M8: the 200% and 400% reflow walkthrough of the catalogue and B1. The contrast \
-         *ratios* are checked by `cargo test -p rustify-ui theme`; what a person still has \
-         to do is look at the pages at those zoom levels",
+        "M8: a person's look at the catalogue and B1 at 200% and 400%. Most of this is \
+         checked already - the contrast ratios by `cargo test -p rustify-ui theme`, the \
+         five journeys at 200% and the catalogue's reflow at 320 CSS pixels by \
+         `p2-zoom` and `p2-reflow`. What is left is the judgement a measurement cannot \
+         make: whether the reflowed pages are still *readable*",
     ),
 ];
 

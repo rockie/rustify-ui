@@ -63,6 +63,26 @@ Both are fixed. A token table is exactly the kind of thing that goes wrong one
 value at a time, and each time it does, the person who cannot read the result
 finds out first - which is why this is a test and not a review.
 
+## Zoom and reflow
+
+Also checked rather than walked through, and the way WCAG defines the test: 200%
+zoom of a 1280-pixel window is a 640-pixel CSS viewport, 400% is 320.
+
+| Check | Result |
+| --- | --- |
+| B1's five journeys at 200%, keyboard only, with the root font size doubled as well | Complete - select, edit, run a command, read a failed result, and undo the selection | 
+| The region at 200% | Still drawn, still reports where it drew, and what it reports is inside the canvas it was given |
+| The catalogue at 320 CSS pixels | Reflows: the document is no wider than the viewport |
+| Content at 320 CSS pixels | Nothing lost - all eighteen categories plus the status and samples pages still reachable, and the page still switches |
+
+**It failed when it was written, and by a lot.** The catalogue was 557 pixels
+wide in a 320-pixel viewport: a fixed 220-pixel nav column beside a main column
+with a minimum of its own could never have fitted, so the page had never
+reflowed at any width. Below 640 pixels it is one column now, the header's row
+of switches wraps, the region takes the width it is given, and the capability
+table scrolls inside its own container - which is what WCAG allows for content
+that genuinely needs two dimensions, as long as the *page* does not.
+
 ## Motion
 
 `reduce_motion` is honoured by both halves: the DOM as a zero transition
@@ -76,7 +96,7 @@ theme value, so one setting covers both.
 | `docs/validation/p2/manual/voiceover.md` | VoiceOver + Chrome over the eighteen categories and B1's five journeys |
 | `docs/validation/p2/manual/pinyin.md` | Real pinyin input in the property form and the command palette |
 | `docs/validation/p2/manual/samples.md` | The twenty B5 samples against a reference rendering (A-4) |
-| `docs/validation/p2/manual/contrast-and-zoom.md` | The 200% and 400% reflow walkthrough |
+| `docs/validation/p2/manual/contrast-and-zoom.md` | Whether the reflowed pages are *readable* at 200% and 400%. The ratios, the journeys and the reflow itself are checked above; this is the judgement a measurement cannot make |
 
 None of these is in. This release cannot be called complete until they are, and
 the verification suite says so rather than reporting a pass.

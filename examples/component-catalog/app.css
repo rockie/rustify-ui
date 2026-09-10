@@ -51,6 +51,7 @@ body {
    it and nothing else on the page moves when it redraws. */
 .catalogue-region {
     width: 320px;
+    max-width: 100%;
     height: 170px;
 }
 
@@ -58,6 +59,16 @@ body {
     width: 100%;
     height: 100%;
     display: block;
+}
+
+/* A table is the one thing on this page that may keep its own width: WCAG's
+   reflow criterion allows content that genuinely needs two dimensions to scroll
+   in its own container, and eighteen rows by four columns is that. What it may
+   not do is make the *page* scroll sideways, which is what the wrapper is for. */
+.catalogue-main table {
+    display: block;
+    overflow-x: auto;
+    max-width: 100%;
 }
 
 .catalogue table {
@@ -155,4 +166,43 @@ body {
 
 .samples-state dd {
     margin: 0;
+}
+
+/* At 400% zoom of a 1280-pixel window - a 320-pixel viewport, which is how
+   WCAG defines the reflow test - the page becomes one column. The nav is a
+   fixed 220 pixels beside a main column with a mind of its own, and 220 plus a
+   gap plus anything at all is already wider than the viewport. */
+@media (max-width: 640px) {
+    body {
+        padding: 12px;
+    }
+
+    .catalogue {
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-areas:
+            "header"
+            "nav"
+            "main";
+    }
+
+    /* The three-up state matrix and the two-up sample columns stack rather
+       than squeeze: three columns of 90 pixels is not a reflow, it is the same
+       overflow moved inside. */
+    .catalogue-states,
+    .samples {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    /* The header's row of switches is a flex line that would otherwise set the
+       whole page's minimum width. */
+    .catalogue-header > div {
+        flex-wrap: wrap;
+    }
+
+    /* And the region takes the width it is given rather than the width it
+       would like. Its canvas is resized either way - that path is P1's V4 -
+       so what changes here is only how much room it is offered. */
+    .catalogue-region {
+        width: 100%;
+    }
 }
