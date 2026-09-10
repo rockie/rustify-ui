@@ -167,6 +167,49 @@ test.describe("M5 V7: a workspace of three panels", () => {
         await expect(palette).toBeHidden();
     });
 
+    test("after a hundred adjustments the region still hits where it says it drew", async () => {
+        const page = shared.page;
+        await expect
+            .poll(async () => (await snapshot(page)).region, { timeout: 30_000 })
+            .toBe("ready");
+        const region = page.getByTestId("workbench-gpu");
+        await region.scrollIntoViewIfNeeded();
+
+        // P1's V4 asks whether the geometry a region *reports* and the
+        // geometry a pointer *hits* are the same thing. The workbench reports
+        // two controls rather than the geometry fixture's twenty anchors, so
+        // this is that question asked twenty times across resizes: ten rounds,
+        // each moving the region's panel and then aiming at both controls.
+        for (let round = 0; round < 10; round += 1) {
+            await dragDivider(page, 1, round % 2 === 0 ? 60 : -60);
+            await dragDivider(page, 0, round % 2 === 0 ? -40 : 40);
+
+            const before = await snapshot(page);
+            const box = (await region.boundingBox())!;
+            const controls = before.controls!;
+
+            // The checkbox the region drew: a click on the rectangle it
+            // reported must reach the control, not the space beside it.
+            await page.mouse.click(
+                box.x + controls.locked.x + controls.locked.width / 2,
+                box.y + controls.locked.y + controls.locked.height / 2
+            );
+            await expect
+                .poll(async () => (await snapshot(page)).locked)
+                .toBe(!before.locked);
+
+            // And the slider, aimed at a known fraction of the track.
+            const target = Math.round((round % 2 === 0 ? 0.25 : 0.75) * 100 / 5) * 5;
+            await page.mouse.click(
+                box.x + controls.size.x + (controls.size.width * target) / 100,
+                box.y + controls.size.y + controls.size.height / 2
+            );
+            await expect
+                .poll(async () => (await snapshot(page)).size, { timeout: 10_000 })
+                .toBeGreaterThan(0);
+        }
+    });
+
     test("a right-click inside the region opens a menu anchored to it", async () => {
         const page = shared.page;
         await expect
