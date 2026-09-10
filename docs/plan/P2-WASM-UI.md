@@ -30,9 +30,10 @@
 - 当前进度：**1/8**（M1 关闭）。
 - 当前状态：In progress。A-1、A-2 都已解除；D1/D2/D3/D5 与 ADR-4–7 已接受，D13/ADR-5 已按 M1 的实测修正（见下）。
 - 最近完成（本计划）：**M1 · 契约对齐与组件工程，已关闭**。八个提交 `153f67c`→`fb3cc96`：① 核对 P1 M4–M7 六个实际接口并回写 §2.1（四处与假设不同，各自写明 P2 怎么办）；② Rust/UI 两个宏「原样导入 → 重写」两步提交，`sources.lock.json.rust_ui` 双向校验（说是原样的必须字节一致，说重写的必须不一致）；③ **修正 D13/ADR-5**：`tw_merge` 的 `prefix` 选项**不能设**——v4 的 `prefix(rui)` 在变体之前，该选项期待 v3 的位置；默认设置下 `rui` 作为首个变体参与合并，结果正确（5 条单测）；④ token 扩到 19 色 4 度量 + Tailwind 输入与提交产物 + `cargo xtask css [--check]`（第一次跑就抓到目录页的类没编译进产物）；⑤ 第三个示例 `component-catalog`（18 类导航、能力页、总表、主题/语言切换、一个只画 token 的 GPU 区域）+ 第三个 Playwright project + 宿主原生控件对照夹具（与「不加载我们样式表的同样标记」逐属性比对，结论：我们的两张样式表对宿主原生控件零影响）+ CI 增项。
-- 下一步：**M2 · 18 类组件目录**。第一步按 §2.1 的结论：把能力目录从 `crates/rustify-ui/src/catalog.rs` 搬进 `crates/rustify-components`，与 18 类组件放在同一个提交里（搬空的目录没有意义），`docs/components.md` 随之改由新目录生成；然后按 §1.2 的文件清单逐个「原样导入 → 重写」，浮层类建在 P1 的浮层栈上，退出条件见 §10 的 M2 行。
+- 下一步：**M2 · 18 类组件目录**。第一步按 §2.1 的结论：把能力目录从 `crates/rustify-ui/src/catalog.rs` 搬进 `crates/rustify-components`，与 18 类组件放在同一个提交里（搬空的目录没有意义），`docs/components.md` 随之改由新目录生成；然后按 §1.2 的文件清单逐个「原样导入 → 重写」，浮层类建在 P1 的浮层栈上；退出条件见 §10 的 M2 行。**顺手做一件省时间的事**：现在每个浏览器用例都新开 page 重新下载并编译 8.6 MB wasm，实测冷启动 6.7–7.0 秒，`--project=component-catalog` 的 9 个用例里约 55/60 秒花在这上面。M2 会加进大量组件用例，建议同一 describe 内用 serial + `beforeAll` 共享一个 page，先做再加用例。
 - 当前阻塞：无。
 - 代码基线：`736b668`（一期收尾）→ `153f67c`、`b14b2fb`、`a92c8dc`、`2e435e1`、`07ce3e0`、`5edcc31`、`fa0e5a4`、`fb3cc96`（M1）→ `1a479ef`、`a3a555c`（一期的脚本堆泄漏修复，二期同样受益：区域在两次泵之间攒够 20,000 条垃圾就清扫一次）。工作区 clean。
+- 回归（2026-09-10，本会话末）：`npx playwright test --project=fusion-basic --project=deployment` **52/52**（46 + 6），跑的是一期代码被本会话改动过之后的产物（诊断开关、区域画中文的字体修复、`muted`→`muted_foreground` 改名、脚本堆回收），确认没有改坏既有用例。`--project=component-catalog` 9/9、`--project=property-workbench` 在本会话中途为 71 passed/1 failed（失败的是当时刚写的新用例，已修，其三个用例随后 3/3）——**这一套没有在最终产物上整套重跑过**，下个会话若要一份干净的全绿证据，跑 `cargo xtask verify --suite p1` 或分 project 各跑一次。
 
 ### 完成记录
 
