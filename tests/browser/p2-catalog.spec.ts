@@ -76,7 +76,13 @@ test.describe("M1 V1: the catalogue starts under the policy it will be deployed 
 test.describe("M1 V1: one theme, both halves", () => {
     test("a switch moves the panel and the region together, from either side", async ({ page }) => {
         await ready(page);
-        await expect.poll(async () => (await snapshot(page)).region).toBe("ready");
+        // Its own page, so this one pays the region's first render itself: an
+        // eleven-megabyte module compiled and a Makepad `Cx` started, which is
+        // seconds rather than milliseconds. The blocks that share a page pay it
+        // once in `beforeAll` and never see this.
+        await expect
+            .poll(async () => (await snapshot(page)).region, { timeout: 30_000 })
+            .toBe("ready");
         const region = page.getByTestId("catalogue-region");
         const before = await region.screenshot();
 

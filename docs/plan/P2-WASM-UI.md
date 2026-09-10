@@ -26,16 +26,26 @@
 
 ### 恢复快照
 
-- 最近更新：2026-09-10。**M5 已完成并通过全部退出条件**。下一个是 M6。
-- 当前进度：**5/8**（M1–M5 关闭）。
-- 当前状态：In progress。A-1、A-2、A-5 已解除；D1/D2/D3/D5 与 ADR-4–7 已接受；D13/ADR-5 按 M1 实测修正；§3/§5.3 按 M3 实测修正。**A-3 仍开放**（B1 是负载定义，不是已批准预算；数字在 M8）。
-- 最近完成（本计划）：**M5 · 工作区（B1 形态），已关闭**。四个提交 `e59b101`、`e5004a9`、`caed633`、`1e09e44`：
+- 最近更新：2026-09-10。**M6、M7 已完成**（浏览器全量复跑结果见下）。下一个是 M8。
+- 当前进度：**7/8**（M1–M7 关闭）。
+- 当前状态：In progress。A-1、A-2、A-5、**A-6 已解除**；D1/D2/D3/D5 与 ADR-4–7 已接受；D13/ADR-5 按 M1 实测修正；§3/§5.3 按 M3 实测修正；§10 的 M6 行按实测修正（边界缓存落在 `web.js` 的基类而不是 `embedded.js`）。**A-3 仍开放**（B1 是负载定义，不是已批准预算；数字在 M8）。**A-4 仍开放**：四份人工记录一份都没有，`verify --suite p2` 逐条列为缺失。
+- 最近完成（本计划）：**M6 · 拖拽、剪贴板与文件** 与 **M7 · 多语言与文本样本**。
+  - **M6 三个提交** `3920cf0`、`fed8c81`、`c7dbf03`：
+    - ① **A-6 解除**：`--cfg=web_sys_unstable_apis` 经 `xtask` 的 `run_cargo_makepad` 设 `RUSTFLAGS`，cargo-makepad 与自身的 `WASM_RUSTFLAGS` 组合（`compile.rs:230`）。**两边都验**：带旗与不带旗的 `cargo check --target wasm32-unknown-unknown` 都过；不带旗时 `clipboard::available()` 为 false，两个入口给同形状的 `Unavailable` 应答。写进 `.cargo/config.toml` 是不行的——cargo-makepad 设的是环境变量，环境变量压过配置文件。
+    - ② **宿主桥（D14/F27）**：新增 `FromWasmScrollBoundary` 与 `Cx::report_scroll_boundary`；`web.js` 的 `wheel_belongs_to_parent` 在 `preventDefault` 之前按上一帧的上报同步判定。**到边界的那一次 wheel 仍归区域**（它对照的是这次 wheel 到达之前的上报），下一次才归页面——这正是人的预期：区域先停，页面再动。**与计划的一处偏离**：§10 把边界缓存写在 `embedded.js`，实际落在 `web.js` 的 `WasmWebBrowser` 构造函数里，因为 wheel 处理器就在那个类上、`EmbeddedRegion` 继承它；放在子类就是同一个事实的第二处。`cd makepad && cargo test` 通过。
+    - ③ **一个设计缺陷被 M6 逼出来**：`Pace::Continuous` 全作用域只有一个槽，任何两条连续流互相顶掉。workbench 区域在同一次 pump 里先报控件几何、再报滚动位置，后者顶掉了前者——症状不是崩溃，是一个**永远不到的上报**。现在 `Pace::Continuous(名字)`，每条流只顶自己；`a_second_stream_still_cannot_push_a_click_into_backpressure` 守住「流再多也挤不掉点击」。
+    - ④ `drag.rs` 会话 + GPU 命中问答：DOM 目标先有名字再被问，GPU 目标只能被问「这个点上是什么」，由区域在应答里报出名字。**每次拖拽的提问号都从 1 开始**，所以应答必须按（会话号，提问号）成对匹配——只看号码的话，两次各问一次的拖拽都是「第 1 问」。
+    - ⑤ `clipboard.rs`/`files.rs`/`DropZone`/`FilePicker`，workbench 跨区拖到分组 + 文本/二进制导入导出（下载字节与应用写出的字节逐字节比对，严格 CSP 不拦 `blob:` 下载，没有放宽任何指令）。
+    - **一个自己造的坑**：投放区在 `.objects` 的拉伸行里，而旁边的属性面板有二十个字段，于是 bin 被推到页面下方两千像素处——布局正确、无法投放。用例拖上去拿到 0 次投放才发现，改成从顶部堆叠。
+  - **M7 一个提交** `8877f0e`：`i18n.rs`（15+2 条框架文案 × 2 语言，两条测试守住「没被漏译」和「没有两条一样」）；`Intl` 数字/日期由应用传选项；目录 `/samples` 20 条 B5 样本 DOM 与 GPU 并排 + 缺字标识与恢复；`docs/i18n.md`、`docs/forms.md`。**对比度改成宿主测试后立刻发现两处真实不达标**：浅色主题主色上的白字 3.24:1（普通文本要 4.5），border 令牌对背景 1.41:1 / 深色 1.80:1（这个令牌同时是控件边界，看不见的边界就是找不到的控件）。都已修正。
+- 更早完成：**M5 · 工作区（B1 形态），已关闭**。四个提交 `e59b101`、`e5004a9`、`caed633`、`1e09e44`：
   - ① `crates/rustify-components/src/workspace/{splitter,panel_tabs,command_palette}.rs`，每个都把「容易悄悄错掉的那部分」抽成函数单独测（共 12 条宿主单测）：拖动只在相邻两块之间搬空间、总宽不变、谁都不会低于应用声明的最小值；关掉正在看的那块该切到哪块（右邻优先，没有右邻取左邻，都没有就没有——以及「关掉的不是正在看的那块时什么都不动」，这条错了是静默的）；搜索要求每个词都出现，跑不了的命令留在列表里说明原因。
   - ② **分隔器不包含面板**——这是发现，不是偷懒：面板里有 GPU 区域，它的应用标记不是 `Send`，而经过 Leptos 组件 children 的东西必须是。所以应用自己排版（`position: relative; display: grid` + `workspace::columns`），分隔器把手柄画在边界上，只拥有算术、手柄和键盘。`docs/workspace.md` 写了这条，因为下一个人也会先去够 children。
   - ③ property-workbench 达到 B1：3 面板（对象列表/GPU 视图/属性表单，各自声明最小宽度）、10 个视图（过滤器而非文件夹，切换不丢选择）、1,000 对象、20 个可见属性、右键在**区域内部**打开的上下文菜单（§6.2 要求 B1 至少有一处 GPU 锚点菜单）、命令面板（本身就是模态层）。逐项对照表在 `docs/validation/p2/m5.md`。
   - ④ 一期 V4 的锚点性质在 100 次面板调整后复核：区域报告的几何与指针命中的几何仍是同一个（10 轮 × 2 个控件 = 20 次瞄准）。
   - **两个自己造的坑，都修在源头**：快照把面板尺寸按整数像素报，1,160 宽的一行会读成 1,161，把「总宽不变」的断言弄挂了——算术是精确的，报告现在也精确；`m5-text` 用写死的 470 px 去点区域画的备注，B1 把区域放进更窄的面板后就点空了——区域现在报告它画文字的两个矩形，用例去问它（R25 要的就是这个）。**这已经是同一形状的第三次**：调用方去猜区域早就知道的几何（第一次是目录页的区域按钮，第二次是区域从地址栏推断资源根）。
-- 下一步：**M6 · 拖拽、剪贴板与文件**。按 §10 的 M6 行：**A-6 探针先行**（`--cfg=web_sys_unstable_apis` 能否经 cargo-makepad 追加，使 web-sys 的 `Clipboard::read_text/write_text` 可用；失败就改宿主 JS 薄封装）；`crates/rustify-ui/src/drag.rs` 会话状态机（会话号、查询序号、目标失效、`Releasing`，§5.4 第 3 步的四条必测序列先写成宿主单测）；GPU 侧 `HitQuery`/`HitAnswer`；**宿主桥改动**：区域→宿主的滚动边界上报 + wheel 按边界同步判定（`web.js`/`web.rs`/`embedded.js`，静态桥重新生成，`cd makepad && cargo test` 与指纹校验都要过）；`clipboard.rs`/`files.rs`；投放区与文件选择组件；workbench 对象跨区拖到分组 + 导入导出。退出条件见 §10 的 M6 行与 §9.1 的 V8/V9。**两条现成的地基**：M4 已经改过 `web.js` 一次（区域的部署路径），路子和指纹校验都走通了；`Pace::Continuous` 已有真实生产者（区域 Hover），拖拽会话共用同一投递路径（§0.7 第 6 条）。
+- 下一步：**M8 · 二期验收与交接**。按 §10 的 M8 行：三示例双干净构建、`verify --suite p2` 全量、B1 基线与 R29/R30 对照、六类报告与需求矩阵（已写，数字待回填）、四份人工记录（A-4，需要用户提供环境与评审人）。**不能在人工记录缺失时称 P2 完成**——套件已经按这条设计，缺一份就打印缺一份。
+- 上一步（已完成）：**M6 · 拖拽、剪贴板与文件**。按 §10 的 M6 行：**A-6 探针先行**（`--cfg=web_sys_unstable_apis` 能否经 cargo-makepad 追加，使 web-sys 的 `Clipboard::read_text/write_text` 可用；失败就改宿主 JS 薄封装）；`crates/rustify-ui/src/drag.rs` 会话状态机（会话号、查询序号、目标失效、`Releasing`，§5.4 第 3 步的四条必测序列先写成宿主单测）；GPU 侧 `HitQuery`/`HitAnswer`；**宿主桥改动**：区域→宿主的滚动边界上报 + wheel 按边界同步判定（`web.js`/`web.rs`/`embedded.js`，静态桥重新生成，`cd makepad && cargo test` 与指纹校验都要过）；`clipboard.rs`/`files.rs`；投放区与文件选择组件；workbench 对象跨区拖到分组 + 导入导出。退出条件见 §10 的 M6 行与 §9.1 的 V8/V9。**两条现成的地基**：M4 已经改过 `web.js` 一次（区域的部署路径），路子和指纹校验都走通了；`Pace::Continuous` 已有真实生产者（区域 Hover），拖拽会话共用同一投递路径（§0.7 第 6 条）。
 - 当前阻塞：无。
 - 代码基线：`736b668` → M1 八提交 → `1a479ef`、`a3a555c` → M2 八提交 → M3 三提交 → M4 六提交 `41d77f4`…`dec20f1` → **M5 四提交 `e59b101`、`e5004a9`、`caed633`、`1e09e44`**。工作区 clean。
 - 回归：见「完成记录」各行。**三条操作教训**：跑浏览器套件时别同时跑 release 构建；`ps` 要匹配 `ms-playwright/chromium`；串行共享 page 的块能抓到单条用例抓不到的 bug，代价是每条用例要把动到的东西放回去，放不回去的用自己的 page。**两条已知缺口**：`m8-endurance` 两分钟档的尾部断言先于二期就不过（P1 账本）；workbench 首帧 6,625 ms（M8 的 B1 基线材料）。

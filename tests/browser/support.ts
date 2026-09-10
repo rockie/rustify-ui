@@ -236,7 +236,6 @@ declare global {
         };
         __component_catalog: {
             mount(): number;
-            block_font(blocked: boolean): boolean;
             dispose(): boolean;
             mount_second(): number;
             dispose_second(): boolean;

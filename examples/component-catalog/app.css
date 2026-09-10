@@ -137,3 +137,22 @@ body {
     font-size: 12px;
     color: #475467;
 }
+
+/* What the page asked for, what it projected, and what the region drew. */
+.samples-state {
+    display: grid;
+    grid-template-columns: auto auto;
+    justify-content: start;
+    gap: 2px 10px;
+    margin: 0 0 8px;
+    font-size: 12px;
+    color: #475467;
+}
+
+.samples-state dt {
+    color: #667085;
+}
+
+.samples-state dd {
+    margin: 0;
+}

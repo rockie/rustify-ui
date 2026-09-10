@@ -105,7 +105,11 @@ test.describe("M2 V3: a theme both halves adopt", () => {
         // Tabbed into, not focused programmatically: `:focus-visible` is what
         // the ring is bound to, and a script moving focus does not match it -
         // which is the whole point of the pseudo-class.
-        await page.getByTestId("nav-status").focus();
+        //
+        // From the last thing in the nav rather than from a named entry: the
+        // nav grows a page from time to time, and what this needs is "the step
+        // before the page's own controls", not a particular button.
+        await page.locator("nav.catalogue-nav li:last-child button").focus();
         await page.keyboard.press("Tab");
         const focused = await page.evaluate(() => {
             const element = document.querySelector('[data-testid="default-button"]')!;

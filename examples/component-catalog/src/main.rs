@@ -1,6 +1,8 @@
 #[cfg(target_arch = "wasm32")]
 mod catalog_region;
 #[cfg(target_arch = "wasm32")]
+mod sample_column;
+#[cfg(target_arch = "wasm32")]
 mod sample_region;
 // Not gated: twenty fixed strings and their ids are checked on the host, where
 // "there are twenty of them and no two share a name" needs no browser. Only
@@ -214,15 +216,6 @@ mod app {
         static HANDLES: RefCell<BTreeMap<u32, AppHandle>> = const { RefCell::new(BTreeMap::new()) };
         static NEXT_HANDLE: RefCell<u32> = const { RefCell::new(1) };
         static SNAPSHOT: RefCell<String> = const { RefCell::new(String::new()) };
-        /// Whether the page has been told to behave as though the wide font
-        /// never arrived. The real path is a resource failure, which the
-        /// deployment build exercises against a real broken file; this is the
-        /// switch that lets one page show the mark and then take it away
-        /// again, so "and it recovers" is something a test can watch.
-        ///
-        /// The signal is registered by the page that reads it, so the switch
-        /// writes to the live scope rather than to a copy of the answer.
-        static FONT_BLOCKED: RefCell<Option<RwSignal<bool>>> = const { RefCell::new(None) };
     }
 
     fn chip(support: Support) -> ChipVariant {
@@ -688,12 +681,17 @@ mod app {
         // rather than guessed: a font that failed is reported there as
         // `AssetLoadFailed`, and this page is the one that has to say so.
         let fonts = RwSignal::new(true);
-        // What the page has been told to pretend, registered so the test seam
-        // writes to this scope rather than to a copy of the answer.
+        // Whether the page has been told to behave as though the font that
+        // covers more than Latin never arrived. A control rather than a hidden
+        // switch: this is the page where a reader would want to see what a
+        // missing font looks like, and the real path - a resource that fails -
+        // is exercised against a real broken file by the deployment build.
         let blocked = RwSignal::new(false);
-        FONT_BLOCKED.with(|slot| *slot.borrow_mut() = Some(blocked));
-        on_cleanup(move || FONT_BLOCKED.with(|slot| *slot.borrow_mut() = None));
         let lines = RwSignal::new(0usize);
+        // How many samples the region replaced with the missing-glyph message
+        // in its last draw. Reported by the region, because it is the only one
+        // that knows what it drew.
+        let marked = RwSignal::new(0usize);
         let region = RwSignal::new(RegionState::Starting);
         Effect::new(move || {
             // Tracked: the count rises when an asset does not arrive, whenever
@@ -714,14 +712,20 @@ mod app {
         });
         let props = Signal::derive(move || crate::sample_region::SampleProps {
             theme: theme.get().unwrap_or_else(Theme::light),
-            missing: (!fonts.get()).then(|| {
+            missing: (!fonts.get() || blocked.get()).then(|| {
                 rustify_ui::Message::MissingGlyph
                     .text(locale.get())
                     .to_string()
             }),
         });
         let on_action = move |action| match action {
-            crate::sample_region::SampleAction::Lines(drawn) => lines.set(drawn.len()),
+            crate::sample_region::SampleAction::Drew {
+                lines: drawn,
+                marked: count,
+            } => {
+                lines.set(drawn.len());
+                marked.set(count);
+            }
         };
         // Bound out here: `view!` cannot parse a turbofish in an attribute.
         let app = PhantomData::<crate::sample_region::SampleRegion>;
@@ -751,9 +755,37 @@ mod app {
                 </ul>
                 <p data-testid="format-number">{move || formatted_number(locale.get())}</p>
                 <p data-testid="format-date">{move || formatted_date(locale.get())}</p>
-                <p data-testid="samples-drawn">
-                    {move || format!("{} / {}", lines.get(), crate::samples::SAMPLES.len())}
-                </p>
+                // What the two halves say about each other, in order: what the
+                // page asked for, what it projected, and what the region drew.
+                // Three lines rather than one, because when this page went
+                // wrong it was the *middle* one that had stopped - the switch
+                // moved and the projection did not - and neither of the other
+                // two could have said so.
+                <dl class="samples-state">
+                    <dt>"asked to block the wide font"</dt>
+                    <dd data-testid="samples-blocked">{move || blocked.get().to_string()}</dd>
+                    <dt>"projected into the region"</dt>
+                    <dd data-testid="samples-asked">
+                        {move || props.get().missing.is_some().to_string()}
+                    </dd>
+                    <dt>"lines drawn"</dt>
+                    <dd data-testid="samples-drawn">
+                        {move || format!("{} / {}", lines.get(), crate::samples::SAMPLES.len())}
+                    </dd>
+                    <dt>"drawn as the missing-glyph message"</dt>
+                    <dd data-testid="samples-marked">{move || marked.get()}</dd>
+                </dl>
+                <Row>
+                    <Checkbox
+                        test_id="block-font"
+                        aria_label="draw as though the wide font never arrived"
+                        checked=Signal::derive(move || blocked.get())
+                        on_change=move |value: bool| blocked.set(value)
+                    />
+                    <span class="rui:text-sm">
+                        "draw as though the wide font never arrived"
+                    </span>
+                </Row>
                 <div class="samples">
                     <div class="samples-column">
                         <h3>{move || t(locale.get(), "samples-dom")}</h3>
@@ -1186,18 +1218,6 @@ mod app {
     #[wasm_bindgen]
     pub fn catalog_diagnostics() -> String {
         rustify_ui::report_json()
-    }
-
-    /// Makes the page behave as though the font that covers more than Latin
-    /// never arrived, or stop behaving that way. Answers what it set.
-    #[wasm_bindgen]
-    pub fn catalog_block_font(blocked: bool) -> bool {
-        FONT_BLOCKED.with(|slot| {
-            if let Some(signal) = *slot.borrow() {
-                signal.set(blocked);
-            }
-        });
-        blocked
     }
 
     #[wasm_bindgen]

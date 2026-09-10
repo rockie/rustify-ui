@@ -19,7 +19,30 @@ measurement of the harness.
 | Transfer | `cargo xtask report-size`, six categories, read off the built directory, and again gzipped | The directory is the deployment; nothing is estimated |
 | Memory | `hooks.runtime.stats()` inside the page, sampled over the run | wasm linear memory never shrinks, so a tail is the only honest shape to report |
 
-## The figures
+## Transfer, by category
+
+Read off the built directories with `cargo xtask report-size`, release builds,
+2026-09-10. These are what the deployment *contains*; what a first load actually
+fetches is smaller, and is measured separately in the browser (below).
+
+| Example | wasm | js | css | fonts | images | data | total |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| fusion-basic | 8,279,424 | 189,641 | 3,208 | 51,187,844 | 20,701 | 9,044 | 59,689,862 |
+| component-catalog | 11,307,927 | 189,157 | 29,308 | 51,187,844 | 20,701 | 8,943 | 62,743,880 |
+| property-workbench | 11,477,091 | 232,565 | 36,552 | 51,187,844 | 20,701 | 9,456 | 62,964,209 |
+| property-workbench at `/tools/demo/` | 11,477,091 | 232,565 | 36,552 | 51,187,844 | 20,701 | 12,352 | 62,967,105 |
+
+The font total dominates every row and is almost entirely the two families that
+cover more than Latin. They are **not** fetched unless a value needs them: a
+label whose text is not ASCII moves to the wider family, and that move is what
+fetches the file. What a first load actually costs, and what the first Chinese
+glyph adds to it, are measured in the browser rather than inferred from this
+table.
+
+The same wasm serves the root and the sub-path deployment; only the manifest
+and the page differ, which is the 2,896-byte gap in the `data` column.
+
+## Start-up, interaction and memory
 
 Filled in by M8 from the run recorded in `docs/validation/p2/m8.md`. Each row
 carries the R29/R30 figure it sits beside and says plainly whether the release

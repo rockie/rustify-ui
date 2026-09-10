@@ -20,6 +20,15 @@ const drag = async (page: Page) => (await snapshot(page)).drag;
 /// something in this project guessed at geometry the region already knew, it
 /// broke the first time a panel changed width.
 async function places(page: Page) {
+    // Measured from the top of the page, and left there.
+    //
+    // These are viewport coordinates, and the workbench is taller than the
+    // viewport: a Playwright click into the property form scrolls the page,
+    // and a drag measured afterwards aims at a canvas that has moved. The
+    // symptom was a drag that delivered nothing while the count was exact -
+    // the region was never asked, because the point was off the screen.
+    await page.evaluate(() => window.scrollTo(0, 0));
+
     // The report arrives from the region's first draw, which is a pump or two
     // after the page says it is ready. Waiting for the report is waiting for
     // the thing that has to have happened, rather than for a duration.
@@ -223,6 +232,9 @@ test.describe("M6 V8: an object carried from one half of the page to the other",
 
         await page.getByTestId("locked-input").click();
         await expect.poll(async () => (await snapshot(page)).locked).toBe(false);
+        // Reaching the form scrolled the page; the next test measures from the
+        // top and would otherwise be measuring where the canvas used to be.
+        await page.evaluate(() => window.scrollTo(0, 0));
     });
 
     test("a release the region has not answered yet still lands, twenty times", async () => {

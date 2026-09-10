@@ -66,14 +66,6 @@ boot({ wasm_url: new URL("./component-catalog.wasm", import.meta.url), on_fatal:
             live_regions() {
                 return app.catalog_live_regions();
             },
-            // Makes the samples page behave as though the font that covers
-            // more than Latin never arrived, and lets it arrive again. The
-            // real path is a resource failure, which the deployment build
-            // exercises against a real broken file; this is what lets one page
-            // show the mark and then take it away.
-            block_font(blocked) {
-                return app.catalog_block_font(blocked);
-            },
             stats() {
                 return hooks.runtime.stats();
             },

@@ -138,23 +138,31 @@ test.describe("M7 V10: twenty texts, drawn twice", () => {
 
     test("a font that never arrives costs glyphs, and says so", async () => {
         const page = shared.page;
-        const mark = () => page.getByTestId("message-missing-glyph").innerText();
-        const shown = await mark();
-        expect(shown).toContain("□");
+        const drawn = () => page.getByTestId("samples-drawn").innerText();
+        const marked = async () =>
+            Number((await page.getByTestId("samples-marked").innerText()).trim());
+        const all = `${SAMPLE_IDS.length} / ${SAMPLE_IDS.length}`;
 
-        // The region redraws with the mark in place of the samples it cannot
-        // draw. What is under test is that the page says *why* it looks wrong:
-        // a row of boxes on its own tells a reader nothing.
-        await page.evaluate(() => window.__component_catalog.block_font(true));
-        await expect
-            .poll(async () => (await page.getByTestId("samples-drawn").innerText()).trim())
-            .toBe(`${SAMPLE_IDS.length} / ${SAMPLE_IDS.length}`);
+        // The SDK's own words for it, and they say whose fault it is: a row of
+        // boxes on its own tells a reader nothing.
+        expect(await page.getByTestId("message-missing-glyph").innerText()).toContain("□");
+        expect(await marked()).toBe(0);
 
-        // And when it arrives, the region is back to the samples themselves,
-        // with all twenty lines still there to be compared.
-        await page.evaluate(() => window.__component_catalog.block_font(false));
-        await expect
-            .poll(async () => (await page.getByTestId("samples-drawn").innerText()).trim())
-            .toBe(`${SAMPLE_IDS.length} / ${SAMPLE_IDS.length}`);
+        await page.getByTestId("block-font").click();
+        // The page took the request first; then the region says what it drew.
+        await expect.poll(async () => page.getByTestId("samples-blocked").innerText()).toBe("true");
+        // …and the projection into the region carries it.
+        await expect.poll(async () => page.getByTestId("samples-asked").innerText()).toBe("true");
+        // Sixteen of the twenty need more than Latin. The count comes from the
+        // region, which is the only thing that knows what it drew.
+        await expect.poll(marked).toBeGreaterThan(0);
+        // And it is still twenty lines: the samples that are pure Latin are
+        // unaffected, and nothing was dropped.
+        expect((await drawn()).trim()).toBe(all);
+
+        // When the font arrives, the region is back to the samples themselves.
+        await page.getByTestId("block-font").click();
+        await expect.poll(marked).toBe(0);
+        expect((await drawn()).trim()).toBe(all);
     });
 });
