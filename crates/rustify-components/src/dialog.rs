@@ -66,14 +66,19 @@ pub fn Dialog(
                 class="rui-dialog-layer"
                 test_id=panel_test_id.get_value()
             >
-                <Show when=move || modal && close_on_backdrop fallback=move || {
-                    view! { <div class=BACKDROP aria-hidden="true" /> }
-                }>
+                // Only a modal one has a backdrop. A modeless dialog is meant
+                // to be worked beside, and a sheet of glass over the page -
+                // even a transparent one - is exactly what stops that.
+                <Show when=move || modal fallback=|| ()>
                     <div
                         class=BACKDROP
                         data-name="DialogBackdrop"
                         aria-hidden="true"
-                        on:click=move |_| close()
+                        on:click=move |_| {
+                            if close_on_backdrop {
+                                close();
+                            }
+                        }
                     />
                 </Show>
                 <div class=move || panel_class.get_value() data-name="Dialog">

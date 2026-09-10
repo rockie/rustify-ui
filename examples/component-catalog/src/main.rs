@@ -218,24 +218,22 @@ mod app {
             None => "null".to_string(),
         }
     }
-    /// Whether a state matrix says anything for this category.
+    /// The states this category actually has, beyond the ordinary one.
     ///
-    /// A label, an icon and a progress bar have one state; a tooltip, a menu
-    /// and a dialog have one that is a layer, and four of those open at once
-    /// would be four layers over each other rather than a matrix.
-    fn has_states(category: Category) -> bool {
-        matches!(
-            category,
-            Category::Button
-                | Category::Link
-                | Category::TextField
-                | Category::TextArea
-                | Category::Checkbox
-                | Category::Radio
-                | Category::Switch
-                | Category::Slider
-                | Category::Tabs
-        )
+    /// Not every control has all three, and a matrix that renders a state a
+    /// component does not have shows the same picture twice and calls one of
+    /// them "invalid". The overlay categories have none of them here: four
+    /// tooltips or four dialogs open at once are four layers over each other.
+    fn states(category: Category) -> &'static [ExampleState] {
+        use ExampleState::{Disabled, Invalid, ReadOnly};
+        match category {
+            Category::Button | Category::Link => &[Disabled],
+            Category::TextField | Category::TextArea | Category::Checkbox => {
+                &[Disabled, ReadOnly, Invalid]
+            }
+            Category::Radio | Category::Switch | Category::Slider => &[Disabled, ReadOnly],
+            _ => &[],
+        }
     }
 
     /// One category, drawn in one state, bound to the page's values.
@@ -556,11 +554,12 @@ mod app {
                 <p data-testid="gpu-note" class="rui:text-sm rui:text-muted-foreground">
                     {entry.environment.note}
                 </p>
-                <Show when=move || has_states(category) fallback=|| ()>
+                <Show when=move || !states(category).is_empty() fallback=|| ()>
                     <h3>{move || locale.get().t("states")}</h3>
                     <div data-testid="state-matrix" class="catalogue-states">
-                        {[ExampleState::Disabled, ExampleState::ReadOnly, ExampleState::Invalid]
-                            .into_iter()
+                        {states(category)
+                            .iter()
+                            .copied()
                             .map(|state| {
                                 view! {
                                     <div data-testid=format!("state-{}", state.name())>

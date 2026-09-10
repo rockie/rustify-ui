@@ -55,27 +55,24 @@ because a region never touches the page's history (C-5).
 | scroll area | yes | yes | yes | yes — what it contains, and whether a wheel arriving at the edge scrolls the page behind it | no — none of its own; the scrolling is the browser's | yes — the scrollbar takes the scope's border colour rather than the browser's | yes — wheel, drag and the keyboard - it takes a tab stop, because a box only a mouse can scroll is unreachable without one | yes — role=group with a name, so a reader knows which box the keyboard landed in | partial — a region's is makepad's own ScrollBars on a View; the boundary a wheel is handed back at is P2 M6 |
 <!-- catalogue -->
 
-## What "not in P1" means
+## Where they live
 
-The nine absent categories — link, icon, radio, switch, select, progress,
-tooltip, tabs, scroll area — have no implementation, no example and no test
-here. They are the subject of P2 M2, which is where the eighteen-category
-catalogue with a runnable example per category is delivered. Nothing in P1
-should be read as a claim about them.
+- The eighteen DOM components — `crates/rustify-components/src/`, one file per
+  category. The class strings came from Rust/UI; `sources.lock.json` records
+  what was imported and what the rewrite changed.
+- The GPU halves — `crates/rustify-ui/src/gpu/`. `RustifyButton`,
+  `RustifyCheckBox`, `RustifyRadio`, `RustifyToggle`, `RustifySlider`,
+  `RustifyProgress`, `RustifySpinner`, `RustifyIcon`, and the two experimental
+  ones, `RustifyDropDown` and `RustifyTabBar`. A scrolling region is makepad's
+  own `ScrollBars` on a `View`.
+- The overlay four stand on the SDK's layer stack —
+  `crates/rustify-ui/src/overlay.rs` — which owns anchoring, the Escape order,
+  the focus trap and the return of focus.
+- P1's own component subset is still where it was
+  (`crates/rustify-ui/src/components.rs`) and is unchanged: the two examples
+  built on it keep working, and the new crate is where `class` and the
+  eighteen-category contract live.
 
-## Where the nine live
-
-- `Button`, `Label`, `TextField`, `TextArea`, `Checkbox`, `Slider`, `LoadView` —
-  `crates/rustify-ui/src/components.rs`.
-- `Menu` and `Dialog` — `Layer` in `crates/rustify-ui/src/overlay.rs`; a menu is
-  a layer anchored to a rectangle, a dialog is a modal layer.
-- The GPU halves of button, label, checkbox and slider are Makepad widgets
-  driven by the same application value; see
-  `examples/property-workbench/src/object_region.rs`.
-
-## The one third-party component
-
-P1 also verifies one component the SDK did not write: noUiSlider 15.8.1,
-vendored into the checkout. It is not in the table above, because the table is
-about what this SDK offers. What it is for, and what is and is not claimed about
-third-party components in general, is in `docs/compatibility.md`.
+A runnable example of every category, in each state it has, and with the GPU
+half beside it, is `examples/component-catalog` — one page per row of this
+table.

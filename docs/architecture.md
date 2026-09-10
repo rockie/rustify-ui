@@ -58,4 +58,4 @@ flowchart TD
 
 ## Deferred to later milestones
 
-The eighteen-category component catalogue is P2 M2; `docs/components.md` records which nine of the eighteen P1 ships and says plainly that the other nine are not here. Routing, workspaces, large data, general cross-region drag, the clipboard and file import are P2 or later. What P1 measured, and what it could not, is in `docs/reports/p1/`.
+The eighteen-category component catalogue is delivered in P2 M2 (`crates/rustify-components`); `docs/components.md` is printed from it and records what each category supports and what a GPU region draws of it. Routing, workspaces, large data, general cross-region drag, the clipboard and file import are P2 M4 to M6 or later. What P1 measured, and what it could not, is in `docs/reports/p1/`.

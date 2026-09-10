@@ -155,6 +155,42 @@ test.describe("M2 V3: a theme both halves adopt", () => {
         expect(await snapshot(page)).toMatchObject({ reduce_motion: false });
     });
 
+    test("the region's spinner turns, and stops when the scope asks it to", async () => {
+        const page = shared.page;
+        await page.getByTestId("nav-loading").click();
+        await expect.poll(async () => (await snapshot(page)).control, { timeout: 15_000 }).not.toBeNull();
+        const region = page.getByTestId("catalogue-region");
+        await region.scrollIntoViewIfNeeded();
+
+        // Turning: two frames a moment apart are different pictures.
+        await expect
+            .poll(
+                async () => {
+                    const first = await region.screenshot();
+                    const second = await region.screenshot();
+                    return first.equals(second);
+                },
+                { timeout: 15_000 }
+            )
+            .toBe(false);
+
+        // Still: the arc is still drawn - it is what says "busy" - it just
+        // does not move, and the region stops asking for frames.
+        await page.getByTestId("toggle-motion").click();
+        expect(await snapshot(page)).toMatchObject({ reduce_motion: true });
+        await expect
+            .poll(
+                async () => {
+                    const first = await region.screenshot();
+                    const second = await region.screenshot();
+                    return first.equals(second);
+                },
+                { timeout: 15_000 }
+            )
+            .toBe(true);
+        await page.getByTestId("toggle-motion").click();
+    });
+
     test("the host page is not part of the scope's theme", async () => {
         const page = shared.page;
         const before = await page.evaluate(() => ({

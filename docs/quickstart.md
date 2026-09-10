@@ -124,17 +124,17 @@ view! {
 page hold different themes and the host page keeps its own; `ThemeOverride`
 changes part of the theme for one area and leaves the rest inherited. A region
 inside an override is handed the patched table, so both halves draw with the
-same numbers. `rustify_ui::CATALOG` (printed in `docs/components.md`) says which
-categories exist and what each of them supports.
+same numbers. `rustify_components::CATALOG` (printed in `docs/components.md`)
+says which categories exist and what each of them supports.
 
 `rustify_ui::mount(container, config, view)` returns an `AppHandle`; disposing it runs the scope's cleanups (destroying its regions) and unmounts the DOM. The page loads the wasm through `web/loader.js` (`boot(...)`), which validates the bridge fingerprint and hands the host hooks to the runtime before the application's own exported entry points are called. `examples/fusion-basic/app.js` is the reference page script.
 
 ## Limits of the preview
 
-Nine of R18's eighteen component categories are not implemented yet; the
-component crate has the machinery and the catalogue has the pages, and the
-components themselves are P2 M2. There is no router, no workspace, no
-large-data view and no cross-region drag. See `docs/components.md` for what
-each category supports today, `docs/compatibility.md` for the capability state
+All eighteen of R18's component categories have a DOM component
+(`rustify_components`), and fourteen of them are drawn by a GPU region as well;
+the four that are not say where they are drawn instead. There is no router, no
+workspace, no large-data view and no cross-region drag - those are P2 M4 to M6.
+See `docs/components.md` for what each category supports today, `docs/compatibility.md` for the capability state
 and the one third-party component that is verified, `docs/reports/p1/` for what
 P1 measured and what it could not, and `docs/plan/` for progress.

@@ -26,20 +26,29 @@
 
 ### 恢复快照
 
-- 最近更新：2026-09-10。**M1 已完成并通过全部退出条件**（`--project=component-catalog` 9/9）。下一个是 M2。
-- 当前进度：**1/8**（M1 关闭）。
-- 当前状态：In progress。A-1、A-2 都已解除；D1/D2/D3/D5 与 ADR-4–7 已接受，D13/ADR-5 已按 M1 的实测修正（见下）。
-- 最近完成（本计划）：**M1 · 契约对齐与组件工程，已关闭**。八个提交 `153f67c`→`fb3cc96`：① 核对 P1 M4–M7 六个实际接口并回写 §2.1（四处与假设不同，各自写明 P2 怎么办）；② Rust/UI 两个宏「原样导入 → 重写」两步提交，`sources.lock.json.rust_ui` 双向校验（说是原样的必须字节一致，说重写的必须不一致）；③ **修正 D13/ADR-5**：`tw_merge` 的 `prefix` 选项**不能设**——v4 的 `prefix(rui)` 在变体之前，该选项期待 v3 的位置；默认设置下 `rui` 作为首个变体参与合并，结果正确（5 条单测）；④ token 扩到 19 色 4 度量 + Tailwind 输入与提交产物 + `cargo xtask css [--check]`（第一次跑就抓到目录页的类没编译进产物）；⑤ 第三个示例 `component-catalog`（18 类导航、能力页、总表、主题/语言切换、一个只画 token 的 GPU 区域）+ 第三个 Playwright project + 宿主原生控件对照夹具（与「不加载我们样式表的同样标记」逐属性比对，结论：我们的两张样式表对宿主原生控件零影响）+ CI 增项。
-- 下一步：**M2 · 18 类组件目录**。第一步按 §2.1 的结论：把能力目录从 `crates/rustify-ui/src/catalog.rs` 搬进 `crates/rustify-components`，与 18 类组件放在同一个提交里（搬空的目录没有意义），`docs/components.md` 随之改由新目录生成；然后按 §1.2 的文件清单逐个「原样导入 → 重写」，浮层类建在 P1 的浮层栈上；退出条件见 §10 的 M2 行。**顺手做一件省时间的事**：现在每个浏览器用例都新开 page 重新下载并编译 8.6 MB wasm，实测冷启动 6.7–7.0 秒，`--project=component-catalog` 的 9 个用例里约 55/60 秒花在这上面。M2 会加进大量组件用例，建议同一 describe 内用 serial + `beforeAll` 共享一个 page，先做再加用例。
+- 最近更新：2026-09-10。**M2 已完成并通过全部退出条件**（`--project=component-catalog` 31/31；一期回归 46/46 + 6/6 + 71/72，唯一的失败 `m8-endurance` 已证明先于 M2 存在）。下一个是 M3。
+- 当前进度：**2/8**（M1、M2 关闭）。
+- 当前状态：In progress。A-1、A-2 都已解除；D1/D2/D3/D5 与 ADR-4–7 已接受，D13/ADR-5 按 M1 实测修正。
+- 最近完成（本计划）：**M2 · 18 类组件目录，已关闭**。七个提交 `098281e`→`8cd2c15`：
+  - ① 17 个 Rust/UI 组件文件 + `style/slider.css`「原样导入 → 重写」两步提交（`098281e`/`fe5a37e`），`sources.lock.json.rust_ui` 现 20 个文件全部 rewritten，双向校验通过。
+  - ② 18 类 DOM 组件全部受控：显示值只来自应用，`disabled`/`read_only` 是信号，只读控件接下点击再把自己放回去；`rui:` 前缀；零内联脚本/样式（Progress 的进度条改用 `style:` 指令）。去掉了 `icons`（它强制 `leptos/nightly`）、`strum`、`validator` 三个依赖，`icon.rs` 是我们自己的（容器 + 六个字形）。
+  - ③ 浮层四类（Tooltip/Menu/Dialog/Select）重写到 P1 的浮层栈上：约 1,700 行 `format!` 拼装的内联 `<script>` 连同 `document.currentScript`、`window.ScrollLock` 全部消失；补上原本完全没有的 `role="dialog"`+`aria-modal`+标题关联、`menu`/`menuitem`+方向键、`combobox`/`listbox`+`aria-activedescendant`、`role="tooltip"` 并挂到被描述的控件上（且 focus 也能触发——原版只有 hover，键盘用户根本看不到）。方向键落点是一个函数（`roving.rs`）带自己的单测，不是三份。
+  - ④ GPU 声明子集：`RustifyButton`/`Radio`/`Toggle`/`Progress`/`Spinner`/`Icon` 稳定，`DropDown`/`TabBar` 实验（区域画得了收起态、画不了要跳出画布的列表，列表是 DOM 浮层），ScrollBars 用 makepad 自己的 `View{scroll_bars}` 声明、不需要新 widget。形状写在各自的 script 里（Sdf2d），Rust 只决定画哪几块、画在哪。`RustifyButton` 是新加的：makepad 自己的按钮带 makepad 的主题，在浅色作用域里是浅底白字。
+  - ⑤ 能力目录从 `rustify-ui` 搬进 `rustify-components` 并填满 18 行（DOM 全 yes，14 类区域能画，4 类写明"改在哪里画"）；`cargo xtask catalog --write docs/components.md [--check]` 是唯一的写入者，宿主单测只剩漂移检查；CI 增 `catalog --check`。
+  - ⑥ `component-catalog` 每类一页：活示例 + 区域画的同一个值 + 状态矩阵（只渲染该类真有的状态）；区域的下拉把 DOM 菜单锚到画布内的矩形上。
+  - ⑦ `sharedPage`（`tests/browser/support.ts`）：同一 describe 共享一个 page。M2 的 20 条用例因此从"每条 7 秒冷启动"降到 40 ms–1.5 s。
+  - **浏览器抓到四个真实缺陷**（都不是靠读代码发现的）：SDK 的 GPU 组件从没注册进区域的 script 模块（`RustifyCheckBox{}` 解析不到，槽位画空，看起来像布局 bug）；`field +: mod.widgets.X{...}` 不是换 draw 类型的写法（`+:` 是扩展已有值，五个定义因此在脚本装载时静默失败）；页面切换时没清掉记住的矩形，导致新控件正好落在老位置时永远不上报；区域表头一行放不下（标签+四个色块+按钮 > 320 px），按钮画到边界外，指针够不着。
+- 下一步：**M3 · 表单**。`crates/rustify-ui/src/form.rs` 的纯逻辑状态机（字段错误集、验证代际、提交单飞）先写宿主单测再接组件；`crates/rustify-components/src/form/{provider,field,submit}.rs` 把状态机映射成 `aria-invalid`/`aria-describedby`/聚焦首错/提交按钮态；property-workbench 的属性面板扩成 20 个可见属性的表单；`diagnostics.rs` 登记新错误种类。退出条件见 §10 的 M3 行与 §9.1 的 V5。**两条现成的地基**：组件已经有 `invalid` 与 `described_by` 两个 prop（M2 就留好了，见 `input.rs`/`textarea.rs`/`checkbox.rs`/`select.rs`），M3 只要把它们接到 `FormState` 上；异步票据 `Ticket::deliver`（P1 `task.rs`）就是"只接受最新代际"的现成实现，不要另写一套。
 - 当前阻塞：无。
-- 代码基线：`736b668`（一期收尾）→ `153f67c`、`b14b2fb`、`a92c8dc`、`2e435e1`、`07ce3e0`、`5edcc31`、`fa0e5a4`、`fb3cc96`（M1）→ `1a479ef`、`a3a555c`（一期的脚本堆泄漏修复，二期同样受益：区域在两次泵之间攒够 20,000 条垃圾就清扫一次）。工作区 clean。
-- 回归（2026-09-10，本会话末）：`npx playwright test --project=fusion-basic --project=deployment` **52/52**（46 + 6），跑的是一期代码被本会话改动过之后的产物（诊断开关、区域画中文的字体修复、`muted`→`muted_foreground` 改名、脚本堆回收），确认没有改坏既有用例。`--project=component-catalog` 9/9、`--project=property-workbench` 在本会话中途为 71 passed/1 failed（失败的是当时刚写的新用例，已修，其三个用例随后 3/3）——**这一套没有在最终产物上整套重跑过**，下个会话若要一份干净的全绿证据，跑 `cargo xtask verify --suite p1` 或分 project 各跑一次。
+- 代码基线：`736b668`（一期收尾）→ M1 八提交 `153f67c`…`fb3cc96` → `1a479ef`、`a3a555c`（一期脚本堆泄漏修复）→ **M2 七提交 `098281e`、`fe5a37e`、`42162d6`、`36dbb2d`、`903685c`、`2c8a1bc`、`8cd2c15`**。工作区 clean。
+- 回归（2026-09-10，M2 退出）：见下方"完成记录"的 M2 行。**一条操作教训**：跑浏览器套件时不要同时跑 release 构建——LTO 的构建会把 CPU 抢光，用例慢到像是卡死；本次因此误杀过一次跑到 33/46 的 fusion-basic。另外用 `ps` 判断"还在不在跑"要匹配 `ms-playwright/chromium`，父进程的 CPU 时间不反映进度。
 
 ### 完成记录
 
 | Milestone | 完成时间 | 准确完成摘要 | 验证证据 | 代码基线 |
 | --- | --- | --- | --- | --- |
 | M1 | 2026-09-10 | 契约对齐与组件工程：核对并回写 §2.1；`rustify-components` 建起（两个 Rust/UI 宏原样导入后重写，去 leptos_router、去 nightly、加 test_id）；`sources.lock.json.rust_ui` 双向校验；D13 按实测修正（tw_merge 不设 prefix）；token 扩表 + Tailwind 输入与产物 + `cargo xtask css [--check]`；第三个示例 component-catalog 与第三个 Playwright project；宿主控件计算样式对照；CI 增项。未做：18 类组件本身与目录搬迁（M2）、路由（M4） | `docs/validation/p2/m1.md`；`npx playwright test --project=component-catalog` 9/9；`cargo test --workspace --lib` 65；`cargo test -p xtask` 14；clippy/fmt 通过；`cargo xtask css --check` 无漂移；`cargo xtask sources verify` 通过；`cargo xtask doctor` 10/10 | `fb3cc96` |
+| M2 | 2026-09-10 | 18 类组件目录：17 个 Rust/UI 文件 + slider.css 原样导入后重写（全部受控、`rui:` 前缀、零内联脚本/样式）；浮层四类重写到 P1 浮层栈并补齐 role/键盘/焦点归还；GPU 声明子集（Button/Radio/Toggle/Progress/Spinner/Icon 稳定，DropDown/TabBar 实验，ScrollBars 声明式）；能力目录搬进 `rustify-components` 并填满 18 行 + `cargo xtask catalog`；component-catalog 每类一页（活示例 + GPU 列 + 状态矩阵）；`sharedPage` 测试提速。未做：表单（M3）、路由（M4）、`/samples` 文本样本页与 SDK 文案目录（M7）、对比度与缩放人工走查（M8） | `docs/validation/p2/m2.md`；`npx playwright test --project=component-catalog` **31/31**（M1 9、V2 7、V3 6、V4 9）；一期回归 `--project=fusion-basic` **46/46**、`--project=deployment` **6/6**、`--project=property-workbench` **71 passed / 1 failed**（失败的是 `m8-endurance` 的内存尾部断言，**不是 M2 造成的**：在 M2 前的 `550c2ef` 上用 worktree 建同一个示例复测，同一条断言失败且余量更大——尾部增长 851,968 B vs M2 的 786,432 B，阈值约 420 KB；行为部分两边都是 1,200 发 1,200 收 0 拒 0 错。详见 `docs/validation/p2/m2.md`）；`cargo test --workspace --lib` 76；clippy/fmt 通过；`cargo xtask css --check`、`cargo xtask catalog --check` 无漂移；`cargo xtask sources verify` rust_ui 20 files, 0 verbatim, 20 rewritten | `8cd2c15` |
 
 ## 0. 需求、范围与决策
 
@@ -241,7 +250,7 @@ flowchart TD
 | --- | --- | --- |
 | `crates/rustify-components/Cargo.toml`、`src/lib.rs` ★ | DOM 组件 crate；依赖 `rustify-ui`、`leptos`、`tw_merge`（不依赖 leptos_router） | M1 |
 | `crates/rustify-components/src/macros/{clx.rs,variants.rs}` ★ | 自 `ref/ui-main/crates/leptos_ui/src/` 硬分叉的宏，去掉 nightly 特性依赖 | M1 |
-| `crates/rustify-components/src/catalog.rs` ★ | 能力目录数据：每组件六类能力 × {Stable, Experimental, Unsupported, NotApplicable}，DOM/GPU/跨区三列 | M1 骨架，M2 填满 |
+| `crates/rustify-components/src/catalog.rs` ★ | 能力目录数据：每组件六类能力 × {yes, partial, no}，DOM/GPU/跨区三列 | **M2 交付**（M1 不复制第二份，见 §2.1；实际由 `rustify-ui` 搬入并填满 18 行） |
 | `crates/rustify-components/src/{button,label,link,icon,input,textarea,checkbox,radio,switch,select,slider,progress,spinner,tooltip,menu,dialog,tabs,scroll_area}.rs` ★ | 18 类 DOM 组件；来源标记见 `sources.lock.json` | M2 |
 | `crates/rustify-components/src/form/{provider,field,submit}.rs` ★ | 表单 DOM 包装：错误关联、聚焦首错、提交按钮状态 | M3 |
 | `crates/rustify-components/src/workspace/{splitter,panel_tabs,command_palette}.rs` ★ | 工作区 DOM 组件 | M5 |
@@ -255,7 +264,7 @@ flowchart TD
 | `crates/rustify-ui/src/{clipboard.rs,files.rs}` ★ | 剪贴板与文件导入/导出出口 | M6 |
 | `crates/rustify-ui/src/i18n.rs` ★ | `Locale` 上下文、框架自带文案 zh-CN/en、`Intl` 格式化 | M7 |
 | `crates/rustify-ui/src/diagnostics.rs` | 新增错误种类（§0.7 第 5 条） | M3–M6 |
-| `crates/rustify-makepad/src/widgets/` ☐→扩展 | GPU 声明子集：Radio、Toggle、Progress、Spinner、Icon、DropDown（实验）、TabBar（实验）、ScrollBars；命中查询 `HitQuery` 动作；滚动边界上报 | P1 M6 建立落点，P2 M2/M6 扩展 |
+| `crates/rustify-ui/src/gpu/` ☐→扩展 | GPU 声明子集：Button、Radio、Toggle、Progress、Spinner、Icon、DropDown（实验）、TabBar（实验）；ScrollBars 用 makepad `View{scroll_bars}` 声明，不需新 widget；命中查询 `HitQuery` 动作；滚动边界上报 | **落点是 `rustify-ui/src/gpu/` 而不是 `rustify-makepad/src/widgets/`**（P1 的实际位置，§2.1 规则）；P2 M2 交付控件，M6 扩展 |
 | `makepad/platform/src/os/web/web.js`、`web.rs`、`crates/rustify-makepad/web/embedded.js` | M6：新增区域→宿主的滚动边界上报消息；wheel 处理器按边界状态与策略同步决定是否 `preventDefault` 与投递（D14） | M6 |
 | `examples/component-catalog/` ★（`Cargo.toml`、`src/main.rs`、`index.html`、`app.js`、`app.css`） | 第三个示例 | M1 |
 | `examples/property-workbench/src/` | 升级为 B1：面板、标签页、20 属性表单、命令入口、路由、拖拽、导入导出 | M3–M6 |

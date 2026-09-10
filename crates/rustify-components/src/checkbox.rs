@@ -3,7 +3,7 @@
 use crate::icon::{Glyph, Icon};
 use leptos::prelude::*;
 
-const BOX: &str = "rui:pointer-events-none rui:absolute rui:inset-0 rui:flex rui:items-center rui:justify-center rui:rounded-[4px] rui:border rui:border-border rui:bg-input rui:text-primary-foreground rui:transition-colors rui:peer-checked:bg-primary rui:peer-checked:border-primary rui:peer-focus-visible:ring-ring/50 rui:peer-focus-visible:ring-[3px] rui:peer-disabled:opacity-50";
+const BOX: &str = "rui:pointer-events-none rui:absolute rui:inset-0 rui:flex rui:items-center rui:justify-center rui:rounded-[4px] rui:border rui:border-border rui:bg-input rui:text-primary-foreground rui:transition-colors rui:peer-checked:bg-primary rui:peer-checked:border-primary rui:peer-focus-visible:ring-ring/50 rui:peer-focus-visible:ring-[3px] rui:peer-disabled:opacity-50 rui:peer-aria-invalid:border-destructive rui:peer-aria-invalid:ring-destructive/40 rui:peer-aria-invalid:ring-[3px]";
 const INPUT: &str = "rui:peer rui:absolute rui:inset-0 rui:size-full rui:m-0 rui:opacity-0 rui:cursor-pointer rui:disabled:cursor-not-allowed";
 
 /// Rust/UI drew this as a `<button role="checkbox">`. This one is the

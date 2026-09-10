@@ -285,7 +285,10 @@ test.describe("M2 V2: a component per category", () => {
         "scroll-area",
     ];
 
-    /// The nine whose disabled, read-only and invalid states say anything.
+    /// The eight with a state beyond the ordinary one. A matrix is only worth
+    /// drawing where the states differ: a tooltip has one, and a component
+    /// rendered as "invalid" that has no invalid state shows the same picture
+    /// twice under two names.
     const WITH_STATES = [
         "button",
         "link",
@@ -295,7 +298,6 @@ test.describe("M2 V2: a component per category", () => {
         "radio",
         "switch",
         "slider",
-        "tabs",
     ];
 
     async function open(page: Page, category: string) {
