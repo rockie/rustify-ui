@@ -5,13 +5,19 @@
       "source": "XGENT-ai/skills",
       "sourceType": "github",
       "skillPath": "skills/dev-plan/SKILL.md",
-      "computedHash": "7b90fe73a31f6795a0500ba4a882b6ff6d1afe0de190c211bc19e1ff116eacc3"
+      "computedHash": "b9f5cf5cfde8df92e6ab5c231da29912f18bd6c3cc120f57dc50eb063d980f28"
+    },
+    "elintp": {
+      "source": "XGENT-ai/skills",
+      "sourceType": "github",
+      "skillPath": "skills/elintp/SKILL.md",
+      "computedHash": "4518a85acd7375d8792e53306bb6db65604b70dbb370d2b428657745d8cc7b61"
     },
     "prd": {
       "source": "XGENT-ai/skills",
       "sourceType": "github",
       "skillPath": "skills/prd/SKILL.md",
-      "computedHash": "1e71ee8006d803afd8aa3addf002bf2442e1c5bb081c1d9796fd073b2c8cec2e"
+      "computedHash": "97e0a2eb06431d22eb797c3040d7707a106bbfc425aefa13fa4da1f88b6bf645"
     },
     "rust-async-patterns": {
       "source": "wshobson/agents",
@@ -29,7 +35,7 @@
       "source": "XGENT-ai/skills",
       "sourceType": "github",
       "skillPath": "skills/story-points/SKILL.md",
-      "computedHash": "ed556f7d8e8cfc84664d380690f8f787b46b02e5acaebaf9c2284910b6ac29c3"
+      "computedHash": "60f54390765d6860b8982a14068d5dda46b0fc9b0e795bf7eaffc184920b6b1a"
     },
     "test-plan": {
       "source": "XGENT-ai/skills",
