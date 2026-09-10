@@ -202,8 +202,15 @@ impl Drags {
         if session.state != State::Dragging {
             return None;
         }
-        if session.over.as_deref() == Some(region) && session.asked_at == Some((x, y)) {
+        let same_region = session.over.as_deref() == Some(region);
+        if same_region && session.asked_at == Some((x, y)) {
             return None;
+        }
+        // Arriving from somewhere else withdraws what that somewhere else
+        // said, exactly as moving between two DOM targets does. Only staying
+        // inside one region keeps its answer.
+        if !same_region {
+            session.confirmed = None;
         }
         session.over = Some(region.to_string());
         session.asked_at = Some((x, y));
@@ -672,6 +679,44 @@ mod tests {
         assert_eq!(drags.answer(session, query.seq, true), None);
         assert_eq!(drags.confirmed(), None);
         assert!(drags.waiting(), "and the question is still outstanding");
+    }
+
+    #[test]
+    fn every_drag_counts_its_own_questions_from_one() {
+        let mut drags = Drags::new();
+        let first = drags.start("object-1", "1");
+        let one = drags.over_region("view", 10.0, 10.0).expect("asked");
+        assert_eq!(one.seq, 1);
+
+        let second = drags.start("object-2", "2");
+        let two = drags.over_region("view", 10.0, 10.0).expect("asked again");
+        assert_eq!(two.seq, 1, "a new drag starts its own count");
+        assert_ne!(first, second, "and the two are told apart by the session");
+
+        // So an answer is only ever matched against both together. The first
+        // drag's question number belongs to a drag that is over.
+        assert_eq!(drags.hit(&found(first, one.seq, Some("group-a"))), None);
+        assert_eq!(drags.confirmed(), None);
+        drags.hit(&found(second, two.seq, Some("group-b")));
+        assert_eq!(drags.confirmed(), Some("group-b"));
+    }
+
+    #[test]
+    fn entering_a_region_withdraws_what_a_dom_target_had_said() {
+        let mut drags = Drags::new();
+        let session = drags.start("object-1", "1");
+        let query = drags.over(Some("ungrouped")).expect("asked the bin");
+        drags.answer(session, query.seq, true);
+        assert_eq!(drags.confirmed(), Some("ungrouped"));
+
+        drags
+            .over_region("view", 10.0, 10.0)
+            .expect("asked the region");
+        assert_eq!(
+            drags.confirmed(),
+            None,
+            "the pointer left the bin, so the bin's yes is not a drop"
+        );
     }
 
     #[test]

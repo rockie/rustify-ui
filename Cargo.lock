@@ -168,6 +168,7 @@ checksum = "2550f75b8cfac212855f6b1885455df8eaee8fe8e246b647d69146142e016084"
 name = "component-catalog"
 version = "0.1.0"
 dependencies = [
+ "js-sys",
  "leptos",
  "rustify-components",
  "rustify-makepad",

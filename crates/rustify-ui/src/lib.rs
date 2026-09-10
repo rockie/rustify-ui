@@ -10,6 +10,7 @@ pub mod files;
 pub mod form;
 #[cfg(target_arch = "wasm32")]
 pub mod gpu;
+pub mod i18n;
 pub mod mount;
 pub mod overlay;
 pub mod region;
@@ -29,6 +30,7 @@ pub use diagnostics::{
 pub use drag::{Drags, HitAnswer, HitQuery, Outcome, Query};
 pub use files::{Import, Limits, Refusal};
 pub use form::{FormState, Generation, Submit};
+pub use i18n::{Direction, Locale, Message};
 pub use mount::{mount, AppHandle, MountConfig, ScopeRoots};
 pub use overlay::{LayerId, LocalRect};
 pub use region::{GpuRegion, RegionState};
@@ -40,12 +42,16 @@ pub use task::{Load, Requests, Ticket};
 #[cfg(target_arch = "wasm32")]
 pub use components::{Button, Checkbox, Label, LoadView, Slider, TextArea, TextField};
 #[cfg(target_arch = "wasm32")]
+pub use diagnostics::asset_failures;
+#[cfg(target_arch = "wasm32")]
 pub use drag::{provide_drags, use_drags, DragHandle};
 #[cfg(target_arch = "wasm32")]
 pub use gpu::{
     Glyph as RegionGlyph, RustifyButton, RustifyCheckBox, RustifyDropDown, RustifyIcon,
     RustifyProgress, RustifyRadio, RustifySlider, RustifySpinner, RustifyTabBar, RustifyToggle,
 };
+#[cfg(target_arch = "wasm32")]
+pub use i18n::{browser_languages, format_date, format_number, provide_locale, use_locale};
 #[cfg(target_arch = "wasm32")]
 pub use overlay::{use_overlay, Anchor, Layer, OverlayStack};
 #[cfg(target_arch = "wasm32")]

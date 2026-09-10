@@ -86,3 +86,60 @@ on it would be the wrong command, chosen by somebody who was typing a word.
   person's history with resizes.
 - **No layout persistence.** Sizes and open views start where the application
   puts them on every load.
+
+## Carrying something from one panel to another
+
+A drag here is the SDK's own pointer session (`rustify_ui::drag`), not HTML5
+drag and drop, and the reason is the region: Makepad's web backend takes no part
+in the browser's DnD protocol, so a target drawn on a canvas could never receive
+a `drop` event. One pointer session works across both halves instead.
+
+The asymmetry between the two kinds of target is the whole design:
+
+- **A DOM target is named before it is asked.** The application knows what is
+  under the pointer, asks that target whether it would take this, and gets an
+  answer in the same turn.
+- **A GPU target cannot be.** The DOM knows only *where* the pointer is; the
+  region knows what it drew there. So `over_region(region, x, y)` asks about a
+  point, and the region's `HitAnswer` names the target - or names nothing,
+  which covers both "nothing is there" and "what is there refuses this",
+  because a drag does the same thing about either.
+
+The region answers on its next pump, so a release can happen while the answer is
+still in flight. `release()` then returns `Waiting` and the session is decided
+by that answer when it arrives. This is what makes exactly one drop happen: the
+freshest answer decides, an older one cannot, and `finish` runs once.
+
+Two rules that look inconsistent and are not:
+
+- Moving between DOM targets withdraws the previous target's yes at once. The
+  thing under the pointer is what a drop lands on, and a stale yes is how a drop
+  lands somewhere nobody pointed at.
+- Moving *inside* one region does not. The pointer has not left the region, and
+  the region is about to say whether it left the target inside it; blanking the
+  highlight between every move and its answer would be a flicker, not a fact.
+  Arriving from somewhere else is a move between places and does withdraw the
+  previous yes, like any other.
+
+Every drag counts its own questions from one, so an answer is matched on the
+session **and** the question number. Two drags that each ask once would both be
+question one otherwise, and the second would go unanswered.
+
+## Whose wheel event it is
+
+A region that scrolls has to tell the host where its scrolling ends, because the
+host's decision is synchronous and the region's is not: by the time a wheel has
+been delivered to the region and pumped, the browser has already been told
+whether the event was cancelled.
+
+So a scrolling widget calls `Cx::report_scroll_boundary` after it draws - the
+only moment the answer is a fact - and the host's wheel handler consults the
+last report. The wheel goes to the page only when the region asked for that
+(`propagate`) and every axis the wheel actually moves has run out. The wheel
+that *reaches* an edge is still the region's, because it is judged against the
+report from before it arrived; the next one belongs to the page. A DOM scroller
+says the same thing with `overscroll-behavior`.
+
+One control should drive both, as the workbench's does. A page where the region
+hands wheels over and the list beside it does not is a page where the same
+gesture means two things.

@@ -197,8 +197,12 @@ body {
 
 .objects {
     display: grid;
-    /* Tabs, count, the list, and the bin a drag can drop into. */
-    grid-template-rows: auto auto 1fr auto;
+    /* Tabs, count, the list, and the bin a drag can drop into. Stacked from
+       the top rather than spread: the properties panel beside this one is
+       twenty fields tall, so a row that stretched would put the bin two
+       thousand pixels down the page, where nothing can be dropped on it. */
+    grid-template-rows: auto auto auto auto;
+    align-content: start;
     gap: 6px;
     min-height: 0;
     padding-right: 10px;

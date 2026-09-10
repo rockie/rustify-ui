@@ -39,7 +39,7 @@ export default defineConfig({
         },
         {
             name: "component-catalog",
-            testMatch: ["p2-catalog.spec.ts", "p2-theme.spec.ts", "p2-semantics.spec.ts"],
+            testMatch: ["p2-catalog.spec.ts", "p2-theme.spec.ts", "p2-semantics.spec.ts", "p2-i18n.spec.ts"],
             use: { baseURL: `http://127.0.0.1:${catalogPort}/` },
         },
         {

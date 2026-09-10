@@ -11,7 +11,9 @@ mod object_region;
 #[cfg(target_arch = "wasm32")]
 mod third_party;
 // Not gated: the file formats are arithmetic on bytes, and the host is where
-// a round trip can be compared without a browser.
+// a round trip can be compared without a browser. Nothing calls them there,
+// which is the point.
+#[cfg_attr(not(target_arch = "wasm32"), allow(dead_code))]
 mod transfer;
 
 #[cfg(target_arch = "wasm32")]
@@ -442,6 +444,9 @@ mod app {
         // One drag for the scope. Both halves of the page take part in the
         // same one, which is the point: a pointer cannot be in two drags.
         let drags = provide_drags();
+        // The scope's language, so the SDK's own words - a retry, a dialog's
+        // close button - are in the same language as the application's.
+        rustify_ui::provide_locale(rustify_ui::Locale::English);
         // The question in flight, projected into the region. The region is not
         // running while the pointer moves over the page, so this is how it
         // hears the question at all.

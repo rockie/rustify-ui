@@ -174,9 +174,18 @@ test.describe("M6 V9: the clipboard, and what happens when it refuses", () => {
     test.describe.configure({ mode: "serial" });
 
     /// Ten thousand characters of the two things a Latin-only path gets wrong.
+    ///
+    /// Counted in code points, not in the UTF-16 units JavaScript calls
+    /// `length`: an emoji is one character and two of those units, so slicing
+    /// by `length` would both cut a pair in half and give 7,778 characters
+    /// where ten thousand were asked for.
     const LONG = (() => {
-        const unit = "属性工作台🙂🌍";
-        return unit.repeat(Math.ceil(10_000 / unit.length)).slice(0, 10_000);
+        const unit = [..."属性工作台🙂🌍"];
+        const out: string[] = [];
+        while (out.length < 10_000) {
+            out.push(...unit);
+        }
+        return out.slice(0, 10_000).join("");
     })();
 
     test("ten thousand Chinese characters and emoji make the round trip", async ({
@@ -190,7 +199,7 @@ test.describe("M6 V9: the clipboard, and what happens when it refuses", () => {
         await page.getByTestId("object-1").click();
         await expect.poll(async () => (await snapshot(page)).selected).toBe(1);
         await page.getByTestId("notes-input").fill(LONG);
-        await expect.poll(async () => (await snapshot(page)).notes?.length).toBe(LONG.length);
+        await expect.poll(async () => (await snapshot(page)).notes).toBe(LONG);
 
         expect((await transfer(page)).can_copy).toBe(true);
         await page.getByTestId("copy-notes").click();

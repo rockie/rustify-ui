@@ -121,7 +121,7 @@ pub fn from_text(bytes: &[u8]) -> Result<Vec<Record>, Malformed> {
 
 /// Reads a binary export.
 pub fn from_binary(bytes: &[u8]) -> Result<Vec<Record>, Malformed> {
-    if bytes.len() % BINARY_RECORD != 0 {
+    if !bytes.len().is_multiple_of(BINARY_RECORD) {
         return Err(Malformed::Length(bytes.len()));
     }
     Ok(bytes

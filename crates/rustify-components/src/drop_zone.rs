@@ -38,8 +38,11 @@ pub fn DropZone(
     // boolean flickers the highlight off and on as the pointer crosses the
     // text inside the zone.
     let depth = RwSignal::new(0i32);
+    // The SDK's words when the application supplies none: a drop zone with no
+    // label is still a drop zone, and what it says is the SDK's to say.
+    let locale = rustify_ui::use_locale();
     let label = if label.is_empty() {
-        "drop a file here".to_string()
+        locale.text(rustify_ui::Message::DropFileHere).to_string()
     } else {
         label
     };

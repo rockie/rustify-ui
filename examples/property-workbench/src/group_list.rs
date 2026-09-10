@@ -165,13 +165,29 @@ impl GroupList {
 
 impl Widget for GroupList {
     fn handle_event(&mut self, cx: &mut Cx, event: &Event, _scope: &mut Scope) {
-        if let Hit::FingerScroll(fe) = event.hits(cx, self.draw_bg.area()) {
-            let next = (self.scroll + fe.scroll.y).clamp(0.0, self.max_scroll);
-            if next != self.scroll {
-                self.scroll = next;
-                self.redraw(cx);
-            }
+        let Event::Scroll(wheel) = event else {
+            return;
+        };
+        // Tested against the rectangle this list drew, rather than through the
+        // widget's draw area. An area reads as an empty rectangle whenever its
+        // draw list has been redrawn since the instance was written, and this
+        // region asks for a redraw on every projection - so the ordinary hit
+        // test answers "nowhere" for a list that is plainly on the screen. The
+        // rectangle it drew is the one the user saw, which is the one a wheel
+        // over it should scroll.
+        let Some(pane) = self.pane else {
+            return;
+        };
+        if !pane.contains(wheel.abs) || self.max_scroll <= 0.0 {
+            return;
         }
+        let next = (self.scroll + wheel.scroll.y).clamp(0.0, self.max_scroll);
+        if next != self.scroll {
+            self.scroll = next;
+            self.redraw(cx);
+        }
+        // Taken here, so an ancestor scroller does not move as well.
+        wheel.handled_y.set(true);
     }
 
     fn draw_walk(&mut self, cx: &mut Cx2d, _scope: &mut Scope, walk: Walk) -> DrawStep {

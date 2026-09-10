@@ -76,7 +76,7 @@ impl std::fmt::Display for Refusal {
             Self::TooLarge { bytes, limit } => {
                 write!(f, "{bytes} bytes, and the limit is {limit}")
             }
-            Self::WrongKind { allowed } if allowed.is_empty() => f.write_str("not a kind we read"),
+            Self::WrongKind { allowed: [] } => f.write_str("not a kind we read"),
             Self::WrongKind { allowed } => write!(f, "we read {}", allowed.join(", ")),
             Self::Unreadable => f.write_str("the file could not be read"),
         }
@@ -287,7 +287,7 @@ mod tests {
                 limit: 1 << 20
             })
         );
-        assert_eq!(JSON.check("objects.json", (1 << 20) + 1).is_err(), true);
+        assert!(JSON.check("objects.json", (1 << 20) + 1).is_err());
         // Exactly at the limit is within it.
         assert_eq!(JSON.check("objects.json", 1 << 20), Ok(()));
     }

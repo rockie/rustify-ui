@@ -100,3 +100,82 @@ contexts - a third-party component that calls `leptos_router::hooks::*` will
 panic for want of one. Nested routing, route-level authorisation, server
 redirects and form actions are not provided and are not planned for this
 release.
+
+## The clipboard
+
+`navigator.clipboard` is behind `--cfg=web_sys_unstable_apis` in web-sys
+0.3.105, so whether the SDK can reach it at all is decided when the wasm is
+compiled rather than by the browser it runs in. `cargo xtask build-web` sets
+the flag (`xtask/src/build.rs`), and cargo-makepad composes inherited
+`RUSTFLAGS` with its own, so every build made that way is clipboard-capable.
+
+A build made another way is not, and this is not a crash: the two entry points
+answer `ClipboardError::Unavailable`, and `rustify_ui::clipboard::available()`
+says so before anything is attempted. An application should ask that once and
+offer its manual path from the start rather than at the moment somebody presses
+copy.
+
+Two things the browser decides at run time, and neither is worked around:
+
+- Reading the clipboard needs permission, and a page that has not been granted
+  it gets a rejected promise. Every rejection arrives as `ClipboardError::Denied`,
+  whatever the browser's reason - permission, an unfocused document, or a
+  gesture the call was not part of - because the answer to all of them is the
+  same: say so, and offer the path that needs no permission.
+- A success is never reported that did not happen. The manual path is the text,
+  selected, in a control the user can press the copy key in.
+
+Programmatic reading is only for a deliberate "paste" control on something that
+is not a text field. A text field's own paste is the browser's, needs no
+permission, and is the path a person expects.
+
+## Downloads under the strict policy
+
+`default-src 'none'` governs what a page may load, not what it may hand the
+user to save, and an export started from a `blob:` object URL and an anchor's
+`download` attribute is not affected by it. No directive was added: the
+committed strict policy is unchanged, and `p2-files.spec.ts` compares the bytes
+the browser actually saved against the bytes the application meant to write, so
+a browser that ever did block this would fail a test rather than lose a
+feature quietly.
+
+The object URL is revoked on the next turn rather than in the same one. A click
+on an anchor starts the download asynchronously, and revoking immediately
+cancels it in some browsers.
+
+## Dragging
+
+Dragging inside a page is the SDK's own pointer session (`rustify_ui::drag`),
+not HTML5 drag and drop. Makepad's web backend has no part in the browser's DnD
+protocol, so a GPU target could never be a drop target under it; the pointer
+session works across both halves because the region answers a question about a
+*point* and names the target itself.
+
+HTML5 drag and drop is used for exactly one thing: files dragged in from the
+operating system, which arrive as a `drop` event and nothing else can receive
+them. Dragging *out* to the operating system is not provided.
+
+## Languages
+
+Two ship: English and `zh-CN` (`docs/i18n.md`). The SDK translates the words it
+puts on screen on its own account and nothing else; an application's vocabulary
+is the application's. `Locale::from_tag` matches on the language subtag, so
+`zh`, `zh-CN` and `zh-Hans-CN` are one language.
+
+Number and date formatting is `Intl`, with the options object supplied by the
+application. Plural rules, message interpolation and locale-aware collation are
+not provided.
+
+Direction is a value the layout reads (`dir` on the scope root, logical
+properties in the component classes), but no right-to-left language ships. The
+B5 sample page draws right-to-left text so that a reviewer can see what the two
+halves do with it. The theme's wide family covers Latin, Chinese and emoji and
+does **not** include Arabic or Hebrew, so the region draws those samples with
+whatever that font has for absent glyphs. That is a gap in the shipped fonts,
+not in the layout, and it is what the reviewer's comparison against the browser
+column is there to record.
+
+The missing-glyph mark (`Message::MissingGlyph`) is for the other case: a font
+that fails to arrive. The region then falls back to its built-in Latin face and
+the page says so, because a row of boxes on its own tells a reader nothing about
+whose fault it is.
