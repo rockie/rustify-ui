@@ -103,7 +103,9 @@ pub const P2_MANUAL_RECORDS: [(&str, &str); 4] = [
     ),
     (
         "docs/validation/p2/manual/pinyin.md",
-        "M8: real pinyin input in the property form and the command palette",
+        "M8: a real pinyin session in the property form and the command palette. The \
+         mechanics beneath it are checked by `p2-ime` - what a person still has to say \
+         is whether composing in them actually feels right",
     ),
     (
         "docs/validation/p2/manual/samples.md",

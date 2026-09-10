@@ -88,3 +88,14 @@ screen. Three details of theirs are contractual:
 `beforeunload` only while some guard's `has_unsaved` is true, so a page with
 nothing to lose closes without a dialogue. See `docs/navigation.md` for how a
 refused navigation is undone.
+
+## Input methods
+
+A field reports nothing while an input method is composing in it, and reports
+once when the composition ends. The keys an input method puts in the field are
+how a character is being *looked up*, not the value: a form that took them would
+record "gongzuo" as somebody's name and keep it if they abandoned the lookup.
+
+The same rule keeps the control from writing its held value back into the
+element mid-composition, which would take the input method's own text away from
+the person using it.

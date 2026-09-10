@@ -63,6 +63,28 @@ Both are fixed. A token table is exactly the kind of thing that goes wrong one
 value at a time, and each time it does, the person who cannot read the result
 finds out first - which is why this is a test and not a review.
 
+## Input methods
+
+A composition in flight is not a value. An input method puts the keys being used
+to *look up* a character into the field - pinyin, bopomofo, a partial Hangul
+syllable - and a control that reported those to the application would name an
+object "gongzuo" and leave it named that if the user changed their mind.
+
+Both pairs of text components ignore input while composing and report once at
+`compositionend`, which is the first moment the field holds a value. They also
+stop settling during a composition: writing the held value back into the element
+mid-composition takes the input method's own text out of the field.
+
+**This was broken when the test was written**, in the SDK's pair *and* the
+component crate's - which is what happens when two implementations share a
+contract and only one of them is ever exercised. `p2-ime.spec.ts` covers the two
+places §9.4 names, the property form and the command palette; P1 had only
+checked the region's own text control.
+
+What is still a person's: a real input method. The mechanics are settled here;
+whether a real pinyin session feels right is not something a synthetic
+composition can answer.
+
 ## Zoom and reflow
 
 Also checked rather than walked through, and the way WCAG defines the test: 200%
@@ -94,7 +116,7 @@ theme value, so one setting covers both.
 | Record | What it covers |
 | --- | --- |
 | `docs/validation/p2/manual/voiceover.md` | VoiceOver + Chrome over the eighteen categories and B1's five journeys |
-| `docs/validation/p2/manual/pinyin.md` | Real pinyin input in the property form and the command palette |
+| `docs/validation/p2/manual/pinyin.md` | A real pinyin session in the form and the palette. The mechanics beneath it - a composition in flight not being a value, keys during one belonging to the composition - are checked by `p2-ime` |
 | `docs/validation/p2/manual/samples.md` | The twenty B5 samples against a reference rendering (A-4) |
 | `docs/validation/p2/manual/contrast-and-zoom.md` | Whether the reflowed pages are *readable* at 200% and 400%. The ratios, the journeys and the reflow itself are checked above; this is the judgement a measurement cannot make |
 
