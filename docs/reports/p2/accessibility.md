@@ -63,6 +63,34 @@ Both are fixed. A token table is exactly the kind of thing that goes wrong one
 value at a time, and each time it does, the person who cannot read the result
 finds out first - which is why this is a test and not a review.
 
+## The accessibility tree, and the way out of it
+
+Three things the VoiceOver record covers, and two of them are machine-checkable:
+
+| Check | Result |
+| --- | --- |
+| Every operable control in the scope has a non-empty accessible name | Passes, over the whole tree rather than a list of twenty |
+| The twenty nav entries are twenty distinct names | Passes - a duplicate is a screen reader saying the same thing twice with no way to tell them apart |
+| Tab from the top comes back round | Passes within 300 presses, so the keyboard is not stuck anywhere |
+| Twenty tab stops with a modal open never reach the scope behind it | Passes |
+
+The last one is the one `p2-semantics` could not make: it checks that Escape
+closes a dialog and returns focus, and a *broken* trap passes that too.
+
+**Modality here is scope-level, deliberately.** A modal makes the rest of its own
+scope `inert`; it does not make the host page inert, because the host page is not
+the SDK's to disable. So the keyboard may leave a modal onto the host's own
+controls and may not reach the scope behind it - which is what the test asserts,
+and what an SDK embedded in somebody else's page should do.
+
+Writing it also found a nameless text input in the catalogue's own fixture. It
+was the host-page control V1 uses, so it was outside the scope and outside the
+check; it has a name now anyway, because a nameless input in our own page is
+careless whoever owns it.
+
+What is still a person's: whether a screen reader *announces* any of this
+correctly. The tree can be read by a machine; the speech cannot.
+
 ## Input methods
 
 A composition in flight is not a value. An input method puts the keys being used
@@ -115,7 +143,7 @@ theme value, so one setting covers both.
 
 | Record | What it covers |
 | --- | --- |
-| `docs/validation/p2/manual/voiceover.md` | VoiceOver + Chrome over the eighteen categories and B1's five journeys |
+| `docs/validation/p2/manual/voiceover.md` | What VoiceOver actually *says* over the eighteen categories and B1's five journeys. The tree behind it - names, distinctness, no focus trap, modality - is checked by `p2-semantics` and `p2-a11y` |
 | `docs/validation/p2/manual/pinyin.md` | A real pinyin session in the form and the palette. The mechanics beneath it - a composition in flight not being a value, keys during one belonging to the composition - are checked by `p2-ime` |
 | `docs/validation/p2/manual/samples.md` | The twenty B5 samples against a reference rendering (A-4) |
 | `docs/validation/p2/manual/contrast-and-zoom.md` | Whether the reflowed pages are *readable* at 200% and 400%. The ratios, the journeys and the reflow itself are checked above; this is the judgement a measurement cannot make |

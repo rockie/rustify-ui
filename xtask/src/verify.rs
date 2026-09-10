@@ -99,7 +99,10 @@ pub const MANUAL_RECORDS: [(&str, &str); 4] = [
 pub const P2_MANUAL_RECORDS: [(&str, &str); 4] = [
     (
         "docs/validation/p2/manual/voiceover.md",
-        "M8: VoiceOver + Chrome over the catalogue's eighteen categories and B1's five journeys",
+        "M8: what VoiceOver actually says over the catalogue's eighteen categories and B1's \
+         five journeys. The tree behind it is checked by `p2-semantics` and `p2-a11y` - \
+         names, distinctness, no focus trap, and a modal the keyboard cannot get behind. \
+         What needs a person is the speech",
     ),
     (
         "docs/validation/p2/manual/pinyin.md",

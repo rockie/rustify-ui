@@ -23,8 +23,9 @@
              page that loads none of our stylesheets. -->
         <section class="dark" data-testid="host-controls">
             <h2>the page's own controls</h2>
-            <input type="range" data-testid="host-range" min="0" max="10" value="5">
-            <input type="text" data-testid="host-text" value="host">
+            <input type="range" data-testid="host-range" min="0" max="10" value="5"
+                   aria-label="a host range">
+            <input type="text" data-testid="host-text" value="host" aria-label="a host field">
             <button type="button" data-testid="host-button">host button</button>
             <a href="#host" data-testid="host-link">host link</a>
         </section>
