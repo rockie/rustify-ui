@@ -6,6 +6,9 @@ const workbenchPort = 4174;
 // sub-path, with a switch that makes it serve a broken one on request.
 const deploymentPort = 4175;
 const catalogPort = 4176;
+// The workbench again, under a sub-path: the same deep-link checks have to
+// pass at the root and below it, and the difference is the deployment.
+const deepLinkPort = 4177;
 const deploymentBase = "/tools/demo/";
 
 export default defineConfig({
@@ -31,13 +34,18 @@ export default defineConfig({
         },
         {
             name: "property-workbench",
-            testMatch: ["m3-workbench.spec.ts", "m5-text.spec.ts", "m5-semantics.spec.ts", "m6-theme.spec.ts", "m6-async.spec.ts", "m6-components.spec.ts", "m7-recovery.spec.ts", "m8-baseline.spec.ts", "m8-network.spec.ts", "m8-endurance.spec.ts", "p2-form.spec.ts"],
+            testMatch: ["m3-workbench.spec.ts", "m5-text.spec.ts", "m5-semantics.spec.ts", "m6-theme.spec.ts", "m6-async.spec.ts", "m6-components.spec.ts", "m7-recovery.spec.ts", "m8-baseline.spec.ts", "m8-network.spec.ts", "m8-endurance.spec.ts", "p2-form.spec.ts", "p2-deeplink.spec.ts"],
             use: { baseURL: `http://127.0.0.1:${workbenchPort}/` },
         },
         {
             name: "component-catalog",
             testMatch: ["p2-catalog.spec.ts", "p2-theme.spec.ts", "p2-semantics.spec.ts"],
             use: { baseURL: `http://127.0.0.1:${catalogPort}/` },
+        },
+        {
+            name: "workbench-deep",
+            testMatch: ["p2-deeplink.spec.ts"],
+            use: { baseURL: `http://127.0.0.1:${deepLinkPort}${deploymentBase}` },
         },
         {
             name: "deployment",
@@ -53,7 +61,7 @@ export default defineConfig({
             timeout: 120_000,
         },
         {
-            command: `cargo xtask serve --example property-workbench --release --port ${workbenchPort}`,
+            command: `cargo xtask serve --example property-workbench --release --port ${workbenchPort} --spa`,
             url: `http://127.0.0.1:${workbenchPort}/`,
             reuseExistingServer: false,
             timeout: 120_000,
@@ -61,6 +69,12 @@ export default defineConfig({
         {
             command: `cargo xtask serve --example component-catalog --release --port ${catalogPort}`,
             url: `http://127.0.0.1:${catalogPort}/`,
+            reuseExistingServer: false,
+            timeout: 120_000,
+        },
+        {
+            command: `cargo xtask serve --example property-workbench --release --port ${deepLinkPort} --base ${deploymentBase} --spa`,
+            url: `http://127.0.0.1:${deepLinkPort}${deploymentBase}`,
             reuseExistingServer: false,
             timeout: 120_000,
         },

@@ -90,3 +90,13 @@ teardown, so a rebuild can be inspected rather than assumed clean.
 - A trap in the shared wasm affects every mount scope on the page (ADR-1, D9). The static failure notice exists in the loader; the runtime fatal path is M7 work.
 - Release wasm is 7,682,693 bytes uncompressed with `opt-level=z`; no size budget is claimed.
 - The Leptos reference tree under `ref/` carries post-release changes in files unrelated to the SDK (see `sources.lock.json`); the crates.io release is what is built and tested.
+
+## Routing
+
+The SDK has its own minimal router (`docs/navigation.md`): static segments,
+`:param`, one URL owner per page, and a guard that can undo a refused move
+through history. It is not `leptos_router`, and it provides none of its
+contexts - a third-party component that calls `leptos_router::hooks::*` will
+panic for want of one. Nested routing, route-level authorisation, server
+redirects and form actions are not provided and are not planned for this
+release.

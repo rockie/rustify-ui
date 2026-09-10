@@ -126,7 +126,7 @@ pub fn build(request: &BuildRequest) -> Result<PathBuf, String> {
     }
     let page = std::fs::read_to_string(example_dir.join("index.html"))
         .map_err(|e| format!("{}/index.html: {e}", example_dir.display()))?;
-    write(&app.join("index.html"), page.as_bytes())?;
+    write(&app.join("index.html"), rebase_index(&page, "/").as_bytes())?;
     // Third-party browser files are part of the checkout, at one recorded
     // version (`sources.lock.json`), so the build copies them rather than
     // fetching anything.
@@ -223,15 +223,15 @@ pub fn manifest_base(app: &Path) -> Result<String, String> {
 /// Points a page's own relative references at the path it will be served under.
 ///
 /// `./app.js` resolves against the *document's* directory, so at
-/// `/tools/demo/objects/42` it becomes `/tools/demo/objects/app.js` and the
-/// page does not load. The policy forbids `<base>` (`base-uri 'none'`), so the
-/// references are rewritten instead - which is also the honest thing, because
-/// the path a build is deployed under is a property of the build.
+/// `/objects/42` it becomes `/objects/app.js` and the page does not load. That
+/// is true at the root as much as under a sub-path, which is why this happens
+/// to every build and not only to the deployed-under-a-path ones: an
+/// application with routes has deep links wherever it is served. The policy
+/// forbids `<base>` (`base-uri 'none'`), so the references are rewritten
+/// instead - which is also the honest thing, because the path a build is
+/// deployed under is a property of the build.
 pub fn rebase_index(html: &str, base: &str) -> String {
     let base = crate::serve::normalize_base(base);
-    if base == "/" {
-        return html.to_string();
-    }
     html.replace("=\"./", &format!("=\"{base}"))
         .replace("='./", &format!("='{base}"))
 }
@@ -482,9 +482,13 @@ mod tests {
     }
 
     #[test]
-    fn a_build_for_the_root_is_left_alone() {
-        assert_eq!(rebase_index(PAGE, "/"), PAGE);
-        assert_eq!(rebase_index(PAGE, ""), PAGE);
+    fn a_build_for_the_root_still_names_its_files_from_the_root() {
+        // Not "left alone": `./app.js` at `/objects/42` is `/objects/app.js`,
+        // and an application with routes has deep links at the root too.
+        let rebased = rebase_index(PAGE, "/");
+        assert!(rebased.contains(r#"href="/runtime.css""#), "{rebased}");
+        assert!(rebased.contains(r#"src="/app.js""#), "{rebased}");
+        assert_eq!(rebased, rebase_index(PAGE, ""));
     }
 
     #[test]
