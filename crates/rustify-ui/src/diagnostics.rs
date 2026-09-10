@@ -66,10 +66,14 @@ pub enum ErrorKind {
     /// The shared wasm trapped. Every mount in this runtime is dead; only a
     /// reload brings them back.
     RuntimeFatal,
+    /// A form was told about a field it does not have. Nothing happened, which
+    /// is the problem: a misspelled field is a control that never validates
+    /// and a form that never becomes dirty, with nothing on screen to say so.
+    UnknownField,
 }
 
 impl ErrorKind {
-    pub const ALL: [ErrorKind; 10] = [
+    pub const ALL: [ErrorKind; 11] = [
         Self::InvalidContainer,
         Self::OccupiedContainer,
         Self::UnsupportedCapability,
@@ -80,6 +84,7 @@ impl ErrorKind {
         Self::Backpressure,
         Self::Disposed,
         Self::RuntimeFatal,
+        Self::UnknownField,
     ];
 
     /// The name the diagnostics ring and the host notice both print.
@@ -95,6 +100,7 @@ impl ErrorKind {
             Self::Backpressure => "Backpressure",
             Self::Disposed => "Disposed",
             Self::RuntimeFatal => "RuntimeFatal",
+            Self::UnknownField => "UnknownField",
         }
     }
 
@@ -111,6 +117,7 @@ impl ErrorKind {
             Self::Backpressure => "run the action again; it did not happen",
             Self::Disposed => "drop the handle; what it named is gone",
             Self::RuntimeFatal => "reload the page; unsaved in-memory state is lost",
+            Self::UnknownField => "name the field in FormState::new, or correct the spelling",
         }
     }
 }
@@ -158,6 +165,10 @@ pub struct Diagnostic {
     /// application's own resource table asked for - never anything a user
     /// typed.
     pub asset: Option<String>,
+    /// The form field the entry is about, when one is. `&'static str` for the
+    /// same reason `detail` is: a form's fields are named in its own source,
+    /// so nothing a user typed can arrive here.
+    pub field: Option<&'static str>,
     pub detail: &'static str,
 }
 
@@ -169,6 +180,7 @@ impl Diagnostic {
             scope: None,
             region: None,
             asset: None,
+            field: None,
             detail,
         }
     }
@@ -187,6 +199,12 @@ impl Diagnostic {
 
     pub fn in_region(mut self, region: u32) -> Self {
         self.region = Some(region);
+        self
+    }
+
+    /// Names the form field this entry is about.
+    pub fn about_field(mut self, field: &'static str) -> Self {
+        self.field = Some(field);
         self
     }
 
@@ -333,7 +351,7 @@ impl Diagnostics {
             .iter()
             .map(|entry| {
                 format!(
-                    "{{\"kind\":\"{}\",\"at_ms\":{:.0},\"scope\":{},\"region\":{},\"asset\":{},\"detail\":\"{}\",\"suggestion\":\"{}\"}}",
+                    "{{\"kind\":\"{}\",\"at_ms\":{:.0},\"scope\":{},\"region\":{},\"asset\":{},\"field\":{},\"detail\":\"{}\",\"suggestion\":\"{}\"}}",
                     entry.kind.name(),
                     entry.at_ms,
                     entry
@@ -349,6 +367,10 @@ impl Diagnostics {
                         .asset
                         .as_deref()
                         .map(|asset| format!("\"{asset}\""))
+                        .unwrap_or_else(|| "null".to_string()),
+                    entry
+                        .field
+                        .map(|field| format!("\"{field}\""))
                         .unwrap_or_else(|| "null".to_string()),
                     entry.detail,
                     entry.suggestion(),
@@ -522,8 +544,8 @@ mod tests {
     }
 
     #[test]
-    fn the_ten_registered_kinds_are_all_there() {
-        assert_eq!(ErrorKind::ALL.len(), 10);
+    fn the_eleven_registered_kinds_are_all_there() {
+        assert_eq!(ErrorKind::ALL.len(), 11);
         let names: Vec<&str> = ErrorKind::ALL.iter().map(|kind| kind.name()).collect();
         assert_eq!(
             names,
@@ -538,6 +560,7 @@ mod tests {
                 "Backpressure",
                 "Disposed",
                 "RuntimeFatal",
+                "UnknownField",
             ]
         );
         // No duplicates, and every one of them says what to do next.
