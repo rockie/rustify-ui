@@ -205,7 +205,12 @@ test.describe("M1 V1: the host page's own controls are not ours", () => {
 
     test("they compute the same with our stylesheets as without them", async ({ page, browser }) => {
         await ready(page);
-        await expect.poll(async () => (await snapshot(page)).region).toBe("ready");
+        // The same allowance the other region checks give it. Waiting for the
+        // region is a precondition here, not the thing under test, and a cold
+        // boot behind thirty other tests is slower than one on its own.
+        await expect
+            .poll(async () => (await snapshot(page)).region, { timeout: 30_000 })
+            .toBe("ready");
         const withUs = await styles(page);
 
         // The bare page carries the example's own stylesheet and not ours, so

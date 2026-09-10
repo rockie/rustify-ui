@@ -26,21 +26,21 @@
 
 ### 恢复快照
 
-- 最近更新：2026-09-10。**M3 已完成并通过全部退出条件**（`p2-form.spec.ts` 9/9）。下一个是 M4。
-- 当前进度：**3/8**（M1、M2、M3 关闭）。
-- 当前状态：In progress。A-1、A-2 已解除；D1/D2/D3/D5 与 ADR-4–7 已接受；D13/ADR-5 按 M1 实测修正；§3/§5.3 按 M3 实测修正（见下）。
-- 最近完成（本计划）：**M3 · 表单，已关闭**。两个提交 `210d4bb`、`4cee481`：
-  - ① `crates/rustify-ui/src/form.rs`：代际、pending、提交请求绑定、单飞。16 条宿主单测**先于代码写**，其中两条真抓到东西。
-  - ② **`submit()` 原本把所有错误都清掉再跑规则**，于是异步校验刚拒绝过的值被抹掉、表单就保存了。错误现在带来源：规则的错误规则自己可以撤回，校验的答案说的是值本身、而值没变。抓到它的是「异步失败后再问二十次也不保存」那条。
-  - ③ `ErrorKind::UnknownField` + `Diagnostic::field`（`&'static str`，NFR-4 的保证不破）：拼错字段名原本是静默无操作，表现成「表单永远不脏」，最难查的那种。错误种类现在 11 类。
-  - ④ `crates/rustify-components/src/form/{provider,field,submit}.rs`：`Form` 句柄（save 闭包归它，所以「一次请求至多一次保存」是结构性的，不靠调用方记得）、`Field`（label→控件、`aria-invalid`、只指向真实存在的错误文本）、`SubmitButton`、`FormStatus`。
-  - ⑤ property-workbench 属性面板扩到 20 个可见属性：4 个仍随打随生效（区域画它们），15 个是草稿 + 保存，规则覆盖必填/格式/跨字段（含跨「即时/草稿」那条：锁定的对象不能换 owner），一个属性走异步校验。页面可以把校验和保存都按住不放，这才让「二十次反序应答」「二十次连点只保存一次」可数。
-  - **两处按实测修正计划正文**（都已回写 §3/§5.3）：`FormState` **不持有字段值**（值在应用手里，再存一份就是同一个字段有两个答案，正是 P1 M6 从控件里拿掉的 bug；也正因如此 workbench 才能让 4 个属性即时生效、15 个走草稿）；提交按钮用 **`aria-disabled` 而非原生 `disabled`**（原生禁用的按钮收不到点击，`submit()` 就当不成权威——这是一条测试用「校验进行中提交」时收不到任何事件才发现的）。
-  - **一个自己造的坑**：新区块用了 `data-testid="details"`，与 P1 异步夹具重名，五条 P1 用例互相选中对方的元素。已改名 `object-details`。
-- 下一步：**M4 · 导航与深链接**。顺序按 §10 的 M4 行：**A-5 探针先行**——在浏览器里验三件事：`history.go(-3)` 一次跨多项、同一 URL 对应多个历史项、恢复期间连续后退；评审 2026-09-09 的探针已经证明「用 `go(+1)` 逐步回」不成立（`/d`→`go(-3)`→`/a`，`go(+1)` 只回到 `/b`），所以实现必须按 `history.state.rustify.index` 的**序号差**算位移。探针过了再写 `crates/rustify-ui/src/router.rs`（URL 所有者/内存 location、静态段与 `:param` 匹配、序号、作用域根锚点拦截、守卫、`beforeunload`）与宿主单测，然后 `MountConfig { url_owner, base }` + `UrlOwnerConflict`（走 `mount` 现有前置闸，§2.1）、`build-web --base` + `serve --spa`、workbench 的 `objects/:id` 与未找到页、fusion-basic 双挂载夹具加宿主链接与非所有者用例、`docs/navigation.md`。退出条件见 §10 的 M4 行与 §9.1 的 V6。**三条现成的地基**：`ErrorKind` 已经能加（M3 刚加过一个，改法在 `diagnostics.rs`），M4 要加的是 `severity()` 与 `NavigationBlocked`/`NavigationBusy`（§2.1）；表单已经发布 `dirty`，守卫直接读它；`rustify_components::Link` 的 `aria-current` 读的就是 `provide_current_path`，路由把真 location 接上去即可，组件不用动。
+- 最近更新：2026-09-10。**M4 已完成并通过全部退出条件**。下一个是 M5。
+- 当前进度：**4/8**（M1–M4 关闭）。
+- 当前状态：In progress。A-1、A-2 已解除；**A-5 已解除**（探针五条全过，见下）；D1/D2/D3/D5 与 ADR-4–7 已接受；D13/ADR-5 按 M1 实测修正；§3/§5.3 按 M3 实测修正。
+- 最近完成（本计划）：**M4 · 导航与深链接，已关闭**。五个提交 `41d77f4`→`8023b68`：
+  - ① **A-5 探针先行**（`tests/browser/p2-navigation.spec.ts`，五条，留在套件里当作设计依据）：一次 `go()` 能跨多项且事件带着落点那一项的 state；「逐步 `go(+1)` 回去」只回一步（`/d`→`go(-3)`→`/a`→`go(+1)`→`/b`）；同一 URL 两项只有序号能区分；恢复期间按下的后退是它自己的事件，所以只能按读到的序号判断、不能数自己发了几次 go；路由没推过的项根本没有序号。**结论：A-5 成立，守卫不需要 §11 备着的「降级为单步」。**
+  - ② `crates/rustify-ui/src/router.rs`：匹配（静态段、`:param`、解码、尾斜杠、`strip_base` 的 `/tools/demo-other` 陷阱）+ 历史序号账本，15 条宿主单测。
+  - ③ **序号是「当前历史里的深度」，不是累加计数器**。这条是单测过、串行跑挂才发现的：走 20 步、退 20 步、再往新地方走一步，push 会把前面 20 项截断，累加的序号会让 `history.go` 去走 21 项而实际只有 1 项，用户就被留在守卫承诺不会去的地方。现在序号 = 来源项 + 1，两个序号的差就是浏览器要走的距离——它唯一的用途。
+  - ④ `MountConfig { url_owner, base }` + `UiError::UrlOwnerConflict`（走 `mount` 现有前置闸，失败时页面原样不动）；非所有者作用域**也**要拦自己容器里的链接（否则嵌在别人页面里的实例会把整页导航走）；`ErrorKind` 加 4 类到 15 类并引入 `Severity`（守卫拒绝 20 次不是 20 个错误，报告分开计数）。
+  - ⑤ `build-web --base`（页面自己的相对引用改写成绝对；**根部署也要改**——`./app.js` 在 `/objects/42` 会解析成 `/objects/app.js`，凡是有路由的应用在哪儿部署都有深链接）、子路径构建是第二份产物且有自己的目录、`serve --spa`（只对「看起来像路由」的路径回退，缺失的 `app.js` 仍是 404）、`serve` 在 base 与构建不符时拒绝启动。
+  - ⑥ workbench 路由 `objects/:id` + 未找到页 + 未保存守卫；fusion-basic 双挂载夹具（一个所有者一个非所有者，各报各的 location）；`docs/navigation.md` 与 `compatibility.md` 的路由说明。
+  - **最值钱的一条**：Makepad 用 `location.pathname` 解析自己的资源。对不导航的页面没问题，嵌入区域却活在一个会导航的应用里——workbench 一路由到 `/objects/1`，所有字体请求就变成 `/objects/1/makepad_widgets/...` 全部 404。路由落地一分钟内被 11 条一期用例抓到（这正是 §9.2「每个里程碑退出都跑一期套件」的价值）。现在由宿主把**部署路径**（从构建自己的 manifest 读、经 loader 传下去）告诉区域，而不是让它去猜一个别人正在改的地址栏。这是 F15 往下一层的同一个错误，没有深链接用例的话会一直藏到生产环境第一个被分享的 URL。改的是 `makepad/platform/src/os/web/web.js` 与 `web/loader.js`——§1.2 把宿主桥改动排在 M6，这条记为 M4 的偏离；不动任何桥消息，schema hash 不变。
+- 下一步：**M5 · 工作区（B1 形态）**。按 §10 的 M5 行：`crates/rustify-components/src/workspace/{splitter,panel_tabs,command_palette}.rs`；property-workbench 达到 PRD §5.2 的 B1 定义（3 面板、10 标签页、1,000 对象、20 属性、菜单+模态、命令入口）；`docs/workspace.md`。退出条件见 §10 的 M5 行与 §9.1 的 V7，另外要复跑一期 V4 的锚点子集（100 次分隔栏调整后用 20 个锚点复核命中）。**三条现成的地基**：`Menu`/`Dialog`/`Select` 已经在浮层栈上（M2），命令面板直接建在同一套上；20 属性表单已经在（M3），标签页只要把它按过滤视图分组；路由已经能带参数（M4），面板/标签页要不要进 URL 是 M5 自己的决定——PRD 只要求 `objects/:id`。
 - 当前阻塞：无。
-- 代码基线：`736b668`（一期收尾）→ M1 八提交 `153f67c`…`fb3cc96` → `1a479ef`、`a3a555c`（一期脚本堆泄漏修复）→ M2 八提交 `098281e`…`aa9586d` → **M3 两提交 `210d4bb`、`4cee481`**。工作区 clean。
-- 回归：见「完成记录」各行。**两条操作教训**：跑浏览器套件时别同时跑 release 构建（LTO 会把 CPU 抢光，用例慢到像卡死，本次因此误杀过一次跑到 33/46 的 fusion-basic）；用 `ps` 判断套件还在不在跑要匹配 `ms-playwright/chromium`，父进程的 CPU 时间不反映进度。**一条已知的一期缺口**：`m8-endurance` 两分钟档的「尾部平坦」断言在这台机器上 M2 前后都不过（已用 worktree 在 `550c2ef` 上复测，详见 `docs/validation/p2/m2.md`），属 P1 账本，二期不改它。
+- 代码基线：`736b668`（一期收尾）→ M1 八提交 → `1a479ef`、`a3a555c` → M2 八提交 `098281e`…`aa9586d` → M3 两提交 `210d4bb`、`4cee481`、`387531b` → **M4 五提交 `41d77f4`、`bbdda12`、`204a481`、`7f4cfd2`、`16652f5`、`8023b68`**。工作区 clean。
+- 回归：见「完成记录」各行。**三条操作教训**：跑浏览器套件时别同时跑 release 构建；用 `ps` 判断套件还在不在跑要匹配 `ms-playwright/chromium`；**串行共享 page 的块能抓到单测和单条用例都抓不到的 bug**（序号那条就是这么发现的），代价是每条用例得把动到的东西放回去，动不回去的（比如会整页导航的）要用自己的 page。**两条已知缺口**：`m8-endurance` 两分钟档的尾部断言在这台机器上先于二期就不过（P1 账本，二期不改）；workbench 首帧渲染实测 6,625 ms，M3 的 20 字段表单把它推过了几条 5 秒预置条件的边——这个数字属于 M8 的 B1 基线。
 
 ### 完成记录
 
@@ -49,6 +49,7 @@
 | M1 | 2026-09-10 | 契约对齐与组件工程：核对并回写 §2.1；`rustify-components` 建起（两个 Rust/UI 宏原样导入后重写，去 leptos_router、去 nightly、加 test_id）；`sources.lock.json.rust_ui` 双向校验；D13 按实测修正（tw_merge 不设 prefix）；token 扩表 + Tailwind 输入与产物 + `cargo xtask css [--check]`；第三个示例 component-catalog 与第三个 Playwright project；宿主控件计算样式对照；CI 增项。未做：18 类组件本身与目录搬迁（M2）、路由（M4） | `docs/validation/p2/m1.md`；`npx playwright test --project=component-catalog` 9/9；`cargo test --workspace --lib` 65；`cargo test -p xtask` 14；clippy/fmt 通过；`cargo xtask css --check` 无漂移；`cargo xtask sources verify` 通过；`cargo xtask doctor` 10/10 | `fb3cc96` |
 | M2 | 2026-09-10 | 18 类组件目录：17 个 Rust/UI 文件 + slider.css 原样导入后重写（全部受控、`rui:` 前缀、零内联脚本/样式）；浮层四类重写到 P1 浮层栈并补齐 role/键盘/焦点归还；GPU 声明子集（Button/Radio/Toggle/Progress/Spinner/Icon 稳定，DropDown/TabBar 实验，ScrollBars 声明式）；能力目录搬进 `rustify-components` 并填满 18 行 + `cargo xtask catalog`；component-catalog 每类一页（活示例 + GPU 列 + 状态矩阵）；`sharedPage` 测试提速。未做：表单（M3）、路由（M4）、`/samples` 文本样本页与 SDK 文案目录（M7）、对比度与缩放人工走查（M8） | `docs/validation/p2/m2.md`；`npx playwright test --project=component-catalog` **31/31**（M1 9、V2 7、V3 6、V4 9）；一期回归 `--project=fusion-basic` **46/46**、`--project=deployment` **6/6**、`--project=property-workbench` **71 passed / 1 failed**（失败的是 `m8-endurance` 的内存尾部断言，**不是 M2 造成的**：在 M2 前的 `550c2ef` 上用 worktree 建同一个示例复测，同一条断言失败且余量更大——尾部增长 851,968 B vs M2 的 786,432 B，阈值约 420 KB；行为部分两边都是 1,200 发 1,200 收 0 拒 0 错。详见 `docs/validation/p2/m2.md`）；`cargo test --workspace --lib` 76；clippy/fmt 通过；`cargo xtask css --check`、`cargo xtask catalog --check` 无漂移；`cargo xtask sources verify` rust_ui 20 files, 0 verbatim, 20 rewritten | `8cd2c15` |
 | M3 | 2026-09-10 | 表单：`form.rs` 状态机（代际/pending/提交请求绑定/单飞，16 条宿主单测）；错误带来源（修掉「异步失败后再点一次就保存」）；`ErrorKind::UnknownField` + `Diagnostic::field`（11 类）；`rustify-components` 的 `Form`/`Field`/`SubmitButton`/`FormStatus`；property-workbench 属性面板扩到 20 个可见属性（4 即时 + 15 草稿保存，必填/格式/跨字段规则 + 一个异步校验 + 可按住的保存）。按实测修正 §3/§5.3 两处（FormState 不持值、提交按钮用 aria-disabled）。未做：SDK 文案目录（M7）、离开视图的未保存守卫（M4） | `docs/validation/p2/m3.md`；`p2-form.spec.ts` **9/9**；`--project=component-catalog` **31/31**；`--project=property-workbench` **80 passed / 1 failed**（80 = 一期 71 + V5 9；唯一失败是 `m8-endurance` 的内存尾部断言，M2 时已用 worktree 证明先于二期存在）；`cargo test --workspace --lib` 91；clippy/fmt 通过；`cargo xtask css --check` 无漂移 | `4cee481` |
+| M4 | 2026-09-10 | 导航与深链接：A-5 探针五条（结论成立，守卫不降级）；`router.rs` 匹配 + 历史序号（序号=深度而非累加，15 条宿主单测）；`MountConfig{url_owner,base}` + `UrlOwnerConflict`；非所有者也拦自己容器的链接；`ErrorKind` 15 类 + `Severity`；`build-web --base`（根部署也改写）+ 子路径独立产物 + `serve --spa` + base 不符拒绝启动；workbench `objects/:id` + 未找到页 + 未保存守卫；fusion-basic 双挂载夹具；`docs/navigation.md`。**并修掉一个会一直藏到生产的缺陷**：区域原本按 `location.pathname` 解析资源，路由一改地址就全部 404，现在由宿主传部署路径。未做：嵌套路由/路由鉴权/服务端重定向（不在本期）、面板与标签页进 URL（M5 决定） | `docs/validation/p2/m4.md`；`--project=fusion-basic` **56/56**（一期 46 + 导航 10）；`--project=workbench-deep` **6/6**、`--project=property-workbench` 的 `p2-deeplink` **6/6**（同一套深链接用例在根与 `/tools/demo/` 各跑一遍）；`--project=deployment` **6/6**；`--project=component-catalog` **31/31**；`--project=property-workbench` **87 passed / 1 failed**（唯一失败仍是 `m8-endurance`，M2 时已用 worktree 证明先于二期存在）；`cargo test --workspace --lib` 107；`cargo test -p xtask` 19；clippy/fmt 通过 | `8023b68` |
 
 ## 0. 需求、范围与决策
 

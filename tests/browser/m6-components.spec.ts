@@ -356,7 +356,13 @@ test.describe("M6 V7 / R07: a third-party component rebuilt twenty times", () =>
         await waitForReady(page);
 
         const stats = () => page.evaluate(() => window.__property_workbench.third_party());
-        await expect.poll(async () => (await stats()).targets).toBe(1);
+        // The first render, not a rebuild: the panel around this component has
+        // grown a twenty-field form since this was written, and the default
+        // five seconds is now a near miss rather than a margin. The rebuilds
+        // below keep the default, because that is what the test is about.
+        const started = Date.now();
+        await expect.poll(async () => (await stats()).targets, { timeout: 30_000 }).toBe(1);
+        console.log(`third-party first render: ${Date.now() - started} ms`);
         expect(await stats()).toMatchObject({ live: 1, created: 1, destroyed: 0 });
 
         for (let round = 0; round < 20; round++) {
