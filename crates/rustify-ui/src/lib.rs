@@ -26,7 +26,7 @@ pub use diagnostics::{
     identify_runtime, note, record, report_json, set_recording, watch_assets, with_log, Diagnostic,
     Diagnostics, ErrorKind, Severity, UiError, REFUSED_CAPABILITIES,
 };
-pub use drag::{Drags, Outcome, Query};
+pub use drag::{Drags, HitAnswer, HitQuery, Outcome, Query};
 pub use files::{Import, Limits, Refusal};
 pub use form::{FormState, Generation, Submit};
 pub use mount::{mount, AppHandle, MountConfig, ScopeRoots};

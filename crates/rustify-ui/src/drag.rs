@@ -17,6 +17,37 @@ pub struct Query {
     pub target: String,
 }
 
+/// A question put to a GPU region: what is at this point, and would it take
+/// this?
+///
+/// The two halves know different things. The DOM knows where the pointer is;
+/// only the region knows what it drew there and whether that thing takes this
+/// payload. So unlike a DOM target, which is named before it is asked, a
+/// region is asked about a *place* and names the target in its answer.
+#[derive(Clone, Debug, PartialEq)]
+pub struct HitQuery {
+    pub session: u64,
+    pub seq: u64,
+    /// Where, in the region's own coordinates.
+    pub x: f64,
+    pub y: f64,
+    /// What is being carried, so the region can decide in one pass rather
+    /// than being asked what is there and then whether it would take it.
+    pub payload: String,
+}
+
+/// What a region found where it was asked to look.
+///
+/// `target: None` covers both "nothing is there" and "what is there would
+/// refuse this", because the drag does the same thing about either: the
+/// pointer is over nothing that would take it.
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct HitAnswer {
+    pub session: u64,
+    pub seq: u64,
+    pub target: Option<String>,
+}
+
 /// What releasing turned into.
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub enum Outcome {
@@ -48,8 +79,13 @@ struct Session {
     over: Option<String>,
     /// The target that said yes, and the question it was answering.
     confirmed: Option<(String, u64)>,
-    /// The question that has not been answered.
-    pending: Option<(String, u64)>,
+    /// The question that has not been answered, and the target it names when
+    /// there is one. A region is asked about a point, so it is asked before
+    /// anyone knows which target the question is about.
+    pending: Option<(Option<String>, u64)>,
+    /// The last point a region was asked about, so that a pointer event that
+    /// did not move does not ask again.
+    asked_at: Option<(f64, f64)>,
     next_seq: u64,
 }
 
@@ -80,6 +116,7 @@ impl Drags {
             over: None,
             confirmed: None,
             pending: None,
+            asked_at: None,
             next_seq: 0,
         });
         self.next_id
@@ -137,14 +174,69 @@ impl Drags {
         session.over = target.map(str::to_string);
         session.confirmed = None;
         session.pending = None;
+        session.asked_at = None;
         let target = target?;
         session.next_seq += 1;
-        session.pending = Some((target.to_string(), session.next_seq));
+        session.pending = Some((Some(target.to_string()), session.next_seq));
         Some(Query {
             session: session.id,
             seq: session.next_seq,
             target: target.to_string(),
         })
+    }
+
+    /// The pointer is over a GPU region, at a point in that region's own
+    /// coordinates. The region is asked what is there.
+    ///
+    /// Unlike moving between DOM targets, this does not withdraw the answer
+    /// already given. The pointer has not left the region, and the region is
+    /// about to say whether it has left the target inside it; blanking the
+    /// answer in between would make every pointer move flicker the highlight
+    /// off and on. Delivery is safe regardless, because a release with a
+    /// question outstanding waits for that question ([`Drags::release`]) and
+    /// so is always decided by the freshest answer.
+    ///
+    /// A pointer event that did not move the pointer asks nothing.
+    pub fn over_region(&mut self, region: &str, x: f64, y: f64) -> Option<HitQuery> {
+        let session = self.current.as_mut()?;
+        if session.state != State::Dragging {
+            return None;
+        }
+        if session.over.as_deref() == Some(region) && session.asked_at == Some((x, y)) {
+            return None;
+        }
+        session.over = Some(region.to_string());
+        session.asked_at = Some((x, y));
+        session.next_seq += 1;
+        session.pending = Some((None, session.next_seq));
+        Some(HitQuery {
+            session: session.id,
+            seq: session.next_seq,
+            x,
+            y,
+            payload: session.payload.clone(),
+        })
+    }
+
+    /// A region said what it found.
+    ///
+    /// The same rules as [`Drags::answer`]: dropped unless it answers the
+    /// question still outstanding, and it decides a release that was waiting.
+    pub fn hit(&mut self, answer: &HitAnswer) -> Option<Outcome> {
+        let session = self.current.as_mut()?;
+        if session.id != answer.session || session.state == State::Done {
+            return None;
+        }
+        let (_, pending_seq) = session.pending.clone()?;
+        if pending_seq != answer.seq {
+            return None;
+        }
+        session.pending = None;
+        session.confirmed = answer.target.clone().map(|target| (target, answer.seq));
+        if session.state != State::Releasing {
+            return None;
+        }
+        Some(self.finish())
     }
 
     /// A target answered.
@@ -161,6 +253,10 @@ impl Drags {
         if pending_seq != seq {
             return None;
         }
+        // A question a region was asked is answered by the region, which is
+        // the only half that knows the target's name. An `accept` for it has
+        // nothing to accept.
+        let target = target?;
         session.pending = None;
         session.confirmed = accept.then_some((target, seq));
         if session.state != State::Releasing {
@@ -197,6 +293,7 @@ impl Drags {
             session.state = State::Done;
             session.confirmed = None;
             session.pending = None;
+            session.asked_at = None;
         }
     }
 
@@ -219,7 +316,7 @@ impl Drags {
 
 #[cfg(test)]
 mod tests {
-    use super::{Drags, Outcome};
+    use super::{Drags, HitAnswer, Outcome};
 
     fn dropped_on(outcome: &Outcome) -> Option<&str> {
         match outcome {
@@ -355,6 +452,125 @@ mod tests {
         assert!(drags.over(Some("group-a")).is_some());
         assert_eq!(drags.over(Some("group-a")), None);
         assert_eq!(drags.over(Some("group-a")), None);
+    }
+
+    fn found(session: u64, seq: u64, target: Option<&str>) -> HitAnswer {
+        HitAnswer {
+            session,
+            seq,
+            target: target.map(str::to_string),
+        }
+    }
+
+    #[test]
+    fn a_region_names_the_target_it_found_and_the_drop_goes_there() {
+        let mut drags = Drags::new();
+        let session = drags.start("object-1", "1");
+        let query = drags.over_region("view", 40.0, 60.0).expect("asked");
+        assert_eq!(query.session, session);
+        // The question carries what is being carried, so the region decides
+        // what is there and whether it would take it in one pass.
+        assert_eq!(query.payload, "1");
+
+        assert_eq!(drags.hit(&found(session, query.seq, Some("group-a"))), None);
+        assert_eq!(drags.confirmed(), Some("group-a"));
+        assert_eq!(
+            dropped_on(&drags.release()),
+            Some("group-a"),
+            "the target the region named takes it"
+        );
+    }
+
+    #[test]
+    fn a_region_that_finds_nothing_there_delivers_nothing() {
+        let mut drags = Drags::new();
+        let session = drags.start("object-1", "1");
+        let query = drags.over_region("view", 40.0, 60.0).expect("asked");
+        drags.hit(&found(session, query.seq, None));
+        assert_eq!(drags.confirmed(), None);
+        assert_eq!(drags.release(), Outcome::Nothing);
+    }
+
+    #[test]
+    fn a_pointer_event_that_did_not_move_asks_the_region_nothing() {
+        let mut drags = Drags::new();
+        drags.start("object-1", "1");
+        assert!(drags.over_region("view", 40.0, 60.0).is_some());
+        assert_eq!(drags.over_region("view", 40.0, 60.0), None);
+        // A pixel of movement is a new place, and the region is asked again.
+        assert!(drags.over_region("view", 41.0, 60.0).is_some());
+    }
+
+    #[test]
+    fn moving_inside_a_region_keeps_the_answer_until_a_newer_one_contradicts_it() {
+        let mut drags = Drags::new();
+        let session = drags.start("object-1", "1");
+        let first = drags.over_region("view", 10.0, 10.0).expect("asked");
+        drags.hit(&found(session, first.seq, Some("group-a")));
+
+        let second = drags.over_region("view", 11.0, 10.0).expect("asked again");
+        assert_eq!(
+            drags.confirmed(),
+            Some("group-a"),
+            "the pointer has not left the region, and blanking the highlight \
+             between every move and its answer is a flicker, not a fact"
+        );
+        drags.hit(&found(session, second.seq, Some("group-b")));
+        assert_eq!(drags.confirmed(), Some("group-b"));
+        assert_eq!(dropped_on(&drags.release()), Some("group-b"));
+    }
+
+    #[test]
+    fn releasing_inside_a_region_waits_for_what_it_answers() {
+        let mut drags = Drags::new();
+        let session = drags.start("object-1", "1");
+        let first = drags.over_region("view", 10.0, 10.0).expect("asked");
+        drags.hit(&found(session, first.seq, Some("group-a")));
+        let second = drags.over_region("view", 90.0, 90.0).expect("asked again");
+
+        assert_eq!(drags.release(), Outcome::Waiting);
+        // The freshest answer decides, even though an older one said yes.
+        let outcome = drags
+            .hit(&found(session, second.seq, None))
+            .expect("the release was waiting on this");
+        assert_eq!(outcome, Outcome::Nothing);
+        assert_eq!(drags.release(), Outcome::Nothing, "and only once");
+    }
+
+    #[test]
+    fn a_region_answer_about_a_place_the_pointer_has_left_is_dropped() {
+        let mut drags = Drags::new();
+        let session = drags.start("object-1", "1");
+        let stale = drags.over_region("view", 10.0, 10.0).expect("asked");
+        // The pointer leaves the region for a DOM target before the region
+        // gets round to answering.
+        drags.over(Some("list")).expect("asked the list");
+        assert_eq!(drags.hit(&found(session, stale.seq, Some("group-a"))), None);
+        assert_eq!(drags.confirmed(), None);
+    }
+
+    #[test]
+    fn leaving_the_region_withdraws_what_it_said() {
+        let mut drags = Drags::new();
+        let session = drags.start("object-1", "1");
+        let query = drags.over_region("view", 10.0, 10.0).expect("asked");
+        drags.hit(&found(session, query.seq, Some("group-a")));
+
+        assert_eq!(drags.over(None), None, "nothing to ask about nowhere");
+        assert_eq!(drags.confirmed(), None);
+        assert_eq!(drags.release(), Outcome::Nothing);
+    }
+
+    #[test]
+    fn a_yes_or_no_cannot_answer_a_question_only_a_region_can_name() {
+        let mut drags = Drags::new();
+        let session = drags.start("object-1", "1");
+        let query = drags.over_region("view", 10.0, 10.0).expect("asked");
+        // `answer` accepts or refuses a target that was named up front. This
+        // question has no target yet, so there is nothing for it to accept.
+        assert_eq!(drags.answer(session, query.seq, true), None);
+        assert_eq!(drags.confirmed(), None);
+        assert!(drags.waiting(), "and the question is still outstanding");
     }
 
     #[test]
