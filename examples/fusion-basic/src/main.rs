@@ -401,12 +401,26 @@ mod app {
         N: IntoView,
         N::State: 'static,
     {
+        mount_scope_with(container_id, false, view)
+    }
+
+    /// The same, saying whether this scope owns the page's URL. Only one on a
+    /// page may, and this example mounts several - which is exactly the case
+    /// worth having a fixture for.
+    fn mount_scope_with<F, N>(container_id: &str, url_owner: bool, view: F) -> Result<u32, JsValue>
+    where
+        F: FnOnce() -> N + 'static,
+        N: IntoView,
+        N::State: 'static,
+    {
         let container = document()
             .get_element_by_id(container_id)
             .ok_or_else(|| JsValue::from_str("container not found"))?
             .unchecked_into::<leptos::web_sys::HtmlElement>();
         let config = MountConfig {
             scope: container_id.to_string(),
+            url_owner,
+            base: String::new(),
         };
         let handle =
             mount(container, config, view).map_err(|e| JsValue::from_str(&e.to_string()))?;

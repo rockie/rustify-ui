@@ -967,6 +967,10 @@ mod app {
             container,
             MountConfig {
                 scope: "catalog".to_string(),
+                // The catalogue's paths are in memory: its nav is buttons, and
+                // the address bar belongs to whatever page embeds it.
+                url_owner: false,
+                base: String::new(),
             },
             Catalogue,
         )

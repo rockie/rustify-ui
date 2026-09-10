@@ -53,6 +53,12 @@ pub struct ServeConfig {
     pub base: String,
     pub port: u16,
     pub csp: CspMode,
+    /// Answer a path that names no file with `index.html`, so a deep link
+    /// opened cold reaches the application rather than a 404. Only for paths
+    /// that look like a route: anything with a file extension stays a 404,
+    /// because a missing script answered with HTML is a deployment fault that
+    /// hides itself.
+    pub spa: bool,
     /// What this server is currently doing wrong on purpose. Set at start with
     /// `--fault`, and changed at run time through `<base>__fault/<spec>`, so
     /// one server can exercise several deployment failures without a restart.
@@ -293,8 +299,37 @@ fn handle(mut stream: TcpStream, config: &ServeConfig) -> std::io::Result<()> {
                 method == "HEAD",
             )
         }
-        None => write_response(&mut stream, 404, "text/plain", b"not found", config, false),
+        None => {
+            if config.spa && looks_like_a_route(target) {
+                let index = config.root.join("index.html");
+                if let Ok(body) = std::fs::read(&index) {
+                    return write_response(
+                        &mut stream,
+                        200,
+                        "text/html; charset=utf-8",
+                        &body,
+                        config,
+                        method == "HEAD",
+                    );
+                }
+            }
+            write_response(&mut stream, 404, "text/plain", b"not found", config, false)
+        }
     }
+}
+
+/// Whether a path that names no file should be answered with the application.
+///
+/// A route has no file extension in its last segment. A request for
+/// `app.js` that is missing must stay a 404: answering it with HTML would turn
+/// a deployment that lost a file into a page that fails somewhere else, much
+/// later, for a reason nobody can see.
+fn looks_like_a_route(target: &str) -> bool {
+    let path = target.split(['?', '#']).next().unwrap_or(target);
+    !path
+        .rsplit('/')
+        .next()
+        .is_some_and(|segment| segment.contains('.'))
 }
 
 /// The bytes a broken deployment would serve.
@@ -428,6 +463,19 @@ mod tests {
         std::fs::write(root.join("index.html"), "<html>").unwrap();
         std::fs::write(root.join("sub").join("a.js"), "1").unwrap();
         root
+    }
+
+    #[test]
+    fn a_route_is_answered_with_the_application_and_a_missing_file_is_not() {
+        // The distinction the `--spa` fallback turns on. A deep link has to
+        // reach the application; a script that did not deploy has to stay a
+        // 404, or the failure hides itself somewhere much later.
+        assert!(looks_like_a_route("/tools/demo/objects/42"));
+        assert!(looks_like_a_route("/objects"));
+        assert!(looks_like_a_route("/objects/42?tab=notes"));
+        assert!(!looks_like_a_route("/app.js"));
+        assert!(!looks_like_a_route("/tools/demo/rustify.css"));
+        assert!(!looks_like_a_route("/vendor/nouislider/nouislider.min.css"));
     }
 
     #[test]

@@ -150,7 +150,17 @@ export class WasmWebBrowser extends WasmBridge {
                 protocol: location.protocol + "",
                 host: location.host + "",
                 hostname: location.hostname + "",
-                pathname: location.pathname + "",
+                // Where this application is deployed, not where it currently
+                // is. The runtime resolves its resources against this, and an
+                // embedded region lives inside an application that routes: at
+                // `/objects/1` the live pathname would send every font request
+                // to `/objects/1/makepad_widgets/...`. The host sets the
+                // global from the build's own manifest; without one this is
+                // the pathname, which is what a standalone build wants.
+                pathname:
+                    this.embedded && typeof window.makepad_resource_base === "string"
+                        ? window.makepad_resource_base
+                        : location.pathname + "",
                 search: location.search + "",
                 hash: location.hash + "",
                 has_thread_support: this.wasm._has_thread_support,

@@ -15,6 +15,19 @@ export class StartupError extends Error {
 // `on_fatal` is called if the module traps later on; every mount in this
 // runtime is dead by then and only a reload brings it back.
 export async function boot({ wasm_url, on_fatal }) {
+    // The path this build was made for. It is a property of the build - the
+    // page names its own files absolutely under it - so it is read from the
+    // build rather than guessed from the address bar, which at a deep link
+    // says nothing about where the application starts.
+    const manifest_url = new URL("./build-manifest.json", wasm_url);
+    const base = await fetch(manifest_url)
+        .then((response) => (response.ok ? response.json() : null))
+        .then((manifest) => manifest?.base ?? "/")
+        .catch(() => "/");
+    // The region resolves its resources against this rather than against the
+    // address bar, which an application that routes is changing. One page is
+    // one deployment, so one global is the right shape for it.
+    window.makepad_resource_base = base;
     const env = {};
     const set_wasm = init_env(env);
     const module = await WebAssembly.compileStreaming(fetch(wasm_url));
@@ -39,7 +52,7 @@ export async function boot({ wasm_url, on_fatal }) {
     // The build the runtime came from, so a diagnostic can be matched to the
     // source it was produced by. The bridge hash is the one identifier the
     // page and the wasm have already agreed on.
-    return { app, wasm, hooks, build: SCHEMA_HASH };
+    return { app, wasm, hooks, build: SCHEMA_HASH, base };
 }
 
 // Shows a static failure notice inside `container`; used when the runtime

@@ -250,3 +250,18 @@ test.describe("M2 V5: a form that says what is wrong and saves once", () => {
         expect((await snapshot(page)).form).toMatchObject({ dirty: false });
     });
 });
+
+test.describe("probe", () => {
+    test("what the router thinks", async ({ page }) => {
+        await page.goto("./");
+        await expect(page.getByTestId("status")).toHaveAttribute("data-status", "ready", {
+            timeout: 60_000,
+        });
+        console.log("on load:", JSON.stringify(await snapshot(page)));
+        await page.getByTestId("select-next").click().catch(() => {});
+        await page.waitForTimeout(500);
+        console.log("after next:", JSON.stringify(await snapshot(page)));
+        console.log("url:", page.url());
+        console.log("diagnostics:", JSON.stringify(await page.evaluate(() => window.__property_workbench.diagnostics())).slice(0, 1200));
+    });
+});

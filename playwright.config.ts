@@ -65,7 +65,7 @@ export default defineConfig({
             timeout: 120_000,
         },
         {
-            command: `cargo xtask serve --example fusion-basic --release --port ${deploymentPort} --base ${deploymentBase}`,
+            command: `cargo xtask build-web --example fusion-basic --release --base ${deploymentBase} && cargo xtask serve --example fusion-basic --release --port ${deploymentPort} --base ${deploymentBase} --spa`,
             url: `http://127.0.0.1:${deploymentPort}${deploymentBase}`,
             reuseExistingServer: false,
             timeout: 120_000,

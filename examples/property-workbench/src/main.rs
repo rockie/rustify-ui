@@ -23,9 +23,10 @@ mod app {
     use rustify_components::{Form, FormStatus, SubmitButton};
     use rustify_components::{Support, CATALOG};
     use rustify_ui::{
-        mount, Anchor, AppHandle, Button, Checkbox, GpuRegion, Load, LoadView, LocalRect,
-        MountConfig, RegionState, Requests, Slider, TextArea, TextEdit, TextField, Theme,
-        ThemeOverride, ThemePatch, ThemedScope, UiError,
+        mount, navigate, provide_routes, use_params, Anchor, AppHandle, Button, Checkbox,
+        GpuRegion, Load, LoadView, LocalRect, MountConfig, Navigation, NavigationGuard,
+        RegionState, Requests, Routes, Slider, TextArea, TextEdit, TextField, Theme, ThemeOverride,
+        ThemePatch, ThemedScope, UiError,
     };
     use std::cell::{Cell, RefCell};
     use std::collections::{BTreeMap, BTreeSet};
@@ -88,6 +89,10 @@ mod app {
         /// Ids the application has deleted, so a lookup can tell a name that
         /// never existed from one that is gone.
         static DELETED: RefCell<BTreeSet<u32>> = const { RefCell::new(BTreeSet::new()) };
+        /// The path this build is served under, read from the build's own
+        /// manifest by the loader. The address bar cannot say: at a deep link
+        /// it is the route, not the base.
+        static BASE: RefCell<String> = const { RefCell::new(String::new()) };
         /// Registered by the live scope: selects an object by id and reports
         /// whether it could.
         static SELECT_BY_ID: Seam<dyn Fn(u32) -> bool> = const { RefCell::new(BTreeMap::new()) };
@@ -242,6 +247,41 @@ mod app {
             }
         });
 
+        provide_routes(Routes::new(&["/", "/objects", "/objects/:id"]));
+        // Opening `objects/42` picks that object; after that the URL follows
+        // the selection, so back and forward step through what was looked at.
+        // Both directions check first, so neither can chase the other.
+        let params = use_params();
+        Effect::new(move || {
+            let named = params
+                .get()
+                .get("id")
+                .and_then(|id| id.parse::<u32>().ok())
+                .map(ObjectId);
+            match named {
+                // The address names one: that is the object to show, whether
+                // it came from a deep link or from pressing back.
+                Some(id) if Some(id) != selected.get_untracked() => selected.set(Some(id)),
+                Some(_) => {}
+                // The address names none, and the application has a selection
+                // of its own. The address bar catches up without adding an
+                // entry - arriving at a page is not a navigation within it.
+                None => {
+                    if let Some(id) = selected.get_untracked() {
+                        navigate(&format!("/objects/{}", id.0), true);
+                    }
+                }
+            }
+        });
+        // Unsaved work in the details form is what a guard refuses to leave.
+        // The live four are applied as they are typed, so there is nothing
+        // unsaved about them; what this compares is the draft against the
+        // object it came from.
+        NavigationGuard::register(Signal::derive(move || match current.get() {
+            Some(object) => object.details != draft.get(),
+            None => false,
+        }));
+
         // Rebuilt only when the objects change, so moving the selection does
         // not rebuild a thousand cells.
         let cells = Memo::new(move |_| {
@@ -318,6 +358,25 @@ mod app {
 
         // One place moves the selection; the DOM buttons and the GPU actions
         // both go through it, so there is a single rule for what "next" means.
+        // The URL names the object showing, so choosing one is a navigation -
+        // and a navigation can be refused. Every path that picks an object
+        // goes through here, so "there is unsaved work" is answered once
+        // rather than at five call sites that would drift apart.
+        let select = move |id: Option<ObjectId>| -> bool {
+            if selected.get_untracked() == id {
+                return true;
+            }
+            let to = match id {
+                Some(id) => format!("/objects/{}", id.0),
+                None => "/objects".to_string(),
+            };
+            if navigate(&to, false) != Navigation::Done {
+                return false;
+            }
+            selected.set(id);
+            true
+        };
+
         let step = move |delta: i32| {
             let (index, total) = position.get();
             if total == 0 {
@@ -328,7 +387,7 @@ mod app {
                 None => 0,
             };
             let id = objects.with(|objects| objects[next].id);
-            selected.set(Some(id));
+            select(Some(id));
         };
 
         // Why a value the user asked for was not taken, or `None` when the
@@ -474,6 +533,7 @@ mod app {
             objects.update(|objects| objects.retain(|o| !dropped.contains(&o.id)));
             if selected.get().is_some_and(|id| dropped.contains(&id)) {
                 selected.set(None);
+                navigate("/objects", true);
             }
         };
         // A test seam, not a feature: it breaks the invariant the application
@@ -495,9 +555,9 @@ mod app {
         let select_by_id = move |id: u32| {
             let known = objects.with(|objects| objects.iter().any(|o| o.id.0 == id));
             if known {
-                selected.set(Some(ObjectId(id)));
+                return select(Some(ObjectId(id)));
             }
-            known
+            false
         };
         publish(&SELECT_BY_ID, registration, Rc::new(select_by_id));
         publish(
@@ -678,7 +738,7 @@ mod app {
             let (index, total) = position.get();
             let current = current.get();
             let snapshot = format!(
-                "{{\"count\":{},\"position\":{},\"selected\":{},\"name\":{},\"color\":\"{}\",\"first_colors\":\"{}\",\"first_ids\":\"{}\",\"accepted\":{},\"refused\":{},\"hovered\":{},\"hovers\":{},\"editing\":{},\"invalidated\":{},\"notes\":{},\"theme\":\"{}\",\"details\":\"{}\",\"details_value\":{},\"locked\":{},\"size\":{},\"refusals\":{},\"refusal\":{},\"third_party\":{},\"third_party_updates\":{},\"controls\":{},\"region\":\"{}\",\"form\":{}}}",
+                "{{\"count\":{},\"position\":{},\"selected\":{},\"name\":{},\"color\":\"{}\",\"first_colors\":\"{}\",\"first_ids\":\"{}\",\"accepted\":{},\"refused\":{},\"hovered\":{},\"hovers\":{},\"editing\":{},\"invalidated\":{},\"notes\":{},\"theme\":\"{}\",\"details\":\"{}\",\"details_value\":{},\"locked\":{},\"size\":{},\"refusals\":{},\"refusal\":{},\"third_party\":{},\"third_party_updates\":{},\"controls\":{},\"region\":\"{}\",\"form\":{},\"path\":{},\"guarded\":{}}}",
                 total,
                 index.map(|i| i as i64 + 1).unwrap_or(0),
                 current
@@ -780,6 +840,11 @@ mod app {
                         .map(|failure| json_string(&failure))
                         .unwrap_or_else(|| "null".to_string()),
                 ),
+                json_string(&rustify_ui::use_location().get().path),
+                match current.as_ref() {
+                    Some(object) => object.details != draft.get(),
+                    None => false,
+                },
             );
             SNAPSHOT.with(|slot| *slot.borrow_mut() = snapshot);
         });
@@ -802,7 +867,7 @@ mod app {
                 }
                 SelectionAction::Pick(id) => {
                     accepted.update(|n| *n += 1);
-                    selected.set(Some(ObjectId(id)));
+                    select(Some(ObjectId(id)));
                 }
                 SelectionAction::Edit {
                     field,
@@ -844,6 +909,21 @@ mod app {
                 <ThemedScope theme=theme />
                 <section class="panel" aria-label="object properties">
                     <h2>"properties"</h2>
+                    <Show
+                        when=move || {
+                            params.get().contains_key("id") && current.get().is_none()
+                        }
+                        fallback=|| ()
+                    >
+                        <p class="region-error" role="alert" data-testid="not-found">
+                            {move || {
+                                format!(
+                                    "no object {}; the address is kept so it can be corrected",
+                                    params.get().get("id").cloned().unwrap_or_default(),
+                                )
+                            }}
+                        </p>
+                    </Show>
                     <Button
                         test_id="open-link-from-region"
                         aria_label="ask the region to open a link"
@@ -1279,11 +1359,28 @@ mod app {
             .get_element_by_id(container_id)
             .ok_or_else(|| JsValue::from_str("container not found"))?
             .unchecked_into::<leptos::web_sys::HtmlElement>();
-        let config = MountConfig {
+        // This application wants the address bar. If another instance on the
+        // page already has it, it runs with a location of its own instead -
+        // which is what `UrlOwnerConflict` is for, and the only sensible
+        // answer to it.
+        let owned = MountConfig {
             scope: container_id.to_string(),
+            url_owner: true,
+            base: BASE.with(|base| base.borrow().clone()),
         };
-        let handle = mount(container, config, || view! { <Workbench /> })
-            .map_err(|e| JsValue::from_str(&e.to_string()))?;
+        let handle = match mount(container.clone(), owned, || view! { <Workbench /> }) {
+            Err(UiError::UrlOwnerConflict) => mount(
+                container,
+                MountConfig {
+                    scope: container_id.to_string(),
+                    url_owner: false,
+                    base: String::new(),
+                },
+                || view! { <Workbench /> },
+            ),
+            other => other,
+        }
+        .map_err(|e| JsValue::from_str(&e.to_string()))?;
         let id = NEXT_HANDLE.with(|next| {
             let id = *next.borrow();
             *next.borrow_mut() += 1;
@@ -1371,6 +1468,12 @@ mod app {
     #[wasm_bindgen]
     pub fn workbench_resolve_save(ok: bool) -> bool {
         newest(&RESOLVE_SAVE).is_some_and(|resolve| resolve(ok))
+    }
+
+    /// The path this build is served under, from the loader.
+    #[wasm_bindgen]
+    pub fn workbench_set_base(base: &str) {
+        BASE.with(|slot| *slot.borrow_mut() = base.to_string());
     }
 
     /// Names this runtime and the build it came from, so every diagnostic

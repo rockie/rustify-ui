@@ -87,7 +87,8 @@ const runtime_fatal = (error) => {
 };
 
 boot({ wasm_url: new URL("./property-workbench.wasm", import.meta.url), on_fatal: runtime_fatal })
-    .then(({ app, hooks, build }) => {
+    .then(({ app, hooks, build, base }) => {
+        app.workbench_set_base(base);
         app.workbench_identify(1, build);
         window.__property_workbench = {
             hooks,

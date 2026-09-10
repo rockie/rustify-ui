@@ -14,12 +14,19 @@ use std::process::Command;
 pub struct BuildRequest {
     pub example: String,
     pub release: bool,
+    /// Where the product will be served from. `/` for the ordinary case.
+    pub base: String,
 }
 
 #[derive(Serialize)]
 pub struct BuildManifest {
     pub example: String,
     pub profile: String,
+    /// The path this build's page expects to be served under. Written into the
+    /// product because it is baked into the product: `index.html` names its
+    /// files absolutely so that a deep link like `/tools/demo/objects/42` does
+    /// not resolve them against `/tools/demo/objects/`.
+    pub base: String,
     pub build_id: String,
     pub schema_hash: String,
     pub toolchain: String,
@@ -45,7 +52,33 @@ pub fn repo_root() -> PathBuf {
         .to_path_buf()
 }
 
+/// Where a build goes.
+///
+/// A build for a sub-path is a different product - its page names its own
+/// files absolutely - so it gets its own directory. Without that, serving the
+/// same example at two bases would mean one directory and two contradictory
+/// answers about what is in it.
 pub fn app_dir(root: &Path, request: &BuildRequest) -> PathBuf {
+    let base = crate::serve::normalize_base(&request.base);
+    let name = if base == "/" {
+        request.example.clone()
+    } else {
+        format!(
+            "{}@{}",
+            request.example,
+            base.trim_matches('/').replace('/', "-")
+        )
+    };
+    root.join("target")
+        .join("makepad-wasm-app")
+        .join(profile(request))
+        .join(name)
+}
+
+/// Where cargo-makepad writes, which is a fixed path it does not take an
+/// option for. It is also the product for the root, so a build for a sub-path
+/// finishes this one too rather than leaving it half-made.
+fn staging_dir(root: &Path, request: &BuildRequest) -> PathBuf {
     root.join("target")
         .join("makepad-wasm-app")
         .join(profile(request))
@@ -66,7 +99,7 @@ pub fn build(request: &BuildRequest) -> Result<PathBuf, String> {
     if !example_dir.join("Cargo.toml").is_file() {
         return Err(format!("no example at {}", example_dir.display()));
     }
-    let app = app_dir(&root, request);
+    let app = staging_dir(&root, request);
     if app.exists() {
         std::fs::remove_dir_all(&app)
             .map_err(|e| format!("cannot clear {}: {e}", app.display()))?;
@@ -88,9 +121,12 @@ pub fn build(request: &BuildRequest) -> Result<PathBuf, String> {
     )?;
     copy(&root.join("web/loader.js"), &app.join("loader.js"))?;
     copy(&root.join("web/runtime.css"), &app.join("runtime.css"))?;
-    for name in ["index.html", "app.js", "app.css"] {
+    for name in ["app.js", "app.css"] {
         copy(&example_dir.join(name), &app.join(name))?;
     }
+    let page = std::fs::read_to_string(example_dir.join("index.html"))
+        .map_err(|e| format!("{}/index.html: {e}", example_dir.display()))?;
+    write(&app.join("index.html"), page.as_bytes())?;
     // Third-party browser files are part of the checkout, at one recorded
     // version (`sources.lock.json`), so the build copies them rather than
     // fetching anything.
@@ -108,13 +144,55 @@ pub fn build(request: &BuildRequest) -> Result<PathBuf, String> {
         )?;
     }
 
-    let files = list_files(&app)?;
+    finish(&root, request, &app, "/", &bridge.hash.to_string(), &wasm)?;
+
+    let base = crate::serve::normalize_base(&request.base);
+    if base == "/" {
+        return Ok(app);
+    }
+    // A sub-path build is a second product: the same files with a page that
+    // names them absolutely, so a deep link does not resolve them against the
+    // route it was opened at. The root product above stays valid, because
+    // cargo-makepad's output directory is fixed and clearing it later would
+    // leave whoever serves it with half a build.
+    let rebased = app_dir(&root, request);
+    if rebased.exists() {
+        std::fs::remove_dir_all(&rebased)
+            .map_err(|e| format!("cannot clear {}: {e}", rebased.display()))?;
+    }
+    copy_tree(&app, &rebased)?;
+    write(
+        &rebased.join("index.html"),
+        rebase_index(&page, &base).as_bytes(),
+    )?;
+    finish(
+        &root,
+        request,
+        &rebased,
+        &base,
+        &bridge.hash.to_string(),
+        &wasm,
+    )?;
+    Ok(rebased)
+}
+
+/// Writes the manifest for a finished product and reports it.
+fn finish(
+    root: &Path,
+    request: &BuildRequest,
+    app: &Path,
+    base: &str,
+    schema_hash: &str,
+    wasm: &[u8],
+) -> Result<(), String> {
+    let files = list_files(app)?;
     let manifest = BuildManifest {
         example: request.example.clone(),
         profile: profile(request).to_string(),
-        build_id: build_id(&wasm),
-        schema_hash: bridge.hash.to_string(),
-        toolchain: toolchain_channel(&root)?,
+        base: base.to_string(),
+        build_id: build_id(wasm),
+        schema_hash: schema_hash.to_string(),
+        toolchain: toolchain_channel(root)?,
         size_report: size_report(&files),
         files,
     };
@@ -122,7 +200,40 @@ pub fn build(request: &BuildRequest) -> Result<PathBuf, String> {
     write(&app.join("build-manifest.json"), json.as_bytes())?;
     println!("built {} -> {}", request.example, app.display());
     println!("{}", format_size_report(&manifest.size_report));
-    Ok(app)
+    Ok(())
+}
+
+/// The base a built directory was made for, read from its manifest.
+///
+/// An older build has no `base` in its manifest; it was made before the field
+/// existed, and it was made for the root.
+pub fn manifest_base(app: &Path) -> Result<String, String> {
+    let path = app.join("build-manifest.json");
+    let text = std::fs::read_to_string(&path).map_err(|e| format!("{}: {e}", path.display()))?;
+    let value: serde_json::Value =
+        serde_json::from_str(&text).map_err(|e| format!("{}: {e}", path.display()))?;
+    Ok(crate::serve::normalize_base(
+        value
+            .get("base")
+            .and_then(|base| base.as_str())
+            .unwrap_or("/"),
+    ))
+}
+
+/// Points a page's own relative references at the path it will be served under.
+///
+/// `./app.js` resolves against the *document's* directory, so at
+/// `/tools/demo/objects/42` it becomes `/tools/demo/objects/app.js` and the
+/// page does not load. The policy forbids `<base>` (`base-uri 'none'`), so the
+/// references are rewritten instead - which is also the honest thing, because
+/// the path a build is deployed under is a property of the build.
+pub fn rebase_index(html: &str, base: &str) -> String {
+    let base = crate::serve::normalize_base(base);
+    if base == "/" {
+        return html.to_string();
+    }
+    html.replace("=\"./", &format!("=\"{base}"))
+        .replace("='./", &format!("='{base}"))
 }
 
 /// Whether this example draws with the component crate's classes.
@@ -286,6 +397,7 @@ fn write(path: &Path, bytes: &[u8]) -> Result<(), String> {
 
 #[cfg(test)]
 mod tests {
+    use super::rebase_index;
     use super::*;
 
     #[test]
@@ -335,6 +447,65 @@ mod tests {
                 data: 6,
                 total: 38
             }
+        );
+    }
+
+    const PAGE: &str = r#"<link rel="stylesheet" href="./runtime.css">
+<script type="module" src="./app.js"></script>
+<a href="/objects/1">an application link</a>"#;
+
+    #[test]
+    fn a_build_for_a_sub_path_has_its_own_directory() {
+        // Two bases are two products; one directory could not hold both, and
+        // a server started against the wrong one serves a page whose scripts
+        // 404.
+        let root = Path::new("/repo");
+        let at_root = super::app_dir(
+            root,
+            &super::BuildRequest {
+                example: "fusion-basic".to_string(),
+                release: true,
+                base: "/".to_string(),
+            },
+        );
+        let under = super::app_dir(
+            root,
+            &super::BuildRequest {
+                example: "fusion-basic".to_string(),
+                release: true,
+                base: "/tools/demo/".to_string(),
+            },
+        );
+        assert!(at_root.ends_with("fusion-basic"));
+        assert!(under.ends_with("fusion-basic@tools-demo"));
+        assert_ne!(at_root, under);
+    }
+
+    #[test]
+    fn a_build_for_the_root_is_left_alone() {
+        assert_eq!(rebase_index(PAGE, "/"), PAGE);
+        assert_eq!(rebase_index(PAGE, ""), PAGE);
+    }
+
+    #[test]
+    fn a_build_for_a_sub_path_names_its_own_files_absolutely() {
+        let rebased = rebase_index(PAGE, "/tools/demo");
+        assert!(
+            rebased.contains(r#"href="/tools/demo/runtime.css""#),
+            "{rebased}"
+        );
+        assert!(rebased.contains(r#"src="/tools/demo/app.js""#), "{rebased}");
+        // Only the page's own references. A link the application wrote is the
+        // router's business, and rewriting it here would be a second opinion.
+        assert!(rebased.contains(r#"href="/objects/1""#), "{rebased}");
+    }
+
+    #[test]
+    fn the_base_is_normalised_the_way_serve_normalises_it() {
+        // Whatever a person types, the product and the server agree.
+        assert_eq!(
+            rebase_index(PAGE, "tools/demo/"),
+            rebase_index(PAGE, "/tools/demo")
         );
     }
 }

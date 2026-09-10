@@ -14,8 +14,8 @@ const USAGE: &str = "\
 cargo xtask <command> [options]
 
   doctor
-  build-web --example <name> [--release]
-  serve       --example <name> [--release] [--base /path/] [--port N] [--csp strict|no-wasm|off]
+  build-web --example <name> [--release] [--base /path/]
+  serve       --example <name> [--release] [--base /path/] [--spa] [--port N] [--csp strict|no-wasm|off]
               [--fault missing:<path>|corrupt:<path>|truncated:<path>|stale-bridge]
   css         [--check]
   catalog     --write <path> [--check]
@@ -56,6 +56,7 @@ fn build_request(args: &[String]) -> Result<BuildRequest, String> {
             .ok_or("--example <name> is required")?
             .to_string(),
         release: args.iter().any(|a| a == "--release"),
+        base: option(args, "--base").unwrap_or("/").to_string(),
     })
 }
 
@@ -115,11 +116,25 @@ fn serve_example(args: &[String]) -> Result<(), String> {
         Some(spec) => Some(serve::Fault::parse(spec)?),
         None => None,
     };
+    let base = serve::normalize_base(option(args, "--base").unwrap_or("/"));
+    // A build carries the base it was made for, because its page names its own
+    // files absolutely. Serving it from anywhere else produces a page whose
+    // scripts 404, so the server refuses rather than starting into that.
+    let built_for = build::manifest_base(&root)?;
+    if built_for != base {
+        return Err(format!(
+            "this build was made for {built_for} and you asked to serve it at {base}; \
+             rebuild with `cargo xtask build-web --example {} {}--base {base}`",
+            request.example,
+            if request.release { "--release " } else { "" }
+        ));
+    }
     serve::serve(ServeConfig {
         root,
-        base: serve::normalize_base(option(args, "--base").unwrap_or("/")),
+        base,
         port,
         csp: CspMode::parse(option(args, "--csp").unwrap_or("strict"))?,
+        spa: args.iter().any(|a| a == "--spa"),
         fault: std::sync::Mutex::new(fault),
     })
 }

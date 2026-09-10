@@ -146,6 +146,7 @@ fn double_build(root: &Path, example: &str) -> Step {
         _ => "double build: property-workbench",
     };
     let request = BuildRequest {
+        base: "/".to_string(),
         example: example.to_string(),
         release: true,
     };
