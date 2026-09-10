@@ -26,22 +26,21 @@
 
 ### 恢复快照
 
-- 最近更新：2026-09-10。**M2 已完成并通过全部退出条件**（`--project=component-catalog` 31/31；一期回归 46/46 + 6/6 + 71/72，唯一的失败 `m8-endurance` 已证明先于 M2 存在）。下一个是 M3。
-- 当前进度：**2/8**（M1、M2 关闭）。
-- 当前状态：In progress。A-1、A-2 都已解除；D1/D2/D3/D5 与 ADR-4–7 已接受，D13/ADR-5 按 M1 实测修正。
-- 最近完成（本计划）：**M2 · 18 类组件目录，已关闭**。七个提交 `098281e`→`8cd2c15`：
-  - ① 17 个 Rust/UI 组件文件 + `style/slider.css`「原样导入 → 重写」两步提交（`098281e`/`fe5a37e`），`sources.lock.json.rust_ui` 现 20 个文件全部 rewritten，双向校验通过。
-  - ② 18 类 DOM 组件全部受控：显示值只来自应用，`disabled`/`read_only` 是信号，只读控件接下点击再把自己放回去；`rui:` 前缀；零内联脚本/样式（Progress 的进度条改用 `style:` 指令）。去掉了 `icons`（它强制 `leptos/nightly`）、`strum`、`validator` 三个依赖，`icon.rs` 是我们自己的（容器 + 六个字形）。
-  - ③ 浮层四类（Tooltip/Menu/Dialog/Select）重写到 P1 的浮层栈上：约 1,700 行 `format!` 拼装的内联 `<script>` 连同 `document.currentScript`、`window.ScrollLock` 全部消失；补上原本完全没有的 `role="dialog"`+`aria-modal`+标题关联、`menu`/`menuitem`+方向键、`combobox`/`listbox`+`aria-activedescendant`、`role="tooltip"` 并挂到被描述的控件上（且 focus 也能触发——原版只有 hover，键盘用户根本看不到）。方向键落点是一个函数（`roving.rs`）带自己的单测，不是三份。
-  - ④ GPU 声明子集：`RustifyButton`/`Radio`/`Toggle`/`Progress`/`Spinner`/`Icon` 稳定，`DropDown`/`TabBar` 实验（区域画得了收起态、画不了要跳出画布的列表，列表是 DOM 浮层），ScrollBars 用 makepad 自己的 `View{scroll_bars}` 声明、不需要新 widget。形状写在各自的 script 里（Sdf2d），Rust 只决定画哪几块、画在哪。`RustifyButton` 是新加的：makepad 自己的按钮带 makepad 的主题，在浅色作用域里是浅底白字。
-  - ⑤ 能力目录从 `rustify-ui` 搬进 `rustify-components` 并填满 18 行（DOM 全 yes，14 类区域能画，4 类写明"改在哪里画"）；`cargo xtask catalog --write docs/components.md [--check]` 是唯一的写入者，宿主单测只剩漂移检查；CI 增 `catalog --check`。
-  - ⑥ `component-catalog` 每类一页：活示例 + 区域画的同一个值 + 状态矩阵（只渲染该类真有的状态）；区域的下拉把 DOM 菜单锚到画布内的矩形上。
-  - ⑦ `sharedPage`（`tests/browser/support.ts`）：同一 describe 共享一个 page。M2 的 20 条用例因此从"每条 7 秒冷启动"降到 40 ms–1.5 s。
-  - **浏览器抓到四个真实缺陷**（都不是靠读代码发现的）：SDK 的 GPU 组件从没注册进区域的 script 模块（`RustifyCheckBox{}` 解析不到，槽位画空，看起来像布局 bug）；`field +: mod.widgets.X{...}` 不是换 draw 类型的写法（`+:` 是扩展已有值，五个定义因此在脚本装载时静默失败）；页面切换时没清掉记住的矩形，导致新控件正好落在老位置时永远不上报；区域表头一行放不下（标签+四个色块+按钮 > 320 px），按钮画到边界外，指针够不着。
-- 下一步：**M3 · 表单**。`crates/rustify-ui/src/form.rs` 的纯逻辑状态机（字段错误集、验证代际、提交单飞）先写宿主单测再接组件；`crates/rustify-components/src/form/{provider,field,submit}.rs` 把状态机映射成 `aria-invalid`/`aria-describedby`/聚焦首错/提交按钮态；property-workbench 的属性面板扩成 20 个可见属性的表单；`diagnostics.rs` 登记新错误种类。退出条件见 §10 的 M3 行与 §9.1 的 V5。**两条现成的地基**：组件已经有 `invalid` 与 `described_by` 两个 prop（M2 就留好了，见 `input.rs`/`textarea.rs`/`checkbox.rs`/`select.rs`），M3 只要把它们接到 `FormState` 上；异步票据 `Ticket::deliver`（P1 `task.rs`）就是"只接受最新代际"的现成实现，不要另写一套。
+- 最近更新：2026-09-10。**M3 已完成并通过全部退出条件**（`p2-form.spec.ts` 9/9）。下一个是 M4。
+- 当前进度：**3/8**（M1、M2、M3 关闭）。
+- 当前状态：In progress。A-1、A-2 已解除；D1/D2/D3/D5 与 ADR-4–7 已接受；D13/ADR-5 按 M1 实测修正；§3/§5.3 按 M3 实测修正（见下）。
+- 最近完成（本计划）：**M3 · 表单，已关闭**。两个提交 `210d4bb`、`4cee481`：
+  - ① `crates/rustify-ui/src/form.rs`：代际、pending、提交请求绑定、单飞。16 条宿主单测**先于代码写**，其中两条真抓到东西。
+  - ② **`submit()` 原本把所有错误都清掉再跑规则**，于是异步校验刚拒绝过的值被抹掉、表单就保存了。错误现在带来源：规则的错误规则自己可以撤回，校验的答案说的是值本身、而值没变。抓到它的是「异步失败后再问二十次也不保存」那条。
+  - ③ `ErrorKind::UnknownField` + `Diagnostic::field`（`&'static str`，NFR-4 的保证不破）：拼错字段名原本是静默无操作，表现成「表单永远不脏」，最难查的那种。错误种类现在 11 类。
+  - ④ `crates/rustify-components/src/form/{provider,field,submit}.rs`：`Form` 句柄（save 闭包归它，所以「一次请求至多一次保存」是结构性的，不靠调用方记得）、`Field`（label→控件、`aria-invalid`、只指向真实存在的错误文本）、`SubmitButton`、`FormStatus`。
+  - ⑤ property-workbench 属性面板扩到 20 个可见属性：4 个仍随打随生效（区域画它们），15 个是草稿 + 保存，规则覆盖必填/格式/跨字段（含跨「即时/草稿」那条：锁定的对象不能换 owner），一个属性走异步校验。页面可以把校验和保存都按住不放，这才让「二十次反序应答」「二十次连点只保存一次」可数。
+  - **两处按实测修正计划正文**（都已回写 §3/§5.3）：`FormState` **不持有字段值**（值在应用手里，再存一份就是同一个字段有两个答案，正是 P1 M6 从控件里拿掉的 bug；也正因如此 workbench 才能让 4 个属性即时生效、15 个走草稿）；提交按钮用 **`aria-disabled` 而非原生 `disabled`**（原生禁用的按钮收不到点击，`submit()` 就当不成权威——这是一条测试用「校验进行中提交」时收不到任何事件才发现的）。
+  - **一个自己造的坑**：新区块用了 `data-testid="details"`，与 P1 异步夹具重名，五条 P1 用例互相选中对方的元素。已改名 `object-details`。
+- 下一步：**M4 · 导航与深链接**。顺序按 §10 的 M4 行：**A-5 探针先行**——在浏览器里验三件事：`history.go(-3)` 一次跨多项、同一 URL 对应多个历史项、恢复期间连续后退；评审 2026-09-09 的探针已经证明「用 `go(+1)` 逐步回」不成立（`/d`→`go(-3)`→`/a`，`go(+1)` 只回到 `/b`），所以实现必须按 `history.state.rustify.index` 的**序号差**算位移。探针过了再写 `crates/rustify-ui/src/router.rs`（URL 所有者/内存 location、静态段与 `:param` 匹配、序号、作用域根锚点拦截、守卫、`beforeunload`）与宿主单测，然后 `MountConfig { url_owner, base }` + `UrlOwnerConflict`（走 `mount` 现有前置闸，§2.1）、`build-web --base` + `serve --spa`、workbench 的 `objects/:id` 与未找到页、fusion-basic 双挂载夹具加宿主链接与非所有者用例、`docs/navigation.md`。退出条件见 §10 的 M4 行与 §9.1 的 V6。**三条现成的地基**：`ErrorKind` 已经能加（M3 刚加过一个，改法在 `diagnostics.rs`），M4 要加的是 `severity()` 与 `NavigationBlocked`/`NavigationBusy`（§2.1）；表单已经发布 `dirty`，守卫直接读它；`rustify_components::Link` 的 `aria-current` 读的就是 `provide_current_path`，路由把真 location 接上去即可，组件不用动。
 - 当前阻塞：无。
-- 代码基线：`736b668`（一期收尾）→ M1 八提交 `153f67c`…`fb3cc96` → `1a479ef`、`a3a555c`（一期脚本堆泄漏修复）→ **M2 七提交 `098281e`、`fe5a37e`、`42162d6`、`36dbb2d`、`903685c`、`2c8a1bc`、`8cd2c15`**。工作区 clean。
-- 回归（2026-09-10，M2 退出）：见下方"完成记录"的 M2 行。**一条操作教训**：跑浏览器套件时不要同时跑 release 构建——LTO 的构建会把 CPU 抢光，用例慢到像是卡死；本次因此误杀过一次跑到 33/46 的 fusion-basic。另外用 `ps` 判断"还在不在跑"要匹配 `ms-playwright/chromium`，父进程的 CPU 时间不反映进度。
+- 代码基线：`736b668`（一期收尾）→ M1 八提交 `153f67c`…`fb3cc96` → `1a479ef`、`a3a555c`（一期脚本堆泄漏修复）→ M2 八提交 `098281e`…`aa9586d` → **M3 两提交 `210d4bb`、`4cee481`**。工作区 clean。
+- 回归：见「完成记录」各行。**两条操作教训**：跑浏览器套件时别同时跑 release 构建（LTO 会把 CPU 抢光，用例慢到像卡死，本次因此误杀过一次跑到 33/46 的 fusion-basic）；用 `ps` 判断套件还在不在跑要匹配 `ms-playwright/chromium`，父进程的 CPU 时间不反映进度。**一条已知的一期缺口**：`m8-endurance` 两分钟档的「尾部平坦」断言在这台机器上 M2 前后都不过（已用 worktree 在 `550c2ef` 上复测，详见 `docs/validation/p2/m2.md`），属 P1 账本，二期不改它。
 
 ### 完成记录
 
@@ -49,6 +48,7 @@
 | --- | --- | --- | --- | --- |
 | M1 | 2026-09-10 | 契约对齐与组件工程：核对并回写 §2.1；`rustify-components` 建起（两个 Rust/UI 宏原样导入后重写，去 leptos_router、去 nightly、加 test_id）；`sources.lock.json.rust_ui` 双向校验；D13 按实测修正（tw_merge 不设 prefix）；token 扩表 + Tailwind 输入与产物 + `cargo xtask css [--check]`；第三个示例 component-catalog 与第三个 Playwright project；宿主控件计算样式对照；CI 增项。未做：18 类组件本身与目录搬迁（M2）、路由（M4） | `docs/validation/p2/m1.md`；`npx playwright test --project=component-catalog` 9/9；`cargo test --workspace --lib` 65；`cargo test -p xtask` 14；clippy/fmt 通过；`cargo xtask css --check` 无漂移；`cargo xtask sources verify` 通过；`cargo xtask doctor` 10/10 | `fb3cc96` |
 | M2 | 2026-09-10 | 18 类组件目录：17 个 Rust/UI 文件 + slider.css 原样导入后重写（全部受控、`rui:` 前缀、零内联脚本/样式）；浮层四类重写到 P1 浮层栈并补齐 role/键盘/焦点归还；GPU 声明子集（Button/Radio/Toggle/Progress/Spinner/Icon 稳定，DropDown/TabBar 实验，ScrollBars 声明式）；能力目录搬进 `rustify-components` 并填满 18 行 + `cargo xtask catalog`；component-catalog 每类一页（活示例 + GPU 列 + 状态矩阵）；`sharedPage` 测试提速。未做：表单（M3）、路由（M4）、`/samples` 文本样本页与 SDK 文案目录（M7）、对比度与缩放人工走查（M8） | `docs/validation/p2/m2.md`；`npx playwright test --project=component-catalog` **31/31**（M1 9、V2 7、V3 6、V4 9）；一期回归 `--project=fusion-basic` **46/46**、`--project=deployment` **6/6**、`--project=property-workbench` **71 passed / 1 failed**（失败的是 `m8-endurance` 的内存尾部断言，**不是 M2 造成的**：在 M2 前的 `550c2ef` 上用 worktree 建同一个示例复测，同一条断言失败且余量更大——尾部增长 851,968 B vs M2 的 786,432 B，阈值约 420 KB；行为部分两边都是 1,200 发 1,200 收 0 拒 0 错。详见 `docs/validation/p2/m2.md`）；`cargo test --workspace --lib` 76；clippy/fmt 通过；`cargo xtask css --check`、`cargo xtask catalog --check` 无漂移；`cargo xtask sources verify` rust_ui 20 files, 0 verbatim, 20 rewritten | `8cd2c15` |
+| M3 | 2026-09-10 | 表单：`form.rs` 状态机（代际/pending/提交请求绑定/单飞，16 条宿主单测）；错误带来源（修掉「异步失败后再点一次就保存」）；`ErrorKind::UnknownField` + `Diagnostic::field`（11 类）；`rustify-components` 的 `Form`/`Field`/`SubmitButton`/`FormStatus`；property-workbench 属性面板扩到 20 个可见属性（4 即时 + 15 草稿保存，必填/格式/跨字段规则 + 一个异步校验 + 可按住的保存）。按实测修正 §3/§5.3 两处（FormState 不持值、提交按钮用 aria-disabled）。未做：SDK 文案目录（M7）、离开视图的未保存守卫（M4） | `docs/validation/p2/m3.md`；`p2-form.spec.ts` **9/9**；`--project=component-catalog` **31/31**；`--project=property-workbench` **80 passed / 1 failed**（80 = 一期 71 + V5 9；唯一失败是 `m8-endurance` 的内存尾部断言，M2 时已用 worktree 证明先于二期存在）；`cargo test --workspace --lib` 91；clippy/fmt 通过；`cargo xtask css --check` 无漂移 | `4cee481` |
 
 ## 0. 需求、范围与决策
 
