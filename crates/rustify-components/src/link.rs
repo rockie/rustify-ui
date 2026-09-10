@@ -1,73 +1,58 @@
-use leptos::prelude::*;
-use leptos_router::components::A;
-use leptos_router::hooks::use_location;
-use tw_merge::*;
+//! A link that knows whether it points at the page you are on.
+//!
+//! Rust/UI's version asked `leptos_router` where it was. This one asks this
+//! crate, which the SDK's router will tell in M4 and which an application
+//! without one never sets - a link with no current path is simply never
+//! current, and that is the right answer for a page that does not navigate.
 
-#[derive(Debug, Clone, PartialEq, Eq, Default)]
-pub enum PathMatchType {
+use leptos::prelude::*;
+
+const BASE: &str = "rui:text-primary rui:underline-offset-4 rui:rounded-sm rui:hover:underline rui:outline-none rui:focus-visible:ring-ring/50 rui:focus-visible:ring-[3px] rui:aria-disabled:pointer-events-none rui:aria-disabled:opacity-50";
+
+/// How much of the current path a link needs to match to count as current.
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+pub enum LinkMatch {
+    /// The page it points at, or any page under it. A link to `/objects`
+    /// stays marked while the page shows `/objects/17`.
     #[default]
-    StartsWith,
+    Within,
+    /// That page and no other.
     Exact,
-    Contains,
-    Custom(String),
-    StartsWithExcept(String, Vec<String>),
-    MatchAny(Vec<String>),
 }
 
 #[component]
 pub fn Link(
-    children: Children,
     #[prop(into)] href: String,
-    #[prop(into, default = true)] scroll: bool, // Default to true in Leptos.
-    #[prop(into, default = PathMatchType::default())] match_type: PathMatchType,
-    #[prop(into, default = false)] force_reload: bool,
+    #[prop(optional)] match_: LinkMatch,
+    /// A link with nowhere to go keeps its place in the text and loses its
+    /// href: `<a>` has no disabled attribute, and a link that still navigates
+    /// while looking disabled is worse than one that looks ordinary.
+    #[prop(optional, into)]
+    disabled: Signal<bool>,
     #[prop(optional, into)] class: String,
+    #[prop(optional, into)] test_id: String,
+    children: Children,
 ) -> impl IntoView {
-    let location = use_location();
-
-    let current_path = Memo::new(move |_| location.pathname.get());
-
-    let is_active = move |path_segment: &str| -> bool {
-        let current = current_path();
-        match &match_type {
-            PathMatchType::StartsWith => current.starts_with(path_segment),
-            PathMatchType::Exact => current == path_segment,
-            PathMatchType::Contains => current.contains(path_segment),
-            PathMatchType::Custom(custom_path) => current.starts_with(custom_path),
-            PathMatchType::StartsWithExcept(base_path, excludes) => {
-                current.starts_with(base_path) && !excludes.contains(&current)
-            }
-            PathMatchType::MatchAny(paths) => paths.contains(&current),
-        }
+    let path = crate::current_path();
+    let target = href.clone();
+    let current = move || {
+        let path = path.as_ref()?.get();
+        let matches = match match_ {
+            LinkMatch::Within => crate::is_within(&path, &target),
+            LinkMatch::Exact => path.trim_end_matches('/') == target.trim_end_matches('/'),
+        };
+        matches.then_some("page")
     };
-
-    let class_with_active = move |path_segment: &str| -> String {
-        let active_styles = if is_active(path_segment) { "font-semibold" } else { "" };
-        tw_merge!(&class, active_styles)
-    };
-
-    if force_reload {
-        let href_clone = href.clone();
-        view! {
-            <button
-                type="button"
-                class="cursor-pointer"
-                on:click=move |_| {
-                    if let Some(window) = web_sys::window() {
-                        let _ = window.location().set_href(&href_clone);
-                    }
-                }
-            >
-                <span class=move || class_with_active(&href)>{children()}</span>
-            </button>
-        }
-        .into_any()
-    } else {
-        view! {
-            <A href=href.clone() scroll=scroll>
-                <span class=move || class_with_active(&href)>{children()}</span>
-            </A>
-        }
-        .into_any()
+    view! {
+        <a
+            class=crate::macros::merge(BASE, &class)
+            data-name="Link"
+            data-testid=test_id
+            href=move || (!disabled.get()).then(|| href.clone())
+            aria-current=current
+            aria-disabled=move || disabled.get().then_some("true")
+        >
+            {children()}
+        </a>
     }
 }

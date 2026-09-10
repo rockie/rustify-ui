@@ -20,6 +20,12 @@
    the default variant would make our components follow it. */
 @custom-variant dark (&:is([data-rustify-scope][data-theme="dark"] *));
 
+/* The rules no utility expresses. Both are scoped to this SDK's own root; the
+   slider's came from Rust/UI, where it selected the host page's range controls
+   through a bare element selector. */
+@import "./slider.css";
+@import "./controls.css";
+
 /* The utilities reference these names, and the SDK writes their values onto
    the scope root at mount (`crates/rustify-ui/src/theme.rs`). `inline` means a
    utility resolves to `var(--primary)` rather than to a copy of its value, so

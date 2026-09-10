@@ -1,330 +1,269 @@
-use icons::{Check, ChevronDown, ChevronUp};
-use leptos::context::Provider;
+//! Choosing one of a list that is too long to show all at once.
+//!
+//! Rust/UI's select measured the trigger and flipped the panel from an inline
+//! `<script>`, and carried no `combobox`, `listbox` or `option` role. Here the
+//! panel is a layer on the SDK's stack, the roles are the ones a reader
+//! expects, and the value is the application's: what the trigger shows is what
+//! the application holds, never what was clicked.
+
+use leptos::ev::KeyboardEvent;
 use leptos::prelude::*;
-use leptos_ui::clx;
-use strum::{AsRefStr, Display};
-use tw_merge::*;
+use rustify_ui::{Anchor, Layer};
 
-use crate::hooks::use_can_scroll_vertical::use_can_scroll_vertical;
-use crate::hooks::use_random::use_random_id_for;
+const TRIGGER: &str = "rui:flex rui:h-9 rui:w-full rui:items-center rui:justify-between rui:gap-2 rui:rounded-md rui:border rui:border-border rui:bg-input rui:px-3 rui:py-1 rui:text-sm rui:text-foreground rui:transition-colors rui:cursor-pointer rui:outline-none rui:focus-visible:ring-ring/50 rui:focus-visible:ring-[3px] rui:disabled:cursor-not-allowed rui:disabled:opacity-50 rui:aria-invalid:border-destructive";
+const PANEL: &str = "rui:min-w-40 rui:max-h-64 rui:overflow-auto rui:rounded-md rui:border rui:border-border rui:bg-popover rui:p-1 rui:shadow-lg rui:outline-none";
+const OPTION: &str = "rui:flex rui:w-full rui:items-center rui:gap-2 rui:rounded-sm rui:px-2 rui:py-1.5 rui:text-sm rui:text-foreground rui:cursor-pointer rui:aria-disabled:opacity-50 rui:aria-disabled:cursor-not-allowed";
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, Display, AsRefStr)]
-pub enum SelectPosition {
-    #[default]
-    Below,
-    Above,
+/// One choice.
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct SelectOption {
+    pub value: String,
+    pub label: String,
+    pub disabled: bool,
 }
 
-mod components {
-    use super::*;
-    clx! {SelectLabel, span, "px-2 py-1.5 text-sm font-medium data-inset:pl-8", "mb-1"}
-    clx! {SelectItem, li, "inline-flex gap-2 items-center w-full rounded-sm px-2 py-1.5 text-sm no-underline transition-colors duration-200 text-popover-foreground hover:bg-accent hover:text-accent-foreground [&_svg:not([class*='size-'])]:size-4"}
-}
-
-pub use components::*;
-
-#[component]
-pub fn SelectGroup(
-    children: Children,
-    #[prop(optional, into)] class: String,
-    #[prop(default = "Select options".into(), into)] aria_label: String,
-) -> impl IntoView {
-    let merged_class = tw_merge!("group", class);
-
-    view! {
-        <ul data-name="SelectGroup" role="listbox" aria-label=aria_label class=merged_class>
-            {children()}
-        </ul>
+impl SelectOption {
+    pub fn new(value: impl Into<String>, label: impl Into<String>) -> Self {
+        Self {
+            value: value.into(),
+            label: label.into(),
+            disabled: false,
+        }
     }
-}
 
-#[component]
-pub fn SelectValue(#[prop(optional, into)] placeholder: String) -> impl IntoView {
-    let select_ctx = expect_context::<SelectContext>();
-
-    view! {
-        <span data-name="SelectValue" class="text-sm text-muted-foreground truncate">
-            {move || { select_ctx.value_signal.get().unwrap_or_else(|| placeholder.clone()) }}
-        </span>
+    pub fn disabled(mut self) -> Self {
+        self.disabled = true;
+        self
     }
-}
-
-/* ========================================================== */
-/*                     ✨ FUNCTIONS ✨                        */
-/* ========================================================== */
-
-#[component]
-pub fn SelectOption(
-    children: Children,
-    #[prop(optional, into)] class: String,
-    #[prop(default = false.into(), into)] aria_selected: Signal<bool>,
-    #[prop(optional, into)] value: Option<String>,
-) -> impl IntoView {
-    let ctx = expect_context::<SelectContext>();
-
-    let merged_class = tw_merge!(
-        "group inline-flex gap-2 items-center w-full rounded-sm px-2 py-1.5 text-sm cursor-pointer no-underline transition-colors duration-200 text-popover-foreground hover:bg-accent hover:text-accent-foreground [&_svg:not([class*='size-'])]:size-4",
-        class
-    );
-
-    let value_for_check = value.clone();
-    let is_selected = move || aria_selected.get() || ctx.value_signal.get() == value_for_check;
-
-    view! {
-        <li
-            data-name="SelectOption"
-            class=merged_class
-            role="option"
-            tabindex="0"
-            aria-selected=move || is_selected().to_string()
-            data-select-option="true"
-            on:click=move |_| {
-                let val = value.clone();
-                ctx.value_signal.set(val.clone());
-                if let Some(on_change) = ctx.on_change {
-                    on_change.run(val);
-                }
-            }
-        >
-            {children()}
-            <Check class="ml-auto opacity-0 size-4 text-muted-foreground group-aria-selected:opacity-100" />
-        </li>
-    }
-}
-
-/* ========================================================== */
-/*                     ✨ FUNCTIONS ✨                        */
-/* ========================================================== */
-
-#[derive(Clone)]
-struct SelectContext {
-    target_id: String,
-    value_signal: RwSignal<Option<String>>,
-    on_change: Option<Callback<Option<String>>>,
 }
 
 #[component]
 pub fn Select(
-    children: Children,
-    #[prop(optional, into)] class: String,
-    #[prop(optional, into)] default_value: Option<String>,
-    #[prop(optional)] on_change: Option<Callback<Option<String>>>,
-) -> impl IntoView {
-    let select_target_id = use_random_id_for("select");
-    let value_signal = RwSignal::new(default_value);
-
-    let ctx = SelectContext { target_id: select_target_id, value_signal, on_change };
-
-    let merged_class = tw_merge!("relative w-fit", class);
-
-    view! {
-        <Provider value=ctx>
-            <div data-name="Select" class=merged_class>
-                {children()}
-            </div>
-        </Provider>
-    }
-}
-
-#[component]
-pub fn SelectTrigger(
-    children: Children,
-    #[prop(optional, into)] class: String,
+    #[prop(into)] value: Signal<String>,
+    #[prop(into)] options: Signal<Vec<SelectOption>>,
+    on_change: impl Fn(String) + Send + Sync + 'static,
+    #[prop(into)] open: Signal<bool>,
+    on_open_change: impl Fn(bool) + Send + Sync + 'static,
+    /// What the trigger shows when the value matches no option - before a
+    /// first choice, or after the options changed under one.
+    #[prop(optional, into)]
+    placeholder: String,
     #[prop(optional, into)] id: String,
+    #[prop(optional, into)] aria_label: String,
+    #[prop(optional, into)] disabled: Signal<bool>,
+    #[prop(optional, into)] read_only: Signal<bool>,
+    #[prop(optional, into)] invalid: Signal<bool>,
+    #[prop(optional, into)] described_by: Signal<String>,
+    #[prop(optional, into)] class: String,
+    #[prop(optional, into)] test_id: String,
 ) -> impl IntoView {
-    let ctx = expect_context::<SelectContext>();
+    let group = crate::id::next("select");
+    let trigger_id = StoredValue::new(if id.is_empty() {
+        format!("{group}-trigger")
+    } else {
+        id
+    });
+    let list_id = StoredValue::new(format!("{group}-listbox"));
+    let group = StoredValue::new(group);
+    let placeholder = StoredValue::new(if placeholder.is_empty() {
+        "choose".to_string()
+    } else {
+        placeholder
+    });
+    let panel_test_id = StoredValue::new(test_id.clone());
+    let aria_label = (!aria_label.is_empty()).then_some(aria_label);
+    let on_change = StoredValue::new(on_change);
+    let on_open_change = StoredValue::new(on_open_change);
+    let trigger = NodeRef::<leptos::html::Button>::new();
+    let list = NodeRef::<leptos::html::Ul>::new();
 
-    let peer_class = if !id.is_empty() { format!("peer/{}", id) } else { String::new() };
+    let option_id = move |value: &str| format!("{}-option-{value}", group.get_value());
+    // Which option the keyboard is on while the list is open. It starts at the
+    // chosen one, so the arrows continue from what the user picked last rather
+    // than from the top.
+    let active = RwSignal::new(String::new());
 
-    let button_class = tw_merge!(
-        "w-full p-2 h-9 inline-flex items-center justify-between text-sm font-medium whitespace-nowrap rounded-md transition-colors focus:outline-none focus:ring-1 focus:ring-ring focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 [&_svg:not(:last-child)]:mr-2 [&_svg:not(:first-child)]:ml-2 [&_svg:not([class*='size-'])]:size-4 border bg-background border-input hover:bg-accent hover:text-accent-foreground",
-        &peer_class,
-        class
-    );
+    let shown = Memo::new(move |_| {
+        let held = value.get();
+        options
+            .get()
+            .into_iter()
+            .find(|option| option.value == held)
+            .map(|option| option.label)
+    });
 
-    let button_id = if !id.is_empty() { id } else { format!("trigger_{}", ctx.target_id) };
+    let set_open = move |open: bool| {
+        if open {
+            active.set(value.get_untracked());
+        }
+        on_open_change.with_value(|change| change(open));
+    };
+
+    let choose = move |asked: String| {
+        if read_only.get_untracked() {
+            set_open(false);
+            return;
+        }
+        on_change.with_value(|change| change(asked));
+        set_open(false);
+        // The keyboard goes back where it came from, which is what makes a
+        // second choice possible without the mouse.
+        if let Some(button) = trigger.get_untracked() {
+            let _ = (*button).focus();
+        }
+    };
+
+    // The keyboard moves into the list when it opens: the list carries the
+    // focus and `aria-activedescendant` says which option is current, which is
+    // the arrangement a combobox is read with.
+    Effect::new(move || {
+        if !open.get() {
+            return;
+        }
+        if let Some(list) = list.get() {
+            let _ = (*list).focus();
+        }
+    });
+
+    let on_trigger_key = move |ev: KeyboardEvent| {
+        if disabled.get_untracked() {
+            return;
+        }
+        if matches!(ev.key().as_str(), "ArrowDown" | "ArrowUp") {
+            ev.prevent_default();
+            set_open(true);
+        }
+    };
+
+    let on_list_key = move |ev: KeyboardEvent| {
+        let options = options.get_untracked();
+        let here = options
+            .iter()
+            .position(|option| option.value == active.get_untracked());
+        let reachable = |index: usize| !options[index].disabled;
+        let moved = match ev.key().as_str() {
+            "ArrowDown" => crate::roving::step(options.len(), reachable, here, 1),
+            "ArrowUp" => crate::roving::step(options.len(), reachable, here, -1),
+            "Home" => crate::roving::edge(options.len(), reachable, false),
+            "End" => crate::roving::edge(options.len(), reachable, true),
+            "Enter" | " " => {
+                ev.prevent_default();
+                if let Some(option) = here.map(|here| &options[here]) {
+                    if !option.disabled {
+                        choose(option.value.clone());
+                    }
+                }
+                return;
+            }
+            _ => return,
+        };
+        let Some(moved) = moved else {
+            return;
+        };
+        ev.prevent_default();
+        active.set(options[moved].value.clone());
+    };
 
     view! {
         <button
+            node_ref=trigger
             type="button"
-            data-name="SelectTrigger"
-            class=button_class
-            id=button_id
-            tabindex="0"
-            data-select-trigger=ctx.target_id
+            id=move || trigger_id.get_value()
+            class=crate::macros::merge(TRIGGER, &class)
+            data-name="Select"
+            data-testid=test_id
+            role="combobox"
+            aria-label=aria_label
+            aria-haspopup="listbox"
+            aria-controls=move || list_id.get_value()
+            aria-expanded=move || open.get().to_string()
+            aria-invalid=move || invalid.get().then_some("true")
+            aria-readonly=move || read_only.get().then_some("true")
+            aria-describedby=move || {
+                let described_by = described_by.get();
+                (!described_by.is_empty()).then_some(described_by)
+            }
+            prop:disabled=move || disabled.get()
+            on:click=move |_| {
+                if !disabled.get_untracked() {
+                    set_open(!open.get_untracked());
+                }
+            }
+            on:keydown=on_trigger_key
         >
-            {children()}
-            <ChevronDown class="text-muted-foreground" />
+            <span
+                class=move || {
+                    if shown.get().is_some() {
+                        "rui:truncate"
+                    } else {
+                        "rui:truncate rui:text-muted-foreground"
+                    }
+                }
+                data-name="SelectValue"
+            >
+                {move || shown.get().unwrap_or_else(|| placeholder.get_value())}
+            </span>
+            <crate::icon::Icon glyph=crate::icon::Glyph::ChevronDown class="rui:text-muted-foreground" />
         </button>
-    }
-}
-
-#[component]
-pub fn SelectContent(
-    children: Children,
-    #[prop(optional, into)] class: String,
-    #[prop(default = SelectPosition::default())] position: SelectPosition,
-) -> impl IntoView {
-    let ctx = expect_context::<SelectContext>();
-
-    let merged_class = tw_merge!(
-        "w-[150px] overflow-auto z-50 p-1 rounded-md border bg-card shadow-md h-fit max-h-[300px] absolute top-[calc(100%+4px)] left-0 data-[position=Above]:top-auto data-[position=Above]:bottom-[calc(100%+4px)] transition-all duration-200 data-[state=closed]:opacity-0 data-[state=closed]:scale-95 data-[state=open]:opacity-100 data-[state=open]:scale-100 data-[state=closed]:data-[position=Below]:origin-top data-[state=open]:data-[position=Below]:origin-top data-[state=closed]:data-[position=Above]:origin-bottom data-[state=open]:data-[position=Above]:origin-bottom [scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
-        class
-    );
-
-    let target_id_for_script = ctx.target_id.clone();
-
-    // Scroll indicator signals
-    let (on_scroll, can_scroll_up_signal, can_scroll_down_signal) = use_can_scroll_vertical();
-
-    view! {
-        <div
-            data-name="SelectContent"
-            class=merged_class
-            id=ctx.target_id
-            data-target="target__select"
-            data-state="closed"
-            data-position=position.to_string()
-            style="pointer-events: none;"
-            on:scroll=on_scroll
-        >
-            <div
-                data-scroll-up="true"
-                class=move || {
-                    if can_scroll_up_signal.get() {
-                        "sticky -top-1 z-10 flex items-center justify-center py-1 bg-card"
-                    } else {
-                        "hidden"
-                    }
-                }
+        <Show when=move || open.get() fallback=|| ()>
+            <Layer
+                anchor=Signal::derive(move || match trigger.get() {
+                    Some(element) => Anchor::element(&element.into()),
+                    None => Anchor::Centred,
+                })
+                on_close=move || set_open(false)
+                class="rui-select-layer"
             >
-                <ChevronUp class="size-4 text-muted-foreground" />
-            </div>
-            {children()}
-            <div
-                data-scroll-down="true"
-                class=move || {
-                    if can_scroll_down_signal.get() {
-                        "sticky -bottom-1 z-10 flex items-center justify-center py-1 bg-card"
-                    } else {
-                        "hidden"
-                    }
-                }
-            >
-                <ChevronDown class="size-4 text-muted-foreground" />
-            </div>
-        </div>
-
-        <script>
-            {format!(
-                r#"
-                (function() {{
-                    const setupSelect = () => {{
-                        const select = document.querySelector('#{}');
-                        const trigger = document.querySelector('[data-select-trigger="{}"]');
-
-                        if (!select || !trigger) {{
-                            setTimeout(setupSelect, 50);
-                            return;
-                        }}
-
-                        if (select.hasAttribute('data-initialized')) {{
-                            return;
-                        }}
-                        select.setAttribute('data-initialized', 'true');
-
-                        let isOpen = false;
-
-                        const updatePosition = () => {{
-                            const triggerRect = trigger.getBoundingClientRect();
-                            const viewportHeight = window.innerHeight;
-                            const spaceBelow = viewportHeight - triggerRect.bottom;
-                            const spaceAbove = triggerRect.top;
-
-                            // Determine if dropdown should go above or below
-                            if (spaceBelow < 200 && spaceAbove > spaceBelow) {{
-                                select.setAttribute('data-position', 'Above');
-                            }} else {{
-                                select.setAttribute('data-position', 'Below');
-                            }}
-
-                            // Set min-width to match trigger
-                            select.style.minWidth = `${{triggerRect.width}}px`;
-                        }};
-
-                        const openSelect = () => {{
-                            isOpen = true;
-
-                            // Lock scrolling
-                            window.ScrollLock.lock();
-
-                            // Update position and open
-                            updatePosition();
-                            select.setAttribute('data-state', 'open');
-                            select.style.pointerEvents = 'auto';
-
-                            // Trigger scroll event to update indicators
-                            select.dispatchEvent(new Event('scroll'));
-
-                            // Close on click outside
-                            setTimeout(() => {{
-                                document.addEventListener('click', handleClickOutside);
-                            }}, 0);
-                        }};
-
-                        const closeSelect = () => {{
-                            isOpen = false;
-                            select.setAttribute('data-state', 'closed');
-                            select.style.pointerEvents = 'none';
-                            document.removeEventListener('click', handleClickOutside);
-
-                            // Unlock scrolling after animation
-                            window.ScrollLock.unlock(200);
-                        }};
-
-                        const handleClickOutside = (e) => {{
-                            if (!select.contains(e.target) && !trigger.contains(e.target)) {{
-                                closeSelect();
-                            }}
-                        }};
-
-                        // Toggle select when trigger is clicked
-                        trigger.addEventListener('click', (e) => {{
-                            e.stopPropagation();
-                            if (isOpen) {{
-                                closeSelect();
-                            }} else {{
-                                openSelect();
-                            }}
-                        }});
-
-                        // Close when option is selected
-                        const options = select.querySelectorAll('[data-select-option]');
-                        options.forEach(option => {{
-                            option.addEventListener('click', () => {{
-                                closeSelect();
-                            }});
-                        }});
-
-                        // Handle ESC key to close
-                        document.addEventListener('keydown', (e) => {{
-                            if (e.key === 'Escape' && isOpen) {{
-                                e.preventDefault();
-                                closeSelect();
-                            }}
-                        }});
-                    }};
-
-                    if (document.readyState === 'loading') {{
-                        document.addEventListener('DOMContentLoaded', setupSelect);
-                    }} else {{
-                        setupSelect();
-                    }}
-                }})();
-                "#,
-                target_id_for_script,
-                target_id_for_script,
-            )}
-        </script>
+                <ul
+                    node_ref=list
+                    id=move || list_id.get_value()
+                    class=PANEL
+                    data-name="SelectList"
+                    data-testid=move || format!("{}-list", panel_test_id.get_value())
+                    role="listbox"
+                    tabindex="-1"
+                    aria-labelledby=move || trigger_id.get_value()
+                    aria-activedescendant=move || option_id(&active.get())
+                    on:keydown=on_list_key
+                >
+                    <For each=move || options.get() key=|option| option.value.clone() let:option>
+                        {
+                            let SelectOption { value: option_value, label, disabled: option_disabled } = option;
+                            let mine = option_value.clone();
+                            let chosen = Memo::new(move |_| value.get() == mine);
+                            let asked = option_value.clone();
+                            view! {
+                                <li
+                                    id=option_id(&option_value)
+                                    class=OPTION
+                                    class=("rui:bg-muted", {
+                                        let mine = option_value.clone();
+                                        move || active.get() == mine
+                                    })
+                                    data-name="SelectOption"
+                                    data-testid=format!("option-{option_value}")
+                                    role="option"
+                                    aria-selected=move || chosen.get().to_string()
+                                    aria-disabled=option_disabled.then_some("true")
+                                    on:click=move |_| {
+                                        if !option_disabled {
+                                            choose(asked.clone());
+                                        }
+                                    }
+                                >
+                                    <span class="rui:flex-1">{label}</span>
+                                    <Show when=move || chosen.get() fallback=|| ()>
+                                        <crate::icon::Icon
+                                            glyph=crate::icon::Glyph::Check
+                                            class="rui:text-muted-foreground"
+                                        />
+                                    </Show>
+                                </li>
+                            }
+                        }
+                    </For>
+                </ul>
+            </Layer>
+        </Show>
     }
 }

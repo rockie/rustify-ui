@@ -1,569 +1,172 @@
-use icons::{Check, ChevronRight};
-use leptos::context::Provider;
+//! A list of commands, opened against something.
+//!
+//! Rust/UI's dropdown menu was 570 lines of Rust around a `format!`-built
+//! `<script>` that measured the trigger, flipped the panel and closed it on an
+//! outside click - none of which a strict policy will run. The measuring, the
+//! Escape order and the return of focus are the SDK overlay stack's here; what
+//! is left is a list with the roles and the arrow keys a menu is expected to
+//! have.
+
+use leptos::ev::KeyboardEvent;
 use leptos::prelude::*;
-use leptos_ui::clx;
-use tw_merge::*;
+use rustify_ui::{Anchor, Layer};
 
-use crate::hooks::use_random::use_random_id_for;
-pub use crate::ui::separator::Separator as DropdownMenuSeparator;
+const PANEL: &str =
+    "rui:min-w-40 rui:rounded-md rui:border rui:border-border rui:bg-popover rui:p-1 rui:shadow-lg";
+const ITEM: &str = "rui:flex rui:w-full rui:items-center rui:gap-2 rui:rounded-sm rui:px-2 rui:py-1.5 rui:text-sm rui:text-foreground rui:text-left rui:transition-colors rui:outline-none rui:cursor-pointer rui:hover:bg-muted rui:focus-visible:bg-muted rui:aria-disabled:opacity-50 rui:aria-disabled:cursor-not-allowed rui:aria-disabled:hover:bg-transparent";
 
-mod components {
-    use super::*;
-    clx! {DropdownMenuLabel, span, "px-2 py-1.5 text-sm font-medium data-inset:pl-8", "mb-1"}
-    clx! {DropdownMenuGroup, ul, "group"}
-    clx! {DropdownMenuItem, li, "inline-flex gap-2 items-center w-full rounded-sm px-2 py-1.5 text-sm no-underline transition-colors duration-200 text-popover-foreground hover:bg-accent hover:text-accent-foreground [&_svg:not([class*='size-'])]:size-4"}
-    clx! {DropdownMenuSubContent, ul, "dropdown__menu_sub_content", "rounded-md border bg-card shadow-lg p-1 absolute z-[100] min-w-[160px] opacity-0 invisible translate-x-[-8px] transition-all duration-200 ease-out pointer-events-none"}
-    clx! {DropdownMenuLink, a, "w-full inline-flex gap-2 items-center"}
+/// One command in a menu.
+///
+/// A command that cannot run stays in the list and says why, rather than
+/// disappearing: a menu whose contents change with the state is a menu nobody
+/// can learn.
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct MenuItem {
+    pub id: String,
+    pub label: String,
+    pub disabled: bool,
+    /// Why it cannot run. Announced with the item and shown beside it.
+    pub reason: String,
 }
 
-pub use components::*;
-
-/* ========================================================== */
-/*                     RADIO GROUP                            */
-/* ========================================================== */
-
-#[derive(Clone)]
-struct DropdownMenuRadioContext<T: Clone + PartialEq + Send + Sync + 'static> {
-    value_signal: RwSignal<T>,
-}
-
-/// A group of radio items where only one can be selected at a time.
-#[component]
-pub fn DropdownMenuRadioGroup<T>(
-    children: Children,
-    /// The signal holding the current selected value
-    value: RwSignal<T>,
-) -> impl IntoView
-where
-    T: Clone + PartialEq + Send + Sync + 'static,
-{
-    let ctx = DropdownMenuRadioContext { value_signal: value };
-
-    view! {
-        <Provider value=ctx>
-            <ul data-name="DropdownMenuRadioGroup" role="group" class="group">
-                {children()}
-            </ul>
-        </Provider>
-    }
-}
-
-/// A radio item that shows a checkmark when selected.
-#[component]
-pub fn DropdownMenuRadioItem<T>(
-    children: Children,
-    /// The value this item represents
-    value: T,
-    #[prop(optional, into)] class: String,
-) -> impl IntoView
-where
-    T: Clone + PartialEq + Send + Sync + 'static,
-{
-    let ctx = expect_context::<DropdownMenuRadioContext<T>>();
-
-    let value_for_check = value.clone();
-    let value_for_click = value;
-    let is_selected = move || ctx.value_signal.get() == value_for_check;
-
-    let merged_class = tw_merge!(
-        "group inline-flex gap-2 items-center w-full rounded-sm pl-2 pr-2 py-1.5 text-sm cursor-pointer no-underline transition-colors duration-200 text-popover-foreground hover:bg-accent hover:text-accent-foreground [&_svg:not([class*='size-'])]:size-4",
-        class
-    );
-
-    view! {
-        <li
-            data-name="DropdownMenuRadioItem"
-            class=merged_class
-            role="menuitemradio"
-            aria-checked=move || is_selected().to_string()
-            data-dropdown-close="true"
-            on:click=move |_| {
-                ctx.value_signal.set(value_for_click.clone());
-            }
-        >
-            {children()}
-            <Check class="ml-auto opacity-0 size-4 text-muted-foreground group-aria-checked:opacity-100" />
-        </li>
-    }
-}
-
-#[derive(Clone, Copy, PartialEq, Eq, Default)]
-pub enum DropdownMenuActionVariant {
-    #[default]
-    Default,
-    Destructive,
-}
-
-/// An action item in a dropdown menu (no checkmark, just triggers an action).
-#[component]
-pub fn DropdownMenuAction(
-    children: Children,
-    #[prop(optional, into)] class: String,
-    #[prop(optional, into)] href: Option<String>,
-    #[prop(default = DropdownMenuActionVariant::default())] variant: DropdownMenuActionVariant,
-) -> impl IntoView {
-    let _ctx = expect_context::<DropdownMenuContext>();
-
-    let variant_class = match variant {
-        DropdownMenuActionVariant::Default => "text-popover-foreground hover:bg-accent hover:text-accent-foreground",
-        DropdownMenuActionVariant::Destructive => "text-destructive hover:bg-destructive/10 hover:text-destructive",
-    };
-
-    let class = tw_merge!(
-        "inline-flex gap-2 items-center w-full text-sm text-left transition-colors duration-200 focus:outline-none focus-visible:outline-none [&_svg:not([class*='size-'])]:size-4",
-        variant_class,
-        class
-    );
-
-    if let Some(href) = href {
-        // Render as <a> tag when href is provided
-        view! {
-            <a data-name="DropdownMenuAction" class=class href=href data-dropdown-close="true">
-                {children()}
-            </a>
-
-            <script>
-                {r#"
-                (function() {
-                const link = document.currentScript.previousElementSibling;
-                if (!link) return;
-                
-                link.addEventListener('click', function() {
-                // Close dropdown on route change after navigation
-                let currentPath = window.location.pathname;
-                const checkRouteChange = () => {
-                if (window.location.pathname !== currentPath) {
-                currentPath = window.location.pathname;
-                
-                // Find and close the dropdown
-                const dropdown = link.closest('[data-target="target__dropdown"]');
-                if (dropdown) {
-                dropdown.setAttribute('data-state', 'closed');
-                dropdown.style.pointerEvents = 'none';
-                
-                // Unlock scroll
-                if (window.ScrollLock) {
-                window.ScrollLock.unlock(200);
-                }
-                }
-                
-                clearInterval(routeCheckInterval);
-                }
-                };
-                
-                const routeCheckInterval = setInterval(checkRouteChange, 50);
-                
-                // Clear interval after 2 seconds to prevent memory leaks
-                setTimeout(() => clearInterval(routeCheckInterval), 2000);
-                });
-                })();
-                "#}
-            </script>
+impl MenuItem {
+    pub fn new(id: impl Into<String>, label: impl Into<String>) -> Self {
+        Self {
+            id: id.into(),
+            label: label.into(),
+            disabled: false,
+            reason: String::new(),
         }
-        .into_any()
-    } else {
-        // Render as <button> tag when no href
-        view! {
-            <button type="button" data-name="DropdownMenuAction" class=class data-dropdown-close="true">
-                {children()}
-            </button>
-        }
-        .into_any()
     }
-}
 
-/* ========================================================== */
-/*                     ✨ FUNCTIONS ✨                        */
-/* ========================================================== */
-
-#[derive(Clone, Copy, PartialEq, Eq, Default)]
-pub enum DropdownMenuAlign {
-    #[default]
-    Start,
-    StartOuter,
-    End,
-    EndOuter,
-    Center,
-}
-
-#[derive(Clone)]
-struct DropdownMenuContext {
-    target_id: String,
-    align: DropdownMenuAlign,
-}
-
-#[component]
-pub fn DropdownMenu(
-    children: Children,
-    #[prop(default = DropdownMenuAlign::default())] align: DropdownMenuAlign,
-) -> impl IntoView {
-    let dropdown_target_id = use_random_id_for("dropdown");
-
-    let ctx = DropdownMenuContext { target_id: dropdown_target_id, align };
-
-    view! {
-        <Provider value=ctx>
-            <style>
-                "
-                /* Submenu Styles */
-                .dropdown__menu_sub_content {
-                    position: absolute;
-                    inset-inline-start: calc(100% + 8px);
-                    inset-block-start: -4px;
-                    z-index: 100;
-                    min-inline-size: 160px;
-                    opacity: 0;
-                    visibility: hidden;
-                    transform: translateX(-8px);
-                    transition: all 0.2s ease-out;
-                    pointer-events: none;
-                }
-                
-                .dropdown__menu_sub_trigger:hover .dropdown__menu_sub_content {
-                    opacity: 1;
-                    visibility: visible;
-                    transform: translateX(0);
-                    pointer-events: auto;
-                }
-                "
-            </style>
-
-            <div data-name="DropdownMenu">{children()}</div>
-        </Provider>
+    pub fn disabled(mut self, reason: impl Into<String>) -> Self {
+        self.disabled = true;
+        self.reason = reason.into();
+        self
     }
 }
 
 #[component]
-pub fn DropdownMenuTrigger(
-    children: Children,
+pub fn Menu(
+    #[prop(into)] open: Signal<bool>,
+    on_open_change: impl Fn(bool) + Send + Sync + 'static,
+    /// What the menu is placed against: an element of the scope, or a
+    /// rectangle inside a GPU region.
+    #[prop(into)]
+    anchor: Signal<Anchor>,
+    #[prop(into)] items: Signal<Vec<MenuItem>>,
+    on_activate: impl Fn(String) + Send + Sync + 'static,
+    #[prop(optional, into)] aria_label: String,
     #[prop(optional, into)] class: String,
-    /// Render children directly instead of wrapping in a button.
-    /// Use when the child is already a button (e.g. InputGroupButton) to avoid nested buttons.
-    #[prop(optional)]
-    as_child: bool,
+    #[prop(optional, into)] test_id: String,
 ) -> impl IntoView {
-    let ctx = expect_context::<DropdownMenuContext>();
+    let group = StoredValue::new(crate::id::next("menu"));
+    let panel_class = StoredValue::new(crate::macros::merge(PANEL, &class));
+    let panel_test_id = StoredValue::new(test_id);
+    let label = StoredValue::new((!aria_label.is_empty()).then_some(aria_label));
+    // Stored rather than cloned: `Show`, `Layer` and `For` each take a
+    // children function, and a value moved through three of them makes the
+    // outermost callable once.
+    let on_open_change = StoredValue::new(on_open_change);
+    let on_activate = StoredValue::new(on_activate);
+    let list = NodeRef::<leptos::html::Ul>::new();
 
-    if as_child {
-        return view! {
-            <span data-name="DropdownMenuTrigger" data-dropdown-trigger=ctx.target_id class="contents">
-                {children()}
-            </span>
+    let item_id = move |id: &str| format!("{}-item-{id}", group.get_value());
+
+    // The keyboard lands in the menu, not behind it: a menu is not modal, so
+    // the stack does not move focus for it.
+    Effect::new(move || {
+        if !open.get() || list.get().is_none() {
+            return;
         }
-        .into_any();
-    }
+        let items = items.get_untracked();
+        if let Some(first) = crate::roving::edge(items.len(), |index| !items[index].disabled, false)
+        {
+            crate::dom::focus_id(&item_id(&items[first].id));
+        }
+    });
 
-    let button_class = tw_merge!(
-        "px-4 py-2 h-9 inline-flex justify-center items-center text-sm font-medium whitespace-nowrap rounded-md transition-colors w-fit focus:outline-none focus:ring-1 focus:ring-ring focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 [&_svg:not([class*='size-'])]:size-4  border bg-background border-input hover:bg-accent hover:text-accent-foreground",
-        class
-    );
+    let close = move || on_open_change.with_value(|close| close(false));
 
-    view! {
-        <button
-            type="button"
-            class=button_class
-            data-name="DropdownMenuTrigger"
-            data-dropdown-trigger=ctx.target_id
-            tabindex="0"
-        >
-            {children()}
-        </button>
-    }
-    .into_any()
-}
-
-#[derive(Clone, Copy, PartialEq, Eq, Default)]
-pub enum DropdownMenuPosition {
-    #[default]
-    Auto,
-    Top,
-    Bottom,
-}
-
-#[component]
-pub fn DropdownMenuContent(
-    children: Children,
-    #[prop(optional, into)] class: String,
-    #[prop(default = DropdownMenuPosition::default())] position: DropdownMenuPosition,
-) -> impl IntoView {
-    let ctx = expect_context::<DropdownMenuContext>();
-
-    let base_classes = "z-50 p-1 rounded-md border bg-card shadow-md h-fit fixed transition-all duration-200 data-[state=closed]:opacity-0 data-[state=closed]:scale-95 data-[state=open]:opacity-100 data-[state=open]:scale-100";
-    let width_class = match ctx.align {
-        DropdownMenuAlign::Center => "min-w-full",
-        _ => "w-[180px]",
-    };
-
-    let class = tw_merge!(width_class, base_classes, class);
-
-    let target_id_for_script = ctx.target_id.clone();
-    let align_for_script = match ctx.align {
-        DropdownMenuAlign::Start => "start",
-        DropdownMenuAlign::StartOuter => "start-outer",
-        DropdownMenuAlign::End => "end",
-        DropdownMenuAlign::EndOuter => "end-outer",
-        DropdownMenuAlign::Center => "center",
-    };
-
-    let position_for_script = match position {
-        DropdownMenuPosition::Auto => "auto",
-        DropdownMenuPosition::Top => "top",
-        DropdownMenuPosition::Bottom => "bottom",
+    let on_keydown = move |ev: KeyboardEvent| {
+        let items = items.get_untracked();
+        let here = leptos::prelude::document()
+            .active_element()
+            .and_then(|active| active.get_attribute("data-item"))
+            .and_then(|id| items.iter().position(|item| item.id == id));
+        let reachable = |index: usize| !items[index].disabled;
+        let next = match ev.key().as_str() {
+            "ArrowDown" => crate::roving::step(items.len(), reachable, here, 1),
+            "ArrowUp" => crate::roving::step(items.len(), reachable, here, -1),
+            "Home" => crate::roving::edge(items.len(), reachable, false),
+            "End" => crate::roving::edge(items.len(), reachable, true),
+            _ => None,
+        };
+        let Some(next) = next else {
+            return;
+        };
+        ev.prevent_default();
+        crate::dom::focus_id(&item_id(&items[next].id));
     };
 
     view! {
-        <div
-            data-name="DropdownMenuContent"
-            class=class
-            id=ctx.target_id
-            data-target="target__dropdown"
-            data-state="closed"
-            data-align=align_for_script
-            data-position=position_for_script
-            style="pointer-events: none;"
-        >
-            {children()}
-        </div>
-
-        <script>
-            {format!(
-                r#"
-                (function() {{
-                    const setupDropdown = () => {{
-                        const dropdown = document.querySelector('#{}');
-                        const trigger = document.querySelector('[data-dropdown-trigger="{}"]');
-
-                        if (!dropdown || !trigger) {{
-                            setTimeout(setupDropdown, 50);
-                            return;
-                        }}
-
-                        if (dropdown.hasAttribute('data-initialized')) {{
-                            return;
-                        }}
-                        dropdown.setAttribute('data-initialized', 'true');
-
-                        let isOpen = false;
-
-                        const updatePosition = () => {{
-                            const triggerEl = getComputedStyle(trigger).display === 'contents' ? trigger.firstElementChild : trigger;
-                            const triggerRect = triggerEl.getBoundingClientRect();
-                            const dropdownRect = dropdown.getBoundingClientRect();
-                            const viewportHeight = window.innerHeight;
-                            const viewportWidth = window.innerWidth;
-                            const spaceBelow = viewportHeight - triggerRect.bottom;
-                            const spaceAbove = triggerRect.top;
-
-                            const align = dropdown.getAttribute('data-align') || 'start';
-                            const position = dropdown.getAttribute('data-position') || 'auto';
-
-                            // Determine if we should position above
-                            let shouldPositionAbove = false;
-                            if (position === 'top') {{
-                                shouldPositionAbove = true;
-                            }} else if (position === 'bottom') {{
-                                shouldPositionAbove = false;
-                            }} else {{
-                                // Auto: position above if there's space above AND not enough space below
-                                shouldPositionAbove = spaceAbove >= dropdownRect.height && spaceBelow < dropdownRect.height;
-                            }}
-
-                            switch (align) {{
-                                case 'start':
-                                    if (shouldPositionAbove) {{
-                                        dropdown.style.top = `${{triggerRect.top - dropdownRect.height - 6}}px`;
-                                        dropdown.style.transformOrigin = 'left bottom';
-                                    }} else {{
-                                        dropdown.style.top = `${{triggerRect.bottom + 6}}px`;
-                                        dropdown.style.transformOrigin = 'left top';
-                                    }}
-                                    dropdown.style.left = `${{triggerRect.left}}px`;
-                                    break;
-
-                                case 'end':
-                                    if (shouldPositionAbove) {{
-                                        dropdown.style.top = `${{triggerRect.top - dropdownRect.height - 6}}px`;
-                                        dropdown.style.transformOrigin = 'right bottom';
-                                    }} else {{
-                                        dropdown.style.top = `${{triggerRect.bottom + 6}}px`;
-                                        dropdown.style.transformOrigin = 'right top';
-                                    }}
-                                    dropdown.style.left = `${{triggerRect.right - dropdownRect.width}}px`;
-                                    break;
-
-                                case 'start-outer':
-                                    if (shouldPositionAbove) {{
-                                        dropdown.style.top = `${{triggerRect.top - dropdownRect.height - 6}}px`;
-                                        dropdown.style.transformOrigin = 'right bottom';
-                                    }} else {{
-                                        dropdown.style.top = `${{triggerRect.top}}px`;
-                                        dropdown.style.transformOrigin = 'right top';
-                                    }}
-                                    dropdown.style.left = `${{triggerRect.left - dropdownRect.width - 16}}px`;
-                                    break;
-
-                                case 'end-outer':
-                                    if (shouldPositionAbove) {{
-                                        dropdown.style.top = `${{triggerRect.top - dropdownRect.height - 6}}px`;
-                                        dropdown.style.transformOrigin = 'left bottom';
-                                    }} else {{
-                                        dropdown.style.top = `${{triggerRect.top}}px`;
-                                        dropdown.style.transformOrigin = 'left top';
-                                    }}
-                                    dropdown.style.left = `${{triggerRect.right + 8}}px`;
-                                    break;
-
-                                case 'center':
-                                    if (shouldPositionAbove) {{
-                                        dropdown.style.top = `${{triggerRect.top - dropdownRect.height - 6}}px`;
-                                        dropdown.style.transformOrigin = 'center bottom';
-                                    }} else {{
-                                        dropdown.style.top = `${{triggerRect.bottom + 6}}px`;
-                                        dropdown.style.transformOrigin = 'center top';
-                                    }}
-                                    dropdown.style.left = `${{triggerRect.left}}px`;
-                                    dropdown.style.minWidth = `${{triggerRect.width}}px`;
-                                    break;
-                            }}
-                        }};
-
-                        const openDropdown = () => {{
-                            isOpen = true;
-
-                            // Set state to open first to remove scale transform for accurate measurements
-                            dropdown.setAttribute('data-state', 'open');
-
-                            // Make dropdown invisible but rendered to measure true height
-                            dropdown.style.visibility = 'hidden';
-                            dropdown.style.pointerEvents = 'auto';
-
-                            // Force reflow to ensure height is calculated
-                            dropdown.offsetHeight;
-
-                            // Calculate position with accurate height
-                            updatePosition();
-
-                            // Now make it visible
-                            dropdown.style.visibility = 'visible';
-
-                            // Lock all scrollable elements
-                            window.ScrollLock.lock();
-
-                            // Close on click outside
-                            setTimeout(() => {{
-                                document.addEventListener('click', handleClickOutside);
-                            }}, 0);
-                        }};
-
-                        const closeDropdown = () => {{
-                            isOpen = false;
-                            dropdown.setAttribute('data-state', 'closed');
-                            dropdown.style.pointerEvents = 'none';
-                            document.removeEventListener('click', handleClickOutside);
-
-                            // Unlock scroll after animation (200ms delay)
-                            window.ScrollLock.unlock(200);
-                        }};
-
-                        const handleClickOutside = (e) => {{
-                            if (!dropdown.contains(e.target) && !trigger.contains(e.target)) {{
-                                closeDropdown();
-                            }}
-                        }};
-
-                        // Toggle dropdown when trigger is clicked
-                        trigger.addEventListener('click', (e) => {{
-                            e.stopPropagation();
-
-                            // Check if any other dropdown is open
-                            const allDropdowns = document.querySelectorAll('[data-target=\"target__dropdown\"]');
-                            let otherDropdownOpen = false;
-                            allDropdowns.forEach(dd => {{
-                                if (dd !== dropdown && dd.getAttribute('data-state') === 'open') {{
-                                    otherDropdownOpen = true;
-                                    dd.setAttribute('data-state', 'closed');
-                                    dd.style.pointerEvents = 'none';
-                                    // Unlock scroll
-                                    if (window.ScrollLock) {{
-                                        window.ScrollLock.unlock(200);
-                                    }}
-                                }}
-                            }});
-
-                            // If another dropdown was open, just close it and don't open this one
-                            if (otherDropdownOpen) {{
-                                return;
-                            }}
-
-                            // Normal toggle behavior
-                            if (isOpen) {{
-                                closeDropdown();
-                            }} else {{
-                                openDropdown();
-                            }}
-                        }});
-
-                        // Close when action is clicked
-                        const actions = dropdown.querySelectorAll('[data-dropdown-close]');
-                        actions.forEach(action => {{
-                            action.addEventListener('click', () => {{
-                                closeDropdown();
-                            }});
-                        }});
-
-                        // Handle ESC key to close
-                        document.addEventListener('keydown', (e) => {{
-                            if (e.key === 'Escape' && isOpen) {{
-                                e.preventDefault();
-                                closeDropdown();
-                            }}
-                        }});
-                    }};
-
-                    if (document.readyState === 'loading') {{
-                        document.addEventListener('DOMContentLoaded', setupDropdown);
-                    }} else {{
-                        setupDropdown();
-                    }}
-                }})();
-                "#,
-                target_id_for_script,
-                target_id_for_script,
-            )}
-        </script>
-    }
-}
-
-#[component]
-pub fn DropdownMenuSub(children: Children) -> impl IntoView {
-    // TODO. Find a better way for dropdown__menu_sub_trigger.
-    clx! {DropdownMenuSubRoot, li, "dropdown__menu_sub_trigger", " relative inline-flex relative gap-2 items-center py-1.5 px-2 w-full text-sm no-underline rounded-sm transition-colors duration-200 cursor-pointer text-popover-foreground [&_svg:not([class*='size-'])]:size-4 hover:bg-accent hover:text-accent-foreground"}
-
-    view! { <DropdownMenuSubRoot>{children()}</DropdownMenuSubRoot> }
-}
-
-#[component]
-pub fn DropdownMenuSubTrigger(children: Children, #[prop(optional, into)] class: String) -> impl IntoView {
-    let class = tw_merge!("flex items-center justify-between w-full", class);
-
-    view! {
-        <span attr:data-name="DropdownMenuSubTrigger" class=class>
-            <span class="flex gap-2 items-center">{children()}</span>
-            <ChevronRight class="opacity-70 size-4" />
-        </span>
-    }
-}
-
-#[component]
-pub fn DropdownMenuSubItem(children: Children, #[prop(optional, into)] class: String) -> impl IntoView {
-    let class = tw_merge!(
-        "inline-flex gap-2 items-center w-full rounded-sm px-3 py-2 text-sm transition-all duration-150 ease text-popover-foreground hover:bg-accent hover:text-accent-foreground cursor-pointer hover:translate-x-[2px]",
-        class
-    );
-
-    view! {
-        <li data-name="DropdownMenuSubItem" class=class data-dropdown-close="true">
-            {children()}
-        </li>
+        <Show when=move || open.get() fallback=|| ()>
+            <Layer anchor=anchor on_close=close class="rui-menu-layer">
+                <ul
+                    node_ref=list
+                    class=move || panel_class.get_value()
+                    data-name="Menu"
+                    data-testid=move || panel_test_id.get_value()
+                    role="menu"
+                    aria-label=move || label.get_value()
+                    on:keydown=on_keydown
+                >
+                    <For each=move || items.get() key=|item| item.id.clone() let:item>
+                        {
+                            let MenuItem { id, label, disabled, reason } = item;
+                            let element_id = item_id(&id);
+                            let reason_id = format!("{element_id}-reason");
+                            let described = (!reason.is_empty()).then(|| reason_id.clone());
+                            let asked = id.clone();
+                            view! {
+                                <li role="none">
+                                    <button
+                                        type="button"
+                                        role="menuitem"
+                                        id=element_id
+                                        class=ITEM
+                                        data-name="MenuItem"
+                                        data-item=id.clone()
+                                        data-testid=format!("menu-item-{id}")
+                                        aria-disabled=disabled.then_some("true")
+                                        aria-describedby=described
+                                        on:click=move |_| {
+                                            if disabled {
+                                                return;
+                                            }
+                                            on_activate.with_value(|run| run(asked.clone()));
+                                            on_open_change.with_value(|close| close(false));
+                                        }
+                                    >
+                                        <span class="rui:flex-1">{label}</span>
+                                        <Show when={
+                                            let reason = reason.clone();
+                                            move || !reason.is_empty()
+                                        }>
+                                            <span
+                                                id=reason_id.clone()
+                                                class="rui:text-xs rui:text-muted-foreground"
+                                            >
+                                                {reason.clone()}
+                                            </span>
+                                        </Show>
+                                    </button>
+                                </li>
+                            }
+                        }
+                    </For>
+                </ul>
+            </Layer>
+        </Show>
     }
 }

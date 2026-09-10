@@ -7,7 +7,60 @@
 //! ever comes from the application, and a name, role, value and state for
 //! everything a person can reach.
 
+pub mod button;
+pub mod checkbox;
+mod dom;
+pub mod icon;
+pub mod id;
+pub mod input;
+pub mod label;
+pub mod link;
 pub mod macros;
+pub mod progress;
+pub mod radio;
+pub mod roving;
+pub mod scroll_area;
+pub mod slider;
+pub mod spinner;
+pub mod switch;
+pub mod tabs;
+pub mod textarea;
+
+// The four that float. They stand on the SDK's overlay stack - positioning,
+// the Escape order and the return of focus are its, not theirs - and the stack
+// only exists in a browser.
+#[cfg(target_arch = "wasm32")]
+pub mod dialog;
+#[cfg(target_arch = "wasm32")]
+pub mod menu;
+#[cfg(target_arch = "wasm32")]
+pub mod select;
+#[cfg(target_arch = "wasm32")]
+pub mod tooltip;
+
+pub use button::{Button, ButtonSize, ButtonVariant};
+pub use checkbox::Checkbox;
+pub use icon::{Glyph, Icon};
+pub use input::{TextField, TextKind};
+pub use label::Label;
+pub use link::{Link, LinkMatch};
+pub use progress::Progress;
+pub use radio::{RadioGroup, RadioOption};
+pub use scroll_area::{Boundary, ScrollArea};
+pub use slider::Slider;
+pub use spinner::Spinner;
+pub use switch::Switch;
+pub use tabs::{Orientation, Tab, TabPanel, Tabs};
+pub use textarea::TextArea;
+
+#[cfg(target_arch = "wasm32")]
+pub use dialog::Dialog;
+#[cfg(target_arch = "wasm32")]
+pub use menu::{Menu, MenuItem};
+#[cfg(target_arch = "wasm32")]
+pub use select::{Select, SelectOption};
+#[cfg(target_arch = "wasm32")]
+pub use tooltip::Tooltip;
 
 /// Re-exported for the macros: a caller writes `clx!` or `variants!` without
 /// having to take a dependency on the crates their expansion happens to use.

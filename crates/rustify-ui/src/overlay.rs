@@ -502,6 +502,15 @@ mod dom {
         modal: bool,
         #[prop(into)] anchor: Signal<Anchor>,
         on_close: impl Fn() + Send + Sync + 'static,
+        /// The id of the element that names this layer, for the layers that
+        /// carry a role a reader announces. A modal dialog needs one; a
+        /// presentation wrapper around a menu does not, because the menu
+        /// inside it carries its own.
+        #[prop(optional, into)]
+        labelled_by: String,
+        /// The id of the text that describes it, when there is one.
+        #[prop(optional, into)]
+        described_by: String,
         #[prop(optional, into)] class: String,
         #[prop(optional, into)] test_id: String,
         children: ChildrenFn,
@@ -509,6 +518,8 @@ mod dom {
         use_overlay().map(|stack| {
             let root = stack.overlay_root();
             let class = format!("rustify-layer {class}");
+            let labelled_by = (!labelled_by.is_empty()).then(|| labelled_by.clone());
+            let described_by = (!described_by.is_empty()).then(|| described_by.clone());
             let moved = stack.moved();
             let node = NodeRef::<Div>::new();
             let on_close = Arc::new(on_close);
@@ -596,6 +607,8 @@ mod dom {
                         data-testid=test_id.clone()
                         role=if modal { "dialog" } else { "presentation" }
                         aria-modal=modal.then_some("true")
+                        aria-labelledby=labelled_by.clone()
+                        aria-describedby=described_by.clone()
                         style:left=move || format!("{}px", left.get())
                         style:top=move || format!("{}px", top.get())
                     >

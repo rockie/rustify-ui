@@ -1,255 +1,111 @@
-use icons::X;
-use leptos::context::Provider;
+//! A window over the page that has to be dealt with before anything else.
+//!
+//! Rust/UI's dialog had no `open` property - the application could not say
+//! whether it was showing - and the opening, the backdrop click and the
+//! Escape key were an inline `<script>` querying the document by a generated
+//! id. There was no `role="dialog"`, no `aria-modal`, and no focus trap. Here
+//! the application owns `open`, and the trap, the Escape order and the return
+//! of focus belong to the SDK's overlay stack.
+
 use leptos::prelude::*;
-use leptos_ui::clx;
-use tw_merge::*;
+use rustify_ui::{Anchor, Layer};
 
-use crate::hooks::use_random::use_random_id_for;
-use crate::ui::button::{Button, ButtonSize, ButtonVariant};
-
-mod components {
-    use super::*;
-    clx! {DialogBody, div, "flex flex-col gap-4"}
-    clx! {DialogHeader, div, "flex flex-col gap-2 text-center sm:text-left"}
-    clx! {DialogTitle, h3, "text-lg leading-none font-semibold"}
-    clx! {DialogDescription, p, "text-muted-foreground text-sm"}
-    clx! {DialogFooter, footer, "flex flex-col-reverse gap-2 sm:flex-row sm:justify-end"}
-}
-
-pub use components::*;
-
-/* ========================================================== */
-/*                     ✨ FUNCTIONS ✨                        */
-/* ========================================================== */
-
-#[derive(Clone)]
-struct DialogContext {
-    target_id: String,
-}
-
-/// Returns the dialog trigger ID when called inside a `<Dialog>` subtree.
-/// Use this to wire custom elements (e.g. AttachmentTrigger) as dialog triggers.
-pub fn use_dialog_trigger_id() -> Option<String> {
-    use_context::<DialogContext>().map(|c| c.target_id.clone())
-}
+const PANEL: &str = "rui:relative rui:w-full rui:max-w-lg rui:rounded-lg rui:border rui:border-border rui:bg-popover rui:p-6 rui:shadow-lg rui:flex rui:flex-col rui:gap-4";
+const BACKDROP: &str = "rui:fixed rui:inset-0 rui:bg-foreground/30";
+const CLOSE: &str = "rui:absolute rui:top-4 rui:right-4 rui:rounded-sm rui:p-1 rui:text-muted-foreground rui:transition-colors rui:cursor-pointer rui:outline-none rui:hover:bg-muted rui:focus-visible:ring-ring/50 rui:focus-visible:ring-[3px]";
 
 #[component]
-pub fn Dialog(children: Children, #[prop(optional, into)] class: String) -> impl IntoView {
-    let dialog_target_id = use_random_id_for("dialog");
-
-    let ctx = DialogContext { target_id: dialog_target_id };
-
-    let merged_class = tw_merge!("w-fit", class);
-
-    view! {
-        <Provider value=ctx>
-            <div class=merged_class data-name="__Dialog">
-                {children()}
-            </div>
-        </Provider>
-    }
-}
-
-#[component]
-pub fn DialogTrigger(
-    children: Children,
+pub fn Dialog(
+    #[prop(into)] open: Signal<bool>,
+    on_open_change: impl Fn(bool) + Send + Sync + 'static,
+    #[prop(into)] title: Signal<String>,
+    /// One line under the title. Announced with the dialog when there is one.
+    #[prop(optional, into)]
+    description: Signal<String>,
+    /// A modal dialog makes the rest of its scope inert. A modeless one does
+    /// not, and is for a panel the user is meant to keep working beside.
+    #[prop(default = true)]
+    modal: bool,
+    /// Whether a click on the backdrop is a request to close. It is by
+    /// convention; a dialog that would lose work should say otherwise.
+    #[prop(default = true)]
+    close_on_backdrop: bool,
+    /// The label on the close button, in the application's language.
+    #[prop(optional, into)]
+    close_label: String,
     #[prop(optional, into)] class: String,
-    #[prop(default = ButtonVariant::Outline)] variant: ButtonVariant,
-    #[prop(default = ButtonSize::Default)] size: ButtonSize,
+    #[prop(optional, into)] test_id: String,
+    children: ChildrenFn,
 ) -> impl IntoView {
-    let ctx = expect_context::<DialogContext>();
-    let trigger_id = format!("trigger_{}", ctx.target_id);
-
+    let group = crate::id::next("dialog");
+    let title_id = StoredValue::new(format!("{group}-title"));
+    let description_id = StoredValue::new(format!("{group}-description"));
+    let panel_class = StoredValue::new(crate::macros::merge(PANEL, &class));
+    let panel_test_id = StoredValue::new(test_id);
+    let close_label = StoredValue::new(if close_label.is_empty() {
+        "close".to_string()
+    } else {
+        close_label
+    });
+    let on_open_change = StoredValue::new(on_open_change);
+    let close = move || on_open_change.with_value(|close| close(false));
+    let described = Memo::new(move |_| !description.get().is_empty());
+    let children = StoredValue::new(children);
     view! {
-        <Button
-            class=class
-            attr:id=trigger_id
-            attr:tabindex="0"
-            attr:data-dialog-trigger=ctx.target_id
-            variant=variant
-            size=size
-        >
-            {children()}
-        </Button>
-    }
-}
-
-#[component]
-pub fn DialogContent(
-    children: Children,
-    #[prop(optional, into)] class: String,
-    #[prop(default = true)] show_close_button: bool,
-    #[prop(default = true)] close_on_backdrop_click: bool,
-    #[prop(default = "Dialog")] data_name_prefix: &'static str,
-) -> impl IntoView {
-    let ctx = expect_context::<DialogContext>();
-    let merged_class = tw_merge!(
-        // "flex flex-col gap-4", // TODO 🐛 Bug when I try to have this.. Using DialogBody instead.
-        "relative bg-background border rounded-2xl shadow-lg p-6 w-full max-w-[calc(100%-2rem)] max-h-[85vh] fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] z-100 transition-all duration-200 data-[state=closed]:opacity-0 data-[state=closed]:scale-95 data-[state=open]:opacity-100 data-[state=open]:scale-100",
-        class
-    );
-
-    let backdrop_data_name = format!("{}Backdrop", data_name_prefix);
-    let content_data_name = format!("{}Content", data_name_prefix);
-
-    let target_id_clone = ctx.target_id.clone();
-    let backdrop_id = format!("{}_backdrop", ctx.target_id);
-    let target_id_for_script = ctx.target_id.clone();
-    let backdrop_id_for_script = backdrop_id.clone();
-    let backdrop_behavior = if close_on_backdrop_click { "auto" } else { "manual" };
-
-    view! {
-        <div
-            data-name=backdrop_data_name
-            id=backdrop_id
-            class="fixed inset-0 transition-opacity duration-200 pointer-events-none z-60 bg-black/50 data-[state=closed]:opacity-0 data-[state=open]:opacity-100"
-            data-state="closed"
-        />
-
-        <div
-            data-name=content_data_name
-            class=merged_class
-            id=ctx.target_id
-            data-target="target__dialog"
-            data-state="closed"
-            data-backdrop=backdrop_behavior
-            style="pointer-events: none;"
-        >
-            <button
-                type="button"
-                class=format!(
-                    "absolute top-4 right-4 p-1 rounded-sm focus:ring-2 focus:ring-offset-2 focus:outline-none [&_svg:not([class*='size-'])]:size-4 focus:ring-ring{}",
-                    if show_close_button { "" } else { " hidden" },
-                )
-                data-dialog-close=target_id_clone
-                aria-label="Close dialog"
+        <Show when=move || open.get() fallback=|| ()>
+            <Layer
+                modal=modal
+                anchor=Signal::derive(|| Anchor::Centred)
+                on_close=close
+                labelled_by=title_id.get_value()
+                described_by=if described.get_untracked() {
+                    description_id.get_value()
+                } else {
+                    String::new()
+                }
+                class="rui-dialog-layer"
+                test_id=panel_test_id.get_value()
             >
-                <span class="hidden">"Close Dialog"</span>
-                <X />
-            </button>
-
-            {children()}
-        </div>
-
-        <script>
-            {format!(
-                r#"
-                (function() {{
-                    const setupDialog = () => {{
-                        const dialog = document.querySelector('#{}');
-                        const backdrop = document.querySelector('#{}');
-                        const trigger = document.querySelector('[data-dialog-trigger="{}"]');
-
-                        if (!dialog || !backdrop || !trigger) {{
-                            setTimeout(setupDialog, 50);
-                            return;
-                        }}
-
-                        if (dialog.hasAttribute('data-initialized')) {{
-                            return;
-                        }}
-                        dialog.setAttribute('data-initialized', 'true');
-
-                        const openDialog = () => {{
-                            // Lock scrolling
-                            window.ScrollLock.lock();
-
-                            dialog.setAttribute('data-state', 'open');
-                            backdrop.setAttribute('data-state', 'open');
-                            dialog.style.pointerEvents = 'auto';
-                            backdrop.style.pointerEvents = 'auto';
-                        }};
-
-                        const closeDialog = () => {{
-                            dialog.setAttribute('data-state', 'closed');
-                            backdrop.setAttribute('data-state', 'closed');
-                            dialog.style.pointerEvents = 'none';
-                            backdrop.style.pointerEvents = 'none';
-
-                            // Unlock scrolling after animation
-                            window.ScrollLock.unlock(200);
-                        }};
-
-                        // Open dialog when trigger is clicked
-                        trigger.addEventListener('click', openDialog);
-
-                        // Close buttons
-                        const closeButtons = dialog.querySelectorAll('[data-dialog-close]');
-                        closeButtons.forEach(btn => {{
-                            btn.addEventListener('click', closeDialog);
-                        }});
-
-                        // Close on backdrop click (if data-backdrop="auto")
-                        backdrop.addEventListener('click', () => {{
-                            if (dialog.getAttribute('data-backdrop') === 'auto') {{
-                                closeDialog();
-                            }}
-                        }});
-
-                        // Handle ESC key to close
-                        document.addEventListener('keydown', (e) => {{
-                            if (e.key === 'Escape' && dialog.getAttribute('data-state') === 'open') {{
-                                e.preventDefault();
-                                closeDialog();
-                            }}
-                        }});
-                    }};
-
-                    if (document.readyState === 'loading') {{
-                        document.addEventListener('DOMContentLoaded', setupDialog);
-                    }} else {{
-                        setupDialog();
-                    }}
-                }})();
-                "#,
-                target_id_for_script,
-                backdrop_id_for_script,
-                target_id_for_script,
-            )}
-        </script>
-    }
-}
-
-#[component]
-pub fn DialogClose(
-    children: Children,
-    #[prop(optional, into)] class: String,
-    #[prop(default = ButtonVariant::Outline)] variant: ButtonVariant,
-    #[prop(default = ButtonSize::Default)] size: ButtonSize,
-) -> impl IntoView {
-    let ctx = expect_context::<DialogContext>();
-
-    view! {
-        <Button
-            class=class
-            attr:data-dialog-close=ctx.target_id
-            attr:aria-label="Close dialog"
-            variant=variant
-            size=size
-        >
-            {children()}
-        </Button>
-    }
-}
-
-#[component]
-pub fn DialogAction(
-    children: Children,
-    #[prop(optional, into)] class: String,
-    #[prop(default = ButtonVariant::Default)] variant: ButtonVariant,
-    #[prop(default = ButtonSize::Default)] size: ButtonSize,
-) -> impl IntoView {
-    let ctx = expect_context::<DialogContext>();
-
-    view! {
-        <Button
-            class=class
-            attr:data-dialog-close=ctx.target_id
-            attr:aria-label="Close dialog"
-            variant=variant
-            size=size
-        >
-            {children()}
-        </Button>
+                <Show when=move || modal && close_on_backdrop fallback=move || {
+                    view! { <div class=BACKDROP aria-hidden="true" /> }
+                }>
+                    <div
+                        class=BACKDROP
+                        data-name="DialogBackdrop"
+                        aria-hidden="true"
+                        on:click=move |_| close()
+                    />
+                </Show>
+                <div class=move || panel_class.get_value() data-name="Dialog">
+                    <header class="rui:flex rui:flex-col rui:gap-2 rui:pr-8">
+                        <h2
+                            id=move || title_id.get_value()
+                            class="rui:text-lg rui:leading-none rui:font-semibold rui:text-foreground"
+                        >
+                            {move || title.get()}
+                        </h2>
+                        <Show when=move || described.get() fallback=|| ()>
+                            <p
+                                id=move || description_id.get_value()
+                                class="rui:text-sm rui:text-muted-foreground"
+                            >
+                                {move || description.get()}
+                            </p>
+                        </Show>
+                    </header>
+                    {move || children.with_value(|children| children())}
+                    <button
+                        type="button"
+                        class=CLOSE
+                        data-name="DialogClose"
+                        data-testid="dialog-close"
+                        aria-label=move || close_label.get_value()
+                        on:click=move |_| close()
+                    >
+                        <crate::icon::Icon glyph=crate::icon::Glyph::Close />
+                    </button>
+                </div>
+            </Layer>
+        </Show>
     }
 }

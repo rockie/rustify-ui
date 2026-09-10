@@ -1,0 +1,45 @@
+/* The rules a utility cannot express, all of them under `[data-rustify-scope]`
+   and named by `data-name`, so nothing here can reach the host page. */
+
+/* One duration for everything in a scope. `reduce_motion` sets the token to
+   0ms, and every transition in the scope stops with it - which is what V3's
+   "no unnecessary movement" is asking about, in one place rather than in
+   eighteen class strings. */
+[data-rustify-scope] [data-name] {
+  transition-duration: var(--motion-duration);
+}
+
+/* The spinner turns at eight times the scope's own duration: fast enough to
+   read as motion, and stationary when the scope says no motion. */
+[data-rustify-scope] [data-name="Spinner"] > svg {
+  animation: rui-spin calc(var(--motion-duration) * 8) linear infinite;
+}
+
+@keyframes rui-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* A scroll area keeps its scrollbar out of the layout where the platform lets
+   it, and paints it in the scope's own colours rather than the browser's. */
+[data-rustify-scope] [data-name="ScrollArea"] {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+[data-rustify-scope] [data-name="ScrollArea"]::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+[data-rustify-scope] [data-name="ScrollArea"]::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+[data-rustify-scope] [data-name="ScrollArea"]::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 999px;
+  border: 3px solid transparent;
+  background-clip: content-box;
+}

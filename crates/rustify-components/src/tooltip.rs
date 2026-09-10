@@ -1,66 +1,110 @@
+//! A short explanation that appears beside the thing it explains.
+//!
+//! Rust/UI's tooltip was `group-hover` and a positioned `<div>`: no role, no
+//! keyboard, and nothing tying it to the control, so a screen reader never
+//! heard it and a keyboard user never saw it. This one is a layer on the SDK's
+//! own stack, it appears on focus as well as on hover, and the control it
+//! belongs to points at it.
+
 use leptos::prelude::*;
-use leptos_ui::clx;
-use tw_merge::tw_merge;
+use leptos::web_sys::Element;
+use rustify_ui::{Anchor, Layer};
 
-clx! {Tooltip, div, "inline-block relative mx-0 whitespace-nowrap transition-all duration-300 ease-in-out group/tooltip my-[5px]"}
+const CONTENT: &str = "rui:rounded-md rui:bg-foreground rui:text-background rui:px-2.5 rui:py-1.5 rui:text-xs rui:whitespace-nowrap rui:shadow-lg";
 
-#[derive(Clone, Copy, Default, strum::Display, strum::AsRefStr)]
-pub enum TooltipPosition {
-    #[default]
-    Top,
-    Left,
-    Right,
-    Bottom,
-}
-
+/// Wraps a control and describes it.
+///
+/// The control keeps its own markup - this component does not replace it - so
+/// the description is attached to the element the caller rendered rather than
+/// to a wrapper the reader would announce instead. That is the one thing here
+/// done to somebody else's element, and it is the whole point of a tooltip.
 #[component]
-pub fn TooltipContent(
-    #[prop(into, optional)] class: String,
-    #[prop(default = TooltipPosition::default())] position: TooltipPosition,
+pub fn Tooltip(
+    #[prop(into)] open: Signal<bool>,
+    on_open_change: impl Fn(bool) + Send + Sync + 'static,
+    #[prop(into)] label: Signal<String>,
+    #[prop(optional, into)] class: String,
+    #[prop(optional, into)] test_id: String,
     children: Children,
 ) -> impl IntoView {
-    const SHARED_TRANSITION_CLASSES: &str = "absolute opacity-0 transition-all duration-300 ease-in-out pointer-events-none group-hover/tooltip:opacity-100 group-hover/tooltip:pointer-events-auto z-[1000000]";
+    let id = crate::id::next("tooltip");
+    let described_by = id.clone();
+    let trigger = NodeRef::<leptos::html::Span>::new();
+    let on_open_change = std::sync::Arc::new(on_open_change);
 
-    // Position-specific classes for tooltip content
-    let position_class = match position {
-        TooltipPosition::Top => "left-1/2 bottom-full mb-1 -ml-2.5",
-        TooltipPosition::Right => "bottom-1/2 left-full ml-2.5 -mb-3.5",
-        TooltipPosition::Bottom => "left-1/2 top-full mt-1 -ml-2.5",
-        TooltipPosition::Left => "bottom-1/2 right-full mr-2.5 -mb-3.5",
+    // The described element is the caller's control, not our wrapper: a
+    // wrapper carrying `aria-describedby` describes the wrapper, which no
+    // reader announces. `Some` while the tooltip is showing and gone
+    // afterwards, so a control does not point at a description that is not
+    // on the page.
+    Effect::new({
+        let id = described_by;
+        move || {
+            let showing = open.get();
+            let Some(wrapper) = trigger.get() else {
+                return;
+            };
+            let described: Element = wrapper
+                .first_element_child()
+                .unwrap_or_else(|| (*wrapper).clone().into());
+            if showing {
+                let _ = described.set_attribute("aria-describedby", &id);
+            } else {
+                let _ = described.remove_attribute("aria-describedby");
+            }
+        }
+    });
+
+    let anchor = Signal::derive(move || match trigger.get() {
+        Some(element) => Anchor::element(&element.into()),
+        None => Anchor::Centred,
+    });
+    let close = {
+        let on_open_change = on_open_change.clone();
+        move || on_open_change(false)
     };
-
-    // Position-specific classes for arrow
-    let arrow_position_class = match position {
-        TooltipPosition::Top => "left-1/2 bottom-full -mb-2 border-t-foreground/90",
-        TooltipPosition::Right => "bottom-1/2 left-full -mr-0.5 -mb-1 border-r-foreground/90",
-        TooltipPosition::Bottom => "left-1/2 top-full -mt-2 border-b-foreground/90",
-        TooltipPosition::Left => "bottom-1/2 right-full -mb-1 -ml-0.5 border-l-foreground/90",
-    };
-
-    let tooltip_class = tw_merge!(
-        SHARED_TRANSITION_CLASSES,
-        "py-2 px-2.5 text-xs whitespace-nowrap shadow-lg text-background bg-foreground/90",
-        class,
-        position_class,
-    );
-
-    let arrow_class = tw_merge!(
-        "absolute opacity-0 transition-all duration-300 ease-in-out pointer-events-none group-hover/tooltip:opacity-100 group-hover/tooltip:pointer-events-auto z-[1000000]",
-        "bg-transparent border-transparent border-6",
-        arrow_position_class,
-    );
-
+    // Stored rather than cloned: `Show` and `Layer` each take a children
+    // function, and a `String` moved through two of them makes the outer one
+    // callable once.
+    let content_class = StoredValue::new(crate::macros::merge(CONTENT, &class));
+    let content_id = StoredValue::new(id);
+    let content_test_id = StoredValue::new(test_id);
     view! {
-        <>
-            <div data-name="TooltipArrow" data-position=position.to_string() class=arrow_class />
-            <div data-name="TooltipContent" data-position=position.to_string() class=tooltip_class>
-                {children()}
-            </div>
-        </>
+        <span
+            node_ref=trigger
+            class="rui:inline-flex"
+            data-name="Tooltip"
+            on:pointerenter={
+                let on_open_change = on_open_change.clone();
+                move |_| on_open_change(true)
+            }
+            on:pointerleave={
+                let on_open_change = on_open_change.clone();
+                move |_| on_open_change(false)
+            }
+            on:focusin={
+                let on_open_change = on_open_change.clone();
+                move |_| on_open_change(true)
+            }
+            on:focusout={
+                let on_open_change = on_open_change.clone();
+                move |_| on_open_change(false)
+            }
+        >
+            {children()}
+        </span>
+        <Show when=move || open.get() fallback=|| ()>
+            <Layer anchor=anchor on_close=close.clone() class="rui-tooltip-layer">
+                <div
+                    id=move || content_id.get_value()
+                    class=move || content_class.get_value()
+                    data-name="TooltipContent"
+                    data-testid=move || content_test_id.get_value()
+                    role="tooltip"
+                >
+                    {move || label.get()}
+                </div>
+            </Layer>
+        </Show>
     }
 }
-
-/// TooltipProvider is no longer needed - tooltips work with pure CSS via Tailwind's group-hover.
-/// Kept for backwards compatibility but renders nothing.
-#[component]
-pub fn TooltipProvider() -> impl IntoView {}

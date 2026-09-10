@@ -1,59 +1,132 @@
+//! One of several, and the application holding which.
+//!
+//! Rust/UI's version put the chosen value in a context signal the item wrote
+//! to directly, which makes the group its own owner. Here the group takes the
+//! value and reports the request, like every other control in this crate, and
+//! the items are the browser's own radios: one tab stop for the group and the
+//! arrow keys moving within it are the platform's, not a re-implementation.
+
+use crate::icon::{Glyph, Icon};
 use leptos::prelude::*;
-use tw_merge::tw_merge;
 
-#[component]
-pub fn RadioGroup(#[prop(into, optional)] class: String, value: RwSignal<String>, children: Children) -> impl IntoView {
-    provide_context(value);
+const DOT: &str = "rui:pointer-events-none rui:absolute rui:inset-0 rui:flex rui:items-center rui:justify-center rui:rounded-full rui:border rui:border-border rui:bg-input rui:text-primary rui:transition-colors rui:peer-checked:border-primary rui:peer-focus-visible:ring-ring/50 rui:peer-focus-visible:ring-[3px] rui:peer-disabled:opacity-50";
+const INPUT: &str = "rui:peer rui:absolute rui:inset-0 rui:size-full rui:m-0 rui:opacity-0 rui:cursor-pointer rui:disabled:cursor-not-allowed";
 
-    let class = tw_merge!("flex flex-col gap-3", class);
+/// One choice in a group.
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct RadioOption {
+    pub value: String,
+    pub label: String,
+    pub disabled: bool,
+}
 
-    view! {
-        <div data-name="RadioGroup" class=class role="radiogroup">
-            {children()}
-        </div>
+impl RadioOption {
+    pub fn new(value: impl Into<String>, label: impl Into<String>) -> Self {
+        Self {
+            value: value.into(),
+            label: label.into(),
+            disabled: false,
+        }
+    }
+
+    pub fn disabled(mut self) -> Self {
+        self.disabled = true;
+        self
     }
 }
 
+/// A group of choices, exactly one of which the application holds.
 #[component]
-pub fn RadioGroupItem(
-    #[prop(into, optional)] class: String,
-    #[prop(into)] value: String,
-    #[prop(into, optional)] id: String,
-    #[prop(into, optional)] disabled: Signal<bool>,
+pub fn RadioGroup(
+    #[prop(into)] value: Signal<String>,
+    #[prop(into)] options: Signal<Vec<RadioOption>>,
+    on_change: impl Fn(String) + Send + Sync + 'static,
+    /// The name that groups the radios for the browser. Two groups on one page
+    /// must not share it, so it is generated unless the caller says.
+    #[prop(optional, into)]
+    name: String,
+    #[prop(optional, into)] aria_label: String,
+    #[prop(optional, into)] disabled: Signal<bool>,
+    #[prop(optional, into)] read_only: Signal<bool>,
+    #[prop(optional, into)] class: String,
+    #[prop(optional, into)] test_id: String,
 ) -> impl IntoView {
-    let selected = expect_context::<RwSignal<String>>();
-    let value_for_check = value.clone();
-    let value_for_click = value;
-
-    let is_checked = Memo::new(move |_| selected.get() == value_for_check);
-
-    let radio_class = tw_merge!(
-        "aspect-square size-4 shrink-0 rounded-full border border-input shadow-xs transition-colors",
-        "focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
-        "disabled:cursor-not-allowed disabled:opacity-50",
-        "data-[state=checked]:border-primary",
-        class
-    );
-
+    let name = if name.is_empty() {
+        crate::id::next("radio")
+    } else {
+        name
+    };
+    let aria_label = (!aria_label.is_empty()).then_some(aria_label);
+    let on_change = std::sync::Arc::new(on_change);
+    let group_test_id = test_id.clone();
     view! {
-        <button
-            data-name="RadioGroupItem"
-            type="button"
-            role="radio"
-            id=id
-            class=radio_class
-            aria-checked=move || is_checked.get().to_string()
-            data-state=move || if is_checked.get() { "checked" } else { "unchecked" }
-            disabled=move || disabled.get()
-            on:click=move |_| {
-                if !disabled.get() {
-                    selected.set(value_for_click.clone());
-                }
-            }
+        <div
+            class=crate::macros::merge("rui:flex rui:flex-col rui:gap-3", &class)
+            data-name="RadioGroup"
+            data-testid=group_test_id
+            role="radiogroup"
+            aria-label=aria_label
+            aria-readonly=move || read_only.get().then_some("true")
         >
-            <span class="flex justify-center items-center">
-                {move || is_checked.get().then(|| view! { <span class="rounded-full size-2.5 bg-primary"></span> })}
-            </span>
-        </button>
+            <For each=move || options.get() key=|option| option.value.clone() let:option>
+                {
+                    let RadioOption { value: option_value, label, disabled: option_disabled } = option;
+                    let name = name.clone();
+                    let id = crate::id::next("radio-item");
+                    let mine = option_value.clone();
+                    let checked = Memo::new(move |_| value.get() == mine);
+                    let node = NodeRef::<leptos::html::Input>::new();
+                    // A read-only radio has taken the click by the time we see
+                    // it: the browser moved the dot, so put it back where the
+                    // application has it.
+                    let settle = move || {
+                        if let Some(input) = node.get_untracked() {
+                            let held = checked.get_untracked();
+                            if input.checked() != held {
+                                input.set_checked(held);
+                            }
+                        }
+                    };
+                    let on_change = on_change.clone();
+                    let asked = option_value.clone();
+                    let test_id = format!("{test_id}-{option_value}");
+                    view! {
+                        <label class="rui:flex rui:items-center rui:gap-2 rui:text-sm rui:text-foreground">
+                            <span
+                                class="rui:relative rui:inline-block rui:size-4 rui:shrink-0"
+                                data-name="RadioItem"
+                                data-value=option_value
+                                data-state=move || if checked.get() { "checked" } else { "unchecked" }
+                            >
+                                <input
+                                    node_ref=node
+                                    type="radio"
+                                    id=id
+                                    name=name
+                                    class=INPUT
+                                    data-testid=test_id
+                                    prop:checked=move || checked.get()
+                                    prop:disabled=move || disabled.get() || option_disabled
+                                    on:change=move |_| {
+                                        if !disabled.get_untracked() && !read_only.get_untracked()
+                                            && !option_disabled
+                                        {
+                                            on_change(asked.clone());
+                                        }
+                                        settle();
+                                    }
+                                />
+                                <span class=DOT aria-hidden="true">
+                                    <Show when=move || checked.get()>
+                                        <Icon glyph=Glyph::Dot class="rui:size-3.5" />
+                                    </Show>
+                                </span>
+                            </span>
+                            {label}
+                        </label>
+                    }
+                }
+            </For>
+        </div>
     }
 }

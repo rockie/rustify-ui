@@ -1,161 +1,253 @@
+//! Several views in one place, one of them showing.
+//!
+//! Rust/UI's tabs held the selection in a context signal a trigger wrote to,
+//! and carried no `tablist`, `tab` or `tabpanel` role and no keyboard beyond
+//! the click. This version is controlled, and is the pattern a screen reader
+//! expects: one tab stop for the whole strip, the arrows moving inside it.
+
+use leptos::ev::KeyboardEvent;
 use leptos::prelude::*;
-use tw_merge::tw_merge;
+use std::sync::Arc;
 
-/* ========================================================== */
-/*                       Context                              */
-/* ========================================================== */
+const LIST: &str = "rui:inline-flex rui:w-fit rui:items-center rui:justify-center rui:rounded-lg rui:bg-muted rui:p-[3px] rui:text-muted-foreground";
+const TRIGGER: &str = "rui:inline-flex rui:items-center rui:justify-center rui:gap-1.5 rui:rounded-md rui:border rui:border-transparent rui:px-2.5 rui:py-1 rui:text-sm rui:font-medium rui:whitespace-nowrap rui:transition-all rui:cursor-pointer rui:select-none rui:outline-none rui:focus-visible:ring-ring/50 rui:focus-visible:ring-[3px] rui:aria-selected:bg-background rui:aria-selected:text-foreground rui:disabled:pointer-events-none rui:disabled:opacity-50";
 
-#[derive(Clone)]
-struct TabsCtx {
-    selected: RwSignal<String>,
+/// One tab, and whether it can be reached.
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct Tab {
+    pub value: String,
+    pub label: String,
+    pub disabled: bool,
 }
 
-#[derive(Clone, Copy)]
-struct TabsListCtx {
-    variant: TabsVariant,
+impl Tab {
+    pub fn new(value: impl Into<String>, label: impl Into<String>) -> Self {
+        Self {
+            value: value.into(),
+            label: label.into(),
+            disabled: false,
+        }
+    }
+
+    pub fn disabled(mut self) -> Self {
+        self.disabled = true;
+        self
+    }
 }
 
-/* ========================================================== */
-/*                       Enums                                */
-/* ========================================================== */
-
-#[derive(Clone, Copy, PartialEq, Eq, Default)]
-pub enum TabsVariant {
-    #[default]
-    Default,
-    Line,
-}
-
-#[derive(Clone, Copy, PartialEq, Eq, Default)]
-pub enum TabsOrientation {
+/// Which way the strip runs, and therefore which arrows move along it.
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+pub enum Orientation {
     #[default]
     Horizontal,
     Vertical,
 }
 
-/* ========================================================== */
-/*                     ✨ FUNCTIONS ✨                        */
-/* ========================================================== */
+impl Orientation {
+    fn attribute(self) -> &'static str {
+        match self {
+            Self::Horizontal => "horizontal",
+            Self::Vertical => "vertical",
+        }
+    }
 
+    /// The key that moves one step along, and the one that moves one back.
+    fn steps(self, key: &str) -> Option<i32> {
+        match (self, key) {
+            (Self::Horizontal, "ArrowRight") | (Self::Vertical, "ArrowDown") => Some(1),
+            (Self::Horizontal, "ArrowLeft") | (Self::Vertical, "ArrowUp") => Some(-1),
+            _ => None,
+        }
+    }
+}
+
+#[derive(Clone)]
+struct TabsContext {
+    group: String,
+    active: Signal<String>,
+}
+
+fn tab_id(group: &str, value: &str) -> String {
+    format!("{group}-tab-{value}")
+}
+
+fn panel_id(group: &str, value: &str) -> String {
+    format!("{group}-panel-{value}")
+}
+
+/// The next tab a person can actually reach, `step` places along from the one
+/// showing.
+fn neighbour(tabs: &[Tab], active: &str, step: i32) -> Option<String> {
+    let here = tabs.iter().position(|tab| tab.value == active);
+    crate::roving::step(tabs.len(), |index| !tabs[index].disabled, here, step)
+        .map(|index| tabs[index].value.clone())
+}
+
+/// The first tab an arrow can reach, or the last.
+fn end(tabs: &[Tab], last: bool) -> Option<String> {
+    crate::roving::edge(tabs.len(), |index| !tabs[index].disabled, last)
+        .map(|index| tabs[index].value.clone())
+}
+
+/// The strip and the panels below it. `children` are the [`TabPanel`]s.
 #[component]
 pub fn Tabs(
-    #[prop(into, optional)] class: String,
-    #[prop(into, optional)] default_value: String,
-    #[prop(default = TabsOrientation::Horizontal)] orientation: TabsOrientation,
+    #[prop(into)] active: Signal<String>,
+    #[prop(into)] tabs: Signal<Vec<Tab>>,
+    on_activate: impl Fn(String) + Send + Sync + 'static,
+    #[prop(optional)] orientation: Orientation,
+    #[prop(optional, into)] aria_label: String,
+    #[prop(optional, into)] class: String,
+    #[prop(optional, into)] test_id: String,
     children: Children,
 ) -> impl IntoView {
-    let selected = RwSignal::new(default_value);
-    provide_context(TabsCtx { selected });
-
-    let is_horizontal = orientation == TabsOrientation::Horizontal;
-    let class = tw_merge!("group/tabs flex gap-2", if is_horizontal { "flex-col" } else { "flex-row" }, class);
-
-    view! {
-        <div class=class data-name="Tabs" data-orientation=if is_horizontal { "Horizontal" } else { "Vertical" }>
-            {children()}
-        </div>
-    }
-}
-
-#[component]
-pub fn TabsList(
-    #[prop(into, optional)] class: String,
-    #[prop(default = TabsVariant::Default)] variant: TabsVariant,
-    children: Children,
-) -> impl IntoView {
-    provide_context(TabsListCtx { variant });
-
-    let is_line = variant == TabsVariant::Line;
-    let class = tw_merge!(
-        "group/tabs-list inline-flex w-fit items-center justify-center rounded-lg p-[3px] text-muted-foreground",
-        // Orientation via group-data on parent Tabs element (works — Tailwind scans static strings)
-        "group-data-[orientation=Horizontal]/tabs:h-8",
-        "group-data-[orientation=Vertical]/tabs:h-fit group-data-[orientation=Vertical]/tabs:flex-col",
-        if is_line { "gap-1 bg-transparent rounded-none p-0" } else { "bg-muted" },
-        class
-    );
-
-    view! {
-        <div class=class data-name="TabsList" data-variant=if is_line { "Line" } else { "Default" }>
-            {children()}
-        </div>
-    }
-}
-
-#[component]
-pub fn TabsTrigger(
-    #[prop(into)] value: String,
-    #[prop(into, optional)] class: String,
-    children: Children,
-) -> impl IntoView {
-    let ctx = expect_context::<TabsCtx>();
-    let variant = expect_context::<TabsListCtx>().variant;
-    let is_line = variant == TabsVariant::Line;
-
-    let val = value.clone();
-    let is_active = Memo::new(move |_| ctx.selected.get() == val);
-
-    // Static classes that Tailwind can scan (group-data selectors reference parent data attrs)
-    let base = tw_merge!(
-        "relative inline-flex h-[calc(100%-1px)] flex-1 items-center justify-center gap-1.5 rounded-md border border-transparent px-1.5 py-0.5 text-sm font-medium whitespace-nowrap transition-all cursor-pointer select-none",
-        "focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-none",
-        "disabled:pointer-events-none disabled:opacity-50",
-        // Vertical layout via group-data on parent
-        "group-data-[orientation=Vertical]/tabs:w-full group-data-[orientation=Vertical]/tabs:justify-start",
-        // After pseudo-element (underline indicator)
-        "after:absolute after:bg-foreground after:transition-opacity",
-        "group-data-[orientation=Horizontal]/tabs:after:inset-x-0 group-data-[orientation=Horizontal]/tabs:after:bottom-[-5px] group-data-[orientation=Horizontal]/tabs:after:h-0.5",
-        "group-data-[orientation=Vertical]/tabs:after:inset-y-0 group-data-[orientation=Vertical]/tabs:after:-right-1 group-data-[orientation=Vertical]/tabs:after:w-0.5",
-        class
-    );
-
-    view! {
-        <button
-            class=move || {
-                let active = is_active.get();
-                tw_merge!(
-                    &base,
-                    // Active state applied reactively (CSS attr selectors not generated by Tailwind)
-                    if active { "text-foreground" } else { "text-foreground/60 hover:text-foreground" },
-                    // Default variant: active gets white pill + shadow
-                    if !is_line && active { "bg-background shadow-sm dark:border-input dark:bg-input/30" } else { "" },
-                    // Line variant: show underline when active
-                    if is_line && active { "after:opacity-100" } else { "after:opacity-0" },
-                )
-            }
-            data-name="TabsTrigger"
-            data-state=move || if is_active.get() { "Active" } else { "Inactive" }
-            on:click=move |_| ctx.selected.set(value.clone())
-        >
-            {children()}
-        </button>
-    }
-}
-
-#[component]
-pub fn TabsContent(
-    #[prop(into)] value: String,
-    #[prop(into, optional)] class: String,
-    children: Children,
-) -> impl IntoView {
-    let ctx = expect_context::<TabsCtx>();
-    let val = value;
-    let is_active = Memo::new(move |_| ctx.selected.get() == val);
-
+    let group = crate::id::next("tabs");
+    provide_context(TabsContext {
+        group: group.clone(),
+        active,
+    });
+    let aria_label = (!aria_label.is_empty()).then_some(aria_label);
+    let activate = Arc::new(on_activate);
+    let list_class = match orientation {
+        Orientation::Horizontal => LIST,
+        Orientation::Vertical => "rui:inline-flex rui:w-fit rui:flex-col rui:items-stretch rui:rounded-lg rui:bg-muted rui:p-[3px] rui:text-muted-foreground",
+    };
+    let on_keydown = {
+        let activate = activate.clone();
+        let group = group.clone();
+        move |ev: KeyboardEvent| {
+            let key = ev.key();
+            let tabs = tabs.get_untracked();
+            let next = match key.as_str() {
+                "Home" => end(&tabs, false),
+                "End" => end(&tabs, true),
+                _ => orientation
+                    .steps(&key)
+                    .and_then(|step| neighbour(&tabs, &active.get_untracked(), step)),
+            };
+            let Some(next) = next else {
+                return;
+            };
+            ev.prevent_default();
+            activate(next.clone());
+            crate::dom::focus_id(&tab_id(&group, &next));
+        }
+    };
     view! {
         <div
-            data-name="TabsContent"
-            class=move || {
-                tw_merge!(
-                    "flex-1 text-sm outline-none",
-                // Orientation via group-data on parent
-                "group-data-[orientation=Horizontal]/tabs:mt-2 group-data-[orientation=Vertical]/tabs:ml-4",
-                &class,
-                if is_active.get() { "" } else { "hidden" }
-                )
-            }
+            class=crate::macros::merge("rui:flex rui:gap-2 rui:flex-col", &class)
+            data-name="Tabs"
+            data-testid=test_id
+            data-orientation=orientation.attribute()
+        >
+            <div
+                class=list_class
+                data-name="TabList"
+                role="tablist"
+                aria-label=aria_label
+                aria-orientation=orientation.attribute()
+                on:keydown=on_keydown
+            >
+                <For each=move || tabs.get() key=|tab| tab.value.clone() let:tab>
+                    {
+                        let Tab { value, label, disabled } = tab;
+                        let group = group.clone();
+                        let mine = value.clone();
+                        let selected = Memo::new(move |_| active.get() == mine);
+                        let activate = activate.clone();
+                        let asked = value.clone();
+                        view! {
+                            <button
+                                type="button"
+                                role="tab"
+                                id=tab_id(&group, &value)
+                                class=TRIGGER
+                                data-name="Tab"
+                                data-testid=format!("tab-{value}")
+                                aria-selected=move || selected.get().to_string()
+                                aria-controls=panel_id(&group, &value)
+                                tabindex=move || if selected.get() { "0" } else { "-1" }
+                                prop:disabled=disabled
+                                on:click=move |_| {
+                                    if !disabled {
+                                        activate(asked.clone());
+                                    }
+                                }
+                            >
+                                {label}
+                            </button>
+                        }
+                    }
+                </For>
+            </div>
+            {children()}
+        </div>
+    }
+}
+
+/// One panel. It is in the document whether or not it is showing, so that the
+/// application's state inside it survives a look at another tab.
+#[component]
+pub fn TabPanel(
+    #[prop(into)] value: String,
+    #[prop(optional, into)] class: String,
+    children: Children,
+) -> impl IntoView {
+    let context = use_context::<TabsContext>().expect("a TabPanel belongs inside Tabs");
+    let active = context.active;
+    let mine = value.clone();
+    let showing = Memo::new(move |_| active.get() == mine);
+    view! {
+        <div
+            id=panel_id(&context.group, &value)
+            class=crate::macros::merge("rui:flex-1 rui:text-sm rui:outline-none", &class)
+            class=("rui:hidden", move || !showing.get())
+            data-name="TabPanel"
+            data-testid=format!("panel-{value}")
+            role="tabpanel"
+            aria-labelledby=tab_id(&context.group, &value)
+            tabindex="0"
+            hidden=move || !showing.get()
         >
             {children()}
         </div>
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::{end, neighbour, Tab};
+
+    fn strip() -> Vec<Tab> {
+        vec![
+            Tab::new("a", "A"),
+            Tab::new("b", "B").disabled(),
+            Tab::new("c", "C"),
+        ]
+    }
+
+    #[test]
+    fn an_arrow_moves_by_value_and_skips_what_cannot_be_chosen() {
+        assert_eq!(neighbour(&strip(), "a", 1).as_deref(), Some("c"));
+        assert_eq!(neighbour(&strip(), "c", 1).as_deref(), Some("a"));
+    }
+
+    #[test]
+    fn home_and_end_reach_the_first_and_last_tab_anyone_can_choose() {
+        let strip = vec![
+            Tab::new("a", "A").disabled(),
+            Tab::new("b", "B"),
+            Tab::new("c", "C").disabled(),
+        ];
+        assert_eq!(end(&strip, false).as_deref(), Some("b"));
+        assert_eq!(end(&strip, true).as_deref(), Some("b"));
+    }
+
+    #[test]
+    fn arrows_still_work_when_the_tab_showing_is_not_in_the_strip() {
+        // The application changed the tabs under the selection; the arrows
+        // have to be a way back rather than a dead key.
+        assert_eq!(neighbour(&strip(), "gone", 1).as_deref(), Some("a"));
+        assert_eq!(neighbour(&strip(), "gone", -1).as_deref(), Some("c"));
     }
 }
