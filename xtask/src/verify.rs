@@ -292,6 +292,32 @@ fn double_build(root: &Path, example: &str) -> Step {
     }
 }
 
+/// The marker a blank form carries. A record is not a result until a person
+/// has changed it.
+pub const NOT_PERFORMED: &str = "STATUS: NOT PERFORMED";
+
+pub enum RecordState {
+    /// Someone did the session and wrote it down.
+    Held,
+    /// The form is there and still says nobody has done it.
+    Blank,
+    Missing,
+}
+
+/// Whether a manual record has been handed in.
+///
+/// Existence is not enough. The four sessions have forms prepared for them, so
+/// that what a person has to do is perform the session rather than invent a
+/// document - and a prepared form that read as a pass would turn an honest gap
+/// into a false claim, which is the one thing this command exists to prevent.
+pub fn record_state(root: &Path, path: &str) -> RecordState {
+    match std::fs::read_to_string(root.join(path)) {
+        Err(_) => RecordState::Missing,
+        Ok(text) if text.contains(NOT_PERFORMED) => RecordState::Blank,
+        Ok(_) => RecordState::Held,
+    }
+}
+
 fn reports(root: &Path, suite: &Suite) -> Step {
     let missing: Vec<&str> = suite
         .reports
@@ -355,14 +381,19 @@ fn report(steps: &[Step], root: &Path, suite: &Suite) -> Result<(), String> {
         }
     }
 
-    println!("\nmanual records (a person does these; the suite only looks for the file)");
+    println!("\nmanual records (a person does these; the suite reads the file, not the session)");
     let mut missing = 0;
     for (path, what) in suite.manual.iter().copied() {
-        if root.join(path).is_file() {
-            println!("  held  {path}");
-        } else {
-            missing += 1;
-            println!("  none  {path}\n        {what}");
+        match record_state(root, path) {
+            RecordState::Held => println!("  held  {path}"),
+            RecordState::Blank => {
+                missing += 1;
+                println!("  form  {path} exists and says NOT PERFORMED\n        {what}");
+            }
+            RecordState::Missing => {
+                missing += 1;
+                println!("  none  {path}\n        {what}");
+            }
         }
     }
 
@@ -382,4 +413,54 @@ fn report(steps: &[Step], root: &Path, suite: &Suite) -> Result<(), String> {
         );
     }
     Ok(())
+}
+
+#[cfg(test)]
+mod tests {
+    use super::{record_state, RecordState, NOT_PERFORMED, P1, P2};
+
+    #[test]
+    fn the_two_suites_ask_for_different_things() {
+        // Not P1's list under P2's name: the examples, the browser projects,
+        // the reports and the records all differ, and a suite that quietly ran
+        // the wrong list would report a pass nobody had earned.
+        assert_ne!(P1.examples.len(), P2.examples.len());
+        assert_ne!(P1.projects.len(), P2.projects.len());
+        assert_ne!(P1.reports[0], P2.reports[0]);
+        assert_ne!(P1.manual[0].0, P2.manual[0].0);
+        assert_eq!(P2.name, "P2");
+    }
+
+    #[test]
+    fn a_blank_form_is_not_a_handed_in_record() {
+        let dir = std::env::temp_dir().join(format!("rustify-verify-{}", std::process::id()));
+        let _ = std::fs::create_dir_all(dir.join("docs"));
+        let blank = "docs/blank.md";
+        let filled = "docs/filled.md";
+        std::fs::write(dir.join(blank), format!("# a form\n\n{NOT_PERFORMED}\n")).unwrap();
+        std::fs::write(dir.join(filled), "# a record\n\nSTATUS: PERFORMED\n").unwrap();
+
+        assert!(matches!(record_state(&dir, blank), RecordState::Blank));
+        assert!(matches!(record_state(&dir, filled), RecordState::Held));
+        assert!(matches!(
+            record_state(&dir, "docs/nothing.md"),
+            RecordState::Missing
+        ));
+        let _ = std::fs::remove_dir_all(&dir);
+    }
+
+    #[test]
+    fn every_p2_record_that_exists_is_still_a_form() {
+        // The forms are prepared and none of them has been performed. When one
+        // is, this test is what says so - and it fails loudly rather than
+        // letting a half-filled form drift into looking finished.
+        let root = crate::build::repo_root();
+        for (path, _) in P2.manual.iter().copied() {
+            match record_state(&root, path) {
+                RecordState::Held => {}
+                RecordState::Blank => {}
+                RecordState::Missing => panic!("{path}: the form should be prepared"),
+            }
+        }
+    }
 }
