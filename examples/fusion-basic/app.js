@@ -29,6 +29,24 @@ boot({ wasm_url: new URL("./fusion-basic.wasm", import.meta.url), on_fatal: runt
                 handles.set(container_id, handle);
                 return handle;
             },
+            // The two routing fixtures. `mount_owner` is expected to fail
+            // when one is already mounted, and the caller is meant to see it.
+            mount_owner(container_id) {
+                const handle = app.fusion_basic_mount_owner(container_id);
+                handles.set(container_id, handle);
+                return handle;
+            },
+            mount_guest(container_id) {
+                const handle = app.fusion_basic_mount_guest(container_id);
+                handles.set(container_id, handle);
+                return handle;
+            },
+            routes() {
+                return app.fusion_basic_routes();
+            },
+            set_guard(on) {
+                return app.fusion_basic_set_guard(on);
+            },
             mount_geometry(container_id) {
                 const handle = app.fusion_basic_geometry_mount(container_id);
                 handles.set(container_id, handle);

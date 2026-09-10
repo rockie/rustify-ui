@@ -25,6 +25,11 @@ mod app {
     pub use rustify_ui::makepad_widgets;
 
     thread_local! {
+        /// Where each routing fixture thinks it is, as `owner=/x;guest=/y`.
+        static ROUTES: RefCell<String> = const { RefCell::new(String::new()) };
+        /// The routing fixtures' "there is unsaved work" signals, so the page
+        /// can arm them without the fixtures having to invent some work.
+        static GUARDS: RefCell<Vec<RwSignal<bool>>> = const { RefCell::new(Vec::new()) };
         static HANDLES: RefCell<BTreeMap<u32, AppHandle>> = const { RefCell::new(BTreeMap::new()) };
         static NEXT_HANDLE: RefCell<u32> = const { RefCell::new(1) };
         /// Last state each live region published, so the page can report it
@@ -439,6 +444,44 @@ mod app {
         mount_scope(container_id, move || view! { <App scope=scope /> })
     }
 
+    /// Mounts a scope that asks to own the page's URL.
+    ///
+    /// The fixture for the case one page can only have once: the first one to
+    /// ask gets it, and a second gets `UrlOwnerConflict` and is not mounted -
+    /// the running one is untouched by the attempt.
+    #[wasm_bindgen]
+    pub fn fusion_basic_mount_owner(container_id: &str) -> Result<u32, JsValue> {
+        mount_scope_with(container_id, true, || view! { <RouteFixture owner=true /> })
+    }
+
+    /// The same view in a scope that does not own the URL. It routes - it has
+    /// a location of its own - and the address bar is somebody else's.
+    #[wasm_bindgen]
+    pub fn fusion_basic_mount_guest(container_id: &str) -> Result<u32, JsValue> {
+        mount_scope_with(
+            container_id,
+            false,
+            || view! { <RouteFixture owner=false /> },
+        )
+    }
+
+    /// What the routing fixtures report: where each scope thinks it is.
+    #[wasm_bindgen]
+    pub fn fusion_basic_routes() -> String {
+        ROUTES.with(|slot| slot.borrow().clone())
+    }
+
+    /// Arms or disarms the fixture's guard, which refuses to leave.
+    #[wasm_bindgen]
+    pub fn fusion_basic_set_guard(on: bool) -> bool {
+        GUARDS.with(|guards| {
+            for guard in guards.borrow().iter() {
+                let _ = guard.try_set(on);
+            }
+        });
+        on
+    }
+
     /// `{"anchors":[...],"hits":n,"last_hit":{...}|null,"state":"..."}` for the
     /// geometry fixture's region.
     #[wasm_bindgen]
@@ -450,6 +493,62 @@ mod app {
     #[wasm_bindgen]
     pub fn fusion_basic_geometry_mount(container_id: &str) -> Result<u32, JsValue> {
         mount_scope(container_id, || view! { <GeometryFixture /> })
+    }
+
+    /// Two scopes routing side by side, one of which owns the address bar.
+    ///
+    /// Each reports its own location under its own name, so a test can watch
+    /// one move without the other - which is the property that makes an
+    /// embedded instance safe to put on somebody else's page.
+    #[component]
+    fn RouteFixture(owner: bool) -> impl IntoView {
+        rustify_ui::provide_routes(rustify_ui::Routes::new(&[
+            "/",
+            "/one",
+            "/two",
+            "/objects/:id",
+        ]));
+        let name = if owner { "owner" } else { "guest" };
+        let location = rustify_ui::use_location();
+        let asked = RwSignal::new(String::new());
+        // The guard is the page's to arm, so a test can have unsaved work
+        // without having to invent some.
+        let guarded = RwSignal::new(false);
+        rustify_ui::NavigationGuard::register(guarded.into());
+        GUARDS.with(|guards| guards.borrow_mut().push(guarded));
+        on_cleanup(move || {
+            GUARDS.with(|guards| guards.borrow_mut().retain(|slot| *slot != guarded));
+        });
+        Effect::new(move || {
+            let path = location.get().path;
+            ROUTES.with(|slot| {
+                let mut all = slot.borrow_mut();
+                let other = if owner { "guest" } else { "owner" };
+                let keep = all
+                    .split(';')
+                    .find(|part| part.starts_with(other))
+                    .map(str::to_string)
+                    .unwrap_or_default();
+                *all = format!("{name}={path};{keep}");
+            });
+        });
+        view! {
+            <section data-testid=format!("route-{name}")>
+                <p data-testid=format!("route-{name}-path")>{move || location.get().path}</p>
+                <p data-testid=format!("route-{name}-asked")>{move || asked.get()}</p>
+                <rustify_ui::Link href="/one" test_id=format!("route-{name}-one")>"one"</rustify_ui::Link>
+                <rustify_ui::Link href="/two" test_id=format!("route-{name}-two")>"two"</rustify_ui::Link>
+                <button
+                    type="button"
+                    data-testid=format!("route-{name}-go")
+                    on:click=move |_| {
+                        asked.set(format!("{:?}", rustify_ui::navigate("/objects/7", false)));
+                    }
+                >
+                    "go to an object"
+                </button>
+            </section>
+        }
     }
 
     #[wasm_bindgen]

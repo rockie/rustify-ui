@@ -1,6 +1,6 @@
 import { expect, Page, test } from "@playwright/test";
 
-import { sharedPage } from "./support";
+import { sharedPage, waitForReady } from "./support";
 
 /// M4's first task: find out what the browser actually does, before writing a
 /// router that assumes it.
@@ -138,5 +138,135 @@ test.describe("M4 A-5: what the browser does with history, measured", () => {
         // Back on ours, and the number is there again - so "no number" is a
         // property of the entry, not a state the router falls into.
         expect(await here(page)).toMatchObject({ url: "/?a", index: 1 });
+    });
+});
+
+/// M4 V6: one owner, one address bar, a guard that can put the user back, and
+/// a page whose own links are still the page's.
+
+const routes = (page: Page) =>
+    page.evaluate(() => window.__fusion_basic.routes()).then((all: string) =>
+        Object.fromEntries(
+            all
+                .split(";")
+                .filter(Boolean)
+                .map((part) => part.split("=") as [string, string])
+        )
+    );
+
+async function mountRouting(page: Page) {
+    await page.evaluate(() => {
+        window.__fusion_basic.mount_owner("route-owner");
+        window.__fusion_basic.mount_guest("route-guest");
+    });
+    await expect.poll(async () => Object.keys(await routes(page)).length).toBe(2);
+}
+
+test.describe("M4 V6: who owns the address bar", () => {
+    test.describe.configure({ mode: "serial" });
+    const shared = sharedPage(mountRouting);
+
+    test("only the owner's location is the page's, and both of them route", async () => {
+        const page = shared.page;
+        const start = new URL(page.url()).pathname;
+
+        await page.getByTestId("route-guest-two").click();
+        expect(await routes(page)).toMatchObject({ guest: "/two" });
+        // The page did not move: a scope that does not own the address bar
+        // must not write to it, or an application embedded in somebody else's
+        // page would navigate it out from under them.
+        expect(new URL(page.url()).pathname).toBe(start);
+
+        await page.getByTestId("route-owner-two").click();
+        expect(await routes(page)).toMatchObject({ owner: "/two", guest: "/two" });
+        expect(new URL(page.url()).pathname).toBe(`${start.replace(/\/$/, "")}/two`);
+    });
+
+    test("a second scope asking to own the URL is refused and changes nothing", async () => {
+        const page = shared.page;
+        const before = await routes(page);
+        const refused = await page.evaluate(() => {
+            try {
+                // An empty container, so the only thing that can refuse this
+                // is the one being tested.
+                window.__fusion_basic.mount_owner("geometry");
+                return null;
+            } catch (error) {
+                return String(error);
+            }
+        });
+        expect(refused).toContain("another scope owns this page's URL");
+        // And the one that has it is untouched.
+        expect(await routes(page)).toMatchObject(before);
+        await page.getByTestId("route-owner-one").click();
+        expect(await routes(page)).toMatchObject({ owner: "/one" });
+    });
+
+    test("twenty moves are twenty entries, and back walks them", async () => {
+        const page = shared.page;
+        const depth = () => page.evaluate(() => history.length);
+        const before = await depth();
+        for (let round = 0; round < 20; round += 1) {
+            await page.getByTestId(round % 2 === 0 ? "route-owner-two" : "route-owner-one").click();
+        }
+        expect(await depth()).toBe(before + 20);
+        expect(await routes(page)).toMatchObject({ owner: "/one" });
+
+        for (let round = 0; round < 20; round += 1) {
+            await page.goBack();
+        }
+        await expect.poll(async () => (await routes(page)).owner).toBeTruthy();
+        expect(await depth()).toBe(before + 20);
+    });
+
+    test("a guard refuses a move and puts the user back where they were", async () => {
+        const page = shared.page;
+        await page.getByTestId("route-owner-one").click();
+        const held = new URL(page.url()).pathname;
+
+        await page.evaluate(() => window.__fusion_basic.set_guard(true));
+        for (let round = 0; round < 20; round += 1) {
+            await page.goBack();
+            // The address bar and the view agree, and both are where the
+            // guard said to stay.
+            await expect.poll(async () => new URL(page.url()).pathname).toBe(held);
+            expect(await routes(page)).toMatchObject({ owner: "/one" });
+        }
+
+        // And asking to navigate while it is armed is refused rather than
+        // half-done.
+        await page.getByTestId("route-owner-go").click();
+        await expect(page.getByTestId("route-owner-asked")).toHaveText("Blocked");
+        expect(await routes(page)).toMatchObject({ owner: "/one" });
+
+        await page.evaluate(() => window.__fusion_basic.set_guard(false));
+        for (let round = 0; round < 20; round += 1) {
+            await page.getByTestId("route-owner-go").click();
+            await expect(page.getByTestId("route-owner-asked")).toHaveText("Done");
+            await page.getByTestId("route-owner-one").click();
+        }
+    });
+
+});
+
+/// Its own page, deliberately: this one navigates the browser away, which is
+/// the case a shared page cannot put back.
+test.describe("M4 V6: a link the page owns", () => {
+    test("the browser takes it, and the SDK does not", async ({ page }) => {
+        await waitForReady(page);
+        await page.evaluate(() => window.__fusion_basic.mount_owner("route-owner"));
+        await expect(page.getByTestId("route-owner-path")).toBeVisible();
+
+        // Same origin, same base, an ordinary href - everything the scope's
+        // anchor handler looks for except being inside a scope.
+        const [response] = await Promise.all([
+            page.waitForResponse((response) => response.url().includes("/host-page")),
+            page.getByTestId("host-link").click(),
+        ]);
+        expect(response.status()).toBe(404);
+        expect(new URL(page.url()).pathname).toContain("/host-page");
+        // And the application is gone, because the browser navigated: a page's
+        // own links are the page's.
+        expect(await page.evaluate(() => "__fusion_basic" in window)).toBe(false);
     });
 });

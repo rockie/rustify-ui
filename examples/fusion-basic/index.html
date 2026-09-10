@@ -22,11 +22,23 @@
             <h2>scope b</h2>
             <div id="scope-b" data-testid="scope-b"></div>
         </section>
+        <!-- Two scopes that route: one owns the address bar, one has a
+             location of its own. -->
+        <section>
+            <h2>routing</h2>
+            <div id="route-owner" data-testid="route-owner-host"></div>
+            <div id="route-guest" data-testid="route-guest-host"></div>
+        </section>
         <section>
             <h2>geometry</h2>
             <div id="geometry" data-testid="geometry"></div>
         </section>
         <p><a href="#anchor" data-testid="native-link">native link</a></p>
+        <!-- The host page's own link, outside every scope. Same origin, same
+             base, ordinary href: everything a scope's own anchor handler looks
+             for except the one thing that matters, which is that it is not
+             inside a scope. The browser must navigate it. -->
+        <p><a href="/host-page" data-testid="host-link">a link the page owns</a></p>
         <p id="status" data-testid="status"></p>
     </main>
 </body>

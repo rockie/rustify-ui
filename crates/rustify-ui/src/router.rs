@@ -194,7 +194,6 @@ pub enum Navigation {
 #[derive(Clone, Debug)]
 pub struct History {
     index: u64,
-    next: u64,
     restoring: Option<Restore>,
 }
 
@@ -209,7 +208,6 @@ impl History {
     pub fn new(index: u64) -> Self {
         Self {
             index,
-            next: index + 1,
             restoring: None,
         }
     }
@@ -224,14 +222,18 @@ impl History {
     }
 
     /// The number to stamp on a new entry.
+    ///
+    /// One more than the entry it is pushed from, never a running total. The
+    /// number is a *depth* in the history that exists, so that the difference
+    /// between two of them is the distance `history.go` has to travel. A
+    /// counter would drift the moment the user went back and then somewhere
+    /// new: pushing truncates what was ahead, and a number that kept climbing
+    /// would ask the browser to move further than there is history to move.
     pub fn push(&mut self) -> u64 {
-        let index = self.next;
-        self.next += 1;
-        self.index = index;
-        // Pushing truncates whatever was ahead, so nothing can be restored to
-        // it any more.
+        self.index += 1;
+        // Whatever was ahead is gone, so nothing can be restored to it.
         self.restoring = None;
-        index
+        self.index
     }
 
     /// Replacing keeps the entry, and therefore its number.
@@ -369,6 +371,25 @@ mod tests {
         assert_eq!(history.push(), 2);
         assert_eq!(history.replace(), 2);
         assert_eq!(history.index(), 2);
+    }
+
+    #[test]
+    fn a_number_is_a_depth_in_the_history_that_exists_not_a_running_total() {
+        // Twenty moves, all the way back, then somewhere new. The push
+        // truncates the twenty that were ahead, so the new entry is at depth
+        // one - and a guard asked to undo a move from it has one entry to
+        // travel, not twenty-one.
+        let mut history = History::new(0);
+        for _ in 0..20 {
+            history.push();
+        }
+        assert_eq!(history.arrived(Some(0), false), Arrival::Accept);
+        assert_eq!(history.push(), 1, "the entry after the first is the second");
+
+        assert_eq!(
+            history.arrived(Some(0), true),
+            Arrival::Restore { delta: 1 }
+        );
     }
 
     #[test]
@@ -517,7 +538,30 @@ mod browser {
         /// `None` for a scope with a location of its own: it routes, and the
         /// page's address bar is somebody else's.
         owner: Option<SendWrapper<Owned>>,
+        /// A guest's own click handler, held for as long as the scope is.
+        guest_click: Option<SendWrapper<Rc<GuestClick>>>,
         guards: RwSignal<Vec<Signal<bool>>>,
+    }
+
+    struct GuestClick {
+        click: Closure<dyn FnMut(MouseEvent)>,
+        container: Element,
+    }
+
+    impl Drop for GuestClick {
+        fn drop(&mut self) {
+            let _ = self
+                .container
+                .remove_event_listener_with_callback("click", self.click.as_ref().unchecked_ref());
+        }
+    }
+
+    /// A target split into its path and its query.
+    fn split_target(to: &str) -> (&str, String) {
+        match to.split_once('?') {
+            Some((path, search)) => (path, format!("?{search}")),
+            None => (to, String::new()),
+        }
     }
 
     #[derive(Clone)]
@@ -587,12 +631,38 @@ mod browser {
 
         let Some(claim) = claim else {
             // A location of its own: it routes, it just does not touch the
-            // page. Nothing is registered on `window`, which is the point -
-            // an embedded instance must not answer for a page it does not own.
+            // page. Nothing is registered on `window` - an embedded instance
+            // must not answer for history it does not own - but its own
+            // container still is, because a link inside it that fell through
+            // to the browser would navigate the page away from underneath
+            // whoever embedded it.
+            let location = RwSignal::new(Location::new("/", ""));
+            let blocked = move || {
+                guards.with_untracked(|guards| guards.iter().any(|guard| guard.get_untracked()))
+            };
+            let base_for_click = base.clone();
+            let click = Closure::<dyn FnMut(MouseEvent)>::new(move |event: MouseEvent| {
+                let Some(href) = anchor_target(&event, &base_for_click) else {
+                    return;
+                };
+                event.prevent_default();
+                if blocked() {
+                    report(Navigation::Blocked);
+                    return;
+                }
+                let (path, search) = split_target(&href);
+                location.set(Location::new(path, search));
+            });
+            let _ =
+                container.add_event_listener_with_callback("click", click.as_ref().unchecked_ref());
             provide_context(Router {
-                location: RwSignal::new(Location::new("/", "")),
+                location,
                 base,
                 owner: None,
+                guest_click: Some(SendWrapper::new(Rc::new(GuestClick {
+                    click,
+                    container: container.clone().into(),
+                }))),
                 guards,
             });
             return;
@@ -662,6 +732,7 @@ mod browser {
         provide_context(Router {
             location,
             base,
+            guest_click: None,
             owner: Some(SendWrapper::new(Owned {
                 history,
                 _listeners: Rc::new(Listeners {
@@ -740,10 +811,7 @@ mod browser {
         if blocked() {
             return Navigation::Blocked;
         }
-        let (path, search) = match to.split_once('?') {
-            Some((path, search)) => (path, format!("?{search}")),
-            None => (to, String::new()),
-        };
+        let (path, search) = split_target(to);
         let next = Location::new(path, search);
         let index = if replace {
             history.borrow_mut().replace()
@@ -798,10 +866,7 @@ mod browser {
                 if blocked() {
                     Navigation::Blocked
                 } else {
-                    let (path, search) = match to.split_once('?') {
-                        Some((path, search)) => (path, format!("?{search}")),
-                        None => (to, String::new()),
-                    };
+                    let (path, search) = split_target(to);
                     router.location.set(Location::new(path, search));
                     Navigation::Done
                 }

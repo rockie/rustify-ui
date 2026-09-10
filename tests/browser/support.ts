@@ -231,6 +231,10 @@ declare global {
         };
         __fusion_basic: {
             mount(container_id: string): number;
+            mount_owner(container_id: string): number;
+            mount_guest(container_id: string): number;
+            routes(): string;
+            set_guard(on: boolean): boolean;
             dispose(container_id: string): boolean;
             live_regions(): number;
             errors(): string[];
