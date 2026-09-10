@@ -45,6 +45,45 @@ struct Region {
     context_lost: Rc<dyn Fn()>,
     deferred: Vec<Deferred>,
     disposing: bool,
+    /// How much of the script heap was live after this region's last
+    /// collection. See [`collect_script_garbage`].
+    script_heap_floor: usize,
+}
+
+/// How much garbage a region may hold before its script heap is collected.
+///
+/// Every props application that sets a value on a shader evaluates a small
+/// script, and each evaluation leaves three objects behind. Nothing collected
+/// them: a desktop app runs its script at startup, so the collector was only
+/// ever reachable from script itself, and an embedded region that applies
+/// props on every action makes garbage for as long as it runs. A two-hour run
+/// at ten actions a second measured the result - 145 MB of linear memory, in
+/// doublings.
+///
+/// The rule is an amount, not a period: an idle region never collects, and a
+/// busy one collects once it has made this much garbage. The floor is what was
+/// live after the last sweep, so the cost of a collection is paid against the
+/// garbage it reclaims rather than against the size of the application.
+const SCRIPT_HEAP_SLACK: usize = 20_000;
+
+/// Collects this region's script heap if it has grown past its slack.
+///
+/// Called between pumps, never inside one: the VM is not held there, objects a
+/// widget holds are roots (`ScriptObjectRef` registers one), and nothing that
+/// the pump produced is still on the VM's stack.
+fn collect_script_garbage(cx: &mut Cx, floor: &mut usize) {
+    let Some(live) = cx.try_with_vm(|vm| vm.heap().gc_live_len()) else {
+        return;
+    };
+    if live <= *floor + SCRIPT_HEAP_SLACK {
+        return;
+    }
+    if let Some(after) = cx.try_with_vm(|vm| {
+        vm.gc();
+        vm.heap().gc_live_len()
+    }) {
+        *floor = after;
+    }
 }
 
 thread_local! {
@@ -110,6 +149,7 @@ pub fn create_region<A: RegionApp>(
             context_lost: Rc::new(on_context_lost),
             deferred: Vec::new(),
             disposing: false,
+            script_heap_floor: 0,
         })
     });
     let created = with_hooks(|hooks| hooks.create_region(id.raw(), canvas)).unwrap_or(false);
@@ -250,6 +290,7 @@ pub unsafe extern "C" fn rustify_region_process(region: u32, msg_ptr: u32) -> u3
         let mut regions = regions.borrow_mut();
         match regions.get_mut(id) {
             Some(region) => {
+                collect_script_garbage(&mut cx, &mut region.script_heap_floor);
                 region.cx = Some(cx);
                 None
             }

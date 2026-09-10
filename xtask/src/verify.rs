@@ -112,6 +112,14 @@ pub fn run(args: &[String]) -> Result<(), String> {
         ),
         command("xtask tests", &root, "cargo", &["test", "-p", "xtask"]),
         command("fork tests", &root.join("makepad"), "cargo", &["test"]),
+        // The fork's workspace excludes platform/, so its script VM has to be
+        // named to be run. A test that never runs is not a test.
+        command(
+            "fork script tests",
+            &root.join("makepad"),
+            "cargo",
+            &["test", "--manifest-path", "platform/script/Cargo.toml"],
+        ),
         reports(&root),
     ];
 

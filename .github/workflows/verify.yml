@@ -20,6 +20,9 @@ jobs:
       - name: Fork unit tests
         run: cargo test
         working-directory: makepad
+      - name: Fork script VM tests
+        run: cargo test --manifest-path platform/script/Cargo.toml
+        working-directory: makepad
       - name: Clippy
         run: cargo clippy --workspace --all-targets -- -D warnings
       - name: Source record

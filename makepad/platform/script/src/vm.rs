@@ -1655,6 +1655,65 @@ mod tests {
         }
     }
 
+    /// What a reused `script_apply_eval!` callsite leaves behind must be
+    /// garbage, not something still reachable.
+    ///
+    /// Each evaluation allocates three objects and does not free them; that is
+    /// by design, because the collector is not on the evaluation path. What
+    /// this pins is the property the collector depends on: once the values
+    /// have been applied, nothing reaches those objects, so a sweep returns
+    /// the heap to its working size. Root one of them by accident and the heap
+    /// grows for as long as the application runs - which is what a two-hour
+    /// endurance run measured before an embedded region collected at all:
+    /// 145 MB of linear memory, in doublings.
+    ///
+    /// Who runs the collector is the embedder's business;
+    /// `crates/rustify-makepad/src/wasm/host.rs` does it between pumps, once a
+    /// region has made enough garbage to be worth the sweep.
+    #[test]
+    fn what_a_reused_eval_callsite_leaves_behind_is_collectable() {
+        let mut host = ();
+        let mut std = ();
+        let mut vm = ScriptVm {
+            host: &mut host,
+            std: &mut std,
+            bx: Box::new(ScriptVmBase::new()),
+        };
+
+        let mut item = ApplyEvalParityTest::default();
+        let obj = vm.heap_mut().new_object();
+        item.source = vm.heap_mut().new_object_ref(obj);
+
+        // Warm up: the first calls create the body, the parsed code and the
+        // scope, which are per callsite and not per call.
+        for idx in 0..50 {
+            let value = idx as f32;
+            script_apply_eval!(vm, item, { is_even: #(value) });
+        }
+        let warm = vm.heap().gc_live_len();
+
+        for idx in 50..550 {
+            let value = idx as f32;
+            script_apply_eval!(vm, item, { is_even: #(value) });
+        }
+        let after = vm.heap().gc_live_len();
+        // The garbage is real: three objects per evaluation, uncollected.
+        assert!(
+            after > warm + 1_000,
+            "an evaluation used to leave objects behind and now does not; if that \
+             is deliberate, this test is the one to rewrite ({warm} -> {after})"
+        );
+
+        vm.gc();
+        let swept = vm.heap().gc_live_len();
+        assert!(
+            swept <= warm,
+            "a sweep left {swept} entries live where {warm} were live before the five \
+             hundred evaluations: something is still reaching them, and a long run's \
+             memory is that difference multiplied by its actions"
+        );
+    }
+
     fn parse_reports_error(code: &str) -> bool {
         let mut bx = ScriptVmBase::new();
         let mut tokenizer = ScriptTokenizer::default();
