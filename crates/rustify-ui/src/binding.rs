@@ -304,7 +304,7 @@ mod tests {
             if is_click(value) {
                 Pace::Discrete
             } else {
-                Pace::Continuous
+                Pace::Continuous("stream")
             }
         };
 

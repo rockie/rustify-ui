@@ -52,7 +52,7 @@ impl RegionApp for AnchorRegion {
 
     fn pace(action: &AnchorAction) -> Pace {
         match action {
-            AnchorAction::Layout(_) => Pace::Continuous,
+            AnchorAction::Layout(_) => Pace::Continuous("layout"),
             AnchorAction::Hit(_) => Pace::Discrete,
         }
     }

@@ -11,6 +11,13 @@
 pub enum Pace {
     /// Queued in order and never merged.
     Discrete,
-    /// Only the most recent one is worth delivering.
-    Continuous,
+    /// Only the most recent one is worth delivering - of *this* stream.
+    ///
+    /// The name is what makes that true. One region can have several streams
+    /// running at once: where the pointer is, what the drag would land on, how
+    /// far a list has scrolled. They supersede themselves and nothing else,
+    /// because a newer answer to one question is not an answer to another -
+    /// and a single slot for the whole scope means whichever stream reported
+    /// last silently ate the others.
+    Continuous(&'static str),
 }

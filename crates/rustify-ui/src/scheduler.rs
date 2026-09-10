@@ -29,9 +29,12 @@ pub enum Admission {
 
 pub struct Scheduler<A> {
     discrete: VecDeque<(Seq, A)>,
-    /// Outside the queue on purpose: a stream of pointer moves must not be
-    /// able to fill it and push a click into backpressure.
-    continuous: Option<(Seq, A)>,
+    /// One slot per named stream, outside the queue on purpose: a stream of
+    /// pointer moves must not be able to fill it and push a click into
+    /// backpressure. A `Vec` because a region has a handful of streams at
+    /// most and the order they are searched in does not matter - what matters
+    /// is that each keeps its own latest.
+    continuous: Vec<(&'static str, Seq, A)>,
     next_seq: Seq,
     capacity: usize,
     batch: usize,
@@ -51,7 +54,7 @@ impl<A> Scheduler<A> {
     pub fn with_limits(capacity: usize, batch: usize) -> Self {
         Self {
             discrete: VecDeque::new(),
-            continuous: None,
+            continuous: Vec::new(),
             next_seq: 0,
             capacity,
             batch,
@@ -60,9 +63,18 @@ impl<A> Scheduler<A> {
 
     pub fn accept(&mut self, pace: Pace, action: A) -> Admission {
         match pace {
-            Pace::Continuous => {
+            Pace::Continuous(stream) => {
                 let seq = self.take_seq();
-                self.continuous = Some((seq, action));
+                match self
+                    .continuous
+                    .iter_mut()
+                    .find(|(name, _, _)| *name == stream)
+                {
+                    // A newer state takes the newer arrival position, so it
+                    // still lands on the correct side of the clicks around it.
+                    Some(slot) => *slot = (stream, seq, action),
+                    None => self.continuous.push((stream, seq, action)),
+                }
                 Admission::Accepted(seq)
             }
             Pace::Discrete if self.discrete.len() < self.capacity => {
@@ -80,15 +92,23 @@ impl<A> Scheduler<A> {
     pub fn take_batch(&mut self) -> Vec<A> {
         let mut batch = Vec::new();
         while batch.len() < self.batch {
-            let take_continuous = match (self.continuous.as_ref(), self.discrete.front()) {
-                (Some((continuous, _)), Some((discrete, _))) => continuous < discrete,
+            let earliest = self
+                .continuous
+                .iter()
+                .enumerate()
+                .min_by_key(|(_, (_, seq, _))| *seq)
+                .map(|(index, (_, seq, _))| (index, *seq));
+            let take_continuous = match (earliest, self.discrete.front()) {
+                (Some((_, continuous)), Some((discrete, _))) => continuous < *discrete,
                 (Some(_), None) => true,
                 (None, _) => false,
             };
-            let next = if take_continuous {
-                self.continuous.take()
-            } else {
-                self.discrete.pop_front()
+            let next = match (take_continuous, earliest) {
+                (true, Some((index, _))) => {
+                    let (_, seq, action) = self.continuous.remove(index);
+                    Some((seq, action))
+                }
+                _ => self.discrete.pop_front(),
             };
             match next {
                 Some((_, action)) => batch.push(action),
@@ -99,11 +119,11 @@ impl<A> Scheduler<A> {
     }
 
     pub fn is_empty(&self) -> bool {
-        self.discrete.is_empty() && self.continuous.is_none()
+        self.discrete.is_empty() && self.continuous.is_empty()
     }
 
     pub fn pending(&self) -> usize {
-        self.discrete.len() + usize::from(self.continuous.is_some())
+        self.discrete.len() + self.continuous.len()
     }
 
     fn take_seq(&mut self) -> Seq {
@@ -171,7 +191,7 @@ mod tests {
         }
         for value in ["move 1", "move 2", "move 3"] {
             assert!(matches!(
-                scheduler.accept(Pace::Continuous, value),
+                scheduler.accept(Pace::Continuous("move"), value),
                 Admission::Accepted(_)
             ));
         }
@@ -189,9 +209,42 @@ mod tests {
     fn a_continuous_action_keeps_its_place_among_the_discrete_ones() {
         let mut scheduler = scheduler();
         scheduler.accept(Pace::Discrete, "press");
-        scheduler.accept(Pace::Continuous, "move");
+        scheduler.accept(Pace::Continuous("pointer"), "move");
         scheduler.accept(Pace::Discrete, "release");
         assert_eq!(scheduler.take_batch(), vec!["press", "move", "release"]);
+    }
+
+    #[test]
+    fn two_streams_supersede_themselves_and_not_each_other() {
+        let mut scheduler = scheduler();
+        scheduler.accept(Pace::Continuous("hover"), "hover 1");
+        scheduler.accept(Pace::Continuous("scroll"), "scroll 1");
+        scheduler.accept(Pace::Continuous("hover"), "hover 2");
+        // Two streams, so two things pending - not one that ate the other.
+        assert_eq!(scheduler.pending(), 2);
+        // And each arrives where its own latest arrived.
+        assert_eq!(scheduler.take_batch(), vec!["scroll 1", "hover 2"]);
+        assert!(scheduler.is_empty());
+    }
+
+    #[test]
+    fn a_second_stream_still_cannot_push_a_click_into_backpressure() {
+        let mut scheduler = scheduler();
+        for _ in 0..4 {
+            scheduler.accept(Pace::Discrete, "click");
+        }
+        // The queue is full of clicks. Streams live outside it, however many
+        // of them there are, so reporting on three of them refuses nothing.
+        for stream in ["hover", "scroll", "hit"] {
+            assert!(matches!(
+                scheduler.accept(Pace::Continuous(stream), "state"),
+                Admission::Accepted(_)
+            ));
+        }
+        assert_eq!(
+            scheduler.accept(Pace::Discrete, "one click too many"),
+            Admission::Backpressure
+        );
     }
 
     #[test]

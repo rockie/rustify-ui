@@ -59,3 +59,42 @@ flowchart TD
 ## Deferred to later milestones
 
 The eighteen-category component catalogue is delivered in P2 M2 (`crates/rustify-components`); `docs/components.md` is printed from it and records what each category supports and what a GPU region draws of it. Routing, workspaces, large data, general cross-region drag, the clipboard and file import are P2 M4 to M6 or later. What P1 measured, and what it could not, is in `docs/reports/p1/`.
+
+## Streams, and why they are named
+
+A scope's action queue holds two kinds of thing. A click, a submit or a cancel
+is its own event: dropping or reordering one changes what the application did,
+so those are queued in arrival order and never merged. A pointer that keeps
+moving is a stream of states rather than a history, so only the latest is worth
+delivering - and it must not be able to fill the queue and push a click out of
+it.
+
+`Pace::Continuous` carries the stream's name, and that name is load-bearing. One
+region can have several streams running at once: where the pointer is, what a
+drag would land on, how far a list has scrolled, where it drew its controls.
+They supersede *themselves* and nothing else. A single slot for the whole scope
+- which is what this was until M6 - means whichever stream reported last
+silently ate the others, and the symptom is not a crash but a report that never
+arrives: the workbench's region drew its controls, said so, and the scroll
+report that followed in the same pump took its place.
+
+Each stream keeps the arrival position of its newest state, so a state still
+lands on the correct side of the clicks around it.
+
+## Deciding in the same turn as the event
+
+Some things cannot be decided by the region, because the browser needs the
+answer before the region can run. A wheel event is the example: `preventDefault`
+has to be called during the event, and by the time the region has been pumped
+the browser has already been told.
+
+The shape that works is a *report from the last draw*. The region says where its
+scrolling has run out at the moment that is a fact - after it draws - and the
+host consults that report synchronously when the next wheel arrives. The
+consequence is deliberate: the wheel that reaches an edge is still the region's,
+because it is judged against the report from before it arrived. Only the next
+one belongs to the page, which is also what a person expects.
+
+The same shape covers anything else where the host must answer immediately and
+the region is the only one who knows: report the state, decide from the report,
+accept that the answer is one event old.

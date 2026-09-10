@@ -309,11 +309,13 @@ pub struct ObjectRegion {
     wide_name: bool,
     #[rust]
     wide_notes: bool,
-    /// The last question answered, so one question is answered once: props are
-    /// applied whenever anything in them changes, and the question is only new
-    /// when its number is.
+    /// The last question answered, as session and number together. Props are
+    /// applied whenever anything in them changes, so the region needs to know
+    /// which questions it has already answered - and the number alone will not
+    /// do it: every drag counts its own questions from one, so two drags that
+    /// each ask once would both be question one.
     #[rust]
-    answered: Option<u64>,
+    answered: Option<(u64, u64)>,
     /// The answer, waiting for the next event to carry it out. Set while props
     /// are being applied, for the same reason `rejected` is: an action leaves
     /// on the application's own callback path, not from inside an apply.
@@ -343,15 +345,19 @@ impl RegionApp for ObjectRegion {
     fn pace(action: &SelectionAction) -> Pace {
         match action {
             // Both are pointer streams: what matters is where they ended up.
-            SelectionAction::Hover(_)
-            | SelectionAction::SetSize(_)
-            | SelectionAction::Controls { .. } => Pace::Continuous,
+            // Three streams, not one. A newer answer about where the
+            // pointer is is not a newer answer about where the region drew,
+            // and one slot for the whole scope means whichever reported last
+            // silently ate the others.
+            SelectionAction::Hover(_) => Pace::Continuous("hover"),
+            SelectionAction::SetSize(_) => Pace::Continuous("size"),
+            SelectionAction::Controls { .. } => Pace::Continuous("controls"),
             // One per pointer move while a drag is in flight, and only the
             // newest can still decide anything: exactly what continuous is
             // for. A drop is a discrete action the application takes after.
-            SelectionAction::Hit(_) => Pace::Continuous,
+            SelectionAction::Hit(_) => Pace::Continuous("hit"),
             // A wheel produces a stream of these and only the last is true.
-            SelectionAction::Scrolled { .. } => Pace::Continuous,
+            SelectionAction::Scrolled { .. } => Pace::Continuous("scroll"),
             _ => Pace::Discrete,
         }
     }
@@ -488,8 +494,8 @@ impl RegionApp for ObjectRegion {
         // has seen. Asking the widget after this apply would answer about a
         // list that has not been drawn yet.
         if let Some(query) = props.hit.as_ref() {
-            if self.answered != Some(query.seq) {
-                self.answered = Some(query.seq);
+            if self.answered != Some((query.session, query.seq)) {
+                self.answered = Some((query.session, query.seq));
                 let found = self
                     .ui
                     .widget(cx, ids!(groups))
