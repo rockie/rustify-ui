@@ -10,7 +10,7 @@ use leptos::prelude::*;
 
 variants! {
     Button {
-        base: "rui:inline-flex rui:items-center rui:justify-center rui:gap-2 rui:whitespace-nowrap rui:rounded-md rui:text-sm rui:font-medium rui:shrink-0 rui:w-fit rui:select-none rui:transition-all rui:outline-none rui:cursor-pointer rui:disabled:pointer-events-none rui:disabled:opacity-50 rui:focus-visible:ring-ring/50 rui:focus-visible:ring-[3px] rui:aria-invalid:border-destructive",
+        base: "rui:inline-flex rui:items-center rui:justify-center rui:gap-2 rui:whitespace-nowrap rui:rounded-md rui:text-sm rui:font-medium rui:shrink-0 rui:w-fit rui:select-none rui:transition-all rui:outline-none rui:cursor-pointer rui:disabled:pointer-events-none rui:disabled:opacity-50 rui:aria-disabled:opacity-50 rui:aria-disabled:cursor-not-allowed rui:focus-visible:ring-ring/50 rui:focus-visible:ring-[3px] rui:aria-invalid:border-destructive",
         variants: {
             variant: {
                 Default: "rui:bg-primary rui:text-primary-foreground rui:hover:bg-primary/90",
@@ -44,6 +44,17 @@ pub fn Button(
     #[prop(optional, into)] variant: Signal<ButtonVariant>,
     #[prop(optional, into)] size: Signal<ButtonSize>,
     #[prop(optional, into)] disabled: Signal<bool>,
+    /// Says the button will not act, and keeps it reachable anyway.
+    ///
+    /// The difference from `disabled` is who decides. A natively disabled
+    /// button never sees the click, so nothing behind it can judge one; this
+    /// one is announced as unavailable, stays in the tab order where it can
+    /// say why, and still delivers the click - which means the handler is the
+    /// authority and has to refuse for itself. A form's submit is the case it
+    /// exists for: what the button shows is a courtesy, and `submit()` is the
+    /// rule.
+    #[prop(optional, into)]
+    unavailable: Signal<bool>,
     /// The accessible name, for a button whose own content is not one - an
     /// icon, or a label that changes with the state.
     #[prop(optional, into)]
@@ -81,6 +92,7 @@ pub fn Button(
                 (!controls.is_empty()).then_some(controls)
             }
             aria-expanded=move || expanded.get().map(|open| open.to_string())
+            aria-disabled=move || unavailable.get().then_some("true")
             prop:disabled=move || disabled.get()
             on:click=move |_| {
                 if !disabled.get_untracked() {

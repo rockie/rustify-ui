@@ -340,6 +340,9 @@
   .rui\:text-background {
     color: var(--background);
   }
+  .rui\:text-destructive {
+    color: var(--destructive);
+  }
   .rui\:text-destructive-foreground {
     color: var(--destructive-foreground);
   }

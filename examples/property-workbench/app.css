@@ -163,3 +163,24 @@ body {
 .workbench .load-retry {
     justify-self: start;
 }
+
+/* The details form. The controls inside it are the component crate's and are
+   drawn by its own classes; what is here is where the block sits. */
+.details {
+    display: grid;
+    gap: 10px;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid #d0d5dd;
+}
+
+.details h3 {
+    margin: 0;
+    font-size: 14px;
+}
+
+.details-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}

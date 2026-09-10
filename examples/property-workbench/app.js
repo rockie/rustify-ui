@@ -136,6 +136,17 @@ boot({ wasm_url: new URL("./property-workbench.wasm", import.meta.url), on_fatal
             start_load(delay_ms, outcome) {
                 return app.workbench_start_load(delay_ms, outcome);
             },
+            // The validations the form is waiting on, oldest first, and the
+            // two answers a test holds open: one per check, one per save.
+            form_checks() {
+                return JSON.parse(app.workbench_form_checks());
+            },
+            resolve_check(index, ok) {
+                return app.workbench_resolve_check(index, ok);
+            },
+            resolve_save(ok) {
+                return app.workbench_resolve_save(ok);
+            },
             lookup_object(id) {
                 return app.workbench_lookup_object(id);
             },

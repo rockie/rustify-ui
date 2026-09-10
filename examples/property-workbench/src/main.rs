@@ -1,4 +1,6 @@
 #[cfg(target_arch = "wasm32")]
+mod details;
+#[cfg(target_arch = "wasm32")]
 mod name_field;
 #[cfg(target_arch = "wasm32")]
 mod object_grid;
@@ -9,12 +11,16 @@ mod third_party;
 
 #[cfg(target_arch = "wasm32")]
 mod app {
+    use super::details::{
+        rules as property_rules, Details, DetailsFields, FIELDS as PROPERTY_FIELDS,
+    };
     use super::object_grid::GridCell;
     use super::object_region::{EditField, ObjectRegion, SelectionAction, SelectionProps};
     use super::third_party::ThirdPartySlider;
     use leptos::prelude::*;
     use leptos::wasm_bindgen::prelude::*;
     use leptos::wasm_bindgen::JsCast;
+    use rustify_components::{Form, FormStatus, SubmitButton};
     use rustify_components::{Support, CATALOG};
     use rustify_ui::{
         mount, Anchor, AppHandle, Button, Checkbox, GpuRegion, Load, LoadView, LocalRect,
@@ -47,6 +53,9 @@ mod app {
         pub locked: bool,
         /// 0..=100 in steps of 5.
         pub size: f64,
+        /// The fifteen a save applies. Together with the five above they are
+        /// the twenty visible properties of an object.
+        pub details: crate::details::Details,
     }
 
     const PALETTE: [u32; 6] = [0x2e90fa, 0x12b76a, 0xf79009, 0xf04438, 0x7a5af8, 0x475467];
@@ -61,6 +70,7 @@ mod app {
                 color: PALETTE[(n as usize - 1) % PALETTE.len()],
                 locked: false,
                 size: 50.0,
+                details: crate::details::Details::seeded(n),
             })
             .collect()
     }
@@ -81,6 +91,13 @@ mod app {
         /// Registered by the live scope: selects an object by id and reports
         /// whether it could.
         static SELECT_BY_ID: Seam<dyn Fn(u32) -> bool> = const { RefCell::new(BTreeMap::new()) };
+        /// The validations the form is waiting on, oldest first, so a test can
+        /// answer them in any order it likes.
+        static FORM_CHECKS: Seam<dyn Fn() -> String> = const { RefCell::new(BTreeMap::new()) };
+        static RESOLVE_CHECK: Seam<dyn Fn(usize, bool) -> bool> = const { RefCell::new(BTreeMap::new()) };
+        /// The save the form started, held open until the page says how it
+        /// went - which is what makes twenty clicks measurable.
+        static RESOLVE_SAVE: Seam<dyn Fn(bool) -> bool> = const { RefCell::new(BTreeMap::new()) };
         /// Reads whether an id is in the application's current state, without
         /// selecting it.
         static EXISTS: Seam<dyn Fn(u32) -> bool> = const { RefCell::new(BTreeMap::new()) };
@@ -182,6 +199,47 @@ mod app {
                 let index = selected.and_then(|id| objects.iter().position(|o| o.id == id));
                 (index, objects.len())
             })
+        });
+
+        // The fifteen drafted properties of the object showing, and the
+        // bookkeeping over all twenty. The draft is the application's copy to
+        // hold, which is why `FormState` does not keep one: two answers to
+        // "what is in this field" is the bug a controlled component exists to
+        // prevent, and a form is not exempt from it.
+        let draft = RwSignal::new(Details::default());
+        let checks = RwSignal::new(Vec::<(&'static str, rustify_ui::Generation)>::new());
+        let saving = RwSignal::new(false);
+        let saves = RwSignal::new(0u32);
+        let form = Form::new(&PROPERTY_FIELDS, move || {
+            // Starting a save, not finishing one: the page says how it went,
+            // and until it does the form is busy - which is what makes twenty
+            // clicks one save rather than twenty.
+            saves.update(|count| *count += 1);
+            saving.set(true);
+        });
+
+        // Selecting another object replaces the draft. Anything unsaved goes
+        // with it, which is this application's answer rather than the SDK's;
+        // a workspace that must not lose it is P2 M5's guard.
+        Effect::new(move || {
+            let held = current
+                .get()
+                .map(|object| object.details)
+                .unwrap_or_default();
+            draft.set(held);
+            checks.set(Vec::new());
+        });
+
+        let asked_result = RwSignal::new(String::new());
+        let changed = Callback::new(move |field: &'static str| {
+            form.changed(field);
+            // One property is checked against something only a server knows.
+            // It is started here rather than inside the form because what a
+            // check *is* belongs to the application.
+            if field == "reference" {
+                let generation = form.validating(field);
+                checks.update(|queue| queue.push((field, generation)));
+            }
         });
 
         // Rebuilt only when the objects change, so moving the selection does
@@ -392,6 +450,7 @@ mod app {
                         color: PALETTE[(next as usize) % PALETTE.len()],
                         locked: false,
                         size: 50.0,
+                        details: Details::seeded(next),
                     });
                     next += 1;
                 }
@@ -441,10 +500,72 @@ mod app {
             known
         };
         publish(&SELECT_BY_ID, registration, Rc::new(select_by_id));
+        publish(
+            &FORM_CHECKS,
+            registration,
+            Rc::new(move || {
+                checks.with(|queue| {
+                    let entries: Vec<String> = queue
+                        .iter()
+                        .map(|(field, _)| format!("\"{field}\""))
+                        .collect();
+                    format!("[{}]", entries.join(","))
+                })
+            }),
+        );
+        publish(
+            &RESOLVE_CHECK,
+            registration,
+            Rc::new(move |index: usize, ok: bool| {
+                let entry = checks
+                    .try_update(|queue| (index < queue.len()).then(|| queue.remove(index)))
+                    .flatten();
+                let Some((field, generation)) = entry else {
+                    return false;
+                };
+                form.validated(
+                    field,
+                    generation,
+                    (!ok).then(|| "no such reference".to_string()),
+                );
+                true
+            }),
+        );
+        publish(
+            &RESOLVE_SAVE,
+            registration,
+            Rc::new(move |ok: bool| {
+                if !saving.get_untracked() {
+                    return false;
+                }
+                saving.set(false);
+                if ok {
+                    // Applying the draft is the application's business, and it
+                    // happens once, here, when the save it started succeeds.
+                    let held = draft.get_untracked();
+                    if let Some(id) = selected.get_untracked() {
+                        objects.update(|objects| {
+                            if let Some(object) = objects.iter_mut().find(|o| o.id == id) {
+                                object.details = held;
+                            }
+                        });
+                    }
+                }
+                form.submitted(if ok {
+                    Ok(())
+                } else {
+                    Err("the server refused the details".to_string())
+                });
+                true
+            }),
+        );
         let exists = move |id: u32| objects.with(|objects| objects.iter().any(|o| o.id.0 == id));
         publish(&EXISTS, registration, Rc::new(exists));
         on_cleanup(move || {
             withdraw(&SELECT_BY_ID, registration);
+            withdraw(&FORM_CHECKS, registration);
+            withdraw(&RESOLVE_CHECK, registration);
+            withdraw(&RESOLVE_SAVE, registration);
             withdraw(&EXISTS, registration);
         });
         let find_id = RwSignal::new(String::new());
@@ -557,7 +678,7 @@ mod app {
             let (index, total) = position.get();
             let current = current.get();
             let snapshot = format!(
-                "{{\"count\":{},\"position\":{},\"selected\":{},\"name\":{},\"color\":\"{}\",\"first_colors\":\"{}\",\"first_ids\":\"{}\",\"accepted\":{},\"refused\":{},\"hovered\":{},\"hovers\":{},\"editing\":{},\"invalidated\":{},\"notes\":{},\"theme\":\"{}\",\"details\":\"{}\",\"details_value\":{},\"locked\":{},\"size\":{},\"refusals\":{},\"refusal\":{},\"third_party\":{},\"third_party_updates\":{},\"controls\":{},\"region\":\"{}\"}}",
+                "{{\"count\":{},\"position\":{},\"selected\":{},\"name\":{},\"color\":\"{}\",\"first_colors\":\"{}\",\"first_ids\":\"{}\",\"accepted\":{},\"refused\":{},\"hovered\":{},\"hovers\":{},\"editing\":{},\"invalidated\":{},\"notes\":{},\"theme\":\"{}\",\"details\":\"{}\",\"details_value\":{},\"locked\":{},\"size\":{},\"refusals\":{},\"refusal\":{},\"third_party\":{},\"third_party_updates\":{},\"controls\":{},\"region\":\"{}\",\"form\":{}}}",
                 total,
                 index.map(|i| i as i64 + 1).unwrap_or(0),
                 current
@@ -637,6 +758,28 @@ mod app {
                     RegionState::Failed(_) => "failed",
                     RegionState::Disposed => "disposed",
                 },
+                format!(
+                    "{{\"fields\":{},\"errors\":{},\"first_error\":{},\"can_submit\":{},\"submitting\":{},\"dirty\":{},\"checks\":{},\"saves\":{},\"asked\":{},\"failure\":{}}}",
+                    PROPERTY_FIELDS.len(),
+                    PROPERTY_FIELDS
+                        .iter()
+                        .filter(|field| form.error(field).is_some())
+                        .count(),
+                    PROPERTY_FIELDS
+                        .iter()
+                        .find(|field| form.error(field).is_some())
+                        .map(|field| json_string(field))
+                        .unwrap_or_else(|| "null".to_string()),
+                    form.can_submit(),
+                    form.submitting(),
+                    form.dirty(),
+                    checks.with(Vec::len),
+                    saves.get(),
+                    json_string(&asked_result.get()),
+                    form.failure()
+                        .map(|failure| json_string(&failure))
+                        .unwrap_or_else(|| "null".to_string()),
+                ),
             );
             SNAPSHOT.with(|slot| *slot.borrow_mut() = snapshot);
         });
@@ -790,6 +933,50 @@ mod app {
                         disabled=Signal::derive(move || current.get().is_none())
                         on_change=move |size| set_size(size)
                     />
+                    <section class="details" aria-label="object details" data-testid="object-details">
+                        <h3>"details"</h3>
+                        <DetailsFields
+                            form=form
+                            draft=draft
+                            disabled=Signal::derive(move || current.get().is_none())
+                            on_changed=changed
+                        />
+                        <div class="details-actions">
+                            <SubmitButton
+                                form=form
+                                test_id="save-details"
+                                rules=move || {
+                                    let object = current.get_untracked();
+                                    draft.with_untracked(|draft| {
+                                        property_rules(
+                                            object.as_ref().map(|o| o.name.as_str()).unwrap_or(""),
+                                            object.as_ref().is_some_and(|o| o.locked),
+                                            object
+                                                .as_ref()
+                                                .map(|o| o.details.owner.as_str())
+                                                .unwrap_or(""),
+                                            draft,
+                                        )
+                                    })
+                                }
+                                on_asked=Callback::new(move |asked: rustify_ui::Submit| {
+                                    asked_result
+                                        .set(
+                                            match asked {
+                                                rustify_ui::Submit::Busy => "busy",
+                                                rustify_ui::Submit::Waiting => "waiting",
+                                                rustify_ui::Submit::Blocked { .. } => "blocked",
+                                                rustify_ui::Submit::Save => "save",
+                                            }
+                                                .to_string(),
+                                        )
+                                })
+                            >
+                                "save details"
+                            </SubmitButton>
+                            <FormStatus form=form test_id="details-status" />
+                        </div>
+                    </section>
                     {move || refusal.get().map(|reason| view! {
                         <p class="region-error" role="alert" data-testid="rejected-value">
                             {format!("{reason}; the field shows the value in force")}
@@ -1162,6 +1349,28 @@ mod app {
             }
             None => false,
         }
+    }
+
+    /// The validations the form is waiting on, oldest first.
+    #[wasm_bindgen]
+    pub fn workbench_form_checks() -> String {
+        newest(&FORM_CHECKS)
+            .map(|checks| checks())
+            .unwrap_or_else(|| "[]".to_string())
+    }
+
+    /// Answers the validation at `index`, so a test can answer them in any
+    /// order it likes - which is the whole of the out-of-order question.
+    #[wasm_bindgen]
+    pub fn workbench_resolve_check(index: usize, ok: bool) -> bool {
+        newest(&RESOLVE_CHECK).is_some_and(|resolve| resolve(index, ok))
+    }
+
+    /// Finishes the save the form started. Until this is called the form is
+    /// saving, which is what makes a run of clicks countable.
+    #[wasm_bindgen]
+    pub fn workbench_resolve_save(ok: bool) -> bool {
+        newest(&RESOLVE_SAVE).is_some_and(|resolve| resolve(ok))
     }
 
     /// Names this runtime and the build it came from, so every diagnostic

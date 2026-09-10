@@ -324,7 +324,7 @@ flowchart TD
 | --- | --- | --- |
 | Token 表 | 每 token：名称、light/dark sRGB 值、GPU 是否投影；单测断言与 `rustify.tailwind.css` 中的变量名一一对应 | 编译期常量；作用域覆盖只存差异，随作用域清理 |
 | ComponentCapability | 组件名、六类能力 × 三列状态、示例 test_id；无 `Unknown` | 编译期常量；`catalog --check` 与文档同步 |
-| FormState | 字段→{value, error, gen, pending}；`submitting: bool`；`submit_request: Option<gen>`；`dirty: bool`；不变量：保存只在 `can_submit()` 为真时调用 | 随视图 Owner；离开视图时被守卫读取 `dirty` |
+| FormState | 字段→{error(+来源 Rule/Check), gen, pending}；`submitting: bool`；`request: Option<每字段代际快照>`；`dirty: bool`；`failure: Option<String>`；不变量：一次请求至多保存一次 | 随视图 Owner；离开视图时被守卫读取 `dirty`。**M3 修正：不持有字段值**——值是应用的（受控组件的定义就是如此），再存一份就是「这个字段里是什么」有两个答案，正是 P1 M6 从控件里拿掉的那个 bug。跨字段规则与保存都是应用的函数，由状态机在顺序要紧的那一刻调用 |
 | RouterState（所有者作用域） | `base`、`current: {url, index}`、`next_index`、`guards: Vec<Signal<bool>>`、`restoring: Option<{target_index, attempts}>`；不变量：SDK 创建的每个历史项 `history.state.rustify.index` 唯一且单调 | 随作用域；初始 `replaceState` 写入 index 0（重载时沿用已有序号）；清理时注销监听与 `beforeunload` |
 | DragSession | `session_id`、`source`、`payload`、`confirmed: Option<{target, query_seq}>`、`pending_query: Option<{target, query_seq}>`、`state ∈ {Idle, Dragging, Releasing, Released, Cancelled}`；不变量：`Released` 至多提交一次；`confirmed` 只能来自当前会话最新序号的 accept | 每次拖拽新建；作用域清理即取消 |
 | ImportResult | `Ok{bytes,name,mime}` / `TooLarge{size,limit}` / `Unsupported{mime}` / `Aborted`；失败不产生业务数据 | 一次导入；应用决定采纳 |
@@ -384,9 +384,9 @@ flowchart TD
 
 ### 5.3 表单
 
-1. `FormState` 持有字段值与错误；每次 `set_value` 推进该字段代际并清除旧错误；同步规则立即执行。
+1. `FormState` 持有每字段的错误、代际与 pending，**不持有值**（M3 修正，理由见 §3）。应用每接受一个新值就调用 `changed(field)`：该字段代际前进，它的错误与正在跑的校验都作废（它们说的是一个已经不存在的值），等待中的提交请求也作废。
 2. 异步验证由应用返回 future；SDK 用 ☐ 异步票据封装，完成时只有代际等于当前才写入错误；反序完成 20 次的断言在宿主单测与浏览器各做一次。
-3. 可提交条件只在一处定义：`can_submit()` = 非 `submitting` ∧ 无字段 pending ∧ 当前代际无错误。`submit()` 的顺序：`submitting` 为真 → 返回 `Busy`，保存 0 次；跑全部同步规则与跨字段规则，任一失败 → 聚焦首个错误字段（DOM 顺序），保存 0 次；有字段 pending → 把提交请求绑定到当前各字段代际并返回 `Pending`，等最后一个 pending 以相同代际完成后再判定：无错误则保存恰好一次，有错误则聚焦首错且保存 0 次；等待期间任一字段代际变化则请求作废（用户改了值，要重新提交）；全部通过 → 保存一次。保存失败保留全部输入并显示可重试；成功只报告一次。提交按钮的禁用/加载态由 `can_submit()` 与 `submitting` 驱动，但服务端语义仍以 `submit()` 内的判定为准。
+3. 可提交条件只在一处定义：`can_submit()` = 非 `submitting` ∧ 无字段 pending ∧ 无错误。`submit(rules)` 的顺序：`submitting` 为真 → 返回 `Busy`，保存 0 次；清掉上一轮**规则**留下的错误（校验结果留着——它说的是值本身，而值没变；两者靠错误的来源标记区分，M3 实测：不区分就会「异步校验失败后再点一次就保存了」），跑全部同步与跨字段规则，任一失败 → 返回 `Blocked{first_error}`（字段顺序的第一个，不是规则报出的第一个），保存 0 次；有字段 pending → 把请求绑定到当前各字段代际、返回 `Waiting`，等最后一个 pending 完成后由 `validated()` 判定：无错误则保存恰好一次，有错误则 `Blocked` 且保存 0 次；等待期间任一字段 `changed` 即请求作废；全部通过 → 保存一次。保存失败保留全部输入（值本来就在应用手里）并给出可重试的原因；成功只报告一次。**提交按钮用 `aria-disabled` 而不是原生 `disabled`**（M3 修正）：原生禁用的按钮根本收不到点击，`submit()` 就当不成权威，而且够不着的按钮也没法告诉人为什么；聚焦首错由发起提交的那一侧执行。
 4. 表单组件把 `FormState` 映射为 `aria-invalid`、`aria-describedby`、错误文本与提交按钮的禁用/加载态；不重写业务规则。
 
 ### 5.4 拖拽与滚轮
