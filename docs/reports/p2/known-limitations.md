@@ -34,6 +34,12 @@ shortage of time, and which of those it was is said plainly.
   down in `docs/workspace.md`.
 - **One region owns a full Makepad `Cx`.** Carried over from P1: script VM,
   theme and font atlas per region, and wasm memory never shrinks.
+- **`math_aot::batch_edges` overflows its stack**, and predates P2. It is a test
+  of the fork's script VM in `makepad/platform/script`; P2 changed three files
+  under `makepad/`, all in `os/web/`. Checked rather than argued: the pre-P2
+  commit built in a `git worktree` fails the same way from a freshly compiled
+  binary. `cargo xtask verify --suite p2` reports it as a failed step, which is
+  correct - it is a failure, just not a new one.
 - **`m8-endurance`'s memory tail assertion fails, and predates P2.** Proved in
   M2 by building the pre-P2 commit in a worktree and re-running the same
   assertion: it failed there too, with a larger margin. The behavioural half of

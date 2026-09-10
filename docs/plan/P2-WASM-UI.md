@@ -26,8 +26,8 @@
 
 ### 恢复快照
 
-- 最近更新：2026-09-10。**M6、M7 已完成**（浏览器全量复跑结果见下）。下一个是 M8。
-- 当前进度：**7/8**（M1–M7 关闭）。
+- 最近更新：2026-09-11。**M1–M7 关闭，M8 的自动化部分已交付**。**P2 不能称为完成**：四份人工记录（A-4）一份都没有，`cargo xtask verify --suite p2` 会一直逐条列为缺失——这正是那条命令存在的理由。
+- 当前进度：**7/8 + M8 自动化部分**。剩下的只有人工项。
 - 当前状态：In progress。A-1、A-2、A-5、**A-6 已解除**；D1/D2/D3/D5 与 ADR-4–7 已接受；D13/ADR-5 按 M1 实测修正；§3/§5.3 按 M3 实测修正；§10 的 M6 行按实测修正（边界缓存落在 `web.js` 的基类而不是 `embedded.js`）。**A-3 仍开放**（B1 是负载定义，不是已批准预算；数字在 M8）。**A-4 仍开放**：四份人工记录一份都没有，`verify --suite p2` 逐条列为缺失。
 - 最近完成（本计划）：**M6 · 拖拽、剪贴板与文件** 与 **M7 · 多语言与文本样本**。
   - **M6 三个提交** `3920cf0`、`fed8c81`、`c7dbf03`：
@@ -44,10 +44,15 @@
   - ③ property-workbench 达到 B1：3 面板（对象列表/GPU 视图/属性表单，各自声明最小宽度）、10 个视图（过滤器而非文件夹，切换不丢选择）、1,000 对象、20 个可见属性、右键在**区域内部**打开的上下文菜单（§6.2 要求 B1 至少有一处 GPU 锚点菜单）、命令面板（本身就是模态层）。逐项对照表在 `docs/validation/p2/m5.md`。
   - ④ 一期 V4 的锚点性质在 100 次面板调整后复核：区域报告的几何与指针命中的几何仍是同一个（10 轮 × 2 个控件 = 20 次瞄准）。
   - **两个自己造的坑，都修在源头**：快照把面板尺寸按整数像素报，1,160 宽的一行会读成 1,161，把「总宽不变」的断言弄挂了——算术是精确的，报告现在也精确；`m5-text` 用写死的 470 px 去点区域画的备注，B1 把区域放进更窄的面板后就点空了——区域现在报告它画文字的两个矩形，用例去问它（R25 要的就是这个）。**这已经是同一形状的第三次**：调用方去猜区域早就知道的几何（第一次是目录页的区域按钮，第二次是区域从地址栏推断资源根）。
-- 下一步：**M8 · 二期验收与交接**。按 §10 的 M8 行：三示例双干净构建、`verify --suite p2` 全量、B1 基线与 R29/R30 对照、六类报告与需求矩阵（已写，数字待回填）、四份人工记录（A-4，需要用户提供环境与评审人）。**不能在人工记录缺失时称 P2 完成**——套件已经按这条设计，缺一份就打印缺一份。
-- 上一步（已完成）：**M6 · 拖拽、剪贴板与文件**。按 §10 的 M6 行：**A-6 探针先行**（`--cfg=web_sys_unstable_apis` 能否经 cargo-makepad 追加，使 web-sys 的 `Clipboard::read_text/write_text` 可用；失败就改宿主 JS 薄封装）；`crates/rustify-ui/src/drag.rs` 会话状态机（会话号、查询序号、目标失效、`Releasing`，§5.4 第 3 步的四条必测序列先写成宿主单测）；GPU 侧 `HitQuery`/`HitAnswer`；**宿主桥改动**：区域→宿主的滚动边界上报 + wheel 按边界同步判定（`web.js`/`web.rs`/`embedded.js`，静态桥重新生成，`cd makepad && cargo test` 与指纹校验都要过）；`clipboard.rs`/`files.rs`；投放区与文件选择组件；workbench 对象跨区拖到分组 + 导入导出。退出条件见 §10 的 M6 行与 §9.1 的 V8/V9。**两条现成的地基**：M4 已经改过 `web.js` 一次（区域的部署路径），路子和指纹校验都走通了；`Pace::Continuous` 已有真实生产者（区域 Hover），拖拽会话共用同一投递路径（§0.7 第 6 条）。
-- 当前阻塞：无。
-- 代码基线：`736b668` → M1 八提交 → `1a479ef`、`a3a555c` → M2 八提交 → M3 三提交 → M4 六提交 `41d77f4`…`dec20f1` → **M5 四提交 `e59b101`、`e5004a9`、`caed633`、`1e09e44`**。工作区 clean。
+- 下一步：**只剩人工验收**。需要用户提供环境与评审人，四份记录写进 `docs/validation/p2/manual/`：
+  1. `voiceover.md`——VoiceOver + Chrome 走目录 18 类与 B1 五旅程；
+  2. `pinyin.md`——真实拼音输入法在属性表单与命令面板里打字；
+  3. `samples.md`——20 条 B5 样本对照参考渲染逐条判方向、顺序、有没有变成方框（**参考渲染图需要评审人提供**）；
+  4. `contrast-and-zoom.md`——200% 与 400% 缩放走查（对比度**比值**已是宿主测试，人要做的是在那两个缩放下看页面）。
+  这四条是 A-4 的内容，本会话无法代做：没有屏幕阅读器、没有输入法会话、没有参考渲染图。其余全部自动化项已有结果。
+- 上一步（已完成）：**M8 自动化部分**——`verify --suite p1|p2` 拆成两套清单；三示例双干净构建**逐字节相同**（build id `5c03d548…`/`08c813b0…`/`bb0feb41…`）；六类报告 + 需求矩阵在 `docs/reports/p2/`；B1 基线在 `docs/reports/p2/performance.md`。**两处失败都先于二期，都是建 worktree 复测证的**，不是论证出来的：`m8-endurance` 的内存尾部（M2 已证），`math_aot::batch_edges` 爆栈（本轮在 `550c2ef` 的 worktree 上重编重跑，同样爆栈；二期在 `makepad/` 只改了 `os/web/` 三个文件）。按 §10 的 M6 行：**A-6 探针先行**（`--cfg=web_sys_unstable_apis` 能否经 cargo-makepad 追加，使 web-sys 的 `Clipboard::read_text/write_text` 可用；失败就改宿主 JS 薄封装）；`crates/rustify-ui/src/drag.rs` 会话状态机（会话号、查询序号、目标失效、`Releasing`，§5.4 第 3 步的四条必测序列先写成宿主单测）；GPU 侧 `HitQuery`/`HitAnswer`；**宿主桥改动**：区域→宿主的滚动边界上报 + wheel 按边界同步判定（`web.js`/`web.rs`/`embedded.js`，静态桥重新生成，`cd makepad && cargo test` 与指纹校验都要过）；`clipboard.rs`/`files.rs`；投放区与文件选择组件；workbench 对象跨区拖到分组 + 导入导出。退出条件见 §10 的 M6 行与 §9.1 的 V8/V9。**两条现成的地基**：M4 已经改过 `web.js` 一次（区域的部署路径），路子和指纹校验都走通了；`Pace::Continuous` 已有真实生产者（区域 Hover），拖拽会话共用同一投递路径（§0.7 第 6 条）。
+- 当前阻塞：**A-4**。四份人工记录需要真实屏幕阅读器、真实输入法与参考渲染图，本会话拿不到，也不会伪造。自动化侧无阻塞。
+- 代码基线：`736b668` → M1 八提交 → `1a479ef`、`a3a555c` → M2 八提交 → M3 三提交 → M4 六提交 `41d77f4`…`dec20f1` → **M5 四提交 `e59b101`、`e5004a9`、`caed633`、`1e09e44`** → **M6 三提交 `3920cf0`、`fed8c81`、`c7dbf03`** → **M7/M8 两提交 `8877f0e`、`5488f81`**。工作区 clean。
 - 回归：见「完成记录」各行。**三条操作教训**：跑浏览器套件时别同时跑 release 构建；`ps` 要匹配 `ms-playwright/chromium`；串行共享 page 的块能抓到单条用例抓不到的 bug，代价是每条用例要把动到的东西放回去，放不回去的用自己的 page。**两条已知缺口**：`m8-endurance` 两分钟档的尾部断言先于二期就不过（P1 账本）；workbench 首帧 6,625 ms（M8 的 B1 基线材料）。
 
 ### 完成记录
@@ -59,6 +64,9 @@
 | M3 | 2026-09-10 | 表单：`form.rs` 状态机（代际/pending/提交请求绑定/单飞，16 条宿主单测）；错误带来源（修掉「异步失败后再点一次就保存」）；`ErrorKind::UnknownField` + `Diagnostic::field`（11 类）；`rustify-components` 的 `Form`/`Field`/`SubmitButton`/`FormStatus`；property-workbench 属性面板扩到 20 个可见属性（4 即时 + 15 草稿保存，必填/格式/跨字段规则 + 一个异步校验 + 可按住的保存）。按实测修正 §3/§5.3 两处（FormState 不持值、提交按钮用 aria-disabled）。未做：SDK 文案目录（M7）、离开视图的未保存守卫（M4） | `docs/validation/p2/m3.md`；`p2-form.spec.ts` **9/9**；`--project=component-catalog` **31/31**；`--project=property-workbench` **80 passed / 1 failed**（80 = 一期 71 + V5 9；唯一失败是 `m8-endurance` 的内存尾部断言，M2 时已用 worktree 证明先于二期存在）；`cargo test --workspace --lib` 91；clippy/fmt 通过；`cargo xtask css --check` 无漂移 | `4cee481` |
 | M4 | 2026-09-10 | 导航与深链接：A-5 探针五条（结论成立，守卫不降级）；`router.rs` 匹配 + 历史序号（序号=深度而非累加，15 条宿主单测）；`MountConfig{url_owner,base}` + `UrlOwnerConflict`；非所有者也拦自己容器的链接；`ErrorKind` 15 类 + `Severity`；`build-web --base`（根部署也改写）+ 子路径独立产物 + `serve --spa` + base 不符拒绝启动；workbench `objects/:id` + 未找到页 + 未保存守卫；fusion-basic 双挂载夹具；`docs/navigation.md`。**并修掉一个会一直藏到生产的缺陷**：区域原本按 `location.pathname` 解析资源，路由一改地址就全部 404，现在由宿主传部署路径。未做：嵌套路由/路由鉴权/服务端重定向（不在本期）、面板与标签页进 URL（M5 决定） | `docs/validation/p2/m4.md`；`--project=fusion-basic` **56/56**（一期 46 + 导航 10）；`--project=workbench-deep` **6/6**、`--project=property-workbench` 的 `p2-deeplink` **6/6**（同一套深链接用例在根与 `/tools/demo/` 各跑一遍）；`--project=deployment` **6/6**；`--project=component-catalog` **31/31**；`--project=property-workbench` **87 passed / 1 failed**（唯一失败仍是 `m8-endurance`，M2 时已用 worktree 证明先于二期存在）；`cargo test --workspace --lib` 107；`cargo test -p xtask` 19；clippy/fmt 通过 | `8023b68` |
 | M5 | 2026-09-10 | 工作区（B1 形态）：`workspace/{splitter,panel_tabs,command_palette}.rs`（12 条宿主单测把「悄悄错掉」的部分单独测）；分隔器画在应用自己排的行上（面板里的 GPU 区域不是 `Send`，过不了组件 children——这条写进 `docs/workspace.md`）；property-workbench 达 B1 逐项（3 面板 / 10 视图 / 1,000 对象 / 20 属性 / 区域内右键菜单 / 命令面板即模态层）；100 次面板调整后复核一期 V4 的锚点性质。顺手修掉两个自己造的坑：快照按整数像素报尺寸、`m5-text` 写死 470 px 点区域文字（区域现在报告文字矩形，用例去问它）。未做：任意停靠树、布局进 URL、布局持久化（都明确不做）；B1 的**数字**属 M8 | `docs/validation/p2/m5.md`；`p2-workspace.spec.ts` **9/9**；`m5-text.spec.ts` **8/8**；`--project=fusion-basic` **56/56**、`--project=component-catalog` **31/31**、`--project=deployment` **6/6**、`--project=workbench-deep` **6/6**；`--project=property-workbench` **95 passed / 1 failed**（唯一失败仍是 `m8-endurance`）；`cargo test --workspace --lib` 119；clippy/fmt 通过 | `1e09e44` |
+| M6 | 2026-09-11 | 拖拽、剪贴板与文件：**A-6 解除**（`--cfg=web_sys_unstable_apis` 经 `xtask` 设 `RUSTFLAGS`，带旗/不带旗两侧都验；不带旗时 `available()` 为 false 并给同形状应答，不需要宿主 JS 薄封装）；`drag.rs` 会话 + GPU `HitQuery`/`HitAnswer`（DOM 目标先有名字，GPU 目标只能被问「这个点上是什么」，由区域报出名字；应答按（会话号，提问号）成对匹配）；**宿主桥 D14/F27**：`FromWasmScrollBoundary` + `Cx::report_scroll_boundary` + `web.js` 的 `wheel_belongs_to_parent` 同步判定（**偏离**：边界缓存落在 `web.js` 基类而非 `embedded.js`，理由已回写 §10 与 `docs/validation/p2/m6.md`）；`clipboard.rs`/`files.rs`/`DropZone`/`FilePicker`；workbench 跨区拖到分组 + 文本/二进制导入导出。**顺带修掉一个设计缺陷**：`Pace::Continuous` 全作用域一个槽，两条流互相顶掉，现在按流名各占一槽 | `docs/validation/p2/m6.md`；`p2-drag` 14/14、`p2-files` 12/12；`--project=property-workbench` **121 passed / 1 failed**（唯一失败是 `m8-endurance`，M2 已证先于二期）；`cd makepad && cargo test` 通过；导出下载字节与应用写出的字节逐字节相同 | `3920cf0`、`fed8c81`、`c7dbf03` |
+| M7 | 2026-09-11 | 多语言与文本样本：`i18n.rs`（17 条框架文案 × 2 语言，两条测试守住漏译与重复）；`Intl` 数字/日期由应用传选项；目录 `/samples` 20 条 B5 样本 DOM 与 GPU 并排、方向写在元素上而不是交给 `dir="auto"` 猜；缺字标识与恢复；`LoadView`/`Dialog`/`DropZone` 改读 SDK 文案目录；`docs/i18n.md`、`docs/forms.md`。**对比度改成宿主测试后立刻抓到两处真实不达标**：浅色主题主色上的白字 3.24:1、border 令牌对背景 1.41:1（深色 1.80:1），后者同时是控件边界。都已修正 | `docs/validation/p2/m7.md`；`p2-i18n` 7/7；`--project=component-catalog` **38/38**；`cargo test -p rustify-ui theme` 9/9（两套主题 × 13 组配对） | `8877f0e`、`5488f81` |
+| M8 | 2026-09-11 | 二期验收（**自动化部分**）：`verify --suite p1\|p2` 拆成两套清单（示例、浏览器 project、报告、人工记录各不相同）；三示例双干净构建**逐字节相同**；六类报告 + 需求矩阵；B1 基线与 R29/R30 对照。**未完成**：四份人工记录（A-4）一份都没有 | `docs/validation/p2/m8.md`；`verify --suite p2 --no-browser` 除 `fork script tests` 外全过（该失败在 `550c2ef` 的 worktree 上复现，先于二期）；五个 project 合计 **227 passed / 1 failed**（`m8-endurance`，同样先于二期） | `5488f81` 起 |
 
 ## 0. 需求、范围与决策
 

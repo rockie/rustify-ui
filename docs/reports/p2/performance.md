@@ -42,11 +42,56 @@ table.
 The same wasm serves the root and the sub-path deployment; only the manifest
 and the page differ, which is the 2,896-byte gap in the `data` column.
 
-## Start-up, interaction and memory
+## What a first load actually costs
 
-Filled in by M8 from the run recorded in `docs/validation/p2/m8.md`. Each row
-carries the R29/R30 figure it sits beside and says plainly whether the release
-claims anything about it, which it does not.
+Counted by the browser, empty cache, localhost, release build of B1, 2026-09-11.
+
+| | Ready in | Over the wire |
+| --- | --- | --- |
+| Loopback | 9,916 ms | 11,935,619 bytes |
+| 12 Mbit/s, 40 ms latency | 18,687 ms | 11,935,619 bytes |
+| 3 Mbit/s, 40 ms latency | 32,179 ms | 11,753,527 bytes |
+
+By category on the first load: wasm 11,477,391 (1 file), js 235,265 (9), css
+37,752 (4), fonts 182,092 (1), data 3,119 (1).
+
+**182 KB of fonts, out of 51 MB in the directory.** The families that cover
+CJK and emoji are fetched when a value needs them, and the first Chinese glyph
+is what pays for them: 2 files, 29,718,416 bytes
+(`LXGWWenKaiRegular.ttf` 19,074,264 and `NotoColorEmoji.ttf` 10,644,152). That
+is the single largest number in this report and it is a *deliberate* deferral,
+not an optimisation - a page that never draws a non-Latin glyph never fetches
+them at all, and a page that draws one waits for 29 MB.
+
+R29's start-up figure is 5 s. This build is 9.9 s on a loopback. **Nothing is
+claimed either way**: A-3 says these are baselines, the gate runs a software
+rasteriser, and the wasm is a debug-symbol-free release build with no size work
+done on it at all.
+
+## Start-up, interaction and memory, measured in the page
+
+Thirty mounts, a thousand inputs, and a hundred mount rounds, all counted
+inside the page for the reason at the top of this report.
+
+| Measurement | Result | Beside |
+| --- | --- | --- |
+| Mount to ready, 30 rounds | median **64.0 ms**, worst 73.3 ms | Not R29's cold start: this is a mount into a page whose module is already compiled |
+| A thousand inputs the application accepted | median **0.000 ms**, p95 **0.100 ms**, worst 0.400 ms | R30's latency targets. Comfortably inside them, and measured as accepted actions rather than dispatched events |
+| 80 measured mount rounds (after 20 to warm up) | memory 39,649,280 → **39,649,280 bytes**, 1 region, 0 timers, 0 tasks left | R32. No growth at all across the measured rounds |
+| 100 hide-and-restore rounds | 39,649,280 → **39,649,280 bytes**, and the region still working | R31 |
+
+## What the diagnostics record costs
+
+Measured both ways, because a record whose cost cannot be subtracted is a
+record nobody can size.
+
+| | Time for 1,000 entries | Held |
+| --- | --- | --- |
+| Record on | 2.5 ms (2.5 µs each) | 113,000 bytes |
+| Record off | 1.5 ms (1.5 µs each) | 0 |
+
+With nothing going wrong, the record costs nothing measurable: input latency is
+median 0.000 ms and p95 0.100 ms with it on *and* with it off.
 
 ## The one long-running failure
 
