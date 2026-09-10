@@ -1,4 +1,4 @@
-import { expect, Locator, Page } from "@playwright/test";
+import { Browser, expect, Locator, Page, test } from "@playwright/test";
 import { PNG } from "pngjs";
 
 export interface Anchor {
@@ -277,4 +277,32 @@ declare global {
             hooks: { runtime: { errors: string[]; enter_fatal(error: unknown): void } };
         };
     }
+}
+
+
+/// One page for a whole `describe`, instead of one per test.
+///
+/// A cold catalogue page downloads and compiles an eleven megabyte module and
+/// boots its region: about seven seconds, which for a short check is nearly
+/// all of it. Sharing the page makes the suite roughly as long as the work in
+/// it rather than as long as the number of tests.
+///
+/// The cost is that the tests in the block are no longer independent, so the
+/// block has to run serially and each test has to leave the page as it found
+/// it - or read a delta rather than an absolute. Use it where the checks are
+/// reads and small reversible interactions; use a fresh `page` where a test
+/// changes something it cannot put back.
+export function sharedPage(setup?: (page: Page) => Promise<void>): { page: Page } {
+    // Filled by `beforeAll`; the tests in the block run after it.
+    const holder = { page: null as unknown as Page };
+    test.beforeAll(async ({ browser }: { browser: Browser }, info) => {
+        const context = await browser.newContext({ baseURL: info.project.use.baseURL });
+        holder.page = await context.newPage();
+        await waitForReady(holder.page);
+        await setup?.(holder.page);
+    });
+    test.afterAll(async () => {
+        await holder.page?.context().close();
+    });
+    return holder;
 }

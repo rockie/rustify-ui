@@ -10,11 +10,13 @@
 //! shader and a dozen quads otherwise. What Rust decides is which parts to
 //! draw and where, which is where the state lives.
 
+mod button;
 mod lists;
 mod marks;
 mod toggles;
 mod values;
 
+pub use button::RustifyButton;
 pub use lists::{RustifyDropDown, RustifyTabBar};
 pub use marks::{Glyph, RustifyIcon, RustifySpinner};
 pub use toggles::{RustifyCheckBox, RustifyRadio, RustifyToggle};
@@ -58,6 +60,19 @@ script_mod! {
         }
     }
 
+    mod.widgets.RustifyButtonBase = #(RustifyButton::register_widget(vm))
+
+    mod.widgets.RustifyButton = set_type_default() do mod.widgets.RustifyButtonBase{
+        width: 170
+        height: 30
+        draw_bg: mod.widgets.RustifyBox{ color: #xeaecf0 }
+        draw_border: mod.widgets.RustifyBox{ color: #xd0d5dd }
+        draw_text +: {
+            color: #x1d2939
+            text_style: theme.font_regular{ font_size: 12.0 }
+        }
+    }
+
     mod.widgets.RustifyCheckBoxBase = #(RustifyCheckBox::register_widget(vm))
 
     mod.widgets.RustifyCheckBox = set_type_default() do mod.widgets.RustifyCheckBoxBase{
@@ -95,9 +110,9 @@ script_mod! {
     mod.widgets.RustifyRadio = set_type_default() do mod.widgets.RustifyRadioBase{
         width: 20
         height: 20
-        draw_border +: mod.widgets.RustifyDisc{ color: #xd0d5dd }
-        draw_bg +: mod.widgets.RustifyDisc{ color: #x101828 }
-        draw_mark +: mod.widgets.RustifyDisc{ color: #x2e90fa }
+        draw_border: mod.widgets.RustifyDisc{ color: #xd0d5dd }
+        draw_bg: mod.widgets.RustifyDisc{ color: #x101828 }
+        draw_mark: mod.widgets.RustifyDisc{ color: #x2e90fa }
     }
 
     mod.widgets.RustifyToggleBase = #(RustifyToggle::register_widget(vm))
@@ -105,8 +120,8 @@ script_mod! {
     mod.widgets.RustifyToggle = set_type_default() do mod.widgets.RustifyToggleBase{
         width: 44
         height: 24
-        draw_track +: mod.widgets.RustifyPill{ color: #xd0d5dd }
-        draw_knob +: mod.widgets.RustifyDisc{ color: #xffffff }
+        draw_track: mod.widgets.RustifyPill{ color: #xd0d5dd }
+        draw_knob: mod.widgets.RustifyDisc{ color: #xffffff }
     }
 
     mod.widgets.RustifyProgressBase = #(RustifyProgress::register_widget(vm))
@@ -114,8 +129,8 @@ script_mod! {
     mod.widgets.RustifyProgress = set_type_default() do mod.widgets.RustifyProgressBase{
         width: Fill
         height: 8
-        draw_bg +: mod.widgets.RustifyPill{ color: #xeaecf0 }
-        draw_fill +: mod.widgets.RustifyPill{ color: #x2e90fa }
+        draw_bg: mod.widgets.RustifyPill{ color: #xeaecf0 }
+        draw_fill: mod.widgets.RustifyPill{ color: #x2e90fa }
     }
 
     mod.widgets.RustifySpinnerBase = #(RustifySpinner::register_widget(vm))
@@ -213,7 +228,7 @@ script_mod! {
                 return sdf.stroke(self.color, 2.0 * s)
             }
         }
-        draw_dot +: mod.widgets.RustifyDisc{ color: #x1d2939 }
+        draw_dot: mod.widgets.RustifyDisc{ color: #x1d2939 }
     }
 
     mod.widgets.RustifyDropDownBase = #(RustifyDropDown::register_widget(vm))
@@ -221,8 +236,8 @@ script_mod! {
     mod.widgets.RustifyDropDown = set_type_default() do mod.widgets.RustifyDropDownBase{
         width: 180
         height: 32
-        draw_bg +: mod.widgets.RustifyBox{ color: #xffffff }
-        draw_border +: mod.widgets.RustifyBox{ color: #xd0d5dd }
+        draw_bg: mod.widgets.RustifyBox{ color: #xffffff }
+        draw_border: mod.widgets.RustifyBox{ color: #xd0d5dd }
         draw_chevron +: {
             color: #x667085
             pixel: fn(){
@@ -245,8 +260,8 @@ script_mod! {
     mod.widgets.RustifyTabBar = set_type_default() do mod.widgets.RustifyTabBarBase{
         width: Fill
         height: 32
-        draw_bg +: mod.widgets.RustifyBox{ color: #xf2f4f7 }
-        draw_tab +: mod.widgets.RustifyBox{ color: #xffffff }
+        draw_bg: mod.widgets.RustifyBox{ color: #xf2f4f7 }
+        draw_tab: mod.widgets.RustifyBox{ color: #xffffff }
         draw_text +: {
             color: #x1d2939
             text_style: theme.font_regular{ font_size: 12.0 }

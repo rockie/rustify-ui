@@ -82,6 +82,23 @@ impl RustifyIcon {
         }
     }
 
+    /// Where it ended up, in the region's own local pixels.
+    pub fn drawn(&self, cx: &Cx) -> Option<Rect> {
+        let area = self.drawn_area();
+        (!area.is_empty()).then(|| area.rect(cx))
+    }
+
+    fn drawn_area(&self) -> Area {
+        match self.glyph {
+            Glyph::Check => self.draw_check.area(),
+            Glyph::ChevronDown => self.draw_chevron_down.area(),
+            Glyph::ChevronUp => self.draw_chevron_up.area(),
+            Glyph::ChevronRight => self.draw_chevron_right.area(),
+            Glyph::Close => self.draw_close.area(),
+            Glyph::Dot => self.draw_dot.area(),
+        }
+    }
+
     fn drawing(&mut self) -> &mut DrawColor {
         match self.glyph {
             Glyph::Check => &mut self.draw_check,
@@ -158,6 +175,12 @@ impl RustifySpinner {
             self.ink = Some(ink);
             self.redraw(cx);
         }
+    }
+
+    /// Where it ended up, in the region's own local pixels.
+    pub fn drawn(&self, cx: &Cx) -> Option<Rect> {
+        let area = self.draw_bg.area();
+        (!area.is_empty()).then(|| area.rect(cx))
     }
 
     fn turning(&self) -> bool {

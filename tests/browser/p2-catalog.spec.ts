@@ -1,5 +1,7 @@
 import { expect, Page, test } from "@playwright/test";
 
+import { sharedPage } from "./support";
+
 /// M1's exit conditions, on the third example: it boots under the release
 /// policy, its product carries nothing inline, a theme change reaches the DOM
 /// and the GPU in the same breath, and a host page's own controls look exactly
@@ -249,3 +251,257 @@ test.describe("M1 V1: the host page's own controls are not ours", () => {
         expect(await page.evaluate(() => window.__component_catalog.dispose_second())).toBe(true);
     });
 });
+
+/// M2 V2: the eighteen categories are components now, not descriptions of
+/// them. Every page carries the component itself, bound to a value the region
+/// above it draws with the GPU half - and, for the nine where the states mean
+/// something, the same component again as disabled, read-only and invalid.
+///
+/// One page for the whole block. A cold catalogue costs about seven seconds to
+/// download, compile and boot, and these are short checks; the price is that
+/// each test has to leave the page as it found it, or read a delta.
+test.describe("M2 V2: a component per category", () => {
+    test.describe.configure({ mode: "serial" });
+    const shared = sharedPage();
+
+    const CATEGORIES = [
+        "button",
+        "label",
+        "link",
+        "icon",
+        "text-field",
+        "text-area",
+        "checkbox",
+        "radio",
+        "switch",
+        "select",
+        "slider",
+        "progress",
+        "loading",
+        "tooltip",
+        "menu",
+        "dialog",
+        "tabs",
+        "scroll-area",
+    ];
+
+    /// The nine whose disabled, read-only and invalid states say anything.
+    const WITH_STATES = [
+        "button",
+        "link",
+        "text-field",
+        "text-area",
+        "checkbox",
+        "radio",
+        "switch",
+        "slider",
+        "tabs",
+    ];
+
+    async function open(page: Page, category: string) {
+        await page.getByTestId(`nav-${category}`).click();
+        await expect(page.getByTestId("category-name")).toHaveText(category.replace(/-/g, " "));
+    }
+
+    test("every category shows a working example of itself", async () => {
+        const page = shared.page;
+        for (const category of CATEGORIES) {
+            await open(page, category);
+            // A component of this crate, not a paragraph about one: every one
+            // of them carries `data-name`.
+            const named = page.locator('[data-testid="example"] [data-name]');
+            expect(await named.count(), category).toBeGreaterThan(0);
+            const matrix = page.getByTestId("state-matrix");
+            await expect(matrix, category).toBeAttached({
+                attached: WITH_STATES.includes(category),
+            });
+        }
+    });
+
+    test("a disabled control asks for nothing and a read-only one puts itself back", async () => {
+        const page = shared.page;
+        await open(page, "checkbox");
+        const before = await snapshot(page);
+
+        // The live one is an ordinary control: it asks, and the application
+        // grants.
+        await page.getByTestId("default-checkbox").click();
+        const after = await snapshot(page);
+        expect(after.actions).toBe(before.actions + 1);
+        expect(after.checked).toBe(!before.checked);
+
+        // The other two share that value and that counter, which is what
+        // makes this a measurement rather than a guess.
+        await page.getByTestId("disabled-checkbox").click({ force: true });
+        expect(await snapshot(page)).toMatchObject({
+            actions: after.actions,
+            checked: after.checked,
+        });
+
+        // A read-only checkbox has no HTML state to be in, so it takes the
+        // click and puts the box back where the application has it.
+        await page.getByTestId("read-only-checkbox").click();
+        expect(await snapshot(page)).toMatchObject({
+            actions: after.actions,
+            checked: after.checked,
+        });
+        expect(await page.getByTestId("read-only-checkbox").isChecked()).toBe(after.checked);
+
+        // Put the page back for whatever runs next.
+        await page.getByTestId("default-checkbox").click();
+        expect(await snapshot(page)).toMatchObject({ checked: before.checked });
+    });
+
+    test("a read-only field keeps the application's value, not the keystrokes", async () => {
+        const page = shared.page;
+        await open(page, "text-field");
+        const before = await snapshot(page);
+
+        // A text field has a read-only state in HTML, so the browser refuses
+        // the keystrokes itself.
+        await expect(page.getByTestId("read-only-text-field")).toHaveJSProperty(
+            "readOnly",
+            true
+        );
+        // And an input event that arrives anyway - a script, an extension, a
+        // test - is still not a change: the control is put back in step with
+        // what the application holds.
+        await page.evaluate(() => {
+            const field = document.querySelector(
+                '[data-testid="read-only-text-field"]'
+            ) as HTMLInputElement;
+            field.value = "typed into a read-only field";
+            field.dispatchEvent(new Event("input", { bubbles: true }));
+        });
+        expect(await snapshot(page)).toMatchObject({
+            actions: before.actions,
+            text: before.text,
+        });
+        await expect(page.getByTestId("read-only-text-field")).toHaveValue(before.text);
+
+        await expect(page.getByTestId("disabled-text-field")).toBeDisabled();
+
+        // The live one does take them, which is what makes the two different.
+        await page.getByTestId("default-text-field").fill("a new value");
+        expect(await snapshot(page)).toMatchObject({ text: "a new value" });
+        await page.getByTestId("default-text-field").fill(before.text);
+    });
+
+    test("one value, two halves: the region's control moves the DOM's", async () => {
+        const page = shared.page;
+        await open(page, "checkbox");
+        await expect.poll(async () => (await snapshot(page)).region).toBe("ready");
+        // The rectangle is cleared on a page change and reported again once
+        // the region has drawn this page's control, so waiting for it is
+        // waiting for the right control rather than the last one.
+        await expect
+            .poll(async () => (await snapshot(page)).control, { timeout: 15_000 })
+            .not.toBeNull();
+        const before = await snapshot(page);
+
+        // A bounding box is in the viewport, and so is a mouse click. The nav
+        // is long enough to have scrolled the region off the top, and a click
+        // at a negative y lands nowhere.
+        const region = page.getByTestId("catalogue-region");
+        await region.scrollIntoViewIfNeeded();
+        const box = (await region.boundingBox())!;
+        const control = before.control!;
+        await page.mouse.click(
+            box.x + control.x + control.width / 2,
+            box.y + control.y + control.height / 2
+        );
+
+        await expect.poll(async () => (await snapshot(page)).checked).toBe(!before.checked);
+        expect((await snapshot(page)).actions).toBe(before.actions + 1);
+        // And the DOM half is showing the same value, because there is one.
+        await expect(page.getByTestId("default-checkbox")).toBeChecked({
+            checked: !before.checked,
+        });
+
+        await page.getByTestId("default-checkbox").click();
+        expect(await snapshot(page)).toMatchObject({ checked: before.checked });
+    });
+
+    test("the state matrix shows one value in each of its states", async () => {
+        const page = shared.page;
+        await open(page, "switch");
+        const held = (await snapshot(page)).on;
+        for (const state of ["default", "disabled", "read-only"]) {
+            await expect(page.getByTestId(`${state}-switch`)).toHaveAttribute(
+                "aria-checked",
+                String(held)
+            );
+        }
+        await expect(page.getByTestId("disabled-switch")).toBeDisabled();
+        await expect(page.getByTestId("read-only-switch")).toHaveAttribute(
+            "aria-readonly",
+            "true"
+        );
+    });
+
+    test("five kinds of component make one interface", async () => {
+        const page = shared.page;
+        await open(page, "radio");
+        const names = await page.evaluate(() =>
+            Array.from(
+                new Set(
+                    Array.from(document.querySelectorAll("[data-rustify-scope] [data-name]")).map(
+                        (element) => (element as HTMLElement).dataset.name
+                    )
+                )
+            )
+        );
+        // Button, Panel, Row, Chip, RadioGroup, RadioItem, Label, Switch: the
+        // page is composed of the crate's own components rather than of markup
+        // that happens to look like them.
+        expect(names.length).toBeGreaterThanOrEqual(5);
+        expect(names).toContain("Button");
+        expect(names).toContain("RadioGroup");
+
+        // And the mixed interface works: a choice in the group is the
+        // application's, and the counter moves once.
+        const before = await snapshot(page);
+        await page.getByTestId("default-radio-third").click();
+        expect(await snapshot(page)).toMatchObject({
+            chosen: 2,
+            actions: before.actions + 1,
+        });
+        await page.getByTestId(`default-radio-first`).click();
+        expect(await snapshot(page)).toMatchObject({ chosen: 0 });
+    });
+
+    test("the region draws a control for every category it claims one for", async () => {
+        const page = shared.page;
+        await expect.poll(async () => (await snapshot(page)).region, { timeout: 30_000 }).toBe(
+            "ready"
+        );
+        // The fourteen the catalogue says a region draws. A shader that does
+        // not compile, a widget type that was never registered and a slot that
+        // never becomes visible all look the same from here - an empty
+        // rectangle - and all three fail this.
+        const DRAWN = [
+            "button",
+            "icon",
+            "checkbox",
+            "radio",
+            "switch",
+            "select",
+            "slider",
+            "progress",
+            "loading",
+            "tabs",
+            "scroll-area",
+        ];
+        for (const category of DRAWN) {
+            await open(page, category);
+            await expect
+                .poll(async () => (await snapshot(page)).control, {
+                    message: category,
+                    timeout: 15_000,
+                })
+                .not.toBeNull();
+        }
+    });
+});
+
+

@@ -74,6 +74,9 @@ mod app {
                 (Self::En, "across") => "across regions",
                 (Self::En, "theme") => "theme",
                 (Self::En, "language") => "language",
+                (Self::En, "motion") => "motion",
+                (Self::En, "less") => "less",
+                (Self::En, "full") => "full",
                 (Self::En, "example") => "example",
                 (Self::En, "states") => "states",
                 (Self::En, "default") => "default",
@@ -89,6 +92,9 @@ mod app {
                 (Self::ZhCn, "across") => "跨区",
                 (Self::ZhCn, "theme") => "主题",
                 (Self::ZhCn, "language") => "语言",
+                (Self::ZhCn, "motion") => "动效",
+                (Self::ZhCn, "less") => "减少",
+                (Self::ZhCn, "full") => "完整",
                 (Self::ZhCn, "example") => "示例",
                 (Self::ZhCn, "states") => "状态",
                 (Self::ZhCn, "default") => "默认",
@@ -700,11 +706,23 @@ mod app {
             });
         };
 
-        let category = Signal::derive(move || match page.get() {
+        // A memo rather than a derived signal: it fires only when the answer
+        // changes, and what depends on it below is a *change* of category.
+        let category = Memo::new(move |_| match page.get() {
             Page::Category(index) => CATALOG[index].category,
             // The status page draws no control, and a label saying so is a
             // truer answer than the last page's control left on screen.
             Page::Status => Category::Label,
+        });
+
+        // The reported rectangle belongs to the control the region is drawing
+        // now. Clearing it when the category changes means a caller waits for
+        // the new one rather than aiming at the old one - and not clearing it
+        // when the category has *not* changed means a caller is not left
+        // waiting for a report the region has no reason to send.
+        Effect::new(move || {
+            category.get();
+            region_control.set(None);
         });
 
         Effect::new(move || {
@@ -713,7 +731,7 @@ mod app {
                 "{{\"path\":\"{}\",\"theme\":\"{}\",\"locale\":\"{}\",\"categories\":{},\
                  \"button\":{},\"control\":{},\"region\":\"{}\",\"checked\":{},\"chosen\":{},\
                  \"on\":{},\"size\":{},\"fraction\":{:.2},\"spinning\":{},\"tab\":{},\
-                 \"chooser\":\"{}\",\"text\":\"{}\",\"actions\":{}}}",
+                 \"chooser\":\"{}\",\"text\":\"{}\",\"actions\":{},\"reduce_motion\":{}}}",
                 page.path(),
                 theme.get().name,
                 locale.get().tag(),
@@ -738,6 +756,7 @@ mod app {
                 SIZES[values.chooser.get()],
                 values.text.get().replace('"', "'"),
                 values.actions.get(),
+                theme.get().reduce_motion,
             );
             SNAPSHOT.with(|slot| *slot.borrow_mut() = snapshot);
         });
@@ -809,6 +828,28 @@ mod app {
                         >
                             {move || format!("{}: {}", locale.get().t("theme"), theme.get().name)}
                         </Button>
+                        <Switch
+                            test_id="toggle-motion"
+                            aria_label="reduce motion"
+                            checked=Signal::derive(move || theme.get().reduce_motion)
+                            on_change=move |less| {
+                                theme.update(|theme| theme.reduce_motion = less)
+                            }
+                        />
+                        <span class="rui:text-sm">
+                            {move || {
+                                let locale = locale.get();
+                                format!(
+                                    "{}: {}",
+                                    locale.t("motion"),
+                                    if theme.get().reduce_motion {
+                                        locale.t("less")
+                                    } else {
+                                        locale.t("full")
+                                    },
+                                )
+                            }}
+                        </span>
                         <Button
                             test_id="toggle-locale"
                             aria_label="switch language"

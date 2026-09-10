@@ -193,6 +193,12 @@ impl RustifyTabBar {
     pub fn tab_drawn(&self, index: usize) -> Option<Rect> {
         self.rects.get(index).copied()
     }
+
+    /// Where the whole strip ended up.
+    pub fn drawn(&self, cx: &Cx) -> Option<Rect> {
+        let area = self.draw_bg.area();
+        (!area.is_empty()).then(|| area.rect(cx))
+    }
 }
 
 impl Widget for RustifyTabBar {

@@ -1,9 +1,9 @@
 use rustify_components::Category;
 use rustify_ui::makepad_widgets::*;
 use rustify_ui::{
-    LocalRect, RegionApp, RegionGlyph, RustifyCheckBox, RustifyDropDown, RustifyIcon,
-    RustifyProgress, RustifyRadio, RustifySlider, RustifySpinner, RustifyTabBar, RustifyToggle,
-    Theme,
+    LocalRect, RegionApp, RegionGlyph, RustifyButton, RustifyCheckBox, RustifyDropDown,
+    RustifyIcon, RustifyProgress, RustifyRadio, RustifySlider, RustifySpinner, RustifyTabBar,
+    RustifyToggle, Theme,
 };
 
 /// What the region is told: the scope's theme, which category the catalogue is
@@ -98,7 +98,7 @@ script_mod! {
                                 destructive := RoundedView{ width: 26 height: 18 }
                                 border_swatch := RoundedView{ width: 26 height: 18 }
                             }
-                            toggle_button := Button{ text: "switch from the region" }
+                            toggle_button := RustifyButton{}
                         }
 
                         stage := View{
@@ -131,7 +131,7 @@ script_mod! {
                                 width: Fit
                                 height: Fit
                                 visible: false
-                                gpu_button := Button{ text: "a button drawn here" }
+                                gpu_button := RustifyButton{}
                             }
                             checkbox_slot := View{
                                 width: Fit
@@ -230,6 +230,10 @@ pub struct CatalogRegion {
     control: Option<LocalRect>,
     #[rust]
     category: Option<Category>,
+    /// Asked for after every change, so that the rectangles below are read
+    /// once the draw that produced them has happened.
+    #[rust]
+    next_frame: Option<NextFrame>,
 }
 
 fn colour(rgb: u32) -> Vec4f {
@@ -264,22 +268,65 @@ fn slot(category: Category) -> &'static str {
 impl CatalogRegion {
     /// The rectangle the current category's control ended up in, in the
     /// region's own local pixels.
+    ///
+    /// Each widget is asked where *it* drew, rather than the tree being asked
+    /// for a widget's area: a custom widget's area is its own to report, and
+    /// the tree does not have it.
     fn control_rect(&mut self, cx: &mut Cx, category: Category) -> Option<LocalRect> {
-        let area = match category {
-            Category::Button => self.ui.widget(cx, ids!(gpu_button)).area(),
-            Category::Checkbox => self.ui.widget(cx, ids!(gpu_checkbox)).area(),
-            Category::Radio => self.ui.widget(cx, ids!(radio_first)).area(),
-            Category::Switch => self.ui.widget(cx, ids!(gpu_switch)).area(),
-            Category::Slider => self.ui.widget(cx, ids!(gpu_slider)).area(),
-            Category::Progress => self.ui.widget(cx, ids!(gpu_progress)).area(),
-            Category::Loading => self.ui.widget(cx, ids!(gpu_spinner)).area(),
-            Category::Icon => self.ui.widget(cx, ids!(icon_check)).area(),
-            Category::Select => self.ui.widget(cx, ids!(gpu_chooser)).area(),
-            Category::Tabs => self.ui.widget(cx, ids!(gpu_tabs)).area(),
-            Category::ScrollArea => self.ui.widget(cx, ids!(scroll_slot)).area(),
+        let rect = match category {
+            Category::Button => self
+                .ui
+                .widget(cx, ids!(gpu_button))
+                .borrow_mut::<RustifyButton>()
+                .and_then(|control| control.drawn(cx))?,
+            Category::ScrollArea => self.ui.widget(cx, ids!(scroll_slot)).area().rect(cx),
+            Category::Checkbox => self
+                .ui
+                .widget(cx, ids!(gpu_checkbox))
+                .borrow_mut::<RustifyCheckBox>()
+                .and_then(|control| control.drawn(cx))?,
+            Category::Radio => self
+                .ui
+                .widget(cx, ids!(radio_first))
+                .borrow_mut::<RustifyRadio>()
+                .and_then(|control| control.drawn(cx))?,
+            Category::Switch => self
+                .ui
+                .widget(cx, ids!(gpu_switch))
+                .borrow_mut::<RustifyToggle>()
+                .and_then(|control| control.drawn(cx))?,
+            Category::Slider => self
+                .ui
+                .widget(cx, ids!(gpu_slider))
+                .borrow_mut::<RustifySlider>()
+                .and_then(|control| control.drawn(cx))?,
+            Category::Progress => self
+                .ui
+                .widget(cx, ids!(gpu_progress))
+                .borrow_mut::<RustifyProgress>()
+                .and_then(|control| control.drawn(cx))?,
+            Category::Loading => self
+                .ui
+                .widget(cx, ids!(gpu_spinner))
+                .borrow_mut::<RustifySpinner>()
+                .and_then(|control| control.drawn(cx))?,
+            Category::Icon => self
+                .ui
+                .widget(cx, ids!(icon_check))
+                .borrow_mut::<RustifyIcon>()
+                .and_then(|control| control.drawn(cx))?,
+            Category::Select => self
+                .ui
+                .widget(cx, ids!(gpu_chooser))
+                .borrow_mut::<RustifyDropDown>()
+                .and_then(|control| control.drawn(cx))?,
+            Category::Tabs => self
+                .ui
+                .widget(cx, ids!(gpu_tabs))
+                .borrow_mut::<RustifyTabBar>()
+                .and_then(|control| control.drawn(cx))?,
             _ => return None,
         };
-        let rect = area.rect(cx);
         (rect.size.x > 0.0)
             .then(|| LocalRect::new(rect.pos.x, rect.pos.y, rect.size.x, rect.size.y))
     }
@@ -291,12 +338,26 @@ impl RegionApp for CatalogRegion {
 
     fn script_mod(vm: &mut ScriptVm) -> ScriptValue {
         rustify_ui::makepad_widgets::script_mod(vm);
+        // The SDK's own GPU controls. Without this the script's
+        // `RustifyCheckBox{}` resolves to nothing and the slot draws empty -
+        // which looks exactly like a layout bug and is a registration one.
+        rustify_ui::gpu::script_mod(vm);
         self::script_mod(vm)
     }
 
     fn apply_props(&mut self, cx: &mut Cx, props: &CatalogProps) {
         let theme = props.theme;
+        // A new page draws a different control, so the rectangle last reported
+        // is not this page's - and a control that happens to land in the same
+        // place as the last one would otherwise never be reported at all.
+        if self.category != Some(props.category) {
+            self.control = None;
+        }
         self.category = Some(props.category);
+        // Where a control ended up is only known after it is drawn, and a
+        // change that came from the application brings no event of its own to
+        // read it on. One more pump does.
+        self.next_frame = Some(cx.new_next_frame());
 
         self.ui
             .label(cx, ids!(name_label))
@@ -353,6 +414,22 @@ impl RegionApp for CatalogRegion {
             ("scroll_slot", ids!(scroll_slot)),
         ] {
             self.ui.widget(cx, id).set_visible(cx, showing == name);
+        }
+
+        for (id, label) in [
+            (ids!(toggle_button), "switch from the region"),
+            (ids!(gpu_button), "a button drawn here"),
+        ] {
+            if let Some(mut button) = self.ui.widget(cx, id).borrow_mut::<RustifyButton>() {
+                button.set_state(cx, label, props.disabled);
+                button.set_palette(
+                    cx,
+                    theme.secondary,
+                    theme.muted,
+                    theme.border,
+                    theme.secondary_foreground,
+                );
+            }
         }
 
         self.ui
@@ -467,12 +544,16 @@ impl RegionApp for CatalogRegion {
     }
 
     fn handle_event(&mut self, cx: &mut Cx, event: &Event, outbox: &mut Vec<CatalogAction>) {
-        if let Event::Actions(actions) = event {
-            if self.ui.button(cx, ids!(toggle_button)).clicked(actions) {
-                outbox.push(CatalogAction::Toggle);
-            }
-        }
         self.ui.handle_event(cx, event, &mut Scope::empty());
+
+        let toggled = self
+            .ui
+            .widget(cx, ids!(toggle_button))
+            .borrow_mut::<RustifyButton>()
+            .and_then(|mut button| button.take_click());
+        if toggled.is_some() {
+            outbox.push(CatalogAction::Toggle);
+        }
 
         let asked = self
             .ui
@@ -533,9 +614,13 @@ impl RegionApp for CatalogRegion {
         // Where things ended up, not where the layout walked: a parent that
         // aligns its children moves them after the walk, and what a pointer
         // has to be aimed at is the former.
-        let area = self.ui.widget(cx, ids!(toggle_button)).area();
-        let rect = area.rect(cx);
-        let drawn = LocalRect::new(rect.pos.x, rect.pos.y, rect.size.x, rect.size.y);
+        let drawn = self
+            .ui
+            .widget(cx, ids!(toggle_button))
+            .borrow_mut::<RustifyButton>()
+            .and_then(|button| button.drawn(cx))
+            .map(|rect| LocalRect::new(rect.pos.x, rect.pos.y, rect.size.x, rect.size.y))
+            .unwrap_or(LocalRect::new(0.0, 0.0, 0.0, 0.0));
         if drawn.width > 0.0 && self.button != Some(drawn) {
             self.button = Some(drawn);
             outbox.push(CatalogAction::Button(drawn));
