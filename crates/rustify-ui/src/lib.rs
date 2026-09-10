@@ -4,6 +4,7 @@
 pub mod binding;
 pub mod components;
 pub mod diagnostics;
+pub mod drag;
 pub mod form;
 #[cfg(target_arch = "wasm32")]
 pub mod gpu;
@@ -22,6 +23,7 @@ pub use diagnostics::{
     identify_runtime, note, record, report_json, set_recording, watch_assets, with_log, Diagnostic,
     Diagnostics, ErrorKind, Severity, UiError, REFUSED_CAPABILITIES,
 };
+pub use drag::{Drags, Outcome, Query};
 pub use form::{FormState, Generation, Submit};
 pub use mount::{mount, AppHandle, MountConfig, ScopeRoots};
 pub use overlay::{LayerId, LocalRect};
