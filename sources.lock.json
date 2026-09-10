@@ -1575,8 +1575,43 @@
     "license": "MIT, Copyright (c) 2026 Max Wells; reproduced in crates/rustify-components/LICENSE-RUST-UI",
     "import_root": "crates/rustify-components",
     "import_rule": "only the files listed here. Each is imported verbatim in one commit and rewritten in the next, so what the fork changes reads as a diff. `state` is `verbatim` while our copy is byte-identical to what was received and `rewritten` once it is not; `sha256` is the digest of what was received either way, so provenance survives the rewrite.",
-    "not_imported": "the components that build inline <script> or <style> with format!, use_scroll_lock.rs, public/app_components/*.js, style/Animate.css, style/highlight_code.css, and charts/date_picker/carousel/sonner/data_grid/drag_and_drop",
+    "not_imported": "use_scroll_lock.rs, public/app_components/*.js, style/Animate.css, style/highlight_code.css, and the components outside the eighteen categories (charts, date_picker, carousel, sonner, data_grid, drag_and_drop, accordion, sheet, drawer, hover_card, popover, command, menubar, context_menu and the rest). The four overlay components that are imported - dialog, select, dropdown_menu, tooltip - arrive with their inline <script> and are rewritten onto the SDK's overlay stack; the script is what the rewrite removes, not what the import skips.",
     "files": {
+      "crates/rustify-components/css/slider.css": {
+        "source": "style/slider.css",
+        "sha256": "2d2bd4923864b1743fed1bb7c2c53958a43a34329ef3ad3e5bd7f04595c909aa",
+        "state": "verbatim"
+      },
+      "crates/rustify-components/src/button.rs": {
+        "source": "app_crates/registry/src/ui/button.rs",
+        "sha256": "152dc00e00a5ba99794a79aba1d1009160ba35c9506b63814154061fe07886c9",
+        "state": "verbatim"
+      },
+      "crates/rustify-components/src/checkbox.rs": {
+        "source": "app_crates/registry/src/ui/checkbox.rs",
+        "sha256": "b4b503b32faa456023eaa565f904026c6cc18e88975c24b0959bbde8ee9e6de3",
+        "state": "verbatim"
+      },
+      "crates/rustify-components/src/dialog.rs": {
+        "source": "app_crates/registry/src/ui/dialog.rs",
+        "sha256": "ff117f2ee51a8895dfd54f473f847a13dd88e4160607134c25c9d25cbe6707d6",
+        "state": "verbatim"
+      },
+      "crates/rustify-components/src/input.rs": {
+        "source": "app_crates/registry/src/ui/input.rs",
+        "sha256": "62edf7d028c0ece5ffa42890bd7766085e72adf6f474ec612ab0504858f60696",
+        "state": "verbatim"
+      },
+      "crates/rustify-components/src/label.rs": {
+        "source": "app_crates/registry/src/ui/label.rs",
+        "sha256": "b52c3e635643714c6ef5e096108a7da9435e5ab3245a3416d5393c719d5c3585",
+        "state": "verbatim"
+      },
+      "crates/rustify-components/src/link.rs": {
+        "source": "app_crates/registry/src/ui/link.rs",
+        "sha256": "f6dbc6d33521d545e26c6a654d409edd6ce97e6fbb58723910c63fdd86701c7e",
+        "state": "verbatim"
+      },
       "crates/rustify-components/src/macros/clx.rs": {
         "source": "crates/leptos_ui/src/clx.rs",
         "sha256": "24521409d6a592f5486cd2fd551bcdbf6404c5a25e14a6120accd190e7c558fb",
@@ -1586,6 +1621,61 @@
         "source": "crates/leptos_ui/src/variants.rs",
         "sha256": "83a4a376205452dd026c3344753be265eafd4e9ac0d030db619f4e922356c2dd",
         "state": "rewritten"
+      },
+      "crates/rustify-components/src/menu.rs": {
+        "source": "app_crates/registry/src/ui/dropdown_menu.rs",
+        "sha256": "38993dfdb6ebce3ec2341552632ff7e822266492e2ed6cb4eb3aa7b0df1839ae",
+        "state": "verbatim"
+      },
+      "crates/rustify-components/src/progress.rs": {
+        "source": "app_crates/registry/src/ui/progress.rs",
+        "sha256": "a5b412e4193b2abc32c297d749b098cacfbff52626ac9f76d2bbc57998f9ee47",
+        "state": "verbatim"
+      },
+      "crates/rustify-components/src/radio.rs": {
+        "source": "app_crates/registry/src/ui/radio_button.rs",
+        "sha256": "fdcec2ffce5d579d9a04d044030b3d41ceb7566f5ff3b54084aee09139ccfd5e",
+        "state": "verbatim"
+      },
+      "crates/rustify-components/src/scroll_area.rs": {
+        "source": "app_crates/registry/src/ui/scroll_area.rs",
+        "sha256": "a0d73c31e1fb6403b4951961339af6fe571b3838602336f02251c1d86f264aaf",
+        "state": "verbatim"
+      },
+      "crates/rustify-components/src/select.rs": {
+        "source": "app_crates/registry/src/ui/select.rs",
+        "sha256": "e04a55cb51bb9e2cd664e1713734b1e785dc2e391a6a4f3cf58a62159af5fa53",
+        "state": "verbatim"
+      },
+      "crates/rustify-components/src/slider.rs": {
+        "source": "app_crates/registry/src/ui/slider.rs",
+        "sha256": "517dfa0504c8031a17590ec71f1451c76a4e8d8fc76e0d0c117bbbcf50f9c10d",
+        "state": "verbatim"
+      },
+      "crates/rustify-components/src/spinner.rs": {
+        "source": "app_crates/registry/src/ui/spinner.rs",
+        "sha256": "024bf95d08d2051b6a1728d6e3039ad539d56f9ec3ad3216be38e61417cf840b",
+        "state": "verbatim"
+      },
+      "crates/rustify-components/src/switch.rs": {
+        "source": "app_crates/registry/src/ui/switch.rs",
+        "sha256": "09acb6f0e5994c8f6515562cbc8cb4e4519da81a44050072ae48306f7de89246",
+        "state": "verbatim"
+      },
+      "crates/rustify-components/src/tabs.rs": {
+        "source": "app_crates/registry/src/ui/tabs.rs",
+        "sha256": "61dcc2a126b6dd6d1f84a9c832bc9c41d33af7e6d2b541a3f85d2b4beed34164",
+        "state": "verbatim"
+      },
+      "crates/rustify-components/src/textarea.rs": {
+        "source": "app_crates/registry/src/ui/textarea.rs",
+        "sha256": "c40d5b5efdc290bfd9144ee250a523afa9c423923e39837bf944c727b16d4032",
+        "state": "verbatim"
+      },
+      "crates/rustify-components/src/tooltip.rs": {
+        "source": "app_crates/registry/src/ui/tooltip.rs",
+        "sha256": "e88a4a96aca747eb72042baa1063bfcec402d6dfbc22b0734b8a34dac0ec68c7",
+        "state": "verbatim"
       }
     },
     "rewrite": {
