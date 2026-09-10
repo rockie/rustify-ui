@@ -464,9 +464,18 @@ impl RegionApp for ObjectRegion {
                 if let Some(size) = asked {
                     outbox.push(SelectionAction::SetSize(size));
                 }
-                let name = self.ui.widget(cx, ids!(name_label)).area().rect(cx);
-                let notes = self.ui.widget(cx, ids!(notes_label)).area().rect(cx);
-                if let (Some(locked), Some(size)) = (drawn_locked, drawn_size) {
+                // `is_valid`, not `is_empty`: an area can be an instance
+                // pointer holding no instances, which is what a widget that
+                // has not been drawn yet looks like. Asking one of those for
+                // its rectangle is a warning from the platform, and a region
+                // disposed while it was still starting produces one per pump.
+                let name_area = self.ui.widget(cx, ids!(name_label)).area();
+                let notes_area = self.ui.widget(cx, ids!(notes_label)).area();
+                let name = name_area.is_valid(cx).then(|| name_area.rect(cx));
+                let notes = notes_area.is_valid(cx).then(|| notes_area.rect(cx));
+                if let (Some(locked), Some(size), Some(name), Some(notes)) =
+                    (drawn_locked, drawn_size, name, notes)
+                {
                     let reported = (local(locked), local(size), local(name), local(notes));
                     if self.controls != Some(reported) {
                         self.controls = Some(reported);
