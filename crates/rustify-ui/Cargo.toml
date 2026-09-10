@@ -43,6 +43,8 @@ web-sys = { workspace = true, features = [
     # `--cfg=web_sys_unstable_apis`, which `cargo xtask build-web` sets; a build
     # without it compiles against `clipboard::available() == false` instead.
     "Clipboard",
+    # A text field has to know when an input method is composing in it.
+    "CompositionEvent",
     "Navigator",
 ] }
 

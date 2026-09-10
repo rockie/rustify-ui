@@ -15,4 +15,12 @@ tw_merge = { version = "=0.1.21", features = ["variant"] }
 paste = "1"
 # The drop zone reads a `DragEvent`'s file list, and the picker its input's.
 # Everything else these components touch, Leptos already enables.
-web-sys = { workspace = true, features = ["DataTransfer", "DragEvent", "File", "FileList"] }
+web-sys = { workspace = true, features = [
+    "DataTransfer",
+    "DragEvent",
+    "File",
+    "FileList",
+    # A text field has to know when an input method is composing in it: the
+    # keys being used to look a character up are not a value.
+    "CompositionEvent",
+] }

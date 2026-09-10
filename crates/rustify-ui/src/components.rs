@@ -100,6 +100,11 @@ mod dom {
         #[prop(optional, into)] test_id: String,
     ) -> impl IntoView {
         let node = NodeRef::<leptos::html::Input>::new();
+        // Whether an input method is composing in this field right now, and the
+        // one callback shared by the two handlers that now report.
+        let composing = StoredValue::new(false);
+        let on_input = std::rc::Rc::new(on_input);
+        let on_composed = std::rc::Rc::clone(&on_input);
         let settle = move || {
             if let Some(input) = node.get_untracked() {
                 let held = value.get_untracked();
@@ -119,7 +124,29 @@ mod dom {
                     prop:disabled=move || disabled.get()
                     prop:readOnly=move || read_only.get()
                     aria-readonly=move || read_only.get().then_some("true")
+                    on:compositionstart=move |_| composing.set_value(true)
+                    on:compositionend:target=move |ev| {
+                        // The first moment the field holds a value rather than
+                        // the keys being used to look one up.
+                        composing.set_value(false);
+                        let chosen = ev.target().value();
+                        if !disabled.get_untracked() && !read_only.get_untracked() {
+                            on_composed(chosen);
+                        }
+                        settle();
+                    }
                     on:input:target=move |ev| {
+                        // A composition in flight is not a value. An input
+                        // method puts the keys used to *look up* a character
+                        // into the field - pinyin, bopomofo, a partial Hangul
+                        // syllable - and reporting those would name an object
+                        // "gongzuo" and leave it named that if the user changed
+                        // their mind. Settling is skipped for the same reason:
+                        // writing the held value back mid-composition takes the
+                        // input method's own text out of the field.
+                        if composing.get_value() {
+                            return;
+                        }
                         let typed = ev.target().value();
                         if !disabled.get_untracked() && !read_only.get_untracked() {
                             on_input(typed);
@@ -144,6 +171,9 @@ mod dom {
         #[prop(optional, into)] test_id: String,
     ) -> impl IntoView {
         let node = NodeRef::<leptos::html::Textarea>::new();
+        let composing = StoredValue::new(false);
+        let on_input = std::rc::Rc::new(on_input);
+        let on_composed = std::rc::Rc::clone(&on_input);
         let settle = move || {
             if let Some(area) = node.get_untracked() {
                 let held = value.get_untracked();
@@ -163,7 +193,29 @@ mod dom {
                     prop:disabled=move || disabled.get()
                     prop:readOnly=move || read_only.get()
                     aria-readonly=move || read_only.get().then_some("true")
+                    on:compositionstart=move |_| composing.set_value(true)
+                    on:compositionend:target=move |ev| {
+                        // The first moment the field holds a value rather than
+                        // the keys being used to look one up.
+                        composing.set_value(false);
+                        let chosen = ev.target().value();
+                        if !disabled.get_untracked() && !read_only.get_untracked() {
+                            on_composed(chosen);
+                        }
+                        settle();
+                    }
                     on:input:target=move |ev| {
+                        // A composition in flight is not a value. An input
+                        // method puts the keys used to *look up* a character
+                        // into the field - pinyin, bopomofo, a partial Hangul
+                        // syllable - and reporting those would name an object
+                        // "gongzuo" and leave it named that if the user changed
+                        // their mind. Settling is skipped for the same reason:
+                        // writing the held value back mid-composition takes the
+                        // input method's own text out of the field.
+                        if composing.get_value() {
+                            return;
+                        }
                         let typed = ev.target().value();
                         if !disabled.get_untracked() && !read_only.get_untracked() {
                             on_input(typed);
