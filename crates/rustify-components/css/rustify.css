@@ -250,8 +250,15 @@
     border-bottom-style: var(--tw-border-style);
     border-bottom-width: 1px;
   }
+  .rui\:border-dashed {
+    --tw-border-style: dashed;
+    border-style: dashed;
+  }
   .rui\:border-border {
     border-color: var(--border);
+  }
+  .rui\:border-primary {
+    border-color: var(--primary);
   }
   .rui\:border-transparent {
     border-color: transparent;
@@ -427,6 +434,9 @@
   .rui\:opacity-40 {
     opacity: 40%;
   }
+  .rui\:opacity-50 {
+    opacity: 50%;
+  }
   .rui\:shadow-lg {
     --tw-shadow: 0 10px 15px -3px var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 4px 6px -4px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
     box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
@@ -505,6 +515,58 @@
       @supports (color: color-mix(in lab, red, red)) {
         --tw-ring-color: color-mix(in oklab, var(--destructive) 40%, transparent);
       }
+    }
+  }
+  .rui\:file\:mr-3 {
+    &::file-selector-button {
+      margin-right: calc(var(--rui-spacing) * 3);
+    }
+  }
+  .rui\:file\:cursor-pointer {
+    &::file-selector-button {
+      cursor: pointer;
+    }
+  }
+  .rui\:file\:rounded-md {
+    &::file-selector-button {
+      border-radius: var(--radius);
+    }
+  }
+  .rui\:file\:border {
+    &::file-selector-button {
+      border-style: var(--tw-border-style);
+      border-width: 1px;
+    }
+  }
+  .rui\:file\:border-border {
+    &::file-selector-button {
+      border-color: var(--border);
+    }
+  }
+  .rui\:file\:bg-secondary {
+    &::file-selector-button {
+      background-color: var(--secondary);
+    }
+  }
+  .rui\:file\:px-3 {
+    &::file-selector-button {
+      padding-inline: calc(var(--rui-spacing) * 3);
+    }
+  }
+  .rui\:file\:py-1\.5 {
+    &::file-selector-button {
+      padding-block: calc(var(--rui-spacing) * 1.5);
+    }
+  }
+  .rui\:file\:text-sm {
+    &::file-selector-button {
+      font-size: var(--rui-text-sm);
+      line-height: var(--tw-leading, var(--rui-text-sm--line-height));
+    }
+  }
+  .rui\:file\:text-foreground {
+    &::file-selector-button {
+      color: var(--foreground);
     }
   }
   .rui\:placeholder\:text-muted-foreground {
@@ -609,6 +671,12 @@
       @supports (color: color-mix(in lab, red, red)) {
         --tw-ring-color: color-mix(in oklab, var(--ring) 50%, transparent);
       }
+    }
+  }
+  .rui\:focus-visible\:outline-none {
+    &:focus-visible {
+      --tw-outline-style: none;
+      outline-style: none;
     }
   }
   .rui\:disabled\:pointer-events-none {

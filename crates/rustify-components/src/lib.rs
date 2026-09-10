@@ -11,6 +11,10 @@ pub mod button;
 pub mod catalog;
 pub mod checkbox;
 mod dom;
+#[cfg(target_arch = "wasm32")]
+pub mod drop_zone;
+#[cfg(target_arch = "wasm32")]
+pub mod file_picker;
 pub mod form;
 pub mod icon;
 pub mod id;
@@ -44,6 +48,10 @@ pub mod tooltip;
 pub use button::{Button, ButtonSize, ButtonVariant};
 pub use catalog::{Capability, Category, Entry, Presentation, Support, CATALOG};
 pub use checkbox::Checkbox;
+#[cfg(target_arch = "wasm32")]
+pub use drop_zone::DropZone;
+#[cfg(target_arch = "wasm32")]
+pub use file_picker::FilePicker;
 pub use form::{provide_form, use_form, Field, FieldBinding, Form, FormStatus, SubmitButton};
 pub use icon::{Glyph, Icon};
 pub use input::{TextField, TextKind};

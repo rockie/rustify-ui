@@ -131,8 +131,53 @@ declare global {
                     size: { x: number; y: number; width: number; height: number };
                     name: { x: number; y: number; width: number; height: number };
                     notes: { x: number; y: number; width: number; height: number };
+                    groups: { x: number; y: number; width: number; height: number };
+                    row: number;
                 } | null;
                 region: string;
+                form: {
+                    fields: number;
+                    errors: number;
+                    first_error: string | null;
+                    can_submit: boolean;
+                    submitting: boolean;
+                    dirty: boolean;
+                    checks: number;
+                    saves: number;
+                    asked: string;
+                    failure: string | null;
+                };
+                path: string;
+                guarded: boolean;
+                workspace: {
+                    panels: number[];
+                    tabs: number;
+                    tab: string;
+                    palette: boolean;
+                    menu: boolean;
+                };
+                drag: {
+                    drops: number;
+                    cancels: number;
+                    grouped: number;
+                    dragging: boolean;
+                    target: string | null;
+                    selected_group: number | null;
+                    propagates: boolean;
+                    scroll: number;
+                    scroll_max: number;
+                };
+                transfer: {
+                    imports: number;
+                    exports: number;
+                    status: string;
+                    bytes: number;
+                    copies: number;
+                    pastes: number;
+                    clipboard: string;
+                    by_hand: boolean;
+                    can_copy: boolean;
+                };
             };
             mount_into(container_id: string): number;
             mount_over(container_id: string): string;

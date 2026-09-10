@@ -197,10 +197,28 @@ body {
 
 .objects {
     display: grid;
-    grid-template-rows: auto auto 1fr;
+    /* Tabs, count, the list, and the bin a drag can drop into. */
+    grid-template-rows: auto auto 1fr auto;
     gap: 6px;
     min-height: 0;
     padding-right: 10px;
+}
+
+/* The DOM half of the drop targets. It has to be a rectangle a pointer can be
+   over while the list beside it scrolls, so it sits outside the scroller. */
+.objects-bin {
+    border: 1px dashed #d0d5dd;
+    border-radius: 6px;
+    padding: 8px;
+    text-align: center;
+    font-size: 12px;
+    color: #667085;
+}
+
+.objects-bin[data-active="true"] {
+    border-style: solid;
+    border-color: #2e90fa;
+    color: #1d2939;
 }
 
 .objects-count {
@@ -231,4 +249,20 @@ body {
 .objects-item[aria-current="true"] {
     background: #eaecf0;
     border-radius: 4px;
+}
+
+/* The file and clipboard controls, in a column so the drop zone has a
+   rectangle a pointer can be dragged over. */
+.transfer {
+    display: grid;
+    gap: 6px;
+    padding: 8px 0;
+    border-top: 1px solid #eaecf0;
+}
+
+.transfer p {
+    margin: 0;
+    font-size: 12px;
+    color: #667085;
+    min-height: 1em;
 }

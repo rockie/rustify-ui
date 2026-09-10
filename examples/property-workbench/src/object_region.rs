@@ -1,8 +1,11 @@
+use crate::group_list::{Group, GroupList};
 use crate::name_field::NameField;
 use crate::object_grid::{GridCell, ObjectGrid};
 use rustify_ui::makepad_widgets::makepad_platform::{CxOsApi, OpenUrlInPlace};
 use rustify_ui::makepad_widgets::*;
-use rustify_ui::{LocalRect, Pace, RegionApp, RustifyCheckBox, RustifySlider, Theme};
+use rustify_ui::{
+    HitAnswer, HitQuery, LocalRect, Pace, RegionApp, RustifyCheckBox, RustifySlider, Theme,
+};
 use std::sync::Arc;
 
 /// What the region shows: the current selection, projected out of the
@@ -32,6 +35,21 @@ pub struct SelectionProps {
     /// A counter rather than a flag: the region acts on the change, and an
     /// application that asks twice means it twice.
     pub open_link_requests: u32,
+    /// The groups an object can be dropped into. Shared for the same reason
+    /// the cells are: it changes when the groups do, not when a drag moves.
+    pub groups: Arc<Vec<Group>>,
+    /// The group a drag is currently over, so the region draws where a release
+    /// would land. The application decides this from the region's own answers,
+    /// which is why it comes back in rather than being remembered inside.
+    pub drop_target: Option<u32>,
+    /// The question the drag wants answered, if there is one. A region cannot
+    /// answer during a pointer move on the page - it is not running then - so
+    /// the question arrives as a projection and the answer leaves as an
+    /// action, like everything else that crosses the boundary.
+    pub hit: Option<HitQuery>,
+    /// What a wheel at the end of the group list is for: the page, or the
+    /// list. `true` hands it over once the list has run out.
+    pub wheel_propagates: bool,
     /// The scope's theme. One table drives both halves, so a colour cannot
     /// mean one thing in the panel and another in the region.
     pub theme: Theme,
@@ -75,6 +93,11 @@ pub enum SelectionAction {
         /// a caller that breaks the first time a panel changes width.
         name: LocalRect,
         notes: LocalRect,
+        /// Where the group list was drawn, and how tall one of its rows is.
+        /// A drag aiming at a group needs both, and neither is anybody's to
+        /// guess.
+        groups: LocalRect,
+        row: f64,
     },
     /// The user asked to lock or unlock the object. A request, not a value:
     /// the region draws whatever comes back.
@@ -85,6 +108,15 @@ pub enum SelectionAction {
     /// The projection named the same object twice and was refused; the region
     /// still shows the last unambiguous one.
     RejectedDuplicate(u32),
+    /// What the region found where the drag asked it to look.
+    Hit(HitAnswer),
+    /// How far down the group list is, and how far down it can go. Reported
+    /// when it changes, so that "the region has run out of scroll" is a fact
+    /// the page can read rather than a screenshot it has to interpret.
+    Scrolled {
+        at: f64,
+        max: f64,
+    },
 }
 
 script_mod! {
@@ -219,9 +251,23 @@ script_mod! {
                                 draw_text.text_style.font_size: 12
                             }
                         }
-                        grid := ObjectGrid{
+                        View{
                             width: Fill
                             height: Fill
+                            flow: Right
+                            spacing: 8
+
+                            grid := ObjectGrid{
+                                width: Fill
+                                height: Fill
+                            }
+                            // Taller than the space it gets, on purpose: a
+                            // list that always fits never reaches an edge, and
+                            // the edge is the whole point of D14.
+                            groups := GroupList{
+                                width: 150
+                                height: Fill
+                            }
                         }
                     }
                 }
@@ -255,7 +301,7 @@ pub struct ObjectRegion {
     opened_links: u32,
     /// The last geometry reported, so only a change is sent.
     #[rust]
-    controls: Option<(LocalRect, LocalRect, LocalRect, LocalRect)>,
+    controls: Option<(LocalRect, LocalRect, LocalRect, LocalRect, LocalRect, f64)>,
     /// Which values have needed more than Latin. Once one has, that label keeps
     /// drawing with the wider family: the file is already here, and moving
     /// back would only make the same value change shape.
@@ -263,6 +309,20 @@ pub struct ObjectRegion {
     wide_name: bool,
     #[rust]
     wide_notes: bool,
+    /// The last question answered, so one question is answered once: props are
+    /// applied whenever anything in them changes, and the question is only new
+    /// when its number is.
+    #[rust]
+    answered: Option<u64>,
+    /// The answer, waiting for the next event to carry it out. Set while props
+    /// are being applied, for the same reason `rejected` is: an action leaves
+    /// on the application's own callback path, not from inside an apply.
+    #[rust]
+    answer: Option<HitAnswer>,
+    /// The last scroll position reported, so a redraw that did not move the
+    /// list reports nothing.
+    #[rust]
+    scrolled: Option<(f64, f64)>,
 }
 
 /// Whether a value needs glyphs the default family does not carry.
@@ -286,6 +346,12 @@ impl RegionApp for ObjectRegion {
             SelectionAction::Hover(_)
             | SelectionAction::SetSize(_)
             | SelectionAction::Controls { .. } => Pace::Continuous,
+            // One per pointer move while a drag is in flight, and only the
+            // newest can still decide anything: exactly what continuous is
+            // for. A drop is a discrete action the application takes after.
+            SelectionAction::Hit(_) => Pace::Continuous,
+            // A wheel produces a stream of these and only the last is true.
+            SelectionAction::Scrolled { .. } => Pace::Continuous,
             _ => Pace::Discrete,
         }
     }
@@ -293,6 +359,7 @@ impl RegionApp for ObjectRegion {
     fn script_mod(vm: &mut ScriptVm) -> ScriptValue {
         rustify_ui::makepad_widgets::script_mod(vm);
         rustify_ui::gpu::script_mod(vm);
+        crate::group_list::script_mod(vm);
         crate::name_field::script_mod(vm);
         crate::object_grid::script_mod(vm);
         self::script_mod(vm)
@@ -412,6 +479,33 @@ impl RegionApp for ObjectRegion {
                 )
                 .err();
         }
+        if let Some(mut groups) = self.ui.widget(cx, ids!(groups)).borrow_mut::<GroupList>() {
+            groups.set_groups(cx, props.groups.as_ref().clone());
+            groups.set_target(cx, props.drop_target);
+            groups.set_propagate(cx, props.wheel_propagates);
+        }
+        // Answered from the layout of the last draw, which is the one the user
+        // has seen. Asking the widget after this apply would answer about a
+        // list that has not been drawn yet.
+        if let Some(query) = props.hit.as_ref() {
+            if self.answered != Some(query.seq) {
+                self.answered = Some(query.seq);
+                let found = self
+                    .ui
+                    .widget(cx, ids!(groups))
+                    .borrow_mut::<GroupList>()
+                    .and_then(|groups| groups.group_at(dvec2(query.x, query.y)));
+                self.answer = Some(HitAnswer {
+                    session: query.session,
+                    seq: query.seq,
+                    // A group takes anything an object drag carries, so being
+                    // found is being willing. A region with targets that
+                    // refuse some payloads would decide that here, where both
+                    // the payload and the target are in hand.
+                    target: found.map(|id| format!("group-{id}")),
+                });
+            }
+        }
         self.ui.redraw(cx);
     }
 
@@ -473,10 +567,22 @@ impl RegionApp for ObjectRegion {
                 let notes_area = self.ui.widget(cx, ids!(notes_label)).area();
                 let name = name_area.is_valid(cx).then(|| name_area.rect(cx));
                 let notes = notes_area.is_valid(cx).then(|| notes_area.rect(cx));
-                if let (Some(locked), Some(size), Some(name), Some(notes)) =
-                    (drawn_locked, drawn_size, name, notes)
+                let groups = self
+                    .ui
+                    .widget(cx, ids!(groups))
+                    .borrow_mut::<GroupList>()
+                    .and_then(|groups| Some((groups.pane()?, groups.row_height())));
+                if let (Some(locked), Some(size), Some(name), Some(notes), Some((groups, row))) =
+                    (drawn_locked, drawn_size, name, notes, groups)
                 {
-                    let reported = (local(locked), local(size), local(name), local(notes));
+                    let reported = (
+                        local(locked),
+                        local(size),
+                        local(name),
+                        local(notes),
+                        local(groups),
+                        row,
+                    );
                     if self.controls != Some(reported) {
                         self.controls = Some(reported);
                         outbox.push(SelectionAction::Controls {
@@ -484,6 +590,8 @@ impl RegionApp for ObjectRegion {
                             size: reported.1,
                             name: reported.2,
                             notes: reported.3,
+                            groups: reported.4,
+                            row: reported.5,
                         });
                     }
                 }
@@ -506,6 +614,23 @@ impl RegionApp for ObjectRegion {
         }
         if let Some(id) = self.rejected.take() {
             outbox.push(SelectionAction::RejectedDuplicate(id));
+        }
+        if let Some(answer) = self.answer.take() {
+            outbox.push(SelectionAction::Hit(answer));
+        }
+        if let Some(scroll) = self
+            .ui
+            .widget(cx, ids!(groups))
+            .borrow_mut::<GroupList>()
+            .map(|groups| groups.scroll())
+        {
+            if self.scrolled != Some(scroll) {
+                self.scrolled = Some(scroll);
+                outbox.push(SelectionAction::Scrolled {
+                    at: scroll.0,
+                    max: scroll.1,
+                });
+            }
         }
     }
 }

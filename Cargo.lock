@@ -1631,6 +1631,7 @@ dependencies = [
  "paste",
  "rustify-ui",
  "tw_merge",
+ "web-sys",
 ]
 
 [[package]]

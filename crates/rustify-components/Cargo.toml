@@ -13,3 +13,6 @@ rustify-ui = { path = "../rustify-ui" }
 # decides what a class list means, not the library that merges it.
 tw_merge = { version = "=0.1.21", features = ["variant"] }
 paste = "1"
+# The drop zone reads a `DragEvent`'s file list, and the picker its input's.
+# Everything else these components touch, Leptos already enables.
+web-sys = { workspace = true, features = ["DataTransfer", "DragEvent", "File", "FileList"] }

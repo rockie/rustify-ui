@@ -95,6 +95,26 @@ pub struct FromWasmBrowserUpdateUrl {
     pub replace: bool,
 }
 
+/// Where a region's own scrolling has run out, and what it wants done about a
+/// wheel that arrives there.
+///
+/// The host has to decide whether to consume a wheel event *in the same turn
+/// as the event*: by the time the region has been pumped, the browser has
+/// already been told whether the event was cancelled, and telling it later
+/// changes nothing. So the region reports the state it drew, and the host
+/// reads that report when the next wheel arrives.
+#[derive(FromWasm)]
+pub struct FromWasmScrollBoundary {
+    /// True where the region can scroll no further in that direction.
+    pub at_top: bool,
+    pub at_bottom: bool,
+    pub at_left: bool,
+    pub at_right: bool,
+    /// What the region wants at a boundary: `true` hands the wheel to
+    /// whatever contains the region, `false` keeps consuming it.
+    pub propagate: bool,
+}
+
 #[derive(FromWasm)]
 pub struct FromWasmBrowserHistoryGo {
     pub delta: f64,

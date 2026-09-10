@@ -314,6 +314,107 @@ impl Drags {
     }
 }
 
+/// One drag per scope, reactively, so the components that take part in a drag
+/// can see it without passing it hand to hand.
+///
+/// The session itself is the host logic above; this only gives it an owner and
+/// makes "is a drag in flight, and would this land" something a view can read.
+#[cfg(target_arch = "wasm32")]
+mod browser {
+    use super::{Drags, HitAnswer, HitQuery, Outcome, Query};
+    use leptos::prelude::*;
+
+    /// A handle to the scope's drag. `Copy`, so it goes into every closure
+    /// that needs it without ceremony.
+    #[derive(Clone, Copy)]
+    pub struct DragHandle {
+        drags: RwSignal<Drags>,
+    }
+
+    /// Puts one drag session in context and returns it.
+    ///
+    /// Called once per scope. A second scope on the page gets its own: two
+    /// applications on one page do not share a pointer any more than they
+    /// share a selection.
+    pub fn provide_drags() -> DragHandle {
+        let handle = DragHandle {
+            drags: RwSignal::new(Drags::new()),
+        };
+        provide_context(handle);
+        handle
+    }
+
+    /// The scope's drag session.
+    ///
+    /// # Panics
+    ///
+    /// If no scope provided one. That is a wiring mistake rather than a state
+    /// a running application can reach, and a component that silently made its
+    /// own would be a second drag nobody could see.
+    pub fn use_drags() -> DragHandle {
+        use_context::<DragHandle>()
+            .expect("no drag session in scope; call provide_drags in the scope root")
+    }
+
+    impl DragHandle {
+        pub fn start(&self, source: impl Into<String>, payload: impl Into<String>) -> u64 {
+            self.drags
+                .try_update(|drags| drags.start(source, payload))
+                .unwrap_or(0)
+        }
+
+        pub fn over(&self, target: Option<&str>) -> Option<Query> {
+            self.drags.try_update(|drags| drags.over(target)).flatten()
+        }
+
+        pub fn over_region(&self, region: &str, x: f64, y: f64) -> Option<HitQuery> {
+            self.drags
+                .try_update(|drags| drags.over_region(region, x, y))
+                .flatten()
+        }
+
+        pub fn answer(&self, session: u64, seq: u64, accept: bool) -> Option<Outcome> {
+            self.drags
+                .try_update(|drags| drags.answer(session, seq, accept))
+                .flatten()
+        }
+
+        pub fn hit(&self, answer: &HitAnswer) -> Option<Outcome> {
+            self.drags.try_update(|drags| drags.hit(answer)).flatten()
+        }
+
+        pub fn release(&self) -> Outcome {
+            self.drags
+                .try_update(|drags| drags.release())
+                .unwrap_or(Outcome::Nothing)
+        }
+
+        pub fn cancel(&self) {
+            self.drags.update(|drags| drags.cancel());
+        }
+
+        /// Whether a drag is in flight. Tracked, so a view can dim, highlight
+        /// or refuse while one is.
+        pub fn dragging(&self) -> bool {
+            self.drags.with(|drags| drags.dragging())
+        }
+
+        /// What is being carried, tracked.
+        pub fn payload(&self) -> Option<String> {
+            self.drags.with(|drags| drags.payload().map(str::to_string))
+        }
+
+        /// The target that would take a release now, tracked.
+        pub fn confirmed(&self) -> Option<String> {
+            self.drags
+                .with(|drags| drags.confirmed().map(str::to_string))
+        }
+    }
+}
+
+#[cfg(target_arch = "wasm32")]
+pub use browser::{provide_drags, use_drags, DragHandle};
+
 #[cfg(test)]
 mod tests {
     use super::{Drags, HitAnswer, Outcome};

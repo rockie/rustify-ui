@@ -40,6 +40,8 @@ pub use task::{Load, Requests, Ticket};
 #[cfg(target_arch = "wasm32")]
 pub use components::{Button, Checkbox, Label, LoadView, Slider, TextArea, TextField};
 #[cfg(target_arch = "wasm32")]
+pub use drag::{provide_drags, use_drags, DragHandle};
+#[cfg(target_arch = "wasm32")]
 pub use gpu::{
     Glyph as RegionGlyph, RustifyButton, RustifyCheckBox, RustifyDropDown, RustifyIcon,
     RustifyProgress, RustifyRadio, RustifySlider, RustifySpinner, RustifyTabBar, RustifyToggle,

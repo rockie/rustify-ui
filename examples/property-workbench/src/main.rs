@@ -1,6 +1,8 @@
 #[cfg(target_arch = "wasm32")]
 mod details;
 #[cfg(target_arch = "wasm32")]
+mod group_list;
+#[cfg(target_arch = "wasm32")]
 mod name_field;
 #[cfg(target_arch = "wasm32")]
 mod object_grid;
@@ -8,28 +10,33 @@ mod object_grid;
 mod object_region;
 #[cfg(target_arch = "wasm32")]
 mod third_party;
+// Not gated: the file formats are arithmetic on bytes, and the host is where
+// a round trip can be compared without a browser.
+mod transfer;
 
 #[cfg(target_arch = "wasm32")]
 mod app {
     use super::details::{
         rules as property_rules, Details, DetailsFields, FIELDS as PROPERTY_FIELDS,
     };
+    use super::group_list::Group;
     use super::object_grid::GridCell;
     use super::object_region::{EditField, ObjectRegion, SelectionAction, SelectionProps};
     use super::third_party::ThirdPartySlider;
     use leptos::prelude::*;
     use leptos::wasm_bindgen::prelude::*;
     use leptos::wasm_bindgen::JsCast;
+    use leptos::web_sys::{Element, PointerEvent};
     use rustify_components::workspace::splitter::initial as splitter_initial;
     use rustify_components::{
         Command, CommandPalette, Form, FormStatus, PanelTab, PanelTabs, Splitter, SubmitButton,
     };
     use rustify_components::{Support, CATALOG};
     use rustify_ui::{
-        mount, navigate, provide_routes, use_params, Anchor, AppHandle, Button, Checkbox,
-        GpuRegion, Load, LoadView, LocalRect, MountConfig, Navigation, NavigationGuard,
-        RegionState, Requests, Routes, Slider, TextArea, TextEdit, TextField, Theme, ThemeOverride,
-        ThemePatch, ThemedScope, UiError,
+        mount, navigate, provide_drags, provide_routes, use_params, Anchor, AppHandle, Button,
+        Checkbox, GpuRegion, HitQuery, Load, LoadView, LocalRect, MountConfig, Navigation,
+        NavigationGuard, Outcome, RegionState, Requests, Routes, Slider, TextArea, TextEdit,
+        TextField, Theme, ThemeOverride, ThemePatch, ThemedScope, UiError,
     };
     use std::cell::{Cell, RefCell};
     use std::collections::{BTreeMap, BTreeSet};
@@ -41,7 +48,7 @@ mod app {
     /// Stable business identity. Ids are assigned once and never reused, so a
     /// selection survives renames, reordering and deletions of other objects.
     #[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord)]
-    pub struct ObjectId(u32);
+    pub struct ObjectId(pub u32);
 
     #[derive(Clone, Debug, PartialEq)]
     pub struct WorkbenchObject {
@@ -57,10 +64,34 @@ mod app {
         pub locked: bool,
         /// 0..=100 in steps of 5.
         pub size: f64,
+        /// Which group the object has been put in, or none. Set by dropping it
+        /// on a group, which is the only way to set it: the whole point of the
+        /// drag is that this is the property with no field.
+        pub group: Option<u32>,
         /// The fifteen a save applies. Together with the five above they are
         /// the twenty visible properties of an object.
         pub details: crate::details::Details,
     }
+
+    /// The groups objects can be dropped into.
+    ///
+    /// Twelve because the list has to be taller than the space the region can
+    /// give it: a list that always fits never reaches an edge, and reaching
+    /// the edge is what decides whose wheel event it is.
+    const GROUPS: [(u32, &str); 12] = [
+        (1, "inbox"),
+        (2, "review"),
+        (3, "approved"),
+        (4, "shipped"),
+        (5, "archive"),
+        (6, "blocked"),
+        (7, "spare"),
+        (8, "draft"),
+        (9, "legal"),
+        (10, "support"),
+        (11, "billing"),
+        (12, "retired"),
+    ];
 
     const PALETTE: [u32; 6] = [0x2e90fa, 0x12b76a, 0xf79009, 0xf04438, 0x7a5af8, 0x475467];
 
@@ -111,6 +142,7 @@ mod app {
                 color: PALETTE[(n as usize - 1) % PALETTE.len()],
                 locked: false,
                 size: 50.0,
+                group: None,
                 details: crate::details::Details::seeded(n),
             })
             .collect()
@@ -407,6 +439,55 @@ mod app {
         // any other: the region draws what the application projects back, not
         // what its own pointer did.
         let hovered = RwSignal::new(None::<ObjectId>);
+        // One drag for the scope. Both halves of the page take part in the
+        // same one, which is the point: a pointer cannot be in two drags.
+        let drags = provide_drags();
+        // The question in flight, projected into the region. The region is not
+        // running while the pointer moves over the page, so this is how it
+        // hears the question at all.
+        let hit = RwSignal::new(None::<HitQuery>);
+        // The group a release would land in, as the region answered. Kept by
+        // the application so that both the highlight the region draws and the
+        // drop that follows come from one fact.
+        let drop_target = RwSignal::new(None::<u32>);
+        // The DOM target under the pointer, for the same reason.
+        let dom_target = RwSignal::new(None::<String>);
+        // What a wheel at the end of the group list is for. A policy with one
+        // value is not a policy, so it is a control rather than a constant.
+        let wheel_propagates = RwSignal::new(true);
+        // Exactly one per delivered drop, so a hundred drags can be counted
+        // rather than inspected.
+        let drops = RwSignal::new(0u32);
+        let drag_cancels = RwSignal::new(0u32);
+        // How far down the region's group list is, as the region reported it.
+        // A wheel that the region kept moves this; one it handed to the page
+        // does not, which is the whole difference D14 is about.
+        let group_scroll = RwSignal::new((0.0f64, 0.0f64));
+        // Where a press started, and on which object. A press is not a drag:
+        // a drag begins once the pointer has travelled far enough that it
+        // cannot have been a click.
+        let press = RwSignal::new(None::<(f64, f64, ObjectId)>);
+        // Set when a drag delivered something, so the click that follows the
+        // release does not also select what was just dropped.
+        let dragged = StoredValue::new(false);
+
+        // The groups, with what is in them. Rebuilt when the objects change,
+        // like the cells: a drag moving does not change the groups.
+        let groups = Memo::new(move |_| {
+            Arc::new(objects.with(|objects| {
+                GROUPS
+                    .iter()
+                    .map(|(id, name)| Group {
+                        id: *id,
+                        name: name.to_string(),
+                        members: objects
+                            .iter()
+                            .filter(|object| object.group == Some(*id))
+                            .count(),
+                    })
+                    .collect::<Vec<_>>()
+            }))
+        });
         let theme = RwSignal::new(Theme::light());
         // The rectangle the region drew the name into, while a native control
         // is editing it. The application decides when the session exists.
@@ -443,6 +524,10 @@ mod app {
                     locked: object.locked,
                     size: object.size,
                     open_link_requests: open_link_requests.get(),
+                    groups: groups.get(),
+                    drop_target: drop_target.get(),
+                    hit: hit.get(),
+                    wheel_propagates: wheel_propagates.get(),
                     theme,
                 },
                 None => SelectionProps {
@@ -458,6 +543,10 @@ mod app {
                     locked: false,
                     size: 0.0,
                     open_link_requests: open_link_requests.get(),
+                    groups: groups.get(),
+                    drop_target: drop_target.get(),
+                    hit: hit.get(),
+                    wheel_propagates: wheel_propagates.get(),
                     theme,
                 },
             }
@@ -616,6 +705,7 @@ mod app {
                         color: PALETTE[(next as usize) % PALETTE.len()],
                         locked: false,
                         size: 50.0,
+                        group: None,
                         details: Details::seeded(next),
                     });
                     next += 1;
@@ -809,7 +899,31 @@ mod app {
         // Where the region drew the controls it owns, as it reported them.
         // Business state like any other: nobody keeps a second copy of the
         // region's layout.
-        let controls = RwSignal::new(None::<(LocalRect, LocalRect, LocalRect, LocalRect)>);
+        // What an import will take. The picker offers the same list, because
+        // the two come from one place and so cannot drift apart.
+        let limits = rustify_ui::Limits {
+            // A thousand objects is about 30 KB of text; a quarter of a
+            // megabyte is room for a file that grew, and a wall in front of
+            // one somebody picked by mistake.
+            max_bytes: 256 * 1024,
+            kinds: &[".txt", ".bin"],
+        };
+        // What the last import or export did, in the application's own words.
+        let transfer_status = RwSignal::new(String::new());
+        let imports = RwSignal::new(0u32);
+        let exports = RwSignal::new(0u32);
+        // The bytes of the last export, so a test can compare what the browser
+        // downloaded against what the application meant to write.
+        let exported = StoredValue::new(Vec::<u8>::new());
+        let clipboard_status = RwSignal::new(String::new());
+        let copies = RwSignal::new(0u32);
+        let pastes = RwSignal::new(0u32);
+        // Set when the clipboard refuses, so the view can offer the path that
+        // always works: the text, selected, for the user to copy themselves.
+        let copy_by_hand = RwSignal::new(false);
+
+        let controls =
+            RwSignal::new(None::<(LocalRect, LocalRect, LocalRect, LocalRect, LocalRect, f64)>);
 
         // Whether the third-party component is in the view, and every callback
         // it has made. A rebuild that left a subscription behind would show up
@@ -845,7 +959,7 @@ mod app {
             let (index, total) = position.get();
             let current = current.get();
             let snapshot = format!(
-                "{{\"count\":{},\"position\":{},\"selected\":{},\"name\":{},\"color\":\"{}\",\"first_colors\":\"{}\",\"first_ids\":\"{}\",\"accepted\":{},\"refused\":{},\"hovered\":{},\"hovers\":{},\"editing\":{},\"invalidated\":{},\"notes\":{},\"theme\":\"{}\",\"details\":\"{}\",\"details_value\":{},\"locked\":{},\"size\":{},\"refusals\":{},\"refusal\":{},\"third_party\":{},\"third_party_updates\":{},\"controls\":{},\"region\":\"{}\",\"form\":{},\"path\":{},\"guarded\":{},\"workspace\":{}}}",
+                "{{\"count\":{},\"position\":{},\"selected\":{},\"name\":{},\"color\":\"{}\",\"first_colors\":\"{}\",\"first_ids\":\"{}\",\"accepted\":{},\"refused\":{},\"hovered\":{},\"hovers\":{},\"editing\":{},\"invalidated\":{},\"notes\":{},\"theme\":\"{}\",\"details\":\"{}\",\"details_value\":{},\"locked\":{},\"size\":{},\"refusals\":{},\"refusal\":{},\"third_party\":{},\"third_party_updates\":{},\"controls\":{},\"region\":\"{}\",\"form\":{},\"path\":{},\"guarded\":{},\"workspace\":{},\"drag\":{},\"transfer\":{}}}",
                 total,
                 index.map(|i| i as i64 + 1).unwrap_or(0),
                 current
@@ -909,13 +1023,15 @@ mod app {
                 third_party_updates.get(),
                 controls
                     .get()
-                    .map(|(locked, size, name, notes)| {
+                    .map(|(locked, size, name, notes, groups, row)| {
                         format!(
-                            "{{\"locked\":{},\"size\":{},\"name\":{},\"notes\":{}}}",
+                            "{{\"locked\":{},\"size\":{},\"name\":{},\"notes\":{},\"groups\":{},\"row\":{:.1}}}",
                             rect_json(locked),
                             rect_json(size),
                             rect_json(name),
                             rect_json(notes),
+                            rect_json(groups),
+                            row,
                         )
                     })
                     .unwrap_or_else(|| "null".to_string()),
@@ -970,9 +1086,327 @@ mod app {
                     palette_open.get(),
                     region_menu.get().is_some(),
                 ),
+                format!(
+                    "{{\"drops\":{},\"cancels\":{},\"grouped\":{},\"dragging\":{},\"target\":{},\"selected_group\":{},\"propagates\":{},\"scroll\":{:.1},\"scroll_max\":{:.1}}}",
+                    drops.get(),
+                    drag_cancels.get(),
+                    objects
+                        .with(|objects| objects
+                            .iter()
+                            .filter(|object| object.group.is_some())
+                            .count()),
+                    drags.dragging(),
+                    match (drop_target.get(), dom_target.get()) {
+                        (Some(group), _) => format!("\"group-{group}\""),
+                        (None, Some(target)) => json_string(&target),
+                        (None, None) => "null".to_string(),
+                    },
+                    current
+                        .as_ref()
+                        .and_then(|object| object.group)
+                        .map(|group| group.to_string())
+                        .unwrap_or_else(|| "null".to_string()),
+                    wheel_propagates.get(),
+                    group_scroll.get().0,
+                    group_scroll.get().1,
+                ),
+                format!(
+                    "{{\"imports\":{},\"exports\":{},\"status\":{},\"bytes\":{},\"copies\":{},\"pastes\":{},\"clipboard\":{},\"by_hand\":{},\"can_copy\":{}}}",
+                    imports.get(),
+                    exports.get(),
+                    json_string(&transfer_status.get()),
+                    exported.with_value(Vec::len),
+                    copies.get(),
+                    pastes.get(),
+                    json_string(&clipboard_status.get()),
+                    copy_by_hand.get(),
+                    rustify_ui::clipboard::available(),
+                ),
             );
             SNAPSHOT.with(|slot| *slot.borrow_mut() = snapshot);
         });
+
+        // What a drop does. One place, because a drop can arrive from three
+        // routes - a DOM target answering on the spot, a region answering
+        // later, or a release that was already decided - and "what happens
+        // when an object lands somewhere" must not have three answers.
+        let deliver = move |outcome: Outcome| {
+            if let Outcome::Drop { target, payload } = outcome {
+                if let Ok(id) = payload.parse::<u32>() {
+                    let group = target
+                        .strip_prefix("group-")
+                        .and_then(|group| group.parse::<u32>().ok());
+                    if group.is_some() || target == "ungrouped" {
+                        objects.update(|objects| {
+                            if let Some(object) =
+                                objects.iter_mut().find(|object| object.id.0 == id)
+                            {
+                                object.group = group;
+                            }
+                        });
+                        drops.update(|n| *n += 1);
+                    }
+                }
+            }
+            drop_target.set(None);
+            dom_target.set(None);
+            hit.set(None);
+        };
+
+        // Whether a DOM target would take this object.
+        //
+        // The bin refuses a locked object: a lock is a business rule about the
+        // object, not a property of the control, and a target that says no is
+        // the other half of the drag contract.
+        let accepts = move |target: &str, payload: &str| -> bool {
+            if target != "ungrouped" {
+                return false;
+            }
+            let Ok(id) = payload.parse::<u32>() else {
+                return false;
+            };
+            !objects.with(|objects| {
+                objects
+                    .iter()
+                    .any(|object| object.id.0 == id && object.locked)
+            })
+        };
+
+        // Where the pointer is now, in terms a drag can use.
+        //
+        // The region is asked rather than told, because only it knows what it
+        // drew; a DOM target answers on the spot, because it is running.
+        let point_at = move |client_x: f64, client_y: f64| {
+            let under = leptos::web_sys::window()
+                .and_then(|window| window.document())
+                .and_then(|document| document.element_from_point(client_x as f32, client_y as f32));
+            if let (Some(under), Some(canvas)) = (under.as_ref(), canvas.get_untracked()) {
+                let canvas: leptos::web_sys::Element = canvas.into();
+                if under.is_same_node(Some(canvas.as_ref())) {
+                    let box_ = canvas.get_bounding_client_rect();
+                    if let Some(query) =
+                        drags.over_region("view", client_x - box_.left(), client_y - box_.top())
+                    {
+                        dom_target.set(None);
+                        hit.set(Some(query));
+                    }
+                    return;
+                }
+            }
+            let name = under.as_ref().and_then(|element| {
+                element
+                    .closest("[data-drop-target]")
+                    .ok()
+                    .flatten()
+                    .and_then(|zone| zone.get_attribute("data-drop-target"))
+            });
+            let Some(query) = drags.over(name.as_deref()) else {
+                if name.is_none() {
+                    // Left everything: nothing would take a release here, and
+                    // both halves have to stop saying it would.
+                    drop_target.set(None);
+                    dom_target.set(None);
+                    hit.set(None);
+                }
+                return;
+            };
+            hit.set(None);
+            drop_target.set(None);
+            let payload = drags.payload().unwrap_or_default();
+            let accepted = accepts(&query.target, &payload);
+            dom_target.set(accepted.then(|| query.target.clone()));
+            if let Some(outcome) = drags.answer(query.session, query.seq, accepted) {
+                deliver(outcome);
+            }
+        };
+
+        let end_drag = move || {
+            if !drags.dragging() {
+                press.set(None);
+                return;
+            }
+            dragged.set_value(true);
+            press.set(None);
+            match drags.release() {
+                // The region has been asked and has not answered. Its answer
+                // decides, and it arrives on the action path like every other
+                // thing the region says.
+                Outcome::Waiting => {}
+                outcome => deliver(outcome),
+            }
+        };
+
+        let cancel_drag = move || {
+            if drags.dragging() {
+                drags.cancel();
+                drag_cancels.update(|n| *n += 1);
+            }
+            press.set(None);
+            drop_target.set(None);
+            dom_target.set(None);
+            hit.set(None);
+        };
+
+        let apply_records = move |records: Vec<crate::transfer::Record>| {
+            let mut applied = 0usize;
+            objects.update(|objects| {
+                for record in &records {
+                    let Some(object) = objects.iter_mut().find(|o| o.id.0 == record.id) else {
+                        continue;
+                    };
+                    if let Some(name) = &record.name {
+                        object.name = name.clone();
+                    }
+                    object.group = record.group;
+                    object.locked = record.locked;
+                    object.size = record.size;
+                    applied += 1;
+                }
+            });
+            applied
+        };
+
+        let receive = move |files: Option<leptos::web_sys::FileList>| {
+            rustify_ui::files::import_files(files, limits, move |import| match import {
+                rustify_ui::Import::Loaded { name, bytes } => {
+                    match crate::transfer::parse(&name, &bytes) {
+                        Ok(records) => {
+                            let applied = apply_records(records);
+                            imports.update(|n| *n += 1);
+                            transfer_status.set(format!("imported {applied} objects"));
+                        }
+                        // A file that parses wrong changes nothing: the
+                        // records were all read before any of them was
+                        // applied, so there is no half-imported state to be
+                        // in.
+                        Err(malformed) => {
+                            transfer_status.set(format!("{name} is not readable: {malformed}"))
+                        }
+                    }
+                }
+                rustify_ui::Import::Refused { name, why } => {
+                    transfer_status.set(format!("{name} was not read: {why}"))
+                }
+                // Dismissing a picker is not an error and not worth a message
+                // that says nothing happened. It is recorded so a test can see
+                // that nothing did.
+                rustify_ui::Import::Aborted => transfer_status.set("nothing chosen".to_string()),
+            });
+        };
+
+        let send = move |binary: bool| {
+            let records = objects.with(|objects| {
+                objects
+                    .iter()
+                    .map(|object| crate::transfer::Record {
+                        id: object.id.0,
+                        name: Some(object.name.clone()),
+                        group: object.group,
+                        locked: object.locked,
+                        size: object.size,
+                    })
+                    .collect::<Vec<_>>()
+            });
+            let bytes = if binary {
+                crate::transfer::to_binary(&records)
+            } else {
+                crate::transfer::to_text(&records)
+            };
+            let (name, mime) = if binary {
+                ("objects.bin", "application/octet-stream")
+            } else {
+                ("objects.txt", "text/plain")
+            };
+            exported.set_value(bytes.clone());
+            match rustify_ui::files::export(name, &bytes, mime) {
+                Ok(()) => {
+                    exports.update(|n| *n += 1);
+                    transfer_status.set(format!("exported {} bytes to {name}", bytes.len()));
+                }
+                // The browser refused to start the download. Saying so is the
+                // whole of what can be done about it, and it is more than
+                // saying nothing.
+                Err(_) => transfer_status.set(format!("{name} could not be downloaded")),
+            }
+        };
+
+        // Copying the notes, and what to do when the browser says no.
+        //
+        // A refusal is never dressed up as a success (D9): the control says it
+        // could not, and offers the path that needs no permission - the text,
+        // selected, in a control the user can press the copy key in.
+        let copy_notes = move || {
+            let notes = current.get_untracked().map(|o| o.notes).unwrap_or_default();
+            if !rustify_ui::clipboard::available() {
+                copy_by_hand.set(true);
+                clipboard_status.set("this build cannot reach the clipboard".to_string());
+                return;
+            }
+            rustify_ui::clipboard::copy(&notes, move |result| match result {
+                Ok(()) => {
+                    copies.update(|n| *n += 1);
+                    copy_by_hand.set(false);
+                    clipboard_status.set("copied".to_string());
+                }
+                Err(error) => {
+                    copy_by_hand.set(true);
+                    clipboard_status.set(format!("{error}; the notes are selected, press copy"));
+                }
+            });
+        };
+
+        let paste_notes = move || {
+            if !rustify_ui::clipboard::available() {
+                clipboard_status.set("this build cannot reach the clipboard".to_string());
+                return;
+            }
+            rustify_ui::clipboard::paste(move |result| match result {
+                Ok(text) => {
+                    pastes.update(|n| *n += 1);
+                    clipboard_status.set(format!("pasted {} characters", text.chars().count()));
+                    renote(text);
+                }
+                Err(error) => {
+                    clipboard_status
+                        .set(format!("{error}; paste into the notes with the keyboard"));
+                }
+            });
+        };
+
+        // Selects the notes in their own control, which is what "press copy
+        // yourself" needs to be true rather than an instruction.
+        Effect::new(move || {
+            if !copy_by_hand.get() {
+                return;
+            }
+            if let Some(field) = leptos::web_sys::window()
+                .and_then(|window| window.document())
+                .and_then(|document| {
+                    document
+                        .query_selector("[data-testid=\"notes-input\"]")
+                        .ok()
+                })
+                .flatten()
+                .and_then(|element| {
+                    element
+                        .dyn_into::<leptos::web_sys::HtmlTextAreaElement>()
+                        .ok()
+                })
+            {
+                let _ = field.focus();
+                field.select();
+            }
+        });
+
+        // Escape ends a drag wherever the pointer is. The key does not arrive
+        // at the element holding the pointer, so the window is where it has to
+        // be listened for.
+        let escape = window_event_listener(leptos::ev::keydown, move |event| {
+            if event.key() == "Escape" {
+                cancel_drag();
+            }
+        });
+        on_cleanup(move || escape.remove());
 
         let label_id = format!("third-party-label-{registration}");
         let app = PhantomData::<ObjectRegion>;
@@ -981,6 +1415,24 @@ mod app {
                 SelectionAction::Hover(id) => {
                     hovers.update(|n| *n += 1);
                     hovered.set(id.map(ObjectId));
+                }
+                SelectionAction::Scrolled { at, max } => {
+                    group_scroll.set((at, max));
+                }
+                SelectionAction::Hit(answer) => {
+                    // What the region found, in the two places it matters: the
+                    // highlight it draws, and the drag that may already be
+                    // waiting on this exact answer.
+                    let target = answer
+                        .target
+                        .as_deref()
+                        .and_then(|target| target.strip_prefix("group-"))
+                        .and_then(|group| group.parse::<u32>().ok());
+                    if let Some(outcome) = drags.hit(&answer) {
+                        deliver(outcome);
+                    } else {
+                        drop_target.set(target);
+                    }
                 }
                 SelectionAction::SelectPrevious => {
                     accepted.update(|n| *n += 1);
@@ -1011,8 +1463,10 @@ mod app {
                     size,
                     name,
                     notes,
+                    groups,
+                    row,
                 } => {
-                    controls.set(Some((locked, size, name, notes)));
+                    controls.set(Some((locked, size, name, notes, groups, row)));
                 }
                 SelectionAction::SetLocked(locked) => {
                     accepted.update(|n| *n += 1);
@@ -1168,7 +1622,17 @@ mod app {
                     <p class="objects-count" data-testid="objects-count">
                         {format!("{} objects", showing.len())}
                     </p>
-                    <ul class="objects-list" data-testid="objects-list">
+                    <ul
+                        class="objects-list"
+                        data-testid="objects-list"
+                        // The DOM says the same thing the region reports to
+                        // the host: `contain` keeps a wheel at the end of this
+                        // list, `auto` gives it to the page. One control drives
+                        // both halves, because one rule cannot have two values.
+                        style:overscroll-behavior=move || {
+                            if wheel_propagates.get() { "auto" } else { "contain" }
+                        }
+                    >
                         {showing
                             .into_iter()
                             .map(|(id, name)| {
@@ -1180,7 +1644,65 @@ mod app {
                                             class="objects-item"
                                             data-testid=format!("object-{}", id.0)
                                             aria-current=move || chosen.get().then_some("true")
+                                            on:pointerdown=move |event: PointerEvent| {
+                                                // A press, not yet a drag. The
+                                                // row is still a button, and a
+                                                // button that started a drag on
+                                                // every press could not be
+                                                // clicked.
+                                                if let Some(element) = event
+                                                    .target()
+                                                    .and_then(|target| {
+                                                        target.dyn_into::<Element>().ok()
+                                                    })
+                                                {
+                                                    let _ = element
+                                                        .set_pointer_capture(event.pointer_id());
+                                                }
+                                                dragged.set_value(false);
+                                                press
+                                                    .set(
+                                                        Some((
+                                                            event.client_x() as f64,
+                                                            event.client_y() as f64,
+                                                            id,
+                                                        )),
+                                                    );
+                                            }
+                                            on:pointermove=move |event: PointerEvent| {
+                                                let (x, y) = (
+                                                    event.client_x() as f64,
+                                                    event.client_y() as f64,
+                                                );
+                                                if let Some((from_x, from_y, id)) = press
+                                                    .get_untracked()
+                                                {
+                                                    if !drags.dragging()
+                                                        && (x - from_x).abs().max((y - from_y).abs())
+                                                            > 4.0
+                                                    {
+                                                        drags
+                                                            .start(
+                                                                format!("object-{}", id.0),
+                                                                id.0.to_string(),
+                                                            );
+                                                    }
+                                                }
+                                                if drags.dragging() {
+                                                    point_at(x, y);
+                                                }
+                                            }
+                                            on:pointerup=move |_| end_drag()
+                                            on:pointercancel=move |_| cancel_drag()
                                             on:click=move |_| {
+                                                // A release that delivered
+                                                // something is not also a
+                                                // click: the object was moved,
+                                                // not chosen.
+                                                if dragged.get_value() {
+                                                    dragged.set_value(false);
+                                                    return;
+                                                }
                                                 select(Some(id));
                                             }
                                         >
@@ -1191,6 +1713,17 @@ mod app {
                             })
                             .collect_view()}
                     </ul>
+                    <div
+                        class="objects-bin"
+                        data-drop-target="ungrouped"
+                        data-testid="ungrouped-bin"
+                        aria-label="take an object out of its group"
+                        data-active=move || {
+                            dom_target.get().is_some_and(|target| target == "ungrouped")
+                        }
+                    >
+                        "no group"
+                    </div>
                 </section>
             }
         };
@@ -1237,6 +1770,12 @@ mod app {
                     >
                         "open a link from the region"
                     </Button>
+                    <Checkbox
+                        test_id="wheel-propagates"
+                        label="a wheel past the end of the groups scrolls the page"
+                        checked=Signal::derive(move || wheel_propagates.get())
+                        on_change=move |value: bool| wheel_propagates.set(value)
+                    />
                     <Button
                         test_id="toggle-theme"
                         aria_label="switch theme"
@@ -1300,6 +1839,53 @@ mod app {
                         disabled=Signal::derive(move || current.get().is_none())
                         on_input=move |value| renote(value)
                     />
+                    <div class="transfer" aria-label="files and the clipboard">
+                        <Button
+                            test_id="export-text"
+                            aria_label="write the objects out as text"
+                            on_click=move || send(false)
+                        >
+                            "export text"
+                        </Button>
+                        <Button
+                            test_id="export-binary"
+                            aria_label="write the objects out as bytes"
+                            on_click=move || send(true)
+                        >
+                            "export binary"
+                        </Button>
+                        <rustify_components::FilePicker
+                            test_id="import-file"
+                            aria_label="read objects from a file"
+                            accept=Signal::derive(move || limits.accept_attribute())
+                            on_files=move |files| receive(files)
+                        />
+                        <rustify_components::DropZone
+                            test_id="import-drop"
+                            label="or drop one here"
+                            on_files=move |files| receive(files)
+                        />
+                        <Button
+                            test_id="copy-notes"
+                            aria_label="copy the notes"
+                            on_click=move || copy_notes()
+                        >
+                            "copy notes"
+                        </Button>
+                        <Button
+                            test_id="paste-notes"
+                            aria_label="paste into the notes"
+                            on_click=move || paste_notes()
+                        >
+                            "paste notes"
+                        </Button>
+                        <p role="status" aria-label="transfer" data-testid="transfer-status">
+                            {move || transfer_status.get()}
+                        </p>
+                        <p role="status" aria-label="clipboard" data-testid="clipboard-status">
+                            {move || clipboard_status.get()}
+                        </p>
+                    </div>
                     <Checkbox
                         label="locked"
                         test_id="locked-input"

@@ -1080,6 +1080,52 @@ impl Cx {
     pub fn time_now() -> f64 {
         unsafe { js_time_now() }
     }
+
+    /// Tells the host where this region's scrolling has run out.
+    ///
+    /// Called by a scrolling widget after it draws, because that is the only
+    /// moment the answer is a fact rather than a guess. The host keeps the
+    /// last report and consults it synchronously when a wheel arrives - see
+    /// `wheel_belongs_to_parent` in `web.js`. A region that never reports is
+    /// treated as one that has not run out, which is what an embedded region
+    /// did before this existed.
+    pub fn report_scroll_boundary(&mut self, boundary: ScrollBoundary) {
+        self.os.from_wasm(FromWasmScrollBoundary {
+            at_top: boundary.at_top,
+            at_bottom: boundary.at_bottom,
+            at_left: boundary.at_left,
+            at_right: boundary.at_right,
+            propagate: boundary.propagate,
+        });
+    }
+}
+
+/// Where a region's scrolling has run out, and what a wheel there is for.
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+pub struct ScrollBoundary {
+    pub at_top: bool,
+    pub at_bottom: bool,
+    pub at_left: bool,
+    pub at_right: bool,
+    /// `true`: a wheel at the boundary belongs to whatever contains this
+    /// region. `false`: this region keeps it, and nothing outside scrolls.
+    /// The DOM says the same thing with `overscroll-behavior`.
+    pub propagate: bool,
+}
+
+impl ScrollBoundary {
+    /// The boundary of a vertical scroller, from where it is and how far it
+    /// can go. Both edges at once when there is nothing to scroll, which is
+    /// the honest answer: a wheel there moves this region not at all.
+    pub fn vertical(scroll: f64, max: f64, propagate: bool) -> Self {
+        Self {
+            at_top: scroll <= 0.0,
+            at_bottom: scroll >= max,
+            at_left: true,
+            at_right: true,
+            propagate,
+        }
+    }
 }
 
 #[link(wasm_import_module = "env")]
@@ -1247,6 +1293,7 @@ pub fn web_bridge_js_sources() -> (Vec<String>, Vec<String>) {
             FromWasmOpenUrl::to_js_code(),
             FromWasmBrowserUpdateUrl::to_js_code(),
             FromWasmBrowserHistoryGo::to_js_code(),
+            FromWasmScrollBoundary::to_js_code(),
             FromWasmUseMidiInputs::to_js_code(),
             FromWasmSendMidiOutput::to_js_code(),
             FromWasmQueryAudioDevices::to_js_code(),

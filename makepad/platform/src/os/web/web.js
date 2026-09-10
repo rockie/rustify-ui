@@ -20,6 +20,10 @@ export class WasmWebBrowser extends WasmBridge {
         this.handlers = {};
         this.timers = [];
         this.text_copy_response = "";
+        // The region's last word on where its own scrolling ran out (D14).
+        // Null until it says, and a region that never says keeps every wheel,
+        // which is what an embedded region did before this existed.
+        this.scroll_boundary = null;
         this.web_sockets = [];
         this.network_web_sockets = {};
         this.network_http_requests = new Map();
@@ -410,6 +414,16 @@ export class WasmWebBrowser extends WasmBridge {
         else {
             window.history.go(args.delta);
         }
+    }
+
+    FromWasmScrollBoundary(args) {
+        this.scroll_boundary = {
+            at_top: args.at_top,
+            at_bottom: args.at_bottom,
+            at_left: args.at_left,
+            at_right: args.at_right,
+            propagate: args.propagate,
+        };
     }
 
     FromWasmStartTimer(args) {
@@ -1599,6 +1613,12 @@ export class WasmWebBrowser extends WasmBridge {
             this.do_wasm_pump();
         };
         this.handlers.on_wheel = e => {
+            if (this.wheel_belongs_to_parent(e)) {
+                // Neither cancelled nor delivered: the browser gives the
+                // scroll to whatever contains this region, which is what a
+                // wheel past the region's own end means.
+                return;
+            }
             e.preventDefault();
             const mouse = local_mouse(e);
             let fac = 1;
@@ -1622,6 +1642,31 @@ export class WasmWebBrowser extends WasmBridge {
         canvas.addEventListener('pointerleave', e => this.handlers.on_pointer_leave(e), { signal });
         canvas.addEventListener('wheel', e => this.handlers.on_wheel(e), { signal, passive: false });
         canvas.addEventListener('contextmenu', e => e.preventDefault(), { signal });
+    }
+
+    // D14: whether this wheel is the parent's to act on rather than this
+    // region's.
+    //
+    // It is, only when the region asked for that (`propagate`) and every axis
+    // the wheel actually moves has already run out inside the region. A region
+    // that can still scroll along one axis keeps the whole event: splitting
+    // one wheel between two scrollers is how a diagonal gesture tears in half.
+    //
+    // The wheel that *reaches* a boundary is still the region's, because the
+    // report it is judged against is the one from before that wheel arrived.
+    // Only the wheel after it belongs to the parent, which is what a person
+    // expects: the region stops, then the page moves.
+    wheel_belongs_to_parent(e) {
+        const edge = this.scroll_boundary;
+        if (!edge || !edge.propagate) {
+            return false;
+        }
+        let moves = false;
+        if (e.deltaY < 0) { moves = true; if (!edge.at_top) return false; }
+        if (e.deltaY > 0) { moves = true; if (!edge.at_bottom) return false; }
+        if (e.deltaX < 0) { moves = true; if (!edge.at_left) return false; }
+        if (e.deltaX > 0) { moves = true; if (!edge.at_right) return false; }
+        return moves;
     }
 
     bind_mouse_and_touch() {
