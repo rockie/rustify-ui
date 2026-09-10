@@ -290,6 +290,7 @@ flowchart TD
 | `package.json`、`package-lock.json` | 新增 `@tailwindcss/cli`、`tailwindcss` devDependencies，版本锁定 | M1 |
 | `sources.lock.json` | 新增 `rust_ui` 节 | M1 |
 | `tests/browser/p2-{catalog,theme,semantics,form,navigation,workspace,drag,clipboard-files,i18n}.spec.ts` ★、`playwright.config.ts` | 第三个 project（4175）与 P2 用例 | M1 起 |
+| `tests/browser/p2-{deeplink,zoom,reflow}.spec.ts` ★ | 计划外新增：深链接在根与子路径各跑一遍（M4）；200% 五旅程与 400% 重排（M8，原本挂在人工记录里） | M4/M8 |
 | `docs/{components.md,forms.md,navigation.md,workspace.md,i18n.md}` ★、`docs/compatibility.md`、`docs/quickstart.md`、`docs/architecture.md` | 文档；`components.md` 由能力目录生成 | M2–M8 |
 | `docs/validation/p2/` ★ | 各里程碑报告与 B1 基线 | M1 起 |
 | `.github/workflows/verify.yml` | 增加 `css --check`、`catalog --check`、第三示例构建与用例 | M1 |
