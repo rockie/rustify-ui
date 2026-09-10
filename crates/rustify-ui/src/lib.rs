@@ -32,7 +32,10 @@ pub use task::{Load, Requests, Ticket};
 #[cfg(target_arch = "wasm32")]
 pub use components::{Button, Checkbox, Label, LoadView, Slider, TextArea, TextField};
 #[cfg(target_arch = "wasm32")]
-pub use gpu::{RustifyCheckBox, RustifySlider};
+pub use gpu::{
+    Glyph as RegionGlyph, RustifyCheckBox, RustifyDropDown, RustifyIcon, RustifyProgress,
+    RustifyRadio, RustifySlider, RustifySpinner, RustifyTabBar, RustifyToggle,
+};
 #[cfg(target_arch = "wasm32")]
 pub use overlay::{use_overlay, Anchor, Layer, OverlayStack};
 #[cfg(target_arch = "wasm32")]

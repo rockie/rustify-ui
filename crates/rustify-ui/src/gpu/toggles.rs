@@ -1,53 +1,10 @@
-//! The GPU half of the controls that have one on both sides of the boundary.
-//!
-//! Neither of these widgets holds the value it shows. A click is a request the
-//! application answers by handing back a new projection, exactly as the DOM
-//! half works, so one value cannot mean two things on one screen. A disabled
-//! or read-only control makes no request at all.
+//! The two-state controls: a box, a circle in a group, and a track a knob
+//! slides along. All three ask; none of them decides.
 
-use crate::components::snap;
 use crate::makepad_widgets::widget::*;
 use crate::makepad_widgets::*;
 
-script_mod! {
-    use mod.prelude.widgets_internal.*
-
-    mod.widgets.RustifyCheckBoxBase = #(RustifyCheckBox::register_widget(vm))
-
-    mod.widgets.RustifyCheckBox = set_type_default() do mod.widgets.RustifyCheckBoxBase{
-        width: 24
-        height: 24
-        draw_bg +: {
-            color: #x101828
-        }
-        draw_mark +: {
-            color: #x2e90fa
-        }
-        draw_border +: {
-            color: #xd0d5dd
-        }
-    }
-
-    mod.widgets.RustifySliderBase = #(RustifySlider::register_widget(vm))
-
-    mod.widgets.RustifySlider = set_type_default() do mod.widgets.RustifySliderBase{
-        width: 140
-        height: 24
-        draw_bg +: {
-            color: #x101828
-        }
-        draw_fill +: {
-            color: #x2e90fa
-        }
-        draw_knob +: {
-            color: #xffffff
-        }
-    }
-}
-
-fn colour(rgb: u32) -> Vec4f {
-    Vec4f::from_u32(rgb << 8 | 0xff)
-}
+use super::colour;
 
 /// A two-state control drawn by a region.
 ///
@@ -173,13 +130,14 @@ impl Widget for RustifyCheckBox {
     }
 }
 
-/// A value on a range drawn by a region.
+/// One choice of several, drawn by a region.
 ///
-/// The value is snapped by the same rule the DOM half uses, so dragging the
-/// GPU knob and dragging the DOM range cannot produce values from two
-/// different sets.
+/// A radio is not a checkbox that happens to be round: it can only be turned
+/// on, and turning one on is the group's business, not this widget's. So the
+/// request it makes carries nothing - "this one, please" - and the application
+/// decides what that does to the rest.
 #[derive(Script, ScriptHook, Widget)]
-pub struct RustifySlider {
+pub struct RustifyRadio {
     #[uid]
     uid: WidgetUid,
     #[source]
@@ -192,141 +150,187 @@ pub struct RustifySlider {
     #[live]
     draw_bg: DrawColor,
     #[live]
-    draw_fill: DrawColor,
+    draw_mark: DrawColor,
     #[live]
-    draw_knob: DrawColor,
+    draw_border: DrawColor,
     #[rust]
-    value: f64,
+    active: bool,
     #[rust]
     disabled: bool,
     #[rust]
     read_only: bool,
-    /// Minimum, maximum and step. `None` until the application says; a slider
-    /// with no range would answer every drag with the same number.
-    #[rust]
-    range: Option<(f64, f64, f64)>,
-    /// Track, fill and knob, from the scope's theme.
+    /// Disc, dot and ring, from the scope's theme.
     #[rust]
     palette: Option<(u32, u32, u32)>,
+    /// Set when the user asked for this one. Not a value: the application
+    /// decides whether it becomes one.
     #[rust]
-    change: Option<f64>,
+    change: Option<()>,
 }
 
-/// The default range, used until an application gives its own.
-const RANGE: (f64, f64, f64) = (0.0, 100.0, 1.0);
-
-impl RustifySlider {
-    pub fn set_state(&mut self, cx: &mut Cx, value: f64, disabled: bool, read_only: bool) {
-        if self.value != value || self.disabled != disabled || self.read_only != read_only {
-            self.value = value;
+impl RustifyRadio {
+    pub fn set_state(&mut self, cx: &mut Cx, active: bool, disabled: bool, read_only: bool) {
+        if self.active != active || self.disabled != disabled || self.read_only != read_only {
+            self.active = active;
             self.disabled = disabled;
             self.read_only = read_only;
             self.redraw(cx);
         }
     }
 
-    pub fn set_range(&mut self, cx: &mut Cx, min: f64, max: f64, step: f64) {
-        let next = Some((min, max, step));
-        if self.range != next {
-            self.range = next;
-            self.redraw(cx);
-        }
-    }
-
-    pub fn set_palette(&mut self, cx: &mut Cx, track: u32, fill: u32, knob: u32) {
-        let next = Some((track, fill, knob));
+    pub fn set_palette(&mut self, cx: &mut Cx, disc: u32, dot: u32, ring: u32) {
+        let next = Some((disc, dot, ring));
         if self.palette != next {
             self.palette = next;
             self.redraw(cx);
         }
     }
 
-    pub fn take_change(&mut self) -> Option<f64> {
+    pub fn take_change(&mut self) -> Option<()> {
         self.change.take()
     }
 
-    /// The track where it ended up, in the region's own local pixels. See
-    /// `RustifyCheckBox::drawn`.
+    /// Where it ended up, in the region's own local pixels.
     pub fn drawn(&self, cx: &Cx) -> Option<Rect> {
         let area = self.draw_bg.area();
         (!area.is_empty()).then(|| area.rect(cx))
     }
-
-    fn range(&self) -> (f64, f64, f64) {
-        self.range.unwrap_or(RANGE)
-    }
-
-    /// Where along the track the value sits, as 0..=1.
-    fn fraction(&self) -> f64 {
-        let (min, max, _) = self.range();
-        if max <= min {
-            return 0.0;
-        }
-        ((self.value - min) / (max - min)).clamp(0.0, 1.0)
-    }
-
-    /// The value the pointer is asking for at `x`.
-    fn value_at(&self, track: Rect, x: f64) -> f64 {
-        let (min, max, step) = self.range();
-        let span = track.size.x.max(1.0);
-        let fraction = ((x - track.pos.x) / span).clamp(0.0, 1.0);
-        snap(min + fraction * (max - min), min, max, step)
-    }
-
-    fn ask(&mut self, cx: &Cx, x: f64) {
-        let Some(track) = self.drawn(cx) else {
-            return;
-        };
-        if self.disabled || self.read_only {
-            return;
-        }
-        let asked = self.value_at(track, x);
-        if asked != self.value {
-            self.change = Some(asked);
-        }
-    }
 }
 
-impl Widget for RustifySlider {
+impl Widget for RustifyRadio {
     fn handle_event(&mut self, cx: &mut Cx, event: &Event, _scope: &mut Scope) {
-        match event.hits(cx, self.draw_bg.area()) {
-            Hit::FingerDown(fe) => {
-                if fe.is_primary_hit() {
-                    self.ask(cx, fe.abs.x);
-                }
+        if let Hit::FingerUp(fe) = event.hits(cx, self.draw_bg.area()) {
+            if !fe.is_over || !fe.is_primary_hit() {
+                return;
             }
-            Hit::FingerMove(fe) => self.ask(cx, fe.abs.x),
-            _ => {}
+            if self.disabled || self.read_only {
+                return;
+            }
+            // Choosing what is already chosen is not a change, and an
+            // application that hears one has to work out that it is not.
+            if !self.active {
+                self.change = Some(());
+            }
         }
     }
 
     fn draw_walk(&mut self, cx: &mut Cx2d, _scope: &mut Scope, walk: Walk) -> DrawStep {
         let pane = cx.walk_turtle(walk);
-        if let Some((track, fill, knob)) = self.palette {
-            self.draw_bg.color = colour(track);
-            self.draw_fill.color = colour(fill);
+        if let Some((disc, dot, ring)) = self.palette {
+            self.draw_bg.color = colour(disc);
+            self.draw_mark.color = colour(dot);
+            self.draw_border.color = colour(ring);
+        }
+        self.draw_border.draw_abs(cx, pane);
+        let inset = 2.0f64.min(pane.size.x * 0.2).min(pane.size.y * 0.2);
+        self.draw_bg.draw_abs(cx, inset_rect(pane, inset));
+        if self.active {
+            self.draw_mark
+                .draw_abs(cx, inset_rect(pane, pane.size.x.min(pane.size.y) * 0.3));
+        }
+        DrawStep::done()
+    }
+}
+
+/// The same rectangle, pulled in on every side.
+pub(super) fn inset_rect(rect: Rect, by: f64) -> Rect {
+    Rect {
+        pos: dvec2(rect.pos.x + by, rect.pos.y + by),
+        size: dvec2(
+            (rect.size.x - by * 2.0).max(0.0),
+            (rect.size.y - by * 2.0).max(0.0),
+        ),
+    }
+}
+
+/// A switch drawn by a region: two states, presented as a thing that moves.
+#[derive(Script, ScriptHook, Widget)]
+pub struct RustifyToggle {
+    #[uid]
+    uid: WidgetUid,
+    #[source]
+    source: ScriptObjectRef,
+    #[walk]
+    walk: Walk,
+    #[layout]
+    layout: Layout,
+    #[redraw]
+    #[live]
+    draw_track: DrawColor,
+    #[live]
+    draw_knob: DrawColor,
+    #[rust]
+    active: bool,
+    #[rust]
+    disabled: bool,
+    #[rust]
+    read_only: bool,
+    /// The track when off, the track when on, and the knob.
+    #[rust]
+    palette: Option<(u32, u32, u32)>,
+    #[rust]
+    change: Option<bool>,
+}
+
+impl RustifyToggle {
+    pub fn set_state(&mut self, cx: &mut Cx, active: bool, disabled: bool, read_only: bool) {
+        if self.active != active || self.disabled != disabled || self.read_only != read_only {
+            self.active = active;
+            self.disabled = disabled;
+            self.read_only = read_only;
+            self.redraw(cx);
+        }
+    }
+
+    pub fn set_palette(&mut self, cx: &mut Cx, off: u32, on: u32, knob: u32) {
+        let next = Some((off, on, knob));
+        if self.palette != next {
+            self.palette = next;
+            self.redraw(cx);
+        }
+    }
+
+    pub fn take_change(&mut self) -> Option<bool> {
+        self.change.take()
+    }
+
+    /// Where it ended up, in the region's own local pixels.
+    pub fn drawn(&self, cx: &Cx) -> Option<Rect> {
+        let area = self.draw_track.area();
+        (!area.is_empty()).then(|| area.rect(cx))
+    }
+}
+
+impl Widget for RustifyToggle {
+    fn handle_event(&mut self, cx: &mut Cx, event: &Event, _scope: &mut Scope) {
+        if let Hit::FingerUp(fe) = event.hits(cx, self.draw_track.area()) {
+            if !fe.is_over || !fe.is_primary_hit() {
+                return;
+            }
+            if self.disabled || self.read_only {
+                return;
+            }
+            self.change = Some(!self.active);
+        }
+    }
+
+    fn draw_walk(&mut self, cx: &mut Cx2d, _scope: &mut Scope, walk: Walk) -> DrawStep {
+        let pane = cx.walk_turtle(walk);
+        if let Some((off, on, knob)) = self.palette {
+            self.draw_track.color = colour(if self.active { on } else { off });
             self.draw_knob.color = colour(knob);
         }
-        self.draw_bg.draw_abs(cx, pane);
-        let fraction = self.fraction();
-        if fraction > 0.0 {
-            self.draw_fill.draw_abs(
-                cx,
-                Rect {
-                    pos: pane.pos,
-                    size: dvec2(pane.size.x * fraction, pane.size.y),
-                },
-            );
-        }
-        let knob = pane.size.y.min(pane.size.x).max(2.0);
-        // Kept inside the track: a knob half off the end would report a value
-        // the pointer never asked for.
-        let left = pane.pos.x + (pane.size.x - knob) * fraction;
+        self.draw_track.draw_abs(cx, pane);
+        let inset = (pane.size.y * 0.1).min(3.0);
+        let diameter = (pane.size.y - inset * 2.0).max(0.0);
+        // Right when on, left when off, and never past either end.
+        let travel = (pane.size.x - diameter - inset * 2.0).max(0.0);
+        let left = pane.pos.x + inset + if self.active { travel } else { 0.0 };
         self.draw_knob.draw_abs(
             cx,
             Rect {
-                pos: dvec2(left, pane.pos.y),
-                size: dvec2(knob, pane.size.y),
+                pos: dvec2(left, pane.pos.y + inset),
+                size: dvec2(diameter, diameter),
             },
         );
         DrawStep::done()
