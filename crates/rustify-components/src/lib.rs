@@ -27,6 +27,7 @@ pub mod spinner;
 pub mod switch;
 pub mod tabs;
 pub mod textarea;
+pub mod workspace;
 
 // The four that float. They stand on the SDK's overlay stack - positioning,
 // the Escape order and the return of focus are its, not theirs - and the stack
@@ -56,6 +57,9 @@ pub use spinner::Spinner;
 pub use switch::Switch;
 pub use tabs::{Orientation, Tab, TabPanel, Tabs};
 pub use textarea::TextArea;
+#[cfg(target_arch = "wasm32")]
+pub use workspace::{Command, CommandPalette};
+pub use workspace::{PanelTab, PanelTabs, PanelView, Splitter};
 
 #[cfg(target_arch = "wasm32")]
 pub use dialog::Dialog;

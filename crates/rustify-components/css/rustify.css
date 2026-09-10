@@ -104,17 +104,29 @@
   .rui\:max-h-64 {
     max-height: calc(var(--rui-spacing) * 64);
   }
+  .rui\:max-h-80 {
+    max-height: calc(var(--rui-spacing) * 80);
+  }
   .rui\:min-h-16 {
     min-height: calc(var(--rui-spacing) * 16);
   }
+  .rui\:w-1\.5 {
+    width: calc(var(--rui-spacing) * 1.5);
+  }
   .rui\:w-11 {
     width: calc(var(--rui-spacing) * 11);
+  }
+  .rui\:w-\[32rem\] {
+    width: 32rem;
   }
   .rui\:w-fit {
     width: fit-content;
   }
   .rui\:w-full {
     width: 100%;
+  }
+  .rui\:max-w-full {
+    max-width: 100%;
   }
   .rui\:max-w-lg {
     max-width: var(--rui-container-lg);
@@ -135,6 +147,9 @@
     --tw-translate-x: calc(var(--rui-spacing) * 5);
     translate: var(--tw-translate-x) var(--tw-translate-y);
   }
+  .rui\:cursor-col-resize {
+    cursor: col-resize;
+  }
   .rui\:cursor-pointer {
     cursor: pointer;
   }
@@ -152,6 +167,9 @@
   }
   .rui\:justify-center {
     justify-content: center;
+  }
+  .rui\:gap-1 {
+    gap: calc(var(--rui-spacing) * 1);
   }
   .rui\:gap-1\.5 {
     gap: calc(var(--rui-spacing) * 1.5);
@@ -176,6 +194,9 @@
   .rui\:overflow-hidden {
     overflow: hidden;
   }
+  .rui\:overflow-x-auto {
+    overflow-x: auto;
+  }
   .rui\:overscroll-auto {
     overscroll-behavior: auto;
   }
@@ -197,13 +218,25 @@
   .rui\:rounded-sm {
     border-radius: calc(var(--radius) - 2px);
   }
+  .rui\:rounded-t-md {
+    border-top-left-radius: var(--radius);
+    border-top-right-radius: var(--radius);
+  }
   .rui\:border {
     border-style: var(--tw-border-style);
     border-width: 1px;
   }
+  .rui\:border-0 {
+    border-style: var(--tw-border-style);
+    border-width: 0px;
+  }
   .rui\:border-2 {
     border-style: var(--tw-border-style);
     border-width: 2px;
+  }
+  .rui\:border-b {
+    border-bottom-style: var(--tw-border-style);
+    border-bottom-width: 1px;
   }
   .rui\:border-border {
     border-color: var(--border);
@@ -253,11 +286,17 @@
   .rui\:bg-success {
     background-color: var(--success);
   }
+  .rui\:bg-transparent {
+    background-color: transparent;
+  }
   .rui\:bg-warning {
     background-color: var(--warning);
   }
   .rui\:p-0 {
     padding: calc(var(--rui-spacing) * 0);
+  }
+  .rui\:p-0\.5 {
+    padding: calc(var(--rui-spacing) * 0.5);
   }
   .rui\:p-1 {
     padding: calc(var(--rui-spacing) * 1);
@@ -300,6 +339,9 @@
   }
   .rui\:py-2 {
     padding-block: calc(var(--rui-spacing) * 2);
+  }
+  .rui\:py-3 {
+    padding-block: calc(var(--rui-spacing) * 3);
   }
   .rui\:pr-8 {
     padding-right: calc(var(--rui-spacing) * 8);
@@ -612,6 +654,11 @@
       @supports (color: color-mix(in lab, red, red)) {
         --tw-ring-color: color-mix(in oklab, var(--destructive) 40%, transparent);
       }
+    }
+  }
+  .rui\:aria-selected\:border-border {
+    &[aria-selected="true"] {
+      border-color: var(--border);
     }
   }
   .rui\:aria-selected\:bg-background {
