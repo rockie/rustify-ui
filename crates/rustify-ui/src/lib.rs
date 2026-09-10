@@ -10,6 +10,7 @@ pub mod gpu;
 pub mod mount;
 pub mod overlay;
 pub mod region;
+pub mod router;
 pub mod scheduler;
 pub mod task;
 pub mod text;
