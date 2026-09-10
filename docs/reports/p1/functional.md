@@ -61,3 +61,4 @@ Kept here because each one changed a contract rather than a line:
 - A widget reported the rectangle the layout walked rather than the one it was aligned into, so a pointer aimed at the reported position missed by the width of the centring (M6).
 - A region drew a notes value it never updated: the helper that would have updated it was dead code (M6).
 - Recovering a lost GPU context by replacing the canvas element left the rebuilt region compiling shaders against the dead context, so it came back blank — worse than staying visibly lost. The platform's own restore event is what the region now waits for (M7).
+- An embedded region never collected its script heap, so every props application that set a value on a shader leaked three objects. Two hours at ten actions a second cost 145 MB. A region now sweeps between pumps once it has made enough garbage to be worth it (M8).

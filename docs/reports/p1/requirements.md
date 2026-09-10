@@ -43,7 +43,7 @@ Status words mean exactly this:
 | R30 interaction latency | measured | 1,000 controlled round trips, p95 and worst case, taken inside the page. No budget claimed | performance |
 | R31 idle and restore | partial | Idle pumps, hide-and-restore rounds, first frame after a 0×0 recovery; CPU figures per machine class are not P1's | M2, M4, M8 |
 | R32 memory | partial | Symmetric release over 250 rounds, a hundred measured mount rounds, the endurance curve; the full B0/B2 matrix is later | M2, M8 |
-| R33 reliability over time | **partial, with a failure** | Endurance at ten actions a second: nothing lost, duplicated or late, at two minutes and at two hours. But the two-hour run's memory tail is not flat and the test fails on it - an open defect, see [the performance report](performance.md) | M8 |
+| R33 reliability over time | partial | Endurance at ten actions a second: nothing lost, duplicated or late, at two minutes and at two hours (72,000 sent, 72,000 accepted, 0 refused). The two-hour run also found a 145 MB leak in the script heap, which is fixed - see [the performance report](performance.md) | M8 |
 | R34 browser matrix | partial | macOS Chrome is the pass gate; Safari is an observation and has not been run | [compatibility](compatibility.md) |
 | R35 accessibility numbers | **not verified** | The contrast and 200%/400% reflow walkthrough is a missing manual record | [accessibility](accessibility.md) |
 | R36 security | met (P1 scope) | No default outbound traffic, no JavaScript `unsafe-eval`, no user text in logs by construction, text that looks like markup stays a value | M1, M7 |

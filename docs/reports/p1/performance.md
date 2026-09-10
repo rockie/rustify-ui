@@ -90,12 +90,12 @@ at 9.92/s — nothing lost, duplicated or late. The memory curve was
 third. The test asserts that the last quarter is flat and prints the whole
 curve, because a two-minute run cannot tell a plateau from a slow climb.
 
-**The two-hour run fails.** Its last quarter is not flat: over two hours linear
-memory is still climbing by more than the 1% the test allows. Nothing was lost
-in it - the counters are asserted before the memory is, and the run got that
-far - so what it says is that the two-minute shape above is not the two-hour
-shape. See [the M8 report](../../validation/p1/m8-baselines.md) for what is
-known and what a re-run is expected to add.
+**The two-hour run found a leak**, which is what a two-hour run is for. Memory
+grew 37 MB → 189 MB in doublings; the cause was the script VM's heap, which an
+embedded region never collected. After the fix, fifteen minutes at the same
+rate ends at 43.5 MB and flat. The whole account - curve, cause, host test and
+measurement after - is in [the M8
+report](../../validation/p1/m8-baselines.md).
 
 ## What is still not measured
 

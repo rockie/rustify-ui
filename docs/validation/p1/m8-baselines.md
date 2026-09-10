@@ -4,7 +4,7 @@ Date: 2026-09-09 and 2026-09-10 (the two-hour runs cross midnight). Machine: mac
 
 ## Status
 
-M8's automated half is complete **except for the two-hour endurance run, which fails**; see the section below. Its manual half has none of its four records, and `cargo xtask verify --suite p1` prints that as a missing record rather than passing over it. M8 is therefore **not closed**, and neither are M5, M6 and M7, which have waited on the same two people-only checks since 2026-09-09.
+M8's automated half is complete. The two-hour endurance run found a real leak - 145 MB in two hours - which is fixed; the section below has the curve, the cause and the measurement after. Its manual half has none of its four records, and `cargo xtask verify --suite p1` prints that as a missing record rather than passing over it. M8 is therefore **not closed**, and neither are M5, M6 and M7, which have waited on the same two people-only checks since 2026-09-09.
 
 **None of these numbers are the PRD's B0 or B1 loads.** They are P1's own fixture, and the plan forbids letting a small load stand in for a large one. Nothing here is claimed against R29's budgets (A-6).
 
@@ -64,25 +64,52 @@ Also new. V12 asks for a comparison with the record on and off, and until this m
 
 The two-minute memory curve is worth printing rather than summarising: `36896768, 36896768, 36896768, 36896768, 37552128, 38207488, 38862848, 39518208, 41680896, 41680896, 41680896, 41680896` - flat, a climb of 4.8 MB, then flat again for the last third. The test asserts that the last quarter is flat and prints the whole curve, because a two-minute run cannot tell a plateau from a slow climb.
 
-### The two-hour run
+### The two-hour run, and the leak it found
 
-**It failed, and the failure is the finding.** At two hours the memory curve's
-last quarter is not flat: the test asserts that the tail grows by less than 1%
-of where it started, and it grew by more.
+The first two-hour run **failed**, and the failure was the point of running it.
+Linear memory grew from 36,896,768 to 189,136,896 bytes - 145 MB - and not
+smoothly: in doublings.
 
-The first run's own numbers were lost - the curve and the counters are printed
-by the test, and a concurrent Playwright invocation of mine cleared the results
-directory the run was writing into, taking its report with it. That was a
-process mistake, not a product one, and it is why this section names the
-assertion rather than the megabytes. A clean re-run is under way; the curve
-goes here when it lands.
+| At | Jump | To |
+| --- | --- | --- |
+| 1.3 min | +2.4 MB | 40 MB |
+| 3.5 min | +4.1 MB | 45 MB |
+| 7.7 min | +8.1 MB | 53 MB |
+| 16.0 min | +16.1 MB | 71 MB |
+| 32.8 min | +32.1 MB | 105 MB |
+| 66.5 min | +64.1 MB | 175 MB |
 
-What the failure does and does not say:
+Each jump twice the last, at intervals that also doubled (13, 25, 50, 101
+samples): one container growing by a fixed amount per action and reallocating
+at double capacity. Nothing else about the run was wrong - 72,000 sent, 72,000
+accepted, 0 refused, at 10.00/s, no errors, one live listener at the end.
 
-- It does **not** say an action was lost. `accepted === sent` and `refused === 0` are asserted before the memory ones, and the run reached the memory assertion, so seven-hundred-thousand-odd actions arrived exactly once each over two hours.
-- It says the two-minute shape - flat, a 4.8 MB climb, flat again - is not the two-hour shape, which is exactly the question the plan wanted a two-hour run to answer. Whether it is a leak or a slower plateau needs the curve.
+**The container was the script VM's heap.** Every props application that sets a
+value on a shader evaluates a small script through `script_apply_eval!`, and
+each evaluation leaves three objects behind. Nothing ever collected them: a
+desktop application runs its script at startup, so the collector was only
+reachable from script itself, and an embedded region that applies props on
+every action makes garbage for as long as it runs.
 
-Recorded as an open defect against V12 rather than as a measurement.
+A ten-millisecond host test says the same thing as the two-hour browser run:
+five hundred evaluations of one callsite add fifteen hundred live heap entries,
+and one sweep takes all of them back
+(`what_a_reused_eval_callsite_leaves_behind_is_collectable`, in the fork's
+script VM). That the sweep reclaims them is what makes it garbage rather than
+state, and it is what the fix depends on.
+
+The fix is in the region's pump (`crates/rustify-makepad/src/wasm/host.rs`):
+between pumps, when the VM is not held and nothing the pump produced is still
+on its stack, a region collects if it has made more than 20,000 entries of
+garbage since its last sweep. An amount rather than a period - an idle region
+never collects, and a busy one pays for the sweep with what it reclaims.
+
+Measured after the fix, fifteen minutes at ten actions a second: 9,000 sent,
+9,000 accepted, 0 refused, memory **36,896,768 -> 43,515,904** and flat for the
+last twenty-eight samples. The old build was at 71 MB and still doubling by
+that point in its run.
+
+<!-- endurance-two-hours-after-fix -->
 
 ## A defect this milestone found
 

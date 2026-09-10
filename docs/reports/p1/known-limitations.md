@@ -28,7 +28,7 @@ a promise about a later release.
 ## Measured, but only here
 
 - **Every GPU figure is a software figure.** The headless browser runs on SwiftShader.
-- **Memory does not flatten over two hours.** The two-minute run's tail is flat; the two-hour run's is not, and the test fails on it. It is an open defect against V12, not a measurement - see [the performance report](performance.md).
+- **A region collects its script heap on an amount, not a schedule.** It sweeps once it has made 20,000 entries of garbage, so a burst of work is followed by a sweep and an idle region never pays for one. What that bounds is the heap, not the peak of any single burst.
 - **Transfer figures are from a loopback server with no compression.** The gzip figure that a compressing host would send is reported separately by `cargo xtask report-size --compressed`.
 - **No PRD budget is claimed.** A-6 stands: P1 delivers baselines, and the PRD's R29/R30 numbers were never approved.
 
