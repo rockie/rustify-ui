@@ -8,6 +8,7 @@
 //! everything a person can reach.
 
 pub mod button;
+pub mod catalog;
 pub mod checkbox;
 mod dom;
 pub mod icon;
@@ -39,6 +40,7 @@ pub mod select;
 pub mod tooltip;
 
 pub use button::{Button, ButtonSize, ButtonVariant};
+pub use catalog::{Capability, Category, Entry, Presentation, Support, CATALOG};
 pub use checkbox::Checkbox;
 pub use icon::{Glyph, Icon};
 pub use input::{TextField, TextKind};

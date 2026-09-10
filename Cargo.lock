@@ -1457,6 +1457,7 @@ name = "property-workbench"
 version = "0.1.0"
 dependencies = [
  "leptos",
+ "rustify-components",
  "rustify-makepad",
  "rustify-ui",
  "wasm-bindgen",
@@ -2444,6 +2445,7 @@ checksum = "3ad82d2a33cdc9674dc7465672f271e096168fcdbe0f799d9e6db8c5892679dc"
 name = "xtask"
 version = "0.1.0"
 dependencies = [
+ "rustify-components",
  "serde",
  "serde_json",
  "sha2",

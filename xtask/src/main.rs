@@ -1,5 +1,6 @@
 mod bridge;
 mod build;
+mod catalog;
 mod css;
 mod doctor;
 mod serve;
@@ -17,6 +18,7 @@ cargo xtask <command> [options]
   serve       --example <name> [--release] [--base /path/] [--port N] [--csp strict|no-wasm|off]
               [--fault missing:<path>|corrupt:<path>|truncated:<path>|stale-bridge]
   css         [--check]
+  catalog     --write <path> [--check]
   report-size --example <name> [--release] [--compressed]
   sources     verify
   verify      --suite p1 [--no-browser] [--no-build]
@@ -29,6 +31,7 @@ fn main() {
         Some("build-web") => build_web(&args[1..]).map(|_| ()),
         Some("serve") => serve_example(&args[1..]),
         Some("css") => css::run(&args[1..]),
+        Some("catalog") => catalog::run(&args[1..]),
         Some("report-size") => report_size(&args[1..]),
         Some("sources") => sources::run(&args[1..]),
         Some("verify") => verify::run(&args[1..]),
@@ -40,7 +43,7 @@ fn main() {
     }
 }
 
-fn option<'a>(args: &'a [String], name: &str) -> Option<&'a str> {
+pub fn option<'a>(args: &'a [String], name: &str) -> Option<&'a str> {
     args.iter()
         .position(|a| a == name)
         .and_then(|i| args.get(i + 1))

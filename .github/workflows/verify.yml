@@ -34,6 +34,8 @@ jobs:
         run: npm ci
       - name: Component stylesheet is in step with the classes
         run: cargo xtask css --check
+      - name: Capability document is in step with the catalogue
+        run: cargo xtask catalog --write docs/components.md --check
 
   web:
     name: release web build and browser probes

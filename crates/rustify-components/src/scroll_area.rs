@@ -54,7 +54,7 @@ pub fn ScrollArea(
     let aria_label = (!aria_label.is_empty()).then_some(aria_label);
     view! {
         <div
-            class=crate::macros::merge(&format!("{BASE} {}", boundary.class()), &class)
+            class=crate::macros::merge(format!("{BASE} {}", boundary.class()), &class)
             data-name="ScrollArea"
             data-testid=test_id
             data-boundary=boundary.name()

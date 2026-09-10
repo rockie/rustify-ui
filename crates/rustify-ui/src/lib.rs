@@ -2,7 +2,6 @@
 //! regions inside one browser page and one wasm module.
 
 pub mod binding;
-pub mod catalog;
 pub mod components;
 pub mod diagnostics;
 #[cfg(target_arch = "wasm32")]
@@ -16,7 +15,6 @@ pub mod text;
 pub mod theme;
 
 pub use binding::{duplicate_key, ActionSink};
-pub use catalog::{Capability, Category, Entry, Presentation, Support, CATALOG};
 pub use components::snap;
 pub use diagnostics::{
     identify_runtime, note, record, report_json, set_recording, watch_assets, with_log, Diagnostic,

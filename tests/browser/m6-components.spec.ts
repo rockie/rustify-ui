@@ -28,7 +28,7 @@ test.describe("M6 V7: eighteen categories, and no blank support cell", () => {
             Array.from(document.querySelectorAll('[data-testid="catalogue"] tbody tr')).map(
                 (row) => ({
                     category: row.querySelector("th")!.textContent,
-                    shipped: (row as HTMLElement).dataset.shipped,
+                    region: (row as HTMLElement).dataset.region,
                     values: Array.from(row.querySelectorAll("td")).map((cell) => ({
                         support: (cell as HTMLElement).dataset.support,
                         text: cell.textContent?.trim() ?? "",
@@ -50,28 +50,42 @@ test.describe("M6 V7: eighteen categories, and no blank support cell", () => {
             }
         }
 
-        const shipped = cells.filter((row) => row.shipped === "true").map((row) => row.category);
-        expect(shipped).toEqual([
+        // Every category has a DOM component, which is where a control is
+        // named, focused and read - including the ones a region draws.
+        for (const row of cells) {
+            expect(row.values[0].support, `${row.category}`).toBe("yes");
+        }
+
+        const drawn = cells.filter((row) => row.region === "true").map((row) => row.category);
+        expect(drawn).toEqual([
             "button",
             "label",
+            "icon",
             "text field",
             "text area",
             "checkbox",
+            "radio",
+            "switch",
+            "select",
             "slider",
+            "progress",
             "loading",
+            "tabs",
+            "scroll area",
+        ]);
+        // The four with no GPU half say where they are drawn instead: a cell
+        // saying only "no" would read as "not usable with a region", which is
+        // the opposite of true for three of them.
+        const elsewhere = cells.filter((row) => row.region !== "true");
+        expect(elsewhere.map((row) => row.category)).toEqual([
+            "link",
+            "tooltip",
             "menu",
             "dialog",
         ]);
-        // The other nine are in the table, saying they are not here.
-        const absent = cells.filter((row) => row.shipped !== "true");
-        expect(absent).toHaveLength(9);
-        for (const row of absent) {
-            for (const value of row.values) {
-                expect(value.support, `${row.category}`).toBe("no");
-            }
-            for (const value of row.values.slice(3)) {
-                expect(value.text, `${row.category}`).toContain("not in P1");
-            }
+        for (const row of elsewhere) {
+            expect(row.values[1].support, `${row.category}`).toBe("no");
+            expect(row.values[8].text, `${row.category}`).toContain("region");
         }
     });
 });

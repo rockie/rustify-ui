@@ -15,10 +15,11 @@ mod app {
     use leptos::prelude::*;
     use leptos::wasm_bindgen::prelude::*;
     use leptos::wasm_bindgen::JsCast;
+    use rustify_components::{Support, CATALOG};
     use rustify_ui::{
         mount, Anchor, AppHandle, Button, Checkbox, GpuRegion, Load, LoadView, LocalRect,
-        MountConfig, RegionState, Requests, Slider, Support, TextArea, TextEdit, TextField, Theme,
-        ThemeOverride, ThemePatch, ThemedScope, UiError, CATALOG,
+        MountConfig, RegionState, Requests, Slider, TextArea, TextEdit, TextField, Theme,
+        ThemeOverride, ThemePatch, ThemedScope, UiError,
     };
     use std::cell::{Cell, RefCell};
     use std::collections::{BTreeMap, BTreeSet};
@@ -1057,7 +1058,7 @@ mod app {
                             view! {
                                 <tr
                                     data-testid=format!("catalogue-{}", entry.category.name())
-                                    data-shipped=entry.shipped().to_string()
+                                    data-region=entry.drawn_by_region().to_string()
                                 >
                                     <th scope="row">{entry.category.name()}</th>
                                     <td data-support=entry

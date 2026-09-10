@@ -6,6 +6,9 @@ license.workspace = true
 publish.workspace = true
 
 [dependencies]
+# The capability document is printed from the table the components are
+# declared in, so the command that writes it has to be able to read that table.
+rustify-components = { path = "../crates/rustify-components" }
 serde = { version = "1", features = ["derive"] }
 serde_json = { version = "1", features = ["preserve_order"] }
 sha2 = "0.10"

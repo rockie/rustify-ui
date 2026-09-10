@@ -6,10 +6,10 @@ mod app {
     use super::theme_region::{ThemeAction, ThemeProps, ThemeRegion};
     use leptos::prelude::*;
     use leptos::wasm_bindgen::prelude::*;
-    use rustify_components::{clx, provide_current_path, variants};
+    use rustify_components::{clx, provide_current_path, variants, Support, CATALOG};
     use rustify_ui::{
         mount, AppHandle, Button, GpuRegion, LocalRect, MountConfig, RegionState, Theme,
-        ThemedScope, CATALOG,
+        ThemedScope,
     };
     use std::cell::RefCell;
     use std::collections::BTreeMap;
@@ -115,11 +115,11 @@ mod app {
         static SNAPSHOT: RefCell<String> = const { RefCell::new(String::new()) };
     }
 
-    fn chip(support: rustify_ui::Support) -> ChipVariant {
+    fn chip(support: Support) -> ChipVariant {
         match support {
-            rustify_ui::Support::Yes => ChipVariant::Yes,
-            rustify_ui::Support::Partial => ChipVariant::Partial,
-            rustify_ui::Support::No => ChipVariant::No,
+            Support::Yes => ChipVariant::Yes,
+            Support::Partial => ChipVariant::Partial,
+            Support::No => ChipVariant::No,
         }
     }
 
