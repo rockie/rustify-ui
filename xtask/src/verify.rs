@@ -112,8 +112,10 @@ pub const P2_MANUAL_RECORDS: [(&str, &str); 4] = [
     ),
     (
         "docs/validation/p2/manual/samples.md",
-        "M7/M8: the twenty B5 samples against a reference rendering - direction, order, and \
-         whether anything is a box (A-4)",
+        "M7/M8: direction and order of the twenty B5 samples against a reference rendering \
+         (A-4). Whether anything came out blank is measured by `p2-i18n`; what needs the \
+         reference image is whether the marks that *are* there are the right ones, in the \
+         right order and the right direction",
     ),
     (
         "docs/validation/p2/manual/contrast-and-zoom.md",

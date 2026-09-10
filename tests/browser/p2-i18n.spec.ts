@@ -129,6 +129,71 @@ test.describe("M7 V10: twenty texts, drawn twice", () => {
         await expect(page.getByTestId("sample-zh-latin")).toHaveAttribute("dir", "ltr");
     });
 
+    test("every sample actually put marks on the screen", async () => {
+        const page = shared.page;
+        // A reviewer looks for three things: direction, order, and whether
+        // anything came out as a box or a blank. The first two need eyes and a
+        // reference rendering; the third has a measurable half - a line that
+        // rendered nothing at all has no width, and no amount of looking at a
+        // screenshot is needed to say so.
+        const widths = await page.evaluate((ids) => {
+            const measure = (id: string) => {
+                const element = document.querySelector(
+                    `[data-testid="sample-${id}"]`
+                ) as HTMLElement;
+                const range = document.createRange();
+                range.selectNodeContents(element);
+                return {
+                    id,
+                    text: element.textContent ?? "",
+                    width: range.getBoundingClientRect().width,
+                };
+            };
+            return ids.map(measure);
+        }, SAMPLE_IDS);
+
+        const blank = widths.filter((sample) => sample.width < 1);
+        expect(blank.map((sample) => sample.id), "a sample that drew nothing").toEqual([]);
+
+        // Width cannot be checked against character count in general, and the
+        // samples are the reason why: five combining marks on one letter are
+        // six characters and one narrow glyph, and a family emoji is seven
+        // code points and one. Getting those *right* makes them narrow. So the
+        // proportional check is made only where proportionality holds - a
+        // Latin pangram with nothing stacked or joined in it.
+        const pangram = widths.find((sample) => sample.id === "en-plain")!;
+        expect(pangram.width, "a plain Latin line is as wide as its text").toBeGreaterThan(100);
+
+        // And the one that should be narrow is narrow, which is the same fact
+        // from the other side: it means the marks combined instead of being
+        // laid out one after another.
+        const stacked = widths.find((sample) => sample.id === "combining-stack")!;
+        expect(stacked.width, "five marks stacked onto one letter").toBeLessThan(
+            pangram.width / 4
+        );
+    });
+
+    test("the families the samples need are the ones the browser loaded", async () => {
+        const page = shared.page;
+        // `document.fonts.check` answers for the text it is given: if the page
+        // is drawing Chinese with a font that has no Chinese in it, this is
+        // where it shows, rather than in a screenshot somebody has to squint
+        // at. The DOM half falls back to the system stack, which on this gate
+        // does have these scripts - so what this catches is the page having
+        // asked for something that never arrived.
+        const ready = await page.evaluate(async () => {
+            await document.fonts.ready;
+            return {
+                latin: document.fonts.check("15px system-ui", "The quick brown fox"),
+                chinese: document.fonts.check("15px system-ui", "属性工作台"),
+                emoji: document.fonts.check("15px system-ui", "👨‍👩‍👧‍👦"),
+            };
+        });
+        expect(ready.latin).toBe(true);
+        expect(ready.chinese).toBe(true);
+        expect(ready.emoji).toBe(true);
+    });
+
     test("the region drew all twenty as well", async () => {
         const page = shared.page;
         await expect

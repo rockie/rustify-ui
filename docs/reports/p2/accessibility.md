@@ -145,7 +145,7 @@ theme value, so one setting covers both.
 | --- | --- |
 | `docs/validation/p2/manual/voiceover.md` | What VoiceOver actually *says* over the eighteen categories and B1's five journeys. The tree behind it - names, distinctness, no focus trap, modality - is checked by `p2-semantics` and `p2-a11y` |
 | `docs/validation/p2/manual/pinyin.md` | A real pinyin session in the form and the palette. The mechanics beneath it - a composition in flight not being a value, keys during one belonging to the composition - are checked by `p2-ime` |
-| `docs/validation/p2/manual/samples.md` | The twenty B5 samples against a reference rendering (A-4) |
+| `docs/validation/p2/manual/samples.md` | Direction and order of the twenty B5 samples against a reference rendering (A-4). The third thing a reviewer looks for - whether anything came out blank - is measured: no sample has zero width, a Latin pangram is as wide as its text, and five marks stacked on one letter are correctly *narrow* |
 | `docs/validation/p2/manual/contrast-and-zoom.md` | Whether the reflowed pages are *readable* at 200% and 400%. The ratios, the journeys and the reflow itself are checked above; this is the judgement a measurement cannot make |
 
 None of these is in. This release cannot be called complete until they are, and
