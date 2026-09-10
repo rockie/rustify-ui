@@ -129,6 +129,8 @@ declare global {
                 controls: {
                     locked: { x: number; y: number; width: number; height: number };
                     size: { x: number; y: number; width: number; height: number };
+                    name: { x: number; y: number; width: number; height: number };
+                    notes: { x: number; y: number; width: number; height: number };
                 } | null;
                 region: string;
             };

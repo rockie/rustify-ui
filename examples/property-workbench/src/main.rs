@@ -809,7 +809,7 @@ mod app {
         // Where the region drew the controls it owns, as it reported them.
         // Business state like any other: nobody keeps a second copy of the
         // region's layout.
-        let controls = RwSignal::new(None::<(LocalRect, LocalRect)>);
+        let controls = RwSignal::new(None::<(LocalRect, LocalRect, LocalRect, LocalRect)>);
 
         // Whether the third-party component is in the view, and every callback
         // it has made. A rebuild that left a subscription behind would show up
@@ -909,11 +909,13 @@ mod app {
                 third_party_updates.get(),
                 controls
                     .get()
-                    .map(|(locked, size)| {
+                    .map(|(locked, size, name, notes)| {
                         format!(
-                            "{{\"locked\":{},\"size\":{}}}",
+                            "{{\"locked\":{},\"size\":{},\"name\":{},\"notes\":{}}}",
                             rect_json(locked),
-                            rect_json(size)
+                            rect_json(size),
+                            rect_json(name),
+                            rect_json(notes),
                         )
                     })
                     .unwrap_or_else(|| "null".to_string()),
@@ -1004,8 +1006,13 @@ mod app {
                         editing.set(Some((field, LocalRect::new(x, y, width, height))));
                     }
                 }
-                SelectionAction::Controls { locked, size } => {
-                    controls.set(Some((locked, size)));
+                SelectionAction::Controls {
+                    locked,
+                    size,
+                    name,
+                    notes,
+                } => {
+                    controls.set(Some((locked, size, name, notes)));
                 }
                 SelectionAction::SetLocked(locked) => {
                     accepted.update(|n| *n += 1);

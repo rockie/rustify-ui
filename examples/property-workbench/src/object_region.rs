@@ -69,6 +69,12 @@ pub enum SelectionAction {
     Controls {
         locked: LocalRect,
         size: LocalRect,
+        /// Where the two pieces of text it draws ended up. Reported for the
+        /// same reason the controls are: what a pointer has to be aimed at is
+        /// the region's to say, and a caller that guesses at a pixel offset is
+        /// a caller that breaks the first time a panel changes width.
+        name: LocalRect,
+        notes: LocalRect,
     },
     /// The user asked to lock or unlock the object. A request, not a value:
     /// the region draws whatever comes back.
@@ -249,7 +255,7 @@ pub struct ObjectRegion {
     opened_links: u32,
     /// The last geometry reported, so only a change is sent.
     #[rust]
-    controls: Option<(LocalRect, LocalRect)>,
+    controls: Option<(LocalRect, LocalRect, LocalRect, LocalRect)>,
     /// Which values have needed more than Latin. Once one has, that label keeps
     /// drawing with the wider family: the file is already here, and moving
     /// back would only make the same value change shape.
@@ -458,13 +464,17 @@ impl RegionApp for ObjectRegion {
                 if let Some(size) = asked {
                     outbox.push(SelectionAction::SetSize(size));
                 }
+                let name = self.ui.widget(cx, ids!(name_label)).area().rect(cx);
+                let notes = self.ui.widget(cx, ids!(notes_label)).area().rect(cx);
                 if let (Some(locked), Some(size)) = (drawn_locked, drawn_size) {
-                    let reported = (local(locked), local(size));
+                    let reported = (local(locked), local(size), local(name), local(notes));
                     if self.controls != Some(reported) {
                         self.controls = Some(reported);
                         outbox.push(SelectionAction::Controls {
                             locked: reported.0,
                             size: reported.1,
+                            name: reported.2,
+                            notes: reported.3,
                         });
                     }
                 }

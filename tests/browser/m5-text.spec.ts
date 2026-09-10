@@ -8,15 +8,28 @@ const snapshot = (page: Page) => page.evaluate(() => window.__property_workbench
 // buttons first and its values after them, so these do not move when a value
 // does; they are pixels rather than fractions because the row is laid out from
 // the left, not stretched across the width.
-const NAME_LABEL = { dx: 250, fy: 0.06 };
-const NOTES_LABEL = { dx: 470, fy: 0.06 };
+/// Where the region says it drew its two pieces of text, in its own local
+/// pixels. Asked for rather than guessed: a pixel offset written down here is
+/// a test that breaks the first time the panel around the region changes
+/// width, which is exactly what R25 says not to build.
+async function labelPoint(page: Page, which: "name" | "notes") {
+    const region = page.getByTestId("workbench-gpu");
+    const box = (await region.boundingBox())!;
+    await expect
+        .poll(async () => (await snapshot(page)).controls, { timeout: 15_000 })
+        .not.toBeNull();
+    const rect = (await snapshot(page)).controls![which];
+    return {
+        x: box.x + rect.x + rect.width / 2,
+        y: box.y + rect.y + rect.height / 2,
+    };
+}
 
 /// Clicks the name the region draws, which asks the application for a real
 /// text control over that rectangle.
 async function startEditing(page: Page) {
-    const region = page.getByTestId("workbench-gpu");
-    const box = (await region.boundingBox())!;
-    await page.mouse.click(box.x + NAME_LABEL.dx, box.y + box.height * NAME_LABEL.fy);
+    const at = await labelPoint(page, "name");
+    await page.mouse.click(at.x, at.y);
     await expect.poll(async () => (await snapshot(page)).editing).toBe(true);
     return page.getByTestId("gpu-name-edit");
 }
@@ -45,9 +58,8 @@ async function compose(page: Page, steps: string[], final: string) {
 /// Clicks the one line of notes the region shows, which asks for a control
 /// that can hold all of them.
 async function startEditingNotes(page: Page) {
-    const region = page.getByTestId("workbench-gpu");
-    const box = (await region.boundingBox())!;
-    await page.mouse.click(box.x + NOTES_LABEL.dx, box.y + box.height * NOTES_LABEL.fy);
+    const at = await labelPoint(page, "notes");
+    await page.mouse.click(at.x, at.y);
     await expect.poll(async () => (await snapshot(page)).editing).toBe(true);
     return page.getByTestId("gpu-notes-edit");
 }
