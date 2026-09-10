@@ -10,4 +10,4 @@ pub mod splitter;
 #[cfg(target_arch = "wasm32")]
 pub use command_palette::{Command, CommandPalette};
 pub use panel_tabs::{PanelTab, PanelTabs};
-pub use splitter::{PanelView, Splitter};
+pub use splitter::{columns, Splitter};

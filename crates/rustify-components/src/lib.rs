@@ -59,7 +59,7 @@ pub use tabs::{Orientation, Tab, TabPanel, Tabs};
 pub use textarea::TextArea;
 #[cfg(target_arch = "wasm32")]
 pub use workspace::{Command, CommandPalette};
-pub use workspace::{PanelTab, PanelTabs, PanelView, Splitter};
+pub use workspace::{PanelTab, PanelTabs, Splitter};
 
 #[cfg(target_arch = "wasm32")]
 pub use dialog::Dialog;

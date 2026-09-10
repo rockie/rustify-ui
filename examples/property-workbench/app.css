@@ -184,3 +184,51 @@ body {
     align-items: center;
     gap: 12px;
 }
+
+/* The workspace row: three panels the application lays out, with the
+   splitter's dividers drawn over the boundaries between them. `relative` is
+   what the dividers position against; `grid` is what the sizes apply to. */
+.workspace {
+    position: relative;
+    display: grid;
+    align-items: stretch;
+    gap: 0;
+}
+
+.objects {
+    display: grid;
+    grid-template-rows: auto auto 1fr;
+    gap: 6px;
+    min-height: 0;
+    padding-right: 10px;
+}
+
+.objects-count {
+    margin: 0;
+    font-size: 12px;
+    color: #667085;
+}
+
+.objects-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    overflow: auto;
+    max-height: 60vh;
+}
+
+.objects-item {
+    display: block;
+    width: 100%;
+    text-align: start;
+    border: 0;
+    background: transparent;
+    padding: 3px 6px;
+    font: inherit;
+    cursor: pointer;
+}
+
+.objects-item[aria-current="true"] {
+    background: #eaecf0;
+    border-radius: 4px;
+}

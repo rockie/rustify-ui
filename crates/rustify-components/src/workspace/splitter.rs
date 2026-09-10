@@ -8,10 +8,6 @@
 
 use leptos::ev::{KeyboardEvent, PointerEvent};
 use leptos::prelude::*;
-use std::sync::Arc;
-
-/// One panel's content, rendered where the splitter puts it.
-pub type PanelView = Arc<dyn Fn() -> AnyView + Send + Sync>;
 
 /// Moves `delta` pixels across the divider to the right of panel `index`.
 ///
@@ -51,7 +47,28 @@ pub fn initial(mins: &[f64], available: f64) -> Vec<f64> {
     mins.iter().map(|min| min + spare).collect()
 }
 
-/// Panels in a row, with a draggable divider between each pair.
+/// The CSS a row of these sizes lays out with.
+///
+/// Here rather than in the caller so that the sizes the dividers are placed
+/// from and the sizes the panels are drawn at cannot disagree.
+pub fn columns(sizes: &[f64]) -> String {
+    sizes
+        .iter()
+        .map(|size| format!("{size}px"))
+        .collect::<Vec<String>>()
+        .join(" ")
+}
+
+/// The dividers between panels, drawn over the row the application laid out.
+///
+/// It does not contain the panels. That is deliberate rather than a
+/// simplification: a panel may hold a GPU region, whose application marker is
+/// not `Send`, and anything passed through a component's children has to be.
+/// So the application keeps its own markup and its own container, sets
+/// `grid-template-columns` from [`columns`], and puts this inside it; what the
+/// splitter owns is the arithmetic, the dividers and the keyboard.
+///
+/// The container needs `position: relative` and `display: grid`.
 #[component]
 pub fn Splitter(
     #[prop(into)] sizes: Signal<Vec<f64>>,
@@ -59,20 +76,26 @@ pub fn Splitter(
     /// only it knows what its own content needs.
     mins: Vec<f64>,
     on_resize: impl Fn(Vec<f64>) + Send + Sync + 'static,
-    panels: Vec<PanelView>,
     /// How far one arrow key press moves a divider.
     #[prop(optional)]
     step: Option<f64>,
-    #[prop(optional, into)] class: String,
+    /// What each divider is called, in the application's language. The panel
+    /// number is appended.
+    #[prop(optional, into)]
+    divider_label: String,
     #[prop(optional, into)] test_id: String,
 ) -> impl IntoView {
     let step = step.unwrap_or(16.0);
     let mins = StoredValue::new(mins);
     let on_resize = StoredValue::new(on_resize);
-    let panels = StoredValue::new(panels);
-    let count = panels.with_value(Vec::len);
-    // Which divider is being dragged, and where the pointer was when the drag
-    // that is in flight last moved.
+    let divider_label = StoredValue::new(if divider_label.is_empty() {
+        "resize panel".to_string()
+    } else {
+        divider_label
+    });
+    // Where the pointer was the last time a drag moved. A drag is a series of
+    // deltas rather than an absolute position, so grabbing a divider anywhere
+    // along its width does not jump it.
     let dragging = RwSignal::new(None::<(usize, f64)>);
 
     let apply = move |index: usize, delta: f64| {
@@ -80,80 +103,94 @@ pub fn Splitter(
         on_resize.with_value(|resize| resize(next));
     };
 
+    /// Where each divider sits: at the end of the panel to its left.
+    fn offsets(sizes: &[f64]) -> Vec<f64> {
+        sizes
+            .iter()
+            .scan(0.0, |at, size| {
+                *at += size;
+                Some(*at)
+            })
+            .take(sizes.len().saturating_sub(1))
+            .collect()
+    }
+
+    // The view macro parses an attribute value as an expression, and a
+    // turbofish inside one is not one of them.
+    let dividers = move || {
+        let sizes = sizes.get();
+        offsets(&sizes)
+            .into_iter()
+            .enumerate()
+            .collect::<Vec<(usize, f64)>>()
+    };
+
     view! {
         <div
-            class=crate::macros::merge("rui:flex rui:items-stretch rui:w-full", &class)
+            class="rui:pointer-events-none rui:absolute rui:inset-0"
             data-name="Splitter"
             data-testid=test_id
-            on:pointermove=move |event: PointerEvent| {
-                let Some((index, from)) = dragging.get_untracked() else {
-                    return;
-                };
-                let at = event.client_x() as f64;
-                dragging.set(Some((index, at)));
-                apply(index, at - from);
-            }
-            on:pointerup=move |_| dragging.set(None)
-            on:pointercancel=move |_| dragging.set(None)
         >
-            {(0..count)
-                .map(|index| {
-                    let panel = panels.with_value(|panels| panels[index].clone());
-                    let divider = index + 1 < count;
+            <For each=dividers key=|(index, _)| *index let:divider>
+                {
+                    let (index, at) = divider;
                     view! {
                         <div
-                            class="rui:overflow-hidden rui:shrink-0"
-                            data-name="Panel"
-                            data-testid=format!("panel-{index}")
-                            style:width=move || {
-                                format!("{}px", sizes.get().get(index).copied().unwrap_or(0.0))
+                            class="rui:pointer-events-auto rui:absolute rui:top-0 rui:bottom-0 rui:-ml-1 rui:w-2 rui:cursor-col-resize rui:bg-border rui:outline-none rui:focus-visible:ring-ring/50 rui:focus-visible:ring-[3px]"
+                            data-name="SplitterDivider"
+                            data-testid=format!("divider-{index}")
+                            role="separator"
+                            aria-orientation="vertical"
+                            aria-label=move || {
+                                format!("{} {}", divider_label.get_value(), index + 1)
                             }
-                        >
-                            {panel()}
-                        </div>
-                        <Show when=move || divider fallback=|| ()>
-                            <div
-                                class="rui:w-1.5 rui:shrink-0 rui:cursor-col-resize rui:bg-border rui:outline-none rui:focus-visible:ring-ring/50 rui:focus-visible:ring-[3px]"
-                                data-name="SplitterDivider"
-                                data-testid=format!("divider-{index}")
-                                role="separator"
-                                aria-orientation="vertical"
-                                aria-label=format!("resize panel {}", index + 1)
-                                tabindex="0"
-                                aria-valuenow=move || {
-                                    sizes.get().get(index).copied().unwrap_or(0.0).round()
-                                        as i64
+                            tabindex="0"
+                            aria-valuenow=move || {
+                                sizes.get().get(index).copied().unwrap_or(0.0).round() as i64
+                            }
+                            style:left=format!("{at}px")
+                            on:pointerdown=move |event: PointerEvent| {
+                                // The divider keeps the pointer, so a drag that
+                                // moves faster than the divider does not stop
+                                // when it leaves it - and every move afterwards
+                                // arrives here rather than on whatever is under
+                                // the cursor.
+                                if let Some(element) = event.target().and_then(|target| {
+                                    leptos::wasm_bindgen::JsCast::dyn_into::<
+                                        leptos::web_sys::Element,
+                                    >(target)
+                                    .ok()
+                                }) {
+                                    let _ = element.set_pointer_capture(event.pointer_id());
                                 }
-                                on:pointerdown=move |event: PointerEvent| {
-                                    // The divider keeps the pointer, so a fast
-                                    // drag that leaves it does not stop.
-                                    if let Some(element) = event
-                                        .target()
-                                        .and_then(|target| {
-                                            leptos::wasm_bindgen::JsCast::dyn_into::<
-                                                leptos::web_sys::Element,
-                                            >(target)
-                                            .ok()
-                                        })
-                                    {
-                                        let _ = element.set_pointer_capture(event.pointer_id());
-                                    }
-                                    dragging.set(Some((index, event.client_x() as f64)));
+                                dragging.set(Some((index, event.client_x() as f64)));
+                            }
+                            on:pointermove=move |event: PointerEvent| {
+                                let Some((dragged, from)) = dragging.get_untracked() else {
+                                    return;
+                                };
+                                if dragged != index {
+                                    return;
                                 }
-                                on:keydown=move |event: KeyboardEvent| {
-                                    let delta = match event.key().as_str() {
-                                        "ArrowLeft" => -step,
-                                        "ArrowRight" => step,
-                                        _ => return,
-                                    };
-                                    event.prevent_default();
-                                    apply(index, delta);
-                                }
-                            />
-                        </Show>
+                                let at = event.client_x() as f64;
+                                dragging.set(Some((index, at)));
+                                apply(index, at - from);
+                            }
+                            on:pointerup=move |_| dragging.set(None)
+                            on:pointercancel=move |_| dragging.set(None)
+                            on:keydown=move |event: KeyboardEvent| {
+                                let delta = match event.key().as_str() {
+                                    "ArrowLeft" => -step,
+                                    "ArrowRight" => step,
+                                    _ => return,
+                                };
+                                event.prevent_default();
+                                apply(index, delta);
+                            }
+                        />
                     }
-                })
-                .collect_view()}
+                }
+            </For>
         </div>
     }
 }

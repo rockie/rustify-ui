@@ -17,6 +17,9 @@
   }
 }
 @layer utilities {
+  .rui\:pointer-events-auto {
+    pointer-events: auto;
+  }
   .rui\:pointer-events-none {
     pointer-events: none;
   }
@@ -32,14 +35,23 @@
   .rui\:inset-0 {
     inset: calc(var(--rui-spacing) * 0);
   }
+  .rui\:top-0 {
+    top: calc(var(--rui-spacing) * 0);
+  }
   .rui\:top-4 {
     top: calc(var(--rui-spacing) * 4);
   }
   .rui\:right-4 {
     right: calc(var(--rui-spacing) * 4);
   }
+  .rui\:bottom-0 {
+    bottom: calc(var(--rui-spacing) * 0);
+  }
   .rui\:m-0 {
     margin: calc(var(--rui-spacing) * 0);
+  }
+  .rui\:-ml-1 {
+    margin-left: calc(var(--rui-spacing) * -1);
   }
   .rui\:block {
     display: block;
@@ -110,8 +122,8 @@
   .rui\:min-h-16 {
     min-height: calc(var(--rui-spacing) * 16);
   }
-  .rui\:w-1\.5 {
-    width: calc(var(--rui-spacing) * 1.5);
+  .rui\:w-2 {
+    width: calc(var(--rui-spacing) * 2);
   }
   .rui\:w-11 {
     width: calc(var(--rui-spacing) * 11);

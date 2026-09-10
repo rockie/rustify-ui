@@ -12,4 +12,6 @@ rustify-ui = { path = "../../crates/rustify-ui" }
 
 [target.'cfg(target_arch = "wasm32")'.dependencies]
 rustify-makepad = { path = "../../crates/rustify-makepad" }
+# A cleanup has to be Send; a DOM handle is not, and never leaves this thread.
+send_wrapper = "0.6"
 wasm-bindgen.workspace = true

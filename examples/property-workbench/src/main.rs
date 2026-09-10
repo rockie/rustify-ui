@@ -20,7 +20,10 @@ mod app {
     use leptos::prelude::*;
     use leptos::wasm_bindgen::prelude::*;
     use leptos::wasm_bindgen::JsCast;
-    use rustify_components::{Form, FormStatus, SubmitButton};
+    use rustify_components::workspace::splitter::initial as splitter_initial;
+    use rustify_components::{
+        Command, CommandPalette, Form, FormStatus, PanelTab, PanelTabs, Splitter, SubmitButton,
+    };
     use rustify_components::{Support, CATALOG};
     use rustify_ui::{
         mount, navigate, provide_routes, use_params, Anchor, AppHandle, Button, Checkbox,
@@ -60,6 +63,43 @@ mod app {
     }
 
     const PALETTE: [u32; 6] = [0x2e90fa, 0x12b76a, 0xf79009, 0xf04438, 0x7a5af8, 0x475467];
+
+    /// The ten views of the object list. Ten because B1 says ten; filters
+    /// rather than folders because the objects are one set and a person moving
+    /// between views is changing what they are looking at, not where things
+    /// are.
+    const TABS: [(&str, &str); 10] = [
+        ("all", "all"),
+        ("blue", "blue"),
+        ("green", "green"),
+        ("amber", "amber"),
+        ("red", "red"),
+        ("violet", "violet"),
+        ("slate", "slate"),
+        ("locked", "locked"),
+        ("archived", "archived"),
+        ("recent", "recent"),
+    ];
+
+    /// The smallest each of the three panels may be. The application declares
+    /// them because only it knows what its own content needs: a list of names,
+    /// a region that has to be worth drawing, and a form of twenty fields.
+    const PANEL_MINS: [f64; 3] = [220.0, 320.0, 360.0];
+
+    /// Whether an object belongs in a view.
+    fn in_tab(tab: &str, object: &WorkbenchObject, newest: u32) -> bool {
+        match tab {
+            "all" => true,
+            "locked" => object.locked,
+            "archived" => object.details.archived,
+            "recent" => object.id.0 + 20 > newest,
+            colour => PALETTE
+                .iter()
+                .position(|value| *value == object.color)
+                .and_then(|index| TABS.get(index + 1))
+                .is_some_and(|(id, _)| *id == colour),
+        }
+    }
     const OBJECT_COUNT: u32 = 1_000;
 
     fn initial_objects() -> Vec<WorkbenchObject> {
@@ -245,6 +285,73 @@ mod app {
                 let generation = form.validating(field);
                 checks.update(|queue| queue.push((field, generation)));
             }
+        });
+
+        // The workspace: three panels, ten views over the object list, and
+        // every command in one place.
+        let panel_sizes = RwSignal::new(splitter_initial(&PANEL_MINS, 1160.0));
+        let tabs = Signal::derive(|| {
+            TABS.iter()
+                .enumerate()
+                .map(|(index, (id, label))| {
+                    let tab = PanelTab::new(*id, *label);
+                    // One that cannot be closed, so there is always somewhere
+                    // to be.
+                    if index == 0 {
+                        tab.permanent()
+                    } else {
+                        tab
+                    }
+                })
+                .collect::<Vec<_>>()
+        });
+        let open_tabs = RwSignal::new(
+            TABS.iter()
+                .map(|(id, _)| id.to_string())
+                .collect::<Vec<String>>(),
+        );
+        let active_tab = RwSignal::new("all".to_string());
+        let palette_open = RwSignal::new(false);
+        // Where in the region a context menu was asked for, in the region's
+        // own local pixels. `None` when there is no menu open.
+        let region_menu = RwSignal::new(None::<LocalRect>);
+
+        // Everything the workspace can do, in one list. Availability is a
+        // signal, so a command that cannot run says so at the moment it is
+        // looked at rather than at the moment it was declared.
+        let commands = Signal::derive(move || {
+            let has_selection = selected.get().is_some();
+            let unsaved = match current.get() {
+                Some(object) => object.details != draft.get(),
+                None => false,
+            };
+            let closable = open_tabs.with(Vec::len) > 1;
+            vec![
+                Command::new("next", "select the next object").keywords("move forward"),
+                Command::new("previous", "select the previous object").keywords("move back"),
+                if has_selection {
+                    Command::new("lock", "lock the selected object").keywords("read-only")
+                } else {
+                    Command::new("lock", "lock the selected object")
+                        .keywords("read-only")
+                        .unavailable("nothing is selected")
+                },
+                if unsaved {
+                    Command::new("save", "save the details").keywords("submit form")
+                } else {
+                    Command::new("save", "save the details")
+                        .keywords("submit form")
+                        .unavailable("there is nothing to save")
+                },
+                if closable {
+                    Command::new("close-view", "close this view").keywords("tab panel")
+                } else {
+                    Command::new("close-view", "close this view")
+                        .keywords("tab panel")
+                        .unavailable("the last view stays open")
+                },
+                Command::new("theme", "switch the theme").keywords("dark light"),
+            ]
         });
 
         provide_routes(Routes::new(&["/", "/objects", "/objects/:id"]));
@@ -738,7 +845,7 @@ mod app {
             let (index, total) = position.get();
             let current = current.get();
             let snapshot = format!(
-                "{{\"count\":{},\"position\":{},\"selected\":{},\"name\":{},\"color\":\"{}\",\"first_colors\":\"{}\",\"first_ids\":\"{}\",\"accepted\":{},\"refused\":{},\"hovered\":{},\"hovers\":{},\"editing\":{},\"invalidated\":{},\"notes\":{},\"theme\":\"{}\",\"details\":\"{}\",\"details_value\":{},\"locked\":{},\"size\":{},\"refusals\":{},\"refusal\":{},\"third_party\":{},\"third_party_updates\":{},\"controls\":{},\"region\":\"{}\",\"form\":{},\"path\":{},\"guarded\":{}}}",
+                "{{\"count\":{},\"position\":{},\"selected\":{},\"name\":{},\"color\":\"{}\",\"first_colors\":\"{}\",\"first_ids\":\"{}\",\"accepted\":{},\"refused\":{},\"hovered\":{},\"hovers\":{},\"editing\":{},\"invalidated\":{},\"notes\":{},\"theme\":\"{}\",\"details\":\"{}\",\"details_value\":{},\"locked\":{},\"size\":{},\"refusals\":{},\"refusal\":{},\"third_party\":{},\"third_party_updates\":{},\"controls\":{},\"region\":\"{}\",\"form\":{},\"path\":{},\"guarded\":{},\"workspace\":{}}}",
                 total,
                 index.map(|i| i as i64 + 1).unwrap_or(0),
                 current
@@ -845,6 +952,22 @@ mod app {
                     Some(object) => object.details != draft.get(),
                     None => false,
                 },
+                format!(
+                    "{{\"panels\":[{}],\"tabs\":{},\"tab\":{},\"palette\":{},\"menu\":{}}}",
+                    panel_sizes
+                        .get()
+                        .iter()
+                        // Three decimals, not none: a drag moves room between
+                        // two panels exactly, and rounding each one separately
+                        // would make the row look a pixel wider than it is.
+                        .map(|size| format!("{:.3}", size))
+                        .collect::<Vec<_>>()
+                        .join(","),
+                    open_tabs.with(Vec::len),
+                    json_string(&active_tab.get()),
+                    palette_open.get(),
+                    region_menu.get().is_some(),
+                ),
             );
             SNAPSHOT.with(|slot| *slot.borrow_mut() = snapshot);
         });
@@ -904,9 +1027,178 @@ mod app {
             }
         };
 
+        let run_command = move |id: String| match id.as_str() {
+            "next" => step(1),
+            "previous" => step(-1),
+            "lock" => {
+                if let Some(object) = current.get_untracked() {
+                    set_locked(!object.locked);
+                }
+            }
+            "save" => {
+                palette_open.set(false);
+                let object = current.get_untracked();
+                let asked = draft.with_untracked(|draft| {
+                    property_rules(
+                        object.as_ref().map(|o| o.name.as_str()).unwrap_or(""),
+                        object.as_ref().is_some_and(|o| o.locked),
+                        object
+                            .as_ref()
+                            .map(|o| o.details.owner.as_str())
+                            .unwrap_or(""),
+                        draft,
+                    )
+                });
+                let _ = form.submit(|| asked);
+            }
+            "close-view" => {
+                let closing = active_tab.get_untracked();
+                let open = open_tabs.get_untracked();
+                let strip: Vec<PanelTab> = tabs
+                    .get_untracked()
+                    .into_iter()
+                    .filter(|tab| open.contains(&tab.id))
+                    .collect();
+                if let Some(next) = rustify_components::workspace::panel_tabs::after_close(
+                    &strip, &closing, &closing,
+                ) {
+                    open_tabs.update(|open| open.retain(|id| *id != closing));
+                    active_tab.set(next);
+                }
+            }
+            "theme" => theme.update(|theme| {
+                *theme = if theme.name == "light" {
+                    Theme::dark()
+                } else {
+                    Theme::light()
+                };
+            }),
+            _ => {}
+        };
+
+        // The shortcut a workspace is expected to have. Registered on the
+        // scope's own container rather than the window: a page with two of
+        // these on it should not have them fighting over one key. The closure
+        // and the element go into a `SendWrapper` because a cleanup has to be
+        // `Send` and a DOM handle is not - they never leave this thread.
+        Effect::new(move || {
+            let Some(roots) = use_context::<rustify_ui::ScopeRoots>() else {
+                return;
+            };
+            let container = roots.container();
+            let handler = leptos::wasm_bindgen::closure::Closure::<
+                dyn FnMut(leptos::web_sys::KeyboardEvent),
+            >::new(move |event: leptos::web_sys::KeyboardEvent| {
+                if event.key() == "k" && (event.meta_key() || event.ctrl_key()) {
+                    event.prevent_default();
+                    palette_open.set(true);
+                }
+            });
+            let _ = container.add_event_listener_with_callback(
+                "keydown",
+                leptos::wasm_bindgen::JsCast::unchecked_ref(handler.as_ref()),
+            );
+            let held = send_wrapper::SendWrapper::new((container, handler));
+            on_cleanup(move || {
+                let (container, handler) = &*held;
+                let _ = container.remove_event_listener_with_callback(
+                    "keydown",
+                    leptos::wasm_bindgen::JsCast::unchecked_ref(handler.as_ref()),
+                );
+            });
+        });
+
+        let resize_panels = move |next: Vec<f64>| panel_sizes.set(next);
+        let run_from_palette = move |id: String| run_command(id);
+
+        // The first of the three panels. The other two are the ones that were
+        // already here.
+        let objects_panel = move || {
+            let open = open_tabs.get();
+            let strip: Vec<PanelTab> = tabs
+                .get()
+                .into_iter()
+                .filter(|tab| open.contains(&tab.id))
+                .collect();
+            let newest = objects.with(|objects| objects.iter().map(|o| o.id.0).max().unwrap_or(0));
+            let showing = objects.with(|objects| {
+                objects
+                    .iter()
+                    .filter(|object| in_tab(&active_tab.get(), object, newest))
+                    .map(|object| (object.id, object.name.clone()))
+                    .collect::<Vec<_>>()
+            });
+            view! {
+                <section class="objects" aria-label="objects" data-testid="objects-panel">
+                    <PanelTabs
+                        tabs=Signal::derive(move || strip.clone())
+                        active=active_tab
+                        aria_label="views of the objects"
+                        test_id="object-views"
+                        on_activate=move |id: String| active_tab.set(id)
+                        on_close=move |id: String| {
+                            // The strip asks; the application decides, and it
+                            // is the application that knows what the next view
+                            // should be.
+                            let open = open_tabs.get_untracked();
+                            let strip: Vec<PanelTab> = tabs
+                                .get_untracked()
+                                .into_iter()
+                                .filter(|tab| open.contains(&tab.id))
+                                .collect();
+                            if let Some(next) =
+                                rustify_components::workspace::panel_tabs::after_close(
+                                    &strip,
+                                    &active_tab.get_untracked(),
+                                    &id,
+                                )
+                            {
+                                open_tabs.update(|open| open.retain(|open| *open != id));
+                                active_tab.set(next);
+                            }
+                        }
+                    />
+                    <p class="objects-count" data-testid="objects-count">
+                        {format!("{} objects", showing.len())}
+                    </p>
+                    <ul class="objects-list" data-testid="objects-list">
+                        {showing
+                            .into_iter()
+                            .map(|(id, name)| {
+                                let chosen = Memo::new(move |_| selected.get() == Some(id));
+                                view! {
+                                    <li>
+                                        <button
+                                            type="button"
+                                            class="objects-item"
+                                            data-testid=format!("object-{}", id.0)
+                                            aria-current=move || chosen.get().then_some("true")
+                                            on:click=move |_| {
+                                                select(Some(id));
+                                            }
+                                        >
+                                            {name}
+                                        </button>
+                                    </li>
+                                }
+                            })
+                            .collect_view()}
+                    </ul>
+                </section>
+            }
+        };
+
         view! {
             <div class="workbench">
                 <ThemedScope theme=theme />
+                <div
+                    class="workspace"
+                    data-testid="workspace"
+                    style:grid-template-columns=move || {
+                        rustify_components::workspace::columns(&panel_sizes.get())
+                    }
+                >
+                {objects_panel()}
                 <section class="panel" aria-label="object properties">
                     <h2>"properties"</h2>
                     <Show
@@ -924,6 +1216,13 @@ mod app {
                             }}
                         </p>
                     </Show>
+                    <Button
+                        test_id="open-commands"
+                        aria_label="open the command palette"
+                        on_click=move || palette_open.set(true)
+                    >
+                        "commands"
+                    </Button>
                     <Button
                         test_id="open-link-from-region"
                         aria_label="ask the region to open a link"
@@ -1206,7 +1505,30 @@ mod app {
                         </Button>
                     </div>
                 </section>
-                <div>
+                <div
+                    on:contextmenu=move |event: leptos::ev::MouseEvent| {
+                        // A menu on a rectangle *inside* the canvas: the region
+                        // cannot draw one - a popup that leaves the canvas is a
+                        // DOM layer - so the application opens the DOM one
+                        // against the point that was clicked.
+                        let Some(canvas) = canvas.get_untracked() else {
+                            return;
+                        };
+                        event.prevent_default();
+                        let box_ = canvas.get_bounding_client_rect();
+                        region_menu
+                            .set(
+                                Some(
+                                    LocalRect::new(
+                                        event.client_x() as f64 - box_.left(),
+                                        event.client_y() as f64 - box_.top(),
+                                        1.0,
+                                        1.0,
+                                    ),
+                                ),
+                            );
+                    }
+                >
                     <GpuRegion
                         app=app
                         props=props
@@ -1287,6 +1609,60 @@ mod app {
                         _ => None,
                     }}
                 </div>
+                <rustify_components::Menu
+                    test_id="region-menu"
+                    aria_label="what can be done here"
+                    open=Signal::derive(move || region_menu.get().is_some())
+                    on_open_change=move |open: bool| {
+                        if !open {
+                            region_menu.set(None);
+                        }
+                    }
+                    anchor=Signal::derive(move || {
+                        match (canvas.get(), region_menu.get()) {
+                            (Some(canvas), Some(at)) => Anchor::region(&canvas.into(), at),
+                            _ => Anchor::Centred,
+                        }
+                    })
+                    items=Signal::derive(move || {
+                        let locked = current.get().is_some_and(|object| object.locked);
+                        vec![
+                            rustify_components::MenuItem::new("next", "select the next object"),
+                            rustify_components::MenuItem::new(
+                                "lock",
+                                if locked { "unlock this object" } else { "lock this object" },
+                            ),
+                            match current.get() {
+                                Some(_) => rustify_components::MenuItem::new(
+                                    "theme",
+                                    "switch the theme",
+                                ),
+                                None => rustify_components::MenuItem::new(
+                                        "theme",
+                                        "switch the theme",
+                                    )
+                                    .disabled("nothing is selected"),
+                            },
+                        ]
+                    })
+                    on_activate=move |id: String| run_command(id)
+                />
+                <Splitter
+                    sizes=panel_sizes
+                    mins=PANEL_MINS.to_vec()
+                    on_resize=resize_panels
+                    divider_label="resize panel"
+                    test_id="dividers"
+                />
+                </div>
+                <CommandPalette
+                    open=palette_open
+                    on_open_change=move |open| palette_open.set(open)
+                    commands=commands
+                    on_run=run_from_palette
+                    placeholder="type a command"
+                    aria_label="workspace commands"
+                />
             </div>
             <section class="catalogue" aria-label="component catalogue">
                 <h2>"components"</h2>
