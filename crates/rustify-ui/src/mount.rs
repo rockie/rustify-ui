@@ -17,6 +17,17 @@ const OVERLAY_ATTRIBUTE: &str = "data-rustify-overlay";
 pub struct MountConfig {
     /// Human readable scope name used in diagnostics and DOM attributes.
     pub scope: String,
+    /// Whether this scope owns the page's address bar.
+    ///
+    /// One page has one address bar, so at most one scope may say yes. A
+    /// scope that says no still routes - it gets a location of its own, in
+    /// memory - which is what lets an application be embedded in a page that
+    /// is navigating for its own reasons, and what lets a second instance
+    /// exist on the same page at all.
+    pub url_owner: bool,
+    /// The path this application is deployed under, for an owner. `/tools/demo/`
+    /// means a route of `/objects` is at `/tools/demo/objects`.
+    pub base: String,
 }
 
 /// The scope's own elements, for the parts of the SDK that need to reach them
@@ -39,6 +50,10 @@ impl ScopeRoots {
 /// then unmounts the DOM.
 pub struct AppHandle {
     container: HtmlElement,
+    /// Held for as long as the scope is mounted; dropping it lets another
+    /// scope own the URL.
+    #[cfg(target_arch = "wasm32")]
+    url_owner: Option<crate::router::UrlClaim>,
     roots: Vec<leptos::web_sys::Element>,
     owner: Option<Owner>,
     unmount: Option<Box<dyn Any>>,
@@ -77,7 +92,28 @@ where
     let scope = if config.scope.is_empty() {
         "default".to_string()
     } else {
-        config.scope
+        config.scope.clone()
+    };
+    // After the container gates and before anything is written: a scope that
+    // cannot have what it asked for must leave the page as it found it, and
+    // the scope that does own the URL must be untouched by the attempt.
+    #[cfg(target_arch = "wasm32")]
+    let url_owner = if config.url_owner {
+        match crate::router::claim_url() {
+            Some(claim) => Some(claim),
+            None => {
+                record(
+                    note(
+                        ErrorKind::UrlOwnerConflict,
+                        "another scope on this page already owns the URL",
+                    )
+                    .in_scope(scope.clone()),
+                );
+                return Err(UiError::UrlOwnerConflict);
+            }
+        }
+    } else {
+        None
     };
     container
         .set_attribute(MOUNTED_ATTRIBUTE, &scope)
@@ -100,11 +136,14 @@ where
             provide_context(ScopeRoots(send_wrapper::SendWrapper::new(
                 container.clone(),
             )));
+            crate::router::provide_router(&container, url_owner.clone(), &config.base);
         }
         leptos::mount::mount_to(target, view)
     });
     Ok(AppHandle {
         container,
+        #[cfg(target_arch = "wasm32")]
+        url_owner,
         roots: vec![content, overlay],
         owner: Some(owner),
         unmount: Some(Box::new(unmount)),
@@ -130,6 +169,10 @@ impl AppHandle {
     pub fn dispose(&mut self) {
         if let Some(owner) = self.owner.take() {
             owner.cleanup();
+        }
+        #[cfg(target_arch = "wasm32")]
+        {
+            self.url_owner = None;
         }
         if let Some(unmount) = self.unmount.take() {
             drop(unmount);

@@ -20,12 +20,13 @@ pub use binding::{duplicate_key, ActionSink};
 pub use components::snap;
 pub use diagnostics::{
     identify_runtime, note, record, report_json, set_recording, watch_assets, with_log, Diagnostic,
-    Diagnostics, ErrorKind, UiError, REFUSED_CAPABILITIES,
+    Diagnostics, ErrorKind, Severity, UiError, REFUSED_CAPABILITIES,
 };
 pub use form::{FormState, Generation, Submit};
 pub use mount::{mount, AppHandle, MountConfig, ScopeRoots};
 pub use overlay::{LayerId, LocalRect};
 pub use region::{GpuRegion, RegionState};
+pub use router::{Arrival, History, Location, Navigation, Params, Route, Routes};
 pub use rustify_makepad::RegionId;
 pub use scheduler::{Admission, Pace, Scheduler, Seq};
 pub use task::{Load, Requests, Ticket};
@@ -39,6 +40,10 @@ pub use gpu::{
 };
 #[cfg(target_arch = "wasm32")]
 pub use overlay::{use_overlay, Anchor, Layer, OverlayStack};
+#[cfg(target_arch = "wasm32")]
+pub use router::{
+    navigate, provide_routes, use_location, use_params, use_route, Link, NavigationGuard,
+};
 #[cfg(target_arch = "wasm32")]
 pub use rustify_makepad::{makepad_widgets, RegionApp};
 #[cfg(target_arch = "wasm32")]

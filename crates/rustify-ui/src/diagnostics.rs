@@ -19,6 +19,10 @@ pub enum UiError {
     Disposed,
     /// It was neither found nor ruled out before the caller's deadline.
     Timeout,
+    /// Another scope on this page already owns the address bar. One page has
+    /// one of those, and a second owner would be two answers to where the user
+    /// is.
+    UrlOwnerConflict,
 }
 
 impl fmt::Display for UiError {
@@ -30,6 +34,7 @@ impl fmt::Display for UiError {
             Self::NotFound => f.write_str("no object with that identity"),
             Self::Disposed => f.write_str("that object has been deleted"),
             Self::Timeout => f.write_str("no answer before the deadline"),
+            Self::UrlOwnerConflict => f.write_str("another scope owns this page's URL"),
         }
     }
 }
@@ -70,10 +75,45 @@ pub enum ErrorKind {
     /// is the problem: a misspelled field is a control that never validates
     /// and a form that never becomes dirty, with nothing on screen to say so.
     UnknownField,
+    /// A second scope asked to own the page's URL. One address bar cannot have
+    /// two owners; the scope that asked is not mounted and the one that has it
+    /// is untouched.
+    UrlOwnerConflict,
+    /// A guard refused a move through history and the router could not put the
+    /// user back where they were. They are somewhere else, and the address bar
+    /// and the view agree about where.
+    NavigationRestoreFailed,
+    /// A guard refused a navigation. Informational: the application asked, the
+    /// answer was no, and nothing is broken - but a developer wondering why a
+    /// link did nothing should be able to find out.
+    NavigationBlocked,
+    /// A navigation was asked for while the router was putting the user back
+    /// after a refused one. Informational, and for the same reason.
+    NavigationBusy,
+}
+
+/// Whether an entry is something that went wrong or something that happened.
+///
+/// The distinction earns its place at exactly one moment: a report says how
+/// many errors a run had, and a guard doing its job twenty times is not twenty
+/// errors. Everything the runtime could not do stays an error.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum Severity {
+    Error,
+    Info,
+}
+
+impl Severity {
+    pub fn name(self) -> &'static str {
+        match self {
+            Self::Error => "error",
+            Self::Info => "info",
+        }
+    }
 }
 
 impl ErrorKind {
-    pub const ALL: [ErrorKind; 11] = [
+    pub const ALL: [ErrorKind; 15] = [
         Self::InvalidContainer,
         Self::OccupiedContainer,
         Self::UnsupportedCapability,
@@ -85,6 +125,10 @@ impl ErrorKind {
         Self::Disposed,
         Self::RuntimeFatal,
         Self::UnknownField,
+        Self::UrlOwnerConflict,
+        Self::NavigationRestoreFailed,
+        Self::NavigationBlocked,
+        Self::NavigationBusy,
     ];
 
     /// The name the diagnostics ring and the host notice both print.
@@ -101,6 +145,20 @@ impl ErrorKind {
             Self::Disposed => "Disposed",
             Self::RuntimeFatal => "RuntimeFatal",
             Self::UnknownField => "UnknownField",
+            Self::UrlOwnerConflict => "UrlOwnerConflict",
+            Self::NavigationRestoreFailed => "NavigationRestoreFailed",
+            Self::NavigationBlocked => "NavigationBlocked",
+            Self::NavigationBusy => "NavigationBusy",
+        }
+    }
+
+    /// Whether this is a failure or a thing that happened. Only the four
+    /// navigation entries are informational; everything else is something the
+    /// runtime could not do.
+    pub fn severity(self) -> Severity {
+        match self {
+            Self::NavigationBlocked | Self::NavigationBusy => Severity::Info,
+            _ => Severity::Error,
         }
     }
 
@@ -118,6 +176,14 @@ impl ErrorKind {
             Self::Disposed => "drop the handle; what it named is gone",
             Self::RuntimeFatal => "reload the page; unsaved in-memory state is lost",
             Self::UnknownField => "name the field in FormState::new, or correct the spelling",
+            Self::UrlOwnerConflict => {
+                "mount this scope with url_owner: false; only one scope owns the address bar"
+            }
+            Self::NavigationRestoreFailed => {
+                "nothing: the user is where the browser left them, and the view agrees"
+            }
+            Self::NavigationBlocked => "nothing: a guard refused, and the application was told",
+            Self::NavigationBusy => "ask again once the router has finished putting the user back",
         }
     }
 }
@@ -140,6 +206,7 @@ impl UiError {
             Self::OccupiedContainer => Some(ErrorKind::OccupiedContainer),
             Self::GpuUnavailable => Some(ErrorKind::GpuInitFailed),
             Self::Disposed => Some(ErrorKind::Disposed),
+            Self::UrlOwnerConflict => Some(ErrorKind::UrlOwnerConflict),
             Self::NotFound | Self::Timeout => None,
         }
     }
@@ -351,8 +418,9 @@ impl Diagnostics {
             .iter()
             .map(|entry| {
                 format!(
-                    "{{\"kind\":\"{}\",\"at_ms\":{:.0},\"scope\":{},\"region\":{},\"asset\":{},\"field\":{},\"detail\":\"{}\",\"suggestion\":\"{}\"}}",
+                    "{{\"kind\":\"{}\",\"severity\":\"{}\",\"at_ms\":{:.0},\"scope\":{},\"region\":{},\"asset\":{},\"field\":{},\"detail\":\"{}\",\"suggestion\":\"{}\"}}",
                     entry.kind.name(),
+                    entry.kind.severity().name(),
                     entry.at_ms,
                     entry
                         .scope
@@ -378,10 +446,14 @@ impl Diagnostics {
             })
             .collect();
         format!(
-            "{{\"runtime\":{},\"build\":\"{}\",\"count\":{},\"bytes\":{},\"dropped\":{},\"recording\":{},\"suppressed\":{},\"max_entries\":{},\"max_bytes\":{},\"entries\":[{}]}}",
+            "{{\"runtime\":{},\"build\":\"{}\",\"count\":{},\"errors\":{},\"bytes\":{},\"dropped\":{},\"recording\":{},\"suppressed\":{},\"max_entries\":{},\"max_bytes\":{},\"entries\":[{}]}}",
             self.runtime,
             self.build,
             self.entries.len(),
+            self.entries
+                .iter()
+                .filter(|entry| entry.kind.severity() == Severity::Error)
+                .count(),
             self.bytes,
             self.dropped,
             self.recording,
@@ -401,10 +473,14 @@ impl Diagnostics {
             format!(", recording off, {} suppressed", self.suppressed)
         };
         format!(
-            "runtime {} build {}: {} entries, {} bytes, {} dropped{switch}",
+            "runtime {} build {}: {} entries ({} errors), {} bytes, {} dropped{switch}",
             self.runtime,
             self.build,
             self.entries.len(),
+            self.entries
+                .iter()
+                .filter(|entry| entry.kind.severity() == Severity::Error)
+                .count(),
             self.bytes,
             self.dropped
         )
@@ -544,8 +620,30 @@ mod tests {
     }
 
     #[test]
-    fn the_eleven_registered_kinds_are_all_there() {
-        assert_eq!(ErrorKind::ALL.len(), 11);
+    fn a_guard_doing_its_job_is_not_an_error() {
+        // The whole reason severity exists: a report says how many errors a
+        // run had, and a guard refusing twenty navigations is not twenty
+        // errors. Everything the runtime could not do stays one.
+        let informational: Vec<&str> = ErrorKind::ALL
+            .iter()
+            .filter(|kind| kind.severity() == Severity::Info)
+            .map(|kind| kind.name())
+            .collect();
+        assert_eq!(informational, ["NavigationBlocked", "NavigationBusy"]);
+
+        let mut log = Diagnostics::new(1, "test");
+        log.record(entry(ErrorKind::NavigationBlocked, 1.0));
+        log.record(entry(ErrorKind::NavigationBusy, 2.0));
+        log.record(entry(ErrorKind::Disposed, 3.0));
+        let report = log.report_json();
+        assert!(report.contains("\"count\":3"), "{report}");
+        assert!(report.contains("\"errors\":1"), "{report}");
+        assert!(report.contains("\"severity\":\"info\""), "{report}");
+    }
+
+    #[test]
+    fn the_fifteen_registered_kinds_are_all_there() {
+        assert_eq!(ErrorKind::ALL.len(), 15);
         let names: Vec<&str> = ErrorKind::ALL.iter().map(|kind| kind.name()).collect();
         assert_eq!(
             names,
@@ -561,6 +659,10 @@ mod tests {
                 "Disposed",
                 "RuntimeFatal",
                 "UnknownField",
+                "UrlOwnerConflict",
+                "NavigationRestoreFailed",
+                "NavigationBlocked",
+                "NavigationBusy",
             ]
         );
         // No duplicates, and every one of them says what to do next.

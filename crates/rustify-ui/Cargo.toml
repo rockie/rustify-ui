@@ -11,6 +11,9 @@ leptos.workspace = true
 rustify-makepad = { path = "../rustify-makepad" }
 # DOM handles have to sit in Leptos context values, which are Send + Sync.
 send_wrapper = "0.6"
+# The router reads and writes `history.state`, which is a JS object; there is no
+# typed accessor for a field an application chose the name of.
+js-sys.workspace = true
 # The overlay stack measures anchors and owns listeners, so it asks for the
 # web-sys features it uses rather than relying on what Leptos happens to enable.
 web-sys = { workspace = true, features = [
@@ -19,6 +22,10 @@ web-sys = { workspace = true, features = [
     "DomRect",
     "Element",
     "Event",
+    "History",
+    "Location",
+    "MouseEvent",
+    "Url",
     "EventTarget",
     "HtmlElement",
     "KeyboardEvent",
