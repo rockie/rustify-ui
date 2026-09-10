@@ -95,6 +95,9 @@
   .rui\:h-10 {
     height: calc(var(--rui-spacing) * 10);
   }
+  .rui\:h-24 {
+    height: calc(var(--rui-spacing) * 24);
+  }
   .rui\:h-full {
     height: 100%;
   }

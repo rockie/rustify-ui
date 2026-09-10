@@ -139,9 +139,10 @@ test.describe("M1: the catalogue answers for all eighteen categories", () => {
         expect(await snapshot(page)).toMatchObject({ path: "/slider" });
         await page.getByTestId("nav-tabs").click();
         await expect(page.getByTestId("category-name")).toHaveText("tabs");
-        // Nine categories are not in P1 and the catalogue says so rather than
-        // leaving the cell empty.
-        await expect(page.getByTestId("presentation-dom")).toHaveText("no");
+        // Every category has a DOM component now; what differs is what a
+        // region draws of one, and the cell says which rather than nothing.
+        await expect(page.getByTestId("presentation-dom")).toHaveText("yes");
+        await expect(page.getByTestId("presentation-gpu")).toHaveText("partial");
     });
 
     test("the language switch changes the words and nothing else", async ({ page }) => {

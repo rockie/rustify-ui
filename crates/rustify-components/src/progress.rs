@@ -16,7 +16,10 @@ const FILL: &str = "rui:h-full rui:bg-primary rui:transition-[width]";
 /// "in progress, no idea how far", and one at zero says "not started".
 #[component]
 pub fn Progress(
-    #[prop(into)] value: Signal<f64>,
+    /// Optional, because a bar whose quantity is not known has no value to
+    /// give: `indeterminate` with no `value` is the honest pair.
+    #[prop(optional, into)]
+    value: Signal<f64>,
     #[prop(optional)] max: Option<f64>,
     #[prop(optional, into)] indeterminate: Signal<bool>,
     #[prop(optional, into)] aria_label: String,
