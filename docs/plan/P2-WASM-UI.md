@@ -1,6 +1,6 @@
 # P2 · Rustify UI · 组件目录、表单、导航与工作区（Leptos CSR + Makepad Web · Rust/UI 子集硬分叉接入）
 
-> **计划状态：Blocked**（A-1 已于 2026-09-09 由用户解除；A-2 仍未正式解除——一期形式上 4/8，但其自动化部分已全部完成，只欠四份人工记录。实施已按恢复快照记录的偏离开始，见 §0.2/§11）。
+> **计划状态：In progress**（A-1、A-2 均已解除：用户 2026-09-10 判定一期完成并要求后续只做二期。**本文件是唯一的工作入口**，`P1-WASM-UI.md` 已封板，不要再从那里开工）。
 >
 > 调查基线：2026-09-09 · `465f18081e5bf9bd38fc4bf79d68fb1314e10c6f` · 调查开始时工作区 clean；本次仅新增本计划。参考源码来自被忽略的 `ref/`（`ref/ui-main` 18 MB、`ref/leptos-main` 12 MB、`ref/makepad-dev` 293 MB），不属于该 commit。
 > 输入：[PRD v0.1](../PRD-WASM-UI.md)（仍为评审草稿，Q1–Q3 与建议预算未批准）；[P1 计划](P1-WASM-UI.md)。**P1 实施状态：3/8 里程碑关闭（M1/M2/M3）**（P1 快照 2026-09-09）；M4–M8（几何/浮层/焦点、原生文本与语义、组件子集/异步/主题、部署/恢复/诊断、验收）均未开始。本计划不把 P1 未交付的能力写成已有事实。
@@ -26,19 +26,19 @@
 
 ### 恢复快照
 
-- 最近更新：2026-09-09（第三轮）。**M1 已实施完毕，只差浏览器用例**（端口被 P1 M8 的两小时耐久占着，跑完即补）。
-- 当前进度：0/8 个里程碑完成；M1 的交付物已全部提交，退出条件里只剩 `--project=component-catalog` 一项没跑。
-- 当前状态：Blocked（A-2），但阻塞的性质变了：P1 的**自动化部分已全部完成**，A-2 没解除的唯一原因是四份只能由人做的记录（真实拼音、VoiceOver、对比度与缩放走查、Safari 观察）。P1 形式上仍是 4/8。A-1 已由用户 2026-09-09 的指示解除，D1/D2/D3/D5 与 ADR-4–7 转为已接受。
-- 最近完成（本计划）：M1 的四个提交——① Rust/UI 两个宏原样导入 + `sources.lock.json.rust_ui` 双向校验；② 重写（去 leptos_router、去 nightly、加 test_id、四臂并作两臂）并**修正 D13**（`tw_merge` 的 `prefix` 不设，`rui` 作为首个变体参与合并，五条单测）；③ token 扩表到组件类字符串点名的 19 色 4 度量 + Tailwind 输入与产物 + `cargo xtask css [--check]`；④ 第三个示例 `component-catalog`（18 类导航、能力页、总表、主题/语言切换、一个只画 token 的 GPU 区域）与第三个 Playwright project、宿主原生控件对照夹具、CI 增项。前置的 P1：M1–M4 关闭，M5–M8 的自动化全部完成，四者等四份人工记录。
-- 下一步：耐久跑完后依次 ① `npx playwright test --project=component-catalog` 并把结果写进 `docs/validation/p2/m1.md`；② 补跑 `cargo xtask verify --suite p1` 作为 P1 的收尾证据；③ 进入 M2 · 18 类组件目录（第一步是把能力目录从 `rustify-ui` 搬进 `rustify-components`，与组件同一个提交）。
-- 当前阻塞：A-2 未正式解除（P1 4/8）。**本计划据此记录一次偏离**：用户给出的目标是「按 P2 计划完成剩余开发」，而 A-2 的字面解除条件（P1 8/8）只能由用户到场做那四份记录才成立，本机无法产生。因此在人工记录到齐前开始 P2 M1，并约束：P2 的任何成果都不得用来关闭 P1 的任何里程碑，也不得改写 P1 计划；P1 的状态只由那四份记录改变。若记录到齐后 P1 某条退出条件不成立，受影响的 P2 工作按 §11 重审。
-- 代码基线：`736b668`（P1 M8 收尾）→ `153f67c`、`b14b2fb`、`a92c8dc`、`2e435e1`、`07ce3e0`（P2 M1）。
+- 最近更新：2026-09-10。**M1 已完成并通过全部退出条件**（`--project=component-catalog` 9/9）。下一个是 M2。
+- 当前进度：**1/8**（M1 关闭）。
+- 当前状态：In progress。A-1、A-2 都已解除；D1/D2/D3/D5 与 ADR-4–7 已接受，D13/ADR-5 已按 M1 的实测修正（见下）。
+- 最近完成（本计划）：**M1 · 契约对齐与组件工程，已关闭**。八个提交 `153f67c`→`fb3cc96`：① 核对 P1 M4–M7 六个实际接口并回写 §2.1（四处与假设不同，各自写明 P2 怎么办）；② Rust/UI 两个宏「原样导入 → 重写」两步提交，`sources.lock.json.rust_ui` 双向校验（说是原样的必须字节一致，说重写的必须不一致）；③ **修正 D13/ADR-5**：`tw_merge` 的 `prefix` 选项**不能设**——v4 的 `prefix(rui)` 在变体之前，该选项期待 v3 的位置；默认设置下 `rui` 作为首个变体参与合并，结果正确（5 条单测）；④ token 扩到 19 色 4 度量 + Tailwind 输入与提交产物 + `cargo xtask css [--check]`（第一次跑就抓到目录页的类没编译进产物）；⑤ 第三个示例 `component-catalog`（18 类导航、能力页、总表、主题/语言切换、一个只画 token 的 GPU 区域）+ 第三个 Playwright project + 宿主原生控件对照夹具（与「不加载我们样式表的同样标记」逐属性比对，结论：我们的两张样式表对宿主原生控件零影响）+ CI 增项。
+- 下一步：**M2 · 18 类组件目录**。第一步按 §2.1 的结论：把能力目录从 `crates/rustify-ui/src/catalog.rs` 搬进 `crates/rustify-components`，与 18 类组件放在同一个提交里（搬空的目录没有意义），`docs/components.md` 随之改由新目录生成；然后按 §1.2 的文件清单逐个「原样导入 → 重写」，浮层类建在 P1 的浮层栈上，退出条件见 §10 的 M2 行。
+- 当前阻塞：无。
+- 代码基线：`736b668`（一期收尾）→ `153f67c`、`b14b2fb`、`a92c8dc`、`2e435e1`、`07ce3e0`、`5edcc31`、`fa0e5a4`、`fb3cc96`（M1）→ `1a479ef`、`a3a555c`（一期的脚本堆泄漏修复，二期同样受益：区域在两次泵之间攒够 20,000 条垃圾就清扫一次）。工作区 clean。
 
 ### 完成记录
 
 | Milestone | 完成时间 | 准确完成摘要 | 验证证据 | 代码基线 |
 | --- | --- | --- | --- | --- |
-| — | — | 尚未完成任何里程碑 | — | — |
+| M1 | 2026-09-10 | 契约对齐与组件工程：核对并回写 §2.1；`rustify-components` 建起（两个 Rust/UI 宏原样导入后重写，去 leptos_router、去 nightly、加 test_id）；`sources.lock.json.rust_ui` 双向校验；D13 按实测修正（tw_merge 不设 prefix）；token 扩表 + Tailwind 输入与产物 + `cargo xtask css [--check]`；第三个示例 component-catalog 与第三个 Playwright project；宿主控件计算样式对照；CI 增项。未做：18 类组件本身与目录搬迁（M2）、路由（M4） | `docs/validation/p2/m1.md`；`npx playwright test --project=component-catalog` 9/9；`cargo test --workspace --lib` 65；`cargo test -p xtask` 14；clippy/fmt 通过；`cargo xtask css --check` 无漂移；`cargo xtask sources verify` 通过；`cargo xtask doctor` 10/10 | `fb3cc96` |
 
 ## 0. 需求、范围与决策
 

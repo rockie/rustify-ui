@@ -1,6 +1,8 @@
 ref/
 /target
-/makepad/target
+# Any cargo target dir, including the ones a `--manifest-path` build creates
+# inside the fork (makepad/platform/script/target, and its siblings).
+target/
 /node_modules
 /test-results
 /playwright-report
