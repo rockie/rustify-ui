@@ -13,3 +13,6 @@ rustify-ui = { path = "../../crates/rustify-ui" }
 [target.'cfg(target_arch = "wasm32")'.dependencies]
 rustify-makepad = { path = "../../crates/rustify-makepad" }
 wasm-bindgen.workspace = true
+# The formatting options are the application's, and an options object is a JS
+# object: this page builds the two it wants.
+js-sys.workspace = true

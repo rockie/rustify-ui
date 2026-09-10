@@ -1,5 +1,12 @@
 #[cfg(target_arch = "wasm32")]
 mod catalog_region;
+#[cfg(target_arch = "wasm32")]
+mod sample_region;
+// Not gated: twenty fixed strings and their ids are checked on the host, where
+// "there are twenty of them and no two share a name" needs no browser. Only
+// the browser build draws them, which is what the allow is for.
+#[cfg_attr(not(target_arch = "wasm32"), allow(dead_code))]
+mod samples;
 
 #[cfg(target_arch = "wasm32")]
 mod app {
@@ -13,8 +20,8 @@ mod app {
         TextArea, TextField, Tooltip, CATALOG,
     };
     use rustify_ui::{
-        mount, Anchor, AppHandle, GpuRegion, LocalRect, MountConfig, RegionState, Theme,
-        ThemedScope,
+        mount, use_theme_values, Anchor, AppHandle, GpuRegion, LocalRect, Locale, MountConfig,
+        RegionState, Theme, ThemedScope,
     };
     use std::cell::RefCell;
     use std::collections::BTreeMap;
@@ -41,68 +48,72 @@ mod app {
         }
     }
 
-    /// The catalogue's own words, in the two languages the plan names.
+    /// The catalogue's own words, in the two languages the SDK ships.
     ///
-    /// This is not the SDK's message catalogue - that is M7's, and it will
-    /// replace this. What it is here for is the switch: a page that cannot
-    /// change language cannot show that changing it changes nothing else.
-    #[derive(Clone, Copy, Debug, PartialEq, Eq)]
-    pub enum Locale {
-        En,
-        ZhCn,
-    }
-
-    impl Locale {
-        fn tag(self) -> &'static str {
-            match self {
-                Self::En => "en",
-                Self::ZhCn => "zh-CN",
+    /// The language itself is `rustify_ui::Locale` - one language for the page
+    /// and for the SDK's own messages, because a page that said "close" in
+    /// English inside a layer whose close button said 关闭 would be showing two
+    /// answers to one question. What stays here is the *vocabulary*: these are
+    /// the catalogue's words, and an SDK that shipped them would be
+    /// translating a page it cannot see.
+    ///
+    /// The key is `&'static str` so a key with no translation can be its own
+    /// answer: the page shows the key, which is how a missing entry gets
+    /// noticed instead of leaking or panicking.
+    fn t(locale: Locale, key: &'static str) -> &'static str {
+        match (locale, key) {
+            (Locale::English, "catalogue") => "catalogue",
+            (Locale::English, "status") => "support at a glance",
+            (Locale::English, "samples") => "text samples",
+            (Locale::English, "samples-heading") => "twenty texts, drawn twice",
+            (Locale::English, "samples-dom") => "browser",
+            (Locale::English, "samples-gpu") => "region",
+            (Locale::English, "samples-note") => {
+                "The same string in both columns. A reviewer compares them with a \
+                     reference rendering: order, direction, and whether anything is a box."
             }
-        }
-
-        /// The key is `&'static str` so a key with no translation can be its
-        /// own answer: the page shows the key, which is how a missing entry
-        /// gets noticed instead of leaking or panicking.
-        fn t(self, key: &'static str) -> &'static str {
-            match (self, key) {
-                (Self::En, "catalogue") => "catalogue",
-                (Self::En, "status") => "support at a glance",
-                (Self::En, "presentation") => "presentation",
-                (Self::En, "capabilities") => "capabilities",
-                (Self::En, "dom") => "DOM",
-                (Self::En, "gpu") => "GPU",
-                (Self::En, "across") => "across regions",
-                (Self::En, "theme") => "theme",
-                (Self::En, "language") => "language",
-                (Self::En, "motion") => "motion",
-                (Self::En, "less") => "less",
-                (Self::En, "full") => "full",
-                (Self::En, "example") => "example",
-                (Self::En, "states") => "states",
-                (Self::En, "default") => "default",
-                (Self::En, "disabled") => "disabled",
-                (Self::En, "read-only") => "read-only",
-                (Self::En, "invalid") => "invalid",
-                (Self::ZhCn, "catalogue") => "组件目录",
-                (Self::ZhCn, "status") => "能力总表",
-                (Self::ZhCn, "presentation") => "呈现",
-                (Self::ZhCn, "capabilities") => "能力",
-                (Self::ZhCn, "dom") => "DOM",
-                (Self::ZhCn, "gpu") => "GPU",
-                (Self::ZhCn, "across") => "跨区",
-                (Self::ZhCn, "theme") => "主题",
-                (Self::ZhCn, "language") => "语言",
-                (Self::ZhCn, "motion") => "动效",
-                (Self::ZhCn, "less") => "减少",
-                (Self::ZhCn, "full") => "完整",
-                (Self::ZhCn, "example") => "示例",
-                (Self::ZhCn, "states") => "状态",
-                (Self::ZhCn, "default") => "默认",
-                (Self::ZhCn, "disabled") => "禁用",
-                (Self::ZhCn, "read-only") => "只读",
-                (Self::ZhCn, "invalid") => "错误",
-                (_, other) => other,
+            (Locale::English, "presentation") => "presentation",
+            (Locale::English, "capabilities") => "capabilities",
+            (Locale::English, "dom") => "DOM",
+            (Locale::English, "gpu") => "GPU",
+            (Locale::English, "across") => "across regions",
+            (Locale::English, "theme") => "theme",
+            (Locale::English, "language") => "language",
+            (Locale::English, "motion") => "motion",
+            (Locale::English, "less") => "less",
+            (Locale::English, "full") => "full",
+            (Locale::English, "example") => "example",
+            (Locale::English, "states") => "states",
+            (Locale::English, "default") => "default",
+            (Locale::English, "disabled") => "disabled",
+            (Locale::English, "read-only") => "read-only",
+            (Locale::English, "invalid") => "invalid",
+            (Locale::Chinese, "catalogue") => "组件目录",
+            (Locale::Chinese, "status") => "能力总表",
+            (Locale::Chinese, "samples") => "文本样本",
+            (Locale::Chinese, "samples-heading") => "二十条文本，各画两遍",
+            (Locale::Chinese, "samples-dom") => "浏览器",
+            (Locale::Chinese, "samples-gpu") => "区域",
+            (Locale::Chinese, "samples-note") => {
+                "两列是同一个字符串。评审人对照参考渲染逐条判断：顺序、方向，以及有没有变成方框。"
             }
+            (Locale::Chinese, "presentation") => "呈现",
+            (Locale::Chinese, "capabilities") => "能力",
+            (Locale::Chinese, "dom") => "DOM",
+            (Locale::Chinese, "gpu") => "GPU",
+            (Locale::Chinese, "across") => "跨区",
+            (Locale::Chinese, "theme") => "主题",
+            (Locale::Chinese, "language") => "语言",
+            (Locale::Chinese, "motion") => "动效",
+            (Locale::Chinese, "less") => "减少",
+            (Locale::Chinese, "full") => "完整",
+            (Locale::Chinese, "example") => "示例",
+            (Locale::Chinese, "states") => "状态",
+            (Locale::Chinese, "default") => "默认",
+            (Locale::Chinese, "disabled") => "禁用",
+            (Locale::Chinese, "read-only") => "只读",
+            (Locale::Chinese, "invalid") => "错误",
+            (_, other) => other,
         }
     }
 
@@ -113,6 +124,9 @@ mod app {
     enum Page {
         Category(usize),
         Status,
+        /// B5: the twenty fixed texts, drawn by the browser and by the region
+        /// side by side, for a reviewer to compare against a reference.
+        Samples,
     }
 
     impl Page {
@@ -122,6 +136,7 @@ mod app {
                     format!("/{}", CATALOG[index].category.name().replace(' ', "-"))
                 }
                 Self::Status => "/status".to_string(),
+                Self::Samples => "/samples".to_string(),
             }
         }
     }
@@ -199,6 +214,15 @@ mod app {
         static HANDLES: RefCell<BTreeMap<u32, AppHandle>> = const { RefCell::new(BTreeMap::new()) };
         static NEXT_HANDLE: RefCell<u32> = const { RefCell::new(1) };
         static SNAPSHOT: RefCell<String> = const { RefCell::new(String::new()) };
+        /// Whether the page has been told to behave as though the wide font
+        /// never arrived. The real path is a resource failure, which the
+        /// deployment build exercises against a real broken file; this is the
+        /// switch that lets one page show the mark and then take it away
+        /// again, so "and it recovers" is something a test can watch.
+        ///
+        /// The signal is registered by the page that reads it, so the switch
+        /// writes to the live scope rather than to a copy of the answer.
+        static FONT_BLOCKED: RefCell<Option<RwSignal<bool>>> = const { RefCell::new(None) };
     }
 
     fn chip(support: Support) -> ChipVariant {
@@ -547,7 +571,7 @@ mod app {
         view! {
             <Panel test_id="category-page">
                 <h2 data-testid="category-name">{entry.category.name()}</h2>
-                <h3>{move || locale.get().t("example")}</h3>
+                <h3>{move || t(locale.get(), "example")}</h3>
                 <div data-testid="example" class="catalogue-example">
                     <Example category=category state=ExampleState::Live values=values />
                 </div>
@@ -555,7 +579,7 @@ mod app {
                     {entry.environment.note}
                 </p>
                 <Show when=move || !states(category).is_empty() fallback=|| ()>
-                    <h3>{move || locale.get().t("states")}</h3>
+                    <h3>{move || t(locale.get(), "states")}</h3>
                     <div data-testid="state-matrix" class="catalogue-states">
                         {states(category)
                             .iter()
@@ -564,7 +588,7 @@ mod app {
                                 view! {
                                     <div data-testid=format!("state-{}", state.name())>
                                         <span class="rui:text-xs rui:text-muted-foreground">
-                                            {move || locale.get().t(state.name())}
+                                            {move || t(locale.get(), state.name())}
                                         </span>
                                         <Example
                                             category=category
@@ -577,14 +601,14 @@ mod app {
                             .collect_view()}
                     </div>
                 </Show>
-                <h3>{move || locale.get().t("presentation")}</h3>
+                <h3>{move || t(locale.get(), "presentation")}</h3>
                 <Row>
                     {presentation
                         .into_iter()
                         .map(|(key, support)| {
                             view! {
                                 <Row>
-                                    <span>{move || locale.get().t(key)}</span>
+                                    <span>{move || t(locale.get(), key)}</span>
                                     <Chip
                                         variant=chip(support)
                                         test_id=format!("presentation-{key}")
@@ -596,7 +620,7 @@ mod app {
                         })
                         .collect_view()}
                 </Row>
-                <h3>{move || locale.get().t("capabilities")}</h3>
+                <h3>{move || t(locale.get(), "capabilities")}</h3>
                 <ul>
                     {entry
                         .capabilities()
@@ -623,18 +647,161 @@ mod app {
         }
     }
 
+    /// A number the way the reader's language writes it.
+    ///
+    /// The options are the application's, which is the whole contract: this
+    /// page happens to want a currency with two decimals, and the SDK formats
+    /// nothing of its own.
+    fn formatted_number(locale: Locale) -> String {
+        let options = js_sys::Object::new();
+        let set = |key: &str, value: &str| {
+            let _ =
+                js_sys::Reflect::set(&options, &JsValue::from_str(key), &JsValue::from_str(value));
+        };
+        set("style", "currency");
+        set("currency", "CNY");
+        rustify_ui::format_number(locale, 1_234_567.891, &options)
+    }
+
+    /// A fixed instant, so the page reads the same on every run: the first of
+    /// March 2026, noon UTC.
+    fn formatted_date(locale: Locale) -> String {
+        let options = js_sys::Object::new();
+        let set = |key: &str, value: &str| {
+            let _ =
+                js_sys::Reflect::set(&options, &JsValue::from_str(key), &JsValue::from_str(value));
+        };
+        set("dateStyle", "long");
+        set("timeZone", "UTC");
+        rustify_ui::format_date(locale, 1_772_366_400_000.0, &options)
+    }
+
+    /// B5: the twenty texts, drawn by the browser and by a region beside it.
+    ///
+    /// A second region on the page rather than the header's: the header's
+    /// region is showing whichever control the reader is looking at, and a
+    /// page that borrowed it would have to put it back.
+    #[component]
+    fn SamplesPage(locale: Signal<Locale>) -> impl IntoView {
+        let theme = use_theme_values();
+        // Whether the wide font arrived. Read from the runtime's own record
+        // rather than guessed: a font that failed is reported there as
+        // `AssetLoadFailed`, and this page is the one that has to say so.
+        let fonts = RwSignal::new(true);
+        // What the page has been told to pretend, registered so the test seam
+        // writes to this scope rather than to a copy of the answer.
+        let blocked = RwSignal::new(false);
+        FONT_BLOCKED.with(|slot| *slot.borrow_mut() = Some(blocked));
+        on_cleanup(move || FONT_BLOCKED.with(|slot| *slot.borrow_mut() = None));
+        let lines = RwSignal::new(0usize);
+        let region = RwSignal::new(RegionState::Starting);
+        Effect::new(move || {
+            // Tracked: the count rises when an asset does not arrive, whenever
+            // that happens, so a font that fails after the region is already
+            // drawing still reaches this page.
+            rustify_ui::asset_failures();
+            region.get();
+            let failed = rustify_ui::with_log(|log| {
+                log.entries().any(|entry| {
+                    entry.kind == rustify_ui::ErrorKind::AssetLoadFailed
+                        && entry
+                            .asset
+                            .as_deref()
+                            .is_some_and(|asset| asset.ends_with(".ttf"))
+                })
+            });
+            fonts.set(!failed);
+        });
+        let props = Signal::derive(move || crate::sample_region::SampleProps {
+            theme: theme.get().unwrap_or_else(Theme::light),
+            missing: (!fonts.get()).then(|| {
+                rustify_ui::Message::MissingGlyph
+                    .text(locale.get())
+                    .to_string()
+            }),
+        });
+        let on_action = move |action| match action {
+            crate::sample_region::SampleAction::Lines(drawn) => lines.set(drawn.len()),
+        };
+        // Bound out here: `view!` cannot parse a turbofish in an attribute.
+        let app = PhantomData::<crate::sample_region::SampleRegion>;
+        view! {
+            // A plain section rather than `Panel`: a component's children have
+            // to be `Send`, and a GPU region's application marker is not. The
+            // same finding as the splitter's in M5, and the same answer - the
+            // page holds the region itself and borrows only the classes.
+            <section
+                class="rui:rounded-md rui:border rui:border-border rui:bg-card rui:p-4"
+                data-testid="samples-page"
+            >
+                <h2>{move || t(locale.get(), "samples-heading")}</h2>
+                <p data-testid="samples-note">{move || t(locale.get(), "samples-note")}</p>
+                <h3>{move || t(locale.get(), "messages-heading")}</h3>
+                <ul class="messages" data-testid="sdk-messages">
+                    {rustify_ui::Message::all()
+                        .into_iter()
+                        .map(|message| {
+                            view! {
+                                <li data-testid=format!("message-{}", message.key())>
+                                    {move || message.text(locale.get())}
+                                </li>
+                            }
+                        })
+                        .collect_view()}
+                </ul>
+                <p data-testid="format-number">{move || formatted_number(locale.get())}</p>
+                <p data-testid="format-date">{move || formatted_date(locale.get())}</p>
+                <p data-testid="samples-drawn">
+                    {move || format!("{} / {}", lines.get(), crate::samples::SAMPLES.len())}
+                </p>
+                <div class="samples">
+                    <div class="samples-column">
+                        <h3>{move || t(locale.get(), "samples-dom")}</h3>
+                        {crate::samples::SAMPLES
+                            .iter()
+                            .map(|sample| {
+                                view! {
+                                    <p
+                                        class="sample"
+                                        lang=if sample.rtl { "ar" } else { "" }
+                                        dir=if sample.rtl { "rtl" } else { "ltr" }
+                                        data-testid=format!("sample-{}", sample.id)
+                                        title=sample.label
+                                    >
+                                        {sample.text}
+                                    </p>
+                                }
+                            })
+                            .collect_view()}
+                    </div>
+                    <div class="samples-column">
+                        <h3>{move || t(locale.get(), "samples-gpu")}</h3>
+                        <GpuRegion
+                            app=app
+                            props=props
+                            state=region
+                            on_action=on_action
+                            class="samples-canvas"
+                            test_id="samples-region"
+                        />
+                    </div>
+                </div>
+            </section>
+        }
+    }
+
     #[component]
     fn StatusPage(locale: Signal<Locale>) -> impl IntoView {
         view! {
             <Panel test_id="status-page">
-                <h2>{move || locale.get().t("status")}</h2>
+                <h2>{move || t(locale.get(), "status")}</h2>
                 <table data-testid="status-table">
                     <thead>
                         <tr>
-                            <th scope="col">{move || locale.get().t("catalogue")}</th>
-                            <th scope="col">{move || locale.get().t("dom")}</th>
-                            <th scope="col">{move || locale.get().t("gpu")}</th>
-                            <th scope="col">{move || locale.get().t("across")}</th>
+                            <th scope="col">{move || t(locale.get(), "catalogue")}</th>
+                            <th scope="col">{move || t(locale.get(), "dom")}</th>
+                            <th scope="col">{move || t(locale.get(), "gpu")}</th>
+                            <th scope="col">{move || t(locale.get(), "across")}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -663,7 +830,11 @@ mod app {
     #[component]
     fn Catalogue() -> impl IntoView {
         let theme = RwSignal::new(Theme::light());
-        let locale = RwSignal::new(Locale::En);
+        // The scope's language, in context: the SDK's own components read it
+        // too, so a dialog's close button and this page's headings cannot end
+        // up in two different languages.
+        let locale = rustify_ui::provide_locale(Locale::English);
+        let locale_signal = Signal::derive(move || locale.get());
         let page = RwSignal::new(Page::Category(0));
         let region = RwSignal::new(RegionState::Starting);
         // Where the region says it drew its own controls, so a test can put a
@@ -709,9 +880,10 @@ mod app {
         // changes, and what depends on it below is a *change* of category.
         let category = Memo::new(move |_| match page.get() {
             Page::Category(index) => CATALOG[index].category,
-            // The status page draws no control, and a label saying so is a
-            // truer answer than the last page's control left on screen.
-            Page::Status => Category::Label,
+            // Neither the status page nor the samples page draws a control,
+            // and a label saying so is a truer answer than the last page's
+            // control left on screen.
+            Page::Status | Page::Samples => Category::Label,
         });
 
         // The reported rectangle belongs to the control the region is drawing
@@ -818,14 +990,14 @@ mod app {
             <ThemedScope theme=theme />
             <div class="catalogue" data-testid="catalogue">
                 <header class="catalogue-header">
-                    <h1>{move || locale.get().t("catalogue")}</h1>
+                    <h1>{move || t(locale.get(), "catalogue")}</h1>
                     <Row>
                         <Button
                             test_id="toggle-theme"
                             aria_label="switch theme"
                             on_click=switch_theme
                         >
-                            {move || format!("{}: {}", locale.get().t("theme"), theme.get().name)}
+                            {move || format!("{}: {}", t(locale.get(), "theme"), theme.get().name)}
                         </Button>
                         <Switch
                             test_id="toggle-motion"
@@ -840,11 +1012,11 @@ mod app {
                                 let locale = locale.get();
                                 format!(
                                     "{}: {}",
-                                    locale.t("motion"),
+                                    t(locale, "motion"),
                                     if theme.get().reduce_motion {
-                                        locale.t("less")
+                                        t(locale, "less")
                                     } else {
-                                        locale.t("full")
+                                        t(locale, "full")
                                     },
                                 )
                             }}
@@ -855,16 +1027,14 @@ mod app {
                             variant=ButtonVariant::Secondary
                             on_click=move || {
                                 locale
-                                    .update(|locale| {
-                                        *locale = match locale {
-                                            Locale::En => Locale::ZhCn,
-                                            Locale::ZhCn => Locale::En,
-                                        };
+                                    .set(match locale.get_untracked() {
+                                        Locale::English => Locale::Chinese,
+                                        Locale::Chinese => Locale::English,
                                     })
                             }
                         >
                             {move || {
-                                format!("{}: {}", locale.get().t("language"), locale.get().tag())
+                                format!("{}: {}", t(locale.get(), "language"), locale.get().tag())
                             }}
                         </Button>
                     </Row>
@@ -906,7 +1076,16 @@ mod app {
                                 variant=ButtonVariant::Ghost
                                 on_click=move || page.set(Page::Status)
                             >
-                                {move || locale.get().t("status")}
+                                {move || t(locale.get(), "status")}
+                            </Button>
+                        </li>
+                        <li>
+                            <Button
+                                test_id="nav-samples"
+                                variant=ButtonVariant::Ghost
+                                on_click=move || page.set(Page::Samples)
+                            >
+                                {move || t(locale.get(), "samples")}
                             </Button>
                         </li>
                     </ul>
@@ -917,13 +1096,16 @@ mod app {
                             view! {
                                 <CategoryPage
                                     index=index
-                                    locale=locale.into()
+                                    locale=locale_signal
                                     values=values
                                 />
                             }
                                 .into_any()
                         }
-                        Page::Status => view! { <StatusPage locale=locale.into() /> }.into_any(),
+                        Page::Status => view! { <StatusPage locale=locale_signal /> }.into_any(),
+                        Page::Samples => {
+                            view! { <SamplesPage locale=locale_signal /> }.into_any()
+                        }
                     }}
                 </main>
                 <Menu
@@ -1004,6 +1186,18 @@ mod app {
     #[wasm_bindgen]
     pub fn catalog_diagnostics() -> String {
         rustify_ui::report_json()
+    }
+
+    /// Makes the page behave as though the font that covers more than Latin
+    /// never arrived, or stop behaving that way. Answers what it set.
+    #[wasm_bindgen]
+    pub fn catalog_block_font(blocked: bool) -> bool {
+        FONT_BLOCKED.with(|slot| {
+            if let Some(signal) = *slot.borrow() {
+                signal.set(blocked);
+            }
+        });
+        blocked
     }
 
     #[wasm_bindgen]

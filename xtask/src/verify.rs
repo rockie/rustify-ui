@@ -1,4 +1,4 @@
-//! `cargo xtask verify --suite p1`: everything the milestone can check by
+//! `cargo xtask verify --suite p1|p2`: everything the milestone can check by
 //! itself, in one place, plus an honest account of what it cannot.
 //!
 //! The point is not to replace the individual commands - a developer runs
@@ -32,6 +32,43 @@ impl Step {
     }
 }
 
+/// One release's worth of checks: what to build, what to run in a browser,
+/// which reports it owes and which records only a person can write.
+///
+/// Two suites rather than one command with a flag, because "what P2 delivers"
+/// is not "what P1 delivered plus more": the examples, the browser projects
+/// and the manual records all differ, and a suite that quietly ran P1's list
+/// under P2's name would report a pass nobody had earned.
+pub struct Suite {
+    pub name: &'static str,
+    pub examples: &'static [&'static str],
+    pub projects: &'static [&'static str],
+    pub reports: &'static [&'static str],
+    pub manual: &'static [(&'static str, &'static str)],
+}
+
+pub const P1: Suite = Suite {
+    name: "P1",
+    examples: &["fusion-basic", "property-workbench"],
+    projects: &["fusion-basic", "property-workbench", "deployment"],
+    reports: &REPORTS,
+    manual: &MANUAL_RECORDS,
+};
+
+pub const P2: Suite = Suite {
+    name: "P2",
+    examples: &["fusion-basic", "property-workbench", "component-catalog"],
+    projects: &[
+        "fusion-basic",
+        "property-workbench",
+        "component-catalog",
+        "workbench-deep",
+        "deployment",
+    ],
+    reports: &P2_REPORTS,
+    manual: &P2_MANUAL_RECORDS,
+};
+
 /// The manual records P1 cannot produce for itself. Each one is a file a
 /// person writes after doing the thing; the suite reports which are missing
 /// rather than passing over them.
@@ -57,6 +94,40 @@ pub const MANUAL_RECORDS: [(&str, &str); 4] = [
 /// The six reports the milestone delivers, plus the requirement matrix. They
 /// are the milestone's own output rather than a person's, so a missing one is
 /// a failed step and not a note.
+/// P2's, which are not P1's: an eighteen-category catalogue, two languages
+/// and twenty text samples are things only a person can sign off on.
+pub const P2_MANUAL_RECORDS: [(&str, &str); 4] = [
+    (
+        "docs/validation/p2/manual/voiceover.md",
+        "M8: VoiceOver + Chrome over the catalogue's eighteen categories and B1's five journeys",
+    ),
+    (
+        "docs/validation/p2/manual/pinyin.md",
+        "M8: real pinyin input in the property form and the command palette",
+    ),
+    (
+        "docs/validation/p2/manual/samples.md",
+        "M7/M8: the twenty B5 samples against a reference rendering - direction, order, and \
+         whether anything is a box (A-4)",
+    ),
+    (
+        "docs/validation/p2/manual/contrast-and-zoom.md",
+        "M8: the 200% and 400% reflow walkthrough of the catalogue and B1. The contrast \
+         *ratios* are checked by `cargo test -p rustify-ui theme`; what a person still has \
+         to do is look at the pages at those zoom levels",
+    ),
+];
+
+pub const P2_REPORTS: [&str; 7] = [
+    "docs/reports/p2/functional.md",
+    "docs/reports/p2/performance.md",
+    "docs/reports/p2/compatibility.md",
+    "docs/reports/p2/accessibility.md",
+    "docs/reports/p2/fault-recovery.md",
+    "docs/reports/p2/known-limitations.md",
+    "docs/reports/p2/requirements.md",
+];
+
 pub const REPORTS: [&str; 7] = [
     "docs/reports/p1/functional.md",
     "docs/reports/p1/performance.md",
@@ -68,14 +139,20 @@ pub const REPORTS: [&str; 7] = [
 ];
 
 pub fn run(args: &[String]) -> Result<(), String> {
-    let suite = args
+    let suite = match args
         .iter()
         .position(|a| a == "--suite")
         .and_then(|i| args.get(i + 1))
-        .map(String::as_str);
-    if suite != Some("p1") {
-        return Err("usage: cargo xtask verify --suite p1 [--no-browser] [--no-build]".to_string());
-    }
+        .map(String::as_str)
+    {
+        Some("p1") => P1,
+        Some("p2") => P2,
+        _ => {
+            return Err(
+                "usage: cargo xtask verify --suite p1|p2 [--no-browser] [--no-build]".to_string(),
+            )
+        }
+    };
     let root = build::repo_root();
     let mut steps = vec![
         command(
@@ -120,21 +197,21 @@ pub fn run(args: &[String]) -> Result<(), String> {
             "cargo",
             &["test", "--manifest-path", "platform/script/Cargo.toml"],
         ),
-        reports(&root),
+        reports(&root, &suite),
     ];
 
     if !args.iter().any(|a| a == "--no-build") {
-        for example in ["fusion-basic", "property-workbench"] {
+        for example in suite.examples {
             steps.push(double_build(&root, example));
         }
     }
     if !args.iter().any(|a| a == "--no-browser") {
-        for project in ["fusion-basic", "property-workbench", "deployment"] {
+        for project in suite.projects {
             steps.push(browser(&root, project));
         }
     }
 
-    report(&steps, &root)
+    report(&steps, &root, &suite)
 }
 
 /// Builds one example twice, from scratch each time, and compares what came
@@ -143,6 +220,7 @@ pub fn run(args: &[String]) -> Result<(), String> {
 fn double_build(root: &Path, example: &str) -> Step {
     let name: &'static str = match example {
         "fusion-basic" => "double build: fusion-basic",
+        "component-catalog" => "double build: component-catalog",
         _ => "double build: property-workbench",
     };
     let request = BuildRequest {
@@ -205,13 +283,15 @@ fn double_build(root: &Path, example: &str) -> Step {
     }
 }
 
-fn reports(root: &Path) -> Step {
-    let missing: Vec<&str> = REPORTS
-        .into_iter()
+fn reports(root: &Path, suite: &Suite) -> Step {
+    let missing: Vec<&str> = suite
+        .reports
+        .iter()
+        .copied()
         .filter(|path| !root.join(path).is_file())
         .collect();
     if missing.is_empty() {
-        Step::ok("reports", format!("{} delivered", REPORTS.len()))
+        Step::ok("reports", format!("{} delivered", suite.reports.len()))
     } else {
         Step::failed("reports", format!("missing: {}", missing.join(", ")))
     }
@@ -221,6 +301,8 @@ fn browser(root: &Path, project: &'static str) -> Step {
     let name: &'static str = match project {
         "fusion-basic" => "browser: fusion-basic",
         "property-workbench" => "browser: property-workbench",
+        "component-catalog" => "browser: component-catalog",
+        "workbench-deep" => "browser: workbench-deep",
         _ => "browser: deployment",
     };
     let mut step = command(
@@ -251,9 +333,9 @@ fn command(name: &'static str, dir: &Path, program: &str, args: &[&str]) -> Step
     }
 }
 
-fn report(steps: &[Step], root: &Path) -> Result<(), String> {
+fn report(steps: &[Step], root: &Path, suite: &Suite) -> Result<(), String> {
     let mut failed = 0;
-    println!("P1 verification suite");
+    println!("{} verification suite", suite.name);
     for step in steps {
         match &step.outcome {
             Ok(detail) => println!("  ok    {:<30} {detail}", step.name),
@@ -266,7 +348,7 @@ fn report(steps: &[Step], root: &Path) -> Result<(), String> {
 
     println!("\nmanual records (a person does these; the suite only looks for the file)");
     let mut missing = 0;
-    for (path, what) in MANUAL_RECORDS {
+    for (path, what) in suite.manual.iter().copied() {
         if root.join(path).is_file() {
             println!("  held  {path}");
         } else {
@@ -285,7 +367,10 @@ fn report(steps: &[Step], root: &Path) -> Result<(), String> {
     if missing > 0 {
         // Not an error: the suite ran everything it can. Saying "passed" here
         // would be the lie the milestone is meant to prevent.
-        println!("P1 cannot be called complete while a manual record is missing.");
+        println!(
+            "{} cannot be called complete while a manual record is missing.",
+            suite.name
+        );
     }
     Ok(())
 }

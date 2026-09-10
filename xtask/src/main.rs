@@ -21,7 +21,7 @@ cargo xtask <command> [options]
   catalog     --write <path> [--check]
   report-size --example <name> [--release] [--compressed]
   sources     verify
-  verify      --suite p1 [--no-browser] [--no-build]
+  verify      --suite p1|p2 [--no-browser] [--no-build]
 ";
 
 fn main() {

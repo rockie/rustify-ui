@@ -94,3 +94,46 @@ body {
     gap: 4px;
     justify-items: start;
 }
+
+/* B5: the same twenty strings, drawn by the browser and by a region, in two
+   columns a reviewer can read across. */
+.samples {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    align-items: start;
+}
+
+.samples-column h3 {
+    margin: 0 0 6px;
+    font-size: 13px;
+    color: #667085;
+}
+
+/* 15px a line, the same as the region draws, so the two columns line up and a
+   reviewer compares row against row rather than counting. */
+.samples .sample {
+    margin: 0;
+    height: 15px;
+    line-height: 15px;
+    font-size: 11px;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.samples-canvas {
+    width: 100%;
+    height: 320px;
+    border: 1px solid #d0d5dd;
+    border-radius: 6px;
+    background: #0c111d;
+}
+
+/* The SDK's own words, one per line, so a test can read each of them and a
+   reader can see the whole vocabulary change at once. */
+.messages {
+    margin: 0 0 8px;
+    padding-left: 18px;
+    font-size: 12px;
+    color: #475467;
+}

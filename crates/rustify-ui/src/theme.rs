@@ -56,7 +56,10 @@ impl Theme {
             name: "light",
             background: 0xf9fafb,
             foreground: 0x1d2939,
-            primary: 0x2e90fa,
+            // A step darker than the blue this started with. White on the
+            // brighter one is 3.24:1, which is under AA for anything that is
+            // not large text - and a primary button's label is not large text.
+            primary: 0x1570ef,
             primary_foreground: 0xffffff,
             secondary: 0xeaecf0,
             secondary_foreground: 0x1d2939,
@@ -70,9 +73,12 @@ impl Theme {
             popover: 0xffffff,
             success: 0x12b76a,
             warning: 0xf79009,
-            border: 0xd0d5dd,
+            // Dark enough to be seen against both surfaces it is drawn on.
+            // This token is a control's boundary as well as a panel's edge,
+            // and a boundary nobody can see is a control nobody can find.
+            border: 0x858f9e,
             input: 0xffffff,
-            ring: 0x2e90fa,
+            ring: 0x1570ef,
             radius: 6.0,
             font_size: 15.0,
             spacing: 8.0,
@@ -99,7 +105,7 @@ impl Theme {
             popover: 0x1d2939,
             success: 0x32d583,
             warning: 0xfdb022,
-            border: 0x344054,
+            border: 0x717c8e,
             input: 0x101828,
             ring: 0x53b1fd,
             radius: 6.0,
@@ -359,6 +365,30 @@ mod dom {
     }
 }
 
+/// WCAG relative luminance of an `0xRRGGBB` colour.
+///
+/// Public because the contrast of a theme is a property of the theme, and an
+/// application that patches one should be able to check what it has made
+/// rather than find out from a person who cannot read it.
+pub fn luminance(color: Color) -> f64 {
+    let channel = |shift: u32| {
+        let value = ((color >> shift) & 0xff) as f64 / 255.0;
+        if value <= 0.040_45 {
+            value / 12.92
+        } else {
+            ((value + 0.055) / 1.055).powf(2.4)
+        }
+    };
+    0.2126 * channel(16) + 0.7152 * channel(8) + 0.0722 * channel(0)
+}
+
+/// The WCAG contrast ratio between two colours, from 1.0 to 21.0.
+pub fn contrast(a: Color, b: Color) -> f64 {
+    let (a, b) = (luminance(a), luminance(b));
+    let (lighter, darker) = if a > b { (a, b) } else { (b, a) };
+    (lighter + 0.05) / (darker + 0.05)
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -470,5 +500,119 @@ mod tests {
             .find(|(name, _)| *name == "--radius")
             .map(|(_, value)| value);
         assert_eq!(radius.as_deref(), Some("6px"));
+    }
+}
+
+#[cfg(test)]
+mod contrast_tests {
+    use super::{contrast, luminance, Theme};
+
+    /// Normal text on its background. WCAG AA is 4.5:1.
+    const TEXT: f64 = 4.5;
+    /// Large text, and anything that is not text but has to be seen: a border,
+    /// a focus ring, the filled part of a control. WCAG AA is 3:1.
+    const LARGE: f64 = 3.0;
+
+    fn pairs(theme: &Theme) -> Vec<(&'static str, u32, u32, f64)> {
+        vec![
+            (
+                "foreground on background",
+                theme.foreground,
+                theme.background,
+                TEXT,
+            ),
+            ("foreground on card", theme.foreground, theme.card, TEXT),
+            (
+                "foreground on popover",
+                theme.foreground,
+                theme.popover,
+                TEXT,
+            ),
+            (
+                "muted text on muted",
+                theme.muted_foreground,
+                theme.muted,
+                TEXT,
+            ),
+            (
+                "muted text on background",
+                theme.muted_foreground,
+                theme.background,
+                TEXT,
+            ),
+            (
+                "primary text on primary",
+                theme.primary_foreground,
+                theme.primary,
+                TEXT,
+            ),
+            (
+                "secondary text on secondary",
+                theme.secondary_foreground,
+                theme.secondary,
+                TEXT,
+            ),
+            (
+                "destructive text on destructive",
+                theme.destructive_foreground,
+                theme.destructive,
+                TEXT,
+            ),
+            // Not text: it only has to be seen, not read.
+            (
+                "primary against background",
+                theme.primary,
+                theme.background,
+                LARGE,
+            ),
+            (
+                "border against background",
+                theme.border,
+                theme.background,
+                LARGE,
+            ),
+            ("border against card", theme.border, theme.card, LARGE),
+            ("border against popover", theme.border, theme.popover, LARGE),
+            (
+                "ring against background",
+                theme.ring,
+                theme.background,
+                LARGE,
+            ),
+            (
+                "destructive against card",
+                theme.destructive,
+                theme.card,
+                LARGE,
+            ),
+        ]
+    }
+
+    #[test]
+    fn the_luminance_of_the_two_ends_is_what_it_should_be() {
+        assert!((luminance(0xffffff) - 1.0).abs() < 1e-9);
+        assert!(luminance(0x000000).abs() < 1e-9);
+        assert!((contrast(0xffffff, 0x000000) - 21.0).abs() < 1e-9);
+        assert!((contrast(0x2e90fa, 0x2e90fa) - 1.0).abs() < 1e-9);
+    }
+
+    #[test]
+    fn every_pair_the_themes_actually_use_reaches_its_target() {
+        // Checked rather than walked through by eye. A token table is exactly
+        // the kind of thing that goes wrong one value at a time, and each time
+        // it does, somebody who cannot read the result finds out first.
+        let mut wrong = Vec::new();
+        for theme in [Theme::light(), Theme::dark()] {
+            for (what, a, b, target) in pairs(&theme) {
+                let ratio = contrast(a, b);
+                if ratio < target {
+                    wrong.push(format!(
+                        "{}: {what} is {ratio:.2}:1, wanted {target}:1",
+                        theme.name
+                    ));
+                }
+            }
+        }
+        assert!(wrong.is_empty(), "{}", wrong.join("\n"));
     }
 }

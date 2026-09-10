@@ -42,11 +42,11 @@ pub fn Dialog(
     let description_id = StoredValue::new(format!("{group}-description"));
     let panel_class = StoredValue::new(crate::macros::merge(PANEL, &class));
     let panel_test_id = StoredValue::new(test_id);
-    let close_label = StoredValue::new(if close_label.is_empty() {
-        "close".to_string()
-    } else {
-        close_label
-    });
+    // The application's word if it gave one; otherwise the SDK's, in the
+    // scope's language. Read on each render rather than fixed at build time,
+    // so switching language relabels a dialog that is already open.
+    let locale = rustify_ui::use_locale();
+    let close_label = StoredValue::new((!close_label.is_empty()).then_some(close_label));
     let on_open_change = StoredValue::new(on_open_change);
     let close = move || on_open_change.with_value(|close| close(false));
     let described = Memo::new(move |_| !description.get().is_empty());
@@ -104,7 +104,13 @@ pub fn Dialog(
                         class=CLOSE
                         data-name="DialogClose"
                         data-testid="dialog-close"
-                        aria-label=move || close_label.get_value()
+                        aria-label=move || {
+                            close_label
+                                .get_value()
+                                .unwrap_or_else(|| {
+                                    locale.text(rustify_ui::Message::Close).to_string()
+                                })
+                        }
                         on:click=move |_| close()
                     >
                         <crate::icon::Icon glyph=crate::icon::Glyph::Close />

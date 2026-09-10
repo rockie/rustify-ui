@@ -566,7 +566,44 @@ pub fn watch_assets() {}
 
 /// Records one entry in this runtime's bounded record.
 pub fn record(entry: Diagnostic) {
+    #[cfg(target_arch = "wasm32")]
+    if entry.kind == ErrorKind::AssetLoadFailed {
+        browser::note_asset_failure();
+    }
     LOG.with(|log| log.borrow_mut().record(entry));
+}
+
+/// A count of the assets that have failed to arrive in this runtime, tracked.
+///
+/// The record itself is a plain log, and a view that read it would never hear
+/// about the next entry. This is the one thing in it a view has to react to: a
+/// font that does not arrive changes what a page can draw, and the page is the
+/// only thing that can say so. Counting rather than listing, because what a
+/// view does about it is the same whichever asset it was.
+#[cfg(target_arch = "wasm32")]
+pub fn asset_failures() -> u32 {
+    browser::asset_failures()
+}
+
+#[cfg(target_arch = "wasm32")]
+mod browser {
+    use leptos::prelude::*;
+
+    thread_local! {
+        /// `ArcRwSignal` rather than `RwSignal`: this is created the first
+        /// time anything asks, which is not inside anybody's reactive owner,
+        /// and an owned signal there would belong to whoever happened to be
+        /// running.
+        static FAILURES: ArcRwSignal<u32> = ArcRwSignal::new(0);
+    }
+
+    pub fn note_asset_failure() {
+        FAILURES.with(|failures| failures.update(|count| *count += 1));
+    }
+
+    pub fn asset_failures() -> u32 {
+        FAILURES.with(|failures| failures.get())
+    }
 }
 
 /// Turns this runtime's record on or off and answers what it was.

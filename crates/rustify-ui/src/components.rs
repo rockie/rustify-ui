@@ -275,6 +275,12 @@ mod dom {
     ///
     /// The retry sits beside the status rather than inside it, so a reader of
     /// the status hears the state and not a button's label.
+    ///
+    /// The words are the SDK's - a wait, an empty answer and a failure are
+    /// states of the SDK's own machinery, not of the application's data - so
+    /// they come from the scope's language and change with it. The value and
+    /// the reason for a failure are the application's and are passed through
+    /// untouched.
     #[component]
     pub fn LoadView(
         #[prop(into)] value: Signal<Load<String>>,
@@ -283,6 +289,7 @@ mod dom {
         #[prop(optional, into)] test_id: String,
     ) -> impl IntoView {
         let retry_id = format!("{test_id}-retry");
+        let locale = crate::i18n::use_locale();
         view! {
             <p
                 class="load-view"
@@ -293,11 +300,18 @@ mod dom {
             >
                 {move || {
                     value
-                        .with(|value| match value {
-                            Load::Loading => "loading…".to_string(),
-                            Load::Empty => "nothing to show".to_string(),
-                            Load::Ready(value) => value.clone(),
-                            Load::Error(error) => format!("failed: {error}; try again"),
+                        .with(|value| {
+                            let say = |message| locale.text(message).to_string();
+                            match value {
+                                Load::Loading => say(crate::i18n::Message::Loading),
+                                Load::Empty => say(crate::i18n::Message::Empty),
+                                Load::Ready(value) => value.clone(),
+                                Load::Error(error) => format!(
+                                    "{}: {error}; {}",
+                                    say(crate::i18n::Message::LoadFailed),
+                                    say(crate::i18n::Message::Retry),
+                                ),
+                            }
                         })
                 }}
             </p>
@@ -311,7 +325,7 @@ mod dom {
                         move |_| on_retry()
                     }
                 >
-                    "retry"
+                    {move || locale.text(crate::i18n::Message::Retry)}
                 </button>
             </Show>
         }

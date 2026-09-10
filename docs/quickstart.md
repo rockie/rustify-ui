@@ -41,7 +41,13 @@ cargo fmt --all -- --check           # the fork under makepad/ is excluded by it
 cargo xtask sources verify           # drift of makepad/ against the import record
 npm run test:browser                 # Playwright probes against a release build
 cd makepad && cargo test -p cargo-makepad
+cargo xtask verify --suite p2        # everything above in one report, plus what needs a person
 ```
+
+`verify` runs the checks, double-builds each example, runs every browser
+project, and then lists the records only a person can write - the VoiceOver
+pass, real pinyin input, the sample comparison, the zoom walkthrough. It reports
+those as *missing*, never as passed, which is the whole reason it exists.
 
 ## Changing a component's classes
 
@@ -61,6 +67,18 @@ example whose manifest names the component crate.
 The prefix is what keeps a host page's own Tailwind build and ours apart, and
 `dark` is bound to the SDK's scope attribute rather than to any `.dark`
 ancestor, so a host page using that convention does not darken a scope.
+
+## Two languages
+
+```rust
+let locale = rustify_ui::provide_locale(Locale::English);   // once, in the scope root
+locale.text(Message::Retry)                                  // tracked; changes with the language
+```
+
+The SDK ships the words it puts on screen for itself; the application's
+vocabulary is the application's. `format_number` and `format_date` go through
+`Intl` with an options object the application builds, because what a value
+*means* decides how it should be written. See `docs/i18n.md`.
 
 ## Writing a GPU region
 
