@@ -31,4 +31,26 @@ web-sys = { workspace = true, features = [
     "KeyboardEvent",
     "Performance",
     "Window",
+    # Importing and exporting: the picker, what it hands over, and the blob an
+    # export is downloaded from.
+    "Blob",
+    "BlobPropertyBag",
+    "File",
+    "FileList",
+    "HtmlAnchorElement",
+    "HtmlInputElement",
+    # The clipboard, for the copy and paste controls. Both accessors are behind
+    # `--cfg=web_sys_unstable_apis`, which `cargo xtask build-web` sets; a build
+    # without it compiles against `clipboard::available() == false` instead.
+    "Clipboard",
+    "Navigator",
 ] }
+
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+# `JsFuture`, to await the two clipboard promises.
+wasm-bindgen-futures = "0.4.78"
+
+[lints.rust]
+# `web_sys_unstable_apis` is web-sys's own flag rather than one cargo knows
+# about, and this crate reads it to decide whether it can reach the clipboard.
+unexpected_cfgs = { level = "warn", check-cfg = ['cfg(web_sys_unstable_apis)'] }

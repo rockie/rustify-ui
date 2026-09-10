@@ -95,7 +95,7 @@
 | A-3 | 测量合同 | PRD 预算仍未批准；P2 只交 B1 基线与对照，不把 R29/R30 数字写成门 | 用户确认；M8 前 | 开放（默认沿用 P1 A-6） |
 | A-4 | 验收资源 | M8 需真实 VoiceOver+Chrome、真实拼音（表单与命令面板中文）、阿拉伯文/emoji 参考样本评审人 | 用户承诺；M7 前 | 开放 |
 | A-5 | 技术假设 | 以 `history.state` 中的 SDK 序号计算位移并 `history.go(-delta)` 反向恢复，在 Chrome 对多项跳转（`go(-3)`）、重复 URL、恢复期间连续后退均可靠且不产生重复历史项 | M4 首个探针；失败则守卫降级为只覆盖单步并写入已知限制 | 开放 |
-| A-6 | 技术假设 | `--cfg=web_sys_unstable_apis` 可经 cargo-makepad 追加 RUSTFLAGS 生效，使 web-sys 0.3.105 的 Clipboard `read_text/write_text` 可用 | M6 首个探针；失败则改用宿主 JS 薄封装 | 开放 |
+| A-6 | 技术假设 | `--cfg=web_sys_unstable_apis` 可经 cargo-makepad 追加 RUSTFLAGS 生效，使 web-sys 0.3.105 的 Clipboard `read_text/write_text` 可用 | M6 首个探针；失败则改用宿主 JS 薄封装 | **已解除（2026-09-10）**：`xtask` 的 `run_cargo_makepad` 设 `RUSTFLAGS`，cargo-makepad 与自身的 `WASM_RUSTFLAGS` 组合（`makepad/tools/cargo_makepad/src/wasm/compile.rs:230`），带旗与不带旗两次 `cargo check --target wasm32-unknown-unknown` 都通过；不带旗时 `clipboard::available()` 为 false 并走同形状的 `Unavailable` 应答，不需要宿主 JS 薄封装 |
 
 ### 0.3 决策表
 
@@ -547,7 +547,7 @@ flowchart TD
 | A-3 预算未批准 | M8 只交基线与对照 | 用户确认或批准 R29/R30 作为门 | M8 前 | 否（默认沿用 P1 A-6） |
 | A-4 人工资源 | VoiceOver、拼音、阿拉伯文/emoji 参考样本与评审人 | 用户承诺 | M7 前 | 对 M7/M8 是 |
 | A-5 按序号反向恢复 | 守卫对多项跳转/重复 URL/并发后退的可靠性 | M4 探针；失败则守卫降级为单步并写入已知限制 | M4 内 | 否，M4 内解决 |
-| A-6 `web_sys_unstable_apis` | 剪贴板实现路径 | M6 探针；失败改宿主 JS 薄封装 | M6 内 | 否 |
+| A-6 `web_sys_unstable_apis` | 剪贴板实现路径 | M6 探针；失败改宿主 JS 薄封装 | M6 内 | **是**（2026-09-10 探针通过，见 §0.2 A-6） |
 | Rust/UI 重写量 | 约 2,300 行浮层类重写 + ARIA 补齐 + 前缀/RTL/作用域改写 | M1 按文件逐个「原样→重写」提交，M2 逐类验收；改写规则有单测 | M2 退出 | 否 |
 | 自研路由能力边界 | 无嵌套路由；依赖 leptos_router 的生态组件不可用 | 记入 `docs/compatibility.md`；ADR-6 重审条件 | M4 退出 | 否 |
 | Tailwind 前缀与 tw_merge | 分层导入上的前缀语法未验证；前缀合并**已验证**（2026-09-09，D13 修正：`tw_merge` 的 `prefix` 不设，`rui` 作为首个变体参与合并） | 分层导入的前缀语法在 M1 的 CSS 提交里验证；失败退回作用域包裹 utilities | M1 内 | 否 |
@@ -642,5 +642,5 @@ flowchart TD
 | A-3 | §7 | 用户确认 | 开放 |
 | A-4 | §6.4/§9.4 | 用户承诺 | 开放 |
 | A-5 | ADR-6/§5.2 第 5 步 | M4 探针（`go(-3)`、重复 URL、恢复期间连续后退） | 开放 |
-| A-6 | D9 | M6 探针 | 开放 |
+| A-6 | D9 | M6 探针 | 已解除 |
 | — | **不在本期：大数据/虚拟化、trap 隔离、完整矩阵与 AA、GPU 自绘编辑器、完整图标集、迁移示例、对外发布** | §0.6 | 排除 |

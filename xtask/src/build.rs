@@ -265,6 +265,7 @@ fn run_cargo_makepad(root: &Path, request: &BuildRequest) -> Result<(), String> 
     args.extend(["-p", request.example.as_str()]);
     let status = Command::new("cargo")
         .args(&args)
+        .env("RUSTFLAGS", wasm_rustflags())
         .current_dir(root)
         .status()
         .map_err(|e| format!("cannot run cargo: {e}"))?;
@@ -272,6 +273,27 @@ fn run_cargo_makepad(root: &Path, request: &BuildRequest) -> Result<(), String> 
         return Err("cargo-makepad wasm build failed".to_string());
     }
     Ok(())
+}
+
+/// The flags this project needs on top of the ones cargo-makepad sets.
+///
+/// `RUSTFLAGS` from the environment is composed with cargo-makepad's own
+/// (`makepad/tools/cargo_makepad/src/wasm/compile.rs`), so this is where a
+/// flag the wasm build needs but the host build does not belongs.
+///
+/// `web_sys_unstable_apis` is what unlocks `navigator.clipboard` in web-sys.
+/// The build sets it rather than asking the developer to, so that
+/// `cargo xtask build-web` always produces a clipboard-capable deployment and
+/// `rustify_ui::clipboard::available()` is true wherever the browser allows
+/// it. Note that changing `RUSTFLAGS` changes the fingerprint: the first build
+/// after this lands recompiles the wasm from scratch.
+fn wasm_rustflags() -> String {
+    const NEEDED: &str = "--cfg=web_sys_unstable_apis";
+    match std::env::var("RUSTFLAGS") {
+        Ok(existing) if existing.split_whitespace().any(|flag| flag == NEEDED) => existing,
+        Ok(existing) if !existing.trim().is_empty() => format!("{existing} {NEEDED}"),
+        _ => NEEDED.to_string(),
+    }
 }
 
 fn toolchain_channel(root: &Path) -> Result<String, String> {

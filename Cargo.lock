@@ -1651,6 +1651,7 @@ dependencies = [
  "leptos",
  "rustify-makepad",
  "send_wrapper",
+ "wasm-bindgen-futures",
  "web-sys",
 ]
 
