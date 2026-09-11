@@ -8,7 +8,6 @@
 use leptos::ev::KeyboardEvent;
 use leptos::prelude::*;
 use rustify_ui::{Anchor, Layer};
-use std::sync::Arc;
 
 const PANEL: &str = "rui:w-[32rem] rui:max-w-full rui:rounded-lg rui:border rui:border-border rui:bg-popover rui:shadow-lg rui:overflow-hidden";
 const SEARCH: &str = "rui:w-full rui:border-0 rui:border-b rui:border-border rui:bg-transparent rui:px-4 rui:py-3 rui:text-sm rui:text-foreground rui:outline-none rui:placeholder:text-muted-foreground";

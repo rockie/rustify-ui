@@ -1,6 +1,6 @@
 import { expect, Page, test } from "@playwright/test";
 
-import { sharedPage } from "./support";
+import { CATALOG_SIZE, sharedPage, waitForQuiet } from "./support";
 
 /// M1's exit conditions, on the third example: it boots under the release
 /// policy, its product carries nothing inline, a theme change reaches the DOM
@@ -21,13 +21,14 @@ async function ready(page: Page) {
     await expect(page.getByTestId("status")).toHaveAttribute("data-status", "ready", {
         timeout: 60_000,
     });
+    await waitForQuiet(page);
     return violations;
 }
 
 test.describe("M1 V1: the catalogue starts under the policy it will be deployed with", () => {
     test("boots with no policy violation and draws its region", async ({ page }) => {
         const violations = await ready(page);
-        expect(await snapshot(page)).toMatchObject({ categories: 18, theme: "light" });
+        expect(await snapshot(page)).toMatchObject({ categories: CATALOG_SIZE, theme: "light" });
         await expect
             .poll(async () => (await snapshot(page)).region, { timeout: 30_000 })
             .toBe("ready");
@@ -133,12 +134,12 @@ test.describe("M1 V1: one theme, both halves", () => {
     });
 });
 
-test.describe("M1: the catalogue answers for all eighteen categories", () => {
+test.describe("M1: the catalogue answers for every category", () => {
     test("every category has a page, and the status table has a row for each", async ({ page }) => {
         await ready(page);
         await page.getByTestId("nav-status").click();
         const rows = page.locator('[data-testid^="status-row-"]');
-        await expect(rows).toHaveCount(18);
+        await expect(rows).toHaveCount(CATALOG_SIZE);
 
         // A category page shows that category's own answers, not the first
         // one's: the nav is what changes the page.
@@ -263,7 +264,7 @@ test.describe("M1 V1: the host page's own controls are not ours", () => {
     });
 });
 
-/// M2 V2: the eighteen categories are components now, not descriptions of
+/// M2 V2: the categories are components now, not descriptions of
 /// them. Every page carries the component itself, bound to a value the region
 /// above it draws with the GPU half - and, for the nine where the states mean
 /// something, the same component again as disabled, read-only and invalid.
@@ -294,6 +295,8 @@ test.describe("M2 V2: a component per category", () => {
         "dialog",
         "tabs",
         "scroll-area",
+        "data-table",
+        "tree",
     ];
 
     /// The eight with a state beyond the ordinary one. A matrix is only worth

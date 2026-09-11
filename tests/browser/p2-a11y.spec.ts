@@ -65,12 +65,12 @@ test.describe("M8: the accessibility tree, and the way out of it", () => {
         expect(named.length, "the tree has controls in it").toBeGreaterThan(10);
     });
 
-    test("the eighteen categories are eighteen different things to say", async () => {
+    test("every category is a different thing to say", async () => {
         const page = shared.page;
         const names = await page
             .locator("nav.catalogue-nav li button")
             .evaluateAll((buttons) => buttons.map((button) => button.textContent?.trim() ?? ""));
-        // Eighteen categories plus the status and samples pages.
+        // Every category, plus the status and samples pages.
         expect(names).toHaveLength(CATALOG_SIZE + 2);
         expect(new Set(names).size, `duplicates in ${JSON.stringify(names)}`).toBe(names.length);
     });

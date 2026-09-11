@@ -221,6 +221,15 @@ pub fn Tree(
                         let mine = key.clone();
                         Memo::new(move |_| current.get() == mine)
                     };
+                    // Whether this group is open has to be read rather than
+                    // captured: the list is keyed by the group, so opening one
+                    // keeps the element it already has and only its children
+                    // come and go.
+                    let open = {
+                        let mine = key.clone();
+                        Memo::new(move |_| expanded.get().contains(&mine))
+                    };
+                    let expandable = row.expandable;
                     let toggle_key = key.clone();
                     let select_key = key.clone();
                     view! {
@@ -233,15 +242,13 @@ pub fn Tree(
                                 "aria-level",
                                 (row.depth + 1).to_string(),
                             )}
-                            aria-expanded=row
-                                .expandable
-                                .then(|| row.expanded.to_string())
+                            aria-expanded=move || expandable.then(|| open.get().to_string())
                             aria-selected=move || chosen.get().to_string()
                             tabindex=move || if tabbable.get() { "0" } else { "-1" }
                             style:padding-left=format!("{}px", 8 + row.depth * 16)
                             on:click=move |_| {
                                 focused.set(select_key.clone());
-                                if row.expandable {
+                                if expandable {
                                     expanded
                                         .update(|open| {
                                             if !open.remove(&toggle_key) {
@@ -253,12 +260,14 @@ pub fn Tree(
                             }
                         >
                             <span aria-hidden="true">
-                                {if !row.expandable {
-                                    "\u{00b7}"
-                                } else if row.expanded {
-                                    "\u{25be}"
-                                } else {
-                                    "\u{25b8}"
+                                {move || {
+                                    if !expandable {
+                                        "\u{00b7}"
+                                    } else if open.get() {
+                                        "\u{25be}"
+                                    } else {
+                                        "\u{25b8}"
+                                    }
                                 }}
                             </span>
                             {row.label.clone()}

@@ -149,10 +149,11 @@ says which categories exist and what each of them supports.
 
 ## Limits of the preview
 
-All eighteen of R18's component categories have a DOM component
-(`rustify_components`), and fourteen of them are drawn by a GPU region as well;
-the four that are not say where they are drawn instead. There is no router, no
-workspace, no large-data view and no cross-region drag - those are P2 M4 to M6.
-See `docs/components.md` for what each category supports today, `docs/compatibility.md` for the capability state
+Every component category has a DOM component (`rustify_components`), and most
+are drawn by a GPU region as well; the ones that are not say where they are
+drawn instead. There is no router, no workspace, no large-data view and no
+cross-region drag - those are P2 M4 to M6.
+See `docs/components.md` for what each category supports today, `docs/data.md`
+for a table larger than the screen, `docs/compatibility.md` for the capability state
 and the one third-party component that is verified, `docs/reports/p1/` for what
 P1 measured and what it could not, and `docs/plan/` for progress.

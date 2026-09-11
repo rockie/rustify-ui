@@ -38,6 +38,48 @@ export async function anchorRect(page: Page, anchor: Anchor) {
 export async function waitForReady(page: Page) {
     await page.goto("./");
     await expect(page.getByTestId("status")).toHaveAttribute("data-status", "ready", { timeout: 60_000 });
+    await waitForQuiet(page);
+}
+
+/// Waits until the page stops blocking its own animation frames.
+///
+/// "Ready" is the application saying it has mounted, and a region's start-up
+/// runs on after it: it presents once, and presents again when the font it
+/// asked for has arrived and its atlas has been built. On a software
+/// rasteriser that second one blocks the main thread for about six seconds. A
+/// test that starts measuring inside that window is measuring the font atlas,
+/// and one that clicks inside it waits out its own timeout for the click to
+/// take effect - which is how a check that has nothing to do with start-up
+/// fails, and only sometimes, depending on what ran before it.
+///
+/// Quiet is the absence of a late frame rather than the absence of frames: a
+/// region that is animating is not busy, and one that is rasterising is.
+export async function waitForQuiet(page: Page, quietMs = 500, timeoutMs = 60_000) {
+    await page.evaluate(
+        ([quietMs, timeoutMs]) =>
+            new Promise<void>((resolve) => {
+                const deadline = performance.now() + timeoutMs;
+                let previous = performance.now();
+                let since = previous;
+                const tick = () => {
+                    const now = performance.now();
+                    if (now - previous > 100) {
+                        since = now;
+                    }
+                    previous = now;
+                    if (now - since >= quietMs || now > deadline) {
+                        // Past the deadline the page is busy with something
+                        // that is not start-up, and whatever the test came to
+                        // check is a better thing to fail on than this.
+                        resolve();
+                        return;
+                    }
+                    requestAnimationFrame(tick);
+                };
+                requestAnimationFrame(tick);
+            }),
+        [quietMs, timeoutMs]
+    );
 }
 
 export interface Pixels {
@@ -83,9 +125,10 @@ export function litPixels(pixels: Pixels, minLuma = 96): number {
 
 /// Waits until two consecutive captures of the region are identical, i.e. the
 /// GPU has finished presenting whatever was requested.
-/// The eighteen categories R18 names. Written here so a test that counts them
-/// says what the number means rather than repeating a literal.
-export const CATALOG_SIZE = 18;
+/// Every category in the catalogue. R18 names eighteen; the table and the tree
+/// that large data needed are two more. Written here so a test that counts
+/// them says what the number means rather than repeating a literal.
+export const CATALOG_SIZE = 20;
 
 export async function settle(locator: Locator, attempts = 20): Promise<Pixels> {
     let previous = await capture(locator);

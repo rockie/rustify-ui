@@ -46,8 +46,13 @@ async function gotoRow(page: Page, row: number) {
         .toBe(true);
 }
 
+/// A cell by the two indices a person and a screen reader read it by. Not by
+/// position among the cells that happen to be drawn: the table windows across
+/// as well as down, so the tenth cell in the document is not column ten.
 function cellOf(page: Page, row: number, column: number): Locator {
-    return page.locator(`[data-testid="table"] [role="row"][aria-rowindex="${row}"] [role="gridcell"]`).nth(column);
+    return page.locator(
+        `[data-testid="table"] [role="row"][aria-rowindex="${row}"] [role="gridcell"][aria-colindex="${column + 1}"]`
+    );
 }
 
 test.describe("M2 · a hundred thousand rows", () => {
@@ -122,7 +127,7 @@ test.describe("M2 · a hundred thousand rows", () => {
         await cellOf(page, 50_000, 0).click();
         await page.keyboard.press("Enter");
         await expect(page.getByTestId("table-detail-row")).toHaveText("row 50000");
-        const field = page.getByTestId("table-detail-2").locator("input");
+        const field = page.getByTestId("table-detail-2");
         await expect(field).toHaveValue(twin.cell(49_999, 2));
         await field.fill("EDITED");
         await page.getByTestId("table-detail-submit").click();
@@ -142,9 +147,11 @@ test.describe("M2 · a hundred thousand rows", () => {
         await expect.poll(async () => (await api(page)).table.selected).toBe(10);
 
         // Ten more rows inserted at the top: every selected identity survives,
-        // and none of the new rows is selected.
+        // and none of the new rows is selected. The keyboard goes to the top
+        // row rather than clicking it, because a click on a row is how a
+        // person selects one and this is about where the insert happens.
         await gotoRow(page, 1);
-        await cellOf(page, 1, 0).click();
+        await cellOf(page, 1, 0).focus();
         await page.getByTestId("table-insert").click();
         await expect.poll(async () => (await api(page)).rows).toBe(twin.ROWS + 10);
         expect(await page.evaluate(() => window.__data_workbench.selected())).toEqual(chosen);
@@ -163,18 +170,38 @@ test.describe("M2 · a hundred thousand rows", () => {
         await expect.poll(async () => (await api(page)).table.selected).toBe(0);
     });
 
-    test("a selected row that is no longer there is counted as not in view", async ({ page }) => {
+    test("deleting three of ten selected leaves seven selected", async ({ page }) => {
         await openTable(page);
-        // Select ten rows in the middle, then delete three of them.
-        await page.evaluate(() => window.__data_workbench.select_rows(500, 10));
-        await gotoRow(page, 501);
-        await cellOf(page, 501, 0).click();
-        await page.evaluate(() => window.__data_workbench.open_row(500));
+        const chosen = await page.evaluate(() =>
+            window.__data_workbench.select_rows(500, 10)
+        );
+        expect(chosen).toHaveLength(10);
+
+        // Ten rows go, of which three were selected: rows 508, 509 and 510 by
+        // the numbers a person reads. A selection of positions would end up
+        // with ten again, shifted onto rows that were never chosen.
+        await gotoRow(page, 508);
+        await cellOf(page, 508, 0).focus();
+        await page.evaluate(() => window.__data_workbench.open_row(507));
         await page.getByTestId("table-delete").click();
         await expect.poll(async () => (await api(page)).rows).toBe(twin.ROWS - 10);
-        const state = (await api(page)).table;
-        // All ten were deleted, so none is selected and none is hidden: a
-        // deleted identity is not a hidden one.
+        expect(await page.evaluate(() => window.__data_workbench.selected())).toEqual(
+            chosen.slice(0, 7)
+        );
+        let state = (await api(page)).table;
+        expect(state.selected).toBe(7);
+        // Nothing filters yet, so every surviving identity is in view: a
+        // deleted identity is gone, not hidden.
+        expect(state.hidden).toBe(0);
+
+        // And the other seven. Their rows have moved up under them, so this
+        // deletes from where the first of them now is.
+        await gotoRow(page, 501);
+        await cellOf(page, 501, 0).focus();
+        await page.getByTestId("table-delete").click();
+        await expect.poll(async () => (await api(page)).rows).toBe(twin.ROWS - 20);
+        expect(await page.evaluate(() => window.__data_workbench.selected())).toEqual([]);
+        state = (await api(page)).table;
         expect(state.selected).toBe(0);
         expect(state.hidden).toBe(0);
     });
@@ -234,7 +261,7 @@ test.describe("M2 · a hundred thousand rows", () => {
     test("text that looks like markup stays a value", async ({ page }) => {
         await openTable(page);
         await page.evaluate(() => window.__data_workbench.open_row(7));
-        const field = page.getByTestId("table-detail-3").locator("input");
+        const field = page.getByTestId("table-detail-3");
         await field.fill("<script>x</script>");
         await page.getByTestId("table-detail-submit").click();
         await expect.poll(async () => (await api(page)).table.saves).toBe(1);
@@ -251,18 +278,29 @@ test.describe("M2 · a hundred thousand rows", () => {
 
     test("the table's twelve named things are findable, thirty times over", async ({ page }) => {
         await openTable(page);
+        // Two of the twelve are fields of the row being edited, so a row is
+        // open: a name nothing is showing is not a name that is missing.
+        await page.evaluate(() => window.__data_workbench.open_row(0));
         const expected = LOCATORS.filter((entry) => entry.side === "table" && entry.from === "M2");
-        // Every one of them exists and carries the role the list says. Thirty
-        // rounds, because a name that is right once and wrong after a redraw
-        // is worse than one that was never right.
+        expect(expected).toHaveLength(12);
+        // Each one is reachable by role and name - which is what a person
+        // using a screen reader actually does - and it is the same element
+        // that carries the test id. An intersection rather than a reading of
+        // the role attribute, because a spinbutton is a number input and says
+        // so without an attribute. Thirty rounds, because a name that is right
+        // once and wrong after a redraw is worse than one never right at all.
         for (let round = 0; round < 30; round++) {
             for (const entry of expected) {
                 const found = page.getByTestId(entry.testId);
                 await expect(found, `${entry.testId} round ${round}`).toHaveCount(1);
-                await expect(found, `${entry.testId} role, round ${round}`).toHaveAttribute(
-                    "role",
-                    entry.role === "textbox" || entry.role === "spinbutton" ? /.*/ : entry.role
-                );
+                const role = entry.role as Parameters<Page["getByRole"]>[0];
+                const named = entry.name
+                    ? page.getByRole(role, { name: entry.name, exact: true })
+                    : page.getByRole(role);
+                await expect(
+                    found.and(named),
+                    `${entry.testId} by role and name, round ${round}`
+                ).toHaveCount(1);
             }
             // Something that redraws the table between rounds, so what is being
             // counted is the name surviving rather than the same DOM standing
@@ -271,12 +309,5 @@ test.describe("M2 · a hundred thousand rows", () => {
                 await gotoRow(page, 1 + round * 1_000);
             }
         }
-        // And each of them is reachable by role and name, which is what a
-        // person using a screen reader actually does.
-        await expect(page.getByRole("grid", { name: "the sample" })).toHaveCount(1);
-        await expect(page.getByRole("tree", { name: "groups" })).toHaveCount(1);
-        await expect(page.getByRole("treeitem", { name: "group 1" }).first()).toBeVisible();
-        await expect(page.getByRole("spinbutton", { name: "go to row" })).toHaveCount(1);
-        await expect(page.getByRole("columnheader", { name: "column 1" })).toHaveCount(1);
     });
 });

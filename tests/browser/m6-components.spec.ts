@@ -1,5 +1,5 @@
 import { expect, Page, test } from "@playwright/test";
-import { capture, differingPixels, settle, waitForReady } from "./support";
+import { CATALOG_SIZE, capture, differingPixels, settle, waitForReady } from "./support";
 
 const snapshot = (page: Page) => page.evaluate(() => window.__property_workbench.snapshot());
 
@@ -18,11 +18,11 @@ const styleOf = (page: Page, selector: string) =>
         };
     }, selector);
 
-test.describe("M6 V7: eighteen categories, and no blank support cell", () => {
-    test("the catalogue answers for every category R18 names", async ({ page }) => {
+test.describe("M6 V7: every category, and no blank support cell", () => {
+    test("the catalogue answers for every category it names", async ({ page }) => {
         await waitForReady(page);
         const rows = page.locator('[data-testid="catalogue"] tbody tr');
-        await expect(rows).toHaveCount(18);
+        await expect(rows).toHaveCount(CATALOG_SIZE);
 
         const cells = await page.evaluate(() =>
             Array.from(document.querySelectorAll('[data-testid="catalogue"] tbody tr')).map(
@@ -73,15 +73,17 @@ test.describe("M6 V7: eighteen categories, and no blank support cell", () => {
             "tabs",
             "scroll area",
         ]);
-        // The four with no GPU half say where they are drawn instead: a cell
+        // The ones with no GPU half say where they are drawn instead: a cell
         // saying only "no" would read as "not usable with a region", which is
-        // the opposite of true for three of them.
+        // the opposite of true for every one of them.
         const elsewhere = cells.filter((row) => row.region !== "true");
         expect(elsewhere.map((row) => row.category)).toEqual([
             "link",
             "tooltip",
             "menu",
             "dialog",
+            "data table",
+            "tree",
         ]);
         for (const row of elsewhere) {
             expect(row.values[1].support, `${row.category}`).toBe("no");

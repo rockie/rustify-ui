@@ -1,8 +1,10 @@
 # Component catalogue
 
-R18 asks for eighteen categories with no blank support cell. All eighteen have
-a DOM component; what differs between them is what a GPU region can draw of
-one, and every row says which and why. The table is generated from
+R18 asks for eighteen categories with no blank support cell. There are twenty:
+the table and the tree that large data needed are categories of their own
+rather than something R18 named. All twenty have a DOM component; what differs
+between them is what a GPU region can draw of one, and every row says which and
+why. The table is generated from
 `crates/rustify-components/src/catalog.rs` by `cargo xtask catalog --write
 docs/components.md`, and `--check` fails when the two disagree.
 
@@ -26,11 +28,14 @@ implemented with the stated limit, `no` means not in this release. There is no
 fourth value: a question nobody answered would be a gap in the catalogue, not a
 state a component can be in.
 
-Four categories have no GPU half, and for two different reasons. A tooltip, a
+Six categories have no GPU half, and for three different reasons. A tooltip, a
 menu and a dialog are DOM layers *anchored to* a region rather than drawn
 inside one: a popup that has to escape the canvas cannot be drawn in it. A link
 is the odd one out - a region reports a click and the application navigates,
-because a region never touches the page's history (C-5).
+because a region never touches the page's history (C-5). A data table and a
+tree are DOM because what they are for is semantics: a row number a screen
+reader can say, a cell a keyboard can reach, text an input method can edit
+(`docs/data.md`). A region draws the band beside the table, not the table.
 
 <!-- catalogue -->
 | category | DOM | GPU | across regions | properties | actions | theme | input | accessibility | environment |

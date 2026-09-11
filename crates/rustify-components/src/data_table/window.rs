@@ -58,22 +58,25 @@ impl Range {
 /// The range is clamped to the table rather than to the scroll position: a
 /// viewport scrolled past the end - which happens for a frame whenever rows
 /// are deleted - shows the last rows rather than nothing.
+///
+/// The window is always the same length, wherever it is. A window that shrank
+/// against an edge would take its last elements out of the document, and one
+/// of them can be the element the keyboard is standing on: walking to the last
+/// row would drop the focus on the way there.
 pub fn rows(scroll_top: f64, height: f64, row_height: f64, count: usize, overscan: usize) -> Range {
     if count == 0 || row_height <= 0.0 || height <= 0.0 {
         return Range::default();
     }
     let visible = ((height / row_height).ceil() as usize + 1).min(MAX_ROWS);
-    let first = (scroll_top.max(0.0) / row_height).floor() as usize;
-    let start = first.saturating_sub(overscan);
-    let end = first
-        .saturating_add(visible)
-        .saturating_add(overscan)
-        .min(count);
-    // A window that ran off the end is pulled back rather than shortened, so
-    // the pool of elements stays the size it was built at.
     let span = (visible + 2 * overscan).min(count);
-    let start = start.min(end.saturating_sub(span));
-    Range { start, end }
+    let first = (scroll_top.max(0.0) / row_height).floor() as usize;
+    let start = first
+        .saturating_sub(overscan)
+        .min(count.saturating_sub(span));
+    Range {
+        start,
+        end: start.saturating_add(span).min(count),
+    }
 }
 
 /// The same for columns, which are fixed width and far fewer.
@@ -129,8 +132,17 @@ mod tests {
         let window = rows(0.0, VIEWPORT, ROW, ROWS, OVERSCAN);
         assert_eq!(window.start, 0);
         assert!(window.contains(0));
-        // Sixty visible, one for the partial row, and the margin below.
-        assert_eq!(window.len(), 61 + OVERSCAN);
+    }
+
+    #[test]
+    fn the_window_is_the_same_length_wherever_it_is() {
+        // Sixty visible, one for the partial row, and a margin either side.
+        let span = 61 + 2 * OVERSCAN;
+        let bottom = ROWS as f64 * ROW - VIEWPORT;
+        for scroll in [0.0, ROW, 100.0 * ROW, bottom / 2.0, bottom, bottom * 2.0] {
+            let window = rows(scroll, VIEWPORT, ROW, ROWS, OVERSCAN);
+            assert_eq!(window.len(), span, "at {scroll}");
+        }
     }
 
     #[test]

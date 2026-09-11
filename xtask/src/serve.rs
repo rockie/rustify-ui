@@ -559,8 +559,11 @@ mod fault_tests {
 mod tests {
     use super::*;
 
-    fn fixture() -> PathBuf {
-        let root = std::env::temp_dir().join(format!("xtask-serve-{}", std::process::id()));
+    /// A tree of its own for the test that asked, named after it: two tests
+    /// sharing one directory is two tests where one can delete the other's
+    /// files halfway through, and they run at the same time.
+    fn fixture(name: &str) -> PathBuf {
+        let root = std::env::temp_dir().join(format!("xtask-serve-{}-{name}", std::process::id()));
         std::fs::create_dir_all(root.join("sub")).unwrap();
         std::fs::write(root.join("index.html"), "<html>").unwrap();
         std::fs::write(root.join("sub").join("a.js"), "1").unwrap();
@@ -585,7 +588,7 @@ mod tests {
         // The whole point of the validator is that a stale one does not match.
         // Getting this wrong does not fail loudly: it serves an old build to a
         // browser that asked whether its copy was still good.
-        let root = fixture();
+        let root = fixture("revalidation");
         let file = root.join("sub").join("a.js");
         let tag = etag(&file).expect("a file that exists has a validator");
         assert!(etag_matches(&tag, &tag));
@@ -613,7 +616,7 @@ mod tests {
 
     #[test]
     fn requests_resolve_inside_the_base_and_never_escape_the_root() {
-        let root = fixture();
+        let root = fixture("resolve");
         assert_eq!(resolve(&root, "/", "/"), Some(root.join("index.html")));
         assert_eq!(
             resolve(&root, "/", "/sub/a.js?x=1"),

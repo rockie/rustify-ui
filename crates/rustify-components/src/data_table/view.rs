@@ -4,12 +4,12 @@ use leptos::ev::{Event, FocusEvent, KeyboardEvent, MouseEvent};
 use leptos::html::Div;
 use leptos::prelude::*;
 use leptos::wasm_bindgen::JsCast;
-use leptos::web_sys::Element;
+use leptos::web_sys::{Element, HtmlElement};
 use rustify_ui::Selection;
 use std::sync::Arc;
 
 const GRID: &str = "rui:relative rui:flex rui:flex-col rui:min-h-0 rui:border rui:border-border rui:rounded-md rui:bg-background rui:text-sm rui:outline-none rui:focus-visible:ring-ring/50 rui:focus-visible:ring-[3px]";
-const HEADER: &str = "rui:flex rui:shrink-0 rui:border-b rui:border-border rui:bg-muted rui:font-medium rui:text-muted-foreground";
+const HEADER: &str = "rui:flex rui:shrink-0 rui:overflow-hidden rui:border-b rui:border-border rui:bg-muted rui:font-medium rui:text-muted-foreground";
 const HEADER_CELL: &str =
     "rui:shrink-0 rui:truncate rui:px-2 rui:py-1 rui:text-left rui:cursor-default rui:select-none";
 const SCROLLER: &str = "rui:relative rui:flex-1 rui:min-h-0 rui:overflow-auto";
@@ -81,6 +81,10 @@ pub fn DataTable(
     let scroller = NodeRef::<Div>::new();
     let scroll_top = RwSignal::new(0.0f64);
     let scroll_left = RwSignal::new(0.0f64);
+    // The column the keyboard is walking towards. Rows have `goto`, which the
+    // application owns because it jumps to rows; nothing outside asks for a
+    // column, so this one is the table's own.
+    let goto_column = RwSignal::new(None::<usize>);
     // Measured rather than assumed: the pool is as big as the viewport, and
     // the viewport is whatever the application's layout gave it.
     let viewport = RwSignal::new((0.0f64, 0.0f64));
@@ -151,6 +155,59 @@ pub fn DataTable(
         }
     });
 
+    Effect::new(move || {
+        let Some(column) = goto_column.get() else {
+            return;
+        };
+        goto_column.set(None);
+        let Some(element) = scroller.get_untracked() else {
+            return;
+        };
+        let element: &Element = element.as_ref();
+        let (width, _) = viewport.get_untracked();
+        let here = scroll_left.get_untracked();
+        let count = columns.get_untracked().len();
+        if let Some(left) = window::scroll_to(column, here, width, column_width, count) {
+            element.scroll_to_with_x_and_y(left, element.scroll_top().into());
+            scroll_left.set(left);
+        }
+    });
+
+    let name = test_id_of(&test_id);
+    // Where the keyboard lands, once the window has been worked out. Focusing
+    // the cell in the key handler would be focusing an element the window has
+    // not made yet, and a walk to the last row would leave the focus behind.
+    // It only ever moves a focus the grid already holds.
+    let focus_name = name.clone();
+    // Set while the table is moving the focus itself, so that the focus event
+    // this causes is not read back as a person having chosen a cell.
+    let placing = StoredValue::new(false);
+    Effect::new(move || {
+        let at = focus.get();
+        let down = visible_rows.get();
+        let across = visible_columns.get();
+        if !down.contains(at.row) || !across.contains(at.column) {
+            return;
+        }
+        let Some(element) = grid.get() else {
+            return;
+        };
+        let element: &Element = element.as_ref();
+        let holds_focus = document()
+            .active_element()
+            .is_some_and(|active| element.contains(Some(active.as_ref())));
+        if holds_focus {
+            placing.set_value(true);
+            focus_cell(
+                element,
+                &focus_name,
+                at.row - down.start,
+                at.column - across.start,
+            );
+            placing.set_value(false);
+        }
+    });
+
     let on_scroll = move |_: Event| {
         let Some(element) = scroller.get_untracked() else {
             return;
@@ -167,11 +224,9 @@ pub fn DataTable(
         viewport: viewport.get_untracked().1,
         row_height,
     };
-    let name = test_id_of(&test_id);
     let on_keydown = {
         let on_select = on_select.clone();
         let on_activate = on_activate.clone();
-        let name = name.clone();
         move |ev: KeyboardEvent| {
             let at = focus.get_untracked();
             let Some(command) =
@@ -183,12 +238,14 @@ pub fn DataTable(
             match command {
                 Command::Move(next) => {
                     focus.set(next);
-                    // Into view first, so the cell the focus is about to land
-                    // on exists to receive it.
+                    // Into view on both axes; the focus follows once the
+                    // window has been worked out again.
                     if !visible_rows.get_untracked().contains(next.row) {
                         goto.set(Some(next.row));
                     }
-                    focus_cell(&grid, next);
+                    if !visible_columns.get_untracked().contains(next.column) {
+                        goto_column.set(Some(next.column));
+                    }
                 }
                 Command::Toggle => on_select(at.row),
                 Command::Activate => on_activate(at.row),
@@ -201,6 +258,13 @@ pub fn DataTable(
     // has to hold, and the table it holds them in has a ceiling: crossing it
     // aborts the module rather than failing an allocation.
     let on_focusin = move |ev: FocusEvent| {
+        // Focus the table just placed is focus the table already knows about,
+        // and the indices on the cell are written by an effect that may not
+        // have run yet: reading them back here would answer with where the
+        // cell used to be.
+        if placing.get_value() {
+            return;
+        }
         let Some(target) = ev
             .target()
             .and_then(|target| target.dyn_into::<Element>().ok())
@@ -264,8 +328,15 @@ pub fn DataTable(
                     role="row"
                     aria-rowindex="0"
                     class="rui:flex"
-                    style:padding-left=move || {
-                        format!("{}px", visible_columns.get().start as f64 * column_width)
+                    // The header sits outside the scroller, so it is moved by
+                    // hand: where its first drawn column starts, less how far
+                    // the body has been scrolled. Anything else puts a heading
+                    // over the wrong column the moment the table scrolls
+                    // sideways.
+                    style:transform=move || {
+                        let offset =
+                            visible_columns.get().start as f64 * column_width - scroll_left.get();
+                        format!("translateX({offset}px)")
                     }
                 >
                     <For each=header_columns key=|(index, _)| *index let:entry>
@@ -310,7 +381,7 @@ pub fn DataTable(
                                 let chosen = Memo::new(move |_| {
                                     within.get() && selected.get().contains(id.get())
                                 });
-                                let cells = move || visible_columns.get().iter().collect::<Vec<_>>();
+                                let cells = move || (0..visible_columns.get().len()).collect::<Vec<_>>();
                                 view! {
                                     <div
                                         role="row"
@@ -335,31 +406,42 @@ pub fn DataTable(
                                             }
                                         }
                                     >
-                                        <For each=cells key=|column| *column let:column>
+                                        <For each=cells key=|slot| *slot let:slot>
                                             {
                                                 let cell = cell.clone();
+                                                let column = Memo::new(move |_| {
+                                                    visible_columns.get().start + slot
+                                                });
+                                                let here = Memo::new(move |_| {
+                                                    within.get() && column.get() < columns.get().len()
+                                                });
                                                 let focused = Memo::new(move |_| {
                                                     let at = focus.get();
-                                                    at.row == row.get() && at.column == column
+                                                    at.row == row.get() && at.column == column.get()
                                                 });
                                                 view! {
                                                     <div
                                                         role="gridcell"
                                                         class=CELL
-                                                        aria-colindex=(column + 1).to_string()
+                                                        class=("rui:hidden", move || !here.get())
+                                                        aria-colindex=move || {
+                                                            (column.get() + 1).to_string()
+                                                        }
                                                         tabindex=move || {
                                                             if focused.get() { "0" } else { "-1" }
                                                         }
                                                         style:position="absolute"
                                                         style:width=format!("{column_width}px")
-                                                        style:transform=format!(
-                                                            "translateX({}px)",
-                                                            column as f64 * column_width,
-                                                        )
+                                                        style:transform=move || {
+                                                            format!(
+                                                                "translateX({}px)",
+                                                                column.get() as f64 * column_width,
+                                                            )
+                                                        }
                                                     >
                                                         {move || {
-                                                            if within.get() {
-                                                                cell(row.get(), column)
+                                                            if here.get() {
+                                                                cell(row.get(), column.get())
                                                             } else {
                                                                 String::new()
                                                             }
@@ -379,21 +461,24 @@ pub fn DataTable(
     }
 }
 
-/// Puts the keyboard on one cell of the grid, found by the indices a person
-/// and a screen reader both read it by.
-fn focus_cell(grid: &NodeRef<Div>, at: Cell) {
-    let Some(element) = grid.get_untracked() else {
+/// Puts the keyboard on one cell of the grid, found by its place in the pool
+/// rather than by the row and column it is showing.
+///
+/// Which row a slot is showing is a reactive attribute, and a reactive
+/// attribute is written when its own effect runs - which can be after this
+/// one. Asking for the cell by the indices a person reads finds the cell that
+/// was there a moment ago, or nothing at all; asking for the slot finds the
+/// element that is about to carry those indices.
+fn focus_cell(grid: &Element, name: &str, row_slot: usize, cell_slot: usize) {
+    let Ok(Some(row)) = grid.query_selector(&format!("[data-testid=\"{name}-row-{row_slot}\"]"))
+    else {
         return;
     };
-    let element: &Element = element.as_ref();
-    crate::dom::focus_within(
-        element,
-        &format!(
-            "[aria-rowindex=\"{}\"] [aria-colindex=\"{}\"]",
-            at.row + 1,
-            at.column + 1
-        ),
-    );
+    if let Some(cell) = row.children().item(cell_slot as u32) {
+        if let Ok(cell) = cell.dyn_into::<HtmlElement>() {
+            let _ = cell.focus();
+        }
+    }
 }
 
 fn test_id_of(test_id: &str) -> String {

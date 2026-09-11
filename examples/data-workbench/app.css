@@ -84,10 +84,18 @@ body {
 }
 
 /* The strip is the whole table squeezed into its own width, so it is as wide
-   as the grid and no taller than a line of it. */
+   as the grid and no taller than a line of it.
+
+   The height is stated rather than left to the flex basis. A canvas is a
+   replaced element: its width and height attributes give it an aspect ratio,
+   and `min-height: auto` on a flex item will not let it shrink below the
+   height that ratio implies. A canvas as wide as the grid would take nearly
+   five hundred pixels of it. */
 .workbench .strip-region {
     display: block;
     flex: 0 0 32px;
+    height: 32px;
+    min-height: 0;
     width: 100%;
     border: 1px solid #d0d5dd;
     border-radius: 4px;

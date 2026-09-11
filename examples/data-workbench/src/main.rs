@@ -189,14 +189,17 @@ mod app {
             PATH.with(|slot| slot.borrow_mut().clear());
         });
 
-        let showing = move || {
-            let path = location.get().path;
-            if path == "/scene" {
+        // A memo rather than a closure: the redirect from the root to the
+        // table is a change of address that is not a change of view, and a
+        // closure would answer "table" twice while tearing the first one down
+        // - taking a GPU region with it - to build the second.
+        let showing = Memo::new(move |_| {
+            if location.get().path == "/scene" {
                 "scene"
             } else {
                 "table"
             }
-        };
+        });
         view! {
             <div class="workbench">
                 <header class="bar">
@@ -208,7 +211,7 @@ mod app {
                         {move || format!("{ROWS} rows x {COLUMNS} columns")}
                     </p>
                 </header>
-                {move || match showing() {
+                {move || match showing.get() {
                     "scene" => view! { <SceneItem scene=scene /> }.into_any(),
                     _ => view! { <TableItem table=table /> }.into_any(),
                 }}
