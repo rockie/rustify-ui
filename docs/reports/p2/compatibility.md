@@ -14,8 +14,10 @@ observed. The capability detail lives in
 | Not tested | Windows, Linux, Android, iOS, Firefox |
 
 WebGL2 under SwiftShader is a software rasteriser. It exercises every code path
-the region has, and it is not evidence about frame rates on real hardware -
-which is one reason no performance budget is claimed.
+the region has, and it is not evidence about frame rates on real hardware. The
+performance gate (R29/R30, B1) runs on this combination and passes on it; that
+is a pass for *this* machine and browser, and R29 asks for each combination to
+be measured on its own.
 
 ## What is pinned, and by what
 

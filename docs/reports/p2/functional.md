@@ -41,7 +41,7 @@ test: `cargo xtask build-web --release` for each example, verified by
 | An arbitrary dock tree, layout in the URL, layout persistence | B1 asks for three panels with minimums |
 | Dragging out to the operating system, pen pressure | Excluded by R-5 |
 | Plural rules, interpolation, collation, a right-to-left interface language | Two languages of the SDK's own words is the claim |
-| A performance budget | A-3 stands: baselines beside R29/R30, not a gate |
+| A budget for B0, B2 or B3 | R29/R30's **B1** figures are a gate since A-3 closed (2026-09-11). The other loads are not built in P2 and are recorded as not measured |
 
 The full list, including the boundaries around things that *were* built, is in
 [known-limitations.md](known-limitations.md).

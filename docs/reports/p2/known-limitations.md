@@ -34,16 +34,23 @@ shortage of time, and which of those it was is said plainly.
   down in `docs/workspace.md`.
 - **One region owns a full Makepad `Cx`.** Carried over from P1: script VM,
   theme and font atlas per region, and wasm memory never shrinks.
-- **`math_aot::batch_edges` overflows its stack**, and predates P2. It is a test
-  of the fork's script VM in `makepad/platform/script`; P2 changed three files
-  under `makepad/`, all in `os/web/`. Checked rather than argued: the pre-P2
-  commit built in a `git worktree` fails the same way from a freshly compiled
-  binary. `cargo xtask verify --suite p2` reports it as a failed step, which is
-  correct - it is a failure, just not a new one.
-- **`m8-endurance`'s memory tail assertion fails, and predates P2.** Proved in
-  M2 by building the pre-P2 commit in a worktree and re-running the same
-  assertion: it failed there too, with a larger margin. The behavioural half of
-  that test passes on both.
+- **The script VM's interpreter has to be built optimised.** `makepad-stitch`
+  is threaded code: every instruction is a sibling call to the next, and only an
+  optimising build turns those into jumps. `makepad/platform/script/Cargo.toml`
+  asks for `opt-level = 1` on that package alone; without it any wasm loop of a
+  few thousand trips overflows the thread stack, and the abort names whichever
+  test reached it first. (This is what `math_aot::batch_edges` was.)
+- **A region's text caches fill before they settle.** The shaper and the
+  layouter hold 4,096 entries each, so a workload that keeps drawing strings it
+  has not drawn before keeps allocating - about 3 KB per new string in B1 - until
+  it has seen its working set. It is bounded and it is not a leak: walking the
+  same thousand objects a second time costs 304 bytes an action, and a third
+  time the same. Any endurance measurement has to walk the set once before it
+  measures anything.
+- **Script-evaluation garbage is collected by the amount, not the clock.** A
+  props application that sets a shader value leaves four blocks behind, and the
+  runtime collects at a slack of 20,000 objects. A busy region's memory
+  sawtooths within that slack; an idle one never collects at all.
 
 ## Not verified here
 
@@ -53,5 +60,11 @@ shortage of time, and which of those it was is said plainly.
   contrast *ratios* are a host test; what needs a person is looking at the pages
   at those zoom levels.
 - Safari is observed, not gated. macOS Chrome at a fixed version is the gate.
-- No performance budget is claimed. A-3 stands: the numbers are baselines beside
-  R29/R30, not a pass or a fail.
+- The performance gate is one machine and one browser. R29 and R30's B1 figures
+  became a pass/fail on 2026-09-11 (A-3 closed) and this build passes all four -
+  on macOS Chrome under SwiftShader, which is not a performance machine. Nothing
+  is claimed for any other combination, for B0, or for R30's AC2/AC3, whose B2
+  and B3 loads P2 does not build.
+- A reload of the workbench in place can cost about ten seconds in this harness
+  before the new document is parsed. Measured, and not the application's: its own
+  teardown is 7-17 ms. See the performance report.

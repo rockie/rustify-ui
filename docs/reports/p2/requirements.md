@@ -25,8 +25,8 @@ Status words mean exactly this:
 | R22 navigation | met (scoped) | Static segments and `:param`, one URL owner, anchor interception, a guard that undoes a refused move through history by sequence number, and deep links at a root and a sub-path deployment | [M4](../../validation/p2/m4.md) |
 | R27 deployment | met (scoped) | `build-web --base`, a build that carries its base and refuses to be served elsewhere, `serve --spa`, and a region whose resources come from the deployment rather than the route | M4 |
 | R28 examples and docs | partial | The third example (component-catalog) is delivered, and the document set is complete. The migration samples and the developer study are not P2's | M1–M7, [quickstart](../../quickstart.md) |
-| R29 start-up and size | measured | B1's baselines beside R29's figures. **No budget claimed** (A-3) | [performance](performance.md) |
-| R30 interaction latency | measured | Counted inside the page, as accepted actions rather than dispatched events | performance |
+| R29 start-up and size | met (B1, one combination) | **Gated** since A-3 closed: cold p95 171 ms against 5 s, hot p95 153 ms against 2 s, 2,772,456 compressed bytes against 8 MiB. B0 is not built and is not claimed | [performance](performance.md) |
+| R30 interaction latency | met (B1, one combination) | **Gated**: 1,000 cross-region actions, p95 42.2 ms against 50 and p99 43.8 ms against 100, counted inside the page. AC2/AC3 need B2/B3, which P2 does not build | performance |
 | R35 accessibility numbers | partial | The contrast ratios are now a host test over both themes; the 200%/400% reflow walkthrough is still a missing manual record | [accessibility](accessibility.md) |
 | R36 security | met (P2 scope) | The strict policy unchanged and nothing added for the export; text that looks like markup stays a value; no user text in diagnostics by construction | [compatibility](compatibility.md) |
 | R38 traceability | met | The Rust/UI import recorded file by file with a digest and a verbatim/rewritten mark; the fork's M6 change is one message and the decision that reads it | M1, compatibility |
@@ -45,11 +45,11 @@ Requirements P2 did not touch keep their P1 status.
 | R-5 drag, wheel, clipboard, files | §5.4, §5.5 | Delivered; dragging out to the OS and pen pressure excluded by the requirement itself |
 | R-6 languages and samples | §5.6 | Delivered except the reviewer's comparison (A-4) |
 | R-7 acceptance | §10 | The automated half is delivered; the manual half is not in |
-| NFR-1 performance | §7 | Baselines only, by A-3. No budget claimed |
+| NFR-1 performance | §7 | A gate since 2026-09-11: four assertions, all passing on the one machine and browser they are measured on |
 | NFR-2 reliability | §5, §8 | Exactly one drop per drag, one save per request, no action lost or duplicated |
 | NFR-3 compatibility | §9.4 | Chrome is the gate; the manual records that would complete it are missing |
 | NFR-4 security | §4 | Met for P2's scope; the strict policy was not relaxed |
 | NFR-5 maintainability | §4, §7 | Sources locked, drift attributable, diagnostics bounded, reports delivered |
-| A-3 measurement contract | §7 | Registered: baselines only |
+| A-3 measurement contract | §7 | **Closed 2026-09-11**: the user approved R29/R30 (B1) as a gate; `tests/browser/budgets.ts` holds the numbers |
 | A-4 acceptance resources | §0.2 | **Open.** VoiceOver, real pinyin and a reference rendering were promised; the sessions have not been run |
 | A-6 `web_sys_unstable_apis` | §0.2 | **Resolved** in M6: the flag reaches the wasm through cargo-makepad, and a build without it says so rather than failing |
