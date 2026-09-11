@@ -31,6 +31,8 @@ pub type Exhausted<'a> = &'a mut dyn FnMut() -> bool;
 pub struct Sort {
     order: Vec<u32>,
     scratch: Vec<u32>,
+    /// Rows moved through, counting every pass. What a progress bar reads.
+    processed: usize,
     column: usize,
     ascending: bool,
     /// Width of the runs that are already in order. Doubles once a pass is
@@ -47,6 +49,7 @@ impl Sort {
         let len = order.len();
         Sort {
             scratch: Vec::with_capacity(len),
+            processed: 0,
             order,
             column,
             ascending,
@@ -78,6 +81,27 @@ impl Sort {
         self.order
     }
 
+    /// Rows moved through so far, counting every pass.
+    pub fn processed(&self) -> usize {
+        self.processed
+    }
+
+    /// How many rows `len` of them is, counting every pass: the blocks, then
+    /// one merge pass for each doubling of the run width. What `processed`
+    /// ends at, and so what a progress bar is out of.
+    pub fn work(len: usize) -> usize {
+        if len <= 1 {
+            return 0;
+        }
+        let mut passes = 1;
+        let mut width = BLOCK;
+        while width < len {
+            passes += 1;
+            width *= 2;
+        }
+        len * passes
+    }
+
     fn key<'a>(&self, cells: &'a [Row], row: u32) -> &'a [u8] {
         let start = self.column * CELL;
         &cells[row as usize][start..start + CELL]
@@ -96,6 +120,7 @@ impl Sort {
                 }
             }
             since_check += end - self.at;
+            self.processed += end - self.at;
             self.at = end;
             if since_check >= CHECK_EVERY {
                 since_check = 0;
@@ -120,6 +145,7 @@ impl Sort {
                 self.merge(cells, left, middle, right);
             }
             since_check += right - left;
+            self.processed += right - left;
             self.at = right;
             if since_check >= CHECK_EVERY {
                 since_check = 0;
@@ -250,6 +276,19 @@ mod tests {
         }
         let (order, _) = run(&cells, 1, true, usize::MAX);
         assert_eq!(order, vec![1, 2, 0]);
+    }
+
+    #[test]
+    fn what_a_progress_bar_is_out_of_is_what_the_sort_gets_to() {
+        for len in [2usize, 31, 32, 33, 1_000, 4_096, 100_000] {
+            let cells = rows(&vec!["A"; len]);
+            let mut sort = Sort::new((0..len as u32).collect(), 0, true);
+            let mut never = || false;
+            assert!(sort.step(&cells, &mut never));
+            assert_eq!(sort.processed(), Sort::work(len), "{len} rows");
+        }
+        assert_eq!(Sort::work(1), 0);
+        assert_eq!(Sort::work(0), 0);
     }
 
     #[test]

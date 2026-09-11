@@ -48,7 +48,7 @@ export default defineConfig({
         },
         {
             name: "data-workbench",
-            testMatch: ["p3-probes.spec.ts", "p3-table.spec.ts"],
+            testMatch: ["p3-probes.spec.ts", "p3-table.spec.ts", "p3-jobs.spec.ts"],
             use: { baseURL: `http://127.0.0.1:${dataPort}/` },
         },
         // The budget gate runs thirty cold loads and thirty hot ones, so it is

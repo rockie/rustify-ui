@@ -11,6 +11,7 @@ pub mod form;
 #[cfg(target_arch = "wasm32")]
 pub mod gpu;
 pub mod i18n;
+pub mod job;
 pub mod mount;
 pub mod overlay;
 pub mod region;
@@ -32,6 +33,7 @@ pub use drag::{Drags, HitAnswer, HitQuery, Outcome, Query};
 pub use files::{Import, Limits, Refusal};
 pub use form::{FormState, Generation, Submit};
 pub use i18n::{Direction, Locale, Message};
+pub use job::{Budget, Ended, Job, Step};
 pub use mount::{mount, AppHandle, MountConfig, ScopeRoots};
 pub use overlay::{LayerId, LocalRect};
 pub use region::{GpuRegion, RegionState};

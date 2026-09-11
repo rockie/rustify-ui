@@ -116,6 +116,73 @@ export function sorted(column: number, ascending = true): number[] {
     return order;
 }
 
+/// The rows whose cells contain `needle`, as row indices in order.
+///
+/// Matched within a cell rather than across the row: cells are fixed width and
+/// butt up against each other, so a search over the whole row would find
+/// things that are not in it. Case sensitive, like the sample's own alphabet.
+const filters = new Map<string, number[]>();
+
+export function filtered(needle: string): number[] {
+    const known = filters.get(needle);
+    if (known !== undefined) {
+        return known;
+    }
+    const data = cells();
+    const hits: number[] = [];
+    if (needle.length > 0 && needle.length <= CELL) {
+        const wanted = new Uint8Array(needle.length);
+        for (let i = 0; i < needle.length; i++) {
+            wanted[i] = needle.charCodeAt(i);
+        }
+        for (let row = 0; row < ROWS; row++) {
+            const base = row * ROW_BYTES;
+            for (let column = 0; column < COLUMNS; column++) {
+                const start = base + column * CELL;
+                const last = start + CELL - wanted.length;
+                let found = false;
+                for (let at = start; at <= last && !found; at++) {
+                    found = true;
+                    for (let i = 0; i < wanted.length; i++) {
+                        if (data[at + i] !== wanted[i]) {
+                            found = false;
+                            break;
+                        }
+                    }
+                }
+                if (found) {
+                    hits.push(row);
+                    break;
+                }
+            }
+        }
+    } else if (needle.length === 0) {
+        for (let row = 0; row < ROWS; row++) {
+            hits.push(row);
+        }
+    }
+    filters.set(needle, hits);
+    return hits;
+}
+
+/// The rows of a group, as row indices. Ten groups of ten, by position: the
+/// tree is navigation, and the values are what the filter is for.
+export function grouped(group: number, child: number): number[] {
+    const rows: number[] = [];
+    for (let row = 0; row < ROWS; row++) {
+        if (Math.floor(row / 10_000) === group && Math.floor(row / 1_000) % 10 === child) {
+            rows.push(row);
+        }
+    }
+    return rows;
+}
+
+/// Where in `order` the first row containing `needle` is, or -1.
+export function foundIn(order: number[], needle: string): number {
+    const hits = new Set(filtered(needle));
+    return order.findIndex((row) => hits.has(row));
+}
+
 /// The scene, worked out the same way.
 export const SCENE = {
     count: 10_000,

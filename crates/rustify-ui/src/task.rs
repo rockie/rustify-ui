@@ -90,6 +90,13 @@ impl Requests {
         }
     }
 
+    /// Ends the current request without starting one. What a cancel button
+    /// does: the ticket that was current stops being current, and the
+    /// sequence it lost to belongs to nothing, so nothing can deliver.
+    pub fn cancel(&self) {
+        drop(self.issue());
+    }
+
     /// Ends every ticket. The view has gone; nothing may deliver into it.
     pub fn close(&self) {
         self.0.open.store(false, Ordering::Relaxed);
@@ -180,6 +187,19 @@ mod tests {
         }
         assert_eq!(*delivered.lock().unwrap(), 0);
         assert!(!requests.is_open());
+    }
+
+    #[test]
+    fn a_cancel_leaves_nothing_that_can_deliver() {
+        let requests = Requests::new();
+        let ticket = requests.issue();
+        requests.cancel();
+        assert!(!ticket.is_current());
+        let value = Mutex::new("kept");
+        assert!(!ticket.deliver("clobbered", |v| *value.lock().unwrap() = v));
+        assert_eq!(*value.lock().unwrap(), "kept");
+        // And the next request is a request like any other.
+        assert!(requests.issue().is_current());
     }
 
     #[test]

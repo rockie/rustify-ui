@@ -4,9 +4,13 @@
 #[cfg_attr(not(target_arch = "wasm32"), allow(dead_code))]
 mod dataset;
 #[cfg_attr(not(target_arch = "wasm32"), allow(dead_code))]
+mod scan;
+#[cfg_attr(not(target_arch = "wasm32"), allow(dead_code))]
 mod scene_layout;
 #[cfg_attr(not(target_arch = "wasm32"), allow(dead_code))]
 mod sort;
+#[cfg_attr(not(target_arch = "wasm32"), allow(dead_code))]
+mod view;
 
 #[cfg(target_arch = "wasm32")]
 mod scene_region;
@@ -20,19 +24,22 @@ mod strip_view;
 #[cfg(target_arch = "wasm32")]
 mod app {
     use super::dataset::{Dataset, Row, COLUMNS, ROWS, ROW_BYTES};
+    use super::scan::{Rule, Scan};
     use super::scene_layout;
     use super::scene_region::{SceneAction, SceneProps, SceneRegion};
     use super::sort::Sort;
     use super::strip_region::{StripAction, StripProps, StripRegion};
     use super::strip_view::BUCKETS;
+    use super::view::View;
     use leptos::prelude::*;
     use leptos::wasm_bindgen::prelude::*;
     use leptos::wasm_bindgen::JsCast;
     use rustify_components::data_table::{Cell as GridCell, Column, DataTable};
     use rustify_components::{Field, FieldBinding, Form, SubmitButton, TextField, Tree, TreeNode};
+    use rustify_ui::job::{self, Ended, Job, Step};
     use rustify_ui::{
         mount, navigate, provide_routes, use_location, AppHandle, Counts, GpuRegion, MountConfig,
-        Routes, Selection,
+        Requests, Routes, Selection,
     };
     use std::cell::{Cell, RefCell};
     use std::collections::{BTreeMap, BTreeSet};
@@ -52,6 +59,13 @@ mod app {
         static NEXT_HANDLE: Cell<u32> = const { Cell::new(1) };
         static SCENE: Cell<Option<SceneControls>> = const { Cell::new(None) };
         static SORT: RefCell<Option<SortProbe>> = const { RefCell::new(None) };
+        /// The table's jobs. One handle, so starting one ends the one before
+        /// it: a view has one answer, and it is the newest question's.
+        static JOBS: RefCell<Option<Requests>> = const { RefCell::new(None) };
+        /// Which job the status line is about. An older one ending is not news
+        /// about the one running now, and four jobs started in one turn end
+        /// three times before the fourth has taken a slice.
+        static JOB_SEQ: Cell<u64> = const { Cell::new(0) };
         /// Where the mounted scope thinks it is. Read from an export, which
         /// is outside every reactive owner and so cannot ask the router.
         static PATH: RefCell<String> = const { RefCell::new(String::new()) };
@@ -68,10 +82,20 @@ mod app {
     /// the application owns and the components are shown.
     #[derive(Clone, Copy)]
     struct TableState {
-        rows: RwSignal<usize>,
+        /// Which rows the table is showing, in which order. Everything the
+        /// table is given is a position in here; everything the sample is
+        /// asked is a position in the sample.
+        view: RwSignal<Arc<View>>,
         /// The sample's version, republished so that everything reading a cell
         /// is reading the current one.
         version: RwSignal<u64>,
+        /// Which column the view is sorted by, and which way.
+        sort: RwSignal<Option<(usize, bool)>>,
+        /// The text the filter box holds. What the view was filtered by is in
+        /// the view, not here: this is what a person has typed.
+        filter: RwSignal<String>,
+        /// The job in flight, or the last one to end.
+        job: RwSignal<JobShown>,
         /// Raised by the table whenever it works out its visible range again.
         /// A frame budget reads this: an animation frame in which it did not
         /// move is a frame in which the table presented nothing.
@@ -82,8 +106,8 @@ mod app {
         goto: RwSignal<Option<usize>>,
         /// The row the details form is showing, if any.
         editing: RwSignal<Option<usize>>,
-        /// The group a person chose in the tree. What it filters is the next
-        /// milestone's; what it is here is a choice the application heard.
+        /// The group a person chose in the tree, and what a filter job for it
+        /// is made from.
         group: RwSignal<Option<String>>,
         /// Jumps the strip asked for, so a jump that happened can be told from
         /// one that was swallowed.
@@ -91,11 +115,28 @@ mod app {
         saves: RwSignal<u32>,
     }
 
+    /// What the status line says about a job: how far it has got, and how the
+    /// last one ended.
+    #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+    struct JobShown {
+        running: bool,
+        done: usize,
+        total: usize,
+        /// Slices taken. How much of a job is overhead is a question about
+        /// this and the time it took together.
+        slices: usize,
+        /// "done", "stale" or "cancelled", once one has ended.
+        ended: Option<&'static str>,
+    }
+
     impl TableState {
         fn new(rows: usize) -> Self {
             Self {
-                rows: RwSignal::new(rows),
+                view: RwSignal::new(Arc::new(View::identity(rows, 0))),
                 version: RwSignal::new(0),
+                sort: RwSignal::new(None),
+                filter: RwSignal::new(String::new()),
+                job: RwSignal::new(JobShown::default()),
                 window_version: RwSignal::new(0),
                 selection: RwSignal::new(Selection::new()),
                 counts: RwSignal::new(Counts::default()),
@@ -183,9 +224,18 @@ mod app {
         SCENE.with(|slot| slot.set(Some(scene)));
         let table = TableState::new(with_data(|data| data.len()).unwrap_or(0));
         TABLE.with(|slot| slot.set(Some(table)));
+        JOBS.with(|slot| *slot.borrow_mut() = Some(Requests::new()));
         on_cleanup(move || {
             SCENE.with(|slot| slot.set(None));
             TABLE.with(|slot| slot.set(None));
+            // Closing the handle ends every job it issued: a slice that was
+            // about to run does not, and nothing delivers into a view that
+            // has gone.
+            JOBS.with(|slot| {
+                if let Some(requests) = slot.borrow_mut().take() {
+                    requests.close();
+                }
+            });
             PATH.with(|slot| slot.borrow_mut().clear());
         });
 
@@ -298,24 +348,30 @@ mod app {
         );
         let expanded = RwSignal::new(BTreeSet::from(["g0".to_string()]));
         let goto_input = RwSignal::new(String::new());
+        let find_input = RwSignal::new(String::new());
 
-        // Both readers take the version as a dependency, so a write redraws
-        // the cells that changed rather than only the row being edited.
+        // Both readers go through the view, and both take the version as a
+        // dependency, so a write redraws the cells that changed rather than
+        // only the row being edited.
         let version = table.version;
+        let view = table.view;
+        let at = move |row: usize| {
+            version.track();
+            view.get().row(row).map(|position| position as usize)
+        };
         let cell = Arc::new(move |row: usize, column: usize| {
-            version.track();
-            read_cell(row, column)
+            at(row)
+                .map(|row| read_cell(row, column))
+                .unwrap_or_default()
         });
-        let row_id = Arc::new(move |row: usize| {
-            version.track();
-            read_id(row)
-        });
+        let row_id = Arc::new(move |row: usize| at(row).map(read_id).unwrap_or(0));
+        let rows = Signal::derive(move || table.view.get().len());
 
         // How much of each bucket is selected. Worked out when the selection
         // or the sample changes, not when the table scrolls.
         let strip = Memo::new(move |_| {
             table.version.track();
-            let rows = table.rows.get();
+            let view = table.view.get();
             let selection = table.selection.get();
             let mut buckets = vec![0u16; BUCKETS];
             DATA.with(|slot| {
@@ -323,9 +379,12 @@ mod app {
                 let Some(data) = slot.as_ref() else {
                     return;
                 };
-                for row in 0..rows {
-                    if data.id(row).is_some_and(|id| selection.contains(id)) {
-                        let bucket = bucket_of(row, rows);
+                for (row, position) in view.order().iter().enumerate() {
+                    if data
+                        .id(*position as usize)
+                        .is_some_and(|id| selection.contains(id))
+                    {
+                        let bucket = bucket_of(row, view.len());
                         buckets[bucket] = buckets[bucket].saturating_add(1);
                     }
                 }
@@ -334,7 +393,7 @@ mod app {
             (Arc::new(buckets), peak)
         });
         let strip_props = Signal::derive(move || {
-            let rows = table.rows.get();
+            let rows = rows.get();
             let at = table.focus.get().row;
             let (buckets, peak) = strip.get();
             let bucket = bucket_of(at, rows);
@@ -346,47 +405,61 @@ mod app {
         });
         let on_strip = move |action: StripAction| match action {
             StripAction::Jump(bucket) => {
-                let row = first_row_of(bucket, table.rows.get_untracked());
+                let row = first_row_of(bucket, rows.get_untracked());
                 table.goto.set(Some(row));
                 table.focus.update(|at| at.row = row);
                 table.jumps.update(|count| *count += 1);
             }
         };
 
-        // Selected rows that are not in the view. Nothing filters yet, so the
-        // hidden count is the identities the sample no longer has - which is
-        // exactly what deleting a selected row has to make true.
+        // Selected rows that are not in the view: filtered out, or no longer
+        // in the sample at all. One pass over the view rather than a set built
+        // from it, because the pass is what a hundred thousand rows cost once
+        // and the set is what they cost twice.
         let counts = Memo::new(move |_| {
             table.version.track();
-            let rows = table.rows.get();
+            let view = table.view.get();
+            let selection = table.selection.get();
+            let mut visible = 0usize;
             DATA.with(|slot| {
                 let slot = slot.borrow();
-                let live: BTreeSet<u32> = slot
-                    .as_ref()
-                    .map(|data| (0..rows).filter_map(|row| data.id(row)).collect())
-                    .unwrap_or_default();
-                table.selection.get().counts(|id| live.contains(&id))
-            })
+                let Some(data) = slot.as_ref() else {
+                    return;
+                };
+                for position in view.order() {
+                    if data
+                        .id(*position as usize)
+                        .is_some_and(|id| selection.contains(id))
+                    {
+                        visible += 1;
+                    }
+                }
+            });
+            Counts {
+                visible,
+                hidden: selection.len() - visible,
+            }
         });
         table.counts.set(counts.get_untracked());
         Effect::new(move || table.counts.set(counts.get()));
 
         let select = move |row: usize| {
-            let id = read_id(row);
-            if id != 0 {
-                table.selection.update(|selection| {
-                    selection.toggle(id);
-                });
-            }
+            let Some(id) = at(row).map(read_id).filter(|id| *id != 0) else {
+                return;
+            };
+            table.selection.update(|selection| {
+                selection.toggle(id);
+            });
         };
-        let activate = move |row: usize| table.editing.set(Some(row));
+        let activate = move |row: usize| table.editing.set(at(row));
         let strip_app = PhantomData::<StripRegion>;
         // The tree follows the table until a person chooses a group of their
         // own: the keyboard is somewhere in the sample, and which part of it
         // that is is exactly what the tree is for.
         let showing_group = Signal::derive(move || {
             table.group.get().or_else(|| {
-                let (group, child) = Dataset::group(table.focus.get().row);
+                let row = at(table.focus.get().row)?;
+                let (group, child) = Dataset::group(row);
                 Some(format!("g{group}-{child}"))
             })
         });
@@ -408,7 +481,7 @@ mod app {
                                 if let Ok(row) = asked.trim().parse::<usize>() {
                                     let row = row
                                         .saturating_sub(1)
-                                        .min(table.rows.get_untracked().saturating_sub(1));
+                                        .min(rows.get_untracked().saturating_sub(1));
                                     table.goto.set(Some(row));
                                     table.focus.update(|at| at.row = row);
                                 }
@@ -431,6 +504,38 @@ mod app {
                     >
                         {format!("delete {BATCH}")}
                     </button>
+                    <label class="field">
+                        "filter"
+                        <input
+                            type="search"
+                            data-testid="table-filter"
+                            prop:value=move || table.filter.get()
+                            on:input=move |ev| table.filter.set(event_target_value(&ev))
+                            on:change=move |_| {
+                                // Typing does not start a job; asking does. A
+                                // job for every keystroke is a hundred
+                                // thousand rows scanned for a prefix nobody
+                                // meant to search for.
+                                table.group.set(None);
+                                start(table, Ask::Filter, 1);
+                            }
+                        />
+                    </label>
+                    <label class="field">
+                        "find"
+                        <input
+                            type="search"
+                            data-testid="table-find"
+                            prop:value=move || find_input.get()
+                            on:input=move |ev| find_input.set(event_target_value(&ev))
+                            on:change=move |_| {
+                                let text = find_input.get_untracked();
+                                if !text.trim().is_empty() {
+                                    start(table, Ask::Find(text), 1);
+                                }
+                            }
+                        />
+                    </label>
                     <p role="status" data-testid="table-status" aria-live="polite">
                         {move || {
                             let counts = counts.get();
@@ -441,6 +546,37 @@ mod app {
                             )
                         }}
                     </p>
+                    <p role="status" data-testid="table-job" aria-live="polite">
+                        {move || {
+                            let job = table.job.get();
+                            if job.running {
+                                let percent = if job.total == 0 {
+                                    0
+                                } else {
+                                    job.done * 100 / job.total
+                                };
+                                format!("working, {percent}%")
+                            } else {
+                                match job.ended {
+                                    Some("cancelled") => "cancelled".to_string(),
+                                    Some("stale") => "the sample changed".to_string(),
+                                    Some(_) => "done".to_string(),
+                                    None => "idle".to_string(),
+                                }
+                            }
+                        }}
+                    </p>
+                    <button
+                        type="button"
+                        data-testid="table-cancel"
+                        prop:disabled=move || !table.job.get().running
+                        on:click=move |_| cancel(table)
+                    >
+                        "cancel"
+                    </button>
+                    <Show when=move || table.view.get().is_stale(table.version.get()) fallback=|| ()>
+                        <p data-testid="table-stale">"the sample has changed since this view"</p>
+                    </Show>
                 </div>
                 <div class="table-layout">
                     <Tree
@@ -450,14 +586,18 @@ mod app {
                         nodes=Signal::derive(groups)
                         expanded=expanded
                         selected=showing_group
-                        on_select=move |key: String| table.group.set(Some(key))
+                        on_select=move |key: String| {
+                            table.group.set(Some(key));
+                            table.filter.set(String::new());
+                            start(table, Ask::Filter, 1);
+                        }
                     />
                     <div class="table-middle">
                         <DataTable
                             test_id="table"
                             aria_label="the sample"
                             class="rui:flex-1"
-                            rows=table.rows
+                            rows=rows
                             columns=columns
                             cell=cell
                             row_id=row_id
@@ -465,9 +605,21 @@ mod app {
                             goto=table.goto
                             version=table.window_version
                             focus=table.focus
+                            sorted=table.sort
+                            on_sort=Arc::new(move |column: usize| {
+                                let next = match table.sort.get_untracked() {
+                                    Some((at, true)) if at == column => (column, false),
+                                    _ => (column, true),
+                                };
+                                table.sort.set(Some(next));
+                                start(table, Ask::Sort(next.0, next.1), 1);
+                            })
                             on_select=select
                             on_activate=activate
                         />
+                        <Show when=move || rows.get() == 0 fallback=|| ()>
+                            <p data-testid="table-empty">"nothing matches"</p>
+                        </Show>
                         <GpuRegion
                             app=strip_app
                             props=strip_props
@@ -590,21 +742,29 @@ mod app {
         table.version.set(version);
     }
 
-    /// Inserts `count` rows after `at`. The view takes them straight away: a
-    /// job would rebuild the order, and there is no job until the next
-    /// milestone.
+    /// Inserts `count` rows into the sample at `at`, and corrects the view
+    /// rather than waiting for a job: a person who inserts a row expects to
+    /// see it, and the next job will put it where it belongs.
     fn insert_rows(table: TableState, at: usize, count: usize) {
-        let seed = table.rows.get_untracked();
+        let seed = with_data(Dataset::len).unwrap_or(0);
+        let mut added = 0;
         DATA.with(|slot| {
             let mut slot = slot.borrow_mut();
             let Some(data) = slot.as_mut() else {
                 return;
             };
             for index in 0..count {
-                data.insert((at + index).min(data.len()), new_row(seed + index));
+                if data
+                    .insert((at + index).min(data.len()), new_row(seed + index))
+                    .is_some()
+                {
+                    added += 1;
+                }
             }
         });
-        table.rows.set(with_data(|data| data.len()).unwrap_or(0));
+        table
+            .view
+            .update(|view| Arc::make_mut(view).inserted(at, added));
         bump_version(table);
     }
 
@@ -630,8 +790,244 @@ mod app {
         table.selection.update(|selection| {
             selection.remove_deleted(&gone);
         });
-        table.rows.set(with_data(|data| data.len()).unwrap_or(0));
+        table
+            .view
+            .update(|view| Arc::make_mut(view).removed(at, gone.len()));
         bump_version(table);
+    }
+
+    /// What a job was asked for. Kept so that a job made stale by a write can
+    /// be asked again, once, with the version it now has.
+    #[derive(Clone, Debug)]
+    enum Ask {
+        /// Order the view by a column.
+        Sort(usize, bool),
+        /// Rebuild the view from the sample, keeping the rows the filter box
+        /// and the tree agree on.
+        Filter,
+        /// Where in the view the first row containing this is.
+        Find(String),
+    }
+
+    /// What a job produced.
+    enum Answer {
+        /// A new order for the table.
+        Order(Vec<u32>),
+        /// Where in the current view the first match was, if anywhere.
+        Found(Option<usize>),
+    }
+
+    /// The rule the filter box and the tree add up to.
+    fn filter_rule(table: TableState) -> Option<Rule> {
+        if let Some(key) = table.group.get_untracked() {
+            if let Some((group, child)) = parse_group(&key) {
+                return Some(Rule::Group(group, child));
+            }
+        }
+        let text = table.filter.get_untracked();
+        (!text.trim().is_empty()).then(|| Rule::text(text.trim()))
+    }
+
+    /// `g3-7` as the pair the sample's own grouping answers in.
+    fn parse_group(key: &str) -> Option<(usize, usize)> {
+        let (group, child) = key.strip_prefix('g')?.split_once('-')?;
+        Some((group.parse().ok()?, child.parse().ok()?))
+    }
+
+    /// Starts a job, ending whatever was running. `retries` is how many times
+    /// it may be asked again if a write makes it stale before it answers.
+    fn start(table: TableState, ask: Ask, retries: u32) {
+        let Some(requests) = JOBS.with(|slot| slot.borrow().clone()) else {
+            return;
+        };
+        let ticket = requests.issue();
+        let view = table.view.get_untracked();
+        let Some(job) = build(table, ask.clone(), &view, ticket) else {
+            return;
+        };
+        let seq = JOB_SEQ.with(|slot| {
+            slot.set(slot.get() + 1);
+            slot.get()
+        });
+        table.job.set(JobShown {
+            running: true,
+            done: 0,
+            total: job.progress().1,
+            slices: 0,
+            ended: None,
+        });
+        job::run(job, move |end| finish(table, ask, retries, seq, end));
+    }
+
+    /// Builds the state machine one ask needs, wrapped in a job.
+    fn build(
+        table: TableState,
+        ask: Ask,
+        view: &Arc<View>,
+        ticket: rustify_ui::Ticket,
+    ) -> Option<Job<Answer>> {
+        let version = || with_data(|data| data.version()).unwrap_or(0);
+        match ask {
+            Ask::Sort(column, ascending) => {
+                let mut sort = Some(Sort::new(view.order().to_vec(), column, ascending));
+                let mut charged = 0usize;
+                let total = Sort::work(view.len());
+                Some(Job::new(ticket, version, job::now, total, move |budget| {
+                    // Progress is written once a slice. A job of this size
+                    // takes a handful of them, so this is a handful of writes
+                    // rather than the hundred a timer would make.
+                    let state = sort.as_mut().expect("a finished sort is not stepped again");
+                    let done = with_data(|data| {
+                        let mut exhausted = || budget.exhausted();
+                        state.step(data.rows(), &mut exhausted)
+                    })
+                    .unwrap_or(true);
+                    let processed = state.processed();
+                    budget.did(processed - charged);
+                    charged = processed;
+                    shown(table, processed, total);
+                    if done {
+                        let order = sort
+                            .take()
+                            .expect("the sort that just finished")
+                            .into_order();
+                        Step::Done(Answer::Order(order))
+                    } else {
+                        Step::More
+                    }
+                }))
+            }
+            Ask::Filter => {
+                // A filter is asked of the whole sample rather than of the
+                // view: a row the last filter hid is a row this one may want.
+                let order: Vec<u32> = (0..with_data(Dataset::len).unwrap_or(0) as u32).collect();
+                scan_job(table, ticket, Scan::filter(rule_for(&ask)?), order, false)
+            }
+            Ask::Find(_) => {
+                // A find is asked of the view, because where it lands is a
+                // place in what the person is looking at.
+                scan_job(
+                    table,
+                    ticket,
+                    Scan::find(rule_for(&ask)?),
+                    view.order().to_vec(),
+                    true,
+                )
+            }
+        }
+    }
+
+    /// Stops the job in flight. Nothing is half-applied, because nothing is
+    /// applied until a job is finished.
+    fn cancel(table: TableState) {
+        JOBS.with(|slot| {
+            if let Some(requests) = slot.borrow().as_ref() {
+                requests.cancel();
+            }
+        });
+        // Said now rather than when the slice in flight notices: this is the
+        // feedback a person is waiting for, and the slice is already running.
+        table.job.update(|job| {
+            job.running = false;
+            job.ended = Some("cancelled");
+        });
+    }
+
+    /// How far a job has got, for the status line to say.
+    fn shown(table: TableState, done: usize, total: usize) {
+        table.job.update(|job| {
+            job.done = done.min(total);
+            job.total = total;
+            job.slices += 1;
+        });
+    }
+
+    /// The rule an ask carries, for the two asks that carry one.
+    fn rule_for(ask: &Ask) -> Option<Rule> {
+        match ask {
+            Ask::Find(text) => Some(Rule::text(text.trim())),
+            Ask::Filter => TABLE.with(|slot| slot.get()).and_then(filter_rule),
+            Ask::Sort(..) => None,
+        }
+    }
+
+    fn scan_job(
+        table: TableState,
+        ticket: rustify_ui::Ticket,
+        scan: Scan,
+        order: Vec<u32>,
+        find: bool,
+    ) -> Option<Job<Answer>> {
+        let mut scan = Some(scan);
+        let mut charged = 0usize;
+        let total = order.len();
+        let version = || with_data(|data| data.version()).unwrap_or(0);
+        Some(Job::new(ticket, version, job::now, total, move |budget| {
+            let state = scan.as_mut().expect("a finished scan is not stepped again");
+            let done = with_data(|data| {
+                let mut exhausted = || budget.exhausted();
+                state.step(data.rows(), &order, &mut exhausted)
+            })
+            .unwrap_or(true);
+            let processed = state.processed();
+            budget.did(processed - charged);
+            charged = processed;
+            shown(table, processed, total);
+            if !done {
+                return Step::More;
+            }
+            let state = scan.take().expect("the scan that just finished");
+            Step::Done(if find {
+                Answer::Found(state.found())
+            } else {
+                Answer::Order(state.into_hits())
+            })
+        }))
+    }
+
+    /// Takes a job's answer, or says why there is not one.
+    fn finish(table: TableState, ask: Ask, retries: u32, seq: u64, end: Ended<Answer>) {
+        let state = end.state();
+        // Whether this is the job the status line is about. An older one may
+        // still be ending; it is recorded, but it is not the news.
+        let newest = JOB_SEQ.with(|slot| slot.get()) == seq;
+        match end {
+            Ended::Done(Answer::Order(order)) => {
+                let version = with_data(|data| data.version()).unwrap_or(0);
+                table.view.set(Arc::new(View::built(order, version)));
+                table.goto.set(Some(0));
+                table.focus.update(|at| at.row = 0);
+            }
+            Ended::Done(Answer::Found(at)) => {
+                if let Some(row) = at {
+                    table.goto.set(Some(row));
+                    table.focus.update(|cell| cell.row = row);
+                }
+            }
+            Ended::Stale => {
+                rustify_ui::diagnostics::record(rustify_ui::diagnostics::note(
+                    rustify_ui::diagnostics::ErrorKind::JobCancelled,
+                    "the sample was written to while a job was running; its answer was dropped",
+                ));
+                if newest && retries > 0 {
+                    // Once. A second write during the re-run is a person
+                    // typing, and a job started for every keystroke would
+                    // never finish one.
+                    start(table, ask, retries - 1);
+                    return;
+                }
+            }
+            Ended::Cancelled => rustify_ui::diagnostics::record(rustify_ui::diagnostics::note(
+                rustify_ui::diagnostics::ErrorKind::JobCancelled,
+                "a job was cancelled or replaced before it answered",
+            )),
+        }
+        if newest {
+            table.job.update(|shown| {
+                shown.running = false;
+                shown.ended = Some(state);
+            });
+        }
     }
 
     #[component]
@@ -746,13 +1142,27 @@ mod app {
             }
             None => (0, 0, None, None, 0, 0, 0),
         };
+        let (shown, stale, sorted, job) = match table {
+            Some(table) => {
+                let view = table.view.get_untracked();
+                (
+                    view.len(),
+                    view.is_stale(version),
+                    table.sort.get_untracked(),
+                    table.job.get_untracked(),
+                )
+            }
+            None => (0, false, None, JobShown::default()),
+        };
         format!(
             concat!(
                 r#"{{"path":"{}","rows":{},"version":{},"generated_ms":{:.1},"#,
                 r#""scene":{{"camera":[{},{}],"pane":[{},{}],"drawn":{},"#,
                 r#""asked":{},"reported":{}}},"#,
                 r#""table":{{"selected":{},"hidden":{},"editing":{},"group":{},"#,
-                r#""jumps":{},"saves":{},"window_version":{}}}}}"#
+                r#""jumps":{},"saves":{},"window_version":{},"shown":{},"stale":{},"#,
+                r#""sorted":{},"job":{{"running":{},"done":{},"total":{},"slices":{},"#,
+                r#""ended":{}}}}}}}"#
             ),
             path,
             rows,
@@ -776,7 +1186,60 @@ mod app {
             jumps,
             saves,
             window,
+            shown,
+            stale,
+            sorted
+                .map(|(column, ascending)| {
+                    format!("\"{column}:{}\"", if ascending { "asc" } else { "desc" })
+                })
+                .unwrap_or_else(|| "null".to_string()),
+            job.running,
+            job.done,
+            job.total,
+            job.slices,
+            job.ended
+                .map(|state| format!("\"{state}\""))
+                .unwrap_or_else(|| "null".to_string()),
         )
+    }
+
+    /// A window of the view, as sample positions: what the table is showing,
+    /// in the order it is showing it, for comparing against an order worked
+    /// out somewhere else.
+    #[wasm_bindgen]
+    pub fn data_workbench_view(from: usize, count: usize) -> Vec<u32> {
+        TABLE
+            .with(|slot| slot.get())
+            .map(|table| {
+                let view = table.view.get_untracked();
+                let end = from.saturating_add(count).min(view.len());
+                view.order().get(from..end).unwrap_or_default().to_vec()
+            })
+            .unwrap_or_default()
+    }
+
+    /// Starts a sort of a column, as clicking its heading does.
+    #[wasm_bindgen]
+    pub fn data_workbench_sort(column: usize, ascending: bool) -> bool {
+        let Some(table) = TABLE.with(|slot| slot.get()) else {
+            return false;
+        };
+        if column >= COLUMNS {
+            return false;
+        }
+        table.sort.set(Some((column, ascending)));
+        start(table, Ask::Sort(column, ascending), 1);
+        true
+    }
+
+    /// Cancels the job in flight, as the cancel button does.
+    #[wasm_bindgen]
+    pub fn data_workbench_cancel_job() -> bool {
+        let Some(table) = TABLE.with(|slot| slot.get()) else {
+            return false;
+        };
+        cancel(table);
+        true
     }
 
     /// How many times the table has worked out its visible range.
@@ -802,29 +1265,32 @@ mod app {
             .unwrap_or_default()
     }
 
-    /// Opens a row in the details form, as Enter does.
+    /// Opens a row of the sample in the details form, as Enter does with the
+    /// row the keyboard is on.
     #[wasm_bindgen]
     pub fn data_workbench_open_row(row: usize) -> bool {
         let Some(table) = TABLE.with(|slot| slot.get()) else {
             return false;
         };
-        if row >= table.rows.get_untracked() {
+        if row >= with_data(Dataset::len).unwrap_or(0) {
             return false;
         }
         table.editing.set(Some(row));
         true
     }
 
-    /// Selects a run of rows by position, for the checks that need a selection
-    /// before they can say what happens to one.
+    /// Selects a run of the table's rows, for the checks that need a selection
+    /// before they can say what happens to one. Positions in the view, which
+    /// is what a person would be clicking.
     #[wasm_bindgen]
     pub fn data_workbench_select_rows(from: usize, count: usize) -> Vec<u32> {
         let Some(table) = TABLE.with(|slot| slot.get()) else {
             return Vec::new();
         };
-        let rows = table.rows.get_untracked();
-        let ids: Vec<u32> = (from..(from + count).min(rows))
-            .map(read_id)
+        let view = table.view.get_untracked();
+        let ids: Vec<u32> = (from..(from + count).min(view.len()))
+            .filter_map(|row| view.row(row))
+            .map(|position| read_id(position as usize))
             .filter(|id| *id != 0)
             .collect();
         table.selection.update(|selection| {

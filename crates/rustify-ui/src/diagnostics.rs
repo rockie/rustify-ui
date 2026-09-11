@@ -90,6 +90,10 @@ pub enum ErrorKind {
     /// A navigation was asked for while the router was putting the user back
     /// after a refused one. Informational, and for the same reason.
     NavigationBusy,
+    /// A sliced job stopped before it delivered: somebody cancelled it, a
+    /// newer one was started, or the data changed under it. Informational -
+    /// the view it would have replaced is untouched, which is the point.
+    JobCancelled,
 }
 
 /// Whether an entry is something that went wrong or something that happened.
@@ -113,7 +117,7 @@ impl Severity {
 }
 
 impl ErrorKind {
-    pub const ALL: [ErrorKind; 15] = [
+    pub const ALL: [ErrorKind; 16] = [
         Self::InvalidContainer,
         Self::OccupiedContainer,
         Self::UnsupportedCapability,
@@ -129,6 +133,7 @@ impl ErrorKind {
         Self::NavigationRestoreFailed,
         Self::NavigationBlocked,
         Self::NavigationBusy,
+        Self::JobCancelled,
     ];
 
     /// The name the diagnostics ring and the host notice both print.
@@ -149,15 +154,16 @@ impl ErrorKind {
             Self::NavigationRestoreFailed => "NavigationRestoreFailed",
             Self::NavigationBlocked => "NavigationBlocked",
             Self::NavigationBusy => "NavigationBusy",
+            Self::JobCancelled => "JobCancelled",
         }
     }
 
-    /// Whether this is a failure or a thing that happened. Only the four
-    /// navigation entries are informational; everything else is something the
-    /// runtime could not do.
+    /// Whether this is a failure or a thing that happened. The navigation
+    /// entries and a stopped job are informational; everything else is
+    /// something the runtime could not do.
     pub fn severity(self) -> Severity {
         match self {
-            Self::NavigationBlocked | Self::NavigationBusy => Severity::Info,
+            Self::NavigationBlocked | Self::NavigationBusy | Self::JobCancelled => Severity::Info,
             _ => Severity::Error,
         }
     }
@@ -184,6 +190,7 @@ impl ErrorKind {
             }
             Self::NavigationBlocked => "nothing: a guard refused, and the application was told",
             Self::NavigationBusy => "ask again once the router has finished putting the user back",
+            Self::JobCancelled => "nothing: the view it would have replaced is the one still shown",
         }
     }
 }
@@ -666,7 +673,10 @@ mod tests {
             .filter(|kind| kind.severity() == Severity::Info)
             .map(|kind| kind.name())
             .collect();
-        assert_eq!(informational, ["NavigationBlocked", "NavigationBusy"]);
+        assert_eq!(
+            informational,
+            ["NavigationBlocked", "NavigationBusy", "JobCancelled"]
+        );
 
         let mut log = Diagnostics::new(1, "test");
         log.record(entry(ErrorKind::NavigationBlocked, 1.0));
@@ -679,8 +689,8 @@ mod tests {
     }
 
     #[test]
-    fn the_fifteen_registered_kinds_are_all_there() {
-        assert_eq!(ErrorKind::ALL.len(), 15);
+    fn the_registered_kinds_are_all_there() {
+        assert_eq!(ErrorKind::ALL.len(), 16);
         let names: Vec<&str> = ErrorKind::ALL.iter().map(|kind| kind.name()).collect();
         assert_eq!(
             names,
@@ -700,6 +710,7 @@ mod tests {
                 "NavigationRestoreFailed",
                 "NavigationBlocked",
                 "NavigationBusy",
+                "JobCancelled",
             ]
         );
         // No duplicates, and every one of them says what to do next.

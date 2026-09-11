@@ -434,6 +434,9 @@
   .rui\:text-foreground {
     color: var(--foreground);
   }
+  .rui\:text-inherit {
+    color: inherit;
+  }
   .rui\:text-muted-foreground {
     color: var(--muted-foreground);
   }

@@ -352,6 +352,22 @@ declare global {
                     jumps: number;
                     saves: number;
                     window_version: number;
+                    /// Rows the view is showing, which is not the sample's
+                    /// count once something has been filtered.
+                    shown: number;
+                    /// Whether the sample has been written to since the view
+                    /// was built.
+                    stale: boolean;
+                    /// "3:asc", "3:desc", or nothing.
+                    sorted: string | null;
+                    job: {
+                        running: boolean;
+                        done: number;
+                        total: number;
+                        slices: number;
+                        /// "done", "stale" or "cancelled".
+                        ended: string | null;
+                    };
                 };
             };
             diagnostics(): {
@@ -382,6 +398,9 @@ declare global {
             selected(): number[];
             select_rows(from: number, count: number): number[];
             open_row(row: number): boolean;
+            view(from: number, count: number): number[];
+            sort(column: number, ascending?: boolean): boolean;
+            cancel_job(): boolean;
             sort_probe(column: number, ascending?: boolean): boolean;
             sort_probe_state(): { running: boolean; slices: number; ms: number; rows: number };
             sort_probe_order(from: number, count: number): number[];

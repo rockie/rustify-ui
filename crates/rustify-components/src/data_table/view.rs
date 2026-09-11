@@ -12,6 +12,7 @@ const GRID: &str = "rui:relative rui:flex rui:flex-col rui:min-h-0 rui:border ru
 const HEADER: &str = "rui:flex rui:shrink-0 rui:overflow-hidden rui:border-b rui:border-border rui:bg-muted rui:font-medium rui:text-muted-foreground";
 const HEADER_CELL: &str =
     "rui:shrink-0 rui:truncate rui:px-2 rui:py-1 rui:text-left rui:cursor-default rui:select-none";
+const HEADER_BUTTON: &str = "rui:w-full rui:truncate rui:bg-transparent rui:border-0 rui:p-0 rui:text-left rui:font-medium rui:text-inherit rui:cursor-pointer rui:outline-none rui:focus-visible:ring-ring/50 rui:focus-visible:ring-2";
 const SCROLLER: &str = "rui:relative rui:flex-1 rui:min-h-0 rui:overflow-auto";
 const ROW: &str = "rui:absolute rui:left-0 rui:flex rui:w-full rui:items-center rui:border-b rui:border-border/50 rui:aria-selected:bg-accent";
 const CELL: &str = "rui:shrink-0 rui:truncate rui:px-2 rui:outline-none rui:focus-visible:ring-ring/50 rui:focus-visible:ring-2 rui:focus-visible:ring-inset";
@@ -69,6 +70,14 @@ pub fn DataTable(
     on_select: impl Fn(usize) + Send + Sync + 'static,
     /// A row was opened - Enter, F2, or a double click.
     on_activate: impl Fn(usize) + Send + Sync + 'static,
+    /// Which column the rows are in the order of, and which way. Only says so
+    /// in the header: what it means is the application's.
+    #[prop(optional, into)]
+    sorted: Option<Signal<Option<(usize, bool)>>>,
+    /// A column heading was chosen. Without this the headings are text; with
+    /// it they are buttons, which is what makes them reachable by keyboard.
+    #[prop(optional)]
+    on_sort: Option<Arc<dyn Fn(usize) + Send + Sync>>,
     #[prop(optional)] row_height: Option<f64>,
     #[prop(optional)] column_width: Option<f64>,
     #[prop(optional, into)] aria_label: String,
@@ -343,15 +352,42 @@ pub fn DataTable(
                         {
                             let (index, column) = entry;
                             let name = headings.clone();
+                            let on_sort = on_sort.clone();
+                            let sortable = on_sort.is_some();
+                            let order = move || {
+                                match sorted.and_then(|sorted| sorted.get()) {
+                                    Some((at, true)) if at == index => Some("ascending"),
+                                    Some((at, false)) if at == index => Some("descending"),
+                                    // `none` rather than nothing: a sortable
+                                    // column that says nothing is one a reader
+                                    // cannot tell from an unsortable one.
+                                    _ => sortable.then_some("none"),
+                                }
+                            };
                             view! {
                                 <div
                                     role="columnheader"
                                     class=HEADER_CELL
                                     data-testid=format!("{name}-column-{index}")
                                     aria-colindex=(index + 1).to_string()
+                                    aria-sort=order
                                     style:width=format!("{column_width}px")
                                 >
-                                    {column.label}
+                                    {match on_sort.clone() {
+                                        Some(sort) => {
+                                            view! {
+                                                <button
+                                                    type="button"
+                                                    class=HEADER_BUTTON
+                                                    on:click=move |_: MouseEvent| sort(index)
+                                                >
+                                                    {column.label.clone()}
+                                                </button>
+                                            }
+                                                .into_any()
+                                        }
+                                        None => column.label.clone().into_any(),
+                                    }}
                                 </div>
                             }
                         }

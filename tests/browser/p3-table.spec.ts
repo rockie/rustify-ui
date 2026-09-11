@@ -276,13 +276,13 @@ test.describe("M2 · a hundred thousand rows", () => {
         ).toBe(0);
     });
 
-    test("the table's twelve named things are findable, thirty times over", async ({ page }) => {
+    test("the table's fourteen named things are findable, thirty times over", async ({ page }) => {
         await openTable(page);
-        // Two of the twelve are fields of the row being edited, so a row is
-        // open: a name nothing is showing is not a name that is missing.
+        // Two of them are fields of the row being edited, so a row is open: a
+        // name nothing is showing is not a name that is missing.
         await page.evaluate(() => window.__data_workbench.open_row(0));
-        const expected = LOCATORS.filter((entry) => entry.side === "table" && entry.from === "M2");
-        expect(expected).toHaveLength(12);
+        const expected = LOCATORS.filter((entry) => entry.side === "table");
+        expect(expected).toHaveLength(14);
         // Each one is reachable by role and name - which is what a person
         // using a screen reader actually does - and it is the same element
         // that carries the test id. An intersection rather than a reading of

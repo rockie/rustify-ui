@@ -5,11 +5,6 @@ a person is looking at is sixty of them; what the application holds is all of
 them; what the table holds is neither. This page is about where each of those
 three lives and what happens when they disagree.
 
-*Draft. The table, the groups over it and the selection they share are here.
-The jobs that sort, filter and find - and what a running job does when the
-sample changes underneath it - arrive with the next milestone and will be
-written up here when they do.*
-
 ## The table holds no data
 
 `DataTable` is told how many rows there are and given a way to read a cell. It
@@ -123,6 +118,74 @@ behind.
 One tab stop for the whole grid: the focused cell has `tabindex="0"` and every
 other cell `-1`.
 
+## Work that does not fit in a frame
+
+Sorting a hundred thousand rows takes about fifty milliseconds. That is three
+frames, and a frame you cannot draw is a page that has stopped. There is no
+thread to move it to either: an ordinary deployment is not cross-origin
+isolated, so there is no shared memory and no worker that could see these rows
+without being sent thirty-two megabytes of them.
+
+So the work is sliced. `rustify_ui::Job` takes a closure that does as much as
+it can within a `Budget` and says `More` or `Done`; between two slices the
+browser gets its turn back, through the host's own task rather than a timer.
+
+```rust
+let job = Job::new(requests.issue(), version, job::now, total, move |budget| {
+    let done = sort.step(rows, &mut || budget.exhausted());
+    budget.did(sort.processed() - charged);
+    if done { Step::Done(sort.into_order()) } else { Step::More }
+});
+job::run(job, move |ended| { /* Done, Stale or Cancelled */ });
+```
+
+Three rules hold it together, and each of them is a thing that goes wrong
+otherwise.
+
+**A slice is a length of time, not a number of rows.** Eight milliseconds, with
+a row count as an upper bound so that a step which turns out to be cheap cannot
+run away with the turn. Ask `budget.exhausted()` every few hundred rows: a
+clock read per row costs more than the row.
+
+**A job that ran while the data changed has nothing to say.** The version is
+read before a slice touches anything. If it has moved, the slice does not run,
+nothing is delivered, and the application is told `Stale`. This is not
+politeness: a job holds row *positions*, a deletion moves every position after
+it, and a slice that read one anyway would read the wrong row - or, at the end
+of the sample, no row at all.
+
+The application decides what to do about it. This one asks again, once, with
+the version it now has. Once, because a second write during the re-run is
+somebody typing, and a job restarted on every keystroke never finishes one.
+
+**Only the newest job may deliver.** One `Requests` handle: starting a job ends
+the one before it, closing the scope ends them all, and `requests.cancel()` is
+what a cancel button does. A cancelled job is not interrupted - it stops before
+its next slice - so there is never half a result anywhere. What the view shows
+is what it showed before, because nothing is applied until a job is finished.
+
+## Sorting, filtering and finding
+
+All three are jobs, and they differ only in what they are asked and what they
+produce.
+
+- **A sort** orders the view it is given, so sorting a filtered view sorts what
+  is left. It is a merge sort over row positions, stable, so sorting by a second
+  column refines the first rather than reshuffling it.
+- **A filter** is asked of the whole sample rather than of the view - a row the
+  last filter hid is a row this one may want - and the view it produces is the
+  rows that matched, in the sample's order. Text is matched within a cell: cells
+  are fixed width and butt up against each other, so a search over a whole row
+  would find things that are not in it.
+- **A group** in the tree is the same job with a different question: not what is
+  in a row but where it is.
+- **A find** is asked of the view, because where it lands is a place in what the
+  person is looking at. It stops at the first match and scrolls there.
+
+While one runs, the status line says how far it has got and the cancel button
+is live. Cancelling is instant to look at - the status changes in the same
+frame as the click, ahead of the slice that is already running noticing.
+
 ## Editing a row
 
 The row that is open is shown as a form of twenty fields beside the table, and
@@ -132,11 +195,18 @@ writes the fields that changed and moves the sample's version on.
 
 The version is what a job in flight watches, and it moves for *any* write:
 sorting, filtering and finding all read cell values, so an edit makes a running
-job's answer stale even though no row was added or removed. What a job does
-about that is the next milestone's.
+job's answer stale even though no row was added or removed.
+
+A write does not wait for a job either. Rows that went are taken out of the
+view and the ones after them move up; rows that arrived go where they were put
+if the view has no order of its own, and at the end if it has - a sorted view
+has no correct place for a row nothing has compared yet. The view then says it
+was built for an older version, which is what "stale" on the screen means:
+still usable, no longer the answer.
 
 ## What is not here
 
 No server paging, no data source protocol, no formula engine, no column
-resizing or reordering, no grouping by value, and no virtualised tree. The
+resizing or reordering, no grouping by value, and no virtualised tree. No
+worker and no second thread: a job is sliced on the one thread there is. The
 table draws what it is told and holds nothing.

@@ -86,6 +86,17 @@ boot({ wasm_url, on_fatal: runtime_fatal })
             open_row(row) {
                 return app.data_workbench_open_row(row);
             },
+            /// A window of the view, as sample positions: what the table is
+            /// showing, in the order it is showing it.
+            view(from, count) {
+                return Array.from(app.data_workbench_view(from, count));
+            },
+            sort(column, ascending = true) {
+                return app.data_workbench_sort(column, ascending);
+            },
+            cancel_job() {
+                return app.data_workbench_cancel_job();
+            },
             sort_probe(column, ascending = true) {
                 return app.data_workbench_sort_probe(column, ascending);
             },
