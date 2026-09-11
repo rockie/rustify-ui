@@ -12,22 +12,32 @@ mod sort;
 mod scene_region;
 #[cfg(target_arch = "wasm32")]
 mod scene_view;
+#[cfg(target_arch = "wasm32")]
+mod strip_region;
+#[cfg(target_arch = "wasm32")]
+mod strip_view;
 
 #[cfg(target_arch = "wasm32")]
 mod app {
-    use super::dataset::{Dataset, COLUMNS, ROWS};
+    use super::dataset::{Dataset, Row, COLUMNS, ROWS, ROW_BYTES};
     use super::scene_layout;
     use super::scene_region::{SceneAction, SceneProps, SceneRegion};
     use super::sort::Sort;
+    use super::strip_region::{StripAction, StripProps, StripRegion};
+    use super::strip_view::BUCKETS;
     use leptos::prelude::*;
     use leptos::wasm_bindgen::prelude::*;
     use leptos::wasm_bindgen::JsCast;
+    use rustify_components::data_table::{Cell as GridCell, Column, DataTable};
+    use rustify_components::{Field, FieldBinding, Form, SubmitButton, TextField, Tree, TreeNode};
     use rustify_ui::{
-        mount, navigate, provide_routes, use_location, AppHandle, GpuRegion, MountConfig, Routes,
+        mount, navigate, provide_routes, use_location, AppHandle, Counts, GpuRegion, MountConfig,
+        Routes, Selection,
     };
     use std::cell::{Cell, RefCell};
-    use std::collections::BTreeMap;
+    use std::collections::{BTreeMap, BTreeSet};
     use std::marker::PhantomData;
+    use std::sync::Arc;
 
     /// How long one slice of a job may take. Long enough that the overhead of
     /// yielding is small, short enough that a frame still fits around it.
@@ -35,6 +45,7 @@ mod app {
 
     thread_local! {
         static DATA: RefCell<Option<Dataset>> = const { RefCell::new(None) };
+        static TABLE: Cell<Option<TableState>> = const { Cell::new(None) };
         /// How long generating the sample took, in milliseconds.
         static GENERATED_MS: Cell<f64> = const { Cell::new(0.0) };
         static HANDLES: RefCell<BTreeMap<u32, AppHandle>> = const { RefCell::new(BTreeMap::new()) };
@@ -51,6 +62,51 @@ mod app {
             .and_then(|window| window.performance())
             .map(|performance| performance.now())
             .unwrap_or(0.0)
+    }
+
+    /// The handles the page needs on the table. Every one of them is a fact
+    /// the application owns and the components are shown.
+    #[derive(Clone, Copy)]
+    struct TableState {
+        rows: RwSignal<usize>,
+        /// The sample's version, republished so that everything reading a cell
+        /// is reading the current one.
+        version: RwSignal<u64>,
+        /// Raised by the table whenever it works out its visible range again.
+        /// A frame budget reads this: an animation frame in which it did not
+        /// move is a frame in which the table presented nothing.
+        window_version: RwSignal<u64>,
+        selection: RwSignal<Selection>,
+        counts: RwSignal<Counts>,
+        focus: RwSignal<GridCell>,
+        goto: RwSignal<Option<usize>>,
+        /// The row the details form is showing, if any.
+        editing: RwSignal<Option<usize>>,
+        /// The group a person chose in the tree. What it filters is the next
+        /// milestone's; what it is here is a choice the application heard.
+        group: RwSignal<Option<String>>,
+        /// Jumps the strip asked for, so a jump that happened can be told from
+        /// one that was swallowed.
+        jumps: RwSignal<u32>,
+        saves: RwSignal<u32>,
+    }
+
+    impl TableState {
+        fn new(rows: usize) -> Self {
+            Self {
+                rows: RwSignal::new(rows),
+                version: RwSignal::new(0),
+                window_version: RwSignal::new(0),
+                selection: RwSignal::new(Selection::new()),
+                counts: RwSignal::new(Counts::default()),
+                focus: RwSignal::new(GridCell::default()),
+                goto: RwSignal::new(None),
+                editing: RwSignal::new(None),
+                group: RwSignal::new(None),
+                jumps: RwSignal::new(0),
+                saves: RwSignal::new(0),
+            }
+        }
     }
 
     /// The handles the page needs on the scene: what it is looking at, and
@@ -125,8 +181,11 @@ mod app {
             reported: RwSignal::new(0),
         };
         SCENE.with(|slot| slot.set(Some(scene)));
+        let table = TableState::new(with_data(|data| data.len()).unwrap_or(0));
+        TABLE.with(|slot| slot.set(Some(table)));
         on_cleanup(move || {
             SCENE.with(|slot| slot.set(None));
+            TABLE.with(|slot| slot.set(None));
             PATH.with(|slot| slot.borrow_mut().clear());
         });
 
@@ -151,26 +210,425 @@ mod app {
                 </header>
                 {move || match showing() {
                     "scene" => view! { <SceneItem scene=scene /> }.into_any(),
-                    _ => view! { <TableItem /> }.into_any(),
+                    _ => view! { <TableItem table=table /> }.into_any(),
                 }}
             </div>
         }
     }
 
-    /// The table view. Its contents - the windowed grid, the group tree and the
-    /// details form - are the next milestone; what is here is the frame they
-    /// go in and the counts a page can already check.
+    /// The twenty columns, as the names a form knows its fields by. A form's
+    /// field list has to be `'static`, and the columns are fixed.
+    const FIELDS: [&str; COLUMNS] = [
+        "c0", "c1", "c2", "c3", "c4", "c5", "c6", "c7", "c8", "c9", "c10", "c11", "c12", "c13",
+        "c14", "c15", "c16", "c17", "c18", "c19",
+    ];
+
+    /// Rows added or removed at a time by the controls that exercise identity.
+    const BATCH: usize = 10;
+
+    /// One cell of the sample, trimmed of the padding a fixed width leaves.
+    fn read_cell(row: usize, column: usize) -> String {
+        with_data(|data| {
+            data.cell(row, column)
+                .map(|cell| String::from_utf8_lossy(cell).trim_end().to_string())
+                .unwrap_or_default()
+        })
+        .unwrap_or_default()
+    }
+
+    fn read_id(row: usize) -> u32 {
+        with_data(|data| data.id(row).unwrap_or(0)).unwrap_or(0)
+    }
+
+    /// Ten groups of ten, over positions rather than values: the tree is for
+    /// getting about, and the values are what the jobs are for.
+    fn groups() -> Vec<TreeNode> {
+        (0..10)
+            .map(|group| {
+                TreeNode::new(format!("g{group}"), format!("group {}", group + 1)).with(
+                    (0..10)
+                        .map(|child| {
+                            TreeNode::new(
+                                format!("g{group}-{child}"),
+                                format!("group {}.{}", group + 1, child + 1),
+                            )
+                        })
+                        .collect(),
+                )
+            })
+            .collect()
+    }
+
+    fn bucket_of(row: usize, rows: usize) -> usize {
+        if rows == 0 {
+            return 0;
+        }
+        (row * BUCKETS / rows).min(BUCKETS - 1)
+    }
+
+    fn first_row_of(bucket: usize, rows: usize) -> usize {
+        (bucket * rows / BUCKETS).min(rows.saturating_sub(1))
+    }
+
+    /// A row to insert: the sample's own alphabet, marked so a person can see
+    /// which rows are new.
+    fn new_row(seed: usize) -> Row {
+        let mut row = [b'A'; ROW_BYTES];
+        for (index, byte) in format!("NEW{seed:05}").bytes().enumerate() {
+            row[index] = byte;
+        }
+        row
+    }
+
+    /// The table view: the grid, the groups over it, the row being edited, and
+    /// the strip that says where the selection is.
+    ///
+    /// The application owns all four of those facts and hands each component
+    /// the part it needs. None of them holds any of it, which is why an edit
+    /// shows up in all four at once without anything being told twice.
     #[component]
-    fn TableItem() -> impl IntoView {
-        let rows = with_data(|data| data.len()).unwrap_or(0);
-        let version = with_data(|data| data.version()).unwrap_or(0);
+    fn TableItem(table: TableState) -> impl IntoView {
+        let columns = RwSignal::new(
+            (0..COLUMNS)
+                .map(|index| Column::new(FIELDS[index], format!("column {}", index + 1)))
+                .collect::<Vec<_>>(),
+        );
+        let expanded = RwSignal::new(BTreeSet::from(["g0".to_string()]));
+        let goto_input = RwSignal::new(String::new());
+
+        // Both readers take the version as a dependency, so a write redraws
+        // the cells that changed rather than only the row being edited.
+        let version = table.version;
+        let cell = Arc::new(move |row: usize, column: usize| {
+            version.track();
+            read_cell(row, column)
+        });
+        let row_id = Arc::new(move |row: usize| {
+            version.track();
+            read_id(row)
+        });
+
+        // How much of each bucket is selected. Worked out when the selection
+        // or the sample changes, not when the table scrolls.
+        let strip = Memo::new(move |_| {
+            table.version.track();
+            let rows = table.rows.get();
+            let selection = table.selection.get();
+            let mut buckets = vec![0u16; BUCKETS];
+            DATA.with(|slot| {
+                let slot = slot.borrow();
+                let Some(data) = slot.as_ref() else {
+                    return;
+                };
+                for row in 0..rows {
+                    if data.id(row).is_some_and(|id| selection.contains(id)) {
+                        let bucket = bucket_of(row, rows);
+                        buckets[bucket] = buckets[bucket].saturating_add(1);
+                    }
+                }
+            });
+            let peak = buckets.iter().copied().max().unwrap_or(0);
+            (Arc::new(buckets), peak)
+        });
+        let strip_props = Signal::derive(move || {
+            let rows = table.rows.get();
+            let at = table.focus.get().row;
+            let (buckets, peak) = strip.get();
+            let bucket = bucket_of(at, rows);
+            StripProps {
+                buckets,
+                peak,
+                viewport: (bucket, bucket + 1),
+            }
+        });
+        let on_strip = move |action: StripAction| match action {
+            StripAction::Jump(bucket) => {
+                let row = first_row_of(bucket, table.rows.get_untracked());
+                table.goto.set(Some(row));
+                table.focus.update(|at| at.row = row);
+                table.jumps.update(|count| *count += 1);
+            }
+        };
+
+        // Selected rows that are not in the view. Nothing filters yet, so the
+        // hidden count is the identities the sample no longer has - which is
+        // exactly what deleting a selected row has to make true.
+        let counts = Memo::new(move |_| {
+            table.version.track();
+            let rows = table.rows.get();
+            DATA.with(|slot| {
+                let slot = slot.borrow();
+                let live: BTreeSet<u32> = slot
+                    .as_ref()
+                    .map(|data| (0..rows).filter_map(|row| data.id(row)).collect())
+                    .unwrap_or_default();
+                table.selection.get().counts(|id| live.contains(&id))
+            })
+        });
+        table.counts.set(counts.get_untracked());
+        Effect::new(move || table.counts.set(counts.get()));
+
+        let select = move |row: usize| {
+            let id = read_id(row);
+            if id != 0 {
+                table.selection.update(|selection| {
+                    selection.toggle(id);
+                });
+            }
+        };
+        let activate = move |row: usize| table.editing.set(Some(row));
+        let strip_app = PhantomData::<StripRegion>;
+        // The tree follows the table until a person chooses a group of their
+        // own: the keyboard is somewhere in the sample, and which part of it
+        // that is is exactly what the tree is for.
+        let showing_group = Signal::derive(move || {
+            table.group.get().or_else(|| {
+                let (group, child) = Dataset::group(table.focus.get().row);
+                Some(format!("g{group}-{child}"))
+            })
+        });
+
         view! {
             <section data-testid="table-view" class="view">
-                <h1>"table"</h1>
-                <p data-testid="table-rows">{rows.to_string()}</p>
-                <p data-testid="table-version">{version.to_string()}</p>
+                <div class="bar" data-testid="table-controls">
+                    <label class="field">
+                        "go to row"
+                        <input
+                            type="number"
+                            data-testid="table-goto"
+                            min="1"
+                            prop:value=move || goto_input.get()
+                            on:input=move |ev| goto_input.set(event_target_value(&ev))
+                            on:change=move |ev| {
+                                let asked = event_target_value(&ev);
+                                goto_input.set(asked.clone());
+                                if let Ok(row) = asked.trim().parse::<usize>() {
+                                    let row = row
+                                        .saturating_sub(1)
+                                        .min(table.rows.get_untracked().saturating_sub(1));
+                                    table.goto.set(Some(row));
+                                    table.focus.update(|at| at.row = row);
+                                }
+                            }
+                        />
+                    </label>
+                    <button
+                        type="button"
+                        data-testid="table-insert"
+                        on:click=move |_| insert_rows(table, table.focus.get_untracked().row, BATCH)
+                    >
+                        {format!("insert {BATCH}")}
+                    </button>
+                    <button
+                        type="button"
+                        data-testid="table-delete"
+                        on:click=move |_| {
+                            delete_rows(table, table.focus.get_untracked().row, BATCH)
+                        }
+                    >
+                        {format!("delete {BATCH}")}
+                    </button>
+                    <p role="status" data-testid="table-status" aria-live="polite">
+                        {move || {
+                            let counts = counts.get();
+                            format!(
+                                "selected {} (of which {} not in view)",
+                                counts.total(),
+                                counts.hidden,
+                            )
+                        }}
+                    </p>
+                </div>
+                <div class="table-layout">
+                    <Tree
+                        test_id="table-tree"
+                        aria_label="groups"
+                        class="groups"
+                        nodes=Signal::derive(groups)
+                        expanded=expanded
+                        selected=showing_group
+                        on_select=move |key: String| table.group.set(Some(key))
+                    />
+                    <div class="table-middle">
+                        <DataTable
+                            test_id="table"
+                            aria_label="the sample"
+                            class="rui:flex-1"
+                            rows=table.rows
+                            columns=columns
+                            cell=cell
+                            row_id=row_id
+                            selected=table.selection
+                            goto=table.goto
+                            version=table.window_version
+                            focus=table.focus
+                            on_select=select
+                            on_activate=activate
+                        />
+                        <GpuRegion
+                            app=strip_app
+                            props=strip_props
+                            on_action=on_strip
+                            class="strip-region"
+                            test_id="table-strip"
+                        />
+                    </div>
+                    <Details table=table columns=columns />
+                </div>
             </section>
         }
+    }
+
+    /// The twenty values of one row, editable.
+    ///
+    /// A save writes every field whose value changed, and every write bumps the
+    /// sample's version: sorting, filtering and finding all read cell values,
+    /// so any write at all makes a job that is still running stale.
+    #[component]
+    fn Details(table: TableState, columns: RwSignal<Vec<Column>>) -> impl IntoView {
+        let draft = RwSignal::new(vec![String::new(); COLUMNS]);
+        Effect::new(move || {
+            let Some(row) = table.editing.get() else {
+                return;
+            };
+            table.version.track();
+            draft.set((0..COLUMNS).map(|column| read_cell(row, column)).collect());
+        });
+        let save = move || {
+            let Some(row) = table.editing.get_untracked() else {
+                return;
+            };
+            let values = draft.get_untracked();
+            let mut written = 0;
+            DATA.with(|slot| {
+                let mut slot = slot.borrow_mut();
+                let Some(data) = slot.as_mut() else {
+                    return;
+                };
+                for (column, value) in values.iter().enumerate() {
+                    let current = data
+                        .cell(row, column)
+                        .map(|cell| String::from_utf8_lossy(cell).trim_end().to_string())
+                        .unwrap_or_default();
+                    if current != *value && data.write(row, column, value) {
+                        written += 1;
+                    }
+                }
+            });
+            if written > 0 {
+                bump_version(table);
+            }
+            table.saves.update(|count| *count += 1);
+        };
+        let form = Form::new(&FIELDS, save);
+        view! {
+            <div class="details" data-testid="table-details">
+                <h2 data-testid="table-detail-row">
+                    {move || match table.editing.get() {
+                        Some(row) => format!("row {}", row + 1),
+                        None => "no row open".to_string(),
+                    }}
+                </h2>
+                <Show when=move || table.editing.get().is_some() fallback=|| ()>
+                    <form on:submit=move |ev| ev.prevent_default()>
+                        {(0..COLUMNS)
+                            .map(|column| {
+                                let label = columns
+                                    .get_untracked()
+                                    .get(column)
+                                    .map(|entry| entry.label.clone())
+                                    .unwrap_or_default();
+                                view! {
+                                    <Field
+                                        form=form
+                                        field=FIELDS[column]
+                                        label=label
+                                        control=move |binding: FieldBinding| {
+                                            view! {
+                                                <TextField
+                                                    id=binding.id()
+                                                    test_id=format!("table-detail-{column}")
+                                                    value=Signal::derive(move || {
+                                                        draft
+                                                            .get()
+                                                            .get(column)
+                                                            .cloned()
+                                                            .unwrap_or_default()
+                                                    })
+                                                    on_change=move |next: String| {
+                                                        draft
+                                                            .update(|values| {
+                                                                if let Some(slot) = values.get_mut(column) {
+                                                                    *slot = next.clone();
+                                                                }
+                                                            });
+                                                        form.changed(FIELDS[column]);
+                                                    }
+                                                />
+                                            }
+                                                .into_any()
+                                        }
+                                    />
+                                }
+                            })
+                            .collect_view()}
+                        <SubmitButton form=form rules=Vec::new test_id="table-detail-submit">
+                            "save"
+                        </SubmitButton>
+                    </form>
+                </Show>
+            </div>
+        }
+    }
+
+    /// Publishes the sample's version, and with it every reader of a cell.
+    fn bump_version(table: TableState) {
+        let version = with_data(|data| data.version()).unwrap_or(0);
+        table.version.set(version);
+    }
+
+    /// Inserts `count` rows after `at`. The view takes them straight away: a
+    /// job would rebuild the order, and there is no job until the next
+    /// milestone.
+    fn insert_rows(table: TableState, at: usize, count: usize) {
+        let seed = table.rows.get_untracked();
+        DATA.with(|slot| {
+            let mut slot = slot.borrow_mut();
+            let Some(data) = slot.as_mut() else {
+                return;
+            };
+            for index in 0..count {
+                data.insert((at + index).min(data.len()), new_row(seed + index));
+            }
+        });
+        table.rows.set(with_data(|data| data.len()).unwrap_or(0));
+        bump_version(table);
+    }
+
+    /// Deletes `count` rows from `at`, and takes the identities that have gone
+    /// out of the selection. A selected row that no longer exists is not
+    /// selected: it is a leak.
+    fn delete_rows(table: TableState, at: usize, count: usize) {
+        let mut gone = Vec::new();
+        DATA.with(|slot| {
+            let mut slot = slot.borrow_mut();
+            let Some(data) = slot.as_mut() else {
+                return;
+            };
+            for _ in 0..count {
+                if at >= data.len() {
+                    break;
+                }
+                if let Some(id) = data.remove(at) {
+                    gone.push(id);
+                }
+            }
+        });
+        table.selection.update(|selection| {
+            selection.remove_deleted(&gone);
+        });
+        table.rows.set(with_data(|data| data.len()).unwrap_or(0));
+        bump_version(table);
     }
 
     #[component]
@@ -269,11 +727,29 @@ mod app {
             ),
             None => ((0.0, 0.0), (0.0, 0.0, 0.0, 0.0, 0), 0, 0),
         };
+        let table = TABLE.with(|slot| slot.get());
+        let (selected, hidden, editing, group, jumps, saves, window) = match table {
+            Some(table) => {
+                let counts = table.counts.get_untracked();
+                (
+                    counts.total(),
+                    counts.hidden,
+                    table.editing.get_untracked(),
+                    table.group.get_untracked(),
+                    table.jumps.get_untracked(),
+                    table.saves.get_untracked(),
+                    table.window_version.get_untracked(),
+                )
+            }
+            None => (0, 0, None, None, 0, 0, 0),
+        };
         format!(
             concat!(
                 r#"{{"path":"{}","rows":{},"version":{},"generated_ms":{:.1},"#,
                 r#""scene":{{"camera":[{},{}],"pane":[{},{}],"drawn":{},"#,
-                r#""asked":{},"reported":{}}}}}"#
+                r#""asked":{},"reported":{}}},"#,
+                r#""table":{{"selected":{},"hidden":{},"editing":{},"group":{},"#,
+                r#""jumps":{},"saves":{},"window_version":{}}}}}"#
             ),
             path,
             rows,
@@ -286,7 +762,72 @@ mod app {
             drawn.4,
             asked,
             reported,
+            selected,
+            hidden,
+            editing
+                .map(|row| row.to_string())
+                .unwrap_or_else(|| "null".to_string()),
+            group
+                .map(|key| format!("\"{key}\""))
+                .unwrap_or_else(|| "null".to_string()),
+            jumps,
+            saves,
+            window,
         )
+    }
+
+    /// How many times the table has worked out its visible range.
+    ///
+    /// This is the table's content version: an animation frame in which it did
+    /// not move is a frame in which the table presented nothing, and a frame
+    /// budget that counted those frames would pass a table that had stopped.
+    #[wasm_bindgen]
+    pub fn data_workbench_window_version() -> u64 {
+        TABLE
+            .with(|slot| slot.get())
+            .map(|table| table.window_version.get_untracked())
+            .unwrap_or(0)
+    }
+
+    /// The identities currently selected, in order. The page compares these
+    /// against what it selected rather than against a count.
+    #[wasm_bindgen]
+    pub fn data_workbench_selected() -> Vec<u32> {
+        TABLE
+            .with(|slot| slot.get())
+            .map(|table| table.selection.get_untracked().ids().collect())
+            .unwrap_or_default()
+    }
+
+    /// Opens a row in the details form, as Enter does.
+    #[wasm_bindgen]
+    pub fn data_workbench_open_row(row: usize) -> bool {
+        let Some(table) = TABLE.with(|slot| slot.get()) else {
+            return false;
+        };
+        if row >= table.rows.get_untracked() {
+            return false;
+        }
+        table.editing.set(Some(row));
+        true
+    }
+
+    /// Selects a run of rows by position, for the checks that need a selection
+    /// before they can say what happens to one.
+    #[wasm_bindgen]
+    pub fn data_workbench_select_rows(from: usize, count: usize) -> Vec<u32> {
+        let Some(table) = TABLE.with(|slot| slot.get()) else {
+            return Vec::new();
+        };
+        let rows = table.rows.get_untracked();
+        let ids: Vec<u32> = (from..(from + count).min(rows))
+            .map(read_id)
+            .filter(|id| *id != 0)
+            .collect();
+        table.selection.update(|selection| {
+            selection.add(ids.iter().copied());
+        });
+        ids
     }
 
     /// A checksum over every cell, as a decimal string: the one number that

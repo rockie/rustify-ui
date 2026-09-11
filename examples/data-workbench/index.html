@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>data-workbench</title>
     <link rel="stylesheet" href="./runtime.css">
+    <!-- The component stylesheet. Without it the table's scroller has no
+         height of its own, and a windowed table with no viewport is a table
+         that draws every row it has. -->
+    <link rel="stylesheet" href="./rustify.css">
     <link rel="stylesheet" href="./app.css">
     <link rel="modulepreload" href="./loader.js">
     <link rel="modulepreload" href="./bindgen.js">

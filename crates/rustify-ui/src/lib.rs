@@ -16,6 +16,7 @@ pub mod overlay;
 pub mod region;
 pub mod router;
 pub mod scheduler;
+pub mod selection;
 pub mod task;
 pub mod text;
 pub mod theme;
@@ -37,6 +38,7 @@ pub use region::{GpuRegion, RegionState};
 pub use router::{Arrival, History, Location, Navigation, Params, Route, Routes};
 pub use rustify_makepad::RegionId;
 pub use scheduler::{Admission, Pace, Scheduler, Seq};
+pub use selection::{Counts, Selection};
 pub use task::{Load, Requests, Ticket};
 
 #[cfg(target_arch = "wasm32")]

@@ -47,6 +47,9 @@
   .rui\:bottom-0 {
     bottom: calc(var(--rui-spacing) * 0);
   }
+  .rui\:left-0 {
+    left: calc(var(--rui-spacing) * 0);
+  }
   .rui\:m-0 {
     margin: calc(var(--rui-spacing) * 0);
   }
@@ -110,6 +113,9 @@
   .rui\:h-24 {
     height: calc(var(--rui-spacing) * 24);
   }
+  .rui\:h-48 {
+    height: calc(var(--rui-spacing) * 48);
+  }
   .rui\:h-full {
     height: 100%;
   }
@@ -118,6 +124,9 @@
   }
   .rui\:max-h-80 {
     max-height: calc(var(--rui-spacing) * 80);
+  }
+  .rui\:min-h-0 {
+    min-height: calc(var(--rui-spacing) * 0);
   }
   .rui\:min-h-16 {
     min-height: calc(var(--rui-spacing) * 16);
@@ -162,6 +171,9 @@
   .rui\:cursor-col-resize {
     cursor: col-resize;
   }
+  .rui\:cursor-default {
+    cursor: default;
+  }
   .rui\:cursor-pointer {
     cursor: pointer;
   }
@@ -179,6 +191,9 @@
   }
   .rui\:justify-center {
     justify-content: center;
+  }
+  .rui\:gap-0\.5 {
+    gap: calc(var(--rui-spacing) * 0.5);
   }
   .rui\:gap-1 {
     gap: calc(var(--rui-spacing) * 1);
@@ -214,6 +229,9 @@
   }
   .rui\:overscroll-contain {
     overscroll-behavior: contain;
+  }
+  .rui\:rounded {
+    border-radius: 0.25rem;
   }
   .rui\:rounded-\[4px\] {
     border-radius: 4px;
@@ -256,6 +274,12 @@
   }
   .rui\:border-border {
     border-color: var(--border);
+  }
+  .rui\:border-border\/50 {
+    border-color: var(--border);
+    @supports (color: color-mix(in lab, red, red)) {
+      border-color: color-mix(in oklab, var(--border) 50%, transparent);
+    }
   }
   .rui\:border-primary {
     border-color: var(--primary);
@@ -579,6 +603,16 @@
       background-color: var(--muted);
     }
   }
+  .rui\:hover\:bg-accent\/50 {
+    &:hover {
+      @media (hover: hover) {
+        background-color: var(--accent);
+        @supports (color: color-mix(in lab, red, red)) {
+          background-color: color-mix(in oklab, var(--accent) 50%, transparent);
+        }
+      }
+    }
+  }
   .rui\:hover\:bg-accent\/80 {
     &:hover {
       @media (hover: hover) {
@@ -659,6 +693,12 @@
       background-color: var(--muted);
     }
   }
+  .rui\:focus-visible\:ring-2 {
+    &:focus-visible {
+      --tw-ring-shadow: var(--tw-ring-inset,) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color, currentcolor);
+      box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+    }
+  }
   .rui\:focus-visible\:ring-\[3px\] {
     &:focus-visible {
       --tw-ring-shadow: var(--tw-ring-inset,) 0 0 0 calc(3px + var(--tw-ring-offset-width)) var(--tw-ring-color, currentcolor);
@@ -677,6 +717,11 @@
     &:focus-visible {
       --tw-outline-style: none;
       outline-style: none;
+    }
+  }
+  .rui\:focus-visible\:ring-inset {
+    &:focus-visible {
+      --tw-ring-inset: inset;
     }
   }
   .rui\:disabled\:pointer-events-none {
@@ -739,6 +784,11 @@
   .rui\:aria-selected\:border-border {
     &[aria-selected="true"] {
       border-color: var(--border);
+    }
+  }
+  .rui\:aria-selected\:bg-accent {
+    &[aria-selected="true"] {
+      background-color: var(--accent);
     }
   }
   .rui\:aria-selected\:bg-background {

@@ -10,6 +10,7 @@
 pub mod button;
 pub mod catalog;
 pub mod checkbox;
+pub mod data_table;
 mod dom;
 #[cfg(target_arch = "wasm32")]
 pub mod drop_zone;
@@ -31,6 +32,7 @@ pub mod spinner;
 pub mod switch;
 pub mod tabs;
 pub mod textarea;
+pub mod tree;
 pub mod workspace;
 
 // The four that float. They stand on the SDK's overlay stack - positioning,
@@ -49,6 +51,8 @@ pub use button::{Button, ButtonSize, ButtonVariant};
 pub use catalog::{Capability, Category, Entry, Presentation, Support, CATALOG};
 pub use checkbox::Checkbox;
 #[cfg(target_arch = "wasm32")]
+pub use data_table::{Column, DataTable};
+#[cfg(target_arch = "wasm32")]
 pub use drop_zone::DropZone;
 #[cfg(target_arch = "wasm32")]
 pub use file_picker::FilePicker;
@@ -65,6 +69,9 @@ pub use spinner::Spinner;
 pub use switch::Switch;
 pub use tabs::{Orientation, Tab, TabPanel, Tabs};
 pub use textarea::TextArea;
+#[cfg(target_arch = "wasm32")]
+pub use tree::Tree;
+pub use tree::TreeNode;
 #[cfg(target_arch = "wasm32")]
 pub use workspace::{Command, CommandPalette};
 pub use workspace::{PanelTab, PanelTabs, Splitter};

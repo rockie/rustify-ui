@@ -61,6 +61,10 @@ impl Default for Random {
 pub struct Dataset {
     ids: Vec<Id>,
     cells: Vec<Row>,
+    /// The next identity to hand out. Never goes back, so an inserted row can
+    /// never collide with one that was deleted, and a selection can name a row
+    /// that has gone without ever naming the wrong one.
+    next_id: Id,
     version: u64,
 }
 
@@ -80,6 +84,7 @@ impl Dataset {
         Dataset {
             ids: (1..=ROWS as Id).collect(),
             cells,
+            next_id: ROWS as Id + 1,
             version: 0,
         }
     }
@@ -107,6 +112,56 @@ impl Dataset {
         let row = self.cells.get(row)?;
         let start = column.checked_mul(CELL)?;
         row.get(start..start + CELL)
+    }
+
+    /// The group a row belongs to: ten groups of ten, by position. A tree
+    /// over positions rather than over values, because the tree is navigation
+    /// and the values are what the jobs are for.
+    pub fn group(row: usize) -> (usize, usize) {
+        (row / 10_000, (row / 1_000) % 10)
+    }
+
+    /// Writes one cell and bumps the version. The value is padded or cut to a
+    /// cell's width: every row is the same shape, and a value that changed
+    /// that would change what a column comparison means.
+    pub fn write(&mut self, row: usize, column: usize, value: &str) -> bool {
+        let Some(target) = self.cells.get_mut(row) else {
+            return false;
+        };
+        let Some(start) = column.checked_mul(CELL).filter(|start| *start < ROW_BYTES) else {
+            return false;
+        };
+        let mut cell = [b' '; CELL];
+        for (slot, byte) in cell.iter_mut().zip(value.bytes()) {
+            *slot = byte;
+        }
+        target[start..start + CELL].copy_from_slice(&cell);
+        self.version += 1;
+        true
+    }
+
+    /// Inserts a row at `row`, with a fresh identity, and returns it.
+    pub fn insert(&mut self, row: usize, cells: Row) -> Option<Id> {
+        if row > self.ids.len() {
+            return None;
+        }
+        let id = self.next_id;
+        self.next_id += 1;
+        self.ids.insert(row, id);
+        self.cells.insert(row, cells);
+        self.version += 1;
+        Some(id)
+    }
+
+    /// Removes a row and returns the identity that has gone.
+    pub fn remove(&mut self, row: usize) -> Option<Id> {
+        if row >= self.ids.len() {
+            return None;
+        }
+        let id = self.ids.remove(row);
+        self.cells.remove(row);
+        self.version += 1;
+        Some(id)
     }
 
     /// FNV-1a over every cell byte in row order.
@@ -153,6 +208,48 @@ mod tests {
             *byte = ALPHABET[(random.next() % 36) as usize];
         }
         assert!(row.iter().all(|byte| ALPHABET.contains(byte)));
+    }
+
+    #[test]
+    fn groups_are_ten_by_ten() {
+        assert_eq!(Dataset::group(0), (0, 0));
+        assert_eq!(Dataset::group(999), (0, 0));
+        assert_eq!(Dataset::group(1_000), (0, 1));
+        assert_eq!(Dataset::group(9_999), (0, 9));
+        assert_eq!(Dataset::group(10_000), (1, 0));
+        assert_eq!(Dataset::group(99_999), (9, 9));
+    }
+
+    #[test]
+    fn an_identity_is_never_handed_out_twice() {
+        let mut data = Dataset {
+            ids: vec![1, 2, 3],
+            cells: vec![[b'A'; ROW_BYTES]; 3],
+            next_id: 4,
+            version: 0,
+        };
+        assert_eq!(data.remove(1), Some(2));
+        assert_eq!(data.insert(1, [b'B'; ROW_BYTES]), Some(4));
+        assert_eq!(data.id(1), Some(4));
+        assert_eq!(data.len(), 3);
+        assert_eq!(data.version(), 2);
+        assert_eq!(data.remove(99), None);
+    }
+
+    #[test]
+    fn writing_a_cell_pads_it_and_bumps_the_version() {
+        let mut data = Dataset {
+            ids: vec![1],
+            cells: vec![[b'A'; ROW_BYTES]; 1],
+            next_id: 2,
+            version: 7,
+        };
+        assert!(data.write(0, 2, "ZZ"));
+        assert_eq!(data.cell(0, 2).unwrap(), b"ZZ              ");
+        assert_eq!(data.version(), 8);
+        // A column that is not there is not a write.
+        assert!(!data.write(0, COLUMNS, "ZZ"));
+        assert_eq!(data.version(), 8);
     }
 
     #[test]

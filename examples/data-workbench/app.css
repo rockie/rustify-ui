@@ -56,3 +56,64 @@ body {
 #scratch:empty {
     display: none;
 }
+
+/* The table view: groups, the grid with its strip under it, and the row
+   being edited. Flex for the same reason the shell is: a row that spans a
+   grid pushes its siblings back to the first column. */
+.workbench .table-layout {
+    display: flex;
+    flex: 1 1 auto;
+    gap: 12px;
+    min-height: 0;
+}
+
+.workbench .groups {
+    flex: 0 0 180px;
+    border: 1px solid #d0d5dd;
+    border-radius: 6px;
+    background: #ffffff;
+}
+
+.workbench .table-middle {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+    min-height: 0;
+}
+
+/* The strip is the whole table squeezed into its own width, so it is as wide
+   as the grid and no taller than a line of it. */
+.workbench .strip-region {
+    display: block;
+    flex: 0 0 32px;
+    width: 100%;
+    border: 1px solid #d0d5dd;
+    border-radius: 4px;
+    background: #101828;
+}
+
+.workbench .details {
+    flex: 0 0 260px;
+    overflow: auto;
+    padding: 8px;
+    border: 1px solid #d0d5dd;
+    border-radius: 6px;
+    background: #ffffff;
+}
+
+.workbench .details h2 {
+    margin: 0 0 8px;
+    font-size: 14px;
+}
+
+.workbench .field {
+    display: flex;
+    gap: 6px;
+    align-items: baseline;
+}
+
+.workbench .field input[type="number"] {
+    width: 90px;
+}

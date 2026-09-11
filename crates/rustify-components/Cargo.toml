@@ -23,4 +23,8 @@ web-sys = { workspace = true, features = [
     # A text field has to know when an input method is composing in it: the
     # keys being used to look a character up are not a value.
     "CompositionEvent",
+    # The windowed table reads and sets a scroll position. Named here rather
+    # than left to whatever the build that pulled this crate in enabled: the
+    # accessors exist on two types with different signatures.
+    "Element",
 ] }

@@ -72,6 +72,20 @@ boot({ wasm_url, on_fatal: runtime_fatal })
             scene_visible() {
                 return app.data_workbench_scene_visible();
             },
+            /// How many times the table has worked out its visible range: the
+            /// table's content version, for a frame budget.
+            window_version() {
+                return Number(app.data_workbench_window_version());
+            },
+            selected() {
+                return Array.from(app.data_workbench_selected());
+            },
+            select_rows(from, count) {
+                return Array.from(app.data_workbench_select_rows(from, count));
+            },
+            open_row(row) {
+                return app.data_workbench_open_row(row);
+            },
             sort_probe(column, ascending = true) {
                 return app.data_workbench_sort_probe(column, ascending);
             },

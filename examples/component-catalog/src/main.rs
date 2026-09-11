@@ -15,19 +15,21 @@ mod app {
     use super::catalog_region::{CatalogAction, CatalogProps, CatalogRegion};
     use leptos::prelude::*;
     use leptos::wasm_bindgen::prelude::*;
+    use rustify_components::data_table::{Cell as GridCell, Column, DataTable};
     use rustify_components::{
         clx, provide_current_path, variants, Boundary, Button, ButtonVariant, Category, Checkbox,
         Dialog, Glyph, Icon, Label, Link, Menu, MenuItem, Progress, RadioGroup, RadioOption,
         ScrollArea, Select, SelectOption, Slider, Spinner, Support, Switch, Tab, TabPanel, Tabs,
-        TextArea, TextField, Tooltip, CATALOG,
+        TextArea, TextField, Tooltip, Tree, TreeNode, CATALOG,
     };
     use rustify_ui::{
         mount, use_theme_values, Anchor, AppHandle, GpuRegion, LocalRect, Locale, MountConfig,
-        RegionState, Theme, ThemedScope,
+        RegionState, Selection, Theme, ThemedScope,
     };
     use std::cell::RefCell;
-    use std::collections::BTreeMap;
+    use std::collections::{BTreeMap, BTreeSet};
     use std::marker::PhantomData;
+    use std::sync::Arc;
 
     clx! {Panel, section, "rui:rounded-md rui:border rui:border-border rui:bg-card rui:p-4"}
     clx! {Row, div, "rui:flex rui:items-center rui:gap-2"}
@@ -536,6 +538,79 @@ mod app {
                 </Tabs>
             }
             .into_any(),
+            // A table of a thousand rows, so that what the page shows is a
+            // windowed table rather than a picture of one, and a tree over the
+            // same thousand.
+            Category::DataTable => {
+                let rows = RwSignal::new(1_000usize);
+                let columns = RwSignal::new(
+                    (0..4)
+                        .map(|index| {
+                            Column::new(format!("c{index}"), format!("column {}", index + 1))
+                        })
+                        .collect::<Vec<_>>(),
+                );
+                let chosen = RwSignal::new(Selection::new());
+                let focus = RwSignal::new(GridCell::default());
+                let goto = RwSignal::new(None);
+                view! {
+                    <DataTable
+                        test_id=id("data-table")
+                        aria_label="a thousand rows"
+                        class="rui:h-48"
+                        rows=rows
+                        columns=columns
+                        cell=Arc::new(|row: usize, column: usize| format!("r{row}c{column}"))
+                        row_id=Arc::new(|row: usize| row as u32 + 1)
+                        selected=chosen
+                        goto=goto
+                        focus=focus
+                        on_select=move |row: usize| {
+                            chosen.update(|selection| {
+                                selection.toggle(row as u32 + 1);
+                            });
+                            values.accept();
+                        }
+                        on_activate=move |_row: usize| values.accept()
+                    />
+                }
+                .into_any()
+            }
+            Category::Tree => {
+                let nodes = RwSignal::new(
+                    (0..3)
+                        .map(|group| {
+                            TreeNode::new(format!("g{group}"), format!("group {}", group + 1)).with(
+                                (0..3)
+                                    .map(|child| {
+                                        TreeNode::new(
+                                            format!("g{group}-{child}"),
+                                            format!("group {}.{}", group + 1, child + 1),
+                                        )
+                                    })
+                                    .collect(),
+                            )
+                        })
+                        .collect::<Vec<_>>(),
+                );
+                let expanded = RwSignal::new(BTreeSet::from(["g0".to_string()]));
+                let picked = RwSignal::new(Option::<String>::None);
+                view! {
+                    <Tree
+                        test_id=id("tree")
+                        aria_label="groups"
+                        class="rui:h-48"
+                        nodes=nodes
+                        expanded=expanded
+                        selected=picked
+                        on_select=move |key: String| {
+                            picked.set(Some(key));
+                            values.accept();
+                        }
+                    />
+                }
+                .into_any()
+            }
             Category::ScrollArea => view! {
                 <ScrollArea
                     test_id=id("scroll-area")

@@ -240,7 +240,7 @@ fn colour(rgb: u32) -> Vec4f {
     Vec4f::from_u32(rgb << 8 | 0xff)
 }
 
-/// Which slot a category is drawn in. Every category has one: the four no
+/// Which slot a category is drawn in. Every category has one: the ones no
 /// region draws get the note slot, which says where they are drawn instead
 /// rather than leaving an empty rectangle.
 fn slot(category: Category) -> &'static str {
@@ -261,7 +261,9 @@ fn slot(category: Category) -> &'static str {
         | Category::Link
         | Category::Tooltip
         | Category::Menu
-        | Category::Dialog => "note_slot",
+        | Category::Dialog
+        | Category::DataTable
+        | Category::Tree => "note_slot",
     }
 }
 

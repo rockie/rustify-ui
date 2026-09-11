@@ -82,33 +82,35 @@ export const B4_ACTIONS = [
 /// Twenty is the PRD's number (R25), and the list is frozen here so that the
 /// check is against a list somebody wrote down rather than against whatever
 /// the application happens to expose. `from` says which milestone builds the
-/// element: until then the entry is a commitment, not a passing check.
+/// element: until then the entry is a commitment, not a passing check. The
+/// table's own controls arrive with the table (M2); the ones that drive a job
+/// arrive with the jobs (M3); the scene's arrive with the scene (M4).
 export interface Locator {
     testId: string;
     role: string;
     name: string;
     side: "table" | "scene";
-    from: "M2" | "M4";
+    from: "M2" | "M3" | "M4";
 }
 
 export const LOCATORS: Locator[] = [
-    { testId: "table-grid", role: "grid", name: "rows", side: "table", from: "M2" },
+    { testId: "table", role: "grid", name: "the sample", side: "table", from: "M2" },
     { testId: "table-goto", role: "spinbutton", name: "go to row", side: "table", from: "M2" },
-    { testId: "table-find", role: "searchbox", name: "find", side: "table", from: "M2" },
-    { testId: "table-filter", role: "searchbox", name: "filter", side: "table", from: "M2" },
-    { testId: "table-status", role: "status", name: "selection", side: "table", from: "M2" },
+    { testId: "table-insert", role: "button", name: "insert 10", side: "table", from: "M2" },
+    { testId: "table-delete", role: "button", name: "delete 10", side: "table", from: "M2" },
+    { testId: "table-status", role: "status", name: "", side: "table", from: "M2" },
     { testId: "table-column-0", role: "columnheader", name: "column 1", side: "table", from: "M2" },
     { testId: "table-column-1", role: "columnheader", name: "column 2", side: "table", from: "M2" },
     { testId: "table-tree", role: "tree", name: "groups", side: "table", from: "M2" },
-    { testId: "table-tree-0", role: "treeitem", name: "group 1", side: "table", from: "M2" },
-    { testId: "table-tree-0-0", role: "treeitem", name: "group 1.1", side: "table", from: "M2" },
+    { testId: "table-tree-g0", role: "treeitem", name: "group 1", side: "table", from: "M2" },
+    { testId: "table-tree-g0-0", role: "treeitem", name: "group 1.1", side: "table", from: "M2" },
     { testId: "table-detail-0", role: "textbox", name: "column 1", side: "table", from: "M2" },
-    { testId: "table-detail-1", role: "textbox", name: "column 2", side: "table", from: "M2" },
     { testId: "table-detail-submit", role: "button", name: "save", side: "table", from: "M2" },
-    { testId: "table-cancel", role: "button", name: "cancel", side: "table", from: "M2" },
+    { testId: "table-find", role: "searchbox", name: "find", side: "table", from: "M3" },
+    { testId: "table-filter", role: "searchbox", name: "filter", side: "table", from: "M3" },
     { testId: "scene-find", role: "searchbox", name: "find an object", side: "scene", from: "M4" },
     { testId: "scene-selected", role: "list", name: "selected", side: "scene", from: "M4" },
-    { testId: "scene-selected-count", role: "status", name: "selected", side: "scene", from: "M4" },
+    { testId: "scene-selected-count", role: "status", name: "", side: "scene", from: "M4" },
     { testId: "scene-detail-label", role: "textbox", name: "label", side: "scene", from: "M4" },
     { testId: "scene-detail-submit", role: "button", name: "save", side: "scene", from: "M4" },
     { testId: "scene-clear", role: "button", name: "clear the selection", side: "scene", from: "M4" },

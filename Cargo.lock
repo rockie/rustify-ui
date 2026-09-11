@@ -308,6 +308,7 @@ name = "data-workbench"
 version = "0.1.0"
 dependencies = [
  "leptos",
+ "rustify-components",
  "rustify-makepad",
  "rustify-ui",
  "wasm-bindgen",

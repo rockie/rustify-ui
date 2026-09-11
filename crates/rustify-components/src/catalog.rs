@@ -1,8 +1,13 @@
 //! What each component category actually supports, in one table.
 //!
 //! R18 asks a catalogue for eighteen categories with no blank support cell.
-//! All eighteen have a DOM component now; what differs between them is what a
-//! GPU region can draw of one, and every row says which and why.
+//! All eighteen have a DOM component; what differs between them is what a GPU
+//! region can draw of one, and every row says which and why.
+//!
+//! Two more categories were added for the large loads. They are not R18's, and
+//! the count is no longer R18's count: a table of a hundred thousand rows and
+//! a tree over them are components in this crate, so they answer the same six
+//! questions as the rest rather than being described only in a plan.
 //!
 //! Every entry answers the same six questions (properties, actions, theme,
 //! input, accessibility, environment), so a reader never has to guess whether
@@ -13,8 +18,8 @@
 
 use std::fmt::Write as _;
 
-/// The eighteen categories R18 names. The catalogue covers all of them; it
-/// does not implement all of them.
+/// The eighteen categories R18 names, and the two the large loads added. The
+/// catalogue covers all of them; it does not implement all of them.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum Category {
     Button,
@@ -35,6 +40,8 @@ pub enum Category {
     Dialog,
     Tabs,
     ScrollArea,
+    DataTable,
+    Tree,
 }
 
 impl Category {
@@ -59,6 +66,8 @@ impl Category {
             Self::Dialog => "dialog",
             Self::Tabs => "tabs",
             Self::ScrollArea => "scroll area",
+            Self::DataTable => "data table",
+            Self::Tree => "tree",
         }
     }
 }
@@ -154,8 +163,8 @@ impl Entry {
     }
 }
 
-/// The catalogue. Eighteen categories, every cell answered.
-pub const CATALOG: [Entry; 18] = [
+/// The catalogue. Twenty categories, every cell answered.
+pub const CATALOG: [Entry; 20] = [
     Entry {
         category: Category::Button,
         presentation: Presentation {
@@ -408,6 +417,34 @@ pub const CATALOG: [Entry; 18] = [
         accessibility: cap(Support::Yes, "role=group with a name, so a reader knows which box the keyboard landed in"),
         environment: cap(Support::Partial, "a region's is makepad's own ScrollBars on a View; the boundary a wheel is handed back at is P2 M6"),
     },
+    Entry {
+        category: Category::DataTable,
+        presentation: Presentation {
+            dom: Support::Yes,
+            gpu: Support::No,
+            across_regions: Support::Partial,
+        },
+        properties: cap(Support::Yes, "how many rows, which columns, a callback per cell and a callback per row identity; it holds no data, so a sorted, filtered or edited view is the same table asked different questions"),
+        actions: cap(Support::Yes, "select a row, open a row, and ask to be shown a row; scrolling is the browser's"),
+        theme: cap(Support::Yes, "border, muted header and the accent a selected row is drawn in"),
+        input: cap(Support::Yes, "pointer, the arrows, PageUp/PageDown, Home/End and Ctrl+Home/End, Space to select and Enter or F2 to open"),
+        accessibility: cap(Support::Yes, "role=grid with aria-rowcount over every row, not only the drawn ones; each row carries its real aria-rowindex and its business id, and one cell at a time takes the tab stop"),
+        environment: cap(Support::Partial, "macOS Chrome, strict CSP; no region draws a table - the GPU half of this load is the selection strip beside it - and the row elements are a pool, so a reader meets the rows on screen plus the overscan and reaches the rest by scrolling"),
+    },
+    Entry {
+        category: Category::Tree,
+        presentation: Presentation {
+            dom: Support::Yes,
+            gpu: Support::No,
+            across_regions: Support::Partial,
+        },
+        properties: cap(Support::Partial, "two fixed levels of groups, which are open, and which one is chosen; no arbitrary depth and no virtualisation"),
+        actions: cap(Support::Yes, "open or close a group, and choose one"),
+        theme: cap(Support::Yes, "accent for the chosen group and the scope's focus ring"),
+        input: cap(Support::Yes, "pointer; the arrows walk what is showing, right opens a group and steps into it, left closes one and steps out of a child"),
+        accessibility: cap(Support::Yes, "role=tree and role=treeitem with aria-expanded, aria-level and aria-selected; one tab stop for the whole tree"),
+        environment: cap(Support::Partial, "macOS Chrome, strict CSP, no inline script or style; no region draws a tree - a region takes the group a person chose as a projection, like any other value"),
+    },
 ];
 
 /// The row for one category.
@@ -453,7 +490,7 @@ pub fn markdown() -> String {
 mod tests {
     use super::*;
 
-    const ALL: [Category; 18] = [
+    const ALL: [Category; 20] = [
         Category::Button,
         Category::Label,
         Category::Link,
@@ -472,11 +509,15 @@ mod tests {
         Category::Dialog,
         Category::Tabs,
         Category::ScrollArea,
+        Category::DataTable,
+        Category::Tree,
     ];
 
     #[test]
-    fn every_one_of_the_eighteen_categories_appears_exactly_once() {
-        assert_eq!(CATALOG.len(), 18);
+    fn every_category_appears_exactly_once() {
+        // R18's eighteen, plus the table and the tree the large loads added.
+        assert_eq!(CATALOG.len(), 20);
+        assert_eq!(ALL.len(), CATALOG.len());
         for category in ALL {
             let found = CATALOG
                 .iter()
@@ -594,7 +635,7 @@ mod tests {
     fn every_row_is_printed_with_ten_filled_cells() {
         let table = markdown();
         let rows: Vec<&str> = table.lines().skip(2).collect();
-        assert_eq!(rows.len(), 18);
+        assert_eq!(rows.len(), CATALOG.len());
         for row in rows {
             let cells: Vec<&str> = row.trim_matches('|').split('|').map(str::trim).collect();
             assert_eq!(cells.len(), 10, "{row}");

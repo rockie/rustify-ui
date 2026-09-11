@@ -301,6 +301,15 @@ declare global {
                     asked: number;
                     reported: number;
                 };
+                table: {
+                    selected: number;
+                    hidden: number;
+                    editing: number | null;
+                    group: string | null;
+                    jumps: number;
+                    saves: number;
+                    window_version: number;
+                };
             };
             diagnostics(): {
                 runtime: number;
@@ -326,6 +335,10 @@ declare global {
             look_at(x: number, y: number): boolean;
             freeze_scene(on: boolean): boolean;
             scene_visible(): number;
+            window_version(): number;
+            selected(): number[];
+            select_rows(from: number, count: number): number[];
+            open_row(row: number): boolean;
             sort_probe(column: number, ascending?: boolean): boolean;
             sort_probe_state(): { running: boolean; slices: number; ms: number; rows: number };
             sort_probe_order(from: number, count: number): number[];
