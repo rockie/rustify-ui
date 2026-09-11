@@ -40,13 +40,13 @@
 
 ### 恢复快照
 
-- 最近更新：2026-09-12（M2 完成并全部跑绿）
-- 当前进度：2/8 个里程碑完成
-- 当前状态：M1、M2 均已完成并全部跑绿（见完成记录）。M2 把上一轮写好但一次没跑过的 11 条浏览器用例跑到绿，途中查出七个问题（六个在产品、一个在用例）与两处与本期无关的既有 flaky，结论与数字见 `docs/validation/p3/m2.md`。**正文已随实现修订三处**：§1.2 的 `data_table` 行（行与列都是按槽位复用的池、窗口长度处处相同、焦点在窗口重算之后落位）、§5.3 第 4 步（焦点落位的机制与「不回读自己放的焦点」）、§10 的 M2 行（目录变 20 类牵动的是四处计数，不是两处）。另新增 `tests/browser/support.ts` 的 `waitForQuiet`——计划里没有，是既有 flaky 的修法，改在共享夹具里，所以七个 project 全部重跑过
-- 最近完成：**M2 · 表格、树与选择**（2026-09-12）
-- 下一步：**M3 · 作业：排序、筛选、查找与取消**——`crates/rustify-ui/src/job.rs` 与单测（时间预算切片、取消、片前版本校验、进度、只有最新生效）、`JobCancelled` 登记、列头排序与筛选框与树分组筛选与查找入口、进度与取消 UI、作业中插入/删除/编辑的陈旧重跑。退出条件见 §10 的 M3 行与 §9.1 的 V3；孪生预期在 `tests/browser/dataset.ts`，`loads.ts` 里 M3 该补的定位项是 `table-find` 与 `table-filter` 两条
+- 最近更新：2026-09-12（M3 完成并全部跑绿；按用户要求在此停下，M4 留给新对话）
+- 当前进度：3/8 个里程碑完成
+- 当前状态：M1、M2、M3 均已完成并全部跑绿（见完成记录）。M3 交付分片作业（`job.rs`）、排序/筛选/分组/查找四种作业、进度与取消 UI、写入让作业失效并重跑一次；数字见 `docs/validation/p3/m3.md`：整份样本排序端到端 p50 59 ms / p95 114 ms（门 500 ms）、5–13 片中位 7 片，取消反馈 p50 7.6 ms / p95 9.0 ms（门 100 ms），两者都只是测量值，成门在 M8。**正文已随实现修订四处**：§2 的 `job` 行（`Job::new` + `job::run` 分家、`Budget::did/exhausted` 分开、取消走 `Requests::cancel`）、§2 的 `DataTable` 行（`sorted`/`on_sort`）、§1.2 的示例文件行（新增 `src/scan.rs` 与 `src/view.rs`）、§5.2 第 2/4 条（排序排的是视图、筛选换掉视图、查找扫视图；字节序里数字在字母之前）
+- 最近完成：**M3 · 作业：排序、筛选、查找与取消**（2026-09-12）
+- 下一步：**M4 · 场景**——前置已在 M1 交付（视口剔除、绝对相机 props、`Viewport` 上报、高亮、`freeze_scene`）。本里程碑补 `scene_layout::{within,pick}`、真实输入路径（平移流/框选/命中/接受计数出口）、`/scene` 视图（查找入口、选中列表、详情表单）、20 项定位清单的场景侧 6 项，并**解决 F24：让一次相机变化在同一帧呈现**（现状每两帧一次，见 §11 风险表与 `docs/validation/p3/m1.md`）。退出条件见 §10 的 M4 行与 §9.1 的 V4；孪生预期在 `tests/browser/dataset.ts`（`sceneRect`/`sceneVisible`/`sceneClamp`），负载定义在 `loads.ts` 的 B3
 - 当前阻塞：无。A-4（VoiceOver 人工记录或用户豁免）仍开放，最晚 M8 确认
-- 代码基线：`122a49f`（M2 的提交；M1 为 `a6968ca`）
+- 代码基线：`d0a193e`（M3 的提交；M2 为 `122a49f`，M1 为 `a6968ca`）
 
 ### 完成记录
 
@@ -54,6 +54,7 @@
 | --- | --- | --- | --- | --- |
 | M1 | 2026-09-11 | 探针与负载冻结。`stats().frames`（呈现计数）与 `defer` 的 MessageChannel 让出落在 `embedded.js`——**呈现计数不动分叉**：`FromWasmBeginRenderCanvas` 派发在嵌入区域对象上，覆写即可计到同一批呈现，D8 与 §1.2 已按此改。`web/loader.js` 改为按实例 `boot`（首个实例走静态导入，其后动态求值 `./bindgen.js?instance=n`、共用同一个 `WebAssembly.Module`）+ 导出调用边界（fatal 后抛 `InstanceDead`，`RuntimeError` 先 `enter_fatal` 再重抛）+ 按 glue URL 归属页面级 `error` + 每实例 `AbortController` + 上限 3 次的 `restart()` + `release_container()`；fusion-basic 加真实 trap 出口（`fusion_basic_trap()` 与处理器内 panic 的按钮）与第二实例容器。新增 `examples/data-workbench` 骨架：数据集（xorshift32 固定种子、100,000 × 20 × 16 字节、FNV-1a 校验和）、场景布局与视口剔除的 `SceneView`/`SceneRegion`、可分片的稳定归并排序、路由与测试出口；`tests/browser/{dataset,loads}.ts` 孪生与冻结的负载定义；`budgets.ts` 增 B0/B2/B3 段（M1 只写数值与边界，不断言）；第四个 project（4178）与 CI 显式 project 清单。**五个探针的结论见 §0.2 与 `docs/validation/p3/m1.md`**：四个成立，A-3 走「只有有头通过」分支；另发现 F24（场景每两帧才呈现一次）交给 M4。只交付有调用方的 API：数据集的写入、场景的框选与命中、排序的进度随 M2–M4 的调用方一起加 | `docs/validation/p3/m1.md`；`--project=data-workbench` **7/7**（含严格 CSP 下启动 0 违规、孪生哈希与 1,000 采样相等、排序结果逐行相等）；六个既有 project 全绿：`fusion-basic` **56/56**、`property-workbench` **129/129**、`component-catalog` **46/46**、`budget` **4/4**（冷 p95 162 ms、首载 2,772,456 B、B1 时延 p95 41.7 ms，P2 为 42.2 ms，让出机制换成消息端口没有代价）、`workbench-deep` **6/6**、`deployment` **6/6**；`cargo test --workspace --lib` 158、`-p data-workbench` 13、`-p xtask` 23；`cd makepad && cargo test` 与脚本 VM 测试通过；clippy `-D warnings` / fmt 通过；`cargo xtask sources verify` 通过（分叉未改动）；`cargo xtask build-web --example data-workbench --release` 通过 | `a6968ca` |
 | M2 | 2026-09-12 | 表格、树与选择。SDK 的 `selection.rs`（按 ID 的选择集：排序筛选保留、删除即清除、隐藏数是对视图的提问）；组件的 `data_table/{mod,window,keys,view}.rs`（行与列都是按槽位复用的元素池、窗口长度处处相同、`role="grid"` 与真实 `aria-rowindex`、一个网格一个 tab 停、跳行入口、`window_version` 出口）与 `tree.rs`（两层分组、方向键、`aria-expanded` 随开合变化）；能力目录加两行，目录因此是 20 类；data-workbench 的 `/table` 视图（窗口化表格 + 树 + 20 字段详情表单 + `StripRegion` 概览带 + 插入/删除）；`docs/data.md`。**跑用例查出七个问题**（详见 `docs/validation/p3/m2.md`）：①`/`→`/table` 的重定向用闭包选视图，视图被拆建一次、连带 GPU 区域，第二个上下文当场丢失（改 `Memo`）；②canvas 是替换元素，`min-height: auto` 下 flex-basis 管不住高度，概览带占了 458 px（显式写高）；③窗口在表格两端会变短，键盘所在的槽位被删掉（窗口改为处处等长，附六个滚动位置的单测）；④槽位显示哪一行是响应式属性，写得比移焦点的效果晚——按槽位找元素，且不回读自己放的焦点；⑤表头在滚动条外按列号偏移，横向一滚就对不齐；⑥树的 `aria-expanded` 是捕获的不是读的，列表按分组 key，元素不重建所以永远不变；⑦两条用例定位写错（数字输入框的 spinbutton 角色是隐式的、`TextField` 的 test id 在 input 本身）。另修两处既有 flaky：`xtask` 两个测试共用一个临时目录；catalog 在 ready 之后还会阻塞主线程约 6 s（在 `c5f135a` 上复测为 5.9/6.1 s，非本期引入），`waitForReady` 增加「等页面不再迟到掉帧」 | `docs/validation/p3/m2.md`；七个 project 全绿，逐个单跑：`data-workbench` **18/18**、`fusion-basic` **56/56**、`property-workbench` **129/129**、`component-catalog` **46/46**、`budget` **4/4**（冷 p95 149 ms、热 142 ms、首载 2,776,616 B、B1 时延 p95 42.0 ms）、`workbench-deep` **6/6**、`deployment` **6/6**；`cargo test --workspace --lib` 191（components 68、makepad 3、ui 120）、`-p data-workbench` 16、`-p xtask` 23（连跑 15 次）；`cd makepad && cargo test` 与脚本 VM 测试通过；clippy `-D warnings` / fmt 通过；`cargo xtask catalog --check`（20 行）、`css --check`、`sources verify` 通过；四个示例均以本工作树重新构建后再跑 | `122a49f` |
+| M3 | 2026-09-12 | 作业：排序、筛选、查找与取消。SDK 的 `job.rs`（按时钟切片、行数只作上限、每片前与完成时校验数据版本、票据失效即停、`progress()`/`slices()`），`task.rs` 增 `Requests::cancel()`，诊断增 `JobCancelled`（Info，目录因此 16 类）；组件的 `DataTable` 增 `sorted`/`on_sort`（列头是真正的 `<button>`，每个可排序列头带 `aria-sort`）；示例新增 `src/scan.rs`（筛选/分组/查找逐格匹配）与 `src/view.rs`（视图与写入后的就地修正），`sort.rs` 增 `processed()`/`work()` 供进度；`/table` 接上列头排序、筛选框、树分组筛选、查找框、进度与取消、陈旧标记与空结果。**三处查出的问题**（详见 `docs/validation/p3/m3.md`）：①旧作业被取代后仍然覆写状态行，四个作业同轮发出时状态行会说「已取消」而实际在跑——作业改为编号，只有最新的那个是状态行的主语；②`A-Z0-9` 不是字节序，数字在字母之前，写成全 A 并期望排第一的用例是用例错了；③三条「作业中写入」用例此前靠运气：驱动从测试进程发出，写入落点不确定，现改为在页内等作业真的跑过一片再写，并断言写入落下时作业确实在跑 | `docs/validation/p3/m3.md`；七个 project 全绿，逐个单跑：`data-workbench` **32/32**（7 探针 + 11 表格 + 14 作业）、`fusion-basic` **56/56**、`property-workbench` **129/129**、`component-catalog` **46/46**、`budget` **4/4**（冷 p95 154 ms、热 143 ms、首载 2,776,741 B、B1 时延 p95 41.7 ms）、`workbench-deep` **6/6**、`deployment` **6/6**；页内测量：整份样本排序 p50 59 ms / p95 114 ms、5–13 片（中位 7），取消反馈 p50 7.6 ms / p95 9.0 ms，排序与筛选结果与孪生逐项相等；`cargo test --workspace --lib` 202（components 68、makepad 3、ui 131）、`-p data-workbench` 33、`-p xtask` 23；`cd makepad && cargo test` 与脚本 VM 测试通过；clippy `-D warnings` / fmt 通过；`cargo xtask catalog --check`（20 行）、`css --check`、`sources verify` 通过；四个示例均以本工作树重新构建后再跑 | `d0a193e` |
 
 ## 0. 需求、范围与决策
 
@@ -223,7 +224,7 @@ flowchart TD
 
 | 路径 | 责任 | 首次落点 |
 | --- | --- | --- |
-| `examples/data-workbench/` ★（`Cargo.toml`、`index.html`、`app.js`、`app.css`、`src/main.rs`、`src/dataset.rs`、`src/scene_layout.rs`、`src/scene_view.rs`、`src/scene_region.rs`、`src/sort.rs`；M2 再加 `src/strip_region.rs`） | 第四示例：数据集与版本、视图与作业、两个视图、GPU 场景与概览带、测试出口。`scene_view.rs` 是被 `scene_region.rs` 摆进根视图的 widget（与 `object_grid.rs`/`object_region.rs` 同一分法：一个文件一个 `script_mod!`）；`sort.rs` 是应用自己的作业规则函数，M3 由 `job.rs` 驱动 | M1 骨架（数据集、场景、分片排序、测试出口），M2–M4 填充 |
+| `examples/data-workbench/` ★（`Cargo.toml`、`index.html`、`app.js`、`app.css`、`src/main.rs`、`src/dataset.rs`、`src/scene_layout.rs`、`src/scene_view.rs`、`src/scene_region.rs`、`src/sort.rs`；M2 再加 `src/strip_region.rs`；M3 再加 `src/scan.rs`（筛选/分组/查找对一行的提问，逐格匹配——定长格首尾相接，整行搜索会搜出行里没有的东西）与 `src/view.rs`（表格在看哪些行、写入后如何就地修正） | 第四示例：数据集与版本、视图与作业、两个视图、GPU 场景与概览带、测试出口。`scene_view.rs` 是被 `scene_region.rs` 摆进根视图的 widget（与 `object_grid.rs`/`object_region.rs` 同一分法：一个文件一个 `script_mod!`）；`sort.rs` 是应用自己的作业规则函数，M3 由 `job.rs` 驱动 | M1 骨架（数据集、场景、分片排序、测试出口），M2–M4 填充 |
 | `crates/rustify-ui/src/job.rs` ★ | 分片作业：步进、切片大小、票据取消、进度；纯逻辑 + `defer` 驱动 | M3 |
 | `crates/rustify-ui/src/selection.rs` ★ | 按 ID 的选择集：删除清除、排序筛选保留、隐藏计数 | M2 |
 | `crates/rustify-ui/src/region.rs` | GPU 启动有界重试（D7） | M5 |
@@ -252,9 +253,9 @@ flowchart TD
 
 | 模块 | 调用者 | 入口与不变量 | 接缝/隐藏复杂度 | 依赖及验证面 |
 | --- | --- | --- | --- | --- |
-| `job`（SDK，纯逻辑 + `defer`） | 示例的排序/筛选/查找 | `Job::start(requests, version: impl Fn() -> u64, work) -> Ticket`；`work: FnMut(&mut Budget) -> Step::{More, Done(T)}`，每步在 `Budget{ deadline: 8 ms, max_rows: 16_384 }` 内做一片，`work` 每处理 512 行问一次 `budget.exhausted()`；每步之间一个 `defer`（MessageChannel 让出）；每步开始前读 `version()`，与发起时不等即 `Stale`（不读数据、不投递，回调一次让应用决定重跑）；`Ticket` 失效（新作业发出、作用域关闭、显式 `cancel`）后下一步不再运行且结果不投递；`Done` 时整体投递一次；`progress() -> (done, total)` 供 UI 显示 | 切片预算、让出点与版本校验集中一处；结果双缓冲（作业期间旧视图不动） | 宿主单测（步数、时间预算、取消、版本变化在片间被拦住、乱序完成、进度）+ V3 |
+| `job`（SDK，纯逻辑 + `defer`） | 示例的排序/筛选/查找 | `Job::new(ticket, version, clock, total, work)` 造状态机，`job::run(job, on_end)` 驱动（wasm 侧，每步之间一个 `defer` 让出）；`work: FnMut(&mut Budget) -> Step::{More, Done(T)}`，每步在 8 ms / 16,384 行内做一片，`work` 每处理 512 行 `budget.did(rows)` 记账、`budget.exhausted()` 问一次（**记账与提问分开**：只在提问时记账会漏掉最后一批不足 512 行的行，进度永远差几百）；每步开始前与 `Done` 时读 `version()`，与发起时不等即 `Ended::Stale`（不读数据、不投递，回调一次让应用决定重跑）；`Ticket` 失效（新作业发出、作用域关闭、`Requests::cancel()` ★）后下一步不再运行且结果不投递；`Done` 时整体投递一次；`progress() -> (done, total)`、`slices()` 供 UI 与测量 | 切片预算、让出点与版本校验集中一处；纯状态机与驱动分开，所以每条规则都有不用浏览器的单测 | 宿主单测（步数、时间预算、取消、版本变化在片间被拦住、乱序完成、进度）+ V3 |
 | `selection`（SDK，纯逻辑） | 表格、场景、概览带 | `Selection::{toggle, set, clear, remove_deleted(&[Id]), contains}`；`counts(view: impl Fn(Id) -> bool) -> {visible, hidden}`；不变量：只含存活 ID | 三条规则集中一处 | 宿主单测 + V2/V4 |
-| `DataTable`（components） | 示例 | `rows: Signal<usize>`、`columns: Signal<Vec<Column>>`、`cell: Rc<dyn Fn(row, col) -> String>`、`row_id: Rc<dyn Fn(row) -> Id>`、`row_height`、`selected: Signal<Selection>`、`on_select`、`on_activate`、`goto: RwSignal<Option<usize>>`；不变量：DOM 中行元素数 ≤ 可见行 + 2 × 过扫；`aria-rowcount` 恒等于 `rows`；焦点在一个 `gridcell` 上且 `aria-rowindex` 是其真实行号 | 行元素池与可见范围（`window.rs`）、键盘映射（`keys.rs`）藏在组件内；只有一个调用方，所以不进 SDK | 宿主单测（`window.rs` 的范围/过扫/跳行/末尾夹取）+ V2 |
+| `DataTable`（components） | 示例 | `rows: Signal<usize>`、`columns: Signal<Vec<Column>>`、`cell: Rc<dyn Fn(row, col) -> String>`、`row_id: Rc<dyn Fn(row) -> Id>`、`row_height`、`selected: Signal<Selection>`、`on_select`、`on_activate`、`goto: RwSignal<Option<usize>>`、`sorted: Signal<Option<(col, asc)>>` ★、`on_sort: Arc<dyn Fn(col)>` ★（列头带 `on_sort` 时是真正的 `<button>`，可键盘到达；每个可排序列头都带 `aria-sort`，不是当前排序列时为 `none`）；不变量：DOM 中行元素数 ≤ 可见行 + 2 × 过扫；`aria-rowcount` 恒等于 `rows`；焦点在一个 `gridcell` 上且 `aria-rowindex` 是其真实行号 | 行元素池与可见范围（`window.rs`）、键盘映射（`keys.rs`）藏在组件内；只有一个调用方，所以不进 SDK | 宿主单测（`window.rs` 的范围/过扫/跳行/末尾夹取）+ V2 |
 | `Tree`（components） | 示例 | `nodes: Signal<Vec<TreeNode>>`（两层）、`expanded`、`selected`、`on_select`；`role="tree"/"treeitem"`、`aria-expanded`、方向键、Home/End | 不虚拟化 | V2 |
 | `SceneRegion`（示例，`RegionApp`） | 示例 | props：`layout: Arc<Vec<SceneRect>>`、`selected: Arc<Selection>`、`camera: {x, y}`、`highlight: Option<Id>`；actions：`Camera{x, y}`（`Continuous("pan")`，区域把指针/滚轮增量累计到本地相机后发**绝对值**——同批多次输入只剩最后一个也不丢位移）、`Marquee{rect}`（Discrete，释放时一次）、`Pick(Id)`、`Hover`（`Continuous("hover")`）、`Viewport{rect}`（`Continuous("viewport")`，每次绘制后上报可见范围与相机）；不变量：只绘制与视口相交的矩形与标签；框选结果由应用按布局计算，区域只报矩形；本地相机只在 props 的 `camera` 与区域最后发出的值不同时（应用夹取或查找定位）被 props 覆盖 | 视口剔除与命中在区域；选择规则在 SDK | V4 |
 | `StripRegion`（示例，`RegionApp`） | 示例 | props：`buckets: Arc<Vec<u16>>`（视图行按像素列分桶的选中数）、`viewport: (start, end)`；action：`Jump(bucket)` | 桶由应用算 | V2 |
@@ -320,9 +321,9 @@ flowchart TD
 ### 5.2 作业
 
 1. 切片与让出：每片以 8 ms 时间预算为准（`Budget::exhausted()`，每 512 行问一次），行数 16,384 只是上限；片间让出走 `defer`，而 `defer` 改为 MessageChannel（D4/F2）——链式 `setTimeout(0)` 每片至少 4 ms，150 片就吃掉整个 500 ms 门。每片开始前比对 `version`，不等即 `Stale`。
-2. 排序：对 `order` 的副本做分片归并——第一阶段按预算排若干段（比较 16 字节切片），第二阶段按预算归并；完成后整体替换 `View`。取消：票据失效，副本丢弃，旧视图不动。A-7 探针⑤在 M1 先测端到端 p95 与片数。
+2. 排序：对**当前视图** `order` 的副本做分片归并——第一阶段按预算排若干段（比较 16 字节切片），第二阶段按预算归并；完成后整体替换 `View`。取消：票据失效，副本丢弃，旧视图不动。A-7 探针⑤在 M1 先测端到端 p95 与片数。**排序排的是视图、筛选换掉视图**：先筛后排保留筛选，先排后筛丢掉排序；两者组合的后果写在 `docs/data.md`。比较是字节序，而样本字母表写作 `A-Z0-9` 却不是它的顺序——数字在字母之前。
 3. 筛选：每片在预算内扫描行 × 20 列的子串匹配，命中索引追加到缓冲；完成后替换。分组树点击 = 一个带分组谓词的筛选作业。
-4. 查找：每片在预算内扫描，首个命中即 `Done`；结果是 `goto` 该行。
+4. 查找：每片在预算内扫描**当前视图**（落点是人正在看的那个位置），首个命中即 `Done`；结果是 `goto` 该行。筛选则扫整份样本——上一次筛选藏起来的行正是这一次可能要的。
 5. 取消与反馈：取消按钮点击在同一帧把作业状态置为「已取消」并记 `JobCancelled`（Info），UI 即时切换——这就是 R30 AC3 的「取消反馈」，页内从点击到呈现计时；正在跑的那一步跑完即停，不再 `defer` 下一步。
 6. 版本：作业记录发起时的 `version`；每片开始前与完成时比对，不等则该片不读数据、结果丢弃，应用自动以新版本重跑一次（最多一次，避免连续编辑下的重跑风暴）。删除移动了 `cells`/`ids`，作业持有的行索引因此失效——校验在读取之前，所以失效索引不会被读到。
 7. 一次只有一个视图作业：新作业发出即使旧票据失效（一期 `Requests` 语义）。
