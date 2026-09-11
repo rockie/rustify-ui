@@ -1,19 +1,27 @@
 # Manual record: VoiceOver over the catalogue and B1
 
-<!-- Fill in every field. `verify --suite p2` reports this record as
-outstanding while the STATUS line below still says NOT PERFORMED. -->
+STATUS: WAIVED
 
-STATUS: NOT PERFORMED
+Partial result, 2026-09-11: the user reported **PASS** and clarified
+“只走查了 dialog 弹窗” (only the dialog walkthrough). The user then instructed
+“不查了，跳过” (stop checking and skip). The remaining VoiceOver checks are
+waived for P2; they were not performed and are not recorded as passes. This
+decision does not waive pinyin, text samples, or contrast and zoom acceptance.
 
 | | |
 | --- | --- |
-| Date | |
-| Device | |
-| OS | |
-| Browser and version | |
-| Assistive technology and version | |
-| Build id | (from `build-manifest.json`, or the page's own diagnostics) |
-| Performed by | |
+| Date | 2026-09-11 |
+| Device | Local Mac, model identifier Mac17,9 |
+| OS | macOS 26.6.2 (25G83) |
+| Browser and version | Google Chrome 152.0.7977.84 installed locally |
+| Assistive technology and version | VoiceOver 10 (993) installed locally |
+| Build id | component-catalog: `bee689d75a2bd76f`, served at `http://127.0.0.1:4176/` |
+| Performed by | User, reporting the result in this conversation |
+
+The OS and installed application versions were read from the local machine;
+the build ID was read from the running server's `build-manifest.json`.
+The result and its scope come from the user. No verbatim speech transcript
+or individual step observations were supplied.
 
 ## What to do
 
@@ -47,10 +55,13 @@ VoiceOver on macOS with Chrome at the version in the table above.
 
 | # | What was done | What VoiceOver said | Pass / fail |
 | --- | --- | --- | --- |
-| 1 | | | |
-| 2 | | | |
+| 1 | Dialog walkthrough described in the conversation: locate `open the dialog`, open `a modal dialog`, inspect navigation, close with Escape and check focus return | No verbatim transcript supplied | PASS — user-reported; dialog only |
+| 2 | Remaining catalogue categories and component state matrices | Not recorded | SKIPPED — user decision, 2026-09-11 |
+| 3 | Menu, select and tooltip walkthroughs | Not recorded | SKIPPED — user decision, 2026-09-11 |
+| 4 | B1's five journeys in property-workbench | Not recorded | SKIPPED — user decision, 2026-09-11 |
 
 ## Findings
 
-<!-- One line per problem. If there were none, say so explicitly - "no
-findings" is a result; an empty section is an unfinished record. -->
+No dialog issue was reported. Only that walkthrough has a user-reported pass.
+The remaining rows are untested and waived as P2 completion gates by the user;
+this record does not establish full screen-reader support.

@@ -54,11 +54,14 @@ shortage of time, and which of those it was is said plainly.
 
 ## Not verified here
 
-- The four manual records (`cargo xtask verify --suite p2` lists them):
-  VoiceOver over the catalogue and B1, real pinyin input, the twenty samples
-  against a reference rendering, and the 200%/400% reflow walkthrough. The
-  contrast *ratios* are a host test; what needs a person is looking at the pages
-  at those zoom levels.
+- VoiceOver: the user reported the dialog walkthrough passed on 2026-09-11
+  and waived the remaining catalogue and B1 checks. Those remain untested;
+  this does not establish full screen-reader support.
+- Pinyin, text samples, and contrast and zoom have overall user-reported
+  passes dated 2026-09-11. Individual input strings, reference images, per-sample
+  DOM/GPU comparisons and per-zoom/theme observations were not supplied. These
+  records close the P2 manual acceptance disposition; they are not independent
+  evidence that the Arabic/Hebrew font gap is fixed or the full matrix passed.
 - Safari is observed, not gated. macOS Chrome at a fixed version is the gate.
 - The performance gate is one machine and one browser. R29 and R30's B1 figures
   became a pass/fail on 2026-09-11 (A-3 closed) and this build passes all four -

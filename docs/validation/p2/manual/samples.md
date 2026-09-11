@@ -1,19 +1,23 @@
 # Manual record: the twenty B5 samples against a reference
 
-<!-- Fill in every field. `verify --suite p2` reports this record as
-outstanding while the STATUS line below still says NOT PERFORMED. -->
+STATUS: PERFORMED
 
-STATUS: NOT PERFORMED
+Result: **PASS — user-reported, 2026-09-11.** The user confirmed text samples
+and contrast and zoom passed. This records the overall human acceptance
+result; detailed per-step observations were not supplied.
 
 | | |
 | --- | --- |
-| Date | |
-| Device | |
-| OS | |
-| Browser and version | |
-| Assistive technology and version | |
-| Build id | (from `build-manifest.json`, or the page's own diagnostics) |
-| Performed by | |
+| Date | 2026-09-11 |
+| Device | Local Mac, model identifier Mac17,9 |
+| OS | macOS 26.6.2 (25G83) |
+| Browser and version | Google Chrome 152.0.7977.84 installed locally |
+| Assistive technology and version | Not reported for this visual walkthrough |
+| Build id | component-catalog: `bee689d75a2bd76f`, served at `http://127.0.0.1:4176/` |
+| Performed by | User, reporting the result in this conversation |
+
+The local environment and served build IDs were read by the agent. The pass
+is the user's report, not an independent automated replay of this session.
 
 ## What to do
 
@@ -25,7 +29,7 @@ the reviewer's to supply - see A-4. Record where it came from:
 
 | | |
 | --- | --- |
-| Reference rendering | (what produced it, and where it is kept) |
+| Reference rendering | Not supplied in the conversation; source and image unavailable in this record |
 
 Then, for each of the twenty, compare all three - browser, region, reference.
 
@@ -45,29 +49,15 @@ that is the evidence for the limitation in `docs/compatibility.md`.
 
 ## Results
 
-| Sample | Browser | Region | Matches reference | Notes |
-| --- | --- | --- | --- | --- |
-| en-plain | | | | |
-| en-punctuation | | | | |
-| zh-common | | | | |
-| zh-punctuation | | | | |
-| zh-latin | | | | |
-| zh-traditional | | | | |
-| zh-vertical-forms | | | | |
-| ar-plain | | | | |
-| ar-digits | | | | |
-| ar-latin | | | | |
-| he-plain | | | | |
-| combining-acute | | | | |
-| combining-stack | | | | |
-| combining-devanagari | | | | |
-| combining-thai | | | | |
-| emoji-family | | | | |
-| emoji-skin-tone | | | | |
-| emoji-flags | | | | |
-| emoji-in-text | | | | |
-| mixed-everything | | | | |
+| Scope | Result | Evidence detail |
+| --- | --- | --- |
+| P2 text-sample manual acceptance | PASS — user-reported | No reference image, per-sample comparison, or individual DOM/GPU observations supplied |
 
 ## Findings
 
-<!-- One line per problem, or "no findings" explicitly. -->
+No new issue was reported with the user's acceptance. The existing Arabic and
+Hebrew GPU font coverage gap remains documented above and in
+`docs/compatibility.md`; this confirmation is not evidence that those fonts
+were added or that every glyph was independently verified. The record retains
+the user's overall acceptance without inventing reference images or individual
+comparison results.

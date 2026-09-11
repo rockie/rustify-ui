@@ -1,9 +1,9 @@
 # P2 · Rustify UI · 组件目录、表单、导航与工作区（Leptos CSR + Makepad Web · Rust/UI 子集硬分叉接入）
 
-> **计划状态：In progress**（A-1、A-2 均已解除：用户 2026-09-10 判定一期完成并要求后续只做二期。**本文件是唯一的工作入口**，`P1-WASM-UI.md` 已封板，不要再从那里开工）。
+> **计划状态：Closed**（2026-09-11 本期验收收尾：既有自动化验证通过；真实拼音、文本样本、对比度与缩放由用户确认通过；VoiceOver 仅 dialog 通过，其余由用户明确豁免。人工结论为用户汇总确认，未补造逐项证据；现有字体等限制保留。本期完成不等于完整 PRD 达标，`P1-WASM-UI.md` 继续保持封板）。
 >
 > 调查基线：2026-09-09 · `465f18081e5bf9bd38fc4bf79d68fb1314e10c6f` · 调查开始时工作区 clean；本次仅新增本计划。参考源码来自被忽略的 `ref/`（`ref/ui-main` 18 MB、`ref/leptos-main` 12 MB、`ref/makepad-dev` 293 MB），不属于该 commit。
-> 输入：[PRD v0.1](../PRD-WASM-UI.md)（仍为评审草稿，Q1–Q3 与建议预算未批准）；[P1 计划](P1-WASM-UI.md)。**P1 实施状态：3/8 里程碑关闭（M1/M2/M3）**（P1 快照 2026-09-09）；M4–M8（几何/浮层/焦点、原生文本与语义、组件子集/异步/主题、部署/恢复/诊断、验收）均未开始。本计划不把 P1 未交付的能力写成已有事实。
+> 输入：[PRD v0.1](../PRD-WASM-UI.md)（完整版本仍为评审草稿；本期范围已确认，R29/R30 的 B1 门已于 2026-09-11 批准）；[P1 计划](P1-WASM-UI.md)。原调查时 P1 仅 3/8；用户已于 2026-09-10 判定 P1 完成并封板，P2 前置接口已由 M1 核对。
 > 已读取规则：宿主根目录无 AGENTS.md/CLAUDE.md；`ref/ui-main/CLAUDE.md` 及其各 crate 的 CLAUDE.md 只约束该参考树的维护者发布流程，对本仓无约束；`ref/makepad-dev/AGENTS.md` 已在 P1 读取。采用 `.claude/skills/dev-plan/SKILL.md` 与配套骨架、架构质量参考。
 > 修订：2026-09-09 评审后核实 7 条意见全部成立并回写：ADR-6 由 leptos_router 改为 SDK 自研最小路由（页面 URL 唯一所有者、作用域内锚点拦截、`history.state` 序号计算位移，F12/F13/F26）；拖拽会话绑定查询序号与目标身份（§5.4）；提交请求绑定代际并等待异步验证（§5.3）；样式隔离改为 utilities 前缀 + 作用域限定手写 CSS，并把宿主控件样式不变纳入 V1（ADR-5/F28）；滚轮改为宿主同步边界判定，宿主桥修改列入 M6（§5.4 第 5 步/F27）；NFR-1 的 B1 对照值改为 5 s/8 MiB/2 s。
 >
@@ -26,18 +26,14 @@
 
 ### 恢复快照
 
-- 最近更新：2026-09-11（第二轮，用户 2026-09-11 追加两条指示：把 R29/R30 变成门、修掉两处失败）。**里程碑数由 8 增至 10**：新增 M9（性能门）与 M10（两处先于二期的失败清零），均已交付。**P2 仍不能称为完成**：四份人工记录（A-4）一份都没有，`cargo xtask verify --suite p2` 会一直逐条列为缺失——这正是那条命令存在的理由。
-- 当前进度：**9/10 关闭**（M1–M7、M9、M10）。**M8 仍未关闭**：它的自动化部分早已交付，退出条件里的四份人工记录一份都没有。
-- 当前状态：In progress。A-1、A-2、A-5、A-6 已解除；**A-3 于 2026-09-11 关闭**（用户指示「把 R29/R30 变成门」，B1 列成为通过门，数值只写在 `tests/browser/budgets.ts`）；**A-4 仍开放**，是唯一阻塞。D1/D2/D3/D5 与 ADR-4–7 已接受；D13/ADR-5 按 M1 实测修正；§3/§5.3 按 M3 实测修正；§10 的 M6 行按实测修正。
-- 最近完成：**M9 · 性能门** 与 **M10 · 两处先于二期的失败清零**。
-  - **M9**：`budgets.ts`（数值 + 明写「不覆盖什么」）、`p2-budget.spec.ts` 四条断言、新 `--project=budget`、`verify --suite p2` 的 project 清单加一行；§7/§9.1/§0.2/§13 由「基线」改「门」；六类报告中的性能、需求矩阵、已知限制、索引同步改写。**四条全绿**：冷启动 p95 171 ms（门 5 s）、热启动 p95 153 ms（门 2 s）、首载压缩 2,772,456 B（门 8 MiB）、1,000 次跨区动作 p95 42.2 ms / p99 43.8 ms（门 50/100）。
-  - **写门的过程发现旧基线里三个数字是测量假象，不是构建**：① 报告里的「冷启动 9,916 ms」是进程侧计时，页内同一次启动约 160 ms；② 关掉 HTTP 缓存不等于冷启动——编译好的模块另有代码缓存，同一个 context 连开 30 次量到的是那个缓存（p50 105 ms、p95 10,033 ms 的双峰）；③ 原地刷新会把**上一个文档的销毁**算进新文档的时间线（30 次里有 3–6 次报 10.5 s，而资源计时显示文档 1 ms 就到、10,460 ms 才开始解析；区域自己的 `dispose()` 只要 7–17 ms）。门因此改成：每次冷启动一个全新 context，每次热启动一个新 page 且先关掉上一个。
-  - **`xtask serve` 原本没有校验器**（只有 `Cache-Control: no-cache`），所以「热启动」根本不存在：每次刷新重下 11.5 MB。现在发 `ETag`（大小+修改时间，不是内容哈希——每次请求哈希 11 MB 等于把下载换成读盘）并对 `If-None-Match` 回 304；`cargo test -p xtask` 覆盖匹配、过期、列表与 `*`，故障注入的文件仍不带校验器。**但模块仍每次重下**：Playwright 的 context 装不下 11.5 MB 的缓存条目——这条如实记在报告里，没有假装它命中了缓存。
-  - **M10 两处失败都不是它们看起来的样子**：① `math_aot::batch_edges` 不是一条用例的问题——`makepad-stitch` 是线程码解释器，opt-level 0 下每条**执行过的**指令都留一帧栈，`batch_matches_single_calls` 单跑同样爆栈，只是 abort 会点名第一个到的；`platform/script/Cargo.toml` 给 `makepad-stitch` 设 `[profile.dev.package]` `opt-level = 1` 后 19/19 全过（stitch 自己的 manifest 写过同一条，但路径依赖不吃那份 profile）。② `m8-endurance` 的内存尾部**不是泄漏，是文本缓存在填**：shaper 与 layouter 各 4,096 条，一千个对象的名字/位置/尺寸就是三千条第一次，而两分钟 10 Hz 的跑还不到一圈。用计数分配器按大小分类查实：`fusion-basic` 同样操作零留存；先走完一圈后第二、三圈每次动作只留 4 个块（一次脚本求值的垃圾，由 `SCRIPT_HEAP_SLACK` 回收）。测试改为先不限速走完一圈再计时，并加断言「整段跑要比第一圈便宜一个数量级」。
-- 下一步：**只剩人工验收**。四份表单在 `docs/validation/p2/manual/`，都带 `STATUS: NOT PERFORMED`，`verify --suite p2` 见到这行就按缺失计。需要用户做的是做那四场会话并填进去：`voiceover.md`（真实屏幕阅读器念出来的内容）、`pinyin.md`（真实输入法会话）、`samples.md`（**需要评审人提供参考渲染图**）、`contrast-and-zoom.md`（200%/400% 下「看着还能不能读」这一条主观判断）。四条底下的机制都已自动化并通过。
-- 当前阻塞：**A-4**。需要真实屏幕阅读器、真实输入法与参考渲染图，本会话拿不到，也不会伪造。自动化侧无阻塞。
-- 代码基线：`736b668` → M1 八提交 → `1a479ef`、`a3a555c` → M2 八提交 → M3 三提交 → M4 六提交 → M5 四提交 → M6 三提交 `3920cf0`、`fed8c81`、`c7dbf03` → M7/M8 两提交 `8877f0e`、`5488f81` → M8 表单 `95719be` → **M9/M10 一个实现提交 `bb1017f` + 一个回写提交**。
-- 回归：**`cargo xtask verify --suite p2` 本轮 0 个自动化步骤失败**——这是二期第一次全绿：sources/doctor/fmt/clippy/host tests/xtask tests/fork tests/**fork script tests**/reports 全过，三示例双干净构建逐字节相同（build id `5c03d548…`/`13dd1aba…`/`bee689d7…`），六个浏览器 project（fusion-basic、property-workbench、component-catalog、workbench-deep、**budget**、deployment）全过；只剩四份人工记录按缺失打印。**四条操作教训**：跑浏览器套件时别同时跑 release 构建；一次只跑一个 project，**跑下一个前先确认 4173–4177 没被上一轮的 serve 占着**（否则 playwright 直接报端口占用）；串行共享 page 的块能抓到单条用例抓不到的 bug；**性能数字一律页内测**——本轮三个旧数字全是进程侧计时或缓存假象。**已知缺口**：只剩 A-4。
+- 最近更新：2026-09-11（人工验收收尾）。用户确认「拼音 通过」及文本样本、对比度与缩放通过；VoiceOver 仅 dialog 通过，其余按用户「不查了，跳过」决定豁免。四份记录已登记各自结论，均保留证据来源与未提供的细项。
+- 当前进度：**10/10 关闭**（M1–M10）。M8 以既有自动化通过记录、三项用户人工验收通过与 VoiceOver 剩余项豁免完成本期收尾。
+- 当前状态：**Closed**。A-1–A-6 的本期前置与验收处置均已闭环；未测的 VoiceOver 范围不记通过，缺失字体等已知限制不因用户验收自动消失。
+- 最近完成：**M8 · 二期验收与交接**（2026-09-11 人工部分收尾；自动化部分在 M9/M10 前已交付）。
+- 下一步：本期无待执行事项。后续范围另行安排，不再要求补做已由用户豁免的 VoiceOver 项目，也不重开 P1。
+- 当前阻塞：无本期验收阻塞。用户未提供逐句输入、逐样本参考图及逐缩放/主题记录；它们记为证据细节未提供，不能据此宣传完整浏览器、字形或无障碍矩阵已验证。
+- 代码基线：实现沿用 `4b2a873`（M9/M10 实现 `bb1017f`、回写 `8c3b6aa`；其后为 CI 深链接服务配置修正）。本次为 `dirty@4b2a873` 文档更新，涉及本计划、`docs/validation/p2/manual/`、M7/M8 报告及 `docs/reports/p2/` 的验收相关报告。走查所用目录 build ID `bee689d75a2bd76f`，工作台 `13dd1aba0b6c5afc`。
+- 验证依据：沿用 M9/M10 后 `cargo xtask verify --suite p2` 自动化 0 失败的既有记录（三示例双干净构建、六个浏览器 project 均通过，见完成记录与报告）；本次仅改文档，未重跑完整构建/浏览器套件。人工部分由用户在本会话确认，确认结论与限制保存在四份人工记录中。
 
 ### 完成记录
 
@@ -50,7 +46,7 @@
 | M5 | 2026-09-10 | 工作区（B1 形态）：`workspace/{splitter,panel_tabs,command_palette}.rs`（12 条宿主单测把「悄悄错掉」的部分单独测）；分隔器画在应用自己排的行上（面板里的 GPU 区域不是 `Send`，过不了组件 children——这条写进 `docs/workspace.md`）；property-workbench 达 B1 逐项（3 面板 / 10 视图 / 1,000 对象 / 20 属性 / 区域内右键菜单 / 命令面板即模态层）；100 次面板调整后复核一期 V4 的锚点性质。顺手修掉两个自己造的坑：快照按整数像素报尺寸、`m5-text` 写死 470 px 点区域文字（区域现在报告文字矩形，用例去问它）。未做：任意停靠树、布局进 URL、布局持久化（都明确不做）；B1 的**数字**属 M8 | `docs/validation/p2/m5.md`；`p2-workspace.spec.ts` **9/9**；`m5-text.spec.ts` **8/8**；`--project=fusion-basic` **56/56**、`--project=component-catalog` **31/31**、`--project=deployment` **6/6**、`--project=workbench-deep` **6/6**；`--project=property-workbench` **95 passed / 1 failed**（唯一失败仍是 `m8-endurance`）；`cargo test --workspace --lib` 119；clippy/fmt 通过 | `1e09e44` |
 | M6 | 2026-09-11 | 拖拽、剪贴板与文件：**A-6 解除**（`--cfg=web_sys_unstable_apis` 经 `xtask` 设 `RUSTFLAGS`，带旗/不带旗两侧都验；不带旗时 `available()` 为 false 并给同形状应答，不需要宿主 JS 薄封装）；`drag.rs` 会话 + GPU `HitQuery`/`HitAnswer`（DOM 目标先有名字，GPU 目标只能被问「这个点上是什么」，由区域报出名字；应答按（会话号，提问号）成对匹配）；**宿主桥 D14/F27**：`FromWasmScrollBoundary` + `Cx::report_scroll_boundary` + `web.js` 的 `wheel_belongs_to_parent` 同步判定（**偏离**：边界缓存落在 `web.js` 基类而非 `embedded.js`，理由已回写 §10 与 `docs/validation/p2/m6.md`）；`clipboard.rs`/`files.rs`/`DropZone`/`FilePicker`；workbench 跨区拖到分组 + 文本/二进制导入导出。**顺带修掉一个设计缺陷**：`Pace::Continuous` 全作用域一个槽，两条流互相顶掉，现在按流名各占一槽 | `docs/validation/p2/m6.md`；`p2-drag` 14/14、`p2-files` 12/12；`--project=property-workbench` **121 passed / 1 failed**（唯一失败是 `m8-endurance`，M2 已证先于二期）；`cd makepad && cargo test` 通过；导出下载字节与应用写出的字节逐字节相同 | `3920cf0`、`fed8c81`、`c7dbf03` |
 | M7 | 2026-09-11 | 多语言与文本样本：`i18n.rs`（17 条框架文案 × 2 语言，两条测试守住漏译与重复）；`Intl` 数字/日期由应用传选项；目录 `/samples` 20 条 B5 样本 DOM 与 GPU 并排、方向写在元素上而不是交给 `dir="auto"` 猜；缺字标识与恢复；`LoadView`/`Dialog`/`DropZone` 改读 SDK 文案目录；`docs/i18n.md`、`docs/forms.md`。**对比度改成宿主测试后立刻抓到两处真实不达标**：浅色主题主色上的白字 3.24:1、border 令牌对背景 1.41:1（深色 1.80:1），后者同时是控件边界。都已修正 | `docs/validation/p2/m7.md`；`p2-i18n` 7/7；`--project=component-catalog` **38/38**；`cargo test -p rustify-ui theme` 9/9（两套主题 × 13 组配对） | `8877f0e`、`5488f81` |
-| M8 | 2026-09-11 | 二期验收（**自动化部分**）：`verify --suite p1\|p2` 拆成两套清单（示例、浏览器 project、报告、人工记录各不相同）；三示例双干净构建**逐字节相同**；六类报告 + 需求矩阵；B1 基线与 R29/R30 对照。**§9.3 的缩放两条从人工挪进自动化**（200% = 640 CSS px 视口 + 根字号翻倍跑 B1 五旅程；400% = 320 CSS px 查目录页重排）——**写出来就挂了**：320 视口里页面宽 557 px，220 px 固定导航列加一个有自己最小宽度的主列，任何宽度下都没重排过；已改成 640 以下单列 + 头部开关换行 + 区域随宽 + 能力表自己滚。**又从人工记录里挖出一个真缺陷**：写「组合中不算值」的用例时发现属性表单把 `gongzuo` 存成了对象名（两套文本组件都有，都已修，见 `p2-ime`）。**未完成**：四份人工记录（A-4）一份都没有 | `docs/validation/p2/m8.md`；`verify --suite p2 --no-browser` 除 `fork script tests` 外全过（该失败在 `550c2ef` 的 worktree 上复现，先于二期）；五个 project 合计 **242 passed / 1 failed**（`m8-endurance`，同样先于二期；含新增的 `p2-zoom` 2、`p2-reflow` 2、`p2-ime` 5、`p2-a11y` 4、`p2-i18n` 追加 2 条） | `5488f81` 起 |
+| M8 | 2026-09-11 | 二期验收与交接关闭：自动化交付及 M9/M10 后全绿记录沿用；用户确认真实拼音、文本样本、对比度与缩放通过，VoiceOver dialog 通过、其余明确豁免。四份人工记录及报告同步；未提供逐项证据与参考图，不补造观察，也不移除已知字体限制 | `docs/validation/p2/m8.md`；`docs/validation/p2/manual/` 四份记录（3 份用户确认通过、1 份部分通过及豁免）；既有 `cargo xtask verify --suite p2` 自动化 0 失败记录见 M9/M10，本次未重跑完整套件 | `dirty@4b2a873`（本计划、人工记录与验收报告；产物沿用目录 `bee689d75a2bd76f`、工作台 `13dd1aba0b6c5afc`） |
 | M9 | 2026-09-11 | 性能门：**A-3 关闭**（用户批准 R29/R30 的 B1 列为通过门）。`tests/browser/budgets.ts` 只放数值与「不覆盖什么」；`p2-budget.spec.ts` 四条断言；新 `--project=budget`（慢，所以单列一个 project）并进 `verify --suite p2`；§7/§9.1/§0.2/§13 与四份报告由「基线」改「门」。**写门的过程发现旧基线里三个数字是测量假象**：冷启动 9,916 ms 是进程侧计时（页内约 160 ms）；关 HTTP 缓存不等于冷启动（代码缓存把 30 次载入变成 p50 105 ms / p95 10,033 ms 的双峰）；原地刷新把上一个文档的销毁算进新文档（区域自身 `dispose()` 只有 7–17 ms）。另给 `xtask serve` 加 `ETag`/304——没有校验器就没有热启动可言；模块因体积仍每次重下，如实记录未假装命中 | `docs/validation/p2/m9.md`；`--project=budget` **4/4**：冷 p95 **171 ms**（门 5 s）、热 p95 **153 ms**（门 2 s）、首载压缩 **2,772,456 B** 且无未分类文件（门 8 MiB）、1,000 次跨区动作 p95 **42.2 ms** / p99 **43.8 ms**、0 拒绝 0 错误（门 50/100 ms）；`cargo test -p xtask` **23** | `bb1017f` |
 | M10 | 2026-09-11 | 两处先于二期的失败清零，两处都不是原先记的那回事：① **不是 `batch_edges` 一条用例**——`makepad-stitch` 是线程码解释器，opt-level 0 下每条执行过的指令留一帧栈，`batch_matches_single_calls` 单跑同样爆栈，abort 只点名第一个到的；`platform/script/Cargo.toml` 给该包设 `[profile.dev.package]` `opt-level = 1`（stitch 自己的 manifest 写过同一条，路径依赖不吃）。② **`m8-endurance` 的内存尾部不是泄漏**，是 shaper/layouter 各 4,096 条的文本缓存在填：一千个对象的名字/位置/尺寸就是三千条第一次，两分钟 10 Hz 还不到一圈。用计数分配器按大小分类证实（`fusion-basic` 零留存；第二、三圈每次动作只留 4 个块 = 一次脚本求值的垃圾）。测试改为先不限速走完一圈再计时，并加「整段跑比第一圈便宜一个数量级」的断言 | `docs/validation/p2/m10.md`；`cargo test --manifest-path platform/script/Cargo.toml` 全绿（`math_aot` **19/19**）；`m8-endurance` 通过：热身圈 1,050 接受 / 0 拒绝 / +5,242,880 B，2 分钟跑 1,200 发 1,200 收 / 0 拒绝 / 0 错误 / +655,360 B，尾部 **327,680 < 452,198** | `bb1017f` |
 
@@ -69,7 +65,7 @@
 | SDK 增量 | 路由守卫、表单状态机、拖拽会话、剪贴板/文件、i18n、主题 token 表 | 纯逻辑可在宿主单测；浏览器行为有 Playwright 用例 |
 | 可复现交付材料 | Rust/UI 导入记录、Tailwind 产物漂移检查、能力表/文档生成、B1 基线报告、六类报告 | 两次干净构建通过；未测项如实标注 |
 
-**B1 的边界**：B1 是 PRD 的负载定义，不是性能预算已批准（A-3）。M8 交 B1 的启动/体积/延迟基线并与 R29/R30 目标对照，不设通过门，除非用户在 M8 前批准预算。
+**B1 的边界**：B1 是 PRD 负载定义；用户已于 2026-09-11 批准 R29/R30 的 B1 数值为通过门（A-3/M9）。门的测量边界见 §7；B0、B2/B3 与完整设备矩阵不在本期。
 
 ### 0.2 需求与约束账本
 
@@ -95,10 +91,10 @@
 | C-4 | PRD §2.4/§2.5 | 不做账号、业务持久化、不受信任插件；只读/禁用是本地交互语义 | §0.4/§7 | 沿用 |
 | C-5 | P1 D10；`makepad/platform/src/os/web/web.js` 356–401、548–552 | GPU 区域在嵌入模式下已拒绝改 URL/history/title；导航只能由应用发起 | §5.2 | 已核实 |
 | A-1 | 范围假设 | 用户确认 §0.1 交付形态、§0.5 延期与 §0.3 关键决策（D2 Rust/UI 接入方式、D3 CSS 管线、D5 路由方案） | 用户 2026-09-09 指示「按照 docs/plan/P2-WASM-UI.md 完成开发」，即按本计划所写的建议选择实施；D1/D2/D3/D5 与 ADR-4–7 据此转为已接受 | 已解除 |
-| A-2 | 前置假设 | P1 M4–M8 按 P1 计划关闭：浮层栈/锚点、焦点与命令优先级、原生编辑态与语义入口、受控组件子集与主题 token、异步票据、诊断环与错误种类 | P1 进度 8/8；P2 M1 第一项即核对实际接口并回写 §2 | **部分解除**（2026-09-09 第二轮）：P2 M1 依赖的六个接口全部已交付并通过自动验证；P1 形式上仍是 4/8，只欠四份人工记录 |
+| A-2 | 前置假设 | P1 M4–M8 按 P1 计划关闭：浮层栈/锚点、焦点与命令优先级、原生编辑态与语义入口、受控组件子集与主题 token、异步票据、诊断环与错误种类 | P1 进度 8/8；P2 M1 第一项即核对实际接口并回写 §2 | **已解除**：用户 2026-09-10 判定 P1 完成并封板，P2 M1 已核对实际接口 |
 | A-3 | 测量合同 | 用户 2026-09-11 批准 R29/R30 为通过门（B1 列）。B0 的 2.5 s/3 MiB/1 s 与 R30 的 B2/B3 两条不在本期，按「未测」记，不按通过记 | 用户 2026-09-11 指示「把 R29/R30 变成门」；落点 §7、`tests/browser/budgets.ts`、`p2-budget.spec.ts`、M9 | **已关闭（2026-09-11）** |
-| A-4 | 验收资源 | M8 需真实 VoiceOver+Chrome、真实拼音（表单与命令面板中文）、阿拉伯文/emoji 参考样本评审人 | 用户承诺；M7 前 | 开放 |
-| A-5 | 技术假设 | 以 `history.state` 中的 SDK 序号计算位移并 `history.go(-delta)` 反向恢复，在 Chrome 对多项跳转（`go(-3)`）、重复 URL、恢复期间连续后退均可靠且不产生重复历史项 | M4 首个探针；失败则守卫降级为只覆盖单步并写入已知限制 | 开放 |
+| A-4 | 验收资源 | 真实拼音、文本样本、对比度与缩放由用户确认通过；VoiceOver dialog 通过、其余用户豁免 | 2026-09-11 本会话用户结论，见 `docs/validation/p2/manual/`；细项与参考图未提供的事实保留 | **已关闭（本期用户验收处置完成）** |
+| A-5 | 技术假设 | 按 `history.state` 的 SDK 序号反向恢复多项跳转、重复 URL 与并发后退 | M4 探针通过，见 `docs/validation/p2/m4.md` | 已解除 |
 | A-6 | 技术假设 | `--cfg=web_sys_unstable_apis` 可经 cargo-makepad 追加 RUSTFLAGS 生效，使 web-sys 0.3.105 的 Clipboard `read_text/write_text` 可用 | M6 首个探针；失败则改用宿主 JS 薄封装 | **已解除（2026-09-10）**：`xtask` 的 `run_cargo_makepad` 设 `RUSTFLAGS`，cargo-makepad 与自身的 `WASM_RUSTFLAGS` 组合（`makepad/tools/cargo_makepad/src/wasm/compile.rs:230`），带旗与不带旗两次 `cargo check --target wasm32-unknown-unknown` 都通过；不带旗时 `clipboard::available()` 为 false 并走同形状的 `Unavailable` 应答，不需要宿主 JS 薄封装 |
 
 ### 0.3 决策表
@@ -147,7 +143,7 @@ D1/D2/D3/D5 由用户在 A-1 中一并确认，2026-09-09 已确认；其余为�
 
 #### ADR-6：SDK 自研最小路由，页面 URL 只有一个所有者
 
-- 状态：Accepted（A-1 已于 2026-09-09 解除；A-5 仍待 M4 首个探针）。
+- 状态：Accepted（A-1 已于 2026-09-09 解除；A-5 已由 M4 探针解除）。
 - 背景与驱动：R22 要求历史唯一、深链接、根/子路径与离开拦截；R07 AC2 要求宿主链接保留浏览器行为；R05 要求同页双挂载不串扰；C-1 禁止修改 Leptos 系源码。核实（F11–F14、F26）：crates.io 有 `leptos_router` 0.8.15；`Router` 硬编码 `BrowserUrl::new()`（`ref/leptos-main/router/src/components.rs` 第 87 行），location provider 不可替换；它的锚点点击监听注册在 `window`（`router/src/location/history.rs` 第 161 行），只判同源与 base（`router/src/location/mod.rs` 第 350–360 行），没有挂载容器归属判断——根路径部署时宿主页面的同源链接也会被它接管，两个作用域各挂 `Router` 时两个监听器都会导航；`popstate` 直接写入 URL 信号（`history.rs` 第 170–200 行）且 `complete_navigation` 用应用传入的 state 覆盖 `history.state`（第 226、236 行），SDK 无法给历史项打序号；浏览器历史可一次跨多项（`history.go(-3)`），URL 不能唯一标识历史项，因此没有序号就无法把被拒绝的跳转恢复到原位。Rust/UI 的 `Link` 与 `variants!` 生成的 `href` 分支调用 `::leptos_router::hooks::use_location`（`ref/ui-main/crates/leptos_ui/src/variants.rs` 第 222 行）。
 - 备选 A：`leptos_router` + 外侧守卫——宿主链接接管与多项跳转恢复两个问题都无法在其外侧解决，只能靠「宿主链接必须带 `rel="external"`」之类的宿主契约兜底，淘汰。备选 B：SDK 自研最小路由：`crates/rustify-ui/src/router.rs` 拥有 pushState/replaceState/popstate、base、路径模式匹配（静态段与 `:param`）、未匹配回退、`use_location/use_params/navigate/Link`；锚点监听挂在作用域根而非 `window`；每个 SDK 创建的历史项在 `history.state.rustify.index` 带单调序号。备选 C：自研路由但仍用 leptos_router 做匹配——`Router` 一创建就注册 `window` 监听，无法只取匹配部分，不可行。
 - 决策：B。规则：一个页面只有一个「URL 所有者」作用域（`MountConfig { url_owner: true, base }`），第二个所有者在 `mount` 前置闸失败并返回 `UiError::UrlOwnerConflict`，已运行实例不受影响；非所有者作用域（嵌入既有页面、同页第二个实例）使用内存 location，`navigate()` 只改内存信号，不写历史；宿主页面的链接与滚动不经过 SDK。守卫在 P2 只服务「离开有未提交编辑的视图」（R22 AC3）。
@@ -189,7 +185,7 @@ D1/D2/D3/D5 由用户在 A-1 中一并确认，2026-09-09 已确认；其余为�
 - **拖出到操作系统、笔压与复杂手势、任意 3D 变换**：不纳入。
 - **SSR/hydration、WebGPU、自动双后端转换、云服务、业务持久化、不受信任插件**：保持 PRD §2.5。
 
-### 0.7 对 P1 未完成里程碑的对齐建议（不修改 P1 计划）
+### 0.7 P1 前置对齐建议（原计划期记录，不修改 P1）
 
 以下建议供 P1 M4–M8 实施者参考，目的是让 P2 M1 的契约对齐不必返工；采纳与否由 P1 实施者在其进度中记录。
 
@@ -441,7 +437,7 @@ flowchart TD
 ### 6.4 文本样本与输入
 
 - B5 样本页 20 条固定文本（中文常用字、英文、阿拉伯文 RTL、组合字符、家庭 emoji），DOM 与 GPU 并排；参考渲染图由评审人提供（A-4），人工判定方向、顺序与乱码。
-- 真实拼音在表单字段与命令面板搜索框各验 5 条短句（子集，完整 20 条已在一期 M5）；组合期间 Enter/Esc 不提交表单、不执行命令、不关闭浮层。
+- 真实拼音在表单字段与命令面板搜索框各验 5 条短句（本期子集；一期 20 条真实输入记录未执行，已随 P1 封板豁免）；组合期间 Enter/Esc 不提交表单、不执行命令、不关闭浮层。
 
 ## 7. NFR、安全与运行保障
 
@@ -516,6 +512,8 @@ flowchart TD
 
 沿用 P1 §9.4：macOS Chrome 固定版本通过门，Safari 观察。人工项：VoiceOver+Chrome 目录 18 类与 B1 五旅程；真实拼音在表单与命令面板；B5 样本对照参考渲染；对比度与 200%/400% 缩放。记录含设备、OS、浏览器、辅助技术版本、build ID、步骤与结果。
 
+**2026-09-11 用户验收处置**：VoiceOver 仅 dialog 弹窗实测通过，用户随后明确跳过其余目录/状态矩阵、menu/select/tooltip 与工作台五旅程，这些范围按未测及用户豁免登记。用户另行确认真实拼音、文本样本、对比度与缩放通过，按人工汇总结论关闭本期 M8；逐句输入、逐样本参考图及逐缩放/主题记录未提供，不补造。样本确认不等于缺失的阿拉伯文/希伯来文 GPU 字体已经补齐；已有字体限制保留，完整 PRD 的逐项达标不在此宣称。
+
 ### 9.5 静态校验与执行入口
 
 | 命令 | 责任/落点 |
@@ -542,7 +540,7 @@ flowchart TD
 | M5 | 工作区（B1 形态） | Splitter/PanelTabs/CommandPalette；property-workbench 达 B1 定义（3 面板、10 标签页、1,000 对象、20 属性、菜单+模态、命令入口）；`docs/workspace.md` | V7 全项；一期 V4 锚点子集在 100 次调整后复核；B1 定义逐项对照表 |
 | M6 | 拖拽、剪贴板与文件 | A-6 探针先行；`drag.rs` 会话（会话号、查询序号、目标失效、`Releasing`）与 GPU `HitQuery/HitAnswer`；宿主桥：区域滚动边界上报消息与 wheel 同步判定（`web.js`/`web.rs`/`embedded.js`，静态桥重生成）；`clipboard.rs`/`files.rs`；投放区与文件选择组件；property-workbench 对象跨区拖到分组、导入/导出 | V8/V9 全项（含必测序列与边界滚轮）；`cd makepad && cargo test` 与桥指纹校验通过；CSP 报告仍为 0；导出下载字节比对 |
 | M7 | 多语言与文本样本 | `i18n.rs`、框架文案 zh-CN/en、`Intl` 格式；目录 `/samples` 页；字体失败缺字与恢复；`docs/i18n.md` | V10 全项（样本方向/乱码为人工判定，A-4） |
-| M8 | 二期验收与交接 | 三示例双干净构建；VoiceOver/拼音/样本人工记录；对比度与缩放走查；B1 基线与对照报告；文档更新（quickstart/architecture/compatibility/components/forms/navigation/workspace/i18n）；六类报告；`verify --suite p2` | V1–V12 适用项全部有结果；本期功能、CSP、输入、导航、拖拽关键缺陷 0；未测项标注；进度 8/8 后才可称 P2 完成 |
+| M8 | 二期验收与交接 | 三示例双干净构建；VoiceOver dialog 通过及其余用户豁免记录；拼音/样本人工记录；对比度与缩放走查；B1 基线与对照报告；文档更新（quickstart/architecture/compatibility/components/forms/navigation/workspace/i18n）；六类报告；`verify --suite p2` | V1–V12 适用项全部有结果；本期功能、CSP、输入、导航、拖拽关键缺陷 0；未测及用户豁免项标注；按 §9.4 完成剩余人工验收；进度 10/10 后才可称 P2 完成；回写「实施进度」 |
 | M9 | 性能门（A-3 关闭后新增） | 用户 2026-09-11 批准 R29/R30 为门。`tests/browser/budgets.ts` 持有 R29 三条与 R30 AC1 的 B1 数值并写明**不覆盖**什么；`p2-budget.spec.ts` 断言（30 次冷启动、30 次热启动、首次加载逐文件压缩后求和并分类、1,000 次跨区动作）；新增 `--project=budget` 并进 `verify --suite p2` 的 project 清单；§7 NFR-1 与 §9.1 V11 由基线改为门；`docs/reports/p2/performance.md` 改写 | V11 全项：冷 p95 ≤ 5 s、热 p95 ≤ 2 s、压缩首载 ≤ 8 MiB 且无未分类文件、p95 ≤ 50 ms 且 p99 ≤ 100 ms、失败启动 0、拒绝与错误 0；`--project=budget` 绿；回写「实施进度」 |
 | M10 | 两处先于二期的失败清零 | `makepad/platform/script/Cargo.toml` 给 `makepad-stitch` 设 `[profile.dev.package]` `opt-level = 1`（线程码解释器缺尾调用优化就按执行指令数吃栈）；`m8-endurance` 先不限速走完一圈工作集再计时，并新增「第二圈比第一圈便宜一个数量级」的断言 | `cargo test --manifest-path platform/script/Cargo.toml` 全绿（`math_aot` 19 条）；`--project=property-workbench` 全绿（不再有已知失败）；`known-limitations.md`/`performance.md` 改写；回写「实施进度」 |
 
@@ -553,11 +551,11 @@ flowchart TD
 | 项目 | 影响 | 责任/解除办法 | 最晚确认点 | 是否阻塞 |
 | --- | --- | --- | --- | --- |
 | A-1 范围与关键决策未确认 | 交付形态、第三示例、Rust/UI 接入方式、CSS 管线、路由方案 | 用户 2026-09-09 确认按本计划实施 | P2 M1 前 | 否（已解除） |
-| A-2 P1 未完成 | P2 M1 依赖 P1 M4–M7 接口；M6/M7 决定 GPU 适配落点与 token | 接口已全部交付并通过自动验证；P1 到 8/8 仍需四份人工记录 | P2 M1 前 | 否（部分解除，偏离已记录在恢复快照） |
+| A-2 P1 前置 | 依赖 P1 M4–M7 接口 | 用户 2026-09-10 判定 P1 完成；P2 M1 接口核对已交付 | 已确认 | 否（已解除） |
 | A-3 预算未批准 | ~~M8 只交基线与对照~~ | 用户 2026-09-11 批准 R29/R30（B1 列）为门，落点 M9 | 已确认 | **已解除** |
-| A-4 人工资源 | VoiceOver、拼音、阿拉伯文/emoji 参考样本与评审人 | 用户承诺 | M7 前 | 对 M7/M8 是 |
-| A-5 按序号反向恢复 | 守卫对多项跳转/重复 URL/并发后退的可靠性 | M4 探针；失败则守卫降级为单步并写入已知限制 | M4 内 | 否，M4 内解决 |
-| A-6 `web_sys_unstable_apis` | 剪贴板实现路径 | M6 探针；失败改宿主 JS 薄封装 | M6 内 | **是**（2026-09-10 探针通过，见 §0.2 A-6） |
+| A-4 人工资源 | 四份人工验收记录 | 拼音、样本、对比度与缩放用户确认通过；VoiceOver dialog 通过、其余用户豁免 | 2026-09-11 | 否（本期处置完成） |
+| A-5 按序号反向恢复 | 多项跳转、重复 URL、并发后退 | M4 探针通过，守卫未降级 | M4 已完成 | 否（已解除） |
+| A-6 `web_sys_unstable_apis` | 剪贴板实现路径 | M6 带旗与不带旗路径均验证，见 §0.2 A-6 | M6 已完成 | 否（已解除） |
 | Rust/UI 重写量 | 约 2,300 行浮层类重写 + ARIA 补齐 + 前缀/RTL/作用域改写 | M1 按文件逐个「原样→重写」提交，M2 逐类验收；改写规则有单测 | M2 退出 | 否 |
 | 自研路由能力边界 | 无嵌套路由；依赖 leptos_router 的生态组件不可用 | 记入 `docs/compatibility.md`；ADR-6 重审条件 | M4 退出 | 否 |
 | Tailwind 前缀与 tw_merge | 分层导入上的前缀语法未验证；前缀合并**已验证**（2026-09-09，D13 修正：`tw_merge` 的 `prefix` 不设，`rui` 作为首个变体参与合并） | 分层导入的前缀语法在 M1 的 CSS 提交里验证；失败退回作用域包裹 utilities | M1 内 | 否 |
@@ -567,8 +565,8 @@ flowchart TD
 | 一期 property-workbench 用例契约变化 | 回归 | 升级时同步更新 `snapshot()` 与用例 | M3–M6 | 否 |
 | SPMS 工具缺失 | 无真实需求 key | 只用 PRD 工作号 | 后续 | 不阻塞 |
 
-- 最终状态：**Blocked（已记录偏离并开始 M1）**。A-1 已解除；A-2 只剩四份人工记录，P2 M1 依赖的接口已全部交付并通过自动验证。除此之外无实施前置。
-- 退回 Blocked 的条件：A-5 探针失败且自研路由方案未被接受；A-4 到 M7 仍不可得；P1 M4–M7 交付接口与 §2 差异导致 D4/D7 不成立。
+- 最终状态：**Closed（10/10）**。本期按既有自动化证据、用户人工验收结论及 VoiceOver 明确豁免完成；完整 PRD、未测矩阵与已知字体限制继续保留原边界。
+- 后续重开条件：用户要求恢复豁免范围，或发现需要修复的实际缺陷时另行记录范围与验证；原计划期 A-5 探针、A-4 资源及 P1 前置不再作为待确认事项重复提出。
 - 本轮已做：读 PRD 与 P1 计划；核实 SDK 现有源码与 xtask/CI/测试基础；核实 `ref/ui-main` 结构、许可、消费模型、18 类组件、主题、CSP 冲突、受控性与语义；核实 Makepad 分叉 Widget 清单与 Web 后端在拖放/剪贴板/文件/历史/IME/上下文丢失/无障碍/wheel 上的现状；核实 leptos_router 0.8.15 的 base、`window` 锚点监听、popstate 与守卫缺口；核实 crates.io 版本（leptos_router 0.8.15、leptos_meta 0.8.6、leptos_ui 0.3.22、tw_merge 0.1.21、icons 0.18.3）；核实 web-sys/js-sys 的 Clipboard/File/Intl 绑定；核实示例 `index.html` 相对引用与 serve 无回退。2026-09-09 评审修订：核实 7 条评审意见（宿主链接接管、拖拽目标失效、提交未查异步状态、样式隔离不足、多项历史跳转、wheel 无条件 preventDefault、B1 对照值）全部成立并回写 ADR-5/ADR-6、D13/D14、§5.2–§5.4、§8、V1/V5/V6/V8、M1/M4/M6。
 - 本轮未做：未安装依赖、未构建含 tw_merge 的产物、未运行浏览器验证、未修改 P1 计划或实现代码、未创建 SPMS 记录。评审探针中的滑块样式与 `go(-3)` 观察结果来自评审方，本次未复现。
 
@@ -597,7 +595,7 @@ flowchart TD
 
 ### 13.1 PRD R01–R40 的第二期去向
 
-「覆盖/部分」是计划覆盖程度，当前完成数为 0。一期已覆盖的条目在本期只做回归，不重复计入。
+「覆盖/部分」表示本期范围覆盖程度，不表示完整 PRD 逐条达标；当前本期里程碑 10/10，人工验收结论与豁免见 §9.4。一期已覆盖的条目在本期只做回归，不重复计入。
 
 | PRD | P2 范围与延期边界 | 设计/里程碑 | 验证/去向 |
 | --- | --- | --- | --- |
@@ -632,12 +630,12 @@ flowchart TD
 
 | ID | 设计落点 | 验证/解除办法 | 当前结果 |
 | --- | --- | --- | --- |
-| R-1 | ADR-4/ADR-5，§5.1/§6.1/§6.3，M1/M2 | V1–V4 | 有设计，待 A-1/A-2 |
+| R-1 | ADR-4/ADR-5，§5.1/§6.1/§6.3，M1/M2 | V1–V4 | 已交付；人工与豁免边界见 §9.4 |
 | R-2 | §5.3，M3 | V5 | 有设计 |
-| R-3 | ADR-6，D6，§5.2，M4 | V6，A-5 探针 | 有设计，待探针 |
+| R-3 | ADR-6，D6，§5.2，M4 | V6，A-5 探针 | 已交付，探针通过 |
 | R-4 | D7，§6.2，M5 | V7 | 有设计 |
-| R-5 | ADR-7，D8/D9，§5.4/§5.5，M6 | V8/V9，A-6 探针 | 有设计，待探针 |
-| R-6 | §5.6/§6.4，M7 | V10，A-4 | 有设计，待人工资源 |
+| R-5 | ADR-7，D8/D9，§5.4/§5.5，M6 | V8/V9，A-6 探针 | 已交付，探针通过 |
+| R-6 | §5.6/§6.4，M7 | V10，A-4 | 已交付；样本用户确认通过，字体限制与缺失细项证据保留 |
 | R-7 | §9.4/§9.5，M8 | V12 | 有设计 |
 | NFR-1 | §7，M9 | V11（门），`--project=budget` | **已成门**（A-3 关闭） |
 | NFR-2 | §5/§8 | V5/V6/V8 | 有设计 |
@@ -649,10 +647,10 @@ flowchart TD
 | C-3 | ADR-4/§4.1 | `sources.lock.json.rust_ui` | 已确认 |
 | C-4 | §0.5/§7 | 走查 | 沿用 |
 | C-5 | §5.2 | V6 核 GPU 不改 history | 已核实 |
-| A-1 | §0.1/§0.3/§0.5 | 用户确认 | **阻塞** |
-| A-2 | §1.1 F2，§2 | P1 8/8 + M1 核对回写 | 部分解除：接口齐备，欠四份人工记录 |
+| A-1 | §0.1/§0.3/§0.5 | 用户确认 | 已解除 |
+| A-2 | §1.1 F2，§2 | P1 封板 + P2 M1 接口核对 | 已解除 |
 | A-3 | §7 | 用户确认 | **已关闭（2026-09-11 批准为门）** |
-| A-4 | §6.4/§9.4 | 用户承诺 | 开放 |
-| A-5 | ADR-6/§5.2 第 5 步 | M4 探针（`go(-3)`、重复 URL、恢复期间连续后退） | 开放 |
+| A-4 | §6.4/§9.4 | 用户人工验收及 VoiceOver 豁免，见 `docs/validation/p2/manual/` | 本期处置完成；细项证据未提供与已知限制如实保留 |
+| A-5 | ADR-6/§5.2 第 5 步 | M4 探针（多项跳转、重复 URL、连续后退） | 已解除 |
 | A-6 | D9 | M6 探针 | 已解除 |
 | — | **不在本期：大数据/虚拟化、trap 隔离、完整矩阵与 AA、GPU 自绘编辑器、完整图标集、迁移示例、对外发布** | §0.6 | 排除 |

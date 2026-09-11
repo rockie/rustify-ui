@@ -1,19 +1,25 @@
 # Manual record: a real pinyin session
 
-<!-- Fill in every field. `verify --suite p2` reports this record as
-outstanding while the STATUS line below still says NOT PERFORMED. -->
+STATUS: PERFORMED
 
-STATUS: NOT PERFORMED
+Result: **PASS — user-reported, 2026-09-11.** The user confirmed
+“拼音 通过” (pinyin passed). This records that overall manual acceptance result;
+individual input strings, per-step observations, and the input method's exact
+name and version were not supplied.
 
 | | |
 | --- | --- |
-| Date | |
-| Device | |
-| OS | |
-| Browser and version | |
-| Assistive technology and version | |
-| Build id | (from `build-manifest.json`, or the page's own diagnostics) |
-| Performed by | |
+| Date | 2026-09-11 |
+| Device | Local Mac, model identifier Mac17,9 |
+| OS | macOS 26.6.2 (25G83) |
+| Browser and version | Google Chrome 152.0.7977.84 installed locally |
+| Input method and version | Real pinyin input; exact product and version not supplied |
+| Build id | property-workbench: `13dd1aba0b6c5afc`, served at `http://127.0.0.1:4174/` |
+| Performed by | User, reporting the result in this conversation |
+
+The local machine and installed Chrome version were read from the host; the
+build ID was read from the running server's `build-manifest.json`. The manual
+result comes from the user, not an automated reproduction of the session.
 
 ## What to do
 
@@ -42,9 +48,10 @@ property-workbench.
 
 | # | Where | What was composed | What the application ended up with | Pass / fail |
 | --- | --- | --- | --- | --- |
-| 1 | | | | |
-| 2 | | | | |
+| 1 | P2 real pinyin manual acceptance in property-workbench; overall user report | Exact strings not supplied | User confirmed acceptance passed; individual final values not supplied | PASS — user-reported |
 
 ## Findings
 
-<!-- One line per problem, or "no findings" explicitly. -->
+No issue was reported with the user's pass confirmation. The steps above remain
+the acceptance procedure; this record does not invent a sentence count or
+individual observations, and does not backfill P1's unperformed pinyin session.

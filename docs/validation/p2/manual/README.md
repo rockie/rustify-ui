@@ -1,11 +1,12 @@
 # The four records only a person can write
 
-Everything in P2's acceptance that a machine can settle has been settled and is
-green. What is here is the residue: four sessions that need ears, an input
-method, a reference rendering, and a look at a screen.
+The automated checks have passing results in the P2 reports. Manual acceptance
+was closed on 2026-09-11: the user confirmed pinyin, text samples, and contrast
+and zoom passed; VoiceOver records a dialog pass and an explicit waiver for the
+remaining checks. The records identify these as user-reported conclusions and
+retain missing detailed observations, reference images, and known limitations.
 
-Each file beside this one is a **form, not a result.** Every one of them carries
-the line
+Unperformed records carry the line
 
 ```
 STATUS: NOT PERFORMED
@@ -17,16 +18,21 @@ to read as a pass - that is the whole reason the suite prints these at all.
 
 To hand one in: perform the session, fill in the header and the results, and
 change that line to `STATUS: PERFORMED`. Leave the failures in. A record with no
-findings is a record nobody will believe.
+findings should explicitly say that none were found.
 
-## What each one still needs, and what is already checked
+An explicit user waiver is recorded as `STATUS: WAIVED`, with its scope and
+date, and leaves untested checks marked skipped. The verifier prints `held`
+for that record, meaning a disposition is on file; it is not a test pass.
 
-| Record | Needs | Already checked by a test |
+## Recorded disposition and automated checks
+
+| Record | Manual disposition | Already checked by a test |
 | --- | --- | --- |
-| [voiceover.md](voiceover.md) | A screen reader and someone to listen to it | Every operable control has a name; twenty distinct nav names; Tab comes back round; a modal the keyboard cannot get behind (`p2-semantics`, `p2-a11y`) |
-| [pinyin.md](pinyin.md) | A real input method and someone to type in it | A composition in flight is not a value; keys during one belong to the composition; one commit at the end (`p2-ime`) |
-| [samples.md](samples.md) | A reference rendering of the twenty B5 texts | No sample blank; a Latin pangram proportional to its text; combining marks correctly narrow; the required scripts loaded (`p2-i18n`) |
-| [contrast-and-zoom.md](contrast-and-zoom.md) | Eyes on the pages at 200% and 400% | Contrast ratios over both themes; B1's five journeys at 200%; the catalogue reflowing at 320 CSS px (`theme` host test, `p2-zoom`, `p2-reflow`) |
+| [voiceover.md](voiceover.md) | Dialog passed; remaining checks waived by the user on 2026-09-11 | Every operable control has a name; twenty distinct nav names; Tab comes back round; a modal the keyboard cannot get behind (`p2-semantics`, `p2-a11y`) |
+| [pinyin.md](pinyin.md) | PASS — user-reported, 2026-09-11; individual input strings not supplied | A composition in flight is not a value; keys during one belong to the composition; one commit at the end (`p2-ime`) |
+| [samples.md](samples.md) | PASS — user-reported, 2026-09-11; reference images and individual comparisons not supplied; known font limitations retained | No sample blank; a Latin pangram proportional to its text; combining marks correctly narrow; the required scripts loaded (`p2-i18n`) |
+| [contrast-and-zoom.md](contrast-and-zoom.md) | PASS — user-reported, 2026-09-11; per-page/theme/zoom observations not supplied | Contrast ratios over both themes; B1's five journeys at 200%; the catalogue reflowing at 320 CSS px (`theme` host test, `p2-zoom`, `p2-reflow`) |
 
-The tests in the right-hand column are why the sessions are short: what is left
-to judge is the part that was never measurable.
+Automated checks and user acceptance are separate evidence sources. A supplied
+record or waiver does not establish full PRD conformance or remove a known
+implementation limitation.

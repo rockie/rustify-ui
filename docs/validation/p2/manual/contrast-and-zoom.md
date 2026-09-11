@@ -1,19 +1,23 @@
 # Manual record: reading the pages at 200% and 400%
 
-<!-- Fill in every field. `verify --suite p2` reports this record as
-outstanding while the STATUS line below still says NOT PERFORMED. -->
+STATUS: PERFORMED
 
-STATUS: NOT PERFORMED
+Result: **PASS — user-reported, 2026-09-11.** The user confirmed text samples
+and contrast and zoom passed. This records the overall human acceptance
+result; detailed per-step observations were not supplied.
 
 | | |
 | --- | --- |
-| Date | |
-| Device | |
-| OS | |
-| Browser and version | |
-| Assistive technology and version | |
-| Build id | (from `build-manifest.json`, or the page's own diagnostics) |
-| Performed by | |
+| Date | 2026-09-11 |
+| Device | Local Mac, model identifier Mac17,9 |
+| OS | macOS 26.6.2 (25G83) |
+| Browser and version | Google Chrome 152.0.7977.84 installed locally |
+| Assistive technology and version | Not reported for this visual walkthrough |
+| Build id | component-catalog: `bee689d75a2bd76f`; property-workbench: `13dd1aba0b6c5afc` (ports 4176 and 4174) |
+| Performed by | User, reporting the result in this conversation |
+
+The local environment and served build IDs were read by the agent. The pass
+is the user's report, not an independent automated replay of this session.
 
 ## What is already checked, and what is not
 
@@ -50,9 +54,9 @@ Browser zoom, not a resized window: 200% and then 400% on a 1280-wide window.
 
 | # | Page | Zoom | Theme | What was found | Pass / fail |
 | --- | --- | --- | --- | --- | --- |
-| 1 | | | | | |
-| 2 | | | | | |
+| 1 | P2 contrast and zoom manual acceptance | Per-level observations not supplied; procedure specifies 200% and 400% | Per-theme observations not supplied | User confirmed the overall acceptance passed | PASS — user-reported |
 
 ## Findings
 
-<!-- One line per problem, or "no findings" explicitly. -->
+No issue was reported with the user's pass confirmation. Per-page, per-theme
+and per-zoom observations were not supplied and have not been reconstructed.

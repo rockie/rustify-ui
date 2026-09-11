@@ -1,8 +1,10 @@
 # P2 accessibility report
 
-What was checked, how, and what still needs a person. The four manual records
-are listed by `cargo xtask verify --suite p2`, which reports them as missing
-rather than passed.
+What was checked, how, and what still needs a person. On 2026-09-11 the user
+reported the dialog VoiceOver walkthrough passed and waived the remaining
+VoiceOver checks. The user also confirmed pinyin, samples, and contrast and
+zoom passed. The manual records retain the overall conclusions without
+inventing detailed speech, input, reference images, or per-zoom observations.
 
 ## The controlled contract, and why it is an accessibility matter
 
@@ -109,9 +111,9 @@ contract and only one of them is ever exercised. `p2-ime.spec.ts` covers the two
 places §9.4 names, the property form and the command palette; P1 had only
 checked the region's own text control.
 
-What is still a person's: a real input method. The mechanics are settled here;
-whether a real pinyin session feels right is not something a synthetic
-composition can answer.
+The user confirmed real pinyin acceptance passed on 2026-09-11; see
+`docs/validation/p2/manual/pinyin.md`. Individual strings and observations
+were not supplied, so the record preserves the overall user conclusion only.
 
 ## Zoom and reflow
 
@@ -139,14 +141,15 @@ that genuinely needs two dimensions, as long as the *page* does not.
 duration, the region by not easing a change it would otherwise animate. It is a
 theme value, so one setting covers both.
 
-## What needs a person
+## Manual acceptance dispositions
 
 | Record | What it covers |
 | --- | --- |
-| `docs/validation/p2/manual/voiceover.md` | What VoiceOver actually *says* over the eighteen categories and B1's five journeys. The tree behind it - names, distinctness, no focus trap, modality - is checked by `p2-semantics` and `p2-a11y` |
-| `docs/validation/p2/manual/pinyin.md` | A real pinyin session in the form and the palette. The mechanics beneath it - a composition in flight not being a value, keys during one belonging to the composition - are checked by `p2-ime` |
-| `docs/validation/p2/manual/samples.md` | Direction and order of the twenty B5 samples against a reference rendering (A-4). The third thing a reviewer looks for - whether anything came out blank - is measured: no sample has zero width, a Latin pangram is as wide as its text, and five marks stacked on one letter are correctly *narrow* |
-| `docs/validation/p2/manual/contrast-and-zoom.md` | Whether the reflowed pages are *readable* at 200% and 400%. The ratios, the journeys and the reflow itself are checked above; this is the judgement a measurement cannot make |
+| `docs/validation/p2/manual/voiceover.md` | **Dialog passed; remaining checks waived by the user, 2026-09-11.** Original scope: what VoiceOver actually *says* over the eighteen categories and B1's five journeys. The tree behind it - names, distinctness, no focus trap, modality - is checked by `p2-semantics` and `p2-a11y` |
+| `docs/validation/p2/manual/pinyin.md` | **PASS — user-reported, 2026-09-11.** Real pinyin acceptance; individual input strings not supplied. The mechanics beneath it - a composition in flight not being a value, keys during one belonging to the composition - are checked by `p2-ime` |
+| `docs/validation/p2/manual/samples.md` | **PASS — user-reported, 2026-09-11.** Reference rendering and individual DOM/GPU comparisons were not supplied; known Arabic/Hebrew font limitations remain. The third thing a reviewer looks for - whether anything came out blank - is measured: no sample has zero width, a Latin pangram is as wide as its text, and five marks stacked on one letter are correctly *narrow* |
+| `docs/validation/p2/manual/contrast-and-zoom.md` | **PASS — user-reported, 2026-09-11.** Contrast and zoom acceptance; no separate results for each page, theme, or zoom level supplied. The ratios, the journeys and the reflow itself are checked above; this is the judgement a measurement cannot make |
 
-None of these is in. This release cannot be called complete until they are, and
-the verification suite says so rather than reporting a pass.
+M8 is closed for P2 on the existing automated evidence, the three user-reported
+manual passes, and the explicit VoiceOver waiver. This is not full screen-reader
+or WCAG conformance, and the known font coverage gap remains.

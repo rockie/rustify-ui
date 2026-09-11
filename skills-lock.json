@@ -5,13 +5,19 @@
       "source": "XGENT-ai/skills",
       "sourceType": "github",
       "skillPath": "skills/dev-plan/SKILL.md",
-      "computedHash": "b9f5cf5cfde8df92e6ab5c231da29912f18bd6c3cc120f57dc50eb063d980f28"
+      "computedHash": "7a21ddc80b8ebb7b47e6182449dd223c99c2708589656166039d2428e6ebcd5c"
     },
     "elintp": {
       "source": "XGENT-ai/skills",
       "sourceType": "github",
       "skillPath": "skills/elintp/SKILL.md",
-      "computedHash": "4518a85acd7375d8792e53306bb6db65604b70dbb370d2b428657745d8cc7b61"
+      "computedHash": "b3486ea6c84593291a0185060b165a78b61059f60c37a78ccc2a1fdcbadcd11a"
+    },
+    "pardon": {
+      "source": "XGENT-ai/skills",
+      "sourceType": "github",
+      "skillPath": "skills/pardon/SKILL.md",
+      "computedHash": "c22f56d27f6c7fdef8f1e1a77d22ba93c5c40f7f03628b1ece64a01e0a9dd6e3"
     },
     "prd": {
       "source": "XGENT-ai/skills",
