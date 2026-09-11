@@ -195,13 +195,21 @@ fn handle(mut stream: TcpStream, config: &ServeConfig) -> std::io::Result<()> {
     let method = parts.next().unwrap_or("");
     let target = parts.next().unwrap_or("/");
     let mut content_length = 0usize;
+    let mut if_none_match = String::new();
     loop {
         let mut line = String::new();
         if reader.read_line(&mut line)? == 0 || line == "\r\n" || line == "\n" {
             break;
         }
-        if let Some(value) = line.to_ascii_lowercase().strip_prefix("content-length:") {
+        let lower = line.to_ascii_lowercase();
+        if let Some(value) = lower.strip_prefix("content-length:") {
             content_length = value.trim().parse().unwrap_or(0);
+        }
+        if lower.starts_with("if-none-match:") {
+            if_none_match = line
+                .split_once(':')
+                .map(|(_, value)| value.trim().to_string())
+                .unwrap_or_default();
         }
     }
     if content_length > 0 {
@@ -289,12 +297,26 @@ fn handle(mut stream: TcpStream, config: &ServeConfig) -> std::io::Result<()> {
                 }
                 None => {}
             }
+            // A validator, so a browser that already has this file can be
+            // told to keep it. Without one, `Cache-Control: no-cache` means
+            // every reload re-downloads every byte - which made a "hot start"
+            // impossible to measure here, because there was no such thing.
+            //
+            // Size and modification time rather than a hash of the content:
+            // this serves an eleven-megabyte module, and hashing it on every
+            // request would trade the download for a read.
+            let tag = etag(&file);
+            if let Some(tag) = &tag {
+                if etag_matches(&if_none_match, tag) {
+                    return write_not_modified(&mut stream, tag, config);
+                }
+            }
             let body = std::fs::read(&file)?;
-            write_response(
+            write_file_response(
                 &mut stream,
-                200,
                 mime_type(&file),
                 &body,
+                tag.as_deref(),
                 config,
                 method == "HEAD",
             )
@@ -368,11 +390,86 @@ pub fn damage(fault: &Fault, mut body: Vec<u8>) -> Vec<u8> {
     }
 }
 
+/// What this file is right now, as a value a browser can send back.
+///
+/// `None` when the file's metadata cannot be read, which is not an error here:
+/// the response simply goes out without a validator and is never revalidated.
+fn etag(file: &Path) -> Option<String> {
+    let meta = std::fs::metadata(file).ok()?;
+    let modified = meta
+        .modified()
+        .ok()?
+        .duration_since(std::time::UNIX_EPOCH)
+        .ok()?;
+    Some(format!(
+        "\"{}-{}-{}\"",
+        meta.len(),
+        modified.as_secs(),
+        modified.subsec_nanos()
+    ))
+}
+
+/// Whether an `If-None-Match` header names this version.
+///
+/// A list, because that is what the header is, and `*` because a browser is
+/// allowed to send it. A weak comparison would need the `W/` prefix stripped;
+/// nothing here ever sends a weak tag, so a mismatch is a mismatch.
+fn etag_matches(header: &str, tag: &str) -> bool {
+    header
+        .split(',')
+        .map(str::trim)
+        .any(|candidate| candidate == "*" || candidate == tag)
+}
+
+fn write_not_modified(
+    stream: &mut TcpStream,
+    tag: &str,
+    config: &ServeConfig,
+) -> std::io::Result<()> {
+    let mut head = format!(
+        "HTTP/1.1 304 Not Modified\r\nETag: {tag}\r\nCache-Control: no-cache\r\n\
+         X-Content-Type-Options: nosniff\r\nConnection: close\r\n"
+    );
+    if let Some(csp) = config.csp.header_value() {
+        head.push_str("Content-Security-Policy: ");
+        head.push_str(csp);
+        head.push_str("\r\n");
+    }
+    head.push_str("\r\n");
+    stream.write_all(head.as_bytes())?;
+    stream.flush()
+}
+
+/// A file, with its validator when it has one. Everything else about the
+/// response is what `write_response` sends.
+fn write_file_response(
+    stream: &mut TcpStream,
+    mime: &str,
+    body: &[u8],
+    tag: Option<&str>,
+    config: &ServeConfig,
+    head_only: bool,
+) -> std::io::Result<()> {
+    write_response_with(stream, 200, mime, body, tag, config, head_only)
+}
+
 fn write_response(
     stream: &mut TcpStream,
     status: u16,
     mime: &str,
     body: &[u8],
+    config: &ServeConfig,
+    head_only: bool,
+) -> std::io::Result<()> {
+    write_response_with(stream, status, mime, body, None, config, head_only)
+}
+
+fn write_response_with(
+    stream: &mut TcpStream,
+    status: u16,
+    mime: &str,
+    body: &[u8],
+    tag: Option<&str>,
     config: &ServeConfig,
     head_only: bool,
 ) -> std::io::Result<()> {
@@ -387,6 +484,11 @@ fn write_response(
          Cache-Control: no-cache\r\nX-Content-Type-Options: nosniff\r\nConnection: close\r\n",
         body.len()
     );
+    if let Some(tag) = tag {
+        head.push_str("ETag: ");
+        head.push_str(tag);
+        head.push_str("\r\n");
+    }
     if let Some(csp) = config.csp.header_value() {
         head.push_str("Content-Security-Policy: ");
         head.push_str(csp);
@@ -476,6 +578,29 @@ mod tests {
         assert!(!looks_like_a_route("/app.js"));
         assert!(!looks_like_a_route("/tools/demo/rustify.css"));
         assert!(!looks_like_a_route("/vendor/nouislider/nouislider.min.css"));
+    }
+
+    #[test]
+    fn a_revalidation_is_answered_only_for_the_version_the_browser_has() {
+        // The whole point of the validator is that a stale one does not match.
+        // Getting this wrong does not fail loudly: it serves an old build to a
+        // browser that asked whether its copy was still good.
+        let root = fixture();
+        let file = root.join("sub").join("a.js");
+        let tag = etag(&file).expect("a file that exists has a validator");
+        assert!(etag_matches(&tag, &tag));
+        assert!(etag_matches("*", &tag));
+        assert!(etag_matches(&format!("\"other\", {tag}"), &tag));
+        assert!(!etag_matches("\"other\"", &tag));
+        assert!(!etag_matches("", &tag));
+
+        // A file that changed has a different validator, so the browser is
+        // told to take the new bytes.
+        std::fs::write(&file, "12").unwrap();
+        let after = etag(&file).expect("still a file");
+        assert_ne!(tag, after);
+        assert!(!etag_matches(&tag, &after));
+        let _ = std::fs::remove_dir_all(&root);
     }
 
     #[test]

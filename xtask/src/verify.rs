@@ -63,6 +63,7 @@ pub const P2: Suite = Suite {
         "property-workbench",
         "component-catalog",
         "workbench-deep",
+        "budget",
         "deployment",
     ],
     reports: &P2_REPORTS,
@@ -338,6 +339,7 @@ fn browser(root: &Path, project: &'static str) -> Step {
         "property-workbench" => "browser: property-workbench",
         "component-catalog" => "browser: component-catalog",
         "workbench-deep" => "browser: workbench-deep",
+        "budget" => "browser: budget",
         _ => "browser: deployment",
     };
     let mut step = command(

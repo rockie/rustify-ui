@@ -6,6 +6,12 @@
 //! - slots: splash `let` locals / params mapped to wasm locals.
 //! - batch: the eval_batch entry and its edges.
 //! - fuzz: differential fuzzing interpreter-vs-AOT over random expressions.
+//!
+//! The batch tests run thousands of trips of a wasm loop through
+//! `makepad-stitch`, whose instructions are sibling calls. Unoptimised, each
+//! trip keeps its native frames, and the test binary dies with a stack
+//! overflow that names whichever test got there first - not a bug in the test.
+//! `Cargo.toml` builds the interpreter at opt-level 1 for exactly this reason.
 
 use makepad_script::math_aot::{MathAot, MathAotParam, MathAotValue};
 use makepad_script::makepad_math::{Vec2f, Vec3f, Vec4f};

@@ -42,6 +42,14 @@ export default defineConfig({
             testMatch: ["p2-catalog.spec.ts", "p2-theme.spec.ts", "p2-semantics.spec.ts", "p2-i18n.spec.ts", "p2-reflow.spec.ts", "p2-a11y.spec.ts"],
             use: { baseURL: `http://127.0.0.1:${catalogPort}/` },
         },
+        // The budget gate runs thirty cold loads and thirty hot ones, so it is
+        // its own project rather than a slow tail on every workbench run. Same
+        // build, same server: what makes it separate is how long it takes.
+        {
+            name: "budget",
+            testMatch: ["p2-budget.spec.ts"],
+            use: { baseURL: `http://127.0.0.1:${workbenchPort}/` },
+        },
         {
             name: "workbench-deep",
             testMatch: ["p2-deeplink.spec.ts"],
