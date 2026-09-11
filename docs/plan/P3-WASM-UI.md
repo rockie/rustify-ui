@@ -40,13 +40,13 @@
 
 ### 恢复快照
 
-- 最近更新：2026-09-11（M1 完成并回写）
-- 当前进度：1/8 个里程碑完成
-- 当前状态：M1 已完成，退出条件全部跑绿。五个探针各有数字与决定：A-2（裸 DOM 网格 p95 16.70–16.80 ms）、A-5（二次实例化、导出调用与 DOM 处理器两种真实 trap 的归属、重启后的内存保留量全部成立）、A-6（CDP `Runtime.getHeapUsage` 与 `TaskDuration` 可读）、A-7（排序 p95 45–57 ms）成立；A-3 只有有头 Chrome 成立，已按 §11 分支表「A-3 只有有头通过」执行。**新发现 F24**：每帧驱动一次相机时场景每两帧才呈现一次，SwiftShader 与有头 Chrome 比值相同，是调度性质不是光栅器能力——已进 §11 风险表并写进 M4 的交付。正文修订：§0.2 的 A-2/A-3/A-5/A-6/A-7 五行、ADR-8 与 ADR-9 状态、D5、D8、§1.1 的 F21 与新增 F24、§1.2 文件清单三处、§3 场景范围改为 13,050 × 3,996、§9.3、§10 的 M1/M2/M4 三行、§11 风险表、§13.2
+- 最近更新：2026-09-11（M1 完成；M2 进行中，按用户要求在此停下并回写）
+- 当前进度：1/8 个里程碑完成（M2 进行中，未完成）
+- 当前状态：M1 已完成并全部跑绿（见完成记录）。**M2 进行中**：SDK 的 `selection.rs`、组件的 `data_table/{mod,window,keys,view}.rs` 与 `tree.rs`、能力目录两行（目录因此变成 20 类，不再是 R18 的 18 类，`catalog.rs` 与 `docs/components.md` 已同步）、data-workbench 的 `/table` 视图（窗口化表格 + 树 + 20 字段详情表单 + `StripRegion` 概览带 + 插入/删除）与 `strip_{view,region}.rs` 均已落地并通过宿主检查；`tests/browser/p3-table.spec.ts`（11 条）已写好但**尚未跑绿**。M2 途中修掉两个真问题，都已写进代码注释与提交说明：①窗口化表格假设滚动容器自己有高度，容器若按内容撑开则视口等于整张表，窗口会要走全部 100,000 行，externref 表被撑爆后以无消息的 `unreachable` 中止（`window.rs` 现有 `MAX_ROWS` 上限；示例页面补上了漏链的 `rustify.css`）；②每个单元格两个事件监听器代价太高，focus 与 dblclick 上收到网格与行。
 - 最近完成：**M1 · 探针与负载冻结**（2026-09-11）
-- 下一步：M2 · 表格、树与选择——`crates/rustify-ui/src/selection.rs` 与单测；`crates/rustify-components/src/data_table/{mod,window,keys}.rs` 与 `tree.rs`；能力目录两行 + `catalog --check`、`css --check`；data-workbench `/table` 视图（表格、树、详情表单含编辑写回与 `version` 递增、概览带 `StripRegion`、插入/删除）；`docs/data.md` 初稿。注意 M1 只交付了当时有调用方的 API：`Dataset` 的插入/删除/写回/按行取 ID 随 M2 的调用方一起加，`scene_layout::{within,pick}` 随 M4 的框选与命中一起加。退出条件见 §10
+- 下一步：**把 M2 跑完**——① `cargo xtask build-web --example data-workbench --release`（当前只构建过 debug）；② `npx playwright test --project=data-workbench`，先让 `p3-table.spec.ts` 的 11 条通过（用例里的 `table-*` 定位名已与实现对齐，定位清单见 `tests/browser/loads.ts`，M2 该有的是 12 项）；③ 补 `docs/data.md` 初稿（窗口化、选择、可访问入口；作业留给 M3）；④ 一期二期六个 project 逐个回归（**本轮完全没跑**，组件目录从 18 类变 20 类会动到 `p2-catalog.spec.ts` 的两处计数与 `support.ts` 的 `CATALOG_SIZE`，以及 catalog 示例新增的两页）；⑤ 全绿后回写本节并把 M2 记进完成记录。退出条件见 §10 的 M2 行与 §9.1 的 V2
 - 当前阻塞：无。A-4（VoiceOver 人工记录或用户豁免）仍开放，最晚 M8 确认
-- 代码基线：`a6968ca`（M1 实现；本次回写为其后的文档提交）
+- 代码基线：`56509d3`（M2 进行中的提交；M1 为 `a6968ca`）
 
 ### 完成记录
 
@@ -229,7 +229,7 @@ flowchart TD
 | `crates/rustify-ui/src/router.rs`、`crates/rustify-ui/src/overlay.rs` | URL 所有者改页面级判定（带实例号）；`window`/`document`/容器上的监听改带实例 `AbortSignal` 注册 | M5 |
 | `crates/rustify-makepad/src/wasm/host.rs` | 向 SDK 暴露实例的 `AbortSignal`（`listener_options()`） | M5 |
 | `crates/rustify-ui/src/diagnostics.rs` | `GpuInitRetry`、`JobCancelled` | M3/M5 |
-| `crates/rustify-components/src/data_table/{mod.rs,window.rs,keys.rs}` ★ | 窗口化表格：行元素池、可见范围、`role="grid"` 语义、键盘导航、跳行/查找入口的槽 | M2 |
+| `crates/rustify-components/src/data_table/{mod.rs,window.rs,keys.rs,view.rs}` ★ | 窗口化表格：行元素池、可见范围（含 `MAX_ROWS` 上限——容器没高度时视口会等于整张表，窗口若不封顶会把 externref 表撑爆并以无消息的 `unreachable` 中止）、`role="grid"` 语义、键盘导航、跳行入口、`window_version` 出口。单元格只留 `tabindex` 与文本两个响应式位：每格两个事件监听器意味着上千个 wasm 必须持有的 JS 值，focus 与 dblclick 因此上收到网格与行 | M2 |
 | `crates/rustify-components/src/tree.rs` ★ | 基本树 | M2 |
 | `crates/rustify-components/src/catalog.rs` | 能力目录补 DataTable 与 Tree 两行；`cargo xtask catalog --check` 随之 | M2 |
 | `web/loader.js` | `boot({ instance })`、动态导入带查询串的 glue、导出调用边界、页面级 `error`/`unhandledrejection` 归属、每实例 `AbortController`、URL 属性清除、有上限的 `restart()`、致命提示含重启入口 | M1（探针③用最小版本）/M5 |
@@ -478,7 +478,7 @@ flowchart TD
 | # | 里程碑 | 具体交付/依赖 | 验证与退出条件 |
 | --- | --- | --- | --- |
 | M1 | 探针与负载冻结 | 前置：A-1 确认。先落 `stats().frames`（`embedded.js` 覆写 `FromWasmBeginRenderCanvas`，不动分叉——见 D8）与 `defer` 的 MessageChannel 让出（F2）；五个探针（①裸 DOM 网格滚动帧，按有效呈现定义采样；②10,000 矩形场景在 SwiftShader 与有头 Chrome 的有效呈现帧间隔；③同模块二次实例化与 glue 隔离 + 导出调用与 DOM 处理器两种真实 trap 的归属 + 重启一次后旧实例内存保留量，用最小版本的 loader 调用边界与 `error` 归属；④`performance.memory`/CDP 指标；⑤分片排序端到端 20 次的 p95 与片数）各写一条 `tests/browser/p3-probes.spec.ts` 用例并把数字与决定回写 §0.2 A-2/A-3/A-5/A-6/A-7 与 ADR-8/ADR-9/D14/D15 状态；`examples/data-workbench` 骨架（数据集生成、路由、两个空视图、测试出口）；`tests/browser/dataset.ts` 孪生与哈希对齐；`tests/browser/loads.ts`（含 20 项定位清单、动作清单）与 `budgets.ts` 的 B0/B2/B3 段（数值与边界，先不断言）；project `data-workbench`（4178）与 CI 显式 project 清单；`Cargo.toml` 成员；`docs/validation/p3/m1.md` | V1 全项：五个探针有结果与决定、哈希与采样一致、骨架严格 CSP 启动且报告 0、六个既有 project 全绿、`cargo test --workspace --lib` 与 `cd makepad && cargo test` 通过；探针失败的分支按 §11 分支表改正文；回写「实施进度」 |
-| M2 | 表格、树与选择 | 前置：M1 已冻结数据集与孪生。`Dataset` 的插入/删除/写回与按行取 ID 在本里程碑随调用方一起加（M1 只交付了有调用方的部分）；`crates/rustify-ui/src/selection.rs` 与单测；`crates/rustify-components/src/data_table/`（`window.rs`/`keys.rs` 单测、行元素池、语义、键盘、跳行入口、`window_version()` 出口）与 `tree.rs`（展开/折叠/方向键/选择事件，筛选作业在 M3 接）；能力目录两行 + `catalog --check`、`css --check`；data-workbench `/table` 视图（表格、树、详情表单含编辑写回与 `version` 递增、概览带 `StripRegion`、插入/删除）；`docs/data.md` 初稿 | V2 全项（只含 M2 交付：跳行三目标、树选择事件、表格侧定位项）；`--project=data-workbench` 绿；一期二期 project 回归绿；回写「实施进度」 |
+| M2 | 表格、树与选择 | 前置：M1 已冻结数据集与孪生。**能力目录加两行后目录为 20 类（不再是 R18 的 18 类），`p2-catalog.spec.ts` 的两处计数、`support.ts` 的 `CATALOG_SIZE` 与 catalog 示例的两页随之更新，理由记在提交说明里**。`Dataset` 的插入/删除/写回与按行取 ID 在本里程碑随调用方一起加（M1 只交付了有调用方的部分）；`crates/rustify-ui/src/selection.rs` 与单测；`crates/rustify-components/src/data_table/`（`window.rs`/`keys.rs` 单测、行元素池、语义、键盘、跳行入口、`window_version()` 出口）与 `tree.rs`（展开/折叠/方向键/选择事件，筛选作业在 M3 接）；能力目录两行 + `catalog --check`、`css --check`；data-workbench `/table` 视图（表格、树、详情表单含编辑写回与 `version` 递增、概览带 `StripRegion`、插入/删除）；`docs/data.md` 初稿 | V2 全项（只含 M2 交付：跳行三目标、树选择事件、表格侧定位项）；`--project=data-workbench` 绿；一期二期 project 回归绿；回写「实施进度」 |
 | M3 | 作业：排序、筛选、查找与取消 | `crates/rustify-ui/src/job.rs` 与单测（时间预算切片、取消、片前版本校验、进度、只有最新生效）；`JobCancelled` 登记；列头排序、筛选框、树分组筛选、查找入口（R15 AC3 查找路径）、进度与取消 UI；作业中插入/删除/编辑的陈旧重跑 | V3 全项（顺序/筛选与孪生逐项相等；树筛选正确；取消 ≤ 100 ms 页内计时；三种写入下无越界读、重跑一次；排序 p95 记测量值）；`cargo test --workspace --lib`；回写「实施进度」 |
 | M4 | 场景 | 前置：M1 已交付视口剔除、绝对相机的 props、`Viewport` 上报、高亮与 `freeze_scene`。本里程碑补 `scene_layout::{within,pick}`（框选与命中的期望）与真实输入路径，并**解决 F24：让一次相机变化在同一帧呈现**（现状每两帧一次，§11 风险表）；`examples/data-workbench/src/{scene_layout.rs,scene_region.rs,scene_view.rs}`（平移流、框选、命中、接受计数出口）；`/scene` 视图（查找入口、选中列表、详情表单）；20 项定位清单补齐场景侧；探针②若要求则参数化文本缓存容量并记录 | V4 全项（含突发滚轮与全 20 项 30 轮）；`cd makepad && cargo test` 与桥指纹校验通过；一期二期回归；回写「实施进度」 |
 | M5 | 实例隔离与有界重试 | `web/loader.js` 按实例 `boot`/调用边界/`error` 归属/`AbortController`/URL 属性清除/有上限的 `restart`/提示含重启入口；`host.rs` 暴露 `listener_options()`，`router.rs`/`overlay.rs` 的页面级监听带信号注册，`router.rs` 页面级 URL 所有者带实例号；`region.rs` 三次重试与 `GpuInitRetry`；fusion-basic 双实例模式、`fusion_basic_trap()` 与处理器内 panic 按钮；示例 `app.js` 的 `runtime_fatal` 改实例级（三个既有示例同改）；`docs/architecture.md` 写入实例模型与 trap 边界；`docs/compatibility.md` 写入实例内存代价与重启上限 | V5 全项（含 A-5 探针在真实产物上复跑）；P1 M2「trap 带走同实例全部作用域」用例继续通过；四示例 CSP 报告 0；回写「实施进度」。**A-5 失败分支**（§11）：交付改为 D7 重试 + 三种 trap 入口的调用边界与清理 + 重载式重启入口，V5 去掉双实例项，退出条件按缩减后的清单执行并在正文与进度里写明 |
