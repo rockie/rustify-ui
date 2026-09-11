@@ -81,7 +81,7 @@ export default defineConfig({
             timeout: 120_000,
         },
         {
-            command: `cargo xtask serve --example property-workbench --release --port ${deepLinkPort} --base ${deploymentBase} --spa`,
+            command: `cargo xtask build-web --example property-workbench --release --base ${deploymentBase} && cargo xtask serve --example property-workbench --release --port ${deepLinkPort} --base ${deploymentBase} --spa`,
             url: `http://127.0.0.1:${deepLinkPort}${deploymentBase}`,
             reuseExistingServer: false,
             timeout: 120_000,
