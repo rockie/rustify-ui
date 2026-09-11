@@ -40,19 +40,19 @@
 
 ### 恢复快照
 
-- 最近更新：尚未开始（计划撰写于 2026-09-11，同日评审修订）
-- 当前进度：0/8 个里程碑完成
-- 当前状态：尚未开始；A-1 已于 2026-09-11 由用户确认；同日评审修订后计划仍 Ready（D14 的重启上限 3 次是产品可见的建议值，用户可在 M5 开工前改），可开工 M1
-- 最近完成：无
-- 下一步：M1 · 探针与负载冻结——先落 `stats().frames` 计数与 `defer` 的 MessageChannel 让出，再跑 A-2/A-3/A-5/A-6/A-7 五个探针并把结论回写 §0.2，然后冻结数据集生成器与 B3 布局、建 data-workbench 骨架；退出条件见 §10
-- 当前阻塞：无
-- 代码基线：`0f4ceae`（计划调查 commit，工作区 clean）
+- 最近更新：2026-09-11（M1 完成并回写）
+- 当前进度：1/8 个里程碑完成
+- 当前状态：M1 已完成，退出条件全部跑绿。五个探针各有数字与决定：A-2（裸 DOM 网格 p95 16.70–16.80 ms）、A-5（二次实例化、导出调用与 DOM 处理器两种真实 trap 的归属、重启后的内存保留量全部成立）、A-6（CDP `Runtime.getHeapUsage` 与 `TaskDuration` 可读）、A-7（排序 p95 45–57 ms）成立；A-3 只有有头 Chrome 成立，已按 §11 分支表「A-3 只有有头通过」执行。**新发现 F24**：每帧驱动一次相机时场景每两帧才呈现一次，SwiftShader 与有头 Chrome 比值相同，是调度性质不是光栅器能力——已进 §11 风险表并写进 M4 的交付。正文修订：§0.2 的 A-2/A-3/A-5/A-6/A-7 五行、ADR-8 与 ADR-9 状态、D5、D8、§1.1 的 F21 与新增 F24、§1.2 文件清单三处、§3 场景范围改为 13,050 × 3,996、§9.3、§10 的 M1/M2/M4 三行、§11 风险表、§13.2
+- 最近完成：**M1 · 探针与负载冻结**（2026-09-11）
+- 下一步：M2 · 表格、树与选择——`crates/rustify-ui/src/selection.rs` 与单测；`crates/rustify-components/src/data_table/{mod,window,keys}.rs` 与 `tree.rs`；能力目录两行 + `catalog --check`、`css --check`；data-workbench `/table` 视图（表格、树、详情表单含编辑写回与 `version` 递增、概览带 `StripRegion`、插入/删除）；`docs/data.md` 初稿。注意 M1 只交付了当时有调用方的 API：`Dataset` 的插入/删除/写回/按行取 ID 随 M2 的调用方一起加，`scene_layout::{within,pick}` 随 M4 的框选与命中一起加。退出条件见 §10
+- 当前阻塞：无。A-4（VoiceOver 人工记录或用户豁免）仍开放，最晚 M8 确认
+- 代码基线：`a6968ca`（M1 实现；本次回写为其后的文档提交）
 
 ### 完成记录
 
 | Milestone | 完成时间 | 准确完成摘要 | 验证证据 | 代码基线 |
 | --- | --- | --- | --- | --- |
-| — | — | 尚未完成任何里程碑 | — | — |
+| M1 | 2026-09-11 | 探针与负载冻结。`stats().frames`（呈现计数）与 `defer` 的 MessageChannel 让出落在 `embedded.js`——**呈现计数不动分叉**：`FromWasmBeginRenderCanvas` 派发在嵌入区域对象上，覆写即可计到同一批呈现，D8 与 §1.2 已按此改。`web/loader.js` 改为按实例 `boot`（首个实例走静态导入，其后动态求值 `./bindgen.js?instance=n`、共用同一个 `WebAssembly.Module`）+ 导出调用边界（fatal 后抛 `InstanceDead`，`RuntimeError` 先 `enter_fatal` 再重抛）+ 按 glue URL 归属页面级 `error` + 每实例 `AbortController` + 上限 3 次的 `restart()` + `release_container()`；fusion-basic 加真实 trap 出口（`fusion_basic_trap()` 与处理器内 panic 的按钮）与第二实例容器。新增 `examples/data-workbench` 骨架：数据集（xorshift32 固定种子、100,000 × 20 × 16 字节、FNV-1a 校验和）、场景布局与视口剔除的 `SceneView`/`SceneRegion`、可分片的稳定归并排序、路由与测试出口；`tests/browser/{dataset,loads}.ts` 孪生与冻结的负载定义；`budgets.ts` 增 B0/B2/B3 段（M1 只写数值与边界，不断言）；第四个 project（4178）与 CI 显式 project 清单。**五个探针的结论见 §0.2 与 `docs/validation/p3/m1.md`**：四个成立，A-3 走「只有有头通过」分支；另发现 F24（场景每两帧才呈现一次）交给 M4。只交付有调用方的 API：数据集的写入、场景的框选与命中、排序的进度随 M2–M4 的调用方一起加 | `docs/validation/p3/m1.md`；`--project=data-workbench` **7/7**（含严格 CSP 下启动 0 违规、孪生哈希与 1,000 采样相等、排序结果逐行相等）；六个既有 project 全绿：`fusion-basic` **56/56**、`property-workbench` **129/129**、`component-catalog` **46/46**、`budget` **4/4**（冷 p95 162 ms、首载 2,772,456 B、B1 时延 p95 41.7 ms，P2 为 42.2 ms，让出机制换成消息端口没有代价）、`workbench-deep` **6/6**、`deployment` **6/6**；`cargo test --workspace --lib` 158、`-p data-workbench` 13、`-p xtask` 23；`cd makepad && cargo test` 与脚本 VM 测试通过；clippy `-D warnings` / fmt 通过；`cargo xtask sources verify` 通过（分叉未改动）；`cargo xtask build-web --example data-workbench --release` 通过 | `a6968ca` |
 
 ## 0. 需求、范围与决策
 
@@ -97,12 +97,12 @@
 | C-5 | PRD §5.3「正确性」 | 预期动作/数据清单由独立实现生成，不能用实现自身输出当期望值 | §3.1/§9.3 | 已确认 |
 | C-6 | P2 M10；`makepad/draw/src/text/layouter.rs` 第 240、270 行 | 整形器与排版器各 4,096 条缓存；耐久测量必须先走完工作集；标签数超过缓存容量会持续换出 | §5.4/§12 | 已核实 |
 | A-1 | 范围假设 | 用户确认 §0.1 交付形态、§0.6 延期清单、ADR-8（实例隔离形态）与 ADR-9（B2 表格在 DOM 窗口化） | 用户 2026-09-11 确认「A-1 ok」，即按本计划所写的建议选择实施；D1/D2/D4/D6 与 ADR-8/ADR-9 据此转为已接受 | **已解除** |
-| A-2 | 技术假设 | DOM 窗口化表格在 60 × 12 可见单元格、行元素复用下，滚动帧间隔 p95 ≤ 20 ms（本机 Chrome） | M1 探针①：裸 DOM 网格 + 720 个文本节点每帧更新；失败则 ADR-9 退到 GPU DataGrid 备选并记录 | 开放 |
-| A-3 | 测量环境 | B3 帧门在 headless SwiftShader 上不可代表 PRD 性能机；用 `channel: "chrome"` 的有头 Chrome 跑帧门；CI 不跑有头 project | M1 探针②：同一场景在 SwiftShader 与有头 Chrome 各测一次并记录；两者都过则两处都跑，只有有头过则门只在有头跑并在 `budgets.ts` 写明 | 开放 |
+| A-2 | 技术假设 | DOM 窗口化表格在 60 × 12 可见单元格、行元素复用下，滚动帧间隔 p95 ≤ 20 ms（本机 Chrome） | M1 探针①（2026-09-11）：裸 DOM 网格 768 个文本节点、每帧滚 3 行，有效呈现间隔 p95 **16.80 ms**、> 50 ms 占比 **0%**、601 次驱动 601 次呈现 | **已解除·成立**：ADR-9 保持备选 A（DOM 窗口化），GPU DataGrid 不再是本期可能走的路 |
+| A-3 | 测量环境 | B3 帧门在 headless SwiftShader 上不可代表 PRD 性能机；用 `channel: "chrome"` 的有头 Chrome 跑帧门；CI 不跑有头 project | M1 探针②（2026-09-11）：同一场景、同一驱动，headless SwiftShader p95 **50.10 ms**、> 50 ms 占比 13.9%；有头 Chrome 152.0.7977.84 p95 **17.60 ms**、占比 0% | **已解除·只有有头通过**（§11 分支表「A-3 只有有头通过」）：B3 帧门只在有头 `budget-data` 跑，CI 不跑；`budgets.ts`「在哪跑」已写明 |
 | A-4 | 验收资源 | VoiceOver + Chrome 对 B2/B3 三目标旅程的人工记录；用户 2026-09-11 曾豁免 P2 的 VoiceOver 其余项，本期只要求新增旅程，或由用户再次豁免 | `docs/validation/p3/manual/voiceover-data.md`；M8 | 开放 |
-| A-5 | 技术假设 | 同一份编译后的模块可在同页实例化两次、各自 `boot`：`bindgen.js` 的模块级 `wasm` 绑定以带 `?instance=` 的 URL 二次求值隔离（`wasm_bridge.js` 的 `init_env` 状态是闭包局部、`WasmBridge.current` 在 `as_current` 内保存/恢复，已核实不需要二次求值），`modulepreload` 与 CSP 不冲突；DOM 事件处理器内的 trap 能由 `error` 事件的 `error.stack` 中的 glue URL 归属到实例 | M1 探针③：两次 `boot`，各挂一个作用域；一个实例分别经导出调用与 DOM 事件处理器触发真实 trap，另一个继续答复，且 `error.stack` 含本实例 glue URL；重启一次后以 `WeakRef` + CDP `HeapProfiler.collectGarbage` 记录旧实例线性内存是否被保留（预期保留，数字进 D14 的上限说明） | 开放；二次实例化失败则 ADR-8 退到备选 A（分支后果见 §11）；只有 DOM 处理器 trap 不可归属则按 D15 退路记为页面级 |
-| A-6 | 测量手段 | Playwright Chromium 下 `performance.memory.usedJSHeapSize`（或 CDP `Runtime.getHeapUsage`）与 CDP `Performance.getMetrics` 的 `TaskDuration` 可读 | M1 探针④；缺失的量按 PRD §5.3「未测并标记」处理，不自动通过 | 开放 |
-| A-7 | 技术假设 | 以 MessageChannel 让出、每片 8 ms 时间预算的分片作业，100,000 行 × 16 字节键的单列排序（初排 + 归并）在 headless Chrome 上端到端 p95 ≤ 500 ms，且作业片不把滚动帧持住 | M1 探针⑤：裸 wasm 排序作业（不带表格）跑 20 次记 p95 与片数；同时驱动一个空 rAF 循环记帧间隔 | 开放；失败则先放宽片预算到 16 ms 重测，再不过则走 §11 分支表 A-7 行 |
+| A-5 | 技术假设 | 同一份编译后的模块可在同页实例化两次、各自 `boot`；DOM 事件处理器内的 trap 能由 `error.stack` 中的 glue URL 归属到实例 | M1 探针③（2026-09-11）：两个实例线性内存互不相同（118.3 MB + 2.6 MB）、1 次 wasm 请求 2 次 glue 请求；导出调用 trap 抛 `RuntimeError` 后本实例 fatal、再调用得 `InstanceDead`；DOM 处理器 trap **成功归属本实例**；另一实例两次都 100/100 接受动作；重启一次后旧实例线性内存在 `HeapProfiler.collectGarbage` 后**仍可达** | **已解除·完全成立**：ADR-8 保持备选 B，D15 不需要退路，D14 的「保留量有上限」被实测证实 |
+| A-6 | 测量手段 | Playwright Chromium 下 `performance.memory.usedJSHeapSize`（或 CDP `Runtime.getHeapUsage`）与 CDP `Performance.getMetrics` 的 `TaskDuration` 可读 | M1 探针④（2026-09-11）：`performance.memory.usedJSHeapSize` 可读但被量化（实测 10,000,000 整数）；CDP `Runtime.getHeapUsage` 可读且精确（7,340,180）；CDP `Performance.getMetrics` 的 `TaskDuration` 可读；`stats().memory` 67,633,152 | **已解除·成立**：JS 堆以 CDP `Runtime.getHeapUsage` 为准，`performance.memory` 只作旁证；无未测项 |
+| A-7 | 技术假设 | 以 MessageChannel 让出、每片 8 ms 时间预算的分片作业，100,000 行 × 16 字节键的单列排序（初排 + 归并）在 headless Chrome 上端到端 p95 ≤ 500 ms，且作业片不把滚动帧持住 | M1 探针⑤（2026-09-11）：20 次 p95 **57.2 ms**、中位 44.1 ms、中位 6 片；同跑的空 rAF 循环帧间隔 p95 16.70 ms；结果与孪生实现逐行相等 | **已解除·成立**，余量约 8 倍；片预算保持 8 ms |
 
 ### 0.3 决策表
 
@@ -112,10 +112,10 @@
 | D2 | B2 呈现层 | DOM 窗口化表格（ADR-9）；GPU 只承担旁边的选择概览带 | 语义、键盘、IME、文本选择、对比度全是 DOM 原生；GPU DataGrid 备选保留在 ADR-9 | A-2；P1 D6 |
 | D3 | 数据集与预期 | 数据集由 Rust 在内存生成（xorshift32、固定种子、36 字符字母表、16 字节定长单元格）；TypeScript 用同一算法再生成一份，作为排序/筛选/框选的独立预期 | 无网络、无数据文件；两份实现互为校验（哈希对齐单测） | C-5；§3.1 |
 | D4 | 大数据作业 | 主线程分片作业（`crates/rustify-ui/src/job.rs` ★）：每步一个 `defer` 任务、按 8 ms 时间预算切片（行数只作上限）、每片开始前校验数据版本、以一期票据取消；`defer` 的让出改为 MessageChannel（F2：150 次链式 `setTimeout(0)` 实测 716–743 ms）；不用 Worker、不用线程 | 无第二份 wasm、无 32 MB 数据拷贝；取消是票据失效，结果只在完成时整体写入；版本变了的片不读数据 | C-4；A-7；P1 `task.rs` |
-| D5 | 帧门环境 | B2 滚动帧门 headless；B3 帧门按 A-3 探针结论决定是否只在有头 Chrome 跑，作为独立 project `budget-data`，CI 明确不跑 | 一台机器一个浏览器的边界照旧写在 `budgets.ts` | A-3；PRD §5.1 |
+| D5 | 帧门环境 | B2 滚动帧门 headless；B3 帧门**只在有头 Chrome 跑**（A-3 探针②：headless SwiftShader p95 50.10 ms，有头 17.60 ms），作为独立 project `budget-data`，CI 明确不跑 | 一台机器一个浏览器的边界照旧写在 `budgets.ts` | A-3；PRD §5.1 |
 | D6 | 实例隔离 | 每个应用实例一份 wasm 实例（ADR-8）；作用域仍是实例内的挂载 | 「实例」= PRD 的应用实例；trap 只带走本实例；B4 的「2 个实例」按此定义 | R-4；A-5 |
 | D7 | GPU 启动重试 | `GpuRegion` 在拿不到 WebGL2 上下文时以 0/250/750 ms 三次重试，全部失败才 `Failed`；上下文丢失后的重建仍由 `webglcontextrestored` 驱动、不轮询 | 从首次失败到最终提示 < 2 s；不会无限重启 | R33 AC3；`crates/rustify-ui/src/region.rs` |
-| D8 | 资源账本 | `web_gl.js` 在 `bufferData`/`texImage2D`/`deleteBuffer`/`deleteTexture` 处记字节，`stats()` 暴露 `gpu_bytes` 与 `frames`；CPU 侧 = `wasm._memory.buffer.byteLength` + JS 堆 | GPU 为估算（PRD 允许），文档写明估算口径 | NFR-2；F10 |
+| D8 | 资源账本 | `web_gl.js` 在 `bufferData`/`texImage2D`/`deleteBuffer`/`deleteTexture` 处记字节并由 `stats()` 暴露 `gpu_bytes`（M6）；`frames` 不动分叉——`FromWasmBeginRenderCanvas` 派发在嵌入区域对象上，在 `embedded.js` 覆写即可计到同一批呈现（M1 已落）；CPU 侧 = `wasm._memory.buffer.byteLength` + CDP `Runtime.getHeapUsage`（A-6 探针：`performance.memory` 被量化，只作旁证） | GPU 为估算（PRD 允许），文档写明估算口径 | NFR-2；F10；A-6 |
 | D9 | B0 的组件来源 | B0 的 10 项 DOM 表单只用 `rustify-ui` 一期组件（`TextField/TextArea/Checkbox/Slider/Button/Label/LoadView`），不引入 `rustify-components` 与 Tailwind 产物 | 首载体积不涨；R29 B0 的 3 MiB 门有余量 | NFR-1；F14 |
 | D10 | 选择集归属 | `crates/rustify-ui/src/selection.rs` ★ 拥有「删除即清除、排序筛选保留、隐藏计数按当前视图」三条规则；表格、场景、概览带三个消费者共用 | 三个真实调用方成立共享 | R-1/R-2 |
 | D11 | 树 | 基本树只做 DOM `role="tree"` + 展开/折叠 + 方向键，两层固定分组（10 × 10），点击分组即筛选作业；不虚拟化 | 给 PRD R20「树提供基本导航」一个真实用处，不造通用树 | R20 边界 |
@@ -130,7 +130,7 @@ D1/D2/D4/D6 由用户在 A-1 中一并确认（2026-09-11 已确认）；其余�
 
 #### ADR-8：每个应用实例一份 wasm 实例，由 loader 实例化
 
-- 状态：Accepted（A-1 已于 2026-09-11 解除；A-5 探针在 M1 跑，失败则按「重新评估触发」退到备选 A 并改回本节状态）。
+- 状态：Accepted（A-1 已于 2026-09-11 解除；A-5 探针已于 2026-09-11 在 M1 跑通，二次实例化、三种真实 trap 的归属与重启后的内存保留量全部符合本节预期，见 `docs/validation/p3/m1.md`）。
 - 背景与驱动：R26 AC3 要求「同页其他独立实例继续满足其可用契约」，R33 AC3 要求 trap 后 2 s 内反馈且不循环；P1 D9/ADR-1 选择了单 wasm 多作用域并明确「共享 runtime 不能满足 R26 AC3 的独立实例 trap 边界」。核实：`crates/rustify-makepad/web/embedded.js` 的 `create_host_hooks` 已经是「每个 runtime 一个对象」（`regions`/`tasks`/`runtime.fatal` 都在闭包内，`enter_fatal` 只销毁本 runtime 的区域）；`crates/rustify-makepad/src/wasm/host.rs` 的 `HOOKS`/`REGIONS` 是 `thread_local!`，随 wasm 实例各有一份；`web/loader.js` 的 `boot()` 用 `WebAssembly.compileStreaming` 编译一次、`init({ module_or_path: module }, env)` 实例化一次，但 `bindgen.js` 是静态导入且其模块级 `wasm` 绑定只有一份，生成的 `__wbg_init`/`initSync` 以 `if(wasm!==undefined)return wasm` 守卫——同一份 glue 第二次 `init` 是空操作而不是覆盖，且 glue 没有释放入口（F22）；`window.makepad_resource_base` 是页面级全局但只表示部署路径，两个实例同一部署。`crates/rustify-ui/src/router.rs` 第 498–528 行的 URL 所有者槽位是 `thread_local!`，即**每个 wasm 实例一个槽**——两个实例各自都能成为所有者，这与 R22「一个页面只有一个所有者」冲突，必须改成页面级。
 - 备选 A：保持单 wasm，R26 AC3 后半句继续作为文档边界——零改动，但完整版本前这条 AC 永远是 partial。备选 B：loader 对每个应用实例调用一次实例化：首个实例用现有静态导入；后续实例以 `import(new URL("./bindgen.js?instance=" + n, import.meta.url))` 动态求值一份新的 glue（`wasm_bridge.js` 的状态是 `init_env` 闭包局部与 `as_current` 内保存/恢复的 `WasmBridge.current`，`message_bridge.js` 只造类，两者已核实不需要二次求值），共用同一个 `WebAssembly.Module`；每个实例有自己的线性内存、`HostHooks`、诊断环、路由槽；URL 所有者改为页面级（`document.documentElement` 上的 `data-rustify-url-owner` 属性，`claim_url` 先查它再占本实例槽）；`boot()` 返回值增加 `instance` 编号与 `restart()`；trap 的调用边界、监听清理与重启上限见 D15/D14。备选 C：每个 GPU 区域一份 wasm——区域间共享状态不可能，淘汰。
 - 决策：建议 B。实例 = wasm 实例 + 一个 runtime；作用域 = 实例内的挂载。同实例内的多作用域行为不变（P1 M2 的双作用域夹具与「trap 带走同实例全部作用域」的用例继续成立）。真实 trap 用示例导出 `fusion_basic_trap()`（`panic = "abort"` 下 panic 即 `unreachable`）触发，不再只用 JS 侧 `enter_fatal` 模拟。
@@ -140,7 +140,7 @@ D1/D2/D4/D6 由用户在 A-1 中一并确认（2026-09-11 已确认）；其余�
 
 #### ADR-9：B2 表格在 DOM 侧窗口化，GPU 只画选择概览带
 
-- 状态：Accepted（A-1 已于 2026-09-11 解除；A-2 探针在 M1 跑，失败则改备选 B 并改回本节状态）。
+- 状态：Accepted（A-1 已于 2026-09-11 解除；A-2 探针已于 2026-09-11 在 M1 跑通，裸 DOM 网格的有效呈现间隔 p95 16.80 ms，备选 B 不再是本期会走的路）。
 - 背景与驱动：R20 三条 AC 里两条是关于身份与可访问性（按 ID 的选择存活；键盘/AT 定位不可见项并修改），R15 AC3 要求可访问的查询与导航入口；R30 AC2 要求滚动帧间隔 p95 ≤ 20 ms。核实：分叉里 `makepad/widgets/src/data_grid.rs`（2,127 行）有双轴虚拟化（`set_grid_size`、`next_cell`、`scroll_cell_into_view`、`visible_counts`、`GridSelection`、排序指示），`portal_list.rs`（3,649 行）有按可见范围绘制的列表；但 Makepad Web 的 `AccessibilityUpdate` 分支为空（P2 F22），GPU 表格的每个单元格都需要一个 DOM 等价入口才能满足 R20 AC3（P1 D6）；一期文本编辑已是「区域交出矩形、原生控件承接」（ADR-3）。
 - 备选 A：DOM 窗口化——固定行高、固定列宽，只渲染可见 60 行 × 12 列加过扫的行元素池，滚动时只更新单元格文本；语义、键盘、IME、文本选择、对比度全部来自浏览器；成本是每帧最多约 720 个文本节点更新。备选 B：GPU `DataGrid`——绘制成本最低，但要为可见单元格镜像一套 DOM 语义、把编辑交给原生控件、把 100,000 行的行号语义放到镜像上；两套布局要对齐到 1 CSS 像素（P1 R09 的老问题）。备选 C：DOM 表格但不窗口化——100,000 × 20 个节点，淘汰。
 - 决策：建议 A，条件是 A-2 探针通过（裸 DOM 网格每帧 720 个文本更新的滚动帧 p95 ≤ 20 ms）。探针失败则改 B，并把 §5.3/§6.1 的语义部分改成「镜像入口」，本 ADR 状态改 Accepted-B 并记录数字。
@@ -198,8 +198,9 @@ D1/D2/D4/D6 由用户在 A-1 中一并确认（2026-09-11 已确认）；其余�
 | F18 | 已核实·足够 | `examples/fusion-basic/src/main.rs`（593 行）导出 `fusion_basic_mount`、`fusion_basic_mount_owner/guest`、`fusion_basic_geometry_mount`；`app.js` 一次 `boot` | B0 改默认挂载内容；双实例模式加第二次 `boot` |
 | F19 | 已核实·足够 | `crates/rustify-ui/src/diagnostics.rs`：`ErrorKind` 15 类 + `Severity::{Error, Info}`，`detail` 为 `&'static str` | 新增 `GpuInitRetry`（Info）、`JobCancelled`（Info）两类 |
 | F20 | 已核实·缺口 | `xtask/src/serve.rs` 有 ETag/304，不发 `Content-Encoding`；`xtask/src/build.rs` 的 `compressed_sizes` 用 `gzip -9` | R29 B0 AC2 与 P2 同法：页内 `CompressionStream` 求和 |
-| F21 | 未核实·探针 | ① DOM 窗口化滚动帧；② SwiftShader 与有头 Chrome 上的 B3 帧间隔；③ 同模块二次实例化、glue 隔离、trap 归属与重启保留量；④ `performance.memory` / CDP 指标可读；⑤ 分片排序端到端 | M1 五个探针，各有退路（A-2/A-3/A-5/A-6/A-7） |
+| F21 | 已核实·足够 | M1 五个探针于 2026-09-11 全部跑完（`tests/browser/p3-probes.spec.ts`，结论见 §0.2 A-2/A-3/A-5/A-6/A-7 与 `docs/validation/p3/m1.md`）：①16.80 ms 成立；②只有有头成立；③完全成立；④CDP 两个量都可读；⑤p95 57.2 ms 成立 | 只有 A-3 走了分支（B3 帧门有头专跑）；其余按原设计执行 |
 | F22 | 已核实·边界 | 生成的 glue（`target/makepad-wasm-app/release/fusion-basic/bindgen.js`，wasm-bindgen 输出）：第 995 行 `let wasmModule,wasmInstance,wasm;` 模块级；`__wbg_init`/`initSync` 以 `if(wasm!==undefined)return wasm` 守卫；没有释放或重置入口；`CLOSURE_DTORS` 是模块级 `FinalizationRegistry`（第 822 行，第 932 行注册），析构回调经当时的模块级 `wasm` 调 `__wbindgen_destroy_closure`。ES 模块记录按 URL 缓存、随文档存活 | 每个 glue URL 永久持有一份实例：重启必须换 URL 且有上限（D14）；不能靠给 glue 加重置入口复用 URL（析构会打到新实例）；死实例的迟到析构可能再进入死实例并抛出，V5 不以 `pageerror` 为 0 断言另一实例健康，而以动作接受计数 |
+| F24 | 已核实·缺口 | 场景呈现节奏：每帧驱动一个相机位置时，区域**每两帧才呈现一次**——SwiftShader 401 驱动 / 602 pump / 201 呈现，有头 Chrome 1201 / 1801 / 600，两者比值相同（0.5 呈现、1.5 pump 每驱动），说明是 props → 重绘 → 呈现的调度性质而非光栅器能力 | §7「有效帧数 ≥ 驱动数 × 0.99」在现状下两个环境都达不到；M4 负责把呈现拉到每帧一次，M8 的门是检验点（§11 风险表） |
 | F23 | 已核实·缺口 | P2 的 R30 AC1 门在页内等「值落地后的下一帧」（`p2-budget.spec.ts` 第 404–478 行）；本期 B2/B3 帧门若只采 rAF 时间戳差，画面停止更新时 rAF 仍以 60 Hz 回调、p95 恒为 16.7 ms | 帧门必须绑定内容版本（§9.3 有效呈现定义）并带负向探针 |
 
 ### 1.2 拓扑与文件清单
@@ -221,7 +222,7 @@ flowchart TD
 
 | 路径 | 责任 | 首次落点 |
 | --- | --- | --- |
-| `examples/data-workbench/` ★（`Cargo.toml`、`index.html`、`app.js`、`app.css`、`src/main.rs`、`src/dataset.rs`、`src/scene_region.rs`、`src/strip_region.rs`、`src/scene_layout.rs`） | 第四示例：数据集与版本、视图与作业、两个视图、GPU 场景与概览带、测试出口 | M1 骨架，M2–M4 填充 |
+| `examples/data-workbench/` ★（`Cargo.toml`、`index.html`、`app.js`、`app.css`、`src/main.rs`、`src/dataset.rs`、`src/scene_layout.rs`、`src/scene_view.rs`、`src/scene_region.rs`、`src/sort.rs`；M2 再加 `src/strip_region.rs`） | 第四示例：数据集与版本、视图与作业、两个视图、GPU 场景与概览带、测试出口。`scene_view.rs` 是被 `scene_region.rs` 摆进根视图的 widget（与 `object_grid.rs`/`object_region.rs` 同一分法：一个文件一个 `script_mod!`）；`sort.rs` 是应用自己的作业规则函数，M3 由 `job.rs` 驱动 | M1 骨架（数据集、场景、分片排序、测试出口），M2–M4 填充 |
 | `crates/rustify-ui/src/job.rs` ★ | 分片作业：步进、切片大小、票据取消、进度；纯逻辑 + `defer` 驱动 | M3 |
 | `crates/rustify-ui/src/selection.rs` ★ | 按 ID 的选择集：删除清除、排序筛选保留、隐藏计数 | M2 |
 | `crates/rustify-ui/src/region.rs` | GPU 启动有界重试（D7） | M5 |
@@ -232,12 +233,12 @@ flowchart TD
 | `crates/rustify-components/src/tree.rs` ★ | 基本树 | M2 |
 | `crates/rustify-components/src/catalog.rs` | 能力目录补 DataTable 与 Tree 两行；`cargo xtask catalog --check` 随之 | M2 |
 | `web/loader.js` | `boot({ instance })`、动态导入带查询串的 glue、导出调用边界、页面级 `error`/`unhandledrejection` 归属、每实例 `AbortController`、URL 属性清除、有上限的 `restart()`、致命提示含重启入口 | M1（探针③用最小版本）/M5 |
-| `crates/rustify-makepad/web/embedded.js` | `defer` 改 MessageChannel 让出；`stats()` 增 `frames`（M1，探针②与帧门都要它）、`gpu_bytes`（M6） | M1/M6 |
-| `makepad/platform/src/os/web/web_gl.js`、`web.js` | 呈现计数上报（M1）；字节账本（M6） | M1/M6 |
+| `crates/rustify-makepad/web/embedded.js` | `defer` 改 MessageChannel 让出；`stats()` 增 `frames`（M1：覆写 `FromWasmBeginRenderCanvas`，不动分叉）、`gpu_bytes`（M6） | M1/M6 |
+| `makepad/platform/src/os/web/web_gl.js` | 字节账本（M6）。呈现计数**不动分叉**：`FromWasmBeginRenderCanvas` 派发在嵌入区域对象上，覆写在 `embedded.js` 即可（M1 已落，D8） | M6 |
 | `examples/fusion-basic/src/main.rs`、`app.js`、`index.html` | B0 默认挂载；双实例模式；`fusion_basic_trap()` 与一个处理器内 panic 的 DOM 按钮 | M1（trap 出口，探针③）/M5/M6 |
 | `tests/browser/budgets.ts`、`tests/browser/loads.ts` ★ | B0/B2/B3 数值与「不覆盖什么」；负载定义与基线标识（种子、布局、动作清单） | M1（数值）/M8（断言） |
 | `tests/browser/dataset.ts` ★ | 数据集与场景布局的 TypeScript 孪生实现（独立预期） | M1 |
-| `tests/browser/p3-{probes,table,jobs,scene,instances,b0,idle,memory,faults,endurance}.spec.ts` ★、`p3-budget-{minimal,data}.spec.ts` ★ | 本期用例 | M1 起 |
+| `tests/browser/p3-{probes,table,jobs,scene,instances,b0,idle,memory,faults,endurance}.spec.ts` ★、`p3-budget-{minimal,data}.spec.ts` ★ | 本期用例。`p3-probes.spec.ts` 在 M1 后保留为回归：`frames` 计数、冻结场景不呈现、孪生哈希与采样、排序结果逐行相等仍然每次都跑 | M1 起 |
 | `playwright.config.ts`、`.github/workflows/verify.yml` | project `data-workbench`（4178）、`budget-minimal`、`budget-data`；CI 显式 project 清单 | M1/M8 |
 | `xtask/src/verify.rs` | `P3` suite（四示例、九 project、`docs/reports/p3/` 七文件、人工记录一份） | M8 |
 | `Cargo.toml` | workspace 成员加 `examples/data-workbench` | M1 |
@@ -273,7 +274,7 @@ flowchart TD
 | `View`（示例） | `order: Vec<u32>`（行索引，排序/筛选后）、`sort: Option<(col, asc)>`、`filter: Option<String>`、`group: Option<(g, sg)>`、`built_for: version` | 作业完成时整体替换；`built_for != version` 的视图在下一次作业前继续显示但标「陈旧」；作业绑定发起时版本，每片开始前与完成时比对，变了即 `Stale` |
 | `Selection`（SDK） | `BTreeSet<Id>`；删除行时 `remove_deleted`；`counts(view)` 用 `View::contains(id)`（`order` 建位图 `Vec<bool>`，随视图重建） | 随作用域；两个视图与概览带读同一份 |
 | `Job` 状态 | `ticket`、`done_rows`、`total_rows`、`buffer`（排序：索引数组的分片归并；筛选：命中索引；查找：首个命中） | 一次作业一份；取消即丢弃缓冲 |
-| `SceneLayout`（示例） | 10,000 个 `SceneRect{ id, x, y, w: 120, h: 24, label: "OBJ%05d" }`：`col = i % 100`、`row = i / 100`、`x = col * 130`、`y = row * 40`；`i % 10 == 9` 的矩形再偏移 (+60, +12) 形成第二层；重叠 ≤ 2 层；场景范围 13,000 × 4,000 CSS px | 编译期常量算法，TypeScript 孪生复算 |
+| `SceneLayout`（示例） | 10,000 个 `SceneRect{ id, x, y, w: 120, h: 24, label: "OBJ%05d" }`：`col = i % 100`、`row = i / 100`、`x = col * 130`、`y = row * 40`；`i % 10 == 9` 的矩形再偏移 (+60, +12) 形成第二层；重叠 ≤ 2 层；场景范围 **13,050 × 3,996** CSS px（由公式推出的外接框：99 × 130 + 60 + 120，99 × 40 + 12 + 24；相机夹取要的是精确值，原先写的 13,000 × 4,000 是约数，2026-09-11 M1 更正） | 编译期常量算法，TypeScript 孪生复算 |
 | 实例（loader） | `instance: u32`（页面级递增）、`slot: u32`（容器对应的实例槽，重启不变）、`restarts: u32`（≤ 3）、`module`（共享）、`glue_url`、`controller: AbortController`、`hooks`、`fatal: Error|null`；页面级 `data-rustify-url-owner="<instance>:<scope>"` | 实例 trap → `fatal` 置位、`controller.abort()`、清本实例的 URL 属性、区域释放、容器清空、提示与重启入口；`restart()` 生成新实例编号与新 glue URL，死实例的模块记录与线性内存随文档保留（D14） |
 | GPU 字节账本（宿主 JS） | 每个 GL 上下文一个 `Map<object, bytes>`；`bufferData` 覆盖、`bufferSubData` 不改、`texImage2D` 按 `width × height × 4`（RGBA8）或按格式表、`delete*` 移除 | 随 `destroy()` 归零；估算口径见 `docs/compatibility.md` |
 
@@ -450,7 +451,7 @@ flowchart TD
 
 ### 9.3 NFR 与故障注入
 
-帧间隔（有效呈现）：页内每个 rAF 回调读一次内容版本——B3 读 `stats().frames`（区域呈现计数），B2 读表格导出的 `window_version()`（可见范围每次重算 +1）；只有版本比上一个有效帧前进了的 rAF 才是有效呈现，样本 = 相邻两个有效呈现的时间戳差，版本没动的 rAF 不产生样本、只把间隔累加到下一个有效帧上。滚动由页内每帧设 `scrollTop`（3 行/帧）驱动，平移由页内派发 `wheel`/指针事件驱动；每次驱动记一次，结束时断言驱动数 = 区域接受数（场景，经 `Admission::Accepted` 计数导出）或 = 范围重算数（表格），有效帧数 ≥ 驱动数 × 0.99；预热 10 s 不计；5 次运行各自算 p95 与 > 50 ms 占比。负向探针：同一驱动下把内容冻结（示例导出 `freeze_scene(true)` / `freeze_table(true)`，区域仍 pump 但不改相机与呈现计数）5 s，p95 必须超门，否则门实现有误、整个 budget project 失败。取消反馈：页内从点击到「已取消」呈现的那一帧。内存：`stats().memory` + `performance.memory`；GPU：`stats().gpu_bytes`；CPU：CDP `Performance.getMetrics`。trap：`fusion_basic_trap()` 与 `enter_fatal`。GPU 不可用：页内覆盖 `HTMLCanvasElement.prototype.getContext` 返回 `null`。上下文丢失：现有 `lose_context/restore_context`。字体失败：`serve --fault missing:`。隐藏：`host.hidden` 与 CDP 生命周期。耐久：`RUSTIFY_ENDURANCE_MINUTES=120`，2 h 只在 M7 跑一次并把曲线写进报告，默认 2 min 作为回归。
+帧间隔（有效呈现）：页内每个 rAF 回调读一次内容版本——B3 读 `stats().frames`（区域呈现计数，`embedded.js` 在 `FromWasmBeginRenderCanvas` 上 +1），B2 读表格导出的 `window_version()`（可见范围每次重算 +1）；只有版本比上一个有效帧前进了的 rAF 才是有效呈现，样本 = 相邻两个有效呈现的时间戳差，版本没动的 rAF 不产生样本、只把间隔累加到下一个有效帧上。滚动由页内每帧设 `scrollTop`（3 行/帧）驱动，平移由页内派发 `wheel`/指针事件驱动；每次驱动记一次，结束时断言驱动数 = 区域接受数（场景，经 `Admission::Accepted` 计数导出）或 = 范围重算数（表格），有效帧数 ≥ 驱动数 × 0.99；预热 10 s 不计；5 次运行各自算 p95 与 > 50 ms 占比。负向探针：同一驱动下把内容冻结（示例导出 `freeze_scene(true)` / `freeze_table(true)`，区域仍 pump 但不改相机与呈现计数）5 s，p95 必须超门，否则门实现有误、整个 budget project 失败。取消反馈：页内从点击到「已取消」呈现的那一帧。内存：`stats().memory` + `performance.memory`；GPU：`stats().gpu_bytes`；CPU：CDP `Performance.getMetrics`。trap：`fusion_basic_trap()` 与 `enter_fatal`。GPU 不可用：页内覆盖 `HTMLCanvasElement.prototype.getContext` 返回 `null`。上下文丢失：现有 `lose_context/restore_context`。字体失败：`serve --fault missing:`。隐藏：`host.hidden` 与 CDP 生命周期。耐久：`RUSTIFY_ENDURANCE_MINUTES=120`，2 h 只在 M7 跑一次并把曲线写进报告，默认 2 min 作为回归。
 
 ### 9.4 真实环境与人工验证
 
@@ -476,10 +477,10 @@ flowchart TD
 
 | # | 里程碑 | 具体交付/依赖 | 验证与退出条件 |
 | --- | --- | --- | --- |
-| M1 | 探针与负载冻结 | 前置：A-1 确认。先落 `stats().frames`（`web_gl.js` 呈现路径 → `embedded.js`）与 `defer` 的 MessageChannel 让出（F2）；五个探针（①裸 DOM 网格滚动帧，按有效呈现定义采样；②10,000 矩形场景在 SwiftShader 与有头 Chrome 的有效呈现帧间隔；③同模块二次实例化与 glue 隔离 + 导出调用与 DOM 处理器两种真实 trap 的归属 + 重启一次后旧实例内存保留量，用最小版本的 loader 调用边界与 `error` 归属；④`performance.memory`/CDP 指标；⑤分片排序端到端 20 次的 p95 与片数）各写一条 `tests/browser/p3-probes.spec.ts` 用例并把数字与决定回写 §0.2 A-2/A-3/A-5/A-6/A-7 与 ADR-8/ADR-9/D14/D15 状态；`examples/data-workbench` 骨架（数据集生成、路由、两个空视图、测试出口）；`tests/browser/dataset.ts` 孪生与哈希对齐；`tests/browser/loads.ts`（含 20 项定位清单、动作清单）与 `budgets.ts` 的 B0/B2/B3 段（数值与边界，先不断言）；project `data-workbench`（4178）与 CI 显式 project 清单；`Cargo.toml` 成员；`docs/validation/p3/m1.md` | V1 全项：五个探针有结果与决定、哈希与采样一致、骨架严格 CSP 启动且报告 0、六个既有 project 全绿、`cargo test --workspace --lib` 与 `cd makepad && cargo test` 通过；探针失败的分支按 §11 分支表改正文；回写「实施进度」 |
-| M2 | 表格、树与选择 | `crates/rustify-ui/src/selection.rs` 与单测；`crates/rustify-components/src/data_table/`（`window.rs`/`keys.rs` 单测、行元素池、语义、键盘、跳行入口、`window_version()` 出口）与 `tree.rs`（展开/折叠/方向键/选择事件，筛选作业在 M3 接）；能力目录两行 + `catalog --check`、`css --check`；data-workbench `/table` 视图（表格、树、详情表单含编辑写回与 `version` 递增、概览带 `StripRegion`、插入/删除）；`docs/data.md` 初稿 | V2 全项（只含 M2 交付：跳行三目标、树选择事件、表格侧定位项）；`--project=data-workbench` 绿；一期二期 project 回归绿；回写「实施进度」 |
+| M1 | 探针与负载冻结 | 前置：A-1 确认。先落 `stats().frames`（`embedded.js` 覆写 `FromWasmBeginRenderCanvas`，不动分叉——见 D8）与 `defer` 的 MessageChannel 让出（F2）；五个探针（①裸 DOM 网格滚动帧，按有效呈现定义采样；②10,000 矩形场景在 SwiftShader 与有头 Chrome 的有效呈现帧间隔；③同模块二次实例化与 glue 隔离 + 导出调用与 DOM 处理器两种真实 trap 的归属 + 重启一次后旧实例内存保留量，用最小版本的 loader 调用边界与 `error` 归属；④`performance.memory`/CDP 指标；⑤分片排序端到端 20 次的 p95 与片数）各写一条 `tests/browser/p3-probes.spec.ts` 用例并把数字与决定回写 §0.2 A-2/A-3/A-5/A-6/A-7 与 ADR-8/ADR-9/D14/D15 状态；`examples/data-workbench` 骨架（数据集生成、路由、两个空视图、测试出口）；`tests/browser/dataset.ts` 孪生与哈希对齐；`tests/browser/loads.ts`（含 20 项定位清单、动作清单）与 `budgets.ts` 的 B0/B2/B3 段（数值与边界，先不断言）；project `data-workbench`（4178）与 CI 显式 project 清单；`Cargo.toml` 成员；`docs/validation/p3/m1.md` | V1 全项：五个探针有结果与决定、哈希与采样一致、骨架严格 CSP 启动且报告 0、六个既有 project 全绿、`cargo test --workspace --lib` 与 `cd makepad && cargo test` 通过；探针失败的分支按 §11 分支表改正文；回写「实施进度」 |
+| M2 | 表格、树与选择 | 前置：M1 已冻结数据集与孪生。`Dataset` 的插入/删除/写回与按行取 ID 在本里程碑随调用方一起加（M1 只交付了有调用方的部分）；`crates/rustify-ui/src/selection.rs` 与单测；`crates/rustify-components/src/data_table/`（`window.rs`/`keys.rs` 单测、行元素池、语义、键盘、跳行入口、`window_version()` 出口）与 `tree.rs`（展开/折叠/方向键/选择事件，筛选作业在 M3 接）；能力目录两行 + `catalog --check`、`css --check`；data-workbench `/table` 视图（表格、树、详情表单含编辑写回与 `version` 递增、概览带 `StripRegion`、插入/删除）；`docs/data.md` 初稿 | V2 全项（只含 M2 交付：跳行三目标、树选择事件、表格侧定位项）；`--project=data-workbench` 绿；一期二期 project 回归绿；回写「实施进度」 |
 | M3 | 作业：排序、筛选、查找与取消 | `crates/rustify-ui/src/job.rs` 与单测（时间预算切片、取消、片前版本校验、进度、只有最新生效）；`JobCancelled` 登记；列头排序、筛选框、树分组筛选、查找入口（R15 AC3 查找路径）、进度与取消 UI；作业中插入/删除/编辑的陈旧重跑 | V3 全项（顺序/筛选与孪生逐项相等；树筛选正确；取消 ≤ 100 ms 页内计时；三种写入下无越界读、重跑一次；排序 p95 记测量值）；`cargo test --workspace --lib`；回写「实施进度」 |
-| M4 | 场景 | `examples/data-workbench/src/{scene_layout.rs,scene_region.rs}`（视口剔除、绝对相机的平移流、框选、命中、`Viewport` 上报、高亮、接受计数出口、`freeze_scene` 测试出口）；`/scene` 视图（查找入口、选中列表、详情表单）；20 项定位清单补齐场景侧；探针②若要求则参数化文本缓存容量并记录 | V4 全项（含突发滚轮与全 20 项 30 轮）；`cd makepad && cargo test` 与桥指纹校验通过；一期二期回归；回写「实施进度」 |
+| M4 | 场景 | 前置：M1 已交付视口剔除、绝对相机的 props、`Viewport` 上报、高亮与 `freeze_scene`。本里程碑补 `scene_layout::{within,pick}`（框选与命中的期望）与真实输入路径，并**解决 F24：让一次相机变化在同一帧呈现**（现状每两帧一次，§11 风险表）；`examples/data-workbench/src/{scene_layout.rs,scene_region.rs,scene_view.rs}`（平移流、框选、命中、接受计数出口）；`/scene` 视图（查找入口、选中列表、详情表单）；20 项定位清单补齐场景侧；探针②若要求则参数化文本缓存容量并记录 | V4 全项（含突发滚轮与全 20 项 30 轮）；`cd makepad && cargo test` 与桥指纹校验通过；一期二期回归；回写「实施进度」 |
 | M5 | 实例隔离与有界重试 | `web/loader.js` 按实例 `boot`/调用边界/`error` 归属/`AbortController`/URL 属性清除/有上限的 `restart`/提示含重启入口；`host.rs` 暴露 `listener_options()`，`router.rs`/`overlay.rs` 的页面级监听带信号注册，`router.rs` 页面级 URL 所有者带实例号；`region.rs` 三次重试与 `GpuInitRetry`；fusion-basic 双实例模式、`fusion_basic_trap()` 与处理器内 panic 按钮；示例 `app.js` 的 `runtime_fatal` 改实例级（三个既有示例同改）；`docs/architecture.md` 写入实例模型与 trap 边界；`docs/compatibility.md` 写入实例内存代价与重启上限 | V5 全项（含 A-5 探针在真实产物上复跑）；P1 M2「trap 带走同实例全部作用域」用例继续通过；四示例 CSP 报告 0；回写「实施进度」。**A-5 失败分支**（§11）：交付改为 D7 重试 + 三种 trap 入口的调用边界与清理 + 重载式重启入口，V5 去掉双实例项，退出条件按缩减后的清单执行并在正文与进度里写明 |
 | M6 | B0、B4、空闲与资源 | fusion-basic 默认挂载改为 B0（§6.3）并更新受影响的既有断言（逐条列出）；B4 夹具（两个长期实例内的作用域轮次，§5.7.3）；`embedded.js`/`web_gl.js` 的 `gpu_bytes`（`frames` 已在 M1）；`tests/browser/p3-{b0,idle,memory}.spec.ts`；`sources.lock.json` 与 `docs/compatibility.md` 登记分叉改动与账本口径 | V6 全项（不可测项按未测记且写明）；`cargo xtask sources verify`；一期二期回归；回写「实施进度」。**A-5 失败分支**：B4 夹具为「1 实例 × 2 作用域 × 2 区域」，报告与 §0.1 写明不是 PRD 的 B4 定义 |
 | M7 | 故障矩阵、长时与诊断开销 | `tests/browser/p3-faults.spec.ts`（4 × 20，预期清单）；`p3-endurance.spec.ts`（B4，默认 2 min、验收 120 min）；R39 AC2 对照（诊断开/关各 1,000 次跨区动作）；`docs/validation/p3/m7.md` 含 2 h 曲线 | V7 全项：2 h 跑完且 72,000/72,000/0/0、尾部持平；4 类各 20 次状态一致；p95 增长 ≤ 5%；回写「实施进度」。**A-5 失败分支**：2 h 跑在单实例的 B4 替代夹具上，报告行标「非 PRD B4」 |
@@ -492,12 +493,13 @@ flowchart TD
 | 项目 | 影响 | 责任/解除办法 | 最晚确认点 | 是否阻塞 |
 | --- | --- | --- | --- | --- |
 | A-1 范围与关键决策 | 第四示例、实例隔离形态、B2 呈现层、延期清单 | 用户 2026-09-11 确认按本计划实施 | 已确认 | 否（已解除） |
-| A-2 DOM 窗口化滚动帧 | B2 呈现层 | M1 探针①；失败切 ADR-9 备选 B | M1 内 | 否 |
-| A-3 B3 帧门环境 | R30 AC2 能否成门 | M1 探针②；只有有头过则门只在有头跑并写明；两处都不过则走分支表 A-3 行 | M1 内 | 否 |
+| A-2 DOM 窗口化滚动帧 | B2 呈现层 | M1 探针①：p95 16.80 ms，ADR-9 保持备选 A | 已解除（2026-09-11） | 否 |
+| A-3 B3 帧门环境 | R30 AC2 能否成门 | M1 探针②：只有有头 Chrome 通过，按分支表「A-3 只有有头通过」执行 | 已解除（2026-09-11） | 否 |
+| **场景每两帧才呈现一次**（F24） | R30 AC2 的「有效帧数 ≥ 驱动数 × 0.99」在两个环境下都达不到；有头 Chrome 之所以仍然通过 p95，靠的是 120 Hz 显示器，60 Hz 上同一管线只有 30 Hz | M4：把 props → 重绘 → 呈现拉成每帧一次（先查 `request_pump` 的微任务与 `FromWasmRequestAnimationFrame` 的相位，再决定是否让区域在同一帧内完成绘制）；M8 的 `budget-data` 是检验点。若 M4 证明浏览器侧无法做到，M8 改为断言「有效帧数 ≥ 驱动数 × 0.5」并在 R30 AC2 报告行写明 | M4 退出 | 否（M1 不阻塞） |
 | A-4 VoiceOver 记录 | NFR-4 | 用户提供或豁免 | M8 | 否 |
-| A-5 二次实例化与 trap 归属 | ADR-8、D14/D15、B4 定义 | M1 探针③；二次实例化失败走分支表 A-5 行；只有 DOM 处理器 trap 不可归属走 D15 退路 | M1 内 | 否 |
-| A-6 内存/CPU 指标 | R31 AC1、R32 AC1 的可测性 | M1 探针④；不可读的量记未测 | M1 内 | 否 |
-| A-7 分片排序端到端 | R30 AC3 排序/筛选门 | M1 探针⑤；失败走分支表 A-7 行 | M1 内 | 否 |
+| A-5 二次实例化与 trap 归属 | ADR-8、D14/D15、B4 定义 | M1 探针③：三种真实 trap 全部按实例归属，重启后旧实例内存确实保留 | 已解除（2026-09-11） | 否 |
+| A-6 内存/CPU 指标 | R31 AC1、R32 AC1 的可测性 | M1 探针④：CDP `Runtime.getHeapUsage` 与 `TaskDuration` 都可读；`performance.memory` 被量化，只作旁证 | 已解除（2026-09-11） | 否 |
+| A-7 分片排序端到端 | R30 AC3 排序/筛选门 | M1 探针⑤：p95 57.2 ms，余量约 8 倍 | 已解除（2026-09-11） | 否 |
 | fusion-basic 改 B0 牵动既有断言 | 一期回归 | M6 集中改并逐条列出 | M6 退出 | 否 |
 | B0 首载 3 MiB 余量约 0.5 MB | R29 B0 AC2 | D9 不引组件 crate；M6 起每次构建打印首载压缩体积 | M8 | 否 |
 | 场景标签整形缓存换出 | B3 帧门 | 视口剔除；探针②决定容量参数化 | M4 | 否 |
@@ -601,10 +603,10 @@ flowchart TD
 | C-5 | §3.1 | V1 哈希对齐；V2–V4 孪生比对 | 已确认 |
 | C-6 | §5.4/§12 | V4/V7 预热一圈 | 已核实 |
 | A-1 | §0.1/§0.6/ADR-8/ADR-9 | 用户确认 | 已解除（2026-09-11） |
-| A-2 | ADR-9 | M1 探针① | 开放 |
-| A-3 | D5/§7 | M1 探针② | 开放 |
+| A-2 | ADR-9 | M1 探针① | 已解除：p95 16.80 ms，DOM 窗口化成立 |
+| A-3 | D5/§7 | M1 探针② | 已解除：只有有头 Chrome 成立，B3 帧门有头专跑 |
 | A-4 | §9.4 | 人工记录或豁免 | 开放 |
-| A-5 | ADR-8、D14/D15 | M1 探针③ | 开放 |
-| A-6 | §5.6/§5.7 | M1 探针④ | 开放 |
-| A-7 | D4/§5.2 | M1 探针⑤ | 开放 |
+| A-5 | ADR-8、D14/D15 | M1 探针③ | 已解除：二次实例化、三种 trap 归属与重启保留量全部成立 |
+| A-6 | §5.6/§5.7 | M1 探针④ | 已解除：JS 堆改用 CDP `Runtime.getHeapUsage` |
+| A-7 | D4/§5.2 | M1 探针⑤ | 已解除：p95 57.2 ms |
 | — | **不在本期：完整矩阵与 AA、迁移示例与新用户研究、弃用窗口、热更新、多线程模式、GPU 表格与自绘编辑器、区域级隔离、对外发布** | §0.6 | 排除 |
