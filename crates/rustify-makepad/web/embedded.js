@@ -73,6 +73,17 @@ export class EmbeddedRegion extends WasmWebGL {
         return !this.runtime.fatal && !this.context_lost;
     }
 
+    // Every batch that reaches the canvas begins by binding it and clearing
+    // it, so this is the one call per frame this region actually presented.
+    // A frame budget needs that rather than an animation frame callback: the
+    // browser keeps calling back at 60 Hz while the picture stands still, and
+    // an interval measured between those callbacks passes without anything
+    // having been drawn.
+    FromWasmBeginRenderCanvas(args) {
+        this.runtime.frames += 1;
+        super.FromWasmBeginRenderCanvas(args);
+    }
+
     destroy() {
         this.canvas.removeEventListener("webglcontextlost", this.on_context_lost);
         super.destroy();
@@ -180,11 +191,34 @@ export class EmbeddedRegion extends WasmWebGL {
 // that killed the runtime, after every region's browser resources are released.
 export function create_host_hooks(wasm, msg_class, on_fatal) {
     const regions = new Map();
-    // Browser tasks the SDK asked for, by timer id. The host owns them because
+    // Browser tasks the SDK asked for, by task id. The host owns them because
     // their callbacks are wasm code: a runtime that has failed drops them
     // instead of letting them re-enter a module nothing can trust.
     const tasks = new Set();
+    const deferred = new Map();
+    let next_task = 1;
     let signal_pump_scheduled = false;
+
+    // A turn of the browser, taken through a message port rather than a
+    // timer. From the fifth nested timer on, `setTimeout(…, 0)` is clamped to
+    // at least 4 ms: 150 chained timers measured 716-743 ms on this machine
+    // against 0-4 ms for 150 port messages. Work that yields once a slice
+    // would spend its whole budget on the clamp.
+    const turns = new MessageChannel();
+    turns.port1.onmessage = (event) => {
+        const id = event.data;
+        const callback = deferred.get(id);
+        if (callback === undefined) {
+            return;
+        }
+        deferred.delete(id);
+        tasks.delete(id);
+        try {
+            callback();
+        } catch (error) {
+            runtime.enter_fatal(error);
+        }
+    };
 
     // Makepad's UI/action signals are process-wide flags, so one read per
     // runtime serves every live region. Rust raises the flags and calls
@@ -229,6 +263,7 @@ export function create_host_hooks(wasm, msg_class, on_fatal) {
         // Bounded: a runtime that keeps failing must not grow an unbounded log.
         errors: [],
         pumps: 0,
+        frames: 0,
         record_error(message) {
             if (runtime.errors.length < 64) {
                 runtime.errors.push(message);
@@ -256,6 +291,9 @@ export function create_host_hooks(wasm, msg_class, on_fatal) {
                 // that keeps pace with the number of rounds.
                 memory: wasm._memory.buffer.byteLength,
                 pumps: runtime.pumps,
+                // Frames this runtime presented. What a frame budget counts:
+                // see `FromWasmBeginRenderCanvas`.
+                frames: runtime.frames,
             };
         },
         enter_fatal(error) {
@@ -263,9 +301,9 @@ export function create_host_hooks(wasm, msg_class, on_fatal) {
                 return;
             }
             runtime.fatal = error;
-            for (const id of tasks) {
-                window.clearTimeout(id);
-            }
+            // Messages already posted still arrive; dropping the callbacks is
+            // what keeps them from re-entering the module.
+            deferred.clear();
             tasks.clear();
             const live = [...regions.values()];
             regions.clear();
@@ -328,15 +366,11 @@ export function create_host_hooks(wasm, msg_class, on_fatal) {
             if (runtime.fatal) {
                 return;
             }
-            const id = window.setTimeout(() => {
-                tasks.delete(id);
-                try {
-                    callback();
-                } catch (error) {
-                    runtime.enter_fatal(error);
-                }
-            }, 0);
+            const id = next_task;
+            next_task += 1;
+            deferred.set(id, callback);
             tasks.add(id);
+            turns.port2.postMessage(id);
         },
     };
 }

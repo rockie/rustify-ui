@@ -231,6 +231,7 @@ declare global {
                 errors: number;
                 memory: number;
                 pumps: number;
+                frames: number;
             };
             hooks: {
                 regions: Map<number, { new_from_wasm(ptr: number): unknown }>;
@@ -277,10 +278,63 @@ declare global {
                 errors: number;
                 memory: number;
                 pumps: number;
+                frames: number;
             };
             hooks: { runtime: { errors: string[]; enter_fatal(error: unknown): void } };
         };
+        /// Every instance running on the fusion-basic page, by its number.
+        __fusion_instances: Record<number, Window["__fusion_basic"]>;
+        __data_workbench: {
+            hooks: { runtime: { errors: string[]; enter_fatal(error: unknown): void } };
+            instance: number;
+            mount(container_id?: string): number;
+            dispose(): boolean;
+            snapshot(): {
+                path: string;
+                rows: number;
+                version: number;
+                generated_ms: number;
+                scene: {
+                    camera: [number, number];
+                    pane: [number, number];
+                    drawn: number;
+                    asked: number;
+                    reported: number;
+                };
+            };
+            diagnostics(): {
+                runtime: number;
+                build: string;
+                count: number;
+                entries: { kind: string; severity: string; detail: string }[];
+            };
+            live_regions(): number;
+            errors(): string[];
+            stats(): {
+                regions: number;
+                timers: number;
+                animation_frames: number;
+                tasks: number;
+                errors: number;
+                memory: number;
+                pumps: number;
+                frames: number;
+            };
+            dataset_hash(): string;
+            row_id(row: number): number;
+            cell(row: number, column: number): string;
+            look_at(x: number, y: number): boolean;
+            freeze_scene(on: boolean): boolean;
+            scene_visible(): number;
+            sort_probe(column: number, ascending?: boolean): boolean;
+            sort_probe_state(): { running: boolean; slices: number; ms: number; rows: number };
+            sort_probe_order(from: number, count: number): number[];
+        };
         __fusion_basic: {
+            instance: number;
+            wasm: { exports: { memory: WebAssembly.Memory } };
+            restarts: number;
+            restart_limit: number;
             mount(container_id: string): number;
             mount_owner(container_id: string): number;
             mount_guest(container_id: string): number;
@@ -297,6 +351,7 @@ declare global {
                 errors: number;
                 memory: number;
                 pumps: number;
+                frames: number;
             };
             diagnostics(): {
                 runtime: number;
@@ -315,6 +370,11 @@ declare global {
             };
             region_states(): Record<string, string>;
             mount_geometry(container_id: string): number;
+            mount_trap(container_id: string): number;
+            trap(): void;
+            fatal(): string | null;
+            boot_instance(container_id: string): Promise<number>;
+            restart(container_id: string): Promise<number | null>;
             geometry(): {
                 anchors: { id: number; x: number; y: number; width: number; height: number }[];
                 hits: number;

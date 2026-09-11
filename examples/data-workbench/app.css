@@ -1,0 +1,58 @@
+body {
+    margin: 0;
+    padding: 16px;
+    font: 15px/1.5 system-ui, sans-serif;
+    color: #1d2939;
+    background: #f9fafb;
+}
+
+/* Flex rather than grid: a row that spans every column of a grid pushes its
+   siblings back to the first one, and a region squeezed narrow re-lays itself
+   on every projection. */
+.workbench {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    height: calc(100vh - 32px);
+    box-sizing: border-box;
+}
+
+.workbench .bar {
+    display: flex;
+    gap: 16px;
+    align-items: baseline;
+    margin: 0;
+}
+
+.workbench .bar nav {
+    display: flex;
+    gap: 8px;
+}
+
+.workbench .view {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    min-height: 0;
+    gap: 8px;
+}
+
+.workbench .view h1 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.workbench .scene-region {
+    display: block;
+    flex: 1 1 auto;
+    min-height: 240px;
+    border: 1px solid #d0d5dd;
+    border-radius: 6px;
+    background: #0c111d;
+}
+
+/* Where the bare-grid probe builds its own markup. It is not the
+   application's, so it takes nothing from the application's rules. */
+#scratch:empty {
+    display: none;
+}

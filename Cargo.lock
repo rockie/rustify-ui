@@ -304,6 +304,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "data-workbench"
+version = "0.1.0"
+dependencies = [
+ "leptos",
+ "rustify-makepad",
+ "rustify-ui",
+ "wasm-bindgen",
+ "web-sys",
+]
+
+[[package]]
 name = "derive-where"
 version = "1.6.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"

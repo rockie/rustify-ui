@@ -30,6 +30,59 @@ export const R30 = {
     actions: 1_000,
 } as const;
 
+/// R29's B0 column: the smallest complete application, not the workbench.
+///
+/// A different load and therefore a different budget. What makes it worth its
+/// own figures is the first load: B0 is where three compressed megabytes has
+/// to be enough, and B1 already spends 2.77 of them on the module alone.
+export const R29_B0 = {
+    cold_p95_ms: 2_500,
+    first_load_bytes: 3 * 1024 * 1024,
+    hot_p95_ms: 1_000,
+    rounds: 30,
+} as const;
+
+/// R30 AC2 and AC3 over the large loads: scrolling B2, panning and selecting
+/// in B3, and putting a hundred thousand rows in order.
+export const R30_LARGE = {
+    /// AC2: the interval between two **effective presentations** - two frames
+    /// whose content actually differs. Not the interval between animation
+    /// frame callbacks: those keep arriving at 60 Hz while the picture stands
+    /// still, so a budget measured on them passes a frozen screen.
+    frame_p95_ms: 20,
+    /// The share of intervals that may exceed this.
+    frame_slow_ms: 50,
+    frame_slow_share: 0.01,
+    /// Each run is this long after a warm-up that is not measured, and every
+    /// one of `runs` has to pass on its own rather than the best of them.
+    seconds: 60,
+    warmup_seconds: 10,
+    runs: 5,
+    /// Every drive has to be accepted, and almost every drive has to produce a
+    /// presentation: a region that keeps up with two thirds of the input is
+    /// not a region that is keeping up.
+    effective_frame_share: 0.99,
+    /// AC3: a single-column sort and a text filter over the whole sample, end
+    /// to end, and the feedback a cancel gives.
+    job_p95_ms: 500,
+    cancel_p95_ms: 100,
+    job_rounds: 20,
+} as const;
+
+/// R32 over the large loads. The CPU figure is committed wasm memory plus the
+/// JavaScript heap; the GPU figure is a ledger the host keeps, not a reading
+/// from the driver.
+export const R32 = {
+    b0_cpu_bytes: 128 * 1024 * 1024,
+    b2_cpu_bytes: 384 * 1024 * 1024,
+    b0_gpu_bytes: 128 * 1024 * 1024,
+    b2_gpu_bytes: 256 * 1024 * 1024,
+    /// B4: what eighty rounds of mounting and unmounting may add, and what the
+    /// last forty of them may add per round.
+    growth_bytes: 8 * 1024 * 1024,
+    growth_bytes_per_round: 64 * 1024,
+} as const;
+
 /// What these gates do **not** cover, stated here because a gate that is read
 /// as covering more than it measures is worse than no gate:
 ///
@@ -37,13 +90,22 @@ export const R30 = {
 ///   fully supported browser to pass on its own. This suite runs Chrome on the
 ///   development machine under SwiftShader, a software rasteriser. A pass here
 ///   is a pass on that combination and says nothing about any other.
-/// - **B0, B2 and B3.** P2 delivers B1. R29's B0 column and R30's AC2/AC3
-///   (scrolling, panning, sorting over the large loads) belong to loads this
-///   phase does not build, and are reported as not measured rather than passed.
+/// - **Where each one runs.** The B1 and B0 gates and B2's frame interval run
+///   headless. B3's frame interval runs **only on headed Chrome**, and CI does
+///   not run it. M1's second probe measured the same scene under both: p95
+///   50.10 ms under headless SwiftShader against 17.60 ms on headed Chrome
+///   152. SwiftShader is a software rasteriser, and R30's figures are about a
+///   machine with a GPU, so a failure under it would say nothing about the
+///   budget and a pass would say nothing about the machine.
 /// - **A throttled link.** The cold-start gate runs on the loopback, so it
 ///   measures what the machine costs rather than what a link costs. The
 ///   throttled figures stay in `m8-network.spec.ts` as observations; they are
 ///   served uncompressed there and so are not a reading of AC2.
+/// - **Nothing above is asserted yet.** The figures for B0, B2 and B3 are
+///   written down here as of M1 so that the probes have something to be
+///   measured against; the projects that fail a build for missing them are
+///   built in M8. Until then a report prints the measurement beside the
+///   figure and says "not gated".
 
 /// The p-th percentile of `samples`, nearest-rank, which is the definition
 /// that keeps a p95 of thirty samples an actual sample rather than an

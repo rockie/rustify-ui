@@ -56,10 +56,23 @@ jobs:
         run: cargo xtask build-web --example property-workbench --release
       - name: Build component-catalog
         run: cargo xtask build-web --example component-catalog --release
+      - name: Build data-workbench
+        run: cargo xtask build-web --example data-workbench --release
       - name: Install pinned Playwright
         run: npm ci && npx playwright install --with-deps chromium
+      # Named one by one rather than run as a whole: a headed project measures
+      # what a rasteriser can do, and a runner without a display would report
+      # the software one under the hardware one's name.
       - name: Browser probes (Playwright Chromium; not the macOS Chrome pass gate)
-        run: npm run test:browser
+        run: >-
+          npx playwright test
+          --project=fusion-basic
+          --project=property-workbench
+          --project=component-catalog
+          --project=data-workbench
+          --project=budget
+          --project=workbench-deep
+          --project=deployment
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -69,3 +82,4 @@ jobs:
             target/makepad-wasm-app/release/fusion-basic/build-manifest.json
             target/makepad-wasm-app/release/property-workbench/build-manifest.json
             target/makepad-wasm-app/release/component-catalog/build-manifest.json
+            target/makepad-wasm-app/release/data-workbench/build-manifest.json

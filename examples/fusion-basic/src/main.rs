@@ -495,6 +495,39 @@ mod app {
         mount_scope(container_id, || view! { <GeometryFixture /> })
     }
 
+    /// Traps this instance from inside an export call.
+    ///
+    /// A real trap, not a simulated one: the release profile aborts on panic,
+    /// so this is an `unreachable` in wasm and every later call into the
+    /// module is a call into something that cannot be trusted. The path it
+    /// exercises is the one no host entry point sees - the page calling an
+    /// export directly - which is why the loader has a call boundary at all.
+    #[wasm_bindgen]
+    pub fn fusion_basic_trap() {
+        unreachable!("deliberate trap");
+    }
+
+    /// A scope whose only control traps inside its own event handler.
+    ///
+    /// The third way into a trap: not a host entry point and not an export
+    /// call, but the browser dispatching a DOM event into wasm. Nothing of
+    /// ours is on the stack to catch it, so the only thing left naming the
+    /// instance is the glue frame in the uncaught error.
+    #[wasm_bindgen]
+    pub fn fusion_basic_mount_trap(container_id: &str) -> Result<u32, JsValue> {
+        mount_scope(container_id, || {
+            view! {
+                <button
+                    type="button"
+                    data-testid="trap-in-handler"
+                    on:click=move |_| unreachable!("deliberate trap in a DOM handler")
+                >
+                    "trap in a handler"
+                </button>
+            }
+        })
+    }
+
     /// Two scopes routing side by side, one of which owns the address bar.
     ///
     /// Each reports its own location under its own name, so a test can watch

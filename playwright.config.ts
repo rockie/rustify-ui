@@ -1,6 +1,8 @@
 import { defineConfig, devices } from "@playwright/test";
 
-const fusionPort = 4173;
+// Exported so a probe that has to reach a second example's server names the
+// port once rather than repeating it.
+export const fusionPort = 4173;
 const workbenchPort = 4174;
 // A third server for the deployment checks: the same build, served under a
 // sub-path, with a switch that makes it serve a broken one on request.
@@ -9,6 +11,8 @@ const catalogPort = 4176;
 // The workbench again, under a sub-path: the same deep-link checks have to
 // pass at the root and below it, and the difference is the deployment.
 const deepLinkPort = 4177;
+// The fourth example: a hundred thousand rows and ten thousand objects.
+const dataPort = 4178;
 const deploymentBase = "/tools/demo/";
 
 export default defineConfig({
@@ -41,6 +45,11 @@ export default defineConfig({
             name: "component-catalog",
             testMatch: ["p2-catalog.spec.ts", "p2-theme.spec.ts", "p2-semantics.spec.ts", "p2-i18n.spec.ts", "p2-reflow.spec.ts", "p2-a11y.spec.ts"],
             use: { baseURL: `http://127.0.0.1:${catalogPort}/` },
+        },
+        {
+            name: "data-workbench",
+            testMatch: ["p3-probes.spec.ts"],
+            use: { baseURL: `http://127.0.0.1:${dataPort}/` },
         },
         // The budget gate runs thirty cold loads and thirty hot ones, so it is
         // its own project rather than a slow tail on every workbench run. Same
@@ -77,6 +86,12 @@ export default defineConfig({
         {
             command: `cargo xtask serve --example component-catalog --release --port ${catalogPort}`,
             url: `http://127.0.0.1:${catalogPort}/`,
+            reuseExistingServer: false,
+            timeout: 120_000,
+        },
+        {
+            command: `cargo xtask serve --example data-workbench --release --port ${dataPort} --spa`,
+            url: `http://127.0.0.1:${dataPort}/`,
             reuseExistingServer: false,
             timeout: 120_000,
         },

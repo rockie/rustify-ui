@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>data-workbench</title>
+    <link rel="stylesheet" href="./runtime.css">
+    <link rel="stylesheet" href="./app.css">
+    <link rel="modulepreload" href="./loader.js">
+    <link rel="modulepreload" href="./bindgen.js">
+    <script type="module" src="./app.js"></script>
+</head>
+<body>
+    <main>
+        <!-- One scope, because this application is one application: the two
+             views share a sample, a selection and the address bar. -->
+        <div id="workbench" data-testid="workbench"></div>
+        <!-- A scratch area for probes that measure the browser rather than the
+             application - a bare grid against which a windowed one can be
+             judged. Empty unless a probe is running. -->
+        <div id="scratch" data-testid="scratch"></div>
+        <p id="status" data-testid="status"></p>
+    </main>
+</body>
+</html>
