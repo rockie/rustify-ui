@@ -243,3 +243,49 @@ export function sceneClamp(
         Math.min(Math.max(value, 0), Math.max(extent - pane, 0));
     return [to(x, EXTENT_X, width), to(y, EXTENT_Y, height)];
 }
+
+/// The objects a marquee over this rectangle took, in index order.
+///
+/// Every object is tested. The application narrows the search to the rows and
+/// columns the area could reach, and a second implementation that narrowed it
+/// the same way would agree with the same mistake.
+export function sceneWithin(
+    x: number,
+    y: number,
+    width: number,
+    height: number
+): number[] {
+    const hit: number[] = [];
+    for (let index = 0; index < SCENE.count; index++) {
+        const rect = sceneRect(index);
+        if (
+            rect.x <= x + width &&
+            x <= rect.x + SCENE.width &&
+            rect.y <= y + height &&
+            y <= rect.y + SCENE.height
+        ) {
+            hit.push(index);
+        }
+    }
+    return hit;
+}
+
+/// The object under a point, or null. The upper layer is drawn last, so of two
+/// objects over one point it is the one a person sees and the one a pointer
+/// gets.
+export function scenePick(x: number, y: number): number | null {
+    let found: number | null = null;
+    for (let index = 0; index < SCENE.count; index++) {
+        const rect = sceneRect(index);
+        if (
+            x >= rect.x &&
+            x < rect.x + SCENE.width &&
+            y >= rect.y &&
+            y < rect.y + SCENE.height &&
+            (found === null || isOverlay(index))
+        ) {
+            found = index;
+        }
+    }
+    return found;
+}

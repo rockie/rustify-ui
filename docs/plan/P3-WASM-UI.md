@@ -235,7 +235,7 @@ flowchart TD
 | `crates/rustify-components/src/tree.rs` ★ | 基本树 | M2 |
 | `crates/rustify-components/src/catalog.rs` | 能力目录补 DataTable 与 Tree 两行；`cargo xtask catalog --check` 随之 | M2 |
 | `web/loader.js` | `boot({ instance })`、动态导入带查询串的 glue、导出调用边界、页面级 `error`/`unhandledrejection` 归属、每实例 `AbortController`、URL 属性清除、有上限的 `restart()`、致命提示含重启入口 | M1（探针③用最小版本）/M5 |
-| `crates/rustify-makepad/web/embedded.js` | `defer` 改 MessageChannel 让出；`stats()` 增 `frames`（M1：覆写 `FromWasmBeginRenderCanvas`，不动分叉）、`gpu_bytes`（M6） | M1/M6 |
+| `crates/rustify-makepad/web/embedded.js` | `defer` 改 MessageChannel 让出；`stats()` 增 `frames`（M1：覆写 `FromWasmBeginRenderCanvas`，不动分叉）、`gpu_bytes`（M6）；`present()`（M4：props pump 之后就地兑现区域要的那一帧，F24） | M1/M4/M6 |
 | `makepad/platform/src/os/web/web_gl.js` | 字节账本（M6）。呈现计数**不动分叉**：`FromWasmBeginRenderCanvas` 派发在嵌入区域对象上，覆写在 `embedded.js` 即可（M1 已落，D8） | M6 |
 | `examples/fusion-basic/src/main.rs`、`app.js`、`index.html` | B0 默认挂载；双实例模式；`fusion_basic_trap()` 与一个处理器内 panic 的 DOM 按钮 | M1（trap 出口，探针③）/M5/M6 |
 | `tests/browser/budgets.ts`、`tests/browser/loads.ts` ★ | B0/B2/B3 数值与「不覆盖什么」；负载定义与基线标识（种子、布局、动作清单） | M1（数值）/M8（断言） |
@@ -257,7 +257,7 @@ flowchart TD
 | `selection`（SDK，纯逻辑） | 表格、场景、概览带 | `Selection::{toggle, set, clear, remove_deleted(&[Id]), contains}`；`counts(view: impl Fn(Id) -> bool) -> {visible, hidden}`；不变量：只含存活 ID | 三条规则集中一处 | 宿主单测 + V2/V4 |
 | `DataTable`（components） | 示例 | `rows: Signal<usize>`、`columns: Signal<Vec<Column>>`、`cell: Rc<dyn Fn(row, col) -> String>`、`row_id: Rc<dyn Fn(row) -> Id>`、`row_height`、`selected: Signal<Selection>`、`on_select`、`on_activate`、`goto: RwSignal<Option<usize>>`、`sorted: Signal<Option<(col, asc)>>` ★、`on_sort: Arc<dyn Fn(col)>` ★（列头带 `on_sort` 时是真正的 `<button>`，可键盘到达；每个可排序列头都带 `aria-sort`，不是当前排序列时为 `none`）；不变量：DOM 中行元素数 ≤ 可见行 + 2 × 过扫；`aria-rowcount` 恒等于 `rows`；焦点在一个 `gridcell` 上且 `aria-rowindex` 是其真实行号 | 行元素池与可见范围（`window.rs`）、键盘映射（`keys.rs`）藏在组件内；只有一个调用方，所以不进 SDK | 宿主单测（`window.rs` 的范围/过扫/跳行/末尾夹取）+ V2 |
 | `Tree`（components） | 示例 | `nodes: Signal<Vec<TreeNode>>`（两层）、`expanded`、`selected`、`on_select`；`role="tree"/"treeitem"`、`aria-expanded`、方向键、Home/End | 不虚拟化 | V2 |
-| `SceneRegion`（示例，`RegionApp`） | 示例 | props：`layout: Arc<Vec<SceneRect>>`、`selected: Arc<Selection>`、`camera: {x, y}`、`highlight: Option<Id>`；actions：`Camera{x, y}`（`Continuous("pan")`，区域把指针/滚轮增量累计到本地相机后发**绝对值**——同批多次输入只剩最后一个也不丢位移）、`Marquee{rect}`（Discrete，释放时一次）、`Pick(Id)`、`Hover`（`Continuous("hover")`）、`Viewport{rect}`（`Continuous("viewport")`，每次绘制后上报可见范围与相机）；不变量：只绘制与视口相交的矩形与标签；框选结果由应用按布局计算，区域只报矩形；本地相机只在 props 的 `camera` 与区域最后发出的值不同时（应用夹取或查找定位）被 props 覆盖 | 视口剔除与命中在区域；选择规则在 SDK | V4 |
+| `SceneRegion`（示例，`RegionApp`） | 示例 | props：`camera: (f64, f64)`、`highlight: Option<Id>`、`chosen: Arc<Selection>`、`labels: Arc<BTreeMap<Id, String>>` ★（只装改过名的，其余是算出来的）、`frozen`；**没有 `layout` prop**——位置是对下标的算术（`scene_layout`），传一份一万条的表只是把同一个公式抄两遍；actions：`Camera{x, y}`（`Continuous("pan")`，区域把指针/滚轮增量累计到本地相机后发**绝对值**——同批多次输入只剩最后一个也不丢位移）、`Marquee{x, y, width, height, additive}` ★（Discrete，释放时一次，场景坐标）、`Pick{id, additive}` ★、`Hover(Option<Id>)`（`Continuous("hover")`）、`Viewport{..}`（`Continuous("viewport")`，每次绘制后上报可见范围与相机）；修饰键随动作走（**并入还是替换是按下时的事实**，应用晚一个回合去读键盘读到的是另一个时刻）；不变量：只绘制与视口相交的矩形与标签；框选结果由应用按布局计算，区域只报矩形；按下点在矩形上是框选、在空白处是平移，位移不超过 3 px 的一次按下释放是点选；本地相机只在 props 的 `camera` 与区域最后发出的值不同时（应用夹取或查找定位）被 props 覆盖 | 视口剔除与命中在区域；选择规则在 SDK | V4 |
 | `StripRegion`（示例，`RegionApp`） | 示例 | props：`buckets: Arc<Vec<u16>>`（视图行按像素列分桶的选中数）、`viewport: (start, end)`；action：`Jump(bucket)` | 桶由应用算 | V2 |
 | loader 实例 API | 示例 `app.js` | `boot({ wasm_url, on_fatal, instance? }) -> { app, hooks, build, base, instance, signal, restart }`；`app` 是调用边界（D15）：fatal 后调用抛 `InstanceDead`，导出抛 `WebAssembly.RuntimeError` 时先 `enter_fatal` 再重抛，`Result::Err` 抛出的普通错误不算 trap；`instance` 从 1 起，页面级递增；`signal` 是本实例 `AbortController` 的信号，`enter_fatal` 第一步 `abort()`、第二步清本实例的 `data-rustify-url-owner`、第三步作废任务并清区域，最后 `on_fatal`；同一 `WebAssembly.Module` 复用；`restart()` 在同容器以新 glue URL 重新实例化并返回新句柄集，每个实例槽 ≤ 3 次（D14），超出后提示只剩重新加载；致命提示含 `role="alert"` 文本与一个 `restart` 按钮，按钮只在页面允许且未超上限时出现；loader 按实例监听 `window` 的 `error`/`unhandledrejection`，`RuntimeError` 的 `stack` 含本实例 glue URL 即归本实例 | glue 的二次求值、页面级 URL 属性、归属的栈解析 | V5 |
 | `GpuRegion` 重试（SDK） | 应用 | 三次尝试 0/250/750 ms；每次失败记 `GpuInitRetry`（Info，带尝试序号）；第三次失败后记 `GpuInitFailed` 并 `Failed`；期间 `state` 为 `Starting` | 策略在组件内 | 宿主单测（重试表）+ V5 |
@@ -341,7 +341,7 @@ flowchart TD
 
 1. 绘制：每帧按相机与画布尺寸算可见矩形集合（10,000 个矩形按行列布局，直接由行列范围推出，不逐个判断），只对可见矩形 `draw_abs` 填充与标签；被选中的画高亮边框，`highlight` 的画查找标记。标签只在可见时调用文本绘制，使整形缓存只见到视口内的字符串（C-6）。
 2. 平移：指针在空白处按下拖动或滚轮 → 区域把增量累计到本地相机，发 `Camera{x, y}` 绝对值（`Continuous("pan")`）；连续流同批只留最新（F3），绝对值让「最新」就是正确答案，增量会丢位移。应用夹取到场景范围后经 props 回流，区域只在回流值与自己最后发出的值不同时（夹取、查找定位）覆盖本地相机。断言：100 步固定位移后相机等于预期；同一任务内连续派发 10 个滚轮事件（不让出）后相机位移等于 10 个增量之和。
-3. 框选：指针在矩形上按下拖动 → 区域画选框，释放时一次 `Marquee{rect}`（场景坐标）；应用按 `SceneLayout` 算相交集合并按修饰键并入/替换选择；点击单个矩形 → `Pick(Id)`。
+3. 框选：指针在矩形上按下拖动 → 区域画选框，释放时一次 `Marquee{rect, additive}`（场景坐标）；应用按 `scene_layout::within` 算相交集合并按修饰键并入/替换选择；按下与释放之间位移不超过 3 px 的，是点选而不是零面积的框选，发 `Pick{id, additive}`。修饰键随动作走，不由应用晚一个回合去读键盘。
 4. 命中：按最后一次绘制的布局与相机解析；重叠处取上层（`i % 10 == 9` 的那一层）。
 5. 查询入口（R15 AC3）：DOM「按标签查找」输入框 → 应用定位 ID → 相机平移到该矩形并 `highlight`，同时详情表单切到该对象；三目标 = `OBJ00000`、`OBJ05000`、`OBJ09999`；主操作（重命名标签）在详情表单完成，与指针点选后的操作路径相同。
 6. 场景视图的 DOM→GPU 路径是查找与详情编辑；GPU→DOM 是框选/点选后 DOM 列表与计数的更新。
@@ -497,7 +497,7 @@ flowchart TD
 | A-1 范围与关键决策 | 第四示例、实例隔离形态、B2 呈现层、延期清单 | 用户 2026-09-11 确认按本计划实施 | 已确认 | 否（已解除） |
 | A-2 DOM 窗口化滚动帧 | B2 呈现层 | M1 探针①：p95 16.80 ms，ADR-9 保持备选 A | 已解除（2026-09-11） | 否 |
 | A-3 B3 帧门环境 | R30 AC2 能否成门 | M1 探针②：只有有头 Chrome 通过，按分支表「A-3 只有有头通过」执行 | 已解除（2026-09-11） | 否 |
-| **场景每两帧才呈现一次**（F24） | R30 AC2 的「有效帧数 ≥ 驱动数 × 0.99」在两个环境下都达不到；有头 Chrome 之所以仍然通过 p95，靠的是 120 Hz 显示器，60 Hz 上同一管线只有 30 Hz | M4：把 props → 重绘 → 呈现拉成每帧一次（先查 `request_pump` 的微任务与 `FromWasmRequestAnimationFrame` 的相位，再决定是否让区域在同一帧内完成绘制）；M8 的 `budget-data` 是检验点。若 M4 证明浏览器侧无法做到，M8 改为断言「有效帧数 ≥ 驱动数 × 0.5」并在 R30 AC2 报告行写明 | M4 退出 | 否（M1 不阻塞） |
+| ~~**场景每两帧才呈现一次**（F24）~~ | R30 AC2 的「有效帧数 ≥ 驱动数 × 0.99」在两个环境下都达不到 | **已解除（2026-09-12，M4）**：相位查明——props pump 在微任务里要的是**下一帧**，而上一帧的回调还没跑时新的请求被当重复丢掉，于是两次请求落在同一帧、第三帧空过。`embedded.js` 的 `present()` 在 props pump 之后就地兑现那一帧（取消已排的 rAF，补一条 `ToWasmAnimationFrame` 再 pump 一次），驱动与呈现回到 1:1（页内实测 53 呈现 / 54 驱动）。M8 的 `budget-data` 仍是检验点 | 已解除 | 否 |
 | A-4 VoiceOver 记录 | NFR-4 | 用户提供或豁免 | M8 | 否 |
 | A-5 二次实例化与 trap 归属 | ADR-8、D14/D15、B4 定义 | M1 探针③：三种真实 trap 全部按实例归属，重启后旧实例内存确实保留 | 已解除（2026-09-11） | 否 |
 | A-6 内存/CPU 指标 | R31 AC1、R32 AC1 的可测性 | M1 探针④：CDP `Runtime.getHeapUsage` 与 `TaskDuration` 都可读；`performance.memory` 被量化，只作旁证 | 已解除（2026-09-11） | 否 |
@@ -539,6 +539,10 @@ flowchart TD
 - 脚本求值垃圾按量回收（`SCRIPT_HEAP_SLACK` 20,000）：忙区域内存锯齿在这个量内，别把锯齿当泄漏。
 - Tachys 静态 `style="…"` 在严格 CSP 下被拒；表格的行位置只能用 `style:` 指令或类。
 - 一个横跨整行的 `<section>` 放进 `display: grid` 会把兄弟推回第一列，区域被挤窄后每次 props 变化都重排（P1 M6）；data-workbench 的三栏布局用 flex。
+- canvas 是替换元素，宽高属性就是它的固有尺寸，而宿主每帧按实际尺寸回写这两个属性：flex 项在**自己固有方向**上的 `min-*: auto` 撑不下去，于是概览带占了 458 px 高（M2）、场景在 flex 行里长到 1,964 px 宽、比窗口还宽（M4）。两个方向都显式写尺寸并把 `min-width`/`min-height` 清零。
+- 画布上方会随选择变高的 DOM（选中列表）会把画布往下推，指针按屏幕坐标点下去就落在别处：这类列表的高度要写死；用例也要在每次手势前重新量一次画布的位置。
+- 表单的 `submit` 会把 `submitting` 置位，只有 `form.submitted(result)` 能清；同步保存也必须回报，否则第一次之后按钮永远不可用（M4 在表格与场景两处修）。
+- 「等差步长取模」不是散布：步长 137 对跨度 1,096 只有 8 个余数，而场景两层相距 130 px——采样点要用随机数发生器，否则一百个点可能一个上层矩形都碰不到。
 - GPU 区域不能做组件的 children（应用标记不是 `Send`，`docs/workspace.md`）；概览带与场景都由应用自己排，不塞进 `DataTable`/`Splitter` 的 children。
 - `cx.walk_turtle` 给的是对齐前矩形；命中与上报要用 `draw_bg.area().rect(cx)`（P1 M6）。
 - 现有 trap 夹具是 JS 侧模拟；实例隔离必须再用一次真实 `unreachable`，否则测的是 `enter_fatal` 而不是 trap。

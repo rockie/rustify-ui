@@ -150,19 +150,39 @@ mod app {
         }
     }
 
-    /// The handles the page needs on the scene: what it is looking at, and
-    /// what the region said it drew.
+    /// The handles the page needs on the scene: what it is looking at, what
+    /// is chosen in it, and what the region said it drew.
     #[derive(Clone, Copy)]
     struct SceneControls {
         camera: RwSignal<(f64, f64)>,
         highlight: RwSignal<Option<u32>>,
         frozen: RwSignal<bool>,
+        /// Behind an `Arc` because both of them are projected into the region
+        /// on every camera change, and a marquee can choose thousands.
+        chosen: RwSignal<Arc<Selection>>,
+        /// The labels a person changed. Everything not in here is the name the
+        /// layout gives an object, which is arithmetic rather than storage.
+        labels: RwSignal<Arc<BTreeMap<u32, String>>>,
+        /// The object the details form is showing, and the one under the
+        /// pointer.
+        editing: RwSignal<Option<u32>>,
+        hover: RwSignal<Option<u32>>,
         /// Camera, pane and object count of the region's last draw.
         drawn: RwSignal<(f64, f64, f64, f64, usize)>,
         /// Camera positions the application asked for, and viewport reports
         /// that came back. A frame gate compares the two.
         asked: RwSignal<u64>,
         reported: RwSignal<u64>,
+        /// Camera positions the region sent that the scope let through. A
+        /// frame gate drives the pointer and compares its own count against
+        /// this one: a region that answered half the drives has not kept up,
+        /// whatever its frame interval says.
+        accepted: RwSignal<u64>,
+        /// Boxes drawn, objects picked and objects renamed, so a check can say
+        /// a gesture arrived once rather than that something changed.
+        picks: RwSignal<u64>,
+        marquees: RwSignal<u64>,
+        renames: RwSignal<u64>,
     }
 
     /// A sort running on its own, with nothing else to show for it than how
@@ -217,9 +237,17 @@ mod app {
             camera: RwSignal::new((0.0, 0.0)),
             highlight: RwSignal::new(None),
             frozen: RwSignal::new(false),
+            chosen: RwSignal::new(Arc::new(Selection::new())),
+            labels: RwSignal::new(Arc::new(BTreeMap::new())),
+            editing: RwSignal::new(None),
+            hover: RwSignal::new(None),
             drawn: RwSignal::new((0.0, 0.0, 0.0, 0.0, 0)),
             asked: RwSignal::new(0),
             reported: RwSignal::new(0),
+            accepted: RwSignal::new(0),
+            picks: RwSignal::new(0),
+            marquees: RwSignal::new(0),
+            renames: RwSignal::new(0),
         };
         SCENE.with(|slot| slot.set(Some(scene)));
         let table = TableState::new(with_data(|data| data.len()).unwrap_or(0));
@@ -634,6 +662,20 @@ mod app {
         }
     }
 
+    /// Where a save finds the form it has to report back to.
+    ///
+    /// A form is built from its save, so the save cannot be given the form: it
+    /// is put here once the form exists. Reporting back is not optional - a
+    /// form that is never told its save finished goes on thinking one is
+    /// running, and refuses the next one.
+    type FormHandle = StoredValue<Option<Form>>;
+
+    fn saved(handle: FormHandle) {
+        if let Some(form) = handle.get_value() {
+            form.submitted(Ok(()));
+        }
+    }
+
     /// The twenty values of one row, editable.
     ///
     /// A save writes every field whose value changed, and every write bumps the
@@ -649,6 +691,7 @@ mod app {
             table.version.track();
             draft.set((0..COLUMNS).map(|column| read_cell(row, column)).collect());
         });
+        let handle = FormHandle::new(None);
         let save = move || {
             let Some(row) = table.editing.get_untracked() else {
                 return;
@@ -674,8 +717,10 @@ mod app {
                 bump_version(table);
             }
             table.saves.update(|count| *count += 1);
+            saved(handle);
         };
         let form = Form::new(&FIELDS, save);
+        handle.set_value(Some(form));
         view! {
             <div class="details" data-testid="table-details">
                 <h2 data-testid="table-detail-row">
@@ -1030,13 +1075,46 @@ mod app {
         }
     }
 
+    /// The one field an object has that a person can change. A form's field
+    /// list has to be `'static`, and there is only ever this one.
+    const SCENE_FIELDS: [&str; 1] = ["label"];
+
+    /// The most of the selection the page puts in the document.
+    ///
+    /// A marquee can take thousands of objects and a list of thousands of
+    /// nodes is neither readable nor free to build. The count beside it is of
+    /// all of them, so what is not listed is still said.
+    const SHOWN_OBJECTS: usize = 50;
+
+    /// What an object is called: what it was renamed to, or what the layout
+    /// names it.
+    fn object_label(labels: &BTreeMap<u32, String>, id: u32) -> String {
+        labels
+            .get(&id)
+            .cloned()
+            .unwrap_or_else(|| scene_layout::label(id as usize))
+    }
+
     #[component]
     fn SceneItem(scene: SceneControls) -> impl IntoView {
         let props = Signal::derive(move || SceneProps {
             camera: scene.camera.get(),
             highlight: scene.highlight.get(),
+            chosen: scene.chosen.get(),
+            labels: scene.labels.get(),
             frozen: scene.frozen.get(),
         });
+        let find_input = RwSignal::new(String::new());
+        let choose = move |ids: Vec<u32>, additive: bool| {
+            scene.chosen.update(|chosen| {
+                let chosen = Arc::make_mut(chosen);
+                if additive {
+                    chosen.add(ids);
+                } else {
+                    chosen.set(ids);
+                }
+            });
+        };
         let on_action = move |action: SceneAction| match action {
             SceneAction::Viewport {
                 x,
@@ -1048,19 +1126,202 @@ mod app {
                 scene.drawn.set((x, y, width, height, drawn));
                 scene.reported.update(|count| *count += 1);
             }
+            SceneAction::Camera { x, y } => {
+                // The region moved itself and said where to; the application
+                // is what decides the scene has edges.
+                let (_, _, width, height, _) = scene.drawn.get_untracked();
+                scene.accepted.update(|count| *count += 1);
+                scene.camera.set(scene_layout::clamp(x, y, width, height));
+            }
+            SceneAction::Marquee {
+                x,
+                y,
+                width,
+                height,
+                additive,
+            } => {
+                let taken = scene_layout::within(x, y, width, height);
+                choose(taken.iter().map(|index| *index as u32).collect(), additive);
+                scene.marquees.update(|count| *count += 1);
+            }
+            SceneAction::Pick { id, additive } => {
+                if additive {
+                    scene.chosen.update(|chosen| {
+                        Arc::make_mut(chosen).toggle(id);
+                    });
+                } else {
+                    choose(vec![id], false);
+                }
+                scene.editing.set(Some(id));
+                scene.picks.update(|count| *count += 1);
+            }
+            SceneAction::Hover(over) => scene.hover.set(over),
+        };
+        let find = move || {
+            let asked = find_input.get_untracked();
+            let Some(id) = find_object(&scene.labels.get_untracked(), asked.trim()) else {
+                return;
+            };
+            look_at_object(scene, id);
+            scene.editing.set(Some(id));
         };
         let app = PhantomData::<SceneRegion>;
         view! {
             <section data-testid="scene-view" class="view">
-                <h1>"scene"</h1>
-                <GpuRegion
-                    app=app
-                    props=props
-                    on_action=on_action
-                    class="scene-region"
-                    test_id="scene-gpu"
-                />
+                <div class="bar" data-testid="scene-controls">
+                    <label class="field">
+                        "find an object"
+                        <input
+                            type="search"
+                            data-testid="scene-find"
+                            prop:value=move || find_input.get()
+                            on:input=move |ev| find_input.set(event_target_value(&ev))
+                            on:change=move |_| find()
+                        />
+                    </label>
+                    <p role="status" data-testid="scene-selected-count" aria-live="polite">
+                        {move || format!("selected {}", scene.chosen.get().len())}
+                    </p>
+                    <button
+                        type="button"
+                        data-testid="scene-clear"
+                        on:click=move |_| {
+                            scene.chosen.update(|chosen| Arc::make_mut(chosen).clear());
+                        }
+                    >
+                        "clear the selection"
+                    </button>
+                    <p data-testid="scene-hover">
+                        {move || match scene.hover.get() {
+                            Some(id) => object_label(&scene.labels.get(), id),
+                            None => "nothing".to_string(),
+                        }}
+                    </p>
+                </div>
+                <ul class="chosen" data-testid="scene-selected" aria-label="selected">
+                    {move || {
+                        let labels = scene.labels.get();
+                        scene
+                            .chosen
+                            .get()
+                            .ids()
+                            .take(SHOWN_OBJECTS)
+                            .map(|id| {
+                                view! {
+                                    <li data-object=id.to_string()>{object_label(&labels, id)}</li>
+                                }
+                            })
+                            .collect_view()
+                    }}
+                </ul>
+                <div class="scene-layout">
+                    <GpuRegion
+                        app=app
+                        props=props
+                        on_action=on_action
+                        class="scene-region"
+                        test_id="scene-gpu"
+                    />
+                    <SceneDetails scene=scene />
+                </div>
             </section>
+        }
+    }
+
+    /// The object with this label, by whatever it is called now.
+    ///
+    /// The names the layout gives are worked out rather than stored, so the
+    /// common case is arithmetic on the digits; only a renamed object has to
+    /// be looked for, and only among the ones that were renamed.
+    fn find_object(labels: &BTreeMap<u32, String>, asked: &str) -> Option<u32> {
+        if let Some((id, _)) = labels.iter().find(|(_, label)| *label == asked) {
+            return Some(*id);
+        }
+        let digits = asked.strip_prefix("OBJ")?;
+        let id: u32 = digits.parse().ok()?;
+        // An object that was renamed no longer answers to the name the layout
+        // gives it: that name now belongs to nothing.
+        if (id as usize) < scene_layout::COUNT && !labels.contains_key(&id) {
+            Some(id)
+        } else {
+            None
+        }
+    }
+
+    /// Puts an object in the middle of the pane and marks it.
+    fn look_at_object(scene: SceneControls, id: u32) {
+        let (_, _, width, height, _) = scene.drawn.get_untracked();
+        let rect = scene_layout::rect(id as usize);
+        let camera = scene_layout::clamp(
+            rect.x + scene_layout::WIDTH / 2.0 - width / 2.0,
+            rect.y + scene_layout::HEIGHT / 2.0 - height / 2.0,
+            width,
+            height,
+        );
+        scene.asked.update(|count| *count += 1);
+        scene.highlight.set(Some(id));
+        scene.camera.set(camera);
+    }
+
+    /// The object being edited, and the one thing about it that can change.
+    #[component]
+    fn SceneDetails(scene: SceneControls) -> impl IntoView {
+        let draft = RwSignal::new(String::new());
+        Effect::new(move || {
+            let Some(id) = scene.editing.get() else {
+                return;
+            };
+            draft.set(object_label(&scene.labels.get(), id));
+        });
+        let handle = FormHandle::new(None);
+        let save = move || {
+            let Some(id) = scene.editing.get_untracked() else {
+                return;
+            };
+            let asked = draft.get_untracked();
+            scene.labels.update(|labels| {
+                Arc::make_mut(labels).insert(id, asked);
+            });
+            scene.renames.update(|count| *count += 1);
+            saved(handle);
+        };
+        let form = Form::new(&SCENE_FIELDS, save);
+        handle.set_value(Some(form));
+        view! {
+            <div class="details" data-testid="scene-details">
+                <h2 data-testid="scene-detail-object">
+                    {move || match scene.editing.get() {
+                        Some(id) => object_label(&scene.labels.get(), id),
+                        None => "no object open".to_string(),
+                    }}
+                </h2>
+                <Show when=move || scene.editing.get().is_some() fallback=|| ()>
+                    <form on:submit=move |ev| ev.prevent_default()>
+                        <Field
+                            form=form
+                            field=SCENE_FIELDS[0]
+                            label="label"
+                            control=move |binding: FieldBinding| {
+                                view! {
+                                    <TextField
+                                        id=binding.id()
+                                        test_id="scene-detail-label"
+                                        value=Signal::derive(move || draft.get())
+                                        on_change=move |next: String| {
+                                            draft.set(next);
+                                            form.changed(SCENE_FIELDS[0]);
+                                        }
+                                    />
+                                }
+                                    .into_any()
+                            }
+                        />
+                        <SubmitButton form=form rules=Vec::new test_id="scene-detail-submit">
+                            "save"
+                        </SubmitButton>
+                    </form>
+                </Show>
+            </div>
         }
     }
 
@@ -1126,6 +1387,18 @@ mod app {
             ),
             None => ((0.0, 0.0), (0.0, 0.0, 0.0, 0.0, 0), 0, 0),
         };
+        let (chosen, open_object, hover, accepted, picks, marquees, renames) = match scene {
+            Some(scene) => (
+                scene.chosen.get_untracked().len(),
+                scene.editing.get_untracked(),
+                scene.hover.get_untracked(),
+                scene.accepted.get_untracked(),
+                scene.picks.get_untracked(),
+                scene.marquees.get_untracked(),
+                scene.renames.get_untracked(),
+            ),
+            None => (0, None, None, 0, 0, 0, 0),
+        };
         let table = TABLE.with(|slot| slot.get());
         let (selected, hidden, editing, group, jumps, saves, window) = match table {
             Some(table) => {
@@ -1158,7 +1431,8 @@ mod app {
             concat!(
                 r#"{{"path":"{}","rows":{},"version":{},"generated_ms":{:.1},"#,
                 r#""scene":{{"camera":[{},{}],"pane":[{},{}],"drawn":{},"#,
-                r#""asked":{},"reported":{}}},"#,
+                r#""asked":{},"reported":{},"accepted":{},"chosen":{},"editing":{},"#,
+                r#""hover":{},"picks":{},"marquees":{},"renames":{}}},"#,
                 r#""table":{{"selected":{},"hidden":{},"editing":{},"group":{},"#,
                 r#""jumps":{},"saves":{},"window_version":{},"shown":{},"stale":{},"#,
                 r#""sorted":{},"job":{{"running":{},"done":{},"total":{},"slices":{},"#,
@@ -1175,6 +1449,17 @@ mod app {
             drawn.4,
             asked,
             reported,
+            accepted,
+            chosen,
+            open_object
+                .map(|id| id.to_string())
+                .unwrap_or_else(|| "null".to_string()),
+            hover
+                .map(|id| id.to_string())
+                .unwrap_or_else(|| "null".to_string()),
+            picks,
+            marquees,
+            renames,
             selected,
             hidden,
             editing
@@ -1361,6 +1646,27 @@ mod app {
         let (x, y) = scene.camera.get_untracked();
         let (_, _, width, height, _) = scene.drawn.get_untracked();
         scene_layout::visible(x, y, width, height).count()
+    }
+
+    /// The objects currently chosen, in order. The page compares these against
+    /// what a second implementation says the marquee took, rather than against
+    /// a count.
+    #[wasm_bindgen]
+    pub fn data_workbench_scene_chosen() -> Vec<u32> {
+        SCENE
+            .with(|slot| slot.get())
+            .map(|scene| scene.chosen.get_untracked().ids().collect())
+            .unwrap_or_default()
+    }
+
+    /// What an object is called now: the name it was given, or the one the
+    /// layout works out.
+    #[wasm_bindgen]
+    pub fn data_workbench_scene_label(id: u32) -> String {
+        SCENE
+            .with(|slot| slot.get())
+            .map(|scene| object_label(&scene.labels.get_untracked(), id))
+            .unwrap_or_default()
     }
 
     /// Starts a sliced sort of the whole sample on `column`.

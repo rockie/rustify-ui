@@ -72,6 +72,13 @@ boot({ wasm_url, on_fatal: runtime_fatal })
             scene_visible() {
                 return app.data_workbench_scene_visible();
             },
+            /// The objects chosen in the scene, in order.
+            scene_chosen() {
+                return Array.from(app.data_workbench_scene_chosen());
+            },
+            scene_label(id) {
+                return app.data_workbench_scene_label(id);
+            },
             /// How many times the table has worked out its visible range: the
             /// table's content version, for a frame budget.
             window_version() {

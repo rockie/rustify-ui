@@ -148,8 +148,36 @@ export class EmbeddedRegion extends WasmWebGL {
             this.pump_scheduled = false;
             if (!this.destroyed && this.to_wasm) {
                 this.do_wasm_pump();
+                this.present();
             }
         });
+    }
+
+    // Draws what the pump just changed, in the frame it was changed in.
+    //
+    // A pump that only applied props leaves the region wanting to draw, and
+    // what it asks for is an animation frame - the next one. Two of those
+    // requests land in the same browser frame, because the request made while
+    // a callback is already pending is dropped as a duplicate, so a region
+    // driven once a frame drew on every second frame and a display at 60 Hz
+    // presented it at 30.
+    //
+    // Serving the request here instead: the props pump runs on a microtask of
+    // the task that changed them, which is still inside the frame, so the
+    // draw lands in that frame's paint. A request made during this draw is a
+    // real next frame - an animation running on - and goes back to the
+    // browser untouched.
+    present() {
+        if (!this.req_anim_frame_id || this.destroyed || this.runtime.fatal) {
+            return;
+        }
+        if (this.suspended || this.context_lost) {
+            return;
+        }
+        window.cancelAnimationFrame(this.req_anim_frame_id);
+        this.req_anim_frame_id = 0;
+        this.to_wasm.ToWasmAnimationFrame({ time: performance.now() / 1000.0 });
+        this.do_wasm_pump();
     }
 
     // A Rust panic traps the whole module. Linear memory survives the trap but
