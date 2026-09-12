@@ -52,6 +52,26 @@ async function start(create) {
             mounted.set(container_id, { id, fixture: "mount" });
             return id;
         },
+        /// The smallest complete application, which is what this page shows.
+        b0(container_id) {
+            const id = app.fusion_basic_b0_mount(container_id);
+            mounted.set(container_id, { id, fixture: "b0" });
+            return id;
+        },
+        /// Its one state, its region's state, and where the region drew each
+        /// of its twenty controls.
+        b0_state() {
+            return JSON.parse(app.fusion_basic_b0());
+        },
+        /// The names of those controls, in drawing order.
+        b0_controls() {
+            return JSON.parse(app.fusion_basic_b0_controls());
+        },
+        /// How many of the application's own components are alive here. Zero
+        /// after the last scope has gone, or something of it is still held.
+        live_components() {
+            return app.fusion_basic_live_components();
+        },
         // The two routing fixtures. `mount_owner` is expected to fail when one
         // is already mounted, and the caller is meant to see it.
         mount_owner(container_id) {
@@ -136,6 +156,20 @@ async function start(create) {
             next[fixture](container_id);
             return next.instance;
         },
+        /// The second long-lived instance of the B4 load.
+        ///
+        /// B4 is two instances, each mounting and unmounting one scope of two
+        /// regions per round; the instances themselves are booted once and
+        /// live for the whole measurement, because a restarted instance
+        /// leaves a linear memory behind and that is a different measurement.
+        async boot_second_instance(container_id = "instance-two") {
+            const existing = instances[2];
+            if (existing !== undefined && existing.fatal() === null) {
+                return existing.instance;
+            }
+            const next = await start((on_fatal) => boot({ wasm_url, on_fatal }));
+            return next.instance;
+        },
         /// A fresh instance in this slot, mounting the trap fixture again.
         /// `null` once the slot has been restarted as often as it may be.
         async restart(container_id) {
@@ -210,8 +244,7 @@ async function relaunch(died, was_showing) {
 
 start((on_fatal) => boot({ wasm_url, on_fatal }))
     .then((api) => {
-        api.mount("scope-a");
-        api.mount("scope-b");
+        api.b0("b0");
         window.__fusion_basic = api;
         status.dataset.status = "ready";
         status.textContent = "ready";

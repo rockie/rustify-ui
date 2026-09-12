@@ -3,6 +3,8 @@ mod anchor_grid;
 #[cfg(target_arch = "wasm32")]
 mod anchor_region;
 #[cfg(target_arch = "wasm32")]
+mod b0_region;
+#[cfg(target_arch = "wasm32")]
 mod counter_region;
 
 #[cfg(target_arch = "wasm32")]
@@ -10,14 +12,16 @@ mod app {
     use super::anchor_grid::DEFAULT_COLOR;
     use super::anchor_grid::{Anchor as GridAnchor, COLUMNS, ROWS};
     use super::anchor_region::{AnchorAction, AnchorProps, AnchorRegion};
+    use super::b0_region::{B0Action, B0Props, B0Region, CONTROLS, DENSITIES, PALETTES};
     use super::counter_region::{CounterAction, CounterProps, CounterRegion};
     use leptos::prelude::*;
     use leptos::wasm_bindgen::prelude::*;
     use leptos::wasm_bindgen::JsCast;
     use rustify_ui::{
-        mount, Anchor, AppHandle, GpuRegion, Layer, LocalRect, MountConfig, RegionState,
+        mount, Anchor, AppHandle, Button, Checkbox, GpuRegion, Layer, LocalRect, MountConfig,
+        RegionState, Slider, TextArea, TextField,
     };
-    use std::cell::RefCell;
+    use std::cell::{Cell, RefCell};
     use std::collections::BTreeMap;
     use std::marker::PhantomData;
     use std::sync::Arc;
@@ -39,6 +43,41 @@ mod app {
         /// What the geometry fixture reports about its region, derived from
         /// its signals by an effect.
         static GEOMETRY: RefCell<String> = const { RefCell::new(String::new()) };
+        /// What the B0 fixture reports: the one state both halves share, and
+        /// where the region drew each of its controls.
+        static B0: RefCell<String> = const { RefCell::new(String::new()) };
+        /// How many of this example's own components are alive in this
+        /// instance. What it answers is whether a scope that has gone left
+        /// anything of the application behind, which nothing the runtime
+        /// counts can say.
+        static LIVE_COMPONENTS: Cell<u32> = const { Cell::new(0) };
+    }
+
+    /// Counts this component alive for as long as its owner is.
+    ///
+    /// Called from the top of every fixture, so that "nothing of the
+    /// application is left" is a number the page can read rather than an
+    /// absence a test has to infer.
+    fn count_component() {
+        LIVE_COMPONENTS.with(|live| live.set(live.get() + 1));
+        on_cleanup(|| LIVE_COMPONENTS.with(|live| live.set(live.get() - 1)));
+    }
+
+    /// A string as a JSON value. The B0 fields are the user's to type into.
+    fn quoted(text: &str) -> String {
+        let mut out = String::with_capacity(text.len() + 2);
+        out.push('"');
+        for c in text.chars() {
+            match c {
+                '"' => out.push_str("\\\""),
+                '\\' => out.push_str("\\\\"),
+                '\n' => out.push_str("\\n"),
+                c if (c as u32) < 0x20 => out.push_str(&format!("\\u{:04x}", c as u32)),
+                c => out.push(c),
+            }
+        }
+        out.push('"');
+        out
     }
 
     fn state_name(state: RegionState) -> &'static str {
@@ -94,6 +133,7 @@ mod app {
     /// One counter shared by the DOM and two GPU regions.
     #[component]
     fn App(scope: String) -> impl IntoView {
+        count_component();
         let (count, set_count) = signal(0i64);
         let props = Signal::derive(move || CounterProps { count: count.get() });
         let on_action = move |action| match action {
@@ -107,6 +147,227 @@ mod app {
                 </button>
                 <CounterSlot test_id=format!("{scope}-gpu-1") props=props on_action=on_action />
                 <CounterSlot test_id=format!("{scope}-gpu-2") props=props on_action=on_action />
+            </div>
+        }
+    }
+
+    /// The one state the ten DOM controls and the twenty GPU controls share.
+    ///
+    /// One struct rather than one signal per control: what makes this the
+    /// smallest *complete* application is that both halves are two views of
+    /// the same thing, and a field only one half can reach would be a second
+    /// state wearing the first one's name.
+    #[derive(Clone, Debug, PartialEq)]
+    struct B0State {
+        count: i64,
+        title: String,
+        subtitle: String,
+        tag: String,
+        notes: String,
+        visible: bool,
+        locked: bool,
+        compact: bool,
+        busy: bool,
+        choice: usize,
+        size: f64,
+        weight: f64,
+        palette: usize,
+        density: usize,
+        tab: usize,
+    }
+
+    impl B0State {
+        fn new() -> Self {
+            Self {
+                count: 0,
+                title: "fusion".to_string(),
+                subtitle: "the smallest complete application".to_string(),
+                tag: "b0".to_string(),
+                notes: "two halves of one state".to_string(),
+                visible: true,
+                locked: false,
+                compact: false,
+                busy: false,
+                choice: 0,
+                size: 40.0,
+                weight: 60.0,
+                palette: 0,
+                density: 0,
+                tab: 0,
+            }
+        }
+    }
+
+    /// The smallest complete application: ten DOM controls, one region with
+    /// twenty, and one state behind both.
+    #[component]
+    fn B0Fixture() -> impl IntoView {
+        count_component();
+        let state = RwSignal::new(B0State::new());
+        let region = RwSignal::new(RegionState::Starting);
+        let layout = RwSignal::new(Vec::<(String, LocalRect)>::new());
+
+        Effect::new(move || {
+            let controls = layout.with(|controls| {
+                let body: Vec<String> = controls
+                    .iter()
+                    .map(|(name, rect)| {
+                        format!(
+                            "{{\"name\":{},\"x\":{:.3},\"y\":{:.3},\"width\":{:.3},\"height\":{:.3}}}",
+                            quoted(name),
+                            rect.x,
+                            rect.y,
+                            rect.width,
+                            rect.height
+                        )
+                    })
+                    .collect();
+                format!("[{}]", body.join(","))
+            });
+            let report = state.with(|s| {
+                format!(
+                    "{{\"count\":{},\"title\":{},\"subtitle\":{},\"tag\":{},\"notes\":{},\"visible\":{},\"locked\":{},\"compact\":{},\"busy\":{},\"choice\":{},\"size\":{},\"weight\":{},\"palette\":{},\"density\":{},\"tab\":{},\"region\":\"{}\",\"controls\":{}}}",
+                    s.count,
+                    quoted(&s.title),
+                    quoted(&s.subtitle),
+                    quoted(&s.tag),
+                    quoted(&s.notes),
+                    s.visible,
+                    s.locked,
+                    s.compact,
+                    s.busy,
+                    s.choice,
+                    s.size,
+                    s.weight,
+                    quoted(PALETTES[s.palette]),
+                    quoted(DENSITIES[s.density]),
+                    s.tab,
+                    state_name(region.get()),
+                    controls,
+                )
+            });
+            B0.with(|slot| *slot.borrow_mut() = report);
+        });
+        on_cleanup(|| B0.with(|slot| slot.borrow_mut().clear()));
+
+        let props = Signal::derive(move || {
+            state.with(|s| B0Props {
+                count: s.count,
+                visible: s.visible,
+                locked: s.locked,
+                compact: s.compact,
+                busy: s.busy,
+                choice: s.choice,
+                size: s.size,
+                weight: s.weight,
+                palette: PALETTES[s.palette].to_string(),
+                density: DENSITIES[s.density].to_string(),
+                tab: s.tab,
+            })
+        });
+        // Every request the region makes is answered here, by the application
+        // that owns the value - the same rule the DOM half follows.
+        let on_action = move |action| {
+            state.update(|s| match action {
+                B0Action::Bump => s.count += 1,
+                B0Action::SetVisible(on) => s.visible = on,
+                B0Action::SetLocked(on) => s.locked = on,
+                B0Action::SetCompact(on) => s.compact = on,
+                B0Action::SetBusy(on) => s.busy = on,
+                B0Action::Choose(index) => s.choice = index,
+                B0Action::SetSize(value) => s.size = value,
+                B0Action::SetWeight(value) => s.weight = value,
+                B0Action::SetTab(index) => s.tab = index,
+                B0Action::NextPalette => s.palette = (s.palette + 1) % PALETTES.len(),
+                B0Action::NextDensity => s.density = (s.density + 1) % DENSITIES.len(),
+                B0Action::Layout(reported) => {
+                    layout.set(
+                        reported
+                            .into_iter()
+                            .map(|(name, rect)| (name.to_string(), rect))
+                            .collect(),
+                    );
+                    return;
+                }
+            })
+        };
+
+        let app = PhantomData::<B0Region>;
+        view! {
+            <div class="b0">
+                <p>"count: " <span data-testid="b0-count">{move || state.with(|s| s.count)}</span></p>
+                <div class="b0-form">
+                    <TextField
+                        label="title"
+                        value=Signal::derive(move || state.with(|s| s.title.clone()))
+                        on_input=move |typed| state.update(|s| s.title = typed)
+                        test_id="b0-title"
+                    />
+                    <TextField
+                        label="subtitle"
+                        value=Signal::derive(move || state.with(|s| s.subtitle.clone()))
+                        on_input=move |typed| state.update(|s| s.subtitle = typed)
+                        test_id="b0-subtitle"
+                    />
+                    <TextField
+                        label="tag"
+                        value=Signal::derive(move || state.with(|s| s.tag.clone()))
+                        on_input=move |typed| state.update(|s| s.tag = typed)
+                        test_id="b0-tag"
+                    />
+                    <TextArea
+                        label="notes"
+                        value=Signal::derive(move || state.with(|s| s.notes.clone()))
+                        on_input=move |typed| state.update(|s| s.notes = typed)
+                        test_id="b0-notes"
+                    />
+                    <Checkbox
+                        label="visible"
+                        checked=Signal::derive(move || state.with(|s| s.visible))
+                        on_change=move |on| state.update(|s| s.visible = on)
+                        test_id="b0-visible"
+                    />
+                    <Checkbox
+                        label="locked"
+                        checked=Signal::derive(move || state.with(|s| s.locked))
+                        on_change=move |on| state.update(|s| s.locked = on)
+                        test_id="b0-locked"
+                    />
+                    <Checkbox
+                        label="compact"
+                        checked=Signal::derive(move || state.with(|s| s.compact))
+                        on_change=move |on| state.update(|s| s.compact = on)
+                        test_id="b0-compact"
+                    />
+                    <Slider
+                        label="size"
+                        value=Signal::derive(move || state.with(|s| s.size))
+                        on_change=move |value| state.update(|s| s.size = value)
+                        step=5.0
+                        test_id="b0-size"
+                    />
+                    <Slider
+                        label="weight"
+                        value=Signal::derive(move || state.with(|s| s.weight))
+                        on_change=move |value| state.update(|s| s.weight = value)
+                        step=5.0
+                        test_id="b0-weight"
+                    />
+                    <Button
+                        on_click=move || state.update(|s| s.count += 1)
+                        test_id="b0-bump"
+                    >
+                        "DOM +1"
+                    </Button>
+                </div>
+                <GpuRegion
+                    app=app
+                    props=props
+                    on_action=on_action
+                    state=region
+                    class="b0-region"
+                    test_id="b0-gpu"
+                />
             </div>
         }
     }
@@ -129,6 +390,7 @@ mod app {
     /// test lives with the code that has to survive it.
     #[component]
     fn GeometryFixture() -> impl IntoView {
+        count_component();
         let anchors = RwSignal::new(Vec::<GridAnchor>::new());
         let hits = RwSignal::new(0u32);
         let last_hit = RwSignal::new(None::<(usize, f64, f64)>);
@@ -482,6 +744,35 @@ mod app {
         on
     }
 
+    /// Mounts the B0 fixture, which is what this page shows by default.
+    #[wasm_bindgen]
+    pub fn fusion_basic_b0_mount(container_id: &str) -> Result<u32, JsValue> {
+        mount_scope(container_id, || view! { <B0Fixture /> })
+    }
+
+    /// The B0 fixture's shared state, the region's state, and where the region
+    /// drew each of its controls.
+    #[wasm_bindgen]
+    pub fn fusion_basic_b0() -> String {
+        B0.with(|slot| slot.borrow().clone())
+    }
+
+    /// The names of the twenty controls the region draws, in drawing order.
+    ///
+    /// The load's count comes from the list the region iterates, not from a
+    /// number written down twice.
+    #[wasm_bindgen]
+    pub fn fusion_basic_b0_controls() -> String {
+        let body: Vec<String> = CONTROLS.iter().map(|name| quoted(name)).collect();
+        format!("[{}]", body.join(","))
+    }
+
+    /// How many of this example's components are alive in this instance.
+    #[wasm_bindgen]
+    pub fn fusion_basic_live_components() -> u32 {
+        LIVE_COMPONENTS.with(|live| live.get())
+    }
+
     /// `{"anchors":[...],"hits":n,"last_hit":{...}|null,"state":"..."}` for the
     /// geometry fixture's region.
     #[wasm_bindgen]
@@ -546,6 +837,7 @@ mod app {
     /// embedded instance safe to put on somebody else's page.
     #[component]
     fn RouteFixture(owner: bool) -> impl IntoView {
+        count_component();
         rustify_ui::provide_routes(rustify_ui::Routes::new(&[
             "/",
             "/one",

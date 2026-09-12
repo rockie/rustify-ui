@@ -37,9 +37,13 @@ test.describe("M1 probe 1: Leptos CSR and Makepad in one wasm, no isolation", ()
 });
 
 test.describe("M1 probe 2: two scopes, four regions, symmetric teardown", () => {
+    // Five regions, not four: since P3 M6 the page's own mount is B0, which
+    // has one, and the two counter scopes these checks are about are mounted
+    // by `waitForReady` and have two each. Every count below is the counter
+    // scopes' own plus B0's one.
     test("regions in different scopes do not share state", async ({ page }) => {
         await waitForReady(page);
-        expect(await page.evaluate(() => window.__fusion_basic.live_regions())).toBe(4);
+        expect(await page.evaluate(() => window.__fusion_basic.live_regions())).toBe(5);
         const a2 = page.getByTestId("scope-a-gpu-2");
         const b1 = page.getByTestId("scope-b-gpu-1");
         const a2Before = await settle(a2);
@@ -60,7 +64,7 @@ test.describe("M1 probe 2: two scopes, four regions, symmetric teardown", () => 
         await settle(b1);
         expect(await page.evaluate(() => window.__fusion_basic.dispose("scope-a"))).toBe(true);
         await expect(page.getByTestId("scope-a-gpu-1")).toHaveCount(0);
-        expect(await page.evaluate(() => window.__fusion_basic.live_regions())).toBe(2);
+        expect(await page.evaluate(() => window.__fusion_basic.live_regions())).toBe(3);
         const before = await settle(b1);
         await page.getByTestId("scope-b-dom-increment").click();
         await expect(page.getByTestId("scope-b-dom-count")).toHaveText("1");
@@ -90,7 +94,7 @@ test.describe("M1 probe 2: two scopes, four regions, symmetric teardown", () => 
                 await new Promise((r) => setTimeout(r, 300));
                 return api.live_regions();
             }, delay);
-            expect(live).toBe(2);
+            expect(live).toBe(3);
         }
         expect(errors).toEqual([]);
         await page.evaluate(() => window.__fusion_basic.mount("scope-a"));
@@ -119,10 +123,10 @@ test.describe("M1 probe 2: two scopes, four regions, symmetric teardown", () => 
         };
         for (let round = 0; round < 20; round++) {
             expect(await page.evaluate(() => window.__fusion_basic.dispose("scope-a"))).toBe(true);
-            await expectRegions(2, `round ${round}: after dispose`);
+            await expectRegions(3, `round ${round}: after dispose`);
             await page.evaluate(() => window.__fusion_basic.mount("scope-a"));
             await expect(page.getByTestId("scope-a-gpu-1")).toHaveCount(1);
-            await expectRegions(4, `round ${round}: after mount`);
+            await expectRegions(5, `round ${round}: after mount`);
         }
         expect(await errors()).toEqual([]);
         const region = page.getByTestId("scope-a-gpu-1");

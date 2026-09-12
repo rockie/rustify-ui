@@ -458,6 +458,11 @@ test.describe("M1 · the five things P3 assumes", () => {
             timeout: 120_000,
         });
 
+        // Instance 1's health is measured below by how many of a hundred
+        // actions a counter scope takes, and since P3 M6 the page's own mount
+        // is B0 - so the scope this probe measures is one it mounts itself.
+        await page.evaluate(() => window.__fusion_basic.mount("scope-a"));
+
         // A second instance of the same module: its own memory, its own
         // runtime, one compilation.
         expect(await page.evaluate(() => window.__fusion_basic.boot_instance("instance-two"))).toBe(2);

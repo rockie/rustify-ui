@@ -222,8 +222,14 @@ test.describe("M4 V4: focus belongs to whoever had it", () => {
         expect(await focused(page)).toBe("native-link");
 
         // And nothing in the page is a hidden text box of Makepad's: the
-        // regions do not compete for focus with a proxy of their own.
-        expect(await page.evaluate(() => document.querySelectorAll("textarea").length)).toBe(0);
+        // regions do not compete for focus with a proxy of their own. Named
+        // by its class rather than counted as "every textarea": B0 has one of
+        // its own, and a control the application put there is not a proxy.
+        expect(
+            await page.evaluate(
+                () => document.querySelectorAll("textarea.cx_webgl_textinput").length
+            )
+        ).toBe(0);
     });
 });
 

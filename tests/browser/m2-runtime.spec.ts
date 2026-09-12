@@ -1,6 +1,10 @@
 import { expect, test } from "@playwright/test";
 import { capture, differingPixels, settle, waitForReady } from "./support";
 
+// Every region count here is five at rest and three with one counter scope
+// gone: the page's own mount is B0 (one region) since P3 M6, and the two
+// counter scopes these checks are about (two regions each) are mounted by
+// `waitForReady`.
 test.describe("M2 V1: mounting", () => {
     test("a missing container fails and leaves the running scopes alone", async ({ page }) => {
         await waitForReady(page);
@@ -13,7 +17,7 @@ test.describe("M2 V1: mounting", () => {
             }
         });
         expect(error).toContain("container not found");
-        expect(await page.evaluate(() => window.__fusion_basic.live_regions())).toBe(4);
+        expect(await page.evaluate(() => window.__fusion_basic.live_regions())).toBe(5);
         await page.getByTestId("scope-a-dom-increment").click();
         await expect(page.getByTestId("scope-a-dom-count")).toHaveText("1");
     });
@@ -31,7 +35,7 @@ test.describe("M2 V1: mounting", () => {
             }
         });
         expect(error).toContain("already mounted");
-        expect(await page.evaluate(() => window.__fusion_basic.live_regions())).toBe(4);
+        expect(await page.evaluate(() => window.__fusion_basic.live_regions())).toBe(5);
         await expect(page.getByTestId("scope-a-dom-count")).toHaveText("1");
         await page.getByTestId("scope-a-dom-increment").click();
         await expect(page.getByTestId("scope-a-dom-count")).toHaveText("2");
@@ -41,7 +45,7 @@ test.describe("M2 V1: mounting", () => {
         await waitForReady(page);
         expect(await page.evaluate(() => window.__fusion_basic.dispose("scope-a"))).toBe(true);
         expect(await page.evaluate(() => window.__fusion_basic.dispose("scope-a"))).toBe(false);
-        expect(await page.evaluate(() => window.__fusion_basic.live_regions())).toBe(2);
+        expect(await page.evaluate(() => window.__fusion_basic.live_regions())).toBe(3);
     });
 });
 
@@ -85,7 +89,7 @@ test.describe("M2: region state", () => {
             "scope-b-gpu-1": "ready",
             "scope-b-gpu-2": "ready",
         });
-        expect(await page.evaluate(() => window.__fusion_basic.live_regions())).toBe(2);
+        expect(await page.evaluate(() => window.__fusion_basic.live_regions())).toBe(3);
         // Six, for two regions: a region asks the canvas three times before it
         // gives up, and the host records every refusal it saw. The record the
         // application reads tells the three apart - two `GpuInitRetry` and one
@@ -132,7 +136,7 @@ test.describe("M2 V3: teardown and host coexistence", () => {
         await page.setViewportSize({ width: 1000, height: 800 });
         await page.waitForTimeout(500);
         expect(failures).toEqual([]);
-        expect(await page.evaluate(() => window.__fusion_basic.live_regions())).toBe(2);
+        expect(await page.evaluate(() => window.__fusion_basic.live_regions())).toBe(3);
         await expect(page.getByTestId("scope-b-dom-count")).toHaveText("0");
     });
 
@@ -153,7 +157,7 @@ test.describe("M2 V3: teardown and host coexistence", () => {
             hash: location.hash,
             history: history.length,
             body_overflow: document.body.style.overflow,
-            hidden_textareas: document.querySelectorAll("textarea").length,
+            hidden_textareas: document.querySelectorAll("textarea.cx_webgl_textinput").length,
         }));
         expect(page_state).toEqual({
             active: "BODY",
@@ -197,7 +201,7 @@ test.describe("M2 V3: teardown and host coexistence", () => {
             window.__fusion_basic.stats()
         );
         expect({ regions, timers, animation_frames, tasks, errors }).toEqual({
-            regions: 4,
+            regions: 5,
             timers: 0,
             animation_frames: 0,
             tasks: 0,
@@ -237,9 +241,9 @@ test.describe("M2 V3: teardown and host coexistence", () => {
             };
         });
         expect(after.errors).toEqual([]);
-        expect(after.canvases).toBe(2);
+        expect(after.canvases).toBe(3);
         expect(after.stats).toMatchObject({
-            regions: 2,
+            regions: 3,
             timers: 0,
             animation_frames: 0,
             tasks: 0,
@@ -267,7 +271,7 @@ test.describe("M7 V8: what a trap in the shared module reaches", () => {
         // them, so all of them have to be there to begin with.
         await expect(page.getByTestId("scope-a-dom-count")).toHaveCount(1);
         await expect(page.getByTestId("scope-b-dom-count")).toHaveCount(1);
-        expect(await page.evaluate(() => window.__fusion_basic.live_regions())).toBe(4);
+        expect(await page.evaluate(() => window.__fusion_basic.live_regions())).toBe(5);
 
         await page.evaluate(() =>
             window.__fusion_basic.hooks.runtime.enter_fatal(new Error("injected trap"))

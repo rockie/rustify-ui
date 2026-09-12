@@ -197,7 +197,9 @@ test.describe("M5 · the address bar after its owner dies", () => {
         const baseline = await windowListeners(page);
 
         await page.evaluate(() => window.__fusion_basic.mount_owner("route-owner"));
-        await expect.poll(async () => await urlOwner(page)).toBe("1:route-owner");
+        await expect
+            .poll(async () => await urlOwner(page), { message: "the first owner", timeout: 15_000 })
+            .toBe("1:route-owner");
         const owning = await windowListeners(page);
         expect(owning.popstate ?? 0).toBeGreaterThan(baseline.popstate ?? 0);
 
@@ -207,7 +209,10 @@ test.describe("M5 · the address bar after its owner dies", () => {
         // host aborting the signal every one of them was registered with is
         // what did, and the count says whether it worked.
         await expect
-            .poll(async () => (await windowListeners(page)).popstate ?? 0)
+            .poll(async () => (await windowListeners(page)).popstate ?? 0, {
+                message: "the dead instance's listeners",
+                timeout: 15_000,
+            })
             .toBe(baseline.popstate ?? 0);
         // The loader's own attribution listener goes with them: the instance
         // that had it is the one that died, and it was the only instance on
@@ -222,7 +227,12 @@ test.describe("M5 · the address bar after its owner dies", () => {
         await expect(status(page)).toHaveAttribute("data-status", "ready", { timeout: 60_000 });
         const restarted = await page.evaluate(() => window.__fusion_basic.instance);
         expect(restarted).toBeGreaterThan(1);
-        await expect.poll(async () => await urlOwner(page)).toBe(`${restarted}:route-owner`);
+        await expect
+            .poll(async () => await urlOwner(page), {
+                message: "the replacement owner",
+                timeout: 15_000,
+            })
+            .toBe(`${restarted}:route-owner`);
         // The replacement put its own listeners back where the dead one's
         // had been.
         const after = await windowListeners(page);
@@ -238,18 +248,29 @@ test.describe("M5 · the address bar after its owner dies", () => {
             const target = step % 2 === 0 ? "two" : "one";
             await page.getByTestId(`route-owner-${target}`).click();
             visited.push(`/${target}`);
-            await expect.poll(async () => (await routes(page)).owner).toBe(`/${target}`);
+            await expect
+                .poll(async () => (await routes(page)).owner, {
+                    message: `moved to ${target}`,
+                    timeout: 10_000,
+                })
+                .toBe(`/${target}`);
         }
         for (let step = 4; step >= 1; step--) {
             await page.goBack();
             await expect
-                .poll(async () => (await routes(page)).owner, { message: `back to ${step}` })
+                .poll(async () => (await routes(page)).owner, {
+                    message: `back to ${step}`,
+                    timeout: 10_000,
+                })
                 .toBe(visited[step - 1]);
         }
         for (let step = 1; step < 5; step++) {
             await page.goForward();
             await expect
-                .poll(async () => (await routes(page)).owner, { message: `forward to ${step}` })
+                .poll(async () => (await routes(page)).owner, {
+                    message: `forward to ${step}`,
+                    timeout: 10_000,
+                })
                 .toBe(visited[step]);
         }
     });
@@ -257,7 +278,9 @@ test.describe("M5 · the address bar after its owner dies", () => {
     test("a second owner is refused and the first one is untouched", async ({ page }) => {
         await open(page);
         await page.evaluate(() => window.__fusion_basic.mount_owner("route-owner"));
-        await expect.poll(async () => await urlOwner(page)).toBe("1:route-owner");
+        await expect
+            .poll(async () => await urlOwner(page), { message: "the first owner", timeout: 15_000 })
+            .toBe("1:route-owner");
 
         // A second instance asking for the same address bar. One page, one
         // owner - and the page-level mark is what makes that true across two

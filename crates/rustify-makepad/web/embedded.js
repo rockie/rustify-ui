@@ -327,11 +327,13 @@ export function create_host_hooks(wasm, msg_class, on_fatal, instance = 1) {
         stats() {
             let timers = 0;
             let animation_frames = 0;
+            let gpu_bytes = 0;
             for (const host of regions.values()) {
                 timers += host.timers.length;
                 if (host.req_anim_frame_id) {
                     animation_frames += 1;
                 }
+                gpu_bytes += host.gpu_bytes || 0;
             }
             return {
                 regions: regions.size,
@@ -339,6 +341,12 @@ export function create_host_hooks(wasm, msg_class, on_fatal, instance = 1) {
                 animation_frames,
                 tasks: tasks.size,
                 errors: runtime.errors.length,
+                // What the regions have asked the GPU to hold, as their own
+                // ledgers count it: every buffer and texture uploaded through
+                // the renderer, and nothing the driver adds around them. A
+                // region that has been destroyed is not in this map, so a
+                // runtime with no regions holds nothing.
+                gpu_bytes,
                 // Linear memory never shrinks, so a leak shows up as growth
                 // that keeps pace with the number of rounds.
                 memory: wasm._memory.buffer.byteLength,

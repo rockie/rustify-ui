@@ -16,12 +16,34 @@ export class WasmWebGL extends WasmWebBrowser {
     this._missing_shader_ids = new Set();
     this._gl_error_reports = new Set();
     this.video_players = {};
+    // What this context has been asked to hold, in bytes. A ledger, not a
+    // reading: it counts the buffers and textures uploaded through the calls
+    // below, which is every allocation this renderer makes and nothing the
+    // driver adds around them.
+    this.gpu_bytes = 0;
     this.init_webgl_context();
     if (!this.gl) {
       return;
     }
 
     this.load_deps().catch((error) => this.report_startup_failure(error));
+  }
+
+  // Records what one GL object holds now, having held `_gpu_bytes` before.
+  //
+  // Per object rather than per call: a buffer that is reallocated larger
+  // replaces what it held, and counting the new size without taking the old
+  // one off would make every resize a leak.
+  note_gpu_bytes(object, bytes) {
+    if (!object) {
+      return;
+    }
+    const held = object._gpu_bytes || 0;
+    if (held === bytes) {
+      return;
+    }
+    object._gpu_bytes = bytes;
+    this.gpu_bytes += bytes - held;
   }
 
   // Frees every GL object this region allocated and gives the context back
@@ -73,6 +95,9 @@ export class WasmWebGL extends WasmWebBrowser {
     this.vaos = [];
     this.textures = [];
     this.framebuffers = [];
+    // Everything the ledger was counting has just been deleted along with the
+    // context that held it.
+    this.gpu_bytes = 0;
     for (const key in this.video_players) {
       const player = this.video_players[key];
       player.video.pause();
@@ -302,6 +327,9 @@ export class WasmWebGL extends WasmWebBrowser {
     if (gl_buf._buffer_byte_length !== byte_length) {
       gl.bufferData(target, data, usage);
       gl_buf._buffer_byte_length = byte_length;
+      // Only this branch allocates: `bufferSubData` writes into what the
+      // buffer already holds.
+      this.note_gpu_bytes(gl_buf, byte_length);
     } else {
       gl.bufferSubData(target, 0, data);
     }
@@ -813,6 +841,7 @@ export class WasmWebGL extends WasmWebBrowser {
       gl.UNSIGNED_BYTE,
       data_array,
     );
+    this.note_gpu_bytes(gl_tex, args.width * args.height * 4);
     this.textures[args.texture_id] = gl_tex;
   }
 
@@ -844,6 +873,7 @@ export class WasmWebGL extends WasmWebBrowser {
       data_array,
     );
     gl.pixelStorei(gl.UNPACK_ALIGNMENT, 4);
+    this.note_gpu_bytes(gl_tex, args.width * args.height);
     this.textures[args.texture_id] = gl_tex;
   }
 
@@ -873,6 +903,7 @@ export class WasmWebGL extends WasmWebBrowser {
       gl.FLOAT,
       data_array,
     );
+    this.note_gpu_bytes(gl_tex, args.width * args.height * 16);
     this.textures[args.texture_id] = gl_tex;
   }
 
@@ -917,6 +948,7 @@ export class WasmWebGL extends WasmWebBrowser {
         data_array,
       );
     }
+    this.note_gpu_bytes(gl_tex, face_size * 6);
     this.textures[args.texture_id] = gl_tex;
   }
 
@@ -979,6 +1011,7 @@ export class WasmWebGL extends WasmWebBrowser {
             gl.FLOAT,
             null,
           );
+          this.note_gpu_bytes(gl_tex, gl_tex._width * gl_tex._height * 4);
         } else {
           gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
           gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
@@ -995,6 +1028,7 @@ export class WasmWebGL extends WasmWebBrowser {
             gl.UNSIGNED_BYTE,
             null,
           );
+          this.note_gpu_bytes(gl_tex, gl_tex._width * gl_tex._height * 4);
         }
       } else if (!tgt.init_only) {
         clear_flags |= gl.COLOR_BUFFER_BIT;

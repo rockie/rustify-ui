@@ -17,11 +17,12 @@ test.describe("M7 V9: the same build, served under a sub-path", () => {
     test("boots, draws, and leaves the page it was embedded in alone", async ({ page }) => {
         await waitForReady(page);
         expect(page.url()).toContain("/tools/demo/");
-        // The page mounts its own two scopes as it boots, exactly as it does
-        // at the root: a sub-path is a deployment detail, not an API.
+        // The page mounts B0 as it boots and the helper adds the two counter
+        // scopes, exactly as at the root: a sub-path is a deployment detail,
+        // not an API. Five regions - B0's one and two each.
         const region = page.getByTestId("scope-a-gpu-1");
         await settle(region);
-        expect(await page.evaluate(() => window.__fusion_basic.live_regions())).toBe(4);
+        expect(await page.evaluate(() => window.__fusion_basic.live_regions())).toBe(5);
 
         // The host page around the scope is the page's, not the SDK's: its
         // own headings and links are still there and still work.
@@ -84,16 +85,16 @@ test.describe("M7 V8: an asset that does not arrive, or arrives broken", () => {
             const failures: string[] = [];
             page.on("pageerror", (error) => failures.push(String(error)));
             await fault(page, spec);
-            await page.goto("./");
+            // Loaded through the helper, which is also where the two counter
+            // scopes this check drives come from now that the page's own
+            // mount is B0. The runtime still starts, which is the point: a
+            // font is not a precondition for an application, and what a
+            // missing one costs is the text a region can draw.
+            await waitForReady(page);
 
             // The page's own half is untouched by an asset a region wanted.
             await expect(page.getByRole("heading", { level: 1 })).toHaveCount(1);
-            // And the runtime still starts. A font is not a precondition for
-            // an application: what it costs is the text a region can draw.
-            await expect(page.getByTestId("status")).toHaveAttribute("data-status", "ready", {
-                timeout: 60_000,
-            });
-            expect(await page.evaluate(() => window.__fusion_basic.live_regions())).toBe(4);
+            expect(await page.evaluate(() => window.__fusion_basic.live_regions())).toBe(5);
 
             // Both halves still move one value together.
             await page.getByTestId("scope-a-dom-increment").click();

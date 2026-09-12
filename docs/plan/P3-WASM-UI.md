@@ -280,7 +280,7 @@ flowchart TD
 | `Job` 状态 | `ticket`、`done_rows`、`total_rows`、`buffer`（排序：索引数组的分片归并；筛选：命中索引；查找：首个命中） | 一次作业一份；取消即丢弃缓冲 |
 | `SceneLayout`（示例） | 10,000 个 `SceneRect{ id, x, y, w: 120, h: 24, label: "OBJ%05d" }`：`col = i % 100`、`row = i / 100`、`x = col * 130`、`y = row * 40`；`i % 10 == 9` 的矩形再偏移 (+60, +12) 形成第二层；重叠 ≤ 2 层；场景范围 **13,050 × 3,996** CSS px（由公式推出的外接框：99 × 130 + 60 + 120，99 × 40 + 12 + 24；相机夹取要的是精确值，原先写的 13,000 × 4,000 是约数，2026-09-11 M1 更正） | 编译期常量算法，TypeScript 孪生复算 |
 | 实例（loader + 宿主 runtime） | `instance: u32`（页面级递增）、`slot: u32`（容器对应的实例槽，重启不变）、`restarts: u32`（≤ 3）、`module`（共享）、`glue_url`、`hooks`、`fatal: Error|null`；`controller: AbortController` 在宿主 runtime 内，经 `hooks.signal` 给两侧用；页面级 `data-rustify-url-owner="<instance>:<scope>"` | 实例 trap → `fatal` 置位、`controller.abort()`、清本实例的 URL 属性、区域释放、容器清空、提示与重启入口；`restart()` 生成新实例编号与新 glue URL，死实例的模块记录与线性内存随文档保留（D14） |
-| GPU 字节账本（宿主 JS） | 每个 GL 上下文一个 `Map<object, bytes>`；`bufferData` 覆盖、`bufferSubData` 不改、`texImage2D` 按 `width × height × 4`（RGBA8）或按格式表、`delete*` 移除 | 随 `destroy()` 归零；估算口径见 `docs/compatibility.md` |
+| GPU 字节账本（宿主 JS） | 每个 GL 上下文一份，字节记在对象自己身上（`_gpu_bytes`）并汇总到 `this.gpu_bytes`：`bufferData` 覆盖、`bufferSubData` 不改、四个 `FromWasmAllocTexture*` 入口按格式（RGBA8 ×4、Ru8 ×1、RGBAf32 ×16、立方体 ×6）、渲染目标按 `width × height × 4`；本后端没有单独的释放消息，资源随上下文一起走 | `destroy()` 归零；区域销毁后不在 `regions` 里，所以实例的汇总自然归零；估算口径（不含着色器程序、VAO、帧缓冲、画布后备存储与驱动开销）见 `docs/compatibility.md` |
 
 ### 3.1 独立预期（C-5）
 
@@ -359,14 +359,14 @@ flowchart TD
 ### 5.6 空闲、隐藏与恢复（R31）
 
 1. 计数：`frames` 在呈现路径 +1；`pumps` 已有。B0 空闲 60 s（无动画、无请求、无计时任务）：`frames` 增量 ≤ 1、`pumps` 增量记录；CPU 用 CDP `Performance.getMetrics` 的 `TaskDuration` 增量 / 60 s，与同浏览器空白页的同一量对照，差 ≤ 1 个百分点（A-6；不可读则该项记未测）。
-2. 隐藏：两种隐藏各测——`host.hidden = true`（区域 0×0 → `suspended`）与 `document.hidden`（CDP `Emulation.setFocusEmulationEnabled`/`Page.setWebLifecycleState` 或最小化窗口；不可用则只测前者并记未测）；隐藏后 1 s 内 `frames` 停止增长；隐藏期间派发的指针移动只保留最新（一期 `Continuous`），派发的离散动作不能到达隐藏画布（浏览器行为）——断言恢复后业务动作计数不变、hover 为最新值。
+2. 隐藏：两种隐藏各测——`host.hidden = true`（区域 0×0 → `suspended`；**注意 `[hidden]{display:none}` 会输给宿主页自己设了 `display` 的规则，属性没生效时区域根本不会挂起**，示例页因此带一条 `!important` 覆盖）与 `document.hidden`（M6 实测：另开标签页置前与 CDP `Page.setWebLifecycleState` 在本无头浏览器上都无法把 `document.hidden` 置真，按既定退路**记未测**，用例跳过而不是对着仍可见的页面断言）；隐藏后 1 s 内 `frames` 停止增长；隐藏期间派发的指针移动只保留最新（一期 `Continuous`），派发的离散动作不能到达隐藏画布（浏览器行为）——断言恢复后业务动作计数不变、hover 为最新值。
 3. 恢复：`host.hidden = false` 后 500 ms 内 `frames` +1 且区域答复真实指针；100 轮隐藏/恢复的业务动作重复数 0（沿用 P1 M8 夹具并加时限断言）。
 
 ### 5.7 资源账本（R32）
 
 1. CPU 侧 = `stats().memory`（wasm 已提交）+ `performance.memory.usedJSHeapSize`（A-6）；B0 稳定后取峰值 ≤ 128 MiB；B2 在 100,000 行 + 一次排序 + 一次筛选后取峰值 ≤ 384 MiB。
 2. GPU 侧 = `stats().gpu_bytes`；B0 ≤ 128 MiB、B2 ≤ 256 MiB；口径写明为账本估算。
-3. B4：两个实例在测量开始前各 `boot` 一次并存活到结束；一轮 = 两实例各挂一个作用域（各两区域）→ 卸载，不重建实例（重启的保留量按 D14 另算、不进这条门）；预热 20 轮后 80 轮，CPU 合计高水位增长 ≤ 8 MiB，后 40 轮线性拟合斜率 ≤ 64 KiB/轮。
+3. B4：两个实例在测量开始前各 `boot` 一次并存活到结束；一轮 = 两实例各挂一个作用域（各两区域——即计数器夹具，不是只有一个区域的 B0 作用域）→ 卸载，不重建实例；每轮的内存样本在 `HeapProfiler.collectGarbage` 之后取（未回收的堆锯齿比整条增长门还大，拟合出来的是回收时机不是留存量）（重启的保留量按 D14 另算、不进这条门）；预热 20 轮后 80 轮，CPU 合计高水位增长 ≤ 8 MiB，后 40 轮线性拟合斜率 ≤ 64 KiB/轮。
 4. 卸载后：`regions = 0`、`timers = 0`、`tasks = 0`、`gpu_bytes = 0`、诊断可识别的业务组件（示例导出 `live_components()`）为 0；允许保留的共享缓存：浏览器代码缓存与 HTTP 缓存（不在页内），wasm 线性内存不回缩（PRD 明示不作泄漏依据）。
 
 ## 6. 前端、输入与语义
@@ -552,6 +552,10 @@ flowchart TD
 - 死实例的诊断要在 trap **之前**读：调用边界在 fatal 后抛 `InstanceDead`，事后去问死实例等于问了个必然失败的问题，而反过来写的用例会「通过」（M5）。
 - 一次挂载卸载轮次的内存曲线在本构建上约第 250 轮才走完工作集（三次复跑逐字节相同）：尾部断言的预热少于这个数，量到的是工作集不是泄漏（M5 把 150 轮预热改成 300）。
 - 有界重试会把诊断条数翻倍：一个区域三次问 canvas 就是两条 `GpuInitRetry` 加一条 `GpuInitFailed`，按条数断言的既有用例要跟着改，靠 `kind` 区分而不是靠总数（M5）。
+- `[hidden]` 输给同一元素上任何设了 `display` 的类：标了 hidden 却仍在布局里的区域画布尺寸照旧、根本不挂起，量出来的「隐藏开销」等于可见开销（M6，示例页加 `!important` 覆盖）。
+- 页面长过视口之后，`page.mouse.click` 打在视口外不会报错也不会命中：每次手势前先 `scrollIntoViewIfNeeded` 再量画布（M6 在 B0 与 m3-state 两处踩到）。
+- 增长门的堆样本要在 `HeapProfiler.collectGarbage` 之后取：未回收的锯齿（本机 80 轮约 50 KB/轮）比门本身还大，拟合出来的是回收时机；收集后同一测量是 10 KB/轮（M6）。
+- 「作业没在跑」在作业开始之前也是真的：等 `running == false` 会立刻通过，要等 `slices > 0` 才说明它真的跑过（M3 在写入用例上踩过一次，M6 在内存峰值用例上又踩一次）。
 - URL 所有者槽是 `thread_local!`，每个 wasm 实例一份；双实例前必须改页面级，否则两个地址栏所有者悄悄并存。
 - 静态导入的 `bindgen.js` 只有一份模块级 `wasm` 绑定，且 `init` 以 `if(wasm!==undefined)return wasm` 守卫：第二次 `init` 是空操作，既不覆盖也不并存——二次实例化必须二次求值 glue；而每个 glue URL 的模块记录随文档存活，死实例的内存不会回来，所以重启要有上限（D14）。
 - `panic = "abort"` 的 trap 不运行任何 `Drop`：路由监听、URL 槽、浮层监听都靠析构移除，trap 后它们还挂在 `window`/`document`/容器上并会再进入死实例；页面级资源的寿命必须由 JS 侧的 `AbortController` 持有（D15）。

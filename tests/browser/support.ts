@@ -38,6 +38,19 @@ export async function anchorRect(page: Page, anchor: Anchor) {
 export async function waitForReady(page: Page) {
     await page.goto("./");
     await expect(page.getByTestId("status")).toHaveAttribute("data-status", "ready", { timeout: 60_000 });
+    // The fusion-basic page shows B0 and nothing else: a load has to be the
+    // load it says it is, so every other fixture is mounted by whoever needs
+    // it. The two counter scopes are what the phase-one checks were written
+    // for, and this is where they come from now. Every example's checks come
+    // through here, and only one of them has those scopes to mount.
+    await page.evaluate(() => {
+        const fusion = window.__fusion_basic;
+        if (fusion === undefined) {
+            return;
+        }
+        fusion.mount("scope-a");
+        fusion.mount("scope-b");
+    });
     await waitForQuiet(page);
 }
 
@@ -411,6 +424,28 @@ declare global {
             restarts: number;
             restart_limit: number;
             mount(container_id: string): number;
+            b0(container_id: string): number;
+            b0_state(): {
+                count: number;
+                title: string;
+                subtitle: string;
+                tag: string;
+                notes: string;
+                visible: boolean;
+                locked: boolean;
+                compact: boolean;
+                busy: boolean;
+                choice: number;
+                size: number;
+                weight: number;
+                palette: string;
+                density: string;
+                tab: number;
+                region: string;
+                controls: { name: string; x: number; y: number; width: number; height: number }[];
+            };
+            b0_controls(): string[];
+            live_components(): number;
             mount_owner(container_id: string): number;
             mount_guest(container_id: string): number;
             routes(): string;
@@ -448,8 +483,11 @@ declare global {
             mount_trap(container_id: string): number;
             trap(): void;
             fatal(): string | null;
-            boot_instance(container_id: string): Promise<number>;
+            boot_instance(container_id: string, fixture?: string): Promise<number>;
+            boot_second_instance(container_id?: string): Promise<number>;
             restart(container_id: string): Promise<number | null>;
+            trap_deferred(): void;
+            simulate_trap(message?: string): void;
             geometry(): {
                 anchors: { id: number; x: number; y: number; width: number; height: number }[];
                 hits: number;

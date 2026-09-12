@@ -115,6 +115,68 @@ memory - the three that died and the one running - and an application that
 expects to fail more often than that should be reloading rather than
 restarting.
 
+## What the resource ledgers count
+
+`stats()` reports two figures about resources, and both are accountings rather
+than readings. Nothing on the web can ask a driver what it holds.
+
+- **`memory`** is `WebAssembly.Memory.buffer.byteLength`: what this instance's
+  linear memory has been grown to. It never shrinks, so it is a high-water
+  mark and not a current level. The JavaScript half of the same question is
+  the heap, and `performance.memory` quantises it to ten million bytes here -
+  the figures in `docs/validation/p3/` use the debugger's
+  `Runtime.getHeapUsage` instead.
+- **`gpu_bytes`** is a ledger the renderer keeps per region, summed over the
+  live regions of the instance. It counts a vertex, index or uniform buffer
+  at the size it was last allocated at (a `bufferSubData` write into an
+  existing buffer changes nothing), each texture uploaded through the four
+  `FromWasmAllocTexture*` entry points at width x height x bytes-per-pixel for
+  its format, and each render-target texture at the size it was allocated. A
+  region that is destroyed leaves the map, so an instance with no regions
+  holds nothing.
+
+  It does **not** count what a WebGL implementation allocates around those
+  objects: shader programs, vertex array objects, framebuffer and renderbuffer
+  objects, the canvas's own backing store, mip chains the driver derives, or
+  any per-object overhead. Treat it as the lower bound the application itself
+  asked for.
+
+  Measured on this build: the B0 page holds 57,576 bytes, the large table
+  1,976, and the ten-thousand-object scene 286,072 - most of that last one a
+  glyph atlas, which is what makes the scene the load that exercises the
+  ledger at all.
+
+The counting lives in `makepad/platform/src/os/web/web_gl.js`, which is a
+change to the fork: an ordinary commit that `cargo xtask sources verify`
+reports as drift from the import recorded in `sources.lock.json`, as every
+edit to the fork does.
+
+## A region nobody can see
+
+A region suspends when its canvas has no area - `display: none` on anything
+above it, a zero-sized box, the `hidden` attribute - and resumes when it has
+one again. Suspended, it presents nothing and keeps its state; a projection
+made while it is away is drawn in the frame it comes back in. Measured: it
+stops inside a second and comes back in 24 ms, against the 500 ms R31 allows.
+
+Two things an embedding page has to get right:
+
+- **`hidden` has to actually hide.** The browser's `[hidden] { display: none }`
+  loses to any rule of the page's own that sets `display` on the same element,
+  and a region marked hidden that is still laid out keeps its canvas at full
+  size - so it never suspends, and the page goes on paying for something
+  nobody can see. `examples/fusion-basic/app.css` carries the one-line
+  override that makes the attribute win.
+- **Input aimed at a hidden region does not arrive later.** It does not
+  arrive at all: the browser does not dispatch to an element that is not laid
+  out, and nothing is queued for replay. A hundred rounds of hiding and
+  restoring, with a pointer aimed at the region on every one of them, left the
+  application's own count exactly where the visible half had put it.
+
+An idle page costs nothing worth measuring: sixty seconds of B0 with nobody
+touching it presented **0** frames and spent 0.02% of the main thread against
+a blank page's 0.01%.
+
 ## Routing
 
 The SDK has its own minimal router (`docs/navigation.md`): static segments,

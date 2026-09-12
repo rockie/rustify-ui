@@ -12,6 +12,46 @@ body {
     max-width: 520px;
 }
 
+/* A host page takes a region off screen with the `hidden` attribute, and the
+   rule that does that - `[hidden] { display: none }` in the browser's own
+   stylesheet - loses to any class here that sets `display`. An element that
+   is marked hidden and still laid out keeps its canvas at full size, so the
+   region never suspends and nobody finds out until a measurement says a
+   hidden page cost as much as a visible one. */
+[hidden] {
+    display: none !important;
+}
+
+.b0 {
+    display: grid;
+    gap: 12px;
+    max-width: 560px;
+}
+
+.b0-form {
+    display: grid;
+    gap: 6px;
+}
+
+.b0-form label {
+    display: grid;
+    gap: 2px;
+}
+
+/* A canvas is a replaced element and the host writes its own size onto its
+   width and height attributes every frame, so the size is written here and
+   the intrinsic minimum is taken off both axes. */
+.b0-region {
+    display: block;
+    width: 520px;
+    height: 360px;
+    min-width: 0;
+    min-height: 0;
+    border: 1px solid #d0d5dd;
+    border-radius: 6px;
+    background: #f9fafb;
+}
+
 .fusion-basic .gpu-region {
     height: 200px;
     border: 1px solid #d0d5dd;

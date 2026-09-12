@@ -33,7 +33,7 @@ export default defineConfig({
     projects: [
         {
             name: "fusion-basic",
-            testMatch: ["m1-probes.spec.ts", "m2-runtime.spec.ts", "m3-state.spec.ts", "m4-geometry.spec.ts", "m4-overlay.spec.ts", "m6-mainpath.spec.ts", "p2-navigation.spec.ts", "p3-instances.spec.ts"],
+            testMatch: ["m1-probes.spec.ts", "m2-runtime.spec.ts", "m3-state.spec.ts", "m4-geometry.spec.ts", "m4-overlay.spec.ts", "m6-mainpath.spec.ts", "p2-navigation.spec.ts", "p3-instances.spec.ts", "p3-b0.spec.ts", "p3-idle.spec.ts", "p3-memory.spec.ts"],
             use: { baseURL: `http://127.0.0.1:${fusionPort}/` },
         },
         {
@@ -48,7 +48,7 @@ export default defineConfig({
         },
         {
             name: "data-workbench",
-            testMatch: ["p3-probes.spec.ts", "p3-table.spec.ts", "p3-jobs.spec.ts", "p3-scene.spec.ts"],
+            testMatch: ["p3-probes.spec.ts", "p3-table.spec.ts", "p3-jobs.spec.ts", "p3-scene.spec.ts", "p3-memory.spec.ts"],
             use: { baseURL: `http://127.0.0.1:${dataPort}/` },
         },
         // The budget gate runs thirty cold loads and thirty hot ones, so it is

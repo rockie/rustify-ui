@@ -13,7 +13,15 @@
 <body>
     <main>
         <h1>fusion-basic</h1>
-        <p>Leptos DOM and Makepad GPU regions sharing one counter per mount scope.</p>
+        <p>Leptos DOM and Makepad GPU regions sharing one state.</p>
+        <!-- What the page shows by default: the smallest complete
+             application. Ten DOM controls, one region with twenty, one state
+             behind both. Every other fixture below is mounted on request, so
+             that what a load measures here is B0 and nothing else. -->
+        <section>
+            <h2>b0</h2>
+            <div id="b0" data-testid="b0"></div>
+        </section>
         <section>
             <h2>scope a</h2>
             <div id="scope-a" data-testid="scope-a"></div>
