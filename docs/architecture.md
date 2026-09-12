@@ -1,14 +1,23 @@
-# Architecture (state at the end of P1)
+# Architecture
 
-One browser page loads one fusion wasm module. Leptos owns the DOM and the
-application's reactive state; every `GpuRegion` owns a Makepad `Cx` that draws
-into a canvas the DOM laid out. The two never share widgets or state: the
-application projects state into regions as props and receives typed actions
-back.
+One browser page can run several **instances**, and each instance is a wasm
+instance: its own linear memory, its own host hooks, its own diagnostics ring,
+its own everything. Inside one instance are **scopes** - the mount points
+Leptos owns - and inside a scope are the DOM and the `GpuRegion`s. Leptos owns
+the DOM and the application's reactive state; every `GpuRegion` owns a Makepad
+`Cx` that draws into a canvas the DOM laid out. The two never share widgets or
+state: the application projects state into regions as props and receives typed
+actions back.
+
+A trap stops at the instance boundary. Everything in the instance it happened
+in is gone - every scope, every region, every task - and nothing outside it is
+touched, which is what lets an application be embedded on a page it does not
+own.
 
 ```mermaid
 flowchart TD
-    Loader[web/loader.js] --> Runtime[wasm instance + host hooks]
+    Loader[web/loader.js] --> Runtime[instance 1: wasm instance + host hooks]
+    Loader --> Second[instance 2: its own memory and runtime]
     Runtime --> ScopeA[mount scope A / Leptos Owner]
     Runtime --> ScopeB[mount scope B / Leptos Owner]
     ScopeA --> Signals[application signals]
@@ -39,6 +48,11 @@ flowchart TD
 ## Runtime contracts
 
 - **Region identity.** `RegionId`s come from a monotonic counter and are never reused; a stale id fails every lookup. The JS host carries the id in every export call.
+- **Instances.** `boot()` is one instance. The first evaluates the generated glue by static import; each later one evaluates a copy of it under `./bindgen.js?instance=<n>`, because the glue keeps its instance in a module-level binding whose initialiser returns early once it is set - a second `init` of the same module record is a no-op, and a different URL is a different record. All of them share one `WebAssembly.Module`, so there is one compile and one wasm request; what they do not share is linear memory.
+- **The instance boundary.** Everything the page hands back is wrapped in a call boundary: an export called after the instance has failed throws `InstanceDead` rather than trapping again, and one that throws `WebAssembly.RuntimeError` reports the failure before rethrowing it. A trap that leaves through a DOM event handler has no code of ours on the stack, so it is attributed by the glue URL in the uncaught error's own stack - each instance has its own. When an instance fails, the host releases what it holds in a fixed order: abort the signal every page-level listener was registered with, take this instance's mark off the address bar, drop the pending tasks, destroy the regions, and only then tell the page. Nothing later in that list can be reached by something earlier in it.
+- **Page-level listeners.** `window`, `document` and a scope's container outlive the scope, and `panic = "abort"` runs no destructor. So every listener the SDK puts on one of them is registered with the instance's abort signal as well (`rustify_makepad::listener_options`): dropping is still the normal path, and aborting is the one removal that works when no Rust can run.
+- **One address bar, one owner.** The owner is a mark on the document's root element - `data-rustify-url-owner`, valued `<instance>:<scope>` - rather than a flag inside the module. Two instances each have their own copy of everything inside, and each would otherwise conclude it was the only one. The instance number is in the value so that the host can clear the mark of the instance that died and no one else's.
+- **Restarting.** A failed instance can be replaced in the same slot at most three times. Every restart evaluates a fresh copy of the glue under a new URL, and a module record lives as long as the document: the dead instance's linear memory is never returned. After the third the only thing left is reloading the page, and the notice says so.
 - **Pump.** JS calls `rustify_region_process(region, msg)`; the region's `Cx` is taken out of the registry for the duration of the pump, deferred closures run first inside the same outgoing-message frame (`Cx::process_to_wasm_with`), then Makepad handles the batch. Handlers therefore never observe a borrowed registry, and re-entrant `apply` calls simply queue for the next pump.
 - **Props and actions.** `apply(id, f)` queues `f(cx, app)` and asks the host for a pump (coalesced on the microtask queue). Actions pushed into the outbox during a pump are delivered to the application callback after the pump returns, so handlers may write signals or apply new props freely.
 - **Presentation.** A pump that only applied props leaves the region wanting to draw, and what Makepad asks for is an animation frame - the next one. The host serves that request itself, at the end of the same microtask, so the picture a projection asked for is in the frame the projection was made in. Without this, two requests fell in one browser frame (the second is dropped as a duplicate while the first is still pending) and a third frame went by unpainted: a region driven once a frame presented every second frame, and a 60 Hz display showed 30. A request made during that draw is a real next frame - an animation running on - and goes back to the browser untouched.

@@ -143,21 +143,25 @@ async function start(wasm_url, on_fatal, number, restarts) {
     }
 
     message_classes ??= create_message_classes(ToWasmMsg, FromWasmMsg);
-    // Page-level resources this instance takes out, so a trap can release
-    // them from here: a Rust destructor does not run after one.
-    const controller = new AbortController();
     const instance = { number, fatal: null, hooks: null, restarts };
-    const hooks = create_host_hooks(wasm, message_classes, (error) => {
-        instance.fatal = error;
-        controller.abort();
-        window.removeEventListener("error", attribute);
-        window.removeEventListener("unhandledrejection", attribute_rejection);
-        if (on_fatal) {
-            on_fatal(error);
-        } else {
-            console.error(error);
-        }
-    });
+    // The runtime owns the page-level resources this instance takes out, and
+    // releases them in a fixed order when it fails - listeners first, then the
+    // marks on the page, then the tasks and the regions. By the time this is
+    // called there is nothing of this instance left on the page but its
+    // linear memory.
+    const hooks = create_host_hooks(
+        wasm,
+        message_classes,
+        (error) => {
+            instance.fatal = error;
+            if (on_fatal) {
+                on_fatal(error);
+            } else {
+                console.error(error);
+            }
+        },
+        number
+    );
     instance.hooks = hooks;
 
     // A trap inside a DOM event handler leaves wasm through the browser's own
@@ -176,8 +180,12 @@ async function start(wasm_url, on_fatal, number, restarts) {
             hooks.runtime.enter_fatal(event.reason);
         }
     };
-    window.addEventListener("error", attribute);
-    window.addEventListener("unhandledrejection", attribute_rejection);
+    // Registered with the instance's own signal, like everything else it puts
+    // on the page: a listener that outlived the instance it belongs to would
+    // attribute somebody else's failure to a module that is already dead.
+    const listening = { signal: hooks.signal };
+    window.addEventListener("error", attribute, listening);
+    window.addEventListener("unhandledrejection", attribute_rejection, listening);
 
     glue.rustify_makepad_boot(hooks);
     // The build the runtime came from, so a diagnostic can be matched to the
@@ -193,7 +201,7 @@ async function start(wasm_url, on_fatal, number, restarts) {
         glue_url,
         /// Aborted when this instance fails. Page-level listeners registered
         /// with it are gone by the time `on_fatal` is called.
-        signal: controller.signal,
+        signal: hooks.signal,
         restarts,
         /// A fresh instance in place of this one, or `null` once the slot has
         /// been restarted as often as it may be. The dead instance's memory
@@ -227,13 +235,36 @@ export function release_container(container) {
     container.removeAttribute("tabindex");
 }
 
-// Shows a static failure notice inside `container`; used when the runtime
-// cannot start at all, so the message never depends on wasm being alive.
-export function show_fatal(container, error) {
+/// Shows a failure notice inside `container`, and the one thing a person can
+/// still do about it.
+///
+/// Built from nothing but the DOM: it is shown when the runtime could not
+/// start, or has just died, so it must not depend on wasm being alive. When
+/// `restart` is given the notice offers it - the caller decides whether the
+/// slot has a restart left, because the loader will refuse one it does not.
+/// The text is the caller's and says what was lost; it never says anything
+/// was saved.
+export function show_fatal(container, error, { restart } = {}) {
     const box = document.createElement("div");
     box.className = "rustify-fatal";
     box.setAttribute("role", "alert");
     const kind = error && error.kind ? error.kind : "RuntimeFatal";
-    box.textContent = `${kind}: ${error && error.message ? error.message : String(error)}`;
+    const text = document.createElement("p");
+    text.dataset.testid = "fatal-text";
+    text.textContent = `${kind}: ${error && error.message ? error.message : String(error)}`;
+    box.append(text);
+    if (typeof restart === "function") {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.dataset.testid = "fatal-restart";
+        button.textContent = "restart this instance";
+        // Once: a second press while the first restart is still loading would
+        // spend a restart of the slot on an instance nobody asked for.
+        button.addEventListener("click", () => {
+            button.disabled = true;
+            restart();
+        });
+        box.append(button);
+    }
     container.replaceChildren(box);
 }

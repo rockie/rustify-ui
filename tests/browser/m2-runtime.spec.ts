@@ -86,7 +86,11 @@ test.describe("M2: region state", () => {
             "scope-b-gpu-2": "ready",
         });
         expect(await page.evaluate(() => window.__fusion_basic.live_regions())).toBe(2);
-        expect(await page.evaluate(() => window.__fusion_basic.errors())).toHaveLength(2);
+        // Six, for two regions: a region asks the canvas three times before it
+        // gives up, and the host records every refusal it saw. The record the
+        // application reads tells the three apart - two `GpuInitRetry` and one
+        // `GpuInitFailed` per region - because only the last one is a failure.
+        expect(await page.evaluate(() => window.__fusion_basic.errors())).toHaveLength(6);
         await page.getByTestId("scope-a-dom-increment").click();
         await expect(page.getByTestId("scope-a-dom-count")).toHaveText("1");
         await expect(page.getByTestId("scope-b-dom-count")).toHaveText("0");
@@ -199,10 +203,16 @@ test.describe("M2 V3: teardown and host coexistence", () => {
             tasks: 0,
             errors: 0,
         });
-        // The allocator reaches its high-water mark once, at a round that
-        // varies between runs, so the leak sample is the tail: a hundred more
-        // rounds that have to add nothing. Linear memory never shrinks, so
-        // even 8 KiB held per round would show up as a dozen more pages.
+        // The leak sample is the tail: a hundred rounds that have to add
+        // nothing. Linear memory never shrinks, so even 8 KiB held per round
+        // would show up as a dozen more pages.
+        //
+        // The warm-up is what the tail has to come after, and three hundred is
+        // measured rather than guessed: on this build the working set settles
+        // at about round two hundred and fifty - in three identical runs, so
+        // it is where this build puts it rather than variance - and six
+        // hundred rounds add nothing after that. A warm-up that ends before
+        // the working set does measures the working set and calls it a leak.
         const after = await page.evaluate(async () => {
             const api = window.__fusion_basic;
             const round = async () => {
@@ -210,7 +220,7 @@ test.describe("M2 V3: teardown and host coexistence", () => {
                 api.mount("scope-a");
                 await new Promise((r) => setTimeout(r, 20));
             };
-            for (let i = 0; i < 150; i++) {
+            for (let i = 0; i < 300; i++) {
                 await round();
             }
             const warm = api.stats();

@@ -125,7 +125,7 @@
 | D12 | 浏览器矩阵 | 沿用 P1/P2：macOS Chrome 固定版本通过门，Safari 观察 | 不因本期变化 | NFR-4 |
 | D13 | 门的运行纪律 | 帧门、内存门与 2 h 耐久各自单独 project，一次只跑一个，机器上不并跑 cargo | P1/P2 记录：整套同跑会被杀、CPU 争用让时延翻倍 | §12 |
 | D14 | 实例重启的生命周期 | 每次 `restart()` 用新的 glue URL 求值一份新 glue 并实例化；死实例的 ES 模块记录与其 `wasm` 绑定随文档存活、线性内存不释放（F22）；每个实例槽最多重启 3 次，之后提示只剩「重新加载页面」；B4 的 100 轮是**两个长期存活实例内的作用域挂载/卸载**，不重建实例 | 保留量有上限且写进文档：≤ 3 × 单实例线性内存（P2 测得 B1 起步 39.6 MB）；不改生成的 glue。备选「xtask 给生成的 glue 追加释放入口后原 URL 重 `init`」被否决：glue 的 `CLOSURE_DTORS`（模块级 `FinalizationRegistry`）会把死实例闭包的析构打到同一绑定上的新实例 | F22；R26 AC3 只要求一个重启入口 |
-| D15 | trap 的调用边界与实例归属 | loader 把 `boot()` 返回的 `app` 包成调用边界：每个导出在 `runtime.fatal` 后拒绝调用，抛出 `WebAssembly.RuntimeError` 时先 `enter_fatal` 再重抛；loader 按实例监听 `window` 的 `error`/`unhandledrejection`，`RuntimeError` 按 `error.stack` 里的 glue URL 归属实例；每实例一个 `AbortController`，SDK 在 `window`/`document`/容器上的监听一律带其 `signal` 注册，`enter_fatal` 先 `abort()` 再清区域；页面级 URL 所有者属性带实例号，由 loader 在 fatal 时清除 | Rust 的 `Drop` 在 abort 后不运行（F8），清理必须在 JS 侧；归属不成立时（探针③）DOM 处理器 trap 记为页面级并进入两实例 fatal、写进 `docs/compatibility.md` | F7/F8/F9/F22；R26 AC3 |
+| D15 | trap 的调用边界与实例归属 | loader 把 `boot()` 返回的 `app` 包成调用边界：每个导出在 `runtime.fatal` 后拒绝调用，抛出 `WebAssembly.RuntimeError` 时先 `enter_fatal` 再重抛；loader 按实例监听 `window` 的 `error`/`unhandledrejection`，`RuntimeError` 按 `error.stack` 里的 glue URL 归属实例；每实例一个 `AbortController`（在宿主 runtime 内，经 `hooks.signal` 暴露给 SDK 与 loader 两侧），SDK 在 `window`/`document`/容器上的监听一律带其 `signal` 注册，`enter_fatal` 先 `abort()` 再清区域；页面级 URL 所有者属性带实例号，由 loader 在 fatal 时清除 | Rust 的 `Drop` 在 abort 后不运行（F8），清理必须在 JS 侧；归属不成立时（探针③）DOM 处理器 trap 记为页面级并进入两实例 fatal、写进 `docs/compatibility.md` | F7/F8/F9/F22；R26 AC3 |
 
 D1/D2/D4/D6 由用户在 A-1 中一并确认（2026-09-11 已确认）；其余为工程决策，在对应里程碑退出时确认。D14 的重启上限（3 次）是产品可见的建议值，用户可在 M5 开工前改；未改则按 3 实施。
 
@@ -158,8 +158,8 @@ D1/D2/D4/D6 由用户在 A-1 中一并确认（2026-09-11 已确认）；其余�
 | 应用/示例 | 数据集与其版本、视图（排序/筛选后的索引）、作业的规则函数、选择集实例、场景布局、路由表、B0/B4 夹具的动作清单 | 决定作业结果是否采纳；刷新后不恢复数据（PRD R22 边界） |
 | `rustify-components` | 表格与树的 DOM、语义、键盘、行元素池、可见范围计算 | 只显示回调给它的单元格文本；不持有数据、不持有选择 |
 | Rustify SDK（`rustify-ui`） | 分片作业与取消、选择集规则、GPU 启动重试策略、错误种类 | 作用域清理即取消作业；不复制业务事实 |
-| 私有 Makepad 集成 + 分叉 | 区域 Cx、帧计数、GPU 字节账本、场景命中 | 只答复活区域；账本是估算，口径写进文档 |
-| loader（`web/loader.js`） | 实例编号、实例化与重启（有上限）、导出调用边界与 trap 归属、每实例的 `AbortController`、致命错误的静态提示、页面级 URL 所有者属性的写入与清除 | 一个实例的 trap 只结束本实例：先 abort 本实例全部页面级监听、清 URL 属性，再清区域与容器；重启由用户触发，不自动循环 |
+| 私有 Makepad 集成 + 分叉 | 区域 Cx、帧计数、GPU 字节账本、场景命中、实例的 `AbortController` 与失败时的释放顺序（`enter_fatal`，含页面级 URL 属性的清除） | 只答复活区域；账本是估算，口径写进文档 |
+| loader（`web/loader.js`） | 实例编号、实例化与重启（有上限）、导出调用边界与 trap 归属、致命错误的静态提示与重启入口 | 一个实例的 trap 只结束本实例：先 abort 本实例全部页面级监听、清 URL 属性，再清区域与容器；重启由用户触发，不自动循环 |
 | 浏览器 | 上下文丢失/恢复、rAF 节流、HTTP 与代码缓存 | SDK 不轮询、不绕过 |
 
 一句话：数据在应用手里、可见范围在组件手里、顺序与取消在 SDK 手里、实例边界与页面级监听的寿命在 loader 手里。
@@ -260,8 +260,8 @@ flowchart TD
 | `Tree`（components） | 示例 | `nodes: Signal<Vec<TreeNode>>`（两层）、`expanded`、`selected`、`on_select`；`role="tree"/"treeitem"`、`aria-expanded`、方向键、Home/End | 不虚拟化 | V2 |
 | `SceneRegion`（示例，`RegionApp`） | 示例 | props：`camera: (f64, f64)`、`highlight: Option<Id>`、`chosen: Arc<Selection>`、`labels: Arc<BTreeMap<Id, String>>` ★（只装改过名的，其余是算出来的）、`frozen`；**没有 `layout` prop**——位置是对下标的算术（`scene_layout`），传一份一万条的表只是把同一个公式抄两遍；actions：`Camera{x, y}`（`Continuous("pan")`，区域把指针/滚轮增量累计到本地相机后发**绝对值**——同批多次输入只剩最后一个也不丢位移）、`Marquee{x, y, width, height, additive}` ★（Discrete，释放时一次，场景坐标）、`Pick{id, additive}` ★、`Hover(Option<Id>)`（`Continuous("hover")`）、`Viewport{..}`（`Continuous("viewport")`，每次绘制后上报可见范围与相机）；修饰键随动作走（**并入还是替换是按下时的事实**，应用晚一个回合去读键盘读到的是另一个时刻）；不变量：只绘制与视口相交的矩形与标签；框选结果由应用按布局计算，区域只报矩形；按下点在矩形上是框选、在空白处是平移，位移不超过 3 px 的一次按下释放是点选；本地相机只在 props 的 `camera` 与区域最后发出的值不同时（应用夹取或查找定位）被 props 覆盖 | 视口剔除与命中在区域；选择规则在 SDK | V4 |
 | `StripRegion`（示例，`RegionApp`） | 示例 | props：`buckets: Arc<Vec<u16>>`（视图行按像素列分桶的选中数）、`viewport: (start, end)`；action：`Jump(bucket)` | 桶由应用算 | V2 |
-| loader 实例 API | 示例 `app.js` | `boot({ wasm_url, on_fatal, instance? }) -> { app, hooks, build, base, instance, signal, restart }`；`app` 是调用边界（D15）：fatal 后调用抛 `InstanceDead`，导出抛 `WebAssembly.RuntimeError` 时先 `enter_fatal` 再重抛，`Result::Err` 抛出的普通错误不算 trap；`instance` 从 1 起，页面级递增；`signal` 是本实例 `AbortController` 的信号，`enter_fatal` 第一步 `abort()`、第二步清本实例的 `data-rustify-url-owner`、第三步作废任务并清区域，最后 `on_fatal`；同一 `WebAssembly.Module` 复用；`restart()` 在同容器以新 glue URL 重新实例化并返回新句柄集，每个实例槽 ≤ 3 次（D14），超出后提示只剩重新加载；致命提示含 `role="alert"` 文本与一个 `restart` 按钮，按钮只在页面允许且未超上限时出现；loader 按实例监听 `window` 的 `error`/`unhandledrejection`，`RuntimeError` 的 `stack` 含本实例 glue URL 即归本实例 | glue 的二次求值、页面级 URL 属性、归属的栈解析 | V5 |
-| `GpuRegion` 重试（SDK） | 应用 | 三次尝试 0/250/750 ms；每次失败记 `GpuInitRetry`（Info，带尝试序号）；第三次失败后记 `GpuInitFailed` 并 `Failed`；期间 `state` 为 `Starting` | 策略在组件内 | 宿主单测（重试表）+ V5 |
+| loader 实例 API | 示例 `app.js` | `boot({ wasm_url, on_fatal, instance? }) -> { app, hooks, build, base, instance, signal, restart }`；`app` 是调用边界（D15）：fatal 后调用抛 `InstanceDead`，导出抛 `WebAssembly.RuntimeError` 时先 `enter_fatal` 再重抛，`Result::Err` 抛出的普通错误不算 trap；`instance` 从 1 起，页面级递增；`signal` 是本实例 `AbortController` 的信号，controller 与 `enter_fatal` 同在宿主（`embedded.js`）、经 `hooks.signal` 暴露，loader 自己的两个页面级监听也用它注册；`enter_fatal` 第一步 `abort()`、第二步清本实例的 `data-rustify-url-owner`、第三步作废任务与计时器并清区域，最后 `on_fatal`；同一 `WebAssembly.Module` 复用；`restart()` 在同容器以新 glue URL 重新实例化并返回新句柄集，每个实例槽 ≤ 3 次（D14），超出后提示只剩重新加载；致命提示含 `role="alert"` 文本与一个 `restart` 按钮，按钮只在页面允许且未超上限时出现；loader 按实例监听 `window` 的 `error`/`unhandledrejection`，`RuntimeError` 的 `stack` 含本实例 glue URL 即归本实例 | glue 的二次求值、页面级 URL 属性、归属的栈解析 | V5 |
+| `GpuRegion` 重试（SDK） | 应用 | 三次尝试 0/250/750 ms；每次失败记 `GpuInitRetry`（Info，带尝试序号）；第三次失败后记 `GpuInitFailed` 并 `Failed`；期间 `state` 为 `Starting`；两次等待走 `host::defer_after(ms)` ★——计时器持有的是 wasm 回调，和 `defer` 同一条理由归宿主所有，失败的 runtime 连同已投递的消息一起清掉它 | 策略在组件内；等待由宿主持有 | 宿主单测（重试表）+ V5 |
 | `stats()` 扩展（宿主 JS） | 测试、报告、帧门 | `frames`：每个区域每次呈现 +1（在 `web_gl.js` 的呈现路径上报给 runtime；M1 落地，是 B3 有效呈现的内容版本）；`gpu_bytes`：账本当前值；`destroy()` 后账本归零 | 估算口径写文档 | V1/V6/V8 |
 | `budgets.ts`/`loads.ts` | 三个 budget project | 数值、边界、种子、布局、动作清单；变更即换基线标识 | 无 | V8 |
 
@@ -278,7 +278,7 @@ flowchart TD
 | `Selection`（SDK） | `BTreeSet<Id>`；删除行时 `remove_deleted`；`counts(view)` 用 `View::contains(id)`（`order` 建位图 `Vec<bool>`，随视图重建） | 随作用域；两个视图与概览带读同一份 |
 | `Job` 状态 | `ticket`、`done_rows`、`total_rows`、`buffer`（排序：索引数组的分片归并；筛选：命中索引；查找：首个命中） | 一次作业一份；取消即丢弃缓冲 |
 | `SceneLayout`（示例） | 10,000 个 `SceneRect{ id, x, y, w: 120, h: 24, label: "OBJ%05d" }`：`col = i % 100`、`row = i / 100`、`x = col * 130`、`y = row * 40`；`i % 10 == 9` 的矩形再偏移 (+60, +12) 形成第二层；重叠 ≤ 2 层；场景范围 **13,050 × 3,996** CSS px（由公式推出的外接框：99 × 130 + 60 + 120，99 × 40 + 12 + 24；相机夹取要的是精确值，原先写的 13,000 × 4,000 是约数，2026-09-11 M1 更正） | 编译期常量算法，TypeScript 孪生复算 |
-| 实例（loader） | `instance: u32`（页面级递增）、`slot: u32`（容器对应的实例槽，重启不变）、`restarts: u32`（≤ 3）、`module`（共享）、`glue_url`、`controller: AbortController`、`hooks`、`fatal: Error|null`；页面级 `data-rustify-url-owner="<instance>:<scope>"` | 实例 trap → `fatal` 置位、`controller.abort()`、清本实例的 URL 属性、区域释放、容器清空、提示与重启入口；`restart()` 生成新实例编号与新 glue URL，死实例的模块记录与线性内存随文档保留（D14） |
+| 实例（loader + 宿主 runtime） | `instance: u32`（页面级递增）、`slot: u32`（容器对应的实例槽，重启不变）、`restarts: u32`（≤ 3）、`module`（共享）、`glue_url`、`hooks`、`fatal: Error|null`；`controller: AbortController` 在宿主 runtime 内，经 `hooks.signal` 给两侧用；页面级 `data-rustify-url-owner="<instance>:<scope>"` | 实例 trap → `fatal` 置位、`controller.abort()`、清本实例的 URL 属性、区域释放、容器清空、提示与重启入口；`restart()` 生成新实例编号与新 glue URL，死实例的模块记录与线性内存随文档保留（D14） |
 | GPU 字节账本（宿主 JS） | 每个 GL 上下文一个 `Map<object, bytes>`；`bufferData` 覆盖、`bufferSubData` 不改、`texImage2D` 按 `width × height × 4`（RGBA8）或按格式表、`delete*` 移除 | 随 `destroy()` 归零；估算口径见 `docs/compatibility.md` |
 
 ### 3.1 独立预期（C-5）
@@ -349,8 +349,8 @@ flowchart TD
 
 ### 5.5 实例、trap 与重启
 
-1. `boot({ instance })`：`instance` 缺省为页面级下一个编号；编号 1 走现有静态导入；编号 ≥ 2 动态导入 `./bindgen.js?instance=<n>`（只有 `bindgen.js` 需要，A-5），共用 `module`；每个实例一份 `hooks` 与一个 `AbortController`，`app.*_identify(instance, build)` 把实例号写进诊断。返回的 `app` 是调用边界（D15）：导出抛 `WebAssembly.RuntimeError` 即 `enter_fatal` 后重抛，fatal 后再调用抛 `InstanceDead`。
-2. URL 所有者与页面级监听：`claim_url` 先读 `document.documentElement` 的 `data-rustify-url-owner`，已有则返回 `None`（`UrlOwnerConflict` 语义不变），否则写入 `<instance>:<scope>` 并占本实例槽；正常卸载时 `UrlClaim` drop 清除属性，trap 时析构不运行，由 loader 的 `enter_fatal` 按实例号前缀清除。SDK 在 `window`（`popstate`/`beforeunload`/`resize`）、`document`（`scroll`）与容器（`click`/`keydown`）上的监听一律带实例 `signal` 注册（`host.rs` 暴露 `listener_options()`）：`Drop` 移除是正常路径，`abort()` 是 trap 路径。P2 的「第二个所有者挂载失败、原实例不受影响」用例在双实例上复跑。
+1. `boot({ instance })`：`instance` 缺省为页面级下一个编号；编号 1 走现有静态导入；编号 ≥ 2 动态导入 `./bindgen.js?instance=<n>`（只有 `bindgen.js` 需要，A-5），共用 `module`；每个实例一份 `hooks`，`hooks.signal` 是该实例 `AbortController` 的信号（controller 在宿主 runtime 内，与 `enter_fatal` 同一处），`app.*_identify(instance, build)` 把实例号写进诊断。返回的 `app` 是调用边界（D15）：导出抛 `WebAssembly.RuntimeError` 即 `enter_fatal` 后重抛，fatal 后再调用抛 `InstanceDead`。
+2. URL 所有者与页面级监听：`claim_url` 先读 `document.documentElement` 的 `data-rustify-url-owner`，已有则返回 `None`（`UrlOwnerConflict` 语义不变），否则写入 `<instance>:<scope>` 并占本实例槽；正常卸载时 `UrlClaim` drop 清除属性（且只在属性仍是本 claim 写的那一个时清，重启后的新所有者不会被旧 claim 的析构擦掉），trap 时析构不运行，由宿主 runtime 的 `enter_fatal` 按实例号前缀清除。SDK 在 `window`（`popstate`/`beforeunload`/`resize`）、`document`（`scroll`）与容器（`click`/`keydown`）上的监听一律带实例 `signal` 注册（`host.rs` 暴露 `listener_options()`）：`Drop` 移除是正常路径，`abort()` 是 trap 路径。P2 的「第二个所有者挂载失败、原实例不受影响」用例在双实例上复跑。
 3. trap：`enter_fatal` 只作用于本实例，顺序固定为 `controller.abort()` → 清本实例 URL 属性 → 作废 `tasks` → 销毁区域 → `on_fatal`；`on_fatal` 由示例实现为「清空本实例容器、记录、显示提示与重启入口」；提示文本写明「未持久化修改已丢失」，不声称已保存；其他实例的 `stats()`、动作接受、区域绘制不受影响（V5 断言另一实例 100 次动作全部接受）。三条真实 trap 入口都要走到同一个提示：宿主入口（pump/`defer`，现状）、导出调用（经调用边界）、DOM 事件处理器（经 loader 的页面级 `error` 监听按 `error.stack` 中的 glue URL 归属；探针③证明归属不成立则退为页面级：两实例都 fatal，并写进 `docs/compatibility.md` 与 R26 AC3 的报告行）。死实例的迟到闭包析构（F22）可能再进入死实例并抛出，属已知边界：V5 用动作接受计数而不是 `pageerror = 0` 断言另一实例健康。
 4. 重启：`restart()` 由用户点击触发，生成新实例编号与新 glue URL 并重新挂载；同一实例槽最多 3 次（D14），第 4 次提示只剩「重新加载页面」；死实例的线性内存随文档保留，上限 ≤ 3 × 单实例起步内存写进 `docs/compatibility.md`；页面不自动重启。所有者实例 trap → 重启后新实例必须能再次成为所有者，前进/后退只由新实例答复（V5 用 CDP `DOMDebugger.getEventListeners(window)` 比对 `popstate` 监听数回到重启前基线）。GPU 启动重试按 D7 有界；上下文丢失重建仍由浏览器事件驱动，`GpuContextLost` 期间不重试。
 5. 真实 trap 出口：`fusion_basic_trap()` 调用 `unreachable!()`，只经调用边界触发；另有一个 DOM 按钮（`data-testid="trap-in-handler"`）在 Leptos 事件处理器内 panic，覆盖不经宿主也不经导出的那条路。V5 跑三种真实入口与 JS 模拟，都必须走到同一个提示；测试只触发、不捕获，不得自行 catch 后调用 `enter_fatal`。
@@ -443,7 +443,7 @@ flowchart TD
 | V2 | 表格：经跳行入口跳到 1/50,000/100,000 并键盘 Ctrl+Home/End，Enter 打开详情、修改、提交后滚回核对；采样 100 个单元格与孪生比对；DOM 行元素数 ≤ 60 + 20；选中 10 项后插入 10、删除 10（含 3 个选中）；概览带点击 20 次；树展开/折叠/方向键/选择并发出分组选择事件；表格侧语义定位项 30 轮；含 `<script>` 文本单元格 | 首/中/末可达且 `aria-rowindex` 正确；修改后单元格一致；行数上限；存活 7 项仍选中、删除项清除、隐藏数正确；跳到对应行；树选择事件正确（筛选结果在 V3）；定位 0 错；文本是数据 | R-1（R20 AC1/AC2、R25 表格侧）、NFR-5；M2（不依赖 M3/M4 交付） |
 | V3 | 3 列升降序、5 条筛选、树分组筛选；查找首/中/末样本（R15 AC3 的查找路径）；取消 20 次；作业中插入、删除、编辑各一次；同字段连续发作业；20 次排序的片数与端到端时长 | 顺序与孪生逐项相等；树筛选结果正确；查找定位正确；取消 ≤ 100 ms 且旧视图不动；三种写入都让作业在下一片前失效并重跑一次、无越界读；只有最新作业生效；p95 ≤ 500 ms（先记测量值，M8 成门） | R-1（R20 AC2）、NFR-1 部分；M3 |
 | V4 | 场景：20 个框选与孪生相交集比对；100 步平移相机；同一任务内 10 次滚轮不让出；100 次点选；查找首/中/末三目标并重命名；DOM↔GPU 各 100 次；hover 流；全 20 项语义定位 30 轮 | 集合相等；相机等于预期；突发位移等于增量之和；命中正确；三目标可达且主操作与点选路径结果相同；无丢无重；定位 0 错 | R-2（R15 AC3）、R25 全项；M4 |
-| V5 | 双实例启动；trap 四种入口各一次（导出调用、DOM 处理器、宿主 `defer` 内 panic、JS 模拟），测试只触发不捕获；另一实例 100 次动作；所有者实例 trap → 重启 → 新实例再次成为所有者 → 前进/后退各 5 次；CDP `DOMDebugger.getEventListeners(window)` 的 `popstate`/`error` 计数；`data-rustify-url-owner` 值；第 4 次重启；第二所有者；三次 GPU 启动失败（`serve --csp` 或注入 `getContext` 返回 null）；CSP 报告 | 四种入口都到同一提示（含重启入口与数据边界文本）；另一实例 100/100 接受（不以 `pageerror = 0` 为判据）；重启后可用且导航只由新实例答复；监听数回到基线；属性随 fatal 清除并被新实例重写；第 4 次只剩重载提示；`UrlOwnerConflict`；`GpuInitRetry` ×2 + `GpuInitFailed`、≤ 2 s、DOM 可用；CSP 0 | R-4、NFR-3 AC3、NFR-5；M5 |
+| V5 | 双实例启动；trap 四种入口各一次（导出调用、DOM 处理器、宿主 `defer` 内 panic、JS 模拟），测试只触发不捕获；另一实例 100 次动作；所有者实例 trap → 重启 → 新实例再次成为所有者 → 前进/后退各 5 次；CDP `DOMDebugger.getEventListeners(window)` 的 `popstate`/`error` 计数；`data-rustify-url-owner` 值；第 4 次重启；第二所有者；三次 GPU 启动失败（注入 `getContext` 返回 null，复用 `m7-recovery.spec.ts` 的既有夹具，在 property-workbench project 里跑）；CSP 报告 | 四种入口都到同一提示（含重启入口与数据边界文本）；另一实例 100/100 接受（不以 `pageerror = 0` 为判据）；重启后可用且导航只由新实例答复；监听数回到基线；属性随 fatal 清除并被新实例重写；第 4 次只剩重载提示；`UrlOwnerConflict`；`GpuInitRetry` ×2 + `GpuInitFailed`、≤ 2 s、DOM 可用；CSP 0 | R-4、NFR-3 AC3、NFR-5；M5 |
 | V6 | B0 定义对照表；空闲 60 s；两种隐藏 60 s；恢复；100 轮隐藏/恢复；B0/B2 内存峰值；B4 20 + 80 轮；卸载残留 | `frames` ≤ 1、CPU ≤ 1 点（或未测）；1 s 内停止；500 ms 内恢复；重复 0；≤ 128/384 MiB、GPU ≤ 128/256 MiB；增长 ≤ 8 MiB 且 ≤ 64 KiB/轮；残留 0 | R-3、R-5、NFR-2；M6 |
 | V7 | 4 类故障 × 20（字体 404 经 `serve --fault`、票据反序、pending 中关闭区域、`lose_context`/`restore_context`）；B4 2 h 10/s；诊断开/关各 1,000 次 | 每次故障后已确认状态等于预期清单；72,000 发 72,000 收 0 拒 0 错，尾部持平；p95 增长 ≤ 5% | NFR-3 AC1/AC2、NFR-6；M7 |
 | V8 | `budget-minimal`、`budget-data`（每次门运行前先跑 5 s 负向探针：驱动继续、内容冻结）、`budget`（B1 回归）；`verify --suite p3`；文档；七份报告；VoiceOver 记录或豁免 | 负向探针必败、正向门全绿；驱动数 = 接受数；双干净构建；未测如实 | NFR-1/NFR-4/R-6；M8 |
@@ -547,6 +547,10 @@ flowchart TD
 - GPU 区域不能做组件的 children（应用标记不是 `Send`，`docs/workspace.md`）；概览带与场景都由应用自己排，不塞进 `DataTable`/`Splitter` 的 children。
 - `cx.walk_turtle` 给的是对齐前矩形；命中与上报要用 `draw_bg.area().rect(cx)`（P1 M6）。
 - 现有 trap 夹具是 JS 侧模拟；实例隔离必须再用一次真实 `unreachable`，否则测的是 `enter_fatal` 而不是 trap。
+- trap 有四扇门（导出调用、宿主任务、DOM 处理器、页内模拟），示例的 `on_fatal` 必须按「页面当前显示的是哪个实例」判断要不要提示，不能写死实例 1：重启后页面的实例号是 2、3，写死的那一版第二次失败时一声不响，页面看着还活着而里面什么都没挂（M5）。
+- 死实例的诊断要在 trap **之前**读：调用边界在 fatal 后抛 `InstanceDead`，事后去问死实例等于问了个必然失败的问题，而反过来写的用例会「通过」（M5）。
+- 一次挂载卸载轮次的内存曲线在本构建上约第 250 轮才走完工作集（三次复跑逐字节相同）：尾部断言的预热少于这个数，量到的是工作集不是泄漏（M5 把 150 轮预热改成 300）。
+- 有界重试会把诊断条数翻倍：一个区域三次问 canvas 就是两条 `GpuInitRetry` 加一条 `GpuInitFailed`，按条数断言的既有用例要跟着改，靠 `kind` 区分而不是靠总数（M5）。
 - URL 所有者槽是 `thread_local!`，每个 wasm 实例一份；双实例前必须改页面级，否则两个地址栏所有者悄悄并存。
 - 静态导入的 `bindgen.js` 只有一份模块级 `wasm` 绑定，且 `init` 以 `if(wasm!==undefined)return wasm` 守卫：第二次 `init` 是空操作，既不覆盖也不并存——二次实例化必须二次求值 glue；而每个 glue URL 的模块记录随文档存活，死实例的内存不会回来，所以重启要有上限（D14）。
 - `panic = "abort"` 的 trap 不运行任何 `Drop`：路由监听、URL 槽、浮层监听都靠析构移除，trap 后它们还挂在 `window`/`document`/容器上并会再进入死实例；页面级资源的寿命必须由 JS 侧的 `AbortController` 持有（D15）。

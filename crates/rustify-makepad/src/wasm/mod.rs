@@ -4,4 +4,6 @@ mod host;
 pub use makepad_widgets;
 
 pub use app::RegionApp;
-pub use host::{apply, create_region, defer, destroy_region, live_region_count};
+pub use host::{
+    apply, create_region, defer, defer_after, destroy_region, listener_options, live_region_count,
+};

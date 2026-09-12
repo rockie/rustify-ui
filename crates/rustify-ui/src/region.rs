@@ -28,6 +28,36 @@ pub enum RegionState {
     Disposed,
 }
 
+/// When a region asks the canvas for a context, counting from the first ask.
+///
+/// A browser that is taking a context away from something else refuses the
+/// next one that asks, and usually has it a moment later; a region that gave
+/// up on the first no would send an application down the DOM path over a
+/// hiccup. Three asks, and the last of them is answered well inside the two
+/// seconds R33 gives a failure to reach the screen - a region that kept
+/// asking would instead sit there saying nothing at all.
+#[cfg_attr(not(target_arch = "wasm32"), allow(dead_code))]
+const GPU_ATTEMPTS: [i32; 3] = [0, 250, 750];
+
+/// How long to wait before `attempt`, or `None` when there are no more.
+#[cfg_attr(not(target_arch = "wasm32"), allow(dead_code))]
+fn gpu_attempt_delay(attempt: usize) -> Option<i32> {
+    GPU_ATTEMPTS.get(attempt).copied()
+}
+
+/// What the record says about the retry that is about to happen.
+///
+/// One string per attempt rather than a formatted number: a diagnostic's
+/// detail is `&'static str` on purpose, so that nothing a user typed can ever
+/// reach the record through one.
+#[cfg_attr(not(target_arch = "wasm32"), allow(dead_code))]
+fn gpu_retry_detail(attempt: usize) -> &'static str {
+    match attempt {
+        1 => "the canvas gave no WebGL2 context; asking again in 250 ms (2 of 3)",
+        _ => "the canvas gave no WebGL2 context; asking again in 750 ms (3 of 3)",
+    }
+}
+
 /// One Makepad-drawn area inside a Leptos view.
 ///
 /// `props` is the controlled projection of application state into the region;
@@ -119,6 +149,10 @@ where
     // built again only then: everything between the loss and the restore
     // would be drawn into a context that is gone.
     let generation = RwSignal::new(0u32);
+    // Which ask of the canvas this is. Raised by the wait between two of
+    // them, so the effect below runs again without anything else having
+    // changed; reset when a restored context makes it a fresh start.
+    let attempt = RwSignal::new(0usize);
     // Kept outside the reactive arena so the cleanup closure can still reach
     // the region after the owner's nodes are gone, and so an effect that runs
     // after cleanup cannot create a region nobody will destroy.
@@ -167,6 +201,7 @@ where
         };
         let target: leptos::web_sys::EventTarget = element.into();
         let restored = leptos::wasm_bindgen::closure::Closure::wrap(Box::new(move || {
+            attempt.set(0);
             generation.update(|round| *round += 1);
         }) as Box<dyn FnMut()>);
         let _ = target.add_event_listener_with_callback(
@@ -187,9 +222,11 @@ where
     Effect::new({
         let slot = slot.clone();
         move || {
-            // Both are dependencies: the canvas appearing starts the first
-            // region, a restored context starts the next one.
+            // All three are dependencies: the canvas appearing starts the
+            // first region, a restored context starts the next one, and a
+            // wait between two asks of the same canvas starts this one again.
             generation.get();
+            let asked = attempt.get();
             if !matches!(*slot.lock().unwrap(), Slot::Pending) {
                 return;
             }
@@ -218,14 +255,22 @@ where
                         publish(RegionState::Ready);
                     }
                 }
-                None => {
-                    *slot = Slot::Closed;
-                    record(note(
-                        ErrorKind::GpuInitFailed,
-                        "the canvas gave no WebGL2 context",
-                    ));
-                    publish(RegionState::Failed(UiError::GpuUnavailable));
-                }
+                // A refusal is not yet a failure. The region stays
+                // `Starting` and asks again; only the last ask decides.
+                None => match gpu_attempt_delay(asked + 1) {
+                    Some(wait) => {
+                        record(note(ErrorKind::GpuInitRetry, gpu_retry_detail(asked + 1)));
+                        rustify_makepad::defer_after(wait, move || attempt.set(asked + 1));
+                    }
+                    None => {
+                        *slot = Slot::Closed;
+                        record(note(
+                            ErrorKind::GpuInitFailed,
+                            "the canvas gave no WebGL2 context after three asks",
+                        ));
+                        publish(RegionState::Failed(UiError::GpuUnavailable));
+                    }
+                },
             }
         }
     });
@@ -288,4 +333,41 @@ pub fn GpuRegion<A: 'static>(
 ) -> impl IntoView {
     let _ = app;
     view! { <canvas class=class /> }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn a_canvas_is_asked_three_times_and_the_answer_is_inside_two_seconds() {
+        assert_eq!(
+            gpu_attempt_delay(0),
+            Some(0),
+            "the first ask is not a retry"
+        );
+        assert_eq!(gpu_attempt_delay(1), Some(250));
+        assert_eq!(gpu_attempt_delay(2), Some(750));
+        assert_eq!(gpu_attempt_delay(3), None, "three asks and no more");
+        // R33 gives a failure two seconds to be on screen, and the last ask
+        // has to have been made and answered inside that.
+        let total: i32 = GPU_ATTEMPTS.iter().sum();
+        assert!(
+            total < 2_000,
+            "{total} ms is too long to wait before saying so"
+        );
+    }
+
+    #[test]
+    fn every_retry_says_which_one_it_is() {
+        let details: Vec<&str> = (1..GPU_ATTEMPTS.len()).map(gpu_retry_detail).collect();
+        assert_eq!(
+            details.len(),
+            2,
+            "the first ask is not announced as a retry"
+        );
+        for (index, detail) in details.iter().enumerate() {
+            assert!(detail.contains(&format!("{} of 3", index + 2)), "{detail}");
+        }
+    }
 }

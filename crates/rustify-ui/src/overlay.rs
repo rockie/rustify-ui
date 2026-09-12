@@ -72,7 +72,7 @@ mod dom {
     use leptos::prelude::*;
     use leptos::wasm_bindgen::closure::Closure;
     use leptos::wasm_bindgen::JsCast;
-    use leptos::web_sys::{AddEventListenerOptions, Element, Event, HtmlElement, KeyboardEvent};
+    use leptos::web_sys::{Element, Event, HtmlElement, KeyboardEvent};
     use send_wrapper::SendWrapper;
     use std::sync::{Arc, Mutex, Weak};
 
@@ -324,7 +324,7 @@ mod dom {
 
             // Capture, so the stack answers before anything inside the scope
             // does: an open layer outranks the application's own commands.
-            let capture = AddEventListenerOptions::new();
+            let capture = crate::listeners::page_level();
             capture.set_capture(true);
             let _ = inner
                 .roots
@@ -336,7 +336,7 @@ mod dom {
                 );
             // Capture, on the document: any container between a layer and its
             // anchor can scroll, and only the capture phase sees all of them.
-            let options = AddEventListenerOptions::new();
+            let options = crate::listeners::page_level();
             options.set_capture(true);
             options.set_passive(true);
             let _ = document().add_event_listener_with_callback_and_add_event_listener_options(
@@ -344,8 +344,11 @@ mod dom {
                 on_moved.as_ref().unchecked_ref(),
                 &options,
             );
-            let _ = window()
-                .add_event_listener_with_callback("resize", on_moved.as_ref().unchecked_ref());
+            let _ = window().add_event_listener_with_callback_and_add_event_listener_options(
+                "resize",
+                on_moved.as_ref().unchecked_ref(),
+                &crate::listeners::page_level(),
+            );
             inner.watchers = Some(SendWrapper::new(Watchers {
                 escape,
                 moved: on_moved,

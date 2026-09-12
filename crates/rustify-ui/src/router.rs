@@ -491,43 +491,57 @@ mod browser {
     use leptos::wasm_bindgen::{JsCast, JsValue};
     use leptos::web_sys::{Element, Event, HtmlElement, MouseEvent};
     use send_wrapper::SendWrapper;
-    use std::cell::{Cell, RefCell};
+    use std::cell::RefCell;
     use std::rc::Rc;
     use std::sync::Arc;
 
-    thread_local! {
-        /// One page, one address bar, one owner. A slot rather than a counter:
-        /// the question is not how many asked but whether anyone has it.
-        static URL_TAKEN: Cell<bool> = const { Cell::new(false) };
-    }
+    /// Where the page records who owns its address bar, as
+    /// `<instance>:<scope>`.
+    ///
+    /// On the document rather than in this module, because "this page" is
+    /// bigger than "this wasm instance": every instance has its own copy of
+    /// everything in here, and each of them would otherwise conclude it was
+    /// the only one and quietly become a second owner. The instance number is
+    /// in the value because a trap runs no destructor - the host clears the
+    /// mark for the instance that died, and must not clear anyone else's.
+    const URL_OWNER: &str = "data-rustify-url-owner";
 
     /// Proof that this scope owns the page's URL, for as long as it is held.
     ///
     /// The token is never read; it is dropped. Cloning it is what lets the
-    /// handle and the router both hold the claim while the slot is released
+    /// handle and the router both hold the claim while the mark is taken off
     /// only when the last of them goes - which is why this is an `Rc` around a
     /// `Drop` type rather than a `Drop` on the claim itself.
     #[derive(Clone)]
     pub struct UrlClaim(#[allow(dead_code)] Rc<ClaimToken>);
 
-    struct ClaimToken;
+    struct ClaimToken {
+        mark: String,
+    }
 
     impl Drop for ClaimToken {
         fn drop(&mut self) {
-            URL_TAKEN.with(|taken| taken.set(false));
+            let Some(root) = document().document_element() else {
+                return;
+            };
+            // Only if it is still this claim's. An instance that trapped had
+            // its mark cleared by the host, and by now the mark on the page
+            // may belong to whoever took the address bar next.
+            if root.get_attribute(URL_OWNER).as_deref() == Some(self.mark.as_str()) {
+                let _ = root.remove_attribute(URL_OWNER);
+            }
         }
     }
 
-    /// Takes the page's URL, if nobody has it.
-    pub fn claim_url() -> Option<UrlClaim> {
-        URL_TAKEN.with(|taken| {
-            if taken.get() {
-                None
-            } else {
-                taken.set(true);
-                Some(UrlClaim(Rc::new(ClaimToken)))
-            }
-        })
+    /// Takes the page's URL for `scope`, if nobody has it.
+    pub fn claim_url(scope: &str) -> Option<UrlClaim> {
+        let root = document().document_element()?;
+        if root.has_attribute(URL_OWNER) {
+            return None;
+        }
+        let mark = format!("{}:{scope}", crate::diagnostics::runtime_id());
+        root.set_attribute(URL_OWNER, &mark).ok()?;
+        Some(UrlClaim(Rc::new(ClaimToken { mark })))
     }
 
     /// What every scope has, whether or not it owns the address bar.
@@ -653,8 +667,11 @@ mod browser {
                 let (path, search) = split_target(&href);
                 location.set(Location::new(path, search));
             });
-            let _ =
-                container.add_event_listener_with_callback("click", click.as_ref().unchecked_ref());
+            let _ = container.add_event_listener_with_callback_and_add_event_listener_options(
+                "click",
+                click.as_ref().unchecked_ref(),
+                &crate::listeners::page_level(),
+            );
             provide_context(Router {
                 location,
                 base,
@@ -711,8 +728,11 @@ mod browser {
                 }
             })
         };
-        let _ = window()
-            .add_event_listener_with_callback("popstate", popstate.as_ref().unchecked_ref());
+        let _ = window().add_event_listener_with_callback_and_add_event_listener_options(
+            "popstate",
+            popstate.as_ref().unchecked_ref(),
+            &crate::listeners::page_level(),
+        );
 
         let click = {
             let history = history.clone();
@@ -727,7 +747,11 @@ mod browser {
                 report(asked);
             })
         };
-        let _ = container.add_event_listener_with_callback("click", click.as_ref().unchecked_ref());
+        let _ = container.add_event_listener_with_callback_and_add_event_listener_options(
+            "click",
+            click.as_ref().unchecked_ref(),
+            &crate::listeners::page_level(),
+        );
 
         provide_context(Router {
             location,
@@ -928,10 +952,12 @@ mod browser {
                             let handler = Closure::<dyn FnMut(Event)>::new(|event: Event| {
                                 event.prevent_default();
                             });
-                            let _ = window().add_event_listener_with_callback(
-                                "beforeunload",
-                                handler.as_ref().unchecked_ref(),
-                            );
+                            let _ = window()
+                                .add_event_listener_with_callback_and_add_event_listener_options(
+                                    "beforeunload",
+                                    handler.as_ref().unchecked_ref(),
+                                    &crate::listeners::page_level(),
+                                );
                             *slot = Some(handler);
                         }
                         (false, true) => {

@@ -153,6 +153,17 @@ test.describe("M7 V8: a region that cannot start at all", () => {
         expect(await snapshot(page)).toMatchObject({ selected: 2 });
 
         const log = await diagnostics(page);
+        // Asked three times before it gave up. A browser that refuses a
+        // context while it is taking one away from something else usually has
+        // one a moment later, so a region that failed on the first no would
+        // send an application down the DOM path over a hiccup - and the two
+        // waits together still leave the notice inside its two seconds.
+        const retries = log.entries.filter((entry) => entry.kind === "GpuInitRetry");
+        expect(retries.map((entry) => entry.detail)).toEqual([
+            "the canvas gave no WebGL2 context; asking again in 250 ms (2 of 3)",
+            "the canvas gave no WebGL2 context; asking again in 750 ms (3 of 3)",
+        ]);
+        expect(retries.every((entry) => entry.severity === "info")).toBe(true);
         const failed = log.entries.filter((entry) => entry.kind === "GpuInitFailed");
         expect(failed.length).toBe(1);
         expect(failed[0].suggestion).toContain("use the DOM path");

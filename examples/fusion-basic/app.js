@@ -9,6 +9,14 @@ const wasm_url = new URL("./fusion-basic.wasm", import.meta.url);
 const instances = {};
 window.__fusion_instances = instances;
 
+/// Which instance the page itself is showing.
+///
+/// Not always the first one: a restart puts a new instance in its place, and
+/// from then on that is the one whose death the page's status line is about.
+/// An extra instance a test booted alongside it is nobody's news but the
+/// test's.
+let showing = 1;
+
 /// Starts one application instance and publishes the page's handle on it.
 ///
 /// `create` is given the instance's own failure notice and returns the loader
@@ -23,6 +31,10 @@ async function start(create) {
     }
     const handle = await created;
     const { app, hooks, build, instance } = handle;
+    // What this instance has mounted, by container: the scope's own handle and
+    // which fixture it is. The fixture is kept because a replacement instance
+    // has to put back what this one was showing, and "a scope was here" does
+    // not say which one.
     const mounted = new Map();
     let dead = null;
 
@@ -37,19 +49,19 @@ async function start(create) {
         restart_limit: handle.restart_limit,
         mount(container_id) {
             const id = app.fusion_basic_mount(container_id);
-            mounted.set(container_id, id);
+            mounted.set(container_id, { id, fixture: "mount" });
             return id;
         },
         // The two routing fixtures. `mount_owner` is expected to fail when one
         // is already mounted, and the caller is meant to see it.
         mount_owner(container_id) {
             const id = app.fusion_basic_mount_owner(container_id);
-            mounted.set(container_id, id);
+            mounted.set(container_id, { id, fixture: "mount_owner" });
             return id;
         },
         mount_guest(container_id) {
             const id = app.fusion_basic_mount_guest(container_id);
-            mounted.set(container_id, id);
+            mounted.set(container_id, { id, fixture: "mount_guest" });
             return id;
         },
         routes() {
@@ -60,7 +72,7 @@ async function start(create) {
         },
         mount_geometry(container_id) {
             const id = app.fusion_basic_geometry_mount(container_id);
-            mounted.set(container_id, id);
+            mounted.set(container_id, { id, fixture: "mount_geometry" });
             return id;
         },
         geometry() {
@@ -69,20 +81,30 @@ async function start(create) {
         /// A scope whose only control traps inside its own event handler.
         mount_trap(container_id) {
             const id = app.fusion_basic_mount_trap(container_id);
-            mounted.set(container_id, id);
+            mounted.set(container_id, { id, fixture: "mount_trap" });
             return id;
         },
         /// Traps this instance from an export call.
         trap() {
             app.fusion_basic_trap();
         },
+        /// Traps this instance from inside a task the host is running. The
+        /// call itself returns; the failure arrives a turn later.
+        trap_deferred() {
+            app.fusion_basic_trap_deferred();
+        },
+        /// What a JS-side simulation of a trap reaches. It is the same door
+        /// the three real ones come through, which is the point of having it.
+        simulate_trap(message = "simulated trap") {
+            hooks.runtime.enter_fatal(new Error(message));
+        },
         dispose(container_id) {
-            const id = mounted.get(container_id);
-            if (id === undefined) {
+            const scope = mounted.get(container_id);
+            if (scope === undefined) {
                 return false;
             }
             mounted.delete(container_id);
-            return app.fusion_basic_dispose(id);
+            return app.fusion_basic_dispose(scope.id);
         },
         diagnostics() {
             return JSON.parse(app.fusion_basic_diagnostics());
@@ -103,11 +125,15 @@ async function start(create) {
         fatal() {
             return dead;
         },
-        /// A second application instance on this page, mounting the trap
-        /// fixture into `container_id`. Resolves to its instance number.
-        async boot_instance(container_id) {
+        /// A second application instance on this page, mounting `fixture`
+        /// into `container_id`. Resolves to its instance number.
+        ///
+        /// Which fixture matters: an instance that is going to be asked
+        /// whether it still works needs something to work, and one that is
+        /// going to be killed needs a way to die.
+        async boot_instance(container_id, fixture = "mount_trap") {
             const next = await start((on_fatal) => boot({ wasm_url, on_fatal }));
-            next.mount_trap(container_id);
+            next[fixture](container_id);
             return next.instance;
         },
         /// A fresh instance in this slot, mounting the trap fixture again.
@@ -125,25 +151,61 @@ async function start(create) {
     // The mounted controls and their listeners live in the module that just
     // trapped, so they have to go with it. Removing the nodes is a JS-only
     // path: calling the application's dispose would re-enter that module.
+    //
+    // The notice belongs to the instance the page is showing. A second
+    // instance dying is not news the page's own status line should carry: the
+    // test that booted it is what asks about it.
     slot.notify = (error) => {
         dead = String(error);
-        for (const container_id of mounted.keys()) {
+        const was_showing = [...mounted].map(([container_id, scope]) => [
+            container_id,
+            scope.fixture,
+        ]);
+        for (const [container_id] of was_showing) {
             release_container(document.getElementById(container_id));
         }
         mounted.clear();
-        if (instance !== 1) {
+        if (instance !== showing) {
             return;
         }
         delete window.__fusion_basic;
         status.dataset.status = "fatal";
+        const again = handle.restarts < handle.restart_limit;
         show_fatal(
             status,
-            new StartupError("RuntimeFatal", `${error}; reload the page, unsaved in-memory state is lost`)
+            new StartupError(
+                "RuntimeFatal",
+                again
+                    ? `${error}; unsaved in-memory state is lost. Restart this instance, or reload the page.`
+                    : `${error}; unsaved in-memory state is lost. Reload the page: this instance has been restarted as often as it can be.`
+            ),
+            { restart: again ? () => relaunch(handle, was_showing) : null }
         );
     };
 
     instances[instance] = api;
     return api;
+}
+
+/// Starts a replacement for the instance that died and puts back what it had
+/// mounted, so the page a person is looking at comes back rather than an empty
+/// one they have to know how to refill.
+async function relaunch(died, was_showing) {
+    status.dataset.status = "starting";
+    status.textContent = "starting";
+    const next = await start((on_fatal) => died.restart({ on_fatal }));
+    if (next === null) {
+        status.dataset.status = "fatal";
+        show_fatal(status, new StartupError("RuntimeFatal", "no restarts left; reload the page"));
+        return;
+    }
+    for (const [container_id, fixture] of was_showing) {
+        next[fixture](container_id);
+    }
+    showing = next.instance;
+    window.__fusion_basic = next;
+    status.dataset.status = "ready";
+    status.textContent = "ready";
 }
 
 start((on_fatal) => boot({ wasm_url, on_fatal }))

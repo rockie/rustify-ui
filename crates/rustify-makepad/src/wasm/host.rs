@@ -27,6 +27,12 @@ extern "C" {
 
     #[wasm_bindgen(method)]
     fn defer(this: &HostHooks, callback: &JsValue);
+
+    #[wasm_bindgen(method)]
+    fn defer_after(this: &HostHooks, callback: &JsValue, ms: i32);
+
+    #[wasm_bindgen(method, getter)]
+    fn signal(this: &HostHooks) -> web_sys::AbortSignal;
 }
 
 type Deferred = Box<dyn FnOnce(&mut Cx)>;
@@ -118,6 +124,31 @@ fn with_hooks<R>(f: impl FnOnce(&HostHooks) -> R) -> Option<R> {
 pub fn defer(f: impl FnOnce() + 'static) {
     let callback = Closure::once_into_js(f);
     with_hooks(|hooks| hooks.defer(&callback));
+}
+
+/// Runs `f` after `ms` milliseconds, on a fresh browser task.
+///
+/// The host owns the timer for the same reason it owns [`defer`]'s message:
+/// the callback is wasm code, and a runtime that fails while the timer is
+/// pending drops it instead of letting it re-enter a trapped module.
+pub fn defer_after(ms: i32, f: impl FnOnce() + 'static) {
+    let callback = Closure::once_into_js(f);
+    with_hooks(|hooks| hooks.defer_after(&callback, ms));
+}
+
+/// How a listener on something the page owns - `window`, `document`, the
+/// container - must be registered by this instance.
+///
+/// Removing a listener in `Drop` is the normal path and covers every ordinary
+/// unmount. A trap runs no destructor, and then the only thing that can take
+/// these off the page is the host aborting the signal every one of them was
+/// registered with - so every one of them carries it. Callers that also want
+/// capture or passive set those on the object they get back.
+pub fn listener_options() -> Option<web_sys::AddEventListenerOptions> {
+    let signal = with_hooks(|hooks| hooks.signal())?;
+    let options = web_sys::AddEventListenerOptions::new();
+    options.set_signal(&signal);
+    Some(options)
 }
 
 /// Creates a region: its own `Cx`, script VM and widget tree, drawn into

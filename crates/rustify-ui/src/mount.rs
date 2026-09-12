@@ -99,7 +99,7 @@ where
     // the scope that does own the URL must be untouched by the attempt.
     #[cfg(target_arch = "wasm32")]
     let url_owner = if config.url_owner {
-        match crate::router::claim_url() {
+        match crate::router::claim_url(&scope) {
             Some(claim) => Some(claim),
             None => {
                 record(

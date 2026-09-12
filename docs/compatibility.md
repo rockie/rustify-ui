@@ -87,9 +87,33 @@ teardown, so a rebuild can be inspected rather than assumed clean.
 
 - Each region owns a full Makepad `Cx` (script VM, theme, font atlas). Four regions occupied 123,994,112 bytes of wasm linear memory after start-up on the fusion-basic page; wasm memory never shrinks. Sharing font data across regions is open work.
 - Makepad's UI/action signals are process-wide flags; one 16 ms poll per runtime runs while any region exists and broadcasts the signal to all regions. Converting this to push delivery is scheduled with M2.
-- A trap in the shared wasm affects every mount scope on the page (ADR-1, D9). The static failure notice exists in the loader; the runtime fatal path is M7 work.
+- A trap affects every mount scope in the instance it happened in. Since P3 M5 that is the instance rather than the page: see "Instances and what they cost" below.
 - Release wasm is 7,682,693 bytes uncompressed with `opt-level=z`; no size budget is claimed.
 - The Leptos reference tree under `ref/` carries post-release changes in files unrelated to the SDK (see `sources.lock.json`); the crates.io release is what is built and tested.
+
+## Instances and what they cost
+
+One page can run several application instances, and each is a wasm instance
+with its own linear memory. They share the compiled `WebAssembly.Module`, so a
+second instance is one extra JS request for a copy of the generated glue under
+a query string and no extra wasm request - but its memory is its own. A
+fusion-basic instance starts at about 39.6 MB of linear memory
+(`docs/reports/p2/performance.md`), so two of them cost about twice that.
+Fonts are still taken per region, not per instance.
+
+**A dead instance's memory does not come back.** Every restart evaluates a
+fresh copy of the glue under a new URL, and an ES module record lives as long
+as the document: the module that trapped, its binding to its wasm instance, and
+that instance's linear memory are all reachable until the page is unloaded.
+Collecting garbage does not reclaim them, and there is no release entry point
+in the generated glue to call.
+
+That is why restarting is bounded. A slot may be restarted **three times**;
+after that the failure notice offers only a page reload. The worst case a page
+has to be sized for is therefore about four times one instance's starting
+memory - the three that died and the one running - and an application that
+expects to fail more often than that should be reloading rather than
+restarting.
 
 ## Routing
 

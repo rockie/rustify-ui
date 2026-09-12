@@ -68,166 +68,198 @@ const status = document.getElementById("status");
 // One WEBGL_lose_context per canvas, taken while the context still hands
 // extensions out.
 const lose_context_handles = new Map();
+const wasm_url = new URL("./property-workbench.wasm", import.meta.url);
 let handle = null;
+/// The loader handle of the instance that is running, so a failure notice can
+/// offer to start another one in its place.
+let live = null;
 
+/// What one instance's death looks like on the page.
+///
+/// The mounted controls and their listeners live in the module that just
+/// trapped, so they have to go with it. Removing the nodes is a JS-only path:
+/// calling the application's dispose would re-enter that module.
 const runtime_fatal = (error) => {
-    // The mounted controls and their listeners live in the module that just
-    // trapped, so they have to go with it. Removing the nodes is a JS-only
-    // path: calling the application's dispose would re-enter that module.
     if (handle !== null) {
         document.getElementById(container)?.replaceChildren();
     }
     handle = null;
+    const died = live;
+    live = null;
     delete window.__property_workbench;
     status.dataset.status = "fatal";
+    const again = died !== null && died.restarts < died.restart_limit;
     show_fatal(
         status,
-        new StartupError("RuntimeFatal", `${error}; reload the page, unsaved in-memory state is lost`)
+        new StartupError(
+            "RuntimeFatal",
+            again
+                ? `${error}; unsaved in-memory state is lost. Restart this instance, or reload the page.`
+                : `${error}; unsaved in-memory state is lost. Reload the page: this instance has been restarted as often as it can be.`
+        ),
+        { restart: again ? () => relaunch(died) : null }
     );
 };
 
-boot({ wasm_url: new URL("./property-workbench.wasm", import.meta.url), on_fatal: runtime_fatal })
-    .then(({ app, hooks, build, base }) => {
-        app.workbench_set_base(base);
-        app.workbench_identify(1, build);
-        window.__property_workbench = {
-            hooks,
-            mount() {
-                handle = app.workbench_mount(container);
-                return handle;
-            },
-            dispose() {
-                if (handle === null) {
-                    return false;
+async function relaunch(died) {
+    status.dataset.status = "starting";
+    status.textContent = "starting";
+    const next = await died.restart({ on_fatal: runtime_fatal });
+    if (next === null) {
+        status.dataset.status = "fatal";
+        show_fatal(status, new StartupError("RuntimeFatal", "no restarts left; reload the page"));
+        return;
+    }
+    publish(next);
+}
+
+/// Publishes the page's handle on one live instance and mounts it.
+function publish(started) {
+    live = started;
+    const { app, hooks, build, base } = started;
+    app.workbench_set_base(base);
+    app.workbench_identify(1, build);
+    window.__property_workbench = {
+        hooks,
+        mount() {
+            handle = app.workbench_mount(container);
+            return handle;
+        },
+        dispose() {
+            if (handle === null) {
+                return false;
+            }
+            const spent = app.workbench_dispose(handle);
+            handle = null;
+            return spent;
+        },
+        live_regions() {
+            return app.workbench_live_regions();
+        },
+        // A second scope on the same page, for the checks that need one
+        // instance to be shown not to disturb another.
+        mount_into(container_id) {
+            const host = document.createElement("div");
+            host.id = container_id;
+            document.querySelector("main").append(host);
+            return app.workbench_mount(container_id);
+        },
+        // Mounts over a container that is already taken, which is a
+        // refusal the SDK records. Nothing is created either way, so this
+        // can be driven as hard as a test needs.
+        mount_over(container_id) {
+            try {
+                app.workbench_mount(container_id);
+                return "mounted";
+            } catch (error) {
+                return String(error);
+            }
+        },
+        dispose_handle(id, container_id) {
+            const spent = app.workbench_dispose(id);
+            document.getElementById(container_id)?.remove();
+            return spent;
+        },
+        snapshot() {
+            return JSON.parse(app.workbench_snapshot());
+        },
+        start_load(delay_ms, outcome) {
+            return app.workbench_start_load(delay_ms, outcome);
+        },
+        // The validations the form is waiting on, oldest first, and the
+        // two answers a test holds open: one per check, one per save.
+        form_checks() {
+            return JSON.parse(app.workbench_form_checks());
+        },
+        resolve_check(index, ok) {
+            return app.workbench_resolve_check(index, ok);
+        },
+        resolve_save(ok) {
+            return app.workbench_resolve_save(ok);
+        },
+        lookup_object(id) {
+            return app.workbench_lookup_object(id);
+        },
+        // R25's wait: bounded at five seconds, and the only outcome the
+        // deadline can produce is a timeout - found and disposed are
+        // answers the application already has.
+        async await_object(id, timeout_ms = 5000) {
+            const deadline = performance.now() + Math.min(timeout_ms, 5000);
+            for (;;) {
+                const outcome = app.workbench_lookup_object(id);
+                if (outcome !== "not_found") {
+                    return outcome;
                 }
-                const spent = app.workbench_dispose(handle);
-                handle = null;
-                return spent;
-            },
-            live_regions() {
-                return app.workbench_live_regions();
-            },
-            // A second scope on the same page, for the checks that need one
-            // instance to be shown not to disturb another.
-            mount_into(container_id) {
-                const host = document.createElement("div");
-                host.id = container_id;
-                document.querySelector("main").append(host);
-                return app.workbench_mount(container_id);
-            },
-            // Mounts over a container that is already taken, which is a
-            // refusal the SDK records. Nothing is created either way, so this
-            // can be driven as hard as a test needs.
-            mount_over(container_id) {
-                try {
-                    app.workbench_mount(container_id);
-                    return "mounted";
-                } catch (error) {
-                    return String(error);
+                if (performance.now() >= deadline) {
+                    return "timeout";
                 }
-            },
-            dispose_handle(id, container_id) {
-                const spent = app.workbench_dispose(id);
-                document.getElementById(container_id)?.remove();
-                return spent;
-            },
-            snapshot() {
-                return JSON.parse(app.workbench_snapshot());
-            },
-            start_load(delay_ms, outcome) {
-                return app.workbench_start_load(delay_ms, outcome);
-            },
-            // The validations the form is waiting on, oldest first, and the
-            // two answers a test holds open: one per check, one per save.
-            form_checks() {
-                return JSON.parse(app.workbench_form_checks());
-            },
-            resolve_check(index, ok) {
-                return app.workbench_resolve_check(index, ok);
-            },
-            resolve_save(ok) {
-                return app.workbench_resolve_save(ok);
-            },
-            lookup_object(id) {
-                return app.workbench_lookup_object(id);
-            },
-            // R25's wait: bounded at five seconds, and the only outcome the
-            // deadline can produce is a timeout - found and disposed are
-            // answers the application already has.
-            async await_object(id, timeout_ms = 5000) {
-                const deadline = performance.now() + Math.min(timeout_ms, 5000);
-                for (;;) {
-                    const outcome = app.workbench_lookup_object(id);
-                    if (outcome !== "not_found") {
-                        return outcome;
-                    }
-                    if (performance.now() >= deadline) {
-                        return "timeout";
-                    }
-                    await new Promise((resolve) => setTimeout(resolve, 50));
-                }
-            },
-            inject_duplicate_id() {
-                return app.workbench_inject_duplicate_id();
-            },
-            close_on_next_action() {
-                app.workbench_close_on_next_action();
-            },
-            set_third_party(present) {
-                return app.workbench_set_third_party(present);
-            },
-            // Moves the third-party component the way a user would, from
-            // outside the application: whatever it reports is the component's
-            // own doing.
-            nudge_third_party(value) {
-                let moved = 0;
-                for (const element of third_party.live.keys()) {
-                    element.noUiSlider.set(value);
-                    moved += 1;
-                }
-                return moved;
-            },
-            third_party: third_party.stats,
-            stats() {
-                return hooks.runtime.stats();
-            },
-            diagnostics() {
-                return JSON.parse(app.workbench_diagnostics());
-            },
-            set_diagnostics(on) {
-                return app.workbench_set_diagnostics(on);
-            },
-            // Takes the GL context away from a region's canvas the way the
-            // browser does when it reclaims one. The extension is the only
-            // honest way to produce a real loss.
-            lose_context(test_id) {
-                const canvas = document.querySelector(`[data-testid="${test_id}"]`);
-                const gl = canvas?.getContext("webgl2");
-                const ext = gl?.getExtension("WEBGL_lose_context");
-                if (!ext) {
-                    return false;
-                }
-                // Kept: a lost context hands out no extensions, so the only
-                // way to ask for the restore is an object taken beforehand.
-                lose_context_handles.set(test_id, ext);
-                ext.loseContext();
-                return true;
-            },
-            // A real loss is followed by the browser's own restore; the
-            // extension makes that step explicit so a test can drive it.
-            restore_context(test_id) {
-                const ext = lose_context_handles.get(test_id);
-                if (!ext) {
-                    return false;
-                }
-                ext.restoreContext();
-                return true;
-            },
-        };
-        window.__property_workbench.mount();
-        status.dataset.status = "ready";
-        status.textContent = "ready";
-    })
+                await new Promise((resolve) => setTimeout(resolve, 50));
+            }
+        },
+        inject_duplicate_id() {
+            return app.workbench_inject_duplicate_id();
+        },
+        close_on_next_action() {
+            app.workbench_close_on_next_action();
+        },
+        set_third_party(present) {
+            return app.workbench_set_third_party(present);
+        },
+        // Moves the third-party component the way a user would, from
+        // outside the application: whatever it reports is the component's
+        // own doing.
+        nudge_third_party(value) {
+            let moved = 0;
+            for (const element of third_party.live.keys()) {
+                element.noUiSlider.set(value);
+                moved += 1;
+            }
+            return moved;
+        },
+        third_party: third_party.stats,
+        stats() {
+            return hooks.runtime.stats();
+        },
+        diagnostics() {
+            return JSON.parse(app.workbench_diagnostics());
+        },
+        set_diagnostics(on) {
+            return app.workbench_set_diagnostics(on);
+        },
+        // Takes the GL context away from a region's canvas the way the
+        // browser does when it reclaims one. The extension is the only
+        // honest way to produce a real loss.
+        lose_context(test_id) {
+            const canvas = document.querySelector(`[data-testid="${test_id}"]`);
+            const gl = canvas?.getContext("webgl2");
+            const ext = gl?.getExtension("WEBGL_lose_context");
+            if (!ext) {
+                return false;
+            }
+            // Kept: a lost context hands out no extensions, so the only
+            // way to ask for the restore is an object taken beforehand.
+            lose_context_handles.set(test_id, ext);
+            ext.loseContext();
+            return true;
+        },
+        // A real loss is followed by the browser's own restore; the
+        // extension makes that step explicit so a test can drive it.
+        restore_context(test_id) {
+            const ext = lose_context_handles.get(test_id);
+            if (!ext) {
+                return false;
+            }
+            ext.restoreContext();
+            return true;
+        },
+    };
+    window.__property_workbench.mount();
+    status.dataset.status = "ready";
+    status.textContent = "ready";
+}
+
+boot({ wasm_url, on_fatal: runtime_fatal })
+    .then(publish)
     .catch((error) => {
         status.dataset.status = "failed";
         show_fatal(status, error);

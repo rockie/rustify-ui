@@ -12,4 +12,9 @@ description = "Private Makepad integration: region Cx ownership, bridge and rele
 makepad-widgets.workspace = true
 wasm-bindgen.workspace = true
 js-sys.workspace = true
-web-sys = { workspace = true, features = ["HtmlCanvasElement", "Element"] }
+web-sys = { workspace = true, features = [
+    "AbortSignal",
+    "AddEventListenerOptions",
+    "Element",
+    "HtmlCanvasElement",
+] }

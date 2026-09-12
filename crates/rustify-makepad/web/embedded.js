@@ -214,16 +214,30 @@ export class EmbeddedRegion extends WasmWebGL {
     }
 }
 
+/// The attribute one page-level owner of the address bar writes on the root
+/// element, as `<instance>:<scope>`. It is here as well as in the SDK because
+/// a trap runs no Rust destructor: after one, the only thing that can take the
+/// attribute off is the host.
+const URL_OWNER_ATTRIBUTE = "data-rustify-url-owner";
+
 // The object handed to `rustify_makepad_boot`. Method names are the contract
 // with the Rust `HostHooks` binding. `on_fatal` is called once, with the error
 // that killed the runtime, after every region's browser resources are released.
-export function create_host_hooks(wasm, msg_class, on_fatal) {
+//
+// `instance` is this runtime's number on the page. It is what tells this
+// instance's page-level marks from another instance's, which matters exactly
+// when one of them dies and the other must not notice.
+export function create_host_hooks(wasm, msg_class, on_fatal, instance = 1) {
     const regions = new Map();
     // Browser tasks the SDK asked for, by task id. The host owns them because
     // their callbacks are wasm code: a runtime that has failed drops them
     // instead of letting them re-enter a module nothing can trust.
     const tasks = new Set();
     const deferred = new Map();
+    // Timers for the tasks that asked to wait. Held so a runtime that has
+    // failed can cancel them: a message already posted cannot be unposted, but
+    // a timer that has not fired can be stopped before it re-enters the module.
+    const delays = new Map();
     let next_task = 1;
     let signal_pump_scheduled = false;
 
@@ -233,20 +247,21 @@ export function create_host_hooks(wasm, msg_class, on_fatal) {
     // against 0-4 ms for 150 port messages. Work that yields once a slice
     // would spend its whole budget on the clamp.
     const turns = new MessageChannel();
-    turns.port1.onmessage = (event) => {
-        const id = event.data;
+    const run_task = (id) => {
         const callback = deferred.get(id);
         if (callback === undefined) {
             return;
         }
         deferred.delete(id);
         tasks.delete(id);
+        delays.delete(id);
         try {
             callback();
         } catch (error) {
             runtime.enter_fatal(error);
         }
     };
+    turns.port1.onmessage = (event) => run_task(event.data);
 
     // Makepad's UI/action signals are process-wide flags, so one read per
     // runtime serves every live region. Rust raises the flags and calls
@@ -286,8 +301,17 @@ export function create_host_hooks(wasm, msg_class, on_fatal) {
         });
     };
 
+    // Every page-level listener this instance takes out is registered with
+    // this signal, on both sides of the boundary: the SDK asks for it through
+    // `listener_options`, and the loader uses it for its own. Aborting it is
+    // the only removal a trap can perform, because `Drop` does not run after
+    // one.
+    const controller = new AbortController();
+
     const runtime = {
         fatal: null,
+        instance,
+        signal: controller.signal,
         // Bounded: a runtime that keeps failing must not grow an unbounded log.
         errors: [],
         pumps: 0,
@@ -324,13 +348,32 @@ export function create_host_hooks(wasm, msg_class, on_fatal) {
                 frames: runtime.frames,
             };
         },
+        // The order here is the contract, not a preference.
+        //
+        // The listeners go first: until they are gone, a `popstate` or a
+        // `scroll` arriving while the rest of this runs would re-enter a
+        // module that cannot be trusted. The page-level marks go next, so the
+        // page is free for a replacement before anything slower happens. Only
+        // then are the tasks dropped and the regions torn down, and `on_fatal`
+        // is last because it is the page's turn to show something.
         enter_fatal(error) {
             if (runtime.fatal) {
                 return;
             }
             runtime.fatal = error;
+            controller.abort();
+            const root = document.documentElement;
+            const owner = root.getAttribute(URL_OWNER_ATTRIBUTE);
+            if (owner !== null && owner.startsWith(`${instance}:`)) {
+                root.removeAttribute(URL_OWNER_ATTRIBUTE);
+            }
             // Messages already posted still arrive; dropping the callbacks is
-            // what keeps them from re-entering the module.
+            // what keeps them from re-entering the module. A timer has not
+            // been posted yet, so it can be stopped outright.
+            for (const timer of delays.values()) {
+                clearTimeout(timer);
+            }
+            delays.clear();
             deferred.clear();
             tasks.clear();
             const live = [...regions.values()];
@@ -349,6 +392,9 @@ export function create_host_hooks(wasm, msg_class, on_fatal) {
     return {
         regions,
         runtime,
+        /// Aborted when this instance fails, and what every page-level
+        /// listener it takes out is registered with.
+        signal: controller.signal,
         create_region(region, canvas) {
             if (runtime.fatal) {
                 return false;
@@ -399,6 +445,20 @@ export function create_host_hooks(wasm, msg_class, on_fatal) {
             deferred.set(id, callback);
             tasks.add(id);
             turns.port2.postMessage(id);
+        },
+        // The same, after a wait. A region that has to ask the browser for
+        // something again in a quarter of a second owns that wait through the
+        // runtime for the reason `defer` does: the callback is wasm code, and
+        // a module that has trapped must not be re-entered.
+        defer_after(callback, ms) {
+            if (runtime.fatal) {
+                return;
+            }
+            const id = next_task;
+            next_task += 1;
+            deferred.set(id, callback);
+            tasks.add(id);
+            delays.set(id, setTimeout(() => run_task(id), ms));
         },
     };
 }

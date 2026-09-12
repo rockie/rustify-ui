@@ -507,6 +507,17 @@ mod app {
         unreachable!("deliberate trap");
     }
 
+    /// Traps this instance from inside a task the host is running.
+    ///
+    /// The second of the three real ways in, and the one the runtime is on the
+    /// stack for: the host posts the turn, calls back into wasm, and the trap
+    /// happens under its own `try`. The export that asks for it returns
+    /// normally, so the caller is long gone by the time anything fails.
+    #[wasm_bindgen]
+    pub fn fusion_basic_trap_deferred() {
+        rustify_makepad::defer(|| unreachable!("deliberate trap in a deferred task"));
+    }
+
     /// A scope whose only control traps inside its own event handler.
     ///
     /// The third way into a trap: not a host entry point and not an export

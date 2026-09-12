@@ -59,6 +59,11 @@ pub enum ErrorKind {
     BuildContractMismatch,
     /// The canvas could not give the region a WebGL2 context to start with.
     GpuInitFailed,
+    /// The canvas refused a context and the region is about to ask again.
+    /// Informational: a browser that is busy taking a context away from
+    /// something else usually has one a moment later, and the region says so
+    /// rather than failing on the first no.
+    GpuInitRetry,
     /// A running region's context went away. Unlike the one above, this one
     /// is recoverable: the region is rebuilt and the application's state is
     /// projected into it again.
@@ -117,13 +122,14 @@ impl Severity {
 }
 
 impl ErrorKind {
-    pub const ALL: [ErrorKind; 16] = [
+    pub const ALL: [ErrorKind; 17] = [
         Self::InvalidContainer,
         Self::OccupiedContainer,
         Self::UnsupportedCapability,
         Self::AssetLoadFailed,
         Self::BuildContractMismatch,
         Self::GpuInitFailed,
+        Self::GpuInitRetry,
         Self::GpuContextLost,
         Self::Backpressure,
         Self::Disposed,
@@ -145,6 +151,7 @@ impl ErrorKind {
             Self::AssetLoadFailed => "AssetLoadFailed",
             Self::BuildContractMismatch => "BuildContractMismatch",
             Self::GpuInitFailed => "GpuInitFailed",
+            Self::GpuInitRetry => "GpuInitRetry",
             Self::GpuContextLost => "GpuContextLost",
             Self::Backpressure => "Backpressure",
             Self::Disposed => "Disposed",
@@ -163,7 +170,10 @@ impl ErrorKind {
     /// something the runtime could not do.
     pub fn severity(self) -> Severity {
         match self {
-            Self::NavigationBlocked | Self::NavigationBusy | Self::JobCancelled => Severity::Info,
+            Self::GpuInitRetry
+            | Self::NavigationBlocked
+            | Self::NavigationBusy
+            | Self::JobCancelled => Severity::Info,
             _ => Severity::Error,
         }
     }
@@ -177,6 +187,9 @@ impl ErrorKind {
             Self::AssetLoadFailed => "check the asset is deployed beside the build, then retry",
             Self::BuildContractMismatch => "deploy the JS, the wasm and the bridge from one build",
             Self::GpuInitFailed => "use the DOM path; this browser or machine gave no WebGL2",
+            Self::GpuInitRetry => {
+                "nothing yet; the region is asking again and will say if it gives up"
+            }
             Self::GpuContextLost => "nothing: the region is rebuilt with the current state",
             Self::Backpressure => "run the action again; it did not happen",
             Self::Disposed => "drop the handle; what it named is gone",
@@ -546,6 +559,15 @@ pub fn identify_runtime(runtime: u32, build: &str) {
     watch_assets();
 }
 
+/// This runtime's number on the page, as the host gave it.
+///
+/// Zero until the page has identified the runtime. What reads it is the mark
+/// one instance leaves on page-level state so that another instance - and the
+/// host clearing up after a trap - can tell whose it is.
+pub fn runtime_id() -> u32 {
+    with_log(|log| log.runtime())
+}
+
 /// Reports an asset the region asked for and did not get.
 ///
 /// Without this the failure is a log line inside the fork and nothing else:
@@ -675,7 +697,12 @@ mod tests {
             .collect();
         assert_eq!(
             informational,
-            ["NavigationBlocked", "NavigationBusy", "JobCancelled"]
+            [
+                "GpuInitRetry",
+                "NavigationBlocked",
+                "NavigationBusy",
+                "JobCancelled"
+            ]
         );
 
         let mut log = Diagnostics::new(1, "test");
@@ -690,7 +717,7 @@ mod tests {
 
     #[test]
     fn the_registered_kinds_are_all_there() {
-        assert_eq!(ErrorKind::ALL.len(), 16);
+        assert_eq!(ErrorKind::ALL.len(), 17);
         let names: Vec<&str> = ErrorKind::ALL.iter().map(|kind| kind.name()).collect();
         assert_eq!(
             names,
@@ -701,6 +728,7 @@ mod tests {
                 "AssetLoadFailed",
                 "BuildContractMismatch",
                 "GpuInitFailed",
+                "GpuInitRetry",
                 "GpuContextLost",
                 "Backpressure",
                 "Disposed",
