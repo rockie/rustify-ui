@@ -40,13 +40,13 @@
 
 ### 恢复快照
 
-- 最近更新：2026-09-13（M7 完成并全部跑绿）
+- 最近更新：2026-09-13（M8 交付物全部完成并跑绿；A-4 待用户处置，故仍记 7/8）
 - 当前进度：7/8 个里程碑完成
-- 当前状态：M1–M7 均已完成并全部跑绿（见完成记录）。M7 只交付测试与报告，**不动任何 Rust 与 JavaScript 源码**，四个示例产物与 M6 逐字节相同。`p3-faults.spec.ts` 四类故障各 20 次（字体 404 经 `serve --fault missing:`、答复反序、区域动作内关闭自己的作用域、`lose_context`/`restore_context`），每次对照一份跑之前就写好的预期清单；`p3-endurance.spec.ts` 以 B4 跑 2 min 回归与 120 min 验收；`p3-diagnostics.spec.ts` 做 R39 AC2 的开/关对照。**实测**：2 h **72,000 发 72,000 收**、0 丢 0 重 0 错，尾部 p95 1.3 ms 对头部 1.5 ms，两实例分别 +5.96 MB / +5.70 MB 且**第 43 分钟后 77 分钟纹丝不动**；诊断开销 **−0.4%**（45.10 ms 对 45.30 ms，门 ≤ 5%）；B1 时延 p95 **45.5 ms**，连涨三期后回落，M6「是机器不是构建」的判断成立。**正文已随实现修订**：§12 增两条教训（2 h 必须放在会话最后、重复对照实验要各自命名且 `set_diagnostics` 返回旧值）
-- 最近完成：**M7 · 故障矩阵、长时与诊断开销**（2026-09-13）
-- 下一步：**M8 · 门、报告与交接**——`tests/browser/budgets.ts` 的 B0/B2/B3 段由「写下的数值」变为断言（文件末尾「不覆盖什么」里那句「Nothing above is asserted yet」要一并改掉）；新增 `p3-budget-minimal.spec.ts`（B0：30 次冷启动 p95 ≤ 2.5 s、30 次热启动 ≤ 1 s、首载压缩 ≤ 3 MiB）与 `p3-budget-data.spec.ts`（B2 滚动帧门 headless、B3 平移/框选帧门**只在有头 Chrome**、排序/筛选 p95 ≤ 500 ms、取消 ≤ 100 ms），各自一个 project，**每次门运行前先跑 5 s 负向探针（驱动继续、内容冻结）且必须失败**；`xtask/src/verify.rs` 增 `P3` suite（照 `P1`/`P2` 的写法，examples/projects/reports/manual 四类各自列全，并加一条「三个 suite 要的东西互不相同」的单测）；`docs/reports/p3/` 七文件（六类报告 + 需求矩阵，照 `docs/reports/p2/README.md` 的形状）；`docs/data.md`/`quickstart.md`/`architecture.md`/`compatibility.md`/`components.md` 收口；四示例双干净构建；A-4 处置（VoiceOver 人工记录或用户豁免，记录写 `docs/validation/p3/manual/voiceover-data.md`）。退出条件见 §10 的 M8 行与 §9.1 的 V8。纪律：`budget-minimal`、`budget-data`、`budget` 一次只跑一个，不并跑 cargo（D13）；排查阶段只跑受影响的 spec 文件，完整回归留到收尾一次（M7 教训）
-- 当前阻塞：无。A-4（VoiceOver 人工记录或用户豁免）仍开放，**M8 是最后确认点**
-- 代码基线：`12a9d5e`（M7 的提交；M6 为 `bb76c29`，M5 为 `aa0b1e9`，M4 为 `956b89d`，M3 为 `d0a193e`，M2 为 `122a49f`，M1 为 `a6968ca`）
+- 当前状态：**M1–M7 已完成；M8 的交付物已全部完成并跑绿，但退出条件差 A-4 一项，按「记完成的门槛」不记完成。**M8 已交付：`budgets.ts` 的 B0/B2/B3 段成为断言（文件头与「不覆盖什么」同步重写，写明哪个门测哪个负载、在哪跑）；`p3-budget-{minimal,data,scene}.spec.ts` 与**三个** project（**由计划的两个改为三个**，理由见 §10 的 M8 行与 §9.5：一个 project 只有一种 `headless`，装不下 §7 要求的两种环境）；每个帧门前置 5 s 负向探针且必须失败；`xtask/src/verify.rs` 的 `P3` suite（9 个 project、4 个示例、7 份报告、1 份人工记录）；`docs/reports/p3/` 七文件 + `README.md`；`docs/validation/p3/m8.md`；`docs/quickstart.md`（删掉过期的「没有 router/workspace/大数据视图」并补实例模型一节）与 `docs/data.md`（补「它要满足什么门」）收口。**实测**：B0 冷 149 ms / 热 140 ms / 首载 2,436,583 B（门 2.5 s / 1 s / 3 MiB）；B2 帧门五轮 p95 16.70–16.80 ms、>50 ms 0.00%、驱动=重算=呈现 3601；排序 116 ms、筛选 32 ms、取消 14.3 ms；B3 有头五轮 p95 **9.30 ms**（该机 120 Hz，物理下限 8.33 ms）；两个负向探针都 0 次呈现而必败（B3 那次同时 601 次 pump）；`verify --suite p3` **22 个自动化步骤 0 失败**、四示例双构建一致。**跑用例查出一个真 bug**：`verify.rs` 的步骤名用「固定列表 + `_ =>` 兜底」生成，第四个示例被报成 `property-workbench`，而 `browser` 那半会把 `data-workbench`/`budget-minimal`/`budget-data` 全报成 `deployment`——构建与测试都对，只有报告在撒谎，已改为从实际名字生成。**正文已随实现修订三处**：§10 的 M8 行（三个 project 及理由）、§9.5（新增 `budget-scene` 行并标明有头/不进 CI）、以及本节
+- 最近完成：**M7 · 故障矩阵、长时与诊断开销**（2026-09-13）；M8 的交付物同日完成但未记完成（A-4）
+- 下一步：**只剩 A-4 处置**——`docs/validation/p3/manual/voiceover-data.md` 现为 `STATUS: NOT PERFORMED` 的空表单（七步：B2 的第 1/50,000/100,000 行、B3 的三个对象，含要看什么）。用户跑一遍并填表，或按 P2 先例豁免。**豁免记为「未测·用户豁免」，不记通过**，并同步 `docs/reports/p3/accessibility.md` 与 `requirements.md` 的 A-4 行；填表或豁免之后，追加 M8 完成记录行、进度改 8/8，P3 方可称完成。无论哪种，代码与报告都不需再改
+- 当前阻塞：**A-4（VoiceOver 人工走查或用户豁免）**——这是 P3 记完成的唯一未决项，且只能由用户决定。`cargo xtask verify --suite p3` 自动化 0 失败，但结尾自行判定 `P3 cannot be called complete while a manual record is missing.`
+- 代码基线：`7d4c71d`（M8 的实现提交；M7 为 `12a9d5e`，M6 为 `bb76c29`，M5 为 `aa0b1e9`，M4 为 `956b89d`，M3 为 `d0a193e`，M2 为 `122a49f`，M1 为 `a6968ca`）
 
 ### 完成记录
 
