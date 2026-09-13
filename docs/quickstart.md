@@ -147,13 +147,33 @@ says which categories exist and what each of them supports.
 
 `rustify_ui::mount(container, config, view)` returns an `AppHandle`; disposing it runs the scope's cleanups (destroying its regions) and unmounts the DOM. The page loads the wasm through `web/loader.js` (`boot(...)`), which validates the bridge fingerprint and hands the host hooks to the runtime before the application's own exported entry points are called. `examples/fusion-basic/app.js` is the reference page script.
 
+## More than one application on a page
+
+`boot(...)` starts **one application instance**: one wasm instance with its own
+linear memory, its own host hooks and its own diagnostics. Calling it again
+starts a second, sharing the compiled module but nothing else, and the handle
+it returns carries the instance number. That boundary is what a trap respects:
+if one instance traps, the loader aborts its page-level listeners, releases its
+URL ownership and shows a notice with a restart entry, and the other instance
+on the page keeps working. Restarts are capped at three per slot, because a
+dead instance's linear memory is not released until the page is unloaded.
+Within an instance, `mount(...)` can be called for as many scopes as the page
+needs, and those still live and die together.
+
 ## Limits of the preview
 
 Every component category has a DOM component (`rustify_components`), and most
 are drawn by a GPU region as well; the ones that are not say where they are
-drawn instead. There is no router, no workspace, no large-data view and no
-cross-region drag - those are P2 M4 to M6.
+drawn instead. What is *not* here is listed per release in
+`docs/reports/p3/known-limitations.md` - the short version is: no threads or
+`SharedArrayBuffer` (a plain deployment is not cross-origin isolated, so large
+jobs are sliced on the one thread there is), no server-side paging or formula
+engine, no GPU-drawn table, and no hot module replacement.
+
 See `docs/components.md` for what each category supports today, `docs/data.md`
-for a table larger than the screen, `docs/compatibility.md` for the capability state
-and the one third-party component that is verified, `docs/reports/p1/` for what
-P1 measured and what it could not, and `docs/plan/` for progress.
+for a table larger than the screen and the sliced jobs over it,
+`docs/navigation.md`, `docs/workspace.md`, `docs/forms.md` and `docs/i18n.md`
+for the application layer, `docs/architecture.md` for the instance and region
+model, `docs/compatibility.md` for the capability state and what the resource
+ledgers do and do not count, `docs/reports/p3/` for what this release measured
+and what it could not, and `docs/plan/` for progress.

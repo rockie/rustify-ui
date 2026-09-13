@@ -204,6 +204,28 @@ has no correct place for a row nothing has compared yet. The view then says it
 was built for an older version, which is what "stale" on the screen means:
 still usable, no longer the answer.
 
+## What this has to be fast enough for
+
+The numbers are not advice; they fail a build. `tests/browser/budgets.ts` holds
+them and `--project=budget-data` asserts them against the hundred thousand row
+sample:
+
+| What | Budget |
+| --- | --- |
+| Scrolling: the interval between two frames whose content actually differs | p95 ≤ 20 ms, and at most 1% over 50 ms, in each of five independent 60-second runs |
+| A single-column sort, and a text filter, over the whole sample | p95 ≤ 500 ms |
+| A cancel, from the ask to the frame that shows it | p95 ≤ 100 ms |
+
+"The interval between two frames whose content actually differs" is the part
+worth reading twice. Animation-frame callbacks keep arriving at 60 Hz in front
+of a picture that has stopped, so a budget measured on them passes a frozen
+screen. What is measured here is the table's own content version — it moves
+every time the table works out its visible range — and a frame in which it did
+not move produces no sample. Each gate run begins with a five-second negative
+probe in which the drive continues and the content is frozen; that probe has to
+**miss** the budget, or the gate is measuring the wrong thing and the whole
+project fails before the real runs start.
+
 ## What is not here
 
 No server paging, no data source protocol, no formula engine, no column

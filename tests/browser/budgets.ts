@@ -3,12 +3,13 @@
 /// Until 2026-09-11 these figures were targets to compare against: the PRD's
 /// numbers were not an approved budget (A-3), so `docs/reports/p2/performance.md`
 /// printed measurements beside them and nothing failed. A-3 is now closed - the
-/// user approved R29 and R30 as gates - so the numbers below are assertions,
-/// and `p2-budget.spec.ts` is where they are asserted.
+/// user approved R29 and R30 as gates - so every number below is an assertion.
 ///
-/// Every figure here is B1's. R29 also carries B0 figures (2.5 s, 3 MiB, 1 s)
-/// and they are *not* the ones to gate this build with: B1 is the load P2
-/// delivers, and a B0 budget applied to a B1 build would be a different claim.
+/// Each block is one load's budget, and applying one load's figures to another
+/// build is a different claim: B1 spends 2.77 compressed megabytes on its
+/// module alone, so a build that passes B1's 8 MiB could miss B0's 3 MiB by a
+/// factor of three and the B1 gate would never say so. "Which load each figure
+/// is about" at the foot of this file says which project asserts which block.
 export const R29 = {
     /// AC1: cold start, first interactive, p95 over thirty loads.
     cold_p95_ms: 5_000,
@@ -101,11 +102,23 @@ export const R32 = {
 ///   measures what the machine costs rather than what a link costs. The
 ///   throttled figures stay in `m8-network.spec.ts` as observations; they are
 ///   served uncompressed there and so are not a reading of AC2.
-/// - **Nothing above is asserted yet.** The figures for B0, B2 and B3 are
-///   written down here as of M1 so that the probes have something to be
-///   measured against; the projects that fail a build for missing them are
-///   built in M8. Until then a report prints the measurement beside the
-///   figure and says "not gated".
+/// - **Which load each figure is about.** `R29`/`R30` are B1's and are asserted
+///   by `p2-budget.spec.ts` in the `budget` project. `R29_B0` is B0's and is
+///   asserted by `p3-budget-minimal.spec.ts` in `budget-minimal`. `R30_LARGE`
+///   is B2's and B3's: B2's half is asserted by `p3-budget-data.spec.ts` in
+///   `budget-data` (headless), B3's by `p3-budget-scene.spec.ts` in
+///   `budget-scene` (headed Chrome, run by hand, not in CI and not in
+///   `verify --suite p3`). `R32` is asserted by `p3-memory.spec.ts`, which runs
+///   inside the two application projects because the peaks it reads belong to
+///   a page that has been used rather than to one that has just started.
+///   A figure quoted without the load it was measured on says nothing: B1
+///   spends 2.77 compressed megabytes on its module alone, which is most of
+///   B0's entire budget.
+/// - **A gate that cannot fail is not a gate.** Both frame gates run a five
+///   second negative probe first, in which the drive continues and the content
+///   is frozen. The probe has to *miss* the budget; if it passes, the gate is
+///   measuring animation frames rather than presentations and the whole
+///   project fails before the real runs start.
 
 /// The p-th percentile of `samples`, nearest-rank, which is the definition
 /// that keeps a p95 of thirty samples an actual sample rather than an

@@ -183,6 +183,9 @@ pub fn DataTable(
     });
 
     let name = test_id_of(&test_id);
+    // The element that scrolls, named so a frame budget can drive it: it is
+    // the one thing in here a caller cannot reach through a role or a label.
+    let scroller_name = format!("{name}-scroller");
     // Where the keyboard lands, once the window has been worked out. Focusing
     // the cell in the key handler would be focusing an element the window has
     // not made yet, and a walk to the last row would leave the focus behind.
@@ -394,7 +397,13 @@ pub fn DataTable(
                     </For>
                 </div>
             </div>
-            <div node_ref=scroller class=SCROLLER role="presentation" on:scroll=on_scroll>
+            <div
+                node_ref=scroller
+                class=SCROLLER
+                data-testid=scroller_name
+                role="presentation"
+                on:scroll=on_scroll
+            >
                 <div
                     role="presentation"
                     style:position="relative"

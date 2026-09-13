@@ -1,4 +1,4 @@
-//! `cargo xtask verify --suite p1|p2`: everything the milestone can check by
+//! `cargo xtask verify --suite p1|p2|p3`: everything the milestone can check by
 //! itself, in one place, plus an honest account of what it cannot.
 //!
 //! The point is not to replace the individual commands - a developer runs
@@ -12,21 +12,26 @@ use std::path::Path;
 use std::process::Command;
 
 pub struct Step {
-    pub name: &'static str,
+    /// What this step is called in the report. Built from the example or
+    /// project it is about rather than chosen from a fixed list: a label list
+    /// with a catch-all arm reports the last name in it for everything it does
+    /// not know, which is how `data-workbench` was reported twice as
+    /// `property-workbench`.
+    pub name: String,
     pub outcome: Result<String, String>,
 }
 
 impl Step {
-    fn ok(name: &'static str, detail: impl Into<String>) -> Self {
+    fn ok(name: impl Into<String>, detail: impl Into<String>) -> Self {
         Self {
-            name,
+            name: name.into(),
             outcome: Ok(detail.into()),
         }
     }
 
-    fn failed(name: &'static str, detail: impl Into<String>) -> Self {
+    fn failed(name: impl Into<String>, detail: impl Into<String>) -> Self {
         Self {
-            name,
+            name: name.into(),
             outcome: Err(detail.into()),
         }
     }
@@ -35,10 +40,11 @@ impl Step {
 /// One release's worth of checks: what to build, what to run in a browser,
 /// which reports it owes and which records only a person can write.
 ///
-/// Two suites rather than one command with a flag, because "what P2 delivers"
-/// is not "what P1 delivered plus more": the examples, the browser projects
-/// and the manual records all differ, and a suite that quietly ran P1's list
-/// under P2's name would report a pass nobody had earned.
+/// One suite per release rather than one command with a flag, because "what
+/// P2 delivers" is not "what P1 delivered plus more": the examples, the
+/// browser projects and the manual records all differ, and a suite that
+/// quietly ran P1's list under P3's name would report a pass nobody had
+/// earned.
 pub struct Suite {
     pub name: &'static str,
     pub examples: &'static [&'static str],
@@ -69,6 +75,56 @@ pub const P2: Suite = Suite {
     reports: &P2_REPORTS,
     manual: &P2_MANUAL_RECORDS,
 };
+
+pub const P3: Suite = Suite {
+    name: "P3",
+    examples: &[
+        "fusion-basic",
+        "property-workbench",
+        "component-catalog",
+        "data-workbench",
+    ],
+    // `budget-scene` is deliberately absent. R30 AC2 over B3 is gated on
+    // headed Chrome only (A-3): under a software rasteriser the same scene
+    // measures p95 50.10 ms against 17.60 ms headed, so a suite that ran it
+    // wherever it happened to be invoked would report the rasteriser's number
+    // under the budget's name. It is run by hand, and the report says so.
+    projects: &[
+        "fusion-basic",
+        "property-workbench",
+        "component-catalog",
+        "data-workbench",
+        "workbench-deep",
+        "budget",
+        "budget-minimal",
+        "budget-data",
+        "deployment",
+    ],
+    reports: &P3_REPORTS,
+    manual: &P3_MANUAL_RECORDS,
+};
+
+/// P3's, which are neither P1's nor P2's: the journeys are over a hundred
+/// thousand rows and ten thousand objects, and reaching a row nothing has
+/// drawn yet is the part a measurement cannot sign off on.
+pub const P3_MANUAL_RECORDS: [(&str, &str); 1] = [(
+    "docs/validation/p3/manual/voiceover-data.md",
+    "M8: VoiceOver + Chrome over B2's three rows and B3's three objects (A-4). The tree \
+     beneath them is checked by `p3-table` and `p3-scene` - the grid's row indices, one tab \
+     stop per grid, the query entries, and that each target can be reached and changed from \
+     the keyboard. What needs a person is whether the speech makes a hundred thousand rows \
+     navigable rather than merely announced",
+)];
+
+pub const P3_REPORTS: [&str; 7] = [
+    "docs/reports/p3/functional.md",
+    "docs/reports/p3/performance.md",
+    "docs/reports/p3/compatibility.md",
+    "docs/reports/p3/accessibility.md",
+    "docs/reports/p3/fault-recovery.md",
+    "docs/reports/p3/known-limitations.md",
+    "docs/reports/p3/requirements.md",
+];
 
 /// The manual records P1 cannot produce for itself. Each one is a file a
 /// person writes after doing the thing; the suite reports which are missing
@@ -157,9 +213,11 @@ pub fn run(args: &[String]) -> Result<(), String> {
     {
         Some("p1") => P1,
         Some("p2") => P2,
+        Some("p3") => P3,
         _ => {
             return Err(
-                "usage: cargo xtask verify --suite p1|p2 [--no-browser] [--no-build]".to_string(),
+                "usage: cargo xtask verify --suite p1|p2|p3 [--no-browser] [--no-build]"
+                    .to_string(),
             )
         }
     };
@@ -228,11 +286,7 @@ pub fn run(args: &[String]) -> Result<(), String> {
 /// out. V10 asks that a product be traceable to its sources and tools, which
 /// means two runs of the same command have to agree about what they produced.
 fn double_build(root: &Path, example: &str) -> Step {
-    let name: &'static str = match example {
-        "fusion-basic" => "double build: fusion-basic",
-        "component-catalog" => "double build: component-catalog",
-        _ => "double build: property-workbench",
-    };
+    let name = format!("double build: {example}");
     let request = BuildRequest {
         base: "/".to_string(),
         example: example.to_string(),
@@ -334,14 +388,7 @@ fn reports(root: &Path, suite: &Suite) -> Step {
 }
 
 fn browser(root: &Path, project: &'static str) -> Step {
-    let name: &'static str = match project {
-        "fusion-basic" => "browser: fusion-basic",
-        "property-workbench" => "browser: property-workbench",
-        "component-catalog" => "browser: component-catalog",
-        "workbench-deep" => "browser: workbench-deep",
-        "budget" => "browser: budget",
-        _ => "browser: deployment",
-    };
+    let name = format!("browser: {project}");
     let mut step = command(
         name,
         root,
@@ -354,7 +401,7 @@ fn browser(root: &Path, project: &'static str) -> Step {
     step
 }
 
-fn command(name: &'static str, dir: &Path, program: &str, args: &[&str]) -> Step {
+fn command(name: impl Into<String>, dir: &Path, program: &str, args: &[&str]) -> Step {
     match Command::new(program).args(args).current_dir(dir).output() {
         Ok(output) if output.status.success() => Step::ok(name, "passed"),
         Ok(output) => {
@@ -419,18 +466,31 @@ fn report(steps: &[Step], root: &Path, suite: &Suite) -> Result<(), String> {
 
 #[cfg(test)]
 mod tests {
-    use super::{record_state, RecordState, NOT_PERFORMED, P1, P2};
+    use super::{record_state, RecordState, NOT_PERFORMED, P1, P2, P3};
 
     #[test]
-    fn the_two_suites_ask_for_different_things() {
-        // Not P1's list under P2's name: the examples, the browser projects,
+    fn the_three_suites_ask_for_different_things() {
+        // Not P1's list under P3's name: the examples, the browser projects,
         // the reports and the records all differ, and a suite that quietly ran
         // the wrong list would report a pass nobody had earned.
-        assert_ne!(P1.examples.len(), P2.examples.len());
-        assert_ne!(P1.projects.len(), P2.projects.len());
-        assert_ne!(P1.reports[0], P2.reports[0]);
-        assert_ne!(P1.manual[0].0, P2.manual[0].0);
-        assert_eq!(P2.name, "P2");
+        let suites = [&P1, &P2, &P3];
+        for (index, left) in suites.iter().enumerate() {
+            for right in suites.iter().skip(index + 1) {
+                assert_ne!(left.name, right.name);
+                assert_ne!(left.examples.len(), right.examples.len());
+                assert_ne!(left.projects.len(), right.projects.len());
+                assert_ne!(left.reports[0], right.reports[0]);
+                assert_ne!(left.manual[0].0, right.manual[0].0);
+            }
+        }
+        assert_eq!(P3.name, "P3");
+        // The headed project is not in any suite: it is the one check whose
+        // result depends on there being a GPU to measure, so it is run by hand
+        // and reported by hand.
+        assert!(!P3.projects.contains(&"budget-scene"));
+        // And the ones that fail a build for a missed budget are.
+        assert!(P3.projects.contains(&"budget-minimal"));
+        assert!(P3.projects.contains(&"budget-data"));
     }
 
     #[test]
@@ -452,12 +512,12 @@ mod tests {
     }
 
     #[test]
-    fn every_p2_record_that_exists_is_still_a_form() {
+    fn every_later_record_that_exists_is_still_a_form() {
         // The forms are prepared and none of them has been performed. When one
         // is, this test is what says so - and it fails loudly rather than
         // letting a half-filled form drift into looking finished.
         let root = crate::build::repo_root();
-        for (path, _) in P2.manual.iter().copied() {
+        for (path, _) in P2.manual.iter().chain(P3.manual.iter()).copied() {
             match record_state(&root, path) {
                 RecordState::Held => {}
                 RecordState::Blank => {}

@@ -475,7 +475,8 @@ flowchart TD
 | `cargo clippy --workspace --all-targets -- -D warnings`、`cargo fmt --all -- --check` | 每里程碑 |
 | `cargo xtask sources verify` | 分叉改动登记后 |
 | `npx playwright test --project=data-workbench` | M2–M4 |
-| `npx playwright test --project=budget-minimal`、`--project=budget-data` | M8 门；一次一个 |
+| `npx playwright test --project=budget-minimal`、`--project=budget-data` | M8 门（无头）；一次一个 |
+| `npx playwright test --project=budget-scene` | M8 的 B3 帧门：**有头 Chrome 专跑**，CI 与 `verify --suite p3` 都不含它（A-3）；跑时屏幕上会出现真实浏览器窗口 |
 | `RUSTIFY_ENDURANCE_MINUTES=120 npx playwright test --project=fusion-basic p3-endurance.spec.ts` | M7 |
 | `cargo xtask verify --suite p3` | M8 |
 
@@ -490,7 +491,7 @@ flowchart TD
 | M5 | 实例隔离与有界重试 | `web/loader.js` 按实例 `boot`/调用边界/`error` 归属/`AbortController`/URL 属性清除/有上限的 `restart`/提示含重启入口；`host.rs` 暴露 `listener_options()`，`router.rs`/`overlay.rs` 的页面级监听带信号注册，`router.rs` 页面级 URL 所有者带实例号；`region.rs` 三次重试与 `GpuInitRetry`；fusion-basic 双实例模式、`fusion_basic_trap()` 与处理器内 panic 按钮；示例 `app.js` 的 `runtime_fatal` 改实例级（三个既有示例同改）；`docs/architecture.md` 写入实例模型与 trap 边界；`docs/compatibility.md` 写入实例内存代价与重启上限 | V5 全项（含 A-5 探针在真实产物上复跑）；P1 M2「trap 带走同实例全部作用域」用例继续通过；四示例 CSP 报告 0；回写「实施进度」。**A-5 失败分支**（§11）：交付改为 D7 重试 + 三种 trap 入口的调用边界与清理 + 重载式重启入口，V5 去掉双实例项，退出条件按缩减后的清单执行并在正文与进度里写明 |
 | M6 | B0、B4、空闲与资源 | fusion-basic 默认挂载改为 B0（§6.3）并更新受影响的既有断言（逐条列出）；B4 夹具（两个长期实例内的作用域轮次，§5.7.3）；`embedded.js`/`web_gl.js` 的 `gpu_bytes`（`frames` 已在 M1）；`tests/browser/p3-{b0,idle,memory}.spec.ts`；`sources.lock.json` 与 `docs/compatibility.md` 登记分叉改动与账本口径 | V6 全项（不可测项按未测记且写明）；`cargo xtask sources verify`；一期二期回归；回写「实施进度」。**A-5 失败分支**：B4 夹具为「1 实例 × 2 作用域 × 2 区域」，报告与 §0.1 写明不是 PRD 的 B4 定义 |
 | M7 | 故障矩阵、长时与诊断开销 | `tests/browser/p3-faults.spec.ts`（4 × 20，预期清单）；`p3-endurance.spec.ts`（B4，默认 2 min、验收 120 min）；R39 AC2 对照（诊断开/关各 1,000 次跨区动作）；`docs/validation/p3/m7.md` 含 2 h 曲线 | V7 全项：2 h 跑完且 72,000/72,000/0/0、尾部持平；4 类各 20 次状态一致；p95 增长 ≤ 5%；回写「实施进度」。**A-5 失败分支**：2 h 跑在单实例的 B4 替代夹具上，报告行标「非 PRD B4」 |
-| M8 | 门、报告与交接 | `budgets.ts` 的 B0/B2/B3 段变为断言；`p3-budget-minimal.spec.ts`、`p3-budget-data.spec.ts` 与两个 project；`xtask/src/verify.rs` 的 `P3` suite；四示例双干净构建；`docs/reports/p3/` 七文件；`docs/data.md`/`quickstart.md`/`architecture.md`/`compatibility.md`/`components.md` 收口；VoiceOver 记录或用户豁免；A-4 处置 | V8 全项：`budget-minimal`、`budget-data`（含负向探针）、`budget` 全绿（一次一个）；`cargo xtask verify --suite p3` 自动化 0 失败；未测与豁免逐项标注；进度 8/8 后才可称 P3 完成；回写「实施进度」。**A-3 两处都失败分支**：`budget-data` 只断言 B2 段，B3 帧间隔打印为测量值并在 `budgets.ts`「不覆盖什么」与 R30 AC2 报告行写「未成门」；**A-7 失败分支**：排序/筛选 p95 同样降为测量值；这两个分支下 M8 仍可退出，但 §13.1 的 R30 行改「部分」 |
+| M8 | 门、报告与交接 | `budgets.ts` 的 B0/B2/B3 段变为断言；`p3-budget-minimal.spec.ts`、`p3-budget-data.spec.ts`、`p3-budget-scene.spec.ts` 与**三个** project（M8 实施时由两个改为三个：§7 同时要求「B2 的门在 headless 跑」与「B3 的帧门只在有头 Chrome 跑」，一个 project 只能有一种 `headless` 设置，装不下两种环境；环境那条有探针②的实测支撑，故按环境拆。`budget-scene` 不进 CI、不进 `verify --suite p3`，由人工跑并在报告里标明）；`xtask/src/verify.rs` 的 `P3` suite；四示例双干净构建；`docs/reports/p3/` 七文件；`docs/data.md`/`quickstart.md`/`architecture.md`/`compatibility.md`/`components.md` 收口；VoiceOver 记录或用户豁免；A-4 处置 | V8 全项：`budget-minimal`、`budget-data`（含负向探针）、`budget` 全绿（一次一个）；`cargo xtask verify --suite p3` 自动化 0 失败；未测与豁免逐项标注；进度 8/8 后才可称 P3 完成；回写「实施进度」。**A-3 两处都失败分支**：`budget-data` 只断言 B2 段，B3 帧间隔打印为测量值并在 `budgets.ts`「不覆盖什么」与 R30 AC2 报告行写「未成门」；**A-7 失败分支**：排序/筛选 p95 同样降为测量值；这两个分支下 M8 仍可退出，但 §13.1 的 R30 行改「部分」 |
 
 依赖链 M1 → M2 → M3 → M4 → M5 → M6 → M7 → M8。M1 的探针失败不阻塞后续，而是按 §11 分支表切换交付范围、验收与状态并改正文——每个里程碑的退出条件以分支后的版本为准，不再要求原分支的项；M5 之前不动 fusion-basic 的默认挂载，M6 才改，这样 B0 的既有断言只在一处集中更新。
 

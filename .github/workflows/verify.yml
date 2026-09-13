@@ -62,7 +62,9 @@ jobs:
         run: npm ci && npx playwright install --with-deps chromium
       # Named one by one rather than run as a whole: a headed project measures
       # what a rasteriser can do, and a runner without a display would report
-      # the software one under the hardware one's name.
+      # the software one under the hardware one's name. `budget-scene` is
+      # absent for exactly that reason - R30 AC2 over B3 is gated on headed
+      # Chrome only (A-3), and this runner has no GPU to gate against.
       - name: Browser probes (Playwright Chromium; not the macOS Chrome pass gate)
         run: >-
           npx playwright test
@@ -71,6 +73,8 @@ jobs:
           --project=component-catalog
           --project=data-workbench
           --project=budget
+          --project=budget-minimal
+          --project=budget-data
           --project=workbench-deep
           --project=deployment
       - uses: actions/upload-artifact@v4

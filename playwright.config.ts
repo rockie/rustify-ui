@@ -59,6 +59,36 @@ export default defineConfig({
             testMatch: ["p2-budget.spec.ts"],
             use: { baseURL: `http://127.0.0.1:${workbenchPort}/` },
         },
+        // R29's B0 column, on the example B0 actually is. Its own project for
+        // the same reason `budget` is: sixty loads take a quarter of an hour,
+        // which has no business being a slow tail on the fusion-basic run.
+        {
+            name: "budget-minimal",
+            testMatch: ["p3-budget-minimal.spec.ts"],
+            use: { baseURL: `http://127.0.0.1:${fusionPort}/` },
+        },
+        // R30 AC2 over B2 and AC3 over the jobs. Headless: B2 is DOM work, so
+        // the software rasteriser is not what is under test.
+        {
+            name: "budget-data",
+            testMatch: ["p3-budget-data.spec.ts"],
+            use: { baseURL: `http://127.0.0.1:${dataPort}/` },
+        },
+        // R30 AC2 over B3, on headed Chrome and nowhere else (A-3, M1 probe
+        // 2): the same scene measures p95 50.10 ms under SwiftShader against
+        // 17.60 ms here, so a result from the software rasteriser would be
+        // about the rasteriser. CI does not run this project - see
+        // `.github/workflows` - and the file skips itself if it is ever
+        // started headless rather than reporting a rasteriser as a red build.
+        {
+            name: "budget-scene",
+            testMatch: ["p3-budget-scene.spec.ts"],
+            use: {
+                baseURL: `http://127.0.0.1:${dataPort}/`,
+                channel: "chrome",
+                headless: false,
+            },
+        },
         {
             name: "workbench-deep",
             testMatch: ["p2-deeplink.spec.ts"],
