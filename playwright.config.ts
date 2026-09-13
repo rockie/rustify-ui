@@ -33,12 +33,12 @@ export default defineConfig({
     projects: [
         {
             name: "fusion-basic",
-            testMatch: ["m1-probes.spec.ts", "m2-runtime.spec.ts", "m3-state.spec.ts", "m4-geometry.spec.ts", "m4-overlay.spec.ts", "m6-mainpath.spec.ts", "p2-navigation.spec.ts", "p3-instances.spec.ts", "p3-b0.spec.ts", "p3-idle.spec.ts", "p3-memory.spec.ts"],
+            testMatch: ["m1-probes.spec.ts", "m2-runtime.spec.ts", "m3-state.spec.ts", "m4-geometry.spec.ts", "m4-overlay.spec.ts", "m6-mainpath.spec.ts", "p2-navigation.spec.ts", "p3-instances.spec.ts", "p3-b0.spec.ts", "p3-idle.spec.ts", "p3-memory.spec.ts", "p3-endurance.spec.ts"],
             use: { baseURL: `http://127.0.0.1:${fusionPort}/` },
         },
         {
             name: "property-workbench",
-            testMatch: ["m3-workbench.spec.ts", "m5-text.spec.ts", "m5-semantics.spec.ts", "m6-theme.spec.ts", "m6-async.spec.ts", "m6-components.spec.ts", "m7-recovery.spec.ts", "m8-baseline.spec.ts", "m8-network.spec.ts", "m8-endurance.spec.ts", "p2-form.spec.ts", "p2-deeplink.spec.ts", "p2-workspace.spec.ts", "p2-drag.spec.ts", "p2-clipboard-files.spec.ts", "p2-zoom.spec.ts", "p2-ime.spec.ts", "p3-policy.spec.ts"],
+            testMatch: ["m3-workbench.spec.ts", "m5-text.spec.ts", "m5-semantics.spec.ts", "m6-theme.spec.ts", "m6-async.spec.ts", "m6-components.spec.ts", "m7-recovery.spec.ts", "m8-baseline.spec.ts", "m8-network.spec.ts", "m8-endurance.spec.ts", "p2-form.spec.ts", "p2-deeplink.spec.ts", "p2-workspace.spec.ts", "p2-drag.spec.ts", "p2-clipboard-files.spec.ts", "p2-zoom.spec.ts", "p2-ime.spec.ts", "p3-policy.spec.ts", "p3-faults.spec.ts", "p3-diagnostics.spec.ts"],
             use: { baseURL: `http://127.0.0.1:${workbenchPort}/` },
         },
         {
