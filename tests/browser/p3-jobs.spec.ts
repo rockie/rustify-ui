@@ -153,7 +153,7 @@ test.describe("M3 · a hundred thousand rows, in order", () => {
                     document.querySelectorAll('[data-testid="table"] [role="row"][data-row-id]')
                 ).map((element) => Number(element.getAttribute("aria-rowindex")))
             );
-            expect(drawn, `${needle} is on screen`).toContain(at + 1);
+            expect(drawn, `${needle} is on screen`).toContain(at + 2);
         }
     });
 
@@ -171,7 +171,7 @@ test.describe("M3 · a hundred thousand rows, in order", () => {
                 document.querySelectorAll('[data-testid="table"] [role="row"][data-row-id]')
             ).map((element) => Number(element.getAttribute("aria-rowindex")))
         );
-        expect(drawn).toContain(at + 1);
+        expect(drawn).toContain(at + 2);
     });
 });
 
@@ -378,5 +378,66 @@ test.describe("M3 · what a sort costs", () => {
         // that held the frame for as long as it took.
         expect(slices[0]).toBeGreaterThan(1);
         expect(times.every((ms) => ms > 0)).toBe(true);
+    });
+});
+
+test.describe("review · committed jobs", () => {
+    test("clearing a filter restores every row, including from no matches", async ({ page }) => {
+        await openTable(page);
+        for (const needle of ["QQ", "no matches here!"]) {
+            await page.getByTestId("table-filter").fill(needle);
+            await page.getByTestId("table-filter").press("Enter");
+            expect(await settled(page)).toBe("done");
+            expect((await api(page)).table.shown).toBeLessThan(twin.ROWS);
+            await page.getByTestId("table-filter").fill("");
+            await page.getByTestId("table-filter").press("Enter");
+            expect(await settled(page)).toBe("done");
+            expect((await api(page)).table.shown).toBe(twin.ROWS);
+        }
+    });
+
+    test("choosing a parent group replaces the previous filter with its whole range", async ({ page }) => {
+        await openTable(page);
+        await page.getByTestId("table-filter").fill("QQ");
+        await page.getByTestId("table-filter").press("Enter");
+        expect(await settled(page)).toBe("done");
+        await page.getByTestId("table-tree-g1").click();
+        expect(await settled(page)).toBe("done");
+        await sameOrder(page, Array.from({ length: 10000 }, (_, i) => 10000 + i), "parent group");
+    });
+
+    for (const key of ["Enter", " "]) {
+        test(`a header button sorts through native ${JSON.stringify(key)}`, async ({ page }) => {
+            await openTable(page);
+            const header = page.getByTestId("table-column-0").getByRole("button");
+            await header.focus();
+            await page.keyboard.press(key);
+            await expect.poll(async () => (await api(page)).table.sorted).toBe("0:asc");
+            expect((await api(page)).table.editing).toBeNull();
+            expect((await api(page)).table.selected).toBe(0);
+            await expect(header).toBeFocused();
+        });
+    }
+
+    test("cancel keeps the committed sort and filtering clears it on commit", async ({ page }) => {
+        await openTable(page);
+        await page.getByTestId("table-column-0").getByRole("button").click();
+        expect(await settled(page)).toBe("done");
+        const previous = await view(page, 0, 200);
+        const pending = await page.evaluate(() => {
+            document.querySelector<HTMLButtonElement>('[data-testid="table-column-1"] button')!.click();
+            const sorted = window.__data_workbench.snapshot().table.sorted;
+            window.__data_workbench.cancel_job();
+            return sorted;
+        });
+        expect(pending).toBe("0:asc");
+        expect(await settled(page)).toBe("cancelled");
+        expect(await view(page, 0, 200)).toEqual(previous);
+        await expect(page.getByTestId("table-column-0")).toHaveAttribute("aria-sort", "ascending");
+        await page.getByTestId("table-filter").fill("QQ");
+        await page.getByTestId("table-filter").press("Enter");
+        expect(await settled(page)).toBe("done");
+        expect((await api(page)).table.sorted).toBeNull();
+        await expect(page.getByTestId("table-column-0")).toHaveAttribute("aria-sort", "none");
     });
 });

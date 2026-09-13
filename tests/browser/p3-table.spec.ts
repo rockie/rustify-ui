@@ -20,7 +20,7 @@ async function openTable(page: Page) {
     await expect(page.getByTestId("table-view")).toHaveCount(1);
     await expect(page.getByTestId("table")).toHaveAttribute(
         "aria-rowcount",
-        String(twin.ROWS)
+        String(twin.ROWS + 1)
     );
 }
 
@@ -30,7 +30,7 @@ async function drawnRows(page: Page): Promise<{ index: number; id: number }[]> {
         Array.from(document.querySelectorAll('[data-testid="table"] [role="row"]'))
             .filter((row) => !row.classList.contains("rui:hidden") && row.hasAttribute("data-row-id"))
             .map((row) => ({
-                index: Number(row.getAttribute("aria-rowindex")),
+                index: Number(row.getAttribute("aria-rowindex")) - 1,
                 id: Number(row.getAttribute("data-row-id")),
             }))
     );
@@ -51,7 +51,7 @@ async function gotoRow(page: Page, row: number) {
 /// as well as down, so the tenth cell in the document is not column ten.
 function cellOf(page: Page, row: number, column: number): Locator {
     return page.locator(
-        `[data-testid="table"] [role="row"][aria-rowindex="${row}"] [role="gridcell"][aria-colindex="${column + 1}"]`
+        `[data-testid="table"] [role="row"][aria-rowindex="${row + 1}"] [role="gridcell"][aria-colindex="${column + 1}"]`
     );
 }
 
@@ -310,4 +310,136 @@ test.describe("M2 · a hundred thousand rows", () => {
             }
         }
     });
+});
+
+test.describe("review · table identity and window", () => {
+    for (const mode of ["sorted", "filtered"] as const) {
+        test(`deleting ${mode} rows removes the displayed identities`, async ({ page }) => {
+            await openTable(page);
+            if (mode === "sorted") {
+                await page.getByTestId("table-column-0").getByRole("button").click();
+            } else {
+                await page.getByTestId("table-filter").fill("QQ");
+                await page.getByTestId("table-filter").press("Enter");
+            }
+            await expect.poll(async () => (await api(page)).table.job.ended).toBe("done");
+            const before = await page.evaluate(() => {
+                const api = window.__data_workbench;
+                return api.view(0, 30).map((row) => api.row_id(row));
+            });
+            await page.locator('[data-row-id]').first().getByRole("gridcell").first().focus();
+            await page.evaluate(() => window.__data_workbench.select_rows(0, 12));
+            await page.getByTestId("table-delete").click();
+            const after = await page.evaluate(() => {
+                const api = window.__data_workbench;
+                return api.view(0, 20).map((row) => api.row_id(row));
+            });
+            expect(after).toEqual(before.slice(10));
+            expect(await page.evaluate(() => window.__data_workbench.selected())).toEqual(
+                before.slice(10, 12).sort((a, b) => a - b)
+            );
+        });
+    }
+
+    test("an open draft stays with its identity across insert and delete", async ({ page }) => {
+        await openTable(page);
+        const row = page.locator('[data-row-id="20"]');
+        await row.getByRole("gridcell").first().focus();
+        await page.keyboard.press("Enter");
+        await page.getByTestId("table-detail-0").fill("DRAFT");
+        await page.getByTestId("table-insert").click();
+        await expect(page.getByTestId("table-detail-0")).toHaveValue("DRAFT");
+        await page.getByTestId("table-detail-submit").click();
+        expect(await page.evaluate(() => window.__data_workbench.cell(29, 0).trim())).toBe("DRAFT");
+        await page.getByTestId("table-delete").click();
+        await expect(page.getByTestId("table-detail-row")).toHaveText("row 20");
+        await page.getByTestId("table-detail-0").fill("SAVED AGAIN");
+        await page.getByTestId("table-detail-submit").click();
+        expect(await page.evaluate(() => window.__data_workbench.cell(19, 0).trim())).toBe("SAVED AGAIN");
+        await page.getByTestId("table-delete").click();
+        await expect(page.getByTestId("table-detail-row")).toHaveText("no row open");
+        await expect(page.getByTestId("table-detail-0")).toHaveCount(0);
+    });
+
+    test("scrolling a focused slot keeps selection and the tab stop on the focused row", async ({ page }) => {
+        await openTable(page);
+        await page.locator('[data-row-id="1"]').getByRole("gridcell").first().focus();
+        await page.getByTestId("table-scroller").evaluate((element) => element.scrollTo(1800, 1_000_000));
+        await expect.poll(async () => Number(await page.locator('[data-row-id]').first().getAttribute("data-row-id"))).toBeGreaterThan(1);
+        await expect(page.locator('[role="gridcell"][tabindex="0"]')).toHaveCount(1);
+        const focusedId = await page.evaluate(() => Number(document.activeElement?.closest('[data-row-id]')?.getAttribute("data-row-id")));
+        expect(focusedId).toBeGreaterThan(1);
+        await page.keyboard.press(" ");
+        expect(await page.evaluate(() => window.__data_workbench.selected())).toEqual([focusedId]);
+        await expect(page.locator('[role="gridcell"][tabindex="0"]')).toBeFocused();
+    });
+
+    test("resizing the scroller covers its enlarged viewport without scrolling", async ({ page }) => {
+        await page.setViewportSize({ width: 1100, height: 600 });
+        await page.goto("./table");
+        await expect(page.getByTestId("status")).toHaveAttribute("data-status", "ready");
+        const count = await page.locator('[data-row-id]').count();
+        await page.setViewportSize({ width: 1440, height: 1200 });
+        await expect.poll(() => page.locator('[data-row-id]').count()).toBeGreaterThan(count);
+        // Change only the element's layout too; a window resize listener cannot see this.
+        await page.getByTestId("table-scroller").evaluate((element) => element.style.maxHeight = "240px");
+        await expect.poll(() => page.locator('[data-row-id]').count()).toBeLessThan(count);
+        await page.getByTestId("table-scroller").evaluate((element) => element.style.maxHeight = "");
+        await expect.poll(async () => page.getByTestId("table-scroller").evaluate((element) => {
+            const bottom = Math.max(...Array.from(element.querySelectorAll('[data-row-id]')).map((row) => row.getBoundingClientRect().bottom));
+            return bottom >= element.getBoundingClientRect().bottom;
+        })).toBe(true);
+    });
+
+    test("ARIA row indices include the header and stay within the total", async ({ page }) => {
+        await openTable(page);
+        await expect(page.getByTestId("table")).toHaveAttribute("aria-rowcount", "100001");
+        await expect(page.getByTestId("table").getByRole("row").first()).toHaveAttribute("aria-rowindex", "1");
+        await expect(page.locator('[data-row-id="1"]')).toHaveAttribute("aria-rowindex", "2");
+        await gotoRow(page, 100000);
+        await expect(page.locator('[data-row-id="100000"]')).toHaveAttribute("aria-rowindex", "100001");
+    });
+});
+
+test("review · size observations stop on unmount and fatal", async ({ page }) => {
+    await page.addInitScript(() => {
+        const NativeObserver = window.ResizeObserver;
+        const tableObservers = new Set<ResizeObserver>();
+        Object.assign(window, { __tableObservers: tableObservers });
+        window.ResizeObserver = class extends NativeObserver {
+            observe(element: Element, options?: ResizeObserverOptions) {
+                if (element.getAttribute("data-testid") === "table-scroller") tableObservers.add(this);
+                super.observe(element, options);
+            }
+            disconnect() {
+                tableObservers.delete(this);
+                super.disconnect();
+            }
+        };
+    });
+    await openTable(page);
+    const observations = () => page.evaluate(() => (window as unknown as { __tableObservers: Set<ResizeObserver> }).__tableObservers.size);
+    await expect.poll(observations).toBe(1);
+    await page.evaluate(() => window.__data_workbench.dispose());
+    await expect.poll(observations).toBe(0);
+    await page.evaluate(() => window.__data_workbench.mount());
+    await expect.poll(observations).toBe(1);
+    await page.evaluate(() => window.__data_workbench.hooks.runtime.enter_fatal(new Error("observer cleanup")));
+    await expect.poll(observations).toBe(0);
+});
+
+test("review · resizing at the end preserves the focused cell", async ({ page }) => {
+    await page.setViewportSize({ width: 1100, height: 600 });
+    await page.goto("./table");
+    await expect(page.getByTestId("status")).toHaveAttribute("data-status", "ready");
+    await page.locator('[data-row-id="1"]').getByRole("gridcell").first().focus();
+    await page.keyboard.press("ControlOrMeta+End");
+    const last = page.locator('[data-row-id="100000"] [aria-colindex="20"]');
+    await expect(last).toBeFocused();
+    await page.setViewportSize({ width: 1440, height: 1200 });
+    await expect(last).toBeFocused();
+    await expect(page.locator('[role="gridcell"][tabindex="0"]')).toBeFocused();
+    await page.setViewportSize({ width: 1100, height: 600 });
+    await expect(last).toBeFocused();
+    await expect(page.locator('[role="gridcell"][tabindex="0"]')).toBeFocused();
 });

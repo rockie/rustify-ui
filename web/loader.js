@@ -266,5 +266,11 @@ export function show_fatal(container, error, { restart } = {}) {
         });
         box.append(button);
     }
+    const reload = document.createElement("button");
+    reload.type = "button";
+    reload.dataset.testid = "fatal-reload";
+    reload.textContent = "reload the page";
+    reload.addEventListener("click", () => window.location.reload());
+    box.append(reload);
     container.replaceChildren(box);
 }

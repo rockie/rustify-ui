@@ -64,7 +64,7 @@ pub use router::{
     navigate, provide_routes, use_location, use_params, use_route, Link, NavigationGuard,
 };
 #[cfg(target_arch = "wasm32")]
-pub use rustify_makepad::{makepad_widgets, RegionApp};
+pub use rustify_makepad::{makepad_widgets, observe_resize, RegionApp, ResizeObservation};
 #[cfg(target_arch = "wasm32")]
 pub use text::TextEdit;
 #[cfg(target_arch = "wasm32")]

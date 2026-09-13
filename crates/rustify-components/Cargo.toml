@@ -27,4 +27,5 @@ web-sys = { workspace = true, features = [
     # than left to whatever the build that pulled this crate in enabled: the
     # accessors exist on two types with different signatures.
     "Element",
+    "FocusOptions",
 ] }

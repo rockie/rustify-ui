@@ -31,6 +31,13 @@ extern "C" {
     #[wasm_bindgen(method)]
     fn defer_after(this: &HostHooks, callback: &JsValue, ms: i32);
 
+    #[wasm_bindgen(method)]
+    fn observe_resize(
+        this: &HostHooks,
+        element: &web_sys::Element,
+        callback: &JsValue,
+    ) -> js_sys::Function;
+
     #[wasm_bindgen(method, getter)]
     fn signal(this: &HostHooks) -> web_sys::AbortSignal;
 }
@@ -149,6 +156,32 @@ pub fn listener_options() -> Option<web_sys::AddEventListenerOptions> {
     let options = web_sys::AddEventListenerOptions::new();
     options.set_signal(&signal);
     Some(options)
+}
+
+/// Observes an element's size until dropped or this instance fails.
+/// The host owns the observer so aborting never calls into dead wasm.
+pub fn observe_resize(
+    element: &web_sys::Element,
+    f: impl FnMut() + 'static,
+) -> Option<ResizeObservation> {
+    let callback = Closure::new(f);
+    let release = with_hooks(|hooks| hooks.observe_resize(element, callback.as_ref()))?;
+    Some(ResizeObservation {
+        release,
+        _callback: callback,
+    })
+}
+
+/// A size observation, disconnected before its callback is dropped.
+pub struct ResizeObservation {
+    release: js_sys::Function,
+    _callback: Closure<dyn FnMut()>,
+}
+
+impl Drop for ResizeObservation {
+    fn drop(&mut self) {
+        let _ = self.release.call0(&JsValue::NULL);
+    }
 }
 
 /// Creates a region: its own `Cx`, script VM and widget tree, drawn into

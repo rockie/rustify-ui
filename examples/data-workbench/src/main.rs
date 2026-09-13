@@ -23,7 +23,7 @@ mod strip_view;
 
 #[cfg(target_arch = "wasm32")]
 mod app {
-    use super::dataset::{Dataset, Row, COLUMNS, ROWS, ROW_BYTES};
+    use super::dataset::{Dataset, Row, CELL, COLUMNS, ROWS, ROW_BYTES};
     use super::scan::{Rule, Scan};
     use super::scene_layout;
     use super::scene_region::{SceneAction, SceneProps, SceneRegion};
@@ -104,8 +104,8 @@ mod app {
         counts: RwSignal<Counts>,
         focus: RwSignal<GridCell>,
         goto: RwSignal<Option<usize>>,
-        /// The row the details form is showing, if any.
-        editing: RwSignal<Option<usize>>,
+        /// The stable identity the details form is editing, if any.
+        editing: RwSignal<Option<u32>>,
         /// The group a person chose in the tree, and what a filter job for it
         /// is made from.
         group: RwSignal<Option<String>>,
@@ -479,7 +479,11 @@ mod app {
                 selection.toggle(id);
             });
         };
-        let activate = move |row: usize| table.editing.set(at(row));
+        let activate = move |row: usize| {
+            table
+                .editing
+                .set(at(row).map(read_id).filter(|id| *id != 0));
+        };
         let strip_app = PhantomData::<StripRegion>;
         // The tree follows the table until a person chooses a group of their
         // own: the keyboard is somewhere in the sample, and which part of it
@@ -578,11 +582,7 @@ mod app {
                         {move || {
                             let job = table.job.get();
                             if job.running {
-                                let percent = if job.total == 0 {
-                                    0
-                                } else {
-                                    job.done * 100 / job.total
-                                };
+                                let percent = (job.done * 100).checked_div(job.total).unwrap_or(0);
                                 format!("working, {percent}%")
                             } else {
                                 match job.ended {
@@ -639,7 +639,6 @@ mod app {
                                     Some((at, true)) if at == column => (column, false),
                                     _ => (column, true),
                                 };
-                                table.sort.set(Some(next));
                                 start(table, Ask::Sort(next.0, next.1), 1);
                             })
                             on_select=select
@@ -684,16 +683,29 @@ mod app {
     #[component]
     fn Details(table: TableState, columns: RwSignal<Vec<Column>>) -> impl IntoView {
         let draft = RwSignal::new(vec![String::new(); COLUMNS]);
+        // Inserting or deleting other rows changes positions and versions,
+        // but does not change this row or discard its unsaved draft.
+        let edited = Memo::new(move |_| {
+            table.version.track();
+            let id = table.editing.get()?;
+            with_data(|data| Some((id, *data.rows().get(data.position(id)?)?))).flatten()
+        });
         Effect::new(move || {
-            let Some(row) = table.editing.get() else {
+            let Some((_, row)) = edited.get() else {
+                if table.editing.get_untracked().is_some() {
+                    table.editing.set(None);
+                }
                 return;
             };
-            table.version.track();
-            draft.set((0..COLUMNS).map(|column| read_cell(row, column)).collect());
+            draft.set(
+                row.chunks_exact(CELL)
+                    .map(|cell| String::from_utf8_lossy(cell).trim_end().to_string())
+                    .collect(),
+            );
         });
         let handle = FormHandle::new(None);
         let save = move || {
-            let Some(row) = table.editing.get_untracked() else {
+            let Some(id) = table.editing.get_untracked() else {
                 return;
             };
             let values = draft.get_untracked();
@@ -701,6 +713,9 @@ mod app {
             DATA.with(|slot| {
                 let mut slot = slot.borrow_mut();
                 let Some(data) = slot.as_mut() else {
+                    return;
+                };
+                let Some(row) = data.position(id) else {
                     return;
                 };
                 for (column, value) in values.iter().enumerate() {
@@ -725,7 +740,7 @@ mod app {
             <div class="details" data-testid="table-details">
                 <h2 data-testid="table-detail-row">
                     {move || match table.editing.get() {
-                        Some(row) => format!("row {}", row + 1),
+                        Some(id) => format!("row {id}"),
                         None => "no row open".to_string(),
                     }}
                 </h2>
@@ -813,31 +828,42 @@ mod app {
         bump_version(table);
     }
 
-    /// Deletes `count` rows from `at`, and takes the identities that have gone
-    /// out of the selection. A selected row that no longer exists is not
-    /// selected: it is a leak.
+    /// Deletes a run of the current view, removing those identities from
+    /// the sample and the selection. Resolve the whole run before any write.
     fn delete_rows(table: TableState, at: usize, count: usize) {
-        let mut gone = Vec::new();
+        let mut removed = table.view.with_untracked(|view| {
+            with_data(|data| {
+                view.order()
+                    .iter()
+                    .skip(at)
+                    .take(count)
+                    .filter_map(|position| {
+                        data.id(*position as usize)
+                            .map(|id| (*position as usize, id))
+                    })
+                    .collect::<Vec<_>>()
+            })
+            .unwrap_or_default()
+        });
+        // Work backwards so earlier sample positions remain valid.
+        removed.sort_unstable_by_key(|(position, _)| std::cmp::Reverse(*position));
         DATA.with(|slot| {
-            let mut slot = slot.borrow_mut();
-            let Some(data) = slot.as_mut() else {
-                return;
-            };
-            for _ in 0..count {
-                if at >= data.len() {
-                    break;
-                }
-                if let Some(id) = data.remove(at) {
-                    gone.push(id);
+            if let Some(data) = slot.borrow_mut().as_mut() {
+                for (position, _) in &removed {
+                    data.remove(*position);
                 }
             }
         });
+        let gone: Vec<_> = removed.iter().map(|(_, id)| *id).collect();
         table.selection.update(|selection| {
             selection.remove_deleted(&gone);
         });
-        table
-            .view
-            .update(|view| Arc::make_mut(view).removed(at, gone.len()));
+        table.view.update(|view| {
+            let view = Arc::make_mut(view);
+            for (position, _) in &removed {
+                view.removed(*position, 1);
+            }
+        });
         bump_version(table);
     }
 
@@ -863,20 +889,26 @@ mod app {
     }
 
     /// The rule the filter box and the tree add up to.
-    fn filter_rule(table: TableState) -> Option<Rule> {
+    fn filter_rule(table: TableState) -> Rule {
         if let Some(key) = table.group.get_untracked() {
             if let Some((group, child)) = parse_group(&key) {
-                return Some(Rule::Group(group, child));
+                return match child {
+                    Some(child) => Rule::Group(group, child),
+                    None => Rule::ParentGroup(group),
+                };
             }
         }
         let text = table.filter.get_untracked();
-        (!text.trim().is_empty()).then(|| Rule::text(text.trim()))
+        Rule::text(text.trim())
     }
 
-    /// `g3-7` as the pair the sample's own grouping answers in.
-    fn parse_group(key: &str) -> Option<(usize, usize)> {
-        let (group, child) = key.strip_prefix('g')?.split_once('-')?;
-        Some((group.parse().ok()?, child.parse().ok()?))
+    /// `g3` or `g3-7` as a parent group and optional child.
+    fn parse_group(key: &str) -> Option<(usize, Option<usize>)> {
+        let key = key.strip_prefix('g')?;
+        match key.split_once('-') {
+            Some((group, child)) => Some((group.parse().ok()?, Some(child.parse().ok()?))),
+            None => Some((key.parse().ok()?, None)),
+        }
     }
 
     /// Starts a job, ending whatever was running. `retries` is how many times
@@ -991,7 +1023,7 @@ mod app {
     fn rule_for(ask: &Ask) -> Option<Rule> {
         match ask {
             Ask::Find(text) => Some(Rule::text(text.trim())),
-            Ask::Filter => TABLE.with(|slot| slot.get()).and_then(filter_rule),
+            Ask::Filter => TABLE.with(|slot| slot.get()).map(filter_rule),
             Ask::Sort(..) => None,
         }
     }
@@ -1040,6 +1072,10 @@ mod app {
             Ended::Done(Answer::Order(order)) => {
                 let version = with_data(|data| data.version()).unwrap_or(0);
                 table.view.set(Arc::new(View::built(order, version)));
+                table.sort.set(match ask {
+                    Ask::Sort(column, ascending) => Some((column, ascending)),
+                    _ => None,
+                });
                 table.goto.set(Some(0));
                 table.focus.update(|at| at.row = 0);
             }
@@ -1512,7 +1548,6 @@ mod app {
         if column >= COLUMNS {
             return false;
         }
-        table.sort.set(Some((column, ascending)));
         start(table, Ask::Sort(column, ascending), 1);
         true
     }
@@ -1560,7 +1595,7 @@ mod app {
         if row >= with_data(Dataset::len).unwrap_or(0) {
             return false;
         }
-        table.editing.set(Some(row));
+        table.editing.set(with_data(|data| data.id(row)).flatten());
         true
     }
 

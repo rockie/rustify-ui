@@ -4,7 +4,7 @@ use leptos::ev::{Event, FocusEvent, KeyboardEvent, MouseEvent};
 use leptos::html::Div;
 use leptos::prelude::*;
 use leptos::wasm_bindgen::JsCast;
-use leptos::web_sys::{Element, HtmlElement};
+use leptos::web_sys::{Element, FocusOptions, HtmlElement};
 use rustify_ui::Selection;
 use std::sync::Arc;
 
@@ -140,8 +140,13 @@ pub fn DataTable(
         }
     };
     Effect::new(move || {
-        scroller.track();
+        let Some(element) = scroller.get() else {
+            return;
+        };
         measure();
+        // The owner drops the observation on unmount; the host disconnects
+        // it on fatal, when Rust destructors cannot run.
+        StoredValue::new_local(rustify_ui::observe_resize(element.as_ref(), measure));
     });
 
     // Scrolling to a row the application asked for. It is done against the
@@ -195,19 +200,28 @@ pub fn DataTable(
     // this causes is not read back as a person having chosen a cell.
     let placing = StoredValue::new(false);
     Effect::new(move || {
-        let at = focus.get();
+        let mut at = focus.get();
         let down = visible_rows.get();
         let across = visible_columns.get();
-        if !down.contains(at.row) || !across.contains(at.column) {
+        if down.is_empty() || across.is_empty() {
             return;
+        }
+        if !down.contains(at.row) || !across.contains(at.column) {
+            if goto.get_untracked().is_some() || goto_column.get_untracked().is_some() {
+                return;
+            }
+            at.row = at.row.clamp(down.start, down.end - 1);
+            at.column = at.column.clamp(across.start, across.end - 1);
+            focus.set(at);
         }
         let Some(element) = grid.get() else {
             return;
         };
         let element: &Element = element.as_ref();
-        let holds_focus = document()
-            .active_element()
-            .is_some_and(|active| element.contains(Some(active.as_ref())));
+        let holds_focus = document().active_element().is_some_and(|active| {
+            active.get_attribute("role").as_deref() == Some("gridcell")
+                && element.contains(Some(active.as_ref()))
+        });
         if holds_focus {
             placing.set_value(true);
             focus_cell(
@@ -240,6 +254,13 @@ pub fn DataTable(
         let on_select = on_select.clone();
         let on_activate = on_activate.clone();
         move |ev: KeyboardEvent| {
+            let is_cell = ev
+                .target()
+                .and_then(|target| target.dyn_into::<Element>().ok())
+                .is_some_and(|target| target.get_attribute("role").as_deref() == Some("gridcell"));
+            if !is_cell {
+                return;
+            }
             let at = focus.get_untracked();
             let Some(command) =
                 keys::command(&ev.key(), ev.ctrl_key() || ev.meta_key(), at, shape())
@@ -301,7 +322,7 @@ pub fn DataTable(
             return;
         };
         let next = Cell {
-            row: row.saturating_sub(1),
+            row: row.saturating_sub(2),
             column: column.saturating_sub(1),
         };
         if focus.get_untracked() != next {
@@ -330,7 +351,7 @@ pub fn DataTable(
             data-testid=test_id.clone()
             role="grid"
             aria-label=aria_label
-            aria-rowcount=move || rows.get().to_string()
+            aria-rowcount=move || (rows.get() + 1).to_string()
             aria-colcount=move || columns.get().len().to_string()
             on:keydown=on_keydown
             on:focusin=on_focusin
@@ -338,7 +359,7 @@ pub fn DataTable(
             <div role="rowgroup" class=HEADER>
                 <div
                     role="row"
-                    aria-rowindex="0"
+                    aria-rowindex="1"
                     class="rui:flex"
                     // The header sits outside the scroller, so it is moved by
                     // hand: where its first drawn column starts, less how far
@@ -434,7 +455,7 @@ pub fn DataTable(
                                         class=("rui:hidden", move || !within.get())
                                         data-testid=format!("{name}-row-{slot}")
                                         data-row-id=move || id.get().to_string()
-                                        aria-rowindex=move || (row.get() + 1).to_string()
+                                        aria-rowindex=move || (row.get() + 2).to_string()
                                         aria-selected=move || chosen.get().to_string()
                                         style:height=format!("{row_height}px")
                                         style:transform=move || {
@@ -521,7 +542,9 @@ fn focus_cell(grid: &Element, name: &str, row_slot: usize, cell_slot: usize) {
     };
     if let Some(cell) = row.children().item(cell_slot as u32) {
         if let Ok(cell) = cell.dyn_into::<HtmlElement>() {
-            let _ = cell.focus();
+            let options = FocusOptions::new();
+            options.set_prevent_scroll(true);
+            let _ = cell.focus_with_options(&options);
         }
     }
 }

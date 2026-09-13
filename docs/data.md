@@ -39,17 +39,20 @@ Row elements are a pool. There are as many as fit the viewport plus ten of
 overscan either side, and the pool is the same size wherever the table is
 scrolled to - at the top, in the middle, and against the last row. Scrolling
 moves them and rewrites their text; it does not make new ones. Columns work
-the same way across, with two of overscan.
+the same way across, with two of overscan. A resize observation on the actual
+scroller updates the window when its layout changes. It is disconnected when
+the component unmounts or the instance fails.
 
 So the `<For>` is keyed by the slot, not by the row. Which row a slot is
 showing is written on it, in the two attributes a person's screen reader and a
 test both read:
 
-- `aria-rowindex` - the row number, from 1.
+- `aria-rowindex` - the grid row number: the header is 1, and data rows start at 2.
 - `data-row-id` - the identity `row_id` gave for it.
 
-`aria-rowcount` on the grid is the whole table, not the pool, so a screen
-reader says "row 50,000 of 100,000" rather than "row 12 of 81".
+`aria-rowcount` includes the header and every data row, so the initial sample
+has 100,001 grid rows. Data row 50,000 has grid index 50,001. The application
+API, jump field and view positions still count data rows only.
 
 Two consequences are worth knowing before they surprise you:
 
@@ -93,6 +96,12 @@ they cannot fully see. The table's status line says
 `selected 12 (of which 5 not in view)`, in an `aria-live="polite"` region, so
 it is announced rather than only displayed.
 
+The delete command resolves the requested run of the current view before
+changing the sample, so sorting and filtering cannot redirect the deletion.
+The details form holds an identity and resolves its current sample position
+when saving. Inserting or deleting other rows preserves its draft; deleting
+the edited row closes the form.
+
 ## Getting to a row you cannot see
 
 A hundred thousand rows need a way to say "that one" that is not scrolling.
@@ -115,8 +124,10 @@ scrolls the table - on both axes - and the keyboard lands on the cell once the
 window has been worked out, so a walk to the last row does not leave the focus
 behind.
 
-One tab stop for the whole grid: the focused cell has `tabindex="0"` and every
-other cell `-1`.
+The data cells have one tab stop: the focused cell has `tabindex="0"` and every
+other cell `-1`. Scrolling its position out of the window moves that logical
+focus into the new window and coordinates the DOM focus without scrolling back.
+Header buttons retain their own native Enter and Space activation.
 
 ## Work that does not fit in a frame
 
@@ -185,6 +196,11 @@ produce.
 While one runs, the status line says how far it has got and the cancel button
 is live. Cancelling is instant to look at - the status changes in the same
 frame as the click, ahead of the slice that is already running noticing.
+
+An empty text filter rebuilds the full view. Selecting a parent group includes
+all its children; selecting a child narrows to that child's range. The sort
+indicator changes only when the new view is committed: cancellation keeps the
+previous indicator, and a completed filter clears it.
 
 ## Editing a row
 

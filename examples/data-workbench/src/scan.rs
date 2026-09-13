@@ -24,6 +24,8 @@ pub enum Rule {
     /// It is in this group. The tree is navigation over positions, so this is
     /// a question about where a row is rather than about what is in it.
     Group(usize, usize),
+    /// Every child of this group.
+    ParentGroup(usize),
 }
 
 impl Rule {
@@ -47,6 +49,7 @@ impl Rule {
                         .any(|window| window == needle.as_slice())
                 })
             }
+            Rule::ParentGroup(group) => Dataset::group(position).0 == *group,
             Rule::Group(group, child) => Dataset::group(position) == (*group, *child),
         }
     }

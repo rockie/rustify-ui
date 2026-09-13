@@ -1,4 +1,4 @@
-import { boot, show_fatal, StartupError } from "./loader.js";
+import { boot, release_container, show_fatal, StartupError } from "./loader.js";
 
 const container = "catalog";
 const second_container = "catalog-second";
@@ -17,10 +17,10 @@ let live = null;
 /// calling the application's dispose would re-enter that module.
 const runtime_fatal = (error) => {
     if (handle !== null) {
-        document.getElementById(container)?.replaceChildren();
+        release_container(document.getElementById(container));
     }
     if (second !== null) {
-        document.getElementById(second_container)?.replaceChildren();
+        release_container(document.getElementById(second_container));
     }
     handle = null;
     second = null;
@@ -44,20 +44,25 @@ const runtime_fatal = (error) => {
 async function relaunch(died) {
     status.dataset.status = "starting";
     status.textContent = "starting";
-    const next = await died.restart({ on_fatal: runtime_fatal });
-    if (next === null) {
-        status.dataset.status = "fatal";
-        show_fatal(status, new StartupError("RuntimeFatal", "no restarts left; reload the page"));
-        return;
+    try {
+        const next = await died.restart({ on_fatal: runtime_fatal });
+        if (next === null) {
+            status.dataset.status = "fatal";
+            show_fatal(status, new StartupError("RuntimeFatal", "no restarts left; reload the page"));
+            return;
+        }
+        publish(next);
+    } catch (error) {
+        status.dataset.status = "failed";
+        show_fatal(status, error);
     }
-    publish(next);
 }
 
 /// Publishes the page's handle on one live instance and mounts it.
 function publish(started) {
     live = started;
     const { app, hooks, build } = started;
-    app.catalog_identify(1, build);
+    app.catalog_identify(started.instance, build);
     window.__component_catalog = {
         hooks,
         mount() {

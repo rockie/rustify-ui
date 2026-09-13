@@ -1,4 +1,4 @@
-import { boot, show_fatal, StartupError } from "./loader.js";
+import { boot, release_container, show_fatal, StartupError } from "./loader.js";
 import * as noUiSlider from "./vendor/nouislider/nouislider.min.mjs";
 
 // The one fixed-version third-party DOM component this release verifies:
@@ -81,7 +81,7 @@ let live = null;
 /// calling the application's dispose would re-enter that module.
 const runtime_fatal = (error) => {
     if (handle !== null) {
-        document.getElementById(container)?.replaceChildren();
+        release_container(document.getElementById(container));
     }
     handle = null;
     const died = live;
@@ -104,13 +104,18 @@ const runtime_fatal = (error) => {
 async function relaunch(died) {
     status.dataset.status = "starting";
     status.textContent = "starting";
-    const next = await died.restart({ on_fatal: runtime_fatal });
-    if (next === null) {
-        status.dataset.status = "fatal";
-        show_fatal(status, new StartupError("RuntimeFatal", "no restarts left; reload the page"));
-        return;
+    try {
+        const next = await died.restart({ on_fatal: runtime_fatal });
+        if (next === null) {
+            status.dataset.status = "fatal";
+            show_fatal(status, new StartupError("RuntimeFatal", "no restarts left; reload the page"));
+            return;
+        }
+        publish(next);
+    } catch (error) {
+        status.dataset.status = "failed";
+        show_fatal(status, error);
     }
-    publish(next);
 }
 
 /// Publishes the page's handle on one live instance and mounts it.
@@ -118,7 +123,7 @@ function publish(started) {
     live = started;
     const { app, hooks, build, base } = started;
     app.workbench_set_base(base);
-    app.workbench_identify(1, build);
+    app.workbench_identify(started.instance, build);
     window.__property_workbench = {
         hooks,
         mount() {

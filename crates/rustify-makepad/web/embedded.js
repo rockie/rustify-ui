@@ -444,6 +444,31 @@ export function create_host_hooks(wasm, msg_class, on_fatal, instance = 1) {
         request_signal_pump() {
             schedule_signal_pump();
         },
+        observe_resize(element, callback) {
+            let active = true;
+            const observer = new ResizeObserver(() => {
+                if (!active || runtime.fatal) {
+                    return;
+                }
+                try {
+                    callback();
+                } catch (error) {
+                    runtime.enter_fatal(error);
+                }
+            });
+            const release = () => {
+                active = false;
+                observer.disconnect();
+                controller.signal.removeEventListener("abort", release);
+            };
+            if (runtime.fatal) {
+                release();
+            } else {
+                controller.signal.addEventListener("abort", release, { once: true });
+                observer.observe(element);
+            }
+            return release;
+        },
         defer(callback) {
             if (runtime.fatal) {
                 return;

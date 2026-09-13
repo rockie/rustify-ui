@@ -227,19 +227,24 @@ async function start(create) {
 async function relaunch(died, was_showing) {
     status.dataset.status = "starting";
     status.textContent = "starting";
-    const next = await start((on_fatal) => died.restart({ on_fatal }));
-    if (next === null) {
-        status.dataset.status = "fatal";
-        show_fatal(status, new StartupError("RuntimeFatal", "no restarts left; reload the page"));
-        return;
+    try {
+        const next = await start((on_fatal) => died.restart({ on_fatal }));
+        if (next === null) {
+            status.dataset.status = "fatal";
+            show_fatal(status, new StartupError("RuntimeFatal", "no restarts left; reload the page"));
+            return;
+        }
+        for (const [container_id, fixture] of was_showing) {
+            next[fixture](container_id);
+        }
+        showing = next.instance;
+        window.__fusion_basic = next;
+        status.dataset.status = "ready";
+        status.textContent = "ready";
+    } catch (error) {
+        status.dataset.status = "failed";
+        show_fatal(status, error);
     }
-    for (const [container_id, fixture] of was_showing) {
-        next[fixture](container_id);
-    }
-    showing = next.instance;
-    window.__fusion_basic = next;
-    status.dataset.status = "ready";
-    status.textContent = "ready";
 }
 
 start((on_fatal) => boot({ wasm_url, on_fatal }))

@@ -97,6 +97,11 @@ impl Dataset {
         self.ids.get(row).copied()
     }
 
+    /// Resolves an identity after insertions or deletions have moved its row.
+    pub fn position(&self, id: Id) -> Option<usize> {
+        self.ids.iter().position(|candidate| *candidate == id)
+    }
+
     /// Every write bumps this. Sorting, filtering and finding all read cell
     /// values, so any write at all makes a job that is still running stale -
     /// not only the writes that change which rows exist.
