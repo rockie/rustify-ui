@@ -64,7 +64,7 @@ reader can say, a cell a keyboard can reach, text an input method can edit
 
 ## Where they live
 
-- The eighteen DOM components — `crates/rustify-components/src/`, one file per
+- The twenty DOM components — `crates/rustify-components/src/`, one file per
   category. The class strings came from Rust/UI; `sources.lock.json` records
   what was imported and what the rewrite changed.
 - The GPU halves — `crates/rustify-ui/src/gpu/`. `RustifyButton`,
@@ -78,7 +78,7 @@ reader can say, a cell a keyboard can reach, text an input method can edit
 - P1's own component subset is still where it was
   (`crates/rustify-ui/src/components.rs`) and is unchanged: the two examples
   built on it keep working, and the new crate is where `class` and the
-  eighteen-category contract live.
+  catalogue contract live.
 
 A runnable example of every category, in each state it has, and with the GPU
 half beside it, is `examples/component-catalog` — one page per row of this

@@ -39,9 +39,9 @@ flowchart TD
 | `crates/rustify-makepad` | Private Makepad integration: `RegionApp` trait, region registry with never-reused ids, pump entry points exported to JS, deferred props application, action outbox delivery, `HostHooks` binding, `web/embedded.js` (JS host for regions). |
 | `makepad/` | Hard fork of the Makepad wasm closure. Changed for embedding: `platform/src/os/web/web.js`, `web_gl.js`, `libs/wasm_bridge/src/wasm_bridge.js`, `platform/src/os/web/web.rs`, `platform/src/action.rs`, `platform/src/cx.rs`; trimmed to the browser backend; `tools/cargo_makepad` reduced to the single-threaded browser build. |
 | `web/loader.js`, `web/runtime.css` | Page-side boot: wasm instantiation, bridge fingerprint check, host hooks, static failure notice. |
-| `xtask` | `doctor`, `build-web`, `serve` (with `--base` and `--fault`), `report-size` (with `--compressed`), `css` (with `--check`), `sources verify`, `verify --suite p1`. |
+| `xtask` | `doctor`, `build-web`, `serve` (with `--base`, `--spa` and `--fault`), `report-size` (with `--compressed`), `css` (with `--check`), `catalog` (with `--check`), `sources verify`, `verify --suite p1|p2|p3`. |
 | `examples/fusion-basic` | Two mount scopes, each with a DOM counter and two GPU regions bound to the same signal. |
-| `examples/component-catalog` | The eighteen categories, what each supports and where: a nav, a page per category, a status table, a theme switch, a language switch, and one GPU region that draws the scope's tokens so a theme change can be seen reaching both halves. |
+| `examples/component-catalog` | The twenty categories, what each supports and where: a nav, a page per category, a status table, a theme switch, a language switch, and one GPU region that draws the scope's tokens so a theme change can be seen reaching both halves. |
 | `examples/property-workbench` | A thousand objects with stable ids: a DOM property panel renames, recolours and deletes the selection, a GPU region draws it, and both sides move the selection through the same rule. Also carries the one fixed-version third-party DOM component (`vendor/nouislider`, `src/third_party.rs`) and the rendered capability catalogue. |
 | `tests/browser` | Playwright probes run against the release build. |
 
@@ -73,9 +73,11 @@ flowchart TD
 2. `cargo xtask build-web`: clears the output directory, runs step 1, extracts the message bridge, copies `embedded.js`, `loader.js`, `runtime.css` and the example page, writes `build-manifest.json` (build id, schema hash, toolchain, per-file sizes, six-category size report).
 3. `cargo xtask serve`: loopback static server with the release CSP, sub-path support and a negative CSP mode.
 
-## Deferred to later milestones
+## What is delivered, and what is deferred
 
-The eighteen-category component catalogue is delivered in P2 M2 (`crates/rustify-components`); `docs/components.md` is printed from it and records what each category supports and what a GPU region draws of it. Routing, workspaces, large data, general cross-region drag, the clipboard and file import are P2 M4 to M6 or later. What P1 measured, and what it could not, is in `docs/reports/p1/`.
+The component catalogue is twenty categories (`crates/rustify-components`); `docs/components.md` is printed from it and records what each supports and what a GPU region draws of it. Routing, workspaces, cross-region drag, the clipboard and file import arrived with P2; large data - a windowed table over a hundred thousand rows, sliced jobs, and a scene of ten thousand GPU objects - arrived with P3, and `docs/data.md` describes it.
+
+Still not provided: threads and `SharedArrayBuffer` (a plain deployment is not cross-origin isolated, so large work is sliced on the one thread there is), a GPU-drawn table, region-level trap isolation, server-side paging, a formula engine, and hot module replacement. What each release measured, and what it could not, is in `docs/reports/p1/`, `docs/reports/p2/` and `docs/reports/p3/`; the per-release limitation lists are the authority on what a pass does not mean.
 
 ## Streams, and why they are named
 

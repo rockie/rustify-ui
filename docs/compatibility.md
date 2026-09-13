@@ -21,8 +21,10 @@ future behaviour.
 
 | Environment | Status |
 | --- | --- |
-| macOS Chrome 152 | P1 pass gate. M1 probes run automatically in Playwright Chromium; the same build was opened in Chrome 152 (regions render, counters update). Manual Chrome records for later milestones live under `docs/validation/p1/`. |
-| macOS Safari | Observation only (recorded at M8, never blocking). Not exercised yet. |
+| macOS Chrome | The pass gate, unchanged since P1. Manual Chrome records live under `docs/validation/p1/`, `p2/` and `p3/`. |
+| Playwright's bundled Chromium (SwiftShader) | What the automated checks and CI run, and what every gate is measured on **except one**. It is a software rasteriser: it exercises each code path a region has and is not evidence about frame rates on real hardware. |
+| Headed Chrome, by hand | R30 AC2 over B3 - the frame interval while ten thousand GPU objects are panned - runs here and nowhere else, in the `budget-scene` project. The same scene measures p95 50.10 ms under SwiftShader against 17.60 ms headed, so a result from the rasteriser would be about the rasteriser. CI does not run it and neither does `verify --suite p3`. |
+| macOS Safari | Observation only, never blocking. |
 | Windows, Linux, mobile | Not tested; no support claimed. |
 
 ## Deployment contract
