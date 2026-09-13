@@ -350,10 +350,16 @@ fn double_build(root: &Path, example: &str) -> Step {
 /// The marker a blank form carries. A record is not a result until a person
 /// has changed it.
 pub const NOT_PERFORMED: &str = "STATUS: NOT PERFORMED";
+/// What a record says once the user has decided it will not be performed.
+pub const WAIVED: &str = "STATUS: WAIVED";
 
 pub enum RecordState {
     /// Someone did the session and wrote it down.
     Held,
+    /// The user decided this one will not be performed. It does not block the
+    /// release, and it is not a pass: the thing was never measured, and every
+    /// report that cites it has to say so.
+    Waived,
     /// The form is there and still says nobody has done it.
     Blank,
     Missing,
@@ -369,6 +375,7 @@ pub fn record_state(root: &Path, path: &str) -> RecordState {
     match std::fs::read_to_string(root.join(path)) {
         Err(_) => RecordState::Missing,
         Ok(text) if text.contains(NOT_PERFORMED) => RecordState::Blank,
+        Ok(text) if text.contains(WAIVED) => RecordState::Waived,
         Ok(_) => RecordState::Held,
     }
 }
@@ -432,9 +439,14 @@ fn report(steps: &[Step], root: &Path, suite: &Suite) -> Result<(), String> {
 
     println!("\nmanual records (a person does these; the suite reads the file, not the session)");
     let mut missing = 0;
+    let mut waived = 0;
     for (path, what) in suite.manual.iter().copied() {
         match record_state(root, path) {
             RecordState::Held => println!("  held  {path}"),
+            RecordState::Waived => {
+                waived += 1;
+                println!("  waiv  {path}\n        untested, waived by the user - not a pass");
+            }
             RecordState::Blank => {
                 missing += 1;
                 println!("  form  {path} exists and says NOT PERFORMED\n        {what}");
@@ -447,8 +459,9 @@ fn report(steps: &[Step], root: &Path, suite: &Suite) -> Result<(), String> {
     }
 
     println!(
-        "\n{} automated step(s) failed, {} manual record(s) not handed in",
-        failed, missing
+        "\n{} automated step(s) failed, {} manual record(s) not handed in, \
+         {} waived",
+        failed, missing, waived
     );
     if failed > 0 {
         return Err("the automated part of the suite did not pass".to_string());
@@ -460,13 +473,22 @@ fn report(steps: &[Step], root: &Path, suite: &Suite) -> Result<(), String> {
             "{} cannot be called complete while a manual record is missing.",
             suite.name
         );
+    } else if waived > 0 {
+        // A waiver lets the release close. What it must never do is close
+        // quietly: the thing was not measured, and the suite says so every
+        // time it runs rather than only in the report nobody re-reads.
+        println!(
+            "{} is complete with {} waived record(s): those checks were not \
+             performed and are not claimed.",
+            suite.name, waived
+        );
     }
     Ok(())
 }
 
 #[cfg(test)]
 mod tests {
-    use super::{record_state, RecordState, NOT_PERFORMED, P1, P2, P3};
+    use super::{record_state, RecordState, NOT_PERFORMED, P1, P2, P3, WAIVED};
 
     #[test]
     fn the_three_suites_ask_for_different_things() {
@@ -502,8 +524,15 @@ mod tests {
         std::fs::write(dir.join(blank), format!("# a form\n\n{NOT_PERFORMED}\n")).unwrap();
         std::fs::write(dir.join(filled), "# a record\n\nSTATUS: PERFORMED\n").unwrap();
 
+        let waived = "docs/waived.md";
+        std::fs::write(dir.join(waived), format!("# a record\n\n{WAIVED}\n")).unwrap();
+
         assert!(matches!(record_state(&dir, blank), RecordState::Blank));
         assert!(matches!(record_state(&dir, filled), RecordState::Held));
+        // A waiver is its own answer. Read as "held" it would claim someone
+        // did the session; read as "blank" it would block a release the user
+        // has already decided about.
+        assert!(matches!(record_state(&dir, waived), RecordState::Waived));
         assert!(matches!(
             record_state(&dir, "docs/nothing.md"),
             RecordState::Missing
@@ -512,15 +541,15 @@ mod tests {
     }
 
     #[test]
-    fn every_later_record_that_exists_is_still_a_form() {
-        // The forms are prepared and none of them has been performed. When one
-        // is, this test is what says so - and it fails loudly rather than
-        // letting a half-filled form drift into looking finished.
+    fn every_later_record_is_prepared() {
+        // Every form exists. Which of the three answers it carries - performed,
+        // waived, or still blank - is the user's to give; what this test
+        // refuses is a record that was never even prepared, because that is the
+        // one state where nobody was ever asked.
         let root = crate::build::repo_root();
         for (path, _) in P2.manual.iter().chain(P3.manual.iter()).copied() {
             match record_state(&root, path) {
-                RecordState::Held => {}
-                RecordState::Blank => {}
+                RecordState::Held | RecordState::Waived | RecordState::Blank => {}
                 RecordState::Missing => panic!("{path}: the form should be prepared"),
             }
         }

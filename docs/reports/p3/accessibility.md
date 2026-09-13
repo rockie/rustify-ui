@@ -60,13 +60,13 @@ Unchanged from P2 and re-run: contrast ratios over both themes are a host test,
 the five journeys pass at 200%, and the catalogue reflows at 320 CSS pixels.
 P3 adds no new colour tokens.
 
-## What still needs a person
+## What needed a person, and was waived
 
-**A-4 is open.** The form is prepared at
+**A-4 was waived by the user on 2026-09-13.** The walkthrough at
 [`docs/validation/p3/manual/voiceover-data.md`](../../validation/p3/manual/voiceover-data.md)
-and has **not** been performed. `cargo xtask verify --suite p3` reports it as a
-record that has not been handed in, and a blank form is never counted as a
-pass.
+was **not performed**. `cargo xtask verify --suite p3` reports it as waived on
+every run, with the words "those checks were not performed and are not
+claimed"; a waiver lets the release close and is never counted as a pass.
 
 What the automated checks establish is that the tree is correct: the row
 indices are the rows' own, there is one tab stop, the query entries work, and
@@ -77,6 +77,12 @@ they are in the sample, whether a job's progress arrives as one statement or as
 a stream of interruptions, and whether the scene's query entry is discoverable
 at all by someone who cannot see the canvas.
 
-Until that walkthrough is done or explicitly waived, this release claims a
-correct accessibility tree over both large loads and **does not** claim
-screen-reader support for them.
+So: this release claims a **correct accessibility tree** over both large
+loads, and **does not claim screen-reader support** for them. The difference
+matters. A correct tree is what makes support possible; whether it is achieved
+is a question about speech, and nobody has listened.
+
+The waiver follows the precedent set for P2's remaining VoiceOver rows, waived
+on 2026-09-11. The full WCAG 2.2 AA review and the wider assistive-technology
+matrix were already P4's (plan §0.6); this waiver does not enlarge that
+exclusion and does not waive anything the automated checks above cover.

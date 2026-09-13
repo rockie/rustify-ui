@@ -64,9 +64,11 @@ limitation lists still hold.
 
 ## Not verified
 
-- **A-4: VoiceOver over the two large loads.** The form is prepared and has not
-  been performed. Not a pass, not a failure — untested, and reported as such by
-  `cargo xtask verify --suite p3`.
+- **A-4: VoiceOver over the two large loads.** **Waived by the user on
+  2026-09-13** and not performed. Not a pass and not a failure — untested, and
+  reported as waived by `cargo xtask verify --suite p3` on every run. This
+  release claims a correct accessibility tree over both large loads and does
+  **not** claim screen-reader support for them.
 - **`document.hidden`.** Could not be made true in this headless browser by
   either method tried. The element-level hidden path is measured.
 - **R30 AC2 over B3 in CI.** Deliberately: there is no GPU there to gate
