@@ -5,7 +5,7 @@
       "source": "XGENT-ai/skills",
       "sourceType": "github",
       "skillPath": "skills/dev-plan/SKILL.md",
-      "computedHash": "7a21ddc80b8ebb7b47e6182449dd223c99c2708589656166039d2428e6ebcd5c"
+      "computedHash": "5f26d8d7daf295268a2d7d4f08c90e5446ba040a8d201c2eb193053bef9bdcef"
     },
     "elintp": {
       "source": "XGENT-ai/skills",
@@ -23,7 +23,7 @@
       "source": "XGENT-ai/skills",
       "sourceType": "github",
       "skillPath": "skills/prd/SKILL.md",
-      "computedHash": "97e0a2eb06431d22eb797c3040d7707a106bbfc425aefa13fa4da1f88b6bf645"
+      "computedHash": "cae8b4615a35eb5e5840d4b5d67863c280b668f64cdb0e08567244e16c38e706"
     },
     "rust-async-patterns": {
       "source": "wshobson/agents",
@@ -43,11 +43,35 @@
       "skillPath": "skills/story-points/SKILL.md",
       "computedHash": "60f54390765d6860b8982a14068d5dda46b0fc9b0e795bf7eaffc184920b6b1a"
     },
+    "summarize": {
+      "source": "XGENT-ai/skills",
+      "sourceType": "github",
+      "skillPath": "skills/summarize/SKILL.md",
+      "computedHash": "9c4df86dab7c205394baa9f12e4c78055a44683aafc475deb8e0162406b54dfd"
+    },
     "test-plan": {
       "source": "XGENT-ai/skills",
       "sourceType": "github",
       "skillPath": "skills/test-plan/SKILL.md",
       "computedHash": "9388ed7b66dc5d76d9e6ae3d95e02739ba02879fbae120f614fb9a47a842100f"
+    },
+    "xgent-app-release": {
+      "source": "XGENT-ai/skills",
+      "sourceType": "github",
+      "skillPath": "skills/xgent-app-release/SKILL.md",
+      "computedHash": "d622a8d8d89df288bbcdc50478a82e87a8c58b8eb53c3b891222f6f7d0c8f918"
+    },
+    "xgent-image-push": {
+      "source": "XGENT-ai/skills",
+      "sourceType": "github",
+      "skillPath": "skills/xgent-image-push/SKILL.md",
+      "computedHash": "9c8704f893af471d86095b11f45dfe9a503d370b748b286c5d4ae9b72bae5874"
+    },
+    "xgent-init": {
+      "source": "XGENT-ai/skills",
+      "sourceType": "github",
+      "skillPath": "skills/xgent-init/SKILL.md",
+      "computedHash": "b959a41c5deed3b10350db52029043f397ac2a6d25a6bc5b15bf0e7a86bf007f"
     }
   }
 }

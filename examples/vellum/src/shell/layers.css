@@ -1,0 +1,10 @@
+/* Layer portals remain inside the themed .vellum scope. */
+.vellum .vellum-modal-layer { width: 100vw; height: 100vh; }
+/* Keep status messages above the SDK's overlay plane, as in the original. */
+.vellum .toast { z-index: 2200; }
+.vellum .modal-subtitle { margin: 0; }
+.vellum .modal-save-file { height: 43px; }
+.vellum .token-edit-row { display: flex; gap: 8px; margin-bottom: 10px; }
+.vellum .token-edit-color { width: 36px; height: 36px; }
+.vellum .command-hint { font-size: 10px; margin-bottom: 0; }
+.vellum .vellum-visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }

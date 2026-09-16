@@ -31,6 +31,8 @@ without a restart.
 
 `build-web` runs the fork's `cargo-makepad` (nightly, `build-std`, single-threaded wasm, in-process wasm-bindgen), extracts the static message bridge from the built wasm with a host interpreter, copies the runtime JS and the example page, and writes `build-manifest.json` with a size report. Output lives in `target/makepad-wasm-app/release/<example>/` and is a plain static directory.
 
+For the [Vellum design editor](../examples/vellum/), use `cargo xtask build-web --example vellum --release`; its [framework integration guide](vellum.md) explains the rendering, editing and persistence paths.
+
 ## Verification commands
 
 ```sh

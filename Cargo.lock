@@ -2138,6 +2138,12 @@ name = "unicode-ccc"
 version = "0.3.0"
 
 [[package]]
+name = "unicode-general-category"
+version = "1.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "0b993bddc193ae5bd0d623b49ec06ac3e9312875fdae725a975c51db1cc1677f"
+
+[[package]]
 name = "unicode-ident"
 version = "1.0.24"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2204,6 +2210,23 @@ dependencies = [
  "getrandom",
  "js-sys",
  "wasm-bindgen",
+]
+
+[[package]]
+name = "vellum"
+version = "0.1.0"
+dependencies = [
+ "js-sys",
+ "leptos",
+ "rustify-makepad",
+ "rustify-ui",
+ "serde",
+ "serde_json",
+ "unicode-general-category",
+ "unicode-segmentation 1.13.3",
+ "wasm-bindgen",
+ "wasm-bindgen-futures",
+ "web-sys",
 ]
 
 [[package]]

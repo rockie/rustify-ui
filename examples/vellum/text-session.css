@@ -1,0 +1,22 @@
+.vellum textarea.vellum-text-session {
+  position: fixed;
+  z-index: 4;
+  transform-origin: 0 0;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  outline: 1px solid var(--accent);
+  caret-color: var(--accent);
+  padding: 0;
+  min-height: 1em;
+  cursor: text;
+  margin: 0;
+  user-select: text;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  resize: none;
+  overflow: hidden;
+  box-sizing: border-box;
+  pointer-events: auto;
+}

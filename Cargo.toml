@@ -8,6 +8,7 @@ members = [
     "examples/data-workbench",
     "examples/fusion-basic",
     "examples/property-workbench",
+    "examples/vellum",
     "xtask",
 ]
 exclude = ["makepad", "ref"]

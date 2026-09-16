@@ -1,0 +1,35 @@
+[package]
+name = "vellum"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[dependencies]
+leptos.workspace = true
+rustify-ui = { path = "../../crates/rustify-ui" }
+serde = { version = "1", features = ["derive", "rc"] }
+serde_json = { version = "1", features = ["float_roundtrip"] }
+unicode-segmentation = "1.12"
+unicode-general-category = "1"
+
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+rustify-makepad = { path = "../../crates/rustify-makepad" }
+wasm-bindgen.workspace = true
+wasm-bindgen-futures = "=0.4.78"
+js-sys.workspace = true
+web-sys = { workspace = true, features = [
+    "Window", "Document", "Element", "HtmlElement", "HtmlCanvasElement",
+    "CanvasRenderingContext2d", "Path2d", "CanvasGradient", "TextMetrics",
+    "ImageData", "HtmlImageElement", "DomMatrix", "FontFace", "FontFaceSet",
+    "Storage", "IdbFactory", "IdbOpenDbRequest", "IdbDatabase", "IdbTransaction",
+    "IdbTransactionMode", "IdbObjectStore", "IdbRequest", "Blob", "BlobPropertyBag",
+    "Url", "File", "FileList", "FileReader", "KeyboardEvent", "PointerEvent",
+    "WheelEvent", "MouseEvent", "DragEvent", "DataTransfer", "ResizeObserver",
+    "Performance", "CssStyleDeclaration", "DomRect", "HtmlInputElement",
+    "Location", "UrlSearchParams",
+    "AddEventListenerOptions", "FocusOptions", "Event", "EventTarget",
+    "DomTokenList", "NodeList", "HtmlSelectElement", "HtmlTextAreaElement",
+    "ScrollIntoViewOptions", "ScrollLogicalPosition", "BeforeUnloadEvent", "DomException",
+    "DataTransferItemList", "DataTransferItem",
+] }

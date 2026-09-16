@@ -69,6 +69,11 @@ mod dom {
         /// changes from outside while the session is open.
         #[prop(into)]
         value: Signal<String>,
+        /// Optional CSS transform applied after the anchor places the control.
+        /// The anchor remains untransformed; use the control's class to choose
+        /// a transform origin when supplying an application-space matrix.
+        #[prop(optional)]
+        transform: Option<Signal<String>>,
         #[prop(optional)] multiline: bool,
         on_commit: impl Fn(String) + Send + Sync + 'static,
         on_cancel: impl Fn() + Send + Sync + 'static,
@@ -234,6 +239,7 @@ mod dom {
                                     style:top=style_top
                                     style:width=style_width
                                     style:height=style_height
+                                    style:transform=move || transform.map(|value| value.get()).unwrap_or_default()
                                     on:keydown=move |event| on_key.with_value(|key| key(event))
                                     on:compositionstart=move |_| {
                                         on_composition.with_value(|set| set(true))
@@ -256,6 +262,7 @@ mod dom {
                                     style:top=style_top
                                     style:width=style_width
                                     style:height=style_height
+                                    style:transform=move || transform.map(|value| value.get()).unwrap_or_default()
                                     on:keydown=move |event| on_key.with_value(|key| key(event))
                                     on:compositionstart=move |_| {
                                         on_composition.with_value(|set| set(true))

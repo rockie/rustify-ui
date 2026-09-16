@@ -58,6 +58,8 @@ jobs:
         run: cargo xtask build-web --example component-catalog --release
       - name: Build data-workbench
         run: cargo xtask build-web --example data-workbench --release
+      - name: Build vellum
+        run: cargo xtask build-web --example vellum --release
       - name: Install pinned Playwright
         run: npm ci && npx playwright install --with-deps chromium
       # Named one by one rather than run as a whole: a headed project measures
@@ -77,6 +79,8 @@ jobs:
           --project=budget-data
           --project=workbench-deep
           --project=deployment
+      - name: Vellum browser probes
+        run: npx playwright test -c tests/vellum/playwright.config.ts
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -87,3 +91,4 @@ jobs:
             target/makepad-wasm-app/release/property-workbench/build-manifest.json
             target/makepad-wasm-app/release/component-catalog/build-manifest.json
             target/makepad-wasm-app/release/data-workbench/build-manifest.json
+            target/makepad-wasm-app/release/vellum/build-manifest.json

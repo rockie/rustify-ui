@@ -43,6 +43,7 @@ flowchart TD
 | `examples/fusion-basic` | Two mount scopes, each with a DOM counter and two GPU regions bound to the same signal. |
 | `examples/component-catalog` | The twenty categories, what each supports and where: a nav, a page per category, a status table, a theme switch, a language switch, and one GPU region that draws the scope's tokens so a theme change can be seen reaching both halves. |
 | `examples/property-workbench` | A thousand objects with stable ids: a DOM property panel renames, recolours and deletes the selection, a GPU region draws it, and both sides move the selection through the same rule. Also carries the one fixed-version third-party DOM component (`vendor/nouislider`, `src/third_party.rs`) and the rendered capability catalogue. |
+| [`examples/vellum`](../examples/vellum/) | A design editor combining one GPU scene with DOM controls, native text sessions and SDK layers; [framework integration and validation](vellum.md). |
 | `tests/browser` | Playwright probes run against the release build. |
 
 ## Runtime contracts

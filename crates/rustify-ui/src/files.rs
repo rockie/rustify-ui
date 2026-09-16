@@ -196,35 +196,74 @@ mod browser {
         }
 
         let done = Rc::new(RefCell::new(Some(done)));
-        let answer = {
-            let done = Rc::clone(&done);
-            move |import: Import| {
-                if let Some(done) = done.borrow_mut().take() {
-                    done(import);
+        let listeners = Rc::new(RefCell::new(
+            None::<(Closure<dyn FnMut()>, Closure<dyn FnMut()>)>,
+        ));
+        let cleanup = {
+            let input = input.clone();
+            let listeners = Rc::clone(&listeners);
+            move || {
+                let callbacks = listeners.borrow_mut().take();
+                if let Some((chosen, dismissed)) = callbacks {
+                    let _ = input.remove_event_listener_with_callback(
+                        "change",
+                        chosen.as_ref().unchecked_ref(),
+                    );
+                    let _ = input.remove_event_listener_with_callback(
+                        "cancel",
+                        dismissed.as_ref().unchecked_ref(),
+                    );
                 }
             }
         };
 
         let chosen = {
             let input = input.clone();
-            let answer = answer.clone();
+            let done = Rc::clone(&done);
+            let cleanup = cleanup.clone();
             Closure::<dyn FnMut()>::new(move || {
-                let answer = answer.clone();
-                import_files(input.files(), limits, move |import| answer(import));
+                let answer = done.borrow_mut().take();
+                cleanup();
+                if let Some(answer) = answer {
+                    import_files(input.files(), limits, answer);
+                }
             })
         };
         let dismissed = {
-            let answer = answer.clone();
-            Closure::<dyn FnMut()>::new(move || answer(Import::Aborted))
+            let done = Rc::clone(&done);
+            let cleanup = cleanup.clone();
+            Closure::<dyn FnMut()>::new(move || {
+                let answer = done.borrow_mut().take();
+                cleanup();
+                if let Some(answer) = answer {
+                    answer(Import::Aborted);
+                }
+            })
         };
-        let _ = input.add_event_listener_with_callback("change", chosen.as_ref().unchecked_ref());
-        let _ =
-            input.add_event_listener_with_callback("cancel", dismissed.as_ref().unchecked_ref());
-        // The element is never in the document, so nothing takes the closures
-        // off it for us; they are held until whichever event fires and then
-        // dropped together with the input.
-        chosen.forget();
-        dismissed.forget();
+        let options = crate::listeners::page_level();
+        let registered = input
+            .add_event_listener_with_callback_and_add_event_listener_options(
+                "change",
+                chosen.as_ref().unchecked_ref(),
+                &options,
+            )
+            .and_then(|()| {
+                input.add_event_listener_with_callback_and_add_event_listener_options(
+                    "cancel",
+                    dismissed.as_ref().unchecked_ref(),
+                    &options,
+                )
+            });
+        // Either event takes the callback and breaks this ownership cycle before
+        // reading bytes. A queued second event can neither answer nor keep the input alive.
+        *listeners.borrow_mut() = Some((chosen, dismissed));
+        if registered.is_err() {
+            cleanup();
+            if let Some(answer) = done.borrow_mut().take() {
+                answer(Import::Aborted);
+            }
+            return;
+        }
         input.click();
     }
 
