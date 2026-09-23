@@ -25,6 +25,18 @@
       "skillPath": "skills/prd/SKILL.md",
       "computedHash": "cae8b4615a35eb5e5840d4b5d67863c280b668f64cdb0e08567244e16c38e706"
     },
+    "react": {
+      "source": "XGENT-ai/skills",
+      "sourceType": "github",
+      "skillPath": "skills/react/SKILL.md",
+      "computedHash": "8532b11f10ab6fdcbb05bfddb3187e4a78b8ea907ed77a17f56c7d8211857905"
+    },
+    "rust": {
+      "source": "XGENT-ai/skills",
+      "sourceType": "github",
+      "skillPath": "skills/rust/SKILL.md",
+      "computedHash": "b40bb593f56b43f2680e039a5b57a2694dab44c7d0a9e77194362bdc148088d5"
+    },
     "rust-async-patterns": {
       "source": "wshobson/agents",
       "sourceType": "github",
@@ -49,11 +61,29 @@
       "skillPath": "skills/summarize/SKILL.md",
       "computedHash": "9c4df86dab7c205394baa9f12e4c78055a44683aafc475deb8e0162406b54dfd"
     },
+    "swarm": {
+      "source": "XGENT-ai/skills",
+      "sourceType": "github",
+      "skillPath": "skills/swarm/SKILL.md",
+      "computedHash": "122a83568fca7fb01b961487ede79a22c859515a7cc2e86e1683e6d8b45b7fb8"
+    },
     "test-plan": {
       "source": "XGENT-ai/skills",
       "sourceType": "github",
       "skillPath": "skills/test-plan/SKILL.md",
       "computedHash": "9388ed7b66dc5d76d9e6ae3d95e02739ba02879fbae120f614fb9a47a842100f"
+    },
+    "working-with-mbx": {
+      "source": "XGENT-ai/skills",
+      "sourceType": "github",
+      "skillPath": "skills/working-with-mbx/SKILL.md",
+      "computedHash": "82ae35bd493ffd751b5649b18d40ec32880986713ba9b4ba672dccf436f78ce1"
+    },
+    "working-with-mise": {
+      "source": "XGENT-ai/skills",
+      "sourceType": "github",
+      "skillPath": "skills/working-with-mise/SKILL.md",
+      "computedHash": "6a22091310a2b459fe17775c2490ff39ef7ad3a24d8ac7c6586fad477c3bf8ef"
     },
     "xgent-app-release": {
       "source": "XGENT-ai/skills",
