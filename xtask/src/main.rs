@@ -11,7 +11,7 @@ use build::BuildRequest;
 use serve::{CspMode, ServeConfig};
 
 const USAGE: &str = "\
-cargo xtask <command> [options]
+mbx xtask <command> [options]
 
   doctor
   build-web --example <name> [--release] [--base /path/]
@@ -73,7 +73,7 @@ fn report_size(args: &[String]) -> Result<(), String> {
     let root = build::app_dir(&build::repo_root(), &request);
     if !root.join("index.html").is_file() {
         return Err(format!(
-            "{} has no build; run `cargo xtask build-web --example {}{}` first",
+            "{} has no build; run `mbx xtask build-web --example {}{}` first",
             root.display(),
             request.example,
             if request.release { " --release" } else { "" }
@@ -102,7 +102,7 @@ fn serve_example(args: &[String]) -> Result<(), String> {
     let root = build::app_dir(&build::repo_root(), &request);
     if !root.join("index.html").is_file() {
         return Err(format!(
-            "{} has no build; run `cargo xtask build-web --example {}{}` first",
+            "{} has no build; run `mbx xtask build-web --example {}{}` first",
             root.display(),
             request.example,
             if request.release { " --release" } else { "" }
@@ -124,7 +124,7 @@ fn serve_example(args: &[String]) -> Result<(), String> {
     if built_for != base {
         return Err(format!(
             "this build was made for {built_for} and you asked to serve it at {base}; \
-             rebuild with `cargo xtask build-web --example {} {}--base {base}`",
+             rebuild with `mbx xtask build-web --example {} {}--base {base}`",
             request.example,
             if request.release { "--release " } else { "" }
         ));

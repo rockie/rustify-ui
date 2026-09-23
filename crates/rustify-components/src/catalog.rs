@@ -647,7 +647,7 @@ mod tests {
 
     /// The capability document is the same table, printed.
     ///
-    /// `cargo xtask catalog --write docs/components.md` is what writes it;
+    /// `mbx xtask catalog --write docs/components.md` is what writes it;
     /// this is what fails when somebody edits the table and forgets.
     #[test]
     fn the_capability_document_holds_the_table_the_code_holds() {
@@ -656,7 +656,7 @@ mod tests {
         assert!(
             document.contains(&markdown()),
             "docs/components.md is out of step with the catalogue; \
-             run `cargo xtask catalog --write docs/components.md`"
+             run `mbx xtask catalog --write docs/components.md`"
         );
     }
 

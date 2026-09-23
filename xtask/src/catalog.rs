@@ -1,4 +1,4 @@
-//! `cargo xtask catalog --write <path> [--check]`: the capability document,
+//! `mbx xtask catalog --write <path> [--check]`: the capability document,
 //! printed from the table the components are declared in.
 //!
 //! Two copies of eighteen rows drift, and the one that drifts is always the
@@ -38,7 +38,7 @@ pub fn run(args: &[String]) -> Result<(), String> {
             Ok(())
         } else {
             Err(format!(
-                "{} is not what the catalogue prints; run `cargo xtask catalog --write {}`",
+                "{} is not what the catalogue prints; run `mbx xtask catalog --write {}`",
                 target.display(),
                 crate::option(args, "--write").unwrap_or_default()
             ))

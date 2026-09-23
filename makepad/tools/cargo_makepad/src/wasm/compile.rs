@@ -169,59 +169,13 @@ fn run_wasm_bindgen(wasm_path: &Path, out_dir: &Path) -> Result<(), String> {
         .map_err(|e| format!("wasm-bindgen failed on {}: {e:#}", wasm_path.display()))
 }
 
-fn build_wasm_target_spec(cwd: &Path, channel: &str) -> Result<PathBuf, String> {
-    let target_spec_dir = cwd.join("target/makepad-wasm-target/single");
-    mkdir(&target_spec_dir)?;
-    let target_spec_path = target_spec_dir.join(format!("{WASM_TARGET_TRIPLE}.json"));
-
-    let target_spec = shell_env_cap(
-        &[],
-        cwd,
-        "rustup",
-        &[
-            "run",
-            channel,
-            "rustc",
-            "-Z",
-            "unstable-options",
-            "--print",
-            "target-spec-json",
-            "--target",
-            WASM_TARGET_TRIPLE,
-        ],
-    )?;
-    if target_spec.contains("\"features\"") {
-        return Err(
-            "Built-in wasm target spec unexpectedly contains \"features\"; update cargo_makepad wasm target generation."
-                .to_string(),
-        );
-    }
-    fs::write(&target_spec_path, target_spec).map_err(|e| {
-        format!(
-            "Can't write wasm target spec {:?}: {:?}",
-            target_spec_path, e
-        )
-    })?;
-    Ok(target_spec_path)
-}
-
 pub fn build(config: WasmConfig, args: &[String]) -> Result<PathBuf, String> {
     let build_crate = get_build_crate_from_args(args)?;
     let cwd = std::env::current_dir().unwrap();
-    let channel = super::toolchain::pinned_channel(&cwd)?;
-    let wasm_target_spec = build_wasm_target_spec(&cwd, &channel)?;
-    let target_arg = format!("--target={}", wasm_target_spec.display());
 
     let mut args_out = vec![
-        "run".to_string(),
-        channel.clone(),
-        "cargo".to_string(),
         "build".to_string(),
-        target_arg,
-        "-Z".to_string(),
-        "json-target-spec".to_string(),
-        "-Z".to_string(),
-        "build-std=panic_abort,std".to_string(),
+        format!("--target={WASM_TARGET_TRIPLE}"),
     ];
     let profile = get_profile_from_args(args);
     args_out.extend(args.iter().cloned());
@@ -229,11 +183,25 @@ pub fn build(config: WasmConfig, args: &[String]) -> Result<PathBuf, String> {
 
     let inherited_rustflags = std::env::var("RUSTFLAGS").ok();
     let rustflags =
-        super::toolchain::compose_rustflags(WASM_RUSTFLAGS, inherited_rustflags.as_deref());
+        super::rustflags::compose_rustflags(WASM_RUSTFLAGS, inherited_rustflags.as_deref());
+    // mbx rather than `$CARGO`: a program started by `mbx run` gets the plain
+    // toolchain Cargo and none of mbx's wrapping, so a nested build has to ask
+    // for the cache by name.
+    //
+    // Learned incremental is off for this build. mbx compiles a freshly edited
+    // workspace crate with private incremental state, and that comes out
+    // differently from a clean compile: the same fusion-basic sources gave
+    // 8,673,018 wasm bytes that way and 8,671,140 without. A product must not
+    // depend on which crates were edited since the last build. The switch is
+    // set here, on the build itself, because one given to an outer mbx does
+    // not reach this one while that outer session is running.
     shell_env(
-        &[("RUSTFLAGS", rustflags.as_str())],
+        &[
+            ("RUSTFLAGS", rustflags.as_str()),
+            ("MBX_LEARNED_INCREMENTAL", "0"),
+        ],
         &cwd,
-        "rustup",
+        "mbx",
         &args_out_refs,
     )?;
 

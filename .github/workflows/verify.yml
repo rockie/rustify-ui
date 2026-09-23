@@ -11,31 +11,32 @@ jobs:
     runs-on: macos-14
     steps:
       - uses: actions/checkout@v4
-      - name: Toolchain from rust-toolchain.toml
-        run: rustup show active-toolchain
+      - name: Rust and mbx from mise.toml
+        uses: jdx/mise-action@v4
+      - uses: jdx/mr-boxington-action@v1
       - name: Format
         run: cargo fmt --all -- --check
       - name: Unit tests
-        run: cargo test --workspace --lib
+        run: mbx test --workspace --lib
       - name: Fork unit tests
-        run: cargo test
+        run: mbx test
         working-directory: makepad
       - name: Fork script VM tests
-        run: cargo test --manifest-path platform/script/Cargo.toml
+        run: mbx test --manifest-path platform/script/Cargo.toml
         working-directory: makepad
       - name: Clippy
-        run: cargo clippy --workspace --all-targets -- -D warnings
+        run: mbx clippy --workspace --all-targets -- -D warnings
       - name: Source record
-        run: cargo xtask sources verify
+        run: mbx xtask sources verify
       - uses: actions/setup-node@v4
         with:
           node-version: 26
       - name: Install pinned devDependencies
         run: npm ci
       - name: Component stylesheet is in step with the classes
-        run: cargo xtask css --check
+        run: mbx xtask css --check
       - name: Capability document is in step with the catalogue
-        run: cargo xtask catalog --write docs/components.md --check
+        run: mbx xtask catalog --write docs/components.md --check
 
   web:
     name: release web build and browser probes
@@ -45,21 +46,22 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 26
-      - name: Toolchain from rust-toolchain.toml
-        run: rustup show active-toolchain
+      - name: Rust and mbx from mise.toml
+        uses: jdx/mise-action@v4
+      - uses: jdx/mr-boxington-action@v1
       - name: Doctor (reports only, installs nothing)
-        run: cargo xtask doctor
+        run: mbx xtask doctor
         continue-on-error: true
       - name: Build fusion-basic
-        run: cargo xtask build-web --example fusion-basic --release
+        run: mbx xtask build-web --example fusion-basic --release
       - name: Build property-workbench
-        run: cargo xtask build-web --example property-workbench --release
+        run: mbx xtask build-web --example property-workbench --release
       - name: Build component-catalog
-        run: cargo xtask build-web --example component-catalog --release
+        run: mbx xtask build-web --example component-catalog --release
       - name: Build data-workbench
-        run: cargo xtask build-web --example data-workbench --release
+        run: mbx xtask build-web --example data-workbench --release
       - name: Build vellum
-        run: cargo xtask build-web --example vellum --release
+        run: mbx xtask build-web --example vellum --release
       - name: Install pinned Playwright
         run: npm ci && npx playwright install --with-deps chromium
       # Named one by one rather than run as a whole: a headed project measures

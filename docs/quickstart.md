@@ -2,24 +2,25 @@
 
 ## Prerequisites
 
-- `rustup`. The toolchain in `rust-toolchain.toml` (a pinned nightly with `rust-src` and the wasm32 target) is installed by rustup on first use; nothing else is installed silently.
+- `mise` (2026.9.2 or newer). `mise install` installs what `mise.toml` pins: Rust 1.98.1 (stable) with `rustfmt`, `clippy` and the wasm32 target, and mbx 1.15.0, the compiler cache every build goes through. Nothing else is installed silently.
+- After installing Rust, mise runs `scripts/link-libllvm.sh`, which puts a link to the toolchain's `libLLVM` next to `rust-lld`. mbx starts the toolchain's Cargo without rustup's proxy, so without that link the wasm link cannot load LLVM. `mbx xtask doctor` reports a toolchain that is missing the link.
 - Node 26 and npm for the browser tests: `npm ci` then `npx playwright install chromium`.
 - Google Chrome on macOS for the manual pass gate.
 
-`cargo xtask doctor` reports the state of all of the above and never changes it.
+`mbx xtask doctor` reports the state of all of the above and never changes it.
 
 ## Build and preview an example
 
 ```sh
-cargo xtask build-web --example fusion-basic --release
-cargo xtask build-web --example property-workbench --release
-cargo xtask build-web --example component-catalog --release
-cargo xtask serve --example fusion-basic --release          # prints http://127.0.0.1:<port>/
-cargo xtask serve --example fusion-basic --release --base /tools/demo/ --port 4173
-cargo xtask serve --example fusion-basic --release --csp no-wasm   # negative test: wasm must fail visibly
-cargo xtask serve --example fusion-basic --release --fault missing:makepad_widgets/resources/IBMPlexSans-Text.ttf
-cargo xtask report-size --example fusion-basic --release           # six category totals, read off the directory
-cargo xtask report-size --example fusion-basic --release --compressed  # and what a gzip host would send
+mbx xtask build-web --example fusion-basic --release
+mbx xtask build-web --example property-workbench --release
+mbx xtask build-web --example component-catalog --release
+mbx xtask serve --example fusion-basic --release          # prints http://127.0.0.1:<port>/
+mbx xtask serve --example fusion-basic --release --base /tools/demo/ --port 4173
+mbx xtask serve --example fusion-basic --release --csp no-wasm   # negative test: wasm must fail visibly
+mbx xtask serve --example fusion-basic --release --fault missing:makepad_widgets/resources/IBMPlexSans-Text.ttf
+mbx xtask report-size --example fusion-basic --release           # six category totals, read off the directory
+mbx xtask report-size --example fusion-basic --release --compressed  # and what a gzip host would send
 ```
 
 `serve --fault` makes the server break the deployment in one specific way -
@@ -29,21 +30,21 @@ copy of it. A running server also takes `GET <base>__fault/<spec>` (and
 `.../none` to stop), which is how the browser tests switch between them
 without a restart.
 
-`build-web` runs the fork's `cargo-makepad` (nightly, `build-std`, single-threaded wasm, in-process wasm-bindgen), extracts the static message bridge from the built wasm with a host interpreter, copies the runtime JS and the example page, and writes `build-manifest.json` with a size report. Output lives in `target/makepad-wasm-app/release/<example>/` and is a plain static directory.
+`build-web` runs the fork's `cargo-makepad` (stable, the built-in `wasm32-unknown-unknown` target, single-threaded wasm, in-process wasm-bindgen), extracts the static message bridge from the built wasm with a host interpreter, copies the runtime JS and the example page, and writes `build-manifest.json` with a size report. Output lives in `target/makepad-wasm-app/release/<example>/` and is a plain static directory.
 
-For the [Vellum design editor](../examples/vellum/), use `cargo xtask build-web --example vellum --release`; its [framework integration guide](vellum.md) explains the rendering, editing and persistence paths.
+For the [Vellum design editor](../examples/vellum/), use `mbx xtask build-web --example vellum --release`; its [framework integration guide](vellum.md) explains the rendering, editing and persistence paths.
 
 ## Verification commands
 
 ```sh
-cargo test --workspace --lib
-cargo xtask css --check              # the component stylesheet is in step with the classes
-cargo clippy --workspace --all-targets -- -D warnings
+mbx test --workspace --lib
+mbx xtask css --check                # the component stylesheet is in step with the classes
+mbx clippy --workspace --all-targets -- -D warnings
 cargo fmt --all -- --check           # the fork under makepad/ is excluded by its rustfmt.toml
-cargo xtask sources verify           # drift of makepad/ against the import record
+mbx xtask sources verify             # drift of makepad/ against the import record
 npm run test:browser                 # Playwright probes against a release build
-cd makepad && cargo test -p cargo-makepad
-cargo xtask verify --suite p2        # everything above in one report, plus what needs a person
+cd makepad && mbx test -p cargo-makepad
+mbx xtask verify --suite p2          # everything above in one report, plus what needs a person
 ```
 
 `verify` runs the checks, double-builds each example, runs every browser
@@ -58,8 +59,8 @@ and the stylesheet they need is **committed**, so building the wasm never needs
 Node:
 
 ```sh
-cargo xtask css            # regenerate crates/rustify-components/css/rustify.css
-cargo xtask css --check    # fail if the committed product is not what the input produces
+mbx xtask css            # regenerate crates/rustify-components/css/rustify.css
+mbx xtask css --check    # fail if the committed product is not what the input produces
 ```
 
 A class string added without regenerating would simply have no rule; `--check`

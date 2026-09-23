@@ -1,6 +1,6 @@
 mod bindgen_glue;
 mod compile;
-mod toolchain;
+mod rustflags;
 
 pub use compile::WasmConfig;
 

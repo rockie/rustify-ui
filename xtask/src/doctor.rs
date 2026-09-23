@@ -1,4 +1,4 @@
-//! `cargo xtask doctor`: reports the fixed toolchain and the repository's
+//! `mbx xtask doctor`: reports the fixed toolchain and the repository's
 //! provenance records. It never installs anything.
 
 use std::path::Path;
@@ -13,6 +13,7 @@ pub fn run() -> Result<(), String> {
     let root = crate::build::repo_root();
     let checks = vec![
         toolchain(&root),
+        mbx(&root),
         wasm_bindgen_lock(&root),
         leptos_lock(&root),
         sources_lock(&root),
@@ -41,32 +42,92 @@ pub fn run() -> Result<(), String> {
 
 fn toolchain(root: &Path) -> Check {
     let result = (|| {
-        let text =
-            std::fs::read_to_string(root.join("rust-toolchain.toml")).map_err(|e| e.to_string())?;
-        let channel = text
-            .lines()
-            .find_map(|line| line.trim().strip_prefix("channel"))
-            .and_then(|rest| rest.split('"').nth(1))
-            .ok_or("rust-toolchain.toml has no channel")?
-            .to_string();
-        let version = capture("rustup", &["run", &channel, "rustc", "--version"])?;
-        let components = capture(
-            "rustup",
-            &["component", "list", "--installed", "--toolchain", &channel],
-        )?;
-        for needed in ["rust-src", "rust-std-wasm32-unknown-unknown"] {
-            if !components.lines().any(|line| line.starts_with(needed)) {
-                return Err(format!(
-                    "{channel} lacks {needed}; run `rustup component add` for it"
-                ));
-            }
+        let pinned = mise_pin(root, "rust")?;
+        let version = capture("rustc", &["--version"])?;
+        let version = version.trim();
+        if !version.starts_with(&format!("rustc {pinned} ")) {
+            return Err(format!(
+                "{version} is active but mise.toml pins rust {pinned}; run `mise install`"
+            ));
         }
-        Ok(format!("{channel} ({})", version.trim()))
+        let sysroot = capture("rustc", &["--print", "sysroot"])?;
+        let rustlib = Path::new(sysroot.trim()).join("lib/rustlib");
+        if !rustlib.join("wasm32-unknown-unknown").is_dir() {
+            return Err(format!(
+                "rust {pinned} lacks wasm32-unknown-unknown; run \
+                 `rustup target add wasm32-unknown-unknown --toolchain {pinned}`"
+            ));
+        }
+        // Started the way mbx starts it: with no library path, which rustup's
+        // proxy (and Cargo, for this very process) would otherwise supply.
+        let verbose = capture("rustc", &["-vV"])?;
+        let host = verbose
+            .lines()
+            .find_map(|line| line.strip_prefix("host: "))
+            .ok_or("rustc -vV names no host")?;
+        let lld = Command::new(rustlib.join(host).join("bin/rust-lld"))
+            .args(["-flavor", "wasm", "--version"])
+            .env_remove("DYLD_FALLBACK_LIBRARY_PATH")
+            .env_remove("DYLD_LIBRARY_PATH")
+            .env_remove("LD_LIBRARY_PATH")
+            .output();
+        if !lld.is_ok_and(|output| output.status.success()) {
+            return Err(
+                "rust-lld cannot start on its own, so the wasm link fails under \
+                 mbx; run `sh scripts/link-libllvm.sh`"
+                    .to_string(),
+            );
+        }
+        Ok(format!("{version}, wasm32-unknown-unknown, rust-lld"))
     })();
     Check {
         name: "toolchain",
         result,
     }
+}
+
+/// Every build goes through mbx, so a missing one is a build that cannot run.
+fn mbx(root: &Path) -> Check {
+    let result = (|| {
+        let pinned = mise_pin(root, "mr-boxington")?;
+        let version = capture("mbx", &["--version"])?;
+        let version = version.trim();
+        if version != format!("mbx {pinned}") {
+            return Err(format!(
+                "{version} is active but mise.toml pins mr-boxington {pinned}; run `mise install`"
+            ));
+        }
+        Ok(version.to_string())
+    })();
+    Check {
+        name: "mbx",
+        result,
+    }
+}
+
+/// The version `mise.toml` pins for `tool`, written either as a bare string
+/// or as the `version` of an inline table.
+fn mise_pin(root: &Path, tool: &str) -> Result<String, String> {
+    let text = std::fs::read_to_string(root.join("mise.toml")).map_err(|e| e.to_string())?;
+    parse_mise_pin(&text, tool).ok_or_else(|| format!("mise.toml pins no version of {tool}"))
+}
+
+fn parse_mise_pin(text: &str, tool: &str) -> Option<String> {
+    let value = text.lines().find_map(|line| {
+        line.trim()
+            .strip_prefix(tool)
+            .and_then(|rest| rest.trim_start().strip_prefix('='))
+    })?;
+    let value = value.trim();
+    let quoted = match value.strip_prefix('{') {
+        Some(table) => table
+            .split("version")
+            .nth(1)?
+            .trim_start()
+            .strip_prefix('=')?,
+        None => value,
+    };
+    quoted.split('"').nth(1).map(str::to_string)
 }
 
 fn wasm_bindgen_lock(root: &Path) -> Check {
@@ -122,7 +183,7 @@ fn sources_lock(root: &Path) -> Check {
                 .as_object()
                 .ok_or("sources.lock.json has no makepad.files")?;
             Ok(format!(
-                "{} imported files recorded; run `cargo xtask sources verify` for drift",
+                "{} imported files recorded; run `mbx xtask sources verify` for drift",
                 files.len()
             ))
         });
@@ -161,7 +222,7 @@ fn vendored(root: &Path) -> Check {
                 named.push(format!("{name} {version}"));
             }
             Ok(format!(
-                "{}; run `cargo xtask sources verify` for digests",
+                "{}; run `mbx xtask sources verify` for digests",
                 named.join(", ")
             ))
         });
@@ -197,7 +258,7 @@ fn licenses(root: &Path) -> Check {
 ///
 /// It is a dev dependency and never part of a build: the product is committed,
 /// so `build-web` needs no Node. What needs it is changing a class string, and
-/// `cargo xtask css --check` is what catches one that was changed without it.
+/// `mbx xtask css --check` is what catches one that was changed without it.
 fn tailwind(root: &Path) -> Check {
     let cli = root.join("node_modules/.bin/tailwindcss");
     Check {
@@ -214,7 +275,7 @@ fn tailwind(root: &Path) -> Check {
                 .or_else(|_| Ok("installed".to_string()))
         } else {
             Err(
-                "not installed; `npm ci`. Only `cargo xtask css` needs it - a build does not"
+                "not installed; `npm ci`. Only `mbx xtask css` needs it - a build does not"
                     .to_string(),
             )
         },
@@ -310,5 +371,16 @@ mod tests {
             Some("0.2.128")
         );
         assert_eq!(lock_version(lock, "leptos"), None);
+    }
+
+    #[test]
+    fn mise_pin_reads_a_string_and_an_inline_table() {
+        let text = "[tools]\nmr-boxington = \"1.15.0\"\nrust = { version = \"1.98.1\", mr_boxington = true, targets = \"wasm32-unknown-unknown\" }\n";
+        assert_eq!(parse_mise_pin(text, "rust").as_deref(), Some("1.98.1"));
+        assert_eq!(
+            parse_mise_pin(text, "mr-boxington").as_deref(),
+            Some("1.15.0")
+        );
+        assert_eq!(parse_mise_pin(text, "node"), None);
     }
 }

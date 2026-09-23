@@ -1,4 +1,4 @@
-//! `cargo xtask build-web`: the complete static build of one example.
+//! `mbx xtask build-web`: the complete static build of one example.
 //!
 //! cargo-makepad produces the wasm, the bindgen glue and Makepad's own JS and
 //! resources. This step adds everything the runtime needs on top: the static
@@ -136,7 +136,7 @@ pub fn build(request: &BuildRequest) -> Result<PathBuf, String> {
     }
     // The component stylesheet, for the examples that use the components. It
     // is committed rather than generated here, so this build needs no Node;
-    // `cargo xtask css --check` is what keeps it in step with the classes.
+    // `mbx xtask css --check` is what keeps it in step with the classes.
     if uses_components(&example_dir)? {
         copy(
             &root.join("crates/rustify-components/css/rustify.css"),
@@ -144,7 +144,7 @@ pub fn build(request: &BuildRequest) -> Result<PathBuf, String> {
         )?;
     }
 
-    finish(&root, request, &app, "/", &bridge.hash.to_string(), &wasm)?;
+    finish(request, &app, "/", &bridge.hash.to_string(), &wasm)?;
 
     let base = crate::serve::normalize_base(&request.base);
     if base == "/" {
@@ -165,20 +165,12 @@ pub fn build(request: &BuildRequest) -> Result<PathBuf, String> {
         &rebased.join("index.html"),
         rebase_index(&page, &base).as_bytes(),
     )?;
-    finish(
-        &root,
-        request,
-        &rebased,
-        &base,
-        &bridge.hash.to_string(),
-        &wasm,
-    )?;
+    finish(request, &rebased, &base, &bridge.hash.to_string(), &wasm)?;
     Ok(rebased)
 }
 
 /// Writes the manifest for a finished product and reports it.
 fn finish(
-    root: &Path,
     request: &BuildRequest,
     app: &Path,
     base: &str,
@@ -192,7 +184,7 @@ fn finish(
         base: base.to_string(),
         build_id: build_id(wasm),
         schema_hash: schema_hash.to_string(),
-        toolchain: toolchain_channel(root)?,
+        toolchain: toolchain_version()?,
         size_report: size_report(&files),
         files,
     };
@@ -263,12 +255,12 @@ fn run_cargo_makepad(root: &Path, request: &BuildRequest) -> Result<(), String> 
         args.push("--release");
     }
     args.extend(["-p", request.example.as_str()]);
-    let status = Command::new("cargo")
+    let status = Command::new("mbx")
         .args(&args)
         .env("RUSTFLAGS", wasm_rustflags())
         .current_dir(root)
         .status()
-        .map_err(|e| format!("cannot run cargo: {e}"))?;
+        .map_err(|e| format!("cannot run mbx: {e}; `mise install` provides it"))?;
     if !status.success() {
         return Err("cargo-makepad wasm build failed".to_string());
     }
@@ -283,7 +275,7 @@ fn run_cargo_makepad(root: &Path, request: &BuildRequest) -> Result<(), String> 
 ///
 /// `web_sys_unstable_apis` is what unlocks `navigator.clipboard` in web-sys.
 /// The build sets it rather than asking the developer to, so that
-/// `cargo xtask build-web` always produces a clipboard-capable deployment and
+/// `mbx xtask build-web` always produces a clipboard-capable deployment and
 /// `rustify_ui::clipboard::available()` is true wherever the browser allows
 /// it. Note that changing `RUSTFLAGS` changes the fingerprint: the first build
 /// after this lands recompiles the wasm from scratch.
@@ -296,14 +288,22 @@ fn wasm_rustflags() -> String {
     }
 }
 
-fn toolchain_channel(root: &Path) -> Result<String, String> {
-    let text =
-        std::fs::read_to_string(root.join("rust-toolchain.toml")).map_err(|e| e.to_string())?;
-    text.lines()
-        .find_map(|line| line.trim().strip_prefix("channel"))
-        .and_then(|rest| rest.split('"').nth(1))
-        .map(str::to_string)
-        .ok_or_else(|| "rust-toolchain.toml has no channel".to_string())
+/// The compiler that made this build, as it names itself.
+///
+/// Asked of `rustc` rather than read from `mise.toml`: the pin says what
+/// should have been used, and the manifest records what was.
+fn toolchain_version() -> Result<String, String> {
+    let output = Command::new("rustc")
+        .arg("--version")
+        .output()
+        .map_err(|e| format!("cannot run rustc: {e}"))?;
+    if !output.status.success() {
+        return Err(format!(
+            "rustc --version failed: {}",
+            String::from_utf8_lossy(&output.stderr).trim()
+        ));
+    }
+    Ok(String::from_utf8_lossy(&output.stdout).trim().to_string())
 }
 
 fn build_id(wasm: &[u8]) -> String {

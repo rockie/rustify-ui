@@ -1,5 +1,5 @@
 /* The input Tailwind reads. The product beside it, rustify.css, is committed;
-   `cargo xtask css` regenerates it and `--check` fails on drift, so a class
+   `mbx xtask css` regenerates it and `--check` fails on drift, so a class
    string that was never compiled cannot reach a deployment.
 
    Two things are deliberately absent. Preflight: a host page's own elements

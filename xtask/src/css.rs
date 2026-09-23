@@ -1,4 +1,4 @@
-//! `cargo xtask css [--check]`: the component stylesheet, generated and
+//! `mbx xtask css [--check]`: the component stylesheet, generated and
 //! checked in.
 //!
 //! The product is committed rather than built during `build-web`, so building
@@ -69,7 +69,7 @@ pub fn run(args: &[String]) -> Result<(), String> {
         Ok(())
     } else {
         Err(format!(
-            "{} is not what the input produces; run `cargo xtask css` and commit the result \
+            "{} is not what the input produces; run `mbx xtask css` and commit the result \
              ({} bytes committed, {} bytes generated)",
             output(&root).display(),
             committed.len(),

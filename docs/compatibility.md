@@ -8,14 +8,15 @@ future behaviour.
 
 | Component | Version | Where it is pinned |
 | --- | --- | --- |
-| Rust toolchain | `nightly-2026-05-20` (rustc 1.97.0-nightly), `rust-src`, target `wasm32-unknown-unknown`; the wasm build uses `-Z build-std=panic_abort,std` with a generated single-threaded target spec | `rust-toolchain.toml`; read by `makepad/tools/cargo_makepad` |
+| Rust toolchain | `1.98.1` (stable), `rustfmt`, `clippy`, target `wasm32-unknown-unknown`; the wasm build uses the built-in single-threaded target and its prebuilt `std` | `mise.toml`; checked by `mbx xtask doctor` |
+| Build cache | mbx (mr-boxington) `1.15.0`; every compile goes through it, including the nested wasm build cargo-makepad starts. That build runs with learned incremental off (`MBX_LEARNED_INCREMENTAL=0`), because an incrementally compiled crate changes the wasm bytes | `mise.toml` (`mr-boxington`, and `mr_boxington = true` on rust); checked by `mbx xtask doctor` |
 | Leptos | `0.8.20` from crates.io, feature `csr` only; no Leptos source is modified | `Cargo.toml` (`=0.8.20`), `Cargo.lock`, `sources.lock.json` |
-| wasm-bindgen | crate `0.2.128` and `wasm-bindgen-cli-support` `0.2.128` (run in-process by cargo-makepad; a version mismatch fails the build) | `Cargo.lock`, `makepad/Cargo.lock`; checked by `cargo xtask doctor` |
+| wasm-bindgen | crate `0.2.128` and `wasm-bindgen-cli-support` `0.2.128` (run in-process by cargo-makepad; a version mismatch fails the build) | `Cargo.lock`, `makepad/Cargo.lock`; checked by `mbx xtask doctor` |
 | Makepad | hard fork in `makepad/`, declared version 2.0.0, upstream commit unknown; never synced with upstream again | `sources.lock.json` |
 | Playwright | `@playwright/test 1.63.0` with its bundled Chromium (continuous regression only) | `package.json`, `package-lock.json` |
-| Node | 26.1.0 (browser tests only; the build does not need Node) | reported by `cargo xtask doctor` |
-| noUiSlider | `15.8.1`, MIT, vendored into `examples/property-workbench/vendor/nouislider/` (the minified module and stylesheet only) | `sources.lock.json` (`vendor`), digests checked by `cargo xtask sources verify`, presence by `cargo xtask doctor` |
-| Pass-gate browser | Google Chrome 152.0.7977.77 on macOS (Darwin 25.6) | reported by `cargo xtask doctor` |
+| Node | 26.1.0 (browser tests only; the build does not need Node) | reported by `mbx xtask doctor` |
+| noUiSlider | `15.8.1`, MIT, vendored into `examples/property-workbench/vendor/nouislider/` (the minified module and stylesheet only) | `sources.lock.json` (`vendor`), digests checked by `mbx xtask sources verify`, presence by `mbx xtask doctor` |
+| Pass-gate browser | Google Chrome 152.0.7977.77 on macOS (Darwin 25.6) | reported by `mbx xtask doctor` |
 
 ## Browser matrix
 
@@ -30,7 +31,7 @@ future behaviour.
 ## Deployment contract
 
 - Plain static hosting. The page is not cross-origin isolated (`crossOriginIsolated === false`, no `SharedArrayBuffer`); verified by the M1 probes.
-- Scripts are external ES modules. The release Content Security Policy served by `cargo xtask serve --csp strict` is  
+- Scripts are external ES modules. The release Content Security Policy served by `mbx xtask serve --csp strict` is  
   `default-src 'none'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; media-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'`.  
   `'wasm-unsafe-eval'` is required for WebAssembly; JavaScript `'unsafe-eval'` is not, because the message bridge is generated at build time (`rustify_makepad/message_bridge.js`) and no shipped JS uses `new Function` or `eval`.
 - The loader refuses to drive a wasm whose exported bridge fingerprint differs from the shipped bridge module (`BuildContractMismatch`); `build-manifest.json` records the same fingerprint and the build id.
@@ -76,7 +77,7 @@ teardown, so a rebuild can be inspected rather than assumed clean.
 
 | Question | Answer |
 | --- | --- |
-| Root and sub-path | Both. The build uses relative URLs throughout, and `cargo xtask serve --base /tools/demo/` runs the same directory under a sub-path; the browser tests cover it as a third project. |
+| Root and sub-path | Both. The build uses relative URLs throughout, and `mbx xtask serve --base /tools/demo/` runs the same directory under a sub-path; the browser tests cover it as a third project. |
 | Embedded in an existing page | Yes. A scope mounts into an element the page owns; the page's own headings, links, scrolling and text selection are untouched, and no theme or attribute is written to the document. |
 | Outbound network | Only the build's own files, same-origin and under its base. Business network calls are the application's to make. |
 | Content-Security-Policy | `default-src 'none'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self'; …`. Nothing in the shipped JS needs `unsafe-eval` or `unsafe-inline`; the theme is written through the CSSOM for that reason. |
@@ -149,7 +150,7 @@ than readings. Nothing on the web can ask a driver what it holds.
   ledger at all.
 
 The counting lives in `makepad/platform/src/os/web/web_gl.js`, which is a
-change to the fork: an ordinary commit that `cargo xtask sources verify`
+change to the fork: an ordinary commit that `mbx xtask sources verify`
 reports as drift from the import recorded in `sources.lock.json`, as every
 edit to the fork does.
 
@@ -193,7 +194,7 @@ release.
 
 `navigator.clipboard` is behind `--cfg=web_sys_unstable_apis` in web-sys
 0.3.105, so whether the SDK can reach it at all is decided when the wasm is
-compiled rather than by the browser it runs in. `cargo xtask build-web` sets
+compiled rather than by the browser it runs in. `mbx xtask build-web` sets
 the flag (`xtask/src/build.rs`), and cargo-makepad composes inherited
 `RUSTFLAGS` with its own, so every build made that way is clipboard-capable.
 

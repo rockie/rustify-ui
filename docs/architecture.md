@@ -70,9 +70,9 @@ flowchart TD
 
 ## Build pipeline
 
-1. `cargo-makepad wasm build` (from `makepad/tools/cargo_makepad`, run by xtask): pinned nightly from `rust-toolchain.toml`, generated single-threaded target spec, `build-std`, the fork's link flags with any caller `RUSTFLAGS` appended, resource copy for every dependency crate, in-process `wasm-bindgen`, asserted glue patching (`bindgen_glue.rs`), optional custom-section stripping.
-2. `cargo xtask build-web`: clears the output directory, runs step 1, extracts the message bridge, copies `embedded.js`, `loader.js`, `runtime.css` and the example page, writes `build-manifest.json` (build id, schema hash, toolchain, per-file sizes, six-category size report).
-3. `cargo xtask serve`: loopback static server with the release CSP, sub-path support and a negative CSP mode.
+1. `cargo-makepad wasm build` (from `makepad/tools/cargo_makepad`, run by xtask through `mbx run`): `mbx build` on the stable toolchain `mise.toml` pins, for the built-in single-threaded `wasm32-unknown-unknown` target with its prebuilt `std`, the fork's link flags with any caller `RUSTFLAGS` appended, resource copy for every dependency crate, in-process `wasm-bindgen`, asserted glue patching (`bindgen_glue.rs`), optional custom-section stripping.
+2. `mbx xtask build-web`: clears the output directory, runs step 1, extracts the message bridge, copies `embedded.js`, `loader.js`, `runtime.css` and the example page, writes `build-manifest.json` (build id, schema hash, toolchain, per-file sizes, six-category size report).
+3. `mbx xtask serve`: loopback static server with the release CSP, sub-path support and a negative CSP mode.
 
 ## What is delivered, and what is deferred
 

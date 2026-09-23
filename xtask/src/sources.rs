@@ -125,7 +125,7 @@ fn hex(bytes: &[u8]) -> String {
 pub fn run(args: &[String]) -> Result<(), String> {
     match args.first().map(String::as_str) {
         Some("verify") => verify(),
-        _ => Err("usage: cargo xtask sources verify".to_string()),
+        _ => Err("usage: mbx xtask sources verify".to_string()),
     }
 }
 

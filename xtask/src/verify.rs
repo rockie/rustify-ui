@@ -1,4 +1,4 @@
-//! `cargo xtask verify --suite p1|p2|p3`: everything the milestone can check by
+//! `mbx xtask verify --suite p1|p2|p3`: everything the milestone can check by
 //! itself, in one place, plus an honest account of what it cannot.
 //!
 //! The point is not to replace the individual commands - a developer runs
@@ -177,7 +177,7 @@ pub const P2_MANUAL_RECORDS: [(&str, &str); 4] = [
     (
         "docs/validation/p2/manual/contrast-and-zoom.md",
         "M8: a person's look at the catalogue and B1 at 200% and 400%. Most of this is \
-         checked already - the contrast ratios by `cargo test -p rustify-ui theme`, the \
+         checked already - the contrast ratios by `mbx test -p rustify-ui theme`, the \
          five journeys at 200% and the catalogue's reflow at 320 CSS pixels by \
          `p2-zoom` and `p2-reflow`. What is left is the judgement a measurement cannot \
          make: whether the reflowed pages are still *readable*",
@@ -216,8 +216,7 @@ pub fn run(args: &[String]) -> Result<(), String> {
         Some("p3") => P3,
         _ => {
             return Err(
-                "usage: cargo xtask verify --suite p1|p2|p3 [--no-browser] [--no-build]"
-                    .to_string(),
+                "usage: mbx xtask verify --suite p1|p2|p3 [--no-browser] [--no-build]".to_string(),
             )
         }
     };
@@ -226,20 +225,20 @@ pub fn run(args: &[String]) -> Result<(), String> {
         command(
             "sources",
             &root,
-            "cargo",
+            "mbx",
             &["run", "--quiet", "-p", "xtask", "--", "sources", "verify"],
         ),
         command(
             "doctor",
             &root,
-            "cargo",
+            "mbx",
             &["run", "--quiet", "-p", "xtask", "--", "doctor"],
         ),
         command("fmt", &root, "cargo", &["fmt", "--all", "--", "--check"]),
         command(
             "clippy",
             &root,
-            "cargo",
+            "mbx",
             &[
                 "clippy",
                 "--workspace",
@@ -252,17 +251,17 @@ pub fn run(args: &[String]) -> Result<(), String> {
         command(
             "host tests",
             &root,
-            "cargo",
+            "mbx",
             &["test", "--workspace", "--lib"],
         ),
-        command("xtask tests", &root, "cargo", &["test", "-p", "xtask"]),
-        command("fork tests", &root.join("makepad"), "cargo", &["test"]),
+        command("xtask tests", &root, "mbx", &["test", "-p", "xtask"]),
+        command("fork tests", &root.join("makepad"), "mbx", &["test"]),
         // The fork's workspace excludes platform/, so its script VM has to be
         // named to be run. A test that never runs is not a test.
         command(
             "fork script tests",
             &root.join("makepad"),
-            "cargo",
+            "mbx",
             &["test", "--manifest-path", "platform/script/Cargo.toml"],
         ),
         reports(&root, &suite),

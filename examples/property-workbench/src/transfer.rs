@@ -125,7 +125,9 @@ pub fn from_binary(bytes: &[u8]) -> Result<Vec<Record>, Malformed> {
         return Err(Malformed::Length(bytes.len()));
     }
     Ok(bytes
-        .chunks_exact(BINARY_RECORD)
+        .as_chunks::<BINARY_RECORD>()
+        .0
+        .iter()
         .map(|record| Record {
             id: u32::from_le_bytes(record[0..4].try_into().unwrap()),
             name: None,

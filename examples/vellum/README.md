@@ -3,8 +3,8 @@
 A Rustify UI port of the local Vellum design editor. Leptos owns the document and editor state; one `GpuRegion` renders the scene through Makepad WebGL2.
 
 ```sh
-cargo xtask build-web --example vellum --release
-cargo xtask serve --example vellum --release --port 4179
+mbx xtask build-web --example vellum --release
+mbx xtask serve --example vellum --release --port 4179
 ```
 
 Open `http://127.0.0.1:4179/`. Add `?nogpu` to exercise the GPU unavailable state. The DOM shell, document model, page switching and automation remain available.

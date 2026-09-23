@@ -40,8 +40,8 @@
 验证入口：
 
 ```sh
-cargo test -p vellum
-cargo run -q -p vellum -- --starter > /tmp/forma-rust.vellum
+mbx test -p vellum
+mbx run -q -p vellum -- --starter > /tmp/forma-rust.vellum
 node tests/vellum/interop.mjs --check-starter /tmp/forma-rust.vellum
 ```
 

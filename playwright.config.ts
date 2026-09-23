@@ -102,37 +102,37 @@ export default defineConfig({
     ],
     webServer: [
         {
-            command: `cargo xtask serve --example fusion-basic --release --port ${fusionPort}`,
+            command: `mbx xtask serve --example fusion-basic --release --port ${fusionPort}`,
             url: `http://127.0.0.1:${fusionPort}/`,
             reuseExistingServer: false,
             timeout: 120_000,
         },
         {
-            command: `cargo xtask serve --example property-workbench --release --port ${workbenchPort} --spa`,
+            command: `mbx xtask serve --example property-workbench --release --port ${workbenchPort} --spa`,
             url: `http://127.0.0.1:${workbenchPort}/`,
             reuseExistingServer: false,
             timeout: 120_000,
         },
         {
-            command: `cargo xtask serve --example component-catalog --release --port ${catalogPort}`,
+            command: `mbx xtask serve --example component-catalog --release --port ${catalogPort}`,
             url: `http://127.0.0.1:${catalogPort}/`,
             reuseExistingServer: false,
             timeout: 120_000,
         },
         {
-            command: `cargo xtask serve --example data-workbench --release --port ${dataPort} --spa`,
+            command: `mbx xtask serve --example data-workbench --release --port ${dataPort} --spa`,
             url: `http://127.0.0.1:${dataPort}/`,
             reuseExistingServer: false,
             timeout: 120_000,
         },
         {
-            command: `cargo xtask build-web --example property-workbench --release --base ${deploymentBase} && cargo xtask serve --example property-workbench --release --port ${deepLinkPort} --base ${deploymentBase} --spa`,
+            command: `mbx xtask build-web --example property-workbench --release --base ${deploymentBase} && mbx xtask serve --example property-workbench --release --port ${deepLinkPort} --base ${deploymentBase} --spa`,
             url: `http://127.0.0.1:${deepLinkPort}${deploymentBase}`,
             reuseExistingServer: false,
             timeout: 120_000,
         },
         {
-            command: `cargo xtask build-web --example fusion-basic --release --base ${deploymentBase} && cargo xtask serve --example fusion-basic --release --port ${deploymentPort} --base ${deploymentBase} --spa`,
+            command: `mbx xtask build-web --example fusion-basic --release --base ${deploymentBase} && mbx xtask serve --example fusion-basic --release --port ${deploymentPort} --base ${deploymentBase} --spa`,
             url: `http://127.0.0.1:${deploymentPort}${deploymentBase}`,
             reuseExistingServer: false,
             timeout: 120_000,

@@ -5,7 +5,7 @@ the table and the tree that large data needed are categories of their own
 rather than something R18 named. All twenty have a DOM component; what differs
 between them is what a GPU region can draw of one, and every row says which and
 why. The table is generated from
-`crates/rustify-components/src/catalog.rs` by `cargo xtask catalog --write
+`crates/rustify-components/src/catalog.rs` by `mbx xtask catalog --write
 docs/components.md`, and `--check` fails when the two disagree.
 
 Every row answers the same six questions:

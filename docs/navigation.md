@@ -98,8 +98,8 @@ rewriting is what is left - and it is the honest place for it, because the path
 a build is deployed under is a property of the build.
 
 ```
-cargo xtask build-web --example property-workbench --release --base /tools/demo/
-cargo xtask serve     --example property-workbench --release --base /tools/demo/ --spa
+mbx xtask build-web --example property-workbench --release --base /tools/demo/
+mbx xtask serve     --example property-workbench --release --base /tools/demo/ --spa
 ```
 
 A build for a sub-path is a second product and gets its own directory

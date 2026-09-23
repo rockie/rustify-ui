@@ -1,0 +1,3 @@
+[tools]
+mr-boxington = "1.15.0"
+rust = { version = "1.98.1", mr_boxington = true, components = "rustfmt,clippy", targets = "wasm32-unknown-unknown", postinstall = "sh scripts/link-libllvm.sh" }

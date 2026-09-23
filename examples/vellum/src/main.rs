@@ -3,9 +3,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     if std::env::args().nth(1).as_deref() == Some("--starter") {
         println!("{}", vellum::starter::make_starter()?.serialize()?);
     } else {
-        eprintln!(
-            "Build the browser example with cargo xtask build-web --example vellum --release."
-        );
+        eprintln!("Build the browser example with mbx xtask build-web --example vellum --release.");
     }
     Ok(())
 }

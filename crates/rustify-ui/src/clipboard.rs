@@ -32,7 +32,7 @@ impl std::fmt::Display for ClipboardError {
 ///
 /// `web-sys` puts `navigator.clipboard` behind `--cfg=web_sys_unstable_apis`,
 /// so it is a property of how the wasm was compiled rather than of the browser
-/// it runs in. `cargo xtask build-web` sets the flag; a build made another way
+/// it runs in. `mbx xtask build-web` sets the flag; a build made another way
 /// may not have it, and this is how an application finds out without waiting
 /// for a failure.
 pub const fn available() -> bool {

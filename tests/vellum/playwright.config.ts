@@ -25,7 +25,7 @@ export default defineConfig({
     projects: [{ name: "vellum", use: { baseURL: "http://127.0.0.1:4179/" } }],
     webServer: [
         {
-            command: "cargo xtask serve --example vellum --release --port 4179",
+            command: "mbx xtask serve --example vellum --release --port 4179",
             cwd: root,
             url: "http://127.0.0.1:4179/",
             reuseExistingServer: false,

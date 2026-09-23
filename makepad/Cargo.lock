@@ -25,7 +25,6 @@ name = "cargo-makepad"
 version = "1.0.0"
 dependencies = [
  "makepad-shell",
- "makepad-toml-parser",
  "makepad-wasm-strip",
  "wasm-bindgen-cli-support",
 ]
@@ -185,10 +184,6 @@ version = "1.0.0"
 
 [[package]]
 name = "makepad-shell"
-version = "1.0.0"
-
-[[package]]
-name = "makepad-toml-parser"
 version = "1.0.0"
 
 [[package]]

@@ -9,7 +9,6 @@ homepage = "https://github.com/makepad/makepad/"
 repository = "https://github.com/makepad/makepad/"
 
 [dependencies]
-makepad-toml-parser = { path = "../../libs/toml_parser", version = "1.0.0" }
 makepad-shell = { path = "../../libs/shell", version = "1.0.0" }
 makepad-wasm-strip = { path = "../../libs/wasm_strip", version = "1.0.0" }
 wasm-bindgen-cli-support = "=0.2.128"
