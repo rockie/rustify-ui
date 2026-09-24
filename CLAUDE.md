@@ -33,8 +33,6 @@ mbx xtask serve --example fusion-basic --release   # strict CSP; also --base, --
 mbx xtask report-size --example fusion-basic --release --compressed
 ```
 
-The examples are `fusion-basic`, `property-workbench`, `component-catalog`, `data-workbench` and `vellum`.
-
 ### Browser tests
 
 Playwright runs against **release builds that already exist**. `serve` does not rebuild, so after a Rust change, run `build-web --release` again for the affected example. Playwright starts every `webServer` in `playwright.config.ts` whatever `--project` you pass. All four root builds (fusion-basic, property-workbench, component-catalog, data-workbench) must therefore exist; the two sub-path servers build their own `<example>@tools-demo` copies.
@@ -57,10 +55,7 @@ VELLUM_ARTIFACT_SCOPE=m4-pointer npx playwright test -c tests/vellum/playwright.
 
 The workspace excludes `makepad/` (a fork with its own workspace) and `ref/`.
 
-- `crates/rustify-ui` is the public SDK:
-  - `mount` / `AppHandle` and the `GpuRegion` component.
-  - The application layer: router, overlay/layer stack, native text sessions, theme, tasks and jobs, drag, clipboard, files, forms, i18n, diagnostics.
-  - The DOM controls, and the GPU halves of controls (`gpu`, wasm-only).
+- `crates/rustify-ui` is the public SDK.
 - `crates/rustify-components` holds the DOM component catalogue of twenty categories:
   - The `clx!` / `variants!` class macros, forked from Rust/UI.
   - `CATALOG`, from which `docs/components.md` is generated.
@@ -72,7 +67,7 @@ The workspace excludes `makepad/` (a fork with its own workspace) and `ref/`.
 - `makepad/` is a hard fork of the Makepad wasm closure, trimmed to the browser backend. It is first-class source: edit it directly, and `sources verify` reports the edits as attributable drift. The embedding changes are in `platform/src/os/web/*`, `platform/src/{action,cx}.rs`, `libs/wasm_bridge` and `tools/cargo_makepad`, which is reduced to the single-threaded browser build.
 - `web/loader.js` and `web/runtime.css` are the page boot. `boot()` instantiates one wasm instance, checks the bridge fingerprint, installs host hooks and owns the static failure notice.
 - `examples/*` each have `src/` (the Rust app), `index.html`, and an `app.js` page script. The script calls `boot()` and exposes a `window.__<example>` handle that the Playwright specs drive.
-- `xtask` provides `doctor`, `build-web`, `serve`, `report-size`, `css`, `catalog`, `sources` and `verify`. `build-web` runs the fork's `cargo-makepad` through `mbx`, pulls the generated message-bridge JS out of the wasm with `wasmi` and ships it as a static ES module, then writes `build-manifest.json`. There is no runtime codegen, which is what keeps the strict CSP.
+- `xtask build-web` runs the fork's `cargo-makepad` through `mbx`, pulls the generated message-bridge JS out of the wasm with `wasmi` and ships it as a static ES module, then writes `build-manifest.json`. There is no runtime codegen, which is what keeps the strict CSP.
 
 Runtime contracts to know before touching the runtime (the full list is in `docs/architecture.md`):
 
