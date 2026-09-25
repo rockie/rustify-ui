@@ -318,6 +318,8 @@ docs/validation/dx/m<n>.md ★
 | 回归层（降回合） | `m1-probes`、`m3-state`、`m3-workbench`、`m4-geometry`（9 组 → 2 组）、`m4-overlay`、`m6-async`、`m6-components`、`m6-theme`、`m7-recovery`、`p2-*`（`p2-budget` 除外）、`p3-scene`、`p3-table` | 循环次数改 `rounds(n)`，矩阵改 `pick()` |
 | 回归层（原样） | `m2-runtime`（除上行的单用例）、`m5-*`、`m6-mainpath`、`m7-deployment`、`p3-b0`、`p3-instances`、`p3-jobs`（除上行的单用例）、`p3-policy`、`p3-restart`；vellum `m2-scene`、`m3-raster`、`m4-pointer`（除上行的单用例）、`m5-shell`、`m6-edit`、`m7-files` | 只换页面复用方式（D4） |
 
+**M2 偏差（证据层回合数）**：`m2-runtime`「repeated mount and dispose returns every browser resource」的预热由 300 回合改为 400（尾段 100 回合与「零增长」阈值不变）。依据：1,000 回合逐 50 回合采样，改前构建第 100 回合即稳定，M2 构建因各夹具登记复位闭包在第 300–350 回合间多一次 16 MB 的堆增长、此后 650 回合平稳；用例注释本就写明预热按构建实测（`docs/validation/dx/m2.md`）。
+
 `p3-faults` 整体进证据层的依据：它是四类故障各 20 次的放大版，单次版本已在回归层：过期答复 `m6-async.spec.ts:51-61`、上下文丢失 `m7-recovery.spec.ts:66-107`、动作内关闭 `m3-workbench.spec.ts:350-379`、字体缺失 `m7-deployment.spec.ts:73-120`。
 
 **去重表**（保留处 ← 删除/移出处）：
