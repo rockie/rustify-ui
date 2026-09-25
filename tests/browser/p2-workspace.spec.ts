@@ -1,6 +1,7 @@
-import { expect, Page, test } from "@playwright/test";
+import { expect, Page } from "@playwright/test";
 
-import { sharedPage } from "./support";
+import { rounds } from "../tier";
+import { test } from "./support";
 
 /// M5 V7: three panels, ten views over the objects, and every command in one
 /// place.
@@ -41,11 +42,7 @@ async function dragDivider(page: Page, index: number, delta: number) {
 }
 
 test.describe("M5 V7: a workspace of three panels", () => {
-    test.describe.configure({ mode: "serial" });
-    const shared = sharedPage();
-
-    test("three panels, each no smaller than the application declared", async () => {
-        const page = shared.page;
+    test("three panels, each no smaller than the application declared", async ({ page }) => {
         const { panels } = await workspace(page);
         expect(panels).toHaveLength(3);
         // The minimums the workbench declares: a list of names, a region worth
@@ -55,13 +52,12 @@ test.describe("M5 V7: a workspace of three panels", () => {
         }
     });
 
-    test("a hundred drags never take a panel below its minimum", async () => {
-        const page = shared.page;
+    test("a hundred drags never take a panel below its minimum", async ({ page }) => {
         const before = (await workspace(page)).panels as number[];
         const total = before.reduce((sum, size) => sum + size, 0);
         const mins = [220, 320, 360];
 
-        for (let round = 0; round < 100; round += 1) {
+        for (let round = 0; round < rounds(100); round += 1) {
             // Alternating dividers and far larger than the room available,
             // which is what a person dragging quickly produces.
             await dragDivider(page, round % 2, round % 3 === 0 ? 400 : -350);
@@ -80,8 +76,7 @@ test.describe("M5 V7: a workspace of three panels", () => {
         }
     });
 
-    test("a divider is reachable and movable from the keyboard", async () => {
-        const page = shared.page;
+    test("a divider is reachable and movable from the keyboard", async ({ page }) => {
         const divider = page.getByTestId("divider-0");
         await expect(divider).toHaveAttribute("role", "separator");
         await expect(divider).toHaveAttribute("aria-label", "resize panel 1");
@@ -94,8 +89,7 @@ test.describe("M5 V7: a workspace of three panels", () => {
         expect((await workspace(page)).panels[0]).toBe(before);
     });
 
-    test("ten views over one set of objects, and switching keeps the selection", async () => {
-        const page = shared.page;
+    test("ten views over one set of objects, and switching keeps the selection", async ({ page }) => {
         expect(await workspace(page)).toMatchObject({ tabs: 10, tab: "all" });
         const strip = page.getByTestId("object-views");
         await expect(strip.getByRole("tab")).toHaveCount(10);
@@ -111,8 +105,7 @@ test.describe("M5 V7: a workspace of three panels", () => {
         expect(await workspace(page)).toMatchObject({ tab: "all" });
     });
 
-    test("closing the view showing moves to its neighbour, and one view cannot be closed", async () => {
-        const page = shared.page;
+    test("closing the view showing moves to its neighbour, and one view cannot be closed", async ({ page }) => {
         const strip = page.getByTestId("object-views");
         await strip.getByRole("tab", { name: "blue" }).click();
         expect(await workspace(page)).toMatchObject({ tab: "blue" });
@@ -126,8 +119,7 @@ test.describe("M5 V7: a workspace of three panels", () => {
         await expect(page.getByTestId("close-all")).toHaveCount(0);
     });
 
-    test("closing a view that is not showing leaves the selection alone", async () => {
-        const page = shared.page;
+    test("closing a view that is not showing leaves the selection alone", async ({ page }) => {
         const strip = page.getByTestId("object-views");
         await strip.getByRole("tab", { name: "all", exact: true }).click();
         const before = await workspace(page);
@@ -136,8 +128,7 @@ test.describe("M5 V7: a workspace of three panels", () => {
         expect(await workspace(page)).toMatchObject({ tab: before.tab, tabs: before.tabs - 1 });
     });
 
-    test("the palette finds a command, runs it once, and refuses one that cannot run", async () => {
-        const page = shared.page;
+    test("the palette finds a command, runs it once, and refuses one that cannot run", async ({ page }) => {
         await page.getByTestId("open-commands").click();
         const palette = page.getByTestId("command-palette");
         await expect(palette).toBeVisible();
@@ -167,8 +158,7 @@ test.describe("M5 V7: a workspace of three panels", () => {
         await expect(palette).toBeHidden();
     });
 
-    test("after a hundred adjustments the region still hits where it says it drew", async () => {
-        const page = shared.page;
+    test("after a hundred adjustments the region still hits where it says it drew", async ({ page }) => {
         await expect
             .poll(async () => (await snapshot(page)).region, { timeout: 30_000 })
             .toBe("ready");
@@ -180,7 +170,7 @@ test.describe("M5 V7: a workspace of three panels", () => {
         // two controls rather than the geometry fixture's twenty anchors, so
         // this is that question asked twenty times across resizes: ten rounds,
         // each moving the region's panel and then aiming at both controls.
-        for (let round = 0; round < 10; round += 1) {
+        for (let round = 0; round < rounds(10); round += 1) {
             await dragDivider(page, 1, round % 2 === 0 ? 60 : -60);
             await dragDivider(page, 0, round % 2 === 0 ? -40 : 40);
 
@@ -210,8 +200,7 @@ test.describe("M5 V7: a workspace of three panels", () => {
         }
     });
 
-    test("a right-click inside the region opens a menu anchored to it", async () => {
-        const page = shared.page;
+    test("a right-click inside the region opens a menu anchored to it", async ({ page }) => {
         await expect
             .poll(async () => (await snapshot(page)).region, { timeout: 30_000 })
             .toBe("ready");

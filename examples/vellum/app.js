@@ -6,6 +6,10 @@ let handle = null;
 let live = null;
 let readyFrame = null;
 let mountGeneration = 0;
+// Where the page was loaded, and what `window` and `navigator` held once it
+// was first ready: `reset()` returns the page to both.
+const entry = location.href;
+let firstLoad = null;
 
 // Fatal cleanup must stay outside the failed Wasm instance. This owns only
 // native resource teardown; document reads, writes and serialization are Rust.
@@ -28,6 +32,26 @@ window.__vellumAbortResource = (signal, resource, kind) => {
         if (kind === "open") resource.removeEventListener("success", lateOpen);
     };
 };
+
+// Everything a remount reads back: the autosaved document in IndexedDB, and
+// the options, welcome flag and fallback document in localStorage.
+async function forgetStorage() {
+    localStorage.clear();
+    sessionStorage.clear();
+    const names = new Set(["vellum-editor", ...(await indexedDB.databases()).map(database => database.name)]);
+    // A connection still closing only delays a delete; it completes once it has.
+    await Promise.all([...names].map(name => new Promise((resolve, reject) => {
+        const request = indexedDB.deleteDatabase(name);
+        request.onsuccess = resolve;
+        request.onerror = () => reject(request.error);
+    })));
+}
+
+function forgetAdded(target, kept) {
+    for (const key of Reflect.ownKeys(target)) {
+        if (!kept.has(key)) Reflect.deleteProperty(target, key);
+    }
+}
 
 function stopReadyCheck() {
     if (readyFrame !== null) cancelAnimationFrame(readyFrame);
@@ -76,6 +100,7 @@ function publish(started) {
             readyFrame = null;
             if (live !== started || handle === null || mountGeneration !== generation) return;
             if (snapshot().ready) {
+                firstLoad ??= { window: new Set(Reflect.ownKeys(window)), navigator: new Set(Reflect.ownKeys(navigator)) };
                 status.dataset.status = "ready";
                 status.textContent = "ready";
             } else {
@@ -93,8 +118,35 @@ function publish(started) {
         world(id) { return JSON.parse(app.vellum_world(id)); },
         serialize() { return app.vellum_serialize(); },
     };
+    // The page as a first load has it, without loading it again: nothing a
+    // remount would read back from storage, nothing a caller added to the
+    // page, and a new editor. Resolves once that editor is ready and has
+    // drawn its scene. Creating the region again is cheap here; keeping it
+    // would mean resetting every piece of editor state by hand.
+    const reset = async () => {
+        window.__vellum.dispose();
+        await forgetStorage();
+        // Only faces added from script go; the document keeps its stylesheets' own.
+        for (const face of [...document.fonts]) document.fonts.delete(face);
+        if (firstLoad) {
+            forgetAdded(window, firstLoad.window);
+            forgetAdded(navigator, firstLoad.navigator);
+        }
+        hooks.runtime.errors.length = 0;
+        if (location.href !== entry) history.replaceState(null, "", entry);
+        window.__vellum.mount();
+        await new Promise((resolve, reject) => {
+            const check = () => {
+                if (live !== started) return reject(new Error("Vellum stopped before its reset finished"));
+                const state = handle !== null && status.dataset.status === "ready" ? snapshot() : null;
+                if (state?.ready && (state.renderer.gpuError !== null || state.renderer.instanceCount > 0)) resolve();
+                else requestAnimationFrame(check);
+            };
+            requestAnimationFrame(check);
+        });
+    };
     window.__vellum = {
-        hooks, instance,
+        hooks, instance, reset,
         mount(container_id = "vellum") { stopReadyCheck(); handle = app.vellum_mount(container_id); waitReady(); return handle; },
         dispose() { stopReadyCheck(); if (handle === null) return false; const disposed = app.vellum_dispose(handle); handle = null; return disposed; },
         snapshot,

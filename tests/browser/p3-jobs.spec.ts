@@ -1,5 +1,6 @@
-import { expect, Page, test } from "@playwright/test";
+import { expect, Page } from "@playwright/test";
 import * as twin from "./dataset";
+import { isShared, test } from "./support";
 import { EVIDENCE } from "../tier";
 
 /// M3 · the jobs: sorting, filtering, finding, and stopping.
@@ -16,9 +17,26 @@ import { EVIDENCE } from "../tier";
 
 const api = (page: Page) => page.evaluate(() => window.__data_workbench.snapshot());
 
+/// The part of the example's handle that puts a shared page back.
+type Resettable = { reset(path?: string): Promise<void> };
+
+/// Brings the page to `path` as a first load of it would: a load of its own
+/// for a page of its own, and the example's reset for the shared one, which
+/// is already loaded and has its regions running.
+async function arrive(page: Page, path: string) {
+    if (isShared(page)) {
+        await page.evaluate(
+            (path) => (window.__data_workbench as unknown as Resettable).reset(path),
+            path
+        );
+    } else {
+        await page.goto(`.${path}`);
+    }
+}
+
 async function openTable(page: Page) {
     await page.setViewportSize({ width: 1440, height: 1200 });
-    await page.goto("./table");
+    await arrive(page, "/table");
     await expect(page.getByTestId("status")).toHaveAttribute("data-status", "ready", {
         timeout: 120_000,
     });
@@ -276,6 +294,8 @@ test.describe("M3 · a write while a job is running", () => {
 
     test("an insert makes the job stale, and it is asked again", async ({ page }) => {
         await openTable(page);
+        // The record outlives a reset, so what counts is what this job adds.
+        const since = await page.evaluate(() => performance.now());
         expect(await sortThen(page, "insert")).toBe(true);
         expect(await settled(page)).toBe("done");
         // Stale, then asked again with the version it has now - and the answer
@@ -283,10 +303,16 @@ test.describe("M3 · a write while a job is running", () => {
         expect((await api(page)).rows).toBe(twin.ROWS + 10);
         expect((await api(page)).table.shown).toBe(twin.ROWS + 10);
         expect((await api(page)).table.stale).toBe(false);
-        const entries = await page.evaluate(() =>
-            window.__data_workbench
-                .diagnostics()
-                .entries.filter((entry) => entry.kind === "JobCancelled")
+        const entries = await page.evaluate(
+            (since) =>
+                (
+                    window.__data_workbench.diagnostics().entries as {
+                        kind: string;
+                        severity: string;
+                        at_ms: number;
+                    }[]
+                ).filter((entry) => entry.kind === "JobCancelled" && entry.at_ms >= Math.floor(since)),
+            since
         );
         expect(entries.length, "the dropped answer is recorded").toBeGreaterThan(0);
         expect(entries.every((entry) => entry.severity === "info")).toBe(true);

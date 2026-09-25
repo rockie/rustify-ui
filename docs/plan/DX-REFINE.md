@@ -35,18 +35,19 @@
 
 ### 恢复快照
 
-- 最近更新：2026-09-25 UTC · M1 完成，M3 待 CI
+- 最近更新：2026-09-25 UTC · M2 回归层两轮全绿、达 D9 本地目标；证据层与 CI 待办
 - 当前进度：1/8 个里程碑完成
-- 当前状态：M1 已完成（分层开关、证据标签、按需 server、`--bins`、探针）；M1 探针证伪「重挂即亚秒级」，ADR-6/D4 已修订为区域昂贵的示例原地复位；M3 本地验收全过，只差 CI 上核实 A-1 与 host job
+- 当前状态：M2 进行中——五个示例的 `reset()`（四个原地、Vellum 重挂）与共享页 fixture 落地，回归层各 project 两轮全绿且 workers=2 均 ≤ 5 min；修了三个既有失败（数据表缩小时丢焦点、Vellum 覆盖层残影、`p3-instances` 的 Promise 回收）；CI matrix 与 `evidence.yml` 已写；证据层本地逐 project 运行中；M3 只差 CI；M4/M5 在独立工作树实施中，M6/M7 的 SDK 原语已在独立工作树提交（`e1c99c3`，待拣入）
 - 最近完成：M1 · 测试分层骨架与探针
-- 下一步：推送并在 PR 上看 CI host job（A-1、无 `npm ci` 的 `css --check`）以关闭 M3；同时开 M2：`support.ts` 的 worker 级页面 fixture + 各示例 `reset()`（property-workbench 原地复位，Vellum/component-catalog 重挂）、`rounds()`/`pick()`、去重、CI matrix 与 `evidence.yml`
-- 当前阻塞：无（分支历史：`main` 已以 rebase 方式收下本分支的计划提交并多一次 skills 更新，本分支未合入 `main`——重置与合并均未获授权，待用户处理，不影响 PR 的净差异）
-- 代码基线：M1/M3 集成提交见完成记录；起点 `65b2225`
+- 下一步：等本地证据层跑完写入 M2 记录；拣入 SDK 原语提交与 M4/M5 提交并重建验证；开 M6 采用（Vellum、property-workbench、data-workbench、fusion-basic）
+- 当前阻塞：PR（rockie/rustify-ui#2）与 `main` 冲突（`docs/plan/DX-REFINE.md` 两边各自新增），GitHub 不起 `pull_request` 工作流，因此 M2/M3 的 CI 退出条件（matrix 全绿、最长 job ≤ 10 min、A-1、A-6）无法验证；把 `main` 合入本分支的操作两次被权限拒绝，需用户合并或授权
+- 代码基线：M1/M3 `fa76b20`；M2 集成见完成记录
 
 ### 完成记录
 
 | Milestone | 状态 | 更新时间 | 简要记录 | 实现与验收记录 |
 | --- | --- | --- | --- | --- |
+| M2 | 进行中 | 2026-09-25 | 共享页 fixture + 五个示例 `reset()`；回归层两轮全绿，workers=2：fusion-basic 4.4–4.8 min、property-workbench 4.5–4.6、component-catalog 1.8–1.9、data-workbench 2.6、vellum 3.2–3.3；CI matrix/`evidence.yml` 已写；证据层与 CI 待办 | [M2 记录](../validation/dx/m2.md) |
 | M3 | 进行中 | 2026-09-25 | mise 固定 Tailwind 4.1.13、`xtask/src/tailwind.rs`、`source(none)`、去 npm Tailwind、`verify` 加 CSS/目录检查；本地全过，A-1 与 CI host job 待 CI | [M3 记录](../validation/dx/m3.md) |
 | M1 | 已完成 | 2026-09-25 | `RUSTIFY_TIER` + `@evidence`（`--list` 守恒）、按需 server（A-4 成立）、CI/verify `--bins` 与全量层；component-catalog 回归层 49/49；A-2 部分证伪 → ADR-6 修订；A-7 内存成立 | [M1 记录](../validation/dx/m1.md) |
 
@@ -92,8 +93,8 @@
 | --- | --- | --- | --- | --- |
 | D1 | 形态 | 三条工作线（测试 / Tailwind / Vellum 抽取）、一份计划、8 个里程碑；只改仓库工具链、SDK 两个公开 crate、示例与测试 | 零改动：`makepad/`、`crates/rustify-makepad` 的运行时语义（只新增公开出口所需的最小函数）、`web/loader.js` 的实例/中止模型 | R-1–R-6；C-1 |
 | D2 | 测试分层开关 | `RUSTIFY_TIER=regression`（默认）/`evidence`/`all`；证据用例用 Playwright 标签 `@evidence`；两份 config 读同一个 `tests/tier.ts` ★ | 本地直接跑就是回归层；CI PR 跑回归层；证据 workflow 跑 `evidence`；`xtask verify` 跑 `all` | ADR-1；R-1/R-2 |
-| D3 | 回合与矩阵 | `rounds(n)`：回归层 `min(n, 3)`、证据/全量层 `n`；参数矩阵用 `pick(all, representative)`：回归层取代表子集 | 20 回合循环在 PR 里降为 3；`m4-geometry` 的 9 组视口×DPR 在回归层取 2 组 | A-3；§5.1 |
-| D4 | 页面复用 | ADR-6：worker 级 fixture 为每个 project 只开一页，每个用例前调示例句柄的 `reset()`；以下用例声明 `test.use({ fresh: true })` 拿同 context 的新页：冷加载/首载字节、服务器故障开关（`__fault/*`）、需要 `addInitScript` 改写环境（如拒绝 WebGL2）、深链接首载、会让实例 trap 或耗尽重启次数；用例后 fixture 检查运行时健康（`data-status`、区域与错误计数），不健康就丢掉该页，下个用例重开。**M1 修订**：`reset()` 在区域创建昂贵的示例上（property-workbench 单次约 7–9 s）**原地复位**——应用状态、存储与 URL 回到首载值，已挂载的 scope 与区域保留；用例新增的 scope 卸载、卸掉的 scope 重挂（只有这时付区域创建）；区域创建便宜（Vellum 约 0.9 s）或已达 D9 目标（component-catalog 3.1 min）的示例按原文重挂。`fresh` 用例直接用 Playwright 默认的每用例 context + 页（「同 context 新页」实测只省约 0.4 s） | 用例改从 `tests/browser/support.ts`（Vellum：`tests/vellum/support.ts`）导入 `test`；每个示例的 `window.__<example>` 增加 `reset()`，Vellum 基于既有 `window.vellum.actions.resetStarter()` 并清空 IndexedDB/localStorage | ADR-6；A-2；`tests/browser/support.ts:511-536`；`tests/browser/p3-faults.spec.ts:162-165` |
+| D3 | 回合与矩阵 | `rounds(n)`：回归层 `min(n, 3)`、证据/全量层 `n`；参数矩阵用 `pick(all, representative)`：回归层取代表子集 | 20 回合循环在 PR 里降为 3；`m4-geometry` 的 9 组视口×DPR 在回归层取 2 组，其余 7 组标 `@evidence`（每周仍跑，回归层 ∪ 证据层 = 全集）；`p3-scene` 帧呈现用例的「样本帧数下限」随 `rounds()` 缩放（它只保证比例有样本，软件光栅下 3 s 只有约 10 帧） | A-3；§5.1 |
+| D4 | 页面复用 | ADR-6：worker 级 fixture 为每个 project 只开一页，每个用例前调示例句柄的 `reset()`；以下用例声明 `test.use({ fresh: true })` 拿同 context 的新页：冷加载/首载字节、服务器故障开关（`__fault/*`）、需要 `addInitScript` 改写环境（如拒绝 WebGL2）、深链接首载、会让实例 trap 或耗尽重启次数；用例后 fixture 检查运行时健康（`data-status`、区域与错误计数），不健康就丢掉该页，下个用例重开。**M1 修订**：`reset()` 在区域创建昂贵的示例上**原地复位**——应用状态、存储与 URL 回到首载值，已挂载的 scope 与区域保留；用例新增的 scope 卸载、卸掉的 scope 重挂（只有这时付区域创建）。M2 实测区域创建：property-workbench 7–9 s、component-catalog 6.2–6.6 s、fusion-basic 每个区域同量级、data-workbench 表格 0.8 s / 场景 3.9 s，四者都原地复位；Vellum 约 0.9 s，按原文重挂（清存储后卸载再挂载）。`fresh` 用例直接用 Playwright 默认的每用例 context + 页（「同 context 新页」实测只省约 0.4 s）；与共享 context 选项不同（如设备像素比）的用例由 fixture 自动给新页 | 用例改从 `tests/browser/support.ts`（Vellum：`tests/vellum/support.ts`）导入 `test`；每个示例的 `window.__<example>` 增加 `reset()`，Vellum 基于既有 `window.vellum.actions.resetStarter()` 并清空 IndexedDB/localStorage | ADR-6；A-2；`tests/browser/support.ts:511-536`；`tests/browser/p3-faults.spec.ts:162-165` |
 | D5 | 去重 | §5.1「去重」表逐项执行：保留一处、其余删或移入证据层；删除项在 M2 记录里列出「由谁保留」 | 回归层不再有同一行为的多处 20 次重复 | R-2 |
 | D6 | webServer 按需 | config 只为本次 `--project` 起对应 server（A-4）；两个子路径 server 不再在启动命令里 `build-web`，改为显式构建步骤，`serve` 找不到产物即失败并提示命令 | 单 project 运行不再起 6 个 server、不再每次重建 2 个子路径产物 | `playwright.config.ts:111-138`；`CLAUDE.md`「Browser tests」 |
 | D7 | CI 编排 | host job 加 `--bins`；浏览器改 matrix：fusion-basic+deployment、property-workbench+workbench-deep、component-catalog+data-workbench、vellum，各自只构建需要的示例；超 D9 的 project 用 `--shard=i/n` 拆成多个 job；新增 `.github/workflows/evidence.yml` ★（`workflow_dispatch` + 每周一次） | PR 关键路径变为最慢的一个 job；证据层不再拖 PR | A-6；D9；`.github/workflows/verify.yml` |

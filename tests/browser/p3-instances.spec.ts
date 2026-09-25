@@ -1,4 +1,5 @@
-import { expect, Page, test } from "@playwright/test";
+import { expect, Page } from "@playwright/test";
+import { isShared, test } from "./support";
 
 /// M5 · two application instances on one page, and what one of them dying
 /// does to the other.
@@ -14,10 +15,18 @@ import { expect, Page, test } from "@playwright/test";
 /// nothing about the instance beside it - so nothing here judges by the
 /// absence of console noise.
 
+// Every check here runs on a page of its own and shares nothing with the
+// next, so both workers can take them.
+test.describe.configure({ mode: "parallel" });
+
 const status = (page: Page) => page.getByTestId("status");
 
 async function open(page: Page) {
-    await page.goto("./");
+    // Every check here runs on a page of its own, but a shared one would be
+    // loaded already, and loading it again is the cost it is shared to avoid.
+    if (!isShared(page)) {
+        await page.goto("./");
+    }
     await expect(status(page)).toHaveAttribute("data-status", "ready", { timeout: 120_000 });
 }
 
@@ -33,6 +42,27 @@ async function watchPolicy(page: Page) {
             );
         });
     });
+}
+
+/// Boots a second instance with `fixture` mounted in it, and says which
+/// number it got.
+///
+/// The pending boot is held on the page while it runs. The DevTools protocol
+/// holds the promise an evaluate returns only weakly, and in this browser
+/// build one that starts GPU regions before it settles is reported collected
+/// ("Resulting promise was garbage collected") although the instance has
+/// booted and mounted: returned bare, the same call failed every time in
+/// four probe rounds, and held like this it passed every time.
+async function bootSecond(page: Page, fixture: string): Promise<number> {
+    return page.evaluate(async (fixture) => {
+        const w = window as unknown as { __booting?: Promise<number> };
+        w.__booting = window.__fusion_basic.boot_instance("instance-two", fixture);
+        try {
+            return await w.__booting;
+        } finally {
+            delete w.__booting;
+        }
+    }, fixture);
 }
 
 const policyViolations = (page: Page) =>
@@ -94,15 +124,17 @@ const TRAPS: { name: string; fire: (page: Page) => Promise<unknown> }[] = [
 ];
 
 test.describe("M5 · one instance fails, the other does not", () => {
+    // Each of these boots a second instance, which nothing can take off the
+    // page again, and most of them kill the first: their own page each.
+    test.use({ fresh: true });
+
     for (const trap of TRAPS) {
         test(`a trap through ${trap.name} reaches its own instance only`, async ({ page }) => {
             await open(page);
             // The second instance gets the counter fixture: an instance that
             // is going to be asked whether it still works needs something to
             // work.
-            const second = await page.evaluate(() =>
-                window.__fusion_basic.boot_instance("instance-two", "mount")
-            );
+            const second = await bootSecond(page, "mount");
             expect(second).toBe(2);
 
             await trap.fire(page);
@@ -131,7 +163,7 @@ test.describe("M5 · one instance fails, the other does not", () => {
 
     test("a dead instance's diagnostics are its own", async ({ page }) => {
         await open(page);
-        await page.evaluate(() => window.__fusion_basic.boot_instance("instance-two", "mount"));
+        await bootSecond(page, "mount");
         // Read before the trap: an export called on a dead instance throws
         // `InstanceDead` rather than reaching it, which is the boundary doing
         // its job - so a dead instance's record is not something to go asking
@@ -156,9 +188,7 @@ test.describe("M5 · one instance fails, the other does not", () => {
     test("two instances start under the release policy with nothing refused", async ({ page }) => {
         await watchPolicy(page);
         await open(page);
-        const second = await page.evaluate(() =>
-            window.__fusion_basic.boot_instance("instance-two", "mount")
-        );
+        const second = await bootSecond(page, "mount");
         expect(second).toBe(2);
         // One wasm module, two instances of it: the second glue is a second
         // module record under a query string, and a strict `script-src 'self'`
@@ -190,6 +220,10 @@ async function windowListeners(page: Page): Promise<Record<string, number>> {
 }
 
 test.describe("M5 · the address bar after its owner dies", () => {
+    // A trap, a second instance, or a slot's restarts spent: none of it is
+    // anything a page can be put back from.
+    test.use({ fresh: true });
+
     test("a restarted instance owns the URL again and is the only one answering", async ({
         page,
     }) => {

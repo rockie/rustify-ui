@@ -1,6 +1,6 @@
-import { expect, Page, test } from "@playwright/test";
+import { expect, Page } from "@playwright/test";
 
-import { waitForReady } from "./support";
+import { test, waitForReady } from "./support";
 
 /// M6 V9: files in, files out, and the clipboard when it says no.
 ///
@@ -35,19 +35,7 @@ async function download(page: Page, testId: string): Promise<Buffer> {
 }
 
 test.describe("M6 V9: exporting, and reading back exactly what was written", () => {
-    test.describe.configure({ mode: "serial" });
-    let page: Page;
-
-    test.beforeAll(async ({ browser }, info) => {
-        const context = await browser.newContext({ baseURL: info.project.use.baseURL });
-        page = await context.newPage();
-        await waitForReady(page);
-    });
-    test.afterAll(async () => {
-        await page?.context().close();
-    });
-
-    test("a strict page can still start a download", async () => {
+    test("a strict page can still start a download", async ({ page }) => {
         // `default-src 'none'` governs what the page may load, not what it may
         // hand the user to save. If it did, the export would be the feature
         // that the security policy silently removed, so it is checked rather
@@ -60,7 +48,7 @@ test.describe("M6 V9: exporting, and reading back exactly what was written", () 
         expect(saved.byteLength).toBe(state.bytes);
     });
 
-    test("text out, in, and out again is the same bytes", async () => {
+    test("text out, in, and out again is the same bytes", async ({ page }) => {
         const first = await download(page, "export-text");
         await choose(page, "objects.txt", first);
         await expect.poll(async () => (await transfer(page)).imports).toBeGreaterThan(0);
@@ -69,7 +57,7 @@ test.describe("M6 V9: exporting, and reading back exactly what was written", () 
         expect(second.equals(first)).toBe(true);
     });
 
-    test("binary out, in, and out again is the same bytes", async () => {
+    test("binary out, in, and out again is the same bytes", async ({ page }) => {
         const before = (await transfer(page)).imports;
         const first = await download(page, "export-binary");
         // Seventeen bytes an object: an id, a group, a flag and a size.
@@ -80,7 +68,7 @@ test.describe("M6 V9: exporting, and reading back exactly what was written", () 
         expect(second.equals(first)).toBe(true);
     });
 
-    test("what was dropped on the region survives a round trip", async () => {
+    test("what was dropped on the region survives a round trip", async ({ page }) => {
         // Put an object in a group, write everything out, take it out of the
         // group, read the file back: the group is where the file said.
         await page.getByTestId("object-11").click();
@@ -99,19 +87,7 @@ test.describe("M6 V9: exporting, and reading back exactly what was written", () 
 });
 
 test.describe("M6 V9: the three answers an import has", () => {
-    test.describe.configure({ mode: "serial" });
-    let page: Page;
-
-    test.beforeAll(async ({ browser }, info) => {
-        const context = await browser.newContext({ baseURL: info.project.use.baseURL });
-        page = await context.newPage();
-        await waitForReady(page);
-    });
-    test.afterAll(async () => {
-        await page?.context().close();
-    });
-
-    test("a file within the limits is read", async () => {
+    test("a file within the limits is read", async ({ page }) => {
         await choose(page, "objects.txt", "1\tfirst\t2\t0\t35\n2\tsecond\t0\t1\t10\n");
         await expect.poll(async () => (await transfer(page)).imports).toBe(1);
         expect((await transfer(page)).status).toBe("imported 2 objects");
@@ -119,7 +95,7 @@ test.describe("M6 V9: the three answers an import has", () => {
         expect(state.count).toBe(1000);
     });
 
-    test("a file over the limit is refused before it is read", async () => {
+    test("a file over the limit is refused before it is read", async ({ page }) => {
         const before = await transfer(page);
         // Bigger than the quarter of a megabyte the application declared.
         const huge = "1\tname\t0\t0\t5\n".repeat(30_000);
@@ -128,14 +104,14 @@ test.describe("M6 V9: the three answers an import has", () => {
         expect((await transfer(page)).imports).toBe(before.imports);
     });
 
-    test("a kind we do not read is refused, and says what we do read", async () => {
+    test("a kind we do not read is refused, and says what we do read", async ({ page }) => {
         const before = await transfer(page);
         await choose(page, "objects.exe", "1\tname\t0\t0\t5\n");
         await expect.poll(async () => (await transfer(page)).status).toContain("we read .txt, .bin");
         expect((await transfer(page)).imports).toBe(before.imports);
     });
 
-    test("a file of the right kind that goes wrong changes nothing", async () => {
+    test("a file of the right kind that goes wrong changes nothing", async ({ page }) => {
         const before = await snapshot(page);
         await choose(page, "objects.txt", "1\tfirst\tnope\t0\t35\n");
         await expect.poll(async () => (await transfer(page)).status).toContain("is not readable");
@@ -145,14 +121,14 @@ test.describe("M6 V9: the three answers an import has", () => {
         expect((await snapshot(page)).name).toBe(before.name);
     });
 
-    test("choosing nothing is not an error and imports nothing", async () => {
+    test("choosing nothing is not an error and imports nothing", async ({ page }) => {
         const before = await transfer(page);
         await page.getByTestId("import-file").setInputFiles([]);
         await expect.poll(async () => (await transfer(page)).status).toBe("nothing chosen");
         expect((await transfer(page)).imports).toBe(before.imports);
     });
 
-    test("a file dropped on the zone is read the same way", async () => {
+    test("a file dropped on the zone is read the same way", async ({ page }) => {
         const before = await transfer(page);
         await page.evaluate(() => {
             const zone = document.querySelector('[data-testid="import-drop"]') as HTMLElement;
@@ -171,7 +147,8 @@ test.describe("M6 V9: the three answers an import has", () => {
 });
 
 test.describe("M6 V9: the clipboard, and what happens when it refuses", () => {
-    test.describe.configure({ mode: "serial" });
+    // These two make their own contexts - one granted the clipboard, one whose
+    // clipboard refuses - so they load their own pages.
 
     /// Ten thousand characters of the two things a Latin-only path gets wrong.
     ///

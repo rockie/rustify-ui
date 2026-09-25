@@ -29,6 +29,7 @@ mod app {
     use std::cell::RefCell;
     use std::collections::{BTreeMap, BTreeSet};
     use std::marker::PhantomData;
+    use std::rc::Rc;
     use std::sync::Arc;
 
     clx! {Panel, section, "rui:rounded-md rui:border rui:border-border rui:bg-card rui:p-4"}
@@ -218,6 +219,43 @@ mod app {
         static HANDLES: RefCell<BTreeMap<u32, AppHandle>> = const { RefCell::new(BTreeMap::new()) };
         static NEXT_HANDLE: RefCell<u32> = const { RefCell::new(1) };
         static SNAPSHOT: RefCell<String> = const { RefCell::new(String::new()) };
+        /// How to put each mounted scope back the way it loaded, by handle.
+        static RESETS: RefCell<BTreeMap<u32, Rc<dyn Fn()>>> = const { RefCell::new(BTreeMap::new()) };
+    }
+
+    /// The application's own state, each piece with the value it starts with.
+    ///
+    /// A test resets the page between checks rather than loading it again:
+    /// a load is dominated by starting the region, and so is a remount. So the
+    /// scope and its region stay, and the application puts back what it owns.
+    /// The first value is given once, where the signal is created, so a new
+    /// piece of state cannot be added without saying what it resets to.
+    #[derive(Default)]
+    struct FirstLoad(Vec<Box<dyn Fn()>>);
+
+    impl FirstLoad {
+        /// A signal that a reset puts back to `initial`.
+        fn signal<T: Clone + Send + Sync + 'static>(&mut self, initial: T) -> RwSignal<T> {
+            let signal = RwSignal::new(initial.clone());
+            self.0.push(Box::new(move || signal.set(initial.clone())));
+            signal
+        }
+
+        /// State that is not a plain signal of this scope's.
+        fn then(&mut self, reset: impl Fn() + 'static) {
+            self.0.push(Box::new(reset));
+        }
+
+        /// Makes the resets reachable under the scope's handle, for as long
+        /// as the scope lives.
+        fn register(self, handle: u32) {
+            let resets = self.0;
+            let reset: Rc<dyn Fn()> = Rc::new(move || resets.iter().for_each(|reset| reset()));
+            RESETS.with(|table| table.borrow_mut().insert(handle, reset));
+            on_cleanup(move || {
+                RESETS.with(|table| table.borrow_mut().remove(&handle));
+            });
+        }
     }
 
     fn chip(support: Support) -> ChipVariant {
@@ -226,6 +264,15 @@ mod app {
             Support::Partial => ChipVariant::Partial,
             Support::No => ChipVariant::No,
         }
+    }
+
+    /// A string as a JSON literal, by the browser's own encoder: whatever a
+    /// reader typed into a field cannot break the snapshot it is reported in.
+    fn json_string(text: &str) -> String {
+        js_sys::JSON::stringify(&JsValue::from_str(text))
+            .ok()
+            .and_then(|json| json.as_string())
+            .unwrap_or_else(|| "\"\"".to_string())
     }
 
     fn rect_json(rect: Option<LocalRect>) -> String {
@@ -934,15 +981,27 @@ mod app {
         }
     }
 
+    /// The catalogue, as one scope. `handle` is what JS knows the scope by,
+    /// and so what its reset is registered under.
     #[component]
-    fn Catalogue() -> impl IntoView {
-        let theme = RwSignal::new(Theme::light());
+    fn Catalogue(handle: u32) -> impl IntoView {
+        // What mirrors the region - its state and the rectangles it reports -
+        // is created plainly: the region stays through a reset and goes on
+        // reporting, so those are not the application's to put back. The
+        // rest starts through `first`.
+        let mut first = FirstLoad::default();
+        let theme = first.signal(Theme::light());
         // The scope's language, in context: the SDK's own components read it
         // too, so a dialog's close button and this page's headings cannot end
         // up in two different languages.
-        let locale = rustify_ui::provide_locale(Locale::English);
+        let first_locale = Locale::English;
+        let locale = rustify_ui::provide_locale(first_locale);
+        first.then(move || locale.set(first_locale));
         let locale_signal = Signal::derive(move || locale.get());
-        let page = RwSignal::new(Page::Category(0));
+        // Every page's own state - a table's selection, a tree's expansion,
+        // whether the samples page blocks its font - lives in that page and
+        // is rebuilt when this is set, even to the page it already shows.
+        let page = first.signal(Page::Category(0));
         let region = RwSignal::new(RegionState::Starting);
         // Where the region says it drew its own controls, so a test can put a
         // real pointer on one instead of guessing from the layout.
@@ -953,24 +1012,27 @@ mod app {
         let canvas = NodeRef::<leptos::html::Canvas>::new();
         // Where the region drew its chooser, while its list is open. The list
         // is a DOM layer: a popup cannot leave the canvas.
-        let region_chooser = RwSignal::new(None::<LocalRect>);
+        // Reported by the region, but whether the list is open is the page's
+        // decision, and a reset closes it.
+        let region_chooser = first.signal(None::<LocalRect>);
         let values = Values {
-            checked: RwSignal::new(false),
-            chosen: RwSignal::new(0),
-            on: RwSignal::new(false),
-            size: RwSignal::new(40.0),
-            fraction: RwSignal::new(0.35),
-            spinning: RwSignal::new(true),
-            tab: RwSignal::new(0),
-            text: RwSignal::new("hello".to_string()),
-            notes: RwSignal::new("two\nlines".to_string()),
-            chooser: RwSignal::new(1),
-            tooltip: RwSignal::new(false),
-            menu: RwSignal::new(false),
-            dialog: RwSignal::new(false),
-            select: RwSignal::new(false),
-            actions: RwSignal::new(0),
+            checked: first.signal(false),
+            chosen: first.signal(0),
+            on: first.signal(false),
+            size: first.signal(40.0),
+            fraction: first.signal(0.35),
+            spinning: first.signal(true),
+            tab: first.signal(0),
+            text: first.signal("hello".to_string()),
+            notes: first.signal("two\nlines".to_string()),
+            chooser: first.signal(1),
+            tooltip: first.signal(false),
+            menu: first.signal(false),
+            dialog: first.signal(false),
+            select: first.signal(false),
+            actions: first.signal(0),
         };
+        first.register(handle);
         provide_current_path(Signal::derive(move || page.get().path()));
 
         let switch_theme = move || {
@@ -1009,7 +1071,9 @@ mod app {
                 "{{\"path\":\"{}\",\"theme\":\"{}\",\"locale\":\"{}\",\"categories\":{},\
                  \"button\":{},\"control\":{},\"region\":\"{}\",\"checked\":{},\"chosen\":{},\
                  \"on\":{},\"size\":{},\"fraction\":{:.2},\"spinning\":{},\"tab\":{},\
-                 \"chooser\":\"{}\",\"text\":\"{}\",\"actions\":{},\"reduce_motion\":{}}}",
+                 \"chooser\":\"{}\",\"text\":{},\"actions\":{},\"reduce_motion\":{},\
+                 \"notes\":{},\"tooltip\":{},\"menu\":{},\"dialog\":{},\"listbox\":{},\
+                 \"region_list\":{}}}",
                 page.path(),
                 theme.get().name,
                 locale.get().tag(),
@@ -1032,9 +1096,15 @@ mod app {
                 values.spinning.get(),
                 values.tab.get(),
                 SIZES[values.chooser.get()],
-                values.text.get().replace('"', "'"),
+                json_string(&values.text.get()),
                 values.actions.get(),
                 theme.get().reduce_motion,
+                json_string(&values.notes.get()),
+                values.tooltip.get(),
+                values.menu.get(),
+                values.dialog.get(),
+                values.select.get(),
+                region_chooser.get().is_some(),
             );
             SNAPSHOT.with(|slot| *slot.borrow_mut() = snapshot);
         });
@@ -1252,6 +1322,14 @@ mod app {
             .ok_or_else(|| JsValue::from_str(&format!("no element with id {container_id}")))?
             .dyn_into::<leptos::web_sys::HtmlElement>()
             .map_err(|_| JsValue::from_str("the container is not an element"))?;
+        // Chosen before the scope is built, so the scope can register its
+        // reset under it. A mount that fails spends one, which costs nothing:
+        // handles are never reused anyway.
+        let id = NEXT_HANDLE.with(|next| {
+            let id = *next.borrow();
+            *next.borrow_mut() += 1;
+            id
+        });
         let handle = mount(
             container,
             MountConfig {
@@ -1261,14 +1339,9 @@ mod app {
                 url_owner: false,
                 base: String::new(),
             },
-            Catalogue,
+            move || view! { <Catalogue handle=id /> },
         )
         .map_err(|error| JsValue::from_str(&error.to_string()))?;
-        let id = NEXT_HANDLE.with(|next| {
-            let id = *next.borrow();
-            *next.borrow_mut() += 1;
-            id
-        });
         HANDLES.with(|handles| handles.borrow_mut().insert(id, handle));
         Ok(id)
     }
@@ -1278,6 +1351,23 @@ mod app {
         HANDLES
             .with(|handles| handles.borrow_mut().remove(&handle))
             .is_some()
+    }
+
+    /// Puts a mounted scope's own state back to its first-load values, in
+    /// place: the scope and its region stay. False for a handle that is not
+    /// mounted.
+    #[wasm_bindgen]
+    pub fn catalog_reset(handle: u32) -> bool {
+        // Taken out of the table before it runs, so nothing it sets off can
+        // find the table borrowed.
+        let reset = RESETS.with(|table| table.borrow().get(&handle).cloned());
+        match reset {
+            Some(reset) => {
+                reset();
+                true
+            }
+            None => false,
+        }
     }
 
     #[wasm_bindgen]

@@ -58,12 +58,39 @@ async function relaunch(died) {
     }
 }
 
+const frame = () => new Promise((resolve) => requestAnimationFrame(resolve));
+
+/// Resolves once the page shows what a first load shows.
+///
+/// The application's effects run after the task that set them off, and the
+/// region reports where it drew a control a frame after drawing it; a page
+/// that was left on the samples page also has that page's region to lose. The
+/// first category is one the region draws, so its control is reported too.
+async function settled(catalog, timeout_ms = 60_000) {
+    const deadline = performance.now() + timeout_ms;
+    for (;;) {
+        await frame();
+        const now = catalog.snapshot();
+        if (
+            now.region === "ready" &&
+            now.button !== null &&
+            now.control !== null &&
+            catalog.live_regions() === 1
+        ) {
+            return;
+        }
+        if (performance.now() > deadline) {
+            throw new Error(`the page did not settle after a reset: ${JSON.stringify(now)}`);
+        }
+    }
+}
+
 /// Publishes the page's handle on one live instance and mounts it.
 function publish(started) {
     live = started;
     const { app, hooks, build } = started;
     app.catalog_identify(started.instance, build);
-    window.__component_catalog = {
+    const catalog = {
         hooks,
         mount() {
             handle = app.catalog_mount(container);
@@ -103,8 +130,33 @@ function publish(started) {
         stats() {
             return hooks.runtime.stats();
         },
+        // The page as it loads, without loading it again, for checks that
+        // share one page.
+        //
+        // What a load costs is starting the region: every new WebGL context
+        // has a software rasteriser compile its shaders, which takes seconds,
+        // and a remount pays that again. So the scope and its region stay and
+        // the application puts its own state back. Only what a caller did to
+        // the page itself is undone the other way: a second scope it added
+        // is disposed, and a main scope it disposed is mounted again.
+        async reset() {
+            catalog.dispose_second();
+            if (handle === null) {
+                catalog.mount();
+            } else {
+                app.catalog_reset(handle);
+            }
+            await settled(catalog);
+            // After the application has closed its layers, since a layer that
+            // closes hands focus back to whatever opened it.
+            document.activeElement?.blur();
+            window.scrollTo(0, 0);
+            // What the caller provoked is not part of a first load.
+            hooks.runtime.errors.length = 0;
+        },
     };
-    window.__component_catalog.mount();
+    window.__component_catalog = catalog;
+    catalog.mount();
     status.dataset.status = "ready";
     status.textContent = "ready";
 }

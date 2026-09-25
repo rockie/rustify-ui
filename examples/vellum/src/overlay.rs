@@ -44,7 +44,14 @@ pub fn draw_overlay(
         .ok_or_else(|| JsValue::from_str("Canvas 2D unavailable"))?
         .dyn_into::<CanvasRenderingContext2d>()?;
     ctx.set_transform(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)?;
-    ctx.clear_rect(0.0, 0.0, f64::from(pixels_w), f64::from(pixels_h));
+    // Not clearRect: when a full-canvas clear is a frame's only operation (the
+    // overlay once nothing is selected), Chromium's accelerated canvas can
+    // present a recycled buffer that still holds an earlier frame. A "copy"
+    // fill is a recorded draw that replaces every pixel.
+    ctx.set_global_composite_operation("copy")?;
+    ctx.set_fill_style_str("transparent");
+    ctx.fill_rect(0.0, 0.0, f64::from(pixels_w), f64::from(pixels_h));
+    ctx.set_global_composite_operation("source-over")?;
     ctx.scale(dpr, dpr)?;
 
     let accent = if options.dark { "#ad96ff" } else { "#8a64e8" };

@@ -24,6 +24,7 @@ mod app {
     use std::cell::{Cell, RefCell};
     use std::collections::BTreeMap;
     use std::marker::PhantomData;
+    use std::rc::Rc;
     use std::sync::Arc;
 
     pub use rustify_ui::makepad_widgets;
@@ -51,6 +52,31 @@ mod app {
         /// anything of the application behind, which nothing the runtime
         /// counts can say.
         static LIVE_COMPONENTS: Cell<u32> = const { Cell::new(0) };
+        /// How each live fixture goes back to the state it was mounted with,
+        /// keyed so that a fixture that goes takes its own entry with it.
+        static RESETS: RefCell<BTreeMap<u32, Rc<dyn Fn()>>> =
+            const { RefCell::new(BTreeMap::new()) };
+        static NEXT_RESET: Cell<u32> = const { Cell::new(0) };
+    }
+
+    /// Registers how this fixture returns to its first state, for as long as
+    /// its owner lives.
+    ///
+    /// Putting the state back is cheaper than mounting the fixture again:
+    /// a remount starts its regions again, and on a software rasteriser a
+    /// region start is seconds of shader and font-atlas work. A reset keeps
+    /// the regions and hands them the first state's props like any other
+    /// change.
+    fn on_reset(reset: impl Fn() + 'static) {
+        let key = NEXT_RESET.with(|next| {
+            let key = next.get();
+            next.set(key + 1);
+            key
+        });
+        RESETS.with(|resets| resets.borrow_mut().insert(key, Rc::new(reset)));
+        on_cleanup(move || {
+            RESETS.with(|resets| resets.borrow_mut().remove(&key));
+        });
     }
 
     /// Counts this component alive for as long as its owner is.
@@ -135,7 +161,17 @@ mod app {
     fn App(scope: String) -> impl IntoView {
         count_component();
         let (count, set_count) = signal(0i64);
-        let props = Signal::derive(move || CounterProps { count: count.get() });
+        let resets = RwSignal::new(0u32);
+        // Back to zero, and the regions told that it is a reset, so that they
+        // also drop the key focus a press left on their button.
+        on_reset(move || {
+            set_count.set(0);
+            resets.update(|n| *n += 1);
+        });
+        let props = Signal::derive(move || CounterProps {
+            count: count.get(),
+            resets: resets.get(),
+        });
         let on_action = move |action| match action {
             CounterAction::Increment => set_count.update(|c| *c += 1),
         };
@@ -204,6 +240,14 @@ mod app {
     fn B0Fixture() -> impl IntoView {
         count_component();
         let state = RwSignal::new(B0State::new());
+        // The state goes back; the region's own report of where it drew its
+        // controls does not, because the region sends it once and it has not
+        // moved.
+        on_reset(move || {
+            if state.with_untracked(|s| *s != B0State::new()) {
+                state.set(B0State::new());
+            }
+        });
         let region = RwSignal::new(RegionState::Starting);
         let layout = RwSignal::new(Vec::<(String, LocalRect)>::new());
 
@@ -457,6 +501,9 @@ mod app {
             );
             GEOMETRY.with(|slot| *slot.borrow_mut() = report);
         });
+        // What a fixture that has gone reports is nothing. A report it left
+        // behind would answer for the next one before that one had drawn.
+        on_cleanup(|| GEOMETRY.with(|slot| slot.borrow_mut().clear()));
 
         let on_action = move |action| match action {
             AnchorAction::Layout(reported) => anchors.set(reported),
@@ -854,6 +901,19 @@ mod app {
         GUARDS.with(|guards| guards.borrow_mut().push(guarded));
         on_cleanup(move || {
             GUARDS.with(|guards| guards.borrow_mut().retain(|slot| *slot != guarded));
+            // A scope that has gone is nowhere, so it stops saying where it is.
+            ROUTES.with(|slot| {
+                let mut all = slot.borrow_mut();
+                let prefix = format!("{name}=");
+                let keep: Vec<&str> = all
+                    .split(';')
+                    .filter(|part| !part.is_empty() && !part.starts_with(&prefix))
+                    .collect();
+                *all = keep
+                    .iter()
+                    .map(|part| format!("{part};"))
+                    .collect::<String>();
+            });
         });
         Effect::new(move || {
             let path = location.get().path;
@@ -884,6 +944,21 @@ mod app {
                     "go to an object"
                 </button>
             </section>
+        }
+    }
+
+    /// Puts every live fixture's own state back to what it was mounted with.
+    ///
+    /// The page's `reset()` calls this once it has disposed the scopes the
+    /// page does not load with. The fixtures that stay keep their regions.
+    #[wasm_bindgen]
+    pub fn fusion_basic_reset() {
+        // Taken out first: a reset sets signals, and nothing it sets may find
+        // the list still borrowed.
+        let resets: Vec<Rc<dyn Fn()>> =
+            RESETS.with(|resets| resets.borrow().values().cloned().collect());
+        for reset in resets {
+            reset();
         }
     }
 

@@ -9,6 +9,8 @@ mod object_grid;
 #[cfg(target_arch = "wasm32")]
 mod object_region;
 #[cfg(target_arch = "wasm32")]
+mod reset;
+#[cfg(target_arch = "wasm32")]
 mod third_party;
 // Not gated: the file formats are arithmetic on bytes, and the host is where
 // a round trip can be compared without a browser. Nothing calls them there,
@@ -24,6 +26,7 @@ mod app {
     use super::group_list::Group;
     use super::object_grid::GridCell;
     use super::object_region::{EditField, ObjectRegion, SelectionAction, SelectionProps};
+    use super::reset::Resets;
     use super::third_party::ThirdPartySlider;
     use leptos::prelude::*;
     use leptos::wasm_bindgen::prelude::*;
@@ -185,6 +188,9 @@ mod app {
         /// Registered by the live scope: puts the third-party component into
         /// the view or takes it out, so a rebuild can be driven from the page.
         static PRESENT: Seam<dyn Fn(bool)> = const { RefCell::new(BTreeMap::new()) };
+        /// Registered by the live scope: puts its state back to the page's
+        /// first load, at the path the page was loaded at.
+        static RESET: Seam<dyn Fn(&str)> = const { RefCell::new(BTreeMap::new()) };
     }
 
     /// Drops every scope this page mounted. Called from inside an action
@@ -227,6 +233,25 @@ mod app {
         slot.with(|slot| slot.borrow().values().next_back().cloned())
     }
 
+    /// One number for the whole object list. Equal lists give equal numbers,
+    /// which is all a snapshot compared with an earlier one needs, and it
+    /// saves printing a thousand objects to say so.
+    fn digest(objects: &[WorkbenchObject]) -> u64 {
+        use std::hash::{Hash, Hasher};
+        let mut hasher = std::collections::hash_map::DefaultHasher::new();
+        for object in objects {
+            object.id.0.hash(&mut hasher);
+            object.name.hash(&mut hasher);
+            object.notes.hash(&mut hasher);
+            object.color.hash(&mut hasher);
+            object.locked.hash(&mut hasher);
+            object.size.to_bits().hash(&mut hasher);
+            object.group.hash(&mut hasher);
+            object.details.hash(&mut hasher);
+        }
+        hasher.finish()
+    }
+
     /// One reported rectangle, in the region's own local CSS pixels.
     fn rect_json(rect: LocalRect) -> String {
         format!(
@@ -265,8 +290,11 @@ mod app {
             *next.borrow_mut() += 1;
             id
         });
-        let objects = RwSignal::new(initial_objects());
-        let selected = RwSignal::new(Some(ObjectId(1)));
+        // Everything below that a reset puts back registers here, next to
+        // where it is made.
+        let resets = Resets::provide();
+        let objects = resets.signal(initial_objects);
+        let selected = resets.signal(|| Some(ObjectId(1)));
 
         let current = Signal::derive(move || {
             let selected = selected.get()?;
@@ -286,15 +314,25 @@ mod app {
         // "what is in this field" is the bug a controlled component exists to
         // prevent, and a form is not exempt from it.
         let draft = RwSignal::new(Details::default());
-        let checks = RwSignal::new(Vec::<(&'static str, rustify_ui::Generation)>::new());
-        let saving = RwSignal::new(false);
-        let saves = RwSignal::new(0u32);
+        let checks = resets.signal(Vec::<(&'static str, rustify_ui::Generation)>::new);
+        let saving = resets.signal(|| false);
+        let saves = resets.signal(|| 0u32);
         let form = Form::new(&PROPERTY_FIELDS, move || {
             // Starting a save, not finishing one: the page says how it went,
             // and until it does the form is busy - which is what makes twenty
             // clicks one save rather than twenty.
             saves.update(|count| *count += 1);
             saving.set(true);
+        });
+        // The form's bookkeeping has no reset of its own, and needs none: a
+        // field that moves on drops its error and any check still running for
+        // it, and a save that finished leaves nothing dirty, failed or in
+        // flight. Together that is a form nobody has touched.
+        resets.on_reset(move || {
+            for field in PROPERTY_FIELDS {
+                form.changed(field);
+            }
+            form.submitted(Ok(()));
         });
 
         // Selecting another object replaces the draft. Anything unsaved goes
@@ -308,8 +346,19 @@ mod app {
             draft.set(held);
             checks.set(Vec::new());
         });
+        // Set by a reset itself rather than left to the effect above. Until
+        // that runs the draft would differ from the object, and the guard
+        // would refuse the navigation a reset ends with.
+        resets.on_reset(move || {
+            draft.set(
+                current
+                    .get_untracked()
+                    .map(|object| object.details)
+                    .unwrap_or_default(),
+            );
+        });
 
-        let asked_result = RwSignal::new(String::new());
+        let asked_result = resets.signal(String::new);
         let changed = Callback::new(move |field: &'static str| {
             form.changed(field);
             // One property is checked against something only a server knows.
@@ -323,7 +372,7 @@ mod app {
 
         // The workspace: three panels, ten views over the object list, and
         // every command in one place.
-        let panel_sizes = RwSignal::new(splitter_initial(&PANEL_MINS, 1160.0));
+        let panel_sizes = resets.signal(|| splitter_initial(&PANEL_MINS, 1160.0));
         let tabs = Signal::derive(|| {
             TABS.iter()
                 .enumerate()
@@ -339,16 +388,16 @@ mod app {
                 })
                 .collect::<Vec<_>>()
         });
-        let open_tabs = RwSignal::new(
+        let open_tabs = resets.signal(|| {
             TABS.iter()
                 .map(|(id, _)| id.to_string())
-                .collect::<Vec<String>>(),
-        );
-        let active_tab = RwSignal::new("all".to_string());
-        let palette_open = RwSignal::new(false);
+                .collect::<Vec<String>>()
+        });
+        let active_tab = resets.signal(|| "all".to_string());
+        let palette_open = resets.signal(|| false);
         // Where in the region a context menu was asked for, in the region's
         // own local pixels. `None` when there is no menu open.
-        let region_menu = RwSignal::new(None::<LocalRect>);
+        let region_menu = resets.signal(|| None::<LocalRect>);
 
         // Everything the workspace can do, in one list. Availability is a
         // signal, so a command that cannot run says so at the moment it is
@@ -440,30 +489,35 @@ mod app {
         // Where the pointer is, as the region reported it. Business state like
         // any other: the region draws what the application projects back, not
         // what its own pointer did.
-        let hovered = RwSignal::new(None::<ObjectId>);
+        let hovered = resets.signal(|| None::<ObjectId>);
         // One drag for the scope. Both halves of the page take part in the
         // same one, which is the point: a pointer cannot be in two drags.
         let drags = provide_drags();
+        resets.on_reset(move || {
+            if drags.dragging() {
+                drags.cancel();
+            }
+        });
         // The scope's language, so the SDK's own words - a retry, a dialog's
         // close button - are in the same language as the application's.
         rustify_ui::provide_locale(rustify_ui::Locale::English);
         // The question in flight, projected into the region. The region is not
         // running while the pointer moves over the page, so this is how it
         // hears the question at all.
-        let hit = RwSignal::new(None::<HitQuery>);
+        let hit = resets.signal(|| None::<HitQuery>);
         // The group a release would land in, as the region answered. Kept by
         // the application so that both the highlight the region draws and the
         // drop that follows come from one fact.
-        let drop_target = RwSignal::new(None::<u32>);
+        let drop_target = resets.signal(|| None::<u32>);
         // The DOM target under the pointer, for the same reason.
-        let dom_target = RwSignal::new(None::<String>);
+        let dom_target = resets.signal(|| None::<String>);
         // What a wheel at the end of the group list is for. A policy with one
         // value is not a policy, so it is a control rather than a constant.
-        let wheel_propagates = RwSignal::new(true);
+        let wheel_propagates = resets.signal(|| true);
         // Exactly one per delivered drop, so a hundred drags can be counted
         // rather than inspected.
-        let drops = RwSignal::new(0u32);
-        let drag_cancels = RwSignal::new(0u32);
+        let drops = resets.signal(|| 0u32);
+        let drag_cancels = resets.signal(|| 0u32);
         // How far down the region's group list is, as the region reported it.
         // A wheel that the region kept moves this; one it handed to the page
         // does not, which is the whole difference D14 is about.
@@ -471,10 +525,11 @@ mod app {
         // Where a press started, and on which object. A press is not a drag:
         // a drag begins once the pointer has travelled far enough that it
         // cannot have been a click.
-        let press = RwSignal::new(None::<(f64, f64, ObjectId)>);
+        let press = resets.signal(|| None::<(f64, f64, ObjectId)>);
         // Set when a drag delivered something, so the click that follows the
         // release does not also select what was just dropped.
         let dragged = StoredValue::new(false);
+        resets.on_reset(move || dragged.set_value(false));
 
         // The groups, with what is in them. Rebuilt when the objects change,
         // like the cells: a drag moving does not change the groups.
@@ -493,17 +548,18 @@ mod app {
                     .collect::<Vec<_>>()
             }))
         });
-        let theme = RwSignal::new(Theme::light());
+        let theme = resets.signal(Theme::light);
         // The rectangle the region drew the name into, while a native control
         // is editing it. The application decides when the session exists.
-        let editing = RwSignal::new(None::<(EditField, LocalRect)>);
+        let editing = resets.signal(|| None::<(EditField, LocalRect)>);
         // How many edit sessions ended because the value moved underneath them.
-        let invalidated = RwSignal::new(0u32);
+        let invalidated = resets.signal(|| 0u32);
         let canvas = NodeRef::<leptos::html::Canvas>::new();
         // How many times the application has asked the region to open a link.
         // A region is not the page, so the embedded contract refuses it; what
         // is being exercised is that the refusal is reported rather than
-        // silently swallowed.
+        // silently swallowed. Not reset: the region acts on a number higher
+        // than the last it saw, so winding it back would silence the next ask.
         let open_link_requests = RwSignal::new(0u32);
 
         let props = Signal::derive(move || {
@@ -594,8 +650,8 @@ mod app {
         // Why a value the user asked for was not taken, or `None` when the
         // last one was. The control shows the application's value either way;
         // this says out loud why it is not what was typed.
-        let refusal = RwSignal::new(None::<String>);
-        let refusals = RwSignal::new(0u32);
+        let refusal = resets.signal(|| None::<String>);
+        let refusals = resets.signal(|| 0u32);
 
         /// The application's own rule for a name. It is deliberately not the
         /// control's: a control cannot know that two objects may not share a
@@ -830,8 +886,8 @@ mod app {
             withdraw(&RESOLVE_SAVE, registration);
             withdraw(&EXISTS, registration);
         });
-        let find_id = RwSignal::new(String::new());
-        let find_result = RwSignal::new(String::new());
+        let find_id = resets.signal(String::new);
+        let find_result = resets.signal(String::new);
         let find = move || {
             let Ok(id) = find_id.get().trim().parse::<u32>() else {
                 find_result.set("enter an object number".to_string());
@@ -849,8 +905,14 @@ mod app {
         // One field loaded asynchronously, in its four states. The requests
         // outlive nothing: a stale answer and an answer to a closed view both
         // change what is shown by exactly nothing.
-        let details = RwSignal::new(Load::<String>::Loading);
+        let details = resets.signal(|| Load::<String>::Loading);
         let requests = Requests::new();
+        // An answer still on its way was asked for by the state a reset threw
+        // away, so it must not land in the state put back.
+        resets.on_reset({
+            let requests = requests.clone();
+            move || requests.cancel()
+        });
         let start_load = {
             let requests = requests.clone();
             move |delay_ms: i32, outcome: String| {
@@ -884,18 +946,18 @@ mod app {
             }
         });
 
-        let rejected = RwSignal::new(None::<u32>);
+        let rejected = resets.signal(|| None::<u32>);
         // Actions the scope refused because its queue was full. They never ran
         // and changed nothing, so the panel says so instead of pretending.
-        let refused = RwSignal::new(0usize);
+        let refused = resets.signal(|| 0usize);
         // Counts what the application was actually handed, so a run of actions
         // can be checked for losses and duplicates rather than only for where
         // the selection ended up - the selection wraps, a count does not.
-        let accepted = RwSignal::new(0u32);
+        let accepted = resets.signal(|| 0u32);
         // Counted apart from the rest: a pointer stream is collapsed on its way
         // here, so its count says how much of it survived, not how much of it
         // happened.
-        let hovers = RwSignal::new(0u32);
+        let hovers = resets.signal(|| 0u32);
 
         // What the region says about itself, so the page can tell a region
         // that is rebuilding from one that failed.
@@ -914,18 +976,19 @@ mod app {
             kinds: &[".txt", ".bin"],
         };
         // What the last import or export did, in the application's own words.
-        let transfer_status = RwSignal::new(String::new());
-        let imports = RwSignal::new(0u32);
-        let exports = RwSignal::new(0u32);
+        let transfer_status = resets.signal(String::new);
+        let imports = resets.signal(|| 0u32);
+        let exports = resets.signal(|| 0u32);
         // The bytes of the last export, so a test can compare what the browser
         // downloaded against what the application meant to write.
         let exported = StoredValue::new(Vec::<u8>::new());
-        let clipboard_status = RwSignal::new(String::new());
-        let copies = RwSignal::new(0u32);
-        let pastes = RwSignal::new(0u32);
+        resets.on_reset(move || exported.set_value(Vec::new()));
+        let clipboard_status = resets.signal(String::new);
+        let copies = resets.signal(|| 0u32);
+        let pastes = resets.signal(|| 0u32);
         // Set when the clipboard refuses, so the view can offer the path that
         // always works: the text, selected, for the user to copy themselves.
-        let copy_by_hand = RwSignal::new(false);
+        let copy_by_hand = resets.signal(|| false);
 
         let controls =
             RwSignal::new(None::<(LocalRect, LocalRect, LocalRect, LocalRect, LocalRect, f64)>);
@@ -933,8 +996,8 @@ mod app {
         // Whether the third-party component is in the view, and every callback
         // it has made. A rebuild that left a subscription behind would show up
         // as two callbacks for one change.
-        let third_party_present = RwSignal::new(true);
-        let third_party_updates = RwSignal::new(0u32);
+        let third_party_present = resets.signal(|| true);
+        let third_party_updates = resets.signal(|| 0u32);
         publish(
             &PRESENT,
             registration,
@@ -945,7 +1008,7 @@ mod app {
         // One area of the scope with part of the theme changed. It writes only
         // what it names, onto its own element, so the rest of the scope and
         // every other scope keep the values they had.
-        let emphasis = RwSignal::new(false);
+        let emphasis = resets.signal(|| false);
         let patch = Signal::derive(move || {
             if emphasis.get() {
                 ThemePatch {
@@ -960,11 +1023,14 @@ mod app {
             }
         });
 
+        // The whole list as one number for the snapshot, recomputed when the
+        // objects change rather than whenever the selection moves.
+        let listed = Memo::new(move |_| objects.with(|objects| digest(objects)));
         Effect::new(move || {
             let (index, total) = position.get();
             let current = current.get();
             let snapshot = format!(
-                "{{\"count\":{},\"position\":{},\"selected\":{},\"name\":{},\"color\":\"{}\",\"first_colors\":\"{}\",\"first_ids\":\"{}\",\"accepted\":{},\"refused\":{},\"hovered\":{},\"hovers\":{},\"editing\":{},\"invalidated\":{},\"notes\":{},\"theme\":\"{}\",\"details\":\"{}\",\"details_value\":{},\"locked\":{},\"size\":{},\"refusals\":{},\"refusal\":{},\"third_party\":{},\"third_party_updates\":{},\"controls\":{},\"region\":\"{}\",\"form\":{},\"path\":{},\"guarded\":{},\"workspace\":{},\"drag\":{},\"transfer\":{}}}",
+                "{{\"count\":{},\"position\":{},\"selected\":{},\"name\":{},\"color\":\"{}\",\"first_colors\":\"{}\",\"first_ids\":\"{}\",\"accepted\":{},\"refused\":{},\"hovered\":{},\"hovers\":{},\"editing\":{},\"invalidated\":{},\"notes\":{},\"theme\":\"{}\",\"details\":\"{}\",\"details_value\":{},\"locked\":{},\"size\":{},\"refusals\":{},\"refusal\":{},\"third_party\":{},\"third_party_updates\":{},\"controls\":{},\"region\":\"{}\",\"form\":{},\"path\":{},\"guarded\":{},\"workspace\":{},\"drag\":{},\"transfer\":{},\"find\":{{\"id\":{},\"result\":{}}},\"emphasis\":{},\"rejected\":{},\"objects\":\"{:016x}\"}}",
                 total,
                 index.map(|i| i as i64 + 1).unwrap_or(0),
                 current
@@ -1127,6 +1193,14 @@ mod app {
                     copy_by_hand.get(),
                     rustify_ui::clipboard::available(),
                 ),
+                json_string(&find_id.get()),
+                json_string(&find_result.get()),
+                emphasis.get(),
+                rejected
+                    .get()
+                    .map(|id| id.to_string())
+                    .unwrap_or_else(|| "null".to_string()),
+                listed.get(),
             );
             SNAPSHOT.with(|slot| *slot.borrow_mut() = snapshot);
         });
@@ -1573,6 +1647,23 @@ mod app {
                 );
             });
         });
+
+        // A reset: everything registered above goes back to its first value,
+        // and the address to the one the page was loaded at. It runs under
+        // this scope's owner because a navigation finds its router there.
+        if let Some(owner) = Owner::current() {
+            publish(
+                &RESET,
+                registration,
+                Rc::new(move |path: &str| {
+                    owner.with(|| {
+                        resets.run();
+                        navigate(path, true);
+                    })
+                }) as Rc<dyn Fn(&str)>,
+            );
+            on_cleanup(move || withdraw(&RESET, registration));
+        }
 
         let resize_panels = move |next: Vec<f64>| panel_sizes.set(next);
         let run_from_palette = move |id: String| run_command(id);
@@ -2468,6 +2559,51 @@ mod app {
     #[wasm_bindgen]
     pub fn workbench_set_diagnostics(on: bool) -> bool {
         rustify_ui::set_recording(on)
+    }
+
+    /// The first half of a reset. Every scope but `main` closes, and what
+    /// outlives a scope is forgotten. The third-party component comes out of
+    /// `main` here so that the second half builds it again the way a first
+    /// load does - created at the value in force, with the one callback that
+    /// creating it makes - rather than moving the old one to a new value.
+    /// Answers whether `main` is still mounted; if it is not, the page mounts
+    /// it again instead of resetting it.
+    #[wasm_bindgen]
+    pub fn workbench_reset_page(main: u32) -> bool {
+        let others = HANDLES.with(|handles| {
+            let mut handles = handles.borrow_mut();
+            let kept = handles.remove(&main);
+            let others = std::mem::take(&mut *handles);
+            if let Some(kept) = kept {
+                handles.insert(main, kept);
+            }
+            others
+        });
+        // Dropped outside the borrow: closing a scope runs its cleanups.
+        drop(others);
+        CLOSE_ON_ACTION.with(|armed| armed.set(false));
+        DELETED.with(|deleted| deleted.borrow_mut().clear());
+        rustify_ui::set_recording(true);
+        let mounted = HANDLES.with(|handles| handles.borrow().contains_key(&main));
+        if let (true, Some(present)) = (mounted, newest(&PRESENT)) {
+            present(false);
+        }
+        mounted
+    }
+
+    /// The second half: the page's scope goes back to the state it loaded in,
+    /// at `address`, the path and query the page was loaded at.
+    #[wasm_bindgen]
+    pub fn workbench_reset_scope(address: &str) -> bool {
+        let base = BASE.with(|base| base.borrow().clone());
+        let path = rustify_ui::router::strip_base(&base, address).unwrap_or("/");
+        match newest(&RESET) {
+            Some(reset) => {
+                reset(path);
+                true
+            }
+            None => false,
+        }
     }
 
     /// Puts the third-party component into the view or takes it out, so a

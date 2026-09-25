@@ -1,0 +1,105 @@
+name: evidence
+
+# The measurements: budgets, long runs, memory, idle, first-load bytes and the
+# twin comparisons. They are the evidence releases are signed off on, not
+# behaviour checks, so they run on request and once a week instead of on
+# every change (`tests/tier.ts`).
+#
+# One job, one project at a time: a budget measured next to another load is a
+# measurement of the load. The long runs go last, because a baseline taken
+# straight after two minutes of sustained input has been seen to fail and
+# then pass on a rerun. Each run writes to its own folder under test-results,
+# because Playwright clears its output folder when it starts.
+#
+# Not here, and run by hand: `budget-scene` and Vellum's `m3-webgpu` and
+# `m8-ui` need headed Chrome on a real GPU, and a runner without one would
+# report the software rasteriser's numbers under their names.
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 3 * * 1"
+
+jobs:
+  evidence:
+    name: evidence tier
+    runs-on: macos-14
+    timeout-minutes: 300
+    env:
+      RUSTIFY_TIER: evidence
+      LONG_RUNS: "a run that lasts|for as long as it takes"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 26
+      - name: Rust, mbx and Tailwind from mise.toml
+        uses: jdx/mise-action@v4
+      - uses: jdx/mr-boxington-action@v1
+      - name: Build
+        run: |
+          for example in fusion-basic property-workbench component-catalog data-workbench vellum; do
+            mbx xtask build-web --example "$example" --release
+          done
+      - name: Install pinned Playwright
+        run: npm ci && npx playwright install --with-deps chromium
+      # `if: !cancelled()` on every run after the first: one red project must
+      # not hide the others' numbers.
+      - name: fusion-basic
+        run: |
+          status=0
+          npx playwright test --project=fusion-basic --grep-invert "$LONG_RUNS" --output=test-results/fusion-basic || status=$?
+          cp test-results/browser.json test-results/fusion-basic.json 2>/dev/null || true
+          exit $status
+      - name: property-workbench
+        if: ${{ !cancelled() }}
+        run: |
+          status=0
+          npx playwright test --project=property-workbench --grep-invert "$LONG_RUNS" --output=test-results/property-workbench || status=$?
+          cp test-results/browser.json test-results/property-workbench.json 2>/dev/null || true
+          exit $status
+      - name: data-workbench
+        if: ${{ !cancelled() }}
+        run: |
+          status=0
+          npx playwright test --project=data-workbench --output=test-results/data-workbench || status=$?
+          cp test-results/browser.json test-results/data-workbench.json 2>/dev/null || true
+          exit $status
+      - name: budget
+        if: ${{ !cancelled() }}
+        run: |
+          status=0
+          npx playwright test --project=budget --output=test-results/budget || status=$?
+          cp test-results/browser.json test-results/budget.json 2>/dev/null || true
+          exit $status
+      - name: budget-minimal
+        if: ${{ !cancelled() }}
+        run: |
+          status=0
+          npx playwright test --project=budget-minimal --output=test-results/budget-minimal || status=$?
+          cp test-results/browser.json test-results/budget-minimal.json 2>/dev/null || true
+          exit $status
+      - name: budget-data
+        if: ${{ !cancelled() }}
+        run: |
+          status=0
+          npx playwright test --project=budget-data --output=test-results/budget-data || status=$?
+          cp test-results/browser.json test-results/budget-data.json 2>/dev/null || true
+          exit $status
+      - name: vellum
+        if: ${{ !cancelled() }}
+        run: npx playwright test -c tests/vellum/playwright.config.ts
+      - name: long runs
+        if: ${{ !cancelled() }}
+        run: |
+          status=0
+          npx playwright test --project=fusion-basic --grep "$LONG_RUNS" --output=test-results/long-fusion || status=$?
+          cp test-results/browser.json test-results/long-fusion.json 2>/dev/null || true
+          npx playwright test --project=property-workbench --grep "$LONG_RUNS" --output=test-results/long-workbench || status=$?
+          cp test-results/browser.json test-results/long-workbench.json 2>/dev/null || true
+          exit $status
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: evidence-results
+          path: test-results

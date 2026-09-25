@@ -40,17 +40,22 @@ Playwright runs against **release builds that already exist**. `serve` does not 
 `RUSTIFY_TIER` picks what a run is for (`tests/tier.ts`): `regression` (the default) skips tests tagged `@evidence` and cuts `rounds(n)` loops to three; `evidence` runs only the tagged measurements at full strength; `all` runs everything. The `budget*` projects exist only outside `regression`.
 
 ```sh
-npx playwright test --project=property-workbench p3-faults.spec.ts   # one spec: iterate this way
-npx playwright test --project=fusion-basic                            # one whole project
+npx playwright test --project=property-workbench m3-workbench.spec.ts   # one spec: iterate this way
+npx playwright test --project=fusion-basic                              # one whole project, regression tier
+RUSTIFY_TIER=evidence npx playwright test --project=budget              # a measurement project
 npx playwright test -c tests/vellum/playwright.config.ts m2-scene.spec.ts
 VELLUM_ARTIFACT_SCOPE=m4-pointer npx playwright test -c tests/vellum/playwright.config.ts m4-pointer.spec.ts
+VELLUM_TWIN=baseline VELLUM_BASELINE_DIR=../rustify-ui-vellum-baseline RUSTIFY_TIER=evidence npx playwright test -c tests/vellum/playwright.config.ts visual.spec.ts
 ```
+
+- Regression specs import `test` from `tests/browser/support.ts` (Vellum: `tests/vellum/support.ts`). Each worker keeps one page per project and calls the example handle's `reset()` before every test, because starting a GPU region is the expensive part: under the software rasteriser every new WebGL context compiles its shaders for several seconds, and a remount pays it again. `reset()` puts the application back to its first-load state in place. A test that needs a page load of its own (a trap, a deep link, `addInitScript`, a context option) declares `test.use({ fresh: true })` and gets Playwright's usual new context.
+- Vellum's twin on port 4180 is the original from `ref/`, or with `VELLUM_TWIN=baseline` a release build of the example in the worktree `VELLUM_BASELINE_DIR` names (`git worktree add` a pre-change commit and `build-web` it there). Without either, twin comparisons skip.
 
 - `playwright.config.ts` maps specs to projects. There is one project per example, plus budget and deployment projects, and a spec runs only under the projects that list it.
 - Never run without `--project`, because the whole suite gets killed for memory. Run one project per command, and never start two Playwright runs at once: each clears `test-results/` at startup, and the other run then fails with phantom ENOENT errors.
 - Whole projects take tens of minutes (fusion-basic ~47 min, property-workbench ~38 min), so iterate on single spec files. A full sweep is evidence for a milestone's exit, not a debugging tool.
 - `budget-scene` needs headed Chrome on a real GPU. CI leaves it out on purpose, and it skips itself when headless.
-- Performance figures are measured inside the page, never from Playwright timings (the harness adds seconds per navigation).
+- Performance figures are measured inside the page, never from Playwright timings.
 - `mbx xtask verify --suite p1|p2|p3` runs a release's full check set. It lists the manual records (VoiceOver, real IME input, zoom walkthrough) as *missing*, never as passed.
 
 ## Architecture

@@ -1,4 +1,6 @@
-import { Browser, expect, Locator, Page, test } from "@playwright/test";
+import { Browser, BrowserContext, expect, Locator, Page, test as base, TestInfo } from "@playwright/test";
+
+export { expect };
 import { PNG } from "pngjs";
 
 export interface Anchor {
@@ -36,22 +38,40 @@ export async function anchorRect(page: Page, anchor: Anchor) {
 }
 
 export async function waitForReady(page: Page) {
-    await page.goto("./");
+    // A shared page is already loaded and reset; loading it again would pay
+    // for the region start-up the page is shared to avoid.
+    if (!isShared(page)) {
+        await page.goto("./");
+    }
     await expect(page.getByTestId("status")).toHaveAttribute("data-status", "ready", { timeout: 60_000 });
     // The fusion-basic page shows B0 and nothing else: a load has to be the
     // load it says it is, so every other fixture is mounted by whoever needs
     // it. The two counter scopes are what the phase-one checks were written
     // for, and this is where they come from now. Every example's checks come
     // through here, and only one of them has those scopes to mount.
-    await page.evaluate(() => {
+    //
+    // Only the missing ones: a shared page's reset keeps a healthy counter
+    // scope mounted, because mounting it again would start its two regions
+    // again - seconds each on a software rasteriser.
+    const mounted = await page.evaluate(() => {
         const fusion = window.__fusion_basic;
         if (fusion === undefined) {
-            return;
+            return false;
         }
-        fusion.mount("scope-a");
-        fusion.mount("scope-b");
+        let mounted = false;
+        for (const scope of ["scope-a", "scope-b"]) {
+            if (!document.getElementById(scope)?.hasAttribute("data-rustify-scope")) {
+                fusion.mount(scope);
+                mounted = true;
+            }
+        }
+        return mounted;
     });
-    await waitForQuiet(page);
+    // The fixture waited for quiet after its reset; only a region started
+    // here has anything left to settle.
+    if (mounted || !isShared(page)) {
+        await waitForQuiet(page);
+    }
 }
 
 /// Waits until the page stops blocking its own animation frames.
@@ -159,6 +179,7 @@ export async function settle(locator: Locator, attempts = 20): Promise<Pixels> {
 declare global {
     interface Window {
         __property_workbench: {
+            reset(): Promise<void>;
             mount(): number;
             dispose(): boolean;
             live_regions(): number;
@@ -296,6 +317,7 @@ declare global {
             };
         };
         __component_catalog: {
+            reset(): Promise<void>;
             mount(): number;
             dispose(): boolean;
             mount_second(): number;
@@ -341,6 +363,8 @@ declare global {
         /// Every instance running on the fusion-basic page, by its number.
         __fusion_instances: Record<number, Window["__fusion_basic"]>;
         __data_workbench: {
+            /// Puts the page where a first load of `path` (default `/`) puts it.
+            reset(path?: string): Promise<void>;
             hooks: { runtime: { errors: string[]; enter_fatal(error: unknown): void } };
             instance: number;
             mount(container_id?: string): number;
@@ -419,6 +443,7 @@ declare global {
             sort_probe_order(from: number, count: number): number[];
         };
         __fusion_basic: {
+            reset(): Promise<void>;
             instance: number;
             wasm: { exports: { memory: WebAssembly.Memory } };
             restarts: number;
@@ -508,29 +533,180 @@ declare global {
 }
 
 
-/// One page for a whole `describe`, instead of one per test.
-///
-/// A cold catalogue page downloads and compiles an eleven megabyte module and
-/// boots its region: about seven seconds, which for a short check is nearly
-/// all of it. Sharing the page makes the suite roughly as long as the work in
-/// it rather than as long as the number of tests.
-///
-/// The cost is that the tests in the block are no longer independent, so the
-/// block has to run serially and each test has to leave the page as it found
-/// it - or read a delta rather than an absolute. Use it where the checks are
-/// reads and small reversible interactions; use a fresh `page` where a test
-/// changes something it cannot put back.
-export function sharedPage(setup?: (page: Page) => Promise<void>): { page: Page } {
-    // Filled by `beforeAll`; the tests in the block run after it.
-    const holder = { page: null as unknown as Page };
-    test.beforeAll(async ({ browser }: { browser: Browser }, info) => {
-        const context = await browser.newContext({ baseURL: info.project.use.baseURL });
-        holder.page = await context.newPage();
-        await waitForReady(holder.page);
-        await setup?.(holder.page);
-    });
-    test.afterAll(async () => {
-        await holder.page?.context().close();
-    });
-    return holder;
+/// The window handle each project's example publishes, and so the one whose
+/// `reset()` puts a shared page back. A project that is not here runs every
+/// test on a fresh page.
+const HANDLES: Record<string, string> = {
+    "fusion-basic": "__fusion_basic",
+    "property-workbench": "__property_workbench",
+    "component-catalog": "__component_catalog",
+    "data-workbench": "__data_workbench",
+};
+
+const shared = new WeakSet<Page>();
+
+/// Whether this page is the worker's shared one rather than the test's own.
+export function isShared(page: Page): boolean {
+    return shared.has(page);
 }
+
+interface Slot {
+    context: BrowserContext | null;
+    page: Page | null;
+    viewport: { width: number; height: number } | null;
+}
+
+/// The project options that make a context rather than a page.
+const CONTEXT_ONLY = [
+    "userAgent",
+    "javaScriptEnabled",
+    "bypassCSP",
+    "offline",
+    "permissions",
+    "geolocation",
+    "extraHTTPHeaders",
+    "storageState",
+    "httpCredentials",
+    "ignoreHTTPSErrors",
+    "acceptDownloads",
+    "serviceWorkers",
+    "timezoneId",
+    "forcedColors",
+    "screen",
+    "baseURL",
+] as const;
+
+async function open(
+    browser: Browser,
+    slot: Slot,
+    info: TestInfo,
+    fixed: Record<string, unknown>,
+    viewport: { width: number; height: number } | null
+): Promise<Page> {
+    const use = info.project.use as Record<string, unknown>;
+    const options: Record<string, unknown> = { ...fixed, viewport };
+    for (const key of CONTEXT_ONLY) {
+        if (use[key] !== undefined) {
+            options[key] = use[key];
+        }
+    }
+    slot.context = await browser.newContext(options);
+    slot.page = await slot.context.newPage();
+    slot.viewport = viewport;
+    shared.add(slot.page);
+    await slot.page.goto("./");
+    await expect(slot.page.getByTestId("status")).toHaveAttribute("data-status", "ready", { timeout: 60_000 });
+    return slot.page;
+}
+
+async function discard(slot: Slot) {
+    const context = slot.context;
+    slot.context = null;
+    slot.page = null;
+    slot.viewport = null;
+    await context?.close();
+}
+
+/// Whether the shared page can carry the next test: the instance is alive,
+/// its handle is published and the page still says it is ready.
+async function healthy(page: Page, handle: string): Promise<boolean> {
+    if (page.isClosed()) {
+        return false;
+    }
+    return page
+        .evaluate(
+            (handle) =>
+                (window as unknown as Record<string, unknown>)[handle] !== undefined &&
+                document.querySelector('[data-testid="status"]')?.getAttribute("data-status") === "ready",
+            handle
+        )
+        .catch(() => false);
+}
+
+/// `test`, with one page per worker and project instead of one per test.
+///
+/// Loading the page is not what a test costs; starting its region is. Every
+/// new WebGL context has the software rasteriser compile the region's
+/// shaders, which takes several seconds and happens again on a remount. So a
+/// regression test runs on the page the previous test used, put back by the
+/// example's own `reset()`, and pays for a start-up only when it asks for one
+/// with `test.use({ fresh: true })`, when it sets a context option a live page
+/// cannot take (a device scale factor, a locale), or when the previous test
+/// left the page broken or failed on it.
+///
+/// A fresh page is Playwright's own: a new context per test. Tests that touch
+/// what a context owns - `context.addInitScript`, permissions, a second page
+/// in the same context - need one.
+export const test = base.extend<{ fresh: boolean }, { slot: Slot }>({
+    fresh: [false, { option: true }],
+    slot: [
+        async ({}, use) => {
+            const slot: Slot = { context: null, page: null, viewport: null };
+            await use(slot);
+            await discard(slot);
+        },
+        { scope: "worker" },
+    ],
+    page: async (
+        { page, fresh, slot, browser, viewport, deviceScaleFactor, isMobile, hasTouch, locale, colorScheme, reducedMotion },
+        use,
+        info
+    ) => {
+        const handle = HANDLES[info.project.name];
+        const project = info.project.use as Record<string, unknown>;
+        // The shared context is always the project's own, whichever test
+        // happens to open it; a test that asks for a different one gets its
+        // own. These defaults are Playwright's for the same options.
+        const projectFixed = {
+            deviceScaleFactor: project.deviceScaleFactor,
+            isMobile: project.isMobile ?? false,
+            hasTouch: project.hasTouch ?? false,
+            locale: project.locale ?? "en-US",
+            colorScheme: project.colorScheme ?? "light",
+            reducedMotion: project.reducedMotion ?? "no-preference",
+        };
+        const fixed = { deviceScaleFactor, isMobile, hasTouch, locale, colorScheme, reducedMotion };
+        const projectViewport = (project.viewport ?? { width: 1280, height: 720 }) as { width: number; height: number };
+        const differs = JSON.stringify(fixed) !== JSON.stringify(projectFixed);
+        if (fresh || handle === undefined || differs) {
+            await use(page);
+            return;
+        }
+
+        let app = slot.page;
+        if (app === null || !(await healthy(app, handle))) {
+            await discard(slot);
+            app = await open(browser, slot, info, projectFixed, projectViewport);
+        } else {
+            await app.evaluate(async (handle) => {
+                const example = (window as unknown as Record<string, { reset(): Promise<void> }>)[handle];
+                await example.reset();
+            }, handle);
+        }
+        if (viewport && (viewport.width !== projectViewport.width || viewport.height !== projectViewport.height)) {
+            await app.setViewportSize(viewport);
+        }
+        await waitForQuiet(app);
+
+        const listening = new Map(app.eventNames().map((name) => [name, app!.listeners(name).slice()]));
+        await use(app);
+
+        for (const name of app.eventNames()) {
+            const before = listening.get(name) ?? [];
+            for (const listener of app.listeners(name)) {
+                if (!before.includes(listener)) {
+                    app.removeListener(name, listener as (...args: unknown[]) => void);
+                }
+            }
+        }
+        const passed = info.status === info.expectedStatus;
+        if (!passed || app.isClosed() || !(await healthy(app, handle))) {
+            await discard(slot);
+            return;
+        }
+        await app.unrouteAll({ behavior: "ignoreErrors" });
+        await app.emulateMedia({ media: null, colorScheme, reducedMotion, forcedColors: null });
+        await app.mouse.move(0, 0);
+        await app.setViewportSize(projectViewport);
+    },
+});

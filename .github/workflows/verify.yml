@@ -36,69 +36,56 @@ jobs:
       - name: Capability document is in step with the catalogue
         run: mbx xtask catalog --write docs/components.md --check
 
+  # The regression tier, one job per example group so the slowest group is
+  # the whole wait. Each job builds only what its projects serve. The
+  # measurements live in evidence.yml.
   web:
-    name: release web build and browser probes
+    name: browser regression (${{ matrix.name }})
     runs-on: macos-14
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: fusion-basic
+            examples: fusion-basic
+            sub_path: fusion-basic
+            projects: --project=fusion-basic --project=deployment
+          - name: property-workbench
+            examples: property-workbench
+            sub_path: property-workbench
+            projects: --project=property-workbench --project=workbench-deep
+          - name: catalog and data
+            examples: component-catalog data-workbench
+            sub_path: ""
+            projects: --project=component-catalog --project=data-workbench
+          - name: vellum
+            examples: vellum
+            sub_path: ""
+            projects: -c tests/vellum/playwright.config.ts
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 26
-      - name: Rust and mbx from mise.toml
+      - name: Rust, mbx and Tailwind from mise.toml
         uses: jdx/mise-action@v4
       - uses: jdx/mr-boxington-action@v1
-      - name: Doctor (reports only, installs nothing)
-        run: mbx xtask doctor
-        continue-on-error: true
-      - name: Build fusion-basic
-        run: mbx xtask build-web --example fusion-basic --release
-      - name: Build property-workbench
-        run: mbx xtask build-web --example property-workbench --release
-      - name: Build component-catalog
-        run: mbx xtask build-web --example component-catalog --release
-      - name: Build data-workbench
-        run: mbx xtask build-web --example data-workbench --release
-      - name: Build vellum
-        run: mbx xtask build-web --example vellum --release
-      # The sub-path projects serve builds made for their base; the servers
-      # no longer build them.
-      - name: Build the sub-path copies
+      - name: Build
         run: |
-          mbx xtask build-web --example property-workbench --release --base /tools/demo/
-          mbx xtask build-web --example fusion-basic --release --base /tools/demo/
+          for example in ${{ matrix.examples }}; do
+            mbx xtask build-web --example "$example" --release
+          done
+      # The sub-path projects serve builds made for their base; the servers
+      # only serve.
+      - name: Build the sub-path copy
+        if: matrix.sub_path != ''
+        run: mbx xtask build-web --example ${{ matrix.sub_path }} --release --base /tools/demo/
       - name: Install pinned Playwright
         run: npm ci && npx playwright install --with-deps chromium
-      # Named one by one rather than run as a whole: a headed project measures
-      # what a rasteriser can do, and a runner without a display would report
-      # the software one under the hardware one's name. `budget-scene` is
-      # absent for exactly that reason - R30 AC2 over B3 is gated on headed
-      # Chrome only (A-3), and this runner has no GPU to gate against.
-      - name: Browser probes (Playwright Chromium; not the macOS Chrome pass gate)
-        env:
-          RUSTIFY_TIER: all
-        run: >-
-          npx playwright test
-          --project=fusion-basic
-          --project=property-workbench
-          --project=component-catalog
-          --project=data-workbench
-          --project=budget
-          --project=budget-minimal
-          --project=budget-data
-          --project=workbench-deep
-          --project=deployment
-      - name: Vellum browser probes
-        env:
-          RUSTIFY_TIER: all
-        run: npx playwright test -c tests/vellum/playwright.config.ts
+      - name: Regression tier (Playwright Chromium; not the macOS Chrome pass gate)
+        run: npx playwright test ${{ matrix.projects }}
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: browser-results
-          path: |
-            test-results
-            target/makepad-wasm-app/release/fusion-basic/build-manifest.json
-            target/makepad-wasm-app/release/property-workbench/build-manifest.json
-            target/makepad-wasm-app/release/component-catalog/build-manifest.json
-            target/makepad-wasm-app/release/data-workbench/build-manifest.json
-            target/makepad-wasm-app/release/vellum/build-manifest.json
+          name: browser-results-${{ strategy.job-index }}
+          path: test-results

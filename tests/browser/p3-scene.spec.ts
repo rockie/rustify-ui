@@ -1,6 +1,8 @@
-import { expect, Page, test } from "@playwright/test";
+import { expect, Page } from "@playwright/test";
 import { B3, LOCATORS } from "./loads";
 import * as twin from "./dataset";
+import { isShared, test, waitForQuiet } from "./support";
+import { pick, rounds } from "../tier";
 
 /// M4 · the scene: ten thousand objects, and the pointer over them.
 ///
@@ -11,11 +13,37 @@ import * as twin from "./dataset";
 
 const api = (page: Page) => page.evaluate(() => window.__data_workbench.snapshot());
 
+/// How many of the chosen objects the page lists. The count beside the list
+/// is of all of them.
+const LISTED = 50;
+
+/// The part of the example's handle that puts a shared page back.
+type Resettable = { reset(path?: string): Promise<void> };
+
+/// Brings the page to `path` as a first load of it would: a load of its own
+/// for a page of its own, and the example's reset for the shared one, which
+/// is already loaded and has its regions running.
+async function arrive(page: Page, path: string) {
+    if (isShared(page)) {
+        await page.evaluate(
+            (path) => (window.__data_workbench as unknown as Resettable).reset(path),
+            path
+        );
+    } else {
+        await page.goto(`.${path}`);
+    }
+}
+
 /// Opens the scene and waits until the region has drawn: until then its pane
 /// is nothing, and a camera clamped against nothing is clamped to zero.
+///
+/// Then until it has finished starting: its first draws build a font atlas,
+/// which on a software rasteriser holds the main thread for seconds, and a
+/// check that counts frames or waits on a click inside that window is
+/// measuring the start-up rather than the scene.
 async function openScene(page: Page) {
     await page.setViewportSize({ width: 1440, height: 1200 });
-    await page.goto("./scene");
+    await arrive(page, "/scene");
     await expect(page.getByTestId("status")).toHaveAttribute("data-status", "ready", {
         timeout: 120_000,
     });
@@ -23,6 +51,7 @@ async function openScene(page: Page) {
     await expect
         .poll(async () => (await api(page)).scene.drawn, { timeout: 60_000 })
         .toBeGreaterThan(0);
+    await waitForQuiet(page);
 }
 
 test.describe("M4 · what a frame shows", () => {
@@ -65,8 +94,11 @@ test.describe("M4 · what a frame shows", () => {
         // A software rasteriser draws this scene in about seventy
         // milliseconds, so three seconds of it is tens of frames rather than a
         // hundred and eighty. How fast it can go is A-3's question and M8's
-        // gate; what this one is about is the ratio.
-        expect(run.drives).toBeGreaterThan(30);
+        // gate; what this one is about is the ratio. The floor only makes the
+        // ratio a sample worth having, so it scales with the tier like any
+        // other repeat count: a slower rasteriser still gives a regression
+        // run a few frames to check.
+        expect(run.drives).toBeGreaterThan(rounds(30));
         // The clause NFR-1 is written with: a frame that was driven is a frame
         // that was drawn. One drive may still be in flight when the run ends.
         expect(run.presentations).toBeGreaterThanOrEqual(run.drives - 1);
@@ -131,7 +163,7 @@ test.describe("M4 · the pointer on ten thousand objects", () => {
         await openScene(page);
         await lookAt(page, 800, 400);
         const at = await pane(page);
-        for (let round = 0; round < 20; round++) {
+        for (let round = 0; round < rounds(20); round++) {
             // Starting on an object is what makes it a box rather than a pan,
             // so every one of these starts in the middle of one - and in the
             // part of the scene this camera can see.
@@ -225,9 +257,10 @@ test.describe("M4 · the pointer on ten thousand objects", () => {
             });
         });
         const STEP = [7, 3];
+        const steps = rounds(100);
         let x = gap.x;
         let y = gap.y;
-        for (let step = 0; step < 100; step++) {
+        for (let step = 0; step < steps; step++) {
             x += STEP[0];
             y += STEP[1];
             await page.mouse.move(x, y);
@@ -235,8 +268,8 @@ test.describe("M4 · the pointer on ten thousand objects", () => {
         await page.mouse.up();
         // Dragging the scene one way moves the camera the other.
         const expected = twin.sceneClamp(
-            at.camera[0] - 700,
-            at.camera[1] - 300,
+            at.camera[0] - STEP[0] * steps,
+            at.camera[1] - STEP[1] * steps,
             at.size[0],
             at.size[1]
         );
@@ -311,10 +344,16 @@ test.describe("M4 · the pointer on ten thousand objects", () => {
                 points.push({ x, y, index });
             }
         }
+        // Fewer of them stand for all of them: the first on the upper layer
+        // and the first two on the lower.
+        const clicked = pick(points, [
+            points.find((point) => twin.isOverlay(point.index))!,
+            ...points.filter((point) => !twin.isOverlay(point.index)).slice(0, 2),
+        ]);
         // The scene has two layers, and a check that never lands on the upper
         // one has not checked the rule that decides between them.
-        expect(points.filter((point) => twin.isOverlay(point.index)).length).toBeGreaterThan(0);
-        for (const [round, point] of points.entries()) {
+        expect(clicked.filter((point) => twin.isOverlay(point.index)).length).toBeGreaterThan(0);
+        for (const [round, point] of clicked.entries()) {
             const screen = await pointAt(page, point.x, point.y);
             await page.mouse.click(screen.x, screen.y);
             await expect
@@ -420,7 +459,8 @@ test.describe("M4 · reaching an object without the pointer", () => {
         await openScene(page);
         // DOM to GPU: a hundred queries, each one moving the camera and the
         // mark on the object it found.
-        for (let round = 0; round < 100; round++) {
+        const queries = rounds(100);
+        for (let round = 0; round < queries; round++) {
             const index = round * 97;
             await page.getByTestId("scene-find").fill(twin.sceneLabel(index));
             await page.getByTestId("scene-find").press("Enter");
@@ -428,15 +468,19 @@ test.describe("M4 · reaching an object without the pointer", () => {
                 .poll(async () => (await api(page)).scene.editing, { message: `query ${round}` })
                 .toBe(index);
         }
-        expect((await api(page)).scene.asked).toBe(100);
+        expect((await api(page)).scene.asked).toBe(queries);
 
         // GPU to DOM: a hundred clicks, each one changing the list and the
         // count the document shows.
         await lookAt(page, 800, 400);
         const at = await pane(page);
         const picked: number[] = [];
+        // More than the fifty the list shows, however few rounds there are:
+        // what is not listed still has to be counted, and it takes more than
+        // fifty to say.
+        const clicks = Math.max(rounds(100), LISTED + 1);
         const random = scatter(0x1b87_3593);
-        while (picked.length < 100) {
+        while (picked.length < clicks) {
             const x = at.camera[0] + 10 + (random() % Math.floor(at.size[0] - 20));
             const y = at.camera[1] + 10 + (random() % Math.floor(at.size[1] - 20));
             const index = twin.scenePick(x, y);
@@ -454,12 +498,12 @@ test.describe("M4 · reaching an object without the pointer", () => {
                 })
                 .toBe(picked.length);
         }
-        expect((await api(page)).scene.chosen).toBe(100);
+        expect((await api(page)).scene.chosen).toBe(clicks);
         expect(await page.evaluate(() => window.__data_workbench.scene_chosen())).toEqual(
             [...picked].sort((a, b) => a - b)
         );
-        await expect(page.getByTestId("scene-selected-count")).toHaveText("selected 100");
-        // Fifty of them are listed and the count says a hundred: what is not
+        await expect(page.getByTestId("scene-selected-count")).toHaveText(`selected ${clicks}`);
+        // Fifty of them are listed and the count says all of them: what is not
         // shown is still said. Which fifty matters too - a list that shows the
         // wrong objects is worse than one that shows fewer.
         const listed = await page.evaluate(() =>
@@ -468,17 +512,19 @@ test.describe("M4 · reaching an object without the pointer", () => {
                 (item) => Number(item.getAttribute("data-object"))
             )
         );
-        expect(listed).toEqual([...picked].sort((a, b) => a - b).slice(0, 50));
+        expect(listed).toEqual([...picked].sort((a, b) => a - b).slice(0, LISTED));
         await page.getByTestId("scene-clear").click();
         await expect(page.getByTestId("scene-selected-count")).toHaveText("selected 0");
     });
 });
 
 test.describe("M4 · twenty names, thirty times over", () => {
+    // Fourteen of the twenty are the table's, and p3-table checks those the
+    // same way; what is left here is the scene's six.
     test("every one of the twenty is findable by role and name", async ({ page }) => {
         expect(LOCATORS).toHaveLength(20);
-        const check = async (side: "table" | "scene", round: number) => {
-            for (const entry of LOCATORS.filter((entry) => entry.side === side)) {
+        const check = async (round: number) => {
+            for (const entry of LOCATORS.filter((entry) => entry.side === "scene")) {
                 const found = page.getByTestId(entry.testId);
                 await expect(found, `${entry.testId} round ${round}`).toHaveCount(1);
                 const role = entry.role as Parameters<Page["getByRole"]>[0];
@@ -497,21 +543,12 @@ test.describe("M4 · twenty names, thirty times over", () => {
         await page.getByTestId("scene-find").fill(twin.sceneLabel(0));
         await page.getByTestId("scene-find").press("Enter");
         await expect.poll(async () => (await api(page)).scene.editing).toBe(0);
-        for (let round = 0; round < 30; round++) {
-            await check("scene", round);
+        for (let round = 0; round < rounds(30); round++) {
+            await check(round);
             // Something that redraws the scene between rounds, so what is
             // counted is the name surviving rather than the same document
             // standing still.
             await lookAt(page, (round % 10) * 100, (round % 7) * 80);
-        }
-
-        await page.getByTestId("go-table").click();
-        await expect(page.getByTestId("table-view")).toHaveCount(1);
-        await page.evaluate(() => window.__data_workbench.open_row(0));
-        for (let round = 0; round < 30; round++) {
-            await check("table", round);
-            await page.getByTestId("table-goto").fill(String(1 + round * 1_000));
-            await page.getByTestId("table-goto").press("Enter");
         }
     });
 });

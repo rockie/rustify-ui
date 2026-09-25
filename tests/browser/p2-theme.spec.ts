@@ -1,6 +1,7 @@
-import { expect, Page, test } from "@playwright/test";
+import { expect, Page } from "@playwright/test";
 
-import { sharedPage } from "./support";
+import { rounds } from "../tier";
+import { test } from "./support";
 
 /// M2 V3: one theme, adopted by both halves, in every state a control has -
 /// and a scope that asks for less movement gets less movement.
@@ -18,19 +19,17 @@ const scopeVariable = (page: Page, name: string) =>
     }, name);
 
 test.describe("M2 V3: a theme both halves adopt", () => {
-    test.describe.configure({ mode: "serial" });
-    const shared = sharedPage();
-
-    test("twenty switches, and every one of them lands inside the budget", async () => {
-        const page = shared.page;
-        const measured = await page.evaluate(async () => {
+    test("twenty switches, and every one of them lands inside the budget", async ({ page }) => {
+        // An even number, so the page ends in the theme it started in.
+        const switches = 2 * rounds(10);
+        const measured = await page.evaluate(async (switches) => {
             const toggle = document.querySelector(
                 '[data-testid="toggle-theme"]'
             ) as HTMLButtonElement;
             const scope = document.querySelector("[data-rustify-scope]") as HTMLElement;
             const frame = () => new Promise((resolve) => requestAnimationFrame(resolve));
-            const rounds: { adopted: number; theme: string; primary: string }[] = [];
-            for (let round = 0; round < 20; round += 1) {
+            const taken: { adopted: number; theme: string; primary: string }[] = [];
+            for (let round = 0; round < switches; round += 1) {
                 const before = getComputedStyle(scope).getPropertyValue("--primary").trim();
                 const started = performance.now();
                 toggle.click();
@@ -38,22 +37,22 @@ test.describe("M2 V3: a theme both halves adopt", () => {
                 // force when it is read.
                 await frame();
                 await frame();
-                rounds.push({
+                taken.push({
                     adopted: performance.now() - started,
                     theme: scope.dataset.theme ?? "",
                     primary: getComputedStyle(scope).getPropertyValue("--primary").trim(),
                 });
-                if (rounds[round].primary === before) {
+                if (taken[round].primary === before) {
                     throw new Error(`round ${round} did not change --primary`);
                 }
             }
-            return rounds;
-        });
+            return taken;
+        }, switches);
 
-        expect(measured).toHaveLength(20);
-        // Twenty switches from light is twenty alternations back to light.
+        expect(measured).toHaveLength(switches);
+        // An even number of switches from light alternates back to light.
         expect(measured.map((round) => round.theme)).toEqual(
-            Array.from({ length: 20 }, (_, index) => (index % 2 === 0 ? "dark" : "light"))
+            Array.from({ length: switches }, (_, index) => (index % 2 === 0 ? "dark" : "light"))
         );
         for (const [index, round] of measured.entries()) {
             expect(round.adopted, `round ${index}`).toBeLessThan(200);
@@ -61,8 +60,7 @@ test.describe("M2 V3: a theme both halves adopt", () => {
         expect(await snapshot(page)).toMatchObject({ theme: "light" });
     });
 
-    test("the region's pixels move with the panel, not after it", async () => {
-        const page = shared.page;
+    test("the region's pixels move with the panel, not after it", async ({ page }) => {
         await expect.poll(async () => (await snapshot(page)).region, { timeout: 30_000 }).toBe(
             "ready"
         );
@@ -80,8 +78,7 @@ test.describe("M2 V3: a theme both halves adopt", () => {
         expect(await scopeVariable(page, "--background")).toBe("#f9fafb");
     });
 
-    test("a control's four states are four different things to look at", async () => {
-        const page = shared.page;
+    test("a control's four states are four different things to look at", async ({ page }) => {
         await page.getByTestId("nav-button").click();
         const live = page.getByTestId("default-button");
         const disabled = page.getByTestId("disabled-button");
@@ -127,8 +124,7 @@ test.describe("M2 V3: a theme both halves adopt", () => {
         await expect(disabled).toBeDisabled();
     });
 
-    test("less motion is less motion, in the stylesheet and in the region", async () => {
-        const page = shared.page;
+    test("less motion is less motion, in the stylesheet and in the region", async ({ page }) => {
         await page.getByTestId("nav-loading").click();
         expect(await scopeVariable(page, "--motion-duration")).toBe("150ms");
         const spinning = await page.evaluate(() => {
@@ -159,8 +155,7 @@ test.describe("M2 V3: a theme both halves adopt", () => {
         expect(await snapshot(page)).toMatchObject({ reduce_motion: false });
     });
 
-    test("the region's spinner turns, and stops when the scope asks it to", async () => {
-        const page = shared.page;
+    test("the region's spinner turns, and stops when the scope asks it to", async ({ page }) => {
         await page.getByTestId("nav-loading").click();
         await expect.poll(async () => (await snapshot(page)).control, { timeout: 15_000 }).not.toBeNull();
         const region = page.getByTestId("catalogue-region");
@@ -192,11 +187,9 @@ test.describe("M2 V3: a theme both halves adopt", () => {
                 { timeout: 15_000 }
             )
             .toBe(true);
-        await page.getByTestId("toggle-motion").click();
     });
 
-    test("the host page is not part of the scope's theme", async () => {
-        const page = shared.page;
+    test("the host page is not part of the scope's theme", async ({ page }) => {
         const before = await page.evaluate(() => ({
             theme: document.documentElement.dataset.theme ?? null,
             body: getComputedStyle(document.body).backgroundColor,
@@ -213,6 +206,5 @@ test.describe("M2 V3: a theme both halves adopt", () => {
                     .backgroundColor,
             }))
         ).toEqual(before);
-        await page.getByTestId("toggle-theme").click();
     });
 });

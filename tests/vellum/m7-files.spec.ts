@@ -3,6 +3,7 @@ import path from "node:path";
 import { PNG } from "pngjs";
 import { expect, present, test, waitForReady } from "./support";
 import { hasReference, openTwin } from "./twin";
+import { rounds } from "../tier";
 
 const emptyDocument = { format: "vellum", version: 1, name: "Empty import", pageId: "empty", pages: [{ id: "empty", name: "Empty", nodes: [] }], assets: {} };
 const imageSvg = '<svg xmlns="http://www.w3.org/2000/svg" width="80" height="60"><rect width="80" height="60" fill="#339966"/></svg>';
@@ -26,69 +27,75 @@ async function storedDocument(page) {
     }));
 }
 
-test("debounced local save restores the document and options after reload", async ({ page }) => {
-    await waitForReady(page);
-    await page.locator("[data-page]").nth(2).click();
-    const id = await page.evaluate(() => window.vellum.createAtCenter("rect", { name: "Persisted rectangle", w: 123, h: 87 }).id);
-    await page.evaluate(() => { window.vellum.actions.theme(); window.vellum.actions.grid(); window.vellum.actions.rulers(); window.vellum.actions.snap(); });
-    await page.locator("#dismiss-tip").click();
-    await expect.poll(async () => (await storedDocument(page))?.pages.flatMap(page => page.nodes).some(node => node.id === id)).toBe(true);
-    await expect(page.locator("#save-indicator")).toContainText("Saved locally");
-    await waitForReady(page, "./", false);
-    expect(await page.evaluate(id => window.vellum.doc.get(id)?.name ?? null, id)).toBe("Persisted rectangle");
-    expect(await page.evaluate(() => (window.vellum as any).options)).toMatchObject({ theme: "light", grid: true, rulers: true, snap: false });
-    expect(await page.evaluate(() => [...window.vellum.state.selection])).toEqual([]);
-    await expect(page.locator("#welcome-tip")).toHaveCount(0);
-});
+// These reload the page to read storage back, or replace the browser's storage
+// with init scripts and prototype stubs that stay in place.
+test.describe(() => {
+    test.use({ fresh: true });
 
-test("IndexedDB open failure falls back to localStorage and preserves edits", async ({ page }) => {
-    await page.addInitScript(() => { IDBFactory.prototype.open = () => { throw new DOMException("Injected storage denial", "SecurityError"); }; });
-    await waitForReady(page);
-    await page.locator("[data-page]").nth(2).click();
-    const id = await page.evaluate(() => window.vellum.createAtCenter("ellipse", { name: "Fallback saved" }).id);
-    await page.evaluate(() => (window.vellum as any).save());
-    expect(await page.evaluate(() => JSON.parse(localStorage.getItem("vellum-document")!).pages.at(-1).nodes.length)).toBe(1);
-    await page.evaluate(() => window.vellum.actions.settings());
-    await expect(page.locator("#modal")).toContainText("localStorage");
-    await waitForReady(page, "./", false);
-    expect(await page.evaluate(id => window.vellum.doc.get(id)?.name, id)).toBe("Fallback saved");
-});
+    test("debounced local save restores the document and options after reload", async ({ page }) => {
+        await waitForReady(page);
+        await page.locator("[data-page]").nth(2).click();
+        const id = await page.evaluate(() => window.vellum.createAtCenter("rect", { name: "Persisted rectangle", w: 123, h: 87 }).id);
+        await page.evaluate(() => { window.vellum.actions.theme(); window.vellum.actions.grid(); window.vellum.actions.rulers(); window.vellum.actions.snap(); });
+        await page.locator("#dismiss-tip").click();
+        await expect.poll(async () => (await storedDocument(page))?.pages.flatMap(page => page.nodes).some(node => node.id === id)).toBe(true);
+        await expect(page.locator("#save-indicator")).toContainText("Saved locally");
+        await waitForReady(page, "./", false);
+        expect(await page.evaluate(id => window.vellum.doc.get(id)?.name ?? null, id)).toBe("Persisted rectangle");
+        expect(await page.evaluate(() => (window.vellum as any).options)).toMatchObject({ theme: "light", grid: true, rulers: true, snap: false });
+        expect(await page.evaluate(() => [...window.vellum.state.selection])).toEqual([]);
+        await expect(page.locator("#welcome-tip")).toHaveCount(0);
+    });
 
-test("quota failure shows an unsaved state while portable export remains available", async ({ page }) => {
-    await waitForReady(page);
-    await page.evaluate(() => {
-        IDBObjectStore.prototype.put = () => { throw new DOMException("Injected quota failure", "QuotaExceededError"); };
-        window.vellum.createAtCenter("rect", { name: "Still exportable" });
+    test("IndexedDB open failure falls back to localStorage and preserves edits", async ({ page }) => {
+        await page.addInitScript(() => { IDBFactory.prototype.open = () => { throw new DOMException("Injected storage denial", "SecurityError"); }; });
+        await waitForReady(page);
+        await page.locator("[data-page]").nth(2).click();
+        const id = await page.evaluate(() => window.vellum.createAtCenter("ellipse", { name: "Fallback saved" }).id);
+        await page.evaluate(() => (window.vellum as any).save());
+        expect(await page.evaluate(() => JSON.parse(localStorage.getItem("vellum-document")!).pages.at(-1).nodes.length)).toBe(1);
+        await page.evaluate(() => window.vellum.actions.settings());
+        await expect(page.locator("#modal")).toContainText("localStorage");
+        await waitForReady(page, "./", false);
+        expect(await page.evaluate(id => window.vellum.doc.get(id)?.name, id)).toBe("Fallback saved");
     });
-    await expect(page.locator("#save-indicator")).toContainText("Save failed", { timeout: 10_000 });
-    await expect(page.locator("#toast")).toContainText(/full|unavailable/);
-    const downloadPromise = page.waitForEvent("download");
-    await page.evaluate(() => window.vellum.actions.saveFile());
-    const download = await downloadPromise;
-    const saved = JSON.parse(await fs.readFile((await download.path())!, "utf8"));
-    expect(saved.pages[0].nodes.some(node => node.name === "Still exportable")).toBe(true);
-});
 
-test("an aborted IndexedDB write and an unavailable fallback both report save failure", async ({ page }) => {
-    await waitForReady(page);
-    await page.evaluate(() => {
-        const put = IDBObjectStore.prototype.put;
-        IDBObjectStore.prototype.put = function (...args) {
-            const request = put.apply(this, args as [any, IDBValidKey?]);
-            this.transaction.abort();
-            return request;
-        };
-        window.vellum.createAtCenter("rect", { name: "Aborted write" });
+    test("quota failure shows an unsaved state while portable export remains available", async ({ page }) => {
+        await waitForReady(page);
+        await page.evaluate(() => {
+            IDBObjectStore.prototype.put = () => { throw new DOMException("Injected quota failure", "QuotaExceededError"); };
+            window.vellum.createAtCenter("rect", { name: "Still exportable" });
+        });
+        await expect(page.locator("#save-indicator")).toContainText("Save failed", { timeout: 10_000 });
+        await expect(page.locator("#toast")).toContainText(/full|unavailable/);
+        const downloadPromise = page.waitForEvent("download");
+        await page.evaluate(() => window.vellum.actions.saveFile());
+        const download = await downloadPromise;
+        const saved = JSON.parse(await fs.readFile((await download.path())!, "utf8"));
+        expect(saved.pages[0].nodes.some(node => node.name === "Still exportable")).toBe(true);
     });
-    await expect(page.locator("#save-indicator")).toContainText("Save failed", { timeout: 10_000 });
-    await page.addInitScript(() => {
-        IDBFactory.prototype.open = () => { throw new DOMException("Injected denial", "SecurityError"); };
-        Storage.prototype.setItem = () => { throw new DOMException("Injected quota failure", "QuotaExceededError"); };
+
+    test("an aborted IndexedDB write and an unavailable fallback both report save failure", async ({ page }) => {
+        await waitForReady(page);
+        await page.evaluate(() => {
+            const put = IDBObjectStore.prototype.put;
+            IDBObjectStore.prototype.put = function (...args) {
+                const request = put.apply(this, args as [any, IDBValidKey?]);
+                this.transaction.abort();
+                return request;
+            };
+            window.vellum.createAtCenter("rect", { name: "Aborted write" });
+        });
+        await expect(page.locator("#save-indicator")).toContainText("Save failed", { timeout: 10_000 });
+        await page.addInitScript(() => {
+            IDBFactory.prototype.open = () => { throw new DOMException("Injected denial", "SecurityError"); };
+            Storage.prototype.setItem = () => { throw new DOMException("Injected quota failure", "QuotaExceededError"); };
+        });
+        await waitForReady(page);
+        await page.evaluate(() => window.vellum.createAtCenter("rect", { name: "No local store" }));
+        await expect(page.locator("#save-indicator")).toContainText("Save failed", { timeout: 10_000 });
+        expect(await page.evaluate(() => window.vellum.doc.nodes.at(-1)?.name)).toBe("No local store");
     });
-    await waitForReady(page);
-    await page.evaluate(() => window.vellum.createAtCenter("rect", { name: "No local store" }));
-    await expect(page.locator("#save-indicator")).toContainText("Save failed", { timeout: 10_000 });
-    expect(await page.evaluate(() => window.vellum.doc.nodes.at(-1)?.name)).toBe("No local store");
 });
 
 test("an unfinished pointer transaction is never persisted as a completed edit", async ({ page }) => {
@@ -107,68 +114,73 @@ test("an unfinished pointer transaction is never persisted as a completed edit",
     await expect.poll(async () => (await storedDocument(page)).pages.at(-1).nodes.length).toBe(1);
 });
 
-test("malformed saved data opens a usable starter and explains the recovery", async ({ page }) => {
-    await page.addInitScript(() => {
-        IDBFactory.prototype.open = () => { throw new DOMException("Injected denial", "SecurityError"); };
-        localStorage.setItem("vellum-document", "{broken");
-    });
-    await waitForReady(page);
-    expect(await page.evaluate(() => window.vellum.doc.nodes.length)).toBe(171);
-    await expect(page.locator("#toast")).toContainText("could not be restored");
-    await page.evaluate(() => window.vellum.createAtCenter("rect", { name: "Recovered editor" }));
-    expect(await page.evaluate(() => window.vellum.doc.nodes.at(-1)?.name)).toBe("Recovered editor");
-});
+// An init script, and runtime traps that spend the instance's restarts.
+test.describe(() => {
+    test.use({ fresh: true });
 
-test("runtime traps recover saved work through three SDK restarts", async ({ page }) => {
-    await waitForReady(page);
-    await page.locator("[data-page]").nth(2).click();
-    const id = await page.evaluate(async () => {
-        const node = window.vellum.createAtCenter("rect", { name: "Survives restart" });
-        await (window.vellum as any).save();
-        return node.id;
+    test("malformed saved data opens a usable starter and explains the recovery", async ({ page }) => {
+        await page.addInitScript(() => {
+            IDBFactory.prototype.open = () => { throw new DOMException("Injected denial", "SecurityError"); };
+            localStorage.setItem("vellum-document", "{broken");
+        });
+        await waitForReady(page);
+        expect(await page.evaluate(() => window.vellum.doc.nodes.length)).toBe(171);
+        await expect(page.locator("#toast")).toContainText("could not be restored");
+        await page.evaluate(() => window.vellum.createAtCenter("rect", { name: "Recovered editor" }));
+        expect(await page.evaluate(() => window.vellum.doc.nodes.at(-1)?.name)).toBe("Recovered editor");
     });
-    for (let round = 0; round < 3; round++) {
+
+    test("runtime traps recover saved work through three SDK restarts", async ({ page }) => {
+        await waitForReady(page);
+        await page.locator("[data-page]").nth(2).click();
+        const id = await page.evaluate(async () => {
+            const node = window.vellum.createAtCenter("rect", { name: "Survives restart" });
+            await (window.vellum as any).save();
+            return node.id;
+        });
+        for (let round = 0; round < 3; round++) {
+            await page.evaluate(() => {
+                window.vellum.createAtCenter("rect", { name: "Unsaved draft" });
+                (window.__vellum as any).hooks.runtime.enter_fatal(new Error("injected Vellum recovery trap"));
+            });
+            await expect(page.locator("#status")).toHaveAttribute("data-status", "fatal");
+            await expect(page.getByTestId("fatal-text")).toContainText("unsaved changes were lost");
+            await page.waitForTimeout(700);
+            expect((await storedDocument(page)).pages.at(-1).nodes.some(node => node.name === "Unsaved draft")).toBe(false);
+            await page.getByTestId("fatal-restart").click();
+            await page.waitForFunction(() => window.vellum?.ready);
+            expect(await page.evaluate(id => window.vellum.doc.get(id)?.name, id)).toBe("Survives restart");
+            expect(await page.evaluate(() => window.vellum.doc.nodes.some(node => node.name === "Unsaved draft"))).toBe(false);
+            expect(await page.evaluate(() => window.__vellum.live_regions())).toBe(1);
+        }
+        await page.evaluate(() => (window.__vellum as any).hooks.runtime.enter_fatal(new Error("restart limit")));
+        await expect(page.locator("#status")).toHaveAttribute("data-status", "fatal");
+        await expect(page.getByTestId("fatal-restart")).toHaveCount(0);
+        await expect(page.getByRole("button", { name: /reload/i })).toBeVisible();
+    });
+
+    test("a runtime trap aborts a storage write before its transaction commits", async ({ page }) => {
+        await waitForReady(page);
+        await page.locator("[data-page]").nth(2).click();
+        await page.evaluate(() => (window.vellum as any).save());
         await page.evaluate(() => {
-            window.vellum.createAtCenter("rect", { name: "Unsaved draft" });
-            (window.__vellum as any).hooks.runtime.enter_fatal(new Error("injected Vellum recovery trap"));
+            const put = IDBObjectStore.prototype.put;
+            IDBObjectStore.prototype.put = function (...args) {
+                const request = put.apply(this, args as [any, IDBValidKey?]);
+                IDBObjectStore.prototype.put = put;
+                (window.__vellum as any).hooks.runtime.enter_fatal(new Error("trap during storage write"));
+                return request;
+            };
+            window.vellum.createAtCenter("rect", { name: "Interrupted storage write" });
+            void (window.vellum as any).save().catch(() => undefined);
         });
         await expect(page.locator("#status")).toHaveAttribute("data-status", "fatal");
-        await expect(page.getByTestId("fatal-text")).toContainText("unsaved changes were lost");
         await page.waitForTimeout(700);
-        expect((await storedDocument(page)).pages.at(-1).nodes.some(node => node.name === "Unsaved draft")).toBe(false);
+        expect((await storedDocument(page)).pages.at(-1).nodes).toHaveLength(0);
         await page.getByTestId("fatal-restart").click();
         await page.waitForFunction(() => window.vellum?.ready);
-        expect(await page.evaluate(id => window.vellum.doc.get(id)?.name, id)).toBe("Survives restart");
-        expect(await page.evaluate(() => window.vellum.doc.nodes.some(node => node.name === "Unsaved draft"))).toBe(false);
-        expect(await page.evaluate(() => window.__vellum.live_regions())).toBe(1);
-    }
-    await page.evaluate(() => (window.__vellum as any).hooks.runtime.enter_fatal(new Error("restart limit")));
-    await expect(page.locator("#status")).toHaveAttribute("data-status", "fatal");
-    await expect(page.getByTestId("fatal-restart")).toHaveCount(0);
-    await expect(page.getByRole("button", { name: /reload/i })).toBeVisible();
-});
-
-test("a runtime trap aborts a storage write before its transaction commits", async ({ page }) => {
-    await waitForReady(page);
-    await page.locator("[data-page]").nth(2).click();
-    await page.evaluate(() => (window.vellum as any).save());
-    await page.evaluate(() => {
-        const put = IDBObjectStore.prototype.put;
-        IDBObjectStore.prototype.put = function (...args) {
-            const request = put.apply(this, args as [any, IDBValidKey?]);
-            IDBObjectStore.prototype.put = put;
-            (window.__vellum as any).hooks.runtime.enter_fatal(new Error("trap during storage write"));
-            return request;
-        };
-        window.vellum.createAtCenter("rect", { name: "Interrupted storage write" });
-        void (window.vellum as any).save().catch(() => undefined);
+        expect(await page.evaluate(() => window.vellum.doc.nodes.length)).toBe(0);
     });
-    await expect(page.locator("#status")).toHaveAttribute("data-status", "fatal");
-    await page.waitForTimeout(700);
-    expect((await storedDocument(page)).pages.at(-1).nodes).toHaveLength(0);
-    await page.getByTestId("fatal-restart").click();
-    await page.waitForFunction(() => window.vellum?.ready);
-    expect(await page.evaluate(() => window.vellum.doc.nodes.length)).toBe(0);
 });
 
 test("image import embeds pixels and undoing document replacement restores assets", async ({ page }) => {
@@ -290,41 +302,46 @@ test("image picker scales large valid images and cancellation leaves the documen
     expect(await page.evaluate(() => window.vellum.doc.serialize())).toBe(before);
 });
 
-test("a file read completed after disposal cannot replace the new mounted editor", async ({ page }) => {
-    await waitForReady(page);
-    await page.evaluate(value => {
-        const file = new File([JSON.stringify(value)], "late.vellum", { type: "application/json" });
-        const buffer = new TextEncoder().encode(JSON.stringify(value)).buffer;
-        const read = File.prototype.arrayBuffer;
-        File.prototype.arrayBuffer = function () {
-            if (this.name !== "late.vellum") return read.call(this);
-            return new Promise(resolve => { (window as any).__finishLateRead = () => resolve(buffer); });
-        };
-        (window as any).__lateRead = (window.vellum as any).importDocument(file).catch(error => String(error));
-    }, emptyDocument);
-    await page.waitForFunction(() => typeof (window as any).__finishLateRead === "function");
-    await page.evaluate(() => { (window.__vellum as any).dispose(); (window.__vellum as any).mount(); });
-    await page.waitForFunction(() => window.vellum.ready);
-    const name = await page.evaluate(() => window.vellum.doc.data.name);
-    await page.evaluate(async () => { (window as any).__finishLateRead(); await (window as any).__lateRead; });
-    expect(await page.evaluate(() => window.vellum.doc.data.name)).toBe(name);
-    expect(await page.evaluate(() => window.__vellum.live_regions())).toBe(1);
-});
+// A `File.prototype.arrayBuffer` stub that stays in place, and a reload after saving.
+test.describe(() => {
+    test.use({ fresh: true });
 
-test("local font picker embeds a font, applies it to text and restores it after reload", async ({ page }) => {
-    await waitForReady(page);
-    await page.locator("[data-page]").nth(2).click();
-    const id = await page.evaluate(() => window.vellum.createAtCenter("text", { text: "Portable typography" }).id);
-    const chooserPromise = page.waitForEvent("filechooser");
-    await page.evaluate(() => window.vellum.actions.loadFont());
-    const chooser = await chooserPromise;
-    await chooser.setFiles(path.resolve(__dirname, "../../makepad/widgets/resources/LiberationMono-Regular.ttf"));
-    await expect.poll(() => page.evaluate(id => window.vellum.doc.get(id).fontFamily, id)).toBe("LiberationMono-Regular");
-    await page.evaluate(() => (window.vellum as any).save());
-    await waitForReady(page, "./", false);
-    const fonts = await page.evaluate(() => window.vellum.fontReady());
-    expect(fonts.families).toContain("LiberationMono-Regular");
-    expect(await page.evaluate(id => window.vellum.doc.get(id).fontFamily, id)).toBe("LiberationMono-Regular");
+    test("a file read completed after disposal cannot replace the new mounted editor", async ({ page }) => {
+        await waitForReady(page);
+        await page.evaluate(value => {
+            const file = new File([JSON.stringify(value)], "late.vellum", { type: "application/json" });
+            const buffer = new TextEncoder().encode(JSON.stringify(value)).buffer;
+            const read = File.prototype.arrayBuffer;
+            File.prototype.arrayBuffer = function () {
+                if (this.name !== "late.vellum") return read.call(this);
+                return new Promise(resolve => { (window as any).__finishLateRead = () => resolve(buffer); });
+            };
+            (window as any).__lateRead = (window.vellum as any).importDocument(file).catch(error => String(error));
+        }, emptyDocument);
+        await page.waitForFunction(() => typeof (window as any).__finishLateRead === "function");
+        await page.evaluate(() => { (window.__vellum as any).dispose(); (window.__vellum as any).mount(); });
+        await page.waitForFunction(() => window.vellum.ready);
+        const name = await page.evaluate(() => window.vellum.doc.data.name);
+        await page.evaluate(async () => { (window as any).__finishLateRead(); await (window as any).__lateRead; });
+        expect(await page.evaluate(() => window.vellum.doc.data.name)).toBe(name);
+        expect(await page.evaluate(() => window.__vellum.live_regions())).toBe(1);
+    });
+
+    test("local font picker embeds a font, applies it to text and restores it after reload", async ({ page }) => {
+        await waitForReady(page);
+        await page.locator("[data-page]").nth(2).click();
+        const id = await page.evaluate(() => window.vellum.createAtCenter("text", { text: "Portable typography" }).id);
+        const chooserPromise = page.waitForEvent("filechooser");
+        await page.evaluate(() => window.vellum.actions.loadFont());
+        const chooser = await chooserPromise;
+        await chooser.setFiles(path.resolve(__dirname, "../../makepad/widgets/resources/LiberationMono-Regular.ttf"));
+        await expect.poll(() => page.evaluate(id => window.vellum.doc.get(id).fontFamily, id)).toBe("LiberationMono-Regular");
+        await page.evaluate(() => (window.vellum as any).save());
+        await waitForReady(page, "./", false);
+        const fonts = await page.evaluate(() => window.vellum.fontReady());
+        expect(fonts.families).toContain("LiberationMono-Regular");
+        expect(await page.evaluate(id => window.vellum.doc.get(id).fontFamily, id)).toBe("LiberationMono-Regular");
+    });
 });
 
 test("font sources follow document replacement undo and redo without retaining removed faces", async ({ page }) => {
@@ -347,50 +364,56 @@ test("font sources follow document replacement undo and redo without retaining r
     await expect.poll(() => page.evaluate(() => window.vellum.textLayout("recovery_text").widths[0])).toBeCloseTo(second, 4);
 });
 
-test("local font faces leave the browser when their runtime fails", async ({ page }) => {
-    await waitForReady(page);
-    const bytes = await fs.readFile(path.resolve(__dirname, "../../makepad/widgets/resources/LiberationMono-Regular.ttf"));
-    await page.evaluate(async dataUrl => {
-        await window.vellum.importFont({ name: "Restart Font.ttf", dataUrl });
-        await (window.vellum as any).save();
-    }, `data:font/ttf;base64,${bytes.toString("base64")}`);
-    expect(await page.evaluate(() => [...document.fonts].filter(face => face.family === "Restart Font").length)).toBe(1);
-    await page.evaluate(() => (window.__vellum as any).hooks.runtime.enter_fatal(new Error("font cleanup")));
-    await expect(page.locator("#status")).toHaveAttribute("data-status", "fatal");
-    expect(await page.evaluate(() => [...document.fonts].filter(face => face.family === "Restart Font").length)).toBe(0);
-    await page.getByTestId("fatal-restart").click();
-    await page.waitForFunction(() => window.vellum?.ready);
-    expect(await page.evaluate(() => [...document.fonts].filter(face => face.family === "Restart Font").length)).toBe(1);
-});
+// A runtime trap, and `EventTarget.prototype` wrappers that stay in place.
+test.describe(() => {
+    test.use({ fresh: true });
 
-test("SDK picker releases its listeners after both cancel and successful selection", async ({ page }) => {
-    await waitForReady(page);
-    await page.evaluate(() => {
-        const add = EventTarget.prototype.addEventListener;
-        const remove = EventTarget.prototype.removeEventListener;
-        (window as any).__pickerListeners = 0;
-        EventTarget.prototype.addEventListener = function (name, callback, options) {
-            if (this instanceof HTMLInputElement && this.type === "file" && ["change", "cancel"].includes(name)) (window as any).__pickerListeners++;
-            return add.call(this, name, callback, options);
-        };
-        EventTarget.prototype.removeEventListener = function (name, callback, options) {
-            if (this instanceof HTMLInputElement && this.type === "file" && ["change", "cancel"].includes(name)) (window as any).__pickerListeners--;
-            return remove.call(this, name, callback, options);
-        };
+    test("local font faces leave the browser when their runtime fails", async ({ page }) => {
+        await waitForReady(page);
+        const bytes = await fs.readFile(path.resolve(__dirname, "../../makepad/widgets/resources/LiberationMono-Regular.ttf"));
+        await page.evaluate(async dataUrl => {
+            await window.vellum.importFont({ name: "Restart Font.ttf", dataUrl });
+            await (window.vellum as any).save();
+        }, `data:font/ttf;base64,${bytes.toString("base64")}`);
+        expect(await page.evaluate(() => [...document.fonts].filter(face => face.family === "Restart Font").length)).toBe(1);
+        await page.evaluate(() => (window.__vellum as any).hooks.runtime.enter_fatal(new Error("font cleanup")));
+        await expect(page.locator("#status")).toHaveAttribute("data-status", "fatal");
+        expect(await page.evaluate(() => [...document.fonts].filter(face => face.family === "Restart Font").length)).toBe(0);
+        await page.getByTestId("fatal-restart").click();
+        await page.waitForFunction(() => window.vellum?.ready);
+        expect(await page.evaluate(() => [...document.fonts].filter(face => face.family === "Restart Font").length)).toBe(1);
     });
-    for (let index = 0; index < 4; index++) {
-        const choice = page.waitForEvent("filechooser");
-        await page.evaluate(() => window.vellum.actions.openFile());
-        const chooser = await choice;
-        expect(await page.evaluate(() => (window as any).__pickerListeners)).toBe(2);
-        if (index === 3) {
-            await chooser.setFiles({ name: "opened.vellum", mimeType: "application/json", buffer: Buffer.from(JSON.stringify(emptyDocument)) });
-            await expect(page.locator("#file-name")).toHaveText("Empty import");
-        } else {
-            await chooser.element().evaluate(input => input.dispatchEvent(new Event("cancel")));
+
+    test("SDK picker releases its listeners after both cancel and successful selection", async ({ page }) => {
+        await waitForReady(page);
+        await page.evaluate(() => {
+            const add = EventTarget.prototype.addEventListener;
+            const remove = EventTarget.prototype.removeEventListener;
+            (window as any).__pickerListeners = 0;
+            EventTarget.prototype.addEventListener = function (name, callback, options) {
+                if (this instanceof HTMLInputElement && this.type === "file" && ["change", "cancel"].includes(name)) (window as any).__pickerListeners++;
+                return add.call(this, name, callback, options);
+            };
+            EventTarget.prototype.removeEventListener = function (name, callback, options) {
+                if (this instanceof HTMLInputElement && this.type === "file" && ["change", "cancel"].includes(name)) (window as any).__pickerListeners--;
+                return remove.call(this, name, callback, options);
+            };
+        });
+        const picks = rounds(4);
+        for (let index = 0; index < picks; index++) {
+            const choice = page.waitForEvent("filechooser");
+            await page.evaluate(() => window.vellum.actions.openFile());
+            const chooser = await choice;
+            expect(await page.evaluate(() => (window as any).__pickerListeners)).toBe(2);
+            if (index === picks - 1) {
+                await chooser.setFiles({ name: "opened.vellum", mimeType: "application/json", buffer: Buffer.from(JSON.stringify(emptyDocument)) });
+                await expect(page.locator("#file-name")).toHaveText("Empty import");
+            } else {
+                await chooser.element().evaluate(input => input.dispatchEvent(new Event("cancel")));
+            }
+            expect(await page.evaluate(() => (window as any).__pickerListeners)).toBe(0);
         }
-        expect(await page.evaluate(() => (window as any).__pickerListeners)).toBe(0);
-    }
+    });
 });
 
 test("SVG and PNG exports contain real vector, text and image content with bounded dimensions", async ({ page }, info) => {
@@ -468,25 +491,31 @@ test("frame presentation navigates, follows prototype links and returns keyboard
     expect(await page.evaluate(ids => [window.vellum.doc.get(ids.first).x, window.vellum.doc.get(ids.second).x], ids)).toEqual([0, 500]);
 });
 
-test("reference and Rust portable documents open in both directions", async ({ page, context }, info) => {
-    test.skip(!hasReference, "Reference checkout is not available");
-    const reference = await context.newPage();
-    await openTwin(reference);
-    await waitForReady(page);
-    const original = await reference.evaluate(() => (window as any).vellum.doc.serialize());
-    await importDocument(page, JSON.parse(original));
-    const actual = await page.evaluate(() => window.vellum.doc.serialize());
-    const rust = JSON.parse(actual);
-    expect(rust.pages.map(page => page.nodes.length)).toEqual([171, 31, 0]);
-    const reparsed = await reference.evaluate(async text => {
-        const api = (window as any).vellum;
-        await api.importDocument(new File([text], "rust.vellum", { type: "application/json" }));
-        return api.doc.data;
-    }, actual);
-    expect(reparsed.pages.map(page => page.nodes.length)).toEqual([171, 31, 0]);
-    for (let index = 0; index < rust.pages.length; index++) {
-        expect(reparsed.pages[index]).toEqual(rust.pages[index]);
-    }
-    await fs.writeFile(info.outputPath("rust-roundtrip.vellum"), actual);
-    await reference.close();
+// Twin comparisons open the twin in the test's own context and keep the page
+// they compare there too.
+test.describe(() => {
+    test.use({ fresh: true });
+
+    test("reference and Rust portable documents open in both directions", async ({ page, context }, info) => {
+        test.skip(!hasReference, "Reference checkout is not available");
+        const reference = await context.newPage();
+        await openTwin(reference);
+        await waitForReady(page);
+        const original = await reference.evaluate(() => (window as any).vellum.doc.serialize());
+        await importDocument(page, JSON.parse(original));
+        const actual = await page.evaluate(() => window.vellum.doc.serialize());
+        const rust = JSON.parse(actual);
+        expect(rust.pages.map(page => page.nodes.length)).toEqual([171, 31, 0]);
+        const reparsed = await reference.evaluate(async text => {
+            const api = (window as any).vellum;
+            await api.importDocument(new File([text], "rust.vellum", { type: "application/json" }));
+            return api.doc.data;
+        }, actual);
+        expect(reparsed.pages.map(page => page.nodes.length)).toEqual([171, 31, 0]);
+        for (let index = 0; index < rust.pages.length; index++) {
+            expect(reparsed.pages[index]).toEqual(rust.pages[index]);
+        }
+        await fs.writeFile(info.outputPath("rust-roundtrip.vellum"), actual);
+        await reference.close();
+    });
 });

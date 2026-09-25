@@ -1,6 +1,7 @@
-import { expect, Page, test } from "@playwright/test";
+import { expect, Page } from "@playwright/test";
 import { PNG } from "pngjs";
-import { Anchor, anchorRect, geometry, mountGeometry } from "./support";
+import { Anchor, anchorRect, geometry, mountGeometry, test } from "./support";
+import { EVIDENCE, pick } from "../tier";
 
 /// The three CSS viewports and three zoom levels R09 names. Zoom is the device
 /// scale factor: what browser zoom actually changes for a page is how many
@@ -11,6 +12,14 @@ const VIEWPORTS = [
     { width: 1920, height: 1080 },
 ];
 const ZOOMS = [1, 1.25, 2];
+const SIZES = VIEWPORTS.flatMap((viewport) => ZOOMS.map((zoom) => ({ viewport, zoom })));
+
+/// The two of those nine that stand for the rest on every change: the
+/// smallest viewport at 100%, and a fractional zoom, where a CSS pixel is not
+/// a whole number of device pixels and every rounding shows.
+const REPRESENTATIVE = SIZES.filter(
+    ({ viewport, zoom }) => (viewport.width === 1024 && zoom === 1) || (viewport.width === 1440 && zoom === 1.25)
+);
 
 /// Scrolls the anchor into the middle of the inner clip box, and the clip box
 /// into the middle of the page, then reports where the region's own origin
@@ -145,20 +154,25 @@ async function checkAnchoredMenu(page: Page, label: string) {
     await expect.poll(async () => (await geometry(page)).menu).toBeNull();
 }
 
-for (const viewport of VIEWPORTS) {
-    for (const zoom of ZOOMS) {
-        const label = `${viewport.width}x${viewport.height} at ${zoom * 100}%`;
-        test.describe(`M4 V4: one geometry for display and for hits, ${label}`, () => {
-            test.use({ viewport, deviceScaleFactor: zoom });
+// A zoom other than 100% is a device scale factor, which a page cannot
+// change on itself, so those sizes run on a page of their own; the shared page
+// takes the viewport of a 100% one.
+// The other seven are the same check at more sizes: they run with the
+// measurements rather than on every change, so no size goes unchecked.
+for (const size of SIZES) {
+    const { viewport, zoom } = size;
+    const label = `${viewport.width}x${viewport.height} at ${zoom * 100}%`;
+    const tag = REPRESENTATIVE.includes(size) ? [] : [EVIDENCE];
+    test.describe(`M4 V4: one geometry for display and for hits, ${label}`, { tag }, () => {
+        test.use({ viewport, deviceScaleFactor: zoom });
 
-            test("twenty anchors agree with the picture and with the pointer", async ({ page }) => {
-                test.setTimeout(300_000);
-                await mountGeometry(page);
-                await checkAnchors(page, label);
-                await checkAnchoredMenu(page, label);
-            });
+        test("twenty anchors agree with the picture and with the pointer", async ({ page }) => {
+            test.setTimeout(300_000);
+            await mountGeometry(page);
+            await checkAnchors(page, label);
+            await checkAnchoredMenu(page, label);
         });
-    }
+    });
 }
 
 test.describe("M4 V4: the region follows a change of resolution", () => {
@@ -206,6 +220,7 @@ test.describe("M4 V4: the region follows a change of resolution", () => {
             expect(state.height).toBe(Math.round(240 * zoom));
         }
         await cdp.send("Emulation.clearDeviceMetricsOverride");
+        await cdp.detach();
     });
 });
 
@@ -219,7 +234,15 @@ test.describe("M4 V4: the clip is the same for the picture and for the pointer",
         let clicksOutside = 0;
         let leakChecks = 0;
 
-        for (let round = 0; round < 100; round++) {
+        // Each round is a size and a pair of offsets rather than a repeat, so
+        // a short run takes rounds that reach past both clip edges and fall on
+        // a look: the second is under the bottom edge, the other two past
+        // the right one.
+        const played = pick(
+            Array.from({ length: 100 }, (_, round) => round),
+            [2, 10, 20]
+        );
+        for (const round of played) {
             // A size the region has to re-lay out for, and scroll offsets that
             // move it under its clip box on both axes.
             const outside = await page.evaluate((round) => {
@@ -293,8 +316,11 @@ test.describe("M4 V4: the clip is the same for the picture and for the pointer",
             }
         }
 
-        expect(clicksOutside).toBeGreaterThan(20);
-        expect(leakChecks).toBeGreaterThan(3);
+        // A fifth of the rounds clicked past the edge, and a third of the
+        // looks found something to look at: at full length, more than twenty
+        // clicks and three looks.
+        expect(clicksOutside).toBeGreaterThan(Math.floor(played.length / 5));
+        expect(leakChecks).toBeGreaterThan(Math.floor(played.filter((round) => round % 10 === 0).length / 3));
         // Not one of those clicks reached the region.
         expect((await geometry(page)).hits).toBe(before);
 

@@ -69,6 +69,22 @@ mod app {
         /// Where the mounted scope thinks it is. Read from an export, which
         /// is outside every reactive owner and so cannot ask the router.
         static PATH: RefCell<String> = const { RefCell::new(String::new()) };
+        /// What a reset needs of the mounted scope that the handles above do
+        /// not carry: its router, and the counter that rebuilds its controls.
+        static MOUNTED: RefCell<Option<Mounted>> = const { RefCell::new(None) };
+    }
+
+    /// The mounted workbench, as a reset reaches it from outside.
+    #[derive(Clone)]
+    struct Mounted {
+        /// The workbench's reactive owner. Navigating asks the router, and
+        /// the router is only found from inside the scope it was provided in.
+        owner: Owner,
+        /// Raised by a reset. Every part of a view that keeps something of its
+        /// own - a typed value, an open group, a scroll position, a draft - is
+        /// built again from nothing when it moves; the regions beside them are
+        /// not, because starting one again is what a reset is there to avoid.
+        epoch: RwSignal<u64>,
     }
 
     fn now() -> f64 {
@@ -131,8 +147,9 @@ mod app {
 
     impl TableState {
         fn new(rows: usize) -> Self {
-            Self {
-                view: RwSignal::new(Arc::new(View::identity(rows, 0))),
+            // Placeholders: `reset` writes the values a view starts from.
+            let table = Self {
+                view: RwSignal::new(Arc::default()),
                 version: RwSignal::new(0),
                 sort: RwSignal::new(None),
                 filter: RwSignal::new(String::new()),
@@ -146,7 +163,28 @@ mod app {
                 group: RwSignal::new(None),
                 jumps: RwSignal::new(0),
                 saves: RwSignal::new(0),
-            }
+            };
+            table.reset(rows);
+            table
+        }
+
+        /// Puts every fact back where a first mount starts it. A mount goes
+        /// through here as well, so the two cannot come to disagree.
+        fn reset(self, rows: usize) {
+            self.view.set(Arc::new(View::identity(rows, 0)));
+            self.version.set(0);
+            self.sort.set(None);
+            self.filter.set(String::new());
+            self.job.set(JobShown::default());
+            self.window_version.set(0);
+            self.selection.set(Selection::new());
+            self.counts.set(Counts::default());
+            self.focus.set(GridCell::default());
+            self.goto.set(None);
+            self.editing.set(None);
+            self.group.set(None);
+            self.jumps.set(0);
+            self.saves.set(0);
         }
     }
 
@@ -183,6 +221,55 @@ mod app {
         picks: RwSignal<u64>,
         marquees: RwSignal<u64>,
         renames: RwSignal<u64>,
+    }
+
+    impl SceneControls {
+        fn new() -> Self {
+            // Placeholders, as for the table: `reset` has the real values.
+            let scene = Self {
+                camera: RwSignal::new((0.0, 0.0)),
+                highlight: RwSignal::new(None),
+                frozen: RwSignal::new(false),
+                chosen: RwSignal::new(Arc::new(Selection::new())),
+                labels: RwSignal::new(Arc::new(BTreeMap::new())),
+                editing: RwSignal::new(None),
+                hover: RwSignal::new(None),
+                drawn: RwSignal::new((0.0, 0.0, 0.0, 0.0, 0)),
+                asked: RwSignal::new(0),
+                reported: RwSignal::new(0),
+                accepted: RwSignal::new(0),
+                picks: RwSignal::new(0),
+                marquees: RwSignal::new(0),
+                renames: RwSignal::new(0),
+            };
+            scene.reset(false);
+            scene
+        }
+
+        /// Puts the scene back where a first mount starts it.
+        ///
+        /// `drawn` is the region's own report of its last draw. A region that
+        /// stays has still drawn it, and one that has to start again has not:
+        /// a report kept from a region that has gone would pass for the new
+        /// one having drawn before it has, and clamp the camera against it.
+        fn reset(self, region_stays: bool) {
+            self.camera.set((0.0, 0.0));
+            self.highlight.set(None);
+            self.frozen.set(false);
+            self.chosen.set(Arc::new(Selection::new()));
+            self.labels.set(Arc::new(BTreeMap::new()));
+            self.editing.set(None);
+            self.hover.set(None);
+            if !region_stays {
+                self.drawn.set((0.0, 0.0, 0.0, 0.0, 0));
+            }
+            self.asked.set(0);
+            self.reported.set(0);
+            self.accepted.set(0);
+            self.picks.set(0);
+            self.marquees.set(0);
+            self.renames.set(0);
+        }
     }
 
     /// A sort running on its own, with nothing else to show for it than how
@@ -233,27 +320,19 @@ mod app {
                 navigate("/table", true);
             }
         });
-        let scene = SceneControls {
-            camera: RwSignal::new((0.0, 0.0)),
-            highlight: RwSignal::new(None),
-            frozen: RwSignal::new(false),
-            chosen: RwSignal::new(Arc::new(Selection::new())),
-            labels: RwSignal::new(Arc::new(BTreeMap::new())),
-            editing: RwSignal::new(None),
-            hover: RwSignal::new(None),
-            drawn: RwSignal::new((0.0, 0.0, 0.0, 0.0, 0)),
-            asked: RwSignal::new(0),
-            reported: RwSignal::new(0),
-            accepted: RwSignal::new(0),
-            picks: RwSignal::new(0),
-            marquees: RwSignal::new(0),
-            renames: RwSignal::new(0),
-        };
+        let scene = SceneControls::new();
         SCENE.with(|slot| slot.set(Some(scene)));
         let table = TableState::new(with_data(|data| data.len()).unwrap_or(0));
         TABLE.with(|slot| slot.set(Some(table)));
         JOBS.with(|slot| *slot.borrow_mut() = Some(Requests::new()));
+        let epoch = RwSignal::new(0u64);
+        MOUNTED.with(|slot| {
+            *slot.borrow_mut() = Owner::current().map(|owner| Mounted { owner, epoch });
+        });
         on_cleanup(move || {
+            // The owner is the scope's, and a handle on it kept past the scope
+            // would keep everything it owns alive with it.
+            MOUNTED.with(|slot| *slot.borrow_mut() = None);
             SCENE.with(|slot| slot.set(None));
             TABLE.with(|slot| slot.set(None));
             // Closing the handle ends every job it issued: a slice that was
@@ -271,13 +350,7 @@ mod app {
         // table is a change of address that is not a change of view, and a
         // closure would answer "table" twice while tearing the first one down
         // - taking a GPU region with it - to build the second.
-        let showing = Memo::new(move |_| {
-            if location.get().path == "/scene" {
-                "scene"
-            } else {
-                "table"
-            }
-        });
+        let showing = Memo::new(move |_| view_of(&location.get().path));
         view! {
             <div class="workbench">
                 <header class="bar">
@@ -290,10 +363,20 @@ mod app {
                     </p>
                 </header>
                 {move || match showing.get() {
-                    "scene" => view! { <SceneItem scene=scene /> }.into_any(),
-                    _ => view! { <TableItem table=table /> }.into_any(),
+                    "scene" => view! { <SceneItem scene=scene epoch=epoch /> }.into_any(),
+                    _ => view! { <TableItem table=table epoch=epoch /> }.into_any(),
                 }}
             </div>
+        }
+    }
+
+    /// Which view an address shows. One address for each of two views, and
+    /// everything else - the bare root included - is the table.
+    fn view_of(path: &str) -> &'static str {
+        if path == "/scene" {
+            "scene"
+        } else {
+            "table"
         }
     }
 
@@ -361,22 +444,36 @@ mod app {
         row
     }
 
+    /// What it holds, built again from nothing each time `epoch` moves: new
+    /// nodes as well as new state. A closure that returned the same view
+    /// again would not do - the renderer builds a view of the same shape into
+    /// the nodes it already has, and they keep whatever was left on them.
+    #[component]
+    fn Rebuilt(epoch: RwSignal<u64>, children: ChildrenFn) -> impl IntoView {
+        view! {
+            <For each=move || [epoch.get()] key=|epoch| *epoch let:_epoch>
+                {children()}
+            </For>
+        }
+    }
+
     /// The table view: the grid, the groups over it, the row being edited, and
     /// the strip that says where the selection is.
     ///
     /// The application owns all four of those facts and hands each component
     /// the part it needs. None of them holds any of it, which is why an edit
     /// shows up in all four at once without anything being told twice.
+    ///
+    /// The controls, the tree, the grid and the details form each keep
+    /// something of their own, so a reset builds them again (`epoch`); the
+    /// strip is a region, and stays.
     #[component]
-    fn TableItem(table: TableState) -> impl IntoView {
+    fn TableItem(table: TableState, epoch: RwSignal<u64>) -> impl IntoView {
         let columns = RwSignal::new(
             (0..COLUMNS)
                 .map(|index| Column::new(FIELDS[index], format!("column {}", index + 1)))
                 .collect::<Vec<_>>(),
         );
-        let expanded = RwSignal::new(BTreeSet::from(["g0".to_string()]));
-        let goto_input = RwSignal::new(String::new());
-        let find_input = RwSignal::new(String::new());
 
         // Both readers go through the view, and both take the version as a
         // dependency, so a write redraws the cells that changed rather than
@@ -498,152 +595,51 @@ mod app {
 
         view! {
             <section data-testid="table-view" class="view">
-                <div class="bar" data-testid="table-controls">
-                    <label class="field">
-                        "go to row"
-                        <input
-                            type="number"
-                            data-testid="table-goto"
-                            min="1"
-                            prop:value=move || goto_input.get()
-                            on:input=move |ev| goto_input.set(event_target_value(&ev))
-                            on:change=move |ev| {
-                                let asked = event_target_value(&ev);
-                                goto_input.set(asked.clone());
-                                if let Ok(row) = asked.trim().parse::<usize>() {
-                                    let row = row
-                                        .saturating_sub(1)
-                                        .min(rows.get_untracked().saturating_sub(1));
-                                    table.goto.set(Some(row));
-                                    table.focus.update(|at| at.row = row);
-                                }
-                            }
-                        />
-                    </label>
-                    <button
-                        type="button"
-                        data-testid="table-insert"
-                        on:click=move |_| insert_rows(table, table.focus.get_untracked().row, BATCH)
-                    >
-                        {format!("insert {BATCH}")}
-                    </button>
-                    <button
-                        type="button"
-                        data-testid="table-delete"
-                        on:click=move |_| {
-                            delete_rows(table, table.focus.get_untracked().row, BATCH)
-                        }
-                    >
-                        {format!("delete {BATCH}")}
-                    </button>
-                    <label class="field">
-                        "filter"
-                        <input
-                            type="search"
-                            data-testid="table-filter"
-                            prop:value=move || table.filter.get()
-                            on:input=move |ev| table.filter.set(event_target_value(&ev))
-                            on:change=move |_| {
-                                // Typing does not start a job; asking does. A
-                                // job for every keystroke is a hundred
-                                // thousand rows scanned for a prefix nobody
-                                // meant to search for.
-                                table.group.set(None);
+                <Rebuilt epoch=epoch>
+                    <TableControls table=table rows=rows counts=counts />
+                </Rebuilt>
+                <div class="table-layout">
+                    <Rebuilt epoch=epoch>
+                        <Tree
+                            test_id="table-tree"
+                            aria_label="groups"
+                            class="groups"
+                            nodes=Signal::derive(groups)
+                            expanded=RwSignal::new(BTreeSet::from(["g0".to_string()]))
+                            selected=showing_group
+                            on_select=move |key: String| {
+                                table.group.set(Some(key));
+                                table.filter.set(String::new());
                                 start(table, Ask::Filter, 1);
                             }
                         />
-                    </label>
-                    <label class="field">
-                        "find"
-                        <input
-                            type="search"
-                            data-testid="table-find"
-                            prop:value=move || find_input.get()
-                            on:input=move |ev| find_input.set(event_target_value(&ev))
-                            on:change=move |_| {
-                                let text = find_input.get_untracked();
-                                if !text.trim().is_empty() {
-                                    start(table, Ask::Find(text), 1);
-                                }
-                            }
-                        />
-                    </label>
-                    <p role="status" data-testid="table-status" aria-live="polite">
-                        {move || {
-                            let counts = counts.get();
-                            format!(
-                                "selected {} (of which {} not in view)",
-                                counts.total(),
-                                counts.hidden,
-                            )
-                        }}
-                    </p>
-                    <p role="status" data-testid="table-job" aria-live="polite">
-                        {move || {
-                            let job = table.job.get();
-                            if job.running {
-                                let percent = (job.done * 100).checked_div(job.total).unwrap_or(0);
-                                format!("working, {percent}%")
-                            } else {
-                                match job.ended {
-                                    Some("cancelled") => "cancelled".to_string(),
-                                    Some("stale") => "the sample changed".to_string(),
-                                    Some(_) => "done".to_string(),
-                                    None => "idle".to_string(),
-                                }
-                            }
-                        }}
-                    </p>
-                    <button
-                        type="button"
-                        data-testid="table-cancel"
-                        prop:disabled=move || !table.job.get().running
-                        on:click=move |_| cancel(table)
-                    >
-                        "cancel"
-                    </button>
-                    <Show when=move || table.view.get().is_stale(table.version.get()) fallback=|| ()>
-                        <p data-testid="table-stale">"the sample has changed since this view"</p>
-                    </Show>
-                </div>
-                <div class="table-layout">
-                    <Tree
-                        test_id="table-tree"
-                        aria_label="groups"
-                        class="groups"
-                        nodes=Signal::derive(groups)
-                        expanded=expanded
-                        selected=showing_group
-                        on_select=move |key: String| {
-                            table.group.set(Some(key));
-                            table.filter.set(String::new());
-                            start(table, Ask::Filter, 1);
-                        }
-                    />
+                    </Rebuilt>
                     <div class="table-middle">
-                        <DataTable
-                            test_id="table"
-                            aria_label="the sample"
-                            class="rui:flex-1"
-                            rows=rows
-                            columns=columns
-                            cell=cell
-                            row_id=row_id
-                            selected=table.selection
-                            goto=table.goto
-                            version=table.window_version
-                            focus=table.focus
-                            sorted=table.sort
-                            on_sort=Arc::new(move |column: usize| {
-                                let next = match table.sort.get_untracked() {
-                                    Some((at, true)) if at == column => (column, false),
-                                    _ => (column, true),
-                                };
-                                start(table, Ask::Sort(next.0, next.1), 1);
-                            })
-                            on_select=select
-                            on_activate=activate
-                        />
+                        <Rebuilt epoch=epoch>
+                            <DataTable
+                                test_id="table"
+                                aria_label="the sample"
+                                class="rui:flex-1"
+                                rows=rows
+                                columns=columns
+                                cell=cell.clone()
+                                row_id=row_id.clone()
+                                selected=table.selection
+                                goto=table.goto
+                                version=table.window_version
+                                focus=table.focus
+                                sorted=table.sort
+                                on_sort=Arc::new(move |column: usize| {
+                                    let next = match table.sort.get_untracked() {
+                                        Some((at, true)) if at == column => (column, false),
+                                        _ => (column, true),
+                                    };
+                                    start(table, Ask::Sort(next.0, next.1), 1);
+                                })
+                                on_select=select
+                                on_activate=activate
+                            />
+                        </Rebuilt>
                         <Show when=move || rows.get() == 0 fallback=|| ()>
                             <p data-testid="table-empty">"nothing matches"</p>
                         </Show>
@@ -655,9 +651,133 @@ mod app {
                             test_id="table-strip"
                         />
                     </div>
-                    <Details table=table columns=columns />
+                    <Rebuilt epoch=epoch>
+                        <Details table=table columns=columns />
+                    </Rebuilt>
                 </div>
             </section>
+        }
+    }
+
+    /// Going to a row, inserting and deleting, filtering, finding, and what
+    /// the table says about the selection and the job in flight.
+    #[component]
+    fn TableControls(
+        table: TableState,
+        rows: Signal<usize>,
+        counts: Memo<Counts>,
+    ) -> impl IntoView {
+        let goto_input = RwSignal::new(String::new());
+        let find_input = RwSignal::new(String::new());
+        view! {
+            <div class="bar" data-testid="table-controls">
+                <label class="field">
+                    "go to row"
+                    <input
+                        type="number"
+                        data-testid="table-goto"
+                        min="1"
+                        prop:value=move || goto_input.get()
+                        on:input=move |ev| goto_input.set(event_target_value(&ev))
+                        on:change=move |ev| {
+                            let asked = event_target_value(&ev);
+                            goto_input.set(asked.clone());
+                            if let Ok(row) = asked.trim().parse::<usize>() {
+                                let row = row
+                                    .saturating_sub(1)
+                                    .min(rows.get_untracked().saturating_sub(1));
+                                table.goto.set(Some(row));
+                                table.focus.update(|at| at.row = row);
+                            }
+                        }
+                    />
+                </label>
+                <button
+                    type="button"
+                    data-testid="table-insert"
+                    on:click=move |_| insert_rows(table, table.focus.get_untracked().row, BATCH)
+                >
+                    {format!("insert {BATCH}")}
+                </button>
+                <button
+                    type="button"
+                    data-testid="table-delete"
+                    on:click=move |_| {
+                        delete_rows(table, table.focus.get_untracked().row, BATCH)
+                    }
+                >
+                    {format!("delete {BATCH}")}
+                </button>
+                <label class="field">
+                    "filter"
+                    <input
+                        type="search"
+                        data-testid="table-filter"
+                        prop:value=move || table.filter.get()
+                        on:input=move |ev| table.filter.set(event_target_value(&ev))
+                        on:change=move |_| {
+                            // Typing does not start a job; asking does. A
+                            // job for every keystroke is a hundred
+                            // thousand rows scanned for a prefix nobody
+                            // meant to search for.
+                            table.group.set(None);
+                            start(table, Ask::Filter, 1);
+                        }
+                    />
+                </label>
+                <label class="field">
+                    "find"
+                    <input
+                        type="search"
+                        data-testid="table-find"
+                        prop:value=move || find_input.get()
+                        on:input=move |ev| find_input.set(event_target_value(&ev))
+                        on:change=move |_| {
+                            let text = find_input.get_untracked();
+                            if !text.trim().is_empty() {
+                                start(table, Ask::Find(text), 1);
+                            }
+                        }
+                    />
+                </label>
+                <p role="status" data-testid="table-status" aria-live="polite">
+                    {move || {
+                        let counts = counts.get();
+                        format!(
+                            "selected {} (of which {} not in view)",
+                            counts.total(),
+                            counts.hidden,
+                        )
+                    }}
+                </p>
+                <p role="status" data-testid="table-job" aria-live="polite">
+                    {move || {
+                        let job = table.job.get();
+                        if job.running {
+                            let percent = (job.done * 100).checked_div(job.total).unwrap_or(0);
+                            format!("working, {percent}%")
+                        } else {
+                            match job.ended {
+                                Some("cancelled") => "cancelled".to_string(),
+                                Some("stale") => "the sample changed".to_string(),
+                                Some(_) => "done".to_string(),
+                                None => "idle".to_string(),
+                            }
+                        }
+                    }}
+                </p>
+                <button
+                    type="button"
+                    data-testid="table-cancel"
+                    prop:disabled=move || !table.job.get().running
+                    on:click=move |_| cancel(table)
+                >
+                    "cancel"
+                </button>
+                <Show when=move || table.view.get().is_stale(table.version.get()) fallback=|| ()>
+                    <p data-testid="table-stale">"the sample has changed since this view"</p>
+                </Show>
+            </div>
         }
     }
 
@@ -1131,8 +1251,11 @@ mod app {
             .unwrap_or_else(|| scene_layout::label(id as usize))
     }
 
+    /// The scene view. As with the table, what the controls and the details
+    /// form keep of their own is built again on a reset, and the region is
+    /// not.
     #[component]
-    fn SceneItem(scene: SceneControls) -> impl IntoView {
+    fn SceneItem(scene: SceneControls, epoch: RwSignal<u64>) -> impl IntoView {
         let props = Signal::derive(move || SceneProps {
             camera: scene.camera.get(),
             highlight: scene.highlight.get(),
@@ -1140,7 +1263,6 @@ mod app {
             labels: scene.labels.get(),
             frozen: scene.frozen.get(),
         });
-        let find_input = RwSignal::new(String::new());
         let choose = move |ids: Vec<u32>, additive: bool| {
             scene.chosen.update(|chosen| {
                 let chosen = Arc::make_mut(chosen);
@@ -1193,47 +1315,12 @@ mod app {
             }
             SceneAction::Hover(over) => scene.hover.set(over),
         };
-        let find = move || {
-            let asked = find_input.get_untracked();
-            let Some(id) = find_object(&scene.labels.get_untracked(), asked.trim()) else {
-                return;
-            };
-            look_at_object(scene, id);
-            scene.editing.set(Some(id));
-        };
         let app = PhantomData::<SceneRegion>;
         view! {
             <section data-testid="scene-view" class="view">
-                <div class="bar" data-testid="scene-controls">
-                    <label class="field">
-                        "find an object"
-                        <input
-                            type="search"
-                            data-testid="scene-find"
-                            prop:value=move || find_input.get()
-                            on:input=move |ev| find_input.set(event_target_value(&ev))
-                            on:change=move |_| find()
-                        />
-                    </label>
-                    <p role="status" data-testid="scene-selected-count" aria-live="polite">
-                        {move || format!("selected {}", scene.chosen.get().len())}
-                    </p>
-                    <button
-                        type="button"
-                        data-testid="scene-clear"
-                        on:click=move |_| {
-                            scene.chosen.update(|chosen| Arc::make_mut(chosen).clear());
-                        }
-                    >
-                        "clear the selection"
-                    </button>
-                    <p data-testid="scene-hover">
-                        {move || match scene.hover.get() {
-                            Some(id) => object_label(&scene.labels.get(), id),
-                            None => "nothing".to_string(),
-                        }}
-                    </p>
-                </div>
+                <Rebuilt epoch=epoch>
+                    <SceneControlsBar scene=scene />
+                </Rebuilt>
                 <ul class="chosen" data-testid="scene-selected" aria-label="selected">
                     {move || {
                         let labels = scene.labels.get();
@@ -1258,9 +1345,57 @@ mod app {
                         class="scene-region"
                         test_id="scene-gpu"
                     />
-                    <SceneDetails scene=scene />
+                    <Rebuilt epoch=epoch>
+                        <SceneDetails scene=scene />
+                    </Rebuilt>
                 </div>
             </section>
+        }
+    }
+
+    /// Finding an object by name, and what is chosen and pointed at.
+    #[component]
+    fn SceneControlsBar(scene: SceneControls) -> impl IntoView {
+        let find_input = RwSignal::new(String::new());
+        let find = move || {
+            let asked = find_input.get_untracked();
+            let Some(id) = find_object(&scene.labels.get_untracked(), asked.trim()) else {
+                return;
+            };
+            look_at_object(scene, id);
+            scene.editing.set(Some(id));
+        };
+        view! {
+            <div class="bar" data-testid="scene-controls">
+                <label class="field">
+                    "find an object"
+                    <input
+                        type="search"
+                        data-testid="scene-find"
+                        prop:value=move || find_input.get()
+                        on:input=move |ev| find_input.set(event_target_value(&ev))
+                        on:change=move |_| find()
+                    />
+                </label>
+                <p role="status" data-testid="scene-selected-count" aria-live="polite">
+                    {move || format!("selected {}", scene.chosen.get().len())}
+                </p>
+                <button
+                    type="button"
+                    data-testid="scene-clear"
+                    on:click=move |_| {
+                        scene.chosen.update(|chosen| Arc::make_mut(chosen).clear());
+                    }
+                >
+                    "clear the selection"
+                </button>
+                <p data-testid="scene-hover">
+                    {move || match scene.hover.get() {
+                        Some(id) => object_label(&scene.labels.get(), id),
+                        None => "nothing".to_string(),
+                    }}
+                </p>
+            </div>
         }
     }
 
@@ -1382,6 +1517,63 @@ mod app {
         });
         HANDLES.with(|handles| handles.borrow_mut().insert(id, handle));
         Ok(id)
+    }
+
+    /// Puts the instance back where a fresh load of `path` would leave it,
+    /// without loading anything: a load starts the GPU regions again, and on
+    /// a software rasteriser each one is seconds of shader compilation.
+    ///
+    /// What belongs to the instance goes back whether or not a scope is
+    /// mounted. A mounted workbench then puts its own state back, builds its
+    /// controls again, and goes to `path` through its own router. A region
+    /// the route keeps is kept; a change of view drops one region and starts
+    /// the other, as following the link would.
+    ///
+    /// Returns whether there was a workbench to put back. When there was not,
+    /// the page mounts one, and a mount starts from all of this anyway.
+    #[wasm_bindgen]
+    pub fn data_workbench_reset(path: &str) -> bool {
+        SORT.with(|slot| *slot.borrow_mut() = None);
+        // Only a sample that was written to is made again: it is the one
+        // part of this that costs anything, and every write bumps the version.
+        if with_data(|data| data.version() != 0).unwrap_or(false) {
+            // Dropped first, so that the new one takes the old one's memory
+            // rather than growing the instance by another sample.
+            DATA.with(|slot| *slot.borrow_mut() = None);
+            ensure_data();
+        }
+        let Some(mounted) = MOUNTED.with(|slot| slot.borrow().clone()) else {
+            return false;
+        };
+        // Every job in flight ends, and none of them may deliver: what it
+        // would deliver is an answer about a sample and a view that have both
+        // gone. Nor may one say how it ended, so the reset counts as a newer
+        // question than all of them. `JOB_SEQ` goes on rather than back: it
+        // only has to tell the newest job from the others, and a count that
+        // started again could take one of these for the newest while it is
+        // still ending.
+        JOBS.with(|slot| {
+            if let Some(requests) = slot.borrow_mut().replace(Requests::new()) {
+                requests.close();
+            }
+        });
+        JOB_SEQ.with(|slot| slot.set(slot.get() + 1));
+        let target = path.split(['?', '#']).next().unwrap_or_default();
+        let from = PATH.with(|slot| view_of(&slot.borrow()));
+        let to = view_of(target);
+        let rows = with_data(Dataset::len).unwrap_or(0);
+        if let Some(table) = TABLE.with(|slot| slot.get()) {
+            table.reset(rows);
+        }
+        if let Some(scene) = SCENE.with(|slot| slot.get()) {
+            scene.reset(from == "scene" && to == "scene");
+        }
+        // A change of view builds the other view from nothing anyway.
+        if from == to {
+            mounted.epoch.update(|epoch| *epoch += 1);
+        }
+        mounted.owner.with(|| navigate(path, true));
+        true
     }
 
     #[wasm_bindgen]

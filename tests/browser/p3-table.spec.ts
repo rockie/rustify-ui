@@ -1,6 +1,8 @@
-import { expect, Locator, Page, test } from "@playwright/test";
+import { expect, Locator, Page } from "@playwright/test";
 import { LOCATORS } from "./loads";
 import * as twin from "./dataset";
+import { isShared, test, waitForQuiet } from "./support";
+import { rounds } from "../tier";
 
 /// M2 · the table, the groups over it and the row being edited.
 ///
@@ -11,9 +13,26 @@ import * as twin from "./dataset";
 
 const api = (page: Page) => page.evaluate(() => window.__data_workbench.snapshot());
 
+/// The part of the example's handle that puts a shared page back.
+type Resettable = { reset(path?: string): Promise<void> };
+
+/// Brings the page to `path` as a first load of it would: a load of its own
+/// for a page of its own, and the example's reset for the shared one, which
+/// is already loaded and has its regions running.
+async function arrive(page: Page, path: string) {
+    if (isShared(page)) {
+        await page.evaluate(
+            (path) => (window.__data_workbench as unknown as Resettable).reset(path),
+            path
+        );
+    } else {
+        await page.goto(`.${path}`);
+    }
+}
+
 async function openTable(page: Page) {
     await page.setViewportSize({ width: 1440, height: 1200 });
-    await page.goto("./table");
+    await arrive(page, "/table");
     await expect(page.getByTestId("status")).toHaveAttribute("data-status", "ready", {
         timeout: 120_000,
     });
@@ -241,9 +260,11 @@ test.describe("M2 · a hundred thousand rows", () => {
         const strip = page.getByTestId("table-strip");
         await expect(strip).toHaveCount(1);
         const box = (await strip.boundingBox())!;
+        // Spread over the whole strip however many there are.
+        const clicks = rounds(20);
         let jumps = 0;
-        for (let click = 0; click < 20; click++) {
-            const across = (click + 0.5) / 20;
+        for (let click = 0; click < clicks; click++) {
+            const across = (click + 0.5) / clicks;
             await page.mouse.click(box.x + box.width * across, box.y + box.height / 2);
             jumps += 1;
             await expect.poll(async () => (await api(page)).table.jumps).toBe(jumps);
@@ -289,7 +310,11 @@ test.describe("M2 · a hundred thousand rows", () => {
         // the role attribute, because a spinbutton is a number input and says
         // so without an attribute. Thirty rounds, because a name that is right
         // once and wrong after a redraw is worse than one never right at all.
-        for (let round = 0; round < 30; round++) {
+        const total = rounds(30);
+        // Six redraws over the thirty, and one after every round of fewer:
+        // what is counted is the name surviving a redraw either way.
+        const redrawEvery = Math.max(1, Math.round(total / 6));
+        for (let round = 0; round < total; round++) {
             for (const entry of expected) {
                 const found = page.getByTestId(entry.testId);
                 await expect(found, `${entry.testId} round ${round}`).toHaveCount(1);
@@ -305,7 +330,7 @@ test.describe("M2 · a hundred thousand rows", () => {
             // Something that redraws the table between rounds, so what is being
             // counted is the name surviving rather than the same DOM standing
             // still.
-            if (round % 5 === 0) {
+            if (round % redrawEvery === 0) {
                 await gotoRow(page, 1 + round * 1_000);
             }
         }
@@ -376,7 +401,7 @@ test.describe("review · table identity and window", () => {
 
     test("resizing the scroller covers its enlarged viewport without scrolling", async ({ page }) => {
         await page.setViewportSize({ width: 1100, height: 600 });
-        await page.goto("./table");
+        await arrive(page, "/table");
         await expect(page.getByTestId("status")).toHaveAttribute("data-status", "ready");
         const count = await page.locator('[data-row-id]').count();
         await page.setViewportSize({ width: 1440, height: 1200 });
@@ -401,36 +426,42 @@ test.describe("review · table identity and window", () => {
     });
 });
 
-test("review · size observations stop on unmount and fatal", async ({ page }) => {
-    await page.addInitScript(() => {
-        const NativeObserver = window.ResizeObserver;
-        const tableObservers = new Set<ResizeObserver>();
-        Object.assign(window, { __tableObservers: tableObservers });
-        window.ResizeObserver = class extends NativeObserver {
-            observe(element: Element, options?: ResizeObserverOptions) {
-                if (element.getAttribute("data-testid") === "table-scroller") tableObservers.add(this);
-                super.observe(element, options);
-            }
-            disconnect() {
-                tableObservers.delete(this);
-                super.disconnect();
-            }
-        };
+test.describe(() => {
+    // A script that has to run before the page does, and an instance that is
+    // killed at the end: both need a page of their own.
+    test.use({ fresh: true });
+
+    test("review · size observations stop on unmount and fatal", async ({ page }) => {
+        await page.addInitScript(() => {
+            const NativeObserver = window.ResizeObserver;
+            const tableObservers = new Set<ResizeObserver>();
+            Object.assign(window, { __tableObservers: tableObservers });
+            window.ResizeObserver = class extends NativeObserver {
+                observe(element: Element, options?: ResizeObserverOptions) {
+                    if (element.getAttribute("data-testid") === "table-scroller") tableObservers.add(this);
+                    super.observe(element, options);
+                }
+                disconnect() {
+                    tableObservers.delete(this);
+                    super.disconnect();
+                }
+            };
+        });
+        await openTable(page);
+        const observations = () => page.evaluate(() => (window as unknown as { __tableObservers: Set<ResizeObserver> }).__tableObservers.size);
+        await expect.poll(observations).toBe(1);
+        await page.evaluate(() => window.__data_workbench.dispose());
+        await expect.poll(observations).toBe(0);
+        await page.evaluate(() => window.__data_workbench.mount());
+        await expect.poll(observations).toBe(1);
+        await page.evaluate(() => window.__data_workbench.hooks.runtime.enter_fatal(new Error("observer cleanup")));
+        await expect.poll(observations).toBe(0);
     });
-    await openTable(page);
-    const observations = () => page.evaluate(() => (window as unknown as { __tableObservers: Set<ResizeObserver> }).__tableObservers.size);
-    await expect.poll(observations).toBe(1);
-    await page.evaluate(() => window.__data_workbench.dispose());
-    await expect.poll(observations).toBe(0);
-    await page.evaluate(() => window.__data_workbench.mount());
-    await expect.poll(observations).toBe(1);
-    await page.evaluate(() => window.__data_workbench.hooks.runtime.enter_fatal(new Error("observer cleanup")));
-    await expect.poll(observations).toBe(0);
 });
 
 test("review · resizing at the end preserves the focused cell", async ({ page }) => {
     await page.setViewportSize({ width: 1100, height: 600 });
-    await page.goto("./table");
+    await arrive(page, "/table");
     await expect(page.getByTestId("status")).toHaveAttribute("data-status", "ready");
     await page.locator('[data-row-id="1"]').getByRole("gridcell").first().focus();
     await page.keyboard.press("ControlOrMeta+End");
@@ -442,4 +473,181 @@ test("review · resizing at the end preserves the focused cell", async ({ page }
     await page.setViewportSize({ width: 1100, height: 600 });
     await expect(last).toBeFocused();
     await expect(page.locator('[role="gridcell"][tabindex="0"]')).toBeFocused();
+});
+
+/// What a first load of the page fixes, read the same way after a load and
+/// after a reset: the application's own account of itself, the sample, the
+/// address, and what the document shows and holds.
+async function firstLoadState(page: Page) {
+    return page.evaluate(() => {
+        const api = window.__data_workbench;
+        const snapshot = api.snapshot() as unknown as Record<string, unknown>;
+        // How long making the sample took: a timing, which two first loads do
+        // not agree on either.
+        delete snapshot.generated_ms;
+        const scroller = document.querySelector('[data-testid="table-scroller"]');
+        return {
+            snapshot,
+            hash: api.dataset_hash(),
+            url: location.pathname + location.search + location.hash,
+            view: api.view(0, 30),
+            selected: api.selected(),
+            chosen: api.scene_chosen(),
+            regions: api.live_regions(),
+            errors: [...api.errors()],
+            focus: document.activeElement?.tagName ?? null,
+            scrolled: [window.scrollX, window.scrollY],
+            scroller: scroller && [scroller.scrollTop, scroller.scrollLeft, scroller.getAttribute("style")],
+            inputs: Array.from(
+                document.querySelectorAll<HTMLInputElement>("#workbench input[data-testid]"),
+                (input) => [input.dataset.testid, input.value]
+            ),
+            expanded: Array.from(
+                document.querySelectorAll('#workbench [aria-expanded="true"]'),
+                (node) => node.getAttribute("data-testid")
+            ),
+            sorted: Array.from(document.querySelectorAll("#workbench [aria-sort]"), (node) =>
+                node.getAttribute("aria-sort")
+            ),
+            rows: Array.from(
+                document.querySelectorAll('[data-testid="table"] [data-row-id]'),
+                (row) => row.getAttribute("data-row-id")
+            ).slice(0, 5),
+            open: document.querySelector(
+                '[data-testid="table-detail-row"], [data-testid="scene-detail-object"]'
+            )?.textContent,
+            listed: document.querySelectorAll('[data-testid="scene-selected"] li').length,
+            moves:
+                (document.querySelector('[data-testid="scene-gpu"]') as { moves?: number } | null)
+                    ?.moves ?? null,
+            scratch: document.getElementById("scratch")?.childElementCount,
+        };
+    });
+}
+
+test.describe(() => {
+    // What a reset is compared against is a first load, so this one loads.
+    test.use({ fresh: true });
+
+    test("a reset leaves the page as a first load of the same address does", async ({ page }) => {
+        // Two loads and three regions started, on a software rasteriser.
+        test.setTimeout(240_000);
+        const reset = (path?: string) =>
+            page.evaluate(
+                (path) => (window.__data_workbench as unknown as Resettable).reset(path),
+                path
+            );
+        const drawn = () =>
+            expect
+                .poll(async () => (await api(page)).scene.drawn, { timeout: 60_000 })
+                .toBeGreaterThan(0);
+        const jobDone = () =>
+            expect
+                .poll(async () => (await api(page)).table.job.running, { timeout: 30_000 })
+                .toBe(false);
+        const ready = async () => {
+            await expect(page.getByTestId("status")).toHaveAttribute("data-status", "ready", {
+                timeout: 120_000,
+            });
+            await waitForQuiet(page);
+        };
+        await page.setViewportSize({ width: 1440, height: 1200 });
+
+        // The two first loads: the scene's, and the root's, which is the
+        // table's and which the page then stays on.
+        await page.goto("./scene");
+        await ready();
+        await drawn();
+        await waitForQuiet(page);
+        const scene = await firstLoadState(page);
+        await page.goto("./");
+        await ready();
+        const root = await firstLoadState(page);
+        expect(root.url).toBe("/table");
+        expect(root.snapshot).toMatchObject({ rows: twin.ROWS, version: 0 });
+
+        /// Everything the table lets a person change, and a few things a check
+        /// leaves behind on the page, ending with a job still running.
+        const disturbTable = async () => {
+            await page.getByTestId("table-column-3").getByRole("button").click();
+            await jobDone();
+            await page.getByTestId("table-filter").fill("QQ");
+            await page.getByTestId("table-filter").press("Enter");
+            await jobDone();
+            await page.evaluate(() => window.__data_workbench.select_rows(0, 5));
+            await page.evaluate(() => window.__data_workbench.open_row(7));
+            await page.getByTestId("table-detail-2").fill("EDITED");
+            await page.getByTestId("table-detail-submit").click();
+            await expect.poll(async () => (await api(page)).table.saves).toBe(1);
+            await page.locator("[data-row-id]").first().getByRole("gridcell").first().focus();
+            await page.getByTestId("table-insert").click();
+            await page.getByTestId("table-delete").click();
+            await page.getByTestId("table-delete").click();
+            await page.getByTestId("table-tree-g0").focus();
+            await page.keyboard.press("ArrowLeft");
+            await page.getByTestId("table-goto").fill("500");
+            await page.getByTestId("table-goto").press("Enter");
+            await page.getByTestId("table-find").fill("NOT THERE");
+            await page.getByTestId("table-scroller").evaluate((element) => {
+                (element as HTMLElement).style.maxHeight = "240px";
+            });
+            await page.evaluate(() => {
+                window.__data_workbench.hooks.runtime.errors.push("left by a check");
+                document.getElementById("scratch")!.append(document.createElement("div"));
+                window.__data_workbench.sort(5, true);
+            });
+            const changed = await firstLoadState(page);
+            expect(changed.hash).not.toBe(root.hash);
+            expect(changed.snapshot).not.toEqual(root.snapshot);
+        };
+        const disturbScene = async () => {
+            await drawn();
+            await waitForQuiet(page);
+            await page.evaluate(() => window.__data_workbench.look_at(900, 700));
+            await expect.poll(async () => (await api(page)).scene.camera).toEqual([900, 700]);
+            // Found by name, which moves the camera onto it, and then pointed
+            // at, which chooses it.
+            const index = 5_000;
+            await page.getByTestId("scene-find").fill(twin.sceneLabel(index));
+            await page.getByTestId("scene-find").press("Enter");
+            await expect.poll(async () => (await api(page)).scene.editing).toBe(index);
+            const box = (await page.getByTestId("scene-gpu").boundingBox())!;
+            const camera = (await api(page)).scene.camera;
+            const rect = twin.sceneRect(index);
+            await page.mouse.click(box.x + rect.x + 10 - camera[0], box.y + rect.y + 10 - camera[1]);
+            await expect.poll(async () => (await api(page)).scene.picks).toBe(1);
+            expect(await page.evaluate(() => window.__data_workbench.scene_chosen())).toEqual([index]);
+            await page.getByTestId("scene-detail-label").fill("RENAMED");
+            await page.getByTestId("scene-detail-submit").click();
+            await expect.poll(async () => (await api(page)).scene.renames).toBe(1);
+            await page.getByTestId("scene-gpu").evaluate((canvas) => {
+                (canvas as HTMLCanvasElement & { moves?: number }).moves = 3;
+            });
+        };
+
+        // The table, then the scene, then the default reset: the root again.
+        await disturbTable();
+        await page.getByTestId("go-scene").click();
+        await disturbScene();
+        await reset();
+        await waitForQuiet(page);
+        expect(await firstLoadState(page)).toEqual(root);
+
+        // The table again, reset in place, where its region stays.
+        await disturbTable();
+        await reset("/table");
+        await waitForQuiet(page);
+        expect(await firstLoadState(page)).toEqual(root);
+
+        // From the table to the scene, which is how every scene check starts.
+        await reset("/scene");
+        await waitForQuiet(page);
+        expect(await firstLoadState(page)).toEqual(scene);
+
+        // And the scene in place, where its region stays.
+        await disturbScene();
+        await reset("/scene");
+        await waitForQuiet(page);
+        expect(await firstLoadState(page)).toEqual(scene);
+    });
 });

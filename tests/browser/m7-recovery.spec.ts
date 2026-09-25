@@ -1,12 +1,18 @@
-import { expect, Page, test } from "@playwright/test";
-import { capture, differingPixels, settle, waitForReady } from "./support";
+import { expect, Page } from "@playwright/test";
+import { rounds } from "../tier";
+import { capture, differingPixels, settle, test, waitForReady } from "./support";
 
 const snapshot = (page: Page) => page.evaluate(() => window.__property_workbench.snapshot());
 const diagnostics = (page: Page) => page.evaluate(() => window.__property_workbench.diagnostics());
 const state = (page: Page) =>
     page.evaluate(() => document.querySelector("[data-testid='workbench-gpu']") !== null);
 
+// Most of these count entries in the diagnostic record, which has no reset
+// and so is only the check's own on a page of its own.
+
 test.describe("M7 V8: a region whose context went away", () => {
+    test.use({ fresh: true });
+
     test("comes back with the state the application still holds", async ({ page }) => {
         const failures: string[] = [];
         page.on("pageerror", (error) => failures.push(String(error)));
@@ -72,7 +78,8 @@ test.describe("M7 V8: a region whose context went away", () => {
         await settle(region);
         const name = page.getByRole("textbox", { name: "name" });
 
-        for (let round = 0; round < 20; round++) {
+        const losses = rounds(20);
+        for (let round = 0; round < losses; round++) {
             // Ten fields edited across the rounds, so a loss always lands on
             // an application that has moved since the last one.
             await name.fill(`round ${round}`);
@@ -100,14 +107,19 @@ test.describe("M7 V8: a region whose context went away", () => {
         await expect.poll(async () => (await snapshot(page)).selected).not.toBe(1);
 
         const log = await diagnostics(page);
-        expect(log.entries.filter((entry) => entry.kind === "GpuContextLost").length).toBe(20);
-        // Twenty rebuilds and no runtime failure.
-        expect(await page.evaluate(() => window.__property_workbench.hooks.runtime.errors.length)).toBe(20);
+        expect(log.entries.filter((entry) => entry.kind === "GpuContextLost").length).toBe(losses);
+        // One rebuild per loss, and no runtime failure.
+        expect(await page.evaluate(() => window.__property_workbench.hooks.runtime.errors.length)).toBe(
+            losses
+        );
         expect(failures).toEqual([]);
     });
 });
 
 test.describe("M7 V8: a region that cannot start at all", () => {
+    // The denial is a stub on the canvas prototype that nothing takes back.
+    test.use({ fresh: true });
+
     test("says so within two seconds and leaves the DOM half working", async ({ page }) => {
         await waitForReady(page);
         await page.evaluate(() => window.__property_workbench.dispose());
@@ -171,6 +183,8 @@ test.describe("M7 V8: a region that cannot start at all", () => {
 });
 
 test.describe("M7 V9 / NFR-4: a capability a region does not get", () => {
+    test.use({ fresh: true });
+
     test("is refused, recorded once, and does not move the page", async ({ page }) => {
         await waitForReady(page);
         const url = page.url();
@@ -203,7 +217,7 @@ test.describe("M7 V9 / NFR-4: a capability a region does not get", () => {
 
         // Asked ten more times, it is still those two entries: a region in a
         // loop cannot fill the record with one mistake.
-        for (let round = 0; round < 10; round++) {
+        for (let round = 0; round < rounds(10); round++) {
             await page.getByRole("button", { name: "ask the region to open a link" }).click();
         }
         await page.waitForTimeout(500);
@@ -249,6 +263,8 @@ test.describe("M7 V9 / NFR-4: ordinary text that looks like code", () => {
 });
 
 test.describe("M7 V9: a bounded record that says when it is a tail", () => {
+    test.use({ fresh: true });
+
     test("the record names the runtime, the build, and what it dropped", async ({ page }) => {
         await waitForReady(page);
         const log = await diagnostics(page);

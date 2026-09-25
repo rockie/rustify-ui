@@ -65,9 +65,15 @@ window.__rustify_third_party = third_party;
 
 const container = "workbench";
 const status = document.getElementById("status");
+// Where the page was loaded, before the application moved the address to the
+// object it selected. A reset starts from here the way the load did.
+const first_address = location.pathname + location.search;
 // One WEBGL_lose_context per canvas, taken while the context still hands
-// extensions out.
+// extensions out, with the context it belongs to.
 const lose_context_handles = new Map();
+// The containers `mount_into` made, so a reset can take away what a check
+// added to the page.
+const added = new Set();
 const wasm_url = new URL("./property-workbench.wasm", import.meta.url);
 let handle = null;
 /// The loader handle of the instance that is running, so a failure notice can
@@ -118,6 +124,20 @@ async function relaunch(died) {
     }
 }
 
+const next_task = () => new Promise((resolve) => setTimeout(resolve, 0));
+
+/// Waits for `done()`, polling. The application's effects run as microtasks,
+/// so one task is enough for them; a region's start or rebuild is not.
+async function until(done, what, timeout_ms = 60_000) {
+    const deadline = performance.now() + timeout_ms;
+    while (!done()) {
+        if (performance.now() > deadline) {
+            throw new Error(`reset: ${what} did not happen within ${timeout_ms} ms`);
+        }
+        await new Promise((resolve) => setTimeout(resolve, 20));
+    }
+}
+
 /// Publishes the page's handle on one live instance and mounts it.
 function publish(started) {
     live = started;
@@ -147,6 +167,7 @@ function publish(started) {
             const host = document.createElement("div");
             host.id = container_id;
             document.querySelector("main").append(host);
+            added.add(host);
             return app.workbench_mount(container_id);
         },
         // Mounts over a container that is already taken, which is a
@@ -162,7 +183,9 @@ function publish(started) {
         },
         dispose_handle(id, container_id) {
             const spent = app.workbench_dispose(id);
-            document.getElementById(container_id)?.remove();
+            const host = document.getElementById(container_id);
+            added.delete(host);
+            host?.remove();
             return spent;
         },
         snapshot() {
@@ -243,19 +266,89 @@ function publish(started) {
             }
             // Kept: a lost context hands out no extensions, so the only
             // way to ask for the restore is an object taken beforehand.
-            lose_context_handles.set(test_id, ext);
+            lose_context_handles.set(test_id, { gl, ext });
             ext.loseContext();
             return true;
         },
         // A real loss is followed by the browser's own restore; the
         // extension makes that step explicit so a test can drive it.
         restore_context(test_id) {
-            const ext = lose_context_handles.get(test_id);
-            if (!ext) {
+            const lost = lose_context_handles.get(test_id);
+            if (!lost) {
                 return false;
             }
-            ext.restoreContext();
+            lost.ext.restoreContext();
             return true;
+        },
+        // Puts the page back the way it loaded, without loading it again.
+        //
+        // Loading is not what a check costs here; starting the region is:
+        // every new WebGL context has the software rasteriser compile its
+        // shaders, and mounting the scope again makes a new context. So the
+        // scope and its region stay, and the application gives its state the
+        // values it started with. Only a check that closed the scope pays for
+        // a start, because the scope has to be mounted again.
+        //
+        // What is not put back: the diagnostic record and the runtime's
+        // counters, which have no reset, the history entries a check pushed,
+        // which cannot be removed, and what the region keeps to itself, such
+        // as how far its group list is scrolled.
+        async reset() {
+            // Left focused, a text control commits when it loses focus. That
+            // has to land in the state being thrown away, not the one put back.
+            document.activeElement?.blur?.();
+            getSelection()?.removeAllRanges();
+            for (const { gl, ext } of lose_context_handles.values()) {
+                if (gl.isContextLost()) {
+                    ext.restoreContext();
+                }
+            }
+            lose_context_handles.clear();
+
+            // Handles start at one, so a page whose scope was disposed asks
+            // for none of them to be kept.
+            const mounted = app.workbench_reset_page(handle ?? 0);
+            for (const host of added) {
+                host.remove();
+            }
+            added.clear();
+            if (mounted) {
+                // The third-party component went out in the first half; it
+                // comes back in the second, once its teardown has run.
+                await next_task();
+                app.workbench_reset_scope(first_address);
+            } else {
+                // Closed by the check, or by an action it armed: mounted
+                // again at the address the page loaded at, which is what the
+                // scope reads its selection from.
+                history.replaceState(history.state, "", first_address);
+                handle = app.workbench_mount(container);
+            }
+            // The scope's effects - the address following the selection, the
+            // snapshot - run as microtasks after the calls above.
+            await next_task();
+            await until(() => third_party.live.size === 1, "the third-party component");
+            await until(
+                () => JSON.parse(app.workbench_snapshot()).region === "ready",
+                "a ready region"
+            );
+            // Counted from the load, when the one component there is had just
+            // been made.
+            third_party.created = third_party.live.size;
+            third_party.destroyed = 0;
+            hooks.runtime.errors.length = 0;
+            // Again: a layer that closed above hands the keyboard back to
+            // whatever opened it when nothing else has it.
+            document.activeElement?.blur?.();
+            // A check that zoomed the page set the root font size.
+            document.documentElement.removeAttribute("style");
+            window.scrollTo(0, 0);
+            for (const element of document.querySelectorAll("main *")) {
+                if (element.scrollTop !== 0 || element.scrollLeft !== 0) {
+                    element.scrollTop = 0;
+                    element.scrollLeft = 0;
+                }
+            }
         },
     };
     window.__property_workbench.mount();

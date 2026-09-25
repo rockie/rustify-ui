@@ -120,6 +120,13 @@ pub fn DataTable(
         }
     });
 
+    // A smaller viewport is not the reader moving away. If it leaves the cell
+    // that has the keyboard outside the window, that cell is brought back into
+    // view and given the keyboard again, where otherwise the window would move
+    // the keyboard to whatever is still inside it. It has to be given back
+    // rather than kept: the smaller pool can take the cell's element away,
+    // and the browser's focus with it.
+    let return_keyboard = StoredValue::new(false);
     // Through `Element`, read with `into` and written with `scroll_to`: the
     // scroll accessors exist on more than one type in the deref chain, and
     // web-sys gives `scrollTop` an `i32` normally and an `f64` under
@@ -135,8 +142,26 @@ pub fn DataTable(
             element.client_width() as f64,
             element.client_height() as f64,
         );
-        if viewport.get_untracked() != size {
-            viewport.set(size);
+        if viewport.get_untracked() == size {
+            return;
+        }
+        let held = grid
+            .get_untracked()
+            .is_some_and(|grid| holds_keyboard(grid.as_ref()));
+        viewport.set(size);
+        if held {
+            let at = focus.get_untracked();
+            let away_down = !visible_rows.get_untracked().contains(at.row);
+            let away_across = !visible_columns.get_untracked().contains(at.column);
+            if away_down {
+                goto.set(Some(at.row));
+            }
+            if away_across {
+                goto_column.set(Some(at.column));
+            }
+            if away_down || away_across {
+                return_keyboard.set_value(true);
+            }
         }
     };
     Effect::new(move || {
@@ -218,11 +243,8 @@ pub fn DataTable(
             return;
         };
         let element: &Element = element.as_ref();
-        let holds_focus = document().active_element().is_some_and(|active| {
-            active.get_attribute("role").as_deref() == Some("gridcell")
-                && element.contains(Some(active.as_ref()))
-        });
-        if holds_focus {
+        if holds_keyboard(element) || return_keyboard.get_value() {
+            return_keyboard.set_value(false);
             placing.set_value(true);
             focus_cell(
                 element,
@@ -525,6 +547,14 @@ pub fn DataTable(
             </div>
         </div>
     }
+}
+
+/// Whether a cell of this grid has the keyboard.
+fn holds_keyboard(grid: &Element) -> bool {
+    document().active_element().is_some_and(|active| {
+        active.get_attribute("role").as_deref() == Some("gridcell")
+            && grid.contains(Some(active.as_ref()))
+    })
 }
 
 /// Puts the keyboard on one cell of the grid, found by its place in the pool

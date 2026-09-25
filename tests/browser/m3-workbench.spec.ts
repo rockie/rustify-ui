@@ -1,7 +1,8 @@
-import { expect, test } from "@playwright/test";
-import { capture, differingPixels, litPixels, settle, waitForReady } from "./support";
+import { expect, Page } from "@playwright/test";
+import { rounds } from "../tier";
+import { capture, differingPixels, litPixels, settle, test, waitForReady } from "./support";
 
-const snapshot = (page: import("@playwright/test").Page) =>
+const snapshot = (page: Page) =>
     page.evaluate(() => window.__property_workbench.snapshot());
 
 // The region's own header row puts its buttons first, so their place depends on
@@ -83,18 +84,20 @@ test.describe("M3 V2: one authoritative state behind a DOM panel and a GPU view"
     test("a run of selection steps from both sides lands on one expected object", async ({ page }) => {
         test.setTimeout(300_000);
         await waitForReady(page);
-        const rounds = 25;
-        for (let round = 0; round < rounds; round++) {
+        const forward = rounds(25);
+        // Fewer back than forward, so the run cannot land where it started.
+        const back = Math.min(5, forward - 1);
+        for (let round = 0; round < forward; round++) {
             await page.getByTestId("select-next").click();
         }
-        await expect(page.getByTestId("selected-id")).toHaveText(String(1 + rounds));
-        for (let round = 0; round < 5; round++) {
+        await expect(page.getByTestId("selected-id")).toHaveText(String(1 + forward));
+        for (let round = 0; round < back; round++) {
             await page.getByTestId("select-previous").click();
         }
         expect(await snapshot(page)).toMatchObject({
-            selected: 1 + rounds - 5,
-            position: 1 + rounds - 5,
-            name: `object-${String(1 + rounds - 5).padStart(4, "0")}`,
+            selected: 1 + forward - back,
+            position: 1 + forward - back,
+            name: `object-${String(1 + forward - back).padStart(4, "0")}`,
         });
     });
 
@@ -186,7 +189,7 @@ test.describe("M3 V2: one authoritative state behind a DOM panel and a GPU view"
         const region = page.getByTestId("workbench-gpu");
         await settle(region);
         const box = (await region.boundingBox())!;
-        const rounds = 10_000;
+        const actions = rounds(10_000);
         // Driven inside the page: ten thousand round trips through the test
         // harness would measure the harness, not the runtime. The events are
         // the ones the region's own listeners receive.
@@ -218,15 +221,15 @@ test.describe("M3 V2: one authoritative state behind a DOM panel and a GPU view"
                 await new Promise((r) => setTimeout(r, 3_000));
                 return api.snapshot();
             },
-            { ...at(box, NEXT_BUTTON), rounds }
+            { ...at(box, NEXT_BUTTON), rounds: actions }
         );
         // Not one lost, not one delivered twice, and not one refused: this is
         // the load the queue depth was chosen for.
-        expect(result.accepted).toBe(rounds);
+        expect(result.accepted).toBe(actions);
         expect(result.refused).toBe(0);
         // And they were applied in order: each one advanced the selection by
         // one object, so the ring of a thousand lands back where it started.
-        expect(result.position).toBe((rounds % 1000) + 1);
+        expect(result.position).toBe((actions % 1000) + 1);
         expect(result.count).toBe(1000);
     });
 
@@ -253,7 +256,7 @@ test.describe("M3 V2: one authoritative state behind a DOM panel and a GPU view"
         const region = page.getByTestId("workbench-gpu");
         const before = await settle(region);
         const box = (await region.boundingBox())!;
-        const clicks = 20;
+        const clicks = rounds(20);
         const moves_per_click = 12;
         // Driven inside the page and paced by a real timer: the stream has to
         // be a stream, and a round trip through the harness per move would set
@@ -456,37 +459,245 @@ test.describe("M3: a scope that closes while its region is running", () => {
         expect(failures).toEqual([]);
     });
 
-    test("a fatal drops the work the runtime had already scheduled", async ({ page }) => {
-        await waitForReady(page);
-        const outcome = await page.evaluate(async () => {
-            const api = window.__property_workbench;
-            let ran = false;
-            // The SDK gives the browser its turn between action batches through
-            // this same entry, so what is cancelled here is a queued action on
-            // its way back into a module that has trapped.
-            api.hooks.defer(() => {
-                ran = true;
-            });
-            const scheduled = api.stats().tasks;
-            api.hooks.runtime.enter_fatal(new Error("injected trap"));
-            await new Promise((r) => setTimeout(r, 200));
-            return { scheduled, ran, tasks: api.stats().tasks };
-        });
-        expect(outcome).toEqual({ scheduled: 1, ran: false, tasks: 0 });
-        await expect(page.getByTestId("status")).toHaveAttribute("data-status", "fatal");
-    });
+    // A trap ends the instance, so each of these loads a page of its own.
+    test.describe(() => {
+        test.use({ fresh: true });
 
-    test("a trapped runtime takes its controls off the page", async ({ page }) => {
-        await waitForReady(page);
-        await expect(page.getByTestId("name-input")).toHaveCount(1);
-        await page.evaluate(() =>
-            window.__property_workbench.hooks.runtime.enter_fatal(new Error("injected trap"))
-        );
-        await expect(page.getByTestId("status")).toHaveAttribute("data-status", "fatal");
-        // Nothing the user can still press reaches the module that trapped.
-        await expect(page.getByTestId("name-input")).toHaveCount(0);
-        await expect(page.getByTestId("select-next")).toHaveCount(0);
-        await expect(page.getByTestId("workbench-gpu")).toHaveCount(0);
+        test("a fatal drops the work the runtime had already scheduled", async ({ page }) => {
+            await waitForReady(page);
+            const outcome = await page.evaluate(async () => {
+                const api = window.__property_workbench;
+                let ran = false;
+                // The SDK gives the browser its turn between action batches through
+                // this same entry, so what is cancelled here is a queued action on
+                // its way back into a module that has trapped.
+                api.hooks.defer(() => {
+                    ran = true;
+                });
+                const scheduled = api.stats().tasks;
+                api.hooks.runtime.enter_fatal(new Error("injected trap"));
+                await new Promise((r) => setTimeout(r, 200));
+                return { scheduled, ran, tasks: api.stats().tasks };
+            });
+            expect(outcome).toEqual({ scheduled: 1, ran: false, tasks: 0 });
+            await expect(page.getByTestId("status")).toHaveAttribute("data-status", "fatal");
+        });
+
+        test("a trapped runtime takes its controls off the page", async ({ page }) => {
+            await waitForReady(page);
+            await expect(page.getByTestId("name-input")).toHaveCount(1);
+            await page.evaluate(() =>
+                window.__property_workbench.hooks.runtime.enter_fatal(new Error("injected trap"))
+            );
+            await expect(page.getByTestId("status")).toHaveAttribute("data-status", "fatal");
+            // Nothing the user can still press reaches the module that trapped.
+            await expect(page.getByTestId("name-input")).toHaveCount(0);
+            await expect(page.getByTestId("select-next")).toHaveCount(0);
+            await expect(page.getByTestId("workbench-gpu")).toHaveCount(0);
+        });
     });
 });
 
+
+test.describe("a reset puts the page back the way it loaded", () => {
+    // The first load is what it is compared with, so it makes one.
+    test.use({ fresh: true });
+
+    /// Everything a check can leave behind that the next one could see.
+    const state = (page: Page) =>
+        page.evaluate(() => {
+            const api = window.__property_workbench;
+            return {
+                url: location.href,
+                snapshot: api.snapshot(),
+                regions: api.live_regions(),
+                scopes: document.querySelectorAll("[data-rustify-scope]").length,
+                third_party: api.third_party(),
+                recording: api.diagnostics().recording,
+                // Deleted below; a reset forgets that it ever was.
+                deleted: api.lookup_object(43),
+                errors: api.hooks.runtime.errors.length,
+                expanded: document.querySelectorAll('[aria-expanded="true"]').length,
+                focused: (document.activeElement as HTMLElement | null)?.dataset.testid ?? document.activeElement?.tagName,
+                root_style: document.documentElement.style.cssText,
+                scrolled: window.scrollY,
+            };
+        });
+
+    /// One drag of an object's row onto the bin, dispatched in the page, or
+    /// abandoned with Escape once it is over it.
+    const carry = (page: Page, object: number, escape: boolean) =>
+        page.evaluate(
+            ({ object, escape }) => {
+                const row = document.querySelector(`[data-testid="object-${object}"]`) as HTMLElement;
+                const from = row.getBoundingClientRect();
+                const bin = document.querySelector('[data-testid="ungrouped-bin"]')!.getBoundingClientRect();
+                const to = { x: bin.left + bin.width / 2, y: bin.top + bin.height / 2 };
+                const send = (type: string, x: number, y: number) =>
+                    row.dispatchEvent(
+                        new PointerEvent(type, {
+                            bubbles: true,
+                            clientX: x,
+                            clientY: y,
+                            pointerId: 1,
+                            isPrimary: true,
+                            button: 0,
+                            buttons: type === "pointerup" ? 0 : 1,
+                        })
+                    );
+                send("pointerdown", from.left + from.width / 2, from.top + from.height / 2);
+                send("pointermove", to.x, to.y);
+                if (escape) {
+                    window.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape", bubbles: true }));
+                } else {
+                    send("pointerup", to.x, to.y);
+                }
+            },
+            { object, escape }
+        );
+
+    test("the application, the address and the page read as they did on the first load", async ({
+        page,
+    }) => {
+        test.setTimeout(240_000);
+        await waitForReady(page);
+        await expect.poll(async () => (await snapshot(page)).controls).not.toBeNull();
+        const first = await state(page);
+        // Loaded at the root; the application put the first object's address
+        // in its place.
+        expect(new URL(first.url).pathname).toBe("/objects/1");
+        expect(first.snapshot).toMatchObject({ selected: 1, path: "/objects/1", region: "ready" });
+
+        const region = page.getByTestId("workbench-gpu");
+        const box = (await region.boundingBox())!;
+        // The pointer over the grid, and a selection made on the region.
+        await page.mouse.move(box.x + box.width * 0.4, box.y + box.height * 0.6);
+        await expect.poll(async () => (await snapshot(page)).hovered).not.toBeNull();
+        const next = at(box, NEXT_BUTTON);
+        await page.mouse.click(next.x, next.y);
+        await expect.poll(async () => (await snapshot(page)).selected).toBe(2);
+
+        // Carried to the bin once, and abandoned over it once.
+        await page.evaluate(() => window.scrollTo(0, 0));
+        await carry(page, 2, false);
+        await carry(page, 2, true);
+        await expect
+            .poll(async () => {
+                const { drops, cancels } = (await snapshot(page)).drag;
+                return { drops, cancels };
+            })
+            .toEqual({ drops: 1, cancels: 1 });
+
+        // One object deleted, another renamed, recoloured, locked and resized,
+        // and the list itself reordered and grown.
+        const find = async (id: number) => {
+            await page.getByTestId("find-object-id").fill(String(id));
+            await page.getByTestId("find-object").click();
+        };
+        await find(43);
+        await page.getByTestId("delete-selected").click();
+        await find(42);
+        await page.getByTestId("name-input").fill("renamed before a reset");
+        await page.getByTestId("swatch-f04438").click();
+        await page.getByRole("slider", { name: "size" }).focus();
+        await page.keyboard.press("ArrowRight");
+        await page.getByTestId("locked-input").check();
+        await page.getByTestId("recolour-batch").click();
+        await page.getByTestId("reverse-batch").click();
+        await page.getByTestId("add-objects").click();
+        await page.getByTestId("import-file").setInputFiles({
+            name: "objects.txt",
+            mimeType: "text/plain",
+            buffer: Buffer.from("3\tfrom a file\t2\t0\t35\n", "utf8"),
+        });
+        const downloaded = page.waitForEvent("download");
+        await page.getByTestId("export-text").click();
+        await downloaded;
+        await page.getByTestId("copy-notes").click();
+        await expect
+            .poll(async () => {
+                const { imports, exports, clipboard } = (await snapshot(page)).transfer;
+                return { imports, exports, answered: clipboard !== "" };
+            })
+            .toEqual({ imports: 1, exports: 1, answered: true });
+
+        // The theme, an override, the third-party component and the workspace.
+        await page.getByTestId("toggle-theme").click();
+        await page.getByTestId("toggle-emphasis").click();
+        await page.getByTestId("toggle-third-party").click();
+        await page.getByTestId("wheel-propagates").click();
+        await page.getByTestId("divider-0").focus();
+        await page.keyboard.press("ArrowRight");
+        const views = page.getByTestId("object-views");
+        await views.getByRole("tab", { name: "blue" }).click();
+        await page.getByTestId("close-blue").click();
+        await views.getByRole("tab", { name: "locked" }).click();
+        await page.evaluate(() => window.__property_workbench.start_load(40, "loaded before a reset"));
+        await expect(page.getByTestId("details")).toHaveAttribute("data-state", "ready");
+
+        // Unsaved details with a check still running and a submit waiting on
+        // it, which is also a guard on leaving.
+        await page.getByTestId("location").fill("shelf 99");
+        await page.getByTestId("reference").fill("REF-9999");
+        await page.getByTestId("save-details").click({ force: true });
+
+        // An edit session on the region, committed by the palette taking the
+        // keyboard, and the palette left open.
+        const controls = (await snapshot(page)).controls!;
+        const name = {
+            x: box.x + controls.name.x + controls.name.width / 2,
+            y: box.y + controls.name.y + controls.name.height / 2,
+        };
+        await page.evaluate(() => window.scrollTo(0, 0));
+        await page.mouse.click(name.x, name.y);
+        await expect.poll(async () => (await snapshot(page)).editing).toBe(true);
+        await page.getByTestId("gpu-name-edit").fill("typed on the region");
+        await page.getByTestId("open-commands").click();
+        await expect(page.getByTestId("command-palette")).toBeVisible();
+        await page.getByTestId("command-search").fill("theme");
+        await page.mouse.move(0, 0);
+
+        const changed = await state(page);
+        expect(changed.snapshot).toMatchObject({
+            count: 1009,
+            theme: "dark",
+            emphasis: true,
+            third_party: false,
+            guarded: true,
+            workspace: { tabs: 9, tab: "locked", palette: true },
+            drag: { propagates: false, grouped: 1 },
+            form: { checks: 1, asked: "waiting" },
+        });
+        expect(changed.snapshot.objects).not.toBe(first.snapshot.objects);
+        expect(changed.deleted).toBe("disposed");
+
+        // Then what only the page's handle reaches, all at once so that no
+        // region action can land between the last of them and the reset: a
+        // second scope, an armed close, a record switched off, an error, a
+        // zoomed root, a scrolled page, and an answer still on its way.
+        const second = await page.evaluate(async () => {
+            const api = window.__property_workbench;
+            const second = api.mount_into("second-workbench");
+            api.set_diagnostics(false);
+            api.hooks.runtime.errors.push("left by a check");
+            document.documentElement.style.fontSize = "200%";
+            window.scrollTo(0, 400);
+            api.start_load(1_000, "asked for before the reset");
+            api.close_on_next_action();
+            await (api as unknown as { reset(): Promise<void> }).reset();
+            return second;
+        });
+        expect(second).toBeGreaterThan(0);
+
+        await expect.poll(() => state(page), { timeout: 30_000 }).toEqual(first);
+        // The answer asked for before the reset has had its time, and did not
+        // land in the state put back.
+        await page.waitForTimeout(1_200);
+        expect(await state(page)).toEqual(first);
+        // And the close the check armed went with it: the region's next
+        // action selects, and the scope stays.
+        await page.mouse.click(next.x, next.y);
+        await expect.poll(async () => (await snapshot(page)).selected).toBe(2);
+        expect(await page.evaluate(() => window.__property_workbench.live_regions())).toBe(1);
+    });
+});

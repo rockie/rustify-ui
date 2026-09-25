@@ -1,5 +1,5 @@
-import { expect, test } from "@playwright/test";
-import { capture, differingPixels, settle, waitForReady } from "./support";
+import { expect } from "@playwright/test";
+import { capture, differingPixels, settle, test, waitForReady } from "./support";
 import { EVIDENCE } from "../tier";
 
 // Every region count here is five at rest and three with one counter scope
@@ -266,6 +266,10 @@ test.describe("M2 V3: teardown and host coexistence", () => {
 });
 
 test.describe("M7 V8: what a trap in the shared module reaches", () => {
+    // Its own page: a trap kills the instance, and a shared page's instance
+    // is the next check's.
+    test.use({ fresh: true });
+
     test("every mount in the runtime is dead, and the page says which", async ({ page }) => {
         await waitForReady(page);
         // Two scopes, two regions each: the blast radius claim is about all of

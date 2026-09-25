@@ -4,6 +4,11 @@ use rustify_ui::RegionApp;
 #[derive(Clone, Debug, PartialEq)]
 pub struct CounterProps {
     pub count: i64,
+    /// How many times the application has been put back to its first state.
+    /// A new value is the region's cue to let go of the key focus its button
+    /// took when it was pressed: the one part of how it looks that the count
+    /// does not say, and that nothing outside the region can take back.
+    pub resets: u32,
 }
 
 #[derive(Debug)]
@@ -44,6 +49,9 @@ script_mod! {
 pub struct CounterRegion {
     #[live]
     ui: WidgetRef,
+    /// The last reset count this region was given.
+    #[rust]
+    resets: u32,
 }
 
 impl RegionApp for CounterRegion {
@@ -56,6 +64,10 @@ impl RegionApp for CounterRegion {
     }
 
     fn apply_props(&mut self, cx: &mut Cx, props: &CounterProps) {
+        if props.resets != self.resets {
+            self.resets = props.resets;
+            cx.set_key_focus(Area::Empty);
+        }
         self.ui
             .label(cx, ids!(counter_label))
             .set_text(cx, &format!("Count: {}", props.count));

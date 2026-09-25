@@ -5,6 +5,9 @@ import { tierFilter } from "../tier";
 
 const root = path.resolve(__dirname, "../..");
 const reference = path.join(root, "ref/Vellum-main");
+// The twin on port 4180 (see twin.ts): the original from `ref/`, or with
+// VELLUM_TWIN=baseline a release build of this example in another worktree.
+const baseline = process.env.VELLUM_TWIN === "baseline" ? process.env.VELLUM_BASELINE_DIR : undefined;
 const artifactScope = process.env.VELLUM_ARTIFACT_SCOPE ?? "suite";
 
 export default defineConfig({
@@ -33,7 +36,13 @@ export default defineConfig({
             reuseExistingServer: false,
             timeout: 120_000,
         },
-        ...(existsSync(reference) ? [{
+        ...(baseline ? [{
+            command: "mbx xtask serve --example vellum --release --port 4180",
+            cwd: baseline,
+            url: "http://127.0.0.1:4180/",
+            reuseExistingServer: false,
+            timeout: 120_000,
+        }] : existsSync(reference) && process.env.VELLUM_TWIN !== "baseline" ? [{
             command: "python3 -m http.server 4180 --directory ref/Vellum-main --bind 127.0.0.1",
             cwd: root,
             url: "http://127.0.0.1:4180/",

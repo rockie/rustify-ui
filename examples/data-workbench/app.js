@@ -52,6 +52,29 @@ async function relaunch(died) {
     }
 }
 
+const frame = () => new Promise((resolve) => requestAnimationFrame(resolve));
+
+/// Waits until the view `path` shows is in the document and, for the scene,
+/// until its region has drawn: before that its pane is nothing, and a camera
+/// clamped against nothing is clamped to zero. Gives up after a minute, so a
+/// region that never draws fails whatever was going to use it rather than
+/// this.
+async function settled(app, path) {
+    const view = path.split(/[?#]/)[0] === "/scene" ? "scene" : "table";
+    const deadline = performance.now() + 60_000;
+    const there = () => {
+        if (document.querySelector(`[data-testid="${view}-view"]`) === null) {
+            return false;
+        }
+        return view !== "scene" || JSON.parse(app.data_workbench_snapshot()).scene.drawn > 0;
+    };
+    while (!there() && performance.now() < deadline) {
+        await frame();
+    }
+    // One more, so what the reset changed has been drawn as well as decided.
+    await frame();
+}
+
 /// Publishes the page's handle on one live instance and mounts it.
 function publish(started) {
     live = started;
@@ -71,6 +94,32 @@ function publish(started) {
             const spent = app.data_workbench_dispose(handle);
             handle = null;
             return spent;
+        },
+        /// Puts the page back where a fresh load of `path` would leave it,
+        /// and resolves once it is there. Nothing is loaded, and a region the
+        /// page already shows for `path` is kept rather than started again:
+        /// on a software rasteriser starting one is seconds of shader
+        /// compilation, which is most of what a load costs. The application
+        /// puts its own state back through its export; this clears what a
+        /// caller may have left on the page.
+        async reset(path = "/") {
+            hooks.runtime.errors.length = 0;
+            // A fresh load has nothing focused and nothing scrolled.
+            if (document.activeElement instanceof HTMLElement) {
+                document.activeElement.blur();
+            }
+            window.scrollTo(0, 0);
+            for (const canvas of document.querySelectorAll('[data-testid="scene-gpu"]')) {
+                delete canvas.moves;
+            }
+            document.getElementById("scratch").replaceChildren();
+            if (!app.data_workbench_reset(path)) {
+                // Nothing mounted to put back, so mount: a mount reads its
+                // route from the address, and starts from the rest.
+                history.replaceState(null, "", path);
+                this.mount();
+            }
+            await settled(app, path);
         },
         snapshot() {
             return JSON.parse(app.data_workbench_snapshot());

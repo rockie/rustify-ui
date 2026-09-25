@@ -1,5 +1,6 @@
-import { expect, Page, test } from "@playwright/test";
-import { anchorRect, geometry, mountGeometry } from "./support";
+import { expect, Page } from "@playwright/test";
+import { anchorRect, geometry, mountGeometry, test } from "./support";
+import { rounds } from "../tier";
 
 const box = (page: Page, testId: string) =>
     page.evaluate((testId) => {
@@ -85,7 +86,7 @@ test.describe("M4 V4 / R10: layers of one scope", () => {
         const anchor = (await geometry(page)).anchors[7];
         const rect = await anchorRect(page, anchor);
         const dialog = (await box(page, "geometry-dialog"))!;
-        for (let click = 0; click < 100; click++) {
+        for (let click = 0; click < rounds(100); click++) {
             // Half on the dialog itself, half on the control it covers.
             if (click % 2 === 0) {
                 await page.mouse.click(dialog.x + dialog.width / 2, dialog.y + 4);

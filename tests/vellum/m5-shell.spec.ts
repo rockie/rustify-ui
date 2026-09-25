@@ -1,4 +1,9 @@
-import { expect, present, test, waitForReady } from "./support";
+import { readFileSync } from "node:fs";
+import path from "node:path";
+import type { Page } from "@playwright/test";
+import { expect, present, test, waitForQuiet, waitForReady } from "./support";
+
+const font = readFileSync(path.resolve(__dirname, "../../makepad/widgets/resources/LiberationMono-Regular.ttf")).toString("base64");
 
 test("page switching and the width inspector preserve the original smoke behavior", async ({ page }) => {
     await waitForReady(page);
@@ -283,4 +288,96 @@ test("tokens, CSS, settings and export dialogs expose their original controls", 
     await expect(page.getByRole("button", { name: "SVG vector" })).toBeVisible();
     await page.keyboard.press("Escape");
     await expect(page.locator("#share")).toBeFocused();
+});
+
+/// What a first load decides and a later test could observe: the editor's own
+/// state, the address, what is in storage, and what is on the page around the
+/// editor.
+async function firstLoadState(page: Page) {
+    await present(page);
+    await waitForQuiet(page);
+    // A load autosaves the starter half a second in; compare once that is done.
+    await expect.poll(() => page.evaluate(() => (window.__vellum as any).snapshot().storage)).toMatchObject({ dirty: false, writing: false, status: "Saved locally" });
+    return page.evaluate(async () => {
+        const snapshot = (window.__vellum as any).snapshot();
+        // A timing, not state.
+        delete snapshot.renderer.cpuMs;
+        const stored = await new Promise<unknown>((resolve, reject) => {
+            const request = indexedDB.open("vellum-editor", 1);
+            request.onerror = () => reject(request.error);
+            request.onsuccess = () => {
+                const db = request.result;
+                const read = db.transaction("documents").objectStore("documents").get("current");
+                read.onsuccess = () => { db.close(); resolve(read.result ? JSON.parse(read.result) : null); };
+                read.onerror = () => { db.close(); reject(read.error); };
+            };
+        });
+        // In name order: the order they were set in differs between a load and a remount.
+        const attributes = (element: Element | null) => element ? [...element.attributes].map(({ name, value }) => [name, value]).sort() : null;
+        return {
+            snapshot,
+            url: location.href,
+            localStorage: Object.entries(localStorage).sort(),
+            sessionStorage: Object.entries(sessionStorage).sort(),
+            databases: (await indexedDB.databases()).map(database => database.name).sort(),
+            stored,
+            fonts: [...document.fonts].map(face => `${face.family} ${face.status}`).sort(),
+            globals: Object.keys(window).sort(),
+            navigator: Reflect.ownKeys(navigator).map(String),
+            errors: window.__vellum.errors(),
+            regions: window.__vellum.live_regions(),
+            status: document.getElementById("status")?.dataset.status,
+            body: [...document.body.children].map(element => element.id || element.tagName),
+            attributes: [document.documentElement, document.body, document.getElementById("vellum")].map(attributes),
+            focus: document.activeElement?.id || document.activeElement?.tagName,
+            welcome: document.querySelectorAll("#welcome-tip").length,
+            theme: document.querySelector(".vellum")?.getAttribute("data-theme"),
+        };
+    });
+}
+
+// A real first load is what `reset()` is measured against.
+test.describe(() => {
+    test.use({ fresh: true });
+
+    test("reset returns the editor, its storage, the address and the page to their first-load state", async ({ page }) => {
+        await waitForReady(page);
+        const first = await firstLoadState(page);
+        expect(first.databases).toEqual(["vellum-editor"]);
+        expect(first.stored).not.toBeNull();
+
+        // What a remount would read back: a saved document, options and the welcome flag.
+        await page.locator("[data-page]").nth(2).click();
+        await page.evaluate(async font => {
+            const api = window.vellum as any;
+            const node = api.createAtCenter("rect", { name: "Left behind", w: 120, h: 80 });
+            api.select([node.id]);
+            api.setProperty("w", 160);
+            await api.importFont({ name: "Saved Font.ttf", dataUrl: `data:font/ttf;base64,${font}` });
+            api.zoomAt(1.5, 200, 150);
+            api.actions.theme();
+            api.actions.grid();
+            api.actions.rulers();
+            await api.save();
+        }, font);
+        await page.locator("#dismiss-tip").click();
+        await page.locator("[data-page]").nth(1).click();
+        // What a test leaves on the page around the editor.
+        await page.evaluate(async font => {
+            (window as any).leftBehind = true;
+            Object.defineProperty(navigator, "clipboard", { configurable: true, value: {} });
+            const face = new FontFace("Left Behind", Uint8Array.from(atob(font), character => character.charCodeAt(0)));
+            document.fonts.add(await face.load());
+            window.__vellum.errors().push("left behind");
+            history.pushState(null, "", "./elsewhere?page=2#left");
+        }, font);
+        const changed = await firstLoadState(page);
+        // Every part of the comparison starts out different, so none of it passes by default.
+        for (const key of ["snapshot", "url", "localStorage", "stored", "fonts", "globals", "navigator", "errors", "welcome", "theme"] as const) {
+            expect(changed[key], key).not.toEqual(first[key]);
+        }
+
+        await page.evaluate(() => window.__vellum.reset());
+        expect(await firstLoadState(page)).toEqual(first);
+    });
 });

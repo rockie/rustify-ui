@@ -37,20 +37,31 @@ For the [Vellum design editor](../examples/vellum/), use `mbx xtask build-web --
 ## Verification commands
 
 ```sh
-mbx test --workspace --lib
+mbx test --workspace --lib --bins    # --bins: xtask and the examples are binaries
 mbx xtask css --check                # the component stylesheet is in step with the classes
 mbx clippy --workspace --all-targets -- -D warnings
 cargo fmt --all -- --check           # the fork under makepad/ is excluded by its rustfmt.toml
 mbx xtask sources verify             # drift of makepad/ against the import record
-npm run test:browser                 # Playwright probes against a release build
+npx playwright test --project=component-catalog              # one example's regression checks
+RUSTIFY_TIER=evidence npx playwright test --project=budget   # the measurements, on request
 cd makepad && mbx test -p cargo-makepad
-mbx xtask verify --suite p2          # all of the above, css --check and catalog --check included, plus what needs a person
+mbx xtask verify --suite p3          # all of the above, css --check and catalog --check included, plus what needs a person
 ```
 
+The browser checks come in two tiers (`tests/tier.ts`). The regression tier,
+the default, asks whether behaviour is still right: each example's project
+shares one page per worker, puts it back between tests with the example's
+`reset()`, and runs repeated behaviours a few rounds. It is what a pull request
+runs, one job per example. The evidence tier (`RUSTIFY_TIER=evidence`) asks
+whether the numbers still hold - budgets, long runs, memory, idle cost - at
+their full round counts; `.github/workflows/evidence.yml` runs it on request
+and weekly. Always name a project: the whole suite at once runs out of memory.
+
 `verify` runs the checks, double-builds each example, runs every browser
-project, and then lists the records only a person can write - the VoiceOver
-pass, real pinyin input, the sample comparison, the zoom walkthrough. It reports
-those as *missing*, never as passed, which is the whole reason it exists.
+project at full strength (`RUSTIFY_TIER=all`), and then lists the records only
+a person can write - the VoiceOver pass, real pinyin input, the sample
+comparison, the zoom walkthrough. It reports those as *missing*, never as
+passed, which is the whole reason it exists.
 
 ## Changing a component's classes
 

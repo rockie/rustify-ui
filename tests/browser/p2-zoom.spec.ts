@@ -1,6 +1,6 @@
-import { expect, Page, test } from "@playwright/test";
+import { expect, Page } from "@playwright/test";
 
-import { settle, waitForReady } from "./support";
+import { settle, test, waitForReady } from "./support";
 
 /// M8: B1's five journeys at 200%.
 ///

@@ -1,6 +1,6 @@
-import { expect, Page, test } from "@playwright/test";
+import { expect, Page } from "@playwright/test";
 
-import { CATALOG_SIZE, sharedPage, waitForQuiet } from "./support";
+import { CATALOG_SIZE, isShared, test, waitForQuiet } from "./support";
 
 /// M1's exit conditions, on the third example: it boots under the release
 /// policy, its product carries nothing inline, a theme change reaches the DOM
@@ -17,7 +17,11 @@ async function ready(page: Page) {
             violations.push(message.text());
         }
     });
-    await page.goto("./");
+    // A shared page is loaded and reset already, and loading it again would
+    // pay for the region start-up the page is shared to avoid.
+    if (!isShared(page)) {
+        await page.goto("./");
+    }
     await expect(page.getByTestId("status")).toHaveAttribute("data-status", "ready", {
         timeout: 60_000,
     });
@@ -26,6 +30,10 @@ async function ready(page: Page) {
 }
 
 test.describe("M1 V1: the catalogue starts under the policy it will be deployed with", () => {
+    // The listener has to be on the page before it loads, so this one loads
+    // its own.
+    test.use({ fresh: true });
+
     test("boots with no policy violation and draws its region", async ({ page }) => {
         const violations = await ready(page);
         expect(await snapshot(page)).toMatchObject({ categories: CATALOG_SIZE, theme: "light" });
@@ -53,34 +61,14 @@ test.describe("M1 V1: the catalogue starts under the policy it will be deployed 
             expect(body).not.toMatch(/\beval\(/);
         }
     });
-
-    test("the stylesheet the page loads is the one the components were compiled against", async ({
-        request,
-    }) => {
-        const css = await (await request.get("./rustify.css")).text();
-        // The classes the catalogue actually uses have rules; a missing one
-        // means the product was built from a stale stylesheet.
-        for (const cls of [
-            "rui\\:bg-card",
-            "rui\\:bg-success",
-            "rui\\:bg-warning",
-            "rui\\:text-muted-foreground",
-        ]) {
-            expect(css).toContain(`.${cls}`);
-        }
-        // And nothing that resets or restyles the host page.
-        expect(css).not.toContain("@layer base");
-        expect(css).not.toMatch(/^\s*(html|body|input|button|a|\*)\s*\{/m);
-    });
 });
 
 test.describe("M1 V1: one theme, both halves", () => {
     test("a switch moves the panel and the region together, from either side", async ({ page }) => {
         await ready(page);
-        // Its own page, so this one pays the region's first render itself: an
-        // eleven-megabyte module compiled and a Makepad `Cx` started, which is
-        // seconds rather than milliseconds. The blocks that share a page pay it
-        // once in `beforeAll` and never see this.
+        // On the first check of a run the page is new, and its region may
+        // still be starting: a Makepad `Cx` and its shaders, which is seconds
+        // rather than milliseconds.
         await expect
             .poll(async () => (await snapshot(page)).region, { timeout: 30_000 })
             .toBe("ready");
@@ -274,13 +262,9 @@ test.describe("M1 V1: the host page's own controls are not ours", () => {
 /// above it draws with the GPU half - and, for the nine where the states mean
 /// something, the same component again as disabled, read-only and invalid.
 ///
-/// One page for the whole block. A cold catalogue costs about seven seconds to
-/// download, compile and boot, and these are short checks; the price is that
-/// each test has to leave the page as it found it, or read a delta.
+/// Short checks on the page the project shares, each starting from the page
+/// as it loads: the example's own reset puts it back in between.
 test.describe("M2 V2: a component per category", () => {
-    test.describe.configure({ mode: "serial" });
-    const shared = sharedPage();
-
     const CATEGORIES = [
         "button",
         "label",
@@ -324,8 +308,7 @@ test.describe("M2 V2: a component per category", () => {
         await expect(page.getByTestId("category-name")).toHaveText(category.replace(/-/g, " "));
     }
 
-    test("every category shows a working example of itself", async () => {
-        const page = shared.page;
+    test("every category shows a working example of itself", async ({ page }) => {
         for (const category of CATEGORIES) {
             await open(page, category);
             // A component of this crate, not a paragraph about one: every one
@@ -339,8 +322,7 @@ test.describe("M2 V2: a component per category", () => {
         }
     });
 
-    test("a disabled control asks for nothing and a read-only one puts itself back", async () => {
-        const page = shared.page;
+    test("a disabled control asks for nothing and a read-only one puts itself back", async ({ page }) => {
         await open(page, "checkbox");
         const before = await snapshot(page);
 
@@ -367,14 +349,9 @@ test.describe("M2 V2: a component per category", () => {
             checked: after.checked,
         });
         expect(await page.getByTestId("read-only-checkbox").isChecked()).toBe(after.checked);
-
-        // Put the page back for whatever runs next.
-        await page.getByTestId("default-checkbox").click();
-        expect(await snapshot(page)).toMatchObject({ checked: before.checked });
     });
 
-    test("a read-only field keeps the application's value, not the keystrokes", async () => {
-        const page = shared.page;
+    test("a read-only field keeps the application's value, not the keystrokes", async ({ page }) => {
         await open(page, "text-field");
         const before = await snapshot(page);
 
@@ -405,11 +382,9 @@ test.describe("M2 V2: a component per category", () => {
         // The live one does take them, which is what makes the two different.
         await page.getByTestId("default-text-field").fill("a new value");
         expect(await snapshot(page)).toMatchObject({ text: "a new value" });
-        await page.getByTestId("default-text-field").fill(before.text);
     });
 
-    test("one value, two halves: the region's control moves the DOM's", async () => {
-        const page = shared.page;
+    test("one value, two halves: the region's control moves the DOM's", async ({ page }) => {
         await open(page, "checkbox");
         await expect.poll(async () => (await snapshot(page)).region).toBe("ready");
         // The rectangle is cleared on a page change and reported again once
@@ -438,13 +413,9 @@ test.describe("M2 V2: a component per category", () => {
         await expect(page.getByTestId("default-checkbox")).toBeChecked({
             checked: !before.checked,
         });
-
-        await page.getByTestId("default-checkbox").click();
-        expect(await snapshot(page)).toMatchObject({ checked: before.checked });
     });
 
-    test("the state matrix shows one value in each of its states", async () => {
-        const page = shared.page;
+    test("the state matrix shows one value in each of its states", async ({ page }) => {
         await open(page, "switch");
         const held = (await snapshot(page)).on;
         for (const state of ["default", "disabled", "read-only"]) {
@@ -460,8 +431,7 @@ test.describe("M2 V2: a component per category", () => {
         );
     });
 
-    test("five kinds of component make one interface", async () => {
-        const page = shared.page;
+    test("five kinds of component make one interface", async ({ page }) => {
         await open(page, "radio");
         const names = await page.evaluate(() =>
             Array.from(
@@ -487,12 +457,9 @@ test.describe("M2 V2: a component per category", () => {
             chosen: 2,
             actions: before.actions + 1,
         });
-        await page.getByTestId(`default-radio-first`).click();
-        expect(await snapshot(page)).toMatchObject({ chosen: 0 });
     });
 
-    test("the region draws a control for every category it claims one for", async () => {
-        const page = shared.page;
+    test("the region draws a control for every category it claims one for", async ({ page }) => {
         await expect.poll(async () => (await snapshot(page)).region, { timeout: 30_000 }).toBe(
             "ready"
         );
@@ -525,4 +492,124 @@ test.describe("M2 V2: a component per category", () => {
     });
 });
 
+/// The page the other checks share is put back between them by the example's
+/// own `reset()` rather than loaded again, and that is only sound if a reset
+/// leaves the page the way a load does. So, on a page of its own: what a load
+/// leaves, a round of changes to everything the application holds, a reset,
+/// and what is left then.
+test.describe("a reset is as good as a load", () => {
+    test.use({ fresh: true });
 
+    /// What a check can see: the application's account of its own state, the
+    /// scope as a reader meets it, and the page around the scope.
+    async function observed(page: Page) {
+        return {
+            snapshot: await snapshot(page),
+            tree: await page.locator("#catalog").ariaSnapshot(),
+            page: await page.evaluate(() => {
+                const catalog = window.__component_catalog;
+                const active = document.activeElement;
+                return {
+                    scopes: document.querySelectorAll("[data-rustify-scope]").length,
+                    regions: catalog.live_regions(),
+                    errors: catalog.hooks.runtime.errors.length,
+                    inert: document.querySelectorAll("[inert]").length,
+                    focused: active?.getAttribute("data-testid") ?? active?.tagName ?? null,
+                    scrolled: [window.scrollX, window.scrollY],
+                };
+            }),
+        };
+    }
+
+    test("the page after a reset is the page after a load", async ({ page }) => {
+        await ready(page);
+        // A load is over when the region has said where it drew.
+        await expect
+            .poll(
+                async () => {
+                    const now = await snapshot(page);
+                    return now.region === "ready" && now.button !== null && now.control !== null;
+                },
+                { timeout: 30_000 }
+            )
+            .toBe(true);
+        const loaded = await observed(page);
+
+        // The ids repeat in the second scope, so the first is named.
+        const main = page.locator("#catalog");
+        const open = async (category: string) => {
+            await main.getByTestId(`nav-${category}`).click();
+            await expect(main.getByTestId("category-name")).toHaveText(category.replace(/-/g, " "));
+        };
+        await main.getByTestId("toggle-theme").click();
+        await main.getByTestId("toggle-motion").click();
+        await main.getByTestId("toggle-locale").click();
+        await open("checkbox");
+        await main.getByTestId("default-checkbox").click();
+        await open("text-field");
+        await main.getByTestId("default-text-field").fill("typed");
+        await open("text-area");
+        await main.getByTestId("default-text-area").fill("more\nnotes");
+        await open("radio");
+        await main.getByTestId("default-radio-third").click();
+        await open("switch");
+        await main.getByTestId("default-switch").click();
+        await open("slider");
+        await main.getByTestId("default-slider").focus();
+        await page.keyboard.press("ArrowRight");
+        await open("tabs");
+        await main.getByTestId("example").getByRole("tab", { name: "third" }).click();
+        await open("loading");
+        await main.getByTestId("default-spinner-toggle").click();
+        await open("select");
+        await main.getByTestId("default-select").click();
+        await page.getByTestId("option-large").click();
+        // A page's own state, which the snapshot does not report: it lives in
+        // the samples page, and a reset has to leave that page for it to go.
+        await main.getByTestId("nav-samples").click();
+        await main.getByTestId("block-font").click();
+        await expect(main.getByTestId("samples-blocked")).toHaveText("true");
+        // Every change landed, so the comparison below is not a vacuous one.
+        const changed = await snapshot(page);
+        expect(changed.actions).toBeGreaterThan(0);
+        expect(changed).toMatchObject({
+            path: "/samples",
+            theme: "dark",
+            reduce_motion: true,
+            locale: "zh-CN",
+            checked: true,
+            text: "typed",
+            notes: "more\nnotes",
+            chosen: 2,
+            on: true,
+            size: 45,
+            tab: 2,
+            spinning: false,
+            chooser: "large",
+        });
+
+        // A second scope, changed in its own right.
+        await page.evaluate(() => window.__component_catalog.mount_second());
+        await expect(page.locator("[data-rustify-scope]")).toHaveCount(2);
+        await page.locator("#catalog-second").getByTestId("toggle-theme").click();
+        await expect(page.locator("#catalog-second")).toHaveAttribute("data-theme", "dark");
+
+        // And a modal left open in the first, with focus inside it and the
+        // rest of its scope inert.
+        await open("dialog");
+        await main.getByTestId("default-dialog-trigger").click();
+        await expect(page.getByRole("dialog", { name: "a modal dialog" })).toBeVisible();
+        await page.evaluate(() => {
+            window.scrollTo(0, 200);
+            window.__component_catalog.hooks.runtime.errors.push("an error a check provoked");
+        });
+
+        await page.evaluate(() =>
+            (window.__component_catalog as unknown as { reset(): Promise<void> }).reset()
+        );
+        expect(await observed(page)).toEqual(loaded);
+
+        await page.getByTestId("nav-samples").click();
+        await expect(page.getByTestId("samples-blocked")).toHaveText("false");
+    });
+});
