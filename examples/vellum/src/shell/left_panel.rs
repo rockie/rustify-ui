@@ -15,7 +15,7 @@ pub fn LeftPanel(editor: Editor) -> impl IntoView {
             }
         });
         if open {
-            crate::browser_frame::request_animation_frame(move || {
+            rustify_ui::next_frame(move || {
                 if let Some(input) = search.try_get().flatten() {
                     let _ = input.focus();
                 }

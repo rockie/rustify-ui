@@ -20,7 +20,7 @@ pub fn Toast(editor: Editor) -> impl IntoView {
     Effect::new(move || {
         let (serial, visible) = state.get();
         if visible {
-            rustify_makepad::defer_after(3200, move || {
+            rustify_ui::defer_after(3200, move || {
                 if !editor.shell.is_disposed()
                     && editor
                         .shell

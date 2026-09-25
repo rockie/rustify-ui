@@ -3,9 +3,7 @@
 use leptos::prelude::*;
 use rustify_ui::{Anchor, Layer};
 use wasm_bindgen::{JsCast, JsValue};
-use web_sys::{
-    CanvasRenderingContext2d, HtmlCanvasElement, HtmlElement, KeyboardEvent, MouseEvent,
-};
+use web_sys::{CanvasRenderingContext2d, HtmlCanvasElement, MouseEvent};
 
 use crate::{affine::Point, app::Editor, hit, icons::icon};
 
@@ -91,7 +89,6 @@ pub fn Presentation(editor: Editor) -> impl IntoView {
 
 #[component]
 fn Preview(editor: Editor) -> impl IntoView {
-    let root = NodeRef::<leptos::html::Div>::new();
     let stage = NodeRef::<leptos::html::Div>::new();
     let canvas = NodeRef::<leptos::html::Canvas>::new();
     let preview = Memo::new(move |_| editor.shell.with(|shell| shell.preview.clone()));
@@ -210,7 +207,7 @@ fn Preview(editor: Editor) -> impl IntoView {
         <Layer modal=true anchor=Signal::derive(|| Anchor::Centred)
             on_close=move || close(editor) class="vellum-modal-layer"
             labelled_by="presentation-title" test_id="vellum-presentation-layer">
-            <div id="presentation" class="presentation" node_ref=root on:keydown=move |event| trap_tab(root,event)>
+            <div id="presentation" class="presentation">
                 <div class="presentation-toolbar">
                     <span>"vellum "<span class="muted">"/ Preview"</span></span>
                     <span id="presentation-title">{move || title.get()}</span>
@@ -287,37 +284,5 @@ fn follow_link(
                 preview.index = index;
             }
         });
-    }
-}
-
-fn trap_tab(root: NodeRef<leptos::html::Div>, event: KeyboardEvent) {
-    if event.key() != "Tab" {
-        return;
-    }
-    let Some(root) = root.get_untracked() else {
-        return;
-    };
-    let Ok(buttons) = root.query_selector_all("button:not([disabled])") else {
-        return;
-    };
-    let first = buttons
-        .item(0)
-        .and_then(|node| node.dyn_into::<HtmlElement>().ok());
-    let last = buttons
-        .item(buttons.length().saturating_sub(1))
-        .and_then(|node| node.dyn_into::<HtmlElement>().ok());
-    let (Some(first), Some(last), Some(active)) = (first, last, document().active_element()) else {
-        return;
-    };
-    let target = if event.shift_key() && active == *first.as_ref() {
-        Some(last)
-    } else if !event.shift_key() && active == *last.as_ref() {
-        Some(first)
-    } else {
-        None
-    };
-    if let Some(target) = target {
-        event.prevent_default();
-        let _ = target.focus();
     }
 }

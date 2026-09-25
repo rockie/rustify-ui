@@ -1,37 +1,39 @@
 use std::{cell::RefCell, collections::BTreeMap, rc::Rc};
 
-use js_sys::{Function, Promise};
+use js_sys::{Function, Promise, Reflect};
+use rustify_ui::{instance_failed, release_on_abort, AbortRelease};
 use serde_json::{json, Value};
-use wasm_bindgen::{prelude::wasm_bindgen, JsValue};
+use wasm_bindgen::{JsCast, JsValue};
 use wasm_bindgen_futures::{future_to_promise, JsFuture};
-use web_sys::{AbortSignal, FontFace, FontFaceSet};
+use web_sys::{FontFace, FontFaceSet};
 
 const MAX_FONT_BYTES: usize = 15 * 1024 * 1024;
 
-#[wasm_bindgen]
-extern "C" {
-    #[wasm_bindgen(js_namespace = window, js_name = __vellumAbortResource)]
-    fn abort_resource(signal: &AbortSignal, resource: &JsValue, kind: &str) -> Function;
+fn running() -> Result<(), JsValue> {
+    if instance_failed() {
+        Err(JsValue::from_str("Vellum is no longer mounted"))
+    } else {
+        Ok(())
+    }
 }
 
-fn runtime_signal() -> Result<AbortSignal, JsValue> {
-    rustify_makepad::listener_options()
-        .and_then(|options| options.get_signal())
-        .filter(|signal| !signal.aborted())
-        .ok_or_else(|| JsValue::from_str("Vellum is no longer mounted"))
+/// Has the browser take `face` out of the document's fonts if the instance
+/// fails: it was added from script, and after a trap no Rust runs to remove it.
+fn remove_on_failure(set: &FontFaceSet, face: &FontFace) -> Option<AbortRelease> {
+    let delete = Reflect::get(set, &JsValue::from_str("delete"))
+        .ok()?
+        .dyn_into::<Function>()
+        .ok()?;
+    Some(release_on_abort(
+        delete.bind1(set, face.as_ref()).unchecked_into(),
+    ))
 }
 
 struct LoadedFont {
     source: Rc<str>,
     face: FontFace,
-    unregister: Function,
-}
-
-impl Drop for LoadedFont {
-    fn drop(&mut self) {
-        // Normal removal releases the native abort listener. Fatal removal is entirely JS.
-        let _ = self.unregister.call0(&JsValue::UNDEFINED);
-    }
+    /// Normal removal takes the release back; fatal removal is entirely JS.
+    _release: Option<AbortRelease>,
 }
 
 struct PendingFont {
@@ -80,14 +82,14 @@ impl FontCache {
         source: Rc<str>,
         face: FontFace,
     ) -> Result<(), JsValue> {
-        let signal = runtime_signal()?;
+        running()?;
         let mut fonts = self.0.borrow_mut();
         if fonts.disposed {
             return Err(JsValue::from_str("Vellum is no longer mounted"));
         }
         let set = font_set()?;
         set.add(&face)?;
-        let unregister = abort_resource(&signal, face.as_ref(), "font");
+        let release = remove_on_failure(&set, &face);
         fonts.pending.remove(family);
         fonts.errors.remove(family);
         if let Some(old) = fonts.loaded.insert(
@@ -95,7 +97,7 @@ impl FontCache {
             LoadedFont {
                 source,
                 face,
-                unregister,
+                _release: release,
             },
         ) {
             set.delete(&old.face);
@@ -104,7 +106,7 @@ impl FontCache {
     }
 
     pub fn load(&self, family: &str, source: Rc<str>) -> Result<Promise, JsValue> {
-        let signal = runtime_signal()?;
+        running()?;
         {
             let fonts = self.0.borrow();
             if fonts.disposed {
@@ -151,7 +153,7 @@ impl FontCache {
                 .pending
                 .get(&key)
                 .is_some_and(|pending| pending.source == pending_source);
-            if signal.aborted() || fonts.disposed || !current {
+            if instance_failed() || fonts.disposed || !current {
                 if current {
                     fonts.pending.remove(&key);
                 }
@@ -161,13 +163,13 @@ impl FontCache {
             let result = loaded.and_then(|_| {
                 let set = font_set()?;
                 set.add(&face)?;
-                let unregister = abort_resource(&signal, face.as_ref(), "font");
+                let release = remove_on_failure(&set, &face);
                 if let Some(old) = fonts.loaded.insert(
                     key.clone(),
                     LoadedFont {
                         source: pending_source,
                         face,
-                        unregister,
+                        _release: release,
                     },
                 ) {
                     set.delete(&old.face);
@@ -195,11 +197,8 @@ impl FontCache {
     }
 
     pub async fn ready(&self) -> Result<Value, JsValue> {
-        let signal = runtime_signal()?;
         loop {
-            if signal.aborted() {
-                return Err(JsValue::from_str("Vellum is no longer mounted"));
-            }
+            running()?;
             let pending: Vec<_> = self
                 .0
                 .borrow()
@@ -216,9 +215,7 @@ impl FontCache {
             }
         }
         JsFuture::from(font_set()?.ready()?).await?;
-        if signal.aborted() {
-            return Err(JsValue::from_str("Vellum is no longer mounted"));
-        }
+        running()?;
         Ok(self.status())
     }
 

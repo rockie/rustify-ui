@@ -4,8 +4,9 @@ use std::collections::{HashMap, HashSet};
 use std::sync::Arc;
 
 use leptos::prelude::*;
+use rustify_ui::{listen, ListenOptions, Listener};
 use serde_json::{json, Value};
-use wasm_bindgen::{closure::Closure, JsCast, JsValue};
+use wasm_bindgen::JsCast;
 use web_sys::{Event, EventTarget, HtmlCanvasElement, MouseEvent, PointerEvent, WheelEvent};
 
 use crate::affine::{identity, point, Matrix, Point, Rect};
@@ -169,12 +170,6 @@ impl InputState {
     }
 }
 
-struct Listener {
-    target: EventTarget,
-    name: &'static str,
-    callback: Closure<dyn FnMut(Event)>,
-}
-
 /// Owns every canvas, area and window listener installed for this editor mount.
 #[derive(Default)]
 pub struct Bindings {
@@ -182,43 +177,15 @@ pub struct Bindings {
 }
 
 impl Bindings {
-    fn listen(
-        &mut self,
-        target: &EventTarget,
-        name: &'static str,
-        handler: impl FnMut(Event) + 'static,
-    ) -> Result<(), JsValue> {
-        let callback = Closure::wrap(Box::new(handler) as Box<dyn FnMut(Event)>);
-        let options = rustify_makepad::listener_options()
-            .unwrap_or_else(web_sys::AddEventListenerOptions::new);
-        options.set_passive(false);
-        target.add_event_listener_with_callback_and_add_event_listener_options(
-            name,
-            callback.as_ref().unchecked_ref(),
-            &options,
-        )?;
-        self.listeners.push(Listener {
-            target: target.clone(),
-            name,
-            callback,
-        });
-        Ok(())
-    }
-}
-
-impl Drop for Bindings {
-    fn drop(&mut self) {
-        for listener in self.listeners.drain(..) {
-            let _ = listener.target.remove_event_listener_with_callback(
-                listener.name,
-                listener.callback.as_ref().unchecked_ref(),
-            );
-        }
+    fn listen(&mut self, target: &EventTarget, name: &str, handler: impl FnMut(Event) + 'static) {
+        // Not passive: the wheel handler cancels the page's own scroll.
+        self.listeners
+            .push(listen(target, name, ListenOptions::default(), handler));
     }
 }
 
 /// Installs the reference pointer lifecycle. Dropping the result removes all listeners.
-pub fn install(editor: Editor, canvas: HtmlCanvasElement) -> Result<Bindings, JsValue> {
+pub fn install(editor: Editor, canvas: HtmlCanvasElement) -> Bindings {
     let mut bindings = Bindings::default();
     let target: EventTarget = canvas.clone().into();
     for name in ["pointerdown", "pointermove", "pointerup", "pointercancel"] {
@@ -241,13 +208,13 @@ pub fn install(editor: Editor, canvas: HtmlCanvasElement) -> Result<Bindings, Js
                     cancel(editor);
                 }
             }
-        })?;
+        });
     }
     bindings.listen(&target, "pointerleave", move |_| {
         if !editor.input.is_disposed() {
             editor.input.update(|input| input.hover = None);
         }
-    })?;
+    });
     for name in ["dblclick", "contextmenu"] {
         let canvas = canvas.clone();
         bindings.listen(&target, name, move |event| {
@@ -262,7 +229,7 @@ pub fn install(editor: Editor, canvas: HtmlCanvasElement) -> Result<Bindings, Js
             } else {
                 context_menu(editor, &canvas, &event);
             }
-        })?;
+        });
     }
     let area: EventTarget = canvas
         .parent_element()
@@ -288,7 +255,7 @@ pub fn install(editor: Editor, canvas: HtmlCanvasElement) -> Result<Bindings, Js
                 },
             );
         });
-    })?;
+    });
     bindings.listen(&window().into(), "blur", move |_| {
         if !editor.input.is_disposed() {
             editor.input.update(|input| input.space = false);
@@ -297,8 +264,8 @@ pub fn install(editor: Editor, canvas: HtmlCanvasElement) -> Result<Bindings, Js
                 cancel(editor);
             }
         }
-    })?;
-    Ok(bindings)
+    });
+    bindings
 }
 
 fn event_point(canvas: &HtmlCanvasElement, x: impl Into<f64>, y: impl Into<f64>) -> Point {

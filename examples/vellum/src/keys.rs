@@ -1,38 +1,29 @@
 //! Canvas shortcuts are scoped listeners; form controls keep their native editing keys.
 
 use leptos::prelude::*;
-use wasm_bindgen::{closure::Closure, JsCast, JsValue};
+use rustify_ui::{is_text_entry, listen, ListenOptions, Listener, Platform};
+use wasm_bindgen::{JsCast, JsValue};
 use web_sys::{HtmlElement, KeyboardEvent};
 
 use crate::{app::Editor, commands::Order, pointer, shell};
 
+/// The document's key listeners for this editor mount, removed when dropped.
 pub struct Bindings {
-    document: web_sys::Document,
-    down: Closure<dyn FnMut(KeyboardEvent)>,
-    up: Closure<dyn FnMut(KeyboardEvent)>,
+    _down: Listener,
+    _up: Listener,
 }
 
-impl Drop for Bindings {
-    fn drop(&mut self) {
-        let _ = self
-            .document
-            .remove_event_listener_with_callback("keydown", self.down.as_ref().unchecked_ref());
-        let _ = self
-            .document
-            .remove_event_listener_with_callback("keyup", self.up.as_ref().unchecked_ref());
-    }
-}
-
-pub fn install(editor: Editor) -> Result<Bindings, JsValue> {
-    let down = Closure::new(move |event: KeyboardEvent| {
-        if let Err(error) = key_down(editor, &event) {
+pub fn install(editor: Editor) -> Bindings {
+    let target = document();
+    let down = listen(&target, "keydown", ListenOptions::default(), move |event| {
+        if let Err(error) = key_down(editor, event.unchecked_ref()) {
             editor
                 .error
                 .set(Some(format!("Shortcut failed: {error:?}")));
         }
     });
-    let up = Closure::new(move |event: KeyboardEvent| {
-        if event.code() == "Space" {
+    let up = listen(&target, "keyup", ListenOptions::default(), move |event| {
+        if event.unchecked_ref::<KeyboardEvent>().code() == "Space" {
             let hand = editor.tool.get_untracked() == "hand";
             editor.input.update(|input| {
                 input.space = false;
@@ -40,28 +31,23 @@ pub fn install(editor: Editor) -> Result<Bindings, JsValue> {
             });
         }
     });
-    let bindings = Bindings {
-        document: document(),
-        down,
-        up,
-    };
-    let options =
-        rustify_makepad::listener_options().unwrap_or_else(web_sys::AddEventListenerOptions::new);
-    bindings
-        .document
-        .add_event_listener_with_callback_and_add_event_listener_options(
-            "keydown",
-            bindings.down.as_ref().unchecked_ref(),
-            &options,
-        )?;
-    bindings
-        .document
-        .add_event_listener_with_callback_and_add_event_listener_options(
-            "keyup",
-            bindings.up.as_ref().unchecked_ref(),
-            &options,
-        )?;
-    Ok(bindings)
+    Bindings {
+        _down: down,
+        _up: up,
+    }
+}
+
+/// Whether the command key is held: what `Mod` stands for in a shortcut, Meta
+/// on a Mac and Control everywhere else.
+///
+/// The table below ignores the modifiers an entry does not name - Shift+R
+/// still picks the rectangle - so it asks for the command key alone; matching
+/// whole shortcuts would hold every other modifier to account as well.
+fn command_held(event: &KeyboardEvent) -> bool {
+    match Platform::current() {
+        Platform::Mac => event.meta_key(),
+        Platform::Other => event.ctrl_key(),
+    }
 }
 
 fn key_down(editor: Editor, event: &KeyboardEvent) -> Result<(), JsValue> {
@@ -81,17 +67,10 @@ fn key_down(editor: Editor, event: &KeyboardEvent) -> Result<(), JsValue> {
     if editor.input.with_untracked(|input| input.modal_open) {
         return Ok(());
     }
-    let command = event.meta_key() || event.ctrl_key();
+    let command = command_held(event);
     let key = event.key();
     let lowercase = key.to_lowercase();
-    let is_input = event
-        .target()
-        .and_then(|target| target.dyn_into::<HtmlElement>().ok())
-        .is_some_and(|element| {
-            element.is_content_editable()
-                || matches!(element.tag_name().as_str(), "INPUT" | "TEXTAREA" | "SELECT")
-        });
-    if is_input {
+    if event.target().is_some_and(|target| is_text_entry(&target)) {
         if command
             && key == "Enter"
             && event

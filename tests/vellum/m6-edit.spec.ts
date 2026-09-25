@@ -1,7 +1,7 @@
 import fs from "node:fs/promises";
 import { PNG } from "pngjs";
 import { differingPixels, expect, present, test, waitForReady } from "./support";
-import { hasReference, openTwin } from "./twin";
+import { hasReference, openTwin, twin as twinSource } from "./twin";
 
 test("native text session commits multiline Unicode once and restores it with undo", async ({ page }) => {
     await waitForReady(page);
@@ -326,6 +326,8 @@ test.describe(() => {
         const twin = await context.newPage();
         await openTwin(twin);
         const results: { operation: string; differing: number; ratio: number }[] = [];
+        // The original's session textarea has an id; this example's has a test id.
+        const twinEditor = twinSource === "original" ? "#text-editor" : '[data-testid="text-editor"]';
         for (const operation of ["text", "pen"]) {
             const geometry: unknown[] = [];
             for (const target of [page, twin]) {
@@ -338,7 +340,7 @@ test.describe(() => {
                         const node = api.createAtCenter("text", { text: "Typography test", w: 340, h: 80, fontSize: 24, rotation: 15 });
                         api.fit([node.id]); api.actions.editText();
                     });
-                    await target.locator(target === page ? '[data-testid="text-editor"]' : "#text-editor").fill("Vellum · Typography\nZażółć gęślą jaźń · مرحبا");
+                    await target.locator(target === page ? '[data-testid="text-editor"]' : twinEditor).fill("Vellum · Typography\nZażółć gęślą jaźń · مرحبا");
                     await target.keyboard.press("Escape");
                 } else {
                     await target.keyboard.press("p");

@@ -115,7 +115,7 @@ node tests/vellum/interop.mjs --check-starter /tmp/forma-rust.vellum
 
 [持久化](../examples/vellum/src/storage.rs)使用原版的`vellum-editor/documents/current`键，IndexedDB打开或读取失败时回退到`vellum-document`本地存储。文档变更防抖500 ms，待提交的拖拽、检查器或文本事务不会作为恢复副本写入。写入串行执行并跟踪保存代次，只有对应副本真正写入成功才显示已保存；失败显示红色状态和导出提示。`vellum-options`与`vellum-welcomed`单独保留用户选项。普通卸载清理监听、数据库连接和待完成写入，计时代次使旧任务失效；loader的实例重启重新执行恢复流程，未保存编辑不会跨实例保留。
 
-故障注入曾发现裸浏览器计时器会在实例fatal后继续保存。保存与toast延时现使用框架`defer_after`，页级输入及数据库事件使用`listener_options`提供的运行时AbortSignal；[动画帧适配](../examples/vellum/src/browser_frame.rs)保留rAF时序，同时绑定同一信号。`app.js`只增加原生资源关闭胶水：signal终止时取消rAF、终止事务、关闭数据库并移除本地字体，完全不调用已死Wasm。已排入的框架内部Promise微任务不由示例统一取消，应用异步落地入口另查运行时是否存活，保证不能继续写文档或存储。
+故障注入曾发现裸浏览器计时器会在实例fatal后继续保存。保存与toast延时现使用SDK `rustify_ui::defer_after`，页级输入及数据库事件用`rustify_ui::listen`注册（带实例AbortSignal），动画帧用`rustify_ui::next_frame`（保留rAF时序，signal终止时由浏览器取消）。事务、数据库连接、打开请求与本地字体用`rustify_ui::release_on_abort`登记绑定好的原生JS方法：signal终止时由浏览器终止事务、关闭连接（含终止后才打开的连接）并移除本地字体，完全不调用已死Wasm；`app.js`不再有资源关闭胶水。已排入的框架内部Promise微任务不由示例统一取消，应用异步落地入口用`rustify_ui::instance_failed`另查实例是否存活，保证不能继续写文档或存储。
 
 本期还修复[SDK文件选择器](../crates/rustify-ui/src/files.rs)的既有闭包释放缺口：选择或取消后立即移除监听、释放闭包并只回调一次，监听同时绑定运行时终止信号。浏览器回归先观察到取消后仍保留2个监听，修复后多次取消和成功选择均回到0。字体随文档替换与Undo/Redo同步来源，移除已删除字族并使旧加载结果失效；同名字体切换的字宽回归也先红后绿。fatal时的字体移除同样由原生JS终止回调执行，重启后再从已保存文档载入。
 
@@ -139,17 +139,16 @@ PNG与[演示预览](../examples/vellum/src/shell/presentation.rs)使用同一�
 
 字体是构建流水线随Makepad资源复制的部分，不能把全部产物体积当作首屏实际下载量。连续两次`cargo xtask build-web --example vellum --release`生成的43个文件（含manifest）SHA-256完全一致，证据为`test-results/vellum/m8-build-determinism.json`与`m8-build-compare.log`。
 
-应用入口`app.js`为145行、7,115字节（`wc -l examples/vellum/app.js`及manifest的`files["app.js"]`）。它负责loader接线、薄自动化门面和fatal原生资源关闭；编辑规则、文件格式、持久化策略与Canvas画家均在Rust中。其余JavaScript来自框架或构建胶水。
+应用入口`app.js`为145行、7,115字节（`wc -l examples/vellum/app.js`及manifest的`files["app.js"]`）。它负责loader接线与薄自动化门面（fatal原生资源关闭已移入SDK，见上文）；编辑规则、文件格式、持久化策略与Canvas画家均在Rust中。其余JavaScript来自框架或构建胶水。
 
-应用Rust显式常驻DOM监听为16个：指针/滚轮/失焦9、键盘2、拖放2、菜单外点1、持久化页生命周期2。原生文字会话临时增加1个input监听；IndexedDB打开/读取/写入分别临时增加3/2/3个。`app.js`另按原生资源绑定AbortSignal：数据库连接1、每个本地字体1、每个待执行rAF1、打开请求2（abort与晚到success）、每个活动事务1。因此16不是整个实例的总数，也不包含Leptos声明式事件、SDK内部监听与ResizeObserver；SDK文件选择器另有2个临时监听，选择或取消后释放。
+应用Rust显式常驻DOM监听为16个，均经`rustify_ui::listen`注册：指针/滚轮/失焦9、键盘2、拖放2、菜单外点1、持久化页生命周期2。原生文字会话临时增加1个input监听；IndexedDB打开/读取/写入分别临时增加3/2/3个。另经`release_on_abort`与`next_frame`在AbortSignal上登记原生JS释放：数据库连接1、每个本地字体1、每个待执行rAF1、打开请求1（另在请求上挂1个原生success，接住晚到的连接）、每个活动事务1。因此16不是整个实例的总数，也不包含Leptos声明式事件、SDK内部监听与ResizeObserver；SDK文件选择器另有2个临时监听，选择或取消后释放。
 
 计数可用以下命令复核注册点，并展开`pointer.rs`的两组事件循环：
 
 ```sh
 rg -n 'for name in|bindings\.listen' examples/vellum/src/pointer.rs
-rg -n -A4 'add_event_listener_with_callback_and_add_event_listener_options' examples/vellum/src/{keys,fileio}.rs examples/vellum/src/shell/{menus,text_session}.rs
-rg -n -A4 '\blisten\(' examples/vellum/src/storage.rs
-rg -n 'addEventListener|removeEventListener' examples/vellum/app.js
+rg -n '\blisten\(' examples/vellum/src/{keys,fileio,storage}.rs examples/vellum/src/shell/{menus,text_session}.rs
+rg -n '\brelease\(|close_when_opened\(|remove_on_failure\(|next_frame\(' examples/vellum/src
 ```
 
 `m8-metrics.spec.ts`在三个独立浏览器上下文禁用HTTP缓存，使用页内`performance.now()`记录ready、首次SDK呈现和光栅细化完成；数据为`test-results/vellum/m8-startup-1.json`至`m8-startup-3.json`，不把操作系统缓存视为已清除，也不把它称作物理显示延迟。

@@ -5,6 +5,7 @@ use std::{cell::RefCell, rc::Rc};
 use js_sys::{Promise, Uint8Array};
 use leptos::prelude::*;
 use rustify_ui::files::{self, Import, Limits, Refusal};
+use rustify_ui::{instance_failed, listen, ListenOptions, Listener};
 use serde_json::json;
 use wasm_bindgen::{closure::Closure, JsCast, JsValue};
 use wasm_bindgen_futures::JsFuture;
@@ -109,10 +110,7 @@ impl ImportGuard {
 }
 
 fn mounted(editor: Editor) -> Result<(), JsValue> {
-    let failed = rustify_makepad::listener_options()
-        .and_then(|options| options.get_signal())
-        .is_some_and(|signal| signal.aborted());
-    if editor.doc.is_disposed() || failed {
+    if editor.doc.is_disposed() || instance_failed() {
         Err(JsValue::from_str("Vellum is no longer mounted"))
     } else {
         Ok(())
@@ -562,29 +560,19 @@ pub fn dispatch(editor: Editor, action: &str) {
     }
 }
 
+/// The canvas area's drop listeners, removed when dropped.
 pub struct DropBindings {
-    target: EventTarget,
-    over: Closure<dyn FnMut(DragEvent)>,
-    drop: Closure<dyn FnMut(DragEvent)>,
+    _over: Listener,
+    _drop: Listener,
 }
 
-impl Drop for DropBindings {
-    fn drop(&mut self) {
-        let _ = self
-            .target
-            .remove_event_listener_with_callback("dragover", self.over.as_ref().unchecked_ref());
-        let _ = self
-            .target
-            .remove_event_listener_with_callback("drop", self.drop.as_ref().unchecked_ref());
-    }
-}
-
-pub fn install_drop(editor: Editor, overlay: HtmlCanvasElement) -> Result<DropBindings, JsValue> {
+pub fn install_drop(editor: Editor, overlay: HtmlCanvasElement) -> DropBindings {
     let target: EventTarget = overlay.parent_element().map_or_else(
         || overlay.clone().unchecked_into(),
         |element| element.unchecked_into(),
     );
-    let over = Closure::new(move |event: DragEvent| {
+    let over = listen(&target, "dragover", ListenOptions::default(), |event| {
+        let event: &DragEvent = event.unchecked_ref();
         if event.data_transfer().is_some_and(|transfer| {
             transfer
                 .types()
@@ -597,7 +585,8 @@ pub fn install_drop(editor: Editor, overlay: HtmlCanvasElement) -> Result<DropBi
             }
         }
     });
-    let drop = Closure::new(move |event: DragEvent| {
+    let drop = listen(&target, "drop", ListenOptions::default(), move |event| {
+        let event: &DragEvent = event.unchecked_ref();
         let Some(file) = event
             .data_transfer()
             .and_then(|transfer| transfer.files())
@@ -624,21 +613,8 @@ pub fn install_drop(editor: Editor, overlay: HtmlCanvasElement) -> Result<DropBi
             report(editor, result);
         });
     });
-    let options = rustify_makepad::listener_options()
-        .ok_or_else(|| JsValue::from_str("Runtime lifecycle is unavailable"))?;
-    target.add_event_listener_with_callback_and_add_event_listener_options(
-        "dragover",
-        over.as_ref().unchecked_ref(),
-        &options,
-    )?;
-    if let Err(error) = target.add_event_listener_with_callback_and_add_event_listener_options(
-        "drop",
-        drop.as_ref().unchecked_ref(),
-        &options,
-    ) {
-        let _ =
-            target.remove_event_listener_with_callback("dragover", over.as_ref().unchecked_ref());
-        return Err(error);
+    DropBindings {
+        _over: over,
+        _drop: drop,
     }
-    Ok(DropBindings { target, over, drop })
 }

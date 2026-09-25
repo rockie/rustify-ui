@@ -6,9 +6,9 @@
 //! abort signal, as a cancellation the browser performs on its own: what the
 //! signal calls is `cancelAnimationFrame` itself, not anything in this module.
 
+use crate::listeners::{instance_failed, release_on_abort, AbortRelease};
 use leptos::wasm_bindgen::closure::Closure;
 use leptos::wasm_bindgen::{JsCast, JsValue};
-use leptos::web_sys::{AbortSignal, AddEventListenerOptions};
 use send_wrapper::SendWrapper;
 use std::cell::{Cell, RefCell};
 use std::rc::Rc;
@@ -28,16 +28,14 @@ struct Pending {
     /// over to JS for good would be freed only by being called.
     callback: RefCell<Option<Closure<dyn FnMut()>>>,
     /// The cancellation registered on the abort signal.
-    on_abort: RefCell<Option<(AbortSignal, js_sys::Function)>>,
+    on_abort: RefCell<Option<AbortRelease>>,
 }
 
 impl Pending {
     /// Leaves nothing of this request registered anywhere.
     fn release(&self) {
         self.id.set(None);
-        if let Some((signal, cancel)) = self.on_abort.take() {
-            let _ = signal.remove_event_listener_with_callback("abort", &cancel);
-        }
+        drop(self.on_abort.take());
         // May be the callback that is running: wasm-bindgen frees a closure
         // dropped during its own call once that call returns.
         drop(self.callback.take());
@@ -64,8 +62,7 @@ pub fn next_frame(f: impl FnOnce() + 'static) -> FrameHandle {
     let Some(window) = leptos::web_sys::window() else {
         return handle;
     };
-    let signal = crate::listeners::instance_signal();
-    if signal.as_ref().is_some_and(AbortSignal::aborted) {
+    if instance_failed() {
         return handle;
     }
 
@@ -85,23 +82,14 @@ pub fn next_frame(f: impl FnOnce() + 'static) -> FrameHandle {
     handle.0.id.set(Some(id));
     *handle.0.callback.borrow_mut() = Some(callback);
 
-    if let Some(signal) = signal {
-        let cancel = js_sys::Reflect::get(&window, &JsValue::from_str("cancelAnimationFrame"))
-            .ok()
-            .and_then(|cancel| cancel.dyn_into::<js_sys::Function>().ok())
-            .map(|cancel| {
-                cancel
-                    .bind1(&window, &JsValue::from(id))
-                    .unchecked_into::<js_sys::Function>()
-            });
-        if let Some(cancel) = cancel {
-            let once = AddEventListenerOptions::new();
-            once.set_once(true);
-            let _ = signal.add_event_listener_with_callback_and_add_event_listener_options(
-                "abort", &cancel, &once,
-            );
-            *handle.0.on_abort.borrow_mut() = Some((signal, cancel));
-        }
+    let cancel = js_sys::Reflect::get(&window, &JsValue::from_str("cancelAnimationFrame"))
+        .ok()
+        .and_then(|cancel| cancel.dyn_into::<js_sys::Function>().ok());
+    if let Some(cancel) = cancel {
+        let cancel = cancel
+            .bind1(&window, &JsValue::from(id))
+            .unchecked_into::<js_sys::Function>();
+        *handle.0.on_abort.borrow_mut() = Some(release_on_abort(cancel));
     }
     handle
 }

@@ -2,7 +2,7 @@ import { readFileSync } from "node:fs";
 import path from "node:path";
 import { PNG } from "pngjs";
 import { capture, differingPixels, expect, present, rgb, test, waitForReady } from "./support";
-import { hasReference, openTwin } from "./twin";
+import { hasReference, openTwin, twin as twinSource } from "./twin";
 
 const font = `data:font/ttf;base64,${readFileSync(path.resolve(__dirname, "../../makepad/widgets/resources/LiberationMono-Regular.ttf")).toString("base64")}`;
 
@@ -39,7 +39,7 @@ test.describe(() => {
     test.use({ fresh: true });
 
     test("typography properties bind and Unicode layout matches the browser reference", async ({ page, context }, info) => {
-        test.skip(!hasReference, "The optional Vellum source reference is absent.");
+        test.skip(twinSource !== "original", "Needs the original's JavaScript layout module, which only the original twin serves.");
         await playground(page);
         const twin = await context.newPage();
         await openTwin(twin);
