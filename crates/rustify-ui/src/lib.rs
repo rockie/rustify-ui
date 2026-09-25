@@ -5,9 +5,12 @@ pub mod binding;
 pub mod clipboard;
 pub mod components;
 pub mod diagnostics;
+mod draft;
 pub mod drag;
 pub mod files;
 pub mod form;
+#[cfg(target_arch = "wasm32")]
+mod frame;
 #[cfg(target_arch = "wasm32")]
 pub mod gpu;
 pub mod i18n;
@@ -19,9 +22,11 @@ pub mod region;
 pub mod router;
 pub mod scheduler;
 pub mod selection;
+pub mod shortcut;
 pub mod task;
 pub mod text;
 pub mod theme;
+pub mod toast;
 
 pub use binding::{duplicate_key, ActionSink};
 pub use clipboard::ClipboardError;
@@ -42,14 +47,20 @@ pub use router::{Arrival, History, Location, Navigation, Params, Route, Routes};
 pub use rustify_makepad::RegionId;
 pub use scheduler::{Admission, Pace, Scheduler, Seq};
 pub use selection::{Counts, Selection};
+pub use shortcut::{Keystroke, Modifiers, Platform, Shortcut, ShortcutError};
 pub use task::{Load, Requests, Ticket};
+pub use toast::{Toast, ToastOptions, ToastTone};
 
 #[cfg(target_arch = "wasm32")]
 pub use components::{Button, Checkbox, Label, LoadView, Slider, TextArea, TextField};
 #[cfg(target_arch = "wasm32")]
 pub use diagnostics::asset_failures;
 #[cfg(target_arch = "wasm32")]
+pub use draft::Draft;
+#[cfg(target_arch = "wasm32")]
 pub use drag::{provide_drags, use_drags, DragHandle};
+#[cfg(target_arch = "wasm32")]
+pub use frame::{next_frame, FrameHandle};
 #[cfg(target_arch = "wasm32")]
 pub use gpu::{
     Glyph as RegionGlyph, RustifyButton, RustifyCheckBox, RustifyDropDown, RustifyIcon,
@@ -58,15 +69,23 @@ pub use gpu::{
 #[cfg(target_arch = "wasm32")]
 pub use i18n::{browser_languages, format_date, format_number, provide_locale, use_locale};
 #[cfg(target_arch = "wasm32")]
+pub use listeners::{listen, ListenOptions, Listener};
+#[cfg(target_arch = "wasm32")]
 pub use overlay::{use_overlay, Anchor, Layer, OverlayStack};
 #[cfg(target_arch = "wasm32")]
 pub use router::{
     navigate, provide_routes, use_location, use_params, use_route, Link, NavigationGuard,
 };
 #[cfg(target_arch = "wasm32")]
-pub use rustify_makepad::{makepad_widgets, observe_resize, RegionApp, ResizeObservation};
+pub use rustify_makepad::{
+    defer, defer_after, makepad_widgets, observe_resize, RegionApp, ResizeObservation,
+};
+#[cfg(target_arch = "wasm32")]
+pub use shortcut::is_text_entry;
 #[cfg(target_arch = "wasm32")]
 pub use text::TextEdit;
 #[cfg(target_arch = "wasm32")]
 pub use theme::{use_theme, use_theme_values, ThemeOverride, ThemedScope};
 pub use theme::{Theme, ThemePatch};
+#[cfg(target_arch = "wasm32")]
+pub use toast::{provide_toasts, use_toasts, ToastHandle, ToastRegion};

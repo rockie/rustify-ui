@@ -59,6 +59,36 @@ impl LocalRect {
 #[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord)]
 pub struct LayerId(u64);
 
+/// Where the keyboard is, among a modal layer's tab stops.
+#[cfg_attr(not(target_arch = "wasm32"), allow(dead_code))]
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+enum TabFocus {
+    /// On the stop at this index.
+    On(usize),
+    /// On something inside the layer that is not a stop, with this many
+    /// stops before it in the document.
+    After(usize),
+}
+
+/// The stop Tab (or Shift+Tab, `backwards`) has to be sent to so that it stays
+/// inside a modal layer of `stops` tab stops, or `None` where the browser's own
+/// move already does.
+///
+/// Only the two ends wrap. Everything between is the browser's ordinary tab
+/// order, which is what a person expects inside a dialog as much as outside
+/// one.
+#[cfg_attr(not(target_arch = "wasm32"), allow(dead_code))]
+fn wrap_tab(stops: usize, focus: TabFocus, backwards: bool) -> Option<usize> {
+    let last = stops.checked_sub(1)?;
+    let at_end = match (focus, backwards) {
+        (TabFocus::On(index), false) => index == last,
+        (TabFocus::On(index), true) => index == 0,
+        (TabFocus::After(before), false) => before == stops,
+        (TabFocus::After(before), true) => before == 0,
+    };
+    at_end.then_some(if backwards { last } else { 0 })
+}
+
 #[cfg(target_arch = "wasm32")]
 pub(crate) use dom::EditSession;
 #[cfg(target_arch = "wasm32")]
@@ -66,14 +96,15 @@ pub use dom::{use_overlay, Anchor, Layer, OverlayStack};
 
 #[cfg(target_arch = "wasm32")]
 mod dom {
-    use super::{LayerId, LocalRect};
+    use super::{wrap_tab, LayerId, LocalRect, TabFocus};
+    use crate::listeners::{listen, ListenOptions, Listener};
     use leptos::html::Div;
     use leptos::portal::Portal;
     use leptos::prelude::*;
-    use leptos::wasm_bindgen::closure::Closure;
     use leptos::wasm_bindgen::JsCast;
-    use leptos::web_sys::{Element, Event, HtmlElement, KeyboardEvent};
+    use leptos::web_sys::{Element, HtmlElement, HtmlInputElement, KeyboardEvent, Node};
     use send_wrapper::SendWrapper;
+    use std::collections::HashSet;
     use std::sync::{Arc, Mutex, Weak};
 
     /// What a layer is placed against.
@@ -143,10 +174,12 @@ mod dom {
         overlay: Element,
     }
 
-    /// Listeners the stack keeps only while it has something to place.
+    /// Listeners the stack keeps only while it has something to place. Held
+    /// for their `Drop`, which is what takes them off the page.
     struct Watchers {
-        escape: Closure<dyn FnMut(KeyboardEvent)>,
-        moved: Closure<dyn FnMut(Event)>,
+        _escape: Listener,
+        _scroll: Listener,
+        _resize: Listener,
     }
 
     /// A native editing session. It outranks the layer stack: a key pressed
@@ -162,7 +195,7 @@ mod dom {
         layers: Vec<LayerRecord>,
         next: u64,
         edit: Option<EditSession>,
-        watchers: Option<SendWrapper<Watchers>>,
+        watchers: Option<Watchers>,
     }
 
     /// The scope's layer stack. Provided by `mount`, read with [`use_overlay`].
@@ -304,79 +337,58 @@ mod dom {
             // keep alive, and a scope disposed with a layer open must still
             // drop everything.
             let weak = Arc::downgrade(&self.inner);
-            let escape = Closure::<dyn FnMut(KeyboardEvent)>::new(move |event: KeyboardEvent| {
-                let key = event.key();
-                if key != "Escape" && key != "Enter" {
-                    return;
-                }
-                match route(&weak, &key) {
-                    // Nothing above the application wanted it.
-                    Routed::Ignored => {}
-                    Routed::Taken => {
-                        event.prevent_default();
-                        event.stop_propagation();
-                    }
-                }
-            });
-            let moved = self.moved;
-            let on_moved =
-                Closure::<dyn FnMut(Event)>::new(move |_: Event| moved.update(|n| *n += 1));
-
             // Capture, so the stack answers before anything inside the scope
             // does: an open layer outranks the application's own commands.
-            let capture = crate::listeners::page_level();
-            capture.set_capture(true);
-            let _ = inner
-                .roots
-                .container
-                .add_event_listener_with_callback_and_add_event_listener_options(
-                    "keydown",
-                    escape.as_ref().unchecked_ref(),
-                    &capture,
-                );
+            let escape = listen(
+                &inner.roots.container,
+                "keydown",
+                ListenOptions {
+                    capture: true,
+                    passive: false,
+                },
+                move |event| {
+                    let Some(event) = event.dyn_ref::<KeyboardEvent>() else {
+                        return;
+                    };
+                    let key = event.key();
+                    if key != "Escape" && key != "Enter" {
+                        return;
+                    }
+                    match route(&weak, &key) {
+                        // Nothing above the application wanted it.
+                        Routed::Ignored => {}
+                        Routed::Taken => {
+                            event.prevent_default();
+                            event.stop_propagation();
+                        }
+                    }
+                },
+            );
+            let moved = self.moved;
             // Capture, on the document: any container between a layer and its
             // anchor can scroll, and only the capture phase sees all of them.
-            let options = crate::listeners::page_level();
-            options.set_capture(true);
-            options.set_passive(true);
-            let _ = document().add_event_listener_with_callback_and_add_event_listener_options(
+            let scroll = listen(
+                &document(),
                 "scroll",
-                on_moved.as_ref().unchecked_ref(),
-                &options,
+                ListenOptions {
+                    capture: true,
+                    passive: true,
+                },
+                move |_| moved.update(|n| *n += 1),
             );
-            let _ = window().add_event_listener_with_callback_and_add_event_listener_options(
-                "resize",
-                on_moved.as_ref().unchecked_ref(),
-                &crate::listeners::page_level(),
-            );
-            inner.watchers = Some(SendWrapper::new(Watchers {
-                escape,
-                moved: on_moved,
-            }));
+            let resize = listen(&window(), "resize", ListenOptions::default(), move |_| {
+                moved.update(|n| *n += 1)
+            });
+            inner.watchers = Some(Watchers {
+                _escape: escape,
+                _scroll: scroll,
+                _resize: resize,
+            });
         }
 
         fn disarm(&self) {
-            let mut inner = self.lock();
-            let Some(watchers) = inner.watchers.take() else {
-                return;
-            };
-            let _ = inner
-                .roots
-                .container
-                .remove_event_listener_with_callback_and_bool(
-                    "keydown",
-                    watchers.escape.as_ref().unchecked_ref(),
-                    true,
-                );
-            let _ = document().remove_event_listener_with_callback_and_bool(
-                "scroll",
-                watchers.moved.as_ref().unchecked_ref(),
-                true,
-            );
-            let _ = window().remove_event_listener_with_callback(
-                "resize",
-                watchers.moved.as_ref().unchecked_ref(),
-            );
+            let watchers = self.lock().watchers.take();
+            drop(watchers);
         }
 
         /// Where focus goes when a layer closes and its trigger is gone.
@@ -453,13 +465,121 @@ mod dom {
         }
     }
 
-    /// The first thing inside `root` that can take focus, or `root` itself.
+    /// Everything that can take focus, before the rules below narrow it.
+    const FOCUSABLE: &str = "a[href], area[href], button, input:not([type='hidden']), select, \
+         textarea, iframe, details > summary:first-of-type, \
+         [contenteditable]:not([contenteditable='false']), [tabindex]";
+
+    /// The elements inside `root` that Tab stops at, in the order it stops at
+    /// them.
+    ///
+    /// The browser's rules, as far as a page can apply them: nothing disabled,
+    /// inert, hidden, taken out with a negative `tabindex`, or not rendered;
+    /// one radio button per group, the checked one if there is one; positive
+    /// `tabindex` values first, in their own order.
+    fn tab_stops(root: &Element) -> Vec<HtmlElement> {
+        let Ok(found) = root.query_selector_all(FOCUSABLE) else {
+            return Vec::new();
+        };
+        let mut stops: Vec<(i32, HtmlElement)> = (0..found.length())
+            .filter_map(|index| found.item(index)?.dyn_into::<HtmlElement>().ok())
+            .filter_map(|element| {
+                let index = element
+                    .get_attribute("tabindex")
+                    .and_then(|value| value.trim().parse::<i32>().ok())
+                    .unwrap_or(0);
+                (index >= 0 && reachable(&element)).then_some((index, element))
+            })
+            .collect();
+
+        let group = |element: &HtmlElement| {
+            element
+                .dyn_ref::<HtmlInputElement>()
+                .filter(|input| input.type_() == "radio" && !input.name().is_empty())
+                .map(|input| (input.name(), input.checked()))
+        };
+        let checked: HashSet<String> = stops
+            .iter()
+            .filter_map(|(_, element)| group(element))
+            .filter_map(|(name, checked)| checked.then_some(name))
+            .collect();
+        let mut first_of_group = HashSet::new();
+        stops.retain(|(_, element)| match group(element) {
+            None => true,
+            Some((name, is_checked)) if checked.contains(&name) => is_checked,
+            Some((name, _)) => first_of_group.insert(name),
+        });
+
+        // Stable, so equal indices keep their document order.
+        stops.sort_by_key(|(index, _)| if *index > 0 { *index } else { i32::MAX });
+        stops.into_iter().map(|(_, element)| element).collect()
+    }
+
+    /// Whether `element` is on screen and neither disabled nor shut away.
+    fn reachable(element: &HtmlElement) -> bool {
+        if element.matches(":disabled").unwrap_or(false)
+            || element
+                .closest("[inert], [hidden]")
+                .ok()
+                .flatten()
+                .is_some()
+            || element.get_client_rects().length() == 0
+        {
+            return false;
+        }
+        !window()
+            .get_computed_style(element)
+            .ok()
+            .flatten()
+            .and_then(|style| style.get_property_value("visibility").ok())
+            .is_some_and(|visibility| visibility == "hidden" || visibility == "collapse")
+    }
+
+    /// The first tab stop inside `root`, or `root` itself.
     fn focus_first(root: &Element) {
-        let candidates = "a[href], button:not([disabled]), input:not([disabled]), \
-             select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex='-1'])";
-        match root.query_selector(candidates) {
-            Ok(Some(first)) => focus(&first),
-            _ => focus(root),
+        match tab_stops(root).first() {
+            Some(first) => {
+                let _ = first.focus();
+            }
+            None => focus(root),
+        }
+    }
+
+    /// Keeps Tab inside a modal layer: past the last stop it goes to the
+    /// first, and Shift+Tab before the first goes to the last. Everything else
+    /// is left to the browser.
+    fn keep_tab_inside(root: &Element, event: &KeyboardEvent) {
+        if event.key() != "Tab"
+            || event.default_prevented()
+            || event.is_composing()
+            || event.ctrl_key()
+            || event.alt_key()
+            || event.meta_key()
+        {
+            return;
+        }
+        let Some(active) = document().active_element() else {
+            return;
+        };
+        let stops = tab_stops(root);
+        let focus = match stops
+            .iter()
+            .position(|stop| AsRef::<Element>::as_ref(stop) == &active)
+        {
+            Some(index) => TabFocus::On(index),
+            None => TabFocus::After(
+                stops
+                    .iter()
+                    .filter(|stop| {
+                        stop.compare_document_position(&active) & Node::DOCUMENT_POSITION_FOLLOWING
+                            != 0
+                    })
+                    .count(),
+            ),
+        };
+        if let Some(target) = wrap_tab(stops.len(), focus, event.shift_key()) {
+            event.prevent_default();
+            let _ = stops[target].focus();
         }
     }
 
@@ -530,6 +650,8 @@ mod dom {
             let top = RwSignal::new(0.0f64);
             let registered = RwSignal::new(None::<LayerId>);
             let returns_to: StoredValue<Option<SendWrapper<Element>>> = StoredValue::new(None);
+            // Dropped with the layer, which takes the listener with it.
+            let tab_loop = StoredValue::new(None::<Listener>);
 
             Effect::new({
                 let on_close = on_close.clone();
@@ -582,6 +704,21 @@ mod dom {
                     registered.set(Some(id));
                     if modal {
                         focus_first(&element);
+                        // Inert keeps the keyboard off the scope behind the
+                        // layer, but Tab past the last stop would still leave
+                        // for whatever follows the layer on the page. Bubbling,
+                        // so a control that uses Tab itself goes first.
+                        let root = element.clone();
+                        tab_loop.set_value(Some(listen(
+                            &element,
+                            "keydown",
+                            ListenOptions::default(),
+                            move |event| {
+                                if let Some(event) = event.dyn_ref::<KeyboardEvent>() {
+                                    keep_tab_inside(&root, event);
+                                }
+                            },
+                        )));
                     }
                 }
             });
@@ -656,5 +793,41 @@ mod tests {
             LocalRect::centred((300.0, 200.0), (400.0, 400.0)),
             (0.0, 0.0)
         );
+    }
+
+    #[test]
+    fn tab_wraps_only_at_the_two_ends_of_a_modal_layer() {
+        use TabFocus::{After, On};
+        // (stops, focus, backwards, where Tab is sent; None = the browser's move)
+        let table = [
+            // Forward: only past the last stop.
+            (3, On(0), false, None),
+            (3, On(1), false, None),
+            (3, On(2), false, Some(0)),
+            // Backward: only before the first.
+            (3, On(0), true, Some(2)),
+            (3, On(1), true, None),
+            (3, On(2), true, None),
+            // One stop keeps the keyboard in both directions.
+            (1, On(0), false, Some(0)),
+            (1, On(0), true, Some(0)),
+            // Focus on something that is not a stop - a heading focused by
+            // script - wraps only if every stop is behind it going forward, or
+            // ahead of it going back.
+            (3, After(3), false, Some(0)),
+            (3, After(1), false, None),
+            (3, After(0), true, Some(2)),
+            (3, After(2), true, None),
+            // A layer with nothing to stop at leaves Tab to the browser.
+            (0, After(0), false, None),
+            (0, After(0), true, None),
+        ];
+        for (stops, focus, backwards, sent) in table {
+            assert_eq!(
+                wrap_tab(stops, focus, backwards),
+                sent,
+                "{stops} stops, {focus:?}, backwards: {backwards}"
+            );
+        }
     }
 }
