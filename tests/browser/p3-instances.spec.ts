@@ -1,5 +1,5 @@
 import { expect, Page } from "@playwright/test";
-import { isShared, test } from "./support";
+import { isShared, test, windowListeners } from "./support";
 
 /// M5 · two application instances on one page, and what one of them dying
 /// does to the other.
@@ -197,27 +197,6 @@ test.describe("M5 · one instance fails, the other does not", () => {
         expect(await liveActions(page, "instance-two")).toBe(100);
     });
 });
-
-/// How many listeners of each kind are on `window` right now.
-///
-/// Read through the debugger rather than by counting registrations: what is
-/// being checked is that a trap actually took them off, and a count the page
-/// keeps itself would only say what the page believed.
-async function windowListeners(page: Page): Promise<Record<string, number>> {
-    const cdp = await page.context().newCDPSession(page);
-    const { result } = (await cdp.send("Runtime.evaluate", { expression: "window" })) as {
-        result: { objectId: string };
-    };
-    const { listeners } = (await cdp.send("DOMDebugger.getEventListeners", {
-        objectId: result.objectId,
-    })) as { listeners: { type: string }[] };
-    await cdp.detach();
-    const counts: Record<string, number> = {};
-    for (const listener of listeners) {
-        counts[listener.type] = (counts[listener.type] ?? 0) + 1;
-    }
-    return counts;
-}
 
 test.describe("M5 · the address bar after its owner dies", () => {
     // A trap, a second instance, or a slot's restarts spent: none of it is

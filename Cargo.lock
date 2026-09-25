@@ -1473,7 +1473,6 @@ dependencies = [
  "rustify-components",
  "rustify-makepad",
  "rustify-ui",
- "send_wrapper",
  "wasm-bindgen",
 ]
 

@@ -128,6 +128,22 @@ test.describe("M5 V7: a workspace of three panels", () => {
         expect(await workspace(page)).toMatchObject({ tab: before.tab, tabs: before.tabs - 1 });
     });
 
+    test("the palette opens from the keyboard inside its own workspace, and only there", async ({ page }) => {
+        const palette = page.getByTestId("command-palette");
+        // Outside the scope the key belongs to the page: two workspaces on
+        // one page must not both answer it.
+        await page.evaluate(() => (document.activeElement as HTMLElement | null)?.blur());
+        await page.keyboard.press("ControlOrMeta+k");
+        await expect(palette).toBeHidden();
+
+        await page.getByTestId("object-views").getByRole("tab", { name: "all", exact: true }).focus();
+        await page.keyboard.press("ControlOrMeta+k");
+        await expect(palette).toBeVisible();
+        expect((await workspace(page)).palette).toBe(true);
+        await page.keyboard.press("Escape");
+        await expect(palette).toBeHidden();
+    });
+
     test("the palette finds a command, runs it once, and refuses one that cannot run", async ({ page }) => {
         await page.getByTestId("open-commands").click();
         const palette = page.getByTestId("command-palette");

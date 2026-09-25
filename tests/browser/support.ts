@@ -533,6 +533,27 @@ declare global {
 }
 
 
+/// How many listeners of each kind are on `window` right now.
+///
+/// Read through the debugger rather than by counting registrations: what is
+/// being checked is that a trap actually took them off, and a count the page
+/// keeps itself would only say what the page believed.
+export async function windowListeners(page: Page): Promise<Record<string, number>> {
+    const cdp = await page.context().newCDPSession(page);
+    const { result } = (await cdp.send("Runtime.evaluate", { expression: "window" })) as {
+        result: { objectId: string };
+    };
+    const { listeners } = (await cdp.send("DOMDebugger.getEventListeners", {
+        objectId: result.objectId,
+    })) as { listeners: { type: string }[] };
+    await cdp.detach();
+    const counts: Record<string, number> = {};
+    for (const listener of listeners) {
+        counts[listener.type] = (counts[listener.type] ?? 0) + 1;
+    }
+    return counts;
+}
+
 /// The window handle each project's example publishes, and so the one whose
 /// `reset()` puts a shared page back. A project that is not here runs every
 /// test on a fresh page.

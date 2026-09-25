@@ -1479,13 +1479,22 @@ mod app {
 
         // Escape ends a drag wherever the pointer is. The key does not arrive
         // at the element holding the pointer, so the window is where it has to
-        // be listened for.
-        let escape = window_event_listener(leptos::ev::keydown, move |event| {
-            if event.key() == "Escape" {
-                cancel_drag();
-            }
-        });
-        on_cleanup(move || escape.remove());
+        // be listened for - with the instance's abort signal, since the window
+        // outlives a trapped module that no cleanup would run for.
+        let escape = rustify_ui::listen(
+            &window(),
+            "keydown",
+            rustify_ui::ListenOptions::default(),
+            move |event| {
+                let is_escape = event
+                    .dyn_ref::<leptos::web_sys::KeyboardEvent>()
+                    .is_some_and(|event| event.key() == "Escape");
+                if is_escape {
+                    cancel_drag();
+                }
+            },
+        );
+        on_cleanup(move || drop(escape));
 
         let label_id = format!("third-party-label-{registration}");
         let app = PhantomData::<ObjectRegion>;
@@ -1618,34 +1627,28 @@ mod app {
 
         // The shortcut a workspace is expected to have. Registered on the
         // scope's own container rather than the window: a page with two of
-        // these on it should not have them fighting over one key. The closure
-        // and the element go into a `SendWrapper` because a cleanup has to be
-        // `Send` and a DOM handle is not - they never leave this thread.
+        // these on it should not have them fighting over one key.
+        let open_palette = rustify_ui::Shortcut::parse("Mod+K").expect("a well-formed shortcut");
         Effect::new(move || {
             let Some(roots) = use_context::<rustify_ui::ScopeRoots>() else {
                 return;
             };
-            let container = roots.container();
-            let handler = leptos::wasm_bindgen::closure::Closure::<
-                dyn FnMut(leptos::web_sys::KeyboardEvent),
-            >::new(move |event: leptos::web_sys::KeyboardEvent| {
-                if event.key() == "k" && (event.meta_key() || event.ctrl_key()) {
-                    event.prevent_default();
-                    palette_open.set(true);
-                }
-            });
-            let _ = container.add_event_listener_with_callback(
+            let open_palette = open_palette.clone();
+            let listener = rustify_ui::listen(
+                &roots.container(),
                 "keydown",
-                leptos::wasm_bindgen::JsCast::unchecked_ref(handler.as_ref()),
+                rustify_ui::ListenOptions::default(),
+                move |event| {
+                    let Some(event) = event.dyn_ref::<leptos::web_sys::KeyboardEvent>() else {
+                        return;
+                    };
+                    if open_palette.matches(event) {
+                        event.prevent_default();
+                        palette_open.set(true);
+                    }
+                },
             );
-            let held = send_wrapper::SendWrapper::new((container, handler));
-            on_cleanup(move || {
-                let (container, handler) = &*held;
-                let _ = container.remove_event_listener_with_callback(
-                    "keydown",
-                    leptos::wasm_bindgen::JsCast::unchecked_ref(handler.as_ref()),
-                );
-            });
+            on_cleanup(move || drop(listener));
         });
 
         // A reset: everything registered above goes back to its first value,

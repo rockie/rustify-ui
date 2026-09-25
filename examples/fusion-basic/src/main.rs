@@ -853,7 +853,7 @@ mod app {
     /// normally, so the caller is long gone by the time anything fails.
     #[wasm_bindgen]
     pub fn fusion_basic_trap_deferred() {
-        rustify_makepad::defer(|| unreachable!("deliberate trap in a deferred task"));
+        rustify_ui::defer(|| unreachable!("deliberate trap in a deferred task"));
     }
 
     /// A scope whose only control traps inside its own event handler.

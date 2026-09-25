@@ -1,6 +1,6 @@
 import { expect, Page } from "@playwright/test";
 import { rounds } from "../tier";
-import { capture, differingPixels, litPixels, settle, test, waitForReady } from "./support";
+import { capture, differingPixels, litPixels, settle, test, waitForReady, windowListeners } from "./support";
 
 const snapshot = (page: Page) =>
     page.evaluate(() => window.__property_workbench.snapshot());
@@ -481,6 +481,19 @@ test.describe("M3: a scope that closes while its region is running", () => {
             });
             expect(outcome).toEqual({ scheduled: 1, ran: false, tasks: 0 });
             await expect(page.getByTestId("status")).toHaveAttribute("data-status", "fatal");
+        });
+
+        test("a trapped runtime leaves no keyboard listener on the window", async ({ page }) => {
+            await waitForReady(page);
+            // The drag's Escape is heard on the window, which outlives the
+            // module; no cleanup runs after a trap, so only the instance's
+            // abort can take it off.
+            expect((await windowListeners(page)).keydown ?? 0).toBeGreaterThan(0);
+            await page.evaluate(() =>
+                window.__property_workbench.hooks.runtime.enter_fatal(new Error("injected trap"))
+            );
+            await expect(page.getByTestId("status")).toHaveAttribute("data-status", "fatal");
+            expect((await windowListeners(page)).keydown ?? 0).toBe(0);
         });
 
         test("a trapped runtime takes its controls off the page", async ({ page }) => {

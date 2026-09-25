@@ -17,6 +17,11 @@ name: evidence
 
 on:
   workflow_dispatch:
+    inputs:
+      vellum_baseline:
+        description: "A commit whose Vellum build is the twin for Vellum's visual gate (empty: no twin, the comparisons skip)"
+        required: false
+        default: ""
   schedule:
     - cron: "17 3 * * 1"
 
@@ -86,6 +91,18 @@ jobs:
           npx playwright test --project=budget-data --output=test-results/budget-data || status=$?
           cp test-results/browser.json test-results/budget-data.json 2>/dev/null || true
           exit $status
+      # The twin is this example as it was at another commit, built in a
+      # worktree of its own; see tests/vellum/twin.ts.
+      - name: Vellum baseline
+        if: ${{ inputs.vellum_baseline != '' }}
+        env:
+          BASELINE: ${{ inputs.vellum_baseline }}
+        run: |
+          git fetch --no-tags origin "$BASELINE"
+          git worktree add --detach "$RUNNER_TEMP/vellum-baseline" "$BASELINE"
+          (cd "$RUNNER_TEMP/vellum-baseline" && mbx xtask build-web --example vellum --release)
+          echo "VELLUM_TWIN=baseline" >> "$GITHUB_ENV"
+          echo "VELLUM_BASELINE_DIR=$RUNNER_TEMP/vellum-baseline" >> "$GITHUB_ENV"
       - name: vellum
         if: ${{ !cancelled() }}
         run: npx playwright test -c tests/vellum/playwright.config.ts
