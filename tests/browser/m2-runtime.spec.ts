@@ -212,12 +212,14 @@ test.describe("M2 V3: teardown and host coexistence", () => {
         // nothing. Linear memory never shrinks, so even 8 KiB held per round
         // would show up as a dozen more pages.
         //
-        // The warm-up is what the tail has to come after, and three hundred is
-        // measured rather than guessed: on this build the working set settles
-        // at about round two hundred and fifty - in three identical runs, so
-        // it is where this build puts it rather than variance - and six
-        // hundred rounds add nothing after that. A warm-up that ends before
-        // the working set does measures the working set and calls it a leak.
+        // The warm-up is what the tail has to come after, and four hundred is
+        // measured rather than guessed: sampled every fifty rounds over a
+        // thousand, this build's working set takes its last step between
+        // rounds three hundred and three hundred and fifty and the next six
+        // hundred and fifty add nothing. It settled by round one hundred
+        // before each fixture kept a way back to its first state, and the
+        // warm-up was three hundred then. A warm-up that ends before the
+        // working set does measures the working set and calls it a leak.
         const after = await page.evaluate(async () => {
             const api = window.__fusion_basic;
             const round = async () => {
@@ -225,7 +227,7 @@ test.describe("M2 V3: teardown and host coexistence", () => {
                 api.mount("scope-a");
                 await new Promise((r) => setTimeout(r, 20));
             };
-            for (let i = 0; i < 300; i++) {
+            for (let i = 0; i < 400; i++) {
                 await round();
             }
             const warm = api.stats();

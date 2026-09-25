@@ -2,6 +2,7 @@ import { Browser, BrowserContext, expect, Locator, Page, test as base, TestInfo 
 
 export { expect };
 import { PNG } from "pngjs";
+import { EVIDENCE } from "../tier";
 
 export interface Anchor {
     id: number;
@@ -651,9 +652,10 @@ async function healthy(page: Page, handle: string): Promise<boolean> {
 /// shaders, which takes several seconds and happens again on a remount. So a
 /// regression test runs on the page the previous test used, put back by the
 /// example's own `reset()`, and pays for a start-up only when it asks for one
-/// with `test.use({ fresh: true })`, when it sets a context option a live page
-/// cannot take (a device scale factor, a locale), or when the previous test
-/// left the page broken or failed on it.
+/// with `test.use({ fresh: true })`, when it is a measurement (`@evidence`),
+/// when it sets a context option a live page cannot take (a device scale
+/// factor, a locale), or when the previous test left the page broken or
+/// failed on it.
 ///
 /// A fresh page is Playwright's own: a new context per test. Tests that touch
 /// what a context owns - `context.addInitScript`, permissions, a second page
@@ -689,7 +691,10 @@ export const test = base.extend<{ fresh: boolean }, { slot: Slot }>({
         const fixed = { deviceScaleFactor, isMobile, hasTouch, locale, colorScheme, reducedMotion };
         const projectViewport = (project.viewport ?? { width: 1280, height: 720 }) as { width: number; height: number };
         const differs = JSON.stringify(fixed) !== JSON.stringify(projectFixed);
-        if (fresh || handle === undefined || differs) {
+        // A measurement is taken the way it always was, from a page load:
+        // sharing is for behaviour checks.
+        const measuring = info.tags.includes(EVIDENCE);
+        if (fresh || measuring || handle === undefined || differs) {
             await use(page);
             return;
         }
