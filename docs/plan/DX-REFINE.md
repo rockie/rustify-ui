@@ -3,7 +3,7 @@
 > **计划状态：Proposed**
 >
 > 调查基线：2026-09-25 · `a0560408d0eb64ce53286f3fabb3642404721bcf` · 工作区 clean（除本计划）。`ref/` 与 `node_modules/` 在本工作树中不存在；Tailwind 行为由本次在隔离目录用 `@tailwindcss/cli` 4.1.13 与 `tailwindcss-linux-x64` v4.1.13 独立二进制实测（§1.1 标注「实测」的条目），浏览器测试未在本次运行，耗时数字取自已提交的验收记录。
-> 输入：用户三条诉求——「目前的自动化测试特别耗时间，感觉意义也不是很大，优化一下」「看看从 examples/vellum 怎么提取一些组件作为本项目的公共组件」「更友好和高效地支持 tailwindcss v4」。2026-09-25 拍板：度量/证据类 spec **移出 PR、按需触发**；应用与 SDK **去掉 `rui:` 前缀**（推翻 P2 D13/ADR-5 的样式隔离决策）；Tailwind CLI 由 **mise 固定独立二进制**提供。
+> 输入：用户三条诉求——「目前的自动化测试特别耗时间，感觉意义也不是很大，优化一下」「看看从 examples/vellum 怎么提取一些组件作为本项目的公共组件」「更友好和高效地支持 tailwindcss v4」。2026-09-25 拍板：度量/证据类 spec **移出 PR、按需触发**；应用与 SDK **去掉 `rui:` 前缀**（推翻 P2 D13/ADR-5 的样式隔离决策）；Tailwind CLI 由 **mise 固定独立二进制**提供。同日补充：Vellum 的视觉对比以 **`examples/vellum` 自身的改造前构建**为基线（它对 `ref/` 原版已接近 100% 复刻）；mise 注册表只收 bun/node 这类工具简写，Tailwind 独立二进制须用显式的 `github:` 后端从 GitHub Release 安装（与 npm 包无关）。
 >
 > 本期交付：**（一）测试分回归层与证据层：PR 只跑去重、降回合、复用页面后的行为回归，按示例并行；预算、长跑、内存、空闲、基线测量与孪生视觉移入按需/定时触发的证据层，阈值与回合数不变；CI 补跑一直漏掉的 xtask 与示例 bin 单测。（二）从 Vellum 抽出通用件：SDK 行为原语（作用域监听守卫、快捷键匹配、模态 Tab 循环、可中止的延时/帧回调、Toast 队列、输入草稿）进 `rustify-ui`，Vellum 与 property-workbench 改用；在其上新增四个目录类别（Toast、数字输入、颜色输入、切换组/工具栏）并扩展 Menu/Dialog。（三）Tailwind v4：组件类去前缀，`tw_merge` 覆盖语义对应用类生效；SDK 提供可组合 CSS 入口，`build-web` 编译示例自带的 Tailwind 输入；CLI 由 mise 固定、只扫显式源，生成 CSS 不再需要 Node；编辑器补全配置与应用作者文档。**
 > 本期独特职责：P1–P3 与 VELLUM 都在「加能力并证明它」；本期第一次反向——把证明能力的成本降到日常可承受，把示例里被验证过的通用件沉淀回 SDK，并把 SDK 的样式模型从「与宿主隔离」改为「与应用同构」。
@@ -37,7 +37,7 @@
 
 - 最近更新：尚未开始
 - 当前进度：0/8 个里程碑完成
-- 当前状态：尚未开始；计划为 Proposed，§11 的三项评审点可在 M1 期间并行确认，不阻塞 M1/M3
+- 当前状态：尚未开始；计划为 Proposed，§11 的三项评审点可在 M1 期间并行确认，不阻塞 M1/M3；2026-09-25 按用户意见修订 A-1（mise 用显式 `github:` 后端）与 A-5/D8（Vellum 以改造前构建作孪生基线）
 - 最近完成：无
 - 下一步：M1 · 在 `tests/tier.ts` 建 `RUSTIFY_TIER` 分层与 `rounds()`，给 §5.1 表中证据类用例打 `@evidence`，按需起 webServer；退出条件是两份 config 的 `--list` 计数守恒、component-catalog 回归层跑绿、A-2/A-4 探针有结论
 - 当前阻塞：无
@@ -64,7 +64,7 @@
 | NFR-1 | 开发效率 | 基线：CI 跑的 9 个 project 串行 122.6 min（`docs/validation/p3/m7.md:61-67`、`docs/validation/p3/m8.md:136-138`，早于 review-fixes 新增的 21 项）；vellum 80 项无耗时记录；另有 5 次 release 构建 | 提议目标（D9）：PR 上最长的浏览器 CI job（含构建）≤ 20 min；本地单示例回归层 ≤ 10 min | D2–D7、D9、§9.3 | 目标待确认（非阻塞） |
 | NFR-2 | 证据保真 | P1–P3 验收依赖这些度量（`tests/browser/budgets.ts`、`loads.ts`） | 证据层保留全部度量用例、阈值与原回合数；`verify --suite` 仍跑全集；回归层 ∪ 证据层 ∪ 删除清单 = 改造前用例集 | ADR-1、§9.2 | 已知 |
 | NFR-3 | 构建效率 | 实测：当前 SDK CSS 构建冷 6.6 s / 热 0.66 s，加 `source(none)` 后 0.29 s 且产物逐字节相同 | SDK CSS 只含 SDK 类；应用 CSS 压缩；两次构建产物一致（`xtask verify` 的 double build） | D11、D14、§9.5 | 已知 |
-| NFR-4 | 视觉不回归 | 用户未给新阈值；沿用各计划既有门 | 去前缀前后，component-catalog 全部页面亮/暗两态的计算样式差异 0；Vellum 采用原语后外壳 DOM 除新增 ARIA 外不变；有 `ref/` 时孪生差异仍 ≤2%（`docs/plan/VELLUM.md` R-2） | §9.4、M4/M6/M7 | 已知 |
+| NFR-4 | 视觉不回归 | 用户未给新阈值；沿用各计划既有门 | 去前缀前后，component-catalog 全部页面亮/暗两态的计算样式差异 0；Vellum 采用原语后，与改造前 `examples/vellum` 构建（基线孪生，A-5）在 `visual.spec.ts` 的 8 张视图上每张差异 ≤2%（沿用 `docs/plan/VELLUM.md` R-2 的门），实测值写入记录，非 0 差异逐项说明来源 | §9.4、M4/M6/M7 | 已知 |
 | NFR-5 | 隔离（修订） | P2 D13（`docs/plan/P2-WASM-UI.md:116`）+ ADR-2 | 保留：无 preflight、无裸元素选择器、`dark` 绑定作用域、令牌只写作用域根；放弃：「宿主页自带 Tailwind 构建与 SDK 样式互不干扰」 | ADR-2、§7 | 已确认 |
 | NFR-6 | 可访问性 | `tests/browser/p2-a11y.spec.ts`、`p2-semantics.spec.ts` 的既有口径 | 新组件有 role/可访问名、完整键盘路径；模态层 Tab 首尾循环；Toast `role=status` + `aria-live=polite` 且不进覆盖层栈 | §6、M6/M7 | 已知 |
 | NFR-7 | 可维护性 | Vellum 手写 6 份监听守卫、2 份 `trap_tab`；示例直连私有 crate 的 `listener_options`/`defer`/`defer_after` 共 16 处（Vellum 14、data-workbench 1、fusion-basic 1） | 示例不再为监听/延时直连 `rustify_makepad`；同一原语只有 SDK 一份实现 | D17、M6 | 已知 |
@@ -77,11 +77,11 @@
 | C-7 | 约束 | `CLAUDE.md`「Plans」「Conventions」 | 计划中文；证据进 `docs/validation/`；源码不带计划/需求编号；scripted 改写需断言命中数 | 全文、M4 | 已确认 |
 | C-8 | 约束 | `CLAUDE.md`「缺服务、缺容器就停下来问」「不新开分支」 | 不擅自下载 `ref/Vellum-main` 或装未经确认的工具；改动提交在当前分支 | A-5、§11 | 已确认 |
 | C-9 | 约束 | `docs/plan/VELLUM.md` ADR-3、R-2；`tests/vellum/*` 的 DOM 钩子 | Vellum 保留自有标记与 CSS；孪生视觉门 ≤2%；spec 依赖的 id/class/data-* 不变 | ADR-5、D18 | 已确认 |
-| A-1 | 假设 | D10 依赖 | mise 注册表提供 `tailwindcss` 4.1.13 独立二进制（macOS arm64 与 linux x64），且 macOS 版产物与已验证的 linux 版逐字节一致 | M3 开工先跑 `mise registry tailwindcss`、`mise ls-remote tailwindcss`；不可用则改 `github:tailwindlabs/tailwindcss` 后端；CI 的 `css --check` 在 macOS 上验证一致性。责任人：M3 实施者；最晚 M3 退出 | 开放 |
+| A-1 | 假设 | D10 依赖 | mise 的 `github:tailwindlabs/tailwindcss` 后端（不依赖注册表简写）能为 macOS arm64 与 linux x64 选中 v4.1.13 的对应裸二进制并以 `tailwindcss` 暴露；macOS 版产物与已验证的 linux 版逐字节一致。已知：该 release 有 `tailwindcss-{macos-arm64,macos-x64,linux-x64,linux-x64-musl,linux-arm64,linux-arm64-musl}`、`windows-x64.exe` 与 `sha256sums.txt`（本次逐个探测均 200）；mise 文档写明 `github:` 后端支持裸二进制、自动去掉 OS/arch 后缀、`bin` 可改名 | M3 开工 `mise install` 后看 `mise which tailwindcss` 与横幅；linux 若误选 `-musl` 或选择有歧义，加 `platforms` 下逐平台 `asset_pattern`；CI 的 `css --check` 在 macOS 上验证一致性。责任人：M3 实施者；最晚 M3 退出 | 开放 |
 | A-2 | 假设 | D4 依赖 | 同一 BrowserContext 内的后续加载命中 wasm 编译缓存，单测试启动明显变短；反面证据：SwiftShader 字体图集每页阻塞约 6 s（`tests/browser/support.ts:58-64`） | M1 探针测三种方式的「goto→ready→quiet」墙钟与页内时间：新 context、共享 context 新 page、共享 page + 应用级重置；按结果定每个 project 的复用方式。责任人：M1；最晚 M2 开工 | 开放 |
 | A-3 | 假设 | D3 依赖 | 对确定性行为，回归层 3 回合与原 20 回合抓到同类回归；竞态/泄漏类靠证据层的原回合数 | 不做前置验证，接受该取舍；重新评估触发：证据层出现回归层复现不了的失败 | 开放（接受） |
 | A-4 | 假设 | D6 依赖 | Playwright config 在 runner 进程里可按 `process.argv` 的 `--project` 只起需要的 webServer，且不影响 worker 里的 projects 定义 | M1 用 `--project=component-catalog` 起跑，确认只启动一个 server；失败则改用环境变量 `RUSTIFY_SERVERS` 显式选择 | 开放 |
-| A-5 | 假设 | NFR-4 的孪生部分 | `ref/Vellum-main` 当前不存在，孪生视觉门无法在本工作树运行 | M6/M7 用 Vellum 外壳 DOM 快照对比代替；需要孪生结果时向用户要 `ref/`，不擅自下载（C-8）。责任人：主 agent；最晚 M8 | 开放 |
+| A-5 | 假设 | NFR-4 的 Vellum 部分；用户 2026-09-25「可以用 examples 中的 Vellum 作对比」 | 改造前的 `examples/vellum` release 构建可作孪生：`visual.spec.ts` 的截图流程（`prepareVisual`）对两边同样适用；`twin.ts` 目前只认 `ref/`（`tests/vellum/twin.ts:6`）且断言孪生后端为「Canvas 2D」（`tests/vellum/twin.ts:9-13`），基线是「Makepad WebGL2」，须加基线模式；`m3-raster`/`m4-pointer`/`m6-edit`/`m7-files` 里的孪生用例能否对基线运行未知 | M6 开工先接入基线模式并跑 `visual.spec.ts`；其余孪生用例逐个试跑，能跑的纳入 M6/M7 退出条件，依赖原版专有行为的记录原因并保持跳过。责任人：M6 实施者；最晚 M6 退出 | 开放 |
 | A-6 | 假设 | D7 依赖 | GitHub Actions 的 macOS runner 能同时跑 4–5 个 matrix job，且 mbx 缓存对并行 job 生效 | M2 在 PR 上实跑一次看排队与缓存命中；不成立则合并 job 或改为两段 | 开放 |
 
 ### 0.2 决策表
@@ -95,9 +95,9 @@
 | D5 | 去重 | §5.1「去重」表逐项执行：保留一处、其余删或移入证据层；删除项在 M2 记录里列出「由谁保留」 | 回归层不再有同一行为的多处 20 次重复 | R-2 |
 | D6 | webServer 按需 | config 只为本次 `--project` 起对应 server（A-4）；两个子路径 server 不再在启动命令里 `build-web`，改为显式构建步骤，`serve` 找不到产物即失败并提示命令 | 单 project 运行不再起 6 个 server、不再每次重建 2 个子路径产物 | `playwright.config.ts:111-138`；`CLAUDE.md`「Browser tests」 |
 | D7 | CI 编排 | host job 加 `--bins`；浏览器改 matrix：fusion-basic+deployment、property-workbench+workbench-deep、component-catalog+data-workbench、vellum，各自只构建需要的示例；新增 `.github/workflows/evidence.yml` ★（`workflow_dispatch` + 每周一次） | PR 关键路径变为最慢的一个 job；证据层不再拖 PR | A-6；`.github/workflows/verify.yml` |
-| D8 | Vellum 测试配置 | 保留 `tests/vellum/playwright.config.ts`，接入同一分层开关 | 视口/SwiftShader 启动参数与 `VELLUM_ARTIFACT_SCOPE` 不动 | 改动最小 |
+| D8 | Vellum 测试配置 | 保留 `tests/vellum/playwright.config.ts`，接入同一分层开关；孪生来源由 `VELLUM_TWIN=original\|baseline` 选择（默认有 `ref/` 用 original），`baseline` 时 4180 端口由 `VELLUM_BASELINE_DIR` 指向的基线工作树 `mbx xtask serve --example vellum --release --port 4180` 提供 | 视口/SwiftShader 启动参数与 `VELLUM_ARTIFACT_SCOPE` 不动；没有 `ref/` 也能跑视觉门 | 改动最小；A-5 |
 | D9 | NFR-1 目标 | 提议：最长浏览器 CI job ≤ 20 min、本地单示例回归层 ≤ 10 min | M2 实测未达标时先按 §8「超时」行处理，再评估是否加 smoke 层或更细分片 | 用户「特别耗时间」；待确认 |
-| D10 | Tailwind CLI 来源 | `mise.toml` 固定 `tailwindcss = "4.1.13"`；`xtask/src/tailwind.rs` ★ 解析 `RUSTIFY_TAILWIND` 或 PATH 上的 `tailwindcss`，校验横幅版本；删除 `package.json` 的 `@tailwindcss/cli`、`tailwindcss` 与 `css` 脚本 | 生成/校验 CSS 无需 `npm ci`；Node 只剩 Playwright 需要 | R-6；实测独立二进制产物与 npm CLI 逐字节一致 |
+| D10 | Tailwind CLI 来源 | `mise.toml` 以显式后端固定 `"github:tailwindlabs/tailwindcss" = { version = "4.1.13", bin = "tailwindcss" }`（mise 注册表不收这类工具的简写，不依赖它）；`xtask/src/tailwind.rs` ★ 解析 `RUSTIFY_TAILWIND` 或 PATH 上的 `tailwindcss`，校验横幅版本；删除 `package.json` 的 `@tailwindcss/cli`、`tailwindcss` 与 `css` 脚本 | 生成/校验 CSS 无需 `npm ci`；Node 只剩 Playwright 需要 | R-6；实测独立二进制产物与 npm CLI 逐字节一致 |
 | D11 | 源扫描 | 所有 Tailwind 输入的 utilities 导入带 `source(none)`，源一律 `@source` 显式列出 | 去前缀后，仓库里任何写着 `flex`/`table` 的文字都不会再被编成规则 | 实测：当前构建会把 `docs/` 里的 `rui:` 字符串编进产物 |
 | D12 | 去前缀 | 机械去掉 `rui:`（组件 src 673 处、component-catalog 42 处、data-workbench 1 处、测试 5 处——M2 删掉 `p2-catalog.spec.ts:57-74` 后剩 `p3-table.spec.ts:31` 1 处）；Tailwind 输入去 `prefix(rui)`；`@theme inline` 加 `--spacing: 0.25rem`；CSS 默认令牌值对齐 `Theme::light()` | 组件外观不变（NFR-4）；`p-4` 不再读 SDK 的 `--spacing: 8px` | ADR-2；实测 `--spacing` 冲突与修复 |
 | D13 | SDK CSS 入口拆分 | 新增 `crates/rustify-components/css/sdk.css` ★（`@source "../src"`、暗色变体、`@theme inline`、`slider.css`/`controls.css`、作用域默认令牌）；`rustify.tailwind.css` 只剩 Tailwind 导入 + `@import "./sdk.css"` | 预编译产物与应用构建共用同一份 SDK 层 | 实测：被导入文件里的 `@source` 相对该文件解析 |
@@ -192,7 +192,7 @@
 - [已核实·缺口] 同一行为多处重复（§5.1 去重表），另有两处浏览器断言重复 host 单测：`tests/browser/p2-catalog.spec.ts:57-74`（= `crates/rustify-components/src/lib.rs` 的 stylesheet 测试）、`tests/browser/m6-components.spec.ts:21-92`（= `crates/rustify-components/src/catalog.rs` 的目录表测试）→ D5。
 - [已核实·缺口] `playwright.config.ts` 不论 `--project` 都起 6 个 webServer，其中两个每次先 `build-web --base /tools/demo/`（`playwright.config.ts:129,135`）→ D6。
 - [已核实·缺口] CI 的 `mbx test --workspace --lib` 跳过没有 lib 目标的 crate：xtask（无 `xtask/src/lib.rs`）约 24 项、data-workbench 39、property-workbench 7、component-catalog 5、vellum `shaders.rs` 5 项从未在 CI 跑过 → D7。
-- [已核实·缺口] Vellum 在无 `ref/` 时 18/80 项跳过（含整个视觉门），而 `examples/vellum/README.md:84` 称视觉检查「always checks」→ M2 修文档。
+- [已核实·缺口] Vellum 在无 `ref/` 时 18/80 项跳过（含整个视觉门），而 `examples/vellum/README.md:84` 称视觉检查「always checks」→ M2 修文档；M6 的基线孪生模式（D8）让视觉门不再依赖 `ref/`。
 - [已核实·足够] 已记录的耗时基线：`docs/validation/p3/m7.md:61-67`、`docs/validation/p3/m8.md:136-138`；每次导航约 10.9 s 墙钟（`docs/reports/p2/performance.md:76`）。
 - [已核实·足够] `xtask verify --suite` 逐 project 调一次 Playwright（`xtask/src/verify.rs:396-408`），且不含 `css --check`（`xtask/src/verify.rs:224-281`），而 `docs/quickstart.md:47` 说它覆盖「everything above」→ M3 补上并修文档。
 
@@ -226,7 +226,7 @@
 tests/tier.ts ★                         分层开关、rounds()、pick()
 tests/browser/support.ts                 导出扩展后的 test（共享 context fixture）
 tests/browser/*.spec.ts                  打标签、rounds()/pick()、去重删改
-tests/vellum/{support.ts,playwright.config.ts,*.spec.ts}  同一分层开关
+tests/vellum/{support.ts,twin.ts,playwright.config.ts,*.spec.ts}  同一分层开关；twin.ts/config 加基线孪生模式
 playwright.config.ts                     projects 读分层；webServer 按需；子路径不再现场构建
 .github/workflows/verify.yml             host 加 --bins、去 npm ci（CSS）；浏览器 matrix
 .github/workflows/evidence.yml ★         证据层：手动 + 每周
@@ -275,12 +275,12 @@ docs/validation/dx/m<n>.md ★
 | 依赖/调用方 | 当前状态 | 行为级证据 | 本期处理 | 失败语义 |
 | --- | --- | --- | --- | --- |
 | Tailwind CLI 4.1.13 | 已核实足够（实测） | 单前缀、`source(none)`、`@source` 相对导入文件、`@theme inline` 内联、`--minify` 均在本次实测 | D10–D14 | 二进制缺失/版本不符 → xtask 报错退出，不产出 |
-| mise 注册表 `tailwindcss` | 未核实阻塞（A-1，仅 M3） | — | M3 开工先核实；不可用改 `github:` 后端 | `mise install` 失败即停在 M3，向用户报告（C-8） |
+| mise `github:` 后端 + Tailwind release 裸二进制 | 已核实足够（文档与资产探测）/ 未核实（实装，A-1） | mise 官方仓库（`jdx/mise`）的 github 后端文档：裸二进制、`bin`、`platforms.*.asset_pattern`；v4.1.13 各平台资产存在 | M3 开工 `mise install` 核实 | `mise install` 失败即停在 M3，向用户报告（C-8） |
 | Playwright 1.63 | 已核实缺口 | 标签/`grep`/`grepInvert` 是该版本能力；argv 过滤 webServer 未验（A-4） | D2/D6 | argv 方案失败 → 环境变量显式选择 |
 | `tw_merge` 0.1.21（`variant` 特性） | 已核实足够 | 无前缀时冲突判定即 Tailwind 原义（`macros/mod.rs:31-59` 的前缀用例同构） | 去掉前缀相关用例，加「调用方无前缀类替换组件类」用例 | — |
 | 实例 abort signal | 已核实足够 | `rustify_makepad::listener_options()` 取实例 signal（`crates/rustify-makepad/src/wasm/host.rs:154`），loader 在 trap 时 abort | `listen`/`next_frame`/`defer_after` 复用 | 无宿主时退回裸选项（与 `page_level()` 同） |
 | GitHub Actions macOS runner | 未核实阻塞（A-6，仅 M2） | — | M2 在 PR 上实跑 | 排队过久 → 合并 job |
-| `ref/Vellum-main` | 已核实缺口（不存在） | `tests/vellum/twin.ts:6` | A-5：DOM 快照替代 | 孪生用例照旧跳过并在记录里写明 |
+| Vellum 孪生（`ref/` 原版 / `examples/vellum` 基线） | 已核实缺口：`ref/` 不存在，`twin.ts` 只认原版且断言 Canvas 2D 后端 | `tests/vellum/twin.ts:6-13`、`tests/vellum/playwright.config.ts:34-40` | D8/A-5：加基线模式 | 两者都没有时孪生用例照旧跳过并在记录里写明 |
 
 新增登记点：环境变量 `RUSTIFY_TIER`、`RUSTIFY_TAILWIND`（`CLAUDE.md` Commands 节与 `docs/quickstart.md`）；Playwright 标签 `@evidence`（`tests/tier.ts`）；目录类别 4 个（`crates/rustify-components/src/catalog.rs` + `docs/components.md`）；SDK 公共导出（`crates/rustify-ui/src/lib.rs`）。
 
@@ -345,7 +345,7 @@ crates/rustify-components/css/sdk.css   ← @source "../src"; @custom-variant da
 
 执行顺序：
 
-1. **M3 工具链**：`mise.toml` 加 `tailwindcss = "4.1.13"`；`xtask/src/tailwind.rs` 解析与校验；`css.rs` 改用它，`--check` 失败时额外打印首个差异行；两份输入加 `source(none)`（产物不变，已实测）；删除 `package.json` 里的 Tailwind 依赖与 `css` 脚本并更新 lock；`doctor` 报 Tailwind 版本；CI host job 的 CSS 检查不再需要 `npm ci`；`verify` 加 `css --check`/`catalog --check`。此步仍保留 `@source "../../../examples"` 与 `prefix(rui)`。
+1. **M3 工具链**：`mise.toml` 加 `"github:tailwindlabs/tailwindcss" = { version = "4.1.13", bin = "tailwindcss" }`（A-1）；`xtask/src/tailwind.rs` 解析与校验；`css.rs` 改用它，`--check` 失败时额外打印首个差异行；两份输入加 `source(none)`（产物不变，已实测）；删除 `package.json` 里的 Tailwind 依赖与 `css` 脚本并更新 lock；`doctor` 报 Tailwind 版本；CI host job 的 CSS 检查不再需要 `npm ci`；`verify` 加 `css --check`/`catalog --check`。此步仍保留 `@source "../../../examples"` 与 `prefix(rui)`。
 2. **M4 去前缀**：脚本去掉 `rui:`，按文件断言命中数（§1.1 的 673/42/1/5；`cargo fmt` 之后再核一次无残留，C-7）；输入去 `prefix(rui)`，`@theme inline` 加 `--spacing: 0.25rem`；作用域默认令牌改为 `Theme::light()` 的值；`macros/mod.rs` 删掉前缀相关用例、新增「调用方 `p-6` 替换组件 `p-4`」「调用方 `hover:bg-x` 替换组件同变体类」；stylesheet 单测加：无 `.rui\:` 选择器、无 `var(--spacing)`、默认令牌值与 `Theme::light()` 相等；`tests/browser/p3-table.spec.ts:31` 与剩余 `p2-catalog` 引用同步。
 3. **M5 应用侧**：抽出 `sdk.css`；`build-web` 编译示例 `tailwind.css`；component-catalog 新增 `tailwind.css` 并改链接；SDK 入口删掉 `@source "../../../examples"`（产物少 4 个类）；`.vscode/settings.json`；文档：`docs/quickstart.md` 新节「Using Tailwind v4 in your app」（输入模板、可用令牌 utility、`dark:` 语义、`class` 覆盖规则、宿主已有 Tailwind 时的并入方式）、`docs/architecture.md` 的样式模型、`CLAUDE.md` Conventions 的「`rui:` prefix」条目。
 
@@ -366,7 +366,7 @@ crates/rustify-components/css/sdk.css   ← @source "../src"; @custom-variant da
 | Dialog 标题栏 + 关闭按钮 | `shell/dialogs.rs:81-119` | component-catalog、fusion-basic（裸 `Layer` 3 处） | 准入 | 扩 `Dialog`（M7） |
 | 提示输入对话框、图层树、相机、历史、LRU、标尺、图标集、持久化 | — | 无或语义不同 | 不准入 | §0.5 |
 
-**Vellum 改用顺序**：监听守卫 → 快捷键防护 → Tab 循环（删两份 `trap_tab`）→ 帧/延时（删 `browser_frame.rs` 与 `app.js` 的 `__vellumAbortResource`）→ Toast 核心 → 草稿核心。每步后跑对应 Vellum 回归 spec 与 DOM 快照（§9.4）。
+**Vellum 改用顺序**：监听守卫 → 快捷键防护 → Tab 循环（删两份 `trap_tab`）→ 帧/延时（删 `browser_frame.rs` 与 `app.js` 的 `__vellumAbortResource`）→ Toast 核心 → 草稿核心。每步后跑对应 Vellum 回归 spec 与基线孪生 `visual.spec.ts`（§9.4）。
 
 **property-workbench 改用**：`main.rs:1409` 换成 `listen(window, "keydown", …)`；`main.rs:1553-1580` 换成 `listen` + `Shortcut::parse("Mod+K")`；右键菜单用 Menu 分隔线与快捷键提示（M7）。
 
@@ -404,7 +404,7 @@ crates/rustify-components/css/sdk.css   ← @source "../src"; @custom-variant da
 | `--spacing` 内联丢失 | 所有间距 | 无 | 组件间距翻倍 | 单测「无 `var(--spacing)`」；计算样式对比 | 补回 `@theme inline` | M4 |
 | 宿主页自带 Tailwind 又链接 `rustify.css` | 嵌入场景 | 无 | 同名 utility 相互覆盖 | 无自动检测（ADR-2 接受） | 按文档把 `sdk.css` 并入宿主构建 | 文档审阅 |
 | 模态 Tab 循环改变既有焦点路径 | 所有模态 | 无 | 焦点顺序变化 | `p2-a11y`、`m4-overlay`、`p2-semantics` | 修循环的可聚焦元素判定 | M6 |
-| Vellum 采用原语后行为或 DOM 变化 | Vellum | IndexedDB 保存路径不变 | 快捷键/菜单/文本会话异常 | Vellum 回归 spec + DOM 快照 | 回退该步提交 | M6/M7 |
+| Vellum 采用原语后行为或 DOM 变化 | Vellum | IndexedDB 保存路径不变 | 快捷键/菜单/文本会话异常 | Vellum 回归 spec + 基线孪生视觉对比 | 回退该步提交 | M6/M7 |
 
 - 发布顺序：按里程碑合入当前分支；M4 是破坏性改动（类名全变），与其依赖的测试字符串同一提交。
 - 回滚：每个里程碑独立可回退；M4 回退需同时回退 M5/M7（它们建立在无前缀类上）；无数据与外部契约需要补偿（`publish = false`，无仓库外使用者）。
@@ -432,7 +432,7 @@ crates/rustify-components/css/sdk.css   ← @source "../src"; @custom-variant da
 ### 9.4 真实环境与 UI
 
 - **计算样式对比（M4）**：去前缀前用 release 构建跑一次探针脚本，逐页收集 component-catalog 每个类别页亮/暗两态 `[data-rustify-scope]` 下全部元素的 `getComputedStyle` 快照；去前缀后重跑并比对，差异 0。脚本与结果存 `docs/validation/dx/`，不进回归层。
-- **Vellum DOM 快照（M6/M7）**：改造前后在同一启动文档、同一视口下序列化 `#vellum` 外壳 DOM（剔除运行期数值属性），差异只允许新增 ARIA 属性。有 `ref/` 时加跑 `visual.spec.ts`（≤2%）；没有则记「孪生未运行（A-5）」。
+- **Vellum 基线孪生（M6/M7）**：M6 开工时记录 HEAD 为基线 SHA（M1–M5 不改 Vellum 源码与产物，基线即改造前的 Vellum；M7 沿用同一基线，保证累计不回归）。在仓库外建 `git worktree`（如 `../rustify-ui-vellum-baseline`）检出基线并 `mbx xtask build-web --example vellum --release`；以 `VELLUM_TWIN=baseline VELLUM_BASELINE_DIR=<工作树> npx playwright test -c tests/vellum/playwright.config.ts visual.spec.ts` 对比 8 张视图（6 张启动页亮/暗 + 主菜单 + 帮助），每张 ≤2%，实测值写入记录；同一渲染器对同一文档，预期接近 0，非 0 差异逐项说明。A-5 判定可跑的其余孪生用例一并运行。
 - component-catalog 新类别页人工键盘走查（§6）。
 
 ### 9.5 静态校验
@@ -448,8 +448,8 @@ crates/rustify-components/css/sdk.css   ← @source "../src"; @custom-variant da
 | M3 | Tailwind 工具链：mise 二进制与精确扫描 | 无（CI 改动在 M1 之后） | A-1 核实；`mise.toml`；`xtask/src/tailwind.rs`；`css.rs` 改用并改进 `--check` 输出；`source(none)`；删 npm Tailwind 依赖；`doctor`；`verify` 加 CSS/目录检查；修 `docs/quickstart.md:47`。单人负责 `xtask/src/{tailwind,css,doctor,main}.rs`、`mise.toml`、`package*.json`；`verify.rs`/`verify.yml` 在 M1 合入后再改 | `mbx xtask css --check` 无漂移（无 `node_modules`）；新单测通过；缺二进制/错版本两种故障注入给出预期错误；`mbx xtask doctor` 显示版本；CI host job 不再为 CSS 跑 `npm ci` 且全绿；回写「实施进度」 |
 | M4 | 去掉 `rui:` 前缀 | M2、M3 | §5.2 第 2 步；改前先跑 §9.4 计算样式快照。组件 crate、component-catalog、data-workbench、两处测试字符串同一提交，单人负责（机械改写不拆） | 命中数断言与残留为 0；host 单测（含新增的覆盖、令牌值、无 `var(--spacing)`）通过；`css --check`；计算样式差异 0；component-catalog、property-workbench、data-workbench 回归层全绿；回写「实施进度」 |
 | M5 | 应用侧 Tailwind v4 | M4 | `sdk.css` 拆分；`build-web` 编译示例 `tailwind.css`；component-catalog 采用并删除 SDK 的 examples 源；`.vscode/settings.json`；quickstart/architecture/`CLAUDE.md` 样式章节。`xtask/src/build.rs` 与 CSS 文件单人负责，文档可并行 subagent | 全部 5 个示例 `build-web --release` 成功；`mbx xtask verify --suite p3 --no-browser` 的 double build 一致；`css --check`（SDK 产物少 4 个类）；component-catalog 回归层全绿；新增「调用方类覆盖组件类」浏览器断言通过；文档路径检查通过；回写「实施进度」 |
-| M6 | Vellum 抽取（一）：SDK 行为原语 | M2（可与 M4/M5 并行：文件集不相交，浏览器验证与 M4/M5 串行排队） | `listen`、`shortcut`、`Layer` Tab 循环、`defer`/`defer_after`/`next_frame`；Vellum 按 §5.3 顺序改用并删除 `trap_tab`、`browser_frame.rs`、`__vellumAbortResource`、三份死 CSS；property-workbench 两处改用；data-workbench、fusion-basic 的 `defer` 改用 SDK 出口。SDK 原语与 Vellum 改用可拆给两个 subagent（先定接口，SDK 先合） | host 单测（shortcut 表）；Vellum 回归层全绿；property-workbench、component-catalog、fusion-basic 回归层全绿（`Layer` 变化影响面）；Vellum DOM 快照仅增 ARIA；示例对私有出口的直连为 0（NFR-7）；有 `ref/` 则孪生 ≤2%，否则记未运行；回写「实施进度」 |
-| M7 | Vellum 抽取（二）：目录新组件 | M4、M6；ADR-4/D19 确认 | Toast 核心与组件、`Draft` 与 NumberField/ColorField、ToggleGroup、Menu 与 Dialog 扩展；`CATALOG` 24 类与 `docs/components.md`；component-catalog 四个新页与 spec；Vellum 改用 Toast/草稿核心；property-workbench 右键菜单改用扩展；`docs/architecture.md` 受控值例外。四个组件可分给 subagents（各自文件；`catalog.rs`、`lib.rs` 导出与 component-catalog `main.rs` 归主 agent） | host 单测（Draft、Toast、目录）；`css --check`、`catalog --check`；component-catalog、property-workbench、Vellum 回归层全绿；Vellum DOM 快照仅增 ARIA；新类别页人工键盘走查记录；回写「实施进度」 |
+| M6 | Vellum 抽取（一）：SDK 行为原语 | M2（可与 M4/M5 并行：文件集不相交，浏览器验证与 M4/M5 串行排队） | `listen`、`shortcut`、`Layer` Tab 循环、`defer`/`defer_after`/`next_frame`；Vellum 按 §5.3 顺序改用并删除 `trap_tab`、`browser_frame.rs`、`__vellumAbortResource`、三份死 CSS；property-workbench 两处改用；data-workbench、fusion-basic 的 `defer` 改用 SDK 出口；开工先接入 Vellum 基线孪生模式（D8：`twin.ts`、`tests/vellum/playwright.config.ts`）并按 A-5 试跑孪生用例；`evidence.yml` 的手动触发加可选输入 `vellum_baseline`（commit SHA），给出时构建该 commit 的 Vellum 作孪生。SDK 原语与 Vellum 改用可拆给两个 subagent（先定接口，SDK 先合） | host 单测（shortcut 表）；Vellum 回归层全绿；property-workbench、component-catalog、fusion-basic 回归层全绿（`Layer` 变化影响面）；基线孪生 `visual.spec.ts` 8 张视图每张 ≤2% 并记录实测值（§9.4）；示例对私有出口的直连为 0（NFR-7）；回写「实施进度」 |
+| M7 | Vellum 抽取（二）：目录新组件 | M4、M6；ADR-4/D19 确认 | Toast 核心与组件、`Draft` 与 NumberField/ColorField、ToggleGroup、Menu 与 Dialog 扩展；`CATALOG` 24 类与 `docs/components.md`；component-catalog 四个新页与 spec；Vellum 改用 Toast/草稿核心；property-workbench 右键菜单改用扩展；`docs/architecture.md` 受控值例外。四个组件可分给 subagents（各自文件；`catalog.rs`、`lib.rs` 导出与 component-catalog `main.rs` 归主 agent） | host 单测（Draft、Toast、目录）；`css --check`、`catalog --check`；component-catalog、property-workbench、Vellum 回归层全绿；基线孪生 `visual.spec.ts` 每张 ≤2%（同 M6 基线）；新类别页人工键盘走查记录；回写「实施进度」 |
 | M8 | 收尾：全量验收与文档 | M1–M7 | 全部回归层 + 证据层各一轮；`verify --suite p3`；`docs/vellum.md` 写明 Vellum 现在用了哪些 SDK 原语；`docs/architecture.md` 测试分层节；`CLAUDE.md` 同步（命令、twenty→twenty-four、前缀、mise Tailwind）；计划自检 | 每个 project 回归层与证据层全绿；`mbx xtask verify --suite p3` 自动项 0 失败；CI（PR matrix + 一次手动 evidence）全绿；NFR-1 实测对照 D9 写入记录；`check_paths`/`check_progress` 通过；回写「实施进度」 |
 
 并行说明：M1 ∥ M3——M1 负责 `tests/`、`playwright.config.ts`、`xtask/src/serve.rs`，M3 负责 `xtask/src/{tailwind,css,doctor,main}.rs`、`mise.toml`、`package*.json`；两者都要改的 `xtask/src/verify.rs` 与 `.github/workflows/verify.yml` 先 M1 后 M3；M6 ∥ M4/M5 的代码编写（`crates/rustify-ui` + `examples/vellum`、`examples/property-workbench` 与 `crates/rustify-components` + `xtask` 不相交），但任何时刻只有一个 Playwright 运行、测时长时不并行跑 cargo（C-6、§12）。
@@ -461,9 +461,9 @@ crates/rustify-components/css/sdk.css   ← @source "../src"; @custom-variant da
 | D9 的 NFR-1 目标值（20 min / 10 min） | M2 的成败判定 | 用户确认或给出其他数字 | M2 退出前 | 否 |
 | ADR-4 受控值例外 | 运行时契约文字；M7 两个组件 | 用户确认；不接受则 NumberField/ColorField 退出本期、Vellum 草稿留在示例 | M7 开工前 | 否（M1–M6 不依赖） |
 | D19 新增四个目录类别 | 目录范围与文档 | 用户确认或删减；删减项进 §0.5 | M7 开工前 | 否 |
-| A-1 mise 注册表 | M3 工具来源 | M3 开工核实；备选 `github:` 后端 | M3 | 否（有备选） |
+| A-1 mise `github:` 后端选资产 | M3 工具来源 | M3 开工 `mise install` 核实；歧义时逐平台 `asset_pattern` | M3 | 否（有备选） |
 | A-2 共享 context 收益 | D4 的具体手段 | M1 探针 | M2 开工 | 否（有备选） |
-| A-5 缺 `ref/` | Vellum 孪生门无法复核 | DOM 快照替代；需要时向用户要 | M8 | 否 |
+| A-5 基线孪生的覆盖面 | 哪些孪生用例能对 `examples/vellum` 基线运行 | M6 开工逐个试跑 | M6 | 否（`visual.spec.ts` 只依赖截图流程） |
 | A-6 CI 并行容量 | D7 形态 | M2 实跑 | M2 | 否 |
 | 证据层最长一周的发现延迟 | 性能回归晚发现 | ADR-1 接受；里程碑退出仍跑证据层 | — | 否 |
 
@@ -482,7 +482,7 @@ crates/rustify-components/css/sdk.css   ← @source "../src"; @custom-variant da
 - Tailwind v4 一次构建只有一个前缀（本次实测）→ ADR-2 的前提。
 - 去前缀后 `--spacing` 与 SDK 令牌同名（本次实测）→ D12。
 - 脚本化替换后 `cargo fmt` 会重排行（`CLAUDE.md`「Scripted edits」）→ M4 断言命中数并在 fmt 后复查。
-- Vellum spec 钉住 DOM 钩子（`tests/vellum/*`）且孪生门需要 `ref/`（`tests/vellum/twin.ts:6`）→ D18、A-5。
+- Vellum spec 钉住 DOM 钩子（`tests/vellum/*`）；`openTwin` 用 `?canvas` 打开孪生并断言后端为「Canvas 2D」（`tests/vellum/twin.ts:9-13`），对 `examples/vellum` 基线必须改为「Makepad WebGL2」→ D8、D18、A-5。
 - `Layer` 靠 inert 而非 Tab 循环（`crates/rustify-ui/src/overlay.rs:286-293`）；`p2-a11y` 断言「键盘永不被困」（`tests/browser/p2-a11y.spec.ts:9-11`）→ Tab 循环只在模态层内，关闭后焦点归还不变。
 - Leptos `window_event_listener` 不带实例 abort signal（`examples/property-workbench/src/main.rs:1409`）→ M6 改用 `listen`。
 
@@ -492,14 +492,14 @@ crates/rustify-components/css/sdk.css   ← @source "../src"; @custom-variant da
 | --- | --- | --- | --- | --- |
 | R-1 | 测试显著变快 | ADR-1、D2–D7、§5.1 | M2 各 project 墙钟、CI job 时长 | 覆盖 |
 | R-2 | 证据类移出 PR、去重、补单测 | ADR-1、§5.1 去重表、D7 | `--list` 守恒 + 删除清单；`--lib --bins` | 覆盖 |
-| R-3 | 从 Vellum 抽公共组件 | ADR-5、D16–D19、§5.3 | M6/M7 单测与回归、DOM 快照、NFR-7 检查 | 覆盖 |
+| R-3 | 从 Vellum 抽公共组件 | ADR-5、D16–D19、§5.3 | M6/M7 单测与回归、基线孪生视觉、NFR-7 检查 | 覆盖 |
 | R-4 | 去 `rui:` 前缀 | ADR-2、D12、§5.2 | M4 命中数、计算样式差异 0、`merge` 覆盖单测 | 覆盖 |
 | R-5 | 应用侧友好的 Tailwind v4 | ADR-3、D13–D15、§5.2 | M5 构建、double build、覆盖断言、文档 | 覆盖 |
 | R-6 | mise 固定 CLI，无 Node | D10、§5.2 | M3 无 `node_modules` 的 `css --check`、故障注入 | 覆盖 |
 | NFR-1 | 墙钟目标 | D9 | M2/M8 实测对照 | 目标待确认 |
 | NFR-2 | 证据保真 | ADR-1 | 计数守恒；证据层全绿 | 覆盖 |
 | NFR-3 | 构建效率与产物 | D10/D11/D14 | `css --check`、double build | 覆盖 |
-| NFR-4 | 视觉不回归 | D12、D18、§9.4 | 计算样式快照；Vellum DOM 快照；孪生（A-5） | 覆盖 |
+| NFR-4 | 视觉不回归 | D12、D18、§9.4 | 计算样式快照；Vellum 基线孪生视觉（A-5） | 覆盖 |
 | NFR-5 | 隔离修订 | ADR-2 | host 单测；宿主外观用例 | 覆盖 |
 | NFR-6 | 可访问性 | §6、`Layer` Tab 循环 | 新 spec；`p2-a11y` | 覆盖 |
 | NFR-7 | 去掉私有直连 | D17 | M6 `rg` 检查 | 覆盖 |
@@ -511,11 +511,11 @@ crates/rustify-components/css/sdk.css   ← @source "../src"; @custom-variant da
 | C-6 | Playwright 使用纪律 | §9、§10 并行说明 | 执行审阅 | 覆盖 |
 | C-7 | 中文计划、证据位置、源码无编号、脚本断言 | 全文、M4 | 记录审阅 | 覆盖 |
 | C-8 | 不擅自装服务；不新开分支 | A-1、A-5 | 执行审阅 | 覆盖 |
-| C-9 | Vellum 视觉与钩子 | D18、ADR-5 | DOM 快照；孪生（A-5） | 覆盖 |
-| A-1 | mise 注册表 | D10 | M3 开工核实 | 开放 |
+| C-9 | Vellum 视觉与钩子 | D18、ADR-5 | 基线孪生视觉；Vellum 回归 spec | 覆盖 |
+| A-1 | mise `github:` 后端 | D10 | M3 开工 `mise install` 核实 | 开放 |
 | A-2 | 共享 context 收益 | D4 | M1 探针 | 开放 |
 | A-3 | 3 回合足够 | D3 | 接受；证据层兜底 | 接受 |
 | A-4 | argv 过滤 webServer | D6 | M1 | 开放 |
-| A-5 | 缺 `ref/` | §9.4 | DOM 快照替代 | 开放 |
+| A-5 | `examples/vellum` 基线作孪生 | D8、§9.4 | M6 开工接入并试跑 | 开放 |
 | A-6 | CI 并行容量 | D7 | M2 实跑 | 开放 |
 | — | **不在本期：CI 换 OS、Rust 级 DOM 测试、Vellum 改用样式组件、未准入的 Vellum 件、CSS watch、按组件裁剪、手写规则分层、主题模型扩展、改写历史计划** | §0.5 | 各自触发条件 | 排除 |
