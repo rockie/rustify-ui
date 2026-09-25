@@ -1,10 +1,12 @@
 # Component catalogue
 
-R18 asks for eighteen categories with no blank support cell. There are twenty:
-the table and the tree that large data needed are categories of their own
-rather than something R18 named. All twenty have a DOM component; what differs
-between them is what a GPU region can draw of one, and every row says which and
-why. The table is generated from
+R18 asks for eighteen categories with no blank support cell. There are
+twenty-four: the table and the tree that large data needed are categories of
+their own rather than something R18 named, and so are the four the Vellum
+example gave up once each had a second caller - a toast, a number field, a
+colour field and a toggle group. All twenty-four have a DOM component; what
+differs between them is what a GPU region can draw of one, and every row says
+which and why. The table is generated from
 `crates/rustify-components/src/catalog.rs` by `mbx xtask catalog --write
 docs/components.md`, and `--check` fails when the two disagree.
 
@@ -28,14 +30,25 @@ implemented with the stated limit, `no` means not in this release. There is no
 fourth value: a question nobody answered would be a gap in the catalogue, not a
 state a component can be in.
 
-Six categories have no GPU half, and for three different reasons. A tooltip, a
+Ten categories have no GPU half, and for four different reasons. A tooltip, a
 menu and a dialog are DOM layers *anchored to* a region rather than drawn
 inside one: a popup that has to escape the canvas cannot be drawn in it. A link
 is the odd one out - a region reports a click and the application navigates,
 because a region never touches the page's history (C-5). A data table and a
 tree are DOM because what they are for is semantics: a row number a screen
 reader can say, a cell a keyboard can reach, text an input method can edit
-(`docs/data.md`). A region draws the band beside the table, not the table.
+(`docs/data.md`). A region draws the band beside the table, not the table. The
+last four are the editor's controls: a toast is a live region a reader has to
+hear, and a number field, a colour field and a toggle group edit a value that
+a region takes as a projection like any other.
+
+The number field and the colour field are the one exception to controlled
+values (`docs/architecture.md`): while one has focus it keeps the text being
+typed as a draft - `-`, `1e` and `#1f` are on the way to a value without being
+one - and asks the application for a preview on every value it can read, then
+once more to commit when the edit ends. Leaving the field puts it back on the
+application's value. The rules are the SDK's `Draft`, and the same rules drive
+the editor example's own fields.
 
 <!-- catalogue -->
 | category | DOM | GPU | across regions | properties | actions | theme | input | accessibility | environment |
@@ -54,18 +67,22 @@ reader can say, a cell a keyboard can reach, text an input method can edit
 | progress | yes | yes | yes | yes — value, max, and whether the quantity is known at all | no — none; it is a reading | yes — the track and the filled part | no — none | yes — role=progressbar; with nothing known it carries no aria-valuenow, which says 'in progress' rather than 'nothing done' | partial — the region draws a known fraction; an unknown one is the DOM's, because animating it in a region would keep the page's GPU awake |
 | loading | yes | yes | yes | yes — whether it is spinning, and the four states of Load in the SDK's own LoadView: loading, empty, ready, error | yes — one application-defined retry on the error state | yes — the arc takes the text colour around it | yes — the retry control is an ordinary button | yes — role=status with a name, so the state is announced rather than only drawn | yes — a region's arc turns on the pass clock and asks for the next frame only while it is spinning; a scope that asks for less motion gets the same arc held still |
 | tooltip | yes | no | yes | yes — open and the text; the application owns whether it is showing | yes — open-change on pointer and on focus, which is what the imported one lacked and what made it invisible to a keyboard | yes — the layer surface and its text | yes — hover and focus both open it; Escape closes the top layer only | yes — role=tooltip, attached to the control it describes rather than to a wrapper no reader announces | partial — a region's tooltip is a DOM layer anchored to a rectangle inside it; a popup drawn in the canvas cannot leave it (F16) |
-| menu | yes | no | yes | yes — open, the items, and a reason on any item that cannot run; a command that cannot run stays in the list | yes — activation and open-change; activating an item closes the menu once | yes — the panel surface, its border and the hovered row | yes — the arrows and Home/End move within it, Enter and Space activate, Escape closes the top layer only | yes — role=menu over menuitems, the keyboard lands on the first reachable one, and focus returns to what opened it | partial — anchors to a rectangle inside a region within one CSS pixel, but does not flip or clamp to the viewport |
-| dialog | yes | no | yes | yes — open, title, description, modal, and whether the backdrop dismisses it | yes — open-change; Escape closes the top layer only | yes — the panel surface, its border and the backdrop | yes — the keyboard cannot leave a modal one, and clicks do not reach what it covers, region included | yes — role=dialog with aria-modal, labelled by its own title and described by its own description; focus returns on close | partial — a modal covers the scope's regions as well as its DOM and clicks reach neither; only this scope is made inert, and a host page outside it is not |
+| menu | yes | no | yes | yes — open, the items, group headings, separators, the application's shortcut beside a command, and a reason on any item that cannot run; a command that cannot run stays in the list | yes — activation and open-change; activating an item closes the menu once | yes — the panel surface, its border, the hovered row, the headings, the separators and the shortcut column | yes — the arrows and Home/End move within it over the headings and separators, Enter and Space activate, Escape closes the top layer only | yes — role=menu over menuitems, groups named by their headings, separators, aria-keyshortcuts for every shortcut shown; the keyboard lands on the first reachable item, and focus returns to what opened it | partial — anchors to an element, a point, or a rectangle inside a region within one CSS pixel, and moves left or opens above rather than leave the viewport; it is a DOM layer, because a popup drawn in the canvas cannot leave it |
+| dialog | yes | no | yes | yes — open, title, description, modal, whether the backdrop dismisses it, and a title bar whose close button is named in the scope's language unless the application names it | yes — open-change; the close button and Escape send the same request, and Escape closes the top layer only | yes — the panel surface, its border and the backdrop | yes — the keyboard cannot leave a modal one, and clicks do not reach what it covers, region included | yes — role=dialog with aria-modal, labelled by its own title and described by its own description; focus returns on close | partial — a modal covers the scope's regions as well as its DOM and clicks reach neither; only this scope is made inert, and a host page outside it is not |
 | tabs | yes | partial | yes | yes — the tabs, which is active, and whether one is disabled; the panels stay in the document so what is in them survives a look elsewhere | yes — activate; the application owns which tab is showing | yes — the strip, the active tab's face and the focus ring | yes — one tab stop for the strip, the arrows and Home/End within it, wrapping and stepping over the unreachable | yes — a tablist over tabs and tabpanels, each panel labelled by its own tab | partial — experimental in a region: the strip is drawn and reports which tab was asked for, and the panel below it is the application's to draw |
 | scroll area | yes | yes | yes | yes — what it contains, and whether a wheel arriving at the edge scrolls the page behind it | no — none of its own; the scrolling is the browser's | yes — the scrollbar takes the scope's border colour rather than the browser's | yes — wheel, drag and the keyboard - it takes a tab stop, because a box only a mouse can scroll is unreachable without one | yes — role=group with a name, so a reader knows which box the keyboard landed in | partial — a region's is makepad's own ScrollBars on a View; the boundary a wheel is handed back at is P2 M6 |
 | data table | yes | no | partial | yes — how many rows, which columns, a callback per cell and a callback per row identity; it holds no data, so a sorted, filtered or edited view is the same table asked different questions | yes — select a row, open a row, and ask to be shown a row; scrolling is the browser's | yes — border, muted header and the accent a selected row is drawn in | yes — pointer, the arrows, PageUp/PageDown, Home/End and Ctrl+Home/End, Space to select and Enter or F2 to open | yes — role=grid with aria-rowcount over every row, not only the drawn ones; each row carries its real aria-rowindex and its business id, and one cell at a time takes the tab stop | partial — macOS Chrome, strict CSP; no region draws a table - the GPU half of this load is the selection strip beside it - and the row elements are a pool, so a reader meets the rows on screen plus the overscan and reaches the rest by scrolling |
 | tree | yes | no | partial | partial — two fixed levels of groups, which are open, and which one is chosen; no arbitrary depth and no virtualisation | yes — open or close a group, and choose one | yes — accent for the chosen group and the scope's focus ring | yes — pointer; the arrows walk what is showing, right opens a group and steps into it, left closes one and steps out of a child | yes — role=tree and role=treeitem with aria-expanded, aria-level and aria-selected; one tab stop for the whole tree | partial — macOS Chrome, strict CSP, no inline script or style; no region draws a tree - a region takes the group a person chose as a projection, like any other value |
+| toast | yes | no | no | yes — the message, how long it stays and a tone; a newer message replaces the one showing rather than queueing behind it | yes — show, dismiss and hide on its own; a timer set for a message that was replaced leaves its successor alone | yes — the popover surface, its border, and a coloured edge per tone; the tone changes how it looks and nothing else | yes — the dismiss button, by pointer or keyboard; the message takes no focus and answers no Escape | yes — role=status with aria-live=polite, present while empty so a reader knows it before it speaks; the dismiss button is named in the scope's language | partial — macOS Chrome, strict CSP; drawn in the scope's overlay plane but not a layer, so a modal does not make it inert; it shows over a region and no region draws one |
+| number field | yes | no | partial | yes — value, min, max, step, disabled, read-only, invalid; the bounds are announced, and clamping is the application's | yes — a preview for every number typed, one commit when the edit ends, a cancel when Escape abandons one; the application may refuse any of them | yes — the text field's tokens, with the destructive border while the draft is not a number | yes — typing keeps a draft while the field has focus; Enter or leaving commits, Escape reverts, Up/Down ask for one step and Page Up/Page Down for ten | yes — role=spinbutton with aria-valuenow, aria-valuemin and aria-valuemax; aria-invalid while the draft does not parse | partial — macOS Chrome, strict CSP; the draft is the one exception to controlled values and lives only inside the focused field; no region draws one - a region takes the number as a projection |
+| color field | yes | no | partial | yes — value as hex, whether an opacity is allowed, disabled, read-only, invalid; #rgb and #rrggbb, and #rgba and #rrggbbaa with an opacity | yes — a preview for every colour typed, one commit when the edit ends, a cancel when Escape abandons one | yes — the text field's tokens, and a swatch of the application's colour painted through the CSS object model | yes — typing keeps a draft while the field has focus; Enter or leaving commits, Escape reverts | yes — a named text field with aria-invalid while the draft is not a colour; the swatch is decoration and stays out of the tree | partial — macOS Chrome, strict CSP, no style attribute; no region draws one - a region takes the colour as a projection, like any other value |
+| toggle group | yes | no | partial | yes — which are pressed, one at a time or several, the buttons, disabled, and whether it is a toolbar; a button can be disabled on its own | yes — a press asks for the set the group would have afterwards; the application owns which are pressed | yes — the pressed face in the primary colour, the toolbar's bar and the focus ring | yes — one tab stop for the group, the arrows and Home/End within it, wrapping and stepping over the unreachable; Enter and Space press | yes — role=group or role=toolbar with a name, each button aria-pressed | partial — macOS Chrome, strict CSP; no region draws one - a region takes what is pressed as a projection, like any other value |
 <!-- catalogue -->
 
 ## Where they live
 
-- The twenty DOM components — `crates/rustify-components/src/`, one file per
-  category. The class strings came from Rust/UI; `sources.lock.json` records
+- The twenty-four DOM components — `crates/rustify-components/src/`, one file
+  per category. The class strings came from Rust/UI; `sources.lock.json` records
   what was imported and what the rewrite changed.
 - The GPU halves — `crates/rustify-ui/src/gpu/`. `RustifyButton`,
   `RustifyCheckBox`, `RustifyRadio`, `RustifyToggle`, `RustifySlider`,
@@ -73,8 +90,10 @@ reader can say, a cell a keyboard can reach, text an input method can edit
   ones, `RustifyDropDown` and `RustifyTabBar`. A scrolling region is makepad's
   own `ScrollBars` on a `View`.
 - The overlay four stand on the SDK's layer stack —
-  `crates/rustify-ui/src/overlay.rs` — which owns anchoring, the Escape order,
-  the focus trap and the return of focus.
+  `crates/rustify-ui/src/overlay.rs` — which owns anchoring, keeping a menu
+  inside the viewport, the Escape order, the focus trap and the return of
+  focus. The toast is drawn in the same overlay plane but is not a layer: it
+  takes no focus and answers no Escape (`crates/rustify-ui/src/toast.rs`).
 - P1's own component subset is still where it was
   (`crates/rustify-ui/src/components.rs`) and is unchanged: the two examples
   built on it keep working, and the new crate is where `class` and the

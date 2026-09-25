@@ -10,6 +10,7 @@
 pub mod button;
 pub mod catalog;
 pub mod checkbox;
+pub mod color_field;
 pub mod data_table;
 mod dom;
 #[cfg(target_arch = "wasm32")]
@@ -23,6 +24,8 @@ pub mod input;
 pub mod label;
 pub mod link;
 pub mod macros;
+pub mod menu;
+pub mod number_field;
 pub mod progress;
 pub mod radio;
 pub mod roving;
@@ -32,16 +35,18 @@ pub mod spinner;
 pub mod switch;
 pub mod tabs;
 pub mod textarea;
+#[cfg(target_arch = "wasm32")]
+pub mod toast;
+pub mod toggle_group;
 pub mod tree;
 pub mod workspace;
 
 // The four that float. They stand on the SDK's overlay stack - positioning,
 // the Escape order and the return of focus are its, not theirs - and the stack
-// only exists in a browser.
+// only exists in a browser. The menu's module is not gated because its items
+// are plain data with rules of their own; its component is.
 #[cfg(target_arch = "wasm32")]
 pub mod dialog;
-#[cfg(target_arch = "wasm32")]
-pub mod menu;
 #[cfg(target_arch = "wasm32")]
 pub mod select;
 #[cfg(target_arch = "wasm32")]
@@ -50,6 +55,8 @@ pub mod tooltip;
 pub use button::{Button, ButtonSize, ButtonVariant};
 pub use catalog::{Capability, Category, Entry, Presentation, Support, CATALOG};
 pub use checkbox::Checkbox;
+#[cfg(target_arch = "wasm32")]
+pub use color_field::ColorField;
 #[cfg(target_arch = "wasm32")]
 pub use data_table::{Column, DataTable};
 #[cfg(target_arch = "wasm32")]
@@ -61,6 +68,9 @@ pub use icon::{Glyph, Icon};
 pub use input::{TextField, TextKind};
 pub use label::Label;
 pub use link::{Link, LinkMatch};
+pub use menu::{MenuItem, MenuItemKind};
+#[cfg(target_arch = "wasm32")]
+pub use number_field::NumberField;
 pub use progress::Progress;
 pub use radio::{RadioGroup, RadioOption};
 pub use scroll_area::{Boundary, ScrollArea};
@@ -69,6 +79,9 @@ pub use spinner::Spinner;
 pub use switch::Switch;
 pub use tabs::{Orientation, Tab, TabPanel, Tabs};
 pub use textarea::TextArea;
+#[cfg(target_arch = "wasm32")]
+pub use toast::{Toast, Toaster};
+pub use toggle_group::{ToggleGroup, ToggleItem};
 #[cfg(target_arch = "wasm32")]
 pub use tree::Tree;
 pub use tree::TreeNode;
@@ -79,7 +92,7 @@ pub use workspace::{PanelTab, PanelTabs, Splitter};
 #[cfg(target_arch = "wasm32")]
 pub use dialog::Dialog;
 #[cfg(target_arch = "wasm32")]
-pub use menu::{Menu, MenuItem};
+pub use menu::{anchor_at, Menu};
 #[cfg(target_arch = "wasm32")]
 pub use select::{Select, SelectOption};
 #[cfg(target_arch = "wasm32")]

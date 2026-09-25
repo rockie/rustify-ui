@@ -45,6 +45,29 @@ impl LocalRect {
         (self.x, self.y + self.height)
     }
 
+    /// Top-left of a layer of `size` placed against this rectangle and kept
+    /// inside a viewport of `viewport`, moved as little as that takes.
+    ///
+    /// Across, it keeps the anchor's left edge until that would carry it past
+    /// the right edge, and then ends at that edge instead. Down, it goes under
+    /// the anchor if it fits there, over the anchor if it fits there, and
+    /// otherwise as low as the viewport allows. The top-left corner never
+    /// leaves the viewport: a layer larger than it is cut off at the far
+    /// edges, so its first items stay in reach.
+    pub fn below_within(self, size: (f64, f64), viewport: (f64, f64)) -> (f64, f64) {
+        let (width, height) = size;
+        let x = self.x.min(viewport.0 - width).max(0.0);
+        let under = self.y + self.height;
+        let y = if under + height <= viewport.1 {
+            under
+        } else if self.y - height >= 0.0 {
+            self.y - height
+        } else {
+            (viewport.1 - height).max(0.0)
+        };
+        (x, y)
+    }
+
     /// Top-left of a layer of `size` centred in a viewport of `viewport`.
     pub fn centred(viewport: (f64, f64), size: (f64, f64)) -> (f64, f64) {
         (
@@ -613,6 +636,16 @@ mod dom {
         )
     }
 
+    /// The part of the viewport a fixed layer can be seen in: the window less
+    /// its scroll bars, which would otherwise cover a layer placed flush with
+    /// the edge.
+    fn visible_area() -> (f64, f64) {
+        match document().document_element() {
+            Some(root) => (root.client_width() as f64, root.client_height() as f64),
+            None => viewport(),
+        }
+    }
+
     /// One layer of the scope's stack.
     ///
     /// The application owns whether the layer exists; `on_close` is how the
@@ -624,6 +657,11 @@ mod dom {
         #[prop(optional)]
         modal: bool,
         #[prop(into)] anchor: Signal<Anchor>,
+        /// Keeps an anchored layer inside the viewport, moving it off its
+        /// anchor as little as that takes. Off, the layer stays exactly under
+        /// its anchor wherever that is.
+        #[prop(optional)]
+        fit: bool,
         on_close: impl Fn() + Send + Sync + 'static,
         /// The id of the element that names this layer, for the layers that
         /// carry a role a reader announces. A modal dialog needs one; a
@@ -667,6 +705,12 @@ mod dom {
                         return;
                     };
                     let (x, y) = match rect {
+                        Some(rect) if fit => {
+                            // Fractional: a layer placed flush with the right
+                            // edge a rounding short of its width would wrap.
+                            let measured = element.get_bounding_client_rect();
+                            rect.below_within((measured.width(), measured.height()), visible_area())
+                        }
                         Some(rect) => rect.below(),
                         None => LocalRect::centred(
                             viewport(),
@@ -779,6 +823,48 @@ mod tests {
         assert_eq!(
             LocalRect::new(180.0, 110.0, 72.0, 52.0).below(),
             (180.0, 162.0)
+        );
+    }
+
+    #[test]
+    fn a_fitted_layer_stays_under_its_anchor_while_it_fits_there() {
+        let anchor = LocalRect::new(100.0, 50.0, 80.0, 30.0);
+        assert_eq!(
+            anchor.below_within((160.0, 120.0), (1000.0, 800.0)),
+            anchor.below()
+        );
+    }
+
+    #[test]
+    fn a_fitted_layer_moves_left_rather_than_past_the_right_edge() {
+        // A point near the right edge, as a context menu opens at.
+        let point = LocalRect::new(950.0, 100.0, 0.0, 0.0);
+        assert_eq!(
+            point.below_within((160.0, 120.0), (1000.0, 800.0)),
+            (840.0, 100.0)
+        );
+    }
+
+    #[test]
+    fn a_fitted_layer_goes_over_its_anchor_when_it_does_not_fit_under() {
+        let anchor = LocalRect::new(100.0, 700.0, 80.0, 30.0);
+        assert_eq!(
+            anchor.below_within((160.0, 120.0), (1000.0, 800.0)),
+            (100.0, 580.0)
+        );
+    }
+
+    #[test]
+    fn a_fitted_layer_that_fits_neither_side_is_as_low_as_the_viewport_allows() {
+        let anchor = LocalRect::new(100.0, 60.0, 80.0, 30.0);
+        assert_eq!(
+            anchor.below_within((160.0, 120.0), (1000.0, 160.0)),
+            (100.0, 40.0)
+        );
+        // Larger than the viewport: the top-left corner stays reachable.
+        assert_eq!(
+            anchor.below_within((1200.0, 900.0), (1000.0, 800.0)),
+            (0.0, 0.0)
         );
     }
 

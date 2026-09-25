@@ -44,7 +44,7 @@ pub enum Orientation {
 }
 
 impl Orientation {
-    fn attribute(self) -> &'static str {
+    pub(crate) fn attribute(self) -> &'static str {
         match self {
             Self::Horizontal => "horizontal",
             Self::Vertical => "vertical",
@@ -52,7 +52,7 @@ impl Orientation {
     }
 
     /// The key that moves one step along, and the one that moves one back.
-    fn steps(self, key: &str) -> Option<i32> {
+    pub(crate) fn steps(self, key: &str) -> Option<i32> {
         match (self, key) {
             (Self::Horizontal, "ArrowRight") | (Self::Vertical, "ArrowDown") => Some(1),
             (Self::Horizontal, "ArrowLeft") | (Self::Vertical, "ArrowUp") => Some(-1),

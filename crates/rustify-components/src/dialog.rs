@@ -6,13 +6,19 @@
 //! id. There was no `role="dialog"`, no `aria-modal`, and no focus trap. Here
 //! the application owns `open`, and the trap, the Escape order and the return
 //! of focus belong to the SDK's overlay stack.
+//!
+//! The title and the close button share a bar at the top. The button comes
+//! right after the title in the document, so it is the first thing the
+//! keyboard reaches: the one control in any dialog that is always safe to
+//! press. It and Escape make the same request.
 
 use leptos::prelude::*;
 use rustify_ui::{Anchor, Layer};
 
 const PANEL: &str = "relative w-full max-w-lg rounded-lg border border-border bg-popover p-6 shadow-lg flex flex-col gap-4";
+const TITLE_BAR: &str = "flex items-start gap-4";
 const BACKDROP: &str = "fixed inset-0 bg-foreground/30";
-const CLOSE: &str = "absolute top-4 right-4 rounded-sm p-1 text-muted-foreground transition-colors cursor-pointer outline-none hover:bg-muted focus-visible:ring-ring/50 focus-visible:ring-[3px]";
+const CLOSE: &str = "-me-2 -mt-2 shrink-0 rounded-sm p-1 text-muted-foreground transition-colors cursor-pointer outline-none hover:bg-muted focus-visible:ring-ring/50 focus-visible:ring-[3px]";
 
 #[component]
 pub fn Dialog(
@@ -30,7 +36,8 @@ pub fn Dialog(
     /// convention; a dialog that would lose work should say otherwise.
     #[prop(default = true)]
     close_on_backdrop: bool,
-    /// The label on the close button, in the application's language.
+    /// The label on the close button, in the application's language. Left
+    /// out, the SDK's own word for closing, in the scope's language.
     #[prop(optional, into)]
     close_label: String,
     #[prop(optional, into)] class: String,
@@ -41,12 +48,23 @@ pub fn Dialog(
     let title_id = StoredValue::new(format!("{group}-title"));
     let description_id = StoredValue::new(format!("{group}-description"));
     let panel_class = StoredValue::new(crate::macros::merge(PANEL, &class));
+    // Named after the dialog, so two dialogs on a page have two.
+    let close_test_id = StoredValue::new(if test_id.is_empty() {
+        "dialog-close".to_string()
+    } else {
+        format!("{test_id}-close")
+    });
     let panel_test_id = StoredValue::new(test_id);
     // The application's word if it gave one; otherwise the SDK's, in the
     // scope's language. Read on each render rather than fixed at build time,
     // so switching language relabels a dialog that is already open.
     let locale = rustify_ui::use_locale();
     let close_label = StoredValue::new((!close_label.is_empty()).then_some(close_label));
+    let close_name = move || {
+        close_label
+            .get_value()
+            .unwrap_or_else(|| locale.text(rustify_ui::Message::Close).to_string())
+    };
     let on_open_change = StoredValue::new(on_open_change);
     let close = move || on_open_change.with_value(|close| close(false));
     let described = Memo::new(move |_| !description.get().is_empty());
@@ -82,39 +100,38 @@ pub fn Dialog(
                     />
                 </Show>
                 <div class=move || panel_class.get_value() data-name="Dialog">
-                    <header class="flex flex-col gap-2 pr-8">
-                        <h2
-                            id=move || title_id.get_value()
-                            class="text-lg leading-none font-semibold text-foreground"
-                        >
-                            {move || title.get()}
-                        </h2>
-                        <Show when=move || described.get() fallback=|| ()>
-                            <p
-                                id=move || description_id.get_value()
-                                class="text-sm text-muted-foreground"
+                    <header class=TITLE_BAR data-name="DialogTitleBar">
+                        <div class="flex flex-1 flex-col gap-2">
+                            <h2
+                                id=move || title_id.get_value()
+                                class="text-lg leading-none font-semibold text-foreground"
                             >
-                                {move || description.get()}
-                            </p>
-                        </Show>
+                                {move || title.get()}
+                            </h2>
+                            <Show when=move || described.get() fallback=|| ()>
+                                <p
+                                    id=move || description_id.get_value()
+                                    class="text-sm text-muted-foreground"
+                                >
+                                    {move || description.get()}
+                                </p>
+                            </Show>
+                        </div>
+                        // The same request as Escape: the stack's `on_close`
+                        // and this are one function.
+                        <button
+                            type="button"
+                            class=CLOSE
+                            data-name="DialogClose"
+                            data-testid=move || close_test_id.get_value()
+                            aria-label=close_name
+                            title=close_name
+                            on:click=move |_| close()
+                        >
+                            <crate::icon::Icon glyph=crate::icon::Glyph::Close />
+                        </button>
                     </header>
                     {move || children.with_value(|children| children())}
-                    <button
-                        type="button"
-                        class=CLOSE
-                        data-name="DialogClose"
-                        data-testid="dialog-close"
-                        aria-label=move || {
-                            close_label
-                                .get_value()
-                                .unwrap_or_else(|| {
-                                    locale.text(rustify_ui::Message::Close).to_string()
-                                })
-                        }
-                        on:click=move |_| close()
-                    >
-                        <crate::icon::Icon glyph=crate::icon::Glyph::Close />
-                    </button>
                 </div>
             </Layer>
         </Show>

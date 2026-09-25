@@ -160,9 +160,10 @@ export function litPixels(pixels: Pixels, minLuma = 96): number {
 /// Waits until two consecutive captures of the region are identical, i.e. the
 /// GPU has finished presenting whatever was requested.
 /// Every category in the catalogue. R18 names eighteen; the table and the tree
-/// that large data needed are two more. Written here so a test that counts
+/// that large data needed are two more, and the toast, the number and colour
+/// fields and the toggle group four more. Written here so a test that counts
 /// them says what the number means rather than repeating a literal.
-export const CATALOG_SIZE = 20;
+export const CATALOG_SIZE = 24;
 
 export async function settle(locator: Locator, attempts = 20): Promise<Pixels> {
     let previous = await capture(locator);

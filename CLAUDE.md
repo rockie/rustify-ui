@@ -63,7 +63,7 @@ VELLUM_TWIN=baseline VELLUM_BASELINE_DIR=../rustify-ui-vellum-baseline RUSTIFY_T
 The workspace excludes `makepad/` (a fork with its own workspace) and `ref/`.
 
 - `crates/rustify-ui` is the public SDK.
-- `crates/rustify-components` holds the DOM component catalogue of twenty categories:
+- `crates/rustify-components` holds the DOM component catalogue of twenty-four categories:
   - The `clx!` / `variants!` class macros, forked from Rust/UI.
   - `CATALOG`, from which `docs/components.md` is generated.
   - The Tailwind input and the **committed** output under `css/`.
@@ -85,7 +85,7 @@ Runtime contracts to know before touching the runtime (the full list is in `docs
   - Within one instance, `mount()` scopes live and die together.
 - **Page-level listeners** go through `rustify_makepad::listener_options` so they carry the instance's abort signal: `panic = "abort"` runs no destructors.
 - **Pump.** JS calls `rustify_region_process(region, msg)`, and the region's `Cx` is taken out of the registry for the whole pump. Deferred `apply` closures run first, so a re-entrant `apply` only queues. Actions reach the application after the pump returns.
-- **Controlled values.** A control never holds the value it shows. Each input is a request, and the control is put back in step with whatever the application decided.
+- **Controlled values.** A control never holds the value it shows. Each input is a request, and the control is put back in step with whatever the application decided. The one exception is a `rustify_ui::Draft` field (number, colour): only while it has focus it keeps the typed text, and leaving it returns to the application's value.
 - **Action streams.** `Pace::Continuous("<name>")` states supersede only their own stream. Discrete events are never merged or reordered.
 - **Decisions the host must make synchronously**, such as a wheel's `preventDefault`, are answered from the region's report of its last draw. The answer is one event old by design.
 - **Target split.**
