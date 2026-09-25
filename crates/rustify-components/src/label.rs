@@ -2,7 +2,8 @@
 
 use leptos::prelude::*;
 
-const BASE: &str = "rui:flex rui:items-center rui:gap-2 rui:text-sm rui:leading-none rui:font-medium rui:select-none rui:text-foreground";
+const BASE: &str =
+    "flex items-center gap-2 text-sm leading-none font-medium select-none text-foreground";
 
 /// Names the control whose id is `control`, so that clicking the text moves
 /// focus there and a screen reader announces the two together.

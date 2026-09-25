@@ -7,7 +7,7 @@
 
 use leptos::prelude::*;
 
-const FIELD: &str = "rui:block rui:w-full rui:text-sm rui:text-muted-foreground rui:file:mr-3 rui:file:rounded-md rui:file:border rui:file:border-border rui:file:bg-secondary rui:file:px-3 rui:file:py-1.5 rui:file:text-sm rui:file:text-foreground rui:file:cursor-pointer rui:disabled:opacity-50 rui:disabled:cursor-not-allowed rui:focus-visible:outline-none rui:focus-visible:ring-ring/50 rui:focus-visible:ring-[3px]";
+const FIELD: &str = "block w-full text-sm text-muted-foreground file:mr-3 file:rounded-md file:border file:border-border file:bg-secondary file:px-3 file:py-1.5 file:text-sm file:text-foreground file:cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-ring/50 focus-visible:ring-[3px]";
 
 /// A file input.
 ///

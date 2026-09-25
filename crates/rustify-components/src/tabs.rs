@@ -9,8 +9,8 @@ use leptos::ev::KeyboardEvent;
 use leptos::prelude::*;
 use std::sync::Arc;
 
-const LIST: &str = "rui:inline-flex rui:w-fit rui:items-center rui:justify-center rui:rounded-lg rui:bg-muted rui:p-[3px] rui:text-muted-foreground";
-const TRIGGER: &str = "rui:inline-flex rui:items-center rui:justify-center rui:gap-1.5 rui:rounded-md rui:border rui:border-transparent rui:px-2.5 rui:py-1 rui:text-sm rui:font-medium rui:whitespace-nowrap rui:transition-all rui:cursor-pointer rui:select-none rui:outline-none rui:focus-visible:ring-ring/50 rui:focus-visible:ring-[3px] rui:aria-selected:bg-background rui:aria-selected:text-foreground rui:disabled:pointer-events-none rui:disabled:opacity-50";
+const LIST: &str = "inline-flex w-fit items-center justify-center rounded-lg bg-muted p-[3px] text-muted-foreground";
+const TRIGGER: &str = "inline-flex items-center justify-center gap-1.5 rounded-md border border-transparent px-2.5 py-1 text-sm font-medium whitespace-nowrap transition-all cursor-pointer select-none outline-none focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-selected:bg-background aria-selected:text-foreground disabled:pointer-events-none disabled:opacity-50";
 
 /// One tab, and whether it can be reached.
 #[derive(Clone, Debug, PartialEq, Eq)]
@@ -110,7 +110,7 @@ pub fn Tabs(
     let activate = Arc::new(on_activate);
     let list_class = match orientation {
         Orientation::Horizontal => LIST,
-        Orientation::Vertical => "rui:inline-flex rui:w-fit rui:flex-col rui:items-stretch rui:rounded-lg rui:bg-muted rui:p-[3px] rui:text-muted-foreground",
+        Orientation::Vertical => "inline-flex w-fit flex-col items-stretch rounded-lg bg-muted p-[3px] text-muted-foreground",
     };
     let on_keydown = {
         let activate = activate.clone();
@@ -135,7 +135,7 @@ pub fn Tabs(
     };
     view! {
         <div
-            class=crate::macros::merge("rui:flex rui:gap-2 rui:flex-col", &class)
+            class=crate::macros::merge("flex gap-2 flex-col", &class)
             data-name="Tabs"
             data-testid=test_id
             data-orientation=orientation.attribute()
@@ -200,8 +200,8 @@ pub fn TabPanel(
     view! {
         <div
             id=panel_id(&context.group, &value)
-            class=crate::macros::merge("rui:flex-1 rui:text-sm rui:outline-none", &class)
-            class=("rui:hidden", move || !showing.get())
+            class=crate::macros::merge("flex-1 text-sm outline-none", &class)
+            class=("hidden", move || !showing.get())
             data-name="TabPanel"
             data-testid=format!("panel-{value}")
             role="tabpanel"

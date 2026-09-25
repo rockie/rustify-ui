@@ -9,9 +9,10 @@ use leptos::ev::KeyboardEvent;
 use leptos::prelude::*;
 use rustify_ui::{Anchor, Layer};
 
-const PANEL: &str = "rui:w-[32rem] rui:max-w-full rui:rounded-lg rui:border rui:border-border rui:bg-popover rui:shadow-lg rui:overflow-hidden";
-const SEARCH: &str = "rui:w-full rui:border-0 rui:border-b rui:border-border rui:bg-transparent rui:px-4 rui:py-3 rui:text-sm rui:text-foreground rui:outline-none rui:placeholder:text-muted-foreground";
-const ITEM: &str = "rui:flex rui:w-full rui:items-center rui:justify-between rui:gap-3 rui:px-4 rui:py-2 rui:text-sm rui:text-foreground rui:cursor-pointer rui:aria-disabled:opacity-50 rui:aria-disabled:cursor-not-allowed";
+const PANEL: &str =
+    "w-[32rem] max-w-full rounded-lg border border-border bg-popover shadow-lg overflow-hidden";
+const SEARCH: &str = "w-full border-0 border-b border-border bg-transparent px-4 py-3 text-sm text-foreground outline-none placeholder:text-muted-foreground";
+const ITEM: &str = "flex w-full items-center justify-between gap-3 px-4 py-2 text-sm text-foreground cursor-pointer aria-disabled:opacity-50 aria-disabled:cursor-not-allowed";
 
 /// One thing the application can do.
 #[derive(Clone, Debug, PartialEq, Eq)]
@@ -209,7 +210,7 @@ pub fn CommandPalette(
                     />
                     <ul
                         id=move || format!("{}-list", group.get_value())
-                        class="rui:max-h-80 rui:overflow-auto rui:py-1"
+                        class="max-h-80 overflow-auto py-1"
                         role="listbox"
                         aria-label=move || label.get_value()
                     >
@@ -225,7 +226,7 @@ pub fn CommandPalette(
                                     <li
                                         id=command_id(&id)
                                         class=ITEM
-                                        class=("rui:bg-muted", move || current.get())
+                                        class=("bg-muted", move || current.get())
                                         data-name="Command"
                                         data-testid=format!("command-{id}")
                                         role="option"
@@ -241,7 +242,7 @@ pub fn CommandPalette(
                                         }>
                                             <span
                                                 id=reason_id.clone()
-                                                class="rui:text-xs rui:text-muted-foreground"
+                                                class="text-xs text-muted-foreground"
                                             >
                                                 {reason.clone()}
                                             </span>
@@ -252,7 +253,7 @@ pub fn CommandPalette(
                         </For>
                         <Show when=move || shown.get().is_empty() fallback=|| ()>
                             <li
-                                class="rui:px-4 rui:py-3 rui:text-sm rui:text-muted-foreground"
+                                class="px-4 py-3 text-sm text-muted-foreground"
                                 data-testid="command-empty"
                             >
                                 "nothing matches"

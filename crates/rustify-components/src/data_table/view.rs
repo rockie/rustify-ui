@@ -8,14 +8,14 @@ use leptos::web_sys::{Element, FocusOptions, HtmlElement};
 use rustify_ui::Selection;
 use std::sync::Arc;
 
-const GRID: &str = "rui:relative rui:flex rui:flex-col rui:min-h-0 rui:border rui:border-border rui:rounded-md rui:bg-background rui:text-sm rui:outline-none rui:focus-visible:ring-ring/50 rui:focus-visible:ring-[3px]";
-const HEADER: &str = "rui:flex rui:shrink-0 rui:overflow-hidden rui:border-b rui:border-border rui:bg-muted rui:font-medium rui:text-muted-foreground";
-const HEADER_CELL: &str =
-    "rui:shrink-0 rui:truncate rui:px-2 rui:py-1 rui:text-left rui:cursor-default rui:select-none";
-const HEADER_BUTTON: &str = "rui:w-full rui:truncate rui:bg-transparent rui:border-0 rui:p-0 rui:text-left rui:font-medium rui:text-inherit rui:cursor-pointer rui:outline-none rui:focus-visible:ring-ring/50 rui:focus-visible:ring-2";
-const SCROLLER: &str = "rui:relative rui:flex-1 rui:min-h-0 rui:overflow-auto";
-const ROW: &str = "rui:absolute rui:left-0 rui:flex rui:w-full rui:items-center rui:border-b rui:border-border/50 rui:aria-selected:bg-accent";
-const CELL: &str = "rui:shrink-0 rui:truncate rui:px-2 rui:outline-none rui:focus-visible:ring-ring/50 rui:focus-visible:ring-2 rui:focus-visible:ring-inset";
+const GRID: &str = "relative flex flex-col min-h-0 border border-border rounded-md bg-background text-sm outline-none focus-visible:ring-ring/50 focus-visible:ring-[3px]";
+const HEADER: &str = "flex shrink-0 overflow-hidden border-b border-border bg-muted font-medium text-muted-foreground";
+const HEADER_CELL: &str = "shrink-0 truncate px-2 py-1 text-left cursor-default select-none";
+const HEADER_BUTTON: &str = "w-full truncate bg-transparent border-0 p-0 text-left font-medium text-inherit cursor-pointer outline-none focus-visible:ring-ring/50 focus-visible:ring-2";
+const SCROLLER: &str = "relative flex-1 min-h-0 overflow-auto";
+const ROW: &str =
+    "absolute left-0 flex w-full items-center border-b border-border/50 aria-selected:bg-accent";
+const CELL: &str = "shrink-0 truncate px-2 outline-none focus-visible:ring-ring/50 focus-visible:ring-2 focus-visible:ring-inset";
 
 /// One column of the table.
 #[derive(Clone, Debug, PartialEq, Eq)]
@@ -382,7 +382,7 @@ pub fn DataTable(
                 <div
                     role="row"
                     aria-rowindex="1"
-                    class="rui:flex"
+                    class="flex"
                     // The header sits outside the scroller, so it is moved by
                     // hand: where its first drawn column starts, less how far
                     // the body has been scrolled. Anything else puts a heading
@@ -474,7 +474,7 @@ pub fn DataTable(
                                     <div
                                         role="row"
                                         class=ROW
-                                        class=("rui:hidden", move || !within.get())
+                                        class=("hidden", move || !within.get())
                                         data-testid=format!("{name}-row-{slot}")
                                         data-row-id=move || id.get().to_string()
                                         aria-rowindex=move || (row.get() + 2).to_string()
@@ -511,7 +511,7 @@ pub fn DataTable(
                                                     <div
                                                         role="gridcell"
                                                         class=CELL
-                                                        class=("rui:hidden", move || !here.get())
+                                                        class=("hidden", move || !here.get())
                                                         aria-colindex=move || {
                                                             (column.get() + 1).to_string()
                                                         }

@@ -619,7 +619,7 @@ mod app {
                             <DataTable
                                 test_id="table"
                                 aria_label="the sample"
-                                class="rui:flex-1"
+                                class="flex-1"
                                 rows=rows
                                 columns=columns
                                 cell=cell.clone()

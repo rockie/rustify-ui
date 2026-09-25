@@ -7,11 +7,11 @@
 /// test never has to address one of these by its classes.
 ///
 /// ```ignore
-/// clx! {Card, div, "rui:rounded-lg rui:p-4", "rui:bg-card"}
+/// clx! {Card, div, "rounded-lg p-4", "bg-card"}
 ///
 /// view! {
 ///     <Card>"the base classes"</Card>
-///     <Card class="rui:bg-muted">"which the caller can replace"</Card>
+///     <Card class="bg-muted">"which the caller can replace"</Card>
 /// }
 /// ```
 #[macro_export]

@@ -32,21 +32,21 @@ mod app {
     use std::rc::Rc;
     use std::sync::Arc;
 
-    clx! {Panel, section, "rui:rounded-md rui:border rui:border-border rui:bg-card rui:p-4"}
-    clx! {Row, div, "rui:flex rui:items-center rui:gap-2"}
+    clx! {Panel, section, "rounded-md border border-border bg-card p-4"}
+    clx! {Row, div, "flex items-center gap-2"}
 
     variants! {
         Chip {
-            base: "rui:inline-flex rui:items-center rui:rounded-md rui:px-2 rui:py-0.5 rui:text-xs",
+            base: "inline-flex items-center rounded-md px-2 py-0.5 text-xs",
             variants: {
                 variant: {
-                    Yes: "rui:bg-success rui:text-primary-foreground",
-                    Partial: "rui:bg-warning rui:text-primary-foreground",
-                    No: "rui:bg-muted rui:text-muted-foreground",
+                    Yes: "bg-success text-primary-foreground",
+                    Partial: "bg-warning text-primary-foreground",
+                    No: "bg-muted text-muted-foreground",
                 },
                 size: {
-                    Default: "rui:px-2 rui:py-0.5",
-                    Lg: "rui:px-3 rui:py-1",
+                    Default: "px-2 py-0.5",
+                    Lg: "px-3 py-1",
                 }
             },
             component: { element: span }
@@ -604,7 +604,7 @@ mod app {
                     <DataTable
                         test_id=id("data-table")
                         aria_label="a thousand rows"
-                        class="rui:h-48"
+                        class="h-48"
                         rows=rows
                         columns=columns
                         cell=Arc::new(|row: usize, column: usize| format!("r{row}c{column}"))
@@ -646,7 +646,7 @@ mod app {
                     <Tree
                         test_id=id("tree")
                         aria_label="groups"
-                        class="rui:h-48"
+                        class="h-48"
                         nodes=nodes
                         expanded=expanded
                         selected=picked
@@ -663,10 +663,10 @@ mod app {
                     test_id=id("scroll-area")
                     aria_label="a list that does not fit"
                     boundary=Boundary::Stop
-                    class="rui:h-24 rui:border rui:border-border rui:p-2"
+                    class="h-24 border border-border p-2"
                 >
                     {(1..=20)
-                        .map(|line| view! { <p class="rui:text-sm">{format!("line {line}")}</p> })
+                        .map(|line| view! { <p class="text-sm">{format!("line {line}")}</p> })
                         .collect_view()}
                 </ScrollArea>
             }
@@ -690,7 +690,7 @@ mod app {
                 <div data-testid="example" class="catalogue-example">
                     <Example category=category state=ExampleState::Live values=values />
                 </div>
-                <p data-testid="gpu-note" class="rui:text-sm rui:text-muted-foreground">
+                <p data-testid="gpu-note" class="text-sm text-muted-foreground">
                     {entry.environment.note}
                 </p>
                 <Show when=move || !states(category).is_empty() fallback=|| ()>
@@ -702,7 +702,7 @@ mod app {
                             .map(|state| {
                                 view! {
                                     <div data-testid=format!("state-{}", state.name())>
-                                        <span class="rui:text-xs rui:text-muted-foreground">
+                                        <span class="text-xs text-muted-foreground">
                                             {move || t(locale.get(), state.name())}
                                         </span>
                                         <Example
@@ -857,7 +857,7 @@ mod app {
             // same finding as the splitter's in M5, and the same answer - the
             // page holds the region itself and borrows only the classes.
             <section
-                class="rui:rounded-md rui:border rui:border-border rui:bg-card rui:p-4"
+                class="rounded-md border border-border bg-card p-4"
                 data-testid="samples-page"
             >
                 <h2>{move || t(locale.get(), "samples-heading")}</h2>
@@ -904,7 +904,7 @@ mod app {
                         checked=Signal::derive(move || blocked.get())
                         on_change=move |value: bool| blocked.set(value)
                     />
-                    <span class="rui:text-sm">
+                    <span class="text-sm">
                         "draw as though the wide font never arrived"
                     </span>
                 </Row>
@@ -1184,7 +1184,7 @@ mod app {
                                 theme.update(|theme| theme.reduce_motion = less)
                             }
                         />
-                        <span class="rui:text-sm">
+                        <span class="text-sm">
                             {move || {
                                 let locale = locale.get();
                                 format!(

@@ -156,7 +156,8 @@ mod tests {
     }
 }
 
-/// The token table and the stylesheet have to name the same things.
+/// The token table and the stylesheet have to name the same things, with the
+/// same defaults.
 ///
 /// The SDK writes `--primary` onto the scope root; a utility reads
 /// `var(--primary)`. Either one renamed alone leaves a component drawing with
@@ -164,17 +165,75 @@ mod tests {
 /// spelling one. The check is here, in the crate that has both in reach.
 #[cfg(test)]
 mod stylesheet {
+    use std::collections::BTreeMap;
+
     const INPUT: &str = include_str!("../css/rustify.tailwind.css");
     const OUTPUT: &str = include_str!("../css/rustify.css");
 
+    /// The defaults the input writes onto every scope root.
+    fn scope_defaults() -> BTreeMap<&'static str, &'static str> {
+        let start = INPUT
+            .find("\n[data-rustify-scope] {")
+            .expect("the input sets the scope's default tokens");
+        let block = &INPUT[start..];
+        let block = &block[block.find('{').unwrap() + 1..block.find('}').unwrap()];
+        block
+            .lines()
+            .filter_map(|line| line.trim().strip_suffix(';')?.split_once(": "))
+            .collect()
+    }
+
     #[test]
-    fn every_token_the_sdk_writes_is_a_token_the_stylesheet_names() {
-        for (name, _) in rustify_ui::Theme::light().properties() {
-            assert!(
-                INPUT.contains(&format!("{name}:")),
-                "{name} is written by the theme and named nowhere in the stylesheet input"
-            );
+    fn the_scope_defaults_are_the_light_theme() {
+        // What a component looks like before the scope's own write lands. A
+        // default that drifted from the table would show for that moment, and
+        // everywhere the write never comes.
+        let defaults = scope_defaults();
+        let light = rustify_ui::Theme::light().properties();
+        for (name, value) in &light {
+            assert_eq!(defaults.get(name).copied(), Some(value.as_str()), "{name}");
         }
+        assert_eq!(defaults.len(), light.len(), "{defaults:?}");
+    }
+
+    #[test]
+    fn the_tokens_are_written_only_to_a_scope_root() {
+        // Tailwind's theme layer writes its variables to `:root`, which is
+        // the host page's. None of them may carry one of our names: the
+        // spacing unit shares one, and a host rule reading
+        // `var(--spacing, 8px)` outside a scope would get a quarter rem.
+        let theme = OUTPUT.split("@layer utilities").next().unwrap();
+        for (name, _) in rustify_ui::Theme::light().properties() {
+            assert!(!theme.contains(&format!("{name}:")), "{name} on :root");
+        }
+    }
+
+    #[test]
+    fn a_utility_never_reads_the_scopes_spacing() {
+        // The scope's `--spacing` is its 8px layout gap. A utility that read
+        // it as Tailwind's unit would draw every padding, gap and size twice
+        // as large.
+        assert!(!OUTPUT.contains("var(--spacing)"));
+    }
+
+    #[test]
+    fn the_utilities_are_the_unprefixed_ones_an_application_writes() {
+        // A prefix would make a caller's `p-6` a different class from the
+        // component's `p-4`, and the merge could no longer replace one with
+        // the other.
+        assert!(!INPUT.contains("prefix("));
+        assert!(!OUTPUT.contains(".rui\\:"));
+    }
+
+    #[test]
+    fn the_input_compiles_only_the_sources_it_names() {
+        // Without `source(none)` Tailwind also scans the working directory,
+        // and a class-shaped word anywhere in the repository becomes a rule.
+        let utilities = INPUT
+            .lines()
+            .find(|line| line.starts_with("@import \"tailwindcss/utilities.css\""))
+            .expect("the input imports Tailwind's utilities");
+        assert!(utilities.contains("source(none)"), "{utilities}");
     }
 
     #[test]

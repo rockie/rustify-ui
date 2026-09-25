@@ -10,9 +10,9 @@
 use leptos::prelude::*;
 use rustify_ui::{Anchor, Layer};
 
-const PANEL: &str = "rui:relative rui:w-full rui:max-w-lg rui:rounded-lg rui:border rui:border-border rui:bg-popover rui:p-6 rui:shadow-lg rui:flex rui:flex-col rui:gap-4";
-const BACKDROP: &str = "rui:fixed rui:inset-0 rui:bg-foreground/30";
-const CLOSE: &str = "rui:absolute rui:top-4 rui:right-4 rui:rounded-sm rui:p-1 rui:text-muted-foreground rui:transition-colors rui:cursor-pointer rui:outline-none rui:hover:bg-muted rui:focus-visible:ring-ring/50 rui:focus-visible:ring-[3px]";
+const PANEL: &str = "relative w-full max-w-lg rounded-lg border border-border bg-popover p-6 shadow-lg flex flex-col gap-4";
+const BACKDROP: &str = "fixed inset-0 bg-foreground/30";
+const CLOSE: &str = "absolute top-4 right-4 rounded-sm p-1 text-muted-foreground transition-colors cursor-pointer outline-none hover:bg-muted focus-visible:ring-ring/50 focus-visible:ring-[3px]";
 
 #[component]
 pub fn Dialog(
@@ -82,17 +82,17 @@ pub fn Dialog(
                     />
                 </Show>
                 <div class=move || panel_class.get_value() data-name="Dialog">
-                    <header class="rui:flex rui:flex-col rui:gap-2 rui:pr-8">
+                    <header class="flex flex-col gap-2 pr-8">
                         <h2
                             id=move || title_id.get_value()
-                            class="rui:text-lg rui:leading-none rui:font-semibold rui:text-foreground"
+                            class="text-lg leading-none font-semibold text-foreground"
                         >
                             {move || title.get()}
                         </h2>
                         <Show when=move || described.get() fallback=|| ()>
                             <p
                                 id=move || description_id.get_value()
-                                class="rui:text-sm rui:text-muted-foreground"
+                                class="text-sm text-muted-foreground"
                             >
                                 {move || description.get()}
                             </p>

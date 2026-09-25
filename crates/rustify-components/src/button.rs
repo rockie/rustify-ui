@@ -10,22 +10,22 @@ use leptos::prelude::*;
 
 variants! {
     Button {
-        base: "rui:inline-flex rui:items-center rui:justify-center rui:gap-2 rui:whitespace-nowrap rui:rounded-md rui:text-sm rui:font-medium rui:shrink-0 rui:w-fit rui:select-none rui:transition-all rui:outline-none rui:cursor-pointer rui:disabled:pointer-events-none rui:disabled:opacity-50 rui:aria-disabled:opacity-50 rui:aria-disabled:cursor-not-allowed rui:focus-visible:ring-ring/50 rui:focus-visible:ring-[3px] rui:aria-invalid:border-destructive",
+        base: "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:border-destructive",
         variants: {
             variant: {
-                Default: "rui:bg-primary rui:text-primary-foreground rui:hover:bg-primary/90",
-                Secondary: "rui:bg-secondary rui:text-secondary-foreground rui:hover:bg-secondary/80",
-                Outline: "rui:border rui:border-border rui:bg-background rui:hover:bg-muted",
-                Ghost: "rui:hover:bg-muted rui:hover:text-foreground",
-                Accent: "rui:bg-accent rui:text-accent-foreground rui:hover:bg-accent/80",
-                Destructive: "rui:bg-destructive rui:text-destructive-foreground rui:hover:bg-destructive/90",
-                Link: "rui:text-primary rui:underline-offset-4 rui:hover:underline",
+                Default: "bg-primary text-primary-foreground hover:bg-primary/90",
+                Secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
+                Outline: "border border-border bg-background hover:bg-muted",
+                Ghost: "hover:bg-muted hover:text-foreground",
+                Accent: "bg-accent text-accent-foreground hover:bg-accent/80",
+                Destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90",
+                Link: "text-primary underline-offset-4 hover:underline",
             },
             size: {
-                Default: "rui:h-9 rui:px-4 rui:py-2",
-                Sm: "rui:h-8 rui:px-3 rui:text-xs",
-                Lg: "rui:h-10 rui:px-6",
-                Icon: "rui:size-9 rui:p-0",
+                Default: "h-9 px-4 py-2",
+                Sm: "h-8 px-3 text-xs",
+                Lg: "h-10 px-6",
+                Icon: "size-9 p-0",
             }
         }
     }

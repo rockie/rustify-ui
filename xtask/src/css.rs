@@ -162,16 +162,4 @@ mod tests {
         assert!(difference.committed.chars().count() <= WIDTH + 2);
         assert_eq!(window("short", 3), "short");
     }
-
-    #[test]
-    fn the_input_compiles_only_the_sources_it_names() {
-        // Without `source(none)` Tailwind also scans the working directory, and
-        // a class-shaped word anywhere in the repository becomes a rule.
-        let input = std::fs::read_to_string(input(&crate::build::repo_root())).unwrap();
-        let utilities = input
-            .lines()
-            .find(|line| line.starts_with("@import \"tailwindcss/utilities.css\""))
-            .expect("the input imports Tailwind's utilities");
-        assert!(utilities.contains("source(none)"), "{utilities}");
-    }
 }

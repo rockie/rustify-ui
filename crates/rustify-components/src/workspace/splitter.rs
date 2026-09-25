@@ -127,7 +127,7 @@ pub fn Splitter(
 
     view! {
         <div
-            class="rui:pointer-events-none rui:absolute rui:inset-0"
+            class="pointer-events-none absolute inset-0"
             data-name="Splitter"
             data-testid=test_id
         >
@@ -136,7 +136,7 @@ pub fn Splitter(
                     let (index, at) = divider;
                     view! {
                         <div
-                            class="rui:pointer-events-auto rui:absolute rui:top-0 rui:bottom-0 rui:-ml-1 rui:w-2 rui:cursor-col-resize rui:bg-border rui:outline-none rui:focus-visible:ring-ring/50 rui:focus-visible:ring-[3px]"
+                            class="pointer-events-auto absolute top-0 bottom-0 -ml-1 w-2 cursor-col-resize bg-border outline-none focus-visible:ring-ring/50 focus-visible:ring-[3px]"
                             data-name="SplitterDivider"
                             data-testid=format!("divider-{index}")
                             role="separator"

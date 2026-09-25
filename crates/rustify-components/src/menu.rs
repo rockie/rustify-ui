@@ -11,9 +11,8 @@ use leptos::ev::KeyboardEvent;
 use leptos::prelude::*;
 use rustify_ui::{Anchor, Layer};
 
-const PANEL: &str =
-    "rui:min-w-40 rui:rounded-md rui:border rui:border-border rui:bg-popover rui:p-1 rui:shadow-lg";
-const ITEM: &str = "rui:flex rui:w-full rui:items-center rui:gap-2 rui:rounded-sm rui:px-2 rui:py-1.5 rui:text-sm rui:text-foreground rui:text-left rui:transition-colors rui:outline-none rui:cursor-pointer rui:hover:bg-muted rui:focus-visible:bg-muted rui:aria-disabled:opacity-50 rui:aria-disabled:cursor-not-allowed rui:aria-disabled:hover:bg-transparent";
+const PANEL: &str = "min-w-40 rounded-md border border-border bg-popover p-1 shadow-lg";
+const ITEM: &str = "flex w-full items-center gap-2 rounded-sm px-2 py-1.5 text-sm text-foreground text-left transition-colors outline-none cursor-pointer hover:bg-muted focus-visible:bg-muted aria-disabled:opacity-50 aria-disabled:cursor-not-allowed aria-disabled:hover:bg-transparent";
 
 /// One command in a menu.
 ///
@@ -148,14 +147,14 @@ pub fn Menu(
                                             on_open_change.with_value(|close| close(false));
                                         }
                                     >
-                                        <span class="rui:flex-1">{label}</span>
+                                        <span class="flex-1">{label}</span>
                                         <Show when={
                                             let reason = reason.clone();
                                             move || !reason.is_empty()
                                         }>
                                             <span
                                                 id=reason_id.clone()
-                                                class="rui:text-xs rui:text-muted-foreground"
+                                                class="text-xs text-muted-foreground"
                                             >
                                                 {reason.clone()}
                                             </span>

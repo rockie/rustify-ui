@@ -13,9 +13,9 @@
 use leptos::prelude::*;
 use leptos::web_sys::DragEvent;
 
-const ZONE: &str = "rui:flex rui:flex-col rui:items-center rui:justify-center rui:gap-2 rui:rounded-md rui:border rui:border-dashed rui:border-border rui:bg-background rui:p-6 rui:text-sm rui:text-muted-foreground rui:transition-colors";
-const OVER: &str = "rui:border-primary rui:text-foreground";
-const OFF: &str = "rui:opacity-50";
+const ZONE: &str = "flex flex-col items-center justify-center gap-2 rounded-md border border-dashed border-border bg-background p-6 text-sm text-muted-foreground transition-colors";
+const OVER: &str = "border-primary text-foreground";
+const OFF: &str = "opacity-50";
 
 /// A drop zone for files.
 ///

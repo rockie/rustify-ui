@@ -8,15 +8,15 @@
 /// ```ignore
 /// variants! {
 ///     Badge {
-///         base: "rui:inline-flex rui:items-center rui:rounded-md",
+///         base: "inline-flex items-center rounded-md",
 ///         variants: {
 ///             variant: {
-///                 Default: "rui:bg-primary rui:text-primary-foreground",
-///                 Outline: "rui:border rui:text-foreground",
+///                 Default: "bg-primary text-primary-foreground",
+///                 Outline: "border text-foreground",
 ///             },
 ///             size: {
-///                 Default: "rui:px-2.5 rui:py-0.5 rui:text-xs",
-///                 Lg: "rui:px-3 rui:py-1 rui:text-sm",
+///                 Default: "px-2.5 py-0.5 text-xs",
+///                 Lg: "px-3 py-1 text-sm",
 ///             }
 ///         },
 ///         component: { element: span }

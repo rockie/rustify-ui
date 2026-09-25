@@ -10,7 +10,8 @@ use leptos::prelude::*;
 use leptos::web_sys::Element;
 use rustify_ui::{Anchor, Layer};
 
-const CONTENT: &str = "rui:rounded-md rui:bg-foreground rui:text-background rui:px-2.5 rui:py-1.5 rui:text-xs rui:whitespace-nowrap rui:shadow-lg";
+const CONTENT: &str =
+    "rounded-md bg-foreground text-background px-2.5 py-1.5 text-xs whitespace-nowrap shadow-lg";
 
 /// Wraps a control and describes it.
 ///
@@ -72,7 +73,7 @@ pub fn Tooltip(
     view! {
         <span
             node_ref=trigger
-            class="rui:inline-flex"
+            class="inline-flex"
             data-name="Tooltip"
             on:pointerenter={
                 let on_open_change = on_open_change.clone();

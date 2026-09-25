@@ -94,7 +94,7 @@ Runtime contracts to know before touching the runtime (the full list is in `docs
 
 ## Conventions
 
-- **Component classes** are Tailwind utilities with a `rui:` prefix. After changing a class string, run `mbx xtask css` and commit `crates/rustify-components/css/rustify.css`; otherwise the class has no rule and CI's `--check` fails. Likewise, regenerate `docs/components.md` after changing the catalogue.
+- **Component classes** are unprefixed Tailwind v4 utilities, the same ones an application writes, so a caller's `class` replaces a component's class of the same kind through `tw_merge`. After changing a class string, run `mbx xtask css` and commit `crates/rustify-components/css/rustify.css`; otherwise the class has no rule and CI's `--check` fails. Likewise, regenerate `docs/components.md` after changing the catalogue.
 - **Scripted edits.** `cargo fmt` reflows lines, so a scripted find/replace on Rust source must assert that the old text was found.
 - **Plans.**
   - Development plans live in `docs/plan/*.md` and are written in Chinese. Milestone evidence goes in `docs/validation/`, and release reports go in `docs/reports/`.

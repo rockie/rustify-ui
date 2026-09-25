@@ -5,11 +5,11 @@
    Two things are deliberately absent. Preflight: a host page's own elements
    are not ours to reset, and Rust/UI's base layer sets `html { overflow:
    hidden }`, which would stop the host page scrolling. And any bare element
-   selector: everything here is either a prefixed utility or a rule under
-   `[data-rustify-scope]`. */
+   selector: everything here is either a utility, which selects a class, or a
+   rule under `[data-rustify-scope]`. */
 
-@import "tailwindcss/theme.css" layer(theme) prefix(rui);
-@import "tailwindcss/utilities.css" layer(utilities) prefix(rui) source(none);
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities) source(none);
 
 /* Every class string this build can produce lives in one of these, and
    nowhere else: `source(none)` above stops Tailwind scanning the working
@@ -60,6 +60,16 @@
   --radius-lg: calc(var(--radius) + 2px);
 }
 
+/* Tailwind's spacing unit has the name of the scope's layout gap below, which
+   is 8px. `inline` compiles `p-4` to a fixed `calc(0.25rem * 4)` instead of
+   reading the scope's `var(--spacing)`, where every padding, gap and size
+   would come out twice as large. `reference` keeps the unit off `:root`,
+   where a host page's own `var(--spacing, 8px)` outside a scope would read it:
+   the name is a scope token, and those are written only to a scope root. */
+@theme inline reference {
+  --spacing: 0.25rem;
+}
+
 /* The light theme, as a default. A scope carries its own values a moment
    later; these are what a component looks like before that write lands, and
    what one rendered outside a scope falls back to. `--font-size`, `--spacing`
@@ -68,7 +78,7 @@
 [data-rustify-scope] {
   --background: #f9fafb;
   --foreground: #1d2939;
-  --primary: #2e90fa;
+  --primary: #1570ef;
   --primary-foreground: #ffffff;
   --secondary: #eaecf0;
   --secondary-foreground: #1d2939;
@@ -82,9 +92,9 @@
   --popover: #ffffff;
   --success: #12b76a;
   --warning: #f79009;
-  --border: #d0d5dd;
+  --border: #858f9e;
   --input: #ffffff;
-  --ring: #2e90fa;
+  --ring: #1570ef;
   --radius: 6px;
   --font-size: 15px;
   --spacing: 8px;

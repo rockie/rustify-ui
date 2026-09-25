@@ -65,7 +65,7 @@ passed, which is the whole reason it exists.
 
 ## Changing a component's classes
 
-The component crate's classes are Tailwind utilities behind a `rui:` prefix,
+The component crate's classes are plain Tailwind v4 utilities, with no prefix,
 and the stylesheet they need is **committed**, so building the wasm never needs
 Node:
 
@@ -78,9 +78,19 @@ A class string added without regenerating would simply have no rule; `--check`
 is what turns that into a failure. `build-web` copies the product into any
 example whose manifest names the component crate.
 
-The prefix is what keeps a host page's own Tailwind build and ours apart, and
-`dark` is bound to the SDK's scope attribute rather than to any `.dark`
-ancestor, so a host page using that convention does not darken a scope.
+Because an application writes the same utilities, a `class` passed to a
+component is merged with the component's own through `tw_merge`: a caller's
+`p-6` replaces the component's `p-4`, and `hover:bg-accent` replaces its
+`hover:` background, instead of both reaching the element and the
+stylesheet's order deciding.
+
+What still keeps the SDK out of the host page: the stylesheet has no preflight
+and no bare element selector, the theme tokens are written only onto a scope's
+root, and `dark` is bound to the SDK's scope attribute rather than to any
+`.dark` ancestor, so a host page using that convention does not darken a scope.
+The class names themselves are no longer apart: a host page with its own
+Tailwind build that also links `rustify.css` gets two rules for a class like
+`bg-primary`.
 
 ## Two languages
 

@@ -2,8 +2,9 @@
 
 use leptos::prelude::*;
 
-const TRACK: &str = "rui:inline-flex rui:h-6 rui:w-11 rui:shrink-0 rui:items-center rui:rounded-full rui:border-2 rui:border-transparent rui:transition-colors rui:cursor-pointer rui:outline-none rui:bg-border rui:aria-checked:bg-primary rui:focus-visible:ring-ring/50 rui:focus-visible:ring-[3px] rui:disabled:cursor-not-allowed rui:disabled:opacity-50";
-const KNOB: &str = "rui:pointer-events-none rui:block rui:size-5 rui:rounded-full rui:bg-background rui:transition-transform";
+const TRACK: &str = "inline-flex h-6 w-11 shrink-0 items-center rounded-full border-2 border-transparent transition-colors cursor-pointer outline-none bg-border aria-checked:bg-primary focus-visible:ring-ring/50 focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50";
+const KNOB: &str =
+    "pointer-events-none block size-5 rounded-full bg-background transition-transform";
 
 /// Rust/UI's switch held its own state in an `RwSignal` and had no way to
 /// report a change, so two of them bound to one value could disagree. This one
@@ -51,7 +52,7 @@ pub fn Switch(
         >
             <span
                 class=KNOB
-                class=("rui:translate-x-5", move || checked.get())
+                class=("translate-x-5", move || checked.get())
                 aria-hidden="true"
             />
         </button>

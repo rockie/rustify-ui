@@ -60,7 +60,7 @@ pub fn Field(
     };
     view! {
         <div
-            class=crate::macros::merge("rui:flex rui:flex-col rui:gap-1.5", &class)
+            class=crate::macros::merge("flex flex-col gap-1.5", &class)
             data-name="Field"
             data-testid=format!("field-{field}")
             data-invalid=move || error.get().is_some().then_some("true")
@@ -72,7 +72,7 @@ pub fn Field(
             <Show when=move || error.get().is_some() fallback=|| ()>
                 <p
                     id=move || error_id.get_value()
-                    class="rui:text-sm rui:text-destructive"
+                    class="text-sm text-destructive"
                     data-name="FieldError"
                     data-testid=format!("error-{field}")
                 >

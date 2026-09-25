@@ -10,9 +10,9 @@ use leptos::ev::KeyboardEvent;
 use leptos::prelude::*;
 use rustify_ui::{Anchor, Layer};
 
-const TRIGGER: &str = "rui:flex rui:h-9 rui:w-full rui:items-center rui:justify-between rui:gap-2 rui:rounded-md rui:border rui:border-border rui:bg-input rui:px-3 rui:py-1 rui:text-sm rui:text-foreground rui:transition-colors rui:cursor-pointer rui:outline-none rui:focus-visible:ring-ring/50 rui:focus-visible:ring-[3px] rui:disabled:cursor-not-allowed rui:disabled:opacity-50 rui:aria-invalid:border-destructive";
-const PANEL: &str = "rui:min-w-40 rui:max-h-64 rui:overflow-auto rui:rounded-md rui:border rui:border-border rui:bg-popover rui:p-1 rui:shadow-lg rui:outline-none";
-const OPTION: &str = "rui:flex rui:w-full rui:items-center rui:gap-2 rui:rounded-sm rui:px-2 rui:py-1.5 rui:text-sm rui:text-foreground rui:cursor-pointer rui:aria-disabled:opacity-50 rui:aria-disabled:cursor-not-allowed";
+const TRIGGER: &str = "flex h-9 w-full items-center justify-between gap-2 rounded-md border border-border bg-input px-3 py-1 text-sm text-foreground transition-colors cursor-pointer outline-none focus-visible:ring-ring/50 focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive";
+const PANEL: &str = "min-w-40 max-h-64 overflow-auto rounded-md border border-border bg-popover p-1 shadow-lg outline-none";
+const OPTION: &str = "flex w-full items-center gap-2 rounded-sm px-2 py-1.5 text-sm text-foreground cursor-pointer aria-disabled:opacity-50 aria-disabled:cursor-not-allowed";
 
 /// One choice.
 #[derive(Clone, Debug, PartialEq, Eq)]
@@ -194,16 +194,16 @@ pub fn Select(
             <span
                 class=move || {
                     if shown.get().is_some() {
-                        "rui:truncate"
+                        "truncate"
                     } else {
-                        "rui:truncate rui:text-muted-foreground"
+                        "truncate text-muted-foreground"
                     }
                 }
                 data-name="SelectValue"
             >
                 {move || shown.get().unwrap_or_else(|| placeholder.get_value())}
             </span>
-            <crate::icon::Icon glyph=crate::icon::Glyph::ChevronDown class="rui:text-muted-foreground" />
+            <crate::icon::Icon glyph=crate::icon::Glyph::ChevronDown class="text-muted-foreground" />
         </button>
         <Show when=move || open.get() fallback=|| ()>
             <Layer
@@ -236,7 +236,7 @@ pub fn Select(
                                 <li
                                     id=option_id(&option_value)
                                     class=OPTION
-                                    class=("rui:bg-muted", {
+                                    class=("bg-muted", {
                                         let mine = option_value.clone();
                                         move || active.get() == mine
                                     })
@@ -251,11 +251,11 @@ pub fn Select(
                                         }
                                     }
                                 >
-                                    <span class="rui:flex-1">{label}</span>
+                                    <span class="flex-1">{label}</span>
                                     <Show when=move || chosen.get() fallback=|| ()>
                                         <crate::icon::Icon
                                             glyph=crate::icon::Glyph::Check
-                                            class="rui:text-muted-foreground"
+                                            class="text-muted-foreground"
                                         />
                                     </Show>
                                 </li>
