@@ -211,7 +211,7 @@
 **Tailwind**
 
 - [已核实·足够·实测] Tailwind v4 一次构建只接受一个前缀：`prefix(rui)` 与无前缀导入同入一个输入，产物只剩 117 字节的层声明。
-- [已核实·缺口·实测] 当前输入未写 `source(none)`，CLI 以仓库根为基准自动扫描：放进 `docs/` 的 `rui:w-[123px]` 被编进产物；冷构建 6.6 s，热 0.66 s；加 `source(none)` 后 0.29 s 且产物与已提交 `rustify.css` 逐字节相同 → D11。
+- [已核实·缺口·实测] 当前输入未写 `source(none)`，CLI 以仓库根为基准自动扫描：放进 `docs/` 的一个带 `rui:` 前缀的任意值宽度类被编进产物（本计划初稿原样写了该类名，CI 的 `css --check` 即因此失败，故此处不再写出）；冷构建 6.6 s，热 0.66 s；加 `source(none)` 后 0.29 s 且产物与已提交 `rustify.css` 逐字节相同 → D11。
 - [已核实·缺口·实测] 去前缀后 `p-4` 编译为 `calc(var(--spacing) * 4)`，而 SDK 在作用域根写 `--spacing: 8px`（`crates/rustify-ui/src/theme.rs:142`、`crates/rustify-components/css/rustify.tailwind.css` 的作用域默认值）→ 所有间距翻倍；`@theme inline { --spacing: 0.25rem }` 使产物内联为 `calc(0.25rem * 4)` → D12。
 - [已核实·足够·实测] 被导入文件中的 `@source "../src"` 相对该文件解析；应用输入导入库入口后同时收到库与应用的类 → D13/D14 可行。
 - [已核实·足够·实测] `tailwindcss-linux-x64` v4.1.13 独立二进制在没有 `node_modules` 时产物与已提交 `rustify.css` 逐字节相同（0.97 s 含进程启动）→ D10。`--minify` 使 SDK 样式表 26,644 → 21,228 字节（gzip 4,229 → 3,994）。
