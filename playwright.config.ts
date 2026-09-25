@@ -1,4 +1,5 @@
 import { defineConfig, devices } from "@playwright/test";
+import { TIER, tierFilter } from "./tests/tier";
 
 // Exported so a probe that has to reach a second example's server names the
 // port once rather than repeating it.
@@ -15,6 +16,58 @@ const deepLinkPort = 4177;
 const dataPort = 4178;
 const deploymentBase = "/tools/demo/";
 
+type Server = "fusion" | "workbench" | "catalog" | "data" | "deep" | "deployment";
+
+// The servers each project talks to. A run that names its projects starts only
+// these: six servers for a one-project run is most of its start-up. The
+// fusion server is on the data project's list for the probe that boots a
+// second example, which is an evidence test.
+const serversOf: Record<string, Server[]> = {
+    "fusion-basic": ["fusion"],
+    "property-workbench": ["workbench"],
+    "component-catalog": ["catalog"],
+    "data-workbench": TIER === "regression" ? ["data"] : ["data", "fusion"],
+    budget: ["workbench"],
+    "budget-minimal": ["fusion"],
+    "budget-data": ["data"],
+    "budget-scene": ["data"],
+    "workbench-deep": ["deep"],
+    deployment: ["deployment"],
+};
+
+/// The projects named on the command line, in either of the forms the CLI
+/// takes (`--project=a` and `--project a b`), or nothing if none are named.
+function requestedProjects(argv: string[]): string[] {
+    const names: string[] = [];
+    for (let i = 0; i < argv.length; i++) {
+        const arg = argv[i];
+        if (arg.startsWith("--project=")) {
+            names.push(arg.slice("--project=".length));
+        } else if (arg === "--project") {
+            while (i + 1 < argv.length && !argv[i + 1].startsWith("-")) {
+                names.push(argv[++i]);
+            }
+        }
+    }
+    return names;
+}
+
+/// Every server, unless the run names projects this file knows; then only
+/// theirs. An unknown name starts everything and lets the runner report it.
+function neededServers(): Set<Server> | null {
+    const names = requestedProjects(process.argv);
+    if (names.length === 0 || names.some((name) => !(name in serversOf))) {
+        return null;
+    }
+    return new Set(names.flatMap((name) => serversOf[name]));
+}
+
+const needed = neededServers();
+const wanted = (server: Server) => needed === null || needed.has(server);
+
+// Measurement projects exist only where measurements run.
+const measuring = TIER !== "regression";
+
 export default defineConfig({
     testDir: "./tests/browser",
     // A cold page compiles a 7.7 MB wasm module and boots its regions; the
@@ -24,6 +77,7 @@ export default defineConfig({
     workers: 1,
     retries: 0,
     reporter: [["list"], ["json", { outputFile: "test-results/browser.json" }]],
+    ...tierFilter(),
     use: {
         trace: "retain-on-failure",
         ...devices["Desktop Chrome"],
@@ -54,7 +108,7 @@ export default defineConfig({
         // The budget gate runs thirty cold loads and thirty hot ones, so it is
         // its own project rather than a slow tail on every workbench run. Same
         // build, same server: what makes it separate is how long it takes.
-        {
+        ...(measuring ? [{
             name: "budget",
             testMatch: ["p2-budget.spec.ts"],
             use: { baseURL: `http://127.0.0.1:${workbenchPort}/` },
@@ -73,7 +127,7 @@ export default defineConfig({
             name: "budget-data",
             testMatch: ["p3-budget-data.spec.ts"],
             use: { baseURL: `http://127.0.0.1:${dataPort}/` },
-        },
+        }] : []),
         // R30 AC2 over B3, on headed Chrome and nowhere else (A-3, M1 probe
         // 2): the same scene measures p95 50.10 ms under SwiftShader against
         // 17.60 ms here, so a result from the software rasteriser would be
@@ -100,42 +154,17 @@ export default defineConfig({
             use: { baseURL: `http://127.0.0.1:${deploymentPort}${deploymentBase}` },
         },
     ],
-    webServer: [
-        {
-            command: `mbx xtask serve --example fusion-basic --release --port ${fusionPort}`,
-            url: `http://127.0.0.1:${fusionPort}/`,
-            reuseExistingServer: false,
-            timeout: 120_000,
-        },
-        {
-            command: `mbx xtask serve --example property-workbench --release --port ${workbenchPort} --spa`,
-            url: `http://127.0.0.1:${workbenchPort}/`,
-            reuseExistingServer: false,
-            timeout: 120_000,
-        },
-        {
-            command: `mbx xtask serve --example component-catalog --release --port ${catalogPort}`,
-            url: `http://127.0.0.1:${catalogPort}/`,
-            reuseExistingServer: false,
-            timeout: 120_000,
-        },
-        {
-            command: `mbx xtask serve --example data-workbench --release --port ${dataPort} --spa`,
-            url: `http://127.0.0.1:${dataPort}/`,
-            reuseExistingServer: false,
-            timeout: 120_000,
-        },
-        {
-            command: `mbx xtask build-web --example property-workbench --release --base ${deploymentBase} && mbx xtask serve --example property-workbench --release --port ${deepLinkPort} --base ${deploymentBase} --spa`,
-            url: `http://127.0.0.1:${deepLinkPort}${deploymentBase}`,
-            reuseExistingServer: false,
-            timeout: 120_000,
-        },
-        {
-            command: `mbx xtask build-web --example fusion-basic --release --base ${deploymentBase} && mbx xtask serve --example fusion-basic --release --port ${deploymentPort} --base ${deploymentBase} --spa`,
-            url: `http://127.0.0.1:${deploymentPort}${deploymentBase}`,
-            reuseExistingServer: false,
-            timeout: 120_000,
-        },
-    ],
+    // The two sub-path servers serve builds made for their base, which a
+    // plain `build-web` does not produce; `serve` refuses to start without
+    // one and prints the command that makes it.
+    webServer: ([
+        ["fusion", `mbx xtask serve --example fusion-basic --release --port ${fusionPort}`, `http://127.0.0.1:${fusionPort}/`],
+        ["workbench", `mbx xtask serve --example property-workbench --release --port ${workbenchPort} --spa`, `http://127.0.0.1:${workbenchPort}/`],
+        ["catalog", `mbx xtask serve --example component-catalog --release --port ${catalogPort}`, `http://127.0.0.1:${catalogPort}/`],
+        ["data", `mbx xtask serve --example data-workbench --release --port ${dataPort} --spa`, `http://127.0.0.1:${dataPort}/`],
+        ["deep", `mbx xtask serve --example property-workbench --release --port ${deepLinkPort} --base ${deploymentBase} --spa`, `http://127.0.0.1:${deepLinkPort}${deploymentBase}`],
+        ["deployment", `mbx xtask serve --example fusion-basic --release --port ${deploymentPort} --base ${deploymentBase} --spa`, `http://127.0.0.1:${deploymentPort}${deploymentBase}`],
+    ] as const)
+        .filter(([server]) => wanted(server))
+        .map(([, command, url]) => ({ command, url, reuseExistingServer: false, timeout: 120_000 })),
 });

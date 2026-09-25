@@ -1,5 +1,6 @@
 import { expect, test } from "@playwright/test";
 import { capture, differingPixels, settle, waitForReady } from "./support";
+import { EVIDENCE } from "../tier";
 
 // Every region count here is five at rest and three with one counter scope
 // gone: the page's own mount is B0 (one region) since P3 M6, and the two
@@ -192,7 +193,7 @@ test.describe("M2 V3: teardown and host coexistence", () => {
         expect(selected).toBe("fusion-basic");
     });
 
-    test("repeated mount and dispose returns every browser resource", async ({ page }) => {
+    test("repeated mount and dispose returns every browser resource", { tag: EVIDENCE }, async ({ page }) => {
         test.setTimeout(600_000);
         const failures: string[] = [];
         page.on("pageerror", (error) => failures.push(String(error)));

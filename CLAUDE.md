@@ -8,17 +8,17 @@ Rustify UI is an experimental SDK that runs Leptos (CSR, DOM) and Makepad (GPU, 
 
 ## Toolchain
 
-- `mise install` provides everything `mise.toml` pins: stable Rust 1.98.1 with the `wasm32-unknown-unknown` target, rustfmt and clippy, and mbx 1.15.0. There is no nightly, no `rust-toolchain.toml` and no `build-std`.
+- `mise install` provides everything `mise.toml` pins: stable Rust 1.98.1 with the `wasm32-unknown-unknown` target, rustfmt and clippy, mbx 1.15.0, and Tailwind's standalone CLI 4.1.13 (`xtask` refuses any other version; `RUSTIFY_TAILWIND=<path>` points it at another copy). There is no nightly, no `rust-toolchain.toml` and no `build-std`.
 - Every build goes through **mbx** (the compiler cache): `mbx build`, `mbx test`, `mbx clippy`, `mbx xtask ...`. Plain `cargo` is wrapped by mise too, but anything that launches a *nested* build must call `mbx` explicitly, because `mbx run` gives its child a plain `$CARGO`.
 - mise's postinstall runs `scripts/link-libllvm.sh`. mbx clears `DYLD_*`, so without that link rust-lld cannot load libLLVM. `mbx xtask doctor` reports toolchain state and never changes it.
-- Browser tests need Node 26: `npm ci && npx playwright install chromium`.
+- Only the browser tests need Node 26: `npm ci && npx playwright install chromium`. Generating CSS does not.
 
 ## Commands
 
 ```sh
 # Host checks (CI's `host` job)
 cargo fmt --all -- --check                     # makepad/ opts out via its own rustfmt.toml
-mbx test --workspace --lib
+mbx test --workspace --lib --bins             # --bins: xtask and the examples are binaries
 mbx test -p rustify-ui --lib router::          # one crate, filtered
 mbx clippy --workspace --all-targets -- -D warnings
 (cd makepad && mbx test)                       # the fork is its own workspace
@@ -35,7 +35,9 @@ mbx xtask report-size --example fusion-basic --release --compressed
 
 ### Browser tests
 
-Playwright runs against **release builds that already exist**. `serve` does not rebuild, so after a Rust change, run `build-web --release` again for the affected example. Playwright starts every `webServer` in `playwright.config.ts` whatever `--project` you pass. All four root builds (fusion-basic, property-workbench, component-catalog, data-workbench) must therefore exist; the two sub-path servers build their own `<example>@tools-demo` copies.
+Playwright runs against **release builds that already exist**. `serve` does not rebuild, so after a Rust change, run `build-web --release` again for the affected example. Playwright starts only the servers of the projects you name with `--project`, so only those examples' builds must exist. The two sub-path projects (`workbench-deep`, `deployment`) serve `<example>@tools-demo` copies that `mbx xtask build-web --example property-workbench|fusion-basic --release --base /tools/demo/` makes; `serve` refuses to start without one.
+
+`RUSTIFY_TIER` picks what a run is for (`tests/tier.ts`): `regression` (the default) skips tests tagged `@evidence` and cuts `rounds(n)` loops to three; `evidence` runs only the tagged measurements at full strength; `all` runs everything. The `budget*` projects exist only outside `regression`.
 
 ```sh
 npx playwright test --project=property-workbench p3-faults.spec.ts   # one spec: iterate this way

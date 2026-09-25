@@ -223,9 +223,14 @@ test.describe("M1 V1: the host page's own controls are not ours", () => {
         // The bare page carries the example's own stylesheet and not ours, so
         // a difference is the SDK's doing rather than the application's: what
         // is under test is `runtime.css` and `rustify.css`, not `app.css`.
+        // Fetched rather than navigated to: a page that has been to the
+        // stylesheet keeps its strict policy, which then refuses the inline
+        // copy below and leaves the bare page unstyled.
+        const appCss = await page.evaluate(
+            async (url) => (await fetch(url)).text(),
+            new URL("./app.css", page.url()).href
+        );
         const bare = await browser.newPage();
-        await bare.goto(new URL("./app.css", page.url()).href);
-        const appCss = await bare.evaluate(() => document.body.textContent ?? "");
         await bare.setContent(
             `<!DOCTYPE html><html><head><style>${appCss}</style></head><body>${MARKUP}</body></html>`
         );

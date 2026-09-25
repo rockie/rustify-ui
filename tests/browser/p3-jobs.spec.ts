@@ -1,5 +1,6 @@
 import { expect, Page, test } from "@playwright/test";
 import * as twin from "./dataset";
+import { EVIDENCE } from "../tier";
 
 /// M3 · the jobs: sorting, filtering, finding, and stopping.
 ///
@@ -176,7 +177,7 @@ test.describe("M3 · a hundred thousand rows, in order", () => {
 });
 
 test.describe("M3 · stopping a job", () => {
-    test("twenty cancels each answer inside a tenth of a second", async ({ page }) => {
+    test("twenty cancels each answer inside a tenth of a second", { tag: EVIDENCE }, async ({ page }) => {
         await openTable(page);
         const times: number[] = [];
         for (let round = 0; round < 20; round++) {

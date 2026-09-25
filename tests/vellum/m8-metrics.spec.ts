@@ -1,9 +1,10 @@
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { expect, test, waitForReady } from "./support";
+import { EVIDENCE } from "../tier";
 
 for (const sample of [1, 2, 3]) {
-    test(`cold browser context records startup sample ${sample}`, async ({ page, context, browser }, info) => {
+    test(`cold browser context records startup sample ${sample}`, { tag: EVIDENCE }, async ({ page, context, browser }, info) => {
         const session = await context.newCDPSession(page);
         await session.send("Network.enable");
         await session.send("Network.setCacheDisabled", { cacheDisabled: true });

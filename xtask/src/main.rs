@@ -5,6 +5,7 @@ mod css;
 mod doctor;
 mod serve;
 mod sources;
+mod tailwind;
 mod verify;
 
 use build::BuildRequest;
@@ -18,6 +19,7 @@ mbx xtask <command> [options]
   serve       --example <name> [--release] [--base /path/] [--spa] [--port N] [--csp strict|no-wasm|off]
               [--fault missing:<path>|corrupt:<path>|truncated:<path>|stale-bridge]
   css         [--check]
+              (RUSTIFY_TAILWIND=<path> runs that tailwindcss instead of the one on PATH)
   catalog     --write <path> [--check]
   report-size --example <name> [--release] [--compressed]
   sources     verify
@@ -101,11 +103,19 @@ fn serve_example(args: &[String]) -> Result<(), String> {
     let request = build_request(args)?;
     let root = build::app_dir(&build::repo_root(), &request);
     if !root.join("index.html").is_file() {
+        // A sub-path build is a separate directory, and the command that
+        // makes it has to name the base too.
+        let base = serve::normalize_base(&request.base);
         return Err(format!(
-            "{} has no build; run `mbx xtask build-web --example {}{}` first",
+            "{} has no build; run `mbx xtask build-web --example {}{}{}` first",
             root.display(),
             request.example,
-            if request.release { " --release" } else { "" }
+            if request.release { " --release" } else { "" },
+            if base == "/" {
+                String::new()
+            } else {
+                format!(" --base {base}")
+            }
         ));
     }
     let port = match option(args, "--port") {

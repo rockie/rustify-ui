@@ -11,13 +11,15 @@ jobs:
     runs-on: macos-14
     steps:
       - uses: actions/checkout@v4
-      - name: Rust and mbx from mise.toml
+      - name: Rust, mbx and Tailwind from mise.toml
         uses: jdx/mise-action@v4
       - uses: jdx/mr-boxington-action@v1
       - name: Format
         run: cargo fmt --all -- --check
+      # `--bins` as well: xtask and the examples are binaries, and their tests
+      # do not run under `--lib`.
       - name: Unit tests
-        run: mbx test --workspace --lib
+        run: mbx test --workspace --lib --bins
       - name: Fork unit tests
         run: mbx test
         working-directory: makepad
@@ -28,11 +30,7 @@ jobs:
         run: mbx clippy --workspace --all-targets -- -D warnings
       - name: Source record
         run: mbx xtask sources verify
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 26
-      - name: Install pinned devDependencies
-        run: npm ci
+      # The Tailwind CLI is the standalone binary mise.toml pins; no Node.
       - name: Component stylesheet is in step with the classes
         run: mbx xtask css --check
       - name: Capability document is in step with the catalogue
@@ -62,6 +60,12 @@ jobs:
         run: mbx xtask build-web --example data-workbench --release
       - name: Build vellum
         run: mbx xtask build-web --example vellum --release
+      # The sub-path projects serve builds made for their base; the servers
+      # no longer build them.
+      - name: Build the sub-path copies
+        run: |
+          mbx xtask build-web --example property-workbench --release --base /tools/demo/
+          mbx xtask build-web --example fusion-basic --release --base /tools/demo/
       - name: Install pinned Playwright
         run: npm ci && npx playwright install --with-deps chromium
       # Named one by one rather than run as a whole: a headed project measures
@@ -70,6 +74,8 @@ jobs:
       # absent for exactly that reason - R30 AC2 over B3 is gated on headed
       # Chrome only (A-3), and this runner has no GPU to gate against.
       - name: Browser probes (Playwright Chromium; not the macOS Chrome pass gate)
+        env:
+          RUSTIFY_TIER: all
         run: >-
           npx playwright test
           --project=fusion-basic
@@ -82,6 +88,8 @@ jobs:
           --project=workbench-deep
           --project=deployment
       - name: Vellum browser probes
+        env:
+          RUSTIFY_TIER: all
         run: npx playwright test -c tests/vellum/playwright.config.ts
       - uses: actions/upload-artifact@v4
         if: always()

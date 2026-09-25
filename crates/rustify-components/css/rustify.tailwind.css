@@ -9,9 +9,12 @@
    `[data-rustify-scope]`. */
 
 @import "tailwindcss/theme.css" layer(theme) prefix(rui);
-@import "tailwindcss/utilities.css" layer(utilities) prefix(rui);
+@import "tailwindcss/utilities.css" layer(utilities) prefix(rui) source(none);
 
-/* Every class string this build can produce lives in one of these. */
+/* Every class string this build can produce lives in one of these, and
+   nowhere else: `source(none)` above stops Tailwind scanning the working
+   directory, where a class-shaped word in a document or a test would
+   otherwise become a rule. */
 @source "../src";
 @source "../../../examples";
 

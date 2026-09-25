@@ -3,6 +3,7 @@ import { fusionPort } from "../../playwright.config";
 import { percentile, R30_LARGE } from "./budgets";
 import { BASELINE, B2, B3 } from "./loads";
 import * as twin from "./dataset";
+import { EVIDENCE } from "../tier";
 
 /// The five things P3's design assumes and has not measured.
 ///
@@ -315,7 +316,7 @@ async function watchPolicy(page: Page) {
 const policyViolations = (page: Page) =>
     page.evaluate(() => (window as unknown as { __csp: string[] }).__csp);
 
-test.describe("M1 · the five things P3 assumes", () => {
+test.describe("M1 · the five things P3 assumes", { tag: EVIDENCE }, () => {
     test("the skeleton boots under the release policy with nothing refused", async ({ page }) => {
         await watchPolicy(page);
         await waitForReady(page, "./");

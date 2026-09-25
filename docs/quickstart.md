@@ -2,7 +2,7 @@
 
 ## Prerequisites
 
-- `mise` (2026.9.2 or newer). `mise install` installs what `mise.toml` pins: Rust 1.98.1 (stable) with `rustfmt`, `clippy` and the wasm32 target, and mbx 1.15.0, the compiler cache every build goes through. Nothing else is installed silently.
+- `mise` (2026.9.2 or newer). `mise install` installs what `mise.toml` pins: Rust 1.98.1 (stable) with `rustfmt`, `clippy` and the wasm32 target; mbx 1.15.0, the compiler cache every build goes through; and Tailwind's standalone CLI 4.1.13, which generates the component stylesheet without Node (`RUSTIFY_TAILWIND=<path>` points at another copy of that version). Nothing else is installed silently.
 - After installing Rust, mise runs `scripts/link-libllvm.sh`, which puts a link to the toolchain's `libLLVM` next to `rust-lld`. mbx starts the toolchain's Cargo without rustup's proxy, so without that link the wasm link cannot load LLVM. `mbx xtask doctor` reports a toolchain that is missing the link.
 - Node 26 and npm for the browser tests: `npm ci` then `npx playwright install chromium`.
 - Google Chrome on macOS for the manual pass gate.
@@ -44,7 +44,7 @@ cargo fmt --all -- --check           # the fork under makepad/ is excluded by it
 mbx xtask sources verify             # drift of makepad/ against the import record
 npm run test:browser                 # Playwright probes against a release build
 cd makepad && mbx test -p cargo-makepad
-mbx xtask verify --suite p2          # everything above in one report, plus what needs a person
+mbx xtask verify --suite p2          # all of the above, css --check and catalog --check included, plus what needs a person
 ```
 
 `verify` runs the checks, double-builds each example, runs every browser

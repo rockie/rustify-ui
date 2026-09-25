@@ -1,5 +1,6 @@
 import { CDPSession, expect, Page, test } from "@playwright/test";
 import { percentile, R29_B0 } from "./budgets";
+import { EVIDENCE } from "../tier";
 
 /// R29's B0 column, asserted.
 ///
@@ -130,7 +131,7 @@ function split(kind: string, starts: Start[]) {
     );
 }
 
-test.describe("R29 B0: the smallest complete application, started", () => {
+test.describe("R29 B0: the smallest complete application, started", { tag: EVIDENCE }, () => {
     test(`AC1: ${R29_B0.rounds} cold starts, p95 under ${R29_B0.cold_p95_ms} ms`, async ({
         browser,
     }) => {

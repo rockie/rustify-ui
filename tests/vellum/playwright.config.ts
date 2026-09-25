@@ -1,6 +1,7 @@
 import { defineConfig, devices } from "@playwright/test";
 import { existsSync } from "node:fs";
 import path from "node:path";
+import { tierFilter } from "../tier";
 
 const root = path.resolve(__dirname, "../..");
 const reference = path.join(root, "ref/Vellum-main");
@@ -14,6 +15,7 @@ export default defineConfig({
     workers: 1,
     retries: 0,
     reporter: [["list"], ["json", { outputFile: path.join(root, "test-results/vellum", `${artifactScope}-results.json`) }]],
+    ...tierFilter(),
     use: {
         ...devices["Desktop Chrome"],
         viewport: { width: 1600, height: 1000 },

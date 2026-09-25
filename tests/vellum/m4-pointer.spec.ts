@@ -4,6 +4,7 @@ import type { Page } from "@playwright/test";
 import { PNG } from "pngjs";
 import { differingPixels, expect, present, test, waitForReady } from "./support";
 import { hasReference, openTwin } from "./twin";
+import { EVIDENCE } from "../tier";
 
 async function playground(page: Page, reference = false) {
     if (reference) await openTwin(page); else await waitForReady(page);
@@ -182,7 +183,7 @@ test("canvas keyboard edits ignore form controls and use original nudge and zoom
     expect(await page.evaluate(() => window.vellum.doc.nodes.length)).toBe(1);
 });
 
-test("pan presentation latency is measured from input to an SDK frame in the page", async ({ page }, info) => {
+test("pan presentation latency is measured from input to an SDK frame in the page", { tag: EVIDENCE }, async ({ page }, info) => {
     await waitForReady(page);
     const box = (await page.locator("#overlay").boundingBox())!;
     await page.mouse.move(box.x + 500, box.y + 350);

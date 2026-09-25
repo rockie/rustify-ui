@@ -1,5 +1,6 @@
 import { expect, test } from "@playwright/test";
 import { settle, waitForReady } from "./support";
+import { EVIDENCE } from "../tier";
 
 /// P1's own endurance fixture: one scope, one region, a thousand objects,
 /// ten discrete actions a second. It is not the PRD's B0/B1 load and does not
@@ -13,7 +14,7 @@ import { settle, waitForReady } from "./support";
 const MINUTES = Number(process.env.RUSTIFY_ENDURANCE_MINUTES ?? "2");
 const RATE_HZ = 10;
 
-test.describe("M8 V12: a run that lasts", () => {
+test.describe("M8 V12: a run that lasts", { tag: EVIDENCE }, () => {
     test(`${MINUTES} minutes at ten actions a second, losing none of them`, async ({ page }) => {
         test.setTimeout(MINUTES * 60_000 + 300_000);
         await waitForReady(page);
