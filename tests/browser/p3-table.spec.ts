@@ -47,7 +47,7 @@ async function openTable(page: Page) {
 async function drawnRows(page: Page): Promise<{ index: number; id: number }[]> {
     return page.evaluate(() =>
         Array.from(document.querySelectorAll('[data-testid="table"] [role="row"]'))
-            .filter((row) => !row.classList.contains("rui:hidden") && row.hasAttribute("data-row-id"))
+            .filter((row) => !row.classList.contains("hidden") && row.hasAttribute("data-row-id"))
             .map((row) => ({
                 index: Number(row.getAttribute("aria-rowindex")) - 1,
                 id: Number(row.getAttribute("data-row-id")),
