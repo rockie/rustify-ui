@@ -1126,8 +1126,11 @@ mod app {
                             view! {
                                 <Row>
                                     <span>{move || t(locale.get(), key)}</span>
+                                    // The caller's class replaces the chip's own
+                                    // of the same kind: these are pills.
                                     <Chip
                                         variant=chip(support)
+                                        class="rounded-full"
                                         test_id=format!("presentation-{key}")
                                     >
                                         {support.name()}

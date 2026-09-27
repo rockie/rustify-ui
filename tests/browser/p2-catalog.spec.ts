@@ -142,6 +142,19 @@ test.describe("M1: the catalogue answers for every category", () => {
         await expect(page.getByTestId("presentation-gpu")).toHaveText("partial");
     });
 
+    test("a caller's class replaces the component's own class of the same kind", async ({ page }) => {
+        await ready(page);
+        await page.getByTestId("nav-tabs").click();
+        // The page passes `rounded-full` to a chip whose own classes say
+        // `rounded-md`. Both are unprefixed utilities, so the merge keeps the
+        // caller's alone, and the stylesheet has a rule for it.
+        const chip = page.getByTestId("presentation-dom");
+        await expect(chip).toHaveClass(/(^|\s)rounded-full(\s|$)/);
+        await expect(chip).not.toHaveClass(/(^|\s)rounded-md(\s|$)/);
+        const radius = await chip.evaluate((element) => parseFloat(getComputedStyle(element).borderTopLeftRadius));
+        expect(radius).toBeGreaterThan(100);
+    });
+
     test("the language switch changes the words and nothing else", async ({ page }) => {
         await ready(page);
         await page.getByTestId("nav-status").click();
