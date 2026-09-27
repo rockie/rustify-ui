@@ -318,11 +318,13 @@ docs/validation/dx/m<n>.md ★
 | --- | --- | --- |
 | 证据层（整文件） | `p2-budget`、`p3-budget-minimal`、`p3-budget-data`、`m8-baseline`、`m8-endurance`、`m8-network`、`p3-endurance`、`p3-idle`、`p3-memory`、`p3-diagnostics`、`p3-probes`、`p3-faults`；vellum `smoke`、`visual`、`m8-metrics` | 文件级 `@evidence`；预算类 project（`budget`、`budget-minimal`、`budget-data`）只在证据层存在 |
 | 仅手动 | `p3-budget-scene`（有头 + 真 GPU）；vellum `m3-webgpu`、`m8-ui`（已有环境变量门） | 保持现状，列入证据 workflow 的说明但不自动跑 |
-| 证据层（单用例） | `m2-runtime` 的 300+100 回合挂载泄漏（`m2-runtime.spec.ts:195`）；vellum `m4-pointer` 平移 30 样本 p95（`m4-pointer.spec.ts:217`）；`p3-jobs` 的 20 次取消 p95 | 用例级 `@evidence` |
+| 证据层（单用例） | `m2-runtime` 的 300+100 回合挂载泄漏（`m2-runtime.spec.ts:195`）；vellum `m4-pointer` 平移 30 样本 p95（`m4-pointer.spec.ts:217`）；`p3-jobs` 的 20 次取消 p95；`p2-theme` 每次换主题 < 200 ms 的预算（M2 在 CI 上补分，见下） | 用例级 `@evidence` |
 | 回归层（降回合） | `m1-probes`、`m3-state`、`m3-workbench`、`m4-geometry`（9 组 → 2 组）、`m4-overlay`、`m6-async`、`m6-components`、`m6-theme`、`m7-recovery`、`p2-*`（`p2-budget` 除外）、`p3-scene`、`p3-table` | 循环次数改 `rounds(n)`，矩阵改 `pick()` |
 | 回归层（原样） | `m2-runtime`（除上行的单用例）、`m5-*`、`m6-mainpath`、`m7-deployment`、`p3-b0`、`p3-instances`、`p3-jobs`（除上行的单用例）、`p3-policy`、`p3-restart`；vellum `m2-scene`、`m3-raster`、`m4-pointer`（除上行的单用例）、`m5-shell`、`m6-edit`、`m7-files` | 只换页面复用方式（D4） |
 
 **M2 偏差（证据层回合数）**：`m2-runtime`「repeated mount and dispose returns every browser resource」的预热由 300 回合改为 400（尾段 100 回合与「零增长」阈值不变）。依据：1,000 回合逐 50 回合采样，改前构建第 100 回合即稳定，M2 构建因各夹具登记复位闭包在第 300–350 回合间多一次 16 MB 的堆增长、此后 650 回合平稳；用例注释本就写明预热按构建实测（`docs/validation/dx/m2.md`）。
+
+**M2 补分（`p2-theme`）**：「twenty switches, and every one of them lands inside the budget」原属 `p2-*` 回归层，但它既查结果（每次切换两帧后生效、主题交替）又查 200 ms 预算。PR #3 的 CI 上 2 个 worker 共用 3 核、软件光栅时，一次切换量到 201.7 ms。按判定规则拆开：回归层留「every switch is in force two frames after the click」只查结果，预算用例原名进证据层；`evidence.yml` 因此加跑 component-catalog。
 
 `p3-faults` 整体进证据层的依据：它是四类故障各 20 次的放大版，单次版本已在回归层：过期答复 `m6-async.spec.ts:51-61`、上下文丢失 `m7-recovery.spec.ts:66-107`、动作内关闭 `m3-workbench.spec.ts:350-379`、字体缺失 `m7-deployment.spec.ts:73-120`。
 

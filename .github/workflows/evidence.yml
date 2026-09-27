@@ -70,6 +70,13 @@ jobs:
           npx playwright test --project=data-workbench --output=test-results/data-workbench || status=$?
           cp test-results/browser.json test-results/data-workbench.json 2>/dev/null || true
           exit $status
+      - name: component-catalog
+        if: ${{ !cancelled() }}
+        run: |
+          status=0
+          npx playwright test --project=component-catalog --output=test-results/component-catalog || status=$?
+          cp test-results/browser.json test-results/component-catalog.json 2>/dev/null || true
+          exit $status
       - name: budget
         if: ${{ !cancelled() }}
         run: |
