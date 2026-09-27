@@ -1,5 +1,6 @@
 import { CDPSession, expect, Page, test } from "@playwright/test";
 import { waitForQuiet } from "./support";
+import { EVIDENCE } from "../tier";
 
 /// M6 · what B0 costs when nobody is doing anything.
 ///
@@ -54,7 +55,7 @@ async function cpuShare(cdp: CDPSession, ms: number, wait: () => Promise<void>):
 const idle = (page: Page, ms: number) =>
     page.evaluate((ms) => new Promise((resolve) => setTimeout(resolve, ms)), ms);
 
-test.describe("M6 · B0 at rest", () => {
+test.describe("M6 · B0 at rest", { tag: EVIDENCE }, () => {
     test("sixty seconds of nothing presents at most one frame", async ({ page }) => {
         test.setTimeout(300_000);
         await openB0(page);

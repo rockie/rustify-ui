@@ -1,6 +1,7 @@
 import { expect, test } from "@playwright/test";
 import { percentile } from "./budgets";
 import { settle, waitForReady } from "./support";
+import { EVIDENCE } from "../tier";
 
 /// M7 · what keeping the record costs the thing it is recording.
 ///
@@ -18,7 +19,7 @@ const ACTIONS = 1_000;
 /// What the record may cost, as a share of the p95 without it.
 const ALLOWED_GROWTH = 0.05;
 
-test.describe("M7 V7 / R39 AC2: the cost of the record", () => {
+test.describe("M7 V7 / R39 AC2: the cost of the record", { tag: EVIDENCE }, () => {
     test(`${ACTIONS} cross-region actions with the record on and off`, async ({ page }) => {
         test.setTimeout(1_800_000);
         await waitForReady(page);

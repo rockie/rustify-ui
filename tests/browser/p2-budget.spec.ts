@@ -1,5 +1,6 @@
 import { CDPSession, expect, Page, test } from "@playwright/test";
 import { percentile, R29, R30 } from "./budgets";
+import { EVIDENCE } from "../tier";
 
 /// R29 and R30, asserted rather than reported.
 ///
@@ -183,7 +184,7 @@ function split(kind: string, starts: Start[]) {
     );
 }
 
-test.describe("R29: start-up and what a deployment sends", () => {
+test.describe("R29: start-up and what a deployment sends", { tag: EVIDENCE }, () => {
     test(`AC1: ${R29.rounds} cold starts, p95 under ${R29.cold_p95_ms} ms`, async ({ browser }) => {
         test.setTimeout(3_600_000);
         // A context of its own for every load. Turning the HTTP cache off is
@@ -389,7 +390,7 @@ test.describe("R29: start-up and what a deployment sends", () => {
     });
 });
 
-test.describe("R30: latency at B1's density", () => {
+test.describe("R30: latency at B1's density", { tag: EVIDENCE }, () => {
     test(`AC1: ${R30.actions} actions, p95 under ${R30.latency_p95_ms} ms`, async ({ page }) => {
         test.setTimeout(1_800_000);
         await page.addInitScript(CLOCK);

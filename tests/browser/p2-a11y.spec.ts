@@ -1,6 +1,6 @@
-import { expect, Page, test } from "@playwright/test";
+import { expect, Page } from "@playwright/test";
 
-import { CATALOG_SIZE, sharedPage } from "./support";
+import { CATALOG_SIZE, test } from "./support";
 
 /// M8: what the accessibility tree says, and that the keyboard can leave.
 ///
@@ -40,11 +40,7 @@ const OPERABLE = [
 ];
 
 test.describe("M8: the accessibility tree, and the way out of it", () => {
-    test.describe.configure({ mode: "serial" });
-    const shared = sharedPage();
-
-    test("every control a person can operate has something to call it", async () => {
-        const page = shared.page;
+    test("every control a person can operate has something to call it", async ({ page }) => {
         const lines = await ariaLines(page);
         // `- button "press me"` has a name; `- button:` or `- button` has not.
         const nameless = lines.filter((line) => {
@@ -65,8 +61,7 @@ test.describe("M8: the accessibility tree, and the way out of it", () => {
         expect(named.length, "the tree has controls in it").toBeGreaterThan(10);
     });
 
-    test("every category is a different thing to say", async () => {
-        const page = shared.page;
+    test("every category is a different thing to say", async ({ page }) => {
         const names = await page
             .locator("nav.catalogue-nav li button")
             .evaluateAll((buttons) => buttons.map((button) => button.textContent?.trim() ?? ""));
@@ -75,8 +70,7 @@ test.describe("M8: the accessibility tree, and the way out of it", () => {
         expect(new Set(names).size, `duplicates in ${JSON.stringify(names)}`).toBe(names.length);
     });
 
-    test("tabbing forward from the top comes back round rather than sticking", async () => {
-        const page = shared.page;
+    test("tabbing forward from the top comes back round rather than sticking", async ({ page }) => {
         await page.evaluate(() => (document.activeElement as HTMLElement | null)?.blur());
 
         // A trap shows up two ways: focus stops moving, or it cycles among a
@@ -112,8 +106,7 @@ test.describe("M8: the accessibility tree, and the way out of it", () => {
         ).toBe(true);
     });
 
-    test("an open layer keeps the keyboard, and Escape gives it back", async () => {
-        const page = shared.page;
+    test("an open layer keeps the keyboard, and Escape gives it back", async ({ page }) => {
         await page.getByTestId("nav-dialog").click();
         await expect(page.getByTestId("category-name")).toHaveText("dialog");
 

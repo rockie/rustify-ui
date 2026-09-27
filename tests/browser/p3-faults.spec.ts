@@ -1,5 +1,6 @@
 import { expect, Page, test } from "@playwright/test";
 import { settle, waitForReady } from "./support";
+import { EVIDENCE } from "../tier";
 
 /// M7 · four kinds of failure, twenty times each, against a written
 /// expectation.
@@ -62,7 +63,7 @@ test.afterEach(async ({ page }) => {
     await fault(page, "none");
 });
 
-test.describe("M7 V7: a font that does not arrive", () => {
+test.describe("M7 V7: a font that does not arrive", { tag: EVIDENCE }, () => {
     test(`${ROUNDS} loads without it cost glyphs and nothing else`, async ({ page }) => {
         test.setTimeout(1_800_000);
         const failures: string[] = [];
@@ -97,7 +98,7 @@ test.describe("M7 V7: a font that does not arrive", () => {
     });
 });
 
-test.describe("M7 V7: an answer that arrives after a newer one", () => {
+test.describe("M7 V7: an answer that arrives after a newer one", { tag: EVIDENCE }, () => {
     test(`${ROUNDS} pairs answered backwards leave the newer answer standing`, async ({ page }) => {
         test.setTimeout(900_000);
         const failures: string[] = [];
@@ -128,7 +129,7 @@ test.describe("M7 V7: an answer that arrives after a newer one", () => {
     });
 });
 
-test.describe("M7 V7: a scope closed from inside a region action", () => {
+test.describe("M7 V7: a scope closed from inside a region action", { tag: EVIDENCE }, () => {
     test(`${ROUNDS} closures leave the runtime alive and a fresh scope working`, async ({
         page,
     }) => {
@@ -177,7 +178,7 @@ test.describe("M7 V7: a scope closed from inside a region action", () => {
     });
 });
 
-test.describe("M7 V7: a GPU context lost and given back", () => {
+test.describe("M7 V7: a GPU context lost and given back", { tag: EVIDENCE }, () => {
     test(`${ROUNDS} losses cost pixels, not values`, async ({ page }) => {
         test.setTimeout(1_800_000);
         const failures: string[] = [];

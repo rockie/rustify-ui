@@ -37,7 +37,7 @@ pub const FIELDS: [&str; 20] = [
 ];
 
 /// The fifteen an object carries that a save applies.
-#[derive(Clone, Debug, Default, PartialEq)]
+#[derive(Clone, Debug, Default, PartialEq, Hash)]
 pub struct Details {
     pub owner: String,
     pub email: String,
@@ -335,6 +335,10 @@ fn SelectField(
     on_change: Callback<String>,
 ) -> impl IntoView {
     let open = RwSignal::new(false);
+    // A list a check left open is state like any other, and a reset closes it.
+    if let Some(resets) = crate::reset::Resets::used() {
+        resets.on_reset(move || open.set(false));
+    }
     view! {
         <rustify_components::Select
             id=binding_id

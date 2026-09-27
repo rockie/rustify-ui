@@ -1,6 +1,7 @@
-import { expect, Page, test } from "@playwright/test";
+import { expect, Page } from "@playwright/test";
 
-import { sharedPage, waitForReady } from "./support";
+import { test, waitForReady } from "./support";
+import { rounds } from "../tier";
 
 /// M4's first task: find out what the browser actually does, before writing a
 /// router that assumes it.
@@ -17,20 +18,25 @@ import { sharedPage, waitForReady } from "./support";
 /// router will stamp them.
 async function stack(page: Page, urls: string[]) {
     await page.evaluate((urls) => {
-        const w = window as unknown as { __probe: unknown[]; __probe_listening?: boolean };
+        const w = window as unknown as { __probe: unknown[]; __probe_listening?: AbortController };
         w.__probe = [];
-        // One listener for the page, not one per call: these tests share a
-        // page, and a second listener would report every event twice.
-        if (!w.__probe_listening) {
-            w.__probe_listening = true;
-            addEventListener("popstate", () => {
-                w.__probe.push({
-                    url: location.pathname + location.search,
-                    index:
-                        (history.state as { rustify?: { index?: number } } | null)?.rustify
-                            ?.index ?? null,
-                });
-            });
+        // One listener for the page, not one per call: the page is shared, and
+        // a second listener would report every event twice. Registered with a
+        // controller the page's reset aborts, so it does not outlive the check.
+        if (w.__probe_listening === undefined) {
+            w.__probe_listening = new AbortController();
+            addEventListener(
+                "popstate",
+                () => {
+                    w.__probe.push({
+                        url: location.pathname + location.search,
+                        index:
+                            (history.state as { rustify?: { index?: number } } | null)?.rustify
+                                ?.index ?? null,
+                    });
+                },
+                { signal: w.__probe_listening.signal }
+            );
         }
         history.replaceState({ rustify: { index: 0 } }, "", location.pathname);
         urls.forEach((url, offset) => {
@@ -48,12 +54,14 @@ const here = (page: Page) =>
         index: (history.state as { rustify?: { index?: number } } | null)?.rustify?.index ?? null,
     }));
 
+// Each check stacks its own entries from where the page's reset left the
+// address bar, so they share the page and not each other's history.
 test.describe("M4 A-5: what the browser does with history, measured", () => {
-    test.describe.configure({ mode: "serial" });
-    const shared = sharedPage();
+    test.beforeEach(async ({ page }) => {
+        await waitForReady(page);
+    });
 
-    test("one go() crosses several entries, and reports the entry it landed on", async () => {
-        const page = shared.page;
+    test("one go() crosses several entries, and reports the entry it landed on", async ({ page }) => {
         await stack(page, ["?a", "?b", "?c", "?d"]);
         expect(await here(page)).toMatchObject({ url: "/?d", index: 4 });
 
@@ -65,8 +73,7 @@ test.describe("M4 A-5: what the browser does with history, measured", () => {
         expect(await seen(page)).toEqual([{ url: "/?a", index: 1 }]);
     });
 
-    test("the way back is one go() of the difference, not several of one", async () => {
-        const page = shared.page;
+    test("the way back is one go() of the difference, not several of one", async ({ page }) => {
         await stack(page, ["?a", "?b", "?c", "?d"]);
         await page.evaluate(() => history.go(-3));
         await expect.poll(async () => (await seen(page)).length).toBe(1);
@@ -85,8 +92,7 @@ test.describe("M4 A-5: what the browser does with history, measured", () => {
         expect(await here(page)).toMatchObject({ url: "/?d", index: 4 });
     });
 
-    test("the same URL twice is two entries, and the sequence number tells them apart", async () => {
-        const page = shared.page;
+    test("the same URL twice is two entries, and the sequence number tells them apart", async ({ page }) => {
         // A list, a detail, and back to the same list - the ordinary shape of
         // a repeated URL, and the reason a URL cannot be an identity.
         await stack(page, ["?list", "?item", "?list"]);
@@ -100,8 +106,7 @@ test.describe("M4 A-5: what the browser does with history, measured", () => {
         expect(landed.index).toBe(1);
     });
 
-    test("a back pressed during a recovery arrives after it, and is its own event", async () => {
-        const page = shared.page;
+    test("a back pressed during a recovery arrives after it, and is its own event", async ({ page }) => {
         await stack(page, ["?a", "?b", "?c", "?d"]);
         await page.evaluate(() => history.go(-3));
         await expect.poll(async () => (await seen(page)).length).toBe(1);
@@ -125,8 +130,7 @@ test.describe("M4 A-5: what the browser does with history, measured", () => {
         expect(landed.index).toBe(trail[trail.length - 1].index);
     });
 
-    test("an entry the router did not push has no sequence number", async () => {
-        const page = shared.page;
+    test("an entry the router did not push has no sequence number", async ({ page }) => {
         await stack(page, ["?a"]);
         // Something else on the page pushed one: a host script, an older
         // build, a browser restoring a session.
@@ -162,12 +166,15 @@ async function mountRouting(page: Page) {
     await expect.poll(async () => Object.keys(await routes(page)).length).toBe(2);
 }
 
+// The routing scopes are mounted for each check and go with the page's reset,
+// which also puts the address bar back where the page loaded.
 test.describe("M4 V6: who owns the address bar", () => {
-    test.describe.configure({ mode: "serial" });
-    const shared = sharedPage(mountRouting);
+    test.beforeEach(async ({ page }) => {
+        await waitForReady(page);
+        await mountRouting(page);
+    });
 
-    test("only the owner's location is the page's, and both of them route", async () => {
-        const page = shared.page;
+    test("only the owner's location is the page's, and both of them route", async ({ page }) => {
         const start = new URL(page.url()).pathname;
 
         await page.getByTestId("route-guest-two").click();
@@ -182,8 +189,7 @@ test.describe("M4 V6: who owns the address bar", () => {
         expect(new URL(page.url()).pathname).toBe(`${start.replace(/\/$/, "")}/two`);
     });
 
-    test("a second scope asking to own the URL is refused and changes nothing", async () => {
-        const page = shared.page;
+    test("a second scope asking to own the URL is refused and changes nothing", async ({ page }) => {
         const before = await routes(page);
         const refused = await page.evaluate(() => {
             try {
@@ -202,30 +208,48 @@ test.describe("M4 V6: who owns the address bar", () => {
         expect(await routes(page)).toMatchObject({ owner: "/one" });
     });
 
-    test("twenty moves are twenty entries, and back walks them", async () => {
-        const page = shared.page;
-        const depth = () => page.evaluate(() => history.length);
-        const before = await depth();
-        for (let round = 0; round < 20; round += 1) {
-            await page.getByTestId(round % 2 === 0 ? "route-owner-two" : "route-owner-one").click();
+    test("twenty moves are twenty entries, and back walks them", async ({ page }) => {
+        // Counted as entries rather than as `history.length`: a page that
+        // checks share has its history behind it, and the browser keeps only
+        // the last fifty entries of it, so its length stops saying anything
+        // once it is full.
+        const entries = () =>
+            page.evaluate(() => {
+                const navigation = (
+                    window as unknown as {
+                        navigation: { entries(): { key: string }[]; currentEntry: { key: string } };
+                    }
+                ).navigation;
+                return { keys: navigation.entries().map((entry) => entry.key), current: navigation.currentEntry.key };
+            });
+        const before = await entries();
+        const moves = rounds(20);
+        const targets = Array.from({ length: moves }, (_, round) => (round % 2 === 0 ? "two" : "one"));
+        for (const target of targets) {
+            await page.getByTestId(`route-owner-${target}`).click();
         }
-        expect(await depth()).toBe(before + 20);
-        expect(await routes(page)).toMatchObject({ owner: "/one" });
+        const moved = await entries();
+        const added = moved.keys.filter((key) => !before.keys.includes(key));
+        expect(added).toHaveLength(moves);
+        expect(added[added.length - 1]).toBe(moved.current);
+        expect(await routes(page)).toMatchObject({ owner: `/${targets[targets.length - 1]}` });
 
-        for (let round = 0; round < 20; round += 1) {
+        for (let round = 0; round < moves; round += 1) {
             await page.goBack();
         }
         await expect.poll(async () => (await routes(page)).owner).toBeTruthy();
-        expect(await depth()).toBe(before + 20);
+        // Back where it started, and every entry it walked is still there.
+        const back = await entries();
+        expect(back.current).toBe(before.current);
+        expect(back.keys).toEqual(moved.keys);
     });
 
-    test("a guard refuses a move and puts the user back where they were", async () => {
-        const page = shared.page;
+    test("a guard refuses a move and puts the user back where they were", async ({ page }) => {
         await page.getByTestId("route-owner-one").click();
         const held = new URL(page.url()).pathname;
 
         await page.evaluate(() => window.__fusion_basic.set_guard(true));
-        for (let round = 0; round < 20; round += 1) {
+        for (let round = 0; round < rounds(20); round += 1) {
             await page.goBack();
             // The address bar and the view agree, and both are where the
             // guard said to stay.
@@ -240,7 +264,7 @@ test.describe("M4 V6: who owns the address bar", () => {
         expect(await routes(page)).toMatchObject({ owner: "/one" });
 
         await page.evaluate(() => window.__fusion_basic.set_guard(false));
-        for (let round = 0; round < 20; round += 1) {
+        for (let round = 0; round < rounds(20); round += 1) {
             await page.getByTestId("route-owner-go").click();
             await expect(page.getByTestId("route-owner-asked")).toHaveText("Done");
             await page.getByTestId("route-owner-one").click();
@@ -252,8 +276,13 @@ test.describe("M4 V6: who owns the address bar", () => {
 /// Its own page, deliberately: this one navigates the browser away, which is
 /// the case a shared page cannot put back.
 test.describe("M4 V6: a link the page owns", () => {
+    test.use({ fresh: true });
+
     test("the browser takes it, and the SDK does not", async ({ page }) => {
-        await waitForReady(page);
+        // Loaded, and the owner mounted; the counter scopes `waitForReady`
+        // would add start four regions this check has no use for.
+        await page.goto("./");
+        await expect(page.getByTestId("status")).toHaveAttribute("data-status", "ready", { timeout: 60_000 });
         await page.evaluate(() => window.__fusion_basic.mount_owner("route-owner"));
         await expect(page.getByTestId("route-owner-path")).toBeVisible();
 

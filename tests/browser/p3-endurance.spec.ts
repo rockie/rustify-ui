@@ -1,6 +1,7 @@
 import { expect, test } from "@playwright/test";
 import { B4, B4_ACTIONS } from "./loads";
 import { settle, waitForQuiet } from "./support";
+import { EVIDENCE } from "../tier";
 
 /// M7 · B4 for as long as it takes: two instances, four regions, ten actions
 /// a second, and every one of them counted out and counted back in.
@@ -20,7 +21,7 @@ const RATE_HZ = B4.actionsPerSecond;
 /// Where each instance's scope is mounted, in the rotation's own order.
 const CONTAINERS: string[] = ["scope-a", "instance-two"];
 
-test.describe("M7 V7: B4, for as long as it takes", () => {
+test.describe("M7 V7: B4, for as long as it takes", { tag: EVIDENCE }, () => {
     test(`${MINUTES} minutes at ${RATE_HZ} actions a second across two instances`, async ({
         page,
     }) => {

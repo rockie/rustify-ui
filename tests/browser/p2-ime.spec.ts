@@ -1,6 +1,6 @@
-import { expect, Page, test } from "@playwright/test";
+import { expect, Page } from "@playwright/test";
 
-import { sharedPage } from "./support";
+import { test } from "./support";
 
 /// M8: composing Chinese in the two places the plan names.
 ///
@@ -51,20 +51,17 @@ async function compose(page: Page, testId: string, steps: string[], final: strin
 }
 
 test.describe("M8: a composition in the property form", () => {
-    test.describe.configure({ mode: "serial" });
-    const shared = sharedPage(async (page) => {
+    test.beforeEach(async ({ page }) => {
         await page.getByTestId("object-7").click();
         await expect.poll(async () => (await snapshot(page)).selected).toBe(7);
     });
 
-    test("what the composition committed is what the application has", async () => {
-        const page = shared.page;
+    test("what the composition committed is what the application has", async ({ page }) => {
         await compose(page, "name-input", ["s", "sh", "shu", "shux"], "属性");
         await expect.poll(async () => (await snapshot(page)).name).toBe("属性");
     });
 
-    test("a composition that is abandoned leaves the value it started from", async () => {
-        const page = shared.page;
+    test("a composition that is abandoned leaves the value it started from", async ({ page }) => {
         const before = (await snapshot(page)).name;
         await page.evaluate(() => {
             const field = document.querySelector(
@@ -103,8 +100,7 @@ test.describe("M8: a composition in the property form", () => {
         await expect.poll(async () => (await snapshot(page)).name).toBe(before);
     });
 
-    test("ten thousand characters of Chinese and emoji survive the field", async () => {
-        const page = shared.page;
+    test("ten thousand characters of Chinese and emoji survive the field", async ({ page }) => {
         // The same sample V9 puts through the clipboard, through the form
         // instead: a value the field has to hold, not just carry.
         const unit = [..."属性工作台🙂🌍"];
@@ -119,11 +115,7 @@ test.describe("M8: a composition in the property form", () => {
 });
 
 test.describe("M8: a composition in the command palette", () => {
-    test.describe.configure({ mode: "serial" });
-    const shared = sharedPage();
-
-    test("a command is found by what the composition committed", async () => {
-        const page = shared.page;
+    test("a command is found by what the composition committed", async ({ page }) => {
         await page.getByTestId("open-commands").click();
         const palette = page.getByTestId("command-palette");
         await expect(palette).toBeVisible();
@@ -172,8 +164,7 @@ test.describe("M8: a composition in the command palette", () => {
         await expect(palette).toBeHidden();
     });
 
-    test("and the search still works with the keyboard afterwards", async () => {
-        const page = shared.page;
+    test("and the search still works with the keyboard afterwards", async ({ page }) => {
         await page.getByTestId("open-commands").click();
         await page.getByTestId("command-search").fill("next object");
         await expect(page.getByTestId("command-palette").getByRole("option")).toHaveCount(1);

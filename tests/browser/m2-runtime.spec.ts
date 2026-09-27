@@ -1,5 +1,6 @@
-import { expect, test } from "@playwright/test";
-import { capture, differingPixels, settle, waitForReady } from "./support";
+import { expect } from "@playwright/test";
+import { capture, differingPixels, settle, test, waitForReady } from "./support";
+import { EVIDENCE } from "../tier";
 
 // Every region count here is five at rest and three with one counter scope
 // gone: the page's own mount is B0 (one region) since P3 M6, and the two
@@ -192,7 +193,7 @@ test.describe("M2 V3: teardown and host coexistence", () => {
         expect(selected).toBe("fusion-basic");
     });
 
-    test("repeated mount and dispose returns every browser resource", async ({ page }) => {
+    test("repeated mount and dispose returns every browser resource", { tag: EVIDENCE }, async ({ page }) => {
         test.setTimeout(600_000);
         const failures: string[] = [];
         page.on("pageerror", (error) => failures.push(String(error)));
@@ -211,12 +212,14 @@ test.describe("M2 V3: teardown and host coexistence", () => {
         // nothing. Linear memory never shrinks, so even 8 KiB held per round
         // would show up as a dozen more pages.
         //
-        // The warm-up is what the tail has to come after, and three hundred is
-        // measured rather than guessed: on this build the working set settles
-        // at about round two hundred and fifty - in three identical runs, so
-        // it is where this build puts it rather than variance - and six
-        // hundred rounds add nothing after that. A warm-up that ends before
-        // the working set does measures the working set and calls it a leak.
+        // The warm-up is what the tail has to come after, and four hundred is
+        // measured rather than guessed: sampled every fifty rounds over a
+        // thousand, this build's working set takes its last step between
+        // rounds three hundred and three hundred and fifty and the next six
+        // hundred and fifty add nothing. It settled by round one hundred
+        // before each fixture kept a way back to its first state, and the
+        // warm-up was three hundred then. A warm-up that ends before the
+        // working set does measures the working set and calls it a leak.
         const after = await page.evaluate(async () => {
             const api = window.__fusion_basic;
             const round = async () => {
@@ -224,7 +227,7 @@ test.describe("M2 V3: teardown and host coexistence", () => {
                 api.mount("scope-a");
                 await new Promise((r) => setTimeout(r, 20));
             };
-            for (let i = 0; i < 300; i++) {
+            for (let i = 0; i < 400; i++) {
                 await round();
             }
             const warm = api.stats();
@@ -265,6 +268,10 @@ test.describe("M2 V3: teardown and host coexistence", () => {
 });
 
 test.describe("M7 V8: what a trap in the shared module reaches", () => {
+    // Its own page: a trap kills the instance, and a shared page's instance
+    // is the next check's.
+    test.use({ fresh: true });
+
     test("every mount in the runtime is dead, and the page says which", async ({ page }) => {
         await waitForReady(page);
         // Two scopes, two regions each: the blast radius claim is about all of

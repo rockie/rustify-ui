@@ -1,4 +1,5 @@
 import { expect, Page, test } from "@playwright/test";
+import { EVIDENCE } from "../tier";
 
 /// What a deployment of this build actually sends, and what it costs when the
 /// link is not a loopback.
@@ -82,7 +83,7 @@ async function coldLoad(
     return { ready_ms: Date.now() - started };
 }
 
-test.describe("M8 V11: what a deployment sends", () => {
+test.describe("M8 V11: what a deployment sends", { tag: EVIDENCE }, () => {
     test("a first load with an empty cache, counted by the browser", async ({ page }) => {
         test.setTimeout(600_000);
         const { ready_ms } = await coldLoad(page, await session(page));

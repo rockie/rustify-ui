@@ -1,6 +1,6 @@
-import { expect, Page, test } from "@playwright/test";
+import { expect, Page } from "@playwright/test";
 
-import { CATALOG_SIZE, waitForReady } from "./support";
+import { CATALOG_SIZE, test, waitForReady } from "./support";
 
 /// M8: the catalogue at 400%, without losing content.
 ///
@@ -12,8 +12,6 @@ import { CATALOG_SIZE, waitForReady } from "./support";
 const snapshot = (page: Page) => page.evaluate(() => window.__component_catalog.snapshot());
 
 test.describe("M8: the catalogue reflows at 400%", () => {
-    test.describe.configure({ mode: "serial" });
-
     test("no two-dimensional scrolling at 320 CSS pixels", async ({ page }) => {
         await waitForReady(page);
         await page.setViewportSize({ width: 320, height: 720 });

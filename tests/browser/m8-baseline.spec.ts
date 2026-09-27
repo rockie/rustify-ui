@@ -1,5 +1,6 @@
 import { expect, Page, test } from "@playwright/test";
 import { settle, waitForReady } from "./support";
+import { EVIDENCE } from "../tier";
 
 /// Every number here is taken inside the page. A round trip through the test
 /// harness costs ten to thirty times what is being measured, so a figure taken
@@ -13,7 +14,7 @@ const snapshot = (page: Page) => page.evaluate(() => window.__property_workbench
 
 const stats = (page: Page) => page.evaluate(() => window.__property_workbench.stats());
 
-test.describe("M8 V11: what this build costs to start", () => {
+test.describe("M8 V11: what this build costs to start", { tag: EVIDENCE }, () => {
     test("thirty mounts, measured in the page", async ({ page }) => {
         test.setTimeout(600_000);
         await waitForReady(page);
@@ -98,7 +99,7 @@ test.describe("M8 V11: what this build costs to start", () => {
     });
 });
 
-test.describe("M8 V12: what a long run leaves behind", () => {
+test.describe("M8 V12: what a long run leaves behind", { tag: EVIDENCE }, () => {
     test("a hundred mount rounds, twenty to warm up and eighty measured", async ({ page }) => {
         test.setTimeout(900_000);
         await waitForReady(page);
@@ -179,7 +180,7 @@ test.describe("M8 V12: what a long run leaves behind", () => {
     });
 });
 
-test.describe("M8 V12: what the record itself costs", () => {
+test.describe("M8 V12: what the record itself costs", { tag: EVIDENCE }, () => {
     test("the same refusals with the record on and with it off", async ({ page }) => {
         test.setTimeout(600_000);
         await waitForReady(page);

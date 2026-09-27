@@ -315,63 +315,69 @@ test("external text invalidation discards only the draft and preserves the incom
     expect(await page.evaluate(id => window.vellum.doc.get(id).text, id)).toBe("External update");
 });
 
-test("text and pen editing match twin geometry and the approved screenshot gate", async ({ page, context }, info) => {
-    test.skip(!hasReference, "The optional Vellum source reference is absent.");
-    await waitForReady(page);
-    const twin = await context.newPage();
-    await openTwin(twin);
-    const results: { operation: string; differing: number; ratio: number }[] = [];
-    for (const operation of ["text", "pen"]) {
-        const geometry: unknown[] = [];
-        for (const target of [page, twin]) {
-            await target.evaluate(() => window.vellum.actions.resetStarter());
-            await target.locator("[data-page]").nth(2).click();
-            await target.evaluate(() => window.vellum.select([]));
-            if (operation === "text") {
+// Twin comparisons open the twin in the test's own context and keep the page
+// they compare there too.
+test.describe(() => {
+    test.use({ fresh: true });
+
+    test("text and pen editing match twin geometry and the approved screenshot gate", async ({ page, context }, info) => {
+        test.skip(!hasReference, "The optional Vellum source reference is absent.");
+        await waitForReady(page);
+        const twin = await context.newPage();
+        await openTwin(twin);
+        const results: { operation: string; differing: number; ratio: number }[] = [];
+        for (const operation of ["text", "pen"]) {
+            const geometry: unknown[] = [];
+            for (const target of [page, twin]) {
+                await target.evaluate(() => window.vellum.actions.resetStarter());
+                await target.locator("[data-page]").nth(2).click();
+                await target.evaluate(() => window.vellum.select([]));
+                if (operation === "text") {
+                    await target.evaluate(() => {
+                        const api = window.vellum;
+                        const node = api.createAtCenter("text", { text: "Typography test", w: 340, h: 80, fontSize: 24, rotation: 15 });
+                        api.fit([node.id]); api.actions.editText();
+                    });
+                    await target.locator(target === page ? '[data-testid="text-editor"]' : "#text-editor").fill("Vellum · Typography\nZażółć gęślą jaźń · مرحبا");
+                    await target.keyboard.press("Escape");
+                } else {
+                    await target.keyboard.press("p");
+                    const box = (await target.locator("#overlay").boundingBox())!;
+                    await target.mouse.move(box.x + 200, box.y + 300); await target.mouse.down();
+                    await target.mouse.move(box.x + 240, box.y + 280); await target.mouse.up();
+                    await target.mouse.click(box.x + 350, box.y + 330);
+                    await target.mouse.click(box.x + 280, box.y + 430);
+                    await target.keyboard.press("Enter");
+                    await target.mouse.dblclick(box.x + 350, box.y + 330);
+                    await target.mouse.move(box.x + 350, box.y + 330); await target.mouse.down();
+                    await target.mouse.move(box.x + 370, box.y + 350, { steps: 4 }); await target.mouse.up();
+                    await target.keyboard.press("Escape");
+                }
+                geometry.push(await target.evaluate(() => window.vellum.doc.nodes.map(node => Object.fromEntries(
+                    ["type", "name", "text", "x", "y", "w", "h", "rotation", "points", "pathW", "pathH"].filter(key => key in node && (key !== "text" || node.type === "text")).map(key => [key, node[key]])
+                ))));
                 await target.evaluate(() => {
-                    const api = window.vellum;
-                    const node = api.createAtCenter("text", { text: "Typography test", w: 340, h: 80, fontSize: 24, rotation: 15 });
-                    api.fit([node.id]); api.actions.editText();
+                    window.vellum.select([]);
+                    for (const id of ["toast", "welcome-tip"]) { const el = document.getElementById(id); if (el) el.style.display = "none"; }
                 });
-                await target.locator(target === page ? '[data-testid="text-editor"]' : "#text-editor").fill("Vellum · Typography\nZażółć gęślą jaźń · مرحبا");
-                await target.keyboard.press("Escape");
-            } else {
-                await target.keyboard.press("p");
-                const box = (await target.locator("#overlay").boundingBox())!;
-                await target.mouse.move(box.x + 200, box.y + 300); await target.mouse.down();
-                await target.mouse.move(box.x + 240, box.y + 280); await target.mouse.up();
-                await target.mouse.click(box.x + 350, box.y + 330);
-                await target.mouse.click(box.x + 280, box.y + 430);
-                await target.keyboard.press("Enter");
-                await target.mouse.dblclick(box.x + 350, box.y + 330);
-                await target.mouse.move(box.x + 350, box.y + 330); await target.mouse.down();
-                await target.mouse.move(box.x + 370, box.y + 350, { steps: 4 }); await target.mouse.up();
-                await target.keyboard.press("Escape");
+                await present(target);
+                await target.evaluate(() => {
+                    for (const id of ["engine-label", "performance"]) { const el = document.getElementById(id); if (el) el.textContent = "Renderer"; }
+                });
             }
-            geometry.push(await target.evaluate(() => window.vellum.doc.nodes.map(node => Object.fromEntries(
-                ["type", "name", "text", "x", "y", "w", "h", "rotation", "points", "pathW", "pathH"].filter(key => key in node && (key !== "text" || node.type === "text")).map(key => [key, node[key]])
-            ))));
-            await target.evaluate(() => {
-                window.vellum.select([]);
-                for (const id of ["toast", "welcome-tip"]) { const el = document.getElementById(id); if (el) el.style.display = "none"; }
-            });
-            await present(target);
-            await target.evaluate(() => {
-                for (const id of ["engine-label", "performance"]) { const el = document.getElementById(id); if (el) el.textContent = "Renderer"; }
-            });
+            const normalized = (value: unknown) => JSON.parse(JSON.stringify(value, (_, item) => typeof item === "number" ? Math.round(item * 1e6) / 1e6 : item));
+            expect(normalized(geometry[0])).toEqual(normalized(geometry[1]));
+            const actual = PNG.sync.read(await page.screenshot({ path: info.outputPath(`actual-${operation}.png`) }));
+            const reference = PNG.sync.read(await twin.screenshot({ path: info.outputPath(`reference-${operation}.png`) }));
+            const differing = differingPixels(actual, reference);
+            const result = { operation, differing, ratio: differing / (actual.width * actual.height) };
+            results.push(result);
+            console.log(`Vellum edit visual: ${JSON.stringify(result)}`);
+            expect(result.ratio).toBeLessThanOrEqual(0.02);
         }
-        const normalized = (value: unknown) => JSON.parse(JSON.stringify(value, (_, item) => typeof item === "number" ? Math.round(item * 1e6) / 1e6 : item));
-        expect(normalized(geometry[0])).toEqual(normalized(geometry[1]));
-        const actual = PNG.sync.read(await page.screenshot({ path: info.outputPath(`actual-${operation}.png`) }));
-        const reference = PNG.sync.read(await twin.screenshot({ path: info.outputPath(`reference-${operation}.png`) }));
-        const differing = differingPixels(actual, reference);
-        const result = { operation, differing, ratio: differing / (actual.width * actual.height) };
-        results.push(result);
-        console.log(`Vellum edit visual: ${JSON.stringify(result)}`);
-        expect(result.ratio).toBeLessThanOrEqual(0.02);
-    }
-    await fs.writeFile("test-results/vellum/m6-edit-visual.json", JSON.stringify({ maxRatio: 0.02, results }, null, 2));
-    await twin.close();
+        await fs.writeFile("test-results/vellum/m6-edit-visual.json", JSON.stringify({ maxRatio: 0.02, results }, null, 2));
+        await twin.close();
+    });
 });
 
 test("quick insert, presets and design token downloads use the editor controls", async ({ page }) => {

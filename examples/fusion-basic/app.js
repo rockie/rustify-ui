@@ -9,6 +9,28 @@ const wasm_url = new URL("./fusion-basic.wasm", import.meta.url);
 const instances = {};
 window.__fusion_instances = instances;
 
+/// Where the page was when it loaded, so a reset can put the address bar back
+/// without loading anything. Read before any scope can have routed.
+const loaded_at = {
+    url: location.pathname + location.search + location.hash,
+    state: history.state,
+};
+
+/// The canvas's own `getContext`, for a reset to put back when a check has
+/// replaced it to refuse a GPU context.
+const get_context = HTMLCanvasElement.prototype.getContext;
+
+/// The scopes a reset keeps, by container, and the fixture each has to be:
+/// what the page loads with, and the two counter scopes most checks mount
+/// beside it. Mounting one of them again would start its regions again,
+/// which on a software rasteriser is seconds of shader and font-atlas work
+/// per region - the cost a reset exists to avoid.
+const KEPT = { b0: "b0", "scope-a": "mount", "scope-b": "mount" };
+
+/// A region in one of these states is not the one the page loaded with, and
+/// only starting it again gives that one back.
+const BROKEN = new Set(["failed", "lost"]);
+
 /// Which instance the page itself is showing.
 ///
 /// Not always the first one: a restart puts a new instance in its place, and
@@ -144,6 +166,98 @@ async function start(create) {
         /// What killed this instance, or `null` while it is alive.
         fatal() {
             return dead;
+        },
+        /// Puts the page back to how it loads, in place.
+        ///
+        /// What a check can change and the page can put back without loading
+        /// again: every scope other than the kept ones is disposed; a kept
+        /// scope stays mounted and its state goes back to its first value -
+        /// a counter region also lets go of the key focus a press gave its
+        /// button - unless one of its regions has failed, in which case it
+        /// goes too and whoever needs it mounts it again; B0 is mounted again
+        /// if it is missing. Then the address bar, the guard and the URL owner's mark,
+        /// the page's scroll, selection and focus, inline styles, a stubbed
+        /// `getContext`, the runtime's error list and the `__probe` globals a
+        /// check left behind.
+        ///
+        /// Not put back, because nothing can: the history behind the current
+        /// entry, instance numbers, restarts spent, the diagnostic record,
+        /// the runtime's pump and frame counters, linear memory, and another
+        /// instance booted beside this one.
+        async reset() {
+            // An armed guard would refuse the moves below.
+            app.fusion_basic_set_guard(false);
+            HTMLCanvasElement.prototype.getContext = get_context;
+
+            const regions = JSON.parse(app.fusion_basic_region_states());
+            const broken = (container_id) =>
+                container_id === "b0"
+                    ? BROKEN.has(JSON.parse(app.fusion_basic_b0() || "{}").region)
+                    : Object.entries(regions).some(
+                          ([test_id, state]) => test_id.startsWith(`${container_id}-`) && BROKEN.has(state)
+                      );
+            for (const [container_id, scope] of [...mounted]) {
+                if (KEPT[container_id] === scope.fixture && !broken(container_id)) {
+                    continue;
+                }
+                mounted.delete(container_id);
+                app.fusion_basic_dispose(scope.id);
+            }
+            // Whatever a failed mount or a check left in a container nobody
+            // holds now.
+            for (const container of document.querySelectorAll("section > div[id]")) {
+                if (!mounted.has(container.id) && !container.hasAttribute("data-rustify-scope")) {
+                    release_container(container);
+                }
+            }
+
+            // After the owner has gone, so there is nobody left to answer it.
+            history.replaceState(loaded_at.state, "", loaded_at.url);
+            const root = document.documentElement;
+            if (root.getAttribute("data-rustify-url-owner")?.startsWith(`${instance}:`)) {
+                root.removeAttribute("data-rustify-url-owner");
+            }
+
+            app.fusion_basic_reset();
+            if (!mounted.has("b0")) {
+                api.b0("b0");
+            }
+
+            // The SDK writes no inline style outside a layer, so any other
+            // one is a check's.
+            for (const element of document.querySelectorAll("[style]")) {
+                if (!element.closest("[data-rustify-overlay]")) {
+                    element.removeAttribute("style");
+                }
+            }
+            for (const element of document.querySelectorAll("*")) {
+                if (element.scrollTop !== 0 || element.scrollLeft !== 0) {
+                    element.scrollTop = 0;
+                    element.scrollLeft = 0;
+                }
+            }
+            window.scrollTo(0, 0);
+            getSelection()?.removeAllRanges();
+            if (document.activeElement instanceof HTMLElement) {
+                document.activeElement.blur();
+            }
+
+            hooks.runtime.errors.length = 0;
+            for (const name of Object.keys(window)) {
+                if (name.startsWith("__probe") || name === "__restore_get_context") {
+                    // A probe that listens registers with a controller, so
+                    // that it can be taken off rather than left answering.
+                    if (window[name] instanceof AbortController) {
+                        window[name].abort();
+                    }
+                    delete window[name];
+                }
+            }
+
+            // The application's effects run a turn later, and what they
+            // report - the B0 record, the DOM half, the props the regions
+            // draw - is what a check reads next.
+            await new Promise((resolve) => setTimeout(resolve, 0));
         },
         /// A second application instance on this page, mounting `fixture`
         /// into `container_id`. Resolves to its instance number.

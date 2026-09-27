@@ -46,6 +46,16 @@ web-sys = { workspace = true, features = [
     # A text field has to know when an input method is composing in it.
     "CompositionEvent",
     "Navigator",
+    # Listeners and animation frames end with the instance's abort signal.
+    "AbortSignal",
+    # A draft field's focus and blur.
+    "FocusEvent",
+    # A modal layer's tab stops: found, ordered in the document, and skipped
+    # when they are not rendered or not visible.
+    "CssStyleDeclaration",
+    "DomRectList",
+    "Node",
+    "NodeList",
 ] }
 
 [target.'cfg(target_arch = "wasm32")'.dependencies]

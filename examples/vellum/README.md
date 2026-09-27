@@ -74,13 +74,13 @@ VELLUM_ARTIFACT_SCOPE=m7-files npx playwright test -c tests/vellum/playwright.co
 
 ## Final verification
 
-The original 36 checks run in order in one editor session, including light/dark captures:
+The original 36 checks run in order in one editor session, including light/dark captures. They are an evidence test (`@evidence`, see `tests/tier.ts`), so a plain run skips them:
 
 ```sh
-VELLUM_ARTIFACT_SCOPE=smoke npx playwright test -c tests/vellum/playwright.config.ts smoke.spec.ts
+RUSTIFY_TIER=evidence VELLUM_ARTIFACT_SCOPE=smoke npx playwright test -c tests/vellum/playwright.config.ts smoke.spec.ts
 ```
 
-Run other specs individually with the same independent configuration. CI builds the example and runs the suite; comparisons requiring `ref/Vellum-main` skip when that optional source is absent. `visual.spec.ts` always checks all six starter views and two shell views at the fixed 2% gate.
+Run other specs individually with the same independent configuration. A plain run is the regression tier; `RUSTIFY_TIER=evidence` runs the measurements (`smoke`, `visual`, `m8-metrics` and the pan-latency sample) and `all` runs both. Every comparison against a twin skips when no twin is being served: `visual.spec.ts` checks all six starter views and two shell views at the fixed 2% gate only when `ref/Vellum-main` is present.
 
 The optional installed-Chrome walkthrough covers native UI actions, context-loss recovery and six matched views against the original WebGPU renderer:
 

@@ -1,6 +1,7 @@
-import { expect, Page, test } from "@playwright/test";
+import { expect, Page } from "@playwright/test";
 
-import { sharedPage } from "./support";
+import { rounds } from "../tier";
+import { test } from "./support";
 
 /// M2 V4: every control has a name, a role, a value and a state, and a
 /// keyboard can reach all of them.
@@ -48,11 +49,7 @@ async function open(page: Page, category: string) {
 const example = (page: Page) => page.getByTestId("example");
 
 test.describe("M2 V4: name, role, value, state", () => {
-    test.describe.configure({ mode: "serial" });
-    const shared = sharedPage();
-
-    test("twenty-four things a reader can find by what they are and what they are called", async () => {
-        const page = shared.page;
+    test("twenty-four things a reader can find by what they are and what they are called", async ({ page }) => {
         for (const [category, role, name] of NAMED) {
             await open(page, category);
             await expect(
@@ -62,15 +59,13 @@ test.describe("M2 V4: name, role, value, state", () => {
         }
     });
 
-    test("a control's value and state are in the tree, not only in the pixels", async () => {
-        const page = shared.page;
+    test("a control's value and state are in the tree, not only in the pixels", async ({ page }) => {
         await open(page, "switch");
         const control = example(page).getByRole("switch", { name: "a switch" });
         const before = (await snapshot(page)).on;
         await expect(control).toHaveAttribute("aria-checked", String(before));
         await control.click();
         await expect(control).toHaveAttribute("aria-checked", String(!before));
-        await control.click();
 
         await open(page, "slider");
         const slider = example(page).getByRole("slider", { name: "a size" });
@@ -87,8 +82,7 @@ test.describe("M2 V4: name, role, value, state", () => {
         ).not.toHaveAttribute("aria-valuenow", /.*/);
     });
 
-    test("the arrows move within a tab strip and the strip is one tab stop", async () => {
-        const page = shared.page;
+    test("the arrows move within a tab strip and the strip is one tab stop", async ({ page }) => {
         await open(page, "tabs");
         const strip = example(page).getByRole("tablist", { name: "three tabs" });
         const first = strip.getByRole("tab", { name: "first" });
@@ -112,8 +106,7 @@ test.describe("M2 V4: name, role, value, state", () => {
         ).toBeVisible();
     });
 
-    test("a menu takes the keyboard, moves within itself, and gives it back", async () => {
-        const page = shared.page;
+    test("a menu takes the keyboard, moves within itself, and gives it back", async ({ page }) => {
         await open(page, "menu");
         const trigger = example(page).getByRole("button", { name: "open the menu" });
         await expect(trigger).toHaveAttribute("aria-expanded", "false");
@@ -144,8 +137,7 @@ test.describe("M2 V4: name, role, value, state", () => {
         await expect(trigger).toBeFocused();
     });
 
-    test("a modal dialog is named by its own title and hands focus back", async () => {
-        const page = shared.page;
+    test("a modal dialog is named by its own title and hands focus back", async ({ page }) => {
         await open(page, "dialog");
         const trigger = example(page).getByRole("button", { name: "open the dialog" });
         await trigger.click();
@@ -160,8 +152,7 @@ test.describe("M2 V4: name, role, value, state", () => {
         await expect(trigger).toBeFocused();
     });
 
-    test("a listbox says which option is current and Enter chooses it", async () => {
-        const page = shared.page;
+    test("a listbox says which option is current and Enter chooses it", async ({ page }) => {
         await open(page, "select");
         const trigger = example(page).getByRole("combobox", { name: "a size" });
         await expect(trigger).toHaveAttribute("aria-expanded", "false");
@@ -184,8 +175,7 @@ test.describe("M2 V4: name, role, value, state", () => {
         expect(await snapshot(page)).toMatchObject({ chooser: "medium" });
     });
 
-    test("a tooltip describes the control it belongs to, on focus as well as hover", async () => {
-        const page = shared.page;
+    test("a tooltip describes the control it belongs to, on focus as well as hover", async ({ page }) => {
         await open(page, "tooltip");
         const trigger = example(page).getByRole("button", { name: "hover or focus me" });
         await expect(trigger).not.toHaveAttribute("aria-describedby", /.*/);
@@ -211,14 +201,15 @@ test.describe("M2 V4: name, role, value, state", () => {
         await expect(page.getByRole("tooltip")).toBeHidden();
     });
 
-    test("thirty rounds of theme and size later, everything is still where it says", async () => {
-        const page = shared.page;
+    test("thirty rounds of theme and size later, everything is still where it says", async ({ page }) => {
         const sizes = [
             { width: 1280, height: 720 },
             { width: 1024, height: 800 },
             { width: 900, height: 640 },
         ];
-        for (let round = 0; round < 30; round += 1) {
+        // An even number of switches, so the theme ends where it started.
+        const switches = 2 * rounds(15);
+        for (let round = 0; round < switches; round += 1) {
             await page.setViewportSize(sizes[round % sizes.length]);
             await page.getByTestId("toggle-theme").click();
         }
@@ -234,8 +225,7 @@ test.describe("M2 V4: name, role, value, state", () => {
         }
     });
 
-    test("something that is not there fails quickly rather than hanging", async () => {
-        const page = shared.page;
+    test("something that is not there fails quickly rather than hanging", async ({ page }) => {
         const started = Date.now();
         await expect(
             expect(page.getByTestId("no-such-control")).toBeVisible({ timeout: 5_000 })

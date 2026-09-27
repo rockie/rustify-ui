@@ -3,8 +3,9 @@
 use crate::icon::{Glyph, Icon};
 use leptos::prelude::*;
 
-const BOX: &str = "rui:pointer-events-none rui:absolute rui:inset-0 rui:flex rui:items-center rui:justify-center rui:rounded-[4px] rui:border rui:border-border rui:bg-input rui:text-primary-foreground rui:transition-colors rui:peer-checked:bg-primary rui:peer-checked:border-primary rui:peer-focus-visible:ring-ring/50 rui:peer-focus-visible:ring-[3px] rui:peer-disabled:opacity-50 rui:peer-aria-invalid:border-destructive rui:peer-aria-invalid:ring-destructive/40 rui:peer-aria-invalid:ring-[3px]";
-const INPUT: &str = "rui:peer rui:absolute rui:inset-0 rui:size-full rui:m-0 rui:opacity-0 rui:cursor-pointer rui:disabled:cursor-not-allowed";
+const BOX: &str = "pointer-events-none absolute inset-0 flex items-center justify-center rounded-[4px] border border-border bg-input text-primary-foreground transition-colors peer-checked:bg-primary peer-checked:border-primary peer-focus-visible:ring-ring/50 peer-focus-visible:ring-[3px] peer-disabled:opacity-50 peer-aria-invalid:border-destructive peer-aria-invalid:ring-destructive/40 peer-aria-invalid:ring-[3px]";
+const INPUT: &str =
+    "peer absolute inset-0 size-full m-0 opacity-0 cursor-pointer disabled:cursor-not-allowed";
 
 /// Rust/UI drew this as a `<button role="checkbox">`. This one is the
 /// browser's own control, kept transparent above the box that is drawn for it:
@@ -44,7 +45,7 @@ pub fn Checkbox(
     };
     view! {
         <span
-            class=crate::macros::merge("rui:relative rui:inline-block rui:size-4 rui:shrink-0", &class)
+            class=crate::macros::merge("relative inline-block size-4 shrink-0", &class)
             data-name="Checkbox"
             data-state=move || if checked.get() { "checked" } else { "unchecked" }
         >
@@ -73,7 +74,7 @@ pub fn Checkbox(
             />
             <span class=BOX aria-hidden="true">
                 <Show when=move || checked.get()>
-                    <Icon glyph=Glyph::Check class="rui:size-3" />
+                    <Icon glyph=Glyph::Check class="size-3" />
                 </Show>
             </span>
         </span>

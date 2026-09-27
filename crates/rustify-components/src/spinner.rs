@@ -21,14 +21,14 @@ pub fn Spinner(
     };
     view! {
         <span
-            class=crate::macros::merge("rui:inline-flex rui:text-muted-foreground", &class)
+            class=crate::macros::merge("inline-flex text-muted-foreground", &class)
             data-name="Spinner"
             data-testid=test_id
             role="status"
             aria-label=label
         >
             <svg
-                class="rui:size-4"
+                class="size-4"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -37,7 +37,7 @@ pub fn Spinner(
                 aria-hidden="true"
                 focusable="false"
             >
-                <circle cx="12" cy="12" r="9" class="rui:opacity-25" />
+                <circle cx="12" cy="12" r="9" class="opacity-25" />
                 <path d="M21 12a9 9 0 0 0-9-9" />
             </svg>
         </span>

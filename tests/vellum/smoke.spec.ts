@@ -1,9 +1,10 @@
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { expect, present, test, waitForReady } from "./support";
+import { EVIDENCE } from "../tier";
 
 // Keep the reference smoke.py's 36 checks in one uninterrupted editor session.
-test("the original 36 Vellum smoke checks pass in their original order", async ({ page, browserErrors }, info) => {
+test("the original 36 Vellum smoke checks pass in their original order", { tag: EVIDENCE }, async ({ page, browserErrors }, info) => {
     test.setTimeout(240_000);
     const results: { name: string; passed: true }[] = [];
     let stressScene: Record<string, unknown> | undefined;

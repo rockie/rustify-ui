@@ -19,7 +19,7 @@ pub fn run() -> Result<(), String> {
         sources_lock(&root),
         vendored(&root),
         licenses(&root),
-        tailwind(&root),
+        tailwind(),
         node(),
         playwright(&root),
         chrome(),
@@ -107,7 +107,7 @@ fn mbx(root: &Path) -> Check {
 
 /// The version `mise.toml` pins for `tool`, written either as a bare string
 /// or as the `version` of an inline table.
-fn mise_pin(root: &Path, tool: &str) -> Result<String, String> {
+pub fn mise_pin(root: &Path, tool: &str) -> Result<String, String> {
     let text = std::fs::read_to_string(root.join("mise.toml")).map_err(|e| e.to_string())?;
     parse_mise_pin(&text, tool).ok_or_else(|| format!("mise.toml pins no version of {tool}"))
 }
@@ -254,31 +254,18 @@ fn licenses(root: &Path) -> Check {
     }
 }
 
-/// The Tailwind CLI, which generates the component stylesheet.
-///
-/// It is a dev dependency and never part of a build: the product is committed,
-/// so `build-web` needs no Node. What needs it is changing a class string, and
-/// `mbx xtask css --check` is what catches one that was changed without it.
-fn tailwind(root: &Path) -> Check {
-    let cli = root.join("node_modules/.bin/tailwindcss");
+/// The Tailwind CLI that generates the component stylesheet. mise pins the
+/// standalone binary, so it needs no `npm ci`.
+fn tailwind() -> Check {
     Check {
         name: "tailwind",
-        result: if cli.is_file() {
-            capture(&cli.to_string_lossy(), &["--help"])
-                .map(|out| {
-                    out.lines()
-                        .find(|line| line.contains("tailwindcss v"))
-                        .unwrap_or("installed")
-                        .trim()
-                        .to_string()
-                })
-                .or_else(|_| Ok("installed".to_string()))
-        } else {
-            Err(
-                "not installed; `npm ci`. Only `mbx xtask css` needs it - a build does not"
-                    .to_string(),
+        result: crate::tailwind::cli().map(|cli| {
+            format!(
+                "tailwindcss v{} at {}",
+                crate::tailwind::VERSION,
+                cli.display()
             )
-        },
+        }),
     }
 }
 

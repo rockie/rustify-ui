@@ -1,5 +1,5 @@
-import { expect, Page, test } from "@playwright/test";
-import { capture, differingPixels, settle, waitForReady } from "./support";
+import { expect, Page } from "@playwright/test";
+import { capture, differingPixels, settle, test, waitForReady } from "./support";
 
 const snapshot = (page: Page) => page.evaluate(() => window.__property_workbench.snapshot());
 

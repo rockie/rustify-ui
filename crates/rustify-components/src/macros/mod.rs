@@ -12,17 +12,12 @@ pub mod variants;
 /// Merges a component's own classes with the caller's, caller last.
 ///
 /// It exists as a function rather than a `tw_merge!` call inside each macro so
-/// that the whole crate has one answer about what merging means, and so the
-/// prefix decision below has one place to be stated and tested.
+/// that the whole crate has one answer about what merging means.
 ///
-/// **The prefix is not configured here, on purpose.** Tailwind v4's
-/// `prefix(rui)` puts the prefix in front of the variants (`rui:hover:bg-x`),
-/// while `tw_merge`'s own `prefix` option expects it after them
-/// (`hover:tw-bg-x`, which is v3's shape). Setting that option would make the
-/// parser look for `rui` in a place our classes never put it. Left at its
-/// default, `rui` parses as a leading variant, and since every class in this
-/// crate carries it, two classes conflict exactly when they would have without
-/// it. The tests below are what keeps that true.
+/// The component classes are the same unprefixed utilities an application
+/// writes, so a caller's class that sets what a component's class sets, in the
+/// same state, replaces it. Without the merge both would reach the element,
+/// and the order of the stylesheet, not the caller, would decide which shows.
 pub fn merge(base: impl AsRef<str>, class: &str) -> String {
     tw_merge::tw_merge!(base.as_ref(), class)
 }
@@ -33,40 +28,38 @@ mod tests {
 
     #[test]
     fn a_later_class_replaces_an_earlier_one_of_the_same_kind() {
-        assert_eq!(
-            merge("rui:bg-primary rui:p-2", "rui:bg-secondary"),
-            "rui:p-2 rui:bg-secondary"
-        );
+        assert_eq!(merge("bg-primary p-2", "bg-secondary"), "p-2 bg-secondary");
     }
 
     #[test]
     fn classes_of_different_kinds_are_both_kept() {
-        assert_eq!(merge("rui:bg-primary", "rui:p-2"), "rui:bg-primary rui:p-2");
+        assert_eq!(merge("bg-primary", "p-2"), "bg-primary p-2");
     }
 
     #[test]
-    fn a_variant_makes_two_classes_different_even_with_the_prefix() {
-        // `rui:hover:bg-x` and `rui:bg-x` set the same property in different
-        // states. A merge that dropped one of them would be wrong, and it is
-        // the case the prefix could plausibly have broken.
+    fn a_variant_makes_two_classes_different() {
+        // `hover:bg-x` and `bg-x` set the same property in different states.
+        // A merge that dropped one of them would take away a state the
+        // component still draws.
         assert_eq!(
-            merge("rui:hover:bg-primary", "rui:bg-secondary"),
-            "rui:hover:bg-primary rui:bg-secondary"
-        );
-        assert_eq!(
-            merge("rui:hover:bg-primary", "rui:hover:bg-secondary"),
-            "rui:hover:bg-secondary"
+            merge("hover:bg-primary", "bg-secondary"),
+            "hover:bg-primary bg-secondary"
         );
     }
 
     #[test]
-    fn an_unprefixed_class_does_not_collide_with_a_prefixed_one() {
-        // The host page's own Tailwind build has no `rui` prefix. Its classes
-        // and ours are different classes, and a merge that treated them as the
-        // same would be the class collision the prefix exists to prevent.
+    fn a_callers_padding_replaces_the_components() {
         assert_eq!(
-            merge("rui:bg-primary", "bg-secondary"),
-            "rui:bg-primary bg-secondary"
+            merge("inline-flex p-4 bg-card", "p-6"),
+            "inline-flex bg-card p-6"
+        );
+    }
+
+    #[test]
+    fn a_callers_class_in_a_state_replaces_the_components_in_that_state() {
+        assert_eq!(
+            merge("bg-primary hover:bg-primary/90", "hover:bg-secondary"),
+            "bg-primary hover:bg-secondary"
         );
     }
 }
@@ -77,20 +70,20 @@ mod tests {
 #[cfg(test)]
 #[allow(dead_code)]
 mod expansion {
-    crate::clx! {TestCard, div, "rui:rounded-lg", "rui:bg-card"}
-    crate::void! {TestRule, hr, "rui:border-border"}
+    crate::clx! {TestCard, div, "rounded-lg", "bg-card"}
+    crate::void! {TestRule, hr, "border-border"}
 
     crate::variants! {
         TestBadge {
-            base: "rui:inline-flex",
+            base: "inline-flex",
             variants: {
                 variant: {
-                    Default: "rui:bg-primary",
-                    Outline: "rui:border",
+                    Default: "bg-primary",
+                    Outline: "border",
                 },
                 size: {
-                    Default: "rui:px-2",
-                    Lg: "rui:px-3",
+                    Default: "px-2",
+                    Lg: "px-3",
                 }
             },
             component: { element: span }
@@ -99,13 +92,13 @@ mod expansion {
 
     crate::variants! {
         TestNav {
-            base: "rui:inline-flex",
+            base: "inline-flex",
             variants: {
                 variant: {
-                    Default: "rui:text-foreground",
+                    Default: "text-foreground",
                 },
                 size: {
-                    Default: "rui:px-2",
+                    Default: "px-2",
                 }
             },
             component: { element: span, link: true }
@@ -119,18 +112,15 @@ mod expansion {
             variant: TestBadgeVariant::Outline,
             size: TestBadgeSize::Lg,
         };
-        assert_eq!(
-            outline.with_class(String::new()),
-            "rui:inline-flex rui:border rui:px-3"
-        );
+        assert_eq!(outline.with_class(String::new()), "inline-flex border px-3");
         // The default arms are the defaults, and a caller's class still wins.
         let default = TestBadgeClass {
             variant: TestBadgeVariant::default(),
             size: TestBadgeSize::default(),
         };
         assert_eq!(
-            default.with_class("rui:bg-secondary"),
-            "rui:inline-flex rui:px-2 rui:bg-secondary"
+            default.with_class("bg-secondary"),
+            "inline-flex px-2 bg-secondary"
         );
     }
 }

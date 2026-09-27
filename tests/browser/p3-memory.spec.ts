@@ -2,6 +2,7 @@ import { CDPSession, expect, Page, test } from "@playwright/test";
 import { R32 } from "./budgets";
 import { B4 } from "./loads";
 import { waitForQuiet } from "./support";
+import { EVIDENCE } from "../tier";
 
 /// M6 · what the loads hold, and what a hundred rounds of mounting adds.
 ///
@@ -50,7 +51,7 @@ function slope(samples: number[]): number {
     return top / bottom;
 }
 
-test.describe("M6 · B0 holds what B0 is worth", () => {
+test.describe("M6 · B0 holds what B0 is worth", { tag: EVIDENCE }, () => {
     test.beforeEach(({}, info) => {
         test.skip(info.project.name !== "fusion-basic", "B0 is the fusion-basic page");
     });
@@ -192,7 +193,7 @@ test.describe("M6 · B0 holds what B0 is worth", () => {
     });
 });
 
-test.describe("M6 · B2 holds what B2 is worth", () => {
+test.describe("M6 · B2 holds what B2 is worth", { tag: EVIDENCE }, () => {
     test.beforeEach(({}, info) => {
         test.skip(info.project.name !== "data-workbench", "B2 is the data-workbench page");
     });

@@ -1,4 +1,5 @@
 import { capture, expect, present, rgb, test, waitForQuiet, waitForReady } from "./support";
+import { rounds } from "../tier";
 
 test("Forma mounts in one GPU region and produces real scene pixels", async ({ page }, info) => {
     await waitForReady(page);
@@ -33,14 +34,15 @@ test("5,000 editable primitives render in one draw call with in-page CPU samples
     expect(await page.evaluate(() => window.vellum.doc.nodes.length)).toBe(5000);
     expect(await page.evaluate(() => window.vellum.renderer.drawCalls)).toBe(1);
     await waitForQuiet(page);
-    const measurements = await page.evaluate(async () => {
+    const count = rounds(20);
+    const measurements = await page.evaluate(async count => {
         const api = window.vellum;
         const id = api.doc.nodes[0].id;
         api.select([id]);
         const samples: number[] = [];
         const started = performance.now();
         const before = window.__vellum.stats().frames;
-        for (let i = 0; i < 20; i++) {
+        for (let i = 0; i < count; i++) {
             api.setProperty("w", i % 2 === 0 ? 25 : 24);
             await new Promise<void>(resolve => requestAnimationFrame(() => requestAnimationFrame(() => resolve())));
             samples.push(api.renderer.cpuMs);
@@ -55,8 +57,9 @@ test("5,000 editable primitives render in one draw call with in-page CPU samples
             selected: [...api.state.selection],
             drawCalls: api.renderer.drawCalls,
         };
-    });
-    expect(measurements.width).toBe(24);
+    }, count);
+    // The last edit sets 25 on an odd count, 24 on an even one.
+    expect(measurements.width).toBe(count % 2 === 0 ? 24 : 25);
     expect(measurements.selected).toHaveLength(1);
     expect(measurements.frames).toBeGreaterThan(0);
     expect(measurements.drawCalls).toBe(1);
@@ -143,16 +146,21 @@ test("rounded clipping traverses four frame ancestors", async ({ page }, info) =
     await page.locator("#scene").screenshot({ path: info.outputPath("nested-round-clips.png") });
 });
 
-test("GPU-unavailable mode keeps the document and editing controls alive", async ({ page }) => {
-    await waitForReady(page, "./?nogpu", false);
-    await expect(page.getByRole("alert")).toContainText("GPU unavailable");
-    expect(await page.evaluate(() => window.__vellum.live_regions())).toBe(0);
-    const count = await page.evaluate(() => {
-        const api = window.vellum;
-        const node = api.createAtCenter("rect", { w: 80, h: 40 });
-        api.select([node.id]);
-        api.setProperty("w", 95);
-        return { count: api.doc.nodes.length, width: api.doc.get(node.id).w };
+// The no-GPU mode is read from the address the page loads with.
+test.describe(() => {
+    test.use({ fresh: true });
+
+    test("GPU-unavailable mode keeps the document and editing controls alive", async ({ page }) => {
+        await waitForReady(page, "./?nogpu", false);
+        await expect(page.getByRole("alert")).toContainText("GPU unavailable");
+        expect(await page.evaluate(() => window.__vellum.live_regions())).toBe(0);
+        const count = await page.evaluate(() => {
+            const api = window.vellum;
+            const node = api.createAtCenter("rect", { w: 80, h: 40 });
+            api.select([node.id]);
+            api.setProperty("w", 95);
+            return { count: api.doc.nodes.length, width: api.doc.get(node.id).w };
+        });
+        expect(count).toEqual({ count: 172, width: 95 });
     });
-    expect(count).toEqual({ count: 172, width: 95 });
 });

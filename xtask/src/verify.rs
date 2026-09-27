@@ -248,13 +248,14 @@ pub fn run(args: &[String]) -> Result<(), String> {
                 "warnings",
             ],
         ),
+        // `--bins` as well: xtask and the examples are binaries, and their
+        // tests do not run under `--lib`.
         command(
             "host tests",
             &root,
             "mbx",
-            &["test", "--workspace", "--lib"],
+            &["test", "--workspace", "--lib", "--bins"],
         ),
-        command("xtask tests", &root, "mbx", &["test", "-p", "xtask"]),
         command("fork tests", &root.join("makepad"), "mbx", &["test"]),
         // The fork's workspace excludes platform/, so its script VM has to be
         // named to be run. A test that never runs is not a test.
@@ -263,6 +264,28 @@ pub fn run(args: &[String]) -> Result<(), String> {
             &root.join("makepad"),
             "mbx",
             &["test", "--manifest-path", "platform/script/Cargo.toml"],
+        ),
+        command(
+            "css",
+            &root,
+            "mbx",
+            &["run", "--quiet", "-p", "xtask", "--", "css", "--check"],
+        ),
+        command(
+            "catalog",
+            &root,
+            "mbx",
+            &[
+                "run",
+                "--quiet",
+                "-p",
+                "xtask",
+                "--",
+                "catalog",
+                "--write",
+                "docs/components.md",
+                "--check",
+            ],
         ),
         reports(&root, &suite),
     ];
@@ -273,6 +296,13 @@ pub fn run(args: &[String]) -> Result<(), String> {
         }
     }
     if !args.iter().any(|a| a == "--no-browser") {
+        if !args.iter().any(|a| a == "--no-build") {
+            for (project, example) in SUB_PATH_PROJECTS {
+                if suite.projects.contains(&project) {
+                    steps.push(sub_path_build(example));
+                }
+            }
+        }
         for project in suite.projects {
             steps.push(browser(&root, project));
         }
@@ -346,6 +376,29 @@ fn double_build(root: &Path, example: &str) -> Step {
     }
 }
 
+/// Browser projects that serve a build made for a sub-path, and the example
+/// each one serves. Their servers only serve, so the build comes first.
+const SUB_PATH_PROJECTS: [(&str, &str); 2] = [
+    ("workbench-deep", "property-workbench"),
+    ("deployment", "fusion-basic"),
+];
+
+/// The base the sub-path projects are served under.
+const SUB_PATH_BASE: &str = "/tools/demo/";
+
+fn sub_path_build(example: &str) -> Step {
+    let name = format!("sub-path build: {example}");
+    let request = BuildRequest {
+        base: SUB_PATH_BASE.to_string(),
+        example: example.to_string(),
+        release: true,
+    };
+    match build::build(&request) {
+        Ok(_) => Step::ok(name, format!("built for {SUB_PATH_BASE}")),
+        Err(error) => Step::failed(name, error),
+    }
+}
+
 /// The marker a blank form carries. A record is not a result until a person
 /// has changed it.
 pub const NOT_PERFORMED: &str = "STATUS: NOT PERFORMED";
@@ -393,13 +446,15 @@ fn reports(root: &Path, suite: &Suite) -> Step {
     }
 }
 
+/// A release is verified at full strength: every tier, every round.
 fn browser(root: &Path, project: &'static str) -> Step {
     let name = format!("browser: {project}");
-    let mut step = command(
+    let mut step = spawn(
         name,
-        root,
-        "npx",
-        &["playwright", "test", "--project", project],
+        Command::new("npx")
+            .args(["playwright", "test", "--project", project])
+            .env("RUSTIFY_TIER", "all")
+            .current_dir(root),
     );
     if let Ok(detail) = &mut step.outcome {
         *detail = format!("{project} suite passed");
@@ -408,7 +463,12 @@ fn browser(root: &Path, project: &'static str) -> Step {
 }
 
 fn command(name: impl Into<String>, dir: &Path, program: &str, args: &[&str]) -> Step {
-    match Command::new(program).args(args).current_dir(dir).output() {
+    spawn(name, Command::new(program).args(args).current_dir(dir))
+}
+
+fn spawn(name: impl Into<String>, command: &mut Command) -> Step {
+    let program = command.get_program().to_string_lossy().into_owned();
+    match command.output() {
         Ok(output) if output.status.success() => Step::ok(name, "passed"),
         Ok(output) => {
             let tail: String = String::from_utf8_lossy(&output.stderr)

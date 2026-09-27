@@ -1,5 +1,6 @@
-import { expect, Page, test } from "@playwright/test";
-import { capture, differingPixels, settle, waitForReady } from "./support";
+import { expect, Page } from "@playwright/test";
+import { rounds } from "../tier";
+import { capture, differingPixels, settle, test, waitForReady } from "./support";
 
 const snapshot = (page: Page) => page.evaluate(() => window.__property_workbench.snapshot());
 
@@ -66,7 +67,9 @@ test.describe("M6 V7: one table of values for both halves of a scope", () => {
         await waitForReady(page);
         const before = await hostColours(page);
 
-        for (let round = 0; round < 20; round++) {
+        // An even number, so the run ends on the theme it started with.
+        const switches = 2 * rounds(10);
+        for (let round = 0; round < switches; round++) {
             await page.getByTestId("toggle-theme").click();
             await expect
                 .poll(async () => (await snapshot(page)).theme)

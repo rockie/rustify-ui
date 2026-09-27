@@ -9,8 +9,9 @@
 use crate::icon::{Glyph, Icon};
 use leptos::prelude::*;
 
-const DOT: &str = "rui:pointer-events-none rui:absolute rui:inset-0 rui:flex rui:items-center rui:justify-center rui:rounded-full rui:border rui:border-border rui:bg-input rui:text-primary rui:transition-colors rui:peer-checked:border-primary rui:peer-focus-visible:ring-ring/50 rui:peer-focus-visible:ring-[3px] rui:peer-disabled:opacity-50";
-const INPUT: &str = "rui:peer rui:absolute rui:inset-0 rui:size-full rui:m-0 rui:opacity-0 rui:cursor-pointer rui:disabled:cursor-not-allowed";
+const DOT: &str = "pointer-events-none absolute inset-0 flex items-center justify-center rounded-full border border-border bg-input text-primary transition-colors peer-checked:border-primary peer-focus-visible:ring-ring/50 peer-focus-visible:ring-[3px] peer-disabled:opacity-50";
+const INPUT: &str =
+    "peer absolute inset-0 size-full m-0 opacity-0 cursor-pointer disabled:cursor-not-allowed";
 
 /// One choice in a group.
 #[derive(Clone, Debug, PartialEq, Eq)]
@@ -61,7 +62,7 @@ pub fn RadioGroup(
     let group_test_id = test_id.clone();
     view! {
         <div
-            class=crate::macros::merge("rui:flex rui:flex-col rui:gap-3", &class)
+            class=crate::macros::merge("flex flex-col gap-3", &class)
             data-name="RadioGroup"
             data-testid=group_test_id
             role="radiogroup"
@@ -91,9 +92,9 @@ pub fn RadioGroup(
                     let asked = option_value.clone();
                     let test_id = format!("{test_id}-{option_value}");
                     view! {
-                        <label class="rui:flex rui:items-center rui:gap-2 rui:text-sm rui:text-foreground">
+                        <label class="flex items-center gap-2 text-sm text-foreground">
                             <span
-                                class="rui:relative rui:inline-block rui:size-4 rui:shrink-0"
+                                class="relative inline-block size-4 shrink-0"
                                 data-name="RadioItem"
                                 data-value=option_value
                                 data-state=move || if checked.get() { "checked" } else { "unchecked" }
@@ -118,7 +119,7 @@ pub fn RadioGroup(
                                 />
                                 <span class=DOT aria-hidden="true">
                                     <Show when=move || checked.get()>
-                                        <Icon glyph=Glyph::Dot class="rui:size-3.5" />
+                                        <Icon glyph=Glyph::Dot class="size-3.5" />
                                     </Show>
                                 </span>
                             </span>

@@ -8,7 +8,7 @@
 
 use leptos::prelude::*;
 
-const BASE: &str = "rui:relative rui:overflow-auto rui:rounded-md rui:outline-none rui:focus-visible:ring-ring/50 rui:focus-visible:ring-[3px]";
+const BASE: &str = "relative overflow-auto rounded-md outline-none focus-visible:ring-ring/50 focus-visible:ring-[3px]";
 
 /// What happens to a wheel that arrives after this box has stopped scrolling.
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
@@ -25,8 +25,8 @@ pub enum Boundary {
 impl Boundary {
     fn class(self) -> &'static str {
         match self {
-            Self::Propagate => "rui:overscroll-auto",
-            Self::Stop => "rui:overscroll-contain",
+            Self::Propagate => "overscroll-auto",
+            Self::Stop => "overscroll-contain",
         }
     }
 

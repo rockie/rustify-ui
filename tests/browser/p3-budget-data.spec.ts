@@ -2,6 +2,7 @@ import { expect, Page, test } from "@playwright/test";
 import { percentile, R30_LARGE } from "./budgets";
 import { B2, BASELINE } from "./loads";
 import * as twin from "./dataset";
+import { EVIDENCE } from "../tier";
 
 /// R30 AC2 and AC3 over B2, asserted.
 ///
@@ -150,7 +151,7 @@ async function scrollTable(
     );
 }
 
-test.describe("R30 AC2 over B2: scrolling a hundred thousand rows", () => {
+test.describe("R30 AC2 over B2: scrolling a hundred thousand rows", { tag: EVIDENCE }, () => {
     test(`${R30_LARGE.runs} runs of ${R30_LARGE.seconds} s, each under ${R30_LARGE.frame_p95_ms} ms`, async ({
         page,
     }) => {
@@ -201,7 +202,7 @@ test.describe("R30 AC2 over B2: scrolling a hundred thousand rows", () => {
     });
 });
 
-test.describe("R30 AC3 over B2: what a job over the whole sample costs", () => {
+test.describe("R30 AC3 over B2: what a job over the whole sample costs", { tag: EVIDENCE }, () => {
     test(`${R30_LARGE.job_rounds} sorts and ${R30_LARGE.job_rounds} filters, each under ${R30_LARGE.job_p95_ms} ms`, async ({
         page,
     }) => {

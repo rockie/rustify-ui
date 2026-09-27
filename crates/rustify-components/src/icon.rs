@@ -7,7 +7,7 @@
 
 use leptos::prelude::*;
 
-const BASE: &str = "rui:inline-block rui:shrink-0 rui:size-4";
+const BASE: &str = "inline-block shrink-0 size-4";
 
 /// The drawings this crate ships. An application that wants another one puts
 /// its own children in [`Icon`].

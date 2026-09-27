@@ -45,7 +45,7 @@ pub fn Slider(
             node_ref=node
             type="range"
             id=id
-            class=crate::macros::merge("rui:w-full", &class)
+            class=crate::macros::merge("w-full", &class)
             data-name="Slider"
             data-testid=test_id
             min=min.to_string()

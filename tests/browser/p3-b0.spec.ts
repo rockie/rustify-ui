@@ -1,6 +1,6 @@
-import { expect, Page, test } from "@playwright/test";
+import { expect, Page } from "@playwright/test";
 import { B0 } from "./loads";
-import { capture, differingPixels, litPixels, settle, waitForQuiet } from "./support";
+import { capture, differingPixels, isShared, litPixels, settle, test, waitForQuiet } from "./support";
 
 /// M6 · the page as it loads is B0, and B0 is what the load definition says.
 ///
@@ -12,9 +12,13 @@ import { capture, differingPixels, litPixels, settle, waitForQuiet } from "./sup
 ///
 /// `waitForReady` is not used: it mounts the two counter scopes the
 /// phase-one checks were written for, and the point of this file is the page
-/// with nothing on it but B0.
+/// with nothing on it but B0. A shared page is loaded and put back already,
+/// and may have those scopes below B0: the checks that count what is on the
+/// page run on a page of their own, and the ones that use B0 do not mind.
 async function openB0(page: Page) {
-    await page.goto("./");
+    if (!isShared(page)) {
+        await page.goto("./");
+    }
     await expect(page.getByTestId("status")).toHaveAttribute("data-status", "ready", {
         timeout: 120_000,
     });
@@ -31,41 +35,46 @@ const domControls = (page: Page) =>
     );
 
 test.describe("M6 · B0 is the load it is named after", () => {
-    test("ten DOM controls, twenty GPU controls, one region, one scope", async ({ page }) => {
-        await openB0(page);
+    // What a load puts on the page and what it fetches: only a load can say.
+    test.describe(() => {
+        test.use({ fresh: true });
 
-        expect(await domControls(page)).toBe(B0.domControls);
+        test("ten DOM controls, twenty GPU controls, one region, one scope", async ({ page }) => {
+            await openB0(page);
 
-        // Every GPU control is counted by the rectangle it drew, not by the
-        // list it is named in: a control that laid out to nothing is not on
-        // screen, whatever the region meant to draw.
-        const state = await b0(page);
-        const names = await page.evaluate(() => window.__fusion_basic.b0_controls());
-        expect(names).toHaveLength(B0.gpuControls);
-        expect(state.controls.map((control: { name: string }) => control.name)).toEqual(names);
-        for (const control of state.controls) {
-            expect(control.width, control.name).toBeGreaterThan(0);
-            expect(control.height, control.name).toBeGreaterThan(0);
-        }
+            expect(await domControls(page)).toBe(B0.domControls);
 
-        expect(await page.evaluate(() => window.__fusion_basic.live_regions())).toBe(B0.regions);
-        expect(await page.evaluate(() => window.__fusion_basic.live_components())).toBe(B0.scopes);
+            // Every GPU control is counted by the rectangle it drew, not by the
+            // list it is named in: a control that laid out to nothing is not on
+            // screen, whatever the region meant to draw.
+            const state = await b0(page);
+            const names = await page.evaluate(() => window.__fusion_basic.b0_controls());
+            expect(names).toHaveLength(B0.gpuControls);
+            expect(state.controls.map((control: { name: string }) => control.name)).toEqual(names);
+            for (const control of state.controls) {
+                expect(control.width, control.name).toBeGreaterThan(0);
+                expect(control.height, control.name).toBeGreaterThan(0);
+            }
 
-        // And they are drawn: twenty controls that reported a rectangle and
-        // left the canvas empty would pass everything above.
-        expect(litPixels(await capture(page.getByTestId("b0-gpu")))).toBeGreaterThan(200);
-    });
+            expect(await page.evaluate(() => window.__fusion_basic.live_regions())).toBe(B0.regions);
+            expect(await page.evaluate(() => window.__fusion_basic.live_components())).toBe(B0.scopes);
 
-    test("the first screen takes one font, and it is the Latin one", async ({ page }) => {
-        await openB0(page);
-        const fonts = await page.evaluate(() =>
-            performance
-                .getEntriesByType("resource")
-                .map((entry) => entry.name)
-                .filter((name) => name.endsWith(".ttf") || name.endsWith(".woff2"))
-                .map((name) => name.slice(name.lastIndexOf("/") + 1))
-        );
-        expect(fonts).toEqual(["IBMPlexSans-Text.ttf"]);
+            // And they are drawn: twenty controls that reported a rectangle and
+            // left the canvas empty would pass everything above.
+            expect(litPixels(await capture(page.getByTestId("b0-gpu")))).toBeGreaterThan(200);
+        });
+
+        test("the first screen takes one font, and it is the Latin one", async ({ page }) => {
+            await openB0(page);
+            const fonts = await page.evaluate(() =>
+                performance
+                    .getEntriesByType("resource")
+                    .map((entry) => entry.name)
+                    .filter((name) => name.endsWith(".ttf") || name.endsWith(".woff2"))
+                    .map((name) => name.slice(name.lastIndexOf("/") + 1))
+            );
+            expect(fonts).toEqual(["IBMPlexSans-Text.ttf"]);
+        });
     });
 
     test("one state, two halves: each answers for what the other did", async ({ page }) => {

@@ -3,8 +3,9 @@ import path from "node:path";
 import { PNG } from "pngjs";
 import { differingPixels, expect, present, test, waitForReady } from "./support";
 import { hasReference, openTwin, prepareVisual } from "./twin";
+import { EVIDENCE } from "../tier";
 
-test("starter pages are measured against the same-browser Canvas reference", async ({ page, context }, info) => {
+test("starter pages are measured against the same-browser Canvas reference", { tag: EVIDENCE }, async ({ page, context }, info) => {
     test.skip(!hasReference, "The optional Vellum source reference is absent.");
     test.setTimeout(300_000);
     await waitForReady(page);
@@ -32,7 +33,7 @@ test("starter pages are measured against the same-browser Canvas reference", asy
     await twin.close();
 });
 
-test("open shell menus and dialogs remain within the approved visual gate", async ({ page, context }, info) => {
+test("open shell menus and dialogs remain within the approved visual gate", { tag: EVIDENCE }, async ({ page, context }, info) => {
     test.skip(!hasReference, "The optional Vellum source reference is absent.");
     await waitForReady(page);
     const twin = await context.newPage();

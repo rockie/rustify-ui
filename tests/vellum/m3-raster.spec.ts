@@ -33,39 +33,45 @@ async function textPixels(page: import("@playwright/test").Page, width: number, 
     } }));
 }
 
-test("typography properties bind and Unicode layout matches the browser reference", async ({ page, context }, info) => {
-    test.skip(!hasReference, "The optional Vellum source reference is absent.");
-    await playground(page);
-    const twin = await context.newPage();
-    await openTwin(twin);
-    const nodes = await page.evaluate(() => {
-        const api = window.vellum;
-        const first = api.createAtCenter("text", { text: "Vellum · Typography\nZażółć gęślą jaźń · مرحبا", w: 340, h: 80, fontSize: 24 });
-        api.select([first.id]);
-        for (const [prop, value] of Object.entries({ fontSize: 32, fontWeight: 700, letterSpacing: 1.2, lineHeight: 160, textAlign: "center", direction: "rtl", textDecoration: "underline" })) api.setProperty(prop, value);
-        const values = [api.doc.get(first.id)];
-        for (const [text, textCase, width] of [
-            ["👨‍👩‍👧‍👦 é 🏳️‍🌈\n\n日本語の長い文章", "none", 55],
-            ["straße istanbul ΣΊΣΥΦΟΣ", "upper", 110],
-            ["éCOLE DÉJÀ vu مرحبا", "title", 120],
-            ["WORDS\u00a0AND\u2003SPACES\n", "lower", 85],
-        ] as const) values.push(api.createAtCenter("text", { text, textCase, w: width, h: 500, fontSize: 23, letterSpacing: 0.7 }));
-        api.select([]);
-        return values;
+// Twin comparisons open the twin in the test's own context and keep the page
+// they compare there too.
+test.describe(() => {
+    test.use({ fresh: true });
+
+    test("typography properties bind and Unicode layout matches the browser reference", async ({ page, context }, info) => {
+        test.skip(!hasReference, "The optional Vellum source reference is absent.");
+        await playground(page);
+        const twin = await context.newPage();
+        await openTwin(twin);
+        const nodes = await page.evaluate(() => {
+            const api = window.vellum;
+            const first = api.createAtCenter("text", { text: "Vellum · Typography\nZażółć gęślą jaźń · مرحبا", w: 340, h: 80, fontSize: 24 });
+            api.select([first.id]);
+            for (const [prop, value] of Object.entries({ fontSize: 32, fontWeight: 700, letterSpacing: 1.2, lineHeight: 160, textAlign: "center", direction: "rtl", textDecoration: "underline" })) api.setProperty(prop, value);
+            const values = [api.doc.get(first.id)];
+            for (const [text, textCase, width] of [
+                ["👨‍👩‍👧‍👦 é 🏳️‍🌈\n\n日本語の長い文章", "none", 55],
+                ["straße istanbul ΣΊΣΥΦΟΣ", "upper", 110],
+                ["éCOLE DÉJÀ vu مرحبا", "title", 120],
+                ["WORDS\u00a0AND\u2003SPACES\n", "lower", 85],
+            ] as const) values.push(api.createAtCenter("text", { text, textCase, w: width, h: 500, fontSize: 23, letterSpacing: 0.7 }));
+            api.select([]);
+            return values;
+        });
+        expect(nodes[0]).toMatchObject({ fontSize: 32, fontWeight: 700, letterSpacing: 1.2, lineHeight: 1.6, textAlign: "center", direction: "rtl", textDecoration: "underline" });
+        const actual = await page.evaluate(nodes => nodes.map(node => window.vellum.textLayout(node.id)), nodes);
+        const expected = await twin.evaluate(async nodes => {
+            const source = "/src/renderer.js";
+            const { layoutText, displayText, fontSpec } = await import(source);
+            return nodes.map(node => ({ ...layoutText(node), displayText: displayText(node), fontSpec: fontSpec(node) }));
+        }, nodes);
+        for (let index = 0; index < nodes.length; index++) {
+            expect(actual[index]).toMatchObject(expected[index]);
+            expect(actual[index].widths.every((value: number) => Number.isFinite(value))).toBe(true);
+        }
+        await info.attach("unicode-layout", { body: JSON.stringify({ actual, expected }), contentType: "application/json" });
+        await twin.close();
     });
-    expect(nodes[0]).toMatchObject({ fontSize: 32, fontWeight: 700, letterSpacing: 1.2, lineHeight: 1.6, textAlign: "center", direction: "rtl", textDecoration: "underline" });
-    const actual = await page.evaluate(nodes => nodes.map(node => window.vellum.textLayout(node.id)), nodes);
-    const expected = await twin.evaluate(async nodes => {
-        const source = "/src/renderer.js";
-        const { layoutText, displayText, fontSpec } = await import(source);
-        return nodes.map(node => ({ ...layoutText(node), displayText: displayText(node), fontSpec: fontSpec(node) }));
-    }, nodes);
-    for (let index = 0; index < nodes.length; index++) {
-        expect(actual[index]).toMatchObject(expected[index]);
-        expect(actual[index].widths.every((value: number) => Number.isFinite(value))).toBe(true);
-    }
-    await info.attach("unicode-layout", { body: JSON.stringify({ actual, expected }), contentType: "application/json" });
-    await twin.close();
 });
 
 test("editing a new history branch cannot reuse stale text pixels", async ({ page }) => {
@@ -90,51 +96,57 @@ test("editing a new history branch cannot reuse stale text pixels", async ({ pag
     expect(differingPixels(branch, fresh), "Branch C must render identically to a fresh C node").toBe(0);
 });
 
-test("styled text raster stays within the approved visual tolerance at unit zoom", async ({ page, context }, info) => {
-    test.skip(!hasReference, "The optional Vellum source reference is absent.");
-    await playground(page);
-    const twin = await context.newPage();
-    await openTwin(twin);
-    await twin.locator("[data-page]").nth(2).click();
-    for (const target of [page, twin]) {
-        await target.evaluate(() => {
-            window.vellum.createAtCenter("text", {
-                text: "Zażółć gęślą jaźń\nمرحبا بالعالم\nCafé 👨‍👩‍👧‍👦", w: 500, h: 240,
-                fontFamily: "Arial", fontSize: 30, fontWeight: 700, fontStyle: "italic",
-                textCase: "upper", textAlign: "center", direction: "rtl", letterSpacing: 1.2,
-                lineHeight: 1.6, textDecoration: "underline", fill: "#f0c090", fillOpacity: 0.8,
+// Twin comparisons open the twin in the test's own context and keep the page
+// they compare there too.
+test.describe(() => {
+    test.use({ fresh: true });
+
+    test("styled text raster stays within the approved visual tolerance at unit zoom", async ({ page, context }, info) => {
+        test.skip(!hasReference, "The optional Vellum source reference is absent.");
+        await playground(page);
+        const twin = await context.newPage();
+        await openTwin(twin);
+        await twin.locator("[data-page]").nth(2).click();
+        for (const target of [page, twin]) {
+            await target.evaluate(() => {
+                window.vellum.createAtCenter("text", {
+                    text: "Zażółć gęślą jaźń\nمرحبا بالعالم\nCafé 👨‍👩‍👧‍👦", w: 500, h: 240,
+                    fontFamily: "Arial", fontSize: 30, fontWeight: 700, fontStyle: "italic",
+                    textCase: "upper", textAlign: "center", direction: "rtl", letterSpacing: 1.2,
+                    lineHeight: 1.6, textDecoration: "underline", fill: "#f0c090", fillOpacity: 0.8,
+                });
+                window.vellum.select([]);
             });
-            window.vellum.select([]);
-        });
-        await present(target);
-    }
-    const captureText = async (target: import("@playwright/test").Page, name: string) => {
-        const bounds = await target.locator("#scene").boundingBox();
-        if (!bounds) throw new Error("The scene has no visible bounds");
-        const png = await target.screenshot({
-            animations: "disabled",
-            path: info.outputPath(name),
-            clip: {
-                x: bounds.x + (bounds.width - 500) / 2,
-                y: bounds.y + (bounds.height - 240) / 2,
-                width: 500,
-                height: 240,
-            },
-        });
-        return PNG.sync.read(png);
-    };
-    const actual = await captureText(page, "text-crop-actual.png");
-    const expected = await captureText(twin, "text-crop-reference.png");
-    const count = differingPixels(actual, expected);
-    await page.locator("#scene").screenshot({ path: info.outputPath("text-actual.png") });
-    await twin.locator("#scene").screenshot({ path: info.outputPath("text-reference.png") });
-    const comparison = { differing: count, total: actual.width * actual.height, ratio: count / (actual.width * actual.height), maxRatio: 0.02 };
-    console.log(`Styled text comparison: ${JSON.stringify(comparison)}`);
-    await info.attach("styled-text-comparison", { body: JSON.stringify(comparison), contentType: "application/json" });
-    // Canvas readback uses software antialiasing; the reference may rasterize on the GPU.
-    // Layout is checked exactly above; rendered pixels use the approved screenshot gate.
-    expect(comparison.ratio, "Styled text must satisfy the same visual gate as the full editor").toBeLessThanOrEqual(comparison.maxRatio);
-    await twin.close();
+            await present(target);
+        }
+        const captureText = async (target: import("@playwright/test").Page, name: string) => {
+            const bounds = await target.locator("#scene").boundingBox();
+            if (!bounds) throw new Error("The scene has no visible bounds");
+            const png = await target.screenshot({
+                animations: "disabled",
+                path: info.outputPath(name),
+                clip: {
+                    x: bounds.x + (bounds.width - 500) / 2,
+                    y: bounds.y + (bounds.height - 240) / 2,
+                    width: 500,
+                    height: 240,
+                },
+            });
+            return PNG.sync.read(png);
+        };
+        const actual = await captureText(page, "text-crop-actual.png");
+        const expected = await captureText(twin, "text-crop-reference.png");
+        const count = differingPixels(actual, expected);
+        await page.locator("#scene").screenshot({ path: info.outputPath("text-actual.png") });
+        await twin.locator("#scene").screenshot({ path: info.outputPath("text-reference.png") });
+        const comparison = { differing: count, total: actual.width * actual.height, ratio: count / (actual.width * actual.height), maxRatio: 0.02 };
+        console.log(`Styled text comparison: ${JSON.stringify(comparison)}`);
+        await info.attach("styled-text-comparison", { body: JSON.stringify(comparison), contentType: "application/json" });
+        // Canvas readback uses software antialiasing; the reference may rasterize on the GPU.
+        // Layout is checked exactly above; rendered pixels use the approved screenshot gate.
+        expect(comparison.ratio, "Styled text must satisfy the same visual gate as the full editor").toBeLessThanOrEqual(comparison.maxRatio);
+        await twin.close();
+    });
 });
 
 test("local font loading works under strict CSP and invalidates existing glyph pixels", async ({ page }, info) => {

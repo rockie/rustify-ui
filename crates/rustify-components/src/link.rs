@@ -7,7 +7,7 @@
 
 use leptos::prelude::*;
 
-const BASE: &str = "rui:text-primary rui:underline-offset-4 rui:rounded-sm rui:hover:underline rui:outline-none rui:focus-visible:ring-ring/50 rui:focus-visible:ring-[3px] rui:aria-disabled:pointer-events-none rui:aria-disabled:opacity-50";
+const BASE: &str = "text-primary underline-offset-4 rounded-sm hover:underline outline-none focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-disabled:pointer-events-none aria-disabled:opacity-50";
 
 /// How much of the current path a link needs to match to count as current.
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]

@@ -1,5 +1,6 @@
-import { expect, test } from "@playwright/test";
-import { capture, differingPixels, litPixels, settle, waitForReady } from "./support";
+import { expect } from "@playwright/test";
+import { capture, differingPixels, litPixels, settle, test, waitForReady } from "./support";
+import { rounds } from "../tier";
 
 test.describe("M1 probe 1: Leptos CSR and Makepad in one wasm, no isolation", () => {
     test("boots without cross-origin isolation and draws into the region", async ({ page }) => {
@@ -121,7 +122,7 @@ test.describe("M1 probe 2: two scopes, four regions, symmetric teardown", () => 
             expect(await errors(), what).toEqual([]);
             expect(seen, what).toBe(count);
         };
-        for (let round = 0; round < 20; round++) {
+        for (let round = 0; round < rounds(20); round++) {
             expect(await page.evaluate(() => window.__fusion_basic.dispose("scope-a"))).toBe(true);
             await expectRegions(3, `round ${round}: after dispose`);
             await page.evaluate(() => window.__fusion_basic.mount("scope-a"));
@@ -136,6 +137,10 @@ test.describe("M1 probe 2: two scopes, four regions, symmetric teardown", () => 
 });
 
 test.describe("M1 probe 3: static message bridge under a strict CSP", () => {
+    // Its own page: the listener has to be there before the page's scripts
+    // run, and a shared page ran them before this check began.
+    test.use({ fresh: true });
+
     test("no dynamic JS execution is needed and the bridge hash matches", async ({ page }) => {
         const violations: string[] = [];
         page.on("console", (message) => {

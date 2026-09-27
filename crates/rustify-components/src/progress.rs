@@ -2,9 +2,8 @@
 
 use leptos::prelude::*;
 
-const TRACK: &str =
-    "rui:relative rui:h-2 rui:w-full rui:overflow-hidden rui:rounded-full rui:bg-secondary";
-const FILL: &str = "rui:h-full rui:bg-primary rui:transition-[width]";
+const TRACK: &str = "relative h-2 w-full overflow-hidden rounded-full bg-secondary";
+const FILL: &str = "h-full bg-primary transition-[width]";
 
 /// Rust/UI's version set the bar's width through a `style` attribute, which a
 /// strict policy refuses (P1 M3's lesson: a static `style` attribute is written
@@ -47,7 +46,7 @@ pub fn Progress(
                 style:width=move || {
                     if indeterminate.get() { "100%".to_string() } else { format!("{}%", percent()) }
                 }
-                class=("rui:opacity-40", move || indeterminate.get())
+                class=("opacity-40", move || indeterminate.get())
             />
         </div>
     }

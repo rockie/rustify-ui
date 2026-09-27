@@ -2,7 +2,7 @@
 
 ## Prerequisites
 
-- `mise` (2026.9.2 or newer). `mise install` installs what `mise.toml` pins: Rust 1.98.1 (stable) with `rustfmt`, `clippy` and the wasm32 target, and mbx 1.15.0, the compiler cache every build goes through. Nothing else is installed silently.
+- `mise` (2026.9.2 or newer). `mise install` installs what `mise.toml` pins: Rust 1.98.1 (stable) with `rustfmt`, `clippy` and the wasm32 target; mbx 1.15.0, the compiler cache every build goes through; and Tailwind's standalone CLI 4.1.13, which generates the component stylesheet without Node (`RUSTIFY_TAILWIND=<path>` points at another copy of that version). Nothing else is installed silently.
 - After installing Rust, mise runs `scripts/link-libllvm.sh`, which puts a link to the toolchain's `libLLVM` next to `rust-lld`. mbx starts the toolchain's Cargo without rustup's proxy, so without that link the wasm link cannot load LLVM. `mbx xtask doctor` reports a toolchain that is missing the link.
 - Node 26 and npm for the browser tests: `npm ci` then `npx playwright install chromium`.
 - Google Chrome on macOS for the manual pass gate.
@@ -37,24 +37,35 @@ For the [Vellum design editor](../examples/vellum/), use `mbx xtask build-web --
 ## Verification commands
 
 ```sh
-mbx test --workspace --lib
+mbx test --workspace --lib --bins    # --bins: xtask and the examples are binaries
 mbx xtask css --check                # the component stylesheet is in step with the classes
 mbx clippy --workspace --all-targets -- -D warnings
 cargo fmt --all -- --check           # the fork under makepad/ is excluded by its rustfmt.toml
 mbx xtask sources verify             # drift of makepad/ against the import record
-npm run test:browser                 # Playwright probes against a release build
+npx playwright test --project=component-catalog              # one example's regression checks
+RUSTIFY_TIER=evidence npx playwright test --project=budget   # the measurements, on request
 cd makepad && mbx test -p cargo-makepad
-mbx xtask verify --suite p2          # everything above in one report, plus what needs a person
+mbx xtask verify --suite p3          # all of the above, css --check and catalog --check included, plus what needs a person
 ```
 
+The browser checks come in two tiers (`tests/tier.ts`). The regression tier,
+the default, asks whether behaviour is still right: each example's project
+shares one page per worker, puts it back between tests with the example's
+`reset()`, and runs repeated behaviours a few rounds. It is what a pull request
+runs, one job per example. The evidence tier (`RUSTIFY_TIER=evidence`) asks
+whether the numbers still hold - budgets, long runs, memory, idle cost - at
+their full round counts; `.github/workflows/evidence.yml` runs it on request
+and weekly. Always name a project: the whole suite at once runs out of memory.
+
 `verify` runs the checks, double-builds each example, runs every browser
-project, and then lists the records only a person can write - the VoiceOver
-pass, real pinyin input, the sample comparison, the zoom walkthrough. It reports
-those as *missing*, never as passed, which is the whole reason it exists.
+project at full strength (`RUSTIFY_TIER=all`), and then lists the records only
+a person can write - the VoiceOver pass, real pinyin input, the sample
+comparison, the zoom walkthrough. It reports those as *missing*, never as
+passed, which is the whole reason it exists.
 
 ## Changing a component's classes
 
-The component crate's classes are Tailwind utilities behind a `rui:` prefix,
+The component crate's classes are plain Tailwind v4 utilities, with no prefix,
 and the stylesheet they need is **committed**, so building the wasm never needs
 Node:
 
@@ -67,9 +78,19 @@ A class string added without regenerating would simply have no rule; `--check`
 is what turns that into a failure. `build-web` copies the product into any
 example whose manifest names the component crate.
 
-The prefix is what keeps a host page's own Tailwind build and ours apart, and
-`dark` is bound to the SDK's scope attribute rather than to any `.dark`
-ancestor, so a host page using that convention does not darken a scope.
+Because an application writes the same utilities, a `class` passed to a
+component is merged with the component's own through `tw_merge`: a caller's
+`p-6` replaces the component's `p-4`, and `hover:bg-accent` replaces its
+`hover:` background, instead of both reaching the element and the
+stylesheet's order deciding.
+
+What still keeps the SDK out of the host page: the stylesheet has no preflight
+and no bare element selector, the theme tokens are written only onto a scope's
+root, and `dark` is bound to the SDK's scope attribute rather than to any
+`.dark` ancestor, so a host page using that convention does not darken a scope.
+The class names themselves are no longer apart: a host page with its own
+Tailwind build that also links `rustify.css` gets two rules for a class like
+`bg-primary`.
 
 ## Two languages
 

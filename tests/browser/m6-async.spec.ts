@@ -1,5 +1,6 @@
-import { expect, Page, test } from "@playwright/test";
-import { waitForReady } from "./support";
+import { expect, Page } from "@playwright/test";
+import { rounds } from "../tier";
+import { test, waitForReady } from "./support";
 
 const snapshot = (page: Page) => page.evaluate(() => window.__property_workbench.snapshot());
 
@@ -51,13 +52,14 @@ test.describe("M6 V7: four states, and only the newest answer", () => {
     test("twenty pairs answered backwards all end on the newer answer", async ({ page }) => {
         test.setTimeout(300_000);
         await waitForReady(page);
-        for (let round = 0; round < 20; round++) {
+        const pairs = rounds(20);
+        for (let round = 0; round < pairs; round++) {
             await start(page, 400, `stale ${round}`);
             await start(page, 20, `fresh ${round}`);
             await expect(page.getByTestId("details")).toHaveText(`fresh ${round}`);
         }
         await page.waitForTimeout(600);
-        await expect(page.getByTestId("details")).toHaveText("fresh 19");
+        await expect(page.getByTestId("details")).toHaveText(`fresh ${pairs - 1}`);
     });
 
     test("an answer for a scope that has gone reaches nothing", async ({ page }) => {

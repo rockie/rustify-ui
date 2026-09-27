@@ -1,5 +1,5 @@
-import { expect, test } from "@playwright/test";
-import { anchorRect, geometry, mountGeometry } from "./support";
+import { expect } from "@playwright/test";
+import { anchorRect, geometry, mountGeometry, test } from "./support";
 
 /// The same three steps the workbench takes, on the other example: pick an
 /// object on the region, edit one of its values in a control the DOM owns, and

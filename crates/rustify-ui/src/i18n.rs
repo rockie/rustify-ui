@@ -143,6 +143,8 @@ pub enum Message {
     MissingGlyph,
     /// The default words on a drop zone.
     DropFileHere,
+    /// Taking a status message down before it goes on its own.
+    Dismiss,
 }
 
 impl Message {
@@ -172,6 +174,7 @@ impl Message {
             Self::RegionRecovering => "redrawing",
             Self::RegionFailed => "this view could not start",
             Self::DropFileHere => "drop a file here",
+            Self::Dismiss => "dismiss this message",
             // The character, and what it means, because a lone box tells a
             // reader nothing about whose fault it is.
             Self::MissingGlyph => "□ (no glyph in this font)",
@@ -197,12 +200,13 @@ impl Message {
             Self::RegionFailed => "这个视图没有启动",
             Self::MissingGlyph => "□（当前字体没有这个字形）",
             Self::DropFileHere => "把文件拖到这里",
+            Self::Dismiss => "关闭这条消息",
         }
     }
 
     /// Every message there is, for a catalogue page and for the test that
     /// keeps the two languages the same size.
-    pub fn all() -> [Self; 17] {
+    pub fn all() -> [Self; 18] {
         [
             Self::Retry,
             Self::Close,
@@ -221,6 +225,7 @@ impl Message {
             Self::RegionFailed,
             Self::MissingGlyph,
             Self::DropFileHere,
+            Self::Dismiss,
         ]
     }
 
@@ -244,6 +249,7 @@ impl Message {
             Self::RegionFailed => "region-failed",
             Self::MissingGlyph => "missing-glyph",
             Self::DropFileHere => "drop-file-here",
+            Self::Dismiss => "dismiss",
         }
     }
 }

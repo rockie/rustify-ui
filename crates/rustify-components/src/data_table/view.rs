@@ -8,14 +8,14 @@ use leptos::web_sys::{Element, FocusOptions, HtmlElement};
 use rustify_ui::Selection;
 use std::sync::Arc;
 
-const GRID: &str = "rui:relative rui:flex rui:flex-col rui:min-h-0 rui:border rui:border-border rui:rounded-md rui:bg-background rui:text-sm rui:outline-none rui:focus-visible:ring-ring/50 rui:focus-visible:ring-[3px]";
-const HEADER: &str = "rui:flex rui:shrink-0 rui:overflow-hidden rui:border-b rui:border-border rui:bg-muted rui:font-medium rui:text-muted-foreground";
-const HEADER_CELL: &str =
-    "rui:shrink-0 rui:truncate rui:px-2 rui:py-1 rui:text-left rui:cursor-default rui:select-none";
-const HEADER_BUTTON: &str = "rui:w-full rui:truncate rui:bg-transparent rui:border-0 rui:p-0 rui:text-left rui:font-medium rui:text-inherit rui:cursor-pointer rui:outline-none rui:focus-visible:ring-ring/50 rui:focus-visible:ring-2";
-const SCROLLER: &str = "rui:relative rui:flex-1 rui:min-h-0 rui:overflow-auto";
-const ROW: &str = "rui:absolute rui:left-0 rui:flex rui:w-full rui:items-center rui:border-b rui:border-border/50 rui:aria-selected:bg-accent";
-const CELL: &str = "rui:shrink-0 rui:truncate rui:px-2 rui:outline-none rui:focus-visible:ring-ring/50 rui:focus-visible:ring-2 rui:focus-visible:ring-inset";
+const GRID: &str = "relative flex flex-col min-h-0 border border-border rounded-md bg-background text-sm outline-none focus-visible:ring-ring/50 focus-visible:ring-[3px]";
+const HEADER: &str = "flex shrink-0 overflow-hidden border-b border-border bg-muted font-medium text-muted-foreground";
+const HEADER_CELL: &str = "shrink-0 truncate px-2 py-1 text-left cursor-default select-none";
+const HEADER_BUTTON: &str = "w-full truncate bg-transparent border-0 p-0 text-left font-medium text-inherit cursor-pointer outline-none focus-visible:ring-ring/50 focus-visible:ring-2";
+const SCROLLER: &str = "relative flex-1 min-h-0 overflow-auto";
+const ROW: &str =
+    "absolute left-0 flex w-full items-center border-b border-border/50 aria-selected:bg-accent";
+const CELL: &str = "shrink-0 truncate px-2 outline-none focus-visible:ring-ring/50 focus-visible:ring-2 focus-visible:ring-inset";
 
 /// One column of the table.
 #[derive(Clone, Debug, PartialEq, Eq)]
@@ -120,6 +120,13 @@ pub fn DataTable(
         }
     });
 
+    // A smaller viewport is not the reader moving away. If it leaves the cell
+    // that has the keyboard outside the window, that cell is brought back into
+    // view and given the keyboard again, where otherwise the window would move
+    // the keyboard to whatever is still inside it. It has to be given back
+    // rather than kept: the smaller pool can take the cell's element away,
+    // and the browser's focus with it.
+    let return_keyboard = StoredValue::new(false);
     // Through `Element`, read with `into` and written with `scroll_to`: the
     // scroll accessors exist on more than one type in the deref chain, and
     // web-sys gives `scrollTop` an `i32` normally and an `f64` under
@@ -135,8 +142,26 @@ pub fn DataTable(
             element.client_width() as f64,
             element.client_height() as f64,
         );
-        if viewport.get_untracked() != size {
-            viewport.set(size);
+        if viewport.get_untracked() == size {
+            return;
+        }
+        let held = grid
+            .get_untracked()
+            .is_some_and(|grid| holds_keyboard(grid.as_ref()));
+        viewport.set(size);
+        if held {
+            let at = focus.get_untracked();
+            let away_down = !visible_rows.get_untracked().contains(at.row);
+            let away_across = !visible_columns.get_untracked().contains(at.column);
+            if away_down {
+                goto.set(Some(at.row));
+            }
+            if away_across {
+                goto_column.set(Some(at.column));
+            }
+            if away_down || away_across {
+                return_keyboard.set_value(true);
+            }
         }
     };
     Effect::new(move || {
@@ -218,11 +243,8 @@ pub fn DataTable(
             return;
         };
         let element: &Element = element.as_ref();
-        let holds_focus = document().active_element().is_some_and(|active| {
-            active.get_attribute("role").as_deref() == Some("gridcell")
-                && element.contains(Some(active.as_ref()))
-        });
-        if holds_focus {
+        if holds_keyboard(element) || return_keyboard.get_value() {
+            return_keyboard.set_value(false);
             placing.set_value(true);
             focus_cell(
                 element,
@@ -360,7 +382,7 @@ pub fn DataTable(
                 <div
                     role="row"
                     aria-rowindex="1"
-                    class="rui:flex"
+                    class="flex"
                     // The header sits outside the scroller, so it is moved by
                     // hand: where its first drawn column starts, less how far
                     // the body has been scrolled. Anything else puts a heading
@@ -452,7 +474,7 @@ pub fn DataTable(
                                     <div
                                         role="row"
                                         class=ROW
-                                        class=("rui:hidden", move || !within.get())
+                                        class=("hidden", move || !within.get())
                                         data-testid=format!("{name}-row-{slot}")
                                         data-row-id=move || id.get().to_string()
                                         aria-rowindex=move || (row.get() + 2).to_string()
@@ -489,7 +511,7 @@ pub fn DataTable(
                                                     <div
                                                         role="gridcell"
                                                         class=CELL
-                                                        class=("rui:hidden", move || !here.get())
+                                                        class=("hidden", move || !here.get())
                                                         aria-colindex=move || {
                                                             (column.get() + 1).to_string()
                                                         }
@@ -525,6 +547,14 @@ pub fn DataTable(
             </div>
         </div>
     }
+}
+
+/// Whether a cell of this grid has the keyboard.
+fn holds_keyboard(grid: &Element) -> bool {
+    document().active_element().is_some_and(|active| {
+        active.get_attribute("role").as_deref() == Some("gridcell")
+            && grid.contains(Some(active.as_ref()))
+    })
 }
 
 /// Puts the keyboard on one cell of the grid, found by its place in the pool

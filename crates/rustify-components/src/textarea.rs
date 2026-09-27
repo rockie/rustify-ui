@@ -3,7 +3,7 @@
 
 use leptos::prelude::*;
 
-const BASE: &str = "rui:flex rui:min-h-16 rui:w-full rui:rounded-md rui:border rui:border-border rui:bg-input rui:text-foreground rui:px-3 rui:py-2 rui:text-sm rui:transition-colors rui:outline-none rui:placeholder:text-muted-foreground rui:focus-visible:ring-ring/50 rui:focus-visible:ring-[3px] rui:disabled:cursor-not-allowed rui:disabled:opacity-50 rui:read-only:bg-muted rui:aria-invalid:border-destructive rui:aria-invalid:ring-destructive/40";
+const BASE: &str = "flex min-h-16 w-full rounded-md border border-border bg-input text-foreground px-3 py-2 text-sm transition-colors outline-none placeholder:text-muted-foreground focus-visible:ring-ring/50 focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 read-only:bg-muted aria-invalid:border-destructive aria-invalid:ring-destructive/40";
 
 #[component]
 pub fn TextArea(

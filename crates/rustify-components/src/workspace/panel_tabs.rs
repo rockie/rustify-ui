@@ -10,9 +10,8 @@ use leptos::ev::KeyboardEvent;
 use leptos::prelude::*;
 use std::sync::Arc;
 
-const STRIP: &str =
-    "rui:flex rui:items-stretch rui:gap-1 rui:border-b rui:border-border rui:overflow-x-auto";
-const TAB: &str = "rui:group rui:inline-flex rui:items-center rui:gap-1.5 rui:rounded-t-md rui:border rui:border-transparent rui:px-3 rui:py-1.5 rui:text-sm rui:whitespace-nowrap rui:cursor-pointer rui:outline-none rui:transition-colors rui:hover:bg-muted rui:focus-visible:ring-ring/50 rui:focus-visible:ring-[3px] rui:aria-selected:bg-background rui:aria-selected:border-border rui:aria-selected:text-foreground";
+const STRIP: &str = "flex items-stretch gap-1 border-b border-border overflow-x-auto";
+const TAB: &str = "group inline-flex items-center gap-1.5 rounded-t-md border border-transparent px-3 py-1.5 text-sm whitespace-nowrap cursor-pointer outline-none transition-colors hover:bg-muted focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-selected:bg-background aria-selected:border-border aria-selected:text-foreground";
 
 /// One panel in the strip.
 #[derive(Clone, Debug, PartialEq, Eq)]
@@ -140,7 +139,7 @@ pub fn PanelTabs(
                             <Show when=move || closable fallback=|| ()>
                                 <button
                                     type="button"
-                                    class="rui:rounded-sm rui:p-0.5 rui:text-muted-foreground rui:outline-none rui:hover:bg-muted rui:focus-visible:ring-ring/50 rui:focus-visible:ring-[3px]"
+                                    class="rounded-sm p-0.5 text-muted-foreground outline-none hover:bg-muted focus-visible:ring-ring/50 focus-visible:ring-[3px]"
                                     data-name="PanelTabClose"
                                     data-testid=move || close_test_id.get_value()
                                     aria-label=move || {
@@ -161,7 +160,7 @@ pub fn PanelTabs(
                                 >
                                     <crate::icon::Icon
                                         glyph=crate::icon::Glyph::Close
-                                        class="rui:size-3"
+                                        class="size-3"
                                     />
                                 </button>
                             </Show>
