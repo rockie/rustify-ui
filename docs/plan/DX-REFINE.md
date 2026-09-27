@@ -35,12 +35,12 @@
 
 ### 恢复快照
 
-- 最近更新：2026-09-25 UTC · M2 回归层两轮全绿、达 D9 本地目标；证据层与 CI 待办
+- 最近更新：2026-09-27 UTC · 解决与 `main` 的冲突并合入 `main`；证据层与 CI 待办
 - 当前进度：1/8 个里程碑完成
 - 当前状态：M2 进行中——五个示例的 `reset()`（四个原地、Vellum 重挂）与共享页 fixture 落地，回归层各 project 两轮全绿且 workers=2 均 ≤ 5 min；修了三个既有失败（数据表缩小时丢焦点、Vellum 覆盖层残影、`p3-instances` 的 Promise 回收）；CI matrix 与 `evidence.yml` 已写；证据层本地逐 project 运行中；M3 只差 CI；M4/M5 在独立工作树实施中，M6/M7 的 SDK 原语已在独立工作树提交（`e1c99c3`，待拣入）
 - 最近完成：M1 · 测试分层骨架与探针
 - 下一步：等本地证据层跑完写入 M2 记录；拣入 SDK 原语提交与 M4/M5 提交并重建验证；开 M6 采用（Vellum、property-workbench、data-workbench、fusion-basic）
-- 当前阻塞：PR（rockie/rustify-ui#2）与 `main` 冲突（`docs/plan/DX-REFINE.md` 两边各自新增），GitHub 不起 `pull_request` 工作流，因此 M2/M3 的 CI 退出条件（matrix 全绿、最长 job ≤ 10 min、A-1、A-6）无法验证；把 `main` 合入本分支的操作两次被权限拒绝，需用户合并或授权
+- 当前阻塞：无代码阻塞。2026-09-27 按用户要求把 `main` 合入本分支（冲突只在本计划文件，取本分支版本，无损）并将 rockie/rustify-ui#2 合入 `main`；M2/M3 的 CI 退出条件（matrix 全绿、最长 job ≤ 10 min、A-1、A-6）改在 `main` 的 push CI 上验证。Vellum 采用（`ce3a9b1`）与目录新组件（`bc32ec3`）仍在独立工作树，未随本次合并；容器重启丢失了两次测试运行，待集成后重跑
 - 代码基线：M1/M3 `fa76b20`；M2 集成见完成记录
 
 ### 完成记录
