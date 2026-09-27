@@ -22,7 +22,7 @@
 | GPU 区域与投影 | `GpuRegion` 的创建、重试、上下文恢复、props/actions 调度、卸载；运行时帧与 GPU 字节账本 | 场景打包、Vellum 着色器、光栅纹理缓存、可见对象与绘制次数统计 | GPU 运行时接入、DOM 尺寸同步、恢复时重建和重投影、资源清理、调度与诊断 |
 | 页面状态与主题 | Leptos 信号和受控视图、`ThemedScope`、作用域清理 | 文档、相机、页面选择和 Vellum 标记/样式 | 状态订阅、DOM 更新、主题传播与订阅解绑 |
 | 文本/路径/图片光栅 | Makepad `ImageBuffer` 上传、区域纹理资源回收；挂载作用域的清理入口 | Canvas 2D 画家、字素换行、图片 cover、光栅 LRU、字体加载与失效规则 | 同样的浏览器测量和画家，另接纹理上传与生命周期 |
-| 工作区外壳与浮层 | Leptos受控视图、SDK `Layer`栈、覆盖层根、`ThemedScope` | 原版标记/图标、输入草稿、菜单导航、模态Tab循环、命令语义 | 状态订阅与更新、浮层顺序、Escape分派、焦点归还、背景inert、主题同步与解绑 |
+| 工作区外壳与浮层 | Leptos受控视图、SDK `Layer`栈（含模态Tab循环）、覆盖层根、`ThemedScope`、`Draft`输入草稿、toast队列（`provide_toasts`）、`listen`/`is_text_entry` | 原版标记/图标、草稿的提交与校验规则、菜单导航、命令语义、toast标记 | 状态订阅与更新、浮层顺序、Escape分派、焦点归还、背景inert、主题同步与解绑 |
 | 原生文本会话 | SDK `TextEdit`原生控件、组合输入优先级、会话结束去重、外部值失效；可选CSS变换 | 世界矩阵、字体样式、自适应高度、文字事务、区域跳过编辑层 | 放置控件、维护原生草稿与外部值边界、IME/Escape优先级和资源清理 |
 | 系统剪贴板与令牌文件 | SDK `clipboard`结果回调、`files::export`下载 | Vellum载荷校验、内部副本回退、图层复制语义、令牌JSON | 浏览器权限拒绝处理、系统API接入与下载资源生命周期 |
 | 文件导入导出 | SDK `files::pick/import_files/export`负责选择器、文件读取结果和下载 | 大小与格式限制、文档替换事务、图片解码与定位、字体嵌入、文件名与导出内容 | 文件入口、取消/拒绝回调、Blob与下载URL生命周期 |
@@ -87,7 +87,7 @@ node tests/vellum/interop.mjs --check-starter /tmp/forma-rust.vellum
 
 [字段](../examples/vellum/src/shell/fields.rs)维护聚焦期间的本地草稿。合法数字实时更新画布，失焦提交一次历史；中间的负号、指数和空值不被响应式刷新抢写。十六进制颜色支持三位和六位，非法值恢复文档中的颜色并提示。检查器按选中节点派生，普通属性更新保留输入DOM和焦点，不需要整面板暂停刷新。
 
-[菜单](../examples/vellum/src/shell/menus.rs)、[对话框](../examples/vellum/src/shell/dialogs.rs)与[命令面板](../examples/vellum/src/shell/palette.rs)使用SDK `Layer`。框架负责Escape关闭顺序、初始聚焦、关闭后焦点归还和模态背景inert；应用负责菜单方向键、Home/End、模态Tab首尾循环及33个原版命令的过滤与执行。SDK没有内置Tab循环，这一职责保留在应用。toast通过覆盖层根的Portal显示，避免被背景inert吞掉，同时不占用Escape栈。
+[菜单](../examples/vellum/src/shell/menus.rs)、[对话框](../examples/vellum/src/shell/dialogs.rs)与[命令面板](../examples/vellum/src/shell/palette.rs)使用SDK `Layer`。框架负责Escape关闭顺序、初始聚焦、关闭后焦点归还和模态背景inert；模态`Layer`还负责Tab/Shift+Tab在层内首尾循环；应用负责菜单方向键、Home/End及33个原版命令的过滤与执行。toast的队列、时长与替换由SDK `provide_toasts`返回的`ToastHandle`负责；Vellum只保留自己的标记（页面上常驻、消息间隐藏的`#toast`），通过覆盖层根的Portal显示，避免被背景inert吞掉，同时不占用Escape栈。检查器数值与颜色字段的编辑中文本由SDK `Draft`保存：输入是预览，提交或Escape由应用决定。
 
 `ThemedScope`向整个作用域传播亮暗主题，外壳沿用原版样式。模态在SDK覆盖层根中显示，仍继承主题。`m5-shell.spec.ts`通过可达名称检查输入、主题和菜单；焦点归还、Tab/Shift+Tab、背景inert及关闭后Layer清理均有断言。所有浏览器用例检查未捕获错误与CSP违规。
 

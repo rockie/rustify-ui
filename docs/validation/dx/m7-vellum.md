@@ -63,8 +63,9 @@
 | 依赖与资源（D17/D18、C-9） | `git diff --quiet -- examples/vellum/{Cargo.toml,app.css,index.html,app.js}`；`rg "rustify.components\|rustify_components" examples/vellum` | 均未变；Vellum 不依赖 `rustify-components` |
 | NFR-7 保持 | `rg "rustify_makepad::(listener_options\|defer\|defer_after)" examples/vellum` | 0 行 |
 | DOM 不变（C-9） | 审阅 `view!` 差异 | `#toast` 与两个 `input` 的标签、属性逐字不变；未加 ARIA |
-| Vellum 回归层 | `npx playwright test -c tests/vellum/playwright.config.ts` | **未跑，留给主 agent**。含 `m5-shell` 本次新增的 Escape 断言（写了但未运行） |
-| 基线孪生视觉门（NFR-4、§9.4） | `VELLUM_TWIN=baseline VELLUM_BASELINE_DIR=<基线工作树> RUSTIFY_TIER=evidence npx playwright test -c tests/vellum/playwright.config.ts visual.spec.ts` | **未跑，留给主 agent**。截图前 `prepareVisual` 会隐藏 `#toast`，改动的字段不在截图状态里，预期 8 张视图差异为 0 |
+| Vellum 回归层 | `npx playwright test -c tests/vellum/playwright.config.ts`（主 agent，拣入后 `acf84b6` 重建的 release 构建，Chromium 141） | 58 过、16 跳过（均为 `@evidence`），3.4 min；含 `m5-shell` 新增的 Escape 断言 |
+| 基线孪生视觉门与孪生交互（NFR-4、§9.4） | `VELLUM_TWIN=baseline VELLUM_BASELINE_DIR=<基线工作树 24f1a11> RUSTIFY_TIER=all npx playwright test -c tests/vellum/playwright.config.ts visual.spec.ts m3-raster.spec.ts m4-pointer.spec.ts m6-edit.spec.ts m7-files.spec.ts` | 55 过、1 跳过、1 失败，4.6 min。视觉全部 0 像素差：6 张启动页（3 页 × 亮/暗）、主菜单与帮助对话框、样式文字栅格、文字与钢笔编辑后截图；孪生几何与交互全过。唯一失败是 `@evidence`「pan presentation latency」，见下一行 |
+| 平移呈现延迟（`@evidence`，ADR-2 的 p95 ≤ 50 ms） | `RUSTIFY_TIER=evidence … m4-pointer.spec.ts -g "pan presentation"`，本树与基线工作树交替各 3 次，期间无其他负载 | 本树 131.7 / 130.3 / 134.1 ms，基线 140.9 / 140.5 / 130.9 ms：**无回归**，两者在本容器（SwiftShader，4 核）都过不了 50 ms；`docs/vellum.md` 的 44.5 ms 是另一台机器上测的。与 M6 记录（`m6-vellum.md`）同一结论；证据层阈值不改，此处只作前后对照 |
 
 ### 缺口与说明
 

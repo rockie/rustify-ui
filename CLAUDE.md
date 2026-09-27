@@ -84,7 +84,7 @@ Runtime contracts to know before touching the runtime (the full list is in `docs
   - A trap kills only its own instance. The loader then aborts that instance's page-level listeners, clears its `data-rustify-url-owner` mark, drops its tasks, destroys its regions, and only then shows the notice.
   - A slot restarts at most three times.
   - Within one instance, `mount()` scopes live and die together.
-- **Page-level listeners** go through `rustify_makepad::listener_options` so they carry the instance's abort signal: `panic = "abort"` runs no destructors.
+- **Page-level listeners** go through `rustify_ui::listen` (inside the SDK, `listener_options`), so they carry the instance's abort signal: `panic = "abort"` runs no destructors. What the instance holds that is not a listener goes through `release_on_abort`.
 - **Pump.** JS calls `rustify_region_process(region, msg)`, and the region's `Cx` is taken out of the registry for the whole pump. Deferred `apply` closures run first, so a re-entrant `apply` only queues. Actions reach the application after the pump returns.
 - **Controlled values.** A control never holds the value it shows. Each input is a request, and the control is put back in step with whatever the application decided. The one exception is a `rustify_ui::Draft` field (number, colour): only while it has focus it keeps the typed text, and leaving it returns to the application's value.
 - **Action streams.** `Pace::Continuous("<name>")` states supersede only their own stream. Discrete events are never merged or reordered.
