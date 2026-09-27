@@ -1,6 +1,6 @@
 import { expect, Page } from "@playwright/test";
 
-import { CATALOG_SIZE, isShared, test, waitForQuiet } from "./support";
+import { CATALOG_SIZE, isShared, REGION_START_MS, test, waitForQuiet } from "./support";
 
 /// M1's exit conditions, on the third example: it boots under the release
 /// policy, its product carries nothing inline, a theme change reaches the DOM
@@ -38,7 +38,7 @@ test.describe("M1 V1: the catalogue starts under the policy it will be deployed 
         const violations = await ready(page);
         expect(await snapshot(page)).toMatchObject({ categories: CATALOG_SIZE, theme: "light" });
         await expect
-            .poll(async () => (await snapshot(page)).region, { timeout: 30_000 })
+            .poll(async () => (await snapshot(page)).region, { timeout: REGION_START_MS })
             .toBe("ready");
         expect(violations).toEqual([]);
         // The one thing a strict policy cannot police for us: a page that is
@@ -70,7 +70,7 @@ test.describe("M1 V1: one theme, both halves", () => {
         // still be starting: a Makepad `Cx` and its shaders, which is seconds
         // rather than milliseconds.
         await expect
-            .poll(async () => (await snapshot(page)).region, { timeout: 30_000 })
+            .poll(async () => (await snapshot(page)).region, { timeout: REGION_START_MS })
             .toBe("ready");
         const region = page.getByTestId("catalogue-region");
         const before = await region.screenshot();
@@ -217,7 +217,7 @@ test.describe("M1 V1: the host page's own controls are not ours", () => {
         // region is a precondition here, not the thing under test, and a cold
         // boot behind thirty other tests is slower than one on its own.
         await expect
-            .poll(async () => (await snapshot(page)).region, { timeout: 30_000 })
+            .poll(async () => (await snapshot(page)).region, { timeout: REGION_START_MS })
             .toBe("ready");
         const withUs = await styles(page);
 
@@ -473,7 +473,7 @@ test.describe("M2 V2: a component per category", () => {
     });
 
     test("the region draws a control for every category it claims one for", async ({ page }) => {
-        await expect.poll(async () => (await snapshot(page)).region, { timeout: 30_000 }).toBe(
+        await expect.poll(async () => (await snapshot(page)).region, { timeout: REGION_START_MS }).toBe(
             "ready"
         );
         // The fourteen the catalogue says a region draws. A shader that does

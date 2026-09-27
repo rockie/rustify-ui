@@ -1,7 +1,7 @@
 import { expect, Page } from "@playwright/test";
 
 import { rounds } from "../tier";
-import { test } from "./support";
+import { REGION_START_MS, test } from "./support";
 
 /// M5 V7: three panels, ten views over the objects, and every command in one
 /// place.
@@ -176,7 +176,7 @@ test.describe("M5 V7: a workspace of three panels", () => {
 
     test("after a hundred adjustments the region still hits where it says it drew", async ({ page }) => {
         await expect
-            .poll(async () => (await snapshot(page)).region, { timeout: 30_000 })
+            .poll(async () => (await snapshot(page)).region, { timeout: REGION_START_MS })
             .toBe("ready");
         const region = page.getByTestId("workbench-gpu");
         await region.scrollIntoViewIfNeeded();
@@ -218,7 +218,7 @@ test.describe("M5 V7: a workspace of three panels", () => {
 
     test("a right-click inside the region opens a menu anchored to it", async ({ page }) => {
         await expect
-            .poll(async () => (await snapshot(page)).region, { timeout: 30_000 })
+            .poll(async () => (await snapshot(page)).region, { timeout: REGION_START_MS })
             .toBe("ready");
         const region = page.getByTestId("workbench-gpu");
         await region.scrollIntoViewIfNeeded();
@@ -236,7 +236,7 @@ test.describe("M5 V7: a workspace of three panels", () => {
 
     test("the region's menu is divided into its groups and names the palette's shortcut", async ({ page }) => {
         await expect
-            .poll(async () => (await snapshot(page)).region, { timeout: 30_000 })
+            .poll(async () => (await snapshot(page)).region, { timeout: REGION_START_MS })
             .toBe("ready");
         const region = page.getByTestId("workbench-gpu");
         await region.scrollIntoViewIfNeeded();

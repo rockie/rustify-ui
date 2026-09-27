@@ -47,7 +47,7 @@ test.describe("M7 V8: a region whose context went away", () => {
         expect(
             await page.evaluate(() => window.__property_workbench.restore_context("workbench-gpu"))
         ).toBe(true);
-        await expect.poll(async () => (await snapshot(page)).region, { timeout: 20_000 }).toBe("ready");
+        await expect.poll(async () => (await snapshot(page)).region, { timeout: REGION_START_MS }).toBe("ready");
         await expect.poll(async () => (await snapshot(page)).selected, { timeout: 15_000 }).toBe(42);
         expect(await snapshot(page)).toMatchObject({
             selected: 42,

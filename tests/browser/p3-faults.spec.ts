@@ -1,5 +1,5 @@
 import { expect, Page, test } from "@playwright/test";
-import { settle, waitForReady } from "./support";
+import { REGION_START_MS, settle, waitForReady } from "./support";
 import { EVIDENCE } from "../tier";
 
 /// M7 · four kinds of failure, twenty times each, against a written
@@ -210,7 +210,7 @@ test.describe("M7 V7: a GPU context lost and given back", { tag: EVIDENCE }, () 
                 )
             ).toBe(true);
             await expect
-                .poll(async () => (await snapshot(page)).region, { timeout: 20_000 })
+                .poll(async () => (await snapshot(page)).region, { timeout: REGION_START_MS })
                 .toBe("ready");
             expect(await confirmed(page), `round ${round} after the rebuild`).toEqual(before);
             await settle(region);
