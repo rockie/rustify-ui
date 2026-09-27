@@ -1,6 +1,6 @@
 import { expect, Page } from "@playwright/test";
 import { rounds } from "../tier";
-import { capture, differingPixels, settle, test, waitForReady } from "./support";
+import { capture, differingPixels, REGION_START_MS, settle, test, waitForReady } from "./support";
 
 const snapshot = (page: Page) => page.evaluate(() => window.__property_workbench.snapshot());
 const diagnostics = (page: Page) => page.evaluate(() => window.__property_workbench.diagnostics());
@@ -93,8 +93,9 @@ test.describe("M7 V8: a region whose context went away", () => {
             expect(
                 await page.evaluate(() => window.__property_workbench.restore_context("workbench-gpu"))
             ).toBe(true);
+            // A rebuilt region compiles its shaders again.
             await expect
-                .poll(async () => (await snapshot(page)).region, { timeout: 20_000 })
+                .poll(async () => (await snapshot(page)).region, { timeout: REGION_START_MS })
                 .toBe("ready");
             // The edit made before the loss is still the application's value.
             expect(await snapshot(page)).toMatchObject({ name: `round ${round}` });

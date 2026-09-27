@@ -57,8 +57,9 @@ async function openScene(page: Page) {
 test.describe("M4 · what a frame shows", () => {
     test("a camera change is presented in the frame it was made in", async ({ page }) => {
         await openScene(page);
+        const floor = rounds(30);
         const run = await page.evaluate(
-            ({ step, extent }) =>
+            ({ step, extent, floor }) =>
                 new Promise<{ drives: number; presentations: number }>((resolve) => {
                     const api = window.__data_workbench;
                     let drives = 0;
@@ -80,7 +81,11 @@ test.describe("M4 · what a frame shows", () => {
                             seen = frames;
                             presentations += 1;
                         }
-                        if (now - started >= 3_000) {
+                        // Three seconds, and at least the floor of drives: a
+                        // slower rasteriser takes longer to give the same
+                        // sample, up to a minute.
+                        const elapsed = now - started;
+                        if ((elapsed >= 3_000 && drives > floor) || elapsed >= 60_000) {
                             resolve({ drives, presentations });
                             return;
                         }
@@ -88,7 +93,7 @@ test.describe("M4 · what a frame shows", () => {
                     };
                     requestAnimationFrame(tick);
                 }),
-            { step: B3.panPerFrame, extent: B3.extent }
+            { step: B3.panPerFrame, extent: B3.extent, floor }
         );
         console.log(`  ${run.presentations} presentations for ${run.drives} drives`);
         // A software rasteriser draws this scene in about seventy
@@ -96,9 +101,8 @@ test.describe("M4 · what a frame shows", () => {
         // hundred and eighty. How fast it can go is A-3's question and M8's
         // gate; what this one is about is the ratio. The floor only makes the
         // ratio a sample worth having, so it scales with the tier like any
-        // other repeat count: a slower rasteriser still gives a regression
-        // run a few frames to check.
-        expect(run.drives).toBeGreaterThan(rounds(30));
+        // other repeat count, and the run lasts until it has it.
+        expect(run.drives).toBeGreaterThan(floor);
         // The clause NFR-1 is written with: a frame that was driven is a frame
         // that was drawn. One drive may still be in flight when the run ends.
         expect(run.presentations).toBeGreaterThanOrEqual(run.drives - 1);

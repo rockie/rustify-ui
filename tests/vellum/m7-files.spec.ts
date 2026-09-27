@@ -122,10 +122,19 @@ test.describe(() => {
         await page.addInitScript(() => {
             IDBFactory.prototype.open = () => { throw new DOMException("Injected denial", "SecurityError"); };
             localStorage.setItem("vellum-document", "{broken");
+            // The toast hides itself after a few seconds, and on a slow
+            // rasteriser the editor can take longer than that to settle, so
+            // every message it shows is kept from the first one.
+            const shown: string[] = [];
+            (window as any).__toasts = shown;
+            new MutationObserver(() => {
+                const text = document.getElementById("toast")?.textContent?.trim();
+                if (text && shown.at(-1) !== text) shown.push(text);
+            }).observe(document, { childList: true, subtree: true, characterData: true });
         });
         await waitForReady(page);
         expect(await page.evaluate(() => window.vellum.doc.nodes.length)).toBe(171);
-        await expect(page.locator("#toast")).toContainText("could not be restored");
+        expect(await page.evaluate(() => (window as any).__toasts.join("\n"))).toContain("could not be restored");
         await page.evaluate(() => window.vellum.createAtCenter("rect", { name: "Recovered editor" }));
         expect(await page.evaluate(() => window.vellum.doc.nodes.at(-1)?.name)).toBe("Recovered editor");
     });

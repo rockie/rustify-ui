@@ -1,6 +1,6 @@
 import { expect, Page } from "@playwright/test";
 import { rounds } from "../tier";
-import { test, waitForReady } from "./support";
+import { REGION_START_MS, test, waitForReady } from "./support";
 
 const snapshot = (page: Page) => page.evaluate(() => window.__property_workbench.snapshot());
 
@@ -83,8 +83,10 @@ test.describe("M6 V7: four states, and only the newest answer", () => {
         await page.evaluate(() => window.__property_workbench.mount());
         await expect(page.getByTestId("details")).toHaveAttribute("data-state", "loading");
         expect(await start(page, 40, "a fresh scope answers")).toBe(true);
+        // The answer is drawn by the scope just mounted, whose region is still
+        // starting.
         await expect
-            .poll(async () => (await snapshot(page)).details_value, { timeout: 10_000 })
+            .poll(async () => (await snapshot(page)).details_value, { timeout: REGION_START_MS })
             .toBe("a fresh scope answers");
     });
 });

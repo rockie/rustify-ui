@@ -38,13 +38,19 @@ export async function anchorRect(page: Page, anchor: Anchor) {
     };
 }
 
+/// How long a GPU region may take to start, or to rebuild after its context
+/// was lost. Under a software rasteriser it compiles its shaders on the main
+/// thread; on a CI runner that has taken most of a minute, and anything the
+/// page draws in the meantime, DOM included, waits behind it.
+export const REGION_START_MS = 60_000;
+
 export async function waitForReady(page: Page) {
     // A shared page is already loaded and reset; loading it again would pay
     // for the region start-up the page is shared to avoid.
     if (!isShared(page)) {
         await page.goto("./");
     }
-    await expect(page.getByTestId("status")).toHaveAttribute("data-status", "ready", { timeout: 60_000 });
+    await expect(page.getByTestId("status")).toHaveAttribute("data-status", "ready", { timeout: REGION_START_MS });
     // The fusion-basic page shows B0 and nothing else: a load has to be the
     // load it says it is, so every other fixture is mounted by whoever needs
     // it. The two counter scopes are what the phase-one checks were written
@@ -618,7 +624,7 @@ async function open(
     slot.viewport = viewport;
     shared.add(slot.page);
     await slot.page.goto("./");
-    await expect(slot.page.getByTestId("status")).toHaveAttribute("data-status", "ready", { timeout: 60_000 });
+    await expect(slot.page.getByTestId("status")).toHaveAttribute("data-status", "ready", { timeout: REGION_START_MS });
     return slot.page;
 }
 
