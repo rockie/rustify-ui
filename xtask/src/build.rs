@@ -99,6 +99,12 @@ pub fn build(request: &BuildRequest) -> Result<PathBuf, String> {
     if !example_dir.join("Cargo.toml").is_file() {
         return Err(format!("no example at {}", example_dir.display()));
     }
+    let utilities = utilities(&example_dir)?;
+    if matches!(utilities, Utilities::Compile(_)) {
+        // Asked before the wasm build rather than after it, so a missing or
+        // wrong CLI costs a second instead of a build.
+        crate::tailwind::cli()?;
+    }
     let app = staging_dir(&root, request);
     if app.exists() {
         std::fs::remove_dir_all(&app)
@@ -134,14 +140,15 @@ pub fn build(request: &BuildRequest) -> Result<PathBuf, String> {
     if vendor.is_dir() {
         copy_tree(&vendor, &app.join("vendor"))?;
     }
-    // The component stylesheet, for the examples that use the components. It
-    // is committed rather than generated here, so this build needs no Node;
-    // `mbx xtask css --check` is what keeps it in step with the classes.
-    if uses_components(&example_dir)? {
-        copy(
+    match utilities {
+        Utilities::Compile(input) => {
+            crate::tailwind::compile(&input, &app.join("tailwind.css"), true)?
+        }
+        Utilities::Committed => copy(
             &root.join("crates/rustify-components/css/rustify.css"),
             &app.join("rustify.css"),
-        )?;
+        )?,
+        Utilities::None => {}
     }
 
     finish(request, &app, "/", &bridge.hash.to_string(), &wasm)?;
@@ -226,6 +233,34 @@ pub fn rebase_index(html: &str, base: &str) -> String {
     let base = crate::serve::normalize_base(base);
     html.replace("=\"./", &format!("=\"{base}"))
         .replace("='./", &format!("='{base}"))
+}
+
+/// Where an example's utility classes get their rules.
+#[derive(Debug, PartialEq)]
+enum Utilities {
+    /// The example's own Tailwind input, which imports the SDK's layer and so
+    /// covers the components' classes as well as its own. Compiled into the
+    /// product as `tailwind.css`; nothing generated is committed.
+    Compile(PathBuf),
+    /// The component stylesheet, committed rather than generated here, so the
+    /// build needs no Tailwind; `mbx xtask css --check` is what keeps it in
+    /// step with the classes. Copied into the product as `rustify.css`.
+    Committed,
+    None,
+}
+
+/// An example with a `tailwind.css` compiles it; one without links the
+/// committed stylesheet if it uses the components at all.
+fn utilities(example_dir: &Path) -> Result<Utilities, String> {
+    let input = example_dir.join("tailwind.css");
+    if input.is_file() {
+        return Ok(Utilities::Compile(input));
+    }
+    Ok(if uses_components(example_dir)? {
+        Utilities::Committed
+    } else {
+        Utilities::None
+    })
 }
 
 /// Whether this example draws with the component crate's classes.
@@ -524,6 +559,71 @@ mod tests {
         // Only the page's own references. A link the application wrote is the
         // router's business, and rewriting it here would be a second opinion.
         assert!(rebased.contains(r#"href="/objects/1""#), "{rebased}");
+    }
+
+    #[test]
+    fn an_example_with_its_own_input_compiles_it_and_one_without_links_the_committed_sheet() {
+        let dir = std::env::temp_dir().join(format!("rustify-utilities-{}", std::process::id()));
+        let example = |name: &str, manifest: &str, input: bool| {
+            let path = dir.join(name);
+            std::fs::create_dir_all(&path).expect("a temporary directory");
+            std::fs::write(path.join("Cargo.toml"), manifest).expect("a manifest");
+            if input {
+                std::fs::write(path.join("tailwind.css"), "@import \"tailwindcss\";\n")
+                    .expect("an input");
+            }
+            path
+        };
+        let components = "[dependencies]\nrustify-components = { workspace = true }\n";
+
+        let own = example("own", components, true);
+        assert_eq!(
+            utilities(&own),
+            Ok(Utilities::Compile(own.join("tailwind.css")))
+        );
+        // An input is enough on its own: Tailwind is not only for the
+        // components' classes.
+        let plain = example("plain", "[dependencies]\n", true);
+        assert_eq!(
+            utilities(&plain),
+            Ok(Utilities::Compile(plain.join("tailwind.css")))
+        );
+        let committed = example("committed", components, false);
+        assert_eq!(utilities(&committed), Ok(Utilities::Committed));
+        let neither = example("neither", "[dependencies]\n", false);
+        assert_eq!(utilities(&neither), Ok(Utilities::None));
+        let _ = std::fs::remove_dir_all(&dir);
+    }
+
+    #[test]
+    fn an_examples_input_compiles_only_the_sources_it_names() {
+        // The CLI runs from the repository root. Without `source(none)` it
+        // scans all of it, and a class-shaped word in a document or a test
+        // becomes a rule in the product.
+        let mut inputs = 0;
+        for entry in std::fs::read_dir(repo_root().join("examples")).expect("the examples") {
+            let input = entry.expect("an example").path().join("tailwind.css");
+            let Ok(text) = std::fs::read_to_string(&input) else {
+                continue;
+            };
+            inputs += 1;
+            let utilities: Vec<&str> = text
+                .lines()
+                .filter(|line| {
+                    line.starts_with("@import \"tailwindcss\"")
+                        || line.starts_with("@import \"tailwindcss/utilities.css\"")
+                })
+                .collect();
+            assert!(
+                !utilities.is_empty(),
+                "{} imports no utilities",
+                input.display()
+            );
+            for line in utilities {
+                assert!(line.contains("source(none)"), "{}: {line}", input.display());
+            }
+        }
+        assert!(inputs > 0, "no example has a Tailwind input");
     }
 
     #[test]

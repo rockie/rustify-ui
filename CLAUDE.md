@@ -66,7 +66,7 @@ The workspace excludes `makepad/` (a fork with its own workspace) and `ref/`.
 - `crates/rustify-components` holds the DOM component catalogue of twenty-four categories:
   - The `clx!` / `variants!` class macros, forked from Rust/UI.
   - `CATALOG`, from which `docs/components.md` is generated.
-  - The Tailwind input and the **committed** output under `css/`.
+  - Under `css/`: `sdk.css`, the SDK's Tailwind layer (component sources, the scope-bound `dark` variant, the token utilities, the scope's default tokens), which every Tailwind input imports; `rustify.tailwind.css`, which compiles it alone; and its **committed** output `rustify.css`.
 - `crates/rustify-makepad` is the private Makepad integration:
   - The `RegionApp` trait and a region registry with never-reused `RegionId`s.
   - The pump entry points exported to JS, deferred props and the action outbox.
@@ -75,6 +75,7 @@ The workspace excludes `makepad/` (a fork with its own workspace) and `ref/`.
 - `web/loader.js` and `web/runtime.css` are the page boot. `boot()` instantiates one wasm instance, checks the bridge fingerprint, installs host hooks and owns the static failure notice.
 - `examples/*` each have `src/` (the Rust app), `index.html`, and an `app.js` page script. The script calls `boot()` and exposes a `window.__<example>` handle that the Playwright specs drive.
 - `xtask build-web` runs the fork's `cargo-makepad` through `mbx`, pulls the generated message-bridge JS out of the wasm with `wasmi` and ships it as a static ES module, then writes `build-manifest.json`. There is no runtime codegen, which is what keeps the strict CSP.
+- Stylesheets in `build-web`: an example with a `tailwind.css` of its own (component-catalog) has it compiled with the mise-pinned CLI, minified, to `tailwind.css` in the product, which its page links; nothing generated is committed, and the build fails up front when the CLI is missing or the wrong version. An example without one that depends on `rustify-components` gets the committed `rustify.css` copied in, and needs no Tailwind.
 
 Runtime contracts to know before touching the runtime (the full list is in `docs/architecture.md`):
 
@@ -94,7 +95,7 @@ Runtime contracts to know before touching the runtime (the full list is in `docs
 
 ## Conventions
 
-- **Component classes** are unprefixed Tailwind v4 utilities, the same ones an application writes, so a caller's `class` replaces a component's class of the same kind through `tw_merge`. After changing a class string, run `mbx xtask css` and commit `crates/rustify-components/css/rustify.css`; otherwise the class has no rule and CI's `--check` fails. Likewise, regenerate `docs/components.md` after changing the catalogue.
+- **Component classes** are unprefixed Tailwind v4 utilities, the same ones an application writes, so a caller's `class` replaces a component's class of the same kind through `tw_merge`. After changing a class string in `crates/rustify-components`, run `mbx xtask css` and commit `crates/rustify-components/css/rustify.css`; otherwise the class has no rule and CI's `--check` fails. That stylesheet holds the SDK's classes only: an example's own classes need a `tailwind.css` in the example (see `docs/quickstart.md`, "Using Tailwind v4 in your app"), and a Tailwind input always keeps `source(none)` on its utilities import. Likewise, regenerate `docs/components.md` after changing the catalogue.
 - **Scripted edits.** `cargo fmt` reflows lines, so a scripted find/replace on Rust source must assert that the old text was found.
 - **Plans.**
   - Development plans live in `docs/plan/*.md` and are written in Chinese. Milestone evidence goes in `docs/validation/`, and release reports go in `docs/reports/`.

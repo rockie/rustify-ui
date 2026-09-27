@@ -180,15 +180,18 @@ mod tests {
 mod stylesheet {
     use std::collections::BTreeMap;
 
+    /// The SDK's layer, which both the precompiled stylesheet and an
+    /// application's own Tailwind input import.
+    const SDK: &str = include_str!("../css/sdk.css");
     const INPUT: &str = include_str!("../css/rustify.tailwind.css");
     const OUTPUT: &str = include_str!("../css/rustify.css");
 
-    /// The defaults the input writes onto every scope root.
+    /// The defaults the SDK layer writes onto every scope root.
     fn scope_defaults() -> BTreeMap<&'static str, &'static str> {
-        let start = INPUT
+        let start = SDK
             .find("\n[data-rustify-scope] {")
-            .expect("the input sets the scope's default tokens");
-        let block = &INPUT[start..];
+            .expect("the SDK layer sets the scope's default tokens");
+        let block = &SDK[start..];
         let block = &block[block.find('{').unwrap() + 1..block.find('}').unwrap()];
         block
             .lines()
@@ -235,7 +238,17 @@ mod stylesheet {
         // component's `p-4`, and the merge could no longer replace one with
         // the other.
         assert!(!INPUT.contains("prefix("));
+        assert!(!SDK.contains("prefix("));
         assert!(!OUTPUT.contains(".rui\\:"));
+    }
+
+    #[test]
+    fn the_sdk_layer_leaves_tailwinds_layers_to_the_build_that_imports_it() {
+        // An application's input imports Tailwind itself, and decides whether
+        // preflight comes with it. A second import here would bring the theme
+        // and utilities in twice, or preflight in behind its back.
+        assert!(!SDK.contains("@import \"tailwindcss"));
+        assert!(INPUT.contains("@import \"./sdk.css\";"));
     }
 
     #[test]
@@ -278,7 +291,7 @@ mod stylesheet {
     fn dark_is_this_scope_in_dark_and_not_any_dark_ancestor() {
         // A host page using the shadcn `.dark` convention must not change what
         // a component in our scope looks like.
-        assert!(INPUT
+        assert!(SDK
             .contains(r#"@custom-variant dark (&:is([data-rustify-scope][data-theme="dark"] *))"#));
     }
 }
