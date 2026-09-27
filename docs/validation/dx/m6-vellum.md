@@ -29,6 +29,7 @@
 - 修饰键：`command = meta || ctrl` 换成 `command_held()`，按 `rustify_ui::Platform::current()` 取 `Mod` 的含义——Mac 上 Meta、其余平台 Control（与 `Shortcut::parse("Mod+…")` 同一平台判定，每页只判一次）。
 - 按键表（`keys.rs` 的 `key_down`）原样留在 Vellum。没有把表项逐条换成 `Shortcut::matches`：表对未点名的修饰键宽松（Shift+R 仍选矩形、Ctrl+Alt+Z 仍撤销、Ctrl+Delete 仍删除、`Escape` 不看修饰键），`Shortcut` 的修饰键精确匹配会改变这些组合，违背「行为不变」；注释写明了原因。
 - 唯一有意的行为变化（任务明确要求的 `Mod` 语义）：非 Mac 平台上 Meta（Super/Win 键）+ 字母不再触发命令，Mac 上 Control + 字母不再触发命令（此前两者都算命令键）。`tests/vellum` 在 Linux 上全用 Control/`ControlOrMeta`，m4-pointer、m5-shell、m6-edit 钉住的行为不变（见验收）。滚轮缩放的 `ctrl || meta`（触控板捏合在各平台都报 `ctrlKey`）不是快捷键，未动。
+- 后续修正（集成后 PR #3 的 macOS CI 发现）：上一条「在 Linux 上全用 Control」正是漏洞——m4-pointer、m5-shell、m6-edit 共 6 项在 macOS runner 上失败（Control+K/N/Z/Enter 在 Mac 上按设计不再是命令键），本地 Linux 与此前 CI 都没覆盖到。保留计划定的 `Mod` 语义，把 `tests/vellum` 里命令快捷键的 `Control+` 全部换成 Playwright 的 `ControlOrMeta+`（m4-pointer 3、m5-shell 3、m6-edit 1、smoke 3），在 Mac 上按 Meta、其余平台按 Control；原版孪生两种都认，孪生比对不受影响。拖拽/点击时按住的 Control（关吸附、深选）走 `ctrl || meta`，未改。
 
 ### 3. 模态 Tab 循环 → SDK `Layer`
 

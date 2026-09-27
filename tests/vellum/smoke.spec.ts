@@ -54,12 +54,12 @@ test("the original 36 Vellum smoke checks pass in their original order", { tag: 
             expect(Math.abs(current - rectangle.originalX - 50)).toBeLessThan(1);
         });
         await check("Undo restores transform", async () => {
-            await page.keyboard.press("Control+z");
+            await page.keyboard.press("ControlOrMeta+z");
             const current = await page.evaluate(id => window.vellum.doc.get(id).x, rectangle.id);
             expect(Math.abs(current - rectangle.originalX)).toBeLessThan(1);
         });
         await check("Redo reapplies transform", async () => {
-            await page.keyboard.press("Control+Shift+z");
+            await page.keyboard.press("ControlOrMeta+Shift+z");
             const current = await page.evaluate(id => window.vellum.doc.get(id).x, rectangle.id);
             expect(Math.abs(current - rectangle.originalX - 50)).toBeLessThan(1);
         });
@@ -273,7 +273,7 @@ test("the original 36 Vellum smoke checks pass in their original order", { tag: 
         });
         await check("Command palette executes commands", async () => {
             const rulers = await page.evaluate(() => (window.vellum as any).options.rulers);
-            await page.keyboard.press("Control+k");
+            await page.keyboard.press("ControlOrMeta+k");
             await page.locator("#command-search").fill("rulers");
             await page.keyboard.press("Enter");
             await expect(page.locator("#modal-backdrop")).toBeHidden();

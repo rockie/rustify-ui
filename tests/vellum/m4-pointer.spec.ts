@@ -50,10 +50,10 @@ test("rectangle creation, dragging, undo, redo, resize and rotation follow the o
     expect(initial.h).toBe(100);
     await drag(page, { x: origin.x + 70, y: origin.y + 40 }, { x: origin.x + 120, y: origin.y + 70 });
     expect(await page.evaluate(id => window.vellum.doc.get(id).x, initial.id)).toBe(initial.x + 50);
-    await page.keyboard.press("Control+z");
+    await page.keyboard.press("ControlOrMeta+z");
     await present(page);
     expect(await page.evaluate(id => window.vellum.doc.get(id).x, initial.id)).toBe(initial.x);
-    await page.keyboard.press("Control+Shift+z");
+    await page.keyboard.press("ControlOrMeta+Shift+z");
     await present(page);
     expect(await page.evaluate(id => window.vellum.doc.get(id).x, initial.id)).toBe(initial.x + 50);
     await page.evaluate(() => window.vellum.setProperty("w", 240));
@@ -185,7 +185,7 @@ test("canvas keyboard edits ignore form controls and use original nudge and zoom
     expect(await page.evaluate(() => window.vellum.state.camera.zoom)).toBeCloseTo(1.25);
     await page.keyboard.press("Delete");
     expect(await page.evaluate(() => window.vellum.doc.nodes.length)).toBe(0);
-    await page.keyboard.press("Control+z");
+    await page.keyboard.press("ControlOrMeta+z");
     expect(await page.evaluate(() => window.vellum.doc.nodes.length)).toBe(1);
 });
 

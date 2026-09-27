@@ -179,7 +179,7 @@ test("rotated native text follows the full world matrix while the camera changes
         await expect(editor).toBeFocused();
     }
     await editor.fill("Changed at an angle");
-    await page.keyboard.press("Control+Enter");
+    await page.keyboard.press("ControlOrMeta+Enter");
     await expect(editor).toHaveCount(0);
     expect(await page.evaluate(id => window.vellum.doc.get(id).text, id)).toBe("Changed at an angle");
 });
