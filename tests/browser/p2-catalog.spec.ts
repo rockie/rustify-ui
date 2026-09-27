@@ -1,6 +1,6 @@
 import { expect, Page } from "@playwright/test";
 
-import { CATALOG_SIZE, isShared, REGION_START_MS, test, waitForQuiet } from "./support";
+import { allowRegionStart, CATALOG_SIZE, isShared, REGION_START_MS, test, waitForQuiet } from "./support";
 
 /// M1's exit conditions, on the third example: it boots under the release
 /// policy, its product carries nothing inline, a theme change reaches the DOM
@@ -579,9 +579,11 @@ test.describe("a reset is as good as a load", () => {
         await page.getByTestId("option-large").click();
         // A page's own state, which the snapshot does not report: it lives in
         // the samples page, and a reset has to leave that page for it to go.
+        // The samples page starts a region of its own.
+        allowRegionStart();
         await main.getByTestId("nav-samples").click();
         await main.getByTestId("block-font").click();
-        await expect(main.getByTestId("samples-blocked")).toHaveText("true");
+        await expect(main.getByTestId("samples-blocked")).toHaveText("true", { timeout: REGION_START_MS });
         // Every change landed, so the comparison below is not a vacuous one.
         const changed = await snapshot(page);
         expect(changed.actions).toBeGreaterThan(0);
@@ -622,7 +624,8 @@ test.describe("a reset is as good as a load", () => {
         );
         expect(await observed(page)).toEqual(loaded);
 
+        allowRegionStart();
         await page.getByTestId("nav-samples").click();
-        await expect(page.getByTestId("samples-blocked")).toHaveText("false");
+        await expect(page.getByTestId("samples-blocked")).toHaveText("false", { timeout: REGION_START_MS });
     });
 });
