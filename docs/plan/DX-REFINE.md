@@ -35,11 +35,11 @@
 
 ### 恢复快照
 
-- 最近更新：2026-09-27 UTC · M3 在 `main` 的 CI 上验收通过；PR #2 已合入 `main`
+- 最近更新：2026-09-27 UTC · `main` 首轮 push CI 全绿（45.4 min），最长 job 37.9 min 未达 D9
 - 当前进度：2/8 个里程碑完成
-- 当前状态：M2 进行中——本地回归层各 project 两轮全绿且 ≤ 5 min；`main` 首轮 push CI（run 36291244235）：host 3.5 min 绿，vellum 11.3 min、property-workbench 25.4 min（其中回归 20.8 min）均绿但超 D9 的 10 min，fusion-basic 与 catalog/data 运行中，后启动的 job 排队约 20 min（A-6 疑似受并发限制）；证据层本地首轮只完成 3 个 project。M4 与 M6 的 SDK/示例半已在 `main`；M5 未提交改动在工作树 `.claude/worktrees/agent-abbbe976a35740721`；M6 Vellum 半与 M7 以本地标签 `dx-refine/m6-vellum`、`dx-refine/m7-components` 保存，待拣入
+- 当前状态：M2 进行中——本地回归层各 project 两轮全绿且 ≤ 5 min；`main` push CI（run 36291244235）五个 job 全绿，但最长 job 超 10 min：fusion-basic 37.9、property-workbench 25.4、catalog and data 19.0、vellum 11.3（host 3.5）。原因是 CI 上开新页的用例每个 35–60 s 且串行；证据层本地首轮只完成 3 个 project。M4 与 M6 的 SDK/示例半已在 `main`；M5 未提交改动在工作树 `.claude/worktrees/agent-abbbe976a35740721`；M6 Vellum 半与 M7 以本地标签 `dx-refine/m6-vellum`、`dx-refine/m7-components` 保存，待拣入
 - 最近完成：M3 · Tailwind 工具链：mise 二进制与精确扫描
-- 下一步：等 run 36291244235 结束后把各 job 时长写入 M2 记录；按 D9 手段处理 CI 超时（先查 CI 的 workers 数，再对 property-workbench 用 `--shard`）；拣入两个 `dx-refine/*` 标签与 M5 改动，重建并重跑容器重启时丢失的回归与 Toast 运行；证据层余下 project
+- 下一步：按 D9 处理 CI 超时：CI 开 2 个 worker，fusion-basic 与 property-workbench 用 `--shard` 拆 job；拣入两个 `dx-refine/*` 标签与 M5 改动，重建并重跑容器重启时丢失的回归与 Toast 运行；证据层余下 project
 - 当前阻塞：无。风险：`dx-refine/*` 标签与 M5 未提交改动只存在于本容器，容器回收即丢失，应尽快拣入并推送
 - 代码基线：`b15e4b9`（`main`：M1–M4 与 M6 的 SDK/示例半）
 
@@ -47,7 +47,7 @@
 
 | Milestone | 状态 | 更新时间 | 简要记录 | 实现与验收记录 |
 | --- | --- | --- | --- | --- |
-| M2 | 进行中 | 2026-09-27 | 共享页 fixture + 五个示例 `reset()`；本地回归层两轮全绿，workers=2 均 ≤ 5 min；`main` CI 首轮 host/vellum/property-workbench 绿，但 vellum 11.3 min、property-workbench 25.4 min 超 10 min；证据层余下 project 待跑 | [M2 记录](../validation/dx/m2.md) |
+| M2 | 进行中 | 2026-09-27 | 共享页 fixture + 五个示例 `reset()`；本地回归层两轮全绿，workers=2 均 ≤ 5 min；`main` CI 全绿（run 45.4 min），但最长 job fusion-basic 37.9 min 未达 10 min；证据层余下 project 待跑 | [M2 记录](../validation/dx/m2.md) |
 | M1 | 已完成 | 2026-09-25 | `RUSTIFY_TIER` + `@evidence`（`--list` 守恒）、按需 server（A-4 成立）、CI/verify `--bins` 与全量层；component-catalog 回归层 49/49；A-2 部分证伪 → ADR-6 修订；A-7 内存成立 | [M1 记录](../validation/dx/m1.md) |
 | M3 | 已完成 | 2026-09-27 | mise 固定 Tailwind 4.1.13、`xtask/src/tailwind.rs`、`source(none)`、去 npm Tailwind、`verify` 加 CSS/目录检查；`main` CI host job 全绿，A-1 在 macOS 上成立 | [M3 记录](../validation/dx/m3.md) |
 
