@@ -53,7 +53,7 @@ test("theme, command palette and responsive panels preserve the original smoke b
     await page.screenshot({ path: info.outputPath("responsive-dark.png") });
 });
 
-test("focused inspector drafts preview live, commit one undo step and reject invalid hex", async ({ page }) => {
+test("focused inspector drafts preview live, commit one undo step, revert on Escape and reject invalid hex", async ({ page }) => {
     await waitForReady(page);
     await page.locator("[data-page]").nth(2).click();
     const node = await page.evaluate(() => window.vellum.createAtCenter("rect", { w: 180, h: 100, fill: "#b8a2e2" }));
@@ -66,6 +66,15 @@ test("focused inspector drafts preview live, commit one undo step and reject inv
     expect(await page.evaluate(id => window.vellum.doc.get(id).w, node.id)).toBe(350);
     await width.press("Tab");
     await page.evaluate(() => window.vellum.actions.undo());
+    expect(await page.evaluate(id => window.vellum.doc.get(id).w, node.id)).toBe(180);
+    await width.focus();
+    await width.press("ControlOrMeta+a");
+    await width.pressSequentially("420", { delay: 40 });
+    await expect(width).toHaveValue("420");
+    expect(await page.evaluate(id => window.vellum.doc.get(id).w, node.id)).toBe(420);
+    await width.press("Escape");
+    await expect(width).toBeFocused();
+    await expect(width).toHaveValue("180");
     expect(await page.evaluate(id => window.vellum.doc.get(id).w, node.id)).toBe(180);
     const hex = page.getByRole("textbox", { name: "fill hex color", exact: true });
     await hex.fill("not-a-color");

@@ -343,7 +343,7 @@ fn begin(editor: Editor, label: &str) {
     });
 }
 
-fn cancel_history(editor: Editor) {
+pub fn cancel_history(editor: Editor) {
     if editor.history.with_value(|history| history.is_pending()) {
         editor.doc.update(|doc| {
             editor.history.update_value(|history| history.cancel(doc));

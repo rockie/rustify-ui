@@ -43,8 +43,6 @@ pub struct ShellState {
     pub canvas_color: Option<String>,
     pub export_scale: f64,
     pub export_format: String,
-    pub toast: Option<String>,
-    pub toast_serial: u64,
     pub menu: Option<menus::MenuState>,
     pub dialog: Option<dialogs::DialogState>,
     pub preview: Option<presentation::PreviewState>,
@@ -65,8 +63,6 @@ impl Default for ShellState {
             canvas_color: None,
             export_scale: 2.0,
             export_format: "PNG".into(),
-            toast: None,
-            toast_serial: 0,
             menu: None,
             dialog: None,
             preview: None,
@@ -76,7 +72,9 @@ impl Default for ShellState {
 }
 
 pub fn toast(editor: Editor, message: impl Into<String>) {
-    toast::show(editor, &message.into());
+    editor
+        .toasts
+        .show(message, rustify_ui::ToastOptions::default());
 }
 
 pub fn report(editor: Editor, result: Result<(), JsValue>) {

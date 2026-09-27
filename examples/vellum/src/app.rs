@@ -6,8 +6,8 @@ use std::sync::Arc;
 
 use leptos::prelude::*;
 use rustify_ui::{
-    instance_failed, next_frame, AppHandle, FrameHandle, GpuRegion, MountConfig, RegionState,
-    ResizeObservation, Theme, ThemedScope,
+    instance_failed, next_frame, provide_toasts, AppHandle, FrameHandle, GpuRegion, MountConfig,
+    RegionState, ResizeObservation, Theme, ThemedScope, ToastHandle,
 };
 use serde_json::{json, Value};
 use wasm_bindgen::{JsCast, JsValue};
@@ -55,6 +55,10 @@ pub struct Editor {
     pub text_session: RwSignal<Option<crate::shell::text_session::Session>>,
     pub text_element: StoredValue<Option<(u64, web_sys::HtmlTextAreaElement)>, LocalStorage>,
     pub shell: RwSignal<ShellState, LocalStorage>,
+    /// Held here rather than read from context: messages are also shown from
+    /// spawned tasks and browser callbacks, which run outside any reactive
+    /// owner.
+    pub toasts: ToastHandle,
     pub tool: RwSignal<String>,
     pub dark: RwSignal<bool>,
     pub grid: RwSignal<bool>,
@@ -120,6 +124,7 @@ impl Editor {
             text_session: RwSignal::new(None),
             text_element: StoredValue::new_local(None),
             shell: RwSignal::new_local(shell),
+            toasts: provide_toasts(),
             tool: RwSignal::new("select".into()),
             dark: RwSignal::new(options.theme == "dark"),
             grid: RwSignal::new(options.grid),
