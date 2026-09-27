@@ -81,6 +81,9 @@ export default defineConfig({
     use: {
         trace: "retain-on-failure",
         ...devices["Desktop Chrome"],
+        // A machine whose preinstalled Chromium is not the build this
+        // Playwright pins can name it instead of downloading another.
+        launchOptions: { executablePath: process.env.RUSTIFY_CHROMIUM || undefined },
     },
     // One project per example: each has its own build directory and its own
     // static server, so a spec always talks to the app it was written for.

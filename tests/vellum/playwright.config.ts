@@ -25,7 +25,11 @@ export default defineConfig({
         deviceScaleFactor: 1,
         trace: "retain-on-failure",
         screenshot: "only-on-failure",
-        launchOptions: { args: ["--enable-unsafe-swiftshader", "--use-angle=swiftshader"] },
+        launchOptions: {
+            args: ["--enable-unsafe-swiftshader", "--use-angle=swiftshader"],
+            // See the root config: a preinstalled Chromium in place of the pinned one.
+            executablePath: process.env.RUSTIFY_CHROMIUM || undefined,
+        },
     },
     projects: [{ name: "vellum", use: { baseURL: "http://127.0.0.1:4179/" } }],
     webServer: [

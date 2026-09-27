@@ -11,7 +11,7 @@ Rustify UI is an experimental SDK that runs Leptos (CSR, DOM) and Makepad (GPU, 
 - `mise install` provides everything `mise.toml` pins: stable Rust 1.98.1 with the `wasm32-unknown-unknown` target, rustfmt and clippy, mbx 1.15.0, and Tailwind's standalone CLI 4.1.13 (`xtask` refuses any other version; `RUSTIFY_TAILWIND=<path>` points it at another copy). There is no nightly, no `rust-toolchain.toml` and no `build-std`.
 - Every build goes through **mbx** (the compiler cache): `mbx build`, `mbx test`, `mbx clippy`, `mbx xtask ...`. Plain `cargo` is wrapped by mise too, but anything that launches a *nested* build must call `mbx` explicitly, because `mbx run` gives its child a plain `$CARGO`.
 - mise's postinstall runs `scripts/link-libllvm.sh`. mbx clears `DYLD_*`, so without that link rust-lld cannot load libLLVM. `mbx xtask doctor` reports toolchain state and never changes it.
-- Only the browser tests need Node 26: `npm ci && npx playwright install chromium`. Generating CSS does not.
+- Only the browser tests need Node 26: `npm ci && npx playwright install chromium`. Generating CSS does not. Where a Chromium is preinstalled and downloading another is not an option, `RUSTIFY_CHROMIUM=<path>` makes both Playwright configs launch it.
 
 ## Commands
 
