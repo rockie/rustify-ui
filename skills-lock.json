@@ -5,7 +5,7 @@
       "source": "XGENT-ai/skills",
       "sourceType": "github",
       "skillPath": "skills/dev-plan/SKILL.md",
-      "computedHash": "5f26d8d7daf295268a2d7d4f08c90e5446ba040a8d201c2eb193053bef9bdcef"
+      "computedHash": "a1215226bb119eccb50be21fd9640733bd86c040264d2c9ec839021f730666bc"
     },
     "elintp": {
       "source": "XGENT-ai/skills",
@@ -30,6 +30,12 @@
       "sourceType": "github",
       "skillPath": "skills/react/SKILL.md",
       "computedHash": "8532b11f10ab6fdcbb05bfddb3187e4a78b8ea907ed77a17f56c7d8211857905"
+    },
+    "review-dev-plan": {
+      "source": "XGENT-ai/skills",
+      "sourceType": "github",
+      "skillPath": "skills/review-dev-plan/SKILL.md",
+      "computedHash": "aad813220b8532f1d7da7c5b6db3f021c17715f9d3f476925c62d433ce1b5a24"
     },
     "rust": {
       "source": "XGENT-ai/skills",
