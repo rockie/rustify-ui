@@ -44,10 +44,24 @@ export async function anchorRect(page: Page, anchor: Anchor) {
 /// page draws in the meantime, DOM included, waits behind it.
 export const REGION_START_MS = 60_000;
 
+/// Gives the running test one more region start-up on top of its own budget.
+///
+/// A test's timeout is for what it checks. Starting regions is paid wherever
+/// it falls - the worker's first test opening the shared page, a check that
+/// mounts the counter scopes - and on a busy runner it can take up the whole
+/// of that timeout on its own. A test that fails then costs its worker, and
+/// the next test on the replacement worker pays for the start-up again.
+export function allowRegionStart(info: TestInfo = base.info()) {
+    if (info.timeout > 0) {
+        info.setTimeout(info.timeout + REGION_START_MS);
+    }
+}
+
 export async function waitForReady(page: Page) {
     // A shared page is already loaded and reset; loading it again would pay
     // for the region start-up the page is shared to avoid.
     if (!isShared(page)) {
+        allowRegionStart();
         await page.goto("./");
     }
     await expect(page.getByTestId("status")).toHaveAttribute("data-status", "ready", { timeout: REGION_START_MS });
@@ -74,6 +88,9 @@ export async function waitForReady(page: Page) {
         }
         return mounted;
     });
+    if (mounted) {
+        allowRegionStart();
+    }
     // The fixture waited for quiet after its reset; only a region started
     // here has anything left to settle.
     if (mounted || !isShared(page)) {
@@ -623,6 +640,7 @@ async function open(
     slot.page = await slot.context.newPage();
     slot.viewport = viewport;
     shared.add(slot.page);
+    allowRegionStart(info);
     await slot.page.goto("./");
     await expect(slot.page.getByTestId("status")).toHaveAttribute("data-status", "ready", { timeout: REGION_START_MS });
     return slot.page;
