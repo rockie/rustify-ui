@@ -35,19 +35,21 @@
 
 ### 恢复快照
 
-- 最近更新：2026-09-27 UTC · M5 验收通过（清洁双构建一致、覆盖断言通过）
+- 最近更新：2026-09-27 UTC · Vellum 回归与基线孪生通过；首轮分片 CI 的问题已定位并修正
 - 当前进度：4/8 个里程碑完成
-- 当前状态：M2、M6、M7 进行中。Vellum 改用 Toast/草稿核心已拣入（`acf84b6`），正在跑 Vellum 回归层与基线孪生；PR #3 上首轮新布局 CI：构建 job 约 5.5–6 min 并行、测试 job 多数在 10 min 内，property-workbench 2/2 因 `p2-deeplink` 等区域就绪等待 30 s 过短失败，已把 7 个 spec 里 12 处同类等待统一为 `REGION_START_MS`（`ad5019e`，未推送，待本地验证）
+- 当前状态：M2、M6、M7 进行中。M6/M7 的本地退出条件已满足：Vellum 回归层 58 过（16 个 `@evidence` 跳过），基线孪生 8 张视图与文字/编辑截图全部 0 像素差，NFR-7 直连 0；尚待新 head 的 macOS CI 确认 Vellum 命令键修正（M6 起命令键按平台 `Mod`，spec 原按 `Control+` 写，已改 `ControlOrMeta+`）。M2：首轮分片 CI（run 36302778601）构建 5.1–6.2 min 并行，测试 job 5.0–10.4 min（不计失败与取消者）；已修区域启动预算连锁超时、`p3-table` 帧内来回改尺寸、Vellum 命令键；测试 job 改用构建 job 编好的 xtask（省约 2 min）并加 30 min 超时
 - 最近完成：M5 · 应用侧 Tailwind v4
-- 下一步：Vellum 回归与孪生结果回写 M6/M7；推送后看 PR #3 CI 各 job 时长与 D9；证据层余下 project；M8
-- 当前阻塞：无。风险：`dx-refine/*` 标签与 M5 未提交改动只存在于本容器，容器回收即丢失，应尽快拣入并推送
-- 代码基线：`b15e4b9`（`main`：M1–M4 与 M6 的 SDK/示例半）
+- 下一步：推送后看 PR #3 CI 全绿与最长测试 job ≤ 10 min，据此回写 M2、M6；证据层余下 project；M7 人工键盘走查；M8
+- 当前阻塞：M7 退出条件里的「新类别页人工键盘走查」需要真人（已有 Playwright 键盘脚本代走记录，不能算人工）。风险：macOS runner 并发有限，排队使整个 run 比最长 job 长 5–15 min（A-6）
+- 代码基线：`4c1d653` 之后的本地提交（Vellum 命令键、`p3-table`、文档、区域启动预算与 CI）
 
 ### 完成记录
 
 | Milestone | 状态 | 更新时间 | 简要记录 | 实现与验收记录 |
 | --- | --- | --- | --- | --- |
 | M2 | 进行中 | 2026-09-27 | 共享页 fixture + 五个示例 `reset()`；本地回归层两轮全绿，workers=2 均 ≤ 5 min；`main` CI 全绿（run 45.4 min），但最长 job fusion-basic 37.9 min 未达 10 min；证据层余下 project 待跑 | [M2 记录](../validation/dx/m2.md) |
+| M6 | 进行中 | 2026-09-27 | SDK `listen`/`Shortcut`/`is_text_entry`/`Layer` Tab 循环/`defer`·`next_frame`/`release_on_abort`；Vellum 改用（私有出口直连 14 → 0）；本地 Vellum 回归 58 过、基线孪生 8 张视图 0 像素差；待 macOS CI 确认命令键修正 | [M6 SDK 记录](../validation/dx/m6-sdk.md)、[M6 Vellum 记录](../validation/dx/m6-vellum.md) |
+| M7 | 进行中 | 2026-09-27 | Toast、`Draft` 与 NumberField/ColorField、ToggleGroup、Menu/Dialog 扩展，目录 24 类；Vellum 改用 Toast/草稿核心（3 处行为差异按 ADR-4 采用）；catalog 74/74、孪生 0 差；缺人工键盘走查 | [M7 组件记录](../validation/dx/m7-components.md)、[M7 Vellum 记录](../validation/dx/m7-vellum.md) |
 | M1 | 已完成 | 2026-09-25 | `RUSTIFY_TIER` + `@evidence`（`--list` 守恒）、按需 server（A-4 成立）、CI/verify `--bins` 与全量层；component-catalog 回归层 49/49；A-2 部分证伪 → ADR-6 修订；A-7 内存成立 | [M1 记录](../validation/dx/m1.md) |
 | M3 | 已完成 | 2026-09-27 | mise 固定 Tailwind 4.1.13、`xtask/src/tailwind.rs`、`source(none)`、去 npm Tailwind、`verify` 加 CSS/目录检查；`main` CI host job 全绿，A-1 在 macOS 上成立 | [M3 记录](../validation/dx/m3.md) |
 | M4 | 已完成 | 2026-09-27 | 组件类去 `rui:`，`tw_merge` 覆盖对应用类生效，`--spacing` 内联、默认令牌对齐；component-catalog 74/74、property-workbench 126/126、data-workbench 51/51；标准属性计算样式 0 差异（偏差见 §5.2） | [M4 记录](../validation/dx/m4-unprefix.md) |
