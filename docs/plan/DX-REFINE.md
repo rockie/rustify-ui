@@ -35,11 +35,11 @@
 
 ### 恢复快照
 
-- 最近更新：2026-09-27 UTC · M4 集成验收通过（三个 project 回归层全绿）
-- 当前进度：3/8 个里程碑完成
-- 当前状态：M2、M5、M6、M7 进行中。M5/M6/M7 的已完成部分都已拣入并推送（`8a3b569`、`1977e51`、`e6255c1`、`19e56b0`）；本地回归层全部 project 通过且 ≤ 5 min（Chromium 141）；CI 改为「每个示例构建一次 + 分片测试」并修了四个在慢 runner 上超时的用例，PR #3 上首轮新布局 CI 运行中；M5 只差 `verify --suite p3 --no-browser` 的清洁双构建（运行中）；M7 只差 Vellum 改用 Toast/草稿核心（子任务在独立工作树实施），之后跑 Vellum 回归与基线孪生，M6/M7 一起记完成
-- 最近完成：M4 · 去掉 `rui:` 前缀
-- 下一步：等 verify 与 PR #3 CI 结果回写 M5、M2；拣入 Vellum Toast/草稿改用提交，重建 Vellum 并跑回归层与基线孪生 `visual.spec.ts`；证据层余下 project
+- 最近更新：2026-09-27 UTC · M5 验收通过（清洁双构建一致、覆盖断言通过）
+- 当前进度：4/8 个里程碑完成
+- 当前状态：M2、M6、M7 进行中。Vellum 改用 Toast/草稿核心已拣入（`acf84b6`），正在跑 Vellum 回归层与基线孪生；PR #3 上首轮新布局 CI：构建 job 约 5.5–6 min 并行、测试 job 多数在 10 min 内，property-workbench 2/2 因 `p2-deeplink` 等区域就绪等待 30 s 过短失败，已把 7 个 spec 里 12 处同类等待统一为 `REGION_START_MS`（`ad5019e`，未推送，待本地验证）
+- 最近完成：M5 · 应用侧 Tailwind v4
+- 下一步：Vellum 回归与孪生结果回写 M6/M7；推送后看 PR #3 CI 各 job 时长与 D9；证据层余下 project；M8
 - 当前阻塞：无。风险：`dx-refine/*` 标签与 M5 未提交改动只存在于本容器，容器回收即丢失，应尽快拣入并推送
 - 代码基线：`b15e4b9`（`main`：M1–M4 与 M6 的 SDK/示例半）
 
@@ -51,6 +51,7 @@
 | M1 | 已完成 | 2026-09-25 | `RUSTIFY_TIER` + `@evidence`（`--list` 守恒）、按需 server（A-4 成立）、CI/verify `--bins` 与全量层；component-catalog 回归层 49/49；A-2 部分证伪 → ADR-6 修订；A-7 内存成立 | [M1 记录](../validation/dx/m1.md) |
 | M3 | 已完成 | 2026-09-27 | mise 固定 Tailwind 4.1.13、`xtask/src/tailwind.rs`、`source(none)`、去 npm Tailwind、`verify` 加 CSS/目录检查；`main` CI host job 全绿，A-1 在 macOS 上成立 | [M3 记录](../validation/dx/m3.md) |
 | M4 | 已完成 | 2026-09-27 | 组件类去 `rui:`，`tw_merge` 覆盖对应用类生效，`--spacing` 内联、默认令牌对齐；component-catalog 74/74、property-workbench 126/126、data-workbench 51/51；标准属性计算样式 0 差异（偏差见 §5.2） | [M4 记录](../validation/dx/m4-unprefix.md) |
+| M5 | 已完成 | 2026-09-27 | `sdk.css` 可组合入口、`build-web` 编译示例 `tailwind.css`（component-catalog 首用）、SDK 产物去掉示例类、`.vscode` 与文档；5 个示例构建、四个示例清洁双构建一致、catalog 74/74 含调用方类覆盖断言 | [M5 记录](../validation/dx/m5.md) |
 
 ## 0. 需求、范围与决策
 
