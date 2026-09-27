@@ -467,7 +467,12 @@ test("review · resizing at the end preserves the focused cell", async ({ page }
     await page.keyboard.press("ControlOrMeta+End");
     const last = page.locator('[data-row-id="100000"] [aria-colindex="20"]');
     await expect(last).toBeFocused();
+    const pool = await page.locator('[data-row-id]').count();
     await page.setViewportSize({ width: 1440, height: 1200 });
+    // Until the table has measured the larger viewport, the browser may
+    // already have clamped the scroll position to it; shrinking straight
+    // back then leaves the table a scroll it cannot tell from the reader's.
+    await expect.poll(() => page.locator('[data-row-id]').count()).toBeGreaterThan(pool);
     await expect(last).toBeFocused();
     await expect(page.locator('[role="gridcell"][tabindex="0"]')).toBeFocused();
     await page.setViewportSize({ width: 1100, height: 600 });

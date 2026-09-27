@@ -1,7 +1,7 @@
 import { expect, Page } from "@playwright/test";
 
 import { rounds } from "../tier";
-import { test } from "./support";
+import { REGION_START_MS, test } from "./support";
 
 /// M5 V7: three panels, ten views over the objects, and every command in one
 /// place.
@@ -176,7 +176,7 @@ test.describe("M5 V7: a workspace of three panels", () => {
 
     test("after a hundred adjustments the region still hits where it says it drew", async ({ page }) => {
         await expect
-            .poll(async () => (await snapshot(page)).region, { timeout: 30_000 })
+            .poll(async () => (await snapshot(page)).region, { timeout: REGION_START_MS })
             .toBe("ready");
         const region = page.getByTestId("workbench-gpu");
         await region.scrollIntoViewIfNeeded();
@@ -218,7 +218,7 @@ test.describe("M5 V7: a workspace of three panels", () => {
 
     test("a right-click inside the region opens a menu anchored to it", async ({ page }) => {
         await expect
-            .poll(async () => (await snapshot(page)).region, { timeout: 30_000 })
+            .poll(async () => (await snapshot(page)).region, { timeout: REGION_START_MS })
             .toBe("ready");
         const region = page.getByTestId("workbench-gpu");
         await region.scrollIntoViewIfNeeded();
@@ -232,5 +232,45 @@ test.describe("M5 V7: a workspace of three panels", () => {
         await menu.getByRole("menuitem", { name: "select the next object" }).click();
         expect((await snapshot(page)).selected).toBe(before + 1);
         expect(await workspace(page)).toMatchObject({ menu: false });
+    });
+
+    test("the region's menu is divided into its groups and names the palette's shortcut", async ({ page }) => {
+        await expect
+            .poll(async () => (await snapshot(page)).region, { timeout: REGION_START_MS })
+            .toBe("ready");
+        const region = page.getByTestId("workbench-gpu");
+        await region.scrollIntoViewIfNeeded();
+        await region.click({ button: "right" });
+        const menu = page.getByTestId("region-menu");
+        await expect(menu).toBeVisible();
+
+        // Two lines between three groups, and neither is a stop for the
+        // keyboard: from the last command in the first group, one arrow is
+        // the next command after the line.
+        await expect(menu.getByRole("separator")).toHaveCount(2);
+        await expect(menu.getByTestId("menu-item-next")).toBeFocused();
+        await page.keyboard.press("ArrowDown");
+        await expect(menu.getByTestId("menu-item-lock")).toBeFocused();
+        await page.keyboard.press("ArrowDown");
+        await expect(menu.getByTestId("menu-item-theme")).toBeFocused();
+
+        // The shortcut is announced as the platform names it, shown beside
+        // the command, and kept out of the command's name.
+        const palette = menu.getByRole("menuitem", { name: "all commands", exact: true });
+        await expect(palette).toHaveAttribute("aria-keyshortcuts", /^(Control|Meta)\+K$/);
+        await expect(menu.getByTestId("menu-shortcut-palette")).toHaveText(/^(Control|Meta)\+K$/);
+        await expect(menu.getByTestId("menu-shortcut-palette")).toHaveAttribute("aria-hidden", "true");
+
+        // And the command is the shortcut's: it opens the palette, which
+        // takes the keyboard once the menu has closed.
+        await page.keyboard.press("End");
+        await expect(palette).toBeFocused();
+        await page.keyboard.press("Enter");
+        await expect(menu).toBeHidden();
+        await expect(page.getByTestId("command-palette")).toBeVisible();
+        await expect(page.getByTestId("command-search")).toBeFocused();
+        expect(await workspace(page)).toMatchObject({ menu: false, palette: true });
+        await page.keyboard.press("Escape");
+        await expect(page.getByTestId("command-palette")).toBeHidden();
     });
 });

@@ -2,7 +2,7 @@
 
 ## Prerequisites
 
-- `mise` (2026.9.2 or newer). `mise install` installs what `mise.toml` pins: Rust 1.98.1 (stable) with `rustfmt`, `clippy` and the wasm32 target; mbx 1.15.0, the compiler cache every build goes through; and Tailwind's standalone CLI 4.1.13, which generates the component stylesheet without Node (`RUSTIFY_TAILWIND=<path>` points at another copy of that version). Nothing else is installed silently.
+- `mise` (2026.9.2 or newer). `mise install` installs what `mise.toml` pins: Rust 1.98.1 (stable) with `rustfmt`, `clippy` and the wasm32 target; mbx 1.15.0, the compiler cache every build goes through; and Tailwind's standalone CLI 4.1.13, which generates the component stylesheet without Node and which `build-web` needs for an example with a Tailwind input of its own (`RUSTIFY_TAILWIND=<path>` points at another copy of that version). Nothing else is installed silently.
 - After installing Rust, mise runs `scripts/link-libllvm.sh`, which puts a link to the toolchain's `libLLVM` next to `rust-lld`. mbx starts the toolchain's Cargo without rustup's proxy, so without that link the wasm link cannot load LLVM. `mbx xtask doctor` reports a toolchain that is missing the link.
 - Node 26 and npm for the browser tests: `npm ci` then `npx playwright install chromium`.
 - Google Chrome on macOS for the manual pass gate.
@@ -76,7 +76,9 @@ mbx xtask css --check    # fail if the committed product is not what the input p
 
 A class string added without regenerating would simply have no rule; `--check`
 is what turns that into a failure. `build-web` copies the product into any
-example whose manifest names the component crate.
+example whose manifest names the component crate, unless the example compiles
+a Tailwind input of its own (next section). The product holds the components'
+classes only; an application's own classes are not in it.
 
 Because an application writes the same utilities, a `class` passed to a
 component is merged with the component's own through `tw_merge`: a caller's
@@ -90,9 +92,75 @@ root, and `dark` is bound to the SDK's scope attribute rather than to any
 `.dark` ancestor, so a host page using that convention does not darken a scope.
 The class names themselves are no longer apart: a host page with its own
 Tailwind build that also links `rustify.css` gets two rules for a class like
-`bg-primary`.
+`bg-primary`. The next section says what to do instead.
 
-## Two languages
+## Using Tailwind v4 in your app
+
+An application that styles its own markup with Tailwind puts a `tailwind.css`
+next to its `Cargo.toml`. `build-web` compiles it with the CLI `mise.toml` pins,
+minified, to `tailwind.css` in the product, and fails before the wasm build if
+that CLI is missing or another version. Nothing generated is committed, and
+there is no separate step: a class change means a wasm rebuild anyway, and the
+same command does both. `examples/component-catalog/tailwind.css` is one:
+
+```css
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities) source(none);
+/* @import "tailwindcss/preflight.css" layer(base);  only if the whole page is yours */
+
+@import "../../crates/rustify-components/css/sdk.css";
+@source "./src";
+```
+
+The page links the product in place of `rustify.css`, with a `<link>`: the
+strict policy (`style-src 'self'`) refuses a `<style>` element.
+
+```html
+<link rel="stylesheet" href="./tailwind.css">
+```
+
+- **`sdk.css`** is the SDK's layer: the component sources, the `dark` variant,
+  the token utilities, the rules no utility expresses and the scope's default
+  tokens. It imports no Tailwind itself, so your input decides which of
+  Tailwind's layers it takes. The product has the components' classes and
+  yours, and nothing else is linked.
+- **`source(none)`** is not optional. The CLI runs from the repository root,
+  and without it every class-shaped word in the repository becomes a rule.
+  Name your sources with `@source`. Words in the comments of a named source
+  still count: a comment that says "table" gives the product a `.table` rule.
+- **Preflight** resets every element on the page. Leave it out when the page
+  hosts markup that is not yours; the SDK's own stylesheet never includes it.
+
+**Token utilities.** Any colour utility (`bg-`, `text-`, `border-`, `ring-`,
+`fill-` ...) takes the theme's names: `background`, `foreground`, `primary`,
+`primary-foreground`, `secondary`, `secondary-foreground`, `muted`,
+`muted-foreground`, `accent`, `accent-foreground`, `destructive`,
+`destructive-foreground`, `card`, `popover`, `success`, `warning`, `border`,
+`input` and `ring`, with opacity as usual (`bg-primary/90`). `rounded-sm`,
+`rounded-md` and `rounded-lg` follow the scope's `--radius`. They resolve to
+`var(--primary)` and so on, so they follow the scope's theme and any
+`ThemeOverride` below it, and have no value outside a mounted scope. Spacing is
+Tailwind's own (`p-4` is `1rem`); the scope's `--spacing` token is its layout
+gap for hand-written CSS, not Tailwind's unit.
+
+**`dark:`** means inside a scope whose theme is dark
+(`[data-rustify-scope][data-theme="dark"]`): it follows `ThemedScope`, not a
+`.dark` class on the page and not `prefers-color-scheme`, and it never applies
+outside a scope.
+
+**`class` on a component** is merged with the component's classes, caller
+last, as the previous section describes: yours replaces the component's class
+of the same kind in the same state, and a class of another kind is added.
+
+**A host page with its own Tailwind build** imports `sdk.css` into that build,
+after its own Tailwind imports (the path is relative to the importing file, and
+`sdk.css` names the component sources itself), and links that one product
+rather than also linking `rustify.css`. One build
+has one meaning for each name, so two things are shared: `dark`, where the
+`@custom-variant` declared last applies to every class in the build, the
+components' included; and the colour names above, where the `@theme` value
+declared last wins. A host whose own markup needs a different `dark`, or its
+own `bg-primary`, has to choose.
 
 ```rust
 let locale = rustify_ui::provide_locale(Locale::English);   // once, in the scope root

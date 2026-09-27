@@ -9,6 +9,11 @@
 //! a tree over them are components in this crate, so they answer the same six
 //! questions as the rest rather than being described only in a plan.
 //!
+//! Four more came out of the editor example, once a second caller for each
+//! was in sight: a status message that goes away on its own, a number field
+//! and a colour field that keep a draft while they have focus, and a group of
+//! toggle buttons that can be a toolbar.
+//!
 //! Every entry answers the same six questions (properties, actions, theme,
 //! input, accessibility, environment), so a reader never has to guess whether
 //! a silence means "yes" or "nobody looked".
@@ -18,8 +23,9 @@
 
 use std::fmt::Write as _;
 
-/// The eighteen categories R18 names, and the two the large loads added. The
-/// catalogue covers all of them; it does not implement all of them.
+/// The eighteen categories R18 names, the two the large loads added and the
+/// four the editor example gave up. The catalogue covers all of them; it does
+/// not implement all of them.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum Category {
     Button,
@@ -42,6 +48,10 @@ pub enum Category {
     ScrollArea,
     DataTable,
     Tree,
+    Toast,
+    NumberField,
+    ColorField,
+    ToggleGroup,
 }
 
 impl Category {
@@ -68,6 +78,10 @@ impl Category {
             Self::ScrollArea => "scroll area",
             Self::DataTable => "data table",
             Self::Tree => "tree",
+            Self::Toast => "toast",
+            Self::NumberField => "number field",
+            Self::ColorField => "color field",
+            Self::ToggleGroup => "toggle group",
         }
     }
 }
@@ -163,8 +177,8 @@ impl Entry {
     }
 }
 
-/// The catalogue. Twenty categories, every cell answered.
-pub const CATALOG: [Entry; 20] = [
+/// The catalogue. Twenty-four categories, every cell answered.
+pub const CATALOG: [Entry; 24] = [
     Entry {
         category: Category::Button,
         presentation: Presentation {
@@ -368,12 +382,12 @@ pub const CATALOG: [Entry; 20] = [
             gpu: Support::No,
             across_regions: Support::Yes,
         },
-        properties: cap(Support::Yes, "open, the items, and a reason on any item that cannot run; a command that cannot run stays in the list"),
+        properties: cap(Support::Yes, "open, the items, group headings, separators, the application's shortcut beside a command, and a reason on any item that cannot run; a command that cannot run stays in the list"),
         actions: cap(Support::Yes, "activation and open-change; activating an item closes the menu once"),
-        theme: cap(Support::Yes, "the panel surface, its border and the hovered row"),
-        input: cap(Support::Yes, "the arrows and Home/End move within it, Enter and Space activate, Escape closes the top layer only"),
-        accessibility: cap(Support::Yes, "role=menu over menuitems, the keyboard lands on the first reachable one, and focus returns to what opened it"),
-        environment: cap(Support::Partial, "anchors to a rectangle inside a region within one CSS pixel, but does not flip or clamp to the viewport"),
+        theme: cap(Support::Yes, "the panel surface, its border, the hovered row, the headings, the separators and the shortcut column"),
+        input: cap(Support::Yes, "the arrows and Home/End move within it over the headings and separators, Enter and Space activate, Escape closes the top layer only"),
+        accessibility: cap(Support::Yes, "role=menu over menuitems, groups named by their headings, separators, aria-keyshortcuts for every shortcut shown; the keyboard lands on the first reachable item, and focus returns to what opened it"),
+        environment: cap(Support::Partial, "anchors to an element, a point, or a rectangle inside a region within one CSS pixel, and moves left or opens above rather than leave the viewport; it is a DOM layer, because a popup drawn in the canvas cannot leave it"),
     },
     Entry {
         category: Category::Dialog,
@@ -382,8 +396,8 @@ pub const CATALOG: [Entry; 20] = [
             gpu: Support::No,
             across_regions: Support::Yes,
         },
-        properties: cap(Support::Yes, "open, title, description, modal, and whether the backdrop dismisses it"),
-        actions: cap(Support::Yes, "open-change; Escape closes the top layer only"),
+        properties: cap(Support::Yes, "open, title, description, modal, whether the backdrop dismisses it, and a title bar whose close button is named in the scope's language unless the application names it"),
+        actions: cap(Support::Yes, "open-change; the close button and Escape send the same request, and Escape closes the top layer only"),
         theme: cap(Support::Yes, "the panel surface, its border and the backdrop"),
         input: cap(Support::Yes, "the keyboard cannot leave a modal one, and clicks do not reach what it covers, region included"),
         accessibility: cap(Support::Yes, "role=dialog with aria-modal, labelled by its own title and described by its own description; focus returns on close"),
@@ -445,6 +459,62 @@ pub const CATALOG: [Entry; 20] = [
         accessibility: cap(Support::Yes, "role=tree and role=treeitem with aria-expanded, aria-level and aria-selected; one tab stop for the whole tree"),
         environment: cap(Support::Partial, "macOS Chrome, strict CSP, no inline script or style; no region draws a tree - a region takes the group a person chose as a projection, like any other value"),
     },
+    Entry {
+        category: Category::Toast,
+        presentation: Presentation {
+            dom: Support::Yes,
+            gpu: Support::No,
+            across_regions: Support::No,
+        },
+        properties: cap(Support::Yes, "the message, how long it stays and a tone; a newer message replaces the one showing rather than queueing behind it"),
+        actions: cap(Support::Yes, "show, dismiss and hide on its own; a timer set for a message that was replaced leaves its successor alone"),
+        theme: cap(Support::Yes, "the popover surface, its border, and a coloured edge per tone; the tone changes how it looks and nothing else"),
+        input: cap(Support::Yes, "the dismiss button, by pointer or keyboard; the message takes no focus and answers no Escape"),
+        accessibility: cap(Support::Yes, "role=status with aria-live=polite, present while empty so a reader knows it before it speaks; the dismiss button is named in the scope's language"),
+        environment: cap(Support::Partial, "macOS Chrome, strict CSP; drawn in the scope's overlay plane but not a layer, so a modal does not make it inert; it shows over a region and no region draws one"),
+    },
+    Entry {
+        category: Category::NumberField,
+        presentation: Presentation {
+            dom: Support::Yes,
+            gpu: Support::No,
+            across_regions: Support::Partial,
+        },
+        properties: cap(Support::Yes, "value, min, max, step, disabled, read-only, invalid; the bounds are announced, and clamping is the application's"),
+        actions: cap(Support::Yes, "a preview for every number typed, one commit when the edit ends, a cancel when Escape abandons one; the application may refuse any of them"),
+        theme: cap(Support::Yes, "the text field's tokens, with the destructive border while the draft is not a number"),
+        input: cap(Support::Yes, "typing keeps a draft while the field has focus; Enter or leaving commits, Escape reverts, Up/Down ask for one step and Page Up/Page Down for ten"),
+        accessibility: cap(Support::Yes, "role=spinbutton with aria-valuenow, aria-valuemin and aria-valuemax; aria-invalid while the draft does not parse"),
+        environment: cap(Support::Partial, "macOS Chrome, strict CSP; the draft is the one exception to controlled values and lives only inside the focused field; no region draws one - a region takes the number as a projection"),
+    },
+    Entry {
+        category: Category::ColorField,
+        presentation: Presentation {
+            dom: Support::Yes,
+            gpu: Support::No,
+            across_regions: Support::Partial,
+        },
+        properties: cap(Support::Yes, "value as hex, whether an opacity is allowed, disabled, read-only, invalid; #rgb and #rrggbb, and #rgba and #rrggbbaa with an opacity"),
+        actions: cap(Support::Yes, "a preview for every colour typed, one commit when the edit ends, a cancel when Escape abandons one"),
+        theme: cap(Support::Yes, "the text field's tokens, and a swatch of the application's colour painted through the CSS object model"),
+        input: cap(Support::Yes, "typing keeps a draft while the field has focus; Enter or leaving commits, Escape reverts"),
+        accessibility: cap(Support::Yes, "a named text field with aria-invalid while the draft is not a colour; the swatch is decoration and stays out of the tree"),
+        environment: cap(Support::Partial, "macOS Chrome, strict CSP, no style attribute; no region draws one - a region takes the colour as a projection, like any other value"),
+    },
+    Entry {
+        category: Category::ToggleGroup,
+        presentation: Presentation {
+            dom: Support::Yes,
+            gpu: Support::No,
+            across_regions: Support::Partial,
+        },
+        properties: cap(Support::Yes, "which are pressed, one at a time or several, the buttons, disabled, and whether it is a toolbar; a button can be disabled on its own"),
+        actions: cap(Support::Yes, "a press asks for the set the group would have afterwards; the application owns which are pressed"),
+        theme: cap(Support::Yes, "the pressed face in the primary colour, the toolbar's bar and the focus ring"),
+        input: cap(Support::Yes, "one tab stop for the group, the arrows and Home/End within it, wrapping and stepping over the unreachable; Enter and Space press"),
+        accessibility: cap(Support::Yes, "role=group or role=toolbar with a name, each button aria-pressed"),
+        environment: cap(Support::Partial, "macOS Chrome, strict CSP; no region draws one - a region takes what is pressed as a projection, like any other value"),
+    },
 ];
 
 /// The row for one category.
@@ -490,7 +560,7 @@ pub fn markdown() -> String {
 mod tests {
     use super::*;
 
-    const ALL: [Category; 20] = [
+    const ALL: [Category; 24] = [
         Category::Button,
         Category::Label,
         Category::Link,
@@ -511,12 +581,17 @@ mod tests {
         Category::ScrollArea,
         Category::DataTable,
         Category::Tree,
+        Category::Toast,
+        Category::NumberField,
+        Category::ColorField,
+        Category::ToggleGroup,
     ];
 
     #[test]
     fn every_category_appears_exactly_once() {
-        // R18's eighteen, plus the table and the tree the large loads added.
-        assert_eq!(CATALOG.len(), 20);
+        // R18's eighteen, the table and the tree the large loads added, and
+        // the four from the editor example.
+        assert_eq!(CATALOG.len(), 24);
         assert_eq!(ALL.len(), CATALOG.len());
         for category in ALL {
             let found = CATALOG

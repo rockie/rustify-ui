@@ -28,7 +28,7 @@ web-sys = { workspace = true, features = [
     "WheelEvent", "MouseEvent", "DragEvent", "DataTransfer", "ResizeObserver",
     "Performance", "CssStyleDeclaration", "DomRect", "HtmlInputElement",
     "Location", "UrlSearchParams",
-    "AddEventListenerOptions", "FocusOptions", "Event", "EventTarget",
+    "FocusOptions", "Event", "EventTarget",
     "DomTokenList", "NodeList", "HtmlSelectElement", "HtmlTextAreaElement",
     "ScrollIntoViewOptions", "ScrollLogicalPosition", "BeforeUnloadEvent", "DomException",
     "DataTransferItemList", "DataTransferItem",

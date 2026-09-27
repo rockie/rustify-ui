@@ -25,17 +25,23 @@ export default defineConfig({
         deviceScaleFactor: 1,
         trace: "retain-on-failure",
         screenshot: "only-on-failure",
-        launchOptions: { args: ["--enable-unsafe-swiftshader", "--use-angle=swiftshader"] },
+        launchOptions: {
+            args: ["--enable-unsafe-swiftshader", "--use-angle=swiftshader"],
+            // See the root config: a preinstalled Chromium in place of the pinned one.
+            executablePath: process.env.RUSTIFY_CHROMIUM || undefined,
+        },
     },
     projects: [{ name: "vellum", use: { baseURL: "http://127.0.0.1:4179/" } }],
     webServer: [
         {
-            command: "mbx xtask serve --example vellum --release --port 4179",
+            command: `${process.env.RUSTIFY_XTASK || "mbx xtask"} serve --example vellum --release --port 4179`,
             cwd: root,
             url: "http://127.0.0.1:4179/",
             reuseExistingServer: false,
             timeout: 120_000,
         },
+        // Always the baseline's own xtask: it serves from the tree it was
+        // compiled in, and that tree is the baseline.
         ...(baseline ? [{
             command: "mbx xtask serve --example vellum --release --port 4180",
             cwd: baseline,

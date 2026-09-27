@@ -1,0 +1,14 @@
+/* The catalogue's Tailwind input. `mbx xtask build-web` compiles it, minified,
+   to `tailwind.css` in the product, and the page links that in place of the
+   SDK's precompiled `rustify.css`: one stylesheet with the components' classes
+   and the catalogue's own, such as the `bg-success` of a support badge.
+
+   No preflight: the page's own controls are the host's, and a test holds them
+   to what they look like without our stylesheets. `source(none)` keeps the
+   scan to the sources named here and in `sdk.css`. */
+
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities) source(none);
+
+@import "../../crates/rustify-components/css/sdk.css";
+@source "./src";

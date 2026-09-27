@@ -285,10 +285,7 @@ mod dom {
                     return;
                 }
                 match event.key().as_str() {
-                    "Enter" => {
-                        let request = this.change(Session::commit);
-                        this.ask(request);
-                    }
+                    "Enter" => this.commit(),
                     "Escape" if this.touched() => {
                         event.prevent_default();
                         event.stop_propagation();
@@ -307,6 +304,18 @@ mod dom {
                 let request = this.change(Session::blur);
                 this.ask(request);
             }
+        }
+
+        /// Ends the edit as Enter does: what was typed becomes one commit
+        /// request, and the field shows the application's value again.
+        ///
+        /// For a control that also changes the value some other way - an
+        /// arrow key, a stepper, a picker. Its own request has to come after
+        /// the typed one ends, or the draft would outlast the value it was a
+        /// draft of.
+        pub fn commit(&self) {
+            let request = self.change(Session::commit);
+            self.ask(request);
         }
 
         fn touched(&self) -> bool {

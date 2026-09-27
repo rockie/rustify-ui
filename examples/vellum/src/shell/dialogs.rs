@@ -1,9 +1,6 @@
-use crate::browser_frame::{request_animation_frame_with_handle, AnimationFrameRequestHandle};
 use leptos::prelude::*;
-use rustify_ui::{Anchor, Layer};
+use rustify_ui::{next_frame, Anchor, FrameHandle, Layer};
 use serde_json::json;
-use wasm_bindgen::JsCast;
-use web_sys::{HtmlElement, KeyboardEvent};
 
 use crate::{
     app::Editor,
@@ -81,14 +78,13 @@ pub fn Dialogs(editor: Editor) -> impl IntoView {
 #[component]
 fn Dialog(editor: Editor, state: DialogState) -> impl IntoView {
     let state = StoredValue::new(state);
-    let node = NodeRef::<leptos::html::Section>::new();
     view! {
         <Layer modal=true anchor=Signal::derive(|| Anchor::Centred) on_close=move || close(editor)
             class="vellum-modal-layer" labelled_by="modal-title" test_id="vellum-dialog-layer">
             <div id="modal-backdrop" class="modal-backdrop" on:click=move |event| {
                 if event.target() == event.current_target() { close(editor); }
             }>
-                <section id="modal" class="modal" node_ref=node on:keydown=move |event| trap_tab(node,event)>
+                <section id="modal" class="modal">
                     {body(editor,state.get_value())}
                 </section>
             </div>
@@ -122,14 +118,12 @@ fn Header(editor: Editor, title: String, #[prop(optional)] subtitle: String) -> 
 fn Prompt(editor: Editor, kind: PromptKind, title: String, value: String) -> impl IntoView {
     let value = RwSignal::new(value);
     let node = NodeRef::<leptos::html::Input>::new();
-    let focus = StoredValue::new_local(None::<AnimationFrameRequestHandle>);
+    let focus = StoredValue::new_local(None::<FrameHandle>);
     node.on_load(move |input| {
-        if let Ok(handle) = request_animation_frame_with_handle(move || {
+        focus.set_value(Some(next_frame(move || {
             let _ = input.focus();
             input.select();
-        }) {
-            focus.set_value(Some(handle));
-        }
+        })));
     });
     on_cleanup(move || {
         focus.update_value(|focus| {
@@ -376,33 +370,4 @@ pub fn inspect_css(node: &Node) -> String {
         ));
     }
     css
-}
-
-fn trap_tab(node: NodeRef<leptos::html::Section>, event: KeyboardEvent) {
-    if event.key() != "Tab" {
-        return;
-    }
-    let Some(node) = node.get() else {
-        return;
-    };
-    let Ok(nodes) = node.query_selector_all("button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex='-1'])") else { return; };
-    let items: Vec<_> = (0..nodes.length())
-        .filter_map(|index| nodes.item(index)?.dyn_into::<HtmlElement>().ok())
-        .collect();
-    let (Some(first), Some(last)) = (items.first(), items.last()) else {
-        return;
-    };
-    if let Some(active) = document().active_element() {
-        let target = if event.shift_key() && active == *first.as_ref() {
-            Some(last)
-        } else if !event.shift_key() && active == *last.as_ref() {
-            Some(first)
-        } else {
-            None
-        };
-        if let Some(target) = target {
-            event.prevent_default();
-            let _ = target.focus();
-        }
-    }
 }

@@ -35,21 +35,25 @@
 
 ### 恢复快照
 
-- 最近更新：2026-09-27 UTC · 解决与 `main` 的冲突并合入 `main`；证据层与 CI 待办
-- 当前进度：1/8 个里程碑完成
-- 当前状态：M2 进行中——五个示例的 `reset()`（四个原地、Vellum 重挂）与共享页 fixture 落地，回归层各 project 两轮全绿且 workers=2 均 ≤ 5 min；修了三个既有失败（数据表缩小时丢焦点、Vellum 覆盖层残影、`p3-instances` 的 Promise 回收）；CI matrix 与 `evidence.yml` 已写；证据层本地逐 project 运行中；M3 只差 CI；M4/M5 在独立工作树实施中，M6/M7 的 SDK 原语已在独立工作树提交（`e1c99c3`，待拣入）
-- 最近完成：M1 · 测试分层骨架与探针
-- 下一步：等本地证据层跑完写入 M2 记录；拣入 SDK 原语提交与 M4/M5 提交并重建验证；开 M6 采用（Vellum、property-workbench、data-workbench、fusion-basic）
-- 当前阻塞：无代码阻塞。2026-09-27 按用户要求把 `main` 合入本分支（冲突只在本计划文件，取本分支版本，无损）并将 rockie/rustify-ui#2 合入 `main`；M2/M3 的 CI 退出条件（matrix 全绿、最长 job ≤ 10 min、A-1、A-6）改在 `main` 的 push CI 上验证。Vellum 采用（`ce3a9b1`）与目录新组件（`bc32ec3`）仍在独立工作树，未随本次合并；容器重启丢失了两次测试运行，待集成后重跑
-- 代码基线：M1/M3 `fa76b20`；M2 集成见完成记录
+- 最近更新：2026-09-27 UTC · Vellum 回归与基线孪生通过；首轮分片 CI 的问题已定位并修正
+- 当前进度：4/8 个里程碑完成
+- 当前状态：M2、M6、M7 进行中。M6/M7 的本地退出条件已满足：Vellum 回归层 58 过（16 个 `@evidence` 跳过），基线孪生 8 张视图与文字/编辑截图全部 0 像素差，NFR-7 直连 0；尚待新 head 的 macOS CI 确认 Vellum 命令键修正（M6 起命令键按平台 `Mod`，spec 原按 `Control+` 写，已改 `ControlOrMeta+`）。M2：首轮分片 CI（run 36302778601）构建 5.1–6.2 min 并行，测试 job 5.0–10.4 min（不计失败与取消者）；已修区域启动预算连锁超时、`p3-table` 帧内来回改尺寸、Vellum 命令键；测试 job 改用构建 job 编好的 xtask（省约 2 min）并加 30 min 超时
+- 最近完成：M5 · 应用侧 Tailwind v4
+- 下一步：推送后看 PR #3 CI 全绿与最长测试 job ≤ 10 min，据此回写 M2、M6；证据层余下 project；M7 人工键盘走查；M8
+- 当前阻塞：M7 退出条件里的「新类别页人工键盘走查」需要真人（已有 Playwright 键盘脚本代走记录，不能算人工）。风险：macOS runner 并发有限，排队使整个 run 比最长 job 长 5–15 min（A-6）
+- 代码基线：`4c1d653` 之后的本地提交（Vellum 命令键、`p3-table`、文档、区域启动预算与 CI）
 
 ### 完成记录
 
 | Milestone | 状态 | 更新时间 | 简要记录 | 实现与验收记录 |
 | --- | --- | --- | --- | --- |
-| M2 | 进行中 | 2026-09-25 | 共享页 fixture + 五个示例 `reset()`；回归层两轮全绿，workers=2：fusion-basic 4.4–4.8 min、property-workbench 4.5–4.6、component-catalog 1.8–1.9、data-workbench 2.6、vellum 3.2–3.3；CI matrix/`evidence.yml` 已写；证据层与 CI 待办 | [M2 记录](../validation/dx/m2.md) |
-| M3 | 进行中 | 2026-09-25 | mise 固定 Tailwind 4.1.13、`xtask/src/tailwind.rs`、`source(none)`、去 npm Tailwind、`verify` 加 CSS/目录检查；本地全过，A-1 与 CI host job 待 CI | [M3 记录](../validation/dx/m3.md) |
+| M2 | 进行中 | 2026-09-27 | 共享页 fixture + 五个示例 `reset()`；本地回归层两轮全绿，workers=2 均 ≤ 5 min；`main` CI 全绿（run 45.4 min），但最长 job fusion-basic 37.9 min 未达 10 min；证据层余下 project 待跑 | [M2 记录](../validation/dx/m2.md) |
+| M6 | 进行中 | 2026-09-27 | SDK `listen`/`Shortcut`/`is_text_entry`/`Layer` Tab 循环/`defer`·`next_frame`/`release_on_abort`；Vellum 改用（私有出口直连 14 → 0）；本地 Vellum 回归 58 过、基线孪生 8 张视图 0 像素差；待 macOS CI 确认命令键修正 | [M6 SDK 记录](../validation/dx/m6-sdk.md)、[M6 Vellum 记录](../validation/dx/m6-vellum.md) |
+| M7 | 进行中 | 2026-09-27 | Toast、`Draft` 与 NumberField/ColorField、ToggleGroup、Menu/Dialog 扩展，目录 24 类；Vellum 改用 Toast/草稿核心（3 处行为差异按 ADR-4 采用）；catalog 74/74、孪生 0 差；缺人工键盘走查 | [M7 组件记录](../validation/dx/m7-components.md)、[M7 Vellum 记录](../validation/dx/m7-vellum.md) |
 | M1 | 已完成 | 2026-09-25 | `RUSTIFY_TIER` + `@evidence`（`--list` 守恒）、按需 server（A-4 成立）、CI/verify `--bins` 与全量层；component-catalog 回归层 49/49；A-2 部分证伪 → ADR-6 修订；A-7 内存成立 | [M1 记录](../validation/dx/m1.md) |
+| M3 | 已完成 | 2026-09-27 | mise 固定 Tailwind 4.1.13、`xtask/src/tailwind.rs`、`source(none)`、去 npm Tailwind、`verify` 加 CSS/目录检查；`main` CI host job 全绿，A-1 在 macOS 上成立 | [M3 记录](../validation/dx/m3.md) |
+| M4 | 已完成 | 2026-09-27 | 组件类去 `rui:`，`tw_merge` 覆盖对应用类生效，`--spacing` 内联、默认令牌对齐；component-catalog 74/74、property-workbench 126/126、data-workbench 51/51；标准属性计算样式 0 差异（偏差见 §5.2） | [M4 记录](../validation/dx/m4-unprefix.md) |
+| M5 | 已完成 | 2026-09-27 | `sdk.css` 可组合入口、`build-web` 编译示例 `tailwind.css`（component-catalog 首用）、SDK 产物去掉示例类、`.vscode` 与文档；5 个示例构建、四个示例清洁双构建一致、catalog 74/74 含调用方类覆盖断言 | [M5 记录](../validation/dx/m5.md) |
 
 ## 0. 需求、范围与决策
 
@@ -369,6 +373,7 @@ crates/rustify-components/css/sdk.css   ← @source "../src"; @custom-variant da
 
 1. **M3 工具链**：`mise.toml` 加 `"github:tailwindlabs/tailwindcss" = { version = "4.1.13", bin = "tailwindcss" }`（A-1）；`xtask/src/tailwind.rs` 解析与校验；`css.rs` 改用它，`--check` 失败时额外打印首个差异行；两份输入加 `source(none)`（产物不变，已实测）；删除 `package.json` 里的 Tailwind 依赖与 `css` 脚本并更新 lock；`doctor` 报 Tailwind 版本；CI host job 的 CSS 检查不再需要 `npm ci`；`verify` 加 `css --check`/`catalog --check`。此步仍保留 `@source "../../../examples"` 与 `prefix(rui)`。
 2. **M4 去前缀**：脚本去掉 `rui:`，按文件断言命中数（§1.1 的 673/42/1/5；`cargo fmt` 之后再核一次无残留，C-7）；输入去 `prefix(rui)`，`@theme inline` 加 `--spacing: 0.25rem`；作用域默认令牌改为 `Theme::light()` 的值；`macros/mod.rs` 删掉前缀相关用例、新增「调用方 `p-6` 替换组件 `p-4`」「调用方 `hover:bg-x` 替换组件同变体类」；stylesheet 单测加：无 `.rui\:` 选择器、无 `var(--spacing)`、默认令牌值与 `Theme::light()` 相等；`tests/browser/p3-table.spec.ts:31` 与剩余 `p2-catalog` 引用同步。
+   - **M4 偏差（计算样式）**：去前缀后 `@source` 目录里像类名的普通单词也会编成规则，SDK 源注释/标识符里的 13 个（`grid`、`table`、`outline` 等）成了无人使用的 utility，并带来两处自定义属性（如 `--tw-outline-style`）的计算值差异；标准 CSS 属性差异为 0，无视觉影响。接受、不屏蔽：屏蔽清单随注释失效，放进共享的 `sdk.css` 还会让应用自己写的 `grid`/`table` 失去规则。M4 退出条件里的「计算样式差异 0」据此按标准属性判定（`docs/validation/dx/m4-unprefix.md`）。
 3. **M5 应用侧**：抽出 `sdk.css`；`build-web` 编译示例 `tailwind.css`；component-catalog 新增 `tailwind.css` 并改链接；SDK 入口删掉 `@source "../../../examples"`（产物少 4 个类）；`.vscode/settings.json`；文档：`docs/quickstart.md` 新节「Using Tailwind v4 in your app」（输入模板、可用令牌 utility、`dark:` 语义、`class` 覆盖规则、宿主已有 Tailwind 时的并入方式）、`docs/architecture.md` 的样式模型、`CLAUDE.md` Conventions 的「`rui:` prefix」条目。
 
 ### 5.3 Vellum 抽取

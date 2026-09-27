@@ -2,14 +2,17 @@
 
 use std::{cell::RefCell, collections::BTreeMap, rc::Rc};
 
-use js_sys::{Function, Promise};
+use js_sys::{Function, Promise, Reflect};
 use leptos::prelude::*;
+use rustify_ui::{
+    instance_failed, listen, release_on_abort, AbortRelease, ListenOptions, Listener,
+};
 use serde::{Deserialize, Serialize};
 use serde_json::{json, Value};
-use wasm_bindgen::{closure::Closure, prelude::wasm_bindgen, JsCast, JsValue};
+use wasm_bindgen::{JsCast, JsValue};
 use wasm_bindgen_futures::JsFuture;
 use web_sys::{
-    AbortSignal, BeforeUnloadEvent, Event, EventTarget, IdbDatabase, IdbRequest, IdbTransaction,
+    BeforeUnloadEvent, Event, IdbDatabase, IdbOpenDbRequest, IdbRequest, IdbTransaction,
     IdbTransactionMode,
 };
 
@@ -18,29 +21,57 @@ use crate::{app::Editor, document::Document};
 const SAVE_FAILURE: &str =
     "Local storage is full or unavailable. Export your .vellum file to keep your work.";
 
-#[wasm_bindgen]
-extern "C" {
-    #[wasm_bindgen(js_namespace = window, js_name = __vellumAbortResource)]
-    fn abort_resource(signal: &AbortSignal, resource: &JsValue, kind: &str) -> Function;
+/// `object[name]`, as a function.
+fn method(object: &JsValue, name: &str) -> Option<Function> {
+    Reflect::get(object, &JsValue::from_str(name))
+        .ok()?
+        .dyn_into()
+        .ok()
 }
 
-/// Native JS teardown remains callable when a trap prevents Rust destructors.
-struct NativeResource(Function);
-impl Drop for NativeResource {
-    fn drop(&mut self) {
-        let _ = self.0.call0(&JsValue::UNDEFINED);
-    }
+/// Has the browser call `object.name()` if the instance fails first.
+///
+/// A trap runs no destructor, and a transaction or connection left to itself
+/// would commit a write or hold the database open after the editor that owned
+/// it is gone; the call is bound in JS, so it needs no wasm to run.
+fn release(object: &JsValue, name: &str) -> Option<AbortRelease> {
+    Some(release_on_abort(method(object, name)?.bind0(object)))
 }
 
-fn native_resource(resource: &JsValue, kind: &str) -> Option<NativeResource> {
-    let signal = rustify_makepad::listener_options()?.get_signal()?;
-    Some(NativeResource(abort_resource(&signal, resource, kind)))
-}
-
-fn listen(target: &EventTarget, name: &str, callback: &Function) -> Result<(), JsValue> {
-    let options = rustify_makepad::listener_options()
-        .ok_or_else(|| JsValue::from_str("Runtime lifecycle is unavailable"))?;
-    target.add_event_listener_with_callback_and_add_event_listener_options(name, callback, &options)
+/// Has the browser close whatever connection `request` opens, if the instance
+/// fails first - also when the connection only opens afterwards.
+///
+/// An open request cannot be cancelled. A success that arrives after the
+/// failure reaches no wasm listener, and the connection would stay open,
+/// blocking a later delete of the database, for as long as the page lives. So
+/// the chain from the success to `close()` is built from JS functions alone:
+/// a promise the request's success settles, the request's `result` read once
+/// it has, and `close` called on that.
+fn close_when_opened(request: &IdbOpenDbRequest) -> Option<AbortRelease> {
+    let global = js_sys::global();
+    let opened = Promise::new(&mut |resolve, _| {
+        let _ = request.add_event_listener_with_callback("success", &resolve);
+    });
+    // `Reflect.get(request, "result", request)`, whatever the success passes.
+    let result = method(&Reflect::get(&global, &"Reflect".into()).ok()?, "get")?.bind3(
+        &JsValue::UNDEFINED,
+        request.as_ref(),
+        &"result".into(),
+        request.as_ref(),
+    );
+    let connection = method(&opened, "then")?.call1(&opened, &result).ok()?;
+    // `IDBDatabase.prototype.close.call(connection)`.
+    let prototype = Reflect::get(
+        &Reflect::get(&global, &"IDBDatabase".into()).ok()?,
+        &"prototype".into(),
+    )
+    .ok()?;
+    let close = method(&prototype, "close")?;
+    let close = method(&close, "call")?.bind0(&close);
+    let then = method(&connection, "then")?;
+    Some(release_on_abort(
+        then.bind1(&connection, close.as_ref()).unchecked_into(),
+    ))
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -122,9 +153,8 @@ struct Waiter {
 #[derive(Default)]
 struct State {
     disposed: bool,
-    signal: Option<AbortSignal>,
     database: Option<IdbDatabase>,
-    database_lifetime: Option<NativeResource>,
+    database_lifetime: Option<AbortRelease>,
     transaction: Option<IdbTransaction>,
     timer_ticket: u64,
     queued: Option<Snapshot>,
@@ -137,7 +167,7 @@ struct State {
     waiters: Vec<Waiter>,
     pending: BTreeMap<u64, Function>,
     next_request: u64,
-    listeners: Option<Listeners>,
+    listeners: Vec<Listener>,
 }
 
 #[derive(Clone, Default)]
@@ -145,8 +175,7 @@ pub struct Storage(Rc<RefCell<State>>);
 
 impl Storage {
     fn alive(&self) -> bool {
-        let state = self.0.borrow();
-        !state.disposed && !state.signal.as_ref().is_some_and(AbortSignal::aborted)
+        !self.0.borrow().disposed && !instance_failed()
     }
 
     fn register(&self, reject: Function) -> u64 {
@@ -174,7 +203,7 @@ impl Storage {
                 state.database.take(),
                 std::mem::take(&mut state.waiters),
                 std::mem::take(&mut state.pending),
-                state.listeners.take(),
+                std::mem::take(&mut state.listeners),
             )
         };
         drop(listeners);
@@ -215,7 +244,7 @@ impl Storage {
     fn defer(&self, editor: Editor) {
         let storage = self.clone();
         let ticket = storage.0.borrow().timer_ticket;
-        rustify_makepad::defer_after(500, move || {
+        rustify_ui::defer_after(500, move || {
             if !storage.alive() || storage.0.borrow().timer_ticket != ticket {
                 return;
             }
@@ -340,53 +369,34 @@ impl Storage {
     async fn write_database(&self, database: &IdbDatabase, text: &str) -> Result<(), JsValue> {
         let transaction =
             database.transaction_with_str_and_mode("documents", IdbTransactionMode::Readwrite)?;
-        let _transaction_lifetime = native_resource(transaction.as_ref(), "transaction");
+        let _transaction_lifetime = release(transaction.as_ref(), "abort");
         transaction
             .object_store("documents")?
             .put_with_key(&JsValue::from_str(text), &JsValue::from_str("current"))?;
         self.0.borrow_mut().transaction = Some(transaction.clone());
-        let mut handlers = None;
+        let mut listeners = Vec::new();
         let mut request_id = 0;
         let promise = Promise::new(&mut |resolve, reject| {
             request_id = self.register(reject.clone());
-            let complete = Closure::<dyn FnMut(Event)>::new(move |_| {
-                let _ = resolve.call0(&JsValue::UNDEFINED);
-            });
             let failed = transaction.clone();
-            let error = Closure::<dyn FnMut(Event)>::new(move |_| {
+            let error = move |_| {
                 let error = failed
                     .error()
                     .map(JsValue::from)
                     .unwrap_or_else(|| JsValue::from_str("Storage transaction failed"));
                 let _ = reject.call1(&JsValue::UNDEFINED, &error);
-            });
-            let _ = listen(
-                transaction.as_ref(),
-                "complete",
-                complete.as_ref().unchecked_ref(),
-            );
-            let _ = listen(
-                transaction.as_ref(),
-                "error",
-                error.as_ref().unchecked_ref(),
-            );
-            let _ = listen(
-                transaction.as_ref(),
-                "abort",
-                error.as_ref().unchecked_ref(),
-            );
-            handlers = Some((complete, error));
+            };
+            let options = ListenOptions::default();
+            listeners = vec![
+                listen(&transaction, "complete", options, move |_| {
+                    let _ = resolve.call0(&JsValue::UNDEFINED);
+                }),
+                listen(&transaction, "error", options, error.clone()),
+                listen(&transaction, "abort", options, error),
+            ];
         });
         let result = JsFuture::from(promise).await.map(|_| ());
-        if let Some((complete, error)) = &handlers {
-            let _ = transaction
-                .remove_event_listener_with_callback("complete", complete.as_ref().unchecked_ref());
-            let _ = transaction
-                .remove_event_listener_with_callback("error", error.as_ref().unchecked_ref());
-            let _ = transaction
-                .remove_event_listener_with_callback("abort", error.as_ref().unchecked_ref());
-        }
-        drop(handlers);
+        drop(listeners);
         let mut state = self.0.borrow_mut();
         state.pending.remove(&request_id);
         state.transaction = None;
@@ -412,12 +422,12 @@ async fn open_database(storage: &Storage) -> Result<IdbDatabase, JsValue> {
         .indexed_db()?
         .ok_or_else(|| JsValue::from_str("IndexedDB is unavailable"))?;
     let request = factory.open_with_u32("vellum-editor", 1)?;
-    let _open_lifetime = native_resource(request.as_ref(), "open");
-    let mut handlers = None;
+    let _open_lifetime = close_when_opened(&request);
+    let mut listeners = Vec::new();
     let promise = Promise::new(&mut |resolve, reject| {
         let opened = request.clone();
         let owner = storage.clone();
-        let success = Closure::<dyn FnMut(Event)>::new(move |_| match opened.result() {
+        let success = move |_| match opened.result() {
             Ok(value) if owner.alive() => {
                 let _ = resolve.call1(&JsValue::UNDEFINED, &value);
             }
@@ -430,9 +440,9 @@ async fn open_database(storage: &Storage) -> Result<IdbDatabase, JsValue> {
             Err(error) => {
                 let _ = resolve.call1(&JsValue::UNDEFINED, &error);
             }
-        });
+        };
         let failed = request.clone();
-        let error = Closure::<dyn FnMut(Event)>::new(move |_| {
+        let error = move |_| {
             let error = failed
                 .error()
                 .ok()
@@ -440,9 +450,9 @@ async fn open_database(storage: &Storage) -> Result<IdbDatabase, JsValue> {
                 .map(JsValue::from)
                 .unwrap_or_else(|| JsValue::from_str("Could not open IndexedDB"));
             let _ = reject.call1(&JsValue::UNDEFINED, &error);
-        });
+        };
         let upgrading = request.clone();
-        let upgrade = Closure::<dyn FnMut(Event)>::new(move |_| {
+        let upgrade = move |_| {
             if let Ok(database) = upgrading
                 .result()
                 .and_then(|value| value.dyn_into::<IdbDatabase>())
@@ -453,53 +463,39 @@ async fn open_database(storage: &Storage) -> Result<IdbDatabase, JsValue> {
                     }
                 }
             }
-        });
-        let _ = listen(
-            request.as_ref(),
-            "success",
-            success.as_ref().unchecked_ref(),
-        );
-        let _ = listen(request.as_ref(), "error", error.as_ref().unchecked_ref());
-        let _ = listen(
-            request.as_ref(),
-            "upgradeneeded",
-            upgrade.as_ref().unchecked_ref(),
-        );
-        handlers = Some((success, error, upgrade));
+        };
+        let options = ListenOptions::default();
+        listeners = vec![
+            listen(&request, "success", options, success),
+            listen(&request, "error", options, error),
+            listen(&request, "upgradeneeded", options, upgrade),
+        ];
     });
     // An open request cannot be canceled. Its callback closes any late connection after disposal.
     let result = JsFuture::from(promise)
         .await
         .and_then(|value| value.dyn_into::<IdbDatabase>());
-    if let Some((success, error, upgrade)) = &handlers {
-        let _ = request
-            .remove_event_listener_with_callback("success", success.as_ref().unchecked_ref());
-        let _ =
-            request.remove_event_listener_with_callback("error", error.as_ref().unchecked_ref());
-        let _ = request
-            .remove_event_listener_with_callback("upgradeneeded", upgrade.as_ref().unchecked_ref());
-    }
-    drop(handlers);
+    drop(listeners);
     result
 }
 
 async fn read_request(storage: &Storage, request: IdbRequest) -> Result<JsValue, JsValue> {
-    let mut handlers = None;
+    let mut listeners = Vec::new();
     let mut request_id = 0;
     let promise = Promise::new(&mut |resolve, reject| {
         request_id = storage.register(reject.clone());
         let read = request.clone();
         let rejected = reject.clone();
-        let success = Closure::<dyn FnMut(Event)>::new(move |_| match read.result() {
+        let success = move |_| match read.result() {
             Ok(value) => {
                 let _ = resolve.call1(&JsValue::UNDEFINED, &value);
             }
             Err(error) => {
                 let _ = rejected.call1(&JsValue::UNDEFINED, &error);
             }
-        });
+        };
         let failed = request.clone();
-        let error = Closure::<dyn FnMut(Event)>::new(move |_| {
+        let error = move |_| {
             let error = failed
                 .error()
                 .ok()
@@ -507,23 +503,15 @@ async fn read_request(storage: &Storage, request: IdbRequest) -> Result<JsValue,
                 .map(JsValue::from)
                 .unwrap_or_else(|| JsValue::from_str("Could not read the saved document"));
             let _ = reject.call1(&JsValue::UNDEFINED, &error);
-        });
-        let _ = listen(
-            request.as_ref(),
-            "success",
-            success.as_ref().unchecked_ref(),
-        );
-        let _ = listen(request.as_ref(), "error", error.as_ref().unchecked_ref());
-        handlers = Some((success, error));
+        };
+        let options = ListenOptions::default();
+        listeners = vec![
+            listen(&request, "success", options, success),
+            listen(&request, "error", options, error),
+        ];
     });
     let result = JsFuture::from(promise).await;
-    if let Some((success, error)) = &handlers {
-        let _ = request
-            .remove_event_listener_with_callback("success", success.as_ref().unchecked_ref());
-        let _ =
-            request.remove_event_listener_with_callback("error", error.as_ref().unchecked_ref());
-    }
-    drop(handlers);
+    drop(listeners);
     storage.0.borrow_mut().pending.remove(&request_id);
     result
 }
@@ -537,11 +525,11 @@ async fn restore(storage: &Storage, editor: Editor) -> Result<Option<String>, Js
         }
         {
             let mut state = storage.0.borrow_mut();
-            state.database_lifetime = native_resource(database.as_ref(), "database");
+            state.database_lifetime = release(database.as_ref(), "close");
             state.database = Some(database.clone());
         }
         let transaction = database.transaction_with_str("documents")?;
-        let _transaction_lifetime = native_resource(transaction.as_ref(), "transaction");
+        let _transaction_lifetime = release(transaction.as_ref(), "abort");
         let request = transaction
             .object_store("documents")?
             .get(&JsValue::from_str("current"))?;
@@ -567,8 +555,6 @@ async fn restore(storage: &Storage, editor: Editor) -> Result<Option<String>, Js
 
 pub fn install(editor: Editor, options: Options) {
     let storage = editor.storage.get_value();
-    storage.0.borrow_mut().signal =
-        rustify_makepad::listener_options().and_then(|options| options.get_signal());
     let initial = editor.doc.with_untracked(|doc| doc.data.clone());
     let hydration = storage.clone();
     leptos::task::spawn_local(async move {
@@ -667,7 +653,7 @@ pub fn install(editor: Editor, options: Options) {
             }
         }
     });
-    let visibility = Closure::<dyn FnMut(Event)>::new(move |_| {
+    let visibility = move |_| {
         if document().hidden() && !editor.storage.is_disposed() {
             let storage = editor.storage.get_value();
             if storage.0.borrow().dirty
@@ -680,8 +666,9 @@ pub fn install(editor: Editor, options: Options) {
                 }
             }
         }
-    });
-    let unload = Closure::<dyn FnMut(BeforeUnloadEvent)>::new(move |event: BeforeUnloadEvent| {
+    };
+    let unload = move |event: Event| {
+        let event: &BeforeUnloadEvent = event.unchecked_ref();
         if !editor.storage.is_disposed()
             && (editor
                 .storage
@@ -691,35 +678,12 @@ pub fn install(editor: Editor, options: Options) {
             event.prevent_default();
             event.set_return_value("");
         }
-    });
-    let _ = listen(
-        document().as_ref(),
-        "visibilitychange",
-        visibility.as_ref().unchecked_ref(),
-    );
-    let _ = listen(
-        window().as_ref(),
-        "beforeunload",
-        unload.as_ref().unchecked_ref(),
-    );
-    storage.0.borrow_mut().listeners = Some(Listeners { visibility, unload });
-}
-
-struct Listeners {
-    visibility: Closure<dyn FnMut(Event)>,
-    unload: Closure<dyn FnMut(BeforeUnloadEvent)>,
-}
-impl Drop for Listeners {
-    fn drop(&mut self) {
-        let _ = document().remove_event_listener_with_callback(
-            "visibilitychange",
-            self.visibility.as_ref().unchecked_ref(),
-        );
-        let _ = window().remove_event_listener_with_callback(
-            "beforeunload",
-            self.unload.as_ref().unchecked_ref(),
-        );
-    }
+    };
+    let options = ListenOptions::default();
+    storage.0.borrow_mut().listeners = vec![
+        listen(&document(), "visibilitychange", options, visibility),
+        listen(&window(), "beforeunload", options, unload),
+    ];
 }
 
 /// Explicit save waits until this committed snapshot has completed its storage transaction.

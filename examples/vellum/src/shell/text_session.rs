@@ -2,12 +2,13 @@
 
 use std::cell::Cell;
 
-use crate::browser_frame::{request_animation_frame_with_handle, AnimationFrameRequestHandle};
 use leptos::prelude::*;
-use rustify_ui::{Anchor, LocalRect, TextEdit};
+use rustify_ui::{
+    listen, next_frame, Anchor, FrameHandle, ListenOptions, Listener, LocalRect, TextEdit,
+};
 use serde_json::json;
-use wasm_bindgen::{closure::Closure, JsCast, JsValue};
-use web_sys::{Event, HtmlTextAreaElement};
+use wasm_bindgen::JsCast;
+use web_sys::HtmlTextAreaElement;
 
 use crate::app::Editor;
 use crate::text_layout::{font_spec, layout_text};
@@ -165,15 +166,7 @@ fn complete(editor: Editor, token: u64, draft: Option<String>) {
 
 struct Bindings {
     element: HtmlTextAreaElement,
-    input: Closure<dyn FnMut(Event)>,
-}
-
-impl Drop for Bindings {
-    fn drop(&mut self) {
-        let _ = self
-            .element
-            .remove_event_listener_with_callback("input", self.input.as_ref().unchecked_ref());
-    }
+    _input: Listener,
 }
 
 fn resize(editor: Editor, id: &str, element: &HtmlTextAreaElement) {
@@ -189,27 +182,18 @@ fn resize(editor: Editor, id: &str, element: &HtmlTextAreaElement) {
     let _ = style.set_property("height", &format!("{height}px"));
 }
 
-fn bind(
-    editor: Editor,
-    session: &Session,
-    element: HtmlTextAreaElement,
-) -> Result<Bindings, JsValue> {
+fn bind(editor: Editor, session: &Session, element: HtmlTextAreaElement) -> Bindings {
     let input = {
-        let element = element.clone();
+        let resized = element.clone();
         let id = session.id.clone();
-        Closure::new(move |_: Event| resize(editor, &id, &element))
+        listen(&element, "input", ListenOptions::default(), move |_| {
+            resize(editor, &id, &resized)
+        })
     };
-    let bindings = Bindings { element, input };
-    let options =
-        rustify_makepad::listener_options().unwrap_or_else(web_sys::AddEventListenerOptions::new);
-    bindings
-        .element
-        .add_event_listener_with_callback_and_add_event_listener_options(
-            "input",
-            bindings.input.as_ref().unchecked_ref(),
-            &options,
-        )?;
-    Ok(bindings)
+    Bindings {
+        element,
+        _input: input,
+    }
 }
 
 #[component]
@@ -257,7 +241,7 @@ fn SessionControl(
     });
     let value = Signal::derive(move || source.get().map_or_else(String::new, |node| node.text));
     let bindings = StoredValue::new_local(None::<Bindings>);
-    let request = StoredValue::new_local(None::<AnimationFrameRequestHandle>);
+    let request = StoredValue::new_local(None::<FrameHandle>);
     let mounted = RwSignal::new(false);
     let view = view! {
         <TextEdit anchor value transform multiline=true class=format!("vellum-text-session vellum-text-session-{token}") test_id="text-editor"
@@ -271,45 +255,37 @@ fn SessionControl(
         }
     });
     Effect::new(move || {
-        request.set_value(
-            request_animation_frame_with_handle(move || {
-                if editor.text_session.is_disposed()
-                    || !editor.text_session.with_untracked(|current| {
-                        current
-                            .as_ref()
-                            .is_some_and(|current| current.token == token)
-                    })
-                {
-                    return;
-                }
-                let Ok(Some(element)) =
-                    document().query_selector(&format!(".vellum-text-session-{token}"))
-                else {
-                    return;
-                };
-                let Ok(element) = element.dyn_into::<HtmlTextAreaElement>() else {
-                    return;
-                };
-                element.set_spellcheck(false);
-                let _ = element.set_attribute("aria-label", "Edit text");
-                if !session.with_value(|session| session.select_all) {
-                    let _ = element.set_selection_range(0, 0);
-                }
-                editor
-                    .text_element
-                    .set_value(Some((token, element.clone())));
-                match session.with_value(|session| bind(editor, session, element)) {
-                    Ok(listeners) => {
-                        bindings.set_value(Some(listeners));
-                        mounted.set(true);
-                    }
-                    Err(error) => editor
-                        .error
-                        .set(Some(format!("Text input unavailable: {error:?}"))),
-                }
-            })
-            .ok(),
-        );
+        request.set_value(Some(next_frame(move || {
+            if editor.text_session.is_disposed()
+                || !editor.text_session.with_untracked(|current| {
+                    current
+                        .as_ref()
+                        .is_some_and(|current| current.token == token)
+                })
+            {
+                return;
+            }
+            let Ok(Some(element)) =
+                document().query_selector(&format!(".vellum-text-session-{token}"))
+            else {
+                return;
+            };
+            let Ok(element) = element.dyn_into::<HtmlTextAreaElement>() else {
+                return;
+            };
+            element.set_spellcheck(false);
+            let _ = element.set_attribute("aria-label", "Edit text");
+            if !session.with_value(|session| session.select_all) {
+                let _ = element.set_selection_range(0, 0);
+            }
+            editor
+                .text_element
+                .set_value(Some((token, element.clone())));
+            bindings.set_value(Some(
+                session.with_value(|session| bind(editor, session, element)),
+            ));
+            mounted.set(true);
+        })));
     });
     Effect::new(move || {
         if !mounted.get() {

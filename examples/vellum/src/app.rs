@@ -4,9 +4,11 @@ use std::marker::PhantomData;
 use std::rc::Rc;
 use std::sync::Arc;
 
-use crate::browser_frame::{request_animation_frame_with_handle, AnimationFrameRequestHandle};
 use leptos::prelude::*;
-use rustify_ui::{AppHandle, GpuRegion, MountConfig, RegionState, Theme, ThemedScope};
+use rustify_ui::{
+    instance_failed, next_frame, provide_toasts, AppHandle, FrameHandle, GpuRegion, MountConfig,
+    RegionState, ResizeObservation, Theme, ThemedScope, ToastHandle,
+};
 use serde_json::{json, Value};
 use wasm_bindgen::{JsCast, JsValue};
 
@@ -53,6 +55,10 @@ pub struct Editor {
     pub text_session: RwSignal<Option<crate::shell::text_session::Session>>,
     pub text_element: StoredValue<Option<(u64, web_sys::HtmlTextAreaElement)>, LocalStorage>,
     pub shell: RwSignal<ShellState, LocalStorage>,
+    /// Held here rather than read from context: messages are also shown from
+    /// spawned tasks and browser callbacks, which run outside any reactive
+    /// owner.
+    pub toasts: ToastHandle,
     pub tool: RwSignal<String>,
     pub dark: RwSignal<bool>,
     pub grid: RwSignal<bool>,
@@ -118,6 +124,7 @@ impl Editor {
             text_session: RwSignal::new(None),
             text_element: StoredValue::new_local(None),
             shell: RwSignal::new_local(shell),
+            toasts: provide_toasts(),
             tool: RwSignal::new("select".into()),
             dark: RwSignal::new(options.theme == "dark"),
             grid: RwSignal::new(options.grid),
@@ -280,10 +287,7 @@ impl Editor {
     }
 
     fn ensure_mounted(self) -> Result<(), JsValue> {
-        let failed = rustify_makepad::listener_options()
-            .and_then(|options| options.get_signal())
-            .is_some_and(|signal| signal.aborted());
-        if self.doc.is_disposed() || failed {
+        if self.doc.is_disposed() || instance_failed() {
             Err(JsValue::from_str("Vellum is no longer mounted"))
         } else {
             Ok(())
@@ -563,22 +567,14 @@ fn now() -> f64 {
         .map_or(0.0, |performance| performance.now())
 }
 
-fn schedule_raster_frame(
-    editor: Editor,
-    frame: StoredValue<Option<AnimationFrameRequestHandle>, LocalStorage>,
-) {
+fn schedule_raster_frame(editor: Editor, frame: StoredValue<Option<FrameHandle>, LocalStorage>) {
     if frame.get_value().is_some() || editor.rasters.with_value(|cache| cache.pending() == 0) {
         return;
     }
-    match request_animation_frame_with_handle(move || {
+    frame.set_value(Some(next_frame(move || {
         frame.update_value(|request| *request = None);
         editor.image_version.update(|version| *version += 1);
-    }) {
-        Ok(request) => frame.set_value(Some(request)),
-        Err(error) => editor
-            .error
-            .set(Some(format!("Raster refresh unavailable: {error:?}"))),
-    }
+    })));
 }
 
 pub fn mount(container_id: &str) -> Result<u32, JsValue> {
@@ -653,31 +649,24 @@ fn App() -> impl IntoView {
     });
     let projection_cpu = RwSignal::new(0.0);
     let first_resize = StoredValue::new(false);
-    let observation = StoredValue::new_local(None::<rustify_makepad::ResizeObservation>);
-    let raster_frame = StoredValue::new_local(None::<AnimationFrameRequestHandle>);
+    let observation = StoredValue::new_local(None::<ResizeObservation>);
+    let raster_frame = StoredValue::new_local(None::<FrameHandle>);
     let pointer_bindings = StoredValue::new_local(None::<crate::pointer::Bindings>);
     let key_bindings = StoredValue::new_local(None::<crate::keys::Bindings>);
     let drop_bindings = StoredValue::new_local(None::<crate::fileio::DropBindings>);
-    match crate::keys::install(editor) {
-        Ok(bindings) => key_bindings.set_value(Some(bindings)),
-        Err(error) => editor
-            .error
-            .set(Some(format!("Keyboard input unavailable: {error:?}"))),
-    }
+    key_bindings.set_value(Some(crate::keys::install(editor)));
     Effect::new(move || {
         let Some(canvas) = overlay.get() else {
             return;
         };
-        match crate::fileio::install_drop(editor, canvas.clone().unchecked_into()) {
-            Ok(bindings) => drop_bindings.set_value(Some(bindings)),
-            Err(error) => crate::shell::report(editor, Err(error)),
-        }
-        match crate::pointer::install(editor, canvas.unchecked_into()) {
-            Ok(bindings) => pointer_bindings.set_value(Some(bindings)),
-            Err(error) => editor
-                .error
-                .set(Some(format!("Pointer input unavailable: {error:?}"))),
-        }
+        drop_bindings.set_value(Some(crate::fileio::install_drop(
+            editor,
+            canvas.clone().unchecked_into(),
+        )));
+        pointer_bindings.set_value(Some(crate::pointer::install(
+            editor,
+            canvas.unchecked_into(),
+        )));
     });
     Effect::new(move || {
         let Some(area_element) = area.get() else {
@@ -698,7 +687,7 @@ fn App() -> impl IntoView {
             }
         };
         update();
-        observation.set_value(rustify_makepad::observe_resize(&observed, update));
+        observation.set_value(rustify_ui::observe_resize(&observed, update));
     });
     on_cleanup(move || {
         pointer_bindings.update_value(|bindings| {

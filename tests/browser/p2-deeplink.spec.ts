@@ -1,4 +1,5 @@
 import { expect, Page, test } from "@playwright/test";
+import { REGION_START_MS } from "./support";
 
 /// M4 V6: a URL somebody was sent.
 ///
@@ -56,7 +57,7 @@ test.describe("M4 V6: three deep links and one that names nothing", () => {
         page,
     }) => {
         const failures = await open(page, "./objects/42");
-        await expect.poll(async () => (await snapshot(page)).region, { timeout: 30_000 }).toBe(
+        await expect.poll(async () => (await snapshot(page)).region, { timeout: REGION_START_MS }).toBe(
             "ready"
         );
         // A region resolves its resources against where the application is

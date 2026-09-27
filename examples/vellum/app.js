@@ -11,28 +11,6 @@ let mountGeneration = 0;
 const entry = location.href;
 let firstLoad = null;
 
-// Fatal cleanup must stay outside the failed Wasm instance. This owns only
-// native resource teardown; document reads, writes and serialization are Rust.
-window.__vellumAbortResource = (signal, resource, kind) => {
-    const close = () => {
-        try {
-            if (kind === "raf") cancelAnimationFrame(resource);
-            else if (kind === "font") document.fonts.delete(resource);
-            else if (kind === "transaction") resource.abort();
-            else if (kind === "database") resource.close();
-            else if (resource.readyState === "done") resource.result?.close();
-        } catch { /* Already completed/closed resources have nothing left to stop. */ }
-    };
-    const lateOpen = () => { if (signal.aborted) close(); };
-    if (kind === "open") resource.addEventListener("success", lateOpen, { once: true });
-    signal.addEventListener("abort", close, { once: true });
-    if (signal.aborted) close();
-    return () => {
-        signal.removeEventListener("abort", close);
-        if (kind === "open") resource.removeEventListener("success", lateOpen);
-    };
-};
-
 // Everything a remount reads back: the autosaved document in IndexedDB, and
 // the options, welcome flag and fallback document in localStorage.
 async function forgetStorage() {

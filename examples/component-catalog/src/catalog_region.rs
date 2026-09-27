@@ -263,7 +263,11 @@ fn slot(category: Category) -> &'static str {
         | Category::Menu
         | Category::Dialog
         | Category::DataTable
-        | Category::Tree => "note_slot",
+        | Category::Tree
+        | Category::Toast
+        | Category::NumberField
+        | Category::ColorField
+        | Category::ToggleGroup => "note_slot",
     }
 }
 

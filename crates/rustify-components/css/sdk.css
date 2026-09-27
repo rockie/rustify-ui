@@ -1,0 +1,99 @@
+/* The SDK's part of a Tailwind v4 build: where the component classes are,
+   what the theme utilities resolve to, and the rules no utility expresses.
+
+   Two builds import it. `rustify.tailwind.css` beside it makes the committed
+   `rustify.css` that a page without Tailwind links, and an application's own
+   input imports it to get the components' classes and its own in one
+   stylesheet. It imports no Tailwind itself: which of Tailwind's layers a
+   build takes, preflight included, is that build's decision.
+
+   Nothing here selects a bare element. Every rule is either theme
+   configuration or under `[data-rustify-scope]`, so the host page's own
+   elements are left as they are. */
+
+/* Relative to this file, so it names the component sources whichever input
+   imports it. */
+@source "../src";
+
+/* Dark is *this* SDK's scope in dark, not any `.dark` ancestor. A host page
+   that uses the shadcn convention has a `.dark` on its own root; without this
+   the default variant would make our components follow it. */
+@custom-variant dark (&:is([data-rustify-scope][data-theme="dark"] *));
+
+/* The rules no utility expresses. Both are scoped to this SDK's own root; the
+   slider's came from Rust/UI, where it selected the host page's range controls
+   through a bare element selector. */
+@import "./slider.css";
+@import "./controls.css";
+
+/* The utilities reference these names, and the SDK writes their values onto
+   the scope root at mount (`crates/rustify-ui/src/theme.rs`). `inline` means a
+   utility resolves to `var(--primary)` rather than to a copy of its value, so
+   one write to the scope root moves everything drawn from it. */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-card: var(--card);
+  --color-popover: var(--popover);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* So `rounded-md` follows the scope's radius instead of Tailwind's scale. */
+  --radius-sm: calc(var(--radius) - 2px);
+  --radius-md: var(--radius);
+  --radius-lg: calc(var(--radius) + 2px);
+}
+
+/* Tailwind's spacing unit has the name of the scope's layout gap below, which
+   is 8px. `inline` compiles `p-4` to a fixed `calc(0.25rem * 4)` instead of
+   reading the scope's `var(--spacing)`, where every padding, gap and size
+   would come out twice as large. `reference` keeps the unit off `:root`,
+   where a host page's own `var(--spacing, 8px)` outside a scope would read it:
+   the name is a scope token, and those are written only to a scope root. */
+@theme inline reference {
+  --spacing: 0.25rem;
+}
+
+/* The light theme, as a default. A scope carries its own values a moment
+   later; these are what a component looks like before that write lands, and
+   what one rendered outside a scope falls back to. `--font-size`, `--spacing`
+   and `--motion-duration` are read by hand-written rules rather than by
+   utilities, which is why they appear here and not above. */
+[data-rustify-scope] {
+  --background: #f9fafb;
+  --foreground: #1d2939;
+  --primary: #1570ef;
+  --primary-foreground: #ffffff;
+  --secondary: #eaecf0;
+  --secondary-foreground: #1d2939;
+  --muted: #f2f4f7;
+  --muted-foreground: #667085;
+  --accent: #12b76a;
+  --accent-foreground: #ffffff;
+  --destructive: #d92d20;
+  --destructive-foreground: #ffffff;
+  --card: #ffffff;
+  --popover: #ffffff;
+  --success: #12b76a;
+  --warning: #f79009;
+  --border: #858f9e;
+  --input: #ffffff;
+  --ring: #1570ef;
+  --radius: 6px;
+  --font-size: 15px;
+  --spacing: 8px;
+  --motion-duration: 150ms;
+}

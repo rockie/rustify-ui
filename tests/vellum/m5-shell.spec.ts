@@ -31,7 +31,7 @@ test("theme, command palette and responsive panels preserve the original smoke b
     await waitForReady(page);
     await page.getByRole("button", { name: "Toggle theme", exact: true }).click();
     await expect(page.locator(".vellum").first()).toHaveAttribute("data-theme", "light");
-    await page.keyboard.press("Control+k");
+    await page.keyboard.press("ControlOrMeta+k");
     await page.getByRole("textbox", { name: "Search commands" }).fill("rulers");
     await page.keyboard.press("Enter");
     await expect(page.locator("#modal-backdrop")).toBeHidden();
@@ -53,7 +53,7 @@ test("theme, command palette and responsive panels preserve the original smoke b
     await page.screenshot({ path: info.outputPath("responsive-dark.png") });
 });
 
-test("focused inspector drafts preview live, commit one undo step and reject invalid hex", async ({ page }) => {
+test("focused inspector drafts preview live, commit one undo step, revert on Escape and reject invalid hex", async ({ page }) => {
     await waitForReady(page);
     await page.locator("[data-page]").nth(2).click();
     const node = await page.evaluate(() => window.vellum.createAtCenter("rect", { w: 180, h: 100, fill: "#b8a2e2" }));
@@ -66,6 +66,15 @@ test("focused inspector drafts preview live, commit one undo step and reject inv
     expect(await page.evaluate(id => window.vellum.doc.get(id).w, node.id)).toBe(350);
     await width.press("Tab");
     await page.evaluate(() => window.vellum.actions.undo());
+    expect(await page.evaluate(id => window.vellum.doc.get(id).w, node.id)).toBe(180);
+    await width.focus();
+    await width.press("ControlOrMeta+a");
+    await width.pressSequentially("420", { delay: 40 });
+    await expect(width).toHaveValue("420");
+    expect(await page.evaluate(id => window.vellum.doc.get(id).w, node.id)).toBe(420);
+    await width.press("Escape");
+    await expect(width).toBeFocused();
+    await expect(width).toHaveValue("180");
     expect(await page.evaluate(id => window.vellum.doc.get(id).w, node.id)).toBe(180);
     const hex = page.getByRole("textbox", { name: "fill hex color", exact: true });
     await hex.fill("not-a-color");
@@ -229,7 +238,7 @@ test("document and page dialogs apply names and keep a new document undoable", a
     await page.locator("#prompt-value").fill("Renamed page");
     await page.getByRole("button", { name: "Save", exact: true }).click();
     expect(await page.evaluate(() => window.vellum.doc.page.name)).toBe("Renamed page");
-    await page.keyboard.press("Control+n");
+    await page.keyboard.press("ControlOrMeta+n");
     await expect(page.getByRole("heading", { name: "Start with a clean canvas." })).toBeVisible();
     await page.getByRole("button", { name: "New document", exact: true }).click();
     expect(await page.evaluate(() => window.vellum.doc.data.pages.length)).toBe(1);
@@ -259,7 +268,7 @@ test("zoom and selection menus support keyboard navigation and outside dismissal
 
 test("tokens, CSS, settings and export dialogs expose their original controls", async ({ page }) => {
     await waitForReady(page);
-    await page.keyboard.press("Control+k");
+    await page.keyboard.press("ControlOrMeta+k");
     await page.getByRole("textbox", { name: "Search commands" }).fill("Edit design tokens");
     await page.keyboard.press("Enter");
     await expect(page.getByRole("heading", { name: "Design tokens", exact: true })).toBeVisible();

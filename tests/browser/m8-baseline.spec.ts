@@ -1,5 +1,5 @@
 import { expect, Page, test } from "@playwright/test";
-import { settle, waitForReady } from "./support";
+import { REGION_START_MS, settle, waitForReady } from "./support";
 import { EVIDENCE } from "../tier";
 
 /// Every number here is taken inside the page. A round trip through the test
@@ -172,7 +172,7 @@ test.describe("M8 V12: what a long run leaves behind", { tag: EVIDENCE }, () => 
         expect(outcome.errors).toBe(before.errors);
 
         // Still a working region afterwards: it answers a real pointer.
-        await expect.poll(async () => (await snapshot(page)).region, { timeout: 20_000 }).toBe("ready");
+        await expect.poll(async () => (await snapshot(page)).region, { timeout: REGION_START_MS }).toBe("ready");
         await settle(region);
         const box = (await region.boundingBox())!;
         await page.mouse.click(box.x + box.width * 0.5, box.y + box.height * 0.7);

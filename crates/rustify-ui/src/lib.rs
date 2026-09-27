@@ -69,7 +69,9 @@ pub use gpu::{
 #[cfg(target_arch = "wasm32")]
 pub use i18n::{browser_languages, format_date, format_number, provide_locale, use_locale};
 #[cfg(target_arch = "wasm32")]
-pub use listeners::{listen, ListenOptions, Listener};
+pub use listeners::{
+    instance_failed, listen, release_on_abort, AbortRelease, ListenOptions, Listener,
+};
 #[cfg(target_arch = "wasm32")]
 pub use overlay::{use_overlay, Anchor, Layer, OverlayStack};
 #[cfg(target_arch = "wasm32")]

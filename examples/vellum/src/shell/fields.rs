@@ -1,8 +1,8 @@
 //! Controlled property fields retain their draft while the user is editing.
 
 use leptos::prelude::*;
+use rustify_ui::Draft;
 use serde_json::{json, Value};
-use web_sys::HtmlInputElement;
 
 use crate::app::Editor;
 use crate::document::Node;
@@ -146,53 +146,31 @@ pub fn NumberField(
     #[prop(optional)] min: Option<f64>,
     #[prop(optional)] max: Option<f64>,
 ) -> impl IntoView {
-    let focused = RwSignal::new(false);
-    let dirty = RwSignal::new(false);
-    let draft = RwSignal::new(String::new());
-    let value = Memo::new(move |_| formatted(number(nodes, prop), 100.0));
-    let commit = move || {
-        if dirty.get_untracked() {
-            let number = draft
-                .get_untracked()
-                .parse::<f64>()
-                .ok()
-                .filter(|value| value.is_finite());
-            if let Some(number) = number {
-                shell::set_property(editor, prop, json!(number), false);
-            } else {
-                // Invalid input still finishes an earlier valid live preview.
-                editor.doc.with_untracked(|doc| {
-                    editor.history.update_value(|history| {
-                        history.commit(doc);
-                    });
-                });
-                draft.set(value.get_untracked());
-            }
-            dirty.set(false);
-        }
-    };
+    let value = Memo::new(move |_| number(nodes, prop));
+    // A native number input reports text on the way to a number ("-", "1e")
+    // as empty, which the draft takes for text that is not a number yet. The
+    // typed text stays in the field: a draft writes nothing back until the
+    // edit ends.
+    let draft = Draft::new(
+        value.into(),
+        |value: &f64| formatted(*value, 100.0),
+        |text| text.parse::<f64>().ok().filter(|value| value.is_finite()),
+    )
+    .with_preview(move |value| shell::set_property(editor, prop, json!(value), true))
+    .with_commit(move |value| shell::set_property(editor, prop, json!(value), false))
+    .with_cancel(move || crate::pointer::cancel_history(editor));
     view! {
         <label class="field" title=prop>
             <span>{if symbol.is_empty() {label.into_any()} else {icon(symbol, 12)}}</span>
             <input type="number" data-prop=prop aria-label=prop step=step min=min max=max
-                prop:value=move || if focused.get() { draft.get() } else { value.get() }
-                on:focus=move |_| {draft.set(value.get_untracked()); focused.set(true);}
-                on:input=move |event| {
-                    let input = event_target::<HtmlInputElement>(&event);
-                    if !focused.get_untracked() {focused.set(true);}
-                    dirty.set(true);
-                    let value = input.value_as_number();
-                    if value.is_finite() {
-                        draft.set(input.value());
-                        shell::set_property(editor, prop, json!(value), true);
-                    } else {
-                        // Reassigning value would erase the browser's partial minus/exponent.
-                        draft.update_untracked(|draft| *draft = input.value());
-                    }
-                }
-                on:change=move |event| {draft.set(event_target_value(&event)); dirty.set(true); commit();}
-                on:blur=move |_| {commit(); focused.set(false);}
-                on:keydown=move |event| {if event.key() == "Enter" {commit(); focused.set(false);}}
+                prop:value=draft.text()
+                on:focus=draft.on_focus()
+                on:input=draft.on_input()
+                // The spin buttons end a step with `change` alone, no Enter or
+                // blur: every step is an edit, and an undo step, of its own.
+                on:change=move |_| draft.commit()
+                on:blur=draft.on_blur()
+                on:keydown=draft.on_keydown()
             />
             {(!unit.is_empty()).then(|| view! {<i class="unit">{unit}</i>})}
         </label>
@@ -232,22 +210,21 @@ pub fn ColorField(
     prop: &'static str,
     #[prop(optional)] opacity: Option<&'static str>,
 ) -> impl IntoView {
-    let focused = RwSignal::new(false);
-    let draft = RwSignal::new(String::new());
-    let dirty = RwSignal::new(false);
     let picker_dirty = RwSignal::new(false);
     let source = Memo::new(move |_| text(nodes, prop));
-    let commit = move || {
-        if dirty.get_untracked() {
-            if let Some(value) = parse_hex(&draft.get_untracked()) {
-                shell::set_property(editor, prop, Value::String(value), false);
-            } else {
-                shell::toast(editor, "Enter a 3- or 6-digit hex color, or None.");
-                draft.set(hex_display(&source.get_untracked()));
-            }
-            dirty.set(false);
-        }
-    };
+    // The hex is judged once, when the edit ends, and not as it is typed:
+    // nothing is previewed, and text that is not a colour is refused with a
+    // message rather than settling on a colour typed earlier in the edit. So
+    // the draft's value is the text itself.
+    let hex = Draft::new(
+        source.into(),
+        |value: &String| hex_display(value),
+        |text| Some(text.to_owned()),
+    )
+    .with_commit(move |text| match parse_hex(&text) {
+        Some(color) => shell::set_property(editor, prop, Value::String(color), false),
+        None => shell::toast(editor, "Enter a 3- or 6-digit hex color, or None."),
+    });
     view! {
         <div class="fill-row">
             <div class="hex-field">
@@ -257,12 +234,11 @@ pub fn ColorField(
                     on:blur=move |_| {if picker_dirty.get_untracked() {shell::set_property(editor, prop, Value::String(source.get_untracked()), false); picker_dirty.set(false);}}
                 />
                 <input type="text" data-hex=prop aria-label=format!("{prop} hex color") spellcheck="false"
-                    prop:value=move || if focused.get() {draft.get()} else {hex_display(&source.get())}
-                    on:focus=move |_| {draft.set(hex_display(&source.get_untracked())); focused.set(true);}
-                    on:input=move |event| {focused.set(true); draft.set(event_target_value(&event)); dirty.set(true);}
-                    on:change=move |event| {draft.set(event_target_value(&event)); dirty.set(true); commit();}
-                    on:blur=move |_| {commit(); focused.set(false);}
-                    on:keydown=move |event| {if event.key() == "Enter" {commit(); focused.set(false);}}
+                    prop:value=hex.text()
+                    on:focus=hex.on_focus()
+                    on:input=hex.on_input()
+                    on:blur=hex.on_blur()
+                    on:keydown=hex.on_keydown()
                 />
             </div>
             {opacity.map(|prop| view! {<NumberField editor nodes prop unit="%" min=0.0 max=100.0/>})}

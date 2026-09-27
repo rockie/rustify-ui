@@ -1,8 +1,7 @@
-use crate::browser_frame::{request_animation_frame_with_handle, AnimationFrameRequestHandle};
 use leptos::prelude::*;
-use rustify_ui::{Anchor, Layer};
-use wasm_bindgen::{closure::Closure, JsCast};
-use web_sys::{Event, HtmlElement, KeyboardEvent};
+use rustify_ui::{listen, next_frame, Anchor, FrameHandle, Layer, ListenOptions};
+use wasm_bindgen::JsCast;
+use web_sys::{HtmlElement, KeyboardEvent};
 
 use crate::{affine::Point, app::Editor};
 
@@ -154,40 +153,25 @@ fn entries(editor: Editor, kind: MenuKind) -> Vec<Entry> {
     }
 }
 
-struct OutsideClick(Closure<dyn FnMut(Event)>);
-impl Drop for OutsideClick {
-    fn drop(&mut self) {
-        let _ = document()
-            .remove_event_listener_with_callback("pointerdown", self.0.as_ref().unchecked_ref());
-    }
-}
-
 #[component]
 pub fn Menus(editor: Editor) -> impl IntoView {
-    let listener = Closure::new(move |event: Event| {
-        let inside = event
-            .target()
-            .and_then(|target| target.dyn_into::<web_sys::Element>().ok())
-            .and_then(|element| element.closest("#context-menu,#main-menu,#zoom-value").ok())
-            .flatten()
-            .is_some();
-        if !inside && editor.shell.with_untracked(|shell| shell.menu.is_some()) {
-            close(editor);
-        }
-    });
-    let options =
-        rustify_makepad::listener_options().unwrap_or_else(web_sys::AddEventListenerOptions::new);
-    let _ = document().add_event_listener_with_callback_and_add_event_listener_options(
+    let outside = listen(
+        &document(),
         "pointerdown",
-        listener.as_ref().unchecked_ref(),
-        &options,
+        ListenOptions::default(),
+        move |event| {
+            let inside = event
+                .target()
+                .and_then(|target| target.dyn_into::<web_sys::Element>().ok())
+                .and_then(|element| element.closest("#context-menu,#main-menu,#zoom-value").ok())
+                .flatten()
+                .is_some();
+            if !inside && editor.shell.with_untracked(|shell| shell.menu.is_some()) {
+                close(editor);
+            }
+        },
     );
-    let listener = StoredValue::new_local(Some(OutsideClick(listener)));
-    on_cleanup(move || {
-        listener.update_value(|listener| {
-            listener.take();
-        })
-    });
+    on_cleanup(move || drop(outside));
     let state = Memo::new(move |_| editor.shell.with(|shell| shell.menu.clone()));
     view! { {move || state.get().map(|state| view! { <Menu editor state/> })} }
 }
@@ -235,18 +219,16 @@ fn Menu(editor: Editor, state: MenuState) -> impl IntoView {
             );
         }
     });
-    let focus = StoredValue::new_local(None::<AnimationFrameRequestHandle>);
+    let focus = StoredValue::new_local(None::<FrameHandle>);
     node.on_load(move |node| {
         // Layer records the trigger before this deferred menu focus.
-        if let Ok(handle) = request_animation_frame_with_handle(move || {
+        focus.set_value(Some(next_frame(move || {
             if let Ok(Some(first)) = node.query_selector("button:not([disabled])") {
                 if let Some(first) = first.dyn_ref::<HtmlElement>() {
                     let _ = first.focus();
                 }
             }
-        }) {
-            focus.set_value(Some(handle));
-        }
+        })));
     });
     on_cleanup(move || {
         focus.update_value(|focus| {

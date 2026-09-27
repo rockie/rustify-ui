@@ -48,8 +48,7 @@ pub fn open(editor: Editor) {
 pub fn Palette(editor: Editor) -> impl IntoView {
     let query = RwSignal::new(String::new());
     let selected = RwSignal::new(0usize);
-    let scrolling =
-        StoredValue::new_local(None::<crate::browser_frame::AnimationFrameRequestHandle>);
+    let scrolling = StoredValue::new_local(None::<rustify_ui::FrameHandle>);
     on_cleanup(move || {
         scrolling.update_value(|handle| {
             if let Some(handle) = handle.take() {
@@ -78,7 +77,7 @@ pub fn Palette(editor: Editor) -> impl IntoView {
                         selected.update(|index| *index = if event.key() == "ArrowDown" { (*index + 1).min(last) } else { index.saturating_sub(1) });
                         // The focused class follows the signal; scrolling waits for that DOM update.
                         scrolling.update_value(|handle| { if let Some(handle) = handle.take() { handle.cancel(); } });
-                        if let Ok(handle) = crate::browser_frame::request_animation_frame_with_handle(move || {
+                        scrolling.set_value(Some(rustify_ui::next_frame(move || {
                             if let Ok(Some(element)) = document().query_selector("#command-results .focused") {
                                 if let Some(element) = element.dyn_ref::<web_sys::HtmlElement>() {
                                     let options = web_sys::ScrollIntoViewOptions::new();
@@ -86,7 +85,7 @@ pub fn Palette(editor: Editor) -> impl IntoView {
                                     element.scroll_into_view_with_scroll_into_view_options(&options);
                                 }
                             }
-                        }) { scrolling.set_value(Some(handle)); }
+                        })));
                     }
                     "Enter" => {
                         if let Some((_,action)) = filtered.with_untracked(|items| items.get(selected.get_untracked()).copied()) {

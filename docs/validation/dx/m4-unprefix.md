@@ -109,3 +109,15 @@
 作用域默认令牌改值（`--primary`/`--ring`/`--border`）在快照里没有差异：作用域在挂载时把 `Theme::light()`/`dark()` 的值写到自己的根上，覆盖默认值（`crates/rustify-ui/src/theme.rs`），而探针只记录作用域内的元素。
 
 未验证（M4 退出条件，留给主 agent）：component-catalog、property-workbench、data-workbench 回归层；`p3-table.spec.ts:31` 与 `p2-catalog` 字符串同步后的对应用例。
+
+## 集成验收（主 agent，2026-09-27）
+
+M4 余下的退出条件是 component-catalog、property-workbench、data-workbench 的回归层。在拣入 M4–M7 之后的工作树上逐 project 串行跑（`--workers=2`，Chromium 141 经 `RUSTIFY_CHROMIUM`，同机另有构建负载）：
+
+| project | 结果 | 墙钟 |
+| --- | --- | --- |
+| component-catalog | 74/74（含 M5 的覆盖断言；首轮 73/74 失败的一项是新断言碰上旧构建，重建后通过） | 1.8 min |
+| property-workbench | 126/126 | 3.9 min |
+| data-workbench | 51/51 | 2.8 min |
+
+计算样式对比的偏差按本记录「验收记录」处理：标准 CSS 属性 0 差异；非 0 的只有两个自定义属性，来自 SDK 源注释/标识符里的普通单词编成的无人使用的 utility（发现 5）。决定接受、不加屏蔽：屏蔽清单随注释失效，放进共享的 `sdk.css` 还会让应用自己写的 `grid`/`table` 失去规则。计划 M4 行的「计算样式差异 0」据此读作「标准属性差异 0」，已在计划正文注明。

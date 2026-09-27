@@ -1,7 +1,7 @@
 import { expect, Page } from "@playwright/test";
 
 import { rounds } from "../tier";
-import { test } from "./support";
+import { REGION_START_MS, test } from "./support";
 
 /// M2 V3: one theme, adopted by both halves, in every state a control has -
 /// and a scope that asks for less movement gets less movement.
@@ -61,7 +61,7 @@ test.describe("M2 V3: a theme both halves adopt", () => {
     });
 
     test("the region's pixels move with the panel, not after it", async ({ page }) => {
-        await expect.poll(async () => (await snapshot(page)).region, { timeout: 30_000 }).toBe(
+        await expect.poll(async () => (await snapshot(page)).region, { timeout: REGION_START_MS }).toBe(
             "ready"
         );
         const region = page.getByTestId("catalogue-region");

@@ -1,0 +1,15 @@
+{
+  "tailwindCSS.experimental.configFile": {
+    "crates/rustify-components/css/rustify.tailwind.css": "crates/**",
+    "examples/component-catalog/tailwind.css": "examples/component-catalog/**"
+  },
+  "tailwindCSS.includeLanguages": {
+    "rust": "html"
+  },
+  "tailwindCSS.experimental.classRegex": [
+    ["clx!\\s*\\{([^}]*)\\}", "\"([^\"]*)\""],
+    ["variants!\\s*\\{([\\s\\S]*?)\\bcomponent\\s*:", "\"([^\"]*)\""],
+    "merge\\(\\s*\"([^\"]*)\"",
+    "const\\s+[A-Z][A-Z0-9_]*\\s*:\\s*&str\\s*=\\s*\"([^\"]*)\""
+  ]
+}

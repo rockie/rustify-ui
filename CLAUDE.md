@@ -11,7 +11,7 @@ Rustify UI is an experimental SDK that runs Leptos (CSR, DOM) and Makepad (GPU, 
 - `mise install` provides everything `mise.toml` pins: stable Rust 1.98.1 with the `wasm32-unknown-unknown` target, rustfmt and clippy, mbx 1.15.0, and Tailwind's standalone CLI 4.1.13 (`xtask` refuses any other version; `RUSTIFY_TAILWIND=<path>` points it at another copy). There is no nightly, no `rust-toolchain.toml` and no `build-std`.
 - Every build goes through **mbx** (the compiler cache): `mbx build`, `mbx test`, `mbx clippy`, `mbx xtask ...`. Plain `cargo` is wrapped by mise too, but anything that launches a *nested* build must call `mbx` explicitly, because `mbx run` gives its child a plain `$CARGO`.
 - mise's postinstall runs `scripts/link-libllvm.sh`. mbx clears `DYLD_*`, so without that link rust-lld cannot load libLLVM. `mbx xtask doctor` reports toolchain state and never changes it.
-- Only the browser tests need Node 26: `npm ci && npx playwright install chromium`. Generating CSS does not.
+- Only the browser tests need Node 26: `npm ci && npx playwright install chromium`. Generating CSS does not. Where a Chromium is preinstalled and downloading another is not an option, `RUSTIFY_CHROMIUM=<path>` makes both Playwright configs launch it.
 
 ## Commands
 
@@ -63,10 +63,10 @@ VELLUM_TWIN=baseline VELLUM_BASELINE_DIR=../rustify-ui-vellum-baseline RUSTIFY_T
 The workspace excludes `makepad/` (a fork with its own workspace) and `ref/`.
 
 - `crates/rustify-ui` is the public SDK.
-- `crates/rustify-components` holds the DOM component catalogue of twenty categories:
+- `crates/rustify-components` holds the DOM component catalogue of twenty-four categories:
   - The `clx!` / `variants!` class macros, forked from Rust/UI.
   - `CATALOG`, from which `docs/components.md` is generated.
-  - The Tailwind input and the **committed** output under `css/`.
+  - Under `css/`: `sdk.css`, the SDK's Tailwind layer (component sources, the scope-bound `dark` variant, the token utilities, the scope's default tokens), which every Tailwind input imports; `rustify.tailwind.css`, which compiles it alone; and its **committed** output `rustify.css`.
 - `crates/rustify-makepad` is the private Makepad integration:
   - The `RegionApp` trait and a region registry with never-reused `RegionId`s.
   - The pump entry points exported to JS, deferred props and the action outbox.
@@ -75,6 +75,7 @@ The workspace excludes `makepad/` (a fork with its own workspace) and `ref/`.
 - `web/loader.js` and `web/runtime.css` are the page boot. `boot()` instantiates one wasm instance, checks the bridge fingerprint, installs host hooks and owns the static failure notice.
 - `examples/*` each have `src/` (the Rust app), `index.html`, and an `app.js` page script. The script calls `boot()` and exposes a `window.__<example>` handle that the Playwright specs drive.
 - `xtask build-web` runs the fork's `cargo-makepad` through `mbx`, pulls the generated message-bridge JS out of the wasm with `wasmi` and ships it as a static ES module, then writes `build-manifest.json`. There is no runtime codegen, which is what keeps the strict CSP.
+- Stylesheets in `build-web`: an example with a `tailwind.css` of its own (component-catalog) has it compiled with the mise-pinned CLI, minified, to `tailwind.css` in the product, which its page links; nothing generated is committed, and the build fails up front when the CLI is missing or the wrong version. An example without one that depends on `rustify-components` gets the committed `rustify.css` copied in, and needs no Tailwind.
 
 Runtime contracts to know before touching the runtime (the full list is in `docs/architecture.md`):
 
@@ -83,9 +84,9 @@ Runtime contracts to know before touching the runtime (the full list is in `docs
   - A trap kills only its own instance. The loader then aborts that instance's page-level listeners, clears its `data-rustify-url-owner` mark, drops its tasks, destroys its regions, and only then shows the notice.
   - A slot restarts at most three times.
   - Within one instance, `mount()` scopes live and die together.
-- **Page-level listeners** go through `rustify_makepad::listener_options` so they carry the instance's abort signal: `panic = "abort"` runs no destructors.
+- **Page-level listeners** go through `rustify_ui::listen` (inside the SDK, `listener_options`), so they carry the instance's abort signal: `panic = "abort"` runs no destructors. What the instance holds that is not a listener goes through `release_on_abort`.
 - **Pump.** JS calls `rustify_region_process(region, msg)`, and the region's `Cx` is taken out of the registry for the whole pump. Deferred `apply` closures run first, so a re-entrant `apply` only queues. Actions reach the application after the pump returns.
-- **Controlled values.** A control never holds the value it shows. Each input is a request, and the control is put back in step with whatever the application decided.
+- **Controlled values.** A control never holds the value it shows. Each input is a request, and the control is put back in step with whatever the application decided. The one exception is a `rustify_ui::Draft` field (number, colour): only while it has focus it keeps the typed text, and leaving it returns to the application's value.
 - **Action streams.** `Pace::Continuous("<name>")` states supersede only their own stream. Discrete events are never merged or reordered.
 - **Decisions the host must make synchronously**, such as a wheel's `preventDefault`, are answered from the region's report of its last draw. The answer is one event old by design.
 - **Target split.**
@@ -94,7 +95,7 @@ Runtime contracts to know before touching the runtime (the full list is in `docs
 
 ## Conventions
 
-- **Component classes** are unprefixed Tailwind v4 utilities, the same ones an application writes, so a caller's `class` replaces a component's class of the same kind through `tw_merge`. After changing a class string, run `mbx xtask css` and commit `crates/rustify-components/css/rustify.css`; otherwise the class has no rule and CI's `--check` fails. Likewise, regenerate `docs/components.md` after changing the catalogue.
+- **Component classes** are unprefixed Tailwind v4 utilities, the same ones an application writes, so a caller's `class` replaces a component's class of the same kind through `tw_merge`. After changing a class string in `crates/rustify-components`, run `mbx xtask css` and commit `crates/rustify-components/css/rustify.css`; otherwise the class has no rule and CI's `--check` fails. That stylesheet holds the SDK's classes only: an example's own classes need a `tailwind.css` in the example (see `docs/quickstart.md`, "Using Tailwind v4 in your app"), and a Tailwind input always keeps `source(none)` on its utilities import. Likewise, regenerate `docs/components.md` after changing the catalogue.
 - **Scripted edits.** `cargo fmt` reflows lines, so a scripted find/replace on Rust source must assert that the old text was found.
 - **Plans.**
   - Development plans live in `docs/plan/*.md` and are written in Chinese. Milestone evidence goes in `docs/validation/`, and release reports go in `docs/reports/`.

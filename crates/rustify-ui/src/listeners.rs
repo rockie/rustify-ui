@@ -9,17 +9,21 @@
 //! So each of them is registered with the instance's own abort signal as well.
 //! Dropping is still the normal path and still what happens on an ordinary
 //! unmount; aborting is the one removal that works when no Rust can run.
+//!
+//! The same holds for what the instance keeps on the page that is not a
+//! listener - a font face, a database connection - and the same signal lets
+//! go of those, through a JS release the browser runs on its own.
 
 #[cfg(target_arch = "wasm32")]
-pub use dom::{listen, ListenOptions, Listener};
+pub use dom::{instance_failed, listen, release_on_abort, AbortRelease, ListenOptions, Listener};
 
 #[cfg(target_arch = "wasm32")]
-pub(crate) use dom::{instance_signal, page_level};
+pub(crate) use dom::page_level;
 
 #[cfg(target_arch = "wasm32")]
 mod dom {
     use leptos::wasm_bindgen::closure::Closure;
-    use leptos::wasm_bindgen::JsCast;
+    use leptos::wasm_bindgen::{JsCast, JsValue};
     use leptos::web_sys::{AbortSignal, AddEventListenerOptions, Event, EventTarget};
     use send_wrapper::SendWrapper;
 
@@ -33,10 +37,68 @@ mod dom {
         rustify_makepad::listener_options().unwrap_or_default()
     }
 
-    /// The signal behind [`page_level`], for what the browser has to be told
-    /// to stop without any wasm running - an animation frame, say.
-    pub(crate) fn instance_signal() -> Option<AbortSignal> {
+    /// The signal behind [`page_level`].
+    fn instance_signal() -> Option<AbortSignal> {
         rustify_makepad::listener_options()?.get_signal()
+    }
+
+    /// Whether this instance has failed.
+    ///
+    /// What the runtime calls back into wasm for - listeners, tasks, frames -
+    /// it stops when the instance fails. A promise the browser settles is not
+    /// among them: an `await` on one still resumes, into a module that is to
+    /// be treated as gone, so code resumed that way asks this first. Without a
+    /// runtime - before `boot()` - nothing has failed.
+    pub fn instance_failed() -> bool {
+        instance_signal().is_some_and(|signal| signal.aborted())
+    }
+
+    /// A release registered with [`release_on_abort`], taken back when this is
+    /// dropped.
+    ///
+    /// `Send` and `Sync` for the reason a [`Listener`] is.
+    #[must_use = "dropping an AbortRelease takes the release back"]
+    pub struct AbortRelease {
+        registered: Option<SendWrapper<(AbortSignal, js_sys::Function)>>,
+    }
+
+    impl Drop for AbortRelease {
+        fn drop(&mut self) {
+            if let Some(registered) = self.registered.take() {
+                let (signal, release) = &*registered;
+                let _ = signal.remove_event_listener_with_callback("abort", release);
+            }
+        }
+    }
+
+    /// Has the browser call `release` when this instance fails, unless the
+    /// returned [`AbortRelease`] has been dropped by then.
+    ///
+    /// For what the instance holds on the browser's side and has to let go of
+    /// once no wasm can run: a font face it added to the document, a database
+    /// connection, a transaction that must not commit. `release` is the abort
+    /// signal's own listener, so it has to be JS - a native method bound to
+    /// what it stops, as an animation frame binds `cancelAnimationFrame` to its
+    /// id - and never a closure into this module. What it throws is reported
+    /// like any listener's exception.
+    ///
+    /// An instance that has already failed calls `release` now. Without a
+    /// runtime - before `boot()` - there is nothing to fail, and nothing is
+    /// registered.
+    pub fn release_on_abort(release: js_sys::Function) -> AbortRelease {
+        let registered = instance_signal().and_then(|signal| {
+            if signal.aborted() {
+                let _ = release.call0(&JsValue::UNDEFINED);
+                return None;
+            }
+            let once = AddEventListenerOptions::new();
+            once.set_once(true);
+            let _ = signal.add_event_listener_with_callback_and_add_event_listener_options(
+                "abort", &release, &once,
+            );
+            Some(SendWrapper::new((signal, release)))
+        });
+        AbortRelease { registered }
     }
 
     /// How a [`listen`] registration behaves, beyond the abort signal every

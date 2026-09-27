@@ -1629,6 +1629,7 @@ mod app {
         // scope's own container rather than the window: a page with two of
         // these on it should not have them fighting over one key.
         let open_palette = rustify_ui::Shortcut::parse("Mod+K").expect("a well-formed shortcut");
+        let palette_shortcut = open_palette.clone();
         Effect::new(move || {
             let Some(roots) = use_context::<rustify_ui::ScopeRoots>() else {
                 return;
@@ -2324,6 +2325,7 @@ mod app {
                                 "lock",
                                 if locked { "unlock this object" } else { "lock this object" },
                             ),
+                            rustify_components::MenuItem::separator(),
                             match current.get() {
                                 Some(_) => rustify_components::MenuItem::new(
                                     "theme",
@@ -2335,9 +2337,23 @@ mod app {
                                     )
                                     .disabled("nothing is selected"),
                             },
+                            rustify_components::MenuItem::separator(),
+                            // The shortcut is the one the scope already
+                            // answers to; the menu only says so.
+                            rustify_components::MenuItem::new("palette", "all commands")
+                                .shortcut(palette_shortcut.clone()),
                         ]
                     })
-                    on_activate=move |id: String| run_command(id)
+                    on_activate=move |id: String| {
+                        if id == "palette" {
+                            // After the menu has closed and handed the
+                            // keyboard back, so the palette takes it from
+                            // there rather than racing the menu for it.
+                            rustify_ui::defer(move || palette_open.set(true));
+                        } else {
+                            run_command(id);
+                        }
+                    }
                 />
                 <Splitter
                     sizes=panel_sizes

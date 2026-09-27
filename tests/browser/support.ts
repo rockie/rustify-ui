@@ -38,13 +38,33 @@ export async function anchorRect(page: Page, anchor: Anchor) {
     };
 }
 
+/// How long a GPU region may take to start, or to rebuild after its context
+/// was lost. Under a software rasteriser it compiles its shaders on the main
+/// thread; on a CI runner that has taken most of a minute, and anything the
+/// page draws in the meantime, DOM included, waits behind it.
+export const REGION_START_MS = 60_000;
+
+/// Gives the running test one more region start-up on top of its own budget.
+///
+/// A test's timeout is for what it checks. Starting regions is paid wherever
+/// it falls - the worker's first test opening the shared page, a check that
+/// mounts the counter scopes - and on a busy runner it can take up the whole
+/// of that timeout on its own. A test that fails then costs its worker, and
+/// the next test on the replacement worker pays for the start-up again.
+export function allowRegionStart(info: TestInfo = base.info()) {
+    if (info.timeout > 0) {
+        info.setTimeout(info.timeout + REGION_START_MS);
+    }
+}
+
 export async function waitForReady(page: Page) {
     // A shared page is already loaded and reset; loading it again would pay
     // for the region start-up the page is shared to avoid.
     if (!isShared(page)) {
+        allowRegionStart();
         await page.goto("./");
     }
-    await expect(page.getByTestId("status")).toHaveAttribute("data-status", "ready", { timeout: 60_000 });
+    await expect(page.getByTestId("status")).toHaveAttribute("data-status", "ready", { timeout: REGION_START_MS });
     // The fusion-basic page shows B0 and nothing else: a load has to be the
     // load it says it is, so every other fixture is mounted by whoever needs
     // it. The two counter scopes are what the phase-one checks were written
@@ -68,6 +88,9 @@ export async function waitForReady(page: Page) {
         }
         return mounted;
     });
+    if (mounted) {
+        allowRegionStart();
+    }
     // The fixture waited for quiet after its reset; only a region started
     // here has anything left to settle.
     if (mounted || !isShared(page)) {
@@ -160,9 +183,10 @@ export function litPixels(pixels: Pixels, minLuma = 96): number {
 /// Waits until two consecutive captures of the region are identical, i.e. the
 /// GPU has finished presenting whatever was requested.
 /// Every category in the catalogue. R18 names eighteen; the table and the tree
-/// that large data needed are two more. Written here so a test that counts
+/// that large data needed are two more, and the toast, the number and colour
+/// fields and the toggle group four more. Written here so a test that counts
 /// them says what the number means rather than repeating a literal.
-export const CATALOG_SIZE = 20;
+export const CATALOG_SIZE = 24;
 
 export async function settle(locator: Locator, attempts = 20): Promise<Pixels> {
     let previous = await capture(locator);
@@ -616,8 +640,9 @@ async function open(
     slot.page = await slot.context.newPage();
     slot.viewport = viewport;
     shared.add(slot.page);
+    allowRegionStart(info);
     await slot.page.goto("./");
-    await expect(slot.page.getByTestId("status")).toHaveAttribute("data-status", "ready", { timeout: 60_000 });
+    await expect(slot.page.getByTestId("status")).toHaveAttribute("data-status", "ready", { timeout: REGION_START_MS });
     return slot.page;
 }
 

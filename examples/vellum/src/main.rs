@@ -22,8 +22,6 @@ mod assets;
 #[cfg(target_arch = "wasm32")]
 mod automation;
 #[cfg(target_arch = "wasm32")]
-mod browser_frame;
-#[cfg(target_arch = "wasm32")]
 mod fileio;
 #[cfg(target_arch = "wasm32")]
 mod fonts;

@@ -16,15 +16,18 @@ mod app {
     use leptos::prelude::*;
     use leptos::wasm_bindgen::prelude::*;
     use rustify_components::data_table::{Cell as GridCell, Column, DataTable};
+    use rustify_components::number_field::format_number;
     use rustify_components::{
-        clx, provide_current_path, variants, Boundary, Button, ButtonVariant, Category, Checkbox,
-        Dialog, Glyph, Icon, Label, Link, Menu, MenuItem, Progress, RadioGroup, RadioOption,
-        ScrollArea, Select, SelectOption, Slider, Spinner, Support, Switch, Tab, TabPanel, Tabs,
-        TextArea, TextField, Tooltip, Tree, TreeNode, CATALOG,
+        anchor_at, clx, provide_current_path, variants, Boundary, Button, ButtonVariant, Category,
+        Checkbox, ColorField, Dialog, Glyph, Icon, Label, Link, Menu, MenuItem, NumberField,
+        Progress, RadioGroup, RadioOption, ScrollArea, Select, SelectOption, Slider, Spinner,
+        Support, Switch, Tab, TabPanel, Tabs, TextArea, TextField, Toaster, ToggleGroup,
+        ToggleItem, Tooltip, Tree, TreeNode, CATALOG,
     };
     use rustify_ui::{
-        mount, use_theme_values, Anchor, AppHandle, GpuRegion, LocalRect, Locale, MountConfig,
-        RegionState, Selection, Theme, ThemedScope,
+        mount, provide_toasts, use_theme_values, use_toasts, Anchor, AppHandle, GpuRegion,
+        LocalRect, Locale, MountConfig, RegionState, Selection, Shortcut, Theme, ThemedScope,
+        ToastOptions, ToastTone,
     };
     use std::cell::RefCell;
     use std::collections::{BTreeMap, BTreeSet};
@@ -150,6 +153,74 @@ mod app {
     /// options in the chooser. Named once so both halves agree on the order.
     const CHOICES: [&str; 3] = ["first", "second", "third"];
     const SIZES: [&str; 3] = ["small", "medium", "large"];
+    const TONES: [ToastTone; 4] = [
+        ToastTone::Neutral,
+        ToastTone::Success,
+        ToastTone::Warning,
+        ToastTone::Error,
+    ];
+
+    /// The bounds the number page's application keeps its number in. The
+    /// field announces them; keeping to them is the application's.
+    const NUMBER_MIN: f64 = 0.0;
+    const NUMBER_MAX: f64 = 100.0;
+
+    /// The keys the menu page's two commands answer to. The menu shows them;
+    /// the page is what listens for them.
+    fn menu_shortcut(command: &str) -> Option<Shortcut> {
+        let text = match command {
+            "first" => "Alt+Shift+F",
+            "second" => "Alt+Shift+S",
+            _ => return None,
+        };
+        Some(Shortcut::parse(text).expect("a well-formed shortcut"))
+    }
+
+    /// A value an edit can preview, and what it held before the first
+    /// preview, so that an abandoned edit can be taken back.
+    struct Edited<T: Clone + Send + Sync + 'static> {
+        value: RwSignal<T>,
+        before: RwSignal<Option<T>>,
+    }
+
+    // By hand: a derive would ask `T` to be `Copy`, and two signals are
+    // `Copy` whatever they hold.
+    impl<T: Clone + Send + Sync + 'static> Clone for Edited<T> {
+        fn clone(&self) -> Self {
+            *self
+        }
+    }
+
+    impl<T: Clone + Send + Sync + 'static> Copy for Edited<T> {}
+
+    impl<T: Clone + Send + Sync + 'static> Edited<T> {
+        fn new(first: &mut FirstLoad, initial: T) -> Self {
+            Self {
+                value: first.signal(initial),
+                before: first.signal(None),
+            }
+        }
+
+        fn preview(&self, next: T) {
+            let held = self.value.get_untracked();
+            self.before.update(|before| {
+                before.get_or_insert(held);
+            });
+            self.value.set(next);
+        }
+
+        fn commit(&self, next: T) {
+            self.before.set(None);
+            self.value.set(next);
+        }
+
+        fn cancel(&self) {
+            if let Some(before) = self.before.get_untracked() {
+                self.value.set(before);
+            }
+            self.before.set(None);
+        }
+    }
 
     /// Everything the examples on a page are bound to.
     ///
@@ -175,11 +246,62 @@ mod app {
         /// How many changes the application has accepted. A disabled or
         /// read-only control must not move it, which is what V2 asks.
         actions: RwSignal<u32>,
+        /// How many times the dialog asked to be closed, by Escape or by its
+        /// close button: the two are one request.
+        dialog_closes: RwSignal<u32>,
+        /// The last command a menu or its shortcut ran.
+        command: RwSignal<String>,
+        /// Where the context menu was asked for, while it is open.
+        context: RwSignal<Option<Anchor>>,
+        number: Edited<f64>,
+        colour: Edited<String>,
+        tint: Edited<String>,
+        /// Every request the draft fields made, in order, as the page heard
+        /// it - including the ones it refused.
+        requests: RwSignal<Vec<String>>,
+        align: RwSignal<Vec<String>>,
+        styles: RwSignal<Vec<String>>,
+        tone: RwSignal<ToastTone>,
+        /// How many messages have been shown, so each says which it is.
+        shown: RwSignal<u32>,
     }
 
     impl Values {
         fn accept(&self) {
             self.actions.update(|count| *count += 1);
+        }
+
+        fn run(&self, command: &str) {
+            self.command.set(command.to_string());
+            self.accept();
+        }
+
+        fn asked(&self, request: String) {
+            self.requests.update(|requests| requests.push(request));
+        }
+
+        /// A number typed so far. Inside the bounds it is shown at once;
+        /// outside them it is refused, and the draft stays where it is.
+        fn preview_number(&self, next: f64) {
+            self.asked(format!("number preview {}", format_number(next)));
+            if (NUMBER_MIN..=NUMBER_MAX).contains(&next) {
+                self.number.preview(next);
+            }
+        }
+
+        /// An edit that ended: whatever was asked for, clamped.
+        fn commit_number(&self, next: f64) {
+            self.asked(format!("number commit {}", format_number(next)));
+            self.number.commit(next.clamp(NUMBER_MIN, NUMBER_MAX));
+            self.accept();
+        }
+
+        fn colour_of(&self, which: &str) -> Edited<String> {
+            if which == "tint" {
+                self.tint
+            } else {
+                self.colour
+            }
         }
     }
 
@@ -275,6 +397,11 @@ mod app {
             .unwrap_or_else(|| "\"\"".to_string())
     }
 
+    fn json_strings(items: &[String]) -> String {
+        let items: Vec<String> = items.iter().map(|item| json_string(item)).collect();
+        format!("[{}]", items.join(","))
+    }
+
     fn rect_json(rect: Option<LocalRect>) -> String {
         match rect {
             Some(rect) => format!(
@@ -298,6 +425,8 @@ mod app {
                 &[Disabled, ReadOnly, Invalid]
             }
             Category::Radio | Category::Switch | Category::Slider => &[Disabled, ReadOnly],
+            Category::NumberField | Category::ColorField => &[Disabled, ReadOnly, Invalid],
+            Category::ToggleGroup => &[Disabled],
             _ => &[],
         }
     }
@@ -504,37 +633,112 @@ mod app {
                 </Tooltip>
             }
             .into_any(),
-            Category::Menu => view! {
-                <span node_ref=trigger>
-                    <Button
-                        test_id=id("menu-trigger")
-                        expanded=Signal::derive(move || Some(values.menu.get()))
-                        on_click=move || values.menu.update(|open| *open = !*open)
+            Category::Menu => {
+                let area = NodeRef::<leptos::html::Div>::new();
+                view! {
+                    <span node_ref=trigger>
+                        <Button
+                            test_id=id("menu-trigger")
+                            expanded=Signal::derive(move || Some(values.menu.get()))
+                            on_click=move || values.menu.update(|open| *open = !*open)
+                        >
+                            "open the menu"
+                        </Button>
+                    </span>
+                    <Menu
+                        test_id=id("menu")
+                        aria_label="what can be done"
+                        open=values.menu
+                        on_open_change=move |open| values.menu.set(open)
+                        anchor=Signal::derive(move || match trigger.get() {
+                            Some(element) => Anchor::element(&element.into()),
+                            None => Anchor::Centred,
+                        })
+                        items=Signal::derive(|| {
+                            let command = |id: &str, label: &str| {
+                                let item = MenuItem::new(id, label);
+                                match menu_shortcut(id) {
+                                    Some(shortcut) => item.shortcut(shortcut),
+                                    None => item,
+                                }
+                            };
+                            vec![
+                                MenuItem::heading("on this page"),
+                                command("first", "the first command"),
+                                command("second", "the second command"),
+                                MenuItem::separator(),
+                                MenuItem::heading("on a selection"),
+                                MenuItem::new("third", "the third command")
+                                    .disabled("nothing is selected"),
+                            ]
+                        })
+                        on_activate=move |command: String| values.run(&command)
+                    />
+                    // A menu opened where the pointer is, rather than under a
+                    // button: the context menu. The keyboard's way to the same
+                    // menu is the context-menu key, or Shift+F10, which open it
+                    // against the box itself.
+                    <div
+                        node_ref=area
+                        tabindex="0"
+                        role="group"
+                        aria-label="a place for a context menu"
+                        class="h-24 w-full rounded-md border border-dashed border-border p-2 text-sm text-muted-foreground outline-none focus-visible:ring-ring/50 focus-visible:ring-[3px]"
+                        data-testid=id("context-area")
+                        on:contextmenu=move |event: leptos::ev::MouseEvent| {
+                            let Some(element) = area.get_untracked() else {
+                                return;
+                            };
+                            event.prevent_default();
+                            let element: leptos::web_sys::Element = element.into();
+                            values
+                                .context
+                                .set(
+                                    Some(
+                                        anchor_at(
+                                            &element,
+                                            f64::from(event.client_x()),
+                                            f64::from(event.client_y()),
+                                        ),
+                                    ),
+                                );
+                        }
+                        on:keydown=move |event: leptos::ev::KeyboardEvent| {
+                            let asked = event.key() == "ContextMenu"
+                                || (event.key() == "F10" && event.shift_key());
+                            let Some(element) = area.get_untracked().filter(|_| asked) else {
+                                return;
+                            };
+                            event.prevent_default();
+                            values.context.set(Some(Anchor::element(&element.into())));
+                        }
                     >
-                        "open the menu"
-                    </Button>
-                </span>
-                <Menu
-                    test_id=id("menu")
-                    aria_label="what can be done"
-                    open=values.menu
-                    on_open_change=move |open| values.menu.set(open)
-                    anchor=Signal::derive(move || match trigger.get() {
-                        Some(element) => Anchor::element(&element.into()),
-                        None => Anchor::Centred,
-                    })
-                    items=Signal::derive(|| {
-                        vec![
-                            MenuItem::new("first", "the first command"),
-                            MenuItem::new("second", "the second command"),
-                            MenuItem::new("third", "the third command")
-                                .disabled("nothing is selected"),
-                        ]
-                    })
-                    on_activate=move |_: String| values.accept()
-                />
+                        "right-click anywhere in here"
+                    </div>
+                    <Menu
+                        test_id=id("context-menu")
+                        aria_label="what can be done here"
+                        open=Signal::derive(move || values.context.with(Option::is_some))
+                        on_open_change=move |open| {
+                            if !open {
+                                values.context.set(None);
+                            }
+                        }
+                        anchor=Signal::derive(move || {
+                            values.context.get().unwrap_or(Anchor::Centred)
+                        })
+                        items=Signal::derive(|| {
+                            vec![
+                                MenuItem::new("here", "a command for this point"),
+                                MenuItem::separator(),
+                                MenuItem::new("elsewhere", "a command for anywhere"),
+                            ]
+                        })
+                        on_activate=move |command: String| values.run(&command)
+                    />
+                }
+                .into_any()
             }
-            .into_any(),
             Category::Dialog => view! {
                 <Button
                     test_id=id("dialog-trigger")
@@ -548,7 +752,12 @@ mod app {
                         title="a modal dialog"
                         description="the rest of the scope is inert while this is open"
                         open=values.dialog
-                        on_open_change=move |open| values.dialog.set(open)
+                        on_open_change=move |open| {
+                            if !open {
+                                values.dialog_closes.update(|closes| *closes += 1);
+                            }
+                            values.dialog.set(open);
+                        }
                     >
                         <Button test_id="dialog-accept" on_click=move || {
                             values.accept();
@@ -658,6 +867,181 @@ mod app {
                 }
                 .into_any()
             }
+            Category::Toast => {
+                let toasts = use_toasts();
+                let show = move |duration_ms: u32| {
+                    values.shown.update(|shown| *shown += 1);
+                    toasts.show(
+                        format!("message {}", values.shown.get_untracked()),
+                        ToastOptions {
+                            duration_ms,
+                            tone: values.tone.get_untracked(),
+                        },
+                    );
+                    values.accept();
+                };
+                view! {
+                    <ToggleGroup
+                        test_id=id("toast-tone")
+                        aria_label="the tone of the next message"
+                        value=Signal::derive(move || vec![values.tone.get().key().to_string()])
+                        items=Signal::derive(|| {
+                            TONES
+                                .iter()
+                                .map(|tone| ToggleItem::new(tone.key(), tone.key()))
+                                .collect()
+                        })
+                        // One tone is always chosen: a press on the chosen one
+                        // asks for none, and the page keeps what it has.
+                        on_change=move |next| {
+                            let tone = next
+                                .first()
+                                .and_then(|key| TONES.iter().find(|tone| tone.key() == key));
+                            if let Some(tone) = tone {
+                                values.tone.set(*tone);
+                                values.accept();
+                            }
+                        }
+                    />
+                    <Row>
+                        <Button test_id=id("toast-show") on_click=move || show(3200)>
+                            "show a message"
+                        </Button>
+                        <Button
+                            test_id=id("toast-quick")
+                            variant=ButtonVariant::Secondary
+                            on_click=move || show(1200)
+                        >
+                            "show one that goes quickly"
+                        </Button>
+                    </Row>
+                }
+                .into_any()
+            }
+            Category::NumberField => {
+                let live = state == ExampleState::Live;
+                view! {
+                    <NumberField
+                        test_id=id("number")
+                        aria_label="a quantity"
+                        value=values.number.value
+                        min=NUMBER_MIN
+                        max=NUMBER_MAX
+                        step=5.0
+                        disabled=disabled
+                        read_only=read_only
+                        invalid=invalid
+                        on_preview=move |next| values.preview_number(next)
+                        on_change=move |next| values.commit_number(next)
+                        on_cancel=move |_| {
+                            values.asked("number cancel".to_string());
+                            values.number.cancel();
+                        }
+                    />
+                    {live
+                        .then(|| {
+                            view! {
+                                <OutsideChange
+                                    test_id="number-outside"
+                                    on_click=move || values.number.value.set(25.0)
+                                >
+                                    "set it to 25 from elsewhere"
+                                </OutsideChange>
+                            }
+                        })}
+                }
+                .into_any()
+            }
+            Category::ColorField => {
+                let live = state == ExampleState::Live;
+                let field = move |which: &'static str, label: &'static str, alpha: bool| {
+                    let edited = values.colour_of(which);
+                    view! {
+                        <ColorField
+                            test_id=id(which)
+                            aria_label=label
+                            alpha=alpha
+                            value=edited.value
+                            disabled=disabled
+                            read_only=read_only
+                            invalid=invalid
+                            on_preview=move |next: String| {
+                                values.asked(format!("{which} preview {next}"));
+                                edited.preview(next);
+                            }
+                            on_change=move |next: String| {
+                                values.asked(format!("{which} commit {next}"));
+                                edited.commit(next);
+                                values.accept();
+                            }
+                            on_cancel=move |_| {
+                                values.asked(format!("{which} cancel"));
+                                edited.cancel();
+                            }
+                        />
+                    }
+                };
+                view! {
+                    {field("colour", "a colour", false)}
+                    {live
+                        .then(|| {
+                            view! {
+                                {field("tint", "a colour with opacity", true)}
+                                <OutsideChange
+                                    test_id="colour-outside"
+                                    on_click=move || values.colour.value.set("#12b76a".to_string())
+                                >
+                                    "make it green from elsewhere"
+                                </OutsideChange>
+                            }
+                        })}
+                }
+                .into_any()
+            }
+            Category::ToggleGroup => view! {
+                <ToggleGroup
+                    test_id=id("align")
+                    aria_label="alignment"
+                    value=values.align
+                    disabled=disabled
+                    items=Signal::derive(|| {
+                        vec![
+                            ToggleItem::new("start", "start"),
+                            ToggleItem::new("centre", "centre"),
+                            ToggleItem::new("end", "end"),
+                        ]
+                    })
+                    // Text is always aligned somehow: a press on the pressed
+                    // button asks for none, and the page refuses it.
+                    on_change=move |next| {
+                        if !next.is_empty() {
+                            values.align.set(next);
+                            values.accept();
+                        }
+                    }
+                />
+                <ToggleGroup
+                    test_id=id("styles")
+                    aria_label="text style"
+                    toolbar=true
+                    multiple=true
+                    value=values.styles
+                    disabled=disabled
+                    items=Signal::derive(|| {
+                        vec![
+                            ToggleItem::new("bold", "bold"),
+                            ToggleItem::new("italic", "italic"),
+                            ToggleItem::new("strike", "strike").disabled(),
+                            ToggleItem::new("underline", "underline"),
+                        ]
+                    })
+                    on_change=move |next| {
+                        values.styles.set(next);
+                        values.accept();
+                    }
+                />
+            }
+            .into_any(),
             Category::ScrollArea => view! {
                 <ScrollArea
                     test_id=id("scroll-area")
@@ -671,6 +1055,24 @@ mod app {
                 </ScrollArea>
             }
             .into_any(),
+        }
+    }
+
+    /// A button that changes a value without taking focus, so the change can
+    /// arrive while a field still has it - as a change from anywhere else in
+    /// an application would.
+    #[component]
+    fn OutsideChange(
+        test_id: &'static str,
+        on_click: impl Fn() + 'static,
+        children: Children,
+    ) -> impl IntoView {
+        view! {
+            <span on:mousedown=|event: leptos::ev::MouseEvent| event.prevent_default()>
+                <Button test_id=test_id variant=ButtonVariant::Outline on_click=on_click>
+                    {children()}
+                </Button>
+            </span>
         }
     }
 
@@ -724,8 +1126,11 @@ mod app {
                             view! {
                                 <Row>
                                     <span>{move || t(locale.get(), key)}</span>
+                                    // The caller's class replaces the chip's own
+                                    // of the same kind: these are pills.
                                     <Chip
                                         variant=chip(support)
+                                        class="rounded-full"
                                         test_id=format!("presentation-{key}")
                                     >
                                         {support.name()}
@@ -1015,6 +1420,13 @@ mod app {
         // Reported by the region, but whether the list is open is the page's
         // decision, and a reset closes it.
         let region_chooser = first.signal(None::<LocalRect>);
+        // One message at a time for the whole scope, whichever page shows it.
+        let toasts = provide_toasts();
+        first.then(move || {
+            if let Some(toast) = toasts.current() {
+                toasts.dismiss(toast.seq);
+            }
+        });
         let values = Values {
             checked: first.signal(false),
             chosen: first.signal(0),
@@ -1031,9 +1443,56 @@ mod app {
             dialog: first.signal(false),
             select: first.signal(false),
             actions: first.signal(0),
+            dialog_closes: first.signal(0),
+            command: first.signal(String::new()),
+            context: first.signal(None),
+            number: Edited::new(&mut first, 40.0),
+            colour: Edited::new(&mut first, "#1570ef".to_string()),
+            tint: Edited::new(&mut first, "#12b76a80".to_string()),
+            requests: first.signal(Vec::new()),
+            align: first.signal(vec!["start".to_string()]),
+            styles: first.signal(vec!["bold".to_string()]),
+            tone: first.signal(ToastTone::Neutral),
+            shown: first.signal(0),
         };
         first.register(handle);
         provide_current_path(Signal::derive(move || page.get().path()));
+
+        // The menu page's commands answer to their shortcuts from anywhere in
+        // the scope, except where the keys are someone's text.
+        Effect::new(move || {
+            let Some(roots) = use_context::<rustify_ui::ScopeRoots>() else {
+                return;
+            };
+            let commands: Vec<(Shortcut, &'static str)> = ["first", "second"]
+                .into_iter()
+                .filter_map(|command| Some((menu_shortcut(command)?, command)))
+                .collect();
+            let listener = rustify_ui::listen(
+                &roots.container(),
+                "keydown",
+                rustify_ui::ListenOptions::default(),
+                move |event| {
+                    let Some(event) = event.dyn_ref::<leptos::web_sys::KeyboardEvent>() else {
+                        return;
+                    };
+                    if event
+                        .target()
+                        .is_some_and(|target| rustify_ui::is_text_entry(&target))
+                    {
+                        return;
+                    }
+                    if let Some((_, command)) = commands
+                        .iter()
+                        .find(|(shortcut, _)| shortcut.matches(event))
+                    {
+                        event.prevent_default();
+                        values.run(command);
+                    }
+                },
+            );
+            on_cleanup(move || drop(listener));
+        });
 
         let switch_theme = move || {
             theme.update(|theme| {
@@ -1073,7 +1532,9 @@ mod app {
                  \"on\":{},\"size\":{},\"fraction\":{:.2},\"spinning\":{},\"tab\":{},\
                  \"chooser\":\"{}\",\"text\":{},\"actions\":{},\"reduce_motion\":{},\
                  \"notes\":{},\"tooltip\":{},\"menu\":{},\"dialog\":{},\"listbox\":{},\
-                 \"region_list\":{}}}",
+                 \"region_list\":{},\"dialog_closes\":{},\"command\":{},\"context_menu\":{},\
+                 \"number\":{},\"colour\":{},\"tint\":{},\"requests\":{},\"align\":{},\
+                 \"styles\":{},\"tone\":\"{}\",\"toast\":{}}}",
                 page.path(),
                 theme.get().name,
                 locale.get().tag(),
@@ -1105,6 +1566,25 @@ mod app {
                 values.dialog.get(),
                 values.select.get(),
                 region_chooser.get().is_some(),
+                values.dialog_closes.get(),
+                json_string(&values.command.get()),
+                values.context.with(Option::is_some),
+                values.number.value.get(),
+                json_string(&values.colour.value.get()),
+                json_string(&values.tint.value.get()),
+                values.requests.with(|requests| json_strings(requests)),
+                values.align.with(|align| json_strings(align)),
+                values.styles.with(|styles| json_strings(styles)),
+                values.tone.get().key(),
+                match toasts.current() {
+                    Some(toast) => format!(
+                        "{{\"seq\":{},\"message\":{},\"tone\":\"{}\"}}",
+                        toast.seq,
+                        json_string(&toast.message),
+                        toast.tone.key()
+                    ),
+                    None => "null".to_string(),
+                },
             );
             SNAPSHOT.with(|slot| *slot.borrow_mut() = snapshot);
         });
@@ -1310,6 +1790,7 @@ mod app {
                         }
                     }
                 />
+                <Toaster test_id="toaster" />
             </div>
         }
     }
