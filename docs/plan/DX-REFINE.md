@@ -35,11 +35,11 @@
 
 ### 恢复快照
 
-- 最近更新：2026-09-27 UTC · `main` 首轮 push CI 全绿（45.4 min），最长 job 37.9 min 未达 D9
-- 当前进度：2/8 个里程碑完成
-- 当前状态：M2 进行中——本地回归层各 project 两轮全绿且 ≤ 5 min；`main` push CI（run 36291244235）五个 job 全绿，但最长 job 超 10 min：fusion-basic 37.9、property-workbench 25.4、catalog and data 19.0、vellum 11.3（host 3.5）。原因是 CI 上开新页的用例每个 35–60 s 且串行；证据层本地首轮只完成 3 个 project。M4 与 M6 的 SDK/示例半已在 `main`；M5 未提交改动在工作树 `.claude/worktrees/agent-abbbe976a35740721`；M6 Vellum 半与 M7 以本地标签 `dx-refine/m6-vellum`、`dx-refine/m7-components` 保存，待拣入
-- 最近完成：M3 · Tailwind 工具链：mise 二进制与精确扫描
-- 下一步：按 D9 处理 CI 超时：CI 开 2 个 worker，fusion-basic 与 property-workbench 用 `--shard` 拆 job；拣入两个 `dx-refine/*` 标签与 M5 改动，重建并重跑容器重启时丢失的回归与 Toast 运行；证据层余下 project
+- 最近更新：2026-09-27 UTC · M4 集成验收通过（三个 project 回归层全绿）
+- 当前进度：3/8 个里程碑完成
+- 当前状态：M2、M5、M6、M7 进行中。M5/M6/M7 的已完成部分都已拣入并推送（`8a3b569`、`1977e51`、`e6255c1`、`19e56b0`）；本地回归层全部 project 通过且 ≤ 5 min（Chromium 141）；CI 改为「每个示例构建一次 + 分片测试」并修了四个在慢 runner 上超时的用例，PR #3 上首轮新布局 CI 运行中；M5 只差 `verify --suite p3 --no-browser` 的清洁双构建（运行中）；M7 只差 Vellum 改用 Toast/草稿核心（子任务在独立工作树实施），之后跑 Vellum 回归与基线孪生，M6/M7 一起记完成
+- 最近完成：M4 · 去掉 `rui:` 前缀
+- 下一步：等 verify 与 PR #3 CI 结果回写 M5、M2；拣入 Vellum Toast/草稿改用提交，重建 Vellum 并跑回归层与基线孪生 `visual.spec.ts`；证据层余下 project
 - 当前阻塞：无。风险：`dx-refine/*` 标签与 M5 未提交改动只存在于本容器，容器回收即丢失，应尽快拣入并推送
 - 代码基线：`b15e4b9`（`main`：M1–M4 与 M6 的 SDK/示例半）
 
@@ -50,6 +50,7 @@
 | M2 | 进行中 | 2026-09-27 | 共享页 fixture + 五个示例 `reset()`；本地回归层两轮全绿，workers=2 均 ≤ 5 min；`main` CI 全绿（run 45.4 min），但最长 job fusion-basic 37.9 min 未达 10 min；证据层余下 project 待跑 | [M2 记录](../validation/dx/m2.md) |
 | M1 | 已完成 | 2026-09-25 | `RUSTIFY_TIER` + `@evidence`（`--list` 守恒）、按需 server（A-4 成立）、CI/verify `--bins` 与全量层；component-catalog 回归层 49/49；A-2 部分证伪 → ADR-6 修订；A-7 内存成立 | [M1 记录](../validation/dx/m1.md) |
 | M3 | 已完成 | 2026-09-27 | mise 固定 Tailwind 4.1.13、`xtask/src/tailwind.rs`、`source(none)`、去 npm Tailwind、`verify` 加 CSS/目录检查；`main` CI host job 全绿，A-1 在 macOS 上成立 | [M3 记录](../validation/dx/m3.md) |
+| M4 | 已完成 | 2026-09-27 | 组件类去 `rui:`，`tw_merge` 覆盖对应用类生效，`--spacing` 内联、默认令牌对齐；component-catalog 74/74、property-workbench 126/126、data-workbench 51/51；标准属性计算样式 0 差异（偏差见 §5.2） | [M4 记录](../validation/dx/m4-unprefix.md) |
 
 ## 0. 需求、范围与决策
 
@@ -369,6 +370,7 @@ crates/rustify-components/css/sdk.css   ← @source "../src"; @custom-variant da
 
 1. **M3 工具链**：`mise.toml` 加 `"github:tailwindlabs/tailwindcss" = { version = "4.1.13", bin = "tailwindcss" }`（A-1）；`xtask/src/tailwind.rs` 解析与校验；`css.rs` 改用它，`--check` 失败时额外打印首个差异行；两份输入加 `source(none)`（产物不变，已实测）；删除 `package.json` 里的 Tailwind 依赖与 `css` 脚本并更新 lock；`doctor` 报 Tailwind 版本；CI host job 的 CSS 检查不再需要 `npm ci`；`verify` 加 `css --check`/`catalog --check`。此步仍保留 `@source "../../../examples"` 与 `prefix(rui)`。
 2. **M4 去前缀**：脚本去掉 `rui:`，按文件断言命中数（§1.1 的 673/42/1/5；`cargo fmt` 之后再核一次无残留，C-7）；输入去 `prefix(rui)`，`@theme inline` 加 `--spacing: 0.25rem`；作用域默认令牌改为 `Theme::light()` 的值；`macros/mod.rs` 删掉前缀相关用例、新增「调用方 `p-6` 替换组件 `p-4`」「调用方 `hover:bg-x` 替换组件同变体类」；stylesheet 单测加：无 `.rui\:` 选择器、无 `var(--spacing)`、默认令牌值与 `Theme::light()` 相等；`tests/browser/p3-table.spec.ts:31` 与剩余 `p2-catalog` 引用同步。
+   - **M4 偏差（计算样式）**：去前缀后 `@source` 目录里像类名的普通单词也会编成规则，SDK 源注释/标识符里的 13 个（`grid`、`table`、`outline` 等）成了无人使用的 utility，并带来两处自定义属性（如 `--tw-outline-style`）的计算值差异；标准 CSS 属性差异为 0，无视觉影响。接受、不屏蔽：屏蔽清单随注释失效，放进共享的 `sdk.css` 还会让应用自己写的 `grid`/`table` 失去规则。M4 退出条件里的「计算样式差异 0」据此按标准属性判定（`docs/validation/dx/m4-unprefix.md`）。
 3. **M5 应用侧**：抽出 `sdk.css`；`build-web` 编译示例 `tailwind.css`；component-catalog 新增 `tailwind.css` 并改链接；SDK 入口删掉 `@source "../../../examples"`（产物少 4 个类）；`.vscode/settings.json`；文档：`docs/quickstart.md` 新节「Using Tailwind v4 in your app」（输入模板、可用令牌 utility、`dark:` 语义、`class` 覆盖规则、宿主已有 Tailwind 时的并入方式）、`docs/architecture.md` 的样式模型、`CLAUDE.md` Conventions 的「`rui:` prefix」条目。
 
 ### 5.3 Vellum 抽取
