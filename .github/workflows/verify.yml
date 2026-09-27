@@ -36,11 +36,12 @@ jobs:
       - name: Capability document is in step with the catalogue
         run: mbx xtask catalog --write docs/components.md --check
 
-  # The regression tier, one job per example group so the slowest group is
-  # the whole wait. Each job builds only what its projects serve. The
-  # measurements live in evidence.yml.
-  web:
-    name: browser regression (${{ matrix.name }})
+  # The regression tier. Each example is built once, and its product is
+  # handed to the test jobs as an artifact, so a shard does not spend four
+  # minutes rebuilding what another job already built. The measurements live
+  # in evidence.yml.
+  build:
+    name: build (${{ matrix.name }})
     runs-on: macos-14
     strategy:
       fail-fast: false
@@ -49,24 +50,17 @@ jobs:
           - name: fusion-basic
             examples: fusion-basic
             sub_path: fusion-basic
-            projects: --project=fusion-basic --project=deployment
           - name: property-workbench
             examples: property-workbench
             sub_path: property-workbench
-            projects: --project=property-workbench --project=workbench-deep
           - name: catalog and data
             examples: component-catalog data-workbench
             sub_path: ""
-            projects: --project=component-catalog --project=data-workbench
           - name: vellum
             examples: vellum
             sub_path: ""
-            projects: -c tests/vellum/playwright.config.ts
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 26
       - name: Rust, mbx and Tailwind from mise.toml
         uses: jdx/mise-action@v4
       - uses: jdx/mr-boxington-action@v1
@@ -75,11 +69,59 @@ jobs:
           for example in ${{ matrix.examples }}; do
             mbx xtask build-web --example "$example" --release
           done
-      # The sub-path projects serve builds made for their base; the servers
-      # only serve.
+      # The sub-path projects serve builds made for their base.
       - name: Build the sub-path copy
         if: matrix.sub_path != ''
         run: mbx xtask build-web --example ${{ matrix.sub_path }} --release --base /tools/demo/
+      # The whole release directory, so the artifact keeps one folder per
+      # build rather than flattening a lone one into its root.
+      - uses: actions/upload-artifact@v4
+        with:
+          name: build-${{ strategy.job-index }}
+          path: target/makepad-wasm-app/release/
+          retention-days: 1
+
+  # A spec file runs whole in one shard, so shards are balanced by test count,
+  # not time; two workers per job absorb the difference. Vellum fits in one
+  # job on one worker.
+  web:
+    name: browser regression (${{ matrix.name }})
+    needs: build
+    runs-on: macos-14
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: fusion-basic 1/3
+            projects: --project=fusion-basic --project=deployment --shard=1/3 --workers=2
+          - name: fusion-basic 2/3
+            projects: --project=fusion-basic --project=deployment --shard=2/3 --workers=2
+          - name: fusion-basic 3/3
+            projects: --project=fusion-basic --project=deployment --shard=3/3 --workers=2
+          - name: property-workbench 1/2
+            projects: --project=property-workbench --project=workbench-deep --shard=1/2 --workers=2
+          - name: property-workbench 2/2
+            projects: --project=property-workbench --project=workbench-deep --shard=2/2 --workers=2
+          - name: catalog and data 1/2
+            projects: --project=component-catalog --project=data-workbench --shard=1/2 --workers=2
+          - name: catalog and data 2/2
+            projects: --project=component-catalog --project=data-workbench --shard=2/2 --workers=2
+          - name: vellum
+            projects: -c tests/vellum/playwright.config.ts
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 26
+      # Rust and mbx still: the Playwright servers are `mbx xtask serve`.
+      - name: Rust, mbx and Tailwind from mise.toml
+        uses: jdx/mise-action@v4
+      - uses: jdx/mr-boxington-action@v1
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: build-*
+          merge-multiple: true
+          path: target/makepad-wasm-app/release/
       - name: Install pinned Playwright
         run: npm ci && npx playwright install --with-deps chromium
       - name: Regression tier (Playwright Chromium; not the macOS Chrome pass gate)
