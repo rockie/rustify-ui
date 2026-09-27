@@ -15,6 +15,9 @@ const deepLinkPort = 4177;
 // The fourth example: a hundred thousand rows and ten thousand objects.
 const dataPort = 4178;
 const deploymentBase = "/tools/demo/";
+// What runs `serve`. CI's test jobs are handed the xtask binary their build
+// job compiled rather than compile it again for every job.
+const xtask = process.env.RUSTIFY_XTASK || "mbx xtask";
 
 type Server = "fusion" | "workbench" | "catalog" | "data" | "deep" | "deployment";
 
@@ -161,12 +164,12 @@ export default defineConfig({
     // plain `build-web` does not produce; `serve` refuses to start without
     // one and prints the command that makes it.
     webServer: ([
-        ["fusion", `mbx xtask serve --example fusion-basic --release --port ${fusionPort}`, `http://127.0.0.1:${fusionPort}/`],
-        ["workbench", `mbx xtask serve --example property-workbench --release --port ${workbenchPort} --spa`, `http://127.0.0.1:${workbenchPort}/`],
-        ["catalog", `mbx xtask serve --example component-catalog --release --port ${catalogPort}`, `http://127.0.0.1:${catalogPort}/`],
-        ["data", `mbx xtask serve --example data-workbench --release --port ${dataPort} --spa`, `http://127.0.0.1:${dataPort}/`],
-        ["deep", `mbx xtask serve --example property-workbench --release --port ${deepLinkPort} --base ${deploymentBase} --spa`, `http://127.0.0.1:${deepLinkPort}${deploymentBase}`],
-        ["deployment", `mbx xtask serve --example fusion-basic --release --port ${deploymentPort} --base ${deploymentBase} --spa`, `http://127.0.0.1:${deploymentPort}${deploymentBase}`],
+        ["fusion", `${xtask} serve --example fusion-basic --release --port ${fusionPort}`, `http://127.0.0.1:${fusionPort}/`],
+        ["workbench", `${xtask} serve --example property-workbench --release --port ${workbenchPort} --spa`, `http://127.0.0.1:${workbenchPort}/`],
+        ["catalog", `${xtask} serve --example component-catalog --release --port ${catalogPort}`, `http://127.0.0.1:${catalogPort}/`],
+        ["data", `${xtask} serve --example data-workbench --release --port ${dataPort} --spa`, `http://127.0.0.1:${dataPort}/`],
+        ["deep", `${xtask} serve --example property-workbench --release --port ${deepLinkPort} --base ${deploymentBase} --spa`, `http://127.0.0.1:${deepLinkPort}${deploymentBase}`],
+        ["deployment", `${xtask} serve --example fusion-basic --release --port ${deploymentPort} --base ${deploymentBase} --spa`, `http://127.0.0.1:${deploymentPort}${deploymentBase}`],
     ] as const)
         .filter(([server]) => wanted(server))
         .map(([, command, url]) => ({ command, url, reuseExistingServer: false, timeout: 120_000 })),

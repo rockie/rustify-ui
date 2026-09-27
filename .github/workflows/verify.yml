@@ -80,6 +80,17 @@ jobs:
           name: build-${{ strategy.job-index }}
           path: target/makepad-wasm-app/release/
           retention-days: 1
+      # The test jobs' static servers. xtask finds the builds through the
+      # checkout path compiled into it, and every job of this workflow checks
+      # out to the same path, so the binary one job compiled serves in all of
+      # them - without them each spending over a minute compiling it again.
+      - uses: actions/upload-artifact@v4
+        if: strategy.job-index == 0
+        with:
+          name: xtask
+          path: target/debug/xtask
+          if-no-files-found: error
+          retention-days: 1
 
   # A spec file runs whole in one shard, so shards are balanced by test count,
   # not time; two workers per job absorb the difference. Vellum fits in one
@@ -88,6 +99,9 @@ jobs:
     name: browser regression (${{ matrix.name }})
     needs: build
     runs-on: macos-14
+    # Well over what a shard takes, and well under the six hours a stuck one
+    # would otherwise hold a runner the other jobs are queueing for.
+    timeout-minutes: 30
     strategy:
       fail-fast: false
       matrix:
@@ -108,20 +122,24 @@ jobs:
             projects: --project=component-catalog --project=data-workbench --shard=2/2 --workers=2
           - name: vellum
             projects: -c tests/vellum/playwright.config.ts
+    env:
+      RUSTIFY_XTASK: ${{ github.workspace }}/target/debug/xtask
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 26
-      # Rust and mbx still: the Playwright servers are `mbx xtask serve`.
-      - name: Rust, mbx and Tailwind from mise.toml
-        uses: jdx/mise-action@v4
-      - uses: jdx/mr-boxington-action@v1
       - uses: actions/download-artifact@v4
         with:
           pattern: build-*
           merge-multiple: true
           path: target/makepad-wasm-app/release/
+      # An artifact does not keep the execute bit.
+      - uses: actions/download-artifact@v4
+        with:
+          name: xtask
+          path: target/debug/
+      - run: chmod +x target/debug/xtask
       - name: Install pinned Playwright
         run: npm ci && npx playwright install --with-deps chromium
       - name: Regression tier (Playwright Chromium; not the macOS Chrome pass gate)
