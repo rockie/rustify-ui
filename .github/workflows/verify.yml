@@ -9,6 +9,8 @@ jobs:
   host:
     name: host checks
     runs-on: macos-14
+    # A few minutes normally; the limit is for a runner that stops answering.
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
       - name: Rust, mbx and Tailwind from mise.toml
@@ -43,6 +45,9 @@ jobs:
   build:
     name: build (${{ matrix.name }})
     runs-on: macos-14
+    # Five to eight minutes normally. A runner that stopped answering has
+    # held a build for over an hour, and every test job waits on the builds.
+    timeout-minutes: 30
     strategy:
       fail-fast: false
       matrix:
