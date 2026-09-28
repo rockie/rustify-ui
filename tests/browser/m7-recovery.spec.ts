@@ -1,6 +1,6 @@
 import { expect, Page } from "@playwright/test";
 import { rounds } from "../tier";
-import { capture, differingPixels, REGION_START_MS, settle, test, waitForReady } from "./support";
+import { allowRegionStart, capture, differingPixels, REGION_START_MS, settle, test, waitForReady } from "./support";
 
 const snapshot = (page: Page) => page.evaluate(() => window.__property_workbench.snapshot());
 const diagnostics = (page: Page) => page.evaluate(() => window.__property_workbench.diagnostics());
@@ -43,7 +43,9 @@ test.describe("M7 V8: a region whose context went away", () => {
         });
 
         // The browser gives the context back, and the region is built again
-        // with the state the application never stopped holding.
+        // with the state the application never stopped holding: a start-up,
+        // shaders and glyph atlas included.
+        allowRegionStart();
         expect(
             await page.evaluate(() => window.__property_workbench.restore_context("workbench-gpu"))
         ).toBe(true);
@@ -58,7 +60,7 @@ test.describe("M7 V8: a region whose context went away", () => {
         // And it draws the same picture: the projection is the state, not a
         // copy of it that could have been lost with the context.
         await expect
-            .poll(async () => differingPixels(drawn, await capture(region)), { timeout: 20_000 })
+            .poll(async () => differingPixels(drawn, await capture(region)), { timeout: REGION_START_MS })
             .toBeLessThan(200);
 
         // It is recorded as what it was: recoverable, with nothing to do.
