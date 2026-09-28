@@ -35,19 +35,19 @@
 
 ### 恢复快照
 
-- 最近更新：2026-09-28 UTC · PR #3 已合入 `main`；M6 验收通过；证据层失败项查明为环境
+- 最近更新：2026-09-28 UTC · PR #4 的 CI 全绿，最长测试 job 9.3 min，M2 的 CI 退出条件达标
 - 当前进度：5/8 个里程碑完成
-- 当前状态：M2、M7 进行中。M2：CI 构建一次 + 分片后最长测试 job 9.9 min（达标，余量小：fusion-basic 1/3 比 2/3 多 7 min）；合入的 head 上两个 catalog job 红（`p2-theme` 预算属测量、`p2-i18n` 样本页区域启动等待），修正 `ef6cf66`、`48368d2` 在后续 PR 上待 CI；证据层除 R30 AC1、B2 滚动、Vellum 平移三项帧延迟预算外全过，三项与基线（`24f1a11`）同机同值，属软件光栅环境。M7：除人工键盘走查外退出条件已满足
+- 当前状态：M2、M7 进行中。M2 只差一项：证据层「逐 project 各跑一次全绿」里 R30 AC1、B2 滚动、Vellum 平移三项帧延迟预算在软件光栅上过不了（与改前基线 `24f1a11` 同机同值，不是回归），和 `budget-scene` 一样需要有 GPU 的机器；其余退出条件（复位等价、两轮全绿、本地 ≤ 5 min、守恒计数、CI 全绿且 ≤ 10 min）均已满足。CI 形态：构建 4 job 并行 → 测试 10 job（fusion-basic 4 片、deployment、property-workbench 2 片、catalog and data 2 片、vellum），测试 job 用构建 job 的 xtask，全部 job 30 min 超时。M7：除人工键盘走查外退出条件已满足
 - 最近完成：M6 · Vellum 抽取（一）：SDK 行为原语
-- 下一步：后续 PR 的 CI 全绿后回写 M2；三项帧延迟预算在有 GPU 的机器上跑一次（M2/M8）；M7 人工键盘走查；M8 全量验收与文档
-- 当前阻塞：需要人：M7 的四个新类别页键盘走查；有 GPU 的机器跑三项帧延迟预算（本容器与 CI 的 macOS runner 都是 SwiftShader）
-- 代码基线：`main` `2d44aa5`（PR #3 合入）＋ 分支 `claude/hopeful-mccarthy-3fceae` 上的后续提交
+- 下一步：用户决定三项帧延迟预算的处理（在有 GPU 的机器上跑一次，或像 `budget-scene` 一样列为仅手动）后收 M2；M7 人工键盘走查；M8 全量验收与文档
+- 当前阻塞：需要人：三项帧延迟预算要有 GPU 的机器或用户决定；M7 的四个新类别页键盘走查
+- 代码基线：`main` `2d44aa5` ＋ PR #4（分支 `claude/hopeful-mccarthy-3fceae`，head `717e7d4` 之后）
 
 ### 完成记录
 
 | Milestone | 状态 | 更新时间 | 简要记录 | 实现与验收记录 |
 | --- | --- | --- | --- | --- |
-| M2 | 进行中 | 2026-09-28 | 共享页 fixture + 五个示例 `reset()`；本地各 project 回归层 ≤ 5 min；CI 改为构建一次 + 分片测试，最长测试 job 9.9 min（run 36304675833）；证据层除 3 项软件光栅下的帧延迟预算外全过（3 项与基线同值，需有 GPU 的机器）；待后续 PR 的 CI 全绿 | [M2 记录](../validation/dx/m2.md) |
+| M2 | 进行中 | 2026-09-28 | 共享页 fixture + 五个示例 `reset()`；本地各 project 回归层 ≤ 5 min；CI 构建一次 + 10 个测试 job，run 36451927549 全绿、最长测试 job 9.3 min（达标）；证据层除 R30 AC1、B2 滚动、Vellum 平移三项帧延迟预算外全过——三项与改前基线同机同值，本容器与 CI 都是软件光栅，只能在有 GPU 的机器上判定（缺口，待用户决定） | [M2 记录](../validation/dx/m2.md) |
 | M7 | 进行中 | 2026-09-27 | Toast、`Draft` 与 NumberField/ColorField、ToggleGroup、Menu/Dialog 扩展，目录 24 类；Vellum 改用 Toast/草稿核心（3 处行为差异按 ADR-4 采用）；catalog 74/74、孪生 0 差；缺人工键盘走查 | [M7 组件记录](../validation/dx/m7-components.md)、[M7 Vellum 记录](../validation/dx/m7-vellum.md) |
 | M1 | 已完成 | 2026-09-25 | `RUSTIFY_TIER` + `@evidence`（`--list` 守恒）、按需 server（A-4 成立）、CI/verify `--bins` 与全量层；component-catalog 回归层 49/49；A-2 部分证伪 → ADR-6 修订；A-7 内存成立 | [M1 记录](../validation/dx/m1.md) |
 | M3 | 已完成 | 2026-09-27 | mise 固定 Tailwind 4.1.13、`xtask/src/tailwind.rs`、`source(none)`、去 npm Tailwind、`verify` 加 CSS/目录检查；`main` CI host job 全绿，A-1 在 macOS 上成立 | [M3 记录](../validation/dx/m3.md) |
