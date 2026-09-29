@@ -21,6 +21,16 @@ export type Tier = "regression" | "evidence" | "all";
 
 export const EVIDENCE = "@evidence";
 
+// A frame budget that is about a machine with a GPU skips itself in a headless
+// browser: `test.skip(({ headless }) => headless, GPU_ONLY)`. Headless
+// Chromium draws with SwiftShader, a software rasteriser, and there these
+// budgets miss by the same margin on a build from before a change as on one
+// from after it, so neither a pass nor a failure is about the budget. They
+// are run by hand, headed (`--headed`), on a machine with a GPU, and CI does
+// not run them. `budget-scene` is the same kind of check in a project of its
+// own, which is headed already.
+export const GPU_ONLY = "a frame budget for a machine with a GPU: run it by hand, with --headed, on one";
+
 function parse(value: string | undefined): Tier {
     if (value === undefined || value === "" || value === "regression") {
         return "regression";

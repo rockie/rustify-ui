@@ -77,7 +77,7 @@ node tests/vellum/interop.mjs --check-starter /tmp/forma-rust.vellum
 
 这部分由应用显式注册9个指针/滚轮/失焦监听和2个键盘监听；`Bindings`在Leptos挂载作用域清理时移除监听并释放闭包。裸wasm同样需要这些编辑处理，还需自行管理状态订阅、视图刷新、尺寸观察与卸载顺序。`m4-pointer.spec.ts`的13项检查通过：原版矩形创建/拖动/撤销/重做/缩放/旋转；六组手势几何与选择结果一致；独立覆盖画布在RGB通道差之和>24阈值下为零差异；Escape/指针取消/失焦恢复、钢笔锚点编辑和真实CDP双指输入通过。悬停、实时框选、吸附参考线、钢笔预览和标尺另有逐像素断言。
 
-启动页连续30次平移的输入至SDK呈现帧延迟p95为44.5 ms（最大55.6 ms），未触发ADR-2的p95>50 ms重评条件，相机继续保存在应用信号中。计时在页内完成，从指针事件分派到`requestAnimationFrame`观察到SDK帧数增加；它不是物理显示器的端到端延迟。数据见`test-results/vellum/m4-pan.json`，操作与覆盖截图见`test-results/vellum/artifacts/m4-pointer/`。
+启动页连续30次平移的输入至SDK呈现帧延迟p95为44.5 ms（最大55.6 ms），未触发ADR-2的p95>50 ms重评条件，相机继续保存在应用信号中。计时在页内完成，从指针事件分派到`requestAnimationFrame`观察到SDK帧数增加；它不是物理显示器的端到端延迟。数据见`test-results/vellum/m4-pan.json`，操作与覆盖截图见`test-results/vellum/artifacts/m4-pointer/`。这项预算现在在`m4-pan.spec.ts`，不再用 SwiftShader 启动，无头时自动跳过，只在有GPU的机器上加`--headed`手动跑：SwiftShader下改动前后的构建都在130–140 ms。
 
 ### 工作区外壳与浮层
 

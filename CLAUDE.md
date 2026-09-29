@@ -54,7 +54,7 @@ VELLUM_TWIN=baseline VELLUM_BASELINE_DIR=../rustify-ui-vellum-baseline RUSTIFY_T
 - `playwright.config.ts` maps specs to projects. There is one project per example, plus budget and deployment projects, and a spec runs only under the projects that list it.
 - Never run without `--project`, because the whole suite gets killed for memory. Run one project per command, and never start two Playwright runs at once: each clears `test-results/` at startup, and the other run then fails with phantom ENOENT errors.
 - Whole projects take tens of minutes (fusion-basic ~47 min, property-workbench ~38 min), so iterate on single spec files. A full sweep is evidence for a milestone's exit, not a debugging tool.
-- `budget-scene` needs headed Chrome on a real GPU. CI leaves it out on purpose, and it skips itself when headless.
+- The frame budgets need headed Chrome on a real GPU, so CI leaves them out on purpose and they skip themselves when headless. `budget-scene` is a headed project of its own; R30 AC1 (`budget`), B2's scroll (`budget-data`) and Vellum's pan run by hand with `--headed`, e.g. `RUSTIFY_TIER=evidence npx playwright test --project=budget --headed -g "R30"`.
 - Performance figures are measured inside the page, never from Playwright timings.
 - `mbx xtask verify --suite p1|p2|p3` runs a release's full check set. It lists the manual records (VoiceOver, real IME input, zoom walkthrough) as *missing*, never as passed.
 

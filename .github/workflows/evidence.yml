@@ -13,7 +13,10 @@ name: evidence
 #
 # Not here, and run by hand: `budget-scene` and Vellum's `m3-webgpu` and
 # `m8-ui` need headed Chrome on a real GPU, and a runner without one would
-# report the software rasteriser's numbers under their names.
+# report the software rasteriser's numbers under their names. The other frame
+# budgets - R30 AC1 in `budget`, B2's scroll in `budget-data`, Vellum's pan -
+# skip themselves here for the same reason and run with `--headed` on such a
+# machine (`GPU_ONLY` in tests/tier.ts).
 
 on:
   workflow_dispatch:

@@ -2,7 +2,7 @@ import { expect, Page, test } from "@playwright/test";
 import { percentile, R30_LARGE } from "./budgets";
 import { B2, BASELINE } from "./loads";
 import * as twin from "./dataset";
-import { EVIDENCE } from "../tier";
+import { EVIDENCE, GPU_ONLY } from "../tier";
 
 /// R30 AC2 and AC3 over B2, asserted.
 ///
@@ -17,10 +17,13 @@ import { EVIDENCE } from "../tier";
 /// The second is what a job over the whole sample costs: a single-column sort
 /// and a text filter end to end, and how quickly a cancel is answered.
 ///
-/// Where this runs: headless Chromium under SwiftShader. B2 is DOM work - the
-/// rows are elements and the cells are text nodes - so the software rasteriser
-/// is not the thing under test, which is why B2's gate lives here and B3's
-/// lives in the headed project.
+/// Where this runs: the jobs headless, the frame interval by hand on a machine
+/// with a GPU. B2 is DOM work - the rows are elements and the cells are text
+/// nodes - but the page still reaches the screen through the compositor, and
+/// under SwiftShader the scroll's p95 is 33.4 ms against a budget of 20 on a
+/// build from before a change and on one from after it alike. So the frame
+/// interval skips itself headless (`GPU_ONLY` in `tests/tier.ts`), and the
+/// jobs, which never wait for a frame, stay in the evidence run.
 
 /// The five-second negative probe. The drive continues and the content is
 /// frozen; the budget has to be missed. If it is met, the gate is measuring
@@ -152,6 +155,8 @@ async function scrollTable(
 }
 
 test.describe("R30 AC2 over B2: scrolling a hundred thousand rows", { tag: EVIDENCE }, () => {
+    test.skip(({ headless }) => headless, GPU_ONLY);
+
     test(`${R30_LARGE.runs} runs of ${R30_LARGE.seconds} s, each under ${R30_LARGE.frame_p95_ms} ms`, async ({
         page,
     }) => {

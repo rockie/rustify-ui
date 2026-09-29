@@ -88,7 +88,9 @@ pub const P3: Suite = Suite {
     // headed Chrome only (A-3): under a software rasteriser the same scene
     // measures p95 50.10 ms against 17.60 ms headed, so a suite that ran it
     // wherever it happened to be invoked would report the rasteriser's number
-    // under the budget's name. It is run by hand, and the report says so.
+    // under the budget's name. It is run by hand, and the report says so. The
+    // frame budgets in `budget` and `budget-data` skip themselves headless for
+    // the same reason, so this suite runs the rest of those projects.
     projects: &[
         "fusion-basic",
         "property-workbench",

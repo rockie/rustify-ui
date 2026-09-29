@@ -127,8 +127,9 @@ export default defineConfig({
             testMatch: ["p3-budget-minimal.spec.ts"],
             use: { baseURL: `http://127.0.0.1:${fusionPort}/` },
         },
-        // R30 AC2 over B2 and AC3 over the jobs. Headless: B2 is DOM work, so
-        // the software rasteriser is not what is under test.
+        // R30 AC2 over B2 and AC3 over the jobs. The jobs run headless; the
+        // frame interval skips itself unless the run is `--headed` on a
+        // machine with a GPU (`GPU_ONLY` in `tests/tier.ts`).
         {
             name: "budget-data",
             testMatch: ["p3-budget-data.spec.ts"],
