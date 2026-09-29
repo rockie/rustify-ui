@@ -1,7 +1,7 @@
 # M6 子任务 · Vellum 改用 SDK 行为原语 · 实现与验收记录
 
 - 对应计划：[DX-REFINE](../../plan/DX-REFINE.md) M6 的 Vellum 半边（ADR-5、D16–D18、C-4、C-9、NFR-4、NFR-7、§1.1「Vellum 抽取」、§5.3「Vellum 改用顺序」、§9.4「Vellum 基线孪生」、A-5）；SDK 原语见 [m6-sdk.md](m6-sdk.md)
-- 最近更新：2026-09-25 UTC
+- 最近更新：2026-09-29 UTC
 - 代码基线：`12eae0d` 之上的本子任务提交（独立工作树，分离 HEAD）；孪生基线 `24f1a11`（`/home/user/rustify-ui-vellum-baseline`，其 `examples/vellum`、`tests/vellum` 与 `12eae0d` 逐字节相同，差别只在 SDK）
 - 范围：`examples/vellum/{src,app.js,Cargo.toml}`，删三份死 CSS；`crates/rustify-ui/src/{listeners,frame,lib}.rs`（新增两个出口）；`tests/vellum/{m3-raster,m6-edit}.spec.ts`（A-5 门控）；`docs/vellum.md` 两段机制描述。未动 property-workbench、data-workbench、fusion-basic（M6 另一半）、`CLAUDE.md`、计划正文与「实施进度」（由主 agent 回写）。
 
@@ -28,7 +28,7 @@
 - 文本输入防护：`keys.rs` 手写的 INPUT/TEXTAREA/SELECT/contenteditable 判定换成 `rustify_ui::is_text_entry`（SDK 照原判定实现，语义相同）。
 - 修饰键：`command = meta || ctrl` 换成 `command_held()`，按 `rustify_ui::Platform::current()` 取 `Mod` 的含义——Mac 上 Meta、其余平台 Control（与 `Shortcut::parse("Mod+…")` 同一平台判定，每页只判一次）。
 - 按键表（`keys.rs` 的 `key_down`）原样留在 Vellum。没有把表项逐条换成 `Shortcut::matches`：表对未点名的修饰键宽松（Shift+R 仍选矩形、Ctrl+Alt+Z 仍撤销、Ctrl+Delete 仍删除、`Escape` 不看修饰键），`Shortcut` 的修饰键精确匹配会改变这些组合，违背「行为不变」；注释写明了原因。
-- 唯一有意的行为变化（任务明确要求的 `Mod` 语义）：非 Mac 平台上 Meta（Super/Win 键）+ 字母不再触发命令，Mac 上 Control + 字母不再触发命令（此前两者都算命令键）。`tests/vellum` 在 Linux 上全用 Control/`ControlOrMeta`，m4-pointer、m5-shell、m6-edit 钉住的行为不变（见验收）。滚轮缩放的 `ctrl || meta`（触控板捏合在各平台都报 `ctrlKey`）不是快捷键，未动。
+- 唯一有意的行为变化（任务明确要求的 `Mod` 语义）：非 Mac 平台上 Meta（Super/Win 键）+ 字母不再触发命令，Mac 上 Control + 字母不再触发命令（此前两者都算命令键）。`tests/vellum` 在 Linux 上全用 Control/`ControlOrMeta`，m4-pointer、m5-shell、m6-edit 钉住的行为不变（见验收）。滚轮缩放的 `ctrl || meta`（触控板捏合在各平台都报 `ctrlKey`）不是快捷键，未动。**用户 2026-09-29 确认保留**（Mac 上只认 ⌘）。
 - 后续修正（集成后 PR #3 的 macOS CI 发现）：上一条「在 Linux 上全用 Control」正是漏洞——m4-pointer、m5-shell、m6-edit 共 6 项在 macOS runner 上失败（Control+K/N/Z/Enter 在 Mac 上按设计不再是命令键），本地 Linux 与此前 CI 都没覆盖到。保留计划定的 `Mod` 语义，把 `tests/vellum` 里命令快捷键的 `Control+` 全部换成 Playwright 的 `ControlOrMeta+`（m4-pointer 3、m5-shell 3、m6-edit 1、smoke 3），在 Mac 上按 Meta、其余平台按 Control；原版孪生两种都认，孪生比对不受影响。拖拽/点击时按住的 Control（关吸附、深选）走 `ctrl || meta`，未改。
 
 ### 3. 模态 Tab 循环 → SDK `Layer`
