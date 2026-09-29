@@ -35,25 +35,25 @@
 
 ### 恢复快照
 
-- 最近更新：2026-09-28 UTC · PR #4 的 CI 全绿，最长测试 job 9.3 min，M2 的 CI 退出条件达标
-- 当前进度：5/8 个里程碑完成
-- 当前状态：M2、M7 进行中。M2 只差一项：证据层「逐 project 各跑一次全绿」里 R30 AC1、B2 滚动、Vellum 平移三项帧延迟预算在软件光栅上过不了（与改前基线 `24f1a11` 同机同值，不是回归），和 `budget-scene` 一样需要有 GPU 的机器；其余退出条件（复位等价、两轮全绿、本地 ≤ 5 min、守恒计数、CI 全绿且 ≤ 10 min）均已满足。CI 形态：构建 4 job 并行 → 测试 10 job（fusion-basic 4 片、deployment、property-workbench 2 片、catalog and data 2 片、vellum），测试 job 用构建 job 的 xtask，全部 job 30 min 超时。M7：除人工键盘走查外退出条件已满足
-- 最近完成：M6 · Vellum 抽取（一）：SDK 行为原语
-- 下一步：用户决定三项帧延迟预算的处理（在有 GPU 的机器上跑一次，或像 `budget-scene` 一样列为仅手动）后收 M2；M7 人工键盘走查；M8 全量验收与文档
-- 当前阻塞：需要人：三项帧延迟预算要有 GPU 的机器或用户决定；M7 的四个新类别页键盘走查
-- 代码基线：`main` `2d44aa5` ＋ PR #4（分支 `claude/hopeful-mccarthy-3fceae`，head `717e7d4` 之后）
+- 最近更新：2026-09-29 UTC · PR #4 合入 `main`；用户决定三项帧延迟预算仅手动，M2 完成；Vellum 行为差异获用户确认
+- 当前进度：6/8 个里程碑完成
+- 当前状态：M7 进行中，只差人工键盘走查（用户稍后自己做）。M2 已完成：R30 AC1、B2 滚动、Vellum 平移三项帧延迟预算按用户决定与 `budget-scene` 一样列为仅手动——无头时以 `GPU_ONLY`（`tests/tier.ts`）自跳过，有 GPU 的机器上 `--headed` 手动跑，Vellum 平移移到 `m4-pan.spec.ts`（§5.1）。CI 形态：构建 4 job 并行 → 测试 10 job（fusion-basic 4 片、deployment、property-workbench 2 片、catalog and data 2 片、vellum），测试 job 用构建 job 的 xtask，全部 job 30 min 超时
+- 最近完成：M2 · 回归层瘦身与 CI 重排
+- 下一步：M8 全量验收与文档（依赖人工走查的收尾项留到 M7 走查之后）；M7 四个新类别页的人工键盘走查由用户做，做完回写 M7
+- 当前阻塞：需要人：M7 的四个新类别页键盘走查（用户已知悉，稍后做）；三项帧延迟预算与 `budget-scene` 的有头 GPU 运行需要有 GPU 的机器（不阻塞 M2）
+- 代码基线：`main` `7311544`（PR #4 合入）＋ 分支 `claude/hopeful-mccarthy-3fceae` 上的帧延迟预算改动
 
 ### 完成记录
 
 | Milestone | 状态 | 更新时间 | 简要记录 | 实现与验收记录 |
 | --- | --- | --- | --- | --- |
-| M2 | 进行中 | 2026-09-28 | 共享页 fixture + 五个示例 `reset()`；本地各 project 回归层 ≤ 5 min；CI 构建一次 + 10 个测试 job，run 36451927549 全绿、最长测试 job 9.3 min（达标）；证据层除 R30 AC1、B2 滚动、Vellum 平移三项帧延迟预算外全过——三项与改前基线同机同值，本容器与 CI 都是软件光栅，只能在有 GPU 的机器上判定（缺口，待用户决定） | [M2 记录](../validation/dx/m2.md) |
-| M7 | 进行中 | 2026-09-27 | Toast、`Draft` 与 NumberField/ColorField、ToggleGroup、Menu/Dialog 扩展，目录 24 类；Vellum 改用 Toast/草稿核心（3 处行为差异按 ADR-4 采用）；catalog 74/74、孪生 0 差；缺人工键盘走查 | [M7 组件记录](../validation/dx/m7-components.md)、[M7 Vellum 记录](../validation/dx/m7-vellum.md) |
+| M7 | 进行中 | 2026-09-29 | Toast、`Draft` 与 NumberField/ColorField、ToggleGroup、Menu/Dialog 扩展，目录 24 类；Vellum 改用 Toast/草稿核心（3 处行为差异按 ADR-4 采用，Mac 只认 ⌘，均于 2026-09-29 经用户确认）；catalog 74/74、孪生 0 差；缺人工键盘走查（用户稍后做） | [M7 记录](../validation/dx/m7.md) |
 | M1 | 已完成 | 2026-09-25 | `RUSTIFY_TIER` + `@evidence`（`--list` 守恒）、按需 server（A-4 成立）、CI/verify `--bins` 与全量层；component-catalog 回归层 49/49；A-2 部分证伪 → ADR-6 修订；A-7 内存成立 | [M1 记录](../validation/dx/m1.md) |
 | M3 | 已完成 | 2026-09-27 | mise 固定 Tailwind 4.1.13、`xtask/src/tailwind.rs`、`source(none)`、去 npm Tailwind、`verify` 加 CSS/目录检查；`main` CI host job 全绿，A-1 在 macOS 上成立 | [M3 记录](../validation/dx/m3.md) |
 | M4 | 已完成 | 2026-09-27 | 组件类去 `rui:`，`tw_merge` 覆盖对应用类生效，`--spacing` 内联、默认令牌对齐；component-catalog 74/74、property-workbench 126/126、data-workbench 51/51；标准属性计算样式 0 差异（偏差见 §5.2） | [M4 记录](../validation/dx/m4-unprefix.md) |
 | M5 | 已完成 | 2026-09-27 | `sdk.css` 可组合入口、`build-web` 编译示例 `tailwind.css`（component-catalog 首用）、SDK 产物去掉示例类、`.vscode` 与文档；5 个示例构建、四个示例清洁双构建一致、catalog 74/74 含调用方类覆盖断言 | [M5 记录](../validation/dx/m5.md) |
-| M6 | 已完成 | 2026-09-28 | SDK `listen`/`Shortcut`/`is_text_entry`/`Layer` Tab 循环/`defer`·`next_frame`/`release_on_abort`；Vellum 改用（私有出口直连 14 → 0），命令键按平台 `Mod`；Vellum 回归本地 58 过、macOS CI 通过，基线孪生 8 张视图 0 像素差；property-workbench 126/126、fusion-basic 64/64、component-catalog 74/74 | [M6 SDK 记录](../validation/dx/m6-sdk.md)、[M6 Vellum 记录](../validation/dx/m6-vellum.md) |
+| M6 | 已完成 | 2026-09-28 | SDK `listen`/`Shortcut`/`is_text_entry`/`Layer` Tab 循环/`defer`·`next_frame`/`release_on_abort`；Vellum 改用（私有出口直连 14 → 0），命令键按平台 `Mod`；Vellum 回归本地 58 过、macOS CI 通过，基线孪生 8 张视图 0 像素差；property-workbench 126/126、fusion-basic 64/64、component-catalog 74/74 | [M6 记录](../validation/dx/m6.md) |
+| M2 | 已完成 | 2026-09-29 | 共享页 fixture + 五个示例 `reset()`；本地各 project 回归层 ≤ 5 min；CI 构建一次 + 10 个测试 job，run 36451927549 全绿、最长测试 job 9.3 min；证据层逐 project 全过，R30 AC1、B2 滚动、Vellum 平移三项帧延迟预算按用户 2026-09-29 决定改为仅手动（无头自跳过，`--headed` 放行，已在本容器验证两个方向） | [M2 记录](../validation/dx/m2.md) |
 
 ## 0. 需求、范围与决策
 
@@ -317,14 +317,16 @@ docs/validation/dx/m<n>.md ★
 | 归属 | spec（`tests/browser` / `tests/vellum`） | 处理 |
 | --- | --- | --- |
 | 证据层（整文件） | `p2-budget`、`p3-budget-minimal`、`p3-budget-data`、`m8-baseline`、`m8-endurance`、`m8-network`、`p3-endurance`、`p3-idle`、`p3-memory`、`p3-diagnostics`、`p3-probes`、`p3-faults`；vellum `smoke`、`visual`、`m8-metrics` | 文件级 `@evidence`；预算类 project（`budget`、`budget-minimal`、`budget-data`）只在证据层存在 |
-| 仅手动 | `p3-budget-scene`（有头 + 真 GPU）；vellum `m3-webgpu`、`m8-ui`（已有环境变量门） | 保持现状，列入证据 workflow 的说明但不自动跑 |
-| 证据层（单用例） | `m2-runtime` 的 300+100 回合挂载泄漏（`m2-runtime.spec.ts:195`）；vellum `m4-pointer` 平移 30 样本 p95（`m4-pointer.spec.ts:217`）；`p3-jobs` 的 20 次取消 p95；`p2-theme` 每次换主题 < 200 ms 的预算（M2 在 CI 上补分，见下） | 用例级 `@evidence` |
+| 仅手动 | `p3-budget-scene`（有头 + 真 GPU）；vellum `m3-webgpu`、`m8-ui`（已有环境变量门）；帧延迟预算 `p2-budget` R30 AC1、`p3-budget-data` B2 滚动、vellum `m4-pan`（M2 用户决定，见下） | 前两类保持现状；帧延迟预算仍带 `@evidence`，无头时以 `GPU_ONLY`（`tests/tier.ts`）自跳过，在有 GPU 的机器上加 `--headed` 手动跑。均列入证据 workflow 的说明但不自动跑 |
+| 证据层（单用例） | `m2-runtime` 的 300+100 回合挂载泄漏（`m2-runtime.spec.ts:195`）；vellum 平移 30 样本 p95（原 `m4-pointer.spec.ts:217`，M2 移入 `m4-pan.spec.ts`，属上行仅手动）；`p3-jobs` 的 20 次取消 p95；`p2-theme` 每次换主题 < 200 ms 的预算（M2 在 CI 上补分，见下） | 用例级 `@evidence` |
 | 回归层（降回合） | `m1-probes`、`m3-state`、`m3-workbench`、`m4-geometry`（9 组 → 2 组）、`m4-overlay`、`m6-async`、`m6-components`、`m6-theme`、`m7-recovery`、`p2-*`（`p2-budget` 除外）、`p3-scene`、`p3-table` | 循环次数改 `rounds(n)`，矩阵改 `pick()` |
 | 回归层（原样） | `m2-runtime`（除上行的单用例）、`m5-*`、`m6-mainpath`、`m7-deployment`、`p3-b0`、`p3-instances`、`p3-jobs`（除上行的单用例）、`p3-policy`、`p3-restart`；vellum `m2-scene`、`m3-raster`、`m4-pointer`（除上行的单用例）、`m5-shell`、`m6-edit`、`m7-files` | 只换页面复用方式（D4） |
 
 **M2 偏差（证据层回合数）**：`m2-runtime`「repeated mount and dispose returns every browser resource」的预热由 300 回合改为 400（尾段 100 回合与「零增长」阈值不变）。依据：1,000 回合逐 50 回合采样，改前构建第 100 回合即稳定，M2 构建因各夹具登记复位闭包在第 300–350 回合间多一次 16 MB 的堆增长、此后 650 回合平稳；用例注释本就写明预热按构建实测（`docs/validation/dx/m2.md`）。
 
 **M2 补分（`p2-theme`）**：「twenty switches, and every one of them lands inside the budget」原属 `p2-*` 回归层，但它既查结果（每次切换两帧后生效、主题交替）又查 200 ms 预算。PR #3 的 CI 上 2 个 worker 共用 3 核、软件光栅时，一次切换量到 201.7 ms。按判定规则拆开：回归层留「every switch is in force two frames after the click」只查结果，预算用例原名进证据层；`evidence.yml` 因此加跑 component-catalog。
+
+**M2 决定（帧延迟预算仅手动，用户 2026-09-29）**：证据层里 R30 AC1（p95 ≤ 50 ms）、B2 滚动（p95 ≤ 20 ms）、Vellum 平移（p95 ≤ 50 ms）三项在本容器与 CI 的 macOS runner 上都过不了，与改前基线 `24f1a11` 同机同值（约 120 / 33.4 / 130–140 ms），原因是无头 Chromium 用 SwiftShader 软件光栅，阈值按有 GPU 的机器定。按用户决定与 `budget-scene` 同样处理：用例与阈值不变，无头时 `test.skip(({ headless }) => headless, GPU_ONLY)`，有 GPU 的机器上 `--headed` 手动跑；Vellum 平移因要去掉配置钉住的 SwiftShader 启动参数（worker 级选项只能在文件顶层 `test.use`）移到 `m4-pan.spec.ts`。证据层与 `verify` 里它们记为跳过，不算通过。
 
 `p3-faults` 整体进证据层的依据：它是四类故障各 20 次的放大版，单次版本已在回归层：过期答复 `m6-async.spec.ts:51-61`、上下文丢失 `m7-recovery.spec.ts:66-107`、动作内关闭 `m3-workbench.spec.ts:350-379`、字体缺失 `m7-deployment.spec.ts:73-120`。
 
@@ -474,7 +476,7 @@ crates/rustify-components/css/sdk.css   ← @source "../src"; @custom-variant da
 | # | 里程碑 | 前置依赖 | 内容与并行边界 | 验证/退出条件 |
 | --- | --- | --- | --- | --- |
 | M1 | 测试分层骨架与探针 | 无 | `tests/tier.ts`；两份 config 读分层；§5.1 证据类打 `@evidence`；预算 project 只在证据层；webServer 按需与子路径预构建（D6）；CI host job 改 `--lib --bins`；`verify` 设 `RUSTIFY_TIER=all`；A-2 四种隔离方式耗时探针（只用既有句柄，不改示例代码）、A-4、A-7 探针。单人负责 `playwright.config.ts`、`tests/tier.ts`、`xtask/src/serve.rs`、`xtask/src/verify.rs`、`.github/workflows/verify.yml`；可与 M3 并行（边界见表下说明） | `--list` 计数守恒（§9.2）；`--project=component-catalog` 回归层全绿且只起一个 server；`mbx test --workspace --lib --bins` 通过；四种隔离方式的墙钟与页内时间、各 project 需 `fresh` 的用例数、A-4/A-7 结论写入记录；回写「实施进度」 |
-| M2 | 回归层瘦身与 CI 重排 | M1、A-2 结论 | `rounds()`/`pick()` 落到 §5.1 表；ADR-6/D4：support fixture 与各示例 `reset()`（`examples/*/app.js` 与各自 `src/`，按示例分给 subagents）及复位等价用例；去重表执行；Vellum `smoke`/`visual`/`m8-metrics` 进证据层；CI matrix（D7）与 `evidence.yml`；修 `examples/vellum/README.md:84`；更新 `CLAUDE.md`「Browser tests」与 `docs/quickstart.md` 的测试命令。spec 按 project 分给 subagents（各自只改自己 project 的 spec，`support.ts` 与 config 归主 agent）；浏览器验证串行 | 每个示例的复位等价用例通过；每个 project 回归层连续两次全绿；四个示例主 project 与 vellum 的本地回归层墙钟均 ≤ 5 min（D9 口径）；删除清单与守恒计数；证据层逐 project 各跑一次全绿（`budget-scene` 除外）；PR 上 CI matrix 全绿且最长 job ≤ 10 min（温缓存；冷缓存时长另记，A-6）；回写「实施进度」 |
+| M2 | 回归层瘦身与 CI 重排 | M1、A-2 结论 | `rounds()`/`pick()` 落到 §5.1 表；ADR-6/D4：support fixture 与各示例 `reset()`（`examples/*/app.js` 与各自 `src/`，按示例分给 subagents）及复位等价用例；去重表执行；Vellum `smoke`/`visual`/`m8-metrics` 进证据层；CI matrix（D7）与 `evidence.yml`；修 `examples/vellum/README.md:84`；更新 `CLAUDE.md`「Browser tests」与 `docs/quickstart.md` 的测试命令。spec 按 project 分给 subagents（各自只改自己 project 的 spec，`support.ts` 与 config 归主 agent）；浏览器验证串行 | 每个示例的复位等价用例通过；每个 project 回归层连续两次全绿；四个示例主 project 与 vellum 的本地回归层墙钟均 ≤ 5 min（D9 口径）；删除清单与守恒计数；证据层逐 project 各跑一次全绿（`budget-scene` 与 §5.1 仅手动的三项帧延迟预算除外，后者 2026-09-29 用户决定）；PR 上 CI matrix 全绿且最长 job ≤ 10 min（温缓存；冷缓存时长另记，A-6）；回写「实施进度」 |
 | M3 | Tailwind 工具链：mise 二进制与精确扫描 | 无（CI 改动在 M1 之后） | A-1 核实；`mise.toml`；`xtask/src/tailwind.rs`；`css.rs` 改用并改进 `--check` 输出；`source(none)`；删 npm Tailwind 依赖；`doctor`；`verify` 加 CSS/目录检查；修 `docs/quickstart.md:47`。单人负责 `xtask/src/{tailwind,css,doctor,main}.rs`、`mise.toml`、`package*.json`；`verify.rs`/`verify.yml` 在 M1 合入后再改 | `mbx xtask css --check` 无漂移（无 `node_modules`）；新单测通过；缺二进制/错版本两种故障注入给出预期错误；`mbx xtask doctor` 显示版本；CI host job 不再为 CSS 跑 `npm ci` 且全绿；回写「实施进度」 |
 | M4 | 去掉 `rui:` 前缀 | M2、M3 | §5.2 第 2 步；改前先跑 §9.4 计算样式快照。组件 crate、component-catalog、data-workbench、两处测试字符串同一提交，单人负责（机械改写不拆） | 命中数断言与残留为 0；host 单测（含新增的覆盖、令牌值、无 `var(--spacing)`）通过；`css --check`；计算样式差异 0；component-catalog、property-workbench、data-workbench 回归层全绿；回写「实施进度」 |
 | M5 | 应用侧 Tailwind v4 | M4 | `sdk.css` 拆分；`build-web` 编译示例 `tailwind.css`；component-catalog 采用并删除 SDK 的 examples 源；`.vscode/settings.json`；quickstart/architecture/`CLAUDE.md` 样式章节。`xtask/src/build.rs` 与 CSS 文件单人负责，文档可并行 subagent | 全部 5 个示例 `build-web --release` 成功；`mbx xtask verify --suite p3 --no-browser` 的 double build 一致；`css --check`（SDK 产物少 4 个类）；component-catalog 回归层全绿；新增「调用方类覆盖组件类」浏览器断言通过；文档路径检查通过；回写「实施进度」 |

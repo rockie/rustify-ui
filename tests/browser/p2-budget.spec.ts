@@ -1,6 +1,6 @@
 import { CDPSession, expect, Page, test } from "@playwright/test";
 import { percentile, R29, R30 } from "./budgets";
-import { EVIDENCE } from "../tier";
+import { EVIDENCE, GPU_ONLY } from "../tier";
 
 /// R29 and R30, asserted rather than reported.
 ///
@@ -391,6 +391,11 @@ test.describe("R29: start-up and what a deployment sends", { tag: EVIDENCE }, ()
 });
 
 test.describe("R30: latency at B1's density", { tag: EVIDENCE }, () => {
+    // Every action waits for the region's frame, and under SwiftShader that
+    // frame puts the p95 near 120 ms on a build from before a change and on
+    // one from after it alike, against a budget of 50 ms.
+    test.skip(({ headless }) => headless, GPU_ONLY);
+
     test(`AC1: ${R30.actions} actions, p95 under ${R30.latency_p95_ms} ms`, async ({ page }) => {
         test.setTimeout(1_800_000);
         await page.addInitScript(CLOCK);

@@ -1,7 +1,7 @@
 # M7 子任务 · Vellum 改用 Toast 核心与草稿核心 · 实现与验收记录
 
 - 对应计划：[DX-REFINE](../../plan/DX-REFINE.md) M7 的 Vellum 半边（ADR-4、ADR-5、D17、D18、C-5、C-9、NFR-4、§5.3「Vellum 改用顺序」最后两步）；SDK 核心与目录组件见 [m7-components.md](m7-components.md)，M6 的 Vellum 改用见 [m6-vellum.md](m6-vellum.md)
-- 最近更新：2026-09-27 UTC
+- 最近更新：2026-09-29 UTC
 - 代码基线：`d94471d`（`claude/hopeful-mccarthy-3fceae` 头，已含 M6 Vellum 改用 `8a3b569` 与目录组件 `1977e51`）之上的本子任务提交。工作树分支原在 `b15e4b9`，缺 M6 的 Vellum 改用，先 `git merge --ff-only` 快进到 `d94471d` 再改，避免与主线在同一批文件上冲突
 - 范围：`examples/vellum/src/{app.rs,pointer.rs,shell/mod.rs,shell/toast.rs,shell/fields.rs}`，`tests/vellum/m5-shell.spec.ts` 一条用例加 Escape 断言。未动 SDK、`Cargo.toml`、`app.css`、`index.html`、`app.js`、计划正文与「实施进度」（由主 agent 回写）
 
@@ -69,5 +69,5 @@
 
 ### 缺口与说明
 
-- 行为差异 1–3 按 `Draft`（ADR-4）的规则处理，差异 4 保留 Vellum 的规则，理由见上表。若要让 Escape 在 Vellum 字段里恢复成无作用，只能不用 `Draft`，与 M7「Vellum 改用草稿核心」冲突，需主 agent 决定。
+- 行为差异 1–3 按 `Draft`（ADR-4）的规则处理，差异 4 保留 Vellum 的规则，理由见上表。若要让 Escape 在 Vellum 字段里恢复成无作用，只能不用 `Draft`，与 M7「Vellum 改用草稿核心」冲突，需主 agent 决定。**用户 2026-09-29 确认按上表保留**：Escape 撤回检查器草稿、未改动的聚焦字段跟随外部改值、以非法文本结束的编辑经正常提交路径提交最后一次预览；差异 4 维持 Vellum 规则。
 - 需要真实浏览器确认的只有差异 1 的新断言，以及 spin 按钮 `change` 路径（旧新两份实现都靠同一个 `change` 事件，未改变）。

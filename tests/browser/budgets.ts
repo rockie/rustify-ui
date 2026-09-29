@@ -91,13 +91,18 @@ export const R32 = {
 ///   fully supported browser to pass on its own. This suite runs Chrome on the
 ///   development machine under SwiftShader, a software rasteriser. A pass here
 ///   is a pass on that combination and says nothing about any other.
-/// - **Where each one runs.** The B1 and B0 gates and B2's frame interval run
-///   headless. B3's frame interval runs **only on headed Chrome**, and CI does
-///   not run it. M1's second probe measured the same scene under both: p95
-///   50.10 ms under headless SwiftShader against 17.60 ms on headed Chrome
-///   152. SwiftShader is a software rasteriser, and R30's figures are about a
-///   machine with a GPU, so a failure under it would say nothing about the
-///   budget and a pass would say nothing about the machine.
+/// - **Where each one runs.** The start-up and byte gates and the jobs run
+///   headless. Every frame budget runs **only headed, by hand, on a machine
+///   with a GPU**, and CI does not run them: R30 AC1 and B2's frame interval
+///   skip themselves headless (`GPU_ONLY` in `tests/tier.ts`), and B3's has
+///   the headed `budget-scene` project to itself. M1's second probe measured
+///   the same scene under both: p95 50.10 ms under headless SwiftShader
+///   against 17.60 ms on headed Chrome 152. SwiftShader is a software
+///   rasteriser, and R30's figures are about a machine with a GPU, so a
+///   failure under it would say nothing about the budget and a pass would say
+///   nothing about the machine. AC1 and B2 miss under it by the same margin
+///   on a build from before a change as after it (p95 about 120 ms and
+///   33.4 ms).
 /// - **A throttled link.** The cold-start gate runs on the loopback, so it
 ///   measures what the machine costs rather than what a link costs. The
 ///   throttled figures stay in `m8-network.spec.ts` as observations; they are
@@ -106,7 +111,7 @@ export const R32 = {
 ///   by `p2-budget.spec.ts` in the `budget` project. `R29_B0` is B0's and is
 ///   asserted by `p3-budget-minimal.spec.ts` in `budget-minimal`. `R30_LARGE`
 ///   is B2's and B3's: B2's half is asserted by `p3-budget-data.spec.ts` in
-///   `budget-data` (headless), B3's by `p3-budget-scene.spec.ts` in
+///   `budget-data`, B3's by `p3-budget-scene.spec.ts` in
 ///   `budget-scene` (headed Chrome, run by hand, not in CI and not in
 ///   `verify --suite p3`). `R32` is asserted by `p3-memory.spec.ts`, which runs
 ///   inside the two application projects because the peaks it reads belong to
