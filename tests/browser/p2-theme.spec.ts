@@ -1,7 +1,7 @@
 import { expect, Page } from "@playwright/test";
 
-import { rounds } from "../tier";
-import { REGION_START_MS, test } from "./support";
+import { EVIDENCE, rounds } from "../tier";
+import { REGION_START_MS, test, waitForReady } from "./support";
 
 /// M2 V3: one theme, adopted by both halves, in every state a control has -
 /// and a scope that asks for less movement gets less movement.
@@ -18,42 +18,54 @@ const scopeVariable = (page: Page, name: string) =>
         return getComputedStyle(scope).getPropertyValue(name).trim();
     }, name);
 
-test.describe("M2 V3: a theme both halves adopt", () => {
-    test("twenty switches, and every one of them lands inside the budget", async ({ page }) => {
-        // An even number, so the page ends in the theme it started in.
-        const switches = 2 * rounds(10);
-        const measured = await page.evaluate(async (switches) => {
-            const toggle = document.querySelector(
-                '[data-testid="toggle-theme"]'
-            ) as HTMLButtonElement;
-            const scope = document.querySelector("[data-rustify-scope]") as HTMLElement;
-            const frame = () => new Promise((resolve) => requestAnimationFrame(resolve));
-            const taken: { adopted: number; theme: string; primary: string }[] = [];
-            for (let round = 0; round < switches; round += 1) {
-                const before = getComputedStyle(scope).getPropertyValue("--primary").trim();
-                const started = performance.now();
-                toggle.click();
-                // Two frames: one for the write, one for the style to be in
-                // force when it is read.
-                await frame();
-                await frame();
-                taken.push({
-                    adopted: performance.now() - started,
-                    theme: scope.dataset.theme ?? "",
-                    primary: getComputedStyle(scope).getPropertyValue("--primary").trim(),
-                });
-                if (taken[round].primary === before) {
-                    throw new Error(`round ${round} did not change --primary`);
-                }
+/// Clicks the theme switch `switches` times. Each round is timed inside the
+/// page from the click to the second frame after it - one frame for the
+/// write, one for the style to be in force when it is read - and fails there
+/// if `--primary` did not change.
+async function switchThemes(page: Page, switches: number) {
+    await waitForReady(page);
+    return page.evaluate(async (switches) => {
+        const toggle = document.querySelector('[data-testid="toggle-theme"]') as HTMLButtonElement;
+        const scope = document.querySelector("[data-rustify-scope]") as HTMLElement;
+        const frame = () => new Promise((resolve) => requestAnimationFrame(resolve));
+        const taken: { adopted: number; theme: string; primary: string }[] = [];
+        for (let round = 0; round < switches; round += 1) {
+            const before = getComputedStyle(scope).getPropertyValue("--primary").trim();
+            const started = performance.now();
+            toggle.click();
+            await frame();
+            await frame();
+            taken.push({
+                adopted: performance.now() - started,
+                theme: scope.dataset.theme ?? "",
+                primary: getComputedStyle(scope).getPropertyValue("--primary").trim(),
+            });
+            if (taken[round].primary === before) {
+                throw new Error(`round ${round} did not change --primary`);
             }
-            return taken;
-        }, switches);
+        }
+        return taken;
+    }, switches);
+}
 
-        expect(measured).toHaveLength(switches);
-        // An even number of switches from light alternates back to light.
+test.describe("M2 V3: a theme both halves adopt", () => {
+    // An even number of switches, so the page ends in the theme it started in.
+    test("every switch is in force two frames after the click", async ({ page }) => {
+        const switches = 2 * rounds(10);
+        const measured = await switchThemes(page, switches);
         expect(measured.map((round) => round.theme)).toEqual(
             Array.from({ length: switches }, (_, index) => (index % 2 === 0 ? "dark" : "light"))
         );
+        expect(await snapshot(page)).toMatchObject({ theme: "light" });
+    });
+
+    // How long two frames take is the machine's answer as much as the
+    // page's: on a shared runner drawing in software it has come in at
+    // 201.7 ms. So the budget is a measurement, taken at full strength.
+    test("twenty switches, and every one of them lands inside the budget", { tag: EVIDENCE }, async ({ page }) => {
+        const switches = 2 * rounds(10);
+        const measured = await switchThemes(page, switches);
+        expect(measured).toHaveLength(switches);
         for (const [index, round] of measured.entries()) {
             expect(round.adopted, `round ${index}`).toBeLessThan(200);
         }

@@ -1,6 +1,6 @@
 import { expect, Page } from "@playwright/test";
 
-import { CATALOG_SIZE, test, waitForReady } from "./support";
+import { allowRegionStart, CATALOG_SIZE, REGION_START_MS, test, waitForReady } from "./support";
 
 /// M8: the catalogue at 400%, without losing content.
 ///
@@ -55,10 +55,12 @@ test.describe("M8: the catalogue reflows at 400%", () => {
             await expect(page.getByTestId(control), control).toBeVisible();
         }
 
-        // And it is still a working page at that width.
+        // And it is still a working page at that width. The samples page
+        // starts a region of its own.
+        allowRegionStart();
         await page.getByTestId("nav-samples").click();
-        await expect.poll(async () => (await snapshot(page)).path).toBe("/samples");
-        await expect(page.getByTestId("samples-page")).toBeVisible();
+        await expect.poll(async () => (await snapshot(page)).path, { timeout: REGION_START_MS }).toBe("/samples");
+        await expect(page.getByTestId("samples-page")).toBeVisible({ timeout: REGION_START_MS });
 
         await page.getByTestId("nav-status").click();
         await expect.poll(async () => (await snapshot(page)).path).toBe("/status");

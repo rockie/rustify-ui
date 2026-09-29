@@ -9,6 +9,8 @@ jobs:
   host:
     name: host checks
     runs-on: macos-14
+    # A few minutes normally; the limit is for a runner that stops answering.
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
       - name: Rust, mbx and Tailwind from mise.toml
@@ -43,6 +45,9 @@ jobs:
   build:
     name: build (${{ matrix.name }})
     runs-on: macos-14
+    # Five to eight minutes normally. A runner that stopped answering has
+    # held a build for over an hour, and every test job waits on the builds.
+    timeout-minutes: 30
     strategy:
       fail-fast: false
       matrix:
@@ -106,12 +111,22 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - name: fusion-basic 1/3
-            projects: --project=fusion-basic --project=deployment --shard=1/3 --workers=2
-          - name: fusion-basic 2/3
-            projects: --project=fusion-basic --project=deployment --shard=2/3 --workers=2
-          - name: fusion-basic 3/3
-            projects: --project=fusion-basic --project=deployment --shard=3/3 --workers=2
+          # Four, not three: m1-probes and m2-runtime remount their scopes'
+          # regions test after test, and with anything else beside them the
+          # shard that holds both has run past ten minutes.
+          - name: fusion-basic 1/4
+            projects: --project=fusion-basic --shard=1/4 --workers=2
+          - name: fusion-basic 2/4
+            projects: --project=fusion-basic --shard=2/4 --workers=2
+          - name: fusion-basic 3/4
+            projects: --project=fusion-basic --shard=3/4 --workers=2
+          - name: fusion-basic 4/4
+            projects: --project=fusion-basic --shard=4/4 --workers=2
+          # A job of its own: its checks switch the deployment server's
+          # faults, so they run one at a time, and after a shard's other
+          # tests they kept one worker busy for six minutes on their own.
+          - name: deployment
+            projects: --project=deployment
           - name: property-workbench 1/2
             projects: --project=property-workbench --project=workbench-deep --shard=1/2 --workers=2
           - name: property-workbench 2/2

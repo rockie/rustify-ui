@@ -1,7 +1,7 @@
 import { expect, Page } from "@playwright/test";
 
 import { rounds } from "../tier";
-import { test } from "./support";
+import { allowRegionStart, REGION_START_MS, test } from "./support";
 
 /// M7 V10: two languages, the browser's own formatting, and twenty texts.
 ///
@@ -37,10 +37,14 @@ const SAMPLE_IDS = [
     "mixed-everything",
 ];
 
+/// Opens the samples page, which starts a region of its own: until that
+/// region has compiled its shaders the page answers nothing, the address
+/// included.
 async function openSamples(page: Page) {
+    allowRegionStart();
     await page.getByTestId("nav-samples").click();
-    await expect.poll(async () => (await snapshot(page)).path).toBe("/samples");
-    await expect(page.getByTestId("samples-page")).toBeVisible();
+    await expect.poll(async () => (await snapshot(page)).path, { timeout: REGION_START_MS }).toBe("/samples");
+    await expect(page.getByTestId("samples-page")).toBeVisible({ timeout: REGION_START_MS });
 }
 
 test.describe("M7 V10: the SDK's own words follow the language", () => {

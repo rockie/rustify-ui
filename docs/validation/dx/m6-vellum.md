@@ -97,6 +97,8 @@ Vellum 标记与 CSS 未改：id、class、`data-*` 不变，未新增 ARIA（�
 | 门控改动后的抽查 | 同上，只跑 `m3-raster.spec.ts m6-edit.spec.ts` | 本提交 | 17 passed、3 skipped（孪生用例，默认模式无孪生），0 failed |
 | 基线孪生视觉门（NFR-4、§9.4） | `VELLUM_TWIN=baseline VELLUM_BASELINE_DIR=/home/user/rustify-ui-vellum-baseline RUSTIFY_TIER=evidence flock /tmp/pw.lock npx playwright test -c tests/vellum/playwright.config.ts visual.spec.ts` | 被测：本提交；孪生：`24f1a11` release | 2 passed（30.5 s）。8 张视图每张 0 / 1,600,000 像素不同，比例 0：启动页 0/1/2 × 亮/暗 6 张、主菜单、帮助对话框。门 ≤ 2% |
 | A-5 孪生用例试跑 | `VELLUM_TWIN=baseline VELLUM_BASELINE_DIR=… RUSTIFY_TIER=all flock /tmp/pw.lock npx playwright test -c tests/vellum/playwright.config.ts m3-raster.spec.ts m4-pointer.spec.ts m6-edit.spec.ts m7-files.spec.ts` | 同上 | 55 项：52 passed、3 failed（`m3-raster:41`、`m6-edit:323`、`m4-pointer:192`，见下表与下文）；改门控/选择器后复跑 `m3-raster.spec.ts:41 m3-raster.spec.ts:104 m6-edit.spec.ts:323`：2 passed、1 skipped |
+| 集成后 macOS CI 的 Vellum 回归层 | PR #3 CI，run 36304675833 的 vellum job | macOS-14，`2c57bce`（含 `ControlOrMeta` 修正） | 通过，4.3 min（修正前 run 36302778601 在 Mac 上 6 败） |
+| 集成后三个示例的回归层（M6 另一半） | 本地 `--workers=2`：property-workbench、component-catalog、fusion-basic；另有同一 CI run 的对应 job | 本容器 Chromium 141；`2c57bce` 及其后修正 | property-workbench 126/126、fusion-basic 64/64；component-catalog 74/74（含 `ef6cf66`、`48368d2` 两处与 `Layer` 无关的等待/分层修正）；CI 上 property-workbench 两片、fusion-basic 三片全过 |
 
 ### A-5：孪生用例对基线
 
@@ -128,5 +130,5 @@ A-5 以 `RUSTIFY_TIER=all` 运行时连带跑了这个证据层用例，p95 315.
 
 - 磁盘：本工作树的 mbx 目标约 3.8 GiB；运行期间根分区可用空间在 3.2–11 GiB 间波动（其他工作树同时构建），最低 3.2 GiB，未低于 3 GiB。
 - 回归层两轮在门控改动之前运行；门控改动只影响孪生用例（默认模式跳过），已用抽查运行确认。
-- 未跑 property-workbench、component-catalog、fusion-basic 回归层（M6 另一半与集成的退出条件，归主 agent）。
-- `CLAUDE.md` 的 Page-level listeners 条目与 `docs/vellum.md` 的历史数字待 M8 同步。
+- property-workbench、component-catalog、fusion-basic 回归层由主 agent 在集成后跑完，见上表最后一行。
+- `CLAUDE.md` 的 Page-level listeners 条目与 `docs/vellum.md` 的 SDK 原语说明已在集成后同步（`c8f505e`）。

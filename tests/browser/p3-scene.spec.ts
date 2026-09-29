@@ -1,7 +1,7 @@
 import { expect, Page } from "@playwright/test";
 import { B3, LOCATORS } from "./loads";
 import * as twin from "./dataset";
-import { isShared, test, waitForQuiet } from "./support";
+import { isShared, REGION_START_MS, test, waitForQuiet } from "./support";
 import { pick, rounds } from "../tier";
 
 /// M4 · the scene: ten thousand objects, and the pointer over them.
@@ -12,6 +12,14 @@ import { pick, rounds } from "../tier";
 /// the layout in the plan, and the two have to say the same thing.
 
 const api = (page: Page) => page.evaluate(() => window.__data_workbench.snapshot());
+
+/// Waits until the application has taken `count` renames. The region draws
+/// each label as text, and text it has not drawn before goes through its
+/// glyph atlas first - the same work that makes a start-up slow. Here that
+/// is 0.1-1 s; on a loaded CI runner it has taken more than 5 s.
+async function renamesReach(page: Page, count: number) {
+    await expect.poll(async () => (await api(page)).scene.renames, { timeout: REGION_START_MS }).toBe(count);
+}
 
 /// How many of the chosen objects the page lists. The count beside the list
 /// is of all of them.
@@ -423,7 +431,7 @@ test.describe("M4 · reaching an object without the pointer", () => {
             const renamed = `FOUND-${index}`;
             await page.getByTestId("scene-detail-label").fill(renamed);
             await page.getByTestId("scene-detail-submit").click();
-            await expect.poll(async () => (await api(page)).scene.renames).toBe(round + 1);
+            await renamesReach(page, round + 1);
             expect(
                 await page.evaluate((id) => window.__data_workbench.scene_label(id), index)
             ).toBe(renamed);
@@ -439,7 +447,7 @@ test.describe("M4 · reaching an object without the pointer", () => {
         await expect.poll(async () => (await api(page)).scene.editing).toBe(index);
         await page.getByTestId("scene-detail-label").fill("by the query");
         await page.getByTestId("scene-detail-submit").click();
-        await expect.poll(async () => (await api(page)).scene.renames).toBe(1);
+        await renamesReach(page, 1);
 
         // The same object, reached the other way: the camera is already on it,
         // so the pointer only has to land on it.
@@ -453,7 +461,7 @@ test.describe("M4 · reaching an object without the pointer", () => {
         await expect(page.getByTestId("scene-detail-label")).toHaveValue("by the query");
         await page.getByTestId("scene-detail-label").fill("by the pointer");
         await page.getByTestId("scene-detail-submit").click();
-        await expect.poll(async () => (await api(page)).scene.renames).toBe(2);
+        await renamesReach(page, 2);
         expect(await page.evaluate((id) => window.__data_workbench.scene_label(id), index)).toBe(
             "by the pointer"
         );
