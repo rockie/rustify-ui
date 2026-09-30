@@ -76,6 +76,13 @@ export default defineConfig({
     // A cold page compiles a 7.7 MB wasm module and boots its regions; the
     // 30 s default leaves the shorter probes no headroom over that.
     timeout: 120_000,
+    // A wait on something the page does after a region draws. On the macOS
+    // runners' software rasteriser one draw now and then holds the main
+    // thread for over five seconds - a pick, a navigation - and with a
+    // hundred and seventy waits on the 5 s default, a run lost one of them
+    // at random. A check that passes returns as soon as it does; only a
+    // failing one waits the longer budget out.
+    expect: { timeout: 15_000 },
     fullyParallel: false,
     workers: 1,
     retries: 0,
