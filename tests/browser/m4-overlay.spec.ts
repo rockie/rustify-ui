@@ -36,15 +36,20 @@ test.describe("M4 V4 / R10: layers of one scope", () => {
         await mountGeometry(page);
         const anchor = await openMenuOn(page, 7);
 
-        const check = async (label: string) => {
-            const expected = await anchorRect(page, anchor);
-            const menu = (await box(page, "geometry-menu"))!;
-            expect(Math.abs(menu.x - expected.x), `${label} left`).toBeLessThanOrEqual(1);
-            expect(
-                Math.abs(menu.y - (expected.y + expected.height)),
-                `${label} top`
-            ).toBeLessThanOrEqual(1);
-        };
+        // Read until the two agree rather than once after a fixed pause: the
+        // menu moves on the frame after the scroll, and on a software
+        // rasteriser the region redrawing for that scroll can hold the frame
+        // well past a tenth of a second.
+        const check = (label: string) =>
+            expect(async () => {
+                const expected = await anchorRect(page, anchor);
+                const menu = (await box(page, "geometry-menu"))!;
+                expect(Math.abs(menu.x - expected.x), `${label} left`).toBeLessThanOrEqual(1);
+                expect(
+                    Math.abs(menu.y - (expected.y + expected.height)),
+                    `${label} top`
+                ).toBeLessThanOrEqual(1);
+            }).toPass({ timeout: 15_000 });
         await check("when opened");
 
         // Both levels of scrolling move the anchor without changing it.
@@ -57,7 +62,6 @@ test.describe("M4 V4 / R10: layers of one scope", () => {
                 (document.querySelector('[data-testid="geometry-inner"]') as HTMLElement).scrollTop = inner;
                 (document.querySelector('[data-testid="geometry-outer"]') as HTMLElement).scrollTop = outer;
             }, [inner, outer]);
-            await page.waitForTimeout(100);
             await check(`after scrolling ${inner}/${outer}`);
         }
 

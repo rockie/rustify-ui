@@ -35,7 +35,7 @@
 
 ### 恢复快照
 
-- 最近更新：2026-10-02 UTC · `main` push CI 间歇红（每次一个不同用例超时）定位为 macOS runner 主线程偶发长停顿，`expect.timeout` 升到 15 s、`m7-recovery` 重建等待用 `REGION_START_MS`（M2 记录末行）；PR #6 合入后 `main` 的 push run 36959485249 全绿；随后 PR #7 上 `p3-instances` 重启后的等待同类超时，已改为等启动安静，待合入后 `main` 再验证
+- 最近更新：2026-10-02 UTC · `main` push CI 间歇红（每次一个不同用例超时）定位为 macOS runner 主线程偶发长停顿，`expect.timeout` 升到 15 s、`m7-recovery` 重建等待用 `REGION_START_MS`（M2 记录末行）；PR #6 合入后 `main` 的 push run 36959485249 全绿；随后 PR #7 上又撞出两处同类（`p3-instances` 重启后读所有者、`m4-overlay` 滚动后固定 100 ms 读一次），已改为等启动安静 / 重试到一致，待 PR #7 全绿合入后 `main` 再验证
 - 当前进度：6/8 个里程碑完成
 - 当前状态：M7 进行中，只差人工键盘走查（用户稍后自己做）。M2 已完成：R30 AC1、B2 滚动、Vellum 平移三项帧延迟预算按用户决定与 `budget-scene` 一样列为仅手动——无头时以 `GPU_ONLY`（`tests/tier.ts`）自跳过，有 GPU 的机器上 `--headed` 手动跑，Vellum 平移移到 `m4-pan.spec.ts`（§5.1）。CI 形态：构建 4 job 并行 → 测试 10 job（fusion-basic 4 片、deployment、property-workbench 2 片、catalog and data 2 片、vellum），测试 job 用构建 job 的 xtask，全部 job 30 min 超时
 - 最近完成：M2 · 回归层瘦身与 CI 重排
