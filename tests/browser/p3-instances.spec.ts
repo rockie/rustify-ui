@@ -1,5 +1,5 @@
 import { expect, Page } from "@playwright/test";
-import { isShared, test, windowListeners } from "./support";
+import { allowRegionStart, isShared, test, waitForQuiet, windowListeners } from "./support";
 
 /// M5 · two application instances on one page, and what one of them dying
 /// does to the other.
@@ -28,6 +28,11 @@ async function open(page: Page) {
         await page.goto("./");
     }
     await expect(status(page)).toHaveAttribute("data-status", "ready", { timeout: 120_000 });
+    // Ready is said as soon as B0 is mounted; its region compiles its shaders
+    // after that, on the main thread, and every read of the page waits for it.
+    if (!isShared(page)) {
+        await waitForQuiet(page);
+    }
 }
 
 /// Records every policy violation from before the page's own scripts run. Two
@@ -236,8 +241,12 @@ test.describe("M5 · the address bar after its owner dies", () => {
         expect(await urlOwner(page)).toBeNull();
 
         // The notice's own restart entry, used the way a person would.
+        // A restart is a start-up: the replacement mounts B0 and the owner
+        // again and says ready before B0's region has compiled its shaders.
+        allowRegionStart();
         await page.getByTestId("fatal-restart").click();
         await expect(status(page)).toHaveAttribute("data-status", "ready", { timeout: 60_000 });
+        await waitForQuiet(page);
         const restarted = await page.evaluate(() => window.__fusion_basic.instance);
         expect(restarted).toBeGreaterThan(1);
         await expect
