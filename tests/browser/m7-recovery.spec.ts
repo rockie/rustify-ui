@@ -50,7 +50,10 @@ test.describe("M7 V8: a region whose context went away", () => {
             await page.evaluate(() => window.__property_workbench.restore_context("workbench-gpu"))
         ).toBe(true);
         await expect.poll(async () => (await snapshot(page)).region, { timeout: REGION_START_MS }).toBe("ready");
-        await expect.poll(async () => (await snapshot(page)).selected, { timeout: 15_000 }).toBe(42);
+        // Ready is the region built, not its first frame drawn: that draw
+        // compiles its shaders on the main thread, and the snapshot waits
+        // for it like everything else on the page does.
+        await expect.poll(async () => (await snapshot(page)).selected, { timeout: REGION_START_MS }).toBe(42);
         expect(await snapshot(page)).toMatchObject({
             selected: 42,
             name: "survives a lost context",
