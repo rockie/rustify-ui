@@ -1,5 +1,10 @@
 # Architecture
 
+Theme integration below was checked against the working tree of
+[`rockie/rustify-ui`](https://github.com/rockie/rustify-ui), branch `dev`, based
+on commit `7f5e504` (2026-10-03, `docs: update spec`), including the uncommitted
+Theme Studio implementation.
+
 One browser page can run several **instances**, and each instance is a wasm
 instance: its own linear memory, its own host hooks, its own diagnostics ring,
 its own everything. Inside one instance are **scopes** - the mount points
@@ -44,6 +49,7 @@ flowchart TD
 | `examples/component-catalog` | The twenty-four categories, what each supports and where: a nav, a page per category, a status table, a theme switch, a language switch, and one GPU region that draws the scope's tokens so a theme change can be seen reaching both halves. |
 | `examples/property-workbench` | A thousand objects with stable ids: a DOM property panel renames, recolours and deletes the selection, a GPU region draws it, and both sides move the selection through the same rule. Also carries the one fixed-version third-party DOM component (`vendor/nouislider`, `src/third_party.rs`) and the rendered capability catalogue. |
 | [`examples/vellum`](../examples/vellum/) | A design editor combining one GPU scene with DOM controls, native text sessions and SDK layers; [framework integration and validation](vellum.md). |
+| [`examples/theme-studio`](../examples/theme-studio/README.md) | Local theme documents, presets, edit history, saved themes, import/export and DOM/GPU preview scenes. The SDK owns resolution and projection; the example owns editor and persistence state. |
 | `tests/browser` | Playwright probes run against the release build. |
 
 ## Runtime contracts
@@ -69,6 +75,43 @@ flowchart TD
 - **A lost GPU context.** The host prevents the loss from being permanent and stops pumping into the dead context; the region publishes `Lost`, is torn down, and is built again on `webglcontextrestored` with the application's current projection applied before the first draw. Nothing the application holds was ever in the region, so nothing is recovered - it is projected.
 - **Diagnostics.** One bounded record per runtime, in `diagnostics`: ten registered failure classes each with a next step, a count and a byte ceiling, and a `dropped` counter every report leads with. Entry details are `&'static str`, so a user's text has no path into a log.
 - **Message bridge.** The web backend's message list is one Rust function (`web_bridge_js_sources`). The build extracts the generated JS from the wasm with `wasmi` and ships it as an ES module with the fingerprint the wasm also exports; the loader compares both before driving the module. No runtime code generation exists in the shipped JS.
+
+## Versioned themes
+
+`ThemeDocument` retains light/dark author strings. `resolve` produces one
+`ResolvedTheme` containing sRGB RGBA, CSS-pixel geometry, selected fonts,
+structured shadows and diagnostics. Applications publish that snapshot to
+both renderers; GPU code does not read computed CSS back into its state.
+The document and snapshot contracts are in
+[document.rs](../crates/rustify-ui/src/theme/document.rs#L108) and
+[resolve.rs](../crates/rustify-ui/src/theme/resolve.rs#L118); the studio's
+[`PreviewProps`](../examples/theme-studio/src/preview_region.rs#L43) carries
+an `Arc<ResolvedTheme>` alongside its application state.
+
+[`ThemeScope`](../crates/rustify-ui/src/theme/provider.rs#L77) claims the mount
+root, projects the snapshot through CSSOM and restores prior values on cleanup.
+[`ThemeBoundary`](../crates/rustify-ui/src/theme/provider.rs#L114) re-resolves
+local patches without changing mode; clearing a patch restores inheritance.
+An overlay captures the effective theme signal at its creation point and
+updates its layer from that signal
+([`overlay.rs`](../crates/rustify-ui/src/overlay.rs#L679)).
+
+Applications opt into the document's geometry, fonts and shadows by importing
+[theme-v4.css](../crates/rustify-components/css/theme-v4.css#L1) after
+`sdk.css` in their one Tailwind build. Spacing utilities use `--rustify-unit`,
+while `--layout-gap` is separate. Missing runtime variables retain legacy
+fallbacks, so `Theme`/`ThemePatch` and `ThemedScope`/`ThemeOverride` remain usable.
+[`ThemeDocument::from_legacy`](../crates/rustify-ui/src/theme/document.rs#L212)
+fills a complete document from two legacy themes; the extended author model
+has no lossless conversion back to the opaque legacy palette.
+
+The SDK codec returns validated import candidates without changing editor
+state. JSON keeps author values; CSS exports describe the resolved preview.
+Static CSS consumers use exported selectors, while dynamic applications import
+JSON and update their provider's signal. See [Theme documents](themes.md) for
+the schema, scope integration, font packaging and compatibility rules, and
+the [Theme Studio guide](../examples/theme-studio/README.md) for editing and
+local persistence.
 
 ## Build pipeline
 

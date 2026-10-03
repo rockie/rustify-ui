@@ -1,0 +1,6 @@
+catalog: no drift (24 rows)
+
+[theme-M6 validation]
+command: mise exec -- mbx xtask catalog --write docs/components.md --check
+exit_code: 0
+observed: {"rows": 24, "drift": false}

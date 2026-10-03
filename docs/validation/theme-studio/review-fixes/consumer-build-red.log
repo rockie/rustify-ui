@@ -1,0 +1,9 @@
+error[E0433]: cannot find `state` in `crate`
+   --> generator/src/../../../../examples/theme-studio/src/persistence.rs:197:29
+    |
+197 |         editor: &mut crate::state::EditorState,
+    |                             ^^^^^ could not find `state` in the crate root
+
+For more information about this error, try `rustc --explain E0433`.
+error: could not compile `theme-export-generator` (bin "theme-export-generator") due to 1 previous error
+mbx[savings]: worktrees come and go. their 481.9 GiB logical now goes with them.

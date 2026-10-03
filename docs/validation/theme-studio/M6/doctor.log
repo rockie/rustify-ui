@@ -1,0 +1,13 @@
+ok    toolchain          rustc 1.98.1 (48a229cea 2026-09-01), wasm32-unknown-unknown, rust-lld
+ok    mbx                mbx 1.15.0
+ok    wasm-bindgen       wasm-bindgen crate and cli-support both 0.2.128
+ok    leptos             leptos 0.8.20 from crates.io
+ok    sources.lock.json  1455 imported files recorded; run `mbx xtask sources verify` for drift
+ok    vendored           nouislider 15.8.1, tweakcn-theme-presets snapshot-d333858a5a4f, noto-serif ffebf8c1ee449e544955a7e813c54f9b73848eac, rustify-wenkai repair-1; run `mbx xtask sources verify` for digests
+ok    licenses           makepad/LICENSE, makepad/widgets/resources/FONT-LICENSES.md, examples/property-workbench/vendor/nouislider/LICENSE.md, crates/rustify-components/LICENSE-RUST-UI
+ok    tailwind           tailwindcss v4.1.13 at /Users/rockie/.local/share/mise/installs/github-tailwindlabs-tailwindcss/4.1.13/tailwindcss
+ok    node               v26.1.0
+ok    playwright         @playwright/test 1.63.0 installed
+ok    chrome             Google Chrome 154.0.8037.93
+mbx[cache]: 0 hits, 0 misses, 3 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: 10225 compilations served. ask rustc how many it remembers doing.

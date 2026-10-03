@@ -5,6 +5,9 @@ use crate::makepad_widgets::widget::*;
 use crate::makepad_widgets::*;
 
 use super::colour;
+use super::theme::{disabled_color, draw_focus, focus_hit, set_box_radius, token, ThemeMetrics};
+use super::DrawRustifyShadow;
+use crate::theme::ResolvedTheme;
 
 /// A two-state control drawn by a region.
 ///
@@ -28,6 +31,8 @@ pub struct RustifyCheckBox {
     draw_mark: DrawColor,
     #[live]
     draw_border: DrawColor,
+    #[live]
+    draw_shadow: DrawRustifyShadow,
     #[rust]
     active: bool,
     /// Both default to false, which is the ordinary control: usable.
@@ -38,6 +43,10 @@ pub struct RustifyCheckBox {
     /// Box, mark and border, from the scope's theme.
     #[rust]
     palette: Option<(u32, u32, u32)>,
+    #[rust]
+    theme_palette: Option<[Vec4f; 4]>,
+    #[rust]
+    theme_metrics: Option<ThemeMetrics>,
     /// The value the user asked for, taken by the region app. Not the value:
     /// the application decides whether it becomes one.
     #[rust]
@@ -56,8 +65,29 @@ impl RustifyCheckBox {
 
     pub fn set_palette(&mut self, cx: &mut Cx, box_colour: u32, mark: u32, border: u32) {
         let next = Some((box_colour, mark, border));
-        if self.palette != next {
+        if self.palette != next || self.theme_palette.is_some() {
             self.palette = next;
+            self.theme_palette = None;
+            self.redraw(cx);
+        }
+    }
+
+    /// Applies resolved input/checked RGBA and the checkbox's fixed DOM corner.
+    pub fn apply_theme(&mut self, cx: &mut Cx, theme: &ResolvedTheme) {
+        let palette = [
+            token(theme, "input"),
+            token(theme, "primary"),
+            token(theme, "primary-foreground"),
+            token(theme, "border"),
+        ];
+        let metrics = ThemeMetrics::from(theme);
+        let changed = self.theme_palette != Some(palette) || self.theme_metrics != Some(metrics);
+        self.palette = None;
+        self.theme_palette = Some(palette);
+        self.theme_metrics = Some(metrics);
+        self.walk.width = Size::Fixed(metrics.spacing * 4.0);
+        self.walk.height = Size::Fixed(metrics.spacing * 4.0);
+        if changed {
             self.redraw(cx);
         }
     }
@@ -79,7 +109,11 @@ impl RustifyCheckBox {
 
 impl Widget for RustifyCheckBox {
     fn handle_event(&mut self, cx: &mut Cx, event: &Event, _scope: &mut Scope) {
-        if let Hit::FingerUp(fe) = event.hits(cx, self.draw_bg.area()) {
+        let hit = event.hits(cx, self.draw_bg.area());
+        if focus_hit(&hit, cx, self.draw_bg.area(), self.disabled) {
+            self.redraw(cx);
+        }
+        if let Hit::FingerUp(fe) = hit {
             if !fe.is_over || !fe.is_primary_hit() {
                 return;
             }
@@ -94,6 +128,13 @@ impl Widget for RustifyCheckBox {
 
     fn draw_walk(&mut self, cx: &mut Cx2d, _scope: &mut Scope, walk: Walk) -> DrawStep {
         let pane = cx.walk_turtle(walk);
+        if let Some([input, primary, mark, border]) = self.theme_palette {
+            self.draw_bg.color =
+                disabled_color(if self.active { primary } else { input }, self.disabled);
+            self.draw_mark.color = disabled_color(mark, self.disabled);
+            self.draw_border.color =
+                disabled_color(if self.active { primary } else { border }, self.disabled);
+        }
         if let Some((box_colour, mark, border)) = self.palette {
             self.draw_bg.color = colour(box_colour);
             self.draw_mark.color = colour(mark);
@@ -101,18 +142,27 @@ impl Widget for RustifyCheckBox {
         }
         // The border is drawn first and covered by the box, so what is left is
         // an outline rather than a second quad over the mark.
-        self.draw_border.draw_abs(cx, pane);
-        let inset = 2.0f64.min(pane.size.x * 0.2).min(pane.size.y * 0.2);
-        self.draw_bg.draw_abs(
-            cx,
-            Rect {
-                pos: dvec2(pane.pos.x + inset, pane.pos.y + inset),
-                size: dvec2(
-                    (pane.size.x - inset * 2.0).max(0.0),
-                    (pane.size.y - inset * 2.0).max(0.0),
-                ),
-            },
-        );
+        if let Some(metrics) = self.theme_metrics {
+            let focused = cx.has_key_focus(self.draw_bg.area()) && !self.disabled;
+            draw_focus(&mut self.draw_shadow, cx, pane, 4.0, metrics, focused);
+            set_box_radius(&mut self.draw_bg, cx, 4.0, 0.0);
+            set_box_radius(&mut self.draw_border, cx, 4.0, 1.0);
+            self.draw_bg.draw_abs(cx, pane);
+            self.draw_border.draw_abs(cx, pane);
+        } else {
+            self.draw_border.draw_abs(cx, pane);
+            let inset = 2.0f64.min(pane.size.x * 0.2).min(pane.size.y * 0.2);
+            self.draw_bg.draw_abs(
+                cx,
+                Rect {
+                    pos: dvec2(pane.pos.x + inset, pane.pos.y + inset),
+                    size: dvec2(
+                        (pane.size.x - inset * 2.0).max(0.0),
+                        (pane.size.y - inset * 2.0).max(0.0),
+                    ),
+                },
+            );
+        }
         if self.active {
             let mark = (pane.size.x.min(pane.size.y) * 0.5).max(1.0);
             self.draw_mark.draw_abs(
@@ -153,6 +203,8 @@ pub struct RustifyRadio {
     draw_mark: DrawColor,
     #[live]
     draw_border: DrawColor,
+    #[live]
+    draw_shadow: DrawRustifyShadow,
     #[rust]
     active: bool,
     #[rust]
@@ -162,6 +214,10 @@ pub struct RustifyRadio {
     /// Disc, dot and ring, from the scope's theme.
     #[rust]
     palette: Option<(u32, u32, u32)>,
+    #[rust]
+    theme_palette: Option<[Vec4f; 3]>,
+    #[rust]
+    theme_metrics: Option<ThemeMetrics>,
     /// Set when the user asked for this one. Not a value: the application
     /// decides whether it becomes one.
     #[rust]
@@ -180,8 +236,28 @@ impl RustifyRadio {
 
     pub fn set_palette(&mut self, cx: &mut Cx, disc: u32, dot: u32, ring: u32) {
         let next = Some((disc, dot, ring));
-        if self.palette != next {
+        if self.palette != next || self.theme_palette.is_some() {
             self.palette = next;
+            self.theme_palette = None;
+            self.redraw(cx);
+        }
+    }
+
+    /// Applies resolved RGBA while preserving the radio's circular geometry.
+    pub fn apply_theme(&mut self, cx: &mut Cx, theme: &ResolvedTheme) {
+        let palette = [
+            token(theme, "input"),
+            token(theme, "primary"),
+            token(theme, "border"),
+        ];
+        let metrics = ThemeMetrics::from(theme);
+        let changed = self.theme_palette != Some(palette) || self.theme_metrics != Some(metrics);
+        self.palette = None;
+        self.theme_palette = Some(palette);
+        self.theme_metrics = Some(metrics);
+        self.walk.width = Size::Fixed(metrics.spacing * 4.0);
+        self.walk.height = Size::Fixed(metrics.spacing * 4.0);
+        if changed {
             self.redraw(cx);
         }
     }
@@ -199,7 +275,11 @@ impl RustifyRadio {
 
 impl Widget for RustifyRadio {
     fn handle_event(&mut self, cx: &mut Cx, event: &Event, _scope: &mut Scope) {
-        if let Hit::FingerUp(fe) = event.hits(cx, self.draw_bg.area()) {
+        let hit = event.hits(cx, self.draw_bg.area());
+        if focus_hit(&hit, cx, self.draw_bg.area(), self.disabled) {
+            self.redraw(cx);
+        }
+        if let Hit::FingerUp(fe) = hit {
             if !fe.is_over || !fe.is_primary_hit() {
                 return;
             }
@@ -216,14 +296,34 @@ impl Widget for RustifyRadio {
 
     fn draw_walk(&mut self, cx: &mut Cx2d, _scope: &mut Scope, walk: Walk) -> DrawStep {
         let pane = cx.walk_turtle(walk);
+        if let Some([input, primary, border]) = self.theme_palette {
+            self.draw_bg.color = disabled_color(input, self.disabled);
+            self.draw_mark.color = disabled_color(primary, self.disabled);
+            self.draw_border.color = disabled_color(border, self.disabled);
+        }
         if let Some((disc, dot, ring)) = self.palette {
             self.draw_bg.color = colour(disc);
             self.draw_mark.color = colour(dot);
             self.draw_border.color = colour(ring);
         }
-        self.draw_border.draw_abs(cx, pane);
-        let inset = 2.0f64.min(pane.size.x * 0.2).min(pane.size.y * 0.2);
-        self.draw_bg.draw_abs(cx, inset_rect(pane, inset));
+        if let Some(metrics) = self.theme_metrics {
+            let focused = cx.has_key_focus(self.draw_bg.area()) && !self.disabled;
+            draw_focus(
+                &mut self.draw_shadow,
+                cx,
+                pane,
+                pane.size.x.min(pane.size.y) * 0.5,
+                metrics,
+                focused,
+            );
+            self.draw_border.set_uniform(cx, id!(stroke_width), &[1.0]);
+            self.draw_bg.draw_abs(cx, pane);
+            self.draw_border.draw_abs(cx, pane);
+        } else {
+            self.draw_border.draw_abs(cx, pane);
+            let inset = 2.0f64.min(pane.size.x * 0.2).min(pane.size.y * 0.2);
+            self.draw_bg.draw_abs(cx, inset_rect(pane, inset));
+        }
         if self.active {
             self.draw_mark
                 .draw_abs(cx, inset_rect(pane, pane.size.x.min(pane.size.y) * 0.3));
@@ -259,6 +359,8 @@ pub struct RustifyToggle {
     draw_track: DrawColor,
     #[live]
     draw_knob: DrawColor,
+    #[live]
+    draw_shadow: DrawRustifyShadow,
     #[rust]
     active: bool,
     #[rust]
@@ -268,6 +370,10 @@ pub struct RustifyToggle {
     /// The track when off, the track when on, and the knob.
     #[rust]
     palette: Option<(u32, u32, u32)>,
+    #[rust]
+    theme_palette: Option<[Vec4f; 3]>,
+    #[rust]
+    theme_metrics: Option<ThemeMetrics>,
     #[rust]
     change: Option<bool>,
 }
@@ -284,8 +390,28 @@ impl RustifyToggle {
 
     pub fn set_palette(&mut self, cx: &mut Cx, off: u32, on: u32, knob: u32) {
         let next = Some((off, on, knob));
-        if self.palette != next {
+        if self.palette != next || self.theme_palette.is_some() {
             self.palette = next;
+            self.theme_palette = None;
+            self.redraw(cx);
+        }
+    }
+
+    /// Applies RGBA and spacing units while keeping the capsule and circular knob.
+    pub fn apply_theme(&mut self, cx: &mut Cx, theme: &ResolvedTheme) {
+        let palette = [
+            token(theme, "border"),
+            token(theme, "primary"),
+            token(theme, "background"),
+        ];
+        let metrics = ThemeMetrics::from(theme);
+        let changed = self.theme_palette != Some(palette) || self.theme_metrics != Some(metrics);
+        self.palette = None;
+        self.theme_palette = Some(palette);
+        self.theme_metrics = Some(metrics);
+        self.walk.width = Size::Fixed(metrics.spacing * 11.0);
+        self.walk.height = Size::Fixed(metrics.spacing * 6.0);
+        if changed {
             self.redraw(cx);
         }
     }
@@ -303,7 +429,11 @@ impl RustifyToggle {
 
 impl Widget for RustifyToggle {
     fn handle_event(&mut self, cx: &mut Cx, event: &Event, _scope: &mut Scope) {
-        if let Hit::FingerUp(fe) = event.hits(cx, self.draw_track.area()) {
+        let hit = event.hits(cx, self.draw_track.area());
+        if focus_hit(&hit, cx, self.draw_track.area(), self.disabled) {
+            self.redraw(cx);
+        }
+        if let Hit::FingerUp(fe) = hit {
             if !fe.is_over || !fe.is_primary_hit() {
                 return;
             }
@@ -316,12 +446,32 @@ impl Widget for RustifyToggle {
 
     fn draw_walk(&mut self, cx: &mut Cx2d, _scope: &mut Scope, walk: Walk) -> DrawStep {
         let pane = cx.walk_turtle(walk);
+        if let Some([off, on, knob]) = self.theme_palette {
+            self.draw_track.color =
+                disabled_color(if self.active { on } else { off }, self.disabled);
+            self.draw_knob.color = disabled_color(knob, self.disabled);
+        }
         if let Some((off, on, knob)) = self.palette {
             self.draw_track.color = colour(if self.active { on } else { off });
             self.draw_knob.color = colour(knob);
         }
+        if let Some(metrics) = self.theme_metrics {
+            let focused = cx.has_key_focus(self.draw_track.area()) && !self.disabled;
+            draw_focus(
+                &mut self.draw_shadow,
+                cx,
+                pane,
+                pane.size.y * 0.5,
+                metrics,
+                focused,
+            );
+        }
         self.draw_track.draw_abs(cx, pane);
-        let inset = (pane.size.y * 0.1).min(3.0);
+        let inset = if self.theme_metrics.is_some() {
+            2.0f64.min(pane.size.y * 0.5)
+        } else {
+            (pane.size.y * 0.1).min(3.0)
+        };
         let diameter = (pane.size.y - inset * 2.0).max(0.0);
         // Right when on, left when off, and never past either end.
         let travel = (pane.size.x - diameter - inset * 2.0).max(0.0);

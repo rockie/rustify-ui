@@ -12,9 +12,10 @@ name: evidence
 # because Playwright clears its output folder when it starts.
 #
 # Not here, and run by hand: `budget-scene` and Vellum's `m3-webgpu` and
-# `m8-ui` need headed Chrome on a real GPU, and a runner without one would
-# report the software rasteriser's numbers under their names. The other frame
-# budgets - R30 AC1 in `budget`, B2's scroll in `budget-data`, Vellum's pan -
+# `m8-ui`, and Theme Studio's `theme-performance` need headed Chrome on a real
+# GPU, and a runner without one would report the software rasteriser's numbers
+# under their names. The other frame budgets - R30 AC1 in `budget`, B2's scroll
+# in `budget-data`, Vellum's pan -
 # skip themselves here for the same reason and run with `--headed` on such a
 # machine (`GPU_ONLY` in tests/tier.ts).
 
@@ -46,7 +47,7 @@ jobs:
       - uses: jdx/mr-boxington-action@v1
       - name: Build
         run: |
-          for example in fusion-basic property-workbench component-catalog data-workbench vellum; do
+          for example in fusion-basic property-workbench component-catalog data-workbench vellum theme-studio; do
             mbx xtask build-web --example "$example" --release
           done
       - name: Install pinned Playwright
@@ -79,6 +80,13 @@ jobs:
           status=0
           npx playwright test --project=component-catalog --output=test-results/component-catalog || status=$?
           cp test-results/browser.json test-results/component-catalog.json 2>/dev/null || true
+          exit $status
+      - name: theme-studio measurements
+        if: ${{ !cancelled() }}
+        run: |
+          status=0
+          npx playwright test --project=theme-studio theme-performance.spec.ts --workers=1 --output=test-results/theme-studio || status=$?
+          cp test-results/browser.json test-results/theme-studio.json 2>/dev/null || true
           exit $status
       - name: budget
         if: ${{ !cancelled() }}

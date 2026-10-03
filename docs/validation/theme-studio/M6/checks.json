@@ -1,0 +1,176 @@
+{
+  "checks": [
+    {
+      "name": "build-fusion-basic",
+      "command": "mise exec -- mbx xtask build-web --example fusion-basic --release",
+      "log": "build-fusion-basic.log",
+      "exit_code": 0,
+      "observed": {
+        "build_id": "3d4aece4e583a057",
+        "schema_hash": "2906431550179788552",
+        "files": 45,
+        "size_report": {
+          "wasm": 8775365,
+          "js": 223771,
+          "css": 5696,
+          "fonts": 51732356,
+          "images": 20701,
+          "data": 14774,
+          "total": 60772663
+        }
+      }
+    },
+    {
+      "name": "build-property-workbench",
+      "command": "mise exec -- mbx xtask build-web --example property-workbench --release",
+      "log": "build-property-workbench.log",
+      "exit_code": 0,
+      "observed": {
+        "build_id": "5d698f8a97fd6420",
+        "schema_hash": "2906431550179788552",
+        "files": 49,
+        "size_report": {
+          "wasm": 11776664,
+          "js": 258278,
+          "css": 41516,
+          "fonts": 51732356,
+          "images": 20701,
+          "data": 14479,
+          "total": 63843994
+        }
+      }
+    },
+    {
+      "name": "build-component-catalog",
+      "command": "mise exec -- mbx xtask build-web --example component-catalog --release",
+      "log": "build-component-catalog.log",
+      "exit_code": 0,
+      "observed": {
+        "build_id": "c621ec5c0db15337",
+        "schema_hash": "2906431550179788552",
+        "files": 46,
+        "size_report": {
+          "wasm": 13906734,
+          "js": 216174,
+          "css": 32083,
+          "fonts": 51732356,
+          "images": 20701,
+          "data": 14216,
+          "total": 65922264
+        }
+      }
+    },
+    {
+      "name": "build-data-workbench",
+      "command": "mise exec -- mbx xtask build-web --example data-workbench --release",
+      "log": "build-data-workbench.log",
+      "exit_code": 0,
+      "observed": {
+        "build_id": "ba60b6a392270d76",
+        "schema_hash": "2906431550179788552",
+        "files": 46,
+        "size_report": {
+          "wasm": 10242021,
+          "js": 212728,
+          "css": 35504,
+          "fonts": 51732356,
+          "images": 20701,
+          "data": 13514,
+          "total": 62256824
+        }
+      }
+    },
+    {
+      "name": "build-vellum",
+      "command": "mise exec -- mbx xtask build-web --example vellum --release",
+      "log": "build-vellum.log",
+      "exit_code": 0,
+      "observed": {
+        "build_id": "08a3aae309038219",
+        "schema_hash": "2906431550179788552",
+        "files": 45,
+        "size_report": {
+          "wasm": 20253914,
+          "js": 247792,
+          "css": 34108,
+          "fonts": 51732356,
+          "images": 20701,
+          "data": 13073,
+          "total": 72301944
+        }
+      }
+    },
+    {
+      "name": "fmt",
+      "command": "cargo fmt --all -- --check",
+      "log": "fmt-final.log",
+      "exit_code": 0,
+      "observed": {}
+    },
+    {
+      "name": "workspace-tests",
+      "command": "mise exec -- mbx test --workspace --lib --bins",
+      "log": "workspace-tests-final.log",
+      "exit_code": 0,
+      "observed": {
+        "suites": 11,
+        "counts": {
+          "passed": 588,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0
+        }
+      }
+    },
+    {
+      "name": "clippy",
+      "command": "mise exec -- mbx clippy --workspace --all-targets -- -D warnings",
+      "log": "clippy-final.log",
+      "exit_code": 0,
+      "observed": {}
+    },
+    {
+      "name": "sources",
+      "command": "mise exec -- mbx xtask sources verify",
+      "log": "sources.log",
+      "exit_code": 0,
+      "observed": {
+        "makepad": {
+          "frozen_files": 1455,
+          "modified": 32,
+          "added": 7,
+          "removed": 215
+        },
+        "vendors": [
+          "nouislider 15.8.1: 3 files, 0 modified",
+          "tweakcn-theme-presets snapshot-d333858a5a4f: 8 files, 0 modified",
+          "noto-serif ffebf8c1ee449e544955a7e813c54f9b73848eac: 2 files, 0 modified",
+          "rustify-wenkai repair-1: 2 files, 0 modified"
+        ],
+        "rust_ui": "rust_ui ref/ui-main, the Rust/UI reference tree; it carries no VCS metadata, so there is no upstream commit to record: 20 files, 0 verbatim, 20 rewritten"
+      }
+    },
+    {
+      "name": "css",
+      "command": "mise exec -- mbx xtask css --check",
+      "log": "css.log",
+      "exit_code": 0,
+      "observed": {
+        "stylesheet_bytes": 28725,
+        "drift": false
+      }
+    },
+    {
+      "name": "catalog",
+      "command": "mise exec -- mbx xtask catalog --write docs/components.md --check",
+      "log": "catalog.log",
+      "exit_code": 0,
+      "observed": {
+        "rows": 24,
+        "drift": false
+      }
+    }
+  ],
+  "theme_product_changes": "Final autosave cache and GPU locale signal are example-only. Final root/deep wasm rebuilt; final fmt, workspace tests and clippy rerun. Prior fork/SDK/legacy/export checks reuse unchanged corresponding source."
+}

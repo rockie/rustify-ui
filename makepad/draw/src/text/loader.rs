@@ -199,7 +199,8 @@ mod tests {
     use std::path::PathBuf;
 
     fn bundled_font_path() -> PathBuf {
-        PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("../widgets/resources/IBMPlexSans-Text.ttf")
+        PathBuf::from(option_env!("RUSTIFY_TEXT_MANIFEST_DIR").unwrap_or(env!("CARGO_MANIFEST_DIR")))
+            .join("../widgets/resources/IBMPlexSans-Text.ttf")
     }
 
     #[test]
@@ -227,7 +228,7 @@ mod tests {
     }
 
     fn bundled_variable_font_path() -> PathBuf {
-        PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+        PathBuf::from(option_env!("RUSTIFY_TEXT_MANIFEST_DIR").unwrap_or(env!("CARGO_MANIFEST_DIR")))
             .join("../widgets/resources/jetbrains_mono_variable.ttf")
     }
 

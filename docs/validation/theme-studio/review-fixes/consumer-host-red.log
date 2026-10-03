@@ -1,0 +1,44 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+    Blocking waiting for file lock on build directory
+   Compiling theme-export-generator v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/tests/theme-export/generator)
+   Compiling theme_export_consumer v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/tests/theme-export/runtime)
+error[E0433]: cannot find `state` in `crate`
+   --> generator/src/../../../../examples/theme-studio/src/persistence.rs:197:29
+    |
+197 |         editor: &mut crate::state::EditorState,
+    |                             ^^^^^ could not find `state` in the crate root
+
+error[E0433]: cannot find `state` in `crate`
+   --> generator/src/../../../../examples/theme-studio/src/persistence.rs:411:20
+    |
+411 |             crate::state::EditorState::new(envelope.draft.clone(), ThemeMode::Light, &context)
+    |                    ^^^^^ could not find `state` in the crate root
+
+error[E0433]: cannot find `state` in `crate`
+   --> generator/src/../../../../examples/theme-studio/src/persistence.rs:434:20
+    |
+434 |             crate::state::EditorState::new(envelope.draft.clone(), ThemeMode::Light, &context)
+    |                    ^^^^^ could not find `state` in the crate root
+
+error[E0433]: cannot find `state` in `crate`
+   --> generator/src/../../../../examples/theme-studio/src/persistence.rs:474:25
+    |
+474 |         editor = crate::state::EditorState::new(original.draft.clone(), ThemeMode::Light, &context)
+    |                         ^^^^^ could not find `state` in the crate root
+
+error[E0433]: cannot find `state` in `crate`
+   --> generator/src/../../../../examples/theme-studio/src/persistence.rs:487:20
+    |
+487 |             crate::state::EditorState::new(envelope.draft.clone(), ThemeMode::Light, &context)
+    |                    ^^^^^ could not find `state` in the crate root
+
+For more information about this error, try `rustc --explain E0433`.
+error: could not compile `theme-export-generator` (bin "theme-export-generator" test) due to 5 previous errors
+mbx[cache]: 0 hits, 2 misses, 1 incremental; 0 B downloaded, 0 B uploaded, 4.8 KiB stored locally
+mbx[savings]: 481.9 GiB logical of target/ had outlived its checkouts. it has been dealt with.

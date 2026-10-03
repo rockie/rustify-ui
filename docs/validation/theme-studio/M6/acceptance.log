@@ -1,0 +1,59 @@
+npm notice run rustify-ui-browser-tests@0.1.0 npx
+npm notice run 'playwright' test --project=theme-studio theme-acceptance theme-deployment
+
+Running 10 tests using 1 worker
+
+(node:5031) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 [theme-studio] › tests/browser/theme-acceptance.spec.ts:105:9 › V6 complete theme journey › reference preset → edit → overlays → both renderers → save/reload → export → independent import (6.7s)
+  ✓   2 [theme-studio] › tests/browser/theme-acceptance.spec.ts:206:9 › V6 desktop: bilingual modes, keyboard editing, readable editor and recoverable error states (3.8s)
+  ✓   3 [theme-studio] › tests/browser/theme-acceptance.spec.ts:206:9 › V6 tablet: bilingual modes, keyboard editing, readable editor and recoverable error states (3.1s)
+  ✓   4 [theme-studio] › tests/browser/theme-acceptance.spec.ts:206:9 › V6 mobile: bilingual modes, keyboard editing, readable editor and recoverable error states (3.8s)
+  ✓   5 [theme-studio] › tests/browser/theme-acceptance.spec.ts:261:5 › V6 200% reflow/text zoom completes keyboard edits, preview and modal export (2.3s)
+  ✓   6 [theme-studio] › tests/browser/theme-acceptance.spec.ts:294:9 › V6 isolated failures preserve the document › DOM edits remain usable during GPU loss and the restored region draws the latest revision (2.5s)
+  ✓   7 [theme-studio] › tests/browser/theme-acceptance.spec.ts:322:9 › V6 isolated failures preserve the document › a missing packaged font is diagnosed, DOM edits persist, and a repaired deployment reload restores glyphs (2.7s)
+  ✘   8 [theme-studio] › tests/browser/theme-acceptance.spec.ts:357:9 › V6 isolated failures preserve the document › the existing host fatal boundary releases regions and restart restores the persisted draft, discarding uncommitted input (1.0m)
+(node:5368) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   9 [theme-studio] › tests/browser/theme-deployment.spec.ts:32:5 › V8 root/subpath product: current manifest, real CSS/fonts/wasm and deep-link resource ownership (879ms)
+  ✓  10 [theme-studio] › tests/browser/theme-deployment.spec.ts:127:5 › V8 a missing deployed wasm gives a usable reload action and recovers under the same base (697ms)
+
+
+  1) [theme-studio] › tests/browser/theme-acceptance.spec.ts:357:9 › V6 isolated failures preserve the document › the existing host fatal boundary releases regions and restart restores the persisted draft, discarding uncommitted input 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  getByTestId('status')
+    Expected: "ready"
+    Received: "fatal"
+    Timeout:  60000ms
+
+    Call log:
+      - Expect "toHaveAttribute" getByTestId('status') with timeout 60000ms
+      - waiting for getByTestId('status')
+        123 × locator resolved to <p id="status" role="status" data-status="fatal" data-testid="status">…</p>
+            - unexpected value "fatal"
+
+
+      375 |         expect(await page.evaluate(() => typeof window.__theme_studio)).toBe("undefined");
+      376 |         allowRegionStart(info); await page.getByTestId("fatal-restart").click();
+    > 377 |         await expect(page.getByTestId("status")).toHaveAttribute("data-status", "ready", { timeout: REGION_START_MS });
+          |                                                  ^
+      378 |         const restored = await drawn(page), next = await page.evaluate(() => window.__theme_studio.diagnostics());
+      379 |         expect(restored.document).toEqual(saved); expect(restored.modified).toBe(false); expect(restored.region_count).toBe(1);
+      380 |         expect(next.runtime).toBe(previous.runtime + 1); expect(next.build).toBe(previous.build);
+        at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser/theme-acceptance.spec.ts:377:50
+
+    Error Context: test-results/theme-acceptance-V6-isolat-1e23c-iscarding-uncommitted-input-theme-studio/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/theme-acceptance-V6-isolat-1e23c-iscarding-uncommitted-input-theme-studio/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/theme-acceptance-V6-isolat-1e23c-iscarding-uncommitted-input-theme-studio/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [theme-studio] › tests/browser/theme-acceptance.spec.ts:357:9 › V6 isolated failures preserve the document › the existing host fatal boundary releases regions and restart restores the persisted draft, discarding uncommitted input 
+  9 passed (1.5m)

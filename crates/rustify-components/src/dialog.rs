@@ -15,7 +15,7 @@
 use leptos::prelude::*;
 use rustify_ui::{Anchor, Layer};
 
-const PANEL: &str = "relative w-full max-w-lg rounded-lg border border-border bg-popover p-6 shadow-lg flex flex-col gap-4";
+const PANEL: &str = "relative w-full max-w-lg rounded-lg border border-border bg-popover text-popover-foreground p-6 shadow-lg flex flex-col gap-4";
 const TITLE_BAR: &str = "flex items-start gap-4";
 const BACKDROP: &str = "fixed inset-0 bg-foreground/30";
 const CLOSE: &str = "-me-2 -mt-2 shrink-0 rounded-sm p-1 text-muted-foreground transition-colors cursor-pointer outline-none hover:bg-muted focus-visible:ring-ring/50 focus-visible:ring-[3px]";
@@ -104,7 +104,7 @@ pub fn Dialog(
                         <div class="flex flex-1 flex-col gap-2">
                             <h2
                                 id=move || title_id.get_value()
-                                class="text-lg leading-none font-semibold text-foreground"
+                                class="text-lg leading-none font-semibold text-popover-foreground"
                             >
                                 {move || title.get()}
                             </h2>

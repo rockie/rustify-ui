@@ -1,0 +1,14 @@
+npm notice run rustify-ui-browser-tests@0.1.0 npx
+npm notice run 'playwright' test --project=theme-studio theme-gpu.spec.ts
+
+Running 5 tests using 1 worker
+
+(node:81088) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 [theme-studio] › tests/browser/theme-gpu.spec.ts:26:7 › GPU consumes the resolved snapshot › actual solid pixels include all semantics and alpha blends on the checker (2.6s)
+  ✓  2 [theme-studio] › tests/browser/theme-gpu.spec.ts:50:7 › GPU consumes the resolved snapshot › host rem, actual font resources and letter spacing change measured layout (3.7s)
+  ✓  3 [theme-studio] › tests/browser/theme-gpu.spec.ts:69:7 › GPU consumes the resolved snapshot › soft shadows extend visual bounds without extending hit bounds (2.7s)
+  ✓  4 [theme-studio] › tests/browser/theme-gpu.spec.ts:84:7 › GPU consumes the resolved snapshot › controlled inputs update through actions and context restoration uses the latest revision (2.9s)
+  ✓  5 [theme-studio] › tests/browser/theme-gpu.spec.ts:99:7 › GPU consumes the resolved snapshot › all six packaged families paint actual Latin, CJK and emoji glyphs (5.3s)
+
+  5 passed (18.8s)

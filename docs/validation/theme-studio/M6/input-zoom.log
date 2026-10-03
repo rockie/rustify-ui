@@ -1,0 +1,42 @@
+npm notice run rustify-ui-browser-tests@0.1.0 npx
+npm notice run 'playwright' test --project=theme-studio theme-acceptance -g Chinese composition|actual Chrome --headed --output=test-results/theme-input
+
+Running 2 tests using 1 worker
+
+(node:25880) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 [theme-studio] › tests/browser/theme-acceptance.spec.ts:294:5 › Chinese composition commits once and never invokes theme history while composing (1.7s)
+(node:25902) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  2 [theme-studio] › tests/browser/theme-acceptance.spec.ts:335:5 › actual Chrome 200% page zoom preserves editing, GPU comparison and export (3.3s)
+
+
+  1) [theme-studio] › tests/browser/theme-acceptance.spec.ts:294:5 › Chinese composition commits once and never invokes theme history while composing 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      319 |     expect(events.at(-1).type).toBe("compositionend");
+      320 |     expect(events.filter((event: any) => event.type === "compositionupdate").length).toBeGreaterThan(0);
+    > 321 |     expect(events.every((event: any) => event.trusted)).toBe(true);
+          |                                                         ^
+      322 |     await page.getByTestId("theme-undo").click();
+      323 |     expect((await snapshot(page)).document).toEqual(before.document);
+      324 |     await page.getByTestId("theme-save").click();
+        at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser/theme-acceptance.spec.ts:321:57
+
+    Error Context: test-results/theme-input/theme-acceptance-Chinese-c-3244f-eme-history-while-composing-theme-studio/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/theme-input/theme-acceptance-Chinese-c-3244f-eme-history-while-composing-theme-studio/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/theme-input/theme-acceptance-Chinese-c-3244f-eme-history-while-composing-theme-studio/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [theme-studio] › tests/browser/theme-acceptance.spec.ts:294:5 › Chinese composition commits once and never invokes theme history while composing 
+  1 passed (6.8s)

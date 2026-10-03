@@ -2734,6 +2734,7 @@ impl DrawText {
             style: Style {
                 font_family_id: self.text_style.font_family.to_font_family_id(),
                 font_size_in_pts: self.text_style.font_size,
+                letter_spacing: self.text_style.letter_spacing,
                 color: None,
             },
             options: LayoutOptions {
@@ -3406,6 +3407,9 @@ pub struct TextStyle {
     pub font_family: FontFamily,
     #[live(10.0)]
     pub font_size: f32,
+    /// Letter spacing in ems; zero keeps the original shaping and layout.
+    #[live(0.0)]
+    pub letter_spacing: f64,
     #[live(1.0)]
     pub line_spacing: f32,
     /// A vertical offset applied when drawing text, as a fraction of the font size.
@@ -3428,12 +3432,21 @@ pub struct FontMember {
     pub weight: f32,
 }
 
-#[derive(Debug, Clone, Script, PartialEq)]
+#[derive(Debug, Clone, Script)]
 pub struct FontFamily {
     #[rust]
     id: LiveId,
     #[rust]
     members: Vec<FontMemberDef>,
+    // Dynamic families need to keep their resource handles rooted in the VM.
+    #[rust]
+    resource_refs: Vec<ScriptHandleRef>,
+}
+
+impl PartialEq for FontFamily {
+    fn eq(&self, other: &Self) -> bool {
+        self.id == other.id && self.members == other.members
+    }
 }
 
 #[derive(Debug, Clone, Default, PartialEq)]
@@ -3445,6 +3458,45 @@ pub struct FontMemberDef {
 }
 
 impl FontFamily {
+    /// Select a bundled font by its product-relative `crate/resources/file` path.
+    pub fn from_resource_path(cx: &mut Cx, path: &str) -> Option<Self> {
+        Self::from_resource_paths(cx, &[path])
+    }
+
+    /// Select a primary font followed by bundled fallback resources.
+    /// Returns `None` if the resource path is invalid or the script VM is held.
+    pub fn from_resource_paths(cx: &mut Cx, paths: &[&str]) -> Option<Self> {
+        if paths.is_empty() {
+            return None;
+        }
+        cx.try_with_vm(|vm| {
+            let module = vm.module(id!(res));
+            let method = vm.bx.heap.value(module, id!(crate_resource).into(), NoTrap);
+            let mut members = Vec::with_capacity(paths.len());
+            let mut resource_refs = Vec::with_capacity(paths.len());
+            for path in paths {
+                let (crate_name, resource_path) = path.split_once('/')?;
+                if crate_name.is_empty() || resource_path.is_empty() {
+                    return None;
+                }
+                let value = vm.new_string_with(|_, value| {
+                    value.push_str(crate_name);
+                    value.push(':');
+                    value.push_str(resource_path);
+                });
+                let handle = vm.call_with_self(method, &[value], module.into()).as_handle()?;
+                resource_refs.push(vm.bx.heap.new_handle_ref(handle));
+                members.push(FontMemberDef { handle, ..Default::default() });
+            }
+            let mut hasher = DefaultHasher::new();
+            "resource-font-family".hash(&mut hasher);
+            for member in &members {
+                member.handle.index().hash(&mut hasher);
+            }
+            Some(Self { id: LiveId(hasher.finish()), members, resource_refs })
+        }).flatten()
+    }
+
     fn to_font_family_id(&self) -> FontFamilyId {
         (self.id.0).into()
     }
@@ -3574,12 +3626,14 @@ impl ScriptHook for FontFamily {
         // Use the object index as the unique id
         self.id = LiveId(obj.index() as u64);
         self.members.clear();
+        self.resource_refs.clear();
 
         let len = vm.bx.heap.vec_len(obj);
         for i in 0..len {
             let kv = vm.bx.heap.vec_key_value(obj, i, NoTrap);
             let member = FontMember::script_from_value(vm, kv.value);
             if let Some(ref handle_ref) = member.res {
+                self.resource_refs.push(handle_ref.clone());
                 self.members.push(FontMemberDef {
                     handle: handle_ref.as_handle(),
                     asc: member.asc,

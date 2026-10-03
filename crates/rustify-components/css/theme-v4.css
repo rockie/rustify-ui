@@ -1,0 +1,46 @@
+/* Import after sdk.css into the application's one Tailwind build. Only a
+   ThemeScope writes these runtime variables; the fallbacks preserve legacy
+   scopes in the same stylesheet, including Tailwind 4.1.13's fonts, xl
+   radius and shadow/ring composition. */
+@theme inline {
+  --radius-sm: var(--rustify-radius-sm, calc(var(--radius) - 2px));
+  --radius-md: var(--rustify-radius-md, var(--radius));
+  --radius-lg: var(--rustify-radius-lg, calc(var(--radius) + 2px));
+  --radius-xl: var(--rustify-radius-xl, 0.75rem);
+
+  --font-sans: var(--rustify-font-sans, ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji");
+  --font-serif: var(--rustify-font-serif, ui-serif, Georgia, Cambria, "Times New Roman", Times, serif);
+  --font-mono: var(--rustify-font-mono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace);
+
+  /* Resolve shadow-color on the utility element. Inactive new layers select
+     a whole transparent shadow; absent variables preserve legacy geometry/RGBA. */
+  --shadow-2xs: var(--rustify-shadow-2xs-0-inactive, var(--rustify-shadow-2xs-0-geometry, 0 1px) var(--tw-shadow-color, var(--rustify-shadow-2xs-0-color, rgb(0 0 0 / 0.05))));
+  --shadow-xs: var(--rustify-shadow-xs-0-inactive, var(--rustify-shadow-xs-0-geometry, 0 1px 2px 0) var(--tw-shadow-color, var(--rustify-shadow-xs-0-color, rgb(0 0 0 / 0.05))));
+  --shadow-sm: var(--rustify-shadow-sm-0-inactive, var(--rustify-shadow-sm-0-geometry, 0 1px 3px 0) var(--tw-shadow-color, var(--rustify-shadow-sm-0-color, rgb(0 0 0 / 0.1)))), var(--rustify-shadow-sm-1-inactive, var(--rustify-shadow-sm-1-geometry, 0 1px 2px -1px) var(--tw-shadow-color, var(--rustify-shadow-sm-1-color, rgb(0 0 0 / 0.1))));
+  --shadow: var(--rustify-shadow-0-inactive, var(--rustify-shadow-0-geometry, 0 1px 3px 0) var(--tw-shadow-color, var(--rustify-shadow-0-color, rgb(0 0 0 / 0.1)))), var(--rustify-shadow-1-inactive, var(--rustify-shadow-1-geometry, 0 1px 2px -1px) var(--tw-shadow-color, var(--rustify-shadow-1-color, rgb(0 0 0 / 0.1))));
+  --shadow-md: var(--rustify-shadow-md-0-inactive, var(--rustify-shadow-md-0-geometry, 0 4px 6px -1px) var(--tw-shadow-color, var(--rustify-shadow-md-0-color, rgb(0 0 0 / 0.1)))), var(--rustify-shadow-md-1-inactive, var(--rustify-shadow-md-1-geometry, 0 2px 4px -2px) var(--tw-shadow-color, var(--rustify-shadow-md-1-color, rgb(0 0 0 / 0.1))));
+  --shadow-lg: var(--rustify-shadow-lg-0-inactive, var(--rustify-shadow-lg-0-geometry, 0 10px 15px -3px) var(--tw-shadow-color, var(--rustify-shadow-lg-0-color, rgb(0 0 0 / 0.1)))), var(--rustify-shadow-lg-1-inactive, var(--rustify-shadow-lg-1-geometry, 0 4px 6px -4px) var(--tw-shadow-color, var(--rustify-shadow-lg-1-color, rgb(0 0 0 / 0.1))));
+  --shadow-xl: var(--rustify-shadow-xl-0-inactive, var(--rustify-shadow-xl-0-geometry, 0 20px 25px -5px) var(--tw-shadow-color, var(--rustify-shadow-xl-0-color, rgb(0 0 0 / 0.1)))), var(--rustify-shadow-xl-1-inactive, var(--rustify-shadow-xl-1-geometry, 0 8px 10px -6px) var(--tw-shadow-color, var(--rustify-shadow-xl-1-color, rgb(0 0 0 / 0.1))));
+  --shadow-2xl: var(--rustify-shadow-2xl-0-inactive, var(--rustify-shadow-2xl-0-geometry, 0 25px 50px -12px) var(--tw-shadow-color, var(--rustify-shadow-2xl-0-color, rgb(0 0 0 / 0.25))));
+}
+
+/* --spacing on a legacy scope is its layout gap. Keep the utility unit
+   separate, and keep Tailwind from emitting it onto the host root. */
+@theme inline reference {
+  --spacing: var(--rustify-unit, 0.25rem);
+}
+
+/* The native form defaults otherwise select their own font instead of the
+   resolved font shared by the scope's DOM and GPU content. */
+@layer utilities {
+  :where([data-rustify-theme-runtime="v4"]) {
+    font-family: var(--rustify-font-sans);
+    font-size: var(--font-size);
+    letter-spacing: var(--rustify-letter-spacing, normal);
+  }
+
+  :where([data-rustify-theme-runtime="v4"]) :where(button, input, textarea, select) {
+    font-family: inherit;
+    letter-spacing: inherit;
+  }
+}

@@ -1,0 +1,43 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-theme-text-tests v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/tests/theme-text)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.08s
+     Running unittests src/lib.rs (tests/theme-text/target/debug/deps/rustify_theme_text_tests-2925f6afb4444648)
+
+running 2 tests
+test text::shaper::tests::explicit_ligature_features_override_tracking_defaults ... FAILED
+test text::shaper::tests::letter_spacing_disables_optional_ligatures_and_keeps_zero_spacing ... FAILED
+
+failures:
+
+---- text::shaper::tests::explicit_ligature_features_override_tracking_defaults stdout ----
+
+thread 'text::shaper::tests::explicit_ligature_features_override_tracking_defaults' (9001413) panicked at src/../../../makepad/draw/src/text/shaper.rs:577:9:
+assertion `left == right` failed
+  left: 1
+ right: 2
+
+---- text::shaper::tests::letter_spacing_disables_optional_ligatures_and_keeps_zero_spacing stdout ----
+
+thread 'text::shaper::tests::letter_spacing_disables_optional_ligatures_and_keeps_zero_spacing' (9001414) panicked at src/../../../makepad/draw/src/text/shaper.rs:561:13:
+assertion `left == right` failed: tracking must separate Latin letters
+  left: 4
+ right: 6
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    text::shaper::tests::explicit_ligature_features_override_tracking_defaults
+    text::shaper::tests::letter_spacing_disables_optional_ligatures_and_keeps_zero_spacing
+
+test result: FAILED. 0 passed; 2 failed; 0 ignored; 0 measured; 33 filtered out; finished in 0.02s
+
+error: test failed, to rerun pass `--lib`
+mbx[cache]: 0 hits, 0 misses, 1 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[gc]: evicted 946 objects and 298 action results (685.7 MiB logical); 90.0 GiB logical remain
+mbx[savings]: the running total stands at 1h 25m across 1370 builds. nobody is counting except the box.

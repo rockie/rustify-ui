@@ -1,0 +1,79 @@
+npm notice run rustify-ui-browser-tests@0.1.0 npx
+npm notice run 'playwright' test -c tests/vellum/playwright.config.ts --project=vellum m3-raster.spec.ts m6-edit.spec.ts visual.spec.ts
+[WebServer] 127.0.0.1 - - [04/Oct/2026 00:27:12] "GET / HTTP/1.1" 200 -
+
+Running 22 tests using 1 worker
+
+(node:13426) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] 127.0.0.1 - - [04/Oct/2026 00:27:16] "GET /?canvas HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [04/Oct/2026 00:27:16] "GET /styles.css HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [04/Oct/2026 00:27:16] "GET /src/app.js HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [04/Oct/2026 00:27:16] "GET /src/document.js HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [04/Oct/2026 00:27:16] "GET /src/renderer.js HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [04/Oct/2026 00:27:16] "GET /src/icons.js HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [04/Oct/2026 00:27:16] "GET /src/svg.js HTTP/1.1" 200 -
+  ✓   1 [vellum] › tests/vellum/m3-raster.spec.ts:41:9 › typography properties bind and Unicode layout matches the browser reference (5.5s)
+  ✓   2 [vellum] › tests/vellum/m3-raster.spec.ts:77:5 › editing a new history branch cannot reuse stale text pixels (2.3s)
+[WebServer] 127.0.0.1 - - [04/Oct/2026 00:27:21] "GET /?canvas HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [04/Oct/2026 00:27:21] "GET /styles.css HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [04/Oct/2026 00:27:21] "GET /src/app.js HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [04/Oct/2026 00:27:21] "GET /src/document.js HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [04/Oct/2026 00:27:21] "GET /src/renderer.js HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [04/Oct/2026 00:27:21] "GET /src/icons.js HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [04/Oct/2026 00:27:21] "GET /src/svg.js HTTP/1.1" 200 -
+Styled text comparison: {"differing":4,"total":120000,"ratio":0.000033333333333333335,"maxRatio":0.02}
+  ✓   3 [vellum] › tests/vellum/m3-raster.spec.ts:104:9 › styled text raster stays within the approved visual tolerance at unit zoom (3.1s)
+  ✓   4 [vellum] › tests/vellum/m3-raster.spec.ts:152:5 › local font loading works under strict CSP and invalidates existing glyph pixels (1.9s)
+  ✓   5 [vellum] › tests/vellum/m3-raster.spec.ts:180:5 › decoded images cover the box and replacing an asset refreshes the same GPU key (2.0s)
+  ✓   6 [vellum] › tests/vellum/m3-raster.spec.ts:202:5 › the browser raster LRU evicts pixels at the 64 MiB budget (1.6s)
+Raster resolution samples: [{"zoom":0.49,"elapsedMs":14,"settledMs":127.80000001192093,"rafIntervals":[14],"batches":[{"budget":67108864,"bytes":1448880,"deferred":73,"entries":131,"evictions":0,"hits":204,"lastBudgetMs":8,"lastGenerated":29,"lastProjectMs":8.099999994039536,"lastResolution":0.5,"misses":306,"pending":73,"totalGenerated":233},{"budget":67108864,"bytes":1576020,"deferred":114,"entries":163,"evictions":0,"hits":233,"lastBudgetMs":8,"lastGenerated":32,"lastProjectMs":8,"lastResolution":0.5,"misses":379,"pending":41,"totalGenerated":265},{"budget":67108864,"bytes":1681804,"deferred":132,"entries":186,"evictions":0,"hits":294,"lastBudgetMs":8,"lastGenerated":23,"lastProjectMs":8.399999991059303,"lastResolution":0.5,"misses":420,"pending":18,"totalGenerated":288},{"budget":67108864,"bytes":1761664,"deferred":132,"entries":204,"evictions":0,"hits":378,"lastBudgetMs":8,"lastGenerated":18,"lastProjectMs":4.9000000059604645,"lastResolution":0.5,"misses":438,"pending":0,"totalGenerated":306}],"frames":4,"cpuMs":5.600000008940697,"budget":67108864,"bytes":1761664,"deferred":132,"entries":204,"evictions":0,"hits":378,"lastBudgetMs":8,"lastGenerated":18,"lastProjectMs":4.9000000059604645,"lastResolution":0.5,"misses":438,"pending":0,"totalGenerated":306},{"zoom":0.51,"elapsedMs":7.5,"settledMs":36.20000000298023,"rafIntervals":[7.5],"batches":[{"budget":67108864,"bytes":1761664,"deferred":132,"entries":204,"evictions":0,"hits":480,"lastBudgetMs":8,"lastGenerated":0,"lastProjectMs":0,"lastResolution":1,"misses":438,"pending":0,"totalGenerated":306}],"frames":1,"cpuMs":1.7999999970197678,"budget":67108864,"bytes":1761664,"deferred":132,"entries":204,"evictions":0,"hits":480,"lastBudgetMs":8,"lastGenerated":0,"lastProjectMs":0,"lastResolution":1,"misses":438,"pending":0,"totalGenerated":306},{"zoom":0.99,"elapsedMs":7.200000002980232,"settledMs":40,"rafIntervals":[7.200000002980232],"batches":[{"budget":67108864,"bytes":1761664,"deferred":132,"entries":204,"evictions":0,"hits":574,"lastBudgetMs":8,"lastGenerated":0,"lastProjectMs":0,"lastResolution":1,"misses":438,"pending":0,"totalGenerated":306}],"frames":1,"cpuMs":0.5000000149011612,"budget":67108864,"bytes":1761664,"deferred":132,"entries":204,"evictions":0,"hits":574,"lastBudgetMs":8,"lastGenerated":0,"lastProjectMs":0,"lastResolution":1,"misses":438,"pending":0,"totalGenerated":306},{"zoom":1.01,"elapsedMs":14.399999991059303,"settledMs":180.3999999910593,"rafIntervals":[14.399999991059303],"batches":[{"budget":67108864,"bytes":2456768,"deferred":202,"entries":227,"evictions":0,"hits":574,"lastBudgetMs":8,"lastGenerated":23,"lastProjectMs":8.099999994039536,"lastResolution":2,"misses":531,"pending":70,"totalGenerated":329},{"budget":67108864,"bytes":3859312,"deferred":257,"entries":242,"evictions":0,"hits":597,"lastBudgetMs":8,"lastGenerated":15,"lastProjectMs":8.200000002980232,"lastResolution":2,"misses":601,"pending":55,"totalGenerated":344},{"budget":67108864,"bytes":5302224,"deferred":287,"entries":267,"evictions":0,"hits":635,"lastBudgetMs":8,"lastGenerated":25,"lastProjectMs":8.299999997019768,"lastResolution":2,"misses":656,"pending":30,"totalGenerated":369},{"budget":67108864,"bytes":6940096,"deferred":295,"entries":289,"evictions":0,"hits":698,"lastBudgetMs":8,"lastGenerated":22,"lastProjectMs":8.099999994039536,"lastResolution":2,"misses":686,"pending":8,"totalGenerated":391},{"budget":67108864,"bytes":7313152,"deferred":295,"entries":297,"evictions":0,"hits":783,"lastBudgetMs":8,"lastGenerated":8,"lastProjectMs":4.700000002980232,"lastResolution":2,"misses":694,"pending":0,"totalGenerated":399}],"frames":5,"cpuMs":5.400000020861626,"budget":67108864,"bytes":7313152,"deferred":295,"entries":297,"evictions":0,"hits":783,"lastBudgetMs":8,"lastGenerated":8,"lastProjectMs":4.700000002980232,"lastResolution":2,"misses":694,"pending":0,"totalGenerated":399},{"zoom":1.99,"elapsedMs":22.299999997019768,"settledMs":64.79999999701977,"rafIntervals":[22.299999997019768],"batches":[{"budget":67108864,"bytes":7313152,"deferred":295,"entries":297,"evictions":0,"hits":816,"lastBudgetMs":8,"lastGenerated":0,"lastProjectMs":0,"lastResolution":2,"misses":694,"pending":0,"totalGenerated":399}],"frames":1,"cpuMs":0.30000001192092896,"budget":67108864,"bytes":7313152,"deferred":295,"entries":297,"evictions":0,"hits":816,"lastBudgetMs":8,"lastGenerated":0,"lastProjectMs":0,"lastResolution":2,"misses":694,"pending":0,"totalGenerated":399},{"zoom":2.01,"elapsedMs":16.899999991059303,"settledMs":92.5,"rafIntervals":[16.899999991059303],"batches":[{"budget":67108864,"bytes":10898048,"deferred":314,"entries":310,"evictions":0,"hits":816,"lastBudgetMs":8,"lastGenerated":13,"lastProjectMs":8.200000002980232,"lastResolution":4,"misses":726,"pending":19,"totalGenerated":412},{"budget":67108864,"bytes":15210144,"deferred":316,"entries":327,"evictions":0,"hits":829,"lastBudgetMs":8,"lastGenerated":17,"lastProjectMs":8.599999994039536,"lastResolution":4,"misses":745,"pending":2,"totalGenerated":429},{"budget":67108864,"bytes":16108704,"deferred":316,"entries":329,"evictions":0,"hits":859,"lastBudgetMs":8,"lastGenerated":2,"lastProjectMs":1.7000000029802322,"lastResolution":4,"misses":747,"pending":0,"totalGenerated":431}],"frames":3,"cpuMs":3,"budget":67108864,"bytes":16108704,"deferred":316,"entries":329,"evictions":0,"hits":859,"lastBudgetMs":8,"lastGenerated":2,"lastProjectMs":1.7000000029802322,"lastResolution":4,"misses":747,"pending":0,"totalGenerated":431},{"zoom":3.99,"elapsedMs":22.69999998807907,"settledMs":61.5,"rafIntervals":[22.69999998807907],"batches":[{"budget":67108864,"bytes":16108704,"deferred":316,"entries":329,"evictions":0,"hits":875,"lastBudgetMs":8,"lastGenerated":0,"lastProjectMs":0.09999999403953552,"lastResolution":4,"misses":747,"pending":0,"totalGenerated":431}],"frames":1,"cpuMs":0.3999999910593033,"budget":67108864,"bytes":16108704,"deferred":316,"entries":329,"evictions":0,"hits":875,"lastBudgetMs":8,"lastGenerated":0,"lastProjectMs":0.09999999403953552,"lastResolution":4,"misses":747,"pending":0,"totalGenerated":431},{"zoom":4.01,"elapsedMs":5,"settledMs":32.70000000298023,"rafIntervals":[5],"batches":[{"budget":67108864,"bytes":16108704,"deferred":316,"entries":329,"evictions":0,"hits":891,"lastBudgetMs":8,"lastGenerated":0,"lastProjectMs":0,"lastResolution":4,"misses":747,"pending":0,"totalGenerated":431}],"frames":1,"cpuMs":0.29999999701976776,"budget":67108864,"bytes":16108704,"deferred":316,"entries":329,"evictions":0,"hits":891,"lastBudgetMs":8,"lastGenerated":0,"lastProjectMs":0,"lastResolution":4,"misses":747,"pending":0,"totalGenerated":431}]
+  ✓   7 [vellum] › tests/vellum/m3-raster.spec.ts:218:5 › resolution boundaries record actual raster work and page presentation time (2.0s)
+  ✓   8 [vellum] › tests/vellum/m6-edit.spec.ts:6:5 › native text session commits multiline Unicode once and restores it with undo (1.6s)
+  ✓   9 [vellum] › tests/vellum/m6-edit.spec.ts:38:5 › duplication, grouping, frame wrapping and component history retain original edit semantics (1.5s)
+  ✓  10 [vellum] › tests/vellum/m6-edit.spec.ts:72:5 › component instances propagate source changes while preserving overrides across pages (1.6s)
+  ✓  11 [vellum] › tests/vellum/m6-edit.spec.ts:97:5 › auto layout and frame constraints use the original measured positions (1.4s)
+  ✓  12 [vellum] › tests/vellum/m6-edit.spec.ts:122:5 › alignment, distribution, stacking and delete operate on the selected roots (1.7s)
+  ✓  13 [vellum] › tests/vellum/m6-edit.spec.ts:153:5 › rotated native text follows the full world matrix while the camera changes (1.6s)
+  ✓  14 [vellum] › tests/vellum/m6-edit.spec.ts:187:5 › text completion precedes another transaction and native undo stays in the control (1.5s)
+  ✓  15 [vellum] › tests/vellum/m6-edit.spec.ts:209:5 › composition keeps Enter and Escape in the text control until composition ends (1.4s)
+  ✓  16 [vellum] › tests/vellum/m6-edit.spec.ts:230:5 › text tool and canvas double-click open the native session and blur commits once (1.6s)
+  ✓  17 [vellum] › tests/vellum/m6-edit.spec.ts:255:5 › SDK clipboard handles plain text, validated layers and browser refusal without losing the internal copy (1.4s)
+  ✓  18 [vellum] › tests/vellum/m6-edit.spec.ts:300:5 › external text invalidation discards only the draft and preserves the incoming value (1.4s)
+[WebServer] 127.0.0.1 - - [04/Oct/2026 00:27:50] "GET /?canvas HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [04/Oct/2026 00:27:50] "GET /styles.css HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [04/Oct/2026 00:27:50] "GET /src/app.js HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [04/Oct/2026 00:27:50] "GET /src/document.js HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [04/Oct/2026 00:27:50] "GET /src/icons.js HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [04/Oct/2026 00:27:50] "GET /src/renderer.js HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [04/Oct/2026 00:27:50] "GET /src/svg.js HTTP/1.1" 200 -
+Vellum edit visual: {"operation":"text","differing":533,"ratio":0.000333125}
+Vellum edit visual: {"operation":"pen","differing":1203,"ratio":0.000751875}
+  ✓  19 [vellum] › tests/vellum/m6-edit.spec.ts:323:9 › text and pen editing match twin geometry and the approved screenshot gate (4.4s)
+  ✓  20 [vellum] › tests/vellum/m6-edit.spec.ts:385:5 › quick insert, presets and design token downloads use the editor controls (1.8s)
+[WebServer] 127.0.0.1 - - [04/Oct/2026 00:27:56] "GET /?canvas HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [04/Oct/2026 00:27:56] "GET /styles.css HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [04/Oct/2026 00:27:56] "GET /src/app.js HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [04/Oct/2026 00:27:56] "GET /src/document.js HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [04/Oct/2026 00:27:56] "GET /src/svg.js HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [04/Oct/2026 00:27:56] "GET /src/renderer.js HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [04/Oct/2026 00:27:56] "GET /src/icons.js HTTP/1.1" 200 -
+Vellum visual: {"page":0,"theme":"light","differing":26417,"total":1600000,"ratio":0.016510625}
+Vellum visual: {"page":0,"theme":"dark","differing":11883,"total":1600000,"ratio":0.007426875}
+Vellum visual: {"page":1,"theme":"light","differing":1226,"total":1600000,"ratio":0.00076625}
+Vellum visual: {"page":1,"theme":"dark","differing":4979,"total":1600000,"ratio":0.003111875}
+Vellum visual: {"page":2,"theme":"light","differing":617,"total":1600000,"ratio":0.000385625}
+Vellum visual: {"page":2,"theme":"dark","differing":533,"total":1600000,"ratio":0.000333125}
+  ✓  21 [vellum] › tests/vellum/visual.spec.ts:8:5 › starter pages are measured against the same-browser Canvas reference @evidence (11.8s)
+[WebServer] 127.0.0.1 - - [04/Oct/2026 00:28:08] "GET /?canvas HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [04/Oct/2026 00:28:08] "GET /src/app.js HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [04/Oct/2026 00:28:08] "GET /styles.css HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [04/Oct/2026 00:28:08] "GET /src/document.js HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [04/Oct/2026 00:28:08] "GET /src/renderer.js HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [04/Oct/2026 00:28:08] "GET /src/icons.js HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [04/Oct/2026 00:28:08] "GET /src/svg.js HTTP/1.1" 200 -
+Vellum shell visual: {"surface":"main-menu","differing":26587,"total":1600000,"ratio":0.016616875}
+Vellum shell visual: {"surface":"help-dialog","differing":10733,"total":1600000,"ratio":0.006708125}
+  ✓  22 [vellum] › tests/vellum/visual.spec.ts:36:5 › open shell menus and dialogs remain within the approved visual gate @evidence (6.1s)
+
+  22 passed (1.0m)

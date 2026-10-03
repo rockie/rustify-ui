@@ -1,0 +1,21 @@
+[package]
+name = "rustify-theme-text-tests"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[workspace]
+
+[lints.rust]
+unexpected_cfgs = { level = "warn", check-cfg = ['cfg(feature, values("serde"))'] }
+
+[dependencies]
+makepad-shared-bytes = { path = "../../makepad/libs/shared_bytes", version = "=1.0.0" }
+rustybuzz = { path = "../../makepad/libs/rustybuzz", version = "=0.18.0" }
+fxhash = { path = "../../makepad/libs/fxhash", version = "=0.2.1" }
+unicode-bidi = { path = "../../makepad/libs/unicode/unicode-bidi", version = "=0.3.18" }
+unicode-segmentation = { path = "../../makepad/libs/unicode/unicode-segmentation", version = "=1.12.0" }
+unicode-linebreak = { path = "../../makepad/libs/unicode/unicode-linebreak", version = "=0.1.5" }
+ab_glyph_rasterizer = { path = "../../makepad/libs/ab_glyph_rasterizer", version = "=0.1.8" }
+sdfer = { path = "../../makepad/libs/sdfer", version = "=0.2.1" }
+makepad-zune-png = { path = "../../makepad/libs/zune/zune-png", version = "=0.5.2" }

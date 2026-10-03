@@ -1,0 +1,16 @@
+
+Running 9 tests using 1 worker
+
+(node:83397) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 [theme-export-deep] › tests/browser/theme-export-runtime.spec.ts:5:7 › independent standard hex CSS renders modes, utilities and fonts (395ms)
+  ✓  2 [theme-export-deep] › tests/browser/theme-export-runtime.spec.ts:5:7 › independent standard rgb CSS renders modes, utilities and fonts (315ms)
+  ✓  3 [theme-export-deep] › tests/browser/theme-export-runtime.spec.ts:5:7 › independent standard hsl CSS renders modes, utilities and fonts (333ms)
+  ✓  4 [theme-export-deep] › tests/browser/theme-export-runtime.spec.ts:5:7 › independent standard oklch CSS renders modes, utilities and fonts (318ms)
+  ✓  5 [theme-export-deep] › tests/browser/theme-export-runtime.spec.ts:5:7 › independent scoped hex CSS renders modes, utilities and fonts (387ms)
+  ✓  6 [theme-export-deep] › tests/browser/theme-export-runtime.spec.ts:5:7 › independent scoped rgb CSS renders modes, utilities and fonts (436ms)
+  ✓  7 [theme-export-deep] › tests/browser/theme-export-runtime.spec.ts:5:7 › independent scoped hsl CSS renders modes, utilities and fonts (372ms)
+  ✓  8 [theme-export-deep] › tests/browser/theme-export-runtime.spec.ts:5:7 › independent scoped oklch CSS renders modes, utilities and fonts (380ms)
+  ✓  9 [theme-export-deep] › tests/browser/theme-export-runtime.spec.ts:47:5 › compiled original Rust snippet mounts JSON in independent light and dark scopes (337ms)
+
+  9 passed (3.8s)

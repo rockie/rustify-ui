@@ -11,4 +11,5 @@
 @import "tailwindcss/utilities.css" layer(utilities) source(none);
 
 @import "../../crates/rustify-components/css/sdk.css";
+@import "../../crates/rustify-components/css/theme-v4.css";
 @source "./src";

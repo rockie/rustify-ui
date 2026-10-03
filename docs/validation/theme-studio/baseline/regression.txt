@@ -1,0 +1,16 @@
+Command:
+RUSTIFY_CHROMIUM='/Applications/Google Chrome.app/Contents/MacOS/Google Chrome' RUSTIFY_TIER=regression npx playwright test --project=component-catalog p2-theme.spec.ts --reporter=list --output=docs/validation/theme-studio/baseline/p2-theme-results
+
+Terminal result:
+6 passed (14.7s)
+
+Passed tests:
+- every switch is in force two frames after the click
+- the region's pixels move with the panel, not after it
+- a control's four states are four different things to look at
+- less motion is less motion, in the stylesheet and in the region
+- the region's spinner turns, and stops when the scope asks it to
+- the host page is not part of the scope's theme
+
+The @evidence twenty-switch/200 ms budget test was excluded by regression tier.
+The separate headed collector runs twenty switches and saves raw in-page timings.

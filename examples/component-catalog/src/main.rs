@@ -4,6 +4,8 @@ mod catalog_region;
 mod sample_column;
 #[cfg(target_arch = "wasm32")]
 mod sample_region;
+#[cfg(target_arch = "wasm32")]
+mod theme_fixture;
 // Not gated: twenty fixed strings and their ids are checked on the host, where
 // "there are twenty of them and no two share a name" needs no browser. Only
 // the browser build draws them, which is what the allow is for.

@@ -520,6 +520,9 @@
   .text-background {
     color: var(--background);
   }
+  .text-card-foreground {
+    color: var(--card-foreground, var(--foreground));
+  }
   .text-destructive {
     color: var(--destructive);
   }
@@ -534,6 +537,9 @@
   }
   .text-muted-foreground {
     color: var(--muted-foreground);
+  }
+  .text-popover-foreground {
+    color: var(--popover-foreground, var(--foreground));
   }
   .text-primary {
     color: var(--primary);

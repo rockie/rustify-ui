@@ -11,6 +11,9 @@ use crate::makepad_widgets::widget::*;
 use crate::makepad_widgets::*;
 
 use super::colour;
+use super::theme::{disabled_color, draw_focus, focus_hit, set_box_radius, token, ThemeMetrics};
+use super::{apply_text_theme, DrawRustifyShadow, FontSlot};
+use crate::theme::ResolvedTheme;
 
 /// A chooser in its closed state, drawn by a region.
 #[derive(Script, ScriptHook, Widget)]
@@ -32,6 +35,8 @@ pub struct RustifyDropDown {
     draw_chevron: DrawColor,
     #[live]
     draw_text: DrawText,
+    #[live]
+    draw_shadow: DrawRustifyShadow,
     /// What the application holds, spelled the way it wants it read. The
     /// widget never edits it.
     #[rust]
@@ -43,6 +48,10 @@ pub struct RustifyDropDown {
     /// Face, border, text and chevron, from the scope's theme.
     #[rust]
     palette: Option<(u32, u32, u32, u32)>,
+    #[rust]
+    theme_palette: Option<[Vec4f; 4]>,
+    #[rust]
+    theme_metrics: Option<ThemeMetrics>,
     /// The user asked for the list. The application opens the DOM one.
     #[rust]
     open: Option<()>,
@@ -60,8 +69,29 @@ impl RustifyDropDown {
 
     pub fn set_palette(&mut self, cx: &mut Cx, face: u32, border: u32, text: u32, chevron: u32) {
         let next = Some((face, border, text, chevron));
-        if self.palette != next {
+        if self.palette != next || self.theme_palette.is_some() {
             self.palette = next;
+            self.theme_palette = None;
+            self.redraw(cx);
+        }
+    }
+
+    /// Applies the resolved input surface, font, spacing and medium radius.
+    pub fn apply_theme(&mut self, cx: &mut Cx, theme: &ResolvedTheme) {
+        let palette = [
+            token(theme, "input"),
+            token(theme, "border"),
+            token(theme, "foreground"),
+            token(theme, "muted-foreground"),
+        ];
+        let metrics = ThemeMetrics::from(theme);
+        let changed = self.theme_palette != Some(palette) || self.theme_metrics != Some(metrics);
+        let text_changed = apply_text_theme(&mut self.draw_text, cx, theme, FontSlot::Sans);
+        self.palette = None;
+        self.theme_palette = Some(palette);
+        self.theme_metrics = Some(metrics);
+        self.walk.height = Size::Fixed(metrics.spacing * 9.0);
+        if changed || text_changed {
             self.redraw(cx);
         }
     }
@@ -80,7 +110,11 @@ impl RustifyDropDown {
 
 impl Widget for RustifyDropDown {
     fn handle_event(&mut self, cx: &mut Cx, event: &Event, _scope: &mut Scope) {
-        if let Hit::FingerUp(fe) = event.hits(cx, self.draw_bg.area()) {
+        let hit = event.hits(cx, self.draw_bg.area());
+        if focus_hit(&hit, cx, self.draw_bg.area(), self.disabled) {
+            self.redraw(cx);
+        }
+        if let Hit::FingerUp(fe) = hit {
             if !fe.is_over || !fe.is_primary_hit() {
                 return;
             }
@@ -96,21 +130,47 @@ impl Widget for RustifyDropDown {
 
     fn draw_walk(&mut self, cx: &mut Cx2d, _scope: &mut Scope, walk: Walk) -> DrawStep {
         let pane = cx.walk_turtle(walk);
+        if let Some([face, border, text, chevron]) = self.theme_palette {
+            self.draw_bg.color = disabled_color(face, self.disabled);
+            self.draw_border.color = disabled_color(border, self.disabled);
+            self.draw_text.color = disabled_color(text, self.disabled);
+            self.draw_chevron.color = disabled_color(chevron, self.disabled);
+        }
         if let Some((face, border, text, chevron)) = self.palette {
             self.draw_bg.color = colour(face);
             self.draw_border.color = colour(border);
             self.draw_text.color = colour(text);
             self.draw_chevron.color = colour(chevron);
         }
-        self.draw_border.draw_abs(cx, pane);
-        self.draw_bg
-            .draw_abs(cx, super::toggles::inset_rect(pane, 1.0));
+        if let Some(metrics) = self.theme_metrics {
+            let focused = cx.has_key_focus(self.draw_bg.area()) && !self.disabled;
+            draw_focus(
+                &mut self.draw_shadow,
+                cx,
+                pane,
+                metrics.radii[1],
+                metrics,
+                focused,
+            );
+            set_box_radius(&mut self.draw_bg, cx, metrics.radii[1], 0.0);
+            set_box_radius(&mut self.draw_border, cx, metrics.radii[1], 1.0);
+            self.draw_bg.draw_abs(cx, pane);
+            self.draw_border.draw_abs(cx, pane);
+        } else {
+            self.draw_border.draw_abs(cx, pane);
+            self.draw_bg
+                .draw_abs(cx, super::toggles::inset_rect(pane, 1.0));
+        }
+        let padding = self
+            .theme_metrics
+            .map(|metrics| metrics.spacing * 3.0)
+            .unwrap_or(10.0);
         let chevron = pane.size.y * 0.6;
         self.draw_chevron.draw_abs(
             cx,
             Rect {
                 pos: dvec2(
-                    pane.pos.x + pane.size.x - chevron - 6.0,
+                    pane.pos.x + pane.size.x - chevron - padding,
                     pane.pos.y + (pane.size.y - chevron) * 0.5,
                 ),
                 size: dvec2(chevron, chevron),
@@ -118,7 +178,14 @@ impl Widget for RustifyDropDown {
         );
         self.draw_text.draw_abs(
             cx,
-            dvec2(pane.pos.x + 10.0, pane.pos.y + pane.size.y * 0.5),
+            dvec2(
+                pane.pos.x + padding,
+                self.theme_metrics
+                    .map(|metrics| {
+                        pane.pos.y + (pane.size.y - metrics.font_size * 1.4).max(0.0) * 0.5
+                    })
+                    .unwrap_or(pane.pos.y + pane.size.y * 0.5),
+            ),
             &self.label,
         );
         DrawStep::done()
@@ -147,6 +214,8 @@ pub struct RustifyTabBar {
     draw_tab: DrawColor,
     #[live]
     draw_text: DrawText,
+    #[live]
+    draw_shadow: DrawRustifyShadow,
     #[rust]
     tabs: Vec<String>,
     /// Which one the application holds as active. Out of range means none,
@@ -159,6 +228,10 @@ pub struct RustifyTabBar {
     /// Strip, active tab and text, from the scope's theme.
     #[rust]
     palette: Option<(u32, u32, u32)>,
+    #[rust]
+    theme_palette: Option<[Vec4f; 4]>,
+    #[rust]
+    theme_metrics: Option<ThemeMetrics>,
     /// Where each tab was last drawn, so a click can be turned into an index
     /// without a second copy of the layout.
     #[rust]
@@ -179,8 +252,29 @@ impl RustifyTabBar {
 
     pub fn set_palette(&mut self, cx: &mut Cx, strip: u32, active: u32, text: u32) {
         let next = Some((strip, active, text));
-        if self.palette != next {
+        if self.palette != next || self.theme_palette.is_some() {
             self.palette = next;
+            self.theme_palette = None;
+            self.redraw(cx);
+        }
+    }
+
+    /// Applies muted/active surfaces, text contrast and derived tab radii.
+    pub fn apply_theme(&mut self, cx: &mut Cx, theme: &ResolvedTheme) {
+        let palette = [
+            token(theme, "muted"),
+            token(theme, "background"),
+            token(theme, "muted-foreground"),
+            token(theme, "foreground"),
+        ];
+        let metrics = ThemeMetrics::from(theme);
+        let changed = self.theme_palette != Some(palette) || self.theme_metrics != Some(metrics);
+        let text_changed = apply_text_theme(&mut self.draw_text, cx, theme, FontSlot::Sans);
+        self.palette = None;
+        self.theme_palette = Some(palette);
+        self.theme_metrics = Some(metrics);
+        self.walk.height = Size::Fixed(metrics.spacing * 9.0);
+        if changed || text_changed {
             self.redraw(cx);
         }
     }
@@ -203,7 +297,11 @@ impl RustifyTabBar {
 
 impl Widget for RustifyTabBar {
     fn handle_event(&mut self, cx: &mut Cx, event: &Event, _scope: &mut Scope) {
-        if let Hit::FingerUp(fe) = event.hits(cx, self.draw_bg.area()) {
+        let hit = event.hits(cx, self.draw_bg.area());
+        if focus_hit(&hit, cx, self.draw_bg.area(), self.disabled) {
+            self.redraw(cx);
+        }
+        if let Hit::FingerUp(fe) = hit {
             if !fe.is_over || !fe.is_primary_hit() || self.disabled {
                 return;
             }
@@ -221,10 +319,19 @@ impl Widget for RustifyTabBar {
 
     fn draw_walk(&mut self, cx: &mut Cx2d, _scope: &mut Scope, walk: Walk) -> DrawStep {
         let pane = cx.walk_turtle(walk);
+        if let Some([strip, active, text, _]) = self.theme_palette {
+            self.draw_bg.color = disabled_color(strip, self.disabled);
+            self.draw_tab.color = disabled_color(active, self.disabled);
+            self.draw_text.color = disabled_color(text, self.disabled);
+        }
         if let Some((strip, active, text)) = self.palette {
             self.draw_bg.color = colour(strip);
             self.draw_tab.color = colour(active);
             self.draw_text.color = colour(text);
+        }
+        if let Some(metrics) = self.theme_metrics {
+            set_box_radius(&mut self.draw_bg, cx, metrics.radii[2], 0.0);
+            set_box_radius(&mut self.draw_tab, cx, metrics.radii[1], 0.0);
         }
         self.draw_bg.draw_abs(cx, pane);
         self.rects.clear();
@@ -241,6 +348,17 @@ impl Widget for RustifyTabBar {
             };
             self.rects.push(rect);
             if index == self.active {
+                if let Some(metrics) = self.theme_metrics {
+                    let focused = cx.has_key_focus(self.draw_bg.area()) && !self.disabled;
+                    draw_focus(
+                        &mut self.draw_shadow,
+                        cx,
+                        rect,
+                        metrics.radii[1],
+                        metrics,
+                        focused,
+                    );
+                }
                 self.draw_tab.draw_abs(cx, rect);
             }
         }
@@ -248,9 +366,30 @@ impl Widget for RustifyTabBar {
         // carries the strip and one carries the words.
         for (index, label) in self.tabs.iter().enumerate() {
             let rect = self.rects[index];
+            if let Some([_, _, muted, foreground]) = self.theme_palette {
+                self.draw_text.color = disabled_color(
+                    if index == self.active {
+                        foreground
+                    } else {
+                        muted
+                    },
+                    self.disabled,
+                );
+            }
             self.draw_text.draw_abs(
                 cx,
-                dvec2(rect.pos.x + 8.0, rect.pos.y + rect.size.y * 0.5),
+                dvec2(
+                    rect.pos.x
+                        + self
+                            .theme_metrics
+                            .map(|metrics| metrics.spacing * 2.5)
+                            .unwrap_or(8.0),
+                    self.theme_metrics
+                        .map(|metrics| {
+                            rect.pos.y + (rect.size.y - metrics.font_size * 1.4).max(0.0) * 0.5
+                        })
+                        .unwrap_or(rect.pos.y + rect.size.y * 0.5),
+                ),
                 label,
             );
         }

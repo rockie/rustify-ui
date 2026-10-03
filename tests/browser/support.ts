@@ -203,6 +203,16 @@ export async function settle(locator: Locator, attempts = 20): Promise<Pixels> {
 
 declare global {
     interface Window {
+        __theme_studio: {
+            reset(): Promise<void>;
+            mount(): number;
+            dispose(): boolean;
+            edit(token: string, value: string): boolean;
+            snapshot(): any;
+            diagnostics(): any;
+            stats(): any;
+            environment(): void;
+        };
         __property_workbench: {
             reset(): Promise<void>;
             mount(): number;
@@ -342,6 +352,8 @@ declare global {
             };
         };
         __component_catalog: {
+            mount_theme_fixtures(): void;
+            dispose_theme_fixtures(): void;
             reset(): Promise<void>;
             mount(): number;
             dispose(): boolean;
@@ -586,6 +598,7 @@ const HANDLES: Record<string, string> = {
     "fusion-basic": "__fusion_basic",
     "property-workbench": "__property_workbench",
     "component-catalog": "__component_catalog",
+    "theme-studio": "__theme_studio",
     "data-workbench": "__data_workbench",
 };
 

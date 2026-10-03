@@ -1,0 +1,26 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+    Checking rustify-ui v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui)
+    Checking rustify-components v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-components)
+    Checking vellum v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/examples/vellum)
+    Checking fusion-basic v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/examples/fusion-basic)
+    Checking theme-studio v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/examples/theme-studio)
+    Checking property-workbench v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/examples/property-workbench)
+    Checking data-workbench v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/examples/data-workbench)
+    Checking xtask v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/xtask)
+    Checking component-catalog v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/examples/component-catalog)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 4.91s
+warning: the following packages contain code that will be rejected by a future version of Rust: proc-macro-error2 v2.0.1
+note: to see what the problems were, use the option `--future-incompat-report`, or run `cargo report future-incompatibilities --id 1`
+mbx[cache]: 0 hits, 2 misses, 20 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: 10270 compilations, and the box has forgotten none of them.
+
+[theme-M6 validation]
+command: mise exec -- mbx clippy --workspace --all-targets -- -D warnings
+exit_code: 0
+observed: {}

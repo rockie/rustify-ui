@@ -1,0 +1,6 @@
+css: no drift (28725 bytes)
+
+[theme-M6 validation]
+command: mise exec -- mbx xtask css --check
+exit_code: 0
+observed: {"stylesheet_bytes": 28725, "drift": false}

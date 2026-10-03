@@ -44,11 +44,16 @@ impl FontFamily {
     }
 
     pub fn get_or_shape(&self, text: Substr) -> Rc<ShapedText> {
+        self.get_or_shape_with_spacing(text, 0.0)
+    }
+
+    /// Shape with letter spacing in ems, preserving the legacy zero-spacing path.
+    pub fn get_or_shape_with_spacing(&self, text: Substr, letter_spacing: f64) -> Rc<ShapedText> {
         self.shaper.borrow_mut().get_or_shape(ShapeParams {
             text,
             fonts: self.fonts.clone(),
             direction: Direction::default(),
-            letter_spacing: Ems(0.0),
+            letter_spacing: Ems(letter_spacing as f32),
             word_spacing: Ems(0.0),
             features: Rc::new(Vec::new()),
         })

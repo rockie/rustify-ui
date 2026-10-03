@@ -1,0 +1,49 @@
+{
+  "baseline_catalog": {
+    "wasm": 13488106,
+    "js": 213290,
+    "css": 27902,
+    "fonts": 51187844,
+    "images": 20701,
+    "data": 8987,
+    "total": 64946830
+  },
+  "latest_catalog": {
+    "wasm": 13906734,
+    "js": 216174,
+    "css": 32083,
+    "fonts": 51732356,
+    "images": 20701,
+    "data": 14216,
+    "total": 65922264
+  },
+  "theme_studio": {
+    "wasm": 28644856,
+    "js": 224431,
+    "css": 55735,
+    "fonts": 51732356,
+    "images": 20701,
+    "data": 295270,
+    "total": 80973349
+  },
+  "theme_build_id": "e1e22686fa8f8f27",
+  "catalog_build_id": "c621ec5c0db15337",
+  "theme_vs_baseline_delta": {
+    "wasm": 15156750,
+    "js": 11141,
+    "css": 27833,
+    "fonts": 544512,
+    "images": 0,
+    "data": 286283,
+    "total": 16026519
+  },
+  "catalog_vs_baseline_delta": {
+    "wasm": 418628,
+    "js": 2884,
+    "css": 4181,
+    "fonts": 544512,
+    "images": 0,
+    "data": 5229,
+    "total": 975434
+  }
+}

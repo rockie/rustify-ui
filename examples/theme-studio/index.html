@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Rustify Theme Studio</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="./runtime.css">
+  <link rel="stylesheet" href="./theme-fonts.css">
+  <link rel="stylesheet" href="./tailwind.css">
+  <link rel="stylesheet" href="./app.css">
+  <link rel="modulepreload" href="./loader.js">
+  <script type="module" src="./app.js"></script>
+</head>
+<body>
+  <main class="studio-layout">
+    <aside id="studio-editor" data-testid="studio-editor"></aside>
+    <div class="studio-previews">
+      <div id="studio-preview" data-testid="studio-preview"></div>
+      <details class="studio-compare-details" data-testid="compare-scope"><summary id="compare-summary">Compare an independent scope</summary>
+        <div id="studio-compare" data-testid="studio-compare"></div>
+      </details>
+    </div>
+  </main>
+  <p id="status" data-testid="status" role="status">Starting Theme Studio…</p>
+  <div class="host-probe" data-testid="host-probe"><button type="button">Host control</button></div>
+</body>
+</html>

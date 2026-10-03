@@ -33,19 +33,24 @@
 
 ### 恢复快照
 
-- 最近更新：尚未开始
-- 当前进度：0/6 个里程碑完成
-- 当前状态：尚未开始
-- 最近完成：无
-- 下一步：M1 · 固化主题格式、参考数据和兼容基线，通过 V1
-- 当前阻塞：无产品范围待决；本机编译及浏览器环境尚未完成体检，执行 M1 时核对
-- 代码基线：`5bf63423b1e1474df2cbd2b7780c0295e0553458`
+- 最近更新：2026-10-04 03:28 AEDT（UTC+11）
+- 当前进度：6/6 个里程碑完成
+- 当前状态：M1–M6 已完成；F-01/F-02 与追加发现的独立导出验收接线遗漏已修复，相关浏览器、文本、性能及根／子路径接入重验通过
+- 最近完成：M6 · 全站终验与 SDK 交付
+- 下一步：本次评审问题已关闭；公开部署或在线能力按后续明确范围另行启动
+- 当前阻塞：无；完整证据与验证边界见 M6 记录
+- 代码基线：`dirty@7f5e5042cb647ab474f0ef6c833ea568c75b53d4`；本次修复涉及 Makepad shaping、theme-studio 预览滚动与独立导出验收接线，当前指纹见 M6 记录
 
 ### 完成记录
 
 | Milestone | 状态 | 更新时间 | 简要记录 | 实现与验收记录 |
 | --- | --- | --- | --- | --- |
-| — | — | — | 尚未开始任何里程碑 | — |
+| M1 | 已完成 | 2026-10-03 21:05 AEST（UTC+10） | 完整文档/解析与 44 个内置主题两模式通过，旧浏览器主题与尺寸/阴影/性能基线已固化。 | [M1 记录](../validation/theme-studio/M1.md) |
+| M2 | 已完成 | 2026-10-03 21:57 AEST（UTC+10） | 主题作用域、完整 CSS 映射与浮层同步通过；新站 6 项浏览器及旧/新同产物兼容、旧默认主题回归通过。 | [M2 记录](../validation/theme-studio/M2.md) |
+| M3 | 已完成 | 2026-10-04 03:28 AEDT（UTC+11） | F-01 非零字距可选连字语义修复；36 项真实文本单测及同字体 DOM/GPU 宽度、换行对照通过。 | [M3 记录](../validation/theme-studio/M3.md) |
+| M4 | 已完成 | 2026-10-04 03:28 AEDT（UTC+11） | F-02 分离内容与画布高度；64px spacing 的桌面/窄屏滚动、dropdown/tabs 操作、Inspector 与缩小后恢复通过。 | [M4 记录](../validation/theme-studio/M4.md) |
+| M5 | 已完成 | 2026-10-04 03:28 AEDT（UTC+11） | 独立导出验收工具补齐 state 接线；45 项 host 及根/子路径各 9 项 CSS/Rust 接入通过，交换与存储重验通过。 | [M5 记录](../validation/theme-studio/M5.md) |
+| M6 | 已完成 | 2026-10-04 03:28 AEDT（UTC+11） | 当前完整站点 65 项、子路径 2 项、588 项 workspace tests 及硬件 GPU 性能通过；旧证据保留，本轮结果单独落盘。 | [M6 记录](../validation/theme-studio/M6.md) |
 
 本仓 `CLAUDE.md` 将里程碑证据归入 `docs/validation/`：本计划的独立记录落在 `docs/validation/theme-studio/M<n>.md`，链接相对本计划填写，例如 `[M1 记录](../validation/theme-studio/M1.md)`。首次产生实施事实时再创建记录文件。
 
@@ -182,7 +187,7 @@ flowchart LR
 | 基础颜色 | background/foreground；card/card-foreground；popover/popover-foreground；primary、secondary、muted、accent、destructive 及各自 foreground；border/input/ring |
 | 数据与侧栏 | chart-1…5；sidebar、sidebar-foreground、sidebar-primary、sidebar-primary-foreground、sidebar-accent、sidebar-accent-foreground、sidebar-border、sidebar-ring |
 | Rustify 扩展 | success/warning，沿用现有语义；body font-size、layout-gap、reduce-motion 为 Rustify 扩展，CSS 导出保留命名空间 |
-| 排版 | font-sans/font-serif/font-mono 字体栈；letter-spacing，单位 em；font-size 以 CSS px 表示 |
+| 排版 | font-sans/font-serif/font-mono 字体栈；letter-spacing 运行态统一为 em，作者输入兼容参考预设的 px/rem/normal；font-size 以 CSS px 表示 |
 | 几何 | radius 支持 px/rem；spacing 表示 Tailwind utility 基础单位，独立于 legacy layout gap |
 | 阴影 | shadow-color/opacity/blur/spread/offset-x/offset-y；派生 2xs、xs、sm、默认、md、lg、xl、2xl 阴影层列表 |
 
@@ -229,7 +234,7 @@ utility 由构建阶段生成；运行时只改变量、模式与 GPU props。�
 - sdk.css 补齐 token 和 fallback，但不改变旧间距与圆角档位；新增 card/popover foreground 等变量的默认值必须符合旧画面。
 - theme-v4.css 是 **opt-in 扩展**，在 sdk.css 后导入。将 utility 的 `--spacing` 内联映射到 `var(--rustify-unit, 0.25rem)`，独立运行变量仅在 scope 内设置；legacy `--spacing` 仍代表 scope gap。新 token 的 layout-gap 映射到该 legacy gap，不能用 utility unit 覆盖它。
 - 新入口将有效 radius 解析为像素 r，派生 `--rustify-radius-sm/md/lg/xl`，分别为 `max(0px, r−4px)`、`max(0px, r−2px)`、r、r+4px。theme-v4.css 的 inline 映射为 `--radius-sm: var(--rustify-radius-sm, calc(var(--radius) - 2px))`、`--radius-md: var(--rustify-radius-md, var(--radius))`、`--radius-lg: var(--rustify-radius-lg, calc(var(--radius) + 2px))`；xl 同样读取独立变量，fallback 保留固定 CLI 原有定义，不套用新公式。旧 scope 不写派生变量，即使页面导入扩展，sm/md/lg 仍为 r−2/r/r+2；旧默认 r=6px 时为 4/6/8px，新 scope 同 r 时为 2/4/6/10px。GPU 对应样本使用同一派生函数，不能只收一个原始 radius。
-- 字体和阴影 runtime 变量使用独立 `--rustify-*` 名称，映射只放在 theme-v4.css，sdk.css 不把旧 utility 改为新默认。每个字体/阴影档位读取相应运行变量，缺值时 fallback 是固定 4.1.13 原有表达式，不引用映射变量自身。例如 shadow-lg 读取 `--rustify-shadow-lg`，缺值时保留原两层阴影及 shadow-color 覆盖语义；新 ThemeScope 明确写 none 才选择无阴影。映射仍复用 Tailwind 的 shadow/ring 合成，保留 shadow-none 与焦点 ring 行为；语义颜色继续保留标准名字方便交换。
+- 字体和阴影 runtime 变量使用独立 `--rustify-*` 名称，映射只放在 theme-v4.css，sdk.css 不把旧 utility 改为新默认。每个字体/阴影档位读取相应运行变量，缺值时 fallback 是固定 4.1.13 原有表达式，不引用映射变量自身。例如 shadow-lg 读取 `--rustify-shadow-lg`，缺值时保留原两层阴影及 shadow-color 覆盖语义；新 ThemeScope 用透明零尺寸层 `0 0 #0000` 表达无阴影：Tailwind 的多层 shadow/ring 列表不能混入 `none` 关键字，否则整条 box-shadow 声明失效。映射仍复用 Tailwind 的 shadow/ring 合成，保留 shadow-none 与焦点 ring 行为；语义颜色继续保留标准名字方便交换。
 - ThemeScope 通过 CSSOM 写入完整派生变量；ThemeBoundary 在局部 radius/阴影等依赖字段被覆盖时，从外层快照加 patch 重新解析并写相应派生值，外层变化时同步更新，不能继承一份与局部原值不同步的旧派生值。解除 patch 时移除相应局部派生变量，恢复外层继承。Layer 将创建位置的有效快照（含派生值）写到浮层节点并响应更新，不能只写原始 radius；卸载或同一 root 更换主题拥有者时清理该拥有者写入的运行变量。具体值不放入全局或所有 legacy scope 的默认规则。
 - preflight 继续由应用决定，新站不引入全局 reset。主题具体值不得写入 documentElement、body 或 SDK 外宿主；theme mapping 允许生成顶层 Tailwind 配置，具体运行值只归 scope。保持一个页面只用一份统一编译的 Tailwind CSS，不能并挂两份同名 utility 产物（现有 docs/architecture.md Styles 契约）。
 - CSS export 的「标准 Tailwind v4」profile 才使用 :root/.dark；「Rustify」profile 使用 scope 选择器和上述命名映射，且清楚提示动态应用应加载 JSON 进入 ThemeScope。不能在运行态内联值仍覆盖 CSS 时声称单贴 CSS 即可改主题。

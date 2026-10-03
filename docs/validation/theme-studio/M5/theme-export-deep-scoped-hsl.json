@@ -1,0 +1,38 @@
+[
+  {
+    "prefix": "fixture-a-light",
+    "primary": [
+      255,
+      0,
+      72,
+      204
+    ]
+  },
+  {
+    "prefix": "fixture-a-dark",
+    "primary": [
+      255,
+      180,
+      190,
+      204
+    ]
+  },
+  {
+    "prefix": "fixture-b-light",
+    "primary": [
+      20,
+      138,
+      106,
+      255
+    ]
+  },
+  {
+    "prefix": "fixture-b-dark",
+    "primary": [
+      134,
+      210,
+      189,
+      255
+    ]
+  }
+]

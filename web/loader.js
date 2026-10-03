@@ -232,6 +232,8 @@ export function release_container(container) {
     }
     container.replaceChildren();
     container.removeAttribute("data-rustify-scope");
+    container.removeAttribute("data-rustify-theme-owner");
+    container.removeAttribute("data-rustify-theme-runtime");
     container.removeAttribute("tabindex");
 }
 

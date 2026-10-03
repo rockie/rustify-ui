@@ -1,0 +1,98 @@
+
+Running 3 tests using 1 worker
+
+(node:75716) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 [theme-studio] › tests/browser/theme-review.spec.ts:11:5 › tracking of optional ligatures matches same-font DOM widths (5.6s)
+(node:75731) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  2 [theme-studio] › tests/browser/theme-review.spec.ts:38:9 › large spacing keeps GPU dropdown and tabs scrollable at 1440px (5.5s)
+(node:75836) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  3 [theme-studio] › tests/browser/theme-review.spec.ts:38:9 › large spacing keeps GPU dropdown and tabs scrollable at 390px (5.5s)
+
+
+  1) [theme-studio] › tests/browser/theme-review.spec.ts:11:5 › tracking of optional ligatures matches same-font DOM widths 
+
+    Error: [{"spacing":0,"gpu":106.0350112915039,"dom":106.046875},{"spacing":0.2,"gpu":160.0349884033203,"dom":166.28125}]
+
+    expect(received).toBeLessThan(expected)
+
+    Expected: < 0.1
+    Received:   6.2462615966796875
+
+      31 |         }, { spacing, size: font.font_size_px });
+      32 |         widths.push({ spacing, gpu: font.layout_size_px[0], dom });
+    > 33 |         expect(Math.abs(dom - font.layout_size_px[0]), JSON.stringify(widths)).toBeLessThan(0.1);
+         |                                                                                ^
+      34 |     }
+      35 | });
+      36 |
+        at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser/theme-review.spec.ts:33:80
+
+    Error Context: ../../../../../tmp/rustify-theme-apply-review/browser-red/theme-review-tracking-of-o-50407-atches-same-font-DOM-widths-theme-studio/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../../tmp/rustify-theme-apply-review/browser-red/theme-review-tracking-of-o-50407-atches-same-font-DOM-widths-theme-studio/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../../../../tmp/rustify-theme-apply-review/browser-red/theme-review-tracking-of-o-50407-atches-same-font-DOM-widths-theme-studio/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [theme-studio] › tests/browser/theme-review.spec.ts:38:9 › large spacing keeps GPU dropdown and tabs scrollable at 1440px 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      49 |         const board = page.getByTestId("gpu-board");
+      50 |         const canvas = page.getByTestId("theme-gpu");
+    > 51 |         expect(await board.evaluate(node => node.scrollHeight > node.clientHeight)).toBe(true);
+         |                                                                                     ^
+      52 |         await board.evaluate(node => { node.scrollTop = node.scrollHeight; });
+      53 |         await expect.poll(async () => {
+      54 |             const s = await snapshot(page);
+        at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser/theme-review.spec.ts:51:85
+
+    Error Context: ../../../../../tmp/rustify-theme-apply-review/browser-red/theme-review-large-spacing-1dc28-d-tabs-scrollable-at-1440px-theme-studio/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../../tmp/rustify-theme-apply-review/browser-red/theme-review-large-spacing-1dc28-d-tabs-scrollable-at-1440px-theme-studio/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../../../../tmp/rustify-theme-apply-review/browser-red/theme-review-large-spacing-1dc28-d-tabs-scrollable-at-1440px-theme-studio/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [theme-studio] › tests/browser/theme-review.spec.ts:38:9 › large spacing keeps GPU dropdown and tabs scrollable at 390px 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      49 |         const board = page.getByTestId("gpu-board");
+      50 |         const canvas = page.getByTestId("theme-gpu");
+    > 51 |         expect(await board.evaluate(node => node.scrollHeight > node.clientHeight)).toBe(true);
+         |                                                                                     ^
+      52 |         await board.evaluate(node => { node.scrollTop = node.scrollHeight; });
+      53 |         await expect.poll(async () => {
+      54 |             const s = await snapshot(page);
+        at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser/theme-review.spec.ts:51:85
+
+    Error Context: ../../../../../tmp/rustify-theme-apply-review/browser-red/theme-review-large-spacing-2695b-nd-tabs-scrollable-at-390px-theme-studio/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../../tmp/rustify-theme-apply-review/browser-red/theme-review-large-spacing-2695b-nd-tabs-scrollable-at-390px-theme-studio/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../../../../tmp/rustify-theme-apply-review/browser-red/theme-review-large-spacing-2695b-nd-tabs-scrollable-at-390px-theme-studio/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3 failed
+    [theme-studio] › tests/browser/theme-review.spec.ts:11:5 › tracking of optional ligatures matches same-font DOM widths 
+    [theme-studio] › tests/browser/theme-review.spec.ts:38:9 › large spacing keeps GPU dropdown and tabs scrollable at 1440px 
+    [theme-studio] › tests/browser/theme-review.spec.ts:38:9 › large spacing keeps GPU dropdown and tabs scrollable at 390px 

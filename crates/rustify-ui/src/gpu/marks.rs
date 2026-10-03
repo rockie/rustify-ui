@@ -4,6 +4,8 @@ use crate::makepad_widgets::widget::*;
 use crate::makepad_widgets::*;
 
 use super::colour;
+use super::theme::token;
+use crate::theme::ResolvedTheme;
 
 /// The drawings a region can put beside its own text.
 ///
@@ -65,6 +67,10 @@ pub struct RustifyIcon {
     glyph: Glyph,
     #[rust]
     ink: Option<u32>,
+    #[rust]
+    theme_ink: Option<Vec4f>,
+    #[rust]
+    theme_size: Option<f64>,
 }
 
 impl RustifyIcon {
@@ -76,8 +82,24 @@ impl RustifyIcon {
     }
 
     pub fn set_ink(&mut self, cx: &mut Cx, ink: u32) {
-        if self.ink != Some(ink) {
+        if self.ink != Some(ink) || self.theme_ink.is_some() {
             self.ink = Some(ink);
+            self.theme_ink = None;
+            self.redraw(cx);
+        }
+    }
+
+    /// Applies foreground RGBA and the same spacing-based icon size as the DOM.
+    pub fn apply_theme(&mut self, cx: &mut Cx, theme: &ResolvedTheme) {
+        let ink = token(theme, "foreground");
+        let size = theme.spacing_px * 5.0;
+        let changed = self.theme_ink != Some(ink) || self.theme_size != Some(size);
+        self.ink = None;
+        self.theme_ink = Some(ink);
+        self.theme_size = Some(size);
+        self.walk.width = Size::Fixed(size);
+        self.walk.height = Size::Fixed(size);
+        if changed {
             self.redraw(cx);
         }
     }
@@ -117,7 +139,11 @@ impl Widget for RustifyIcon {
     fn draw_walk(&mut self, cx: &mut Cx2d, _scope: &mut Scope, walk: Walk) -> DrawStep {
         let pane = cx.walk_turtle(walk);
         let ink = self.ink;
+        let theme_ink = self.theme_ink;
         let drawing = self.drawing();
+        if let Some(ink) = theme_ink {
+            drawing.color = ink;
+        }
         if let Some(ink) = ink {
             drawing.color = colour(ink);
         }
@@ -158,6 +184,12 @@ pub struct RustifySpinner {
     #[rust]
     ink: Option<u32>,
     #[rust]
+    theme_ink: Option<Vec4f>,
+    #[rust]
+    theme_size: Option<f64>,
+    #[rust]
+    theme_still: bool,
+    #[rust]
     next_frame: Option<NextFrame>,
 }
 
@@ -171,8 +203,27 @@ impl RustifySpinner {
     }
 
     pub fn set_ink(&mut self, cx: &mut Cx, ink: u32) {
-        if self.ink != Some(ink) {
+        if self.ink != Some(ink) || self.theme_ink.is_some() {
             self.ink = Some(ink);
+            self.theme_ink = None;
+            self.redraw(cx);
+        }
+    }
+
+    /// Applies primary RGBA and motion preference without replacing application state.
+    pub fn apply_theme(&mut self, cx: &mut Cx, theme: &ResolvedTheme) {
+        let ink = token(theme, "primary");
+        let size = theme.spacing_px * 5.0;
+        let changed = self.theme_ink != Some(ink)
+            || self.theme_size != Some(size)
+            || self.theme_still != theme.reduce_motion;
+        self.ink = None;
+        self.theme_ink = Some(ink);
+        self.theme_size = Some(size);
+        self.theme_still = theme.reduce_motion;
+        self.walk.width = Size::Fixed(size);
+        self.walk.height = Size::Fixed(size);
+        if changed {
             self.redraw(cx);
         }
     }
@@ -184,7 +235,7 @@ impl RustifySpinner {
     }
 
     fn turning(&self) -> bool {
-        self.spinning && !self.still
+        self.spinning && !self.still && !self.theme_still
     }
 }
 
@@ -203,6 +254,9 @@ impl Widget for RustifySpinner {
 
     fn draw_walk(&mut self, cx: &mut Cx2d, _scope: &mut Scope, walk: Walk) -> DrawStep {
         let pane = cx.walk_turtle(walk);
+        if let Some(ink) = self.theme_ink {
+            self.draw_bg.color = ink;
+        }
         if let Some(ink) = self.ink {
             self.draw_bg.color = colour(ink);
         }

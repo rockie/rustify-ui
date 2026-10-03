@@ -1664,6 +1664,8 @@ dependencies = [
  "leptos",
  "rustify-makepad",
  "send_wrapper",
+ "serde",
+ "serde_json",
  "wasm-bindgen-futures",
  "web-sys",
 ]
@@ -1974,6 +1976,21 @@ dependencies = [
  "send_wrapper",
  "slotmap",
  "throw_error",
+ "wasm-bindgen",
+ "web-sys",
+]
+
+[[package]]
+name = "theme-studio"
+version = "0.1.0"
+dependencies = [
+ "js-sys",
+ "leptos",
+ "rustify-components",
+ "rustify-makepad",
+ "rustify-ui",
+ "serde",
+ "serde_json",
  "wasm-bindgen",
  "web-sys",
 ]

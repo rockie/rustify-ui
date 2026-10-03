@@ -14,12 +14,18 @@ const catalogPort = 4176;
 const deepLinkPort = 4177;
 // The fourth example: a hundred thousand rows and ten thousand objects.
 const dataPort = 4178;
+const themePort = 4181;
+const themeDeepPort = 4182;
+const themeExportPort = 4183;
+const themeExportDeepPort = 4184;
+const themeExportBase = "/tools/theme-export/";
+const themeExportServer = process.env.RUSTIFY_THEME_EXPORT_SERVER || "tests/theme-export/target/debug/theme-export-serve";
 const deploymentBase = "/tools/demo/";
 // What runs `serve`. CI's test jobs are handed the xtask binary their build
 // job compiled rather than compile it again for every job.
 const xtask = process.env.RUSTIFY_XTASK || "mbx xtask";
 
-type Server = "fusion" | "workbench" | "catalog" | "data" | "deep" | "deployment";
+type Server = "fusion" | "workbench" | "catalog" | "data" | "deep" | "deployment" | "theme" | "theme-deep" | "theme-export" | "theme-export-deep";
 
 // The servers each project talks to. A run that names its projects starts only
 // these: six servers for a one-project run is most of its start-up. The
@@ -29,6 +35,10 @@ const serversOf: Record<string, Server[]> = {
     "fusion-basic": ["fusion"],
     "property-workbench": ["workbench"],
     "component-catalog": ["catalog"],
+    "theme-studio": ["theme"],
+    "theme-studio-deep": ["theme-deep"],
+    "theme-export": ["theme-export"],
+    "theme-export-deep": ["theme-export-deep"],
     "data-workbench": TIER === "regression" ? ["data"] : ["data", "fusion"],
     budget: ["workbench"],
     "budget-minimal": ["fusion"],
@@ -110,8 +120,29 @@ export default defineConfig({
         },
         {
             name: "component-catalog",
-            testMatch: ["p3-restart.spec.ts", "p2-catalog.spec.ts", "p2-theme.spec.ts", "p2-semantics.spec.ts", "p2-i18n.spec.ts", "p2-reflow.spec.ts", "p2-a11y.spec.ts", "p3-policy.spec.ts", "catalog-inputs.spec.ts"],
+            testMatch: ["p3-restart.spec.ts", "p2-catalog.spec.ts", "p2-theme.spec.ts", "p2-semantics.spec.ts", "p2-i18n.spec.ts", "p2-reflow.spec.ts", "p2-a11y.spec.ts", "p3-policy.spec.ts", "catalog-inputs.spec.ts", "theme-compat.spec.ts"],
             use: { baseURL: `http://127.0.0.1:${catalogPort}/` },
+        },
+        {
+            name: "theme-studio",
+            testMatch: ["theme-*.spec.ts"],
+            testIgnore: ["theme-compat.spec.ts", "theme-export-runtime.spec.ts"],
+            use: { baseURL: `http://127.0.0.1:${themePort}/` },
+        },
+        {
+            name: "theme-studio-deep",
+            testMatch: ["theme-deployment.spec.ts"],
+            use: { baseURL: `http://127.0.0.1:${themeDeepPort}${deploymentBase}` },
+        },
+        {
+            name: "theme-export",
+            testMatch: ["theme-export-runtime.spec.ts"],
+            use: { baseURL: `http://127.0.0.1:${themeExportPort}/` },
+        },
+        {
+            name: "theme-export-deep",
+            testMatch: ["theme-export-runtime.spec.ts"],
+            use: { baseURL: `http://127.0.0.1:${themeExportDeepPort}${themeExportBase}` },
         },
         {
             name: "data-workbench",
@@ -175,6 +206,10 @@ export default defineConfig({
         ["fusion", `${xtask} serve --example fusion-basic --release --port ${fusionPort}`, `http://127.0.0.1:${fusionPort}/`],
         ["workbench", `${xtask} serve --example property-workbench --release --port ${workbenchPort} --spa`, `http://127.0.0.1:${workbenchPort}/`],
         ["catalog", `${xtask} serve --example component-catalog --release --port ${catalogPort}`, `http://127.0.0.1:${catalogPort}/`],
+        ["theme", `${xtask} serve --example theme-studio --release --port ${themePort}`, `http://127.0.0.1:${themePort}/`],
+        ["theme-deep", `${xtask} serve --example theme-studio --release --port ${themeDeepPort} --base ${deploymentBase} --spa`, `http://127.0.0.1:${themeDeepPort}${deploymentBase}`],
+        ["theme-export", `${themeExportServer} --root tests/theme-export/target/site-root --base / --port ${themeExportPort}`, `http://127.0.0.1:${themeExportPort}/`],
+        ["theme-export-deep", `${themeExportServer} --root tests/theme-export/target/site-subpath --base ${themeExportBase} --port ${themeExportDeepPort}`, `http://127.0.0.1:${themeExportDeepPort}${themeExportBase}`],
         ["data", `${xtask} serve --example data-workbench --release --port ${dataPort} --spa`, `http://127.0.0.1:${dataPort}/`],
         ["deep", `${xtask} serve --example property-workbench --release --port ${deepLinkPort} --base ${deploymentBase} --spa`, `http://127.0.0.1:${deepLinkPort}${deploymentBase}`],
         ["deployment", `${xtask} serve --example fusion-basic --release --port ${deploymentPort} --base ${deploymentBase} --spa`, `http://127.0.0.1:${deploymentPort}${deploymentBase}`],

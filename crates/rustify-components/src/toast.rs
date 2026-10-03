@@ -12,7 +12,7 @@ use leptos::prelude::*;
 use rustify_ui::{use_locale, use_toasts, Message, ToastRegion, ToastTone};
 
 const REGION: &str = "fixed bottom-4 end-4 z-50 flex max-w-sm flex-col items-end gap-2";
-const CARD: &str = "flex w-full items-start gap-3 rounded-md border border-border bg-popover px-4 py-3 text-sm text-foreground shadow-lg";
+const CARD: &str = "flex w-full items-start gap-3 rounded-md border border-border bg-popover px-4 py-3 text-sm text-popover-foreground shadow-lg";
 const DISMISS: &str = "shrink-0 rounded-sm p-0.5 text-muted-foreground transition-colors cursor-pointer outline-none hover:bg-muted focus-visible:ring-ring/50 focus-visible:ring-[3px]";
 
 /// The colour a tone adds. A tone is how a message looks and nothing else:

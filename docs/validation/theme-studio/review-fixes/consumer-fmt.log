@@ -1,0 +1,48 @@
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/tests/theme-export/runtime/src/../../generated/theme.rs:1:
+ use leptos::prelude::*;
+[31m-use rustify_ui::{mount, AppHandle, MountConfig, ResolvedTheme, ThemeScope};
+(B[m use rustify_ui::theme::{font_context, import_json, resolve, ThemeError, ThemeMode};
+[32m+use rustify_ui::{mount, AppHandle, MountConfig, ResolvedTheme, ThemeScope};
+(B[m use std::sync::Arc;
+ 
+ // Put the downloaded theme.json beside this source file.
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/tests/theme-export/runtime/src/../../generated/theme.rs:14:
+ 
+ // A GPU region receives this same Arc<ResolvedTheme> through its typed props.
+ // Retain the returned AppHandle for as long as the preview is mounted.
+[31m-pub fn mount_exported_theme(
+(B[m[31m-    container: leptos::web_sys::HtmlElement,
+(B[m[31m-) -> Result<AppHandle, String> {
+(B[m[32m+pub fn mount_exported_theme(container: leptos::web_sys::HtmlElement) -> Result<AppHandle, String> {
+(B[m     let initial = load_exported_theme(ThemeMode::Light).map_err(|error| error.to_string())?;
+[31m-    mount(container, MountConfig {
+(B[m[31m-        scope: "theme-preview".into(), url_owner: false, base: "/".into(),
+(B[m[31m-    }, move || {
+(B[m[31m-        let theme = RwSignal::new(initial);
+(B[m[31m-        view! {
+(B[m[31m-            <ThemeScope resolved=theme />
+(B[m[31m-            <main class="bg-background text-foreground font-sans p-4 rounded-lg">
+(B[m[31m-                "Your themed application"
+(B[m[31m-            </main>
+(B[m[31m-        }
+(B[m[31m-    }).map_err(|error| error.to_string())
+(B[m[32m+    mount(
+(B[m[32m+        container,
+(B[m[32m+        MountConfig {
+(B[m[32m+            scope: "theme-preview".into(),
+(B[m[32m+            url_owner: false,
+(B[m[32m+            base: "/".into(),
+(B[m[32m+        },
+(B[m[32m+        move || {
+(B[m[32m+            let theme = RwSignal::new(initial);
+(B[m[32m+            view! {
+(B[m[32m+                <ThemeScope resolved=theme />
+(B[m[32m+                <main class="bg-background text-foreground font-sans p-4 rounded-lg">
+(B[m[32m+                    "Your themed application"
+(B[m[32m+                </main>
+(B[m[32m+            }
+(B[m[32m+        },
+(B[m[32m+    )
+(B[m[32m+    .map_err(|error| error.to_string())
+(B[m }
+ 

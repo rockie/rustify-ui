@@ -1,0 +1,39 @@
+.ce-editor {min-width:0;color:#1d2939;}
+.ce-editor h3 {margin:0;font-size:12px;line-height:1.4;font-weight:600;}
+.ce-search {display:flex;align-items:center;gap:6px;margin:12px 0;}
+.ce-field {height:36px;min-width:0;width:100%;border:1px solid #d0d5dd;border-radius:6px;background:#fff;padding:7px 9px;color:#1d2939;font:inherit;font-size:12px;}
+.ce-field::placeholder {color:#667085;}
+.ce-field:focus-visible,.ce-token:focus-visible,.ce-token-reset:focus-visible,.ce-plane:focus-visible,.ce-range:focus-visible {outline:3px solid #2563eb66;outline-offset:2px;}
+.ce-field[aria-invalid="true"] {border-color:#b42318;}
+.ce-picker {display:grid;gap:8px;padding:0 0 14px;border-bottom:1px solid #eaecf0;}
+.ce-picked-token {overflow-wrap:anywhere;}
+.ce-plane {height:144px;position:relative;border-radius:6px;outline:1px solid #d0d5dd;touch-action:none;cursor:crosshair;background-image:linear-gradient(to bottom,#fff 0%,#fff0 50%,#000 100%),linear-gradient(to right,rgb(50% 50% 50%),var(--ce-hue,#f00));}
+.ce-plane-marker {position:absolute;left:var(--ce-s,0%);top:var(--ce-y,100%);width:13px;height:13px;border:2px solid white;border-radius:50%;box-shadow:0 0 0 1px #101828;transform:translate(-50%,-50%);pointer-events:none;background:var(--ce-color,#000);}
+.ce-help {margin:0;font-size:11px;line-height:1.5;color:#475467;overflow-wrap:anywhere;}
+.ce-text-row {display:grid;grid-template-columns:96px minmax(0,1fr);align-items:center;gap:6px;}
+.ce-text-row > [data-name="Select"] {font-size:12px;padding-inline:8px;}
+.ce-color-text {font-family:"Liberation Mono",monospace;}
+.ce-channels {display:grid;gap:4px;}
+.ce-channel {display:grid;grid-template-columns:68px minmax(0,1fr) 33px;align-items:center;gap:6px;min-height:26px;font-size:11px;line-height:1.4;}
+.ce-channel output {text-align:right;font-variant-numeric:tabular-nums;}
+.ce-range {appearance:none;-webkit-appearance:none;width:100%;height:20px;margin:0;background:transparent;cursor:pointer;border-radius:4px;}
+.ce-range::-webkit-slider-runnable-track {height:6px;border-radius:3px;background:#cbd5e1;}
+.ce-range::-moz-range-track {height:6px;border-radius:3px;background:#cbd5e1;}
+.ce-range::-webkit-slider-thumb {appearance:none;-webkit-appearance:none;width:14px;height:14px;margin-top:-4px;border:2px solid #fff;border-radius:50%;background:#2563eb;box-shadow:0 0 0 1px #2563eb;}
+.ce-range::-moz-range-thumb {width:10px;height:10px;border:2px solid #fff;border-radius:50%;background:#2563eb;box-shadow:0 0 0 1px #2563eb;}
+.ce-range[data-channel="h"]::-webkit-slider-runnable-track {background:linear-gradient(to right,#f00,#ff0,#0f0,#0ff,#00f,#f0f,#f00);}
+.ce-range[data-channel="h"]::-moz-range-track {background:linear-gradient(to right,#f00,#ff0,#0f0,#0ff,#00f,#f0f,#f00);}
+.ce-range[data-channel="a"]::-webkit-slider-runnable-track {background-image:linear-gradient(to right,transparent,var(--ce-opaque,#000)),repeating-conic-gradient(#fff 0% 25%,#cbd5e1 0% 50%);background-size:100% 100%,6px 6px;}
+.ce-range[data-channel="a"]::-moz-range-track {background-image:linear-gradient(to right,transparent,var(--ce-opaque,#000)),repeating-conic-gradient(#fff 0% 25%,#cbd5e1 0% 50%);background-size:100% 100%,6px 6px;}
+.ce-group {margin-top:14px;}
+.ce-group h3 {margin-bottom:6px;color:#475467;}
+.ce-pair {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;margin-top:4px;}
+.ce-token-choice {display:flex;min-width:0;align-items:stretch;}
+.ce-token {display:flex;align-items:center;gap:5px;flex:1;min-width:0;min-height:36px;border:1px solid #d0d5dd;border-radius:5px 0 0 5px;background:#fff;padding:5px;color:#1d2939;text-align:left;cursor:pointer;}
+.ce-token[aria-pressed="true"] {border-color:#2563eb;background:#eff6ff;color:#1d4ed8;}
+.ce-token-name {font-size:10px;line-height:1.3;overflow-wrap:anywhere;}
+.ce-token-reset {width:26px;flex:none;border:1px solid #d0d5dd;border-left:0;border-radius:0 5px 5px 0;background:#fff;color:#475467;cursor:pointer;font-size:15px;}
+.ce-token-reset:disabled {opacity:.4;cursor:default;}
+.ce-swatch {width:18px;height:18px;flex:none;border:1px solid #d0d5dd;border-radius:3px;background-image:linear-gradient(var(--ce-color,#000),var(--ce-color,#000)),repeating-conic-gradient(#fff 0% 25%,#d0d5dd 0% 50%);background-size:100% 100%,6px 6px;}
+.ce-empty {margin:12px 0;color:#475467;font-size:12px;line-height:1.5;}
+@media (prefers-reduced-motion:reduce) {.ce-editor * {scroll-behavior:auto;}}

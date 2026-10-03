@@ -127,6 +127,10 @@ pub fn build(request: &BuildRequest) -> Result<PathBuf, String> {
     )?;
     copy(&root.join("web/loader.js"), &app.join("loader.js"))?;
     copy(&root.join("web/runtime.css"), &app.join("runtime.css"))?;
+    copy(
+        &root.join("web/theme-fonts.css"),
+        &app.join("theme-fonts.css"),
+    )?;
     for name in ["app.js", "app.css"] {
         copy(&example_dir.join(name), &app.join(name))?;
     }

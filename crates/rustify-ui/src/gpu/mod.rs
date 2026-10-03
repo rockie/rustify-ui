@@ -13,12 +13,16 @@
 mod button;
 mod lists;
 mod marks;
+mod shadow;
+mod theme;
 mod toggles;
 mod values;
 
 pub use button::RustifyButton;
 pub use lists::{RustifyDropDown, RustifyTabBar};
 pub use marks::{Glyph, RustifyIcon, RustifySpinner};
+pub use shadow::{DrawRustifyShadow, ShadowGeometry};
+pub use theme::{apply_text_theme, css_px_to_points, rgba_color, FontSlot};
 pub use toggles::{RustifyCheckBox, RustifyRadio, RustifyToggle};
 pub use values::{RustifyProgress, RustifySlider};
 
@@ -27,6 +31,30 @@ use crate::makepad_widgets::*;
 
 script_mod! {
     use mod.prelude.widgets_internal.*
+
+    mod.widgets.DrawRustifyShadow = set_type_default() do #(DrawRustifyShadow::script_shader(vm)){
+        ..mod.draw.DrawQuad
+
+        box_distance: fn(point: vec2, origin: vec2, size: vec2, radius: float) {
+            let half = size * 0.5
+            let q = abs(point - origin - half) - half + vec2(radius)
+            return length(max(q, vec2(0.0))) + min(max(q.x, q.y), 0.0) - radius
+        }
+
+        pixel: fn() {
+            let point = self.pos * self.rect_size
+            let distance = self.box_distance(point, self.source_pos, self.source_size, self.source_radius)
+            let mut mask = 1.0 - smoothstep(-0.5, 0.5, distance)
+            if self.sigma > 0.0 {
+                mask = clamp(GaussShadow.rounded_box_shadow(
+                    self.source_pos self.source_pos + self.source_size point self.sigma self.source_radius
+                ), 0.0, 1.0)
+            }
+            let cutout = self.box_distance(point, self.cutout_pos, self.cutout_size, self.cutout_radius)
+            let alpha = self.color.a * mask * smoothstep(-0.5, 0.5, cutout)
+            return vec4(self.color.rgb * alpha, alpha)
+        }
+    }
 
     /* A filled rectangle with rounded ends, sized to whatever it is drawn
        into. Both toggles and both bars use it. */
@@ -41,10 +69,14 @@ script_mod! {
 
     /* A filled circle, centred and as large as it fits. */
     mod.widgets.RustifyDisc = mod.draw.DrawColor{
+        stroke_width: uniform(0.0)
         pixel: fn(){
             let sdf = Sdf2d.viewport(self.pos * self.rect_size)
-            let radius = min(self.rect_size.x, self.rect_size.y) * 0.5
+            let radius = max(0.0, min(self.rect_size.x, self.rect_size.y) * 0.5 - self.stroke_width * 0.5)
             sdf.circle(self.rect_size.x * 0.5, self.rect_size.y * 0.5, radius)
+            if self.stroke_width > 0.0 {
+                return sdf.stroke(self.color, self.stroke_width * 0.5)
+            }
             return sdf.fill(self.color)
         }
     }
@@ -53,10 +85,42 @@ script_mod! {
        can hand it the theme's, rather than every control agreeing by luck. */
     mod.widgets.RustifyBox = mod.draw.DrawColor{
         corner: uniform(6.0)
+        stroke_width: uniform(0.0)
+        flat: uniform(0.0)
         pixel: fn(){
+            if self.flat > 0.5 { return vec4(self.color.rgb * self.color.a, self.color.a) }
             let sdf = Sdf2d.viewport(self.pos * self.rect_size)
-            sdf.box(0.0, 0.0, self.rect_size.x, self.rect_size.y, self.corner)
+            let half = self.rect_size * 0.5 - vec2(self.stroke_width * 0.5)
+            let radius = clamp(self.corner * 2.0 - self.stroke_width * 0.5, 0.0, min(half.x, half.y))
+            let q = abs(self.pos * self.rect_size - self.rect_size * 0.5) - half + vec2(radius)
+            sdf.shape = length(max(q, vec2(0.0))) + min(max(q.x, q.y), 0.0) - radius
+            if self.stroke_width > 0.0 {
+                return sdf.stroke(self.color, self.stroke_width * 0.5)
+            }
             return sdf.fill(self.color)
+        }
+    }
+
+    mod.widgets.RustifySliderTrack = mod.draw.DrawColor{
+        theme_round: uniform(0.0)
+        pixel: fn() {
+            if self.theme_round < 0.5 { return vec4(self.color.rgb * self.color.a, self.color.a) }
+            let sdf = Sdf2d.viewport(self.pos * self.rect_size)
+            sdf.box(0.0, 0.0, self.rect_size.x, self.rect_size.y, min(self.rect_size.x, self.rect_size.y) * 0.25)
+            return sdf.fill(self.color)
+        }
+    }
+
+    mod.widgets.RustifySliderKnob = mod.draw.DrawColor{
+        theme_round: uniform(0.0)
+        border_color: uniform(#xd0d5dd)
+        pixel: fn() {
+            if self.theme_round < 0.5 { return vec4(self.color.rgb * self.color.a, self.color.a) }
+            let sdf = Sdf2d.viewport(self.pos * self.rect_size)
+            let radius = min(self.rect_size.x, self.rect_size.y) * 0.5 - 0.5
+            sdf.circle(self.rect_size.x * 0.5, self.rect_size.y * 0.5, radius)
+            sdf.fill_keep(self.color)
+            return sdf.stroke(self.border_color, 0.5)
         }
     }
 
@@ -78,15 +142,11 @@ script_mod! {
     mod.widgets.RustifyCheckBox = set_type_default() do mod.widgets.RustifyCheckBoxBase{
         width: 24
         height: 24
-        draw_bg +: {
-            color: #x101828
-        }
+        draw_bg: mod.widgets.RustifyBox{ color: #x101828 corner: 0.0 flat: 1.0 }
         draw_mark +: {
             color: #x2e90fa
         }
-        draw_border +: {
-            color: #xd0d5dd
-        }
+        draw_border: mod.widgets.RustifyBox{ color: #xd0d5dd corner: 0.0 flat: 1.0 }
     }
 
     mod.widgets.RustifySliderBase = #(RustifySlider::register_widget(vm))
@@ -94,15 +154,9 @@ script_mod! {
     mod.widgets.RustifySlider = set_type_default() do mod.widgets.RustifySliderBase{
         width: 140
         height: 24
-        draw_bg +: {
-            color: #x101828
-        }
-        draw_fill +: {
-            color: #x2e90fa
-        }
-        draw_knob +: {
-            color: #xffffff
-        }
+        draw_bg: mod.widgets.RustifySliderTrack{ color: #x101828 }
+        draw_fill: mod.widgets.RustifySliderTrack{ color: #x2e90fa }
+        draw_knob: mod.widgets.RustifySliderKnob{ color: #xffffff }
     }
 
     mod.widgets.RustifyRadioBase = #(RustifyRadio::register_widget(vm))

@@ -1,0 +1,9 @@
+{
+  "format4_declared_length": 6694,
+  "format4_occupied_length": 72230,
+  "format4_segment_count": 1917,
+  "bmp_codepoints_compared": 65536,
+  "bmp_nonzero_glyph_mappings": 34223,
+  "mismatch_count": 0,
+  "note": "Experiment reads the known overflowing format4 using its physical extent. The repaired font contains no format4."
+}

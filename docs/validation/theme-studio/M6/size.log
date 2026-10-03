@@ -1,0 +1,60 @@
+/Users/rockie/Documents/gh-rockie/rustify-ui/target/makepad-wasm-app/release/theme-studio
+size report (bytes): wasm 28639385 | js 224431 | css 55735 | fonts 51732356 | images 20701 | data 298500 | total 80971108
+compressed with gzip -9, which is what a compressing host sends:
+size report (bytes): wasm 3456199 | js 50785 | css 11697 | fonts 35215164 | images 10110 | data 44106 | total 38788061
+55 files
+          8754  app.css
+          2970  app.js
+         46094  bindgen.js
+          3230  build-manifest.json
+          1149  index.html
+         11818  loader.js
+         44157  makepad_platform/web.js
+         31996  makepad_platform/web_gl.js
+         15994  makepad_wasm_bridge/wasm_bridge.js
+          7902  makepad_widgets/resources/FONT-LICENSES.md
+        184656  makepad_widgets/resources/IBMPlexSans-BoldItalic.ttf
+        184020  makepad_widgets/resources/IBMPlexSans-Italic.ttf
+        182176  makepad_widgets/resources/IBMPlexSans-SemiBold.ttf
+        181792  makepad_widgets/resources/IBMPlexSans-Text.ttf
+          4377  makepad_widgets/resources/LICENSE-NOTO-SERIF.txt
+      18546748  makepad_widgets/resources/LXGWWenKaiBold.ttf
+      19002280  makepad_widgets/resources/LXGWWenKaiRegular.ttf
+        108168  makepad_widgets/resources/LiberationMono-Regular.ttf
+       1151568  makepad_widgets/resources/NewCMMath-Regular.otf
+      10643852  makepad_widgets/resources/NotoColorEmoji.ttf
+        201644  makepad_widgets/resources/NotoSans-Regular.ttf
+        616196  makepad_widgets/resources/NotoSerif-Regular.ttf
+        426112  makepad_widgets/resources/fa-solid-900.ttf
+           306  makepad_widgets/resources/icons/back.svg
+          1848  makepad_widgets/resources/icons/close_left_panel.svg
+           791  makepad_widgets/resources/icons/icon_draw.svg
+           792  makepad_widgets/resources/icons/icon_file.svg
+           865  makepad_widgets/resources/icons/icon_folder.svg
+          1381  makepad_widgets/resources/icons/icon_image.svg
+          1579  makepad_widgets/resources/icons/icon_layout.svg
+           851  makepad_widgets/resources/icons/icon_select.svg
+          1704  makepad_widgets/resources/icons/icon_text.svg
+          1245  makepad_widgets/resources/icons/icon_text_align_justify.svg
+          1242  makepad_widgets/resources/icons/icon_text_align_left.svg
+          1241  makepad_widgets/resources/icons/icon_text_align_right.svg
+          1717  makepad_widgets/resources/icons/icon_typography.svg
+          1760  makepad_widgets/resources/icons/icon_vector.svg
+          1238  makepad_widgets/resources/icons/icon_widget.svg
+          1892  makepad_widgets/resources/icons/open_left_panel.svg
+           249  makepad_widgets/resources/icons/sploded.svg
+        303144  makepad_widgets/resources/jetbrains_mono_variable.ttf
+          1223  runtime.css
+         19511  rustify_makepad/embedded.js
+         43721  rustify_makepad/message_bridge.js
+         44302  tailwind.css
+          1456  theme-fonts.css
+      28639385  theme-studio.wasm
+         11357  vendor/tweakcn/LICENSE
+          8170  vendor/tweakcn/normalize.mjs
+        138566  vendor/tweakcn/presets.json
+          6609  vendor/tweakcn/provenance.json
+          4549  vendor/tweakcn/source/config/theme.ts
+          4459  vendor/tweakcn/source/types/theme.ts
+          1453  vendor/tweakcn/source/utils/theme-preset-helper.ts
+        114849  vendor/tweakcn/source/utils/theme-presets.ts

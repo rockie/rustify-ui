@@ -6,6 +6,39 @@
 //! is written to the scope root rather than to the document, so two scopes on
 //! one page can hold different themes and a host page holds its own.
 
+mod codec;
+mod color;
+pub use codec::{
+    export_css, export_json, import_css, import_json, CssProfile, ThemeImport, THEME_INPUT_LIMIT,
+};
+mod document;
+mod fonts;
+mod metrics;
+mod resolve;
+#[cfg(target_arch = "wasm32")]
+pub use fonts::gpu_font_family;
+pub use fonts::{
+    dom_font_stack, font_context, FontSlot, ThemeFont, FONT_FACES, FONT_FALLBACKS,
+    FONT_GLYPH_FALLBACKS, THEME_FONTS,
+};
+#[cfg(target_arch = "wasm32")]
+pub(crate) mod provider;
+pub use color::{
+    composite_over, contrast_ratio, format_color, hsla_to_rgba, parse_color, rgba_to_hsla,
+    ColorFormat, Hsla, ParsedColor, Rgba,
+};
+pub use document::{
+    ThemeDocument, ThemeError, ThemeMode, ThemeStyles, ThemeValuePatch, ThemeValues, COLOR_TOKENS,
+    COMMON_TOKENS, VALUE_TOKENS,
+};
+pub use metrics::{parse_font_stack, parse_length, LengthRule};
+#[cfg(target_arch = "wasm32")]
+pub use provider::{use_resolved_theme, ThemeBoundary, ThemeScope};
+pub use resolve::{
+    resolution_count, resolve, FontFace, ResolveContext, ResolvedFont, ResolvedTheme, ShadowLayer,
+    ThemeDiagnostic,
+};
+
 /// sRGB, `0xRRGGBB`.
 pub type Color = u32;
 
@@ -294,6 +327,16 @@ mod dom {
     #[component]
     pub fn ThemedScope(#[prop(into)] theme: Signal<Theme>) -> impl IntoView {
         let roots = use_context::<ScopeRoots>();
+        if !super::provider::claim_root(
+            roots.as_ref(),
+            Theme::light()
+                .properties()
+                .into_iter()
+                .map(|(name, _)| name.to_owned()),
+            "legacy",
+        ) {
+            return;
+        }
         let published = RwSignal::new(theme.get_untracked());
         provide_context(published);
         provide_context(ThemeValues(published.into()));

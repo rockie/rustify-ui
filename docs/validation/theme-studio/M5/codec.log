@@ -1,0 +1,91 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-ui v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.81s
+warning: the following packages contain code that will be rejected by a future version of Rust: proc-macro-error2 v2.0.1
+note: to see what the problems were, use the option `--future-incompat-report`, or run `cargo report future-incompatibilities --id 1`
+     Running unittests src/lib.rs (target/debug/deps/rustify_ui-8109f4c704b762b5)
+
+running 71 tests
+test theme::color::tests::contrast_black_on_white_is_twenty_one ... ok
+test theme::color::tests::all_output_formats_round_trip_the_resolved_color ... ok
+test theme::color::tests::contrast_composites_foreground_alpha ... ok
+test theme::color::tests::contrast_known_canvas_composites_background_alpha ... ok
+test theme::color::tests::contrast_unknown_background_returns_none ... ok
+test theme::color::tests::formats_opaque_and_transparent_hex ... ok
+test theme::color::tests::grayscale_hsl_has_zero_hue_and_retains_alpha ... ok
+test theme::color::tests::hex_supports_short_long_and_alpha_forms ... ok
+test theme::color::tests::hsl_conversion_stays_finite_near_black ... ok
+test theme::color::tests::nonfinite_values_and_invalid_alpha_are_rejected ... ok
+test theme::codec::tests::source_positions_and_nested_limits_are_bounded ... ok
+test theme::color::tests::hsl_supports_hue_units_wrapping_and_alpha ... ok
+test theme::codec::tests::imports_never_visit_urls_and_ignore_mapping_rules_and_unknown_token_prefixes ... ok
+test theme::codec::tests::css_merges_layered_blocks_with_last_declaration_diagnostics ... ok
+test theme::color::tests::oklch_clips_channels_and_reports_out_of_gamut ... ok
+test theme::color::tests::oklch_fixed_srgb_primary_vectors_match ... ok
+test theme::color::tests::oklch_format_retains_near_neutral_chroma ... ok
+test theme::color::tests::oklch_neutral_and_percentage_chroma_match ... ok
+test theme::color::tests::rgb_supports_legacy_modern_percentages_and_alpha ... ok
+test theme::color::tests::rgb_and_hsl_channels_follow_css_range_clamping ... ok
+test theme::color::tests::source_over_returns_unpremultiplied_channels ... ok
+test theme::color::tests::source_over_transparent_colors_stays_finite ... ok
+test theme::codec::tests::malformed_quotes_braces_and_oversize_inputs_are_rejected ... ok
+test theme::color::tests::transparent_preserves_zero_alpha ... ok
+test theme::color::tests::unsupported_or_malformed_css_is_rejected ... ok
+test theme::contrast_tests::every_pair_the_themes_actually_use_reaches_its_target ... ok
+test theme::contrast_tests::the_luminance_of_the_two_ends_is_what_it_should_be ... ok
+test theme::codec::tests::json_round_trip_keeps_author_values_and_unknown_tokens ... ok
+test theme::codec::tests::unsupported_known_values_reject_the_whole_candidate_even_if_overwritten ... ok
+test theme::document::tests::identity_rejects_unknown_version_and_invalid_names ... ok
+test theme::document::tests::legacy_conversion_keeps_colors_and_separates_unit_from_layout_gap ... ok
+test theme::document::tests::patch_rejects_unknown_tokens_without_mutating_the_source ... ok
+test theme::fonts::tests::catalogue_resources_exist_and_cover_all_slots ... ok
+test theme::metrics::tests::font_families_preserve_quoted_commas_and_unicode ... ok
+test theme::document::tests::published_schema_requires_the_same_tokens_as_the_rust_model ... ok
+test theme::metrics::tests::font_stacks_reject_declaration_injection_and_incomplete_input ... ok
+test theme::metrics::tests::lengths_reject_unbounded_nonfinite_and_unsupported_values ... ok
+test theme::metrics::tests::lengths_use_the_supplied_root_size_and_allow_zero_radius ... ok
+test theme::fonts::tests::unknown_author_stack_survives_and_each_slot_has_visible_packaged_fallback ... ok
+test theme::metrics::tests::letter_spacing_handles_normal_and_checks_em_bounds ... ok
+test theme::metrics::tests::opacity_rejects_nonfinite_and_outside_unit_interval ... ok
+test theme::metrics::tests::reference_px_and_rem_letter_spacing_resolves_to_em ... ok
+test theme::document::tests::json_preserves_author_values_and_requires_both_modes_and_string_tokens ... ok
+test theme::codec::tests::exports_skip_unknown_json_values_and_include_packaged_font_notices ... ok
+test theme::fonts::tests::all_catalogue_faces_resolve_to_their_packaged_resource ... ok
+test theme::codec::tests::json_rejects_duplicates_missing_modes_schema_and_non_string_tokens ... ok
+test theme::resolve::tests::gamut_and_common_field_differences_are_visible_and_author_values_survive ... ok
+test theme::resolve::tests::fonts_pick_packaged_families_and_report_the_requested_fallback ... ok
+test theme::resolve::tests::boundary_patch_recomputes_geometry_and_shadows_using_host_rem_context ... ok
+test theme::resolve::tests::host_reduced_motion_overrides_the_document ... ok
+test theme::resolve::tests::css_projection_separates_legacy_gap_and_new_unit_and_emits_zero_shadows ... ok
+test theme::resolve::tests::legacy_resolves_without_losing_alpha_or_coupling_sizes ... ok
+test theme::resolve::tests::empty_shadow_layers_are_transparent_even_with_a_color_utility ... ok
+test theme::resolve::tests::missing_tokens_fail_and_unknown_tokens_generate_diagnostics ... ok
+test theme::resolve::tests::radius_zero_is_valid_and_never_derives_negative_corners ... ok
+test theme::tests::a_colour_is_written_the_way_both_halves_read_it ... ok
+test theme::tests::a_patched_theme_keeps_everything_the_patch_did_not_name ... ok
+test theme::resolve::tests::sdk_and_export_use_the_same_shadow_utility_with_legacy_fallbacks ... ok
+test theme::tests::a_radius_carries_its_unit ... ok
+test theme::tests::an_override_writes_only_what_it_names ... ok
+test theme::resolve::tests::shadows_derive_layers_from_the_same_geometry_and_rgba ... ok
+test theme::tests::every_property_a_patch_can_write_is_one_it_can_also_take_back ... ok
+test theme::tests::less_movement_is_no_movement_rather_than_no_result ... ok
+test theme::tests::the_two_themes_name_the_same_tokens_and_agree_on_nothing_but_the_metrics ... ok
+test theme::resolve::tests::invalid_fields_report_mode_and_token_without_modifying_author_data ... ok
+test theme::codec::tests::css_scoped_identifiers_are_escaped_and_never_become_selector_code ... ok
+test theme::color::tests::numeric_formats_round_trip_srgb_cube_and_neutrals ... ok
+test theme::codec::tests::scoped_css_preserves_legacy_host_radius_spacing_and_font_defaults ... ok
+test theme::codec::tests::css_profiles_round_trip_known_author_metrics_and_resolved_colors ... ok
+test theme::codec::tests::css_exports_keep_shadow_color_utilities_live_in_every_profile_and_notation ... ok
+test theme::codec::tests::every_css_color_notation_preserves_resolved_channels_and_alpha ... ok
+
+test result: ok. 71 passed; 0 failed; 0 ignored; 0 measured; 154 filtered out; finished in 0.01s
+
+mbx[cache]: 0 hits, 0 misses, 1 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[gc]: evicted 1573 objects and 21 action results (1.7 GiB logical); 89.8 GiB logical remain
+mbx[savings]: 21.8 GiB shared among checkouts that each believe they are an only child.

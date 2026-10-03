@@ -1,0 +1,232 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling web-sys v0.3.105
+warning: unused import: `std::net::TcpStream`
+  --> makepad/platform/network/src/blocking_http.rs:20:5
+   |
+20 | use std::net::TcpStream;
+   |     ^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused import: `Read`
+  --> makepad/platform/network/src/blocking_http.rs:12:15
+   |
+12 | use std::io::{Read, Write};
+   |               ^^^^
+
+warning: unused import: `Write`
+  --> makepad/platform/network/src/blocking_http.rs:12:21
+   |
+12 | use std::io::{Read, Write};
+   |                     ^^^^^
+
+warning: constant `USER_AGENT` is never used
+  --> makepad/platform/network/src/blocking_http.rs:24:7
+   |
+24 | const USER_AGENT: &str = "makepad-network/1.0";
+   |       ^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: constant `IO_SLICE` is never used
+  --> makepad/platform/network/src/blocking_http.rs:26:7
+   |
+26 | const IO_SLICE: Duration = Duration::from_millis(200);
+   |       ^^^^^^^^
+
+warning: field `url` is never read
+   --> makepad/platform/network/src/blocking_http.rs:141:5
+    |
+139 | pub struct Request {
+    |            ------- field in this struct
+140 |     method: Method,
+141 |     url: String,
+    |     ^^^
+
+warning: method `as_str` is never used
+   --> makepad/platform/network/src/blocking_http.rs:155:8
+    |
+154 | impl Method {
+    | ----------- method in this implementation
+155 |     fn as_str(self) -> &'static str {
+    |        ^^^^^^
+
+warning: struct `ParsedUrl` is never constructed
+   --> makepad/platform/network/src/blocking_http.rs:265:8
+    |
+265 | struct ParsedUrl {
+    |        ^^^^^^^^^
+
+warning: function `parse_url` is never used
+   --> makepad/platform/network/src/blocking_http.rs:272:4
+    |
+272 | fn parse_url(url: &str) -> Result<ParsedUrl, Error> {
+    |    ^^^^^^^^^
+
+warning: function `is_forbidden_url_byte` is never used
+   --> makepad/platform/network/src/blocking_http.rs:310:4
+    |
+310 | fn is_forbidden_url_byte(b: u8) -> bool {
+    |    ^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `split_authority` is never used
+   --> makepad/platform/network/src/blocking_http.rs:314:4
+    |
+314 | fn split_authority(authority: &str, default_port: u16) -> Result<(String, u16), Error> {
+    |    ^^^^^^^^^^^^^^^
+
+warning: function `is_literal_loopback_host` is never used
+   --> makepad/platform/network/src/blocking_http.rs:354:4
+    |
+354 | fn is_literal_loopback_host(host: &str) -> bool {
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `cleartext_host_permitted` is never used
+   --> makepad/platform/network/src/blocking_http.rs:368:4
+    |
+368 | fn cleartext_host_permitted(host: &str) -> bool {
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `validate_trailer_line` is never used
+   --> makepad/platform/network/src/blocking_http.rs:462:4
+    |
+462 | fn validate_trailer_line(line: &str) -> Result<(), Error> {
+    |    ^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `split_header_line` is never used
+   --> makepad/platform/network/src/blocking_http.rs:473:4
+    |
+473 | fn split_header_line(line: &str) -> Option<(&str, &str)> {
+    |    ^^^^^^^^^^^^^^^^^
+
+warning: function `parse_content_length` is never used
+   --> makepad/platform/network/src/blocking_http.rs:485:4
+    |
+485 | fn parse_content_length(value: &str) -> Result<u64, Error> {
+    |    ^^^^^^^^^^^^^^^^^^^^
+
+warning: struct `ValidatedHeaders` is never constructed
+   --> makepad/platform/network/src/blocking_http.rs:493:8
+    |
+493 | struct ValidatedHeaders {
+    |        ^^^^^^^^^^^^^^^^
+
+warning: function `validate_response_headers` is never used
+   --> makepad/platform/network/src/blocking_http.rs:499:4
+    |
+499 | fn validate_response_headers(
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `parse_header_block` is never used
+    --> makepad/platform/network/src/blocking_http.rs:1497:4
+     |
+1497 | fn parse_header_block(head: &str, limits: &Limits) -> Result<Vec<(String, String)>, Error> {
+     |    ^^^^^^^^^^^^^^^^^^
+
+warning: function `check_watch` is never used
+    --> makepad/platform/network/src/blocking_http.rs:1707:4
+     |
+1707 | fn check_watch(cancel: &CancelToken, deadline: Instant) -> Result<(), Error> {
+     |    ^^^^^^^^^^^
+
+warning: function `remaining` is never used
+    --> makepad/platform/network/src/blocking_http.rs:1717:4
+     |
+1717 | fn remaining(deadline: Instant) -> Result<Duration, Error> {
+     |    ^^^^^^^^^
+
+warning: `makepad-network` (lib) generated 21 warnings (run `cargo fix --lib -p makepad-network` to apply 1 suggestion)
+warning: unused import: `Read`
+ --> makepad/libs/shared_bytes/src/lib.rs:3:16
+  |
+3 |     io::{self, Read},
+  |                ^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: associated function `map_file` is never used
+   --> makepad/libs/shared_bytes/src/lib.rs:351:16
+    |
+350 |     impl MappedBytesInner {
+    |     --------------------- associated function in this implementation
+351 |         pub fn map_file(_file: &File, _len: usize) -> io::Result<Self> {
+    |                ^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `makepad-shared-bytes` (lib) generated 2 warnings (run `cargo fix --lib -p makepad-shared-bytes` to apply 1 suggestion)
+warning: unused imports: `TextureAlloc`, `TextureCategory`, and `TexturePixel`
+  --> makepad/platform/src/gpu_texture.rs:38:24
+   |
+38 |     texture::{Texture, TextureAlloc, TextureCategory, TextureFormat, TexturePixel},
+   |                        ^^^^^^^^^^^^  ^^^^^^^^^^^^^^^                 ^^^^^^^^^^^^
+   |
+   = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: `makepad-platform` (lib) generated 1 warning (run `cargo fix --lib -p makepad-platform` to apply 1 suggestion)
+   Compiling reactive_graph v0.2.14
+   Compiling gloo-utils v0.2.0
+   Compiling rustify-makepad v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-makepad)
+   Compiling wasm-streams v0.5.0
+   Compiling gloo-net v0.6.0
+   Compiling reactive_stores v0.4.3
+   Compiling tachys v0.2.18
+   Compiling leptos_dom v0.8.8
+   Compiling server_fn v0.8.13
+   Compiling leptos_server v0.8.7
+   Compiling leptos v0.8.20
+   Compiling rustify-ui v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui)
+warning: method `fallback_element` is never used
+   --> crates/rustify-ui/src/overlay.rs:303:23
+    |
+238 |     impl OverlayStack {
+    |     ----------------- method in this implementation
+...
+303 |         pub(crate) fn fallback_element(&self) -> Element {
+    |                       ^^^^^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: field `guest_click` is never read
+   --> crates/rustify-ui/src/router.rs:556:9
+    |
+549 |     struct Router {
+    |            ------ field in this struct
+...
+556 |         guest_click: Option<SendWrapper<Rc<GuestClick>>>,
+    |         ^^^^^^^^^^^
+    |
+    = note: `Router` has a derived impl for the trait `Clone`, but this is intentionally ignored during dead code analysis
+
+warning: `rustify-ui` (lib) generated 2 warnings
+   Compiling fusion-basic v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/examples/fusion-basic)
+warning: unused import: `rustify_ui::makepad_widgets`
+  --> examples/fusion-basic/src/main.rs:30:13
+   |
+30 |     pub use rustify_ui::makepad_widgets;
+   |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+mbx[progress]: 15s elapsed; 8 hits, 3 misses, 2 bypassed, 1 not looked up; ~14.81s compiler work saved
+mbx[progress]: 30s elapsed; 8 hits, 3 misses, 2 bypassed, 1 not looked up; ~14.81s compiler work saved
+warning: `fusion-basic` (bin "fusion-basic") generated 1 warning (run `cargo fix --bin "fusion-basic" -p fusion-basic` to apply 1 suggestion)
+    Finished `release` profile [optimized] target(s) in 30.57s
+warning: the following packages contain code that will be rejected by a future version of Rust: proc-macro-error2 v2.0.1
+note: to see what the problems were, use the option `--future-incompat-report`, or run `cargo report future-incompatibilities --id 1`
+mbx[cache]: 8 hits, 3 misses, 1 not looked up, 2 bypassed; 0 B downloaded, 0 B uploaded, 12.2 MiB stored locally
+mbx[savings]: the checkouts are gone. their 481.9 GiB logical has gone to join them.
+Created wasm package: "/Users/rockie/Documents/gh-rockie/rustify-ui/target/makepad-wasm-app/release/fusion-basic"
+built fusion-basic -> /Users/rockie/Documents/gh-rockie/rustify-ui/target/makepad-wasm-app/release/fusion-basic
+size report (bytes): wasm 8775365 | js 223771 | css 5696 | fonts 51732356 | images 20701 | data 14774 | total 60772663
+
+[theme-M6 validation]
+command: mise exec -- mbx xtask build-web --example fusion-basic --release
+exit_code: 0
+observed: {"build_id": "3d4aece4e583a057", "schema_hash": "2906431550179788552", "files": 45, "size_report": {"wasm": 8775365, "js": 223771, "css": 5696, "fonts": 51732356, "images": 20701, "data": 14774, "total": 60772663}}

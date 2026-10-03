@@ -1566,6 +1566,49 @@
         "examples/property-workbench/vendor/nouislider/nouislider.min.css": "9dc9155cfd6331d1f5629881ac0bc63928243fa4c1d83b17ce4921b5200be0ae",
         "examples/property-workbench/vendor/nouislider/nouislider.min.mjs": "51f2cef94f58f92b13c105fb32c3e784bd8eba8030c60707fcd77c94b7c9734c"
       }
+    },
+    {
+      "name": "tweakcn-theme-presets",
+      "version": "snapshot-d333858a5a4f",
+      "origin": "https://github.com/jnsahaj/tweakcn; local snapshot, upstream commit unknown; provenance.json records input SHA256 and normalization",
+      "license": "Apache-2.0",
+      "files": {
+        "examples/theme-studio/vendor/tweakcn/LICENSE": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+        "examples/theme-studio/vendor/tweakcn/normalize.mjs": "464d38b86be5b73454fe4a92589197f0ccb3db669c4075d195bdb56ce68e36bb",
+        "examples/theme-studio/vendor/tweakcn/presets.json": "cbd2718f8b10b63b27d68d670334844050871cd1b87c5dcff5328fe17fdd19ee",
+        "examples/theme-studio/vendor/tweakcn/provenance.json": "d7d3c8c3f3e06a9837faf8edcda70dec83ecf2f2289b05af26ad98ca631eebdc",
+        "examples/theme-studio/vendor/tweakcn/source/config/theme.ts": "cca693548553545cd6384e1d02b30138510ed6eeb94da313e20c5f328f630da1",
+        "examples/theme-studio/vendor/tweakcn/source/types/theme.ts": "50a62c4c47c6d9d679a7f3aab2b1bb85dcca9908ce3e2d5f5c9ff3fabc8aa2ce",
+        "examples/theme-studio/vendor/tweakcn/source/utils/theme-preset-helper.ts": "ea4c391300fadf7f308d05870dcd9a14b4af92e9d643c32320058e4196b6c510",
+        "examples/theme-studio/vendor/tweakcn/source/utils/theme-presets.ts": "d333858a5a4f1e2fd615f1b73709f552e5a84c12882196456dfc48e1f09376a8"
+      }
+    },
+    {
+      "name": "noto-serif",
+      "version": "ffebf8c1ee449e544955a7e813c54f9b73848eac",
+      "origin": "https://github.com/notofonts/noto-fonts",
+      "license": "SIL OFL 1.1",
+      "upstream_files": [
+        "hinted/ttf/NotoSerif/NotoSerif-Regular.ttf",
+        "LICENSE"
+      ],
+      "files": {
+        "makepad/widgets/resources/NotoSerif-Regular.ttf": "c8f669ceb2c9c60ccf55198b305e08a997ffca79a38cc7eeb551e643cbe66505",
+        "makepad/widgets/resources/LICENSE-NOTO-SERIF.txt": "0dab92d0544f7b233403f14b84a663bdbfa746982eda629e7f4f9ffe1b036feb"
+      }
+    },
+    {
+      "name": "rustify-wenkai",
+      "version": "repair-1",
+      "origin": "Makepad import LXGWWenKaiRegular.ttf; pinned repository source 7f5e5042cb647ab474f0ef6c833ea568c75b53d4",
+      "source_sha256": "0819604ad9357afbc6e7cc097328a16ed85143ee0848ffda09fda35a30da6506",
+      "license": "SIL OFL 1.1; original copyright preserved, modified font renamed Rustify WenKai",
+      "changes": "Remove overflowing optional cmap format-4 records; preserve exact format-12/6 mappings, glyphs and metrics; rename primary family/full/PostScript names and recompute SFNT checksums. Resource path remains compatible.",
+      "reproduce": "python3 scripts/repair-theme-font.py --output NEW_PATH; verify current file with --check makepad/widgets/resources/LXGWWenKaiRegular.ttf",
+      "files": {
+        "makepad/widgets/resources/LXGWWenKaiRegular.ttf": "1d4b2f008ac7e02780c19801d4b04dd4538e40215943cc8ad374dba8ec2278c0",
+        "scripts/repair-theme-font.py": "d996ff650963349f0be917798464af6010603053d16978ad541298eb046dc7db"
+      }
     }
   ],
   "rust_ui": {

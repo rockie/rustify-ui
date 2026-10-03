@@ -1,0 +1,677 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-ui v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui)
+   Compiling rustify-components v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-components)
+   Compiling vellum v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/examples/vellum)
+   Compiling fusion-basic v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/examples/fusion-basic)
+   Compiling theme-studio v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/examples/theme-studio)
+   Compiling component-catalog v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/examples/component-catalog)
+   Compiling property-workbench v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/examples/property-workbench)
+   Compiling xtask v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/xtask)
+   Compiling data-workbench v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/examples/data-workbench)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 5.74s
+warning: the following packages contain code that will be rejected by a future version of Rust: proc-macro-error2 v2.0.1
+note: to see what the problems were, use the option `--future-incompat-report`, or run `cargo report future-incompatibilities --id 1`
+     Running unittests src/main.rs (target/debug/deps/component_catalog-c78753215a7115f3)
+
+running 5 tests
+test samples::tests::there_are_twenty_of_them ... ok
+test samples::tests::the_emoji_samples_really_are_the_hard_ones ... ok
+test samples::tests::direction_is_stated_rather_than_guessed ... ok
+test samples::tests::every_category_the_plan_names_is_here_more_than_once ... ok
+test samples::tests::every_sample_has_a_name_of_its_own_and_something_to_draw ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/main.rs (target/debug/deps/data_workbench-196a1daab3befadc)
+
+running 39 tests
+test dataset::tests::cells_are_alphabet_bytes ... ok
+test dataset::tests::an_identity_is_never_handed_out_twice ... ok
+test dataset::tests::groups_are_ten_by_ten ... ok
+test dataset::tests::the_generator_is_the_published_sequence ... ok
+test scan::tests::a_filter_finds_the_rows_with_the_text_in_any_column ... ok
+test dataset::tests::writing_a_cell_pads_it_and_bumps_the_version ... ok
+test scan::tests::a_group_filter_asks_where_a_row_is_rather_than_what_is_in_it ... ok
+test scan::tests::a_find_stops_at_the_first_one_and_says_where_in_the_order_it_was ... ok
+test scan::tests::a_search_does_not_run_off_the_end_of_a_cell_into_the_next_one ... ok
+test scan::tests::a_search_longer_than_a_cell_matches_nothing_and_an_empty_one_everything ... ok
+test scene_layout::tests::a_camera_at_the_far_corner_still_sees_the_last_object ... ok
+test scan::tests::the_search_is_case_sensitive ... ok
+test scene_layout::tests::a_marquee_takes_what_it_touches_and_nothing_it_misses ... ok
+test scene_layout::tests::a_pane_sees_a_window_not_the_scene ... ok
+test scene_layout::tests::an_object_is_taken_where_it_is_drawn_not_where_its_index_says ... ok
+test scene_layout::tests::every_object_is_picked_at_its_own_corner ... ok
+test scene_layout::tests::the_extent_holds_every_object ... ok
+test scene_layout::tests::the_first_the_middle_and_the_last_are_where_the_formula_puts_them ... ok
+test scene_layout::tests::the_gaps_between_objects_are_nothing ... ok
+test scene_layout::tests::the_upper_layer_is_picked_where_the_two_overlap ... ok
+test sort::tests::a_second_column_is_sorted_independently ... ok
+test sort::tests::a_short_order_is_finished_without_asking_about_the_budget ... ok
+test sort::tests::descending_is_the_reverse_of_ascending_for_distinct_keys ... ok
+test scene_layout::tests::a_marquee_over_the_whole_scene_takes_every_object ... ok
+test sort::tests::equal_keys_keep_their_order ... ok
+test view::tests::a_filtered_view_keeps_only_what_it_had_through_both ... ok
+test view::tests::an_identity_view_is_every_row_in_the_order_the_sample_has_them ... ok
+test view::tests::deleting_from_the_end_of_the_sample_leaves_the_front_where_it_was ... ok
+test view::tests::deleting_more_than_there_is_leaves_what_is_below_it ... ok
+test view::tests::deleting_takes_the_rows_out_and_moves_the_rest_up ... ok
+test view::tests::inserting_at_the_end_appends_without_moving_anything ... ok
+test view::tests::inserting_into_a_view_with_an_order_puts_them_at_the_end ... ok
+test view::tests::inserting_into_an_identity_view_puts_the_rows_where_they_went ... ok
+test sort::tests::what_a_progress_bar_is_out_of_is_what_the_sort_gets_to ... ok
+test scene_layout::tests::no_point_is_under_more_than_two_objects ... ok
+test dataset::tests::every_row_has_an_identity_of_its_own ... ok
+test sort::tests::the_generated_sample_sorts_the_same_whole_or_sliced ... ok
+test scan::tests::a_scan_in_slices_answers_what_a_scan_in_one_would ... ok
+test scan::tests::progress_is_rows_asked_and_ends_at_the_order_it_was_given ... ok
+
+test result: ok. 39 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.53s
+
+     Running unittests src/main.rs (target/debug/deps/fusion_basic-80f1f28dfac69261)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/main.rs (target/debug/deps/property_workbench-25a8509de94f065b)
+
+running 7 tests
+test transfer::tests::an_empty_file_is_no_objects_rather_than_an_error ... ok
+test transfer::tests::a_binary_file_of_the_wrong_length_is_not_read_at_all ... ok
+test transfer::tests::a_name_with_a_tab_in_it_survives_the_text_format ... ok
+test transfer::tests::a_line_that_goes_wrong_stops_the_whole_import ... ok
+test transfer::tests::text_written_and_read_back_is_the_same_objects ... ok
+test transfer::tests::binary_written_and_read_back_keeps_everything_it_carries ... ok
+test transfer::tests::the_name_decides_which_reader_runs ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (target/debug/deps/rustify_components-aa53139cbd2de049)
+
+running 89 tests
+test catalog::tests::a_partial_answer_is_never_a_bare_one ... ok
+test catalog::tests::every_category_has_a_dom_component_and_a_way_to_reach_it ... ok
+test catalog::tests::no_cell_is_blank_and_every_answer_carries_its_reason ... ok
+test data_table::keys::tests::a_key_the_grid_does_not_claim_is_left_to_the_page ... ok
+test catalog::tests::a_category_can_be_looked_up ... ok
+test catalog::tests::every_category_appears_exactly_once ... ok
+test color_field::tests::six_digits_are_a_colour_with_or_without_the_hash ... ok
+test catalog::tests::a_category_no_region_draws_says_where_it_is_drawn_instead ... ok
+test color_field::tests::an_opacity_is_a_colour_only_where_alpha_is_allowed ... ok
+test color_field::tests::three_digits_are_shorthand_for_six ... ok
+test color_field::tests::text_on_its_way_to_a_colour_is_not_one_yet ... ok
+test catalog::tests::the_categories_a_region_draws_are_the_declared_subset ... ok
+test data_table::keys::tests::a_page_is_a_screenful_and_stops_at_the_ends ... ok
+test data_table::keys::tests::an_empty_table_claims_nothing ... ok
+test catalog::tests::every_row_is_printed_with_ten_filled_cells ... ok
+test data_table::keys::tests::home_and_end_are_about_the_row_until_a_modifier_makes_them_about_the_table ... ok
+test data_table::keys::tests::space_selects_and_enter_opens ... ok
+test data_table::keys::tests::the_arrows_move_one_cell ... ok
+test data_table::keys::tests::the_arrows_stop_at_the_edges_rather_than_walking_off ... ok
+test data_table::window::tests::a_page_is_a_screenful_of_whole_rows ... ok
+test data_table::window::tests::a_row_past_the_end_is_the_last_row ... ok
+test data_table::window::tests::a_table_shorter_than_its_viewport_is_all_of_it ... ok
+test data_table::window::tests::a_viewport_with_no_height_of_its_own_still_asks_for_a_window ... ok
+test data_table::window::tests::a_viewport_with_no_height_shows_nothing ... ok
+test data_table::window::tests::columns_window_the_same_way_with_a_smaller_margin ... ok
+test catalog::tests::the_capability_document_holds_the_table_the_code_holds ... ok
+test data_table::window::tests::jumping_centres_the_row_and_stops_at_the_ends ... ok
+test data_table::window::tests::jumping_to_a_row_already_on_screen_does_not_move_the_table ... ok
+test data_table::window::tests::scrolled_past_the_end_shows_the_last_rows_rather_than_none ... ok
+test data_table::window::tests::scrolling_moves_the_window_by_whole_rows ... ok
+test data_table::window::tests::the_end_of_the_table_is_the_end_of_the_window ... ok
+test data_table::window::tests::the_top_of_the_table_has_no_margin_above_it ... ok
+test data_table::window::tests::the_window_is_the_same_length_wherever_it_is ... ok
+test id::tests::two_ids_are_never_the_same_and_say_what_they_are_for ... ok
+test macros::tests::a_callers_class_in_a_state_replaces_the_components_in_that_state ... ok
+test macros::tests::a_callers_padding_replaces_the_components ... ok
+test menu::tests::a_heading_names_the_commands_up_to_the_next_heading_or_separator ... ok
+test macros::tests::a_variant_makes_two_classes_different ... ok
+test menu::tests::a_menu_of_plain_commands_is_one_unnamed_group ... ok
+test menu::tests::a_shortcut_is_shown_the_way_aria_keyshortcuts_names_it ... ok
+test macros::expansion::a_variant_carries_its_own_classes_and_the_callers ... ok
+test macros::tests::classes_of_different_kinds_are_both_kept ... ok
+test macros::tests::a_later_class_replaces_an_earlier_one_of_the_same_kind ... ok
+test menu::tests::the_keyboard_reaches_only_commands_that_can_run ... ok
+test number_field::tests::a_number_is_what_rust_reads_as_a_finite_one ... ok
+test number_field::tests::a_step_lands_on_the_decimals_its_two_parts_have ... ok
+test number_field::tests::a_value_is_written_the_shortest_way_that_reads_back ... ok
+test number_field::tests::text_on_its_way_to_a_number_is_not_one_yet ... ok
+test roving::tests::a_list_with_nothing_reachable_goes_nowhere ... ok
+test roving::tests::an_arrow_steps_over_what_nobody_can_choose ... ok
+test roving::tests::the_edges_skip_the_unreachable_too ... ok
+test roving::tests::the_ends_of_the_list_are_joined ... ok
+test roving::tests::with_nothing_current_the_arrows_are_a_way_in ... ok
+test stylesheet::dark_is_this_scope_in_dark_and_not_any_dark_ancestor ... ok
+test stylesheet::the_input_compiles_only_the_sources_it_names ... ok
+test stylesheet::a_utility_never_reads_the_scopes_spacing ... ok
+test stylesheet::the_sdk_layer_leaves_tailwinds_layers_to_the_build_that_imports_it ... ok
+test stylesheet::the_scope_defaults_are_the_light_theme ... ok
+test stylesheet::the_tokens_are_written_only_to_a_scope_root ... ok
+test tabs::tests::an_arrow_moves_by_value_and_skips_what_cannot_be_chosen ... ok
+test stylesheet::the_utilities_are_the_unprefixed_ones_an_application_writes ... ok
+test tabs::tests::arrows_still_work_when_the_tab_showing_is_not_in_the_strip ... ok
+test tabs::tests::home_and_end_reach_the_first_and_last_tab_anyone_can_choose ... ok
+test tests::a_link_is_current_for_its_own_page_and_the_pages_under_it ... ok
+test tests::a_link_is_not_current_for_a_path_that_merely_starts_the_same ... ok
+test tests::a_link_with_no_target_is_never_current ... ok
+test toggle_group::tests::one_at_a_time_a_press_asks_for_that_one_or_for_none ... ok
+test toggle_group::tests::several_at_once_a_press_toggles_one_and_keeps_the_buttons_order ... ok
+test toggle_group::tests::the_tab_stop_is_where_the_keyboard_was_then_what_is_pressed_then_the_first ... ok
+test stylesheet::the_stylesheet_resets_nothing_and_selects_no_bare_element ... ok
+test tree::tests::a_closed_group_does_not_put_its_children_in_the_document ... ok
+test tree::tests::a_key_the_tree_does_not_claim_is_left_to_the_page ... ok
+test tree::tests::an_open_group_shows_its_children_below_it ... ok
+test tree::tests::left_closes_an_open_group_and_steps_out_of_a_child ... ok
+test tree::tests::right_opens_a_closed_group_and_then_steps_into_it ... ok
+test tree::tests::space_and_enter_choose_the_group_the_keyboard_is_on ... ok
+test tree::tests::the_arrows_walk_what_is_showing_and_join_the_ends ... ok
+test workspace::panel_tabs::tests::closing_a_panel_that_is_not_there_answers_nothing_rather_than_guessing ... ok
+test workspace::panel_tabs::tests::closing_one_that_is_not_showing_leaves_the_selection_alone ... ok
+test workspace::panel_tabs::tests::closing_the_last_panel_moves_left_because_there_is_no_right ... ok
+test workspace::panel_tabs::tests::closing_the_only_panel_leaves_nowhere_to_be ... ok
+test workspace::panel_tabs::tests::closing_the_panel_showing_moves_to_its_right_hand_neighbour ... ok
+test workspace::panel_tabs::tests::the_arrows_walk_the_strip_and_join_its_ends ... ok
+test workspace::splitter::tests::a_divider_at_a_minimum_does_nothing_at_all ... ok
+test workspace::splitter::tests::a_divider_stops_at_a_minimum_rather_than_pushing_through_it ... ok
+test workspace::splitter::tests::a_drag_takes_from_one_panel_and_gives_to_its_neighbour ... ok
+test workspace::splitter::tests::a_hundred_drags_never_take_a_panel_below_its_minimum ... ok
+test workspace::splitter::tests::a_row_shares_out_what_is_left_after_every_minimum ... ok
+test workspace::splitter::tests::the_last_panel_has_no_divider_to_its_right ... ok
+
+test result: ok. 89 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (target/debug/deps/rustify_makepad-858c59b05a15a3e6)
+
+running 3 tests
+test registry::tests::removed_ids_no_longer_resolve ... ok
+test registry::tests::ids_round_trip_through_their_raw_form ... ok
+test registry::tests::ids_are_unique_and_never_reused ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (target/debug/deps/rustify_ui-b3e137834eb0992d)
+
+running 225 tests
+test components::tests::a_value_outside_the_range_comes_back_inside_it ... ok
+test components::tests::a_value_between_two_steps_lands_on_one_of_them ... ok
+test components::tests::a_range_given_backwards_is_still_a_range ... ok
+test components::tests::a_range_with_no_step_only_clamps ... ok
+test clipboard::tests::every_failure_says_what_to_do_about_it ... ok
+test clipboard::tests::a_build_without_the_flag_says_so_rather_than_failing_later ... ok
+test diagnostics::tests::an_answer_to_a_lookup_is_not_a_failure_of_the_runtime ... ok
+test binding::tests::unique_keys_have_no_duplicate ... ok
+test binding::tests::the_second_appearance_of_a_key_is_reported ... ok
+test binding::tests::actions_reach_the_application_in_acceptance_order ... ok
+test binding::tests::actions_queued_before_a_binding_closed_do_not_reach_the_application_after ... ok
+test binding::tests::an_action_submitted_by_a_callback_waits_for_the_next_drain ... ok
+test diagnostics::tests::a_ring_that_never_filled_says_nothing_was_dropped ... ok
+test binding::tests::more_than_one_batch_needs_more_than_one_drain ... ok
+test diagnostics::tests::a_report_says_what_was_dropped_before_it_says_anything_else ... ok
+test diagnostics::tests::an_entry_reads_as_a_cause_and_a_next_step ... ok
+test diagnostics::tests::every_refusal_the_host_can_report_has_words_for_it ... ok
+test diagnostics::tests::a_guard_doing_its_job_is_not_an_error ... ok
+test diagnostics::tests::a_record_that_is_off_keeps_nothing_and_says_how_much_it_refused ... ok
+test binding::tests::a_refused_action_never_runs ... ok
+test diagnostics::tests::the_registered_kinds_are_all_there ... ok
+test diagnostics::tests::the_count_ceiling_keeps_the_newest_and_says_how_many_it_dropped ... ok
+test diagnostics::tests::the_switch_reaches_the_runtime_record_the_same_way_writes_do ... ok
+test diagnostics::tests::the_runtime_record_is_named_once_and_written_from_anywhere ... ok
+test draft::tests::a_draft_is_invalid_only_while_its_text_does_not_parse ... ok
+test binding::tests::the_actions_a_full_scope_refuses_are_counted_for_the_application ... ok
+test draft::tests::a_refused_commit_goes_back_to_the_application_value ... ok
+test draft::tests::a_touched_draft_outlasts_an_outside_change_and_settles_on_blur ... ok
+test draft::tests::after_a_commit_an_untouched_field_follows_the_application_again ... ok
+test draft::tests::an_input_without_a_focus_event_is_still_an_edit ... ok
+test draft::tests::blur_commits_once ... ok
+test draft::tests::enter_commits_once_and_the_field_settles_on_the_application_value ... ok
+test draft::tests::escape_drops_the_draft_and_asks_for_the_preview_back ... ok
+test draft::tests::escape_on_an_untouched_field_is_not_the_field_s_key ... ok
+test draft::tests::every_input_that_parses_is_a_preview_and_a_refusal_keeps_the_draft ... ok
+test draft::tests::text_that_never_parsed_commits_nothing_and_shows_the_application_value ... ok
+test draft::tests::text_that_stopped_parsing_commits_the_last_preview ... ok
+test draft::tests::unfocused_and_untouched_the_field_shows_the_application_value ... ok
+test drag::tests::a_cancelled_drag_delivers_nothing_and_ignores_what_arrives_after ... ok
+test drag::tests::a_drop_on_a_target_that_agreed_happens_once ... ok
+test drag::tests::a_late_yes_about_a_target_the_pointer_left_is_dropped ... ok
+test drag::tests::a_hundred_drags_deliver_exactly_a_hundred_drops ... ok
+test diagnostics::tests::the_byte_ceiling_holds_even_when_the_count_would_not ... ok
+test drag::tests::a_pointer_event_that_did_not_move_asks_the_region_nothing ... ok
+test drag::tests::a_region_answer_about_a_place_the_pointer_has_left_is_dropped ... ok
+test drag::tests::a_region_names_the_target_it_found_and_the_drop_goes_there ... ok
+test drag::tests::a_region_that_finds_nothing_there_delivers_nothing ... ok
+test drag::tests::a_release_with_no_drag_at_all_is_not_a_drop ... ok
+test drag::tests::a_yes_or_no_cannot_answer_a_question_only_a_region_can_name ... ok
+test drag::tests::accepted_then_released_over_a_target_that_refuses_delivers_nothing ... ok
+test drag::tests::accepted_then_released_over_nothing_delivers_nothing ... ok
+test binding::tests::a_stream_of_moves_neither_delays_nor_crowds_out_the_clicks_between_them ... ok
+test drag::tests::an_answer_from_another_session_is_not_this_session_s ... ok
+test drag::tests::entering_a_region_withdraws_what_a_dom_target_had_said ... ok
+test drag::tests::every_drag_counts_its_own_questions_from_one ... ok
+test drag::tests::leaving_the_region_withdraws_what_it_said ... ok
+test drag::tests::moving_inside_a_region_keeps_the_answer_until_a_newer_one_contradicts_it ... ok
+test drag::tests::releasing_inside_a_region_waits_for_what_it_answers ... ok
+test drag::tests::releasing_with_a_question_outstanding_waits_for_its_answer ... ok
+test drag::tests::staying_over_one_target_asks_it_once ... ok
+test files::tests::a_file_that_fits_and_is_the_right_kind_is_read ... ok
+test files::tests::a_kind_we_do_not_read_is_refused_with_the_kinds_we_do ... ok
+test files::tests::a_refusal_says_what_was_wrong_with_the_file ... ok
+test files::tests::an_import_with_no_kinds_takes_any_name ... ok
+test files::tests::only_a_loaded_import_carries_bytes ... ok
+test files::tests::size_is_decided_before_kind_so_a_huge_file_is_never_read ... ok
+test files::tests::the_picker_offers_exactly_what_the_check_would_take ... ok
+test form::tests::a_change_clears_what_was_said_about_the_old_value ... ok
+test form::tests::a_new_form_is_clean_and_ready ... ok
+test form::tests::a_rule_that_stops_failing_stops_showing ... ok
+test form::tests::a_field_the_form_does_not_have_is_recorded_rather_than_ignored ... ok
+test form::tests::a_failed_rule_names_the_first_field_in_field_order_not_the_first_rule_to_fail ... ok
+test form::tests::a_save_that_fails_keeps_the_form_dirty_and_says_why ... ok
+test form::tests::an_error_from_a_check_survives_the_next_ask_and_a_rules_error_does_not ... ok
+test form::tests::a_validation_that_fails_turns_a_waiting_submit_into_a_block ... ok
+test form::tests::asking_twenty_times_after_an_async_failure_never_saves ... ok
+test form::tests::can_submit_is_false_for_each_of_the_three_reasons ... ok
+test form::tests::changing_a_field_while_a_submit_waits_voids_the_submit ... ok
+test form::tests::submitting_while_a_validation_runs_waits_and_then_saves_once ... ok
+test form::tests::twenty_clicks_while_a_save_runs_are_one_save ... ok
+test form::tests::twenty_validations_arriving_out_of_order_leave_the_latest_one_showing ... ok
+test i18n::tests::a_language_is_matched_on_its_language_and_not_its_punctuation ... ok
+test i18n::tests::a_language_says_its_own_name_in_itself ... ok
+test form::tests::asking_right_after_a_change_waits_for_the_check_that_change_started ... ok
+test i18n::tests::every_message_exists_in_every_language_and_is_its_own ... ok
+test i18n::tests::every_message_has_a_name_of_its_own ... ok
+test i18n::tests::no_message_was_left_in_the_other_language ... ok
+test i18n::tests::the_first_language_we_have_wins_and_english_is_the_fallback ... ok
+test job::tests::a_cancelled_job_stops_and_a_closed_scope_stops_everything ... ok
+test job::tests::a_newer_job_stops_the_older_one_at_its_next_slice ... ok
+test job::tests::a_slice_stops_on_the_clock_rather_than_on_a_row_count ... ok
+test job::tests::a_slice_that_costs_nothing_still_stops_at_the_row_allowance ... ok
+test job::tests::a_write_between_two_slices_stops_the_job_before_it_reads_anything ... ok
+test job::tests::a_write_during_the_last_slice_is_caught_at_the_end_of_it ... ok
+test job::tests::an_answer_that_arrives_after_a_newer_question_is_not_an_answer ... ok
+test job::tests::how_a_job_ended_has_a_name_a_view_can_show ... ok
+test job::tests::progress_only_ever_goes_forward_and_stops_at_the_total ... ok
+test job::tests::work_that_fits_in_one_slice_takes_one_slice ... ok
+test overlay::tests::a_centred_layer_is_centred_and_never_placed_off_the_top_or_left ... ok
+test overlay::tests::a_fitted_layer_goes_over_its_anchor_when_it_does_not_fit_under ... ok
+test overlay::tests::a_fitted_layer_moves_left_rather_than_past_the_right_edge ... ok
+test overlay::tests::a_fitted_layer_stays_under_its_anchor_while_it_fits_there ... ok
+test overlay::tests::a_fitted_layer_that_fits_neither_side_is_as_low_as_the_viewport_allows ... ok
+test overlay::tests::a_layer_sits_under_its_anchor_and_shares_its_left_edge ... ok
+test overlay::tests::a_region_anchor_is_measured_from_the_region_it_belongs_to ... ok
+test region::tests::a_canvas_is_asked_three_times_and_the_answer_is_inside_two_seconds ... ok
+test overlay::tests::tab_wraps_only_at_the_two_ends_of_a_modal_layer ... ok
+test region::tests::every_retry_says_which_one_it_is ... ok
+test router::tests::a_back_pressed_during_a_recovery_is_re_aimed_from_where_it_landed ... ok
+test router::tests::a_number_is_a_depth_in_the_history_that_exists_not_a_running_total ... ok
+test router::tests::a_parameter_arrives_decoded ... ok
+test router::tests::a_parameter_binds_by_name ... ok
+test router::tests::a_path_outside_the_base_is_not_ours ... ok
+test router::tests::a_path_that_matches_nothing_is_an_answer_rather_than_an_error ... ok
+test router::tests::a_push_ends_any_recovery_because_it_truncates_what_was_ahead ... ok
+test router::tests::a_push_takes_the_next_number_and_a_replace_keeps_the_one_it_has ... ok
+test router::tests::a_recovery_that_will_not_converge_stops_rather_than_fighting ... ok
+test router::tests::a_refused_move_is_undone_in_one_go_of_the_difference ... ok
+test router::tests::a_static_route_matches_only_itself ... ok
+test router::tests::a_trailing_slash_is_the_same_place ... ok
+test router::tests::an_address_is_the_base_and_the_path_and_the_query ... ok
+test router::tests::an_allowed_move_is_simply_accepted ... ok
+test router::tests::an_entry_this_router_did_not_push_is_left_alone ... ok
+test scheduler::tests::a_batch_is_bounded_and_the_rest_stays_in_order ... ok
+test scheduler::tests::a_continuous_action_keeps_its_place_among_the_discrete_ones ... ok
+test scheduler::tests::a_full_queue_reports_backpressure_and_spends_no_sequence_number ... ok
+test scheduler::tests::a_second_stream_still_cannot_push_a_click_into_backpressure ... ok
+test scheduler::tests::discrete_actions_keep_arrival_order_and_consecutive_sequence_numbers ... ok
+test scheduler::tests::only_the_latest_continuous_action_survives_and_it_uses_no_queue_capacity ... ok
+test scheduler::tests::two_streams_supersede_themselves_and_not_each_other ... ok
+test selection::tests::an_empty_selection_has_nothing_hidden ... ok
+test selection::tests::deleting_an_identity_deselects_it_and_leaves_the_rest ... ok
+test selection::tests::how_many_are_hidden_is_a_question_about_the_view ... ok
+test selection::tests::reordering_and_hiding_change_nothing_about_what_is_selected ... ok
+test selection::tests::setting_replaces_and_adding_does_not ... ok
+test selection::tests::toggling_says_what_the_identity_now_is ... ok
+test shortcut::tests::mod_is_the_command_key_of_the_platform_it_was_parsed_for ... ok
+test shortcut::tests::a_shortcut_matches_the_keys_the_browser_reports_for_it ... ok
+test shortcut::tests::a_shortcut_prints_in_aria_form_and_reads_back_the_same_anywhere ... ok
+test shortcut::tests::outside_a_browser_the_platform_is_the_ordinary_one ... ok
+test shortcut::tests::names_are_read_without_regard_to_case_or_which_alias_was_used ... ok
+test shortcut::tests::text_that_is_not_a_shortcut_says_why ... ok
+test task::tests::a_cancel_leaves_nothing_that_can_deliver ... ok
+test task::tests::a_newer_request_makes_an_older_one_stale ... ok
+test task::tests::a_hundred_pairs_answered_backwards_all_end_on_the_newer_answer ... ok
+test task::tests::a_refused_delivery_leaves_the_value_alone ... ok
+test task::tests::nothing_delivers_into_a_view_that_has_gone ... ok
+test task::tests::the_four_states_name_themselves ... ok
+test theme::color::tests::contrast_black_on_white_is_twenty_one ... ok
+test theme::color::tests::contrast_composites_foreground_alpha ... ok
+test theme::color::tests::contrast_known_canvas_composites_background_alpha ... ok
+test theme::color::tests::all_output_formats_round_trip_the_resolved_color ... ok
+test theme::codec::tests::css_merges_layered_blocks_with_last_declaration_diagnostics ... ok
+test theme::color::tests::contrast_unknown_background_returns_none ... ok
+test theme::color::tests::formats_opaque_and_transparent_hex ... ok
+test theme::color::tests::grayscale_hsl_has_zero_hue_and_retains_alpha ... ok
+test theme::codec::tests::imports_never_visit_urls_and_ignore_mapping_rules_and_unknown_token_prefixes ... ok
+test theme::color::tests::hsl_conversion_stays_finite_near_black ... ok
+test theme::color::tests::hex_supports_short_long_and_alpha_forms ... ok
+test theme::color::tests::hsl_supports_hue_units_wrapping_and_alpha ... ok
+test theme::codec::tests::source_positions_and_nested_limits_are_bounded ... ok
+test theme::color::tests::nonfinite_values_and_invalid_alpha_are_rejected ... ok
+test theme::color::tests::oklch_clips_channels_and_reports_out_of_gamut ... ok
+test theme::color::tests::oklch_fixed_srgb_primary_vectors_match ... ok
+test theme::color::tests::oklch_neutral_and_percentage_chroma_match ... ok
+test theme::color::tests::oklch_format_retains_near_neutral_chroma ... ok
+test theme::color::tests::rgb_and_hsl_channels_follow_css_range_clamping ... ok
+test theme::color::tests::rgb_supports_legacy_modern_percentages_and_alpha ... ok
+test theme::color::tests::source_over_returns_unpremultiplied_channels ... ok
+test theme::codec::tests::malformed_quotes_braces_and_oversize_inputs_are_rejected ... ok
+test theme::color::tests::source_over_transparent_colors_stays_finite ... ok
+test theme::contrast_tests::every_pair_the_themes_actually_use_reaches_its_target ... ok
+test theme::contrast_tests::the_luminance_of_the_two_ends_is_what_it_should_be ... ok
+test theme::color::tests::transparent_preserves_zero_alpha ... ok
+test theme::color::tests::unsupported_or_malformed_css_is_rejected ... ok
+test theme::codec::tests::json_round_trip_keeps_author_values_and_unknown_tokens ... ok
+test theme::codec::tests::unsupported_known_values_reject_the_whole_candidate_even_if_overwritten ... ok
+test theme::document::tests::identity_rejects_unknown_version_and_invalid_names ... ok
+test theme::document::tests::legacy_conversion_keeps_colors_and_separates_unit_from_layout_gap ... ok
+test theme::document::tests::patch_rejects_unknown_tokens_without_mutating_the_source ... ok
+test theme::metrics::tests::font_stacks_reject_declaration_injection_and_incomplete_input ... ok
+test theme::metrics::tests::font_families_preserve_quoted_commas_and_unicode ... ok
+test theme::document::tests::json_preserves_author_values_and_requires_both_modes_and_string_tokens ... ok
+test theme::fonts::tests::unknown_author_stack_survives_and_each_slot_has_visible_packaged_fallback ... ok
+test theme::document::tests::published_schema_requires_the_same_tokens_as_the_rust_model ... ok
+test theme::metrics::tests::lengths_reject_unbounded_nonfinite_and_unsupported_values ... ok
+test theme::metrics::tests::lengths_use_the_supplied_root_size_and_allow_zero_radius ... ok
+test theme::metrics::tests::letter_spacing_handles_normal_and_checks_em_bounds ... ok
+test theme::codec::tests::exports_skip_unknown_json_values_and_include_packaged_font_notices ... ok
+test theme::metrics::tests::opacity_rejects_nonfinite_and_outside_unit_interval ... ok
+test theme::metrics::tests::reference_px_and_rem_letter_spacing_resolves_to_em ... ok
+test theme::codec::tests::json_rejects_duplicates_missing_modes_schema_and_non_string_tokens ... ok
+test theme::fonts::tests::catalogue_resources_exist_and_cover_all_slots ... ok
+test theme::resolve::tests::fonts_pick_packaged_families_and_report_the_requested_fallback ... ok
+test theme::resolve::tests::host_reduced_motion_overrides_the_document ... ok
+test theme::resolve::tests::css_projection_separates_legacy_gap_and_new_unit_and_emits_zero_shadows ... ok
+test theme::resolve::tests::gamut_and_common_field_differences_are_visible_and_author_values_survive ... ok
+test theme::fonts::tests::all_catalogue_faces_resolve_to_their_packaged_resource ... ok
+test theme::resolve::tests::legacy_resolves_without_losing_alpha_or_coupling_sizes ... ok
+test theme::tests::a_colour_is_written_the_way_both_halves_read_it ... ok
+test theme::tests::a_patched_theme_keeps_everything_the_patch_did_not_name ... ok
+test theme::tests::a_radius_carries_its_unit ... ok
+test theme::resolve::tests::boundary_patch_recomputes_geometry_and_shadows_using_host_rem_context ... ok
+test theme::tests::an_override_writes_only_what_it_names ... ok
+test theme::resolve::tests::missing_tokens_fail_and_unknown_tokens_generate_diagnostics ... ok
+test theme::resolve::tests::empty_shadow_layers_are_transparent_even_with_a_color_utility ... ok
+test theme::tests::every_property_a_patch_can_write_is_one_it_can_also_take_back ... ok
+test theme::resolve::tests::sdk_and_export_use_the_same_shadow_utility_with_legacy_fallbacks ... ok
+test theme::tests::less_movement_is_no_movement_rather_than_no_result ... ok
+test theme::resolve::tests::radius_zero_is_valid_and_never_derives_negative_corners ... ok
+test theme::tests::the_two_themes_name_the_same_tokens_and_agree_on_nothing_but_the_metrics ... ok
+test theme::resolve::tests::shadows_derive_layers_from_the_same_geometry_and_rgba ... ok
+test toast::tests::a_message_shows_with_the_default_options_until_its_time_is_up ... ok
+test toast::tests::a_replaced_message_timer_leaves_its_successor_alone ... ok
+test toast::tests::a_timer_that_fires_early_is_told_how_long_is_left ... ok
+test toast::tests::dismissing_closes_only_the_message_it_names ... ok
+test toast::tests::every_message_gets_a_higher_number_and_replaces_the_one_before ... ok
+test toast::tests::every_tone_has_a_name_of_its_own ... ok
+test theme::resolve::tests::invalid_fields_report_mode_and_token_without_modifying_author_data ... ok
+test theme::codec::tests::css_scoped_identifiers_are_escaped_and_never_become_selector_code ... ok
+test theme::color::tests::numeric_formats_round_trip_srgb_cube_and_neutrals ... ok
+test theme::codec::tests::scoped_css_preserves_legacy_host_radius_spacing_and_font_defaults ... ok
+test theme::codec::tests::css_profiles_round_trip_known_author_metrics_and_resolved_colors ... ok
+test theme::codec::tests::css_exports_keep_shadow_color_utilities_live_in_every_profile_and_notation ... ok
+test theme::codec::tests::every_css_color_notation_preserves_resolved_channels_and_alpha ... ok
+
+test result: ok. 225 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running unittests src/main.rs (target/debug/deps/theme_studio-92dacdf11d69c7aa)
+
+running 43 tests
+test color_editor::tests::home_end_do_not_change_lightness_and_unknown_keys_pass_through ... ok
+test color_editor::tests::keyboard_preserves_the_other_axis_and_shift_step ... ok
+test color_editor::tests::plane_corners_and_center_match_saturation_lightness ... ok
+test color_editor::tests::captured_pointer_coordinates_clamp_at_edges ... ok
+test color_editor::tests::zero_size_and_nonfinite_geometry_are_not_color_updates ... ok
+test data_tools::tests::invalid_and_oversize_imports_never_produce_an_apply_candidate ... ok
+test persistence::tests::bad_cache_keeps_exact_raw_and_rejects_shape_version_and_invalid_dark_mode ... ok
+test persistence::tests::valid_cache_round_trip_preserves_author_values_preferences_and_unknown_tokens ... ok
+test data_tools::tests::import_review_lists_identity_added_removed_and_both_mode_changes_without_mutating ... ok
+test data_tools::tests::save_requires_separate_overwrite_intent_and_copy_rename_conflicts_are_rejected ... ok
+test persistence::tests::invalid_candidate_duplicate_names_ids_and_unknown_target_leave_envelope_unchanged ... ok
+test state::tests::adopting_an_external_draft_keeps_its_preset_reset_and_undo_history ... ok
+test persistence::tests::preference_enums_duplicates_and_unknown_fields_are_rejected_without_losing_raw ... ok
+test state::tests::color_scope_is_explicit_and_common_fields_are_always_shared ... ok
+test persistence::tests::named_crud_preserves_identity_intent_and_never_changes_original ... ok
+test state::tests::gesture_returning_to_its_origin_keeps_the_redo_branch ... ok
+test data_tools::tests::exports_route_profiles_color_formats_and_lossless_json_to_actual_sdk ... ok
+test state::tests::gesture_updates_make_one_history_entry_and_no_commit_revision ... ok
+test state::tests::commit_keeps_the_update_pair_and_cancel_refreshes_the_restored_document ... ok
+test state::tests::hsl_default_scope_both_current_scope_and_grayscale_are_finite ... ok
+test state::tests::common_edit_normalizes_both_modes_without_losing_initial_values ... ok
+test state::tests::invalid_hsl_and_gesture_commands_preserve_state ... ok
+test state::tests::invalid_half_value_and_other_mode_validation_are_atomic ... ok
+test state::tests::no_op_skips_resolve_and_history ... ok
+test state::tests::cancel_restores_document_and_redo_but_committed_branch_clears_redo ... ok
+test state::tests::invalid_update_and_no_op_gesture_do_not_change_state ... ok
+test state::tests::rejected_validation_counts_work_without_replacing_the_valid_cache ... ok
+test theme_controls::tests::author_parameters_preserve_supported_units_and_reject_incomplete_text ... ok
+test state::tests::hsl_updates_use_gesture_origin_and_identity_preserves_author_values ... ok
+test state::tests::preset_mode_checkpoint_and_reset_are_independent_of_history ... ok
+test theme_controls::tests::translucent_text_is_composited_and_unknown_surface_backing_is_not_a_pass ... ok
+test state::tests::resolved_pair_reuses_initial_and_accepted_edit_validation ... ok
+test state::tests::restored_modified_draft_resets_to_the_selected_checkpoint_without_startup_history ... ok
+test state::tests::next_hsl_gesture_starts_from_the_last_committed_result ... ok
+test data_tools::tests::full_library_permits_rename_and_confirmed_overwrite_but_rejects_new_copy ... ok
+test state::tests::undo_and_every_context_input_refresh_the_pair_once ... ok
+test presets::tests::rustify_presets_keep_the_legacy_starting_mode_palettes ... ok
+test presets::tests::reference_mode_differences_and_normal_letter_spacing_remain_intact ... ok
+test presets::tests::normalization_preserves_every_reference_author_value ... ok
+test presets::tests::every_reference_preset_and_both_rustify_presets_resolve_in_both_modes ... ok
+test state::tests::history_is_bounded_to_one_hundred_documents ... ok
+test persistence::tests::every_supported_preference_value_and_eighty_unicode_character_name_round_trip ... ok
+test persistence::tests::hundred_theme_limit_allows_explicit_overwrite_and_rejects_extra_or_duplicate_saved_ids ... ok
+
+test result: ok. 43 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+
+     Running unittests src/lib.rs (target/debug/deps/vellum-b21b971e150d5629)
+
+running 137 tests
+test affine::tests::rotation_keeps_the_center_fixed ... ok
+test affine::tests::inverse_restores_a_point_after_composition ... ok
+test affine::tests::empty_bounds_have_no_union ... ok
+test affine::tests::singular_inverse_matches_reference_identity ... ok
+test affine::tests::rotated_bounds_enclose_every_corner ... ok
+test commands::property_tests::property_invalid_numeric_input_leaves_document_untouched ... ok
+test commands::tests::color_tokens_remap_exact_matches_across_pages ... ok
+test commands::tests::distribution_requires_three_layers_and_equalizes_gaps ... ok
+test commands::property_tests::property_layout_change_immediately_places_children ... ok
+test commands::property_tests::property_frame_width_moves_right_constrained_child ... ok
+test commands::property_tests::property_unknown_values_are_retained_without_disturbing_other_extensions ... ok
+test commands::property_tests::property_typography_increases_height_without_shrinking_existing_box ... ok
+test commands::property_tests::property_edit_creates_instance_override_that_survives_propagation ... ok
+test commands::property_tests::property_numeric_strings_follow_javascript_number_coercion ... ok
+test commands::tests::duplicate_remaps_descendants_without_cloning_selected_child_twice ... ok
+test commands::tests::grouping_different_rotated_parents_preserves_world_space ... ok
+test commands::tests::grouping_and_ungrouping_preserve_rotated_world_transforms ... ok
+test commands::tests::component_propagation_respects_overrides_and_instance_position ... ok
+test commands::tests::align_supports_six_edges_and_centers ... ok
+test commands::tests::reorder_supports_all_four_directions ... ok
+test commands::tests::clipboard_uses_world_space_and_pastes_with_24_pixel_offset ... ok
+test document::tests::accepts_json_float_notation_for_version_one ... ok
+test document::tests::applies_type_defaults_and_falls_back_to_first_page ... ok
+test commands::tests::invalid_clipboard_does_not_mutate_document_or_assets ... ok
+test document::tests::accepts_supported_image_types_case_insensitively ... ok
+test document::tests::rejects_cycles ... ok
+test commands::tests::child_component_geometry_propagates_but_root_geometry_stays_placed ... ok
+test document::tests::rejects_injected_page_ids ... ok
+test document::tests::rejects_invalid_page_name ... ok
+test document::tests::rejects_invalid_page_nodes ... ok
+test document::tests::preserves_empty_string_parent_id_as_the_reference_does ... ok
+test document::tests::enforces_page_and_layer_id_length_limits ... ok
+test document::tests::rejects_invalid_vector_paths ... ok
+test document::tests::rejects_empty_pages ... ok
+test document::tests::rejects_injected_node_ids ... ok
+test commands::property_tests::property_percentages_and_numeric_limits_match_reference ... ok
+test document::tests::rejects_negative_dimensions ... ok
+test document::tests::rejects_duplicate_layer_ids_across_pages ... ok
+test document::tests::rejects_non_string_text ... ok
+test document::tests::rejects_invalid_vector_coordinates_and_handles ... ok
+test document::tests::rejects_parents_on_another_page ... ok
+test document::tests::rejects_unsupported_document_format ... ok
+test document::tests::rejects_unknown_layer_type ... ok
+test document::tests::preserves_unknown_fields_at_every_document_level ... ok
+test document::tests::rejects_unsupported_document_version ... ok
+test gesture::tests::absent_falsy_handles_preserve_the_path_anchors ... ok
+test document::tests::walks_hierarchy_and_removes_descendants ... ok
+test gesture::tests::create_shift_and_alt_make_a_centered_square ... ok
+test document::tests::touch_and_refresh_invalidate_revision_and_update_versions ... ok
+test gesture::tests::frame_fit_uses_reference_top_offset_and_zoom_limit ... ok
+test gesture::tests::line_creation_snaps_to_45_degrees ... ok
+test gesture::tests::moving_in_a_rotated_parent_converts_world_delta_to_local_axes ... ok
+test gesture::tests::moving_threshold_is_strictly_greater_than_two_pixels ... ok
+test gesture::tests::normalize_path_preserves_world_points ... ok
+test gesture::tests::path_alt_breaks_handle_symmetry ... ok
+test gesture::tests::multiple_resize_scales_text_and_positions ... ok
+test document::tests::rejects_missing_invalid_and_excessive_geometry ... ok
+test gesture::tests::pen_closes_two_point_paths_at_less_than_eight_screen_pixels ... ok
+test gesture::tests::path_anchor_translates_both_handles ... ok
+test gesture::tests::pen_handles_require_more_than_three_screen_pixels ... ok
+test gesture::tests::pen_shift_snaps_angle_without_changing_length ... ok
+test document::tests::rejects_unsupported_image_assets ... ok
+test gesture::tests::pinch_preserves_the_initial_world_center ... ok
+test gesture::tests::resize_shift_and_alt_preserves_ratio_about_center ... ok
+test gesture::tests::rotation_negative_half_step_rounds_toward_positive_infinity ... ok
+test gesture::tests::rotation_shift_snaps_the_delta_to_fifteen_degrees ... ok
+test document::tests::portable_roundtrip_preserves_geometry_and_unknown_floats_exactly ... ok
+test gesture::tests::shift_move_locks_to_larger_axis_with_vertical_ties ... ok
+test gesture::tests::wheel_shift_translates_vertically_scrolled_input_horizontally ... ok
+test gesture::tests::zoom_keeps_the_pointer_world_position_fixed ... ok
+test gesture::tests::single_resize_in_rotated_parent_preserves_the_fixed_world_corner ... ok
+test history::tests::cancel_restores_pending_geometry_and_assets ... ok
+test history::tests::changing_only_an_asset_is_undoable ... ok
+test history::tests::nested_begin_retains_original_snapshot_and_commit_discards_redo ... ok
+test history::tests::discarded_text_edit_preserves_external_update_and_previous_history ... ok
+test hit::tests::deep_selection_reaches_the_child ... ok
+test history::tests::unchanged_transaction_does_not_enter_history ... ok
+test history::tests::undo_and_redo_restore_replaced_documents_and_asset_keys ... ok
+test history::tests::undo_commits_pending_edit_before_reverting_it ... ok
+test hit::tests::ellipse_uses_curved_boundary_and_zoom_tolerance ... ok
+test hit::tests::handles_have_a_strict_seven_pixel_radius ... ok
+test hit::tests::marquee_requires_full_containment ... ok
+test hit::tests::inherited_lock_skips_the_entire_subtree ... ok
+test hit::tests::rounded_frame_clip_excludes_child_corners ... ok
+test hit::tests::shallow_marquee_includes_empty_parent_ids ... ok
+test hit::tests::path_tester_receives_local_coordinates_and_zoom_stroke_tolerance ... ok
+test hit::tests::snap_threshold_scales_with_zoom_and_reports_the_axis ... ok
+test hit::tests::zero_path_dimensions_fall_back_to_node_dimensions ... ok
+test layout::tests::frame_right_constraint_tracks_width_delta ... ok
+test layout::tests::vertical_layout_matches_reference_offsets ... ok
+test layout::tests::group_resize_scales_descendants_and_font_size ... ok
+test layout::tests::horizontal_layout_matches_reference_offsets ... ok
+test raster_policy::tests::allocates_at_least_one_pixel_for_empty_geometry ... ok
+test raster_policy::tests::cache_key_changes_with_node_version_and_resolution ... ok
+test raster_policy::tests::caps_raster_size_at_2044_and_preserves_aspect_ratio ... ok
+test raster_policy::tests::evicts_least_recently_accessed_entries_with_a_64_mib_default ... ok
+test raster_policy::tests::oversized_entry_does_not_destroy_existing_working_set ... ok
+test raster_policy::tests::pads_only_paths_and_lines_for_strokes ... ok
+test raster_policy::tests::quantizes_resolution_upward_in_powers_of_two_and_clamps ... ok
+test raster_policy::tests::remove_and_clear_release_cache_accounting ... ok
+test raster_policy::tests::replacement_updates_bytes_and_access_order_without_stale_entries ... ok
+test scene::tests::clipping_chain_contains_only_clipping_frames ... ok
+test scene::tests::empty_parent_id_is_a_root_for_default_bounds ... ok
+test scene::tests::hierarchy_drives_paint_order_and_world_translation ... ok
+test scene::tests::hidden_nodes_keep_world_geometry_but_leave_paint_order ... ok
+test svg_export::tests::embeds_images_with_cover_clipping_and_optional_outline ... ok
+test svg_export::tests::exports_group_descendants_without_a_group_shape ... ok
+test svg_export::tests::exports_linear_gradient_and_drop_shadow_with_original_geometry ... ok
+test svg_export::tests::rejects_empty_selection ... ok
+test svg_export::tests::exports_scaled_open_and_closed_bezier_paths ... ok
+test svg_export::tests::ignores_falsy_optional_handles_accepted_by_the_file_format ... ok
+test svg_export::tests::exports_rectangles_ellipses_and_lines_in_paint_order ... ok
+test svg_export::tests::path_defaults_to_its_own_dimensions_and_empty_path_stays_empty ... ok
+test svg_export::tests::token_export_preserves_color_typography_and_extension_values ... ok
+test svg_export::tests::retains_nested_world_clips_inherited_opacity_and_selected_descendants ... ok
+test text_layout::tests::allows_the_browser_measurement_provider_to_apply_its_locale ... ok
+test text_layout::tests::calculates_line_height_total_height_and_baseline ... ok
+test text_layout::tests::breaks_oversized_words_at_grapheme_boundaries ... ok
+test text_layout::tests::empty_text_still_occupies_a_line_and_zero_metrics_use_defaults ... ok
+test svg_export::tests::uses_shared_text_wrapping_alignment_and_escaped_font_properties ... ok
+test text_layout::tests::falls_back_to_unicode_characters_when_segmenter_is_unavailable ... ok
+test text_layout::tests::includes_letter_spacing_in_the_injected_measurement ... ok
+test text_layout::tests::never_splits_a_grapheme_even_when_it_exceeds_available_width ... ok
+test text_layout::tests::preserves_empty_paragraphs_and_terminal_newline ... ok
+test text_layout::tests::uses_inter_system_stack_and_sanitizes_custom_font_names ... ok
+test text_layout::tests::uses_javascript_whitespace_rules ... ok
+test text_layout::tests::transforms_unicode_upper_lower_and_title_case ... ok
+test text_layout::tests::wraps_words_and_trims_only_at_line_boundaries ... ok
+test document::tests::rejects_more_than_100_pages ... ok
+test history::tests::retains_only_80_committed_steps ... ok
+test document::tests::rejects_text_beyond_100000_utf16_units ... ok
+test document::tests::accepts_100_ancestors_and_rejects_101 ... ok
+test document::tests::parses_forma_with_three_pages_and_202_layers ... ok
+test commands::tests::component_instances_can_be_placed_on_another_page ... ok
+test starter::tests::starter_keeps_forma_page_layer_counts ... ok
+test document::tests::rejects_more_than_50000_vector_points ... ok
+test document::tests::rejects_more_than_50000_layers ... ok
+
+test result: ok. 137 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.62s
+
+     Running unittests src/main.rs (target/debug/deps/vellum-504c15289f4e2b03)
+
+running 5 tests
+test shaders::tests::clips_transform_rebased_world_back_into_clip_local_space ... ok
+test shaders::tests::color_and_uploaded_pixels_use_matching_premultiplied_alpha ... ok
+test shaders::tests::rebasing_retains_subpixel_offsets_at_large_coordinates ... ok
+test shaders::tests::raster_padding_is_transformed_with_both_matrix_axes ... ok
+test shaders::tests::shadow_preserves_shape_transform_and_uses_half_blur ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/main.rs (target/debug/deps/xtask-97320850768e2287)
+
+running 32 tests
+test css::tests::the_first_differing_line_is_reported_with_both_sides ... ok
+test bridge::tests::message_string_is_decoded_from_the_from_wasm_layout ... ok
+test bridge::tests::module_exports_hash_and_factory_with_the_source_verbatim ... ok
+test build::tests::the_base_is_normalised_the_way_serve_normalises_it ... ok
+test build::tests::a_build_for_the_root_still_names_its_files_from_the_root ... ok
+test build::tests::a_build_for_a_sub_path_names_its_own_files_absolutely ... ok
+test doctor::tests::mise_pin_reads_a_string_and_an_inline_table ... ok
+test css::tests::a_line_only_one_side_has_is_reported_against_the_end_of_file ... ok
+test build::tests::sizes_are_bucketed_by_extension ... ok
+test build::tests::a_build_for_a_sub_path_has_its_own_directory ... ok
+test doctor::tests::lock_version_reads_the_package_block ... ok
+test css::tests::a_long_line_is_cut_around_where_it_differs ... ok
+test serve::fault_tests::a_fault_names_the_file_it_breaks ... ok
+test serve::fault_tests::a_stale_bridge_claims_a_hash_the_wasm_does_not_have ... ok
+test serve::fault_tests::each_kind_of_damage_is_the_one_it_says ... ok
+test serve::tests::a_route_is_answered_with_the_application_and_a_missing_file_is_not ... ok
+test serve::tests::base_paths_are_normalized_to_slash_wrapped_form ... ok
+test serve::tests::strict_policy_allows_wasm_but_no_script_eval ... ok
+test build::tests::an_examples_input_compiles_only_the_sources_it_names ... ok
+test sources::tests::list_fingerprint_is_order_independent_and_content_sensitive ... ok
+test sources::tests::unchanged_tree_reports_no_drift ... ok
+test sources::tests::modified_added_and_removed_files_are_classified ... ok
+test tailwind::tests::only_the_pinned_version_is_accepted ... ok
+test tailwind::tests::mise_pins_the_version_this_checks_for ... ok
+test tailwind::tests::the_banner_names_the_version ... ok
+test verify::tests::the_three_suites_ask_for_different_things ... ok
+test serve::tests::requests_resolve_inside_the_base_and_never_escape_the_root ... ok
+test serve::tests::a_revalidation_is_answered_only_for_the_version_the_browser_has ... ok
+test verify::tests::every_later_record_is_prepared ... ok
+test verify::tests::a_blank_form_is_not_a_handed_in_record ... ok
+test build::tests::an_example_with_its_own_input_compiles_it_and_one_without_links_the_committed_sheet ... ok
+test build::tests::compressed_sizes_are_what_a_compressing_host_would_send ... ok
+
+test result: ok. 32 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+mbx[cache]: 0 hits, 2 misses, 13 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: lent the same 21.9 GiB to every checkout at once. none of them has checked.
+
+[theme-M6 validation]
+command: mise exec -- mbx test --workspace --lib --bins
+exit_code: 0
+observed: {"suites": 11, "counts": {"passed": 585, "failed": 0, "ignored": 0, "measured": 0, "filtered": 0}, "per_suite": [{"passed": 5, "failed": 0, "ignored": 0, "measured": 0, "filtered": 0, "suite": "src/main.rs (target/debug/deps/component_catalog-c78753215a7115f3)"}, {"passed": 39, "failed": 0, "ignored": 0, "measured": 0, "filtered": 0, "suite": "src/main.rs (target/debug/deps/data_workbench-196a1daab3befadc)"}, {"passed": 0, "failed": 0, "ignored": 0, "measured": 0, "filtered": 0, "suite": "src/main.rs (target/debug/deps/fusion_basic-80f1f28dfac69261)"}, {"passed": 7, "failed": 0, "ignored": 0, "measured": 0, "filtered": 0, "suite": "src/main.rs (target/debug/deps/property_workbench-25a8509de94f065b)"}, {"passed": 89, "failed": 0, "ignored": 0, "measured": 0, "filtered": 0, "suite": "src/lib.rs (target/debug/deps/rustify_components-aa53139cbd2de049)"}, {"passed": 3, "failed": 0, "ignored": 0, "measured": 0, "filtered": 0, "suite": "src/lib.rs (target/debug/deps/rustify_makepad-858c59b05a15a3e6)"}, {"passed": 225, "failed": 0, "ignored": 0, "measured": 0, "filtered": 0, "suite": "src/lib.rs (target/debug/deps/rustify_ui-b3e137834eb0992d)"}, {"passed": 43, "failed": 0, "ignored": 0, "measured": 0, "filtered": 0, "suite": "src/main.rs (target/debug/deps/theme_studio-92dacdf11d69c7aa)"}, {"passed": 137, "failed": 0, "ignored": 0, "measured": 0, "filtered": 0, "suite": "src/lib.rs (target/debug/deps/vellum-b21b971e150d5629)"}, {"passed": 5, "failed": 0, "ignored": 0, "measured": 0, "filtered": 0, "suite": "src/main.rs (target/debug/deps/vellum-504c15289f4e2b03)"}, {"passed": 32, "failed": 0, "ignored": 0, "measured": 0, "filtered": 0, "suite": "src/main.rs (target/debug/deps/xtask-97320850768e2287)"}]}

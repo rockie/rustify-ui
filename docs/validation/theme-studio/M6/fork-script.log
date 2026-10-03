@@ -1,0 +1,188 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.12s
+     Running unittests src/lib.rs (platform/script/target/debug/deps/makepad_script-5feaa9efa3d73f69)
+
+running 10 tests
+test shader_control::tests::guard_cap_is_generous_versus_real_shader_loops ... ok
+test shader_vars::tests::infer_unmarked_shader_io_rules_match_requested_defaults ... ok
+test shader_control::tests::non_literal_bounds_are_treated_as_unprovable ... ok
+test shader_control::tests::absurd_literal_bounds_still_get_guarded ... ok
+test shader_control::tests::literal_bounds_are_recognised ... ok
+test array_heap::tests::reused_array_slot_resets_to_script_value_storage ... ok
+test vm::tests::script_apply_eval_refreshes_interpolated_values_on_reused_callsite ... ok
+test vm::tests::reserved_words_still_read_and_normal_names_bind ... ok
+test vm::tests::reserved_words_cannot_be_bound ... ok
+test vm::tests::what_a_reused_eval_callsite_leaves_behind_is_collectable ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/allocation_limit.rs (platform/script/target/debug/deps/allocation_limit-881d21146052642d)
+
+running 4 tests
+test raw_string_builder_fails_closed_only_while_budgeted ... ok
+test sparse_object_index_is_refused_before_resize ... ok
+test sparse_array_index_is_refused_before_resize ... ok
+test repeated_concat_stops_at_the_cumulative_string_budget ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/auto_close_eof.rs (platform/script/target/debug/deps/auto_close_eof-2fa33b3499abffe0)
+
+running 6 tests
+test eof_call_result_let_binds ... ok
+test eof_braced_lambda_let_binds ... ok
+test eof_unbraced_lambda_let_binds ... ok
+test nonlast_lambda_let_discriminating ... ok
+test deferred_arg_closure_calls_module_fn ... ok
+test notrap_scope_probe_is_silent ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/extra_arg_typecheck.rs (platform/script/target/debug/deps/extra_arg_typecheck-d2af08c9b98d60ee)
+
+running 1 test
+test callback_minted_in_an_over_called_closure_survives ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/fn_ref_callback.rs (platform/script/target/debug/deps/fn_ref_callback-558c4fd6050a876d)
+
+running 2 tests
+test nested_fn_arg_callback_mutates_module_scalar ... ok
+test stored_fn_ref_calls_back_with_built_object ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/hook_scope.rs (platform/script/target/debug/deps/hook_scope-266ef5d3d9a6d136)
+
+running 1 test
+test hooks_resolve_in_the_scope_the_body_ended_in ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/json_negative_numbers.rs (platform/script/target/debug/deps/json_negative_numbers-b53772e74c20fa8b)
+
+running 2 tests
+test object_keeps_negative_values_and_their_keys ... ok
+test arrays_and_nested_values_keep_the_sign ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/math_aot.rs (platform/script/target/debug/deps/math_aot-2a3934d392ddcdfc)
+
+running 19 tests
+test slots_compound_assign ... ok
+test translate_scalar_composite ... ok
+test translate_vec3_length_sphere ... ok
+test batch_scalar_params ... ok
+test translate_early_return ... ok
+test slots_let_locals ... ok
+test translate_scope_constant ... ok
+test batch_matches_single_calls ... ok
+test batch_edges ... ok
+test uniforms_parametric_sphere ... ok
+test translate_vec_constructor ... ok
+test translate_comparisons_and_if ... ok
+test translate_logic_ops ... ok
+test uniforms_smooth_min_blend ... ok
+test translate_vec_arithmetic_and_swizzle ... ok
+test rejects_outside_subset ... ok
+test translate_scalar_arithmetic ... ok
+test translate_vec_intrinsics ... ok
+test translate_scalar_intrinsics ... ok
+
+test result: ok. 19 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running tests/math_aot_fuzz.rs (platform/script/target/debug/deps/math_aot_fuzz-e0e6771dd7467e8a)
+
+running 1 test
+test differential_fuzz ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.12s
+
+     Running tests/newline_call.rs (platform/script/target/debug/deps/newline_call-fd978cd7b8f0d194)
+
+running 8 tests
+test index_bracket_newline_is_new_statement ... ok
+test multiline_args_still_work ... ok
+test same_line_calls_still_work ... ok
+test field_access_same_line_still_reads ... ok
+test paren_on_new_line_is_not_a_call ... ok
+test leading_operator_inside_parens_still_continues ... ok
+test trailing_operator_still_continues_across_newline ... ok
+test leading_binary_operator_newline_continues_expression ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/on_render_emission.rs (platform/script/target/debug/deps/on_render_emission-01bc9ae83940ae70)
+
+running 18 tests
+test if_else_taken_true_branch_emits ... ok
+test closure_final_statement_is_returned ... ok
+test for_in_array_emits_into_literal ... ok
+test int_receiver_dispatches_number_methods ... ok
+test bare_if_taken_emits_and_untaken_emits_nothing ... ok
+test if_else_inside_while_inside_literal ... ok
+test if_else_taken_else_branch_emits ... ok
+test int_argument_accepted_for_float_default ... ok
+test elif_as_expression_value ... ok
+test elif_arm_emits_into_literal ... ok
+test for_in_nil_and_empty_are_silent ... ok
+test if_else_followed_by_more_statements ... ok
+test for_two_vars_over_number_binds_index_and_value ... ok
+test for_in_non_iterable_errors ... ok
+test elif_chain_values ... ok
+test line_leading_brace_is_a_new_statement ... ok
+test match_arm_emits_into_literal ... ok
+test same_line_proto_instantiation_still_works ... ok
+
+test result: ok. 18 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/parse_error_capture.rs (platform/script/target/debug/deps/parse_error_capture-535f2806171afffb)
+
+running 3 tests
+test clean_parse_captures_nothing ... ok
+test dangling_else_reaches_the_sink ... ok
+test streaming_eval_surfaces_parse_errors ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/reload_defaults.rs (platform/script/target/debug/deps/reload_defaults-1449c53341a83af8)
+
+running 3 tests
+test reload_missing_live_field_without_type_default_keeps_existing_value ... ok
+test reload_missing_enum_field_with_type_default_uses_pick_variant ... ok
+test reload_missing_object_field_with_type_default_refreshes_from_type_default ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/short_circuit_args.rs (platform/script/target/debug/deps/short_circuit_args-86be247a7e9cd9c9)
+
+running 10 tests
+test zz_debug_dump ... ignored
+test zz_debug_dump_scriptcall ... ignored
+test or_short_circuit_as_call_argument ... ok
+test and_short_circuit_as_call_argument ... ok
+test and_short_circuit_var_lhs_as_call_argument ... ok
+test and_short_circuit_as_second_call_argument ... ok
+test and_short_circuit_in_host_called_fn ... ok
+test and_short_circuit_unparenthesized_as_call_argument ... ok
+test host_called_fn_context_matrix ... ok
+test short_circuit_control_cases ... ok
+
+test result: ok. 8 passed; 0 failed; 2 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests makepad_script
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+mbx[cache]: 0 hits, 0 misses, 1 bypassed; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: 10262 compilations, and the box has forgotten none of them.

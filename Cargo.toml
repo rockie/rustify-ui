@@ -9,6 +9,7 @@ members = [
     "examples/fusion-basic",
     "examples/property-workbench",
     "examples/vellum",
+    "examples/theme-studio",
     "xtask",
 ]
 exclude = ["makepad", "ref"]

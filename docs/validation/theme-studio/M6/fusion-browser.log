@@ -1,0 +1,22 @@
+npm notice run rustify-ui-browser-tests@0.1.0 npx
+npm notice run 'playwright' test --project=fusion-basic m4-overlay p3-restart
+
+Running 11 tests using 1 worker
+
+(node:12602) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 [fusion-basic] › tests/browser/m4-overlay.spec.ts:32:9 › M4 V4 / R10: layers of one scope › a menu opened from a GPU anchor sits on it, and stays on it while the page scrolls (2.3s)
+  ✓   2 [fusion-basic] › tests/browser/m4-overlay.spec.ts:80:9 › M4 V4 / R10: layers of one scope › a modal over the region takes a hundred clicks and passes none of them down (764ms)
+  ✓   3 [fusion-basic] › tests/browser/m4-overlay.spec.ts:105:9 › M4 V4 / R10: layers of one scope › escape closes one layer at a time and hands focus back to what opened it (750ms)
+  ✓   4 [fusion-basic] › tests/browser/m4-overlay.spec.ts:125:9 › M4 V4 / R10: layers of one scope › an open layer owns escape, and the application gets it back afterwards (769ms)
+  ✓   5 [fusion-basic] › tests/browser/m4-overlay.spec.ts:151:9 › M4 V4 / R10: layers of one scope › a layer whose trigger is gone hands focus to the scope instead (734ms)
+  ✓   6 [fusion-basic] › tests/browser/m4-overlay.spec.ts:171:9 › M4 V4 / R10: layers of one scope › a layer that no longer holds focus does not take it back (716ms)
+  ✓   7 [fusion-basic] › tests/browser/m4-overlay.spec.ts:186:9 › M4 V4 / R10: layers of one scope › a modal keeps the tab sequence inside itself, and gives it back after (821ms)
+  ✓   8 [fusion-basic] › tests/browser/m4-overlay.spec.ts:215:9 › M4 V4: focus belongs to whoever had it › mounting a scope and starting its region take no focus from the host page (1.4s)
+  ✓   9 [fusion-basic] › tests/browser/m4-overlay.spec.ts:242:9 › M4 V4: twenty focus items › tab and shift-tab walk them in order, skipping the disabled one (757ms)
+(node:12762) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  10 [fusion-basic] › tests/browser/p3-restart.spec.ts:14:5 › review · mounted instances restart with matching SDK identity and release URL ownership (810ms)
+  ✓  11 [fusion-basic] › tests/browser/p3-restart.spec.ts:42:5 › review · a failed restart load shows an error and a working reload action (688ms)
+
+  11 passed (12.4s)

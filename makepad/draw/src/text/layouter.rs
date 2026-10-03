@@ -421,6 +421,7 @@ impl LayoutContext {
             self.span_text(len),
             self.font_family.clone(),
             self.style.font_size_in_lpxs(),
+            self.style.letter_spacing,
             SegmentKind::Word,
         );
         while !fitter.is_empty() {
@@ -463,6 +464,7 @@ impl LayoutContext {
             self.span_text(len),
             self.font_family.clone(),
             self.style.font_size_in_lpxs(),
+            self.style.letter_spacing,
             SegmentKind::Grapheme,
         );
         while !fitter.is_empty() {
@@ -484,9 +486,10 @@ impl LayoutContext {
 
     fn layout_directly(&mut self, len: usize) {
         self.append_text(
-            &self.font_family.get_or_shape(
+            &self.font_family.get_or_shape_with_spacing(
                 self.text
                     .substr(self.current_row_end..self.current_row_end + len),
+                self.style.letter_spacing,
             ),
         );
     }
@@ -647,7 +650,7 @@ impl LayoutContext {
 
     /// Truncates the last row to fit within `max_width` and appends an ellipsis glyph.
     fn truncate_last_row_with_ellipsis(&mut self, max_width: f32) {
-        let ellipsis_shaped = self.font_family.get_or_shape("…".into());
+        let ellipsis_shaped = self.font_family.get_or_shape_with_spacing("…".into(), self.style.letter_spacing);
         let font_size_in_lpxs = self.style.font_size_in_lpxs();
         let ellipsis_width: f32 = ellipsis_shaped
             .glyphs
@@ -710,6 +713,7 @@ struct Fitter {
     text: Substr,
     font_family: Rc<FontFamily>,
     font_size_in_lpxs: f32,
+    letter_spacing: f64,
     lens: Vec<usize>,
     widths_in_lpxs: Vec<f32>,
 }
@@ -719,6 +723,7 @@ impl Fitter {
         text: Substr,
         font_family: Rc<FontFamily>,
         font_size_in_lpxs: f32,
+        letter_spacing: f64,
         segment_kind: SegmentKind,
     ) -> Self {
         let mut lens: Vec<_> = match segment_kind {
@@ -737,7 +742,7 @@ impl Fitter {
             .scan(0, |state, len| {
                 let start = *state;
                 let end = start + len;
-                let segment = font_family.get_or_shape(text.substr(start..end));
+                let segment = font_family.get_or_shape_with_spacing(text.substr(start..end), letter_spacing);
                 let width_in_lpxs = segment.width_in_ems * font_size_in_lpxs;
                 *state = end;
                 Some(width_in_lpxs)
@@ -747,6 +752,7 @@ impl Fitter {
             text,
             font_family,
             font_size_in_lpxs,
+            letter_spacing,
             lens,
             widths_in_lpxs,
         }
@@ -776,7 +782,7 @@ impl Fitter {
         if let Some(mut best_count) = best_count {
             while best_count > 0 {
                 let best_len = self.lens[..best_count].iter().sum();
-                let best_text = self.font_family.get_or_shape(self.text.substr(0..best_len));
+                let best_text = self.font_family.get_or_shape_with_spacing(self.text.substr(0..best_len), self.letter_spacing);
                 if best_text.width_in_ems * self.font_size_in_lpxs <= wrap_width_in_lpxs {
                     self.lens.drain(..best_count);
                     self.widths_in_lpxs.drain(..best_count);
@@ -1003,6 +1009,8 @@ impl<'a> LayoutParams for BorrowedLayoutParams<'a> {
 pub struct Style {
     pub font_family_id: FontFamilyId,
     pub font_size_in_pts: f32,
+    /// Letter spacing in ems, applied between shaped clusters.
+    pub letter_spacing: f64,
     pub color: Option<Color>,
 }
 
@@ -1021,6 +1029,7 @@ impl Hash for Style {
     {
         self.font_family_id.hash(hasher);
         self.font_size_in_pts.to_bits().hash(hasher);
+        self.letter_spacing.to_bits().hash(hasher);
         self.color.hash(hasher);
     }
 }
@@ -1031,6 +1040,9 @@ impl PartialEq for Style {
             return false;
         }
         if self.font_size_in_lpxs().to_bits() != other.font_size_in_lpxs().to_bits() {
+            return false;
+        }
+        if self.letter_spacing.to_bits() != other.letter_spacing.to_bits() {
             return false;
         }
         if self.color != other.color {
@@ -1511,6 +1523,7 @@ mod tests {
             style: Style {
                 font_family_id: 0u64.into(),
                 font_size_in_pts: 12.0,
+                letter_spacing: 0.0,
                 color: None,
             },
             options: LayoutOptions::default(),
@@ -1696,7 +1709,8 @@ mod tests {
     fn real_font_layouter() -> Layouter {
         let mut layouter = Layouter::new(Settings::default());
         let resources =
-            PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("../widgets/resources");
+            PathBuf::from(option_env!("RUSTIFY_TEXT_MANIFEST_DIR").unwrap_or(env!("CARGO_MANIFEST_DIR")))
+                .join("../widgets/resources");
         for (family_id, font_id, file) in [
             (LATIN_FAMILY, 0xE111_0001_u64, "IBMPlexSans-Text.ttf"),
             (CJK_FAMILY, 0xE111_0002_u64, "LXGWWenKaiRegular.ttf"),
@@ -1739,6 +1753,7 @@ mod tests {
             style: super::Style {
                 font_family_id: family.into(),
                 font_size_in_pts: 12.0,
+                letter_spacing: 0.0,
                 color: None,
             },
             options: LayoutOptions {
@@ -1749,6 +1764,105 @@ mod tests {
                 ..LayoutOptions::default()
             },
         })
+    }
+
+    #[test]
+    fn letter_spacing_layout_cache_measurement_and_hit_testing_agree() {
+        let mut layouter = real_font_layouter();
+        let plain_params = BorrowedLayoutParams {
+            text: "abc",
+            style: Style { font_family_id: LATIN_FAMILY.into(), font_size_in_pts: 12.0, letter_spacing: 0.0, color: None },
+            options: LayoutOptions::default(),
+        };
+        let plain = layouter.get_or_layout(plain_params);
+        let spaced_params = BorrowedLayoutParams {
+            style: Style { letter_spacing: 0.2, ..plain_params.style },
+            ..plain_params
+        };
+        let spaced = layouter.get_or_layout(spaced_params);
+        assert!(!Rc::ptr_eq(&plain, &spaced));
+        assert!(Rc::ptr_eq(&spaced, &layouter.get_or_layout(spaced_params)));
+        assert!((spaced.size_in_lpxs.width - plain.size_in_lpxs.width - 9.6).abs() < 1e-5);
+        let row = &spaced.rows[0];
+        for index in 0..=3 {
+            assert_eq!(row.x_in_lpxs_to_index(row.index_to_x_in_lpxs(index)), index);
+        }
+        assert!((row.glyphs.iter().map(|glyph| glyph.advance_in_lpxs()).sum::<f32>() - row.width_in_lpxs).abs() < 1e-5);
+    }
+
+    #[test]
+    fn letter_spacing_wrap_uses_the_spaced_measurement() {
+        let mut layouter = real_font_layouter();
+        let params = BorrowedLayoutParams {
+            text: "abc",
+            style: Style { font_family_id: LATIN_FAMILY.into(), font_size_in_pts: 12.0, letter_spacing: 0.0, color: None },
+            options: LayoutOptions::default(),
+        };
+        let width = layouter.get_or_layout(params).size_in_lpxs.width + 1.0;
+        let options = LayoutOptions { wrap: true, max_width_in_lpxs: Some(width), ..LayoutOptions::default() };
+        let plain = layouter.get_or_layout(BorrowedLayoutParams { options, ..params });
+        let spaced = layouter.get_or_layout(BorrowedLayoutParams {
+            style: Style { letter_spacing: 0.2, ..params.style }, options, ..params
+        });
+        assert_eq!(plain.rows.len(), 1);
+        assert!(spaced.rows.len() > 1);
+        assert!(spaced.rows.iter().all(|row| row.width_in_lpxs <= width));
+    }
+
+    #[test]
+    fn tracked_ligatures_wrap_like_css_at_the_word_boundary() {
+        let mut layouter = real_font_layouter();
+        let layout = layouter.get_or_layout(BorrowedLayoutParams {
+            text: "fi fi",
+            style: Style { font_family_id: LATIN_FAMILY.into(), font_size_in_pts: 12.0, letter_spacing: 0.5, color: None },
+            options: LayoutOptions { wrap: true, max_width_in_lpxs: Some(35.0), ..LayoutOptions::default() },
+        });
+        assert_eq!(layout.rows.len(), 2, "16px IBM Plex Sans with .5em tracking wraps at 35px");
+    }
+
+    #[test]
+    fn letter_spacing_combining_cluster_keeps_mark_origin_and_caret_boundaries() {
+        let mut layouter = real_font_layouter();
+        let params = BorrowedLayoutParams {
+            text: "x\u{301}z",
+            style: Style { font_family_id: LATIN_FAMILY.into(), font_size_in_pts: 12.0, letter_spacing: 0.0, color: None },
+            options: LayoutOptions::default(),
+        };
+        let plain = layouter.get_or_layout(params);
+        for spacing in [0.2, -0.1] {
+            let spaced = layouter.get_or_layout(BorrowedLayoutParams {
+                style: Style { letter_spacing: spacing, ..params.style }, ..params
+            });
+            let row = &spaced.rows[0];
+            assert_eq!(row.glyphs[1].origin_in_lpxs, plain.rows[0].glyphs[1].origin_in_lpxs);
+            let next_cluster = row.glyphs.iter().find(|glyph| glyph.cluster == 3).unwrap();
+            let plain_next = plain.rows[0].glyphs.iter().find(|glyph| glyph.cluster == 3).unwrap();
+            assert!((next_cluster.origin_in_lpxs.x - plain_next.origin_in_lpxs.x - spacing as f32 * 16.0).abs() < 1e-5);
+            for index in [0, 3, 4] {
+                assert_eq!(row.x_in_lpxs_to_index(row.index_to_x_in_lpxs(index)), index);
+            }
+        }
+    }
+
+    #[test]
+    fn letter_spacing_ellipsis_fits_the_measured_width() {
+        let mut layouter = real_font_layouter();
+        let text = layouter.get_or_layout(BorrowedLayoutParams {
+            text: "abcdefghijk",
+            style: Style { font_family_id: LATIN_FAMILY.into(), font_size_in_pts: 12.0, letter_spacing: 0.2, color: None },
+            options: LayoutOptions { max_width_in_lpxs: Some(40.0), ellipsis: true, ..LayoutOptions::default() },
+        });
+        assert!(text.is_truncated);
+        assert!(text.rows[0].width_in_lpxs <= 40.0);
+        assert!(ends_with_ellipsis(&text));
+    }
+
+    #[test]
+    fn letter_spacing_legacy_shape_wrapper_keeps_zero_spacing() {
+        let mut layouter = real_font_layouter();
+        let family = layouter.loader.get_or_load_font_family_rc(LATIN_FAMILY.into());
+        let legacy = family.get_or_shape("sample".into());
+        assert!(Rc::ptr_eq(&legacy, &family.get_or_shape_with_spacing("sample".into(), 0.0)));
     }
 
     /// The appended ellipsis glyphs are stamped with `cluster == text.len()`,

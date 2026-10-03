@@ -1,0 +1,268 @@
+{
+  "source": {
+    "repository": "https://github.com/jnsahaj/tweakcn",
+    "snapshot_root": "ref/tweakcn-main",
+    "upstream_commit": null,
+    "identity": "Local source snapshot identified by the input SHA256 digests; upstream commit is not established",
+    "license": "Apache-2.0"
+  },
+  "inputs": [
+    {
+      "source_path": "ref/tweakcn-main/utils/theme-presets.ts",
+      "vendored_path": "source/utils/theme-presets.ts",
+      "sha256": "d333858a5a4f1e2fd615f1b73709f552e5a84c12882196456dfc48e1f09376a8"
+    },
+    {
+      "source_path": "ref/tweakcn-main/utils/theme-preset-helper.ts",
+      "vendored_path": "source/utils/theme-preset-helper.ts",
+      "sha256": "ea4c391300fadf7f308d05870dcd9a14b4af92e9d643c32320058e4196b6c510"
+    },
+    {
+      "source_path": "ref/tweakcn-main/config/theme.ts",
+      "vendored_path": "source/config/theme.ts",
+      "sha256": "cca693548553545cd6384e1d02b30138510ed6eeb94da313e20c5f328f630da1"
+    },
+    {
+      "source_path": "ref/tweakcn-main/types/theme.ts",
+      "vendored_path": "source/types/theme.ts",
+      "sha256": "50a62c4c47c6d9d679a7f3aab2b1bb85dcca9908ce3e2d5f5c9ff3fabc8aa2ce"
+    },
+    {
+      "source_path": "ref/tweakcn-main/LICENSE",
+      "vendored_path": "LICENSE",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    }
+  ],
+  "preset_keys": [
+    "modern-minimal",
+    "violet-bloom",
+    "t3-chat",
+    "twitter",
+    "mocha-mousse",
+    "bubblegum",
+    "amethyst-haze",
+    "notebook",
+    "doom-64",
+    "catppuccin",
+    "graphite",
+    "perpetuity",
+    "kodama-grove",
+    "cosmic-night",
+    "tangerine",
+    "quantum-rose",
+    "nature",
+    "bold-tech",
+    "elegant-luxury",
+    "amber-minimal",
+    "supabase",
+    "neo-brutalism",
+    "solar-dusk",
+    "claymorphism",
+    "cyberpunk",
+    "pastel-dreams",
+    "clean-slate",
+    "caffeine",
+    "ocean-breeze",
+    "retro-arcade",
+    "midnight-bloom",
+    "candyland",
+    "northern-lights",
+    "vintage-paper",
+    "sunset-horizon",
+    "starry-night",
+    "claude",
+    "vercel",
+    "darkmatter",
+    "mono",
+    "soft-pop",
+    "sage-garden"
+  ],
+  "merge_order": {
+    "light": [
+      "default.light",
+      "preset.light"
+    ],
+    "dark": [
+      "default.dark",
+      "preset.light",
+      "preset.dark"
+    ]
+  },
+  "required_tokens": [
+    "background",
+    "foreground",
+    "card",
+    "card-foreground",
+    "popover",
+    "popover-foreground",
+    "primary",
+    "primary-foreground",
+    "secondary",
+    "secondary-foreground",
+    "muted",
+    "muted-foreground",
+    "accent",
+    "accent-foreground",
+    "destructive",
+    "destructive-foreground",
+    "border",
+    "input",
+    "ring",
+    "chart-1",
+    "chart-2",
+    "chart-3",
+    "chart-4",
+    "chart-5",
+    "sidebar",
+    "sidebar-foreground",
+    "sidebar-primary",
+    "sidebar-primary-foreground",
+    "sidebar-accent",
+    "sidebar-accent-foreground",
+    "sidebar-border",
+    "sidebar-ring",
+    "font-sans",
+    "font-serif",
+    "font-mono",
+    "radius",
+    "shadow-color",
+    "shadow-opacity",
+    "shadow-blur",
+    "shadow-spread",
+    "shadow-offset-x",
+    "shadow-offset-y",
+    "letter-spacing"
+  ],
+  "optional_tokens": [
+    "spacing"
+  ],
+  "common_styles": [
+    "font-sans",
+    "font-serif",
+    "font-mono",
+    "radius",
+    "shadow-opacity",
+    "shadow-blur",
+    "shadow-spread",
+    "shadow-offset-x",
+    "shadow-offset-y",
+    "letter-spacing",
+    "spacing"
+  ],
+  "normalization": {
+    "script": "normalize.mjs",
+    "command": "node --experimental-vm-modules examples/theme-studio/vendor/tweakcn/normalize.mjs --check",
+    "method": "Evaluate the complete vendored TypeScript modules with Node's type eraser; compare every preset with getBuiltInThemeStyles; inspect upstream schema shape",
+    "scope": "Built-in presets only; unused type/database/store imports use shims; schema shim records keys only",
+    "author_values_preserved": true,
+    "rustify_extension_tokens_added": false,
+    "output_path": "presets.json",
+    "output_sha256": "cbd2718f8b10b63b27d68d670334844050871cd1b87c5dcff5328fe17fdd19ee"
+  },
+  "audit": {
+    "preset_count": 42,
+    "tokens_per_mode": 44,
+    "missing_required_tokens": [],
+    "unknown_tokens": [],
+    "exceptional_metric_values": [
+      {
+        "id": "notebook",
+        "mode": "light",
+        "token": "letter-spacing",
+        "value": "0.5px"
+      },
+      {
+        "id": "notebook",
+        "mode": "dark",
+        "token": "letter-spacing",
+        "value": "0.5px"
+      },
+      {
+        "id": "darkmatter",
+        "mode": "light",
+        "token": "letter-spacing",
+        "value": "0rem"
+      },
+      {
+        "id": "darkmatter",
+        "mode": "dark",
+        "token": "letter-spacing",
+        "value": "0rem"
+      },
+      {
+        "id": "soft-pop",
+        "mode": "light",
+        "token": "letter-spacing",
+        "value": "normal"
+      },
+      {
+        "id": "soft-pop",
+        "mode": "dark",
+        "token": "letter-spacing",
+        "value": "normal"
+      }
+    ],
+    "common_style_differences": [
+      {
+        "id": "notebook",
+        "token": "font-serif",
+        "light": "\"Times New Roman\", Times, serif",
+        "dark": "Georgia, serif"
+      },
+      {
+        "id": "notebook",
+        "token": "font-mono",
+        "light": "\"Courier New\", Courier, monospace",
+        "dark": "\"Fira Code\", \"Courier New\", monospace"
+      },
+      {
+        "id": "doom-64",
+        "token": "shadow-opacity",
+        "light": "0.4",
+        "dark": "0.6"
+      },
+      {
+        "id": "doom-64",
+        "token": "shadow-blur",
+        "light": "4px",
+        "dark": "5px"
+      },
+      {
+        "id": "graphite",
+        "token": "font-sans",
+        "light": "Montserrat, sans-serif",
+        "dark": "Inter, sans-serif"
+      },
+      {
+        "id": "perpetuity",
+        "token": "font-sans",
+        "light": "Courier New, monospace",
+        "dark": "Source Code Pro, monospace"
+      },
+      {
+        "id": "perpetuity",
+        "token": "font-serif",
+        "light": "Courier New, monospace",
+        "dark": "Source Code Pro, monospace"
+      },
+      {
+        "id": "perpetuity",
+        "token": "font-mono",
+        "light": "Courier New, monospace",
+        "dark": "Source Code Pro, monospace"
+      },
+      {
+        "id": "perpetuity",
+        "token": "shadow-opacity",
+        "light": "0.15",
+        "dark": "0.2"
+      },
+      {
+        "id": "quantum-rose",
+        "token": "font-sans",
+        "light": "Poppins, sans-serif",
+        "dark": "Quicksand, sans-serif"
+      }
+    ]
+  }
+}

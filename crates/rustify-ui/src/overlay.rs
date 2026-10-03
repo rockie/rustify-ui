@@ -676,6 +676,7 @@ mod dom {
         #[prop(optional, into)] test_id: String,
         children: ChildrenFn,
     ) -> impl IntoView {
+        let theme = crate::theme::use_resolved_theme();
         use_overlay().map(|stack| {
             let root = stack.overlay_root();
             let class = format!("rustify-layer {class}");
@@ -683,10 +684,20 @@ mod dom {
             let described_by = (!described_by.is_empty()).then(|| described_by.clone());
             let moved = stack.moved();
             let node = NodeRef::<Div>::new();
+            if let Some(theme) = theme {
+                Effect::new(move || {
+                    let snapshot = theme.get();
+                    if let Some(node) = node.get() {
+                        let element: leptos::web_sys::HtmlElement = node.into();
+                        crate::theme::provider::write_snapshot(&element, &snapshot, true);
+                    }
+                });
+            }
             let on_close = Arc::new(on_close);
             let left = RwSignal::new(0.0f64);
             let top = RwSignal::new(0.0f64);
             let registered = RwSignal::new(None::<LayerId>);
+            let size_watch = StoredValue::new(None::<SendWrapper<crate::ResizeObservation>>);
             let returns_to: StoredValue<Option<SendWrapper<Element>>> = StoredValue::new(None);
             // Dropped with the layer, which takes the listener with it.
             let tab_loop = StoredValue::new(None::<Listener>);
@@ -736,6 +747,12 @@ mod dom {
                         return;
                     }
                     let element: Element = element.into();
+                    // Dialog steps and menu contents can change after opening.
+                    // Reposition on the layer's own size, as well as its anchor.
+                    size_watch.set_value(
+                        crate::observe_resize(&element, move || moved.update(|n| *n += 1))
+                            .map(SendWrapper::new),
+                    );
                     returns_to.set_value(
                         document()
                             .active_element()
@@ -768,6 +785,7 @@ mod dom {
             });
 
             on_cleanup(move || {
+                size_watch.set_value(None);
                 if let Some(id) = registered.get_untracked() {
                     stack.remove(id);
                 }

@@ -269,11 +269,11 @@ mod tests {
     use std::{cell::RefCell, path::PathBuf, rc::Rc};
 
     fn bundled_emoji_font_path() -> PathBuf {
-        PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("../widgets/resources/NotoColorEmoji.ttf")
+        bundled_font_path("NotoColorEmoji.ttf")
     }
 
     fn bundled_font_path(name: &str) -> PathBuf {
-        PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+        PathBuf::from(option_env!("RUSTIFY_TEXT_MANIFEST_DIR").unwrap_or(env!("CARGO_MANIFEST_DIR")))
             .join("../widgets/resources")
             .join(name)
     }
@@ -303,6 +303,8 @@ mod tests {
             "IBMPlexSans-SemiBold.ttf",
             "LiberationMono-Regular.ttf",
             "NotoSans-Regular.ttf",
+            "NotoSerif-Regular.ttf",
+            "jetbrains_mono_variable.ttf",
         ] {
             let cap = make_font(bundled_font_path(name)).cap_height_in_ems();
             assert!(

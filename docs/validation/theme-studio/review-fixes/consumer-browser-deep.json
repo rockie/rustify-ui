@@ -1,0 +1,602 @@
+{
+  "config": {
+    "argv": [
+      "/Users/rockie/.nvm/versions/node/v26.1.0/bin/node",
+      "/Users/rockie/Documents/gh-rockie/rustify-ui/node_modules/.bin/playwright",
+      "test",
+      "--project=theme-export-deep",
+      "--output=/tmp/rustify-theme-apply-review/consumer-browser-deep"
+    ],
+    "configFile": "/Users/rockie/Documents/gh-rockie/rustify-ui/playwright.config.ts",
+    "rootDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": {},
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/tmp/rustify-theme-apply-review/consumer-browser-deep",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "fusion-basic",
+        "name": "fusion-basic",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "p3-restart.spec.ts",
+          "m1-probes.spec.ts",
+          "m2-runtime.spec.ts",
+          "m3-state.spec.ts",
+          "m4-geometry.spec.ts",
+          "m4-overlay.spec.ts",
+          "m6-mainpath.spec.ts",
+          "p2-navigation.spec.ts",
+          "p3-instances.spec.ts",
+          "p3-b0.spec.ts",
+          "p3-idle.spec.ts",
+          "p3-memory.spec.ts",
+          "p3-endurance.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/tmp/rustify-theme-apply-review/consumer-browser-deep",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "property-workbench",
+        "name": "property-workbench",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "p3-restart.spec.ts",
+          "m3-workbench.spec.ts",
+          "m5-text.spec.ts",
+          "m5-semantics.spec.ts",
+          "m6-theme.spec.ts",
+          "m6-async.spec.ts",
+          "m6-components.spec.ts",
+          "m7-recovery.spec.ts",
+          "m8-baseline.spec.ts",
+          "m8-network.spec.ts",
+          "m8-endurance.spec.ts",
+          "p2-form.spec.ts",
+          "p2-deeplink.spec.ts",
+          "p2-workspace.spec.ts",
+          "p2-drag.spec.ts",
+          "p2-clipboard-files.spec.ts",
+          "p2-zoom.spec.ts",
+          "p2-ime.spec.ts",
+          "p3-policy.spec.ts",
+          "p3-faults.spec.ts",
+          "p3-diagnostics.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/tmp/rustify-theme-apply-review/consumer-browser-deep",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "component-catalog",
+        "name": "component-catalog",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "p3-restart.spec.ts",
+          "p2-catalog.spec.ts",
+          "p2-theme.spec.ts",
+          "p2-semantics.spec.ts",
+          "p2-i18n.spec.ts",
+          "p2-reflow.spec.ts",
+          "p2-a11y.spec.ts",
+          "p3-policy.spec.ts",
+          "catalog-inputs.spec.ts",
+          "theme-compat.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/tmp/rustify-theme-apply-review/consumer-browser-deep",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "theme-studio",
+        "name": "theme-studio",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [
+          "theme-compat.spec.ts",
+          "theme-export-runtime.spec.ts"
+        ],
+        "testMatch": [
+          "theme-*.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/tmp/rustify-theme-apply-review/consumer-browser-deep",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "theme-studio-deep",
+        "name": "theme-studio-deep",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "theme-deployment.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/tmp/rustify-theme-apply-review/consumer-browser-deep",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "theme-export",
+        "name": "theme-export",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "theme-export-runtime.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/tmp/rustify-theme-apply-review/consumer-browser-deep",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "theme-export-deep",
+        "name": "theme-export-deep",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "theme-export-runtime.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/tmp/rustify-theme-apply-review/consumer-browser-deep",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "data-workbench",
+        "name": "data-workbench",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "p3-restart.spec.ts",
+          "p3-probes.spec.ts",
+          "p3-table.spec.ts",
+          "p3-jobs.spec.ts",
+          "p3-scene.spec.ts",
+          "p3-memory.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/tmp/rustify-theme-apply-review/consumer-browser-deep",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "budget-scene",
+        "name": "budget-scene",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "p3-budget-scene.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/tmp/rustify-theme-apply-review/consumer-browser-deep",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "workbench-deep",
+        "name": "workbench-deep",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "p2-deeplink.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/tmp/rustify-theme-apply-review/consumer-browser-deep",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "deployment",
+        "name": "deployment",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "m7-deployment.spec.ts"
+        ],
+        "timeout": 120000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/browser.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "theme-export-runtime.spec.ts",
+      "file": "theme-export-runtime.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "independent standard hex CSS renders modes, utilities and fonts",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "theme-export-deep",
+              "projectName": "theme-export-deep",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 395,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-03T16:20:36.901Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e14814059f9f20d0bfff-c2219b147d1322816c8d",
+          "file": "theme-export-runtime.spec.ts",
+          "line": 5,
+          "column": 7
+        },
+        {
+          "title": "independent standard rgb CSS renders modes, utilities and fonts",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "theme-export-deep",
+              "projectName": "theme-export-deep",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 315,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-03T16:20:37.473Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e14814059f9f20d0bfff-2652efe7e39bf97d1095",
+          "file": "theme-export-runtime.spec.ts",
+          "line": 5,
+          "column": 7
+        },
+        {
+          "title": "independent standard hsl CSS renders modes, utilities and fonts",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "theme-export-deep",
+              "projectName": "theme-export-deep",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 333,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-03T16:20:37.793Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e14814059f9f20d0bfff-0cc145c7992be981a866",
+          "file": "theme-export-runtime.spec.ts",
+          "line": 5,
+          "column": 7
+        },
+        {
+          "title": "independent standard oklch CSS renders modes, utilities and fonts",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "theme-export-deep",
+              "projectName": "theme-export-deep",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 318,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-03T16:20:38.131Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e14814059f9f20d0bfff-b980e7762cb1da0be60e",
+          "file": "theme-export-runtime.spec.ts",
+          "line": 5,
+          "column": 7
+        },
+        {
+          "title": "independent scoped hex CSS renders modes, utilities and fonts",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "theme-export-deep",
+              "projectName": "theme-export-deep",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 387,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-03T16:20:38.454Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e14814059f9f20d0bfff-0aeedeabd81717210b51",
+          "file": "theme-export-runtime.spec.ts",
+          "line": 5,
+          "column": 7
+        },
+        {
+          "title": "independent scoped rgb CSS renders modes, utilities and fonts",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "theme-export-deep",
+              "projectName": "theme-export-deep",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 436,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-03T16:20:38.846Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e14814059f9f20d0bfff-865088e482696f83f8af",
+          "file": "theme-export-runtime.spec.ts",
+          "line": 5,
+          "column": 7
+        },
+        {
+          "title": "independent scoped hsl CSS renders modes, utilities and fonts",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "theme-export-deep",
+              "projectName": "theme-export-deep",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 372,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-03T16:20:39.286Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e14814059f9f20d0bfff-4365461be6b2f6969d6b",
+          "file": "theme-export-runtime.spec.ts",
+          "line": 5,
+          "column": 7
+        },
+        {
+          "title": "independent scoped oklch CSS renders modes, utilities and fonts",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "theme-export-deep",
+              "projectName": "theme-export-deep",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 380,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-03T16:20:39.662Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e14814059f9f20d0bfff-7271bba26459990ed049",
+          "file": "theme-export-runtime.spec.ts",
+          "line": 5,
+          "column": 7
+        },
+        {
+          "title": "compiled original Rust snippet mounts JSON in independent light and dark scopes",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "theme-export-deep",
+              "projectName": "theme-export-deep",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 337,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-03T16:20:40.046Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e14814059f9f20d0bfff-b93c4a94dd3623cd68be",
+          "file": "theme-export-runtime.spec.ts",
+          "line": 47,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-03T16:20:36.636Z",
+    "duration": 3821.683,
+    "expected": 9,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

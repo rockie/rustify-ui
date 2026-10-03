@@ -127,6 +127,12 @@ function publish(started) {
         live_regions() {
             return app.catalog_live_regions();
         },
+        mount_theme_fixtures() {
+            app.catalog_theme_fixtures("catalog-theme-legacy", "catalog-theme-v4");
+        },
+        dispose_theme_fixtures() {
+            app.catalog_theme_fixtures_dispose();
+        },
         stats() {
             return hooks.runtime.stats();
         },
@@ -140,6 +146,7 @@ function publish(started) {
         // the page itself is undone the other way: a second scope it added
         // is disposed, and a main scope it disposed is mounted again.
         async reset() {
+            catalog.dispose_theme_fixtures();
             catalog.dispose_second();
             if (handle === null) {
                 catalog.mount();

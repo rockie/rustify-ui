@@ -1,0 +1,11 @@
+[package]
+name = "theme-export-generator"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[dependencies]
+rustify-ui = { path = "../../../crates/rustify-ui" }
+serde = { version = "=1.0.229", features = ["derive"] }
+serde_json = "=1.0.151"
+wasmi = "=2.0.0"

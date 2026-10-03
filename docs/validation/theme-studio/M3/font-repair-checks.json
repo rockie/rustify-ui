@@ -1,0 +1,179 @@
+{
+  "source_sha256": "0819604ad9357afbc6e7cc097328a16ed85143ee0848ffda09fda35a30da6506",
+  "source_whole_checksum": "0x6f938885",
+  "candidate_sha256": "1d4b2f008ac7e02780c19801d4b04dd4538e40215943cc8ad374dba8ec2278c0",
+  "tests": [
+    {
+      "name": "original-format4-rejected",
+      "command": [
+        "/Applications/Xcode.app/Contents/Developer/usr/bin/python3",
+        "/Users/rockie/Documents/gh-rockie/rustify-ui/scripts/repair-theme-font.py",
+        "--check",
+        "/tmp/theme-font-repair/original.ttf"
+      ],
+      "expected_exit": 1,
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "font repair check failed: overflowing format 4: {\"declared_length\": 6694, \"encoding\": 3, \"format\": 4, \"minimum_arrays_length\": 15352, \"occupied_length\": 72230, \"offset\": 44, \"platform\": 0, \"segments\": 1917}"
+    },
+    {
+      "name": "fixed-output-standalone-no-git",
+      "command": [
+        "/Applications/Xcode.app/Contents/Developer/usr/bin/python3",
+        "/Users/rockie/Documents/gh-rockie/rustify-ui/scripts/repair-theme-font.py",
+        "--check",
+        "/tmp/theme-font-repair/RustifyWenKai-Regular.ttf",
+        "--report",
+        "/tmp/theme-font-repair/check-standalone.json"
+      ],
+      "expected_exit": 0,
+      "exit_code": 0,
+      "stdout": "{\n  \"sha256\": \"1d4b2f008ac7e02780c19801d4b04dd4538e40215943cc8ad374dba8ec2278c0\",\n  \"bytes\": 19002280,\n  \"glyph_count\": 36498,\n  \"format12_codepoints\": 36212,\n  \"browser_ots_verified\": false\n}",
+      "stderr": ""
+    },
+    {
+      "name": "fixed-output-compared-to-original",
+      "command": [
+        "/Applications/Xcode.app/Contents/Developer/usr/bin/python3",
+        "/Users/rockie/Documents/gh-rockie/rustify-ui/scripts/repair-theme-font.py",
+        "--check",
+        "/tmp/theme-font-repair/RustifyWenKai-Regular.ttf",
+        "--input",
+        "/tmp/theme-font-repair/original.ttf",
+        "--report",
+        "/tmp/theme-font-repair/check-source.json"
+      ],
+      "expected_exit": 0,
+      "exit_code": 0,
+      "stdout": "{\n  \"sha256\": \"1d4b2f008ac7e02780c19801d4b04dd4538e40215943cc8ad374dba8ec2278c0\",\n  \"bytes\": 19002280,\n  \"glyph_count\": 36498,\n  \"format12_codepoints\": 36212,\n  \"browser_ots_verified\": false\n}",
+      "stderr": ""
+    },
+    {
+      "name": "deterministic-rerun",
+      "command": [
+        "/Applications/Xcode.app/Contents/Developer/usr/bin/python3",
+        "/Users/rockie/Documents/gh-rockie/rustify-ui/scripts/repair-theme-font.py",
+        "--input",
+        "/tmp/theme-font-repair/original.ttf",
+        "--output",
+        "/tmp/theme-font-repair/deterministic-rerun.ttf",
+        "--report",
+        "/tmp/theme-font-repair/rerun.json"
+      ],
+      "expected_exit": 0,
+      "exit_code": 0,
+      "stdout": "{\n  \"sha256\": \"1d4b2f008ac7e02780c19801d4b04dd4538e40215943cc8ad374dba8ec2278c0\",\n  \"bytes\": 19002280,\n  \"glyph_count\": 36498,\n  \"format12_codepoints\": 36212,\n  \"browser_ots_verified\": false\n}",
+      "stderr": ""
+    },
+    {
+      "name": "glyf-change-with-valid-checksums-rejected",
+      "command": [
+        "/Applications/Xcode.app/Contents/Developer/usr/bin/python3",
+        "/Users/rockie/Documents/gh-rockie/rustify-ui/scripts/repair-theme-font.py",
+        "--check",
+        "/tmp/theme-font-repair/tampered-glyf.ttf"
+      ],
+      "expected_exit": 1,
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "font repair check failed: modified source table glyf"
+    },
+    {
+      "name": "cmap-change-with-valid-checksums-rejected",
+      "command": [
+        "/Applications/Xcode.app/Contents/Developer/usr/bin/python3",
+        "/Users/rockie/Documents/gh-rockie/rustify-ui/scripts/repair-theme-font.py",
+        "--check",
+        "/tmp/theme-font-repair/tampered-cmap.ttf"
+      ],
+      "expected_exit": 1,
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "font repair check failed: format 6 differs from pinned source"
+    },
+    {
+      "name": "original-primary-names-rejected",
+      "command": [
+        "/Applications/Xcode.app/Contents/Developer/usr/bin/python3",
+        "/Users/rockie/Documents/gh-rockie/rustify-ui/scripts/repair-theme-font.py",
+        "--check",
+        "/tmp/theme-font-repair/unrenamed-names.ttf"
+      ],
+      "expected_exit": 1,
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "font repair check failed: unrenamed primary name (1, 0, 0, 1)"
+    },
+    {
+      "name": "copyright-change-with-valid-checksums-rejected",
+      "command": [
+        "/Applications/Xcode.app/Contents/Developer/usr/bin/python3",
+        "/Users/rockie/Documents/gh-rockie/rustify-ui/scripts/repair-theme-font.py",
+        "--check",
+        "/tmp/theme-font-repair/tampered-copyright.ttf",
+        "--input",
+        "/tmp/theme-font-repair/original.ttf"
+      ],
+      "expected_exit": 1,
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "font repair check failed: name differs from deterministic rename"
+    },
+    {
+      "name": "checksum-adjustment-change-rejected",
+      "command": [
+        "/Applications/Xcode.app/Contents/Developer/usr/bin/python3",
+        "/Users/rockie/Documents/gh-rockie/rustify-ui/scripts/repair-theme-font.py",
+        "--check",
+        "/tmp/theme-font-repair/bad-adjustment.ttf"
+      ],
+      "expected_exit": 1,
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "font repair check failed: incorrect whole-font checksumAdjustment"
+    },
+    {
+      "name": "output-overwrite-refused",
+      "command": [
+        "/Applications/Xcode.app/Contents/Developer/usr/bin/python3",
+        "/Users/rockie/Documents/gh-rockie/rustify-ui/scripts/repair-theme-font.py",
+        "--input",
+        "/tmp/theme-font-repair/original.ttf",
+        "--output",
+        "/tmp/theme-font-repair/RustifyWenKai-Regular.ttf"
+      ],
+      "expected_exit": 1,
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "font repair check failed: [Errno 17] File exists: '/tmp/theme-font-repair/RustifyWenKai-Regular.ttf'"
+    },
+    {
+      "name": "wrong-source-digest-rejected",
+      "command": [
+        "/Applications/Xcode.app/Contents/Developer/usr/bin/python3",
+        "/Users/rockie/Documents/gh-rockie/rustify-ui/scripts/repair-theme-font.py",
+        "--input",
+        "/tmp/theme-font-repair/RustifyWenKai-Regular.ttf",
+        "--output",
+        "/tmp/theme-font-repair/wrong-source.ttf"
+      ],
+      "expected_exit": 1,
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "font repair check failed: input is not the pinned original font"
+    },
+    {
+      "name": "format12-change-with-valid-checksums-rejected",
+      "command": [
+        "/Applications/Xcode.app/Contents/Developer/usr/bin/python3",
+        "/Users/rockie/Documents/gh-rockie/rustify-ui/scripts/repair-theme-font.py",
+        "--check",
+        "/tmp/theme-font-repair/tampered-format12.ttf"
+      ],
+      "expected_exit": 1,
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "font repair check failed: format 12 differs from pinned source"
+    }
+  ]
+}

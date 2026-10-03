@@ -1,0 +1,48 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.02s
+     Running unittests src/lib.rs (tests/theme-text/target/debug/deps/rustify_theme_text_tests-2925f6afb4444648)
+
+running 34 tests
+test text::layouter::tests::empty_text ... ok
+test text::layouter::tests::consecutive_trailing_punctuation_chains_merge ... ok
+test text::layouter::tests::layout_cache_admits_long_texts_and_hits_refresh_recency ... ok
+test text::layouter::tests::letter_spacing_legacy_shape_wrapper_keeps_zero_spacing ... ok
+test text::layouter::tests::letter_spacing_ellipsis_fits_the_measured_width ... ok
+test text::layouter::tests::letter_spacing_layout_cache_measurement_and_hit_testing_agree ... ok
+test text::layouter::tests::multiple_trailing_punctuation_marks_merge ... ok
+test text::layouter::tests::letter_spacing_combining_cluster_keeps_mark_origin_and_caret_boundaries ... ok
+test text::layouter::tests::no_merge_for_plain_words ... ok
+test text::layouter::tests::opening_punctuation_merges_into_following_word ... ok
+test text::layouter::tests::parses_text_atlas_size_from_env_value ... ok
+test text::layouter::tests::punctuation_between_words_merges_correctly ... ok
+test text::font::tests::noto_color_emoji_prefers_raster_images ... ok
+test text::layouter::tests::single_word_no_change ... ok
+test text::layouter::tests::trailing_punctuation_merges_into_preceding_word ... ok
+test text::layouter::tests::multiline_ellipsis_counts_explicit_newlines ... ok
+test text::layouter::tests::letter_spacing_wrap_uses_the_spaced_measurement ... ok
+test text::layouter::tests::multiline_ellipsis_fills_last_row_by_grapheme ... ok
+test text::layouter::tests::multiline_ellipsis_leaves_fitting_text_alone ... ok
+test text::font::tests::cap_height_ignores_the_ascender_fudge ... ok
+test text::loader::tests::get_or_load_font_reuses_cached_instance ... ok
+test text::loader::tests::variable_font_weight_changes_outline_shape ... ok
+test text::shaper::tests::letter_spacing_changes_shape_cache_key ... ok
+test text::shaper::tests::letter_spacing_keeps_combining_glyphs_together ... ok
+test text::layouter::tests::multiline_ellipsis_one_row_over_gets_ellipsis ... ok
+test text::layouter::tests::multiline_ellipsis_truncates_cjk_on_grapheme_boundaries ... ok
+test text::layouter::tests::single_line_ellipsis_under_wrapping_flow ... ok
+test text::shaper::tests::letter_spacing_preserves_emoji_sequence ... ok
+test text::layouter::tests::multiline_ellipsis_truncates_at_last_allowed_row ... ok
+test text::shaper::tests::letter_spacing_preserves_ligature_shape ... ok
+test text::font::tests::text_faces_report_a_cap_height ... ok
+test text::layouter::tests::layout_cache_reclaims_over_budget_memory_at_frame_boundaries ... ok
+test text::layouter::tests::layout_cache_evicts_to_byte_budget ... ok
+test text::layouter::tests::layout_cache_protects_current_frame_working_set ... ok
+
+test result: ok. 34 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.38s
+

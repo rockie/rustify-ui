@@ -124,7 +124,16 @@ impl Shaper {
         }
     }
 
-    pub fn get_or_shape(&mut self, params: ShapeParams) -> Rc<ShapedText> {
+    pub fn get_or_shape(&mut self, mut params: ShapeParams) -> Rc<ShapedText> {
+        // CSS tracking suppresses optional ligatures, unless explicitly enabled.
+        // Normalize before cache lookup so the effective features belong to the key.
+        if params.letter_spacing.0 != 0.0 {
+            for tag in [u32::from_be_bytes(*b"liga"), u32::from_be_bytes(*b"clig")] {
+                if !params.features.iter().any(|feature| feature.0 == tag) {
+                    Rc::make_mut(&mut params.features).push((tag, 0));
+                }
+            }
+        }
         if self.cache_size == 0 {
             return Rc::new(self.shape(params));
         }
@@ -232,15 +241,20 @@ impl Shaper {
             }
         }
 
-        // Post-process: apply letter-spacing and word-spacing
+        // Place spacing after a shaped cluster, so a combining mark or an
+        // emoji's internal glyphs keep their position relative to the base.
         let letter_spacing = params.letter_spacing.0;
         let word_spacing = params.word_spacing.0;
         if letter_spacing != 0.0 || word_spacing != 0.0 {
             let text = params.text.as_bytes();
-            for glyph in glyphs.iter_mut() {
-                glyph.advance_in_ems += letter_spacing;
-                if glyph.cluster < text.len() && text[glyph.cluster] == b' ' {
-                    glyph.advance_in_ems += word_spacing;
+            for index in 0..glyphs.len() {
+                let cluster = glyphs[index].cluster;
+                if glyphs.get(index + 1).is_some_and(|next| next.cluster == cluster) {
+                    continue;
+                }
+                glyphs[index].advance_in_ems += letter_spacing;
+                if text.get(cluster) == Some(&b' ') {
+                    glyphs[index].advance_in_ems += word_spacing;
                 }
             }
         }
@@ -490,4 +504,112 @@ pub struct ShapedGlyph {
     pub advance_in_ems: f32,
     pub offset_in_ems: f32,
     pub y_offset_in_ems: f32,
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::{
+        makepad_platform::SharedBytes,
+        text::{font_face::FontFace, layouter, rasterizer::Rasterizer},
+    };
+    use std::{cell::RefCell, path::PathBuf};
+
+    fn params(text: &str, font_file: &str, spacing: f32) -> ShapeParams {
+        let path = PathBuf::from(option_env!("RUSTIFY_TEXT_MANIFEST_DIR").unwrap_or(env!("CARGO_MANIFEST_DIR")))
+            .join("../widgets/resources")
+            .join(font_file);
+        let face = FontFace::from_data_and_index(
+            SharedBytes::from_file_mmap_or_read(path).expect("bundled font bytes"),
+            0,
+        ).expect("bundled font face");
+        let font = Rc::new(Font::new(
+            font_file.into(),
+            Rc::new(RefCell::new(Rasterizer::new(layouter::Settings::default().loader.rasterizer))),
+            face,
+            0.0,
+            0.0,
+        ));
+        ShapeParams {
+            text: text.into(),
+            fonts: vec![font].into(),
+            direction: Direction::Ltr,
+            letter_spacing: Ems(spacing),
+            word_spacing: Ems(0.0),
+            features: Rc::new(Vec::new()),
+        }
+    }
+
+    #[test]
+    fn letter_spacing_keeps_combining_glyphs_together() {
+        let mut shaper = Shaper::new(Settings { cache_size: 16 });
+        let plain_params = params("x\u{301}", "IBMPlexSans-Text.ttf", 0.0);
+        let plain = shaper.get_or_shape(plain_params.clone());
+        assert!(plain.glyphs.len() > 1, "the bundled font must produce base and mark glyphs");
+        for spacing in [0.2, -0.15] {
+            let spaced = shaper.get_or_shape(ShapeParams {
+                letter_spacing: Ems(spacing),
+                ..plain_params.clone()
+            });
+            assert!((spaced.width_in_ems - plain.width_in_ems - spacing).abs() < 1e-6,
+                "one combining cluster must receive spacing only once");
+            assert_eq!(spaced.glyphs[0].advance_in_ems, plain.glyphs[0].advance_in_ems,
+                "spacing must not move the combining mark away from its base");
+        }
+    }
+
+    #[test]
+    fn letter_spacing_disables_optional_ligatures_and_keeps_zero_spacing() {
+        let mut shaper = Shaper::new(Settings { cache_size: 16 });
+        let plain_params = params("ffi fi", "IBMPlexSans-Text.ttf", 0.0);
+        let plain = shaper.get_or_shape(plain_params.clone());
+        assert_eq!(plain.glyphs.len(), 4, "zero spacing retains optional ligatures");
+        for spacing in [0.2, 0.5, -0.15] {
+            let spaced_params = ShapeParams { letter_spacing: Ems(spacing), ..plain_params.clone() };
+            let spaced = shaper.get_or_shape(spaced_params.clone());
+            assert_eq!(spaced.glyphs.len(), 6, "tracking must separate Latin letters");
+            assert!(Rc::ptr_eq(&spaced, &shaper.get_or_shape(spaced_params)));
+        }
+        assert!(Rc::ptr_eq(&plain, &shaper.get_or_shape(plain_params)));
+    }
+
+    #[test]
+    fn explicit_ligature_features_override_tracking_defaults() {
+        let mut shaper = Shaper::new(Settings { cache_size: 16 });
+        let defaults = params("fi", "IBMPlexSans-Text.ttf", 0.2);
+        let explicit = shaper.get_or_shape(ShapeParams {
+            features: Rc::new(vec![(u32::from_be_bytes(*b"liga"), 1)]),
+            ..defaults.clone()
+        });
+        assert_eq!(explicit.glyphs.len(), 1);
+        let tracked = shaper.get_or_shape(defaults);
+        assert_eq!(tracked.glyphs.len(), 2);
+        assert!(!Rc::ptr_eq(&explicit, &tracked));
+    }
+
+    #[test]
+    fn letter_spacing_preserves_emoji_sequence() {
+        let mut shaper = Shaper::new(Settings { cache_size: 16 });
+        let plain_params = params("👨‍👩‍👧‍👦", "NotoColorEmoji.ttf", 0.0);
+        let plain = shaper.get_or_shape(plain_params.clone());
+        assert_eq!(plain.glyphs.len(), 1, "ZWJ family emoji must remain one glyph");
+        let spaced = shaper.get_or_shape(ShapeParams {
+            letter_spacing: Ems(0.2),
+            ..plain_params
+        });
+        assert_eq!(plain.glyphs[0].id, spaced.glyphs[0].id);
+        assert!((spaced.width_in_ems - plain.width_in_ems - 0.2).abs() < 1e-6);
+    }
+
+    #[test]
+    fn letter_spacing_changes_shape_cache_key() {
+        let mut shaper = Shaper::new(Settings { cache_size: 16 });
+        let plain_params = params("主题", "LXGWWenKaiRegular.ttf", 0.0);
+        let plain = shaper.get_or_shape(plain_params.clone());
+        let spaced_params = ShapeParams { letter_spacing: Ems(0.2), ..plain_params };
+        let spaced = shaper.get_or_shape(spaced_params.clone());
+        assert!(!Rc::ptr_eq(&plain, &spaced));
+        assert!(Rc::ptr_eq(&spaced, &shaper.get_or_shape(spaced_params)));
+        assert!((spaced.width_in_ems - plain.width_in_ems - 0.4).abs() < 1e-6);
+    }
 }

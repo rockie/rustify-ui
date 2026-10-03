@@ -22,6 +22,10 @@ jobs:
       # do not run under `--lib`.
       - name: Unit tests
         run: mbx test --workspace --lib --bins
+      - name: Independent theme consumer tests
+        run: mbx test --locked --manifest-path tests/theme-export/Cargo.toml --workspace --bins
+      - name: Makepad text layout and shaping checks
+        run: sh tests/theme-text/run.sh --lib
       - name: Fork unit tests
         run: mbx test
         working-directory: makepad
@@ -64,6 +68,9 @@ jobs:
           - name: vellum
             examples: vellum
             sub_path: ""
+          - name: theme-studio
+            examples: theme-studio
+            sub_path: theme-studio
     steps:
       - uses: actions/checkout@v4
       - name: Rust, mbx and Tailwind from mise.toml
@@ -78,6 +85,22 @@ jobs:
       - name: Build the sub-path copy
         if: matrix.sub_path != ''
         run: mbx xtask build-web --example ${{ matrix.sub_path }} --release --base /tools/demo/
+      - name: Independent exported theme consumers
+        if: matrix.name == 'theme-studio'
+        run: |
+          mbx fetch --locked --manifest-path tests/theme-export/Cargo.toml
+          sh tests/theme-export/build.sh
+          sh tests/theme-export/build.sh --base /tools/theme-export/ --out tests/theme-export/target/site-subpath
+      - uses: actions/upload-artifact@v4
+        if: matrix.name == 'theme-studio'
+        with:
+          name: theme-consumers
+          path: |
+            tests/theme-export/target/site-root/
+            tests/theme-export/target/site-subpath/
+            tests/theme-export/target/debug/theme-export-serve
+          if-no-files-found: error
+          retention-days: 1
       # The whole release directory, so the artifact keeps one folder per
       # build rather than flattening a lone one into its root.
       - uses: actions/upload-artifact@v4
@@ -137,6 +160,8 @@ jobs:
             projects: --project=component-catalog --project=data-workbench --shard=2/2 --workers=2
           - name: vellum
             projects: -c tests/vellum/playwright.config.ts
+          - name: theme-studio
+          - name: exported themes
     env:
       RUSTIFY_XTASK: ${{ github.workspace }}/target/debug/xtask
     steps:
@@ -155,10 +180,36 @@ jobs:
           name: xtask
           path: target/debug/
       - run: chmod +x target/debug/xtask
+      - uses: actions/download-artifact@v4
+        if: matrix.name == 'exported themes'
+        with:
+          name: theme-consumers
+          path: tests/theme-export/target/
+      - run: chmod +x tests/theme-export/target/debug/theme-export-serve
+        if: matrix.name == 'exported themes'
       - name: Install pinned Playwright
         run: npm ci && npx playwright install --with-deps chromium
       - name: Regression tier (Playwright Chromium; not the macOS Chrome pass gate)
+        if: matrix.name != 'theme-studio' && matrix.name != 'exported themes'
         run: npx playwright test ${{ matrix.projects }}
+      - name: Theme Studio root and sub-path regression
+        if: matrix.name == 'theme-studio'
+        run: |
+          status=0
+          npx playwright test --project=theme-studio --workers=1 --output=test-results/theme-studio || status=$?
+          cp test-results/browser.json test-results/theme-studio.json 2>/dev/null || true
+          npx playwright test --project=theme-studio-deep --workers=1 --output=test-results/theme-studio-deep || status=$?
+          cp test-results/browser.json test-results/theme-studio-deep.json 2>/dev/null || true
+          exit $status
+      - name: Exported themes root and sub-path regression
+        if: matrix.name == 'exported themes'
+        run: |
+          status=0
+          npx playwright test --project=theme-export --workers=1 --output=test-results/theme-export || status=$?
+          cp test-results/browser.json test-results/theme-export.json 2>/dev/null || true
+          npx playwright test --project=theme-export-deep --workers=1 --output=test-results/theme-export-deep || status=$?
+          cp test-results/browser.json test-results/theme-export-deep.json 2>/dev/null || true
+          exit $status
       - uses: actions/upload-artifact@v4
         if: always()
         with:

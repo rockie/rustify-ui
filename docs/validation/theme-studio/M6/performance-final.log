@@ -1,0 +1,11 @@
+npm notice run rustify-ui-browser-tests@0.1.0 npx
+npm notice run 'playwright' test --project=theme-studio theme-performance --headed --output=test-results/theme-performance-final
+
+Running 1 test using 1 worker
+
+(node:29137) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"project":"theme-studio","viewport":{"width":1440,"height":900},"environment":{"collected_at":"2026-10-03T14:57:37.612Z","user_agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.8010.12 Safari/537.36","visibility":"visible","dpr":1,"root_font":"16px","gpu_renderer":"ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Pro, Unspecified Version)","webgl_version":"WebGL 2.0 (OpenGL ES 3.0 Chromium)","build_id":"e1e22686fa8f8f27","wasm_bytes":28644856},"long_tasks":{"count":0,"total_ms":0,"max_ms":0,"entries":[]},"samples":40,"dom_css_commit":{"p50":11,"p95":11.700000002980232},"dom_color_settled":{"p50":75,"p95":76.1000000089407},"gpu_draw_ack":{"p50":11.799999997019768,"p95":12.799999997019768},"resolves":{"editor":80,"sdk_total":160},"gesture":{"inputs":240,"published":30,"duration_ms":497.6000000089407,"editor_resolves":240,"sdk_total_resolves":300,"final_revision":70,"drawn_revision":70},"idle":{"before":{"regions":1,"timers":0,"animation_frames":0,"tasks":0,"errors":0,"gpu_bytes":16951608,"memory":98762752,"pumps":195,"frames":74},"after":{"regions":1,"timers":0,"animation_frames":0,"tasks":0,"errors":0,"gpu_bytes":16951608,"memory":98762752,"pumps":195,"frames":74},"task_cpu_percent":0.6480800000000001}}
+  ✓  1 [theme-studio] › tests/browser/theme-performance.spec.ts:10:6 › theme update measurements › page timestamps measure DOM commits, GPU acknowledgements, frame merging and idle @evidence (11.1s)
+
+  1 passed (12.5s)

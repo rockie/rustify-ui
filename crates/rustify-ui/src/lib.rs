@@ -86,8 +86,14 @@ pub use rustify_makepad::{
 pub use shortcut::is_text_entry;
 #[cfg(target_arch = "wasm32")]
 pub use text::TextEdit;
+pub use theme::{
+    resolve, FontFace, ResolveContext, ResolvedTheme, Theme, ThemeDocument, ThemeError, ThemeMode,
+    ThemePatch, ThemeStyles, ThemeValuePatch, ThemeValues,
+};
 #[cfg(target_arch = "wasm32")]
-pub use theme::{use_theme, use_theme_values, ThemeOverride, ThemedScope};
-pub use theme::{Theme, ThemePatch};
+pub use theme::{
+    use_resolved_theme, use_theme, use_theme_values, ThemeBoundary, ThemeOverride, ThemeScope,
+    ThemedScope,
+};
 #[cfg(target_arch = "wasm32")]
 pub use toast::{provide_toasts, use_toasts, ToastHandle, ToastRegion};

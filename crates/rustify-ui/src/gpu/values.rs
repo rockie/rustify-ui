@@ -5,6 +5,9 @@ use crate::makepad_widgets::widget::*;
 use crate::makepad_widgets::*;
 
 use super::colour;
+use super::theme::{disabled_color, draw_focus, focus_hit, token, ThemeMetrics};
+use super::DrawRustifyShadow;
+use crate::theme::ResolvedTheme;
 
 /// A value on a range drawn by a region.
 ///
@@ -28,6 +31,8 @@ pub struct RustifySlider {
     draw_fill: DrawColor,
     #[live]
     draw_knob: DrawColor,
+    #[live]
+    draw_shadow: DrawRustifyShadow,
     #[rust]
     value: f64,
     #[rust]
@@ -41,6 +46,12 @@ pub struct RustifySlider {
     /// Track, fill and knob, from the scope's theme.
     #[rust]
     palette: Option<(u32, u32, u32)>,
+    #[rust]
+    theme_palette: Option<[Vec4f; 4]>,
+    #[rust]
+    theme_metrics: Option<ThemeMetrics>,
+    #[rust]
+    hit_area: Area,
     #[rust]
     change: Option<f64>,
 }
@@ -68,8 +79,28 @@ impl RustifySlider {
 
     pub fn set_palette(&mut self, cx: &mut Cx, track: u32, fill: u32, knob: u32) {
         let next = Some((track, fill, knob));
-        if self.palette != next {
+        if self.palette != next || self.theme_palette.is_some() {
             self.palette = next;
+            self.theme_palette = None;
+            self.redraw(cx);
+        }
+    }
+
+    /// Applies RGBA and spacing-based track/thumb geometry, keeping the full input area.
+    pub fn apply_theme(&mut self, cx: &mut Cx, theme: &ResolvedTheme) {
+        let palette = [
+            token(theme, "secondary"),
+            token(theme, "primary"),
+            token(theme, "background"),
+            token(theme, "border"),
+        ];
+        let metrics = ThemeMetrics::from(theme);
+        let changed = self.theme_palette != Some(palette) || self.theme_metrics != Some(metrics);
+        self.palette = None;
+        self.theme_palette = Some(palette);
+        self.theme_metrics = Some(metrics);
+        self.walk.height = Size::Fixed(metrics.spacing * 6.0);
+        if changed {
             self.redraw(cx);
         }
     }
@@ -81,12 +112,20 @@ impl RustifySlider {
     /// The track where it ended up, in the region's own local pixels. See
     /// `RustifyCheckBox::drawn`.
     pub fn drawn(&self, cx: &Cx) -> Option<Rect> {
-        let area = self.draw_bg.area();
+        let area = self.hit_area();
         (!area.is_empty()).then(|| area.rect(cx))
     }
 
     fn range(&self) -> (f64, f64, f64) {
         self.range.unwrap_or(RANGE)
+    }
+
+    fn hit_area(&self) -> Area {
+        if self.theme_palette.is_some() {
+            self.hit_area
+        } else {
+            self.draw_bg.area()
+        }
     }
 
     /// Where along the track the value sits, as 0..=1.
@@ -122,7 +161,12 @@ impl RustifySlider {
 
 impl Widget for RustifySlider {
     fn handle_event(&mut self, cx: &mut Cx, event: &Event, _scope: &mut Scope) {
-        match event.hits(cx, self.draw_bg.area()) {
+        let area = self.hit_area();
+        let hit = event.hits(cx, area);
+        if focus_hit(&hit, cx, area, self.disabled) {
+            self.redraw(cx);
+        }
+        match hit {
             Hit::FingerDown(fe) => {
                 if fe.is_primary_hit() {
                     self.ask(cx, fe.abs.x);
@@ -135,33 +179,86 @@ impl Widget for RustifySlider {
 
     fn draw_walk(&mut self, cx: &mut Cx2d, _scope: &mut Scope, walk: Walk) -> DrawStep {
         let pane = cx.walk_turtle(walk);
+        if let Some([track, fill, knob, border]) = self.theme_palette {
+            self.draw_bg.color = disabled_color(track, self.disabled);
+            self.draw_fill.color = disabled_color(fill, self.disabled);
+            self.draw_knob.color = disabled_color(knob, self.disabled);
+            self.draw_bg.set_uniform(cx, id!(theme_round), &[1.0]);
+            self.draw_fill.set_uniform(cx, id!(theme_round), &[1.0]);
+            self.draw_knob.set_uniform(cx, id!(theme_round), &[1.0]);
+            let border = disabled_color(border, self.disabled);
+            self.draw_knob.set_uniform(
+                cx,
+                id!(border_color),
+                &[border.x, border.y, border.z, border.w],
+            );
+        } else {
+            self.draw_bg.set_uniform(cx, id!(theme_round), &[0.0]);
+            self.draw_fill.set_uniform(cx, id!(theme_round), &[0.0]);
+            self.draw_knob.set_uniform(cx, id!(theme_round), &[0.0]);
+        }
         if let Some((track, fill, knob)) = self.palette {
             self.draw_bg.color = colour(track);
             self.draw_fill.color = colour(fill);
             self.draw_knob.color = colour(knob);
         }
-        self.draw_bg.draw_abs(cx, pane);
+        let track = self
+            .theme_metrics
+            .map(|metrics| {
+                let height = (metrics.spacing * 2.0).min(pane.size.y);
+                Rect {
+                    pos: dvec2(pane.pos.x, pane.pos.y + (pane.size.y - height) * 0.5),
+                    size: dvec2(pane.size.x, height),
+                }
+            })
+            .unwrap_or(pane);
+        self.draw_bg.draw_abs(cx, track);
+        if self.theme_palette.is_some() {
+            cx.add_rect_area(&mut self.hit_area, pane);
+        }
         let fraction = self.fraction();
         if fraction > 0.0 {
             self.draw_fill.draw_abs(
                 cx,
                 Rect {
-                    pos: pane.pos,
-                    size: dvec2(pane.size.x * fraction, pane.size.y),
+                    pos: track.pos,
+                    size: dvec2(track.size.x * fraction, track.size.y),
                 },
             );
         }
-        let knob = pane.size.y.min(pane.size.x).max(2.0);
+        let knob = self
+            .theme_metrics
+            .map(|metrics| metrics.spacing * 4.0)
+            .unwrap_or(pane.size.y)
+            .min(pane.size.y)
+            .min(pane.size.x)
+            .max(2.0);
         // Kept inside the track: a knob half off the end would report a value
         // the pointer never asked for.
         let left = pane.pos.x + (pane.size.x - knob) * fraction;
-        self.draw_knob.draw_abs(
-            cx,
-            Rect {
-                pos: dvec2(left, pane.pos.y),
-                size: dvec2(knob, pane.size.y),
-            },
-        );
+        let knob_rect = Rect {
+            pos: dvec2(left, pane.pos.y + (pane.size.y - knob) * 0.5),
+            size: dvec2(
+                knob,
+                if self.theme_palette.is_some() {
+                    knob
+                } else {
+                    pane.size.y
+                },
+            ),
+        };
+        if let Some(metrics) = self.theme_metrics {
+            let focused = cx.has_key_focus(self.hit_area()) && !self.disabled;
+            draw_focus(
+                &mut self.draw_shadow,
+                cx,
+                knob_rect,
+                knob * 0.5,
+                metrics,
+                focused,
+            );
+        }
+        self.draw_knob.draw_abs(cx, knob_rect);
         DrawStep::done()
     }
 }
@@ -194,6 +291,10 @@ pub struct RustifyProgress {
     /// Track and fill, from the scope's theme.
     #[rust]
     palette: Option<(u32, u32)>,
+    #[rust]
+    theme_palette: Option<[Vec4f; 2]>,
+    #[rust]
+    theme_spacing: Option<f64>,
 }
 
 impl RustifyProgress {
@@ -207,8 +308,23 @@ impl RustifyProgress {
 
     pub fn set_palette(&mut self, cx: &mut Cx, track: u32, fill: u32) {
         let next = Some((track, fill));
-        if self.palette != next {
+        if self.palette != next || self.theme_palette.is_some() {
             self.palette = next;
+            self.theme_palette = None;
+            self.redraw(cx);
+        }
+    }
+
+    /// Applies secondary/primary RGBA and the DOM progress height in spacing units.
+    pub fn apply_theme(&mut self, cx: &mut Cx, theme: &ResolvedTheme) {
+        let palette = [token(theme, "secondary"), token(theme, "primary")];
+        let changed =
+            self.theme_palette != Some(palette) || self.theme_spacing != Some(theme.spacing_px);
+        self.palette = None;
+        self.theme_palette = Some(palette);
+        self.theme_spacing = Some(theme.spacing_px);
+        self.walk.height = Size::Fixed(theme.spacing_px * 2.0);
+        if changed {
             self.redraw(cx);
         }
     }
@@ -225,6 +341,10 @@ impl Widget for RustifyProgress {
 
     fn draw_walk(&mut self, cx: &mut Cx2d, _scope: &mut Scope, walk: Walk) -> DrawStep {
         let pane = cx.walk_turtle(walk);
+        if let Some([track, fill]) = self.theme_palette {
+            self.draw_bg.color = track;
+            self.draw_fill.color = fill;
+        }
         if let Some((track, fill)) = self.palette {
             self.draw_bg.color = colour(track);
             self.draw_fill.color = colour(fill);
@@ -233,7 +353,11 @@ impl Widget for RustifyProgress {
         if self.fraction > 0.0 {
             // Never narrower than it is tall: a rounded end needs the room, and
             // a one-percent bar drawn as a sliver reads as nothing at all.
-            let width = (pane.size.x * self.fraction).max(pane.size.y.min(pane.size.x));
+            let width = if self.theme_palette.is_some() {
+                pane.size.x * self.fraction
+            } else {
+                (pane.size.x * self.fraction).max(pane.size.y.min(pane.size.x))
+            };
             self.draw_fill.draw_abs(
                 cx,
                 Rect {

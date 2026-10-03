@@ -1,0 +1,50 @@
+/* These URLs name the same bundled resources used by the GPU font catalogue. */
+@font-face {
+  font-family: "IBM Plex Sans";
+  src: url("./makepad_widgets/resources/IBMPlexSans-Text.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Noto Sans";
+  src: url("./makepad_widgets/resources/NotoSans-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Rustify WenKai";
+  src: url("./makepad_widgets/resources/LXGWWenKaiRegular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Noto Serif";
+  src: url("./makepad_widgets/resources/NotoSerif-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Liberation Mono";
+  src: url("./makepad_widgets/resources/LiberationMono-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("./makepad_widgets/resources/jetbrains_mono_variable.ttf") format("truetype");
+  font-weight: 100 800;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Noto Color Emoji";
+  src: url("./makepad_widgets/resources/NotoColorEmoji.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}

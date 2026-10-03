@@ -145,9 +145,9 @@ mod dom {
     // leaves the host page's defaults alone, and a list's are an em of margin
     // above and below and a marker beside every row.
     const PANEL: &str =
-        "m-0 min-w-40 list-none rounded-md border border-border bg-popover p-1 shadow-lg";
+        "m-0 min-w-40 list-none rounded-md border border-border bg-popover text-popover-foreground p-1 shadow-lg";
     const GROUP: &str = "m-0 p-0";
-    const ITEM: &str = "flex w-full items-center gap-2 rounded-sm px-2 py-1.5 text-sm text-foreground text-left transition-colors outline-none cursor-pointer hover:bg-muted focus-visible:bg-muted aria-disabled:opacity-50 aria-disabled:cursor-not-allowed aria-disabled:hover:bg-transparent";
+    const ITEM: &str = "flex w-full items-center gap-2 rounded-sm px-2 py-1.5 text-sm text-popover-foreground text-left transition-colors outline-none cursor-pointer hover:bg-muted focus-visible:bg-muted aria-disabled:opacity-50 aria-disabled:cursor-not-allowed aria-disabled:hover:bg-transparent";
     const HEADING: &str = "px-2 py-1.5 text-xs font-medium text-muted-foreground select-none";
     const SEPARATOR: &str = "-mx-1 my-1 h-px bg-border";
     const HINT: &str = "ms-auto ps-4 text-xs tracking-widest text-muted-foreground";

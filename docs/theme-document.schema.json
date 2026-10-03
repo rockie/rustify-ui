@@ -1,0 +1,254 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Rustify ThemeDocument v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "id",
+    "name",
+    "styles"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "id": {
+      "$ref": "#/$defs/identity"
+    },
+    "name": {
+      "$ref": "#/$defs/identity"
+    },
+    "styles": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "light",
+        "dark"
+      ],
+      "properties": {
+        "light": {
+          "$ref": "#/$defs/values"
+        },
+        "dark": {
+          "$ref": "#/$defs/values"
+        }
+      }
+    }
+  },
+  "$defs": {
+    "identity": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 80,
+      "pattern": "^[^\\u0000-\\u001f\\u007f-\\u009f]*\\S[^\\u0000-\\u001f\\u007f-\\u009f]*$"
+    },
+    "values": {
+      "type": "object",
+      "required": [
+        "background",
+        "foreground",
+        "card",
+        "card-foreground",
+        "popover",
+        "popover-foreground",
+        "primary",
+        "primary-foreground",
+        "secondary",
+        "secondary-foreground",
+        "muted",
+        "muted-foreground",
+        "accent",
+        "accent-foreground",
+        "destructive",
+        "destructive-foreground",
+        "border",
+        "input",
+        "ring",
+        "chart-1",
+        "chart-2",
+        "chart-3",
+        "chart-4",
+        "chart-5",
+        "sidebar",
+        "sidebar-foreground",
+        "sidebar-primary",
+        "sidebar-primary-foreground",
+        "sidebar-accent",
+        "sidebar-accent-foreground",
+        "sidebar-border",
+        "sidebar-ring",
+        "success",
+        "warning",
+        "shadow-color",
+        "font-sans",
+        "font-serif",
+        "font-mono",
+        "letter-spacing",
+        "font-size",
+        "radius",
+        "spacing",
+        "layout-gap",
+        "shadow-opacity",
+        "shadow-blur",
+        "shadow-spread",
+        "shadow-offset-x",
+        "shadow-offset-y",
+        "reduce-motion"
+      ],
+      "properties": {
+        "background": {
+          "type": "string"
+        },
+        "foreground": {
+          "type": "string"
+        },
+        "card": {
+          "type": "string"
+        },
+        "card-foreground": {
+          "type": "string"
+        },
+        "popover": {
+          "type": "string"
+        },
+        "popover-foreground": {
+          "type": "string"
+        },
+        "primary": {
+          "type": "string"
+        },
+        "primary-foreground": {
+          "type": "string"
+        },
+        "secondary": {
+          "type": "string"
+        },
+        "secondary-foreground": {
+          "type": "string"
+        },
+        "muted": {
+          "type": "string"
+        },
+        "muted-foreground": {
+          "type": "string"
+        },
+        "accent": {
+          "type": "string"
+        },
+        "accent-foreground": {
+          "type": "string"
+        },
+        "destructive": {
+          "type": "string"
+        },
+        "destructive-foreground": {
+          "type": "string"
+        },
+        "border": {
+          "type": "string"
+        },
+        "input": {
+          "type": "string"
+        },
+        "ring": {
+          "type": "string"
+        },
+        "chart-1": {
+          "type": "string"
+        },
+        "chart-2": {
+          "type": "string"
+        },
+        "chart-3": {
+          "type": "string"
+        },
+        "chart-4": {
+          "type": "string"
+        },
+        "chart-5": {
+          "type": "string"
+        },
+        "sidebar": {
+          "type": "string"
+        },
+        "sidebar-foreground": {
+          "type": "string"
+        },
+        "sidebar-primary": {
+          "type": "string"
+        },
+        "sidebar-primary-foreground": {
+          "type": "string"
+        },
+        "sidebar-accent": {
+          "type": "string"
+        },
+        "sidebar-accent-foreground": {
+          "type": "string"
+        },
+        "sidebar-border": {
+          "type": "string"
+        },
+        "sidebar-ring": {
+          "type": "string"
+        },
+        "success": {
+          "type": "string"
+        },
+        "warning": {
+          "type": "string"
+        },
+        "shadow-color": {
+          "type": "string"
+        },
+        "font-sans": {
+          "type": "string"
+        },
+        "font-serif": {
+          "type": "string"
+        },
+        "font-mono": {
+          "type": "string"
+        },
+        "letter-spacing": {
+          "type": "string"
+        },
+        "font-size": {
+          "type": "string"
+        },
+        "radius": {
+          "type": "string"
+        },
+        "spacing": {
+          "type": "string"
+        },
+        "layout-gap": {
+          "type": "string"
+        },
+        "shadow-opacity": {
+          "type": "string"
+        },
+        "shadow-blur": {
+          "type": "string"
+        },
+        "shadow-spread": {
+          "type": "string"
+        },
+        "shadow-offset-x": {
+          "type": "string"
+        },
+        "shadow-offset-y": {
+          "type": "string"
+        },
+        "reduce-motion": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {
+        "type": "string"
+      },
+      "description": "Author strings. resolve validates color grammar, fonts and numeric limits with the supplied rem/font context; unknown string tokens are preserved with diagnostics."
+    }
+  }
+}

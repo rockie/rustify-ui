@@ -1,0 +1,67 @@
+{
+  "sha256": "1d4b2f008ac7e02780c19801d4b04dd4538e40215943cc8ad374dba8ec2278c0",
+  "bytes": 19002280,
+  "table_count": 22,
+  "whole_font_checksum": "0xb1b0afba",
+  "glyph_count": 36498,
+  "format12_groups": 3453,
+  "format12_codepoints": 36212,
+  "cmap_records": [
+    {
+      "platform": 0,
+      "encoding": 4,
+      "offset": 28,
+      "format": 12,
+      "bytes": 41452,
+      "sha256": "63ac8fc7300a5f2450aaef715a4af4dd9e2106891d851e2db2463e534d03ee1b"
+    },
+    {
+      "platform": 1,
+      "encoding": 0,
+      "offset": 41480,
+      "format": 6,
+      "bytes": 522,
+      "sha256": "4ce470683e821e3cdec4860ce0be5bac58d4471644adb1cedd6561b0d6367257"
+    },
+    {
+      "platform": 3,
+      "encoding": 10,
+      "offset": 28,
+      "format": 12,
+      "bytes": 41452,
+      "sha256": "63ac8fc7300a5f2450aaef715a4af4dd9e2106891d851e2db2463e534d03ee1b"
+    }
+  ],
+  "preserved_table_sha256": {
+    "BASE": "460dcccb059f385cfa05e11d8beed70b0818d6e36e9feb01e4a1fa3712c4eefa",
+    "FFTM": "fb6769964c8891dcb3bf0847534dc0f316989e9d7518190c3f34a70f13234bf6",
+    "GDEF": "c71f8f81fa7fc6cbcfe60e02b045c1e746d94dc94847c2400de14c9a30765935",
+    "GPOS": "70bc95ad3267671a69862b2a2eaf41aedc818fe5f26c8f3e07392f5007ec2fa8",
+    "GSUB": "cfd801762968031277fad43d4558c54515c612c6faaddac01c76b705e9db323f",
+    "OS/2": "e9ef82b33636b012fa32a4ab769bfd35854df41bf998311319203b5dd379007c",
+    "bsln": "eddc9fcd4fa115bc0ec642b071f422e99cd6e5ff209efe5fef4fd1777c2e810a",
+    "feat": "a2fdb74b04fa831bdda32a53952748d4b0d54c036f27783350e958a3a67c5111",
+    "gasp": "4ca731f86ad506ac0e320283dc9461926346de3c4d91d539ea7f6620d3826940",
+    "glyf": "9983a7545e2155059c58e7d6f9ab3e763dcedfa51e3326f96d352e8caa2b31fa",
+    "head": "41051a40e16f0aedaf4fde6f9c2975fb6079aae3b85d86f4ac93fad2f4027cae",
+    "hhea": "33e9ab0e6861f76af5b3797d13dd65af926114b62f843089b19f2e62e4ab8682",
+    "hmtx": "42e9e1feb8dfb893d8fcb1c682e215d9ce7754da91615505c81cfb04141a19f0",
+    "loca": "2778a37aa5869f1f0110682e753eeb254323a4289b4748f53a402d9db0190948",
+    "maxp": "c787f9ba12585321122150b31a03fe789046c41e1402a5a292a32c6af01017e5",
+    "morx": "5984464c470f7a66b2fbea65280104ff08b951df252648aa11bdc34a78177b37",
+    "post": "d2995b91524bf6db98dfa5f185ad433450d5788f9335a831c67cc72d65ab05d1",
+    "prop": "5770b5884d5008147be14bcf3c516a5c46b3afb2fcd3bc5c062fc421ece963b9",
+    "vhea": "a260939184874412cbeffa193ed382dad1ed75784b53a7b1ce85f176d0cdd252",
+    "vmtx": "f4516c936268bfbc77d095d9e969d237cbb26975cfe6fcae0ed722245f61ba55"
+  },
+  "renamed_name_ids": [
+    1,
+    3,
+    4,
+    6
+  ],
+  "original_metadata_compared": false,
+  "browser_ots_verified": false,
+  "source_baseline": "7f5e5042cb647ab474f0ef6c833ea568c75b53d4",
+  "source_sha256": "0819604ad9357afbc6e7cc097328a16ed85143ee0848ffda09fda35a30da6506"
+}

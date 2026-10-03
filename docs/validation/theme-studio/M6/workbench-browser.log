@@ -1,0 +1,33 @@
+npm notice run rustify-ui-browser-tests@0.1.0 npx
+npm notice run 'playwright' test --project=property-workbench m6-theme p2-form m5-text p3-restart
+
+Running 22 tests using 1 worker
+
+(node:12078) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 [property-workbench] › tests/browser/m5-text.spec.ts:68:9 › M5 V5: the browser's own text control edits the region's text › the control takes the rectangle the region drew the name into (1.8s)
+  ✓   2 [property-workbench] › tests/browser/m5-text.spec.ts:93:9 › M5 V5: the browser's own text control edits the region's text › enter commits once and the region draws the new value (1.0s)
+  ✓   3 [property-workbench] › tests/browser/m5-text.spec.ts:113:9 › M5 V5: the browser's own text control edits the region's text › escape abandons the edit and the value is untouched (950ms)
+  ✓   4 [property-workbench] › tests/browser/m5-text.spec.ts:124:9 › M5 V5: the browser's own text control edits the region's text › keys pressed while composing belong to the composition (1.1s)
+  ✓   5 [property-workbench] › tests/browser/m5-text.spec.ts:152:9 › M5 V5: the browser's own text control edits the region's text › a composition produces one value, not one per event (1.0s)
+  ✓   6 [property-workbench] › tests/browser/m5-text.spec.ts:164:9 › M5 V5: the browser's own text control edits the region's text › a value that moves underneath the session ends it instead of overwriting (941ms)
+  ✓   7 [property-workbench] › tests/browser/m5-text.spec.ts:188:9 › M5 V5: the browser's own text control edits the region's text › losing the control commits exactly once (951ms)
+  ✓   8 [property-workbench] › tests/browser/m5-text.spec.ts:203:9 › M5 V5: the browser's own text control edits the region's text › several lines are edited in a control that can hold them (982ms)
+  ✓   9 [property-workbench] › tests/browser/m6-theme.spec.ts:37:9 › M6 V7: one table of values for both halves of a scope › switching the theme moves the DOM and the GPU together (1.0s)
+  ✓  10 [property-workbench] › tests/browser/m6-theme.spec.ts:65:9 › M6 V7: one table of values for both halves of a scope › the host page keeps its own appearance across twenty switches (851ms)
+  ✓  11 [property-workbench] › tests/browser/m6-theme.spec.ts:87:9 › M6 V7: one table of values for both halves of a scope › the controls are still found by role and name after a switch (735ms)
+  ✓  12 [property-workbench] › tests/browser/p2-form.spec.ts:31:9 › M2 V5: a form that says what is wrong and saves once › twenty visible properties, each with a label pointing at its control (659ms)
+  ✓  13 [property-workbench] › tests/browser/p2-form.spec.ts:58:9 › M2 V5: a form that says what is wrong and saves once › a rule that fails names its field, describes it, and takes the keyboard (735ms)
+  ✓  14 [property-workbench] › tests/browser/p2-form.spec.ts:80:9 › M2 V5: a form that says what is wrong and saves once › a rule across two fields belongs to neither and says which pair (852ms)
+  ✓  15 [property-workbench] › tests/browser/p2-form.spec.ts:101:9 › M2 V5: a form that says what is wrong and saves once › twenty checks answered backwards leave the latest one showing (719ms)
+  ✓  16 [property-workbench] › tests/browser/p2-form.spec.ts:137:9 › M2 V5: a form that says what is wrong and saves once › asking while a check runs waits, and then saves exactly once (700ms)
+  ✓  17 [property-workbench] › tests/browser/p2-form.spec.ts:162:9 › M2 V5: a form that says what is wrong and saves once › a check that fails turns a waiting submit into a block, not a save (718ms)
+  ✓  18 [property-workbench] › tests/browser/p2-form.spec.ts:187:9 › M2 V5: a form that says what is wrong and saves once › changing a field while a submit waits voids the submit (667ms)
+  ✓  19 [property-workbench] › tests/browser/p2-form.spec.ts:200:9 › M2 V5: a form that says what is wrong and saves once › twenty clicks while a save runs are one save (732ms)
+  ✓  20 [property-workbench] › tests/browser/p2-form.spec.ts:220:9 › M2 V5: a form that says what is wrong and saves once › a save that fails keeps the values and says why (751ms)
+(node:12495) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  21 [property-workbench] › tests/browser/p3-restart.spec.ts:14:5 › review · mounted instances restart with matching SDK identity and release URL ownership (981ms)
+  ✓  22 [property-workbench] › tests/browser/p3-restart.spec.ts:42:5 › review · a failed restart load shows an error and a working reload action (848ms)
+
+  22 passed (22.0s)

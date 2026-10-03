@@ -1,0 +1,54 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling theme-export-generator v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/tests/theme-export/generator)
+   Compiling theme_export_consumer v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/tests/theme-export/runtime)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.26s
+warning: the following packages contain code that will be rejected by a future version of Rust: proc-macro-error2 v2.0.1
+note: to see what the problems were, use the option `--future-incompat-report`, or run `cargo report future-incompatibilities --id 1`
+     Running unittests src/main.rs (tests/theme-export/target/debug/deps/theme_export_generator-e67f33580047019a)
+
+running 14 tests
+test bridge::tests::module_exports_hash_and_factory_with_the_source_verbatim ... ok
+test bridge::tests::message_string_is_decoded_from_the_from_wasm_layout ... ok
+test data_tools::tests::invalid_and_oversize_imports_never_produce_an_apply_candidate ... ok
+test persistence::tests::bad_cache_keeps_exact_raw_and_rejects_shape_version_and_invalid_dark_mode ... ok
+test persistence::tests::valid_cache_round_trip_preserves_author_values_preferences_and_unknown_tokens ... ok
+test data_tools::tests::import_review_lists_identity_added_removed_and_both_mode_changes_without_mutating ... ok
+test persistence::tests::invalid_candidate_duplicate_names_ids_and_unknown_target_leave_envelope_unchanged ... ok
+test data_tools::tests::save_requires_separate_overwrite_intent_and_copy_rename_conflicts_are_rejected ... ok
+test persistence::tests::named_crud_preserves_identity_intent_and_never_changes_original ... ok
+test persistence::tests::preference_enums_duplicates_and_unknown_fields_are_rejected_without_losing_raw ... ok
+test data_tools::tests::exports_route_profiles_color_formats_and_lossless_json_to_actual_sdk ... ok
+test data_tools::tests::full_library_permits_rename_and_confirmed_overwrite_but_rejects_new_copy ... ok
+test persistence::tests::every_supported_preference_value_and_eighty_unicode_character_name_round_trip ... ok
+test persistence::tests::hundred_theme_limit_allows_explicit_overwrite_and_rejects_extra_or_duplicate_saved_ids ... ok
+
+test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+
+     Running unittests src/bin/theme-export-serve.rs (tests/theme-export/target/debug/deps/theme_export_serve-0846c50193d95c4c)
+
+running 8 tests
+test serve::fault_tests::a_stale_bridge_claims_a_hash_the_wasm_does_not_have ... ok
+test serve::fault_tests::a_fault_names_the_file_it_breaks ... ok
+test serve::fault_tests::each_kind_of_damage_is_the_one_it_says ... ok
+test serve::tests::a_route_is_answered_with_the_application_and_a_missing_file_is_not ... ok
+test serve::tests::base_paths_are_normalized_to_slash_wrapped_form ... ok
+test serve::tests::strict_policy_allows_wasm_but_no_script_eval ... ok
+test serve::tests::requests_resolve_inside_the_base_and_never_escape_the_root ... ok
+test serve::tests::a_revalidation_is_answered_only_for_the_version_the_browser_has ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/main.rs (tests/theme-export/target/debug/deps/theme_export_consumer-09f74390bd0cc7b8)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+mbx[cache]: 0 hits, 2 misses, 1 not looked up, 1 incremental; 0 B downloaded, 0 B uploaded, 1007.4 KiB stored locally
+mbx[savings]: 10262 compilations old. not one compiled twice.

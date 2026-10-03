@@ -1,0 +1,13 @@
+[workspace]
+resolver = "2"
+members = ["generator", "runtime"]
+default-members = ["generator"]
+
+[patch.crates-io]
+bitflags = { path = "../../makepad/libs/bitflags" }
+smallvec = { path = "../../makepad/libs/smallvec" }
+
+[profile.release]
+codegen-units = 1
+lto = "fat"
+panic = "abort"

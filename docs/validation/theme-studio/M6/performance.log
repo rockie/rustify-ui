@@ -1,0 +1,11 @@
+npm notice run rustify-ui-browser-tests@0.1.0 npx
+npm notice run 'playwright' test --project=theme-studio theme-performance --headed
+
+Running 1 test using 1 worker
+
+(node:5718) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"project":"theme-studio","viewport":{"width":1440,"height":900},"samples":40,"dom_css_commit":{"p50":11.099999994039536,"p95":12.700000002980232},"dom_color_settled":{"p50":75,"p95":76.6000000089407},"gpu_draw_ack":{"p50":11.800000011920929,"p95":13.5},"resolves":{"editor":80,"sdk_total":240},"gesture":{"inputs":240,"published":30,"duration_ms":498.09999999403954,"editor_resolves":240,"sdk_total_resolves":302,"final_revision":70,"drawn_revision":70},"idle":{"before":{"regions":1,"timers":0,"animation_frames":0,"tasks":0,"errors":0,"gpu_bytes":16951608,"memory":98762752,"pumps":195,"frames":75},"after":{"regions":1,"timers":0,"animation_frames":0,"tasks":0,"errors":0,"gpu_bytes":16951608,"memory":98762752,"pumps":195,"frames":75},"task_cpu_percent":0.58162}}
+  ✓  1 [theme-studio] › tests/browser/theme-performance.spec.ts:10:6 › theme update measurements › page timestamps measure DOM commits, GPU acknowledgements, frame merging and idle @evidence (11.0s)
+
+  1 passed (12.5s)

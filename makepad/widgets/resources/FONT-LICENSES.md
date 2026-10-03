@@ -1,12 +1,14 @@
 # Font licenses
 
-Fonts bundled in `makepad/widgets/resources` and shipped with every web build. All of them were received with the Makepad reference tree; the notices below are reproduced from the fonts' upstream projects so the required license text travels with the files.
+Fonts bundled in `makepad/widgets/resources` and shipped with every web build. Most were received with the Makepad reference tree; the notices below follow the bundled fonts' metadata. The separately imported serif face and repaired WenKai face are identified below.
 
 | File | Family | Copyright / reserved names | License |
 |---|---|---|---|
-| LXGWWenKaiRegular.ttf, LXGWWenKaiBold.ttf | LXGW WenKai (Chinese) | Copyright 2021-2026 LXGW, with Reserved Font Names 霞鹜, 霞鶩, 落霞孤鹜, 落霞孤鶩 and LXGW; derived from Klee (Copyright 2020 The Klee Project Authors) | SIL OFL 1.1 |
+| LXGWWenKaiRegular.ttf | Rustify WenKai (Chinese) | Copyright 2021-2024 LXGW; Copyright 2020 The Klee Project Authors. Modified by Rustify: removes the overflowing format-4 cmap, preserves the complete format-12 mapping and every glyph/metric table, recalculates checksums, and renames the primary family. The filename is kept for existing resource references. | SIL OFL 1.1; see scripts/repair-theme-font.py and sources.lock.json |
+| LXGWWenKaiBold.ttf | LXGW WenKai (Chinese) | Copyright 2021-2024 LXGW, with Reserved Font Names 霞鹜, 霞鶩, 落霞孤鹜, 落霞孤鶩 and LXGW; derived from Klee (Copyright 2020 The Klee Project Authors) | SIL OFL 1.1 |
 | NotoColorEmoji.ttf | Noto Color Emoji | Copyright 2013 Google LLC | SIL OFL 1.1 |
-| NotoSans-Regular.ttf | Noto Sans | Copyright 2022 The Noto Project Authors | SIL OFL 1.1 |
+| NotoSans-Regular.ttf | Noto Sans | Copyright 2012 Google Inc. All Rights Reserved. | SIL OFL 1.1 |
+| NotoSerif-Regular.ttf | Noto Serif | Copyright 2018 The Noto Project Authors; imported from notofonts/noto-fonts at ffebf8c1ee449e544955a7e813c54f9b73848eac | SIL OFL 1.1; original notice in LICENSE-NOTO-SERIF.txt |
 | IBMPlexSans-Text.ttf, IBMPlexSans-SemiBold.ttf, IBMPlexSans-Italic.ttf, IBMPlexSans-BoldItalic.ttf | IBM Plex Sans | Copyright © 2017 IBM Corp. with Reserved Font Name "Plex" | SIL OFL 1.1 |
 | jetbrains_mono_variable.ttf | JetBrains Mono | Copyright 2020 The JetBrains Mono Project Authors | SIL OFL 1.1 |
 | LiberationMono-Regular.ttf | Liberation Mono | Digitized data copyright (c) 2010 Google Corporation with Reserved Font Arimo, Tinos and Cousine; Copyright (c) 2012 Red Hat, Inc. with Reserved Font Name Liberation | SIL OFL 1.1 |

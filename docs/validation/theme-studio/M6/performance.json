@@ -1,0 +1,477 @@
+{
+  "project": "theme-studio",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "environment": {
+    "collected_at": "2026-10-03T14:57:37.612Z",
+    "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.8010.12 Safari/537.36",
+    "visibility": "visible",
+    "dpr": 1,
+    "root_font": "16px",
+    "gpu_renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Pro, Unspecified Version)",
+    "webgl_version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+    "build_id": "e1e22686fa8f8f27",
+    "wasm_bytes": 28644856
+  },
+  "long_tasks": {
+    "count": 0,
+    "total_ms": 0,
+    "max_ms": 0,
+    "entries": []
+  },
+  "samples": 40,
+  "dom_css_commit": {
+    "p50": 11,
+    "p95": 11.700000002980232
+  },
+  "dom_color_settled": {
+    "p50": 75,
+    "p95": 76.1000000089407
+  },
+  "gpu_draw_ack": {
+    "p50": 11.799999997019768,
+    "p95": 12.799999997019768
+  },
+  "resolves": {
+    "editor": 80,
+    "sdk_total": 160
+  },
+  "gesture": {
+    "inputs": 240,
+    "published": 30,
+    "duration_ms": 497.6000000089407,
+    "editor_resolves": 240,
+    "sdk_total_resolves": 300,
+    "final_revision": 70,
+    "drawn_revision": 70
+  },
+  "idle": {
+    "before": {
+      "regions": 1,
+      "timers": 0,
+      "animation_frames": 0,
+      "tasks": 0,
+      "errors": 0,
+      "gpu_bytes": 16951608,
+      "memory": 98762752,
+      "pumps": 195,
+      "frames": 74
+    },
+    "after": {
+      "regions": 1,
+      "timers": 0,
+      "animation_frames": 0,
+      "tasks": 0,
+      "errors": 0,
+      "gpu_bytes": 16951608,
+      "memory": 98762752,
+      "pumps": 195,
+      "frames": 74
+    },
+    "task_cpu_percent": 0.6480800000000001
+  },
+  "raw": [
+    {
+      "revision": 1,
+      "input_ms": 1601.0999999940395,
+      "css_commit_ms": 1611.4000000059605,
+      "color_settled_ms": 1755.5999999940395,
+      "gpu_ms": 1612.7000000029802,
+      "css_commit_latency_ms": 10.300000011920929,
+      "color_settled_latency_ms": 154.5,
+      "gpu_latency_ms": 11.600000008940697
+    },
+    {
+      "revision": 2,
+      "input_ms": 1755.7000000029802,
+      "css_commit_ms": 1767,
+      "color_settled_ms": 1830.2999999970198,
+      "gpu_ms": 1768.0999999940395,
+      "css_commit_latency_ms": 11.299999997019768,
+      "color_settled_latency_ms": 74.59999999403954,
+      "gpu_latency_ms": 12.399999991059303
+    },
+    {
+      "revision": 3,
+      "input_ms": 1830.2999999970198,
+      "css_commit_ms": 1841.7000000029802,
+      "color_settled_ms": 1905.2000000029802,
+      "gpu_ms": 1842.5999999940395,
+      "css_commit_latency_ms": 11.400000005960464,
+      "color_settled_latency_ms": 74.90000000596046,
+      "gpu_latency_ms": 12.299999997019768
+    },
+    {
+      "revision": 4,
+      "input_ms": 1905.2000000029802,
+      "css_commit_ms": 1916.5999999940395,
+      "color_settled_ms": 1980.4000000059605,
+      "gpu_ms": 1917.4000000059605,
+      "css_commit_latency_ms": 11.399999991059303,
+      "color_settled_latency_ms": 75.20000000298023,
+      "gpu_latency_ms": 12.200000002980232
+    },
+    {
+      "revision": 5,
+      "input_ms": 1980.4000000059605,
+      "css_commit_ms": 1990.9000000059605,
+      "color_settled_ms": 2055.4000000059605,
+      "gpu_ms": 1991.7999999970198,
+      "css_commit_latency_ms": 10.5,
+      "color_settled_latency_ms": 75,
+      "gpu_latency_ms": 11.399999991059303
+    },
+    {
+      "revision": 6,
+      "input_ms": 2055.4000000059605,
+      "css_commit_ms": 2066.2999999970198,
+      "color_settled_ms": 2130.2999999970198,
+      "gpu_ms": 2067.2000000029802,
+      "css_commit_latency_ms": 10.899999991059303,
+      "color_settled_latency_ms": 74.8999999910593,
+      "gpu_latency_ms": 11.799999997019768
+    },
+    {
+      "revision": 7,
+      "input_ms": 2130.2999999970198,
+      "css_commit_ms": 2141.7000000029802,
+      "color_settled_ms": 2205.4000000059605,
+      "gpu_ms": 2142.4000000059605,
+      "css_commit_latency_ms": 11.400000005960464,
+      "color_settled_latency_ms": 75.1000000089407,
+      "gpu_latency_ms": 12.100000008940697
+    },
+    {
+      "revision": 8,
+      "input_ms": 2205.4000000059605,
+      "css_commit_ms": 2215.2999999970198,
+      "color_settled_ms": 2280.5,
+      "gpu_ms": 2216,
+      "css_commit_latency_ms": 9.899999991059303,
+      "color_settled_latency_ms": 75.09999999403954,
+      "gpu_latency_ms": 10.599999994039536
+    },
+    {
+      "revision": 9,
+      "input_ms": 2280.5,
+      "css_commit_ms": 2291.2000000029802,
+      "color_settled_ms": 2355.2000000029802,
+      "gpu_ms": 2292,
+      "css_commit_latency_ms": 10.700000002980232,
+      "color_settled_latency_ms": 74.70000000298023,
+      "gpu_latency_ms": 11.5
+    },
+    {
+      "revision": 10,
+      "input_ms": 2355.2000000029802,
+      "css_commit_ms": 2366.4000000059605,
+      "color_settled_ms": 2429.7999999970198,
+      "gpu_ms": 2367.2000000029802,
+      "css_commit_latency_ms": 11.200000002980232,
+      "color_settled_latency_ms": 74.59999999403954,
+      "gpu_latency_ms": 12
+    },
+    {
+      "revision": 11,
+      "input_ms": 2429.7999999970198,
+      "css_commit_ms": 2441.5,
+      "color_settled_ms": 2505.4000000059605,
+      "gpu_ms": 2442.5999999940395,
+      "css_commit_latency_ms": 11.700000002980232,
+      "color_settled_latency_ms": 75.6000000089407,
+      "gpu_latency_ms": 12.799999997019768
+    },
+    {
+      "revision": 12,
+      "input_ms": 2505.4000000059605,
+      "css_commit_ms": 2516.5,
+      "color_settled_ms": 2580.4000000059605,
+      "gpu_ms": 2517.2999999970198,
+      "css_commit_latency_ms": 11.099999994039536,
+      "color_settled_latency_ms": 75,
+      "gpu_latency_ms": 11.899999991059303
+    },
+    {
+      "revision": 13,
+      "input_ms": 2580.4000000059605,
+      "css_commit_ms": 2591.4000000059605,
+      "color_settled_ms": 2655.4000000059605,
+      "gpu_ms": 2592.2000000029802,
+      "css_commit_latency_ms": 11,
+      "color_settled_latency_ms": 75,
+      "gpu_latency_ms": 11.799999997019768
+    },
+    {
+      "revision": 14,
+      "input_ms": 2655.4000000059605,
+      "css_commit_ms": 2666.2999999970198,
+      "color_settled_ms": 2729.4000000059605,
+      "gpu_ms": 2667.0999999940395,
+      "css_commit_latency_ms": 10.899999991059303,
+      "color_settled_latency_ms": 74,
+      "gpu_latency_ms": 11.699999988079071
+    },
+    {
+      "revision": 15,
+      "input_ms": 2729.4000000059605,
+      "css_commit_ms": 2740.2999999970198,
+      "color_settled_ms": 2805.2999999970198,
+      "gpu_ms": 2741,
+      "css_commit_latency_ms": 10.899999991059303,
+      "color_settled_latency_ms": 75.8999999910593,
+      "gpu_latency_ms": 11.599999994039536
+    },
+    {
+      "revision": 16,
+      "input_ms": 2805.2999999970198,
+      "css_commit_ms": 2816.4000000059605,
+      "color_settled_ms": 2879.0999999940395,
+      "gpu_ms": 2817.0999999940395,
+      "css_commit_latency_ms": 11.100000008940697,
+      "color_settled_latency_ms": 73.79999999701977,
+      "gpu_latency_ms": 11.799999997019768
+    },
+    {
+      "revision": 17,
+      "input_ms": 2879.0999999940395,
+      "css_commit_ms": 2891.7000000029802,
+      "color_settled_ms": 2955.2999999970198,
+      "gpu_ms": 2892.5,
+      "css_commit_latency_ms": 12.600000008940697,
+      "color_settled_latency_ms": 76.20000000298023,
+      "gpu_latency_ms": 13.400000005960464
+    },
+    {
+      "revision": 18,
+      "input_ms": 2955.2999999970198,
+      "css_commit_ms": 2966.5999999940395,
+      "color_settled_ms": 3030.4000000059605,
+      "gpu_ms": 2967.4000000059605,
+      "css_commit_latency_ms": 11.299999997019768,
+      "color_settled_latency_ms": 75.1000000089407,
+      "gpu_latency_ms": 12.100000008940697
+    },
+    {
+      "revision": 19,
+      "input_ms": 3030.4000000059605,
+      "css_commit_ms": 3041.5,
+      "color_settled_ms": 3105.4000000059605,
+      "gpu_ms": 3042.2000000029802,
+      "css_commit_latency_ms": 11.099999994039536,
+      "color_settled_latency_ms": 75,
+      "gpu_latency_ms": 11.799999997019768
+    },
+    {
+      "revision": 20,
+      "input_ms": 3105.4000000059605,
+      "css_commit_ms": 3116.5999999940395,
+      "color_settled_ms": 3180.2999999970198,
+      "gpu_ms": 3117.2999999970198,
+      "css_commit_latency_ms": 11.199999988079071,
+      "color_settled_latency_ms": 74.8999999910593,
+      "gpu_latency_ms": 11.899999991059303
+    },
+    {
+      "revision": 21,
+      "input_ms": 3180.2999999970198,
+      "css_commit_ms": 3191.5,
+      "color_settled_ms": 3255.4000000059605,
+      "gpu_ms": 3192.2000000029802,
+      "css_commit_latency_ms": 11.200000002980232,
+      "color_settled_latency_ms": 75.1000000089407,
+      "gpu_latency_ms": 11.900000005960464
+    },
+    {
+      "revision": 22,
+      "input_ms": 3255.4000000059605,
+      "css_commit_ms": 3266.5,
+      "color_settled_ms": 3330.4000000059605,
+      "gpu_ms": 3267.2000000029802,
+      "css_commit_latency_ms": 11.099999994039536,
+      "color_settled_latency_ms": 75,
+      "gpu_latency_ms": 11.799999997019768
+    },
+    {
+      "revision": 23,
+      "input_ms": 3330.4000000059605,
+      "css_commit_ms": 3341.4000000059605,
+      "color_settled_ms": 3405.2999999970198,
+      "gpu_ms": 3342.0999999940395,
+      "css_commit_latency_ms": 11,
+      "color_settled_latency_ms": 74.8999999910593,
+      "gpu_latency_ms": 11.699999988079071
+    },
+    {
+      "revision": 24,
+      "input_ms": 3405.2999999970198,
+      "css_commit_ms": 3416.5,
+      "color_settled_ms": 3480.5,
+      "gpu_ms": 3417.2000000029802,
+      "css_commit_latency_ms": 11.200000002980232,
+      "color_settled_latency_ms": 75.20000000298023,
+      "gpu_latency_ms": 11.900000005960464
+    },
+    {
+      "revision": 25,
+      "input_ms": 3480.5,
+      "css_commit_ms": 3491.5999999940395,
+      "color_settled_ms": 3555.5,
+      "gpu_ms": 3492.2999999970198,
+      "css_commit_latency_ms": 11.099999994039536,
+      "color_settled_latency_ms": 75,
+      "gpu_latency_ms": 11.799999997019768
+    },
+    {
+      "revision": 26,
+      "input_ms": 3555.5,
+      "css_commit_ms": 3566.5,
+      "color_settled_ms": 3630.5,
+      "gpu_ms": 3567.2999999970198,
+      "css_commit_latency_ms": 11,
+      "color_settled_latency_ms": 75,
+      "gpu_latency_ms": 11.799999997019768
+    },
+    {
+      "revision": 27,
+      "input_ms": 3630.5,
+      "css_commit_ms": 3641.5,
+      "color_settled_ms": 3705.5,
+      "gpu_ms": 3642.2000000029802,
+      "css_commit_latency_ms": 11,
+      "color_settled_latency_ms": 75,
+      "gpu_latency_ms": 11.700000002980232
+    },
+    {
+      "revision": 28,
+      "input_ms": 3705.5,
+      "css_commit_ms": 3716.5,
+      "color_settled_ms": 3780.5,
+      "gpu_ms": 3717.2000000029802,
+      "css_commit_latency_ms": 11,
+      "color_settled_latency_ms": 75,
+      "gpu_latency_ms": 11.700000002980232
+    },
+    {
+      "revision": 29,
+      "input_ms": 3780.5,
+      "css_commit_ms": 3790.5999999940395,
+      "color_settled_ms": 3855.5999999940395,
+      "gpu_ms": 3791.4000000059605,
+      "css_commit_latency_ms": 10.099999994039536,
+      "color_settled_latency_ms": 75.09999999403954,
+      "gpu_latency_ms": 10.900000005960464
+    },
+    {
+      "revision": 30,
+      "input_ms": 3855.5999999940395,
+      "css_commit_ms": 3866.5,
+      "color_settled_ms": 3930.5,
+      "gpu_ms": 3867.2000000029802,
+      "css_commit_latency_ms": 10.900000005960464,
+      "color_settled_latency_ms": 74.90000000596046,
+      "gpu_latency_ms": 11.600000008940697
+    },
+    {
+      "revision": 31,
+      "input_ms": 3930.5,
+      "css_commit_ms": 3941.5,
+      "color_settled_ms": 4005.4000000059605,
+      "gpu_ms": 3942.0999999940395,
+      "css_commit_latency_ms": 11,
+      "color_settled_latency_ms": 74.90000000596046,
+      "gpu_latency_ms": 11.599999994039536
+    },
+    {
+      "revision": 32,
+      "input_ms": 4005.4000000059605,
+      "css_commit_ms": 4016.5,
+      "color_settled_ms": 4080.4000000059605,
+      "gpu_ms": 4017.2000000029802,
+      "css_commit_latency_ms": 11.099999994039536,
+      "color_settled_latency_ms": 75,
+      "gpu_latency_ms": 11.799999997019768
+    },
+    {
+      "revision": 33,
+      "input_ms": 4080.5,
+      "css_commit_ms": 4091.4000000059605,
+      "color_settled_ms": 4154,
+      "gpu_ms": 4092.2000000029802,
+      "css_commit_latency_ms": 10.900000005960464,
+      "color_settled_latency_ms": 73.5,
+      "gpu_latency_ms": 11.700000002980232
+    },
+    {
+      "revision": 34,
+      "input_ms": 4154.0999999940395,
+      "css_commit_ms": 4168.5,
+      "color_settled_ms": 4230.20000000298,
+      "gpu_ms": 4169.5,
+      "css_commit_latency_ms": 14.400000005960464,
+      "color_settled_latency_ms": 76.1000000089407,
+      "gpu_latency_ms": 15.400000005960464
+    },
+    {
+      "revision": 35,
+      "input_ms": 4230.20000000298,
+      "css_commit_ms": 4239.9000000059605,
+      "color_settled_ms": 4305.4000000059605,
+      "gpu_ms": 4240.79999999702,
+      "css_commit_latency_ms": 9.700000002980232,
+      "color_settled_latency_ms": 75.20000000298023,
+      "gpu_latency_ms": 10.599999994039536
+    },
+    {
+      "revision": 36,
+      "input_ms": 4305.5,
+      "css_commit_ms": 4316.5,
+      "color_settled_ms": 4379.4000000059605,
+      "gpu_ms": 4317.20000000298,
+      "css_commit_latency_ms": 11,
+      "color_settled_latency_ms": 73.90000000596046,
+      "gpu_latency_ms": 11.700000002980232
+    },
+    {
+      "revision": 37,
+      "input_ms": 4379.4000000059605,
+      "css_commit_ms": 4390,
+      "color_settled_ms": 4455.5,
+      "gpu_ms": 4390.70000000298,
+      "css_commit_latency_ms": 10.599999994039536,
+      "color_settled_latency_ms": 76.09999999403954,
+      "gpu_latency_ms": 11.299999997019768
+    },
+    {
+      "revision": 38,
+      "input_ms": 4455.5,
+      "css_commit_ms": 4466.5999999940395,
+      "color_settled_ms": 4530.4000000059605,
+      "gpu_ms": 4467.29999999702,
+      "css_commit_latency_ms": 11.099999994039536,
+      "color_settled_latency_ms": 74.90000000596046,
+      "gpu_latency_ms": 11.799999997019768
+    },
+    {
+      "revision": 39,
+      "input_ms": 4530.4000000059605,
+      "css_commit_ms": 4541.0999999940395,
+      "color_settled_ms": 4605.5,
+      "gpu_ms": 4541.79999999702,
+      "css_commit_latency_ms": 10.699999988079071,
+      "color_settled_latency_ms": 75.09999999403954,
+      "gpu_latency_ms": 11.399999991059303
+    },
+    {
+      "revision": 40,
+      "input_ms": 4605.5,
+      "css_commit_ms": 4616.5,
+      "color_settled_ms": 4680.5999999940395,
+      "gpu_ms": 4617.0999999940395,
+      "css_commit_latency_ms": 11,
+      "color_settled_latency_ms": 75.09999999403954,
+      "gpu_latency_ms": 11.599999994039536
+    }
+  ]
+}

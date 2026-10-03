@@ -9,6 +9,9 @@ use crate::makepad_widgets::widget::*;
 use crate::makepad_widgets::*;
 
 use super::colour;
+use super::theme::{disabled_color, draw_focus, focus_hit, set_box_radius, token, ThemeMetrics};
+use super::{apply_text_theme, DrawRustifyShadow, FontSlot};
+use crate::theme::ResolvedTheme;
 
 #[derive(Script, ScriptHook, Widget)]
 pub struct RustifyButton {
@@ -27,6 +30,8 @@ pub struct RustifyButton {
     draw_border: DrawColor,
     #[live]
     draw_text: DrawText,
+    #[live]
+    draw_shadow: DrawRustifyShadow,
     #[rust]
     label: String,
     #[rust]
@@ -40,6 +45,10 @@ pub struct RustifyButton {
     /// Face, face under the pointer, border and ink.
     #[rust]
     palette: Option<(u32, u32, u32, u32)>,
+    #[rust]
+    theme_palette: Option<[Vec4f; 4]>,
+    #[rust]
+    theme_metrics: Option<ThemeMetrics>,
     #[rust]
     click: Option<()>,
 }
@@ -55,8 +64,32 @@ impl RustifyButton {
 
     pub fn set_palette(&mut self, cx: &mut Cx, face: u32, hover: u32, border: u32, ink: u32) {
         let next = Some((face, hover, border, ink));
-        if self.palette != next {
+        if self.palette != next || self.theme_palette.is_some() {
             self.palette = next;
+            self.theme_palette = None;
+            self.redraw(cx);
+        }
+    }
+
+    /// Applies the same resolved RGBA, typography and geometry as the DOM theme.
+    pub fn apply_theme(&mut self, cx: &mut Cx, theme: &ResolvedTheme) {
+        let face = token(theme, "primary");
+        let mut hover = face;
+        hover.w *= 0.9;
+        let palette = [
+            face,
+            hover,
+            vec4(0.0, 0.0, 0.0, 0.0),
+            token(theme, "primary-foreground"),
+        ];
+        let metrics = ThemeMetrics::from(theme);
+        let changed = self.theme_palette != Some(palette) || self.theme_metrics != Some(metrics);
+        let text_changed = apply_text_theme(&mut self.draw_text, cx, theme, FontSlot::Sans);
+        self.palette = None;
+        self.theme_palette = Some(palette);
+        self.theme_metrics = Some(metrics);
+        self.walk.height = Size::Fixed(metrics.spacing * 9.0);
+        if changed || text_changed {
             self.redraw(cx);
         }
     }
@@ -74,7 +107,11 @@ impl RustifyButton {
 
 impl Widget for RustifyButton {
     fn handle_event(&mut self, cx: &mut Cx, event: &Event, _scope: &mut Scope) {
-        match event.hits(cx, self.draw_bg.area()) {
+        let hit = event.hits(cx, self.draw_bg.area());
+        if focus_hit(&hit, cx, self.draw_bg.area(), self.disabled) {
+            self.redraw(cx);
+        }
+        match hit {
             Hit::FingerDown(fe) => {
                 if fe.is_primary_hit() && !self.disabled {
                     self.pressed = true;
@@ -103,6 +140,18 @@ impl Widget for RustifyButton {
 
     fn draw_walk(&mut self, cx: &mut Cx2d, _scope: &mut Scope, walk: Walk) -> DrawStep {
         let pane = cx.walk_turtle(walk);
+        if let Some([face, hover, border, ink]) = self.theme_palette {
+            self.draw_bg.color = disabled_color(
+                if self.pressed || self.hovered {
+                    hover
+                } else {
+                    face
+                },
+                self.disabled,
+            );
+            self.draw_border.color = disabled_color(border, self.disabled);
+            self.draw_text.color = disabled_color(ink, self.disabled);
+        }
         if let Some((face, hover, border, ink)) = self.palette {
             let face = if self.disabled {
                 border
@@ -115,16 +164,39 @@ impl Widget for RustifyButton {
             self.draw_border.color = colour(border);
             self.draw_text.color = colour(ink);
         }
-        self.draw_border.draw_abs(cx, pane);
-        self.draw_bg
-            .draw_abs(cx, super::toggles::inset_rect(pane, 1.0));
+        if let Some(metrics) = self.theme_metrics {
+            let focused = cx.has_key_focus(self.draw_bg.area()) && !self.disabled;
+            draw_focus(
+                &mut self.draw_shadow,
+                cx,
+                pane,
+                metrics.radii[1],
+                metrics,
+                focused,
+            );
+            set_box_radius(&mut self.draw_bg, cx, metrics.radii[1], 0.0);
+            set_box_radius(&mut self.draw_border, cx, metrics.radii[1], 1.0);
+            self.draw_bg.draw_abs(cx, pane);
+            self.draw_border.draw_abs(cx, pane);
+        } else {
+            self.draw_border.draw_abs(cx, pane);
+            self.draw_bg
+                .draw_abs(cx, super::toggles::inset_rect(pane, 1.0));
+        }
         // The line box, centred in the face. `draw_abs` places a line by its
         // top-left, so a text drawn at the middle of the box sits below it.
-        let line = self.draw_text.text_style.font_size as f64 * 1.4;
+        let line = self
+            .theme_metrics
+            .map(|metrics| metrics.font_size * 1.4)
+            .unwrap_or(self.draw_text.text_style.font_size as f64 * 1.4);
+        let padding = self
+            .theme_metrics
+            .map(|metrics| metrics.spacing * 4.0)
+            .unwrap_or(10.0);
         self.draw_text.draw_abs(
             cx,
             dvec2(
-                pane.pos.x + 10.0,
+                pane.pos.x + padding,
                 pane.pos.y + (pane.size.y - line).max(0.0) * 0.5,
             ),
             if self.label.is_empty() {

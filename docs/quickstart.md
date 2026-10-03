@@ -34,6 +34,20 @@ without a restart.
 
 For the [Vellum design editor](../examples/vellum/), use `mbx xtask build-web --example vellum --release`; its [framework integration guide](vellum.md) explains the rendering, editing and persistence paths.
 
+For the [Theme Studio editor](../examples/theme-studio/README.md), run:
+
+```sh
+mbx xtask build-web --example theme-studio --release
+mbx xtask serve --example theme-studio --release
+```
+
+Choose a preset, edit its light/dark values, compare the DOM and GPU previews,
+then export JSON for a dynamic application or CSS for a static consumer. The
+[theme guide](themes.md) covers both export profiles, font resources and the
+compiled Rust integration snippet. The example README covers local storage,
+child-path hosting and its browser checks. Rebuild after edits; `serve` uses
+the existing product.
+
 ## Verification commands
 
 ```sh
@@ -147,6 +161,23 @@ gap for hand-written CSS, not Tailwind's unit.
 (`[data-rustify-scope][data-theme="dark"]`): it follows `ThemedScope`, not a
 `.dark` class on the page and not `prefers-color-scheme`, and it never applies
 outside a scope.
+
+For versioned theme documents, import
+[theme-v4.css](../crates/rustify-components/css/theme-v4.css) immediately after
+`sdk.css`, using the same relative directory as in the input above.
+`ThemeScope` publishes the document's resolved colors,
+fonts, spacing, radius and shadows on its mounted root. In these scopes,
+spacing utilities read `--rustify-unit`; `--layout-gap` remains an independent
+layout value. The mapping keeps the legacy fallbacks for scopes using
+`ThemedScope`, and `dark:` follows either provider's explicit mode.
+
+Load exported JSON with `import_json`, resolve it with `font_context` using
+the host's root font size and reduced-motion preference, and publish an
+`Arc<ResolvedTheme>` to `ThemeScope` and the GPU region's typed props. Use
+`ThemeBoundary` for local patches. The [mount example](themes.md#mount-a-browser-scope)
+shows the complete snippet and stylesheet order. A running provider owns its
+CSSOM values; pasted static export CSS cannot replace them. Update its resolved
+signal instead.
 
 **`class` on a component** is merged with the component's classes, caller
 last, as the previous section describes: yours replaces the component's class

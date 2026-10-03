@@ -1,0 +1,10 @@
+[package]
+name = "theme_export_consumer"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[dependencies]
+rustify-ui = { path = "../../../crates/rustify-ui" }
+leptos = { version = "=0.8.20", features = ["csr"] }
+wasm-bindgen = "=0.2.128"

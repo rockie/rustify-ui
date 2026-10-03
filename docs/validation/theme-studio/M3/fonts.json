@@ -1,0 +1,440 @@
+[
+  {
+    "family": "IBM Plex Sans",
+    "latin": {
+      "font": "IBM Plex Sans",
+      "font_size_px": 15,
+      "hit_rect": null,
+      "id": "font.sans.latin",
+      "layout_size_px": [
+        106.0350112915039,
+        19.5
+      ],
+      "letter_spacing_em": 0,
+      "radius_px": null,
+      "rect": [
+        16,
+        842,
+        106.0350112915039,
+        19.5
+      ],
+      "rgba": [
+        0.11372549019607843,
+        0.1607843137254902,
+        0.2235294117647059,
+        1
+      ],
+      "shadow_layers": [],
+      "token_ids": [
+        "foreground"
+      ],
+      "visible_rect": [
+        16.350000381469727,
+        844.5850219726562,
+        106.0100154876709,
+        16.789958000183105
+      ],
+      "visual_rect": null
+    },
+    "multilingual": {
+      "font": "IBM Plex Sans",
+      "font_size_px": 15,
+      "hit_rect": null,
+      "id": "font.sans.multilingual",
+      "layout_size_px": [
+        90.8267593383789,
+        19.5
+      ],
+      "letter_spacing_em": 0,
+      "radius_px": null,
+      "rect": [
+        16,
+        864.5,
+        90.8267593383789,
+        19.5
+      ],
+      "rgba": [
+        0.11372549019607843,
+        0.1607843137254902,
+        0.2235294117647059,
+        1
+      ],
+      "shadow_layers": [],
+      "token_ids": [
+        "foreground"
+      ],
+      "visible_rect": [
+        17.010000228881836,
+        864.7733154296875,
+        91.25499725341797,
+        20.114999771118164
+      ],
+      "visual_rect": null
+    }
+  },
+  {
+    "family": "Noto Sans",
+    "latin": {
+      "font": "Noto Sans",
+      "font_size_px": 15,
+      "hit_rect": null,
+      "id": "font.sans.latin",
+      "layout_size_px": [
+        107.080078125,
+        20.42724609375
+      ],
+      "letter_spacing_em": 0,
+      "radius_px": null,
+      "rect": [
+        16,
+        842,
+        107.080078125,
+        20.42724609375
+      ],
+      "rgba": [
+        0.11372549019607843,
+        0.1607843137254902,
+        0.2235294117647059,
+        1
+      ],
+      "shadow_layers": [],
+      "token_ids": [
+        "foreground"
+      ],
+      "visible_rect": [
+        16.45751953125,
+        845.541015625,
+        106.86083984375,
+        17.09521484375
+      ],
+      "visual_rect": null
+    },
+    "multilingual": {
+      "font": "Noto Sans",
+      "font_size_px": 15,
+      "hit_rect": null,
+      "id": "font.sans.multilingual",
+      "layout_size_px": [
+        90.49072265625,
+        20.42724609375
+      ],
+      "letter_spacing_em": 0,
+      "radius_px": null,
+      "rect": [
+        16,
+        864.5,
+        90.49072265625,
+        20.42724609375
+      ],
+      "rgba": [
+        0.11372549019607843,
+        0.1607843137254902,
+        0.2235294117647059,
+        1
+      ],
+      "shadow_layers": [],
+      "token_ids": [
+        "foreground"
+      ],
+      "visible_rect": [
+        17.010000228881836,
+        865.4310302734375,
+        90.91896057128906,
+        20.114999771118164
+      ],
+      "visual_rect": null
+    }
+  },
+  {
+    "family": "Rustify WenKai",
+    "latin": {
+      "font": "Rustify WenKai",
+      "font_size_px": 15,
+      "hit_rect": null,
+      "id": "font.sans.latin",
+      "layout_size_px": [
+        117.8550033569336,
+        17.760000228881836
+      ],
+      "letter_spacing_em": 0,
+      "radius_px": null,
+      "rect": [
+        16,
+        842,
+        117.8550033569336,
+        17.760000228881836
+      ],
+      "rgba": [
+        0.11372549019607843,
+        0.1607843137254902,
+        0.2235294117647059,
+        1
+      ],
+      "shadow_layers": [],
+      "token_ids": [
+        "foreground"
+      ],
+      "visible_rect": [
+        15.885000228881836,
+        844.2249755859375,
+        118.14500522613525,
+        15.154982566833496
+      ],
+      "visual_rect": null
+    },
+    "multilingual": {
+      "font": "Rustify WenKai",
+      "font_size_px": 15,
+      "hit_rect": null,
+      "id": "font.sans.multilingual",
+      "layout_size_px": [
+        94.4267578125,
+        17.760000228881836
+      ],
+      "letter_spacing_em": 0,
+      "radius_px": null,
+      "rect": [
+        16,
+        864.5,
+        94.4267578125,
+        17.760000228881836
+      ],
+      "rgba": [
+        0.11372549019607843,
+        0.1607843137254902,
+        0.2235294117647059,
+        1
+      ],
+      "shadow_layers": [],
+      "token_ids": [
+        "foreground"
+      ],
+      "visible_rect": [
+        17.010000228881836,
+        863.3182983398438,
+        94.85499572753906,
+        20.114999771118164
+      ],
+      "visual_rect": null
+    }
+  },
+  {
+    "family": "Noto Serif",
+    "latin": {
+      "font": "Noto Serif",
+      "font_size_px": 15,
+      "hit_rect": null,
+      "id": "font.sans.latin",
+      "layout_size_px": [
+        110.22000885009766,
+        20.43000030517578
+      ],
+      "letter_spacing_em": 0,
+      "radius_px": null,
+      "rect": [
+        16,
+        842,
+        110.22000885009766,
+        20.43000030517578
+      ],
+      "rgba": [
+        0.11372549019607843,
+        0.1607843137254902,
+        0.2235294117647059,
+        1
+      ],
+      "shadow_layers": [],
+      "token_ids": [
+        "foreground"
+      ],
+      "visible_rect": [
+        15.569999694824219,
+        845.4099731445312,
+        110.90000534057617,
+        17.225022315979004
+      ],
+      "visual_rect": null
+    },
+    "multilingual": {
+      "font": "Noto Serif",
+      "font_size_px": 15,
+      "hit_rect": null,
+      "id": "font.sans.multilingual",
+      "layout_size_px": [
+        90.22676086425781,
+        20.43000030517578
+      ],
+      "letter_spacing_em": 0,
+      "radius_px": null,
+      "rect": [
+        16,
+        864.5,
+        90.22676086425781,
+        20.43000030517578
+      ],
+      "rgba": [
+        0.11372549019607843,
+        0.1607843137254902,
+        0.2235294117647059,
+        1
+      ],
+      "shadow_layers": [],
+      "token_ids": [
+        "foreground"
+      ],
+      "visible_rect": [
+        17.010000228881836,
+        865.4332885742188,
+        90.65499877929688,
+        20.114999771118164
+      ],
+      "visual_rect": null
+    }
+  },
+  {
+    "family": "Liberation Mono",
+    "latin": {
+      "font": "Liberation Mono",
+      "font_size_px": 15,
+      "hit_rect": null,
+      "id": "font.sans.latin",
+      "layout_size_px": [
+        180.029296875,
+        16.9921875
+      ],
+      "letter_spacing_em": 0,
+      "radius_px": null,
+      "rect": [
+        16,
+        842,
+        180.029296875,
+        16.9921875
+      ],
+      "rgba": [
+        0.11372549019607843,
+        0.1607843137254902,
+        0.2235294117647059,
+        1
+      ],
+      "shadow_layers": [],
+      "token_ids": [
+        "foreground"
+      ],
+      "visible_rect": [
+        16.1865234375,
+        842.61865234375,
+        179.85400390625,
+        15.98193359375
+      ],
+      "visual_rect": null
+    },
+    "multilingual": {
+      "font": "Liberation Mono",
+      "font_size_px": 15,
+      "hit_rect": null,
+      "id": "font.sans.multilingual",
+      "layout_size_px": [
+        105.68115234375,
+        16.9921875
+      ],
+      "letter_spacing_em": 0,
+      "radius_px": null,
+      "rect": [
+        16,
+        864.5,
+        105.68115234375,
+        16.9921875
+      ],
+      "rgba": [
+        0.11372549019607843,
+        0.1607843137254902,
+        0.2235294117647059,
+        1
+      ],
+      "shadow_layers": [],
+      "token_ids": [
+        "foreground"
+      ],
+      "visible_rect": [
+        17.010000228881836,
+        861.8861083984375,
+        106.10939025878906,
+        20.114999771118164
+      ],
+      "visual_rect": null
+    }
+  },
+  {
+    "family": "JetBrains Mono",
+    "latin": {
+      "font": "JetBrains Mono",
+      "font_size_px": 15,
+      "hit_rect": null,
+      "id": "font.sans.latin",
+      "layout_size_px": [
+        180,
+        19.799999237060547
+      ],
+      "letter_spacing_em": 0,
+      "radius_px": null,
+      "rect": [
+        16,
+        842,
+        180,
+        19.799999237060547
+      ],
+      "rgba": [
+        0.11372549019607843,
+        0.1607843137254902,
+        0.2235294117647059,
+        1
+      ],
+      "shadow_layers": [],
+      "token_ids": [
+        "foreground"
+      ],
+      "visible_rect": [
+        16.395000457763672,
+        844.5249633789062,
+        179.3449935913086,
+        16.475025177001953
+      ],
+      "visual_rect": null
+    },
+    "multilingual": {
+      "font": "JetBrains Mono",
+      "font_size_px": 15,
+      "hit_rect": null,
+      "id": "font.sans.multilingual",
+      "layout_size_px": [
+        105.6767578125,
+        19.799999237060547
+      ],
+      "letter_spacing_em": 0,
+      "radius_px": null,
+      "rect": [
+        16,
+        864.5,
+        105.6767578125,
+        19.799999237060547
+      ],
+      "rgba": [
+        0.11372549019607843,
+        0.1607843137254902,
+        0.2235294117647059,
+        1
+      ],
+      "shadow_layers": [],
+      "token_ids": [
+        "foreground"
+      ],
+      "visible_rect": [
+        17.010000228881836,
+        864.6983032226562,
+        106.10499572753906,
+        20.114999771118164
+      ],
+      "visual_rect": null
+    }
+  }
+]

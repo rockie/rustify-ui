@@ -1,0 +1,911 @@
+{
+  "collected_at": "2026-10-03T11:00:26.035Z",
+  "url": "http://127.0.0.1:4176/",
+  "headed": true,
+  "executable_path": "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+  "manifest": {
+    "example": "component-catalog",
+    "profile": "release",
+    "base": "/",
+    "build_id": "3a3760a88d5fa623",
+    "schema_hash": "2906431550179788552",
+    "toolchain": "rustc 1.98.1 (48a229cea 2026-09-01)",
+    "files": {
+      "app.css": 4905,
+      "app.js": 5998,
+      "bindgen.js": 40215,
+      "component-catalog.wasm": 13488106,
+      "index.html": 1731,
+      "loader.js": 11698,
+      "makepad_platform/web.js": 44157,
+      "makepad_platform/web_gl.js": 31996,
+      "makepad_wasm_bridge/wasm_bridge.js": 15994,
+      "makepad_widgets/resources/FONT-LICENSES.md": 7256,
+      "makepad_widgets/resources/IBMPlexSans-BoldItalic.ttf": 184656,
+      "makepad_widgets/resources/IBMPlexSans-Italic.ttf": 184020,
+      "makepad_widgets/resources/IBMPlexSans-SemiBold.ttf": 182176,
+      "makepad_widgets/resources/IBMPlexSans-Text.ttf": 181792,
+      "makepad_widgets/resources/LXGWWenKaiBold.ttf": 18546748,
+      "makepad_widgets/resources/LXGWWenKaiRegular.ttf": 19073964,
+      "makepad_widgets/resources/LiberationMono-Regular.ttf": 108168,
+      "makepad_widgets/resources/NewCMMath-Regular.otf": 1151568,
+      "makepad_widgets/resources/NotoColorEmoji.ttf": 10643852,
+      "makepad_widgets/resources/NotoSans-Regular.ttf": 201644,
+      "makepad_widgets/resources/fa-solid-900.ttf": 426112,
+      "makepad_widgets/resources/icons/back.svg": 306,
+      "makepad_widgets/resources/icons/close_left_panel.svg": 1848,
+      "makepad_widgets/resources/icons/icon_draw.svg": 791,
+      "makepad_widgets/resources/icons/icon_file.svg": 792,
+      "makepad_widgets/resources/icons/icon_folder.svg": 865,
+      "makepad_widgets/resources/icons/icon_image.svg": 1381,
+      "makepad_widgets/resources/icons/icon_layout.svg": 1579,
+      "makepad_widgets/resources/icons/icon_select.svg": 851,
+      "makepad_widgets/resources/icons/icon_text.svg": 1704,
+      "makepad_widgets/resources/icons/icon_text_align_justify.svg": 1245,
+      "makepad_widgets/resources/icons/icon_text_align_left.svg": 1242,
+      "makepad_widgets/resources/icons/icon_text_align_right.svg": 1241,
+      "makepad_widgets/resources/icons/icon_typography.svg": 1717,
+      "makepad_widgets/resources/icons/icon_vector.svg": 1760,
+      "makepad_widgets/resources/icons/icon_widget.svg": 1238,
+      "makepad_widgets/resources/icons/open_left_panel.svg": 1892,
+      "makepad_widgets/resources/icons/sploded.svg": 249,
+      "makepad_widgets/resources/jetbrains_mono_variable.ttf": 303144,
+      "runtime.css": 1223,
+      "rustify_makepad/embedded.js": 19511,
+      "rustify_makepad/message_bridge.js": 43721,
+      "tailwind.css": 21774
+    },
+    "size_report": {
+      "wasm": 13488106,
+      "js": 213290,
+      "css": 27902,
+      "fonts": 51187844,
+      "images": 20701,
+      "data": 8987,
+      "total": 64946830
+    }
+  },
+  "assets": {
+    "build-manifest.json": {
+      "bytes": 2693,
+      "sha256": "002c929ab0c5f5e4788f928bc2fb3d8463ad840cca4a454ce86a71aca238f466"
+    },
+    "component-catalog.wasm": {
+      "bytes": 13488106,
+      "sha256": "3a3760a88d5fa623fb80f20e9a6cdc9581c36f864cc3a5187db50559ed1d6f05"
+    },
+    "tailwind.css": {
+      "bytes": 21774,
+      "sha256": "c9372fa1760685f7aeecc48eb17b62435b521c606f64de90dd07ef20951ab1f6"
+    },
+    "runtime.css": {
+      "bytes": 1223,
+      "sha256": "c8555dfb9752120ee6ffe7abb9adea2919e0dea3d4ae6a7d4327ce39ecfb74da"
+    },
+    "app.css": {
+      "bytes": 4905,
+      "sha256": "57bd24a840d23866aa12483f9d3a7d5f058b9a8d8b41f344da82984bb17378a2"
+    },
+    "app.js": {
+      "bytes": 5998,
+      "sha256": "c6632a0a0d10ea14e5c9008664f351489d2044cd37cd674c10d2a7d90d0e7235"
+    },
+    "rustify_makepad/embedded.js": {
+      "bytes": 19511,
+      "sha256": "7721bf0044ccacec28d6b38cf7d278fc0c121ad81c25fb950c1a16dc00d06a79"
+    },
+    "makepad_platform/web_gl.js": {
+      "bytes": 31996,
+      "sha256": "e5cce4588f877679e5bdbe6e02bbe35c4df915277dbac446c3e9963d1666999b"
+    }
+  },
+  "browser_version": {
+    "protocolVersion": "1.3",
+    "product": "Chrome/154.0.8037.93",
+    "revision": "@f89f3a4363808e117c592adedcf9947882ac3b79",
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+    "jsVersion": "15.4.80.19"
+  },
+  "gpu_system_info": {
+    "devices": [
+      {
+        "vendorId": 4203,
+        "deviceId": 0,
+        "vendorString": "Google Inc. (Apple)",
+        "deviceString": "ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Pro, Version 27.0.1 (Build 26A434))",
+        "driverVendor": "Apple",
+        "driverVersion": "27.0.1"
+      }
+    ],
+    "auxAttributes": {
+      "amdSwitchable": false,
+      "canSupportThreadedTextureMailbox": false,
+      "directRenderingVersion": "",
+      "displayType": "ANGLE_METAL",
+      "glExtensions": "GL_AMD_performance_monitor GL_ANGLE_base_vertex_base_instance_shader_builtin GL_ANGLE_blob_cache GL_ANGLE_client_arrays GL_ANGLE_clip_cull_distance GL_ANGLE_compressed_texture_etc GL_ANGLE_depth_texture GL_ANGLE_framebuffer_blit GL_ANGLE_framebuffer_multisample GL_ANGLE_get_serialized_context_string GL_ANGLE_get_tex_level_parameter GL_ANGLE_instanced_arrays GL_ANGLE_memory_size GL_ANGLE_pack_reverse_row_order GL_ANGLE_polygon_mode GL_ANGLE_program_binary_readiness_query GL_ANGLE_program_cache_control GL_ANGLE_provoking_vertex GL_ANGLE_renderability_validation GL_ANGLE_request_extension GL_ANGLE_rgbx_internal_format GL_ANGLE_robust_client_memory GL_ANGLE_shader_pixel_local_storage GL_ANGLE_shader_pixel_local_storage_coherent GL_ANGLE_stencil_texturing GL_ANGLE_texture_compression_dxt3 GL_ANGLE_texture_compression_dxt5 GL_ANGLE_texture_multisample GL_ANGLE_translated_shader_source GL_APPLE_clip_distance GL_ARM_rgba8 GL_CHROMIUM_bind_generates_resource GL_CHROMIUM_bind_uniform_location GL_CHROMIUM_copy_texture GL_CHROMIUM_lose_context GL_EXT_base_instance GL_EXT_blend_func_extended GL_EXT_blend_minmax GL_EXT_clip_control GL_EXT_color_buffer_float GL_EXT_color_buffer_half_float GL_EXT_compressed_ETC1_RGB8_sub_texture GL_EXT_conservative_depth GL_EXT_debug_label GL_EXT_debug_marker GL_EXT_depth_clamp GL_EXT_discard_framebuffer GL_EXT_disjoint_timer_query GL_EXT_draw_buffers GL_EXT_draw_buffers_indexed GL_EXT_draw_elements_base_vertex GL_EXT_float_blend GL_EXT_frag_depth GL_EXT_instanced_arrays GL_EXT_map_buffer_range GL_EXT_multisampled_render_to_texture GL_EXT_occlusion_query_boolean GL_EXT_polygon_offset_clamp GL_EXT_pvrtc_sRGB GL_EXT_read_format_bgra GL_EXT_render_snorm GL_EXT_robustness GL_EXT_sRGB GL_EXT_shader_texture_lod GL_EXT_texture_compression_bptc GL_EXT_texture_compression_dxt1 GL_EXT_texture_compression_rgtc GL_EXT_texture_compression_s3tc_srgb GL_EXT_texture_filter_anisotropic GL_EXT_texture_format_BGRA8888 GL_EXT_texture_mirror_clamp_to_edge GL_EXT_texture_norm16 GL_EXT_texture_rg GL_EXT_texture_sRGB_R8 GL_EXT_texture_sRGB_RG8 GL_EXT_texture_shadow_lod GL_EXT_texture_storage GL_IMG_texture_compression_pvrtc GL_KHR_debug GL_KHR_parallel_shader_compile GL_KHR_robustness GL_KHR_texture_compression_astc_hdr GL_KHR_texture_compression_astc_ldr GL_KHR_texture_compression_astc_sliced_3d GL_MESA_framebuffer_flip_y GL_NV_fence GL_NV_framebuffer_blit GL_NV_pixel_buffer_object GL_NV_shader_noperspective_interpolation GL_OES_EGL_image GL_OES_EGL_sync GL_OES_compressed_ETC1_RGB8_texture GL_OES_depth24 GL_OES_depth32 GL_OES_depth_texture GL_OES_draw_buffers_indexed GL_OES_draw_elements_base_vertex GL_OES_element_index_uint GL_OES_fbo_render_mipmap GL_OES_get_program_binary GL_OES_mapbuffer GL_OES_packed_depth_stencil GL_OES_required_internalformat GL_OES_rgb8_rgba8 GL_OES_sample_variables GL_OES_shader_multisample_interpolation GL_OES_standard_derivatives GL_OES_surfaceless_context GL_OES_texture_3D GL_OES_texture_float GL_OES_texture_float_linear GL_OES_texture_half_float GL_OES_texture_half_float_linear GL_OES_texture_npot GL_OES_texture_stencil8 GL_OES_vertex_array_object GL_QCOM_render_shared_exponent ",
+      "glImplementationParts": "(gl=egl-angle,angle=metal)",
+      "glRenderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Pro, Version 27.0.1 (Build 26A434))",
+      "glResetNotificationStrategy": 33362,
+      "glVendor": "Google Inc. (Apple)",
+      "glVersion": "OpenGL ES 3.0 (ANGLE 2.1.28733 git hash: 802a8704ca94)",
+      "glWsExtensions": "",
+      "glWsVendor": "",
+      "glWsVersion": "",
+      "inProcessGpu": false,
+      "initializationTime": 0.019571,
+      "isAsan": false,
+      "isClangCoverage": false,
+      "jpegDecodeAcceleratorSupported": false,
+      "maxMsaaSamples": "8",
+      "optimus": false,
+      "passthroughCmdDecoder": true,
+      "pixelShaderVersion": "3.00",
+      "processCrashCount": 0,
+      "sandboxed": false,
+      "skiaBackendType": "GraphiteDawnMetal",
+      "subpixelFontRendering": true,
+      "targetCpuBits": 64,
+      "vertexShaderVersion": "3.00",
+      "visibilityCallbackCallCount": 0
+    },
+    "featureStatus": {
+      "2d_canvas": "enabled",
+      "direct_rendering_display_compositor": "disabled_off_ok",
+      "gpu_compositing": "enabled",
+      "multiple_raster_threads": "enabled_on",
+      "opengl": "enabled_on",
+      "rasterization": "enabled",
+      "raw_draw": "disabled_off_ok",
+      "skia_graphite": "enabled_on",
+      "trees_in_viz": "disabled_off",
+      "video_decode": "enabled",
+      "video_encode": "enabled",
+      "webgl": "enabled",
+      "webgpu": "enabled",
+      "webnn": "disabled_off"
+    },
+    "driverBugWorkarounds": [
+      "disable_2d_canvas_auto_flush",
+      "enable_webgl_timer_query_extensions",
+      "disabled_extension_GL_KHR_blend_equation_advanced",
+      "disabled_extension_GL_KHR_blend_equation_advanced_coherent"
+    ],
+    "videoDecoding": [],
+    "videoEncoding": []
+  },
+  "environment": {
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+    "platform": "MacIntel",
+    "viewport": {
+      "width": 1280,
+      "height": 960
+    },
+    "device_pixel_ratio": 1,
+    "visibility": "visible",
+    "webgl_version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+    "shading_language": "WebGL GLSL ES 3.00 (OpenGL ES GLSL ES 3.0 Chromium)",
+    "gpu_vendor": "Google Inc. (Apple)",
+    "gpu_renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Pro, Unspecified Version)",
+    "canvas": {
+      "width": 320,
+      "height": 170,
+      "css_width": 320,
+      "css_height": 170
+    }
+  },
+  "csp": "default-src 'none'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; media-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'",
+  "regression": {
+    "tier": "regression",
+    "passed": 6,
+    "failed": 0,
+    "duration_seconds": 14.7,
+    "evidence_test_run": false
+  },
+  "styles": {
+    "light": {
+      "theme": "light",
+      "tokens": {
+        "--background": "#f9fafb",
+        "--foreground": "#1d2939",
+        "--primary": "#1570ef",
+        "--radius": "6px",
+        "--font-size": "15px",
+        "--spacing": "8px",
+        "--motion-duration": "150ms"
+      },
+      "utility_border_radius": {
+        "sm": "4px",
+        "md": "6px",
+        "lg": "8px"
+      },
+      "scope": {
+        "font_size": "15px",
+        "font_family": "system-ui, sans-serif",
+        "gap": "normal",
+        "padding": "0px",
+        "border_radius": "0px",
+        "box_shadow": "none",
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(29, 41, 57)"
+      },
+      "catalogue": {
+        "font_size": "15px",
+        "font_family": "system-ui, sans-serif",
+        "gap": "16px",
+        "padding": "0px",
+        "border_radius": "0px",
+        "box_shadow": "none",
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(29, 41, 57)"
+      },
+      "header": {
+        "font_size": "15px",
+        "font_family": "system-ui, sans-serif",
+        "gap": "8px",
+        "padding": "0px",
+        "border_radius": "0px",
+        "box_shadow": "none",
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(29, 41, 57)"
+      },
+      "header_row": {
+        "font_size": "15px",
+        "font_family": "system-ui, sans-serif",
+        "gap": "8px",
+        "padding": "0px",
+        "border_radius": "0px",
+        "box_shadow": "none",
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(29, 41, 57)"
+      },
+      "example": {
+        "font_size": "15px",
+        "font_family": "system-ui, sans-serif",
+        "gap": "8px",
+        "padding": "8px 0px",
+        "border_radius": "0px",
+        "box_shadow": "none",
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(29, 41, 57)"
+      },
+      "primary_button": {
+        "font_size": "14px",
+        "font_family": "Arial",
+        "gap": "8px",
+        "padding": "8px 16px",
+        "border_radius": "6px",
+        "box_shadow": "none",
+        "background": "rgb(21, 112, 239)",
+        "color": "rgb(255, 255, 255)"
+      }
+    },
+    "dark": {
+      "theme": "dark",
+      "tokens": {
+        "--background": "#0c111d",
+        "--foreground": "#f9fafb",
+        "--primary": "#53b1fd",
+        "--radius": "6px",
+        "--font-size": "15px",
+        "--spacing": "8px",
+        "--motion-duration": "150ms"
+      },
+      "utility_border_radius": {
+        "sm": "4px",
+        "md": "6px",
+        "lg": "8px"
+      },
+      "scope": {
+        "font_size": "15px",
+        "font_family": "system-ui, sans-serif",
+        "gap": "normal",
+        "padding": "0px",
+        "border_radius": "0px",
+        "box_shadow": "none",
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(29, 41, 57)"
+      },
+      "catalogue": {
+        "font_size": "15px",
+        "font_family": "system-ui, sans-serif",
+        "gap": "16px",
+        "padding": "0px",
+        "border_radius": "0px",
+        "box_shadow": "none",
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(29, 41, 57)"
+      },
+      "header": {
+        "font_size": "15px",
+        "font_family": "system-ui, sans-serif",
+        "gap": "8px",
+        "padding": "0px",
+        "border_radius": "0px",
+        "box_shadow": "none",
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(29, 41, 57)"
+      },
+      "header_row": {
+        "font_size": "15px",
+        "font_family": "system-ui, sans-serif",
+        "gap": "8px",
+        "padding": "0px",
+        "border_radius": "0px",
+        "box_shadow": "none",
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(29, 41, 57)"
+      },
+      "example": {
+        "font_size": "15px",
+        "font_family": "system-ui, sans-serif",
+        "gap": "8px",
+        "padding": "8px 0px",
+        "border_radius": "0px",
+        "box_shadow": "none",
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(29, 41, 57)"
+      },
+      "primary_button": {
+        "font_size": "14px",
+        "font_family": "Arial",
+        "gap": "8px",
+        "padding": "8px 16px",
+        "border_radius": "6px",
+        "box_shadow": "none",
+        "background": "rgb(83, 177, 253)",
+        "color": "rgb(12, 17, 29)"
+      }
+    },
+    "overlays": {
+      "dark": {
+        "dialog": {
+          "box_shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.1) 0px 4px 6px -4px",
+          "border_radius": "8px",
+          "background": "rgb(29, 41, 57)",
+          "gap": "16px",
+          "font_size": "15px",
+          "class": "relative w-full max-w-lg rounded-lg border border-border bg-popover p-6 shadow-lg flex flex-col gap-4"
+        },
+        "menu": {
+          "box_shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.1) 0px 4px 6px -4px",
+          "border_radius": "6px",
+          "background": "rgb(29, 41, 57)",
+          "font_size": "15px",
+          "class": "m-0 min-w-40 list-none rounded-md border border-border bg-popover p-1 shadow-lg"
+        }
+      },
+      "light": {
+        "dialog": {
+          "box_shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.1) 0px 4px 6px -4px",
+          "border_radius": "8px",
+          "background": "rgb(255, 255, 255)",
+          "gap": "16px",
+          "font_size": "15px",
+          "class": "relative w-full max-w-lg rounded-lg border border-border bg-popover p-6 shadow-lg flex flex-col gap-4"
+        },
+        "menu": {
+          "box_shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.1) 0px 4px 6px -4px",
+          "border_radius": "6px",
+          "background": "rgb(255, 255, 255)",
+          "font_size": "15px",
+          "class": "m-0 min-w-40 list-none rounded-md border border-border bg-popover p-1 shadow-lg"
+        }
+      }
+    }
+  },
+  "timing": {
+    "method": "input click -> old ThemedScope data-theme setter after token writes -> actual WebGL2 drawElementsInstanced calls; two rAFs use existing p2-theme convention",
+    "window_start_ms": 1400.1000000089407,
+    "window_end_ms": 1735.2999999970198,
+    "rounds": [
+      {
+        "index": 0,
+        "expected": "dark",
+        "started": 1400.1000000089407,
+        "dom_commit_ms": 0.3999999910593033,
+        "gpu_first_submit_ms": 1.8999999910593033,
+        "gpu_last_submit_ms": 2,
+        "draw_calls": 5,
+        "primary": "#53b1fd",
+        "two_frames_ms": 16.099999994039536,
+        "theme": "dark",
+        "frames_presented": 1,
+        "live_regions": 1
+      },
+      {
+        "index": 1,
+        "expected": "light",
+        "started": 1416.4000000059605,
+        "dom_commit_ms": 0.20000000298023224,
+        "gpu_first_submit_ms": 1.5,
+        "gpu_last_submit_ms": 1.5,
+        "draw_calls": 5,
+        "primary": "#1570ef",
+        "two_frames_ms": 17.599999994039536,
+        "theme": "light",
+        "frames_presented": 1,
+        "live_regions": 1
+      },
+      {
+        "index": 2,
+        "expected": "dark",
+        "started": 1434,
+        "dom_commit_ms": 0.20000000298023224,
+        "gpu_first_submit_ms": 1.2000000029802322,
+        "gpu_last_submit_ms": 1.2000000029802322,
+        "draw_calls": 5,
+        "primary": "#53b1fd",
+        "two_frames_ms": 17.900000005960464,
+        "theme": "dark",
+        "frames_presented": 1,
+        "live_regions": 1
+      },
+      {
+        "index": 3,
+        "expected": "light",
+        "started": 1452,
+        "dom_commit_ms": 0.10000000894069672,
+        "gpu_first_submit_ms": 1.1000000089406967,
+        "gpu_last_submit_ms": 1.2000000029802322,
+        "draw_calls": 5,
+        "primary": "#1570ef",
+        "two_frames_ms": 16.799999997019768,
+        "theme": "light",
+        "frames_presented": 1,
+        "live_regions": 1
+      },
+      {
+        "index": 4,
+        "expected": "dark",
+        "started": 1469,
+        "dom_commit_ms": 0.20000000298023224,
+        "gpu_first_submit_ms": 1.2999999970197678,
+        "gpu_last_submit_ms": 1.4000000059604645,
+        "draw_calls": 5,
+        "primary": "#53b1fd",
+        "two_frames_ms": 15.100000008940697,
+        "theme": "dark",
+        "frames_presented": 1,
+        "live_regions": 1
+      },
+      {
+        "index": 5,
+        "expected": "light",
+        "started": 1484.2999999970198,
+        "dom_commit_ms": 0.20000000298023224,
+        "gpu_first_submit_ms": 1.5,
+        "gpu_last_submit_ms": 1.5,
+        "draw_calls": 5,
+        "primary": "#1570ef",
+        "two_frames_ms": 16.400000005960464,
+        "theme": "light",
+        "frames_presented": 1,
+        "live_regions": 1
+      },
+      {
+        "index": 6,
+        "expected": "dark",
+        "started": 1500.9000000059605,
+        "dom_commit_ms": 0.20000000298023224,
+        "gpu_first_submit_ms": 1.2000000029802322,
+        "gpu_last_submit_ms": 1.2000000029802322,
+        "draw_calls": 5,
+        "primary": "#53b1fd",
+        "two_frames_ms": 18.099999994039536,
+        "theme": "dark",
+        "frames_presented": 1,
+        "live_regions": 1
+      },
+      {
+        "index": 7,
+        "expected": "light",
+        "started": 1519.1000000089407,
+        "dom_commit_ms": 0.19999998807907104,
+        "gpu_first_submit_ms": 1.199999988079071,
+        "gpu_last_submit_ms": 1.199999988079071,
+        "draw_calls": 5,
+        "primary": "#1570ef",
+        "two_frames_ms": 16.399999991059303,
+        "theme": "light",
+        "frames_presented": 1,
+        "live_regions": 1
+      },
+      {
+        "index": 8,
+        "expected": "dark",
+        "started": 1535.6000000089407,
+        "dom_commit_ms": 0.09999999403953552,
+        "gpu_first_submit_ms": 1.199999988079071,
+        "gpu_last_submit_ms": 1.199999988079071,
+        "draw_calls": 5,
+        "primary": "#53b1fd",
+        "two_frames_ms": 16.099999994039536,
+        "theme": "dark",
+        "frames_presented": 1,
+        "live_regions": 1
+      },
+      {
+        "index": 9,
+        "expected": "light",
+        "started": 1551.9000000059605,
+        "dom_commit_ms": 0.09999999403953552,
+        "gpu_first_submit_ms": 1.0999999940395355,
+        "gpu_last_submit_ms": 1.2000000029802322,
+        "draw_calls": 5,
+        "primary": "#1570ef",
+        "two_frames_ms": 15.399999991059303,
+        "theme": "light",
+        "frames_presented": 1,
+        "live_regions": 1
+      },
+      {
+        "index": 10,
+        "expected": "dark",
+        "started": 1567.5,
+        "dom_commit_ms": 0.10000000894069672,
+        "gpu_first_submit_ms": 1.2000000029802322,
+        "gpu_last_submit_ms": 1.2999999970197678,
+        "draw_calls": 5,
+        "primary": "#53b1fd",
+        "two_frames_ms": 18.100000008940697,
+        "theme": "dark",
+        "frames_presented": 1,
+        "live_regions": 1
+      },
+      {
+        "index": 11,
+        "expected": "light",
+        "started": 1585.7999999970198,
+        "dom_commit_ms": 0.10000000894069672,
+        "gpu_first_submit_ms": 1.1000000089406967,
+        "gpu_last_submit_ms": 1.1000000089406967,
+        "draw_calls": 5,
+        "primary": "#1570ef",
+        "two_frames_ms": 16.200000002980232,
+        "theme": "light",
+        "frames_presented": 1,
+        "live_regions": 1
+      },
+      {
+        "index": 12,
+        "expected": "dark",
+        "started": 1602.1000000089407,
+        "dom_commit_ms": 0.09999999403953552,
+        "gpu_first_submit_ms": 1.2999999970197678,
+        "gpu_last_submit_ms": 1.2999999970197678,
+        "draw_calls": 5,
+        "primary": "#53b1fd",
+        "two_frames_ms": 16.5,
+        "theme": "dark",
+        "frames_presented": 1,
+        "live_regions": 1
+      },
+      {
+        "index": 13,
+        "expected": "light",
+        "started": 1618.7999999970198,
+        "dom_commit_ms": 0.20000000298023224,
+        "gpu_first_submit_ms": 1.2000000029802322,
+        "gpu_last_submit_ms": 1.300000011920929,
+        "draw_calls": 5,
+        "primary": "#1570ef",
+        "two_frames_ms": 15.400000005960464,
+        "theme": "light",
+        "frames_presented": 1,
+        "live_regions": 1
+      },
+      {
+        "index": 14,
+        "expected": "dark",
+        "started": 1634.2999999970198,
+        "dom_commit_ms": 0.20000000298023224,
+        "gpu_first_submit_ms": 1.300000011920929,
+        "gpu_last_submit_ms": 1.300000011920929,
+        "draw_calls": 5,
+        "primary": "#53b1fd",
+        "two_frames_ms": 16.400000005960464,
+        "theme": "dark",
+        "frames_presented": 1,
+        "live_regions": 1
+      },
+      {
+        "index": 15,
+        "expected": "light",
+        "started": 1650.9000000059605,
+        "dom_commit_ms": 0.09999999403953552,
+        "gpu_first_submit_ms": 1.2000000029802322,
+        "gpu_last_submit_ms": 1.2000000029802322,
+        "draw_calls": 5,
+        "primary": "#1570ef",
+        "two_frames_ms": 16.299999997019768,
+        "theme": "light",
+        "frames_presented": 1,
+        "live_regions": 1
+      },
+      {
+        "index": 16,
+        "expected": "dark",
+        "started": 1667.2999999970198,
+        "dom_commit_ms": 0.10000000894069672,
+        "gpu_first_submit_ms": 1.2000000029802322,
+        "gpu_last_submit_ms": 1.2000000029802322,
+        "draw_calls": 5,
+        "primary": "#53b1fd",
+        "two_frames_ms": 18,
+        "theme": "dark",
+        "frames_presented": 1,
+        "live_regions": 1
+      },
+      {
+        "index": 17,
+        "expected": "light",
+        "started": 1685.4000000059605,
+        "dom_commit_ms": 0.20000000298023224,
+        "gpu_first_submit_ms": 1.2000000029802322,
+        "gpu_last_submit_ms": 1.2000000029802322,
+        "draw_calls": 5,
+        "primary": "#1570ef",
+        "two_frames_ms": 15.5,
+        "theme": "light",
+        "frames_presented": 1,
+        "live_regions": 1
+      },
+      {
+        "index": 18,
+        "expected": "dark",
+        "started": 1701,
+        "dom_commit_ms": 0.20000000298023224,
+        "gpu_first_submit_ms": 1,
+        "gpu_last_submit_ms": 1,
+        "draw_calls": 5,
+        "primary": "#53b1fd",
+        "two_frames_ms": 17.600000008940697,
+        "theme": "dark",
+        "frames_presented": 1,
+        "live_regions": 1
+      },
+      {
+        "index": 19,
+        "expected": "light",
+        "started": 1718.7999999970198,
+        "dom_commit_ms": 0.10000000894069672,
+        "gpu_first_submit_ms": 1,
+        "gpu_last_submit_ms": 1.1000000089406967,
+        "draw_calls": 5,
+        "primary": "#1570ef",
+        "two_frames_ms": 16.5,
+        "theme": "light",
+        "frames_presented": 1,
+        "live_regions": 1
+      }
+    ],
+    "long_tasks": [],
+    "dom_commit": {
+      "samples": [
+        0.3999999910593033,
+        0.20000000298023224,
+        0.20000000298023224,
+        0.10000000894069672,
+        0.20000000298023224,
+        0.20000000298023224,
+        0.20000000298023224,
+        0.19999998807907104,
+        0.09999999403953552,
+        0.09999999403953552,
+        0.10000000894069672,
+        0.10000000894069672,
+        0.09999999403953552,
+        0.20000000298023224,
+        0.20000000298023224,
+        0.09999999403953552,
+        0.10000000894069672,
+        0.20000000298023224,
+        0.20000000298023224,
+        0.10000000894069672
+      ],
+      "p50_ms": 0.19999998807907104,
+      "p95_ms": 0.20000000298023224
+    },
+    "gpu_first_submit": {
+      "samples": [
+        1.8999999910593033,
+        1.5,
+        1.2000000029802322,
+        1.1000000089406967,
+        1.2999999970197678,
+        1.5,
+        1.2000000029802322,
+        1.199999988079071,
+        1.199999988079071,
+        1.0999999940395355,
+        1.2000000029802322,
+        1.1000000089406967,
+        1.2999999970197678,
+        1.2000000029802322,
+        1.300000011920929,
+        1.2000000029802322,
+        1.2000000029802322,
+        1.2000000029802322,
+        1,
+        1
+      ],
+      "p50_ms": 1.2000000029802322,
+      "p95_ms": 1.5
+    },
+    "gpu_last_submit": {
+      "samples": [
+        2,
+        1.5,
+        1.2000000029802322,
+        1.2000000029802322,
+        1.4000000059604645,
+        1.5,
+        1.2000000029802322,
+        1.199999988079071,
+        1.199999988079071,
+        1.2000000029802322,
+        1.2999999970197678,
+        1.1000000089406967,
+        1.2999999970197678,
+        1.300000011920929,
+        1.300000011920929,
+        1.2000000029802322,
+        1.2000000029802322,
+        1.2000000029802322,
+        1,
+        1.1000000089406967
+      ],
+      "p50_ms": 1.2000000029802322,
+      "p95_ms": 1.5
+    },
+    "two_frames": {
+      "samples": [
+        16.099999994039536,
+        17.599999994039536,
+        17.900000005960464,
+        16.799999997019768,
+        15.100000008940697,
+        16.400000005960464,
+        18.099999994039536,
+        16.399999991059303,
+        16.099999994039536,
+        15.399999991059303,
+        18.100000008940697,
+        16.200000002980232,
+        16.5,
+        15.400000005960464,
+        16.400000005960464,
+        16.299999997019768,
+        18,
+        15.5,
+        17.600000008940697,
+        16.5
+      ],
+      "p50_ms": 16.400000005960464,
+      "p95_ms": 18.099999994039536
+    }
+  },
+  "regions": {
+    "before": {
+      "stats": {
+        "regions": 1,
+        "timers": 0,
+        "animation_frames": 0,
+        "tasks": 0,
+        "errors": 0,
+        "gpu_bytes": 45960,
+        "memory": 37224448,
+        "pumps": 9,
+        "frames": 3
+      },
+      "diagnostics": {
+        "runtime": 1,
+        "build": "2906431550179788552",
+        "count": 1,
+        "errors": 1,
+        "bytes": 128,
+        "dropped": 0,
+        "recording": true,
+        "suppressed": 0,
+        "max_entries": 1000,
+        "max_bytes": 4194304,
+        "entries": [
+          {
+            "kind": "UnsupportedCapability",
+            "severity": "error",
+            "at_ms": 162,
+            "scope": null,
+            "region": 1,
+            "asset": null,
+            "field": null,
+            "detail": "a region asked to set the document title; only the host page can",
+            "suggestion": "do it from the host page; a region cannot"
+          }
+        ]
+      },
+      "live_regions": 1,
+      "contexts": 1,
+      "draws": 15
+    },
+    "after": {
+      "stats": {
+        "regions": 1,
+        "timers": 0,
+        "animation_frames": 0,
+        "tasks": 0,
+        "errors": 0,
+        "gpu_bytes": 45960,
+        "memory": 37224448,
+        "pumps": 49,
+        "frames": 23
+      },
+      "live_regions": 1,
+      "contexts": 1,
+      "draws": 115
+    }
+  },
+  "idle": {
+    "duration_ms": 1502.699999988079,
+    "before": {
+      "regions": 1,
+      "timers": 0,
+      "animation_frames": 0,
+      "tasks": 0,
+      "errors": 0,
+      "gpu_bytes": 65672,
+      "memory": 37224448,
+      "pumps": 63,
+      "frames": 30
+    },
+    "after": {
+      "regions": 1,
+      "timers": 0,
+      "animation_frames": 0,
+      "tasks": 0,
+      "errors": 0,
+      "gpu_bytes": 65672,
+      "memory": 37224448,
+      "pumps": 63,
+      "frames": 30
+    },
+    "frames_delta": 0,
+    "pumps_delta": 0
+  },
+  "color_input": {
+    "input_to_two_frames_ms": 6.899999991059303,
+    "swatch_background_at_two_frames": "rgb(29, 109, 230)",
+    "swatch_background_after_transition": "rgb(217, 45, 32)",
+    "application_colour": "#d92d20",
+    "primary_before": "#1570ef",
+    "primary_after": "#1570ef",
+    "gpu_theme_change_supported": false
+  },
+  "gpu_light_dark_pixel_diff": {
+    "width": 320,
+    "height": 171,
+    "changed_pixels_rgb_delta_gt_24": 53802
+  },
+  "resolver": {
+    "count": null,
+    "reason": "The old Theme is a direct Copy table with properties(); no new resolver/revision or resolver counter is present in this browser API."
+  },
+  "limitations": [
+    "GPU submit timestamps are CPU-side GL invocation timestamps, not a revision-tagged draw acknowledgement or display scanout.",
+    "The old catalog exposes palette switching but no arbitrary theme color input. Its ColorField changes only a DOM swatch and application field state.",
+    "Raw GL instrumentation and style reads add probe overhead; compare a later sample using this same methodology or clearly report the instrumentation difference."
+  ],
+  "errors": [
+    {
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:4176/favicon.ico",
+        "line": 0,
+        "column": 0,
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    }
+  ],
+  "failed_requests": [],
+  "error_responses": []
+}

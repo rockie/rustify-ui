@@ -11,8 +11,8 @@ use leptos::prelude::*;
 use rustify_ui::{Anchor, Layer};
 
 const TRIGGER: &str = "flex h-9 w-full items-center justify-between gap-2 rounded-md border border-border bg-input px-3 py-1 text-sm text-foreground transition-colors cursor-pointer outline-none focus-visible:ring-ring/50 focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive";
-const PANEL: &str = "min-w-40 max-h-64 overflow-auto rounded-md border border-border bg-popover p-1 shadow-lg outline-none";
-const OPTION: &str = "flex w-full items-center gap-2 rounded-sm px-2 py-1.5 text-sm text-foreground cursor-pointer aria-disabled:opacity-50 aria-disabled:cursor-not-allowed";
+const PANEL: &str = "min-w-40 max-h-64 overflow-auto rounded-md border border-border bg-popover text-popover-foreground p-1 shadow-lg outline-none";
+const OPTION: &str = "flex w-full items-center gap-2 rounded-sm px-2 py-1.5 text-sm text-popover-foreground cursor-pointer aria-disabled:opacity-50 aria-disabled:cursor-not-allowed";
 
 /// One choice.
 #[derive(Clone, Debug, PartialEq, Eq)]
@@ -207,6 +207,7 @@ pub fn Select(
         </button>
         <Show when=move || open.get() fallback=|| ()>
             <Layer
+                fit=true
                 anchor=Signal::derive(move || match trigger.get() {
                     Some(element) => Anchor::element(&element.into()),
                     None => Anchor::Centred,

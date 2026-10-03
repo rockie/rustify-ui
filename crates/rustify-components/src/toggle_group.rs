@@ -184,7 +184,7 @@ pub fn ToggleGroup(
                         <button
                             type="button"
                             id=item_id(&group, &mine)
-                            class=ITEM
+                            class=crate::macros::merge(ITEM, if toolbar { "text-card-foreground" } else { "" })
                             data-name="Toggle"
                             data-testid=format!("{item_test_id}-{mine}")
                             aria-pressed=move || pressed.get().to_string()

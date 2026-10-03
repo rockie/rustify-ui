@@ -2,7 +2,7 @@
 
 Rustify UI is an experimental Rust SDK for combining Leptos CSR components and Makepad WebGL2 rendering in a browser application. Leptos owns the DOM, layout and reactive application state; each `GpuRegion` renders into a canvas positioned by the DOM. Applications send props into regions and receive typed actions back.
 
-This repository contains the SDK, DOM components, a Makepad fork and five runnable examples. The workspace is version `0.1.0`, with publishing disabled. Start here to build an example; use the [quick start](docs/quickstart.md) to write a region or integrate the components into an application.
+This repository contains the SDK, DOM components, a Makepad fork and six runnable examples. The workspace is version `0.1.0`, with publishing disabled. Start here to build an example; use the [quick start](docs/quickstart.md) to write a region or integrate the components into an application.
 
 ## Quick start
 
@@ -60,6 +60,7 @@ Choose an example name for `mbx xtask build-web --example NAME --release` and `m
 | [property-workbench](examples/property-workbench/) | Select, rename, recolour and delete objects through a DOM property panel and GPU view; try the vendored noUiSlider integration |
 | [data-workbench](examples/data-workbench/) | Sort and filter a 100,000-row DOM table, inspect its GPU selection strip, and explore a separate 10,000-object GPU scene |
 | [vellum](examples/vellum/README.md) | Edit a design document with a GPU scene, DOM inspector, native text editing, local persistence, import and export |
+| [theme-studio](examples/theme-studio/README.md) | Edit full light/dark themes, compare DOM/GPU samples, save locally and export JSON or Tailwind CSS |
 
 For example, to run the design editor:
 
@@ -77,6 +78,8 @@ Use `mbx` for compilation, tests and Clippy, including builds in the Makepad for
 ```sh
 cargo fmt --all -- --check
 mbx test --workspace --lib --bins
+mbx test --locked --manifest-path tests/theme-export/Cargo.toml --workspace --bins
+sh tests/theme-text/run.sh --lib
 mbx clippy --workspace --all-targets -- -D warnings
 mbx xtask sources verify
 mbx xtask css --check
@@ -132,6 +135,28 @@ mbx xtask build-web --example vellum --release
 npx playwright test -c tests/vellum/playwright.config.ts m2-scene.spec.ts
 ```
 
+Theme Studio and the independent export consumers each have root and child-path
+projects. Build their products, then run each project in a separate invocation:
+
+```sh
+mbx xtask build-web --example theme-studio --release
+mbx xtask build-web --example theme-studio --release --base /tools/demo/
+npx playwright test --project=theme-studio --workers=1 --output=test-results/theme-studio
+npx playwright test --project=theme-studio-deep --workers=1 --output=test-results/theme-studio-deep
+mbx fetch --locked --manifest-path tests/theme-export/Cargo.toml
+sh tests/theme-export/build.sh
+sh tests/theme-export/build.sh --base /tools/theme-export/ --out tests/theme-export/target/site-subpath
+npx playwright test --project=theme-export --workers=1 --output=test-results/theme-export
+npx playwright test --project=theme-export-deep --workers=1 --output=test-results/theme-export-deep
+```
+
+Keep ports 4181–4184 free. The [editor guide](examples/theme-studio/README.md)
+describes fresh storage contexts; the [consumer fixture guide](tests/theme-export/README.md)
+describes its strict CSP server and resource paths. CI runs each new project
+serially and saves its JSON report before starting the next one. The headed
+Theme Studio measurement fixture is skipped on headless CI, so CI does not
+establish its real-GPU timings.
+
 The default `regression` tier checks behaviour. `RUSTIFY_TIER=evidence` runs tagged measurements at full strength; `RUSTIFY_TIER=all` runs both tiers. Frame budgets require headed Chrome on a real GPU. See the [verification guide](docs/quickstart.md#verification-commands) for evidence runs, sub-path builds and release checks; [evidence CI](.github/workflows/evidence.yml) runs measurements weekly and on request.
 
 ## Runtime and deployment boundaries
@@ -155,6 +180,6 @@ This preview uses single-threaded wasm and WebGL2. It provides no WebGPU backend
 | [tests/browser](tests/browser/) and [tests/vellum](tests/vellum/) | Browser regression and evidence checks |
 | [docs/plan](docs/plan/), [docs/validation](docs/validation/) and [docs/reports](docs/reports/) | Development plans, validation records and release reports |
 
-Read the [architecture](docs/architecture.md) for runtime ownership and lifecycle contracts, and the [component reference](docs/components.md) for supported controls. Application guides cover [navigation](docs/navigation.md), [workspace layout](docs/workspace.md), [forms](docs/forms.md), [localisation](docs/i18n.md) and [large data](docs/data.md).
+Read the [architecture](docs/architecture.md) for runtime ownership and lifecycle contracts, and the [component reference](docs/components.md) for supported controls. Application guides cover [navigation](docs/navigation.md), [workspace layout](docs/workspace.md), [forms](docs/forms.md), [localisation](docs/i18n.md), [large data](docs/data.md) and [full theme integration](docs/themes.md).
 
-Third-party source provenance and file digests are recorded in [sources.lock.json](sources.lock.json). Included license notices cover [Makepad](makepad/LICENSE), its [fonts](makepad/widgets/resources/FONT-LICENSES.md), [Rust/UI component sources](crates/rustify-components/LICENSE-RUST-UI), [noUiSlider](examples/property-workbench/vendor/nouislider/LICENSE.md) and [Vellum](examples/vellum/LICENSE-VELLUM).
+Third-party source provenance and file digests are recorded in [sources.lock.json](sources.lock.json). Included license notices cover [Makepad](makepad/LICENSE), its [fonts](makepad/widgets/resources/FONT-LICENSES.md), [Rust/UI component sources](crates/rustify-components/LICENSE-RUST-UI), [noUiSlider](examples/property-workbench/vendor/nouislider/LICENSE.md), [Vellum](examples/vellum/LICENSE-VELLUM) and [tweakcn theme data](examples/theme-studio/vendor/tweakcn/LICENSE).
