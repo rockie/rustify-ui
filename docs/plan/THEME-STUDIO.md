@@ -4,7 +4,7 @@
 >
 > **计划状态：Proposed**
 >
-> 调查基线：2026-10-03 · `2a41704f3c5c87e27132753c056d7f75fdde7488` · 调查开始时工作区 clean；事实来自该工作树，交付文档为未提交新增。
+> 调查基线：2026-10-03 · `5bf63423b1e1474df2cbd2b7780c0295e0553458` · 核对开始时工作区 clean；主题兼容与测试契约事实来自该工作树。
 >
 > 本期交付：**可复用的 Tailwind CSS v4 主题模型、DOM/GPU 同源运行时，以及尽量完整复刻 tweakcn 本地编辑体验的 Rust/Leptos demo site**。
 > 本期独特职责：现有目录只演示组件与浅深色切换；本期交付可编辑、可保存、可交换、可直接接入应用的主题。
@@ -39,7 +39,7 @@
 - 最近完成：无
 - 下一步：M1 · 固化主题格式、参考数据和兼容基线，通过 V1
 - 当前阻塞：无产品范围待决；本机编译及浏览器环境尚未完成体检，执行 M1 时核对
-- 代码基线：`2a41704f3c5c87e27132753c056d7f75fdde7488`
+- 代码基线：`5bf63423b1e1474df2cbd2b7780c0295e0553458`
 
 ### 完成记录
 
@@ -66,7 +66,7 @@
 | NFR2 | 编辑器热路径 | 连续编辑不重建 wasm/region；每帧至多提交一个最新主题快照，测量更新延迟 | §5.4、§7；V4、V7 | 机制已定，延迟基线未知 |
 | NFR3 | 仓库 UI 规则及现有 contrast tests | 编辑壳、默认主题可用且可键盘操作；用户主题给出对比度诊断 | §6–7；V3、V6 | 已知 |
 | C1 | `mise.toml`、`Cargo.toml` | 复用 Rust/Leptos/Makepad 和固定 Tailwind 4.1.13，无 Next.js 运行时 | §0.2、§1.2；V8 | 已确认 |
-| C2 | `README.md`、`CLAUDE.md` | 保持现有示例、旧 Theme API、静态托管与无前缀 utility 使用方式 | §3.2、§5.1；V1、V8 | 已确认 |
+| C2 | `README.md`、`CLAUDE.md` | 保持现有示例、旧 Theme API、静态托管与无前缀 utility 使用方式 | §3.2、§5.1；V1、V2、V8 | 已确认 |
 | C3 | `CLAUDE.md`、`.gitignore` | `ref/` 仅供参考，产物及干净 checkout 不依赖它；证据放 docs/validation | §4、§8；V1、V8 | 已确认 |
 | C4 | `AGENTS.md`、`CLAUDE.md` | 不安装缺失服务、不擅自开分支；Playwright 单 project 串行；必须真实浏览器验收 | §9–10；V6、V8 | 已确认 |
 | A1 | 推定的使用者 | 主要面向应用开发者与设计人员，首要任务为选主题、调整、验证、导出 | §6；M4 走查主路径，产品负责人可修订文案 | 非阻塞假设 |
@@ -79,7 +79,7 @@
 | D2 | 事实来源 | 版本化 `ThemeDocument` → 一次解析得到 `ResolvedTheme` → DOM/GPU 两个投影 | 保留作者输入与编辑元数据；运行态使用统一数值，禁止 GPU 从 CSS 反查颜色 |
 | D3 | 兼容 | 增量 API，保留现有 `Theme`、`ThemePatch`、`ThemedScope` | 旧 Color 是不透明 u32，Theme 是 Copy 且 name 是静态字符串；直接扩成动态文档会破坏调用方 |
 | D4 | 颜色 | 支持 HEX、RGB、HSL、OKLCH 与 alpha；编辑值保留，预览统一映射到 sRGB | DOM 与 WebGL2 可比较；超色域给诊断，不让 DOM 显示广色域而 GPU 静默截断 |
-| D5 | Tailwind 接入 | 现有 sdk.css 补 token，另加可选 `theme-v4.css` 切换动态尺寸语义 | 避开已有 spacing/radius 契约；主题编辑站显式采用新入口，旧应用无需迁移 |
+| D5 | Tailwind 接入 | 现有 sdk.css 补 token，另加可选 `theme-v4.css`，utility 读取 scope 运行变量并保留旧值 fallback | 一份 CSS 内由 provider 选择尺寸/阴影语义；主题编辑站显式采用新入口，旧应用无需迁移；具体映射见 §5.1 |
 | D6 | 场景隔离 | 编辑壳与预览是同一 wasm 内两个并列 scope，共用应用拥有的编辑状态 | 修改预览颜色不会使编辑工具失去可读性；overlay 仍归各自 scope |
 | D7 | 本地保存 | 一个版本化 localStorage 文档包，包含当前草稿、命名主题和偏好 | 数据量有界、无需 IndexedDB/服务端；写入失败保留内存和下载出口 |
 | D8 | 参考利用 | 移植交互与 token 语义；固化本地内置预设数据，Rust 重写行为 | 不引入 React、Zustand、数据库、支付与在线依赖；来源和差异可追溯 |
@@ -120,7 +120,7 @@
 - **已核实·缺口**：`crates/rustify-ui/src/overlay.rs::Layer` 通过 Portal 放到 scope overlay root；局部 patch 的 DOM 祖先关系不会随 Portal 保留。新增主题边界必须将有效主题响应式投影到浮层，而不是只验证普通子树。
 - **已核实·足够**：ColorField/Draft、NumberField、Slider、Select、Dialog、Tabs、Splitter、文件与剪贴板等已存在，可组合编辑站。ColorField 当前只解析 HEX，格式切换和二维色板需要本期补充。
 - **已核实·约束**：`docs/plan/DX-REFINE.md` 仍有未完成的人工走查与收口记录；本计划复用代码能力，不替其宣告验收完成。其 spacing 与测试分层决策继续有效。
-- **未实测**：本次没有编译站点或启动浏览器；本机 PATH 未找到 Tailwind，`mise which tailwindcss` 未能解析二进制。M1 使用既有 doctor 确认工具链激活及依赖，不把源码调查写成运行通过。
+- **未实测**：本机工具链与浏览器环境尚未完成当前基线的体检，新站尚无实现。M1 使用既有 doctor 确认工具链激活及依赖，不把源码调查写成运行通过。
 
 ### 1.2 拓扑与文件清单
 
@@ -193,9 +193,9 @@ flowchart LR
 ### 3.2 旧 API 与 CSS 的兼容窗口
 
 1. **Expand**：旧 Theme/ThemePatch 的字段、Copy、默认颜色与 `properties()` 契约保持；新增 `ThemeDocument::from_legacy(light, dark)`，不使用泄漏字符串解决动态命名。
-2. **默认补齐**：card/popover foreground 继承 foreground；chart/sidebar 使用具名默认方案；新增阴影默认无阴影；字体和尺寸采用旧行为兼容值。新增变量在 scope 内有默认值，旧组件消费它们时不变色、不增阴影。
-3. **显式升级**：新应用改用 ThemeScope/use_resolved_theme 与 theme-v4.css。旧 use_theme/use_theme_values 只服务旧 provider；不伪装完整主题为有损 legacy Theme。接入文档给出两种入口及迁移示例。
-4. **保留**：本期不删除旧 API、不强制升级五个既有示例。component-catalog 增加新主题验收 fixture，原默认路径保持。
+2. **默认补齐**：card/popover foreground 继承 foreground；chart/sidebar 使用具名默认方案；新文档新增阴影默认无阴影；字体和尺寸采用旧行为兼容值。语义色新增变量的默认值必须保留旧画面；新尺寸/字体/阴影运行变量只由新入口提供，旧 scope 不写这些变量，utility 使用 §5.1 的旧值 fallback。旧 Dialog 的 shadow-lg 等已有阴影不得变为 none。
+3. **显式升级**：新应用改用 ThemeScope/use_resolved_theme 与 theme-v4.css；CSS import 提供映射，ThemeScope 的运行变量才选择新公式，同一份 CSS 内旧 ThemedScope 继续使用旧公式。旧 use_theme/use_theme_values 只服务旧 provider；不伪装完整主题为有损 legacy Theme。接入文档给出两种入口及迁移示例。
+4. **保留**：本期不删除旧 API、不强制升级五个既有示例。component-catalog 在同一页面的一份 Tailwind 产物内，以并列的旧 ThemedScope 和新 ThemeScope 增加验收 fixture，原默认路径保持；新 fixture 不另挂同名 utility 产物。
 5. **回滚**：应用撤回新入口与 CSS import 可恢复旧主题；保存的主题 JSON 不被清理。localStorage 使用独立版本键，旧站点不读取或覆盖新格式。
 
 ## 4. tweakcn 参考矩阵与复刻边界
@@ -228,8 +228,9 @@ utility 由构建阶段生成；运行时只改变量、模式与 GPU props。�
 
 - sdk.css 补齐 token 和 fallback，但不改变旧间距与圆角档位；新增 card/popover foreground 等变量的默认值必须符合旧画面。
 - theme-v4.css 是 **opt-in 扩展**，在 sdk.css 后导入。将 utility 的 `--spacing` 内联映射到 `var(--rustify-unit, 0.25rem)`，独立运行变量仅在 scope 内设置；legacy `--spacing` 仍代表 scope gap。新 token 的 layout-gap 映射到该 legacy gap，不能用 utility unit 覆盖它。
-- 新入口的 radius sm/md/lg/xl 使用 `max(0px, r−4px)`、`max(0px, r−2px)`、r、r+4px；旧入口保持 r−2/r/r+2 的既有契约。GPU 对应样本使用相同派生函数，不能只收一个原始 radius。
-- 字体和阴影 runtime 变量使用独立 `--rustify-*` 名称，utility 映射至它们，避免同名 `var()` 自引用；语义颜色继续保留标准名字方便交换。
+- 新入口将有效 radius 解析为像素 r，派生 `--rustify-radius-sm/md/lg/xl`，分别为 `max(0px, r−4px)`、`max(0px, r−2px)`、r、r+4px。theme-v4.css 的 inline 映射为 `--radius-sm: var(--rustify-radius-sm, calc(var(--radius) - 2px))`、`--radius-md: var(--rustify-radius-md, var(--radius))`、`--radius-lg: var(--rustify-radius-lg, calc(var(--radius) + 2px))`；xl 同样读取独立变量，fallback 保留固定 CLI 原有定义，不套用新公式。旧 scope 不写派生变量，即使页面导入扩展，sm/md/lg 仍为 r−2/r/r+2；旧默认 r=6px 时为 4/6/8px，新 scope 同 r 时为 2/4/6/10px。GPU 对应样本使用同一派生函数，不能只收一个原始 radius。
+- 字体和阴影 runtime 变量使用独立 `--rustify-*` 名称，映射只放在 theme-v4.css，sdk.css 不把旧 utility 改为新默认。每个字体/阴影档位读取相应运行变量，缺值时 fallback 是固定 4.1.13 原有表达式，不引用映射变量自身。例如 shadow-lg 读取 `--rustify-shadow-lg`，缺值时保留原两层阴影及 shadow-color 覆盖语义；新 ThemeScope 明确写 none 才选择无阴影。映射仍复用 Tailwind 的 shadow/ring 合成，保留 shadow-none 与焦点 ring 行为；语义颜色继续保留标准名字方便交换。
+- ThemeScope 通过 CSSOM 写入完整派生变量；ThemeBoundary 在局部 radius/阴影等依赖字段被覆盖时，从外层快照加 patch 重新解析并写相应派生值，外层变化时同步更新，不能继承一份与局部原值不同步的旧派生值。解除 patch 时移除相应局部派生变量，恢复外层继承。Layer 将创建位置的有效快照（含派生值）写到浮层节点并响应更新，不能只写原始 radius；卸载或同一 root 更换主题拥有者时清理该拥有者写入的运行变量。具体值不放入全局或所有 legacy scope 的默认规则。
 - preflight 继续由应用决定，新站不引入全局 reset。主题具体值不得写入 documentElement、body 或 SDK 外宿主；theme mapping 允许生成顶层 Tailwind 配置，具体运行值只归 scope。保持一个页面只用一份统一编译的 Tailwind CSS，不能并挂两份同名 utility 产物（现有 docs/architecture.md Styles 契约）。
 - CSS export 的「标准 Tailwind v4」profile 才使用 :root/.dark；「Rustify」profile 使用 scope 选择器和上述命名映射，且清楚提示动态应用应加载 JSON 进入 ThemeScope。不能在运行态内联值仍覆盖 CSS 时声称单贴 CSS 即可改主题。
 
@@ -364,10 +365,10 @@ Inspector 仅检查本站预览，不反编译任意网页或 shader。DOM 节�
 | ID | 覆盖与可观察结果 | 入口与环境 | 执行时点 |
 | --- | --- | --- | --- |
 | V1 | R1/C2/C3：文档/schema、legacy 转换、全 preset 补齐、颜色向量/alpha/gamut、数值与名称边界；旧默认样式/颜色更新测量基线 | `mbx test -p rustify-ui --lib theme`；新增站点纯 Rust 单测；既有 theme 浏览器 spec 的改前运行 | M1；契约通过即可供后续开发 |
-| V2 | R1/R2/NFR1：固定 CLI 编译、token/default 一致、spacing 分离、radius 0、class 覆盖、双 scope、局部 patch 解除、overlay 随主题更新、strict CSP | theme-studio DOM spec + component-catalog 主题 fixture；固定 4.1.13 生成 CSS 后实读 computed style | M2；GPU 视觉无需在此提前通过 |
+| V2 | R1/R2/C2/NFR1：固定 CLI 编译、token/default 一致、spacing 分离、radius 0、class 覆盖、双 scope、局部 patch 解除、overlay 随主题更新、strict CSP；同一产物下旧/新 sm/md/lg 与新 xl 符合 §5.1，旧浮层 computed box-shadow 保持 V1 基线；更新新 scope、局部 radius/阴影 patch 及解除时派生值/浮层同步，旧 scope 不变 | theme-studio DOM spec + component-catalog 并列旧/新主题 fixture；固定 4.1.13 生成一份 CSS 后实读 computed style；另核对仅 sdk.css 的旧入口 | M2；GPU 视觉无需在此提前通过 |
 | V3 | R2：RGBA 实际填色/混合、非 16px root、字体替换与回退、字距缓存/测量、阴影参数与命中边界、GPU 恢复应用最新主题 | SDK/Makepad 单测 + theme-studio GPU spec + 实际截图；GPU 样本板读 draw revision 并核对像素和几何 | M3；最终组合场景在 M6 |
 | V4 | R3/R4/NFR2：所有分组编辑、预设搜索/重置、两模式规则、undo/redo 分叉/手势合并、no-op、HSL 无漂移、全部场景交互、Inspector、编辑时 region 未重建 | `mbx test -p theme-studio --bins`（新增）；theme-studio editor spec 使用共享 page/reset | M4；用已稳定 resolver 可先开发，整里程碑退出需真实 DOM/GPU |
-| V5 | R5/NFR1：CSS/JSON 导入成功/失败/取消、恶意输入不执行、往返、各导出 profile、保存恢复/覆盖/删除/坏缓存/多标签冲突、剪贴板失败 | theme-studio codec 单测与 storage/export browser specs；两标签用独立 fresh context | M5；依赖 V1 与编辑命令契约 |
+| V5 | R5/NFR1：CSS/JSON 导入成功/失败/取消、恶意输入不执行、往返、各导出 profile、保存恢复/覆盖/删除/坏缓存/多标签冲突、剪贴板失败；A 页真实保存后 B 页收到冲突提示，决定前 B 内存草稿不变，覆盖载入和保留/另存分支 | theme-studio codec 单测与 storage/export browser specs；每个持久化用例使用独立 fresh context，跨标签用例在该 context 中创建两个同源 page，共享 localStorage；不能仅人工 dispatch storage 事件代替真实跨页写入 | M5；依赖 V1 与编辑命令契约 |
 | V6 | R2–R5/NFR1/NFR3：完整主路径，中英文、浅深色、三视口、200% zoom、键盘、低对比度、GPU/字体失败与恢复、无死按钮及 console/CSP 异常 | 已构建最新站点，Playwright 或现有真实浏览器通道；按 §9.2 记录 | M6 集中终验 |
 | V7 | NFR2：页面内更新 p50/p95、合并数/region 数、空闲重绘、包体增量、一次长手势结束最终 revision 一致 | 主题站 evidence spec；真实 GPU 测绘制相关指标，结果与 V1 同环境基线比较 | M6；不在每次 PR 重复完整度量 |
 | V8 | C1–C4/兼容：root 与 fork 检查、CSS/catalog/source 校验、全示例 release build、受影响旧例回归、新站根/子路径和导出接入 | §9.3 命令；Playwright project 逐个串行 | M6；中间里程碑跑受影响的局部集 |
@@ -423,10 +424,10 @@ RUSTIFY_TIER=evidence npx playwright test --project=theme-studio --headed
 | # | 里程碑 | 前置依赖 | 内容与并行边界 | 验证／退出条件 |
 | --- | --- | --- | --- | --- |
 | M1 | 主题内核与参考基线 | 本计划；工具链体检 | 文档/schema、颜色与度量解析、legacy 单向转换、固化全预设和来源、建立旧例主题基线；共享公共类型单人负责 | V1 通过，预设与必填 token 可解析，旧基线有记录；回写「实施进度」 |
-| M2 | DOM 主题与 Tailwind 兼容 | M1 的类型/解析与 V1 | ThemeScope/Boundary、完整 CSS token、opt-in 尺寸入口、overlay 继承；建立新站最小壳与 DOM 样本，注册 workspace/build/project；CSS/overlay 共享文件单人负责 | V2 通过，旧例默认表现保持，新站两 scope 可独立换肤；回写「实施进度」 |
+| M2 | DOM 主题与 Tailwind 兼容 | M1 的类型/解析与 V1 | ThemeScope/Boundary、完整 CSS token、§5.1 的派生变量/旧值 fallback 与 overlay 同步；catalog 同产物旧/新 scope fixture；建立新站最小壳与 DOM 样本，注册 workspace/build/project；CSS/overlay 共享文件单人负责 | V2 通过，同产物旧圆角与浮层阴影保持基线，新站两 scope 可独立换肤；回写「实施进度」 |
 | M3 | GPU 主题完整落地 | M1 的解析契约/V1；集成需 M2 最小站 | GPU style 入口、RGBA、半径/间距、字体资源、字距链路及阴影样本；GPU 控件与 Makepad 文本可分工，共享快照与字体目录一人集成 | V3 通过，所有主题维度实际绘制，恢复/回退有证据，Makepad 相关单测通过；回写「实施进度」 |
 | M4 | 本地编辑器与场景 | 开发需 V1/V2；退出需 V3 | 预设、全编辑面板、历史、HSL、全部预览场景、Inspector、响应式和中英文；站内 editor 与 previews 可按稳定命令分工 | V4 通过，参考矩阵的编辑/预览行齐备，DOM/GPU 主链可操作；回写「实施进度」 |
-| M5 | 主题交换与本地保存 | V1 和 M4 的编辑命令；UI 收口需 V4 | CSS/JSON parser/export、本地库/草稿、导入差异、下载复制和编译可用的接入片段；codec 与 persistence 可独立，保存动作一人集成 | V5 通过，独立应用可消费产物，失败不破坏当前文档；回写「实施进度」 |
+| M5 | 主题交换与本地保存 | V1 和 M4 的编辑命令；UI 收口需 V4 | CSS/JSON parser/export、本地库/草稿、导入差异、下载复制和编译可用的接入片段；codec 与 persistence 可独立，保存动作一人集成 | V5 通过，独立应用可消费产物，失败不破坏当前文档，同 context 两个同源 page 的真实保存/冲突处理有证据；回写「实施进度」 |
 | M6 | 全站终验与 SDK 交付 | V1–V5 及完整场景 | 最新构建统一浏览器走查、性能证据、兼容回归、根/子路径静态部署、CI 与指南；浏览器/GPU 资源串行使用，主负责人统一收口 | V6/V7/V8 通过，§0.1 与 §4 全覆盖，未验证项不记完成；回写「实施进度」 |
 
 可在 M2 完成前按稳定 ResolvedTheme 契约开发 M3 纯 GPU 控件；不以 mock 样本代替最终浏览器验证。M5 的 codec 可在 V1 后先做，不等待全部场景；历史/保存动作整合必须依赖 M4 的命令约定。共享 Cargo/lock、公共导出、主题注册表、CSS 入口、字体目录、Playwright/CI 和本计划由主负责人单写。只有收益超过协调成本时再委派，不能并行占用同一个 browser 或改同一套 token。
@@ -437,7 +438,7 @@ RUSTIFY_TIER=evidence npx playwright test --project=theme-studio --headed
 
 | 项目 | 影响 | 责任人与解除办法 | 最晚确认点 | 是否阻塞设计 |
 | --- | --- | --- | --- | --- |
-| 本机 Tailwind 未解析、完整 doctor 未运行 | 本地编译与 browser 验证可能无法立即执行 | 实施负责人按现有 mise 配置体检；缺服务遵仓库规则联系用户 | M1 开始 | 否；若依赖缺失则阻塞执行检查 |
+| 本机工具链与浏览器尚未体检 | 本地编译与 browser 验证可能无法立即执行 | 实施负责人按现有 mise 配置体检；缺服务遵仓库规则联系用户 | M1 开始 | 否；若依赖缺失则阻塞执行检查 |
 | GPU 新字体/字距/阴影成本 | 主要实现风险；字体缓存和几何容易不一致 | M3 先做最小双端样本；字段必须进入真实绘制和 cache key，未通过不隐藏控制项假装完成 | M3 退出 | 否，已列明确实现任务 |
 | 任意字体与广色域精确还原 | 参考主题可能在本地回退 | 按 §5.2–5.3 保留作者值、统一解析、可见诊断；若要求任意字体完全相同，需扩展资源加载范围 | V3/V5 | 否，本期契约明确 |
 | A1 用户画像 | 文案和默认入口可能需要调整 | 产品负责人结合 M4 主路径修订，不改变主题契约 | M4 | 否 |
@@ -446,7 +447,7 @@ RUSTIFY_TIER=evidence npx playwright test --project=theme-studio --headed
 | 公开域名/托管方未知 | 影响后续发布步骤 | 用户指定部署时另做部署操作；本期验证静态目录与子路径契约 | 实际发布前 | 否，本期不发布 |
 
 - 最终状态：**Proposed**。
-- 定级理由：用户范围已明确，接口、兼容、失败语义、里程碑和验收已闭合；关键实现选择作为可评审提案，当前没有产品范围待拍板项。设计调查基于源码与参考资料，尚无运行可行性或 UI 验收完成声明。
+- 定级理由：用户范围已明确，同产物圆角/阴影兼容及跨标签测试契约已明确，当前没有产品范围或关键契约待拍板项；关键实现选择仍作为可评审提案等待非阻塞评审。工具链体检与 V1–V8 是实施门，尚无运行可行性或 UI 验收完成声明。
 
 ## 12. 已知坑与历史教训
 
