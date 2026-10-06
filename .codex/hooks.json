@@ -1,26 +1,6 @@
 {
   "hooks": {
-    "PreToolUse": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "python3 '/Users/rockie/Documents/gh-rockie/rustify-ui/.codex/hooks/context-goal-guard.py' --threshold 65",
-            "timeout": 3
-          }
-        ]
-      }
-    ],
     "Stop": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "python3 '/Users/rockie/Documents/gh-rockie/rustify-ui/.codex/hooks/context-goal-guard.py' --threshold 65",
-            "timeout": 3
-          }
-        ]
-      },
       {
         "hooks": [
           {
