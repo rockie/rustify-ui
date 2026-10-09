@@ -1,0 +1,11 @@
+{
+  "implementation_commit": "c2d48c6b2fa3270d09de759fcaed05e702d2d44b",
+  "subject": "feat: add Rust/WASM Tailwind utility runtime",
+  "branch": "main",
+  "observed_at": "2026-10-09T18:30:37+08:00",
+  "committed_paths": 4853,
+  "validation": "checks.json",
+  "source_fingerprints": "source-fingerprints.json",
+  "scope": "WASM-TAILWIND implementation, fixtures, plan/review documents and validation artifacts; positioning documents and unrelated local changes excluded",
+  "push_performed": false
+}

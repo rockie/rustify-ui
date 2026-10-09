@@ -27,3 +27,5 @@
 本次没有重跑 scanner 浏览器、完整上游差分、完整旧示例、性能与远端 CI，不把这些历史结果记为本次通过。style 的 12 个 ignored 保留原上游性能测试标记。
 
 暂存源码的差异空白检查通过，保留一项明确例外：上游 `slim.rs` 的 `test_embedded_ruby_percent_w_extraction` 预期字符串第 320/323 行各有尾随空格，代表预处理后的实际输出，不修改这份固定上游 fixture。命令与排除项见 checks.json，输出见 [staged-diff.log](staged-diff.log)。
+
+实现与验证产物已提交为 `c2d48c6b2fa3270d09de759fcaed05e702d2d44b`；[提交记录](commit.json) 保存范围与验证入口，[源码指纹](source-fingerprints.json) 保存本次验证的源码集合。

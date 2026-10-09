@@ -33,13 +33,13 @@
 
 ### 恢复快照
 
-- 最近更新：2026-10-09T14:35:00+08:00
+- 最近更新：2026-10-09T18:30:37+08:00
 - 当前进度：7/7 个里程碑完成
 - 当前状态：全部完成。M7在同一release上通过V-1至V-11：utility-lab root53/deep47、scanner 5+5，上游执行门1,183/0失败，workspace与特性测试、clippy、来源及旧包检查；V-11原生/WASM/浏览器/包体已与JS参考及M1基线对照记录（无数值SLO）。代码评审R1的3个P2已修复：scope关键帧随动画变量改写、新增`rebuild(active)`、CI安装oracle；CI仅本地等效验证；R2复审确认三项已解决并发现回归F-04；R3判F-04部分解决并新增F-05–F-07（变量代换、数学时长、数值iteration），已改为按var()代换后的层状态判定关键帧名，R4判F-05–F-07已解决、F-04部分解决并新增F-08（副本不跟随公开token覆盖）；经用户裁定收窄契约：公开token的关键帧名仍改为本owner名，用途冲突时报UnsupportedFeature，副本只留给`--tw-*`，修后root58/deep52通过（scanner浏览器未重跑），见[M6](../validation/wasm-tailwind/M6.md#评审修复代码评审-r4)/[M7](../validation/wasm-tailwind/M7.md#评审修复代码评审-r1)
 - 最近完成：M7 · 全范围终验与开发者交付
-- 下一步：R5 对 R4 的 F-04/F-08 及直接回归复审已通过，本轮无需 apply；提交本期实现与验证产物。提交前检查与 root/deep 各 12 项浏览器冒烟见 [提交前验证](../validation/wasm-tailwind/pre-commit/README.md)。可选后续：远端运行新增CI任务；cn缓存命中路径的性能（需保持回调调用次数语义）；浏览器Worker内存（需跨源隔离）
+- 下一步：本期实现与验证产物已提交，R5 对 R4 的 F-04/F-08 及直接回归复审已通过，本轮无需 apply。提交前检查与 root/deep 各 12 项浏览器冒烟见 [提交前验证](../validation/wasm-tailwind/pre-commit/README.md)，实现 SHA 见 [提交记录](../validation/wasm-tailwind/pre-commit/commit.json)。可选后续：远端运行新增CI任务；cn缓存命中路径的性能（需保持回调调用次数语义）；浏览器Worker内存（需跨源隔离）
 - 当前阻塞：无
-- 代码基线：`53652fc4`（dirty，未提交）；此前`ef766ce`、`fb28856`的历史证据保留
+- 代码基线：`c2d48c6b2fa3270d09de759fcaed05e702d2d44b`（本期实现与验证产物已提交）；此前 dirty@`53652fc`、`ef766ce`、`fb28856` 的历史验证证据保留，未计为本次重新执行。
 
 ### 完成记录
 
