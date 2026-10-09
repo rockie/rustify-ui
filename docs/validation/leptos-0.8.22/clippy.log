@@ -1,0 +1,48 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+    Checking hydration_context v0.3.2
+   Compiling derive-where v1.7.0
+   Compiling server_fn_macro v0.8.12
+   Compiling manyhow-macros v0.14.0
+   Compiling quote-use-macros v0.9.0
+   Compiling reactive_stores_macro v0.4.4
+    Checking syn v3.0.5
+   Compiling proc-macro2-diagnostics v0.11.0
+    Checking rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+   Compiling prettyplease v0.3.0
+    Checking rustify-makepad v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-makepad)
+    Checking classification-macros v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style/upstream/classification-macros)
+    Checking reactive_graph v0.2.15
+   Compiling server_fn_macro_default v0.8.6
+   Compiling manyhow v0.14.0
+   Compiling quote-use v0.9.0
+    Checking server_fn v0.8.13
+   Compiling rstml v0.13.1
+    Checking reactive_stores v0.4.4
+   Compiling leptos_hot_reload v0.8.7
+   Compiling attribute-derive-macro v0.11.0
+    Checking tachys v0.2.19
+   Compiling attribute-derive v0.11.0
+    Checking rustify-style-wasm v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style-wasm)
+   Compiling leptos_macro v0.8.19
+    Checking leptos_server v0.8.8
+    Checking leptos_dom v0.8.8
+    Checking leptos v0.8.22
+    Checking rustify-ui v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui)
+    Checking rustify-components v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-components)
+    Checking vellum v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/examples/vellum)
+    Checking utility-lab v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/examples/utility-lab)
+    Checking fusion-basic v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/examples/fusion-basic)
+    Checking theme-studio v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/examples/theme-studio)
+    Checking property-workbench v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/examples/property-workbench)
+    Checking data-workbench v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/examples/data-workbench)
+    Checking xtask v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/xtask)
+    Checking component-catalog v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/examples/component-catalog)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 10.51s
+mbx[cache]: 0 hits, 3 misses, 49 not looked up, 9 incremental; 0 B downloaded, 0 B uploaded, 59.2 MiB stored locally
+mbx[savings]: 2h 50m unspent across 4625 builds. compounding, in a sense.

@@ -1,0 +1,138 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling syn v3.0.5
+   Compiling reactive_graph v0.2.15
+   Compiling server_fn_macro v0.8.12
+   Compiling proc-macro2-diagnostics v0.11.0
+   Compiling rstml v0.13.1
+   Compiling reactive_stores_macro v0.4.4
+   Compiling manyhow-macros v0.14.0
+   Compiling tachys v0.2.19
+   Compiling prettyplease v0.3.0
+   Compiling leptos_macro v0.8.19
+   Compiling leptos v0.8.22
+   Compiling wasm-bindgen-macro-support v0.2.128
+   Compiling serde_derive v1.0.229
+   Compiling futures-macro v0.3.34
+   Compiling thiserror-impl v2.0.20
+   Compiling zerovec-derive v0.11.6
+   Compiling wasm-bindgen-macro v0.2.128
+   Compiling displaydoc v0.2.7
+   Compiling zerotrie v0.2.5
+   Compiling quote-use-macros v0.9.0
+   Compiling derive-where v1.7.0
+   Compiling futures-util v0.3.34
+   Compiling serde v1.0.229
+   Compiling thiserror v2.0.20
+   Compiling zerovec v0.11.8
+   Compiling async-trait v0.1.92
+   Compiling wasm-bindgen v0.2.128
+   Compiling futures-executor v0.3.34
+   Compiling js-sys v0.3.105
+   Compiling futures v0.3.34
+   Compiling server_fn_macro_default v0.8.6
+   Compiling manyhow v0.14.0
+   Compiling leptos_hot_reload v0.8.7
+   Compiling quote-use v0.9.0
+   Compiling hydration_context v0.3.2
+   Compiling oco_ref v0.2.1
+   Compiling serde_qs v0.15.0
+   Compiling codee v0.3.5
+   Compiling leptos_config v0.8.10
+   Compiling tinystr v0.8.4
+   Compiling potential_utf v0.1.6
+   Compiling icu_collections v2.3.0
+   Compiling icu_locale_core v2.3.0
+   Compiling attribute-derive-macro v0.11.0
+   Compiling icu_provider v2.3.1
+   Compiling icu_normalizer v2.3.0
+   Compiling icu_properties v2.3.0
+   Compiling attribute-derive v0.11.0
+   Compiling idna_adapter v1.2.2
+   Compiling idna v1.1.0
+   Compiling url v2.5.8
+   Compiling wasm-bindgen-futures v0.4.78
+   Compiling web-sys v0.3.105
+   Compiling any_spawner v0.3.0
+   Compiling reactive_stores v0.4.4
+   Compiling gloo-utils v0.2.0
+   Compiling gloo-net v0.6.0
+   Compiling wasm-streams v0.5.0
+   Compiling server_fn v0.8.13
+mbx[progress]: 15s elapsed; 30 hits, 0 misses, 1 bypassed, 37 not looked up; ~20.17s compiler work saved
+   Compiling leptos_dom v0.8.8
+   Compiling leptos_server v0.8.8
+   Compiling rustify-ui v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui)
+   Compiling theme-export-generator v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/tests/theme-export/generator)
+   Compiling theme_export_consumer v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/tests/theme-export/runtime)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 18.06s
+     Running unittests src/main.rs (tests/theme-export/target/debug/deps/theme_export_generator-e6fc29fe58736077)
+
+running 37 tests
+test bridge::tests::message_string_is_decoded_from_the_from_wasm_layout ... ok
+test bridge::tests::module_exports_hash_and_factory_with_the_source_verbatim ... ok
+test data_tools::tests::invalid_and_oversize_imports_never_produce_an_apply_candidate ... ok
+test data_tools::tests::import_review_lists_identity_added_removed_and_both_mode_changes_without_mutating ... ok
+test data_tools::tests::save_requires_separate_overwrite_intent_and_copy_rename_conflicts_are_rejected ... ok
+test data_tools::tests::exports_route_profiles_color_formats_and_lossless_json_to_actual_sdk ... ok
+test persistence::tests::bad_cache_keeps_exact_raw_and_rejects_shape_version_and_invalid_dark_mode ... ok
+test persistence::tests::autosave_rejects_changed_library_metadata_and_unresolved_drafts ... ok
+test persistence::tests::autosave_revalidates_saved_dimensions_when_root_size_changes ... ok
+test persistence::tests::named_crud_preserves_identity_intent_and_never_changes_original ... ok
+test state::tests::color_scope_is_explicit_and_common_fields_are_always_shared ... ok
+test state::tests::gesture_updates_make_one_history_entry_and_no_commit_revision ... ok
+test state::tests::gesture_returning_to_its_origin_keeps_the_redo_branch ... ok
+test state::tests::commit_keeps_the_update_pair_and_cancel_refreshes_the_restored_document ... ok
+test state::tests::cancel_restores_document_and_redo_but_committed_branch_clears_redo ... ok
+test persistence::tests::valid_cache_round_trip_preserves_author_values_preferences_and_unknown_tokens ... ok
+test state::tests::adopting_an_external_draft_keeps_its_preset_reset_and_undo_history ... ok
+test persistence::tests::invalid_candidate_duplicate_names_ids_and_unknown_target_leave_envelope_unchanged ... ok
+test state::tests::common_edit_normalizes_both_modes_without_losing_initial_values ... ok
+test data_tools::tests::full_library_permits_rename_and_confirmed_overwrite_but_rejects_new_copy ... ok
+test persistence::tests::preference_enums_duplicates_and_unknown_fields_are_rejected_without_losing_raw ... ok
+test state::tests::hsl_default_scope_both_current_scope_and_grayscale_are_finite ... ok
+test state::tests::invalid_half_value_and_other_mode_validation_are_atomic ... ok
+test state::tests::no_op_skips_resolve_and_history ... ok
+test state::tests::invalid_update_and_no_op_gesture_do_not_change_state ... ok
+test state::tests::preset_mode_checkpoint_and_reset_are_independent_of_history ... ok
+test state::tests::next_hsl_gesture_starts_from_the_last_committed_result ... ok
+test state::tests::rejected_validation_counts_work_without_replacing_the_valid_cache ... ok
+test state::tests::invalid_hsl_and_gesture_commands_preserve_state ... ok
+test state::tests::resolved_pair_reuses_initial_and_accepted_edit_validation ... ok
+test state::tests::hsl_updates_use_gesture_origin_and_identity_preserves_author_values ... ok
+test state::tests::restored_modified_draft_resets_to_the_selected_checkpoint_without_startup_history ... ok
+test state::tests::undo_and_every_context_input_refresh_the_pair_once ... ok
+test persistence::tests::every_supported_preference_value_and_eighty_unicode_character_name_round_trip ... ok
+test state::tests::history_is_bounded_to_one_hundred_documents ... ok
+test persistence::tests::hundred_theme_limit_allows_explicit_overwrite_and_rejects_extra_or_duplicate_saved_ids ... ok
+test persistence::tests::autosave_reuses_editor_resolution_and_unchanged_saved_library ... ok
+
+test result: ok. 37 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+
+     Running unittests src/bin/theme-export-serve.rs (tests/theme-export/target/debug/deps/theme_export_serve-4d0dd70b874950a8)
+
+running 8 tests
+test serve::fault_tests::a_stale_bridge_claims_a_hash_the_wasm_does_not_have ... ok
+test serve::fault_tests::a_fault_names_the_file_it_breaks ... ok
+test serve::fault_tests::each_kind_of_damage_is_the_one_it_says ... ok
+test serve::tests::a_route_is_answered_with_the_application_and_a_missing_file_is_not ... ok
+test serve::tests::base_paths_are_normalized_to_slash_wrapped_form ... ok
+test serve::tests::strict_policy_allows_wasm_but_no_script_eval ... ok
+test serve::tests::a_revalidation_is_answered_only_for_the_version_the_browser_has ... ok
+test serve::tests::requests_resolve_inside_the_base_and_never_escape_the_root ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/main.rs (tests/theme-export/target/debug/deps/theme_export_consumer-313677e34c74cd35)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+mbx[cache]: 30 hits, 0 misses, 44 not looked up, 1 bypassed; 0 B downloaded, 0 B uploaded, 197.1 MiB stored locally
+mbx[savings]: 1.1 TiB logical of outputs had survived their checkouts. an unnatural state, now corrected.

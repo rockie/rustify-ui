@@ -21,7 +21,7 @@ license = "MIT"
 publish = false
 
 [workspace.dependencies]
-leptos = { version = "=0.8.20", features = ["csr"] }
+leptos = { version = "=0.8.22", features = ["csr"] }
 wasm-bindgen = "=0.2.128"
 js-sys = "=0.3.105"
 web-sys = "=0.3.105"

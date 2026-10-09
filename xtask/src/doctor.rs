@@ -160,8 +160,8 @@ fn leptos_lock(root: &Path) -> Check {
         let app_lock =
             std::fs::read_to_string(root.join("Cargo.lock")).map_err(|e| e.to_string())?;
         let version = lock_version(&app_lock, "leptos").ok_or("leptos missing from Cargo.lock")?;
-        if version != "0.8.20" {
-            return Err(format!("leptos is {version}, expected the pinned 0.8.20"));
+        if version != "0.8.22" {
+            return Err(format!("leptos is {version}, expected the pinned 0.8.22"));
         }
         Ok(format!("leptos {version} from crates.io"))
     })();

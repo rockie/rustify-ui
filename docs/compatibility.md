@@ -10,7 +10,7 @@ future behaviour.
 | --- | --- | --- |
 | Rust toolchain | `1.98.1` (stable), `rustfmt`, `clippy`, target `wasm32-unknown-unknown`; the wasm build uses the built-in single-threaded target and its prebuilt `std` | `mise.toml`; checked by `mbx xtask doctor` |
 | Build cache | mbx (mr-boxington) `1.15.0`; every compile goes through it, including the nested wasm build cargo-makepad starts. That build runs with learned incremental off (`MBX_LEARNED_INCREMENTAL=0`), because an incrementally compiled crate changes the wasm bytes | `mise.toml` (`mr-boxington`, and `mr_boxington = true` on rust); checked by `mbx xtask doctor` |
-| Leptos | `0.8.20` from crates.io, feature `csr` only; no Leptos source is modified | `Cargo.toml` (`=0.8.20`), `Cargo.lock`, `sources.lock.json` |
+| Leptos | `0.8.22` from crates.io, feature `csr` only; no Leptos source is modified | `Cargo.toml` (`=0.8.22`), `Cargo.lock`, `sources.lock.json` |
 | wasm-bindgen | crate `0.2.128` and `wasm-bindgen-cli-support` `0.2.128` (run in-process by cargo-makepad; a version mismatch fails the build) | `Cargo.lock`, `makepad/Cargo.lock`; checked by `mbx xtask doctor` |
 | Makepad | hard fork in `makepad/`, declared version 2.0.0, upstream commit unknown; never synced with upstream again | `sources.lock.json` |
 | Playwright | `@playwright/test 1.63.0` with its bundled Chromium (continuous regression only) | `package.json`, `package-lock.json` |

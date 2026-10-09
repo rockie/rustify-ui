@@ -1,0 +1,1130 @@
+{
+  "config": {
+    "argv": [
+      "/Users/rockie/.nvm/versions/node/v26.1.0/bin/node",
+      "/Users/rockie/Documents/gh-rockie/rustify-ui/node_modules/.bin/playwright",
+      "test",
+      "--project=property-workbench",
+      "m3-workbench.spec.ts",
+      "--workers=1",
+      "--output=test-results/leptos-0.8.22-workbench"
+    ],
+    "configFile": "/Users/rockie/Documents/gh-rockie/rustify-ui/playwright.config.ts",
+    "rootDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": {},
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/leptos-0.8.22-workbench",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "utility-lab-scanner",
+        "name": "utility-lab-scanner",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "utility-scanner.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/leptos-0.8.22-workbench",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "utility-lab-scanner-deep",
+        "name": "utility-lab-scanner-deep",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "utility-scanner.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/leptos-0.8.22-workbench",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "utility-lab",
+        "name": "utility-lab",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "utility-runtime.spec.ts",
+          "utility-faults.spec.ts",
+          "utility-gpu.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/leptos-0.8.22-workbench",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "utility-lab-deep",
+        "name": "utility-lab-deep",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "utility-runtime.spec.ts",
+          "utility-gpu.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/leptos-0.8.22-workbench",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "utility-baseline",
+        "name": "utility-baseline",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "utility-baseline.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/leptos-0.8.22-workbench",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "fusion-basic",
+        "name": "fusion-basic",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "p3-restart.spec.ts",
+          "m1-probes.spec.ts",
+          "m2-runtime.spec.ts",
+          "m3-state.spec.ts",
+          "m4-geometry.spec.ts",
+          "m4-overlay.spec.ts",
+          "m6-mainpath.spec.ts",
+          "p2-navigation.spec.ts",
+          "p3-instances.spec.ts",
+          "p3-b0.spec.ts",
+          "p3-idle.spec.ts",
+          "p3-memory.spec.ts",
+          "p3-endurance.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/leptos-0.8.22-workbench",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "property-workbench",
+        "name": "property-workbench",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "p3-restart.spec.ts",
+          "m3-workbench.spec.ts",
+          "m5-text.spec.ts",
+          "m5-semantics.spec.ts",
+          "m6-theme.spec.ts",
+          "m6-async.spec.ts",
+          "m6-components.spec.ts",
+          "m7-recovery.spec.ts",
+          "m8-baseline.spec.ts",
+          "m8-network.spec.ts",
+          "m8-endurance.spec.ts",
+          "p2-form.spec.ts",
+          "p2-deeplink.spec.ts",
+          "p2-workspace.spec.ts",
+          "p2-drag.spec.ts",
+          "p2-clipboard-files.spec.ts",
+          "p2-zoom.spec.ts",
+          "p2-ime.spec.ts",
+          "p3-policy.spec.ts",
+          "p3-faults.spec.ts",
+          "p3-diagnostics.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/leptos-0.8.22-workbench",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "component-catalog",
+        "name": "component-catalog",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "p3-restart.spec.ts",
+          "p2-catalog.spec.ts",
+          "p2-theme.spec.ts",
+          "p2-semantics.spec.ts",
+          "p2-i18n.spec.ts",
+          "p2-reflow.spec.ts",
+          "p2-a11y.spec.ts",
+          "p3-policy.spec.ts",
+          "catalog-inputs.spec.ts",
+          "theme-compat.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/leptos-0.8.22-workbench",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "theme-studio",
+        "name": "theme-studio",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [
+          "theme-compat.spec.ts",
+          "theme-export-runtime.spec.ts"
+        ],
+        "testMatch": [
+          "theme-*.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/leptos-0.8.22-workbench",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "theme-studio-deep",
+        "name": "theme-studio-deep",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "theme-deployment.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/leptos-0.8.22-workbench",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "theme-export",
+        "name": "theme-export",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "theme-export-runtime.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/leptos-0.8.22-workbench",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "theme-export-deep",
+        "name": "theme-export-deep",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "theme-export-runtime.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/leptos-0.8.22-workbench",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "data-workbench",
+        "name": "data-workbench",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "p3-restart.spec.ts",
+          "p3-probes.spec.ts",
+          "p3-table.spec.ts",
+          "p3-jobs.spec.ts",
+          "p3-scene.spec.ts",
+          "p3-memory.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/leptos-0.8.22-workbench",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "budget-scene",
+        "name": "budget-scene",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "p3-budget-scene.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/leptos-0.8.22-workbench",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "workbench-deep",
+        "name": "workbench-deep",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "p2-deeplink.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/leptos-0.8.22-workbench",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "deployment",
+        "name": "deployment",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "m7-deployment.spec.ts"
+        ],
+        "timeout": 120000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/browser.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "m3-workbench.spec.ts",
+      "file": "m3-workbench.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "M3 V2: one authoritative state behind a DOM panel and a GPU view",
+          "file": "m3-workbench.spec.ts",
+          "line": 21,
+          "column": 6,
+          "specs": [
+            {
+              "title": "a thousand objects with stable ids, the first one selected",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "property-workbench",
+                  "projectName": "property-workbench",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1697,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-09T08:20:20.227Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a2185ec8754d32fab391-d729bb7909e8c2fea6de",
+              "file": "m3-workbench.spec.ts",
+              "line": 22,
+              "column": 9
+            },
+            {
+              "title": "renaming and recolouring in the DOM changes what the GPU draws",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "property-workbench",
+                  "projectName": "property-workbench",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4202,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-09T08:20:22.287Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a2185ec8754d32fab391-276ab56860970d426014",
+              "file": "m3-workbench.spec.ts",
+              "line": 43,
+              "column": 9
+            },
+            {
+              "title": "the GPU view moves the selection the application owns",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "property-workbench",
+                  "projectName": "property-workbench",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 998,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-09T08:20:26.511Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a2185ec8754d32fab391-230f27f1e2ff3c1cc1d4",
+              "file": "m3-workbench.spec.ts",
+              "line": 63,
+              "column": 9
+            },
+            {
+              "title": "a name with quotes and backslashes reaches the application unchanged",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "property-workbench",
+                  "projectName": "property-workbench",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 683,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-09T08:20:27.528Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a2185ec8754d32fab391-d1aa262fa8cf970221bb",
+              "file": "m3-workbench.spec.ts",
+              "line": 76,
+              "column": 9
+            },
+            {
+              "title": "a run of selection steps from both sides lands on one expected object",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 300000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "property-workbench",
+                  "projectName": "property-workbench",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 881,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-09T08:20:28.230Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a2185ec8754d32fab391-ac20fae1a2752b58d7ec",
+              "file": "m3-workbench.spec.ts",
+              "line": 84,
+              "column": 9
+            },
+            {
+              "title": "clicking a cell in the GPU grid selects that object in the DOM",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "property-workbench",
+                  "projectName": "property-workbench",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 951,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-09T08:20:29.129Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a2185ec8754d32fab391-a8b035bc18f1ef26dfe6",
+              "file": "m3-workbench.spec.ts",
+              "line": 104,
+              "column": 9
+            },
+            {
+              "title": "a hundred objects change in one update and the GPU shows the result",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "property-workbench",
+                  "projectName": "property-workbench",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1050,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-09T08:20:30.094Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a2185ec8754d32fab391-7edc2653409860de2c8a",
+              "file": "m3-workbench.spec.ts",
+              "line": 127,
+              "column": 9
+            },
+            {
+              "title": "reordering keeps the selection on the object, not on the position",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "property-workbench",
+                  "projectName": "property-workbench",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 746,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-09T08:20:31.164Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a2185ec8754d32fab391-93cf6ed605e0fed8cb82",
+              "file": "m3-workbench.spec.ts",
+              "line": 144,
+              "column": 9
+            },
+            {
+              "title": "adding and removing objects keeps every other id where it was",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "property-workbench",
+                  "projectName": "property-workbench",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 763,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-09T08:20:31.929Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a2185ec8754d32fab391-7cc0185a75647d740652",
+              "file": "m3-workbench.spec.ts",
+              "line": 159,
+              "column": 9
+            },
+            {
+              "title": "a list that names one object twice is refused, not guessed at",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "property-workbench",
+                  "projectName": "property-workbench",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1498,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-09T08:20:32.713Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a2185ec8754d32fab391-4b597f4fc69eebe7bc20",
+              "file": "m3-workbench.spec.ts",
+              "line": 173,
+              "column": 9
+            },
+            {
+              "title": "ten thousand GPU actions arrive once each, in order",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 600000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "property-workbench",
+                  "projectName": "property-workbench",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3916,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-09T08:20:34.229Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a2185ec8754d32fab391-d7e9a05171b4434109b9",
+              "file": "m3-workbench.spec.ts",
+              "line": 186,
+              "column": 9
+            },
+            {
+              "title": "the object under the pointer is the object a click there selects",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "property-workbench",
+                  "projectName": "property-workbench",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 977,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-09T08:20:38.162Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a2185ec8754d32fab391-9dfd299b4db1ec322c40",
+              "file": "m3-workbench.spec.ts",
+              "line": 236,
+              "column": 9
+            },
+            {
+              "title": "a pointer stream loses none of the clicks and saves interleaved with it",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 300000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "property-workbench",
+                  "projectName": "property-workbench",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3379,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-09T08:20:39.162Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a2185ec8754d32fab391-12069d2199bae0ff2f34",
+              "file": "m3-workbench.spec.ts",
+              "line": 253,
+              "column": 9
+            },
+            {
+              "title": "deleting the selected object drops it and clears the selection",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "property-workbench",
+                  "projectName": "property-workbench",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 763,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-09T08:20:42.562Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a2185ec8754d32fab391-7036c140c85e4620ac22",
+              "file": "m3-workbench.spec.ts",
+              "line": 334,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "M3: a scope that closes while its region is running",
+          "file": "m3-workbench.spec.ts",
+          "line": 352,
+          "column": 6,
+          "specs": [
+            {
+              "title": "closing from inside a region action leaves the runtime alive",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "property-workbench",
+                  "projectName": "property-workbench",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1685,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-09T08:20:43.345Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a2185ec8754d32fab391-cba8f064d0aff4cf4ed3",
+              "file": "m3-workbench.spec.ts",
+              "line": 353,
+              "column": 9
+            },
+            {
+              "title": "a scope disposed while its region is still starting leaves nothing behind",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "property-workbench",
+                  "projectName": "property-workbench",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2215,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-09T08:20:45.051Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a2185ec8754d32fab391-610e04afc7c03f7f522d",
+              "file": "m3-workbench.spec.ts",
+              "line": 384,
+              "column": 9
+            },
+            {
+              "title": "the batch a closing region produced is drawn before its Cx goes",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "property-workbench",
+                  "projectName": "property-workbench",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1365,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-09T08:20:47.290Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a2185ec8754d32fab391-6a7e5dc6d721832fb0d5",
+              "file": "m3-workbench.spec.ts",
+              "line": 414,
+              "column": 9
+            }
+          ],
+          "suites": [
+            {
+              "title": "",
+              "file": "m3-workbench.spec.ts",
+              "line": 463,
+              "column": 10,
+              "specs": [
+                {
+                  "title": "a fatal drops the work the runtime had already scheduled",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 180000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "property-workbench",
+                      "projectName": "property-workbench",
+                      "results": [
+                        {
+                          "workerIndex": 0,
+                          "parallelIndex": 0,
+                          "status": "passed",
+                          "duration": 1246,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-10-09T08:20:48.673Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "a2185ec8754d32fab391-562ca7572dd2f1d192fd",
+                  "file": "m3-workbench.spec.ts",
+                  "line": 466,
+                  "column": 13
+                },
+                {
+                  "title": "a trapped runtime leaves no keyboard listener on the window",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 180000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "property-workbench",
+                      "projectName": "property-workbench",
+                      "results": [
+                        {
+                          "workerIndex": 0,
+                          "parallelIndex": 0,
+                          "status": "passed",
+                          "duration": 1049,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-10-09T08:20:49.935Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "a2185ec8754d32fab391-17e87673a96800fb8940",
+                  "file": "m3-workbench.spec.ts",
+                  "line": 486,
+                  "column": 13
+                },
+                {
+                  "title": "a trapped runtime takes its controls off the page",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 180000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "property-workbench",
+                      "projectName": "property-workbench",
+                      "results": [
+                        {
+                          "workerIndex": 0,
+                          "parallelIndex": 0,
+                          "status": "passed",
+                          "duration": 1043,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-10-09T08:20:51.006Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "a2185ec8754d32fab391-56f88877f3ec11e69b98",
+                  "file": "m3-workbench.spec.ts",
+                  "line": 499,
+                  "column": 13
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "a reset puts the page back the way it loaded",
+          "file": "m3-workbench.spec.ts",
+          "line": 515,
+          "column": 6,
+          "specs": [
+            {
+              "title": "the application, the address and the page read as they did on the first load",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 300000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "property-workbench",
+                  "projectName": "property-workbench",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3496,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-09T08:20:52.073Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a2185ec8754d32fab391-e0e7622292a6d288f197",
+              "file": "m3-workbench.spec.ts",
+              "line": 572,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-09T08:20:19.846Z",
+    "duration": 35897.233,
+    "expected": 21,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

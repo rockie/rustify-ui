@@ -1,0 +1,29 @@
+npm notice run rustify-ui-browser-tests@0.1.0 npx
+npm notice run 'playwright' test --project=data-workbench p3-table.spec.ts --workers=1 --output=test-results/leptos-0.8.22-data
+
+Running 20 tests using 1 worker
+
+(node:19416) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 [data-workbench] › tests/browser/p3-table.spec.ts:78:9 › M2 · a hundred thousand rows › the first, the middle and the last row are all reachable (1.8s)
+  ✓   2 [data-workbench] › tests/browser/p3-table.spec.ts:90:9 › M2 · a hundred thousand rows › what is in the document is a window, not the table (3.5s)
+  ✓   3 [data-workbench] › tests/browser/p3-table.spec.ts:102:9 › M2 · a hundred thousand rows › a hundred sampled cells say what the second implementation says (778ms)
+  ✓   4 [data-workbench] › tests/browser/p3-table.spec.ts:120:9 › M2 · a hundred thousand rows › the keyboard walks the grid and reaches both ends of it (948ms)
+  ✓   5 [data-workbench] › tests/browser/p3-table.spec.ts:143:9 › M2 · a hundred thousand rows › a row opened from the keyboard can be edited and reads back the same (978ms)
+  ✓   6 [data-workbench] › tests/browser/p3-table.spec.ts:162:9 › M2 · a hundred thousand rows › a selection is of rows, and deleting one deselects that one only (1.0s)
+  ✓   7 [data-workbench] › tests/browser/p3-table.spec.ts:192:9 › M2 · a hundred thousand rows › deleting three of ten selected leaves seven selected (1.0s)
+  ✓   8 [data-workbench] › tests/browser/p3-table.spec.ts:228:9 › M2 · a hundred thousand rows › the tree opens, closes and walks from the keyboard (870ms)
+  ✓   9 [data-workbench] › tests/browser/p3-table.spec.ts:257:9 › M2 · a hundred thousand rows › the strip sends the table where it was clicked (860ms)
+  ✓  10 [data-workbench] › tests/browser/p3-table.spec.ts:282:9 › M2 · a hundred thousand rows › text that looks like markup stays a value (781ms)
+  ✓  11 [data-workbench] › tests/browser/p3-table.spec.ts:300:9 › M2 · a hundred thousand rows › the table's fourteen named things are findable, thirty times over (1.1s)
+  ✓  12 [data-workbench] › tests/browser/p3-table.spec.ts:342:13 › review · table identity and window › deleting sorted rows removes the displayed identities (944ms)
+  ✓  13 [data-workbench] › tests/browser/p3-table.spec.ts:342:13 › review · table identity and window › deleting filtered rows removes the displayed identities (966ms)
+  ✓  14 [data-workbench] › tests/browser/p3-table.spec.ts:369:9 › review · table identity and window › an open draft stays with its identity across insert and delete (1.0s)
+  ✓  15 [data-workbench] › tests/browser/p3-table.spec.ts:389:9 › review · table identity and window › scrolling a focused slot keeps selection and the tab stop on the focused row (808ms)
+  ✓  16 [data-workbench] › tests/browser/p3-table.spec.ts:402:9 › review · table identity and window › resizing the scroller covers its enlarged viewport without scrolling (962ms)
+  ✓  17 [data-workbench] › tests/browser/p3-table.spec.ts:419:9 › review · table identity and window › ARIA row indices include the header and stay within the total (794ms)
+  ✓  18 [data-workbench] › tests/browser/p3-table.spec.ts:434:9 › review · size observations stop on unmount and fatal (649ms)
+  ✓  19 [data-workbench] › tests/browser/p3-table.spec.ts:462:5 › review · resizing at the end preserves the focused cell (912ms)
+  ✓  20 [data-workbench] › tests/browser/p3-table.spec.ts:537:9 › a reset leaves the page as a first load of the same address does (7.5s)
+
+  20 passed (29.6s)

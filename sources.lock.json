@@ -1485,13 +1485,13 @@
   },
   "leptos": {
     "source": "crates.io",
-    "version": "0.8.20",
+    "version": "0.8.22",
     "crate_checksums_sha256": {
-      "leptos-0.8.20": "705e2951f3688e0c4f66bbb7a2702282782dcee716971dbd6209c2619d272479",
-      "reactive_graph-0.2.14": "00c5a025366836190c7030e883cc2bcd9e384ff555336e3c7954741ca411b177",
-      "tachys-0.2.18": "a92ba81187437cc5df4281f2326a2e13cc81e8f96448292d1112388e2025ca66",
+      "leptos-0.8.22": "713ee6895e3d1126ea9781280d01414f5643f3f201a949b71efffac07d735f00",
+      "reactive_graph-0.2.15": "79f11fac67625645add76313dab8dae510fca0654d96ef98fd8f961a7d2e22c1",
+      "tachys-0.2.19": "e47e2220bb9d2a3be976a22a0fb7685a0b84499bb11ea5cb3bbc82907675ac68",
       "leptos_dom-0.8.8": "35742e9ed8f8aaf9e549b454c68a7ac0992536e06856365639b111f72ab07884",
-      "leptos_macro-0.8.17": "96de6e8da9d4f1a7b74b447b317d590ebabb38709f588f7ee20564b773ccbcce"
+      "leptos_macro-0.8.19": "0902af1e6947ffc7e906b7003a165f76f178dc711a47b74241025090b0c32a72"
     },
     "reference_tree_diff": {
       "compared_on": "2026-09-08",

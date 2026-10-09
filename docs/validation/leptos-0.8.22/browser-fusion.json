@@ -1,0 +1,916 @@
+{
+  "config": {
+    "argv": [
+      "/Users/rockie/.nvm/versions/node/v26.1.0/bin/node",
+      "/Users/rockie/Documents/gh-rockie/rustify-ui/node_modules/.bin/playwright",
+      "test",
+      "--project=fusion-basic",
+      "m2-runtime.spec.ts",
+      "m3-state.spec.ts",
+      "--workers=1",
+      "--output=test-results/leptos-0.8.22-fusion"
+    ],
+    "configFile": "/Users/rockie/Documents/gh-rockie/rustify-ui/playwright.config.ts",
+    "rootDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": {},
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/leptos-0.8.22-fusion",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "utility-lab-scanner",
+        "name": "utility-lab-scanner",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "utility-scanner.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/leptos-0.8.22-fusion",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "utility-lab-scanner-deep",
+        "name": "utility-lab-scanner-deep",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "utility-scanner.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/leptos-0.8.22-fusion",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "utility-lab",
+        "name": "utility-lab",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "utility-runtime.spec.ts",
+          "utility-faults.spec.ts",
+          "utility-gpu.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/leptos-0.8.22-fusion",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "utility-lab-deep",
+        "name": "utility-lab-deep",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "utility-runtime.spec.ts",
+          "utility-gpu.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/leptos-0.8.22-fusion",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "utility-baseline",
+        "name": "utility-baseline",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "utility-baseline.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/leptos-0.8.22-fusion",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "fusion-basic",
+        "name": "fusion-basic",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "p3-restart.spec.ts",
+          "m1-probes.spec.ts",
+          "m2-runtime.spec.ts",
+          "m3-state.spec.ts",
+          "m4-geometry.spec.ts",
+          "m4-overlay.spec.ts",
+          "m6-mainpath.spec.ts",
+          "p2-navigation.spec.ts",
+          "p3-instances.spec.ts",
+          "p3-b0.spec.ts",
+          "p3-idle.spec.ts",
+          "p3-memory.spec.ts",
+          "p3-endurance.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/leptos-0.8.22-fusion",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "property-workbench",
+        "name": "property-workbench",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "p3-restart.spec.ts",
+          "m3-workbench.spec.ts",
+          "m5-text.spec.ts",
+          "m5-semantics.spec.ts",
+          "m6-theme.spec.ts",
+          "m6-async.spec.ts",
+          "m6-components.spec.ts",
+          "m7-recovery.spec.ts",
+          "m8-baseline.spec.ts",
+          "m8-network.spec.ts",
+          "m8-endurance.spec.ts",
+          "p2-form.spec.ts",
+          "p2-deeplink.spec.ts",
+          "p2-workspace.spec.ts",
+          "p2-drag.spec.ts",
+          "p2-clipboard-files.spec.ts",
+          "p2-zoom.spec.ts",
+          "p2-ime.spec.ts",
+          "p3-policy.spec.ts",
+          "p3-faults.spec.ts",
+          "p3-diagnostics.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/leptos-0.8.22-fusion",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "component-catalog",
+        "name": "component-catalog",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "p3-restart.spec.ts",
+          "p2-catalog.spec.ts",
+          "p2-theme.spec.ts",
+          "p2-semantics.spec.ts",
+          "p2-i18n.spec.ts",
+          "p2-reflow.spec.ts",
+          "p2-a11y.spec.ts",
+          "p3-policy.spec.ts",
+          "catalog-inputs.spec.ts",
+          "theme-compat.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/leptos-0.8.22-fusion",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "theme-studio",
+        "name": "theme-studio",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [
+          "theme-compat.spec.ts",
+          "theme-export-runtime.spec.ts"
+        ],
+        "testMatch": [
+          "theme-*.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/leptos-0.8.22-fusion",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "theme-studio-deep",
+        "name": "theme-studio-deep",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "theme-deployment.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/leptos-0.8.22-fusion",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "theme-export",
+        "name": "theme-export",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "theme-export-runtime.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/leptos-0.8.22-fusion",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "theme-export-deep",
+        "name": "theme-export-deep",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "theme-export-runtime.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/leptos-0.8.22-fusion",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "data-workbench",
+        "name": "data-workbench",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "p3-restart.spec.ts",
+          "p3-probes.spec.ts",
+          "p3-table.spec.ts",
+          "p3-jobs.spec.ts",
+          "p3-scene.spec.ts",
+          "p3-memory.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/leptos-0.8.22-fusion",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "budget-scene",
+        "name": "budget-scene",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "p3-budget-scene.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/leptos-0.8.22-fusion",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "workbench-deep",
+        "name": "workbench-deep",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "p2-deeplink.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/leptos-0.8.22-fusion",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "deployment",
+        "name": "deployment",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "m7-deployment.spec.ts"
+        ],
+        "timeout": 120000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/browser.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "m2-runtime.spec.ts",
+      "file": "m2-runtime.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "M2 V1: mounting",
+          "file": "m2-runtime.spec.ts",
+          "line": 9,
+          "column": 6,
+          "specs": [
+            {
+              "title": "a missing container fails and leaves the running scopes alone",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 240000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "fusion-basic",
+                  "projectName": "fusion-basic",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2452,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-09T08:18:09.376Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "c43b91cb363eca44aca4-b3005a4c62b16b456063",
+              "file": "m2-runtime.spec.ts",
+              "line": 10,
+              "column": 9
+            },
+            {
+              "title": "mounting over a live scope fails and leaves that scope alone",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "fusion-basic",
+                  "projectName": "fusion-basic",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2133,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-09T08:18:12.150Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "c43b91cb363eca44aca4-95ac3a5a8777699ba6c4",
+              "file": "m2-runtime.spec.ts",
+              "line": 26,
+              "column": 9
+            },
+            {
+              "title": "a disposed handle is spent: the second dispose reports nothing to do",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "fusion-basic",
+                  "projectName": "fusion-basic",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 649,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-09T08:18:14.302Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "c43b91cb363eca44aca4-f2c976dca3b685c4b9f4",
+              "file": "m2-runtime.spec.ts",
+              "line": 45,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "M2: region state",
+          "file": "m2-runtime.spec.ts",
+          "line": 53,
+          "column": 6,
+          "specs": [
+            {
+              "title": "every live region reports itself ready",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "fusion-basic",
+                  "projectName": "fusion-basic",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1351,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-09T08:18:14.967Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "c43b91cb363eca44aca4-dfdc62ac86b1a0136443",
+              "file": "m2-runtime.spec.ts",
+              "line": 54,
+              "column": 9
+            },
+            {
+              "title": "a region denied a GPU context says so and keeps its DOM half working",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "fusion-basic",
+                  "projectName": "fusion-basic",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2666,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-09T08:18:16.334Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "c43b91cb363eca44aca4-47cfa7191b1c74e4c7ef",
+              "file": "m2-runtime.spec.ts",
+              "line": 69,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "M2 V3: teardown and host coexistence",
+          "file": "m2-runtime.spec.ts",
+          "line": 106,
+          "column": 6,
+          "specs": [
+            {
+              "title": "closing one scope leaves the other fully operable, DOM and GPU",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "fusion-basic",
+                  "projectName": "fusion-basic",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2335,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-09T08:18:19.015Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "c43b91cb363eca44aca4-d5eb2afb431ac328a0ef",
+              "file": "m2-runtime.spec.ts",
+              "line": 107,
+              "column": 9
+            },
+            {
+              "title": "events aimed at a disposed scope produce no callback and no error",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "fusion-basic",
+                  "projectName": "fusion-basic",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1851,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-09T08:18:21.368Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "c43b91cb363eca44aca4-f3d9c5a56f019bceaf3d",
+              "file": "m2-runtime.spec.ts",
+              "line": 126,
+              "column": 9
+            },
+            {
+              "title": "idle regions do not wake the runtime",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "fusion-basic",
+                  "projectName": "fusion-basic",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4570,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-09T08:18:23.243Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "c43b91cb363eca44aca4-4fdc4bb5a3230c9bf50f",
+              "file": "m2-runtime.spec.ts",
+              "line": 144,
+              "column": 9
+            },
+            {
+              "title": "an embedded region takes no page-level state",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "fusion-basic",
+                  "projectName": "fusion-basic",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 653,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-09T08:18:27.830Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "c43b91cb363eca44aca4-6529627a359d8be156f6",
+              "file": "m2-runtime.spec.ts",
+              "line": 153,
+              "column": 9
+            },
+            {
+              "title": "the host page keeps its link, scrolling and text selection",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "fusion-basic",
+                  "projectName": "fusion-basic",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 687,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-09T08:18:28.500Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "c43b91cb363eca44aca4-9e39a9cf54dcbe8eb51c",
+              "file": "m2-runtime.spec.ts",
+              "line": 176,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "M7 V8: what a trap in the shared module reaches",
+          "file": "m2-runtime.spec.ts",
+          "line": 270,
+          "column": 6,
+          "specs": [
+            {
+              "title": "every mount in the runtime is dead, and the page says which",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 240000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "fusion-basic",
+                  "projectName": "fusion-basic",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1407,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-09T08:18:29.204Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "c43b91cb363eca44aca4-06ef50b1c5dbf4ccbf6f",
+              "file": "m2-runtime.spec.ts",
+              "line": 275,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "m3-state.spec.ts",
+      "file": "m3-state.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "M3 V2: shared state and controlled GPU components",
+          "file": "m3-state.spec.ts",
+          "line": 5,
+          "column": 6,
+          "specs": [
+            {
+              "title": "interleaved DOM and GPU actions each land exactly once",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 360000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "fusion-basic",
+                  "projectName": "fusion-basic",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1558,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-09T08:18:30.641Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "64100b86406c9177f7c7-dbe7bc240dcc56525286",
+              "file": "m3-state.spec.ts",
+              "line": 6,
+              "column": 9
+            },
+            {
+              "title": "both regions of a scope show the current value, not a stale one",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "fusion-basic",
+                  "projectName": "fusion-basic",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1464,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-09T08:18:32.216Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "64100b86406c9177f7c7-f2359eca1ca7811f8af3",
+              "file": "m3-state.spec.ts",
+              "line": 27,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "the page a check starts on",
+          "file": "m3-state.spec.ts",
+          "line": 90,
+          "column": 6,
+          "specs": [
+            {
+              "title": "a reset puts back the page as it loads, and keeps its regions",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 420000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "fusion-basic",
+                  "projectName": "fusion-basic",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3649,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-09T08:18:33.700Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "64100b86406c9177f7c7-e49f01c854328d023451",
+              "file": "m3-state.spec.ts",
+              "line": 91,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-09T08:18:09.012Z",
+    "duration": 28461.843,
+    "expected": 14,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

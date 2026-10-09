@@ -1,0 +1,23 @@
+npm notice run rustify-ui-browser-tests@0.1.0 npx
+npm notice run 'playwright' test --project=fusion-basic m2-runtime.spec.ts m3-state.spec.ts --workers=1 --output=test-results/leptos-0.8.22-fusion
+
+Running 14 tests using 1 worker
+
+(node:17706) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 [fusion-basic] › tests/browser/m2-runtime.spec.ts:10:9 › M2 V1: mounting › a missing container fails and leaves the running scopes alone (2.5s)
+  ✓   2 [fusion-basic] › tests/browser/m2-runtime.spec.ts:26:9 › M2 V1: mounting › mounting over a live scope fails and leaves that scope alone (2.1s)
+  ✓   3 [fusion-basic] › tests/browser/m2-runtime.spec.ts:45:9 › M2 V1: mounting › a disposed handle is spent: the second dispose reports nothing to do (649ms)
+  ✓   4 [fusion-basic] › tests/browser/m2-runtime.spec.ts:54:9 › M2: region state › every live region reports itself ready (1.4s)
+  ✓   5 [fusion-basic] › tests/browser/m2-runtime.spec.ts:69:9 › M2: region state › a region denied a GPU context says so and keeps its DOM half working (2.7s)
+  ✓   6 [fusion-basic] › tests/browser/m2-runtime.spec.ts:107:9 › M2 V3: teardown and host coexistence › closing one scope leaves the other fully operable, DOM and GPU (2.3s)
+  ✓   7 [fusion-basic] › tests/browser/m2-runtime.spec.ts:126:9 › M2 V3: teardown and host coexistence › events aimed at a disposed scope produce no callback and no error (1.9s)
+  ✓   8 [fusion-basic] › tests/browser/m2-runtime.spec.ts:144:9 › M2 V3: teardown and host coexistence › idle regions do not wake the runtime (4.6s)
+  ✓   9 [fusion-basic] › tests/browser/m2-runtime.spec.ts:153:9 › M2 V3: teardown and host coexistence › an embedded region takes no page-level state (653ms)
+  ✓  10 [fusion-basic] › tests/browser/m2-runtime.spec.ts:176:9 › M2 V3: teardown and host coexistence › the host page keeps its link, scrolling and text selection (687ms)
+  ✓  11 [fusion-basic] › tests/browser/m2-runtime.spec.ts:275:9 › M7 V8: what a trap in the shared module reaches › every mount in the runtime is dead, and the page says which (1.4s)
+  ✓  12 [fusion-basic] › tests/browser/m3-state.spec.ts:6:9 › M3 V2: shared state and controlled GPU components › interleaved DOM and GPU actions each land exactly once (1.6s)
+  ✓  13 [fusion-basic] › tests/browser/m3-state.spec.ts:27:9 › M3 V2: shared state and controlled GPU components › both regions of a scope show the current value, not a stale one (1.5s)
+  ✓  14 [fusion-basic] › tests/browser/m3-state.spec.ts:91:9 › the page a check starts on › a reset puts back the page as it loads, and keeps its regions (3.6s)
+
+  14 passed (28.5s)
