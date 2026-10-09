@@ -1,0 +1,619 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "1334c99db8fd26c8ea065375dd9259800863f072",
+  "oracleVersion": "4.1.13",
+  "cases": [
+    {
+      "id": "effect:ring",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "ring"
+      ],
+      "expectedCss": "@layer properties;\n.ring {\n  --tw-ring-shadow: var(--tw-ring-inset,) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color, currentcolor);\n  box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);\n}\n@property --tw-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@property --tw-shadow-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-shadow-alpha {\n  syntax: \"<percentage>\";\n  inherits: false;\n  initial-value: 100%;\n}\n@property --tw-inset-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@property --tw-inset-shadow-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-inset-shadow-alpha {\n  syntax: \"<percentage>\";\n  inherits: false;\n  initial-value: 100%;\n}\n@property --tw-ring-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-ring-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@property --tw-inset-ring-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-inset-ring-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@property --tw-ring-inset {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-ring-offset-width {\n  syntax: \"<length>\";\n  inherits: false;\n  initial-value: 0px;\n}\n@property --tw-ring-offset-color {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: #fff;\n}\n@property --tw-ring-offset-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-shadow: 0 0 #0000;\n      --tw-shadow-color: initial;\n      --tw-shadow-alpha: 100%;\n      --tw-inset-shadow: 0 0 #0000;\n      --tw-inset-shadow-color: initial;\n      --tw-inset-shadow-alpha: 100%;\n      --tw-ring-color: initial;\n      --tw-ring-shadow: 0 0 #0000;\n      --tw-inset-ring-color: initial;\n      --tw-inset-ring-shadow: 0 0 #0000;\n      --tw-ring-inset: initial;\n      --tw-ring-offset-width: 0px;\n      --tw-ring-offset-color: #fff;\n      --tw-ring-offset-shadow: 0 0 #0000;\n    }\n  }\n}\n"
+    },
+    {
+      "id": "effect:ring-0",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "ring-0"
+      ],
+      "expectedCss": "@layer properties;\n.ring-0 {\n  --tw-ring-shadow: var(--tw-ring-inset,) 0 0 0 calc(0px + var(--tw-ring-offset-width)) var(--tw-ring-color, currentcolor);\n  box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);\n}\n@property --tw-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@property --tw-shadow-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-shadow-alpha {\n  syntax: \"<percentage>\";\n  inherits: false;\n  initial-value: 100%;\n}\n@property --tw-inset-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@property --tw-inset-shadow-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-inset-shadow-alpha {\n  syntax: \"<percentage>\";\n  inherits: false;\n  initial-value: 100%;\n}\n@property --tw-ring-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-ring-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@property --tw-inset-ring-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-inset-ring-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@property --tw-ring-inset {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-ring-offset-width {\n  syntax: \"<length>\";\n  inherits: false;\n  initial-value: 0px;\n}\n@property --tw-ring-offset-color {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: #fff;\n}\n@property --tw-ring-offset-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-shadow: 0 0 #0000;\n      --tw-shadow-color: initial;\n      --tw-shadow-alpha: 100%;\n      --tw-inset-shadow: 0 0 #0000;\n      --tw-inset-shadow-color: initial;\n      --tw-inset-shadow-alpha: 100%;\n      --tw-ring-color: initial;\n      --tw-ring-shadow: 0 0 #0000;\n      --tw-inset-ring-color: initial;\n      --tw-inset-ring-shadow: 0 0 #0000;\n      --tw-ring-inset: initial;\n      --tw-ring-offset-width: 0px;\n      --tw-ring-offset-color: #fff;\n      --tw-ring-offset-shadow: 0 0 #0000;\n    }\n  }\n}\n"
+    },
+    {
+      "id": "effect:ring-2",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "ring-2"
+      ],
+      "expectedCss": "@layer properties;\n.ring-2 {\n  --tw-ring-shadow: var(--tw-ring-inset,) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color, currentcolor);\n  box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);\n}\n@property --tw-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@property --tw-shadow-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-shadow-alpha {\n  syntax: \"<percentage>\";\n  inherits: false;\n  initial-value: 100%;\n}\n@property --tw-inset-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@property --tw-inset-shadow-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-inset-shadow-alpha {\n  syntax: \"<percentage>\";\n  inherits: false;\n  initial-value: 100%;\n}\n@property --tw-ring-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-ring-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@property --tw-inset-ring-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-inset-ring-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@property --tw-ring-inset {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-ring-offset-width {\n  syntax: \"<length>\";\n  inherits: false;\n  initial-value: 0px;\n}\n@property --tw-ring-offset-color {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: #fff;\n}\n@property --tw-ring-offset-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-shadow: 0 0 #0000;\n      --tw-shadow-color: initial;\n      --tw-shadow-alpha: 100%;\n      --tw-inset-shadow: 0 0 #0000;\n      --tw-inset-shadow-color: initial;\n      --tw-inset-shadow-alpha: 100%;\n      --tw-ring-color: initial;\n      --tw-ring-shadow: 0 0 #0000;\n      --tw-inset-ring-color: initial;\n      --tw-inset-ring-shadow: 0 0 #0000;\n      --tw-ring-inset: initial;\n      --tw-ring-offset-width: 0px;\n      --tw-ring-offset-color: #fff;\n      --tw-ring-offset-shadow: 0 0 #0000;\n    }\n  }\n}\n"
+    },
+    {
+      "id": "effect:ring-[3px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "ring-[3px]"
+      ],
+      "expectedCss": "@layer properties;\n.ring-\\[3px\\] {\n  --tw-ring-shadow: var(--tw-ring-inset,) 0 0 0 calc(3px + var(--tw-ring-offset-width)) var(--tw-ring-color, currentcolor);\n  box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);\n}\n@property --tw-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@property --tw-shadow-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-shadow-alpha {\n  syntax: \"<percentage>\";\n  inherits: false;\n  initial-value: 100%;\n}\n@property --tw-inset-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@property --tw-inset-shadow-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-inset-shadow-alpha {\n  syntax: \"<percentage>\";\n  inherits: false;\n  initial-value: 100%;\n}\n@property --tw-ring-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-ring-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@property --tw-inset-ring-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-inset-ring-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@property --tw-ring-inset {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-ring-offset-width {\n  syntax: \"<length>\";\n  inherits: false;\n  initial-value: 0px;\n}\n@property --tw-ring-offset-color {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: #fff;\n}\n@property --tw-ring-offset-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-shadow: 0 0 #0000;\n      --tw-shadow-color: initial;\n      --tw-shadow-alpha: 100%;\n      --tw-inset-shadow: 0 0 #0000;\n      --tw-inset-shadow-color: initial;\n      --tw-inset-shadow-alpha: 100%;\n      --tw-ring-color: initial;\n      --tw-ring-shadow: 0 0 #0000;\n      --tw-inset-ring-color: initial;\n      --tw-inset-ring-shadow: 0 0 #0000;\n      --tw-ring-inset: initial;\n      --tw-ring-offset-width: 0px;\n      --tw-ring-offset-color: #fff;\n      --tw-ring-offset-shadow: 0 0 #0000;\n    }\n  }\n}\n"
+    },
+    {
+      "id": "effect:ring-[length:var(--probe)]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "ring-[length:var(--probe)]"
+      ],
+      "expectedCss": "@layer properties;\n.ring-\\[length\\:var\\(--probe\\)\\] {\n  --tw-ring-shadow: var(--tw-ring-inset,) 0 0 0 calc(var(--probe) + var(--tw-ring-offset-width)) var(--tw-ring-color, currentcolor);\n  box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);\n}\n@property --tw-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@property --tw-shadow-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-shadow-alpha {\n  syntax: \"<percentage>\";\n  inherits: false;\n  initial-value: 100%;\n}\n@property --tw-inset-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@property --tw-inset-shadow-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-inset-shadow-alpha {\n  syntax: \"<percentage>\";\n  inherits: false;\n  initial-value: 100%;\n}\n@property --tw-ring-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-ring-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@property --tw-inset-ring-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-inset-ring-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@property --tw-ring-inset {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-ring-offset-width {\n  syntax: \"<length>\";\n  inherits: false;\n  initial-value: 0px;\n}\n@property --tw-ring-offset-color {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: #fff;\n}\n@property --tw-ring-offset-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-shadow: 0 0 #0000;\n      --tw-shadow-color: initial;\n      --tw-shadow-alpha: 100%;\n      --tw-inset-shadow: 0 0 #0000;\n      --tw-inset-shadow-color: initial;\n      --tw-inset-shadow-alpha: 100%;\n      --tw-ring-color: initial;\n      --tw-ring-shadow: 0 0 #0000;\n      --tw-inset-ring-color: initial;\n      --tw-inset-ring-shadow: 0 0 #0000;\n      --tw-ring-inset: initial;\n      --tw-ring-offset-width: 0px;\n      --tw-ring-offset-color: #fff;\n      --tw-ring-offset-shadow: 0 0 #0000;\n    }\n  }\n}\n"
+    },
+    {
+      "id": "effect:ring-[#123456]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "ring-[#123456]"
+      ],
+      "expectedCss": ".ring-\\[\\#123456\\] {\n  --tw-ring-color: #123456;\n}\n"
+    },
+    {
+      "id": "effect:ring-current",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "ring-current"
+      ],
+      "expectedCss": ".ring-current {\n  --tw-ring-color: currentcolor;\n}\n"
+    },
+    {
+      "id": "effect:ring-inherit",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "ring-inherit"
+      ],
+      "expectedCss": ".ring-inherit {\n  --tw-ring-color: inherit;\n}\n"
+    },
+    {
+      "id": "effect:ring-transparent",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "ring-transparent"
+      ],
+      "expectedCss": ".ring-transparent {\n  --tw-ring-color: transparent;\n}\n"
+    },
+    {
+      "id": "effect:ring-inset",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "ring-inset"
+      ],
+      "expectedCss": "@layer properties;\n.ring-inset {\n  --tw-ring-inset: inset;\n}\n@property --tw-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@property --tw-shadow-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-shadow-alpha {\n  syntax: \"<percentage>\";\n  inherits: false;\n  initial-value: 100%;\n}\n@property --tw-inset-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@property --tw-inset-shadow-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-inset-shadow-alpha {\n  syntax: \"<percentage>\";\n  inherits: false;\n  initial-value: 100%;\n}\n@property --tw-ring-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-ring-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@property --tw-inset-ring-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-inset-ring-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@property --tw-ring-inset {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-ring-offset-width {\n  syntax: \"<length>\";\n  inherits: false;\n  initial-value: 0px;\n}\n@property --tw-ring-offset-color {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: #fff;\n}\n@property --tw-ring-offset-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-shadow: 0 0 #0000;\n      --tw-shadow-color: initial;\n      --tw-shadow-alpha: 100%;\n      --tw-inset-shadow: 0 0 #0000;\n      --tw-inset-shadow-color: initial;\n      --tw-inset-shadow-alpha: 100%;\n      --tw-ring-color: initial;\n      --tw-ring-shadow: 0 0 #0000;\n      --tw-inset-ring-color: initial;\n      --tw-inset-ring-shadow: 0 0 #0000;\n      --tw-ring-inset: initial;\n      --tw-ring-offset-width: 0px;\n      --tw-ring-offset-color: #fff;\n      --tw-ring-offset-shadow: 0 0 #0000;\n    }\n  }\n}\n"
+    },
+    {
+      "id": "effect:shadow-none",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "shadow-none"
+      ],
+      "expectedCss": "@layer properties;\n.shadow-none {\n  --tw-shadow: 0 0 #0000;\n  box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);\n}\n@property --tw-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@property --tw-shadow-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-shadow-alpha {\n  syntax: \"<percentage>\";\n  inherits: false;\n  initial-value: 100%;\n}\n@property --tw-inset-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@property --tw-inset-shadow-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-inset-shadow-alpha {\n  syntax: \"<percentage>\";\n  inherits: false;\n  initial-value: 100%;\n}\n@property --tw-ring-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-ring-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@property --tw-inset-ring-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-inset-ring-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@property --tw-ring-inset {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-ring-offset-width {\n  syntax: \"<length>\";\n  inherits: false;\n  initial-value: 0px;\n}\n@property --tw-ring-offset-color {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: #fff;\n}\n@property --tw-ring-offset-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-shadow: 0 0 #0000;\n      --tw-shadow-color: initial;\n      --tw-shadow-alpha: 100%;\n      --tw-inset-shadow: 0 0 #0000;\n      --tw-inset-shadow-color: initial;\n      --tw-inset-shadow-alpha: 100%;\n      --tw-ring-color: initial;\n      --tw-ring-shadow: 0 0 #0000;\n      --tw-inset-ring-color: initial;\n      --tw-inset-ring-shadow: 0 0 #0000;\n      --tw-ring-inset: initial;\n      --tw-ring-offset-width: 0px;\n      --tw-ring-offset-color: #fff;\n      --tw-ring-offset-shadow: 0 0 #0000;\n    }\n  }\n}\n"
+    },
+    {
+      "id": "effect:shadow-inherit",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "shadow-inherit"
+      ],
+      "expectedCss": "@layer properties;\n.shadow-inherit {\n  --tw-shadow-color: inherit;\n}\n@property --tw-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@property --tw-shadow-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-shadow-alpha {\n  syntax: \"<percentage>\";\n  inherits: false;\n  initial-value: 100%;\n}\n@property --tw-inset-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@property --tw-inset-shadow-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-inset-shadow-alpha {\n  syntax: \"<percentage>\";\n  inherits: false;\n  initial-value: 100%;\n}\n@property --tw-ring-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-ring-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@property --tw-inset-ring-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-inset-ring-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@property --tw-ring-inset {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-ring-offset-width {\n  syntax: \"<length>\";\n  inherits: false;\n  initial-value: 0px;\n}\n@property --tw-ring-offset-color {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: #fff;\n}\n@property --tw-ring-offset-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-shadow: 0 0 #0000;\n      --tw-shadow-color: initial;\n      --tw-shadow-alpha: 100%;\n      --tw-inset-shadow: 0 0 #0000;\n      --tw-inset-shadow-color: initial;\n      --tw-inset-shadow-alpha: 100%;\n      --tw-ring-color: initial;\n      --tw-ring-shadow: 0 0 #0000;\n      --tw-inset-ring-color: initial;\n      --tw-inset-ring-shadow: 0 0 #0000;\n      --tw-ring-inset: initial;\n      --tw-ring-offset-width: 0px;\n      --tw-ring-offset-color: #fff;\n      --tw-ring-offset-shadow: 0 0 #0000;\n    }\n  }\n}\n"
+    },
+    {
+      "id": "effect:shadow-[#123456]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "shadow-[#123456]"
+      ],
+      "expectedCss": "@layer properties;\n.shadow-\\[\\#123456\\] {\n  --tw-shadow-color: #123456;\n  @supports (color: color-mix(in lab, red, red)) {\n    --tw-shadow-color: color-mix(in oklab, #123456 var(--tw-shadow-alpha), transparent);\n  }\n}\n@property --tw-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@property --tw-shadow-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-shadow-alpha {\n  syntax: \"<percentage>\";\n  inherits: false;\n  initial-value: 100%;\n}\n@property --tw-inset-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@property --tw-inset-shadow-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-inset-shadow-alpha {\n  syntax: \"<percentage>\";\n  inherits: false;\n  initial-value: 100%;\n}\n@property --tw-ring-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-ring-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@property --tw-inset-ring-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-inset-ring-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@property --tw-ring-inset {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-ring-offset-width {\n  syntax: \"<length>\";\n  inherits: false;\n  initial-value: 0px;\n}\n@property --tw-ring-offset-color {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: #fff;\n}\n@property --tw-ring-offset-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-shadow: 0 0 #0000;\n      --tw-shadow-color: initial;\n      --tw-shadow-alpha: 100%;\n      --tw-inset-shadow: 0 0 #0000;\n      --tw-inset-shadow-color: initial;\n      --tw-inset-shadow-alpha: 100%;\n      --tw-ring-color: initial;\n      --tw-ring-shadow: 0 0 #0000;\n      --tw-inset-ring-color: initial;\n      --tw-inset-ring-shadow: 0 0 #0000;\n      --tw-ring-inset: initial;\n      --tw-ring-offset-width: 0px;\n      --tw-ring-offset-color: #fff;\n      --tw-ring-offset-shadow: 0 0 #0000;\n    }\n  }\n}\n"
+    },
+    {
+      "id": "effect:shadow-[0_2px_4px_#123456]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "shadow-[0_2px_4px_#123456]"
+      ],
+      "expectedCss": "@layer properties;\n.shadow-\\[0_2px_4px_\\#123456\\] {\n  --tw-shadow: 0 2px 4px var(--tw-shadow-color, #123456);\n  box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);\n}\n@property --tw-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@property --tw-shadow-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-shadow-alpha {\n  syntax: \"<percentage>\";\n  inherits: false;\n  initial-value: 100%;\n}\n@property --tw-inset-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@property --tw-inset-shadow-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-inset-shadow-alpha {\n  syntax: \"<percentage>\";\n  inherits: false;\n  initial-value: 100%;\n}\n@property --tw-ring-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-ring-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@property --tw-inset-ring-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-inset-ring-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@property --tw-ring-inset {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-ring-offset-width {\n  syntax: \"<length>\";\n  inherits: false;\n  initial-value: 0px;\n}\n@property --tw-ring-offset-color {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: #fff;\n}\n@property --tw-ring-offset-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-shadow: 0 0 #0000;\n      --tw-shadow-color: initial;\n      --tw-shadow-alpha: 100%;\n      --tw-inset-shadow: 0 0 #0000;\n      --tw-inset-shadow-color: initial;\n      --tw-inset-shadow-alpha: 100%;\n      --tw-ring-color: initial;\n      --tw-ring-shadow: 0 0 #0000;\n      --tw-inset-ring-color: initial;\n      --tw-inset-ring-shadow: 0 0 #0000;\n      --tw-ring-inset: initial;\n      --tw-ring-offset-width: 0px;\n      --tw-ring-offset-color: #fff;\n      --tw-ring-offset-shadow: 0 0 #0000;\n    }\n  }\n}\n"
+    },
+    {
+      "id": "effect:shadow-[0_2px_4px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "shadow-[0_2px_4px]"
+      ],
+      "expectedCss": "@layer properties;\n.shadow-\\[0_2px_4px\\] {\n  --tw-shadow: 0 2px 4px var(--tw-shadow-color, currentcolor);\n  box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);\n}\n@property --tw-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@property --tw-shadow-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-shadow-alpha {\n  syntax: \"<percentage>\";\n  inherits: false;\n  initial-value: 100%;\n}\n@property --tw-inset-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@property --tw-inset-shadow-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-inset-shadow-alpha {\n  syntax: \"<percentage>\";\n  inherits: false;\n  initial-value: 100%;\n}\n@property --tw-ring-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-ring-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@property --tw-inset-ring-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-inset-ring-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@property --tw-ring-inset {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-ring-offset-width {\n  syntax: \"<length>\";\n  inherits: false;\n  initial-value: 0px;\n}\n@property --tw-ring-offset-color {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: #fff;\n}\n@property --tw-ring-offset-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-shadow: 0 0 #0000;\n      --tw-shadow-color: initial;\n      --tw-shadow-alpha: 100%;\n      --tw-inset-shadow: 0 0 #0000;\n      --tw-inset-shadow-color: initial;\n      --tw-inset-shadow-alpha: 100%;\n      --tw-ring-color: initial;\n      --tw-ring-shadow: 0 0 #0000;\n      --tw-inset-ring-color: initial;\n      --tw-inset-ring-shadow: 0 0 #0000;\n      --tw-ring-inset: initial;\n      --tw-ring-offset-width: 0px;\n      --tw-ring-offset-color: #fff;\n      --tw-ring-offset-shadow: 0 0 #0000;\n    }\n  }\n}\n"
+    },
+    {
+      "id": "effect:shadow-[inset_0_2px_4px_rgb(10_20_30)]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "shadow-[inset_0_2px_4px_rgb(10_20_30)]"
+      ],
+      "expectedCss": "@layer properties;\n.shadow-\\[inset_0_2px_4px_rgb\\(10_20_30\\)\\] {\n  --tw-shadow: inset 0 2px 4px var(--tw-shadow-color, rgb(10 20 30));\n  box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);\n}\n@property --tw-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@property --tw-shadow-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-shadow-alpha {\n  syntax: \"<percentage>\";\n  inherits: false;\n  initial-value: 100%;\n}\n@property --tw-inset-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@property --tw-inset-shadow-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-inset-shadow-alpha {\n  syntax: \"<percentage>\";\n  inherits: false;\n  initial-value: 100%;\n}\n@property --tw-ring-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-ring-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@property --tw-inset-ring-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-inset-ring-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@property --tw-ring-inset {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-ring-offset-width {\n  syntax: \"<length>\";\n  inherits: false;\n  initial-value: 0px;\n}\n@property --tw-ring-offset-color {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: #fff;\n}\n@property --tw-ring-offset-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-shadow: 0 0 #0000;\n      --tw-shadow-color: initial;\n      --tw-shadow-alpha: 100%;\n      --tw-inset-shadow: 0 0 #0000;\n      --tw-inset-shadow-color: initial;\n      --tw-inset-shadow-alpha: 100%;\n      --tw-ring-color: initial;\n      --tw-ring-shadow: 0 0 #0000;\n      --tw-inset-ring-color: initial;\n      --tw-inset-ring-shadow: 0 0 #0000;\n      --tw-ring-inset: initial;\n      --tw-ring-offset-width: 0px;\n      --tw-ring-offset-color: #fff;\n      --tw-ring-offset-shadow: 0 0 #0000;\n    }\n  }\n}\n"
+    },
+    {
+      "id": "effect:content-[\"probe\"]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "content-[\"probe\"]"
+      ],
+      "expectedCss": "@layer properties;\n.content-\\[\\\"probe\\\"\\] {\n  --tw-content: \"probe\";\n  content: var(--tw-content);\n}\n@property --tw-content {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: \"\";\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-content: \"\";\n    }\n  }\n}\n"
+    },
+    {
+      "id": "effect:before:content-[\"probe\"]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "before:content-[\"probe\"]"
+      ],
+      "expectedCss": "@layer properties;\n.before\\:content-\\[\\\"probe\\\"\\] {\n  &::before {\n    --tw-content: \"probe\";\n    content: var(--tw-content);\n  }\n}\n@property --tw-content {\n  syntax: \"*\";\n  initial-value: \"\";\n  inherits: false;\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-content: \"\";\n    }\n  }\n}\n"
+    },
+    {
+      "id": "effect:after:content-[attr(data-label)]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "after:content-[attr(data-label)]"
+      ],
+      "expectedCss": "@layer properties;\n.after\\:content-\\[attr\\(data-label\\)\\] {\n  &::after {\n    --tw-content: attr(data-label);\n    content: var(--tw-content);\n  }\n}\n@property --tw-content {\n  syntax: \"*\";\n  initial-value: \"\";\n  inherits: false;\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-content: \"\";\n    }\n  }\n}\n"
+    },
+    {
+      "id": "effect:before:w-[137px]!",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "before:w-[137px]!"
+      ],
+      "expectedCss": "@layer properties;\n.before\\:w-\\[137px\\]\\! {\n  &::before {\n    content: var(--tw-content);\n    width: 137px !important;\n  }\n}\n@property --tw-content {\n  syntax: \"*\";\n  initial-value: \"\";\n  inherits: false;\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-content: \"\";\n    }\n  }\n}\n"
+    },
+    {
+      "id": "effect:after:content-none",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "after:content-none"
+      ],
+      "expectedCss": "@layer properties;\n.after\\:content-none {\n  &::after {\n    content: var(--tw-content);\n    --tw-content: none;\n    content: none;\n  }\n}\n@property --tw-content {\n  syntax: \"*\";\n  initial-value: \"\";\n  inherits: false;\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-content: \"\";\n    }\n  }\n}\n"
+    },
+    {
+      "id": "effect:before:hover:content-[\"probe\"]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "before:hover:content-[\"probe\"]"
+      ],
+      "expectedCss": "@layer properties;\n.before\\:hover\\:content-\\[\\\"probe\\\"\\] {\n  &::before {\n    content: var(--tw-content);\n    &:hover {\n      @media (hover: hover) {\n        --tw-content: \"probe\";\n        content: var(--tw-content);\n      }\n    }\n  }\n}\n@property --tw-content {\n  syntax: \"*\";\n  initial-value: \"\";\n  inherits: false;\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-content: \"\";\n    }\n  }\n}\n"
+    },
+    {
+      "id": "effect:rounded-[8px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "rounded-[8px]"
+      ],
+      "expectedCss": ".rounded-\\[8px\\] {\n  border-radius: 8px;\n}\n"
+    },
+    {
+      "id": "effect:rounded-s-[8px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "rounded-s-[8px]"
+      ],
+      "expectedCss": ".rounded-s-\\[8px\\] {\n  border-start-start-radius: 8px;\n  border-end-start-radius: 8px;\n}\n"
+    },
+    {
+      "id": "effect:rounded-e-[8px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "rounded-e-[8px]"
+      ],
+      "expectedCss": ".rounded-e-\\[8px\\] {\n  border-start-end-radius: 8px;\n  border-end-end-radius: 8px;\n}\n"
+    },
+    {
+      "id": "effect:rounded-t-[8px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "rounded-t-[8px]"
+      ],
+      "expectedCss": ".rounded-t-\\[8px\\] {\n  border-top-left-radius: 8px;\n  border-top-right-radius: 8px;\n}\n"
+    },
+    {
+      "id": "effect:rounded-r-[8px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "rounded-r-[8px]"
+      ],
+      "expectedCss": ".rounded-r-\\[8px\\] {\n  border-top-right-radius: 8px;\n  border-bottom-right-radius: 8px;\n}\n"
+    },
+    {
+      "id": "effect:rounded-b-[8px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "rounded-b-[8px]"
+      ],
+      "expectedCss": ".rounded-b-\\[8px\\] {\n  border-bottom-right-radius: 8px;\n  border-bottom-left-radius: 8px;\n}\n"
+    },
+    {
+      "id": "effect:rounded-l-[8px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "rounded-l-[8px]"
+      ],
+      "expectedCss": ".rounded-l-\\[8px\\] {\n  border-top-left-radius: 8px;\n  border-bottom-left-radius: 8px;\n}\n"
+    },
+    {
+      "id": "effect:rounded-ss-[8px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "rounded-ss-[8px]"
+      ],
+      "expectedCss": ".rounded-ss-\\[8px\\] {\n  border-start-start-radius: 8px;\n}\n"
+    },
+    {
+      "id": "effect:rounded-se-[8px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "rounded-se-[8px]"
+      ],
+      "expectedCss": ".rounded-se-\\[8px\\] {\n  border-start-end-radius: 8px;\n}\n"
+    },
+    {
+      "id": "effect:rounded-ee-[8px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "rounded-ee-[8px]"
+      ],
+      "expectedCss": ".rounded-ee-\\[8px\\] {\n  border-end-end-radius: 8px;\n}\n"
+    },
+    {
+      "id": "effect:rounded-es-[8px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "rounded-es-[8px]"
+      ],
+      "expectedCss": ".rounded-es-\\[8px\\] {\n  border-end-start-radius: 8px;\n}\n"
+    },
+    {
+      "id": "effect:rounded-tl-[8px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "rounded-tl-[8px]"
+      ],
+      "expectedCss": ".rounded-tl-\\[8px\\] {\n  border-top-left-radius: 8px;\n}\n"
+    },
+    {
+      "id": "effect:rounded-tr-[8px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "rounded-tr-[8px]"
+      ],
+      "expectedCss": ".rounded-tr-\\[8px\\] {\n  border-top-right-radius: 8px;\n}\n"
+    },
+    {
+      "id": "effect:rounded-br-[8px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "rounded-br-[8px]"
+      ],
+      "expectedCss": ".rounded-br-\\[8px\\] {\n  border-bottom-right-radius: 8px;\n}\n"
+    },
+    {
+      "id": "effect:rounded-bl-[8px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "rounded-bl-[8px]"
+      ],
+      "expectedCss": ".rounded-bl-\\[8px\\] {\n  border-bottom-left-radius: 8px;\n}\n"
+    },
+    {
+      "id": "effect-theme:ring",
+      "input": "@theme { --radius: 11px; --radius-card: 13px; --default-ring-width: 7px; --default-ring-color: purple; --shadow-card: 0 2px 4px #123456; --color-brand: #aabbcc; } @tailwind utilities;",
+      "candidates": [
+        "ring"
+      ],
+      "expectedCss": "@layer properties;\n.ring {\n  --tw-ring-shadow: var(--tw-ring-inset,) 0 0 0 calc(7px + var(--tw-ring-offset-width)) var(--tw-ring-color, purple);\n  box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);\n}\n@property --tw-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@property --tw-shadow-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-shadow-alpha {\n  syntax: \"<percentage>\";\n  inherits: false;\n  initial-value: 100%;\n}\n@property --tw-inset-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@property --tw-inset-shadow-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-inset-shadow-alpha {\n  syntax: \"<percentage>\";\n  inherits: false;\n  initial-value: 100%;\n}\n@property --tw-ring-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-ring-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@property --tw-inset-ring-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-inset-ring-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@property --tw-ring-inset {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-ring-offset-width {\n  syntax: \"<length>\";\n  inherits: false;\n  initial-value: 0px;\n}\n@property --tw-ring-offset-color {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: #fff;\n}\n@property --tw-ring-offset-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-shadow: 0 0 #0000;\n      --tw-shadow-color: initial;\n      --tw-shadow-alpha: 100%;\n      --tw-inset-shadow: 0 0 #0000;\n      --tw-inset-shadow-color: initial;\n      --tw-inset-shadow-alpha: 100%;\n      --tw-ring-color: initial;\n      --tw-ring-shadow: 0 0 #0000;\n      --tw-inset-ring-color: initial;\n      --tw-inset-ring-shadow: 0 0 #0000;\n      --tw-ring-inset: initial;\n      --tw-ring-offset-width: 0px;\n      --tw-ring-offset-color: #fff;\n      --tw-ring-offset-shadow: 0 0 #0000;\n    }\n  }\n}\n"
+    },
+    {
+      "id": "effect-theme:ring-brand",
+      "input": "@theme { --radius: 11px; --radius-card: 13px; --default-ring-width: 7px; --default-ring-color: purple; --shadow-card: 0 2px 4px #123456; --color-brand: #aabbcc; } @tailwind utilities;",
+      "candidates": [
+        "ring-brand"
+      ],
+      "expectedCss": ":root, :host {\n  --color-brand: #aabbcc;\n}\n.ring-brand {\n  --tw-ring-color: var(--color-brand);\n}\n"
+    },
+    {
+      "id": "effect-theme:shadow-card",
+      "input": "@theme { --radius: 11px; --radius-card: 13px; --default-ring-width: 7px; --default-ring-color: purple; --shadow-card: 0 2px 4px #123456; --color-brand: #aabbcc; } @tailwind utilities;",
+      "candidates": [
+        "shadow-card"
+      ],
+      "expectedCss": "@layer properties;\n.shadow-card {\n  --tw-shadow: 0 2px 4px var(--tw-shadow-color, #123456);\n  box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);\n}\n@property --tw-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@property --tw-shadow-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-shadow-alpha {\n  syntax: \"<percentage>\";\n  inherits: false;\n  initial-value: 100%;\n}\n@property --tw-inset-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@property --tw-inset-shadow-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-inset-shadow-alpha {\n  syntax: \"<percentage>\";\n  inherits: false;\n  initial-value: 100%;\n}\n@property --tw-ring-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-ring-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@property --tw-inset-ring-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-inset-ring-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@property --tw-ring-inset {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-ring-offset-width {\n  syntax: \"<length>\";\n  inherits: false;\n  initial-value: 0px;\n}\n@property --tw-ring-offset-color {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: #fff;\n}\n@property --tw-ring-offset-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-shadow: 0 0 #0000;\n      --tw-shadow-color: initial;\n      --tw-shadow-alpha: 100%;\n      --tw-inset-shadow: 0 0 #0000;\n      --tw-inset-shadow-color: initial;\n      --tw-inset-shadow-alpha: 100%;\n      --tw-ring-color: initial;\n      --tw-ring-shadow: 0 0 #0000;\n      --tw-inset-ring-color: initial;\n      --tw-inset-ring-shadow: 0 0 #0000;\n      --tw-ring-inset: initial;\n      --tw-ring-offset-width: 0px;\n      --tw-ring-offset-color: #fff;\n      --tw-ring-offset-shadow: 0 0 #0000;\n    }\n  }\n}\n"
+    },
+    {
+      "id": "effect-theme:shadow-brand",
+      "input": "@theme { --radius: 11px; --radius-card: 13px; --default-ring-width: 7px; --default-ring-color: purple; --shadow-card: 0 2px 4px #123456; --color-brand: #aabbcc; } @tailwind utilities;",
+      "candidates": [
+        "shadow-brand"
+      ],
+      "expectedCss": "@layer properties;\n:root, :host {\n  --color-brand: #aabbcc;\n}\n.shadow-brand {\n  --tw-shadow-color: #aabbcc;\n  @supports (color: color-mix(in lab, red, red)) {\n    --tw-shadow-color: color-mix(in oklab, var(--color-brand) var(--tw-shadow-alpha), transparent);\n  }\n}\n@property --tw-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@property --tw-shadow-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-shadow-alpha {\n  syntax: \"<percentage>\";\n  inherits: false;\n  initial-value: 100%;\n}\n@property --tw-inset-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@property --tw-inset-shadow-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-inset-shadow-alpha {\n  syntax: \"<percentage>\";\n  inherits: false;\n  initial-value: 100%;\n}\n@property --tw-ring-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-ring-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@property --tw-inset-ring-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-inset-ring-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@property --tw-ring-inset {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-ring-offset-width {\n  syntax: \"<length>\";\n  inherits: false;\n  initial-value: 0px;\n}\n@property --tw-ring-offset-color {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: #fff;\n}\n@property --tw-ring-offset-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-shadow: 0 0 #0000;\n      --tw-shadow-color: initial;\n      --tw-shadow-alpha: 100%;\n      --tw-inset-shadow: 0 0 #0000;\n      --tw-inset-shadow-color: initial;\n      --tw-inset-shadow-alpha: 100%;\n      --tw-ring-color: initial;\n      --tw-ring-shadow: 0 0 #0000;\n      --tw-inset-ring-color: initial;\n      --tw-inset-ring-shadow: 0 0 #0000;\n      --tw-ring-inset: initial;\n      --tw-ring-offset-width: 0px;\n      --tw-ring-offset-color: #fff;\n      --tw-ring-offset-shadow: 0 0 #0000;\n    }\n  }\n}\n"
+    },
+    {
+      "id": "effect-theme:rounded",
+      "input": "@theme { --radius: 11px; --radius-card: 13px; --default-ring-width: 7px; --default-ring-color: purple; --shadow-card: 0 2px 4px #123456; --color-brand: #aabbcc; } @tailwind utilities;",
+      "candidates": [
+        "rounded"
+      ],
+      "expectedCss": ":root, :host {\n  --radius: 11px;\n}\n.rounded {\n  border-radius: var(--radius);\n}\n"
+    },
+    {
+      "id": "effect-theme:rounded-s",
+      "input": "@theme { --radius: 11px; --radius-card: 13px; --default-ring-width: 7px; --default-ring-color: purple; --shadow-card: 0 2px 4px #123456; --color-brand: #aabbcc; } @tailwind utilities;",
+      "candidates": [
+        "rounded-s"
+      ],
+      "expectedCss": ":root, :host {\n  --radius: 11px;\n}\n.rounded-s {\n  border-start-start-radius: var(--radius);\n  border-end-start-radius: var(--radius);\n}\n"
+    },
+    {
+      "id": "effect-theme:rounded-e",
+      "input": "@theme { --radius: 11px; --radius-card: 13px; --default-ring-width: 7px; --default-ring-color: purple; --shadow-card: 0 2px 4px #123456; --color-brand: #aabbcc; } @tailwind utilities;",
+      "candidates": [
+        "rounded-e"
+      ],
+      "expectedCss": ":root, :host {\n  --radius: 11px;\n}\n.rounded-e {\n  border-start-end-radius: var(--radius);\n  border-end-end-radius: var(--radius);\n}\n"
+    },
+    {
+      "id": "effect-theme:rounded-t",
+      "input": "@theme { --radius: 11px; --radius-card: 13px; --default-ring-width: 7px; --default-ring-color: purple; --shadow-card: 0 2px 4px #123456; --color-brand: #aabbcc; } @tailwind utilities;",
+      "candidates": [
+        "rounded-t"
+      ],
+      "expectedCss": ":root, :host {\n  --radius: 11px;\n}\n.rounded-t {\n  border-top-left-radius: var(--radius);\n  border-top-right-radius: var(--radius);\n}\n"
+    },
+    {
+      "id": "effect-theme:rounded-r",
+      "input": "@theme { --radius: 11px; --radius-card: 13px; --default-ring-width: 7px; --default-ring-color: purple; --shadow-card: 0 2px 4px #123456; --color-brand: #aabbcc; } @tailwind utilities;",
+      "candidates": [
+        "rounded-r"
+      ],
+      "expectedCss": ":root, :host {\n  --radius: 11px;\n}\n.rounded-r {\n  border-top-right-radius: var(--radius);\n  border-bottom-right-radius: var(--radius);\n}\n"
+    },
+    {
+      "id": "effect-theme:rounded-b",
+      "input": "@theme { --radius: 11px; --radius-card: 13px; --default-ring-width: 7px; --default-ring-color: purple; --shadow-card: 0 2px 4px #123456; --color-brand: #aabbcc; } @tailwind utilities;",
+      "candidates": [
+        "rounded-b"
+      ],
+      "expectedCss": ":root, :host {\n  --radius: 11px;\n}\n.rounded-b {\n  border-bottom-right-radius: var(--radius);\n  border-bottom-left-radius: var(--radius);\n}\n"
+    },
+    {
+      "id": "effect-theme:rounded-l",
+      "input": "@theme { --radius: 11px; --radius-card: 13px; --default-ring-width: 7px; --default-ring-color: purple; --shadow-card: 0 2px 4px #123456; --color-brand: #aabbcc; } @tailwind utilities;",
+      "candidates": [
+        "rounded-l"
+      ],
+      "expectedCss": ":root, :host {\n  --radius: 11px;\n}\n.rounded-l {\n  border-top-left-radius: var(--radius);\n  border-bottom-left-radius: var(--radius);\n}\n"
+    },
+    {
+      "id": "effect-theme:rounded-ss",
+      "input": "@theme { --radius: 11px; --radius-card: 13px; --default-ring-width: 7px; --default-ring-color: purple; --shadow-card: 0 2px 4px #123456; --color-brand: #aabbcc; } @tailwind utilities;",
+      "candidates": [
+        "rounded-ss"
+      ],
+      "expectedCss": ":root, :host {\n  --radius: 11px;\n}\n.rounded-ss {\n  border-start-start-radius: var(--radius);\n}\n"
+    },
+    {
+      "id": "effect-theme:rounded-se",
+      "input": "@theme { --radius: 11px; --radius-card: 13px; --default-ring-width: 7px; --default-ring-color: purple; --shadow-card: 0 2px 4px #123456; --color-brand: #aabbcc; } @tailwind utilities;",
+      "candidates": [
+        "rounded-se"
+      ],
+      "expectedCss": ":root, :host {\n  --radius: 11px;\n}\n.rounded-se {\n  border-start-end-radius: var(--radius);\n}\n"
+    },
+    {
+      "id": "effect-theme:rounded-ee",
+      "input": "@theme { --radius: 11px; --radius-card: 13px; --default-ring-width: 7px; --default-ring-color: purple; --shadow-card: 0 2px 4px #123456; --color-brand: #aabbcc; } @tailwind utilities;",
+      "candidates": [
+        "rounded-ee"
+      ],
+      "expectedCss": ":root, :host {\n  --radius: 11px;\n}\n.rounded-ee {\n  border-end-end-radius: var(--radius);\n}\n"
+    },
+    {
+      "id": "effect-theme:rounded-es",
+      "input": "@theme { --radius: 11px; --radius-card: 13px; --default-ring-width: 7px; --default-ring-color: purple; --shadow-card: 0 2px 4px #123456; --color-brand: #aabbcc; } @tailwind utilities;",
+      "candidates": [
+        "rounded-es"
+      ],
+      "expectedCss": ":root, :host {\n  --radius: 11px;\n}\n.rounded-es {\n  border-end-start-radius: var(--radius);\n}\n"
+    },
+    {
+      "id": "effect-theme:rounded-tl",
+      "input": "@theme { --radius: 11px; --radius-card: 13px; --default-ring-width: 7px; --default-ring-color: purple; --shadow-card: 0 2px 4px #123456; --color-brand: #aabbcc; } @tailwind utilities;",
+      "candidates": [
+        "rounded-tl"
+      ],
+      "expectedCss": ":root, :host {\n  --radius: 11px;\n}\n.rounded-tl {\n  border-top-left-radius: var(--radius);\n}\n"
+    },
+    {
+      "id": "effect-theme:rounded-tr",
+      "input": "@theme { --radius: 11px; --radius-card: 13px; --default-ring-width: 7px; --default-ring-color: purple; --shadow-card: 0 2px 4px #123456; --color-brand: #aabbcc; } @tailwind utilities;",
+      "candidates": [
+        "rounded-tr"
+      ],
+      "expectedCss": ":root, :host {\n  --radius: 11px;\n}\n.rounded-tr {\n  border-top-right-radius: var(--radius);\n}\n"
+    },
+    {
+      "id": "effect-theme:rounded-br",
+      "input": "@theme { --radius: 11px; --radius-card: 13px; --default-ring-width: 7px; --default-ring-color: purple; --shadow-card: 0 2px 4px #123456; --color-brand: #aabbcc; } @tailwind utilities;",
+      "candidates": [
+        "rounded-br"
+      ],
+      "expectedCss": ":root, :host {\n  --radius: 11px;\n}\n.rounded-br {\n  border-bottom-right-radius: var(--radius);\n}\n"
+    },
+    {
+      "id": "effect-theme:rounded-bl",
+      "input": "@theme { --radius: 11px; --radius-card: 13px; --default-ring-width: 7px; --default-ring-color: purple; --shadow-card: 0 2px 4px #123456; --color-brand: #aabbcc; } @tailwind utilities;",
+      "candidates": [
+        "rounded-bl"
+      ],
+      "expectedCss": ":root, :host {\n  --radius: 11px;\n}\n.rounded-bl {\n  border-bottom-left-radius: var(--radius);\n}\n"
+    },
+    {
+      "id": "effect-theme:rounded-card",
+      "input": "@theme { --radius: 11px; --radius-card: 13px; --default-ring-width: 7px; --default-ring-color: purple; --shadow-card: 0 2px 4px #123456; --color-brand: #aabbcc; } @tailwind utilities;",
+      "candidates": [
+        "rounded-card"
+      ],
+      "expectedCss": ":root, :host {\n  --radius-card: 13px;\n}\n.rounded-card {\n  border-radius: var(--radius-card);\n}\n"
+    },
+    {
+      "id": "effect-theme:rounded-s-card",
+      "input": "@theme { --radius: 11px; --radius-card: 13px; --default-ring-width: 7px; --default-ring-color: purple; --shadow-card: 0 2px 4px #123456; --color-brand: #aabbcc; } @tailwind utilities;",
+      "candidates": [
+        "rounded-s-card"
+      ],
+      "expectedCss": ":root, :host {\n  --radius-card: 13px;\n}\n.rounded-s-card {\n  border-start-start-radius: var(--radius-card);\n  border-end-start-radius: var(--radius-card);\n}\n"
+    },
+    {
+      "id": "effect-theme:rounded-e-card",
+      "input": "@theme { --radius: 11px; --radius-card: 13px; --default-ring-width: 7px; --default-ring-color: purple; --shadow-card: 0 2px 4px #123456; --color-brand: #aabbcc; } @tailwind utilities;",
+      "candidates": [
+        "rounded-e-card"
+      ],
+      "expectedCss": ":root, :host {\n  --radius-card: 13px;\n}\n.rounded-e-card {\n  border-start-end-radius: var(--radius-card);\n  border-end-end-radius: var(--radius-card);\n}\n"
+    },
+    {
+      "id": "effect-theme:rounded-t-card",
+      "input": "@theme { --radius: 11px; --radius-card: 13px; --default-ring-width: 7px; --default-ring-color: purple; --shadow-card: 0 2px 4px #123456; --color-brand: #aabbcc; } @tailwind utilities;",
+      "candidates": [
+        "rounded-t-card"
+      ],
+      "expectedCss": ":root, :host {\n  --radius-card: 13px;\n}\n.rounded-t-card {\n  border-top-left-radius: var(--radius-card);\n  border-top-right-radius: var(--radius-card);\n}\n"
+    },
+    {
+      "id": "effect-theme:rounded-r-card",
+      "input": "@theme { --radius: 11px; --radius-card: 13px; --default-ring-width: 7px; --default-ring-color: purple; --shadow-card: 0 2px 4px #123456; --color-brand: #aabbcc; } @tailwind utilities;",
+      "candidates": [
+        "rounded-r-card"
+      ],
+      "expectedCss": ":root, :host {\n  --radius-card: 13px;\n}\n.rounded-r-card {\n  border-top-right-radius: var(--radius-card);\n  border-bottom-right-radius: var(--radius-card);\n}\n"
+    },
+    {
+      "id": "effect-theme:rounded-b-card",
+      "input": "@theme { --radius: 11px; --radius-card: 13px; --default-ring-width: 7px; --default-ring-color: purple; --shadow-card: 0 2px 4px #123456; --color-brand: #aabbcc; } @tailwind utilities;",
+      "candidates": [
+        "rounded-b-card"
+      ],
+      "expectedCss": ":root, :host {\n  --radius-card: 13px;\n}\n.rounded-b-card {\n  border-bottom-right-radius: var(--radius-card);\n  border-bottom-left-radius: var(--radius-card);\n}\n"
+    },
+    {
+      "id": "effect-theme:rounded-l-card",
+      "input": "@theme { --radius: 11px; --radius-card: 13px; --default-ring-width: 7px; --default-ring-color: purple; --shadow-card: 0 2px 4px #123456; --color-brand: #aabbcc; } @tailwind utilities;",
+      "candidates": [
+        "rounded-l-card"
+      ],
+      "expectedCss": ":root, :host {\n  --radius-card: 13px;\n}\n.rounded-l-card {\n  border-top-left-radius: var(--radius-card);\n  border-bottom-left-radius: var(--radius-card);\n}\n"
+    },
+    {
+      "id": "effect-theme:rounded-ss-card",
+      "input": "@theme { --radius: 11px; --radius-card: 13px; --default-ring-width: 7px; --default-ring-color: purple; --shadow-card: 0 2px 4px #123456; --color-brand: #aabbcc; } @tailwind utilities;",
+      "candidates": [
+        "rounded-ss-card"
+      ],
+      "expectedCss": ":root, :host {\n  --radius-card: 13px;\n}\n.rounded-ss-card {\n  border-start-start-radius: var(--radius-card);\n}\n"
+    },
+    {
+      "id": "effect-theme:rounded-se-card",
+      "input": "@theme { --radius: 11px; --radius-card: 13px; --default-ring-width: 7px; --default-ring-color: purple; --shadow-card: 0 2px 4px #123456; --color-brand: #aabbcc; } @tailwind utilities;",
+      "candidates": [
+        "rounded-se-card"
+      ],
+      "expectedCss": ":root, :host {\n  --radius-card: 13px;\n}\n.rounded-se-card {\n  border-start-end-radius: var(--radius-card);\n}\n"
+    },
+    {
+      "id": "effect-theme:rounded-ee-card",
+      "input": "@theme { --radius: 11px; --radius-card: 13px; --default-ring-width: 7px; --default-ring-color: purple; --shadow-card: 0 2px 4px #123456; --color-brand: #aabbcc; } @tailwind utilities;",
+      "candidates": [
+        "rounded-ee-card"
+      ],
+      "expectedCss": ":root, :host {\n  --radius-card: 13px;\n}\n.rounded-ee-card {\n  border-end-end-radius: var(--radius-card);\n}\n"
+    },
+    {
+      "id": "effect-theme:rounded-es-card",
+      "input": "@theme { --radius: 11px; --radius-card: 13px; --default-ring-width: 7px; --default-ring-color: purple; --shadow-card: 0 2px 4px #123456; --color-brand: #aabbcc; } @tailwind utilities;",
+      "candidates": [
+        "rounded-es-card"
+      ],
+      "expectedCss": ":root, :host {\n  --radius-card: 13px;\n}\n.rounded-es-card {\n  border-end-start-radius: var(--radius-card);\n}\n"
+    },
+    {
+      "id": "effect-theme:rounded-tl-card",
+      "input": "@theme { --radius: 11px; --radius-card: 13px; --default-ring-width: 7px; --default-ring-color: purple; --shadow-card: 0 2px 4px #123456; --color-brand: #aabbcc; } @tailwind utilities;",
+      "candidates": [
+        "rounded-tl-card"
+      ],
+      "expectedCss": ":root, :host {\n  --radius-card: 13px;\n}\n.rounded-tl-card {\n  border-top-left-radius: var(--radius-card);\n}\n"
+    },
+    {
+      "id": "effect-theme:rounded-tr-card",
+      "input": "@theme { --radius: 11px; --radius-card: 13px; --default-ring-width: 7px; --default-ring-color: purple; --shadow-card: 0 2px 4px #123456; --color-brand: #aabbcc; } @tailwind utilities;",
+      "candidates": [
+        "rounded-tr-card"
+      ],
+      "expectedCss": ":root, :host {\n  --radius-card: 13px;\n}\n.rounded-tr-card {\n  border-top-right-radius: var(--radius-card);\n}\n"
+    },
+    {
+      "id": "effect-theme:rounded-br-card",
+      "input": "@theme { --radius: 11px; --radius-card: 13px; --default-ring-width: 7px; --default-ring-color: purple; --shadow-card: 0 2px 4px #123456; --color-brand: #aabbcc; } @tailwind utilities;",
+      "candidates": [
+        "rounded-br-card"
+      ],
+      "expectedCss": ":root, :host {\n  --radius-card: 13px;\n}\n.rounded-br-card {\n  border-bottom-right-radius: var(--radius-card);\n}\n"
+    },
+    {
+      "id": "effect-theme:rounded-bl-card",
+      "input": "@theme { --radius: 11px; --radius-card: 13px; --default-ring-width: 7px; --default-ring-color: purple; --shadow-card: 0 2px 4px #123456; --color-brand: #aabbcc; } @tailwind utilities;",
+      "candidates": [
+        "rounded-bl-card"
+      ],
+      "expectedCss": ":root, :host {\n  --radius-card: 13px;\n}\n.rounded-bl-card {\n  border-bottom-left-radius: var(--radius-card);\n}\n"
+    },
+    {
+      "id": "effect:union",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "ring",
+        "ring-0",
+        "ring-2",
+        "ring-[3px]",
+        "ring-[length:var(--probe)]",
+        "ring-[#123456]",
+        "ring-current",
+        "ring-inherit",
+        "ring-transparent",
+        "ring-inset",
+        "shadow-none",
+        "shadow-inherit",
+        "shadow-[#123456]",
+        "shadow-[0_2px_4px_#123456]",
+        "shadow-[0_2px_4px]",
+        "shadow-[inset_0_2px_4px_rgb(10_20_30)]",
+        "content-[\"probe\"]",
+        "before:content-[\"probe\"]",
+        "after:content-[attr(data-label)]",
+        "before:w-[137px]!",
+        "after:content-none",
+        "before:hover:content-[\"probe\"]",
+        "rounded-[8px]",
+        "rounded-s-[8px]",
+        "rounded-e-[8px]",
+        "rounded-t-[8px]",
+        "rounded-r-[8px]",
+        "rounded-b-[8px]",
+        "rounded-l-[8px]",
+        "rounded-ss-[8px]",
+        "rounded-se-[8px]",
+        "rounded-ee-[8px]",
+        "rounded-es-[8px]",
+        "rounded-tl-[8px]",
+        "rounded-tr-[8px]",
+        "rounded-br-[8px]",
+        "rounded-bl-[8px]"
+      ],
+      "expectedCss": "@layer properties;\n.rounded-\\[8px\\] {\n  border-radius: 8px;\n}\n.rounded-s-\\[8px\\] {\n  border-start-start-radius: 8px;\n  border-end-start-radius: 8px;\n}\n.rounded-ss-\\[8px\\] {\n  border-start-start-radius: 8px;\n}\n.rounded-e-\\[8px\\] {\n  border-start-end-radius: 8px;\n  border-end-end-radius: 8px;\n}\n.rounded-se-\\[8px\\] {\n  border-start-end-radius: 8px;\n}\n.rounded-ee-\\[8px\\] {\n  border-end-end-radius: 8px;\n}\n.rounded-es-\\[8px\\] {\n  border-end-start-radius: 8px;\n}\n.rounded-t-\\[8px\\] {\n  border-top-left-radius: 8px;\n  border-top-right-radius: 8px;\n}\n.rounded-l-\\[8px\\] {\n  border-top-left-radius: 8px;\n  border-bottom-left-radius: 8px;\n}\n.rounded-tl-\\[8px\\] {\n  border-top-left-radius: 8px;\n}\n.rounded-r-\\[8px\\] {\n  border-top-right-radius: 8px;\n  border-bottom-right-radius: 8px;\n}\n.rounded-tr-\\[8px\\] {\n  border-top-right-radius: 8px;\n}\n.rounded-b-\\[8px\\] {\n  border-bottom-right-radius: 8px;\n  border-bottom-left-radius: 8px;\n}\n.rounded-br-\\[8px\\] {\n  border-bottom-right-radius: 8px;\n}\n.rounded-bl-\\[8px\\] {\n  border-bottom-left-radius: 8px;\n}\n.shadow-\\[0_2px_4px\\] {\n  --tw-shadow: 0 2px 4px var(--tw-shadow-color, currentcolor);\n  box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);\n}\n.shadow-\\[0_2px_4px_\\#123456\\] {\n  --tw-shadow: 0 2px 4px var(--tw-shadow-color, #123456);\n  box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);\n}\n.shadow-\\[inset_0_2px_4px_rgb\\(10_20_30\\)\\] {\n  --tw-shadow: inset 0 2px 4px var(--tw-shadow-color, rgb(10 20 30));\n  box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);\n}\n.shadow-none {\n  --tw-shadow: 0 0 #0000;\n  box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);\n}\n.ring {\n  --tw-ring-shadow: var(--tw-ring-inset,) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color, currentcolor);\n  box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);\n}\n.ring-0 {\n  --tw-ring-shadow: var(--tw-ring-inset,) 0 0 0 calc(0px + var(--tw-ring-offset-width)) var(--tw-ring-color, currentcolor);\n  box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);\n}\n.ring-2 {\n  --tw-ring-shadow: var(--tw-ring-inset,) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color, currentcolor);\n  box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);\n}\n.ring-\\[3px\\] {\n  --tw-ring-shadow: var(--tw-ring-inset,) 0 0 0 calc(3px + var(--tw-ring-offset-width)) var(--tw-ring-color, currentcolor);\n  box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);\n}\n.ring-\\[length\\:var\\(--probe\\)\\] {\n  --tw-ring-shadow: var(--tw-ring-inset,) 0 0 0 calc(var(--probe) + var(--tw-ring-offset-width)) var(--tw-ring-color, currentcolor);\n  box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);\n}\n.shadow-\\[\\#123456\\] {\n  --tw-shadow-color: #123456;\n  @supports (color: color-mix(in lab, red, red)) {\n    --tw-shadow-color: color-mix(in oklab, #123456 var(--tw-shadow-alpha), transparent);\n  }\n}\n.shadow-inherit {\n  --tw-shadow-color: inherit;\n}\n.ring-\\[\\#123456\\] {\n  --tw-ring-color: #123456;\n}\n.ring-current {\n  --tw-ring-color: currentcolor;\n}\n.ring-inherit {\n  --tw-ring-color: inherit;\n}\n.ring-transparent {\n  --tw-ring-color: transparent;\n}\n.content-\\[\\\"probe\\\"\\] {\n  --tw-content: \"probe\";\n  content: var(--tw-content);\n}\n.ring-inset {\n  --tw-ring-inset: inset;\n}\n.before\\:w-\\[137px\\]\\! {\n  &::before {\n    content: var(--tw-content);\n    width: 137px !important;\n  }\n}\n.before\\:content-\\[\\\"probe\\\"\\] {\n  &::before {\n    --tw-content: \"probe\";\n    content: var(--tw-content);\n  }\n}\n.after\\:content-\\[attr\\(data-label\\)\\] {\n  &::after {\n    --tw-content: attr(data-label);\n    content: var(--tw-content);\n  }\n}\n.after\\:content-none {\n  &::after {\n    content: var(--tw-content);\n    --tw-content: none;\n    content: none;\n  }\n}\n.before\\:hover\\:content-\\[\\\"probe\\\"\\] {\n  &::before {\n    content: var(--tw-content);\n    &:hover {\n      @media (hover: hover) {\n        --tw-content: \"probe\";\n        content: var(--tw-content);\n      }\n    }\n  }\n}\n@property --tw-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@property --tw-shadow-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-shadow-alpha {\n  syntax: \"<percentage>\";\n  inherits: false;\n  initial-value: 100%;\n}\n@property --tw-inset-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@property --tw-inset-shadow-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-inset-shadow-alpha {\n  syntax: \"<percentage>\";\n  inherits: false;\n  initial-value: 100%;\n}\n@property --tw-ring-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-ring-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@property --tw-inset-ring-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-inset-ring-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@property --tw-ring-inset {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-ring-offset-width {\n  syntax: \"<length>\";\n  inherits: false;\n  initial-value: 0px;\n}\n@property --tw-ring-offset-color {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: #fff;\n}\n@property --tw-ring-offset-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@property --tw-content {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: \"\";\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-shadow: 0 0 #0000;\n      --tw-shadow-color: initial;\n      --tw-shadow-alpha: 100%;\n      --tw-inset-shadow: 0 0 #0000;\n      --tw-inset-shadow-color: initial;\n      --tw-inset-shadow-alpha: 100%;\n      --tw-ring-color: initial;\n      --tw-ring-shadow: 0 0 #0000;\n      --tw-inset-ring-color: initial;\n      --tw-inset-ring-shadow: 0 0 #0000;\n      --tw-ring-inset: initial;\n      --tw-ring-offset-width: 0px;\n      --tw-ring-offset-color: #fff;\n      --tw-ring-offset-shadow: 0 0 #0000;\n      --tw-content: \"\";\n    }\n  }\n}\n"
+    }
+  ]
+}

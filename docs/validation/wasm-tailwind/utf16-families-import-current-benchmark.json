@@ -1,0 +1,109 @@
+{
+  "before": {
+    "scope": "public AST constructor with sixteen repeated tracked imports and four builds",
+    "samples": [
+      {
+        "constructorP95Ms": 1.3583750000000236,
+        "buildP95Ms": 0.46974999999997635,
+        "sessionsPerSecond": 332.6892104261352,
+        "outputSha256": "a123d62c776bc635bda402dddccd89fd7edeaf2ac973716a07d762fe031b799d",
+        "sessions": 100,
+        "builds": 400
+      },
+      {
+        "constructorP95Ms": 1.4471669999998085,
+        "buildP95Ms": 0.49529100000006565,
+        "sessionsPerSecond": 321.67075791661875,
+        "outputSha256": "a123d62c776bc635bda402dddccd89fd7edeaf2ac973716a07d762fe031b799d",
+        "sessions": 100,
+        "builds": 400
+      },
+      {
+        "constructorP95Ms": 1.5518329999999878,
+        "buildP95Ms": 0.5410839999999553,
+        "sessionsPerSecond": 300.77106482259796,
+        "outputSha256": "a123d62c776bc635bda402dddccd89fd7edeaf2ac973716a07d762fe031b799d",
+        "sessions": 100,
+        "builds": 400
+      },
+      {
+        "constructorP95Ms": 1.5249169999999594,
+        "buildP95Ms": 0.5534170000000813,
+        "sessionsPerSecond": 298.5356827745266,
+        "outputSha256": "a123d62c776bc635bda402dddccd89fd7edeaf2ac973716a07d762fe031b799d",
+        "sessions": 100,
+        "builds": 400
+      },
+      {
+        "constructorP95Ms": 1.566665999999941,
+        "buildP95Ms": 0.58400000000006,
+        "sessionsPerSecond": 296.34093094780377,
+        "outputSha256": "a123d62c776bc635bda402dddccd89fd7edeaf2ac973716a07d762fe031b799d",
+        "sessions": 100,
+        "builds": 400
+      }
+    ],
+    "constructorP95Ms": 1.5249169999999594,
+    "buildP95Ms": 0.5410839999999553,
+    "sessionsPerSecond": 300.77106482259796,
+    "wasmBytes": 2416177,
+    "wasmSha256": "cd4048509b0b183fb26262fdebee8c35e904902558e0300ca4c2ef7c3c61961b",
+    "actualWasm": true,
+    "finalPerformanceAcceptance": "pending"
+  },
+  "after": {
+    "scope": "public AST constructor with sixteen repeated tracked imports and four builds",
+    "samples": [
+      {
+        "constructorP95Ms": 1.4164999999999281,
+        "buildP95Ms": 0.4699589999999034,
+        "sessionsPerSecond": 324.02538865938106,
+        "outputSha256": "a123d62c776bc635bda402dddccd89fd7edeaf2ac973716a07d762fe031b799d",
+        "sessions": 100,
+        "builds": 400
+      },
+      {
+        "constructorP95Ms": 1.4091250000000173,
+        "buildP95Ms": 0.4614169999999831,
+        "sessionsPerSecond": 328.3713230276313,
+        "outputSha256": "a123d62c776bc635bda402dddccd89fd7edeaf2ac973716a07d762fe031b799d",
+        "sessions": 100,
+        "builds": 400
+      },
+      {
+        "constructorP95Ms": 1.4096660000000156,
+        "buildP95Ms": 0.46929099999988466,
+        "sessionsPerSecond": 330.54586757754095,
+        "outputSha256": "a123d62c776bc635bda402dddccd89fd7edeaf2ac973716a07d762fe031b799d",
+        "sessions": 100,
+        "builds": 400
+      },
+      {
+        "constructorP95Ms": 1.5515409999998155,
+        "buildP95Ms": 0.5201660000000174,
+        "sessionsPerSecond": 313.2872566100673,
+        "outputSha256": "a123d62c776bc635bda402dddccd89fd7edeaf2ac973716a07d762fe031b799d",
+        "sessions": 100,
+        "builds": 400
+      },
+      {
+        "constructorP95Ms": 1.45116599999983,
+        "buildP95Ms": 0.46745800000007875,
+        "sessionsPerSecond": 323.7227253608943,
+        "outputSha256": "a123d62c776bc635bda402dddccd89fd7edeaf2ac973716a07d762fe031b799d",
+        "sessions": 100,
+        "builds": 400
+      }
+    ],
+    "constructorP95Ms": 1.4164999999999281,
+    "buildP95Ms": 0.46929099999988466,
+    "sessionsPerSecond": 324.02538865938106,
+    "wasmBytes": 2416446,
+    "wasmSha256": "64acb3dc4c1e6378f35b25a8d84cf3c7f065e4ea276ace1aeae01f009db18db3",
+    "actualWasm": true,
+    "finalPerformanceAcceptance": "pending"
+  },
+  "serial": true,
+  "concurrentBuildsOrTests": false,
+  "interpretation": "Local descriptive tracked repeated-import workload; CSS-bearing shape hash only, independent complete graph gates; no optimization or final performance claim; Promise and allocator peak pending"
+}

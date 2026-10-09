@@ -1,0 +1,9 @@
+{
+  "passed": 39,
+  "failures": [
+    {
+      "name": "public-compileModel-complete-shape-callbacks-and-identity",
+      "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n+ actual - expected\n\n+ 'undefined'\n- 'function'\n\n    at file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/cn/run-build-host.mjs:91:11\n    at check (file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/cn/run-build-host.mjs:29:41)\n    at file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/cn/run-build-host.mjs:90:9"
+    }
+  ]
+}

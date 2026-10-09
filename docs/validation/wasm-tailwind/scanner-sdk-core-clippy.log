@@ -1,0 +1,40 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+    Checking rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+    Checking rustify-style-wasm v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style-wasm)
+error: this creates an owned instance just for comparison
+   --> crates/rustify-style/src/text.rs:354:17
+    |
+354 |         assert!(Text::from("😀") > Text::from("\u{e000}"));
+    |                 ^^^^^^^^^^^^^^^^-------------------------
+    |                 |
+    |                 help: try: `Text::from("\u{e000}") > "😀"`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.98.0/index.html#cmp_owned
+    = note: `-D clippy::cmp-owned` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::cmp_owned)]`
+
+error: this creates an owned instance just for comparison
+   --> crates/rustify-style/src/text.rs:354:35
+    |
+354 |         assert!(Text::from("😀") > Text::from("\u{e000}"));
+    |                                    ^^^^^^^^^^^^^^^^^^^^^^ help: try: `"\u{e000}"`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.98.0/index.html#cmp_owned
+
+error: this creates an owned instance just for comparison
+   --> crates/rustify-style/src/text.rs:356:50
+    |
+356 |         assert!(Text::from_units(vec![0xd800]) < Text::from("\u{e000}"));
+    |                                                  ^^^^^^^^^^^^^^^^^^^^^^ help: try: `"\u{e000}"`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.98.0/index.html#cmp_owned
+
+error: could not compile `rustify-style` (lib test) due to 3 previous errors
+mbx[cache]: 0 hits, 2 misses, 6 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: 11906 compilations served. the monocle stays on.

@@ -1,0 +1,27 @@
+{
+  "samples": [
+    {
+      "owner": "old",
+      "name": "rustify-old-card",
+      "timing": "linear",
+      "animations": 1
+    },
+    {
+      "owner": "new",
+      "name": "none",
+      "timing": "ease",
+      "animations": 0
+    }
+  ],
+  "scannerRebuild": {
+    "before": 236,
+    "after": 241,
+    "variable": "#123456",
+    "width": "147px",
+    "replayVariable": "#123456",
+    "rebuiltRevision": 3,
+    "replayRevision": 4
+  },
+  "errors": [],
+  "failed": []
+}

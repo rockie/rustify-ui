@@ -1,0 +1,15 @@
+node:internal/fs/promises:1281
+  return new FileHandle(await PromisePrototypeThen(
+                        ^
+
+Error: ENOENT: no such file or directory, open '/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-utf16-verified-54mkl3kq/runner/crates/rustify-style/upstream/tailwind/PROVENANCE.json'
+    at async open (node:internal/fs/promises:1281:25)
+    at async readFile (node:internal/fs/promises:1929:14)
+    at async file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/compiler/run-utf16-values-wasm.mjs:12:31 {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-utf16-verified-54mkl3kq/runner/crates/rustify-style/upstream/tailwind/PROVENANCE.json'
+}
+
+Node.js v26.1.0

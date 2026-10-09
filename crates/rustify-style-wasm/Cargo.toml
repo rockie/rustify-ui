@@ -1,0 +1,27 @@
+[package]
+name = "rustify-style-wasm"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[features]
+default = []
+cn = ["rustify-style/cn", "dep:js-sys", "dep:wasm-bindgen-futures"]
+baseline = ["dep:serde_json"]
+scanner = ["rustify-style/scanner", "dep:serde_json"]
+compiler = ["rustify-style/compiler", "dep:serde", "dep:serde_json", "dep:js-sys"]
+compiler-api = ["compiler", "dep:js-sys"]
+# Upstream internal helpers, only for executing the upstream unit tests.
+upstream-units = ["compiler-api"]
+
+[dependencies]
+rustify-style = { path = "../rustify-style", default-features = false }
+wasm-bindgen.workspace = true
+js-sys = { workspace = true, optional = true }
+wasm-bindgen-futures = { version = "0.4.78", optional = true }
+serde_json = { version = "1", optional = true }
+serde = { version = "1", features = ["derive"], optional = true }

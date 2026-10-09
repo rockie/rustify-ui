@@ -1,0 +1,17 @@
+# R3 修前 host（所审 scope.rs sha256 7a8bcaf6…a0d4 + 本次新增测试；仅在 scratch 拼接运行，工作树已复原为 d13fd89a…eb14e）
+mbx test --locked -p rustify-style --all-features --lib scope::
+test scope::tests::non_scalar_declarations_keep_units_while_internal_bindings_are_isolated ... ok
+test scope::tests::generated_globals_and_references_are_isolated_without_changing_public_tokens ... ok
+test scope::tests::keyframe_names_that_match_animation_keywords_stay_in_their_own_slot ... ok
+test scope::tests::keyframe_references_follow_custom_properties_into_animations ... ok
+test scope::tests::a_property_used_as_timing_and_as_name_gets_a_copy_for_each_use ... FAILED
+test scope::tests::substituted_values_keep_their_slots_in_the_whole_shorthand ... FAILED
+test scope::tests::registered_internal_properties_register_their_copies ... FAILED
+test scope::tests::a_name_whose_role_depends_on_the_cascade_is_reported ... FAILED
+test scope::tests::math_times_and_numeric_iterations_take_their_own_slots ... FAILED
+thread 'scope::tests::a_property_used_as_timing_and_as_name_gets_a_copy_for_each_use' (13045358) panicked at crates/rustify-style/src/scope.rs:435:9:
+thread 'scope::tests::substituted_values_keep_their_slots_in_the_whole_shorthand' (13045365) panicked at crates/rustify-style/src/scope.rs:450:9:
+thread 'scope::tests::registered_internal_properties_register_their_copies' (13045364) panicked at crates/rustify-style/src/scope.rs:506:9:
+thread 'scope::tests::a_name_whose_role_depends_on_the_cascade_is_reported' (13045357) panicked at crates/rustify-style/src/scope.rs:495:13:
+thread 'scope::tests::math_times_and_numeric_iterations_take_their_own_slots' (13045362) panicked at crates/rustify-style/src/scope.rs:469:13:
+test result: FAILED. 4 passed; 5 failed; 0 ignored; 0 measured; 535 filtered out; finished in 0.01s

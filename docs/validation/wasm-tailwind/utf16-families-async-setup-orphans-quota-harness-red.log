@@ -1,0 +1,119 @@
+{"name":"orphan-missing-before-params","expectedUnhandled":["missing_asset"],"actualUnhandled":[]}
+{"name":"orphan-missing-before-host","expectedUnhandled":["missing_asset"],"actualUnhandled":[]}
+{"name":"orphan-parser-before-host","expectedUnhandled":[["Error","Missing closing } at .broken"]],"actualUnhandled":[]}
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: queued-reactions: synchronous admission writes nothing
++ actual - expected
+... Skipped lines
+
+  {
+    records: [
+      {
+        array: true,
+        fields: [
+...
+            'kind',
++           'context'
++         ],
++         [
++           'context',
++           {
++             reference: 2
++           }
++         ],
++         [
++           'nodes',
++           {
++             reference: 3
++           }
++         ]
++       ]
++     },
++     {
++       array: false,
++       fields: []
++     },
++     {
++       array: true,
++       fields: []
++     },
++     {
++       array: false,
++       fields: [
++         [
++           'kind',
+            'at-rule'
+          ],
+          [
+            'name',
+            '@import'
+...
+            {
++             reference: 5
+-             reference: 2
+            }
+          ]
+        ]
+      },
+      {
+...
+      {
++       reference: 4
+-       reference: 1
+      }
+    ]
+  }
+
+    at file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/compiler/run-public-ast-async-wasm.mjs:164:10 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: {
+    roots: [ { reference: 0 }, { reference: 4 } ],
+    records: [
+      { array: true, fields: [ [ '0', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'context' ],
+          [ 'context', [Object] ],
+          [ 'nodes', [Object] ]
+        ]
+      },
+      { array: false, fields: [] },
+      { array: true, fields: [] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'at-rule' ],
+          [ 'name', '@import' ],
+          [ 'params', '"leaf.css"' ],
+          [ 'nodes', [Object] ]
+        ]
+      },
+      { array: true, fields: [] }
+    ]
+  },
+  expected: {
+    roots: [ { reference: 0 }, { reference: 1 } ],
+    records: [
+      { array: true, fields: [ [ '0', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'at-rule' ],
+          [ 'name', '@import' ],
+          [ 'params', '"leaf.css"' ],
+          [ 'nodes', [Object] ]
+        ]
+      },
+      { array: true, fields: [] }
+    ]
+  },
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v26.1.0

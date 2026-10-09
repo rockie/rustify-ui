@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Style integration probes · Rustify UI</title>
+  <link rel="stylesheet" href="./app.css">
+  <script type="module" src="./app.js"></script>
+</head>
+<body>
+  <main>
+    <h1>Style integration probes</h1>
+    <p>Test fixtures for Worker transport and scoped CSS installation.</p>
+    <section data-probe="outer" data-utility-probe aria-label="Owned stylesheet scope">
+      <h2>Owned scope</h2>
+      <div id="sample"><span>Nested text</span></div>
+      <div id="property">Registered length</div>
+      <section data-probe="boundary" aria-label="Nested scope boundary"><div id="boundary">Nested scope</div></section>
+    </section>
+    <section aria-label="Outside the stylesheet scope"><h2>Outside scope</h2><div id="outside">Host content</div></section>
+  </main>
+</body>
+</html>

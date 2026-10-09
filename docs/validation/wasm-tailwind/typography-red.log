@@ -1,0 +1,42 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.69s
+     Running unittests src/lib.rs (target/debug/deps/rustify_style-d8a92cb6940dfdfd)
+
+running 1 test
+test compiler::typography::tests::typography_branches_match_official_fixtures ... FAILED
+
+failures:
+
+---- compiler::typography::tests::typography_branches_match_official_fixtures stdout ----
+
+thread 'compiler::typography::tests::typography_branches_match_official_fixtures' (12204854) panicked at crates/rustify-style/src/compiler/typography.rs:52:9:
+1074 mismatches; first cases: [
+    "typography:font-card:empty: actual=\"\" expected=\"\" pending=[CandidateDiagnostic { candidate: \"font-card\", kind: PendingFamily, family: Some(\"font\") }]",
+    "typography:font-bold:empty: actual=\"\" expected=\"\" pending=[CandidateDiagnostic { candidate: \"font-bold\", kind: PendingFamily, family: Some(\"font\") }]",
+    "typography:font-500:empty: actual=\"\" expected=\"\" pending=[CandidateDiagnostic { candidate: \"font-500\", kind: PendingFamily, family: Some(\"font\") }]",
+    "typography:font-1.5:empty: actual=\"\" expected=\"\" pending=[CandidateDiagnostic { candidate: \"font-1.5\", kind: PendingFamily, family: Some(\"font\") }]",
+    "typography:font-unknown:empty: actual=\"\" expected=\"\" pending=[CandidateDiagnostic { candidate: \"font-unknown\", kind: PendingFamily, family: Some(\"font\") }]",
+    "typography:font-weight-card:empty: actual=\"\" expected=\"\" pending=[CandidateDiagnostic { candidate: \"font-weight-card\", kind: PendingFamily, family: Some(\"font\") }]",
+    "typography:font-size-card:empty: actual=\"\" expected=\"\" pending=[CandidateDiagnostic { candidate: \"font-size-card\", kind: PendingFamily, family: Some(\"font\") }]",
+    "typography:font-[\"arial_rounded\"]:empty: actual=\"\" expected=\".font-\\\\[\\\\\\\"arial_rounded\\\\\\\"\\\\] {\\n  font-family: \\\"arial rounded\\\";\\n}\\n\" pending=[CandidateDiagnostic { candidate: \"font-[\\\"arial_rounded\\\"]\", kind: PendingFamily, family: Some(\"font\") }]",
+    "typography:font-[ui-sans-serif]:empty: actual=\"\" expected=\".font-\\\\[ui-sans-serif\\\\] {\\n  font-family: ui-sans-serif;\\n}\\n\" pending=[CandidateDiagnostic { candidate: \"font-[ui-sans-serif]\", kind: PendingFamily, family: Some(\"font\") }]",
+    "typography:font-[sans-serif]:empty: actual=\"\" expected=\".font-\\\\[sans-serif\\\\] {\\n  font-family: sans-serif;\\n}\\n\" pending=[CandidateDiagnostic { candidate: \"font-[sans-serif]\", kind: PendingFamily, family: Some(\"font\") }]",
+]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    compiler::typography::tests::typography_branches_match_official_fixtures
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 37 filtered out; finished in 0.12s
+
+error: test failed, to rerun pass `-p rustify-style --lib`
+mbx[cache]: 0 hits, 0 misses, 1 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: the checkouts are gone. their 481.9 GiB logical has gone to join them.

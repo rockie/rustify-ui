@@ -1,0 +1,81 @@
+{
+  "recorded_at_utc": "2026-10-04T05:40:59.112418+00:00",
+  "gate": "V-1.extractor pure memory closure; not full V-3/M2 source selection",
+  "upstream_commit": "1334c99db8fd26c8ea065375dd9259800863f072",
+  "fixture_sha256": "4e1cfcb6e6f055f87b465bbef5e9a6817909178ba7cbf7fc3e4b13a113de68ee",
+  "fixture_count": 24,
+  "red_initial": {
+    "command": "mbx test --locked -p rustify-style --no-default-features --features scanner --lib scanner::tests",
+    "exit_code": 101,
+    "passed": 0,
+    "failed": 4,
+    "cause": "scan stub returned empty result"
+  },
+  "red_raw_css_semantics": {
+    "command": "mbx test --locked -p rustify-style --no-default-features --features scanner --lib scanner::tests",
+    "exit_code": 101,
+    "passed": 2,
+    "failed": 2,
+    "cause": "CSS file-only used-variable semantics contradicted upstream raw-memory scan_content"
+  },
+  "native": {
+    "command": "mbx test --locked -p rustify-style --no-default-features --features scanner --lib",
+    "exit_code": 0,
+    "passed": 78,
+    "failed": 0,
+    "ignored_upstream_performance_tests": 12,
+    "finished_seconds": 0.04
+  },
+  "oracle": {
+    "command": "python3 tests/utility/scanner/reference.py",
+    "exit_code": 0,
+    "cases_matched": 24,
+    "method": "Actual fixed upstream pre_process_input + Extractor::extract, per line; development-only isolated native lockfile"
+  },
+  "wasm_build": {
+    "command": "mbx build --locked -p rustify-style --no-default-features --features scanner --example scanner-probe --release --target wasm32-unknown-unknown",
+    "exit_code": 0
+  },
+  "wasm_execution": {
+    "command": "node tests/utility/scanner/run-wasm.mjs",
+    "exit_code": 0,
+    "cases": 24,
+    "failures": 0,
+    "imports": [],
+    "shared_memory": false,
+    "bytes": 1379612,
+    "sha256": "7ef6d87ed10ff8c61f952d5bc72ee116a48a381c2ac1c5386a520174e969a4c2",
+    "size_note": "Test-only embedded JSON/serde probe; not production facade size"
+  },
+  "wasm_check": {
+    "command": "mbx check --locked -p rustify-style --no-default-features --features scanner --target wasm32-unknown-unknown",
+    "exit_code": 0
+  },
+  "clippy": {
+    "command": "mbx clippy --locked -p rustify-style --no-default-features --features scanner --lib --examples -- -D warnings",
+    "exit_code": 0
+  },
+  "dependency_boundary": {
+    "command": "mbx tree --locked -p rustify-style --no-default-features --features scanner --target wasm32-unknown-unknown --edges normal",
+    "runtime": [
+      "bstr 1.13.1",
+      "regex 1.13.1"
+    ],
+    "host_proc_macro": "classification-macros with syn/full; proc-macro2/quote/syn run on host",
+    "absent": [
+      "rayon",
+      "crossbeam",
+      "ignore",
+      "walkdir",
+      "globwalk",
+      "tracing",
+      "tracing-subscriber"
+    ]
+  },
+  "pending": [
+    "Native and virtual source selection, ignore, glob and file discovery",
+    "Incremental source updates/new candidates",
+    "Positions API",
+    "Browser facade/Worker actual integration owned by main task"
+  ]
+}

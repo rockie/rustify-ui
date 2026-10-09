@@ -1,0 +1,49 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 3.01s
+     Running unittests src/lib.rs (target/debug/deps/rustify_style-d8a92cb6940dfdfd)
+
+running 2 tests
+test compiler::motion::tests::animation_keeps_keyframe_dependencies_and_timing_resources_are_deduplicated ... FAILED
+test compiler::motion::tests::motion_branches_match_official_fixtures_and_prefix ... FAILED
+
+failures:
+
+---- compiler::motion::tests::animation_keeps_keyframe_dependencies_and_timing_resources_are_deduplicated stdout ----
+
+thread 'compiler::motion::tests::animation_keeps_keyframe_dependencies_and_timing_resources_are_deduplicated' (12768930) panicked at crates/rustify-style/src/compiler/motion.rs:117:9:
+assertion failed: css.contains("@keyframes card")
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- compiler::motion::tests::motion_branches_match_official_fixtures_and_prefix stdout ----
+
+thread 'compiler::motion::tests::motion_branches_match_official_fixtures_and_prefix' (12768931) panicked at crates/rustify-style/src/compiler/motion.rs:97:9:
+4161 mismatches; first cases: [
+    "motion:animate-<default>:empty: actual=\"\" expected=\"\" pending=[CandidateDiagnostic { candidate: \"animate\", kind: PendingFamily, family: Some(\"animate\") }]",
+    "motion:animate-card:empty: actual=\"\" expected=\"\" pending=[CandidateDiagnostic { candidate: \"animate-card\", kind: PendingFamily, family: Some(\"animate\") }]",
+    "motion:animate-alias:empty: actual=\"\" expected=\"\" pending=[CandidateDiagnostic { candidate: \"animate-alias\", kind: PendingFamily, family: Some(\"animate\") }]",
+    "motion:animate-1.5:empty: actual=\"\" expected=\"\" pending=[CandidateDiagnostic { candidate: \"animate-1.5\", kind: PendingFamily, family: Some(\"animate\") }]",
+    "motion:animate-1/2:empty: actual=\"\" expected=\"\" pending=[CandidateDiagnostic { candidate: \"animate-1/2\", kind: PendingFamily, family: Some(\"animate\") }]",
+    "motion:animate-missing:empty: actual=\"\" expected=\"\" pending=[CandidateDiagnostic { candidate: \"animate-missing\", kind: PendingFamily, family: Some(\"animate\") }]",
+    "motion:animate-none:empty: actual=\"\" expected=\".animate-none {\\n  animation: none;\\n}\\n\" pending=[CandidateDiagnostic { candidate: \"animate-none\", kind: PendingFamily, family: Some(\"animate\") }]",
+    "motion:animate-initial:empty: actual=\"\" expected=\"\" pending=[CandidateDiagnostic { candidate: \"animate-initial\", kind: PendingFamily, family: Some(\"animate\") }]",
+    "motion:animate-linear:empty: actual=\"\" expected=\"\" pending=[CandidateDiagnostic { candidate: \"animate-linear\", kind: PendingFamily, family: Some(\"animate\") }]",
+    "motion:animate-all:empty: actual=\"\" expected=\"\" pending=[CandidateDiagnostic { candidate: \"animate-all\", kind: PendingFamily, family: Some(\"animate\") }]",
+]
+
+
+failures:
+    compiler::motion::tests::animation_keeps_keyframe_dependencies_and_timing_resources_are_deduplicated
+    compiler::motion::tests::motion_branches_match_official_fixtures_and_prefix
+
+test result: FAILED. 0 passed; 2 failed; 0 ignored; 0 measured; 56 filtered out; finished in 0.89s
+
+error: test failed, to rerun pass `-p rustify-style --lib`
+mbx[cache]: 0 hits, 0 misses, 1 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: 10555 compilations retrieved with a straight face.

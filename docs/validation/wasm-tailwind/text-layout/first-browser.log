@@ -1,0 +1,38 @@
+npm notice run rustify-ui-browser-tests@0.1.0 npx
+npm notice run 'playwright' test --project=utility-lab --workers=1 utility-gpu.spec.ts -g same lines as the DOM|same bands as the DOM|column alignment --output=docs/validation/wasm-tailwind/text-layout/first-results --reporter=line
+
+Running 3 tests using 1 worker
+
+[1/3] [utility-lab] › tests/browser/utility-gpu.spec.ts:727:5 › GPU text wraps, leads and tracks on the same lines as the DOM
+[2/3] [utility-lab] › tests/browser/utility-gpu.spec.ts:764:5 › GPU ring offset, ring and shadow layers paint the same bands as the DOM
+[3/3] [utility-lab] › tests/browser/utility-gpu.spec.ts:804:5 › GPU per-side spacing, size, min/max and column alignment place boxes where the DOM does
+  1) [utility-lab] › tests/browser/utility-gpu.spec.ts:804:5 › GPU per-side spacing, size, min/max and column alignment place boxes where the DOM does 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "rejected"
+    Received: "applied"
+
+      836 |   await expect.poll(async () => (await report(page)).text.attempted_revision).toBe(weighted);
+      837 |   const rejected = await report(page);
+    > 838 |   expect(rejected.text.status).toBe('rejected');
+          |                                ^
+      839 |   expect(rejected.text.diagnostics.some((item: any) => item.property === 'font-weight')).toBe(true);
+      840 |   expect(rejected.text.applied_revision).toBe(revision);
+      841 |   expect(rejected.text.computed).toEqual(state.text.computed);
+        at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser/utility-gpu.spec.ts:838:32
+
+    Error Context: docs/validation/wasm-tailwind/text-layout/first-results/utility-gpu-GPU-per-side-s-52c8f-ce-boxes-where-the-DOM-does-utility-lab/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    docs/validation/wasm-tailwind/text-layout/first-results/utility-gpu-GPU-per-side-s-52c8f-ce-boxes-where-the-DOM-does-utility-lab/trace.zip
+    Usage:
+
+        npx playwright show-trace docs/validation/wasm-tailwind/text-layout/first-results/utility-gpu-GPU-per-side-s-52c8f-ce-boxes-where-the-DOM-does-utility-lab/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  1 failed
+    [utility-lab] › tests/browser/utility-gpu.spec.ts:804:5 › GPU per-side spacing, size, min/max and column alignment place boxes where the DOM does 
+  2 passed (8.5s)

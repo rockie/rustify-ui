@@ -1,0 +1,23 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.04s
+     Running unittests src/lib.rs (target/debug/deps/rustify_style-4ed64bbe76d78d97)
+
+running 9 tests
+test compiler::public_api::tests::public_function_helper_checks_unchanged_text_against_output_bytes ... ok
+test compiler::public_api::tests::public_banner_counts_toward_the_output_limit_before_commit ... ok
+test compiler::public_api::tests::warning_messages_match_fixed_upstream ... ok
+test compiler::public_api::tests::missing_public_loader_reports_the_official_error ... ok
+test compiler::public_api::tests::discovery_base_is_independent_of_source_path ... ok
+test compiler::public_api::tests::virtual_stylesheet_loader_arguments_match_fixed_upstream ... ok
+test compiler::public_api::tests::feature_masks_match_fixed_upstream ... ok
+test compiler::public_api::tests::polyfill_flags_match_fixed_upstream_css ... ok
+test compiler::public_api::tests::every_string_api_build_matches_fixed_upstream_css ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 139 filtered out; finished in 0.14s
+

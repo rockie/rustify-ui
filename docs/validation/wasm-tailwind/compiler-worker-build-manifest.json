@@ -1,0 +1,23 @@
+{
+  "protocol_version": 1,
+  "profile": "release",
+  "base": "/",
+  "group": "all",
+  "build_id": "8b3674db06a2e1af86ca2606c446797a5573acf95ec89c27366e69a8bdfb0107",
+  "files_sha256": {
+    "app.css": "ccbb5e2d25c1b8efecf35afe614ea3721418434a88caf1e7c9f9898722cbf26c",
+    "app.js": "096e082e9f59b6cfa377c349a42d30e8a6b1379b597a61c3b98a9f13d4ac68c4",
+    "compiler/style.js": "1d48897278b496fa25f5a8ef472721f7b8ca9327b3f495966ce5066029a3f7ef",
+    "compiler/style_bg.wasm": "761805833937162c824f5822d6b7ad03b35941e01bf64798b08389d90fa64634",
+    "extractor/style.js": "6c41607a4ed8c79e8153a7c210862eb894ee7c8bf4687d233d5514064b13c1eb",
+    "extractor/style_bg.wasm": "c7000ae3fbecdb8769d6f230b624f368750e65a4d8f03df8296524a556769606",
+    "index.html": "8e83e2e8ed01a0d64560b5a6d60031841c2b883467e4f754dc0d19a3e0520aa3",
+    "official.css": "332864299adb3cde96f70f972c1669adcac88288e01a86f5123676c665192e4d",
+    "probe.css": "5aaf336a5cf9df09a4cedf653f47f73b200ce5fb9af79226766b550dbdb79aae",
+    "scanner-fixtures.json": "4e1cfcb6e6f055f87b465bbef5e9a6817909178ba7cbf7fc3e4b13a113de68ee",
+    "utility-worker.js": "d8690d438cd30ee6fb541a105da96780faf2fbd8a585000f85302cf002f42b9b",
+    "worker.js": "2ef28f4eb250b73711d0c00c7101ceb20c8ac8babc15ed6bd8d8e768ac6c48fc",
+    "worker/style.js": "8faa97b19aff8a39a7a4ded7345f4251ef9306cbd34da370d2fb4aaba9888203",
+    "worker/style_bg.wasm": "2a0472e2c93a60d7efd4f1c89175ebba2aea44f7b4fba3a7cb6864cb7f94cf2a"
+  }
+}

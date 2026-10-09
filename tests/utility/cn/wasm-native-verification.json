@@ -1,0 +1,165 @@
+{
+  "schemaVersion": 1,
+  "scope": "cn actual-JS runtime/config/compiler-table facade; partial M2 evidence, not full package completion",
+  "upstream": {
+    "repository": "https://github.com/shadcn-ui/cn",
+    "suppliedCommit": "b7ec0fce43d824a60517fab508584eb860fdf717",
+    "commitIdentityIndependentlyVerified": false,
+    "lockedSource": "source-lock.json",
+    "files": [
+      {
+        "path": "ref/cn/packages/cn/src/index.ts",
+        "sha256": "bf4a95e73b6016053042ecf8b2747fddd57ccb083d5394d0392c9dbcb0bfc177"
+      },
+      {
+        "path": "ref/cn/packages/cn/src/lite.ts",
+        "sha256": "96c8e2d8a381c973a15578a9a0689901920f034caab8231b7bba6c17560c31da"
+      },
+      {
+        "path": "ref/cn/packages/cn/src/config.ts",
+        "sha256": "91de24439c76dbd2a79ae3d6fee762379043e97665659eebf7ecc1a95d60668a"
+      },
+      {
+        "path": "ref/cn/packages/cn/src/compiler.ts",
+        "sha256": "31592dc0eaa0e8afefd00ed1aa15c1e257d1de16f203dc1a9ed1aae8a78db4c7"
+      },
+      {
+        "path": "ref/cn/packages/cn/src/engine.ts",
+        "sha256": "1d8e57c8b05c2246344dfd95f58d275dfb62b230e391bf901a7387beb084d71b"
+      },
+      {
+        "path": "ref/cn/packages/cn/src/types.ts",
+        "sha256": "670f7b6b08349d1ae04bb1d05e5c7e2f1e1a280fea03f51f26175078a2829b39"
+      },
+      {
+        "path": "ref/cn/packages/cn/src/validators.ts",
+        "sha256": "88fe1a6262b0c2e2a409919710f0d60d7659e402dbfea03d8b978d56c8dc41b5"
+      },
+      {
+        "path": "ref/cn/LICENSE",
+        "sha256": "00ff8408e93e2ecc4d90c0edeabdf434100c3aff50acc5d330e17eccd4a3faa5"
+      }
+    ]
+  },
+  "productionFiles": [
+    {
+      "path": "crates/rustify-style-wasm/src/cn.rs",
+      "sha256": "03937a4db6a4e5753f52a108c37f8fddaff261bbd4d0be2274f999a7b7d481fa"
+    },
+    {
+      "path": "crates/rustify-style/src/cn/config.rs",
+      "sha256": "125e06cb3da04274d475f5672c1ca7512ccf10261ad09a045fa6a3c748490987"
+    },
+    {
+      "path": "crates/rustify-style/src/cn/compiler.rs",
+      "sha256": "8bf6c3d433d4d8bd6609323a0c2abe8bc4958f1149cd39fbff8311305d1a89d7"
+    },
+    {
+      "path": "crates/rustify-style/src/cn/engine.rs",
+      "sha256": "f5a3d42fc8426b27fcd7f7e0f57711df4edc486ce223e6579a9826d102a349d6"
+    },
+    {
+      "path": "crates/rustify-style/src/cn/instance.rs",
+      "sha256": "6ca24fe52969c4cb801ef80e05eed7c8d85822285c4a5613c78552c23c2a36ef"
+    },
+    {
+      "path": "crates/rustify-style/src/cn/mod.rs",
+      "sha256": "3003ee7626ab675337ed04f7016127adacb8734f775916be8232b2ae59b46908"
+    }
+  ],
+  "commands": [
+    {
+      "command": "mbx xtask utility-conformance --check --group cn-native --build-only",
+      "exitCode": 0,
+      "log": "evidence/wasm-native-build.log"
+    },
+    {
+      "command": "node tests/utility/cn/run-wasm-native.mjs",
+      "exitCode": 0,
+      "fixedPassed": 947,
+      "extraPassed": 56,
+      "log": "evidence/wasm-compat-green.log"
+    },
+    {
+      "command": "mbx test --locked -p rustify-style --no-default-features --features cn cn::",
+      "exitCode": 0,
+      "passed": 31,
+      "log": "evidence/utf16-native-green.log"
+    },
+    {
+      "command": "mbx clippy --locked -p rustify-style --no-default-features --features cn --all-targets -- -D warnings",
+      "exitCode": 0,
+      "log": "evidence/utf16-native-clippy.log"
+    },
+    {
+      "command": "mbx clippy --locked -p rustify-style-wasm --no-default-features --features cn --target wasm32-unknown-unknown -- -D warnings",
+      "exitCode": 0,
+      "log": "evidence/wasm-clippy.log"
+    },
+    {
+      "command": "node tests/utility/cn/id-limit.mjs oracle",
+      "exitCode": 0,
+      "tokens": 2097152,
+      "utf16Units": 26151865,
+      "log": "evidence/id-limit-oracle.log"
+    },
+    {
+      "command": "node tests/utility/cn/id-limit.mjs wasm",
+      "exitCode": 0,
+      "tokens": 2097152,
+      "utf16Units": 26151865,
+      "log": "evidence/id-limit-wasm-green.log"
+    }
+  ],
+  "wasmEvidence": "evidence/wasm-native.json",
+  "resourceAccounting": {
+    "cacheBytes": "Aggregate retained UTF-16 text bytes: token memo and context/property tracking <= floor(cacheBytes/2), whole-result cache <= floor(cacheBytes/4), argument cache <= floor(cacheBytes/4). All map generations, tuple/prediction entries, bucket keys and churn strings are included. Not total process or foreign JS heap bytes.",
+    "inputLimits": [
+      "maxDepth",
+      "maxNodes",
+      "maxUtf16Units",
+      "maxTokens"
+    ],
+    "compiler": "Shared UTF-16 input counters across theme getter results; definition depth/nodes, hyphen-path depth, radix recursion and actual character trie node allocation bounded. Fixed default typed tables exempt from custom input limits.",
+    "metadata": "8192 token slots, 32768 doorkeeper integers, optional 4096 churn slots; whole-result maps use bounded admitted generations and argument prediction entries <= caller maxNodes. Context/property tracking stops at source 4096 thresholds. ID guard temporary distinct sets execute only near 2^21, with keys bounded by tokens and tracked prior state. Temporary work/model copies bounded by products of caller limits.",
+    "callbacks": "Original JsValue/function handles retained; JS objects and user callback allocations are opaque and outside Rust byte accounting."
+  },
+  "explicitGaps": [
+    "compileToSource/compileStats/subsetConfig JS exports and build/tools/plugin real host/WASM bridge remain outside this runtime facade delivery.",
+    "No browser/performance rerun in this local phase; root owns headed-browser verification."
+  ],
+  "wasmBytes": 714887,
+  "wasmSha256": "7a364ef81aa9031f1f19a9b4f3bf6e5d9dd9fcdf182afbea6207da5e6163cd4c",
+  "compatibilityClosures": [
+    {
+      "contract": "result-generation and argument tuple/churn caching; mutable objects resolve on each call",
+      "status": "closed-for-recorded-reference-contracts",
+      "evidence": [
+        "evidence/wasm-compat-red.log",
+        "evidence/wasm-compat-green.log"
+      ]
+    },
+    {
+      "contract": "deferred definition/theme reads, actual iterators, late metadata, marker Proxy calls, map-before-iteration order, UTF-16 error text",
+      "status": "closed-for-recorded-reference-contracts",
+      "evidence": [
+        "evidence/wasm-compat-red.log",
+        "evidence/wasm-compat-expansion-red.log",
+        "evidence/wasm-metadata-method-red.log",
+        "evidence/wasm-map-order-red.log",
+        "evidence/wasm-error-units-red.log",
+        "evidence/wasm-compat-green.log"
+      ]
+    },
+    {
+      "contract": "ID_LIMIT original public threshold error after tokenization before claim pass",
+      "status": "closed-at-original-public-threshold",
+      "evidence": [
+        "evidence/id-limit-oracle.json",
+        "evidence/id-limit-wasm-red.log",
+        "evidence/id-limit-wasm.json"
+      ]
+    }
+  ],
+  "proofBoundary": "Evidence is differential for the locked source contracts and explicit fixtures; no formal equivalence claim for every arbitrary JavaScript program. SDK cycles/reentrant-config/resource/malformed-table validation and early resource-pressure retirement remain explicit boundaries. Metadata map results must be bounded arrays."
+}

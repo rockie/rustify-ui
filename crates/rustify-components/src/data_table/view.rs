@@ -368,7 +368,7 @@ pub fn DataTable(
     view! {
         <div
             node_ref=grid
-            class=crate::macros::merge(GRID, &class)
+            class=crate::macros::reactive_merge(GRID, &class)
             data-name="DataTable"
             data-testid=test_id.clone()
             role="grid"

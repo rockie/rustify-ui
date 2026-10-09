@@ -1,0 +1,63 @@
+mbx[warning]: Unix-domain cache session listener unavailable; using FIFO transport: failed to bind cache session listener at /var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/mbx-session-Jn64P7/cache-agent.sock: Operation not permitted (os error 1)
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+    Checking rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+warning: variant `Host` is never constructed
+  --> crates/rustify-style/src/compiler/imports/schedule.rs:11:5
+   |
+ 9 | pub(crate) enum Fault {
+   |                 ----- variant in this enum
+10 |     Native(Arc<CompileError>),
+11 |     Host(usize),
+   |     ^^^^
+   |
+   = note: `Fault` has derived impls for the traits `Debug` and `Clone`, but these are intentionally ignored during dead code analysis
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: method `effects` is never used
+  --> crates/rustify-style/src/compiler/imports/schedule.rs:68:12
+   |
+60 | impl Program {
+   | ------------ method in this implementation
+...
+68 |     pub fn effects(&self) -> impl Iterator<Item = &InputMutation> {
+   |            ^^^^^^^
+
+warning: associated items `prepared` and `take_ready` are never used
+   --> crates/rustify-style/src/compiler/imports/schedule.rs:92:12
+    |
+ 88 | impl Machine {
+    | ------------ associated items in this implementation
+...
+ 92 |     pub fn prepared(program: &Program, limits: &Limits) -> Result<Self, CompileError> {
+    |            ^^^^^^^^
+...
+129 |     pub fn take_ready(&mut self) -> Vec<Job> { self.ready.drain(..).collect() }
+    |            ^^^^^^^^^^
+
+warning: field `import_program` is never read
+  --> crates/rustify-style/src/compiler/public_api/compile_ast.rs:64:5
+   |
+54 | pub struct AstCompiler {
+   |            ----------- field in this struct
+...
+64 |     import_program: Option<compiler::imports::schedule::Program>,
+   |     ^^^^^^^^^^^^^^
+
+warning: field `import_program` is never read
+  --> crates/rustify-style/src/compiler/public_api/compile_ast.rs:84:5
+   |
+77 | pub struct AstSetupFailure {
+   |            --------------- field in this struct
+...
+84 |     import_program: Option<compiler::imports::schedule::Program>,
+   |     ^^^^^^^^^^^^^^
+
+warning: `rustify-style` (lib) generated 5 warnings
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 1.68s
+mbx[cache]: 0 hits, 1 misses; 0 B downloaded, 0 B uploaded, 2.7 MiB stored locally

@@ -441,6 +441,9 @@
   .p-6 {
     padding: calc(0.25rem * 6);
   }
+  .p-8 {
+    padding: calc(0.25rem * 8);
+  }
   .p-\[3px\] {
     padding: 3px;
   }

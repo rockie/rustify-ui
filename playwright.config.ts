@@ -18,6 +18,9 @@ const themePort = 4181;
 const themeDeepPort = 4182;
 const themeExportPort = 4183;
 const themeExportDeepPort = 4184;
+const utilityBaselinePort = 4185;
+const utilityLabPort = 4186;
+const utilityLabDeepPort = 4187;
 const themeExportBase = "/tools/theme-export/";
 const themeExportServer = process.env.RUSTIFY_THEME_EXPORT_SERVER || "tests/theme-export/target/debug/theme-export-serve";
 const deploymentBase = "/tools/demo/";
@@ -25,13 +28,18 @@ const deploymentBase = "/tools/demo/";
 // job compiled rather than compile it again for every job.
 const xtask = process.env.RUSTIFY_XTASK || "mbx xtask";
 
-type Server = "fusion" | "workbench" | "catalog" | "data" | "deep" | "deployment" | "theme" | "theme-deep" | "theme-export" | "theme-export-deep";
+type Server = "fusion" | "workbench" | "catalog" | "data" | "deep" | "deployment" | "theme" | "theme-deep" | "theme-export" | "theme-export-deep" | "utility-baseline" | "utility-lab" | "utility-lab-deep";
 
 // The servers each project talks to. A run that names its projects starts only
 // these: six servers for a one-project run is most of its start-up. The
 // fusion server is on the data project's list for the probe that boots a
 // second example, which is an evidence test.
 const serversOf: Record<string, Server[]> = {
+    "utility-baseline": ["utility-baseline"],
+    "utility-lab": ["utility-lab"],
+    "utility-lab-scanner": ["utility-lab"],
+    "utility-lab-scanner-deep": ["utility-lab-deep"],
+    "utility-lab-deep": ["utility-lab-deep"],
     "fusion-basic": ["fusion"],
     "property-workbench": ["workbench"],
     "component-catalog": ["catalog"],
@@ -108,6 +116,31 @@ export default defineConfig({
     // One project per example: each has its own build directory and its own
     // static server, so a spec always talks to the app it was written for.
     projects: [
+        {
+            name: "utility-lab-scanner",
+            testMatch: ["utility-scanner.spec.ts"],
+            use: { baseURL: `http://127.0.0.1:${utilityLabPort}/`, channel: "chrome" },
+        },
+        {
+            name: "utility-lab-scanner-deep",
+            testMatch: ["utility-scanner.spec.ts"],
+            use: { baseURL: `http://127.0.0.1:${utilityLabDeepPort}/tools/utility-lab/`, channel: "chrome" },
+        },
+        {
+            name: "utility-lab",
+            testMatch: ["utility-runtime.spec.ts", "utility-faults.spec.ts", "utility-gpu.spec.ts"],
+            use: { baseURL: `http://127.0.0.1:${utilityLabPort}/`, channel: "chrome" },
+        },
+        {
+            name: "utility-lab-deep",
+            testMatch: ["utility-runtime.spec.ts", "utility-gpu.spec.ts"],
+            use: { baseURL: `http://127.0.0.1:${utilityLabDeepPort}/tools/utility-lab/`, channel: "chrome" },
+        },
+        {
+            name: "utility-baseline",
+            testMatch: ["utility-baseline.spec.ts"],
+            use: { baseURL: `http://127.0.0.1:${utilityBaselinePort}/`, channel: "chrome" },
+        },
         {
             name: "fusion-basic",
             testMatch: ["p3-restart.spec.ts", "m1-probes.spec.ts", "m2-runtime.spec.ts", "m3-state.spec.ts", "m4-geometry.spec.ts", "m4-overlay.spec.ts", "m6-mainpath.spec.ts", "p2-navigation.spec.ts", "p3-instances.spec.ts", "p3-b0.spec.ts", "p3-idle.spec.ts", "p3-memory.spec.ts", "p3-endurance.spec.ts"],
@@ -203,6 +236,9 @@ export default defineConfig({
     // plain `build-web` does not produce; `serve` refuses to start without
     // one and prints the command that makes it.
     webServer: ([
+        ["utility-lab", `${xtask} serve --example utility-lab --release --port ${utilityLabPort}`, `http://127.0.0.1:${utilityLabPort}/`],
+        ["utility-lab-deep", `${xtask} serve --example utility-lab --release --port ${utilityLabDeepPort} --base /tools/utility-lab/`, `http://127.0.0.1:${utilityLabDeepPort}/tools/utility-lab/`],
+        ["utility-baseline", `${xtask} utility-baseline --serve --port ${utilityBaselinePort}`, `http://127.0.0.1:${utilityBaselinePort}/`],
         ["fusion", `${xtask} serve --example fusion-basic --release --port ${fusionPort}`, `http://127.0.0.1:${fusionPort}/`],
         ["workbench", `${xtask} serve --example property-workbench --release --port ${workbenchPort} --spa`, `http://127.0.0.1:${workbenchPort}/`],
         ["catalog", `${xtask} serve --example component-catalog --release --port ${catalogPort}`, `http://127.0.0.1:${catalogPort}/`],

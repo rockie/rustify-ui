@@ -1,0 +1,14 @@
+{
+  "fixedCases": 947,
+  "passed": 947,
+  "failures": []
+}
+{
+  "extraPassed": 53,
+  "failures": [
+    {
+      "id": "config/metadata-array-methods-and-throws",
+      "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n+ actual - expected\n\n+ 'hover:hold:p-4'\n- 'hold:hover:p-2 hover:hold:p-4'\n     ^\n"
+    }
+  ]
+}

@@ -1,0 +1,604 @@
+{
+  "schemaVersion": 1,
+  "productionBundle": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/utility/cn",
+  "reads": [
+    {
+      "stage": "content",
+      "actual": [
+        "get:cwd",
+        "get:out",
+        "get:css",
+        "get:config",
+        "get:full",
+        "get:tokens",
+        "get:content",
+        "get:content",
+        "get:safelist",
+        "get:full"
+      ],
+      "expected": [
+        "get:cwd",
+        "get:out",
+        "get:css",
+        "get:config",
+        "get:full",
+        "get:tokens",
+        "get:content",
+        "get:content",
+        "get:safelist",
+        "get:full"
+      ]
+    },
+    {
+      "stage": "default",
+      "actual": [
+        "get:cwd",
+        "get:out",
+        "get:css",
+        "get:css",
+        "get:config",
+        "get:full",
+        "get:tokens",
+        "get:content",
+        "get:safelist",
+        "get:full"
+      ],
+      "expected": [
+        "get:cwd",
+        "get:out",
+        "get:css",
+        "get:css",
+        "get:config",
+        "get:full",
+        "get:tokens",
+        "get:content",
+        "get:safelist",
+        "get:full"
+      ]
+    },
+    {
+      "stage": "tokens",
+      "actual": [
+        "get:cwd",
+        "get:out",
+        "get:css",
+        "get:css",
+        "get:css",
+        "get:config",
+        "get:full",
+        "get:tokens",
+        "get:tokens",
+        "get:tokens",
+        "get:safelist",
+        "get:safelist",
+        "get:safelist",
+        "get:full"
+      ],
+      "expected": [
+        "get:cwd",
+        "get:out",
+        "get:css",
+        "get:css",
+        "get:css",
+        "get:config",
+        "get:full",
+        "get:tokens",
+        "get:tokens",
+        "get:tokens",
+        "get:safelist",
+        "get:safelist",
+        "get:safelist",
+        "get:full"
+      ]
+    },
+    {
+      "stage": "full",
+      "actual": [
+        "get:cwd",
+        "get:out",
+        "get:css",
+        "get:config",
+        "get:full",
+        "get:full"
+      ],
+      "expected": [
+        "get:cwd",
+        "get:out",
+        "get:css",
+        "get:config",
+        "get:full",
+        "get:full"
+      ]
+    },
+    {
+      "stage": "dynamic-full",
+      "actual": [
+        "get:cwd",
+        "get:out",
+        "get:css",
+        "get:config",
+        "get:full",
+        "get:tokens",
+        "get:content",
+        "get:content",
+        "get:safelist",
+        "get:full"
+      ],
+      "expected": [
+        "get:cwd",
+        "get:out",
+        "get:css",
+        "get:config",
+        "get:full",
+        "get:tokens",
+        "get:content",
+        "get:content",
+        "get:safelist",
+        "get:full"
+      ]
+    },
+    {
+      "stage": "options-6",
+      "actual": [
+        "get:cwd",
+        "get:out",
+        "get:css"
+      ],
+      "expected": [
+        "get:cwd",
+        "get:out",
+        "get:css"
+      ]
+    },
+    {
+      "stage": "options-7",
+      "actual": [
+        "get:cwd",
+        "get:out",
+        "get:css",
+        "get:config",
+        "get:config",
+        "get:full",
+        "get:full"
+      ],
+      "expected": [
+        "get:cwd",
+        "get:out",
+        "get:css",
+        "get:config",
+        "get:config",
+        "get:full",
+        "get:full"
+      ]
+    },
+    {
+      "stage": "options-8",
+      "actual": [
+        "get:cwd",
+        "get:content",
+        "get:content"
+      ],
+      "expected": [
+        "get:cwd",
+        "get:content",
+        "get:content"
+      ]
+    },
+    {
+      "stage": "options-9",
+      "actual": [
+        "get:cwd",
+        "get:out",
+        "get:css",
+        "get:config",
+        "get:full",
+        "get:tokens",
+        "get:content",
+        "get:content",
+        "get:safelist",
+        "get:full"
+      ],
+      "expected": [
+        "get:cwd",
+        "get:out",
+        "get:css",
+        "get:config",
+        "get:full",
+        "get:tokens",
+        "get:content",
+        "get:content",
+        "get:safelist",
+        "get:full"
+      ]
+    },
+    {
+      "stage": "options-10",
+      "actual": [
+        "get:css",
+        "get:full",
+        "get:tokens"
+      ],
+      "expected": [
+        "get:css",
+        "get:full",
+        "get:tokens"
+      ]
+    },
+    {
+      "stage": "options-11",
+      "actual": [
+        "get:css",
+        "get:full"
+      ],
+      "expected": [
+        "get:css",
+        "get:full"
+      ]
+    },
+    {
+      "stage": "options-12",
+      "actual": [
+        "get:cwd",
+        "get:out",
+        "get:css",
+        "get:css",
+        "get:config",
+        "get:full",
+        "get:tokens",
+        "get:content",
+        "get:content",
+        "get:safelist",
+        "get:full"
+      ],
+      "expected": [
+        "get:cwd",
+        "get:out",
+        "get:css",
+        "get:css",
+        "get:config",
+        "get:full",
+        "get:tokens",
+        "get:content",
+        "get:content",
+        "get:safelist",
+        "get:full"
+      ]
+    },
+    {
+      "stage": "options-13",
+      "actual": [],
+      "expected": []
+    },
+    {
+      "stage": "options-14",
+      "actual": [
+        "ownKeys",
+        "descriptor:cwd",
+        "get:cwd",
+        "descriptor:css",
+        "get:css",
+        "descriptor:content",
+        "get:content",
+        "descriptor:extra",
+        "get:extra"
+      ],
+      "expected": [
+        "ownKeys",
+        "descriptor:cwd",
+        "get:cwd",
+        "descriptor:css",
+        "get:css",
+        "descriptor:content",
+        "get:content",
+        "descriptor:extra",
+        "get:extra"
+      ]
+    },
+    {
+      "stage": "options-15",
+      "actual": [],
+      "expected": []
+    },
+    {
+      "stage": "Vite-lazy-buildStart",
+      "actual": [
+        "get:cwd",
+        "get:content",
+        "get:cwd",
+        "get:out",
+        "get:css",
+        "get:config",
+        "get:full",
+        "get:tokens",
+        "get:content",
+        "get:safelist",
+        "get:full"
+      ],
+      "expected": [
+        "get:cwd",
+        "get:content",
+        "get:cwd",
+        "get:out",
+        "get:css",
+        "get:config",
+        "get:full",
+        "get:tokens",
+        "get:content",
+        "get:safelist",
+        "get:full"
+      ]
+    },
+    {
+      "stage": "options-17",
+      "actual": [],
+      "expected": []
+    },
+    {
+      "stage": "Next-call-before-await",
+      "actual": [
+        "get:cwd",
+        "get:content",
+        "get:cwd",
+        "get:out",
+        "get:css",
+        "get:config",
+        "get:full",
+        "get:tokens",
+        "get:content",
+        "get:safelist",
+        "get:full"
+      ],
+      "expected": [
+        "get:cwd",
+        "get:content",
+        "get:cwd",
+        "get:out",
+        "get:css",
+        "get:config",
+        "get:full",
+        "get:tokens",
+        "get:content",
+        "get:safelist",
+        "get:full"
+      ]
+    },
+    {
+      "stage": "options-19",
+      "actual": [
+        "get:cwd",
+        "get:content",
+        "get:cwd",
+        "get:out",
+        "get:css",
+        "get:config",
+        "get:full",
+        "get:tokens",
+        "get:content",
+        "get:safelist",
+        "get:full"
+      ],
+      "expected": [
+        "get:cwd",
+        "get:content",
+        "get:cwd",
+        "get:out",
+        "get:css",
+        "get:config",
+        "get:full",
+        "get:tokens",
+        "get:content",
+        "get:safelist",
+        "get:full"
+      ]
+    },
+    {
+      "stage": "options-20",
+      "actual": [
+        "get:cwd",
+        "get:content",
+        "get:cwd",
+        "get:out",
+        "get:css",
+        "get:config",
+        "get:full",
+        "get:tokens",
+        "get:content",
+        "get:safelist",
+        "get:full",
+        "get:cwd"
+      ],
+      "expected": [
+        "get:cwd",
+        "get:content",
+        "get:cwd",
+        "get:out",
+        "get:css",
+        "get:config",
+        "get:full",
+        "get:tokens",
+        "get:content",
+        "get:safelist",
+        "get:full",
+        "get:cwd"
+      ]
+    },
+    {
+      "stage": "options-21",
+      "actual": [
+        "get:cwd",
+        "get:out",
+        "get:css",
+        "get:config",
+        "get:full",
+        "get:tokens",
+        "get:tokens",
+        "get:tokens"
+      ],
+      "expected": [
+        "get:cwd",
+        "get:out",
+        "get:css",
+        "get:config",
+        "get:full",
+        "get:tokens",
+        "get:tokens",
+        "get:tokens"
+      ]
+    },
+    {
+      "stage": "options-22",
+      "actual": [
+        "get:cwd",
+        "get:out",
+        "get:css",
+        "get:config",
+        "get:full",
+        "get:tokens",
+        "get:tokens",
+        "get:tokens",
+        "get:safelist",
+        "get:safelist",
+        "get:safelist"
+      ],
+      "expected": [
+        "get:cwd",
+        "get:out",
+        "get:css",
+        "get:config",
+        "get:full",
+        "get:tokens",
+        "get:tokens",
+        "get:tokens",
+        "get:safelist",
+        "get:safelist",
+        "get:safelist"
+      ]
+    },
+    {
+      "stage": "options-23",
+      "actual": [
+        "get:cwd",
+        "get:content"
+      ],
+      "expected": [
+        "get:cwd",
+        "get:content"
+      ]
+    },
+    {
+      "stage": "options-24",
+      "actual": [
+        "get:full",
+        "get:out"
+      ],
+      "expected": [
+        "get:full",
+        "get:out"
+      ]
+    },
+    {
+      "stage": "Next-bounded-getter-reentry",
+      "actual": [
+        "get:cwd",
+        "get:cwd",
+        "get:content",
+        "get:cwd",
+        "get:out",
+        "get:css",
+        "get:config",
+        "get:full",
+        "get:tokens",
+        "get:content",
+        "get:safelist",
+        "get:full",
+        "get:content",
+        "get:cwd",
+        "get:out",
+        "get:css",
+        "get:config",
+        "get:full",
+        "get:tokens",
+        "get:content",
+        "get:safelist",
+        "get:full"
+      ],
+      "expected": [
+        "get:cwd",
+        "get:cwd",
+        "get:content",
+        "get:cwd",
+        "get:out",
+        "get:css",
+        "get:config",
+        "get:full",
+        "get:tokens",
+        "get:content",
+        "get:safelist",
+        "get:full",
+        "get:content",
+        "get:cwd",
+        "get:out",
+        "get:css",
+        "get:config",
+        "get:full",
+        "get:tokens",
+        "get:content",
+        "get:safelist",
+        "get:full"
+      ]
+    },
+    {
+      "stage": "Vite-bounded-getter-reentry",
+      "actual": [
+        "get:cwd",
+        "get:cwd",
+        "get:content",
+        "get:cwd",
+        "get:out",
+        "get:css",
+        "get:config",
+        "get:full",
+        "get:tokens",
+        "get:content",
+        "get:safelist",
+        "get:full",
+        "get:content",
+        "get:cwd",
+        "get:out",
+        "get:css",
+        "get:config",
+        "get:full",
+        "get:tokens",
+        "get:content",
+        "get:safelist",
+        "get:full"
+      ],
+      "expected": [
+        "get:cwd",
+        "get:cwd",
+        "get:content",
+        "get:cwd",
+        "get:out",
+        "get:css",
+        "get:config",
+        "get:full",
+        "get:tokens",
+        "get:content",
+        "get:safelist",
+        "get:full",
+        "get:content",
+        "get:cwd",
+        "get:out",
+        "get:css",
+        "get:config",
+        "get:full",
+        "get:tokens",
+        "get:content",
+        "get:safelist",
+        "get:full"
+      ]
+    }
+  ],
+  "bundleWasmSha256": "cd39e9bf16760ee625e589c79aa6bd85966b035bbb21b1ecc550710a9359df0b",
+  "bundleJsSha256": "23224e7550a864ec4a005ece0cd850122120e923e6a7686a5082ed662e1e9fb5"
+}

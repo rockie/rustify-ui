@@ -1,0 +1,15 @@
+{
+  "input": ":root { --ease: linear; } @keyframes card { to { opacity: 0; } } @keyframes linear { to { opacity: 0.5; } } .main-motion { animation: card 1s var(--ease) infinite; } .other-motion { animation-name: linear; animation-duration: 2s; } @tailwind utilities;",
+  "results": [
+    {
+      "dir": "/tmp/wasm-tailwind-review-facade",
+      "owner": "old",
+      "css": "@scope ([data-rustify-style-owner=\"old\"]) to ([data-rustify-style-owner]) {\n  :scope {\n    --ease: linear;\n  }\n  .main-motion {\n    animation: rustify-old-card 1s var(--ease) infinite;\n  }\n  .other-motion {\n    animation-name: rustify-old-linear;\n    animation-duration: 2s;\n  }\n}\n@keyframes rustify-old-card {\n  to {\n    opacity: 0;\n  }\n}\n@keyframes rustify-old-linear {\n  to {\n    opacity: 0.5;\n  }\n}\n"
+    },
+    {
+      "dir": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/makepad-wasm-app/release/utility-lab/utility/compiler",
+      "owner": "new",
+      "css": "@scope ([data-rustify-style-owner=\"new\"]) to ([data-rustify-style-owner]) {\n  :scope {\n    --ease: rustify-new-linear;\n  }\n  .main-motion {\n    animation: rustify-new-card 1s var(--ease) infinite;\n  }\n  .other-motion {\n    animation-name: rustify-new-linear;\n    animation-duration: 2s;\n  }\n}\n@keyframes rustify-new-card {\n  to {\n    opacity: 0;\n  }\n}\n@keyframes rustify-new-linear {\n  to {\n    opacity: 0.5;\n  }\n}\n"
+    }
+  ]
+}

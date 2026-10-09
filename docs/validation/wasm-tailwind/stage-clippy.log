@@ -1,0 +1,18 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling classification-macros v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style/upstream/classification-macros)
+    Checking rustify-ui v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui)
+    Checking rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+    Checking rustify-style-wasm v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style-wasm)
+    Checking rustify-components v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-components)
+    Checking xtask v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/xtask)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 6.10s
+warning: the following packages contain code that will be rejected by a future version of Rust: proc-macro-error2 v2.0.1
+note: to see what the problems were, use the option `--future-incompat-report`, or run `cargo report future-incompatibilities --id 1`
+mbx[cache]: 0 hits, 1 misses, 10 not looked up, 1 incremental; 0 B downloaded, 0 B uploaded, 5.4 MiB stored locally
+mbx[savings]: escorted 481.9 GiB logical of ownerless outputs off the premises.

@@ -1,0 +1,56 @@
+[
+  {
+    "source": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-tailwind-browser-v_c2md8x/target/makepad-wasm-app/release/utility-lab",
+    "destination": "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/makepad-wasm-app/release/utility-lab",
+    "previousProduct": "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/makepad-wasm-app/release/utility-lab@before-raw-theme",
+    "assets": [
+      {
+        "file": "build-manifest.json",
+        "bytes": 3114,
+        "sha256": "5152bbf46c8c88d4cee2a7f55b0e3467b488409c9a860ccc6d97e61c2bec4b02"
+      },
+      {
+        "file": "utility/build-manifest.json",
+        "bytes": 592,
+        "sha256": "c25e769a6da2253019461075e7e7a2993de9d6bac40d71983545e68873cf8ac4"
+      },
+      {
+        "file": "utility-lab.wasm",
+        "bytes": 9486990,
+        "sha256": "b063f40bd16e0972f4fae917c117d0726225beb7e3d599514b4c45980ee9efeb"
+      },
+      {
+        "file": "utility/compiler/style_bg.wasm",
+        "bytes": 1739870,
+        "sha256": "7667f53b934b22f5039b0982b43726667f0559f24ec4cdbf5fef4a6e85aa81ce"
+      }
+    ]
+  },
+  {
+    "source": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-tailwind-browser-v_c2md8x/target/makepad-wasm-app/release/utility-lab@tools-utility-lab",
+    "destination": "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/makepad-wasm-app/release/utility-lab@tools-utility-lab",
+    "previousProduct": "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/makepad-wasm-app/release/utility-lab@tools-utility-lab@before-raw-theme",
+    "assets": [
+      {
+        "file": "build-manifest.json",
+        "bytes": 3165,
+        "sha256": "c282abc138e89dbbf1bff2e7781d0ff72cb236628082335105194dce1769f45a"
+      },
+      {
+        "file": "utility/build-manifest.json",
+        "bytes": 592,
+        "sha256": "c25e769a6da2253019461075e7e7a2993de9d6bac40d71983545e68873cf8ac4"
+      },
+      {
+        "file": "utility-lab.wasm",
+        "bytes": 9486990,
+        "sha256": "b063f40bd16e0972f4fae917c117d0726225beb7e3d599514b4c45980ee9efeb"
+      },
+      {
+        "file": "utility/compiler/style_bg.wasm",
+        "bytes": 1739870,
+        "sha256": "7667f53b934b22f5039b0982b43726667f0559f24ec4cdbf5fef4a6e85aa81ce"
+      }
+    ]
+  }
+]

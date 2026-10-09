@@ -1,0 +1,85 @@
+{"name":"no-import-success","expectedEpoch":4,"actualEpoch":1,"expectedTrace":[["0",{"reference":1}],["1",{"reference":2}]],"comparison":"no-import-success"}
+{"name":"leaf-success","expectedEpoch":8,"actualEpoch":1,"expectedTrace":[["0",{"reference":1}],["1",{"reference":15}],["2",{"reference":16}]],"comparison":"leaf-success"}
+{"name":"siblings-success","expectedEpoch":20,"actualEpoch":1,"expectedTrace":[["0",{"reference":1}],["1",{"reference":15}],["2",{"reference":47}],["3",{"reference":48}]],"comparison":"siblings-success"}
+{"name":"chain1-missing","expectedEpoch":6,"actualEpoch":1,"expectedTrace":[["0",{"reference":1}],["1",{"reference":21}],["2",{"reference":24}],["3",{"reference":25}]],"comparison":"chain1-missing"}
+{"name":"chain2-missing","expectedEpoch":6,"actualEpoch":1,"expectedTrace":[["0",{"reference":1}],["1",{"reference":4}],["2",{"reference":7}],["3",{"reference":8}]],"comparison":"chain2-missing"}
+{"name":"chain3-missing","expectedEpoch":6,"actualEpoch":1,"expectedTrace":[["0",{"reference":1}],["1",{"reference":4}],["2",{"reference":7}],["3",{"reference":8}]],"comparison":"chain3-missing"}
+{"name":"chain4-missing","expectedEpoch":6,"actualEpoch":1,"expectedTrace":[["0",{"reference":1}],["1",{"reference":4}],["2",{"reference":7}],["3",{"reference":8}]],"comparison":"chain4-missing"}
+{"name":"chain5-missing","expectedEpoch":6,"actualEpoch":1,"expectedTrace":[["0",{"reference":1}],["1",{"reference":4}],["2",{"reference":7}],["3",{"reference":8}]],"comparison":"chain5-missing"}
+{"name":"chain6-missing","expectedEpoch":6,"actualEpoch":1,"expectedTrace":[["0",{"reference":1}],["1",{"reference":4}],["2",{"reference":7}],["3",{"reference":8}]],"comparison":"chain6-missing"}
+{"name":"chain7-missing","expectedEpoch":6,"actualEpoch":1,"expectedTrace":[["0",{"reference":1}],["1",{"reference":4}],["2",{"reference":7}],["3",{"reference":8}]],"comparison":"chain7-missing"}
+{"name":"chain8-missing","expectedEpoch":6,"actualEpoch":1,"expectedTrace":[["0",{"reference":1}],["1",{"reference":4}],["2",{"reference":7}],["3",{"reference":8}]],"comparison":"chain8-missing"}
+{"name":"missing-first","expectedEpoch":6,"actualEpoch":1,"expectedTrace":[["0",{"reference":1}],["1",{"reference":4}],["2",{"reference":18}],["3",{"reference":19}]],"comparison":"missing-first"}
+{"name":"parser-error","expectedEpoch":6,"actualEpoch":1,"expectedTrace":[["0",{"reference":1}],["1",{"reference":15}],["2",{"reference":18}],["3",{"reference":19}]],"comparison":"parser-error"}
+{"name":"parameter-error","expectedEpoch":3,"actualEpoch":1,"expectedTrace":[["0",{"reference":1}],["1",{"reference":15}],["2",{"reference":17}],["3",{"reference":18}]],"comparison":"parameter-error"}
+{"name":"host-index","expectedEpoch":3,"actualEpoch":1,"expectedTrace":[["0",{"reference":1}],["1",{"reference":3}],["2",{"reference":5}],["3",{"reference":6}]],"comparison":"host-index"}
+{"name":"host-nodes","expectedEpoch":7,"actualEpoch":1,"expectedTrace":[["0",{"reference":1}],["1",{"reference":4}],["2",{"reference":7}],["3",{"reference":8}]],"comparison":"host-nodes"}
+{"name":"theme-and-functions","expectedEpoch":4,"actualEpoch":1,"expectedTrace":[["0",{"reference":1}],["1",{"reference":7}],["2",{"reference":8}]],"comparison":"theme-and-functions"}
+{"name":"theme-import-and-functions","expectedEpoch":8,"actualEpoch":1,"expectedTrace":[["0",{"reference":1}],["1",{"reference":15}],["2",{"reference":21}],["3",{"reference":22}]],"comparison":"theme-import-and-functions"}
+{"name":"theme-and-function-error","expectedEpoch":4,"actualEpoch":1,"expectedTrace":[["0",{"reference":1}],["1",{"reference":7}],["2",{"reference":8}],["3",{"reference":9}]],"comparison":"theme-and-function-error"}
+{"name":"custom-function-error","expectedEpoch":4,"actualEpoch":1,"expectedTrace":[["0",{"reference":1}],["1",{"reference":5}]],"comparison":"custom-function-error"}
+{"asyncCases":20,"externalMicrotaskMarkers":true,"completePrefixAndSettledGraphs":true,"failures":["missing-async-entry","no-import-success","leaf-success","siblings-success","chain1-missing","chain2-missing","chain3-missing","chain4-missing","chain5-missing","chain6-missing","chain7-missing","chain8-missing","missing-first","parser-error","parameter-error","host-index","host-nodes","theme-and-functions","theme-import-and-functions","theme-and-function-error","custom-function-error"],"actualWasm":true,"wasmBytes":2377827,"externalLoaderCallbacks":"pending","orphanRejectionReporting":"pending","fullAsyncApiConformance":"pending"}
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: async compileAst publication and external microtask interleaving
++ actual - expected
+
++ [
++   'missing-async-entry',
++   'no-import-success',
++   'leaf-success',
++   'siblings-success',
++   'chain1-missing',
++   'chain2-missing',
++   'chain3-missing',
++   'chain4-missing',
++   'chain5-missing',
++   'chain6-missing',
++   'chain7-missing',
++   'chain8-missing',
++   'missing-first',
++   'parser-error',
++   'parameter-error',
++   'host-index',
++   'host-nodes',
++   'theme-and-functions',
++   'theme-import-and-functions',
++   'theme-and-function-error',
++   'custom-function-error'
++ ]
+- []
+
+    at file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/compiler/run-public-ast-async-wasm.mjs:117:8 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: [
+    'missing-async-entry',
+    'no-import-success',
+    'leaf-success',
+    'siblings-success',
+    'chain1-missing',
+    'chain2-missing',
+    'chain3-missing',
+    'chain4-missing',
+    'chain5-missing',
+    'chain6-missing',
+    'chain7-missing',
+    'chain8-missing',
+    'missing-first',
+    'parser-error',
+    'parameter-error',
+    'host-index',
+    'host-nodes',
+    'theme-and-functions',
+    'theme-import-and-functions',
+    'theme-and-function-error',
+    'custom-function-error'
+  ],
+  expected: [],
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v26.1.0

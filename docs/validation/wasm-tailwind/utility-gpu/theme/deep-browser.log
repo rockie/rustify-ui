@@ -1,0 +1,25 @@
+npm notice run rustify-ui-browser-tests@0.1.0 npx
+npm notice run 'playwright' test --project=utility-lab-deep --workers=1 utility-gpu.spec.ts utility-runtime.spec.ts
+
+Running 16 tests using 1 worker
+
+(node:79733) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 [utility-lab-deep] › tests/browser/utility-gpu.spec.ts:31:5 › GPU draws compiled colors, geometry and real font glyphs alongside scoped DOM (936ms)
+  ✓   2 [utility-lab-deep] › tests/browser/utility-gpu.spec.ts:67:5 › strict GPU rejection retains the drawn style, partial reports skipped properties and deleting classes restores defaults (666ms)
+  ✓   3 [utility-lab-deep] › tests/browser/utility-gpu.spec.ts:92:5 › GPU responds to pointer, keyboard focus-visible and disabled input without recompiling (598ms)
+  ✓   4 [utility-lab-deep] › tests/browser/utility-gpu.spec.ts:119:5 › GPU media uses the browser viewport, and alpha color blocks match DOM pixels (681ms)
+  ✓   5 [utility-lab-deep] › tests/browser/utility-gpu.spec.ts:139:5 › GPU applies text resources, row layout, shadows and rings from compiler bindings (702ms)
+  ✓   6 [utility-lab-deep] › tests/browser/utility-gpu.spec.ts:163:5 › GPU restores its latest committed programs after a real WebGL context loss (721ms)
+  ✓   7 [utility-lab-deep] › tests/browser/utility-gpu.spec.ts:182:5 › terminal GPU initialization failure explains recovery while DOM editing remains usable (1.6s)
+  ✓   8 [utility-lab-deep] › tests/browser/utility-gpu.spec.ts:201:5 › all non-button GPU boundaries are visible and the desktop comparison frames align (618ms)
+  ✓   9 [utility-lab-deep] › tests/browser/utility-gpu.spec.ts:220:5 › live ThemeScope and ThemeBoundary update colors, dark conditions and host rem without recompiling (761ms)
+  ✓  10 [utility-lab-deep] › tests/browser/utility-runtime.spec.ts:8:5 › SDK ensure installs scanner-free CSS, coalesces requests and isolates independent scopes (507ms)
+  ✓  11 [utility-lab-deep] › tests/browser/utility-runtime.spec.ts:60:5 › controls apply classes and fit desktop and mobile (773ms)
+  ✓  12 [utility-lab-deep] › tests/browser/utility-runtime.spec.ts:78:5 › nested owners stop outer rules and disposal removes the owned stylesheet (529ms)
+  ✓  13 [utility-lab-deep] › tests/browser/utility-runtime.spec.ts:100:5 › classList changes and newly added subtrees compile through the bounded observer without scanner (593ms)
+  ✓  14 [utility-lab-deep] › tests/browser/utility-runtime.spec.ts:127:5 › scoped relation variants and arbitrary selectors retain conditional matching (539ms)
+  ✓  15 [utility-lab-deep] › tests/browser/utility-runtime.spec.ts:169:5 › arbitrary responsive conditions follow the browser viewport at both sizes (560ms)
+  ✓  16 [utility-lab-deep] › tests/browser/utility-runtime.spec.ts:188:5 › color alpha and scoped placeholder selectors retain their browser semantics (507ms)
+
+  16 passed (13.8s)

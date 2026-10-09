@@ -1,0 +1,33 @@
+npm notice run rustify-ui-browser-tests@0.1.0 npx
+npm notice run 'playwright' test --project=utility-lab-deep --workers=1 --output=docs/validation/wasm-tailwind/utility-gpu/apply/deep-verified-results
+
+Running 24 tests using 1 worker
+
+(node:32534) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 [utility-lab-deep] › tests/browser/utility-gpu.spec.ts:31:5 › applied utility dependencies drive DOM and GPU and survive an installation failure (1.1s)
+  ✓   2 [utility-lab-deep] › tests/browser/utility-gpu.spec.ts:81:5 › GPU draws compiled colors, geometry and real font glyphs alongside scoped DOM (730ms)
+  ✓   3 [utility-lab-deep] › tests/browser/utility-gpu.spec.ts:117:5 › CSS functions resolve runtime candidates once and drive actual DOM and GPU pixels (613ms)
+  ✓   4 [utility-lab-deep] › tests/browser/utility-gpu.spec.ts:158:5 › CSS-native utilities drive scoped DOM and GPU while nested branches retain the drawn style (903ms)
+  ✓   5 [utility-lab-deep] › tests/browser/utility-gpu.spec.ts:193:5 › authored custom variants apply DOM hover and preserve the last drawn GPU style on rejection (913ms)
+  ✓   6 [utility-lab-deep] › tests/browser/utility-gpu.spec.ts:230:5 › arbitrary properties with modifiers drive actual DOM and GPU pixels (708ms)
+  ✓   7 [utility-lab-deep] › tests/browser/utility-gpu.spec.ts:245:5 › mask CSS applies to DOM while GPU rejects its unsupported property and retains its drawn style (503ms)
+  ✓   8 [utility-lab-deep] › tests/browser/utility-gpu.spec.ts:261:5 › strict GPU rejection retains the drawn style, partial reports skipped properties and deleting classes restores defaults (649ms)
+  ✓   9 [utility-lab-deep] › tests/browser/utility-gpu.spec.ts:286:5 › GPU responds to pointer, keyboard focus-visible and disabled input without recompiling (573ms)
+  ✓  10 [utility-lab-deep] › tests/browser/utility-gpu.spec.ts:313:5 › GPU media uses the browser viewport, and alpha color blocks match DOM pixels (665ms)
+  ✓  11 [utility-lab-deep] › tests/browser/utility-gpu.spec.ts:333:5 › GPU applies text resources, row layout, shadows and rings from compiler bindings (701ms)
+  ✓  12 [utility-lab-deep] › tests/browser/utility-gpu.spec.ts:357:5 › GPU restores its latest committed programs after a real WebGL context loss (858ms)
+  ✓  13 [utility-lab-deep] › tests/browser/utility-gpu.spec.ts:376:5 › terminal GPU initialization failure explains recovery while DOM editing remains usable (1.7s)
+  ✓  14 [utility-lab-deep] › tests/browser/utility-gpu.spec.ts:395:5 › all non-button GPU boundaries are visible and the desktop comparison frames align (557ms)
+  ✓  15 [utility-lab-deep] › tests/browser/utility-gpu.spec.ts:414:5 › live ThemeScope and ThemeBoundary update colors, dark conditions and host rem without recompiling (703ms)
+  ✓  16 [utility-lab-deep] › tests/browser/utility-runtime.spec.ts:8:5 › parser recovery preserves authored important values and valid compound variants (663ms)
+  ✓  17 [utility-lab-deep] › tests/browser/utility-runtime.spec.ts:47:5 › structural spacing, container and line clamp keep their actual browser semantics (473ms)
+  ✓  18 [utility-lab-deep] › tests/browser/utility-runtime.spec.ts:88:5 › SDK ensure installs scanner-free CSS, coalesces requests and isolates independent scopes (505ms)
+  ✓  19 [utility-lab-deep] › tests/browser/utility-runtime.spec.ts:140:5 › controls apply classes and fit desktop and mobile (701ms)
+  ✓  20 [utility-lab-deep] › tests/browser/utility-runtime.spec.ts:158:5 › nested owners stop outer rules and disposal removes the owned stylesheet (506ms)
+  ✓  21 [utility-lab-deep] › tests/browser/utility-runtime.spec.ts:180:5 › classList changes and newly added subtrees compile through the bounded observer without scanner (535ms)
+  ✓  22 [utility-lab-deep] › tests/browser/utility-runtime.spec.ts:207:5 › scoped relation variants and arbitrary selectors retain conditional matching (470ms)
+  ✓  23 [utility-lab-deep] › tests/browser/utility-runtime.spec.ts:249:5 › arbitrary responsive conditions follow the browser viewport at both sizes (493ms)
+  ✓  24 [utility-lab-deep] › tests/browser/utility-runtime.spec.ts:268:5 › color alpha and scoped placeholder selectors retain their browser semantics (471ms)
+
+  24 passed (18.1s)

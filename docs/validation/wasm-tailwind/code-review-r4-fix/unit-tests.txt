@@ -1,0 +1,9 @@
+$ mbx test --locked -p rustify-style --all-features --lib
+test result: ok. 533 passed; 0 failed; 12 ignored; 0 measured; 0 filtered out; finished in 83.27s
+$ mbx test --locked -p rustify-style-wasm --no-default-features --features compiler,scanner --lib
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+$ mbx clippy --locked -p rustify-style --all-features --all-targets -- -D warnings
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 3.85s
+exit=0
+$ cargo fmt --all -- --check
+exit=0

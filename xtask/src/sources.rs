@@ -97,13 +97,11 @@ pub fn fingerprint_tree(root: &Path) -> Result<BTreeMap<String, String>, String>
             let entry = entry.map_err(|e| e.to_string())?;
             let path = entry.path();
             let name = entry.file_name();
-            if path.is_dir() {
-                if name != "target" {
-                    stack.push(path);
-                }
+            if name == "target" || name == ".DS_Store" {
                 continue;
             }
-            if name == ".DS_Store" {
+            if path.is_dir() {
+                stack.push(path);
                 continue;
             }
             let relative = path
@@ -243,6 +241,27 @@ mod tests {
             .iter()
             .map(|(k, v)| (k.to_string(), v.to_string()))
             .collect()
+    }
+
+    #[cfg(unix)]
+    #[test]
+    fn target_links_are_excluded_even_when_the_cache_is_missing() {
+        let root = std::env::temp_dir().join(format!(
+            "rustify-source-target-link-{}-{}",
+            std::process::id(),
+            std::time::SystemTime::now()
+                .duration_since(std::time::UNIX_EPOCH)
+                .unwrap()
+                .as_nanos()
+        ));
+        std::fs::create_dir(&root).unwrap();
+        std::fs::write(root.join("source.rs"), b"source").unwrap();
+        std::os::unix::fs::symlink(root.join("missing-cache"), root.join("target")).unwrap();
+        let observed = fingerprint_tree(&root);
+        std::fs::remove_dir_all(&root).unwrap();
+        let files = observed.unwrap();
+        assert_eq!(files.len(), 1);
+        assert_eq!(files["source.rs"], hex(&Sha256::digest(b"source")));
     }
 
     #[test]

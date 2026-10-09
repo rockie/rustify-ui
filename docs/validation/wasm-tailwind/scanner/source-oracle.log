@@ -1,0 +1,34 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.08s
+     Running `mbx-launch tests/utility/scanner/oracle/target/debug/rustify-scanner-oracle /Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/scanner/fixtures.json`
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.02s
+     Running `mbx-launch tests/utility/scanner/oracle/target/debug/rustify-scanner-oracle /Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/scanner/source-fixtures.json --sources`
+scanner oracle: 24 fixed cases agree
+source oracle: 12 fixed cases and 51 operations agree

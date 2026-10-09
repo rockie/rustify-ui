@@ -1,0 +1,136 @@
+{
+  "workspace": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-utf16-verified-54mkl3kq/cli-workspace",
+  "copiedSourceHashes": {
+    "xtask/Cargo.toml": "5c0cb6c003e57cba452e1a65d3aa93e9a4e2e2e870cb67774c658b4bfb1b477e",
+    "xtask/src/serve.rs": "f95b4fec14523c94e9f40384be565d91b4010c3f12ffc18e35c03ad363688e6d",
+    "xtask/src/bridge.rs": "a2f9bdb9b37fd33768757096693d8a9d22993354f56798d6d4aa18ab0c1a8535",
+    "xtask/src/utility.rs": "71c2cd61bb696b41e68c2f3c897cfef408ff45cf97678efd5c6b685390966201",
+    "xtask/src/build.rs": "899115b677b19d255108e2a837c91fad71e94423609d9354442cae098260d00a",
+    "xtask/src/catalog.rs": "1fb7ad79a239c729eb99498b6bc78715ebb5ed9c524b0dcc981e3cab2f511f7b",
+    "xtask/src/doctor.rs": "a72d62c190141d8cc5c1fb46d7e06a0e5db539905e6eda5f030e1d0d77775fc1",
+    "xtask/src/verify.rs": "bc964c6354bb6b222f2dbec13beef19949efa72ee4e2e0350eb9061b96d42f3c",
+    "xtask/src/main.rs": "02a6572472c8dc9be6c87c5ba6050eb0d1e7aacda79677dd1adc506c6357626e",
+    "xtask/src/tailwind.rs": "c19c63ffe169c06973b4d9382f0d8efdaf9a25c6b505210bb450f92e00063ba4",
+    "xtask/src/css.rs": "651b5c6307a6bf88e57d80d50451cb5ce80b781fcbacdc2f05b6c6ebc7c4e83d",
+    "xtask/src/sources.rs": "90abc3fa7d948cbb438b3eda35ef57b2997869c22e06e611a43b7adc1feb92de",
+    "xtask/src/utility/seed.rs": "0148521feea35bc182ab0ad97a412f383017c1eb3571e615ef9c33bf2c923052",
+    "Cargo.toml": "dee97baccd454f9bf74ccd8c4bac69e47579d2284b5f07bcb39f73a22d5f871a",
+    "Cargo.lock": "3e1069d4610684c784ddd750ddd9a20132d9f749d3aa660f0bf1d7887ef4577c",
+    ".cargo/config.toml": "716b49c90c25aeeebc4b0359b111a62927d166a1d7f02c4fe83b89d55fb74887"
+  },
+  "sharedSources": {
+    "crates": "/Users/rockie/Documents/gh-rockie/rustify-ui/crates",
+    "examples": "/Users/rockie/Documents/gh-rockie/rustify-ui/examples",
+    "makepad": "/Users/rockie/Documents/gh-rockie/rustify-ui/makepad",
+    "tests": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+    "ref": "/Users/rockie/Documents/gh-rockie/rustify-ui/ref",
+    "web": "/Users/rockie/Documents/gh-rockie/rustify-ui/web",
+    "sources.lock.json": "/Users/rockie/Documents/gh-rockie/rustify-ui/sources.lock.json"
+  },
+  "sameSource": true,
+  "dependenciesInstalled": false,
+  "commands": {
+    "compiler-api": {
+      "command": [
+        "mbx",
+        "run",
+        "--quiet",
+        "--locked",
+        "--package",
+        "xtask",
+        "--manifest-path",
+        "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-utf16-verified-54mkl3kq/cli-workspace/xtask/Cargo.toml",
+        "--",
+        "utility-conformance",
+        "--check",
+        "--group",
+        "compiler-api"
+      ],
+      "exitCode": 0,
+      "seconds": 12.055457540999999,
+      "log": "utf16-families-import-current-cli-compiler-api.log"
+    },
+    "compiler-slice": {
+      "command": [
+        "mbx",
+        "run",
+        "--quiet",
+        "--locked",
+        "--package",
+        "xtask",
+        "--manifest-path",
+        "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-utf16-verified-54mkl3kq/cli-workspace/xtask/Cargo.toml",
+        "--",
+        "utility-conformance",
+        "--check",
+        "--group",
+        "compiler-slice"
+      ],
+      "exitCode": 0,
+      "seconds": 72.345580833,
+      "log": "utf16-families-import-current-cli-compiler-slice.log"
+    }
+  },
+  "artifacts": {
+    "compiler-api": {
+      "style.js": {
+        "bytes": 39538,
+        "sha256": "d0c8025afef20d03d8912d163401689bf7e3d24cf8d74918b5c2a104d1102bb3"
+      },
+      "style_bg.wasm": {
+        "bytes": 2416446,
+        "sha256": "64acb3dc4c1e6378f35b25a8d84cf3c7f065e4ea276ace1aeae01f009db18db3"
+      }
+    },
+    "compiler": {
+      "style.js": {
+        "bytes": 14611,
+        "sha256": "9e0d4aed4b1ac6a18b461f2157f6a80ddb17d5e2f1ad5078b1c0c6aa38aaf4a1"
+      },
+      "style_bg.wasm": {
+        "bytes": 1633432,
+        "sha256": "8bac926661af07c3d0433f86b0edd1c0a169f6869e64e5404706c47f8441982d"
+      }
+    }
+  },
+  "mirrorBuild": {
+    "command": [
+      "mbx",
+      "build",
+      "--locked",
+      "--offline",
+      "--package",
+      "xtask",
+      "--manifest-path",
+      "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-utf16-verified-54mkl3kq/cli-workspace/xtask/Cargo.toml"
+    ],
+    "exitCode": 0,
+    "seconds": 2.036808958,
+    "log": "utf16-families-import-current-cli-mirror-build.log",
+    "bytesUnchanged": true,
+    "mtimeRestored": true
+  },
+  "restoreOriginalXtask": {
+    "command": [
+      "mbx",
+      "build",
+      "--locked",
+      "--offline",
+      "--package",
+      "xtask",
+      "--manifest-path",
+      "/Users/rockie/Documents/gh-rockie/rustify-ui/xtask/Cargo.toml"
+    ],
+    "exitCode": 0,
+    "seconds": 0.46139908300000343,
+    "log": "utf16-families-import-current-cli-restore-forced.log",
+    "bytesUnchanged": true,
+    "mtimeRestored": true,
+    "forcedCargoRebuild": true,
+    "binarySha256": "ef3779a82dcbfc8fccdde279e5301b89d84008cd1247952720eb2517ff9755c6",
+    "rootPathPresent": true,
+    "mirrorPathPresent": false
+  },
+  "repositoryTargetUntouched": true,
+  "artifactHashesMatchIndependentGates": true
+}

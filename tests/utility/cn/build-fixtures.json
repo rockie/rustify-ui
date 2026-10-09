@@ -1,0 +1,1464 @@
+{
+  "schemaVersion": 1,
+  "commit": "b7ec0fce43d824a60517fab508584eb860fdf717",
+  "cases": [
+    {
+      "id": "content",
+      "options": {
+        "content": [
+          "src/**/*.html"
+        ],
+        "css": false
+      },
+      "expected": {
+        "changed": true,
+        "tokens": [
+          "/div",
+          "class=",
+          "custom",
+          "div",
+          "leading-6",
+          "p-2",
+          "p-4",
+          "text-lg/7"
+        ],
+        "configSha256": "1e2f6cad1ded7b262c0b89fa7461be56d8eabd50203425e8f2d963600e7af8e8",
+        "fullConfigSha256": "825d6fe3a743139fe2646973872081b85d6f9c781e317f3b069410843ce72b56",
+        "keptClassGroups": [
+          "p",
+          "font-size",
+          "leading",
+          "text-color"
+        ],
+        "fullClassGroupCount": 384,
+        "theme": {
+          "animate": [
+            "spin",
+            "ping",
+            "pulse",
+            "bounce"
+          ],
+          "aspect": [
+            "video"
+          ],
+          "blur": [
+            {
+              "$v": "isTshirtSize"
+            }
+          ],
+          "breakpoint": [
+            {
+              "$v": "isTshirtSize"
+            }
+          ],
+          "color": [
+            {
+              "$v": "isAny"
+            }
+          ],
+          "container": [
+            {
+              "$v": "isTshirtSize"
+            }
+          ],
+          "drop-shadow": [
+            {
+              "$v": "isTshirtSize"
+            }
+          ],
+          "ease": [
+            "in",
+            "out",
+            "in-out"
+          ],
+          "font": [
+            {
+              "$v": "isAnyNonArbitrary"
+            }
+          ],
+          "font-weight": [
+            "thin",
+            "extralight",
+            "light",
+            "normal",
+            "medium",
+            "semibold",
+            "bold",
+            "extrabold",
+            "black"
+          ],
+          "inset-shadow": [
+            {
+              "$v": "isTshirtSize"
+            }
+          ],
+          "leading": [
+            "none",
+            "tight",
+            "snug",
+            "normal",
+            "relaxed",
+            "loose"
+          ],
+          "perspective": [
+            "dramatic",
+            "near",
+            "normal",
+            "midrange",
+            "distant",
+            "none"
+          ],
+          "radius": [
+            {
+              "$v": "isTshirtSize"
+            }
+          ],
+          "shadow": [
+            {
+              "$v": "isTshirtSize"
+            }
+          ],
+          "spacing": [
+            "px",
+            {
+              "$v": "isNumber"
+            }
+          ],
+          "text": [
+            {
+              "$v": "isTshirtSize"
+            }
+          ],
+          "text-shadow": [
+            {
+              "$v": "isTshirtSize"
+            }
+          ],
+          "tracking": [
+            "tighter",
+            "tight",
+            "normal",
+            "wide",
+            "wider",
+            "widest"
+          ]
+        },
+        "scannedFiles": 1,
+        "cssFiles": [],
+        "usedGroups": 4,
+        "totalGroups": 384,
+        "warnings": [],
+        "sourceSha256": "ca4e6d9dbe5d3ace2144613df8121c53e5be3e98f99a1c48aee7ef24f312e8a7",
+        "sourceBytes": 3809,
+        "merges": [
+          {
+            "input": "p-2 p-4",
+            "expected": "p-4"
+          },
+          {
+            "input": "m-2 m-4",
+            "expected": "m-2 m-4"
+          },
+          {
+            "input": "shadow-card shadow-lg",
+            "expected": "shadow-card shadow-lg"
+          },
+          {
+            "input": "text-hero text-lg",
+            "expected": "text-hero text-lg"
+          },
+          {
+            "input": "custom-display block",
+            "expected": "custom-display block"
+          }
+        ]
+      },
+      "unchangedSecondBuild": true
+    },
+    {
+      "id": "tokens",
+      "options": {
+        "tokens": "tokens.txt",
+        "css": false
+      },
+      "expected": {
+        "changed": true,
+        "tokens": [
+          "hover:p-2",
+          "hover:p-4",
+          "p-2",
+          "p-4"
+        ],
+        "configSha256": "3c941cff9788f6b12d93c55e81ea9b6d98094b61d002b244c4f83616b1aa7919",
+        "fullConfigSha256": "825d6fe3a743139fe2646973872081b85d6f9c781e317f3b069410843ce72b56",
+        "keptClassGroups": [
+          "p"
+        ],
+        "fullClassGroupCount": 384,
+        "theme": {
+          "animate": [
+            "spin",
+            "ping",
+            "pulse",
+            "bounce"
+          ],
+          "aspect": [
+            "video"
+          ],
+          "blur": [
+            {
+              "$v": "isTshirtSize"
+            }
+          ],
+          "breakpoint": [
+            {
+              "$v": "isTshirtSize"
+            }
+          ],
+          "color": [
+            {
+              "$v": "isAny"
+            }
+          ],
+          "container": [
+            {
+              "$v": "isTshirtSize"
+            }
+          ],
+          "drop-shadow": [
+            {
+              "$v": "isTshirtSize"
+            }
+          ],
+          "ease": [
+            "in",
+            "out",
+            "in-out"
+          ],
+          "font": [
+            {
+              "$v": "isAnyNonArbitrary"
+            }
+          ],
+          "font-weight": [
+            "thin",
+            "extralight",
+            "light",
+            "normal",
+            "medium",
+            "semibold",
+            "bold",
+            "extrabold",
+            "black"
+          ],
+          "inset-shadow": [
+            {
+              "$v": "isTshirtSize"
+            }
+          ],
+          "leading": [
+            "none",
+            "tight",
+            "snug",
+            "normal",
+            "relaxed",
+            "loose"
+          ],
+          "perspective": [
+            "dramatic",
+            "near",
+            "normal",
+            "midrange",
+            "distant",
+            "none"
+          ],
+          "radius": [
+            {
+              "$v": "isTshirtSize"
+            }
+          ],
+          "shadow": [
+            {
+              "$v": "isTshirtSize"
+            }
+          ],
+          "spacing": [
+            "px",
+            {
+              "$v": "isNumber"
+            }
+          ],
+          "text": [
+            {
+              "$v": "isTshirtSize"
+            }
+          ],
+          "text-shadow": [
+            {
+              "$v": "isTshirtSize"
+            }
+          ],
+          "tracking": [
+            "tighter",
+            "tight",
+            "normal",
+            "wide",
+            "wider",
+            "widest"
+          ]
+        },
+        "scannedFiles": 0,
+        "cssFiles": [],
+        "usedGroups": 1,
+        "totalGroups": 384,
+        "warnings": [],
+        "sourceSha256": "c5db84f5cf82a26143a0d598b1eb155c707a0b99536993670e6eebdfbff82a68",
+        "sourceBytes": 3710,
+        "merges": [
+          {
+            "input": "p-2 p-4",
+            "expected": "p-4"
+          },
+          {
+            "input": "m-2 m-4",
+            "expected": "m-2 m-4"
+          },
+          {
+            "input": "shadow-card shadow-lg",
+            "expected": "shadow-card shadow-lg"
+          },
+          {
+            "input": "text-hero text-lg",
+            "expected": "text-hero text-lg"
+          },
+          {
+            "input": "custom-display block",
+            "expected": "custom-display block"
+          }
+        ]
+      },
+      "unchangedSecondBuild": true
+    },
+    {
+      "id": "full",
+      "options": {
+        "full": true,
+        "css": false
+      },
+      "expected": {
+        "changed": true,
+        "tokens": [],
+        "configSha256": "825d6fe3a743139fe2646973872081b85d6f9c781e317f3b069410843ce72b56",
+        "fullConfigSha256": "825d6fe3a743139fe2646973872081b85d6f9c781e317f3b069410843ce72b56",
+        "keptClassGroups": [
+          "aspect",
+          "container",
+          "container-type",
+          "container-named",
+          "columns",
+          "break-after",
+          "break-before",
+          "break-inside",
+          "box-decoration",
+          "box",
+          "display",
+          "sr",
+          "float",
+          "clear",
+          "isolation",
+          "object-fit",
+          "object-position",
+          "overflow",
+          "overflow-x",
+          "overflow-y",
+          "overscroll",
+          "overscroll-x",
+          "overscroll-y",
+          "position",
+          "inset",
+          "inset-x",
+          "inset-y",
+          "start",
+          "end",
+          "inset-bs",
+          "inset-be",
+          "top",
+          "right",
+          "bottom",
+          "left",
+          "visibility",
+          "z",
+          "basis",
+          "flex-direction",
+          "flex-wrap",
+          "flex",
+          "grow",
+          "shrink",
+          "order",
+          "grid-cols",
+          "col-start-end",
+          "col-start",
+          "col-end",
+          "grid-rows",
+          "row-start-end",
+          "row-start",
+          "row-end",
+          "grid-flow",
+          "auto-cols",
+          "auto-rows",
+          "gap",
+          "gap-x",
+          "gap-y",
+          "justify-content",
+          "justify-items",
+          "justify-self",
+          "align-content",
+          "align-items",
+          "align-self",
+          "place-content",
+          "place-items",
+          "place-self",
+          "p",
+          "px",
+          "py",
+          "ps",
+          "pe",
+          "pbs",
+          "pbe",
+          "pt",
+          "pr",
+          "pb",
+          "pl",
+          "m",
+          "mx",
+          "my",
+          "ms",
+          "me",
+          "mbs",
+          "mbe",
+          "mt",
+          "mr",
+          "mb",
+          "ml",
+          "space-x",
+          "space-x-reverse",
+          "space-y",
+          "space-y-reverse",
+          "size",
+          "inline-size",
+          "min-inline-size",
+          "max-inline-size",
+          "block-size",
+          "min-block-size",
+          "max-block-size",
+          "w",
+          "min-w",
+          "max-w",
+          "h",
+          "min-h",
+          "max-h",
+          "font-size",
+          "font-smoothing",
+          "font-style",
+          "font-weight",
+          "font-stretch",
+          "font-family",
+          "font-features",
+          "fvn-normal",
+          "fvn-ordinal",
+          "fvn-slashed-zero",
+          "fvn-figure",
+          "fvn-spacing",
+          "fvn-fraction",
+          "tracking",
+          "line-clamp",
+          "leading",
+          "list-image",
+          "list-style-position",
+          "list-style-type",
+          "text-alignment",
+          "placeholder-color",
+          "text-color",
+          "text-decoration",
+          "text-decoration-style",
+          "text-decoration-thickness",
+          "text-decoration-color",
+          "underline-offset",
+          "text-transform",
+          "text-overflow",
+          "text-wrap",
+          "indent",
+          "tab-size",
+          "vertical-align",
+          "whitespace",
+          "break",
+          "wrap",
+          "hyphens",
+          "content",
+          "bg-attachment",
+          "bg-clip",
+          "bg-origin",
+          "bg-position",
+          "bg-repeat",
+          "bg-size",
+          "bg-image",
+          "bg-color",
+          "gradient-from-pos",
+          "gradient-via-pos",
+          "gradient-to-pos",
+          "gradient-from",
+          "gradient-via",
+          "gradient-to",
+          "rounded",
+          "rounded-s",
+          "rounded-e",
+          "rounded-t",
+          "rounded-r",
+          "rounded-b",
+          "rounded-l",
+          "rounded-ss",
+          "rounded-se",
+          "rounded-ee",
+          "rounded-es",
+          "rounded-tl",
+          "rounded-tr",
+          "rounded-br",
+          "rounded-bl",
+          "border-w",
+          "border-w-x",
+          "border-w-y",
+          "border-w-s",
+          "border-w-e",
+          "border-w-bs",
+          "border-w-be",
+          "border-w-t",
+          "border-w-r",
+          "border-w-b",
+          "border-w-l",
+          "divide-x",
+          "divide-x-reverse",
+          "divide-y",
+          "divide-y-reverse",
+          "border-style",
+          "divide-style",
+          "border-color",
+          "border-color-x",
+          "border-color-y",
+          "border-color-s",
+          "border-color-e",
+          "border-color-bs",
+          "border-color-be",
+          "border-color-t",
+          "border-color-r",
+          "border-color-b",
+          "border-color-l",
+          "divide-color",
+          "outline-style",
+          "outline-offset",
+          "outline-w",
+          "outline-color",
+          "shadow",
+          "shadow-color",
+          "inset-shadow",
+          "inset-shadow-color",
+          "ring-w",
+          "ring-w-inset",
+          "ring-color",
+          "ring-offset-w",
+          "ring-offset-color",
+          "inset-ring-w",
+          "inset-ring-color",
+          "text-shadow",
+          "text-shadow-color",
+          "opacity",
+          "mix-blend",
+          "bg-blend",
+          "mask-clip",
+          "mask-composite",
+          "mask-image-linear-pos",
+          "mask-image-linear-from-pos",
+          "mask-image-linear-to-pos",
+          "mask-image-linear-from-color",
+          "mask-image-linear-to-color",
+          "mask-image-t-from-pos",
+          "mask-image-t-to-pos",
+          "mask-image-t-from-color",
+          "mask-image-t-to-color",
+          "mask-image-r-from-pos",
+          "mask-image-r-to-pos",
+          "mask-image-r-from-color",
+          "mask-image-r-to-color",
+          "mask-image-b-from-pos",
+          "mask-image-b-to-pos",
+          "mask-image-b-from-color",
+          "mask-image-b-to-color",
+          "mask-image-l-from-pos",
+          "mask-image-l-to-pos",
+          "mask-image-l-from-color",
+          "mask-image-l-to-color",
+          "mask-image-x-from-pos",
+          "mask-image-x-to-pos",
+          "mask-image-x-from-color",
+          "mask-image-x-to-color",
+          "mask-image-y-from-pos",
+          "mask-image-y-to-pos",
+          "mask-image-y-from-color",
+          "mask-image-y-to-color",
+          "mask-image-radial",
+          "mask-image-radial-from-pos",
+          "mask-image-radial-to-pos",
+          "mask-image-radial-from-color",
+          "mask-image-radial-to-color",
+          "mask-image-radial-shape",
+          "mask-image-radial-size",
+          "mask-image-radial-pos",
+          "mask-image-conic-pos",
+          "mask-image-conic-from-pos",
+          "mask-image-conic-to-pos",
+          "mask-image-conic-from-color",
+          "mask-image-conic-to-color",
+          "mask-mode",
+          "mask-origin",
+          "mask-position",
+          "mask-repeat",
+          "mask-size",
+          "mask-type",
+          "mask-image",
+          "filter",
+          "blur",
+          "brightness",
+          "contrast",
+          "drop-shadow",
+          "drop-shadow-color",
+          "grayscale",
+          "hue-rotate",
+          "invert",
+          "saturate",
+          "sepia",
+          "backdrop-filter",
+          "backdrop-blur",
+          "backdrop-brightness",
+          "backdrop-contrast",
+          "backdrop-grayscale",
+          "backdrop-hue-rotate",
+          "backdrop-invert",
+          "backdrop-opacity",
+          "backdrop-saturate",
+          "backdrop-sepia",
+          "border-collapse",
+          "border-spacing",
+          "border-spacing-x",
+          "border-spacing-y",
+          "table-layout",
+          "caption",
+          "transition",
+          "transition-behavior",
+          "duration",
+          "ease",
+          "delay",
+          "animate",
+          "backface",
+          "perspective",
+          "perspective-origin",
+          "rotate",
+          "rotate-x",
+          "rotate-y",
+          "rotate-z",
+          "scale",
+          "scale-x",
+          "scale-y",
+          "scale-z",
+          "scale-3d",
+          "skew",
+          "skew-x",
+          "skew-y",
+          "transform",
+          "transform-origin",
+          "transform-style",
+          "translate",
+          "translate-x",
+          "translate-y",
+          "translate-z",
+          "translate-none",
+          "zoom",
+          "accent",
+          "appearance",
+          "caret-color",
+          "color-scheme",
+          "cursor",
+          "field-sizing",
+          "pointer-events",
+          "resize",
+          "scroll-behavior",
+          "scrollbar-thumb-color",
+          "scrollbar-track-color",
+          "scrollbar-gutter",
+          "scrollbar-w",
+          "scroll-m",
+          "scroll-mx",
+          "scroll-my",
+          "scroll-ms",
+          "scroll-me",
+          "scroll-mbs",
+          "scroll-mbe",
+          "scroll-mt",
+          "scroll-mr",
+          "scroll-mb",
+          "scroll-ml",
+          "scroll-p",
+          "scroll-px",
+          "scroll-py",
+          "scroll-ps",
+          "scroll-pe",
+          "scroll-pbs",
+          "scroll-pbe",
+          "scroll-pt",
+          "scroll-pr",
+          "scroll-pb",
+          "scroll-pl",
+          "snap-align",
+          "snap-stop",
+          "snap-type",
+          "snap-strictness",
+          "touch",
+          "touch-x",
+          "touch-y",
+          "touch-pz",
+          "select",
+          "will-change",
+          "fill",
+          "stroke-w",
+          "stroke",
+          "forced-color-adjust",
+          "contain",
+          "contain-size",
+          "contain-layout",
+          "contain-paint",
+          "contain-style"
+        ],
+        "fullClassGroupCount": 384,
+        "theme": {
+          "animate": [
+            "spin",
+            "ping",
+            "pulse",
+            "bounce"
+          ],
+          "aspect": [
+            "video"
+          ],
+          "blur": [
+            {
+              "$v": "isTshirtSize"
+            }
+          ],
+          "breakpoint": [
+            {
+              "$v": "isTshirtSize"
+            }
+          ],
+          "color": [
+            {
+              "$v": "isAny"
+            }
+          ],
+          "container": [
+            {
+              "$v": "isTshirtSize"
+            }
+          ],
+          "drop-shadow": [
+            {
+              "$v": "isTshirtSize"
+            }
+          ],
+          "ease": [
+            "in",
+            "out",
+            "in-out"
+          ],
+          "font": [
+            {
+              "$v": "isAnyNonArbitrary"
+            }
+          ],
+          "font-weight": [
+            "thin",
+            "extralight",
+            "light",
+            "normal",
+            "medium",
+            "semibold",
+            "bold",
+            "extrabold",
+            "black"
+          ],
+          "inset-shadow": [
+            {
+              "$v": "isTshirtSize"
+            }
+          ],
+          "leading": [
+            "none",
+            "tight",
+            "snug",
+            "normal",
+            "relaxed",
+            "loose"
+          ],
+          "perspective": [
+            "dramatic",
+            "near",
+            "normal",
+            "midrange",
+            "distant",
+            "none"
+          ],
+          "radius": [
+            {
+              "$v": "isTshirtSize"
+            }
+          ],
+          "shadow": [
+            {
+              "$v": "isTshirtSize"
+            }
+          ],
+          "spacing": [
+            "px",
+            {
+              "$v": "isNumber"
+            }
+          ],
+          "text": [
+            {
+              "$v": "isTshirtSize"
+            }
+          ],
+          "text-shadow": [
+            {
+              "$v": "isTshirtSize"
+            }
+          ],
+          "tracking": [
+            "tighter",
+            "tight",
+            "normal",
+            "wide",
+            "wider",
+            "widest"
+          ]
+        },
+        "scannedFiles": 0,
+        "cssFiles": [],
+        "usedGroups": null,
+        "totalGroups": null,
+        "warnings": [],
+        "sourceSha256": "2d3cbf44446e4f3dba8082d18c36d9628432ba565898b7f6c6ae5ac837466f5d",
+        "sourceBytes": 14165,
+        "merges": [
+          {
+            "input": "p-2 p-4",
+            "expected": "p-4"
+          },
+          {
+            "input": "m-2 m-4",
+            "expected": "m-4"
+          },
+          {
+            "input": "shadow-card shadow-lg",
+            "expected": "shadow-card shadow-lg"
+          },
+          {
+            "input": "text-hero text-lg",
+            "expected": "text-hero text-lg"
+          },
+          {
+            "input": "custom-display block",
+            "expected": "custom-display block"
+          }
+        ]
+      },
+      "unchangedSecondBuild": true
+    },
+    {
+      "id": "css",
+      "options": {
+        "tokens": "tokens.txt",
+        "css": "theme.css",
+        "safelist": "safelist.txt"
+      },
+      "expected": {
+        "changed": true,
+        "tokens": [
+          "hover:p-2",
+          "hover:p-4",
+          "p-2",
+          "p-4",
+          "shadow-card",
+          "shadow-lg"
+        ],
+        "configSha256": "08dcb0993a282a5bd1745fd16cfd9e2e4b2980e1b1bd4e50e23f3327dcf5ee66",
+        "fullConfigSha256": "7635ee743038e671c666f29850c36137ed85da257d79f0ec46a4a1ec6c65cba4",
+        "keptClassGroups": [
+          "p",
+          "shadow"
+        ],
+        "fullClassGroupCount": 384,
+        "theme": {
+          "animate": [
+            "spin",
+            "ping",
+            "pulse",
+            "bounce"
+          ],
+          "aspect": [
+            "video"
+          ],
+          "blur": [
+            {
+              "$v": "isTshirtSize"
+            }
+          ],
+          "breakpoint": [
+            {
+              "$v": "isTshirtSize"
+            }
+          ],
+          "color": [
+            {
+              "$v": "isAny"
+            }
+          ],
+          "container": [
+            {
+              "$v": "isTshirtSize"
+            }
+          ],
+          "drop-shadow": [
+            {
+              "$v": "isTshirtSize"
+            }
+          ],
+          "ease": [
+            "in",
+            "out",
+            "in-out"
+          ],
+          "font": [
+            {
+              "$v": "isAnyNonArbitrary"
+            }
+          ],
+          "font-weight": [
+            "thin",
+            "extralight",
+            "light",
+            "normal",
+            "medium",
+            "semibold",
+            "bold",
+            "extrabold",
+            "black"
+          ],
+          "inset-shadow": [
+            {
+              "$v": "isTshirtSize"
+            }
+          ],
+          "leading": [
+            "none",
+            "tight",
+            "snug",
+            "normal",
+            "relaxed",
+            "loose"
+          ],
+          "perspective": [
+            "dramatic",
+            "near",
+            "normal",
+            "midrange",
+            "distant",
+            "none"
+          ],
+          "radius": [
+            "card"
+          ],
+          "shadow": [
+            {
+              "$v": "isTshirtSize"
+            },
+            "card"
+          ],
+          "spacing": [
+            "px",
+            {
+              "$v": "isNumber"
+            }
+          ],
+          "text": [
+            {
+              "$v": "isTshirtSize"
+            },
+            "hero"
+          ],
+          "text-shadow": [
+            {
+              "$v": "isTshirtSize"
+            }
+          ],
+          "tracking": [
+            "tighter",
+            "tight",
+            "normal",
+            "wide",
+            "wider",
+            "widest"
+          ]
+        },
+        "scannedFiles": 0,
+        "cssFiles": [
+          "theme.css",
+          "nested.css"
+        ],
+        "usedGroups": 2,
+        "totalGroups": 384,
+        "warnings": [],
+        "sourceSha256": "b97998d58976d453b5f8ba2fc2e8ae541fb3b3ac19737cae8460584676fdb219",
+        "sourceBytes": 3746,
+        "merges": [
+          {
+            "input": "p-2 p-4",
+            "expected": "p-4"
+          },
+          {
+            "input": "m-2 m-4",
+            "expected": "m-2 m-4"
+          },
+          {
+            "input": "shadow-card shadow-lg",
+            "expected": "shadow-lg"
+          },
+          {
+            "input": "text-hero text-lg",
+            "expected": "text-hero text-lg"
+          },
+          {
+            "input": "custom-display block",
+            "expected": "custom-display block"
+          }
+        ]
+      },
+      "unchangedSecondBuild": true
+    },
+    {
+      "id": "config",
+      "options": {
+        "content": [
+          "src/**/*.html"
+        ],
+        "config": "config.mjs",
+        "css": false
+      },
+      "expected": {
+        "changed": true,
+        "tokens": [
+          "/div",
+          "class=",
+          "custom",
+          "div",
+          "leading-6",
+          "p-2",
+          "p-4",
+          "text-lg/7"
+        ],
+        "configSha256": "1e2f6cad1ded7b262c0b89fa7461be56d8eabd50203425e8f2d963600e7af8e8",
+        "fullConfigSha256": "8119375c9c0af41974a50abc1fe8c8f6ce5611841dd5cc39c5f7983b6c781954",
+        "keptClassGroups": [
+          "p",
+          "font-size",
+          "leading",
+          "text-color"
+        ],
+        "fullClassGroupCount": 384,
+        "theme": {
+          "animate": [
+            "spin",
+            "ping",
+            "pulse",
+            "bounce"
+          ],
+          "aspect": [
+            "video"
+          ],
+          "blur": [
+            {
+              "$v": "isTshirtSize"
+            }
+          ],
+          "breakpoint": [
+            {
+              "$v": "isTshirtSize"
+            }
+          ],
+          "color": [
+            {
+              "$v": "isAny"
+            }
+          ],
+          "container": [
+            {
+              "$v": "isTshirtSize"
+            }
+          ],
+          "drop-shadow": [
+            {
+              "$v": "isTshirtSize"
+            }
+          ],
+          "ease": [
+            "in",
+            "out",
+            "in-out"
+          ],
+          "font": [
+            {
+              "$v": "isAnyNonArbitrary"
+            }
+          ],
+          "font-weight": [
+            "thin",
+            "extralight",
+            "light",
+            "normal",
+            "medium",
+            "semibold",
+            "bold",
+            "extrabold",
+            "black"
+          ],
+          "inset-shadow": [
+            {
+              "$v": "isTshirtSize"
+            }
+          ],
+          "leading": [
+            "none",
+            "tight",
+            "snug",
+            "normal",
+            "relaxed",
+            "loose"
+          ],
+          "perspective": [
+            "dramatic",
+            "near",
+            "normal",
+            "midrange",
+            "distant",
+            "none"
+          ],
+          "radius": [
+            {
+              "$v": "isTshirtSize"
+            }
+          ],
+          "shadow": [
+            {
+              "$v": "isTshirtSize"
+            }
+          ],
+          "spacing": [
+            "px",
+            {
+              "$v": "isNumber"
+            }
+          ],
+          "text": [
+            {
+              "$v": "isTshirtSize"
+            }
+          ],
+          "text-shadow": [
+            {
+              "$v": "isTshirtSize"
+            }
+          ],
+          "tracking": [
+            "tighter",
+            "tight",
+            "normal",
+            "wide",
+            "wider",
+            "widest"
+          ]
+        },
+        "scannedFiles": 1,
+        "cssFiles": [],
+        "usedGroups": 4,
+        "totalGroups": 384,
+        "warnings": [],
+        "sourceSha256": "41168b5891c367819d4c6fc12a13f5cbd9da547a5526dc65d52def28de111f84",
+        "sourceBytes": 3808,
+        "merges": [
+          {
+            "input": "p-2 p-4",
+            "expected": "p-4"
+          },
+          {
+            "input": "m-2 m-4",
+            "expected": "m-2 m-4"
+          },
+          {
+            "input": "shadow-card shadow-lg",
+            "expected": "shadow-card shadow-lg"
+          },
+          {
+            "input": "text-hero text-lg",
+            "expected": "text-hero text-lg"
+          },
+          {
+            "input": "custom-display block",
+            "expected": "custom-display block"
+          }
+        ]
+      },
+      "unchangedSecondBuild": true
+    },
+    {
+      "id": "tsOutput",
+      "options": {
+        "tokens": "tokens.txt",
+        "css": false,
+        "out": "tables-ts.ts"
+      },
+      "expected": {
+        "changed": true,
+        "tokens": [
+          "hover:p-2",
+          "hover:p-4",
+          "p-2",
+          "p-4"
+        ],
+        "configSha256": "3c941cff9788f6b12d93c55e81ea9b6d98094b61d002b244c4f83616b1aa7919",
+        "fullConfigSha256": "825d6fe3a743139fe2646973872081b85d6f9c781e317f3b069410843ce72b56",
+        "keptClassGroups": [
+          "p"
+        ],
+        "fullClassGroupCount": 384,
+        "theme": {
+          "animate": [
+            "spin",
+            "ping",
+            "pulse",
+            "bounce"
+          ],
+          "aspect": [
+            "video"
+          ],
+          "blur": [
+            {
+              "$v": "isTshirtSize"
+            }
+          ],
+          "breakpoint": [
+            {
+              "$v": "isTshirtSize"
+            }
+          ],
+          "color": [
+            {
+              "$v": "isAny"
+            }
+          ],
+          "container": [
+            {
+              "$v": "isTshirtSize"
+            }
+          ],
+          "drop-shadow": [
+            {
+              "$v": "isTshirtSize"
+            }
+          ],
+          "ease": [
+            "in",
+            "out",
+            "in-out"
+          ],
+          "font": [
+            {
+              "$v": "isAnyNonArbitrary"
+            }
+          ],
+          "font-weight": [
+            "thin",
+            "extralight",
+            "light",
+            "normal",
+            "medium",
+            "semibold",
+            "bold",
+            "extrabold",
+            "black"
+          ],
+          "inset-shadow": [
+            {
+              "$v": "isTshirtSize"
+            }
+          ],
+          "leading": [
+            "none",
+            "tight",
+            "snug",
+            "normal",
+            "relaxed",
+            "loose"
+          ],
+          "perspective": [
+            "dramatic",
+            "near",
+            "normal",
+            "midrange",
+            "distant",
+            "none"
+          ],
+          "radius": [
+            {
+              "$v": "isTshirtSize"
+            }
+          ],
+          "shadow": [
+            {
+              "$v": "isTshirtSize"
+            }
+          ],
+          "spacing": [
+            "px",
+            {
+              "$v": "isNumber"
+            }
+          ],
+          "text": [
+            {
+              "$v": "isTshirtSize"
+            }
+          ],
+          "text-shadow": [
+            {
+              "$v": "isTshirtSize"
+            }
+          ],
+          "tracking": [
+            "tighter",
+            "tight",
+            "normal",
+            "wide",
+            "wider",
+            "widest"
+          ]
+        },
+        "scannedFiles": 0,
+        "cssFiles": [],
+        "usedGroups": 1,
+        "totalGroups": 384,
+        "warnings": [],
+        "sourceSha256": "4852a14cded462c3622adcbfef35499829bd4d5a08b7ac301d10b1240da7abe9",
+        "sourceBytes": 3796
+      },
+      "unchangedSecondBuild": true
+    },
+    {
+      "id": "noFiles",
+      "options": {
+        "content": [
+          "missing/**/*.html"
+        ]
+      },
+      "expected": {
+        "name": "Error",
+        "message": "no files matched the content globs; pass --content or use --full"
+      }
+    },
+    {
+      "id": "missingTokens",
+      "options": {
+        "tokens": "missing.txt"
+      },
+      "expected": {
+        "name": "Error",
+        "message": "cannot read tokens file missing.txt: ENOENT: no such file or directory, open '<fixture>/missing.txt'"
+      }
+    },
+    {
+      "id": "unknownValidatorConfig",
+      "options": {
+        "config": "bad-config.mjs",
+        "full": true
+      },
+      "expected": {
+        "name": "Error",
+        "message": "cn: unknown validator \"unknown\""
+      }
+    },
+    {
+      "id": "builder-dropped-group-edit",
+      "expected": {
+        "firstGroups": [
+          "p",
+          "font-size",
+          "leading",
+          "text-color"
+        ],
+        "reusedKnownResult": true,
+        "addedGroupChanged": true,
+        "lastIsNewResult": true,
+        "freshGroups": [
+          "m"
+        ]
+      }
+    },
+    {
+      "id": "content-matcher",
+      "expected": [
+        {
+          "path": "src/view.html",
+          "matched": true
+        },
+        {
+          "path": "node_modules/hidden/view.html",
+          "matched": true
+        },
+        {
+          "path": "node_modules/allowed/view.html",
+          "matched": true
+        },
+        {
+          "path": ".git/view.html",
+          "matched": false
+        },
+        {
+          "path": "../outside.html",
+          "matched": false
+        },
+        {
+          "path": "src/view.ts",
+          "matched": false
+        }
+      ]
+    },
+    {
+      "id": "token-length-cap",
+      "expected": {
+        "skippedLong": 1,
+        "tokens": [
+          "class=",
+          "p-2",
+          "hover:p-4",
+          "x"
+        ]
+      }
+    }
+  ]
+}

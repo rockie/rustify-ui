@@ -1,0 +1,14 @@
+import fs from 'node:fs';
+import assert from 'node:assert/strict';
+const path = new URL('../../../target/wasm32-unknown-unknown/release/examples/scanner_source_probe.wasm', import.meta.url);
+const bytes = fs.readFileSync(path);
+const module = new WebAssembly.Module(bytes);
+const imports = WebAssembly.Module.imports(module);
+assert.deepEqual(imports, []);
+const instance = new WebAssembly.Instance(module);
+const failures = instance.exports.run_source_fixtures();
+assert.equal(failures, 0, 'fixed upstream source/incremental/positions corpus must agree in WASM');
+const sharedMemory = instance.exports.memory.buffer instanceof SharedArrayBuffer;
+assert.equal(sharedMemory, false);
+const fixtures = JSON.parse(fs.readFileSync(new URL('./source-fixtures.json', import.meta.url), 'utf8'));
+console.log(JSON.stringify({cases:fixtures.length,operations:fixtures.reduce((total,fixture)=>total+fixture.steps.length,0),failures,imports,sharedMemory,wasmBytes:bytes.length},null,2));

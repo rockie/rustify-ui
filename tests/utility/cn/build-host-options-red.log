@@ -1,0 +1,73 @@
+{
+  "passed": 40,
+  "failures": [
+    {
+      "name": "options-build-content-read-order",
+      "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:\n+ actual - expected\n\n  [\n    'get:cwd',\n    'get:out',\n+   'get:safelist',\n-   'get:css',\n    'get:config',\n+   'get:tokens',\n    'get:full',\n+   'get:css',\n-   'get:tokens',\n    'get:content',\n-   'get:content',\n-   'get:safelist',\n-   'get:full'\n  ]\n\n    at compare (file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/cn/build-options-cases.mjs:16:10)\n    at async check (file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/cn/run-build-host.mjs:30:35)\n    at async optionsCases (file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/cn/build-options-cases.mjs:18:2)\n    at async file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/cn/run-build-host.mjs:210:3"
+    },
+    {
+      "name": "options-build-default-CSS-and-empty-content-read-order",
+      "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:\n+ actual - expected\n\n  [\n    'get:cwd',\n    'get:out',\n+   'get:safelist',\n-   'get:css',\n-   'get:css',\n    'get:config',\n+   'get:tokens',\n    'get:full',\n+   'get:css',\n-   'get:tokens',\n    'get:content',\n-   'get:safelist',\n-   'get:full'\n  ]\n\n    at compare (file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/cn/build-options-cases.mjs:16:10)\n    at async check (file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/cn/run-build-host.mjs:30:35)\n    at async optionsCases (file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/cn/build-options-cases.mjs:19:2)\n    at async file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/cn/run-build-host.mjs:210:3"
+    },
+    {
+      "name": "options-build-CSS-token-safelist-repeated-reads",
+      "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:\n+ actual - expected\n\n  [\n    'get:cwd',\n    'get:out',\n+   'get:safelist',\n-   'get:css',\n-   'get:css',\n-   'get:css',\n    'get:config',\n-   'get:full',\n    'get:tokens',\n-   'get:tokens',\n-   'get:tokens',\n-   'get:safelist',\n-   'get:safelist',\n-   'get:safelist',\n    'get:full',\n+   'get:css',\n+   'get:content'\n  ]\n\n    at compare (file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/cn/build-options-cases.mjs:16:10)\n    at async check (file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/cn/run-build-host.mjs:30:35)\n    at async optionsCases (file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/cn/build-options-cases.mjs:20:2)\n    at async file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/cn/run-build-host.mjs:210:3"
+    },
+    {
+      "name": "options-build-full-short-circuit-unread-throwing-getters",
+      "error": "[object Object]"
+    },
+    {
+      "name": "options-build-full-reads-may-change-between-stages",
+      "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:\n+ actual - expected\n\n  [\n    'get:cwd',\n    'get:out',\n+   'get:safelist',\n-   'get:css',\n    'get:config',\n+   'get:tokens',\n    'get:full',\n+   'get:css',\n-   'get:tokens',\n    'get:content',\n-   'get:content',\n-   'get:safelist',\n-   'get:full'\n  ]\n\n    at compare (file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/cn/build-options-cases.mjs:16:10)\n    at async check (file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/cn/run-build-host.mjs:30:35)\n    at async optionsCases (file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/cn/build-options-cases.mjs:22:2)\n    at async file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/cn/run-build-host.mjs:210:3"
+    },
+    {
+      "name": "options-build-getter-throw-original-identity",
+      "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:\n+ actual - expected\n\n  [\n    'get:cwd',\n    'get:out',\n+   'get:safelist',\n+   'get:config',\n+   'get:tokens',\n+   'get:full',\n    'get:css'\n  ]\n\n    at file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/cn/build-options-cases.mjs:25:127\n    at async check (file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/cn/run-build-host.mjs:30:35)\n    at async optionsCases (file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/cn/build-options-cases.mjs:23:2)\n    at async file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/cn/run-build-host.mjs:210:3"
+    },
+    {
+      "name": "options-build-await-transform-sees-late-full",
+      "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:\n+ actual - expected\n\n  [\n    'get:cwd',\n    'get:out',\n+   'get:safelist',\n-   'get:css',\n    'get:config',\n+   'get:tokens',\n-   'get:config',\n    'get:full',\n+   'get:css',\n+   'get:content'\n-   'get:full'\n  ]\n\n    at file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/cn/build-options-cases.mjs:30:220\n    at async check (file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/cn/run-build-host.mjs:30:35)\n    at async optionsCases (file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/cn/build-options-cases.mjs:27:2)\n    at async file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/cn/run-build-host.mjs:210:3"
+    },
+    {
+      "name": "options-builder-create-run-changed-lazy-reads",
+      "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:\n+ actual - expected\n\n  [\n    'get:cwd',\n+   'get:out',\n+   'get:safelist',\n+   'get:config',\n+   'get:tokens',\n+   'get:full',\n+   'get:css',\n    'get:content',\n-   'get:content'\n  ]\n\n    at file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/cn/build-options-cases.mjs:33:278\n    at check (file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/cn/run-build-host.mjs:30:41)\n    at optionsCases (file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/cn/build-options-cases.mjs:32:8)\n    at async file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/cn/run-build-host.mjs:210:3"
+    },
+    {
+      "name": "options-builder-known-CSS-short-circuits-option-reads",
+      "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:\n+ actual - expected\n\n  [\n    'get:cwd',\n    'get:out',\n+   'get:safelist',\n-   'get:css',\n-   'get:css',\n    'get:config',\n+   'get:tokens',\n    'get:full',\n+   'get:css',\n-   'get:tokens',\n    'get:content',\n+   'get:cwd',\n+   'get:out',\n-   'get:content',\n    'get:safelist',\n+   'get:config',\n+   'get:tokens',\n    'get:full',\n+   'get:css',\n+   'get:content'\n  ]\n\n    at file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/cn/build-options-cases.mjs:40:390\n    at async check (file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/cn/run-build-host.mjs:30:35)\n    at async optionsCases (file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/cn/build-options-cases.mjs:39:2)\n    at async file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/cn/run-build-host.mjs:210:3"
+    },
+    {
+      "name": "options-Vite-spread-and-deferred-builder-getters",
+      "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:\n+ actual - expected\n\n  [\n    'get:cwd',\n+   'get:out',\n+   'get:safelist',\n+   'get:config',\n+   'get:tokens',\n+   'get:full',\n+   'get:css',\n    'get:content',\n    'get:cwd',\n    'get:out',\n+   'get:safelist',\n-   'get:css',\n    'get:config',\n+   'get:tokens',\n    'get:full',\n+   'get:css',\n-   'get:tokens',\n    'get:content',\n-   'get:safelist',\n-   'get:full'\n  ]\n\n    at file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/cn/build-options-cases.mjs:44:194\n    at async check (file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/cn/run-build-host.mjs:30:35)\n    at async optionsCases (file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/cn/build-options-cases.mjs:42:2)\n    at async file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/cn/run-build-host.mjs:210:3"
+    },
+    {
+      "name": "options-Next-factory-builder-and-development-cwd-read-order",
+      "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:\n+ actual - expected\n\n  [\n    'get:cwd',\n+   'get:out',\n+   'get:safelist',\n+   'get:config',\n+   'get:tokens',\n+   'get:full',\n+   'get:css',\n    'get:content',\n    'get:cwd',\n    'get:out',\n+   'get:safelist',\n-   'get:css',\n    'get:config',\n+   'get:tokens',\n    'get:full',\n+   'get:css',\n-   'get:tokens',\n    'get:content',\n-   'get:safelist',\n-   'get:full'\n  ]\n\n    at file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/cn/build-options-cases.mjs:47:305\n    at async check (file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/cn/run-build-host.mjs:30:35)\n    at async optionsCases (file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/cn/build-options-cases.mjs:46:2)\n    at async file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/cn/run-build-host.mjs:210:3"
+    },
+    {
+      "name": "options-build-repeated-path-and-error-label-getters",
+      "error": "AssertionError [ERR_ASSERTION]: The validation function is expected to return \"true\". Received false\n\nCaught error:\n\nError: cannot read tokens file condition.txt: ENOENT: no such file or directory, open '/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-cn-host-XKbjGB/option-labels/condition.txt'\n    at async file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/cn/build-options-cases.mjs:54:4\n    at async check (file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/cn/run-build-host.mjs:30:35)\n    at async optionsCases (file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/cn/build-options-cases.mjs:49:2)\n    at async file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/cn/run-build-host.mjs:210:3"
+    },
+    {
+      "name": "options-Vite-async-hooks-reject-original-getter-throw",
+      "error": "AssertionError [ERR_ASSERTION]: Got unwanted exception.\nActual message: \"undefined\"\n    at file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/cn/build-options-cases.mjs:59:53\n    at check (file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/cn/run-build-host.mjs:30:41)\n    at optionsCases (file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/cn/build-options-cases.mjs:57:8)\n    at async file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/cn/run-build-host.mjs:210:3"
+    },
+    {
+      "name": "options-CLI-summary-original-print-stage-getters",
+      "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:\n+ actual - expected\n\n  [\n+   'get:cwd',\n+   'get:out',\n+   'get:safelist',\n+   'get:config',\n+   'get:tokens',\n    'get:full',\n+   'get:css',\n+   'get:content'\n-   'get:out'\n  ]\n\n    at file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/cn/build-options-cases.mjs:66:432\n    at check (file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/cn/run-build-host.mjs:30:41)\n    at optionsCases (file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/cn/build-options-cases.mjs:62:8)\n    at async file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/cn/run-build-host.mjs:210:3"
+    }
+  ]
+}
+node:internal/process/promises:330
+      new UnhandledPromiseRejection(reason);
+      ^
+
+UnhandledPromiseRejection: This error originated either by throwing inside of an async function without a catch block, or by rejecting a promise which was not handled with .catch(). The promise rejected with the reason "#<Object>".
+    at throwUnhandledRejectionsMode (node:internal/process/promises:330:7)
+    at processPromiseRejections (node:internal/process/promises:413:17)
+    at process.processTicksAndRejections (node:internal/process/task_queues:106:37) {
+  code: 'ERR_UNHANDLED_REJECTION'
+}
+
+Node.js v26.1.0

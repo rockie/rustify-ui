@@ -1,0 +1,521 @@
+{
+  "config": {
+    "argv": [
+      "/Users/rockie/.nvm/versions/node/v26.1.0/bin/node",
+      "/Users/rockie/Documents/gh-rockie/rustify-ui/node_modules/.bin/playwright",
+      "test",
+      "--project=utility-lab",
+      "--workers=1",
+      "utility-runtime.spec.ts",
+      "-g",
+      "manifest seed|modified seed|seed count",
+      "--output",
+      "docs/validation/wasm-tailwind/seed-runtime-final-results",
+      "--reporter=json"
+    ],
+    "configFile": "/Users/rockie/Documents/gh-rockie/rustify-ui/playwright.config.ts",
+    "rootDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": {},
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/wasm-tailwind/seed-runtime-final-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "utility-lab-scanner",
+        "name": "utility-lab-scanner",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "utility-scanner.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/wasm-tailwind/seed-runtime-final-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "utility-lab-scanner-deep",
+        "name": "utility-lab-scanner-deep",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "utility-scanner.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/wasm-tailwind/seed-runtime-final-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "utility-lab",
+        "name": "utility-lab",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "utility-runtime.spec.ts",
+          "utility-faults.spec.ts",
+          "utility-gpu.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/wasm-tailwind/seed-runtime-final-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "utility-lab-deep",
+        "name": "utility-lab-deep",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "utility-runtime.spec.ts",
+          "utility-gpu.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/wasm-tailwind/seed-runtime-final-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "utility-baseline",
+        "name": "utility-baseline",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "utility-baseline.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/wasm-tailwind/seed-runtime-final-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "fusion-basic",
+        "name": "fusion-basic",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "p3-restart.spec.ts",
+          "m1-probes.spec.ts",
+          "m2-runtime.spec.ts",
+          "m3-state.spec.ts",
+          "m4-geometry.spec.ts",
+          "m4-overlay.spec.ts",
+          "m6-mainpath.spec.ts",
+          "p2-navigation.spec.ts",
+          "p3-instances.spec.ts",
+          "p3-b0.spec.ts",
+          "p3-idle.spec.ts",
+          "p3-memory.spec.ts",
+          "p3-endurance.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/wasm-tailwind/seed-runtime-final-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "property-workbench",
+        "name": "property-workbench",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "p3-restart.spec.ts",
+          "m3-workbench.spec.ts",
+          "m5-text.spec.ts",
+          "m5-semantics.spec.ts",
+          "m6-theme.spec.ts",
+          "m6-async.spec.ts",
+          "m6-components.spec.ts",
+          "m7-recovery.spec.ts",
+          "m8-baseline.spec.ts",
+          "m8-network.spec.ts",
+          "m8-endurance.spec.ts",
+          "p2-form.spec.ts",
+          "p2-deeplink.spec.ts",
+          "p2-workspace.spec.ts",
+          "p2-drag.spec.ts",
+          "p2-clipboard-files.spec.ts",
+          "p2-zoom.spec.ts",
+          "p2-ime.spec.ts",
+          "p3-policy.spec.ts",
+          "p3-faults.spec.ts",
+          "p3-diagnostics.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/wasm-tailwind/seed-runtime-final-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "component-catalog",
+        "name": "component-catalog",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "p3-restart.spec.ts",
+          "p2-catalog.spec.ts",
+          "p2-theme.spec.ts",
+          "p2-semantics.spec.ts",
+          "p2-i18n.spec.ts",
+          "p2-reflow.spec.ts",
+          "p2-a11y.spec.ts",
+          "p3-policy.spec.ts",
+          "catalog-inputs.spec.ts",
+          "theme-compat.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/wasm-tailwind/seed-runtime-final-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "theme-studio",
+        "name": "theme-studio",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [
+          "theme-compat.spec.ts",
+          "theme-export-runtime.spec.ts"
+        ],
+        "testMatch": [
+          "theme-*.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/wasm-tailwind/seed-runtime-final-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "theme-studio-deep",
+        "name": "theme-studio-deep",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "theme-deployment.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/wasm-tailwind/seed-runtime-final-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "theme-export",
+        "name": "theme-export",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "theme-export-runtime.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/wasm-tailwind/seed-runtime-final-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "theme-export-deep",
+        "name": "theme-export-deep",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "theme-export-runtime.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/wasm-tailwind/seed-runtime-final-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "data-workbench",
+        "name": "data-workbench",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "p3-restart.spec.ts",
+          "p3-probes.spec.ts",
+          "p3-table.spec.ts",
+          "p3-jobs.spec.ts",
+          "p3-scene.spec.ts",
+          "p3-memory.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/wasm-tailwind/seed-runtime-final-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "budget-scene",
+        "name": "budget-scene",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "p3-budget-scene.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/wasm-tailwind/seed-runtime-final-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "workbench-deep",
+        "name": "workbench-deep",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "p2-deeplink.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/wasm-tailwind/seed-runtime-final-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "deployment",
+        "name": "deployment",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "m7-deployment.spec.ts"
+        ],
+        "timeout": 120000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "utility-runtime.spec.ts",
+      "file": "utility-runtime.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "manifest seed preserves static utility order on first ensure, replacement and retry",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "utility-lab",
+              "projectName": "utility-lab",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 1102,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"\u001b[7m0\u001b[27mpx\"\u001b[39m\nReceived: \u001b[31m\"\u001b[7m16\u001b[27mpx\"\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"\u001b[7m0\u001b[27mpx\"\u001b[39m\nReceived: \u001b[31m\"\u001b[7m16\u001b[27mpx\"\u001b[39m\n    at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser/utility-runtime.spec.ts:66:28",
+                    "location": {
+                      "file": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser/utility-runtime.spec.ts",
+                      "column": 28,
+                      "line": 66
+                    },
+                    "snippet": "  64 |     expect(result.first.admitted).toContain('p-4');\n  65 |     expect(result.padding).toBe('16px');\n> 66 |     expect(result.padding).toBe(result.officialPadding);\n     |                            ^\n  67 |     expect(result.replacedPadding).toBe('32px');\n  68 |     expect(result.retryPadding).toBe('32px');\n  69 |     expect(result.replacedPadding).toBe(result.officialReplacedPadding);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser/utility-runtime.spec.ts",
+                        "column": 28,
+                        "line": 66
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"\u001b[7m0\u001b[27mpx\"\u001b[39m\nReceived: \u001b[31m\"\u001b[7m16\u001b[27mpx\"\u001b[39m\n\n  64 |     expect(result.first.admitted).toContain('p-4');\n  65 |     expect(result.padding).toBe('16px');\n> 66 |     expect(result.padding).toBe(result.officialPadding);\n     |                            ^\n  67 |     expect(result.replacedPadding).toBe('32px');\n  68 |     expect(result.retryPadding).toBe('32px');\n  69 |     expect(result.replacedPadding).toBe(result.officialReplacedPadding);\n    at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser/utility-runtime.spec.ts:66:28"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T14:03:13.837Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/wasm-tailwind/seed-runtime-final-results/utility-runtime-manifest-s-cf82b-nsure-replacement-and-retry-utility-lab/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/wasm-tailwind/seed-runtime-final-results/utility-runtime-manifest-s-cf82b-nsure-replacement-and-retry-utility-lab/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser/utility-runtime.spec.ts",
+                    "column": 28,
+                    "line": 66
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "b6296ec9b704237e1532-a8ecf9dcad1e9877eb1a",
+          "file": "utility-runtime.spec.ts",
+          "line": 10,
+          "column": 5
+        },
+        {
+          "title": "a modified seed is rejected before installation and explicit retry keeps committed styles",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "utility-lab",
+              "projectName": "utility-lab",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 644,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T14:03:15.858Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "b6296ec9b704237e1532-e182ba095f26f05f93e3",
+          "file": "utility-runtime.spec.ts",
+          "line": 78,
+          "column": 5
+        },
+        {
+          "title": "seed count and transfer budgets reject init without retaining a half initialized session",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "utility-lab",
+              "projectName": "utility-lab",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 536,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T14:03:16.696Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "Seed init budget boundaries and recovery",
+                      "contentType": "application/json",
+                      "body": "ewogICJjb3VudCI6IHsKICAgICJwcm90b2NvbF92ZXJzaW9uIjogMSwKICAgICJydW50aW1lX2lkIjogInNlZWQtYnVkZ2V0IiwKICAgICJlcG9jaCI6IDEsCiAgICAicmVxdWVzdF9pZCI6IDEsCiAgICAib3BlcmF0aW9uIjogImVycm9yIiwKICAgICJwYXlsb2FkIjogewogICAgICAia2luZCI6ICJjb21waWxlIiwKICAgICAgImVycm9yIjogewogICAgICAgICJraW5kIjogImxpbWl0IiwKICAgICAgICAicmVzb3VyY2UiOiAiY2FuZGlkYXRlX2NvdW50IiwKICAgICAgICAibGltaXQiOiAxCiAgICAgIH0KICAgIH0KICB9LAogICJ0cmFuc2ZlciI6IHsKICAgICJwcm90b2NvbF92ZXJzaW9uIjogMSwKICAgICJydW50aW1lX2lkIjogInNlZWQtYnVkZ2V0IiwKICAgICJlcG9jaCI6IDEsCiAgICAicmVxdWVzdF9pZCI6IDIsCiAgICAib3BlcmF0aW9uIjogImVycm9yIiwKICAgICJwYXlsb2FkIjogewogICAgICAia2luZCI6ICJjb21waWxlIiwKICAgICAgImVycm9yIjogewogICAgICAgICJraW5kIjogImxpbWl0IiwKICAgICAgICAicmVzb3VyY2UiOiAicXVldWVkX2J5dGVzIiwKICAgICAgICAibGltaXQiOiAxMDI0CiAgICAgIH0KICAgIH0KICB9LAogICJyZWNvdmVyZWQiOiB7CiAgICAicHJvdG9jb2xfdmVyc2lvbiI6IDEsCiAgICAicnVudGltZV9pZCI6ICJzZWVkLWJ1ZGdldCIsCiAgICAiZXBvY2giOiAxLAogICAgInJlcXVlc3RfaWQiOiAzLAogICAgIm9wZXJhdGlvbiI6ICJyZWFkeSIsCiAgICAicGF5bG9hZCI6IHsKICAgICAgImJ1aWxkX2lkIjogIjM2NjAzZThiM2ExZjE4NDViMzNlMWNjMzI1MmU2MTAyNTVjM2U0ZWM0ODM2NjBmZjlhZGVjNTBiYjQ2OTVmMzEiLAogICAgICAic2Nhbm5lcl9lbmFibGVkIjogZmFsc2UsCiAgICAgICJzdGF0aWNfY2FuZGlkYXRlcyI6IFsKICAgICAgICAiLW1lLTIiLAogICAgICAgICItbWwtMSIsCiAgICAgICAgIi1tdC0yIiwKICAgICAgICAiLW14LTEiLAogICAgICAgICJhYnNvbHV0ZSIsCiAgICAgICAgImFyaWEtY2hlY2tlZDpiZy1wcmltYXJ5IiwKICAgICAgICAiYXJpYS1kaXNhYmxlZDpjdXJzb3Itbm90LWFsbG93ZWQiLAogICAgICAgICJhcmlhLWRpc2FibGVkOmhvdmVyOmJnLXRyYW5zcGFyZW50IiwKICAgICAgICAiYXJpYS1kaXNhYmxlZDpvcGFjaXR5LTUwIiwKICAgICAgICAiYXJpYS1kaXNhYmxlZDpwb2ludGVyLWV2ZW50cy1ub25lIiwKICAgICAgICAiYXJpYS1pbnZhbGlkOmJvcmRlci1kZXN0cnVjdGl2ZSIsCiAgICAgICAgImFyaWEtaW52YWxpZDpyaW5nLWRlc3RydWN0aXZlLzQwIiwKICAgICAgICAiYXJpYS1wcmVzc2VkOmJnLXByaW1hcnkiLAogICAgICAgICJhcmlhLXByZXNzZWQ6aG92ZXI6YmctcHJpbWFyeS85MCIsCiAgICAgICAgImFyaWEtcHJlc3NlZDp0ZXh0LXByaW1hcnktZm9yZWdyb3VuZCIsCiAgICAgICAgImFyaWEtc2VsZWN0ZWQ6YmctYWNjZW50IiwKICAgICAgICAiYXJpYS1zZWxlY3RlZDpiZy1iYWNrZ3JvdW5kIiwKICAgICAgICAiYXJpYS1zZWxlY3RlZDpib3JkZXItYm9yZGVyIiwKICAgICAgICAiYXJpYS1zZWxlY3RlZDp0ZXh0LWZvcmVncm91bmQiLAogICAgICAgICJiZy1hY2NlbnQiLAogICAgICAgICJiZy1iYWNrZ3JvdW5kIiwKICAgICAgICAiYmctYm9yZGVyIiwKICAgICAgICAiYmctY2FyZCIsCiAgICAgICAgImJnLWRlc3RydWN0aXZlIiwKICAgICAgICAiYmctZm9yZWdyb3VuZCIsCiAgICAgICAgImJnLWZvcmVncm91bmQvMzAiLAogICAgICAgICJiZy1pbnB1dCIsCiAgICAgICAgImJnLW11dGVkIiwKICAgICAgICAiYmctcG9wb3ZlciIsCiAgICAgICAgImJnLXByaW1hcnkiLAogICAgICAgICJiZy1zZWNvbmRhcnkiLAogICAgICAgICJiZy10cmFuc3BhcmVudCIsCiAgICAgICAgImJsb2NrIiwKICAgICAgICAiYm9yZGVyIiwKICAgICAgICAiYm9yZGVyLTAiLAogICAgICAgICJib3JkZXItMiIsCiAgICAgICAgImJvcmRlci1iIiwKICAgICAgICAiYm9yZGVyLWJvcmRlciIsCiAgICAgICAgImJvcmRlci1ib3JkZXIvNTAiLAogICAgICAgICJib3JkZXItZGFzaGVkIiwKICAgICAgICAiYm9yZGVyLXByaW1hcnkiLAogICAgICAgICJib3JkZXItcy00IiwKICAgICAgICAiYm9yZGVyLXMtZGVzdHJ1Y3RpdmUiLAogICAgICAgICJib3JkZXItcy1zdWNjZXNzIiwKICAgICAgICAiYm9yZGVyLXMtd2FybmluZyIsCiAgICAgICAgImJvcmRlci10cmFuc3BhcmVudCIsCiAgICAgICAgImJvdHRvbS0wIiwKICAgICAgICAiYm90dG9tLTQiLAogICAgICAgICJjb250YWluZXIiLAogICAgICAgICJjb250ZW50cyIsCiAgICAgICAgImN1cnNvci1jb2wtcmVzaXplIiwKICAgICAgICAiY3Vyc29yLWRlZmF1bHQiLAogICAgICAgICJjdXJzb3ItcG9pbnRlciIsCiAgICAgICAgImRpc2FibGVkOmN1cnNvci1ub3QtYWxsb3dlZCIsCiAgICAgICAgImRpc2FibGVkOm9wYWNpdHktNTAiLAogICAgICAgICJkaXNhYmxlZDpwb2ludGVyLWV2ZW50cy1ub25lIiwKICAgICAgICAiZW5kLTQiLAogICAgICAgICJmaWxlOmJnLXNlY29uZGFyeSIsCiAgICAgICAgImZpbGU6Ym9yZGVyIiwKICAgICAgICAiZmlsZTpib3JkZXItYm9yZGVyIiwKICAgICAgICAiZmlsZTpjdXJzb3ItcG9pbnRlciIsCiAgICAgICAgImZpbGU6bXItMyIsCiAgICAgICAgImZpbGU6cHgtMyIsCiAgICAgICAgImZpbGU6cHktMS41IiwKICAgICAgICAiZmlsZTpyb3VuZGVkLW1kIiwKICAgICAgICAiZmlsZTp0ZXh0LWZvcmVncm91bmQiLAogICAgICAgICJmaWxlOnRleHQtc20iLAogICAgICAgICJmaXhlZCIsCiAgICAgICAgImZsZXgiLAogICAgICAgICJmbGV4LTEiLAogICAgICAgICJmbGV4LWNvbCIsCiAgICAgICAgImZvY3VzLXZpc2libGU6YmctbXV0ZWQiLAogICAgICAgICJmb2N1cy12aXNpYmxlOm91dGxpbmUtbm9uZSIsCiAgICAgICAgImZvY3VzLXZpc2libGU6cmluZy0yIiwKICAgICAgICAiZm9jdXMtdmlzaWJsZTpyaW5nLVszcHhdIiwKICAgICAgICAiZm9jdXMtdmlzaWJsZTpyaW5nLWluc2V0IiwKICAgICAgICAiZm9jdXMtdmlzaWJsZTpyaW5nLXJpbmcvNTAiLAogICAgICAgICJmb250LW1lZGl1bSIsCiAgICAgICAgImZvbnQtbW9ubyIsCiAgICAgICAgImZvbnQtc2VtaWJvbGQiLAogICAgICAgICJnYXAtMC41IiwKICAgICAgICAiZ2FwLTEiLAogICAgICAgICJnYXAtMS41IiwKICAgICAgICAiZ2FwLTIiLAogICAgICAgICJnYXAtMyIsCiAgICAgICAgImdhcC00IiwKICAgICAgICAiZ3JpZCIsCiAgICAgICAgImdyb3ciLAogICAgICAgICJoLTEwIiwKICAgICAgICAiaC0yIiwKICAgICAgICAiaC02IiwKICAgICAgICAiaC04IiwKICAgICAgICAiaC05IiwKICAgICAgICAiaC1mdWxsIiwKICAgICAgICAiaC1weCIsCiAgICAgICAgImhpZGRlbiIsCiAgICAgICAgImhvdmVyOmJnLWFjY2VudC81MCIsCiAgICAgICAgImhvdmVyOmJnLWFjY2VudC84MCIsCiAgICAgICAgImhvdmVyOmJnLWRlc3RydWN0aXZlLzkwIiwKICAgICAgICAiaG92ZXI6YmctbXV0ZWQiLAogICAgICAgICJob3ZlcjpiZy1wcmltYXJ5IiwKICAgICAgICAiaG92ZXI6YmctcHJpbWFyeS85MCIsCiAgICAgICAgImhvdmVyOmJnLXNlY29uZGFyeSIsCiAgICAgICAgImhvdmVyOmJnLXNlY29uZGFyeS84MCIsCiAgICAgICAgImhvdmVyOnRleHQtZm9yZWdyb3VuZCIsCiAgICAgICAgImhvdmVyOnVuZGVybGluZSIsCiAgICAgICAgImlubGluZSIsCiAgICAgICAgImlubGluZS1ibG9jayIsCiAgICAgICAgImlubGluZS1mbGV4IiwKICAgICAgICAiaW5zZXQtMCIsCiAgICAgICAgImludmlzaWJsZSIsCiAgICAgICAgIml0YWxpYyIsCiAgICAgICAgIml0ZW1zLWNlbnRlciIsCiAgICAgICAgIml0ZW1zLWVuZCIsCiAgICAgICAgIml0ZW1zLXN0YXJ0IiwKICAgICAgICAiaXRlbXMtc3RyZXRjaCIsCiAgICAgICAgImp1c3RpZnktYmV0d2VlbiIsCiAgICAgICAgImp1c3RpZnktY2VudGVyIiwKICAgICAgICAibGVhZGluZy1ub25lIiwKICAgICAgICAibGVmdC0wIiwKICAgICAgICAibGlzdC1ub25lIiwKICAgICAgICAibS0wIiwKICAgICAgICAibWF4LWgtNjQiLAogICAgICAgICJtYXgtaC04MCIsCiAgICAgICAgIm1heC13LWZ1bGwiLAogICAgICAgICJtYXgtdy1sZyIsCiAgICAgICAgIm1heC13LXNtIiwKICAgICAgICAibWluLWgtMCIsCiAgICAgICAgIm1pbi1oLTE2IiwKICAgICAgICAibWluLXctMCIsCiAgICAgICAgIm1pbi13LTQwIiwKICAgICAgICAibWluLXctOSIsCiAgICAgICAgIm1zLWF1dG8iLAogICAgICAgICJteS0xIiwKICAgICAgICAib3BhY2l0eS0wIiwKICAgICAgICAib3BhY2l0eS0yNSIsCiAgICAgICAgIm9wYWNpdHktNDAiLAogICAgICAgICJvcGFjaXR5LTUwIiwKICAgICAgICAib3V0bGluZSIsCiAgICAgICAgIm91dGxpbmUtbm9uZSIsCiAgICAgICAgIm92ZXJmbG93LWF1dG8iLAogICAgICAgICJvdmVyZmxvdy1oaWRkZW4iLAogICAgICAgICJvdmVyZmxvdy14LWF1dG8iLAogICAgICAgICJvdmVyc2Nyb2xsLWF1dG8iLAogICAgICAgICJvdmVyc2Nyb2xsLWNvbnRhaW4iLAogICAgICAgICJwLTAiLAogICAgICAgICJwLTAuNSIsCiAgICAgICAgInAtMSIsCiAgICAgICAgInAtMiIsCiAgICAgICAgInAtNCIsCiAgICAgICAgInAtNiIsCiAgICAgICAgInAtOCIsCiAgICAgICAgInAtWzNweF0iLAogICAgICAgICJwZWVyLWFyaWEtaW52YWxpZDpib3JkZXItZGVzdHJ1Y3RpdmUiLAogICAgICAgICJwZWVyLWFyaWEtaW52YWxpZDpyaW5nLVszcHhdIiwKICAgICAgICAicGVlci1hcmlhLWludmFsaWQ6cmluZy1kZXN0cnVjdGl2ZS80MCIsCiAgICAgICAgInBlZXItY2hlY2tlZDpiZy1wcmltYXJ5IiwKICAgICAgICAicGVlci1jaGVja2VkOmJvcmRlci1wcmltYXJ5IiwKICAgICAgICAicGVlci1kaXNhYmxlZDpvcGFjaXR5LTUwIiwKICAgICAgICAicGVlci1mb2N1cy12aXNpYmxlOnJpbmctWzNweF0iLAogICAgICAgICJwZWVyLWZvY3VzLXZpc2libGU6cmluZy1yaW5nLzUwIiwKICAgICAgICAicGxhY2Vob2xkZXI6dGV4dC1tdXRlZC1mb3JlZ3JvdW5kIiwKICAgICAgICAicG9pbnRlci1ldmVudHMtYXV0byIsCiAgICAgICAgInBvaW50ZXItZXZlbnRzLW5vbmUiLAogICAgICAgICJwcy00IiwKICAgICAgICAicHgtMiIsCiAgICAgICAgInB4LTIuNSIsCiAgICAgICAgInB4LTMiLAogICAgICAgICJweC00IiwKICAgICAgICAicHgtNiIsCiAgICAgICAgInB5LTAuNSIsCiAgICAgICAgInB5LTEiLAogICAgICAgICJweS0xLjUiLAogICAgICAgICJweS0yIiwKICAgICAgICAicHktMyIsCiAgICAgICAgInJlYWQtb25seTpiZy1tdXRlZCIsCiAgICAgICAgInJlbGF0aXZlIiwKICAgICAgICAicmVzaXplIiwKICAgICAgICAicmluZyIsCiAgICAgICAgInJvdW5kZWQiLAogICAgICAgICJyb3VuZGVkLVs0cHhdIiwKICAgICAgICAicm91bmRlZC1mdWxsIiwKICAgICAgICAicm91bmRlZC1sZyIsCiAgICAgICAgInJvdW5kZWQtbWQiLAogICAgICAgICJyb3VuZGVkLXNtIiwKICAgICAgICAicm91bmRlZC10LW1kIiwKICAgICAgICAic2VsZWN0LW5vbmUiLAogICAgICAgICJzaGFkb3ctbGciLAogICAgICAgICJzaHJpbmsiLAogICAgICAgICJzaHJpbmstMCIsCiAgICAgICAgInNpemUtMyIsCiAgICAgICAgInNpemUtMy41IiwKICAgICAgICAic2l6ZS00IiwKICAgICAgICAic2l6ZS01IiwKICAgICAgICAic2l6ZS05IiwKICAgICAgICAic2l6ZS1mdWxsIiwKICAgICAgICAic3RhdGljIiwKICAgICAgICAidGFibGUiLAogICAgICAgICJ0YWJ1bGFyLW51bXMiLAogICAgICAgICJ0ZXh0LWFjY2VudC1mb3JlZ3JvdW5kIiwKICAgICAgICAidGV4dC1iYWNrZ3JvdW5kIiwKICAgICAgICAidGV4dC1jYXJkLWZvcmVncm91bmQiLAogICAgICAgICJ0ZXh0LWRlc3RydWN0aXZlIiwKICAgICAgICAidGV4dC1kZXN0cnVjdGl2ZS1mb3JlZ3JvdW5kIiwKICAgICAgICAidGV4dC1mb3JlZ3JvdW5kIiwKICAgICAgICAidGV4dC1pbmhlcml0IiwKICAgICAgICAidGV4dC1sZWZ0IiwKICAgICAgICAidGV4dC1sZyIsCiAgICAgICAgInRleHQtbXV0ZWQtZm9yZWdyb3VuZCIsCiAgICAgICAgInRleHQtcG9wb3Zlci1mb3JlZ3JvdW5kIiwKICAgICAgICAidGV4dC1wcmltYXJ5IiwKICAgICAgICAidGV4dC1wcmltYXJ5LWZvcmVncm91bmQiLAogICAgICAgICJ0ZXh0LXNlY29uZGFyeS1mb3JlZ3JvdW5kIiwKICAgICAgICAidGV4dC1zbSIsCiAgICAgICAgInRleHQteHMiLAogICAgICAgICJ0b3AtMCIsCiAgICAgICAgInRyYWNraW5nLXdpZGVzdCIsCiAgICAgICAgInRyYW5zaXRpb24tW3dpZHRoXSIsCiAgICAgICAgInRyYW5zaXRpb24tYWxsIiwKICAgICAgICAidHJhbnNpdGlvbi1jb2xvcnMiLAogICAgICAgICJ0cmFuc2l0aW9uLXRyYW5zZm9ybSIsCiAgICAgICAgInRyYW5zbGF0ZS14LTUiLAogICAgICAgICJ0cnVuY2F0ZSIsCiAgICAgICAgInVuZGVybGluZSIsCiAgICAgICAgInVuZGVybGluZS1vZmZzZXQtNCIsCiAgICAgICAgInZpc2libGUiLAogICAgICAgICJ3LTExIiwKICAgICAgICAidy0yIiwKICAgICAgICAidy1bMzJyZW1dIiwKICAgICAgICAidy1maXQiLAogICAgICAgICJ3LWZ1bGwiLAogICAgICAgICJ3aGl0ZXNwYWNlLW5vd3JhcCIsCiAgICAgICAgInotNTAiCiAgICAgIF0sCiAgICAgICJzaGFyZWRfbWVtb3J5IjogZmFsc2UKICAgIH0KICB9Cn0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "b6296ec9b704237e1532-5287657c159f6f23d29b",
+          "file": "utility-runtime.spec.ts",
+          "line": 98,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-05T14:03:08.673Z",
+    "duration": 8629.227,
+    "expected": 2,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}

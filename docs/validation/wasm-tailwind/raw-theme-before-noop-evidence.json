@@ -1,0 +1,625 @@
+{
+  "updatedAt": "2026-10-06T21:41:57+11:00",
+  "baseline": "dirty@ef766ce50005546d861e32a4a1c45b4f4a03f0d7",
+  "previousEvidence": "postcompat-normalize-evidence.json",
+  "sourceHashes": {
+    "Cargo.toml": "dee97baccd454f9bf74ccd8c4bac69e47579d2284b5f07bcb39f73a22d5f871a",
+    "Cargo.lock": "3e1069d4610684c784ddd750ddd9a20132d9f749d3aa660f0bf1d7887ef4577c",
+    "mise.toml": "b39792f4c61600ed818b759bb8f9316b217372135b4b0eae097305ceec761f79",
+    "sources.lock.json": "f07a22046a145b10b7dda5c4ccb949ee1ffc00673a57f5ab3dc1a1c15b0ceb6d",
+    "xtask/src/utility.rs": "ab39be91590e377f01d0d1e19c05f82187b128c9f1f715116bb61be545d6184d",
+    "examples/utility-lab/src/button_baseline.rs": "24fa5304273db11881fd299a899da09e2f553bf4f4c062e524ca0187a1591978",
+    "examples/utility-lab/app.js": "6f3a56cd6526f6d2d7288d940ebc655c77063591627fdeb402ecb4271ea5d8c7",
+    "tests/browser/utility-gpu.spec.ts": "6c49b586391536d7eba5b5e39642d106638102b2a8770c6ead9b6f82f5c6ac57",
+    "tests/utility/compiler/run-public-ast-registration-wasm.mjs": "f23954ff6e4c0f4482ea8427f4057776a73f465edd45efdaa134a6727a632efb",
+    "tests/utility/compiler/run-public-ast-media-source-wasm.mjs": "09137e228eb0a99ef1c8d803265ff6af73170dd744a48da431525bea85f58eca",
+    "tests/utility/compiler/run-public-ast-ownership-wasm.mjs": "dcdd681044323d3a8f26c295a63fa9961f5699d7dcdc0f3fef894e8c7ba10fac",
+    "tests/utility/compiler/bench-media-source-wasm.mjs": "d1130984077de9ef21f239fd09ba8fc4ff49a832cbbf3b6a25dc1962f653117e",
+    "crates/rustify-style/src/compiler/registration.rs": "e12541b3ac0a1ddda780e5b487e3b91ee953ba0151bdd341f81f92b71895884e",
+    "crates/rustify-style/src/compiler/theme.rs": "68d54851c4ac71ba31ed11f887720efb487c1ef28525ba890f9b94fdfde49fc4",
+    "crates/rustify-style/src/compiler/custom_utilities.rs": "565c48533eb8c02fac637885d981d9ec484cc24fd2acfff9d0ca3932b0ae40a6",
+    "crates/rustify-style/src/compiler/custom_variants.rs": "dc8db45d6846eb042a572c52051f0dce39dd423be54bba78566c89134c59cedc",
+    "crates/rustify-style/src/compiler/public_api/compile_ast.rs": "ee424d20890148253b27966f4eea15af6381e7aa1ea6567dc788541f4e68a516",
+    "crates/rustify-style/src/compiler/mod.rs": "0977fc62c8fe2ba83d719cc044a5d50e05fe7f0445ec0052e1fe3a8b75f3ae24",
+    "crates/rustify-style/src/compiler/variants.rs": "0b60904768e92d8e9cf569699363098c77101ad2ca94f2865c8316095ef2e6dd",
+    "crates/rustify-style/src/compiler/origin/current.rs": "e48e222e499cfb3809310d5d2b51891fe058a0aa4b7320c1ddbb055dcdbb0f8d"
+  },
+  "evidenceFiles": {
+    "raw-theme-baseline.json": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-baseline.json",
+      "bytes": 199,
+      "sha256": "bb7adccdc66331c997afed18f44d8727f2ee1c15bbc7d30116e919e961a273c8"
+    },
+    "raw-theme-before-red.log": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-before-red.log",
+      "bytes": 544189,
+      "sha256": "bd0f92730beac78baaf3e5cbc0cb638e63e2342732396ff4df850406d5ed13e1"
+    },
+    "raw-theme-benchmark-after.json": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-benchmark-after.json",
+      "bytes": 1460,
+      "sha256": "79600b167172c2af9bbe79d70058a1bf50e28757b6b361901dc8c4fcc98b9830"
+    },
+    "raw-theme-benchmark-before.json": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-benchmark-before.json",
+      "bytes": 1461,
+      "sha256": "761542525ff1bcdc5f41fb11d45636849192aa9278fb93f766839e43ed77e03c"
+    },
+    "raw-theme-benchmark-cpu.json": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-benchmark-cpu.json",
+      "bytes": 2887,
+      "sha256": "bf7c893c094b3f6323d98e079020360047cf3437e157176d4c54ed45c3f5a58d"
+    },
+    "raw-theme-browser-deep.json": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-browser-deep.json",
+      "bytes": 2972490,
+      "sha256": "98d8b668a6533fb6789d54ceea8850abd3ad14c5aa6c27f5cd2125f9904280d4"
+    },
+    "raw-theme-browser-deep.log": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-browser-deep.log",
+      "bytes": 208,
+      "sha256": "180c8cd744e5b7f47452dca80a147e55e7499c2d613361e3f8857a9232e9ee94"
+    },
+    "raw-theme-browser-root.json": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-browser-root.json",
+      "bytes": 2977747,
+      "sha256": "4436a30cbb03630a1f1f53c9ee55634460091f770a502ece14423eb5ebca01a2"
+    },
+    "raw-theme-browser-root.log": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-browser-root.log",
+      "bytes": 203,
+      "sha256": "0d74c5479d46b9684dbde3104fe7345125078b8f5ef6ee273fbd3d350026f090"
+    },
+    "raw-theme-budget-probe.log": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-budget-probe.log",
+      "bytes": 7763,
+      "sha256": "328ba7fdae68ef3b60e337a61ab9ab381453b45703d57dc61cb325cccc086a72"
+    },
+    "raw-theme-build-deep-verified.log": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-build-deep-verified.log",
+      "bytes": 8736,
+      "sha256": "6bb2d38f71d89387f8cef9194243e680449ebeb4f6bf37ae3fd2f7ac5a62ae11"
+    },
+    "raw-theme-build-deep.log": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-build-deep.log",
+      "bytes": 8768,
+      "sha256": "307b8ed67de7cee78bc7430154605f56d695c8ce486afc39a49189687bde6077"
+    },
+    "raw-theme-build-root-verified.log": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-build-root-verified.log",
+      "bytes": 9033,
+      "sha256": "dff5993c31cba1f559393570beffaa54e7d271d0029e9d74cda5314158727241"
+    },
+    "raw-theme-build-root.log": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-build-root.log",
+      "bytes": 9141,
+      "sha256": "3a07ebc796660c529f7e80e2158bb8187fd2f27feb14c52e72e8ecbfef40dce5"
+    },
+    "raw-theme-compiler-api-final.log": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-compiler-api-final.log",
+      "bytes": 58539,
+      "sha256": "df3850d024f961aa19e3f3f8de63b1a55105570bd48697e107513a04e114f768"
+    },
+    "raw-theme-compiler-api-verified.log": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-compiler-api-verified.log",
+      "bytes": 58720,
+      "sha256": "e425ca83e6079b90dcdb5c42cb3dc54adf8bacd36cd7246f35488c85ae4fc174"
+    },
+    "raw-theme-compiler-api.log": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-compiler-api.log",
+      "bytes": 20000,
+      "sha256": "b845d8a2b53ae9f5c6891abeb2426b3f45884eb98118b1c875045b16ccde1392"
+    },
+    "raw-theme-compiler-slice.log": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-compiler-slice.log",
+      "bytes": 45021,
+      "sha256": "56f1c07c55da061e28d717b67c019fca5b19dd98295aa85af84efd8e1412ff9f"
+    },
+    "raw-theme-core-clippy.log": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-core-clippy.log",
+      "bytes": 647,
+      "sha256": "764ddaf6a75753f2cef7ffe25c909006fc37f0fcb4727dbb54b7694a20dbf98c"
+    },
+    "raw-theme-diff-check.log": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-diff-check.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "raw-theme-diff-final.log": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-diff-final.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "raw-theme-facade-clippy.log": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-facade-clippy.log",
+      "bytes": 875,
+      "sha256": "92f07487bd728b3d6eb503a1598d00133fe80b282f3cab167a0fff5a4d24b089"
+    },
+    "raw-theme-facade.log": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-facade.log",
+      "bytes": 2248,
+      "sha256": "f54bb5bbaa8f0a7b7afc7103c9bb80f8ea7e67a6e639807ede33ee64882ac365"
+    },
+    "raw-theme-fmt-final.log": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-fmt-final.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "raw-theme-fmt.log": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-fmt.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "raw-theme-native-before-red.log": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-native-before-red.log",
+      "bytes": 1546,
+      "sha256": "00dd150821ce2652482299a5a944430fd07aa9e35e40399d310cecfdfe7d31c3"
+    },
+    "raw-theme-native-targeted.log": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-native-targeted.log",
+      "bytes": 1665,
+      "sha256": "b39fc40f5bbba019f7138ceda496c52e4138b45cc6f4924a1f21d5a35fe97c7e"
+    },
+    "raw-theme-native-verified.log": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-native-verified.log",
+      "bytes": 40461,
+      "sha256": "f9c30a406e54d604e72e7ccb5d2cd5e8eec56b3c0a220a8c2aecb6a6d7ff96c2"
+    },
+    "raw-theme-native.log": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-native.log",
+      "bytes": 60983,
+      "sha256": "de585909336918bd2c4da74fb54fe19d45bf5b3dde976cb419ef4fca6fe7fab7"
+    },
+    "raw-theme-ownership-final-red.log": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-ownership-final-red.log",
+      "bytes": 65829,
+      "sha256": "18ed69ecfc5232ead11ddb5243ee0cd0dfd39edc451f959835fded4b92fcde4f"
+    },
+    "raw-theme-ownership-verified-red.log": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-ownership-verified-red.log",
+      "bytes": 65829,
+      "sha256": "3c2639d6c3d7ed1f15d9bd3ed9ffff667809481744dfa4fa9f65688010c482d1"
+    },
+    "raw-theme-products-restored.json": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-products-restored.json",
+      "bytes": 2473,
+      "sha256": "7d9444273d1dda2ff6e5a22030069a9df33b25a5afd27dfbaeae92100b30d480"
+    },
+    "raw-theme-xtask.log": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-xtask.log",
+      "bytes": 3891,
+      "sha256": "d2901e2455bec210fcd7a45c2ceae909975a0463c918bce19b4a6ff174da9216"
+    },
+    "registration-resume-build-workspace.json": {
+      "path": "docs/validation/wasm-tailwind/registration-resume-build-workspace.json",
+      "bytes": 5528,
+      "sha256": "1583a003f6e131ece1dc590b34614d2236f7383de3e2598781990ce2402114ce"
+    },
+    "registration-resume-lifecycle-clippy.log": {
+      "path": "docs/validation/wasm-tailwind/registration-resume-lifecycle-clippy.log",
+      "bytes": 23556,
+      "sha256": "82dbeff877789b842771248ca618b4b5a75aeb75c62082b0f5bea922db6ef950"
+    },
+    "registration-resume-xtask-clippy.log": {
+      "path": "docs/validation/wasm-tailwind/registration-resume-xtask-clippy.log",
+      "bytes": 1169,
+      "sha256": "3ec89b3fd58a4bcf30d8c299434dfac52dcbf1565a93763bcfc89c7fb6fab2e2"
+    },
+    "registration-resume-sources.log": {
+      "path": "docs/validation/wasm-tailwind/registration-resume-sources.log",
+      "bytes": 13429,
+      "sha256": "4a4be14b3f6a20ce95b32de4f836e0ccd32500825091a6c1814890cba40660e8"
+    },
+    "raw-theme-docs-verified.log": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-docs-verified.log",
+      "bytes": 1233,
+      "sha256": "223ca9c23a54dca4c4aae570d603f919f830ae401e210aa2448654d4f0430351"
+    }
+  },
+  "artifacts": {
+    "compiler-api": {
+      "path": "target/utility-conformance/compiler-api/style_bg.wasm",
+      "bytes": 2515759,
+      "sha256": "611d72a67a0432c4026924b455021b2ab97e385d1c902520051015862cdf62cc"
+    },
+    "compiler": {
+      "path": "target/utility-conformance/compiler/style_bg.wasm",
+      "bytes": 1754563,
+      "sha256": "dcde5a01b8d62024ff901e4aa1f846be4a673d0674734585c15bb5b5dabfa490"
+    }
+  },
+  "gates": {
+    "nativeTests": 367,
+    "facadeTests": 13,
+    "xtaskTests": 37,
+    "registration": {
+      "registrationCases": 48,
+      "entryComparisons": 96,
+      "completePrefixAndSettledGraphs": true,
+      "failures": 0,
+      "actualWasm": true,
+      "wasmBytes": 2515759,
+      "fullRegistrationConformance": "pending"
+    },
+    "media": {
+      "cases": 2,
+      "entryComparisons": 4,
+      "failures": 0
+    },
+    "compilerSlice": {
+      "compilerSmoke": "passed",
+      "scannerEnabled": false,
+      "officialNesting": "passed",
+      "cssFunctionBindingsAndLimits": "passed",
+      "customUtilityBindingsAndLimits": "passed",
+      "customVariantBindingsAndLimits": "passed",
+      "legacyCacheLimitsAndRecovery": "passed",
+      "sliceCases": 214909,
+      "incrementalComparisons": 1470,
+      "incrementalCases": 246,
+      "cssComparisons": 216133,
+      "pendingBoundaryCases": 0,
+      "pendingFeatureCases": 0,
+      "utf16OutputCases": 4,
+      "sourceMetadataCases": 1607,
+      "errorCases": 3002,
+      "variantParseCases": 6673,
+      "variantParseNullCases": 2963,
+      "variantReusedCases": 84,
+      "variantParserLimitCases": 24,
+      "wasmBytes": 1754563,
+      "imports": [
+        "__wbg_length_d52ee452c5be0c99",
+        "__wbg_charCodeAt_90635349fbda9f5f",
+        "__wbg___wbindgen_throw_5d9e815e6fdf150f",
+        "__wbg___wbindgen_is_string_c4f7cb494a2a21f1",
+        "__wbindgen_init_externref_table",
+        "__wbindgen_generic_0000000000000001"
+      ],
+      "sharedMemory": false,
+      "fullConformance": "pending"
+    },
+    "ledger": {
+      "sourcesVerified": 109,
+      "originalSourceCalls": 1215,
+      "originalTestCalls": 1125,
+      "originalParameterizationCalls": 10,
+      "originalSuiteCalls": 80,
+      "parameterBuilders": 11,
+      "expandedTests": 1398,
+      "staticallyExpandedTests": 1398,
+      "unresolvedTests": 0,
+      "upstreamSkippedTests": 1,
+      "assertionTemplates": 1851,
+      "assertionTemplateEdges": 2140,
+      "controlledAssertionTemplates": 45,
+      "externalSnapshotExports": 13,
+      "matchedExternalSnapshotExports": 13,
+      "suggestedScopeCorrections": 3,
+      "validatedTests": 0,
+      "validatedAssertions": 0,
+      "adjudicatedExclusions": 0,
+      "unownedAssertionTemplates": 0
+    },
+    "browser": {
+      "root": {
+        "log": "raw-theme-browser-root.json",
+        "startTime": "2026-10-06T10:39:06.475Z",
+        "duration": 46247.488999999994,
+        "expected": 46,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0,
+        "errors": 0
+      },
+      "deep": {
+        "log": "raw-theme-browser-deep.json",
+        "startTime": "2026-10-06T10:40:12.792Z",
+        "duration": 39386.223,
+        "expected": 41,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0,
+        "errors": 0
+      }
+    },
+    "logicalCacheThresholds": [
+      {
+        "actualWasm": true,
+        "sharedMemory": false,
+        "wasmBytes": 2515759,
+        "utilitiesMutationCases": 8,
+        "constructorAndBuildPhases": 38,
+        "noOpIdentities": 12,
+        "originalSetterExceptions": 3,
+        "cacheBoundaries": 4,
+        "twoBuildCacheThreshold": 22324,
+        "fullInputMutationConformance": "pending"
+      },
+      {
+        "themeSetupCases": 18,
+        "constructorAndBuildPhases": 105,
+        "noOpIdentities": 29,
+        "originalConstructorExceptions": 2,
+        "cacheBoundaries": 3,
+        "constructorCacheThreshold": 46386,
+        "actualWasm": true,
+        "sharedMemory": false,
+        "wasmBytes": 2515759,
+        "fullInputMutationConformance": "pending"
+      },
+      {
+        "applyInputCases": 15,
+        "constructorAndBuildPhases": 90,
+        "noOpIdentities": 18,
+        "originalConstructorExceptions": 2,
+        "cacheBoundaries": 3,
+        "constructorCacheThreshold": 56502,
+        "actualWasm": true,
+        "sharedMemory": false,
+        "wasmBytes": 2515759,
+        "fullInputMutationConformance": "pending"
+      },
+      {
+        "functionFailureCases": 12,
+        "originalHostExceptionCases": 4,
+        "cacheBoundaries": 3,
+        "semanticFailureCacheThreshold": 14842,
+        "quotaNoWriteCases": 1,
+        "actualWasm": true,
+        "sharedMemory": false,
+        "wasmBytes": 2515759,
+        "fullFailedSetupConformance": "pending"
+      },
+      {
+        "applyFailureCases": 16,
+        "entries": 2,
+        "checks": 32,
+        "failures": [],
+        "hostExceptionChecks": 8,
+        "cacheBoundaries": 3,
+        "semanticFailureCacheThreshold": 30058,
+        "asyncQuotaNoWriteCases": 2,
+        "actualWasm": true,
+        "wasmBytes": 2515759,
+        "fullFailedSetupConformance": "pending"
+      }
+    ]
+  },
+  "ownershipRed": {
+    "cases": 7,
+    "entryComparisons": 14,
+    "passed": 12,
+    "failures": 2,
+    "diagnostics": [
+      {
+        "name": "authored-success-before-failure",
+        "mode": "sync"
+      },
+      {
+        "name": "authored-success-before-failure",
+        "mode": "async"
+      }
+    ],
+    "defaultGate": false,
+    "log": "raw-theme-ownership-final-red.log"
+  },
+  "products": {
+    "root": {
+      "mainBuildId": "b063f40bd16e0972",
+      "workerBuildId": "a060d3e5c15d6b926cbc06cc285cf8788bb799604caa49bac489594d29476dbd",
+      "scannerEnabled": false,
+      "sizeReport": {
+        "wasm": 11226860,
+        "js": 246562,
+        "css": 35072,
+        "fonts": 51732356,
+        "images": 20701,
+        "data": 19812,
+        "total": 63281363
+      },
+      "mainWasm": {
+        "path": "target/makepad-wasm-app/release/utility-lab/utility-lab.wasm",
+        "bytes": 9486990,
+        "sha256": "b063f40bd16e0972f4fae917c117d0726225beb7e3d599514b4c45980ee9efeb"
+      },
+      "workerWasm": {
+        "path": "target/makepad-wasm-app/release/utility-lab/utility/compiler/style_bg.wasm",
+        "bytes": 1739870,
+        "sha256": "7667f53b934b22f5039b0982b43726667f0559f24ec4cdbf5fef4a6e85aa81ce"
+      },
+      "manifest": {
+        "path": "docs/validation/wasm-tailwind/raw-theme-browser/manifests/root-main-manifest.json",
+        "bytes": 3114,
+        "sha256": "5152bbf46c8c88d4cee2a7f55b0e3467b488409c9a860ccc6d97e61c2bec4b02"
+      },
+      "workerManifest": {
+        "path": "docs/validation/wasm-tailwind/raw-theme-browser/manifests/root-worker-manifest.json",
+        "bytes": 592,
+        "sha256": "c25e769a6da2253019461075e7e7a2993de9d6bac40d71983545e68873cf8ac4"
+      },
+      "mainManifestSelfItem": {
+        "reported": null,
+        "actual": 3114
+      },
+      "sizeCheckExcludesMainManifestSelfItem": true
+    },
+    "deep": {
+      "mainBuildId": "b063f40bd16e0972",
+      "workerBuildId": "a060d3e5c15d6b926cbc06cc285cf8788bb799604caa49bac489594d29476dbd",
+      "scannerEnabled": false,
+      "sizeReport": {
+        "wasm": 11226860,
+        "js": 246562,
+        "css": 35072,
+        "fonts": 51732356,
+        "images": 20701,
+        "data": 22998,
+        "total": 63284549
+      },
+      "mainWasm": {
+        "path": "target/makepad-wasm-app/release/utility-lab@tools-utility-lab/utility-lab.wasm",
+        "bytes": 9486990,
+        "sha256": "b063f40bd16e0972f4fae917c117d0726225beb7e3d599514b4c45980ee9efeb"
+      },
+      "workerWasm": {
+        "path": "target/makepad-wasm-app/release/utility-lab@tools-utility-lab/utility/compiler/style_bg.wasm",
+        "bytes": 1739870,
+        "sha256": "7667f53b934b22f5039b0982b43726667f0559f24ec4cdbf5fef4a6e85aa81ce"
+      },
+      "manifest": {
+        "path": "docs/validation/wasm-tailwind/raw-theme-browser/manifests/deep-main-manifest.json",
+        "bytes": 3165,
+        "sha256": "c282abc138e89dbbf1bff2e7781d0ff72cb236628082335105194dce1769f45a"
+      },
+      "workerManifest": {
+        "path": "docs/validation/wasm-tailwind/raw-theme-browser/manifests/deep-worker-manifest.json",
+        "bytes": 592,
+        "sha256": "c25e769a6da2253019461075e7e7a2993de9d6bac40d71983545e68873cf8ac4"
+      },
+      "mainManifestSelfItem": {
+        "reported": 3114,
+        "actual": 3165
+      },
+      "sizeCheckExcludesMainManifestSelfItem": true
+    }
+  },
+  "benchmark": {
+    "raw-theme-benchmark-before.json": {
+      "scope": "public AST constructor with sixteen media source blocks and four builds",
+      "samples": [
+        {
+          "constructorP95Ms": 0.7964999999999804,
+          "buildP95Ms": 0.3243330000000242,
+          "sessionsPerSecond": 580.6204837959797,
+          "outputSha256": "5fd45470353f800d2e198fad88da86ae25dd6d8ba7ca5f46232ceedebe529c89",
+          "sessions": 100,
+          "builds": 400
+        },
+        {
+          "constructorP95Ms": 0.7562080000000151,
+          "buildP95Ms": 0.340582999999981,
+          "sessionsPerSecond": 562.9254474428398,
+          "outputSha256": "5fd45470353f800d2e198fad88da86ae25dd6d8ba7ca5f46232ceedebe529c89",
+          "sessions": 100,
+          "builds": 400
+        },
+        {
+          "constructorP95Ms": 0.6867079999999532,
+          "buildP95Ms": 0.3085839999999962,
+          "sessionsPerSecond": 603.2628994137297,
+          "outputSha256": "5fd45470353f800d2e198fad88da86ae25dd6d8ba7ca5f46232ceedebe529c89",
+          "sessions": 100,
+          "builds": 400
+        },
+        {
+          "constructorP95Ms": 0.6836660000000165,
+          "buildP95Ms": 0.3033339999999498,
+          "sessionsPerSecond": 606.4059229946587,
+          "outputSha256": "5fd45470353f800d2e198fad88da86ae25dd6d8ba7ca5f46232ceedebe529c89",
+          "sessions": 100,
+          "builds": 400
+        },
+        {
+          "constructorP95Ms": 0.6618339999999989,
+          "buildP95Ms": 0.28937500000006366,
+          "sessionsPerSecond": 628.6420297412808,
+          "outputSha256": "5fd45470353f800d2e198fad88da86ae25dd6d8ba7ca5f46232ceedebe529c89",
+          "sessions": 100,
+          "builds": 400
+        }
+      ],
+      "constructorP95Ms": 0.6867079999999532,
+      "buildP95Ms": 0.3085839999999962,
+      "sessionsPerSecond": 603.2628994137297,
+      "wasmBytes": 2516045,
+      "wasmSha256": "383d13103cef9e121e73f9c456fbe366c24722fc00933775adf08a77c637fe5b",
+      "actualWasm": true,
+      "finalPerformanceAcceptance": "pending"
+    },
+    "raw-theme-benchmark-after.json": {
+      "scope": "public AST constructor with sixteen media source blocks and four builds",
+      "samples": [
+        {
+          "constructorP95Ms": 0.6795419999999694,
+          "buildP95Ms": 0.3013750000000073,
+          "sessionsPerSecond": 603.472076592676,
+          "outputSha256": "5fd45470353f800d2e198fad88da86ae25dd6d8ba7ca5f46232ceedebe529c89",
+          "sessions": 100,
+          "builds": 400
+        },
+        {
+          "constructorP95Ms": 0.6748329999999783,
+          "buildP95Ms": 0.3050829999999678,
+          "sessionsPerSecond": 605.3142059532431,
+          "outputSha256": "5fd45470353f800d2e198fad88da86ae25dd6d8ba7ca5f46232ceedebe529c89",
+          "sessions": 100,
+          "builds": 400
+        },
+        {
+          "constructorP95Ms": 0.6832079999999223,
+          "buildP95Ms": 0.30112499999995634,
+          "sessionsPerSecond": 612.5825984935418,
+          "outputSha256": "5fd45470353f800d2e198fad88da86ae25dd6d8ba7ca5f46232ceedebe529c89",
+          "sessions": 100,
+          "builds": 400
+        },
+        {
+          "constructorP95Ms": 0.70637499999998,
+          "buildP95Ms": 0.29483300000003965,
+          "sessionsPerSecond": 608.7731812913387,
+          "outputSha256": "5fd45470353f800d2e198fad88da86ae25dd6d8ba7ca5f46232ceedebe529c89",
+          "sessions": 100,
+          "builds": 400
+        },
+        {
+          "constructorP95Ms": 0.6763329999999996,
+          "buildP95Ms": 0.3104999999998199,
+          "sessionsPerSecond": 610.0068550130338,
+          "outputSha256": "5fd45470353f800d2e198fad88da86ae25dd6d8ba7ca5f46232ceedebe529c89",
+          "sessions": 100,
+          "builds": 400
+        }
+      ],
+      "constructorP95Ms": 0.6795419999999694,
+      "buildP95Ms": 0.3013750000000073,
+      "sessionsPerSecond": 608.7731812913387,
+      "wasmBytes": 2515759,
+      "wasmSha256": "611d72a67a0432c4026924b455021b2ab97e385d1c902520051015862cdf62cc",
+      "actualWasm": true,
+      "finalPerformanceAcceptance": "pending"
+    }
+  },
+  "benchmarkLimitations": "Other system CPU activity, including an unrelated rustc, observed. Descriptive finite comparison only; no final performance or allocator peak acceptance.",
+  "memoBudgetBasis": {
+    "toolchain": "rustc 1.98.1 (48a229cea 2026-09-01)",
+    "source": "https://raw.githubusercontent.com/rust-lang/rust/48a229ceaefd4985c50990b14116b6d856af0985/library/alloc/src/collections/btree/node.rs",
+    "B": 6,
+    "capacity": 11,
+    "minimumLengthAfterSplit": 5,
+    "scope": "temporary freeze memo, insertion reserve followed by whole-map retained upper bound",
+    "allocatorPeakAcceptance": "pending"
+  },
+  "remaining": [
+    "postcompat single owner and one lowering handoff",
+    "authored variant completed mutation prefix",
+    "full setup/host/allocation admission and peak proof",
+    "captured host projection, Proxy and external loader callbacks",
+    "full upstream test/assertion/exclusion ledger",
+    "M5 full rendered support/default matrix and old examples",
+    "M6 shared budgets/callbacks/cn/demo/old behavior",
+    "M7 full conformance/performance/CI acceptance",
+    "raw synthetic root/functions and authored variant ownership before one handoff"
+  ],
+  "goalStatus": "active",
+  "milestonesCompleted": 3,
+  "milestonesTotal": 7,
+  "postcompatRawFunctionalNormalization": true,
+  "postcompatRawThemePublication": true,
+  "orderedThemeKeyframeFunctionEffects": true,
+  "singleLoweringHandoff": false,
+  "validationRecords": {
+    "docs": "raw-theme-docs-verified.log",
+    "records": "raw-theme-records-verified.log"
+  }
+}

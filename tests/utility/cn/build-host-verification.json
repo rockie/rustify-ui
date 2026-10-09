@@ -1,0 +1,369 @@
+{
+  "schemaVersion": 1,
+  "upstream": {
+    "commit": "b7ec0fce43d824a60517fab508584eb860fdf717",
+    "provenance": "Supplied archive commit; no Git object database. Original bytes verified against source-lock.json by runner.",
+    "files": [
+      {
+        "path": "packages/cn/src/build.ts",
+        "sha256": "aa63dc2de55851b611feab9cfe74054b093819713f86c2ecd0901250de66f130"
+      },
+      {
+        "path": "packages/cn/src/compiler.ts",
+        "sha256": "31592dc0eaa0e8afefd00ed1aa15c1e257d1de16f203dc1a9ed1aae8a78db4c7"
+      },
+      {
+        "path": "packages/cn/src/theme-css.ts",
+        "sha256": "7807268b07d711750ffd9b5edd87eceadc7f5f24c9b69aabbdeff7d7f2037ee1"
+      },
+      {
+        "path": "packages/cn/src/vite.ts",
+        "sha256": "a7a0ec13a05a0ad987b8c267f7359489e967b26056b5a38243567a6dbd323c73"
+      },
+      {
+        "path": "packages/cn/src/next.ts",
+        "sha256": "7b31dbf5a5377583e084d7fbb23811a066bd8744c262d330263050c1c35d1eec"
+      },
+      {
+        "path": "packages/cn/bin/cn.mjs",
+        "sha256": "2f64fc28c778c714d63b7501274582c901bf7318920ce93a11dc513f5134eb5f"
+      },
+      {
+        "path": "LICENSE",
+        "sha256": "00ff8408e93e2ecc4d90c0edeabdf434100c3aff50acc5d330e17eccd4a3faa5"
+      },
+      {
+        "path": "packages/cn/src/config.ts",
+        "sha256": "91de24439c76dbd2a79ae3d6fee762379043e97665659eebf7ecc1a95d60668a"
+      },
+      {
+        "path": "packages/cn/src/engine.ts",
+        "sha256": "1d8e57c8b05c2246344dfd95f58d275dfb62b230e391bf901a7387beb084d71b"
+      }
+    ]
+  },
+  "environment": {
+    "node": "v26.1.0",
+    "platform": "Darwin",
+    "arch": "arm64"
+  },
+  "productionBundle": {
+    "directory": "target/utility/cn",
+    "group": "cn",
+    "profile": "release",
+    "feature": "cn",
+    "manifest": {
+      "protocol_version": 1,
+      "group": "cn",
+      "profile": "release",
+      "files_sha256": {
+        "LICENSE": "00ff8408e93e2ecc4d90c0edeabdf434100c3aff50acc5d330e17eccd4a3faa5",
+        "cn-cli.mjs": "72d59568b3cedbd54079a838a077c71a94f87bf4ff15073807f176ebf1893c53",
+        "cn-node.mjs": "015277bea3a0290cb04de637c4567ef097f93d0d59e5fd5330cdfa20b0657d84",
+        "style.js": "23224e7550a864ec4a005ece0cd850122120e923e6a7686a5082ed662e1e9fb5",
+        "style_bg.wasm": "cd39e9bf16760ee625e589c79aa6bd85966b035bbb21b1ecc550710a9359df0b"
+      }
+    },
+    "wasmBytes": 2137348,
+    "jsBytes": 43725,
+    "sharedMemory": false,
+    "filesystemWasiRayonThreadImports": false
+  },
+  "productionSources": [
+    {
+      "path": "crates/rustify-style-wasm/src/cn_build.rs",
+      "sha256": "c81912b0f601927124e28df037ecba4c1ef3a8716c29ec5578c3d876ce6c3bc7",
+      "adaptedOriginals": [
+        "packages/cn/src/build.ts",
+        "packages/cn/src/compiler.ts",
+        "packages/cn/src/theme-css.ts",
+        "packages/cn/src/vite.ts",
+        "packages/cn/src/next.ts",
+        "packages/cn/bin/cn.mjs"
+      ],
+      "phaseChange": "Build/UTF16 compilation host integration; existing native public API retained."
+    },
+    {
+      "path": "crates/rustify-style-wasm/src/cn.rs",
+      "sha256": "978fd012d79ad609b0711f8da13936a060724bf683ae9b3a3d66f5a5dbee11aa",
+      "adaptedOriginals": [
+        "packages/cn/src/config.ts",
+        "packages/cn/src/compiler.ts",
+        "packages/cn/src/engine.ts"
+      ],
+      "phaseChange": "Build bridge helper visibility plus complete public compileModel JS mapping; runtime parsing preserved and replayed."
+    },
+    {
+      "path": "crates/rustify-style-wasm/host/cn-node.mjs",
+      "sha256": "015277bea3a0290cb04de637c4567ef097f93d0d59e5fd5330cdfa20b0657d84",
+      "adaptedOriginals": [
+        "packages/cn/src/build.ts",
+        "packages/cn/src/next.ts",
+        "packages/cn/bin/cn.mjs"
+      ],
+      "phaseChange": "Host filesystem/path/import/watch/gzip primitives only; explicit close is SDK lifecycle addition."
+    },
+    {
+      "path": "crates/rustify-style-wasm/host/cn-cli.mjs",
+      "sha256": "72d59568b3cedbd54079a838a077c71a94f87bf4ff15073807f176ebf1893c53",
+      "adaptedOriginals": [
+        "packages/cn/bin/cn.mjs"
+      ],
+      "phaseChange": "Streams/exit and explicit bounded caller policy; parsing/business output executes in Rust."
+    },
+    {
+      "path": "crates/rustify-style/src/cn/build.rs",
+      "sha256": "b2bebce6ceefa4b913fc14d2178f890570bce489bc71313fa3b6ba5022761025",
+      "adaptedOriginals": [
+        "packages/cn/src/build.ts"
+      ],
+      "phaseChange": "Build/UTF16 compilation host integration; existing native public API retained."
+    },
+    {
+      "path": "crates/rustify-style/src/cn/build/source.rs",
+      "sha256": "09f07cd05923b29ccf812d032669e2bacfe748a2de068b626f12c2d7e6208356",
+      "adaptedOriginals": [
+        "packages/cn/src/build.ts"
+      ],
+      "phaseChange": "Build/UTF16 compilation host integration; existing native public API retained."
+    },
+    {
+      "path": "crates/rustify-style/src/cn/build/project.rs",
+      "sha256": "afeaef7ed938b136114253e70742a77ae240ad85c6d6827f0cac8ee10ac70fb3",
+      "adaptedOriginals": [
+        "packages/cn/src/build.ts"
+      ],
+      "phaseChange": "Build/UTF16 compilation host integration; existing native public API retained."
+    },
+    {
+      "path": "crates/rustify-style/src/cn/build/builder.rs",
+      "sha256": "1393dd1f21f9c7a145d1098fe530b24a9568e2e227c3feec992437c238a07eaf",
+      "adaptedOriginals": [
+        "packages/cn/src/build.ts"
+      ],
+      "phaseChange": "Build/UTF16 compilation host integration; existing native public API retained."
+    },
+    {
+      "path": "crates/rustify-style/src/cn/build/globs.rs",
+      "sha256": "0b8230c87c3a23f54f3732f499fc36b0de0a23a48fccd9612a86fb21e74e5ac3",
+      "adaptedOriginals": [
+        "packages/cn/src/build.ts"
+      ],
+      "phaseChange": "Build/UTF16 compilation host integration; existing native public API retained."
+    },
+    {
+      "path": "crates/rustify-style/src/cn/build/theme.rs",
+      "sha256": "34a27e557225e2380142c88f9d0de9268f5da95ea3fe420b95e66d39da7bd5ac",
+      "adaptedOriginals": [
+        "packages/cn/src/theme-css.ts"
+      ],
+      "phaseChange": "Build/UTF16 compilation host integration; existing native public API retained."
+    },
+    {
+      "path": "crates/rustify-style/src/cn/compiler.rs",
+      "sha256": "b69bbc9fa6bd52b48b1c828232d17f31a42931e608b59a078af32dff61b3aca5",
+      "adaptedOriginals": [
+        "packages/cn/src/compiler.ts"
+      ],
+      "phaseChange": "Build/UTF16 compilation host integration; existing native public API retained."
+    },
+    {
+      "path": "crates/rustify-style/src/cn/emit.rs",
+      "sha256": "c3bbb1082859b19075467ee1b066eb967e9c8db0c9db23d71f1a890002c61980",
+      "adaptedOriginals": [
+        "packages/cn/src/compiler.ts"
+      ],
+      "phaseChange": "Build/UTF16 compilation host integration; existing native public API retained."
+    },
+    {
+      "path": "crates/rustify-style/src/cn/engine.rs",
+      "sha256": "1ac3f1fd52c62efd486195b63a31a53944ddc53e3e9528cfb06b3ab231e9ea2c",
+      "adaptedOriginals": [
+        "packages/cn/src/engine.ts",
+        "packages/cn/src/compiler.ts"
+      ],
+      "phaseChange": "Existing UTF16 separator helper made crate-visible for subset token prefix handling."
+    }
+  ],
+  "commands": [
+    {
+      "command": "mbx xtask utility-build --group cn",
+      "exitCode": 0,
+      "log": "build-host-production-build.log"
+    },
+    {
+      "command": "RUSTIFY_CN_OPTIONS_EVIDENCE=tests/utility/cn/evidence/build-options.json node tests/utility/cn/run-build-host.mjs",
+      "exitCode": 0,
+      "passed": 56,
+      "log": "build-host-green.log"
+    },
+    {
+      "command": "node tests/utility/cn/run-wasm-native.mjs (temporary cwd target/utility-conformance/cn symlink to production bundle)",
+      "exitCode": 0,
+      "fixedPassed": 947,
+      "extraPassed": 56,
+      "log": "build-host-runtime-regression.log"
+    },
+    {
+      "command": "mbx test --locked -p rustify-style --no-default-features --features cn cn::",
+      "exitCode": 0,
+      "passed": 31,
+      "log": "build-host-native-test.log"
+    },
+    {
+      "command": "mbx clippy --locked -p rustify-style --no-default-features --features cn --all-targets -- -D warnings",
+      "exitCode": 0,
+      "log": "build-host-native-clippy.log"
+    },
+    {
+      "command": "mbx clippy --locked -p rustify-style-wasm --no-default-features --features cn --target wasm32-unknown-unknown -- -D warnings",
+      "exitCode": 0,
+      "log": "build-host-wasm-clippy.log"
+    },
+    {
+      "command": "node tests/utility/cn/build-options-watch-probe.mjs",
+      "exitCode": 0,
+      "log": "build-host-options-watch-probe.log"
+    }
+  ],
+  "actualHostCases": [
+    "actual-WASM-build-export",
+    "real-fs-default-subset-and-noop",
+    "real-fs-safelist-and-tokens",
+    "real-fs-CSS-relative-import-and-reset",
+    "real-fs-ignored-explicit-opt-in",
+    "real-fs-symbolic-link-cycle-output-alias",
+    "real-fs-long-token-and-invalid-UTF8",
+    "real-module-default-extension-UTF16",
+    "real-module-named-export-nullish-default",
+    "real-module-transform-sees-CSS-and-theme-getter",
+    "real-module-transform-original-throw-identity",
+    "real-module-import-cause-identity",
+    "real-module-missing-default",
+    "real-module-custom-callback-refuses-emission",
+    "real-fs-write-error-cause",
+    "pure-UTF16-source-subset-stats-and-banner",
+    "public-compileModel-complete-shape-callbacks-and-identity",
+    "pure-subset-callback-calls-and-throw-identity",
+    "actual-builder-run-Promise-coalescing",
+    "actual-builder-incremental-shared-selection",
+    "actual-builder-reject-queue-and-recover",
+    "actual-Vite-hooks-root-and-override",
+    "actual-Next-factory-context-and-original-throw",
+    "actual-Next-recursive-nonpersistent-watch-and-disposal",
+    "source-ports-expansion-and-matcher",
+    "explicit-source-limit-rejects-instead-of-partial-build",
+    "actual-Next-active-watch-exits-nonpersistent",
+    "actual-CLI-all-flags-and-original-bin-output",
+    "pure-source-default-options-and-UTF16-extraction",
+    "CSS-helper-optional-extension-sections",
+    "real-fs-mini-glob-UTF16-question-and-final-newline",
+    "production-CLI-default-policy-without-env",
+    "candidate-Set-add-duplicates-and-original-throw",
+    "CLI-summary-binary-half-rounding",
+    "CLI-gzip-boundary-original-Node-zlib",
+    "Next-default-config-object-identity",
+    "WASM-virtual-primitive-tree-shared-build-and-incremental",
+    "config-import-primitive-throw-message-and-cause",
+    "config-import-message-getter-original-throw",
+    "actual-CLI-transform-Symbol-throw-format",
+    "options-build-content-read-order",
+    "options-build-default-CSS-and-empty-content-read-order",
+    "options-build-CSS-token-safelist-repeated-reads",
+    "options-build-full-short-circuit-unread-throwing-getters",
+    "options-build-full-reads-may-change-between-stages",
+    "options-build-getter-throw-original-identity",
+    "options-build-await-transform-sees-late-full",
+    "options-builder-create-run-changed-lazy-reads",
+    "options-builder-known-CSS-short-circuits-option-reads",
+    "options-Vite-spread-and-deferred-builder-getters",
+    "options-Next-factory-builder-and-development-cwd-read-order",
+    "options-build-repeated-path-and-error-label-getters",
+    "options-Vite-async-hooks-reject-original-getter-throw",
+    "options-CLI-summary-original-print-stage-getters",
+    "options-Next-getter-bounded-factory-reentry",
+    "options-Vite-getter-bounded-hook-reentry"
+  ],
+  "redEvidence": [
+    "build-host-cli-throw-red.log",
+    "build-host-default-options-red.log",
+    "build-host-glob-units-red.log",
+    "build-host-gzip-red.log",
+    "build-host-import-shapes-red.log",
+    "build-host-model-red.log",
+    "build-host-next-identity-red.log",
+    "build-host-options-next-start-red.log",
+    "build-host-options-red.log",
+    "build-host-options-reentry-red.log",
+    "build-host-rounding-red.log",
+    "build-host-theme-sections-red.log",
+    "build-host-red.log"
+  ],
+  "gzipBoundary": {
+    "fixture": "gzip-boundary.json",
+    "sourceUnits": 10968,
+    "previousNativeMinizSummary": "5.9 KB gzipped",
+    "originalNodeZlibSummary": "5.8 KB gzipped",
+    "production": "Node zlib gzipSync level9 supplies compressed size; Rust owns summary format"
+  },
+  "knownRemaining": [
+    "Windows filesystem/platform-specific IO errors not run.",
+    "Full Vite HMR/Next framework projects not launched; actual hook/factory/Promise/native watch lifecycle verified.",
+    "Randomized build differential corpus and performance not run in this phase.",
+    "Native Rust miniz and Node zlib DEFLATE bytes differ; Node production CLI delegates actual gzip size to zlib."
+  ],
+  "publicCompileModel": {
+    "shape": "All 27 original enumerable fields in definition order; native Int32Array/Array/string types",
+    "literalGroupIds": "original pre-renumber gid retained",
+    "setAttachmentArrayIdentity": "original first-tail-array ownership retained",
+    "callbackImplIdentity": "original JS functions preserved",
+    "exceptions": "Original thrown getter value preserved",
+    "bounds": "Existing compiler budget bounds raw literal retention; JS model materialization bounded by compiled nodes/input units"
+  },
+  "documentationCheck": {
+    "command": "python3 .agents/skills/documentation-writer/scripts/check_doc.py tests/utility/cn/BUILD-OPTIONS.md tests/utility/cn/BUILD-HOST.md tests/utility/cn/WASM-NATIVE.md tests/utility/cn/README.md --repo-root .",
+    "exitCode": 0
+  },
+  "optionGetterSemantics": {
+    "status": "verified_actual_native_JS_options_Proxy_getter_differential",
+    "scenarios": 16,
+    "readTracePairs": 26,
+    "cases": "tests/utility/cn/build-options-cases.mjs",
+    "evidence": "tests/utility/cn/evidence/build-options.json",
+    "details": "Original named-property read order/count, short circuits, staged IO/await reads, synchronous pre-await start, async rejection and finite Next/Vite getter reentry. CLI options are internally constructed plain data; SDK summary tests original print body full/out getters.",
+    "originalSnapshotRed": {
+      "log": "build-host-options-red.log",
+      "passed": 40,
+      "failures": 14,
+      "note": "The RED runner also emitted an unhandled original rejection after the synchronous-throw mismatch; later harness guards attach a rejection observer without changing assertions."
+    },
+    "nextCallBoundaryRed": "build-host-options-next-start-red.log",
+    "nextReentryRed": "build-host-options-reentry-red.log",
+    "traceSha256": "16eafed3151b728d47de24db8fd99fa36edb3f48a6a5bf9dbfa69cbf235d5b6b"
+  },
+  "transientWatchObservation": {
+    "case": "actual-Next-recursive-nonpersistent-watch-and-disposal",
+    "firstFullRun": "55 passed, 1 failed: immediate nested edit did not change output within two seconds. Original full log was overwritten on replay; observation remains in tool conversation.",
+    "independentProbe": "Actual native rename callback for src/index.ts and changed output, exit0; build-host-options-watch-probe.log",
+    "sameBundleFullReplays": "Two later unchanged-production full runs passed 56/56, including the recursive watcher and disposal.",
+    "cause": "Unproven; no registration-race or production-defect claim."
+  },
+  "testSources": [
+    {
+      "path": "tests/utility/cn/run-build-host.mjs",
+      "sha256": "becc8666a1480ba9671bc0aa074dc29107ba4639d16af8a6bd2c2ff4c924c45f"
+    },
+    {
+      "path": "tests/utility/cn/build-options-cases.mjs",
+      "sha256": "7117659a8568cf8fecefcf172e76838ff0a7571cd6b1186bf2b137aa1bc2c899"
+    },
+    {
+      "path": "tests/utility/cn/build-options-watch-probe.mjs",
+      "sha256": "dec128e0aabfb9e8f56b74d3775006d13e6bcb391dc2f3927f26e93c7166ec21"
+    },
+    {
+      "path": "tests/utility/cn/gzip-boundary.json",
+      "sha256": "d0eace9c5fb04e95db9e4eae2ccfbf27ba9f3f721dd037514498c4ef9af74310"
+    }
+  ]
+}

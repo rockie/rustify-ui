@@ -1,0 +1,20 @@
+Pre-fix release product (built before this fix, still on disk), new spec only:
+npx playwright test --project=utility-lab --workers=1 --reporter=line utility-runtime.spec.ts -g "scoped keyframes follow"
+Result: 1 failed at utility-runtime.spec.ts:831
+Expected substring: "--animate-card: rustify-6ea452b3-1f9f-464b-8be5-40616a6b6358-card 1s linear infinite"
+Received string:    "@scope ([data-rustify-style-owner=\"6ea452b3-1f9f-464b-8be5-40616a6b6358\"]) to ([data-rustify-style-owner]) {
+  @layer properties;
+  :scope {
+    --animate-card: card 1s linear infinite;
+    --animate-alias: var(--animate-card);
+  ...
+  .animate-card {
+    animation: var(--animate-card);
+  }
+  ...
+@keyframes rustify-6ea452b3-1f9f-464b-8be5-40616a6b6358-card {
+
+Host red (before the scope.rs change):
+mbx test --locked -p rustify-style --all-features --lib scope::
+scope::tests::keyframe_references_follow_custom_properties_into_animations FAILED
+assertion failed: css.contains("--animate-card: rustify-alpha-card 1s linear infinite")

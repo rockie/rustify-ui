@@ -1,0 +1,14 @@
+{
+  "fixedCases": 947,
+  "passed": 947,
+  "failures": []
+}
+{
+  "extraPassed": 35,
+  "failures": [
+    {
+      "id": "limits/compiled-path-and-theme-expansion-depth",
+      "error": "AssertionError [ERR_ASSERTION]: Missing expected exception."
+    }
+  ]
+}

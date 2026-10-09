@@ -1,0 +1,26 @@
+{
+  "scope": "isolated native cursor sensitivity; not production correctness",
+  "mutants": [
+    {
+      "mutation": "stop-before-replacement",
+      "sourceSha256": "cf696bbe7781fb0b76de735e5b7016d884a379dd3b087335f10d169b0d1618b7",
+      "expectedExit": 1,
+      "witness": "replace-0-stop",
+      "log": "docs/validation/wasm-tailwind/utf16-families-registration-cursor-mutant-stop-before-replacement-red.log"
+    },
+    {
+      "mutation": "context-drops-false-empty",
+      "sourceSha256": "2cabfc999c1d4302c0c3599f3607ed5cec4c01b9f40f77745b6f46dbeb30f4a8",
+      "expectedExit": 1,
+      "witness": "context-overrides-false-and-empty-preserves-parent",
+      "log": "docs/validation/wasm-tailwind/utf16-families-registration-cursor-mutant-context-drops-false-empty-red.log"
+    },
+    {
+      "mutation": "stale-child-view",
+      "sourceSha256": "bfd3a22528923c327969da6d487901f2c9c6ad1f5beb09c69ab35cd8afa7af25",
+      "expectedExit": 1,
+      "witness": "visitor-child-reassignment-is-current",
+      "log": "docs/validation/wasm-tailwind/utf16-families-registration-cursor-mutant-stale-child-view-red.log"
+    }
+  ]
+}

@@ -182,7 +182,7 @@ mod dom {
         #[prop(optional, into)] test_id: String,
     ) -> impl IntoView {
         let group = StoredValue::new(crate::id::next("menu"));
-        let panel_class = StoredValue::new(crate::macros::merge(PANEL, &class));
+        let panel_class = crate::macros::reactive_merge(PANEL, &class);
         let panel_test_id = StoredValue::new(test_id);
         let label = StoredValue::new((!aria_label.is_empty()).then_some(aria_label));
         // Stored rather than cloned: `Show` and `Layer` each take a children
@@ -352,7 +352,7 @@ mod dom {
                 <Layer anchor=anchor fit=true on_close=close class="rui-menu-layer">
                     <ul
                         node_ref=list
-                        class=move || panel_class.get_value()
+                        class=panel_class
                         data-name="Menu"
                         data-testid=move || panel_test_id.get_value()
                         role="menu"

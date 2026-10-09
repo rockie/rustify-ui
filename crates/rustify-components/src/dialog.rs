@@ -47,7 +47,7 @@ pub fn Dialog(
     let group = crate::id::next("dialog");
     let title_id = StoredValue::new(format!("{group}-title"));
     let description_id = StoredValue::new(format!("{group}-description"));
-    let panel_class = StoredValue::new(crate::macros::merge(PANEL, &class));
+    let panel_class = crate::macros::reactive_merge(PANEL, &class);
     // Named after the dialog, so two dialogs on a page have two.
     let close_test_id = StoredValue::new(if test_id.is_empty() {
         "dialog-close".to_string()
@@ -99,7 +99,7 @@ pub fn Dialog(
                         }
                     />
                 </Show>
-                <div class=move || panel_class.get_value() data-name="Dialog">
+                <div class=panel_class data-name="Dialog">
                     <header class=TITLE_BAR data-name="DialogTitleBar">
                         <div class="flex flex-1 flex-col gap-2">
                             <h2

@@ -1,0 +1,14 @@
+{
+  "fixedCases": 947,
+  "passed": 947,
+  "failures": []
+}
+{
+  "extraPassed": 55,
+  "failures": [
+    {
+      "id": "config/conflict-map-before-iteration-order",
+      "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:\n+ actual - expected\n\n  [\n    'base map',\n+   'base iter',\n    'mod map',\n-   'base iter',\n    'mod iter'\n  ]\n"
+    }
+  ]
+}

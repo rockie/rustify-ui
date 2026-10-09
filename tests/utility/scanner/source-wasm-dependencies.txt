@@ -1,0 +1,37 @@
+rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+├── bexpand v1.3.0
+│   ├── itertools v0.14.0
+│   │   └── either v1.18.0
+│   ├── nom v8.0.0
+│   │   └── memchr v2.8.3
+│   └── nom-language v0.1.0
+│       └── nom v8.0.0 (*)
+├── bstr v1.13.1
+│   ├── memchr v2.8.3
+│   └── regex-automata v0.4.18
+│       ├── aho-corasick v1.1.5
+│       │   └── memchr v2.8.3
+│       ├── memchr v2.8.3
+│       └── regex-syntax v0.8.11
+├── classification-macros v0.1.0 (proc-macro) (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style/upstream/classification-macros)
+│   ├── proc-macro2 v1.0.107
+│   │   └── unicode-ident v1.0.24
+│   ├── quote v1.0.47
+│   │   └── proc-macro2 v1.0.107 (*)
+│   └── syn v2.0.119
+│       ├── proc-macro2 v1.0.107 (*)
+│       ├── quote v1.0.47 (*)
+│       └── unicode-ident v1.0.24
+├── fast-glob v0.4.5
+│   └── arrayvec v0.7.8
+├── globset v0.4.20
+│   ├── aho-corasick v1.1.5 (*)
+│   ├── bstr v1.13.1 (*)
+│   ├── log v0.4.34
+│   ├── regex-automata v0.4.18 (*)
+│   └── regex-syntax v0.8.11
+└── regex v1.13.1
+    ├── aho-corasick v1.1.5 (*)
+    ├── memchr v2.8.3
+    ├── regex-automata v0.4.18 (*)
+    └── regex-syntax v0.8.11

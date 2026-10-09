@@ -1,0 +1,7 @@
+F-04 修前浏览器失败（2026-10-08，dirty@53652fc，修前 release 产物：main 9926118ec160f77a、Worker build_id c2ee34fd0c5981850540bb13c80e3be250809e4b893950881077905cf110b6a4）
+
+命令：RUSTIFY_XTASK=target/debug/xtask npx playwright test --project=utility-lab --workers=1 --reporter=line utility-runtime.spec.ts -g "timing keyword"
+结果：1 failed
+  [utility-lab] tests/browser/utility-runtime.spec.ts:843 a keyframes name that is also a timing keyword keeps the timing variable intact
+  expect(result.css).toContain('--ease: linear')  -- scope CSS 中为 `--ease: rustify-<owner>-linear`
+与评审 R2 probe.json `keyword` 一致：活动动画 0，合法原始 CSS 对照为 1。

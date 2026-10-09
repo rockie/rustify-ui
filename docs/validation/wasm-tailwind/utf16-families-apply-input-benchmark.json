@@ -1,0 +1,110 @@
+{
+  "before": {
+    "scope": "public AST constructor with six direct apply directives and four builds",
+    "samples": [
+      {
+        "constructorP95Ms": 0.3176249999999641,
+        "buildP95Ms": 0.24649999999996908,
+        "sessionsPerSecond": 894.2902349739543,
+        "outputSha256": "f7a086c0f290081b17a5f080839b2314c2a2c36a98c318647b8f415963f5ab6a",
+        "sessions": 200,
+        "builds": 800
+      },
+      {
+        "constructorP95Ms": 0.28112499999997453,
+        "buildP95Ms": 0.23108300000001236,
+        "sessionsPerSecond": 940.3515455354706,
+        "outputSha256": "f7a086c0f290081b17a5f080839b2314c2a2c36a98c318647b8f415963f5ab6a",
+        "sessions": 200,
+        "builds": 800
+      },
+      {
+        "constructorP95Ms": 0.27737500000000637,
+        "buildP95Ms": 0.23033300000008694,
+        "sessionsPerSecond": 944.2831621918464,
+        "outputSha256": "f7a086c0f290081b17a5f080839b2314c2a2c36a98c318647b8f415963f5ab6a",
+        "sessions": 200,
+        "builds": 800
+      },
+      {
+        "constructorP95Ms": 0.31179199999996854,
+        "buildP95Ms": 0.2341670000000704,
+        "sessionsPerSecond": 932.85122773413,
+        "outputSha256": "f7a086c0f290081b17a5f080839b2314c2a2c36a98c318647b8f415963f5ab6a",
+        "sessions": 200,
+        "builds": 800
+      },
+      {
+        "constructorP95Ms": 0.2765830000000733,
+        "buildP95Ms": 0.22749999999996362,
+        "sessionsPerSecond": 948.6291646901383,
+        "outputSha256": "f7a086c0f290081b17a5f080839b2314c2a2c36a98c318647b8f415963f5ab6a",
+        "sessions": 200,
+        "builds": 800
+      }
+    ],
+    "constructorP95Ms": 0.28112499999997453,
+    "buildP95Ms": 0.23108300000001236,
+    "sessionsPerSecond": 940.3515455354706,
+    "wasmBytes": 2162906,
+    "wasmSha256": "827c887ce1655aee44128f113701a0f3290bb51d5ada21dd93c58a3448f1df5b",
+    "actualWasm": true,
+    "finalPerformanceAcceptance": "pending"
+  },
+  "after": {
+    "scope": "public AST constructor with six direct apply directives and four builds",
+    "samples": [
+      {
+        "constructorP95Ms": 0.5199999999999818,
+        "buildP95Ms": 0.24295899999998483,
+        "sessionsPerSecond": 791.1272452898291,
+        "outputSha256": "f7a086c0f290081b17a5f080839b2314c2a2c36a98c318647b8f415963f5ab6a",
+        "sessions": 200,
+        "builds": 800
+      },
+      {
+        "constructorP95Ms": 0.5150830000000042,
+        "buildP95Ms": 0.23262499999998454,
+        "sessionsPerSecond": 807.6457105730362,
+        "outputSha256": "f7a086c0f290081b17a5f080839b2314c2a2c36a98c318647b8f415963f5ab6a",
+        "sessions": 200,
+        "builds": 800
+      },
+      {
+        "constructorP95Ms": 0.5129170000000158,
+        "buildP95Ms": 0.2307500000000573,
+        "sessionsPerSecond": 809.3729433707049,
+        "outputSha256": "f7a086c0f290081b17a5f080839b2314c2a2c36a98c318647b8f415963f5ab6a",
+        "sessions": 200,
+        "builds": 800
+      },
+      {
+        "constructorP95Ms": 0.5042909999999665,
+        "buildP95Ms": 0.2295409999999265,
+        "sessionsPerSecond": 817.1058394701699,
+        "outputSha256": "f7a086c0f290081b17a5f080839b2314c2a2c36a98c318647b8f415963f5ab6a",
+        "sessions": 200,
+        "builds": 800
+      },
+      {
+        "constructorP95Ms": 0.4882920000000013,
+        "buildP95Ms": 0.22366699999997763,
+        "sessionsPerSecond": 830.8140627742335,
+        "outputSha256": "f7a086c0f290081b17a5f080839b2314c2a2c36a98c318647b8f415963f5ab6a",
+        "sessions": 200,
+        "builds": 800
+      }
+    ],
+    "constructorP95Ms": 0.5129170000000158,
+    "buildP95Ms": 0.2307500000000573,
+    "sessionsPerSecond": 809.3729433707049,
+    "wasmBytes": 2192750,
+    "wasmSha256": "fbadaf819557fba81791a139fa9bfab4cd88dd32126a446615070608dd939854",
+    "actualWasm": true,
+    "finalPerformanceAcceptance": "pending"
+  },
+  "scope": "six direct apply directives, no theme/import/custom definitions; 200 sessions/800 builds per sample, five measured samples plus warmup",
+  "baseline": "previous preserved theme-pruning baseline API artifact; older render pruning differs but is inactive in this no-theme fixture; fixed serialized AST digest checked",
+  "isolation": "benchmarks serialized with builds/tests; before captured prior to final gates and after captured after gates",
+  "fullPerformanceConformance": "pending"
+}

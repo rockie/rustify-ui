@@ -1,0 +1,131 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: apply-location: first AST
++ actual - expected
+... Skipped lines
+
+  [
+    {
+      kind: 'comment',
+      value: '! tailwindcss v4.1.13 | MIT License | https://tailwindcss.com '
+    },
+...
+            },
++           5,
++           6
+-           12,
+-           17
+          ],
+          value: 'block'
+        }
+      ],
+      selector: '.authored',
+
+    at file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/compiler/run-public-ast-graph-wasm.mjs:80:12 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: [
+    {
+      kind: 'comment',
+      value: '! tailwindcss v4.1.13 | MIT License | https://tailwindcss.com '
+    },
+    {
+      kind: 'rule',
+      selector: '.authored',
+      nodes: [
+        {
+          kind: 'declaration',
+          property: '--x',
+          value: 'red',
+          important: false,
+          src: [ [Object], 1, 2 ]
+        },
+        {
+          kind: 'declaration',
+          property: '--y',
+          value: 'blue',
+          important: false,
+          src: [ [Object], 3, 4 ],
+          dst: [ [Object], 1, 2 ]
+        },
+        {
+          kind: 'declaration',
+          property: 'display',
+          value: 'block',
+          important: false,
+          src: [ [Object], 5, 6 ]
+        }
+      ],
+      src: [ { file: 'entry.css', code: 'source' }, 0, 5 ]
+    },
+    {
+      kind: 'rule',
+      selector: '.block',
+      nodes: [
+        {
+          kind: 'declaration',
+          property: 'display',
+          value: 'block',
+          important: false,
+          src: [ [Object], 6, 7 ]
+        }
+      ],
+      src: [ { file: 'entry.css', code: 'source' }, 6, 7 ]
+    }
+  ],
+  expected: [
+    {
+      kind: 'comment',
+      value: '! tailwindcss v4.1.13 | MIT License | https://tailwindcss.com '
+    },
+    {
+      kind: 'rule',
+      selector: '.authored',
+      nodes: [
+        {
+          kind: 'declaration',
+          property: '--x',
+          value: 'red',
+          important: false,
+          src: [ [Object], 1, 2 ]
+        },
+        {
+          kind: 'declaration',
+          property: '--y',
+          value: 'blue',
+          important: false,
+          src: [ [Object], 3, 4 ],
+          dst: [ [Object], 1, 2 ]
+        },
+        {
+          kind: 'declaration',
+          property: 'display',
+          value: 'block',
+          important: false,
+          src: [ [Object], 12, 17 ]
+        }
+      ],
+      src: [ { file: 'entry.css', code: 'source' }, 0, 5 ]
+    },
+    {
+      kind: 'rule',
+      selector: '.block',
+      nodes: [
+        {
+          kind: 'declaration',
+          property: 'display',
+          value: 'block',
+          important: false,
+          src: [ [Object], 6, 7 ]
+        }
+      ],
+      src: [ { file: 'entry.css', code: 'source' }, 6, 7 ]
+    }
+  ],
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v26.1.0

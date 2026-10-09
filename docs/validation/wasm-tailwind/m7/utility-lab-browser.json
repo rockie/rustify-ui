@@ -1,0 +1,58 @@
+{
+  "recordedAt": "2026-10-07T00:48:07.640Z",
+  "browser": "154.0.8037.98",
+  "headed": true,
+  "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Pro, Unspecified Version)",
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+  "build": {
+    "main": "a971d7b03cffe9f6",
+    "worker": "5faa752bf64b6a9fd1c25d1f341ffd1e89f7171559c6bfca704c8e83b5efec46",
+    "scannerEnabled": false
+  },
+  "ensureNewClass": {
+    "samples": 60,
+    "p50Ms": 2.5,
+    "p95Ms": 3.6000000089406967,
+    "maxMs": 11.200000002980232,
+    "timing": "api.ensure of one new arbitrary width: queue, Worker prepare, transfer, CSSOM staging/adoption and ack, measured in the page"
+  },
+  "ensureRepeat": {
+    "samples": 60,
+    "p50Ms": 0.20000000298023224,
+    "p95Ms": 0.29999999701976776,
+    "maxMs": 0.30000001192092896,
+    "timing": "api.ensure of an already installed class: the runtime no-op path"
+  },
+  "cssomReplaceSync": {
+    "samples": 63,
+    "p50Ms": 0.10000000894069672,
+    "p95Ms": 0.20000000298023224,
+    "maxMs": 0.20000000298023224,
+    "maxBytes": 18393
+  },
+  "cssomAdopt": {
+    "samples": 63,
+    "p50Ms": 0,
+    "p95Ms": 0,
+    "maxMs": 0.09999999403953552
+  },
+  "gpuApplyToDrawn": {
+    "samples": 179,
+    "p50Ms": 8.399999991059303,
+    "p95Ms": 9,
+    "maxMs": 15.599999994039536,
+    "timing": "gpuApply of a new revision (ensure + resolve + props) until the region reports that revision drawn"
+  },
+  "frameIntervals": {
+    "samples": 150,
+    "p50Ms": 8.299999999999955,
+    "p95Ms": 10.299999999999955,
+    "maxMs": 18.09999999999991,
+    "applies": 179,
+    "timing": "rAF intervals while the GPU applies run, after 30 warm-up frames"
+  },
+  "heap": {
+    "usedJSHeapSize": 49879038,
+    "totalJSHeapSize": 68967406
+  }
+}

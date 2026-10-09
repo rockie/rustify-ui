@@ -1,0 +1,373 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: reference: constructor
++ actual - expected
+... Skipped lines
+
+  {
+    records: [
+      {
+        array: true,
+        fields: [
+...
+            {
++             reference: 16
+-             reference: 17
+            }
+          ]
+        ]
+      },
+      {
+...
+            'kind',
++           'at-rule'
+-           'context'
+          ],
+          [
++           'name',
++           '@media'
++         ],
++         [
++           'params',
++           'reference'
++         ],
++         [
++           'nodes',
+-           'context',
+            {
+              reference: 5
+            }
+          ],
+          [
++           'src',
+-           'nodes',
+            {
++             undefined: true
+-             reference: 6
+            }
+          ]
+        ]
+      },
+      {
+-       array: false,
+-       fields: [
+-         [
+-           'reference',
+-           true
+-         ]
+-       ]
+-     },
+-     {
+        array: true,
+        fields: [
+          [
+            '0',
+            {
++             reference: 6
+-             reference: 7
+            }
+          ]
+        ]
+      },
+      {
+...
+            {
++             reference: 7
+-             reference: 8
+            }
+          ],
+          [
+            'nodes',
+            {
++             reference: 8
+-             reference: 9
+            }
+          ]
+        ]
+      },
+      {
+...
+            {
++             reference: 9
+-             reference: 10
+            }
+          ]
+        ]
+      },
+      {
+...
+            {
++             reference: 10
+-             reference: 11
+            }
+          ],
+          [
+            'src',
+            {
++             reference: 14
+-             reference: 15
+            }
+          ]
+        ]
+      },
+      {
+...
+            {
++             reference: 11
+-             reference: 12
+            }
+          ]
+        ]
+      },
+      {
+...
+            {
++             reference: 12
+-             reference: 13
+            }
+          ],
+          [
+            'nodes',
+            {
++             reference: 13
+-             reference: 14
+            }
+          ]
+        ]
+      },
+      {
+...
+            {
++             reference: 15
+-             reference: 16
+            }
+          ],
+          [
+            '1',
+            0
+...
+            {
++             reference: 17
+-             reference: 18
+            }
+          ],
+          [
+            'context',
+            {
++             reference: 18
+-             reference: 19
+            }
+          ]
+        ]
+      },
+      {
+...
+            {
++             reference: 20
+-             reference: 21
+            }
+          ]
+        ]
+      },
+      {
+...
+      {
++       reference: 19
+-       reference: 20
+      },
+      {
++       reference: 16
+-       reference: 17
+      }
+    ]
+  }
+
+    at file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/compiler/run-public-ast-import-input-wasm.mjs:68:12 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: {
+    roots: [ { reference: 0 }, { reference: 19 }, { reference: 16 } ],
+    records: [
+      { array: true, fields: [ [ '0', [Object] ], [ '1', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'context' ],
+          [ 'context', [Object] ],
+          [ 'nodes', [Object] ]
+        ]
+      },
+      { array: false, fields: [] },
+      { array: true, fields: [ [ '0', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'at-rule' ],
+          [ 'name', '@media' ],
+          [ 'params', 'reference' ],
+          [ 'nodes', [Object] ],
+          [ 'src', [Object] ]
+        ]
+      },
+      { array: true, fields: [ [ '0', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'context' ],
+          [ 'context', [Object] ],
+          [ 'nodes', [Object] ]
+        ]
+      },
+      { array: false, fields: [ [ 'base', '/discover' ] ] },
+      { array: true, fields: [ [ '0', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'rule' ],
+          [ 'selector', ':root, :host' ],
+          [ 'nodes', [Object] ],
+          [ 'src', [Object] ]
+        ]
+      },
+      { array: true, fields: [ [ '0', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'context' ],
+          [ 'context', [Object] ],
+          [ 'nodes', [Object] ]
+        ]
+      },
+      { array: false, fields: [ [ 'theme', true ] ] },
+      { array: true, fields: [] },
+      {
+        array: true,
+        fields: [ [ '0', [Object] ], [ '1', 0 ], [ '2', 7 ] ]
+      },
+      {
+        array: false,
+        fields: [
+          [ 'file', '/mapped/one.css' ],
+          [ 'code', '@theme { --color-card: red; }' ]
+        ]
+      },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'context' ],
+          [ 'name', '@tailwind' ],
+          [ 'params', 'utilities' ],
+          [ 'nodes', [Object] ],
+          [ 'context', [Object] ]
+        ]
+      },
+      { array: true, fields: [] },
+      { array: false, fields: [] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'at-rule' ],
+          [ 'name', '@reference' ],
+          [ 'params', '"one.css"' ],
+          [ 'nodes', [Object] ]
+        ]
+      },
+      { array: true, fields: [] }
+    ]
+  },
+  expected: {
+    roots: [ { reference: 0 }, { reference: 20 }, { reference: 17 } ],
+    records: [
+      { array: true, fields: [ [ '0', [Object] ], [ '1', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'context' ],
+          [ 'context', [Object] ],
+          [ 'nodes', [Object] ]
+        ]
+      },
+      { array: false, fields: [] },
+      { array: true, fields: [ [ '0', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'context' ],
+          [ 'context', [Object] ],
+          [ 'nodes', [Object] ]
+        ]
+      },
+      { array: false, fields: [ [ 'reference', true ] ] },
+      { array: true, fields: [ [ '0', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'context' ],
+          [ 'context', [Object] ],
+          [ 'nodes', [Object] ]
+        ]
+      },
+      { array: false, fields: [ [ 'base', '/discover' ] ] },
+      { array: true, fields: [ [ '0', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'rule' ],
+          [ 'selector', ':root, :host' ],
+          [ 'nodes', [Object] ],
+          [ 'src', [Object] ]
+        ]
+      },
+      { array: true, fields: [ [ '0', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'context' ],
+          [ 'context', [Object] ],
+          [ 'nodes', [Object] ]
+        ]
+      },
+      { array: false, fields: [ [ 'theme', true ] ] },
+      { array: true, fields: [] },
+      {
+        array: true,
+        fields: [ [ '0', [Object] ], [ '1', 0 ], [ '2', 7 ] ]
+      },
+      {
+        array: false,
+        fields: [
+          [ 'file', '/mapped/one.css' ],
+          [ 'code', '@theme { --color-card: red; }' ]
+        ]
+      },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'context' ],
+          [ 'name', '@tailwind' ],
+          [ 'params', 'utilities' ],
+          [ 'nodes', [Object] ],
+          [ 'context', [Object] ]
+        ]
+      },
+      { array: true, fields: [] },
+      { array: false, fields: [] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'at-rule' ],
+          [ 'name', '@reference' ],
+          [ 'params', '"one.css"' ],
+          [ 'nodes', [Object] ]
+        ]
+      },
+      { array: true, fields: [] }
+    ]
+  },
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v26.1.0

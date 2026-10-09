@@ -1,0 +1,9 @@
+{
+  "candidate-B.md": "e2eb883f4889c0e8059bc1240ebfe5fdb766936c1e437e8bf1a1c58f25695506",
+  "candidate-A.md": "028818d4c8c5012ccaaadec6ae80c4915a4d89f18597d6e0f3d211e9e665a893",
+  "mapping": {
+    "proposal-1.md": "candidate-B.md",
+    "proposal-2.md": "candidate-A.md"
+  },
+  "citationMode": "Frozen design archives. Revalidate source line anchors against the current worktree before using them as current implementation evidence."
+}

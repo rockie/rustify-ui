@@ -1,0 +1,11 @@
+ok each builder is not a registration; suite and test rows form a product
+ok literal let tables and prefix loops expand without executing callbacks
+ok unknown table and registration loop remain unresolved and retain source calls
+ok skip and only modifiers propagate from suites
+ok array mutations invalidate static tables
+ok assert and assertion-count controls are retained; unowned helpers are visible
+ok suite parameters do not inherit shadowed literal declarations
+ok unsupported for argument semantics and control flow are not guessed
+ok assertion locators preserve runtime multiplicity uncertainty
+ok fixed source edges, compare, parser and snapshots remain complete and pending
+{"checks":10,"summary":{"sourcesVerified":109,"originalSourceCalls":1215,"originalTestCalls":1125,"originalParameterizationCalls":10,"originalSuiteCalls":80,"parameterBuilders":11,"expandedTests":1398,"staticallyExpandedTests":1398,"unresolvedTests":0,"upstreamSkippedTests":1,"assertionTemplates":1851,"assertionTemplateEdges":2140,"controlledAssertionTemplates":45,"externalSnapshotExports":13,"matchedExternalSnapshotExports":13,"suggestedScopeCorrections":3,"validatedTests":0,"validatedAssertions":0,"adjudicatedExclusions":0,"unownedAssertionTemplates":0}}

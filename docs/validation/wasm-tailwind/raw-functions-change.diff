@@ -1,0 +1,733 @@
+--- before/crates/rustify-style/src/compiler/custom_utilities.rs
++++ crates/rustify-style/src/compiler/custom_utilities.rs
+@@ -23,6 +23,7 @@
+     pub functional: bool,
+     pub nodes: Vec<AstNode>,
+     pub origin: Option<super::ast::NodeOrigin>,
++    pub completion: CompletionMetadata,
+ }
+ 
+ pub(super) fn marker(index: usize) -> AstNode {
+@@ -60,17 +61,21 @@
+ }
+ 
+ impl CompletionMetadata {
+-    fn extract(nodes: &[AstNode], depth: usize) -> Result<Self, CompileError> {
++    pub(super) fn include_value(&mut self, input: &Text, depth: usize) -> Result<(), CompileError> {
+         fn visit(
+             values: &[value::ValueNode],
+             spacing: bool,
+-            storage: &mut [CompletionValues; 2],
++            storage: &mut CompletionMetadata,
+             depth: usize,
+         ) -> Result<(), CompileError> {
+             for value in values {
+                 if let value::ValueNode::Function { name, nodes } = value {
+                     if name == "--value" || name == "--modifier" {
+-                        let target = &mut storage[usize::from(name == "--modifier")];
++                        let target = if name == "--modifier" {
++                            &mut storage.modifiers
++                        } else {
++                            &mut storage.values
++                        };
+                         for raw in value::segment_text(&value::to_css_text(nodes), 44, depth)? {
+                             let raw = raw.replace_ascii_sequence("\\*", "*").trim_js();
+                             if spacing {
+@@ -104,14 +109,19 @@
+             }
+             Ok(())
+         }
++        visit(&value::parse_text(input, depth)?, false, self, depth)
++    }
++
++    #[cfg(test)]
++    fn extract(nodes: &[AstNode], depth: usize) -> Result<Self, CompileError> {
+         fn collect(
+             nodes: &[AstNode],
+-            storage: &mut [CompletionValues; 2],
++            storage: &mut CompletionMetadata,
+             depth: usize,
+         ) -> Result<(), CompileError> {
+             for node in nodes {
+                 if let AstNode::Declaration { value, .. } = node {
+-                    visit(&value::parse_text(value, depth)?, false, storage, depth)?;
++                    storage.include_value(value, depth)?;
+                 }
+                 if let Some(nodes) = node.children() {
+                     collect(nodes, storage, depth)?;
+@@ -119,10 +129,9 @@
+             }
+             Ok(())
+         }
+-        let mut storage = [CompletionValues::default(), CompletionValues::default()];
++        let mut storage = Self::default();
+         collect(nodes, &mut storage, depth)?;
+-        let [values, modifiers] = storage;
+-        Ok(Self { values, modifiers })
++        Ok(storage)
+     }
+ 
+     fn owned_bytes(&self) -> usize {
+@@ -153,8 +162,6 @@
+     functional_roots: BTreeMap<String, Vec<usize>>,
+     owned_bytes: usize,
+     warnings: Vec<Text>,
+-    pub(super) normalization_mutations: Vec<super::public_api::InputMutation>,
+-    pub(super) function_mutations: Vec<super::public_api::InputMutation>,
+ }
+ 
+ #[derive(Debug, Default)]
+@@ -241,13 +248,9 @@
+             functional,
+             nodes,
+             origin,
++            completion,
+         } in definitions
+         {
+-            let completion = if functional {
+-                CompletionMetadata::extract(&nodes, limits.ast_depth)?
+-            } else {
+-                CompletionMetadata::default()
+-            };
+             let root = if functional {
+                 &name[..name.len() - 2]
+             } else {
+@@ -272,12 +275,6 @@
+         custom.owned_bytes = custom.measure_owned_bytes();
+         super::check_limit(custom.owned_bytes, limits.cache_bytes, "cache_bytes")?;
+         Ok(custom)
+-    }
+-
+-    pub(super) fn invokes_functions(&self) -> bool {
+-        self.definitions
+-            .iter()
+-            .any(|definition| super::functions::contains(&definition.nodes))
+     }
+ 
+     pub(super) fn contains_apply(&self) -> bool {
+@@ -372,7 +369,6 @@
+                 snapshot.bind_origin(origin);
+             }
+         }
+-        custom.normalization_mutations = snapshot.mutations;
+         custom.owned_bytes = custom.measure_owned_bytes();
+         if custom.owned_bytes > limits.cache_bytes {
+             return Err(CompileError::Limit {
+@@ -455,76 +451,6 @@
+ 
+     pub fn owned_bytes(&self) -> usize {
+         self.owned_bytes
+-    }
+-
+-    pub fn prepare_functions(
+-        &mut self,
+-        theme: &Theme,
+-        limits: &Limits,
+-        nodes: &mut [AstNode],
+-        keyframes: &mut [AstNode],
+-    ) -> Result<(), CompileError> {
+-        fn visit(
+-            custom: &mut CustomUtilities,
+-            nodes: &mut [AstNode],
+-            theme: &Theme,
+-            limits: &Limits,
+-            edits: &mut super::origin::Edits,
+-        ) -> Result<(), CompileError> {
+-            for node in nodes {
+-                if let Some(index) = custom.definition_index(node) {
+-                    super::functions::substitute_with_edits(
+-                        &mut custom.definitions[index].nodes,
+-                        theme,
+-                        limits.ast_depth,
+-                        limits.css_bytes,
+-                        edits,
+-                    )?;
+-                } else if let AstNode::Context { nodes, .. } = node {
+-                    visit(custom, nodes, theme, limits, edits)?;
+-                } else {
+-                    super::functions::substitute_with_edits(
+-                        std::slice::from_mut(node),
+-                        theme,
+-                        limits.ast_depth,
+-                        limits.css_bytes,
+-                        edits,
+-                    )?;
+-                }
+-            }
+-            Ok(())
+-        }
+-        let mut edits = super::origin::Edits::from_nodes(nodes);
+-        // Keyframes live after the caller tree on the compiler's synthetic root.
+-        // Share the same edit owner so aliases and a completed failure prefix survive.
+-        let result = visit(self, nodes, theme, limits, &mut edits).and_then(|()| {
+-            super::functions::substitute_with_edits(
+-                keyframes,
+-                theme,
+-                limits.ast_depth,
+-                limits.css_bytes,
+-                &mut edits,
+-            )
+-        });
+-        let snapshot = edits.finish();
+-        snapshot.bind(nodes);
+-        snapshot.bind(keyframes);
+-        for definition in &mut self.definitions {
+-            snapshot.bind(&mut definition.nodes);
+-            if let Some(origin) = &mut definition.origin {
+-                snapshot.bind_origin(origin);
+-            }
+-        }
+-        self.function_mutations = snapshot.mutations;
+-        result?;
+-        self.owned_bytes = self.measure_owned_bytes();
+-        if self.owned_bytes > limits.cache_bytes {
+-            return Err(CompileError::Limit {
+-                resource: "cache_bytes".into(),
+-                limit: limits.cache_bytes,
+-            });
+-        }
+-        Ok(())
+     }
+ 
+     pub fn compile(
+--- before/crates/rustify-style/src/compiler/functions.rs
++++ crates/rustify-style/src/compiler/functions.rs
+@@ -20,6 +20,7 @@
+     matches!(name, "--alpha" | "--spacing" | "--theme" | "theme")
+ }
+ 
++#[cfg(test)]
+ pub(super) fn contains(nodes: &[AstNode]) -> bool {
+     nodes.iter().any(|node| {
+         (match node {
+@@ -358,6 +359,61 @@
+     substitute_with_edits(nodes, theme, depth, max_bytes, &mut edits)?;
+     edits.finish().bind(nodes);
+     Ok(())
++}
++
++pub(super) fn substitute_current(
++    root: &super::public_api::PublicAst,
++    theme: &Theme,
++    current: &mut super::origin::current::Current,
++    allowance: &mut super::origin::current::Allowance,
++    limits: &super::Limits,
++    effects: &mut Vec<super::public_api::InputMutation>,
++) -> Result<bool, CompileError> {
++    use super::{origin::current::Action, public_api::PublicValue as Value};
++    let mut found = false;
++    current.walk(root, allowance, limits.ast_depth, &mut |node, cursor| {
++        let field = if node["kind"] == "declaration" {
++            Some("value")
++        } else if node["kind"] == "at-rule"
++            && ["@media", "@custom-media", "@container", "@supports"]
++                .iter()
++                .any(|name| node["name"] == *name)
++        {
++            Some("params")
++        } else {
++            None
++        };
++        if let Some((field, value)) = field
++            .and_then(|field| {
++                node.get(field)
++                    .and_then(Value::as_text)
++                    .map(|value| (field, value))
++            })
++            .filter(|(_, value)| has_function(value))
++        {
++            found = true;
++            let value = Value::from(in_text_value(
++                value,
++                theme,
++                field == "params",
++                limits.ast_depth,
++                limits.css_bytes,
++            )?);
++            let captured = cursor.assign(
++                node,
++                field,
++                &value,
++                4 * std::mem::size_of::<super::public_api::InputMutation>() + field.len() * 2,
++            )?;
++            effects.push(super::public_api::InputMutation::Set {
++                target: node.clone(),
++                field: field.into(),
++                value: captured.anchor,
++            });
++        }
++        Ok(Action::Continue)
++    })?;
++    Ok(found)
+ }
+ 
+ pub(super) fn substitute_with_edits(
+--- before/crates/rustify-style/src/compiler/imports.rs
++++ crates/rustify-style/src/compiler/imports.rs
+@@ -148,17 +148,8 @@
+     );
+     fn initial(&mut self, limits: &Limits) -> Result<super::registration::Initial, CompileError>;
+     fn compatibility(&mut self);
+-    fn failed_functions(
+-        &mut self,
+-        theme: &super::theme::Theme,
+-        normalization: Vec<super::public_api::InputMutation>,
+-        mutations: Vec<super::public_api::InputMutation>,
+-    );
+     fn failed_apply(
+         &mut self,
+-        theme: &super::theme::Theme,
+-        normalization: Vec<super::public_api::InputMutation>,
+-        mutations: Vec<super::public_api::InputMutation>,
+         replacements: Vec<super::apply::Replacement>,
+     ) -> Result<(), CompileError>;
+     fn complete(
+--- before/crates/rustify-style/src/compiler/mod.rs
++++ crates/rustify-style/src/compiler/mod.rs
+@@ -99,8 +99,6 @@
+     pending: Option<u64>,
+     input_ast: Vec<AstNode>,
+     apply_replacements: Vec<apply::Replacement>,
+-    input_mutations: Vec<public_api::InputMutation>,
+-    normalization_mutations: Vec<public_api::InputMutation>,
+     theme: theme::Theme,
+     custom: custom_utilities::CustomUtilities,
+     limits: Limits,
+@@ -239,6 +237,7 @@
+             definitions,
+             warnings,
+             has_authored_variants,
++            has_functions,
+         } = if let Some(setup) = &mut public_setup {
+             setup.initial(&limits)?
+         } else {
+@@ -271,15 +270,6 @@
+         custom_variants.finish(&limits)?;
+         let mut custom =
+             custom_utilities::CustomUtilities::from_definitions(definitions, warnings, &limits)?;
+-        let has_functions = functions::contains(&input_ast)
+-            || theme.tokens.values().any(|token| {
+-                !token.reference
+-                    && ["--alpha(", "--spacing(", "--theme(", "theme("]
+-                        .iter()
+-                        .any(|name| token.value.contains(name))
+-            })
+-            || functions::contains(&theme.keyframes)
+-            || custom.invokes_functions();
+         let has_directive = ast::contains_at_rule(&input_ast, "@tailwind")
+             || ast::contains_at_rule(&input_ast, "@apply")
+             || custom.contains_apply();
+@@ -309,26 +299,8 @@
+         theme.custom_variants = custom_variants;
+         theme.blocked = sources.blocked;
+         theme.legacy_budget = Some(theme_budget.saturating_sub(theme.owned_bytes()));
+-        let mut keyframes = std::mem::take(&mut theme.keyframes);
+-        let function_result = validate_directives(&input_ast).and_then(|()| {
+-            custom.prepare_functions(&theme, &limits, &mut input_ast, &mut keyframes)
+-        });
+-        theme.keyframes = keyframes;
+-        let function_result = function_result.and_then(|()| {
+-            theme.prepare_functions(limits.ast_depth, limits.css_bytes, theme_budget)
+-        });
+-        if let Err(error) = function_result {
+-            if let Some(setup) = &mut public_setup {
+-                setup.failed_functions(
+-                    &theme,
+-                    std::mem::take(&mut custom.normalization_mutations),
+-                    std::mem::take(&mut custom.function_mutations),
+-                );
+-            }
+-            return Err(error);
+-        }
+-        let normalization_mutations = std::mem::take(&mut custom.normalization_mutations);
+-        let input_mutations = std::mem::take(&mut custom.function_mutations);
++        validate_directives(&input_ast)?;
++        theme.prepare_functions(limits.ast_depth, limits.css_bytes, theme_budget)?;
+         let mut apply_replacements = Vec::new();
+         if let Err(error) = apply::substitute(
+             &mut input_ast,
+@@ -338,12 +310,7 @@
+             &mut apply_replacements,
+         ) {
+             if let Some(setup) = &mut public_setup {
+-                setup.failed_apply(
+-                    &theme,
+-                    normalization_mutations,
+-                    input_mutations,
+-                    apply_replacements,
+-                )?;
++                setup.failed_apply(apply_replacements)?;
+             }
+             return Err(error);
+         }
+@@ -386,8 +353,6 @@
+             pending: None,
+             input_ast,
+             apply_replacements,
+-            input_mutations,
+-            normalization_mutations,
+             theme,
+             custom,
+             limits,
+--- before/crates/rustify-style/src/compiler/origin.rs
++++ crates/rustify-style/src/compiler/origin.rs
+@@ -323,12 +323,14 @@
+     pub(super) fn finish(self) -> Snapshot {
+         Snapshot {
+             views: Arc::new(self.current),
++            #[cfg(test)]
+             mutations: self.mutations,
+         }
+     }
+ }
+ pub(super) struct Snapshot {
+     views: Arc<Current>,
++    #[cfg(test)]
+     pub mutations: Vec<InputMutation>,
+ }
+ impl Snapshot {
+--- before/crates/rustify-style/src/compiler/origin/current.rs
++++ crates/rustify-style/src/compiler/origin/current.rs
+@@ -275,10 +275,11 @@
+                     .saturating_add(clone_bytes(value))
+             },
+         );
++        let entry_reserve = entry_bytes::<(Key, View)>(self.values.len());
+         let reserve = copy_bytes
+             .saturating_add(field.encode_utf16().count().saturating_mul(2))
+             .saturating_add(clone_bytes(value).saturating_mul(3))
+-            .saturating_add(entry_bytes::<(Key, View)>(self.values.len()))
++            .saturating_add(entry_reserve)
+             .saturating_add(record_bytes);
+         let mut draft = *allowance;
+         draft.reserve(reserve)?;
+@@ -290,7 +291,19 @@
+         let mut fields = (**object).clone();
+         fields.insert(field.into(), captured.anchor.clone());
+         self.publish_freeze(frozen, &mut draft);
++        // Reserve a possible split path before allocation, then retain the
++        // whole-map upper bound: non-root B-tree nodes have at least five keys.
++        let entry_growth = if self
++            .anchor(target)
++            .is_some_and(|anchor| !self.values.contains_key(&anchor))
++            && self.values.len().is_multiple_of(5)
++        {
++            entry_bytes::<(Key, View)>(0)
++        } else {
++            0
++        };
+         self.insert(target.clone(), Value::Object(Arc::new(fields)));
++        draft.release(entry_reserve.saturating_sub(entry_growth));
+         *allowance = draft;
+         Ok(captured)
+     }
+--- before/crates/rustify-style/src/compiler/public_api/compile_ast.rs
++++ crates/rustify-style/src/compiler/public_api/compile_ast.rs
+@@ -170,7 +170,7 @@
+     origins: &'a mut Origins,
+     views: ImportViews,
+     initial_mutations: Vec<InputMutation>,
+-    function_failure_mutations: Vec<InputMutation>,
++    apply_failure_mutations: Vec<InputMutation>,
+     mutations: Vec<InputMutation>,
+     import_program: Option<compiler::imports::schedule::Program>,
+     setup_compatibility: Option<usize>,
+@@ -220,28 +220,15 @@
+     fn compatibility(&mut self) {
+         self.setup_compatibility = Some(self.initial_mutations.len() + self.mutations.len());
+     }
+-    fn failed_functions(
+-        &mut self,
+-        _theme: &compiler::theme::Theme,
+-        normalization: Vec<InputMutation>,
+-        mutations: Vec<InputMutation>,
+-    ) {
+-        self.function_failure_mutations = normalization;
+-        self.function_failure_mutations.extend(mutations);
+-    }
+     fn failed_apply(
+         &mut self,
+-        theme: &compiler::theme::Theme,
+-        normalization: Vec<InputMutation>,
+-        mutations: Vec<InputMutation>,
+         replacements: Vec<compiler::apply::Replacement>,
+     ) -> Result<(), CompileError> {
+-        self.failed_functions(theme, normalization, mutations);
+         apply_input_mutations(
+             self.origins,
+             &self.root,
+             &self.views,
+-            &mut self.function_failure_mutations,
++            &mut self.apply_failure_mutations,
+             replacements,
+         )?;
+         Ok(())
+@@ -277,7 +264,7 @@
+             &mut self.views.allowance,
+             limits,
+         )?;
+-        let warnings = compiler::registration::normalize_definitions(
++        let (warnings, completions) = compiler::registration::normalize_definitions(
+             &definitions,
+             Arc::get_mut(&mut self.views.current)
+                 .expect("registration owner is unique before lowering"),
+@@ -303,6 +290,26 @@
+             limits,
+             &mut self.mutations,
+         )?;
++        let has_functions = compiler::functions::substitute_current(
++            &self.root,
++            &theme,
++            Arc::get_mut(&mut self.views.current)
++                .expect("registration owner is unique before lowering"),
++            &mut self.views.allowance,
++            limits,
++            &mut self.mutations,
++        )?;
++        // Hoisted theme keyframes follow the caller tree without changing its root array.
++        let keyframes = Arc::new(keyframes);
++        let has_functions = compiler::functions::substitute_current(
++            &keyframes,
++            &theme,
++            Arc::get_mut(&mut self.views.current)
++                .expect("registration owner is unique before lowering"),
++            &mut self.views.allowance,
++            limits,
++            &mut self.mutations,
++        )? || has_functions;
+         self.origins.reset_lowering();
+         self.origins.utility_node = utilities.clone();
+         self.origins.theme_rule = theme_rule
+@@ -330,14 +337,15 @@
+                 ))
+             })
+             .collect::<Result<Vec<_>, CompileError>>()?;
+-        theme.keyframes = self.origins.convert_current(
+-            &Arc::new(keyframes),
++        theme.keyframes =
++            self.origins
++                .convert_current(&keyframes, &self.views.current, limits.ast_depth)?;
++        let definitions = self.origins.lower_definitions(
++            definitions,
++            completions,
+             &self.views.current,
+             limits.ast_depth,
+         )?;
+-        let definitions =
+-            self.origins
+-                .lower_definitions(definitions, &self.views.current, limits.ast_depth)?;
+         Ok(compiler::registration::Initial {
+             nodes,
+             sources,
+@@ -348,6 +356,7 @@
+             definitions,
+             warnings,
+             has_authored_variants: !authored_variants.is_empty(),
++            has_functions,
+         })
+     }
+     fn complete(
+@@ -591,7 +600,7 @@
+         &mut allowance,
+         limits,
+     )?;
+-    let warnings = compiler::registration::normalize_definitions(
++    let (warnings, completions) = compiler::registration::normalize_definitions(
+         &definitions,
+         &mut current,
+         &mut allowance,
+@@ -614,6 +623,23 @@
+         limits,
+         &mut Vec::new(),
+     )?;
++    let has_functions = compiler::functions::substitute_current(
++        &root,
++        &theme,
++        &mut current,
++        &mut allowance,
++        limits,
++        &mut Vec::new(),
++    )?;
++    let keyframes = Arc::new(keyframes);
++    let has_functions = compiler::functions::substitute_current(
++        &keyframes,
++        &theme,
++        &mut current,
++        &mut allowance,
++        limits,
++        &mut Vec::new(),
++    )? || has_functions;
+     let current = Arc::new(current);
+     origins.theme_rule = theme_rule
+         .as_ref()
+@@ -634,8 +660,9 @@
+             ))
+         })
+         .collect::<Result<Vec<_>, CompileError>>()?;
+-    theme.keyframes = origins.convert_current(&Arc::new(keyframes), &current, limits.ast_depth)?;
+-    let mut definitions = origins.lower_definitions(definitions, &current, limits.ast_depth)?;
++    theme.keyframes = origins.convert_current(&keyframes, &current, limits.ast_depth)?;
++    let mut definitions =
++        origins.lower_definitions(definitions, completions, &current, limits.ast_depth)?;
+     // The native adapter carries source tuples through the raw pass, then
+     // restores the original native owners rather than retaining caller handles.
+     let locations: BTreeMap<_, _> = origins
+@@ -707,6 +734,7 @@
+         definitions,
+         warnings,
+         has_authored_variants: !authored_variants.is_empty(),
++        has_functions,
+     })
+ }
+ 
+@@ -1401,12 +1429,14 @@
+     fn lower_definitions(
+         &mut self,
+         definitions: Vec<(String, bool, Value)>,
++        completions: Vec<compiler::custom_utilities::CompletionMetadata>,
+         current: &Arc<Current>,
+         limit: usize,
+     ) -> Result<Vec<compiler::custom_utilities::RegisteredDefinition>, CompileError> {
+         let definitions = definitions
+             .into_iter()
+-            .map(|(name, functional, node)| {
++            .zip(completions)
++            .map(|((name, functional, node), completion)| {
+                 let node = current.value(&node);
+                 let Value::Array(children) = &node["nodes"] else {
+                     unreachable!("validated definition body")
+@@ -1414,6 +1444,7 @@
+                 Ok(compiler::custom_utilities::RegisteredDefinition {
+                     name,
+                     functional,
++                    completion,
+                     nodes: self.convert_current(children, current, limit)?,
+                     origin: Some(compiler::ast::NodeOrigin::caller_with_current(
+                         node.clone(),
+@@ -1949,7 +1980,7 @@
+         origins: &mut origins,
+         views: ImportViews::new(limits.cache_bytes),
+         initial_mutations: Vec::new(),
+-        function_failure_mutations: Vec::new(),
++        apply_failure_mutations: Vec::new(),
+         mutations: Vec::new(),
+         import_program: None,
+         setup_compatibility: None,
+@@ -1972,7 +2003,7 @@
+     let ImportGraph {
+         views: import_views,
+         initial_mutations: mut import_mutations,
+-        function_failure_mutations,
++        apply_failure_mutations,
+         mutations,
+         import_program,
+         setup_compatibility,
+@@ -1985,7 +2016,7 @@
+             if matches!(error, CompileError::Limit { .. }) {
+                 return Err(error);
+             }
+-            import_mutations.extend(function_failure_mutations);
++            import_mutations.extend(apply_failure_mutations);
+             let mut seen = BTreeSet::new();
+             let cache_bytes =
+                 super::design_system::json_bytes_seen(&Value::Array(input.clone()), &mut seen)
+@@ -2037,8 +2068,7 @@
+             ]
+         })
+         .unwrap_or_default();
+-    let mut input_mutations = std::mem::take(&mut compiler.normalization_mutations);
+-    input_mutations.extend(std::mem::take(&mut compiler.input_mutations));
++    let mut input_mutations = Vec::new();
+     let mut positions = apply_input_mutations(
+         &mut origins,
+         &input,
+@@ -2356,7 +2386,7 @@
+             origins,
+             views: ImportViews::new(limit),
+             initial_mutations: Vec::new(),
+-            function_failure_mutations: Vec::new(),
++            apply_failure_mutations: Vec::new(),
+             mutations: Vec::new(),
+             import_program: None,
+             setup_compatibility: None,
+--- before/crates/rustify-style/src/compiler/registration.rs
++++ crates/rustify-style/src/compiler/registration.rs
+@@ -22,6 +22,7 @@
+     pub definitions: Vec<super::custom_utilities::RegisteredDefinition>,
+     pub warnings: Vec<Text>,
+     pub has_authored_variants: bool,
++    pub has_functions: bool,
+ }
+ 
+ pub(super) struct Registered {
+@@ -347,10 +348,13 @@
+     allowance: &mut Allowance,
+     limits: &Limits,
+     effects: &mut Vec<InputMutation>,
+-) -> Result<Vec<Text>, CompileError> {
++) -> Result<(Vec<Text>, Vec<super::custom_utilities::CompletionMetadata>), CompileError> {
+     let mut warnings = Vec::new();
++    let mut completions = Vec::with_capacity(definitions.len());
+     for (_, functional, node) in definitions {
++        let mut completion = super::custom_utilities::CompletionMetadata::default();
+         if !functional {
++            completions.push(completion);
+             continue;
+         }
+         let nodes = body(current.value(node)).clone();
+@@ -364,12 +368,15 @@
+                     )? {
+                         assign(cursor, child, "value", &Value::from(value), effects)?;
+                     }
++                    completion
++                        .include_value(text(cursor.value(child), "value"), limits.ast_depth)?;
+                 }
+             }
+             Ok(Action::Continue)
+         })?;
+-    }
+-    Ok(warnings)
++        completions.push(completion);
++    }
++    Ok((warnings, completions))
+ }
+ 
+ pub(super) fn publish_theme(
+@@ -436,6 +443,23 @@
+             queued_bytes: 262144,
+             cache_bytes: 16000000,
+         }
++    }
++
++    #[test]
++    fn native_registration_lowers_substituted_functions_and_keyframes() {
++        let nodes = super::super::parser::parse(
++            "@theme { --spacing: .25rem; @keyframes spin { to { width: --spacing(2); } } } @utility measure-* { width: --spacing(--value(integer)); } @media (width >= --theme(--spacing)) { .probe { width: --spacing(3); } }",
++            32,
++        ).unwrap();
++        let initial = public_api::register_native(&nodes, "", &limits()).unwrap();
++        assert!(
++            !super::super::functions::contains(&initial.nodes)
++                && !super::super::functions::contains(&initial.theme.keyframes)
++                && !super::super::functions::contains(&initial.definitions[0].nodes),
++            "the lowered root, utility bodies and keyframes must share completed function values"
++        );
++        assert!(initial.has_functions);
++        assert!(initial.definitions[0].completion.values.integer);
+     }
+ 
+     #[test]
+--- before/crates/rustify-style/src/compiler/theme.rs
++++ crates/rustify-style/src/compiler/theme.rs
+@@ -313,11 +313,6 @@
+                 token.dependencies = dependencies;
+             }
+         }
+-        if super::functions::contains(&self.keyframes) {
+-            let mut frames = std::mem::take(&mut self.keyframes);
+-            super::functions::substitute(&mut frames, self, depth, max_bytes)?;
+-            self.keyframes = frames;
+-        }
+         super::check_limit(
+             self.owned_bytes()
+                 .saturating_add(super::legacy_theme::cache_usage(self).owned_bytes),

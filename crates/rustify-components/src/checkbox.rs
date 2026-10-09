@@ -45,7 +45,7 @@ pub fn Checkbox(
     };
     view! {
         <span
-            class=crate::macros::merge("relative inline-block size-4 shrink-0", &class)
+            class=crate::macros::reactive_merge("relative inline-block size-4 shrink-0", &class)
             data-name="Checkbox"
             data-state=move || if checked.get() { "checked" } else { "unchecked" }
         >

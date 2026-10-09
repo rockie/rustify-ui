@@ -1,0 +1,23 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+error[E0433]: cannot find type `Text` in this scope
+   --> crates/rustify-style/src/compiler/functions.rs:568:14
+    |
+568 |             &Text::from("--theme(--font-value) --theme(--font-value)"),
+    |              ^^^^ use of undeclared type `Text`
+    |
+help: consider importing this struct
+    |
+380 +     use crate::text::Text;
+    |
+
+For more information about this error, try `rustc --explain E0433`.
+error: could not compile `rustify-style` (lib test) due to 1 previous error
+mbx[cache]: 0 hits, 0 misses, 1 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: 1h 51m refunded over 3168 builds. no receipt necessary.

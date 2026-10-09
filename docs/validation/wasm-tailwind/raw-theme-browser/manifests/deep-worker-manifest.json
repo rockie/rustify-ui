@@ -1,0 +1,12 @@
+{
+  "protocol_version": 1,
+  "build_id": "a060d3e5c15d6b926cbc06cc285cf8788bb799604caa49bac489594d29476dbd",
+  "files_sha256": {
+    "compiler/style.js": "9e0d4aed4b1ac6a18b461f2157f6a80ddb17d5e2f1ad5078b1c0c6aa38aaf4a1",
+    "compiler/style_bg.wasm": "7667f53b934b22f5039b0982b43726667f0559f24ec4cdbf5fef4a6e85aa81ce",
+    "static-candidates.json": "27bec0ed3a8ced71b6262f7626b97f573beaea4a35d0a3d6834c34c2bfc165dd",
+    "utility-worker.js": "a4c12a14caf58bb220ff388a80801f7a971e58e91f56986c91347e8f1aee5548"
+  },
+  "scanner_enabled": false,
+  "static_candidates": "static-candidates.json"
+}

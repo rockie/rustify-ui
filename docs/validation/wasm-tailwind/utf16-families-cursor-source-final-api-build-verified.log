@@ -1,0 +1,15 @@
+mbx[warning]: Unix-domain cache session listener unavailable; using FIFO transport: failed to bind cache session listener at /var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/mbx-session-p6m40j/cache-agent.sock: Operation not permitted (os error 1)
+mbx[warning]: Unix-domain cache session listener unavailable; using FIFO transport: failed to bind cache session listener at /var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/mbx-session-BiYuNt/cache-agent.sock: Operation not permitted (os error 1)
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+mbx[progress]: 15s elapsed; 0 hits, 0 misses, 0 bypassed, 0 not looked up; ~0s compiler work saved
+   Compiling rustify-style-wasm v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style-wasm)
+    Finished `release` profile [optimized] target(s) in 18.99s
+mbx[cache]: 0 hits, 1 misses, 1 bypassed; 0 B downloaded, 0 B uploaded, 19.6 MiB stored locally
+mbx[cache]: 0 hits, 1 misses; 0 B downloaded, 0 B uploaded, 40.3 MiB stored locally

@@ -1,0 +1,9 @@
+# R3 修后 host（dirty@53652fc，scope.rs sha256 d13fd89a791e24da67947a0e3d8a2f5d0e3497ad0e74e2edd7a4816c222eb14e）
+## mbx test --locked -p rustify-style --all-features --lib
+test result: ok. 532 passed; 0 failed; 12 ignored; 0 measured; 0 filtered out; finished in 81.46s
+## mbx test --locked -p rustify-style-wasm --no-default-features --features compiler,scanner --lib
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+## cargo fmt --all -- --check
+ok
+## mbx clippy --locked -p rustify-style --all-features --all-targets -- -D warnings
+ok（无告警）

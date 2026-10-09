@@ -163,7 +163,7 @@ pub fn ToggleGroup(
     };
     view! {
         <div
-            class=crate::macros::merge(&base, &class)
+            class=crate::macros::reactive_merge(base, &class)
             data-name="ToggleGroup"
             data-testid=test_id
             role=if toolbar { "toolbar" } else { "group" }
@@ -184,7 +184,7 @@ pub fn ToggleGroup(
                         <button
                             type="button"
                             id=item_id(&group, &mine)
-                            class=crate::macros::merge(ITEM, if toolbar { "text-card-foreground" } else { "" })
+                            class=crate::macros::reactive_merge(ITEM, if toolbar { "text-card-foreground" } else { "" })
                             data-name="Toggle"
                             data-testid=format!("{item_test_id}-{mine}")
                             aria-pressed=move || pressed.get().to_string()

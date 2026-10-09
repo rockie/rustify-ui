@@ -1,0 +1,882 @@
+[
+  {
+    "directories": [
+      ".git"
+    ],
+    "expected": [
+      [
+        "flex",
+        "gap-4",
+        "p-4"
+      ],
+      [
+        ".hidden/page.rs",
+        "folder.pages/a.html",
+        "index.html"
+      ],
+      [
+        "*",
+        ".hidden/**/*.{aspx,astro,cjs,cts,eex,erb,gjs,gts,haml,handlebars,hbs,heex,html,jade,js,jsx,liquid,md,mdx,mjs,mts,mustache,njk,nunjucks,php,pug,py,razor,rb,rhtml,rs,slim,svelte,tpl,ts,tsx,twig,vue}",
+        "folder.pages/**/*.{aspx,astro,cjs,cts,eex,erb,gjs,gts,haml,handlebars,hbs,heex,html,jade,js,jsx,liquid,md,mdx,mjs,mts,mustache,njk,nunjucks,php,pug,py,razor,rb,rhtml,rs,slim,svelte,tpl,ts,tsx,twig,vue}"
+      ],
+      [
+        "**/*"
+      ]
+    ],
+    "files": [
+      {
+        "content": "flex",
+        "path": "index.html"
+      },
+      {
+        "content": "p-4",
+        "path": ".hidden/page.rs"
+      },
+      {
+        "content": "bg-red-500",
+        "path": "node_modules/lib/a.html"
+      },
+      {
+        "content": "p-99",
+        "path": "logo.png"
+      },
+      {
+        "content": "p-98",
+        "path": "notes.scss"
+      },
+      {
+        "content": "p-97",
+        "path": "package-lock.json"
+      },
+      {
+        "content": "gap-4",
+        "path": "folder.pages/a.html"
+      }
+    ],
+    "name": "default-files-and-hidden",
+    "sources": [
+      {
+        "base": ".",
+        "negated": false,
+        "pattern": "**/*"
+      }
+    ],
+    "steps": [
+      {
+        "operation": "scan"
+      },
+      {
+        "operation": "files"
+      },
+      {
+        "operation": "globs"
+      },
+      {
+        "operation": "normalized"
+      }
+    ],
+    "symlinks": []
+  },
+  {
+    "directories": [
+      ".git"
+    ],
+    "expected": [
+      [
+        "flex",
+        "p-4"
+      ],
+      [
+        "index.html",
+        "src/inner.html"
+      ],
+      [
+        "*",
+        "src/**/*.{aspx,astro,cjs,cts,eex,erb,gjs,gts,haml,handlebars,hbs,heex,html,jade,js,jsx,liquid,md,mdx,mjs,mts,mustache,njk,nunjucks,php,pug,py,razor,rb,rhtml,rs,slim,svelte,tpl,ts,tsx,twig,vue}"
+      ],
+      [
+        "**/*"
+      ]
+    ],
+    "files": [
+      {
+        "content": "*.html\n!index.html\ngenerated/",
+        "path": ".gitignore"
+      },
+      {
+        "content": "flex",
+        "path": "index.html"
+      },
+      {
+        "content": "p-97",
+        "path": "ignored.html"
+      },
+      {
+        "content": "!inner.html",
+        "path": "src/.gitignore"
+      },
+      {
+        "content": "p-4",
+        "path": "src/inner.html"
+      },
+      {
+        "content": "p-98",
+        "path": "generated/a.rs"
+      }
+    ],
+    "name": "gitignore-negation-and-nested",
+    "sources": [
+      {
+        "base": ".",
+        "negated": false,
+        "pattern": "**/*"
+      }
+    ],
+    "steps": [
+      {
+        "operation": "scan"
+      },
+      {
+        "operation": "files"
+      },
+      {
+        "operation": "globs"
+      },
+      {
+        "operation": "normalized"
+      }
+    ],
+    "symlinks": []
+  },
+  {
+    "directories": [
+      ".git"
+    ],
+    "expected": [
+      [
+        "flex",
+        "p-4"
+      ],
+      [
+        "src/ignored.html",
+        "src/theme.styl"
+      ],
+      [
+        "*",
+        "src/{*.html,*.styl,*/*.{aspx,astro,cjs,cts,eex,erb,gjs,gts,haml,handlebars,hbs,heex,html,jade,js,jsx,liquid,md,mdx,mjs,mts,mustache,njk,nunjucks,php,pug,py,razor,rb,rhtml,rs,slim,styl,svelte,tpl,ts,tsx,twig,vue}}"
+      ],
+      [
+        "**/*",
+        "src/*.html",
+        "src/*.styl"
+      ]
+    ],
+    "files": [
+      {
+        "content": "src/ignored.html",
+        "path": ".gitignore"
+      },
+      {
+        "content": "flex",
+        "path": "src/ignored.html"
+      },
+      {
+        "content": "p-99",
+        "path": "src/no.html"
+      },
+      {
+        "content": "p-98",
+        "path": "src/admin/a.html"
+      },
+      {
+        "content": "p-4",
+        "path": "src/theme.styl"
+      }
+    ],
+    "name": "explicit-and-not",
+    "sources": [
+      {
+        "base": ".",
+        "negated": false,
+        "pattern": "**/*"
+      },
+      {
+        "base": ".",
+        "negated": false,
+        "pattern": "src/*.{html,styl}"
+      },
+      {
+        "base": ".",
+        "negated": true,
+        "pattern": "src/no.html"
+      },
+      {
+        "base": ".",
+        "negated": true,
+        "pattern": "src/admin"
+      }
+    ],
+    "steps": [
+      {
+        "operation": "scan"
+      },
+      {
+        "operation": "files"
+      },
+      {
+        "operation": "globs"
+      },
+      {
+        "operation": "normalized"
+      }
+    ],
+    "symlinks": []
+  },
+  {
+    "directories": [
+      ".git"
+    ],
+    "expected": [
+      [
+        "dist",
+        "flex"
+      ],
+      [
+        "node_modules/lib/.gitignore",
+        "node_modules/lib/dist/a.ts"
+      ],
+      [
+        "node_modules/lib/*",
+        "node_modules/lib/dist/**/*.{,aspx,astro,cjs,cts,eex,erb,gjs,gts,haml,handlebars,hbs,heex,html,jade,js,jsx,liquid,md,mdx,mjs,mts,mustache,njk,nunjucks,php,pug,py,razor,rb,rhtml,rs,slim,svelte,tpl,ts,tsx,twig,vue}"
+      ],
+      [
+        "node_modules/lib/**/*"
+      ]
+    ],
+    "files": [
+      {
+        "content": "node_modules\ndist",
+        "path": ".gitignore"
+      },
+      {
+        "content": "dist",
+        "path": "node_modules/lib/.gitignore"
+      },
+      {
+        "content": "flex",
+        "path": "node_modules/lib/dist/a.ts"
+      },
+      {
+        "content": "p-99",
+        "path": "node_modules/lib/logo.png"
+      }
+    ],
+    "name": "external-node-modules",
+    "sources": [
+      {
+        "base": ".",
+        "negated": false,
+        "pattern": "node_modules/lib"
+      }
+    ],
+    "steps": [
+      {
+        "operation": "scan"
+      },
+      {
+        "operation": "files"
+      },
+      {
+        "operation": "globs"
+      },
+      {
+        "operation": "normalized"
+      }
+    ],
+    "symlinks": []
+  },
+  {
+    "directories": [
+      "home/project/.git"
+    ],
+    "expected": [
+      [
+        "flex",
+        "p-1"
+      ],
+      [
+        "home/project/apps/web/ignore-home.html",
+        "home/project/apps/web/index.html"
+      ],
+      [
+        "home/project/apps/web/*"
+      ],
+      [
+        "home/project/apps/web/**/*"
+      ]
+    ],
+    "files": [
+      {
+        "content": "ignore-home.html",
+        "path": "home/.gitignore"
+      },
+      {
+        "content": "ignore-project.html",
+        "path": "home/project/.gitignore"
+      },
+      {
+        "content": "ignore-apps.html",
+        "path": "home/project/apps/.gitignore"
+      },
+      {
+        "content": "flex",
+        "path": "home/project/apps/web/index.html"
+      },
+      {
+        "content": "p-1",
+        "path": "home/project/apps/web/ignore-home.html"
+      },
+      {
+        "content": "p-2",
+        "path": "home/project/apps/web/ignore-project.html"
+      },
+      {
+        "content": "p-3",
+        "path": "home/project/apps/web/ignore-apps.html"
+      }
+    ],
+    "name": "repository-parent-boundary",
+    "sources": [
+      {
+        "base": "home/project/apps/web",
+        "negated": false,
+        "pattern": "**/*"
+      }
+    ],
+    "steps": [
+      {
+        "operation": "scan"
+      },
+      {
+        "operation": "files"
+      },
+      {
+        "operation": "globs"
+      },
+      {
+        "operation": "normalized"
+      }
+    ],
+    "symlinks": []
+  },
+  {
+    "directories": [
+      ".git"
+    ],
+    "expected": [
+      [
+        "flex",
+        "html",
+        "p-4"
+      ],
+      [
+        ".ignore",
+        "index.html",
+        "ok.rs"
+      ],
+      [
+        "*"
+      ],
+      [
+        "**/*"
+      ]
+    ],
+    "files": [
+      {
+        "content": "*.html\n!index.html",
+        "path": ".ignore"
+      },
+      {
+        "content": "index.html",
+        "path": ".gitignore"
+      },
+      {
+        "content": "exclude.rs",
+        "path": ".git/info/exclude"
+      },
+      {
+        "content": "flex",
+        "path": "index.html"
+      },
+      {
+        "content": "p-98",
+        "path": "other.html"
+      },
+      {
+        "content": "p-99",
+        "path": "exclude.rs"
+      },
+      {
+        "content": "p-4",
+        "path": "ok.rs"
+      }
+    ],
+    "name": "ignore-versus-git-exclude",
+    "sources": [
+      {
+        "base": ".",
+        "negated": false,
+        "pattern": "**/*"
+      }
+    ],
+    "steps": [
+      {
+        "operation": "scan"
+      },
+      {
+        "operation": "files"
+      },
+      {
+        "operation": "globs"
+      },
+      {
+        "operation": "normalized"
+      }
+    ],
+    "symlinks": []
+  },
+  {
+    "directories": [
+      ".git"
+    ],
+    "expected": [
+      [
+        "--accent",
+        "--used",
+        "text-(--accent)"
+      ],
+      [
+        "--raw",
+        "width",
+        "x"
+      ],
+      [
+        "--accent",
+        "--raw",
+        "--used",
+        "text-(--accent)",
+        "width",
+        "x"
+      ],
+      [
+        "index.html",
+        "src/theme.css"
+      ],
+      [
+        "*",
+        "src/**/*.{aspx,astro,cjs,css,cts,eex,erb,gjs,gts,haml,handlebars,hbs,heex,html,jade,js,jsx,liquid,md,mdx,mjs,mts,mustache,njk,nunjucks,php,pug,py,razor,rb,rhtml,rs,slim,svelte,tpl,ts,tsx,twig,vue}"
+      ]
+    ],
+    "files": [
+      {
+        "content": "@theme { --defined: red; } .x { color: var(--used); }",
+        "path": "src/theme.css"
+      },
+      {
+        "content": "text-(--accent)",
+        "path": "index.html"
+      }
+    ],
+    "name": "css-file-and-raw-css",
+    "sources": [
+      {
+        "base": ".",
+        "negated": false,
+        "pattern": "**/*"
+      }
+    ],
+    "steps": [
+      {
+        "operation": "scan"
+      },
+      {
+        "changed": [
+          {
+            "content": ".x { --raw: 1; width: var(--used); }",
+            "extension": "css"
+          }
+        ],
+        "operation": "change"
+      },
+      {
+        "operation": "scan"
+      },
+      {
+        "operation": "files"
+      },
+      {
+        "operation": "globs"
+      }
+    ],
+    "symlinks": []
+  },
+  {
+    "directories": [
+      ".git"
+    ],
+    "expected": [
+      [
+        "flex"
+      ],
+      null,
+      [
+        "flex",
+        "p-4"
+      ],
+      [
+        "gap-2"
+      ],
+      [],
+      null,
+      [
+        "flex",
+        "gap-2",
+        "p-4"
+      ]
+    ],
+    "files": [
+      {
+        "content": "flex",
+        "path": "index.html"
+      }
+    ],
+    "name": "incremental-change-delete-noop",
+    "sources": [
+      {
+        "base": ".",
+        "negated": false,
+        "pattern": "**/*"
+      }
+    ],
+    "steps": [
+      {
+        "operation": "scan"
+      },
+      {
+        "content": "p-4",
+        "operation": "put",
+        "path": "index.html"
+      },
+      {
+        "operation": "scan"
+      },
+      {
+        "changed": [
+          {
+            "content": "p-4 gap-2",
+            "extension": "html"
+          }
+        ],
+        "operation": "change"
+      },
+      {
+        "changed": [
+          {
+            "content": "p-4 gap-2",
+            "extension": "html"
+          }
+        ],
+        "operation": "change"
+      },
+      {
+        "operation": "remove",
+        "path": "index.html"
+      },
+      {
+        "operation": "scan"
+      }
+    ],
+    "symlinks": []
+  },
+  {
+    "directories": [
+      ".git"
+    ],
+    "expected": [
+      [
+        "flex"
+      ],
+      null,
+      null,
+      null,
+      [
+        "p-4"
+      ]
+    ],
+    "files": [
+      {
+        "content": "*.jsx\ngenerated/",
+        "path": ".gitignore"
+      },
+      {
+        "content": "flex",
+        "path": "index.html"
+      }
+    ],
+    "name": "manual-changed-file-eligibility",
+    "sources": [
+      {
+        "base": ".",
+        "negated": false,
+        "pattern": "**/*"
+      }
+    ],
+    "steps": [
+      {
+        "operation": "scan"
+      },
+      {
+        "content": "p-4",
+        "operation": "put",
+        "path": "src/good.tsx"
+      },
+      {
+        "content": "p-99",
+        "operation": "put",
+        "path": "src/bad.jsx"
+      },
+      {
+        "content": "p-98",
+        "operation": "put",
+        "path": "src/generated/bad.tsx"
+      },
+      {
+        "changed": [
+          {
+            "extension": "tsx",
+            "path": "src/good.tsx"
+          },
+          {
+            "extension": "jsx",
+            "path": "src/bad.jsx"
+          },
+          {
+            "extension": "tsx",
+            "path": "src/generated/bad.tsx"
+          }
+        ],
+        "operation": "change"
+      }
+    ],
+    "symlinks": []
+  },
+  {
+    "directories": [
+      ".git"
+    ],
+    "expected": [
+      [
+        "flex"
+      ],
+      [
+        "lib/src/a.html"
+      ],
+      [
+        "lib/*.html",
+        "lib/src/*"
+      ],
+      [
+        "lib/*.html",
+        "lib/src/**/*"
+      ]
+    ],
+    "files": [
+      {
+        "content": "flex",
+        "path": "lib/src/a.html"
+      }
+    ],
+    "name": "symlink-source",
+    "sources": [
+      {
+        "base": ".",
+        "negated": false,
+        "pattern": "link/*.html"
+      },
+      {
+        "base": ".",
+        "negated": false,
+        "pattern": "link/src"
+      }
+    ],
+    "steps": [
+      {
+        "operation": "scan"
+      },
+      {
+        "operation": "files"
+      },
+      {
+        "operation": "globs"
+      },
+      {
+        "operation": "normalized"
+      }
+    ],
+    "symlinks": [
+      {
+        "path": "link",
+        "target": "lib"
+      }
+    ]
+  },
+  {
+    "directories": [
+      ".git"
+    ],
+    "expected": [
+      [
+        [
+          "class",
+          5
+        ],
+        [
+          "!tw__flex",
+          12
+        ],
+        [
+          "sm:!tw__block",
+          22
+        ],
+        [
+          "tw__bg-gradient-to-t",
+          36
+        ],
+        [
+          "flex",
+          57
+        ],
+        [
+          "tw:[color:red]",
+          62
+        ],
+        [
+          "group-[]:tw__flex",
+          77
+        ]
+      ],
+      [
+        [
+          "class",
+          9
+        ],
+        [
+          "bg-[#123456]",
+          16
+        ],
+        [
+          "text-(--色彩)",
+          29
+        ]
+      ]
+    ],
+    "files": [],
+    "name": "positions-legacy-and-unicode",
+    "sources": [
+      {
+        "base": ".",
+        "negated": false,
+        "pattern": "**/*"
+      }
+    ],
+    "steps": [
+      {
+        "content": "<div class=\"!tw__flex sm:!tw__block tw__bg-gradient-to-t flex tw:[color:red] group-[]:tw__flex\"",
+        "extension": "html",
+        "operation": "positions"
+      },
+      {
+        "content": "☀ <div class=\"bg-[#123456] text-(--色彩)\" />",
+        "extension": "html",
+        "operation": "positions"
+      }
+    ],
+    "symlinks": []
+  },
+  {
+    "directories": [
+      ".git"
+    ],
+    "expected": [
+      [
+        "flex",
+        "gap-2",
+        "gap-4",
+        "p-4"
+      ],
+      [
+        "public/a.html",
+        "public/nested/b.html",
+        "src/allowed/a.html",
+        "src/new.custom"
+      ],
+      [
+        "*",
+        "src/*/*.{aspx,astro,cjs,cts,custom,eex,erb,gjs,gts,haml,handlebars,hbs,heex,html,jade,js,jsx,liquid,md,mdx,mjs,mts,mustache,njk,nunjucks,php,pug,py,razor,rb,rhtml,rs,slim,svelte,tpl,ts,tsx,twig,vue}",
+        "src/allowed/**/*.{aspx,astro,cjs,cts,custom,eex,erb,gjs,gts,haml,handlebars,hbs,heex,html,jade,js,jsx,liquid,md,mdx,mjs,mts,mustache,njk,nunjucks,php,pug,py,razor,rb,rhtml,rs,slim,svelte,tpl,ts,tsx,twig,vue}"
+      ],
+      [
+        "**/*"
+      ]
+    ],
+    "files": [
+      {
+        "content": "flex",
+        "path": "public/a.html"
+      },
+      {
+        "content": "p-4",
+        "path": "public/nested/b.html"
+      },
+      {
+        "content": "gap-2",
+        "path": "src/new.custom"
+      },
+      {
+        "content": "src/skip/",
+        "path": ".gitignore"
+      },
+      {
+        "content": "p-98",
+        "path": "src/skip/ignored.html"
+      },
+      {
+        "content": "gap-4",
+        "path": "src/allowed/a.html"
+      }
+    ],
+    "name": "public-watch-globs-and-unknown-extension",
+    "sources": [
+      {
+        "base": ".",
+        "negated": false,
+        "pattern": "**/*"
+      }
+    ],
+    "steps": [
+      {
+        "operation": "scan"
+      },
+      {
+        "operation": "files"
+      },
+      {
+        "operation": "globs"
+      },
+      {
+        "operation": "normalized"
+      }
+    ],
+    "symlinks": []
+  }
+]

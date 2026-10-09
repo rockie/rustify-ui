@@ -1,0 +1,22 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+error[E0308]: `match` arms have incompatible types
+   --> crates/rustify-style/src/compiler/public_api/design_system.rs:420:112
+    |
+420 |     match (a["value"].is_null(),b["value"].is_null()) {(true,_)=>Ordering::Less,(_,true)=>Ordering::Greater,_=>{}}
+    |     -------------------------------------------------            --------------           -----------------    ^^ expected `Ordering`, found `()`
+    |     |                                                            |                        |
+    |     |                                                            |                        this is found to be of type `std::cmp::Ordering`
+    |     |                                                            this is found to be of type `std::cmp::Ordering`
+    |     `match` arms have incompatible types
+
+For more information about this error, try `rustc --explain E0308`.
+error: could not compile `rustify-style` (lib test) due to 1 previous error
+mbx[cache]: 0 hits, 0 misses, 1 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: 13540 compilations. rustc did each once; mbx did the rest of the showing up.

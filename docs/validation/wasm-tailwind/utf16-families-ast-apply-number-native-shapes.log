@@ -1,0 +1,33 @@
+mbx[warning]: Unix-domain cache session listener unavailable; using FIFO transport: failed to bind cache session listener at /var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/mbx-session-fmPFpM/cache-agent.sock: Operation not permitted (os error 1)
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 6.26s
+     Running unittests src/lib.rs (/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-utf16-verified-54mkl3kq/cargo-target/debug/deps/rustify_style-7a67d48e3c4c51f4)
+
+running 16 tests
+test compiler::public_api::compile_ast::canonical_text_tests::apply_locations_accept_javascript_number_offsets ... ok
+test compiler::public_api::compile_ast::tests::oversized_public_input_is_rejected_before_ast_conversion ... ok
+test compiler::public_api::compile_ast::tests::public_input_budget_counts_escaped_json_and_from_without_allocating_output ... ok
+test compiler::public_api::compile_ast::canonical_text_tests::shared_public_graph_allocations_are_charged_once ... ok
+test compiler::public_api::compile_ast::tests::deeply_nested_public_input_is_rejected_before_serializing_or_cloning ... ok
+test compiler::public_api::compile_ast::tests::public_ast_input_and_retained_objects_obey_limits ... ok
+test compiler::public_api::compile_ast::tests::nested_identical_selectors_keep_inner_and_outer_sources ... ok
+test compiler::public_api::compile_ast::tests::failed_ast_build_preserves_the_last_array_and_candidate_commit ... ok
+test compiler::public_api::compile_ast::canonical_text_tests::ast_build_preserves_candidate_and_authored_text_units ... ok
+test compiler::public_api::compile_ast::tests::duplicate_at_rule_headers_keep_distinct_sources ... ok
+test compiler::public_api::compile_ast::tests::unused_virtual_assets_do_not_contribute_locations_or_syntax_errors ... ok
+test compiler::public_api::compile_ast::tests::removed_rule_does_not_shift_duplicate_selector_sources ... ok
+test compiler::public_api::compile_ast::canonical_text_tests::rejected_output_does_not_publish_generated_declaration_identities ... ok
+test compiler::public_api::compile_ast::tests::duplicate_selectors_keep_each_rule_and_apply_source ... ok
+test compiler::public_api::compile_ast::tests::every_public_ast_build_matches_fixed_upstream_structure_and_identity ... ok
+test compiler::public_api::compile_ast::canonical_text_tests::graph_json_measurement_matches_original_units_and_shared_wire_expansion ... ok
+
+test result: ok. 16 passed; 0 failed; 0 ignored; 0 measured; 290 filtered out; finished in 0.17s
+
+mbx[cache]: 0 hits, 1 misses; 0 B downloaded, 0 B uploaded, 339.5 MiB stored locally

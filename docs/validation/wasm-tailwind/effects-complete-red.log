@@ -1,0 +1,49 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 4.19s
+     Running unittests src/lib.rs (target/debug/deps/rustify_style-d8a92cb6940dfdfd)
+
+running 2 tests
+test compiler::effects::complete_tests::fractional_radius_theme_and_content_resources_keep_distinct_contracts ... FAILED
+test compiler::effects::complete_tests::complete_radius_and_content_branches_match_official_matrix ... FAILED
+
+failures:
+
+---- compiler::effects::complete_tests::fractional_radius_theme_and_content_resources_keep_distinct_contracts stdout ----
+
+thread 'compiler::effects::complete_tests::fractional_radius_theme_and_content_resources_keep_distinct_contracts' (13714679) panicked at crates/rustify-style/src/compiler/effects.rs:369:13:
+missing rounded-card/foo
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- compiler::effects::complete_tests::complete_radius_and_content_branches_match_official_matrix stdout ----
+
+thread 'compiler::effects::complete_tests::complete_radius_and_content_branches_match_official_matrix' (13714678) panicked at crates/rustify-style/src/compiler/effects.rs:344:9:
+16017 mismatches; first cases: [
+    "effects-complete:root=rounded:value=<default>:base: constructor error Syntax { offset: 269, message: \"declaration requires a property and value\" }",
+    "effects-complete:root=rounded:value=card:base: constructor error Syntax { offset: 269, message: \"declaration requires a property and value\" }",
+    "effects-complete:root=rounded:value=alias:base: constructor error Syntax { offset: 269, message: \"declaration requires a property and value\" }",
+    "effects-complete:root=rounded:value=zero:base: constructor error Syntax { offset: 269, message: \"declaration requires a property and value\" }",
+    "effects-complete:root=rounded:value=calc:base: constructor error Syntax { offset: 269, message: \"declaration requires a property and value\" }",
+    "effects-complete:root=rounded:value=empty:base: constructor error Syntax { offset: 269, message: \"declaration requires a property and value\" }",
+    "effects-complete:root=rounded:value=missing:base: constructor error Syntax { offset: 269, message: \"declaration requires a property and value\" }",
+    "effects-complete:root=rounded:value=none:base: constructor error Syntax { offset: 269, message: \"declaration requires a property and value\" }",
+    "effects-complete:root=rounded:value=full:base: constructor error Syntax { offset: 269, message: \"declaration requires a property and value\" }",
+    "effects-complete:root=rounded:value=1.5:base: constructor error Syntax { offset: 269, message: \"declaration requires a property and value\" }",
+]
+
+
+failures:
+    compiler::effects::complete_tests::complete_radius_and_content_branches_match_official_matrix
+    compiler::effects::complete_tests::fractional_radius_theme_and_content_resources_keep_distinct_contracts
+
+test result: FAILED. 0 passed; 2 failed; 0 ignored; 0 measured; 79 filtered out; finished in 0.61s
+
+error: test failed, to rerun pass `-p rustify-style --lib`
+mbx[cache]: 0 hits, 0 misses, 1 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: has saved 1h 27m across 2103 builds. this line is the only thanks it needs.

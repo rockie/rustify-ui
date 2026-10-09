@@ -1,0 +1,435 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: plain: constructor graph
++ actual - expected
+... Skipped lines
+
+  {
+    records: [
+      {
+        array: true,
+        fields: [
+...
+            {
++             reference: 5
+-             reference: 8
+            }
+          ]
+        ]
+      },
+      {
+...
+            'kind',
++           'at-rule'
+-           'rule'
+          ],
+          [
++           'name',
++           '@theme'
+-           'selector',
+-           ':root, :host'
+          ],
+          [
++           'params',
++           ''
++         ],
++         [
+            'nodes',
+            {
+              reference: 2
+            }
+          ],
+          [
++           'extra',
++           'retained'
+-           'src',
+-           {
+-             undefined: true
+-           }
+          ]
+        ]
+      },
+      {
+        array: true,
+...
+          ],
+-       ]
+-     },
+-     {
+-       array: false,
+-       fields: [
+          [
++           '1',
+-           'kind',
+-           'context'
+-         ],
+-         [
+-           'context',
+            {
+              reference: 4
+            }
+          ],
+-         [
+-           'nodes',
+-           {
+-             reference: 5
+-           }
+-         ]
+        ]
+      },
+      {
+        array: false,
+        fields: [
+          [
+-           'theme',
+-           true
+-         ]
+-       ]
+-     },
+-     {
+-       array: true,
+-       fields: [
+-         [
+-           '0',
+-           {
+-             reference: 6
+-           }
+-         ],
+-         [
+-           '1',
+-           {
+-             reference: 7
+-           }
+-         ]
+-       ]
+-     },
+-     {
+-       array: false,
+-       fields: [
+-         [
+            'kind',
+            'declaration'
+          ],
+          [
+            'property',
+...
+          ],
+-         [
+-           'src',
+-           {
+-             undefined: true
+-           }
+-         ]
+        ]
+      },
+      {
+        array: false,
+        fields: [
+...
+          ],
+-         [
+-           'src',
+-           {
+-             undefined: true
+-           }
+-         ]
+        ]
+      },
+      {
+        array: false,
+        fields: [
+...
+            {
++             reference: 6
+-             reference: 9
+            }
+          ],
+          [
+            'context',
+            {
++             reference: 7
+-             reference: 10
+            }
+          ]
+        ]
+      },
+      {
+...
+          [
+-           'kind',
+-           'at-rule'
+-         ],
+-         [
+-           'name',
+-           '@theme'
+-         ],
+-         [
+-           'params',
+-           ''
+-         ],
+-         [
+-           'nodes',
+-           {
+-             reference: 12
+-           }
+-         ],
+-         [
+-           'extra',
+-           'retained'
+-         ]
+-       ]
+-     },
+-     {
+-       array: true,
+-       fields: [
+-         [
+-           '0',
+-           {
+-             reference: 13
+-           }
+-         ],
+-         [
+-           '1',
+-           {
+-             reference: 14
+-           }
+-         ]
+-       ]
+-     },
+-     {
+-       array: false,
+-       fields: [
+-         [
+-           'kind',
+-           'declaration'
+-         ],
+-         [
+-           'property',
+-           '--color-card'
+-         ],
+-         [
+-           'value',
+-           'red'
+-         ],
+-         [
+-           'important',
+-           false
+-         ]
+-       ]
+-     },
+-     {
+-       array: false,
+-       fields: [
+-         [
+-           'kind',
+-           'declaration'
+-         ],
+-         [
+-           'property',
+-           '--spacing'
+-         ],
+-         [
+-           'value',
+-           '0.25rem'
+-         ],
+-         [
+-           'important',
+-           false
+-         ]
+-       ]
+-     },
+-     {
+-       array: false,
+-       fields: [
+-         [
+            'file',
+            'theme\ud800.css'
+          ],
+          [
+            'code',
+...
+      {
++       reference: 1
+-       reference: 11
+      },
+      {
++       reference: 2
+-       reference: 12
+      },
+      {
++       reference: 8
+-       reference: 15
+      }
+    ]
+  }
+
+    at file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/compiler/run-public-ast-setup-wasm.mjs:72:12 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: {
+    roots: [
+      { reference: 0 },
+      { reference: 1 },
+      { reference: 2 },
+      { reference: 8 }
+    ],
+    records: [
+      { array: true, fields: [ [ '0', [Object] ], [ '1', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'at-rule' ],
+          [ 'name', '@theme' ],
+          [ 'params', '' ],
+          [ 'nodes', [Object] ],
+          [ 'extra', 'retained' ]
+        ]
+      },
+      { array: true, fields: [ [ '0', [Object] ], [ '1', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'declaration' ],
+          [ 'property', '--color-card' ],
+          [ 'value', 'red' ],
+          [ 'important', false ]
+        ]
+      },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'declaration' ],
+          [ 'property', '--spacing' ],
+          [ 'value', '0.25rem' ],
+          [ 'important', false ]
+        ]
+      },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'context' ],
+          [ 'name', '@tailwind' ],
+          [ 'params', 'utilities' ],
+          [ 'nodes', [Object] ],
+          [ 'context', [Object] ]
+        ]
+      },
+      { array: true, fields: [] },
+      { array: false, fields: [] },
+      {
+        array: false,
+        fields: [
+          [ 'file', 'theme\ud800.css' ],
+          [ 'code', 'theme\udc00' ],
+          [ 'extra', 'kept' ]
+        ]
+      }
+    ]
+  },
+  expected: {
+    roots: [
+      { reference: 0 },
+      { reference: 11 },
+      { reference: 12 },
+      { reference: 15 }
+    ],
+    records: [
+      { array: true, fields: [ [ '0', [Object] ], [ '1', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'rule' ],
+          [ 'selector', ':root, :host' ],
+          [ 'nodes', [Object] ],
+          [ 'src', [Object] ]
+        ]
+      },
+      { array: true, fields: [ [ '0', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'context' ],
+          [ 'context', [Object] ],
+          [ 'nodes', [Object] ]
+        ]
+      },
+      { array: false, fields: [ [ 'theme', true ] ] },
+      { array: true, fields: [ [ '0', [Object] ], [ '1', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'declaration' ],
+          [ 'property', '--color-card' ],
+          [ 'value', 'red' ],
+          [ 'important', false ],
+          [ 'src', [Object] ]
+        ]
+      },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'declaration' ],
+          [ 'property', '--spacing' ],
+          [ 'value', '0.25rem' ],
+          [ 'important', false ],
+          [ 'src', [Object] ]
+        ]
+      },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'context' ],
+          [ 'name', '@tailwind' ],
+          [ 'params', 'utilities' ],
+          [ 'nodes', [Object] ],
+          [ 'context', [Object] ]
+        ]
+      },
+      { array: true, fields: [] },
+      { array: false, fields: [] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'at-rule' ],
+          [ 'name', '@theme' ],
+          [ 'params', '' ],
+          [ 'nodes', [Object] ],
+          [ 'extra', 'retained' ]
+        ]
+      },
+      { array: true, fields: [ [ '0', [Object] ], [ '1', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'declaration' ],
+          [ 'property', '--color-card' ],
+          [ 'value', 'red' ],
+          [ 'important', false ]
+        ]
+      },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'declaration' ],
+          [ 'property', '--spacing' ],
+          [ 'value', '0.25rem' ],
+          [ 'important', false ]
+        ]
+      },
+      {
+        array: false,
+        fields: [
+          [ 'file', 'theme\ud800.css' ],
+          [ 'code', 'theme\udc00' ],
+          [ 'extra', 'kept' ]
+        ]
+      }
+    ]
+  },
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v26.1.0

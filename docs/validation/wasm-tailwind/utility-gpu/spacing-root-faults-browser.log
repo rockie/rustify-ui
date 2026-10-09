@@ -1,0 +1,15 @@
+npm notice run rustify-ui-browser-tests@0.1.0 npx
+npm notice run 'playwright' test --project=utility-lab --workers=1 utility-faults.spec.ts
+
+Running 5 tests using 1 worker
+
+(node:59044) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 [utility-lab] › tests/browser/utility-faults.spec.ts:8:5 › failed CSSOM installation nacks preparation, preserves the installed revision and permits retry (569ms)
+  ✓  2 [utility-lab] › tests/browser/utility-faults.spec.ts:36:5 › Worker timeout preserves installed CSS and explicit retry replays in a fresh epoch (1.7s)
+  ✓  3 [utility-lab] › tests/browser/utility-faults.spec.ts:69:5 › instance trap releases Worker, observer, owner attribute and installed stylesheet through JS abort cleanup (501ms)
+  ✓  4 [utility-lab] › tests/browser/utility-faults.spec.ts:86:5 › a second WASM instance keeps its compiler and stylesheet when the first instance traps (473ms)
+[WebServer] request failed: Broken pipe (os error 32)
+  ✓  5 [utility-lab] › tests/browser/utility-faults.spec.ts:110:5 › a Worker construction failure leaves the root available for a later mount (568ms)
+
+  5 passed (5.2s)

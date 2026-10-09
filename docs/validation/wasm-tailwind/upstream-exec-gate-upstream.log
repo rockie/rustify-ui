@@ -1,0 +1,84 @@
+{"sourcesVerified":109,"originalSourceCalls":1215,"originalTestCalls":1125,"originalParameterizationCalls":10,"originalSuiteCalls":80,"parameterBuilders":11,"expandedTests":1398,"staticallyExpandedTests":1398,"unresolvedTests":0,"upstreamSkippedTests":1,"assertionTemplates":1851,"assertionTemplateEdges":2140,"controlledAssertionTemplates":45,"externalSnapshotExports":13,"matchedExternalSnapshotExports":13,"suggestedScopeCorrections":3,"validatedTests":0,"validatedAssertions":0,"adjudicatedExclusions":0,"unownedAssertionTemplates":0}
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-style-wasm v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style-wasm)
+    Finished `release` profile [optimized] target(s) in 7.53s
+mbx[cache]: 0 hits, 0 misses, 1 bypassed; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: the checkouts are gone. their 888.9 GiB logical has gone to join them.
+   9 pass    0 fail  0 skip | rust    0 pass    0 fail  src/ast.test.ts
+  15 pass    0 fail  0 skip | rust    0 pass    0 fail  src/at-import.test.ts
+ 157 pass    0 fail  0 skip | rust    0 pass    0 fail  src/candidate.test.ts
+   7 pass    0 fail  0 skip | rust    0 pass    0 fail  src/compat/apply-config-to-theme.test.ts
+   2 pass    0 fail  0 skip | rust    0 pass    0 fail  src/compat/apply-keyframes-to-theme.test.ts
+  37 pass    0 fail  0 skip | rust    0 pass    0 fail  src/compat/config.test.ts
+   5 pass    0 fail  0 skip | rust    0 pass    0 fail  src/compat/config/resolve-config.test.ts
+   8 pass    0 fail  0 skip | rust    0 pass    0 fail  src/compat/container-config.test.ts
+   1 pass    0 fail  0 skip | rust    0 pass    0 fail  src/compat/flatten-color-palette.test.ts
+   6 pass    0 fail  0 skip | rust    0 pass    0 fail  src/compat/legacy-utilities.test.ts
+  86 pass    0 fail  0 skip | rust    0 pass    0 fail  src/compat/plugin-api.test.ts
+   8 pass    0 fail  0 skip | rust    0 pass    0 fail  src/compat/screens-config.test.ts
+  18 pass    0 fail  0 skip | rust    0 pass    0 fail  src/compat/selector-parser.test.ts
+  69 pass    0 fail  0 skip | rust    0 pass    0 fail  src/css-functions.test.ts
+ 136 pass    0 fail  0 skip | rust    0 pass    0 fail  src/css-parser.test.ts
+   4 pass    0 fail  0 skip | rust    0 pass    0 fail  src/important.test.ts
+ 194 pass    0 fail  0 skip | rust    0 pass    0 fail  src/index.test.ts
+  19 pass    0 fail  0 skip | rust    0 pass    0 fail  src/intellisense.test.ts
+   2 pass    0 fail  0 skip | rust    0 pass    0 fail  src/plugin.test.ts
+   9 pass    0 fail  0 skip | rust    0 pass    0 fail  src/prefix.test.ts
+   8 pass    0 fail  1 skip | rust    0 pass    0 fail  src/sort.test.ts
+   2 pass    0 fail  0 skip | rust    0 pass    0 fail  src/source-maps/line-table.test.ts
+   7 pass    0 fail  0 skip | rust    0 pass    0 fail  src/source-maps/source-map.test.ts
+  12 pass    0 fail  0 skip | rust    0 pass    0 fail  src/source-maps/translation-map.test.ts
+ 332 pass    0 fail  0 skip | rust    0 pass    0 fail  src/utilities.test.ts
+  22 pass    0 fail  0 skip | rust    0 pass    0 fail  src/utils/brace-expansion.test.ts
+  16 pass    0 fail  0 skip | rust    0 pass    0 fail  src/utils/compare.test.ts
+  60 pass    0 fail  0 skip | rust    0 pass    0 fail  src/utils/decode-arbitrary-value.test.ts
+   2 pass    0 fail  0 skip | rust    0 pass    0 fail  src/utils/escape.test.ts
+  12 pass    0 fail  0 skip | rust    0 pass    0 fail  src/utils/replace-shadow-colors.test.ts
+  12 pass    0 fail  0 skip | rust    0 pass    0 fail  src/utils/segment.test.ts
+   1 pass    0 fail  0 skip | rust    0 pass    0 fail  src/utils/to-key-path.test.ts
+  19 pass    0 fail  0 skip | rust    0 pass    0 fail  src/value-parser.test.ts
+ 100 pass    0 fail  0 skip | rust    0 pass    0 fail  src/variants.test.ts
+{"impl":"official","passed":1398,"failed":0,"skipped":0,"total":1398} exit 0
+   0 pass   86 fail  0 skip | rust    0 pass   86 fail  src/compat/plugin-api.test.ts
+   0 pass   37 fail  0 skip | rust    0 pass   37 fail  src/compat/config.test.ts
+ 178 pass   16 fail  0 skip | rust  178 pass   16 fail  src/index.test.ts
+   0 pass    8 fail  0 skip | rust    0 pass    8 fail  src/compat/container-config.test.ts
+   0 pass    8 fail  0 skip | rust    0 pass    8 fail  src/compat/screens-config.test.ts
+  12 pass    7 fail  0 skip | rust   12 pass    7 fail  src/intellisense.test.ts
+  65 pass    4 fail  0 skip | rust   65 pass    4 fail  src/css-functions.test.ts
+  13 pass    2 fail  0 skip | rust   13 pass    2 fail  src/at-import.test.ts
+   0 pass    2 fail  0 skip | rust    0 pass    2 fail  src/plugin.test.ts
+   5 pass    2 fail  0 skip | rust    5 pass    2 fail  src/source-maps/source-map.test.ts
+   8 pass    1 fail  0 skip | rust    8 pass    1 fail  src/prefix.test.ts
+  99 pass    1 fail  0 skip | rust   99 pass    1 fail  src/variants.test.ts
+   9 pass    0 fail  0 skip | rust    4 pass    0 fail  src/ast.test.ts
+ 157 pass    0 fail  0 skip | rust  157 pass    0 fail  src/candidate.test.ts
+   7 pass    0 fail  0 skip | rust    0 pass    0 fail  src/compat/apply-config-to-theme.test.ts
+   2 pass    0 fail  0 skip | rust    0 pass    0 fail  src/compat/apply-keyframes-to-theme.test.ts
+   5 pass    0 fail  0 skip | rust    0 pass    0 fail  src/compat/config/resolve-config.test.ts
+   1 pass    0 fail  0 skip | rust    0 pass    0 fail  src/compat/flatten-color-palette.test.ts
+   6 pass    0 fail  0 skip | rust    6 pass    0 fail  src/compat/legacy-utilities.test.ts
+  18 pass    0 fail  0 skip | rust    0 pass    0 fail  src/compat/selector-parser.test.ts
+ 136 pass    0 fail  0 skip | rust  136 pass    0 fail  src/css-parser.test.ts
+   4 pass    0 fail  0 skip | rust    4 pass    0 fail  src/important.test.ts
+   8 pass    0 fail  1 skip | rust    8 pass    0 fail  src/sort.test.ts
+   2 pass    0 fail  0 skip | rust    2 pass    0 fail  src/source-maps/line-table.test.ts
+  12 pass    0 fail  0 skip | rust   12 pass    0 fail  src/source-maps/translation-map.test.ts
+ 332 pass    0 fail  0 skip | rust  332 pass    0 fail  src/utilities.test.ts
+  22 pass    0 fail  0 skip | rust   22 pass    0 fail  src/utils/brace-expansion.test.ts
+  16 pass    0 fail  0 skip | rust   16 pass    0 fail  src/utils/compare.test.ts
+  60 pass    0 fail  0 skip | rust   60 pass    0 fail  src/utils/decode-arbitrary-value.test.ts
+   2 pass    0 fail  0 skip | rust    2 pass    0 fail  src/utils/escape.test.ts
+  12 pass    0 fail  0 skip | rust   12 pass    0 fail  src/utils/replace-shadow-colors.test.ts
+  12 pass    0 fail  0 skip | rust   12 pass    0 fail  src/utils/segment.test.ts
+   1 pass    0 fail  0 skip | rust    1 pass    0 fail  src/utils/to-key-path.test.ts
+  19 pass    0 fail  0 skip | rust   19 pass    0 fail  src/value-parser.test.ts
+{"impl":"rust","passed":1224,"failed":174,"skipped":0,"total":1398,"rustPassed":1183,"mixed":7,"rustFailed":174,"notExercised":38} exit 1
+{"expandedTests":1398,"rustPassed":1183,"rustFailed":0,"excludedJavaScriptModule":173,"excludedJavaScriptHelper":33,"excludedJavaScriptApi":7,"checkedInternalEntry":1,"mixedUpstreamHelper":0,"notExercised":0,"upstreamSkipped":1}
+getClassList: 10814 upstream classes in order, plus 20 legacy utilities

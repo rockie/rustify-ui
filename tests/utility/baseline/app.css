@@ -1,0 +1,11 @@
+:root { color-scheme: light; font-family: ui-sans-serif, system-ui, sans-serif; color: #1d2939; background: #f9fafb; }
+body { margin: 0; }
+main { max-width: 72ch; margin: auto; padding: 24px; }
+h1 { font-size: 18px; line-height: 1.3; margin: 0 0 12px; }
+h2 { font-size: 16px; margin: 24px 0 12px; }
+p { color: #475467; line-height: 1.5; }
+section { padding-block: 8px; }
+#sample, #outside, #boundary { min-height: 40px; }
+:where(#sample) { color: #fff; background: #1d2939; }
+::selection { background: #eff8ff; color: #175cd3; }
+@media (max-width: 600px) { main { padding: 16px; } }

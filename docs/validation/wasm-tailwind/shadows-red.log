@@ -1,0 +1,58 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+warning: unused import: `DiagnosticKind`
+   --> crates/rustify-style/src/compiler/typography.rs:422:52
+    |
+422 |     use crate::compiler::{Compiler, CompilerInput, DiagnosticKind, Limits};
+    |                                                    ^^^^^^^^^^^^^^
+    |
+    = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: `rustify-style` (lib test) generated 1 warning (run `cargo fix --lib -p rustify-style --tests` to apply 1 suggestion)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.92s
+     Running unittests src/lib.rs (target/debug/deps/rustify_style-d8a92cb6940dfdfd)
+
+running 2 tests
+test compiler::shadows::tests::dynamic_inset_alpha_keeps_nested_ast_and_offset_does_not_create_resources ... FAILED
+test compiler::shadows::tests::shadow_branches_match_official_fixtures_and_preserve_pending_prefix ... FAILED
+
+failures:
+
+---- compiler::shadows::tests::dynamic_inset_alpha_keeps_nested_ast_and_offset_does_not_create_resources stdout ----
+
+thread 'compiler::shadows::tests::dynamic_inset_alpha_keeps_nested_ast_and_offset_does_not_create_resources' (12585012) panicked at crates/rustify-style/src/compiler/shadows.rs:131:14:
+called `Option::unwrap()` on a `None` value
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- compiler::shadows::tests::shadow_branches_match_official_fixtures_and_preserve_pending_prefix stdout ----
+
+thread 'compiler::shadows::tests::shadow_branches_match_official_fixtures_and_preserve_pending_prefix' (12585013) panicked at crates/rustify-style/src/compiler/shadows.rs:88:9:
+13305 mismatches; first cases: [
+    "shadow:root=text-shadow:<default>:empty: actual=\"\" expected=\"\" pending=[CandidateDiagnostic { candidate: \"text-shadow\", kind: PendingFamily, family: Some(\"text-shadow\") }]",
+    "shadow:root=text-shadow:card:empty: actual=\"\" expected=\"\" pending=[CandidateDiagnostic { candidate: \"text-shadow-card\", kind: PendingFamily, family: Some(\"text-shadow\") }]",
+    "shadow:root=text-shadow:alias:empty: actual=\"\" expected=\"\" pending=[CandidateDiagnostic { candidate: \"text-shadow-alias\", kind: PendingFamily, family: Some(\"text-shadow\") }]",
+    "shadow:root=text-shadow:multi:empty: actual=\"\" expected=\"\" pending=[CandidateDiagnostic { candidate: \"text-shadow-multi\", kind: PendingFamily, family: Some(\"text-shadow\") }]",
+    "shadow:root=text-shadow:brand:empty: actual=\"\" expected=\"\" pending=[CandidateDiagnostic { candidate: \"text-shadow-brand\", kind: PendingFamily, family: Some(\"text-shadow\") }]",
+    "shadow:root=text-shadow:1.5:empty: actual=\"\" expected=\"\" pending=[CandidateDiagnostic { candidate: \"text-shadow-1.5\", kind: PendingFamily, family: Some(\"text-shadow\") }]",
+    "shadow:root=text-shadow:missing:empty: actual=\"\" expected=\"\" pending=[CandidateDiagnostic { candidate: \"text-shadow-missing\", kind: PendingFamily, family: Some(\"text-shadow\") }]",
+    "shadow:root=text-shadow:unknown:empty: actual=\"\" expected=\"\" pending=[CandidateDiagnostic { candidate: \"text-shadow-unknown\", kind: PendingFamily, family: Some(\"text-shadow\") }]",
+    "shadow:root=text-shadow:none:empty: actual=\"\" expected=\"@layer properties;\\n.text-shadow-none {\\n  text-shadow: none;\\n}\\n@property --tw-text-shadow-color {\\n  syntax: \\\"*\\\";\\n  inherits: false;\\n}\\n@property --tw-text-shadow-alpha {\\n  syntax: \\\"<percentage>\\\";\\n  inherits: false;\\n  initial-value: 100%;\\n}\\n@layer properties {\\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\\n    *, ::before, ::after, ::backdrop {\\n      --tw-text-shadow-color: initial;\\n      --tw-text-shadow-alpha: 100%;\\n    }\\n  }\\n}\\n\" pending=[CandidateDiagnostic { candidate: \"text-shadow-none\", kind: PendingFamily, family: Some(\"text-shadow\") }]",
+    "shadow:root=text-shadow:inherit:empty: actual=\"\" expected=\"@layer properties;\\n.text-shadow-inherit {\\n  --tw-text-shadow-color: inherit;\\n}\\n@property --tw-text-shadow-color {\\n  syntax: \\\"*\\\";\\n  inherits: false;\\n}\\n@property --tw-text-shadow-alpha {\\n  syntax: \\\"<percentage>\\\";\\n  inherits: false;\\n  initial-value: 100%;\\n}\\n@layer properties {\\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\\n    *, ::before, ::after, ::backdrop {\\n      --tw-text-shadow-color: initial;\\n      --tw-text-shadow-alpha: 100%;\\n    }\\n  }\\n}\\n\" pending=[CandidateDiagnostic { candidate: \"text-shadow-inherit\", kind: PendingFamily, family: Some(\"text-shadow\") }]",
+]
+
+
+failures:
+    compiler::shadows::tests::dynamic_inset_alpha_keeps_nested_ast_and_offset_does_not_create_resources
+    compiler::shadows::tests::shadow_branches_match_official_fixtures_and_preserve_pending_prefix
+
+test result: FAILED. 0 passed; 2 failed; 0 ignored; 0 measured; 53 filtered out; finished in 3.12s
+
+error: test failed, to rerun pass `-p rustify-style --lib`
+mbx[cache]: 0 hits, 0 misses, 1 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: 481.9 GiB logical of target/ was waiting for checkouts that are never coming back. it has stopped waiting.

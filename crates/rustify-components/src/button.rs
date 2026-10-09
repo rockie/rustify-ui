@@ -73,13 +73,16 @@ pub fn Button(
     // An empty `aria-label` would take the name away rather than leave the
     // content to provide it.
     let aria_label = (!aria_label.is_empty()).then_some(aria_label);
-    let computed = move || {
-        ButtonClass {
+    let computed = crate::macros::reactive_merge_with(move || {
+        let classes = ButtonClass {
             variant: variant.get(),
             size: size.get(),
-        }
-        .with_class(class.get())
-    };
+        };
+        vec![
+            crate::cn::IntoTailwindClass::raw_class(&classes).into_owned(),
+            class.get(),
+        ]
+    });
     view! {
         <button
             type="button"

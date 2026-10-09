@@ -1,0 +1,12 @@
+{
+  "review_id": "e4b93990-4ec9-41be-826f-4be4af5fc632",
+  "created_at": "2026-10-08T17:43:04+08:00",
+  "root_app_manifest_sha256": "a0c1f435f26ef9286b020d48a82aafd331c9017435fc38946dcf625bec9f6a83",
+  "root_worker_manifest_sha256": "9b8f7bafe00453b67a7e1d50ec125b527806e13a2e3b1ced47cc77e150d04abd",
+  "deep_app_manifest_sha256": "907cd750330d611bf362162db9c4979681a4445c4338d72ae33b40c9d8ec8689",
+  "deep_worker_manifest_sha256": "9b8f7bafe00453b67a7e1d50ec125b527806e13a2e3b1ced47cc77e150d04abd",
+  "docs/plan/WASM-TAILWIND.md_sha256": "6d79e35fbc904790b13f24c7164af21f732e21494c8dbd45a73e656349a809f9",
+  "docs/plan/WASM-TAILWIND.code-review.r2.md_sha256": "583cd2dc5e3a0da3e1ab35aac653c3d109fed05348f4fe48dcd0b5ea5bf29e10",
+  "crates/rustify-style/src/scope.rs_sha256": "7a8bcaf626ac6a89745039d02de0f617917a2a788f8e744bf2588fb91e24a0d4",
+  "tests/browser/utility-runtime.spec.ts_sha256": "f91eddcbd2c31a7ef3c602bef9b2e5a0caab7ff51a5b360cc3bc506911c1b7c5"
+}

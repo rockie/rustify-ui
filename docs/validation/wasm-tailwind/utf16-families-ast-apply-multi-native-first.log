@@ -1,0 +1,52 @@
+mbx[warning]: Unix-domain cache session listener unavailable; using FIFO transport: failed to bind cache session listener at /var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/mbx-session-0ff2Eq/cache-agent.sock: Operation not permitted (os error 1)
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+error[E0603]: function `json_bytes_seen` is private
+   --> crates/rustify-style/src/compiler/ast.rs:254:67
+    |
+254 |                 .saturating_add(super::public_api::design_system::json_bytes_seen(
+    |                                                                   ^^^^^^^^^^^^^^^ private function
+    |
+note: the function `json_bytes_seen` is defined here
+   --> crates/rustify-style/src/compiler/public_api/design_system.rs:488:1
+    |
+488 | pub(super) fn json_bytes_seen(value: &PublicValue, seen: &mut BTreeSet<(u8, usize)>) -> usize {
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error[E0624]: method `offset_public` is private
+   --> crates/rustify-style/src/compiler/apply.rs:426:20
+    |
+426 |             source.offset_public(7 + offset, raw.units().len());
+    |                    ^^^^^^^^^^^^^ private method
+    |
+   ::: crates/rustify-style/src/compiler/public_api/source_map.rs:24:5
+    |
+ 24 |     pub(super) fn offset_public(&mut self, offset: usize, length: usize) {
+    |     -------------------------------------------------------------------- private method defined here
+
+error: lifetime may not live long enough
+   --> crates/rustify-style/src/compiler/public_api/compile_ast.rs:224:20
+    |
+222 |     fn location(&self, location: &super::SourceLocation, destination: bool) -> Option<&Value> {
+    |                 -                - let's call the lifetime of this reference `'1`
+    |                 |
+    |                 let's call the lifetime of this reference `'2`
+223 |         if let Some(public) = &location.public {
+224 |             return Some(public);
+    |                    ^^^^^^^^^^^^ method was supposed to return data with lifetime `'2` but it is returning data with lifetime `'1`
+    |
+help: consider introducing a named lifetime parameter and update trait if needed
+    |
+222 |     fn location<'a>(&self, location: &'a super::SourceLocation, destination: bool) -> Option<&'a Value> {
+    |                ++++                   ++                                                      ++
+
+Some errors have detailed explanations: E0603, E0624.
+For more information about an error, try `rustc --explain E0603`.
+error: could not compile `rustify-style` (lib test) due to 3 previous errors
+mbx[cache]: 0 hits, 1 misses; 0 B downloaded, 0 B uploaded, 0 B stored locally

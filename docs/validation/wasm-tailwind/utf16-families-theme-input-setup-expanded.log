@@ -1,0 +1,22 @@
+file:///private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-utf16-verified-54mkl3kq/runner/target/utility-conformance/compiler-api/style.js:750
+            const ret = new Error(getStringFromWasm0(arg0, arg1));
+                        ^
+
+Error: @theme requires a block
+    at __wbg_new_a32a1ab6c6655abe (file:///private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-utf16-verified-54mkl3kq/runner/target/utility-conformance/compiler-api/style.js:750:25)
+    at rustify_style_wasm.wasm.<js_sys[2be875191f1f6241]::Error>::new::__wbg_new_a32a1ab6c6655abe externref shim (wasm://wasm/rustify_style_wasm.wasm-00844f26:wasm-function[1444]:0x1794ee)
+    at rustify_style_wasm.wasm.<js_sys[2be875191f1f6241]::Error>::new (wasm://wasm/rustify_style_wasm.wasm-00844f26:wasm-function[1577]:0x179e04)
+    at rustify_style_wasm.wasm.rustify_style_wasm[39cfbc9c0794b431]::public_api::error (wasm://wasm/rustify_style_wasm.wasm-00844f26:wasm-function[352]:0x11b6dc)
+    at rustify_style_wasm.wasm.<rustify_style_wasm[39cfbc9c0794b431]::public_api::AstCompiler>::new (wasm://wasm/rustify_style_wasm.wasm-00844f26:wasm-function[224]:0xeac3b)
+    at rustify_style_wasm.wasm.astcompiler_new (wasm://wasm/rustify_style_wasm.wasm-00844f26:wasm-function[991]:0x16d7b2)
+    at rustify_style_wasm.wasm.astcompiler_new externref shim (wasm://wasm/rustify_style_wasm.wasm-00844f26:wasm-function[1452]:0x1795c9)
+    at rustify_style_wasm.wasm.astcompiler_new externref shim multivalue shim (wasm://wasm/rustify_style_wasm.wasm-00844f26:wasm-function[1366]:0x1789f9)
+    at new AstCompiler (file:///private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-utf16-verified-54mkl3kq/runner/target/utility-conformance/compiler-api/style.js:37:26)
+    at file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/compiler/run-public-ast-setup-wasm.mjs:76:18 {
+  [cause]: {
+    kind: 'compile',
+    error: { kind: 'syntax', offset: 0, message: '@theme requires a block' }
+  }
+}
+
+Node.js v26.1.0

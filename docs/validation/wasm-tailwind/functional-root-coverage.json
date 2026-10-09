@@ -1,0 +1,867 @@
+{
+  "registryCount": 282,
+  "fixtureUnionCount": 282,
+  "roots": {
+    "bg": [
+      "backgrounds-fixtures.json",
+      "colors-fixtures.json"
+    ],
+    "bg-position": [
+      "backgrounds-fixtures.json"
+    ],
+    "bg-size": [
+      "backgrounds-fixtures.json"
+    ],
+    "border": [
+      "borders-fixtures.json",
+      "colors-fixtures.json"
+    ],
+    "border-x": [
+      "borders-fixtures.json",
+      "colors-fixtures.json"
+    ],
+    "border-y": [
+      "borders-fixtures.json",
+      "colors-fixtures.json"
+    ],
+    "border-s": [
+      "borders-fixtures.json",
+      "colors-fixtures.json"
+    ],
+    "border-e": [
+      "borders-fixtures.json",
+      "colors-fixtures.json"
+    ],
+    "border-t": [
+      "borders-fixtures.json",
+      "colors-fixtures.json"
+    ],
+    "border-r": [
+      "borders-fixtures.json",
+      "colors-fixtures.json"
+    ],
+    "border-b": [
+      "borders-fixtures.json",
+      "colors-fixtures.json"
+    ],
+    "border-l": [
+      "borders-fixtures.json",
+      "colors-fixtures.json"
+    ],
+    "divide-x": [
+      "borders-fixtures.json"
+    ],
+    "divide-y": [
+      "borders-fixtures.json"
+    ],
+    "outline": [
+      "borders-fixtures.json",
+      "colors-fixtures.json"
+    ],
+    "outline-offset": [
+      "borders-fixtures.json"
+    ],
+    "-outline-offset": [
+      "borders-fixtures.json"
+    ],
+    "stroke": [
+      "borders-fixtures.json",
+      "colors-fixtures.json"
+    ],
+    "decoration": [
+      "borders-fixtures.json",
+      "colors-fixtures.json"
+    ],
+    "underline-offset": [
+      "borders-fixtures.json"
+    ],
+    "-underline-offset": [
+      "borders-fixtures.json"
+    ],
+    "opacity": [
+      "borders-fixtures.json"
+    ],
+    "text": [
+      "colors-fixtures.json",
+      "typography-fixtures.json"
+    ],
+    "accent": [
+      "colors-fixtures.json"
+    ],
+    "caret": [
+      "colors-fixtures.json"
+    ],
+    "fill": [
+      "colors-fixtures.json"
+    ],
+    "divide": [
+      "colors-fixtures.json"
+    ],
+    "placeholder": [
+      "colors-fixtures.json"
+    ],
+    "rounded": [
+      "effects-complete-fixtures.json"
+    ],
+    "rounded-s": [
+      "effects-complete-fixtures.json"
+    ],
+    "rounded-e": [
+      "effects-complete-fixtures.json"
+    ],
+    "rounded-t": [
+      "effects-complete-fixtures.json"
+    ],
+    "rounded-r": [
+      "effects-complete-fixtures.json"
+    ],
+    "rounded-b": [
+      "effects-complete-fixtures.json"
+    ],
+    "rounded-l": [
+      "effects-complete-fixtures.json"
+    ],
+    "rounded-ss": [
+      "effects-complete-fixtures.json"
+    ],
+    "rounded-se": [
+      "effects-complete-fixtures.json"
+    ],
+    "rounded-ee": [
+      "effects-complete-fixtures.json"
+    ],
+    "rounded-es": [
+      "effects-complete-fixtures.json"
+    ],
+    "rounded-tl": [
+      "effects-complete-fixtures.json"
+    ],
+    "rounded-tr": [
+      "effects-complete-fixtures.json"
+    ],
+    "rounded-br": [
+      "effects-complete-fixtures.json"
+    ],
+    "rounded-bl": [
+      "effects-complete-fixtures.json"
+    ],
+    "content": [
+      "effects-complete-fixtures.json"
+    ],
+    "filter": [
+      "filters-fixtures.json"
+    ],
+    "backdrop-filter": [
+      "filters-fixtures.json"
+    ],
+    "blur": [
+      "filters-fixtures.json"
+    ],
+    "backdrop-blur": [
+      "filters-fixtures.json"
+    ],
+    "brightness": [
+      "filters-fixtures.json"
+    ],
+    "backdrop-brightness": [
+      "filters-fixtures.json"
+    ],
+    "contrast": [
+      "filters-fixtures.json"
+    ],
+    "backdrop-contrast": [
+      "filters-fixtures.json"
+    ],
+    "grayscale": [
+      "filters-fixtures.json"
+    ],
+    "backdrop-grayscale": [
+      "filters-fixtures.json"
+    ],
+    "hue-rotate": [
+      "filters-fixtures.json"
+    ],
+    "backdrop-hue-rotate": [
+      "filters-fixtures.json"
+    ],
+    "invert": [
+      "filters-fixtures.json"
+    ],
+    "backdrop-invert": [
+      "filters-fixtures.json"
+    ],
+    "saturate": [
+      "filters-fixtures.json"
+    ],
+    "backdrop-saturate": [
+      "filters-fixtures.json"
+    ],
+    "sepia": [
+      "filters-fixtures.json"
+    ],
+    "backdrop-sepia": [
+      "filters-fixtures.json"
+    ],
+    "-hue-rotate": [
+      "filters-fixtures.json"
+    ],
+    "-backdrop-hue-rotate": [
+      "filters-fixtures.json"
+    ],
+    "drop-shadow": [
+      "filters-fixtures.json"
+    ],
+    "backdrop-opacity": [
+      "filters-fixtures.json"
+    ],
+    "inset": [
+      "functional-spacing-fixtures.json"
+    ],
+    "-inset": [
+      "functional-spacing-fixtures.json"
+    ],
+    "inset-x": [
+      "functional-spacing-fixtures.json"
+    ],
+    "-inset-x": [
+      "functional-spacing-fixtures.json"
+    ],
+    "inset-y": [
+      "functional-spacing-fixtures.json"
+    ],
+    "-inset-y": [
+      "functional-spacing-fixtures.json"
+    ],
+    "start": [
+      "functional-spacing-fixtures.json"
+    ],
+    "-start": [
+      "functional-spacing-fixtures.json"
+    ],
+    "end": [
+      "functional-spacing-fixtures.json"
+    ],
+    "-end": [
+      "functional-spacing-fixtures.json"
+    ],
+    "top": [
+      "functional-spacing-fixtures.json"
+    ],
+    "-top": [
+      "functional-spacing-fixtures.json"
+    ],
+    "right": [
+      "functional-spacing-fixtures.json"
+    ],
+    "-right": [
+      "functional-spacing-fixtures.json"
+    ],
+    "bottom": [
+      "functional-spacing-fixtures.json"
+    ],
+    "-bottom": [
+      "functional-spacing-fixtures.json"
+    ],
+    "left": [
+      "functional-spacing-fixtures.json"
+    ],
+    "-left": [
+      "functional-spacing-fixtures.json"
+    ],
+    "m": [
+      "functional-spacing-fixtures.json"
+    ],
+    "-m": [
+      "functional-spacing-fixtures.json"
+    ],
+    "mx": [
+      "functional-spacing-fixtures.json"
+    ],
+    "-mx": [
+      "functional-spacing-fixtures.json"
+    ],
+    "my": [
+      "functional-spacing-fixtures.json"
+    ],
+    "-my": [
+      "functional-spacing-fixtures.json"
+    ],
+    "ms": [
+      "functional-spacing-fixtures.json"
+    ],
+    "-ms": [
+      "functional-spacing-fixtures.json"
+    ],
+    "me": [
+      "functional-spacing-fixtures.json"
+    ],
+    "-me": [
+      "functional-spacing-fixtures.json"
+    ],
+    "mt": [
+      "functional-spacing-fixtures.json"
+    ],
+    "-mt": [
+      "functional-spacing-fixtures.json"
+    ],
+    "mr": [
+      "functional-spacing-fixtures.json"
+    ],
+    "-mr": [
+      "functional-spacing-fixtures.json"
+    ],
+    "mb": [
+      "functional-spacing-fixtures.json"
+    ],
+    "-mb": [
+      "functional-spacing-fixtures.json"
+    ],
+    "ml": [
+      "functional-spacing-fixtures.json"
+    ],
+    "-ml": [
+      "functional-spacing-fixtures.json"
+    ],
+    "p": [
+      "functional-spacing-fixtures.json"
+    ],
+    "px": [
+      "functional-spacing-fixtures.json"
+    ],
+    "py": [
+      "functional-spacing-fixtures.json"
+    ],
+    "ps": [
+      "functional-spacing-fixtures.json"
+    ],
+    "pe": [
+      "functional-spacing-fixtures.json"
+    ],
+    "pt": [
+      "functional-spacing-fixtures.json"
+    ],
+    "pr": [
+      "functional-spacing-fixtures.json"
+    ],
+    "pb": [
+      "functional-spacing-fixtures.json"
+    ],
+    "pl": [
+      "functional-spacing-fixtures.json"
+    ],
+    "scroll-m": [
+      "functional-spacing-fixtures.json"
+    ],
+    "-scroll-m": [
+      "functional-spacing-fixtures.json"
+    ],
+    "scroll-mx": [
+      "functional-spacing-fixtures.json"
+    ],
+    "-scroll-mx": [
+      "functional-spacing-fixtures.json"
+    ],
+    "scroll-my": [
+      "functional-spacing-fixtures.json"
+    ],
+    "-scroll-my": [
+      "functional-spacing-fixtures.json"
+    ],
+    "scroll-ms": [
+      "functional-spacing-fixtures.json"
+    ],
+    "-scroll-ms": [
+      "functional-spacing-fixtures.json"
+    ],
+    "scroll-me": [
+      "functional-spacing-fixtures.json"
+    ],
+    "-scroll-me": [
+      "functional-spacing-fixtures.json"
+    ],
+    "scroll-mt": [
+      "functional-spacing-fixtures.json"
+    ],
+    "-scroll-mt": [
+      "functional-spacing-fixtures.json"
+    ],
+    "scroll-mr": [
+      "functional-spacing-fixtures.json"
+    ],
+    "-scroll-mr": [
+      "functional-spacing-fixtures.json"
+    ],
+    "scroll-mb": [
+      "functional-spacing-fixtures.json"
+    ],
+    "-scroll-mb": [
+      "functional-spacing-fixtures.json"
+    ],
+    "scroll-ml": [
+      "functional-spacing-fixtures.json"
+    ],
+    "-scroll-ml": [
+      "functional-spacing-fixtures.json"
+    ],
+    "scroll-p": [
+      "functional-spacing-fixtures.json"
+    ],
+    "scroll-px": [
+      "functional-spacing-fixtures.json"
+    ],
+    "scroll-py": [
+      "functional-spacing-fixtures.json"
+    ],
+    "scroll-ps": [
+      "functional-spacing-fixtures.json"
+    ],
+    "scroll-pe": [
+      "functional-spacing-fixtures.json"
+    ],
+    "scroll-pt": [
+      "functional-spacing-fixtures.json"
+    ],
+    "scroll-pr": [
+      "functional-spacing-fixtures.json"
+    ],
+    "scroll-pb": [
+      "functional-spacing-fixtures.json"
+    ],
+    "scroll-pl": [
+      "functional-spacing-fixtures.json"
+    ],
+    "size": [
+      "functional-spacing-fixtures.json"
+    ],
+    "w": [
+      "functional-spacing-fixtures.json"
+    ],
+    "min-w": [
+      "functional-spacing-fixtures.json"
+    ],
+    "max-w": [
+      "functional-spacing-fixtures.json"
+    ],
+    "h": [
+      "functional-spacing-fixtures.json"
+    ],
+    "min-h": [
+      "functional-spacing-fixtures.json"
+    ],
+    "max-h": [
+      "functional-spacing-fixtures.json"
+    ],
+    "basis": [
+      "functional-spacing-fixtures.json"
+    ],
+    "gap": [
+      "functional-spacing-fixtures.json"
+    ],
+    "gap-x": [
+      "functional-spacing-fixtures.json"
+    ],
+    "gap-y": [
+      "functional-spacing-fixtures.json"
+    ],
+    "bg-linear": [
+      "gradients-fixtures.json"
+    ],
+    "-bg-linear": [
+      "gradients-fixtures.json"
+    ],
+    "bg-conic": [
+      "gradients-fixtures.json"
+    ],
+    "-bg-conic": [
+      "gradients-fixtures.json"
+    ],
+    "bg-radial": [
+      "gradients-fixtures.json"
+    ],
+    "from": [
+      "gradients-fixtures.json"
+    ],
+    "via": [
+      "gradients-fixtures.json"
+    ],
+    "to": [
+      "gradients-fixtures.json"
+    ],
+    "col": [
+      "grid-fixtures.json"
+    ],
+    "-col": [
+      "grid-fixtures.json"
+    ],
+    "col-start": [
+      "grid-fixtures.json"
+    ],
+    "-col-start": [
+      "grid-fixtures.json"
+    ],
+    "col-end": [
+      "grid-fixtures.json"
+    ],
+    "-col-end": [
+      "grid-fixtures.json"
+    ],
+    "row": [
+      "grid-fixtures.json"
+    ],
+    "-row": [
+      "grid-fixtures.json"
+    ],
+    "row-start": [
+      "grid-fixtures.json"
+    ],
+    "-row-start": [
+      "grid-fixtures.json"
+    ],
+    "row-end": [
+      "grid-fixtures.json"
+    ],
+    "-row-end": [
+      "grid-fixtures.json"
+    ],
+    "col-span": [
+      "grid-fixtures.json"
+    ],
+    "row-span": [
+      "grid-fixtures.json"
+    ],
+    "grid-cols": [
+      "grid-fixtures.json"
+    ],
+    "grid-rows": [
+      "grid-fixtures.json"
+    ],
+    "auto-cols": [
+      "grid-fixtures.json"
+    ],
+    "auto-rows": [
+      "grid-fixtures.json"
+    ],
+    "order": [
+      "layout-fixtures.json"
+    ],
+    "-order": [
+      "layout-fixtures.json"
+    ],
+    "flex": [
+      "layout-fixtures.json"
+    ],
+    "grow": [
+      "layout-fixtures.json"
+    ],
+    "shrink": [
+      "layout-fixtures.json"
+    ],
+    "columns": [
+      "layout-fixtures.json"
+    ],
+    "object": [
+      "layout-fixtures.json"
+    ],
+    "flex-grow": [
+      "layout-fixtures.json"
+    ],
+    "flex-shrink": [
+      "layout-fixtures.json"
+    ],
+    "mask": [
+      "masks-fixtures.json"
+    ],
+    "mask-size": [
+      "masks-fixtures.json"
+    ],
+    "mask-position": [
+      "masks-fixtures.json"
+    ],
+    "mask-x-from": [
+      "masks-fixtures.json"
+    ],
+    "mask-x-to": [
+      "masks-fixtures.json"
+    ],
+    "mask-y-from": [
+      "masks-fixtures.json"
+    ],
+    "mask-y-to": [
+      "masks-fixtures.json"
+    ],
+    "mask-t-from": [
+      "masks-fixtures.json"
+    ],
+    "mask-t-to": [
+      "masks-fixtures.json"
+    ],
+    "mask-r-from": [
+      "masks-fixtures.json"
+    ],
+    "mask-r-to": [
+      "masks-fixtures.json"
+    ],
+    "mask-b-from": [
+      "masks-fixtures.json"
+    ],
+    "mask-b-to": [
+      "masks-fixtures.json"
+    ],
+    "mask-l-from": [
+      "masks-fixtures.json"
+    ],
+    "mask-l-to": [
+      "masks-fixtures.json"
+    ],
+    "mask-linear": [
+      "masks-fixtures.json"
+    ],
+    "-mask-linear": [
+      "masks-fixtures.json"
+    ],
+    "mask-radial": [
+      "masks-fixtures.json"
+    ],
+    "mask-radial-at": [
+      "masks-fixtures.json"
+    ],
+    "mask-conic": [
+      "masks-fixtures.json"
+    ],
+    "-mask-conic": [
+      "masks-fixtures.json"
+    ],
+    "mask-linear-from": [
+      "masks-fixtures.json"
+    ],
+    "mask-linear-to": [
+      "masks-fixtures.json"
+    ],
+    "mask-radial-from": [
+      "masks-fixtures.json"
+    ],
+    "mask-radial-to": [
+      "masks-fixtures.json"
+    ],
+    "mask-conic-from": [
+      "masks-fixtures.json"
+    ],
+    "mask-conic-to": [
+      "masks-fixtures.json"
+    ],
+    "line-clamp": [
+      "miscellaneous-fixtures.json"
+    ],
+    "list": [
+      "miscellaneous-fixtures.json"
+    ],
+    "list-image": [
+      "miscellaneous-fixtures.json"
+    ],
+    "indent": [
+      "miscellaneous-fixtures.json"
+    ],
+    "-indent": [
+      "miscellaneous-fixtures.json"
+    ],
+    "align": [
+      "miscellaneous-fixtures.json"
+    ],
+    "z": [
+      "miscellaneous-fixtures.json"
+    ],
+    "-z": [
+      "miscellaneous-fixtures.json"
+    ],
+    "aspect": [
+      "miscellaneous-fixtures.json"
+    ],
+    "cursor": [
+      "miscellaneous-fixtures.json"
+    ],
+    "will-change": [
+      "miscellaneous-fixtures.json"
+    ],
+    "contain": [
+      "miscellaneous-fixtures.json"
+    ],
+    "@container": [
+      "miscellaneous-fixtures.json"
+    ],
+    "max-w-screen": [
+      "miscellaneous-fixtures.json"
+    ],
+    "animate": [
+      "motion-fixtures.json"
+    ],
+    "transition": [
+      "motion-fixtures.json"
+    ],
+    "delay": [
+      "motion-fixtures.json"
+    ],
+    "duration": [
+      "motion-fixtures.json"
+    ],
+    "ease": [
+      "motion-fixtures.json"
+    ],
+    "text-shadow": [
+      "shadows-fixtures.json"
+    ],
+    "shadow": [
+      "shadows-fixtures.json"
+    ],
+    "inset-shadow": [
+      "shadows-fixtures.json"
+    ],
+    "ring": [
+      "shadows-fixtures.json"
+    ],
+    "inset-ring": [
+      "shadows-fixtures.json"
+    ],
+    "ring-offset": [
+      "shadows-fixtures.json"
+    ],
+    "border-spacing": [
+      "structural-spacing-fixtures.json"
+    ],
+    "border-spacing-x": [
+      "structural-spacing-fixtures.json"
+    ],
+    "border-spacing-y": [
+      "structural-spacing-fixtures.json"
+    ],
+    "space-x": [
+      "structural-spacing-fixtures.json"
+    ],
+    "-space-x": [
+      "structural-spacing-fixtures.json"
+    ],
+    "space-y": [
+      "structural-spacing-fixtures.json"
+    ],
+    "-space-y": [
+      "structural-spacing-fixtures.json"
+    ],
+    "origin": [
+      "transforms-fixtures.json"
+    ],
+    "perspective-origin": [
+      "transforms-fixtures.json"
+    ],
+    "perspective": [
+      "transforms-fixtures.json"
+    ],
+    "translate": [
+      "transforms-fixtures.json"
+    ],
+    "translate-x": [
+      "transforms-fixtures.json"
+    ],
+    "translate-y": [
+      "transforms-fixtures.json"
+    ],
+    "translate-z": [
+      "transforms-fixtures.json"
+    ],
+    "scale": [
+      "transforms-fixtures.json"
+    ],
+    "scale-x": [
+      "transforms-fixtures.json"
+    ],
+    "scale-y": [
+      "transforms-fixtures.json"
+    ],
+    "scale-z": [
+      "transforms-fixtures.json"
+    ],
+    "rotate": [
+      "transforms-fixtures.json"
+    ],
+    "rotate-x": [
+      "transforms-fixtures.json"
+    ],
+    "rotate-y": [
+      "transforms-fixtures.json"
+    ],
+    "rotate-z": [
+      "transforms-fixtures.json"
+    ],
+    "skew": [
+      "transforms-fixtures.json"
+    ],
+    "skew-x": [
+      "transforms-fixtures.json"
+    ],
+    "skew-y": [
+      "transforms-fixtures.json"
+    ],
+    "transform": [
+      "transforms-fixtures.json"
+    ],
+    "-translate": [
+      "transforms-fixtures.json"
+    ],
+    "-translate-x": [
+      "transforms-fixtures.json"
+    ],
+    "-translate-y": [
+      "transforms-fixtures.json"
+    ],
+    "-translate-z": [
+      "transforms-fixtures.json"
+    ],
+    "-scale": [
+      "transforms-fixtures.json"
+    ],
+    "-scale-x": [
+      "transforms-fixtures.json"
+    ],
+    "-scale-y": [
+      "transforms-fixtures.json"
+    ],
+    "-scale-z": [
+      "transforms-fixtures.json"
+    ],
+    "-rotate": [
+      "transforms-fixtures.json"
+    ],
+    "-rotate-x": [
+      "transforms-fixtures.json"
+    ],
+    "-rotate-y": [
+      "transforms-fixtures.json"
+    ],
+    "-rotate-z": [
+      "transforms-fixtures.json"
+    ],
+    "-skew": [
+      "transforms-fixtures.json"
+    ],
+    "-skew-x": [
+      "transforms-fixtures.json"
+    ],
+    "-skew-y": [
+      "transforms-fixtures.json"
+    ],
+    "font": [
+      "typography-fixtures.json"
+    ],
+    "leading": [
+      "typography-fixtures.json"
+    ],
+    "tracking": [
+      "typography-fixtures.json"
+    ],
+    "-tracking": [
+      "typography-fixtures.json"
+    ],
+    "font-stretch": [
+      "typography-fixtures.json"
+    ]
+  },
+  "remaining": []
+}

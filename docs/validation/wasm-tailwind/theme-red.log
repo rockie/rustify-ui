@@ -1,0 +1,31 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.15s
+     Running unittests src/lib.rs (target/debug/deps/rustify_style-d8a92cb6940dfdfd)
+
+running 1 test
+test compiler::tests::theme_dependencies_and_keyframes_match_official_css ... FAILED
+
+failures:
+
+---- compiler::tests::theme_dependencies_and_keyframes_match_official_css stdout ----
+
+thread 'compiler::tests::theme_dependencies_and_keyframes_match_official_css' (12471109) panicked at crates/rustify-style/src/compiler/tests.rs:34:34:
+called `Result::unwrap()` on an `Err` value: PendingFeature { feature: "@theme keyframes/non-declaration" }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    compiler::tests::theme_dependencies_and_keyframes_match_official_css
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 48 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p rustify-style --lib`
+mbx[cache]: 0 hits, 0 misses, 1 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: 10555 compilations retrieved with a straight face.

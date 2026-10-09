@@ -1,0 +1,49 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 3.94s
+     Running unittests src/lib.rs (target/debug/deps/rustify_style-d8a92cb6940dfdfd)
+
+running 2 tests
+test compiler::masks::tests::edge_alpha_fallback_keeps_nested_ast_important_and_source_resource_order ... FAILED
+test compiler::masks::tests::mask_branches_match_official_fixtures_and_prefix ... FAILED
+
+failures:
+
+---- compiler::masks::tests::edge_alpha_fallback_keeps_nested_ast_important_and_source_resource_order stdout ----
+
+thread 'compiler::masks::tests::edge_alpha_fallback_keeps_nested_ast_important_and_source_resource_order' (13644580) panicked at crates/rustify-style/src/compiler/masks.rs:131:24:
+range end index 7 out of range for slice of length 0
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- compiler::masks::tests::mask_branches_match_official_fixtures_and_prefix stdout ----
+
+thread 'compiler::masks::tests::mask_branches_match_official_fixtures_and_prefix' (13644581) panicked at crates/rustify-style/src/compiler/masks.rs:107:9:
+21219 mismatches; first cases: [
+    "mask:root=mask:value=<default>:empty: actual=\"\" expected=\"\" pending=[CandidateDiagnostic { candidate: \"mask\", kind: PendingFamily, family: Some(\"mask\") }]",
+    "mask:root=mask:value=card:empty: actual=\"\" expected=\"\" pending=[CandidateDiagnostic { candidate: \"mask-card\", kind: PendingFamily, family: Some(\"mask\") }]",
+    "mask:root=mask:value=brand:empty: actual=\"\" expected=\"\" pending=[CandidateDiagnostic { candidate: \"mask-brand\", kind: PendingFamily, family: Some(\"mask\") }]",
+    "mask:root=mask:value=alias:empty: actual=\"\" expected=\"\" pending=[CandidateDiagnostic { candidate: \"mask-alias\", kind: PendingFamily, family: Some(\"mask\") }]",
+    "mask:root=mask:value=unknown:empty: actual=\"\" expected=\"\" pending=[CandidateDiagnostic { candidate: \"mask-unknown\", kind: PendingFamily, family: Some(\"mask\") }]",
+    "mask:root=mask:value=current:empty: actual=\"\" expected=\"\" pending=[CandidateDiagnostic { candidate: \"mask-current\", kind: PendingFamily, family: Some(\"mask\") }]",
+    "mask:root=mask:value=inherit:empty: actual=\"\" expected=\"\" pending=[CandidateDiagnostic { candidate: \"mask-inherit\", kind: PendingFamily, family: Some(\"mask\") }]",
+    "mask:root=mask:value=transparent:empty: actual=\"\" expected=\"\" pending=[CandidateDiagnostic { candidate: \"mask-transparent\", kind: PendingFamily, family: Some(\"mask\") }]",
+    "mask:root=mask:value=0:empty: actual=\"\" expected=\"\" pending=[CandidateDiagnostic { candidate: \"mask-0\", kind: PendingFamily, family: Some(\"mask\") }]",
+    "mask:root=mask:value=0.25:empty: actual=\"\" expected=\"\" pending=[CandidateDiagnostic { candidate: \"mask-0.25\", kind: PendingFamily, family: Some(\"mask\") }]",
+]
+
+
+failures:
+    compiler::masks::tests::edge_alpha_fallback_keeps_nested_ast_important_and_source_resource_order
+    compiler::masks::tests::mask_branches_match_official_fixtures_and_prefix
+
+test result: FAILED. 0 passed; 2 failed; 0 ignored; 0 measured; 73 filtered out; finished in 5.87s
+
+error: test failed, to rerun pass `-p rustify-style --lib`
+mbx[cache]: 0 hits, 0 misses, 1 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: 552.4 GiB logical tidied away. you may continue not thinking about it.

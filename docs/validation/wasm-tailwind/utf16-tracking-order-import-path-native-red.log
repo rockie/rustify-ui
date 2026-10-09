@@ -1,0 +1,39 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 3.58s
+     Running unittests src/lib.rs (target/debug/deps/rustify_style-4ed64bbe76d78d97)
+
+running 6 tests
+
+thread 'compiler::public_api::design_system::tests::theme_tracking_preserves_encounter_order_before_range_failure' (2787961) panicked at crates/rustify-style/src/compiler/public_api/../../../../../tests/utility/compiler/design-system-native.rs:516:13:
+assertion `left == right` failed
+  left: 0
+ right: 16
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test compiler::public_api::design_system::tests::theme_tracking_decodes_escaped_keys_and_reports_invalid_code_points ... ok
+test compiler::public_api::design_system::tests::theme_tracking_preserves_encounter_order_before_range_failure ... FAILED
+
+thread 'compiler::public_api::design_system::tests::theme_entries_preserve_import_sources_without_tracking_design_system_root' (2787957) panicked at crates/rustify-style/src/compiler/public_api/../../../../../tests/utility/compiler/design-system-native.rs:338:13:
+assertion failed: entries.iter().all(|(_, entry)| entry.src.is_none())
+test compiler::public_api::design_system::tests::theme_entries_preserve_import_sources_without_tracking_design_system_root ... FAILED
+test compiler::public_api::design_system::tests::theme_entry_output_obeys_the_shared_cache_budget ... ok
+test compiler::public_api::design_system::tests::theme_resolution_and_variable_tracking_match_fixed_public_api ... ok
+test compiler::public_api::design_system::tests::theme_entries_keep_all_original_utf16_keys_and_values ... ok
+
+failures:
+
+failures:
+    compiler::public_api::design_system::tests::theme_entries_preserve_import_sources_without_tracking_design_system_root
+    compiler::public_api::design_system::tests::theme_tracking_preserves_encounter_order_before_range_failure
+
+test result: FAILED. 4 passed; 2 failed; 0 ignored; 0 measured; 252 filtered out; finished in 0.24s
+
+error: test failed, to rerun pass `-p rustify-style --lib`
+mbx[cache]: 0 hits, 0 misses, 1 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: 1h 52m not spent compiling, over 3209 builds. what you did instead is between you and the terminal.

@@ -45,7 +45,7 @@ pub fn Link(
     };
     view! {
         <a
-            class=crate::macros::merge(BASE, &class)
+            class=crate::macros::reactive_merge(BASE, &class)
             data-name="Link"
             data-testid=test_id
             href=move || (!disabled.get()).then(|| href.clone())

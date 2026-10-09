@@ -1,0 +1,33 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 3.10s
+     Running unittests src/lib.rs (target/debug/deps/rustify_style-d8a92cb6940dfdfd)
+
+running 1 test
+test compiler::functions::tests::evaluated_theme_aliases_are_available_to_gpu_and_cached_candidates ... FAILED
+
+failures:
+
+---- compiler::functions::tests::evaluated_theme_aliases_are_available_to_gpu_and_cached_candidates stdout ----
+
+thread 'compiler::functions::tests::evaluated_theme_aliases_are_available_to_gpu_and_cached_candidates' (13033599) panicked at crates/rustify-style/src/compiler/functions.rs:279:9:
+assertion `left == right` failed
+  left: "--theme(--color-brand)"
+ right: "var(--color-brand)"
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    compiler::functions::tests::evaluated_theme_aliases_are_available_to_gpu_and_cached_candidates
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 63 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p rustify-style --lib`
+mbx[cache]: 0 hits, 0 misses, 1 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: the running total stands at 1h 26m across 2026 builds. nobody is counting except the box.

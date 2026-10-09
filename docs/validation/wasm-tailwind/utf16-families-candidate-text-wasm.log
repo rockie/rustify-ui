@@ -1,0 +1,63 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: group-hover/\ud800:block
++ actual - expected
+... Skipped lines
+
+  [
+    {
+      node: {
+        kind: 'rule',
+        nodes: [
+...
+            ],
++           selector: '&:is(:where(.group\\/\\\\ud800):hover *)'
+-           selector: '&:is(:where(.group\\/\\ud800):hover *)'
+          }
+        ],
+        selector: '.group-hover\\/\\\\ud800\\:block'
+      },
+      propertySort: {
+
+    at file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/compiler/run-utf16-candidates-wasm.mjs:46:16 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: [
+    {
+      node: {
+        kind: 'rule',
+        nodes: [
+          {
+            kind: 'rule',
+            nodes: [Array],
+            selector: '&:is(:where(.group\\/\\\\ud800):hover *)'
+          }
+        ],
+        selector: '.group-hover\\/\\\\ud800\\:block'
+      },
+      propertySort: { count: 1, order: [ 35 ] }
+    }
+  ],
+  expected: [
+    {
+      node: {
+        kind: 'rule',
+        selector: '.group-hover\\/\\\\ud800\\:block',
+        nodes: [
+          {
+            kind: 'rule',
+            selector: '&:is(:where(.group\\/\\ud800):hover *)',
+            nodes: [Array]
+          }
+        ]
+      },
+      propertySort: { order: [ 35 ], count: 1 }
+    }
+  ],
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v26.1.0

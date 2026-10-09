@@ -1,0 +1,54 @@
+[
+  {
+    "id": "outside-override",
+    "css": ":root { --name: card; } @keyframes card { to { opacity: 0.3; } } @keyframes other { to { opacity: 0.7; } } .motion { animation: var(--name) 10s ease infinite; } .plain { font-family: var(--name); }"
+  },
+  {
+    "id": "cascade-inherit",
+    "css": ":root { --ease: linear; --alias: var(--ease); } @keyframes card { to { opacity: 0; } } @keyframes linear { to { opacity: .5; } } .motion { --ease: ease; animation: card 10s var(--alias) infinite; } .other { animation-name: var(--alias); animation-duration: 10s; }"
+  },
+  {
+    "id": "global-keyword",
+    "css": ":root { --motion: initial; } @keyframes card { to { opacity: .3; } } .motion { animation: var(--motion, card 10s) ; }"
+  },
+  {
+    "id": "none-name",
+    "css": "@keyframes none { to { opacity: 0.3; } } .motion { animation-name: none; animation-duration: 10s; }"
+  },
+  {
+    "id": "default-registered",
+    "css": "@property --tw-name { syntax: \"*\"; inherits: false; initial-value: linear; } @keyframes linear { to { opacity: 0.3; } } .motion { animation: 10s ease var(--tw-name); }"
+  },
+  {
+    "id": "multi-inherit",
+    "css": ":root { --v: linear; } @keyframes linear { to { opacity: .5; } } .motion { animation-name: var(--v); animation-duration: 10s; } .other { transition-timing-function: var(--v); }"
+  },
+  {
+    "id": "var-timing-overridden",
+    "css": ":root { --v: linear; } @keyframes card { to { opacity: .3; } } @keyframes linear { to { opacity: .5; } } .motion { animation: card 10s var(--v) infinite; } .other { animation-name: var(--v); animation-duration: 10s; }"
+  },
+  {
+    "id": "cycle-fallback",
+    "css": ":root { --a: var(--b); --b: var(--a); } @keyframes card { to { opacity: .3; } } .motion { animation: var(--a, card 10s) linear; }"
+  },
+  {
+    "id": "inherited-keyframe",
+    "css": ":root { --v: card; } .motion { --v: inherit; animation: 10s ease var(--v); } @keyframes card { to { opacity: .3; } }"
+  },
+  {
+    "id": "alias-mixed",
+    "css": ":root { --v: linear; --a:var(--v); } @keyframes linear { to { opacity: .3; } } .motion { animation-name: var(--a); animation-duration: 10s; } .other { transition-timing-function: var(--a); }"
+  },
+  {
+    "id": "public-inline-consumer",
+    "css": ":root { --v: linear; } @keyframes linear { to { opacity: .3; } } .motion { animation-name: var(--v); animation-duration: 10s; }"
+  },
+  {
+    "id": "external-disable-name",
+    "css": ":root { --v: linear; } @keyframes card { to { opacity: .3; } } @keyframes linear { to { opacity: .5; } } .motion { animation: card 10s var(--v) infinite; } .other { animation-name: var(--v); animation-duration: 10s; }"
+  },
+  {
+    "id": "external-disable-cyclic",
+    "css": ":root { --v: linear; --a: var(--v); } @keyframes linear { to { opacity: .3; } } .plain { transition-timing-function: var(--v); } .motion { animation-name: var(--a); animation-duration: 10s; }"
+  }
+]

@@ -1,0 +1,61 @@
+mbx[setup]: first build on this machine
+mbx[setup]:   cache is /private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-utf16-verified-54mkl3kq/mbx-cache, shared by every checkout and worktree; automatic collection is off, so only `mbx gc` reclaims it
+mbx[setup]:   this filesystem supports reflinks, so target/ shares disk with the cache instead of copying
+mbx[setup]:   `mbx gc --dry-run` previews cleanup; every limit is configurable
+mbx[warning]: Unix-domain cache session listener unavailable; using FIFO transport: failed to bind cache session listener at /var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/mbx-session-n4em83/cache-agent.sock: Operation not permitted (os error 1)
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling libc v0.2.189
+   Compiling version_check v0.9.5
+   Compiling proc-macro2 v1.0.107
+   Compiling unicode-ident v1.0.24
+   Compiling quote v1.0.47
+   Compiling typenum v1.20.1
+   Compiling serde_core v1.0.229
+   Compiling rustix v1.1.5
+   Compiling getrandom v0.4.3
+   Compiling zmij v1.0.23
+   Compiling cfg-if v1.0.4
+   Compiling equivalent v1.0.2
+   Compiling bitflags v2.10.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/bitflags)
+   Compiling serde v1.0.229
+   Compiling serde_json v1.0.151
+   Compiling hashbrown v0.17.1
+   Compiling diff v0.1.13
+   Compiling fastrand v2.5.0
+   Compiling memchr v2.8.3
+   Compiling generic-array v0.14.7
+   Compiling itoa v1.0.18
+   Compiling yansi v1.0.1
+   Compiling once_cell v1.21.4
+   Compiling unicode-width v0.2.2
+   Compiling indexmap v2.14.2
+   Compiling pretty_assertions v1.4.1
+   Compiling block-buffer v0.10.4
+   Compiling crypto-common v0.1.7
+   Compiling digest v0.10.7
+   Compiling errno v0.3.14
+   Compiling cpufeatures v0.2.17
+   Compiling sha2 v0.10.9
+   Compiling syn v3.0.5
+   Compiling tempfile v3.27.0
+   Compiling serde_derive v1.0.229
+   Compiling rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 9.89s
+     Running unittests src/lib.rs (/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-utf16-verified-54mkl3kq/cargo-target/debug/deps/rustify_style-4ed64bbe76d78d97)
+
+running 5 tests
+test compiler::value::arbitrary_validity_tests::whitespace_is_opaque_in_arbitrary_validity ... ok
+test compiler::value::arbitrary_validity_tests::opaque_units_follow_the_upstream_bracket_quote_and_escape_rules ... ok
+test compiler::value::arbitrary_validity_tests::fixed_upstream_bracket_buffer_overflow_does_not_unwind ... ok
+test compiler::value::arbitrary_validity_tests::every_utf16_unit_retains_its_exact_syntax_role ... ok
+test compiler::value::arbitrary_validity_tests::scalar_convenience_uses_the_text_validity_contract ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 253 filtered out; finished in 0.02s
+
+mbx[cache]: 0 hits, 0 misses, 49 not looked up; 0 B downloaded, 0 B uploaded, 402.3 MiB stored locally

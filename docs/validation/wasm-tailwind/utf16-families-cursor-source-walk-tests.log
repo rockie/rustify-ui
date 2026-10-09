@@ -1,0 +1,59 @@
+mbx[warning]: Unix-domain cache session listener unavailable; using FIFO transport: failed to bind cache session listener at /var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/mbx-session-wNWHCV/cache-agent.sock: Operation not permitted (os error 1)
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+error[E0282]: type annotations needed for `std::sync::Arc<_>`
+   --> crates/rustify-style/src/compiler/origin/current/walk.rs:176:17
+    |
+176 |             let values = Arc::new(ids.iter().map(|id| self.node(id.as_u64().unwrap() as usize)).collect());
+    |                 ^^^^^^
+177 |             self.arrays[id] = Some(values.clone());
+    |                                    ------ type must be known at this point
+    |
+help: consider giving `values` an explicit type, where the placeholder `_` is specified
+    |
+176 |             let values: std::sync::Arc<T> = Arc::new(ids.iter().map(|id| self.node(id.as_u64().unwrap() as usize)).collect());
+    |                       +++++++++++++++++++
+
+error[E0277]: the trait bound `design_system::PublicObject: serde::Serialize` is not satisfied
+   --> crates/rustify-style/src/compiler/origin/current/walk.rs:211:29
+    |
+211 |                 visits.push(json!({"node":node_id,"parent":path.iter().rev().nth(1),"path":path,"context":cursor.context()}));
+    |                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |                             |
+    |                             unsatisfied trait bound
+    |                             required by a bound introduced by this call
+    |
+help: the trait `Serialize` is not implemented for `design_system::PublicObject`
+   --> crates/rustify-style/src/compiler/public_api/design_system.rs:27:1
+    |
+ 27 | pub struct PublicObject {
+    | ^^^^^^^^^^^^^^^^^^^^^^^
+    = note: for local types consider adding `#[derive(serde::Serialize)]` to your `design_system::PublicObject` type
+    = note: for types from other crates check whether the crate offers a `serde` feature flag
+    = note: required for `&design_system::PublicObject` to implement `Serialize`
+    = note: 1 redundant requirement hidden
+    = note: required for `&&design_system::PublicObject` to implement `Serialize`
+note: required by a bound in `to_value`
+   --> /Users/rockie/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde_json-1.0.151/src/value/mod.rs:997:8
+    |
+995 | pub fn to_value<T>(value: T) -> Result<Value, Error>
+    |        -------- required by a bound in this function
+996 | where
+997 |     T: Serialize,
+    |        ^^^^^^^^^ required by this bound in `to_value`
+    = note: this error originates in the macro `$crate::json_internal` which comes from the expansion of the macro `json` (in Nightly builds, run with -Z macro-backtrace for more info)
+help: consider dereferencing here
+    |
+211 |                 visits.push(json!({"node":node_id,"parent":path.iter().rev().nth(1),"path":path,"context":**cursor.context()}));
+    |                                                                                                           ++
+
+Some errors have detailed explanations: E0277, E0282.
+For more information about an error, try `rustc --explain E0277`.
+error: could not compile `rustify-style` (lib test) due to 2 previous errors
+mbx[cache]: 0 hits, 1 misses; 0 B downloaded, 0 B uploaded, 0 B stored locally

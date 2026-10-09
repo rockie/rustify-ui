@@ -1,0 +1,108 @@
+{
+  "observedAt": "2026-10-06T16:07:28+11:00",
+  "before": {
+    "scope": "public AST constructor with sixteen interleaved ordinary/custom function pairs and four builds",
+    "samples": [
+      {
+        "constructorP95Ms": 0.3931670000000054,
+        "buildP95Ms": 0.29000000000002046,
+        "sessionsPerSecond": 744.7015656508903,
+        "outputSha256": "ab887eeeb6d5b52d0bb806db70cd39ea329801c09cae30e6b22e6c00a13ff65f",
+        "sessions": 200,
+        "builds": 800
+      },
+      {
+        "constructorP95Ms": 0.38920900000005076,
+        "buildP95Ms": 0.2854169999999385,
+        "sessionsPerSecond": 752.3633614090262,
+        "outputSha256": "ab887eeeb6d5b52d0bb806db70cd39ea329801c09cae30e6b22e6c00a13ff65f",
+        "sessions": 200,
+        "builds": 800
+      },
+      {
+        "constructorP95Ms": 0.38629200000002584,
+        "buildP95Ms": 0.28583400000002257,
+        "sessionsPerSecond": 750.7217476417915,
+        "outputSha256": "ab887eeeb6d5b52d0bb806db70cd39ea329801c09cae30e6b22e6c00a13ff65f",
+        "sessions": 200,
+        "builds": 800
+      },
+      {
+        "constructorP95Ms": 0.3935830000000351,
+        "buildP95Ms": 0.2832079999998314,
+        "sessionsPerSecond": 750.2739662901603,
+        "outputSha256": "ab887eeeb6d5b52d0bb806db70cd39ea329801c09cae30e6b22e6c00a13ff65f",
+        "sessions": 200,
+        "builds": 800
+      },
+      {
+        "constructorP95Ms": 0.3765419999999722,
+        "buildP95Ms": 0.279166000000032,
+        "sessionsPerSecond": 758.5386563151427,
+        "outputSha256": "ab887eeeb6d5b52d0bb806db70cd39ea329801c09cae30e6b22e6c00a13ff65f",
+        "sessions": 200,
+        "builds": 800
+      }
+    ],
+    "constructorP95Ms": 0.38920900000005076,
+    "buildP95Ms": 0.2854169999999385,
+    "sessionsPerSecond": 750.7217476417915,
+    "wasmBytes": 2395545,
+    "wasmSha256": "1a1df02bff3ef81eff3d81c9171a410488df775d624be17f8e4ebebd49fa41a5",
+    "actualWasm": true,
+    "finalPerformanceAcceptance": "pending"
+  },
+  "after": {
+    "scope": "public AST constructor with sixteen interleaved ordinary/custom function pairs and four builds",
+    "samples": [
+      {
+        "constructorP95Ms": 0.3857079999999087,
+        "buildP95Ms": 0.2863750000000209,
+        "sessionsPerSecond": 752.3303422948455,
+        "outputSha256": "ab887eeeb6d5b52d0bb806db70cd39ea329801c09cae30e6b22e6c00a13ff65f",
+        "sessions": 200,
+        "builds": 800
+      },
+      {
+        "constructorP95Ms": 0.38850000000002183,
+        "buildP95Ms": 0.2927910000000793,
+        "sessionsPerSecond": 738.0659351203138,
+        "outputSha256": "ab887eeeb6d5b52d0bb806db70cd39ea329801c09cae30e6b22e6c00a13ff65f",
+        "sessions": 200,
+        "builds": 800
+      },
+      {
+        "constructorP95Ms": 0.38545799999997143,
+        "buildP95Ms": 0.2819170000000213,
+        "sessionsPerSecond": 749.8243770716832,
+        "outputSha256": "ab887eeeb6d5b52d0bb806db70cd39ea329801c09cae30e6b22e6c00a13ff65f",
+        "sessions": 200,
+        "builds": 800
+      },
+      {
+        "constructorP95Ms": 0.3802499999999327,
+        "buildP95Ms": 0.2773329999999987,
+        "sessionsPerSecond": 763.7314154265632,
+        "outputSha256": "ab887eeeb6d5b52d0bb806db70cd39ea329801c09cae30e6b22e6c00a13ff65f",
+        "sessions": 200,
+        "builds": 800
+      },
+      {
+        "constructorP95Ms": 0.37487499999997453,
+        "buildP95Ms": 0.2767910000000029,
+        "sessionsPerSecond": 762.532094880557,
+        "outputSha256": "ab887eeeb6d5b52d0bb806db70cd39ea329801c09cae30e6b22e6c00a13ff65f",
+        "sessions": 200,
+        "builds": 800
+      }
+    ],
+    "constructorP95Ms": 0.38545799999997143,
+    "buildP95Ms": 0.2819170000000213,
+    "sessionsPerSecond": 752.3303422948455,
+    "wasmBytes": 2394595,
+    "wasmSha256": "e65e098b1e96b711a65c5e05f2712efdb94cf93001487bed194473ea4951e513",
+    "actualWasm": true,
+    "finalPerformanceAcceptance": "pending"
+  },
+  "interpretation": "Serial local measurement of 16 interleaved ordinary/custom function pairs, 200 sessions/800 builds per sample and five post-warmup samples. Complete output JSON hashes match; not M7 or unified allocator acceptance. Promise performance remains pending."
+}

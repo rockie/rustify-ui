@@ -1,0 +1,17 @@
+mbx[setup]: first build on this machine
+mbx[setup]:   cache is /tmp/rustify-tailwind-mbx-1.98.1, shared by every checkout and worktree, pruned to 90.0 GiB
+mbx[setup]:   this filesystem supports reflinks, so target/ shares disk with the cache instead of copying
+mbx[setup]:   `mbx gc --dry-run` previews cleanup; every limit is configurable
+error[E0514]: found crate `wasm_bindgen_cli_support` compiled by an incompatible version of rustc
+   --> tools/cargo_makepad/src/wasm/compile.rs:161:23
+    |
+161 |     let mut bindgen = wasm_bindgen_cli_support::Bindgen::new();
+    |                       ^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: the following crate versions were found:
+            crate `wasm_bindgen_cli_support` compiled by rustc 1.99.0 (b940084d7 2026-09-28): /Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/release/deps/libwasm_bindgen_cli_support-28e59979a8e2198f.rlib
+    = help: please recompile that crate using this compiler (rustc 1.98.1 (48a229cea 2026-09-01)) (consider running `cargo clean` first)
+
+For more information about this error, try `rustc --explain E0514`.
+error: could not compile `cargo-makepad` (bin "cargo-makepad") due to 1 previous error
+cargo-makepad wasm build failed

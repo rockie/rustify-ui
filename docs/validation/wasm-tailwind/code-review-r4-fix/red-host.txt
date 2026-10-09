@@ -1,0 +1,37 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.05s
+     Running unittests src/lib.rs (target/debug/deps/rustify_style-fadef11ddf6365c6)
+
+running 10 tests
+test scope::tests::non_scalar_declarations_keep_units_while_internal_bindings_are_isolated ... ok
+test scope::tests::generated_globals_and_references_are_isolated_without_changing_public_tokens ... ok
+test scope::tests::registered_internal_properties_register_their_copies ... ok
+test scope::tests::an_internal_property_gets_a_copy_for_each_use ... ok
+test scope::tests::a_public_property_whose_uses_need_different_names_is_reported ... FAILED
+test scope::tests::a_name_whose_role_depends_on_the_cascade_is_reported ... ok
+test scope::tests::keyframe_names_that_match_animation_keywords_stay_in_their_own_slot ... ok
+test scope::tests::substituted_values_keep_their_slots_in_the_whole_shorthand ... ok
+test scope::tests::keyframe_references_follow_custom_properties_into_animations ... ok
+test scope::tests::math_times_and_numeric_iterations_take_their_own_slots ... ok
+
+failures:
+
+---- scope::tests::a_public_property_whose_uses_need_different_names_is_reported stdout ----
+
+thread 'scope::tests::a_public_property_whose_uses_need_different_names_is_reported' (14546570) panicked at crates/rustify-style/src/scope.rs:920:13:
+:root { --ease: linear; } @keyframes card { to { opacity: 0; } } @keyframes linear { to { opacity: 0.5; } } .motion { animation: card 10s var(--ease) infinite; } .other { animation-name: var(--ease); animation-duration: 10s; }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    scope::tests::a_public_property_whose_uses_need_different_names_is_reported
+
+test result: FAILED. 9 passed; 1 failed; 0 ignored; 0 measured; 535 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p rustify-style --lib`

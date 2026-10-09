@@ -1,0 +1,31 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 5.55s
+     Running unittests src/lib.rs (target/debug/deps/rustify_style-7a67d48e3c4c51f4)
+
+running 1 test
+test compiler::registration::tests::native_registration_lowers_substituted_functions_and_keyframes ... FAILED
+
+failures:
+
+---- compiler::registration::tests::native_registration_lowers_substituted_functions_and_keyframes stdout ----
+
+thread 'compiler::registration::tests::native_registration_lowers_substituted_functions_and_keyframes' (7263903) panicked at crates/rustify-style/src/compiler/registration.rs:448:9:
+the lowered root, utility bodies and keyframes must share completed function values
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    compiler::registration::tests::native_registration_lowers_substituted_functions_and_keyframes
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 367 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p rustify-style --lib`
+mbx[cache]: 0 hits, 0 misses, 1 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: 35.1 GiB in every checkout, 35.1 GiB on disk. arithmetic declined to comment.

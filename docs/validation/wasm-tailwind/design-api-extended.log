@@ -1,0 +1,42 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 4.99s
+     Running unittests src/lib.rs (target/debug/deps/rustify_style-4ed64bbe76d78d97)
+
+running 12 tests
+test compiler::public_api::design_system::tests::custom_functional_completions_resolve_literals_spacing_and_theme_namespaces ... FAILED
+test compiler::public_api::design_system::tests::respect_important_can_be_disabled_without_disabling_candidate_important ... ok
+test compiler::public_api::design_system::tests::completion_quota_rejects_before_metadata_allocation_and_preserves_cached_candidates ... ok
+test compiler::public_api::design_system::tests::variant_order_preserves_distinct_raw_cache_keys_with_equal_json_values ... ok
+test compiler::public_api::design_system::tests::edited_candidate_payload_obeys_input_limits_before_utility_generation ... ok
+test compiler::public_api::design_system::tests::candidate_arbitrary_variant_preserves_the_original_cache_key ... ok
+test compiler::public_api::design_system::tests::cached_public_values_share_the_session_budget_before_cloning ... ok
+test compiler::public_api::design_system::tests::theme_resolution_and_variable_tracking_match_fixed_public_api ... ok
+test compiler::public_api::design_system::tests::candidate_parse_print_and_compile_ast_nodes_match_fixed_public_api ... ok
+test compiler::public_api::design_system::tests::variant_parse_print_and_selector_completions_match_fixed_public_api ... ok
+test compiler::public_api::design_system::tests::class_order_css_and_cached_variant_order_match_fixed_public_api ... ok
+test compiler::public_api::design_system::tests::all_class_completions_match_the_fixed_upstream_digest ... ok
+
+failures:
+
+---- compiler::public_api::design_system::tests::custom_functional_completions_resolve_literals_spacing_and_theme_namespaces stdout ----
+
+thread 'compiler::public_api::design_system::tests::custom_functional_completions_resolve_literals_spacing_and_theme_namespaces' (1531764) panicked at crates/rustify-style/src/compiler/public_api/../../../../../tests/utility/compiler/design-system-native.rs:236:7:
+called `Result::unwrap()` on an `Err` value: Syntax { offset: 0, message: "The --spacing(…) function requires that the `--spacing` theme variable exists, but it was not found." }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    compiler::public_api::design_system::tests::custom_functional_completions_resolve_literals_spacing_and_theme_namespaces
+
+test result: FAILED. 11 passed; 1 failed; 0 ignored; 0 measured; 170 filtered out; finished in 0.45s
+
+error: test failed, to rerun pass `-p rustify-style --lib`
+mbx[cache]: 0 hits, 0 misses, 1 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: 13545 compilations on file. the box remembers.

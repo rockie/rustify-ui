@@ -1,0 +1,334 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: single: constructor graph
++ actual - expected
+... Skipped lines
+
+  {
+    records: [
+      {
+        array: true,
+        fields: [
+...
+            {
++             reference: 7
+-             reference: 6
+            }
+          ]
+        ]
+      },
+      {
+...
+            {
++             reference: 6
+-             reference: 5
+            }
+          ]
+        ]
+      },
+      {
+...
+            'kind',
++           'at-rule'
+-           'declaration'
+          ],
+          [
++           'name',
++           '@apply'
+-           'property',
+-           'display'
+          ],
+          [
++           'params',
+-           'value',
+            'block'
+          ],
+          [
++           'nodes',
+-           'important',
+-           false
+-         ],
+-         [
+-           'src',
+            {
++             reference: 5
+-             undefined: true
+            }
+          ],
++         [
++           'extra',
++           'old directive'
++         ]
+        ]
+      },
+      {
++       array: true,
++       fields: []
++     },
++     {
+        array: false,
+        fields: [
+          [
+            'kind',
+            'declaration'
+...
+            {
++             reference: 8
+-             reference: 7
+            }
+          ],
+          [
+            'context',
+            {
++             reference: 9
+-             reference: 8
+            }
+          ]
+        ]
+      },
+      {
+...
+          [
+-           'kind',
+-           'at-rule'
+-         ],
+-         [
+-           'name',
+-           '@apply'
+-         ],
+-         [
+-           'params',
+-           'block'
+-         ],
+-         [
+-           'nodes',
+-           {
+-             reference: 10
+-           }
+-         ],
+-         [
+-           'extra',
+-           'old directive'
+-         ]
+-       ]
+-     },
+-     {
+-       array: true,
+-       fields: []
+-     },
+-     {
+-       array: false,
+-       fields: [
+-         [
+            'file',
+            'apply\ud800.css'
+          ],
+          [
+            'code',
+...
+            {
++             reference: 10
+-             reference: 11
+            }
+          ],
+          [
+            '1',
+            3.5
+...
+      {
++       reference: 4
+-       reference: 9
+      },
+      {
++       reference: 5
++     },
++     {
+        reference: 10
+      },
+      {
+        reference: 11
+      },
+-     {
+-       reference: 12
+-     }
+    ]
+  }
+
+    at file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/compiler/run-public-ast-apply-input-wasm.mjs:77:12 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: {
+    roots: [
+      { reference: 0 },
+      { reference: 1 },
+      { reference: 2 },
+      { reference: 4 },
+      { reference: 5 },
+      { reference: 10 },
+      { reference: 11 }
+    ],
+    records: [
+      { array: true, fields: [ [ '0', [Object] ], [ '1', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'rule' ],
+          [ 'selector', '.sheet' ],
+          [ 'nodes', [Object] ]
+        ]
+      },
+      {
+        array: true,
+        fields: [ [ '0', [Object] ], [ '1', [Object] ], [ '2', [Object] ] ]
+      },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'declaration' ],
+          [ 'property', '--authored' ],
+          [ 'value', 'red' ],
+          [ 'important', false ]
+        ]
+      },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'at-rule' ],
+          [ 'name', '@apply' ],
+          [ 'params', 'block' ],
+          [ 'nodes', [Object] ],
+          [ 'extra', 'old directive' ]
+        ]
+      },
+      { array: true, fields: [] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'declaration' ],
+          [ 'property', '--after' ],
+          [ 'value', 'blue' ],
+          [ 'important', false ]
+        ]
+      },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'context' ],
+          [ 'name', '@tailwind' ],
+          [ 'params', 'utilities' ],
+          [ 'nodes', [Object] ],
+          [ 'context', [Object] ]
+        ]
+      },
+      { array: true, fields: [] },
+      { array: false, fields: [] },
+      {
+        array: false,
+        fields: [
+          [ 'file', 'apply\ud800.css' ],
+          [ 'code', 'apply\udc00' ],
+          [ 'extra', 'kept' ]
+        ]
+      },
+      {
+        array: true,
+        fields: [ [ '0', [Object] ], [ '1', 3.5 ], [ '2', 40 ] ]
+      }
+    ]
+  },
+  expected: {
+    roots: [
+      { reference: 0 },
+      { reference: 1 },
+      { reference: 2 },
+      { reference: 9 },
+      { reference: 10 },
+      { reference: 11 },
+      { reference: 12 }
+    ],
+    records: [
+      { array: true, fields: [ [ '0', [Object] ], [ '1', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'rule' ],
+          [ 'selector', '.sheet' ],
+          [ 'nodes', [Object] ]
+        ]
+      },
+      {
+        array: true,
+        fields: [ [ '0', [Object] ], [ '1', [Object] ], [ '2', [Object] ] ]
+      },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'declaration' ],
+          [ 'property', '--authored' ],
+          [ 'value', 'red' ],
+          [ 'important', false ]
+        ]
+      },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'declaration' ],
+          [ 'property', 'display' ],
+          [ 'value', 'block' ],
+          [ 'important', false ],
+          [ 'src', [Object] ]
+        ]
+      },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'declaration' ],
+          [ 'property', '--after' ],
+          [ 'value', 'blue' ],
+          [ 'important', false ]
+        ]
+      },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'context' ],
+          [ 'name', '@tailwind' ],
+          [ 'params', 'utilities' ],
+          [ 'nodes', [Object] ],
+          [ 'context', [Object] ]
+        ]
+      },
+      { array: true, fields: [] },
+      { array: false, fields: [] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'at-rule' ],
+          [ 'name', '@apply' ],
+          [ 'params', 'block' ],
+          [ 'nodes', [Object] ],
+          [ 'extra', 'old directive' ]
+        ]
+      },
+      { array: true, fields: [] },
+      {
+        array: false,
+        fields: [
+          [ 'file', 'apply\ud800.css' ],
+          [ 'code', 'apply\udc00' ],
+          [ 'extra', 'kept' ]
+        ]
+      },
+      {
+        array: true,
+        fields: [ [ '0', [Object] ], [ '1', 3.5 ], [ '2', 40 ] ]
+      }
+    ]
+  },
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v26.1.0

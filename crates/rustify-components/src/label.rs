@@ -21,7 +21,7 @@ pub fn Label(
     let control = (!control.is_empty()).then_some(control);
     view! {
         <label
-            class=crate::macros::merge(BASE, &class)
+            class=crate::macros::reactive_merge(BASE, &class)
             data-name="Label"
             data-testid=test_id
             r#for=control

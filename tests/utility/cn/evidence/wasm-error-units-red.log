@@ -1,0 +1,14 @@
+{
+  "fixedCases": 947,
+  "passed": 947,
+  "failures": []
+}
+{
+  "extraPassed": 54,
+  "failures": [
+    {
+      "id": "utf16/unknown-marker-error-message-stays-lossless",
+      "error": "AssertionError [ERR_ASSERTION]: The validation function is expected to return \"true\". Received false\n\nCaught error:\n\nError: cn: unknown validator \"�\""
+    }
+  ]
+}

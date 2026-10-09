@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 1,
+  "measuredAt": "2026-10-07T01:00:17.454Z",
+  "environment": {
+    "node": "v26.1.0",
+    "platform": "darwin",
+    "release": "27.0.0",
+    "arch": "arm64",
+    "cpuModel": "Apple M5 Pro",
+    "cpuCount": 15,
+    "totalMemoryBytes": 51539607552
+  },
+  "oracle": {
+    "package": "tailwindcss",
+    "version": "4.1.13",
+    "commit": "1334c99db8fd26c8ea065375dd9259800863f072"
+  },
+  "scope": "Official Node compiler reference only. This does not measure Rust, WASM, crossing, DOM installation or GPU frames.",
+  "workload": {
+    "css": "@tailwind utilities;",
+    "initialCandidates": [
+      "w-[137px]",
+      "bg-[#123456]"
+    ],
+    "warmAdditions": 100,
+    "finalCandidateCount": 102,
+    "timing": {
+      "cold": "new compiler session parse plus initial build after Node JIT warmup",
+      "warm": "one new width candidate per call; sorted full CSS output grows from 3 to 102 candidates",
+      "noOp": "repeat initial candidates on the final warmed 102-candidate session"
+    }
+  },
+  "metrics": {
+    "cold": {
+      "samples": 100,
+      "p50Ms": 0.150459000000005,
+      "p95Ms": 0.9790840000000003,
+      "minMs": 0.10495899999999381,
+      "maxMs": 3.1702919999999963
+    },
+    "warm": {
+      "samples": 100,
+      "p50Ms": 0.037624999999998465,
+      "p95Ms": 0.0677920000000043,
+      "minMs": 0.009750000000003922,
+      "maxMs": 3.632249999999999
+    },
+    "noOp": {
+      "samples": 100,
+      "p50Ms": 0.00016699999999758575,
+      "p95Ms": 0.0002080000000006521,
+      "minMs": 0.00012499999999704414,
+      "maxMs": 0.0014170000000035543
+    }
+  },
+  "memory": {
+    "before": {
+      "rss": 74825728,
+      "heapTotal": 20758528,
+      "heapUsed": 13818216,
+      "external": 1925280,
+      "arrayBuffers": 23327
+    },
+    "after": {
+      "rss": 164249600,
+      "heapTotal": 99663872,
+      "heapUsed": 33788328,
+      "external": 1925284,
+      "arrayBuffers": 23291
+    },
+    "meaning": "Node process RSS/heap/external/arrayBuffers snapshots around timed workloads; includes reference compiler and GC behavior, not a Rust/WASM peak measurement"
+  }
+}

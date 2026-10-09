@@ -1,0 +1,25 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: output getter failure retains prior AST and admitted candidates
++ actual - expected
+
+  {
+    nextGridHasFlex: true,
++   noOpFlex: true,
++   noOpSame: false
+-   noOpFlex: false,
+-   noOpSame: true
+  }
+
+    at file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/compiler/run-public-ast-graph-wasm.mjs:157:10 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: { noOpSame: false, noOpFlex: true, nextGridHasFlex: true },
+  expected: { noOpSame: true, noOpFlex: false, nextGridHasFlex: true },
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v26.1.0

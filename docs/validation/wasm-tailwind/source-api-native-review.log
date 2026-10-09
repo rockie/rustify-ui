@@ -1,0 +1,48 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 4.76s
+     Running unittests src/lib.rs (target/debug/deps/rustify_style-4ed64bbe76d78d97)
+
+running 31 tests
+test compiler::public_api::compile_ast::tests::deeply_nested_public_input_is_rejected_before_serializing_or_cloning ... ok
+test compiler::public_api::compile_ast::tests::oversized_public_input_is_rejected_before_ast_conversion ... ok
+test compiler::public_api::source_map::tests::translation_preserves_absent_destination_and_ignores_absent_source ... ok
+test compiler::public_api::compile_ast::tests::public_input_budget_counts_escaped_json_and_from_without_allocating_output ... ok
+test compiler::public_api::source_map::tests::line_table_retains_non_scalar_units_and_upstream_offset_clamping ... ok
+test compiler::public_api::source_map::tests::equal_text_sources_remain_distinct_and_mappings_share_decoded_handles ... ok
+test compiler::public_api::compile_ast::tests::public_ast_input_and_retained_objects_obey_limits ... ok
+test compiler::public_api::compile_ast::tests::unused_virtual_assets_do_not_contribute_locations_or_syntax_errors ... ok
+test compiler::public_api::compile_ast::tests::removed_rule_does_not_shift_duplicate_selector_sources ... ok
+test compiler::public_api::compile_ast::tests::nested_identical_selectors_keep_inner_and_outer_sources ... ok
+test compiler::public_api::compile_ast::tests::duplicate_at_rule_headers_keep_distinct_sources ... ok
+test compiler::public_api::tests::public_banner_counts_toward_the_output_limit_before_commit ... ok
+test compiler::public_api::tests::public_function_helper_checks_unchanged_text_against_output_bytes ... ok
+test compiler::public_api::compile_ast::tests::failed_ast_build_preserves_the_last_array_and_candidate_commit ... ok
+test compiler::public_api::compile_ast::tests::duplicate_selectors_keep_each_rule_and_apply_source ... ok
+test compiler::public_api::tests::failed_output_ast_budget_keeps_previous_source_map_and_can_retry ... ok
+test compiler::public_api::tests::each_apply_candidate_overrides_custom_utility_provenance_with_its_own_span ... ok
+test compiler::public_api::tests::untracked_imports_and_candidates_do_not_allocate_source_objects ... ok
+test compiler::public_api::tests::source_map_limit_keeps_revision_and_previous_map_on_repeated_failure ... ok
+test compiler::public_api::tests::tracked_custom_candidates_charge_each_structured_cloned_source ... ok
+test compiler::public_api::tests::repeated_noop_builds_and_maps_do_not_accumulate_internal_budget ... ok
+test compiler::public_api::tests::missing_public_loader_reports_the_official_error ... ok
+test compiler::public_api::tests::warning_messages_match_fixed_upstream ... ok
+test compiler::public_api::tests::feature_masks_match_fixed_upstream ... ok
+test compiler::public_api::tests::discovery_base_is_independent_of_source_path ... ok
+test compiler::public_api::tests::virtual_stylesheet_loader_arguments_match_fixed_upstream ... ok
+test compiler::public_api::tests::every_initial_source_map_matches_fixed_upstream ... ok
+test compiler::public_api::compile_ast::tests::every_public_ast_build_matches_fixed_upstream_structure_and_identity ... ok
+test compiler::public_api::tests::polyfill_flags_match_fixed_upstream_css ... ok
+test compiler::public_api::tests::every_string_api_build_matches_fixed_upstream_css ... ok
+test compiler::public_api::tests::every_built_source_map_matches_fixed_upstream ... ok
+
+test result: ok. 31 passed; 0 failed; 0 ignored; 0 measured; 139 filtered out; finished in 0.24s
+
+mbx[cache]: 0 hits, 0 misses, 1 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: disposed of 751.3 GiB logical without being asked. that is rather the point.

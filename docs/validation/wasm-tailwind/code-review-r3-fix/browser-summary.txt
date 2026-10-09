@@ -1,0 +1,44 @@
+# R3 修后浏览器（release，main 9926118ec160f77a；compiler-only Worker build_id 85684fa83661cc07ece63c26504f47b52dc061fca89401129d5ea28664fcc1f7，root 与 /tools/utility-lab/ 相同，scanner_enabled=false）
+## 相关用例 utility-lab（--grep 'scoped keyframes|a keyframes name|keyframes names keep|rebuild releases|nested owners|scoped relation|configuration replacement'）
+[1/7] [utility-lab] › tests/browser/utility-runtime.spec.ts:419:5 › nested owners stop outer rules and disposal removes the owned stylesheet
+[2/7] [utility-lab] › tests/browser/utility-runtime.spec.ts:468:5 › scoped relation variants and arbitrary selectors retain conditional matching
+[3/7] [utility-lab] › tests/browser/utility-runtime.spec.ts:676:5 › configuration replacement commits raw component classes and CSS together and rolls failures back
+[4/7] [utility-lab] › tests/browser/utility-runtime.spec.ts:804:5 › scoped keyframes follow theme animation variables, aliases and fallbacks in each owner
+[5/7] [utility-lab] › tests/browser/utility-runtime.spec.ts:843:5 › a keyframes name that is also a timing keyword keeps the timing variable intact
+[6/7] [utility-lab] › tests/browser/utility-runtime.spec.ts:875:5 › keyframes names keep their slot after substitution, math times and numeric iterations
+[7/7] [utility-lab] › tests/browser/utility-runtime.spec.ts:934:5 › rebuild releases inactive candidates and keeps the seed, DOM and named classes
+  7 passed (8.3s)
+## 相关用例 utility-lab-deep
+[1/7] [utility-lab-deep] › tests/browser/utility-runtime.spec.ts:419:5 › nested owners stop outer rules and disposal removes the owned stylesheet
+[2/7] [utility-lab-deep] › tests/browser/utility-runtime.spec.ts:468:5 › scoped relation variants and arbitrary selectors retain conditional matching
+[3/7] [utility-lab-deep] › tests/browser/utility-runtime.spec.ts:676:5 › configuration replacement commits raw component classes and CSS together and rolls failures back
+[4/7] [utility-lab-deep] › tests/browser/utility-runtime.spec.ts:804:5 › scoped keyframes follow theme animation variables, aliases and fallbacks in each owner
+[5/7] [utility-lab-deep] › tests/browser/utility-runtime.spec.ts:843:5 › a keyframes name that is also a timing keyword keeps the timing variable intact
+[6/7] [utility-lab-deep] › tests/browser/utility-runtime.spec.ts:875:5 › keyframes names keep their slot after substitution, math times and numeric iterations
+[7/7] [utility-lab-deep] › tests/browser/utility-runtime.spec.ts:934:5 › rebuild releases inactive candidates and keeps the seed, DOM and named classes
+  7 passed (4.7s)
+## 全项目 utility-lab
+[1/57] [utility-lab] › tests/browser/utility-faults.spec.ts:8:5 › failed CSSOM installation nacks preparation, preserves the installed revision and permits retry
+[WebServer] request failed: Broken pipe (os error 32)
+[WebServer] request failed: Broken pipe (os error 32)
+[31/57] [utility-lab] › tests/browser/utility-gpu.spec.ts:957:5 › configuration replacement publishes new DOM and GPU programs and retains pixels on failed installation
+  57 passed (51.2s)
+## 全项目 utility-lab-deep
+[25/51] [utility-lab-deep] › tests/browser/utility-gpu.spec.ts:957:5 › configuration replacement publishes new DOM and GPU programs and retains pixels on failed installation
+  51 passed (46.9s)
+## scanner-enabled（Worker build_id 34ece77561b3880d89c16a30b6a2879eb3d0f56d51fa82178dca53ab07226a4b，root/deep 相同），随后已恢复 compiler-only（85684fa8…）
+### utility-lab-scanner
+  5 passed (5.4s)
+### utility-lab-scanner-deep
+  5 passed (5.2s)
+## 评审 probe 复跑：node docs/validation/wasm-tailwind/code-review-r3/animation-probe.mjs <strict serve> → animation-probe.json
+errors [] failed requests [] csp violations []
+fixed: scoped name=rustify-<owner>-card timing=linear iteration=infinite count=1 | raw name=card timing=linear iteration=infinite count=1
+var-before: scoped name=rustify-<owner>-ease timing=linear iteration=infinite count=1 | raw name=ease timing=linear iteration=infinite count=1
+var-name: scoped name=rustify-<owner>-linear timing=ease iteration=infinite count=1 | raw name=linear timing=ease iteration=infinite count=1
+var-fallback: scoped name=rustify-<owner>-linear timing=ease iteration=infinite count=1 | raw name=linear timing=ease iteration=infinite count=1
+time-calc: scoped name=rustify-<owner>-card timing=linear iteration=infinite count=1 | raw name=card timing=linear iteration=infinite count=1
+time-min: scoped name=rustify-<owner>-card timing=linear iteration=infinite count=1 | raw name=card timing=linear iteration=infinite count=1
+iteration: scoped name=rustify-<owner>-infinite timing=linear iteration=2 count=1 | raw name=infinite timing=linear iteration=2 count=1
+iteration-before-name: scoped name=none timing=ease iteration=1 count=0 | raw name=none timing=ease iteration=1 count=0
+shared-role: scoped name=rustify-<owner>-card timing=linear iteration=infinite count=1 | raw name=card timing=linear iteration=infinite count=1 | other scoped=rustify-<owner>-linear count=1 raw count=1

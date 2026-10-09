@@ -1,0 +1,35 @@
+{
+  "candidateContexts": "two independent inherited-model contexts with explicitly assigned structural interventions; not a comparison of candidate models",
+  "judge": "gpt-5.6-sol, max, independent anonymous context",
+  "anonymousMapping": {
+    "one": "candidate-b.md",
+    "two": "candidate-a.md"
+  },
+  "defaultUnavailableFamilies": [
+    "claude-opus-5-5-max",
+    "grok-4.7-xhigh-fast"
+  ],
+  "judgedVersions": [
+    {
+      "file": "candidate-a.md",
+      "frozenJudgedSha256": "5ad045e30ce913e296c15f0d1b0fe58df2d0df17f9b983dca418d471cd5e52a2",
+      "annotatedArchiveSha256": "b1b6a6578096f80b4c04e58a8ee6cf0040c4f72fd6923729e84fe3c1395dc3d1"
+    },
+    {
+      "file": "candidate-b.md",
+      "frozenJudgedSha256": "7c5e9b8fbf131a1fd47d8111d43519efd34ff6f0aa80a34aace9e209ee0f759a",
+      "annotatedArchiveSha256": "30e905871a48a619b814386a1191ba0ed1bae8ffbc0eda622d8faa9e287fa1e9"
+    },
+    {
+      "file": "package-one.md",
+      "frozenJudgedSha256": "633416b4c199ba8daac7832f95f4eecddc0ff81b8e8ab4f9e09d62deb895dc0c",
+      "annotatedArchiveSha256": "d1297caa2c5b33262e618144e3bd59ff2f4f93ade970f9ade2f23928012c732d"
+    },
+    {
+      "file": "package-two.md",
+      "frozenJudgedSha256": "e246ed5bd160e93d26bde14b2eeb6944d745dadbbccf82a035a8791bf7db52ba",
+      "annotatedArchiveSha256": "5458fc65d0ac8f5c435f63b05a03414b3412f4aaca970b7798e034e02909ce7f"
+    }
+  ],
+  "decision": "candidate A conditional experiment base; neither approved unchanged; full native integration pending"
+}

@@ -67,7 +67,7 @@ pub fn Tooltip(
     // Stored rather than cloned: `Show` and `Layer` each take a children
     // function, and a `String` moved through two of them makes the outer one
     // callable once.
-    let content_class = StoredValue::new(crate::macros::merge(CONTENT, &class));
+    let content_class = crate::macros::reactive_merge(CONTENT, &class);
     let content_id = StoredValue::new(id);
     let content_test_id = StoredValue::new(test_id);
     view! {
@@ -98,7 +98,7 @@ pub fn Tooltip(
             <Layer anchor=anchor on_close=close.clone() class="rui-tooltip-layer">
                 <div
                     id=move || content_id.get_value()
-                    class=move || content_class.get_value()
+                    class=content_class
                     data-name="TooltipContent"
                     data-testid=move || content_test_id.get_value()
                     role="tooltip"

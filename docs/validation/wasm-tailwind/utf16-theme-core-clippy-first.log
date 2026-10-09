@@ -1,0 +1,78 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+    Checking rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+error: useless conversion to the same type: `text::Text`
+  --> crates/rustify-style/src/compiler/polyfills.rs:72:32
+   |
+72 |                         value: value.into(),
+   |                                ^^^^^^^^^^^^ help: consider removing `.into()`: `value`
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.98.0/index.html#useless_conversion
+   = note: `-D clippy::useless-conversion` implied by `-D warnings`
+   = help: to override `-D warnings` add `#[allow(clippy::useless_conversion)]`
+
+error: very complex type used. Consider factoring parts into `type` definitions
+  --> crates/rustify-style/src/compiler/typography.rs:53:6
+   |
+53 | ) -> Result<Option<(String, Vec<Option<String>>)>, super::utilities::FamilyFailure> {
+   |      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.98.0/index.html#type_complexity
+   = note: `-D clippy::type-complexity` implied by `-D warnings`
+   = help: to override `-D warnings` add `#[allow(clippy::type_complexity)]`
+
+error: useless conversion to the same type: `compiler::utilities::CompileFailure`
+  --> crates/rustify-style/src/compiler/utilities.rs:74:14
+   |
+74 |         _ => diagnostic(candidate, DiagnosticKind::InvalidValue, family).into(),
+   |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: consider removing `.into()`: `diagnostic(candidate, DiagnosticKind::InvalidValue, family)`
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.98.0/index.html#useless_conversion
+
+error: useless conversion to the same type: `compiler::utilities::CompileFailure`
+  --> crates/rustify-style/src/compiler/utilities.rs:81:13
+   |
+81 |             diagnostic(candidate, kind, &root).into()
+   |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: consider removing `.into()`: `diagnostic(candidate, kind, &root)`
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.98.0/index.html#useless_conversion
+
+error: useless conversion to the same type: `compiler::utilities::CompileFailure`
+   --> crates/rustify-style/src/compiler/utilities.rs:420:28
+    |
+420 |                 return Err(diagnostic(candidate, DiagnosticKind::PendingFamily, family).into());
+    |                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: consider removing `.into()`: `diagnostic(candidate, DiagnosticKind::PendingFamily, family)`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.98.0/index.html#useless_conversion
+
+error: useless conversion to the same type: `compiler::utilities::CompileFailure`
+   --> crates/rustify-style/src/compiler/utilities.rs:763:13
+    |
+763 |             diagnostic(candidate, DiagnosticKind::InvalidValue, "custom_utility").into()
+    |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: consider removing `.into()`: `diagnostic(candidate, DiagnosticKind::InvalidValue, "custom_utility")`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.98.0/index.html#useless_conversion
+
+error: could not compile `rustify-style` (lib) due to 6 previous errors
+warning: build failed, waiting for other jobs to finish...
+error: useless conversion to the same type: `text::Text`
+   --> crates/rustify-style/src/compiler/theme.rs:515:25
+    |
+515 |                .into_iter()
+    |   _________________________^
+    |  |_________________________|
+516 | ||             .map(crate::text::Text::from)
+    | ||_________________________________________^
+517 | |              .collect();
+    | |_____________- help: consider removing
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.98.0/index.html#useless_conversion
+
+error: could not compile `rustify-style` (lib test) due to 7 previous errors
+mbx[cache]: 0 hits, 0 misses, 2 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: found 881.0 GiB logical of target/ whose checkouts left long ago. the estate has been settled.

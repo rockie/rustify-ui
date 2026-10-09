@@ -1,0 +1,15 @@
+# F-04 修后浏览器（release，main 9926118ec160f77a，Worker build_id c2a524e1ad2273647dcfa8485b47e38e52a86fbcb85fe6b4d4a100e3c8ba03da，root 与 /tools/utility-lab/ 相同，scanner_enabled=false）
+## utility-lab
+[54/56] [utility-lab] › tests/browser/utility-runtime.spec.ts:804:5 › scoped keyframes follow theme animation variables, aliases and fallbacks in each owner
+[55/56] [utility-lab] › tests/browser/utility-runtime.spec.ts:843:5 › a keyframes name that is also a timing keyword keeps the timing variable intact
+[56/56] [utility-lab] › tests/browser/utility-runtime.spec.ts:875:5 › rebuild releases inactive candidates and keeps the seed, DOM and named classes
+  56 passed (55.0s)
+## utility-lab-deep
+[49/50] [utility-lab-deep] › tests/browser/utility-runtime.spec.ts:843:5 › a keyframes name that is also a timing keyword keeps the timing variable intact
+[50/50] [utility-lab-deep] › tests/browser/utility-runtime.spec.ts:875:5 › rebuild releases inactive candidates and keeps the seed, DOM and named classes
+  50 passed (51.5s)
+## scanner-enabled（Worker build_id 05d2ef33e9cfead01ba883804212e15c582d9f62ec1cca6130d3e3122d913114，root/deep 相同），随后已恢复 compiler-only
+### utility-lab-scanner
+  5 passed (11.2s)
+### utility-lab-scanner-deep
+  5 passed (7.6s)

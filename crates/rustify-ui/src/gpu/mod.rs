@@ -16,6 +16,8 @@ mod marks;
 mod shadow;
 mod theme;
 mod toggles;
+#[cfg(feature = "utility")]
+pub mod utility;
 mod values;
 
 pub use button::RustifyButton;

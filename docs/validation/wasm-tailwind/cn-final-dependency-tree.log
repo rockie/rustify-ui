@@ -1,0 +1,825 @@
+classification-macros v0.1.0 (proc-macro) (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style/upstream/classification-macros)
+├── proc-macro2 v1.0.107
+│   └── unicode-ident v1.0.24
+├── quote v1.0.47
+│   └── proc-macro2 v1.0.107 (*)
+└── syn v2.0.119
+    ├── proc-macro2 v1.0.107 (*)
+    ├── quote v1.0.47 (*)
+    └── unicode-ident v1.0.24
+
+component-catalog v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/examples/component-catalog)
+├── js-sys v0.3.105
+│   ├── cfg-if v1.0.4
+│   ├── futures-util v0.3.34
+│   │   ├── futures-channel v0.3.34
+│   │   │   ├── futures-core v0.3.34
+│   │   │   └── futures-sink v0.3.34
+│   │   ├── futures-core v0.3.34
+│   │   ├── futures-io v0.3.34
+│   │   ├── futures-macro v0.3.34 (proc-macro)
+│   │   │   ├── proc-macro2 v1.0.107 (*)
+│   │   │   ├── quote v1.0.47 (*)
+│   │   │   └── syn v3.0.5
+│   │   │       ├── proc-macro2 v1.0.107 (*)
+│   │   │       ├── quote v1.0.47 (*)
+│   │   │       └── unicode-ident v1.0.24
+│   │   ├── futures-sink v0.3.34
+│   │   ├── futures-task v0.3.34
+│   │   ├── memchr v2.8.3
+│   │   ├── pin-project-lite v0.2.17
+│   │   └── slab v0.4.12
+│   └── wasm-bindgen v0.2.128
+│       ├── cfg-if v1.0.4
+│       ├── once_cell v1.21.4
+│       ├── wasm-bindgen-macro v0.2.128 (proc-macro)
+│       │   ├── quote v1.0.47 (*)
+│       │   └── wasm-bindgen-macro-support v0.2.128
+│       │       ├── bumpalo v3.20.3
+│       │       ├── proc-macro2 v1.0.107 (*)
+│       │       ├── quote v1.0.47 (*)
+│       │       ├── syn v3.0.5 (*)
+│       │       └── wasm-bindgen-shared v0.2.128
+│       │           └── unicode-ident v1.0.24
+│       └── wasm-bindgen-shared v0.2.128 (*)
+│       [build-dependencies]
+│       └── rustversion v1.0.23 (proc-macro)
+├── leptos v0.8.20
+│   ├── any_spawner v0.3.0
+│   │   ├── futures v0.3.34
+│   │   │   ├── futures-channel v0.3.34 (*)
+│   │   │   ├── futures-core v0.3.34
+│   │   │   ├── futures-executor v0.3.34
+│   │   │   │   ├── futures-core v0.3.34
+│   │   │   │   ├── futures-task v0.3.34
+│   │   │   │   └── futures-util v0.3.34 (*)
+│   │   │   ├── futures-io v0.3.34
+│   │   │   ├── futures-sink v0.3.34
+│   │   │   ├── futures-task v0.3.34
+│   │   │   └── futures-util v0.3.34 (*)
+│   │   ├── thiserror v2.0.20
+│   │   │   └── thiserror-impl v2.0.20 (proc-macro)
+│   │   │       ├── proc-macro2 v1.0.107 (*)
+│   │   │       ├── quote v1.0.47 (*)
+│   │   │       └── syn v3.0.5 (*)
+│   │   └── wasm-bindgen-futures v0.4.78
+│   │       ├── js-sys v0.3.105 (*)
+│   │       └── wasm-bindgen v0.2.128 (*)
+│   ├── cfg-if v1.0.4
+│   ├── either_of v0.1.9
+│   │   ├── paste v1.0.15 (proc-macro)
+│   │   └── pin-project-lite v0.2.17
+│   ├── futures v0.3.34 (*)
+│   ├── hydration_context v0.3.1
+│   │   ├── futures v0.3.34 (*)
+│   │   ├── or_poisoned v0.1.0
+│   │   ├── pin-project-lite v0.2.17
+│   │   ├── serde v1.0.229
+│   │   │   ├── serde_core v1.0.229
+│   │   │   │   └── serde_derive v1.0.229 (proc-macro)
+│   │   │   │       ├── proc-macro2 v1.0.107 (*)
+│   │   │   │       ├── quote v1.0.47 (*)
+│   │   │   │       └── syn v3.0.5 (*)
+│   │   │   └── serde_derive v1.0.229 (proc-macro) (*)
+│   │   └── throw_error v0.3.1
+│   │       └── pin-project-lite v0.2.17
+│   ├── leptos_config v0.8.10
+│   │   ├── config v0.15.25
+│   │   │   ├── convert_case v0.6.0
+│   │   │   │   └── unicode-segmentation v1.13.3
+│   │   │   ├── pathdiff v0.2.3
+│   │   │   ├── serde_core v1.0.229 (*)
+│   │   │   ├── toml v1.1.5+spec-1.1.0
+│   │   │   │   ├── serde_core v1.0.229 (*)
+│   │   │   │   ├── serde_spanned v1.1.1
+│   │   │   │   │   └── serde_core v1.0.229 (*)
+│   │   │   │   ├── toml_datetime v1.1.1+spec-1.1.0
+│   │   │   │   │   └── serde_core v1.0.229 (*)
+│   │   │   │   ├── toml_parser v1.1.3+spec-1.1.0
+│   │   │   │   │   └── winnow v1.0.4
+│   │   │   │   └── winnow v1.0.4
+│   │   │   └── winnow v1.0.4
+│   │   ├── regex v1.13.1
+│   │   │   ├── aho-corasick v1.1.5
+│   │   │   │   └── memchr v2.8.3
+│   │   │   ├── memchr v2.8.3
+│   │   │   ├── regex-automata v0.4.18
+│   │   │   │   ├── aho-corasick v1.1.5 (*)
+│   │   │   │   ├── memchr v2.8.3
+│   │   │   │   └── regex-syntax v0.8.11
+│   │   │   └── regex-syntax v0.8.11
+│   │   ├── serde v1.0.229 (*)
+│   │   ├── thiserror v2.0.20 (*)
+│   │   └── typed-builder v0.23.2
+│   │       └── typed-builder-macro v0.23.2 (proc-macro)
+│   │           ├── proc-macro2 v1.0.107 (*)
+│   │           ├── quote v1.0.47 (*)
+│   │           └── syn v2.0.119 (*)
+│   ├── leptos_dom v0.8.8
+│   │   ├── js-sys v0.3.105 (*)
+│   │   ├── or_poisoned v0.1.0
+│   │   ├── reactive_graph v0.2.14
+│   │   │   ├── any_spawner v0.3.0 (*)
+│   │   │   ├── async-lock v3.4.2
+│   │   │   │   ├── event-listener v5.4.2
+│   │   │   │   │   ├── parking v2.2.1
+│   │   │   │   │   └── pin-project-lite v0.2.17
+│   │   │   │   ├── event-listener-strategy v0.5.4
+│   │   │   │   │   ├── event-listener v5.4.2 (*)
+│   │   │   │   │   └── pin-project-lite v0.2.17
+│   │   │   │   └── pin-project-lite v0.2.17
+│   │   │   ├── futures v0.3.34 (*)
+│   │   │   ├── guardian v1.3.0
+│   │   │   ├── hydration_context v0.3.1 (*)
+│   │   │   ├── indexmap v2.14.2
+│   │   │   │   ├── equivalent v1.0.2
+│   │   │   │   ├── hashbrown v0.17.1
+│   │   │   │   ├── serde v1.0.229 (*)
+│   │   │   │   └── serde_core v1.0.229 (*)
+│   │   │   ├── or_poisoned v0.1.0
+│   │   │   ├── paste v1.0.15 (proc-macro)
+│   │   │   ├── pin-project-lite v0.2.17
+│   │   │   ├── rustc-hash v2.1.3
+│   │   │   ├── send_wrapper v0.6.0
+│   │   │   │   └── futures-core v0.3.34
+│   │   │   ├── serde v1.0.229 (*)
+│   │   │   ├── slotmap v1.1.1
+│   │   │   │   [build-dependencies]
+│   │   │   │   └── version_check v0.9.5
+│   │   │   ├── thiserror v2.0.20 (*)
+│   │   │   └── web-sys v0.3.105
+│   │   │       ├── js-sys v0.3.105 (*)
+│   │   │       └── wasm-bindgen v0.2.128 (*)
+│   │   │   [build-dependencies]
+│   │   │   └── rustc_version v0.4.1
+│   │   │       └── semver v1.0.28
+│   │   ├── send_wrapper v0.6.0 (*)
+│   │   ├── tachys v0.2.18
+│   │   │   ├── any_spawner v0.3.0 (*)
+│   │   │   ├── async-trait v0.1.92 (proc-macro)
+│   │   │   │   ├── proc-macro2 v1.0.107 (*)
+│   │   │   │   ├── quote v1.0.47 (*)
+│   │   │   │   └── syn v3.0.5 (*)
+│   │   │   ├── const_str_slice_concat v0.1.0
+│   │   │   ├── drain_filter_polyfill v0.1.3
+│   │   │   ├── either_of v0.1.9 (*)
+│   │   │   ├── erased v0.1.2
+│   │   │   ├── futures v0.3.34 (*)
+│   │   │   ├── html-escape v0.2.15
+│   │   │   ├── indexmap v2.14.2 (*)
+│   │   │   ├── itertools v0.14.0
+│   │   │   │   └── either v1.18.0
+│   │   │   ├── js-sys v0.3.105 (*)
+│   │   │   ├── next_tuple v0.1.0
+│   │   │   ├── oco_ref v0.2.1
+│   │   │   │   ├── serde v1.0.229 (*)
+│   │   │   │   └── thiserror v2.0.20 (*)
+│   │   │   ├── or_poisoned v0.1.0
+│   │   │   ├── paste v1.0.15 (proc-macro)
+│   │   │   ├── reactive_graph v0.2.14 (*)
+│   │   │   ├── reactive_stores v0.4.3
+│   │   │   │   ├── guardian v1.3.0
+│   │   │   │   ├── indexmap v2.14.2 (*)
+│   │   │   │   ├── itertools v0.14.0 (*)
+│   │   │   │   ├── or_poisoned v0.1.0
+│   │   │   │   ├── paste v1.0.15 (proc-macro)
+│   │   │   │   ├── reactive_graph v0.2.14 (*)
+│   │   │   │   ├── reactive_stores_macro v0.4.3 (proc-macro)
+│   │   │   │   │   ├── convert_case v0.11.0
+│   │   │   │   │   │   └── unicode-segmentation v1.13.3
+│   │   │   │   │   ├── proc-macro-error2 v2.0.1
+│   │   │   │   │   │   ├── proc-macro-error-attr2 v2.0.0 (proc-macro)
+│   │   │   │   │   │   │   ├── proc-macro2 v1.0.107 (*)
+│   │   │   │   │   │   │   └── quote v1.0.47 (*)
+│   │   │   │   │   │   ├── proc-macro2 v1.0.107 (*)
+│   │   │   │   │   │   ├── quote v1.0.47 (*)
+│   │   │   │   │   │   └── syn v2.0.119 (*)
+│   │   │   │   │   ├── proc-macro2 v1.0.107 (*)
+│   │   │   │   │   ├── quote v1.0.47 (*)
+│   │   │   │   │   └── syn v2.0.119 (*)
+│   │   │   │   ├── rustc-hash v2.1.3
+│   │   │   │   └── send_wrapper v0.6.0 (*)
+│   │   │   ├── rustc-hash v2.1.3
+│   │   │   ├── send_wrapper v0.6.0 (*)
+│   │   │   ├── slotmap v1.1.1 (*)
+│   │   │   ├── throw_error v0.3.1 (*)
+│   │   │   ├── wasm-bindgen v0.2.128 (*)
+│   │   │   └── web-sys v0.3.105 (*)
+│   │   │   [build-dependencies]
+│   │   │   └── rustc_version v0.4.1 (*)
+│   │   ├── wasm-bindgen v0.2.128 (*)
+│   │   └── web-sys v0.3.105 (*)
+│   ├── leptos_hot_reload v0.8.6
+│   │   ├── anyhow v1.0.104
+│   │   ├── camino v1.2.5
+│   │   ├── indexmap v2.14.2 (*)
+│   │   ├── or_poisoned v0.1.0
+│   │   ├── proc-macro2 v1.0.107 (*)
+│   │   ├── quote v1.0.47 (*)
+│   │   ├── rstml v0.12.1
+│   │   │   ├── derive-where v1.6.1 (proc-macro)
+│   │   │   │   ├── proc-macro2 v1.0.107 (*)
+│   │   │   │   ├── quote v1.0.47 (*)
+│   │   │   │   └── syn v2.0.119 (*)
+│   │   │   ├── proc-macro2 v1.0.107 (*)
+│   │   │   ├── proc-macro2-diagnostics v0.10.1
+│   │   │   │   ├── proc-macro2 v1.0.107 (*)
+│   │   │   │   ├── quote v1.0.47 (*)
+│   │   │   │   ├── syn v2.0.119
+│   │   │   │   │   ├── proc-macro2 v1.0.107 (*)
+│   │   │   │   │   ├── quote v1.0.47 (*)
+│   │   │   │   │   └── unicode-ident v1.0.24
+│   │   │   │   └── yansi v1.0.1
+│   │   │   │   [build-dependencies]
+│   │   │   │   └── version_check v0.9.5
+│   │   │   ├── quote v1.0.47 (*)
+│   │   │   ├── syn v2.0.119 (*)
+│   │   │   ├── syn_derive v0.2.0 (proc-macro)
+│   │   │   │   ├── proc-macro-error2 v2.0.1 (*)
+│   │   │   │   ├── proc-macro2 v1.0.107 (*)
+│   │   │   │   ├── quote v1.0.47 (*)
+│   │   │   │   └── syn v2.0.119 (*)
+│   │   │   └── thiserror v2.0.20 (*)
+│   │   ├── serde v1.0.229 (*)
+│   │   ├── syn v2.0.119 (*)
+│   │   └── walkdir v2.5.0
+│   │       ├── same-file v1.0.6
+│   │       │   └── winapi-util v0.1.11
+│   │       │       └── windows-sys v0.61.2
+│   │       │           └── windows-link v0.2.1
+│   │       └── winapi-util v0.1.11 (*)
+│   ├── leptos_macro v0.8.17 (proc-macro)
+│   │   ├── attribute-derive v0.10.5
+│   │   │   ├── attribute-derive-macro v0.10.5 (proc-macro)
+│   │   │   │   ├── collection_literals v1.0.3
+│   │   │   │   ├── interpolator v0.5.0
+│   │   │   │   ├── manyhow v0.11.4
+│   │   │   │   │   ├── manyhow-macros v0.11.4 (proc-macro)
+│   │   │   │   │   │   ├── proc-macro-utils v0.10.0
+│   │   │   │   │   │   │   ├── proc-macro2 v1.0.107 (*)
+│   │   │   │   │   │   │   ├── quote v1.0.47 (*)
+│   │   │   │   │   │   │   └── smallvec v1.15.1 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/smallvec)
+│   │   │   │   │   │   ├── proc-macro2 v1.0.107 (*)
+│   │   │   │   │   │   └── quote v1.0.47 (*)
+│   │   │   │   │   ├── proc-macro2 v1.0.107 (*)
+│   │   │   │   │   ├── quote v1.0.47 (*)
+│   │   │   │   │   └── syn v2.0.119 (*)
+│   │   │   │   ├── proc-macro-utils v0.10.0 (*)
+│   │   │   │   ├── proc-macro2 v1.0.107 (*)
+│   │   │   │   ├── quote v1.0.47 (*)
+│   │   │   │   ├── quote-use v0.8.4
+│   │   │   │   │   ├── quote v1.0.47 (*)
+│   │   │   │   │   └── quote-use-macros v0.8.4 (proc-macro)
+│   │   │   │   │       ├── proc-macro-utils v0.10.0 (*)
+│   │   │   │   │       ├── proc-macro2 v1.0.107 (*)
+│   │   │   │   │       ├── quote v1.0.47 (*)
+│   │   │   │   │       └── syn v2.0.119 (*)
+│   │   │   │   └── syn v2.0.119 (*)
+│   │   │   ├── derive-where v1.6.1 (proc-macro) (*)
+│   │   │   ├── manyhow v0.11.4 (*)
+│   │   │   ├── proc-macro2 v1.0.107 (*)
+│   │   │   ├── quote v1.0.47 (*)
+│   │   │   └── syn v2.0.119 (*)
+│   │   ├── cfg-if v1.0.4
+│   │   ├── convert_case v0.11.0 (*)
+│   │   ├── convert_case_extras v0.2.0
+│   │   │   └── convert_case v0.11.0 (*)
+│   │   ├── html-escape v0.2.15
+│   │   ├── itertools v0.14.0 (*)
+│   │   ├── leptos_hot_reload v0.8.6 (*)
+│   │   ├── prettyplease v0.2.37
+│   │   │   ├── proc-macro2 v1.0.107 (*)
+│   │   │   └── syn v2.0.119 (*)
+│   │   ├── proc-macro-error2 v2.0.1 (*)
+│   │   ├── proc-macro2 v1.0.107 (*)
+│   │   ├── quote v1.0.47 (*)
+│   │   ├── rstml v0.12.1 (*)
+│   │   ├── server_fn_macro v0.8.10
+│   │   │   ├── const_format v0.2.36
+│   │   │   │   ├── const_format_proc_macros v0.2.34 (proc-macro)
+│   │   │   │   │   ├── proc-macro2 v1.0.107 (*)
+│   │   │   │   │   ├── quote v1.0.47 (*)
+│   │   │   │   │   └── unicode-xid v0.2.6
+│   │   │   │   └── konst v0.2.20
+│   │   │   │       └── konst_macro_rules v0.2.19
+│   │   │   ├── convert_case v0.11.0 (*)
+│   │   │   ├── proc-macro2 v1.0.107 (*)
+│   │   │   ├── quote v1.0.47 (*)
+│   │   │   ├── syn v2.0.119 (*)
+│   │   │   └── xxhash-rust v0.8.18
+│   │   │   [build-dependencies]
+│   │   │   └── rustc_version v0.4.1 (*)
+│   │   ├── syn v2.0.119 (*)
+│   │   └── uuid v1.26.0
+│   │       └── getrandom v0.4.3
+│   │           ├── cfg-if v1.0.4
+│   │           ├── libc v0.2.189
+│   │           └── r-efi v6.0.0
+│   │   [build-dependencies]
+│   │   └── rustc_version v0.4.1 (*)
+│   ├── leptos_server v0.8.7
+│   │   ├── any_spawner v0.3.0 (*)
+│   │   ├── base64 v0.22.1
+│   │   ├── codee v0.3.5
+│   │   │   ├── serde v1.0.229 (*)
+│   │   │   ├── serde_json v1.0.151
+│   │   │   │   ├── indexmap v2.14.2 (*)
+│   │   │   │   ├── itoa v1.0.18
+│   │   │   │   ├── memchr v2.8.3
+│   │   │   │   ├── serde v1.0.229 (*)
+│   │   │   │   ├── serde_core v1.0.229 (*)
+│   │   │   │   └── zmij v1.0.23
+│   │   │   └── thiserror v2.0.20 (*)
+│   │   ├── futures v0.3.34 (*)
+│   │   ├── hydration_context v0.3.1 (*)
+│   │   ├── or_poisoned v0.1.0
+│   │   ├── reactive_graph v0.2.14 (*)
+│   │   ├── send_wrapper v0.6.0 (*)
+│   │   ├── serde v1.0.229 (*)
+│   │   ├── serde_json v1.0.151 (*)
+│   │   ├── server_fn v0.8.13
+│   │   │   ├── base64 v0.22.1
+│   │   │   ├── bytes v1.12.1
+│   │   │   ├── const-str v1.1.0
+│   │   │   ├── const_format v0.2.36 (*)
+│   │   │   ├── futures v0.3.34 (*)
+│   │   │   ├── gloo-net v0.6.0
+│   │   │   │   ├── futures-channel v0.3.34 (*)
+│   │   │   │   ├── futures-core v0.3.34
+│   │   │   │   ├── futures-sink v0.3.34
+│   │   │   │   ├── gloo-utils v0.2.0
+│   │   │   │   │   ├── js-sys v0.3.105 (*)
+│   │   │   │   │   ├── serde v1.0.229 (*)
+│   │   │   │   │   ├── serde_json v1.0.151 (*)
+│   │   │   │   │   ├── wasm-bindgen v0.2.128 (*)
+│   │   │   │   │   └── web-sys v0.3.105 (*)
+│   │   │   │   ├── http v1.5.0
+│   │   │   │   │   ├── bytes v1.12.1
+│   │   │   │   │   └── itoa v1.0.18
+│   │   │   │   ├── js-sys v0.3.105 (*)
+│   │   │   │   ├── pin-project v1.1.13
+│   │   │   │   │   └── pin-project-internal v1.1.13 (proc-macro)
+│   │   │   │   │       ├── proc-macro2 v1.0.107 (*)
+│   │   │   │   │       ├── quote v1.0.47 (*)
+│   │   │   │   │       └── syn v2.0.119 (*)
+│   │   │   │   ├── serde v1.0.229 (*)
+│   │   │   │   ├── serde_json v1.0.151 (*)
+│   │   │   │   ├── thiserror v1.0.69
+│   │   │   │   │   └── thiserror-impl v1.0.69 (proc-macro)
+│   │   │   │   │       ├── proc-macro2 v1.0.107 (*)
+│   │   │   │   │       ├── quote v1.0.47 (*)
+│   │   │   │   │       └── syn v2.0.119 (*)
+│   │   │   │   ├── wasm-bindgen v0.2.128 (*)
+│   │   │   │   ├── wasm-bindgen-futures v0.4.78 (*)
+│   │   │   │   └── web-sys v0.3.105 (*)
+│   │   │   ├── http v1.5.0 (*)
+│   │   │   ├── js-sys v0.3.105 (*)
+│   │   │   ├── or_poisoned v0.1.0
+│   │   │   ├── pin-project-lite v0.2.17
+│   │   │   ├── rustversion v1.0.23 (proc-macro)
+│   │   │   ├── send_wrapper v0.6.0 (*)
+│   │   │   ├── serde v1.0.229 (*)
+│   │   │   ├── serde_json v1.0.151 (*)
+│   │   │   ├── serde_qs v0.15.0
+│   │   │   │   ├── percent-encoding v2.3.2
+│   │   │   │   ├── serde v1.0.229 (*)
+│   │   │   │   └── thiserror v2.0.20 (*)
+│   │   │   ├── server_fn_macro_default v0.8.5 (proc-macro)
+│   │   │   │   ├── server_fn_macro v0.8.10 (*)
+│   │   │   │   └── syn v2.0.119 (*)
+│   │   │   ├── thiserror v2.0.20 (*)
+│   │   │   ├── throw_error v0.3.1 (*)
+│   │   │   ├── url v2.5.8
+│   │   │   │   ├── form_urlencoded v1.2.2
+│   │   │   │   │   └── percent-encoding v2.3.2
+│   │   │   │   ├── idna v1.1.0
+│   │   │   │   │   ├── idna_adapter v1.2.2
+│   │   │   │   │   │   ├── icu_normalizer v2.3.0
+│   │   │   │   │   │   │   ├── icu_collections v2.3.0
+│   │   │   │   │   │   │   │   ├── displaydoc v0.2.7 (proc-macro)
+│   │   │   │   │   │   │   │   │   ├── proc-macro2 v1.0.107 (*)
+│   │   │   │   │   │   │   │   │   ├── quote v1.0.47 (*)
+│   │   │   │   │   │   │   │   │   └── syn v3.0.5 (*)
+│   │   │   │   │   │   │   │   ├── potential_utf v0.1.6
+│   │   │   │   │   │   │   │   │   └── zerovec v0.11.8
+│   │   │   │   │   │   │   │   │       ├── yoke v0.8.3
+│   │   │   │   │   │   │   │   │       │   ├── stable_deref_trait v1.2.1
+│   │   │   │   │   │   │   │   │       │   ├── yoke-derive v0.8.2 (proc-macro)
+│   │   │   │   │   │   │   │   │       │   │   ├── proc-macro2 v1.0.107 (*)
+│   │   │   │   │   │   │   │   │       │   │   ├── quote v1.0.47 (*)
+│   │   │   │   │   │   │   │   │       │   │   ├── syn v2.0.119 (*)
+│   │   │   │   │   │   │   │   │       │   │   └── synstructure v0.13.2
+│   │   │   │   │   │   │   │   │       │   │       ├── proc-macro2 v1.0.107 (*)
+│   │   │   │   │   │   │   │   │       │   │       ├── quote v1.0.47 (*)
+│   │   │   │   │   │   │   │   │       │   │       └── syn v2.0.119 (*)
+│   │   │   │   │   │   │   │   │       │   └── zerofrom v0.1.8
+│   │   │   │   │   │   │   │   │       │       └── zerofrom-derive v0.1.7 (proc-macro)
+│   │   │   │   │   │   │   │   │       │           ├── proc-macro2 v1.0.107 (*)
+│   │   │   │   │   │   │   │   │       │           ├── quote v1.0.47 (*)
+│   │   │   │   │   │   │   │   │       │           ├── syn v2.0.119 (*)
+│   │   │   │   │   │   │   │   │       │           └── synstructure v0.13.2 (*)
+│   │   │   │   │   │   │   │   │       ├── zerofrom v0.1.8 (*)
+│   │   │   │   │   │   │   │   │       └── zerovec-derive v0.11.6 (proc-macro)
+│   │   │   │   │   │   │   │   │           ├── proc-macro2 v1.0.107 (*)
+│   │   │   │   │   │   │   │   │           ├── quote v1.0.47 (*)
+│   │   │   │   │   │   │   │   │           └── syn v3.0.5 (*)
+│   │   │   │   │   │   │   │   ├── utf8_iter v1.0.4
+│   │   │   │   │   │   │   │   ├── yoke v0.8.3 (*)
+│   │   │   │   │   │   │   │   ├── zerofrom v0.1.8 (*)
+│   │   │   │   │   │   │   │   └── zerovec v0.11.8 (*)
+│   │   │   │   │   │   │   ├── icu_normalizer_data v2.3.0
+│   │   │   │   │   │   │   ├── icu_provider v2.3.1
+│   │   │   │   │   │   │   │   ├── displaydoc v0.2.7 (proc-macro) (*)
+│   │   │   │   │   │   │   │   ├── icu_locale_core v2.3.0
+│   │   │   │   │   │   │   │   │   ├── displaydoc v0.2.7 (proc-macro) (*)
+│   │   │   │   │   │   │   │   │   ├── litemap v0.8.3
+│   │   │   │   │   │   │   │   │   ├── tinystr v0.8.4
+│   │   │   │   │   │   │   │   │   │   ├── displaydoc v0.2.7 (proc-macro) (*)
+│   │   │   │   │   │   │   │   │   │   └── zerovec v0.11.8 (*)
+│   │   │   │   │   │   │   │   │   ├── writeable v0.6.4
+│   │   │   │   │   │   │   │   │   └── zerovec v0.11.8 (*)
+│   │   │   │   │   │   │   │   ├── writeable v0.6.4
+│   │   │   │   │   │   │   │   ├── yoke v0.8.3 (*)
+│   │   │   │   │   │   │   │   ├── zerofrom v0.1.8 (*)
+│   │   │   │   │   │   │   │   ├── zerotrie v0.2.5
+│   │   │   │   │   │   │   │   │   ├── displaydoc v0.2.7 (proc-macro) (*)
+│   │   │   │   │   │   │   │   │   ├── yoke v0.8.3 (*)
+│   │   │   │   │   │   │   │   │   └── zerofrom v0.1.8 (*)
+│   │   │   │   │   │   │   │   └── zerovec v0.11.8 (*)
+│   │   │   │   │   │   │   ├── smallvec v1.15.1 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/smallvec)
+│   │   │   │   │   │   │   └── zerovec v0.11.8 (*)
+│   │   │   │   │   │   └── icu_properties v2.3.0
+│   │   │   │   │   │       ├── displaydoc v0.2.7 (proc-macro) (*)
+│   │   │   │   │   │       ├── icu_collections v2.3.0 (*)
+│   │   │   │   │   │       ├── icu_locale_core v2.3.0 (*)
+│   │   │   │   │   │       ├── icu_properties_data v2.3.0
+│   │   │   │   │   │       ├── icu_provider v2.3.1 (*)
+│   │   │   │   │   │       ├── zerotrie v0.2.5 (*)
+│   │   │   │   │   │       └── zerovec v0.11.8 (*)
+│   │   │   │   │   ├── smallvec v1.15.1 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/smallvec)
+│   │   │   │   │   └── utf8_iter v1.0.4
+│   │   │   │   └── percent-encoding v2.3.2
+│   │   │   ├── wasm-bindgen v0.2.128 (*)
+│   │   │   ├── wasm-bindgen-futures v0.4.78 (*)
+│   │   │   ├── wasm-streams v0.5.0
+│   │   │   │   ├── futures-util v0.3.34 (*)
+│   │   │   │   ├── js-sys v0.3.105 (*)
+│   │   │   │   ├── wasm-bindgen v0.2.128 (*)
+│   │   │   │   ├── wasm-bindgen-futures v0.4.78 (*)
+│   │   │   │   └── web-sys v0.3.105 (*)
+│   │   │   ├── web-sys v0.3.105 (*)
+│   │   │   └── xxhash-rust v0.8.18
+│   │   │   [build-dependencies]
+│   │   │   └── rustc_version v0.4.1 (*)
+│   │   └── tachys v0.2.18 (*)
+│   ├── oco_ref v0.2.1 (*)
+│   ├── or_poisoned v0.1.0
+│   ├── paste v1.0.15 (proc-macro)
+│   ├── reactive_graph v0.2.14 (*)
+│   ├── rustc-hash v2.1.3
+│   ├── send_wrapper v0.6.0 (*)
+│   ├── serde v1.0.229 (*)
+│   ├── serde_json v1.0.151 (*)
+│   ├── serde_qs v0.15.0 (*)
+│   ├── server_fn v0.8.13 (*)
+│   ├── slotmap v1.1.1 (*)
+│   ├── tachys v0.2.18 (*)
+│   ├── thiserror v2.0.20 (*)
+│   ├── throw_error v0.3.1 (*)
+│   ├── typed-builder v0.23.2 (*)
+│   ├── typed-builder-macro v0.23.2 (proc-macro) (*)
+│   ├── wasm-bindgen v0.2.128 (*)
+│   ├── wasm-bindgen-futures v0.4.78 (*)
+│   ├── wasm_split_helpers v0.2.3
+│   │   ├── async-once-cell v0.5.4
+│   │   └── wasm_split_macros v0.2.2 (proc-macro)
+│   │       ├── base16 v0.2.1
+│   │       ├── quote v1.0.47 (*)
+│   │       ├── sha2 v0.10.9
+│   │       │   ├── cfg-if v1.0.4
+│   │       │   ├── cpufeatures v0.2.17
+│   │       │   │   └── libc v0.2.189
+│   │       │   └── digest v0.10.7
+│   │       │       ├── block-buffer v0.10.4
+│   │       │       │   └── generic-array v0.14.7
+│   │       │       │       └── typenum v1.20.1
+│   │       │       │       [build-dependencies]
+│   │       │       │       └── version_check v0.9.5
+│   │       │       └── crypto-common v0.1.7
+│   │       │           ├── generic-array v0.14.7 (*)
+│   │       │           └── typenum v1.20.1
+│   │       └── syn v2.0.119 (*)
+│   └── web-sys v0.3.105 (*)
+│   [build-dependencies]
+│   └── rustc_version v0.4.1 (*)
+├── rustify-components v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-components)
+│   ├── leptos v0.8.20 (*)
+│   ├── paste v1.0.15 (proc-macro)
+│   ├── rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+│   │   ├── bexpand v1.3.0
+│   │   │   ├── itertools v0.14.0 (*)
+│   │   │   ├── nom v8.0.0
+│   │   │   │   └── memchr v2.8.3
+│   │   │   └── nom-language v0.1.0
+│   │   │       └── nom v8.0.0 (*)
+│   │   ├── bstr v1.13.1
+│   │   │   ├── memchr v2.8.3
+│   │   │   └── regex-automata v0.4.18 (*)
+│   │   ├── classification-macros v0.1.0 (proc-macro) (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style/upstream/classification-macros) (*)
+│   │   ├── fast-glob v0.4.5
+│   │   │   └── arrayvec v0.7.8
+│   │   ├── flate2 v1.1.10
+│   │   │   ├── crc32fast v1.5.2
+│   │   │   │   └── cfg-if v1.0.4
+│   │   │   └── miniz_oxide v0.9.1
+│   │   │       ├── adler2 v2.0.1
+│   │   │       └── simd-adler32 v0.3.10
+│   │   ├── globset v0.4.20
+│   │   │   ├── aho-corasick v1.1.5 (*)
+│   │   │   ├── bstr v1.13.1 (*)
+│   │   │   ├── log v0.4.34
+│   │   │   ├── regex-automata v0.4.18 (*)
+│   │   │   └── regex-syntax v0.8.11
+│   │   ├── regex v1.13.1 (*)
+│   │   ├── ryu-js v1.0.3
+│   │   ├── serde v1.0.229 (*)
+│   │   └── serde_json v1.0.151 (*)
+│   │   [dev-dependencies]
+│   │   ├── pretty_assertions v1.4.1
+│   │   │   ├── diff v0.1.13
+│   │   │   └── yansi v1.0.1
+│   │   ├── serde v1.0.229 (*)
+│   │   ├── serde_json v1.0.151 (*)
+│   │   ├── sha2 v0.10.9 (*)
+│   │   ├── tempfile v3.27.0
+│   │   │   ├── fastrand v2.5.0
+│   │   │   ├── getrandom v0.4.3 (*)
+│   │   │   ├── once_cell v1.21.4
+│   │   │   ├── rustix v1.1.5
+│   │   │   │   ├── bitflags v2.10.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/bitflags)
+│   │   │   │   ├── errno v0.3.14
+│   │   │   │   │   ├── libc v0.2.189
+│   │   │   │   │   └── windows-sys v0.61.2 (*)
+│   │   │   │   ├── libc v0.2.189
+│   │   │   │   ├── linux-raw-sys v0.12.1
+│   │   │   │   └── windows-sys v0.61.2 (*)
+│   │   │   └── windows-sys v0.61.2 (*)
+│   │   └── unicode-width v0.2.2
+│   ├── rustify-ui v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui)
+│   │   ├── futures-channel v0.3.34 (*)
+│   │   ├── js-sys v0.3.105 (*)
+│   │   ├── leptos v0.8.20 (*)
+│   │   ├── rustify-makepad v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-makepad)
+│   │   │   ├── js-sys v0.3.105 (*)
+│   │   │   ├── makepad-widgets v2.0.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/widgets)
+│   │   │   │   ├── makepad-derive-widget v2.0.0 (proc-macro) (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/widgets/derive_widget)
+│   │   │   │   │   ├── makepad-live-id v1.0.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/live_id)
+│   │   │   │   │   │   └── makepad-live-id-macros v1.0.0 (proc-macro) (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/live_id/id_macros)
+│   │   │   │   │   │       └── makepad-micro-proc-macro v1.0.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/micro_proc_macro)
+│   │   │   │   │   └── makepad-micro-proc-macro v1.0.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/micro_proc_macro)
+│   │   │   │   ├── makepad-draw v2.0.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/draw)
+│   │   │   │   │   ├── ab_glyph_rasterizer v0.1.8 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/ab_glyph_rasterizer)
+│   │   │   │   │   ├── fxhash v0.2.1 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/fxhash)
+│   │   │   │   │   │   └── byteorder v1.5.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/byteorder)
+│   │   │   │   │   ├── makepad-gif v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/gif)
+│   │   │   │   │   │   └── weezl v0.1.12 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/gif/weezl)
+│   │   │   │   │   ├── makepad-live-id v1.0.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/live_id) (*)
+│   │   │   │   │   ├── makepad-math v1.0.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/math)
+│   │   │   │   │   │   └── makepad-micro-serde v1.0.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/micro_serde)
+│   │   │   │   │   │       ├── makepad-live-id v1.0.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/live_id) (*)
+│   │   │   │   │   │       └── makepad-micro-serde-derive v1.0.0 (proc-macro) (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/micro_serde/derive)
+│   │   │   │   │   │           └── makepad-micro-proc-macro v1.0.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/micro_proc_macro)
+│   │   │   │   │   ├── makepad-platform v2.0.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/platform)
+│   │   │   │   │   │   ├── bitflags v2.10.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/bitflags)
+│   │   │   │   │   │   ├── makepad-futures v1.0.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/futures)
+│   │   │   │   │   │   ├── makepad-live-reload-core v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/live_reload_core)
+│   │   │   │   │   │   │   └── makepad-filesystem-watcher v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/filesystem_watcher)
+│   │   │   │   │   │   ├── makepad-network v1.0.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/platform/network)
+│   │   │   │   │   │   │   ├── makepad-error-log v1.0.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/error_log)
+│   │   │   │   │   │   │   │   └── makepad-micro-serde v1.0.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/micro_serde) (*)
+│   │   │   │   │   │   │   ├── makepad-live-id v1.0.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/live_id) (*)
+│   │   │   │   │   │   │   ├── makepad-micro-serde v1.0.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/micro_serde) (*)
+│   │   │   │   │   │   │   └── makepad-script v1.0.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/platform/script)
+│   │   │   │   │   │   │       ├── makepad-error-log v1.0.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/error_log) (*)
+│   │   │   │   │   │   │       ├── makepad-html v1.0.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/html)
+│   │   │   │   │   │   │       │   └── makepad-live-id v1.0.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/live_id) (*)
+│   │   │   │   │   │   │       ├── makepad-live-id v1.0.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/live_id) (*)
+│   │   │   │   │   │   │       ├── makepad-math v1.0.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/math) (*)
+│   │   │   │   │   │   │       ├── makepad-regex v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/regex)
+│   │   │   │   │   │   │       ├── makepad-script-derive v1.0.0 (proc-macro) (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/platform/script/derive)
+│   │   │   │   │   │   │       │   └── makepad-micro-proc-macro v1.0.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/micro_proc_macro)
+│   │   │   │   │   │   │       ├── makepad-stitch v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/stitch)
+│   │   │   │   │   │   │       └── smallvec v1.15.1 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/smallvec)
+│   │   │   │   │   │   ├── makepad-script v1.0.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/platform/script) (*)
+│   │   │   │   │   │   ├── makepad-script-std v1.0.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/platform/script/std)
+│   │   │   │   │   │   │   ├── makepad-network v1.0.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/platform/network) (*)
+│   │   │   │   │   │   │   └── makepad-script v1.0.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/platform/script) (*)
+│   │   │   │   │   │   ├── makepad-shared-bytes v1.0.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/shared_bytes)
+│   │   │   │   │   │   ├── makepad-studio-protocol v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/platform/studio)
+│   │   │   │   │   │   │   ├── bitflags v2.10.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/bitflags)
+│   │   │   │   │   │   │   ├── makepad-error-log v1.0.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/error_log) (*)
+│   │   │   │   │   │   │   ├── makepad-live-id v1.0.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/live_id) (*)
+│   │   │   │   │   │   │   ├── makepad-micro-serde v1.0.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/micro_serde) (*)
+│   │   │   │   │   │   │   └── makepad-script v1.0.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/platform/script) (*)
+│   │   │   │   │   │   ├── makepad-tsdf v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/tsdf)
+│   │   │   │   │   │   │   ├── makepad-math v1.0.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/math) (*)
+│   │   │   │   │   │   │   └── makepad-micro-serde v1.0.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/micro_serde) (*)
+│   │   │   │   │   │   ├── makepad-video v1.0.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/platform/video)
+│   │   │   │   │   │   ├── makepad-wasm-bridge v1.0.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/wasm_bridge)
+│   │   │   │   │   │   │   ├── makepad-derive-wasm-bridge v1.0.0 (proc-macro) (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/wasm_bridge/derive)
+│   │   │   │   │   │   │   │   └── makepad-micro-proc-macro v1.0.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/micro_proc_macro)
+│   │   │   │   │   │   │   └── makepad-live-id v1.0.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/live_id) (*)
+│   │   │   │   │   │   ├── makepad-zune-png v0.5.2 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/zune/zune-png)
+│   │   │   │   │   │   │   ├── makepad-fast-inflate v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/fast_inflate)
+│   │   │   │   │   │   │   ├── makepad-zune-core v0.5.1 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/zune/zune-core)
+│   │   │   │   │   │   │   │   └── log v0.4.34
+│   │   │   │   │   │   │   └── makepad-zune-inflate v0.2.54 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/zune/zune-inflate)
+│   │   │   │   │   │   │       └── simd-adler32 v0.3.9 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/simd-adler32)
+│   │   │   │   │   │   └── smallvec v1.15.1 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/smallvec)
+│   │   │   │   │   ├── makepad-svg v1.0.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/svg)
+│   │   │   │   │   │   ├── makepad-html v1.0.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/html) (*)
+│   │   │   │   │   │   └── makepad-live-id v1.0.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/live_id) (*)
+│   │   │   │   │   ├── makepad-webp v0.2.4 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/webp)
+│   │   │   │   │   │   └── makepad-byteorder-lite v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/byteorder-lite)
+│   │   │   │   │   ├── makepad-zune-bmp v0.5.2 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/zune/zune-bmp)
+│   │   │   │   │   │   ├── log v0.4.34
+│   │   │   │   │   │   └── makepad-zune-core v0.5.1 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/zune/zune-core) (*)
+│   │   │   │   │   ├── makepad-zune-jpeg v0.5.15 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/zune/zune-jpeg)
+│   │   │   │   │   │   └── makepad-zune-core v0.5.1 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/zune/zune-core) (*)
+│   │   │   │   │   ├── makepad-zune-png v0.5.2 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/zune/zune-png) (*)
+│   │   │   │   │   ├── makepad-zune-qoi v0.5.2 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/zune/zune-qoi)
+│   │   │   │   │   │   └── makepad-zune-core v0.5.1 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/zune/zune-core) (*)
+│   │   │   │   │   ├── rustybuzz v0.18.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/rustybuzz)
+│   │   │   │   │   │   ├── bitflags v2.10.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/bitflags)
+│   │   │   │   │   │   ├── bytemuck v1.25.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/bytemuck)
+│   │   │   │   │   │   ├── makepad-error-log v1.0.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/error_log) (*)
+│   │   │   │   │   │   ├── smallvec v1.15.1 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/smallvec)
+│   │   │   │   │   │   ├── ttf-parser v0.24.1 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/ttf-parser)
+│   │   │   │   │   │   ├── unicode-bidi-mirroring v0.3.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/unicode/unicode-bidi-mirroring)
+│   │   │   │   │   │   ├── unicode-ccc v0.3.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/unicode/unicode-ccc)
+│   │   │   │   │   │   ├── unicode-properties v0.1.4 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/unicode/unicode-properties)
+│   │   │   │   │   │   └── unicode-script v0.5.8 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/unicode/unicode-script)
+│   │   │   │   │   ├── sdfer v0.2.1 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/sdfer)
+│   │   │   │   │   ├── unicode-bidi v0.3.18 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/unicode/unicode-bidi)
+│   │   │   │   │   ├── unicode-linebreak v0.1.5 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/unicode/unicode-linebreak)
+│   │   │   │   │   └── unicode-segmentation v1.12.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/unicode/unicode-segmentation)
+│   │   │   │   ├── makepad-html v1.0.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/html) (*)
+│   │   │   │   ├── makepad-latex-math v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/latex_math)
+│   │   │   │   │   └── ttf-parser v0.24.1 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/ttf-parser)
+│   │   │   │   ├── pulldown-cmark v0.12.2 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/pulldown-cmark)
+│   │   │   │   │   ├── bitflags v2.10.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/bitflags)
+│   │   │   │   │   ├── memchr v2.7.6 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/memchr)
+│   │   │   │   │   └── unicase v2.9.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/unicase)
+│   │   │   │   ├── ttf-parser v0.24.1 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/ttf-parser)
+│   │   │   │   └── unicode-segmentation v1.12.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/unicode/unicode-segmentation)
+│   │   │   ├── wasm-bindgen v0.2.128 (*)
+│   │   │   └── web-sys v0.3.105 (*)
+│   │   ├── rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style) (*)
+│   │   ├── send_wrapper v0.6.0 (*)
+│   │   ├── serde v1.0.229 (*)
+│   │   ├── serde_json v1.0.151 (*)
+│   │   ├── wasm-bindgen v0.2.128 (*)
+│   │   ├── wasm-bindgen-futures v0.4.78 (*)
+│   │   └── web-sys v0.3.105 (*)
+│   └── web-sys v0.3.105 (*)
+│   [dev-dependencies]
+│   └── serde_json v1.0.151 (*)
+├── rustify-makepad v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-makepad) (*)
+├── rustify-ui v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui) (*)
+└── wasm-bindgen v0.2.128 (*)
+
+data-workbench v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/examples/data-workbench)
+├── leptos v0.8.20 (*)
+├── rustify-components v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-components) (*)
+├── rustify-makepad v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-makepad) (*)
+├── rustify-ui v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui) (*)
+├── wasm-bindgen v0.2.128 (*)
+└── web-sys v0.3.105 (*)
+
+fusion-basic v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/examples/fusion-basic)
+├── leptos v0.8.20 (*)
+├── rustify-makepad v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-makepad) (*)
+├── rustify-ui v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui) (*)
+└── wasm-bindgen v0.2.128 (*)
+
+property-workbench v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/examples/property-workbench)
+├── leptos v0.8.20 (*)
+├── rustify-components v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-components) (*)
+├── rustify-makepad v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-makepad) (*)
+├── rustify-ui v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui) (*)
+└── wasm-bindgen v0.2.128 (*)
+
+rustify-components v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-components) (*)
+
+rustify-makepad v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-makepad) (*)
+
+rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style) (*)
+
+rustify-style-wasm v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style-wasm)
+├── js-sys v0.3.105 (*)
+├── rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style) (*)
+├── serde v1.0.229 (*)
+├── serde_json v1.0.151 (*)
+├── wasm-bindgen v0.2.128 (*)
+└── wasm-bindgen-futures v0.4.78 (*)
+
+rustify-ui v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui) (*)
+
+theme-studio v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/examples/theme-studio)
+├── js-sys v0.3.105 (*)
+├── leptos v0.8.20 (*)
+├── rustify-components v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-components) (*)
+├── rustify-makepad v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-makepad) (*)
+├── rustify-ui v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui) (*)
+├── serde v1.0.229 (*)
+├── serde_json v1.0.151 (*)
+├── wasm-bindgen v0.2.128 (*)
+└── web-sys v0.3.105 (*)
+
+utility-lab v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/examples/utility-lab)
+├── leptos v0.8.20 (*)
+├── rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style) (*)
+├── rustify-ui v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui) (*)
+├── serde_json v1.0.151 (*)
+├── wasm-bindgen v0.2.128 (*)
+└── wasm-bindgen-futures v0.4.78 (*)
+
+vellum v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/examples/vellum)
+├── js-sys v0.3.105 (*)
+├── leptos v0.8.20 (*)
+├── rustify-makepad v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-makepad) (*)
+├── rustify-ui v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui) (*)
+├── serde v1.0.229 (*)
+├── serde_json v1.0.151 (*)
+├── unicode-general-category v1.1.0
+├── unicode-segmentation v1.13.3
+├── wasm-bindgen v0.2.128 (*)
+├── wasm-bindgen-futures v0.4.78 (*)
+└── web-sys v0.3.105 (*)
+
+xtask v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/xtask)
+├── rustify-components v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-components) (*)
+├── serde v1.0.229 (*)
+├── serde_json v1.0.151 (*)
+├── sha2 v0.10.9 (*)
+├── wasm-bindgen-cli-support v0.2.128
+│   ├── anyhow v1.0.104
+│   ├── base64 v0.22.1
+│   ├── leb128 v0.2.7
+│   ├── log v0.4.34
+│   ├── rustc-demangle v0.1.28
+│   ├── serde v1.0.229 (*)
+│   ├── serde_json v1.0.151 (*)
+│   ├── walrus v0.26.5
+│   │   ├── anyhow v1.0.104
+│   │   ├── gimli v0.32.3
+│   │   │   ├── fallible-iterator v0.3.0
+│   │   │   ├── indexmap v2.14.2 (*)
+│   │   │   └── stable_deref_trait v1.2.1
+│   │   ├── id-arena v2.3.0
+│   │   │   └── rayon v1.12.0
+│   │   │       ├── either v1.18.0
+│   │   │       └── rayon-core v1.13.0
+│   │   │           ├── crossbeam-deque v0.8.8
+│   │   │           │   ├── crossbeam-epoch v0.9.21
+│   │   │           │   │   └── crossbeam-utils v0.8.23
+│   │   │           │   └── crossbeam-utils v0.8.23
+│   │   │           └── crossbeam-utils v0.8.23
+│   │   ├── leb128 v0.2.7
+│   │   ├── log v0.4.34
+│   │   ├── rayon v1.12.0 (*)
+│   │   ├── walrus-macro v0.26.0 (proc-macro)
+│   │   │   ├── heck v0.5.0
+│   │   │   ├── proc-macro2 v1.0.107 (*)
+│   │   │   ├── quote v1.0.47 (*)
+│   │   │   └── syn v2.0.119 (*)
+│   │   ├── wasm-encoder v0.245.1
+│   │   │   └── leb128fmt v0.1.0
+│   │   └── wasmparser v0.245.1
+│   │       ├── bitflags v2.10.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/bitflags)
+│   │       ├── hashbrown v0.16.1
+│   │       │   ├── foldhash v0.2.0
+│   │       │   ├── serde v1.0.229 (*)
+│   │       │   └── serde_core v1.0.229 (*)
+│   │       ├── indexmap v2.14.2 (*)
+│   │       ├── semver v1.0.28
+│   │       └── serde v1.0.229 (*)
+│   ├── wasm-bindgen-shared v0.2.128 (*)
+│   └── wasmparser v0.245.1 (*)
+└── wasmi v2.0.0
+    ├── spin v0.9.9
+    ├── wasmi_collections v2.0.0
+    ├── wasmi_core v2.0.0
+    │   └── libm v0.2.16
+    ├── wasmi_ir v2.0.0
+    │   └── wasmi_core v2.0.0 (*)
+    ├── wasmparser v0.228.0
+    │   └── bitflags v2.10.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/bitflags)
+    └── wat v1.258.0
+        └── wast v258.0.0
+            ├── bumpalo v3.20.3
+            ├── leb128fmt v0.1.0
+            ├── memchr v2.8.3
+            ├── unicode-width v0.2.2
+            └── wasm-encoder v0.258.0
+                └── leb128fmt v0.1.0

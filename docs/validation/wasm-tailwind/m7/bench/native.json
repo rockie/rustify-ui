@@ -1,0 +1,143 @@
+{
+  "schemaVersion": 1,
+  "build": "native release, this host",
+  "environment": {
+    "os": "macos",
+    "arch": "aarch64"
+  },
+  "cn": {
+    "inputs": 186,
+    "chars": 3877,
+    "measurements": {
+      "cnVariadicWarm": {
+        "unit": "ns/call",
+        "callsPerSample": 100000,
+        "samples": 7,
+        "p50": 420.19,
+        "p95": 438.19042,
+        "sortedSamples": [
+          411.86042,
+          412.97666,
+          413.11666,
+          420.19,
+          427.26958,
+          431.59666,
+          438.19042
+        ]
+      },
+      "cnSingleWarm": {
+        "unit": "ns/call",
+        "callsPerSample": 100000,
+        "samples": 7,
+        "p50": 159.61541,
+        "p95": 163.13167,
+        "sortedSamples": [
+          157.82208,
+          157.94208,
+          159.605,
+          159.61541,
+          159.88542,
+          160.405,
+          163.13167
+        ]
+      },
+      "mergeStringWarm": {
+        "unit": "ns/call",
+        "callsPerSample": 100000,
+        "samples": 7,
+        "p50": 113.675,
+        "p95": 114.54625,
+        "sortedSamples": [
+          112.10542,
+          112.27625,
+          112.41792,
+          113.675,
+          113.8175,
+          114.51167,
+          114.54625
+        ]
+      },
+      "mergeUncached": {
+        "unit": "ns/call",
+        "callsPerSample": 100000,
+        "samples": 7,
+        "p50": 407.84625,
+        "p95": 410.39042,
+        "sortedSamples": [
+          405.53167,
+          405.95209,
+          406.42292,
+          407.84625,
+          408.16833,
+          410.11042,
+          410.39042
+        ]
+      },
+      "clsxJoinOnly": {
+        "unit": "ns/call",
+        "callsPerSample": 100000,
+        "samples": 7,
+        "p50": 60.98666,
+        "p95": 62.18042,
+        "sortedSamples": [
+          59.25791,
+          59.66833,
+          59.81,
+          60.98666,
+          61.08333,
+          62.05083,
+          62.18042
+        ]
+      },
+      "createConfigAndFirstMerge": {
+        "unit": "ns/call",
+        "callsPerSample": 40,
+        "samples": 7,
+        "p50": 633282.3,
+        "p95": 667586.45,
+        "sortedSamples": [
+          623295.825,
+          624852.075,
+          629582.3,
+          633282.3,
+          633931.25,
+          634465.625,
+          667586.45
+        ]
+      }
+    }
+  },
+  "compiler": {
+    "workload": "same css, initial candidates and 100 cold/warm/no-op calls as tests/utility/compiler/bench.mjs",
+    "metrics": {
+      "cold": {
+        "samples": 100,
+        "p50Ms": 0.010166999999999999,
+        "p95Ms": 0.010499999999999999,
+        "minMs": 0.009542,
+        "maxMs": 0.010750000000000001
+      },
+      "warm": {
+        "samples": 100,
+        "p50Ms": 0.044292000000000005,
+        "p95Ms": 0.07975,
+        "minMs": 0.0065,
+        "maxMs": 0.08904200000000001
+      },
+      "noOp": {
+        "samples": 100,
+        "p50Ms": 0.000292,
+        "p95Ms": 0.000334,
+        "minMs": 0.00029099999999999997,
+        "maxMs": 0.0005
+      }
+    }
+  },
+  "batch": {
+    "candidates": 1396,
+    "admitted": 1202,
+    "cssBytes": 83297,
+    "p50Ms": 19.010625,
+    "p95Ms": 19.419083999999998
+  }
+}

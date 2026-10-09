@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "url": "https://codeload.github.com/tailwindlabs/tailwindcss/tar.gz/1334c99db8fd26c8ea065375dd9259800863f072",
+  "commit": "1334c99db8fd26c8ea065375dd9259800863f072",
+  "archiveSha256": "34460cfca90b320ae9d498377f76db4feadfdf813884b517dbdc9bfc7f69f7cf",
+  "verifiedSourceFiles": 109,
+  "extraVerifiedFiles": [
+    "packages/tailwindcss/package.json",
+    "packages/tailwindcss/index.css",
+    "packages/tailwindcss/preflight.css",
+    "packages/tailwindcss/theme.css",
+    "packages/tailwindcss/utilities.css",
+    "LICENSE"
+  ],
+  "method": "Compared SHA-256 of every inventoried source and asset file plus exact LICENSE bytes with the fixed commit archive; registry also matches pinned published package."
+}

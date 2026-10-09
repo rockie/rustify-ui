@@ -1,0 +1,24 @@
+mbx[warning]: Unix-domain cache session listener unavailable; using FIFO transport: failed to bind cache session listener at /var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/mbx-session-bTqws9/cache-agent.sock: Operation not permitted (os error 1)
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 6.80s
+     Running unittests src/lib.rs (/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-utf16-verified-54mkl3kq/cargo-target/debug/deps/rustify_style-7a67d48e3c4c51f4)
+
+running 7 tests
+test compiler::origin::tests::earlier_array_storage_reads_the_latest_shared_anchor ... ok
+test compiler::origin::tests::array_lineage_survives_a_bound_snapshot_and_released_edit_owner ... ok
+test compiler::origin::tests::overwritten_array_storage_is_pinned_until_the_snapshot_is_released ... ok
+test compiler::origin::tests::checked_native_clone_rejects_metadata_budget_and_keeps_the_caller_graph ... ok
+test compiler::origin::tests::native_origin_is_ignored_by_serialization_and_equality_but_retained_by_clone ... ok
+test compiler::origin::tests::native_fresh_clone_resolves_current_child_across_body_metadata_and_source ... ok
+test compiler::origin::tests::normalization_refreshes_an_aliased_native_occurrence_before_a_function_guard ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 323 filtered out; finished in 0.00s
+
+mbx[cache]: 0 hits, 1 misses; 0 B downloaded, 0 B uploaded, 341.3 MiB stored locally

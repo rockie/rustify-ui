@@ -12,6 +12,8 @@ use super::colour;
 use super::theme::{disabled_color, draw_focus, focus_hit, set_box_radius, token, ThemeMetrics};
 use super::{apply_text_theme, DrawRustifyShadow, FontSlot};
 use crate::theme::ResolvedTheme;
+#[cfg(feature = "utility")]
+pub(crate) mod utility;
 
 #[derive(Script, ScriptHook, Widget)]
 pub struct RustifyButton {
@@ -28,6 +30,9 @@ pub struct RustifyButton {
     draw_bg: DrawColor,
     #[live]
     draw_border: DrawColor,
+    #[cfg(feature = "utility")]
+    #[live]
+    draw_utility_body: DrawColor,
     #[live]
     draw_text: DrawText,
     #[live]
@@ -51,13 +56,24 @@ pub struct RustifyButton {
     theme_metrics: Option<ThemeMetrics>,
     #[rust]
     click: Option<()>,
+    #[cfg(feature = "utility")]
+    #[rust]
+    utility: Option<utility::ButtonUtilityModel>,
 }
 
 impl RustifyButton {
     pub fn set_state(&mut self, cx: &mut Cx, label: &str, disabled: bool) {
         if self.label != label || self.disabled != disabled {
+            #[cfg(feature = "utility")]
+            let label_changed = self.label != label;
             self.label = label.to_string();
             self.disabled = disabled;
+            #[cfg(feature = "utility")]
+            self.refresh_utility_defaults(cx, None);
+            #[cfg(feature = "utility")]
+            if self.utility.is_some() && !label_changed {
+                return;
+            }
             self.redraw(cx);
         }
     }
@@ -67,12 +83,20 @@ impl RustifyButton {
         if self.palette != next || self.theme_palette.is_some() {
             self.palette = next;
             self.theme_palette = None;
+            #[cfg(feature = "utility")]
+            self.refresh_utility_defaults(cx, None);
+            #[cfg(feature = "utility")]
+            if self.utility.is_some() {
+                return;
+            }
             self.redraw(cx);
         }
     }
 
     /// Applies the same resolved RGBA, typography and geometry as the DOM theme.
     pub fn apply_theme(&mut self, cx: &mut Cx, theme: &ResolvedTheme) {
+        #[cfg(feature = "utility")]
+        self.restore_utility_text_defaults();
         let face = token(theme, "primary");
         let mut hover = face;
         hover.w *= 0.9;
@@ -89,6 +113,12 @@ impl RustifyButton {
         self.theme_palette = Some(palette);
         self.theme_metrics = Some(metrics);
         self.walk.height = Size::Fixed(metrics.spacing * 9.0);
+        #[cfg(feature = "utility")]
+        self.refresh_utility_theme(cx, theme);
+        #[cfg(feature = "utility")]
+        if self.utility.is_some() {
+            return;
+        }
         if changed || text_changed {
             self.redraw(cx);
         }
@@ -100,6 +130,11 @@ impl RustifyButton {
 
     /// Where it ended up, in the region's own local pixels.
     pub fn drawn(&self, cx: &Cx) -> Option<Rect> {
+        #[cfg(feature = "utility")]
+        if self.utility.is_some() {
+            let area = self.draw_utility_body.area();
+            return (!area.is_empty()).then(|| area.rect(cx));
+        }
         let area = self.draw_bg.area();
         (!area.is_empty()).then(|| area.rect(cx))
     }
@@ -107,6 +142,11 @@ impl RustifyButton {
 
 impl Widget for RustifyButton {
     fn handle_event(&mut self, cx: &mut Cx, event: &Event, _scope: &mut Scope) {
+        #[cfg(feature = "utility")]
+        if self.utility.is_some() {
+            self.handle_utility_event(cx, event);
+            return;
+        }
         let hit = event.hits(cx, self.draw_bg.area());
         if focus_hit(&hit, cx, self.draw_bg.area(), self.disabled) {
             self.redraw(cx);
@@ -139,6 +179,10 @@ impl Widget for RustifyButton {
     }
 
     fn draw_walk(&mut self, cx: &mut Cx2d, _scope: &mut Scope, walk: Walk) -> DrawStep {
+        #[cfg(feature = "utility")]
+        if self.utility.is_some() {
+            return self.draw_utility(cx, walk);
+        }
         let pane = cx.walk_turtle(walk);
         if let Some([face, hover, border, ink]) = self.theme_palette {
             self.draw_bg.color = disabled_color(

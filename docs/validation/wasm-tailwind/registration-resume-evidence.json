@@ -1,0 +1,534 @@
+{
+  "updatedAt": "2026-10-06T20:42:17+11:00",
+  "baseline": "dirty@ef766ce50005546d861e32a4a1c45b4f4a03f0d7",
+  "sourceHashes": {
+    "Cargo.toml": "dee97baccd454f9bf74ccd8c4bac69e47579d2284b5f07bcb39f73a22d5f871a",
+    "Cargo.lock": "3e1069d4610684c784ddd750ddd9a20132d9f749d3aa660f0bf1d7887ef4577c",
+    "mise.toml": "b39792f4c61600ed818b759bb8f9316b217372135b4b0eae097305ceec761f79",
+    "sources.lock.json": "f07a22046a145b10b7dda5c4ccb949ee1ffc00673a57f5ab3dc1a1c15b0ceb6d",
+    "xtask/src/utility.rs": "ab39be91590e377f01d0d1e19c05f82187b128c9f1f715116bb61be545d6184d",
+    "examples/utility-lab/src/button_baseline.rs": "24fa5304273db11881fd299a899da09e2f553bf4f4c062e524ca0187a1591978",
+    "examples/utility-lab/app.js": "6f3a56cd6526f6d2d7288d940ebc655c77063591627fdeb402ecb4271ea5d8c7",
+    "tests/browser/utility-gpu.spec.ts": "6c49b586391536d7eba5b5e39642d106638102b2a8770c6ead9b6f82f5c6ac57",
+    "tests/utility/compiler/run-public-ast-registration-wasm.mjs": "f23954ff6e4c0f4482ea8427f4057776a73f465edd45efdaa134a6727a632efb",
+    "tests/utility/compiler/run-public-ast-media-source-wasm.mjs": "09137e228eb0a99ef1c8d803265ff6af73170dd744a48da431525bea85f58eca",
+    "tests/utility/compiler/run-public-ast-ownership-wasm.mjs": "69dc347aaf8c57c288594f744b4f0368d6a721ba320c296bad2912835b905f5e",
+    "tests/utility/compiler/bench-media-source-wasm.mjs": "d1130984077de9ef21f239fd09ba8fc4ff49a832cbbf3b6a25dc1962f653117e",
+    "crates/rustify-style/src/compiler/registration.rs": "baa8eb9c1b447413a368f4232da05b8476024ba80a15771ae7285b62c3003a0e",
+    "crates/rustify-style/src/compiler/theme.rs": "68d54851c4ac71ba31ed11f887720efb487c1ef28525ba890f9b94fdfde49fc4",
+    "crates/rustify-style/src/compiler/custom_utilities.rs": "2c80c9d4c0b86f4bab94c4013863dd846d84f2474ef40296eedaed1626b14909",
+    "crates/rustify-style/src/compiler/custom_variants.rs": "dc8db45d6846eb042a572c52051f0dce39dd423be54bba78566c89134c59cedc",
+    "crates/rustify-style/src/compiler/public_api/compile_ast.rs": "485cc313ea6a6b5618564c61567734543d6f1e623b339e1b7aa2dc78a7f7e2a0",
+    "crates/rustify-style/src/compiler/mod.rs": "ffe834685d9e29cef634508221e4065b024491bfefac6f19a2ac04279caae822",
+    "crates/rustify-style/src/compiler/variants.rs": "0b60904768e92d8e9cf569699363098c77101ad2ca94f2865c8316095ef2e6dd"
+  },
+  "evidenceFiles": {
+    "registration-resume-compiler-api-optimized.log": {
+      "path": "docs/validation/wasm-tailwind/registration-resume-compiler-api-optimized.log",
+      "bytes": 58775,
+      "sha256": "fd91d1dbe9c90bc3fe491c7c32f70a5028c4c50da9cbb20612b2ad85f0d42738"
+    },
+    "registration-resume-compiler-slice-optimized.log": {
+      "path": "docs/validation/wasm-tailwind/registration-resume-compiler-slice-optimized.log",
+      "bytes": 44539,
+      "sha256": "5ae3af6b7378e8e5b786f2a5b7dfaa7946188ec9e1109adad3eb5f10885b5c3c"
+    },
+    "registration-resume-native-optimized.log": {
+      "path": "docs/validation/wasm-tailwind/registration-resume-native-optimized.log",
+      "bytes": 39399,
+      "sha256": "fbbe68953193f25ea76ab06147ffb024557d2bb644b5bc38a232327ce25e5883"
+    },
+    "registration-resume-facade-optimized.log": {
+      "path": "docs/validation/wasm-tailwind/registration-resume-facade-optimized.log",
+      "bytes": 2064,
+      "sha256": "a975e085cfe14391c930a9cbc4511343a88882542132f657e64675b5b91b7220"
+    },
+    "registration-resume-xtask.log": {
+      "path": "docs/validation/wasm-tailwind/registration-resume-xtask.log",
+      "bytes": 3931,
+      "sha256": "180b78514719c271e474b56d43e4f3ce95859d79e7439a2333b25829160d015e"
+    },
+    "registration-resume-clippy-optimized.log": {
+      "path": "docs/validation/wasm-tailwind/registration-resume-clippy-optimized.log",
+      "bytes": 706,
+      "sha256": "d05ff8551933372b0cc6afff9b4848621d3f86a9d1fd825af88ec8c67b096bde"
+    },
+    "registration-resume-xtask-clippy.log": {
+      "path": "docs/validation/wasm-tailwind/registration-resume-xtask-clippy.log",
+      "bytes": 1169,
+      "sha256": "3ec89b3fd58a4bcf30d8c299434dfac52dcbf1565a93763bcfc89c7fb6fab2e2"
+    },
+    "registration-resume-lifecycle-clippy.log": {
+      "path": "docs/validation/wasm-tailwind/registration-resume-lifecycle-clippy.log",
+      "bytes": 23556,
+      "sha256": "82dbeff877789b842771248ca618b4b5a75aeb75c62082b0f5bea922db6ef950"
+    },
+    "registration-resume-fmt-verified.log": {
+      "path": "docs/validation/wasm-tailwind/registration-resume-fmt-verified.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "registration-resume-sources.log": {
+      "path": "docs/validation/wasm-tailwind/registration-resume-sources.log",
+      "bytes": 13429,
+      "sha256": "4a4be14b3f6a20ce95b32de4f836e0ccd32500825091a6c1814890cba40660e8"
+    },
+    "registration-resume-build-workspace-lifecycle-verified.log": {
+      "path": "docs/validation/wasm-tailwind/registration-resume-build-workspace-lifecycle-verified.log",
+      "bytes": 9158,
+      "sha256": "f4857352d95ea7f9a26eabafdfe2ee272ebc47e58f07fa1440142a76b9acaae5"
+    },
+    "registration-resume-build-workspace-deep-verified.log": {
+      "path": "docs/validation/wasm-tailwind/registration-resume-build-workspace-deep-verified.log",
+      "bytes": 8754,
+      "sha256": "eed5de8949363c9d837f1cf6ab1334859c449dac997876668554dc12559f71eb"
+    },
+    "registration-resume-browser-root-final.json": {
+      "path": "docs/validation/wasm-tailwind/registration-resume-browser-root-final.json",
+      "bytes": 2977216,
+      "sha256": "44a067912afe9c4c0b74390080b04d0bdf74abf34074aa4e58d579d29af34911"
+    },
+    "registration-resume-browser-deep-final.json": {
+      "path": "docs/validation/wasm-tailwind/registration-resume-browser-deep-final.json",
+      "bytes": 2972924,
+      "sha256": "2acc17f5e592fb84768c13f3edcb2194bb77bfcab1f45a9db2ae8d0298f042d9"
+    },
+    "registration-resume-lifecycle-root.json": {
+      "path": "docs/validation/wasm-tailwind/registration-resume-lifecycle-root.json",
+      "bytes": 35762,
+      "sha256": "21ddc02b286473e018f5524040c71c04086efe2a3ba6a8eca99ee6876d41b85e"
+    },
+    "registration-resume-lifecycle-root-verified.json": {
+      "path": "docs/validation/wasm-tailwind/registration-resume-lifecycle-root-verified.json",
+      "bytes": 25658,
+      "sha256": "180181b06dab4d4a2bd8ae2efb54fdc3a02b5a26c6211e33930884ff217ebe72"
+    },
+    "registration-resume-ownership-optimized-red.log": {
+      "path": "docs/validation/wasm-tailwind/registration-resume-ownership-optimized-red.log",
+      "bytes": 378753,
+      "sha256": "688e58ac723eabcd9d6436eb35b451edf4885dab5d30c8979d27ec2eb8cc1eb5"
+    },
+    "registration-resume-authored-variant-before.log": {
+      "path": "docs/validation/wasm-tailwind/registration-resume-authored-variant-before.log",
+      "bytes": 5659,
+      "sha256": "92383b4d567a1124470f50fcbbbe6a48dc497870fb255ac4a16bdd07a533194e"
+    },
+    "registration-resume-before.log": {
+      "path": "docs/validation/wasm-tailwind/registration-resume-before.log",
+      "bytes": 114151,
+      "sha256": "6e2d7ff25ef12f4497855411bf53cac2c3d46a93e457ce4192f9a0d30f76a90f"
+    },
+    "registration-undefined-before.log": {
+      "path": "docs/validation/wasm-tailwind/registration-undefined-before.log",
+      "bytes": 3533,
+      "sha256": "64b1900500511f00a06bd58c0a852b0a4133aa56d3fca4c70de3eb26b437ac5a"
+    },
+    "registration-resume-benchmark-before.json": {
+      "path": "docs/validation/wasm-tailwind/registration-resume-benchmark-before.json",
+      "bytes": 1461,
+      "sha256": "afbcb2cb44d42f3ffc59e1b8320d5798d0f28bc43deaa6d7f65e0b1cce97c0be"
+    },
+    "registration-resume-benchmark-after-initial.json": {
+      "path": "docs/validation/wasm-tailwind/registration-resume-benchmark-after-initial.json",
+      "bytes": 1463,
+      "sha256": "12d4c9bcd1fa72e3bc101de6c9db15b163e7aa1c861dab59a3e60275fce877f6"
+    },
+    "registration-resume-benchmark-optimized.json": {
+      "path": "docs/validation/wasm-tailwind/registration-resume-benchmark-optimized.json",
+      "bytes": 1464,
+      "sha256": "a0f6044bd5ca85c4692689c5c5ca084c74603f330588a8afabd25ed570194c3c"
+    },
+    "registration-resume-products-restored.json": {
+      "path": "docs/validation/wasm-tailwind/registration-resume-products-restored.json",
+      "bytes": 1641,
+      "sha256": "5b4406caef7ff37a6acb7cf4eda81baf7e785f5231c0b05373717614cbd4a0bb"
+    },
+    "registration-resume-build-workspace.json": {
+      "path": "docs/validation/wasm-tailwind/registration-resume-build-workspace.json",
+      "bytes": 5528,
+      "sha256": "1583a003f6e131ece1dc590b34614d2236f7383de3e2598781990ce2402114ce"
+    }
+  },
+  "artifacts": {
+    "compiler-api": {
+      "path": "target/utility-conformance/compiler-api/style_bg.wasm",
+      "bytes": 2501226,
+      "sha256": "2114073f8d59e2230ad214eb5d90aabb4682403f4cd1878815561a6cde8d109d"
+    },
+    "compiler": {
+      "path": "target/utility-conformance/compiler/style_bg.wasm",
+      "bytes": 1739394,
+      "sha256": "56b09a09295c888c664a22f871a4463ad0c9b44ecc90ceea505e19d2aa812036"
+    }
+  },
+  "gates": {
+    "nativeTests": 362,
+    "facadeTests": 13,
+    "xtaskTests": 37,
+    "registration": {
+      "registrationCases": 48,
+      "entryComparisons": 96,
+      "completePrefixAndSettledGraphs": true,
+      "actualWasm": true,
+      "wasmBytes": 2501226,
+      "fullRegistrationConformance": "pending",
+      "failures": 0
+    },
+    "media": {
+      "cases": 2,
+      "entryComparisons": 4,
+      "failures": 0
+    },
+    "compilerSlice": {
+      "compilerSmoke": "passed",
+      "scannerEnabled": false,
+      "officialNesting": "passed",
+      "cssFunctionBindingsAndLimits": "passed",
+      "customUtilityBindingsAndLimits": "passed",
+      "customVariantBindingsAndLimits": "passed",
+      "legacyCacheLimitsAndRecovery": "passed",
+      "sliceCases": 214909,
+      "incrementalComparisons": 1470,
+      "incrementalCases": 246,
+      "cssComparisons": 216133,
+      "pendingBoundaryCases": 0,
+      "pendingFeatureCases": 0,
+      "utf16OutputCases": 4,
+      "sourceMetadataCases": 1607,
+      "errorCases": 3002,
+      "variantParseCases": 6673,
+      "variantParseNullCases": 2963,
+      "variantReusedCases": 84,
+      "variantParserLimitCases": 24,
+      "wasmBytes": 1739394,
+      "imports": [
+        "__wbg_length_d52ee452c5be0c99",
+        "__wbg_charCodeAt_90635349fbda9f5f",
+        "__wbg___wbindgen_throw_5d9e815e6fdf150f",
+        "__wbg___wbindgen_is_string_c4f7cb494a2a21f1",
+        "__wbindgen_init_externref_table",
+        "__wbindgen_generic_0000000000000001"
+      ],
+      "sharedMemory": false,
+      "fullConformance": "pending"
+    },
+    "ledger": {
+      "sourcesVerified": 109,
+      "originalSourceCalls": 1215,
+      "originalTestCalls": 1125,
+      "originalParameterizationCalls": 10,
+      "originalSuiteCalls": 80,
+      "parameterBuilders": 11,
+      "expandedTests": 1398,
+      "staticallyExpandedTests": 1398,
+      "unresolvedTests": 0,
+      "upstreamSkippedTests": 1,
+      "assertionTemplates": 1851,
+      "assertionTemplateEdges": 2140,
+      "controlledAssertionTemplates": 45,
+      "externalSnapshotExports": 13,
+      "matchedExternalSnapshotExports": 13,
+      "suggestedScopeCorrections": 3,
+      "validatedTests": 0,
+      "validatedAssertions": 0,
+      "adjudicatedExclusions": 0,
+      "unownedAssertionTemplates": 0
+    },
+    "browser": {
+      "root": {
+        "log": "registration-resume-browser-root-final.json",
+        "startTime": "2026-10-06T09:33:42.499Z",
+        "duration": 42507.45,
+        "expected": 46,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "deep": {
+        "log": "registration-resume-browser-deep-final.json",
+        "startTime": "2026-10-06T09:34:50.938Z",
+        "duration": 39788.227,
+        "expected": 41,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      }
+    }
+  },
+  "ownershipRed": {
+    "cases": 3,
+    "entryComparisons": 6,
+    "failures": 6,
+    "diagnostics": [
+      {
+        "name": "authored-success-before-failure",
+        "mode": "sync"
+      },
+      {
+        "name": "authored-success-before-failure",
+        "mode": "async"
+      },
+      {
+        "name": "shared-variant-utility-declaration",
+        "mode": "sync"
+      },
+      {
+        "name": "shared-variant-utility-declaration",
+        "mode": "async"
+      },
+      {
+        "name": "theme-publication-before-functions",
+        "mode": "sync"
+      },
+      {
+        "name": "theme-publication-before-functions",
+        "mode": "async"
+      }
+    ],
+    "defaultGate": false,
+    "log": "registration-resume-ownership-optimized-red.log"
+  },
+  "products": {
+    "root": {
+      "mainBuildId": "b063f40bd16e0972",
+      "workerBuildId": "a831202616b1044152f4712a93e264990052aead5dcf59d308a5c4f7bb7887c5",
+      "scannerEnabled": false,
+      "sizeReport": {
+        "wasm": 11208140,
+        "js": 246562,
+        "css": 35072,
+        "fonts": 51732356,
+        "images": 20701,
+        "data": 19812,
+        "total": 63262643
+      },
+      "mainWasm": {
+        "path": "target/makepad-wasm-app/release/utility-lab/utility-lab.wasm",
+        "bytes": 9486990,
+        "sha256": "b063f40bd16e0972f4fae917c117d0726225beb7e3d599514b4c45980ee9efeb"
+      },
+      "workerWasm": {
+        "path": "target/makepad-wasm-app/release/utility-lab/utility/compiler/style_bg.wasm",
+        "bytes": 1721150,
+        "sha256": "44f92474550bcb977bdaeebd5a78821c9351e7f3a4bb23ff92beb52b1a073e16"
+      },
+      "manifest": {
+        "path": "docs/validation/wasm-tailwind/registration-resume-browser/manifests/root-main-manifest.json",
+        "bytes": 3114,
+        "sha256": "136355dfac0447510906af81388202847abf4646583475ed5a089682cbf3d3d9"
+      },
+      "workerManifest": {
+        "path": "docs/validation/wasm-tailwind/registration-resume-browser/manifests/root-worker-manifest.json",
+        "bytes": 592,
+        "sha256": "37867c68d3a830419e05b2df849fd89303aef0a9526fa9f52d050c3cf83f0c77"
+      }
+    },
+    "deep": {
+      "mainBuildId": "b063f40bd16e0972",
+      "workerBuildId": "a831202616b1044152f4712a93e264990052aead5dcf59d308a5c4f7bb7887c5",
+      "scannerEnabled": false,
+      "sizeReport": {
+        "wasm": 11208140,
+        "js": 246562,
+        "css": 35072,
+        "fonts": 51732356,
+        "images": 20701,
+        "data": 22998,
+        "total": 63265829
+      },
+      "mainWasm": {
+        "path": "target/makepad-wasm-app/release/utility-lab@tools-utility-lab/utility-lab.wasm",
+        "bytes": 9486990,
+        "sha256": "b063f40bd16e0972f4fae917c117d0726225beb7e3d599514b4c45980ee9efeb"
+      },
+      "workerWasm": {
+        "path": "target/makepad-wasm-app/release/utility-lab@tools-utility-lab/utility/compiler/style_bg.wasm",
+        "bytes": 1721150,
+        "sha256": "44f92474550bcb977bdaeebd5a78821c9351e7f3a4bb23ff92beb52b1a073e16"
+      },
+      "manifest": {
+        "path": "docs/validation/wasm-tailwind/registration-resume-browser/manifests/deep-main-manifest.json",
+        "bytes": 3165,
+        "sha256": "939d85f37ce9f928846cdfc02b798f274a0b039ebcd3594b8abac183436bd38c"
+      },
+      "workerManifest": {
+        "path": "docs/validation/wasm-tailwind/registration-resume-browser/manifests/deep-worker-manifest.json",
+        "bytes": 592,
+        "sha256": "37867c68d3a830419e05b2df849fd89303aef0a9526fa9f52d050c3cf83f0c77"
+      }
+    }
+  },
+  "benchmark": {
+    "before": {
+      "scope": "public AST constructor with sixteen media source blocks and four builds",
+      "samples": [
+        {
+          "constructorP95Ms": 0.6831670000000258,
+          "buildP95Ms": 0.29087499999997135,
+          "sessionsPerSecond": 614.7926778610126,
+          "outputSha256": "5fd45470353f800d2e198fad88da86ae25dd6d8ba7ca5f46232ceedebe529c89",
+          "sessions": 100,
+          "builds": 400
+        },
+        {
+          "constructorP95Ms": 0.674666000000002,
+          "buildP95Ms": 0.3036669999999617,
+          "sessionsPerSecond": 613.4917573548079,
+          "outputSha256": "5fd45470353f800d2e198fad88da86ae25dd6d8ba7ca5f46232ceedebe529c89",
+          "sessions": 100,
+          "builds": 400
+        },
+        {
+          "constructorP95Ms": 0.6146250000000464,
+          "buildP95Ms": 0.2890830000000051,
+          "sessionsPerSecond": 637.8223906759347,
+          "outputSha256": "5fd45470353f800d2e198fad88da86ae25dd6d8ba7ca5f46232ceedebe529c89",
+          "sessions": 100,
+          "builds": 400
+        },
+        {
+          "constructorP95Ms": 0.8088749999999436,
+          "buildP95Ms": 0.33729200000004766,
+          "sessionsPerSecond": 579.5613370946013,
+          "outputSha256": "5fd45470353f800d2e198fad88da86ae25dd6d8ba7ca5f46232ceedebe529c89",
+          "sessions": 100,
+          "builds": 400
+        },
+        {
+          "constructorP95Ms": 0.6502909999999247,
+          "buildP95Ms": 0.283457999999996,
+          "sessionsPerSecond": 627.0788329583833,
+          "outputSha256": "5fd45470353f800d2e198fad88da86ae25dd6d8ba7ca5f46232ceedebe529c89",
+          "sessions": 100,
+          "builds": 400
+        }
+      ],
+      "constructorP95Ms": 0.674666000000002,
+      "buildP95Ms": 0.29087499999997135,
+      "sessionsPerSecond": 614.7926778610126,
+      "wasmBytes": 2457010,
+      "wasmSha256": "71a1a3a37c452d8e32aca0df22d37383e297e0ca75bdbbcd884132a74c1bb985",
+      "actualWasm": true,
+      "finalPerformanceAcceptance": "pending"
+    },
+    "after-initial": {
+      "scope": "public AST constructor with sixteen media source blocks and four builds",
+      "samples": [
+        {
+          "constructorP95Ms": 1.1759170000000267,
+          "buildP95Ms": 0.5294999999999845,
+          "sessionsPerSecond": 420.3852509650764,
+          "outputSha256": "5fd45470353f800d2e198fad88da86ae25dd6d8ba7ca5f46232ceedebe529c89",
+          "sessions": 100,
+          "builds": 400
+        },
+        {
+          "constructorP95Ms": 1.1939169999999422,
+          "buildP95Ms": 0.5285840000000235,
+          "sessionsPerSecond": 471.62052940583465,
+          "outputSha256": "5fd45470353f800d2e198fad88da86ae25dd6d8ba7ca5f46232ceedebe529c89",
+          "sessions": 100,
+          "builds": 400
+        },
+        {
+          "constructorP95Ms": 2.7823339999999916,
+          "buildP95Ms": 1.259916999999973,
+          "sessionsPerSecond": 246.36731395572292,
+          "outputSha256": "5fd45470353f800d2e198fad88da86ae25dd6d8ba7ca5f46232ceedebe529c89",
+          "sessions": 100,
+          "builds": 400
+        },
+        {
+          "constructorP95Ms": 1.0886250000000928,
+          "buildP95Ms": 0.48229200000014316,
+          "sessionsPerSecond": 469.1711551528228,
+          "outputSha256": "5fd45470353f800d2e198fad88da86ae25dd6d8ba7ca5f46232ceedebe529c89",
+          "sessions": 100,
+          "builds": 400
+        },
+        {
+          "constructorP95Ms": 1.4226669999998194,
+          "buildP95Ms": 0.6399579999999787,
+          "sessionsPerSecond": 349.4065188767241,
+          "outputSha256": "5fd45470353f800d2e198fad88da86ae25dd6d8ba7ca5f46232ceedebe529c89",
+          "sessions": 100,
+          "builds": 400
+        }
+      ],
+      "constructorP95Ms": 1.1939169999999422,
+      "buildP95Ms": 0.5294999999999845,
+      "sessionsPerSecond": 420.3852509650764,
+      "wasmBytes": 2501063,
+      "wasmSha256": "3205d71e68204ab0f07d20e25a9c78e2d29146aeab38eef9816e009e9dcf997e",
+      "actualWasm": true,
+      "finalPerformanceAcceptance": "pending"
+    },
+    "optimized": {
+      "scope": "public AST constructor with sixteen media source blocks and four builds",
+      "samples": [
+        {
+          "constructorP95Ms": 0.6087499999999864,
+          "buildP95Ms": 0.28779199999996763,
+          "sessionsPerSecond": 639.9791807092764,
+          "outputSha256": "5fd45470353f800d2e198fad88da86ae25dd6d8ba7ca5f46232ceedebe529c89",
+          "sessions": 100,
+          "builds": 400
+        },
+        {
+          "constructorP95Ms": 0.6040420000000495,
+          "buildP95Ms": 0.28079099999996515,
+          "sessionsPerSecond": 656.3054284800579,
+          "outputSha256": "5fd45470353f800d2e198fad88da86ae25dd6d8ba7ca5f46232ceedebe529c89",
+          "sessions": 100,
+          "builds": 400
+        },
+        {
+          "constructorP95Ms": 0.5953339999999798,
+          "buildP95Ms": 0.2793749999999591,
+          "sessionsPerSecond": 658.8101709116966,
+          "outputSha256": "5fd45470353f800d2e198fad88da86ae25dd6d8ba7ca5f46232ceedebe529c89",
+          "sessions": 100,
+          "builds": 400
+        },
+        {
+          "constructorP95Ms": 0.6066670000000158,
+          "buildP95Ms": 0.2785829999999123,
+          "sessionsPerSecond": 647.7675097630712,
+          "outputSha256": "5fd45470353f800d2e198fad88da86ae25dd6d8ba7ca5f46232ceedebe529c89",
+          "sessions": 100,
+          "builds": 400
+        },
+        {
+          "constructorP95Ms": 0.5789580000000569,
+          "buildP95Ms": 0.27195799999992687,
+          "sessionsPerSecond": 665.2358552147422,
+          "outputSha256": "5fd45470353f800d2e198fad88da86ae25dd6d8ba7ca5f46232ceedebe529c89",
+          "sessions": 100,
+          "builds": 400
+        }
+      ],
+      "constructorP95Ms": 0.6040420000000495,
+      "buildP95Ms": 0.2793749999999591,
+      "sessionsPerSecond": 656.3054284800579,
+      "wasmBytes": 2501226,
+      "wasmSha256": "2114073f8d59e2230ad214eb5d90aabb4682403f4cd1878815561a6cde8d109d",
+      "actualWasm": true,
+      "finalPerformanceAcceptance": "pending"
+    }
+  },
+  "remaining": [
+    "postcompat single owner and one lowering handoff",
+    "authored variant completed mutation prefix",
+    "shared custom variant/functional utility declaration",
+    "raw theme publication before function substitution",
+    "full setup/host/allocation admission and peak proof",
+    "captured host projection, Proxy and external loader callbacks",
+    "full upstream test/assertion/exclusion ledger",
+    "M5 full rendered support/default matrix and old examples",
+    "M6 shared budgets/callbacks/cn/demo/old behavior",
+    "M7 full conformance/performance/CI acceptance"
+  ],
+  "goalStatus": "active",
+  "milestonesCompleted": 3,
+  "milestonesTotal": 7
+}

@@ -1,0 +1,789 @@
+{
+  "config": {
+    "argv": [
+      "/Users/rockie/.nvm/versions/node/v26.1.0/bin/node",
+      "/Users/rockie/Documents/gh-rockie/rustify-ui/node_modules/.bin/playwright",
+      "test",
+      "--project=utility-lab",
+      "--workers=1",
+      "utility-runtime.spec.ts",
+      "utility-faults.spec.ts"
+    ],
+    "configFile": "/Users/rockie/Documents/gh-rockie/rustify-ui/playwright.config.ts",
+    "rootDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": {},
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "utility-lab",
+        "name": "utility-lab",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "utility-runtime.spec.ts",
+          "utility-faults.spec.ts",
+          "utility-gpu.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "utility-lab-deep",
+        "name": "utility-lab-deep",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "utility-runtime.spec.ts",
+          "utility-gpu.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "utility-baseline",
+        "name": "utility-baseline",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "utility-baseline.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "fusion-basic",
+        "name": "fusion-basic",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "p3-restart.spec.ts",
+          "m1-probes.spec.ts",
+          "m2-runtime.spec.ts",
+          "m3-state.spec.ts",
+          "m4-geometry.spec.ts",
+          "m4-overlay.spec.ts",
+          "m6-mainpath.spec.ts",
+          "p2-navigation.spec.ts",
+          "p3-instances.spec.ts",
+          "p3-b0.spec.ts",
+          "p3-idle.spec.ts",
+          "p3-memory.spec.ts",
+          "p3-endurance.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "property-workbench",
+        "name": "property-workbench",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "p3-restart.spec.ts",
+          "m3-workbench.spec.ts",
+          "m5-text.spec.ts",
+          "m5-semantics.spec.ts",
+          "m6-theme.spec.ts",
+          "m6-async.spec.ts",
+          "m6-components.spec.ts",
+          "m7-recovery.spec.ts",
+          "m8-baseline.spec.ts",
+          "m8-network.spec.ts",
+          "m8-endurance.spec.ts",
+          "p2-form.spec.ts",
+          "p2-deeplink.spec.ts",
+          "p2-workspace.spec.ts",
+          "p2-drag.spec.ts",
+          "p2-clipboard-files.spec.ts",
+          "p2-zoom.spec.ts",
+          "p2-ime.spec.ts",
+          "p3-policy.spec.ts",
+          "p3-faults.spec.ts",
+          "p3-diagnostics.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "component-catalog",
+        "name": "component-catalog",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "p3-restart.spec.ts",
+          "p2-catalog.spec.ts",
+          "p2-theme.spec.ts",
+          "p2-semantics.spec.ts",
+          "p2-i18n.spec.ts",
+          "p2-reflow.spec.ts",
+          "p2-a11y.spec.ts",
+          "p3-policy.spec.ts",
+          "catalog-inputs.spec.ts",
+          "theme-compat.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "theme-studio",
+        "name": "theme-studio",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [
+          "theme-compat.spec.ts",
+          "theme-export-runtime.spec.ts"
+        ],
+        "testMatch": [
+          "theme-*.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "theme-studio-deep",
+        "name": "theme-studio-deep",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "theme-deployment.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "theme-export",
+        "name": "theme-export",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "theme-export-runtime.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "theme-export-deep",
+        "name": "theme-export-deep",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "theme-export-runtime.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "data-workbench",
+        "name": "data-workbench",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "p3-restart.spec.ts",
+          "p3-probes.spec.ts",
+          "p3-table.spec.ts",
+          "p3-jobs.spec.ts",
+          "p3-scene.spec.ts",
+          "p3-memory.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "budget-scene",
+        "name": "budget-scene",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "p3-budget-scene.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "workbench-deep",
+        "name": "workbench-deep",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "p2-deeplink.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "deployment",
+        "name": "deployment",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "m7-deployment.spec.ts"
+        ],
+        "timeout": 120000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/browser.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "utility-faults.spec.ts",
+      "file": "utility-faults.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "failed CSSOM installation nacks preparation, preserves the installed revision and permits retry",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "utility-lab",
+              "projectName": "utility-lab",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 717,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-04T10:32:04.268Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d4bd9002ad832de8f293-89b2bdbfc01e3406a5c3",
+          "file": "utility-faults.spec.ts",
+          "line": 8,
+          "column": 5
+        },
+        {
+          "title": "Worker timeout preserves installed CSS and explicit retry replays in a fresh epoch",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "utility-lab",
+              "projectName": "utility-lab",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1668,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-04T10:32:05.291Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d4bd9002ad832de8f293-10225a60d2c334b83fc0",
+          "file": "utility-faults.spec.ts",
+          "line": 36,
+          "column": 5
+        },
+        {
+          "title": "instance trap releases Worker, observer, owner attribute and installed stylesheet through JS abort cleanup",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "utility-lab",
+              "projectName": "utility-lab",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 467,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-04T10:32:06.964Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d4bd9002ad832de8f293-298fa2f32d9aa43a52a9",
+          "file": "utility-faults.spec.ts",
+          "line": 69,
+          "column": 5
+        },
+        {
+          "title": "a second WASM instance keeps its compiler and stylesheet when the first instance traps",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "utility-lab",
+              "projectName": "utility-lab",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 512,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-04T10:32:07.435Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d4bd9002ad832de8f293-71fe0dece576be82fc91",
+          "file": "utility-faults.spec.ts",
+          "line": 86,
+          "column": 5
+        },
+        {
+          "title": "a Worker construction failure leaves the root available for a later mount",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "utility-lab",
+              "projectName": "utility-lab",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 590,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-04T10:32:07.952Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d4bd9002ad832de8f293-fc24a614d933b3ee1013",
+          "file": "utility-faults.spec.ts",
+          "line": 110,
+          "column": 5
+        }
+      ]
+    },
+    {
+      "title": "utility-runtime.spec.ts",
+      "file": "utility-runtime.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "SDK ensure installs scanner-free CSS, coalesces requests and isolates independent scopes",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "utility-lab",
+              "projectName": "utility-lab",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 469,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-04T10:32:08.553Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "SDK committed stylesheet",
+                      "contentType": "application/json",
+                      "body": "ewogICJmaXJzdCI6IFsKICAgIDEsCiAgICAxCiAgXSwKICAicmV2aXNpb24iOiAxLAogICJyZXBlYXRlZFJldmlzaW9uIjogMSwKICAid2lkdGgiOiAiMTM3cHgiLAogICJjb2xvciI6ICJyZ2IoMTgsIDUyLCA4NikiLAogICJvdGhlckNvbG9yIjogInJnYigxNzEsIDIwNSwgMjM5KSIsCiAgIm91dHNpZGVDb2xvciI6ICJyZ2JhKDAsIDAsIDAsIDApIiwKICAib3RoZXJSZXZpc2lvbiI6IDEsCiAgInNoZWV0Q291bnQiOiAyLAogICJyZW1haW5pbmdTaGVldHMiOiAxLAogICJyZW1haW5pbmdDb2xvciI6ICJyZ2IoMTcxLCAyMDUsIDIzOSkiLAogICJ2aW9sYXRpb25zIjogW10sCiAgImNzcyI6ICJAc2NvcGUgKFtkYXRhLXJ1c3RpZnktc3R5bGUtb3duZXI9XCI4MTE2ZThjYi01Zjk3LTRkNWUtYjY2Zi04ZDgzNGNhNjE0MmFcIl0pIHRvIChbZGF0YS1ydXN0aWZ5LXN0eWxlLW93bmVyXSkge1xuICAudy1cXFsxMzdweFxcXSB7XG4gICAgd2lkdGg6IDEzN3B4O1xuICB9XG4gIC5iZy1cXFtcXCMxMjM0NTZcXF0ge1xuICAgIGJhY2tncm91bmQtY29sb3I6ICMxMjM0NTY7XG4gIH1cbn1cbiIKfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "b6296ec9b704237e1532-a60525a22d82a856d5c8",
+          "file": "utility-runtime.spec.ts",
+          "line": 8,
+          "column": 5
+        },
+        {
+          "title": "controls apply classes and fit desktop and mobile",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "utility-lab",
+              "projectName": "utility-lab",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 692,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-04T10:32:09.026Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "b6296ec9b704237e1532-626a9ebbbcd615aff5fa",
+          "file": "utility-runtime.spec.ts",
+          "line": 60,
+          "column": 5
+        },
+        {
+          "title": "nested owners stop outer rules and disposal removes the owned stylesheet",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "utility-lab",
+              "projectName": "utility-lab",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 510,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-04T10:32:09.724Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "b6296ec9b704237e1532-67fb794b7a27d89fc266",
+          "file": "utility-runtime.spec.ts",
+          "line": 78,
+          "column": 5
+        },
+        {
+          "title": "classList changes and newly added subtrees compile through the bounded observer without scanner",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "utility-lab",
+              "projectName": "utility-lab",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 564,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-04T10:32:10.238Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "b6296ec9b704237e1532-c55c75f33137174fbb98",
+          "file": "utility-runtime.spec.ts",
+          "line": 100,
+          "column": 5
+        },
+        {
+          "title": "scoped relation variants and arbitrary selectors retain conditional matching",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "utility-lab",
+              "projectName": "utility-lab",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 499,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-04T10:32:10.806Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "scoped relation variant results",
+                      "contentType": "application/json",
+                      "body": "ewogICJiZWZvcmUiOiB7CiAgICAiY29sb3IiOiAicmdiYSgwLCAwLCAwLCAwKSIsCiAgICAiaGVpZ2h0IjogIjExcHgiCiAgfSwKICAiYWZ0ZXIiOiB7CiAgICAiY29sb3IiOiAicmdiKDE4LCA1MiwgODYpIiwKICAgICJoZWlnaHQiOiAiMzdweCIKICB9LAogICJpc29sYXRlZCI6IFsKICAgICJyZ2JhKDAsIDAsIDAsIDApIiwKICAgICJyZ2JhKDAsIDAsIDAsIDApIgogIF0sCiAgInBhZGRpbmciOiAiN3B4IiwKICAic3BhbldpZHRoIjogIjYzcHgiLAogICJyZXN0b3JlZEhlaWdodCI6ICIxMXB4IiwKICAidW5zdXBwb3J0ZWQiOiBbXSwKICAiY3NzIjogIkBzY29wZSAoW2RhdGEtcnVzdGlmeS1zdHlsZS1vd25lcj1cImI1YjBkNzJmLTdhOTMtNGQyNy05OGJjLWM0ZmNmMjVkMGNmN1wiXSkgdG8gKFtkYXRhLXJ1c3RpZnktc3R5bGUtb3duZXJdKSB7XG4gIC5oLVxcWzExcHhcXF0ge1xuICAgIGhlaWdodDogMTFweDtcbiAgfVxuICAudy1cXFs4OXB4XFxdIHtcbiAgICB3aWR0aDogODlweDtcbiAgfVxuICAucC1cXFs3cHhcXF0ge1xuICAgIHBhZGRpbmc6IDdweDtcbiAgfVxuICAuZ3JvdXAtZGF0YS1cXFtzdGF0ZVxcPW9wZW5cXF1cXDpiZy1cXFtcXCMxMjM0NTZcXF0ge1xuICAgICY6aXMoOndoZXJlKC5ncm91cClbZGF0YS1zdGF0ZT1cIm9wZW5cIl0gKikge1xuICAgICAgYmFja2dyb3VuZC1jb2xvcjogIzEyMzQ1NjtcbiAgICB9XG4gIH1cbiAgLnBlZXItZGF0YS1cXFtzdGF0ZVxcPW9wZW5cXF1cXDpoLVxcWzM3cHhcXF0ge1xuICAgICY6aXMoOndoZXJlKC5wZWVyKVtkYXRhLXN0YXRlPVwib3BlblwiXSB+ICopIHtcbiAgICAgIGhlaWdodDogMzdweDtcbiAgICB9XG4gIH1cbiAgLlxcW1xcJlxcPnNwYW5cXF1cXDp3LVxcWzYzcHhcXF0ge1xuICAgICY+c3BhbiB7XG4gICAgICB3aWR0aDogNjNweDtcbiAgICB9XG4gIH1cbn1cbiIKfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "b6296ec9b704237e1532-fceaa6946983ec0eba3b",
+          "file": "utility-runtime.spec.ts",
+          "line": 127,
+          "column": 5
+        },
+        {
+          "title": "arbitrary responsive conditions follow the browser viewport at both sizes",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "utility-lab",
+              "projectName": "utility-lab",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 504,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-04T10:32:11.311Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "responsive prepared report",
+                      "contentType": "application/json",
+                      "body": "ewogICJyZXZpc2lvbiI6IDEsCiAgImNoYW5nZWQiOiB0cnVlLAogICJjc3MiOiAiQHNjb3BlIChbZGF0YS1ydXN0aWZ5LXN0eWxlLW93bmVyPVwiNjIzMDNjZTUtMGUyNS00MTZiLWI1YWYtNmIxN2Q2YzA0NzNkXCJdKSB0byAoW2RhdGEtcnVzdGlmeS1zdHlsZS1vd25lcl0pIHtcbiAgLmgtXFxbMTFweFxcXSB7XG4gICAgaGVpZ2h0OiAxMXB4O1xuICB9XG4gIC53LVxcWzg5cHhcXF0ge1xuICAgIHdpZHRoOiA4OXB4O1xuICB9XG4gIC5tYXgtXFxbNjAwcHhcXF1cXDpoLVxcWzQ3cHhcXF0ge1xuICAgIEBtZWRpYSAod2lkdGggPCA2MDBweCkge1xuICAgICAgaGVpZ2h0OiA0N3B4O1xuICAgIH1cbiAgfVxuICAubWluLVxcWzYwMHB4XFxdXFw6dy1cXFsxNDlweFxcXSB7XG4gICAgQG1lZGlhICh3aWR0aCA+PSA2MDBweCkge1xuICAgICAgd2lkdGg6IDE0OXB4O1xuICAgIH1cbiAgfVxufVxuIiwKICAiYWRtaXR0ZWQiOiBbCiAgICAiaC1bMTFweF0iLAogICAgInctWzg5cHhdIiwKICAgICJtYXgtWzYwMHB4XTpoLVs0N3B4XSIsCiAgICAibWluLVs2MDBweF06dy1bMTQ5cHhdIgogIF0sCiAgInJlamVjdGVkIjogWwogICAgewogICAgICAiY2FuZGlkYXRlIjogIm5lc3RlZC1zbG90IiwKICAgICAgImtpbmQiOiAidW5rbm93bl91dGlsaXR5IiwKICAgICAgImZhbWlseSI6IG51bGwKICAgIH0sCiAgICB7CiAgICAgICJjYW5kaWRhdGUiOiAicHJldmlldyIsCiAgICAgICJraW5kIjogInVua25vd25fdXRpbGl0eSIsCiAgICAgICJmYW1pbHkiOiBudWxsCiAgICB9LAogICAgewogICAgICAiY2FuZGlkYXRlIjogInByZXZpZXctY29udGVudCIsCiAgICAgICJraW5kIjogInVua25vd25fdXRpbGl0eSIsCiAgICAgICJmYW1pbHkiOiBudWxsCiAgICB9LAogICAgewogICAgICAiY2FuZGlkYXRlIjogInNhbXBsZSIsCiAgICAgICJraW5kIjogInVua25vd25fdXRpbGl0eSIsCiAgICAgICJmYW1pbHkiOiBudWxsCiAgICB9LAogICAgewogICAgICAiY2FuZGlkYXRlIjogInNhbXBsZS1zd2F0Y2giLAogICAgICAia2luZCI6ICJ1bmtub3duX3V0aWxpdHkiLAogICAgICAiZmFtaWx5IjogbnVsbAogICAgfSwKICAgIHsKICAgICAgImNhbmRpZGF0ZSI6ICJzYW1wbGUtdGV4dCIsCiAgICAgICJraW5kIjogInVua25vd25fdXRpbGl0eSIsCiAgICAgICJmYW1pbHkiOiBudWxsCiAgICB9CiAgXSwKICAidW5zdXBwb3J0ZWQiOiBbXSwKICAiZ3B1X3Byb2dyYW1zIjogWwogICAgewogICAgICAiY2FuZGlkYXRlIjogImgtWzExcHhdIiwKICAgICAgImNvbmRpdGlvbnMiOiBbXSwKICAgICAgImRlY2xhcmF0aW9ucyI6IFsKICAgICAgICB7CiAgICAgICAgICAicHJvcGVydHkiOiAiaGVpZ2h0IiwKICAgICAgICAgICJ2YWx1ZSI6IHsKICAgICAgICAgICAgImtpbmQiOiAicGl4ZWxzIiwKICAgICAgICAgICAgInZhbHVlIjogIjExIgogICAgICAgICAgfSwKICAgICAgICAgICJpbXBvcnRhbnQiOiBmYWxzZQogICAgICAgIH0KICAgICAgXSwKICAgICAgImNhc2NhZGVfb3JkZXIiOiAwCiAgICB9LAogICAgewogICAgICAiY2FuZGlkYXRlIjogInctWzg5cHhdIiwKICAgICAgImNvbmRpdGlvbnMiOiBbXSwKICAgICAgImRlY2xhcmF0aW9ucyI6IFsKICAgICAgICB7CiAgICAgICAgICAicHJvcGVydHkiOiAid2lkdGgiLAogICAgICAgICAgInZhbHVlIjogewogICAgICAgICAgICAia2luZCI6ICJwaXhlbHMiLAogICAgICAgICAgICAidmFsdWUiOiAiODkiCiAgICAgICAgICB9LAogICAgICAgICAgImltcG9ydGFudCI6IGZhbHNlCiAgICAgICAgfQogICAgICBdLAogICAgICAiY2FzY2FkZV9vcmRlciI6IDEKICAgIH0sCiAgICB7CiAgICAgICJjYW5kaWRhdGUiOiAibWF4LVs2MDBweF06aC1bNDdweF0iLAogICAgICAiY29uZGl0aW9ucyI6IFsKICAgICAgICB7CiAgICAgICAgICAia2luZCI6ICJtZWRpYSIsCiAgICAgICAgICAicXVlcnkiOiAiKHdpZHRoIDwgNjAwcHgpIgogICAgICAgIH0KICAgICAgXSwKICAgICAgImRlY2xhcmF0aW9ucyI6IFsKICAgICAgICB7CiAgICAgICAgICAicHJvcGVydHkiOiAiaGVpZ2h0IiwKICAgICAgICAgICJ2YWx1ZSI6IHsKICAgICAgICAgICAgImtpbmQiOiAicGl4ZWxzIiwKICAgICAgICAgICAgInZhbHVlIjogIjQ3IgogICAgICAgICAgfSwKICAgICAgICAgICJpbXBvcnRhbnQiOiBmYWxzZQogICAgICAgIH0KICAgICAgXSwKICAgICAgImNhc2NhZGVfb3JkZXIiOiAyCiAgICB9LAogICAgewogICAgICAiY2FuZGlkYXRlIjogIm1pbi1bNjAwcHhdOnctWzE0OXB4XSIsCiAgICAgICJjb25kaXRpb25zIjogWwogICAgICAgIHsKICAgICAgICAgICJraW5kIjogIm1lZGlhIiwKICAgICAgICAgICJxdWVyeSI6ICIod2lkdGggPj0gNjAwcHgpIgogICAgICAgIH0KICAgICAgXSwKICAgICAgImRlY2xhcmF0aW9ucyI6IFsKICAgICAgICB7CiAgICAgICAgICAicHJvcGVydHkiOiAid2lkdGgiLAogICAgICAgICAgInZhbHVlIjogewogICAgICAgICAgICAia2luZCI6ICJwaXhlbHMiLAogICAgICAgICAgICAidmFsdWUiOiAiMTQ5IgogICAgICAgICAgfSwKICAgICAgICAgICJpbXBvcnRhbnQiOiBmYWxzZQogICAgICAgIH0KICAgICAgXSwKICAgICAgImNhc2NhZGVfb3JkZXIiOiAzCiAgICB9CiAgXSwKICAiZ3B1X3ZhcmlhYmxlcyI6IHt9LAogICJtZXRyaWNzIjogewogICAgInBhcnNlZF9jYW5kaWRhdGVzIjogNCwKICAgICJnZW5lcmF0ZWRfY2FuZGlkYXRlcyI6IDQsCiAgICAiY2FjaGVfZW50cmllcyI6IDEwLAogICAgImNhY2hlX2J5dGVzIjogMTM2MSwKICAgICJvdXRwdXRfYnl0ZXMiOiAzNjgKICB9Cn0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "b6296ec9b704237e1532-f6fe3e078ca0fdf5a995",
+          "file": "utility-runtime.spec.ts",
+          "line": 169,
+          "column": 5
+        },
+        {
+          "title": "color alpha and scoped placeholder selectors retain their browser semantics",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "utility-lab",
+              "projectName": "utility-lab",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 491,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-04T10:32:11.820Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "color alpha and placeholder results",
+                      "contentType": "application/json",
+                      "body": "ewogICJiYWNrZ3JvdW5kIjogWwogICAgMTgsCiAgICA1MiwKICAgIDg2LAogICAgMTI4CiAgXSwKICAidGV4dCI6IFsKICAgIDE3MiwKICAgIDIwNiwKICAgIDI0MSwKICAgIDg5CiAgXSwKICAiYm9yZGVyIjogWwogICAgMjU1LAogICAgMjE5LAogICAgMTg3LAogICAgNjQKICBdLAogICJwbGFjZWhvbGRlciI6IFsKICAgIDE4LAogICAgNTIsCiAgICA4NiwKICAgIDEyOAogIF0sCiAgIm91dHNpZGUiOiBbCiAgICAxMTcsCiAgICAxMTcsCiAgICAxMTcsCiAgICAyNTUKICBdLAogICJ1bnN1cHBvcnRlZCI6IFtdLAogICJjc3MiOiAiQHNjb3BlIChbZGF0YS1ydXN0aWZ5LXN0eWxlLW93bmVyPVwiNGMzM2YyNDEtM2I1Yy00OGVmLWE2MzAtMmNjY2VlOWRiZjcyXCJdKSB0byAoW2RhdGEtcnVzdGlmeS1zdHlsZS1vd25lcl0pIHtcbiAgLmJvcmRlci1cXFtcXCNmZWRjYmFcXF1cXC8yNSB7XG4gICAgYm9yZGVyLWNvbG9yOiBjb2xvci1taXgoaW4gb2tsYWIsICNmZWRjYmEgMjUlLCB0cmFuc3BhcmVudCk7XG4gIH1cbiAgLmJnLVxcW1xcIzEyMzQ1NlxcXVxcLzUwIHtcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiBjb2xvci1taXgoaW4gb2tsYWIsICMxMjM0NTYgNTAlLCB0cmFuc3BhcmVudCk7XG4gIH1cbiAgLnRleHQtXFxbXFwjYWJjZGVmXFxdXFwvXFxbXFwuMzVcXF0ge1xuICAgIGNvbG9yOiBjb2xvci1taXgoaW4gb2tsYWIsICNhYmNkZWYgMzUlLCB0cmFuc3BhcmVudCk7XG4gIH1cbiAgLnBsYWNlaG9sZGVyLVxcW1xcIzEyMzQ1NlxcXVxcLzUwIHtcbiAgICAmOjpwbGFjZWhvbGRlciB7XG4gICAgICBjb2xvcjogY29sb3ItbWl4KGluIG9rbGFiLCAjMTIzNDU2IDUwJSwgdHJhbnNwYXJlbnQpO1xuICAgIH1cbiAgfVxufVxuIgp9"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "b6296ec9b704237e1532-8d06654122e0cb5184e5",
+          "file": "utility-runtime.spec.ts",
+          "line": 188,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-04T10:32:03.170Z",
+    "duration": 9220.161,
+    "expected": 12,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

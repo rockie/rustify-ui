@@ -1,0 +1,246 @@
+{
+  "schemaVersion": 2,
+  "commit": "b7ec0fce43d824a60517fab508584eb860fdf717",
+  "referenceChecker": "tests/utility/cn/build-contract.mjs --check",
+  "rustRunner": "mbx test --locked -p rustify-style --no-default-features --features cn cn::",
+  "coreStatus": "implemented_fixed_corpus_verified",
+  "completeM2Status": "public_api_host_and_wasm_fixed_differentials_verified_remaining_environment_checks_explicit",
+  "apis": [
+    {
+      "name": "expandGlobs",
+      "upstream": {
+        "path": "packages/cn/src/build.ts",
+        "line": 169
+      },
+      "rust": "crates/rustify-style/src/cn/build/globs.rs",
+      "nativeCore": "verified_fixed_corpus",
+      "wasmFacade": "verified_actual_js_values",
+      "hostIntegration": "verified_actual_Node_primitives_and_original_source_differential",
+      "wasmExport": "CnBuildSession.expand_globs",
+      "evidenceCase": "source-ports-expansion-and-matcher"
+    },
+    {
+      "name": "createContentMatcher",
+      "upstream": {
+        "path": "packages/cn/src/build.ts",
+        "line": 214
+      },
+      "rust": "crates/rustify-style/src/cn/build/globs.rs",
+      "nativeCore": "verified_fixed_corpus",
+      "wasmFacade": "verified_actual_js_values",
+      "hostIntegration": "verified_actual_Node_primitives_and_original_source_differential",
+      "wasmExport": "CnBuildSession.create_content_matcher / CnContentMatcher.matches",
+      "evidenceCase": "real-fs-mini-glob-UTF16-question-and-final-newline"
+    },
+    {
+      "name": "extractTokens",
+      "upstream": {
+        "path": "packages/cn/src/build.ts",
+        "line": 258
+      },
+      "rust": "crates/rustify-style/src/cn/build.rs",
+      "nativeCore": "verified_fixed_corpus",
+      "wasmFacade": "verified_actual_js_values",
+      "hostIntegration": "verified_actual_Node_primitives_and_original_source_differential",
+      "wasmExport": "cn_extract_tokens",
+      "evidenceCase": "candidate-Set-add-duplicates-and-original-throw"
+    },
+    {
+      "name": "build",
+      "upstream": {
+        "path": "packages/cn/src/build.ts",
+        "line": 319
+      },
+      "rust": "crates/rustify-style/src/cn/build/project.rs",
+      "nativeCore": "verified_fixed_corpus",
+      "wasmFacade": "verified_actual_js_values",
+      "hostIntegration": "verified_actual_Node_primitives_and_original_source_differential",
+      "wasmExport": "CnBuildSession.build",
+      "evidenceCase": "real-fs-default-subset-and-noop"
+    },
+    {
+      "name": "createBuilder",
+      "upstream": {
+        "path": "packages/cn/src/build.ts",
+        "line": 483
+      },
+      "rust": "crates/rustify-style/src/cn/build/builder.rs",
+      "nativeCore": "verified_fixed_corpus",
+      "wasmFacade": "verified_actual_js_values",
+      "hostIntegration": "verified_actual_Node_primitives_and_original_source_differential",
+      "wasmExport": "CnBuildSession.create_builder / CnBuilder.run,changed,last",
+      "evidenceCase": "actual-builder-run-Promise-coalescing"
+    },
+    {
+      "name": "themeFromCss",
+      "upstream": {
+        "path": "packages/cn/src/theme-css.ts",
+        "line": 73
+      },
+      "rust": "crates/rustify-style/src/cn/build/theme.rs",
+      "nativeCore": "verified_fixed_corpus",
+      "wasmFacade": "verified_actual_js_values",
+      "hostIntegration": "verified_actual_Node_primitives_and_original_source_differential",
+      "wasmExport": "CnBuildSession.theme_from_css",
+      "evidenceCase": "CSS-helper-optional-extension-sections"
+    },
+    {
+      "name": "isTailwindCss",
+      "upstream": {
+        "path": "packages/cn/src/theme-css.ts",
+        "line": 53
+      },
+      "rust": "crates/rustify-style/src/cn/build/theme.rs",
+      "nativeCore": "verified_fixed_corpus",
+      "wasmFacade": "verified_actual_js_values",
+      "hostIntegration": "verified_actual_Node_primitives_and_original_source_differential",
+      "wasmExport": "cn_is_tailwind_css",
+      "evidenceCase": "CSS-helper-optional-extension-sections"
+    },
+    {
+      "name": "vite.cn",
+      "upstream": {
+        "path": "packages/cn/src/vite.ts",
+        "line": 6
+      },
+      "rust": "crates/rustify-style/src/cn/build/tools.rs",
+      "nativeCore": "verified_fixed_corpus",
+      "wasmFacade": "verified_actual_js_values",
+      "hostIntegration": "verified_actual_Node_primitives_and_original_source_differential",
+      "wasmExport": "CnBuildSession.vite",
+      "evidenceCase": "actual-Vite-hooks-root-and-override",
+      "frameworkSmoke": "not_run_full_framework_project"
+    },
+    {
+      "name": "next.withCn",
+      "upstream": {
+        "path": "packages/cn/src/next.ts",
+        "line": 8
+      },
+      "rust": "crates/rustify-style/src/cn/build/tools.rs",
+      "nativeCore": "verified_fixed_corpus",
+      "wasmFacade": "verified_actual_js_values",
+      "hostIntegration": "verified_actual_Node_primitives_and_original_source_differential",
+      "wasmExport": "CnBuildSession.with_cn",
+      "evidenceCase": "actual-Next-recursive-nonpersistent-watch-and-disposal",
+      "frameworkSmoke": "not_run_full_framework_project"
+    },
+    {
+      "name": "compileToSource",
+      "upstream": {
+        "path": "packages/cn/src/compiler.ts",
+        "line": 957
+      },
+      "rust": "crates/rustify-style/src/cn/compiler.rs",
+      "wasmExport": "cn_compile_to_source",
+      "wasmFacade": "verified_lossless_UTF16",
+      "evidenceCase": "pure-UTF16-source-subset-stats-and-banner"
+    },
+    {
+      "name": "compileStats",
+      "upstream": {
+        "path": "packages/cn/src/compiler.ts",
+        "line": 1139
+      },
+      "rust": "crates/rustify-style/src/cn/compiler.rs",
+      "wasmExport": "cn_compile_stats",
+      "wasmFacade": "verified_lossless_UTF16",
+      "evidenceCase": "pure-UTF16-source-subset-stats-and-banner"
+    },
+    {
+      "name": "subsetConfig",
+      "upstream": {
+        "path": "packages/cn/src/compiler.ts",
+        "line": 325
+      },
+      "rust": "crates/rustify-style/src/cn/compiler.rs",
+      "wasmExport": "cn_subset_config",
+      "wasmFacade": "verified_lossless_UTF16",
+      "evidenceCase": "pure-UTF16-source-subset-stats-and-banner"
+    },
+    {
+      "name": "compileModel",
+      "upstream": {
+        "path": "packages/cn/src/compiler.ts",
+        "line": 449
+      },
+      "nativeCore": "adapted_model_preserves_raw_literals_and_set_attachment_identity_metadata",
+      "wasmFacade": "verified_complete_original_public_JS_shape",
+      "wasmExport": "cn_compile_model",
+      "evidenceCase": "public-compileModel-complete-shape-callbacks-and-identity"
+    }
+  ],
+  "cli": {
+    "upstream": {
+      "path": "packages/cn/bin/cn.mjs",
+      "line": 19
+    },
+    "rust": "crates/rustify-style/src/cn/build/tools.rs",
+    "core": "verified_parser_streams_exit_gzip_summary",
+    "executableHost": "verified_actual_production_Node_executable_and_original_bin_subprocess",
+    "wasmExports": [
+      "CnBuildSession.parse_cli",
+      "CnBuildSession.run_cli",
+      "CnBuildSession.cli_summary"
+    ],
+    "gzip": "Node gzipSync(level:9) host primitive; Rust miniz compressed bytes are not equivalent"
+  },
+  "hostRequirements": [
+    {
+      "contract": "real JS config module import; default ?? config export selection; extension/transform callback realm and errors",
+      "status": "verified_actual_Node_WASM_differential"
+    },
+    {
+      "contract": "JS native/virtual source/options/report conversion for all build APIs",
+      "status": "verified_actual_Node_WASM_differential"
+    },
+    {
+      "contract": "WASM build/glob/matcher/theme/token and incremental builder exports with shared-result identity",
+      "status": "verified_actual_Node_WASM_differential"
+    },
+    {
+      "contract": "Vite framework hook registration and generated-module/HMR behavior",
+      "status": "not_run_full_framework_project"
+    },
+    {
+      "contract": "Next config factory/Promise realm and recursive nonpersistent native watcher subscription",
+      "status": "verified_actual_Node_WASM_differential"
+    },
+    {
+      "contract": "CLI executable process streams and exit integration",
+      "status": "verified_actual_Node_WASM_differential"
+    }
+  ],
+  "additionalVerification": [
+    "Windows filesystem/platform-specific IO errors not run.",
+    "Full Vite HMR/Next framework projects not launched; actual hook/factory/Promise/native watch lifecycle verified.",
+    "Randomized build differential corpus and performance not run in this phase.",
+    "Native Rust miniz and Node zlib DEFLATE bytes differ; Node production CLI delegates actual gzip size to zlib."
+  ],
+  "wasmRunner": "node tests/utility/cn/run-build-host.mjs",
+  "verificationRecord": "tests/utility/cn/build-host-verification.json",
+  "runtimeHelpers": {
+    "record": "tests/utility/cn/wasm-native-verification.json",
+    "replayedProductionBundle": true,
+    "fixedCases": 947,
+    "extraCases": 56,
+    "exports": [
+      "CnSession.merge/tw_merge/join/tw_join/lite/seen_before/merge_string/merge_uncached/fromTables",
+      "cn_default_config",
+      "cn_from_theme",
+      "cn_validator_marker",
+      "cn_validator",
+      "cn_merge_configs",
+      "cn_compile_to_tables"
+    ],
+    "shape": "original JS handles and UTF16 units; no JSON config transport"
+  },
+  "optionGetterSemantics": {
+    "status": "verified_actual_native_JS_options_Proxy_getter_differential",
+    "scenarios": 16,
+    "readTracePairs": 26,
+    "cases": "tests/utility/cn/build-options-cases.mjs",
+    "evidence": "tests/utility/cn/evidence/build-options.json",
+    "details": "Original named-property read order/count, short circuits, staged IO/await reads, synchronous pre-await start, async rejection and finite Next/Vite getter reentry. CLI options are internally constructed plain data; SDK summary tests original print body full/out getters."
+  }
+}

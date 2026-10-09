@@ -1,0 +1,109 @@
+{
+  "before": {
+    "scope": "public AST constructor with sixteen media source blocks and four builds",
+    "samples": [
+      {
+        "constructorP95Ms": 0.6076249999999845,
+        "buildP95Ms": 0.2971249999999941,
+        "sessionsPerSecond": 646.3937839464198,
+        "outputSha256": "5fd45470353f800d2e198fad88da86ae25dd6d8ba7ca5f46232ceedebe529c89",
+        "sessions": 100,
+        "builds": 400
+      },
+      {
+        "constructorP95Ms": 0.5418750000000045,
+        "buildP95Ms": 0.2802090000000135,
+        "sessionsPerSecond": 685.3191487072445,
+        "outputSha256": "5fd45470353f800d2e198fad88da86ae25dd6d8ba7ca5f46232ceedebe529c89",
+        "sessions": 100,
+        "builds": 400
+      },
+      {
+        "constructorP95Ms": 0.5770410000000084,
+        "buildP95Ms": 0.2866669999999658,
+        "sessionsPerSecond": 675.497859992382,
+        "outputSha256": "5fd45470353f800d2e198fad88da86ae25dd6d8ba7ca5f46232ceedebe529c89",
+        "sessions": 100,
+        "builds": 400
+      },
+      {
+        "constructorP95Ms": 0.5376250000000482,
+        "buildP95Ms": 0.2663329999999178,
+        "sessionsPerSecond": 690.8729384075168,
+        "outputSha256": "5fd45470353f800d2e198fad88da86ae25dd6d8ba7ca5f46232ceedebe529c89",
+        "sessions": 100,
+        "builds": 400
+      },
+      {
+        "constructorP95Ms": 0.5505829999999605,
+        "buildP95Ms": 0.2741249999999127,
+        "sessionsPerSecond": 685.9684891731298,
+        "outputSha256": "5fd45470353f800d2e198fad88da86ae25dd6d8ba7ca5f46232ceedebe529c89",
+        "sessions": 100,
+        "builds": 400
+      }
+    ],
+    "constructorP95Ms": 0.5505829999999605,
+    "buildP95Ms": 0.2802090000000135,
+    "sessionsPerSecond": 685.3191487072445,
+    "wasmBytes": 2416446,
+    "wasmSha256": "64acb3dc4c1e6378f35b25a8d84cf3c7f065e4ea276ace1aeae01f009db18db3",
+    "actualWasm": true,
+    "finalPerformanceAcceptance": "pending"
+  },
+  "after": {
+    "scope": "public AST constructor with sixteen media source blocks and four builds",
+    "samples": [
+      {
+        "constructorP95Ms": 0.583582999999976,
+        "buildP95Ms": 0.28437500000001137,
+        "sessionsPerSecond": 666.795024708923,
+        "outputSha256": "5fd45470353f800d2e198fad88da86ae25dd6d8ba7ca5f46232ceedebe529c89",
+        "sessions": 100,
+        "builds": 400
+      },
+      {
+        "constructorP95Ms": 0.5500839999999698,
+        "buildP95Ms": 0.2761250000000359,
+        "sessionsPerSecond": 680.545058337071,
+        "outputSha256": "5fd45470353f800d2e198fad88da86ae25dd6d8ba7ca5f46232ceedebe529c89",
+        "sessions": 100,
+        "builds": 400
+      },
+      {
+        "constructorP95Ms": 0.5589999999999691,
+        "buildP95Ms": 0.27758299999993596,
+        "sessionsPerSecond": 680.4840819496364,
+        "outputSha256": "5fd45470353f800d2e198fad88da86ae25dd6d8ba7ca5f46232ceedebe529c89",
+        "sessions": 100,
+        "builds": 400
+      },
+      {
+        "constructorP95Ms": 0.5469590000000153,
+        "buildP95Ms": 0.26745900000003076,
+        "sessionsPerSecond": 686.150085903589,
+        "outputSha256": "5fd45470353f800d2e198fad88da86ae25dd6d8ba7ca5f46232ceedebe529c89",
+        "sessions": 100,
+        "builds": 400
+      },
+      {
+        "constructorP95Ms": 0.5531250000000227,
+        "buildP95Ms": 0.2754579999999578,
+        "sessionsPerSecond": 677.510029502784,
+        "outputSha256": "5fd45470353f800d2e198fad88da86ae25dd6d8ba7ca5f46232ceedebe529c89",
+        "sessions": 100,
+        "builds": 400
+      }
+    ],
+    "constructorP95Ms": 0.5531250000000227,
+    "buildP95Ms": 0.2761250000000359,
+    "sessionsPerSecond": 680.4840819496364,
+    "wasmBytes": 2425789,
+    "wasmSha256": "ab5b9b817462b82c18883de3de17f7be56b0bf6077d7011b8dc46379213507ee",
+    "actualWasm": true,
+    "finalPerformanceAcceptance": "pending"
+  },
+  "serial": true,
+  "concurrentBuildsOrTests": false,
+  "interpretation": "Local descriptive sixteen media-source blocks workload; CSS-bearing shape hash only, independent complete graph gates; no optimization or final performance claim; Promise and allocator peak pending"
+}

@@ -1,0 +1,74 @@
+{
+  "preservedOriginalCases": 6289,
+  "preservedById": true,
+  "preservedOrder": true,
+  "originalCasesSha256": "3b4adbf013252a0f3c35e7861aab0deee9ffd78c4c304a8adcd3bc23980ef974",
+  "total": 6782,
+  "added": 493,
+  "addedCss": 395,
+  "addedErrors": 98,
+  "addedIncremental": 4,
+  "addedErrorPhases": {
+    "compile": 98,
+    "build": 0
+  },
+  "sourceCommit": "1334c99db8fd26c8ea065375dd9259800863f072",
+  "sources": [
+    {
+      "path": "packages/tailwindcss/src/index.ts",
+      "sha256": "f5084cb8b08b4048d2cf9a145a3805a46231c5c043db021741d9a19e9297a369"
+    },
+    {
+      "path": "packages/tailwindcss/src/variants.ts",
+      "sha256": "93b90fa5a59849c06c75aab7f0331407a249175d1419de93775120feefe88a06"
+    },
+    {
+      "path": "packages/tailwindcss/src/candidate.ts",
+      "sha256": "b8ab76ca9be87f3e527a419d30f6a38d5f769f93061a458ebc2b23a905b409c1"
+    },
+    {
+      "path": "packages/tailwindcss/src/ast.ts",
+      "sha256": "17ed5fb1a5f5e4573768ba97d54a1002bc258f3ec677f37abd73022efcabcdaf"
+    },
+    {
+      "path": "packages/tailwindcss/src/compile.ts",
+      "sha256": "b9b17359cf3e904121db6043c13fe72a8895f714629df477266d610a6e5ea7cb"
+    },
+    {
+      "path": "packages/tailwindcss/src/theme.ts",
+      "sha256": "bb66d870222aff542977c784e94f8b66c7860b11055726097ceaf1efb186d3f3"
+    },
+    {
+      "path": "packages/tailwindcss/src/at-import.ts",
+      "sha256": "e70b753ba93abdf233c0a9f14ca5ee44de07fc90d573425fa97af2c7a5c1691c"
+    },
+    {
+      "path": "packages/tailwindcss/src/css-parser.ts",
+      "sha256": "1073cc77eff0b00f00750f74ccdebd9b600f9e54300ffa8227b59d28c2574fec"
+    },
+    {
+      "path": "packages/tailwindcss/src/design-system.ts",
+      "sha256": "fab5b5452cc6d967b101137cf111e694dd28dbc6fa98b48e4beae6e17c6c88fb"
+    },
+    {
+      "path": "packages/tailwindcss/src/utils/segment.ts",
+      "sha256": "617f0548dc0018f12968d168e2066a3f1adcbd6e9a7746d56777d516e956a1c7"
+    },
+    {
+      "path": "packages/tailwindcss/src/utils/is-valid-arbitrary.ts",
+      "sha256": "35cc4891b21f3e3153da5c8fa570d39d6e6082f2e275e0d9575c060e92ac0a71"
+    },
+    {
+      "path": "packages/tailwindcss/src/utilities.ts",
+      "sha256": "1e8df70d3357ca477c6a2a4c4fe818627d444969f0790bf9f5538ad467078293"
+    },
+    {
+      "path": "packages/tailwindcss/theme.css",
+      "sha256": "5d1f0002f98471fa59bc53ec2bd2488ff3e4661d965f7fa665408218d63187cb"
+    }
+  ]
+}
+7103d021c16b3c499481383d393f29fea7022f946347ce448f385070b2017f43 tests/utility/compiler/custom-variants.mjs
+c2ba33b5193555cb2e08ad5a904d8fd49544438faeeefa4d0c8f95c8bdb0b6b9 tests/utility/compiler/custom-variants-fixtures.json
+{"id":"custom-variant:application:builtin-resource:base:before:shadow-sm:false","propertyOrder":["--application-outer","--tw-shadow","--tw-shadow-color","--tw-shadow-alpha","--tw-inset-shadow","--tw-inset-shadow-color","--tw-inset-shadow-alpha","--tw-ring-color","--tw-ring-shadow","--tw-inset-ring-color","--tw-inset-ring-shadow","--tw-ring-inset","--tw-ring-offset-width","--tw-ring-offset-color","--tw-ring-offset-shadow"]}
+{"id":"custom-variant:application:builtin-resource:base:after:shadow-sm:false","propertyOrder":["--tw-shadow","--tw-shadow-color","--tw-shadow-alpha","--tw-inset-shadow","--tw-inset-shadow-color","--tw-inset-shadow-alpha","--tw-ring-color","--tw-ring-shadow","--tw-inset-ring-color","--tw-inset-ring-shadow","--tw-ring-inset","--tw-ring-offset-width","--tw-ring-offset-color","--tw-ring-offset-shadow","--application-outer"]}

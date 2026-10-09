@@ -1,0 +1,22 @@
+file:///private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-utf16-verified-54mkl3kq/runner/target/utility-conformance/compiler-api/style.js:730
+            const ret = new Error(getStringFromWasm0(arg0, arg1));
+                        ^
+
+Error: cache_bytes exceeds 4194304
+    at __wbg_new_a32a1ab6c6655abe (file:///private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-utf16-verified-54mkl3kq/runner/target/utility-conformance/compiler-api/style.js:730:25)
+    at rustify_style_wasm.wasm.<js_sys[2be875191f1f6241]::Error>::new::__wbg_new_a32a1ab6c6655abe externref shim (wasm://wasm/rustify_style_wasm.wasm-007e590a:wasm-function[1356]:0x163cac)
+    at rustify_style_wasm.wasm.<js_sys[2be875191f1f6241]::Error>::new (wasm://wasm/rustify_style_wasm.wasm-007e590a:wasm-function[1489]:0x1645d9)
+    at rustify_style_wasm.wasm.rustify_style_wasm[4dd2f874a941e2d5]::public_api::error (wasm://wasm/rustify_style_wasm.wasm-007e590a:wasm-function[326]:0x10a97c)
+    at rustify_style_wasm.wasm.<rustify_style_wasm[4dd2f874a941e2d5]::public_api::design_system::State>::output_with_reserved (wasm://wasm/rustify_style_wasm.wasm-007e590a:wasm-function[777]:0x14fa19)
+    at rustify_style_wasm.wasm.<rustify_style_wasm[4dd2f874a941e2d5]::public_api::design_system::DesignSystem>::get_class_list (wasm://wasm/rustify_style_wasm.wasm-007e590a:wasm-function[671]:0x1466b7)
+    at rustify_style_wasm.wasm.designsystem_getClassList (wasm://wasm/rustify_style_wasm.wasm-007e590a:wasm-function[882]:0x1564e5)
+    at rustify_style_wasm.wasm.designsystem_getClassList multivalue shim (wasm://wasm/rustify_style_wasm.wasm-007e590a:wasm-function[1299]:0x163533)
+    at DesignSystem.getClassList (file:///private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-utf16-verified-54mkl3kq/runner/target/utility-conformance/compiler-api/style.js:465:26)
+    at file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/compiler/run-public-api-wasm.mjs:107:25 {
+  [cause]: {
+    kind: 'compile',
+    error: { kind: 'limit', resource: 'cache_bytes', limit: 4194304 }
+  }
+}
+
+Node.js v26.1.0

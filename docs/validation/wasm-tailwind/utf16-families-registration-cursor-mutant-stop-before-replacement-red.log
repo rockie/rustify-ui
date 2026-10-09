@@ -1,0 +1,108 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: replace-0-stop
++ actual - expected
+... Skipped lines
+
+  {
+    arrays: [
+      [
+        0
+      ],
+...
+    ],
++   stopped: true,
+-   stopped: false,
+    visits: [
+      {
+        context: {},
+        node: 1,
+        parent: null,
+...
+      },
+-     {
+-       context: {},
+-       node: 2,
+-       parent: null,
+-       path: [
+-         2
+-       ]
+-     }
+    ]
+  }
+
+    at file:///Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/wasm-tailwind/registration-design/run-cursor-prototype.mjs:145:10 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: {
+    arrays: [ [ 0 ], [ 2 ] ],
+    deferred: [],
+    effects: [ { array: 1, index: 0, nodes: [], type: 'replace' } ],
+    error: null,
+    nodes: [
+      {
+        children: null,
+        context: {},
+        kind: 'at-rule',
+        operation: null,
+        tag: 'replacement-child'
+      },
+      {
+        children: null,
+        context: {},
+        kind: 'at-rule',
+        operation: { action: 'stop', nodes: [], type: 'replace' },
+        tag: 'replace'
+      },
+      {
+        children: null,
+        context: {},
+        kind: 'at-rule',
+        operation: null,
+        tag: 'following'
+      }
+    ],
+    stopped: true,
+    visits: [ { context: {}, node: 1, parent: null, path: [ 1 ] } ]
+  },
+  expected: {
+    error: null,
+    stopped: false,
+    visits: [
+      { node: 1, parent: null, path: [ 1 ], context: {} },
+      { node: 2, parent: null, path: [ 2 ], context: {} }
+    ],
+    effects: [ { type: 'replace', array: 1, index: 0, nodes: [] } ],
+    arrays: [ [ 0 ], [ 2 ] ],
+    nodes: [
+      {
+        kind: 'at-rule',
+        tag: 'replacement-child',
+        children: null,
+        context: {},
+        operation: null
+      },
+      {
+        kind: 'at-rule',
+        tag: 'replace',
+        children: null,
+        context: {},
+        operation: { type: 'replace', nodes: [], action: 'stop' }
+      },
+      {
+        kind: 'at-rule',
+        tag: 'following',
+        children: null,
+        context: {},
+        operation: null
+      }
+    ],
+    deferred: []
+  },
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v26.1.0

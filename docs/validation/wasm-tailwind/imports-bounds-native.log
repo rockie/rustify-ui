@@ -1,0 +1,22 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.07s
+     Running unittests src/lib.rs (target/debug/deps/rustify_style-d8a92cb6940dfdfd)
+
+running 5 tests
+test compiler::imports::tests::layer_after_supports_has_the_upstream_error ... ok
+test compiler::imports::tests::missing_and_normalized_duplicate_assets_are_explicit_errors ... ok
+test compiler::imports::tests::repeated_expansion_is_bounded_before_parsing_copies ... ok
+test compiler::imports::tests::recursive_imports_obey_ast_depth_and_upstream_recursion_ceiling ... ok
+test compiler::imports::tests::virtual_imports_match_official_css ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 38 filtered out; finished in 0.00s
+
+mbx[cache]: 0 hits, 0 misses, 1 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: 552.1 GiB logical of build debris has left the building.

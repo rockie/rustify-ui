@@ -1,0 +1,29 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.04s
+     Running unittests src/lib.rs (target/debug/deps/rustify_style-4ed64bbe76d78d97)
+
+running 1 test
+test compiler::public_api::design_system::tests::theme_entry_output_obeys_the_shared_cache_budget ... FAILED
+
+failures:
+
+---- compiler::public_api::design_system::tests::theme_entry_output_obeys_the_shared_cache_budget stdout ----
+
+thread 'compiler::public_api::design_system::tests::theme_entry_output_obeys_the_shared_cache_budget' (2667151) panicked at crates/rustify-style/src/compiler/public_api/../../../../../tests/utility/compiler/design-system-native.rs:256:5:
+assertion failed: matches!(api.theme_entries(), Err(CompileError::Limit { resource, .. }) if
+    resource == "cache_bytes")
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    compiler::public_api::design_system::tests::theme_entry_output_obeys_the_shared_cache_budget
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 240 filtered out; finished in 0.09s
+
+error: test failed, to rerun pass `-p rustify-style --lib`

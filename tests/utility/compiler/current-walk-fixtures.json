@@ -1,0 +1,2239 @@
+{
+  "baseline": "1334c99db8fd26c8ea065375dd9259800863f072",
+  "sourceSha256": "17ed5fb1a5f5e4573768ba97d54a1002bc258f3ec677f37abd73022efcabcdaf",
+  "cases": [
+    {
+      "name": "shared-array-removal-visible-to-second-context",
+      "input": {
+        "nodes": [
+          {
+            "kind": "at-rule",
+            "tag": "source",
+            "children": null,
+            "context": {},
+            "operation": {
+              "type": "replace",
+              "nodes": [],
+              "action": "continue"
+            }
+          },
+          {
+            "kind": "at-rule",
+            "tag": "kept",
+            "children": null,
+            "context": {},
+            "operation": null
+          },
+          {
+            "kind": "context",
+            "tag": "one",
+            "children": 0,
+            "context": {},
+            "operation": null
+          },
+          {
+            "kind": "context",
+            "tag": "two",
+            "children": 0,
+            "context": {},
+            "operation": null
+          }
+        ],
+        "arrays": [
+          [
+            0,
+            1
+          ],
+          [
+            2,
+            3
+          ]
+        ],
+        "root": 1
+      },
+      "expected": {
+        "error": null,
+        "stopped": false,
+        "visits": [
+          {
+            "node": 0,
+            "parent": null,
+            "path": [
+              0
+            ],
+            "context": {}
+          },
+          {
+            "node": 1,
+            "parent": null,
+            "path": [
+              1
+            ],
+            "context": {}
+          },
+          {
+            "node": 1,
+            "parent": null,
+            "path": [
+              1
+            ],
+            "context": {}
+          }
+        ],
+        "effects": [
+          {
+            "type": "replace",
+            "array": 0,
+            "index": 0,
+            "nodes": []
+          }
+        ],
+        "arrays": [
+          [
+            1
+          ],
+          [
+            2,
+            3
+          ]
+        ],
+        "nodes": [
+          {
+            "kind": "at-rule",
+            "tag": "source",
+            "children": null,
+            "context": {},
+            "operation": {
+              "type": "replace",
+              "nodes": [],
+              "action": "continue"
+            }
+          },
+          {
+            "kind": "at-rule",
+            "tag": "kept",
+            "children": null,
+            "context": {},
+            "operation": null
+          },
+          {
+            "kind": "context",
+            "tag": "one",
+            "children": 0,
+            "context": {},
+            "operation": null
+          },
+          {
+            "kind": "context",
+            "tag": "two",
+            "children": 0,
+            "context": {},
+            "operation": null
+          }
+        ],
+        "deferred": []
+      }
+    },
+    {
+      "name": "legacy-rename-and-removal-before-error",
+      "input": {
+        "nodes": [
+          {
+            "kind": "at-rule",
+            "tag": "legacy",
+            "children": null,
+            "context": {},
+            "operation": {
+              "type": "rename-error",
+              "name": "custom-variant",
+              "error": "invalid name"
+            }
+          },
+          {
+            "kind": "at-rule",
+            "tag": "unvisited",
+            "children": null,
+            "context": {},
+            "operation": null
+          }
+        ],
+        "arrays": [
+          [
+            0,
+            1
+          ]
+        ],
+        "root": 0
+      },
+      "expected": {
+        "error": "invalid name",
+        "stopped": false,
+        "visits": [
+          {
+            "node": 0,
+            "parent": null,
+            "path": [
+              0
+            ],
+            "context": {}
+          }
+        ],
+        "effects": [
+          {
+            "type": "rename",
+            "node": 0,
+            "name": "custom-variant"
+          },
+          {
+            "type": "replace",
+            "array": 0,
+            "index": 0,
+            "nodes": []
+          }
+        ],
+        "arrays": [
+          [
+            1
+          ]
+        ],
+        "nodes": [
+          {
+            "kind": "at-rule",
+            "tag": "custom-variant",
+            "children": null,
+            "context": {},
+            "operation": {
+              "type": "rename-error",
+              "name": "custom-variant",
+              "error": "invalid name"
+            }
+          },
+          {
+            "kind": "at-rule",
+            "tag": "unvisited",
+            "children": null,
+            "context": {},
+            "operation": null
+          }
+        ],
+        "deferred": []
+      }
+    },
+    {
+      "name": "replace-0-continue",
+      "input": {
+        "nodes": [
+          {
+            "kind": "at-rule",
+            "tag": "replacement-child",
+            "children": null,
+            "context": {},
+            "operation": null
+          },
+          {
+            "kind": "at-rule",
+            "tag": "replace",
+            "children": null,
+            "context": {},
+            "operation": {
+              "type": "replace",
+              "nodes": [],
+              "action": "continue"
+            }
+          },
+          {
+            "kind": "at-rule",
+            "tag": "following",
+            "children": null,
+            "context": {},
+            "operation": null
+          }
+        ],
+        "arrays": [
+          [
+            0
+          ],
+          [
+            1,
+            2
+          ]
+        ],
+        "root": 1
+      },
+      "expected": {
+        "error": null,
+        "stopped": false,
+        "visits": [
+          {
+            "node": 1,
+            "parent": null,
+            "path": [
+              1
+            ],
+            "context": {}
+          },
+          {
+            "node": 2,
+            "parent": null,
+            "path": [
+              2
+            ],
+            "context": {}
+          }
+        ],
+        "effects": [
+          {
+            "type": "replace",
+            "array": 1,
+            "index": 0,
+            "nodes": []
+          }
+        ],
+        "arrays": [
+          [
+            0
+          ],
+          [
+            2
+          ]
+        ],
+        "nodes": [
+          {
+            "kind": "at-rule",
+            "tag": "replacement-child",
+            "children": null,
+            "context": {},
+            "operation": null
+          },
+          {
+            "kind": "at-rule",
+            "tag": "replace",
+            "children": null,
+            "context": {},
+            "operation": {
+              "type": "replace",
+              "nodes": [],
+              "action": "continue"
+            }
+          },
+          {
+            "kind": "at-rule",
+            "tag": "following",
+            "children": null,
+            "context": {},
+            "operation": null
+          }
+        ],
+        "deferred": []
+      }
+    },
+    {
+      "name": "replace-0-skip",
+      "input": {
+        "nodes": [
+          {
+            "kind": "at-rule",
+            "tag": "replacement-child",
+            "children": null,
+            "context": {},
+            "operation": null
+          },
+          {
+            "kind": "at-rule",
+            "tag": "replace",
+            "children": null,
+            "context": {},
+            "operation": {
+              "type": "replace",
+              "nodes": [],
+              "action": "skip"
+            }
+          },
+          {
+            "kind": "at-rule",
+            "tag": "following",
+            "children": null,
+            "context": {},
+            "operation": null
+          }
+        ],
+        "arrays": [
+          [
+            0
+          ],
+          [
+            1,
+            2
+          ]
+        ],
+        "root": 1
+      },
+      "expected": {
+        "error": null,
+        "stopped": false,
+        "visits": [
+          {
+            "node": 1,
+            "parent": null,
+            "path": [
+              1
+            ],
+            "context": {}
+          },
+          {
+            "node": 2,
+            "parent": null,
+            "path": [
+              2
+            ],
+            "context": {}
+          }
+        ],
+        "effects": [
+          {
+            "type": "replace",
+            "array": 1,
+            "index": 0,
+            "nodes": []
+          }
+        ],
+        "arrays": [
+          [
+            0
+          ],
+          [
+            2
+          ]
+        ],
+        "nodes": [
+          {
+            "kind": "at-rule",
+            "tag": "replacement-child",
+            "children": null,
+            "context": {},
+            "operation": null
+          },
+          {
+            "kind": "at-rule",
+            "tag": "replace",
+            "children": null,
+            "context": {},
+            "operation": {
+              "type": "replace",
+              "nodes": [],
+              "action": "skip"
+            }
+          },
+          {
+            "kind": "at-rule",
+            "tag": "following",
+            "children": null,
+            "context": {},
+            "operation": null
+          }
+        ],
+        "deferred": []
+      }
+    },
+    {
+      "name": "replace-0-stop",
+      "input": {
+        "nodes": [
+          {
+            "kind": "at-rule",
+            "tag": "replacement-child",
+            "children": null,
+            "context": {},
+            "operation": null
+          },
+          {
+            "kind": "at-rule",
+            "tag": "replace",
+            "children": null,
+            "context": {},
+            "operation": {
+              "type": "replace",
+              "nodes": [],
+              "action": "stop"
+            }
+          },
+          {
+            "kind": "at-rule",
+            "tag": "following",
+            "children": null,
+            "context": {},
+            "operation": null
+          }
+        ],
+        "arrays": [
+          [
+            0
+          ],
+          [
+            1,
+            2
+          ]
+        ],
+        "root": 1
+      },
+      "expected": {
+        "error": null,
+        "stopped": false,
+        "visits": [
+          {
+            "node": 1,
+            "parent": null,
+            "path": [
+              1
+            ],
+            "context": {}
+          },
+          {
+            "node": 2,
+            "parent": null,
+            "path": [
+              2
+            ],
+            "context": {}
+          }
+        ],
+        "effects": [
+          {
+            "type": "replace",
+            "array": 1,
+            "index": 0,
+            "nodes": []
+          }
+        ],
+        "arrays": [
+          [
+            0
+          ],
+          [
+            2
+          ]
+        ],
+        "nodes": [
+          {
+            "kind": "at-rule",
+            "tag": "replacement-child",
+            "children": null,
+            "context": {},
+            "operation": null
+          },
+          {
+            "kind": "at-rule",
+            "tag": "replace",
+            "children": null,
+            "context": {},
+            "operation": {
+              "type": "replace",
+              "nodes": [],
+              "action": "stop"
+            }
+          },
+          {
+            "kind": "at-rule",
+            "tag": "following",
+            "children": null,
+            "context": {},
+            "operation": null
+          }
+        ],
+        "deferred": []
+      }
+    },
+    {
+      "name": "replace-1-continue",
+      "input": {
+        "nodes": [
+          {
+            "kind": "at-rule",
+            "tag": "replacement-child",
+            "children": null,
+            "context": {},
+            "operation": null
+          },
+          {
+            "kind": "at-rule",
+            "tag": "replacement-0",
+            "children": 0,
+            "context": {},
+            "operation": null
+          },
+          {
+            "kind": "at-rule",
+            "tag": "replace",
+            "children": null,
+            "context": {},
+            "operation": {
+              "type": "replace",
+              "nodes": [
+                1
+              ],
+              "action": "continue"
+            }
+          },
+          {
+            "kind": "at-rule",
+            "tag": "following",
+            "children": null,
+            "context": {},
+            "operation": null
+          }
+        ],
+        "arrays": [
+          [
+            0
+          ],
+          [
+            2,
+            3
+          ]
+        ],
+        "root": 1
+      },
+      "expected": {
+        "error": null,
+        "stopped": false,
+        "visits": [
+          {
+            "node": 2,
+            "parent": null,
+            "path": [
+              2
+            ],
+            "context": {}
+          },
+          {
+            "node": 1,
+            "parent": null,
+            "path": [
+              1
+            ],
+            "context": {}
+          },
+          {
+            "node": 0,
+            "parent": 1,
+            "path": [
+              1,
+              0
+            ],
+            "context": {}
+          },
+          {
+            "node": 3,
+            "parent": null,
+            "path": [
+              3
+            ],
+            "context": {}
+          }
+        ],
+        "effects": [
+          {
+            "type": "replace",
+            "array": 1,
+            "index": 0,
+            "nodes": [
+              1
+            ]
+          }
+        ],
+        "arrays": [
+          [
+            0
+          ],
+          [
+            1,
+            3
+          ]
+        ],
+        "nodes": [
+          {
+            "kind": "at-rule",
+            "tag": "replacement-child",
+            "children": null,
+            "context": {},
+            "operation": null
+          },
+          {
+            "kind": "at-rule",
+            "tag": "replacement-0",
+            "children": 0,
+            "context": {},
+            "operation": null
+          },
+          {
+            "kind": "at-rule",
+            "tag": "replace",
+            "children": null,
+            "context": {},
+            "operation": {
+              "type": "replace",
+              "nodes": [
+                1
+              ],
+              "action": "continue"
+            }
+          },
+          {
+            "kind": "at-rule",
+            "tag": "following",
+            "children": null,
+            "context": {},
+            "operation": null
+          }
+        ],
+        "deferred": []
+      }
+    },
+    {
+      "name": "replace-1-skip",
+      "input": {
+        "nodes": [
+          {
+            "kind": "at-rule",
+            "tag": "replacement-child",
+            "children": null,
+            "context": {},
+            "operation": null
+          },
+          {
+            "kind": "at-rule",
+            "tag": "replacement-0",
+            "children": 0,
+            "context": {},
+            "operation": null
+          },
+          {
+            "kind": "at-rule",
+            "tag": "replace",
+            "children": null,
+            "context": {},
+            "operation": {
+              "type": "replace",
+              "nodes": [
+                1
+              ],
+              "action": "skip"
+            }
+          },
+          {
+            "kind": "at-rule",
+            "tag": "following",
+            "children": null,
+            "context": {},
+            "operation": null
+          }
+        ],
+        "arrays": [
+          [
+            0
+          ],
+          [
+            2,
+            3
+          ]
+        ],
+        "root": 1
+      },
+      "expected": {
+        "error": null,
+        "stopped": false,
+        "visits": [
+          {
+            "node": 2,
+            "parent": null,
+            "path": [
+              2
+            ],
+            "context": {}
+          },
+          {
+            "node": 3,
+            "parent": null,
+            "path": [
+              3
+            ],
+            "context": {}
+          }
+        ],
+        "effects": [
+          {
+            "type": "replace",
+            "array": 1,
+            "index": 0,
+            "nodes": [
+              1
+            ]
+          }
+        ],
+        "arrays": [
+          [
+            0
+          ],
+          [
+            1,
+            3
+          ]
+        ],
+        "nodes": [
+          {
+            "kind": "at-rule",
+            "tag": "replacement-child",
+            "children": null,
+            "context": {},
+            "operation": null
+          },
+          {
+            "kind": "at-rule",
+            "tag": "replacement-0",
+            "children": 0,
+            "context": {},
+            "operation": null
+          },
+          {
+            "kind": "at-rule",
+            "tag": "replace",
+            "children": null,
+            "context": {},
+            "operation": {
+              "type": "replace",
+              "nodes": [
+                1
+              ],
+              "action": "skip"
+            }
+          },
+          {
+            "kind": "at-rule",
+            "tag": "following",
+            "children": null,
+            "context": {},
+            "operation": null
+          }
+        ],
+        "deferred": []
+      }
+    },
+    {
+      "name": "replace-1-stop",
+      "input": {
+        "nodes": [
+          {
+            "kind": "at-rule",
+            "tag": "replacement-child",
+            "children": null,
+            "context": {},
+            "operation": null
+          },
+          {
+            "kind": "at-rule",
+            "tag": "replacement-0",
+            "children": 0,
+            "context": {},
+            "operation": null
+          },
+          {
+            "kind": "at-rule",
+            "tag": "replace",
+            "children": null,
+            "context": {},
+            "operation": {
+              "type": "replace",
+              "nodes": [
+                1
+              ],
+              "action": "stop"
+            }
+          },
+          {
+            "kind": "at-rule",
+            "tag": "following",
+            "children": null,
+            "context": {},
+            "operation": null
+          }
+        ],
+        "arrays": [
+          [
+            0
+          ],
+          [
+            2,
+            3
+          ]
+        ],
+        "root": 1
+      },
+      "expected": {
+        "error": null,
+        "stopped": false,
+        "visits": [
+          {
+            "node": 2,
+            "parent": null,
+            "path": [
+              2
+            ],
+            "context": {}
+          },
+          {
+            "node": 3,
+            "parent": null,
+            "path": [
+              3
+            ],
+            "context": {}
+          }
+        ],
+        "effects": [
+          {
+            "type": "replace",
+            "array": 1,
+            "index": 0,
+            "nodes": [
+              1
+            ]
+          }
+        ],
+        "arrays": [
+          [
+            0
+          ],
+          [
+            1,
+            3
+          ]
+        ],
+        "nodes": [
+          {
+            "kind": "at-rule",
+            "tag": "replacement-child",
+            "children": null,
+            "context": {},
+            "operation": null
+          },
+          {
+            "kind": "at-rule",
+            "tag": "replacement-0",
+            "children": 0,
+            "context": {},
+            "operation": null
+          },
+          {
+            "kind": "at-rule",
+            "tag": "replace",
+            "children": null,
+            "context": {},
+            "operation": {
+              "type": "replace",
+              "nodes": [
+                1
+              ],
+              "action": "stop"
+            }
+          },
+          {
+            "kind": "at-rule",
+            "tag": "following",
+            "children": null,
+            "context": {},
+            "operation": null
+          }
+        ],
+        "deferred": []
+      }
+    },
+    {
+      "name": "replace-2-continue",
+      "input": {
+        "nodes": [
+          {
+            "kind": "at-rule",
+            "tag": "replacement-child",
+            "children": null,
+            "context": {},
+            "operation": null
+          },
+          {
+            "kind": "at-rule",
+            "tag": "replacement-0",
+            "children": 0,
+            "context": {},
+            "operation": null
+          },
+          {
+            "kind": "at-rule",
+            "tag": "replacement-1",
+            "children": 0,
+            "context": {},
+            "operation": null
+          },
+          {
+            "kind": "at-rule",
+            "tag": "replace",
+            "children": null,
+            "context": {},
+            "operation": {
+              "type": "replace",
+              "nodes": [
+                1,
+                2
+              ],
+              "action": "continue"
+            }
+          },
+          {
+            "kind": "at-rule",
+            "tag": "following",
+            "children": null,
+            "context": {},
+            "operation": null
+          }
+        ],
+        "arrays": [
+          [
+            0
+          ],
+          [
+            3,
+            4
+          ]
+        ],
+        "root": 1
+      },
+      "expected": {
+        "error": null,
+        "stopped": false,
+        "visits": [
+          {
+            "node": 3,
+            "parent": null,
+            "path": [
+              3
+            ],
+            "context": {}
+          },
+          {
+            "node": 1,
+            "parent": null,
+            "path": [
+              1
+            ],
+            "context": {}
+          },
+          {
+            "node": 0,
+            "parent": 1,
+            "path": [
+              1,
+              0
+            ],
+            "context": {}
+          },
+          {
+            "node": 2,
+            "parent": null,
+            "path": [
+              2
+            ],
+            "context": {}
+          },
+          {
+            "node": 0,
+            "parent": 2,
+            "path": [
+              2,
+              0
+            ],
+            "context": {}
+          },
+          {
+            "node": 4,
+            "parent": null,
+            "path": [
+              4
+            ],
+            "context": {}
+          }
+        ],
+        "effects": [
+          {
+            "type": "replace",
+            "array": 1,
+            "index": 0,
+            "nodes": [
+              1,
+              2
+            ]
+          }
+        ],
+        "arrays": [
+          [
+            0
+          ],
+          [
+            1,
+            2,
+            4
+          ]
+        ],
+        "nodes": [
+          {
+            "kind": "at-rule",
+            "tag": "replacement-child",
+            "children": null,
+            "context": {},
+            "operation": null
+          },
+          {
+            "kind": "at-rule",
+            "tag": "replacement-0",
+            "children": 0,
+            "context": {},
+            "operation": null
+          },
+          {
+            "kind": "at-rule",
+            "tag": "replacement-1",
+            "children": 0,
+            "context": {},
+            "operation": null
+          },
+          {
+            "kind": "at-rule",
+            "tag": "replace",
+            "children": null,
+            "context": {},
+            "operation": {
+              "type": "replace",
+              "nodes": [
+                1,
+                2
+              ],
+              "action": "continue"
+            }
+          },
+          {
+            "kind": "at-rule",
+            "tag": "following",
+            "children": null,
+            "context": {},
+            "operation": null
+          }
+        ],
+        "deferred": []
+      }
+    },
+    {
+      "name": "replace-2-skip",
+      "input": {
+        "nodes": [
+          {
+            "kind": "at-rule",
+            "tag": "replacement-child",
+            "children": null,
+            "context": {},
+            "operation": null
+          },
+          {
+            "kind": "at-rule",
+            "tag": "replacement-0",
+            "children": 0,
+            "context": {},
+            "operation": null
+          },
+          {
+            "kind": "at-rule",
+            "tag": "replacement-1",
+            "children": 0,
+            "context": {},
+            "operation": null
+          },
+          {
+            "kind": "at-rule",
+            "tag": "replace",
+            "children": null,
+            "context": {},
+            "operation": {
+              "type": "replace",
+              "nodes": [
+                1,
+                2
+              ],
+              "action": "skip"
+            }
+          },
+          {
+            "kind": "at-rule",
+            "tag": "following",
+            "children": null,
+            "context": {},
+            "operation": null
+          }
+        ],
+        "arrays": [
+          [
+            0
+          ],
+          [
+            3,
+            4
+          ]
+        ],
+        "root": 1
+      },
+      "expected": {
+        "error": null,
+        "stopped": false,
+        "visits": [
+          {
+            "node": 3,
+            "parent": null,
+            "path": [
+              3
+            ],
+            "context": {}
+          },
+          {
+            "node": 4,
+            "parent": null,
+            "path": [
+              4
+            ],
+            "context": {}
+          }
+        ],
+        "effects": [
+          {
+            "type": "replace",
+            "array": 1,
+            "index": 0,
+            "nodes": [
+              1,
+              2
+            ]
+          }
+        ],
+        "arrays": [
+          [
+            0
+          ],
+          [
+            1,
+            2,
+            4
+          ]
+        ],
+        "nodes": [
+          {
+            "kind": "at-rule",
+            "tag": "replacement-child",
+            "children": null,
+            "context": {},
+            "operation": null
+          },
+          {
+            "kind": "at-rule",
+            "tag": "replacement-0",
+            "children": 0,
+            "context": {},
+            "operation": null
+          },
+          {
+            "kind": "at-rule",
+            "tag": "replacement-1",
+            "children": 0,
+            "context": {},
+            "operation": null
+          },
+          {
+            "kind": "at-rule",
+            "tag": "replace",
+            "children": null,
+            "context": {},
+            "operation": {
+              "type": "replace",
+              "nodes": [
+                1,
+                2
+              ],
+              "action": "skip"
+            }
+          },
+          {
+            "kind": "at-rule",
+            "tag": "following",
+            "children": null,
+            "context": {},
+            "operation": null
+          }
+        ],
+        "deferred": []
+      }
+    },
+    {
+      "name": "replace-2-stop",
+      "input": {
+        "nodes": [
+          {
+            "kind": "at-rule",
+            "tag": "replacement-child",
+            "children": null,
+            "context": {},
+            "operation": null
+          },
+          {
+            "kind": "at-rule",
+            "tag": "replacement-0",
+            "children": 0,
+            "context": {},
+            "operation": null
+          },
+          {
+            "kind": "at-rule",
+            "tag": "replacement-1",
+            "children": 0,
+            "context": {},
+            "operation": null
+          },
+          {
+            "kind": "at-rule",
+            "tag": "replace",
+            "children": null,
+            "context": {},
+            "operation": {
+              "type": "replace",
+              "nodes": [
+                1,
+                2
+              ],
+              "action": "stop"
+            }
+          },
+          {
+            "kind": "at-rule",
+            "tag": "following",
+            "children": null,
+            "context": {},
+            "operation": null
+          }
+        ],
+        "arrays": [
+          [
+            0
+          ],
+          [
+            3,
+            4
+          ]
+        ],
+        "root": 1
+      },
+      "expected": {
+        "error": null,
+        "stopped": false,
+        "visits": [
+          {
+            "node": 3,
+            "parent": null,
+            "path": [
+              3
+            ],
+            "context": {}
+          },
+          {
+            "node": 4,
+            "parent": null,
+            "path": [
+              4
+            ],
+            "context": {}
+          }
+        ],
+        "effects": [
+          {
+            "type": "replace",
+            "array": 1,
+            "index": 0,
+            "nodes": [
+              1,
+              2
+            ]
+          }
+        ],
+        "arrays": [
+          [
+            0
+          ],
+          [
+            1,
+            2,
+            4
+          ]
+        ],
+        "nodes": [
+          {
+            "kind": "at-rule",
+            "tag": "replacement-child",
+            "children": null,
+            "context": {},
+            "operation": null
+          },
+          {
+            "kind": "at-rule",
+            "tag": "replacement-0",
+            "children": 0,
+            "context": {},
+            "operation": null
+          },
+          {
+            "kind": "at-rule",
+            "tag": "replacement-1",
+            "children": 0,
+            "context": {},
+            "operation": null
+          },
+          {
+            "kind": "at-rule",
+            "tag": "replace",
+            "children": null,
+            "context": {},
+            "operation": {
+              "type": "replace",
+              "nodes": [
+                1,
+                2
+              ],
+              "action": "stop"
+            }
+          },
+          {
+            "kind": "at-rule",
+            "tag": "following",
+            "children": null,
+            "context": {},
+            "operation": null
+          }
+        ],
+        "deferred": []
+      }
+    },
+    {
+      "name": "nested-stop-propagates",
+      "input": {
+        "nodes": [
+          {
+            "kind": "at-rule",
+            "tag": "stop",
+            "children": null,
+            "context": {},
+            "operation": {
+              "type": "action",
+              "action": "stop"
+            }
+          },
+          {
+            "kind": "at-rule",
+            "tag": "unvisited-child",
+            "children": null,
+            "context": {},
+            "operation": null
+          },
+          {
+            "kind": "at-rule",
+            "tag": "parent",
+            "children": 0,
+            "context": {},
+            "operation": null
+          },
+          {
+            "kind": "at-rule",
+            "tag": "unvisited-sibling",
+            "children": null,
+            "context": {},
+            "operation": null
+          }
+        ],
+        "arrays": [
+          [
+            0,
+            1
+          ],
+          [
+            2,
+            3
+          ]
+        ],
+        "root": 1
+      },
+      "expected": {
+        "error": null,
+        "stopped": true,
+        "visits": [
+          {
+            "node": 2,
+            "parent": null,
+            "path": [
+              2
+            ],
+            "context": {}
+          },
+          {
+            "node": 0,
+            "parent": 2,
+            "path": [
+              2,
+              0
+            ],
+            "context": {}
+          }
+        ],
+        "effects": [],
+        "arrays": [
+          [
+            0,
+            1
+          ],
+          [
+            2,
+            3
+          ]
+        ],
+        "nodes": [
+          {
+            "kind": "at-rule",
+            "tag": "stop",
+            "children": null,
+            "context": {},
+            "operation": {
+              "type": "action",
+              "action": "stop"
+            }
+          },
+          {
+            "kind": "at-rule",
+            "tag": "unvisited-child",
+            "children": null,
+            "context": {},
+            "operation": null
+          },
+          {
+            "kind": "at-rule",
+            "tag": "parent",
+            "children": 0,
+            "context": {},
+            "operation": null
+          },
+          {
+            "kind": "at-rule",
+            "tag": "unvisited-sibling",
+            "children": null,
+            "context": {},
+            "operation": null
+          }
+        ],
+        "deferred": []
+      }
+    },
+    {
+      "name": "context-overrides-false-and-empty-preserves-parent",
+      "input": {
+        "nodes": [
+          {
+            "kind": "declaration",
+            "tag": "leaf",
+            "children": null,
+            "context": {},
+            "operation": null
+          },
+          {
+            "kind": "context",
+            "tag": "inner",
+            "children": 0,
+            "context": {
+              "reference": false,
+              "base": ""
+            },
+            "operation": null
+          },
+          {
+            "kind": "rule",
+            "tag": "parent",
+            "children": 1,
+            "context": {},
+            "operation": null
+          },
+          {
+            "kind": "context",
+            "tag": "outer",
+            "children": 2,
+            "context": {
+              "reference": true,
+              "base": "outer",
+              "sourceBase": "source"
+            },
+            "operation": null
+          }
+        ],
+        "arrays": [
+          [
+            0
+          ],
+          [
+            1
+          ],
+          [
+            2
+          ],
+          [
+            3
+          ]
+        ],
+        "root": 3
+      },
+      "expected": {
+        "error": null,
+        "stopped": false,
+        "visits": [
+          {
+            "node": 2,
+            "parent": null,
+            "path": [
+              2
+            ],
+            "context": {
+              "reference": true,
+              "base": "outer",
+              "sourceBase": "source"
+            }
+          },
+          {
+            "node": 0,
+            "parent": 2,
+            "path": [
+              2,
+              0
+            ],
+            "context": {
+              "reference": false,
+              "base": "",
+              "sourceBase": "source"
+            }
+          }
+        ],
+        "effects": [],
+        "arrays": [
+          [
+            0
+          ],
+          [
+            1
+          ],
+          [
+            2
+          ],
+          [
+            3
+          ]
+        ],
+        "nodes": [
+          {
+            "kind": "declaration",
+            "tag": "leaf",
+            "children": null,
+            "context": {},
+            "operation": null
+          },
+          {
+            "kind": "context",
+            "tag": "inner",
+            "children": 0,
+            "context": {
+              "reference": false,
+              "base": ""
+            },
+            "operation": null
+          },
+          {
+            "kind": "rule",
+            "tag": "parent",
+            "children": 1,
+            "context": {},
+            "operation": null
+          },
+          {
+            "kind": "context",
+            "tag": "outer",
+            "children": 2,
+            "context": {
+              "reference": true,
+              "base": "outer",
+              "sourceBase": "source"
+            },
+            "operation": null
+          }
+        ],
+        "deferred": []
+      }
+    },
+    {
+      "name": "deferred-body-reads-later-shared-array-removal",
+      "input": {
+        "nodes": [
+          {
+            "kind": "declaration",
+            "tag": "body",
+            "children": null,
+            "context": {},
+            "operation": null
+          },
+          {
+            "kind": "at-rule",
+            "tag": "utility",
+            "children": 0,
+            "context": {},
+            "operation": {
+              "type": "capture"
+            }
+          },
+          {
+            "kind": "at-rule",
+            "tag": "later",
+            "children": null,
+            "context": {},
+            "operation": {
+              "type": "edit-array",
+              "array": 0,
+              "index": 0,
+              "remove": 1,
+              "nodes": []
+            }
+          }
+        ],
+        "arrays": [
+          [
+            0
+          ],
+          [
+            1,
+            2
+          ]
+        ],
+        "root": 1
+      },
+      "expected": {
+        "error": null,
+        "stopped": false,
+        "visits": [
+          {
+            "node": 1,
+            "parent": null,
+            "path": [
+              1
+            ],
+            "context": {}
+          },
+          {
+            "node": 0,
+            "parent": 1,
+            "path": [
+              1,
+              0
+            ],
+            "context": {}
+          },
+          {
+            "node": 2,
+            "parent": null,
+            "path": [
+              2
+            ],
+            "context": {}
+          }
+        ],
+        "effects": [
+          {
+            "type": "edit-array",
+            "array": 0,
+            "index": 0,
+            "remove": 1,
+            "nodes": []
+          }
+        ],
+        "arrays": [
+          [],
+          [
+            1,
+            2
+          ]
+        ],
+        "nodes": [
+          {
+            "kind": "declaration",
+            "tag": "body",
+            "children": null,
+            "context": {},
+            "operation": null
+          },
+          {
+            "kind": "at-rule",
+            "tag": "utility",
+            "children": 0,
+            "context": {},
+            "operation": {
+              "type": "capture"
+            }
+          },
+          {
+            "kind": "at-rule",
+            "tag": "later",
+            "children": null,
+            "context": {},
+            "operation": {
+              "type": "edit-array",
+              "array": 0,
+              "index": 0,
+              "remove": 1,
+              "nodes": []
+            }
+          }
+        ],
+        "deferred": [
+          []
+        ]
+      }
+    },
+    {
+      "name": "visitor-child-reassignment-is-current",
+      "input": {
+        "nodes": [
+          {
+            "kind": "at-rule",
+            "tag": "old",
+            "children": null,
+            "context": {},
+            "operation": null
+          },
+          {
+            "kind": "at-rule",
+            "tag": "new",
+            "children": null,
+            "context": {},
+            "operation": null
+          },
+          {
+            "kind": "at-rule",
+            "tag": "switch",
+            "children": 0,
+            "context": {},
+            "operation": {
+              "type": "children",
+              "array": 1
+            }
+          }
+        ],
+        "arrays": [
+          [
+            0
+          ],
+          [
+            1
+          ],
+          [
+            2
+          ]
+        ],
+        "root": 2
+      },
+      "expected": {
+        "error": null,
+        "stopped": false,
+        "visits": [
+          {
+            "node": 2,
+            "parent": null,
+            "path": [
+              2
+            ],
+            "context": {}
+          },
+          {
+            "node": 1,
+            "parent": 2,
+            "path": [
+              2,
+              1
+            ],
+            "context": {}
+          }
+        ],
+        "effects": [
+          {
+            "type": "children",
+            "node": 2,
+            "array": 1
+          }
+        ],
+        "arrays": [
+          [
+            0
+          ],
+          [
+            1
+          ],
+          [
+            2
+          ]
+        ],
+        "nodes": [
+          {
+            "kind": "at-rule",
+            "tag": "old",
+            "children": null,
+            "context": {},
+            "operation": null
+          },
+          {
+            "kind": "at-rule",
+            "tag": "new",
+            "children": null,
+            "context": {},
+            "operation": null
+          },
+          {
+            "kind": "at-rule",
+            "tag": "switch",
+            "children": 1,
+            "context": {},
+            "operation": {
+              "type": "children",
+              "array": 1
+            }
+          }
+        ],
+        "deferred": []
+      }
+    },
+    {
+      "name": "shared-array-edit-visible-after-earlier-occurrence",
+      "input": {
+        "nodes": [
+          {
+            "kind": "at-rule",
+            "tag": "shared",
+            "children": null,
+            "context": {},
+            "operation": null
+          },
+          {
+            "kind": "context",
+            "tag": "left",
+            "children": 0,
+            "context": {},
+            "operation": null
+          },
+          {
+            "kind": "at-rule",
+            "tag": "edit",
+            "children": null,
+            "context": {},
+            "operation": {
+              "type": "edit-array",
+              "array": 1,
+              "index": 0,
+              "remove": 1,
+              "nodes": []
+            }
+          },
+          {
+            "kind": "context",
+            "tag": "right",
+            "children": 1,
+            "context": {},
+            "operation": null
+          }
+        ],
+        "arrays": [
+          [
+            0
+          ],
+          [
+            0
+          ],
+          [
+            1,
+            2,
+            3
+          ]
+        ],
+        "root": 2
+      },
+      "expected": {
+        "error": null,
+        "stopped": false,
+        "visits": [
+          {
+            "node": 0,
+            "parent": null,
+            "path": [
+              0
+            ],
+            "context": {}
+          },
+          {
+            "node": 2,
+            "parent": null,
+            "path": [
+              2
+            ],
+            "context": {}
+          }
+        ],
+        "effects": [
+          {
+            "type": "edit-array",
+            "array": 1,
+            "index": 0,
+            "remove": 1,
+            "nodes": []
+          }
+        ],
+        "arrays": [
+          [
+            0
+          ],
+          [],
+          [
+            1,
+            2,
+            3
+          ]
+        ],
+        "nodes": [
+          {
+            "kind": "at-rule",
+            "tag": "shared",
+            "children": null,
+            "context": {},
+            "operation": null
+          },
+          {
+            "kind": "context",
+            "tag": "left",
+            "children": 0,
+            "context": {},
+            "operation": null
+          },
+          {
+            "kind": "at-rule",
+            "tag": "edit",
+            "children": null,
+            "context": {},
+            "operation": {
+              "type": "edit-array",
+              "array": 1,
+              "index": 0,
+              "remove": 1,
+              "nodes": []
+            }
+          },
+          {
+            "kind": "context",
+            "tag": "right",
+            "children": 1,
+            "context": {},
+            "operation": null
+          }
+        ],
+        "deferred": []
+      }
+    },
+    {
+      "name": "ordinary-at-root-establishes-parent",
+      "input": {
+        "nodes": [
+          {
+            "kind": "at-rule",
+            "tag": "leaf",
+            "children": null,
+            "context": {},
+            "operation": null
+          },
+          {
+            "kind": "at-root",
+            "tag": "at-root",
+            "children": 0,
+            "context": {},
+            "operation": null
+          }
+        ],
+        "arrays": [
+          [
+            0
+          ],
+          [
+            1
+          ]
+        ],
+        "root": 1
+      },
+      "expected": {
+        "error": null,
+        "stopped": false,
+        "visits": [
+          {
+            "node": 1,
+            "parent": null,
+            "path": [
+              1
+            ],
+            "context": {}
+          },
+          {
+            "node": 0,
+            "parent": 1,
+            "path": [
+              1,
+              0
+            ],
+            "context": {}
+          }
+        ],
+        "effects": [],
+        "arrays": [
+          [
+            0
+          ],
+          [
+            1
+          ]
+        ],
+        "nodes": [
+          {
+            "kind": "at-rule",
+            "tag": "leaf",
+            "children": null,
+            "context": {},
+            "operation": null
+          },
+          {
+            "kind": "at-root",
+            "tag": "at-root",
+            "children": 0,
+            "context": {},
+            "operation": null
+          }
+        ],
+        "deferred": []
+      }
+    },
+    {
+      "name": "semantic-error-stops-before-later-array-write",
+      "input": {
+        "nodes": [
+          {
+            "kind": "at-rule",
+            "tag": "kept",
+            "children": null,
+            "context": {},
+            "operation": null
+          },
+          {
+            "kind": "at-rule",
+            "tag": "bad",
+            "children": null,
+            "context": {},
+            "operation": {
+              "type": "error",
+              "message": "first error"
+            }
+          },
+          {
+            "kind": "at-rule",
+            "tag": "later",
+            "children": null,
+            "context": {},
+            "operation": {
+              "type": "edit-array",
+              "array": 0,
+              "index": 0,
+              "remove": 1,
+              "nodes": []
+            }
+          }
+        ],
+        "arrays": [
+          [
+            0
+          ],
+          [
+            1,
+            2
+          ]
+        ],
+        "root": 1
+      },
+      "expected": {
+        "error": "first error",
+        "stopped": false,
+        "visits": [
+          {
+            "node": 1,
+            "parent": null,
+            "path": [
+              1
+            ],
+            "context": {}
+          }
+        ],
+        "effects": [],
+        "arrays": [
+          [
+            0
+          ],
+          [
+            1,
+            2
+          ]
+        ],
+        "nodes": [
+          {
+            "kind": "at-rule",
+            "tag": "kept",
+            "children": null,
+            "context": {},
+            "operation": null
+          },
+          {
+            "kind": "at-rule",
+            "tag": "bad",
+            "children": null,
+            "context": {},
+            "operation": {
+              "type": "error",
+              "message": "first error"
+            }
+          },
+          {
+            "kind": "at-rule",
+            "tag": "later",
+            "children": null,
+            "context": {},
+            "operation": {
+              "type": "edit-array",
+              "array": 0,
+              "index": 0,
+              "remove": 1,
+              "nodes": []
+            }
+          }
+        ],
+        "deferred": []
+      }
+    }
+  ]
+}

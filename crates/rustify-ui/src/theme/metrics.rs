@@ -1,5 +1,10 @@
 use super::ThemeError;
 
+/// Makepad layout uses 72 points per inch and CSS uses 96 pixels per inch.
+pub fn css_px_to_points(px: f64) -> f32 {
+    (px * 72.0 / 96.0) as f32
+}
+
 #[derive(Clone, Copy, Debug)]
 pub enum LengthRule {
     Positive,

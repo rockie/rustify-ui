@@ -1,0 +1,77 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+     Locking 11 packages to latest compatible versions
+   Compiling proc-macro2 v1.0.107
+   Compiling quote v1.0.47
+   Compiling unicode-ident v1.0.26
+   Compiling serde_core v1.0.229
+   Compiling zmij v1.0.23
+   Compiling serde v1.0.229
+   Compiling serde_json v1.0.151
+   Compiling itoa v1.0.18
+   Compiling memchr v2.8.3
+   Compiling syn v3.0.6
+   Compiling serde_derive v1.0.229
+   Compiling rustify-production-text-probe v0.0.0 (/tmp/rustify-compiler-utf16-probe/production-codec)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.94s
+     Running unittests src/lib.rs (/tmp/rustify-compiler-utf16-probe/production-codec/target/debug/deps/rustify_production_text_probe-4c16a35dd2c6310a)
+
+running 7 tests
+test tests::strict_scalar_conversion_rejects_lone_units_and_consuming_api_preserves_capacity ... ok
+test tests::ordering_preserves_scalar_codepoint_order_and_distinguishes_unit_order ... FAILED
+test tests::byte_length_preserves_scalar_utf8_and_counts_lone_units_as_three ... FAILED
+test tests::deserialization_accepts_real_json_lone_units_and_rejects_nonstring_and_invalid_wtf8 ... FAILED
+test tests::scalar_json_bytes_match_existing_string_and_maps ... FAILED
+test tests::all_code_units_survive_two_roundtrips_and_nested_report ... FAILED
+test tests::whole_object_codec_matches_every_scalar_bmp_json_escape ... ok
+
+failures:
+
+---- tests::ordering_preserves_scalar_codepoint_order_and_distinguishes_unit_order stdout ----
+
+thread 'tests::ordering_preserves_scalar_codepoint_order_and_distinguishes_unit_order' (13787681) panicked at src/lib.rs:37:9:
+assertion failed: Text::from("😀") > Text::from("\u{e000}")
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- tests::byte_length_preserves_scalar_utf8_and_counts_lone_units_as_three stdout ----
+
+thread 'tests::byte_length_preserves_scalar_utf8_and_counts_lone_units_as_three' (13787679) panicked at src/lib.rs:32:68:
+assertion `left == right` failed
+  left: 1
+ right: 2
+
+---- tests::deserialization_accepts_real_json_lone_units_and_rejects_nonstring_and_invalid_wtf8 stdout ----
+
+thread 'tests::deserialization_accepts_real_json_lone_units_and_rejects_nonstring_and_invalid_wtf8' (13787680) panicked at src/lib.rs:51:82:
+called `Result::unwrap()` on an `Err` value: Error("lone leading surrogate in hex escape", line: 1, column: 13)
+
+---- tests::scalar_json_bytes_match_existing_string_and_maps stdout ----
+
+thread 'tests::scalar_json_bytes_match_existing_string_and_maps' (13787682) panicked at src/lib.rs:29:9:
+assertion `left == right` failed
+  left: "{\"css\":\"\",\"gpu_variables\":{\"😀\":\"\\u0000\\n\\t\\u0001\\u001f\",\"\u{e000}\":\"😀\"}}"
+ right: "{\"css\":\"\",\"gpu_variables\":{\"\u{e000}\":\"😀\",\"😀\":\"\\u0000\\n\\t\\u0001\\u001f\"}}"
+
+---- tests::all_code_units_survive_two_roundtrips_and_nested_report stdout ----
+
+thread 'tests::all_code_units_survive_two_roundtrips_and_nested_report' (13787678) panicked at src/lib.rs:16:50:
+called `Result::unwrap()` on an `Err` value: Error("invalid utf-16: lone surrogate found", line: 0, column: 0)
+
+
+failures:
+    tests::all_code_units_survive_two_roundtrips_and_nested_report
+    tests::byte_length_preserves_scalar_utf8_and_counts_lone_units_as_three
+    tests::deserialization_accepts_real_json_lone_units_and_rejects_nonstring_and_invalid_wtf8
+    tests::ordering_preserves_scalar_codepoint_order_and_distinguishes_unit_order
+    tests::scalar_json_bytes_match_existing_string_and_maps
+
+test result: FAILED. 2 passed; 5 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+error: test failed, to rerun pass `--lib`
+mbx[cache]: 22 hits, 0 misses, 3 not looked up; 0 B downloaded, 0 B uploaded, 2.0 MiB stored locally
+mbx[savings]: 1h 27m of compiling skipped across 2127 builds. rustc suspects nothing.

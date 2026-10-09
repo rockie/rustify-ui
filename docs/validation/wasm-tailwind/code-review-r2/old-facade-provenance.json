@@ -1,0 +1,9 @@
+{
+  "origin": "/tmp/wasm-tailwind-review-facade",
+  "reference": "docs/plan/WASM-TAILWIND.code-review.md: utility-build --group compiler --output /tmp/wasm-tailwind-review-facade",
+  "limitation": "Retained binary comparison only; no source snapshot proves exact R1 byte-for-byte build identity. This does not restore the R1 source diff.",
+  "files_sha256": {
+    "style.js": "9e0d4aed4b1ac6a18b461f2157f6a80ddb17d5e2f1ad5078b1c0c6aa38aaf4a1",
+    "style_bg.wasm": "ecdf74958b5731dd6776ed155e5b8ac0ca7b168f5d79c03bd3aa1e85f62d8323"
+  }
+}

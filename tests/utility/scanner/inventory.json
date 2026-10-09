@@ -1,0 +1,812 @@
+{
+  "upstream": "tailwindcss",
+  "version": "4.1.13",
+  "commit": "1334c99db8fd26c8ea065375dd9259800863f072",
+  "archive": "https://codeload.github.com/tailwindlabs/tailwindcss/tar.gz/1334c99db8fd26c8ea065375dd9259800863f072",
+  "files": [
+    {
+      "source": "crates/oxide/src/cursor.rs",
+      "local": "crates/rustify-style/upstream/oxide/cursor.rs",
+      "sha256": "a98f18a4ea42281e9025161e2275df0a74b9b281d30b8223101588053b90032e",
+      "status": "implemented",
+      "tests": [
+        "test_cursor"
+      ],
+      "public_functions": [
+        "new",
+        "advance_by",
+        "advance",
+        "advance_twice",
+        "move_to"
+      ],
+      "public_types": [
+        "Cursor"
+      ]
+    },
+    {
+      "source": "crates/oxide/src/extractor/arbitrary_property_machine.rs",
+      "local": "crates/rustify-style/upstream/oxide/extractor/arbitrary_property_machine.rs",
+      "sha256": "16e5c07df62d242ea66480d3e3f2975798f77b909304678b6fcfff842a5dfe8b",
+      "status": "implemented",
+      "tests": [
+        "test_arbitrary_property_machine_performance",
+        "test_arbitrary_property_machine_extraction",
+        "test_exceptions"
+      ],
+      "public_functions": [],
+      "public_types": [
+        "IdleState",
+        "ParsingPropertyState",
+        "ParsingValueState",
+        "ArbitraryPropertyMachine"
+      ]
+    },
+    {
+      "source": "crates/oxide/src/extractor/arbitrary_value_machine.rs",
+      "local": "crates/rustify-style/upstream/oxide/extractor/arbitrary_value_machine.rs",
+      "sha256": "f19bdf8ef54565e7bf8df7c409695804febe2963310e9259e78021e6048f9454",
+      "status": "implemented",
+      "tests": [
+        "test_arbitrary_value_machine_performance",
+        "test_arbitrary_value_machine_extraction",
+        "test_exceptions"
+      ],
+      "public_functions": [],
+      "public_types": [
+        "ArbitraryValueMachine"
+      ]
+    },
+    {
+      "source": "crates/oxide/src/extractor/arbitrary_variable_machine.rs",
+      "local": "crates/rustify-style/upstream/oxide/extractor/arbitrary_variable_machine.rs",
+      "sha256": "687c98b6d7a25a5cf877d9134607559bde5485edd1270ea922ae8fa9ea69e4f2",
+      "status": "implemented",
+      "tests": [
+        "test_arbitrary_variable_machine_performance",
+        "test_arbitrary_variable_extraction",
+        "test_exceptions"
+      ],
+      "public_functions": [],
+      "public_types": [
+        "IdleState",
+        "ParsingState",
+        "ParsingDataTypeState",
+        "ParsingFallbackState",
+        "ArbitraryVariableMachine"
+      ]
+    },
+    {
+      "source": "crates/oxide/src/extractor/boundary.rs",
+      "local": "crates/rustify-style/upstream/oxide/extractor/boundary.rs",
+      "sha256": "2c19687187d463b94469fabac2336fcf3728aa69759c337595d2edc18d35bcf2",
+      "status": "implemented",
+      "tests": [],
+      "public_functions": [
+        "is_valid_before_boundary",
+        "is_valid_after_boundary",
+        "has_valid_boundaries"
+      ],
+      "public_types": []
+    },
+    {
+      "source": "crates/oxide/src/extractor/bracket_stack.rs",
+      "local": "crates/rustify-style/upstream/oxide/extractor/bracket_stack.rs",
+      "sha256": "2a3a2728ed11fdd5fb7587bde5c0be0a55c11deb27bd721f62ab1b1f4e1b32fa",
+      "status": "implemented",
+      "tests": [],
+      "public_functions": [
+        "is_empty",
+        "push",
+        "pop",
+        "reset"
+      ],
+      "public_types": [
+        "BracketStack"
+      ]
+    },
+    {
+      "source": "crates/oxide/src/extractor/candidate_machine.rs",
+      "local": "crates/rustify-style/upstream/oxide/extractor/candidate_machine.rs",
+      "sha256": "745ae4aa20661560b66df8bdaa61818ff6ee1b6e37f97b477293d6094825ae13",
+      "status": "implemented",
+      "tests": [
+        "test_candidate_machine_performance",
+        "test_candidate_extraction",
+        "do_not_consider_svg_path_commands",
+        "test_js_interpolation"
+      ],
+      "public_functions": [],
+      "public_types": [
+        "CandidateMachine"
+      ]
+    },
+    {
+      "source": "crates/oxide/src/extractor/css_variable_machine.rs",
+      "local": "crates/rustify-style/upstream/oxide/extractor/css_variable_machine.rs",
+      "sha256": "2d9e83df35110425d3e5f5c5459d07b1d22a39e2260bd143fb67612a00867602",
+      "status": "implemented",
+      "tests": [
+        "test_css_variable_machine_performance",
+        "test_css_variable_machine_extraction"
+      ],
+      "public_functions": [],
+      "public_types": [
+        "CssVariableMachine"
+      ]
+    },
+    {
+      "source": "crates/oxide/src/extractor/machine.rs",
+      "local": "crates/rustify-style/upstream/oxide/extractor/machine.rs",
+      "sha256": "411d859dd4b6bcbff22d5a7fb8e720659683cfa1672ad3c6b9117a33ecc146e9",
+      "status": "implemented",
+      "tests": [],
+      "public_functions": [
+        "new",
+        "slice"
+      ],
+      "public_types": [
+        "Span",
+        "MachineState",
+        "Machine"
+      ]
+    },
+    {
+      "source": "crates/oxide/src/extractor/mod.rs",
+      "local": "crates/rustify-style/upstream/oxide/extractor/mod.rs",
+      "sha256": "dcb5fd48407db29d2379d68e8a41439c1fb25b7ebb1890b14e198db52b5dd7a8",
+      "status": "implemented",
+      "tests": [
+        "test_extract_performance",
+        "test_candidates_extraction",
+        "test_extractor_extract_candidates",
+        "test_ruby_syntax",
+        "test_pug_syntax",
+        "test_slim_syntax",
+        "test_csharp_syntax",
+        "test_clojure_syntax",
+        "test_gleam_syntax",
+        "test_overlapping_candidates",
+        "test_js_syntax",
+        "test_js_tuple_syntax",
+        "test_angular_binding_syntax",
+        "test_angular_binding_attribute_syntax",
+        "test_svelte_shorthand_syntax",
+        "test_twig_syntax",
+        "test_haml_syntax",
+        "test_fluid_template_syntax",
+        "test_arbitrary_container_queries_syntax",
+        "test_js_embedded_in_php_syntax",
+        "test_classes_containing_number_followed_by_dash_or_underscore",
+        "test_arbitrary_variable_with_data_type",
+        "test_leptos_rs_view_class_colon_syntax",
+        "test_extract_css_variables"
+      ],
+      "public_functions": [
+        "new",
+        "extract",
+        "extract_variables_from_css"
+      ],
+      "public_types": [
+        "Extracted",
+        "Extractor"
+      ]
+    },
+    {
+      "source": "crates/oxide/src/extractor/modifier_machine.rs",
+      "local": "crates/rustify-style/upstream/oxide/extractor/modifier_machine.rs",
+      "sha256": "6ee6e9c726b4761888359eb31f8311679437e7e5430b56a2b5f04221ddf70c3d",
+      "status": "implemented",
+      "tests": [
+        "test_modifier_machine_performance",
+        "test_modifier_extraction"
+      ],
+      "public_functions": [],
+      "public_types": [
+        "ModifierMachine"
+      ]
+    },
+    {
+      "source": "crates/oxide/src/extractor/named_utility_machine.rs",
+      "local": "crates/rustify-style/upstream/oxide/extractor/named_utility_machine.rs",
+      "sha256": "8ec7a3d519f290364fe6c1d061168c9702b8d192f59933d3123e0655b554770e",
+      "status": "implemented",
+      "tests": [
+        "test_named_utility_machine_performance",
+        "test_named_utility_extraction"
+      ],
+      "public_functions": [],
+      "public_types": [
+        "IdleState",
+        "ParsingState",
+        "NamedUtilityMachine"
+      ]
+    },
+    {
+      "source": "crates/oxide/src/extractor/named_variant_machine.rs",
+      "local": "crates/rustify-style/upstream/oxide/extractor/named_variant_machine.rs",
+      "sha256": "6d04b439ed3b7c9de26a0613a542588fe87e4d20ba36129517802891c041d589",
+      "status": "implemented",
+      "tests": [
+        "test_named_variant_machine_performance",
+        "test_named_variant_extraction"
+      ],
+      "public_functions": [],
+      "public_types": [
+        "IdleState",
+        "ParsingState",
+        "ParsingModifierState",
+        "ParsingEndState",
+        "NamedVariantMachine"
+      ]
+    },
+    {
+      "source": "crates/oxide/src/extractor/pre_processors/clojure.rs",
+      "local": "crates/rustify-style/upstream/oxide/extractor/pre_processors/clojure.rs",
+      "sha256": "8d8c9e72d44f2e5227f127d58a7380ee38c300e45ebc1414925a54d67b9c4fec",
+      "status": "implemented",
+      "tests": [
+        "test_clojure_pre_processor",
+        "test_extract_candidates",
+        "test_special_characters_are_valid_in_strings",
+        "test_ignore_comments_with_invalid_strings",
+        "test_extraction_of_classes_with_dots",
+        "test_extraction_of_pseudoclasses_from_keywords",
+        "test_noninterference_of_parens_on_keywords"
+      ],
+      "public_functions": [],
+      "public_types": [
+        "Clojure"
+      ]
+    },
+    {
+      "source": "crates/oxide/src/extractor/pre_processors/elixir.rs",
+      "local": "crates/rustify-style/upstream/oxide/extractor/pre_processors/elixir.rs",
+      "sha256": "724c44c292f5ee887cde54eba26d370e32279ebc8cdfa7125a3113cbbcd0db86",
+      "status": "implemented",
+      "tests": [
+        "test_elixir_pre_processor",
+        "test_extract_candidates"
+      ],
+      "public_functions": [],
+      "public_types": [
+        "Elixir"
+      ]
+    },
+    {
+      "source": "crates/oxide/src/extractor/pre_processors/haml.rs",
+      "local": "crates/rustify-style/upstream/oxide/extractor/pre_processors/haml.rs",
+      "sha256": "834538d0ae6804ca8d94845413a394ed8b03a62309f3d77986fed4e7fd1d4068",
+      "status": "implemented",
+      "tests": [
+        "test_haml_pre_processor",
+        "test_strings_only_occur_when_nested",
+        "test_haml_full_file_17051",
+        "test_haml_full_file_17813",
+        "test_arbitrary_code_followed_by_classes",
+        "test_crash_missing_newline"
+      ],
+      "public_functions": [],
+      "public_types": [
+        "Haml"
+      ]
+    },
+    {
+      "source": "crates/oxide/src/extractor/pre_processors/json.rs",
+      "local": "crates/rustify-style/upstream/oxide/extractor/pre_processors/json.rs",
+      "sha256": "a55e9306d0c433e50ee2d893a6c11e0e5091b428578c0c19d942826fb2a2aaa4",
+      "status": "implemented",
+      "tests": [
+        "test_json_pre_processor"
+      ],
+      "public_functions": [],
+      "public_types": [
+        "Json"
+      ]
+    },
+    {
+      "source": "crates/oxide/src/extractor/pre_processors/mod.rs",
+      "local": "crates/rustify-style/upstream/oxide/extractor/pre_processors/mod.rs",
+      "sha256": "75e153dcfbaf087a4d5891f3a26a35b2c354420c44cb0c321d676300985c298e",
+      "status": "implemented",
+      "tests": [],
+      "public_functions": [],
+      "public_types": []
+    },
+    {
+      "source": "crates/oxide/src/extractor/pre_processors/pre_processor.rs",
+      "local": "crates/rustify-style/upstream/oxide/extractor/pre_processors/pre_processor.rs",
+      "sha256": "90109c36c0c737c18ac11eb60268939ccbaa62ae18aad1a2415e57a27e340fca",
+      "status": "implemented",
+      "tests": [],
+      "public_functions": [],
+      "public_types": [
+        "PreProcessor"
+      ]
+    },
+    {
+      "source": "crates/oxide/src/extractor/pre_processors/pug.rs",
+      "local": "crates/rustify-style/upstream/oxide/extractor/pre_processors/pug.rs",
+      "sha256": "950f4253d8812c19b0a3bb7656afae04827add824c184b949e168936403aff6a",
+      "status": "implemented",
+      "tests": [
+        "test_pug_pre_processor",
+        "test_strings_only_occur_when_nested",
+        "test_arbitrary_code_followed_by_classes",
+        "test_class_shorthand_followed_by_parens"
+      ],
+      "public_functions": [],
+      "public_types": [
+        "Pug"
+      ]
+    },
+    {
+      "source": "crates/oxide/src/extractor/pre_processors/razor.rs",
+      "local": "crates/rustify-style/upstream/oxide/extractor/pre_processors/razor.rs",
+      "sha256": "73b2a0ca0ac46a9a01b01438cfd27ec7a7f39e35628d236a5cfdd2091d6b595c",
+      "status": "implemented",
+      "tests": [
+        "test_razor_pre_processor",
+        "test_razor_syntax_with"
+      ],
+      "public_functions": [],
+      "public_types": [
+        "Razor"
+      ]
+    },
+    {
+      "source": "crates/oxide/src/extractor/pre_processors/ruby.rs",
+      "local": "crates/rustify-style/upstream/oxide/extractor/pre_processors/ruby.rs",
+      "sha256": "7bb6c48cdbf45bd93822e80d95b234adb444afef6cfad3ff68a916580fe3beb5",
+      "status": "implemented",
+      "tests": [
+        "test_ruby_pre_processor",
+        "test_ruby_extraction",
+        "test_embedded_slim_extraction"
+      ],
+      "public_functions": [],
+      "public_types": [
+        "Ruby"
+      ]
+    },
+    {
+      "source": "crates/oxide/src/extractor/pre_processors/slim.rs",
+      "local": "crates/rustify-style/upstream/oxide/extractor/pre_processors/slim.rs",
+      "sha256": "e2abf5a5c40cca8705693dd0259639e5c6cb75c517098a3bd18a8455dc34f432",
+      "status": "implemented",
+      "tests": [
+        "test_slim_pre_processor",
+        "test_nested_slim_syntax",
+        "test_single_quotes_to_enforce_trailing_whitespace",
+        "test_class_shorthand_followed_by_parens",
+        "test_strings_only_occur_when_nested",
+        "test_arbitrary_code_followed_by_classes",
+        "test_embedded_ruby_percent_w_extraction"
+      ],
+      "public_functions": [],
+      "public_types": [
+        "Slim"
+      ]
+    },
+    {
+      "source": "crates/oxide/src/extractor/pre_processors/svelte.rs",
+      "local": "crates/rustify-style/upstream/oxide/extractor/pre_processors/svelte.rs",
+      "sha256": "8f258d9267948830a65fcadde01ccaefb1f0dbb21f87f23114e265aeb0976b56",
+      "status": "implemented",
+      "tests": [
+        "test_svelte_pre_processor"
+      ],
+      "public_functions": [],
+      "public_types": [
+        "Svelte"
+      ]
+    },
+    {
+      "source": "crates/oxide/src/extractor/pre_processors/test-fixtures/haml/dst-17051.haml",
+      "local": "crates/rustify-style/upstream/oxide/extractor/pre_processors/test-fixtures/haml/dst-17051.haml",
+      "sha256": "b80f60fc23f162985db362fd96a46678e1848f887700b7c4c749108022145252",
+      "status": "implemented",
+      "tests": [],
+      "public_functions": [],
+      "public_types": []
+    },
+    {
+      "source": "crates/oxide/src/extractor/pre_processors/test-fixtures/haml/dst-17813.haml",
+      "local": "crates/rustify-style/upstream/oxide/extractor/pre_processors/test-fixtures/haml/dst-17813.haml",
+      "sha256": "abf58a6072f6d2560710508e9ecea0e95eedb68c736b3a1f6f486de5dc8d60c4",
+      "status": "implemented",
+      "tests": [],
+      "public_functions": [],
+      "public_types": []
+    },
+    {
+      "source": "crates/oxide/src/extractor/pre_processors/test-fixtures/haml/src-17051.haml",
+      "local": "crates/rustify-style/upstream/oxide/extractor/pre_processors/test-fixtures/haml/src-17051.haml",
+      "sha256": "b37677ff2a1c67d036fb56a6bc2443f96ab706bafc8725fbbc05c0ba0a823666",
+      "status": "implemented",
+      "tests": [],
+      "public_functions": [],
+      "public_types": []
+    },
+    {
+      "source": "crates/oxide/src/extractor/pre_processors/test-fixtures/haml/src-17813.haml",
+      "local": "crates/rustify-style/upstream/oxide/extractor/pre_processors/test-fixtures/haml/src-17813.haml",
+      "sha256": "33eee870bc320e6dce6130913e590151f0e8b76881c29745f3d2db9236087f3f",
+      "status": "implemented",
+      "tests": [],
+      "public_functions": [],
+      "public_types": []
+    },
+    {
+      "source": "crates/oxide/src/extractor/pre_processors/vue.rs",
+      "local": "crates/rustify-style/upstream/oxide/extractor/pre_processors/vue.rs",
+      "sha256": "6a1ee512c17d23fd62e4f08dc39c8a539c23f80d764d71109d2dadf0a010a679",
+      "status": "implemented",
+      "tests": [
+        "test_vue_template_pug"
+      ],
+      "public_functions": [],
+      "public_types": [
+        "Vue"
+      ]
+    },
+    {
+      "source": "crates/oxide/src/extractor/string_machine.rs",
+      "local": "crates/rustify-style/upstream/oxide/extractor/string_machine.rs",
+      "sha256": "89b733bc6637e96593fb85e866793ec3847c3679557218846e4ff2ce00576216",
+      "status": "implemented",
+      "tests": [
+        "test_string_machine_performance",
+        "test_string_machine_extraction"
+      ],
+      "public_functions": [],
+      "public_types": [
+        "StringMachine"
+      ]
+    },
+    {
+      "source": "crates/oxide/src/extractor/utility_machine.rs",
+      "local": "crates/rustify-style/upstream/oxide/extractor/utility_machine.rs",
+      "sha256": "1cbf183a6f3248a46cc29c4ea0119b0a6c170828839d658866e5d305c69acf2e",
+      "status": "implemented",
+      "tests": [
+        "test_utility_machine_performance",
+        "test_utility_extraction"
+      ],
+      "public_functions": [],
+      "public_types": [
+        "UtilityMachine"
+      ]
+    },
+    {
+      "source": "crates/oxide/src/extractor/variant_machine.rs",
+      "local": "crates/rustify-style/upstream/oxide/extractor/variant_machine.rs",
+      "sha256": "3c9370e43a3067d85b98b854d6fe7b1d4d488fbe668bc79fa10c25183772d3eb",
+      "status": "implemented",
+      "tests": [
+        "test_variant_machine_performance",
+        "test_variant_extraction"
+      ],
+      "public_functions": [],
+      "public_types": [
+        "VariantMachine"
+      ]
+    },
+    {
+      "source": "crates/oxide/src/fast_skip.rs",
+      "local": "crates/rustify-style/upstream/oxide/fast_skip.rs",
+      "sha256": "7cc176ff97071a82d0b0536fb64718b594f46dc97719c056770138e0c406eca0",
+      "status": "implemented",
+      "tests": [],
+      "public_functions": [
+        "fast_skip"
+      ],
+      "public_types": []
+    },
+    {
+      "source": "crates/oxide/src/fixtures/example.html",
+      "local": "crates/rustify-style/upstream/oxide/fixtures/example.html",
+      "sha256": "3fd82d209e535801ddfb4c3ecc4aa35e51fd66fd9f87007d6c6f22809c56e438",
+      "status": "implemented",
+      "tests": [],
+      "public_functions": [],
+      "public_types": []
+    },
+    {
+      "source": "crates/oxide/src/throughput.rs",
+      "local": "crates/rustify-style/upstream/oxide/throughput.rs",
+      "sha256": "eba948fc4923893488e165b0027d4adcb2f4389f2497a2692a5e77f62e0de146",
+      "status": "implemented",
+      "tests": [],
+      "public_functions": [
+        "compute"
+      ],
+      "public_types": [
+        "Throughput"
+      ]
+    },
+    {
+      "source": "crates/oxide/src/scanner/auto_source_detection.rs",
+      "sha256": "d9a545daf4458694a5f164968031234bdbe164767a1f5a008e2b8ec8d317d9bf",
+      "status": "implemented_source_core_verified_native_virtual",
+      "tests": [],
+      "public_functions": [],
+      "public_types": [],
+      "evidence": "source-verification.json; all42 upstream Scanner expectations preserved with native/virtual parity; shared source-fixtures.json native/WASM"
+    },
+    {
+      "source": "crates/oxide/src/scanner/detect_sources.rs",
+      "sha256": "dee354fc2c349e35fb2be2f33d8c1857ba87e633ab3de920ebd4d5b13a607058",
+      "status": "implemented_source_core_verified_native_virtual",
+      "tests": [],
+      "public_functions": [
+        "resolve_globs"
+      ],
+      "public_types": [],
+      "evidence": "source-verification.json; all42 upstream Scanner expectations preserved with native/virtual parity; shared source-fixtures.json native/WASM"
+    },
+    {
+      "source": "crates/oxide/src/scanner/fixtures/binary-extensions.txt",
+      "sha256": "6c95bf208645736dd74490c1740bba5f33893f514c8ba534b2b20cfe64326088",
+      "status": "implemented_source_core_verified_native_virtual",
+      "tests": [],
+      "public_functions": [],
+      "public_types": [],
+      "evidence": "source-verification.json; all42 upstream Scanner expectations preserved with native/virtual parity; shared source-fixtures.json native/WASM",
+      "local": "crates/rustify-style/src/scanner/fixtures/binary-extensions.txt"
+    },
+    {
+      "source": "crates/oxide/src/scanner/fixtures/ignored-content-dirs.txt",
+      "sha256": "6f70dbcbdac4a63a0f64091584ee5512e5dd07bab17479ee9a598c3ef3df0a3f",
+      "status": "implemented_source_core_verified_native_virtual",
+      "tests": [],
+      "public_functions": [],
+      "public_types": [],
+      "evidence": "source-verification.json; all42 upstream Scanner expectations preserved with native/virtual parity; shared source-fixtures.json native/WASM",
+      "local": "crates/rustify-style/src/scanner/fixtures/ignored-content-dirs.txt"
+    },
+    {
+      "source": "crates/oxide/src/scanner/fixtures/ignored-extensions.txt",
+      "sha256": "749167ac9bc0a6daaccaf14a56aa41b8b9befd2755b7d7a27ad8cb762230b65e",
+      "status": "implemented_source_core_verified_native_virtual",
+      "tests": [],
+      "public_functions": [],
+      "public_types": [],
+      "evidence": "source-verification.json; all42 upstream Scanner expectations preserved with native/virtual parity; shared source-fixtures.json native/WASM",
+      "local": "crates/rustify-style/src/scanner/fixtures/ignored-extensions.txt"
+    },
+    {
+      "source": "crates/oxide/src/scanner/fixtures/ignored-files.txt",
+      "sha256": "14d3c2a7aa939b238d6b2d6d5c6e6559bbabfbe572490f14c6c0513427577b9e",
+      "status": "implemented_source_core_verified_native_virtual",
+      "tests": [],
+      "public_functions": [],
+      "public_types": [],
+      "evidence": "source-verification.json; all42 upstream Scanner expectations preserved with native/virtual parity; shared source-fixtures.json native/WASM",
+      "local": "crates/rustify-style/src/scanner/fixtures/ignored-files.txt"
+    },
+    {
+      "source": "crates/oxide/src/scanner/fixtures/template-extensions.txt",
+      "sha256": "fded6e73769361c4ef6a07cc7c4b1c2f66b3bb9223b8004a6f391b3b6558dff0",
+      "status": "implemented_source_core_verified_native_virtual",
+      "tests": [],
+      "public_functions": [],
+      "public_types": [],
+      "evidence": "source-verification.json; all42 upstream Scanner expectations preserved with native/virtual parity; shared source-fixtures.json native/WASM",
+      "local": "crates/rustify-style/src/scanner/fixtures/template-extensions.txt"
+    },
+    {
+      "source": "crates/oxide/src/scanner/mod.rs",
+      "sha256": "fff6b4f9d5897d11a5ed5d6dadd092b556113907f16e905870463b5ffa6e62a4",
+      "status": "implemented_source_core_verified_native_virtual",
+      "tests": [
+        "test_positions"
+      ],
+      "public_functions": [
+        "new",
+        "scan",
+        "scan_content",
+        "get_files",
+        "get_globs",
+        "get_normalized_sources",
+        "get_candidates_with_positions",
+        "pre_process_input"
+      ],
+      "public_types": [
+        "ChangedContent",
+        "ScanOptions",
+        "ScanResult",
+        "Scanner"
+      ],
+      "evidence": "source-verification.json; all42 upstream Scanner expectations preserved with native/virtual parity; shared source-fixtures.json native/WASM"
+    },
+    {
+      "source": "crates/oxide/src/scanner/sources.rs",
+      "sha256": "e882eae577091f85581ac7d1c983737f21910361cc0cb33b3a4ea6fecc1b7158",
+      "status": "implemented_source_core_verified_native_virtual",
+      "tests": [],
+      "public_functions": [
+        "new",
+        "iter",
+        "optimize",
+        "public_source_entries_to_private_source_entries"
+      ],
+      "public_types": [
+        "PublicSourceEntry",
+        "SourceEntry",
+        "Sources"
+      ],
+      "evidence": "source-verification.json; all42 upstream Scanner expectations preserved with native/virtual parity; shared source-fixtures.json native/WASM"
+    },
+    {
+      "source": "crates/oxide/tests/scanner.rs",
+      "sha256": "665c35f6f1120d7b07be9c84a5803c1ee574eb2385b56533da22e19cd8744a94",
+      "status": "implemented_source_core_verified_native_virtual",
+      "tests": [
+        "it_should_work_with_a_set_of_root_files",
+        "it_should_work_with_a_set_of_root_files_and_ignore_ignored_files",
+        "it_should_list_all_files_in_the_public_folder_explicitly",
+        "it_should_list_nested_folders_explicitly_in_the_public_folder",
+        "it_should_list_all_files_in_the_public_folder_explicitly_except_ignored_files",
+        "it_should_use_a_glob_for_top_level_folders",
+        "it_should_ignore_binary_files",
+        "it_should_not_ignore_folders_that_end_with_a_binary_extension",
+        "it_should_ignore_known_extensions",
+        "it_should_find_new_extensions",
+        "it_should_ignore_known_files",
+        "it_should_ignore_and_expand_nested_ignored_folders",
+        "it_should_scan_for_utilities",
+        "it_should_be_possible_to_scan_in_the_parent_directory",
+        "it_should_scan_files_without_extensions",
+        "it_should_scan_folders_with_extensions",
+        "it_should_scan_content_paths",
+        "it_should_scan_next_dynamic_folders",
+        "it_should_scan_absolute_paths",
+        "it_should_scan_content_paths_even_when_they_are_git_ignored",
+        "it_should_pick_up_new_files",
+        "it_should_ignore_negated_custom_sources",
+        "it_should_include_defined_extensions_that_are_ignored_by_default",
+        "it_should_work_with_manual_glob_only",
+        "it_respects_gitignore_in_workspace_root",
+        "it_includes_skipped_by_default_extensions_with_a_specific_source",
+        "it_respects_gitignore_in_workspace_root_for_manual_globs",
+        "skips_ignore_files_outside_of_a_repo",
+        "test_explicitly_ignore_explicitly_allowed_files",
+        "test_works_with_filenames_containing_glob_characters",
+        "test_ignore_files_can_be_included_with_custom_source_rule",
+        "test_allow_default_ignored_files",
+        "test_allow_default_ignored_files_via_gitignore",
+        "test_allow_explicit_node_modules_paths",
+        "test_ignore_node_modules_without_gitignore",
+        "test_ignore_gitignore_in_node_modules_source",
+        "test_manually_scanning_files_should_follow_all_rules",
+        "test_works_with_utf8_special_character_paths",
+        "test_glob_with_symlinks",
+        "test_globs_with_recursive_symlinks",
+        "test_partial_globs_with_symlinks",
+        "test_extract_used_css_variables_from_css"
+      ],
+      "evidence": "source-verification.json; all42 upstream Scanner expectations preserved with native/virtual parity; shared source-fixtures.json native/WASM"
+    },
+    {
+      "source": "crates/oxide/src/glob.rs",
+      "sha256": "1f03345eb40bf8088740fccef809e88c98fa4d83b0d0ac6881062ea987e31945",
+      "status": "implemented_source_core_verified_native_virtual",
+      "public_functions": [
+        "hoist_static_glob_parts",
+        "optimize_patterns",
+        "split_pattern"
+      ],
+      "public_types": [
+        "GlobEntry"
+      ],
+      "tests": [
+        "it_should_keep_globs_that_start_with_file_wildcards_as_is",
+        "it_should_keep_globs_that_start_with_folder_wildcards_as_is",
+        "it_should_move_the_starting_folder_to_the_path",
+        "it_should_move_the_starting_folders_to_the_path",
+        "it_should_branch_expandable_folders",
+        "it_should_expand_multiple_expansions_in_the_same_folder",
+        "multiple_expansions_per_folder_starting_at_the_root",
+        "it_should_stop_expanding_once_we_hit_a_wildcard",
+        "it_should_keep_the_negation_symbol_for_all_new_patterns",
+        "it_should_expand_a_complex_example"
+      ],
+      "evidence": "source-verification.json; all42 upstream Scanner expectations preserved with native/virtual parity; shared source-fixtures.json native/WASM"
+    },
+    {
+      "source": "crates/oxide/src/paths.rs",
+      "sha256": "15c247d15987aa8055552c55204b911056d3d083897beabff8e141e26761a474",
+      "status": "implemented_source_core_verified_native_virtual",
+      "public_functions": [
+        "trim_prefix",
+        "join",
+        "canonicalize"
+      ],
+      "public_types": [
+        "Path"
+      ],
+      "tests": [],
+      "evidence": "source-verification.json; all42 upstream Scanner expectations preserved with native/virtual parity; shared source-fixtures.json native/WASM"
+    },
+    {
+      "source": "crates/classification-macros/Cargo.toml",
+      "sha256": "2d8e668b81b362250d1b3b7e1a5aeb1d01544909bc782233c46c744adcc77f24",
+      "status": "implemented_host_macro",
+      "public_functions": [],
+      "public_types": [],
+      "tests": [],
+      "local": "crates/rustify-style/upstream/classification-macros/Cargo.toml",
+      "local_sha256": "9684262395ea0373579eb0f97d2ee27a6c324837080d62b043f5efa484f2b552",
+      "modification": "Explicitly enable syn/full, otherwise missing ExprRange and RangeLimits in isolated closure."
+    },
+    {
+      "source": "crates/classification-macros/src/lib.rs",
+      "sha256": "70ef9013d13442a904d30acac7d0b7923b71899fde58cc5c0a3d2b2cb761447c",
+      "status": "implemented_host_macro",
+      "public_functions": [
+        "classify_bytes_derive"
+      ],
+      "public_types": [],
+      "tests": [],
+      "local": "crates/rustify-style/upstream/classification-macros/src/lib.rs",
+      "local_sha256": "70ef9013d13442a904d30acac7d0b7923b71899fde58cc5c0a3d2b2cb761447c"
+    },
+    {
+      "source": "LICENSE",
+      "sha256": "60e0b68c0f35c078eef3a5d29419d0b03ff84ec1df9c3f9d6e39a519a5ae7985",
+      "status": "license_preserved",
+      "public_functions": [],
+      "public_types": [],
+      "tests": [],
+      "local": "crates/rustify-style/upstream/LICENSE-TAILWIND"
+    }
+  ],
+  "adapted_sources": [
+    {
+      "source": "crates/ignore/src/gitignore.rs",
+      "sha256": "3e408a18cda739f1c698088487c5c98596f9b318b42bc6f9638f6c5ebe81257a",
+      "local": "crates/rustify-style/src/scanner/rules.rs",
+      "local_sha256": "141a15deba0980c5e8a30582b78bb88b5b59f5238591ac439b56aa1ad399cc06",
+      "adaptation": "Port add_line/matching semantics and only_on_files, supplied-byte ignore files; remove global env/filesystem access, use concrete source tree and shared hierarchy matching from ignore/dir.rs.",
+      "license": "crates/rustify-style/src/scanner/LICENSE-IGNORE"
+    },
+    {
+      "source": "crates/ignore/src/dir.rs",
+      "sha256": "fc59d2cf7cbe432e0b1fdc76bf91b996c02fac8e1769166dd65a721693c2dca3",
+      "adaptation": "Reference for ignore precedence/repository boundaries and path stripping; logic integrated in scanner/discovery.rs."
+    },
+    {
+      "source": "crates/ignore/src/pathutil.rs",
+      "sha256": "966d1f641c90d5dced35aca1362ca96e8a4fa5572a33b61604f9de0a157c3596",
+      "adaptation": "Reference for ignore precedence/repository boundaries and path stripping; logic integrated in scanner/discovery.rs."
+    },
+    {
+      "source": "crates/ignore/LICENSE-MIT",
+      "sha256": "0f96a83840e146e43c0ec96a22ec1f392e0680e6c1226e6f3ba87e0740af850f",
+      "local": "crates/rustify-style/src/scanner/LICENSE-IGNORE",
+      "adaptation": "Preserved MIT notice for the ignore parser/precedence port."
+    }
+  ],
+  "source_api_mappings": {
+    "ChangedContent::File/Content": "Same tuple variants; SourceTree determines file storage.",
+    "Scanner::new": "Scanner::new(public_sources, SourceTree) -> Result; concrete Native/Virtual storage.",
+    "Scanner::scan": "SourceScanResult separates candidates/variables; original combined result obtained by sorted union.",
+    "Scanner::scan_content": "ScanResult contains new unique candidates/variables only; known-file bypass/new-file eligibility preserved.",
+    "Scanner::get_files/get_globs/get_normalized_sources": "Same discovery/cached-glob/normalized-source behavior; get_files/get_globs return Result for explicit source diagnostics.",
+    "Scanner::get_candidates_with_positions": "Preprocessed byte positions, legacy -[] replacement and original bytes preserved.",
+    "PublicSourceEntry::optimize": "optimize(&SourceTree) provides equivalent canonicalization and hoisting without OS calls in WASM.",
+    "public_source_entries_to_private_source_entries": "sources::normalize_sources with explicit SourceTree.",
+    "SourceEntry/Sources": "All Auto/Pattern/Ignored/External modes; Sources::new/iter.",
+    "ScanOptions": "Upstream unused data carrier represented by public source entries and explicit SourceTree; no separate legacy ScanOptions facade.",
+    "glob helpers": "split/hoist/optimize implemented inside shared source normalization/watch-glob logic.",
+    "paths::Path": "PathBuf in shared tree; target-native canonicalization or virtual POSIX canonicalization, not an additional public path wrapper."
+  },
+  "source_contract_diagnostics": [
+    "Explicitly unavailable virtual paths produce MissingSourceInformation. Complete snapshots declare omitted paths absent.",
+    "Invalid UTF-8 source bytes return InvalidUtf8 rather than invoking the upstream unsafe string conversion or Vue UTF-8 panic.",
+    "WASM virtual paths use POSIX roots; actual native tests run on macOS, other OS behavior remains unverified."
+  ],
+  "remaining_integration": [
+    "JS/WASM source JSON facade and Worker/source-panel integration are main-task work; plain WASM source probe already executes the shared core corpus."
+  ]
+}

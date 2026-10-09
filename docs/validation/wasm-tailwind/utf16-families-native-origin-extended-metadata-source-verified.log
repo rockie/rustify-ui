@@ -1,0 +1,484 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: functional-body-alias: build ["tone-card"]
++ actual - expected
+... Skipped lines
+
+  {
+    records: [
+      {
+        array: true,
+        fields: [
+...
+            {
++             reference: 36
+-             reference: 15
+            }
+          ],
+          [
+            'dst',
+            {
++             reference: 36
+-             reference: 15
+            }
+          ]
+        ]
+      },
+      {
+...
+      },
++     {
++       array: true,
++       fields: [
++         [
++           '0',
++           {
++             reference: 16
++           }
++         ],
++         [
++           '1',
++           0.5
++         ],
++         [
++           '2',
++           19.5
++         ]
++       ]
++     }
+    ],
+    roots: [
+      {
+        reference: 0
+      },
+
+    at file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/compiler/run-public-ast-custom-origin-wasm.mjs:84:14 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: {
+    roots: [
+      { reference: 0 },
+      { reference: 18 },
+      { reference: 19 },
+      { reference: 20 },
+      { reference: 21 },
+      { reference: 22 },
+      { reference: 25 },
+      { reference: 27 },
+      { reference: 29 }
+    ],
+    records: [
+      { array: true, fields: [ [ '0', [Object] ], [ '1', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'rule' ],
+          [ 'selector', ':root, :host' ],
+          [ 'nodes', [Object] ],
+          [ 'src', [Object] ]
+        ]
+      },
+      { array: true, fields: [ [ '0', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'context' ],
+          [ 'context', [Object] ],
+          [ 'nodes', [Object] ]
+        ]
+      },
+      { array: false, fields: [ [ 'theme', true ] ] },
+      { array: true, fields: [ [ '0', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'declaration' ],
+          [ 'property', '--color-card' ],
+          [ 'value', 'red' ],
+          [ 'important', false ],
+          [ 'src', [Object] ]
+        ]
+      },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'context' ],
+          [ 'name', '@tailwind' ],
+          [ 'params', 'utilities' ],
+          [ 'nodes', [Object] ],
+          [ 'context', [Object] ]
+        ]
+      },
+      { array: true, fields: [ [ '0', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'rule' ],
+          [ 'selector', '.tone-card' ],
+          [ 'nodes', [Object] ]
+        ]
+      },
+      { array: true, fields: [ [ '0', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'rule' ],
+          [ 'selector', '&:hover' ],
+          [ 'nodes', [Object] ],
+          [ 'extra', [Object] ],
+          [ 'src', [Object] ],
+          [ 'dst', [Object] ]
+        ]
+      },
+      { array: true, fields: [ [ '0', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'declaration' ],
+          [ 'property', 'color' ],
+          [ 'value', 'var(--color-card)' ],
+          [ 'important', false ]
+        ]
+      },
+      {
+        array: false,
+        fields: [ [ 'child', [Object] ], [ 'body', [Object] ] ]
+      },
+      {
+        array: true,
+        fields: [ [ '0', [Object] ], [ '1', 0.5 ], [ '2', 19.5 ] ]
+      },
+      {
+        array: false,
+        fields: [
+          [ 'file', 'source.css' ],
+          [ 'code', 'functional\ud800' ],
+          [ 'child', [Object] ],
+          [ 'body', [Object] ]
+        ]
+      },
+      { array: false, fields: [] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'at-rule' ],
+          [ 'name', '@utility' ],
+          [ 'params', 'tone-*' ],
+          [ 'nodes', [Object] ],
+          [ 'extra', [Object] ]
+        ]
+      },
+      { array: true, fields: [ [ '0', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'rule' ],
+          [ 'selector', '&:hover' ],
+          [ 'nodes', [Object] ],
+          [ 'extra', [Object] ],
+          [ 'src', [Object] ],
+          [ 'dst', [Object] ]
+        ]
+      },
+      { array: true, fields: [ [ '0', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'declaration' ],
+          [ 'property', 'color' ],
+          [ 'value', '--value(--color-*)' ],
+          [ 'important', false ]
+        ]
+      },
+      {
+        array: false,
+        fields: [ [ 'child', [Object] ], [ 'body', [Object] ] ]
+      },
+      {
+        array: true,
+        fields: [ [ '0', [Object] ], [ '1', 0.5 ], [ '2', 19.5 ] ]
+      },
+      {
+        array: false,
+        fields: [
+          [ 'file', 'source.css' ],
+          [ 'code', 'functional\ud800' ],
+          [ 'child', [Object] ],
+          [ 'body', [Object] ]
+        ]
+      },
+      {
+        array: false,
+        fields: [
+          [ 'child', [Object] ],
+          [ 'body', [Object] ],
+          [ 'nested', [Object] ]
+        ]
+      },
+      { array: true, fields: [ [ '0', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'comment' ],
+          [
+            'value',
+            '! tailwindcss v4.1.13 | MIT License | https://tailwindcss.com '
+          ]
+        ]
+      },
+      {
+        array: true,
+        fields: [ [ '0', [Object] ], [ '1', [Object] ], [ '2', [Object] ] ]
+      },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'rule' ],
+          [ 'selector', ':root, :host' ],
+          [ 'nodes', [Object] ],
+          [ 'src', [Object] ]
+        ]
+      },
+      { array: true, fields: [ [ '0', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'rule' ],
+          [ 'selector', '.tone-card' ],
+          [ 'nodes', [Object] ]
+        ]
+      },
+      { array: true, fields: [ [ '0', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'rule' ],
+          [ 'selector', '&:hover' ],
+          [ 'nodes', [Object] ],
+          [ 'extra', [Object] ],
+          [ 'src', [Object] ],
+          [ 'dst', [Object] ]
+        ]
+      },
+      { array: true, fields: [ [ '0', [Object] ] ] },
+      {
+        array: true,
+        fields: [ [ '0', [Object] ], [ '1', 0.5 ], [ '2', 19.5 ] ]
+      }
+    ]
+  },
+  expected: {
+    roots: [
+      { reference: 0 },
+      { reference: 18 },
+      { reference: 19 },
+      { reference: 20 },
+      { reference: 21 },
+      { reference: 22 },
+      { reference: 25 },
+      { reference: 27 },
+      { reference: 29 }
+    ],
+    records: [
+      { array: true, fields: [ [ '0', [Object] ], [ '1', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'rule' ],
+          [ 'selector', ':root, :host' ],
+          [ 'nodes', [Object] ],
+          [ 'src', [Object] ]
+        ]
+      },
+      { array: true, fields: [ [ '0', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'context' ],
+          [ 'context', [Object] ],
+          [ 'nodes', [Object] ]
+        ]
+      },
+      { array: false, fields: [ [ 'theme', true ] ] },
+      { array: true, fields: [ [ '0', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'declaration' ],
+          [ 'property', '--color-card' ],
+          [ 'value', 'red' ],
+          [ 'important', false ],
+          [ 'src', [Object] ]
+        ]
+      },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'context' ],
+          [ 'name', '@tailwind' ],
+          [ 'params', 'utilities' ],
+          [ 'nodes', [Object] ],
+          [ 'context', [Object] ]
+        ]
+      },
+      { array: true, fields: [ [ '0', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'rule' ],
+          [ 'selector', '.tone-card' ],
+          [ 'nodes', [Object] ]
+        ]
+      },
+      { array: true, fields: [ [ '0', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'rule' ],
+          [ 'selector', '&:hover' ],
+          [ 'nodes', [Object] ],
+          [ 'extra', [Object] ],
+          [ 'src', [Object] ],
+          [ 'dst', [Object] ]
+        ]
+      },
+      { array: true, fields: [ [ '0', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'declaration' ],
+          [ 'property', 'color' ],
+          [ 'value', 'var(--color-card)' ],
+          [ 'important', false ]
+        ]
+      },
+      {
+        array: false,
+        fields: [ [ 'child', [Object] ], [ 'body', [Object] ] ]
+      },
+      {
+        array: true,
+        fields: [ [ '0', [Object] ], [ '1', 0.5 ], [ '2', 19.5 ] ]
+      },
+      {
+        array: false,
+        fields: [
+          [ 'file', 'source.css' ],
+          [ 'code', 'functional\ud800' ],
+          [ 'child', [Object] ],
+          [ 'body', [Object] ]
+        ]
+      },
+      { array: false, fields: [] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'at-rule' ],
+          [ 'name', '@utility' ],
+          [ 'params', 'tone-*' ],
+          [ 'nodes', [Object] ],
+          [ 'extra', [Object] ]
+        ]
+      },
+      { array: true, fields: [ [ '0', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'rule' ],
+          [ 'selector', '&:hover' ],
+          [ 'nodes', [Object] ],
+          [ 'extra', [Object] ],
+          [ 'src', [Object] ],
+          [ 'dst', [Object] ]
+        ]
+      },
+      { array: true, fields: [ [ '0', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'declaration' ],
+          [ 'property', 'color' ],
+          [ 'value', '--value(--color-*)' ],
+          [ 'important', false ]
+        ]
+      },
+      {
+        array: false,
+        fields: [ [ 'child', [Object] ], [ 'body', [Object] ] ]
+      },
+      {
+        array: true,
+        fields: [ [ '0', [Object] ], [ '1', 0.5 ], [ '2', 19.5 ] ]
+      },
+      {
+        array: false,
+        fields: [
+          [ 'file', 'source.css' ],
+          [ 'code', 'functional\ud800' ],
+          [ 'child', [Object] ],
+          [ 'body', [Object] ]
+        ]
+      },
+      {
+        array: false,
+        fields: [
+          [ 'child', [Object] ],
+          [ 'body', [Object] ],
+          [ 'nested', [Object] ]
+        ]
+      },
+      { array: true, fields: [ [ '0', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'comment' ],
+          [
+            'value',
+            '! tailwindcss v4.1.13 | MIT License | https://tailwindcss.com '
+          ]
+        ]
+      },
+      {
+        array: true,
+        fields: [ [ '0', [Object] ], [ '1', [Object] ], [ '2', [Object] ] ]
+      },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'rule' ],
+          [ 'selector', ':root, :host' ],
+          [ 'nodes', [Object] ],
+          [ 'src', [Object] ]
+        ]
+      },
+      { array: true, fields: [ [ '0', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'rule' ],
+          [ 'selector', '.tone-card' ],
+          [ 'nodes', [Object] ]
+        ]
+      },
+      { array: true, fields: [ [ '0', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'rule' ],
+          [ 'selector', '&:hover' ],
+          [ 'nodes', [Object] ],
+          [ 'extra', [Object] ],
+          [ 'src', [Object] ],
+          [ 'dst', [Object] ]
+        ]
+      },
+      { array: true, fields: [ [ '0', [Object] ] ] }
+    ]
+  },
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v26.1.0

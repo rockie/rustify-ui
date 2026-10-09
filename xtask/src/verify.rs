@@ -322,6 +322,7 @@ fn double_build(root: &Path, example: &str) -> Step {
         base: "/".to_string(),
         example: example.to_string(),
         release: true,
+        utility_scanner: false,
     };
     let mut manifests = Vec::new();
     for round in 0..2 {
@@ -394,6 +395,7 @@ fn sub_path_build(example: &str) -> Step {
         base: SUB_PATH_BASE.to_string(),
         example: example.to_string(),
         release: true,
+        utility_scanner: false,
     };
     match build::build(&request) {
         Ok(_) => Step::ok(name, format!("built for {SUB_PATH_BASE}")),

@@ -1,0 +1,69 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+    Checking rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+error[E0603]: function `scalar_css` is private
+   --> crates/rustify-style/src/scope.rs:120:33
+    |
+120 |                 *value = value::scalar_css(&parsed)?;
+    |                                 ^^^^^^^^^^ private function
+    |
+note: the function `scalar_css` is defined here
+   --> crates/rustify-style/src/compiler/value.rs:175:1
+    |
+175 | pub(super) fn scalar_css(nodes: &[ValueNode]) -> Result<String, CompileError> {
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error[E0631]: type mismatch in function arguments
+   --> crates/rustify-style/src/compiler/imports.rs:63:35
+    |
+ 63 |                 Some(children.map(value::scalar_css).transpose()?.unwrap_or_default());
+    |                               --- ^^^^^^^^^^^^^^^^^ expected due to this
+    |                               |
+    |                               required by a bound introduced by this call
+    |
+   ::: crates/rustify-style/src/compiler/value.rs:175:1
+    |
+175 | pub(super) fn scalar_css(nodes: &[ValueNode]) -> Result<String, CompileError> {
+    | ----------------------------------------------------------------------------- found signature defined here
+    |
+    = note: expected function signature `fn(&Vec<ValueNode>) -> _`
+               found function signature `fn(&[ValueNode]) -> _`
+note: required by a bound in `std::option::Option::<T>::map`
+   --> /rustc/48a229ceaefd4985c50990b14116b6d856af0985/library/core/src/option.rs:1158:4
+help: consider wrapping the function in a closure
+    |
+ 63 |                 Some(children.map(|arg0: &Vec<ValueNode>| value::scalar_css(/* &[ValueNode] */)).transpose()?.unwrap_or_default());
+    |                                   +++++++++++++++++++++++                  ++++++++++++++++++++
+
+error[E0631]: type mismatch in function arguments
+   --> crates/rustify-style/src/compiler/imports.rs:74:44
+    |
+ 74 |             import.supports = children.map(value::scalar_css).transpose()?;
+    |                                        --- ^^^^^^^^^^^^^^^^^ expected due to this
+    |                                        |
+    |                                        required by a bound introduced by this call
+    |
+   ::: crates/rustify-style/src/compiler/value.rs:175:1
+    |
+175 | pub(super) fn scalar_css(nodes: &[ValueNode]) -> Result<String, CompileError> {
+    | ----------------------------------------------------------------------------- found signature defined here
+    |
+    = note: expected function signature `fn(&Vec<ValueNode>) -> _`
+               found function signature `fn(&[ValueNode]) -> _`
+note: required by a bound in `std::option::Option::<T>::map`
+   --> /rustc/48a229ceaefd4985c50990b14116b6d856af0985/library/core/src/option.rs:1158:4
+help: consider wrapping the function in a closure
+    |
+ 74 |             import.supports = children.map(|arg0: &Vec<ValueNode>| value::scalar_css(/* &[ValueNode] */)).transpose()?;
+    |                                            +++++++++++++++++++++++                  ++++++++++++++++++++
+
+Some errors have detailed explanations: E0603, E0631.
+For more information about an error, try `rustc --explain E0603`.
+error: could not compile `rustify-style` (lib) due to 3 previous errors
+mbx[cache]: 0 hits, 0 misses, 1 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: 13662 compilations, each compiled once and served warm ever since

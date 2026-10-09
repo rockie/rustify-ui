@@ -1,0 +1,9 @@
+[package]
+name="rustify-review-r4-probe"
+version="0.0.0"
+edition="2021"
+[dependencies]
+rustify-style={path="../../../../../crates/rustify-style",default-features=false,features=["compiler"]}
+serde_json="1"
+
+[workspace]

@@ -1,0 +1,183 @@
+mbx[warning]: Unix-domain cache session listener unavailable; using FIFO transport: failed to bind cache session listener at /var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/mbx-session-fn5Rge/cache-agent.sock: Operation not permitted (os error 1)
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+    Checking rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+error[E0277]: the trait bound `&mut Text: Clone` is not satisfied
+   --> crates/rustify-style/src/compiler/public_api/design_system.rs:323:102
+    |
+323 | ...t(Arc::new([$((Text::from($key),PublicValue::from(&$value))),*].into_iter().collect())) };
+    |                                    ^^^^^^^^^^^ the trait `Clone` is not implemented for `&mut Text`
+    |
+   ::: crates/rustify-style/src/compiler/public_api/compile_ast.rs:116:92
+    |
+116 | ...ic_json!({"kind":"context", "context":public_json!({"base":base}), "nodes":Value::Array(loaded.clone())}),
+    |                                          --------------------------- in this macro invocation
+    |
+help: the trait `Clone` is implemented for `Text`
+   --> crates/rustify-style/src/text.rs:8:10
+    |
+  8 | #[derive(Clone, Debug, Default, PartialEq, Eq, Hash)]
+    |          ^^^^^
+    = note: `Clone` is implemented for `&Text`, but not for `&mut Text`
+note: required for `PublicValue` to implement `From<&&mut Text>`
+   --> crates/rustify-style/src/compiler/public_api/design_system.rs:257:36
+    |
+257 | impl<T: Clone + Into<PublicValue>> From<&T> for PublicValue {
+    |         -----                      ^^^^^^^^     ^^^^^^^^^^^
+    |         |
+    |         unsatisfied trait bound introduced here
+
+error[E0277]: the trait bound `PublicValue: From<&mut Text>` is not satisfied
+   --> crates/rustify-style/src/compiler/public_api/design_system.rs:323:102
+    |
+323 | ...icValue::Object(Arc::new([$((Text::from($key),PublicValue::from(&$value))),*].into_iter().collect())) };
+    |                                                  ^^^^^^^^^^^ unsatisfied trait bound
+    |
+   ::: crates/rustify-style/src/compiler/public_api/compile_ast.rs:116:92
+    |
+116 | ...ic_json!({"kind":"context", "context":public_json!({"base":base}), "nodes":Value::Array(loaded.clone())}),
+    |                                          --------------------------- in this macro invocation
+    |
+help: the trait `From<&mut Text>` is not implemented for `PublicValue`
+   --> crates/rustify-style/src/compiler/public_api/design_system.rs:74:1
+    |
+ 74 | pub enum PublicValue {
+    | ^^^^^^^^^^^^^^^^^^^^
+    = help: `PublicValue` implements trait `From<T>`:
+              From<&T>
+              From<&str>
+              From<Text>
+              From<Vec<T>>
+              From<bool>
+              From<std::option::Option<T>>
+              From<std::string::String>
+              From<u32>
+            and 2 others
+    = note: required for `&mut Text` to implement `Into<PublicValue>`
+note: required for `PublicValue` to implement `From<&&mut Text>`
+   --> crates/rustify-style/src/compiler/public_api/design_system.rs:257:36
+    |
+257 | impl<T: Clone + Into<PublicValue>> From<&T> for PublicValue {
+    |                 -----------------  ^^^^^^^^     ^^^^^^^^^^^
+    |                 |
+    |                 unsatisfied trait bound introduced here
+    = note: this error originates in the macro `public_json` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0277]: the trait bound `&mut Text: Clone` is not satisfied
+   --> crates/rustify-style/src/compiler/public_api/design_system.rs:323:102
+    |
+323 | ...t(Arc::new([$((Text::from($key),PublicValue::from(&$value))),*].into_iter().collect())) };
+    |                                    ^^^^^^^^^^^ the trait `Clone` is not implemented for `&mut Text`
+    |
+   ::: crates/rustify-style/src/compiler/public_api/compile_ast.rs:120:21
+    |
+120 |                     public_json!({"kind":"at-rule", "name":name, "params":params, "nodes":values, "src":source})
+    |                     -------------------------------------------------------------------------------------------- in this macro invocation
+    |
+help: the trait `Clone` is implemented for `Text`
+   --> crates/rustify-style/src/text.rs:8:10
+    |
+  8 | #[derive(Clone, Debug, Default, PartialEq, Eq, Hash)]
+    |          ^^^^^
+    = note: `Clone` is implemented for `&Text`, but not for `&mut Text`
+note: required for `PublicValue` to implement `From<&&mut Text>`
+   --> crates/rustify-style/src/compiler/public_api/design_system.rs:257:36
+    |
+257 | impl<T: Clone + Into<PublicValue>> From<&T> for PublicValue {
+    |         -----                      ^^^^^^^^     ^^^^^^^^^^^
+    |         |
+    |         unsatisfied trait bound introduced here
+
+error[E0277]: the trait bound `PublicValue: From<&mut Text>` is not satisfied
+   --> crates/rustify-style/src/compiler/public_api/design_system.rs:323:102
+    |
+323 | ...icValue::Object(Arc::new([$((Text::from($key),PublicValue::from(&$value))),*].into_iter().collect())) };
+    |                                                  ^^^^^^^^^^^ unsatisfied trait bound
+    |
+   ::: crates/rustify-style/src/compiler/public_api/compile_ast.rs:120:21
+    |
+120 |                     public_json!({"kind":"at-rule", "name":name, "params":params, "nodes":values, "src":source})
+    |                     -------------------------------------------------------------------------------------------- in this macro invocation
+    |
+help: the trait `From<&mut Text>` is not implemented for `PublicValue`
+   --> crates/rustify-style/src/compiler/public_api/design_system.rs:74:1
+    |
+ 74 | pub enum PublicValue {
+    | ^^^^^^^^^^^^^^^^^^^^
+    = help: `PublicValue` implements trait `From<T>`:
+              From<&T>
+              From<&str>
+              From<Text>
+              From<Vec<T>>
+              From<bool>
+              From<std::option::Option<T>>
+              From<std::string::String>
+              From<u32>
+            and 2 others
+    = note: required for `&mut Text` to implement `Into<PublicValue>`
+note: required for `PublicValue` to implement `From<&&mut Text>`
+   --> crates/rustify-style/src/compiler/public_api/design_system.rs:257:36
+    |
+257 | impl<T: Clone + Into<PublicValue>> From<&T> for PublicValue {
+    |                 -----------------  ^^^^^^^^     ^^^^^^^^^^^
+    |                 |
+    |                 unsatisfied trait bound introduced here
+    = note: this error originates in the macro `public_json` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error: lifetime may not live long enough
+   --> crates/rustify-style/src/compiler/imports.rs:497:26
+    |
+320 |     assets: &[super::public_api::Stylesheet],
+    |             - let's call the lifetime of this reference `'1`
+...
+323 |     public: Option<&mut dyn PublicExpansion>,
+    |                    - let's call the lifetime of this reference `'2`
+...
+497 |             .map(|asset| (normalize(&asset.id), asset))
+    |                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ function was supposed to return data with lifetime `'2` but it is returning data with lifetime `'1`
+    |
+help: consider introducing a named lifetime parameter
+    |
+317 ~ pub(super) fn expand_with_base<'a>(
+318 |     nodes: &mut Vec<AstNode>,
+319 |     base: &str,
+320 ~     assets: &'a [super::public_api::Stylesheet],
+321 |     limits: &Limits,
+322 |     track: bool,
+323 ~     public: Option<&'a mut dyn PublicExpansion>,
+    |
+
+error: lifetime may not live long enough
+   --> crates/rustify-style/src/compiler/imports.rs:505:9
+    |
+321 |     limits: &Limits,
+    |             - let's call the lifetime of this reference `'3`
+322 |     track: bool,
+323 |     public: Option<&mut dyn PublicExpansion>,
+    |                    - let's call the lifetime of this reference `'2`
+...
+505 |         public,
+    |         ^^^^^^ this usage requires that `'3` must outlive `'2`
+    |
+    = note: requirement occurs because of a mutable reference to `dyn PublicExpansion`
+    = note: mutable references are invariant over their type parameter
+    = help: see <https://doc.rust-lang.org/nomicon/subtyping.html> for more information about variance
+help: consider introducing a named lifetime parameter
+    |
+317 ~ pub(super) fn expand_with_base<'a>(
+318 |     nodes: &mut Vec<AstNode>,
+319 |     base: &str,
+320 |     assets: &[super::public_api::Stylesheet],
+321 ~     limits: &'a Limits,
+322 |     track: bool,
+323 ~     public: Option<&'a mut dyn PublicExpansion>,
+    |
+
+For more information about this error, try `rustc --explain E0277`.
+error: could not compile `rustify-style` (lib) due to 6 previous errors
+mbx[cache]: 0 hits, 1 misses; 0 B downloaded, 0 B uploaded, 0 B stored locally

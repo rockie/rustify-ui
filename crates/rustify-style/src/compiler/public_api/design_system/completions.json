@@ -1,0 +1,8682 @@
+{
+  "version": "4.1.13",
+  "source": "packages/tailwindcss/src/utilities.ts",
+  "sourceSha256": "1e8df70d3357ca477c6a2a4c4fe818627d444969f0790bf9f5538ad467078293",
+  "definitions": [
+    [
+      "inset",
+      [
+        {
+          "values": [],
+          "supportsNegative": true,
+          "supportsFractions": true,
+          "valueThemeKeys": [
+            "--inset",
+            "--spacing"
+          ],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        }
+      ]
+    ],
+    [
+      "inset-x",
+      [
+        {
+          "values": [],
+          "supportsNegative": true,
+          "supportsFractions": true,
+          "valueThemeKeys": [
+            "--inset",
+            "--spacing"
+          ],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        }
+      ]
+    ],
+    [
+      "inset-y",
+      [
+        {
+          "values": [],
+          "supportsNegative": true,
+          "supportsFractions": true,
+          "valueThemeKeys": [
+            "--inset",
+            "--spacing"
+          ],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        }
+      ]
+    ],
+    [
+      "start",
+      [
+        {
+          "values": [],
+          "supportsNegative": true,
+          "supportsFractions": true,
+          "valueThemeKeys": [
+            "--inset",
+            "--spacing"
+          ],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        }
+      ]
+    ],
+    [
+      "end",
+      [
+        {
+          "values": [],
+          "supportsNegative": true,
+          "supportsFractions": true,
+          "valueThemeKeys": [
+            "--inset",
+            "--spacing"
+          ],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        }
+      ]
+    ],
+    [
+      "top",
+      [
+        {
+          "values": [],
+          "supportsNegative": true,
+          "supportsFractions": true,
+          "valueThemeKeys": [
+            "--inset",
+            "--spacing"
+          ],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        }
+      ]
+    ],
+    [
+      "right",
+      [
+        {
+          "values": [],
+          "supportsNegative": true,
+          "supportsFractions": true,
+          "valueThemeKeys": [
+            "--inset",
+            "--spacing"
+          ],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        }
+      ]
+    ],
+    [
+      "bottom",
+      [
+        {
+          "values": [],
+          "supportsNegative": true,
+          "supportsFractions": true,
+          "valueThemeKeys": [
+            "--inset",
+            "--spacing"
+          ],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        }
+      ]
+    ],
+    [
+      "left",
+      [
+        {
+          "values": [],
+          "supportsNegative": true,
+          "supportsFractions": true,
+          "valueThemeKeys": [
+            "--inset",
+            "--spacing"
+          ],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        }
+      ]
+    ],
+    [
+      "z",
+      [
+        {
+          "supportsNegative": true,
+          "values": [
+            "0",
+            "10",
+            "20",
+            "30",
+            "40",
+            "50"
+          ],
+          "valueThemeKeys": [
+            "--z-index"
+          ]
+        }
+      ]
+    ],
+    [
+      "order",
+      [
+        {
+          "supportsNegative": true,
+          "values": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12"
+          ],
+          "valueThemeKeys": [
+            "--order"
+          ]
+        }
+      ]
+    ],
+    [
+      "col",
+      [
+        {
+          "supportsNegative": true,
+          "valueThemeKeys": [
+            "--grid-column"
+          ],
+          "hasDefaultValue": false
+        }
+      ]
+    ],
+    [
+      "col-span",
+      [
+        {
+          "values": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12"
+          ],
+          "valueThemeKeys": []
+        }
+      ]
+    ],
+    [
+      "col-start",
+      [
+        {
+          "supportsNegative": true,
+          "values": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13"
+          ],
+          "valueThemeKeys": [
+            "--grid-column-start"
+          ]
+        }
+      ]
+    ],
+    [
+      "col-end",
+      [
+        {
+          "supportsNegative": true,
+          "values": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13"
+          ],
+          "valueThemeKeys": [
+            "--grid-column-end"
+          ]
+        }
+      ]
+    ],
+    [
+      "row",
+      [
+        {
+          "supportsNegative": true,
+          "valueThemeKeys": [
+            "--grid-row"
+          ],
+          "hasDefaultValue": false
+        }
+      ]
+    ],
+    [
+      "row-span",
+      [
+        {
+          "values": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12"
+          ],
+          "valueThemeKeys": []
+        }
+      ]
+    ],
+    [
+      "row-start",
+      [
+        {
+          "supportsNegative": true,
+          "values": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13"
+          ],
+          "valueThemeKeys": [
+            "--grid-row-start"
+          ]
+        }
+      ]
+    ],
+    [
+      "row-end",
+      [
+        {
+          "supportsNegative": true,
+          "values": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13"
+          ],
+          "valueThemeKeys": [
+            "--grid-row-end"
+          ]
+        }
+      ]
+    ],
+    [
+      "m",
+      [
+        {
+          "values": [],
+          "supportsNegative": true,
+          "supportsFractions": false,
+          "valueThemeKeys": [
+            "--margin",
+            "--spacing"
+          ],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        }
+      ]
+    ],
+    [
+      "mx",
+      [
+        {
+          "values": [],
+          "supportsNegative": true,
+          "supportsFractions": false,
+          "valueThemeKeys": [
+            "--margin",
+            "--spacing"
+          ],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        }
+      ]
+    ],
+    [
+      "my",
+      [
+        {
+          "values": [],
+          "supportsNegative": true,
+          "supportsFractions": false,
+          "valueThemeKeys": [
+            "--margin",
+            "--spacing"
+          ],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        }
+      ]
+    ],
+    [
+      "ms",
+      [
+        {
+          "values": [],
+          "supportsNegative": true,
+          "supportsFractions": false,
+          "valueThemeKeys": [
+            "--margin",
+            "--spacing"
+          ],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        }
+      ]
+    ],
+    [
+      "me",
+      [
+        {
+          "values": [],
+          "supportsNegative": true,
+          "supportsFractions": false,
+          "valueThemeKeys": [
+            "--margin",
+            "--spacing"
+          ],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        }
+      ]
+    ],
+    [
+      "mt",
+      [
+        {
+          "values": [],
+          "supportsNegative": true,
+          "supportsFractions": false,
+          "valueThemeKeys": [
+            "--margin",
+            "--spacing"
+          ],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        }
+      ]
+    ],
+    [
+      "mr",
+      [
+        {
+          "values": [],
+          "supportsNegative": true,
+          "supportsFractions": false,
+          "valueThemeKeys": [
+            "--margin",
+            "--spacing"
+          ],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        }
+      ]
+    ],
+    [
+      "mb",
+      [
+        {
+          "values": [],
+          "supportsNegative": true,
+          "supportsFractions": false,
+          "valueThemeKeys": [
+            "--margin",
+            "--spacing"
+          ],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        }
+      ]
+    ],
+    [
+      "ml",
+      [
+        {
+          "values": [],
+          "supportsNegative": true,
+          "supportsFractions": false,
+          "valueThemeKeys": [
+            "--margin",
+            "--spacing"
+          ],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        }
+      ]
+    ],
+    [
+      "line-clamp",
+      [
+        {
+          "values": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6"
+          ],
+          "valueThemeKeys": [
+            "--line-clamp"
+          ]
+        }
+      ]
+    ],
+    [
+      "aspect",
+      [
+        {
+          "valueThemeKeys": [
+            "--aspect"
+          ],
+          "hasDefaultValue": false
+        }
+      ]
+    ],
+    [
+      "size",
+      [
+        {
+          "values": [],
+          "supportsNegative": false,
+          "supportsFractions": true,
+          "valueThemeKeys": [
+            "--size",
+            "--spacing"
+          ],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        }
+      ]
+    ],
+    [
+      "w",
+      [
+        {
+          "values": [],
+          "supportsNegative": false,
+          "supportsFractions": true,
+          "valueThemeKeys": [
+            "--width",
+            "--spacing",
+            "--container"
+          ],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        }
+      ]
+    ],
+    [
+      "min-w",
+      [
+        {
+          "values": [],
+          "supportsNegative": false,
+          "supportsFractions": true,
+          "valueThemeKeys": [
+            "--min-width",
+            "--spacing",
+            "--container"
+          ],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        }
+      ]
+    ],
+    [
+      "max-w",
+      [
+        {
+          "values": [],
+          "supportsNegative": false,
+          "supportsFractions": true,
+          "valueThemeKeys": [
+            "--max-width",
+            "--spacing",
+            "--container"
+          ],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        }
+      ]
+    ],
+    [
+      "h",
+      [
+        {
+          "values": [],
+          "supportsNegative": false,
+          "supportsFractions": true,
+          "valueThemeKeys": [
+            "--height",
+            "--spacing"
+          ],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        }
+      ]
+    ],
+    [
+      "min-h",
+      [
+        {
+          "values": [],
+          "supportsNegative": false,
+          "supportsFractions": true,
+          "valueThemeKeys": [
+            "--min-height",
+            "--height",
+            "--spacing"
+          ],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        }
+      ]
+    ],
+    [
+      "max-h",
+      [
+        {
+          "values": [],
+          "supportsNegative": false,
+          "supportsFractions": true,
+          "valueThemeKeys": [
+            "--max-height",
+            "--height",
+            "--spacing"
+          ],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        }
+      ]
+    ],
+    [
+      "flex",
+      [
+        {
+          "supportsFractions": true
+        },
+        {
+          "values": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12"
+          ]
+        }
+      ]
+    ],
+    [
+      "shrink",
+      [
+        {
+          "values": [
+            "0"
+          ],
+          "valueThemeKeys": [],
+          "hasDefaultValue": true
+        }
+      ]
+    ],
+    [
+      "grow",
+      [
+        {
+          "values": [
+            "0"
+          ],
+          "valueThemeKeys": [],
+          "hasDefaultValue": true
+        }
+      ]
+    ],
+    [
+      "basis",
+      [
+        {
+          "values": [],
+          "supportsNegative": false,
+          "supportsFractions": true,
+          "valueThemeKeys": [
+            "--flex-basis",
+            "--spacing",
+            "--container"
+          ],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        }
+      ]
+    ],
+    [
+      "border-spacing",
+      [
+        {
+          "values": [],
+          "supportsNegative": false,
+          "supportsFractions": false,
+          "valueThemeKeys": [
+            "--border-spacing",
+            "--spacing"
+          ],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        }
+      ]
+    ],
+    [
+      "border-spacing-x",
+      [
+        {
+          "values": [],
+          "supportsNegative": false,
+          "supportsFractions": false,
+          "valueThemeKeys": [
+            "--border-spacing",
+            "--spacing"
+          ],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        }
+      ]
+    ],
+    [
+      "border-spacing-y",
+      [
+        {
+          "values": [],
+          "supportsNegative": false,
+          "supportsFractions": false,
+          "valueThemeKeys": [
+            "--border-spacing",
+            "--spacing"
+          ],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        }
+      ]
+    ],
+    [
+      "origin",
+      [
+        {
+          "valueThemeKeys": [
+            "--transform-origin"
+          ],
+          "hasDefaultValue": false
+        }
+      ]
+    ],
+    [
+      "perspective-origin",
+      [
+        {
+          "valueThemeKeys": [
+            "--perspective-origin"
+          ],
+          "hasDefaultValue": false
+        }
+      ]
+    ],
+    [
+      "perspective",
+      [
+        {
+          "valueThemeKeys": [
+            "--perspective"
+          ],
+          "hasDefaultValue": false
+        }
+      ]
+    ],
+    [
+      "translate",
+      [
+        {
+          "values": [],
+          "supportsNegative": true,
+          "supportsFractions": true,
+          "valueThemeKeys": [
+            "--translate",
+            "--spacing"
+          ],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        }
+      ]
+    ],
+    [
+      "translate-x",
+      [
+        {
+          "values": [],
+          "supportsNegative": true,
+          "supportsFractions": true,
+          "valueThemeKeys": [
+            "--translate",
+            "--spacing"
+          ],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        }
+      ]
+    ],
+    [
+      "translate-y",
+      [
+        {
+          "values": [],
+          "supportsNegative": true,
+          "supportsFractions": true,
+          "valueThemeKeys": [
+            "--translate",
+            "--spacing"
+          ],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        }
+      ]
+    ],
+    [
+      "translate-z",
+      [
+        {
+          "values": [],
+          "supportsNegative": true,
+          "supportsFractions": false,
+          "valueThemeKeys": [
+            "--translate",
+            "--spacing"
+          ],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        }
+      ]
+    ],
+    [
+      "scale",
+      [
+        {
+          "supportsNegative": true,
+          "values": [
+            "0",
+            "50",
+            "75",
+            "90",
+            "95",
+            "100",
+            "105",
+            "110",
+            "125",
+            "150",
+            "200"
+          ],
+          "valueThemeKeys": [
+            "--scale"
+          ]
+        }
+      ]
+    ],
+    [
+      "scale-x",
+      [
+        {
+          "supportsNegative": true,
+          "values": [
+            "0",
+            "50",
+            "75",
+            "90",
+            "95",
+            "100",
+            "105",
+            "110",
+            "125",
+            "150",
+            "200"
+          ],
+          "valueThemeKeys": [
+            "--scale"
+          ]
+        }
+      ]
+    ],
+    [
+      "scale-y",
+      [
+        {
+          "supportsNegative": true,
+          "values": [
+            "0",
+            "50",
+            "75",
+            "90",
+            "95",
+            "100",
+            "105",
+            "110",
+            "125",
+            "150",
+            "200"
+          ],
+          "valueThemeKeys": [
+            "--scale"
+          ]
+        }
+      ]
+    ],
+    [
+      "scale-z",
+      [
+        {
+          "supportsNegative": true,
+          "values": [
+            "0",
+            "50",
+            "75",
+            "90",
+            "95",
+            "100",
+            "105",
+            "110",
+            "125",
+            "150",
+            "200"
+          ],
+          "valueThemeKeys": [
+            "--scale"
+          ]
+        }
+      ]
+    ],
+    [
+      "rotate",
+      [
+        {
+          "supportsNegative": true,
+          "values": [
+            "0",
+            "1",
+            "2",
+            "3",
+            "6",
+            "12",
+            "45",
+            "90",
+            "180"
+          ],
+          "valueThemeKeys": [
+            "--rotate"
+          ]
+        }
+      ]
+    ],
+    [
+      "rotate-x",
+      [
+        {
+          "supportsNegative": true,
+          "values": [
+            "0",
+            "1",
+            "2",
+            "3",
+            "6",
+            "12",
+            "45",
+            "90",
+            "180"
+          ],
+          "valueThemeKeys": [
+            "--rotate"
+          ]
+        }
+      ]
+    ],
+    [
+      "rotate-y",
+      [
+        {
+          "supportsNegative": true,
+          "values": [
+            "0",
+            "1",
+            "2",
+            "3",
+            "6",
+            "12",
+            "45",
+            "90",
+            "180"
+          ],
+          "valueThemeKeys": [
+            "--rotate"
+          ]
+        }
+      ]
+    ],
+    [
+      "rotate-z",
+      [
+        {
+          "supportsNegative": true,
+          "values": [
+            "0",
+            "1",
+            "2",
+            "3",
+            "6",
+            "12",
+            "45",
+            "90",
+            "180"
+          ],
+          "valueThemeKeys": [
+            "--rotate"
+          ]
+        }
+      ]
+    ],
+    [
+      "skew",
+      [
+        {
+          "supportsNegative": true,
+          "values": [
+            "0",
+            "1",
+            "2",
+            "3",
+            "6",
+            "12"
+          ],
+          "valueThemeKeys": [
+            "--skew"
+          ]
+        }
+      ]
+    ],
+    [
+      "skew-x",
+      [
+        {
+          "supportsNegative": true,
+          "values": [
+            "0",
+            "1",
+            "2",
+            "3",
+            "6",
+            "12"
+          ],
+          "valueThemeKeys": [
+            "--skew"
+          ]
+        }
+      ]
+    ],
+    [
+      "skew-y",
+      [
+        {
+          "supportsNegative": true,
+          "values": [
+            "0",
+            "1",
+            "2",
+            "3",
+            "6",
+            "12"
+          ],
+          "valueThemeKeys": [
+            "--skew"
+          ]
+        }
+      ]
+    ],
+    [
+      "transform",
+      [
+        {
+          "hasDefaultValue": true
+        }
+      ]
+    ],
+    [
+      "cursor",
+      [
+        {
+          "valueThemeKeys": [
+            "--cursor"
+          ],
+          "hasDefaultValue": false
+        }
+      ]
+    ],
+    [
+      "scroll-m",
+      [
+        {
+          "values": [],
+          "supportsNegative": true,
+          "supportsFractions": false,
+          "valueThemeKeys": [
+            "--scroll-margin",
+            "--spacing"
+          ],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        }
+      ]
+    ],
+    [
+      "scroll-mx",
+      [
+        {
+          "values": [],
+          "supportsNegative": true,
+          "supportsFractions": false,
+          "valueThemeKeys": [
+            "--scroll-margin",
+            "--spacing"
+          ],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        }
+      ]
+    ],
+    [
+      "scroll-my",
+      [
+        {
+          "values": [],
+          "supportsNegative": true,
+          "supportsFractions": false,
+          "valueThemeKeys": [
+            "--scroll-margin",
+            "--spacing"
+          ],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        }
+      ]
+    ],
+    [
+      "scroll-ms",
+      [
+        {
+          "values": [],
+          "supportsNegative": true,
+          "supportsFractions": false,
+          "valueThemeKeys": [
+            "--scroll-margin",
+            "--spacing"
+          ],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        }
+      ]
+    ],
+    [
+      "scroll-me",
+      [
+        {
+          "values": [],
+          "supportsNegative": true,
+          "supportsFractions": false,
+          "valueThemeKeys": [
+            "--scroll-margin",
+            "--spacing"
+          ],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        }
+      ]
+    ],
+    [
+      "scroll-mt",
+      [
+        {
+          "values": [],
+          "supportsNegative": true,
+          "supportsFractions": false,
+          "valueThemeKeys": [
+            "--scroll-margin",
+            "--spacing"
+          ],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        }
+      ]
+    ],
+    [
+      "scroll-mr",
+      [
+        {
+          "values": [],
+          "supportsNegative": true,
+          "supportsFractions": false,
+          "valueThemeKeys": [
+            "--scroll-margin",
+            "--spacing"
+          ],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        }
+      ]
+    ],
+    [
+      "scroll-mb",
+      [
+        {
+          "values": [],
+          "supportsNegative": true,
+          "supportsFractions": false,
+          "valueThemeKeys": [
+            "--scroll-margin",
+            "--spacing"
+          ],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        }
+      ]
+    ],
+    [
+      "scroll-ml",
+      [
+        {
+          "values": [],
+          "supportsNegative": true,
+          "supportsFractions": false,
+          "valueThemeKeys": [
+            "--scroll-margin",
+            "--spacing"
+          ],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        }
+      ]
+    ],
+    [
+      "scroll-p",
+      [
+        {
+          "values": [],
+          "supportsNegative": false,
+          "supportsFractions": false,
+          "valueThemeKeys": [
+            "--scroll-padding",
+            "--spacing"
+          ],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        }
+      ]
+    ],
+    [
+      "scroll-px",
+      [
+        {
+          "values": [],
+          "supportsNegative": false,
+          "supportsFractions": false,
+          "valueThemeKeys": [
+            "--scroll-padding",
+            "--spacing"
+          ],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        }
+      ]
+    ],
+    [
+      "scroll-py",
+      [
+        {
+          "values": [],
+          "supportsNegative": false,
+          "supportsFractions": false,
+          "valueThemeKeys": [
+            "--scroll-padding",
+            "--spacing"
+          ],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        }
+      ]
+    ],
+    [
+      "scroll-ps",
+      [
+        {
+          "values": [],
+          "supportsNegative": false,
+          "supportsFractions": false,
+          "valueThemeKeys": [
+            "--scroll-padding",
+            "--spacing"
+          ],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        }
+      ]
+    ],
+    [
+      "scroll-pe",
+      [
+        {
+          "values": [],
+          "supportsNegative": false,
+          "supportsFractions": false,
+          "valueThemeKeys": [
+            "--scroll-padding",
+            "--spacing"
+          ],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        }
+      ]
+    ],
+    [
+      "scroll-pt",
+      [
+        {
+          "values": [],
+          "supportsNegative": false,
+          "supportsFractions": false,
+          "valueThemeKeys": [
+            "--scroll-padding",
+            "--spacing"
+          ],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        }
+      ]
+    ],
+    [
+      "scroll-pr",
+      [
+        {
+          "values": [],
+          "supportsNegative": false,
+          "supportsFractions": false,
+          "valueThemeKeys": [
+            "--scroll-padding",
+            "--spacing"
+          ],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        }
+      ]
+    ],
+    [
+      "scroll-pb",
+      [
+        {
+          "values": [],
+          "supportsNegative": false,
+          "supportsFractions": false,
+          "valueThemeKeys": [
+            "--scroll-padding",
+            "--spacing"
+          ],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        }
+      ]
+    ],
+    [
+      "scroll-pl",
+      [
+        {
+          "values": [],
+          "supportsNegative": false,
+          "supportsFractions": false,
+          "valueThemeKeys": [
+            "--scroll-padding",
+            "--spacing"
+          ],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        }
+      ]
+    ],
+    [
+      "list",
+      [
+        {
+          "valueThemeKeys": [
+            "--list-style-type"
+          ],
+          "hasDefaultValue": false
+        }
+      ]
+    ],
+    [
+      "list-image",
+      [
+        {
+          "valueThemeKeys": [
+            "--list-style-image"
+          ],
+          "hasDefaultValue": false
+        }
+      ]
+    ],
+    [
+      "columns",
+      [
+        {
+          "values": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12"
+          ],
+          "valueThemeKeys": [
+            "--columns",
+            "--container"
+          ]
+        }
+      ]
+    ],
+    [
+      "auto-cols",
+      [
+        {
+          "valueThemeKeys": [
+            "--grid-auto-columns"
+          ],
+          "hasDefaultValue": false
+        }
+      ]
+    ],
+    [
+      "auto-rows",
+      [
+        {
+          "valueThemeKeys": [
+            "--grid-auto-rows"
+          ],
+          "hasDefaultValue": false
+        }
+      ]
+    ],
+    [
+      "grid-cols",
+      [
+        {
+          "values": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12"
+          ],
+          "valueThemeKeys": [
+            "--grid-template-columns"
+          ]
+        }
+      ]
+    ],
+    [
+      "grid-rows",
+      [
+        {
+          "values": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12"
+          ],
+          "valueThemeKeys": [
+            "--grid-template-rows"
+          ]
+        }
+      ]
+    ],
+    [
+      "gap",
+      [
+        {
+          "values": [],
+          "supportsNegative": false,
+          "supportsFractions": false,
+          "valueThemeKeys": [
+            "--gap",
+            "--spacing"
+          ],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        }
+      ]
+    ],
+    [
+      "gap-x",
+      [
+        {
+          "values": [],
+          "supportsNegative": false,
+          "supportsFractions": false,
+          "valueThemeKeys": [
+            "--gap",
+            "--spacing"
+          ],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        }
+      ]
+    ],
+    [
+      "gap-y",
+      [
+        {
+          "values": [],
+          "supportsNegative": false,
+          "supportsFractions": false,
+          "valueThemeKeys": [
+            "--gap",
+            "--spacing"
+          ],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        }
+      ]
+    ],
+    [
+      "space-x",
+      [
+        {
+          "values": [],
+          "supportsNegative": true,
+          "supportsFractions": false,
+          "valueThemeKeys": [
+            "--space",
+            "--spacing"
+          ],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        }
+      ]
+    ],
+    [
+      "space-y",
+      [
+        {
+          "values": [],
+          "supportsNegative": true,
+          "supportsFractions": false,
+          "valueThemeKeys": [
+            "--space",
+            "--spacing"
+          ],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        }
+      ]
+    ],
+    [
+      "accent",
+      [
+        {
+          "values": [
+            "current",
+            "inherit",
+            "transparent"
+          ],
+          "valueThemeKeys": [
+            "--accent-color",
+            "--color"
+          ],
+          "modifiers": [
+            "0",
+            "5",
+            "10",
+            "15",
+            "20",
+            "25",
+            "30",
+            "35",
+            "40",
+            "45",
+            "50",
+            "55",
+            "60",
+            "65",
+            "70",
+            "75",
+            "80",
+            "85",
+            "90",
+            "95",
+            "100"
+          ]
+        }
+      ]
+    ],
+    [
+      "caret",
+      [
+        {
+          "values": [
+            "current",
+            "inherit",
+            "transparent"
+          ],
+          "valueThemeKeys": [
+            "--caret-color",
+            "--color"
+          ],
+          "modifiers": [
+            "0",
+            "5",
+            "10",
+            "15",
+            "20",
+            "25",
+            "30",
+            "35",
+            "40",
+            "45",
+            "50",
+            "55",
+            "60",
+            "65",
+            "70",
+            "75",
+            "80",
+            "85",
+            "90",
+            "95",
+            "100"
+          ]
+        }
+      ]
+    ],
+    [
+      "divide",
+      [
+        {
+          "values": [
+            "current",
+            "inherit",
+            "transparent"
+          ],
+          "valueThemeKeys": [
+            "--divide-color",
+            "--border-color",
+            "--color"
+          ],
+          "modifiers": [
+            "0",
+            "5",
+            "10",
+            "15",
+            "20",
+            "25",
+            "30",
+            "35",
+            "40",
+            "45",
+            "50",
+            "55",
+            "60",
+            "65",
+            "70",
+            "75",
+            "80",
+            "85",
+            "90",
+            "95",
+            "100"
+          ]
+        }
+      ]
+    ],
+    [
+      "rounded",
+      [
+        {
+          "valueThemeKeys": [
+            "--radius"
+          ],
+          "hasDefaultValue": false
+        }
+      ]
+    ],
+    [
+      "rounded-s",
+      [
+        {
+          "valueThemeKeys": [
+            "--radius"
+          ],
+          "hasDefaultValue": false
+        }
+      ]
+    ],
+    [
+      "rounded-e",
+      [
+        {
+          "valueThemeKeys": [
+            "--radius"
+          ],
+          "hasDefaultValue": false
+        }
+      ]
+    ],
+    [
+      "rounded-t",
+      [
+        {
+          "valueThemeKeys": [
+            "--radius"
+          ],
+          "hasDefaultValue": false
+        }
+      ]
+    ],
+    [
+      "rounded-r",
+      [
+        {
+          "valueThemeKeys": [
+            "--radius"
+          ],
+          "hasDefaultValue": false
+        }
+      ]
+    ],
+    [
+      "rounded-b",
+      [
+        {
+          "valueThemeKeys": [
+            "--radius"
+          ],
+          "hasDefaultValue": false
+        }
+      ]
+    ],
+    [
+      "rounded-l",
+      [
+        {
+          "valueThemeKeys": [
+            "--radius"
+          ],
+          "hasDefaultValue": false
+        }
+      ]
+    ],
+    [
+      "rounded-ss",
+      [
+        {
+          "valueThemeKeys": [
+            "--radius"
+          ],
+          "hasDefaultValue": false
+        }
+      ]
+    ],
+    [
+      "rounded-se",
+      [
+        {
+          "valueThemeKeys": [
+            "--radius"
+          ],
+          "hasDefaultValue": false
+        }
+      ]
+    ],
+    [
+      "rounded-ee",
+      [
+        {
+          "valueThemeKeys": [
+            "--radius"
+          ],
+          "hasDefaultValue": false
+        }
+      ]
+    ],
+    [
+      "rounded-es",
+      [
+        {
+          "valueThemeKeys": [
+            "--radius"
+          ],
+          "hasDefaultValue": false
+        }
+      ]
+    ],
+    [
+      "rounded-tl",
+      [
+        {
+          "valueThemeKeys": [
+            "--radius"
+          ],
+          "hasDefaultValue": false
+        }
+      ]
+    ],
+    [
+      "rounded-tr",
+      [
+        {
+          "valueThemeKeys": [
+            "--radius"
+          ],
+          "hasDefaultValue": false
+        }
+      ]
+    ],
+    [
+      "rounded-br",
+      [
+        {
+          "valueThemeKeys": [
+            "--radius"
+          ],
+          "hasDefaultValue": false
+        }
+      ]
+    ],
+    [
+      "rounded-bl",
+      [
+        {
+          "valueThemeKeys": [
+            "--radius"
+          ],
+          "hasDefaultValue": false
+        }
+      ]
+    ],
+    [
+      "border",
+      [
+        {
+          "values": [
+            "current",
+            "inherit",
+            "transparent"
+          ],
+          "valueThemeKeys": [
+            "--border-color",
+            "--color"
+          ],
+          "modifiers": [
+            "0",
+            "5",
+            "10",
+            "15",
+            "20",
+            "25",
+            "30",
+            "35",
+            "40",
+            "45",
+            "50",
+            "55",
+            "60",
+            "65",
+            "70",
+            "75",
+            "80",
+            "85",
+            "90",
+            "95",
+            "100"
+          ],
+          "hasDefaultValue": true
+        },
+        {
+          "values": [
+            "0",
+            "2",
+            "4",
+            "8"
+          ],
+          "valueThemeKeys": [
+            "--border-width"
+          ]
+        }
+      ]
+    ],
+    [
+      "border-x",
+      [
+        {
+          "values": [
+            "current",
+            "inherit",
+            "transparent"
+          ],
+          "valueThemeKeys": [
+            "--border-color",
+            "--color"
+          ],
+          "modifiers": [
+            "0",
+            "5",
+            "10",
+            "15",
+            "20",
+            "25",
+            "30",
+            "35",
+            "40",
+            "45",
+            "50",
+            "55",
+            "60",
+            "65",
+            "70",
+            "75",
+            "80",
+            "85",
+            "90",
+            "95",
+            "100"
+          ],
+          "hasDefaultValue": true
+        },
+        {
+          "values": [
+            "0",
+            "2",
+            "4",
+            "8"
+          ],
+          "valueThemeKeys": [
+            "--border-width"
+          ]
+        }
+      ]
+    ],
+    [
+      "border-y",
+      [
+        {
+          "values": [
+            "current",
+            "inherit",
+            "transparent"
+          ],
+          "valueThemeKeys": [
+            "--border-color",
+            "--color"
+          ],
+          "modifiers": [
+            "0",
+            "5",
+            "10",
+            "15",
+            "20",
+            "25",
+            "30",
+            "35",
+            "40",
+            "45",
+            "50",
+            "55",
+            "60",
+            "65",
+            "70",
+            "75",
+            "80",
+            "85",
+            "90",
+            "95",
+            "100"
+          ],
+          "hasDefaultValue": true
+        },
+        {
+          "values": [
+            "0",
+            "2",
+            "4",
+            "8"
+          ],
+          "valueThemeKeys": [
+            "--border-width"
+          ]
+        }
+      ]
+    ],
+    [
+      "border-s",
+      [
+        {
+          "values": [
+            "current",
+            "inherit",
+            "transparent"
+          ],
+          "valueThemeKeys": [
+            "--border-color",
+            "--color"
+          ],
+          "modifiers": [
+            "0",
+            "5",
+            "10",
+            "15",
+            "20",
+            "25",
+            "30",
+            "35",
+            "40",
+            "45",
+            "50",
+            "55",
+            "60",
+            "65",
+            "70",
+            "75",
+            "80",
+            "85",
+            "90",
+            "95",
+            "100"
+          ],
+          "hasDefaultValue": true
+        },
+        {
+          "values": [
+            "0",
+            "2",
+            "4",
+            "8"
+          ],
+          "valueThemeKeys": [
+            "--border-width"
+          ]
+        }
+      ]
+    ],
+    [
+      "border-e",
+      [
+        {
+          "values": [
+            "current",
+            "inherit",
+            "transparent"
+          ],
+          "valueThemeKeys": [
+            "--border-color",
+            "--color"
+          ],
+          "modifiers": [
+            "0",
+            "5",
+            "10",
+            "15",
+            "20",
+            "25",
+            "30",
+            "35",
+            "40",
+            "45",
+            "50",
+            "55",
+            "60",
+            "65",
+            "70",
+            "75",
+            "80",
+            "85",
+            "90",
+            "95",
+            "100"
+          ],
+          "hasDefaultValue": true
+        },
+        {
+          "values": [
+            "0",
+            "2",
+            "4",
+            "8"
+          ],
+          "valueThemeKeys": [
+            "--border-width"
+          ]
+        }
+      ]
+    ],
+    [
+      "border-t",
+      [
+        {
+          "values": [
+            "current",
+            "inherit",
+            "transparent"
+          ],
+          "valueThemeKeys": [
+            "--border-color",
+            "--color"
+          ],
+          "modifiers": [
+            "0",
+            "5",
+            "10",
+            "15",
+            "20",
+            "25",
+            "30",
+            "35",
+            "40",
+            "45",
+            "50",
+            "55",
+            "60",
+            "65",
+            "70",
+            "75",
+            "80",
+            "85",
+            "90",
+            "95",
+            "100"
+          ],
+          "hasDefaultValue": true
+        },
+        {
+          "values": [
+            "0",
+            "2",
+            "4",
+            "8"
+          ],
+          "valueThemeKeys": [
+            "--border-width"
+          ]
+        }
+      ]
+    ],
+    [
+      "border-r",
+      [
+        {
+          "values": [
+            "current",
+            "inherit",
+            "transparent"
+          ],
+          "valueThemeKeys": [
+            "--border-color",
+            "--color"
+          ],
+          "modifiers": [
+            "0",
+            "5",
+            "10",
+            "15",
+            "20",
+            "25",
+            "30",
+            "35",
+            "40",
+            "45",
+            "50",
+            "55",
+            "60",
+            "65",
+            "70",
+            "75",
+            "80",
+            "85",
+            "90",
+            "95",
+            "100"
+          ],
+          "hasDefaultValue": true
+        },
+        {
+          "values": [
+            "0",
+            "2",
+            "4",
+            "8"
+          ],
+          "valueThemeKeys": [
+            "--border-width"
+          ]
+        }
+      ]
+    ],
+    [
+      "border-b",
+      [
+        {
+          "values": [
+            "current",
+            "inherit",
+            "transparent"
+          ],
+          "valueThemeKeys": [
+            "--border-color",
+            "--color"
+          ],
+          "modifiers": [
+            "0",
+            "5",
+            "10",
+            "15",
+            "20",
+            "25",
+            "30",
+            "35",
+            "40",
+            "45",
+            "50",
+            "55",
+            "60",
+            "65",
+            "70",
+            "75",
+            "80",
+            "85",
+            "90",
+            "95",
+            "100"
+          ],
+          "hasDefaultValue": true
+        },
+        {
+          "values": [
+            "0",
+            "2",
+            "4",
+            "8"
+          ],
+          "valueThemeKeys": [
+            "--border-width"
+          ]
+        }
+      ]
+    ],
+    [
+      "border-l",
+      [
+        {
+          "values": [
+            "current",
+            "inherit",
+            "transparent"
+          ],
+          "valueThemeKeys": [
+            "--border-color",
+            "--color"
+          ],
+          "modifiers": [
+            "0",
+            "5",
+            "10",
+            "15",
+            "20",
+            "25",
+            "30",
+            "35",
+            "40",
+            "45",
+            "50",
+            "55",
+            "60",
+            "65",
+            "70",
+            "75",
+            "80",
+            "85",
+            "90",
+            "95",
+            "100"
+          ],
+          "hasDefaultValue": true
+        },
+        {
+          "values": [
+            "0",
+            "2",
+            "4",
+            "8"
+          ],
+          "valueThemeKeys": [
+            "--border-width"
+          ]
+        }
+      ]
+    ],
+    [
+      "divide-x",
+      [
+        {
+          "values": [
+            "0",
+            "2",
+            "4",
+            "8"
+          ],
+          "valueThemeKeys": [
+            "--divide-width",
+            "--border-width"
+          ],
+          "hasDefaultValue": true
+        }
+      ]
+    ],
+    [
+      "divide-y",
+      [
+        {
+          "values": [
+            "0",
+            "2",
+            "4",
+            "8"
+          ],
+          "valueThemeKeys": [
+            "--divide-width",
+            "--border-width"
+          ],
+          "hasDefaultValue": true
+        }
+      ]
+    ],
+    [
+      "bg-size",
+      [
+        {
+          "valueThemeKeys": [],
+          "hasDefaultValue": false
+        }
+      ]
+    ],
+    [
+      "bg-position",
+      [
+        {
+          "valueThemeKeys": [],
+          "hasDefaultValue": false
+        }
+      ]
+    ],
+    [
+      "bg-linear",
+      [
+        {
+          "values": [
+            "to-t",
+            "to-tr",
+            "to-r",
+            "to-br",
+            "to-b",
+            "to-bl",
+            "to-l",
+            "to-tl"
+          ],
+          "modifiers": [
+            "oklab",
+            "oklch",
+            "srgb",
+            "hsl",
+            "longer",
+            "shorter",
+            "increasing",
+            "decreasing"
+          ]
+        },
+        {
+          "values": [
+            "0",
+            "30",
+            "60",
+            "90",
+            "120",
+            "150",
+            "180",
+            "210",
+            "240",
+            "270",
+            "300",
+            "330"
+          ],
+          "supportsNegative": true,
+          "modifiers": [
+            "oklab",
+            "oklch",
+            "srgb",
+            "hsl",
+            "longer",
+            "shorter",
+            "increasing",
+            "decreasing"
+          ]
+        }
+      ]
+    ],
+    [
+      "bg-conic",
+      [
+        {
+          "hasDefaultValue": true,
+          "modifiers": [
+            "oklab",
+            "oklch",
+            "srgb",
+            "hsl",
+            "longer",
+            "shorter",
+            "increasing",
+            "decreasing"
+          ]
+        },
+        {
+          "values": [
+            "0",
+            "30",
+            "60",
+            "90",
+            "120",
+            "150",
+            "180",
+            "210",
+            "240",
+            "270",
+            "300",
+            "330"
+          ],
+          "supportsNegative": true,
+          "modifiers": [
+            "oklab",
+            "oklch",
+            "srgb",
+            "hsl",
+            "longer",
+            "shorter",
+            "increasing",
+            "decreasing"
+          ]
+        }
+      ]
+    ],
+    [
+      "bg-radial",
+      [
+        {
+          "hasDefaultValue": true,
+          "modifiers": [
+            "oklab",
+            "oklch",
+            "srgb",
+            "hsl",
+            "longer",
+            "shorter",
+            "increasing",
+            "decreasing"
+          ]
+        }
+      ]
+    ],
+    [
+      "bg",
+      [
+        {
+          "values": [
+            "current",
+            "inherit",
+            "transparent"
+          ],
+          "valueThemeKeys": [
+            "--background-color",
+            "--color"
+          ],
+          "modifiers": [
+            "0",
+            "5",
+            "10",
+            "15",
+            "20",
+            "25",
+            "30",
+            "35",
+            "40",
+            "45",
+            "50",
+            "55",
+            "60",
+            "65",
+            "70",
+            "75",
+            "80",
+            "85",
+            "90",
+            "95",
+            "100"
+          ]
+        },
+        {
+          "values": [],
+          "valueThemeKeys": [
+            "--background-image"
+          ]
+        }
+      ]
+    ],
+    [
+      "from",
+      [
+        {
+          "values": [
+            "current",
+            "inherit",
+            "transparent"
+          ],
+          "valueThemeKeys": [
+            "--background-color",
+            "--color"
+          ],
+          "modifiers": [
+            "0",
+            "5",
+            "10",
+            "15",
+            "20",
+            "25",
+            "30",
+            "35",
+            "40",
+            "45",
+            "50",
+            "55",
+            "60",
+            "65",
+            "70",
+            "75",
+            "80",
+            "85",
+            "90",
+            "95",
+            "100"
+          ]
+        },
+        {
+          "values": [
+            "0%",
+            "5%",
+            "10%",
+            "15%",
+            "20%",
+            "25%",
+            "30%",
+            "35%",
+            "40%",
+            "45%",
+            "50%",
+            "55%",
+            "60%",
+            "65%",
+            "70%",
+            "75%",
+            "80%",
+            "85%",
+            "90%",
+            "95%",
+            "100%"
+          ],
+          "valueThemeKeys": [
+            "--gradient-color-stop-positions"
+          ]
+        }
+      ]
+    ],
+    [
+      "via",
+      [
+        {
+          "values": [
+            "current",
+            "inherit",
+            "transparent"
+          ],
+          "valueThemeKeys": [
+            "--background-color",
+            "--color"
+          ],
+          "modifiers": [
+            "0",
+            "5",
+            "10",
+            "15",
+            "20",
+            "25",
+            "30",
+            "35",
+            "40",
+            "45",
+            "50",
+            "55",
+            "60",
+            "65",
+            "70",
+            "75",
+            "80",
+            "85",
+            "90",
+            "95",
+            "100"
+          ]
+        },
+        {
+          "values": [
+            "0%",
+            "5%",
+            "10%",
+            "15%",
+            "20%",
+            "25%",
+            "30%",
+            "35%",
+            "40%",
+            "45%",
+            "50%",
+            "55%",
+            "60%",
+            "65%",
+            "70%",
+            "75%",
+            "80%",
+            "85%",
+            "90%",
+            "95%",
+            "100%"
+          ],
+          "valueThemeKeys": [
+            "--gradient-color-stop-positions"
+          ]
+        }
+      ]
+    ],
+    [
+      "to",
+      [
+        {
+          "values": [
+            "current",
+            "inherit",
+            "transparent"
+          ],
+          "valueThemeKeys": [
+            "--background-color",
+            "--color"
+          ],
+          "modifiers": [
+            "0",
+            "5",
+            "10",
+            "15",
+            "20",
+            "25",
+            "30",
+            "35",
+            "40",
+            "45",
+            "50",
+            "55",
+            "60",
+            "65",
+            "70",
+            "75",
+            "80",
+            "85",
+            "90",
+            "95",
+            "100"
+          ]
+        },
+        {
+          "values": [
+            "0%",
+            "5%",
+            "10%",
+            "15%",
+            "20%",
+            "25%",
+            "30%",
+            "35%",
+            "40%",
+            "45%",
+            "50%",
+            "55%",
+            "60%",
+            "65%",
+            "70%",
+            "75%",
+            "80%",
+            "85%",
+            "90%",
+            "95%",
+            "100%"
+          ],
+          "valueThemeKeys": [
+            "--gradient-color-stop-positions"
+          ]
+        }
+      ]
+    ],
+    [
+      "mask-size",
+      [
+        {
+          "valueThemeKeys": [],
+          "hasDefaultValue": false
+        }
+      ]
+    ],
+    [
+      "mask-position",
+      [
+        {
+          "valueThemeKeys": [],
+          "hasDefaultValue": false
+        }
+      ]
+    ],
+    [
+      "mask-x-from",
+      [
+        {
+          "values": [
+            "0%",
+            "5%",
+            "10%",
+            "15%",
+            "20%",
+            "25%",
+            "30%",
+            "35%",
+            "40%",
+            "45%",
+            "50%",
+            "55%",
+            "60%",
+            "65%",
+            "70%",
+            "75%",
+            "80%",
+            "85%",
+            "90%",
+            "95%",
+            "100%"
+          ]
+        },
+        {
+          "values": [],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        },
+        {
+          "values": [
+            "current",
+            "inherit",
+            "transparent"
+          ],
+          "valueThemeKeys": [
+            "--background-color",
+            "--color"
+          ],
+          "modifiers": [
+            "0",
+            "5",
+            "10",
+            "15",
+            "20",
+            "25",
+            "30",
+            "35",
+            "40",
+            "45",
+            "50",
+            "55",
+            "60",
+            "65",
+            "70",
+            "75",
+            "80",
+            "85",
+            "90",
+            "95",
+            "100"
+          ]
+        }
+      ]
+    ],
+    [
+      "mask-x-to",
+      [
+        {
+          "values": [
+            "0%",
+            "5%",
+            "10%",
+            "15%",
+            "20%",
+            "25%",
+            "30%",
+            "35%",
+            "40%",
+            "45%",
+            "50%",
+            "55%",
+            "60%",
+            "65%",
+            "70%",
+            "75%",
+            "80%",
+            "85%",
+            "90%",
+            "95%",
+            "100%"
+          ]
+        },
+        {
+          "values": [],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        },
+        {
+          "values": [
+            "current",
+            "inherit",
+            "transparent"
+          ],
+          "valueThemeKeys": [
+            "--background-color",
+            "--color"
+          ],
+          "modifiers": [
+            "0",
+            "5",
+            "10",
+            "15",
+            "20",
+            "25",
+            "30",
+            "35",
+            "40",
+            "45",
+            "50",
+            "55",
+            "60",
+            "65",
+            "70",
+            "75",
+            "80",
+            "85",
+            "90",
+            "95",
+            "100"
+          ]
+        }
+      ]
+    ],
+    [
+      "mask-y-from",
+      [
+        {
+          "values": [
+            "0%",
+            "5%",
+            "10%",
+            "15%",
+            "20%",
+            "25%",
+            "30%",
+            "35%",
+            "40%",
+            "45%",
+            "50%",
+            "55%",
+            "60%",
+            "65%",
+            "70%",
+            "75%",
+            "80%",
+            "85%",
+            "90%",
+            "95%",
+            "100%"
+          ]
+        },
+        {
+          "values": [],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        },
+        {
+          "values": [
+            "current",
+            "inherit",
+            "transparent"
+          ],
+          "valueThemeKeys": [
+            "--background-color",
+            "--color"
+          ],
+          "modifiers": [
+            "0",
+            "5",
+            "10",
+            "15",
+            "20",
+            "25",
+            "30",
+            "35",
+            "40",
+            "45",
+            "50",
+            "55",
+            "60",
+            "65",
+            "70",
+            "75",
+            "80",
+            "85",
+            "90",
+            "95",
+            "100"
+          ]
+        }
+      ]
+    ],
+    [
+      "mask-y-to",
+      [
+        {
+          "values": [
+            "0%",
+            "5%",
+            "10%",
+            "15%",
+            "20%",
+            "25%",
+            "30%",
+            "35%",
+            "40%",
+            "45%",
+            "50%",
+            "55%",
+            "60%",
+            "65%",
+            "70%",
+            "75%",
+            "80%",
+            "85%",
+            "90%",
+            "95%",
+            "100%"
+          ]
+        },
+        {
+          "values": [],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        },
+        {
+          "values": [
+            "current",
+            "inherit",
+            "transparent"
+          ],
+          "valueThemeKeys": [
+            "--background-color",
+            "--color"
+          ],
+          "modifiers": [
+            "0",
+            "5",
+            "10",
+            "15",
+            "20",
+            "25",
+            "30",
+            "35",
+            "40",
+            "45",
+            "50",
+            "55",
+            "60",
+            "65",
+            "70",
+            "75",
+            "80",
+            "85",
+            "90",
+            "95",
+            "100"
+          ]
+        }
+      ]
+    ],
+    [
+      "mask-t-from",
+      [
+        {
+          "values": [
+            "0%",
+            "5%",
+            "10%",
+            "15%",
+            "20%",
+            "25%",
+            "30%",
+            "35%",
+            "40%",
+            "45%",
+            "50%",
+            "55%",
+            "60%",
+            "65%",
+            "70%",
+            "75%",
+            "80%",
+            "85%",
+            "90%",
+            "95%",
+            "100%"
+          ]
+        },
+        {
+          "values": [],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        },
+        {
+          "values": [
+            "current",
+            "inherit",
+            "transparent"
+          ],
+          "valueThemeKeys": [
+            "--background-color",
+            "--color"
+          ],
+          "modifiers": [
+            "0",
+            "5",
+            "10",
+            "15",
+            "20",
+            "25",
+            "30",
+            "35",
+            "40",
+            "45",
+            "50",
+            "55",
+            "60",
+            "65",
+            "70",
+            "75",
+            "80",
+            "85",
+            "90",
+            "95",
+            "100"
+          ]
+        }
+      ]
+    ],
+    [
+      "mask-t-to",
+      [
+        {
+          "values": [
+            "0%",
+            "5%",
+            "10%",
+            "15%",
+            "20%",
+            "25%",
+            "30%",
+            "35%",
+            "40%",
+            "45%",
+            "50%",
+            "55%",
+            "60%",
+            "65%",
+            "70%",
+            "75%",
+            "80%",
+            "85%",
+            "90%",
+            "95%",
+            "100%"
+          ]
+        },
+        {
+          "values": [],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        },
+        {
+          "values": [
+            "current",
+            "inherit",
+            "transparent"
+          ],
+          "valueThemeKeys": [
+            "--background-color",
+            "--color"
+          ],
+          "modifiers": [
+            "0",
+            "5",
+            "10",
+            "15",
+            "20",
+            "25",
+            "30",
+            "35",
+            "40",
+            "45",
+            "50",
+            "55",
+            "60",
+            "65",
+            "70",
+            "75",
+            "80",
+            "85",
+            "90",
+            "95",
+            "100"
+          ]
+        }
+      ]
+    ],
+    [
+      "mask-r-from",
+      [
+        {
+          "values": [
+            "0%",
+            "5%",
+            "10%",
+            "15%",
+            "20%",
+            "25%",
+            "30%",
+            "35%",
+            "40%",
+            "45%",
+            "50%",
+            "55%",
+            "60%",
+            "65%",
+            "70%",
+            "75%",
+            "80%",
+            "85%",
+            "90%",
+            "95%",
+            "100%"
+          ]
+        },
+        {
+          "values": [],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        },
+        {
+          "values": [
+            "current",
+            "inherit",
+            "transparent"
+          ],
+          "valueThemeKeys": [
+            "--background-color",
+            "--color"
+          ],
+          "modifiers": [
+            "0",
+            "5",
+            "10",
+            "15",
+            "20",
+            "25",
+            "30",
+            "35",
+            "40",
+            "45",
+            "50",
+            "55",
+            "60",
+            "65",
+            "70",
+            "75",
+            "80",
+            "85",
+            "90",
+            "95",
+            "100"
+          ]
+        }
+      ]
+    ],
+    [
+      "mask-r-to",
+      [
+        {
+          "values": [
+            "0%",
+            "5%",
+            "10%",
+            "15%",
+            "20%",
+            "25%",
+            "30%",
+            "35%",
+            "40%",
+            "45%",
+            "50%",
+            "55%",
+            "60%",
+            "65%",
+            "70%",
+            "75%",
+            "80%",
+            "85%",
+            "90%",
+            "95%",
+            "100%"
+          ]
+        },
+        {
+          "values": [],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        },
+        {
+          "values": [
+            "current",
+            "inherit",
+            "transparent"
+          ],
+          "valueThemeKeys": [
+            "--background-color",
+            "--color"
+          ],
+          "modifiers": [
+            "0",
+            "5",
+            "10",
+            "15",
+            "20",
+            "25",
+            "30",
+            "35",
+            "40",
+            "45",
+            "50",
+            "55",
+            "60",
+            "65",
+            "70",
+            "75",
+            "80",
+            "85",
+            "90",
+            "95",
+            "100"
+          ]
+        }
+      ]
+    ],
+    [
+      "mask-b-from",
+      [
+        {
+          "values": [
+            "0%",
+            "5%",
+            "10%",
+            "15%",
+            "20%",
+            "25%",
+            "30%",
+            "35%",
+            "40%",
+            "45%",
+            "50%",
+            "55%",
+            "60%",
+            "65%",
+            "70%",
+            "75%",
+            "80%",
+            "85%",
+            "90%",
+            "95%",
+            "100%"
+          ]
+        },
+        {
+          "values": [],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        },
+        {
+          "values": [
+            "current",
+            "inherit",
+            "transparent"
+          ],
+          "valueThemeKeys": [
+            "--background-color",
+            "--color"
+          ],
+          "modifiers": [
+            "0",
+            "5",
+            "10",
+            "15",
+            "20",
+            "25",
+            "30",
+            "35",
+            "40",
+            "45",
+            "50",
+            "55",
+            "60",
+            "65",
+            "70",
+            "75",
+            "80",
+            "85",
+            "90",
+            "95",
+            "100"
+          ]
+        }
+      ]
+    ],
+    [
+      "mask-b-to",
+      [
+        {
+          "values": [
+            "0%",
+            "5%",
+            "10%",
+            "15%",
+            "20%",
+            "25%",
+            "30%",
+            "35%",
+            "40%",
+            "45%",
+            "50%",
+            "55%",
+            "60%",
+            "65%",
+            "70%",
+            "75%",
+            "80%",
+            "85%",
+            "90%",
+            "95%",
+            "100%"
+          ]
+        },
+        {
+          "values": [],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        },
+        {
+          "values": [
+            "current",
+            "inherit",
+            "transparent"
+          ],
+          "valueThemeKeys": [
+            "--background-color",
+            "--color"
+          ],
+          "modifiers": [
+            "0",
+            "5",
+            "10",
+            "15",
+            "20",
+            "25",
+            "30",
+            "35",
+            "40",
+            "45",
+            "50",
+            "55",
+            "60",
+            "65",
+            "70",
+            "75",
+            "80",
+            "85",
+            "90",
+            "95",
+            "100"
+          ]
+        }
+      ]
+    ],
+    [
+      "mask-l-from",
+      [
+        {
+          "values": [
+            "0%",
+            "5%",
+            "10%",
+            "15%",
+            "20%",
+            "25%",
+            "30%",
+            "35%",
+            "40%",
+            "45%",
+            "50%",
+            "55%",
+            "60%",
+            "65%",
+            "70%",
+            "75%",
+            "80%",
+            "85%",
+            "90%",
+            "95%",
+            "100%"
+          ]
+        },
+        {
+          "values": [],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        },
+        {
+          "values": [
+            "current",
+            "inherit",
+            "transparent"
+          ],
+          "valueThemeKeys": [
+            "--background-color",
+            "--color"
+          ],
+          "modifiers": [
+            "0",
+            "5",
+            "10",
+            "15",
+            "20",
+            "25",
+            "30",
+            "35",
+            "40",
+            "45",
+            "50",
+            "55",
+            "60",
+            "65",
+            "70",
+            "75",
+            "80",
+            "85",
+            "90",
+            "95",
+            "100"
+          ]
+        }
+      ]
+    ],
+    [
+      "mask-l-to",
+      [
+        {
+          "values": [
+            "0%",
+            "5%",
+            "10%",
+            "15%",
+            "20%",
+            "25%",
+            "30%",
+            "35%",
+            "40%",
+            "45%",
+            "50%",
+            "55%",
+            "60%",
+            "65%",
+            "70%",
+            "75%",
+            "80%",
+            "85%",
+            "90%",
+            "95%",
+            "100%"
+          ]
+        },
+        {
+          "values": [],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        },
+        {
+          "values": [
+            "current",
+            "inherit",
+            "transparent"
+          ],
+          "valueThemeKeys": [
+            "--background-color",
+            "--color"
+          ],
+          "modifiers": [
+            "0",
+            "5",
+            "10",
+            "15",
+            "20",
+            "25",
+            "30",
+            "35",
+            "40",
+            "45",
+            "50",
+            "55",
+            "60",
+            "65",
+            "70",
+            "75",
+            "80",
+            "85",
+            "90",
+            "95",
+            "100"
+          ]
+        }
+      ]
+    ],
+    [
+      "mask-linear",
+      [
+        {
+          "supportsNegative": true,
+          "values": [
+            "0",
+            "1",
+            "2",
+            "3",
+            "6",
+            "12",
+            "45",
+            "90",
+            "180"
+          ]
+        }
+      ]
+    ],
+    [
+      "mask-linear-from",
+      [
+        {
+          "values": [
+            "0%",
+            "5%",
+            "10%",
+            "15%",
+            "20%",
+            "25%",
+            "30%",
+            "35%",
+            "40%",
+            "45%",
+            "50%",
+            "55%",
+            "60%",
+            "65%",
+            "70%",
+            "75%",
+            "80%",
+            "85%",
+            "90%",
+            "95%",
+            "100%"
+          ]
+        },
+        {
+          "values": [],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        },
+        {
+          "values": [
+            "current",
+            "inherit",
+            "transparent"
+          ],
+          "valueThemeKeys": [
+            "--background-color",
+            "--color"
+          ],
+          "modifiers": [
+            "0",
+            "5",
+            "10",
+            "15",
+            "20",
+            "25",
+            "30",
+            "35",
+            "40",
+            "45",
+            "50",
+            "55",
+            "60",
+            "65",
+            "70",
+            "75",
+            "80",
+            "85",
+            "90",
+            "95",
+            "100"
+          ]
+        }
+      ]
+    ],
+    [
+      "mask-linear-to",
+      [
+        {
+          "values": [
+            "0%",
+            "5%",
+            "10%",
+            "15%",
+            "20%",
+            "25%",
+            "30%",
+            "35%",
+            "40%",
+            "45%",
+            "50%",
+            "55%",
+            "60%",
+            "65%",
+            "70%",
+            "75%",
+            "80%",
+            "85%",
+            "90%",
+            "95%",
+            "100%"
+          ]
+        },
+        {
+          "values": [],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        },
+        {
+          "values": [
+            "current",
+            "inherit",
+            "transparent"
+          ],
+          "valueThemeKeys": [
+            "--background-color",
+            "--color"
+          ],
+          "modifiers": [
+            "0",
+            "5",
+            "10",
+            "15",
+            "20",
+            "25",
+            "30",
+            "35",
+            "40",
+            "45",
+            "50",
+            "55",
+            "60",
+            "65",
+            "70",
+            "75",
+            "80",
+            "85",
+            "90",
+            "95",
+            "100"
+          ]
+        }
+      ]
+    ],
+    [
+      "mask-radial-at",
+      [
+        {
+          "supportsNegative": false,
+          "valueThemeKeys": [],
+          "hasDefaultValue": false,
+          "supportsFractions": false
+        }
+      ]
+    ],
+    [
+      "mask-radial",
+      [
+        {
+          "supportsNegative": false,
+          "valueThemeKeys": [],
+          "hasDefaultValue": false,
+          "supportsFractions": false
+        }
+      ]
+    ],
+    [
+      "mask-radial-from",
+      [
+        {
+          "values": [
+            "0%",
+            "5%",
+            "10%",
+            "15%",
+            "20%",
+            "25%",
+            "30%",
+            "35%",
+            "40%",
+            "45%",
+            "50%",
+            "55%",
+            "60%",
+            "65%",
+            "70%",
+            "75%",
+            "80%",
+            "85%",
+            "90%",
+            "95%",
+            "100%"
+          ]
+        },
+        {
+          "values": [],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        },
+        {
+          "values": [
+            "current",
+            "inherit",
+            "transparent"
+          ],
+          "valueThemeKeys": [
+            "--background-color",
+            "--color"
+          ],
+          "modifiers": [
+            "0",
+            "5",
+            "10",
+            "15",
+            "20",
+            "25",
+            "30",
+            "35",
+            "40",
+            "45",
+            "50",
+            "55",
+            "60",
+            "65",
+            "70",
+            "75",
+            "80",
+            "85",
+            "90",
+            "95",
+            "100"
+          ]
+        }
+      ]
+    ],
+    [
+      "mask-radial-to",
+      [
+        {
+          "values": [
+            "0%",
+            "5%",
+            "10%",
+            "15%",
+            "20%",
+            "25%",
+            "30%",
+            "35%",
+            "40%",
+            "45%",
+            "50%",
+            "55%",
+            "60%",
+            "65%",
+            "70%",
+            "75%",
+            "80%",
+            "85%",
+            "90%",
+            "95%",
+            "100%"
+          ]
+        },
+        {
+          "values": [],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        },
+        {
+          "values": [
+            "current",
+            "inherit",
+            "transparent"
+          ],
+          "valueThemeKeys": [
+            "--background-color",
+            "--color"
+          ],
+          "modifiers": [
+            "0",
+            "5",
+            "10",
+            "15",
+            "20",
+            "25",
+            "30",
+            "35",
+            "40",
+            "45",
+            "50",
+            "55",
+            "60",
+            "65",
+            "70",
+            "75",
+            "80",
+            "85",
+            "90",
+            "95",
+            "100"
+          ]
+        }
+      ]
+    ],
+    [
+      "mask-conic",
+      [
+        {
+          "supportsNegative": true,
+          "values": [
+            "0",
+            "1",
+            "2",
+            "3",
+            "6",
+            "12",
+            "45",
+            "90",
+            "180"
+          ]
+        }
+      ]
+    ],
+    [
+      "mask-conic-from",
+      [
+        {
+          "values": [
+            "0%",
+            "5%",
+            "10%",
+            "15%",
+            "20%",
+            "25%",
+            "30%",
+            "35%",
+            "40%",
+            "45%",
+            "50%",
+            "55%",
+            "60%",
+            "65%",
+            "70%",
+            "75%",
+            "80%",
+            "85%",
+            "90%",
+            "95%",
+            "100%"
+          ]
+        },
+        {
+          "values": [],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        },
+        {
+          "values": [
+            "current",
+            "inherit",
+            "transparent"
+          ],
+          "valueThemeKeys": [
+            "--background-color",
+            "--color"
+          ],
+          "modifiers": [
+            "0",
+            "5",
+            "10",
+            "15",
+            "20",
+            "25",
+            "30",
+            "35",
+            "40",
+            "45",
+            "50",
+            "55",
+            "60",
+            "65",
+            "70",
+            "75",
+            "80",
+            "85",
+            "90",
+            "95",
+            "100"
+          ]
+        }
+      ]
+    ],
+    [
+      "mask-conic-to",
+      [
+        {
+          "values": [
+            "0%",
+            "5%",
+            "10%",
+            "15%",
+            "20%",
+            "25%",
+            "30%",
+            "35%",
+            "40%",
+            "45%",
+            "50%",
+            "55%",
+            "60%",
+            "65%",
+            "70%",
+            "75%",
+            "80%",
+            "85%",
+            "90%",
+            "95%",
+            "100%"
+          ]
+        },
+        {
+          "values": [],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        },
+        {
+          "values": [
+            "current",
+            "inherit",
+            "transparent"
+          ],
+          "valueThemeKeys": [
+            "--background-color",
+            "--color"
+          ],
+          "modifiers": [
+            "0",
+            "5",
+            "10",
+            "15",
+            "20",
+            "25",
+            "30",
+            "35",
+            "40",
+            "45",
+            "50",
+            "55",
+            "60",
+            "65",
+            "70",
+            "75",
+            "80",
+            "85",
+            "90",
+            "95",
+            "100"
+          ]
+        }
+      ]
+    ],
+    [
+      "fill",
+      [
+        {
+          "values": [
+            "current",
+            "inherit",
+            "transparent"
+          ],
+          "valueThemeKeys": [
+            "--fill",
+            "--color"
+          ],
+          "modifiers": [
+            "0",
+            "5",
+            "10",
+            "15",
+            "20",
+            "25",
+            "30",
+            "35",
+            "40",
+            "45",
+            "50",
+            "55",
+            "60",
+            "65",
+            "70",
+            "75",
+            "80",
+            "85",
+            "90",
+            "95",
+            "100"
+          ]
+        }
+      ]
+    ],
+    [
+      "stroke",
+      [
+        {
+          "values": [
+            "current",
+            "inherit",
+            "transparent"
+          ],
+          "valueThemeKeys": [
+            "--stroke",
+            "--color"
+          ],
+          "modifiers": [
+            "0",
+            "5",
+            "10",
+            "15",
+            "20",
+            "25",
+            "30",
+            "35",
+            "40",
+            "45",
+            "50",
+            "55",
+            "60",
+            "65",
+            "70",
+            "75",
+            "80",
+            "85",
+            "90",
+            "95",
+            "100"
+          ]
+        },
+        {
+          "values": [
+            "0",
+            "1",
+            "2",
+            "3"
+          ],
+          "valueThemeKeys": [
+            "--stroke-width"
+          ]
+        }
+      ]
+    ],
+    [
+      "object",
+      [
+        {
+          "valueThemeKeys": [
+            "--object-position"
+          ],
+          "hasDefaultValue": false
+        }
+      ]
+    ],
+    [
+      "p",
+      [
+        {
+          "values": [],
+          "supportsNegative": false,
+          "supportsFractions": false,
+          "valueThemeKeys": [
+            "--padding",
+            "--spacing"
+          ],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        }
+      ]
+    ],
+    [
+      "px",
+      [
+        {
+          "values": [],
+          "supportsNegative": false,
+          "supportsFractions": false,
+          "valueThemeKeys": [
+            "--padding",
+            "--spacing"
+          ],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        }
+      ]
+    ],
+    [
+      "py",
+      [
+        {
+          "values": [],
+          "supportsNegative": false,
+          "supportsFractions": false,
+          "valueThemeKeys": [
+            "--padding",
+            "--spacing"
+          ],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        }
+      ]
+    ],
+    [
+      "ps",
+      [
+        {
+          "values": [],
+          "supportsNegative": false,
+          "supportsFractions": false,
+          "valueThemeKeys": [
+            "--padding",
+            "--spacing"
+          ],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        }
+      ]
+    ],
+    [
+      "pe",
+      [
+        {
+          "values": [],
+          "supportsNegative": false,
+          "supportsFractions": false,
+          "valueThemeKeys": [
+            "--padding",
+            "--spacing"
+          ],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        }
+      ]
+    ],
+    [
+      "pt",
+      [
+        {
+          "values": [],
+          "supportsNegative": false,
+          "supportsFractions": false,
+          "valueThemeKeys": [
+            "--padding",
+            "--spacing"
+          ],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        }
+      ]
+    ],
+    [
+      "pr",
+      [
+        {
+          "values": [],
+          "supportsNegative": false,
+          "supportsFractions": false,
+          "valueThemeKeys": [
+            "--padding",
+            "--spacing"
+          ],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        }
+      ]
+    ],
+    [
+      "pb",
+      [
+        {
+          "values": [],
+          "supportsNegative": false,
+          "supportsFractions": false,
+          "valueThemeKeys": [
+            "--padding",
+            "--spacing"
+          ],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        }
+      ]
+    ],
+    [
+      "pl",
+      [
+        {
+          "values": [],
+          "supportsNegative": false,
+          "supportsFractions": false,
+          "valueThemeKeys": [
+            "--padding",
+            "--spacing"
+          ],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        }
+      ]
+    ],
+    [
+      "indent",
+      [
+        {
+          "values": [],
+          "supportsNegative": true,
+          "supportsFractions": false,
+          "valueThemeKeys": [
+            "--text-indent",
+            "--spacing"
+          ],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        }
+      ]
+    ],
+    [
+      "align",
+      [
+        {
+          "valueThemeKeys": [],
+          "hasDefaultValue": false
+        }
+      ]
+    ],
+    [
+      "font",
+      [
+        {
+          "values": [],
+          "valueThemeKeys": [
+            "--font"
+          ]
+        },
+        {
+          "values": [],
+          "valueThemeKeys": [
+            "--font-weight"
+          ]
+        }
+      ]
+    ],
+    [
+      "font-stretch",
+      [
+        {
+          "values": [
+            "50%",
+            "75%",
+            "90%",
+            "95%",
+            "100%",
+            "105%",
+            "110%",
+            "125%",
+            "150%",
+            "200%"
+          ]
+        }
+      ]
+    ],
+    [
+      "placeholder",
+      [
+        {
+          "values": [
+            "current",
+            "inherit",
+            "transparent"
+          ],
+          "valueThemeKeys": [
+            "--background-color",
+            "--color"
+          ],
+          "modifiers": [
+            "0",
+            "5",
+            "10",
+            "15",
+            "20",
+            "25",
+            "30",
+            "35",
+            "40",
+            "45",
+            "50",
+            "55",
+            "60",
+            "65",
+            "70",
+            "75",
+            "80",
+            "85",
+            "90",
+            "95",
+            "100"
+          ]
+        }
+      ]
+    ],
+    [
+      "decoration",
+      [
+        {
+          "values": [
+            "current",
+            "inherit",
+            "transparent"
+          ],
+          "valueThemeKeys": [
+            "--text-decoration-color",
+            "--color"
+          ],
+          "modifiers": [
+            "0",
+            "5",
+            "10",
+            "15",
+            "20",
+            "25",
+            "30",
+            "35",
+            "40",
+            "45",
+            "50",
+            "55",
+            "60",
+            "65",
+            "70",
+            "75",
+            "80",
+            "85",
+            "90",
+            "95",
+            "100"
+          ]
+        },
+        {
+          "values": [
+            "0",
+            "1",
+            "2"
+          ],
+          "valueThemeKeys": [
+            "--text-decoration-thickness"
+          ]
+        }
+      ]
+    ],
+    [
+      "animate",
+      [
+        {
+          "valueThemeKeys": [
+            "--animate"
+          ],
+          "hasDefaultValue": false
+        }
+      ]
+    ],
+    [
+      "blur",
+      [
+        {
+          "valueThemeKeys": [
+            "--blur"
+          ],
+          "hasDefaultValue": false
+        }
+      ]
+    ],
+    [
+      "backdrop-blur",
+      [
+        {
+          "valueThemeKeys": [
+            "--backdrop-blur",
+            "--blur"
+          ],
+          "hasDefaultValue": false
+        }
+      ]
+    ],
+    [
+      "brightness",
+      [
+        {
+          "values": [
+            "0",
+            "50",
+            "75",
+            "90",
+            "95",
+            "100",
+            "105",
+            "110",
+            "125",
+            "150",
+            "200"
+          ],
+          "valueThemeKeys": [
+            "--brightness"
+          ]
+        }
+      ]
+    ],
+    [
+      "backdrop-brightness",
+      [
+        {
+          "values": [
+            "0",
+            "50",
+            "75",
+            "90",
+            "95",
+            "100",
+            "105",
+            "110",
+            "125",
+            "150",
+            "200"
+          ],
+          "valueThemeKeys": [
+            "--backdrop-brightness",
+            "--brightness"
+          ]
+        }
+      ]
+    ],
+    [
+      "contrast",
+      [
+        {
+          "values": [
+            "0",
+            "50",
+            "75",
+            "100",
+            "125",
+            "150",
+            "200"
+          ],
+          "valueThemeKeys": [
+            "--contrast"
+          ]
+        }
+      ]
+    ],
+    [
+      "backdrop-contrast",
+      [
+        {
+          "values": [
+            "0",
+            "50",
+            "75",
+            "100",
+            "125",
+            "150",
+            "200"
+          ],
+          "valueThemeKeys": [
+            "--backdrop-contrast",
+            "--contrast"
+          ]
+        }
+      ]
+    ],
+    [
+      "grayscale",
+      [
+        {
+          "values": [
+            "0",
+            "25",
+            "50",
+            "75",
+            "100"
+          ],
+          "valueThemeKeys": [
+            "--grayscale"
+          ],
+          "hasDefaultValue": true
+        }
+      ]
+    ],
+    [
+      "backdrop-grayscale",
+      [
+        {
+          "values": [
+            "0",
+            "25",
+            "50",
+            "75",
+            "100"
+          ],
+          "valueThemeKeys": [
+            "--backdrop-grayscale",
+            "--grayscale"
+          ],
+          "hasDefaultValue": true
+        }
+      ]
+    ],
+    [
+      "hue-rotate",
+      [
+        {
+          "values": [
+            "0",
+            "15",
+            "30",
+            "60",
+            "90",
+            "180"
+          ],
+          "valueThemeKeys": [
+            "--hue-rotate"
+          ]
+        }
+      ]
+    ],
+    [
+      "backdrop-hue-rotate",
+      [
+        {
+          "values": [
+            "0",
+            "15",
+            "30",
+            "60",
+            "90",
+            "180"
+          ],
+          "valueThemeKeys": [
+            "--backdrop-hue-rotate",
+            "--hue-rotate"
+          ]
+        }
+      ]
+    ],
+    [
+      "invert",
+      [
+        {
+          "values": [
+            "0",
+            "25",
+            "50",
+            "75",
+            "100"
+          ],
+          "valueThemeKeys": [
+            "--invert"
+          ],
+          "hasDefaultValue": true
+        }
+      ]
+    ],
+    [
+      "backdrop-invert",
+      [
+        {
+          "values": [
+            "0",
+            "25",
+            "50",
+            "75",
+            "100"
+          ],
+          "valueThemeKeys": [
+            "--backdrop-invert",
+            "--invert"
+          ],
+          "hasDefaultValue": true
+        }
+      ]
+    ],
+    [
+      "saturate",
+      [
+        {
+          "values": [
+            "0",
+            "50",
+            "100",
+            "150",
+            "200"
+          ],
+          "valueThemeKeys": [
+            "--saturate"
+          ]
+        }
+      ]
+    ],
+    [
+      "backdrop-saturate",
+      [
+        {
+          "values": [
+            "0",
+            "50",
+            "100",
+            "150",
+            "200"
+          ],
+          "valueThemeKeys": [
+            "--backdrop-saturate",
+            "--saturate"
+          ]
+        }
+      ]
+    ],
+    [
+      "sepia",
+      [
+        {
+          "values": [
+            "0",
+            "50",
+            "100"
+          ],
+          "valueThemeKeys": [
+            "--sepia"
+          ],
+          "hasDefaultValue": true
+        }
+      ]
+    ],
+    [
+      "backdrop-sepia",
+      [
+        {
+          "values": [
+            "0",
+            "50",
+            "100"
+          ],
+          "valueThemeKeys": [
+            "--backdrop-sepia",
+            "--sepia"
+          ],
+          "hasDefaultValue": true
+        }
+      ]
+    ],
+    [
+      "drop-shadow",
+      [
+        {
+          "values": [
+            "current",
+            "inherit",
+            "transparent"
+          ],
+          "valueThemeKeys": [
+            "--drop-shadow-color",
+            "--color"
+          ],
+          "modifiers": [
+            "0",
+            "5",
+            "10",
+            "15",
+            "20",
+            "25",
+            "30",
+            "35",
+            "40",
+            "45",
+            "50",
+            "55",
+            "60",
+            "65",
+            "70",
+            "75",
+            "80",
+            "85",
+            "90",
+            "95",
+            "100"
+          ]
+        },
+        {
+          "valueThemeKeys": [
+            "--drop-shadow"
+          ]
+        }
+      ]
+    ],
+    [
+      "backdrop-opacity",
+      [
+        {
+          "values": [
+            "0",
+            "5",
+            "10",
+            "15",
+            "20",
+            "25",
+            "30",
+            "35",
+            "40",
+            "45",
+            "50",
+            "55",
+            "60",
+            "65",
+            "70",
+            "75",
+            "80",
+            "85",
+            "90",
+            "95",
+            "100"
+          ],
+          "valueThemeKeys": [
+            "--backdrop-opacity",
+            "--opacity"
+          ]
+        }
+      ]
+    ],
+    [
+      "transition",
+      [
+        {
+          "valueThemeKeys": [
+            "--transition-property"
+          ],
+          "hasDefaultValue": true
+        }
+      ]
+    ],
+    [
+      "delay",
+      [
+        {
+          "values": [
+            "75",
+            "100",
+            "150",
+            "200",
+            "300",
+            "500",
+            "700",
+            "1000"
+          ],
+          "valueThemeKeys": [
+            "--transition-delay"
+          ]
+        }
+      ]
+    ],
+    [
+      "duration",
+      [
+        {
+          "values": [
+            "75",
+            "100",
+            "150",
+            "200",
+            "300",
+            "500",
+            "700",
+            "1000"
+          ],
+          "valueThemeKeys": [
+            "--transition-duration"
+          ]
+        }
+      ]
+    ],
+    [
+      "ease",
+      [
+        {
+          "valueThemeKeys": [
+            "--ease"
+          ],
+          "hasDefaultValue": false
+        }
+      ]
+    ],
+    [
+      "will-change",
+      [
+        {
+          "valueThemeKeys": [],
+          "hasDefaultValue": false
+        }
+      ]
+    ],
+    [
+      "content",
+      [
+        {
+          "valueThemeKeys": [],
+          "hasDefaultValue": false
+        }
+      ]
+    ],
+    [
+      "contain",
+      [
+        {
+          "valueThemeKeys": [],
+          "hasDefaultValue": false
+        }
+      ]
+    ],
+    [
+      "leading",
+      [
+        {
+          "values": [],
+          "supportsNegative": false,
+          "supportsFractions": false,
+          "valueThemeKeys": [
+            "--leading",
+            "--spacing"
+          ],
+          "valuesWhen": {
+            "key": "--spacing",
+            "values": [
+              "0",
+              "0.5",
+              "1",
+              "1.5",
+              "2",
+              "2.5",
+              "3",
+              "3.5",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "14",
+              "16",
+              "20",
+              "24",
+              "28",
+              "32",
+              "36",
+              "40",
+              "44",
+              "48",
+              "52",
+              "56",
+              "60",
+              "64",
+              "72",
+              "80",
+              "96"
+            ]
+          }
+        }
+      ]
+    ],
+    [
+      "tracking",
+      [
+        {
+          "supportsNegative": true,
+          "valueThemeKeys": [
+            "--tracking"
+          ],
+          "hasDefaultValue": false
+        }
+      ]
+    ],
+    [
+      "outline",
+      [
+        {
+          "values": [
+            "current",
+            "inherit",
+            "transparent"
+          ],
+          "valueThemeKeys": [
+            "--outline-color",
+            "--color"
+          ],
+          "modifiers": [
+            "0",
+            "5",
+            "10",
+            "15",
+            "20",
+            "25",
+            "30",
+            "35",
+            "40",
+            "45",
+            "50",
+            "55",
+            "60",
+            "65",
+            "70",
+            "75",
+            "80",
+            "85",
+            "90",
+            "95",
+            "100"
+          ],
+          "hasDefaultValue": true
+        },
+        {
+          "values": [
+            "0",
+            "1",
+            "2",
+            "4",
+            "8"
+          ],
+          "valueThemeKeys": [
+            "--outline-width"
+          ]
+        }
+      ]
+    ],
+    [
+      "outline-offset",
+      [
+        {
+          "supportsNegative": true,
+          "values": [
+            "0",
+            "1",
+            "2",
+            "4",
+            "8"
+          ],
+          "valueThemeKeys": [
+            "--outline-offset"
+          ]
+        }
+      ]
+    ],
+    [
+      "opacity",
+      [
+        {
+          "values": [
+            "0",
+            "5",
+            "10",
+            "15",
+            "20",
+            "25",
+            "30",
+            "35",
+            "40",
+            "45",
+            "50",
+            "55",
+            "60",
+            "65",
+            "70",
+            "75",
+            "80",
+            "85",
+            "90",
+            "95",
+            "100"
+          ],
+          "valueThemeKeys": [
+            "--opacity"
+          ]
+        }
+      ]
+    ],
+    [
+      "underline-offset",
+      [
+        {
+          "supportsNegative": true,
+          "values": [
+            "0",
+            "1",
+            "2",
+            "4",
+            "8"
+          ],
+          "valueThemeKeys": [
+            "--text-underline-offset"
+          ]
+        }
+      ]
+    ],
+    [
+      "text",
+      [
+        {
+          "values": [
+            "current",
+            "inherit",
+            "transparent"
+          ],
+          "valueThemeKeys": [
+            "--text-color",
+            "--color"
+          ],
+          "modifiers": [
+            "0",
+            "5",
+            "10",
+            "15",
+            "20",
+            "25",
+            "30",
+            "35",
+            "40",
+            "45",
+            "50",
+            "55",
+            "60",
+            "65",
+            "70",
+            "75",
+            "80",
+            "85",
+            "90",
+            "95",
+            "100"
+          ]
+        },
+        {
+          "values": [],
+          "valueThemeKeys": [
+            "--text"
+          ],
+          "modifiers": [],
+          "modifierThemeKeys": [
+            "--leading"
+          ]
+        }
+      ]
+    ],
+    [
+      "text-shadow",
+      [
+        {
+          "values": [
+            "current",
+            "inherit",
+            "transparent"
+          ],
+          "valueThemeKeys": [
+            "--text-shadow-color",
+            "--color"
+          ],
+          "modifiers": [
+            "0",
+            "5",
+            "10",
+            "15",
+            "20",
+            "25",
+            "30",
+            "35",
+            "40",
+            "45",
+            "50",
+            "55",
+            "60",
+            "65",
+            "70",
+            "75",
+            "80",
+            "85",
+            "90",
+            "95",
+            "100"
+          ]
+        },
+        {
+          "values": [
+            "none"
+          ]
+        },
+        {
+          "valueThemeKeys": [
+            "--text-shadow"
+          ],
+          "modifiers": [
+            "0",
+            "5",
+            "10",
+            "15",
+            "20",
+            "25",
+            "30",
+            "35",
+            "40",
+            "45",
+            "50",
+            "55",
+            "60",
+            "65",
+            "70",
+            "75",
+            "80",
+            "85",
+            "90",
+            "95",
+            "100"
+          ],
+          "hasDefaultValue": false,
+          "defaultWhen": "--text-shadow"
+        }
+      ]
+    ],
+    [
+      "shadow",
+      [
+        {
+          "values": [
+            "current",
+            "inherit",
+            "transparent"
+          ],
+          "valueThemeKeys": [
+            "--box-shadow-color",
+            "--color"
+          ],
+          "modifiers": [
+            "0",
+            "5",
+            "10",
+            "15",
+            "20",
+            "25",
+            "30",
+            "35",
+            "40",
+            "45",
+            "50",
+            "55",
+            "60",
+            "65",
+            "70",
+            "75",
+            "80",
+            "85",
+            "90",
+            "95",
+            "100"
+          ]
+        },
+        {
+          "values": [
+            "none"
+          ]
+        },
+        {
+          "valueThemeKeys": [
+            "--shadow"
+          ],
+          "modifiers": [
+            "0",
+            "5",
+            "10",
+            "15",
+            "20",
+            "25",
+            "30",
+            "35",
+            "40",
+            "45",
+            "50",
+            "55",
+            "60",
+            "65",
+            "70",
+            "75",
+            "80",
+            "85",
+            "90",
+            "95",
+            "100"
+          ],
+          "hasDefaultValue": false,
+          "defaultWhen": "--shadow"
+        }
+      ]
+    ],
+    [
+      "inset-shadow",
+      [
+        {
+          "values": [
+            "current",
+            "inherit",
+            "transparent"
+          ],
+          "valueThemeKeys": [
+            "--box-shadow-color",
+            "--color"
+          ],
+          "modifiers": [
+            "0",
+            "5",
+            "10",
+            "15",
+            "20",
+            "25",
+            "30",
+            "35",
+            "40",
+            "45",
+            "50",
+            "55",
+            "60",
+            "65",
+            "70",
+            "75",
+            "80",
+            "85",
+            "90",
+            "95",
+            "100"
+          ]
+        },
+        {
+          "values": [
+            "none"
+          ]
+        },
+        {
+          "valueThemeKeys": [
+            "--inset-shadow"
+          ],
+          "modifiers": [
+            "0",
+            "5",
+            "10",
+            "15",
+            "20",
+            "25",
+            "30",
+            "35",
+            "40",
+            "45",
+            "50",
+            "55",
+            "60",
+            "65",
+            "70",
+            "75",
+            "80",
+            "85",
+            "90",
+            "95",
+            "100"
+          ],
+          "hasDefaultValue": false,
+          "defaultWhen": "--inset-shadow"
+        }
+      ]
+    ],
+    [
+      "ring",
+      [
+        {
+          "values": [
+            "current",
+            "inherit",
+            "transparent"
+          ],
+          "valueThemeKeys": [
+            "--ring-color",
+            "--color"
+          ],
+          "modifiers": [
+            "0",
+            "5",
+            "10",
+            "15",
+            "20",
+            "25",
+            "30",
+            "35",
+            "40",
+            "45",
+            "50",
+            "55",
+            "60",
+            "65",
+            "70",
+            "75",
+            "80",
+            "85",
+            "90",
+            "95",
+            "100"
+          ]
+        },
+        {
+          "values": [
+            "0",
+            "1",
+            "2",
+            "4",
+            "8"
+          ],
+          "valueThemeKeys": [
+            "--ring-width"
+          ],
+          "hasDefaultValue": true
+        }
+      ]
+    ],
+    [
+      "inset-ring",
+      [
+        {
+          "values": [
+            "current",
+            "inherit",
+            "transparent"
+          ],
+          "valueThemeKeys": [
+            "--ring-color",
+            "--color"
+          ],
+          "modifiers": [
+            "0",
+            "5",
+            "10",
+            "15",
+            "20",
+            "25",
+            "30",
+            "35",
+            "40",
+            "45",
+            "50",
+            "55",
+            "60",
+            "65",
+            "70",
+            "75",
+            "80",
+            "85",
+            "90",
+            "95",
+            "100"
+          ]
+        },
+        {
+          "values": [
+            "0",
+            "1",
+            "2",
+            "4",
+            "8"
+          ],
+          "valueThemeKeys": [
+            "--ring-width"
+          ],
+          "hasDefaultValue": true
+        }
+      ]
+    ],
+    [
+      "ring-offset",
+      [
+        {
+          "values": [
+            "current",
+            "inherit",
+            "transparent"
+          ],
+          "valueThemeKeys": [
+            "--ring-offset-color",
+            "--color"
+          ],
+          "modifiers": [
+            "0",
+            "5",
+            "10",
+            "15",
+            "20",
+            "25",
+            "30",
+            "35",
+            "40",
+            "45",
+            "50",
+            "55",
+            "60",
+            "65",
+            "70",
+            "75",
+            "80",
+            "85",
+            "90",
+            "95",
+            "100"
+          ]
+        },
+        {
+          "values": [
+            "0",
+            "1",
+            "2",
+            "4",
+            "8"
+          ],
+          "valueThemeKeys": [
+            "--ring-offset-width"
+          ]
+        }
+      ]
+    ],
+    [
+      "@container",
+      [
+        {
+          "values": [
+            "normal"
+          ],
+          "valueThemeKeys": [],
+          "hasDefaultValue": true
+        }
+      ]
+    ]
+  ]
+}

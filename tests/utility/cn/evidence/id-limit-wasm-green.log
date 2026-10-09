@@ -1,0 +1,13 @@
+{
+  "mode": "wasm",
+  "tokens": 2097152,
+  "utf16Units": 26151865,
+  "expected": {
+    "name": "Error",
+    "message": "cn: too many distinct classes in one merge"
+  },
+  "actual": {
+    "name": "Error",
+    "message": "cn: too many distinct classes in one merge"
+  }
+}

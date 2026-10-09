@@ -1,0 +1,33 @@
+mbx[warning]: Unix-domain cache session listener unavailable; using FIFO transport: failed to bind cache session listener at /var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/mbx-session-dVlV6r/cache-agent.sock: Operation not permitted (os error 1)
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+error[E0433]: cannot find `candidate` in `super`
+    --> crates/rustify-style/src/compiler/custom_utilities.rs:1294:24
+     |
+1294 |                 super::candidate::escape_text(&concat_text(&[&namespace, &"-card".into()])),
+     |                        ^^^^^^^^^ could not find `candidate` in `super`
+     |
+help: a struct with a similar name exists (notice the capitalization)
+     |
+1294 -                 super::candidate::escape_text(&concat_text(&[&namespace, &"-card".into()])),
+1294 +                 super::Candidate::escape_text(&concat_text(&[&namespace, &"-card".into()])),
+     |
+help: consider importing this module
+     |
+1247 +     use crate::compiler::candidate;
+     |
+help: if you import `candidate`, refer to it directly
+     |
+1294 -                 super::candidate::escape_text(&concat_text(&[&namespace, &"-card".into()])),
+1294 +                 candidate::escape_text(&concat_text(&[&namespace, &"-card".into()])),
+     |
+
+For more information about this error, try `rustc --explain E0433`.
+error: could not compile `rustify-style` (lib test) due to 1 previous error
+mbx[cache]: 0 hits, 1 misses; 0 B downloaded, 0 B uploaded, 0 B stored locally

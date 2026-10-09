@@ -1,0 +1,34 @@
+{
+  "sourceHashesVerified": 20,
+  "evidenceFilesVerified": 38,
+  "artifactsVerified": 2,
+  "browserProductsVerified": 2,
+  "configurationCopiesVerified": 21,
+  "native": 367,
+  "ownership": {
+    "cases": 7,
+    "entryComparisons": 14,
+    "passed": 12,
+    "failures": 2,
+    "diagnostics": [
+      {
+        "name": "authored-success-before-failure",
+        "mode": "sync"
+      },
+      {
+        "name": "authored-success-before-failure",
+        "mode": "async"
+      }
+    ],
+    "defaultGate": false,
+    "log": "raw-theme-ownership-final-red.log"
+  },
+  "browserTests": 87,
+  "benchmarkShapes": [
+    "5fd45470353f800d2e198fad88da86ae25dd6d8ba7ca5f46232ceedebe529c89"
+  ],
+  "upstreamRuntimeAssertionsAndExclusions": 0,
+  "goalStatus": "active",
+  "progress": "3/7",
+  "docs": "no errors"
+}

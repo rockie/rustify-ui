@@ -1,0 +1,22 @@
+mbx[warning]: Unix-domain cache session listener unavailable; using FIFO transport: failed to bind cache session listener at /var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/mbx-session-t7EwTe/cache-agent.sock: Operation not permitted (os error 1)
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-ui v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.77s
+warning: the following packages contain code that will be rejected by a future version of Rust: proc-macro-error2 v2.0.1
+note: to see what the problems were, use the option `--future-incompat-report`, or run `cargo report future-incompatibilities --id 1`
+     Running unittests src/lib.rs (/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-utf16-verified-54mkl3kq/cargo-target/debug/deps/rustify_ui-c3caf73793b24f4e)
+
+running 3 tests
+test utility::state::tests::utility_error_range_message_decodes_original_lone_units_in_both_field_orders ... ok
+test utility::state::tests::utility_error_scalar_variants_keep_existing_json_schema_and_required_fields ... ok
+test utility::state::tests::utility_error_syntax_message_decodes_original_lone_units_in_both_field_orders ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 295 filtered out; finished in 0.00s
+
+mbx[cache]: 0 hits, 1 misses; 0 B downloaded, 0 B uploaded, 12.0 MiB stored locally

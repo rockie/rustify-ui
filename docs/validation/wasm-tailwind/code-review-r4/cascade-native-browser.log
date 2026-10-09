@@ -1,0 +1,1358 @@
+{
+  "browser": "154.0.8037.98",
+  "cases": [
+    {
+      "id": "outside-override",
+      "versions": {
+        "raw": {
+          "motion": {
+            "variable": "",
+            "name": "card",
+            "timing": "ease",
+            "duration": "10s",
+            "iteration": "infinite",
+            "count": 1,
+            "lastOpacity": "0.3",
+            "transition": "ease",
+            "font": "Times"
+          },
+          "plain": {
+            "variable": "",
+            "name": "none",
+            "timing": "ease",
+            "duration": "0s",
+            "iteration": "1",
+            "count": 0,
+            "transition": "ease",
+            "font": "serif"
+          },
+          "other": {
+            "variable": "",
+            "name": "none",
+            "timing": "ease",
+            "duration": "0s",
+            "iteration": "1",
+            "count": 0,
+            "transition": "ease",
+            "font": "Times"
+          }
+        },
+        "r3": {
+          "motion": {
+            "variable": "",
+            "name": "rustify-review-r4-card",
+            "timing": "ease",
+            "duration": "10s",
+            "iteration": "infinite",
+            "count": 1,
+            "lastOpacity": "0.3",
+            "transition": "ease",
+            "font": "Times"
+          },
+          "plain": {
+            "variable": "",
+            "name": "none",
+            "timing": "ease",
+            "duration": "0s",
+            "iteration": "1",
+            "count": 0,
+            "transition": "ease",
+            "font": "serif"
+          },
+          "other": {
+            "variable": "",
+            "name": "none",
+            "timing": "ease",
+            "duration": "0s",
+            "iteration": "1",
+            "count": 0,
+            "transition": "ease",
+            "font": "Times"
+          }
+        },
+        "r4": {
+          "motion": {
+            "variable": "",
+            "name": "rustify-review-r4-card",
+            "timing": "ease",
+            "duration": "10s",
+            "iteration": "infinite",
+            "count": 1,
+            "lastOpacity": "0.3",
+            "transition": "ease",
+            "font": "Times"
+          },
+          "plain": {
+            "variable": "",
+            "name": "none",
+            "timing": "ease",
+            "duration": "0s",
+            "iteration": "1",
+            "count": 0,
+            "transition": "ease",
+            "font": "card"
+          },
+          "other": {
+            "variable": "",
+            "name": "none",
+            "timing": "ease",
+            "duration": "0s",
+            "iteration": "1",
+            "count": 0,
+            "transition": "ease",
+            "font": "Times"
+          }
+        }
+      }
+    },
+    {
+      "id": "cascade-inherit",
+      "versions": {
+        "raw": {
+          "motion": {
+            "variable": "",
+            "name": "card",
+            "timing": "linear",
+            "duration": "10s",
+            "iteration": "infinite",
+            "count": 1,
+            "lastOpacity": "0",
+            "transition": "ease",
+            "font": "Times"
+          },
+          "plain": {
+            "variable": "",
+            "name": "none",
+            "timing": "ease",
+            "duration": "0s",
+            "iteration": "1",
+            "count": 0,
+            "transition": "ease",
+            "font": "Times"
+          },
+          "other": {
+            "variable": "",
+            "name": "linear",
+            "timing": "ease",
+            "duration": "10s",
+            "iteration": "1",
+            "count": 1,
+            "lastOpacity": "0.5",
+            "transition": "ease",
+            "font": "Times"
+          }
+        },
+        "r3": {
+          "motion": {
+            "variable": "",
+            "name": "none",
+            "timing": "ease",
+            "duration": "0s",
+            "iteration": "1",
+            "count": 0,
+            "transition": "ease",
+            "font": "Times"
+          },
+          "plain": {
+            "variable": "",
+            "name": "none",
+            "timing": "ease",
+            "duration": "0s",
+            "iteration": "1",
+            "count": 0,
+            "transition": "ease",
+            "font": "Times"
+          },
+          "other": {
+            "variable": "",
+            "name": "rustify-review-r4-linear",
+            "timing": "ease",
+            "duration": "10s",
+            "iteration": "1",
+            "count": 1,
+            "lastOpacity": "0.5",
+            "transition": "ease",
+            "font": "Times"
+          }
+        },
+        "r4": {
+          "motion": {
+            "variable": "",
+            "name": "rustify-review-r4-card",
+            "timing": "linear",
+            "duration": "10s",
+            "iteration": "infinite",
+            "count": 1,
+            "lastOpacity": "0",
+            "transition": "ease",
+            "font": "Times"
+          },
+          "plain": {
+            "variable": "",
+            "name": "none",
+            "timing": "ease",
+            "duration": "0s",
+            "iteration": "1",
+            "count": 0,
+            "transition": "ease",
+            "font": "Times"
+          },
+          "other": {
+            "variable": "",
+            "name": "rustify-review-r4-linear",
+            "timing": "ease",
+            "duration": "10s",
+            "iteration": "1",
+            "count": 1,
+            "lastOpacity": "0.5",
+            "transition": "ease",
+            "font": "Times"
+          }
+        }
+      }
+    },
+    {
+      "id": "global-keyword",
+      "versions": {
+        "raw": {
+          "motion": {
+            "variable": "",
+            "name": "card",
+            "timing": "ease",
+            "duration": "10s",
+            "iteration": "1",
+            "count": 1,
+            "lastOpacity": "0.3",
+            "transition": "ease",
+            "font": "Times"
+          },
+          "plain": {
+            "variable": "",
+            "name": "none",
+            "timing": "ease",
+            "duration": "0s",
+            "iteration": "1",
+            "count": 0,
+            "transition": "ease",
+            "font": "Times"
+          },
+          "other": {
+            "variable": "",
+            "name": "none",
+            "timing": "ease",
+            "duration": "0s",
+            "iteration": "1",
+            "count": 0,
+            "transition": "ease",
+            "font": "Times"
+          }
+        },
+        "r3": {
+          "motion": {
+            "variable": "",
+            "name": "rustify-review-r4-card",
+            "timing": "ease",
+            "duration": "10s",
+            "iteration": "1",
+            "count": 1,
+            "lastOpacity": "0.3",
+            "transition": "ease",
+            "font": "Times"
+          },
+          "plain": {
+            "variable": "",
+            "name": "none",
+            "timing": "ease",
+            "duration": "0s",
+            "iteration": "1",
+            "count": 0,
+            "transition": "ease",
+            "font": "Times"
+          },
+          "other": {
+            "variable": "",
+            "name": "none",
+            "timing": "ease",
+            "duration": "0s",
+            "iteration": "1",
+            "count": 0,
+            "transition": "ease",
+            "font": "Times"
+          }
+        },
+        "r4": {
+          "motion": {
+            "variable": "",
+            "name": "rustify-review-r4-card",
+            "timing": "ease",
+            "duration": "10s",
+            "iteration": "1",
+            "count": 1,
+            "lastOpacity": "0.3",
+            "transition": "ease",
+            "font": "Times"
+          },
+          "plain": {
+            "variable": "",
+            "name": "none",
+            "timing": "ease",
+            "duration": "0s",
+            "iteration": "1",
+            "count": 0,
+            "transition": "ease",
+            "font": "Times"
+          },
+          "other": {
+            "variable": "",
+            "name": "none",
+            "timing": "ease",
+            "duration": "0s",
+            "iteration": "1",
+            "count": 0,
+            "transition": "ease",
+            "font": "Times"
+          }
+        }
+      }
+    },
+    {
+      "id": "none-name",
+      "versions": {
+        "raw": {
+          "motion": {
+            "variable": "",
+            "name": "none",
+            "timing": "ease",
+            "duration": "10s",
+            "iteration": "1",
+            "count": 0,
+            "transition": "ease",
+            "font": "Times"
+          },
+          "plain": {
+            "variable": "",
+            "name": "none",
+            "timing": "ease",
+            "duration": "0s",
+            "iteration": "1",
+            "count": 0,
+            "transition": "ease",
+            "font": "Times"
+          },
+          "other": {
+            "variable": "",
+            "name": "none",
+            "timing": "ease",
+            "duration": "0s",
+            "iteration": "1",
+            "count": 0,
+            "transition": "ease",
+            "font": "Times"
+          }
+        },
+        "r3": {
+          "motion": {
+            "variable": "",
+            "name": "rustify-review-r4-none",
+            "timing": "ease",
+            "duration": "10s",
+            "iteration": "1",
+            "count": 1,
+            "lastOpacity": "0.3",
+            "transition": "ease",
+            "font": "Times"
+          },
+          "plain": {
+            "variable": "",
+            "name": "none",
+            "timing": "ease",
+            "duration": "0s",
+            "iteration": "1",
+            "count": 0,
+            "transition": "ease",
+            "font": "Times"
+          },
+          "other": {
+            "variable": "",
+            "name": "none",
+            "timing": "ease",
+            "duration": "0s",
+            "iteration": "1",
+            "count": 0,
+            "transition": "ease",
+            "font": "Times"
+          }
+        },
+        "r4": {
+          "motion": {
+            "variable": "",
+            "name": "rustify-review-r4-none",
+            "timing": "ease",
+            "duration": "10s",
+            "iteration": "1",
+            "count": 1,
+            "lastOpacity": "0.3",
+            "transition": "ease",
+            "font": "Times"
+          },
+          "plain": {
+            "variable": "",
+            "name": "none",
+            "timing": "ease",
+            "duration": "0s",
+            "iteration": "1",
+            "count": 0,
+            "transition": "ease",
+            "font": "Times"
+          },
+          "other": {
+            "variable": "",
+            "name": "none",
+            "timing": "ease",
+            "duration": "0s",
+            "iteration": "1",
+            "count": 0,
+            "transition": "ease",
+            "font": "Times"
+          }
+        }
+      }
+    },
+    {
+      "id": "default-registered",
+      "versions": {
+        "raw": {
+          "motion": {
+            "variable": "",
+            "name": "linear",
+            "timing": "ease",
+            "duration": "10s",
+            "iteration": "1",
+            "count": 1,
+            "lastOpacity": "0.3",
+            "transition": "ease",
+            "font": "Times"
+          },
+          "plain": {
+            "variable": "",
+            "name": "none",
+            "timing": "ease",
+            "duration": "0s",
+            "iteration": "1",
+            "count": 0,
+            "transition": "ease",
+            "font": "Times"
+          },
+          "other": {
+            "variable": "",
+            "name": "none",
+            "timing": "ease",
+            "duration": "0s",
+            "iteration": "1",
+            "count": 0,
+            "transition": "ease",
+            "font": "Times"
+          }
+        },
+        "r3": {
+          "motion": {
+            "variable": "",
+            "name": "linear",
+            "timing": "ease",
+            "duration": "10s",
+            "iteration": "1",
+            "count": 0,
+            "transition": "ease",
+            "font": "Times"
+          },
+          "plain": {
+            "variable": "",
+            "name": "none",
+            "timing": "ease",
+            "duration": "0s",
+            "iteration": "1",
+            "count": 0,
+            "transition": "ease",
+            "font": "Times"
+          },
+          "other": {
+            "variable": "",
+            "name": "none",
+            "timing": "ease",
+            "duration": "0s",
+            "iteration": "1",
+            "count": 0,
+            "transition": "ease",
+            "font": "Times"
+          }
+        },
+        "r4": {
+          "motion": {
+            "variable": "",
+            "name": "linear",
+            "timing": "ease",
+            "duration": "10s",
+            "iteration": "1",
+            "count": 0,
+            "transition": "ease",
+            "font": "Times"
+          },
+          "plain": {
+            "variable": "",
+            "name": "none",
+            "timing": "ease",
+            "duration": "0s",
+            "iteration": "1",
+            "count": 0,
+            "transition": "ease",
+            "font": "Times"
+          },
+          "other": {
+            "variable": "",
+            "name": "none",
+            "timing": "ease",
+            "duration": "0s",
+            "iteration": "1",
+            "count": 0,
+            "transition": "ease",
+            "font": "Times"
+          }
+        }
+      }
+    },
+    {
+      "id": "multi-inherit",
+      "versions": {
+        "raw": {
+          "motion": {
+            "variable": "linear",
+            "name": "linear",
+            "timing": "ease",
+            "duration": "10s",
+            "iteration": "1",
+            "count": 1,
+            "lastOpacity": "0.5",
+            "transition": "ease",
+            "font": "Times"
+          },
+          "plain": {
+            "variable": "linear",
+            "name": "none",
+            "timing": "ease",
+            "duration": "0s",
+            "iteration": "1",
+            "count": 0,
+            "transition": "ease",
+            "font": "Times"
+          },
+          "other": {
+            "variable": "ease-in",
+            "name": "none",
+            "timing": "ease",
+            "duration": "0s",
+            "iteration": "1",
+            "count": 0,
+            "transition": "ease-in",
+            "font": "Times"
+          }
+        },
+        "r3": {
+          "motion": {
+            "variable": "rustify-review-r4-linear",
+            "name": "rustify-review-r4-linear",
+            "timing": "ease",
+            "duration": "10s",
+            "iteration": "1",
+            "count": 1,
+            "lastOpacity": "0.5",
+            "transition": "ease",
+            "font": "Times"
+          },
+          "plain": {
+            "variable": "rustify-review-r4-linear",
+            "name": "none",
+            "timing": "ease",
+            "duration": "0s",
+            "iteration": "1",
+            "count": 0,
+            "transition": "ease",
+            "font": "Times"
+          },
+          "other": {
+            "variable": "ease-in",
+            "name": "none",
+            "timing": "ease",
+            "duration": "0s",
+            "iteration": "1",
+            "count": 0,
+            "transition": "ease-in",
+            "font": "Times"
+          }
+        },
+        "r4": {
+          "motion": {
+            "variable": "rustify-review-r4-linear",
+            "name": "rustify-review-r4-linear",
+            "timing": "ease",
+            "duration": "10s",
+            "iteration": "1",
+            "count": 1,
+            "lastOpacity": "0.5",
+            "transition": "ease",
+            "font": "Times"
+          },
+          "plain": {
+            "variable": "rustify-review-r4-linear",
+            "name": "none",
+            "timing": "ease",
+            "duration": "0s",
+            "iteration": "1",
+            "count": 0,
+            "transition": "ease",
+            "font": "Times"
+          },
+          "other": {
+            "variable": "ease-in",
+            "name": "none",
+            "timing": "ease",
+            "duration": "0s",
+            "iteration": "1",
+            "count": 0,
+            "transition": "linear",
+            "font": "Times"
+          }
+        }
+      }
+    },
+    {
+      "id": "var-timing-overridden",
+      "versions": {
+        "raw": {
+          "motion": {
+            "variable": "linear",
+            "name": "card",
+            "timing": "linear",
+            "duration": "10s",
+            "iteration": "infinite",
+            "count": 1,
+            "lastOpacity": "0.3",
+            "transition": "ease",
+            "font": "Times"
+          },
+          "plain": {
+            "variable": "linear",
+            "name": "none",
+            "timing": "ease",
+            "duration": "0s",
+            "iteration": "1",
+            "count": 0,
+            "transition": "ease",
+            "font": "Times"
+          },
+          "other": {
+            "variable": "linear",
+            "name": "linear",
+            "timing": "ease",
+            "duration": "10s",
+            "iteration": "1",
+            "count": 1,
+            "lastOpacity": "0.5",
+            "transition": "ease",
+            "font": "Times"
+          }
+        },
+        "r3": {
+          "motion": {
+            "variable": "rustify-review-r4-linear",
+            "name": "none",
+            "timing": "ease",
+            "duration": "0s",
+            "iteration": "1",
+            "count": 0,
+            "transition": "ease",
+            "font": "Times"
+          },
+          "plain": {
+            "variable": "rustify-review-r4-linear",
+            "name": "none",
+            "timing": "ease",
+            "duration": "0s",
+            "iteration": "1",
+            "count": 0,
+            "transition": "ease",
+            "font": "Times"
+          },
+          "other": {
+            "variable": "rustify-review-r4-linear",
+            "name": "rustify-review-r4-linear",
+            "timing": "ease",
+            "duration": "10s",
+            "iteration": "1",
+            "count": 1,
+            "lastOpacity": "0.5",
+            "transition": "ease",
+            "font": "Times"
+          }
+        },
+        "r4": {
+          "motion": {
+            "variable": "linear",
+            "name": "rustify-review-r4-card",
+            "timing": "linear",
+            "duration": "10s",
+            "iteration": "infinite",
+            "count": 1,
+            "lastOpacity": "0.3",
+            "transition": "ease",
+            "font": "Times"
+          },
+          "plain": {
+            "variable": "linear",
+            "name": "none",
+            "timing": "ease",
+            "duration": "0s",
+            "iteration": "1",
+            "count": 0,
+            "transition": "ease",
+            "font": "Times"
+          },
+          "other": {
+            "variable": "linear",
+            "name": "rustify-review-r4-linear",
+            "timing": "ease",
+            "duration": "10s",
+            "iteration": "1",
+            "count": 1,
+            "lastOpacity": "0.5",
+            "transition": "ease",
+            "font": "Times"
+          }
+        }
+      }
+    },
+    {
+      "id": "cycle-fallback",
+      "versions": {
+        "raw": {
+          "motion": {
+            "variable": "",
+            "name": "card",
+            "timing": "linear",
+            "duration": "10s",
+            "iteration": "1",
+            "count": 1,
+            "lastOpacity": "0.3",
+            "transition": "ease",
+            "font": "Times"
+          },
+          "plain": {
+            "variable": "",
+            "name": "none",
+            "timing": "ease",
+            "duration": "0s",
+            "iteration": "1",
+            "count": 0,
+            "transition": "ease",
+            "font": "Times"
+          },
+          "other": {
+            "variable": "",
+            "name": "none",
+            "timing": "ease",
+            "duration": "0s",
+            "iteration": "1",
+            "count": 0,
+            "transition": "ease",
+            "font": "Times"
+          }
+        },
+        "r3": {
+          "motion": {
+            "variable": "",
+            "name": "rustify-review-r4-card",
+            "timing": "linear",
+            "duration": "10s",
+            "iteration": "1",
+            "count": 1,
+            "lastOpacity": "0.3",
+            "transition": "ease",
+            "font": "Times"
+          },
+          "plain": {
+            "variable": "",
+            "name": "none",
+            "timing": "ease",
+            "duration": "0s",
+            "iteration": "1",
+            "count": 0,
+            "transition": "ease",
+            "font": "Times"
+          },
+          "other": {
+            "variable": "",
+            "name": "none",
+            "timing": "ease",
+            "duration": "0s",
+            "iteration": "1",
+            "count": 0,
+            "transition": "ease",
+            "font": "Times"
+          }
+        },
+        "r4": {
+          "motion": {
+            "variable": "",
+            "name": "rustify-review-r4-card",
+            "timing": "linear",
+            "duration": "10s",
+            "iteration": "1",
+            "count": 1,
+            "lastOpacity": "0.3",
+            "transition": "ease",
+            "font": "Times"
+          },
+          "plain": {
+            "variable": "",
+            "name": "none",
+            "timing": "ease",
+            "duration": "0s",
+            "iteration": "1",
+            "count": 0,
+            "transition": "ease",
+            "font": "Times"
+          },
+          "other": {
+            "variable": "",
+            "name": "none",
+            "timing": "ease",
+            "duration": "0s",
+            "iteration": "1",
+            "count": 0,
+            "transition": "ease",
+            "font": "Times"
+          }
+        }
+      }
+    },
+    {
+      "id": "inherited-keyframe",
+      "versions": {
+        "raw": {
+          "motion": {
+            "variable": "card",
+            "name": "card",
+            "timing": "ease",
+            "duration": "10s",
+            "iteration": "1",
+            "count": 1,
+            "lastOpacity": "0.3",
+            "transition": "ease",
+            "font": "Times"
+          },
+          "plain": {
+            "variable": "card",
+            "name": "none",
+            "timing": "ease",
+            "duration": "0s",
+            "iteration": "1",
+            "count": 0,
+            "transition": "ease",
+            "font": "Times"
+          },
+          "other": {
+            "variable": "card",
+            "name": "none",
+            "timing": "ease",
+            "duration": "0s",
+            "iteration": "1",
+            "count": 0,
+            "transition": "ease",
+            "font": "Times"
+          }
+        },
+        "r3": {
+          "motion": {
+            "variable": "rustify-review-r4-card",
+            "name": "rustify-review-r4-card",
+            "timing": "ease",
+            "duration": "10s",
+            "iteration": "1",
+            "count": 1,
+            "lastOpacity": "0.3",
+            "transition": "ease",
+            "font": "Times"
+          },
+          "plain": {
+            "variable": "rustify-review-r4-card",
+            "name": "none",
+            "timing": "ease",
+            "duration": "0s",
+            "iteration": "1",
+            "count": 0,
+            "transition": "ease",
+            "font": "Times"
+          },
+          "other": {
+            "variable": "rustify-review-r4-card",
+            "name": "none",
+            "timing": "ease",
+            "duration": "0s",
+            "iteration": "1",
+            "count": 0,
+            "transition": "ease",
+            "font": "Times"
+          }
+        },
+        "r4": {
+          "motion": {
+            "variable": "rustify-review-r4-card",
+            "name": "rustify-review-r4-card",
+            "timing": "ease",
+            "duration": "10s",
+            "iteration": "1",
+            "count": 1,
+            "lastOpacity": "0.3",
+            "transition": "ease",
+            "font": "Times"
+          },
+          "plain": {
+            "variable": "rustify-review-r4-card",
+            "name": "none",
+            "timing": "ease",
+            "duration": "0s",
+            "iteration": "1",
+            "count": 0,
+            "transition": "ease",
+            "font": "Times"
+          },
+          "other": {
+            "variable": "rustify-review-r4-card",
+            "name": "none",
+            "timing": "ease",
+            "duration": "0s",
+            "iteration": "1",
+            "count": 0,
+            "transition": "ease",
+            "font": "Times"
+          }
+        }
+      }
+    },
+    {
+      "id": "alias-mixed",
+      "versions": {
+        "raw": {
+          "motion": {
+            "variable": "linear",
+            "name": "linear",
+            "timing": "ease",
+            "duration": "10s",
+            "iteration": "1",
+            "count": 1,
+            "lastOpacity": "0.3",
+            "transition": "ease",
+            "font": "Times"
+          },
+          "plain": {
+            "variable": "linear",
+            "name": "none",
+            "timing": "ease",
+            "duration": "0s",
+            "iteration": "1",
+            "count": 0,
+            "transition": "ease",
+            "font": "Times"
+          },
+          "other": {
+            "variable": "ease-in",
+            "name": "none",
+            "timing": "ease",
+            "duration": "0s",
+            "iteration": "1",
+            "count": 0,
+            "transition": "linear",
+            "font": "Times"
+          }
+        },
+        "r3": {
+          "motion": {
+            "variable": "rustify-review-r4-linear",
+            "name": "rustify-review-r4-linear",
+            "timing": "ease",
+            "duration": "10s",
+            "iteration": "1",
+            "count": 1,
+            "lastOpacity": "0.3",
+            "transition": "ease",
+            "font": "Times"
+          },
+          "plain": {
+            "variable": "rustify-review-r4-linear",
+            "name": "none",
+            "timing": "ease",
+            "duration": "0s",
+            "iteration": "1",
+            "count": 0,
+            "transition": "ease",
+            "font": "Times"
+          },
+          "other": {
+            "variable": "ease-in",
+            "name": "none",
+            "timing": "ease",
+            "duration": "0s",
+            "iteration": "1",
+            "count": 0,
+            "transition": "ease",
+            "font": "Times"
+          }
+        },
+        "r4": {
+          "motion": {
+            "variable": "rustify-review-r4-linear",
+            "name": "rustify-review-r4-linear",
+            "timing": "ease",
+            "duration": "10s",
+            "iteration": "1",
+            "count": 1,
+            "lastOpacity": "0.3",
+            "transition": "ease",
+            "font": "Times"
+          },
+          "plain": {
+            "variable": "rustify-review-r4-linear",
+            "name": "none",
+            "timing": "ease",
+            "duration": "0s",
+            "iteration": "1",
+            "count": 0,
+            "transition": "ease",
+            "font": "Times"
+          },
+          "other": {
+            "variable": "ease-in",
+            "name": "none",
+            "timing": "ease",
+            "duration": "0s",
+            "iteration": "1",
+            "count": 0,
+            "transition": "linear",
+            "font": "Times"
+          }
+        }
+      }
+    },
+    {
+      "id": "public-inline-consumer",
+      "versions": {
+        "raw": {
+          "motion": {
+            "variable": "linear",
+            "name": "linear",
+            "timing": "ease",
+            "duration": "10s",
+            "iteration": "1",
+            "count": 1,
+            "lastOpacity": "0.3",
+            "transition": "ease",
+            "font": "Times"
+          },
+          "plain": {
+            "variable": "linear",
+            "name": "none",
+            "timing": "ease",
+            "duration": "0s",
+            "iteration": "1",
+            "count": 0,
+            "transition": "linear",
+            "font": "Times"
+          },
+          "other": {
+            "variable": "linear",
+            "name": "none",
+            "timing": "ease",
+            "duration": "0s",
+            "iteration": "1",
+            "count": 0,
+            "transition": "ease",
+            "font": "Times"
+          }
+        },
+        "r3": {
+          "motion": {
+            "variable": "rustify-review-r4-linear",
+            "name": "rustify-review-r4-linear",
+            "timing": "ease",
+            "duration": "10s",
+            "iteration": "1",
+            "count": 1,
+            "lastOpacity": "0.3",
+            "transition": "ease",
+            "font": "Times"
+          },
+          "plain": {
+            "variable": "rustify-review-r4-linear",
+            "name": "none",
+            "timing": "ease",
+            "duration": "0s",
+            "iteration": "1",
+            "count": 0,
+            "transition": "ease",
+            "font": "Times"
+          },
+          "other": {
+            "variable": "rustify-review-r4-linear",
+            "name": "none",
+            "timing": "ease",
+            "duration": "0s",
+            "iteration": "1",
+            "count": 0,
+            "transition": "ease",
+            "font": "Times"
+          }
+        },
+        "r4": {
+          "motion": {
+            "variable": "rustify-review-r4-linear",
+            "name": "rustify-review-r4-linear",
+            "timing": "ease",
+            "duration": "10s",
+            "iteration": "1",
+            "count": 1,
+            "lastOpacity": "0.3",
+            "transition": "ease",
+            "font": "Times"
+          },
+          "plain": {
+            "variable": "rustify-review-r4-linear",
+            "name": "none",
+            "timing": "ease",
+            "duration": "0s",
+            "iteration": "1",
+            "count": 0,
+            "transition": "ease",
+            "font": "Times"
+          },
+          "other": {
+            "variable": "rustify-review-r4-linear",
+            "name": "none",
+            "timing": "ease",
+            "duration": "0s",
+            "iteration": "1",
+            "count": 0,
+            "transition": "ease",
+            "font": "Times"
+          }
+        }
+      }
+    },
+    {
+      "id": "external-disable-name",
+      "versions": {
+        "raw": {
+          "motion": {
+            "variable": "linear",
+            "name": "card",
+            "timing": "linear",
+            "duration": "10s",
+            "iteration": "infinite",
+            "count": 1,
+            "lastOpacity": "0.3",
+            "transition": "ease",
+            "font": "Times"
+          },
+          "plain": {
+            "variable": "linear",
+            "name": "none",
+            "timing": "ease",
+            "duration": "0s",
+            "iteration": "1",
+            "count": 0,
+            "transition": "ease",
+            "font": "Times"
+          },
+          "other": {
+            "variable": "none",
+            "name": "none",
+            "timing": "ease",
+            "duration": "10s",
+            "iteration": "1",
+            "count": 0,
+            "transition": "ease",
+            "font": "Times"
+          }
+        },
+        "r3": {
+          "motion": {
+            "variable": "rustify-review-r4-linear",
+            "name": "none",
+            "timing": "ease",
+            "duration": "0s",
+            "iteration": "1",
+            "count": 0,
+            "transition": "ease",
+            "font": "Times"
+          },
+          "plain": {
+            "variable": "rustify-review-r4-linear",
+            "name": "none",
+            "timing": "ease",
+            "duration": "0s",
+            "iteration": "1",
+            "count": 0,
+            "transition": "ease",
+            "font": "Times"
+          },
+          "other": {
+            "variable": "none",
+            "name": "none",
+            "timing": "ease",
+            "duration": "10s",
+            "iteration": "1",
+            "count": 0,
+            "transition": "ease",
+            "font": "Times"
+          }
+        },
+        "r4": {
+          "motion": {
+            "variable": "linear",
+            "name": "rustify-review-r4-card",
+            "timing": "linear",
+            "duration": "10s",
+            "iteration": "infinite",
+            "count": 1,
+            "lastOpacity": "0.3",
+            "transition": "ease",
+            "font": "Times"
+          },
+          "plain": {
+            "variable": "linear",
+            "name": "none",
+            "timing": "ease",
+            "duration": "0s",
+            "iteration": "1",
+            "count": 0,
+            "transition": "ease",
+            "font": "Times"
+          },
+          "other": {
+            "variable": "none",
+            "name": "rustify-review-r4-linear",
+            "timing": "ease",
+            "duration": "10s",
+            "iteration": "1",
+            "count": 1,
+            "lastOpacity": "0.5",
+            "transition": "ease",
+            "font": "Times"
+          }
+        }
+      }
+    },
+    {
+      "id": "external-disable-cyclic",
+      "versions": {
+        "raw": {
+          "motion": {
+            "variable": "none",
+            "name": "none",
+            "timing": "ease",
+            "duration": "10s",
+            "iteration": "1",
+            "count": 0,
+            "transition": "ease",
+            "font": "Times"
+          },
+          "plain": {
+            "variable": "none",
+            "name": "none",
+            "timing": "ease",
+            "duration": "0s",
+            "iteration": "1",
+            "count": 0,
+            "transition": "ease",
+            "font": "Times"
+          },
+          "other": {
+            "variable": "none",
+            "name": "none",
+            "timing": "ease",
+            "duration": "0s",
+            "iteration": "1",
+            "count": 0,
+            "transition": "ease",
+            "font": "Times"
+          }
+        },
+        "r3": {
+          "motion": {
+            "variable": "none",
+            "name": "none",
+            "timing": "ease",
+            "duration": "10s",
+            "iteration": "1",
+            "count": 0,
+            "transition": "ease",
+            "font": "Times"
+          },
+          "plain": {
+            "variable": "none",
+            "name": "none",
+            "timing": "ease",
+            "duration": "0s",
+            "iteration": "1",
+            "count": 0,
+            "transition": "ease",
+            "font": "Times"
+          },
+          "other": {
+            "variable": "none",
+            "name": "none",
+            "timing": "ease",
+            "duration": "0s",
+            "iteration": "1",
+            "count": 0,
+            "transition": "ease",
+            "font": "Times"
+          }
+        },
+        "r4": {
+          "motion": {
+            "variable": "none",
+            "name": "rustify-review-r4-linear",
+            "timing": "ease",
+            "duration": "10s",
+            "iteration": "1",
+            "count": 1,
+            "lastOpacity": "0.3",
+            "transition": "ease",
+            "font": "Times"
+          },
+          "plain": {
+            "variable": "none",
+            "name": "none",
+            "timing": "ease",
+            "duration": "0s",
+            "iteration": "1",
+            "count": 0,
+            "transition": "ease",
+            "font": "Times"
+          },
+          "other": {
+            "variable": "none",
+            "name": "none",
+            "timing": "ease",
+            "duration": "0s",
+            "iteration": "1",
+            "count": 0,
+            "transition": "ease",
+            "font": "Times"
+          }
+        }
+      }
+    }
+  ],
+  "errors": [],
+  "requests": []
+}

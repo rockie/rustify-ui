@@ -1,0 +1,537 @@
+{
+  "config": {
+    "argv": [
+      "/Users/rockie/.nvm/versions/node/v26.1.0/bin/node",
+      "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-tailwind-browser-v_c2md8x/node_modules/.bin/playwright",
+      "test",
+      "--project=utility-lab",
+      "--workers=1",
+      "utility-gpu.spec.ts",
+      "-g",
+      "clearing utility ownership",
+      "--output=/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/wasm-tailwind/registration-resume-browser/lifecycle-root-verified-results",
+      "--reporter=json"
+    ],
+    "configFile": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-tailwind-browser-v_c2md8x/playwright.config.ts",
+    "rootDir": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-tailwind-browser-v_c2md8x/tests/browser",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": {},
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/wasm-tailwind/registration-resume-browser/lifecycle-root-verified-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "utility-lab-scanner",
+        "name": "utility-lab-scanner",
+        "testDir": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-tailwind-browser-v_c2md8x/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "utility-scanner.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/wasm-tailwind/registration-resume-browser/lifecycle-root-verified-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "utility-lab-scanner-deep",
+        "name": "utility-lab-scanner-deep",
+        "testDir": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-tailwind-browser-v_c2md8x/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "utility-scanner.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/wasm-tailwind/registration-resume-browser/lifecycle-root-verified-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "utility-lab",
+        "name": "utility-lab",
+        "testDir": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-tailwind-browser-v_c2md8x/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "utility-runtime.spec.ts",
+          "utility-faults.spec.ts",
+          "utility-gpu.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/wasm-tailwind/registration-resume-browser/lifecycle-root-verified-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "utility-lab-deep",
+        "name": "utility-lab-deep",
+        "testDir": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-tailwind-browser-v_c2md8x/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "utility-runtime.spec.ts",
+          "utility-gpu.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/wasm-tailwind/registration-resume-browser/lifecycle-root-verified-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "utility-baseline",
+        "name": "utility-baseline",
+        "testDir": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-tailwind-browser-v_c2md8x/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "utility-baseline.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/wasm-tailwind/registration-resume-browser/lifecycle-root-verified-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "fusion-basic",
+        "name": "fusion-basic",
+        "testDir": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-tailwind-browser-v_c2md8x/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "p3-restart.spec.ts",
+          "m1-probes.spec.ts",
+          "m2-runtime.spec.ts",
+          "m3-state.spec.ts",
+          "m4-geometry.spec.ts",
+          "m4-overlay.spec.ts",
+          "m6-mainpath.spec.ts",
+          "p2-navigation.spec.ts",
+          "p3-instances.spec.ts",
+          "p3-b0.spec.ts",
+          "p3-idle.spec.ts",
+          "p3-memory.spec.ts",
+          "p3-endurance.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/wasm-tailwind/registration-resume-browser/lifecycle-root-verified-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "property-workbench",
+        "name": "property-workbench",
+        "testDir": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-tailwind-browser-v_c2md8x/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "p3-restart.spec.ts",
+          "m3-workbench.spec.ts",
+          "m5-text.spec.ts",
+          "m5-semantics.spec.ts",
+          "m6-theme.spec.ts",
+          "m6-async.spec.ts",
+          "m6-components.spec.ts",
+          "m7-recovery.spec.ts",
+          "m8-baseline.spec.ts",
+          "m8-network.spec.ts",
+          "m8-endurance.spec.ts",
+          "p2-form.spec.ts",
+          "p2-deeplink.spec.ts",
+          "p2-workspace.spec.ts",
+          "p2-drag.spec.ts",
+          "p2-clipboard-files.spec.ts",
+          "p2-zoom.spec.ts",
+          "p2-ime.spec.ts",
+          "p3-policy.spec.ts",
+          "p3-faults.spec.ts",
+          "p3-diagnostics.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/wasm-tailwind/registration-resume-browser/lifecycle-root-verified-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "component-catalog",
+        "name": "component-catalog",
+        "testDir": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-tailwind-browser-v_c2md8x/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "p3-restart.spec.ts",
+          "p2-catalog.spec.ts",
+          "p2-theme.spec.ts",
+          "p2-semantics.spec.ts",
+          "p2-i18n.spec.ts",
+          "p2-reflow.spec.ts",
+          "p2-a11y.spec.ts",
+          "p3-policy.spec.ts",
+          "catalog-inputs.spec.ts",
+          "theme-compat.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/wasm-tailwind/registration-resume-browser/lifecycle-root-verified-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "theme-studio",
+        "name": "theme-studio",
+        "testDir": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-tailwind-browser-v_c2md8x/tests/browser",
+        "testIgnore": [
+          "theme-compat.spec.ts",
+          "theme-export-runtime.spec.ts"
+        ],
+        "testMatch": [
+          "theme-*.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/wasm-tailwind/registration-resume-browser/lifecycle-root-verified-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "theme-studio-deep",
+        "name": "theme-studio-deep",
+        "testDir": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-tailwind-browser-v_c2md8x/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "theme-deployment.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/wasm-tailwind/registration-resume-browser/lifecycle-root-verified-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "theme-export",
+        "name": "theme-export",
+        "testDir": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-tailwind-browser-v_c2md8x/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "theme-export-runtime.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/wasm-tailwind/registration-resume-browser/lifecycle-root-verified-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "theme-export-deep",
+        "name": "theme-export-deep",
+        "testDir": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-tailwind-browser-v_c2md8x/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "theme-export-runtime.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/wasm-tailwind/registration-resume-browser/lifecycle-root-verified-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "data-workbench",
+        "name": "data-workbench",
+        "testDir": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-tailwind-browser-v_c2md8x/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "p3-restart.spec.ts",
+          "p3-probes.spec.ts",
+          "p3-table.spec.ts",
+          "p3-jobs.spec.ts",
+          "p3-scene.spec.ts",
+          "p3-memory.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/wasm-tailwind/registration-resume-browser/lifecycle-root-verified-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "budget-scene",
+        "name": "budget-scene",
+        "testDir": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-tailwind-browser-v_c2md8x/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "p3-budget-scene.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/wasm-tailwind/registration-resume-browser/lifecycle-root-verified-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "workbench-deep",
+        "name": "workbench-deep",
+        "testDir": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-tailwind-browser-v_c2md8x/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "p2-deeplink.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/wasm-tailwind/registration-resume-browser/lifecycle-root-verified-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "deployment",
+        "name": "deployment",
+        "testDir": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-tailwind-browser-v_c2md8x/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "m7-deployment.spec.ts"
+        ],
+        "timeout": 120000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "utility-gpu.spec.ts",
+      "file": "utility-gpu.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "clearing utility ownership restores the ordinary Button pixels and events",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "utility-lab",
+              "projectName": "utility-lab",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2779,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T09:32:02.303Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "Ordinary and cleared Button reports",
+                      "contentType": "application/json",
+                      "body": "ewogICJpbml0aWFsIjogewogICAgImdlbmVyYXRpb24iOiAwLAogICAgInBoYXNlIjogMCwKICAgICJiYXNlbGluZSI6IHsKICAgICAgInRoZW1lZCI6IHRydWUsCiAgICAgICJwYWxldHRlIjogZmFsc2UsCiAgICAgICJkaXNhYmxlZCI6IGZhbHNlLAogICAgICAibW9kZSI6ICJsaWdodCIsCiAgICAgICJyZW0iOiAxNiwKICAgICAgImZvbnRfc2l6ZSI6IDE1LAogICAgICAidHJhY2tpbmciOiAwCiAgICB9LAogICAgImJ1dHRvbnMiOiBbCiAgICAgIHsKICAgICAgICAiZ2VvbWV0cnkiOiBbCiAgICAgICAgICAxMiwKICAgICAgICAgIDEyLAogICAgICAgICAgMjIwLAogICAgICAgICAgMzYKICAgICAgICBdLAogICAgICAgICJ1dGlsaXR5IjogbnVsbAogICAgICB9LAogICAgICB7CiAgICAgICAgImdlb21ldHJ5IjogWwogICAgICAgICAgMTIsCiAgICAgICAgICA2MCwKICAgICAgICAgIDIyMCwKICAgICAgICAgIDM2CiAgICAgICAgXSwKICAgICAgICAidXRpbGl0eSI6IG51bGwKICAgICAgfQogICAgXSwKICAgICJjbGlja3MiOiBbCiAgICAgIDAsCiAgICAgIDAKICAgIF0KICB9LAogICJyZXN0b3JlZCI6IHsKICAgICJnZW5lcmF0aW9uIjogOSwKICAgICJwaGFzZSI6IDIsCiAgICAiYmFzZWxpbmUiOiB7CiAgICAgICJ0aGVtZWQiOiB0cnVlLAogICAgICAicGFsZXR0ZSI6IGZhbHNlLAogICAgICAiZGlzYWJsZWQiOiBmYWxzZSwKICAgICAgIm1vZGUiOiAibGlnaHQiLAogICAgICAicmVtIjogMTYsCiAgICAgICJmb250X3NpemUiOiAxNSwKICAgICAgInRyYWNraW5nIjogMAogICAgfSwKICAgICJidXR0b25zIjogWwogICAgICB7CiAgICAgICAgImdlb21ldHJ5IjogWwogICAgICAgICAgMTIsCiAgICAgICAgICAxMiwKICAgICAgICAgIDIyMCwKICAgICAgICAgIDM2CiAgICAgICAgXSwKICAgICAgICAidXRpbGl0eSI6IG51bGwKICAgICAgfSwKICAgICAgewogICAgICAgICJnZW9tZXRyeSI6IFsKICAgICAgICAgIDEyLAogICAgICAgICAgNjAsCiAgICAgICAgICAyMjAsCiAgICAgICAgICAzNgogICAgICAgIF0sCiAgICAgICAgInV0aWxpdHkiOiBudWxsCiAgICAgIH0KICAgIF0sCiAgICAiY2xpY2tzIjogWwogICAgICAwLAogICAgICAwCiAgICBdCiAgfSwKICAiY2xpY2tlZCI6IHsKICAgICJnZW5lcmF0aW9uIjogOSwKICAgICJwaGFzZSI6IDIsCiAgICAiYmFzZWxpbmUiOiB7CiAgICAgICJ0aGVtZWQiOiB0cnVlLAogICAgICAicGFsZXR0ZSI6IGZhbHNlLAogICAgICAiZGlzYWJsZWQiOiBmYWxzZSwKICAgICAgIm1vZGUiOiAibGlnaHQiLAogICAgICAicmVtIjogMTYsCiAgICAgICJmb250X3NpemUiOiAxNSwKICAgICAgInRyYWNraW5nIjogMAogICAgfSwKICAgICJidXR0b25zIjogWwogICAgICB7CiAgICAgICAgImdlb21ldHJ5IjogWwogICAgICAgICAgMTIsCiAgICAgICAgICAxMiwKICAgICAgICAgIDIyMCwKICAgICAgICAgIDM2CiAgICAgICAgXSwKICAgICAgICAidXRpbGl0eSI6IG51bGwKICAgICAgfSwKICAgICAgewogICAgICAgICJnZW9tZXRyeSI6IFsKICAgICAgICAgIDEyLAogICAgICAgICAgNjAsCiAgICAgICAgICAyMjAsCiAgICAgICAgICAzNgogICAgICAgIF0sCiAgICAgICAgInV0aWxpdHkiOiBudWxsCiAgICAgIH0KICAgIF0sCiAgICAiY2xpY2tzIjogWwogICAgICAxLAogICAgICAxCiAgICBdCiAgfQp9"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "16680e39cdda4ee2503a-c552db97de5160a48f62",
+          "file": "../../../../../../../../../Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser/utility-gpu.spec.ts",
+          "line": 72,
+          "column": 5
+        },
+        {
+          "title": "clearing utility ownership restores the latest theme without another baseline setter",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "utility-lab",
+              "projectName": "utility-lab",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2041,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T09:32:05.480Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "Button theme baseline lifecycle",
+                      "contentType": "application/json",
+                      "body": "eyJpbml0aWFsIjp7ImdlbmVyYXRpb24iOjAsInBoYXNlIjowLCJiYXNlbGluZSI6eyJ0aGVtZWQiOnRydWUsInBhbGV0dGUiOmZhbHNlLCJkaXNhYmxlZCI6ZmFsc2UsIm1vZGUiOiJsaWdodCIsInJlbSI6MTYsImZvbnRfc2l6ZSI6MTUsInRyYWNraW5nIjowfSwiYnV0dG9ucyI6W3siZ2VvbWV0cnkiOlsxMiwxMiwyMjAsMzZdLCJ1dGlsaXR5IjpudWxsfSx7Imdlb21ldHJ5IjpbMTIsNjAsMjIwLDM2XSwidXRpbGl0eSI6bnVsbH1dLCJjbGlja3MiOlswLDBdfSwiYXBwbGllZCI6eyJnZW5lcmF0aW9uIjoxLCJwaGFzZSI6MSwiYmFzZWxpbmUiOnsidGhlbWVkIjp0cnVlLCJwYWxldHRlIjpmYWxzZSwiZGlzYWJsZWQiOmZhbHNlLCJtb2RlIjoibGlnaHQiLCJyZW0iOjE2LCJmb250X3NpemUiOjE1LCJ0cmFja2luZyI6MH0sImJ1dHRvbnMiOlt7Imdlb21ldHJ5IjpbMTIsMTIsMjIwLDM2XSwidXRpbGl0eSI6bnVsbH0seyJnZW9tZXRyeSI6WzEyLDYwLDIyMCw2NF0sInV0aWxpdHkiOnsic3RhdHVzIjoiQXBwbGllZCIsImRyYXduX3JldmlzaW9uIjoxfX1dLCJjbGlja3MiOlswLDBdfSwiaGVsZCI6eyJnZW5lcmF0aW9uIjoyLCJwaGFzZSI6MywiYmFzZWxpbmUiOnsidGhlbWVkIjp0cnVlLCJwYWxldHRlIjpmYWxzZSwiZGlzYWJsZWQiOmZhbHNlLCJtb2RlIjoiZGFyayIsInJlbSI6MjAsImZvbnRfc2l6ZSI6MjEsInRyYWNraW5nIjowLjA0fSwiYnV0dG9ucyI6W3siZ2VvbWV0cnkiOlsxMiwxMiwyMjAsNDVdLCJ1dGlsaXR5IjpudWxsfSx7Imdlb21ldHJ5IjpbMTIsNjksMjIwLDY0XSwidXRpbGl0eSI6eyJzdGF0dXMiOiJBcHBsaWVkIiwiZHJhd25fcmV2aXNpb24iOjF9fV0sImNsaWNrcyI6WzAsMF19LCJjbGVhcmVkIjp7ImdlbmVyYXRpb24iOjMsInBoYXNlIjo0LCJiYXNlbGluZSI6eyJ0aGVtZWQiOnRydWUsInBhbGV0dGUiOmZhbHNlLCJkaXNhYmxlZCI6ZmFsc2UsIm1vZGUiOiJkYXJrIiwicmVtIjoyMCwiZm9udF9zaXplIjoyMSwidHJhY2tpbmciOjAuMDR9LCJidXR0b25zIjpbeyJnZW9tZXRyeSI6WzEyLDEyLDIyMCw0NV0sInV0aWxpdHkiOm51bGx9LHsiZ2VvbWV0cnkiOlsxMiw2OSwyMjAsNDVdLCJ1dGlsaXR5IjpudWxsfV0sImNsaWNrcyI6WzAsMF19LCJ1cGRhdGVkIjp7ImdlbmVyYXRpb24iOjQsInBoYXNlIjowLCJiYXNlbGluZSI6eyJ0aGVtZWQiOnRydWUsInBhbGV0dGUiOmZhbHNlLCJkaXNhYmxlZCI6ZmFsc2UsIm1vZGUiOiJsaWdodCIsInJlbSI6MTYsImZvbnRfc2l6ZSI6MTUsInRyYWNraW5nIjowfSwiYnV0dG9ucyI6W3siZ2VvbWV0cnkiOlsxMiwxMiwyMjAsMzZdLCJ1dGlsaXR5IjpudWxsfSx7Imdlb21ldHJ5IjpbMTIsNjAsMjIwLDM2XSwidXRpbGl0eSI6bnVsbH1dLCJjbGlja3MiOlswLDBdfX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "16680e39cdda4ee2503a-6d5e83611d65affb3fd9",
+          "file": "../../../../../../../../../Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser/utility-gpu.spec.ts",
+          "line": 155,
+          "column": 7
+        },
+        {
+          "title": "clearing utility ownership restores the latest palette without another baseline setter",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "utility-lab",
+              "projectName": "utility-lab",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2414,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T09:32:07.531Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "Button palette baseline lifecycle",
+                      "contentType": "application/json",
+                      "body": "eyJpbml0aWFsIjp7ImdlbmVyYXRpb24iOjAsInBoYXNlIjowLCJiYXNlbGluZSI6eyJ0aGVtZWQiOnRydWUsInBhbGV0dGUiOmZhbHNlLCJkaXNhYmxlZCI6ZmFsc2UsIm1vZGUiOiJsaWdodCIsInJlbSI6MTYsImZvbnRfc2l6ZSI6MTUsInRyYWNraW5nIjowfSwiYnV0dG9ucyI6W3siZ2VvbWV0cnkiOlsxMiwxMiwyMjAsMzZdLCJ1dGlsaXR5IjpudWxsfSx7Imdlb21ldHJ5IjpbMTIsNjAsMjIwLDM2XSwidXRpbGl0eSI6bnVsbH1dLCJjbGlja3MiOlswLDBdfSwiYXBwbGllZCI6eyJnZW5lcmF0aW9uIjoxLCJwaGFzZSI6MSwiYmFzZWxpbmUiOnsidGhlbWVkIjp0cnVlLCJwYWxldHRlIjpmYWxzZSwiZGlzYWJsZWQiOmZhbHNlLCJtb2RlIjoibGlnaHQiLCJyZW0iOjE2LCJmb250X3NpemUiOjE1LCJ0cmFja2luZyI6MH0sImJ1dHRvbnMiOlt7Imdlb21ldHJ5IjpbMTIsMTIsMjIwLDM2XSwidXRpbGl0eSI6bnVsbH0seyJnZW9tZXRyeSI6WzEyLDYwLDIyMCw2NF0sInV0aWxpdHkiOnsic3RhdHVzIjoiQXBwbGllZCIsImRyYXduX3JldmlzaW9uIjoxfX1dLCJjbGlja3MiOlswLDBdfSwiaGVsZCI6eyJnZW5lcmF0aW9uIjoyLCJwaGFzZSI6MywiYmFzZWxpbmUiOnsidGhlbWVkIjp0cnVlLCJwYWxldHRlIjp0cnVlLCJkaXNhYmxlZCI6ZmFsc2UsIm1vZGUiOiJsaWdodCIsInJlbSI6MTYsImZvbnRfc2l6ZSI6MjEsInRyYWNraW5nIjowLjA0fSwiYnV0dG9ucyI6W3siZ2VvbWV0cnkiOlsxMiwxMiwyMjAsMzZdLCJ1dGlsaXR5IjpudWxsfSx7Imdlb21ldHJ5IjpbMTIsNjAsMjIwLDY0XSwidXRpbGl0eSI6eyJzdGF0dXMiOiJBcHBsaWVkIiwiZHJhd25fcmV2aXNpb24iOjF9fV0sImNsaWNrcyI6WzAsMF19LCJjbGVhcmVkIjp7ImdlbmVyYXRpb24iOjMsInBoYXNlIjo0LCJiYXNlbGluZSI6eyJ0aGVtZWQiOnRydWUsInBhbGV0dGUiOnRydWUsImRpc2FibGVkIjpmYWxzZSwibW9kZSI6ImxpZ2h0IiwicmVtIjoxNiwiZm9udF9zaXplIjoyMSwidHJhY2tpbmciOjAuMDR9LCJidXR0b25zIjpbeyJnZW9tZXRyeSI6WzEyLDEyLDIyMCwzNl0sInV0aWxpdHkiOm51bGx9LHsiZ2VvbWV0cnkiOlsxMiw2MCwyMjAsMzZdLCJ1dGlsaXR5IjpudWxsfV0sImNsaWNrcyI6WzAsMF19LCJ1cGRhdGVkIjp7ImdlbmVyYXRpb24iOjQsInBoYXNlIjowLCJiYXNlbGluZSI6eyJ0aGVtZWQiOnRydWUsInBhbGV0dGUiOmZhbHNlLCJkaXNhYmxlZCI6ZmFsc2UsIm1vZGUiOiJsaWdodCIsInJlbSI6MTYsImZvbnRfc2l6ZSI6MTUsInRyYWNraW5nIjowfSwiYnV0dG9ucyI6W3siZ2VvbWV0cnkiOlsxMiwxMiwyMjAsMzZdLCJ1dGlsaXR5IjpudWxsfSx7Imdlb21ldHJ5IjpbMTIsNjAsMjIwLDM2XSwidXRpbGl0eSI6bnVsbH1dLCJjbGlja3MiOlswLDBdfX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "16680e39cdda4ee2503a-5f9e5b318665dc936c31",
+          "file": "../../../../../../../../../Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser/utility-gpu.spec.ts",
+          "line": 155,
+          "column": 7
+        },
+        {
+          "title": "clearing utility ownership restores untouched Script Button defaults",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "utility-lab",
+              "projectName": "utility-lab",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1682,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T09:32:09.952Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "Unthemed Script Button lifecycle",
+                      "contentType": "application/json",
+                      "body": "eyJpbml0aWFsIjp7ImdlbmVyYXRpb24iOjAsInBoYXNlIjowLCJiYXNlbGluZSI6eyJ0aGVtZWQiOmZhbHNlLCJwYWxldHRlIjpmYWxzZSwiZGlzYWJsZWQiOmZhbHNlLCJtb2RlIjoibGlnaHQiLCJyZW0iOjE2LCJmb250X3NpemUiOjE1LCJ0cmFja2luZyI6MH0sImJ1dHRvbnMiOlt7Imdlb21ldHJ5IjpbMTMsMTMsMjE4LDM0XSwidXRpbGl0eSI6bnVsbH0seyJnZW9tZXRyeSI6WzEzLDYxLDIxOCwzNF0sInV0aWxpdHkiOm51bGx9XSwiY2xpY2tzIjpbMCwwXX0sImFwcGxpZWQiOnsiZ2VuZXJhdGlvbiI6MSwicGhhc2UiOjEsImJhc2VsaW5lIjp7InRoZW1lZCI6ZmFsc2UsInBhbGV0dGUiOmZhbHNlLCJkaXNhYmxlZCI6ZmFsc2UsIm1vZGUiOiJsaWdodCIsInJlbSI6MTYsImZvbnRfc2l6ZSI6MTUsInRyYWNraW5nIjowfSwiYnV0dG9ucyI6W3siZ2VvbWV0cnkiOlsxMywxMywyMTgsMzRdLCJ1dGlsaXR5IjpudWxsfSx7Imdlb21ldHJ5IjpbMTIsNjAsMjIwLDY0XSwidXRpbGl0eSI6eyJzdGF0dXMiOiJBcHBsaWVkIiwiZHJhd25fcmV2aXNpb24iOjF9fV0sImNsaWNrcyI6WzAsMF19LCJjbGVhcmVkIjp7ImdlbmVyYXRpb24iOjIsInBoYXNlIjo0LCJiYXNlbGluZSI6eyJ0aGVtZWQiOmZhbHNlLCJwYWxldHRlIjpmYWxzZSwiZGlzYWJsZWQiOmZhbHNlLCJtb2RlIjoibGlnaHQiLCJyZW0iOjE2LCJmb250X3NpemUiOjE1LCJ0cmFja2luZyI6MH0sImJ1dHRvbnMiOlt7Imdlb21ldHJ5IjpbMTMsMTMsMjE4LDM0XSwidXRpbGl0eSI6bnVsbH0seyJnZW9tZXRyeSI6WzEzLDYxLDIxOCwzNF0sInV0aWxpdHkiOm51bGx9XSwiY2xpY2tzIjpbMCwwXX19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "16680e39cdda4ee2503a-0b0a64efe17efe4a3c5e",
+          "file": "../../../../../../../../../Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser/utility-gpu.spec.ts",
+          "line": 212,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-06T09:32:01.929Z",
+    "duration": 9798.616,
+    "expected": 4,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

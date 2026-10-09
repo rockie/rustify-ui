@@ -1,0 +1,11 @@
+@property --rustify-probe-length {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 9px;
+}
+@scope ([data-probe="outer"]) to ([data-probe]) {
+  .w-\[137px\] { width: 137px; }
+  .bg-\[\#123456\] { background-color: #123456; }
+  #sample { & > span { color: #1570ef; } }
+  #property { --rustify-probe-length: invalid; width: var(--rustify-probe-length); }
+}

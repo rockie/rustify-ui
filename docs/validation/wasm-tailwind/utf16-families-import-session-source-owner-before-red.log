@@ -1,0 +1,34 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: failed-parser-source-owner
+    at file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/compiler/run-public-ast-import-failure-wasm.mjs:125:10 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: Error: Missing closing } at .broken
+      at __wbg_new_a32a1ab6c6655abe (file:///private/tmp/rustify-import-session-first/compiler-api/style.js:756:25)
+      at rustify_style_wasm.wasm.<js_sys[2be875191f1f6241]::Error>::new::__wbg_new_a32a1ab6c6655abe externref shim (wasm://wasm/rustify_style_wasm.wasm-0090ed92:wasm-function[1587]:0x1a3fea)
+      at rustify_style_wasm.wasm.<js_sys[2be875191f1f6241]::Error>::new (wasm://wasm/rustify_style_wasm.wasm-0090ed92:wasm-function[1723]:0x1a4933)
+      at rustify_style_wasm.wasm.rustify_style_wasm[39cfbc9c0794b431]::public_api::error (wasm://wasm/rustify_style_wasm.wasm-0090ed92:wasm-function[387]:0x13a819)
+      at rustify_style_wasm.wasm.<rustify_style_wasm[39cfbc9c0794b431]::public_api::setup::Crossing>::fault (wasm://wasm/rustify_style_wasm.wasm-0090ed92:wasm-function[1271]:0x19e23e)
+      at rustify_style_wasm.wasm.<rustify_style_wasm[39cfbc9c0794b431]::public_api::AstCompiler>::new (wasm://wasm/rustify_style_wasm.wasm-0090ed92:wasm-function[178]:0xd7b86)
+      at rustify_style_wasm.wasm.astcompiler_new (wasm://wasm/rustify_style_wasm.wasm-0090ed92:wasm-function[1105]:0x197612)
+      at rustify_style_wasm.wasm.astcompiler_new externref shim (wasm://wasm/rustify_style_wasm.wasm-0090ed92:wasm-function[1596]:0x1a40df)
+      at rustify_style_wasm.wasm.astcompiler_new externref shim multivalue shim (wasm://wasm/rustify_style_wasm.wasm-0090ed92:wasm-function[1507]:0x1a34af)
+      at new AstCompiler (file:///private/tmp/rustify-import-session-first/compiler-api/style.js:37:26) {
+    [cause]: {
+      kind: 'compile',
+      error: {
+        kind: 'syntax',
+        offset: 65545,
+        message: 'Missing closing } at .broken'
+      }
+    }
+  },
+  expected: [Function (anonymous)],
+  operator: 'throws',
+  diff: 'simple'
+}
+
+Node.js v26.1.0

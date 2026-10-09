@@ -1,0 +1,1445 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+    Checking rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+error[E0599]: no method named `strip_prefix` found for reference `&Text` in the current scope
+  --> crates/rustify-style/src/compiler/apply.rs:33:18
+   |
+32 |               [AstNode::Comment { value, .. }] => value
+   |  _________________________________________________-
+33 | |                 .strip_prefix("utility definition ")
+   | |                 -^^^^^^^^^^^^ method not found in `&Text`
+   | |_________________|
+   |
+
+error[E0599]: no method named `strip_suffix` found for reference `&Text` in the current scope
+   --> crates/rustify-style/src/compiler/apply.rs:145:35
+    |
+145 |                     .entry(params.strip_suffix("-*").unwrap_or(params).into())
+    |                                   ^^^^^^^^^^^^ method not found in `&Text`
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/apply.rs:174:46
+    |
+174 |                     let dependencies = roots(params, theme, custom, limits)?;
+    |                                        ----- ^^^^^^ expected `&str`, found `&Text`
+    |                                        |
+    |                                        arguments to this function are incorrect
+    |
+    = note: expected reference `&str`
+               found reference `&Text`
+note: function defined here
+   --> crates/rustify-style/src/compiler/apply.rs:76:4
+    |
+ 76 | fn roots(
+    |    ^^^^^
+ 77 |     params: &str,
+    |     ------------
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/apply.rs:160:53
+    |
+160 | ...                   output.extend(roots(params, theme, custom, limits)?);
+    |                                     ----- ^^^^^^ expected `&str`, found `&Text`
+    |                                     |
+    |                                     arguments to this function are incorrect
+    |
+    = note: expected reference `&str`
+               found reference `&Text`
+note: function defined here
+   --> crates/rustify-style/src/compiler/apply.rs:76:4
+    |
+ 76 | fn roots(
+    |    ^^^^^
+ 77 |     params: &str,
+    |     ------------
+
+error[E0599]: no method named `strip_suffix` found for reference `&Text` in the current scope
+   --> crates/rustify-style/src/compiler/apply.rs:222:36
+    |
+222 | ...                   params.strip_suffix("-*").unwrap_or(params)
+    |                              ^^^^^^^^^^^^ method not found in `&Text`
+
+error[E0599]: no method named `split_whitespace` found for reference `&Text` in the current scope
+   --> crates/rustify-style/src/compiler/apply.rs:230:51
+    |
+230 | ...                   for raw in params.split_whitespace() {
+    |                                         ^^^^^^^^^^^^^^^^ method not found in `&Text`
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/apply.rs:422:36
+    |
+422 |                 let nodes = expand(params, arena[child].value.source(), theme, custom, limits)?;
+    |                             ------ ^^^^^^ expected `&str`, found `&Text`
+    |                             |
+    |                             arguments to this function are incorrect
+    |
+    = note: expected reference `&str`
+               found reference `&Text`
+note: function defined here
+   --> crates/rustify-style/src/compiler/apply.rs:355:4
+    |
+355 | fn expand(
+    |    ^^^^^^
+356 |     params: &str,
+    |     ------------
+
+error[E0277]: `Text` doesn't implement `std::fmt::Display`
+   --> crates/rustify-style/src/compiler/custom_utilities.rs:195:138
+    |
+195 | ...lse(|| syntax(format!("`@utility {params}` is empty. Utilities should include at least one property.")))?;
+    |                                     ^^^^^^^^ `Text` cannot be formatted with the default formatter
+    |
+help: the trait `std::fmt::Display` is not implemented for `Text`
+   --> crates/rustify-style/src/text.rs:9:1
+    |
+  9 | pub struct Text(Vec<u16>);
+    | ^^^^^^^^^^^^^^^
+    = note: in format strings you may be able to use `{:?}` (or {:#?} for pretty-print) instead
+    = note: required for `&mut Text` to implement `std::fmt::Display`
+
+error[E0608]: cannot index into a value of type `&mut Text`
+   --> crates/rustify-style/src/compiler/custom_utilities.rs:198:36
+    |
+198 | ...                   &params[..params.len() - 2]
+    |                              ^^^^^^^^^^^^^^^^^^^^
+
+error[E0599]: no method named `as_str` found for mutable reference `&mut Text` in the current scope
+   --> crates/rustify-style/src/compiler/custom_utilities.rs:200:36
+    |
+200 | ...                   params.as_str()
+    |                              ^^^^^^
+    |
+help: there is a method `push_str` with a similar name, but with different arguments
+   --> crates/rustify-style/src/text.rs:13:5
+    |
+ 13 |     pub fn push_str(&mut self, value: &str) {
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/custom_utilities.rs:210:82
+    |
+210 | ...                   return Err(syntax(if !functional && params.ends_with('*') {
+    |                                                                  --------- ^^^ expected `&str`, found `char`
+    |                                                                  |
+    |                                                                  arguments to this method are incorrect
+    |
+note: method defined here
+   --> crates/rustify-style/src/text.rs:41:12
+    |
+ 41 |     pub fn ends_with(&self, value: &str) -> bool {
+    |            ^^^^^^^^^        -----------
+help: if you meant to write a string literal, use double quotes
+    |
+210 -                             return Err(syntax(if !functional && params.ends_with('*') {
+210 +                             return Err(syntax(if !functional && params.ends_with("*") {
+    |
+
+error[E0277]: `Text` doesn't implement `std::fmt::Display`
+   --> crates/rustify-style/src/compiler/custom_utilities.rs:212:48
+    |
+212 | ...                   "`@utility {params}` defines an invalid utility name. A functional utility must end in `-*`."
+    |                                  ^^^^^^^^ `Text` cannot be formatted with the default formatter
+    |
+help: the trait `std::fmt::Display` is not implemented for `Text`
+   --> crates/rustify-style/src/text.rs:9:1
+    |
+  9 | pub struct Text(Vec<u16>);
+    | ^^^^^^^^^^^^^^^
+    = note: in format strings you may be able to use `{:?}` (or {:#?} for pretty-print) instead
+    = note: required for `&mut Text` to implement `std::fmt::Display`
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/custom_utilities.rs:214:70
+    |
+214 | ...                   } else if !functional && params.contains('*') {
+    |                                                       -------- ^^^ expected `&str`, found `char`
+    |                                                       |
+    |                                                       arguments to this method are incorrect
+    |
+note: method defined here
+   --> crates/rustify-style/src/text.rs:26:12
+    |
+ 26 |     pub fn contains(&self, value: &str) -> bool {
+    |            ^^^^^^^^        -----------
+help: if you meant to write a string literal, use double quotes
+    |
+214 -                             } else if !functional && params.contains('*') {
+214 +                             } else if !functional && params.contains("*") {
+    |
+
+error[E0277]: `Text` doesn't implement `std::fmt::Display`
+   --> crates/rustify-style/src/compiler/custom_utilities.rs:216:48
+    |
+216 | ...   "`@utility {params}` defines an invalid utility name. The dynamic portion marked by `-*` must appear once at the end."
+    |                  ^^^^^^^^ `Text` cannot be formatted with the default formatter
+    |
+help: the trait `std::fmt::Display` is not implemented for `Text`
+   --> crates/rustify-style/src/text.rs:9:1
+    |
+  9 | pub struct Text(Vec<u16>);
+    | ^^^^^^^^^^^^^^^
+    = note: in format strings you may be able to use `{:?}` (or {:#?} for pretty-print) instead
+    = note: required for `&mut Text` to implement `std::fmt::Display`
+
+error[E0277]: `Text` doesn't implement `std::fmt::Display`
+   --> crates/rustify-style/src/compiler/custom_utilities.rs:220:48
+    |
+220 | ...   "`@utility {params}` defines an invalid utility name. Utilities should be alphanumeric and start with a lowercase letter."
+    |                  ^^^^^^^^ `Text` cannot be formatted with the default formatter
+    |
+help: the trait `std::fmt::Display` is not implemented for `Text`
+   --> crates/rustify-style/src/text.rs:9:1
+    |
+  9 | pub struct Text(Vec<u16>);
+    | ^^^^^^^^^^^^^^^
+    = note: in format strings you may be able to use `{:?}` (or {:#?} for pretty-print) instead
+    = note: required for `&mut Text` to implement `std::fmt::Display`
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/custom_utilities.rs:240:35
+    |
+240 | ...                   name: params.clone(),
+    |                             ^^^^^^^^^^^^^^ expected `String`, found `Text`
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/custom_utilities.rs:250:44
+    |
+250 | ...                   value: format!("utility definition {index}"),
+    |                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `Text`, found `String`
+    |
+help: call `Into::into` on this expression to convert `std::string::String` into `Text`
+    |
+250 |                                     value: format!("utility definition {index}").into(),
+    |                                                                                 +++++++
+
+error[E0599]: no method named `capacity` found for reference `&Text` in the current scope
+   --> crates/rustify-style/src/compiler/custom_utilities.rs:477:34
+    |
+476 |   ...                   } => base
+    |  ____________________________-
+477 | | ...                       .capacity()
+    | |                           -^^^^^^^^ method not found in `&Text`
+    | |___________________________|
+    |
+
+error[E0631]: type mismatch in function arguments
+   --> crates/rustify-style/src/compiler/custom_utilities.rs:478:80
+    |
+478 | ...                   .saturating_add(source_base.as_ref().map_or(0, String::capacity))
+    |                                                            ------    ^^^^^^^^^^^^^^^^
+    |                                                            |         |
+    |                                                            |         expected due to this
+    |                                                            |         found signature defined here
+    |                                                            required by a bound introduced by this call
+    |
+    = note: expected function signature `fn(&Text) -> _`
+               found function signature `fn(&std::string::String) -> _`
+note: required by a bound in `std::option::Option::<T>::map_or`
+   --> /rustc/48a229ceaefd4985c50990b14116b6d856af0985/library/core/src/option.rs:1222:4
+help: consider wrapping the function in a closure
+    |
+478 |                                 .saturating_add(source_base.as_ref().map_or(0, |arg0: &Text| String::capacity(/* &std::string::String */)))
+    |                                                                                +++++++++++++                 ++++++++++++++++++++++++++++
+
+error[E0599]: no method named `capacity` found for reference `&Text` in the current scope
+   --> crates/rustify-style/src/compiler/custom_utilities.rs:482:43
+    |
+482 | ...                   } => selector.capacity().saturating_add(nodes_bytes(nodes)),
+    |                                     ^^^^^^^^ method not found in `&Text`
+
+error[E0599]: no method named `capacity` found for reference `&Text` in the current scope
+   --> crates/rustify-style/src/compiler/custom_utilities.rs:489:34
+    |
+488 |   ...                   } => name
+    |  ____________________________-
+489 | | ...                       .capacity()
+    | |                           -^^^^^^^^ method not found in `&Text`
+    | |___________________________|
+    |
+
+error[E0599]: no method named `capacity` found for reference `&Text` in the current scope
+   --> crates/rustify-style/src/compiler/custom_utilities.rs:490:56
+    |
+490 | ...                   .saturating_add(params.capacity())
+    |                                              ^^^^^^^^ method not found in `&Text`
+
+error[E0599]: no method named `capacity` found for reference `&Text` in the current scope
+   --> crates/rustify-style/src/compiler/custom_utilities.rs:498:69
+    |
+498 | ...                   AstNode::Comment { value, .. } => value.capacity(),
+    |                                                               ^^^^^^^^ method not found in `&Text`
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/custom_variants.rs:71:53
+    |
+ 71 |                         let definition = definition(params, children.take(), limits)?;
+    |                                          ---------- ^^^^^^ expected `&str`, found `&mut Text`
+    |                                          |
+    |                                          arguments to this function are incorrect
+    |
+    = note:      expected reference `&str`
+            found mutable reference `&mut Text`
+note: function defined here
+   --> crates/rustify-style/src/compiler/custom_variants.rs:193:4
+    |
+193 | fn definition(
+    |    ^^^^^^^^^^
+194 |     params: &str,
+    |     ------------
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/custom_variants.rs:271:21
+    |
+271 |             params: String::new(),
+    |                     ^^^^^^^^^^^^^ expected `Text`, found `String`
+    |
+help: call `Into::into` on this expression to convert `std::string::String` into `Text`
+    |
+271 |             params: String::new().into(),
+    |                                  +++++++
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/custom_variants.rs:280:23
+    |
+280 |             selector: styles.join(", "),
+    |                       ^^^^^^^^^^^^^^^^^ expected `Text`, found `String`
+    |
+help: call `Into::into` on this expression to convert `std::string::String` into `Text`
+    |
+280 |             selector: styles.join(", ").into(),
+    |                                        +++++++
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/custom_variants.rs:324:70
+    |
+324 |                 AstNode::Rule { selector, .. } => selector_compounds(selector),
+    |                                                   ------------------ ^^^^^^^^ expected `&str`, found `&Text`
+    |                                                   |
+    |                                                   arguments to this function are incorrect
+    |
+    = note: expected reference `&str`
+               found reference `&Text`
+note: function defined here
+   --> crates/rustify-style/src/compiler/custom_variants.rs:307:4
+    |
+307 | fn selector_compounds(selector: &str) -> Option<u8> {
+    |    ^^^^^^^^^^^^^^^^^^ --------------
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/custom_variants.rs:325:87
+    |
+325 |                 AstNode::AtRule { name, .. } if name != "@slot" => selector_compounds(name),
+    |                                                                    ------------------ ^^^^ expected `&str`, found `&Text`
+    |                                                                    |
+    |                                                                    arguments to this function are incorrect
+    |
+    = note: expected reference `&str`
+               found reference `&Text`
+note: function defined here
+   --> crates/rustify-style/src/compiler/custom_variants.rs:307:4
+    |
+307 | fn selector_compounds(selector: &str) -> Option<u8> {
+    |    ^^^^^^^^^^^^^^^^^^ --------------
+
+error[E0599]: no method named `as_str` found for reference `&Text` in the current scope
+   --> crates/rustify-style/src/compiler/custom_variants.rs:454:48
+    |
+454 |                 if substitute && matches!(name.as_str(), "@property" | "@keyframes") =>
+    |                                                ^^^^^^
+    |
+help: there is a method `push_str` with a similar name, but with different arguments
+   --> crates/rustify-style/src/text.rs:13:5
+    |
+ 13 |     pub fn push_str(&mut self, value: &str) {
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error[E0599]: no method named `capacity` found for reference `&Text` in the current scope
+   --> crates/rustify-style/src/compiler/custom_variants.rs:554:26
+    |
+553 |                       } => base
+    |  __________________________-
+554 | |                         .capacity()
+    | |                         -^^^^^^^^ method not found in `&Text`
+    | |_________________________|
+    |
+
+error[E0631]: type mismatch in function arguments
+   --> crates/rustify-style/src/compiler/custom_variants.rs:555:72
+    |
+555 |                         .saturating_add(source_base.as_ref().map_or(0, String::capacity))
+    |                                                              ------    ^^^^^^^^^^^^^^^^
+    |                                                              |         |
+    |                                                              |         expected due to this
+    |                                                              |         found signature defined here
+    |                                                              required by a bound introduced by this call
+    |
+    = note: expected function signature `fn(&Text) -> _`
+               found function signature `fn(&std::string::String) -> _`
+note: required by a bound in `std::option::Option::<T>::map_or`
+   --> /rustc/48a229ceaefd4985c50990b14116b6d856af0985/library/core/src/option.rs:1222:4
+help: consider wrapping the function in a closure
+    |
+555 |                         .saturating_add(source_base.as_ref().map_or(0, |arg0: &Text| String::capacity(/* &std::string::String */)))
+    |                                                                        +++++++++++++                 ++++++++++++++++++++++++++++
+
+error[E0599]: no method named `capacity` found for reference `&Text` in the current scope
+   --> crates/rustify-style/src/compiler/custom_variants.rs:559:35
+    |
+559 |                     } => selector.capacity().saturating_add(nodes_owned_bytes(nodes)),
+    |                                   ^^^^^^^^ method not found in `&Text`
+
+error[E0599]: no method named `capacity` found for reference `&Text` in the current scope
+   --> crates/rustify-style/src/compiler/custom_variants.rs:567:26
+    |
+566 |                       } => name
+    |  __________________________-
+567 | |                         .capacity()
+    | |                         -^^^^^^^^ method not found in `&Text`
+    | |_________________________|
+    |
+
+error[E0599]: no method named `capacity` found for reference `&Text` in the current scope
+   --> crates/rustify-style/src/compiler/custom_variants.rs:568:48
+    |
+568 |                         .saturating_add(params.capacity())
+    |                                                ^^^^^^^^ method not found in `&Text`
+
+error[E0599]: no method named `capacity` found for reference `&Text` in the current scope
+   --> crates/rustify-style/src/compiler/custom_variants.rs:576:61
+    |
+576 |                     AstNode::Comment { value, .. } => value.capacity(),
+    |                                                             ^^^^^^^^ method not found in `&Text`
+
+error[E0308]: mismatched types
+  --> crates/rustify-style/src/compiler/dependencies.rs:76:25
+   |
+76 |         if !seen.insert(params.clone()) {
+   |                  ------ ^^^^^^^^^^^^^^ expected `String`, found `Text`
+   |                  |
+   |                  arguments to this method are incorrect
+   |
+note: method defined here
+  --> /rustc/48a229ceaefd4985c50990b14116b6d856af0985/library/alloc/src/collections/btree/set.rs:900:11
+
+error[E0277]: the trait bound `&Text: Into<Text>` is not satisfied
+   --> crates/rustify-style/src/compiler/dependencies.rs:95:49
+    |
+ 95 |         let mut fallback = AstNode::declaration(params, initial.clone());
+    |                            -------------------- ^^^^^^ unsatisfied trait bound
+    |                            |
+    |                            required by a bound introduced by this call
+    |
+help: the trait `From<&Text>` is not implemented for `Text`
+   --> crates/rustify-style/src/text.rs:9:1
+    |
+  9 | pub struct Text(Vec<u16>);
+    | ^^^^^^^^^^^^^^^
+help: `Text` implements trait `From<T>`
+   --> crates/rustify-style/src/text.rs:194:1
+    |
+194 | impl From<&str> for Text {
+    | ^^^^^^^^^^^^^^^^^^^^^^^^ `From<&str>`
+...
+200 | impl From<String> for Text {
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^ `From<std::string::String>`
+...
+206 | impl From<&String> for Text {
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^ `From<&std::string::String>`
+    = note: required for `&Text` to implement `Into<Text>`
+note: required by a bound in `AstNode::declaration`
+   --> crates/rustify-style/src/compiler/ast.rs:141:39
+    |
+141 |     pub fn declaration(property: impl Into<Text>, value: impl Into<Text>) -> Self {
+    |                                       ^^^^^^^^^^ required by this bound in `AstNode::declaration`
+
+error[E0599]: no method named `as_str` found for reference `&Text` in the current scope
+  --> crates/rustify-style/src/compiler/functions.rs:37:26
+   |
+37 |                     name.as_str(),
+   |                          ^^^^^^
+   |
+help: there is a method `push_str` with a similar name, but with different arguments
+  --> crates/rustify-style/src/text.rs:13:5
+   |
+13 |     pub fn push_str(&mut self, value: &str) {
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error[E0308]: mismatched types
+  --> crates/rustify-style/src/compiler/functions.rs:41:25
+   |
+41 |                 invokes(params)
+   |                 ------- ^^^^^^ expected `&str`, found `&Text`
+   |                 |
+   |                 arguments to this function are incorrect
+   |
+   = note: expected reference `&str`
+              found reference `&Text`
+note: function defined here
+  --> crates/rustify-style/src/compiler/functions.rs:23:15
+   |
+23 | pub(super) fn invokes(text: &str) -> bool {
+   |               ^^^^^^^ ----------
+
+error[E0599]: no method named `as_str` found for mutable reference `&mut Text` in the current scope
+   --> crates/rustify-style/src/compiler/functions.rs:393:26
+    |
+393 |                     name.as_str(),
+    |                          ^^^^^^
+    |
+help: there is a method `push_str` with a similar name, but with different arguments
+   --> crates/rustify-style/src/text.rs:13:5
+    |
+ 13 |     pub fn push_str(&mut self, value: &str) {
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/functions.rs:397:36
+    |
+397 |                 *params = in_value(params, theme, true, depth, max_bytes)?;
+    |                           -------- ^^^^^^ expected `&str`, found `&mut Text`
+    |                           |
+    |                           arguments to this function are incorrect
+    |
+    = note:      expected reference `&str`
+            found mutable reference `&mut Text`
+note: function defined here
+   --> crates/rustify-style/src/compiler/functions.rs:366:15
+    |
+366 | pub(super) fn in_value(
+    |               ^^^^^^^^
+367 |     value: &str,
+    |     -----------
+
+error[E0308]: `?` operator has incompatible types
+   --> crates/rustify-style/src/compiler/functions.rs:397:27
+    |
+397 |                 *params = in_value(params, theme, true, depth, max_bytes)?;
+    |                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `Text`, found `String`
+    |
+    = note: `?` operator cannot convert from `std::string::String` to `Text`
+help: call `Into::into` on this expression to convert `std::string::String` into `Text`
+    |
+397 |                 *params = in_value(params, theme, true, depth, max_bytes)?.into();
+    |                                                                           +++++++
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/imports.rs:118:9
+    |
+118 |         params,
+    |         ^^^^^^ expected `Text`, found `String`
+    |
+help: call `Into::into` on this expression to convert `std::string::String` into `Text`
+    |
+118 |         params: params.into(),
+    |         +++++++       +++++++
+
+error[E0599]: no method named `push` found for mutable reference `&mut Text` in the current scope
+   --> crates/rustify-style/src/compiler/imports.rs:142:28
+    |
+142 |                     params.push(' ');
+    |                            ^^^^
+    |
+help: there is a method `push_str` with a similar name
+    |
+142 |                     params.push_str(' ');
+    |                                ++++
+
+error[E0599]: no method named `push` found for mutable reference `&mut Text` in the current scope
+   --> crates/rustify-style/src/compiler/imports.rs:162:28
+    |
+162 |                     params.push(' ');
+    |                            ^^^^
+    |
+help: there is a method `push_str` with a similar name
+    |
+162 |                     params.push_str(' ');
+    |                                ++++
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/imports.rs:166:31
+    |
+166 |                         base: String::new(),
+    |                               ^^^^^^^^^^^^^ expected `Text`, found `String`
+    |
+help: call `Into::into` on this expression to convert `std::string::String` into `Text`
+    |
+166 |                         base: String::new().into(),
+    |                                            +++++++
+
+error[E0599]: no method named `as_str` found for reference `&Text` in the current scope
+   --> crates/rustify-style/src/compiler/imports.rs:233:30
+    |
+233 |             if matches!(name.as_str(), "@theme" | "@custom-variant")
+    |                              ^^^^^^
+    |
+help: there is a method `push_str` with a similar name, but with different arguments
+   --> crates/rustify-style/src/text.rs:13:5
+    |
+ 13 |     pub fn push_str(&mut self, value: &str) {
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/imports.rs:248:21
+    |
+247 |                 output.extend(media(
+    |                               ----- arguments to this function are incorrect
+248 |                     params.clone(),
+    |                     ^^^^^^^^^^^^^^ expected `String`, found `Text`
+    |
+note: function defined here
+   --> crates/rustify-style/src/compiler/imports.rs:123:4
+    |
+123 | fn media(
+    |    ^^^^^
+124 |     params: String,
+    |     --------------
+
+error[E0599]: no method named `as_str` found for reference `&Text` in the current scope
+   --> crates/rustify-style/src/compiler/imports.rs:258:71
+    |
+258 |             AstNode::Context { base, .. } if !base.is_empty() => base.as_str(),
+    |                                                                       ^^^^^^
+    |
+help: there is a method `push_str` with a similar name, but with different arguments
+   --> crates/rustify-style/src/text.rs:13:5
+    |
+ 13 |     pub fn push_str(&mut self, value: &str) {
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error[E0599]: no method named `as_str` found for reference `&Text` in the current scope
+   --> crates/rustify-style/src/compiler/imports.rs:303:38
+    |
+303 |                     if matches!(name.as_str(), "@import" | "@reference") {
+    |                                      ^^^^^^
+    |
+help: there is a method `push_str` with a similar name, but with different arguments
+   --> crates/rustify-style/src/text.rs:13:5
+    |
+ 13 |     pub fn push_str(&mut self, value: &str) {
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/imports.rs:304:62
+    |
+304 |                         if let Some(mut import) = parameters(params, self.limits.ast_depth)? {
+    |                                                   ---------- ^^^^^^ expected `&str`, found `&Text`
+    |                                                   |
+    |                                                   arguments to this function are incorrect
+    |
+    = note: expected reference `&str`
+               found reference `&Text`
+note: function defined here
+   --> crates/rustify-style/src/compiler/imports.rs:18:4
+    |
+ 18 | fn parameters(input: &str, depth: usize) -> Result<Option<Import>, CompileError> {
+    |    ^^^^^^^^^^ -----------
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/parser.rs:296:39
+    |
+296 | ...                   selector: parent.header,
+    |                                 ^^^^^^^^^^^^^ expected `Text`, found `String`
+    |
+help: call `Into::into` on this expression to convert `std::string::String` into `Text`
+    |
+296 |                             selector: parent.header.into(),
+    |                                                    +++++++
+
+error[E0277]: `Text` doesn't implement `std::fmt::Display`
+   --> crates/rustify-style/src/compiler/parser.rs:331:30
+    |
+331 |                     format!("{name} {params}")
+    |                              ^^^^^^ `Text` cannot be formatted with the default formatter
+    |
+help: the trait `std::fmt::Display` is not implemented for `Text`
+   --> crates/rustify-style/src/text.rs:9:1
+    |
+  9 | pub struct Text(Vec<u16>);
+    | ^^^^^^^^^^^^^^^
+    = note: in format strings you may be able to use `{:?}` (or {:#?} for pretty-print) instead
+
+error[E0277]: `Text` doesn't implement `std::fmt::Display`
+   --> crates/rustify-style/src/compiler/public_api/design_system.rs:882:74
+    |
+882 |             AstNode::AtRule { name, params, .. } => Some((true, format!("{name} {params}"))),
+    |                                                                          ^^^^^^ `Text` cannot be formatted with the default formatter
+    |
+help: the trait `std::fmt::Display` is not implemented for `Text`
+   --> crates/rustify-style/src/text.rs:9:1
+    |
+  9 | pub struct Text(Vec<u16>);
+    | ^^^^^^^^^^^^^^^
+    = note: in format strings you may be able to use `{:?}` (or {:#?} for pretty-print) instead
+    = note: required for `&Text` to implement `std::fmt::Display`
+
+error[E0308]: `match` arms have incompatible types
+   --> crates/rustify-style/src/compiler/public_api/design_system.rs:882:53
+    |
+880 |           let part = match node {
+    |  ____________________-
+881 | |             AstNode::Rule { selector, .. } => Some((false, selector.clone())),
+    | |                                               ------------------------------- this is found to be of type `std::option::Option<(bool, Text)>`
+882 | |             AstNode::AtRule { name, params, .. } => Some((true, format!("{name} {params}"))),
+    | |                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `Option<(bool, Text)>`, found `Option<(bool, String)>`
+883 | |             _ => None,
+884 | |         };
+    | |_________- `match` arms have incompatible types
+    |
+    = note: expected enum `std::option::Option<(_, Text)>`
+               found enum `std::option::Option<(_, std::string::String)>`
+
+error[E0308]: mismatched types
+  --> crates/rustify-style/src/compiler/public_api/compile_ast.rs:86:63
+   |
+86 |             AstNode::Rule { selector, .. } => Some(Self::Rule(selector.clone())),
+   |                                                    ---------- ^^^^^^^^^^^^^^^^ expected `String`, found `Text`
+   |                                                    |
+   |                                                    arguments to this enum variant are incorrect
+   |
+note: tuple variant defined here
+  --> crates/rustify-style/src/compiler/public_api/compile_ast.rs:79:5
+   |
+79 |     Rule(String),
+   |     ^^^^
+
+error[E0308]: arguments to this enum variant are incorrect
+  --> crates/rustify-style/src/compiler/public_api/compile_ast.rs:88:22
+   |
+88 |                 Some(Self::AtRule(name.clone(), params.clone()))
+   |                      ^^^^^^^^^^^^ ------------  -------------- expected `String`, found `Text`
+   |                                   |
+   |                                   expected `String`, found `Text`
+   |
+note: tuple variant defined here
+  --> crates/rustify-style/src/compiler/public_api/compile_ast.rs:80:5
+   |
+80 |     AtRule(String, String),
+   |     ^^^^^^
+
+error[E0308]: mismatched types
+  --> crates/rustify-style/src/compiler/public_api/compile_ast.rs:90:66
+   |
+90 |             AstNode::Comment { value, .. } => Some(Self::Comment(value.clone())),
+   |                                                    ------------- ^^^^^^^^^^^^^ expected `String`, found `Text`
+   |                                                    |
+   |                                                    arguments to this enum variant are incorrect
+   |
+note: tuple variant defined here
+  --> crates/rustify-style/src/compiler/public_api/compile_ast.rs:81:5
+   |
+81 |     Comment(String),
+   |     ^^^^^^^
+
+error[E0599]: no method named `encode_utf16` found for reference `&Text` in the current scope
+   --> crates/rustify-style/src/compiler/public_api/source_map.rs:267:68
+    |
+267 |                 AstNode::Rule { selector, .. } => *pos += selector.encode_utf16().count() + 1,
+    |                                                                    ^^^^^^^^^^^^ method not found in `&Text`
+
+error[E0599]: no method named `encode_utf16` found for reference `&Text` in the current scope
+   --> crates/rustify-style/src/compiler/public_api/source_map.rs:274:34
+    |
+274 |                     *pos += name.encode_utf16().count()
+    |                                  ^^^^^^^^^^^^ method not found in `&Text`
+
+error[E0599]: no method named `encode_utf16` found for reference `&Text` in the current scope
+   --> crates/rustify-style/src/compiler/public_api/source_map.rs:276:40
+    |
+276 | ...                   1 + params.encode_utf16().count()
+    |                                  ^^^^^^^^^^^^ method not found in `&Text`
+
+error[E0599]: no method named `encode_utf16` found for reference `&Text` in the current scope
+   --> crates/rustify-style/src/compiler/public_api/source_map.rs:278:74
+    |
+278 | ...                   1 + usize::from(!params.is_empty()) + params.encode_utf16().count()
+    |                                                                    ^^^^^^^^^^^^ method not found in `&Text`
+
+error[E0599]: no method named `encode_utf16` found for reference `&Text` in the current scope
+   --> crates/rustify-style/src/compiler/public_api/source_map.rs:281:69
+    |
+281 |                 AstNode::Comment { value, .. } => *pos += 4 + value.encode_utf16().count(),
+    |                                                                     ^^^^^^^^^^^^ method not found in `&Text`
+
+error[E0599]: no method named `capacity` found for reference `&Text` in the current scope
+   --> crates/rustify-style/src/compiler/public_api/source_map.rs:317:64
+    |
+317 |                     AstNode::Rule { selector, .. } => selector.capacity(),
+    |                                                                ^^^^^^^^ method not found in `&Text`
+
+error[E0599]: no method named `capacity` found for reference `&Text` in the current scope
+   --> crates/rustify-style/src/compiler/public_api/source_map.rs:319:30
+    |
+319 |                         name.capacity().saturating_add(params.capacity())
+    |                              ^^^^^^^^ method not found in `&Text`
+
+error[E0599]: no method named `capacity` found for reference `&Text` in the current scope
+   --> crates/rustify-style/src/compiler/public_api/source_map.rs:319:63
+    |
+319 |                         name.capacity().saturating_add(params.capacity())
+    |                                                               ^^^^^^^^ method not found in `&Text`
+
+error[E0599]: no method named `capacity` found for reference `&Text` in the current scope
+   --> crates/rustify-style/src/compiler/public_api/source_map.rs:324:61
+    |
+324 |                     AstNode::Comment { value, .. } => value.capacity(),
+    |                                                             ^^^^^^^^ method not found in `&Text`
+
+error[E0599]: no method named `capacity` found for reference `&Text` in the current scope
+   --> crates/rustify-style/src/compiler/public_api/source_map.rs:328:26
+    |
+327 |                       } => base
+    |  __________________________-
+328 | |                         .capacity()
+    | |                         -^^^^^^^^ method not found in `&Text`
+    | |_________________________|
+    |
+
+error[E0631]: type mismatch in function arguments
+   --> crates/rustify-style/src/compiler/public_api/source_map.rs:329:72
+    |
+329 |                         .saturating_add(source_base.as_ref().map_or(0, String::capacity)),
+    |                                                              ------    ^^^^^^^^^^^^^^^^
+    |                                                              |         |
+    |                                                              |         expected due to this
+    |                                                              |         found signature defined here
+    |                                                              required by a bound introduced by this call
+    |
+    = note: expected function signature `fn(&Text) -> _`
+               found function signature `fn(&std::string::String) -> _`
+note: required by a bound in `std::option::Option::<T>::map_or`
+   --> /rustc/48a229ceaefd4985c50990b14116b6d856af0985/library/core/src/option.rs:1222:4
+help: consider wrapping the function in a closure
+    |
+329 |                         .saturating_add(source_base.as_ref().map_or(0, |arg0: &Text| String::capacity(/* &std::string::String */))),
+    |                                                                        +++++++++++++                 ++++++++++++++++++++++++++++
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/sources.rs:201:74
+    |
+201 |                         base: if base.is_empty() { context.base } else { base },
+    |                                                                          ^^^^ expected `&str`, found `&mut Text`
+    |
+    = note:      expected reference `&str`
+            found mutable reference `&mut Text`
+
+error[E0599]: the method `as_deref` exists for mutable reference `&mut std::option::Option<Text>`, but its trait bounds were not satisfied
+   --> crates/rustify-style/src/compiler/sources.rs:202:50
+    |
+202 |                         source_base: source_base.as_deref().or(context.source_base),
+    |                                                  ^^^^^^^^
+    |
+   ::: crates/rustify-style/src/text.rs:9:1
+    |
+  9 | pub struct Text(Vec<u16>);
+    | --------------- doesn't satisfy `Text: Deref`
+    |
+    = note: the following trait bounds were not satisfied:
+            `Text: Deref`
+note: the trait `Deref` must be implemented
+   --> /rustc/48a229ceaefd4985c50990b14116b6d856af0985/library/core/src/ops/deref.rs:139:0
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/sources.rs:219:50
+    |
+219 |                     for option in value::segment(params, ' ', limits.ast_depth)? {
+    |                                   -------------- ^^^^^^ expected `&str`, found `&mut Text`
+    |                                   |
+    |                                   arguments to this function are incorrect
+    |
+    = note:      expected reference `&str`
+            found mutable reference `&mut Text`
+note: function defined here
+   --> crates/rustify-style/src/compiler/value.rs:255:8
+    |
+255 | pub fn segment(input: &str, delimiter: char, max_depth: usize) -> Result<Vec<&str>, CompileError> {
+    |        ^^^^^^^ -----------
+
+error[E0599]: no method named `as_str` found for reference `&Text` in the current scope
+   --> crates/rustify-style/src/compiler/sources.rs:246:34
+    |
+246 |                 if matches!(name.as_str(), "@theme" | "@custom-variant")
+    |                                  ^^^^^^
+    |
+help: there is a method `push_str` with a similar name, but with different arguments
+   --> crates/rustify-style/src/text.rs:13:5
+    |
+ 13 |     pub fn push_str(&mut self, value: &str) {
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error[E0599]: no method named `strip_prefix` found for reference `&Text` in the current scope
+   --> crates/rustify-style/src/compiler/sources.rs:264:26
+    |
+263 |                       let (excluded, params) = params
+    |  ______________________________________________-
+264 | |                         .strip_prefix("not ")
+    | |                         -^^^^^^^^^^^^ method not found in `&Text`
+    | |_________________________|
+    |
+
+error[E0599]: no method named `as_str` found for reference `&Text` in the current scope
+   --> crates/rustify-style/src/compiler/sources.rs:265:48
+    |
+265 |                         .map_or((false, params.as_str()), |params| (true, params));
+    |                                                ^^^^^^
+    |
+help: there is a method `push_str` with a similar name, but with different arguments
+   --> crates/rustify-style/src/text.rs:13:5
+    |
+ 13 |     pub fn push_str(&mut self, value: &str) {
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error[E0599]: no method named `as_str` found for mutable reference `&mut Text` in the current scope
+   --> crates/rustify-style/src/compiler/sources.rs:360:34
+    |
+360 |                 if matches!(name.as_str(), "@theme" | "@custom-variant")
+    |                                  ^^^^^^
+    |
+help: there is a method `push_str` with a similar name, but with different arguments
+   --> crates/rustify-style/src/text.rs:13:5
+    |
+ 13 |     pub fn push_str(&mut self, value: &str) {
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/sources.rs:368:50
+    |
+368 | ...   *node = AstNode::Context { base: String::new(), source_base: None, reference: false, nodes: children.into_iter().skip(1).coll...
+    |                                        ^^^^^^^^^^^^^ expected `Text`, found `String`
+    |
+help: call `Into::into` on this expression to convert `std::string::String` into `Text`
+    |
+368 |                 *node = AstNode::Context { base: String::new().into(), source_base: None, reference: false, nodes: children.into_iter().skip(1).collect() };
+    |                                                               +++++++
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/static_utilities.rs:102:25
+    |
+102 |                 params: format!("(width >= {breakpoint})"),
+    |                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `Text`, found `String`
+    |
+help: call `Into::into` on this expression to convert `std::string::String` into `Text`
+    |
+102 |                 params: format!("(width >= {breakpoint})").into(),
+    |                                                           +++++++
+
+error[E0599]: no method named `as_str` found for mutable reference `&mut Text` in the current scope
+  --> crates/rustify-style/src/compiler/theme.rs:96:38
+   |
+96 |                     if matches!(name.as_str(), "@plugin" | "@config") {
+   |                                      ^^^^^^
+   |
+help: there is a method `push_str` with a similar name, but with different arguments
+  --> crates/rustify-style/src/text.rs:13:5
+   |
+13 |     pub fn push_str(&mut self, value: &str) {
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error[E0308]: mismatched types
+  --> crates/rustify-style/src/compiler/theme.rs:98:38
+   |
+98 | ...                   feature: name.clone(),
+   |                                ^^^^^^^^^^^^ expected `String`, found `Text`
+
+error[E0599]: no method named `as_str` found for mutable reference `&mut Text` in the current scope
+   --> crates/rustify-style/src/compiler/theme.rs:101:38
+    |
+101 |                     if matches!(name.as_str(), "@utility" | "@custom-variant" | "@source") {
+    |                                      ^^^^^^
+    |
+help: there is a method `push_str` with a similar name, but with different arguments
+   --> crates/rustify-style/src/text.rs:13:5
+    |
+ 13 |     pub fn push_str(&mut self, value: &str) {
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/theme.rs:103:38
+    |
+103 | ...                   feature: name.clone(),
+    |                                ^^^^^^^^^^^^ expected `String`, found `Text`
+
+error[E0599]: no method named `split_whitespace` found for mutable reference `&mut Text` in the current scope
+   --> crates/rustify-style/src/compiler/theme.rs:107:59
+    |
+107 |                         let options: BTreeSet<_> = params.split_whitespace().collect();
+    |                                                           ^^^^^^^^^^^^^^^^ method not found in `&mut Text`
+
+error[E0599]: no method named `split_whitespace` found for mutable reference `&mut Text` in the current scope
+   --> crates/rustify-style/src/compiler/theme.rs:110:30
+    |
+109 |                           let prefix = params
+    |  ______________________________________-
+110 | |                             .split_whitespace()
+    | |                             -^^^^^^^^^^^^^^^^ method not found in `&mut Text`
+    | |_____________________________|
+    |
+
+error[E0308]: arguments to this function are incorrect
+   --> crates/rustify-style/src/compiler/theme.rs:150:44
+    |
+150 | ...                   return Err(invalid_child(name, params, child));
+    |                                  ^^^^^^^^^^^^^ ----  ------ expected `&str`, found `&mut Text`
+    |                                                |
+    |                                                expected `&str`, found `&mut Text`
+    |
+    = note:      expected reference `&str`
+            found mutable reference `&mut Text`
+    = note:      expected reference `&str`
+            found mutable reference `&mut Text`
+note: function defined here
+   --> crates/rustify-style/src/compiler/theme.rs:46:12
+    |
+ 46 |         fn invalid_child(name: &str, params: &str, child: &AstNode) -> CompileError {
+    |            ^^^^^^^^^^^^^ ----------  ------------
+
+error[E0308]: arguments to this function are incorrect
+   --> crates/rustify-style/src/compiler/theme.rs:153:44
+    |
+153 | ...                   return Err(invalid_child(name, params, child));
+    |                                  ^^^^^^^^^^^^^ ----  ------ expected `&str`, found `&mut Text`
+    |                                                |
+    |                                                expected `&str`, found `&mut Text`
+    |
+    = note:      expected reference `&str`
+            found mutable reference `&mut Text`
+    = note:      expected reference `&str`
+            found mutable reference `&mut Text`
+note: function defined here
+   --> crates/rustify-style/src/compiler/theme.rs:46:12
+    |
+ 46 |         fn invalid_child(name: &str, params: &str, child: &AstNode) -> CompileError {
+    |            ^^^^^^^^^^^^^ ----------  ------------
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/theme.rs:231:41
+    |
+231 | ...                   params: String::new(),
+    |                               ^^^^^^^^^^^^^ expected `Text`, found `String`
+    |
+help: call `Into::into` on this expression to convert `std::string::String` into `Text`
+    |
+231 |                                 params: String::new().into(),
+    |                                                      +++++++
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/utilities.rs:500:23
+    |
+500 |             selector: format!(".{}", super::candidate::escape(&candidate.raw)),
+    |                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `Text`, found `String`
+    |
+help: call `Into::into` on this expression to convert `std::string::String` into `Text`
+    |
+500 |             selector: format!(".{}", super::candidate::escape(&candidate.raw)).into(),
+    |                                                                               +++++++
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/utilities.rs:698:23
+    |
+698 |             selector: format!(".{}", super::candidate::escape(&candidate.raw)),
+    |                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `Text`, found `String`
+    |
+help: call `Into::into` on this expression to convert `std::string::String` into `Text`
+    |
+698 |             selector: format!(".{}", super::candidate::escape(&candidate.raw)).into(),
+    |                                                                               +++++++
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/variants.rs:180:27
+    |
+180 |                 selector: selector.clone(),
+    |                           ^^^^^^^^^^^^^^^^ expected `Text`, found `String`
+    |
+help: call `Into::into` on this expression to convert `std::string::String` into `Text`
+    |
+180 |                 selector: selector.clone().into(),
+    |                                           +++++++
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/variants.rs:345:9
+    |
+345 |         selector,
+    |         ^^^^^^^^ expected `Text`, found `String`
+    |
+help: call `Into::into` on this expression to convert `std::string::String` into `Text`
+    |
+345 |         selector: selector.into(),
+    |         +++++++++         +++++++
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/variants.rs:354:9
+    |
+354 |         params,
+    |         ^^^^^^ expected `Text`, found `String`
+    |
+help: call `Into::into` on this expression to convert `std::string::String` into `Text`
+    |
+354 |         params: params.into(),
+    |         +++++++       +++++++
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/variants.rs:413:30
+    |
+413 |                 headers.push(params.clone());
+    |                         ---- ^^^^^^^^^^^^^^ expected `String`, found `Text`
+    |                         |
+    |                         arguments to this method are incorrect
+    |
+note: method defined here
+   --> /rustc/48a229ceaefd4985c50990b14116b6d856af0985/library/alloc/src/vec/mod.rs:1001:11
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/variants.rs:488:21
+    |
+487 |                 let children = apply_authored_variant(
+    |                                ---------------------- arguments to this function are incorrect
+488 |                     params,
+    |                     ^^^^^^ expected `&str`, found `&mut Text`
+    |
+    = note:      expected reference `&str`
+            found mutable reference `&mut Text`
+note: function defined here
+   --> crates/rustify-style/src/compiler/variants.rs:435:4
+    |
+435 | fn apply_authored_variant(
+    |    ^^^^^^^^^^^^^^^^^^^^^^
+436 |     params: &str,
+    |     ------------
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/variants.rs:557:28
+    |
+557 |                     query: params.clone(),
+    |                            ^^^^^^^^^^^^^^ expected `String`, found `Text`
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/variants.rs:937:35
+    |
+937 |                         selector: format!("&:not({selectors})"),
+    |                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `Text`, found `String`
+    |
+help: call `Into::into` on this expression to convert `std::string::String` into `Text`
+    |
+937 |                         selector: format!("&:not({selectors})").into(),
+    |                                                                +++++++
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/variants.rs:965:31
+    |
+965 |                         name: name.clone(),
+    |                               ^^^^^^^^^^^^ expected `Text`, found `String`
+    |
+help: call `Into::into` on this expression to convert `std::string::String` into `Text`
+    |
+965 |                         name: name.clone().into(),
+    |                                           +++++++
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/variants.rs:966:33
+    |
+966 |                         params: negated,
+    |                                 ^^^^^^^ expected `Text`, found `String`
+    |
+help: call `Into::into` on this expression to convert `std::string::String` into `Text`
+    |
+966 |                         params: negated.into(),
+    |                                        +++++++
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/variants.rs:977:36
+    |
+977 |                         rules.push(selector.clone());
+    |                               ---- ^^^^^^^^^^^^^^^^ expected `String`, found `Text`
+    |                               |
+    |                               arguments to this method are incorrect
+    |
+note: method defined here
+   --> /rustc/48a229ceaefd4985c50990b14116b6d856af0985/library/alloc/src/vec/mod.rs:1001:11
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/variants.rs:987:40
+    |
+987 |                         at_rules.push((name.clone(), params.clone()));
+    |                                        ^^^^^^^^^^^^ expected `String`, found `Text`
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/variants.rs:987:54
+    |
+987 |                         at_rules.push((name.clone(), params.clone()));
+    |                                                      ^^^^^^^^^^^^^^ expected `String`, found `Text`
+
+error[E0599]: no method named `replace` found for mutable reference `&mut Text` in the current scope
+    --> crates/rustify-style/src/compiler/variants.rs:1035:53
+     |
+1035 | ...                   let selector = selector.replace('&', &format!(":where(.{group})"));
+     |                                               ^^^^^^^
+     |
+help: there is a method `replace_ascii` with a similar name
+     |
+1035 |                             let selector = selector.replace_ascii('&', &format!(":where(.{group})"));
+     |                                                            ++++++
+
+error[E0308]: mismatched types
+    --> crates/rustify-style/src/compiler/variants.rs:1042:29
+     |
+1042 | / ...                   format!(
+1043 | | ...                       "&:is({selector} {}*)",
+1044 | | ...                       if root == "peer" { "~ " } else { "" }
+1045 | | ...                   )
+     | |_______________________^ expected `Text`, found `String`
+     |
+help: call `Into::into` on this expression to convert `std::string::String` into `Text`
+     |
+1045 |                             ).into()
+     |                              +++++++
+
+error[E0599]: no method named `replace` found for mutable reference `&mut Text` in the current scope
+    --> crates/rustify-style/src/compiler/variants.rs:1047:66
+     |
+1047 |                         "in" => format!(":where({}) &", selector.replace('&', "*")),
+     |                                                                  ^^^^^^^
+     |
+help: there is a method `replace_ascii` with a similar name
+     |
+1047 |                         "in" => format!(":where({}) &", selector.replace_ascii('&', "*")),
+     |                                                                         ++++++
+
+error[E0308]: mismatched types
+    --> crates/rustify-style/src/compiler/variants.rs:1047:33
+     |
+1047 |                         "in" => format!(":where({}) &", selector.replace('&', "*")),
+     |                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `Text`, found `String`
+     |
+help: call `Into::into` on this expression to convert `std::string::String` into `Text`
+     |
+1047 |                         "in" => format!(":where({}) &", selector.replace('&', "*")).into(),
+     |                                                                                    +++++++
+
+error[E0599]: no method named `replace` found for mutable reference `&mut Text` in the current scope
+    --> crates/rustify-style/src/compiler/variants.rs:1048:64
+     |
+1048 |                         "has" => format!("&:has({})", selector.replace('&', "*")),
+     |                                                                ^^^^^^^
+     |
+help: there is a method `replace_ascii` with a similar name
+     |
+1048 |                         "has" => format!("&:has({})", selector.replace_ascii('&', "*")),
+     |                                                                       ++++++
+
+error[E0308]: mismatched types
+    --> crates/rustify-style/src/compiler/variants.rs:1048:34
+     |
+1048 |                         "has" => format!("&:has({})", selector.replace('&', "*")),
+     |                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `Text`, found `String`
+     |
+help: call `Into::into` on this expression to convert `std::string::String` into `Text`
+     |
+1048 |                         "has" => format!("&:has({})", selector.replace('&', "*")).into(),
+     |                                                                                  +++++++
+
+error[E0599]: no method named `as_str` found for reference `&Text` in the current scope
+   --> crates/rustify-style/src/compiler/mod.rs:779:51
+    |
+779 | ...                   .entry(params.as_str().into())
+    |                                     ^^^^^^
+    |
+help: there is a method `push_str` with a similar name, but with different arguments
+   --> crates/rustify-style/src/text.rs:13:5
+    |
+ 13 |     pub fn push_str(&mut self, value: &str) {
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error[E0599]: no method named `as_str` found for reference `&Text` in the current scope
+   --> crates/rustify-style/src/compiler/mod.rs:810:28
+    |
+810 |                     params.as_str(),
+    |                            ^^^^^^
+    |
+help: there is a method `push_str` with a similar name, but with different arguments
+   --> crates/rustify-style/src/text.rs:13:5
+    |
+ 13 |     pub fn push_str(&mut self, value: &str) {
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error[E0277]: `Text` doesn't implement `std::fmt::Display`
+   --> crates/rustify-style/src/compiler/mod.rs:815:39
+    |
+815 |                     feature: format!("{name} {params}"),
+    |                                       ^^^^^^ `Text` cannot be formatted with the default formatter
+    |
+help: the trait `std::fmt::Display` is not implemented for `Text`
+   --> crates/rustify-style/src/text.rs:9:1
+    |
+  9 | pub struct Text(Vec<u16>);
+    | ^^^^^^^^^^^^^^^
+    = note: in format strings you may be able to use `{:?}` (or {:#?} for pretty-print) instead
+    = note: required for `&Text` to implement `std::fmt::Display`
+
+error[E0277]: the trait bound `std::string::String: Borrow<Text>` is not satisfied
+    --> crates/rustify-style/src/compiler/mod.rs:1004:85
+     |
+1004 |         if matches!(keyframe, AstNode::AtRule { params, .. } if animations.contains(params)) {
+     |                                                                            -------- ^^^^^^ the trait `Borrow<Text>` is not implemented for `std::string::String`
+     |                                                                            |
+     |                                                                            required by a bound introduced by this call
+     |
+help: the trait `Borrow<Text>` is not implemented for `std::string::String`
+      but trait `Borrow<str>` is implemented for it
+    --> /rustc/48a229ceaefd4985c50990b14116b6d856af0985/library/alloc/src/str.rs:229:0
+     = help: for that trait implementation, expected `str`, found `Text`
+note: required by a bound in `BTreeSet::<T, A>::contains`
+    --> /rustc/48a229ceaefd4985c50990b14116b6d856af0985/library/alloc/src/collections/btree/set.rs:606:4
+
+error[E0599]: no method named `as_str` found for reference `&Text` in the current scope
+   --> crates/rustify-style/src/compiler/mod.rs:879:91
+    |
+879 | ...   if matches!(node, AstNode::AtRule { name, nodes: None, .. } if !matches!(name.as_str(), "@layer" | "@charset" | "@custom-medi...
+    |                                                                                     ^^^^^^
+    |
+help: there is a method `push_str` with a similar name, but with different arguments
+   --> crates/rustify-style/src/text.rs:13:5
+    |
+ 13 |     pub fn push_str(&mut self, value: &str) {
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error[E0599]: no method named `as_str` found for reference `&Text` in the current scope
+   --> crates/rustify-style/src/compiler/mod.rs:885:96
+    |
+885 | ...   let preserve_empty = matches!(&node, AstNode::AtRule { name, .. } if matches!(name.as_str(), "@layer" | "@charset" | "@custom...
+    |                                                                                          ^^^^^^
+    |
+help: there is a method `push_str` with a similar name, but with different arguments
+   --> crates/rustify-style/src/text.rs:13:5
+    |
+ 13 |     pub fn push_str(&mut self, value: &str) {
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error[E0308]: mismatched types
+  --> crates/rustify-style/src/scope.rs:34:21
+   |
+34 |               params: format!(
+   |  _____________________^
+35 | |                 "([data-rustify-style-owner=\"{owner}\"]) to ([data-rustify-style-owner])"
+36 | |             ),
+   | |_____________^ expected `Text`, found `String`
+   |
+help: call `Into::into` on this expression to convert `std::string::String` into `Text`
+   |
+36 |             ).into(),
+   |              +++++++
+
+error[E0277]: `Text` doesn't implement `std::fmt::Display`
+  --> crates/rustify-style/src/scope.rs:49:71
+   |
+49 |                 names.insert(params.clone(), format!("rustify-{owner}-{params}"));
+   |                                                                       ^^^^^^^^ `Text` cannot be formatted with the default formatter
+   |
+help: the trait `std::fmt::Display` is not implemented for `Text`
+  --> crates/rustify-style/src/text.rs:9:1
+   |
+ 9 | pub struct Text(Vec<u16>);
+   | ^^^^^^^^^^^^^^^
+   = note: in format strings you may be able to use `{:?}` (or {:#?} for pretty-print) instead
+   = note: required for `&Text` to implement `std::fmt::Display`
+
+error[E0308]: mismatched types
+  --> crates/rustify-style/src/scope.rs:49:30
+   |
+49 |                 names.insert(params.clone(), format!("rustify-{owner}-{params}"));
+   |                       ------ ^^^^^^^^^^^^^^ expected `String`, found `Text`
+   |                       |
+   |                       arguments to this method are incorrect
+   |
+note: method defined here
+  --> /rustc/48a229ceaefd4985c50990b14116b6d856af0985/library/alloc/src/collections/btree/map.rs:1045:11
+
+error[E0599]: no method named `split` found for mutable reference `&mut Text` in the current scope
+   --> crates/rustify-style/src/scope.rs:126:22
+    |
+125 |                   if selector
+    |  ____________________-
+126 | |                     .split(',')
+    | |                     -^^^^^ method not found in `&mut Text`
+    | |_____________________|
+    |
+    |
+    = help: items from traits can only be used if the trait is implemented and in scope
+    = note: the following traits define an item `split`, perhaps you need to implement one of them:
+            candidate #1: `BufRead`
+            candidate #2: `program::_::_serde::de::value::private::Pair`
+
+error[E0599]: no method named `as_str` found for mutable reference `&mut Text` in the current scope
+   --> crates/rustify-style/src/scope.rs:132:64
+    |
+132 |             AstNode::AtRule { name, params, .. } => match name.as_str() {
+    |                                                                ^^^^^^
+    |
+help: there is a method `push_str` with a similar name, but with different arguments
+   --> crates/rustify-style/src/text.rs:13:5
+    |
+ 13 |     pub fn push_str(&mut self, value: &str) {
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/scope.rs:134:66
+    |
+134 |                     if let Some(replacement) = internal_variable(params, owner) {
+    |                                                ----------------- ^^^^^^ expected `&str`, found `&mut Text`
+    |                                                |
+    |                                                arguments to this function are incorrect
+    |
+    = note:      expected reference `&str`
+            found mutable reference `&mut Text`
+note: function defined here
+   --> crates/rustify-style/src/scope.rs:58:4
+    |
+ 58 | fn internal_variable(value: &str, owner: &str) -> Option<String> {
+    |    ^^^^^^^^^^^^^^^^^ -----------
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/scope.rs:135:35
+    |
+135 |                         *params = replacement;
+    |                         -------   ^^^^^^^^^^^ expected `Text`, found `String`
+    |                         |
+    |                         expected due to the type of this binding
+    |
+help: call `Into::into` on this expression to convert `std::string::String` into `Text`
+    |
+135 |                         *params = replacement.into();
+    |                                              +++++++
+
+error[E0277]: the trait bound `std::string::String: Borrow<Text>` is not satisfied
+   --> crates/rustify-style/src/scope.rs:144:41
+    |
+144 |                     *params = keyframes[params].clone();
+    |                                         ^^^^^^ the trait `Borrow<Text>` is not implemented for `std::string::String`
+    |
+help: the trait `Borrow<Text>` is not implemented for `std::string::String`
+      but trait `Borrow<str>` is implemented for it
+   --> /rustc/48a229ceaefd4985c50990b14116b6d856af0985/library/alloc/src/str.rs:229:0
+    = help: for that trait implementation, expected `str`, found `Text`
+    = note: required for `BTreeMap<std::string::String, std::string::String>` to implement `std::ops::Index<&Text>`
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/scope.rs:144:31
+    |
+144 |                     *params = keyframes[params].clone();
+    |                     -------   ^^^^^^^^^^^^^^^^^^^^^^^^^ expected `Text`, found `String`
+    |                     |
+    |                     expected due to the type of this binding
+    |
+help: call `Into::into` on this expression to convert `std::string::String` into `Text`
+    |
+144 |                     *params = keyframes[params].clone().into();
+    |                                                        +++++++
+
+Some errors have detailed explanations: E0277, E0308, E0599, E0608, E0631.
+For more information about an error, try `rustc --explain E0277`.
+error: could not compile `rustify-style` (lib) due to 122 previous errors
+mbx[cache]: 0 hits, 0 misses, 1 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: the checkouts are gone. their 881.0 GiB logical has gone to join them.

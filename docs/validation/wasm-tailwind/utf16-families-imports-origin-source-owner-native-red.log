@@ -1,0 +1,31 @@
+mbx[warning]: Unix-domain cache session listener unavailable; using FIFO transport: failed to bind cache session listener at /var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/mbx-session-TuMkKB/cache-agent.sock: Operation not permitted (os error 1)
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 6.69s
+     Running unittests src/lib.rs (/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-utf16-verified-54mkl3kq/cargo-target/debug/deps/rustify_style-7a67d48e3c4c51f4)
+
+running 1 test
+test compiler::public_api::compile_ast::canonical_text_tests::source_location_cache_keeps_address_identity_alive ... FAILED
+
+failures:
+
+---- compiler::public_api::compile_ast::canonical_text_tests::source_location_cache_keeps_address_identity_alive stdout ----
+
+thread 'compiler::public_api::compile_ast::canonical_text_tests::source_location_cache_keeps_address_identity_alive' (3620040) panicked at crates/rustify-style/src/compiler/public_api/compile_ast.rs:1895:9:
+cached source address must not be reused after native nodes are removed
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    compiler::public_api::compile_ast::canonical_text_tests::source_location_cache_keeps_address_identity_alive
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 319 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p rustify-style --lib`
+mbx[cache]: 0 hits, 1 misses; 0 B downloaded, 0 B uploaded, 339.5 MiB stored locally

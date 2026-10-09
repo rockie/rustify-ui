@@ -1,0 +1,111 @@
+{
+  "observedAt": "2026-10-06T14:05:02+11:00",
+  "scope": "public AST constructor with sixteen repeated tracked imports and four builds",
+  "before": {
+    "scope": "public AST constructor with sixteen repeated tracked imports and four builds",
+    "samples": [
+      {
+        "constructorP95Ms": 1.3964169999999854,
+        "buildP95Ms": 0.4890829999999937,
+        "sessionsPerSecond": 331.4081282814583,
+        "outputSha256": "a123d62c776bc635bda402dddccd89fd7edeaf2ac973716a07d762fe031b799d",
+        "sessions": 100,
+        "builds": 400
+      },
+      {
+        "constructorP95Ms": 1.3139169999999467,
+        "buildP95Ms": 0.4518749999999727,
+        "sessionsPerSecond": 345.9503848820844,
+        "outputSha256": "a123d62c776bc635bda402dddccd89fd7edeaf2ac973716a07d762fe031b799d",
+        "sessions": 100,
+        "builds": 400
+      },
+      {
+        "constructorP95Ms": 1.4887499999999818,
+        "buildP95Ms": 0.5249579999999696,
+        "sessionsPerSecond": 305.98541934190985,
+        "outputSha256": "a123d62c776bc635bda402dddccd89fd7edeaf2ac973716a07d762fe031b799d",
+        "sessions": 100,
+        "builds": 400
+      },
+      {
+        "constructorP95Ms": 1.8642500000000837,
+        "buildP95Ms": 0.62887499999988,
+        "sessionsPerSecond": 292.5387620149254,
+        "outputSha256": "a123d62c776bc635bda402dddccd89fd7edeaf2ac973716a07d762fe031b799d",
+        "sessions": 100,
+        "builds": 400
+      },
+      {
+        "constructorP95Ms": 1.50587500000006,
+        "buildP95Ms": 0.5041670000000522,
+        "sessionsPerSecond": 310.5777344343776,
+        "outputSha256": "a123d62c776bc635bda402dddccd89fd7edeaf2ac973716a07d762fe031b799d",
+        "sessions": 100,
+        "builds": 400
+      }
+    ],
+    "constructorP95Ms": 1.4887499999999818,
+    "buildP95Ms": 0.5041670000000522,
+    "sessionsPerSecond": 310.5777344343776,
+    "wasmBytes": 2323697,
+    "wasmSha256": "12ce4c6925e3b40438d26601ac93e01072ed31d9cc3baf8c059af8f087b483ec",
+    "actualWasm": true,
+    "finalPerformanceAcceptance": "pending"
+  },
+  "after": {
+    "scope": "public AST constructor with sixteen repeated tracked imports and four builds",
+    "samples": [
+      {
+        "constructorP95Ms": 1.3302909999999883,
+        "buildP95Ms": 0.46133399999996527,
+        "sessionsPerSecond": 338.13903975694774,
+        "outputSha256": "a123d62c776bc635bda402dddccd89fd7edeaf2ac973716a07d762fe031b799d",
+        "sessions": 100,
+        "builds": 400
+      },
+      {
+        "constructorP95Ms": 1.3221250000000282,
+        "buildP95Ms": 0.4552919999999858,
+        "sessionsPerSecond": 342.5538355124377,
+        "outputSha256": "a123d62c776bc635bda402dddccd89fd7edeaf2ac973716a07d762fe031b799d",
+        "sessions": 100,
+        "builds": 400
+      },
+      {
+        "constructorP95Ms": 1.3966249999998581,
+        "buildP95Ms": 0.46670799999992596,
+        "sessionsPerSecond": 340.0208833346085,
+        "outputSha256": "a123d62c776bc635bda402dddccd89fd7edeaf2ac973716a07d762fe031b799d",
+        "sessions": 100,
+        "builds": 400
+      },
+      {
+        "constructorP95Ms": 1.287499999999909,
+        "buildP95Ms": 0.443000000000211,
+        "sessionsPerSecond": 347.7950878291283,
+        "outputSha256": "a123d62c776bc635bda402dddccd89fd7edeaf2ac973716a07d762fe031b799d",
+        "sessions": 100,
+        "builds": 400
+      },
+      {
+        "constructorP95Ms": 1.7887920000000577,
+        "buildP95Ms": 0.5325000000000273,
+        "sessionsPerSecond": 330.4729522346786,
+        "outputSha256": "a123d62c776bc635bda402dddccd89fd7edeaf2ac973716a07d762fe031b799d",
+        "sessions": 100,
+        "builds": 400
+      }
+    ],
+    "constructorP95Ms": 1.3302909999999883,
+    "buildP95Ms": 0.46133399999996527,
+    "sessionsPerSecond": 340.0208833346085,
+    "wasmBytes": 2326589,
+    "wasmSha256": "fbee304e6b2a0053110ebf176c0ad078e83c78b6189faa463f03401d32adb8e3",
+    "actualWasm": true,
+    "finalPerformanceAcceptance": "pending"
+  },
+  "comparison": "CSS-bearing AST fields only; all Source/input identities are checked by the separate graph matrices",
+  "interpretation": "descriptive finite measurement, not an optimization or M7 performance acceptance",
+  "finalPerformanceAcceptance": "pending"
+}

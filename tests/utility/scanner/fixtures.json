@@ -1,0 +1,280 @@
+[
+  {
+    "name": "empty",
+    "extension": "txt",
+    "content": "",
+    "candidates": [],
+    "variables": []
+  },
+  {
+    "name": "punctuation",
+    "extension": "txt",
+    "content": "<> {} [] () ; ,",
+    "candidates": [],
+    "variables": []
+  },
+  {
+    "name": "html",
+    "extension": "html",
+    "content": "<div class=\"p-4 flex hover:bg-red-500 p-4\"></div>",
+    "candidates": [
+      "class",
+      "flex",
+      "hover:bg-red-500",
+      "p-4"
+    ],
+    "variables": []
+  },
+  {
+    "name": "rust-raw",
+    "extension": "rs",
+    "content": "let classes = r#\"w-[137px] bg-[#123456] md:hover:p-4\"#;",
+    "candidates": [
+      "bg-[#123456]",
+      "classes",
+      "let",
+      "md:hover:p-4",
+      "w-[137px]"
+    ],
+    "variables": []
+  },
+  {
+    "name": "rust-leptos-class",
+    "extension": "rs",
+    "content": "view! { <div class:flex=true class:px-2.5={enabled}> }",
+    "candidates": [
+      "class",
+      "flex",
+      "px-2.5",
+      "view!"
+    ],
+    "variables": []
+  },
+  {
+    "name": "typescript",
+    "extension": "tsx",
+    "content": "const node = <div className=\"[&>svg]:size-4 !mt-4 mt-2! text-sm/6\" />;",
+    "candidates": [
+      "!mt-4",
+      "[&>svg]:size-4",
+      "className",
+      "const",
+      "mt-2!",
+      "node",
+      "text-sm/6"
+    ],
+    "variables": []
+  },
+  {
+    "name": "json-escapes",
+    "extension": "json",
+    "content": "{\"classes\":\"content-[\\\"hello_world\\\"] bg-[url(\\\"x.png\\\")]\"}",
+    "candidates": [
+      "bg-[url(\\\"x.png\\\")]",
+      "classes",
+      "content-[\\\"hello_world\\\"]"
+    ],
+    "variables": []
+  },
+  {
+    "name": "unicode",
+    "extension": "html",
+    "content": "<div class=\"font-[微软雅黑] content-['☀'] text-(--色彩)\">你好</div>",
+    "candidates": [
+      "class",
+      "content-['☀']",
+      "font-[微软雅黑]",
+      "text-(--色彩)"
+    ],
+    "variables": [
+      "--色彩"
+    ]
+  },
+  {
+    "name": "nested",
+    "extension": "txt",
+    "content": "bg-[url(https://example.com/?q=[1,2])] data-[state=pending]:bg-(--my-color) grid-cols-[repeat(3,minmax(0,1fr))]",
+    "candidates": [
+      "bg-[url(https://example.com/?q=[1,2])]",
+      "data-[state=pending]:bg-(--my-color)",
+      "grid-cols-[repeat(3,minmax(0,1fr))]"
+    ],
+    "variables": [
+      "--my-color"
+    ]
+  },
+  {
+    "name": "malformed",
+    "extension": "txt",
+    "content": "bg-[red flex [color:] hover:foo( w-[137px",
+    "candidates": [
+      "[color:]",
+      "flex"
+    ],
+    "variables": []
+  },
+  {
+    "name": "dynamic",
+    "extension": "rs",
+    "content": "format!(\"bg-{}-500\", color); \"p-\" + size",
+    "candidates": [
+      "size"
+    ],
+    "variables": []
+  },
+  {
+    "name": "variables",
+    "extension": "txt",
+    "content": "text-(--my-color) text-[var(--accent)] --spacing",
+    "candidates": [
+      "text-(--my-color)",
+      "text-[var(--accent)]"
+    ],
+    "variables": [
+      "--accent",
+      "--my-color",
+      "--spacing"
+    ]
+  },
+  {
+    "name": "css-raw-content",
+    "extension": "css",
+    "content": ".x { --defined: 0; color: var(--used); border: var(--used); content: \"--string\"; }",
+    "candidates": [
+      "border",
+      "color",
+      "content",
+      "x"
+    ],
+    "variables": [
+      "--defined",
+      "--string",
+      "--used"
+    ]
+  },
+  {
+    "name": "multiline",
+    "extension": "html",
+    "content": "<div class=\"flex\np-4\nhover:bg-red-500\"></div>",
+    "candidates": [
+      "class",
+      "flex",
+      "hover:bg-red-500",
+      "p-4"
+    ],
+    "variables": []
+  },
+  {
+    "name": "clojure",
+    "extension": "clj",
+    "content": "[:div.flex.gap-1.5 {:class \"hover:bg-red-500\"}] ;; bg-green-500",
+    "candidates": [
+      "div",
+      "flex",
+      "gap-1.5",
+      "hover:bg-red-500"
+    ],
+    "variables": []
+  },
+  {
+    "name": "elixir",
+    "extension": "heex",
+    "content": "~W[text-[red] bg-(--my-color)]",
+    "candidates": [
+      "bg-(--my-color)",
+      "text-[red]"
+    ],
+    "variables": [
+      "--my-color"
+    ]
+  },
+  {
+    "name": "razor",
+    "extension": "cshtml",
+    "content": "<div class=\"@@sm:text-red-500\">",
+    "candidates": [
+      "@sm:text-red-500",
+      "class"
+    ],
+    "variables": []
+  },
+  {
+    "name": "haml",
+    "extension": "haml",
+    "content": "%body.flex.flex-col.items-center.justify-center",
+    "candidates": [
+      "flex",
+      "flex-col",
+      "items-center",
+      "justify-center"
+    ],
+    "variables": []
+  },
+  {
+    "name": "pug",
+    "extension": "pug",
+    "content": "div.flex.bg-red-500",
+    "candidates": [
+      "bg-red-500",
+      "div",
+      "flex"
+    ],
+    "variables": []
+  },
+  {
+    "name": "ruby",
+    "extension": "rb",
+    "content": "%w[flex data-[state=pending]:bg-[#0088cc] flex-col]",
+    "candidates": [
+      "data-[state=pending]:bg-[#0088cc]",
+      "flex",
+      "flex-col"
+    ],
+    "variables": []
+  },
+  {
+    "name": "slim",
+    "extension": "slim",
+    "content": ".bg-red-500.2xl:flex.bg-green-200.3xl:flex",
+    "candidates": [
+      "2xl:flex",
+      "3xl:flex",
+      "bg-green-200",
+      "bg-red-500"
+    ],
+    "variables": []
+  },
+  {
+    "name": "svelte",
+    "extension": "svelte",
+    "content": "<div class:flex class:px-2.5={condition()}>",
+    "candidates": [
+      "class",
+      "flex",
+      "px-2.5"
+    ],
+    "variables": []
+  },
+  {
+    "name": "vue",
+    "extension": "vue",
+    "content": "<template lang=\"pug\">\n.bg-neutral-900.text-red-500\n</template>",
+    "candidates": [
+      "bg-neutral-900",
+      "lang",
+      "pug",
+      "text-red-500"
+    ],
+    "variables": []
+  },
+  {
+    "name": "unknown-extension",
+    "extension": "wat",
+    "content": "flex p-4",
+    "candidates": [
+      "flex",
+      "p-4"
+    ],
+    "variables": []
+  }
+]

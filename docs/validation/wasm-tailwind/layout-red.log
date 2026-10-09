@@ -1,0 +1,49 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 3.94s
+     Running unittests src/lib.rs (target/debug/deps/rustify_style-d8a92cb6940dfdfd)
+
+running 2 tests
+test compiler::layout::tests::columns_precedence_flex_theme_independence_and_legacy_ir_are_preserved ... FAILED
+test compiler::layout::tests::layout_branches_match_official_fixtures_and_prefix ... FAILED
+
+failures:
+
+---- compiler::layout::tests::columns_precedence_flex_theme_independence_and_legacy_ir_are_preserved stdout ----
+
+thread 'compiler::layout::tests::columns_precedence_flex_theme_independence_and_legacy_ir_are_preserved' (13021778) panicked at crates/rustify-style/src/compiler/layout.rs:110:9:
+assertion failed: report.css.contains("columns: var(--columns-card);")
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- compiler::layout::tests::layout_branches_match_official_fixtures_and_prefix stdout ----
+
+thread 'compiler::layout::tests::layout_branches_match_official_fixtures_and_prefix' (13021779) panicked at crates/rustify-style/src/compiler/layout.rs:88:9:
+6966 mismatches; first cases: [
+    "layout:root=order:value=<default>:empty: actual=\"\" expected=\"\" pending=[CandidateDiagnostic { candidate: \"order\", kind: PendingFamily, family: Some(\"order\") }]",
+    "layout:root=order:value=card:empty: actual=\"\" expected=\"\" pending=[CandidateDiagnostic { candidate: \"order-card\", kind: PendingFamily, family: Some(\"order\") }]",
+    "layout:root=order:value=alias:empty: actual=\"\" expected=\"\" pending=[CandidateDiagnostic { candidate: \"order-alias\", kind: PendingFamily, family: Some(\"order\") }]",
+    "layout:root=order:value=container:empty: actual=\"\" expected=\"\" pending=[CandidateDiagnostic { candidate: \"order-container\", kind: PendingFamily, family: Some(\"order\") }]",
+    "layout:root=order:value=1.5:empty: actual=\"\" expected=\"\" pending=[CandidateDiagnostic { candidate: \"order-1.5\", kind: PendingFamily, family: Some(\"order\") }]",
+    "layout:root=order:value=1/2:empty: actual=\"\" expected=\"\" pending=[CandidateDiagnostic { candidate: \"order-1/2\", kind: PendingFamily, family: Some(\"order\") }]",
+    "layout:root=order:value=missing:empty: actual=\"\" expected=\"\" pending=[CandidateDiagnostic { candidate: \"order-missing\", kind: PendingFamily, family: Some(\"order\") }]",
+    "layout:root=order:value=auto:empty: actual=\"\" expected=\"\" pending=[CandidateDiagnostic { candidate: \"order-auto\", kind: PendingFamily, family: Some(\"order\") }]",
+    "layout:root=order:value=initial:empty: actual=\"\" expected=\"\" pending=[CandidateDiagnostic { candidate: \"order-initial\", kind: PendingFamily, family: Some(\"order\") }]",
+    "layout:root=order:value=grow:empty: actual=\"\" expected=\"\" pending=[CandidateDiagnostic { candidate: \"order-grow\", kind: PendingFamily, family: Some(\"order\") }]",
+]
+
+
+failures:
+    compiler::layout::tests::columns_precedence_flex_theme_independence_and_legacy_ir_are_preserved
+    compiler::layout::tests::layout_branches_match_official_fixtures_and_prefix
+
+test result: FAILED. 0 passed; 2 failed; 0 ignored; 0 measured; 61 filtered out; finished in 1.47s
+
+error: test failed, to rerun pass `-p rustify-style --lib`
+mbx[cache]: 0 hits, 0 misses, 1 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: lent the same 22.2 GiB to every checkout at once. none of them has checked.

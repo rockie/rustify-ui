@@ -1,0 +1,11 @@
+{
+  "name": "rustify-cn-reference",
+  "private": true,
+  "type": "module",
+  "engines": { "node": "26.x" },
+  "scripts": {
+    "check": "node reference.mjs --check",
+    "generate": "node reference.mjs --write",
+    "bench": "node bench.mjs"
+  }
+}

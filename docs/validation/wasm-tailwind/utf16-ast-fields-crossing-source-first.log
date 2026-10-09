@@ -1,0 +1,20 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: packages/tailwindcss/src/index.ts
++ actual - expected
+
++ 'f5084cb8b08b4048d2cf9a145a3805a46231c5c043db021741d9a19e9297a369'
+- undefined
+
+    at file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/compiler/run-utf16-ast-fields-wasm.mjs:15:10 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 'f5084cb8b08b4048d2cf9a145a3805a46231c5c043db021741d9a19e9297a369',
+  expected: undefined,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v26.1.0

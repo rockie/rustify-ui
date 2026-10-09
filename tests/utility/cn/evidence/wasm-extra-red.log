@@ -1,0 +1,18 @@
+{
+  "fixedCases": 947,
+  "passed": 947,
+  "failures": []
+}
+{
+  "extraPassed": 17,
+  "failures": [
+    {
+      "id": "callbacks/validator-reentry",
+      "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n+ actual - expected\n\n+ 'probe-b'\n- 'probe-a probe-b'\n         ^\n"
+    },
+    {
+      "id": "callbacks/lazy-transform-empty",
+      "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n1 !== 0\n"
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+npm notice run rustify-ui-browser-tests@0.1.0 npx
+npm notice run 'playwright' test --project=utility-lab --workers=1
+
+Running 24 tests using 1 worker
+
+(node:34524) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 [utility-lab] › tests/browser/utility-faults.spec.ts:8:5 › failed CSSOM installation nacks preparation, preserves the installed revision and permits retry (570ms)
+  ✓   2 [utility-lab] › tests/browser/utility-faults.spec.ts:36:5 › Worker timeout preserves installed CSS and explicit retry replays in a fresh epoch (1.7s)
+  ✓   3 [utility-lab] › tests/browser/utility-faults.spec.ts:69:5 › instance trap releases Worker, observer, owner attribute and installed stylesheet through JS abort cleanup (466ms)
+  ✓   4 [utility-lab] › tests/browser/utility-faults.spec.ts:86:5 › a second WASM instance keeps its compiler and stylesheet when the first instance traps (495ms)
+[WebServer] request failed: Connection reset by peer (os error 54)
+  ✓   5 [utility-lab] › tests/browser/utility-faults.spec.ts:110:5 › a Worker construction failure leaves the root available for a later mount (566ms)
+  ✓   6 [utility-lab] › tests/browser/utility-gpu.spec.ts:31:5 › GPU draws compiled colors, geometry and real font glyphs alongside scoped DOM (722ms)
+  ✓   7 [utility-lab] › tests/browser/utility-gpu.spec.ts:67:5 › CSS functions resolve runtime candidates once and drive actual DOM and GPU pixels (633ms)
+  ✓   8 [utility-lab] › tests/browser/utility-gpu.spec.ts:108:5 › mask CSS applies to DOM while GPU rejects its unsupported property and retains its drawn style (532ms)
+  ✓   9 [utility-lab] › tests/browser/utility-gpu.spec.ts:124:5 › strict GPU rejection retains the drawn style, partial reports skipped properties and deleting classes restores defaults (661ms)
+  ✓  10 [utility-lab] › tests/browser/utility-gpu.spec.ts:149:5 › GPU responds to pointer, keyboard focus-visible and disabled input without recompiling (591ms)
+  ✓  11 [utility-lab] › tests/browser/utility-gpu.spec.ts:176:5 › GPU media uses the browser viewport, and alpha color blocks match DOM pixels (670ms)
+  ✓  12 [utility-lab] › tests/browser/utility-gpu.spec.ts:196:5 › GPU applies text resources, row layout, shadows and rings from compiler bindings (685ms)
+  ✓  13 [utility-lab] › tests/browser/utility-gpu.spec.ts:220:5 › GPU restores its latest committed programs after a real WebGL context loss (726ms)
+  ✓  14 [utility-lab] › tests/browser/utility-gpu.spec.ts:239:5 › terminal GPU initialization failure explains recovery while DOM editing remains usable (1.7s)
+  ✓  15 [utility-lab] › tests/browser/utility-gpu.spec.ts:258:5 › all non-button GPU boundaries are visible and the desktop comparison frames align (606ms)
+  ✓  16 [utility-lab] › tests/browser/utility-gpu.spec.ts:277:5 › live ThemeScope and ThemeBoundary update colors, dark conditions and host rem without recompiling (709ms)
+  ✓  17 [utility-lab] › tests/browser/utility-runtime.spec.ts:8:5 › structural spacing, container and line clamp keep their actual browser semantics (462ms)
+  ✓  18 [utility-lab] › tests/browser/utility-runtime.spec.ts:49:5 › SDK ensure installs scanner-free CSS, coalesces requests and isolates independent scopes (479ms)
+  ✓  19 [utility-lab] › tests/browser/utility-runtime.spec.ts:101:5 › controls apply classes and fit desktop and mobile (649ms)
+  ✓  20 [utility-lab] › tests/browser/utility-runtime.spec.ts:119:5 › nested owners stop outer rules and disposal removes the owned stylesheet (493ms)
+  ✓  21 [utility-lab] › tests/browser/utility-runtime.spec.ts:141:5 › classList changes and newly added subtrees compile through the bounded observer without scanner (518ms)
+  ✓  22 [utility-lab] › tests/browser/utility-runtime.spec.ts:168:5 › scoped relation variants and arbitrary selectors retain conditional matching (463ms)
+  ✓  23 [utility-lab] › tests/browser/utility-runtime.spec.ts:210:5 › arbitrary responsive conditions follow the browser viewport at both sizes (487ms)
+  ✓  24 [utility-lab] › tests/browser/utility-runtime.spec.ts:229:5 › color alpha and scoped placeholder selectors retain their browser semantics (480ms)
+
+  24 passed (18.6s)

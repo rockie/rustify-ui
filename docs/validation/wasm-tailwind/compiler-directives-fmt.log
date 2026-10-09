@@ -1,0 +1,129 @@
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style/src/compiler/functions.rs:30:
+         let text = match node {
+             AstNode::Declaration { value, .. } => Some(value.as_str()),
+             AstNode::AtRule { name, params, .. }
+[31m-                if matches!(name.as_str(), "@media" | "@custom-media" | "@container" | "@supports") => Some(params.as_str()),
+(B[m[32m+                if matches!(
+(B[m[32m+                    name.as_str(),
+(B[m[32m+                    "@media" | "@custom-media" | "@container" | "@supports"
+(B[m[32m+                ) =>
+(B[m[32m+            {
+(B[m[32m+                Some(params.as_str())
+(B[m[32m+            }
+(B[m             _ => None,
+         };
+         if let Some(text) = text {
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style/src/compiler/imports.rs:190:
+     if important {
+         // Consumed before rendering: import importance is a global compiler option.
+         nodes.push(AstNode::AtRoot {
+[31m-            nodes: vec![AstNode::Comment { value: "important utilities".into() }],
+(B[m[32m+            nodes: vec![AstNode::Comment {
+(B[m[32m+                value: "important utilities".into(),
+(B[m[32m+            }],
+(B[m         });
+     }
+     transform_media(&mut nodes, base, depth)?;
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style/src/compiler/imports.rs:204:
+ fn transform_media(nodes: &mut Vec<AstNode>, base: &str, depth: usize) -> Result<(), CompileError> {
+     let mut output = Vec::new();
+     for mut node in std::mem::take(nodes) {
+[31m-        if let AstNode::AtRule { name, params, nodes: Some(children) } = &mut node {
+(B[m[32m+        if let AstNode::AtRule {
+(B[m[32m+            name,
+(B[m[32m+            params,
+(B[m[32m+            nodes: Some(children),
+(B[m[32m+        } = &mut node
+(B[m[32m+        {
+(B[m             if name == "@media" {
+[31m-                output.extend(media(params.clone(), std::mem::take(children), base, depth)?);
+(B[m[32m+                output.extend(media(
+(B[m[32m+                    params.clone(),
+(B[m[32m+                    std::mem::take(children),
+(B[m[32m+                    base,
+(B[m[32m+                    depth,
+(B[m[32m+                )?);
+(B[m                 continue;
+             }
+         }
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style/src/compiler/imports.rs:213:
+         let child_base = match &node {
+             AstNode::Context { base, .. } => base.as_str(),
+             _ => base,
+[31m-        }.to_owned();
+(B[m[32m+        }
+(B[m[32m+        .to_owned();
+(B[m         if let Some(children) = node.children_mut() {
+             transform_media(children, &child_base, depth)?;
+         }
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style/src/compiler/imports.rs:457:
+                 },
+                 assets,
+                 limits(),
+[31m-            )
+(B[m[31m-            ;
+(B[m[32m+            );
+(B[m             if let Some(message) = case["expectedError"].as_str() {
+[31m-                assert!(matches!(&compiler, Err(super::CompileError::Syntax { message: actual, .. }) if actual == message), "{}: {:?}", case["id"], compiler.err());
+(B[m[32m+                assert!(
+(B[m[32m+                    matches!(&compiler, Err(super::CompileError::Syntax { message: actual, .. }) if actual == message),
+(B[m[32m+                    "{}: {:?}",
+(B[m[32m+                    case["id"],
+(B[m[32m+                    compiler.err()
+(B[m[32m+                );
+(B[m                 continue;
+             }
+             let mut compiler = compiler.unwrap_or_else(|error| panic!("{}: {error:?}", case["id"]));
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style/src/compiler/mod.rs:162:
+         let custom_variants = custom_variants::CustomVariants::extract(&mut input_ast, &limits)?;
+         let mut variant_headers = Vec::new();
+         variants::authored_headers(&input_ast, &mut variant_headers);
+[31m-        let passthrough_css = (!has_import && !has_functions && !has_directive && variant_headers.is_empty())
+(B[m[31m-            .then_some(input.css);
+(B[m[31m-        let sources_cache_bytes = sources_cache_bytes.saturating_add(
+(B[m[31m-            passthrough_css.as_ref().map_or(0, String::capacity),
+(B[m[31m-        );
+(B[m[32m+        let passthrough_css =
+(B[m[32m+            (!has_import && !has_functions && !has_directive && variant_headers.is_empty())
+(B[m[32m+                .then_some(input.css);
+(B[m[32m+        let sources_cache_bytes = sources_cache_bytes
+(B[m[32m+            .saturating_add(passthrough_css.as_ref().map_or(0, String::capacity));
+(B[m         let mut custom =
+             custom_utilities::CustomUtilities::extract_marked(&mut input_ast, &limits)?;
+         let theme_budget = limits
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style/src/compiler/mod.rs:195:
+             limits.ast_depth,
+         )?;
+         ast::validate_depth(&empty, limits.ast_depth)?;
+[31m-        let css = passthrough_css.clone().unwrap_or_else(|| ast::to_css(&empty));
+(B[m[32m+        let css = passthrough_css
+(B[m[32m+            .clone()
+(B[m[32m+            .unwrap_or_else(|| ast::to_css(&empty));
+(B[m         let gpu_variables = gpu_variables(&theme, &empty);
+         let initial_metrics = CompileMetrics {
+             cache_bytes: theme
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style/src/compiler/mod.rs:276:
+             .fold(0usize, |size, item| size.saturating_add(item.len()));
+         check_limit(batch_bytes, self.limits.queued_bytes, "queued_bytes")?;
+         let unique: BTreeSet<_> = batch.iter().collect();
+[31m-        let unique = if self.passthrough_css.is_some() { BTreeSet::new() } else { unique };
+(B[m[32m+        let unique = if self.passthrough_css.is_some() {
+(B[m[32m+            BTreeSet::new()
+(B[m[32m+        } else {
+(B[m[32m+            unique
+(B[m[32m+        };
+(B[m         let new_count = unique
+             .iter()
+             .filter(|item| !self.cache.contains_key(item.as_str()))
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style/src/compiler/mod.rs:454:
+             self.limits.ast_depth,
+         )?;
+         ast::validate_depth(&output_ast, self.limits.ast_depth)?;
+[31m-        let css = self.passthrough_css.clone().unwrap_or_else(|| ast::to_css(&output_ast));
+(B[m[32m+        let css = self
+(B[m[32m+            .passthrough_css
+(B[m[32m+            .clone()
+(B[m[32m+            .unwrap_or_else(|| ast::to_css(&output_ast));
+(B[m         let gpu_variables = gpu_variables(&self.theme, &output_ast);
+         check_limit(css.len(), self.limits.css_bytes, "css_bytes")?;
+         metrics.output_bytes = css.len();

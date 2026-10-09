@@ -1,0 +1,38 @@
+mbx[warning]: Unix-domain cache session listener unavailable; using FIFO transport: failed to bind cache session listener at /var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/mbx-session-JHNRiL/cache-agent.sock: Operation not permitted (os error 1)
+warning: method `fields` is never used
+  --> crates/rustify-style/src/compiler/origin.rs:74:19
+   |
+56 | impl NodeOrigin {
+   | --------------- method in this implementation
+...
+74 |     pub(super) fn fields(&self) -> &Value {
+   |                   ^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+mbx[warning]: Unix-domain cache session listener unavailable; using FIFO transport: failed to bind cache session listener at /var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/mbx-session-udViEr/cache-agent.sock: Operation not permitted (os error 1)
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+warning: method `fields` is never used
+  --> crates/rustify-style/src/compiler/origin.rs:74:19
+   |
+56 | impl NodeOrigin {
+   | --------------- method in this implementation
+...
+74 |     pub(super) fn fields(&self) -> &Value {
+   |                   ^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `rustify-style` (lib) generated 1 warning
+   Compiling rustify-style-wasm v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style-wasm)
+mbx[progress]: 15s elapsed; 0 hits, 1 misses, 1 bypassed, 0 not looked up; ~0s compiler work saved
+    Finished `release` profile [optimized] target(s) in 15.18s
+mbx[cache]: 0 hits, 1 misses, 1 bypassed; 0 B downloaded, 0 B uploaded, 18.4 MiB stored locally
+mbx[cache]: 0 hits, 3 misses; 0 B downloaded, 0 B uploaded, 122.6 MiB stored locally

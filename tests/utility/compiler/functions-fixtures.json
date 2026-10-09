@@ -1,0 +1,1955 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "1334c99db8fd26c8ea065375dd9259800863f072",
+  "oracleVersion": "4.1.13",
+  "cases": [
+    {
+      "id": "functions::authored:0",
+      "input": "@theme  { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: --alpha(#123456 / .5); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ".probe {\n  value: color-mix(in oklab, #123456 50%, transparent);\n}\n"
+    },
+    {
+      "id": "functions::candidate:0",
+      "input": "@theme  { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "[value:--alpha(#123456_/_.5)]"
+      ],
+      "expectedCss": ".\\[value\\:--alpha\\(\\#123456_\\/_\\.5\\)\\] {\n  value: color-mix(in oklab, #123456 50%, transparent);\n}\n"
+    },
+    {
+      "id": "functions::authored:1",
+      "input": "@theme  { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: --alpha(currentColor / 35%); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ".probe {\n  value: currentColor;\n  @supports (color: color-mix(in lab, red, red)) {\n    value: color-mix(in oklab, currentColor 35%, transparent);\n  }\n}\n"
+    },
+    {
+      "id": "functions::candidate:1",
+      "input": "@theme  { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "[value:--alpha(currentColor_/_35%)]"
+      ],
+      "expectedCss": ".\\[value\\:--alpha\\(currentColor_\\/_35\\%\\)\\] {\n  value: currentColor;\n  @supports (color: color-mix(in lab, red, red)) {\n    value: color-mix(in oklab, currentColor 35%, transparent);\n  }\n}\n"
+    },
+    {
+      "id": "functions::authored:2",
+      "input": "@theme  { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: --alpha(var(--color-brand) / var(--opacity-muted)); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ":root, :host {\n  --color-brand: #123456;\n  --opacity-muted: .35;\n}\n.probe {\n  value: color-mix(in srgb, #123456 .35, transparent);\n  @supports (color: color-mix(in lab, red, red)) {\n    value: color-mix(in oklab, var(--color-brand) var(--opacity-muted), transparent);\n  }\n}\n"
+    },
+    {
+      "id": "functions::candidate:2",
+      "input": "@theme  { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "[value:--alpha(var(--color-brand)_/_var(--opacity-muted))]"
+      ],
+      "expectedCss": ":root, :host {\n  --color-brand: #123456;\n  --opacity-muted: .35;\n}\n.\\[value\\:--alpha\\(var\\(--color-brand\\)_\\/_var\\(--opacity-muted\\)\\)\\] {\n  value: color-mix(in srgb, #123456 .35, transparent);\n  @supports (color: color-mix(in lab, red, red)) {\n    value: color-mix(in oklab, var(--color-brand) var(--opacity-muted), transparent);\n  }\n}\n"
+    },
+    {
+      "id": "functions::authored:3",
+      "input": "@theme  { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: --alpha(red / 1); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ".probe {\n  value: red;\n}\n"
+    },
+    {
+      "id": "functions::candidate:3",
+      "input": "@theme  { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "[value:--alpha(red_/_1)]"
+      ],
+      "expectedCss": ".\\[value\\:--alpha\\(red_\\/_1\\)\\] {\n  value: red;\n}\n"
+    },
+    {
+      "id": "functions::authored:4",
+      "input": "@theme  { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: --spacing(3); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ":root, :host {\n  --spacing: 4px;\n}\n.probe {\n  value: calc(var(--spacing) * 3);\n}\n"
+    },
+    {
+      "id": "functions::candidate:4",
+      "input": "@theme  { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "[value:--spacing(3)]"
+      ],
+      "expectedCss": ":root, :host {\n  --spacing: 4px;\n}\n.\\[value\\:--spacing\\(3\\)\\] {\n  value: calc(var(--spacing) * 3);\n}\n"
+    },
+    {
+      "id": "functions::authored:5",
+      "input": "@theme  { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: --spacing(-1); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ":root, :host {\n  --spacing: 4px;\n}\n.probe {\n  value: calc(var(--spacing) * -1);\n}\n"
+    },
+    {
+      "id": "functions::candidate:5",
+      "input": "@theme  { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "[value:--spacing(-1)]"
+      ],
+      "expectedCss": ":root, :host {\n  --spacing: 4px;\n}\n.\\[value\\:--spacing\\(-1\\)\\] {\n  value: calc(var(--spacing) * -1);\n}\n"
+    },
+    {
+      "id": "functions::authored:6",
+      "input": "@theme  { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: --spacing(calc(1 + 2)); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ":root, :host {\n  --spacing: 4px;\n}\n.probe {\n  value: calc(var(--spacing) * calc(1 + 2));\n}\n"
+    },
+    {
+      "id": "functions::candidate:6",
+      "input": "@theme  { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "[value:--spacing(calc(1_+_2))]"
+      ],
+      "expectedCss": ":root, :host {\n  --spacing: 4px;\n}\n.\\[value\\:--spacing\\(calc\\(1_\\+_2\\)\\)\\] {\n  value: calc(var(--spacing) * calc(1 + 2));\n}\n"
+    },
+    {
+      "id": "functions::authored:7",
+      "input": "@theme  { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: --theme(--color-brand); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ":root, :host {\n  --color-brand: #123456;\n}\n.probe {\n  value: var(--color-brand);\n}\n"
+    },
+    {
+      "id": "functions::candidate:7",
+      "input": "@theme  { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "[value:--theme(--color-brand)]"
+      ],
+      "expectedCss": ":root, :host {\n  --color-brand: #123456;\n}\n.\\[value\\:--theme\\(--color-brand\\)\\] {\n  value: var(--color-brand);\n}\n"
+    },
+    {
+      "id": "functions::authored:8",
+      "input": "@theme  { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: --theme(--color-brand inline); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ".probe {\n  value: #123456;\n}\n"
+    },
+    {
+      "id": "functions::candidate:8",
+      "input": "@theme  { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "[value:--theme(--color-brand_inline)]"
+      ],
+      "expectedCss": ".\\[value\\:--theme\\(--color-brand_inline\\)\\] {\n  value: #123456;\n}\n"
+    },
+    {
+      "id": "functions::authored:9",
+      "input": "@theme  { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: --theme(--color-brand / 50%); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ":root, :host {\n  --color-brand: #123456;\n}\n.probe {\n  value: color-mix(in srgb, #123456 50%, transparent);\n  @supports (color: color-mix(in lab, red, red)) {\n    value: color-mix(in oklab, var(--color-brand) 50%, transparent);\n  }\n}\n"
+    },
+    {
+      "id": "functions::candidate:9",
+      "input": "@theme  { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "[value:--theme(--color-brand_/_50%)]"
+      ],
+      "expectedCss": ":root, :host {\n  --color-brand: #123456;\n}\n.\\[value\\:--theme\\(--color-brand_\\/_50\\%\\)\\] {\n  value: color-mix(in srgb, #123456 50%, transparent);\n  @supports (color: color-mix(in lab, red, red)) {\n    value: color-mix(in oklab, var(--color-brand) 50%, transparent);\n  }\n}\n"
+    },
+    {
+      "id": "functions::authored:10",
+      "input": "@theme  { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: --theme(--missing, red, blue); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ".probe {\n  value: red, blue;\n}\n"
+    },
+    {
+      "id": "functions::candidate:10",
+      "input": "@theme  { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "[value:--theme(--missing,_red,_blue)]"
+      ],
+      "expectedCss": ".\\[value\\:--theme\\(--missing\\,_red\\,_blue\\)\\] {\n  value: red, blue;\n}\n"
+    },
+    {
+      "id": "functions::authored:11",
+      "input": "@theme  { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: --theme(--missing, initial); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ".probe {\n  value: initial;\n}\n"
+    },
+    {
+      "id": "functions::candidate:11",
+      "input": "@theme  { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "[value:--theme(--missing,_initial)]"
+      ],
+      "expectedCss": ".\\[value\\:--theme\\(--missing\\,_initial\\)\\] {\n  value: initial;\n}\n"
+    },
+    {
+      "id": "functions::authored:12",
+      "input": "@theme  { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: --theme(--color-brand, blue); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ":root, :host {\n  --color-brand: #123456;\n}\n.probe {\n  value: var(--color-brand, blue);\n}\n"
+    },
+    {
+      "id": "functions::candidate:12",
+      "input": "@theme  { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "[value:--theme(--color-brand,_blue)]"
+      ],
+      "expectedCss": ":root, :host {\n  --color-brand: #123456;\n}\n.\\[value\\:--theme\\(--color-brand\\,_blue\\)\\] {\n  value: var(--color-brand, blue);\n}\n"
+    },
+    {
+      "id": "functions::authored:13",
+      "input": "@theme  { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: theme(--color-brand); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ".probe {\n  value: #123456;\n}\n"
+    },
+    {
+      "id": "functions::candidate:13",
+      "input": "@theme  { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "[value:theme(--color-brand)]"
+      ],
+      "expectedCss": ".\\[value\\:theme\\(--color-brand\\)\\] {\n  value: #123456;\n}\n"
+    },
+    {
+      "id": "functions::authored:14",
+      "input": "@theme  { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: theme(\"--color-brand\"); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ".probe {\n  value: #123456;\n}\n"
+    },
+    {
+      "id": "functions::candidate:14",
+      "input": "@theme  { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "[value:theme(\"--color-brand\")]"
+      ],
+      "expectedCss": ".\\[value\\:theme\\(\\\"--color-brand\\\"\\)\\] {\n  value: #123456;\n}\n"
+    },
+    {
+      "id": "functions::authored:15",
+      "input": "@theme  { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: theme(--color-brand / 50%); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ".probe {\n  value: color-mix(in oklab, #123456 50%, transparent);\n}\n"
+    },
+    {
+      "id": "functions::candidate:15",
+      "input": "@theme  { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "[value:theme(--color-brand_/_50%)]"
+      ],
+      "expectedCss": ""
+    },
+    {
+      "id": "functions::authored:16",
+      "input": "@theme  { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: theme(--missing, red, blue); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ".probe {\n  value: red, blue;\n}\n"
+    },
+    {
+      "id": "functions::candidate:16",
+      "input": "@theme  { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "[value:theme(--missing,_red,_blue)]"
+      ],
+      "expectedCss": ".\\[value\\:theme\\(--missing\\,_red\\,_blue\\)\\] {\n  value: red, blue;\n}\n"
+    },
+    {
+      "id": "functions::authored:17",
+      "input": "@theme  { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: calc(--spacing(3) + --spacing(2)); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ":root, :host {\n  --spacing: 4px;\n}\n.probe {\n  value: calc(calc(var(--spacing) * 3) + calc(var(--spacing) * 2));\n}\n"
+    },
+    {
+      "id": "functions::candidate:17",
+      "input": "@theme  { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "[value:calc(--spacing(3)_+_--spacing(2))]"
+      ],
+      "expectedCss": ":root, :host {\n  --spacing: 4px;\n}\n.\\[value\\:calc\\(--spacing\\(3\\)_\\+_--spacing\\(2\\)\\)\\] {\n  value: calc(calc(var(--spacing) * 3) + calc(var(--spacing) * 2));\n}\n"
+    },
+    {
+      "id": "functions::authored:18",
+      "input": "@theme  { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: --alpha(--theme(--color-brand) / .5); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ":root, :host {\n  --color-brand: #123456;\n}\n.probe {\n  value: color-mix(in srgb, #123456 50%, transparent);\n  @supports (color: color-mix(in lab, red, red)) {\n    value: color-mix(in oklab, var(--color-brand) 50%, transparent);\n  }\n}\n"
+    },
+    {
+      "id": "functions::candidate:18",
+      "input": "@theme  { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "[value:--alpha(--theme(--color-brand)_/_.5)]"
+      ],
+      "expectedCss": ":root, :host {\n  --color-brand: #123456;\n}\n.\\[value\\:--alpha\\(--theme\\(--color-brand\\)_\\/_\\.5\\)\\] {\n  value: color-mix(in srgb, #123456 50%, transparent);\n  @supports (color: color-mix(in lab, red, red)) {\n    value: color-mix(in oklab, var(--color-brand) 50%, transparent);\n  }\n}\n"
+    },
+    {
+      "id": "functions::media",
+      "input": "@theme  { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @media (width >= --theme(--breakpoint-card)) { .probe { color: --theme(--color-brand); } } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ":root, :host {\n  --color-brand: #123456;\n}\n@media (width >= 700px) {\n  .probe {\n    color: var(--color-brand);\n  }\n}\n"
+    },
+    {
+      "id": "functions::supports",
+      "input": "@theme  { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @supports (color: --theme(--color-brand)) { .probe { color: red; } } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": "@supports (color: #123456) {\n  .probe {\n    color: red;\n  }\n}\n"
+    },
+    {
+      "id": "functions::theme-dependency",
+      "input": "@theme  { --color-brand: red; --color-alias: --theme(--color-brand); --spacing: 4px; --space-custom: --spacing(3); } @tailwind utilities;",
+      "candidates": [
+        "bg-alias"
+      ],
+      "expectedCss": ":root, :host {\n  --color-brand: red;\n  --color-alias: var(--color-brand);\n}\n.bg-alias {\n  background-color: var(--color-alias);\n}\n"
+    },
+    {
+      "id": "functions:inline:authored:0",
+      "input": "@theme inline { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: --alpha(#123456 / .5); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ".probe {\n  value: color-mix(in oklab, #123456 50%, transparent);\n}\n"
+    },
+    {
+      "id": "functions:inline:candidate:0",
+      "input": "@theme inline { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "[value:--alpha(#123456_/_.5)]"
+      ],
+      "expectedCss": ".\\[value\\:--alpha\\(\\#123456_\\/_\\.5\\)\\] {\n  value: color-mix(in oklab, #123456 50%, transparent);\n}\n"
+    },
+    {
+      "id": "functions:inline:authored:1",
+      "input": "@theme inline { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: --alpha(currentColor / 35%); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ".probe {\n  value: currentColor;\n  @supports (color: color-mix(in lab, red, red)) {\n    value: color-mix(in oklab, currentColor 35%, transparent);\n  }\n}\n"
+    },
+    {
+      "id": "functions:inline:candidate:1",
+      "input": "@theme inline { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "[value:--alpha(currentColor_/_35%)]"
+      ],
+      "expectedCss": ".\\[value\\:--alpha\\(currentColor_\\/_35\\%\\)\\] {\n  value: currentColor;\n  @supports (color: color-mix(in lab, red, red)) {\n    value: color-mix(in oklab, currentColor 35%, transparent);\n  }\n}\n"
+    },
+    {
+      "id": "functions:inline:authored:2",
+      "input": "@theme inline { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: --alpha(var(--color-brand) / var(--opacity-muted)); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ":root, :host {\n  --color-brand: #123456;\n  --opacity-muted: .35;\n}\n.probe {\n  value: color-mix(in srgb, #123456 .35, transparent);\n  @supports (color: color-mix(in lab, red, red)) {\n    value: color-mix(in oklab, var(--color-brand) var(--opacity-muted), transparent);\n  }\n}\n"
+    },
+    {
+      "id": "functions:inline:candidate:2",
+      "input": "@theme inline { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "[value:--alpha(var(--color-brand)_/_var(--opacity-muted))]"
+      ],
+      "expectedCss": ":root, :host {\n  --color-brand: #123456;\n  --opacity-muted: .35;\n}\n.\\[value\\:--alpha\\(var\\(--color-brand\\)_\\/_var\\(--opacity-muted\\)\\)\\] {\n  value: color-mix(in srgb, #123456 .35, transparent);\n  @supports (color: color-mix(in lab, red, red)) {\n    value: color-mix(in oklab, var(--color-brand) var(--opacity-muted), transparent);\n  }\n}\n"
+    },
+    {
+      "id": "functions:inline:authored:3",
+      "input": "@theme inline { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: --alpha(red / 1); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ".probe {\n  value: red;\n}\n"
+    },
+    {
+      "id": "functions:inline:candidate:3",
+      "input": "@theme inline { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "[value:--alpha(red_/_1)]"
+      ],
+      "expectedCss": ".\\[value\\:--alpha\\(red_\\/_1\\)\\] {\n  value: red;\n}\n"
+    },
+    {
+      "id": "functions:inline:authored:4",
+      "input": "@theme inline { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: --spacing(3); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ".probe {\n  value: calc(4px * 3);\n}\n"
+    },
+    {
+      "id": "functions:inline:candidate:4",
+      "input": "@theme inline { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "[value:--spacing(3)]"
+      ],
+      "expectedCss": ".\\[value\\:--spacing\\(3\\)\\] {\n  value: calc(4px * 3);\n}\n"
+    },
+    {
+      "id": "functions:inline:authored:5",
+      "input": "@theme inline { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: --spacing(-1); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ".probe {\n  value: calc(4px * -1);\n}\n"
+    },
+    {
+      "id": "functions:inline:candidate:5",
+      "input": "@theme inline { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "[value:--spacing(-1)]"
+      ],
+      "expectedCss": ".\\[value\\:--spacing\\(-1\\)\\] {\n  value: calc(4px * -1);\n}\n"
+    },
+    {
+      "id": "functions:inline:authored:6",
+      "input": "@theme inline { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: --spacing(calc(1 + 2)); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ".probe {\n  value: calc(4px * calc(1 + 2));\n}\n"
+    },
+    {
+      "id": "functions:inline:candidate:6",
+      "input": "@theme inline { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "[value:--spacing(calc(1_+_2))]"
+      ],
+      "expectedCss": ".\\[value\\:--spacing\\(calc\\(1_\\+_2\\)\\)\\] {\n  value: calc(4px * calc(1 + 2));\n}\n"
+    },
+    {
+      "id": "functions:inline:authored:7",
+      "input": "@theme inline { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: --theme(--color-brand); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ".probe {\n  value: #123456;\n}\n"
+    },
+    {
+      "id": "functions:inline:candidate:7",
+      "input": "@theme inline { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "[value:--theme(--color-brand)]"
+      ],
+      "expectedCss": ".\\[value\\:--theme\\(--color-brand\\)\\] {\n  value: #123456;\n}\n"
+    },
+    {
+      "id": "functions:inline:authored:8",
+      "input": "@theme inline { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: --theme(--color-brand inline); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ".probe {\n  value: #123456;\n}\n"
+    },
+    {
+      "id": "functions:inline:candidate:8",
+      "input": "@theme inline { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "[value:--theme(--color-brand_inline)]"
+      ],
+      "expectedCss": ".\\[value\\:--theme\\(--color-brand_inline\\)\\] {\n  value: #123456;\n}\n"
+    },
+    {
+      "id": "functions:inline:authored:9",
+      "input": "@theme inline { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: --theme(--color-brand / 50%); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ".probe {\n  value: color-mix(in oklab, #123456 50%, transparent);\n}\n"
+    },
+    {
+      "id": "functions:inline:candidate:9",
+      "input": "@theme inline { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "[value:--theme(--color-brand_/_50%)]"
+      ],
+      "expectedCss": ".\\[value\\:--theme\\(--color-brand_\\/_50\\%\\)\\] {\n  value: color-mix(in oklab, #123456 50%, transparent);\n}\n"
+    },
+    {
+      "id": "functions:inline:authored:10",
+      "input": "@theme inline { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: --theme(--missing, red, blue); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ".probe {\n  value: red, blue;\n}\n"
+    },
+    {
+      "id": "functions:inline:candidate:10",
+      "input": "@theme inline { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "[value:--theme(--missing,_red,_blue)]"
+      ],
+      "expectedCss": ".\\[value\\:--theme\\(--missing\\,_red\\,_blue\\)\\] {\n  value: red, blue;\n}\n"
+    },
+    {
+      "id": "functions:inline:authored:11",
+      "input": "@theme inline { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: --theme(--missing, initial); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ".probe {\n  value: initial;\n}\n"
+    },
+    {
+      "id": "functions:inline:candidate:11",
+      "input": "@theme inline { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "[value:--theme(--missing,_initial)]"
+      ],
+      "expectedCss": ".\\[value\\:--theme\\(--missing\\,_initial\\)\\] {\n  value: initial;\n}\n"
+    },
+    {
+      "id": "functions:inline:authored:12",
+      "input": "@theme inline { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: --theme(--color-brand, blue); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ".probe {\n  value: #123456;\n}\n"
+    },
+    {
+      "id": "functions:inline:candidate:12",
+      "input": "@theme inline { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "[value:--theme(--color-brand,_blue)]"
+      ],
+      "expectedCss": ".\\[value\\:--theme\\(--color-brand\\,_blue\\)\\] {\n  value: #123456;\n}\n"
+    },
+    {
+      "id": "functions:inline:authored:13",
+      "input": "@theme inline { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: theme(--color-brand); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ".probe {\n  value: #123456;\n}\n"
+    },
+    {
+      "id": "functions:inline:candidate:13",
+      "input": "@theme inline { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "[value:theme(--color-brand)]"
+      ],
+      "expectedCss": ".\\[value\\:theme\\(--color-brand\\)\\] {\n  value: #123456;\n}\n"
+    },
+    {
+      "id": "functions:inline:authored:14",
+      "input": "@theme inline { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: theme(\"--color-brand\"); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ".probe {\n  value: #123456;\n}\n"
+    },
+    {
+      "id": "functions:inline:candidate:14",
+      "input": "@theme inline { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "[value:theme(\"--color-brand\")]"
+      ],
+      "expectedCss": ".\\[value\\:theme\\(\\\"--color-brand\\\"\\)\\] {\n  value: #123456;\n}\n"
+    },
+    {
+      "id": "functions:inline:authored:15",
+      "input": "@theme inline { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: theme(--color-brand / 50%); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ".probe {\n  value: color-mix(in oklab, #123456 50%, transparent);\n}\n"
+    },
+    {
+      "id": "functions:inline:candidate:15",
+      "input": "@theme inline { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "[value:theme(--color-brand_/_50%)]"
+      ],
+      "expectedCss": ""
+    },
+    {
+      "id": "functions:inline:authored:16",
+      "input": "@theme inline { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: theme(--missing, red, blue); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ".probe {\n  value: red, blue;\n}\n"
+    },
+    {
+      "id": "functions:inline:candidate:16",
+      "input": "@theme inline { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "[value:theme(--missing,_red,_blue)]"
+      ],
+      "expectedCss": ".\\[value\\:theme\\(--missing\\,_red\\,_blue\\)\\] {\n  value: red, blue;\n}\n"
+    },
+    {
+      "id": "functions:inline:authored:17",
+      "input": "@theme inline { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: calc(--spacing(3) + --spacing(2)); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ".probe {\n  value: calc(calc(4px * 3) + calc(4px * 2));\n}\n"
+    },
+    {
+      "id": "functions:inline:candidate:17",
+      "input": "@theme inline { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "[value:calc(--spacing(3)_+_--spacing(2))]"
+      ],
+      "expectedCss": ".\\[value\\:calc\\(--spacing\\(3\\)_\\+_--spacing\\(2\\)\\)\\] {\n  value: calc(calc(4px * 3) + calc(4px * 2));\n}\n"
+    },
+    {
+      "id": "functions:inline:authored:18",
+      "input": "@theme inline { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: --alpha(--theme(--color-brand) / .5); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ".probe {\n  value: color-mix(in oklab, #123456 50%, transparent);\n}\n"
+    },
+    {
+      "id": "functions:inline:candidate:18",
+      "input": "@theme inline { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "[value:--alpha(--theme(--color-brand)_/_.5)]"
+      ],
+      "expectedCss": ".\\[value\\:--alpha\\(--theme\\(--color-brand\\)_\\/_\\.5\\)\\] {\n  value: color-mix(in oklab, #123456 50%, transparent);\n}\n"
+    },
+    {
+      "id": "functions:inline:media",
+      "input": "@theme inline { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @media (width >= --theme(--breakpoint-card)) { .probe { color: --theme(--color-brand); } } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": "@media (width >= 700px) {\n  .probe {\n    color: #123456;\n  }\n}\n"
+    },
+    {
+      "id": "functions:inline:supports",
+      "input": "@theme inline { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @supports (color: --theme(--color-brand)) { .probe { color: red; } } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": "@supports (color: #123456) {\n  .probe {\n    color: red;\n  }\n}\n"
+    },
+    {
+      "id": "functions:inline:theme-dependency",
+      "input": "@theme inline { --color-brand: red; --color-alias: --theme(--color-brand); --spacing: 4px; --space-custom: --spacing(3); } @tailwind utilities;",
+      "candidates": [
+        "bg-alias"
+      ],
+      "expectedCss": ".bg-alias {\n  background-color: red;\n}\n"
+    },
+    {
+      "id": "functions:reference:authored:0",
+      "input": "@theme reference { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: --alpha(#123456 / .5); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ".probe {\n  value: color-mix(in oklab, #123456 50%, transparent);\n}\n"
+    },
+    {
+      "id": "functions:reference:candidate:0",
+      "input": "@theme reference { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "[value:--alpha(#123456_/_.5)]"
+      ],
+      "expectedCss": ".\\[value\\:--alpha\\(\\#123456_\\/_\\.5\\)\\] {\n  value: color-mix(in oklab, #123456 50%, transparent);\n}\n"
+    },
+    {
+      "id": "functions:reference:authored:1",
+      "input": "@theme reference { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: --alpha(currentColor / 35%); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ".probe {\n  value: currentColor;\n  @supports (color: color-mix(in lab, red, red)) {\n    value: color-mix(in oklab, currentColor 35%, transparent);\n  }\n}\n"
+    },
+    {
+      "id": "functions:reference:candidate:1",
+      "input": "@theme reference { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "[value:--alpha(currentColor_/_35%)]"
+      ],
+      "expectedCss": ".\\[value\\:--alpha\\(currentColor_\\/_35\\%\\)\\] {\n  value: currentColor;\n  @supports (color: color-mix(in lab, red, red)) {\n    value: color-mix(in oklab, currentColor 35%, transparent);\n  }\n}\n"
+    },
+    {
+      "id": "functions:reference:authored:2",
+      "input": "@theme reference { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: --alpha(var(--color-brand) / var(--opacity-muted)); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ".probe {\n  value: color-mix(in srgb, #123456 .35, transparent);\n  @supports (color: color-mix(in lab, red, red)) {\n    value: color-mix(in oklab, var(--color-brand) var(--opacity-muted), transparent);\n  }\n}\n"
+    },
+    {
+      "id": "functions:reference:candidate:2",
+      "input": "@theme reference { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "[value:--alpha(var(--color-brand)_/_var(--opacity-muted))]"
+      ],
+      "expectedCss": ".\\[value\\:--alpha\\(var\\(--color-brand\\)_\\/_var\\(--opacity-muted\\)\\)\\] {\n  value: color-mix(in srgb, #123456 .35, transparent);\n  @supports (color: color-mix(in lab, red, red)) {\n    value: color-mix(in oklab, var(--color-brand) var(--opacity-muted), transparent);\n  }\n}\n"
+    },
+    {
+      "id": "functions:reference:authored:3",
+      "input": "@theme reference { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: --alpha(red / 1); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ".probe {\n  value: red;\n}\n"
+    },
+    {
+      "id": "functions:reference:candidate:3",
+      "input": "@theme reference { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "[value:--alpha(red_/_1)]"
+      ],
+      "expectedCss": ".\\[value\\:--alpha\\(red_\\/_1\\)\\] {\n  value: red;\n}\n"
+    },
+    {
+      "id": "functions:reference:authored:4",
+      "input": "@theme reference { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: --spacing(3); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ".probe {\n  value: calc(var(--spacing, 4px) * 3);\n}\n"
+    },
+    {
+      "id": "functions:reference:candidate:4",
+      "input": "@theme reference { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "[value:--spacing(3)]"
+      ],
+      "expectedCss": ".\\[value\\:--spacing\\(3\\)\\] {\n  value: calc(var(--spacing, 4px) * 3);\n}\n"
+    },
+    {
+      "id": "functions:reference:authored:5",
+      "input": "@theme reference { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: --spacing(-1); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ".probe {\n  value: calc(var(--spacing, 4px) * -1);\n}\n"
+    },
+    {
+      "id": "functions:reference:candidate:5",
+      "input": "@theme reference { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "[value:--spacing(-1)]"
+      ],
+      "expectedCss": ".\\[value\\:--spacing\\(-1\\)\\] {\n  value: calc(var(--spacing, 4px) * -1);\n}\n"
+    },
+    {
+      "id": "functions:reference:authored:6",
+      "input": "@theme reference { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: --spacing(calc(1 + 2)); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ".probe {\n  value: calc(var(--spacing, 4px) * calc(1 + 2));\n}\n"
+    },
+    {
+      "id": "functions:reference:candidate:6",
+      "input": "@theme reference { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "[value:--spacing(calc(1_+_2))]"
+      ],
+      "expectedCss": ".\\[value\\:--spacing\\(calc\\(1_\\+_2\\)\\)\\] {\n  value: calc(var(--spacing, 4px) * calc(1 + 2));\n}\n"
+    },
+    {
+      "id": "functions:reference:authored:7",
+      "input": "@theme reference { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: --theme(--color-brand); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ".probe {\n  value: var(--color-brand, #123456);\n}\n"
+    },
+    {
+      "id": "functions:reference:candidate:7",
+      "input": "@theme reference { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "[value:--theme(--color-brand)]"
+      ],
+      "expectedCss": ".\\[value\\:--theme\\(--color-brand\\)\\] {\n  value: var(--color-brand, #123456);\n}\n"
+    },
+    {
+      "id": "functions:reference:authored:8",
+      "input": "@theme reference { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: --theme(--color-brand inline); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ".probe {\n  value: #123456;\n}\n"
+    },
+    {
+      "id": "functions:reference:candidate:8",
+      "input": "@theme reference { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "[value:--theme(--color-brand_inline)]"
+      ],
+      "expectedCss": ".\\[value\\:--theme\\(--color-brand_inline\\)\\] {\n  value: #123456;\n}\n"
+    },
+    {
+      "id": "functions:reference:authored:9",
+      "input": "@theme reference { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: --theme(--color-brand / 50%); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ".probe {\n  value: color-mix(in srgb, #123456 50%, transparent);\n  @supports (color: color-mix(in lab, red, red)) {\n    value: color-mix(in oklab, var(--color-brand, #123456) 50%, transparent);\n  }\n}\n"
+    },
+    {
+      "id": "functions:reference:candidate:9",
+      "input": "@theme reference { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "[value:--theme(--color-brand_/_50%)]"
+      ],
+      "expectedCss": ".\\[value\\:--theme\\(--color-brand_\\/_50\\%\\)\\] {\n  value: color-mix(in srgb, #123456 50%, transparent);\n  @supports (color: color-mix(in lab, red, red)) {\n    value: color-mix(in oklab, var(--color-brand, #123456) 50%, transparent);\n  }\n}\n"
+    },
+    {
+      "id": "functions:reference:authored:10",
+      "input": "@theme reference { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: --theme(--missing, red, blue); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ".probe {\n  value: red, blue;\n}\n"
+    },
+    {
+      "id": "functions:reference:candidate:10",
+      "input": "@theme reference { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "[value:--theme(--missing,_red,_blue)]"
+      ],
+      "expectedCss": ".\\[value\\:--theme\\(--missing\\,_red\\,_blue\\)\\] {\n  value: red, blue;\n}\n"
+    },
+    {
+      "id": "functions:reference:authored:11",
+      "input": "@theme reference { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: --theme(--missing, initial); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ".probe {\n  value: initial;\n}\n"
+    },
+    {
+      "id": "functions:reference:candidate:11",
+      "input": "@theme reference { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "[value:--theme(--missing,_initial)]"
+      ],
+      "expectedCss": ".\\[value\\:--theme\\(--missing\\,_initial\\)\\] {\n  value: initial;\n}\n"
+    },
+    {
+      "id": "functions:reference:authored:12",
+      "input": "@theme reference { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: --theme(--color-brand, blue); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ".probe {\n  value: var(--color-brand, #123456);\n}\n"
+    },
+    {
+      "id": "functions:reference:candidate:12",
+      "input": "@theme reference { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "[value:--theme(--color-brand,_blue)]"
+      ],
+      "expectedCss": ".\\[value\\:--theme\\(--color-brand\\,_blue\\)\\] {\n  value: var(--color-brand, #123456);\n}\n"
+    },
+    {
+      "id": "functions:reference:authored:13",
+      "input": "@theme reference { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: theme(--color-brand); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ".probe {\n  value: #123456;\n}\n"
+    },
+    {
+      "id": "functions:reference:candidate:13",
+      "input": "@theme reference { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "[value:theme(--color-brand)]"
+      ],
+      "expectedCss": ".\\[value\\:theme\\(--color-brand\\)\\] {\n  value: #123456;\n}\n"
+    },
+    {
+      "id": "functions:reference:authored:14",
+      "input": "@theme reference { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: theme(\"--color-brand\"); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ".probe {\n  value: #123456;\n}\n"
+    },
+    {
+      "id": "functions:reference:candidate:14",
+      "input": "@theme reference { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "[value:theme(\"--color-brand\")]"
+      ],
+      "expectedCss": ".\\[value\\:theme\\(\\\"--color-brand\\\"\\)\\] {\n  value: #123456;\n}\n"
+    },
+    {
+      "id": "functions:reference:authored:15",
+      "input": "@theme reference { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: theme(--color-brand / 50%); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ".probe {\n  value: color-mix(in oklab, #123456 50%, transparent);\n}\n"
+    },
+    {
+      "id": "functions:reference:candidate:15",
+      "input": "@theme reference { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "[value:theme(--color-brand_/_50%)]"
+      ],
+      "expectedCss": ""
+    },
+    {
+      "id": "functions:reference:authored:16",
+      "input": "@theme reference { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: theme(--missing, red, blue); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ".probe {\n  value: red, blue;\n}\n"
+    },
+    {
+      "id": "functions:reference:candidate:16",
+      "input": "@theme reference { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "[value:theme(--missing,_red,_blue)]"
+      ],
+      "expectedCss": ".\\[value\\:theme\\(--missing\\,_red\\,_blue\\)\\] {\n  value: red, blue;\n}\n"
+    },
+    {
+      "id": "functions:reference:authored:17",
+      "input": "@theme reference { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: calc(--spacing(3) + --spacing(2)); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ".probe {\n  value: calc(calc(var(--spacing, 4px) * 3) + calc(var(--spacing, 4px) * 2));\n}\n"
+    },
+    {
+      "id": "functions:reference:candidate:17",
+      "input": "@theme reference { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "[value:calc(--spacing(3)_+_--spacing(2))]"
+      ],
+      "expectedCss": ".\\[value\\:calc\\(--spacing\\(3\\)_\\+_--spacing\\(2\\)\\)\\] {\n  value: calc(calc(var(--spacing, 4px) * 3) + calc(var(--spacing, 4px) * 2));\n}\n"
+    },
+    {
+      "id": "functions:reference:authored:18",
+      "input": "@theme reference { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: --alpha(--theme(--color-brand) / .5); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ".probe {\n  value: color-mix(in srgb, #123456 50%, transparent);\n  @supports (color: color-mix(in lab, red, red)) {\n    value: color-mix(in oklab, var(--color-brand, #123456) 50%, transparent);\n  }\n}\n"
+    },
+    {
+      "id": "functions:reference:candidate:18",
+      "input": "@theme reference { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "[value:--alpha(--theme(--color-brand)_/_.5)]"
+      ],
+      "expectedCss": ".\\[value\\:--alpha\\(--theme\\(--color-brand\\)_\\/_\\.5\\)\\] {\n  value: color-mix(in srgb, #123456 50%, transparent);\n  @supports (color: color-mix(in lab, red, red)) {\n    value: color-mix(in oklab, var(--color-brand, #123456) 50%, transparent);\n  }\n}\n"
+    },
+    {
+      "id": "functions:reference:media",
+      "input": "@theme reference { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @media (width >= --theme(--breakpoint-card)) { .probe { color: --theme(--color-brand); } } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": "@media (width >= 700px) {\n  .probe {\n    color: var(--color-brand, #123456);\n  }\n}\n"
+    },
+    {
+      "id": "functions:reference:supports",
+      "input": "@theme reference { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @supports (color: --theme(--color-brand)) { .probe { color: red; } } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": "@supports (color: #123456) {\n  .probe {\n    color: red;\n  }\n}\n"
+    },
+    {
+      "id": "functions:reference:theme-dependency",
+      "input": "@theme reference { --color-brand: red; --color-alias: --theme(--color-brand); --spacing: 4px; --space-custom: --spacing(3); } @tailwind utilities;",
+      "candidates": [
+        "bg-alias"
+      ],
+      "expectedCss": ".bg-alias {\n  background-color: var(--color-alias, var(--color-brand, red));\n}\n"
+    },
+    {
+      "id": "functions:static:authored:0",
+      "input": "@theme static { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: --alpha(#123456 / .5); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ":root, :host {\n  --color-brand: #123456;\n  --spacing: 4px;\n  --breakpoint-card: 700px;\n  --opacity-muted: .35;\n}\n.probe {\n  value: color-mix(in oklab, #123456 50%, transparent);\n}\n"
+    },
+    {
+      "id": "functions:static:candidate:0",
+      "input": "@theme static { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "[value:--alpha(#123456_/_.5)]"
+      ],
+      "expectedCss": ":root, :host {\n  --color-brand: #123456;\n  --spacing: 4px;\n  --breakpoint-card: 700px;\n  --opacity-muted: .35;\n}\n.\\[value\\:--alpha\\(\\#123456_\\/_\\.5\\)\\] {\n  value: color-mix(in oklab, #123456 50%, transparent);\n}\n"
+    },
+    {
+      "id": "functions:static:authored:1",
+      "input": "@theme static { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: --alpha(currentColor / 35%); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ":root, :host {\n  --color-brand: #123456;\n  --spacing: 4px;\n  --breakpoint-card: 700px;\n  --opacity-muted: .35;\n}\n.probe {\n  value: currentColor;\n  @supports (color: color-mix(in lab, red, red)) {\n    value: color-mix(in oklab, currentColor 35%, transparent);\n  }\n}\n"
+    },
+    {
+      "id": "functions:static:candidate:1",
+      "input": "@theme static { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "[value:--alpha(currentColor_/_35%)]"
+      ],
+      "expectedCss": ":root, :host {\n  --color-brand: #123456;\n  --spacing: 4px;\n  --breakpoint-card: 700px;\n  --opacity-muted: .35;\n}\n.\\[value\\:--alpha\\(currentColor_\\/_35\\%\\)\\] {\n  value: currentColor;\n  @supports (color: color-mix(in lab, red, red)) {\n    value: color-mix(in oklab, currentColor 35%, transparent);\n  }\n}\n"
+    },
+    {
+      "id": "functions:static:authored:2",
+      "input": "@theme static { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: --alpha(var(--color-brand) / var(--opacity-muted)); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ":root, :host {\n  --color-brand: #123456;\n  --spacing: 4px;\n  --breakpoint-card: 700px;\n  --opacity-muted: .35;\n}\n.probe {\n  value: color-mix(in srgb, #123456 .35, transparent);\n  @supports (color: color-mix(in lab, red, red)) {\n    value: color-mix(in oklab, var(--color-brand) var(--opacity-muted), transparent);\n  }\n}\n"
+    },
+    {
+      "id": "functions:static:candidate:2",
+      "input": "@theme static { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "[value:--alpha(var(--color-brand)_/_var(--opacity-muted))]"
+      ],
+      "expectedCss": ":root, :host {\n  --color-brand: #123456;\n  --spacing: 4px;\n  --breakpoint-card: 700px;\n  --opacity-muted: .35;\n}\n.\\[value\\:--alpha\\(var\\(--color-brand\\)_\\/_var\\(--opacity-muted\\)\\)\\] {\n  value: color-mix(in srgb, #123456 .35, transparent);\n  @supports (color: color-mix(in lab, red, red)) {\n    value: color-mix(in oklab, var(--color-brand) var(--opacity-muted), transparent);\n  }\n}\n"
+    },
+    {
+      "id": "functions:static:authored:3",
+      "input": "@theme static { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: --alpha(red / 1); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ":root, :host {\n  --color-brand: #123456;\n  --spacing: 4px;\n  --breakpoint-card: 700px;\n  --opacity-muted: .35;\n}\n.probe {\n  value: red;\n}\n"
+    },
+    {
+      "id": "functions:static:candidate:3",
+      "input": "@theme static { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "[value:--alpha(red_/_1)]"
+      ],
+      "expectedCss": ":root, :host {\n  --color-brand: #123456;\n  --spacing: 4px;\n  --breakpoint-card: 700px;\n  --opacity-muted: .35;\n}\n.\\[value\\:--alpha\\(red_\\/_1\\)\\] {\n  value: red;\n}\n"
+    },
+    {
+      "id": "functions:static:authored:4",
+      "input": "@theme static { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: --spacing(3); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ":root, :host {\n  --color-brand: #123456;\n  --spacing: 4px;\n  --breakpoint-card: 700px;\n  --opacity-muted: .35;\n}\n.probe {\n  value: calc(var(--spacing) * 3);\n}\n"
+    },
+    {
+      "id": "functions:static:candidate:4",
+      "input": "@theme static { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "[value:--spacing(3)]"
+      ],
+      "expectedCss": ":root, :host {\n  --color-brand: #123456;\n  --spacing: 4px;\n  --breakpoint-card: 700px;\n  --opacity-muted: .35;\n}\n.\\[value\\:--spacing\\(3\\)\\] {\n  value: calc(var(--spacing) * 3);\n}\n"
+    },
+    {
+      "id": "functions:static:authored:5",
+      "input": "@theme static { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: --spacing(-1); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ":root, :host {\n  --color-brand: #123456;\n  --spacing: 4px;\n  --breakpoint-card: 700px;\n  --opacity-muted: .35;\n}\n.probe {\n  value: calc(var(--spacing) * -1);\n}\n"
+    },
+    {
+      "id": "functions:static:candidate:5",
+      "input": "@theme static { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "[value:--spacing(-1)]"
+      ],
+      "expectedCss": ":root, :host {\n  --color-brand: #123456;\n  --spacing: 4px;\n  --breakpoint-card: 700px;\n  --opacity-muted: .35;\n}\n.\\[value\\:--spacing\\(-1\\)\\] {\n  value: calc(var(--spacing) * -1);\n}\n"
+    },
+    {
+      "id": "functions:static:authored:6",
+      "input": "@theme static { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: --spacing(calc(1 + 2)); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ":root, :host {\n  --color-brand: #123456;\n  --spacing: 4px;\n  --breakpoint-card: 700px;\n  --opacity-muted: .35;\n}\n.probe {\n  value: calc(var(--spacing) * calc(1 + 2));\n}\n"
+    },
+    {
+      "id": "functions:static:candidate:6",
+      "input": "@theme static { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "[value:--spacing(calc(1_+_2))]"
+      ],
+      "expectedCss": ":root, :host {\n  --color-brand: #123456;\n  --spacing: 4px;\n  --breakpoint-card: 700px;\n  --opacity-muted: .35;\n}\n.\\[value\\:--spacing\\(calc\\(1_\\+_2\\)\\)\\] {\n  value: calc(var(--spacing) * calc(1 + 2));\n}\n"
+    },
+    {
+      "id": "functions:static:authored:7",
+      "input": "@theme static { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: --theme(--color-brand); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ":root, :host {\n  --color-brand: #123456;\n  --spacing: 4px;\n  --breakpoint-card: 700px;\n  --opacity-muted: .35;\n}\n.probe {\n  value: var(--color-brand);\n}\n"
+    },
+    {
+      "id": "functions:static:candidate:7",
+      "input": "@theme static { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "[value:--theme(--color-brand)]"
+      ],
+      "expectedCss": ":root, :host {\n  --color-brand: #123456;\n  --spacing: 4px;\n  --breakpoint-card: 700px;\n  --opacity-muted: .35;\n}\n.\\[value\\:--theme\\(--color-brand\\)\\] {\n  value: var(--color-brand);\n}\n"
+    },
+    {
+      "id": "functions:static:authored:8",
+      "input": "@theme static { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: --theme(--color-brand inline); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ":root, :host {\n  --color-brand: #123456;\n  --spacing: 4px;\n  --breakpoint-card: 700px;\n  --opacity-muted: .35;\n}\n.probe {\n  value: #123456;\n}\n"
+    },
+    {
+      "id": "functions:static:candidate:8",
+      "input": "@theme static { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "[value:--theme(--color-brand_inline)]"
+      ],
+      "expectedCss": ":root, :host {\n  --color-brand: #123456;\n  --spacing: 4px;\n  --breakpoint-card: 700px;\n  --opacity-muted: .35;\n}\n.\\[value\\:--theme\\(--color-brand_inline\\)\\] {\n  value: #123456;\n}\n"
+    },
+    {
+      "id": "functions:static:authored:9",
+      "input": "@theme static { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: --theme(--color-brand / 50%); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ":root, :host {\n  --color-brand: #123456;\n  --spacing: 4px;\n  --breakpoint-card: 700px;\n  --opacity-muted: .35;\n}\n.probe {\n  value: color-mix(in srgb, #123456 50%, transparent);\n  @supports (color: color-mix(in lab, red, red)) {\n    value: color-mix(in oklab, var(--color-brand) 50%, transparent);\n  }\n}\n"
+    },
+    {
+      "id": "functions:static:candidate:9",
+      "input": "@theme static { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "[value:--theme(--color-brand_/_50%)]"
+      ],
+      "expectedCss": ":root, :host {\n  --color-brand: #123456;\n  --spacing: 4px;\n  --breakpoint-card: 700px;\n  --opacity-muted: .35;\n}\n.\\[value\\:--theme\\(--color-brand_\\/_50\\%\\)\\] {\n  value: color-mix(in srgb, #123456 50%, transparent);\n  @supports (color: color-mix(in lab, red, red)) {\n    value: color-mix(in oklab, var(--color-brand) 50%, transparent);\n  }\n}\n"
+    },
+    {
+      "id": "functions:static:authored:10",
+      "input": "@theme static { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: --theme(--missing, red, blue); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ":root, :host {\n  --color-brand: #123456;\n  --spacing: 4px;\n  --breakpoint-card: 700px;\n  --opacity-muted: .35;\n}\n.probe {\n  value: red, blue;\n}\n"
+    },
+    {
+      "id": "functions:static:candidate:10",
+      "input": "@theme static { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "[value:--theme(--missing,_red,_blue)]"
+      ],
+      "expectedCss": ":root, :host {\n  --color-brand: #123456;\n  --spacing: 4px;\n  --breakpoint-card: 700px;\n  --opacity-muted: .35;\n}\n.\\[value\\:--theme\\(--missing\\,_red\\,_blue\\)\\] {\n  value: red, blue;\n}\n"
+    },
+    {
+      "id": "functions:static:authored:11",
+      "input": "@theme static { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: --theme(--missing, initial); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ":root, :host {\n  --color-brand: #123456;\n  --spacing: 4px;\n  --breakpoint-card: 700px;\n  --opacity-muted: .35;\n}\n.probe {\n  value: initial;\n}\n"
+    },
+    {
+      "id": "functions:static:candidate:11",
+      "input": "@theme static { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "[value:--theme(--missing,_initial)]"
+      ],
+      "expectedCss": ":root, :host {\n  --color-brand: #123456;\n  --spacing: 4px;\n  --breakpoint-card: 700px;\n  --opacity-muted: .35;\n}\n.\\[value\\:--theme\\(--missing\\,_initial\\)\\] {\n  value: initial;\n}\n"
+    },
+    {
+      "id": "functions:static:authored:12",
+      "input": "@theme static { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: --theme(--color-brand, blue); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ":root, :host {\n  --color-brand: #123456;\n  --spacing: 4px;\n  --breakpoint-card: 700px;\n  --opacity-muted: .35;\n}\n.probe {\n  value: var(--color-brand, blue);\n}\n"
+    },
+    {
+      "id": "functions:static:candidate:12",
+      "input": "@theme static { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "[value:--theme(--color-brand,_blue)]"
+      ],
+      "expectedCss": ":root, :host {\n  --color-brand: #123456;\n  --spacing: 4px;\n  --breakpoint-card: 700px;\n  --opacity-muted: .35;\n}\n.\\[value\\:--theme\\(--color-brand\\,_blue\\)\\] {\n  value: var(--color-brand, blue);\n}\n"
+    },
+    {
+      "id": "functions:static:authored:13",
+      "input": "@theme static { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: theme(--color-brand); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ":root, :host {\n  --color-brand: #123456;\n  --spacing: 4px;\n  --breakpoint-card: 700px;\n  --opacity-muted: .35;\n}\n.probe {\n  value: #123456;\n}\n"
+    },
+    {
+      "id": "functions:static:candidate:13",
+      "input": "@theme static { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "[value:theme(--color-brand)]"
+      ],
+      "expectedCss": ":root, :host {\n  --color-brand: #123456;\n  --spacing: 4px;\n  --breakpoint-card: 700px;\n  --opacity-muted: .35;\n}\n.\\[value\\:theme\\(--color-brand\\)\\] {\n  value: #123456;\n}\n"
+    },
+    {
+      "id": "functions:static:authored:14",
+      "input": "@theme static { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: theme(\"--color-brand\"); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ":root, :host {\n  --color-brand: #123456;\n  --spacing: 4px;\n  --breakpoint-card: 700px;\n  --opacity-muted: .35;\n}\n.probe {\n  value: #123456;\n}\n"
+    },
+    {
+      "id": "functions:static:candidate:14",
+      "input": "@theme static { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "[value:theme(\"--color-brand\")]"
+      ],
+      "expectedCss": ":root, :host {\n  --color-brand: #123456;\n  --spacing: 4px;\n  --breakpoint-card: 700px;\n  --opacity-muted: .35;\n}\n.\\[value\\:theme\\(\\\"--color-brand\\\"\\)\\] {\n  value: #123456;\n}\n"
+    },
+    {
+      "id": "functions:static:authored:15",
+      "input": "@theme static { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: theme(--color-brand / 50%); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ":root, :host {\n  --color-brand: #123456;\n  --spacing: 4px;\n  --breakpoint-card: 700px;\n  --opacity-muted: .35;\n}\n.probe {\n  value: color-mix(in oklab, #123456 50%, transparent);\n}\n"
+    },
+    {
+      "id": "functions:static:candidate:15",
+      "input": "@theme static { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "[value:theme(--color-brand_/_50%)]"
+      ],
+      "expectedCss": ":root, :host {\n  --color-brand: #123456;\n  --spacing: 4px;\n  --breakpoint-card: 700px;\n  --opacity-muted: .35;\n}\n"
+    },
+    {
+      "id": "functions:static:authored:16",
+      "input": "@theme static { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: theme(--missing, red, blue); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ":root, :host {\n  --color-brand: #123456;\n  --spacing: 4px;\n  --breakpoint-card: 700px;\n  --opacity-muted: .35;\n}\n.probe {\n  value: red, blue;\n}\n"
+    },
+    {
+      "id": "functions:static:candidate:16",
+      "input": "@theme static { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "[value:theme(--missing,_red,_blue)]"
+      ],
+      "expectedCss": ":root, :host {\n  --color-brand: #123456;\n  --spacing: 4px;\n  --breakpoint-card: 700px;\n  --opacity-muted: .35;\n}\n.\\[value\\:theme\\(--missing\\,_red\\,_blue\\)\\] {\n  value: red, blue;\n}\n"
+    },
+    {
+      "id": "functions:static:authored:17",
+      "input": "@theme static { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: calc(--spacing(3) + --spacing(2)); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ":root, :host {\n  --color-brand: #123456;\n  --spacing: 4px;\n  --breakpoint-card: 700px;\n  --opacity-muted: .35;\n}\n.probe {\n  value: calc(calc(var(--spacing) * 3) + calc(var(--spacing) * 2));\n}\n"
+    },
+    {
+      "id": "functions:static:candidate:17",
+      "input": "@theme static { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "[value:calc(--spacing(3)_+_--spacing(2))]"
+      ],
+      "expectedCss": ":root, :host {\n  --color-brand: #123456;\n  --spacing: 4px;\n  --breakpoint-card: 700px;\n  --opacity-muted: .35;\n}\n.\\[value\\:calc\\(--spacing\\(3\\)_\\+_--spacing\\(2\\)\\)\\] {\n  value: calc(calc(var(--spacing) * 3) + calc(var(--spacing) * 2));\n}\n"
+    },
+    {
+      "id": "functions:static:authored:18",
+      "input": "@theme static { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: --alpha(--theme(--color-brand) / .5); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ":root, :host {\n  --color-brand: #123456;\n  --spacing: 4px;\n  --breakpoint-card: 700px;\n  --opacity-muted: .35;\n}\n.probe {\n  value: color-mix(in srgb, #123456 50%, transparent);\n  @supports (color: color-mix(in lab, red, red)) {\n    value: color-mix(in oklab, var(--color-brand) 50%, transparent);\n  }\n}\n"
+    },
+    {
+      "id": "functions:static:candidate:18",
+      "input": "@theme static { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "[value:--alpha(--theme(--color-brand)_/_.5)]"
+      ],
+      "expectedCss": ":root, :host {\n  --color-brand: #123456;\n  --spacing: 4px;\n  --breakpoint-card: 700px;\n  --opacity-muted: .35;\n}\n.\\[value\\:--alpha\\(--theme\\(--color-brand\\)_\\/_\\.5\\)\\] {\n  value: color-mix(in srgb, #123456 50%, transparent);\n  @supports (color: color-mix(in lab, red, red)) {\n    value: color-mix(in oklab, var(--color-brand) 50%, transparent);\n  }\n}\n"
+    },
+    {
+      "id": "functions:static:media",
+      "input": "@theme static { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @media (width >= --theme(--breakpoint-card)) { .probe { color: --theme(--color-brand); } } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ":root, :host {\n  --color-brand: #123456;\n  --spacing: 4px;\n  --breakpoint-card: 700px;\n  --opacity-muted: .35;\n}\n@media (width >= 700px) {\n  .probe {\n    color: var(--color-brand);\n  }\n}\n"
+    },
+    {
+      "id": "functions:static:supports",
+      "input": "@theme static { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @supports (color: --theme(--color-brand)) { .probe { color: red; } } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ":root, :host {\n  --color-brand: #123456;\n  --spacing: 4px;\n  --breakpoint-card: 700px;\n  --opacity-muted: .35;\n}\n@supports (color: #123456) {\n  .probe {\n    color: red;\n  }\n}\n"
+    },
+    {
+      "id": "functions:static:theme-dependency",
+      "input": "@theme static { --color-brand: red; --color-alias: --theme(--color-brand); --spacing: 4px; --space-custom: --spacing(3); } @tailwind utilities;",
+      "candidates": [
+        "bg-alias"
+      ],
+      "expectedCss": ":root, :host {\n  --color-brand: red;\n  --color-alias: var(--color-brand);\n  --spacing: 4px;\n  --space-custom: calc(var(--spacing) * 3);\n}\n.bg-alias {\n  background-color: var(--color-alias);\n}\n"
+    },
+    {
+      "id": "functions:prefix(tw):authored:0",
+      "input": "@theme prefix(tw) { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: --alpha(#123456 / .5); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ".probe {\n  value: color-mix(in oklab, #123456 50%, transparent);\n}\n"
+    },
+    {
+      "id": "functions:prefix(tw):candidate:0",
+      "input": "@theme prefix(tw) { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "tw:[value:--alpha(#123456_/_.5)]"
+      ],
+      "expectedCss": ".tw\\:\\[value\\:--alpha\\(\\#123456_\\/_\\.5\\)\\] {\n  value: color-mix(in oklab, #123456 50%, transparent);\n}\n"
+    },
+    {
+      "id": "functions:prefix(tw):authored:1",
+      "input": "@theme prefix(tw) { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: --alpha(currentColor / 35%); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ".probe {\n  value: currentColor;\n  @supports (color: color-mix(in lab, red, red)) {\n    value: color-mix(in oklab, currentColor 35%, transparent);\n  }\n}\n"
+    },
+    {
+      "id": "functions:prefix(tw):candidate:1",
+      "input": "@theme prefix(tw) { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "tw:[value:--alpha(currentColor_/_35%)]"
+      ],
+      "expectedCss": ".tw\\:\\[value\\:--alpha\\(currentColor_\\/_35\\%\\)\\] {\n  value: currentColor;\n  @supports (color: color-mix(in lab, red, red)) {\n    value: color-mix(in oklab, currentColor 35%, transparent);\n  }\n}\n"
+    },
+    {
+      "id": "functions:prefix(tw):authored:2",
+      "input": "@theme prefix(tw) { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: --alpha(var(--color-brand) / var(--opacity-muted)); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ".probe {\n  value: color-mix(in srgb, #123456 .35, transparent);\n  @supports (color: color-mix(in lab, red, red)) {\n    value: color-mix(in oklab, var(--color-brand) var(--opacity-muted), transparent);\n  }\n}\n"
+    },
+    {
+      "id": "functions:prefix(tw):candidate:2",
+      "input": "@theme prefix(tw) { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "tw:[value:--alpha(var(--color-brand)_/_var(--opacity-muted))]"
+      ],
+      "expectedCss": ".tw\\:\\[value\\:--alpha\\(var\\(--color-brand\\)_\\/_var\\(--opacity-muted\\)\\)\\] {\n  value: color-mix(in srgb, #123456 .35, transparent);\n  @supports (color: color-mix(in lab, red, red)) {\n    value: color-mix(in oklab, var(--color-brand) var(--opacity-muted), transparent);\n  }\n}\n"
+    },
+    {
+      "id": "functions:prefix(tw):authored:3",
+      "input": "@theme prefix(tw) { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: --alpha(red / 1); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ".probe {\n  value: red;\n}\n"
+    },
+    {
+      "id": "functions:prefix(tw):candidate:3",
+      "input": "@theme prefix(tw) { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "tw:[value:--alpha(red_/_1)]"
+      ],
+      "expectedCss": ".tw\\:\\[value\\:--alpha\\(red_\\/_1\\)\\] {\n  value: red;\n}\n"
+    },
+    {
+      "id": "functions:prefix(tw):authored:4",
+      "input": "@theme prefix(tw) { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: --spacing(3); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ":root, :host {\n  --tw-spacing: 4px;\n}\n.probe {\n  value: calc(var(--tw-spacing) * 3);\n}\n"
+    },
+    {
+      "id": "functions:prefix(tw):candidate:4",
+      "input": "@theme prefix(tw) { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "tw:[value:--spacing(3)]"
+      ],
+      "expectedCss": ":root, :host {\n  --tw-spacing: 4px;\n}\n.tw\\:\\[value\\:--spacing\\(3\\)\\] {\n  value: calc(var(--tw-spacing) * 3);\n}\n"
+    },
+    {
+      "id": "functions:prefix(tw):authored:5",
+      "input": "@theme prefix(tw) { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: --spacing(-1); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ":root, :host {\n  --tw-spacing: 4px;\n}\n.probe {\n  value: calc(var(--tw-spacing) * -1);\n}\n"
+    },
+    {
+      "id": "functions:prefix(tw):candidate:5",
+      "input": "@theme prefix(tw) { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "tw:[value:--spacing(-1)]"
+      ],
+      "expectedCss": ":root, :host {\n  --tw-spacing: 4px;\n}\n.tw\\:\\[value\\:--spacing\\(-1\\)\\] {\n  value: calc(var(--tw-spacing) * -1);\n}\n"
+    },
+    {
+      "id": "functions:prefix(tw):authored:6",
+      "input": "@theme prefix(tw) { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: --spacing(calc(1 + 2)); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ":root, :host {\n  --tw-spacing: 4px;\n}\n.probe {\n  value: calc(var(--tw-spacing) * calc(1 + 2));\n}\n"
+    },
+    {
+      "id": "functions:prefix(tw):candidate:6",
+      "input": "@theme prefix(tw) { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "tw:[value:--spacing(calc(1_+_2))]"
+      ],
+      "expectedCss": ":root, :host {\n  --tw-spacing: 4px;\n}\n.tw\\:\\[value\\:--spacing\\(calc\\(1_\\+_2\\)\\)\\] {\n  value: calc(var(--tw-spacing) * calc(1 + 2));\n}\n"
+    },
+    {
+      "id": "functions:prefix(tw):authored:7",
+      "input": "@theme prefix(tw) { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: --theme(--color-brand); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ":root, :host {\n  --tw-color-brand: #123456;\n}\n.probe {\n  value: var(--tw-color-brand);\n}\n"
+    },
+    {
+      "id": "functions:prefix(tw):candidate:7",
+      "input": "@theme prefix(tw) { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "tw:[value:--theme(--color-brand)]"
+      ],
+      "expectedCss": ":root, :host {\n  --tw-color-brand: #123456;\n}\n.tw\\:\\[value\\:--theme\\(--color-brand\\)\\] {\n  value: var(--tw-color-brand);\n}\n"
+    },
+    {
+      "id": "functions:prefix(tw):authored:8",
+      "input": "@theme prefix(tw) { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: --theme(--color-brand inline); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ".probe {\n  value: #123456;\n}\n"
+    },
+    {
+      "id": "functions:prefix(tw):candidate:8",
+      "input": "@theme prefix(tw) { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "tw:[value:--theme(--color-brand_inline)]"
+      ],
+      "expectedCss": ".tw\\:\\[value\\:--theme\\(--color-brand_inline\\)\\] {\n  value: #123456;\n}\n"
+    },
+    {
+      "id": "functions:prefix(tw):authored:9",
+      "input": "@theme prefix(tw) { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: --theme(--color-brand / 50%); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ":root, :host {\n  --tw-color-brand: #123456;\n}\n.probe {\n  value: var(--tw-color-brand);\n  @supports (color: color-mix(in lab, red, red)) {\n    value: color-mix(in oklab, var(--tw-color-brand) 50%, transparent);\n  }\n}\n"
+    },
+    {
+      "id": "functions:prefix(tw):candidate:9",
+      "input": "@theme prefix(tw) { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "tw:[value:--theme(--color-brand_/_50%)]"
+      ],
+      "expectedCss": ":root, :host {\n  --tw-color-brand: #123456;\n}\n.tw\\:\\[value\\:--theme\\(--color-brand_\\/_50\\%\\)\\] {\n  value: var(--tw-color-brand);\n  @supports (color: color-mix(in lab, red, red)) {\n    value: color-mix(in oklab, var(--tw-color-brand) 50%, transparent);\n  }\n}\n"
+    },
+    {
+      "id": "functions:prefix(tw):authored:10",
+      "input": "@theme prefix(tw) { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: --theme(--missing, red, blue); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ".probe {\n  value: red, blue;\n}\n"
+    },
+    {
+      "id": "functions:prefix(tw):candidate:10",
+      "input": "@theme prefix(tw) { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "tw:[value:--theme(--missing,_red,_blue)]"
+      ],
+      "expectedCss": ".tw\\:\\[value\\:--theme\\(--missing\\,_red\\,_blue\\)\\] {\n  value: red, blue;\n}\n"
+    },
+    {
+      "id": "functions:prefix(tw):authored:11",
+      "input": "@theme prefix(tw) { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: --theme(--missing, initial); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ".probe {\n  value: initial;\n}\n"
+    },
+    {
+      "id": "functions:prefix(tw):candidate:11",
+      "input": "@theme prefix(tw) { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "tw:[value:--theme(--missing,_initial)]"
+      ],
+      "expectedCss": ".tw\\:\\[value\\:--theme\\(--missing\\,_initial\\)\\] {\n  value: initial;\n}\n"
+    },
+    {
+      "id": "functions:prefix(tw):authored:12",
+      "input": "@theme prefix(tw) { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: --theme(--color-brand, blue); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ":root, :host {\n  --tw-color-brand: #123456;\n}\n.probe {\n  value: var(--tw-color-brand, blue);\n}\n"
+    },
+    {
+      "id": "functions:prefix(tw):candidate:12",
+      "input": "@theme prefix(tw) { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "tw:[value:--theme(--color-brand,_blue)]"
+      ],
+      "expectedCss": ":root, :host {\n  --tw-color-brand: #123456;\n}\n.tw\\:\\[value\\:--theme\\(--color-brand\\,_blue\\)\\] {\n  value: var(--tw-color-brand, blue);\n}\n"
+    },
+    {
+      "id": "functions:prefix(tw):authored:13",
+      "input": "@theme prefix(tw) { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: theme(--color-brand); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ".probe {\n  value: #123456;\n}\n"
+    },
+    {
+      "id": "functions:prefix(tw):candidate:13",
+      "input": "@theme prefix(tw) { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "tw:[value:theme(--color-brand)]"
+      ],
+      "expectedCss": ".tw\\:\\[value\\:theme\\(--color-brand\\)\\] {\n  value: #123456;\n}\n"
+    },
+    {
+      "id": "functions:prefix(tw):authored:14",
+      "input": "@theme prefix(tw) { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: theme(\"--color-brand\"); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ".probe {\n  value: #123456;\n}\n"
+    },
+    {
+      "id": "functions:prefix(tw):candidate:14",
+      "input": "@theme prefix(tw) { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "tw:[value:theme(\"--color-brand\")]"
+      ],
+      "expectedCss": ".tw\\:\\[value\\:theme\\(\\\"--color-brand\\\"\\)\\] {\n  value: #123456;\n}\n"
+    },
+    {
+      "id": "functions:prefix(tw):authored:15",
+      "input": "@theme prefix(tw) { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: theme(--color-brand / 50%); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ".probe {\n  value: color-mix(in oklab, #123456 50%, transparent);\n}\n"
+    },
+    {
+      "id": "functions:prefix(tw):candidate:15",
+      "input": "@theme prefix(tw) { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "tw:[value:theme(--color-brand_/_50%)]"
+      ],
+      "expectedCss": ""
+    },
+    {
+      "id": "functions:prefix(tw):authored:16",
+      "input": "@theme prefix(tw) { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: theme(--missing, red, blue); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ".probe {\n  value: red, blue;\n}\n"
+    },
+    {
+      "id": "functions:prefix(tw):candidate:16",
+      "input": "@theme prefix(tw) { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "tw:[value:theme(--missing,_red,_blue)]"
+      ],
+      "expectedCss": ".tw\\:\\[value\\:theme\\(--missing\\,_red\\,_blue\\)\\] {\n  value: red, blue;\n}\n"
+    },
+    {
+      "id": "functions:prefix(tw):authored:17",
+      "input": "@theme prefix(tw) { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: calc(--spacing(3) + --spacing(2)); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ":root, :host {\n  --tw-spacing: 4px;\n}\n.probe {\n  value: calc(calc(var(--tw-spacing) * 3) + calc(var(--tw-spacing) * 2));\n}\n"
+    },
+    {
+      "id": "functions:prefix(tw):candidate:17",
+      "input": "@theme prefix(tw) { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "tw:[value:calc(--spacing(3)_+_--spacing(2))]"
+      ],
+      "expectedCss": ":root, :host {\n  --tw-spacing: 4px;\n}\n.tw\\:\\[value\\:calc\\(--spacing\\(3\\)_\\+_--spacing\\(2\\)\\)\\] {\n  value: calc(calc(var(--tw-spacing) * 3) + calc(var(--tw-spacing) * 2));\n}\n"
+    },
+    {
+      "id": "functions:prefix(tw):authored:18",
+      "input": "@theme prefix(tw) { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } .probe { value: --alpha(--theme(--color-brand) / .5); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ":root, :host {\n  --tw-color-brand: #123456;\n}\n.probe {\n  value: var(--tw-color-brand);\n  @supports (color: color-mix(in lab, red, red)) {\n    value: color-mix(in oklab, var(--tw-color-brand) 50%, transparent);\n  }\n}\n"
+    },
+    {
+      "id": "functions:prefix(tw):candidate:18",
+      "input": "@theme prefix(tw) { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @tailwind utilities;",
+      "candidates": [
+        "tw:[value:--alpha(--theme(--color-brand)_/_.5)]"
+      ],
+      "expectedCss": ":root, :host {\n  --tw-color-brand: #123456;\n}\n.tw\\:\\[value\\:--alpha\\(--theme\\(--color-brand\\)_\\/_\\.5\\)\\] {\n  value: var(--tw-color-brand);\n  @supports (color: color-mix(in lab, red, red)) {\n    value: color-mix(in oklab, var(--tw-color-brand) 50%, transparent);\n  }\n}\n"
+    },
+    {
+      "id": "functions:prefix(tw):media",
+      "input": "@theme prefix(tw) { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @media (width >= --theme(--breakpoint-card)) { .probe { color: --theme(--color-brand); } } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ":root, :host {\n  --tw-color-brand: #123456;\n}\n@media (width >= 700px) {\n  .probe {\n    color: var(--tw-color-brand);\n  }\n}\n"
+    },
+    {
+      "id": "functions:prefix(tw):supports",
+      "input": "@theme prefix(tw) { --color-brand: #123456; --spacing: 4px; --breakpoint-card: 700px; --opacity-muted: .35; } @supports (color: --theme(--color-brand)) { .probe { color: red; } } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": "@supports (color: #123456) {\n  .probe {\n    color: red;\n  }\n}\n"
+    },
+    {
+      "id": "functions:prefix(tw):theme-dependency",
+      "input": "@theme prefix(tw) { --color-brand: red; --color-alias: --theme(--color-brand); --spacing: 4px; --space-custom: --spacing(3); } @tailwind utilities;",
+      "candidates": [
+        "tw:bg-alias"
+      ],
+      "expectedCss": ":root, :host {\n  --tw-color-brand: red;\n  --tw-color-alias: var(--tw-color-brand);\n}\n.tw\\:bg-alias {\n  background-color: var(--tw-color-alias);\n}\n"
+    },
+    {
+      "id": "functions:invalid:--alpha()",
+      "input": "@theme { --spacing: 4px; } .probe { value: --alpha(); } @tailwind utilities;",
+      "candidates": [],
+      "expectedError": "The --alpha(…) function requires a color and an alpha value, e.g.: `--alpha(var(--my-color) / 50%)`"
+    },
+    {
+      "id": "functions:invalid-candidate:--alpha()",
+      "input": "@theme { --spacing: 4px; } @tailwind utilities;",
+      "candidates": [
+        "[value:--alpha()]"
+      ],
+      "expectedCss": ""
+    },
+    {
+      "id": "functions:invalid:--alpha(red)",
+      "input": "@theme { --spacing: 4px; } .probe { value: --alpha(red); } @tailwind utilities;",
+      "candidates": [],
+      "expectedError": "The --alpha(…) function requires a color and an alpha value, e.g.: `--alpha(red / 50%)`"
+    },
+    {
+      "id": "functions:invalid-candidate:--alpha(red)",
+      "input": "@theme { --spacing: 4px; } @tailwind utilities;",
+      "candidates": [
+        "[value:--alpha(red)]"
+      ],
+      "expectedCss": ""
+    },
+    {
+      "id": "functions:invalid:--alpha(red /)",
+      "input": "@theme { --spacing: 4px; } .probe { value: --alpha(red /); } @tailwind utilities;",
+      "candidates": [],
+      "expectedError": "The --alpha(…) function requires a color and an alpha value, e.g.: `--alpha(red / 50%)`"
+    },
+    {
+      "id": "functions:invalid-candidate:--alpha(red /)",
+      "input": "@theme { --spacing: 4px; } @tailwind utilities;",
+      "candidates": [
+        "[value:--alpha(red_/)]"
+      ],
+      "expectedCss": ""
+    },
+    {
+      "id": "functions:invalid:--alpha(red / .5, blue)",
+      "input": "@theme { --spacing: 4px; } .probe { value: --alpha(red / .5, blue); } @tailwind utilities;",
+      "candidates": [],
+      "expectedError": "The --alpha(…) function only accepts one argument, e.g.: `--alpha(red / .5)`"
+    },
+    {
+      "id": "functions:invalid-candidate:--alpha(red / .5, blue)",
+      "input": "@theme { --spacing: 4px; } @tailwind utilities;",
+      "candidates": [
+        "[value:--alpha(red_/_.5,_blue)]"
+      ],
+      "expectedCss": ""
+    },
+    {
+      "id": "functions:invalid:--spacing()",
+      "input": "@theme { --spacing: 4px; } .probe { value: --spacing(); } @tailwind utilities;",
+      "candidates": [],
+      "expectedError": "The --spacing(…) function requires an argument, but received none."
+    },
+    {
+      "id": "functions:invalid-candidate:--spacing()",
+      "input": "@theme { --spacing: 4px; } @tailwind utilities;",
+      "candidates": [
+        "[value:--spacing()]"
+      ],
+      "expectedCss": ""
+    },
+    {
+      "id": "functions:invalid:--spacing(3, 4)",
+      "input": "@theme { --spacing: 4px; } .probe { value: --spacing(3, 4); } @tailwind utilities;",
+      "candidates": [],
+      "expectedError": "The --spacing(…) function only accepts a single argument, but received 2."
+    },
+    {
+      "id": "functions:invalid-candidate:--spacing(3, 4)",
+      "input": "@theme { --spacing: 4px; } @tailwind utilities;",
+      "candidates": [
+        "[value:--spacing(3,_4)]"
+      ],
+      "expectedCss": ""
+    },
+    {
+      "id": "functions:invalid:--theme(color)",
+      "input": "@theme { --spacing: 4px; } .probe { value: --theme(color); } @tailwind utilities;",
+      "candidates": [],
+      "expectedError": "The --theme(…) function can only be used with CSS variables from your theme."
+    },
+    {
+      "id": "functions:invalid-candidate:--theme(color)",
+      "input": "@theme { --spacing: 4px; } @tailwind utilities;",
+      "candidates": [
+        "[value:--theme(color)]"
+      ],
+      "expectedCss": ""
+    },
+    {
+      "id": "functions:invalid:--theme(--missing)",
+      "input": "@theme { --spacing: 4px; } .probe { value: --theme(--missing); } @tailwind utilities;",
+      "candidates": [],
+      "expectedError": "Could not resolve value for theme function: `theme(--missing)`. Consider checking if the variable name is correct or provide a fallback value to silence this error."
+    },
+    {
+      "id": "functions:invalid-candidate:--theme(--missing)",
+      "input": "@theme { --spacing: 4px; } @tailwind utilities;",
+      "candidates": [
+        "[value:--theme(--missing)]"
+      ],
+      "expectedCss": ""
+    },
+    {
+      "id": "functions:invalid:theme(--missing)",
+      "input": "@theme { --spacing: 4px; } .probe { value: theme(--missing); } @tailwind utilities;",
+      "candidates": [],
+      "expectedError": "Could not resolve value for theme function: `theme(--missing)`. Consider checking if the path is correct or provide a fallback value to silence this error."
+    },
+    {
+      "id": "functions:invalid-candidate:theme(--missing)",
+      "input": "@theme { --spacing: 4px; } @tailwind utilities;",
+      "candidates": [
+        "[value:theme(--missing)]"
+      ],
+      "expectedCss": ""
+    },
+    {
+      "id": "functions:spacing-without-theme",
+      "input": ".probe { padding: --spacing(3); } @tailwind utilities;",
+      "candidates": [],
+      "expectedError": "The --spacing(…) function requires that the `--spacing` theme variable exists, but it was not found."
+    },
+    {
+      "id": "functions::nested-fallback",
+      "input": "@theme  { --font-alias: --theme(--font-missing, initial); } .probe { font-family: --theme(--font-alias, Potato Sans, sans-serif); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ".probe {\n  font-family: var(--font-alias, Potato Sans, sans-serif);\n}\n"
+    },
+    {
+      "id": "functions:reference:nested-fallback",
+      "input": "@theme reference { --font-alias: --theme(--font-missing, initial); } .probe { font-family: --theme(--font-alias, Potato Sans, sans-serif); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ".probe {\n  font-family: var(--font-alias, Potato Sans, sans-serif);\n}\n"
+    },
+    {
+      "id": "functions:inline:nested-fallback",
+      "input": "@theme inline { --font-alias: --theme(--font-missing, initial); } .probe { font-family: --theme(--font-alias, Potato Sans, sans-serif); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ".probe {\n  font-family: Potato Sans, sans-serif;\n}\n"
+    },
+    {
+      "id": "functions::live-keyframes",
+      "input": "@theme  { --spacing: 4px; --color-brand: #123456; --breakpoint-card: 700px; --animate-probe: probe 1s; @keyframes probe { from { margin-left: --spacing(2); color: --theme(--color-brand); } } } @tailwind utilities;",
+      "candidates": [
+        "animate-probe"
+      ],
+      "expectedCss": ":root, :host {\n  --spacing: 4px;\n  --color-brand: #123456;\n  --animate-probe: probe 1s;\n}\n.animate-probe {\n  animation: var(--animate-probe);\n}\n@keyframes probe {\n  from {\n    margin-left: calc(var(--spacing) * 2);\n    color: var(--color-brand);\n  }\n}\n"
+    },
+    {
+      "id": "functions::unused-keyframes",
+      "input": "@theme  { --spacing: 4px; --color-brand: #123456; --breakpoint-card: 700px; --animate-probe: probe 1s; @keyframes probe { from { margin-left: --spacing(2); color: --theme(--color-brand); } } } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ":root, :host {\n  --spacing: 4px;\n  --color-brand: #123456;\n}\n"
+    },
+    {
+      "id": "functions::nested-structural",
+      "input": "@theme  { --spacing: 4px; --color-brand: #123456; --breakpoint-card: 700px; --animate-probe: probe 1s; @keyframes probe { from { margin-left: --spacing(2); color: --theme(--color-brand); } } } @tailwind utilities;",
+      "candidates": [
+        "divide-x-[--spacing(3)]",
+        "drop-shadow-[0_2px_--spacing(3)_--theme(--color-brand)]"
+      ],
+      "expectedCss": "@layer properties;\n:root, :host {\n  --spacing: 4px;\n  --color-brand: #123456;\n}\n.divide-x-\\[--spacing\\(3\\)\\] {\n  :where(& > :not(:last-child)) {\n    --tw-divide-x-reverse: 0;\n    border-inline-style: var(--tw-border-style);\n    border-inline-start-width: calc(calc(var(--spacing) * 3) * var(--tw-divide-x-reverse));\n    border-inline-end-width: calc(calc(var(--spacing) * 3) * calc(1 - var(--tw-divide-x-reverse)));\n  }\n}\n.drop-shadow-\\[0_2px_--spacing\\(3\\)_--theme\\(--color-brand\\)\\] {\n  --tw-drop-shadow-size: drop-shadow(0 2px var(--tw-drop-shadow-color, calc(var(--spacing) * 3)) var(--color-brand));\n  --tw-drop-shadow: var(--tw-drop-shadow-size);\n  filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);\n}\n@property --tw-divide-x-reverse {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0;\n}\n@property --tw-border-style {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: solid;\n}\n@property --tw-blur {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-brightness {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-contrast {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-grayscale {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-hue-rotate {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-invert {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-opacity {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-saturate {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-sepia {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-drop-shadow {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-drop-shadow-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-drop-shadow-alpha {\n  syntax: \"<percentage>\";\n  inherits: false;\n  initial-value: 100%;\n}\n@property --tw-drop-shadow-size {\n  syntax: \"*\";\n  inherits: false;\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-divide-x-reverse: 0;\n      --tw-border-style: solid;\n      --tw-blur: initial;\n      --tw-brightness: initial;\n      --tw-contrast: initial;\n      --tw-grayscale: initial;\n      --tw-hue-rotate: initial;\n      --tw-invert: initial;\n      --tw-opacity: initial;\n      --tw-saturate: initial;\n      --tw-sepia: initial;\n      --tw-drop-shadow: initial;\n      --tw-drop-shadow-color: initial;\n      --tw-drop-shadow-alpha: 100%;\n      --tw-drop-shadow-size: initial;\n    }\n  }\n}\n"
+    },
+    {
+      "id": "functions::function-variant",
+      "input": "@theme  { --spacing: 4px; --color-brand: #123456; --breakpoint-card: 700px; --animate-probe: probe 1s; @keyframes probe { from { margin-left: --spacing(2); color: --theme(--color-brand); } } } @tailwind utilities;",
+      "candidates": [
+        "supports-[color:--theme(--color-brand)]:block",
+        "[@media(width>=--theme(--breakpoint-card))]:block"
+      ],
+      "expectedCss": ":root, :host {\n  --spacing: 4px;\n  --color-brand: #123456;\n}\n.supports-\\[color\\:--theme\\(--color-brand\\)\\]\\:block {\n  @supports (color:#123456) {\n    display: block;\n  }\n}\n.\\[\\@media\\(width\\>\\=--theme\\(--breakpoint-card\\)\\)\\]\\:block {\n  @media (width>=700px) {\n    display: block;\n  }\n}\n"
+    },
+    {
+      "id": "functions::property-function",
+      "input": "@theme  { --spacing: 4px; --color-brand: #123456; --breakpoint-card: 700px; --animate-probe: probe 1s; @keyframes probe { from { margin-left: --spacing(2); color: --theme(--color-brand); } } } @property --custom { syntax: \"*\"; inherits: false; initial-value: --spacing(3); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": "@layer properties;\n:root, :host {\n  --spacing: 4px;\n  --color-brand: #123456;\n}\n@property --custom {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: calc(var(--spacing) * 3);\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --custom: calc(var(--spacing) * 3);\n    }\n  }\n}\n"
+    },
+    {
+      "id": "functions::custom-media-container",
+      "input": "@theme  { --spacing: 4px; --color-brand: #123456; --breakpoint-card: 700px; --animate-probe: probe 1s; @keyframes probe { from { margin-left: --spacing(2); color: --theme(--color-brand); } } } @custom-media --card (width > --theme(--breakpoint-card)); @container (width > --theme(--breakpoint-card)) { .probe { color: --theme(--color-brand); } } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ":root, :host {\n  --spacing: 4px;\n  --color-brand: #123456;\n}\n@custom-media --card (width > 700px);\n@container (width > 700px) {\n  .probe {\n    color: var(--color-brand);\n  }\n}\n"
+    },
+    {
+      "id": "functions::recursive-alias",
+      "input": "@theme  { --color-brand: #123456; --color-alias: --theme(--color-brand); --color-nested: --theme(--color-alias); } @tailwind utilities;",
+      "candidates": [
+        "bg-nested"
+      ],
+      "expectedCss": ":root, :host {\n  --color-brand: #123456;\n  --color-alias: var(--color-brand);\n  --color-nested: var(--color-alias);\n}\n.bg-nested {\n  background-color: var(--color-nested);\n}\n"
+    },
+    {
+      "id": "functions:inline:live-keyframes",
+      "input": "@theme inline { --spacing: 4px; --color-brand: #123456; --breakpoint-card: 700px; --animate-probe: probe 1s; @keyframes probe { from { margin-left: --spacing(2); color: --theme(--color-brand); } } } @tailwind utilities;",
+      "candidates": [
+        "animate-probe"
+      ],
+      "expectedCss": ".animate-probe {\n  animation: probe 1s;\n}\n@keyframes probe {\n  from {\n    margin-left: calc(4px * 2);\n    color: #123456;\n  }\n}\n"
+    },
+    {
+      "id": "functions:inline:unused-keyframes",
+      "input": "@theme inline { --spacing: 4px; --color-brand: #123456; --breakpoint-card: 700px; --animate-probe: probe 1s; @keyframes probe { from { margin-left: --spacing(2); color: --theme(--color-brand); } } } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ""
+    },
+    {
+      "id": "functions:inline:nested-structural",
+      "input": "@theme inline { --spacing: 4px; --color-brand: #123456; --breakpoint-card: 700px; --animate-probe: probe 1s; @keyframes probe { from { margin-left: --spacing(2); color: --theme(--color-brand); } } } @tailwind utilities;",
+      "candidates": [
+        "divide-x-[--spacing(3)]",
+        "drop-shadow-[0_2px_--spacing(3)_--theme(--color-brand)]"
+      ],
+      "expectedCss": "@layer properties;\n.divide-x-\\[--spacing\\(3\\)\\] {\n  :where(& > :not(:last-child)) {\n    --tw-divide-x-reverse: 0;\n    border-inline-style: var(--tw-border-style);\n    border-inline-start-width: calc(calc(4px * 3) * var(--tw-divide-x-reverse));\n    border-inline-end-width: calc(calc(4px * 3) * calc(1 - var(--tw-divide-x-reverse)));\n  }\n}\n.drop-shadow-\\[0_2px_--spacing\\(3\\)_--theme\\(--color-brand\\)\\] {\n  --tw-drop-shadow-size: drop-shadow(0 2px var(--tw-drop-shadow-color, calc(4px * 3)) #123456);\n  --tw-drop-shadow: var(--tw-drop-shadow-size);\n  filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);\n}\n@property --tw-divide-x-reverse {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0;\n}\n@property --tw-border-style {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: solid;\n}\n@property --tw-blur {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-brightness {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-contrast {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-grayscale {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-hue-rotate {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-invert {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-opacity {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-saturate {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-sepia {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-drop-shadow {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-drop-shadow-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-drop-shadow-alpha {\n  syntax: \"<percentage>\";\n  inherits: false;\n  initial-value: 100%;\n}\n@property --tw-drop-shadow-size {\n  syntax: \"*\";\n  inherits: false;\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-divide-x-reverse: 0;\n      --tw-border-style: solid;\n      --tw-blur: initial;\n      --tw-brightness: initial;\n      --tw-contrast: initial;\n      --tw-grayscale: initial;\n      --tw-hue-rotate: initial;\n      --tw-invert: initial;\n      --tw-opacity: initial;\n      --tw-saturate: initial;\n      --tw-sepia: initial;\n      --tw-drop-shadow: initial;\n      --tw-drop-shadow-color: initial;\n      --tw-drop-shadow-alpha: 100%;\n      --tw-drop-shadow-size: initial;\n    }\n  }\n}\n"
+    },
+    {
+      "id": "functions:inline:function-variant",
+      "input": "@theme inline { --spacing: 4px; --color-brand: #123456; --breakpoint-card: 700px; --animate-probe: probe 1s; @keyframes probe { from { margin-left: --spacing(2); color: --theme(--color-brand); } } } @tailwind utilities;",
+      "candidates": [
+        "supports-[color:--theme(--color-brand)]:block",
+        "[@media(width>=--theme(--breakpoint-card))]:block"
+      ],
+      "expectedCss": ".supports-\\[color\\:--theme\\(--color-brand\\)\\]\\:block {\n  @supports (color:#123456) {\n    display: block;\n  }\n}\n.\\[\\@media\\(width\\>\\=--theme\\(--breakpoint-card\\)\\)\\]\\:block {\n  @media (width>=700px) {\n    display: block;\n  }\n}\n"
+    },
+    {
+      "id": "functions:inline:property-function",
+      "input": "@theme inline { --spacing: 4px; --color-brand: #123456; --breakpoint-card: 700px; --animate-probe: probe 1s; @keyframes probe { from { margin-left: --spacing(2); color: --theme(--color-brand); } } } @property --custom { syntax: \"*\"; inherits: false; initial-value: --spacing(3); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": "@layer properties;\n@property --custom {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: calc(4px * 3);\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --custom: calc(4px * 3);\n    }\n  }\n}\n"
+    },
+    {
+      "id": "functions:inline:custom-media-container",
+      "input": "@theme inline { --spacing: 4px; --color-brand: #123456; --breakpoint-card: 700px; --animate-probe: probe 1s; @keyframes probe { from { margin-left: --spacing(2); color: --theme(--color-brand); } } } @custom-media --card (width > --theme(--breakpoint-card)); @container (width > --theme(--breakpoint-card)) { .probe { color: --theme(--color-brand); } } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": "@custom-media --card (width > 700px);\n@container (width > 700px) {\n  .probe {\n    color: #123456;\n  }\n}\n"
+    },
+    {
+      "id": "functions:inline:recursive-alias",
+      "input": "@theme inline { --color-brand: #123456; --color-alias: --theme(--color-brand); --color-nested: --theme(--color-alias); } @tailwind utilities;",
+      "candidates": [
+        "bg-nested"
+      ],
+      "expectedCss": ".bg-nested {\n  background-color: #123456;\n}\n"
+    },
+    {
+      "id": "functions:reference:live-keyframes",
+      "input": "@theme reference { --spacing: 4px; --color-brand: #123456; --breakpoint-card: 700px; --animate-probe: probe 1s; @keyframes probe { from { margin-left: --spacing(2); color: --theme(--color-brand); } } } @tailwind utilities;",
+      "candidates": [
+        "animate-probe"
+      ],
+      "expectedCss": ".animate-probe {\n  animation: var(--animate-probe, probe 1s);\n}\n@keyframes probe {\n  from {\n    margin-left: calc(var(--spacing, 4px) * 2);\n    color: var(--color-brand, #123456);\n  }\n}\n"
+    },
+    {
+      "id": "functions:reference:unused-keyframes",
+      "input": "@theme reference { --spacing: 4px; --color-brand: #123456; --breakpoint-card: 700px; --animate-probe: probe 1s; @keyframes probe { from { margin-left: --spacing(2); color: --theme(--color-brand); } } } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ""
+    },
+    {
+      "id": "functions:reference:nested-structural",
+      "input": "@theme reference { --spacing: 4px; --color-brand: #123456; --breakpoint-card: 700px; --animate-probe: probe 1s; @keyframes probe { from { margin-left: --spacing(2); color: --theme(--color-brand); } } } @tailwind utilities;",
+      "candidates": [
+        "divide-x-[--spacing(3)]",
+        "drop-shadow-[0_2px_--spacing(3)_--theme(--color-brand)]"
+      ],
+      "expectedCss": "@layer properties;\n.divide-x-\\[--spacing\\(3\\)\\] {\n  :where(& > :not(:last-child)) {\n    --tw-divide-x-reverse: 0;\n    border-inline-style: var(--tw-border-style);\n    border-inline-start-width: calc(calc(var(--spacing, 4px) * 3) * var(--tw-divide-x-reverse));\n    border-inline-end-width: calc(calc(var(--spacing, 4px) * 3) * calc(1 - var(--tw-divide-x-reverse)));\n  }\n}\n.drop-shadow-\\[0_2px_--spacing\\(3\\)_--theme\\(--color-brand\\)\\] {\n  --tw-drop-shadow-size: drop-shadow(0 2px var(--tw-drop-shadow-color, calc(var(--spacing, 4px) * 3)) var(--color-brand, #123456));\n  --tw-drop-shadow: var(--tw-drop-shadow-size);\n  filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);\n}\n@property --tw-divide-x-reverse {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0;\n}\n@property --tw-border-style {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: solid;\n}\n@property --tw-blur {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-brightness {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-contrast {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-grayscale {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-hue-rotate {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-invert {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-opacity {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-saturate {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-sepia {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-drop-shadow {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-drop-shadow-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-drop-shadow-alpha {\n  syntax: \"<percentage>\";\n  inherits: false;\n  initial-value: 100%;\n}\n@property --tw-drop-shadow-size {\n  syntax: \"*\";\n  inherits: false;\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-divide-x-reverse: 0;\n      --tw-border-style: solid;\n      --tw-blur: initial;\n      --tw-brightness: initial;\n      --tw-contrast: initial;\n      --tw-grayscale: initial;\n      --tw-hue-rotate: initial;\n      --tw-invert: initial;\n      --tw-opacity: initial;\n      --tw-saturate: initial;\n      --tw-sepia: initial;\n      --tw-drop-shadow: initial;\n      --tw-drop-shadow-color: initial;\n      --tw-drop-shadow-alpha: 100%;\n      --tw-drop-shadow-size: initial;\n    }\n  }\n}\n"
+    },
+    {
+      "id": "functions:reference:function-variant",
+      "input": "@theme reference { --spacing: 4px; --color-brand: #123456; --breakpoint-card: 700px; --animate-probe: probe 1s; @keyframes probe { from { margin-left: --spacing(2); color: --theme(--color-brand); } } } @tailwind utilities;",
+      "candidates": [
+        "supports-[color:--theme(--color-brand)]:block",
+        "[@media(width>=--theme(--breakpoint-card))]:block"
+      ],
+      "expectedCss": ".supports-\\[color\\:--theme\\(--color-brand\\)\\]\\:block {\n  @supports (color:#123456) {\n    display: block;\n  }\n}\n.\\[\\@media\\(width\\>\\=--theme\\(--breakpoint-card\\)\\)\\]\\:block {\n  @media (width>=700px) {\n    display: block;\n  }\n}\n"
+    },
+    {
+      "id": "functions:reference:property-function",
+      "input": "@theme reference { --spacing: 4px; --color-brand: #123456; --breakpoint-card: 700px; --animate-probe: probe 1s; @keyframes probe { from { margin-left: --spacing(2); color: --theme(--color-brand); } } } @property --custom { syntax: \"*\"; inherits: false; initial-value: --spacing(3); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": "@layer properties;\n@property --custom {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: calc(var(--spacing, 4px) * 3);\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --custom: calc(var(--spacing, 4px) * 3);\n    }\n  }\n}\n"
+    },
+    {
+      "id": "functions:reference:custom-media-container",
+      "input": "@theme reference { --spacing: 4px; --color-brand: #123456; --breakpoint-card: 700px; --animate-probe: probe 1s; @keyframes probe { from { margin-left: --spacing(2); color: --theme(--color-brand); } } } @custom-media --card (width > --theme(--breakpoint-card)); @container (width > --theme(--breakpoint-card)) { .probe { color: --theme(--color-brand); } } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": "@custom-media --card (width > 700px);\n@container (width > 700px) {\n  .probe {\n    color: var(--color-brand, #123456);\n  }\n}\n"
+    },
+    {
+      "id": "functions:reference:recursive-alias",
+      "input": "@theme reference { --color-brand: #123456; --color-alias: --theme(--color-brand); --color-nested: --theme(--color-alias); } @tailwind utilities;",
+      "candidates": [
+        "bg-nested"
+      ],
+      "expectedCss": ".bg-nested {\n  background-color: var(--color-nested, var(--color-alias, var(--color-brand, #123456)));\n}\n"
+    },
+    {
+      "id": "functions:static:live-keyframes",
+      "input": "@theme static { --spacing: 4px; --color-brand: #123456; --breakpoint-card: 700px; --animate-probe: probe 1s; @keyframes probe { from { margin-left: --spacing(2); color: --theme(--color-brand); } } } @tailwind utilities;",
+      "candidates": [
+        "animate-probe"
+      ],
+      "expectedCss": ":root, :host {\n  --spacing: 4px;\n  --color-brand: #123456;\n  --breakpoint-card: 700px;\n  --animate-probe: probe 1s;\n}\n.animate-probe {\n  animation: var(--animate-probe);\n}\n@keyframes probe {\n  from {\n    margin-left: calc(var(--spacing) * 2);\n    color: var(--color-brand);\n  }\n}\n"
+    },
+    {
+      "id": "functions:static:unused-keyframes",
+      "input": "@theme static { --spacing: 4px; --color-brand: #123456; --breakpoint-card: 700px; --animate-probe: probe 1s; @keyframes probe { from { margin-left: --spacing(2); color: --theme(--color-brand); } } } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ":root, :host {\n  --spacing: 4px;\n  --color-brand: #123456;\n  --breakpoint-card: 700px;\n  --animate-probe: probe 1s;\n}\n@keyframes probe {\n  from {\n    margin-left: calc(var(--spacing) * 2);\n    color: var(--color-brand);\n  }\n}\n"
+    },
+    {
+      "id": "functions:static:nested-structural",
+      "input": "@theme static { --spacing: 4px; --color-brand: #123456; --breakpoint-card: 700px; --animate-probe: probe 1s; @keyframes probe { from { margin-left: --spacing(2); color: --theme(--color-brand); } } } @tailwind utilities;",
+      "candidates": [
+        "divide-x-[--spacing(3)]",
+        "drop-shadow-[0_2px_--spacing(3)_--theme(--color-brand)]"
+      ],
+      "expectedCss": "@layer properties;\n:root, :host {\n  --spacing: 4px;\n  --color-brand: #123456;\n  --breakpoint-card: 700px;\n  --animate-probe: probe 1s;\n}\n.divide-x-\\[--spacing\\(3\\)\\] {\n  :where(& > :not(:last-child)) {\n    --tw-divide-x-reverse: 0;\n    border-inline-style: var(--tw-border-style);\n    border-inline-start-width: calc(calc(var(--spacing) * 3) * var(--tw-divide-x-reverse));\n    border-inline-end-width: calc(calc(var(--spacing) * 3) * calc(1 - var(--tw-divide-x-reverse)));\n  }\n}\n.drop-shadow-\\[0_2px_--spacing\\(3\\)_--theme\\(--color-brand\\)\\] {\n  --tw-drop-shadow-size: drop-shadow(0 2px var(--tw-drop-shadow-color, calc(var(--spacing) * 3)) var(--color-brand));\n  --tw-drop-shadow: var(--tw-drop-shadow-size);\n  filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);\n}\n@property --tw-divide-x-reverse {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0;\n}\n@property --tw-border-style {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: solid;\n}\n@property --tw-blur {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-brightness {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-contrast {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-grayscale {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-hue-rotate {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-invert {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-opacity {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-saturate {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-sepia {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-drop-shadow {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-drop-shadow-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-drop-shadow-alpha {\n  syntax: \"<percentage>\";\n  inherits: false;\n  initial-value: 100%;\n}\n@property --tw-drop-shadow-size {\n  syntax: \"*\";\n  inherits: false;\n}\n@keyframes probe {\n  from {\n    margin-left: calc(var(--spacing) * 2);\n    color: var(--color-brand);\n  }\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-divide-x-reverse: 0;\n      --tw-border-style: solid;\n      --tw-blur: initial;\n      --tw-brightness: initial;\n      --tw-contrast: initial;\n      --tw-grayscale: initial;\n      --tw-hue-rotate: initial;\n      --tw-invert: initial;\n      --tw-opacity: initial;\n      --tw-saturate: initial;\n      --tw-sepia: initial;\n      --tw-drop-shadow: initial;\n      --tw-drop-shadow-color: initial;\n      --tw-drop-shadow-alpha: 100%;\n      --tw-drop-shadow-size: initial;\n    }\n  }\n}\n"
+    },
+    {
+      "id": "functions:static:function-variant",
+      "input": "@theme static { --spacing: 4px; --color-brand: #123456; --breakpoint-card: 700px; --animate-probe: probe 1s; @keyframes probe { from { margin-left: --spacing(2); color: --theme(--color-brand); } } } @tailwind utilities;",
+      "candidates": [
+        "supports-[color:--theme(--color-brand)]:block",
+        "[@media(width>=--theme(--breakpoint-card))]:block"
+      ],
+      "expectedCss": ":root, :host {\n  --spacing: 4px;\n  --color-brand: #123456;\n  --breakpoint-card: 700px;\n  --animate-probe: probe 1s;\n}\n.supports-\\[color\\:--theme\\(--color-brand\\)\\]\\:block {\n  @supports (color:#123456) {\n    display: block;\n  }\n}\n.\\[\\@media\\(width\\>\\=--theme\\(--breakpoint-card\\)\\)\\]\\:block {\n  @media (width>=700px) {\n    display: block;\n  }\n}\n@keyframes probe {\n  from {\n    margin-left: calc(var(--spacing) * 2);\n    color: var(--color-brand);\n  }\n}\n"
+    },
+    {
+      "id": "functions:static:property-function",
+      "input": "@theme static { --spacing: 4px; --color-brand: #123456; --breakpoint-card: 700px; --animate-probe: probe 1s; @keyframes probe { from { margin-left: --spacing(2); color: --theme(--color-brand); } } } @property --custom { syntax: \"*\"; inherits: false; initial-value: --spacing(3); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": "@layer properties;\n:root, :host {\n  --spacing: 4px;\n  --color-brand: #123456;\n  --breakpoint-card: 700px;\n  --animate-probe: probe 1s;\n}\n@property --custom {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: calc(var(--spacing) * 3);\n}\n@keyframes probe {\n  from {\n    margin-left: calc(var(--spacing) * 2);\n    color: var(--color-brand);\n  }\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --custom: calc(var(--spacing) * 3);\n    }\n  }\n}\n"
+    },
+    {
+      "id": "functions:static:custom-media-container",
+      "input": "@theme static { --spacing: 4px; --color-brand: #123456; --breakpoint-card: 700px; --animate-probe: probe 1s; @keyframes probe { from { margin-left: --spacing(2); color: --theme(--color-brand); } } } @custom-media --card (width > --theme(--breakpoint-card)); @container (width > --theme(--breakpoint-card)) { .probe { color: --theme(--color-brand); } } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ":root, :host {\n  --spacing: 4px;\n  --color-brand: #123456;\n  --breakpoint-card: 700px;\n  --animate-probe: probe 1s;\n}\n@custom-media --card (width > 700px);\n@container (width > 700px) {\n  .probe {\n    color: var(--color-brand);\n  }\n}\n@keyframes probe {\n  from {\n    margin-left: calc(var(--spacing) * 2);\n    color: var(--color-brand);\n  }\n}\n"
+    },
+    {
+      "id": "functions:static:recursive-alias",
+      "input": "@theme static { --color-brand: #123456; --color-alias: --theme(--color-brand); --color-nested: --theme(--color-alias); } @tailwind utilities;",
+      "candidates": [
+        "bg-nested"
+      ],
+      "expectedCss": ":root, :host {\n  --color-brand: #123456;\n  --color-alias: var(--color-brand);\n  --color-nested: var(--color-alias);\n}\n.bg-nested {\n  background-color: var(--color-nested);\n}\n"
+    },
+    {
+      "id": "functions:prefix(tw):live-keyframes",
+      "input": "@theme prefix(tw) { --spacing: 4px; --color-brand: #123456; --breakpoint-card: 700px; --animate-probe: probe 1s; @keyframes probe { from { margin-left: --spacing(2); color: --theme(--color-brand); } } } @tailwind utilities;",
+      "candidates": [
+        "tw:animate-probe"
+      ],
+      "expectedCss": ":root, :host {\n  --tw-spacing: 4px;\n  --tw-color-brand: #123456;\n  --tw-animate-probe: probe 1s;\n}\n.tw\\:animate-probe {\n  animation: var(--tw-animate-probe);\n}\n@keyframes probe {\n  from {\n    margin-left: calc(var(--tw-spacing) * 2);\n    color: var(--tw-color-brand);\n  }\n}\n"
+    },
+    {
+      "id": "functions:prefix(tw):unused-keyframes",
+      "input": "@theme prefix(tw) { --spacing: 4px; --color-brand: #123456; --breakpoint-card: 700px; --animate-probe: probe 1s; @keyframes probe { from { margin-left: --spacing(2); color: --theme(--color-brand); } } } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ":root, :host {\n  --tw-spacing: 4px;\n  --tw-color-brand: #123456;\n}\n"
+    },
+    {
+      "id": "functions:prefix(tw):nested-structural",
+      "input": "@theme prefix(tw) { --spacing: 4px; --color-brand: #123456; --breakpoint-card: 700px; --animate-probe: probe 1s; @keyframes probe { from { margin-left: --spacing(2); color: --theme(--color-brand); } } } @tailwind utilities;",
+      "candidates": [
+        "tw:divide-x-[--spacing(3)]",
+        "tw:drop-shadow-[0_2px_--spacing(3)_--theme(--color-brand)]"
+      ],
+      "expectedCss": "@layer properties;\n:root, :host {\n  --tw-spacing: 4px;\n  --tw-color-brand: #123456;\n}\n.tw\\:divide-x-\\[--spacing\\(3\\)\\] {\n  :where(& > :not(:last-child)) {\n    --tw-divide-x-reverse: 0;\n    border-inline-style: var(--tw-border-style);\n    border-inline-start-width: calc(calc(var(--tw-spacing) * 3) * var(--tw-divide-x-reverse));\n    border-inline-end-width: calc(calc(var(--tw-spacing) * 3) * calc(1 - var(--tw-divide-x-reverse)));\n  }\n}\n.tw\\:drop-shadow-\\[0_2px_--spacing\\(3\\)_--theme\\(--color-brand\\)\\] {\n  --tw-drop-shadow-size: drop-shadow(0 2px var(--tw-drop-shadow-color, calc(var(--tw-spacing) * 3)) var(--tw-color-brand));\n  --tw-drop-shadow: var(--tw-drop-shadow-size);\n  filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);\n}\n@property --tw-divide-x-reverse {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0;\n}\n@property --tw-border-style {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: solid;\n}\n@property --tw-blur {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-brightness {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-contrast {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-grayscale {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-hue-rotate {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-invert {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-opacity {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-saturate {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-sepia {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-drop-shadow {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-drop-shadow-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-drop-shadow-alpha {\n  syntax: \"<percentage>\";\n  inherits: false;\n  initial-value: 100%;\n}\n@property --tw-drop-shadow-size {\n  syntax: \"*\";\n  inherits: false;\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-divide-x-reverse: 0;\n      --tw-border-style: solid;\n      --tw-blur: initial;\n      --tw-brightness: initial;\n      --tw-contrast: initial;\n      --tw-grayscale: initial;\n      --tw-hue-rotate: initial;\n      --tw-invert: initial;\n      --tw-opacity: initial;\n      --tw-saturate: initial;\n      --tw-sepia: initial;\n      --tw-drop-shadow: initial;\n      --tw-drop-shadow-color: initial;\n      --tw-drop-shadow-alpha: 100%;\n      --tw-drop-shadow-size: initial;\n    }\n  }\n}\n"
+    },
+    {
+      "id": "functions:prefix(tw):function-variant",
+      "input": "@theme prefix(tw) { --spacing: 4px; --color-brand: #123456; --breakpoint-card: 700px; --animate-probe: probe 1s; @keyframes probe { from { margin-left: --spacing(2); color: --theme(--color-brand); } } } @tailwind utilities;",
+      "candidates": [
+        "tw:supports-[color:--theme(--color-brand)]:block",
+        "tw:[@media(width>=--theme(--breakpoint-card))]:block"
+      ],
+      "expectedCss": ":root, :host {\n  --tw-spacing: 4px;\n  --tw-color-brand: #123456;\n}\n.tw\\:supports-\\[color\\:--theme\\(--color-brand\\)\\]\\:block {\n  @supports (color:#123456) {\n    display: block;\n  }\n}\n.tw\\:\\[\\@media\\(width\\>\\=--theme\\(--breakpoint-card\\)\\)\\]\\:block {\n  @media (width>=700px) {\n    display: block;\n  }\n}\n"
+    },
+    {
+      "id": "functions:prefix(tw):property-function",
+      "input": "@theme prefix(tw) { --spacing: 4px; --color-brand: #123456; --breakpoint-card: 700px; --animate-probe: probe 1s; @keyframes probe { from { margin-left: --spacing(2); color: --theme(--color-brand); } } } @property --custom { syntax: \"*\"; inherits: false; initial-value: --spacing(3); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": "@layer properties;\n:root, :host {\n  --tw-spacing: 4px;\n  --tw-color-brand: #123456;\n}\n@property --custom {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: calc(var(--tw-spacing) * 3);\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --custom: calc(var(--tw-spacing) * 3);\n    }\n  }\n}\n"
+    },
+    {
+      "id": "functions:prefix(tw):custom-media-container",
+      "input": "@theme prefix(tw) { --spacing: 4px; --color-brand: #123456; --breakpoint-card: 700px; --animate-probe: probe 1s; @keyframes probe { from { margin-left: --spacing(2); color: --theme(--color-brand); } } } @custom-media --card (width > --theme(--breakpoint-card)); @container (width > --theme(--breakpoint-card)) { .probe { color: --theme(--color-brand); } } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ":root, :host {\n  --tw-spacing: 4px;\n  --tw-color-brand: #123456;\n}\n@custom-media --card (width > 700px);\n@container (width > 700px) {\n  .probe {\n    color: var(--tw-color-brand);\n  }\n}\n"
+    },
+    {
+      "id": "functions:prefix(tw):recursive-alias",
+      "input": "@theme prefix(tw) { --color-brand: #123456; --color-alias: --theme(--color-brand); --color-nested: --theme(--color-alias); } @tailwind utilities;",
+      "candidates": [
+        "tw:bg-nested"
+      ],
+      "expectedCss": ":root, :host {\n  --tw-color-brand: #123456;\n  --tw-color-alias: var(--tw-color-brand);\n  --tw-color-nested: var(--tw-color-alias);\n}\n.tw\\:bg-nested {\n  background-color: var(--tw-color-nested);\n}\n"
+    },
+    {
+      "id": "functions:quoted-function-text",
+      "input": ".probe { content: \"--theme(--missing)\"; value: url(\"theme(--missing)\"); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ".probe {\n  content: \"--theme(--missing)\";\n  value: url(\"theme(--missing)\");\n}\n"
+    },
+    {
+      "id": "functions:invalid-unused-keyframes",
+      "input": "@theme { @keyframes probe { from { color: --theme(--missing); } } } @tailwind utilities;",
+      "candidates": [],
+      "expectedError": "Could not resolve value for theme function: `theme(--missing)`. Consider checking if the variable name is correct or provide a fallback value to silence this error."
+    },
+    {
+      "id": "functions:ignored-reference-functions",
+      "input": "@theme reference { --color-brand: --theme(--missing); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ""
+    },
+    {
+      "id": "functions:authored-property-inherits",
+      "input": "@property --custom { syntax: \"*\"; inherits: true; initial-value: --alpha(red / .5); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": "@layer properties;\n@property --custom {\n  syntax: \"*\";\n  inherits: true;\n  initial-value: color-mix(in oklab, red 50%, transparent);\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    :root, :host {\n      --custom: color-mix(in oklab, red 50%, transparent);\n    }\n  }\n}\n"
+    },
+    {
+      "id": "functions:authored-property-duplicate",
+      "input": "@property --custom { syntax: \"*\"; inherits: false; initial-value: red; } @property --custom { syntax: \"*\"; inherits: true; initial-value: blue; } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": "@layer properties;\n@property --custom {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: red;\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --custom: red;\n    }\n  }\n}\n"
+    },
+    {
+      "id": "functions:nested-property-does-not-fallback",
+      "input": "@media (width > 100px) { @property --custom { syntax: \"*\"; inherits: false; initial-value: --alpha(red / .5); } } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": "@media (width > 100px) {\n  @property --custom {\n    syntax: \"*\";\n    inherits: false;\n    initial-value: color-mix(in oklab, red 50%, transparent);\n  }\n}\n"
+    },
+    {
+      "id": "functions:feature-fastpath:.x{content:\"theme(--foo)\";}",
+      "input": ".x{content:\"theme(--foo)\";}",
+      "candidates": [
+        "flex"
+      ],
+      "expectedCss": ".x {\n  content: \"theme(--foo)\";\n}\n"
+    },
+    {
+      "id": "functions:feature-fastpath:.x{--x:pretheme(--foo);}",
+      "input": ".x{--x:pretheme(--foo);}",
+      "candidates": [
+        "flex"
+      ],
+      "expectedCss": ".x {\n  --x: pretheme(--foo);\n}\n"
+    },
+    {
+      "id": "functions:feature-fastpath:@theme reference { --foo:theme(--a,red); } .x{color:blue;}",
+      "input": "@theme reference { --foo:theme(--a,red); } .x{color:blue;}",
+      "candidates": [
+        "flex"
+      ],
+      "expectedCss": "@theme reference { --foo:theme(--a,red); } .x{color:blue;}"
+    },
+    {
+      "id": "functions:feature-fastpath:@theme reference { --spacing:--spacing(2); } .x{color:blue;}",
+      "input": "@theme reference { --spacing:--spacing(2); } .x{color:blue;}",
+      "candidates": [
+        "flex"
+      ],
+      "expectedCss": "@theme reference { --spacing:--spacing(2); } .x{color:blue;}"
+    },
+    {
+      "id": "functions:feature-fastpath:@custom-variant foo { color:theme(--x,red); @slot; }",
+      "input": "@custom-variant foo { color:theme(--x,red); @slot; }",
+      "candidates": [
+        "flex"
+      ],
+      "expectedCss": "@custom-variant foo { color:theme(--x,red); @slot; }"
+    },
+    {
+      "id": "functions:feature-fastpath:@theme { --foo:theme(--a,red); } .x{color:blue;}",
+      "input": "@theme { --foo:theme(--a,red); } .x{color:blue;}",
+      "candidates": [
+        "flex"
+      ],
+      "expectedCss": ".x {\n  color: blue;\n}\n"
+    },
+    {
+      "id": "functions:feature-fastpath:@theme { --foo: red; } .x{color:blue;}",
+      "input": "@theme { --foo: red; } .x{color:blue;}",
+      "candidates": [
+        "flex"
+      ],
+      "expectedCss": "@theme { --foo: red; } .x{color:blue;}"
+    },
+    {
+      "id": "functions:feature-fastpath:@media reference { .x { content:\"theme(--foo)\"; } }",
+      "input": "@media reference { .x { content:\"theme(--foo)\"; } }",
+      "candidates": [
+        "flex"
+      ],
+      "expectedCss": ""
+    },
+    {
+      "id": "functions:feature-fastpath:/*! theme(--foo) */ .x{color:blue;}",
+      "input": "/*! theme(--foo) */ .x{color:blue;}",
+      "candidates": [
+        "flex"
+      ],
+      "expectedCss": "/*! theme(--foo) */ .x{color:blue;}"
+    }
+  ]
+}

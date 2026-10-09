@@ -1,0 +1,23 @@
+{
+  "records": 6,
+  "milestones": 7,
+  "complete": 3,
+  "latestComplete": "M2",
+  "recordLinks": "all exist",
+  "fixtureSha256": "54344f1f45e4db9c42133af3352a6cf83867809570914bc5b91f3ea8b8d79efe",
+  "artifacts": {
+    "compilerApi": {
+      "bytes": 1947428,
+      "sha256": "de7a7657c50977419853e1081fac53e38b74214d2ca80976bb567ef3cbad57e5"
+    },
+    "compilerOnly": {
+      "bytes": 1318270,
+      "sha256": "73fa8d2cdab1329381f8726271f81c4a176a4f642e30d7e0e3339affa1d20892"
+    },
+    "rootRecord": "utf16-prerequisites-build-root.txt"
+  },
+  "evidenceLogs": "all exist",
+  "activeBuilds": 0,
+  "goalStatus": "active",
+  "browserVerification": "latest core unverified"
+}

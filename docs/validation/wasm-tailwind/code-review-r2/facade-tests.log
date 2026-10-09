@@ -1,0 +1,26 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.21s
+     Running unittests src/lib.rs (target/debug/deps/rustify_style_wasm-8cec7dd69502592b)
+
+running 12 tests
+test session::tests::variant_metadata_reader_keeps_queued_limit_priority ... ok
+test session::tests::variant_metadata_reader_counts_pair_and_lone_logical_input_bytes ... ok
+test session::tests::invalid_candidate_json_recovers_without_creating_pending_text_cache ... ok
+test session::tests::initial_css_report_uses_the_same_scope_as_prepared_reports ... ok
+test session::tests::prepared_reply_preserves_variable_candidates_for_recovery ... ok
+test session::tests::scoped_facade_does_not_publish_uninstalled_preparation ... ok
+test session::tests::prepare_commit_discard_keep_a_single_owned_snapshot ... ok
+test session::scanning_tests::scanning_stages_variables_and_preserves_discarded_candidates_for_retry ... ok
+test session::tests::replacement_configuration_is_staged_until_commit_and_discard_keeps_old_cache ... ok
+test session::tests::replacing_configuration_stages_and_discards_without_mutating_committed_state ... ok
+test session::tests::candidate_json_retains_raw_units_through_prepare_commit_discard_and_replacement ... ok
+test session::scanning_tests::source_selection_and_missing_information_are_explicit ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+

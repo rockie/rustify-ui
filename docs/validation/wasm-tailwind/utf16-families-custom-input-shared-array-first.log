@@ -1,0 +1,31 @@
+mbx[warning]: Unix-domain cache session listener unavailable; using FIFO transport: failed to bind cache session listener at /var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/mbx-session-nxihfl/cache-agent.sock: Operation not permitted (os error 1)
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 6.26s
+     Running unittests src/lib.rs (/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-utf16-verified-54mkl3kq/cargo-target/debug/deps/rustify_style-7a67d48e3c4c51f4)
+
+running 1 test
+test compiler::public_api::compile_ast::canonical_text_tests::utility_removal_visits_shared_context_arrays_once ... FAILED
+
+failures:
+
+---- compiler::public_api::compile_ast::canonical_text_tests::utility_removal_visits_shared_context_arrays_once stdout ----
+
+thread 'compiler::public_api::compile_ast::canonical_text_tests::utility_removal_visits_shared_context_arrays_once' (3276818) panicked at crates/rustify-style/src/compiler/public_api/compile_ast.rs:1400:13:
+one removal for the shared caller array
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    compiler::public_api::compile_ast::canonical_text_tests::utility_removal_visits_shared_context_arrays_once
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 313 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p rustify-style --lib`
+mbx[cache]: 0 hits, 1 misses; 0 B downloaded, 0 B uploaded, 340.2 MiB stored locally

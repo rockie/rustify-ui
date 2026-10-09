@@ -1,0 +1,46 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+   Compiling rustify-ui v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui)
+warning: unused import: `GpuCondition`
+ --> crates/rustify-ui/src/utility/gpu/tests.rs:3:30
+  |
+3 | use rustify_style::program::{GpuCondition, GpuDeclaration, GpuValue};
+  |                              ^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+mbx[warning]: result was not stored: compiler input was modified during compilation: /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui/src/utility/gpu.rs
+warning: `rustify-ui` (lib test) generated 1 warning (run `cargo fix --lib -p rustify-ui --tests` to apply 1 suggestion)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 7.09s
+warning: the following packages contain code that will be rejected by a future version of Rust: proc-macro-error2 v2.0.1
+note: to see what the problems were, use the option `--future-incompat-report`, or run `cargo report future-incompatibilities --id 1`
+     Running unittests src/lib.rs (target/debug/deps/rustify_ui-903cd4a0633e85d6)
+
+running 1 test
+test utility::gpu::tests::compiler_order_and_importance_override_input_order ... FAILED
+
+failures:
+
+---- utility::gpu::tests::compiler_order_and_importance_override_input_order stdout ----
+
+thread 'utility::gpu::tests::compiler_order_and_importance_override_input_order' (12041603) panicked at crates/rustify-ui/src/utility/gpu/tests.rs:41:5:
+assertion `left == right` failed
+  left: [0.0, 0.0, 0.0, 0.0]
+ right: [4.0, 4.0, 4.0, 12.0]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    utility::gpu::tests::compiler_order_and_importance_override_input_order
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 228 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p rustify-ui --lib`
+mbx[cache]: 0 hits, 0 misses, 2 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: 10548 cache hits and counting. rustc thinks it has been busy.

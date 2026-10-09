@@ -1,0 +1,59 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+warning: methods `contains_root` and `owned_bytes` are never used
+   --> crates/rustify-style/src/compiler/custom_variants.rs:106:12
+    |
+ 41 | impl CustomVariants {
+    | ------------------- methods in this implementation
+...
+106 |     pub fn contains_root(&self, root: &str) -> bool {
+    |            ^^^^^^^^^^^^^
+...
+116 |     pub fn owned_bytes(&self) -> usize {
+    |            ^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `rustify-style` (lib test) generated 1 warning
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 5.86s
+     Running unittests src/lib.rs (target/debug/deps/rustify_style-4ed64bbe76d78d97)
+
+running 1 test
+test compiler::tests::custom_variant_matrix_matches_official_css_and_errors ... FAILED
+
+failures:
+
+---- compiler::tests::custom_variant_matrix_matches_official_css_and_errors stdout ----
+
+thread 'compiler::tests::custom_variant_matrix_matches_official_css_and_errors' (14121947) panicked at crates/rustify-style/src/compiler/tests.rs:92:5:
+6289 mismatches; first cases: [
+    "\"custom-variant:selector:hover:empty:sample\": constructor PendingFeature { feature: \"@custom-variant\" }",
+    "\"custom-variant:selector:hover:empty:sample/mark\": constructor PendingFeature { feature: \"@custom-variant\" }",
+    "\"custom-variant:selector:hover:empty:sample/[]\": constructor PendingFeature { feature: \"@custom-variant\" }",
+    "\"custom-variant:selector:hover:empty:sample-unknown\": constructor PendingFeature { feature: \"@custom-variant\" }",
+    "\"custom-variant:selector:hover:empty:group-sample\": constructor PendingFeature { feature: \"@custom-variant\" }",
+    "\"custom-variant:selector:hover:empty:group-sample/mark\": constructor PendingFeature { feature: \"@custom-variant\" }",
+    "\"custom-variant:selector:hover:empty:peer-sample\": constructor PendingFeature { feature: \"@custom-variant\" }",
+    "\"custom-variant:selector:hover:empty:peer-sample/mark\": constructor PendingFeature { feature: \"@custom-variant\" }",
+    "\"custom-variant:selector:hover:empty:in-sample\": constructor PendingFeature { feature: \"@custom-variant\" }",
+    "\"custom-variant:selector:hover:empty:not-sample\": constructor PendingFeature { feature: \"@custom-variant\" }",
+    "\"custom-variant:selector:hover:empty:has-sample\": constructor PendingFeature { feature: \"@custom-variant\" }",
+    "\"custom-variant:selector:hover:empty:not-group-sample\": constructor PendingFeature { feature: \"@custom-variant\" }",
+]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    compiler::tests::custom_variant_matrix_matches_official_css_and_errors
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 107 filtered out; finished in 0.23s
+
+error: test failed, to rerun pass `-p rustify-style --lib`
+mbx[cache]: 0 hits, 0 misses, 1 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: 668.4 GiB logical tidied away. you may continue not thinking about it.

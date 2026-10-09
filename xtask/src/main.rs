@@ -6,6 +6,7 @@ mod doctor;
 mod serve;
 mod sources;
 mod tailwind;
+mod utility;
 mod verify;
 
 use build::BuildRequest;
@@ -15,7 +16,7 @@ const USAGE: &str = "\
 mbx xtask <command> [options]
 
   doctor
-  build-web --example <name> [--release] [--base /path/]
+  build-web --example <name> [--release] [--base /path/] [--utility-scanner]
   serve       --example <name> [--release] [--base /path/] [--spa] [--port N] [--csp strict|no-wasm|off]
               [--fault missing:<path>|corrupt:<path>|truncated:<path>|stale-bridge]
   css         [--check]
@@ -23,6 +24,11 @@ mbx xtask <command> [options]
   catalog     --write <path> [--check]
   report-size --example <name> [--release] [--compressed]
   sources     verify
+  utility-baseline [--group worker|css|extractor|compiler|cn|all] [--build-only]
+                   [--serve --port N]
+  utility-conformance --check --group compiler-smoke
+  utility-build --group cn|compiler-api [--output <directory>]
+  utility-bench [--out <directory>]
   verify      --suite p1|p2 [--no-browser] [--no-build]
 ";
 
@@ -36,6 +42,10 @@ fn main() {
         Some("catalog") => catalog::run(&args[1..]),
         Some("report-size") => report_size(&args[1..]),
         Some("sources") => sources::run(&args[1..]),
+        Some("utility-baseline") => utility::baseline(&args[1..]),
+        Some("utility-conformance") => utility::conformance(&args[1..]),
+        Some("utility-build") => utility::build(&args[1..]),
+        Some("utility-bench") => utility::bench(&args[1..]),
         Some("verify") => verify::run(&args[1..]),
         _ => Err(USAGE.to_string()),
     };
@@ -58,6 +68,7 @@ fn build_request(args: &[String]) -> Result<BuildRequest, String> {
             .ok_or("--example <name> is required")?
             .to_string(),
         release: args.iter().any(|a| a == "--release"),
+        utility_scanner: args.iter().any(|a| a == "--utility-scanner"),
         base: option(args, "--base").unwrap_or("/").to_string(),
     })
 }

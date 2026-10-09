@@ -69,7 +69,7 @@ pub fn Icon(
     let solid = glyph.is_some_and(Glyph::solid);
     view! {
         <svg
-            class=crate::macros::merge(BASE, &class)
+            class=crate::macros::reactive_merge(BASE, &class)
             data-name="Icon"
             data-testid=test_id
             data-glyph=glyph.map(Glyph::name)

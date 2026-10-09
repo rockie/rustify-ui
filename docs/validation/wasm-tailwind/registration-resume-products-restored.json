@@ -1,0 +1,44 @@
+[
+  {
+    "source": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-tailwind-browser-v_c2md8x/target/makepad-wasm-app/release/utility-lab",
+    "product": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/makepad-wasm-app/release/utility-lab",
+    "files": [
+      {
+        "path": "build-manifest.json",
+        "bytes": 3114,
+        "sha256": "136355dfac0447510906af81388202847abf4646583475ed5a089682cbf3d3d9"
+      },
+      {
+        "path": "utility/build-manifest.json",
+        "bytes": 592,
+        "sha256": "37867c68d3a830419e05b2df849fd89303aef0a9526fa9f52d050c3cf83f0c77"
+      },
+      {
+        "path": "utility/compiler/style_bg.wasm",
+        "bytes": 1721150,
+        "sha256": "44f92474550bcb977bdaeebd5a78821c9351e7f3a4bb23ff92beb52b1a073e16"
+      }
+    ]
+  },
+  {
+    "source": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-tailwind-browser-v_c2md8x/target/makepad-wasm-app/release/utility-lab@tools-utility-lab",
+    "product": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/makepad-wasm-app/release/utility-lab@tools-utility-lab",
+    "files": [
+      {
+        "path": "build-manifest.json",
+        "bytes": 3165,
+        "sha256": "939d85f37ce9f928846cdfc02b798f274a0b039ebcd3594b8abac183436bd38c"
+      },
+      {
+        "path": "utility/build-manifest.json",
+        "bytes": 592,
+        "sha256": "37867c68d3a830419e05b2df849fd89303aef0a9526fa9f52d050c3cf83f0c77"
+      },
+      {
+        "path": "utility/compiler/style_bg.wasm",
+        "bytes": 1721150,
+        "sha256": "44f92474550bcb977bdaeebd5a78821c9351e7f3a4bb23ff92beb52b1a073e16"
+      }
+    ]
+  }
+]

@@ -1,0 +1,42 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 5.18s
+     Running unittests src/lib.rs (target/debug/deps/rustify_style-d8a92cb6940dfdfd)
+
+running 1 test
+test compiler::tests::arbitrary_property_matrix_matches_official_css ... FAILED
+
+failures:
+
+---- compiler::tests::arbitrary_property_matrix_matches_official_css stdout ----
+
+thread 'compiler::tests::arbitrary_property_matrix_matches_official_css' (13854398) panicked at crates/rustify-style/src/compiler/tests.rs:199:5:
+assertion `left == right` failed: "arbitrary-property:alpha:property=color:value=red:modifier=empty:base": expected String(":root, :host {\n  --opacity-empty: ;\n}\n.\\[color\\:red\\]\\/empty {\n  color: red;\n  @supports (color: color-mix(in lab, red, red)) {\n    color: color-mix(in oklab, red var(--opacity-empty), transparent);\n  }\n}\n"), actual ":root, :host {\n  --opacity-empty: ;\n}\n.\\[color\\:red\\]\\/empty {\n  color: color-mix(in srgb, red , transparent);\n  @supports (color: color-mix(in lab, red, red)) {\n    color: color-mix(in oklab, red var(--opacity-empty), transparent);\n  }\n}\n"; rejected [], pending []
+"arbitrary-property:alpha:property=color:value=var(--probe):modifier=empty:base": expected String(":root, :host {\n  --opacity-empty: ;\n  --probe: red;\n}\n.\\[color\\:var\\(--probe\\)\\]\\/empty {\n  color: red;\n  @supports (color: color-mix(in lab, red, red)) {\n    color: color-mix(in oklab, var(--probe) var(--opacity-empty), transparent);\n  }\n}\n"), actual ":root, :host {\n  --opacity-empty: ;\n  --probe: red;\n}\n.\\[color\\:var\\(--probe\\)\\]\\/empty {\n  color: color-mix(in srgb, red , transparent);\n  @supports (color: color-mix(in lab, red, red)) {\n    color: color-mix(in oklab, var(--probe) var(--opacity-empty), transparent);\n  }\n}\n"; rejected [], pending []
+"arbitrary-property:alpha:property=color:value=13px:modifier=empty:base": expected String(":root, :host {\n  --opacity-empty: ;\n}\n.\\[color\\:13px\\]\\/empty {\n  color: 13px;\n  @supports (color: color-mix(in lab, red, red)) {\n    color: color-mix(in oklab, 13px var(--opacity-empty), transparent);\n  }\n}\n"), actual ":root, :host {\n  --opacity-empty: ;\n}\n.\\[color\\:13px\\]\\/empty {\n  color: color-mix(in srgb, 13px , transparent);\n  @supports (color: color-mix(in lab, red, red)) {\n    color: color-mix(in oklab, 13px var(--opacity-empty), transparent);\n  }\n}\n"; rejected [], pending []
+"arbitrary-property:alpha:property=color:value=color:var(--probe):modifier=empty:base": expected String(":root, :host {\n  --opacity-empty: ;\n  --probe: red;\n}\n.\\[color\\:color\\:var\\(--probe\\)\\]\\/empty {\n  color: color;\n  @supports (color: color-mix(in lab, red, red)) {\n    color: color-mix(in oklab, color:var(--probe) var(--opacity-empty), transparent);\n  }\n}\n"), actual ":root, :host {\n  --opacity-empty: ;\n  --probe: red;\n}\n.\\[color\\:color\\:var\\(--probe\\)\\]\\/empty {\n  color: color-mix(in srgb, color:red , transparent);\n  @supports (color: color-mix(in lab, red, red)) {\n    color: color-mix(in oklab, color:var(--probe) var(--opacity-empty), transparent);\n  }\n}\n"; rejected [], pending []
+"arbitrary-property:alpha:property=color:value=red:modifier=empty:reference": expected String(".\\[color\\:red\\]\\/empty {\n  color: red;\n  @supports (color: color-mix(in lab, red, red)) {\n    color: color-mix(in oklab, red var(--opacity-empty), transparent);\n  }\n}\n"), actual ".\\[color\\:red\\]\\/empty {\n  color: color-mix(in srgb, red , transparent);\n  @supports (color: color-mix(in lab, red, red)) {\n    color: color-mix(in oklab, red var(--opacity-empty), transparent);\n  }\n}\n"; rejected [], pending []
+"arbitrary-property:alpha:property=color:value=var(--probe):modifier=empty:reference": expected String(".\\[color\\:var\\(--probe\\)\\]\\/empty {\n  color: red;\n  @supports (color: color-mix(in lab, red, red)) {\n    color: color-mix(in oklab, var(--probe) var(--opacity-empty), transparent);\n  }\n}\n"), actual ".\\[color\\:var\\(--probe\\)\\]\\/empty {\n  color: color-mix(in srgb, red , transparent);\n  @supports (color: color-mix(in lab, red, red)) {\n    color: color-mix(in oklab, var(--probe) var(--opacity-empty), transparent);\n  }\n}\n"; rejected [], pending []
+"arbitrary-property:alpha:property=color:value=13px:modifier=empty:reference": expected String(".\\[color\\:13px\\]\\/empty {\n  color: 13px;\n  @supports (color: color-mix(in lab, red, red)) {\n    color: color-mix(in oklab, 13px var(--opacity-empty), transparent);\n  }\n}\n"), actual ".\\[color\\:13px\\]\\/empty {\n  color: color-mix(in srgb, 13px , transparent);\n  @supports (color: color-mix(in lab, red, red)) {\n    color: color-mix(in oklab, 13px var(--opacity-empty), transparent);\n  }\n}\n"; rejected [], pending []
+"arbitrary-property:alpha:property=color:value=color:var(--probe):modifier=empty:reference": expected String(".\\[color\\:color\\:var\\(--probe\\)\\]\\/empty {\n  color: color;\n  @supports (color: color-mix(in lab, red, red)) {\n    color: color-mix(in oklab, color:var(--probe) var(--opacity-empty), transparent);\n  }\n}\n"), actual ".\\[color\\:color\\:var\\(--probe\\)\\]\\/empty {\n  color: color-mix(in srgb, color:red , transparent);\n  @supports (color: color-mix(in lab, red, red)) {\n    color: color-mix(in oklab, color:var(--probe) var(--opacity-empty), transparent);\n  }\n}\n"; rejected [], pending []
+"arbitrary-property:alpha:property=color:value=red:modifier=empty:default": expected String(":root, :host {\n  --opacity-empty: ;\n}\n.\\[color\\:red\\]\\/empty {\n  color: red;\n  @supports (color: color-mix(in lab, red, red)) {\n    color: color-mix(in oklab, red var(--opacity-empty), transparent);\n  }\n}\n"), actual ":root, :host {\n  --opacity-empty: ;\n}\n.\\[color\\:red\\]\\/empty {\n  color: color-mix(in srgb, red , transparent);\n  @supports (color: color-mix(in lab, red, red)) {\n    color: color-mix(in oklab, red var(--opacity-empty), transparent);\n  }\n}\n"; rejected [], pending []
+"arbitrary-property:alpha:property=color:value=var(--probe):modifier=empty:default": expected String(":root, :host {\n  --opacity-empty: ;\n  --probe: red;\n}\n.\\[color\\:var\\(--probe\\)\\]\\/empty {\n  color: red;\n  @supports (color: color-mix(in lab, red, red)) {\n    color: color-mix(in oklab, var(--probe) var(--opacity-empty), transparent);\n  }\n}\n"), actual ":root, :host {\n  --opacity-empty: ;\n  --probe: red;\n}\n.\\[color\\:var\\(--probe\\)\\]\\/empty {\n  color: color-mix(in srgb, red , transparent);\n  @supports (color: color-mix(in lab, red, red)) {\n    color: color-mix(in oklab, var(--probe) var(--opacity-empty), transparent);\n  }\n}\n"; rejected [], pending []
+  left: 178
+ right: 0
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    compiler::tests::arbitrary_property_matrix_matches_official_css
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 84 filtered out; finished in 2.26s
+
+error: test failed, to rerun pass `-p rustify-style --lib`
+mbx[cache]: 0 hits, 0 misses, 1 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: 22.3 GiB shared among checkouts that each believe they are an only child.

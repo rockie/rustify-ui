@@ -60,7 +60,7 @@ pub fn Field(
     };
     view! {
         <div
-            class=crate::macros::merge("flex flex-col gap-1.5", &class)
+            class=crate::macros::reactive_merge("flex flex-col gap-1.5", &class)
             data-name="Field"
             data-testid=format!("field-{field}")
             data-invalid=move || error.get().is_some().then_some("true")

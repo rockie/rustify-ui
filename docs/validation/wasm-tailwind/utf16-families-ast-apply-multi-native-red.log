@@ -1,0 +1,33 @@
+mbx[warning]: Unix-domain cache session listener unavailable; using FIFO transport: failed to bind cache session listener at /var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/mbx-session-weVVRO/cache-agent.sock: Operation not permitted (os error 1)
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 6.71s
+     Running unittests src/lib.rs (/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-utf16-verified-54mkl3kq/cargo-target/debug/deps/rustify_style-7a67d48e3c4c51f4)
+
+running 1 test
+test compiler::public_api::compile_ast::canonical_text_tests::multiple_apply_candidates_preserve_each_source_and_tuple_sharing ... FAILED
+
+failures:
+
+---- compiler::public_api::compile_ast::canonical_text_tests::multiple_apply_candidates_preserve_each_source_and_tuple_sharing stdout ----
+
+thread 'compiler::public_api::compile_ast::canonical_text_tests::multiple_apply_candidates_preserve_each_source_and_tuple_sharing' (3133579) panicked at crates/rustify-style/src/compiler/public_api/compile_ast.rs:1053:9:
+assertion `left == right` failed
+  left: Array([Object(PublicObject { identity: (), fields: {Text([102, 105, 108, 101]): String(Text([101, 110, 116, 114, 121, 46, 99, 115, 115])), Text([99, 111, 100, 101]): String(Text([46, 120, 32, 123, 32, 64, 97, 112, 112, 108, 121, 32, 102, 108, 101, 120, 32, 98, 108, 111, 99, 107, 32, 102, 108, 101, 120, 59, 32, 64, 97, 112, 112, 108, 121, 32, 117, 110, 100, 101, 114, 108, 105, 110, 101, 59, 32, 125]))} }), Number(Number(5)), Number(Number(27))])
+ right: Array([Object(PublicObject { identity: (), fields: {Text([102, 105, 108, 101]): String(Text([101, 110, 116, 114, 121, 46, 99, 115, 115])), Text([99, 111, 100, 101]): String(Text([46, 120, 32, 123, 32, 64, 97, 112, 112, 108, 121, 32, 102, 108, 101, 120, 32, 98, 108, 111, 99, 107, 32, 102, 108, 101, 120, 59, 32, 64, 97, 112, 112, 108, 121, 32, 117, 110, 100, 101, 114, 108, 105, 110, 101, 59, 32, 125]))} }), Number(Number(17)), Number(Number(22))])
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    compiler::public_api::compile_ast::canonical_text_tests::multiple_apply_candidates_preserve_each_source_and_tuple_sharing
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 306 filtered out; finished in 0.01s
+
+error: test failed, to rerun pass `-p rustify-style --lib`
+mbx[cache]: 0 hits, 1 misses; 0 B downloaded, 0 B uploaded, 339.5 MiB stored locally

@@ -1,0 +1,36 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+error[E0599]: no method named `as_str` found for reference `&text::Text` in the current scope
+   --> crates/rustify-style/src/compiler/miscellaneous.rs:249:53
+    |
+249 | ...                   } => Some((property.as_str(), value.as_str(), *important)),
+    |                                           ^^^^^^
+    |
+help: there is a method `push_str` with a similar name, but with different arguments
+   --> crates/rustify-style/src/text.rs:13:5
+    |
+ 13 |     pub fn push_str(&mut self, value: &str) {
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error[E0599]: no method named `as_str` found for reference `&text::Text` in the current scope
+   --> crates/rustify-style/src/compiler/miscellaneous.rs:249:69
+    |
+249 | ...                   } => Some((property.as_str(), value.as_str(), *important)),
+    |                                                           ^^^^^^
+    |
+help: there is a method `push_str` with a similar name, but with different arguments
+   --> crates/rustify-style/src/text.rs:13:5
+    |
+ 13 |     pub fn push_str(&mut self, value: &str) {
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+For more information about this error, try `rustc --explain E0599`.
+error: could not compile `rustify-style` (lib test) due to 2 previous errors
+mbx[cache]: 0 hits, 0 misses, 1 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: 13701 compilations served. ask rustc how many it remembers doing.

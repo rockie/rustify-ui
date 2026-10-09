@@ -1,0 +1,12 @@
+{
+  "actualWasm": true,
+  "wasmBytes": 2516045,
+  "expected": "reject @config before functional normalization",
+  "constructed": false,
+  "error": [
+    "Error",
+    "unsupported feature: @config"
+  ],
+  "observedValue": "--value(--color)",
+  "red": false
+}

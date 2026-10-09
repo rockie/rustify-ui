@@ -1,0 +1,41 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 4.66s
+     Running unittests src/lib.rs (target/debug/deps/rustify_style-4ed64bbe76d78d97)
+
+running 6 tests
+test compiler::functions::tests::function_expansion_is_bounded_before_materializing_repeated_theme_values ... ok
+test compiler::functions::tests::cached_theme_function_outputs_obey_the_configuration_cache_budget ... ok
+test compiler::functions::tests::evaluated_theme_aliases_are_available_to_gpu_and_cached_candidates ... ok
+test compiler::functions::tests::oversized_function_expansion_rejects_the_batch_without_committing_candidates ... ok
+test compiler::functions::tests::official_non_scalar_utf16_outputs_remain_explicit_pending_features ... ok
+test compiler::functions::tests::css_functions_match_official_authored_candidate_and_theme_cases ... FAILED
+
+failures:
+
+---- compiler::functions::tests::css_functions_match_official_authored_candidate_and_theme_cases stdout ----
+
+thread 'compiler::functions::tests::css_functions_match_official_authored_candidate_and_theme_cases' (15668999) panicked at crates/rustify-style/src/compiler/functions.rs:528:9:
+4 mismatches; first: [
+    "\"functions:feature-fastpath:.x{content:\\\"theme(--foo)\\\";}\": CSS=\".x{content:\\\"theme(--foo)\\\";}\", pending=[]; expected=.x {\n  content: \"theme(--foo)\";\n}\n",
+    "\"functions:feature-fastpath:.x{--x:pretheme(--foo);}\": CSS=\".x{--x:pretheme(--foo);}\", pending=[]; expected=.x {\n  --x: pretheme(--foo);\n}\n",
+    "\"functions:feature-fastpath:@theme reference { --foo:theme(--a,red); } .x{color:blue;}\": CSS=\".x {\\n  color: blue;\\n}\\n\", pending=[]; expected=@theme reference { --foo:theme(--a,red); } .x{color:blue;}",
+    "\"functions:feature-fastpath:@media reference { .x { content:\\\"theme(--foo)\\\"; } }\": CSS=\"@media reference { .x { content:\\\"theme(--foo)\\\"; } }\", pending=[]; expected=",
+]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    compiler::functions::tests::css_functions_match_official_authored_candidate_and_theme_cases
+
+test result: FAILED. 5 passed; 1 failed; 0 ignored; 0 measured; 124 filtered out; finished in 0.02s
+
+error: test failed, to rerun pass `-p rustify-style --lib`
+mbx[cache]: 0 hits, 0 misses, 1 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: 1h 34m saved across 2281 builds. put it toward something with a progress bar.

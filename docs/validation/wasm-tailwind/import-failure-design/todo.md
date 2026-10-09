@@ -1,0 +1,5 @@
+- Ground：完成；同步walk、promise传播、实际原数组/Source/费用和历史理由已核对；原15场景RED保留为集成前历史。
+- Sketch：完成；两个结构独立候选已冻结，匿名judge选择A，零结构移植；见synthesis.md。
+- Agree：完成；无人工checkpoint，按现有授权直接实施。
+- Implement：进行中；实际owned native片段、共享FIFO、host反馈、持久Graph及detached microtask已接入；15语义失败/5原异常/1首次settlement/4拒绝不写边界和既有成功/函数门通过。实际finite-bundle Promise入口、产生时投递、compatibility await事件拆分和orphan报告已通过20时序图/6 orphan/4额度；external loader、早期阶段/apply失败前缀、动态共享walk、helpers/API和统一峰值仍待完成，见M4。
+- Scrap：当前无需推翻选定reaction结构；若真实片段所有权或host反馈无法满足契约则重做，不追加depth/workaround、不弱化既有门。

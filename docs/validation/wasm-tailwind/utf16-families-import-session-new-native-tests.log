@@ -1,0 +1,20 @@
+mbx[warning]: Unix-domain cache session listener unavailable; using FIFO transport: failed to bind cache session listener at /var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/mbx-session-riCvbi/cache-agent.sock: Operation not permitted (os error 1)
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 6.97s
+     Running unittests src/lib.rs (/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-utf16-verified-54mkl3kq/cargo-target/debug/deps/rustify_style-7a67d48e3c4c51f4)
+
+running 3 tests
+test compiler::public_api::compile_ast::setup::tests::parallel_import_failure_selects_first_settlement_instead_of_first_ast_visit ... ok
+test compiler::public_api::compile_ast::setup::tests::task_launched_before_failed_begin_keeps_its_context_and_source_until_quiescence ... ok
+test compiler::public_api::compile_ast::setup::tests::failed_parser_source_owner_is_reserved_before_any_host_write ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 322 filtered out; finished in 0.01s
+
+mbx[cache]: 0 hits, 1 misses; 0 B downloaded, 0 B uploaded, 341.2 MiB stored locally

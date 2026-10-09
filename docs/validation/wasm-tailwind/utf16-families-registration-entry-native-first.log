@@ -1,0 +1,64 @@
+mbx[warning]: Unix-domain cache session listener unavailable; using FIFO transport: failed to bind cache session listener at /var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/mbx-session-Wwfo6z/cache-agent.sock: Operation not permitted (os error 1)
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+error[E0432]: unresolved import `crate::compiler::text`
+   --> crates/rustify-style/src/compiler/sources.rs:355:31
+    |
+355 |         use crate::{compiler::text::Text};
+    |                               ^^^^ could not find `text` in `compiler`
+
+error[E0433]: cannot find type `AstNode` in this scope
+   --> crates/rustify-style/src/compiler/sources.rs:358:30
+    |
+358 |         let mut nodes = vec![AstNode::Context {
+    |                              ^^^^^^^ use of undeclared type `AstNode`
+    |
+help: consider importing this enum through its public re-export
+    |
+296 +     use crate::compiler::AstNode;
+    |
+
+error[E0433]: cannot find type `AstNode` in this scope
+   --> crates/rustify-style/src/compiler/sources.rs:364:17
+    |
+364 |                 AstNode::AtRule {
+    |                 ^^^^^^^ use of undeclared type `AstNode`
+    |
+help: consider importing this enum through its public re-export
+    |
+296 +     use crate::compiler::AstNode;
+    |
+
+error[E0433]: cannot find type `AstNode` in this scope
+   --> crates/rustify-style/src/compiler/sources.rs:376:17
+    |
+376 |                 AstNode::AtRule {
+    |                 ^^^^^^^ use of undeclared type `AstNode`
+    |
+help: consider importing this enum through its public re-export
+    |
+296 +     use crate::compiler::AstNode;
+    |
+
+error[E0425]: cannot find function `extract` in module `super`
+   --> crates/rustify-style/src/compiler/sources.rs:390:32
+    |
+390 |         let selection = super::extract(&mut nodes, "input.css", &limits()).unwrap();
+    |                                ^^^^^^^ not found in `super`
+    |
+note: function `crate::compiler::utf16_theme_tests::extract` exists but is inaccessible
+   --> crates/rustify-style/src/compiler/../../../../tests/utility/compiler/utf16-theme-native.rs:88:1
+    |
+ 88 | fn extract(mut nodes: Vec<AstNode>) -> Theme {
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ not accessible
+
+Some errors have detailed explanations: E0425, E0432, E0433.
+For more information about an error, try `rustc --explain E0425`.
+error: could not compile `rustify-style` (lib test) due to 5 previous errors
+mbx[cache]: 0 hits, 1 misses; 0 B downloaded, 0 B uploaded, 0 B stored locally

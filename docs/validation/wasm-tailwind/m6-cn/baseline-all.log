@@ -1,0 +1,207 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling serde_core v1.0.229
+   Compiling serde_json v1.0.151
+   Compiling rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+   Compiling rustify-style-wasm v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style-wasm)
+    Finished `release` profile [optimized] target(s) in 2.19s
+mbx[cache]: 0 hits, 5 misses, 1 incremental, 1 bypassed; 0 B downloaded, 0 B uploaded, 14.4 MiB stored locally
+mbx[savings]: 2h 36m unspent across 4316 builds. compounding, in a sense.
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-style-wasm v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style-wasm)
+    Finished `release` profile [optimized] target(s) in 1.88s
+mbx[cache]: 0 hits, 0 misses, 1 bypassed; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: 1018.4 GiB logical of target/ was waiting for checkouts that are never coming back. it has stopped waiting.
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling proc-macro2 v1.0.107
+   Compiling aho-corasick v1.1.5
+   Compiling nom v8.0.0
+   Compiling quote v1.0.47
+   Compiling serde_json v1.0.151
+   Compiling arrayvec v0.7.8
+   Compiling fast-glob v0.4.5
+   Compiling regex-automata v0.4.18
+   Compiling syn v3.0.5
+   Compiling syn v2.0.119
+   Compiling nom-language v0.1.0
+   Compiling bexpand v1.3.0
+   Compiling bstr v1.13.1
+   Compiling regex v1.13.1
+   Compiling globset v0.4.20
+   Compiling serde_derive v1.0.229
+   Compiling classification-macros v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style/upstream/classification-macros)
+   Compiling serde v1.0.229
+   Compiling rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 4.07s
+     Running unittests src/lib.rs (target/debug/deps/rustify_style-641859bf71c59daf)
+
+running 94 tests
+test extractor::arbitrary_property_machine::tests::test_arbitrary_property_machine_performance ... ignored
+test extractor::arbitrary_value_machine::tests::test_arbitrary_value_machine_performance ... ignored
+test extractor::arbitrary_variable_machine::tests::test_arbitrary_variable_machine_performance ... ignored
+test extractor::candidate_machine::tests::test_candidate_machine_performance ... ignored
+test extractor::css_variable_machine::tests::test_css_variable_machine_performance ... ignored
+test extractor::modifier_machine::tests::test_modifier_machine_performance ... ignored
+test cursor::test::test_cursor ... ok
+test extractor::named_utility_machine::tests::test_named_utility_machine_performance ... ignored
+test extractor::named_variant_machine::tests::test_named_variant_machine_performance ... ignored
+test extractor::named_variant_machine::tests::test_named_variant_extraction ... ok
+test extractor::modifier_machine::tests::test_modifier_extraction ... ok
+test extractor::candidate_machine::tests::do_not_consider_svg_path_commands ... ok
+test extractor::arbitrary_value_machine::tests::test_exceptions ... ok
+test extractor::arbitrary_variable_machine::tests::test_exceptions ... ok
+test extractor::arbitrary_variable_machine::tests::test_arbitrary_variable_extraction ... ok
+test extractor::arbitrary_property_machine::tests::test_exceptions ... ok
+test extractor::arbitrary_value_machine::tests::test_arbitrary_value_machine_extraction ... ok
+test extractor::candidate_machine::tests::test_js_interpolation ... ok
+test extractor::pre_processors::clojure::tests::test_extraction_of_classes_with_dots ... ok
+test extractor::pre_processors::clojure::tests::test_extraction_of_pseudoclasses_from_keywords ... ok
+test extractor::pre_processors::clojure::tests::test_clojure_pre_processor ... ok
+test extractor::pre_processors::clojure::tests::test_ignore_comments_with_invalid_strings ... ok
+test extractor::pre_processors::clojure::tests::test_noninterference_of_parens_on_keywords ... ok
+test extractor::pre_processors::clojure::tests::test_special_characters_are_valid_in_strings ... ok
+test extractor::pre_processors::clojure::tests::test_extract_candidates ... ok
+test extractor::pre_processors::elixir::tests::test_elixir_pre_processor ... ok
+test extractor::pre_processors::elixir::tests::test_extract_candidates ... ok
+test extractor::arbitrary_property_machine::tests::test_arbitrary_property_machine_extraction ... ok
+test extractor::css_variable_machine::tests::test_css_variable_machine_extraction ... ok
+test extractor::pre_processors::haml::tests::test_haml_pre_processor ... ok
+test extractor::pre_processors::haml::tests::test_strings_only_occur_when_nested ... ok
+test extractor::pre_processors::pug::tests::test_arbitrary_code_followed_by_classes ... ok
+test extractor::pre_processors::json::tests::test_json_pre_processor ... ok
+test extractor::pre_processors::pug::tests::test_class_shorthand_followed_by_parens ... ok
+test extractor::pre_processors::pug::tests::test_pug_pre_processor ... ok
+test extractor::pre_processors::razor::tests::test_razor_pre_processor ... ok
+test extractor::pre_processors::pug::tests::test_strings_only_occur_when_nested ... ok
+test extractor::pre_processors::razor::tests::test_razor_syntax_with ... ok
+test extractor::pre_processors::slim::tests::test_arbitrary_code_followed_by_classes ... ok
+test extractor::named_utility_machine::tests::test_named_utility_extraction ... ok
+test extractor::pre_processors::slim::tests::test_embedded_ruby_percent_w_extraction ... ok
+test extractor::pre_processors::slim::tests::test_class_shorthand_followed_by_parens ... ok
+test extractor::pre_processors::slim::tests::test_nested_slim_syntax ... ok
+test extractor::candidate_machine::tests::test_candidate_extraction ... ok
+test extractor::pre_processors::slim::tests::test_single_quotes_to_enforce_trailing_whitespace ... ok
+test extractor::pre_processors::slim::tests::test_slim_pre_processor ... ok
+test extractor::pre_processors::slim::tests::test_strings_only_occur_when_nested ... ok
+test extractor::pre_processors::svelte::tests::test_svelte_pre_processor ... ok
+test extractor::string_machine::tests::test_string_machine_performance ... ignored
+test extractor::string_machine::tests::test_string_machine_extraction ... ok
+test extractor::tests::test_angular_binding_attribute_syntax ... ok
+test extractor::tests::test_arbitrary_container_queries_syntax ... ok
+test extractor::tests::test_arbitrary_variable_with_data_type ... ok
+test extractor::tests::test_angular_binding_syntax ... ok
+test extractor::tests::test_classes_containing_number_followed_by_dash_or_underscore ... ok
+test extractor::tests::test_csharp_syntax ... ok
+test extractor::tests::test_clojure_syntax ... ok
+test extractor::tests::test_extract_performance ... ignored
+test extractor::tests::test_fluid_template_syntax ... ok
+test extractor::tests::test_gleam_syntax ... ok
+test extractor::tests::test_haml_syntax ... ok
+test extractor::tests::test_js_embedded_in_php_syntax ... ok
+test extractor::tests::test_candidates_extraction ... ok
+test extractor::tests::test_js_syntax ... ok
+test extractor::tests::test_js_tuple_syntax ... ok
+test extractor::tests::test_extract_css_variables ... ok
+test extractor::tests::test_leptos_rs_view_class_colon_syntax ... ok
+test extractor::tests::test_pug_syntax ... ok
+test extractor::tests::test_overlapping_candidates ... ok
+test extractor::tests::test_slim_syntax ... ok
+test extractor::tests::test_twig_syntax ... ok
+test extractor::tests::test_svelte_shorthand_syntax ... ok
+test extractor::utility_machine::tests::test_utility_machine_performance ... ignored
+test extractor::variant_machine::tests::test_variant_machine_performance ... ignored
+test extractor::variant_machine::tests::test_variant_extraction ... ok
+test extractor::pre_processors::vue::tests::test_vue_template_pug ... ok
+test extractor::pre_processors::haml::tests::test_arbitrary_code_followed_by_classes ... ok
+test extractor::pre_processors::haml::tests::test_crash_missing_newline ... ok
+test extractor::pre_processors::ruby::tests::test_ruby_pre_processor ... ok
+test extractor::pre_processors::ruby::tests::test_ruby_extraction ... ok
+test scanner::tests::candidates_are_unique_and_sorted ... ok
+test extractor::tests::test_ruby_syntax ... ok
+test scanner::source::tests::missing_virtual_source_information_is_reported ... ok
+test extractor::pre_processors::ruby::tests::test_embedded_slim_extraction ... ok
+test scanner::tests::css_raw_content_uses_the_full_extractor ... ok
+test extractor::pre_processors::haml::tests::test_haml_full_file_17813 ... ok
+test extractor::tests::test_extractor_extract_candidates ... ok
+test scanner::tests::fixed_upstream_corpus_matches ... ok
+test extractor::utility_machine::tests::test_utility_extraction ... ok
+test scanner::source::tests::invalid_source_utf8_returns_a_diagnostic ... ok
+test scanner::source::tests::pending_source_and_raw_changes_return_sorted_delta ... ok
+test extractor::pre_processors::haml::tests::test_haml_full_file_17051 ... ok
+test scanner::source_contracts::fixed_upstream_source_steps_match ... ok
+test scanner::tests::long_input_is_deduplicated ... ok
+
+test result: ok. 82 passed; 0 failed; 12 ignored; 0 measured; 0 filtered out; finished in 0.04s
+
+mbx[cache]: 0 hits, 23 misses, 1 not looked up, 1 incremental; 0 B downloaded, 0 B uploaded, 80.1 MiB stored locally
+mbx[savings]: 21278 compilations. rustc did each once; mbx did the rest of the showing up.
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling aho-corasick v1.1.5
+   Compiling nom v8.0.0
+   Compiling either v1.18.0
+   Compiling arrayvec v0.7.8
+   Compiling log v0.4.34
+   Compiling syn v2.0.119
+   Compiling itertools v0.14.0
+   Compiling fast-glob v0.4.5
+   Compiling regex-automata v0.4.18
+   Compiling classification-macros v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style/upstream/classification-macros)
+   Compiling nom-language v0.1.0
+   Compiling bexpand v1.3.0
+   Compiling bstr v1.13.1
+   Compiling regex v1.13.1
+   Compiling globset v0.4.20
+   Compiling rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+   Compiling rustify-style-wasm v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style-wasm)
+    Finished `release` profile [optimized] target(s) in 5.30s
+mbx[cache]: 0 hits, 16 misses, 1 incremental, 1 bypassed; 0 B downloaded, 0 B uploaded, 52.9 MiB stored locally
+mbx[savings]: rustc believes it compiled everything. it is down 2h 36m across 4319 builds. let it believe.
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-style-wasm v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style-wasm)
+    Finished `release` profile [optimized] target(s) in 1.90s
+mbx[cache]: 0 hits, 0 misses, 1 bypassed; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: 2h 36m saved across 4320 builds. put it toward something with a progress bar.
+npm notice run rustify-ui-browser-tests@0.1.0 npx
+npm notice run 'playwright' test --project=utility-baseline --workers=1 utility-baseline.spec.ts -g .
+
+Running 7 tests using 1 worker
+
+  ✓  1 [utility-baseline] › tests/browser/utility-baseline.spec.ts:3:5 › Rust compiler Worker installs a prepared scope under strict CSP (300ms)
+  ✓  2 [utility-baseline] › tests/browser/utility-baseline.spec.ts:27:5 › scanner-free module Worker roundtrips complete class names through Rust (192ms)
+  ✓  3 [utility-baseline] › tests/browser/utility-baseline.spec.ts:44:5 › strict CSP accepts staged scoped sheets, nesting and registered properties (145ms)
+  ✓  4 [utility-baseline] › tests/browser/utility-baseline.spec.ts:65:5 › extractor WASM returns the same fixed memory fixture as native (160ms)
+  ✓  5 [utility-baseline] › tests/browser/utility-baseline.spec.ts:76:5 › strict CSP installs official Tailwind dependencies and nested pseudo selectors (145ms)
+  ✓  6 [utility-baseline] › tests/browser/utility-baseline.spec.ts:93:5 › strict CSP probe fixtures remain readable at desktop and mobile widths (263ms)
+  ✓  7 [utility-baseline] › tests/browser/utility-baseline.spec.ts:109:5 › cn WASM facade answers every fixed runtime case from the page realm under strict CSP (1.4s)
+
+  7 passed (4.0s)
+exit 0

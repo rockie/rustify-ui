@@ -1,0 +1,605 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: imported Source and declarations
++ actual - expected
+... Skipped lines
+
+  {
+    records: [
+      {
+        array: true,
+        fields: [
+...
+            {
++             reference: 8
+-             reference: 13
+            }
+          ]
+        ]
+      },
+      {
+...
+            {
++             reference: 5
+-             reference: 11
+            }
+          ],
+-         [
+-           'dst',
+-           {
+-             reference: 12
+-           }
+-         ]
+        ]
+      },
+      {
+        array: true,
+        fields: [
+...
+            {
++             reference: 7
+-             reference: 8
+            }
+          ]
+        ]
+      },
+      {
+...
+          ],
+-         [
+-           'dst',
+-           {
+-             reference: 7
+-           }
+-         ]
+        ]
+      },
+      {
+        array: true,
+        fields: [
+...
+            '1',
++           0
+-           12
+          ],
+          [
+            '2',
++           10
+-           19
+          ]
+        ]
+      },
+      {
+        array: false,
+...
+      {
+-       array: true,
+-       fields: [
+-         [
+-           '0',
+-           {
+-             reference: 6
+-           }
+-         ],
+-         [
+-           '1',
+-           12
+-         ],
+-         [
+-           '2',
+-           19
+-         ]
+-       ]
+-     },
+-     {
+        array: false,
+        fields: [
+          [
+            'kind',
+            'declaration'
+...
+            {
++             reference: 5
+-             reference: 9
+            }
+          ],
+-         [
+-           'dst',
+-           {
+-             reference: 10
+-           }
+-         ]
+        ]
+      },
+      {
+-       array: true,
+-       fields: [
+-         [
+-           '0',
+-           {
+-             reference: 6
+-           }
+-         ],
+-         [
+-           '1',
+-           21
+-         ],
+-         [
+-           '2',
+-           29
+-         ]
+-       ]
+-     },
+-     {
+-       array: true,
+-       fields: [
+-         [
+-           '0',
+-           {
+-             reference: 6
+-           }
+-         ],
+-         [
+-           '1',
+-           21
+-         ],
+-         [
+-           '2',
+-           29
+-         ]
+-       ]
+-     },
+-     {
+-       array: true,
+-       fields: [
+-         [
+-           '0',
+-           {
+-             reference: 6
+-           }
+-         ],
+-         [
+-           '1',
+-           0
+-         ],
+-         [
+-           '2',
+-           10
+-         ]
+-       ]
+-     },
+-     {
+-       array: true,
+-       fields: [
+-         [
+-           '0',
+-           {
+-             reference: 6
+-           }
+-         ],
+-         [
+-           '1',
+-           0
+-         ],
+-         [
+-           '2',
+-           10
+-         ]
+-       ]
+-     },
+-     {
+        array: false,
+        fields: [
+          [
+            'kind',
+            'rule'
+...
+            {
++             reference: 9
+-             reference: 14
+            }
+          ],
+          [
+            'src',
+            {
+...
+            {
++             reference: 10
+-             reference: 15
+            }
+          ]
+        ]
+      },
+      {
+...
+            {
++             reference: 12
+-             reference: 17
+            }
+          ],
+          [
+            '2',
+            {
++             reference: 14
+-             reference: 19
+            }
+          ],
+          [
+            '3',
+            {
++             reference: 16
+-             reference: 21
+            }
+          ]
+        ]
+      },
+      {
+...
+            {
++             reference: 13
+-             reference: 18
+            }
+          ],
+          [
+            'src',
+            {
++             reference: 5
+-             reference: 11
+            }
+          ],
+-         [
+-           'dst',
+-           {
+-             reference: 12
+-           }
+-         ]
+        ]
+      },
+      {
+        array: true,
+        fields: [
+...
+            {
++             reference: 7
+-             reference: 8
+            }
+          ]
+        ]
+      },
+      {
+...
+            {
++             reference: 15
+-             reference: 20
+            }
+          ],
+          [
+            'src',
+            {
+...
+            {
++             reference: 10
+-             reference: 15
+            }
+          ]
+        ]
+      },
+      {
+...
+            {
++             reference: 17
+-             reference: 22
+            }
+          ],
+          [
+            'src',
+            {
+...
+            {
++             reference: 18
+-             reference: 23
+            }
+          ]
+        ]
+      },
+      {
+...
+      {
++       reference: 11
+-       reference: 16
+      }
+    ]
+  }
+
+    at file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/compiler/run-public-ast-graph-wasm.mjs:115:10 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: {
+    roots: [ { reference: 0 }, { reference: 11 } ],
+    records: [
+      {
+        array: true,
+        fields: [ [ '0', [Object] ], [ '1', [Object] ], [ '2', [Object] ] ]
+      },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'comment' ],
+          [
+            'value',
+            '! tailwindcss v4.1.13 | MIT License | https://tailwindcss.com '
+          ]
+        ]
+      },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'rule' ],
+          [ 'selector', '.imported' ],
+          [ 'nodes', [Object] ],
+          [ 'src', [Object] ]
+        ]
+      },
+      { array: true, fields: [ [ '0', [Object] ], [ '1', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'declaration' ],
+          [ 'property', '--a' ],
+          [ 'value', 'red' ],
+          [ 'important', false ],
+          [ 'src', [Object] ]
+        ]
+      },
+      {
+        array: true,
+        fields: [ [ '0', [Object] ], [ '1', 0 ], [ '2', 10 ] ]
+      },
+      {
+        array: false,
+        fields: [
+          [ 'file', '/mapped/pkg.css' ],
+          [ 'code', '.imported { --a:red; --b:blue; }' ]
+        ]
+      },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'declaration' ],
+          [ 'property', '--b' ],
+          [ 'value', 'blue' ],
+          [ 'important', false ],
+          [ 'src', [Object] ]
+        ]
+      },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'rule' ],
+          [ 'selector', '.block' ],
+          [ 'nodes', [Object] ],
+          [ 'src', [Object] ]
+        ]
+      },
+      { array: true, fields: [ [ '0', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'declaration' ],
+          [ 'property', 'display' ],
+          [ 'value', 'block' ],
+          [ 'important', false ],
+          [ 'src', [Object] ]
+        ]
+      },
+      {
+        array: true,
+        fields: [
+          [ '0', [Object] ],
+          [ '1', [Object] ],
+          [ '2', [Object] ],
+          [ '3', [Object] ]
+        ]
+      },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'rule' ],
+          [ 'selector', '.imported' ],
+          [ 'nodes', [Object] ],
+          [ 'src', [Object] ]
+        ]
+      },
+      { array: true, fields: [ [ '0', [Object] ], [ '1', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'rule' ],
+          [ 'selector', '.block' ],
+          [ 'nodes', [Object] ],
+          [ 'src', [Object] ]
+        ]
+      },
+      { array: true, fields: [ [ '0', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'rule' ],
+          [ 'selector', '.flex' ],
+          [ 'nodes', [Object] ],
+          [ 'src', [Object] ]
+        ]
+      },
+      { array: true, fields: [ [ '0', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'declaration' ],
+          [ 'property', 'display' ],
+          [ 'value', 'flex' ],
+          [ 'important', false ],
+          [ 'src', [Object] ]
+        ]
+      }
+    ]
+  },
+  expected: {
+    roots: [ { reference: 0 }, { reference: 16 } ],
+    records: [
+      {
+        array: true,
+        fields: [ [ '0', [Object] ], [ '1', [Object] ], [ '2', [Object] ] ]
+      },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'comment' ],
+          [
+            'value',
+            '! tailwindcss v4.1.13 | MIT License | https://tailwindcss.com '
+          ]
+        ]
+      },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'rule' ],
+          [ 'selector', '.imported' ],
+          [ 'nodes', [Object] ],
+          [ 'src', [Object] ],
+          [ 'dst', [Object] ]
+        ]
+      },
+      { array: true, fields: [ [ '0', [Object] ], [ '1', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'declaration' ],
+          [ 'property', '--a' ],
+          [ 'value', 'red' ],
+          [ 'important', false ],
+          [ 'src', [Object] ],
+          [ 'dst', [Object] ]
+        ]
+      },
+      {
+        array: true,
+        fields: [ [ '0', [Object] ], [ '1', 12 ], [ '2', 19 ] ]
+      },
+      {
+        array: false,
+        fields: [
+          [ 'file', '/mapped/pkg.css' ],
+          [ 'code', '.imported { --a:red; --b:blue; }' ]
+        ]
+      },
+      {
+        array: true,
+        fields: [ [ '0', [Object] ], [ '1', 12 ], [ '2', 19 ] ]
+      },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'declaration' ],
+          [ 'property', '--b' ],
+          [ 'value', 'blue' ],
+          [ 'important', false ],
+          [ 'src', [Object] ],
+          [ 'dst', [Object] ]
+        ]
+      },
+      {
+        array: true,
+        fields: [ [ '0', [Object] ], [ '1', 21 ], [ '2', 29 ] ]
+      },
+      {
+        array: true,
+        fields: [ [ '0', [Object] ], [ '1', 21 ], [ '2', 29 ] ]
+      },
+      {
+        array: true,
+        fields: [ [ '0', [Object] ], [ '1', 0 ], [ '2', 10 ] ]
+      },
+      {
+        array: true,
+        fields: [ [ '0', [Object] ], [ '1', 0 ], [ '2', 10 ] ]
+      },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'rule' ],
+          [ 'selector', '.block' ],
+          [ 'nodes', [Object] ],
+          [ 'src', [Object] ]
+        ]
+      },
+      { array: true, fields: [ [ '0', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'declaration' ],
+          [ 'property', 'display' ],
+          [ 'value', 'block' ],
+          [ 'important', false ],
+          [ 'src', [Object] ]
+        ]
+      },
+      {
+        array: true,
+        fields: [
+          [ '0', [Object] ],
+          [ '1', [Object] ],
+          [ '2', [Object] ],
+          [ '3', [Object] ]
+        ]
+      },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'rule' ],
+          [ 'selector', '.imported' ],
+          [ 'nodes', [Object] ],
+          [ 'src', [Object] ],
+          [ 'dst', [Object] ]
+        ]
+      },
+      { array: true, fields: [ [ '0', [Object] ], [ '1', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'rule' ],
+          [ 'selector', '.block' ],
+          [ 'nodes', [Object] ],
+          [ 'src', [Object] ]
+        ]
+      },
+      { array: true, fields: [ [ '0', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'rule' ],
+          [ 'selector', '.flex' ],
+          [ 'nodes', [Object] ],
+          [ 'src', [Object] ]
+        ]
+      },
+      { array: true, fields: [ [ '0', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'declaration' ],
+          [ 'property', 'display' ],
+          [ 'value', 'flex' ],
+          [ 'important', false ],
+          [ 'src', [Object] ]
+        ]
+      }
+    ]
+  },
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v26.1.0

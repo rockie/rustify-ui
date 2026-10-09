@@ -10,6 +10,8 @@
 pub mod button;
 pub mod catalog;
 pub mod checkbox;
+#[cfg(test)]
+mod class_migration;
 pub mod color_field;
 pub mod data_table;
 mod dom;
@@ -101,7 +103,7 @@ pub use tooltip::Tooltip;
 /// Re-exported for the macros: a caller writes `clx!` or `variants!` without
 /// having to take a dependency on the crates their expansion happens to use.
 pub use paste;
-pub use tw_merge;
+pub use rustify_style::cn;
 
 /// The path the application is currently showing, for the components that need
 /// to know whether they point at it.

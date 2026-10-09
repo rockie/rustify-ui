@@ -1,0 +1,57 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.04s
+     Running unittests src/lib.rs (target/debug/deps/rustify_style-4ed64bbe76d78d97)
+
+running 4 tests
+test compiler::public_api::tests::warning_messages_match_fixed_upstream ... FAILED
+test compiler::public_api::tests::polyfill_flags_match_fixed_upstream_css ... FAILED
+test compiler::public_api::tests::discovery_base_is_independent_of_source_path ... FAILED
+test compiler::public_api::tests::feature_masks_match_fixed_upstream ... FAILED
+
+failures:
+
+---- compiler::public_api::tests::warning_messages_match_fixed_upstream stdout ----
+
+thread 'compiler::public_api::tests::warning_messages_match_fixed_upstream' (379896) panicked at crates/rustify-style/src/compiler/../../../../tests/utility/compiler/public-api-native.rs:44:5:
+assertion `left == right` failed
+  left: Array []
+ right: Array [String("Unsupported bare value data type: \"*\".\nOnly valid data types are: \"number\", \"integer\", \"ratio\", \"percentage\".\n"), String("```css\n--value(*)\n        ^\n```")]
+
+---- compiler::public_api::tests::polyfill_flags_match_fixed_upstream_css stdout ----
+
+thread 'compiler::public_api::tests::polyfill_flags_match_fixed_upstream_css' (379895) panicked at crates/rustify-style/src/compiler/../../../../tests/utility/compiler/public-api-native.rs:34:13:
+assertion `left == right` failed: "polyfills:authored:None"
+  left: Text([64, 108, 97, 121, 101, 114, 32, 112, 114, 111, 112, 101, 114, 116, 105, 101, 115, 59, 10, 64, 112, 114, 111, 112, 101, 114, 116, 121, 32, 45, 45, 112, 114, 111, 98, 101, 32, 123, 10, 32, 32, 115, 121, 110, 116, 97, 120, 58, 32, 34, 60, 99, 111, 108, 111, 114, 62, 34, 59, 10, 32, 32, 105, 110, 104, 101, 114, 105, 116, 115, 58, 32, 102, 97, 108, 115, 101, 59, 10, 32, 32, 105, 110, 105, 116, 105, 97, 108, 45, 118, 97, 108, 117, 101, 58, 32, 114, 101, 100, 59, 10, 125, 10, 46, 97, 32, 123, 10, 32, 32, 99, 111, 108, 111, 114, 58, 32, 99, 117, 114, 114, 101, 110, 116, 67, 111, 108, 111, 114, 59, 10, 32, 32, 64, 115, 117, 112, 112, 111, 114, 116, 115, 32, 40, 99, 111, 108, 111, 114, 58, 32, 99, 111, 108, 111, 114, 45, 109, 105, 120, 40, 105, 110, 32, 108, 97, 98, 44, 32, 114, 101, 100, 44, 32, 114, 101, 100, 41, 41, 32, 123, 10, 32, 32, 32, 32, 99, 111, 108, 111, 114, 58, 32, 99, 111, 108, 111, 114, 45, 109, 105, 120, 40, 105, 110, 32, 111, 107, 108, 97, 98, 44, 32, 99, 117, 114, 114, 101, 110, 116, 67, 111, 108, 111, 114, 32, 53, 48, 37, 44, 32, 116, 114, 97, 110, 115, 112, 97, 114, 101, 110, 116, 41, 59, 10, 32, 32, 125, 10, 125, 10, 64, 108, 97, 121, 101, 114, 32, 112, 114, 111, 112, 101, 114, 116, 105, 101, 115, 32, 123, 10, 32, 32, 64, 115, 117, 112, 112, 111, 114, 116, 115, 32, 40, 40, 45, 119, 101, 98, 107, 105, 116, 45, 104, 121, 112, 104, 101, 110, 115, 58, 32, 110, 111, 110, 101, 41, 32, 97, 110, 100, 32, 40, 110, 111, 116, 32, 40, 109, 97, 114, 103, 105, 110, 45, 116, 114, 105, 109, 58, 32, 105, 110, 108, 105, 110, 101, 41, 41, 41, 32, 111, 114, 32, 40, 40, 45, 109, 111, 122, 45, 111, 114, 105, 101, 110, 116, 58, 32, 105, 110, 108, 105, 110, 101, 41, 32, 97, 110, 100, 32, 40, 110, 111, 116, 32, 40, 99, 111, 108, 111, 114, 58, 114, 103, 98, 40, 102, 114, 111, 109, 32, 114, 101, 100, 32, 114, 32, 103, 32, 98, 41, 41, 41, 41, 32, 123, 10, 32, 32, 32, 32, 42, 44, 32, 58, 58, 98, 101, 102, 111, 114, 101, 44, 32, 58, 58, 97, 102, 116, 101, 114, 44, 32, 58, 58, 98, 97, 99, 107, 100, 114, 111, 112, 32, 123, 10, 32, 32, 32, 32, 32, 32, 45, 45, 112, 114, 111, 98, 101, 58, 32, 114, 101, 100, 59, 10, 32, 32, 32, 32, 125, 10, 32, 32, 125, 10, 125, 10])
+ right: "/*! tailwindcss v4.1.13 | MIT License | https://tailwindcss.com */\n@property --probe {\n  syntax: \"<color>\";\n  inherits: false;\n  initial-value: red;\n}\n.a {\n  color: color-mix(in oklab, currentColor 50%, transparent);\n}\n"
+
+---- compiler::public_api::tests::discovery_base_is_independent_of_source_path stdout ----
+
+thread 'compiler::public_api::tests::discovery_base_is_independent_of_source_path' (379893) panicked at crates/rustify-style/src/compiler/../../../../tests/utility/compiler/public-api-native.rs:16:9:
+assertion `left == right` failed: "options:base=<omitted>:from=<omitted>"
+  left: Object {"sources": Array [Object {"base": String("."), "pattern": String("./src/**"), "negated": Bool(false)}], "root": Object {"base": String("."), "pattern": String("./root")}}
+ right: Object {"sources": Array [Object {"base": String(""), "pattern": String("./src/**"), "negated": Bool(false)}], "root": Object {"base": String(""), "pattern": String("./root")}}
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- compiler::public_api::tests::feature_masks_match_fixed_upstream stdout ----
+
+thread 'compiler::public_api::tests::feature_masks_match_fixed_upstream' (379894) panicked at crates/rustify-style/src/compiler/../../../../tests/utility/compiler/public-api-native.rs:24:9:
+assertion `left == right` failed: "features:utilities"
+  left: 0
+ right: 16
+
+
+failures:
+    compiler::public_api::tests::discovery_base_is_independent_of_source_path
+    compiler::public_api::tests::feature_masks_match_fixed_upstream
+    compiler::public_api::tests::polyfill_flags_match_fixed_upstream_css
+    compiler::public_api::tests::warning_messages_match_fixed_upstream
+
+test result: FAILED. 0 passed; 4 failed; 0 ignored; 0 measured; 138 filtered out; finished in 0.10s
+
+error: test failed, to rerun pass `-p rustify-style --lib`

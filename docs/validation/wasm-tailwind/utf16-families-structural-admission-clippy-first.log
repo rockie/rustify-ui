@@ -1,0 +1,26 @@
+mbx[warning]: Unix-domain cache session listener unavailable; using FIFO transport: failed to bind cache session listener at /var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/mbx-session-j92JvP/cache-agent.sock: Operation not permitted (os error 1)
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+    Checking rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+error: field assignment outside of initializer for an instance created with Default::default()
+   --> crates/rustify-style/src/compiler/origin.rs:556:9
+    |
+556 |         edits.allowance = Allowance::new(0, 0);
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+note: consider initializing the variable with `compiler::origin::Edits { allowance: Allowance::new(0, 0), ..Default::default() }` and removing relevant reassignments
+   --> crates/rustify-style/src/compiler/origin.rs:555:9
+    |
+555 |         let mut edits = Edits::default();
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.98.0/index.html#field_reassign_with_default
+    = note: `-D clippy::field-reassign-with-default` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::field_reassign_with_default)]`
+
+error: could not compile `rustify-style` (lib test) due to 1 previous error
+mbx[cache]: 0 hits, 2 misses; 0 B downloaded, 0 B uploaded, 2.7 MiB stored locally

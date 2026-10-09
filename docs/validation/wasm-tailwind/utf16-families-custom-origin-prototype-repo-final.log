@@ -1,0 +1,11 @@
+mbx[warning]: Unix-domain cache session listener unavailable; using FIFO transport: failed to bind cache session listener at /var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/mbx-session-vUvJv0/cache-agent.sock: Operation not permitted (os error 1)
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.09s
+     Running `mbx-launch /private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-utf16-verified-54mkl3kq/cargo-target/debug/rustify-custom-origin-prototype docs/validation/wasm-tailwind/custom-origin-prototype/oracle.json`
+{"cowOldStorageAlias":true,"naiveCloneSplitsAlias":true,"oracleCloneScopes":2,"independentClones":true,"functionalReserve":119728,"staticReserve":114032,"rejectedDeepCloneAllocations":0,"fullNativeOriginIntegration":"pending","productionPeakAccounting":"pending"}

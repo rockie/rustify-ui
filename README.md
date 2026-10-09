@@ -61,6 +61,7 @@ Choose an example name for `mbx xtask build-web --example NAME --release` and `m
 | [data-workbench](examples/data-workbench/) | Sort and filter a 100,000-row DOM table, inspect its GPU selection strip, and explore a separate 10,000-object GPU scene |
 | [vellum](examples/vellum/README.md) | Edit a design document with a GPU scene, DOM inspector, native text editing, local persistence, import and export |
 | [theme-studio](examples/theme-studio/README.md) | Edit full light/dark themes, compare DOM/GPU samples, save locally and export JSON or Tailwind CSS |
+| [utility-lab](docs/utility.md) | Merge classes with cn, generate CSS at runtime for classes the static build lacks, and compare the DOM and GPU results |
 
 For example, to run the design editor:
 

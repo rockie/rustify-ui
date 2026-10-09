@@ -1,0 +1,120 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
++ actual - expected
+
+  [
+    {
++     kind: 'comment',
++     value: '! tailwindcss v4.1.13 | MIT License | https://tailwindcss.com '
++   },
++   {
++     kind: 'rule',
+-     context: {},
+-     kind: 'context',
+-     name: '@tailwind',
+      nodes: [
+        {
++         important: false,
++         kind: 'declaration',
++         property: '--probe',
++         value: '\ud800'
++       }
++     ],
++     selector: '.\\[--probe\\:\ud800\\]'
++   },
++   {
++     kind: 'rule',
++     nodes: [
++       {
+          kind: 'rule',
+          nodes: [
+            {
+              important: false,
+              kind: 'declaration',
++             property: 'display',
++             value: 'block'
+-             property: '--probe',
+-             value: '\ud800'
+            }
+          ],
++         selector: '&.\ud800'
+-         selector: '.\\[--probe\\:\ud800\\]'
+        },
+-       {
+-         kind: 'rule',
+-         nodes: [
+-           {
+-             kind: 'rule',
+-             nodes: [
+-               {
+-                 important: false,
+-                 kind: 'declaration',
+-                 property: 'display',
+-                 value: 'block'
+-               }
+-             ],
+-             selector: '&.\ud800'
+-           }
+-         ],
+-         selector: '.\\[\\&\\.\ud800\\]\\:block'
+-       }
+      ],
++     selector: '.\\[\\&\\.\ud800\\]\\:block'
+-     params: 'utilities'
+    }
+  ]
+
+    at file:///private/tmp/rustify-ast-input-text-shared-harness.mjs:80:12 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: [
+    {
+      kind: 'comment',
+      value: '! tailwindcss v4.1.13 | MIT License | https://tailwindcss.com '
+    },
+    {
+      kind: 'rule',
+      selector: '.\\[--probe\\:\ud800\\]',
+      nodes: [
+        {
+          kind: 'declaration',
+          property: '--probe',
+          value: '\ud800',
+          important: false
+        }
+      ]
+    },
+    {
+      kind: 'rule',
+      selector: '.\\[\\&\\.\ud800\\]\\:block',
+      nodes: [ { kind: 'rule', selector: '&.\ud800', nodes: [ [Object] ] } ]
+    }
+  ],
+  expected: [
+    {
+      kind: 'context',
+      name: '@tailwind',
+      params: 'utilities',
+      nodes: [
+        {
+          kind: 'rule',
+          selector: '.\\[--probe\\:\ud800\\]',
+          nodes: [ [Object] ]
+        },
+        {
+          kind: 'rule',
+          selector: '.\\[\\&\\.\ud800\\]\\:block',
+          nodes: [ [Object] ]
+        }
+      ],
+      context: {}
+    }
+  ],
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v26.1.0

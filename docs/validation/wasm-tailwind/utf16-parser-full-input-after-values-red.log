@@ -1,0 +1,143 @@
+{"id":"utf16:theme:ordinary:high","stage":"build","kind":"pending_feature","feature":"non-scalar UTF-16 compiler input","expected":"CSS"}
+{"id":"utf16:theme:ordinary:high","stage":"themeEntries","kind":"pending_feature","feature":"non-scalar value passed to scalar compiler consumer"}
+{"id":"utf16:theme:ordinary:low","stage":"build","kind":"pending_feature","feature":"non-scalar UTF-16 compiler input","expected":"CSS"}
+{"id":"utf16:theme:ordinary:low","stage":"themeEntries","kind":"pending_feature","feature":"non-scalar value passed to scalar compiler consumer"}
+{"id":"utf16:theme:ordinary:high-high","stage":"build","kind":"pending_feature","feature":"non-scalar UTF-16 compiler input","expected":"CSS"}
+{"id":"utf16:theme:ordinary:high-high","stage":"themeEntries","kind":"pending_feature","feature":"non-scalar value passed to scalar compiler consumer"}
+{"id":"utf16:theme:ordinary:low-low","stage":"build","kind":"pending_feature","feature":"non-scalar UTF-16 compiler input","expected":"CSS"}
+{"id":"utf16:theme:ordinary:low-low","stage":"themeEntries","kind":"pending_feature","feature":"non-scalar value passed to scalar compiler consumer"}
+{"id":"utf16:theme:ordinary:low-high","stage":"build","kind":"pending_feature","feature":"non-scalar UTF-16 compiler input","expected":"CSS"}
+{"id":"utf16:theme:ordinary:low-high","stage":"themeEntries","kind":"pending_feature","feature":"non-scalar value passed to scalar compiler consumer"}
+{"id":"utf16:theme:static:high","stage":"build","kind":"pending_feature","feature":"non-scalar UTF-16 compiler input","expected":"CSS"}
+{"id":"utf16:theme:static:high","stage":"themeEntries","kind":"pending_feature","feature":"non-scalar value passed to scalar compiler consumer"}
+{"id":"utf16:theme:static:low","stage":"build","kind":"pending_feature","feature":"non-scalar UTF-16 compiler input","expected":"CSS"}
+{"id":"utf16:theme:static:low","stage":"themeEntries","kind":"pending_feature","feature":"non-scalar value passed to scalar compiler consumer"}
+{"id":"utf16:theme:static:high-high","stage":"build","kind":"pending_feature","feature":"non-scalar UTF-16 compiler input","expected":"CSS"}
+{"id":"utf16:theme:static:high-high","stage":"themeEntries","kind":"pending_feature","feature":"non-scalar value passed to scalar compiler consumer"}
+{"id":"utf16:theme:static:low-low","stage":"build","kind":"pending_feature","feature":"non-scalar UTF-16 compiler input","expected":"CSS"}
+{"id":"utf16:theme:static:low-low","stage":"themeEntries","kind":"pending_feature","feature":"non-scalar value passed to scalar compiler consumer"}
+{"id":"utf16:theme:static:low-high","stage":"build","kind":"pending_feature","feature":"non-scalar UTF-16 compiler input","expected":"CSS"}
+{"id":"utf16:theme:static:low-high","stage":"themeEntries","kind":"pending_feature","feature":"non-scalar value passed to scalar compiler consumer"}
+{"id":"utf16:theme:reference:high","stage":"build","kind":"pending_feature","feature":"non-scalar UTF-16 compiler input","expected":"CSS"}
+{"id":"utf16:theme:reference:high","stage":"themeEntries","kind":"pending_feature","feature":"non-scalar value passed to scalar compiler consumer"}
+{"id":"utf16:theme:reference:low","stage":"build","kind":"pending_feature","feature":"non-scalar UTF-16 compiler input","expected":"CSS"}
+{"id":"utf16:theme:reference:low","stage":"themeEntries","kind":"pending_feature","feature":"non-scalar value passed to scalar compiler consumer"}
+{"id":"utf16:theme:reference:high-high","stage":"build","kind":"pending_feature","feature":"non-scalar UTF-16 compiler input","expected":"CSS"}
+{"id":"utf16:theme:reference:high-high","stage":"themeEntries","kind":"pending_feature","feature":"non-scalar value passed to scalar compiler consumer"}
+{"id":"utf16:theme:reference:low-low","stage":"build","kind":"pending_feature","feature":"non-scalar UTF-16 compiler input","expected":"CSS"}
+{"id":"utf16:theme:reference:low-low","stage":"themeEntries","kind":"pending_feature","feature":"non-scalar value passed to scalar compiler consumer"}
+{"id":"utf16:theme:reference:low-high","stage":"build","kind":"pending_feature","feature":"non-scalar UTF-16 compiler input","expected":"CSS"}
+{"id":"utf16:theme:reference:low-high","stage":"themeEntries","kind":"pending_feature","feature":"non-scalar value passed to scalar compiler consumer"}
+{"id":"utf16:theme:inline:high","stage":"build","kind":"pending_feature","feature":"non-scalar UTF-16 compiler input","expected":"CSS"}
+{"id":"utf16:theme:inline:high","stage":"themeEntries","kind":"pending_feature","feature":"non-scalar value passed to scalar compiler consumer"}
+{"id":"utf16:theme:inline:low","stage":"build","kind":"pending_feature","feature":"non-scalar UTF-16 compiler input","expected":"CSS"}
+{"id":"utf16:theme:inline:low","stage":"themeEntries","kind":"pending_feature","feature":"non-scalar value passed to scalar compiler consumer"}
+{"id":"utf16:theme:inline:high-high","stage":"build","kind":"pending_feature","feature":"non-scalar UTF-16 compiler input","expected":"CSS"}
+{"id":"utf16:theme:inline:high-high","stage":"themeEntries","kind":"pending_feature","feature":"non-scalar value passed to scalar compiler consumer"}
+{"id":"utf16:theme:inline:low-low","stage":"build","kind":"pending_feature","feature":"non-scalar UTF-16 compiler input","expected":"CSS"}
+{"id":"utf16:theme:inline:low-low","stage":"themeEntries","kind":"pending_feature","feature":"non-scalar value passed to scalar compiler consumer"}
+{"id":"utf16:theme:inline:low-high","stage":"build","kind":"pending_feature","feature":"non-scalar UTF-16 compiler input","expected":"CSS"}
+{"id":"utf16:theme:inline:low-high","stage":"themeEntries","kind":"pending_feature","feature":"non-scalar value passed to scalar compiler consumer"}
+{"id":"utf16:theme:default:high","stage":"build","kind":"pending_feature","feature":"non-scalar UTF-16 compiler input","expected":"CSS"}
+{"id":"utf16:theme:default:high","stage":"themeEntries","kind":"pending_feature","feature":"non-scalar value passed to scalar compiler consumer"}
+{"id":"utf16:theme:default:low","stage":"build","kind":"pending_feature","feature":"non-scalar UTF-16 compiler input","expected":"CSS"}
+{"id":"utf16:theme:default:low","stage":"themeEntries","kind":"pending_feature","feature":"non-scalar value passed to scalar compiler consumer"}
+{"id":"utf16:theme:default:high-high","stage":"build","kind":"pending_feature","feature":"non-scalar UTF-16 compiler input","expected":"CSS"}
+{"id":"utf16:theme:default:high-high","stage":"themeEntries","kind":"pending_feature","feature":"non-scalar value passed to scalar compiler consumer"}
+{"id":"utf16:theme:default:low-low","stage":"build","kind":"pending_feature","feature":"non-scalar UTF-16 compiler input","expected":"CSS"}
+{"id":"utf16:theme:default:low-low","stage":"themeEntries","kind":"pending_feature","feature":"non-scalar value passed to scalar compiler consumer"}
+{"id":"utf16:theme:default:low-high","stage":"build","kind":"pending_feature","feature":"non-scalar UTF-16 compiler input","expected":"CSS"}
+{"id":"utf16:theme:default:low-high","stage":"themeEntries","kind":"pending_feature","feature":"non-scalar value passed to scalar compiler consumer"}
+{"id":"utf16:theme:prefix:high","stage":"build","kind":"pending_feature","feature":"non-scalar UTF-16 compiler input","expected":"CSS"}
+{"id":"utf16:theme:prefix:high","stage":"themeEntries","kind":"pending_feature","feature":"non-scalar value passed to scalar compiler consumer"}
+{"id":"utf16:theme:prefix:low","stage":"build","kind":"pending_feature","feature":"non-scalar UTF-16 compiler input","expected":"CSS"}
+{"id":"utf16:theme:prefix:low","stage":"themeEntries","kind":"pending_feature","feature":"non-scalar value passed to scalar compiler consumer"}
+{"id":"utf16:theme:prefix:high-high","stage":"build","kind":"pending_feature","feature":"non-scalar UTF-16 compiler input","expected":"CSS"}
+{"id":"utf16:theme:prefix:high-high","stage":"themeEntries","kind":"pending_feature","feature":"non-scalar value passed to scalar compiler consumer"}
+{"id":"utf16:theme:prefix:low-low","stage":"build","kind":"pending_feature","feature":"non-scalar UTF-16 compiler input","expected":"CSS"}
+{"id":"utf16:theme:prefix:low-low","stage":"themeEntries","kind":"pending_feature","feature":"non-scalar value passed to scalar compiler consumer"}
+{"id":"utf16:theme:prefix:low-high","stage":"build","kind":"pending_feature","feature":"non-scalar UTF-16 compiler input","expected":"CSS"}
+{"id":"utf16:theme:prefix:low-high","stage":"themeEntries","kind":"pending_feature","feature":"non-scalar value passed to scalar compiler consumer"}
+{"id":"utf16:theme:default-prefix:high","stage":"build","kind":"pending_feature","feature":"non-scalar UTF-16 compiler input","expected":"CSS"}
+{"id":"utf16:theme:default-prefix:high","stage":"themeEntries","kind":"pending_feature","feature":"non-scalar value passed to scalar compiler consumer"}
+{"id":"utf16:theme:default-prefix:low","stage":"build","kind":"pending_feature","feature":"non-scalar UTF-16 compiler input","expected":"CSS"}
+{"id":"utf16:theme:default-prefix:low","stage":"themeEntries","kind":"pending_feature","feature":"non-scalar value passed to scalar compiler consumer"}
+{"id":"utf16:theme:default-prefix:high-high","stage":"build","kind":"pending_feature","feature":"non-scalar UTF-16 compiler input","expected":"CSS"}
+{"id":"utf16:theme:default-prefix:high-high","stage":"themeEntries","kind":"pending_feature","feature":"non-scalar value passed to scalar compiler consumer"}
+{"id":"utf16:theme:default-prefix:low-low","stage":"build","kind":"pending_feature","feature":"non-scalar UTF-16 compiler input","expected":"CSS"}
+{"id":"utf16:theme:default-prefix:low-low","stage":"themeEntries","kind":"pending_feature","feature":"non-scalar value passed to scalar compiler consumer"}
+{"id":"utf16:theme:default-prefix:low-high","stage":"build","kind":"pending_feature","feature":"non-scalar UTF-16 compiler input","expected":"CSS"}
+{"id":"utf16:theme:default-prefix:low-high","stage":"themeEntries","kind":"pending_feature","feature":"non-scalar value passed to scalar compiler consumer"}
+{"id":"utf16:escape:theme-key:high","stage":"themeEntries","kind":"pending_feature","feature":"non-scalar value passed to scalar compiler consumer"}
+{"id":"utf16:escape:used-variable:high","stage":"themeEntries","kind":"pending_feature","feature":"non-scalar value passed to scalar compiler consumer"}
+{"id":"utf16:escape:theme-key:high-upper","stage":"themeEntries","kind":"pending_feature","feature":"non-scalar value passed to scalar compiler consumer"}
+{"id":"utf16:escape:used-variable:high-upper","stage":"themeEntries","kind":"pending_feature","feature":"non-scalar value passed to scalar compiler consumer"}
+{"id":"utf16:escape:theme-key:high-six-digit","stage":"themeEntries","kind":"pending_feature","feature":"non-scalar value passed to scalar compiler consumer"}
+{"id":"utf16:escape:used-variable:high-six-digit","stage":"themeEntries","kind":"pending_feature","feature":"non-scalar value passed to scalar compiler consumer"}
+{"id":"utf16:escape:theme-key:high-space","stage":"themeEntries","kind":"pending_feature","feature":"non-scalar value passed to scalar compiler consumer"}
+{"id":"utf16:escape:used-variable:high-space","stage":"themeEntries","kind":"pending_feature","feature":"non-scalar value passed to scalar compiler consumer"}
+{"id":"utf16:escape:theme-key:high-tab","stage":"themeEntries","kind":"pending_feature","feature":"non-scalar value passed to scalar compiler consumer"}
+{"id":"utf16:escape:used-variable:high-tab","stage":"themeEntries","kind":"pending_feature","feature":"non-scalar value passed to scalar compiler consumer"}
+{"id":"utf16:escape:theme-key:high-newline","stage":"themeEntries","kind":"pending_feature","feature":"non-scalar value passed to scalar compiler consumer"}
+{"id":"utf16:escape:used-variable:high-newline","stage":"themeEntries","kind":"pending_feature","feature":"non-scalar value passed to scalar compiler consumer"}
+{"id":"utf16:escape:theme-key:high-cr","stage":"themeEntries","kind":"pending_feature","feature":"non-scalar value passed to scalar compiler consumer"}
+{"id":"utf16:escape:used-variable:high-cr","stage":"themeEntries","kind":"pending_feature","feature":"non-scalar value passed to scalar compiler consumer"}
+{"id":"utf16:escape:theme-key:high-form-feed","stage":"themeEntries","kind":"pending_feature","feature":"non-scalar value passed to scalar compiler consumer"}
+{"id":"utf16:escape:used-variable:high-form-feed","stage":"themeEntries","kind":"pending_feature","feature":"non-scalar value passed to scalar compiler consumer"}
+{"id":"utf16:escape:theme-key:low","stage":"themeEntries","kind":"pending_feature","feature":"non-scalar value passed to scalar compiler consumer"}
+{"id":"utf16:escape:used-variable:low","stage":"themeEntries","kind":"pending_feature","feature":"non-scalar value passed to scalar compiler consumer"}
+{"id":"utf16:escape:used-variable-invalid-without-theme","stage":"compile","kind":"syntax","message":"Invalid code point 1114112","expected":"error phase/message"}
+{"id":"utf16:map:collision:ordinary","stage":"themeEntries","kind":"pending_feature","feature":"non-scalar value passed to scalar compiler consumer"}
+{"id":"utf16:map:collision:static","stage":"themeEntries","kind":"pending_feature","feature":"non-scalar value passed to scalar compiler consumer"}
+{"id":"utf16:map:collision:reference","stage":"themeEntries","kind":"pending_feature","feature":"non-scalar value passed to scalar compiler consumer"}
+{"id":"utf16:map:collision:inline","stage":"themeEntries","kind":"pending_feature","feature":"non-scalar value passed to scalar compiler consumer"}
+{"id":"utf16:map:collision:default","stage":"themeEntries","kind":"pending_feature","feature":"non-scalar value passed to scalar compiler consumer"}
+{"id":"utf16:map:collision:prefix","stage":"themeEntries","kind":"pending_feature","feature":"non-scalar value passed to scalar compiler consumer"}
+{"id":"utf16:map:collision:default-prefix","stage":"themeEntries","kind":"pending_feature","feature":"non-scalar value passed to scalar compiler consumer"}
+{"id":"utf16:map:decoded-low-high-remain-two-units","stage":"themeEntries","kind":"pending_feature","feature":"non-scalar value passed to scalar compiler consumer"}
+{"id":"utf16:map:reset-and-default-identity","stage":"build","kind":"pending_feature","feature":"non-scalar UTF-16 compiler input","expected":"CSS"}
+{"id":"utf16:map:reset-and-default-identity","stage":"themeEntries","kind":"pending_feature","feature":"non-scalar value passed to scalar compiler consumer"}
+{"id":"utf16:candidate:arbitrary-value:high","stage":"build","kind":"pending_feature","feature":"non-scalar UTF-16 compiler input","expected":"CSS"}
+{"id":"utf16:candidate:arbitrary-property:high","stage":"build","kind":"pending_feature","feature":"non-scalar UTF-16 compiler input","expected":"CSS"}
+{"id":"utf16:candidate:arbitrary-quoted:high","stage":"build","kind":"pending_feature","feature":"non-scalar UTF-16 compiler input","expected":"CSS"}
+{"id":"utf16:candidate:arbitrary-function:high","stage":"build","kind":"pending_feature","feature":"non-scalar UTF-16 compiler input","expected":"CSS"}
+{"id":"utf16:candidate:arbitrary-selector:high","stage":"build","kind":"pending_feature","feature":"non-scalar UTF-16 compiler input","expected":"CSS"}
+{"id":"utf16:candidate:arbitrary-at-rule:high","stage":"build","kind":"pending_feature","feature":"non-scalar UTF-16 compiler input","expected":"CSS"}
+{"id":"utf16:candidate:arbitrary-variable:high","stage":"build","kind":"pending_feature","feature":"non-scalar UTF-16 compiler input","expected":"CSS"}
+{"id":"utf16:candidate:arbitrary-value:low","stage":"build","kind":"pending_feature","feature":"non-scalar UTF-16 compiler input","expected":"CSS"}
+{"id":"utf16:candidate:arbitrary-property:low","stage":"build","kind":"pending_feature","feature":"non-scalar UTF-16 compiler input","expected":"CSS"}
+{"id":"utf16:candidate:arbitrary-quoted:low","stage":"build","kind":"pending_feature","feature":"non-scalar UTF-16 compiler input","expected":"CSS"}
+{"id":"utf16:candidate:arbitrary-function:low","stage":"build","kind":"pending_feature","feature":"non-scalar UTF-16 compiler input","expected":"CSS"}
+{"id":"utf16:candidate:arbitrary-selector:low","stage":"build","kind":"pending_feature","feature":"non-scalar UTF-16 compiler input","expected":"CSS"}
+{"id":"utf16:candidate:arbitrary-at-rule:low","stage":"build","kind":"pending_feature","feature":"non-scalar UTF-16 compiler input","expected":"CSS"}
+{"id":"utf16:candidate:arbitrary-variable:low","stage":"build","kind":"pending_feature","feature":"non-scalar UTF-16 compiler input","expected":"CSS"}
+{"id":"utf16:candidate:arbitrary-value:high-high","stage":"build","kind":"pending_feature","feature":"non-scalar UTF-16 compiler input","expected":"CSS"}
+{"id":"utf16:candidate:arbitrary-property:high-high","stage":"build","kind":"pending_feature","feature":"non-scalar UTF-16 compiler input","expected":"CSS"}
+{"id":"utf16:candidate:arbitrary-quoted:high-high","stage":"build","kind":"pending_feature","feature":"non-scalar UTF-16 compiler input","expected":"CSS"}
+{"id":"utf16:candidate:arbitrary-function:high-high","stage":"build","kind":"pending_feature","feature":"non-scalar UTF-16 compiler input","expected":"CSS"}
+{"id":"utf16:candidate:arbitrary-selector:high-high","stage":"build","kind":"pending_feature","feature":"non-scalar UTF-16 compiler input","expected":"CSS"}
+{"id":"utf16:candidate:arbitrary-at-rule:high-high","stage":"build","kind":"pending_feature","feature":"non-scalar UTF-16 compiler input","expected":"CSS"}
+{"id":"utf16:candidate:arbitrary-variable:high-high","stage":"build","kind":"pending_feature","feature":"non-scalar UTF-16 compiler input","expected":"CSS"}
+{"id":"utf16:candidate:arbitrary-value:low-low","stage":"build","kind":"pending_feature","feature":"non-scalar UTF-16 compiler input","expected":"CSS"}
+{"id":"utf16:candidate:arbitrary-property:low-low","stage":"build","kind":"pending_feature","feature":"non-scalar UTF-16 compiler input","expected":"CSS"}
+{"id":"utf16:candidate:arbitrary-quoted:low-low","stage":"build","kind":"pending_feature","feature":"non-scalar UTF-16 compiler input","expected":"CSS"}
+{"id":"utf16:candidate:arbitrary-function:low-low","stage":"build","kind":"pending_feature","feature":"non-scalar UTF-16 compiler input","expected":"CSS"}
+{"id":"utf16:candidate:arbitrary-selector:low-low","stage":"build","kind":"pending_feature","feature":"non-scalar UTF-16 compiler input","expected":"CSS"}
+{"id":"utf16:candidate:arbitrary-at-rule:low-low","stage":"build","kind":"pending_feature","feature":"non-scalar UTF-16 compiler input","expected":"CSS"}
+{"id":"utf16:candidate:arbitrary-variable:low-low","stage":"build","kind":"pending_feature","feature":"non-scalar UTF-16 compiler input","expected":"CSS"}
+{"id":"utf16:candidate:arbitrary-value:low-high","stage":"build","kind":"pending_feature","feature":"non-scalar UTF-16 compiler input","expected":"CSS"}
+{"id":"utf16:candidate:arbitrary-property:low-high","stage":"build","kind":"pending_feature","feature":"non-scalar UTF-16 compiler input","expected":"CSS"}
+{"id":"utf16:candidate:arbitrary-quoted:low-high","stage":"build","kind":"pending_feature","feature":"non-scalar UTF-16 compiler input","expected":"CSS"}
+{"id":"utf16:candidate:arbitrary-function:low-high","stage":"build","kind":"pending_feature","feature":"non-scalar UTF-16 compiler input","expected":"CSS"}
+{"id":"utf16:candidate:arbitrary-selector:low-high","stage":"build","kind":"pending_feature","feature":"non-scalar UTF-16 compiler input","expected":"CSS"}
+{"id":"utf16:candidate:arbitrary-at-rule:low-high","stage":"build","kind":"pending_feature","feature":"non-scalar UTF-16 compiler input","expected":"CSS"}
+{"id":"utf16:candidate:arbitrary-variable:low-high","stage":"build","kind":"pending_feature","feature":"non-scalar UTF-16 compiler input","expected":"CSS"}
+{"id":"utf16:candidate:source-utf16-order","stage":"build","kind":"pending_feature","feature":"non-scalar UTF-16 compiler input","expected":"CSS"}
+{"id":"utf16:candidate:source-number-order","stage":"build","kind":"pending_feature","feature":"non-scalar UTF-16 compiler input","expected":"CSS"}
+{"id":"utf16:candidate:variant-theme-key","stage":"build","kind":"pending_feature","feature":"non-scalar UTF-16 compiler input","expected":"CSS"}
+{"id":"utf16:error:candidate-missing-theme:high","stage":"build","kind":"pending_feature","feature":"non-scalar UTF-16 compiler input","expected":"CSS"}
+{"id":"utf16:error:candidate-missing-theme:low","stage":"build","kind":"pending_feature","feature":"non-scalar UTF-16 compiler input","expected":"CSS"}
+{"id":"utf16:error:candidate-missing-theme:high-high","stage":"build","kind":"pending_feature","feature":"non-scalar UTF-16 compiler input","expected":"CSS"}
+{"id":"utf16:error:candidate-missing-theme:low-low","stage":"build","kind":"pending_feature","feature":"non-scalar UTF-16 compiler input","expected":"CSS"}
+{"id":"utf16:error:candidate-missing-theme:low-high","stage":"build","kind":"pending_feature","feature":"non-scalar UTF-16 compiler input","expected":"CSS"}
+{"cases":486,"cssMatches":346,"errorPhaseMessageMatches":60,"themeObservations":111,"themeMatches":49,"failedObservations":142,"failedCases":106,"actualWasm":true,"sharedMemory":false,"wasmBytes":1929550,"errorNameConformance":"pending: the facade throws its typed JSON envelope rather than an upstream Error object","fullUtf16Conformance":"pending","fullPublicValueConformance":"pending"}

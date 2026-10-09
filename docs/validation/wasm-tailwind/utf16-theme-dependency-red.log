@@ -1,0 +1,33 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 4.54s
+     Running unittests src/lib.rs (target/debug/deps/rustify_style-4ed64bbe76d78d97)
+
+running 1 test
+test compiler::theme::prefix_tests::variable_tracking_retains_original_non_scalar_units ... FAILED
+
+failures:
+
+---- compiler::theme::prefix_tests::variable_tracking_retains_original_non_scalar_units stdout ----
+
+thread 'compiler::theme::prefix_tests::variable_tracking_retains_original_non_scalar_units' (2308005) panicked at crates/rustify-style/src/compiler/theme.rs:569:9:
+assertion `left == right` failed
+  left: 0
+ right: 1
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    compiler::theme::prefix_tests::variable_tracking_retains_original_non_scalar_units
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 202 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p rustify-style --lib`
+mbx[cache]: 0 hits, 0 misses, 1 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: every checkout believes it owns 28.2 GiB of outputs. the disk keeps one copy and says nothing.

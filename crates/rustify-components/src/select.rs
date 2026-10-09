@@ -169,7 +169,7 @@ pub fn Select(
             node_ref=trigger
             type="button"
             id=move || trigger_id.get_value()
-            class=crate::macros::merge(TRIGGER, &class)
+            class=crate::macros::reactive_merge(TRIGGER, &class)
             data-name="Select"
             data-testid=test_id
             role="combobox"

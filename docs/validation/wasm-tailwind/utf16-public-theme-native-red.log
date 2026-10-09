@@ -1,0 +1,31 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 5.70s
+     Running unittests src/lib.rs (target/debug/deps/rustify_style-4ed64bbe76d78d97)
+
+running 1 test
+test compiler::public_api::design_system::tests::theme_entries_keep_all_original_utf16_keys_and_values ... FAILED
+
+failures:
+
+---- compiler::public_api::design_system::tests::theme_entries_keep_all_original_utf16_keys_and_values stdout ----
+
+thread 'compiler::public_api::design_system::tests::theme_entries_keep_all_original_utf16_keys_and_values' (2665806) panicked at crates/rustify-style/src/compiler/public_api/../../../../../tests/utility/compiler/design-system-native.rs:237:43:
+called `Result::unwrap()` on an `Err` value: PendingFeature { feature: "non-scalar value passed to scalar compiler consumer" }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    compiler::public_api::design_system::tests::theme_entries_keep_all_original_utf16_keys_and_values
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 240 filtered out; finished in 0.05s
+
+error: test failed, to rerun pass `-p rustify-style --lib`
+mbx[cache]: 0 hits, 0 misses, 1 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: every checkout believes it owns 28.4 GiB of outputs. the disk keeps one copy and says nothing.

@@ -1,0 +1,44 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 5.67s
+     Running unittests src/lib.rs (target/debug/deps/rustify_style-4ed64bbe76d78d97)
+
+running 1 test
+test compiler::tests::custom_variant_matrix_matches_official_css_and_errors ... FAILED
+
+failures:
+
+---- compiler::tests::custom_variant_matrix_matches_official_css_and_errors stdout ----
+
+thread 'compiler::tests::custom_variant_matrix_matches_official_css_and_errors' (14206012) panicked at crates/rustify-style/src/compiler/tests.rs:92:5:
+56 mismatches; first cases: [
+    "\"custom-variant:legacy-body:noSlot:sample\": expected \"Cannot use `@variant` with unknown variant: sample\", got Some(PendingFeature { feature: \"@variant\" })",
+    "\"custom-variant:legacy-body:noSlot:group-sample\": expected \"Cannot use `@variant` with unknown variant: sample\", got Some(PendingFeature { feature: \"@variant\" })",
+    "\"custom-variant:legacy-body:noSlot:not-sample\": expected \"Cannot use `@variant` with unknown variant: sample\", got Some(PendingFeature { feature: \"@variant\" })",
+    "\"custom-variant:legacy-body:declarationsOnly:sample\": expected \"Cannot use `@variant` with unknown variant: sample\", got Some(PendingFeature { feature: \"@variant\" })",
+    "\"custom-variant:legacy-body:declarationsOnly:group-sample\": expected \"Cannot use `@variant` with unknown variant: sample\", got Some(PendingFeature { feature: \"@variant\" })",
+    "\"custom-variant:legacy-body:declarationsOnly:not-sample\": expected \"Cannot use `@variant` with unknown variant: sample\", got Some(PendingFeature { feature: \"@variant\" })",
+    "\"custom-variant:body:resourceSlot:empty:sample\": actual \"@layer properties;\\n.sample\\\\:w-\\\\[13px\\\\] {\\n  &:hover {\\n    width: 13px;\\n  }\\n}\\n@property --custom-variant-raw {\\n  syntax: \\\"*\\\";\\n  inherits: true;\\n  @slot;\\n}\\n@layer properties {\\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\\n    :root, :host {\\n      --custom-variant-raw: initial;\\n    }\\n  }\\n}\\n\", expected String(\"@layer properties;\\n.sample\\\\:w-\\\\[13px\\\\] {\\n  &:hover {\\n    width: 13px;\\n  }\\n}\\n@property --custom-variant-raw {\\n  syntax: \\\"*\\\";\\n  inherits: true;\\n}\\n@layer properties {\\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\\n    :root, :host {\\n      --custom-variant-raw: initial;\\n    }\\n  }\\n}\\n\"), pending []",
+    "\"custom-variant:body:resourceSlot:empty:sample:hover\": actual \"@layer properties;\\n.sample\\\\:hover\\\\:w-\\\\[13px\\\\] {\\n  &:hover {\\n    &:hover {\\n      @media (hover: hover) {\\n        width: 13px;\\n      }\\n    }\\n  }\\n}\\n@property --custom-variant-raw {\\n  syntax: \\\"*\\\";\\n  inherits: true;\\n  @slot;\\n}\\n@layer properties {\\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\\n    :root, :host {\\n      --custom-variant-raw: initial;\\n    }\\n  }\\n}\\n\", expected String(\"@layer properties;\\n.sample\\\\:hover\\\\:w-\\\\[13px\\\\] {\\n  &:hover {\\n    &:hover {\\n      @media (hover: hover) {\\n        width: 13px;\\n      }\\n    }\\n  }\\n}\\n@property --custom-variant-raw {\\n  syntax: \\\"*\\\";\\n  inherits: true;\\n}\\n@layer properties {\\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\\n    :root, :host {\\n      --custom-variant-raw: initial;\\n    }\\n  }\\n}\\n\"), pending []",
+    "\"custom-variant:body:resourceSlot:empty:hover:sample\": actual \"@layer properties;\\n.hover\\\\:sample\\\\:w-\\\\[13px\\\\] {\\n  &:hover {\\n    @media (hover: hover) {\\n      &:hover {\\n        width: 13px;\\n      }\\n    }\\n  }\\n}\\n@property --custom-variant-raw {\\n  syntax: \\\"*\\\";\\n  inherits: true;\\n  @slot;\\n}\\n@layer properties {\\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\\n    :root, :host {\\n      --custom-variant-raw: initial;\\n    }\\n  }\\n}\\n\", expected String(\"@layer properties;\\n.hover\\\\:sample\\\\:w-\\\\[13px\\\\] {\\n  &:hover {\\n    @media (hover: hover) {\\n      &:hover {\\n        width: 13px;\\n      }\\n    }\\n  }\\n}\\n@property --custom-variant-raw {\\n  syntax: \\\"*\\\";\\n  inherits: true;\\n}\\n@layer properties {\\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\\n    :root, :host {\\n      --custom-variant-raw: initial;\\n    }\\n  }\\n}\\n\"), pending []",
+    "\"custom-variant:body:resourceSlot:empty:sample:focus\": actual \"@layer properties;\\n.sample\\\\:focus\\\\:w-\\\\[13px\\\\] {\\n  &:hover {\\n    &:focus {\\n      width: 13px;\\n    }\\n  }\\n}\\n@property --custom-variant-raw {\\n  syntax: \\\"*\\\";\\n  inherits: true;\\n  @slot;\\n}\\n@layer properties {\\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\\n    :root, :host {\\n      --custom-variant-raw: initial;\\n    }\\n  }\\n}\\n\", expected String(\"@layer properties;\\n.sample\\\\:focus\\\\:w-\\\\[13px\\\\] {\\n  &:hover {\\n    &:focus {\\n      width: 13px;\\n    }\\n  }\\n}\\n@property --custom-variant-raw {\\n  syntax: \\\"*\\\";\\n  inherits: true;\\n}\\n@layer properties {\\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\\n    :root, :host {\\n      --custom-variant-raw: initial;\\n    }\\n  }\\n}\\n\"), pending []",
+    "\"custom-variant:body:resourceSlot:empty:group-hover:sample\": actual \"@layer properties;\\n.group-hover\\\\:sample\\\\:w-\\\\[13px\\\\] {\\n  &:is(:where(.group):hover *) {\\n    @media (hover: hover) {\\n      &:hover {\\n        width: 13px;\\n      }\\n    }\\n  }\\n}\\n@property --custom-variant-raw {\\n  syntax: \\\"*\\\";\\n  inherits: true;\\n  @slot;\\n}\\n@layer properties {\\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\\n    :root, :host {\\n      --custom-variant-raw: initial;\\n    }\\n  }\\n}\\n\", expected String(\"@layer properties;\\n.group-hover\\\\:sample\\\\:w-\\\\[13px\\\\] {\\n  &:is(:where(.group):hover *) {\\n    @media (hover: hover) {\\n      &:hover {\\n        width: 13px;\\n      }\\n    }\\n  }\\n}\\n@property --custom-variant-raw {\\n  syntax: \\\"*\\\";\\n  inherits: true;\\n}\\n@layer properties {\\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\\n    :root, :host {\\n      --custom-variant-raw: initial;\\n    }\\n  }\\n}\\n\"), pending []",
+    "\"custom-variant:body:resourceSlot:empty:sample:sample\": actual \"@layer properties;\\n.sample\\\\:sample\\\\:w-\\\\[13px\\\\] {\\n  &:hover {\\n    &:hover {\\n      width: 13px;\\n    }\\n  }\\n}\\n@property --custom-variant-raw {\\n  syntax: \\\"*\\\";\\n  inherits: true;\\n  @slot;\\n}\\n@layer properties {\\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\\n    :root, :host {\\n      --custom-variant-raw: initial;\\n    }\\n  }\\n}\\n\", expected String(\"@layer properties;\\n.sample\\\\:sample\\\\:w-\\\\[13px\\\\] {\\n  &:hover {\\n    &:hover {\\n      width: 13px;\\n    }\\n  }\\n}\\n@property --custom-variant-raw {\\n  syntax: \\\"*\\\";\\n  inherits: true;\\n}\\n@layer properties {\\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\\n    :root, :host {\\n      --custom-variant-raw: initial;\\n    }\\n  }\\n}\\n\"), pending []",
+]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    compiler::tests::custom_variant_matrix_matches_official_css_and_errors
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 111 filtered out; finished in 0.67s
+
+error: test failed, to rerun pass `-p rustify-style --lib`
+mbx[cache]: 0 hits, 0 misses, 1 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: escorted 577.5 GiB logical of ownerless outputs off the premises.

@@ -36,7 +36,14 @@ pub struct MountConfig {
 pub struct ScopeRoots(
     #[cfg(target_arch = "wasm32")] send_wrapper::SendWrapper<leptos::web_sys::HtmlElement>,
     #[cfg(not(target_arch = "wasm32"))] std::marker::PhantomData<()>,
+    String,
 );
+
+impl ScopeRoots {
+    pub fn base(&self) -> &str {
+        &self.1
+    }
+}
 
 #[cfg(target_arch = "wasm32")]
 impl ScopeRoots {
@@ -133,9 +140,10 @@ where
             provide_context(crate::overlay::OverlayStack::new(
                 &container, &content, &overlay,
             ));
-            provide_context(ScopeRoots(send_wrapper::SendWrapper::new(
-                container.clone(),
-            )));
+            provide_context(ScopeRoots(
+                send_wrapper::SendWrapper::new(container.clone()),
+                config.base.clone(),
+            ));
             crate::router::provide_router(&container, url_owner.clone(), &config.base);
         }
         leptos::mount::mount_to(target, view)

@@ -1,0 +1,116 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: plain: constructor input graph
++ actual - expected
+... Skipped lines
+
+  {
+    records: [
+      {
+        array: true,
+        fields: [
+...
+            'kind',
++           'at-rule'
+-           'context'
+          ],
+          [
+            'name',
+            '@tailwind'
+          ],
+...
+          ],
+-         [
+-           'context',
+-           {
+-             reference: 3
+-           }
+-         ]
+        ]
+      },
+      {
+        array: true,
+        fields: []
+...
+        array: false,
+-       fields: []
+-     },
+-     {
+-       array: false,
+        fields: [
+          [
+            'file',
+            'entry\ud800.css'
+          ],
+...
+      {
++       reference: 3
+-       reference: 4
+      }
+    ]
+  }
+
+    at file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/compiler/run-public-ast-mutations-wasm.mjs:54:12 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: {
+    roots: [
+      { reference: 0 },
+      { reference: 1 },
+      { reference: 2 },
+      { reference: 3 }
+    ],
+    records: [
+      { array: true, fields: [ [ '0', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'at-rule' ],
+          [ 'name', '@tailwind' ],
+          [ 'params', 'utilities' ],
+          [ 'nodes', [Object] ],
+          [ 'extra', 'retained' ]
+        ]
+      },
+      { array: true, fields: [] },
+      {
+        array: false,
+        fields: [ [ 'file', 'entry\ud800.css' ], [ 'code', 'source\udc00' ] ]
+      }
+    ]
+  },
+  expected: {
+    roots: [
+      { reference: 0 },
+      { reference: 1 },
+      { reference: 2 },
+      { reference: 4 }
+    ],
+    records: [
+      { array: true, fields: [ [ '0', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'context' ],
+          [ 'name', '@tailwind' ],
+          [ 'params', 'utilities' ],
+          [ 'nodes', [Object] ],
+          [ 'extra', 'retained' ],
+          [ 'context', [Object] ]
+        ]
+      },
+      { array: true, fields: [] },
+      { array: false, fields: [] },
+      {
+        array: false,
+        fields: [ [ 'file', 'entry\ud800.css' ], [ 'code', 'source\udc00' ] ]
+      }
+    ]
+  },
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v26.1.0

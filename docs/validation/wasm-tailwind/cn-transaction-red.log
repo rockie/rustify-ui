@@ -1,0 +1,96 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-ui v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui)
+error[E0599]: no method named `prepare` found for struct `utility::cn::CnContext` in the current scope
+   --> crates/rustify-ui/src/utility/cn.rs:166:34
+    |
+ 12 | pub struct CnContext {
+    | -------------------- method `prepare` not found for this struct
+...
+166 |             let staged = context.prepare(Rc::new(disjoint_padding()), 4096).unwrap();
+    |                                  ^^^^^^^ method not found in `utility::cn::CnContext`
+
+error[E0599]: no method named `merge_registered` found for struct `utility::cn::CnContext` in the current scope
+   --> crates/rustify-ui/src/utility/cn.rs:167:32
+    |
+ 12 | pub struct CnContext {
+    | -------------------- method `merge_registered` not found for this struct
+...
+167 |             assert_eq!(context.merge_registered(id, &["p-2", "p-4"]).unwrap(), "p-4");
+    |                                ^^^^^^^^^^^^^^^^
+    |
+help: there is a method `register` with a similar name, but with different arguments
+   --> crates/rustify-ui/src/utility/cn.rs:52:5
+    |
+ 52 |     pub fn register(&self, fragments: Vec<String>) -> Result<u64, CnError> {
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error[E0599]: no method named `publish` found for struct `utility::cn::CnContext` in the current scope
+   --> crates/rustify-ui/src/utility/cn.rs:169:21
+    |
+ 12 | pub struct CnContext {
+    | -------------------- method `publish` not found for this struct
+...
+169 |             context.publish(staged, 2);
+    |                     ^^^^^^^ method not found in `utility::cn::CnContext`
+
+error[E0599]: no method named `merge_registered` found for struct `utility::cn::CnContext` in the current scope
+   --> crates/rustify-ui/src/utility/cn.rs:170:32
+    |
+ 12 | pub struct CnContext {
+    | -------------------- method `merge_registered` not found for this struct
+...
+170 |             assert_eq!(context.merge_registered(id, &["p-2", "p-4"]).unwrap(), "p-2 p-4");
+    |                                ^^^^^^^^^^^^^^^^
+    |
+help: there is a method `register` with a similar name, but with different arguments
+   --> crates/rustify-ui/src/utility/cn.rs:52:5
+    |
+ 52 |     pub fn register(&self, fragments: Vec<String>) -> Result<u64, CnError> {
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error[E0599]: no method named `epoch` found for struct `utility::cn::CnContext` in the current scope
+   --> crates/rustify-ui/src/utility/cn.rs:171:32
+    |
+ 12 | pub struct CnContext {
+    | -------------------- method `epoch` not found for this struct
+...
+171 |             assert_eq!(context.epoch(), 2);
+    |                                ^^^^^ method not found in `utility::cn::CnContext`
+
+error[E0599]: no method named `prepare` found for struct `utility::cn::CnContext` in the current scope
+   --> crates/rustify-ui/src/utility/cn.rs:180:34
+    |
+ 12 | pub struct CnContext {
+    | -------------------- method `prepare` not found for this struct
+...
+180 |             let staged = context.prepare(Rc::new(disjoint_padding()), 4096).unwrap();
+    |                                  ^^^^^^^ method not found in `utility::cn::CnContext`
+
+error[E0599]: no method named `is_current` found for struct `utility::cn::CnContext` in the current scope
+   --> crates/rustify-ui/src/utility/cn.rs:182:30
+    |
+ 12 | pub struct CnContext {
+    | -------------------- method `is_current` not found for this struct
+...
+182 |             assert!(!context.is_current(&staged));
+    |                              ^^^^^^^^^^ method not found in `utility::cn::CnContext`
+
+error[E0599]: no method named `epoch` found for struct `utility::cn::CnContext` in the current scope
+   --> crates/rustify-ui/src/utility/cn.rs:183:32
+    |
+ 12 | pub struct CnContext {
+    | -------------------- method `epoch` not found for this struct
+...
+183 |             assert_eq!(context.epoch(), 1);
+    |                                ^^^^^ method not found in `utility::cn::CnContext`
+
+For more information about this error, try `rustc --explain E0599`.
+error: could not compile `rustify-ui` (lib test) due to 8 previous errors
+mbx[cache]: 0 hits, 0 misses, 1 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: 1h 39m of rustc's calendar cleared across 2688 builds.

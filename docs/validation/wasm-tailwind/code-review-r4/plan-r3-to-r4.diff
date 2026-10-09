@@ -1,0 +1,39 @@
+diff --git a/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/wasm-tailwind/code-review-r3/source-snapshot/docs/plan/WASM-TAILWIND.md b/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/WASM-TAILWIND.md
+index eef2c61..40c11b6 100644
+--- a/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/wasm-tailwind/code-review-r3/source-snapshot/docs/plan/WASM-TAILWIND.md
++++ b/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/WASM-TAILWIND.md
+@@ -33,11 +33,11 @@
+ 
+ ### 恢复快照
+ 
+-- 最近更新：2026-10-08T17:30:00+08:00
++- 最近更新：2026-10-08T20:30:00+08:00
+ - 当前进度：7/7 个里程碑完成
+-- 当前状态：全部完成。M7在同一release上通过V-1至V-11：utility-lab root53/deep47、scanner 5+5，上游执行门1,183/0失败，workspace与特性测试、clippy、来源及旧包检查；V-11原生/WASM/浏览器/包体已与JS参考及M1基线对照记录（无数值SLO）。代码评审R1的3个P2已修复：scope关键帧随动画变量改写、新增`rebuild(active)`、CI安装oracle；CI仅本地等效验证；R2复审确认三项已解决并发现回归F-04（timing变量被当作关键帧名），已改为按动画shorthand子属性判别，修后root56/deep50/scanner5+5通过，见[M6](../validation/wasm-tailwind/M6.md#评审修复代码评审-r2)/[M7](../validation/wasm-tailwind/M7.md#评审修复代码评审-r1)
++- 当前状态：全部完成。M7在同一release上通过V-1至V-11：utility-lab root53/deep47、scanner 5+5，上游执行门1,183/0失败，workspace与特性测试、clippy、来源及旧包检查；V-11原生/WASM/浏览器/包体已与JS参考及M1基线对照记录（无数值SLO）。代码评审R1的3个P2已修复：scope关键帧随动画变量改写、新增`rebuild(active)`、CI安装oracle；CI仅本地等效验证；R2复审确认三项已解决并发现回归F-04；R3判F-04部分解决并新增F-05–F-07（变量代换、数学时长、数值iteration），已改为按var()代换后的层状态判定关键帧名，冲突用途用owner私有副本，修后root57/deep51/scanner5+5通过，见[M6](../validation/wasm-tailwind/M6.md#评审修复代码评审-r3)/[M7](../validation/wasm-tailwind/M7.md#评审修复代码评审-r1)
+ - 最近完成：M7 · 全范围终验与开发者交付
+-- 下一步：`/review-code docs/plan/WASM-TAILWIND.md` 复审R2的F-04修复。可选后续：远端运行新增CI任务；cn缓存命中路径的性能（需保持回调调用次数语义）；浏览器Worker内存（需跨源隔离）
++- 下一步：`/review-code docs/plan/WASM-TAILWIND.md` 复审R3的F-04–F-07修复。可选后续：远端运行新增CI任务；cn缓存命中路径的性能（需保持回调调用次数语义）；浏览器Worker内存（需跨源隔离）
+ - 当前阻塞：无
+ - 代码基线：`53652fc4`（dirty，未提交）；此前`ef766ce`、`fb28856`的历史证据保留
+ 
+@@ -50,8 +50,8 @@
+ | M2 | 已完成 | 2026-10-04T21:57:12+11:00 | cn生产host56组、947+56 runtime及getter轨迹26组通过；静态迁移、Scanner及旧包删除局部验收通过，动态epoch与浏览器crossing归M6 | [M2 记录](../validation/wasm-tailwind/M2.md) |
+ | M4 | 已完成 | 2026-10-07T00:18:17+11:00 | 上游1,398测试经Rust执行逐条入账：1,183通过/0失败，其余证据化排除或独立核对；compiler-full门与批次性质测试通过 | [M4 记录](../validation/wasm-tailwind/M4.md) |
+ | M5 | 已完成 | 2026-10-07T11:05:00+11:00 | GPU文字换行/行盒、shadow/ring层序与列几何对DOM实测一致；§5.5矩阵逐行有证据，root49/deep44与旧示例None路径通过 | [M5 记录](../validation/wasm-tailwind/M5.md) |
+-| M6 | 已完成 | 2026-10-08T17:30:00+08:00 | 浏览器cn crossing 947通过、demo cn输入与中/英语言、V-9边界/循环/深度/远程import；评审R1的F-01/F-02与R2的F-04修复后root56/deep50、scanner5+5通过 | [M6 记录](../validation/wasm-tailwind/M6.md) |
+-| M7 | 已完成 | 2026-10-08T17:30:00+08:00 | 同一release终验V-1至V-11通过，R1/R2修复后浏览器门已在新产物重跑；CI补oracle安装（远端未跑）；性能按无SLO记录并列明缺口 | [M7 记录](../validation/wasm-tailwind/M7.md) |
++| M6 | 已完成 | 2026-10-08T20:30:00+08:00 | 浏览器cn crossing 947通过、demo cn输入与中/英语言、V-9边界/循环/深度/远程import；评审R1的F-01/F-02、R2/R3的F-04–F-07修复后root57/deep51、scanner5+5通过 | [M6 记录](../validation/wasm-tailwind/M6.md) |
++| M7 | 已完成 | 2026-10-08T20:30:00+08:00 | 同一release终验V-1至V-11通过，R1–R3修复后浏览器门已在新产物重跑；CI补oracle安装（远端未跑）；性能按无SLO记录并列明缺口 | [M7 记录](../validation/wasm-tailwind/M7.md) |
+ 
+ 
+ 
+@@ -307,7 +307,7 @@ M3 先完成第一组完整动态闭环，M4 完成全部上述范围；M3 不
+ 3. 合并重复候选并校验 limits；若无新增、无变量依赖改变则返回现 revision，不重复排队/编译。显式 ensure_classes 完成凭证只在成功 sheet 安装与 runtime 快照提交后兑现；Worker ack 是编译缓存确认，不把分布在两处的状态假装成一个不可中断事务。
+ 4. Worker prepare，保持最后成功的 committed 集合；输出完整有序 stylesheet、GPU programs 和诊断。runtime 检查实例/epoch/request；旧 epoch 回复丢弃，迟到回复不能覆盖新配置。
+ 5. 为动态 stylesheet 做 AST 级 scope 输出：用唯一 data-rustify-style-owner 作为 @scope 根，嵌套 scope 作为下界；theme 的 :root/:host 输出重定位到该根。先保持原 AST 规则顺序，scoping 不增加 utility 相互间的 specificity。
+-6. @property 和 keyframes 属于 document 全局事实：编译器生成的内部变量/关键帧按 runtime ID 命名空间化，并同步改引用；保留应用公开 theme tokens。无规则不能引用已删除的 namespace。自定义全局资源（如 @font-face）由应用静态 asset bundle 管理，runtime 不自动注册网络资源。测试 group/peer、任意 selector 与两层 scope，不只测简单 descendant。
++6. @property 和 keyframes 属于 document 全局事实：编译器生成的内部变量/关键帧按 runtime ID 命名空间化，并同步改引用；保留应用公开 theme tokens。引用按 var() 代换后的 animation 子属性归属判定；同一变量的用途需要不同改写时，用 owner 私有副本承载其余用途。归属取决于运行时级联、无法静态确定时报告具体特性，不猜测。无规则不能引用已删除的 namespace。自定义全局资源（如 @font-face）由应用静态 asset bundle 管理，runtime 不自动注册网络资源。测试 group/peer、任意 selector 与两层 scope，不只测简单 descendant。
+ 7. 在未 adopted 的 staging CSSStyleSheet 中完成 parse/replace，再按固定位置替换旧 sheet。静态层继续链接；动态输出沿用相同 @layer 序，不用“永远最后插入”规避排序。浏览器可能静默丢弃不支持规则，必须用 M1 特性 probe 与相关 CSSOM/computed-style 验证，不能以 replaceSync 未抛错当全语义通过。CSS 安装失败 nack，不更新 GPU/revision。
+ 8. 安装及同任务内主线程快照切换成功后，发布同 revision 的 GPU programs、候选与配置，发送 ack 并兑现 ensure。该同步提交中任一步失败恢复旧 sheet/快照；ack 响应若丢失或 Worker 崩溃，保留已成功安装的新快照，以它恢复 Worker。尚未完成安装的 prepared 不能成为重放来源。主线程当前 revision 才可交给 RegionApp，GPU 在安全的 apply_props 阶段接收。DOM 与 GPU 未必同一时刻完成 draw；报告最后已绘制 revision，终验等待两者一致。
+ 9. Worker trap/超时 terminate；保留最后成功 sheet/programs，明确返回失败；显式 retry 使用新 epoch 重放 committed 输入。无无限自动重启。scope dispose/instance abort 用不依赖死 WASM 的宿主回调清理 Worker 与 stylesheet。

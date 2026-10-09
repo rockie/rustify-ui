@@ -31,7 +31,7 @@ pub use document::{
     ThemeDocument, ThemeError, ThemeMode, ThemeStyles, ThemeValuePatch, ThemeValues, COLOR_TOKENS,
     COMMON_TOKENS, VALUE_TOKENS,
 };
-pub use metrics::{parse_font_stack, parse_length, LengthRule};
+pub use metrics::{css_px_to_points, parse_font_stack, parse_length, LengthRule};
 #[cfg(target_arch = "wasm32")]
 pub use provider::{use_resolved_theme, ThemeBoundary, ThemeScope};
 pub use resolve::{

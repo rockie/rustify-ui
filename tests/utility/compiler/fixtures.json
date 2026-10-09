@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "oracle": {
+    "package": "tailwindcss",
+    "version": "4.1.13",
+    "sourceCommit": "1334c99db8fd26c8ea065375dd9259800863f072",
+    "options": {},
+    "normalization": "remove generated license banner only; preserve every declaration, rule, duplicate and order"
+  },
+  "cases": [
+    {
+      "name": "compiler-smoke",
+      "css": "@tailwind utilities;",
+      "candidates": [
+        "w-[137px]",
+        "bg-[#123456]"
+      ],
+      "invalidCandidates": [
+        "not-a-tailwind-utility"
+      ],
+      "computed": {
+        "width": "137px",
+        "backgroundColor": "rgb(18, 52, 86)"
+      },
+      "expectedCss": ".w-\\[137px\\] {\n  width: 137px;\n}\n.bg-\\[\\#123456\\] {\n  background-color: #123456;\n}\n",
+      "expectedCssSha256": "9f9292d76d06ed909435117010a6d71c19ddea253099806219752ecd67bd4737",
+      "candidateCss": [
+        ".w-\\[137px\\] {\n  width: 137px;\n}\n",
+        ".bg-\\[\\#123456\\] {\n  background-color: #123456;\n}\n"
+      ],
+      "sources": [],
+      "root": null,
+      "features": 16,
+      "implementationStatus": "pending",
+      "browserStatus": "pending"
+    },
+    {
+      "name": "css-scope-property-nesting",
+      "css": "@scope ([data-utility-probe]) { @tailwind utilities; }",
+      "candidates": [
+        "w-[137px]",
+        "bg-[#123456]",
+        "ring-[3px]",
+        "before:content-[\"probe\"]"
+      ],
+      "invalidCandidates": [],
+      "computed": {
+        "width": "137px",
+        "backgroundColor": "rgb(18, 52, 86)",
+        "beforeContent": "\"probe\"",
+        "boxShadowIncludes": "3px"
+      },
+      "expectedCss": "@layer properties;\n@scope ([data-utility-probe]) {\n  .w-\\[137px\\] {\n    width: 137px;\n  }\n  .bg-\\[\\#123456\\] {\n    background-color: #123456;\n  }\n  .ring-\\[3px\\] {\n    --tw-ring-shadow: var(--tw-ring-inset,) 0 0 0 calc(3px + var(--tw-ring-offset-width)) var(--tw-ring-color, currentcolor);\n    box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);\n  }\n  .before\\:content-\\[\\\"probe\\\"\\] {\n    &::before {\n      --tw-content: \"probe\";\n      content: var(--tw-content);\n    }\n  }\n}\n@property --tw-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@property --tw-shadow-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-shadow-alpha {\n  syntax: \"<percentage>\";\n  inherits: false;\n  initial-value: 100%;\n}\n@property --tw-inset-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@property --tw-inset-shadow-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-inset-shadow-alpha {\n  syntax: \"<percentage>\";\n  inherits: false;\n  initial-value: 100%;\n}\n@property --tw-ring-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-ring-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@property --tw-inset-ring-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-inset-ring-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@property --tw-ring-inset {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-ring-offset-width {\n  syntax: \"<length>\";\n  inherits: false;\n  initial-value: 0px;\n}\n@property --tw-ring-offset-color {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: #fff;\n}\n@property --tw-ring-offset-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@property --tw-content {\n  syntax: \"*\";\n  initial-value: \"\";\n  inherits: false;\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-shadow: 0 0 #0000;\n      --tw-shadow-color: initial;\n      --tw-shadow-alpha: 100%;\n      --tw-inset-shadow: 0 0 #0000;\n      --tw-inset-shadow-color: initial;\n      --tw-inset-shadow-alpha: 100%;\n      --tw-ring-color: initial;\n      --tw-ring-shadow: 0 0 #0000;\n      --tw-inset-ring-color: initial;\n      --tw-inset-ring-shadow: 0 0 #0000;\n      --tw-ring-inset: initial;\n      --tw-ring-offset-width: 0px;\n      --tw-ring-offset-color: #fff;\n      --tw-ring-offset-shadow: 0 0 #0000;\n      --tw-content: \"\";\n    }\n  }\n}\n",
+      "expectedCssSha256": "332864299adb3cde96f70f972c1669adcac88288e01a86f5123676c665192e4d",
+      "candidateCss": [
+        ".w-\\[137px\\] {\n  width: 137px;\n}\n",
+        ".bg-\\[\\#123456\\] {\n  background-color: #123456;\n}\n",
+        ".ring-\\[3px\\] {\n  --tw-ring-shadow: var(--tw-ring-inset,) 0 0 0 calc(3px + var(--tw-ring-offset-width)) var(--tw-ring-color, currentcolor);\n  box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);\n}\n@property --tw-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@property --tw-shadow-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-shadow-alpha {\n  syntax: \"<percentage>\";\n  inherits: false;\n  initial-value: 100%;\n}\n@property --tw-inset-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@property --tw-inset-shadow-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-inset-shadow-alpha {\n  syntax: \"<percentage>\";\n  inherits: false;\n  initial-value: 100%;\n}\n@property --tw-ring-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-ring-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@property --tw-inset-ring-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-inset-ring-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@property --tw-ring-inset {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-ring-offset-width {\n  syntax: \"<length>\";\n  inherits: false;\n  initial-value: 0px;\n}\n@property --tw-ring-offset-color {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: #fff;\n}\n@property --tw-ring-offset-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n",
+        ".before\\:content-\\[\\\"probe\\\"\\] {\n  &::before {\n    --tw-content: \"probe\";\n    content: var(--tw-content);\n  }\n}\n@property --tw-content {\n  syntax: \"*\";\n  initial-value: \"\";\n  inherits: false;\n}\n"
+      ],
+      "sources": [],
+      "root": null,
+      "features": 16,
+      "implementationStatus": "pending",
+      "browserStatus": "pending"
+    }
+  ]
+}

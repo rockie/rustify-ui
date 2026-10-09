@@ -30,7 +30,7 @@ pub fn Progress(
     let percent = move || (value.get() / max * 100.0).clamp(0.0, 100.0);
     view! {
         <div
-            class=crate::macros::merge(TRACK, &class)
+            class=crate::macros::reactive_merge(TRACK, &class)
             data-name="Progress"
             data-testid=test_id
             data-state=move || if indeterminate.get() { "indeterminate" } else { "determinate" }

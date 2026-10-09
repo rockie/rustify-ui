@@ -62,7 +62,7 @@ pub fn RadioGroup(
     let group_test_id = test_id.clone();
     view! {
         <div
-            class=crate::macros::merge("flex flex-col gap-3", &class)
+            class=crate::macros::reactive_merge("flex flex-col gap-3", &class)
             data-name="RadioGroup"
             data-testid=group_test_id
             role="radiogroup"

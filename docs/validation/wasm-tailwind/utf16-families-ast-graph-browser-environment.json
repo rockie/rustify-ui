@@ -1,0 +1,15 @@
+{
+  "kind": "HTTP environment probes; no browser acceptance performed",
+  "probes": [
+    {
+      "url": "http://127.0.0.1:10086/health",
+      "reachable": false,
+      "error": "<urlopen error [Errno 1] Operation not permitted>"
+    },
+    {
+      "url": "http://127.0.0.1:4186/",
+      "reachable": false,
+      "error": "<urlopen error [Errno 1] Operation not permitted>"
+    }
+  ]
+}

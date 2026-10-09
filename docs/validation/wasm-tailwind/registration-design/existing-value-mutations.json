@@ -1,0 +1,21 @@
+{
+  "scope": "Isolated actual PublicValue storage sensitivity; not registration/host conformance",
+  "mutants": [
+    {
+      "mutation": "stale-array-alias",
+      "expectedExit": 101,
+      "exitCode": 101,
+      "witness": "shared-array aliases read current storage",
+      "sourceSha256": "28a448a2dc23a9ccf5ac8624da10bd77b52ef6cb25d6f2e8322214c58ced367c",
+      "log": "docs/validation/wasm-tailwind/utf16-families-registration-existing-value-mutant-stale-array-alias.log"
+    },
+    {
+      "mutation": "lost-version-anchor",
+      "expectedExit": 101,
+      "exitCode": 101,
+      "witness": "an earlier storage version still resolves its current anchor",
+      "sourceSha256": "c1ddc40dd2dd51ce164da8544addca0b5039cd8e9da5e844adadbb1d98a93b70",
+      "log": "docs/validation/wasm-tailwind/utf16-families-registration-existing-value-mutant-lost-version-anchor.log"
+    }
+  ]
+}

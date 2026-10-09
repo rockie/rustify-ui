@@ -1,0 +1,37 @@
+mbx[warning]: Unix-domain cache session listener unavailable; using FIFO transport: failed to bind cache session listener at /var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/mbx-session-ouxs3k/cache-agent.sock: Operation not permitted (os error 1)
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+    Checking serde_json v1.0.151
+    Checking serde v1.0.229
+    Checking registration-cursor-prototype v0.0.0 (/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-utf16-verified-54mkl3kq/registration-cursor)
+error: this `if` statement can be collapsed
+  --> /Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/wasm-tailwind/registration-design/cursor-prototype.rs:86:17
+   |
+86 | /                 if let Some(children) = self.nodes[id].children {
+87 | |                     if matches!(
+88 | |                         self.walk(children, path, &merged, observations)?,
+89 | |                         Action::Stop
+...  |
+93 | |                 }
+   | |_________________^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.98.0/index.html#collapsible_if
+   = note: `-D clippy::collapsible-if` implied by `-D warnings`
+   = help: to override `-D warnings` add `#[allow(clippy::collapsible_if)]`
+help: collapse nested if block
+   |
+86 ~                 if let Some(children) = self.nodes[id].children
+87 ~                     && matches!(
+88 |                         self.walk(children, path, &merged, observations)?,
+...
+91 |                         return Ok(Action::Stop);
+92 ~                     }
+   |
+
+error: could not compile `registration-cursor-prototype` (bin "registration-cursor-prototype") due to 1 previous error
+mbx[cache]: 0 hits, 0 misses, 3 not looked up; 0 B downloaded, 0 B uploaded, 1.4 MiB stored locally

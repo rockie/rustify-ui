@@ -1,0 +1,47 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.25s
+     Running unittests src/lib.rs (target/debug/deps/rustify_style-d8a92cb6940dfdfd)
+
+running 1 test
+test compiler::variants::tests::dynamic_variants_match_official_css_and_union_order ... FAILED
+
+failures:
+
+---- compiler::variants::tests::dynamic_variants_match_official_css_and_union_order stdout ----
+
+thread 'compiler::variants::tests::dynamic_variants_match_official_css_and_union_order' (12090992) panicked at crates/rustify-style/src/compiler/variants.rs:774:9:
+4 differences:
+"dynamic-variant:[@media(width>500px)]:flex"
+actual: ".\\[\\@media\\(width\\>500px\\)\\]\\:flex {\n  @media(width>500px) {\n    display: flex;\n  }\n}\n"
+expected: String(".\\[\\@media\\(width\\>500px\\)\\]\\:flex {\n  @media (width>500px) {\n    display: flex;\n  }\n}\n")
+pending: []
+"dynamic-variant:not-[@media(width>500px)]:flex"
+actual: ""
+expected: String(".not-\\[\\@media\\(width\\>500px\\)\\]\\:flex {\n  @media not (width>500px) {\n    display: flex;\n  }\n}\n")
+pending: []
+"dynamic-variant:[@supports(display:grid)]:flex"
+actual: ".\\[\\@supports\\(display\\:grid\\)\\]\\:flex {\n  @supports(display:grid) {\n    display: flex;\n  }\n}\n"
+expected: String(".\\[\\@supports\\(display\\:grid\\)\\]\\:flex {\n  @supports (display:grid) {\n    display: flex;\n  }\n}\n")
+pending: []
+"dynamic-variant:not-[@supports(display:grid)]:flex"
+actual: ""
+expected: String(".not-\\[\\@supports\\(display\\:grid\\)\\]\\:flex {\n  @supports not (display:grid) {\n    display: flex;\n  }\n}\n")
+pending: []
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    compiler::variants::tests::dynamic_variants_match_official_css_and_union_order
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 35 filtered out; finished in 0.04s
+
+error: test failed, to rerun pass `-p rustify-style --lib`
+mbx[cache]: 0 hits, 0 misses, 1 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: 551.6 GiB logical of old build output has been shown the door.

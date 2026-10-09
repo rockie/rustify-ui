@@ -1,0 +1,31 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 6.17s
+     Running unittests src/lib.rs (target/debug/deps/rustify_style-4ed64bbe76d78d97)
+
+running 1 test
+test compiler::utf16_declaration_tests::canonical_declaration_json_preserves_scalar_schema_and_every_utf16_unit ... FAILED
+
+failures:
+
+---- compiler::utf16_declaration_tests::canonical_declaration_json_preserves_scalar_schema_and_every_utf16_unit stdout ----
+
+thread 'compiler::utf16_declaration_tests::canonical_declaration_json_preserves_scalar_schema_and_every_utf16_unit' (2276406) panicked at crates/rustify-style/src/compiler/../../../../tests/utility/compiler/utf16-declaration-native.rs:128:56:
+called `Result::unwrap()` on an `Err` value: Error("unexpected end of hex escape", line: 1, column: 48)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    compiler::utf16_declaration_tests::canonical_declaration_json_preserves_scalar_schema_and_every_utf16_unit
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 201 filtered out; finished in 0.04s
+
+error: test failed, to rerun pass `-p rustify-style --lib`
+mbx[cache]: 0 hits, 0 misses, 1 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: 13704 compilations retrieved with a straight face.

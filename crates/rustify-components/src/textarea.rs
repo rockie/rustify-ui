@@ -47,7 +47,7 @@ pub fn TextArea(
             node_ref=node
             id=id
             rows=rows
-            class=crate::macros::merge(BASE, &class)
+            class=crate::macros::reactive_merge(BASE, &class)
             data-name="TextArea"
             data-testid=test_id
             placeholder=placeholder

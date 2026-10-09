@@ -1,0 +1,1963 @@
+{
+  "mask-clip-content": [
+    "mask"
+  ],
+  "perspective-origin-right": [
+    "perspective",
+    "perspective-origin"
+  ],
+  "rounded-bl-full": [
+    "rounded",
+    "rounded-bl"
+  ],
+  "h-lvw": [
+    "h"
+  ],
+  "leading-none": [
+    "leading"
+  ],
+  "origin-bottom-right": [
+    "origin"
+  ],
+  "rounded-none": [
+    "rounded"
+  ],
+  "mask-repeat-y": [
+    "mask"
+  ],
+  "bg-blend-lighten": [
+    "bg"
+  ],
+  "size-lvh": [
+    "size"
+  ],
+  "perspective-origin-left": [
+    "perspective",
+    "perspective-origin"
+  ],
+  "font-stretch-condensed": [
+    "font",
+    "font-stretch"
+  ],
+  "decoration-double": [
+    "decoration"
+  ],
+  "object-none": [
+    "object"
+  ],
+  "-top-px": [
+    "-top"
+  ],
+  "bg-clip-padding": [
+    "bg"
+  ],
+  "divide-double": [
+    "divide"
+  ],
+  "bg-scroll": [
+    "bg"
+  ],
+  "perspective-origin-top": [
+    "perspective",
+    "perspective-origin"
+  ],
+  "outline-dashed": [
+    "outline"
+  ],
+  "mask-radial-at-top-left": [
+    "mask",
+    "mask-radial",
+    "mask-radial-at"
+  ],
+  "object-fill": [
+    "object"
+  ],
+  "content-start": [
+    "content"
+  ],
+  "rounded-full": [
+    "rounded"
+  ],
+  "transform-fill": [
+    "transform"
+  ],
+  "outline-none": [
+    "outline"
+  ],
+  "bg-gradient-to-br": [
+    "bg"
+  ],
+  "mask-type-luminance": [
+    "mask"
+  ],
+  "grid-cols-subgrid": [
+    "grid-cols"
+  ],
+  "bg-repeat-x": [
+    "bg"
+  ],
+  "align-text-top": [
+    "align"
+  ],
+  "ease-initial": [
+    "ease"
+  ],
+  "-scroll-me-px": [
+    "-scroll-me"
+  ],
+  "transform-cpu": [
+    "transform"
+  ],
+  "auto-cols-max": [
+    "auto-cols"
+  ],
+  "object-bottom-right": [
+    "object"
+  ],
+  "bg-gradient-to-tr": [
+    "bg"
+  ],
+  "mask-contain": [
+    "mask"
+  ],
+  "decoration-from-font": [
+    "decoration"
+  ],
+  "transform-flat": [
+    "transform"
+  ],
+  "contain-none": [
+    "contain"
+  ],
+  "gap-px": [
+    "gap"
+  ],
+  "mask-radial-at-left": [
+    "mask",
+    "mask-radial",
+    "mask-radial-at"
+  ],
+  "cursor-all-scroll": [
+    "cursor"
+  ],
+  "h-svw": [
+    "h"
+  ],
+  "rounded-r-none": [
+    "rounded",
+    "rounded-r"
+  ],
+  "bg-left": [
+    "bg"
+  ],
+  "h-screen": [
+    "h"
+  ],
+  "rounded-se-full": [
+    "rounded",
+    "rounded-se"
+  ],
+  "text-left": [
+    "text"
+  ],
+  "decoration-auto": [
+    "decoration"
+  ],
+  "transition-discrete": [
+    "transition"
+  ],
+  "rounded-es-full": [
+    "rounded",
+    "rounded-es"
+  ],
+  "-inset-x-px": [
+    "-inset",
+    "-inset-x"
+  ],
+  "min-w-screen": [
+    "min-w"
+  ],
+  "-end-px": [
+    "-end"
+  ],
+  "divide-solid": [
+    "divide"
+  ],
+  "max-w-svh": [
+    "max-w"
+  ],
+  "max-w-fit": [
+    "max-w"
+  ],
+  "mt-auto": [
+    "mt"
+  ],
+  "cursor-not-allowed": [
+    "cursor"
+  ],
+  "rounded-tr-full": [
+    "rounded",
+    "rounded-tr"
+  ],
+  "min-h-px": [
+    "min-h"
+  ],
+  "mask-repeat-x": [
+    "mask"
+  ],
+  "list-outside": [
+    "list"
+  ],
+  "mask-radial-closest-side": [
+    "mask",
+    "mask-radial"
+  ],
+  "basis-auto": [
+    "basis"
+  ],
+  "mask-exclude": [
+    "mask"
+  ],
+  "-translate-z-px": [
+    "-translate",
+    "-translate-z"
+  ],
+  "bg-bottom-left": [
+    "bg"
+  ],
+  "-scroll-ms-px": [
+    "-scroll-ms"
+  ],
+  "flex-auto": [
+    "flex"
+  ],
+  "h-fit": [
+    "h"
+  ],
+  "content-baseline": [
+    "content"
+  ],
+  "object-top": [
+    "object"
+  ],
+  "top-auto": [
+    "top"
+  ],
+  "cursor-nwse-resize": [
+    "cursor"
+  ],
+  "size-svh": [
+    "size"
+  ],
+  "-scroll-mx-px": [
+    "-scroll-mx"
+  ],
+  "size-max": [
+    "size"
+  ],
+  "mask-radial-at-bottom-right": [
+    "mask",
+    "mask-radial",
+    "mask-radial-at"
+  ],
+  "will-change-contents": [
+    "will-change"
+  ],
+  "min-h-lh": [
+    "min-h"
+  ],
+  "-mr-px": [
+    "-mr"
+  ],
+  "transition-colors": [
+    "transition"
+  ],
+  "-start-full": [
+    "-start"
+  ],
+  "min-h-svh": [
+    "min-h"
+  ],
+  "ml-px": [
+    "ml"
+  ],
+  "shadow-initial": [
+    "shadow"
+  ],
+  "-space-x-px": [
+    "-space-x"
+  ],
+  "cursor-cell": [
+    "cursor"
+  ],
+  "perspective-origin-top-right": [
+    "perspective",
+    "perspective-origin"
+  ],
+  "will-change-auto": [
+    "will-change"
+  ],
+  "bottom-auto": [
+    "bottom"
+  ],
+  "object-left": [
+    "object"
+  ],
+  "col-end-auto": [
+    "col",
+    "col-end"
+  ],
+  "me-auto": [
+    "me"
+  ],
+  "object-right": [
+    "object"
+  ],
+  "rounded-l-none": [
+    "rounded",
+    "rounded-l"
+  ],
+  "bg-cover": [
+    "bg"
+  ],
+  "size-px": [
+    "size"
+  ],
+  "max-w-screen": [
+    "max-w",
+    "max-w-screen"
+  ],
+  "rounded-br-full": [
+    "rounded",
+    "rounded-br"
+  ],
+  "start-px": [
+    "start"
+  ],
+  "-translate-x-full": [
+    "-translate",
+    "-translate-x"
+  ],
+  "size-svw": [
+    "size"
+  ],
+  "cursor-s-resize": [
+    "cursor"
+  ],
+  "space-y-px": [
+    "space-y"
+  ],
+  "rounded-tr-none": [
+    "rounded",
+    "rounded-tr"
+  ],
+  "-right-px": [
+    "-right"
+  ],
+  "auto-cols-fr": [
+    "auto-cols"
+  ],
+  "min-w-svw": [
+    "min-w"
+  ],
+  "bg-bottom-right": [
+    "bg"
+  ],
+  "bg-blend-darken": [
+    "bg"
+  ],
+  "min-w-lvh": [
+    "min-w"
+  ],
+  "space-x-px": [
+    "space-x"
+  ],
+  "bg-top-right": [
+    "bg"
+  ],
+  "bg-gradient-to-t": [
+    "bg"
+  ],
+  "translate-x-full": [
+    "translate",
+    "translate-x"
+  ],
+  "object-bottom": [
+    "object"
+  ],
+  "inset-x-full": [
+    "inset",
+    "inset-x"
+  ],
+  "min-h-full": [
+    "min-h"
+  ],
+  "space-y-reverse": [
+    "space-y"
+  ],
+  "auto-rows-fr": [
+    "auto-rows"
+  ],
+  "col-start-auto": [
+    "col",
+    "col-start"
+  ],
+  "rounded-ss-full": [
+    "rounded",
+    "rounded-ss"
+  ],
+  "min-w-lvw": [
+    "min-w"
+  ],
+  "border-hidden": [
+    "border"
+  ],
+  "drop-shadow-none": [
+    "drop-shadow"
+  ],
+  "mask-alpha": [
+    "mask"
+  ],
+  "decoration-slice": [
+    "decoration"
+  ],
+  "h-dvh": [
+    "h"
+  ],
+  "decoration-dotted": [
+    "decoration"
+  ],
+  "max-w-dvh": [
+    "max-w"
+  ],
+  "mask-radial-at-bottom": [
+    "mask",
+    "mask-radial",
+    "mask-radial-at"
+  ],
+  "me-px": [
+    "me"
+  ],
+  "translate-full": [
+    "translate"
+  ],
+  "flex-none": [
+    "flex"
+  ],
+  "decoration-dashed": [
+    "decoration"
+  ],
+  "bg-blend-screen": [
+    "bg"
+  ],
+  "bg-gradient-to-r": [
+    "bg"
+  ],
+  "rounded-tl-full": [
+    "rounded",
+    "rounded-tl"
+  ],
+  "text-right": [
+    "text"
+  ],
+  "-inset-y-full": [
+    "-inset",
+    "-inset-y"
+  ],
+  "max-h-screen": [
+    "max-h"
+  ],
+  "content-around": [
+    "content"
+  ],
+  "rounded-se-none": [
+    "rounded",
+    "rounded-se"
+  ],
+  "h-min": [
+    "h"
+  ],
+  "font-stretch-semi-expanded": [
+    "font",
+    "font-stretch"
+  ],
+  "-ms-px": [
+    "-ms"
+  ],
+  "object-contain": [
+    "object"
+  ],
+  "min-h-dvh": [
+    "min-h"
+  ],
+  "max-h-min": [
+    "max-h"
+  ],
+  "perspective-origin-top-left": [
+    "perspective",
+    "perspective-origin"
+  ],
+  "divide-dashed": [
+    "divide"
+  ],
+  "cursor-grab": [
+    "cursor"
+  ],
+  "w-lvw": [
+    "w"
+  ],
+  "row-start-auto": [
+    "row",
+    "row-start"
+  ],
+  "via-none": [
+    "via"
+  ],
+  "font-stretch-extra-condensed": [
+    "font",
+    "font-stretch"
+  ],
+  "outline-dotted": [
+    "outline"
+  ],
+  "left-full": [
+    "left"
+  ],
+  "h-dvw": [
+    "h"
+  ],
+  "mask-subtract": [
+    "mask"
+  ],
+  "m-auto": [
+    "m"
+  ],
+  "bg-repeat": [
+    "bg"
+  ],
+  "transform-content": [
+    "transform"
+  ],
+  "-inset-full": [
+    "-inset"
+  ],
+  "mask-ellipse": [
+    "mask"
+  ],
+  "size-full": [
+    "size"
+  ],
+  "decoration-clone": [
+    "decoration"
+  ],
+  "object-scale-down": [
+    "object"
+  ],
+  "bg-bottom": [
+    "bg"
+  ],
+  "py-px": [
+    "py"
+  ],
+  "mask-bottom-right": [
+    "mask"
+  ],
+  "-scroll-mt-px": [
+    "-scroll-mt"
+  ],
+  "bg-clip-text": [
+    "bg"
+  ],
+  "mask-clip-view": [
+    "mask"
+  ],
+  "scroll-pr-px": [
+    "scroll-pr"
+  ],
+  "bg-blend-color-burn": [
+    "bg"
+  ],
+  "flex-col-reverse": [
+    "flex"
+  ],
+  "left-px": [
+    "left"
+  ],
+  "max-w-lvw": [
+    "max-w"
+  ],
+  "mask-clip-padding": [
+    "mask"
+  ],
+  "bg-gradient-to-l": [
+    "bg"
+  ],
+  "flex-nowrap": [
+    "flex"
+  ],
+  "transform-none": [
+    "transform"
+  ],
+  "bg-blend-difference": [
+    "bg"
+  ],
+  "mx-auto": [
+    "mx"
+  ],
+  "scroll-pl-px": [
+    "scroll-pl"
+  ],
+  "-inset-y-px": [
+    "-inset",
+    "-inset-y"
+  ],
+  "object-bottom-left": [
+    "object"
+  ],
+  "ms-auto": [
+    "ms"
+  ],
+  "bottom-full": [
+    "bottom"
+  ],
+  "max-h-max": [
+    "max-h"
+  ],
+  "max-h-svw": [
+    "max-h"
+  ],
+  "-translate-full": [
+    "-translate"
+  ],
+  "object-right-top": [
+    "object"
+  ],
+  "list-disc": [
+    "list"
+  ],
+  "cursor-ew-resize": [
+    "cursor"
+  ],
+  "outline-double": [
+    "outline"
+  ],
+  "flex-row": [
+    "flex"
+  ],
+  "rounded-b-none": [
+    "rounded",
+    "rounded-b"
+  ],
+  "max-h-lvh": [
+    "max-h"
+  ],
+  "h-lh": [
+    "h"
+  ],
+  "border-solid": [
+    "border"
+  ],
+  "border-double": [
+    "border"
+  ],
+  "rounded-tl-none": [
+    "rounded",
+    "rounded-tl"
+  ],
+  "text-end": [
+    "text"
+  ],
+  "aspect-square": [
+    "aspect"
+  ],
+  "scroll-me-px": [
+    "scroll-me"
+  ],
+  "start-auto": [
+    "start"
+  ],
+  "border-dashed": [
+    "border"
+  ],
+  "min-w-auto": [
+    "min-w"
+  ],
+  "bg-blend-normal": [
+    "bg"
+  ],
+  "text-pretty": [
+    "text"
+  ],
+  "transform-view": [
+    "transform"
+  ],
+  "text-center": [
+    "text"
+  ],
+  "border-collapse": [
+    "border"
+  ],
+  "mask-no-clip": [
+    "mask"
+  ],
+  "contain-style": [
+    "contain"
+  ],
+  "max-h-fit": [
+    "max-h"
+  ],
+  "perspective-origin-bottom-left": [
+    "perspective",
+    "perspective-origin"
+  ],
+  "max-h-none": [
+    "max-h"
+  ],
+  "content-end": [
+    "content"
+  ],
+  "end-full": [
+    "end"
+  ],
+  "border-dotted": [
+    "border"
+  ],
+  "min-w-max": [
+    "min-w"
+  ],
+  "flex-wrap-reverse": [
+    "flex"
+  ],
+  "w-auto": [
+    "w"
+  ],
+  "align-baseline": [
+    "align"
+  ],
+  "cursor-help": [
+    "cursor"
+  ],
+  "rounded-s-none": [
+    "rounded",
+    "rounded-s"
+  ],
+  "scale-none": [
+    "scale"
+  ],
+  "indent-px": [
+    "indent"
+  ],
+  "rounded-e-full": [
+    "rounded",
+    "rounded-e"
+  ],
+  "max-w-none": [
+    "max-w"
+  ],
+  "bg-blend-color": [
+    "bg"
+  ],
+  "scroll-pe-px": [
+    "scroll-pe"
+  ],
+  "font-stretch-normal": [
+    "font",
+    "font-stretch"
+  ],
+  "-translate-y-px": [
+    "-translate",
+    "-translate-y"
+  ],
+  "bg-origin-padding": [
+    "bg"
+  ],
+  "pe-px": [
+    "pe"
+  ],
+  "mask-origin-content": [
+    "mask"
+  ],
+  "rounded-t-full": [
+    "rounded",
+    "rounded-t"
+  ],
+  "w-full": [
+    "w"
+  ],
+  "leading-px": [
+    "leading"
+  ],
+  "bg-repeat-y": [
+    "bg"
+  ],
+  "mt-px": [
+    "mt"
+  ],
+  "font-stretch-expanded": [
+    "font",
+    "font-stretch"
+  ],
+  "-me-px": [
+    "-me"
+  ],
+  "gap-y-px": [
+    "gap",
+    "gap-y"
+  ],
+  "-scroll-mb-px": [
+    "-scroll-mb"
+  ],
+  "decoration-solid": [
+    "decoration"
+  ],
+  "max-w-max": [
+    "max-w"
+  ],
+  "text-justify": [
+    "text"
+  ],
+  "mask-match": [
+    "mask"
+  ],
+  "h-auto": [
+    "h"
+  ],
+  "-bottom-px": [
+    "-bottom"
+  ],
+  "inset-y-px": [
+    "inset",
+    "inset-y"
+  ],
+  "outline-solid": [
+    "outline"
+  ],
+  "ps-px": [
+    "ps"
+  ],
+  "bg-right": [
+    "bg"
+  ],
+  "cursor-vertical-text": [
+    "cursor"
+  ],
+  "left-auto": [
+    "left"
+  ],
+  "mask-top-right": [
+    "mask"
+  ],
+  "mask-bottom-left": [
+    "mask"
+  ],
+  "mask-radial-at-center": [
+    "mask",
+    "mask-radial",
+    "mask-radial-at"
+  ],
+  "row-auto": [
+    "row"
+  ],
+  "origin-bottom-left": [
+    "origin"
+  ],
+  "max-h-px": [
+    "max-h"
+  ],
+  "rounded-r-full": [
+    "rounded",
+    "rounded-r"
+  ],
+  "size-dvw": [
+    "size"
+  ],
+  "cursor-ns-resize": [
+    "cursor"
+  ],
+  "cursor-pointer": [
+    "cursor"
+  ],
+  "rounded-bl-none": [
+    "rounded",
+    "rounded-bl"
+  ],
+  "list-none": [
+    "list"
+  ],
+  "order-first": [
+    "order"
+  ],
+  "scroll-p-px": [
+    "scroll-p"
+  ],
+  "translate-none": [
+    "translate"
+  ],
+  "mask-origin-fill": [
+    "mask"
+  ],
+  "flex-wrap": [
+    "flex"
+  ],
+  "bg-blend-multiply": [
+    "bg"
+  ],
+  "origin-bottom": [
+    "origin"
+  ],
+  "inset-y-auto": [
+    "inset",
+    "inset-y"
+  ],
+  "basis-px": [
+    "basis"
+  ],
+  "-scroll-ml-px": [
+    "-scroll-ml"
+  ],
+  "px-px": [
+    "px"
+  ],
+  "scroll-m-px": [
+    "scroll-m"
+  ],
+  "origin-right": [
+    "origin"
+  ],
+  "border-spacing-px": [
+    "border",
+    "border-spacing"
+  ],
+  "w-dvh": [
+    "w"
+  ],
+  "-right-full": [
+    "-right"
+  ],
+  "-top-full": [
+    "-top"
+  ],
+  "bg-repeat-space": [
+    "bg"
+  ],
+  "backdrop-blur-none": [
+    "backdrop-blur"
+  ],
+  "ms-px": [
+    "ms"
+  ],
+  "h-max": [
+    "h"
+  ],
+  "bg-right-bottom": [
+    "bg"
+  ],
+  "translate-y-full": [
+    "translate",
+    "translate-y"
+  ],
+  "scroll-pt-px": [
+    "scroll-pt"
+  ],
+  "size-auto": [
+    "size"
+  ],
+  "min-h-lvw": [
+    "min-h"
+  ],
+  "start-full": [
+    "start"
+  ],
+  "min-h-max": [
+    "min-h"
+  ],
+  "inset-x-px": [
+    "inset",
+    "inset-x"
+  ],
+  "mask-bottom": [
+    "mask"
+  ],
+  "h-svh": [
+    "h"
+  ],
+  "max-w-svw": [
+    "max-w"
+  ],
+  "cursor-crosshair": [
+    "cursor"
+  ],
+  "mask-origin-padding": [
+    "mask"
+  ],
+  "flex-row-reverse": [
+    "flex"
+  ],
+  "mask-top-left": [
+    "mask"
+  ],
+  "my-auto": [
+    "my"
+  ],
+  "mask-clip-border": [
+    "mask"
+  ],
+  "mask-auto": [
+    "mask"
+  ],
+  "divide-none": [
+    "divide"
+  ],
+  "bg-no-repeat": [
+    "bg"
+  ],
+  "inset-auto": [
+    "inset"
+  ],
+  "bg-gradient-to-bl": [
+    "bg"
+  ],
+  "bg-left-bottom": [
+    "bg"
+  ],
+  "align-middle": [
+    "align"
+  ],
+  "list-image-none": [
+    "list",
+    "list-image"
+  ],
+  "bg-right-top": [
+    "bg"
+  ],
+  "bg-fixed": [
+    "bg"
+  ],
+  "content-end-safe": [
+    "content"
+  ],
+  "order-none": [
+    "order"
+  ],
+  "min-h-screen": [
+    "min-h"
+  ],
+  "rounded-ee-full": [
+    "rounded",
+    "rounded-ee"
+  ],
+  "cursor-no-drop": [
+    "cursor"
+  ],
+  "w-dvw": [
+    "w"
+  ],
+  "text-shadow-initial": [
+    "text",
+    "text-shadow"
+  ],
+  "auto-cols-min": [
+    "auto-cols"
+  ],
+  "cursor-grabbing": [
+    "cursor"
+  ],
+  "w-lvh": [
+    "w"
+  ],
+  "list-item": [
+    "list"
+  ],
+  "mask-none": [
+    "mask"
+  ],
+  "transition-normal": [
+    "transition"
+  ],
+  "cursor-ne-resize": [
+    "cursor"
+  ],
+  "inset-full": [
+    "inset"
+  ],
+  "top-px": [
+    "top"
+  ],
+  "-m-px": [
+    "-m"
+  ],
+  "cursor-sw-resize": [
+    "cursor"
+  ],
+  "content-evenly": [
+    "content"
+  ],
+  "mask-no-repeat": [
+    "mask"
+  ],
+  "mask-repeat-space": [
+    "mask"
+  ],
+  "contain-layout": [
+    "contain"
+  ],
+  "min-h-auto": [
+    "min-h"
+  ],
+  "object-left-bottom": [
+    "object"
+  ],
+  "size-fit": [
+    "size"
+  ],
+  "mask-origin-border": [
+    "mask"
+  ],
+  "max-w-dvw": [
+    "max-w"
+  ],
+  "-scroll-m-px": [
+    "-scroll-m"
+  ],
+  "bg-clip-content": [
+    "bg"
+  ],
+  "max-h-lh": [
+    "max-h"
+  ],
+  "translate-px": [
+    "translate"
+  ],
+  "mask-clip-fill": [
+    "mask"
+  ],
+  "cursor-wait": [
+    "cursor"
+  ],
+  "-indent-px": [
+    "-indent"
+  ],
+  "right-px": [
+    "right"
+  ],
+  "text-wrap": [
+    "text"
+  ],
+  "border-separate": [
+    "border"
+  ],
+  "transition-all": [
+    "transition"
+  ],
+  "text-nowrap": [
+    "text"
+  ],
+  "cursor-nesw-resize": [
+    "cursor"
+  ],
+  "-translate-px": [
+    "-translate"
+  ],
+  "cursor-auto": [
+    "cursor"
+  ],
+  "border-spacing-y-px": [
+    "border",
+    "border-spacing",
+    "border-spacing-y"
+  ],
+  "inset-px": [
+    "inset"
+  ],
+  "cursor-progress": [
+    "cursor"
+  ],
+  "-scroll-mr-px": [
+    "-scroll-mr"
+  ],
+  "pr-px": [
+    "pr"
+  ],
+  "divide-y-reverse": [
+    "divide",
+    "divide-y"
+  ],
+  "border-none": [
+    "border"
+  ],
+  "mask-origin-view": [
+    "mask"
+  ],
+  "min-h-fit": [
+    "min-h"
+  ],
+  "max-w-full": [
+    "max-w"
+  ],
+  "rounded-l-full": [
+    "rounded",
+    "rounded-l"
+  ],
+  "transition-opacity": [
+    "transition"
+  ],
+  "gap-x-px": [
+    "gap",
+    "gap-x"
+  ],
+  "max-w-min": [
+    "max-w"
+  ],
+  "perspective-origin-bottom-right": [
+    "perspective",
+    "perspective-origin"
+  ],
+  "rounded-s-full": [
+    "rounded",
+    "rounded-s"
+  ],
+  "object-right-bottom": [
+    "object"
+  ],
+  "col-span-full": [
+    "col",
+    "col-span"
+  ],
+  "bg-top": [
+    "bg"
+  ],
+  "cursor-context-menu": [
+    "cursor"
+  ],
+  "ml-auto": [
+    "ml"
+  ],
+  "end-auto": [
+    "end"
+  ],
+  "-end-full": [
+    "-end"
+  ],
+  "min-w-min": [
+    "min-w"
+  ],
+  "list-inside": [
+    "list"
+  ],
+  "w-fit": [
+    "w"
+  ],
+  "mask-cover": [
+    "mask"
+  ],
+  "w-screen": [
+    "w"
+  ],
+  "align-sub": [
+    "align"
+  ],
+  "my-px": [
+    "my"
+  ],
+  "bg-repeat-round": [
+    "bg"
+  ],
+  "cursor-w-resize": [
+    "cursor"
+  ],
+  "grid-rows-none": [
+    "grid-rows"
+  ],
+  "max-h-dvh": [
+    "max-h"
+  ],
+  "rounded-ee-none": [
+    "rounded",
+    "rounded-ee"
+  ],
+  "mask-radial-at-top-right": [
+    "mask",
+    "mask-radial",
+    "mask-radial-at"
+  ],
+  "bg-origin-content": [
+    "bg"
+  ],
+  "underline-offset-auto": [
+    "underline-offset"
+  ],
+  "rounded-es-none": [
+    "rounded",
+    "rounded-es"
+  ],
+  "h-full": [
+    "h"
+  ],
+  "-translate-y-full": [
+    "-translate",
+    "-translate-y"
+  ],
+  "max-w-px": [
+    "max-w"
+  ],
+  "min-w-full": [
+    "min-w"
+  ],
+  "columns-auto": [
+    "columns"
+  ],
+  "origin-top-left": [
+    "origin"
+  ],
+  "outline-hidden": [
+    "outline"
+  ],
+  "row-end-auto": [
+    "row",
+    "row-end"
+  ],
+  "stroke-none": [
+    "stroke"
+  ],
+  "perspective-none": [
+    "perspective"
+  ],
+  "right-full": [
+    "right"
+  ],
+  "scroll-mt-px": [
+    "scroll-mt"
+  ],
+  "bg-blend-hue": [
+    "bg"
+  ],
+  "mask-type-alpha": [
+    "mask"
+  ],
+  "bottom-px": [
+    "bottom"
+  ],
+  "cursor-default": [
+    "cursor"
+  ],
+  "-mb-px": [
+    "-mb"
+  ],
+  "cursor-e-resize": [
+    "cursor"
+  ],
+  "perspective-origin-bottom": [
+    "perspective",
+    "perspective-origin"
+  ],
+  "transform-gpu": [
+    "transform"
+  ],
+  "line-clamp-none": [
+    "line-clamp"
+  ],
+  "max-h-lvw": [
+    "max-h"
+  ],
+  "font-stretch-ultra-expanded": [
+    "font",
+    "font-stretch"
+  ],
+  "origin-top": [
+    "origin"
+  ],
+  "bg-blend-soft-light": [
+    "bg"
+  ],
+  "content-between": [
+    "content"
+  ],
+  "translate-x-px": [
+    "translate",
+    "translate-x"
+  ],
+  "mb-px": [
+    "mb"
+  ],
+  "mask-add": [
+    "mask"
+  ],
+  "min-w-dvw": [
+    "min-w"
+  ],
+  "auto-rows-min": [
+    "auto-rows"
+  ],
+  "rounded-br-none": [
+    "rounded",
+    "rounded-br"
+  ],
+  "bg-contain": [
+    "bg"
+  ],
+  "max-h-svh": [
+    "max-h"
+  ],
+  "min-w-fit": [
+    "min-w"
+  ],
+  "mask-radial-at-bottom-left": [
+    "mask",
+    "mask-radial",
+    "mask-radial-at"
+  ],
+  "w-px": [
+    "w"
+  ],
+  "grid-rows-subgrid": [
+    "grid-rows"
+  ],
+  "bg-blend-color-dodge": [
+    "bg"
+  ],
+  "bg-clip-border": [
+    "bg"
+  ],
+  "bg-gradient-to-b": [
+    "bg"
+  ],
+  "pt-px": [
+    "pt"
+  ],
+  "duration-initial": [
+    "duration"
+  ],
+  "mask-radial-at-top": [
+    "mask",
+    "mask-radial",
+    "mask-radial-at"
+  ],
+  "inset-shadow-initial": [
+    "inset",
+    "inset-shadow"
+  ],
+  "order-last": [
+    "order"
+  ],
+  "border-spacing-x-px": [
+    "border",
+    "border-spacing",
+    "border-spacing-x"
+  ],
+  "grid-cols-none": [
+    "grid-cols"
+  ],
+  "scroll-ps-px": [
+    "scroll-ps"
+  ],
+  "scroll-px-px": [
+    "scroll-px"
+  ],
+  "contain-paint": [
+    "contain"
+  ],
+  "basis-full": [
+    "basis"
+  ],
+  "max-h-full": [
+    "max-h"
+  ],
+  "content-center-safe": [
+    "content"
+  ],
+  "contain-size": [
+    "contain"
+  ],
+  "font-stretch-ultra-condensed": [
+    "font",
+    "font-stretch"
+  ],
+  "size-lvw": [
+    "size"
+  ],
+  "max-h-dvw": [
+    "max-h"
+  ],
+  "h-px": [
+    "h"
+  ],
+  "list-decimal": [
+    "list"
+  ],
+  "cursor-alias": [
+    "cursor"
+  ],
+  "bg-left-top": [
+    "bg"
+  ],
+  "cursor-move": [
+    "cursor"
+  ],
+  "origin-left": [
+    "origin"
+  ],
+  "size-min": [
+    "size"
+  ],
+  "rounded-t-none": [
+    "rounded",
+    "rounded-t"
+  ],
+  "-mx-px": [
+    "-mx"
+  ],
+  "content-stretch": [
+    "content"
+  ],
+  "cursor-copy": [
+    "cursor"
+  ],
+  "font-stretch-extra-expanded": [
+    "font",
+    "font-stretch"
+  ],
+  "scroll-py-px": [
+    "scroll-py"
+  ],
+  "w-max": [
+    "w"
+  ],
+  "p-px": [
+    "p"
+  ],
+  "mask-luminance": [
+    "mask"
+  ],
+  "min-h-svw": [
+    "min-h"
+  ],
+  "right-auto": [
+    "right"
+  ],
+  "rounded-b-full": [
+    "rounded",
+    "rounded-b"
+  ],
+  "m-px": [
+    "m"
+  ],
+  "fill-none": [
+    "fill"
+  ],
+  "mask-radial-farthest-side": [
+    "mask",
+    "mask-radial"
+  ],
+  "mask-repeat-round": [
+    "mask"
+  ],
+  "align-text-bottom": [
+    "align"
+  ],
+  "cursor-row-resize": [
+    "cursor"
+  ],
+  "object-top-right": [
+    "object"
+  ],
+  "bg-local": [
+    "bg"
+  ],
+  "transform-border": [
+    "transform"
+  ],
+  "mb-auto": [
+    "mb"
+  ],
+  "mask-clip-stroke": [
+    "mask"
+  ],
+  "object-top-left": [
+    "object"
+  ],
+  "align-bottom": [
+    "align"
+  ],
+  "bg-blend-luminosity": [
+    "bg"
+  ],
+  "cursor-zoom-in": [
+    "cursor"
+  ],
+  "cursor-text": [
+    "cursor"
+  ],
+  "inset-x-auto": [
+    "inset",
+    "inset-x"
+  ],
+  "content-normal": [
+    "content"
+  ],
+  "transition-transform": [
+    "transition"
+  ],
+  "z-auto": [
+    "z"
+  ],
+  "w-min": [
+    "w"
+  ],
+  "bg-origin-border": [
+    "bg"
+  ],
+  "bg-blend-exclusion": [
+    "bg"
+  ],
+  "size-dvh": [
+    "size"
+  ],
+  "-scroll-my-px": [
+    "-scroll-my"
+  ],
+  "divide-dotted": [
+    "divide"
+  ],
+  "rounded-e-none": [
+    "rounded",
+    "rounded-e"
+  ],
+  "object-left-top": [
+    "object"
+  ],
+  "cursor-nw-resize": [
+    "cursor"
+  ],
+  "ease-linear": [
+    "ease"
+  ],
+  "cursor-se-resize": [
+    "cursor"
+  ],
+  "-translate-x-px": [
+    "-translate",
+    "-translate-x"
+  ],
+  "contain-inline-size": [
+    "contain"
+  ],
+  "text-start": [
+    "text"
+  ],
+  "transition-shadow": [
+    "transition"
+  ],
+  "text-ellipsis": [
+    "text"
+  ],
+  "w-svh": [
+    "w"
+  ],
+  "w-svw": [
+    "w"
+  ],
+  "inset-y-full": [
+    "inset",
+    "inset-y"
+  ],
+  "min-w-dvh": [
+    "min-w"
+  ],
+  "text-clip": [
+    "text"
+  ],
+  "rounded-ss-none": [
+    "rounded",
+    "rounded-ss"
+  ],
+  "end-px": [
+    "end"
+  ],
+  "auto-rows-max": [
+    "auto-rows"
+  ],
+  "origin-top-right": [
+    "origin"
+  ],
+  "align-top": [
+    "align"
+  ],
+  "decoration-wavy": [
+    "decoration"
+  ],
+  "max-w-lvh": [
+    "max-w"
+  ],
+  "mask-right": [
+    "mask"
+  ],
+  "cursor-n-resize": [
+    "cursor"
+  ],
+  "divide-x-reverse": [
+    "divide",
+    "divide-x"
+  ],
+  "scroll-ms-px": [
+    "scroll-ms"
+  ],
+  "space-x-reverse": [
+    "space-x"
+  ],
+  "contain-strict": [
+    "contain"
+  ],
+  "transition-none": [
+    "transition"
+  ],
+  "bg-blend-hard-light": [
+    "bg"
+  ],
+  "min-w-px": [
+    "min-w"
+  ],
+  "bg-auto": [
+    "bg"
+  ],
+  "mask-origin-stroke": [
+    "mask"
+  ],
+  "pl-px": [
+    "pl"
+  ],
+  "-bottom-full": [
+    "-bottom"
+  ],
+  "accent-auto": [
+    "accent"
+  ],
+  "cursor-col-resize": [
+    "cursor"
+  ],
+  "origin-center": [
+    "origin"
+  ],
+  "min-h-min": [
+    "min-h"
+  ],
+  "mask-radial-closest-corner": [
+    "mask",
+    "mask-radial"
+  ],
+  "min-w-svh": [
+    "min-w"
+  ],
+  "transform-3d": [
+    "transform"
+  ],
+  "translate-y-px": [
+    "translate",
+    "translate-y"
+  ],
+  "min-h-dvw": [
+    "min-h"
+  ],
+  "ring-inset": [
+    "ring"
+  ],
+  "object-cover": [
+    "object"
+  ],
+  "scroll-mr-px": [
+    "scroll-mr"
+  ],
+  "animate-none": [
+    "animate"
+  ],
+  "perspective-origin-center": [
+    "perspective",
+    "perspective-origin"
+  ],
+  "font-stretch-semi-condensed": [
+    "font",
+    "font-stretch"
+  ],
+  "scroll-mx-px": [
+    "scroll-mx"
+  ],
+  "rotate-none": [
+    "rotate"
+  ],
+  "scroll-my-px": [
+    "scroll-my"
+  ],
+  "text-balance": [
+    "text"
+  ],
+  "h-lvh": [
+    "h"
+  ],
+  "mask-radial-at-right": [
+    "mask",
+    "mask-radial",
+    "mask-radial-at"
+  ],
+  "translate-z-px": [
+    "translate",
+    "translate-z"
+  ],
+  "-mt-px": [
+    "-mt"
+  ],
+  "mr-auto": [
+    "mr"
+  ],
+  "mask-radial-farthest-corner": [
+    "mask",
+    "mask-radial"
+  ],
+  "bg-top-left": [
+    "bg"
+  ],
+  "translate-3d": [
+    "translate"
+  ],
+  "-start-px": [
+    "-start"
+  ],
+  "content-none": [
+    "content"
+  ],
+  "content-center": [
+    "content"
+  ],
+  "mask-repeat": [
+    "mask"
+  ],
+  "mask-top": [
+    "mask"
+  ],
+  "contain-content": [
+    "contain"
+  ],
+  "-inset-x-full": [
+    "-inset",
+    "-inset-x"
+  ],
+  "bg-blend-overlay": [
+    "bg"
+  ],
+  "aspect-auto": [
+    "aspect"
+  ],
+  "mask-center": [
+    "mask"
+  ],
+  "pb-px": [
+    "pb"
+  ],
+  "mask-intersect": [
+    "mask"
+  ],
+  "scroll-ml-px": [
+    "scroll-ml"
+  ],
+  "will-change-transform": [
+    "will-change"
+  ],
+  "mx-px": [
+    "mx"
+  ],
+  "top-full": [
+    "top"
+  ],
+  "-my-px": [
+    "-my"
+  ],
+  "scroll-pb-px": [
+    "scroll-pb"
+  ],
+  "object-center": [
+    "object"
+  ],
+  "-left-full": [
+    "-left"
+  ],
+  "transform-stroke": [
+    "transform"
+  ],
+  "min-h-lvh": [
+    "min-h"
+  ],
+  "bg-center": [
+    "bg"
+  ],
+  "flex-col": [
+    "flex"
+  ],
+  "cursor-zoom-out": [
+    "cursor"
+  ],
+  "mask-left": [
+    "mask"
+  ],
+  "mask-circle": [
+    "mask"
+  ],
+  "bg-gradient-to-tl": [
+    "bg"
+  ],
+  "flex-initial": [
+    "flex"
+  ],
+  "blur-none": [
+    "blur"
+  ],
+  "auto-rows-auto": [
+    "auto-rows"
+  ],
+  "scale-3d": [
+    "scale"
+  ],
+  "align-super": [
+    "align"
+  ],
+  "-space-y-px": [
+    "-space-y"
+  ],
+  "scroll-mb-px": [
+    "scroll-mb"
+  ],
+  "-left-px": [
+    "-left"
+  ],
+  "row-span-full": [
+    "row",
+    "row-span"
+  ],
+  "-ml-px": [
+    "-ml"
+  ],
+  "-inset-px": [
+    "-inset"
+  ],
+  "bg-blend-saturation": [
+    "bg"
+  ],
+  "col-auto": [
+    "col"
+  ],
+  "mr-px": [
+    "mr"
+  ],
+  "auto-cols-auto": [
+    "auto-cols"
+  ],
+  "cursor-none": [
+    "cursor"
+  ],
+  "bg-none": [
+    "bg"
+  ],
+  "will-change-scroll": [
+    "will-change"
+  ],
+  "flex": [
+    "flex"
+  ]
+}

@@ -135,7 +135,7 @@ pub fn Tabs(
     };
     view! {
         <div
-            class=crate::macros::merge("flex gap-2 flex-col", &class)
+            class=crate::macros::reactive_merge("flex gap-2 flex-col", &class)
             data-name="Tabs"
             data-testid=test_id
             data-orientation=orientation.attribute()
@@ -200,7 +200,7 @@ pub fn TabPanel(
     view! {
         <div
             id=panel_id(&context.group, &value)
-            class=crate::macros::merge("flex-1 text-sm outline-none", &class)
+            class=crate::macros::reactive_merge("flex-1 text-sm outline-none", &class)
             class=("hidden", move || !showing.get())
             data-name="TabPanel"
             data-testid=format!("panel-{value}")

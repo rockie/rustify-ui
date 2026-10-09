@@ -1,0 +1,24 @@
+mbx[warning]: Unix-domain cache session listener unavailable; using FIFO transport: failed to bind cache session listener at /var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/mbx-session-d1vBEn/cache-agent.sock: Operation not permitted (os error 1)
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 6.43s
+     Running unittests src/lib.rs (/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-utf16-verified-54mkl3kq/cargo-target/debug/deps/rustify_style-4ed64bbe76d78d97)
+
+running 7 tests
+test compiler::shadows::text_tests::shadow_splice_budget_counts_surrogate_pairs_across_chunk_boundaries ... ok
+test compiler::shadows::text_tests::relative_alpha_text_preserves_non_scalar_color_and_alpha_units ... ok
+test compiler::shadows::text_tests::shadow_offsets_reject_js_line_terminators_without_normalizing_other_units ... ok
+test compiler::shadows::text_tests::shadow_trim_uses_js_bom_and_retains_nel_and_lone_units ... ok
+test compiler::shadows::text_tests::shadow_color_replacement_interprets_js_dollar_markers_on_original_units ... ok
+test compiler::shadows::text_tests::shadow_replacement_preserves_raw_color_units_and_first_occurrence ... ok
+test compiler::shadows::text_tests::shadow_budget_counts_exact_logical_bytes_and_comma_separators ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 271 filtered out; finished in 0.00s
+
+mbx[cache]: 0 hits, 1 misses; 0 B downloaded, 0 B uploaded, 335.9 MiB stored locally

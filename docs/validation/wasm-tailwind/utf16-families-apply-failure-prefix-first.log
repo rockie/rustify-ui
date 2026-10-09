@@ -1,0 +1,327 @@
+{"applyFailureCases":16,"entries":2,"checks":32,"failures":[{"kind":"custom","mode":"sync","message":"custom: completed setup and apply prefix\n+ actual - expected\n... Skipped lines\n\n  {\n    records: [\n      {\n        array: true,\n        fields: [\n...\n          ],\n+         [\n+           '2',\n+           {\n+             reference: 17\n+           }\n+         ]\n        ]\n      },\n      {\n        array: true,\n        fields: [\n...\n            '0',\n+           'value'\n+         ],\n+         [\n+           '1',\n+           0\n+         ]\n+       ]\n+     },\n+     {\n+       array: true,\n+       fields: [\n+         [\n+           '0',\n            'body'\n          ],\n          [\n            '1',\n            '1'\n...\n      {\n+       reference: 18\n-       reference: 17\n      },\n      {\n        reference: 1\n      },\n      {\n"},{"kind":"custom","mode":"async","message":"custom: Promise rejection graph and epoch\n+ actual - expected\n... Skipped lines\n\n  {\n    epoch: 4,\n    message: 'Cannot apply unknown utility class `missing-apply-class`. Are you using CSS modules or similar and missing `@reference`? https://tailwindcss.com/docs/functions-and-directives#reference-directive',\n    name: 'Error',\n    prefix: {\n...\n            ],\n+           [\n+             '2',\n+             {\n+               reference: 17\n+             }\n+           ]\n          ]\n        },\n        {\n          array: true,\n          fields: [\n...\n              '0',\n+             'value'\n+           ],\n+           [\n+             '1',\n+             2\n+           ]\n+         ]\n+       },\n+       {\n+         array: true,\n+         fields: [\n+           [\n+             '0',\n              'body'\n            ],\n            [\n              '1',\n              '1'\n...\n        {\n+         reference: 18\n-         reference: 17\n        },\n        {\n          reference: 1\n        },\n        {\n...\n            ],\n+           [\n+             '2',\n+             {\n+               reference: 17\n+             }\n+           ]\n          ]\n        },\n        {\n          array: true,\n          fields: [\n...\n              '0',\n+             'value'\n+           ],\n+           [\n+             '1',\n+             2\n+           ]\n+         ]\n+       },\n+       {\n+         array: true,\n+         fields: [\n+           [\n+             '0',\n              'body'\n            ],\n            [\n              '1',\n              '1'\n...\n        {\n+         reference: 18\n-         reference: 17\n        },\n        {\n          reference: 1\n        },\n        {\n"}],"actualWasm":true,"wasmBytes":2395522,"fullFailedSetupConformance":"pending"}
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: all apply failure prefixes
++ actual - expected
+
++ [
++   {
++     kind: 'custom',
++     message: 'custom: completed setup and apply prefix\n' +
++       '+ actual - expected\n' +
++       '... Skipped lines\n' +
++       '\n' +
++       '  {\n' +
++       '    records: [\n' +
++       '      {\n' +
++       '        array: true,\n' +
++       '        fields: [\n' +
++       '...\n' +
++       '          ],\n' +
++       '+         [\n' +
++       "+           '2',\n" +
++       '+           {\n' +
++       '+             reference: 17\n' +
++       '+           }\n' +
++       '+         ]\n' +
++       '        ]\n' +
++       '      },\n' +
++       '      {\n' +
++       '        array: true,\n' +
++       '        fields: [\n' +
++       '...\n' +
++       "            '0',\n" +
++       "+           'value'\n" +
++       '+         ],\n' +
++       '+         [\n' +
++       "+           '1',\n" +
++       '+           0\n' +
++       '+         ]\n' +
++       '+       ]\n' +
++       '+     },\n' +
++       '+     {\n' +
++       '+       array: true,\n' +
++       '+       fields: [\n' +
++       '+         [\n' +
++       "+           '0',\n" +
++       "            'body'\n" +
++       '          ],\n' +
++       '          [\n' +
++       "            '1',\n" +
++       "            '1'\n" +
++       '...\n' +
++       '      {\n' +
++       '+       reference: 18\n' +
++       '-       reference: 17\n' +
++       '      },\n' +
++       '      {\n' +
++       '        reference: 1\n' +
++       '      },\n' +
++       '      {\n',
++     mode: 'sync'
++   },
++   {
++     kind: 'custom',
++     message: 'custom: Promise rejection graph and epoch\n' +
++       '+ actual - expected\n' +
++       '... Skipped lines\n' +
++       '\n' +
++       '  {\n' +
++       '    epoch: 4,\n' +
++       "    message: 'Cannot apply unknown utility class `missing-apply-class`. Are you using CSS modules or similar and missing `@reference`? https://tailwindcss.com/docs/functions-and-directives#reference-directive',\n" +
++       "    name: 'Error',\n" +
++       '    prefix: {\n' +
++       '...\n' +
++       '            ],\n' +
++       '+           [\n' +
++       "+             '2',\n" +
++       '+             {\n' +
++       '+               reference: 17\n' +
++       '+             }\n' +
++       '+           ]\n' +
++       '          ]\n' +
++       '        },\n' +
++       '        {\n' +
++       '          array: true,\n' +
++       '          fields: [\n' +
++       '...\n' +
++       "              '0',\n" +
++       "+             'value'\n" +
++       '+           ],\n' +
++       '+           [\n' +
++       "+             '1',\n" +
++       '+             2\n' +
++       '+           ]\n' +
++       '+         ]\n' +
++       '+       },\n' +
++       '+       {\n' +
++       '+         array: true,\n' +
++       '+         fields: [\n' +
++       '+           [\n' +
++       "+             '0',\n" +
++       "              'body'\n" +
++       '            ],\n' +
++       '            [\n' +
++       "              '1',\n" +
++       "              '1'\n" +
++       '...\n' +
++       '        {\n' +
++       '+         reference: 18\n' +
++       '-         reference: 17\n' +
++       '        },\n' +
++       '        {\n' +
++       '          reference: 1\n' +
++       '        },\n' +
++       '        {\n' +
++       '...\n' +
++       '            ],\n' +
++       '+           [\n' +
++       "+             '2',\n" +
++       '+             {\n' +
++       '+               reference: 17\n' +
++       '+             }\n' +
++       '+           ]\n' +
++       '          ]\n' +
++       '        },\n' +
++       '        {\n' +
++       '          array: true,\n' +
++       '          fields: [\n' +
++       '...\n' +
++       "              '0',\n" +
++       "+             'value'\n" +
++       '+           ],\n' +
++       '+           [\n' +
++       "+             '1',\n" +
++       '+             2\n' +
++       '+           ]\n' +
++       '+         ]\n' +
++       '+       },\n' +
++       '+       {\n' +
++       '+         array: true,\n' +
++       '+         fields: [\n' +
++       '+           [\n' +
++       "+             '0',\n" +
++       "              'body'\n" +
++       '            ],\n' +
++       '            [\n' +
++       "              '1',\n" +
++       "              '1'\n" +
++       '...\n' +
++       '        {\n' +
++       '+         reference: 18\n' +
++       '-         reference: 17\n' +
++       '        },\n' +
++       '        {\n' +
++       '          reference: 1\n' +
++       '        },\n' +
++       '        {\n',
++     mode: 'async'
++   }
++ ]
+- []
+
+    at file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/compiler/run-public-ast-apply-failure-wasm.mjs:111:8 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: [
+    {
+      kind: 'custom',
+      mode: 'sync',
+      message: 'custom: completed setup and apply prefix\n' +
+        '+ actual - expected\n' +
+        '... Skipped lines\n' +
+        '\n' +
+        '  {\n' +
+        '    records: [\n' +
+        '      {\n' +
+        '        array: true,\n' +
+        '        fields: [\n' +
+        '...\n' +
+        '          ],\n' +
+        '+         [\n' +
+        "+           '2',\n" +
+        '+           {\n' +
+        '+             reference: 17\n' +
+        '+           }\n' +
+        '+         ]\n' +
+        '        ]\n' +
+        '      },\n' +
+        '      {\n' +
+        '        array: true,\n' +
+        '        fields: [\n' +
+        '...\n' +
+        "            '0',\n" +
+        "+           'value'\n" +
+        '+         ],\n' +
+        '+         [\n' +
+        "+           '1',\n" +
+        '+           0\n' +
+        '+         ]\n' +
+        '+       ]\n' +
+        '+     },\n' +
+        '+     {\n' +
+        '+       array: true,\n' +
+        '+       fields: [\n' +
+        '+         [\n' +
+        "+           '0',\n" +
+        "            'body'\n" +
+        '          ],\n' +
+        '          [\n' +
+        "            '1',\n" +
+        "            '1'\n" +
+        '...\n' +
+        '      {\n' +
+        '+       reference: 18\n' +
+        '-       reference: 17\n' +
+        '      },\n' +
+        '      {\n' +
+        '        reference: 1\n' +
+        '      },\n' +
+        '      {\n'
+    },
+    {
+      kind: 'custom',
+      mode: 'async',
+      message: 'custom: Promise rejection graph and epoch\n' +
+        '+ actual - expected\n' +
+        '... Skipped lines\n' +
+        '\n' +
+        '  {\n' +
+        '    epoch: 4,\n' +
+        "    message: 'Cannot apply unknown utility class `missing-apply-class`. Are you using CSS modules or similar and missing `@reference`? https://tailwindcss.com/docs/functions-and-directives#reference-directive',\n" +
+        "    name: 'Error',\n" +
+        '    prefix: {\n' +
+        '...\n' +
+        '            ],\n' +
+        '+           [\n' +
+        "+             '2',\n" +
+        '+             {\n' +
+        '+               reference: 17\n' +
+        '+             }\n' +
+        '+           ]\n' +
+        '          ]\n' +
+        '        },\n' +
+        '        {\n' +
+        '          array: true,\n' +
+        '          fields: [\n' +
+        '...\n' +
+        "              '0',\n" +
+        "+             'value'\n" +
+        '+           ],\n' +
+        '+           [\n' +
+        "+             '1',\n" +
+        '+             2\n' +
+        '+           ]\n' +
+        '+         ]\n' +
+        '+       },\n' +
+        '+       {\n' +
+        '+         array: true,\n' +
+        '+         fields: [\n' +
+        '+           [\n' +
+        "+             '0',\n" +
+        "              'body'\n" +
+        '            ],\n' +
+        '            [\n' +
+        "              '1',\n" +
+        "              '1'\n" +
+        '...\n' +
+        '        {\n' +
+        '+         reference: 18\n' +
+        '-         reference: 17\n' +
+        '        },\n' +
+        '        {\n' +
+        '          reference: 1\n' +
+        '        },\n' +
+        '        {\n' +
+        '...\n' +
+        '            ],\n' +
+        '+           [\n' +
+        "+             '2',\n" +
+        '+             {\n' +
+        '+               reference: 17\n' +
+        '+             }\n' +
+        '+           ]\n' +
+        '          ]\n' +
+        '        },\n' +
+        '        {\n' +
+        '          array: true,\n' +
+        '          fields: [\n' +
+        '...\n' +
+        "              '0',\n" +
+        "+             'value'\n" +
+        '+           ],\n' +
+        '+           [\n' +
+        "+             '1',\n" +
+        '+             2\n' +
+        '+           ]\n' +
+        '+         ]\n' +
+        '+       },\n' +
+        '+       {\n' +
+        '+         array: true,\n' +
+        '+         fields: [\n' +
+        '+           [\n' +
+        "+             '0',\n" +
+        "              'body'\n" +
+        '            ],\n' +
+        '            [\n' +
+        "              '1',\n" +
+        "              '1'\n" +
+        '...\n' +
+        '        {\n' +
+        '+         reference: 18\n' +
+        '-         reference: 17\n' +
+        '        },\n' +
+        '        {\n' +
+        '          reference: 1\n' +
+        '        },\n' +
+        '        {\n'
+    }
+  ],
+  expected: [],
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v26.1.0

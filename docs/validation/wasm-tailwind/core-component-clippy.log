@@ -1,0 +1,43 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+    Checking wasm-bindgen v0.2.128
+   Compiling sha2 v0.10.9
+    Checking rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+   Compiling getrandom v0.4.3
+    Checking wasmparser v0.245.1
+    Checking wasmparser v0.228.0
+   Compiling uuid v1.26.0
+   Compiling wasm_split_macros v0.2.2
+   Compiling leptos_macro v0.8.17
+    Checking wasm_split_helpers v0.2.3
+    Checking js-sys v0.3.105
+    Checking wasmi v2.0.0
+    Checking rustify-style-wasm v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style-wasm)
+    Checking walrus v0.26.5
+    Checking wasm-bindgen-cli-support v0.2.128
+    Checking wasm-bindgen-futures v0.4.78
+    Checking web-sys v0.3.105
+    Checking any_spawner v0.3.0
+    Checking reactive_graph v0.2.14
+    Checking reactive_stores v0.4.3
+    Checking gloo-utils v0.2.0
+    Checking tachys v0.2.18
+    Checking wasm-streams v0.5.0
+    Checking gloo-net v0.6.0
+    Checking server_fn v0.8.13
+    Checking leptos_dom v0.8.8
+    Checking leptos_server v0.8.7
+    Checking leptos v0.8.20
+    Checking rustify-ui v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui)
+    Checking rustify-components v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-components)
+    Checking xtask v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/xtask)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 14.53s
+warning: the following packages contain code that will be rejected by a future version of Rust: proc-macro-error2 v2.0.1
+note: to see what the problems were, use the option `--future-incompat-report`, or run `cargo report future-incompatibilities --id 1`
+mbx[cache]: 0 hits, 0 misses, 37 not looked up; 0 B downloaded, 0 B uploaded, 71.6 MiB stored locally
+mbx[savings]: lent the same 22.2 GiB to every checkout at once. none of them has checked.

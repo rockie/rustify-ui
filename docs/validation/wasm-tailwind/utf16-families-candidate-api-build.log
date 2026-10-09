@@ -1,0 +1,97 @@
+mbx[warning]: Unix-domain cache session listener unavailable; using FIFO transport: failed to bind cache session listener at /var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/mbx-session-YvrjH1/cache-agent.sock: Operation not permitted (os error 1)
+warning: function `is_number` is never used
+   --> crates/rustify-style/src/compiler/colors.rs:447:15
+    |
+447 | pub(super) fn is_number(value: &str) -> bool {
+    |               ^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `is_color` is never used
+   --> crates/rustify-style/src/compiler/colors.rs:451:15
+    |
+451 | pub(super) fn is_color(value: &str) -> bool {
+    |               ^^^^^^^^
+
+warning: function `inferred_type` is never used
+   --> crates/rustify-style/src/compiler/colors.rs:455:15
+    |
+455 | pub(super) fn inferred_type(root: &str, value: &str) -> Option<&'static str> {
+    |               ^^^^^^^^^^^^^
+
+warning: function `at_rule` is never used
+   --> crates/rustify-style/src/compiler/parser.rs:380:15
+    |
+380 | pub(super) fn at_rule(header: &str, nodes: Option<Vec<AstNode>>) -> AstNode {
+    |               ^^^^^^^
+
+warning: method `resolve` is never used
+   --> crates/rustify-style/src/compiler/theme.rs:387:12
+    |
+ 38 | impl Theme {
+    | ---------- method in this implementation
+...
+387 |     pub fn resolve(
+    |            ^^^^^^^
+
+warning: function `scalar_css` is never used
+   --> crates/rustify-style/src/compiler/value.rs:198:15
+    |
+198 | pub(crate) fn scalar_css(nodes: &[ValueNode]) -> Result<String, CompileError> {
+    |               ^^^^^^^^^^
+
+mbx[warning]: Unix-domain cache session listener unavailable; using FIFO transport: failed to bind cache session listener at /var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/mbx-session-Ngud9J/cache-agent.sock: Operation not permitted (os error 1)
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+warning: function `is_number` is never used
+   --> crates/rustify-style/src/compiler/colors.rs:447:15
+    |
+447 | pub(super) fn is_number(value: &str) -> bool {
+    |               ^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `is_color` is never used
+   --> crates/rustify-style/src/compiler/colors.rs:451:15
+    |
+451 | pub(super) fn is_color(value: &str) -> bool {
+    |               ^^^^^^^^
+
+warning: function `inferred_type` is never used
+   --> crates/rustify-style/src/compiler/colors.rs:455:15
+    |
+455 | pub(super) fn inferred_type(root: &str, value: &str) -> Option<&'static str> {
+    |               ^^^^^^^^^^^^^
+
+warning: function `at_rule` is never used
+   --> crates/rustify-style/src/compiler/parser.rs:380:15
+    |
+380 | pub(super) fn at_rule(header: &str, nodes: Option<Vec<AstNode>>) -> AstNode {
+    |               ^^^^^^^
+
+warning: method `resolve` is never used
+   --> crates/rustify-style/src/compiler/theme.rs:387:12
+    |
+ 38 | impl Theme {
+    | ---------- method in this implementation
+...
+387 |     pub fn resolve(
+    |            ^^^^^^^
+
+warning: function `scalar_css` is never used
+   --> crates/rustify-style/src/compiler/value.rs:198:15
+    |
+198 | pub(crate) fn scalar_css(nodes: &[ValueNode]) -> Result<String, CompileError> {
+    |               ^^^^^^^^^^
+
+warning: `rustify-style` (lib) generated 6 warnings
+   Compiling rustify-style-wasm v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style-wasm)
+    Finished `release` profile [optimized] target(s) in 13.74s
+mbx[cache]: 0 hits, 1 misses, 1 bypassed; 0 B downloaded, 0 B uploaded, 17.1 MiB stored locally
+mbx[cache]: 0 hits, 3 misses; 0 B downloaded, 0 B uploaded, 116.2 MiB stored locally

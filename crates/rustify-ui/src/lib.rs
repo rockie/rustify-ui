@@ -27,6 +27,8 @@ pub mod task;
 pub mod text;
 pub mod theme;
 pub mod toast;
+#[cfg(feature = "utility")]
+pub mod utility;
 
 pub use binding::{duplicate_key, ActionSink};
 pub use clipboard::ClipboardError;

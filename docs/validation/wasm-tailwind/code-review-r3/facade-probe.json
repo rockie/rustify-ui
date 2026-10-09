@@ -1,0 +1,131 @@
+{
+  "dir": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/makepad-wasm-app/release/utility-lab/utility/compiler",
+  "results": [
+    {
+      "id": "fixed",
+      "input": ":root { --ease: linear; } @keyframes card { to { opacity: 0; } } @keyframes linear { to { opacity: .5; } } .motion { animation: card 1s var(--ease) infinite; } @tailwind utilities;",
+      "outputs": [
+        {
+          "owner": null,
+          "css": ":root {\n  --ease: linear;\n}\n@keyframes card {\n  to {\n    opacity: 0;\n  }\n}\n@keyframes linear {\n  to {\n    opacity: .5;\n  }\n}\n.motion {\n  animation: card 1s var(--ease) infinite;\n}\n"
+        },
+        {
+          "owner": "review-r3",
+          "css": "@scope ([data-rustify-style-owner=\"review-r3\"]) to ([data-rustify-style-owner]) {\n  :scope {\n    --ease: linear;\n  }\n  .motion {\n    animation: rustify-review-r3-card 1s var(--ease) infinite;\n  }\n}\n@keyframes rustify-review-r3-card {\n  to {\n    opacity: 0;\n  }\n}\n@keyframes rustify-review-r3-linear {\n  to {\n    opacity: .5;\n  }\n}\n"
+        }
+      ]
+    },
+    {
+      "id": "var-before",
+      "input": ":root { --x: linear; } @keyframes ease { to { opacity: .3; } } .motion { animation: var(--x) 10s ease infinite; } @tailwind utilities;",
+      "outputs": [
+        {
+          "owner": null,
+          "css": ":root {\n  --x: linear;\n}\n@keyframes ease {\n  to {\n    opacity: .3;\n  }\n}\n.motion {\n  animation: var(--x) 10s ease infinite;\n}\n"
+        },
+        {
+          "owner": "review-r3",
+          "css": "@scope ([data-rustify-style-owner=\"review-r3\"]) to ([data-rustify-style-owner]) {\n  :scope {\n    --x: linear;\n  }\n  .motion {\n    animation: var(--x) 10s ease infinite;\n  }\n}\n@keyframes rustify-review-r3-ease {\n  to {\n    opacity: .3;\n  }\n}\n"
+        }
+      ]
+    },
+    {
+      "id": "var-name",
+      "input": ":root { --name: linear; } @keyframes linear { to { opacity: .3; } } .motion { animation: 10s ease var(--name) infinite; } @tailwind utilities;",
+      "outputs": [
+        {
+          "owner": null,
+          "css": ":root {\n  --name: linear;\n}\n@keyframes linear {\n  to {\n    opacity: .3;\n  }\n}\n.motion {\n  animation: 10s ease var(--name) infinite;\n}\n"
+        },
+        {
+          "owner": "review-r3",
+          "css": "@scope ([data-rustify-style-owner=\"review-r3\"]) to ([data-rustify-style-owner]) {\n  :scope {\n    --name: linear;\n  }\n  .motion {\n    animation: 10s ease var(--name) infinite;\n  }\n}\n@keyframes rustify-review-r3-linear {\n  to {\n    opacity: .3;\n  }\n}\n"
+        }
+      ]
+    },
+    {
+      "id": "var-fallback",
+      "input": ":root { --x: ease; } @keyframes linear { to { opacity: .3; } } .motion { animation: var(--x, linear) 10s linear infinite; } @tailwind utilities;",
+      "outputs": [
+        {
+          "owner": null,
+          "css": ":root {\n  --x: ease;\n}\n@keyframes linear {\n  to {\n    opacity: .3;\n  }\n}\n.motion {\n  animation: var(--x, linear) 10s linear infinite;\n}\n"
+        },
+        {
+          "owner": "review-r3",
+          "css": "@scope ([data-rustify-style-owner=\"review-r3\"]) to ([data-rustify-style-owner]) {\n  :scope {\n    --x: ease;\n  }\n  .motion {\n    animation: var(--x, linear) 10s rustify-review-r3-linear infinite;\n  }\n}\n@keyframes rustify-review-r3-linear {\n  to {\n    opacity: .3;\n  }\n}\n"
+        }
+      ]
+    },
+    {
+      "id": "time-calc",
+      "input": "@keyframes card { to { opacity: .3; } } .motion { animation: calc(10s) linear card infinite; } @tailwind utilities;",
+      "outputs": [
+        {
+          "owner": null,
+          "css": "@keyframes card {\n  to {\n    opacity: .3;\n  }\n}\n.motion {\n  animation: calc(10s) linear card infinite;\n}\n"
+        },
+        {
+          "owner": "review-r3",
+          "css": "@scope ([data-rustify-style-owner=\"review-r3\"]) to ([data-rustify-style-owner]) {\n  .motion {\n    animation: calc(10s) linear card infinite;\n  }\n}\n@keyframes rustify-review-r3-card {\n  to {\n    opacity: .3;\n  }\n}\n"
+        }
+      ]
+    },
+    {
+      "id": "time-min",
+      "input": "@keyframes card { to { opacity: .3; } } .motion { animation: min(10s, 12s) linear card infinite; } @tailwind utilities;",
+      "outputs": [
+        {
+          "owner": null,
+          "css": "@keyframes card {\n  to {\n    opacity: .3;\n  }\n}\n.motion {\n  animation: min(10s, 12s) linear card infinite;\n}\n"
+        },
+        {
+          "owner": "review-r3",
+          "css": "@scope ([data-rustify-style-owner=\"review-r3\"]) to ([data-rustify-style-owner]) {\n  .motion {\n    animation: min(10s, 12s) linear card infinite;\n  }\n}\n@keyframes rustify-review-r3-card {\n  to {\n    opacity: .3;\n  }\n}\n"
+        }
+      ]
+    },
+    {
+      "id": "iteration",
+      "input": "@keyframes infinite { to { opacity: .3; } } .motion { animation: 2 10s infinite linear; } @tailwind utilities;",
+      "outputs": [
+        {
+          "owner": null,
+          "css": "@keyframes infinite {\n  to {\n    opacity: .3;\n  }\n}\n.motion {\n  animation: 2 10s infinite linear;\n}\n"
+        },
+        {
+          "owner": "review-r3",
+          "css": "@scope ([data-rustify-style-owner=\"review-r3\"]) to ([data-rustify-style-owner]) {\n  .motion {\n    animation: 2 10s infinite linear;\n  }\n}\n@keyframes rustify-review-r3-infinite {\n  to {\n    opacity: .3;\n  }\n}\n"
+        }
+      ]
+    },
+    {
+      "id": "iteration-before-name",
+      "input": "@keyframes infinite { to { opacity: .3; } } .motion { animation: 10s infinite 2 linear; } @tailwind utilities;",
+      "outputs": [
+        {
+          "owner": null,
+          "css": "@keyframes infinite {\n  to {\n    opacity: .3;\n  }\n}\n.motion {\n  animation: 10s infinite 2 linear;\n}\n"
+        },
+        {
+          "owner": "review-r3",
+          "css": "@scope ([data-rustify-style-owner=\"review-r3\"]) to ([data-rustify-style-owner]) {\n  .motion {\n    animation: 10s infinite 2 linear;\n  }\n}\n@keyframes rustify-review-r3-infinite {\n  to {\n    opacity: .3;\n  }\n}\n"
+        }
+      ]
+    },
+    {
+      "id": "shared-role",
+      "input": ":root { --ease: linear; } @keyframes card { to { opacity: 0; } } @keyframes linear { to { opacity: .5; } } .motion { animation: card 10s var(--ease) infinite; } .other { animation-name: var(--ease); animation-duration: 10s; } @tailwind utilities;",
+      "outputs": [
+        {
+          "owner": null,
+          "css": ":root {\n  --ease: linear;\n}\n@keyframes card {\n  to {\n    opacity: 0;\n  }\n}\n@keyframes linear {\n  to {\n    opacity: .5;\n  }\n}\n.motion {\n  animation: card 10s var(--ease) infinite;\n}\n.other {\n  animation-name: var(--ease);\n  animation-duration: 10s;\n}\n"
+        },
+        {
+          "owner": "review-r3",
+          "css": "@scope ([data-rustify-style-owner=\"review-r3\"]) to ([data-rustify-style-owner]) {\n  :scope {\n    --ease: rustify-review-r3-linear;\n  }\n  .motion {\n    animation: rustify-review-r3-card 10s var(--ease) infinite;\n  }\n  .other {\n    animation-name: var(--ease);\n    animation-duration: 10s;\n  }\n}\n@keyframes rustify-review-r3-card {\n  to {\n    opacity: 0;\n  }\n}\n@keyframes rustify-review-r3-linear {\n  to {\n    opacity: .5;\n  }\n}\n"
+        }
+      ]
+    }
+  ]
+}

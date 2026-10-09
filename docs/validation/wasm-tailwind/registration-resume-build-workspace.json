@@ -1,0 +1,119 @@
+{
+  "workspace": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-tailwind-browser-v_c2md8x",
+  "source": "/Users/rockie/Documents/gh-rockie/rustify-ui",
+  "target": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-tailwind-browser-v_c2md8x/target",
+  "sharedSources": [
+    "crates",
+    "makepad",
+    "examples",
+    "ref",
+    "web",
+    "tests",
+    "scripts"
+  ],
+  "copiedConfiguration": [
+    "Cargo.toml",
+    "Cargo.lock",
+    "package.json",
+    "package-lock.json",
+    "playwright.config.ts",
+    "mise.toml",
+    "sources.lock.json",
+    ".cargo",
+    "xtask"
+  ],
+  "command": "RUSTUP_TOOLCHAIN=1.98.1 RUSTC=/Users/rockie/.rustup/toolchains/1.98.1-aarch64-apple-darwin/bin/rustc CARGO_TARGET_DIR=<workspace>/target MBX_TARGET_VIEWS=0 MBX_LEARNED_INCREMENTAL=0 MBX_CACHE_DIR=/tmp/rustify-tailwind-mbx-1.98.1 mbx xtask build-web --example utility-lab --release --base /tools/utility-lab/",
+  "copiedConfigurationHashes": {
+    "Cargo.toml": {
+      "source": "dee97baccd454f9bf74ccd8c4bac69e47579d2284b5f07bcb39f73a22d5f871a",
+      "copy": "dee97baccd454f9bf74ccd8c4bac69e47579d2284b5f07bcb39f73a22d5f871a"
+    },
+    "Cargo.lock": {
+      "source": "3e1069d4610684c784ddd750ddd9a20132d9f749d3aa660f0bf1d7887ef4577c",
+      "copy": "3e1069d4610684c784ddd750ddd9a20132d9f749d3aa660f0bf1d7887ef4577c"
+    },
+    "package.json": {
+      "source": "bcc6c3b17887ae0ddac11f39b9cb32cf51c2c4ebfb67414f0863ab1624528c90",
+      "copy": "bcc6c3b17887ae0ddac11f39b9cb32cf51c2c4ebfb67414f0863ab1624528c90"
+    },
+    "package-lock.json": {
+      "source": "870c9e350f686935fee2008cac80dfa3e0c08bedf641669de9c6507cb1084dd3",
+      "copy": "870c9e350f686935fee2008cac80dfa3e0c08bedf641669de9c6507cb1084dd3"
+    },
+    "playwright.config.ts": {
+      "source": "04d4c6ae6028bb7dc515a796dd42e7a11b48adbded3fbff33f69a8ac15aca3af",
+      "copy": "04d4c6ae6028bb7dc515a796dd42e7a11b48adbded3fbff33f69a8ac15aca3af"
+    },
+    "mise.toml": {
+      "source": "b39792f4c61600ed818b759bb8f9316b217372135b4b0eae097305ceec761f79",
+      "copy": "b39792f4c61600ed818b759bb8f9316b217372135b4b0eae097305ceec761f79"
+    },
+    "sources.lock.json": {
+      "source": "f07a22046a145b10b7dda5c4ccb949ee1ffc00673a57f5ab3dc1a1c15b0ceb6d",
+      "copy": "f07a22046a145b10b7dda5c4ccb949ee1ffc00673a57f5ab3dc1a1c15b0ceb6d"
+    },
+    ".cargo/config.toml": {
+      "source": "716b49c90c25aeeebc4b0359b111a62927d166a1d7f02c4fe83b89d55fb74887",
+      "copy": "716b49c90c25aeeebc4b0359b111a62927d166a1d7f02c4fe83b89d55fb74887"
+    },
+    "xtask/Cargo.toml": {
+      "source": "5c0cb6c003e57cba452e1a65d3aa93e9a4e2e2e870cb67774c658b4bfb1b477e",
+      "copy": "5c0cb6c003e57cba452e1a65d3aa93e9a4e2e2e870cb67774c658b4bfb1b477e"
+    },
+    "xtask/src/serve.rs": {
+      "source": "f95b4fec14523c94e9f40384be565d91b4010c3f12ffc18e35c03ad363688e6d",
+      "copy": "f95b4fec14523c94e9f40384be565d91b4010c3f12ffc18e35c03ad363688e6d"
+    },
+    "xtask/src/bridge.rs": {
+      "source": "a2f9bdb9b37fd33768757096693d8a9d22993354f56798d6d4aa18ab0c1a8535",
+      "copy": "a2f9bdb9b37fd33768757096693d8a9d22993354f56798d6d4aa18ab0c1a8535"
+    },
+    "xtask/src/utility.rs": {
+      "source": "ab39be91590e377f01d0d1e19c05f82187b128c9f1f715116bb61be545d6184d",
+      "copy": "ab39be91590e377f01d0d1e19c05f82187b128c9f1f715116bb61be545d6184d"
+    },
+    "xtask/src/build.rs": {
+      "source": "899115b677b19d255108e2a837c91fad71e94423609d9354442cae098260d00a",
+      "copy": "899115b677b19d255108e2a837c91fad71e94423609d9354442cae098260d00a"
+    },
+    "xtask/src/catalog.rs": {
+      "source": "1fb7ad79a239c729eb99498b6bc78715ebb5ed9c524b0dcc981e3cab2f511f7b",
+      "copy": "1fb7ad79a239c729eb99498b6bc78715ebb5ed9c524b0dcc981e3cab2f511f7b"
+    },
+    "xtask/src/doctor.rs": {
+      "source": "a72d62c190141d8cc5c1fb46d7e06a0e5db539905e6eda5f030e1d0d77775fc1",
+      "copy": "a72d62c190141d8cc5c1fb46d7e06a0e5db539905e6eda5f030e1d0d77775fc1"
+    },
+    "xtask/src/verify.rs": {
+      "source": "bc964c6354bb6b222f2dbec13beef19949efa72ee4e2e0350eb9061b96d42f3c",
+      "copy": "bc964c6354bb6b222f2dbec13beef19949efa72ee4e2e0350eb9061b96d42f3c"
+    },
+    "xtask/src/main.rs": {
+      "source": "02a6572472c8dc9be6c87c5ba6050eb0d1e7aacda79677dd1adc506c6357626e",
+      "copy": "02a6572472c8dc9be6c87c5ba6050eb0d1e7aacda79677dd1adc506c6357626e"
+    },
+    "xtask/src/tailwind.rs": {
+      "source": "c19c63ffe169c06973b4d9382f0d8efdaf9a25c6b505210bb450f92e00063ba4",
+      "copy": "c19c63ffe169c06973b4d9382f0d8efdaf9a25c6b505210bb450f92e00063ba4"
+    },
+    "xtask/src/css.rs": {
+      "source": "651b5c6307a6bf88e57d80d50451cb5ce80b781fcbacdc2f05b6c6ebc7c4e83d",
+      "copy": "651b5c6307a6bf88e57d80d50451cb5ce80b781fcbacdc2f05b6c6ebc7c4e83d"
+    },
+    "xtask/src/sources.rs": {
+      "source": "90abc3fa7d948cbb438b3eda35ef57b2997869c22e06e611a43b7adc1feb92de",
+      "copy": "90abc3fa7d948cbb438b3eda35ef57b2997869c22e06e611a43b7adc1feb92de"
+    },
+    "xtask/src/utility/seed.rs": {
+      "source": "0148521feea35bc182ab0ad97a412f383017c1eb3571e615ef9c33bf2c923052",
+      "copy": "0148521feea35bc182ab0ad97a412f383017c1eb3571e615ef9c33bf2c923052"
+    }
+  },
+  "toolchainFailure": {
+    "inheritedRustupToolchain": "1.99.0",
+    "pinnedRustc": "1.98.1",
+    "symptom": "Makepad host E0514: wasm_bindgen_cli_support was compiled by incompatible rustc",
+    "mixedTargetPreserved": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-tailwind-browser-v_c2md8x/target-mixed-toolchain",
+    "resolvedWithExplicitPinsAndFreshTarget": true
+  }
+}

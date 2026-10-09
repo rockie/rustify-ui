@@ -90,7 +90,7 @@ pub fn TextField(
             node_ref=node
             type=kind.attribute()
             id=id
-            class=crate::macros::merge(BASE, &class)
+            class=crate::macros::reactive_merge(BASE, &class)
             data-name="TextField"
             data-testid=test_id
             placeholder=placeholder

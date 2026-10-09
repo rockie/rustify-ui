@@ -1,0 +1,1912 @@
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style/src/compiler/public_api/../../../../../tests/utility/compiler/design-system-native.rs:7:
+ }
+ 
+ fn design(case: &Value) -> DesignSystem {
+[31m-    load_design_system(case["input"].as_str().unwrap(), CompileOptions::default(), vec![], {let mut limits = crate::compiler::tests::limits(); limits.cache_bytes = 8_000_000; limits.candidate_count = 1024; limits}).unwrap()
+(B[m[32m+    load_design_system(
+(B[m[32m+        case["input"].as_str().unwrap(),
+(B[m[32m+        CompileOptions::default(),
+(B[m[32m+        vec![],
+(B[m[32m+        {
+(B[m[32m+            let mut limits = crate::compiler::tests::limits();
+(B[m[32m+            limits.cache_bytes = 8_000_000;
+(B[m[32m+            limits.candidate_count = 1024;
+(B[m[32m+            limits
+(B[m[32m+        },
+(B[m[32m+    )
+(B[m[32m+    .unwrap()
+(B[m }
+ 
+ #[test]
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style/src/compiler/public_api/../../../../../tests/utility/compiler/design-system-native.rs:16:
+         let mut api = design(&case);
+         assert_eq!(api.important, case["important"].as_bool().unwrap());
+         for result in case["candidateResults"].as_array().unwrap() {
+[31m-            let parsed = api.parse_candidate(result["raw"].as_str().unwrap()).unwrap();
+(B[m[31m-            assert_eq!(json!(parsed), result["parsed"], "{} parse {}", case["id"], result["raw"]);
+(B[m[32m+            let parsed = api
+(B[m[32m+                .parse_candidate(result["raw"].as_str().unwrap())
+(B[m[32m+                .unwrap();
+(B[m[32m+            assert_eq!(
+(B[m[32m+                json!(parsed),
+(B[m[32m+                result["parsed"],
+(B[m[32m+                "{} parse {}",
+(B[m[32m+                case["id"],
+(B[m[32m+                result["raw"]
+(B[m[32m+            );
+(B[m             for (index, candidate) in parsed.iter().enumerate() {
+[31m-                assert_eq!(json!(api.print_candidate(candidate).unwrap()), result["printed"][index]);
+(B[m[31m-                assert_eq!(json!(api.compile_ast_nodes(candidate, 0).unwrap()), result["compiled"][index]["flagsNone"]);
+(B[m[31m-                assert_eq!(json!(api.compile_ast_nodes(candidate, 1).unwrap()), result["compiled"][index]["flagsRespectImportant"]);
+(B[m[32m+                assert_eq!(
+(B[m[32m+                    json!(api.print_candidate(candidate).unwrap()),
+(B[m[32m+                    result["printed"][index]
+(B[m[32m+                );
+(B[m[32m+                assert_eq!(
+(B[m[32m+                    json!(api.compile_ast_nodes(candidate, 0).unwrap()),
+(B[m[32m+                    result["compiled"][index]["flagsNone"]
+(B[m[32m+                );
+(B[m[32m+                assert_eq!(
+(B[m[32m+                    json!(api.compile_ast_nodes(candidate, 1).unwrap()),
+(B[m[32m+                    result["compiled"][index]["flagsRespectImportant"]
+(B[m[32m+                );
+(B[m             }
+         }
+     }
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style/src/compiler/public_api/../../../../../tests/utility/compiler/design-system-native.rs:33:
+         let mut api = design(&case);
+         for result in case["variantResults"].as_array().unwrap() {
+             let parsed = api.parse_variant(result["raw"].as_str().unwrap()).unwrap();
+[31m-            assert_eq!(parsed, result["parsed"], "{} parse {}", case["id"], result["raw"]);
+(B[m[31m-            if !parsed.is_null() { assert_eq!(json!(api.print_variant(&parsed).unwrap()), result["printed"]); }
+(B[m[32m+            assert_eq!(
+(B[m[32m+                parsed, result["parsed"],
+(B[m[32m+                "{} parse {}",
+(B[m[32m+                case["id"], result["raw"]
+(B[m[32m+            );
+(B[m[32m+            if !parsed.is_null() {
+(B[m[32m+                assert_eq!(
+(B[m[32m+                    json!(api.print_variant(&parsed).unwrap()),
+(B[m[32m+                    result["printed"]
+(B[m[32m+                );
+(B[m[32m+            }
+(B[m         }
+         let mut variants = api.get_variants().unwrap();
+         for variant in &mut variants {
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style/src/compiler/public_api/../../../../../tests/utility/compiler/design-system-native.rs:41:
+             let name = variant["name"].as_str().unwrap().to_owned();
+             let value = variant["values"][0].as_str().unwrap_or("card").to_owned();
+             let mut probes = Vec::new();
+[31m-            for options in [json!({}), json!({"value": value}), json!({"value":"[state=open]", "modifier":"named"})] {
+(B[m[32m+            for options in [
+(B[m[32m+                json!({}),
+(B[m[32m+                json!({"value": value}),
+(B[m[32m+                json!({"value":"[state=open]", "modifier":"named"}),
+(B[m[32m+            ] {
+(B[m                 let selectors = api.variant_selectors(&name, &options).unwrap();
+                 probes.push(json!({"options":options,"selectors":selectors}));
+             }
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style/src/compiler/public_api/../../../../../tests/utility/compiler/design-system-native.rs:48:
+             variant["selectorProbes"] = json!(probes);
+         }
+[31m-        assert_eq!(variants.len(), case["expectedVariants"].as_array().unwrap().len());
+(B[m[31m-        for (actual,expected) in variants.iter().zip(case["expectedVariants"].as_array().unwrap()) { assert_eq!(actual,expected,"{} variant {}",case["id"],actual["name"]); }
+(B[m[32m+        assert_eq!(
+(B[m[32m+            variants.len(),
+(B[m[32m+            case["expectedVariants"].as_array().unwrap().len()
+(B[m[32m+        );
+(B[m[32m+        for (actual, expected) in variants
+(B[m[32m+            .iter()
+(B[m[32m+            .zip(case["expectedVariants"].as_array().unwrap())
+(B[m[32m+        {
+(B[m[32m+            assert_eq!(
+(B[m[32m+                actual, expected,
+(B[m[32m+                "{} variant {}",
+(B[m[32m+                case["id"], actual["name"]
+(B[m[32m+            );
+(B[m[32m+        }
+(B[m     }
+ }
+ 
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style/src/compiler/public_api/../../../../../tests/utility/compiler/design-system-native.rs:56:
+ fn all_class_completions_match_the_fixed_upstream_digest() {
+     for case in fixtures() {
+         let list = design(&case).get_class_list().unwrap();
+[31m-        assert_eq!(list.as_array().unwrap().len(), case["expectedClassList"]["count"].as_u64().unwrap() as usize, "{} class count", case["id"]);
+(B[m[32m+        assert_eq!(
+(B[m[32m+            list.as_array().unwrap().len(),
+(B[m[32m+            case["expectedClassList"]["count"].as_u64().unwrap() as usize,
+(B[m[32m+            "{} class count",
+(B[m[32m+            case["id"]
+(B[m[32m+        );
+(B[m         let digest = format!("{:x}", Sha256::digest(serde_json::to_vec(&list).unwrap()));
+[31m-        assert_eq!(digest, case["expectedClassList"]["sha256"].as_str().unwrap(), "{} class digest", case["id"]);
+(B[m[32m+        assert_eq!(
+(B[m[32m+            digest,
+(B[m[32m+            case["expectedClassList"]["sha256"].as_str().unwrap(),
+(B[m[32m+            "{} class digest",
+(B[m[32m+            case["id"]
+(B[m[32m+        );
+(B[m     }
+ }
+ 
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style/src/compiler/public_api/../../../../../tests/utility/compiler/design-system-native.rs:66:
+ fn class_order_css_and_cached_variant_order_match_fixed_public_api() {
+     for case in fixtures() {
+         let mut api = design(&case);
+[31m-        for candidate in case["candidateResults"].as_array().unwrap() { api.parse_candidate(candidate["raw"].as_str().unwrap()).unwrap(); }
+(B[m[31m-        for variant in case["variantResults"].as_array().unwrap() { api.parse_variant(variant["raw"].as_str().unwrap()).unwrap(); }
+(B[m[32m+        for candidate in case["candidateResults"].as_array().unwrap() {
+(B[m[32m+            api.parse_candidate(candidate["raw"].as_str().unwrap())
+(B[m[32m+                .unwrap();
+(B[m[32m+        }
+(B[m[32m+        for variant in case["variantResults"].as_array().unwrap() {
+(B[m[32m+            api.parse_variant(variant["raw"].as_str().unwrap()).unwrap();
+(B[m[32m+        }
+(B[m         for variant in api.get_variants().unwrap() {
+             let name = variant["name"].as_str().unwrap();
+             let value = variant["values"][0].as_str().unwrap_or("card");
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style/src/compiler/public_api/../../../../../tests/utility/compiler/design-system-native.rs:74:
+[31m-            for options in [json!({}),json!({"value":value}),json!({"value":"[state=open]","modifier":"named"})] { api.variant_selectors(name, &options).unwrap(); }
+(B[m[32m+            for options in [
+(B[m[32m+                json!({}),
+(B[m[32m+                json!({"value":value}),
+(B[m[32m+                json!({"value":"[state=open]","modifier":"named"}),
+(B[m[32m+            ] {
+(B[m[32m+                api.variant_selectors(name, &options).unwrap();
+(B[m[32m+            }
+(B[m         }
+         let classes: Vec<String> = serde_json::from_value(case["classOrderInput"].clone()).unwrap();
+[31m-        assert_eq!(api.get_class_order(&classes).unwrap(), case["expectedClassOrder"], "{} class order", case["id"]);
+(B[m[31m-        let candidates: Vec<String> = case["candidateResults"].as_array().unwrap().iter().map(|c|c["raw"].as_str().unwrap().into()).collect();
+(B[m[31m-        assert_eq!(api.candidates_to_css(&candidates).unwrap(), case["expectedCandidatesToCss"], "{} css", case["id"]);
+(B[m[31m-        assert_eq!(api.get_variant_order().unwrap(), case["expectedVariantOrder"], "{} variant order", case["id"]);
+(B[m[32m+        assert_eq!(
+(B[m[32m+            api.get_class_order(&classes).unwrap(),
+(B[m[32m+            case["expectedClassOrder"],
+(B[m[32m+            "{} class order",
+(B[m[32m+            case["id"]
+(B[m[32m+        );
+(B[m[32m+        let candidates: Vec<String> = case["candidateResults"]
+(B[m[32m+            .as_array()
+(B[m[32m+            .unwrap()
+(B[m[32m+            .iter()
+(B[m[32m+            .map(|c| c["raw"].as_str().unwrap().into())
+(B[m[32m+            .collect();
+(B[m[32m+        assert_eq!(
+(B[m[32m+            api.candidates_to_css(&candidates).unwrap(),
+(B[m[32m+            case["expectedCandidatesToCss"],
+(B[m[32m+            "{} css",
+(B[m[32m+            case["id"]
+(B[m[32m+        );
+(B[m[32m+        assert_eq!(
+(B[m[32m+            api.get_variant_order().unwrap(),
+(B[m[32m+            case["expectedVariantOrder"],
+(B[m[32m+            "{} variant order",
+(B[m[32m+            case["id"]
+(B[m[32m+        );
+(B[m         assert_eq!(api.invalid_candidates(), case["expectedInvalidCandidates"]);
+     }
+ }
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style/src/compiler/public_api/../../../../../tests/utility/compiler/design-system-native.rs:86:
+ fn theme_resolution_and_variable_tracking_match_fixed_public_api() {
+     for case in fixtures() {
+         let api = design(&case);
+[31m-        for result in case["resolveResults"].as_array().unwrap() { assert_eq!(api.resolve_theme_value(result["path"].as_str().unwrap(),result["forceInline"].as_bool().unwrap_or(true)).unwrap(),result["result"]); }
+(B[m[32m+        for result in case["resolveResults"].as_array().unwrap() {
+(B[m[32m+            assert_eq!(
+(B[m[32m+                api.resolve_theme_value(
+(B[m[32m+                    result["path"].as_str().unwrap(),
+(B[m[32m+                    result["forceInline"].as_bool().unwrap_or(true)
+(B[m[32m+                )
+(B[m[32m+                .unwrap(),
+(B[m[32m+                result["result"]
+(B[m[32m+            );
+(B[m[32m+        }
+(B[m         let mut api = design(&case);
+[31m-        assert_eq!(api.theme_entries(),case["trackUsedVariables"]["beforeTracking"]);
+(B[m[31m-        api.track_used_variables(case["trackUsedVariables"]["input"].as_str().unwrap()).unwrap();
+(B[m[31m-        assert_eq!(api.theme_entries(),case["trackUsedVariables"]["afterTracking"]);
+(B[m[31m-        api.track_used_variables(case["trackUsedVariables"]["input"].as_str().unwrap()).unwrap();
+(B[m[31m-        assert_eq!(api.theme_entries(),case["trackUsedVariables"]["repeatedTracking"]);
+(B[m[32m+        assert_eq!(
+(B[m[32m+            api.theme_entries(),
+(B[m[32m+            case["trackUsedVariables"]["beforeTracking"]
+(B[m[32m+        );
+(B[m[32m+        api.track_used_variables(case["trackUsedVariables"]["input"].as_str().unwrap())
+(B[m[32m+            .unwrap();
+(B[m[32m+        assert_eq!(
+(B[m[32m+            api.theme_entries(),
+(B[m[32m+            case["trackUsedVariables"]["afterTracking"]
+(B[m[32m+        );
+(B[m[32m+        api.track_used_variables(case["trackUsedVariables"]["input"].as_str().unwrap())
+(B[m[32m+            .unwrap();
+(B[m[32m+        assert_eq!(
+(B[m[32m+            api.theme_entries(),
+(B[m[32m+            case["trackUsedVariables"]["repeatedTracking"]
+(B[m[32m+        );
+(B[m     }
+ }
+ 
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style/src/compiler/public_api/design_system.rs:1:
+ //! Fixed-version public design-system operations share the Rust utility emitters.
+ 
+ use super::{CompileOptions, Stylesheet};
+[31m-use crate::compiler::{self, ast::AstNode, candidate::{Candidate, CandidateKind, CandidateValue}, custom_utilities::UtilityKind, theme::Theme, utilities::{CompileFailure, CompiledCandidate}, value, variants, CompileError, Compiler, Limits};
+(B[m[32m+use crate::compiler::{
+(B[m[32m+    self,
+(B[m[32m+    ast::AstNode,
+(B[m[32m+    candidate::{Candidate, CandidateKind, CandidateValue},
+(B[m[32m+    custom_utilities::UtilityKind,
+(B[m[32m+    theme::Theme,
+(B[m[32m+    utilities::{CompileFailure, CompiledCandidate},
+(B[m[32m+    value, variants, CompileError, Compiler, Limits,
+(B[m[32m+};
+(B[m use serde_json::{json, Value};
+[31m-use std::{cmp::Ordering, collections::{BTreeMap, BTreeSet}};
+(B[m[32m+use std::{
+(B[m[32m+    cmp::Ordering,
+(B[m[32m+    collections::{BTreeMap, BTreeSet},
+(B[m[32m+};
+(B[m 
+ pub struct DesignSystem {
+     compiler: Compiler,
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style/src/compiler/public_api/design_system.rs:15:
+     pub important: bool,
+ }
+ 
+[31m-pub fn load_design_system(css: &str, options: CompileOptions, assets: Vec<Stylesheet>, limits: Limits) -> Result<DesignSystem, CompileError> {
+(B[m[32m+pub fn load_design_system(
+(B[m[32m+    css: &str,
+(B[m[32m+    options: CompileOptions,
+(B[m[32m+    assets: Vec<Stylesheet>,
+(B[m[32m+    limits: Limits,
+(B[m[32m+) -> Result<DesignSystem, CompileError> {
+(B[m     let api = super::compile(css, options, assets, limits)?;
+     Ok(DesignSystem {
+         retained_bytes: api.compiler.report().metrics.cache_bytes,
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style/src/compiler/public_api/design_system.rs:22:
+         compiler: api.compiler,
+[31m-        parsed_candidates: BTreeMap::new(), parsed_variants: Vec::new(), variant_indices: BTreeMap::new(), used_variables: BTreeSet::new(), important: false,
+(B[m[32m+        parsed_candidates: BTreeMap::new(),
+(B[m[32m+        parsed_variants: Vec::new(),
+(B[m[32m+        variant_indices: BTreeMap::new(),
+(B[m[32m+        used_variables: BTreeSet::new(),
+(B[m[32m+        important: false,
+(B[m     })
+ }
+ 
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style/src/compiler/public_api/design_system.rs:27:
+[31m-fn syntax(message: &str) -> CompileError { CompileError::Syntax { offset: 0, message: message.into() } }
+(B[m[32m+fn syntax(message: &str) -> CompileError {
+(B[m[32m+    CompileError::Syntax {
+(B[m[32m+        offset: 0,
+(B[m[32m+        message: message.into(),
+(B[m[32m+    }
+(B[m[32m+}
+(B[m fn string<'a>(value: &'a Value, name: &str) -> Result<&'a str, CompileError> {
+[31m-    value.get(name).and_then(Value::as_str).ok_or_else(|| syntax("Invalid public design-system string field"))
+(B[m[32m+    value
+(B[m[32m+        .get(name)
+(B[m[32m+        .and_then(Value::as_str)
+(B[m[32m+        .ok_or_else(|| syntax("Invalid public design-system string field"))
+(B[m }
+[31m-fn text_cmp(a: &str, b: &str) -> Ordering { a.encode_utf16().cmp(b.encode_utf16()) }
+(B[m[31m-fn undefined() -> Value { json!({"undefined":true}) }
+(B[m[32m+fn text_cmp(a: &str, b: &str) -> Ordering {
+(B[m[32m+    a.encode_utf16().cmp(b.encode_utf16())
+(B[m[32m+}
+(B[m[32m+fn undefined() -> Value {
+(B[m[32m+    json!({"undefined":true})
+(B[m[32m+}
+(B[m fn json_bytes(value: &Value) -> usize {
+     match value {
+         Value::String(value) => value.capacity().saturating_add(32),
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style/src/compiler/public_api/design_system.rs:36:
+[31m-        Value::Array(values) => values.iter().fold(values.capacity().saturating_mul(std::mem::size_of::<Value>()), |total, value| total.saturating_add(json_bytes(value))),
+(B[m[31m-        Value::Object(values) => values.iter().fold(values.len().saturating_mul(128), |total, (key,value)| total.saturating_add(key.capacity()).saturating_add(json_bytes(value))),
+(B[m[32m+        Value::Array(values) => values.iter().fold(
+(B[m[32m+            values
+(B[m[32m+                .capacity()
+(B[m[32m+                .saturating_mul(std::mem::size_of::<Value>()),
+(B[m[32m+            |total, value| total.saturating_add(json_bytes(value)),
+(B[m[32m+        ),
+(B[m[32m+        Value::Object(values) => {
+(B[m[32m+            values
+(B[m[32m+                .iter()
+(B[m[32m+                .fold(values.len().saturating_mul(128), |total, (key, value)| {
+(B[m[32m+                    total
+(B[m[32m+                        .saturating_add(key.capacity())
+(B[m[32m+                        .saturating_add(json_bytes(value))
+(B[m[32m+                })
+(B[m[32m+        }
+(B[m         _ => 32,
+     }
+ }
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style/src/compiler/public_api/design_system.rs:41:
+ 
+ impl DesignSystem {
+[31m-    fn input(&self, raw: &str) -> Result<(), CompileError> { compiler::check_limit(raw.len(), self.compiler.limits.input_bytes, "input_bytes") }
+(B[m[31m-    fn budget(&self, extra: usize) -> Result<(), CompileError> { compiler::check_limit(self.retained_bytes.saturating_add(extra), self.compiler.limits.cache_bytes, "cache_bytes") }
+(B[m[31m-    fn result(&self, value: Value) -> Result<Value, CompileError> { self.budget(json_bytes(&value))?; Ok(value) }
+(B[m[32m+    fn input(&self, raw: &str) -> Result<(), CompileError> {
+(B[m[32m+        compiler::check_limit(raw.len(), self.compiler.limits.input_bytes, "input_bytes")
+(B[m[32m+    }
+(B[m[32m+    fn budget(&self, extra: usize) -> Result<(), CompileError> {
+(B[m[32m+        compiler::check_limit(
+(B[m[32m+            self.retained_bytes.saturating_add(extra),
+(B[m[32m+            self.compiler.limits.cache_bytes,
+(B[m[32m+            "cache_bytes",
+(B[m[32m+        )
+(B[m[32m+    }
+(B[m[32m+    fn result(&self, value: Value) -> Result<Value, CompileError> {
+(B[m[32m+        self.budget(json_bytes(&value))?;
+(B[m[32m+        Ok(value)
+(B[m[32m+    }
+(B[m 
+     pub fn parse_candidate(&mut self, raw: &str) -> Result<Vec<Value>, CompileError> {
+         self.input(raw)?;
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style/src/compiler/public_api/design_system.rs:49:
+[31m-        if let Some(parsed) = self.parsed_candidates.get(raw) { return Ok(parsed.clone()); }
+(B[m[31m-        compiler::check_limit(self.parsed_candidates.len().saturating_add(1), self.compiler.limits.candidate_count, "candidate_count")?;
+(B[m[31m-        let candidates = compiler::candidate::parse_with_utilities(raw, self.compiler.limits.ast_depth, &self.compiler.theme, &self.compiler.custom)?;
+(B[m[32m+        if let Some(parsed) = self.parsed_candidates.get(raw) {
+(B[m[32m+            return Ok(parsed.clone());
+(B[m[32m+        }
+(B[m[32m+        compiler::check_limit(
+(B[m[32m+            self.parsed_candidates.len().saturating_add(1),
+(B[m[32m+            self.compiler.limits.candidate_count,
+(B[m[32m+            "candidate_count",
+(B[m[32m+        )?;
+(B[m[32m+        let candidates = compiler::candidate::parse_with_utilities(
+(B[m[32m+            raw,
+(B[m[32m+            self.compiler.limits.ast_depth,
+(B[m[32m+            &self.compiler.theme,
+(B[m[32m+            &self.compiler.custom,
+(B[m[32m+        )?;
+(B[m         let mut result = Vec::with_capacity(candidates.len());
+         for candidate in candidates {
+             let mut variants = Vec::with_capacity(candidate.variants.len());
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style/src/compiler/public_api/design_system.rs:55:
+             for variant in &candidate.variants {
+[31m-                let raw = match variant { compiler::candidate::Variant::Registered {raw,..} => raw.clone(), compiler::candidate::Variant::Arbitrary {selector,..} => format!("[{selector}]") };
+(B[m[32m+                let raw = match variant {
+(B[m[32m+                    compiler::candidate::Variant::Registered { raw, .. } => raw.clone(),
+(B[m[32m+                    compiler::candidate::Variant::Arbitrary { selector, .. } => {
+(B[m[32m+                        format!("[{selector}]")
+(B[m[32m+                    }
+(B[m[32m+                };
+(B[m                 variants.push(self.parse_variant(&raw)?);
+             }
+             let mut node = match candidate.kind {
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style/src/compiler/public_api/design_system.rs:60:
+[31m-                CandidateKind::Static {root} => json!({"kind":"static","root":root}),
+(B[m[31m-                CandidateKind::Functional {root, value, modifier} => {
+(B[m[31m-                    let modifier = modifier_json(modifier.as_deref(), self.compiler.limits.ast_depth)?;
+(B[m[32m+                CandidateKind::Static { root } => json!({"kind":"static","root":root}),
+(B[m[32m+                CandidateKind::Functional {
+(B[m[32m+                    root,
+(B[m[32m+                    value,
+(B[m[32m+                    modifier,
+(B[m[32m+                } => {
+(B[m[32m+                    let modifier =
+(B[m[32m+                        modifier_json(modifier.as_deref(), self.compiler.limits.ast_depth)?;
+(B[m                     let value = match value {
+                         None => Value::Null,
+[31m-                        Some(CandidateValue::Named {value}) => json!({"kind":"named","fraction":modifier["value"].as_str().filter(|_| modifier["kind"] == "named").map(|m|format!("{value}/{m}")),"value":value}),
+(B[m[31m-                        Some(CandidateValue::Arbitrary {value,data_type}) => json!({"kind":"arbitrary","dataType":data_type,"value":value}),
+(B[m[32m+                        Some(CandidateValue::Named { value }) => {
+(B[m[32m+                            json!({"kind":"named","fraction":modifier["value"].as_str().filter(|_| modifier["kind"] == "named").map(|m|format!("{value}/{m}")),"value":value})
+(B[m[32m+                        }
+(B[m[32m+                        Some(CandidateValue::Arbitrary { value, data_type }) => {
+(B[m[32m+                            json!({"kind":"arbitrary","dataType":data_type,"value":value})
+(B[m[32m+                        }
+(B[m                     };
+                     json!({"kind":"functional","root":root,"modifier":modifier,"value":value})
+                 }
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style/src/compiler/public_api/design_system.rs:70:
+[31m-                CandidateKind::ArbitraryProperty {property,value,modifier} => json!({"kind":"arbitrary","property":property,"value":value,"modifier":modifier_json(modifier.as_deref(),self.compiler.limits.ast_depth)?}),
+(B[m[32m+                CandidateKind::ArbitraryProperty {
+(B[m[32m+                    property,
+(B[m[32m+                    value,
+(B[m[32m+                    modifier,
+(B[m[32m+                } => {
+(B[m[32m+                    json!({"kind":"arbitrary","property":property,"value":value,"modifier":modifier_json(modifier.as_deref(),self.compiler.limits.ast_depth)?})
+(B[m[32m+                }
+(B[m             };
+[31m-            node["variants"] = json!(variants); node["important"] = json!(candidate.important); node["raw"] = json!(candidate.raw);
+(B[m[32m+            node["variants"] = json!(variants);
+(B[m[32m+            node["important"] = json!(candidate.important);
+(B[m[32m+            node["raw"] = json!(candidate.raw);
+(B[m             result.push(node);
+         }
+[31m-        let bytes = result.iter().map(json_bytes).sum::<usize>().saturating_add(raw.len()).saturating_add(128);
+(B[m[32m+        let bytes = result
+(B[m[32m+            .iter()
+(B[m[32m+            .map(json_bytes)
+(B[m[32m+            .sum::<usize>()
+(B[m[32m+            .saturating_add(raw.len())
+(B[m[32m+            .saturating_add(128);
+(B[m         self.budget(bytes)?;
+         self.retained_bytes = self.retained_bytes.saturating_add(bytes);
+         self.parsed_candidates.insert(raw.into(), result.clone());
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style/src/compiler/public_api/design_system.rs:81:
+ 
+     pub fn parse_variant(&mut self, raw: &str) -> Result<Value, CompileError> {
+         self.input(raw)?;
+[31m-        if let Some(index) = self.variant_indices.get(raw) { return Ok(self.parsed_variants[*index].1.clone()); }
+(B[m[31m-        compiler::check_limit(self.parsed_variants.len().saturating_add(1), self.compiler.limits.candidate_count, "candidate_count")?;
+(B[m[32m+        if let Some(index) = self.variant_indices.get(raw) {
+(B[m[32m+            return Ok(self.parsed_variants[*index].1.clone());
+(B[m[32m+        }
+(B[m[32m+        compiler::check_limit(
+(B[m[32m+            self.parsed_variants.len().saturating_add(1),
+(B[m[32m+            self.compiler.limits.candidate_count,
+(B[m[32m+            "candidate_count",
+(B[m[32m+        )?;
+(B[m         // Compound children are inserted first, as in the upstream DefaultMap.
+[31m-        if let Some(compiler::candidate::Variant::Registered {root,value:Some(child),..}) = compiler::candidate::parse_variant_with_theme(raw,self.compiler.limits.ast_depth,&self.compiler.theme)? {
+(B[m[31m-            if variants::root_kind(&root,&self.compiler.theme) == Some(variants::VariantKind::Compound) { self.parse_variant(&child)?; }
+(B[m[32m+        if let Some(compiler::candidate::Variant::Registered {
+(B[m[32m+            root,
+(B[m[32m+            value: Some(child),
+(B[m[32m+            ..
+(B[m[32m+        }) = compiler::candidate::parse_variant_with_theme(
+(B[m[32m+            raw,
+(B[m[32m+            self.compiler.limits.ast_depth,
+(B[m[32m+            &self.compiler.theme,
+(B[m[32m+        )? {
+(B[m[32m+            if variants::root_kind(&root, &self.compiler.theme)
+(B[m[32m+                == Some(variants::VariantKind::Compound)
+(B[m[32m+            {
+(B[m[32m+                self.parse_variant(&child)?;
+(B[m[32m+            }
+(B[m         }
+[31m-        let parsed = compiler::candidate::parse_variant_json_with_theme(raw,self.compiler.limits.ast_depth,&self.compiler.theme)?;
+(B[m[31m-        let bytes = json_bytes(&parsed).saturating_add(raw.len().saturating_mul(2)).saturating_add(192);
+(B[m[32m+        let parsed = compiler::candidate::parse_variant_json_with_theme(
+(B[m[32m+            raw,
+(B[m[32m+            self.compiler.limits.ast_depth,
+(B[m[32m+            &self.compiler.theme,
+(B[m[32m+        )?;
+(B[m[32m+        let bytes = json_bytes(&parsed)
+(B[m[32m+            .saturating_add(raw.len().saturating_mul(2))
+(B[m[32m+            .saturating_add(192);
+(B[m         self.budget(bytes)?;
+         self.retained_bytes = self.retained_bytes.saturating_add(bytes);
+[31m-        self.variant_indices.insert(raw.into(),self.parsed_variants.len());
+(B[m[31m-        self.parsed_variants.push((raw.into(),parsed.clone()));
+(B[m[32m+        self.variant_indices
+(B[m[32m+            .insert(raw.into(), self.parsed_variants.len());
+(B[m[32m+        self.parsed_variants.push((raw.into(), parsed.clone()));
+(B[m         Ok(parsed)
+     }
+ 
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style/src/compiler/public_api/design_system.rs:99:
+     pub fn print_candidate(&self, candidate: &Value) -> Result<String, CompileError> {
+[31m-        let mut parts = candidate["variants"].as_array().ok_or_else(||syntax("Invalid candidate variants"))?.iter().rev().map(|variant|self.print_variant(variant)).collect::<Result<Vec<_>,_>>()?;
+(B[m[31m-        if let Some(prefix) = &self.compiler.theme.prefix { parts.insert(0,prefix.clone()); }
+(B[m[31m-        let mut base = match string(candidate,"kind")? {
+(B[m[31m-            "static" => string(candidate,"root")?.into(),
+(B[m[32m+        let mut parts = candidate["variants"]
+(B[m[32m+            .as_array()
+(B[m[32m+            .ok_or_else(|| syntax("Invalid candidate variants"))?
+(B[m[32m+            .iter()
+(B[m[32m+            .rev()
+(B[m[32m+            .map(|variant| self.print_variant(variant))
+(B[m[32m+            .collect::<Result<Vec<_>, _>>()?;
+(B[m[32m+        if let Some(prefix) = &self.compiler.theme.prefix {
+(B[m[32m+            parts.insert(0, prefix.clone());
+(B[m[32m+        }
+(B[m[32m+        let mut base = match string(candidate, "kind")? {
+(B[m[32m+            "static" => string(candidate, "root")?.into(),
+(B[m             "functional" => {
+[31m-                let mut base = string(candidate,"root")?.to_string();
+(B[m[31m-                if !candidate["value"].is_null() { base.push('-'); base.push_str(&print_value(&candidate["value"],true,self.compiler.limits.ast_depth)?); }
+(B[m[31m-                base.push_str(&print_modifier(&candidate["modifier"], self.compiler.limits.ast_depth)?); base
+(B[m[32m+                let mut base = string(candidate, "root")?.to_string();
+(B[m[32m+                if !candidate["value"].is_null() {
+(B[m[32m+                    base.push('-');
+(B[m[32m+                    base.push_str(&print_value(
+(B[m[32m+                        &candidate["value"],
+(B[m[32m+                        true,
+(B[m[32m+                        self.compiler.limits.ast_depth,
+(B[m[32m+                    )?);
+(B[m[32m+                }
+(B[m[32m+                base.push_str(&print_modifier(
+(B[m[32m+                    &candidate["modifier"],
+(B[m[32m+                    self.compiler.limits.ast_depth,
+(B[m[32m+                )?);
+(B[m[32m+                base
+(B[m             }
+[31m-            "arbitrary" => format!("[{}:{}]{}",string(candidate,"property")?,print_arbitrary(string(candidate,"value")?,self.compiler.limits.ast_depth)?,print_modifier(&candidate["modifier"],self.compiler.limits.ast_depth)?),
+(B[m[32m+            "arbitrary" => format!(
+(B[m[32m+                "[{}:{}]{}",
+(B[m[32m+                string(candidate, "property")?,
+(B[m[32m+                print_arbitrary(string(candidate, "value")?, self.compiler.limits.ast_depth)?,
+(B[m[32m+                print_modifier(&candidate["modifier"], self.compiler.limits.ast_depth)?
+(B[m[32m+            ),
+(B[m             _ => return Err(syntax("Invalid candidate kind")),
+         };
+[31m-        if candidate["important"].as_bool().unwrap_or(false) { base.push('!'); }
+(B[m[31m-        parts.push(base); let result = parts.join(":"); self.input(&result)?; Ok(result)
+(B[m[32m+        if candidate["important"].as_bool().unwrap_or(false) {
+(B[m[32m+            base.push('!');
+(B[m[32m+        }
+(B[m[32m+        parts.push(base);
+(B[m[32m+        let result = parts.join(":");
+(B[m[32m+        self.input(&result)?;
+(B[m[32m+        Ok(result)
+(B[m     }
+[31m-    pub fn print_variant(&self, variant: &Value) -> Result<String, CompileError> { print_variant(variant,self.compiler.limits.ast_depth) }
+(B[m[32m+    pub fn print_variant(&self, variant: &Value) -> Result<String, CompileError> {
+(B[m[32m+        print_variant(variant, self.compiler.limits.ast_depth)
+(B[m[32m+    }
+(B[m 
+     fn internal_candidate(&self, candidate: &Value) -> Result<Candidate, CompileError> {
+[31m-        let raw = string(candidate,"raw")?.to_string(); self.input(&raw)?;
+(B[m[31m-        let kind = match string(candidate,"kind")? {
+(B[m[31m-            "static" => CandidateKind::Static {root:string(candidate,"root")?.into()},
+(B[m[31m-            "functional" => CandidateKind::Functional {root:string(candidate,"root")?.into(), value:if candidate["value"].is_null(){None}else{Some(match string(&candidate["value"],"kind")? {
+(B[m[31m-                "named" => CandidateValue::Named {value:string(&candidate["value"],"value")?.into()},
+(B[m[31m-                "arbitrary" => CandidateValue::Arbitrary {value:string(&candidate["value"],"value")?.into(),data_type:candidate["value"]["dataType"].as_str().map(str::to_string)},
+(B[m[31m-                _ => return Err(syntax("Invalid candidate value")),
+(B[m[31m-            })}, modifier:internal_modifier(&candidate["modifier"],self.compiler.limits.ast_depth)?},
+(B[m[31m-            "arbitrary" => CandidateKind::ArbitraryProperty {property:string(candidate,"property")?.into(),value:string(candidate,"value")?.into(),modifier:internal_modifier(&candidate["modifier"],self.compiler.limits.ast_depth)?},
+(B[m[32m+        let raw = string(candidate, "raw")?.to_string();
+(B[m[32m+        self.input(&raw)?;
+(B[m[32m+        let kind = match string(candidate, "kind")? {
+(B[m[32m+            "static" => CandidateKind::Static {
+(B[m[32m+                root: string(candidate, "root")?.into(),
+(B[m[32m+            },
+(B[m[32m+            "functional" => CandidateKind::Functional {
+(B[m[32m+                root: string(candidate, "root")?.into(),
+(B[m[32m+                value: if candidate["value"].is_null() {
+(B[m[32m+                    None
+(B[m[32m+                } else {
+(B[m[32m+                    Some(match string(&candidate["value"], "kind")? {
+(B[m[32m+                        "named" => CandidateValue::Named {
+(B[m[32m+                            value: string(&candidate["value"], "value")?.into(),
+(B[m[32m+                        },
+(B[m[32m+                        "arbitrary" => CandidateValue::Arbitrary {
+(B[m[32m+                            value: string(&candidate["value"], "value")?.into(),
+(B[m[32m+                            data_type: candidate["value"]["dataType"].as_str().map(str::to_string),
+(B[m[32m+                        },
+(B[m[32m+                        _ => return Err(syntax("Invalid candidate value")),
+(B[m[32m+                    })
+(B[m[32m+                },
+(B[m[32m+                modifier: internal_modifier(
+(B[m[32m+                    &candidate["modifier"],
+(B[m[32m+                    self.compiler.limits.ast_depth,
+(B[m[32m+                )?,
+(B[m[32m+            },
+(B[m[32m+            "arbitrary" => CandidateKind::ArbitraryProperty {
+(B[m[32m+                property: string(candidate, "property")?.into(),
+(B[m[32m+                value: string(candidate, "value")?.into(),
+(B[m[32m+                modifier: internal_modifier(
+(B[m[32m+                    &candidate["modifier"],
+(B[m[32m+                    self.compiler.limits.ast_depth,
+(B[m[32m+                )?,
+(B[m[32m+            },
+(B[m             _ => return Err(syntax("Invalid candidate kind")),
+         };
+[31m-        let variants = candidate["variants"].as_array().ok_or_else(||syntax("Invalid candidate variants"))?.iter().map(|variant| {
+(B[m[31m-            let raw = self.print_variant(variant)?;
+(B[m[31m-            compiler::candidate::parse_variant_with_theme(&raw,self.compiler.limits.ast_depth,&self.compiler.theme)?.ok_or_else(||syntax("Invalid candidate variant"))
+(B[m[31m-        }).collect::<Result<Vec<_>,_>>()?;
+(B[m[31m-        Ok(Candidate {raw,kind,variants,important:candidate["important"].as_bool().unwrap_or(false)})
+(B[m[32m+        let variants = candidate["variants"]
+(B[m[32m+            .as_array()
+(B[m[32m+            .ok_or_else(|| syntax("Invalid candidate variants"))?
+(B[m[32m+            .iter()
+(B[m[32m+            .map(|variant| {
+(B[m[32m+                let raw = self.print_variant(variant)?;
+(B[m[32m+                compiler::candidate::parse_variant_with_theme(
+(B[m[32m+                    &raw,
+(B[m[32m+                    self.compiler.limits.ast_depth,
+(B[m[32m+                    &self.compiler.theme,
+(B[m[32m+                )?
+(B[m[32m+                .ok_or_else(|| syntax("Invalid candidate variant"))
+(B[m[32m+            })
+(B[m[32m+            .collect::<Result<Vec<_>, _>>()?;
+(B[m[32m+        Ok(Candidate {
+(B[m[32m+            raw,
+(B[m[32m+            kind,
+(B[m[32m+            variants,
+(B[m[32m+            important: candidate["important"].as_bool().unwrap_or(false),
+(B[m[32m+        })
+(B[m     }
+[31m-    fn compiled(&self, candidate: &Value, flags: u32) -> Result<Vec<CompiledCandidate>,CompileError> {
+(B[m[32m+    fn compiled(
+(B[m[32m+        &self,
+(B[m[32m+        candidate: &Value,
+(B[m[32m+        flags: u32,
+(B[m[32m+    ) -> Result<Vec<CompiledCandidate>, CompileError> {
+(B[m         let mut candidate = self.internal_candidate(candidate)?;
+         candidate.important |= self.important && flags & 1 != 0;
+[31m-        match compiler::utilities::compile_all(&candidate,&self.compiler.theme,&self.compiler.limits,&self.compiler.custom) {
+(B[m[31m-            Ok(outputs) => Ok(outputs), Err(CompileFailure::Resource(error)) => Err(error), Err(CompileFailure::Candidate(_)) => Ok(vec![]),
+(B[m[32m+        match compiler::utilities::compile_all(
+(B[m[32m+            &candidate,
+(B[m[32m+            &self.compiler.theme,
+(B[m[32m+            &self.compiler.limits,
+(B[m[32m+            &self.compiler.custom,
+(B[m[32m+        ) {
+(B[m[32m+            Ok(outputs) => Ok(outputs),
+(B[m[32m+            Err(CompileFailure::Resource(error)) => Err(error),
+(B[m[32m+            Err(CompileFailure::Candidate(_)) => Ok(vec![]),
+(B[m         }
+     }
+[31m-    pub fn compile_ast_nodes(&mut self, candidate: &Value, flags: u32) -> Result<Vec<Value>, CompileError> {
+(B[m[32m+    pub fn compile_ast_nodes(
+(B[m[32m+        &mut self,
+(B[m[32m+        candidate: &Value,
+(B[m[32m+        flags: u32,
+(B[m[32m+    ) -> Result<Vec<Value>, CompileError> {
+(B[m         let values = self.compiled(candidate,flags)?.iter().map(|output|json!({"node":node_json(&output.node),"propertySort":{"order":output.property_order,"count":output.declaration_count}})).collect::<Vec<_>>();
+[31m-        self.budget(values.iter().map(json_bytes).sum())?; Ok(values)
+(B[m[32m+        self.budget(values.iter().map(json_bytes).sum())?;
+(B[m[32m+        Ok(values)
+(B[m     }
+[31m-    fn compile_classes(&mut self, classes: &[String]) -> Result<Vec<CompiledCandidate>,CompileError> {
+(B[m[31m-        compiler::check_limit(classes.len(),self.compiler.limits.candidate_count,"candidate_count")?;
+(B[m[31m-        let mut rules = Vec::new(); let unique:BTreeSet<_> = classes.iter().collect();
+(B[m[31m-        for raw in unique { for candidate in self.parse_candidate(raw)? { rules.extend(self.compiled(&candidate,1)?); } }
+(B[m[31m-        rules.sort_by(compiler::compare_rules); Ok(rules)
+(B[m[32m+    fn compile_classes(
+(B[m[32m+        &mut self,
+(B[m[32m+        classes: &[String],
+(B[m[32m+    ) -> Result<Vec<CompiledCandidate>, CompileError> {
+(B[m[32m+        compiler::check_limit(
+(B[m[32m+            classes.len(),
+(B[m[32m+            self.compiler.limits.candidate_count,
+(B[m[32m+            "candidate_count",
+(B[m[32m+        )?;
+(B[m[32m+        let mut rules = Vec::new();
+(B[m[32m+        let unique: BTreeSet<_> = classes.iter().collect();
+(B[m[32m+        for raw in unique {
+(B[m[32m+            for candidate in self.parse_candidate(raw)? {
+(B[m[32m+                rules.extend(self.compiled(&candidate, 1)?);
+(B[m[32m+            }
+(B[m[32m+        }
+(B[m[32m+        rules.sort_by(compiler::compare_rules);
+(B[m[32m+        Ok(rules)
+(B[m     }
+     pub fn get_class_order(&mut self, classes: &[String]) -> Result<Value, CompileError> {
+         let rules = self.compile_classes(classes)?;
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style/src/compiler/public_api/design_system.rs:154:
+         let mut order = BTreeMap::new();
+[31m-        for rule in rules { let index = order.len(); order.entry(rule.program.candidate).or_insert(index); }
+(B[m[31m-        self.result(json!(classes.iter().map(|raw|json!([raw,order.get(raw).map(|index|json!({"bigint":index.to_string()}))])).collect::<Vec<_>>()))
+(B[m[32m+        for rule in rules {
+(B[m[32m+            let index = order.len();
+(B[m[32m+            order.entry(rule.program.candidate).or_insert(index);
+(B[m[32m+        }
+(B[m[32m+        self.result(json!(classes
+(B[m[32m+            .iter()
+(B[m[32m+            .map(|raw| json!([
+(B[m[32m+                raw,
+(B[m[32m+                order
+(B[m[32m+                    .get(raw)
+(B[m[32m+                    .map(|index| json!({"bigint":index.to_string()}))
+(B[m[32m+            ]))
+(B[m[32m+            .collect::<Vec<_>>()))
+(B[m     }
+     pub fn candidates_to_css(&mut self, classes: &[String]) -> Result<Value, CompileError> {
+[31m-        compiler::check_limit(classes.len(),self.compiler.limits.candidate_count,"candidate_count")?;
+(B[m[32m+        compiler::check_limit(
+(B[m[32m+            classes.len(),
+(B[m[32m+            self.compiler.limits.candidate_count,
+(B[m[32m+            "candidate_count",
+(B[m[32m+        )?;
+(B[m         let mut values = Vec::with_capacity(classes.len());
+         for raw in classes {
+             let rules = self.compile_classes(std::slice::from_ref(raw))?;
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style/src/compiler/public_api/design_system.rs:163:
+[31m-            if rules.is_empty() { values.push(Value::Null); continue; }
+(B[m[31m-            let mut nodes = rules.into_iter().map(|rule|rule.node).collect::<Vec<_>>();
+(B[m[31m-            let mut globals=Vec::new(); compiler::ast::hoist_at_roots(&mut nodes,&mut globals); nodes.extend(globals);
+(B[m[32m+            if rules.is_empty() {
+(B[m[32m+                values.push(Value::Null);
+(B[m[32m+                continue;
+(B[m[32m+            }
+(B[m[32m+            let mut nodes = rules.into_iter().map(|rule| rule.node).collect::<Vec<_>>();
+(B[m[32m+            let mut globals = Vec::new();
+(B[m[32m+            compiler::ast::hoist_at_roots(&mut nodes, &mut globals);
+(B[m[32m+            nodes.extend(globals);
+(B[m             compiler::ast::optimize_rules(&mut nodes);
+[31m-            let css = compiler::ast::to_css(&nodes).to_utf8().map_err(|_|syntax("Non-scalar output requires the UTF-16 facade"))?;
+(B[m[31m-            compiler::check_limit(css.len(),self.compiler.limits.css_bytes,"css_bytes")?;
+(B[m[32m+            let css = compiler::ast::to_css(&nodes)
+(B[m[32m+                .to_utf8()
+(B[m[32m+                .map_err(|_| syntax("Non-scalar output requires the UTF-16 facade"))?;
+(B[m[32m+            compiler::check_limit(css.len(), self.compiler.limits.css_bytes, "css_bytes")?;
+(B[m             values.push(json!(css));
+         }
+         self.result(json!(values))
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style/src/compiler/public_api/design_system.rs:172:
+     }
+ 
+[31m-    pub fn resolve_theme_value(&self, path: &str, force_inline: bool) -> Result<Value, CompileError> {
+(B[m[32m+    pub fn resolve_theme_value(
+(B[m[32m+        &self,
+(B[m[32m+        path: &str,
+(B[m[32m+        force_inline: bool,
+(B[m[32m+    ) -> Result<Value, CompileError> {
+(B[m         self.input(path)?;
+[31m-        let (path,alpha) = path.rsplit_once('/').map_or((path,None),|(path,alpha)|(path.trim(),Some(alpha.trim())));
+(B[m[31m-        let Some(token) = self.compiler.theme.tokens.get(path) else { return Ok(undefined()); };
+(B[m[31m-        let mut used=BTreeSet::new();
+(B[m[31m-        let value=if force_inline { Some(token.value.clone()) } else { self.compiler.theme.resolve(path,&mut used) };
+(B[m[31m-        let value = match (value,alpha.filter(|alpha|!alpha.is_empty())) {
+(B[m[31m-            (Some(value),Some(alpha)) => compiler::colors::as_color(value,Some(&format!("[{alpha}]")),&self.compiler.theme,&mut used),
+(B[m[31m-            (value,_) => value,
+(B[m[32m+        let (path, alpha) = path.rsplit_once('/').map_or((path, None), |(path, alpha)| {
+(B[m[32m+            (path.trim(), Some(alpha.trim()))
+(B[m[32m+        });
+(B[m[32m+        let Some(token) = self.compiler.theme.tokens.get(path) else {
+(B[m[32m+            return Ok(undefined());
+(B[m         };
+[31m-        self.result(value.map_or_else(undefined,|value|json!(value)))
+(B[m[32m+        let mut used = BTreeSet::new();
+(B[m[32m+        let value = if force_inline {
+(B[m[32m+            Some(token.value.clone())
+(B[m[32m+        } else {
+(B[m[32m+            self.compiler.theme.resolve(path, &mut used)
+(B[m[32m+        };
+(B[m[32m+        let value = match (value, alpha.filter(|alpha| !alpha.is_empty())) {
+(B[m[32m+            (Some(value), Some(alpha)) => compiler::colors::as_color(
+(B[m[32m+                value,
+(B[m[32m+                Some(&format!("[{alpha}]")),
+(B[m[32m+                &self.compiler.theme,
+(B[m[32m+                &mut used,
+(B[m[32m+            ),
+(B[m[32m+            (value, _) => value,
+(B[m[32m+        };
+(B[m[32m+        self.result(value.map_or_else(undefined, |value| json!(value)))
+(B[m     }
+     pub fn theme_entries(&self) -> Value {
+         json!(self.compiler.theme.ordered_tokens().map(|(name,token)| {
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style/src/compiler/public_api/design_system.rs:191:
+     }
+     pub fn track_used_variables(&mut self, raw: &str) -> Result<(), CompileError> {
+         self.input(raw)?;
+[31m-        let mut used=BTreeSet::new(); compiler::custom_utilities::collect_used(&[AstNode::declaration("--tracking",raw)],&mut used,self.compiler.limits.ast_depth)?;
+(B[m[32m+        let mut used = BTreeSet::new();
+(B[m[32m+        compiler::custom_utilities::collect_used(
+(B[m[32m+            &[AstNode::declaration("--tracking", raw)],
+(B[m[32m+            &mut used,
+(B[m[32m+            self.compiler.limits.ast_depth,
+(B[m[32m+        )?;
+(B[m         for variable in used {
+[31m-            let name = if let Some(prefix) = &self.compiler.theme.prefix { variable.strip_prefix(&format!("--{prefix}-")).map(|rest|format!("--{rest}")) } else {Some(variable)};
+(B[m[31m-            if let Some(name) = name.filter(|name|self.compiler.theme.tokens.contains_key(name)) { if !self.used_variables.contains(&name) { self.budget(name.len().saturating_add(128))?; self.retained_bytes=self.retained_bytes.saturating_add(name.len().saturating_add(128)); self.used_variables.insert(name); } }
+(B[m[32m+            let name = if let Some(prefix) = &self.compiler.theme.prefix {
+(B[m[32m+                variable
+(B[m[32m+                    .strip_prefix(&format!("--{prefix}-"))
+(B[m[32m+                    .map(|rest| format!("--{rest}"))
+(B[m[32m+            } else {
+(B[m[32m+                Some(variable)
+(B[m[32m+            };
+(B[m[32m+            if let Some(name) = name.filter(|name| self.compiler.theme.tokens.contains_key(name)) {
+(B[m[32m+                if !self.used_variables.contains(&name) {
+(B[m[32m+                    self.budget(name.len().saturating_add(128))?;
+(B[m[32m+                    self.retained_bytes = self
+(B[m[32m+                        .retained_bytes
+(B[m[32m+                        .saturating_add(name.len().saturating_add(128));
+(B[m[32m+                    self.used_variables.insert(name);
+(B[m[32m+                }
+(B[m[32m+            }
+(B[m         }
+         Ok(())
+     }
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style/src/compiler/public_api/design_system.rs:201:
+[31m-    pub fn invalid_candidates(&self) -> Value { json!([]) }
+(B[m[32m+    pub fn invalid_candidates(&self) -> Value {
+(B[m[32m+        json!([])
+(B[m[32m+    }
+(B[m 
+     pub fn get_class_list(&self) -> Result<Value, CompileError> {
+[31m-        let mut limits=self.compiler.limits.clone(); limits.cache_bytes=limits.cache_bytes.saturating_sub(self.retained_bytes);
+(B[m[31m-        class_list(&self.compiler.theme,&self.compiler.custom,&limits)
+(B[m[32m+        let mut limits = self.compiler.limits.clone();
+(B[m[32m+        limits.cache_bytes = limits.cache_bytes.saturating_sub(self.retained_bytes);
+(B[m[32m+        class_list(&self.compiler.theme, &self.compiler.custom, &limits)
+(B[m     }
+     fn variant_roots(&self) -> Vec<String> {
+[31m-        let mut roots=Vec::new();
+(B[m[31m-        for (root,rank) in compiler::registry::VARIANT_ORDER {
+(B[m[31m-            if *rank==64 && *root!="min" { continue; }
+(B[m[31m-            if *root=="min" { roots.extend(self.compiler.theme.ordered_tokens().filter_map(|(name,_)|name.strip_prefix("--breakpoint-").map(str::to_string)).filter(|name|!roots.contains(name)).collect::<Vec<_>>()); }
+(B[m[32m+        let mut roots = Vec::new();
+(B[m[32m+        for (root, rank) in compiler::registry::VARIANT_ORDER {
+(B[m[32m+            if *rank == 64 && *root != "min" {
+(B[m[32m+                continue;
+(B[m[32m+            }
+(B[m[32m+            if *root == "min" {
+(B[m[32m+                roots.extend(
+(B[m[32m+                    self.compiler
+(B[m[32m+                        .theme
+(B[m[32m+                        .ordered_tokens()
+(B[m[32m+                        .filter_map(|(name, _)| {
+(B[m[32m+                            name.strip_prefix("--breakpoint-").map(str::to_string)
+(B[m[32m+                        })
+(B[m[32m+                        .filter(|name| !roots.contains(name))
+(B[m[32m+                        .collect::<Vec<_>>(),
+(B[m[32m+                );
+(B[m[32m+            }
+(B[m             roots.push((*root).into());
+         }
+[31m-        for root in self.compiler.theme.custom_variants.root_names() { if !roots.iter().any(|name|name==root) {roots.push(root.into());} }
+(B[m[32m+        for root in self.compiler.theme.custom_variants.root_names() {
+(B[m[32m+            if !roots.iter().any(|name| name == root) {
+(B[m[32m+                roots.push(root.into());
+(B[m[32m+            }
+(B[m[32m+        }
+(B[m         roots
+     }
+     pub fn get_variants(&self) -> Result<Vec<Value>, CompileError> {
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style/src/compiler/public_api/design_system.rs:218:
+[31m-        let roots=self.variant_roots();
+(B[m[31m-        let mut values=Vec::new();
+(B[m[32m+        let roots = self.variant_roots();
+(B[m[32m+        let mut values = Vec::new();
+(B[m         for root in &roots {
+[31m-            let kind=variants::root_kind(root,&self.compiler.theme);
+(B[m[31m-            let suggestions=match root.as_str() {
+(B[m[31m-                "not"|"group"|"peer"|"in"|"has" => roots.iter().filter(|name| {
+(B[m[31m-                    let variant=compiler::candidate::Variant::Registered {raw:(*name).clone(),root:(*name).clone(),value:None,modifier:None};
+(B[m[31m-                    variants::compounds(&variant,&self.compiler.theme) & if root=="not" {3}else{2} != 0
+(B[m[31m-                }).cloned().collect::<Vec<_>>(),
+(B[m[31m-                "aria" => ["busy","checked","disabled","expanded","hidden","pressed","readonly","required","selected"].map(str::to_string).into(),
+(B[m[31m-                "min"|"max" => namespace_keys(&self.compiler.theme,&["--breakpoint"]),
+(B[m[31m-                "@"|"@min"|"@max" => namespace_keys(&self.compiler.theme,&["--container"]),
+(B[m[32m+            let kind = variants::root_kind(root, &self.compiler.theme);
+(B[m[32m+            let suggestions = match root.as_str() {
+(B[m[32m+                "not" | "group" | "peer" | "in" | "has" => roots
+(B[m[32m+                    .iter()
+(B[m[32m+                    .filter(|name| {
+(B[m[32m+                        let variant = compiler::candidate::Variant::Registered {
+(B[m[32m+                            raw: (*name).clone(),
+(B[m[32m+                            root: (*name).clone(),
+(B[m[32m+                            value: None,
+(B[m[32m+                            modifier: None,
+(B[m[32m+                        };
+(B[m[32m+                        variants::compounds(&variant, &self.compiler.theme)
+(B[m[32m+                            & if root == "not" { 3 } else { 2 }
+(B[m[32m+                            != 0
+(B[m[32m+                    })
+(B[m[32m+                    .cloned()
+(B[m[32m+                    .collect::<Vec<_>>(),
+(B[m[32m+                "aria" => [
+(B[m[32m+                    "busy", "checked", "disabled", "expanded", "hidden", "pressed", "readonly",
+(B[m[32m+                    "required", "selected",
+(B[m[32m+                ]
+(B[m[32m+                .map(str::to_string)
+(B[m[32m+                .into(),
+(B[m[32m+                "min" | "max" => namespace_keys(&self.compiler.theme, &["--breakpoint"]),
+(B[m[32m+                "@" | "@min" | "@max" => namespace_keys(&self.compiler.theme, &["--container"]),
+(B[m                 _ => vec![],
+             };
+             values.push(json!({"name":root,"values":suggestions,"isArbitrary":kind!=Some(variants::VariantKind::Static),"hasDash":root!="@"}));
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style/src/compiler/public_api/design_system.rs:233:
+         }
+[31m-        self.budget(values.iter().map(json_bytes).sum())?; Ok(values)
+(B[m[32m+        self.budget(values.iter().map(json_bytes).sum())?;
+(B[m[32m+        Ok(values)
+(B[m     }
+[31m-    pub fn variant_selectors(&mut self, root: &str, options: &Value) -> Result<Value, CompileError> {
+(B[m[31m-        let mut raw=root.to_string();
+(B[m[31m-        if let Some(value)=options["value"].as_str().filter(|value|!value.is_empty()) { if root!="@" {raw.push('-');} raw.push_str(value); }
+(B[m[31m-        if let Some(modifier)=options["modifier"].as_str().filter(|value|!value.is_empty()) {raw.push('/');raw.push_str(modifier);}
+(B[m[31m-        let parsed=self.parse_variant(&raw)?;
+(B[m[31m-        if parsed.is_null() {return Ok(json!([]));}
+(B[m[31m-        let Some(variant)=compiler::candidate::parse_variant_with_theme(&raw,self.compiler.limits.ast_depth,&self.compiler.theme)? else {return Ok(json!([]));};
+(B[m[31m-        let output=match variants::compile_variant(&variant,vec![],&mut vec![],&self.compiler.theme,&self.compiler.limits) {
+(B[m[31m-            Ok(output)=>output,Err(variants::Failure::Resource(error))=>return Err(error),Err(variants::Failure::Candidate(..))=>return Ok(json!([])),
+(B[m[32m+    pub fn variant_selectors(
+(B[m[32m+        &mut self,
+(B[m[32m+        root: &str,
+(B[m[32m+        options: &Value,
+(B[m[32m+    ) -> Result<Value, CompileError> {
+(B[m[32m+        let mut raw = root.to_string();
+(B[m[32m+        if let Some(value) = options["value"].as_str().filter(|value| !value.is_empty()) {
+(B[m[32m+            if root != "@" {
+(B[m[32m+                raw.push('-');
+(B[m[32m+            }
+(B[m[32m+            raw.push_str(value);
+(B[m[32m+        }
+(B[m[32m+        if let Some(modifier) = options["modifier"]
+(B[m[32m+            .as_str()
+(B[m[32m+            .filter(|value| !value.is_empty())
+(B[m[32m+        {
+(B[m[32m+            raw.push('/');
+(B[m[32m+            raw.push_str(modifier);
+(B[m[32m+        }
+(B[m[32m+        let parsed = self.parse_variant(&raw)?;
+(B[m[32m+        if parsed.is_null() {
+(B[m[32m+            return Ok(json!([]));
+(B[m[32m+        }
+(B[m[32m+        let Some(variant) = compiler::candidate::parse_variant_with_theme(
+(B[m[32m+            &raw,
+(B[m[32m+            self.compiler.limits.ast_depth,
+(B[m[32m+            &self.compiler.theme,
+(B[m[32m+        )?
+(B[m[32m+        else {
+(B[m[32m+            return Ok(json!([]));
+(B[m         };
+[31m-        let mut selectors=Vec::new(); selector_paths(&output.nodes,&mut vec![],&mut selectors);
+(B[m[32m+        let output = match variants::compile_variant(
+(B[m[32m+            &variant,
+(B[m[32m+            vec![],
+(B[m[32m+            &mut vec![],
+(B[m[32m+            &self.compiler.theme,
+(B[m[32m+            &self.compiler.limits,
+(B[m[32m+        ) {
+(B[m[32m+            Ok(output) => output,
+(B[m[32m+            Err(variants::Failure::Resource(error)) => return Err(error),
+(B[m[32m+            Err(variants::Failure::Candidate(..)) => return Ok(json!([])),
+(B[m[32m+        };
+(B[m[32m+        let mut selectors = Vec::new();
+(B[m[32m+        selector_paths(&output.nodes, &mut vec![], &mut selectors);
+(B[m         self.result(json!(selectors))
+     }
+     pub fn variant_order_entries(&self) -> Result<Vec<(String, Value, usize)>, CompileError> {
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style/src/compiler/public_api/design_system.rs:250:
+[31m-        let mut variants=self.parsed_variants.iter().filter(|(_,variant)|!variant.is_null()).collect::<Vec<_>>();
+(B[m[31m-        variants.sort_by(|(a,av),(b,bv)|cached_variant_cmp(a,av,b,bv,&self.compiler.theme));
+(B[m[31m-        let mut index=0; let mut previous:Option<(&str,&Value)>=None; let mut ordered=Vec::new();
+(B[m[31m-        for (raw,variant) in variants {
+(B[m[31m-            if previous.is_some_and(|(previous_raw,previous)| cached_variant_cmp(previous_raw,previous,raw,variant,&self.compiler.theme)!=Ordering::Equal) {index+=1;}
+(B[m[31m-            ordered.push((raw.clone(),variant.clone(),index)); previous=Some((raw,variant));
+(B[m[32m+        let mut variants = self
+(B[m[32m+            .parsed_variants
+(B[m[32m+            .iter()
+(B[m[32m+            .filter(|(_, variant)| !variant.is_null())
+(B[m[32m+            .collect::<Vec<_>>();
+(B[m[32m+        variants.sort_by(|(a, av), (b, bv)| cached_variant_cmp(a, av, b, bv, &self.compiler.theme));
+(B[m[32m+        let mut index = 0;
+(B[m[32m+        let mut previous: Option<(&str, &Value)> = None;
+(B[m[32m+        let mut ordered = Vec::new();
+(B[m[32m+        for (raw, variant) in variants {
+(B[m[32m+            if previous.is_some_and(|(previous_raw, previous)| {
+(B[m[32m+                cached_variant_cmp(previous_raw, previous, raw, variant, &self.compiler.theme)
+(B[m[32m+                    != Ordering::Equal
+(B[m[32m+            }) {
+(B[m[32m+                index += 1;
+(B[m[32m+            }
+(B[m[32m+            ordered.push((raw.clone(), variant.clone(), index));
+(B[m[32m+            previous = Some((raw, variant));
+(B[m         }
+[31m-        self.budget(ordered.iter().map(|(raw,variant,_)|raw.len().saturating_add(json_bytes(variant))).sum())?;
+(B[m[32m+        self.budget(
+(B[m[32m+            ordered
+(B[m[32m+                .iter()
+(B[m[32m+                .map(|(raw, variant, _)| raw.len().saturating_add(json_bytes(variant)))
+(B[m[32m+                .sum(),
+(B[m[32m+        )?;
+(B[m         Ok(ordered)
+     }
+     pub fn get_variant_order(&self) -> Result<Value, CompileError> {
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style/src/compiler/public_api/design_system.rs:261:
+[31m-        self.result(json!(self.variant_order_entries()?.into_iter().map(|(_,variant,order)|json!({"variant":variant,"order":order})).collect::<Vec<_>>()))
+(B[m[32m+        self.result(json!(self
+(B[m[32m+            .variant_order_entries()?
+(B[m[32m+            .into_iter()
+(B[m[32m+            .map(|(_, variant, order)| json!({"variant":variant,"order":order}))
+(B[m[32m+            .collect::<Vec<_>>()))
+(B[m     }
+ }
+ 
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style/src/compiler/public_api/design_system.rs:265:
+[31m-fn modifier_json(raw: Option<&str>, depth: usize) -> Result<Value,CompileError> {
+(B[m[32m+fn modifier_json(raw: Option<&str>, depth: usize) -> Result<Value, CompileError> {
+(B[m     Ok(match raw {
+[31m-        None=>Value::Null,
+(B[m[31m-        Some(raw) if raw.starts_with('[')&&raw.ends_with(']') => json!({"kind":"arbitrary","value":value::decode_arbitrary(&raw[1..raw.len()-1],depth)?}),
+(B[m[31m-        Some(raw) if raw.starts_with('(')&&raw.ends_with(')') => json!({"kind":"arbitrary","value":format!("var({})",value::decode_arbitrary(&raw[1..raw.len()-1],depth)?)}),
+(B[m[31m-        Some(raw)=>json!({"kind":"named","value":raw}),
+(B[m[32m+        None => Value::Null,
+(B[m[32m+        Some(raw) if raw.starts_with('[') && raw.ends_with(']') => {
+(B[m[32m+            json!({"kind":"arbitrary","value":value::decode_arbitrary(&raw[1..raw.len()-1],depth)?})
+(B[m[32m+        }
+(B[m[32m+        Some(raw) if raw.starts_with('(') && raw.ends_with(')') => {
+(B[m[32m+            json!({"kind":"arbitrary","value":format!("var({})",value::decode_arbitrary(&raw[1..raw.len()-1],depth)?)})
+(B[m[32m+        }
+(B[m[32m+        Some(raw) => json!({"kind":"named","value":raw}),
+(B[m     })
+ }
+[31m-fn internal_modifier(modifier:&Value,depth:usize)->Result<Option<String>,CompileError> { if modifier.is_null(){Ok(None)}else{Ok(Some(print_modifier(modifier,depth)?.trim_start_matches('/').into()))} }
+(B[m[31m-fn print_modifier(modifier:&Value,depth:usize)->Result<String,CompileError> { if modifier.is_null(){Ok(String::new())}else{Ok(format!("/{}",print_value(modifier,false,depth)?))} }
+(B[m[31m-fn print_value(value:&Value,data_type:bool,depth:usize)->Result<String,CompileError> {
+(B[m[31m-    let raw=string(value,"value")?;
+(B[m[31m-    if value["kind"]=="named" {return Ok(raw.into());}
+(B[m[31m-    let (open,close,raw)=if raw.starts_with("var(")&&raw.ends_with(')'){('(',')',&raw[4..raw.len()-1])}else{('[',']',raw)};
+(B[m[31m-    let prefix=if data_type {value["dataType"].as_str().map(|kind|format!("{kind}:")).unwrap_or_default()}else{String::new()};
+(B[m[31m-    Ok(format!("{open}{prefix}{}{close}",print_arbitrary(raw,depth)?))
+(B[m[32m+fn internal_modifier(modifier: &Value, depth: usize) -> Result<Option<String>, CompileError> {
+(B[m[32m+    if modifier.is_null() {
+(B[m[32m+        Ok(None)
+(B[m[32m+    } else {
+(B[m[32m+        Ok(Some(
+(B[m[32m+            print_modifier(modifier, depth)?
+(B[m[32m+                .trim_start_matches('/')
+(B[m[32m+                .into(),
+(B[m[32m+        ))
+(B[m[32m+    }
+(B[m }
+[31m-fn print_variant(variant:&Value,depth:usize)->Result<String,CompileError> {
+(B[m[31m-    if depth==0 {return Err(CompileError::Limit{resource:"ast_depth".into(),limit:0});}
+(B[m[31m-    let mut base=match string(variant,"kind")? {
+(B[m[31m-        "static"=>string(variant,"root")?.into(),
+(B[m[31m-        "arbitrary"=> {
+(B[m[31m-            let selector=string(variant,"selector")?; let selector=selector.strip_prefix("&:is(").and_then(|raw|raw.strip_suffix(')')).unwrap_or(selector);
+(B[m[31m-            return Ok(format!("[{}]",print_arbitrary(selector,depth)?));
+(B[m[32m+fn print_modifier(modifier: &Value, depth: usize) -> Result<String, CompileError> {
+(B[m[32m+    if modifier.is_null() {
+(B[m[32m+        Ok(String::new())
+(B[m[32m+    } else {
+(B[m[32m+        Ok(format!("/{}", print_value(modifier, false, depth)?))
+(B[m[32m+    }
+(B[m[32m+}
+(B[m[32m+fn print_value(value: &Value, data_type: bool, depth: usize) -> Result<String, CompileError> {
+(B[m[32m+    let raw = string(value, "value")?;
+(B[m[32m+    if value["kind"] == "named" {
+(B[m[32m+        return Ok(raw.into());
+(B[m[32m+    }
+(B[m[32m+    let (open, close, raw) = if raw.starts_with("var(") && raw.ends_with(')') {
+(B[m[32m+        ('(', ')', &raw[4..raw.len() - 1])
+(B[m[32m+    } else {
+(B[m[32m+        ('[', ']', raw)
+(B[m[32m+    };
+(B[m[32m+    let prefix = if data_type {
+(B[m[32m+        value["dataType"]
+(B[m[32m+            .as_str()
+(B[m[32m+            .map(|kind| format!("{kind}:"))
+(B[m[32m+            .unwrap_or_default()
+(B[m[32m+    } else {
+(B[m[32m+        String::new()
+(B[m[32m+    };
+(B[m[32m+    Ok(format!(
+(B[m[32m+        "{open}{prefix}{}{close}",
+(B[m[32m+        print_arbitrary(raw, depth)?
+(B[m[32m+    ))
+(B[m[32m+}
+(B[m[32m+fn print_variant(variant: &Value, depth: usize) -> Result<String, CompileError> {
+(B[m[32m+    if depth == 0 {
+(B[m[32m+        return Err(CompileError::Limit {
+(B[m[32m+            resource: "ast_depth".into(),
+(B[m[32m+            limit: 0,
+(B[m[32m+        });
+(B[m[32m+    }
+(B[m[32m+    let mut base = match string(variant, "kind")? {
+(B[m[32m+        "static" => string(variant, "root")?.into(),
+(B[m[32m+        "arbitrary" => {
+(B[m[32m+            let selector = string(variant, "selector")?;
+(B[m[32m+            let selector = selector
+(B[m[32m+                .strip_prefix("&:is(")
+(B[m[32m+                .and_then(|raw| raw.strip_suffix(')'))
+(B[m[32m+                .unwrap_or(selector);
+(B[m[32m+            return Ok(format!("[{}]", print_arbitrary(selector, depth)?));
+(B[m         }
+[31m-        "functional"=> {
+(B[m[31m-            let root=string(variant,"root")?;
+(B[m[31m-            if variant["value"].is_null(){root.into()}else{format!("{root}{}{}",if root=="@" {""}else{"-"},print_value(&variant["value"],false,depth)?)}
+(B[m[32m+        "functional" => {
+(B[m[32m+            let root = string(variant, "root")?;
+(B[m[32m+            if variant["value"].is_null() {
+(B[m[32m+                root.into()
+(B[m[32m+            } else {
+(B[m[32m+                format!(
+(B[m[32m+                    "{root}{}{}",
+(B[m[32m+                    if root == "@" { "" } else { "-" },
+(B[m[32m+                    print_value(&variant["value"], false, depth)?
+(B[m[32m+                )
+(B[m[32m+            }
+(B[m         }
+[31m-        "compound"=>format!("{}-{}",string(variant,"root")?,print_variant(&variant["variant"],depth-1)?),
+(B[m[31m-        _=>return Err(syntax("Invalid variant kind")),
+(B[m[32m+        "compound" => format!(
+(B[m[32m+            "{}-{}",
+(B[m[32m+            string(variant, "root")?,
+(B[m[32m+            print_variant(&variant["variant"], depth - 1)?
+(B[m[32m+        ),
+(B[m[32m+        _ => return Err(syntax("Invalid variant kind")),
+(B[m     };
+[31m-    if variant["kind"]=="functional"||variant["kind"]=="compound"{base.push_str(&print_modifier(&variant["modifier"],depth)?);} Ok(base)
+(B[m[32m+    if variant["kind"] == "functional" || variant["kind"] == "compound" {
+(B[m[32m+        base.push_str(&print_modifier(&variant["modifier"], depth)?);
+(B[m[32m+    }
+(B[m[32m+    Ok(base)
+(B[m }
+[31m-fn print_arbitrary(raw:&str,depth:usize)->Result<String,CompileError> {
+(B[m[31m-    fn normalize(nodes:&mut Vec<value::ValueNode>) {
+(B[m[31m-        let mut drop=BTreeSet::new();
+(B[m[31m-        for (index,node) in nodes.iter_mut().enumerate() {
+(B[m[32m+fn print_arbitrary(raw: &str, depth: usize) -> Result<String, CompileError> {
+(B[m[32m+    fn normalize(nodes: &mut Vec<value::ValueNode>) {
+(B[m[32m+        let mut drop = BTreeSet::new();
+(B[m[32m+        for (index, node) in nodes.iter_mut().enumerate() {
+(B[m             match node {
+[31m-                value::ValueNode::Function {nodes,..}=>normalize(nodes),
+(B[m[31m-                value::ValueNode::Separator {value} if value.trim()==","||value.trim()=="/"=>*value=value.trim().into(),
+(B[m[31m-                _=>{},
+(B[m[32m+                value::ValueNode::Function { nodes, .. } => normalize(nodes),
+(B[m[32m+                value::ValueNode::Separator { value }
+(B[m[32m+                    if value.trim() == "," || value.trim() == "/" =>
+(B[m[32m+                {
+(B[m[32m+                    *value = value.trim().into()
+(B[m[32m+                }
+(B[m[32m+                _ => {}
+(B[m             }
+[31m-            if matches!(node,value::ValueNode::Separator {value} if value.trim().is_empty()) { if index==0 {drop.insert(index);} }
+(B[m[32m+            if matches!(node,value::ValueNode::Separator {value} if value.trim().is_empty()) {
+(B[m[32m+                if index == 0 {
+(B[m[32m+                    drop.insert(index);
+(B[m[32m+                }
+(B[m[32m+            }
+(B[m         }
+[31m-        if let Some(value::ValueNode::Separator {value})=nodes.last(){if value.trim().is_empty(){drop.insert(nodes.len()-1);}}
+(B[m[32m+        if let Some(value::ValueNode::Separator { value }) = nodes.last() {
+(B[m[32m+            if value.trim().is_empty() {
+(B[m[32m+                drop.insert(nodes.len() - 1);
+(B[m[32m+            }
+(B[m[32m+        }
+(B[m         for index in 1..nodes.len().saturating_sub(1) {
+[31m-            if matches!(&nodes[index],value::ValueNode::Word {value} if matches!(value.as_str(),"+"|"-"|"*"|"/")) && matches!(&nodes[index-1],value::ValueNode::Separator {value} if value==" ") && matches!(&nodes[index+1],value::ValueNode::Separator {value} if value==" ") {drop.insert(index-1);drop.insert(index+1);}
+(B[m[32m+            if matches!(&nodes[index],value::ValueNode::Word {value} if matches!(value.as_str(),"+"|"-"|"*"|"/"))
+(B[m[32m+                && matches!(&nodes[index-1],value::ValueNode::Separator {value} if value==" ")
+(B[m[32m+                && matches!(&nodes[index+1],value::ValueNode::Separator {value} if value==" ")
+(B[m[32m+            {
+(B[m[32m+                drop.insert(index - 1);
+(B[m[32m+                drop.insert(index + 1);
+(B[m[32m+            }
+(B[m         }
+[31m-        let mut index=0;nodes.retain(|_|{let keep=!drop.contains(&index);index+=1;keep});
+(B[m[32m+        let mut index = 0;
+(B[m[32m+        nodes.retain(|_| {
+(B[m[32m+            let keep = !drop.contains(&index);
+(B[m[32m+            index += 1;
+(B[m[32m+            keep
+(B[m[32m+        });
+(B[m     }
+[31m-    fn escape(nodes:&mut [value::ValueNode]) {
+(B[m[32m+    fn escape(nodes: &mut [value::ValueNode]) {
+(B[m         for node in nodes {
+             match node {
+[31m-                value::ValueNode::Word {value} if value.starts_with("--")=>{},
+(B[m[31m-                value::ValueNode::Word {value}|value::ValueNode::Separator {value}=>*value=value.replace('_',"\\_").replace(' ',"_"),
+(B[m[31m-                value::ValueNode::Function {name,nodes}=> {
+(B[m[31m-                    let url=name=="url"||name.ends_with("_url"); *name=name.replace('_',"\\_").replace(' ',"_"); if !url {escape(nodes);}
+(B[m[32m+                value::ValueNode::Word { value } if value.starts_with("--") => {}
+(B[m[32m+                value::ValueNode::Word { value } | value::ValueNode::Separator { value } => {
+(B[m[32m+                    *value = value.replace('_', "\\_").replace(' ', "_")
+(B[m                 }
+[32m+                value::ValueNode::Function { name, nodes } => {
+(B[m[32m+                    let url = name == "url" || name.ends_with("_url");
+(B[m[32m+                    *name = name.replace('_', "\\_").replace(' ', "_");
+(B[m[32m+                    if !url {
+(B[m[32m+                        escape(nodes);
+(B[m[32m+                    }
+(B[m[32m+                }
+(B[m             }
+         }
+     }
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style/src/compiler/public_api/design_system.rs:327:
+[31m-    let mut nodes=value::parse(raw,depth)?;normalize(&mut nodes);escape(&mut nodes);Ok(value::to_css(&nodes))
+(B[m[32m+    let mut nodes = value::parse(raw, depth)?;
+(B[m[32m+    normalize(&mut nodes);
+(B[m[32m+    escape(&mut nodes);
+(B[m[32m+    Ok(value::to_css(&nodes))
+(B[m }
+[31m-fn node_json(node:&AstNode)->Value {
+(B[m[31m-    let mut value=serde_json::to_value(node).unwrap_or(Value::Null);
+(B[m[31m-    if let Some(kind)=value["kind"].as_str(){let kind=kind.replace('_',"-");value["kind"]=json!(kind);}
+(B[m[31m-    if let Some(children)=node.children(){value["nodes"]=json!(children.iter().map(node_json).collect::<Vec<_>>());}
+(B[m[32m+fn node_json(node: &AstNode) -> Value {
+(B[m[32m+    let mut value = serde_json::to_value(node).unwrap_or(Value::Null);
+(B[m[32m+    if let Some(kind) = value["kind"].as_str() {
+(B[m[32m+        let kind = kind.replace('_', "-");
+(B[m[32m+        value["kind"] = json!(kind);
+(B[m[32m+    }
+(B[m[32m+    if let Some(children) = node.children() {
+(B[m[32m+        value["nodes"] = json!(children.iter().map(node_json).collect::<Vec<_>>());
+(B[m[32m+    }
+(B[m     value
+ }
+[31m-fn selector_paths(nodes:&[AstNode],path:&mut Vec<(bool,String)>,selectors:&mut Vec<String>) {
+(B[m[32m+fn selector_paths(nodes: &[AstNode], path: &mut Vec<(bool, String)>, selectors: &mut Vec<String>) {
+(B[m     for node in nodes {
+[31m-        let part=match node {
+(B[m[31m-            AstNode::Rule{selector,..}=>Some((false,selector.clone())),
+(B[m[31m-            AstNode::AtRule{name,params,..}=>Some((true,format!("{name} {params}"))),
+(B[m[31m-            _=>None,
+(B[m[32m+        let part = match node {
+(B[m[32m+            AstNode::Rule { selector, .. } => Some((false, selector.clone())),
+(B[m[32m+            AstNode::AtRule { name, params, .. } => Some((true, format!("{name} {params}"))),
+(B[m[32m+            _ => None,
+(B[m         };
+[31m-        let Some(part)=part else{continue;};path.push(part);
+(B[m[31m-        let children=node.children().unwrap_or_default();
+(B[m[31m-        if children.is_empty(){
+(B[m[31m-            let mut parts=path.iter().filter(|(_,value)|value!="&").collect::<Vec<_>>();parts.sort_by_key(|(is_at,_)|!is_at);
+(B[m[31m-            let mut selector=String::new();for (_,part) in parts.into_iter().rev(){selector=if selector.is_empty(){part.clone()}else{format!("{part} {{ {selector} }}")};}selectors.push(selector);
+(B[m[31m-        }else{selector_paths(children,path,selectors);}path.pop();
+(B[m[32m+        let Some(part) = part else {
+(B[m[32m+            continue;
+(B[m[32m+        };
+(B[m[32m+        path.push(part);
+(B[m[32m+        let children = node.children().unwrap_or_default();
+(B[m[32m+        if children.is_empty() {
+(B[m[32m+            let mut parts = path
+(B[m[32m+                .iter()
+(B[m[32m+                .filter(|(_, value)| value != "&")
+(B[m[32m+                .collect::<Vec<_>>();
+(B[m[32m+            parts.sort_by_key(|(is_at, _)| !is_at);
+(B[m[32m+            let mut selector = String::new();
+(B[m[32m+            for (_, part) in parts.into_iter().rev() {
+(B[m[32m+                selector = if selector.is_empty() {
+(B[m[32m+                    part.clone()
+(B[m[32m+                } else {
+(B[m[32m+                    format!("{part} {{ {selector} }}")
+(B[m[32m+                };
+(B[m[32m+            }
+(B[m[32m+            selectors.push(selector);
+(B[m[32m+        } else {
+(B[m[32m+            selector_paths(children, path, selectors);
+(B[m[32m+        }
+(B[m[32m+        path.pop();
+(B[m     }
+ }
+[31m-fn namespace_keys(theme:&Theme,namespaces:&[&str])->Vec<String> {
+(B[m[31m-    let mut keys=Vec::new();
+(B[m[32m+fn namespace_keys(theme: &Theme, namespaces: &[&str]) -> Vec<String> {
+(B[m[32m+    let mut keys = Vec::new();
+(B[m     for namespace in namespaces {
+[31m-        let prefix=format!("{namespace}-");
+(B[m[31m-        for (name,_) in theme.ordered_tokens(){
+(B[m[31m-            let ignored=match *namespace {"--font"=>name.starts_with("--font-weight")||name.starts_with("--font-size"),"--inset"=>name.starts_with("--inset-shadow")||name.starts_with("--inset-ring"),"--text"=>["--text-color","--text-decoration-color","--text-decoration-thickness","--text-indent","--text-shadow","--text-underline-offset"].iter().any(|ignored|name==*ignored||name.starts_with(&format!("{ignored}-"))),_=>false};
+(B[m[31m-            if !ignored&&!name[2..].contains("--"){if let Some(key)=name.strip_prefix(&prefix){keys.push(legacy_numeric(key));}}
+(B[m[32m+        let prefix = format!("{namespace}-");
+(B[m[32m+        for (name, _) in theme.ordered_tokens() {
+(B[m[32m+            let ignored = match *namespace {
+(B[m[32m+                "--font" => name.starts_with("--font-weight") || name.starts_with("--font-size"),
+(B[m[32m+                "--inset" => name.starts_with("--inset-shadow") || name.starts_with("--inset-ring"),
+(B[m[32m+                "--text" => [
+(B[m[32m+                    "--text-color",
+(B[m[32m+                    "--text-decoration-color",
+(B[m[32m+                    "--text-decoration-thickness",
+(B[m[32m+                    "--text-indent",
+(B[m[32m+                    "--text-shadow",
+(B[m[32m+                    "--text-underline-offset",
+(B[m[32m+                ]
+(B[m[32m+                .iter()
+(B[m[32m+                .any(|ignored| name == *ignored || name.starts_with(&format!("{ignored}-"))),
+(B[m[32m+                _ => false,
+(B[m[32m+            };
+(B[m[32m+            if !ignored && !name[2..].contains("--") {
+(B[m[32m+                if let Some(key) = name.strip_prefix(&prefix) {
+(B[m[32m+                    keys.push(legacy_numeric(key));
+(B[m[32m+                }
+(B[m[32m+            }
+(B[m         }
+     }
+     keys
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style/src/compiler/public_api/design_system.rs:360:
+ }
+[31m-fn legacy_numeric(raw:&str)->String {
+(B[m[31m-    let mut result=String::new();let bytes=raw.as_bytes();
+(B[m[31m-    for (index,ch) in raw.char_indices(){if ch=='_'&&index>0&&bytes[index-1].is_ascii_digit()&&bytes.get(index+1).is_some_and(u8::is_ascii_digit){result.push('.');}else{result.push(ch);}}result
+(B[m[32m+fn legacy_numeric(raw: &str) -> String {
+(B[m[32m+    let mut result = String::new();
+(B[m[32m+    let bytes = raw.as_bytes();
+(B[m[32m+    for (index, ch) in raw.char_indices() {
+(B[m[32m+        if ch == '_'
+(B[m[32m+            && index > 0
+(B[m[32m+            && bytes[index - 1].is_ascii_digit()
+(B[m[32m+            && bytes.get(index + 1).is_some_and(u8::is_ascii_digit)
+(B[m[32m+        {
+(B[m[32m+            result.push('.');
+(B[m[32m+        } else {
+(B[m[32m+            result.push(ch);
+(B[m[32m+        }
+(B[m[32m+    }
+(B[m[32m+    result
+(B[m }
+[31m-fn class_list(theme:&Theme,custom:&compiler::custom_utilities::CustomUtilities,limits:&Limits)->Result<Value,CompileError> {
+(B[m[31m-    let metadata=include_str!("design_system/completions.json");
+(B[m[31m-    compiler::check_limit(metadata.len().saturating_mul(16),limits.cache_bytes,"cache_bytes")?;
+(B[m[31m-    let mut definitions:Value=serde_json::from_str(metadata).map_err(|_|syntax("Invalid fixed completion metadata"))?;
+(B[m[31m-    let scratch=json_bytes(&definitions);
+(B[m[31m-    compiler::check_limit(scratch,limits.cache_bytes,"cache_bytes")?;
+(B[m[31m-    for (root,nodes) in custom.completion_definitions() {
+(B[m[31m-        if !custom.contains_root(UtilityKind::Functional,root) {continue;}
+(B[m[31m-        let group=custom_completion_group(nodes,theme,limits.ast_depth)?;
+(B[m[31m-        if let Some(entries)=definitions["definitions"].as_array_mut() {
+(B[m[31m-            if let Some(entry)=entries.iter_mut().find(|entry|entry[0]==root) {*entry=json!([root,[group]]);} else {entries.push(json!([root,[group]]));}
+(B[m[32m+fn class_list(
+(B[m[32m+    theme: &Theme,
+(B[m[32m+    custom: &compiler::custom_utilities::CustomUtilities,
+(B[m[32m+    limits: &Limits,
+(B[m[32m+) -> Result<Value, CompileError> {
+(B[m[32m+    let metadata = include_str!("design_system/completions.json");
+(B[m[32m+    compiler::check_limit(
+(B[m[32m+        metadata.len().saturating_mul(16),
+(B[m[32m+        limits.cache_bytes,
+(B[m[32m+        "cache_bytes",
+(B[m[32m+    )?;
+(B[m[32m+    let mut definitions: Value =
+(B[m[32m+        serde_json::from_str(metadata).map_err(|_| syntax("Invalid fixed completion metadata"))?;
+(B[m[32m+    let scratch = json_bytes(&definitions);
+(B[m[32m+    compiler::check_limit(scratch, limits.cache_bytes, "cache_bytes")?;
+(B[m[32m+    for (root, nodes) in custom.completion_definitions() {
+(B[m[32m+        if !custom.contains_root(UtilityKind::Functional, root) {
+(B[m[32m+            continue;
+(B[m         }
+[32m+        let group = custom_completion_group(nodes, theme, limits.ast_depth)?;
+(B[m[32m+        if let Some(entries) = definitions["definitions"].as_array_mut() {
+(B[m[32m+            if let Some(entry) = entries.iter_mut().find(|entry| entry[0] == root) {
+(B[m[32m+                *entry = json!([root, [group]]);
+(B[m[32m+            } else {
+(B[m[32m+                entries.push(json!([root, [group]]));
+(B[m[32m+            }
+(B[m[32m+        }
+(B[m     }
+[31m-    struct Item{utility:String,fraction:bool,modifiers:Vec<String>}
+(B[m[31m-    let mut items:BTreeMap<String,Item>=BTreeMap::new(); let mut item_bytes=0usize;
+(B[m[31m-    for root in compiler::registry::STATIC_ROOTS.iter().copied().chain(custom.roots(UtilityKind::Static)) {
+(B[m[31m-        item_bytes=item_bytes.saturating_add(root.len().saturating_mul(2)).saturating_add(160);
+(B[m[31m-        compiler::check_limit(scratch.saturating_add(item_bytes),limits.cache_bytes,"cache_bytes")?;
+(B[m[31m-        items.insert(root.into(),Item{utility:root.into(),fraction:false,modifiers:vec![]});
+(B[m[32m+    struct Item {
+(B[m[32m+        utility: String,
+(B[m[32m+        fraction: bool,
+(B[m[32m+        modifiers: Vec<String>,
+(B[m     }
+[31m-    let fractions=["1/2","1/3","2/3","1/4","2/4","3/4","1/5","2/5","3/5","4/5","1/6","2/6","3/6","4/6","5/6","1/12","2/12","3/12","4/12","5/12","6/12","7/12","8/12","9/12","10/12","11/12"];
+(B[m[31m-    for definition in definitions["definitions"].as_array().ok_or_else(||syntax("Invalid fixed completion definitions"))? {
+(B[m[31m-        let root=definition[0].as_str().ok_or_else(||syntax("Invalid completion root"))?;
+(B[m[31m-        for group in definition[1].as_array().ok_or_else(||syntax("Invalid completion groups"))? {
+(B[m[31m-            let mut values=group["values"].as_array().cloned().unwrap_or_default();
+(B[m[31m-            if let Some(key)=group["valuesWhen"]["key"].as_str(){if theme.tokens.contains_key(key){values.extend(group["valuesWhen"]["values"].as_array().cloned().unwrap_or_default());}}
+(B[m[31m-            let keys=group["valueThemeKeys"].as_array().map(|keys|keys.iter().filter_map(Value::as_str).collect::<Vec<_>>()).unwrap_or_default();
+(B[m[31m-            values.extend(namespace_keys(theme,&keys).into_iter().map(|value|json!(value)));
+(B[m[31m-            if group["supportsFractions"]==true {values.extend(fractions.map(|value|json!(value)));}
+(B[m[31m-            if group["hasDefaultValue"]==true||group["defaultWhen"].as_str().is_some_and(|key|theme.tokens.contains_key(key)){values.insert(0,Value::Null);}
+(B[m[31m-            let mut modifiers=group["modifiers"].as_array().map(|values|values.iter().filter_map(Value::as_str).map(str::to_string).collect::<Vec<_>>()).unwrap_or_default();
+(B[m[31m-            let keys=group["modifierThemeKeys"].as_array().map(|keys|keys.iter().filter_map(Value::as_str).collect::<Vec<_>>()).unwrap_or_default();modifiers.extend(namespace_keys(theme,&keys));
+(B[m[32m+    let mut items: BTreeMap<String, Item> = BTreeMap::new();
+(B[m[32m+    let mut item_bytes = 0usize;
+(B[m[32m+    for root in compiler::registry::STATIC_ROOTS
+(B[m[32m+        .iter()
+(B[m[32m+        .copied()
+(B[m[32m+        .chain(custom.roots(UtilityKind::Static))
+(B[m[32m+    {
+(B[m[32m+        item_bytes = item_bytes
+(B[m[32m+            .saturating_add(root.len().saturating_mul(2))
+(B[m[32m+            .saturating_add(160);
+(B[m[32m+        compiler::check_limit(
+(B[m[32m+            scratch.saturating_add(item_bytes),
+(B[m[32m+            limits.cache_bytes,
+(B[m[32m+            "cache_bytes",
+(B[m[32m+        )?;
+(B[m[32m+        items.insert(
+(B[m[32m+            root.into(),
+(B[m[32m+            Item {
+(B[m[32m+                utility: root.into(),
+(B[m[32m+                fraction: false,
+(B[m[32m+                modifiers: vec![],
+(B[m[32m+            },
+(B[m[32m+        );
+(B[m[32m+    }
+(B[m[32m+    let fractions = [
+(B[m[32m+        "1/2", "1/3", "2/3", "1/4", "2/4", "3/4", "1/5", "2/5", "3/5", "4/5", "1/6", "2/6", "3/6",
+(B[m[32m+        "4/6", "5/6", "1/12", "2/12", "3/12", "4/12", "5/12", "6/12", "7/12", "8/12", "9/12",
+(B[m[32m+        "10/12", "11/12",
+(B[m[32m+    ];
+(B[m[32m+    for definition in definitions["definitions"]
+(B[m[32m+        .as_array()
+(B[m[32m+        .ok_or_else(|| syntax("Invalid fixed completion definitions"))?
+(B[m[32m+    {
+(B[m[32m+        let root = definition[0]
+(B[m[32m+            .as_str()
+(B[m[32m+            .ok_or_else(|| syntax("Invalid completion root"))?;
+(B[m[32m+        for group in definition[1]
+(B[m[32m+            .as_array()
+(B[m[32m+            .ok_or_else(|| syntax("Invalid completion groups"))?
+(B[m[32m+        {
+(B[m[32m+            let mut values = group["values"].as_array().cloned().unwrap_or_default();
+(B[m[32m+            if let Some(key) = group["valuesWhen"]["key"].as_str() {
+(B[m[32m+                if theme.tokens.contains_key(key) {
+(B[m[32m+                    values.extend(
+(B[m[32m+                        group["valuesWhen"]["values"]
+(B[m[32m+                            .as_array()
+(B[m[32m+                            .cloned()
+(B[m[32m+                            .unwrap_or_default(),
+(B[m[32m+                    );
+(B[m[32m+                }
+(B[m[32m+            }
+(B[m[32m+            let keys = group["valueThemeKeys"]
+(B[m[32m+                .as_array()
+(B[m[32m+                .map(|keys| keys.iter().filter_map(Value::as_str).collect::<Vec<_>>())
+(B[m[32m+                .unwrap_or_default();
+(B[m[32m+            values.extend(
+(B[m[32m+                namespace_keys(theme, &keys)
+(B[m[32m+                    .into_iter()
+(B[m[32m+                    .map(|value| json!(value)),
+(B[m[32m+            );
+(B[m[32m+            if group["supportsFractions"] == true {
+(B[m[32m+                values.extend(fractions.map(|value| json!(value)));
+(B[m[32m+            }
+(B[m[32m+            if group["hasDefaultValue"] == true
+(B[m[32m+                || group["defaultWhen"]
+(B[m[32m+                    .as_str()
+(B[m[32m+                    .is_some_and(|key| theme.tokens.contains_key(key))
+(B[m[32m+            {
+(B[m[32m+                values.insert(0, Value::Null);
+(B[m[32m+            }
+(B[m[32m+            let mut modifiers = group["modifiers"]
+(B[m[32m+                .as_array()
+(B[m[32m+                .map(|values| {
+(B[m[32m+                    values
+(B[m[32m+                        .iter()
+(B[m[32m+                        .filter_map(Value::as_str)
+(B[m[32m+                        .map(str::to_string)
+(B[m[32m+                        .collect::<Vec<_>>()
+(B[m[32m+                })
+(B[m[32m+                .unwrap_or_default();
+(B[m[32m+            let keys = group["modifierThemeKeys"]
+(B[m[32m+                .as_array()
+(B[m[32m+                .map(|keys| keys.iter().filter_map(Value::as_str).collect::<Vec<_>>())
+(B[m[32m+                .unwrap_or_default();
+(B[m[32m+            modifiers.extend(namespace_keys(theme, &keys));
+(B[m             for value in values {
+[31m-                let fraction=value.as_str().is_some_and(|value|value.split_once('/').is_some_and(|(a,b)|!a.is_empty()&&!b.is_empty()&&a.bytes().all(|b|b.is_ascii_digit())&&b.bytes().all(|b|b.is_ascii_digit())));
+(B[m[31m-                let name=value.as_str().map_or_else(||root.to_string(),|value|format!("{root}-{value}"));
+(B[m[31m-                for negative in [false,true] {if negative&&group["supportsNegative"]!=true{continue;}let name=if negative{format!("-{name}")}else{name.clone()};let utility=if negative{format!("-{root}")}else{root.into()};item_bytes=item_bytes.saturating_add(modifiers.iter().map(|value|value.len().saturating_add(32)).sum::<usize>());
+(B[m[31m-                    if !items.contains_key(&name) {item_bytes=item_bytes.saturating_add(name.len()).saturating_add(utility.len()).saturating_add(160);}
+(B[m[31m-                    compiler::check_limit(scratch.saturating_add(item_bytes),limits.cache_bytes,"cache_bytes")?;
+(B[m[31m-                    let item=items.entry(name).or_insert(Item{utility:utility.clone(),fraction:false,modifiers:vec![]});item.utility=utility;item.fraction|=fraction;item.modifiers.extend(modifiers.iter().cloned());}
+(B[m[32m+                let fraction = value.as_str().is_some_and(|value| {
+(B[m[32m+                    value.split_once('/').is_some_and(|(a, b)| {
+(B[m[32m+                        !a.is_empty()
+(B[m[32m+                            && !b.is_empty()
+(B[m[32m+                            && a.bytes().all(|b| b.is_ascii_digit())
+(B[m[32m+                            && b.bytes().all(|b| b.is_ascii_digit())
+(B[m[32m+                    })
+(B[m[32m+                });
+(B[m[32m+                let name = value
+(B[m[32m+                    .as_str()
+(B[m[32m+                    .map_or_else(|| root.to_string(), |value| format!("{root}-{value}"));
+(B[m[32m+                for negative in [false, true] {
+(B[m[32m+                    if negative && group["supportsNegative"] != true {
+(B[m[32m+                        continue;
+(B[m[32m+                    }
+(B[m[32m+                    let name = if negative {
+(B[m[32m+                        format!("-{name}")
+(B[m[32m+                    } else {
+(B[m[32m+                        name.clone()
+(B[m[32m+                    };
+(B[m[32m+                    let utility = if negative {
+(B[m[32m+                        format!("-{root}")
+(B[m[32m+                    } else {
+(B[m[32m+                        root.into()
+(B[m[32m+                    };
+(B[m[32m+                    item_bytes = item_bytes.saturating_add(
+(B[m[32m+                        modifiers
+(B[m[32m+                            .iter()
+(B[m[32m+                            .map(|value| value.len().saturating_add(32))
+(B[m[32m+                            .sum::<usize>(),
+(B[m[32m+                    );
+(B[m[32m+                    if !items.contains_key(&name) {
+(B[m[32m+                        item_bytes = item_bytes
+(B[m[32m+                            .saturating_add(name.len())
+(B[m[32m+                            .saturating_add(utility.len())
+(B[m[32m+                            .saturating_add(160);
+(B[m[32m+                    }
+(B[m[32m+                    compiler::check_limit(
+(B[m[32m+                        scratch.saturating_add(item_bytes),
+(B[m[32m+                        limits.cache_bytes,
+(B[m[32m+                        "cache_bytes",
+(B[m[32m+                    )?;
+(B[m[32m+                    let item = items.entry(name).or_insert(Item {
+(B[m[32m+                        utility: utility.clone(),
+(B[m[32m+                        fraction: false,
+(B[m[32m+                        modifiers: vec![],
+(B[m[32m+                    });
+(B[m[32m+                    item.utility = utility;
+(B[m[32m+                    item.fraction |= fraction;
+(B[m[32m+                    item.modifiers.extend(modifiers.iter().cloned());
+(B[m[32m+                }
+(B[m             }
+         }
+     }
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style/src/compiler/public_api/design_system.rs:407:
+[31m-    let mut list=items.into_iter().collect::<Vec<_>>();list.sort_by(|(a,_),(b,_)|compiler::compare_classes(a,b));
+(B[m[31m-    let mut buckets:Vec<(String,Vec<Value>)>=Vec::new();let mut last=BTreeMap::new();let mut deferred:BTreeMap<String,Vec<Value>>=BTreeMap::new();
+(B[m[31m-    for (name,item) in list {
+(B[m[31m-        if buckets.last().is_none_or(|(utility,_)|utility!=&item.utility){buckets.push((item.utility.clone(),vec![]));last.insert(item.utility.clone(),buckets.len()-1);}
+(B[m[31m-        let value=json!([name,{"modifiers":item.modifiers}]);
+(B[m[31m-        if item.fraction {deferred.entry(item.utility).or_default().push(value);}else{let index=buckets.len()-1;buckets[index].1.push(value);}
+(B[m[32m+    let mut list = items.into_iter().collect::<Vec<_>>();
+(B[m[32m+    list.sort_by(|(a, _), (b, _)| compiler::compare_classes(a, b));
+(B[m[32m+    let mut buckets: Vec<(String, Vec<Value>)> = Vec::new();
+(B[m[32m+    let mut last = BTreeMap::new();
+(B[m[32m+    let mut deferred: BTreeMap<String, Vec<Value>> = BTreeMap::new();
+(B[m[32m+    for (name, item) in list {
+(B[m[32m+        if buckets
+(B[m[32m+            .last()
+(B[m[32m+            .is_none_or(|(utility, _)| utility != &item.utility)
+(B[m[32m+        {
+(B[m[32m+            buckets.push((item.utility.clone(), vec![]));
+(B[m[32m+            last.insert(item.utility.clone(), buckets.len() - 1);
+(B[m[32m+        }
+(B[m[32m+        let value = json!([name,{"modifiers":item.modifiers}]);
+(B[m[32m+        if item.fraction {
+(B[m[32m+            deferred.entry(item.utility).or_default().push(value);
+(B[m[32m+        } else {
+(B[m[32m+            let index = buckets.len() - 1;
+(B[m[32m+            buckets[index].1.push(value);
+(B[m[32m+        }
+(B[m     }
+[31m-    for (utility,values) in deferred {if let Some(index)=last.get(&utility){buckets[*index].1.extend(values);}}
+(B[m[31m-    let result=json!(buckets.into_iter().flat_map(|(_,values)|values).collect::<Vec<_>>());
+(B[m[31m-    compiler::check_limit(scratch.saturating_add(json_bytes(&result)),limits.cache_bytes,"cache_bytes")?;Ok(result)
+(B[m[32m+    for (utility, values) in deferred {
+(B[m[32m+        if let Some(index) = last.get(&utility) {
+(B[m[32m+            buckets[*index].1.extend(values);
+(B[m[32m+        }
+(B[m[32m+    }
+(B[m[32m+    let result = json!(buckets
+(B[m[32m+        .into_iter()
+(B[m[32m+        .flat_map(|(_, values)| values)
+(B[m[32m+        .collect::<Vec<_>>());
+(B[m[32m+    compiler::check_limit(
+(B[m[32m+        scratch.saturating_add(json_bytes(&result)),
+(B[m[32m+        limits.cache_bytes,
+(B[m[32m+        "cache_bytes",
+(B[m[32m+    )?;
+(B[m[32m+    Ok(result)
+(B[m }
+ 
+[31m-const SPACING_SUGGESTIONS:&[&str]=&["0","0.5","1","1.5","2","2.5","3","3.5","4","5","6","7","8","9","10","11","12","14","16","20","24","28","32","36","40","44","48","52","56","60","64","72","80","96"];
+(B[m[31m-fn custom_completion_group(nodes:&[AstNode],theme:&Theme,depth:usize)->Result<Value,CompileError> {
+(B[m[32m+const SPACING_SUGGESTIONS: &[&str] = &[
+(B[m[32m+    "0", "0.5", "1", "1.5", "2", "2.5", "3", "3.5", "4", "5", "6", "7", "8", "9", "10", "11", "12",
+(B[m[32m+    "14", "16", "20", "24", "28", "32", "36", "40", "44", "48", "52", "56", "60", "64", "72", "80",
+(B[m[32m+    "96",
+(B[m[32m+];
+(B[m[32m+fn custom_completion_group(
+(B[m[32m+    nodes: &[AstNode],
+(B[m[32m+    theme: &Theme,
+(B[m[32m+    depth: usize,
+(B[m[32m+) -> Result<Value, CompileError> {
+(B[m     #[derive(Default)]
+[31m-    struct Storage {literals:Vec<String>,namespaces:Vec<String>,number:bool,integer:bool}
+(B[m[31m-    fn visit(values:&[value::ValueNode],spacing:bool,storage:&mut [Storage;2],depth:usize)->Result<(),CompileError> {
+(B[m[32m+    struct Storage {
+(B[m[32m+        literals: Vec<String>,
+(B[m[32m+        namespaces: Vec<String>,
+(B[m[32m+        number: bool,
+(B[m[32m+        integer: bool,
+(B[m[32m+    }
+(B[m[32m+    fn visit(
+(B[m[32m+        values: &[value::ValueNode],
+(B[m[32m+        spacing: bool,
+(B[m[32m+        storage: &mut [Storage; 2],
+(B[m[32m+        depth: usize,
+(B[m[32m+    ) -> Result<(), CompileError> {
+(B[m         for value in values {
+[31m-            if let value::ValueNode::Function{name,nodes}=value {
+(B[m[31m-                if name=="--value"||name=="--modifier" {
+(B[m[31m-                    let target=&mut storage[usize::from(name=="--modifier")];
+(B[m[31m-                    for raw in value::segment(&value::to_css(nodes),',',depth)? {
+(B[m[31m-                        let normalized=raw.replace("\\*","*"); let raw=normalized.trim();
+(B[m[31m-                        if spacing {target.number|=raw=="number";target.integer|=raw=="integer";}
+(B[m[31m-                        else if (raw.starts_with('\'')&&raw.ends_with('\''))||(raw.starts_with('"')&&raw.ends_with('"')) {let literal=raw[1..raw.len()-1].into();if !target.literals.contains(&literal){target.literals.push(literal);}}
+(B[m[31m-                        else if raw.starts_with("--") {let end=raw.find("-*").unwrap_or_else(||raw.find(char::is_whitespace).unwrap_or(raw.len()));let namespace=raw[..end].into();if !target.namespaces.contains(&namespace){target.namespaces.push(namespace);}}
+(B[m[32m+            if let value::ValueNode::Function { name, nodes } = value {
+(B[m[32m+                if name == "--value" || name == "--modifier" {
+(B[m[32m+                    let target = &mut storage[usize::from(name == "--modifier")];
+(B[m[32m+                    for raw in value::segment(&value::to_css(nodes), ',', depth)? {
+(B[m[32m+                        let normalized = raw.replace("\\*", "*");
+(B[m[32m+                        let raw = normalized.trim();
+(B[m[32m+                        if spacing {
+(B[m[32m+                            target.number |= raw == "number";
+(B[m[32m+                            target.integer |= raw == "integer";
+(B[m[32m+                        } else if (raw.starts_with('\'') && raw.ends_with('\''))
+(B[m[32m+                            || (raw.starts_with('"') && raw.ends_with('"'))
+(B[m[32m+                        {
+(B[m[32m+                            let literal = raw[1..raw.len() - 1].into();
+(B[m[32m+                            if !target.literals.contains(&literal) {
+(B[m[32m+                                target.literals.push(literal);
+(B[m[32m+                            }
+(B[m[32m+                        } else if raw.starts_with("--") {
+(B[m[32m+                            let end = raw.find("-*").unwrap_or_else(|| {
+(B[m[32m+                                raw.find(char::is_whitespace).unwrap_or(raw.len())
+(B[m[32m+                            });
+(B[m[32m+                            let namespace = raw[..end].into();
+(B[m[32m+                            if !target.namespaces.contains(&namespace) {
+(B[m[32m+                                target.namespaces.push(namespace);
+(B[m[32m+                            }
+(B[m[32m+                        }
+(B[m                     }
+                 }
+[31m-                visit(nodes,spacing||name=="--spacing",storage,depth)?;
+(B[m[32m+                visit(nodes, spacing || name == "--spacing", storage, depth)?;
+(B[m             }
+         }
+         Ok(())
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style/src/compiler/public_api/design_system.rs:439:
+     }
+[31m-    fn collect(nodes:&[AstNode],storage:&mut [Storage;2],depth:usize)->Result<(),CompileError> {
+(B[m[32m+    fn collect(
+(B[m[32m+        nodes: &[AstNode],
+(B[m[32m+        storage: &mut [Storage; 2],
+(B[m[32m+        depth: usize,
+(B[m[32m+    ) -> Result<(), CompileError> {
+(B[m         for node in nodes {
+[31m-            if let AstNode::Declaration {value,..}=node {visit(&value::parse(value,depth)?,false,storage,depth)?;}
+(B[m[31m-            if let Some(nodes)=node.children(){collect(nodes,storage,depth)?;}
+(B[m[32m+            if let AstNode::Declaration { value, .. } = node {
+(B[m[32m+                visit(&value::parse(value, depth)?, false, storage, depth)?;
+(B[m[32m+            }
+(B[m[32m+            if let Some(nodes) = node.children() {
+(B[m[32m+                collect(nodes, storage, depth)?;
+(B[m[32m+            }
+(B[m         }
+         Ok(())
+     }
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style/src/compiler/public_api/design_system.rs:447:
+[31m-    let mut storage=[Storage::default(),Storage::default()];collect(nodes,&mut storage,depth)?;
+(B[m[31m-    let mut result=[Vec::new(),Vec::new()];
+(B[m[31m-    for (index,target) in storage.into_iter().enumerate(){
+(B[m[32m+    let mut storage = [Storage::default(), Storage::default()];
+(B[m[32m+    collect(nodes, &mut storage, depth)?;
+(B[m[32m+    let mut result = [Vec::new(), Vec::new()];
+(B[m[32m+    for (index, target) in storage.into_iter().enumerate() {
+(B[m         result[index].extend(target.literals);
+[31m-        if target.number {result[index].extend(SPACING_SUGGESTIONS.iter().map(|value|(*value).into()));}
+(B[m[31m-        else if target.integer {result[index].extend(SPACING_SUGGESTIONS.iter().filter(|value|!value.contains('.')).map(|value|(*value).into()));}
+(B[m[31m-        result[index].extend(namespace_keys(theme,&target.namespaces.iter().map(String::as_str).collect::<Vec<_>>()));
+(B[m[32m+        if target.number {
+(B[m[32m+            result[index].extend(SPACING_SUGGESTIONS.iter().map(|value| (*value).into()));
+(B[m[32m+        } else if target.integer {
+(B[m[32m+            result[index].extend(
+(B[m[32m+                SPACING_SUGGESTIONS
+(B[m[32m+                    .iter()
+(B[m[32m+                    .filter(|value| !value.contains('.'))
+(B[m[32m+                    .map(|value| (*value).into()),
+(B[m[32m+            );
+(B[m[32m+        }
+(B[m[32m+        result[index].extend(namespace_keys(
+(B[m[32m+            theme,
+(B[m[32m+            &target
+(B[m[32m+                .namespaces
+(B[m[32m+                .iter()
+(B[m[32m+                .map(String::as_str)
+(B[m[32m+                .collect::<Vec<_>>(),
+(B[m[32m+        ));
+(B[m     }
+     Ok(json!({"values":result[0],"modifiers":result[1]}))
+ }
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style/src/compiler/public_api/design_system.rs:457:
+ 
+[31m-fn variant_rank(variant:&Value,theme:&Theme)->usize {
+(B[m[31m-    let root=variant["root"].as_str().unwrap_or("");
+(B[m[31m-    if let Some((_,rank))=compiler::registry::VARIANT_ORDER.iter().find(|(name,_)|*name==root){*rank}
+(B[m[31m-    else if theme.tokens.contains_key(&format!("--breakpoint-{root}")){64}
+(B[m[31m-    else {compiler::registry::VARIANT_ORDER.iter().map(|(_,rank)|*rank).max().unwrap_or(0)+1+theme.custom_variants.root_names().filter(|root|!compiler::registry::VARIANT_ORDER.iter().any(|(name,_)|name==root)).position(|name|name==root).unwrap_or(0)}
+(B[m[32m+fn variant_rank(variant: &Value, theme: &Theme) -> usize {
+(B[m[32m+    let root = variant["root"].as_str().unwrap_or("");
+(B[m[32m+    if let Some((_, rank)) = compiler::registry::VARIANT_ORDER
+(B[m[32m+        .iter()
+(B[m[32m+        .find(|(name, _)| *name == root)
+(B[m[32m+    {
+(B[m[32m+        *rank
+(B[m[32m+    } else if theme.tokens.contains_key(&format!("--breakpoint-{root}")) {
+(B[m[32m+        64
+(B[m[32m+    } else {
+(B[m[32m+        compiler::registry::VARIANT_ORDER
+(B[m[32m+            .iter()
+(B[m[32m+            .map(|(_, rank)| *rank)
+(B[m[32m+            .max()
+(B[m[32m+            .unwrap_or(0)
+(B[m[32m+            + 1
+(B[m[32m+            + theme
+(B[m[32m+                .custom_variants
+(B[m[32m+                .root_names()
+(B[m[32m+                .filter(|root| {
+(B[m[32m+                    !compiler::registry::VARIANT_ORDER
+(B[m[32m+                        .iter()
+(B[m[32m+                        .any(|(name, _)| name == root)
+(B[m[32m+                })
+(B[m[32m+                .position(|name| name == root)
+(B[m[32m+                .unwrap_or(0)
+(B[m[32m+    }
+(B[m }
+[31m-fn breakpoint_value(variant:&Value,theme:&Theme)->Option<String> {
+(B[m[31m-    let root=variant["root"].as_str()?;
+(B[m[31m-    if variant["kind"]=="static" {return theme.tokens.get(&format!("--breakpoint-{root}")).map(|token|token.value.clone());}
+(B[m[31m-    if variant["value"].is_null()||!root.starts_with('@')&&!variant["modifier"].is_null(){return None;}
+(B[m[31m-    let value=variant["value"]["value"].as_str()?;
+(B[m[31m-    let value=if variant["value"]["kind"]=="arbitrary"{value.to_string()}else{theme.tokens.get(&format!("--{}-{value}",if root.starts_with('@'){"container"}else{"breakpoint"}))?.value.clone()};
+(B[m[31m-    (!value.is_empty()&&!value.contains("var(")).then_some(value)
+(B[m[32m+fn breakpoint_value(variant: &Value, theme: &Theme) -> Option<String> {
+(B[m[32m+    let root = variant["root"].as_str()?;
+(B[m[32m+    if variant["kind"] == "static" {
+(B[m[32m+        return theme
+(B[m[32m+            .tokens
+(B[m[32m+            .get(&format!("--breakpoint-{root}"))
+(B[m[32m+            .map(|token| token.value.clone());
+(B[m[32m+    }
+(B[m[32m+    if variant["value"].is_null() || !root.starts_with('@') && !variant["modifier"].is_null() {
+(B[m[32m+        return None;
+(B[m[32m+    }
+(B[m[32m+    let value = variant["value"]["value"].as_str()?;
+(B[m[32m+    let value = if variant["value"]["kind"] == "arbitrary" {
+(B[m[32m+        value.to_string()
+(B[m[32m+    } else {
+(B[m[32m+        theme
+(B[m[32m+            .tokens
+(B[m[32m+            .get(&format!(
+(B[m[32m+                "--{}-{value}",
+(B[m[32m+                if root.starts_with('@') {
+(B[m[32m+                    "container"
+(B[m[32m+                } else {
+(B[m[32m+                    "breakpoint"
+(B[m[32m+                }
+(B[m[32m+            ))?
+(B[m[32m+            .value
+(B[m[32m+            .clone()
+(B[m[32m+    };
+(B[m[32m+    (!value.is_empty() && !value.contains("var(")).then_some(value)
+(B[m }
+[31m-fn breakpoint_cmp(a:&str,b:&str,descending:bool)->Ordering {
+(B[m[31m-    let bucket=|raw:&str|raw.find('(').map_or_else(||raw.chars().filter(|ch|!ch.is_ascii_digit()&&*ch!='.').collect::<String>(),|end|raw[..end].into());
+(B[m[31m-    let integer=|raw:&str|{let raw=raw.trim_start();let end=raw.char_indices().take_while(|(index,ch)|ch.is_ascii_digit()||*index==0&&matches!(*ch,'+'|'-')).last().map(|(index,ch)|index+ch.len_utf8())?;raw[..end].parse::<i64>().ok()};
+(B[m[31m-    bucket(a).cmp(&bucket(b)).then_with(||match (integer(a),integer(b)){(Some(a),Some(b))=>if descending{b.cmp(&a)}else{a.cmp(&b)},_=>text_cmp(a,b)})
+(B[m[32m+fn breakpoint_cmp(a: &str, b: &str, descending: bool) -> Ordering {
+(B[m[32m+    let bucket = |raw: &str| {
+(B[m[32m+        raw.find('(').map_or_else(
+(B[m[32m+            || {
+(B[m[32m+                raw.chars()
+(B[m[32m+                    .filter(|ch| !ch.is_ascii_digit() && *ch != '.')
+(B[m[32m+                    .collect::<String>()
+(B[m[32m+            },
+(B[m[32m+            |end| raw[..end].into(),
+(B[m[32m+        )
+(B[m[32m+    };
+(B[m[32m+    let integer = |raw: &str| {
+(B[m[32m+        let raw = raw.trim_start();
+(B[m[32m+        let end = raw
+(B[m[32m+            .char_indices()
+(B[m[32m+            .take_while(|(index, ch)| {
+(B[m[32m+                ch.is_ascii_digit() || *index == 0 && matches!(*ch, '+' | '-')
+(B[m[32m+            })
+(B[m[32m+            .last()
+(B[m[32m+            .map(|(index, ch)| index + ch.len_utf8())?;
+(B[m[32m+        raw[..end].parse::<i64>().ok()
+(B[m[32m+    };
+(B[m[32m+    bucket(a)
+(B[m[32m+        .cmp(&bucket(b))
+(B[m[32m+        .then_with(|| match (integer(a), integer(b)) {
+(B[m[32m+            (Some(a), Some(b)) => {
+(B[m[32m+                if descending {
+(B[m[32m+                    b.cmp(&a)
+(B[m[32m+                } else {
+(B[m[32m+                    a.cmp(&b)
+(B[m[32m+                }
+(B[m[32m+            }
+(B[m[32m+            _ => text_cmp(a, b),
+(B[m[32m+        })
+(B[m }
+[31m-fn cached_variant_cmp(raw_a:&str,a:&Value,raw_b:&str,b:&Value,theme:&Theme)->Ordering {
+(B[m[31m-    if raw_a==raw_b{return Ordering::Equal;}
+(B[m[31m-    match (a["kind"]=="arbitrary",b["kind"]=="arbitrary") {
+(B[m[31m-        (true,true)=>return text_cmp(a["selector"].as_str().unwrap_or(""),b["selector"].as_str().unwrap_or("")),(true,false)=>return Ordering::Greater,(false,true)=>return Ordering::Less,_=>{},
+(B[m[32m+fn cached_variant_cmp(raw_a: &str, a: &Value, raw_b: &str, b: &Value, theme: &Theme) -> Ordering {
+(B[m[32m+    if raw_a == raw_b {
+(B[m[32m+        return Ordering::Equal;
+(B[m     }
+[31m-    let rank=variant_rank(a,theme);let order=rank.cmp(&variant_rank(b,theme));if order!=Ordering::Equal{return order;}
+(B[m[31m-    if a["kind"]=="compound"&&b["kind"]=="compound" {let child = |raw:&str| value::segment(raw,'/',usize::MAX).ok().and_then(|parts|parts.first().copied()).and_then(|base|base.split_once('-').map(|(_,child)|child)).unwrap_or("").to_string();
+(B[m[31m-        return cached_variant_cmp(&child(raw_a),&a["variant"],&child(raw_b),&b["variant"],theme).then_with(||match (a["modifier"].as_object(),b["modifier"].as_object()){(Some(_),Some(_))=>text_cmp(a["modifier"]["value"].as_str().unwrap_or(""),b["modifier"]["value"].as_str().unwrap_or("")),(Some(_),None)=>Ordering::Greater,(None,Some(_))=>Ordering::Less,_=>Ordering::Equal});}
+(B[m[31m-    if (63..=66).contains(&rank){let descending=rank==63||rank==65;return match (breakpoint_value(a,theme),breakpoint_value(b,theme)){(Some(a),Some(b))=>breakpoint_cmp(&a,&b,descending),(None,_)=>if descending{Ordering::Greater}else{Ordering::Less},(_,None)=>if descending{Ordering::Less}else{Ordering::Greater}};}
+(B[m[31m-    let root=text_cmp(a["root"].as_str().unwrap_or(""),b["root"].as_str().unwrap_or(""));if root!=Ordering::Equal{return root;}
+(B[m[31m-    match (a["value"].is_null(),b["value"].is_null()) {(true,_)=>return Ordering::Less,(_,true)=>return Ordering::Greater,_=>{}}
+(B[m[31m-    (a["value"]["kind"]=="arbitrary").cmp(&(b["value"]["kind"]=="arbitrary")).then_with(|| {
+(B[m[31m-        let order=text_cmp(a["value"]["value"].as_str().unwrap_or(""),b["value"]["value"].as_str().unwrap_or(""));if order==Ordering::Equal{Ordering::Greater}else{order}
+(B[m[31m-    })
+(B[m[32m+    match (a["kind"] == "arbitrary", b["kind"] == "arbitrary") {
+(B[m[32m+        (true, true) => {
+(B[m[32m+            return text_cmp(
+(B[m[32m+                a["selector"].as_str().unwrap_or(""),
+(B[m[32m+                b["selector"].as_str().unwrap_or(""),
+(B[m[32m+            )
+(B[m[32m+        }
+(B[m[32m+        (true, false) => return Ordering::Greater,
+(B[m[32m+        (false, true) => return Ordering::Less,
+(B[m[32m+        _ => {}
+(B[m[32m+    }
+(B[m[32m+    let rank = variant_rank(a, theme);
+(B[m[32m+    let order = rank.cmp(&variant_rank(b, theme));
+(B[m[32m+    if order != Ordering::Equal {
+(B[m[32m+        return order;
+(B[m[32m+    }
+(B[m[32m+    if a["kind"] == "compound" && b["kind"] == "compound" {
+(B[m[32m+        let child = |raw: &str| {
+(B[m[32m+            value::segment(raw, '/', usize::MAX)
+(B[m[32m+                .ok()
+(B[m[32m+                .and_then(|parts| parts.first().copied())
+(B[m[32m+                .and_then(|base| base.split_once('-').map(|(_, child)| child))
+(B[m[32m+                .unwrap_or("")
+(B[m[32m+                .to_string()
+(B[m[32m+        };
+(B[m[32m+        return cached_variant_cmp(
+(B[m[32m+            &child(raw_a),
+(B[m[32m+            &a["variant"],
+(B[m[32m+            &child(raw_b),
+(B[m[32m+            &b["variant"],
+(B[m[32m+            theme,
+(B[m[32m+        )
+(B[m[32m+        .then_with(
+(B[m[32m+            || match (a["modifier"].as_object(), b["modifier"].as_object()) {
+(B[m[32m+                (Some(_), Some(_)) => text_cmp(
+(B[m[32m+                    a["modifier"]["value"].as_str().unwrap_or(""),
+(B[m[32m+                    b["modifier"]["value"].as_str().unwrap_or(""),
+(B[m[32m+                ),
+(B[m[32m+                (Some(_), None) => Ordering::Greater,
+(B[m[32m+                (None, Some(_)) => Ordering::Less,
+(B[m[32m+                _ => Ordering::Equal,
+(B[m[32m+            },
+(B[m[32m+        );
+(B[m[32m+    }
+(B[m[32m+    if (63..=66).contains(&rank) {
+(B[m[32m+        let descending = rank == 63 || rank == 65;
+(B[m[32m+        return match (breakpoint_value(a, theme), breakpoint_value(b, theme)) {
+(B[m[32m+            (Some(a), Some(b)) => breakpoint_cmp(&a, &b, descending),
+(B[m[32m+            (None, _) => {
+(B[m[32m+                if descending {
+(B[m[32m+                    Ordering::Greater
+(B[m[32m+                } else {
+(B[m[32m+                    Ordering::Less
+(B[m[32m+                }
+(B[m[32m+            }
+(B[m[32m+            (_, None) => {
+(B[m[32m+                if descending {
+(B[m[32m+                    Ordering::Less
+(B[m[32m+                } else {
+(B[m[32m+                    Ordering::Greater
+(B[m[32m+                }
+(B[m[32m+            }
+(B[m[32m+        };
+(B[m[32m+    }
+(B[m[32m+    let root = text_cmp(
+(B[m[32m+        a["root"].as_str().unwrap_or(""),
+(B[m[32m+        b["root"].as_str().unwrap_or(""),
+(B[m[32m+    );
+(B[m[32m+    if root != Ordering::Equal {
+(B[m[32m+        return root;
+(B[m[32m+    }
+(B[m[32m+    match (a["value"].is_null(), b["value"].is_null()) {
+(B[m[32m+        (true, _) => return Ordering::Less,
+(B[m[32m+        (_, true) => return Ordering::Greater,
+(B[m[32m+        _ => {}
+(B[m[32m+    }
+(B[m[32m+    (a["value"]["kind"] == "arbitrary")
+(B[m[32m+        .cmp(&(b["value"]["kind"] == "arbitrary"))
+(B[m[32m+        .then_with(|| {
+(B[m[32m+            let order = text_cmp(
+(B[m[32m+                a["value"]["value"].as_str().unwrap_or(""),
+(B[m[32m+                b["value"]["value"].as_str().unwrap_or(""),
+(B[m[32m+            );
+(B[m[32m+            if order == Ordering::Equal {
+(B[m[32m+                Ordering::Greater
+(B[m[32m+            } else {
+(B[m[32m+                order
+(B[m[32m+            }
+(B[m[32m+        })
+(B[m }
+ 
+ #[cfg(test)]

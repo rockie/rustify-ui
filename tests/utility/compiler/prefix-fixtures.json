@@ -1,0 +1,355 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "1334c99db8fd26c8ea065375dd9259800863f072",
+  "oracleVersion": "4.1.13",
+  "cases": [
+    {
+      "id": "prefix::0",
+      "input": "@theme prefix(tw)  { --color-brand: #123456; --color-alias: var(--color-brand); --color-prefixed: var(--tw-color-brand); --spacing: 4px; --breakpoint-card: 700px; --font-brand: serif; --animate-spin: spin 1s linear; @keyframes spin { to { opacity: 0; } } } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ""
+    },
+    {
+      "id": "prefix::1",
+      "input": "@theme prefix(tw)  { --color-brand: #123456; --color-alias: var(--color-brand); --color-prefixed: var(--tw-color-brand); --spacing: 4px; --breakpoint-card: 700px; --font-brand: serif; --animate-spin: spin 1s linear; @keyframes spin { to { opacity: 0; } } } @tailwind utilities;",
+      "candidates": [
+        "tw:bg-brand",
+        "tw:p-3",
+        "tw:font-brand"
+      ],
+      "expectedCss": ":root, :host {\n  --tw-color-brand: #123456;\n  --tw-spacing: 4px;\n  --tw-font-brand: serif;\n}\n.tw\\:bg-brand {\n  background-color: var(--tw-color-brand);\n}\n.tw\\:p-3 {\n  padding: calc(var(--tw-spacing) * 3);\n}\n.tw\\:font-brand {\n  font-family: var(--tw-font-brand);\n}\n"
+    },
+    {
+      "id": "prefix::2",
+      "input": "@theme prefix(tw)  { --color-brand: #123456; --color-alias: var(--color-brand); --color-prefixed: var(--tw-color-brand); --spacing: 4px; --breakpoint-card: 700px; --font-brand: serif; --animate-spin: spin 1s linear; @keyframes spin { to { opacity: 0; } } } @tailwind utilities;",
+      "candidates": [
+        "bg-brand",
+        "hover:tw:bg-brand",
+        "tw:hover:bg-brand!"
+      ],
+      "expectedCss": ":root, :host {\n  --tw-color-brand: #123456;\n}\n.tw\\:hover\\:bg-brand\\! {\n  &:hover {\n    @media (hover: hover) {\n      background-color: var(--tw-color-brand) !important;\n    }\n  }\n}\n"
+    },
+    {
+      "id": "prefix::3",
+      "input": "@theme prefix(tw)  { --color-brand: #123456; --color-alias: var(--color-brand); --color-prefixed: var(--tw-color-brand); --spacing: 4px; --breakpoint-card: 700px; --font-brand: serif; --animate-spin: spin 1s linear; @keyframes spin { to { opacity: 0; } } } @tailwind utilities;",
+      "candidates": [
+        "tw:bg-alias",
+        "tw:bg-prefixed"
+      ],
+      "expectedCss": ":root, :host {\n  --tw-color-brand: #123456;\n  --tw-color-alias: var(--color-brand);\n  --tw-color-prefixed: var(--tw-color-brand);\n}\n.tw\\:bg-alias {\n  background-color: var(--tw-color-alias);\n}\n.tw\\:bg-prefixed {\n  background-color: var(--tw-color-prefixed);\n}\n"
+    },
+    {
+      "id": "prefix::4",
+      "input": "@theme prefix(tw)  { --color-brand: #123456; --color-alias: var(--color-brand); --color-prefixed: var(--tw-color-brand); --spacing: 4px; --breakpoint-card: 700px; --font-brand: serif; --animate-spin: spin 1s linear; @keyframes spin { to { opacity: 0; } } } @tailwind utilities;",
+      "candidates": [
+        "tw:card:w-[13px]",
+        "tw:[color:var(--tw-color-brand)]"
+      ],
+      "expectedCss": ":root, :host {\n  --tw-color-brand: #123456;\n}\n.tw\\:\\[color\\:var\\(--tw-color-brand\\)\\] {\n  color: var(--tw-color-brand);\n}\n.tw\\:card\\:w-\\[13px\\] {\n  @media (width >= 700px) {\n    width: 13px;\n  }\n}\n"
+    },
+    {
+      "id": "prefix::5",
+      "input": "@theme prefix(tw)  { --color-brand: #123456; --color-alias: var(--color-brand); --color-prefixed: var(--tw-color-brand); --spacing: 4px; --breakpoint-card: 700px; --font-brand: serif; --animate-spin: spin 1s linear; @keyframes spin { to { opacity: 0; } } } @tailwind utilities;",
+      "candidates": [
+        "tw:[animation:var(--tw-animate-spin)]"
+      ],
+      "expectedCss": ":root, :host {\n  --tw-animate-spin: spin 1s linear;\n}\n.tw\\:\\[animation\\:var\\(--tw-animate-spin\\)\\] {\n  animation: var(--tw-animate-spin);\n}\n@keyframes spin {\n  to {\n    opacity: 0;\n  }\n}\n"
+    },
+    {
+      "id": "prefix:inline:6",
+      "input": "@theme prefix(tw) inline { --color-brand: #123456; --color-alias: var(--color-brand); --color-prefixed: var(--tw-color-brand); --spacing: 4px; --breakpoint-card: 700px; --font-brand: serif; --animate-spin: spin 1s linear; @keyframes spin { to { opacity: 0; } } } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ""
+    },
+    {
+      "id": "prefix:inline:7",
+      "input": "@theme prefix(tw) inline { --color-brand: #123456; --color-alias: var(--color-brand); --color-prefixed: var(--tw-color-brand); --spacing: 4px; --breakpoint-card: 700px; --font-brand: serif; --animate-spin: spin 1s linear; @keyframes spin { to { opacity: 0; } } } @tailwind utilities;",
+      "candidates": [
+        "tw:bg-brand",
+        "tw:p-3",
+        "tw:font-brand"
+      ],
+      "expectedCss": ".tw\\:bg-brand {\n  background-color: #123456;\n}\n.tw\\:p-3 {\n  padding: calc(4px * 3);\n}\n.tw\\:font-brand {\n  font-family: serif;\n}\n"
+    },
+    {
+      "id": "prefix:inline:8",
+      "input": "@theme prefix(tw) inline { --color-brand: #123456; --color-alias: var(--color-brand); --color-prefixed: var(--tw-color-brand); --spacing: 4px; --breakpoint-card: 700px; --font-brand: serif; --animate-spin: spin 1s linear; @keyframes spin { to { opacity: 0; } } } @tailwind utilities;",
+      "candidates": [
+        "bg-brand",
+        "hover:tw:bg-brand",
+        "tw:hover:bg-brand!"
+      ],
+      "expectedCss": ".tw\\:hover\\:bg-brand\\! {\n  &:hover {\n    @media (hover: hover) {\n      background-color: #123456 !important;\n    }\n  }\n}\n"
+    },
+    {
+      "id": "prefix:inline:9",
+      "input": "@theme prefix(tw) inline { --color-brand: #123456; --color-alias: var(--color-brand); --color-prefixed: var(--tw-color-brand); --spacing: 4px; --breakpoint-card: 700px; --font-brand: serif; --animate-spin: spin 1s linear; @keyframes spin { to { opacity: 0; } } } @tailwind utilities;",
+      "candidates": [
+        "tw:bg-alias",
+        "tw:bg-prefixed"
+      ],
+      "expectedCss": ":root, :host {\n  --tw-color-brand: #123456;\n}\n.tw\\:bg-alias {\n  background-color: var(--color-brand);\n}\n.tw\\:bg-prefixed {\n  background-color: var(--tw-color-brand);\n}\n"
+    },
+    {
+      "id": "prefix:inline:10",
+      "input": "@theme prefix(tw) inline { --color-brand: #123456; --color-alias: var(--color-brand); --color-prefixed: var(--tw-color-brand); --spacing: 4px; --breakpoint-card: 700px; --font-brand: serif; --animate-spin: spin 1s linear; @keyframes spin { to { opacity: 0; } } } @tailwind utilities;",
+      "candidates": [
+        "tw:card:w-[13px]",
+        "tw:[color:var(--tw-color-brand)]"
+      ],
+      "expectedCss": ":root, :host {\n  --tw-color-brand: #123456;\n}\n.tw\\:\\[color\\:var\\(--tw-color-brand\\)\\] {\n  color: var(--tw-color-brand);\n}\n.tw\\:card\\:w-\\[13px\\] {\n  @media (width >= 700px) {\n    width: 13px;\n  }\n}\n"
+    },
+    {
+      "id": "prefix:inline:11",
+      "input": "@theme prefix(tw) inline { --color-brand: #123456; --color-alias: var(--color-brand); --color-prefixed: var(--tw-color-brand); --spacing: 4px; --breakpoint-card: 700px; --font-brand: serif; --animate-spin: spin 1s linear; @keyframes spin { to { opacity: 0; } } } @tailwind utilities;",
+      "candidates": [
+        "tw:[animation:var(--tw-animate-spin)]"
+      ],
+      "expectedCss": ":root, :host {\n  --tw-animate-spin: spin 1s linear;\n}\n.tw\\:\\[animation\\:var\\(--tw-animate-spin\\)\\] {\n  animation: var(--tw-animate-spin);\n}\n@keyframes spin {\n  to {\n    opacity: 0;\n  }\n}\n"
+    },
+    {
+      "id": "prefix:reference:12",
+      "input": "@theme prefix(tw) reference { --color-brand: #123456; --color-alias: var(--color-brand); --color-prefixed: var(--tw-color-brand); --spacing: 4px; --breakpoint-card: 700px; --font-brand: serif; --animate-spin: spin 1s linear; @keyframes spin { to { opacity: 0; } } } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ""
+    },
+    {
+      "id": "prefix:reference:13",
+      "input": "@theme prefix(tw) reference { --color-brand: #123456; --color-alias: var(--color-brand); --color-prefixed: var(--tw-color-brand); --spacing: 4px; --breakpoint-card: 700px; --font-brand: serif; --animate-spin: spin 1s linear; @keyframes spin { to { opacity: 0; } } } @tailwind utilities;",
+      "candidates": [
+        "tw:bg-brand",
+        "tw:p-3",
+        "tw:font-brand"
+      ],
+      "expectedCss": ".tw\\:bg-brand {\n  background-color: var(--tw-color-brand, #123456);\n}\n.tw\\:p-3 {\n  padding: calc(var(--tw-spacing, 4px) * 3);\n}\n.tw\\:font-brand {\n  font-family: var(--tw-font-brand, serif);\n}\n"
+    },
+    {
+      "id": "prefix:reference:14",
+      "input": "@theme prefix(tw) reference { --color-brand: #123456; --color-alias: var(--color-brand); --color-prefixed: var(--tw-color-brand); --spacing: 4px; --breakpoint-card: 700px; --font-brand: serif; --animate-spin: spin 1s linear; @keyframes spin { to { opacity: 0; } } } @tailwind utilities;",
+      "candidates": [
+        "bg-brand",
+        "hover:tw:bg-brand",
+        "tw:hover:bg-brand!"
+      ],
+      "expectedCss": ".tw\\:hover\\:bg-brand\\! {\n  &:hover {\n    @media (hover: hover) {\n      background-color: var(--tw-color-brand, #123456) !important;\n    }\n  }\n}\n"
+    },
+    {
+      "id": "prefix:reference:15",
+      "input": "@theme prefix(tw) reference { --color-brand: #123456; --color-alias: var(--color-brand); --color-prefixed: var(--tw-color-brand); --spacing: 4px; --breakpoint-card: 700px; --font-brand: serif; --animate-spin: spin 1s linear; @keyframes spin { to { opacity: 0; } } } @tailwind utilities;",
+      "candidates": [
+        "tw:bg-alias",
+        "tw:bg-prefixed"
+      ],
+      "expectedCss": ".tw\\:bg-alias {\n  background-color: var(--tw-color-alias, var(--color-brand));\n}\n.tw\\:bg-prefixed {\n  background-color: var(--tw-color-prefixed, var(--tw-color-brand));\n}\n"
+    },
+    {
+      "id": "prefix:reference:16",
+      "input": "@theme prefix(tw) reference { --color-brand: #123456; --color-alias: var(--color-brand); --color-prefixed: var(--tw-color-brand); --spacing: 4px; --breakpoint-card: 700px; --font-brand: serif; --animate-spin: spin 1s linear; @keyframes spin { to { opacity: 0; } } } @tailwind utilities;",
+      "candidates": [
+        "tw:card:w-[13px]",
+        "tw:[color:var(--tw-color-brand)]"
+      ],
+      "expectedCss": ".tw\\:\\[color\\:var\\(--tw-color-brand\\)\\] {\n  color: var(--tw-color-brand);\n}\n.tw\\:card\\:w-\\[13px\\] {\n  @media (width >= 700px) {\n    width: 13px;\n  }\n}\n"
+    },
+    {
+      "id": "prefix:reference:17",
+      "input": "@theme prefix(tw) reference { --color-brand: #123456; --color-alias: var(--color-brand); --color-prefixed: var(--tw-color-brand); --spacing: 4px; --breakpoint-card: 700px; --font-brand: serif; --animate-spin: spin 1s linear; @keyframes spin { to { opacity: 0; } } } @tailwind utilities;",
+      "candidates": [
+        "tw:[animation:var(--tw-animate-spin)]"
+      ],
+      "expectedCss": ".tw\\:\\[animation\\:var\\(--tw-animate-spin\\)\\] {\n  animation: var(--tw-animate-spin);\n}\n"
+    },
+    {
+      "id": "prefix:static:18",
+      "input": "@theme prefix(tw) static { --color-brand: #123456; --color-alias: var(--color-brand); --color-prefixed: var(--tw-color-brand); --spacing: 4px; --breakpoint-card: 700px; --font-brand: serif; --animate-spin: spin 1s linear; @keyframes spin { to { opacity: 0; } } } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ":root, :host {\n  --tw-color-brand: #123456;\n  --tw-color-alias: var(--color-brand);\n  --tw-color-prefixed: var(--tw-color-brand);\n  --tw-spacing: 4px;\n  --tw-breakpoint-card: 700px;\n  --tw-font-brand: serif;\n  --tw-animate-spin: spin 1s linear;\n}\n@keyframes spin {\n  to {\n    opacity: 0;\n  }\n}\n"
+    },
+    {
+      "id": "prefix:static:19",
+      "input": "@theme prefix(tw) static { --color-brand: #123456; --color-alias: var(--color-brand); --color-prefixed: var(--tw-color-brand); --spacing: 4px; --breakpoint-card: 700px; --font-brand: serif; --animate-spin: spin 1s linear; @keyframes spin { to { opacity: 0; } } } @tailwind utilities;",
+      "candidates": [
+        "tw:bg-brand",
+        "tw:p-3",
+        "tw:font-brand"
+      ],
+      "expectedCss": ":root, :host {\n  --tw-color-brand: #123456;\n  --tw-color-alias: var(--color-brand);\n  --tw-color-prefixed: var(--tw-color-brand);\n  --tw-spacing: 4px;\n  --tw-breakpoint-card: 700px;\n  --tw-font-brand: serif;\n  --tw-animate-spin: spin 1s linear;\n}\n.tw\\:bg-brand {\n  background-color: var(--tw-color-brand);\n}\n.tw\\:p-3 {\n  padding: calc(var(--tw-spacing) * 3);\n}\n.tw\\:font-brand {\n  font-family: var(--tw-font-brand);\n}\n@keyframes spin {\n  to {\n    opacity: 0;\n  }\n}\n"
+    },
+    {
+      "id": "prefix:static:20",
+      "input": "@theme prefix(tw) static { --color-brand: #123456; --color-alias: var(--color-brand); --color-prefixed: var(--tw-color-brand); --spacing: 4px; --breakpoint-card: 700px; --font-brand: serif; --animate-spin: spin 1s linear; @keyframes spin { to { opacity: 0; } } } @tailwind utilities;",
+      "candidates": [
+        "bg-brand",
+        "hover:tw:bg-brand",
+        "tw:hover:bg-brand!"
+      ],
+      "expectedCss": ":root, :host {\n  --tw-color-brand: #123456;\n  --tw-color-alias: var(--color-brand);\n  --tw-color-prefixed: var(--tw-color-brand);\n  --tw-spacing: 4px;\n  --tw-breakpoint-card: 700px;\n  --tw-font-brand: serif;\n  --tw-animate-spin: spin 1s linear;\n}\n.tw\\:hover\\:bg-brand\\! {\n  &:hover {\n    @media (hover: hover) {\n      background-color: var(--tw-color-brand) !important;\n    }\n  }\n}\n@keyframes spin {\n  to {\n    opacity: 0;\n  }\n}\n"
+    },
+    {
+      "id": "prefix:static:21",
+      "input": "@theme prefix(tw) static { --color-brand: #123456; --color-alias: var(--color-brand); --color-prefixed: var(--tw-color-brand); --spacing: 4px; --breakpoint-card: 700px; --font-brand: serif; --animate-spin: spin 1s linear; @keyframes spin { to { opacity: 0; } } } @tailwind utilities;",
+      "candidates": [
+        "tw:bg-alias",
+        "tw:bg-prefixed"
+      ],
+      "expectedCss": ":root, :host {\n  --tw-color-brand: #123456;\n  --tw-color-alias: var(--color-brand);\n  --tw-color-prefixed: var(--tw-color-brand);\n  --tw-spacing: 4px;\n  --tw-breakpoint-card: 700px;\n  --tw-font-brand: serif;\n  --tw-animate-spin: spin 1s linear;\n}\n.tw\\:bg-alias {\n  background-color: var(--tw-color-alias);\n}\n.tw\\:bg-prefixed {\n  background-color: var(--tw-color-prefixed);\n}\n@keyframes spin {\n  to {\n    opacity: 0;\n  }\n}\n"
+    },
+    {
+      "id": "prefix:static:22",
+      "input": "@theme prefix(tw) static { --color-brand: #123456; --color-alias: var(--color-brand); --color-prefixed: var(--tw-color-brand); --spacing: 4px; --breakpoint-card: 700px; --font-brand: serif; --animate-spin: spin 1s linear; @keyframes spin { to { opacity: 0; } } } @tailwind utilities;",
+      "candidates": [
+        "tw:card:w-[13px]",
+        "tw:[color:var(--tw-color-brand)]"
+      ],
+      "expectedCss": ":root, :host {\n  --tw-color-brand: #123456;\n  --tw-color-alias: var(--color-brand);\n  --tw-color-prefixed: var(--tw-color-brand);\n  --tw-spacing: 4px;\n  --tw-breakpoint-card: 700px;\n  --tw-font-brand: serif;\n  --tw-animate-spin: spin 1s linear;\n}\n.tw\\:\\[color\\:var\\(--tw-color-brand\\)\\] {\n  color: var(--tw-color-brand);\n}\n.tw\\:card\\:w-\\[13px\\] {\n  @media (width >= 700px) {\n    width: 13px;\n  }\n}\n@keyframes spin {\n  to {\n    opacity: 0;\n  }\n}\n"
+    },
+    {
+      "id": "prefix:static:23",
+      "input": "@theme prefix(tw) static { --color-brand: #123456; --color-alias: var(--color-brand); --color-prefixed: var(--tw-color-brand); --spacing: 4px; --breakpoint-card: 700px; --font-brand: serif; --animate-spin: spin 1s linear; @keyframes spin { to { opacity: 0; } } } @tailwind utilities;",
+      "candidates": [
+        "tw:[animation:var(--tw-animate-spin)]"
+      ],
+      "expectedCss": ":root, :host {\n  --tw-color-brand: #123456;\n  --tw-color-alias: var(--color-brand);\n  --tw-color-prefixed: var(--tw-color-brand);\n  --tw-spacing: 4px;\n  --tw-breakpoint-card: 700px;\n  --tw-font-brand: serif;\n  --tw-animate-spin: spin 1s linear;\n}\n.tw\\:\\[animation\\:var\\(--tw-animate-spin\\)\\] {\n  animation: var(--tw-animate-spin);\n}\n@keyframes spin {\n  to {\n    opacity: 0;\n  }\n}\n"
+    },
+    {
+      "id": "prefix:default:24",
+      "input": "@theme prefix(tw) default { --color-brand: #123456; --color-alias: var(--color-brand); --color-prefixed: var(--tw-color-brand); --spacing: 4px; --breakpoint-card: 700px; --font-brand: serif; --animate-spin: spin 1s linear; @keyframes spin { to { opacity: 0; } } } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ""
+    },
+    {
+      "id": "prefix:default:25",
+      "input": "@theme prefix(tw) default { --color-brand: #123456; --color-alias: var(--color-brand); --color-prefixed: var(--tw-color-brand); --spacing: 4px; --breakpoint-card: 700px; --font-brand: serif; --animate-spin: spin 1s linear; @keyframes spin { to { opacity: 0; } } } @tailwind utilities;",
+      "candidates": [
+        "tw:bg-brand",
+        "tw:p-3",
+        "tw:font-brand"
+      ],
+      "expectedCss": ":root, :host {\n  --tw-color-brand: #123456;\n  --tw-spacing: 4px;\n  --tw-font-brand: serif;\n}\n.tw\\:bg-brand {\n  background-color: var(--tw-color-brand);\n}\n.tw\\:p-3 {\n  padding: calc(var(--tw-spacing) * 3);\n}\n.tw\\:font-brand {\n  font-family: var(--tw-font-brand);\n}\n"
+    },
+    {
+      "id": "prefix:default:26",
+      "input": "@theme prefix(tw) default { --color-brand: #123456; --color-alias: var(--color-brand); --color-prefixed: var(--tw-color-brand); --spacing: 4px; --breakpoint-card: 700px; --font-brand: serif; --animate-spin: spin 1s linear; @keyframes spin { to { opacity: 0; } } } @tailwind utilities;",
+      "candidates": [
+        "bg-brand",
+        "hover:tw:bg-brand",
+        "tw:hover:bg-brand!"
+      ],
+      "expectedCss": ":root, :host {\n  --tw-color-brand: #123456;\n}\n.tw\\:hover\\:bg-brand\\! {\n  &:hover {\n    @media (hover: hover) {\n      background-color: var(--tw-color-brand) !important;\n    }\n  }\n}\n"
+    },
+    {
+      "id": "prefix:default:27",
+      "input": "@theme prefix(tw) default { --color-brand: #123456; --color-alias: var(--color-brand); --color-prefixed: var(--tw-color-brand); --spacing: 4px; --breakpoint-card: 700px; --font-brand: serif; --animate-spin: spin 1s linear; @keyframes spin { to { opacity: 0; } } } @tailwind utilities;",
+      "candidates": [
+        "tw:bg-alias",
+        "tw:bg-prefixed"
+      ],
+      "expectedCss": ":root, :host {\n  --tw-color-brand: #123456;\n  --tw-color-alias: var(--color-brand);\n  --tw-color-prefixed: var(--tw-color-brand);\n}\n.tw\\:bg-alias {\n  background-color: var(--tw-color-alias);\n}\n.tw\\:bg-prefixed {\n  background-color: var(--tw-color-prefixed);\n}\n"
+    },
+    {
+      "id": "prefix:default:28",
+      "input": "@theme prefix(tw) default { --color-brand: #123456; --color-alias: var(--color-brand); --color-prefixed: var(--tw-color-brand); --spacing: 4px; --breakpoint-card: 700px; --font-brand: serif; --animate-spin: spin 1s linear; @keyframes spin { to { opacity: 0; } } } @tailwind utilities;",
+      "candidates": [
+        "tw:card:w-[13px]",
+        "tw:[color:var(--tw-color-brand)]"
+      ],
+      "expectedCss": ":root, :host {\n  --tw-color-brand: #123456;\n}\n.tw\\:\\[color\\:var\\(--tw-color-brand\\)\\] {\n  color: var(--tw-color-brand);\n}\n.tw\\:card\\:w-\\[13px\\] {\n  @media (width >= 700px) {\n    width: 13px;\n  }\n}\n"
+    },
+    {
+      "id": "prefix:default:29",
+      "input": "@theme prefix(tw) default { --color-brand: #123456; --color-alias: var(--color-brand); --color-prefixed: var(--tw-color-brand); --spacing: 4px; --breakpoint-card: 700px; --font-brand: serif; --animate-spin: spin 1s linear; @keyframes spin { to { opacity: 0; } } } @tailwind utilities;",
+      "candidates": [
+        "tw:[animation:var(--tw-animate-spin)]"
+      ],
+      "expectedCss": ":root, :host {\n  --tw-animate-spin: spin 1s linear;\n}\n.tw\\:\\[animation\\:var\\(--tw-animate-spin\\)\\] {\n  animation: var(--tw-animate-spin);\n}\n@keyframes spin {\n  to {\n    opacity: 0;\n  }\n}\n"
+    },
+    {
+      "id": "prefix:direct-used-prefixed",
+      "input": "@theme prefix(tw) { --color-brand: red; } .x { color: var(--tw-color-brand); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ":root, :host {\n  --tw-color-brand: red;\n}\n.x {\n  color: var(--tw-color-brand);\n}\n"
+    },
+    {
+      "id": "prefix:direct-used-unprefixed",
+      "input": "@theme prefix(tw) { --color-brand: red; } .x { color: var(--color-brand); } @tailwind utilities;",
+      "candidates": [],
+      "expectedCss": ".x {\n  color: var(--color-brand);\n}\n"
+    },
+    {
+      "id": "prefix:later-prefix",
+      "input": "@theme prefix(old) { --color-brand: red; } @theme prefix(new) { --color-other: blue; } @tailwind utilities;",
+      "candidates": [
+        "old:bg-brand",
+        "new:bg-brand",
+        "new:bg-other"
+      ],
+      "expectedCss": ":root, :host {\n  --new-color-brand: red;\n  --new-color-other: blue;\n}\n.new\\:bg-brand {\n  background-color: var(--new-color-brand);\n}\n.new\\:bg-other {\n  background-color: var(--new-color-other);\n}\n"
+    },
+    {
+      "id": "prefix:last-option",
+      "input": "@theme prefix(old) prefix(new) { --color-brand: red; } @tailwind utilities;",
+      "candidates": [
+        "old:bg-brand",
+        "new:bg-brand"
+      ],
+      "expectedCss": ":root, :host {\n  --new-color-brand: red;\n}\n.new\\:bg-brand {\n  background-color: var(--new-color-brand);\n}\n"
+    },
+    {
+      "id": "prefix:empty-prefix-does-not-reset",
+      "input": "@theme prefix(tw) { --color-brand: red; } @theme prefix() { --color-other: blue; } @tailwind utilities;",
+      "candidates": [
+        "tw:bg-brand",
+        "tw:bg-other"
+      ],
+      "expectedCss": ":root, :host {\n  --tw-color-brand: red;\n  --tw-color-other: blue;\n}\n.tw\\:bg-brand {\n  background-color: var(--tw-color-brand);\n}\n.tw\\:bg-other {\n  background-color: var(--tw-color-other);\n}\n"
+    },
+    {
+      "id": "prefix:last-valid-option-overrides-invalid",
+      "input": "@theme prefix(UP) prefix(tw) { --color-brand: red; } @tailwind utilities;",
+      "candidates": [
+        "tw:bg-brand"
+      ],
+      "expectedCss": ":root, :host {\n  --tw-color-brand: red;\n}\n.tw\\:bg-brand {\n  background-color: var(--tw-color-brand);\n}\n"
+    },
+    {
+      "id": "prefix:last-empty-option-ignores-invalid",
+      "input": "@theme prefix(UP) prefix() { --color-brand: red; } @tailwind utilities;",
+      "candidates": [
+        "bg-brand"
+      ],
+      "expectedCss": ":root, :host {\n  --color-brand: red;\n}\n.bg-brand {\n  background-color: var(--color-brand);\n}\n"
+    },
+    {
+      "id": "prefix:escaped-variable",
+      "input": "@theme prefix(tw) { --size-1\\/2: 13px; } @tailwind utilities;",
+      "candidates": [
+        "tw:w-1/2"
+      ],
+      "expectedCss": ".tw\\:w-1\\/2 {\n  width: calc(1/2 * 100%);\n}\n"
+    },
+    {
+      "id": "prefix:invalid:UP",
+      "input": "@theme prefix(UP) { --color-brand: red; } @tailwind utilities;",
+      "candidates": [],
+      "expectedError": "The prefix \"UP\" is invalid. Prefixes must be lowercase ASCII letters (a-z) only."
+    },
+    {
+      "id": "prefix:invalid:tw1",
+      "input": "@theme prefix(tw1) { --color-brand: red; } @tailwind utilities;",
+      "candidates": [],
+      "expectedError": "The prefix \"tw1\" is invalid. Prefixes must be lowercase ASCII letters (a-z) only."
+    },
+    {
+      "id": "prefix:invalid:tw-prefix",
+      "input": "@theme prefix(tw-prefix) { --color-brand: red; } @tailwind utilities;",
+      "candidates": [],
+      "expectedError": "The prefix \"tw-prefix\" is invalid. Prefixes must be lowercase ASCII letters (a-z) only."
+    },
+    {
+      "id": "prefix:invalid:é",
+      "input": "@theme prefix(é) { --color-brand: red; } @tailwind utilities;",
+      "candidates": [],
+      "expectedError": "The prefix \"é\" is invalid. Prefixes must be lowercase ASCII letters (a-z) only."
+    }
+  ]
+}

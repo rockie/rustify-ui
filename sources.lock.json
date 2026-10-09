@@ -1609,6 +1609,214 @@
         "makepad/widgets/resources/LXGWWenKaiRegular.ttf": "1d4b2f008ac7e02780c19801d4b04dd4538e40215943cc8ad374dba8ec2278c0",
         "scripts/repair-theme-font.py": "d996ff650963349f0be917798464af6010603053d16978ad541298eb046dc7db"
       }
+    },
+    {
+      "name": "tailwind-oxide-extraction",
+      "version": "4.1.13-1334c99db8fd26c8ea065375dd9259800863f072",
+      "origin": "https://codeload.github.com/tailwindlabs/tailwindcss/tar.gz/1334c99db8fd26c8ea065375dd9259800863f072",
+      "license": "MIT; crates/rustify-style/upstream/LICENSE-TAILWIND",
+      "import_rule": "Pure extractor/preprocessor closure and private host classification macro only; no filesystem scanner or Rayon runtime. Oxide Rust sources are unchanged; classification-macros/Cargo.toml explicitly enables syn/full for its standalone host build.",
+      "upstream_inventory": "tests/utility/scanner/inventory.json",
+      "files": {
+        "crates/rustify-style/upstream/LICENSE-TAILWIND": "60e0b68c0f35c078eef3a5d29419d0b03ff84ec1df9c3f9d6e39a519a5ae7985",
+        "crates/rustify-style/upstream/classification-macros/Cargo.toml": "9684262395ea0373579eb0f97d2ee27a6c324837080d62b043f5efa484f2b552",
+        "crates/rustify-style/upstream/classification-macros/src/lib.rs": "70ef9013d13442a904d30acac7d0b7923b71899fde58cc5c0a3d2b2cb761447c",
+        "crates/rustify-style/upstream/oxide/cursor.rs": "a98f18a4ea42281e9025161e2275df0a74b9b281d30b8223101588053b90032e",
+        "crates/rustify-style/upstream/oxide/extractor/arbitrary_property_machine.rs": "16e5c07df62d242ea66480d3e3f2975798f77b909304678b6fcfff842a5dfe8b",
+        "crates/rustify-style/upstream/oxide/extractor/arbitrary_value_machine.rs": "f19bdf8ef54565e7bf8df7c409695804febe2963310e9259e78021e6048f9454",
+        "crates/rustify-style/upstream/oxide/extractor/arbitrary_variable_machine.rs": "687c98b6d7a25a5cf877d9134607559bde5485edd1270ea922ae8fa9ea69e4f2",
+        "crates/rustify-style/upstream/oxide/extractor/boundary.rs": "2c19687187d463b94469fabac2336fcf3728aa69759c337595d2edc18d35bcf2",
+        "crates/rustify-style/upstream/oxide/extractor/bracket_stack.rs": "2a3a2728ed11fdd5fb7587bde5c0be0a55c11deb27bd721f62ab1b1f4e1b32fa",
+        "crates/rustify-style/upstream/oxide/extractor/candidate_machine.rs": "745ae4aa20661560b66df8bdaa61818ff6ee1b6e37f97b477293d6094825ae13",
+        "crates/rustify-style/upstream/oxide/extractor/css_variable_machine.rs": "2d9e83df35110425d3e5f5c5459d07b1d22a39e2260bd143fb67612a00867602",
+        "crates/rustify-style/upstream/oxide/extractor/machine.rs": "411d859dd4b6bcbff22d5a7fb8e720659683cfa1672ad3c6b9117a33ecc146e9",
+        "crates/rustify-style/upstream/oxide/extractor/mod.rs": "dcb5fd48407db29d2379d68e8a41439c1fb25b7ebb1890b14e198db52b5dd7a8",
+        "crates/rustify-style/upstream/oxide/extractor/modifier_machine.rs": "6ee6e9c726b4761888359eb31f8311679437e7e5430b56a2b5f04221ddf70c3d",
+        "crates/rustify-style/upstream/oxide/extractor/named_utility_machine.rs": "8ec7a3d519f290364fe6c1d061168c9702b8d192f59933d3123e0655b554770e",
+        "crates/rustify-style/upstream/oxide/extractor/named_variant_machine.rs": "6d04b439ed3b7c9de26a0613a542588fe87e4d20ba36129517802891c041d589",
+        "crates/rustify-style/upstream/oxide/extractor/pre_processors/clojure.rs": "8d8c9e72d44f2e5227f127d58a7380ee38c300e45ebc1414925a54d67b9c4fec",
+        "crates/rustify-style/upstream/oxide/extractor/pre_processors/elixir.rs": "724c44c292f5ee887cde54eba26d370e32279ebc8cdfa7125a3113cbbcd0db86",
+        "crates/rustify-style/upstream/oxide/extractor/pre_processors/haml.rs": "834538d0ae6804ca8d94845413a394ed8b03a62309f3d77986fed4e7fd1d4068",
+        "crates/rustify-style/upstream/oxide/extractor/pre_processors/json.rs": "a55e9306d0c433e50ee2d893a6c11e0e5091b428578c0c19d942826fb2a2aaa4",
+        "crates/rustify-style/upstream/oxide/extractor/pre_processors/mod.rs": "75e153dcfbaf087a4d5891f3a26a35b2c354420c44cb0c321d676300985c298e",
+        "crates/rustify-style/upstream/oxide/extractor/pre_processors/pre_processor.rs": "90109c36c0c737c18ac11eb60268939ccbaa62ae18aad1a2415e57a27e340fca",
+        "crates/rustify-style/upstream/oxide/extractor/pre_processors/pug.rs": "950f4253d8812c19b0a3bb7656afae04827add824c184b949e168936403aff6a",
+        "crates/rustify-style/upstream/oxide/extractor/pre_processors/razor.rs": "73b2a0ca0ac46a9a01b01438cfd27ec7a7f39e35628d236a5cfdd2091d6b595c",
+        "crates/rustify-style/upstream/oxide/extractor/pre_processors/ruby.rs": "7bb6c48cdbf45bd93822e80d95b234adb444afef6cfad3ff68a916580fe3beb5",
+        "crates/rustify-style/upstream/oxide/extractor/pre_processors/slim.rs": "e2abf5a5c40cca8705693dd0259639e5c6cb75c517098a3bd18a8455dc34f432",
+        "crates/rustify-style/upstream/oxide/extractor/pre_processors/svelte.rs": "8f258d9267948830a65fcadde01ccaefb1f0dbb21f87f23114e265aeb0976b56",
+        "crates/rustify-style/upstream/oxide/extractor/pre_processors/test-fixtures/haml/dst-17051.haml": "b80f60fc23f162985db362fd96a46678e1848f887700b7c4c749108022145252",
+        "crates/rustify-style/upstream/oxide/extractor/pre_processors/test-fixtures/haml/dst-17813.haml": "abf58a6072f6d2560710508e9ecea0e95eedb68c736b3a1f6f486de5dc8d60c4",
+        "crates/rustify-style/upstream/oxide/extractor/pre_processors/test-fixtures/haml/src-17051.haml": "b37677ff2a1c67d036fb56a6bc2443f96ab706bafc8725fbbc05c0ba0a823666",
+        "crates/rustify-style/upstream/oxide/extractor/pre_processors/test-fixtures/haml/src-17813.haml": "33eee870bc320e6dce6130913e590151f0e8b76881c29745f3d2db9236087f3f",
+        "crates/rustify-style/upstream/oxide/extractor/pre_processors/vue.rs": "6a1ee512c17d23fd62e4f08dc39c8a539c23f80d764d71109d2dadf0a010a679",
+        "crates/rustify-style/upstream/oxide/extractor/string_machine.rs": "89b733bc6637e96593fb85e866793ec3847c3679557218846e4ff2ce00576216",
+        "crates/rustify-style/upstream/oxide/extractor/utility_machine.rs": "1cbf183a6f3248a46cc29c4ea0119b0a6c170828839d658866e5d305c69acf2e",
+        "crates/rustify-style/upstream/oxide/extractor/variant_machine.rs": "3c9370e43a3067d85b98b854d6fe7b1d4d488fbe668bc79fa10c25183772d3eb",
+        "crates/rustify-style/upstream/oxide/fast_skip.rs": "7cc176ff97071a82d0b0536fb64718b594f46dc97719c056770138e0c406eca0",
+        "crates/rustify-style/upstream/oxide/fixtures/example.html": "3fd82d209e535801ddfb4c3ecc4aa35e51fd66fd9f87007d6c6f22809c56e438",
+        "crates/rustify-style/upstream/oxide/throughput.rs": "eba948fc4923893488e165b0027d4adcb2f4389f2497a2692a5e77f62e0de146"
+      }
+    },
+    {
+      "name": "cn-reference-data",
+      "version": "b7ec0fce43d824a60517fab508584eb860fdf717",
+      "origin": "https://github.com/shadcn-ui/cn",
+      "license": "MIT; tests/utility/cn/LICENSE-CN",
+      "purpose": "Fixed development oracle data; not a production compiler or compatibility pass",
+      "files": {
+        "tests/utility/cn/LICENSE-CN": "00ff8408e93e2ecc4d90c0edeabdf434100c3aff50acc5d330e17eccd4a3faa5",
+        "tests/utility/cn/source-lock.json": "edbda82e4ffc6cfbb4a7b9b2fd204ed08db60361c06148fc644874b2943c6d04",
+        "tests/utility/cn/default-config.json": "825d6fe3a743139fe2646973872081b85d6f9c781e317f3b069410843ce72b56",
+        "tests/utility/cn/default-tables.json": "43ed29b6e143e86b530f111fa93c046d7dd64a44ad82bd980ff658a2f6c9aee7",
+        "tests/utility/cn/runtime-fixtures.json": "49d4702335b939794ee43a3d29a82b15eea3fd7847f6f04c2da80112623c5543",
+        "tests/utility/cn/compiler-fixtures.json": "1036e6fd4d0360bc252afc47bf8e71fbc7699727e87e89d6c50823eed5c681c9",
+        "tests/utility/cn/build-fixtures.json": "f9be9902b25cbd24dfbcdf6ff8177f938db059abf968e553960e136edf303983",
+        "tests/utility/cn/build-contract.mjs": "52f7004fab2c3962594ef5566b450905b8e0d864c2f45bbdf13cc31abdd66872",
+        "tests/utility/cn/build-contract-fixtures.json": "87d2b0f1425a2b23e543db77f69c74fc6fae2dbbfb6d3613affdeadaae9b47a6"
+      }
+    },
+    {
+      "name": "tailwind-compiler-reference-data",
+      "version": "4.1.13-1334c99db8fd26c8ea065375dd9259800863f072",
+      "origin": "https://github.com/tailwindlabs/tailwindcss",
+      "license": "MIT; tests/utility/compiler/LICENSE.tailwindcss",
+      "purpose": "Fixed development oracle data; not a production compiler or compatibility pass",
+      "files": {
+        "tests/utility/compiler/LICENSE.tailwindcss": "60e0b68c0f35c078eef3a5d29419d0b03ff84ec1df9c3f9d6e39a519a5ae7985",
+        "tests/utility/compiler/upstream-provenance.json": "873f98eaa5efa34ff0130ab20ee45f687d85c74293da1266a0ce5d32938ae5cd",
+        "tests/utility/compiler/fixtures.json": "e70da835483dd1ea58932e84c75e459c01ac18407b45d8f9c138069c469e195a",
+        "tests/utility/compiler/compiler-smoke.css": "9f9292d76d06ed909435117010a6d71c19ddea253099806219752ecd67bd4737",
+        "tests/utility/compiler/css-scope-property-nesting.css": "332864299adb3cde96f70f972c1669adcac88288e01a86f5123676c665192e4d",
+        "tests/utility/compiler/static.mjs": "8f00d577900bad879ea819ad0a2c4fd6dd3283da2592c7eff7dd8425078928d8",
+        "tests/utility/compiler/static-fixtures.json": "9303875715079c2e6e2114a3d559d3e831ba7dccc01a40c4be0135e5432e66df",
+        "tests/utility/compiler/effects.mjs": "0a367c5a61913afe79c43b458191f6b4a89339245747cfab19849cf1bfedf8c0",
+        "tests/utility/compiler/effects-fixtures.json": "b1bb50d15da57500b8113882e045f19c820460599ca04c3be4e0cba8320b9cf6",
+        "tests/utility/compiler/variants.mjs": "fd2ee8a0bbcb9115c9a265848497463610cb029cb20303086a2311d0e1933440",
+        "tests/utility/compiler/variant-fixtures.json": "51548e4e990bb7d11f4246206b8c833f5a738b9621fb03ff92bed26676f5af17",
+        "tests/utility/compiler/functional-spacing.mjs": "42b657e4d490feb0b60a26ffbd5982bf4dc11fbfec3fe1b2b7aba57dbc3fbc77",
+        "tests/utility/compiler/functional-spacing-fixtures.json": "2acad81ce1a2d9f15a99b4476e3a75fb4c6997856b38653ac673936079208365",
+        "tests/utility/compiler/dynamic-variants.mjs": "d5d8e191af4529deb08ed8cee9d14f0ea1f6dacace81329cb4c2dcc11427b451",
+        "tests/utility/compiler/dynamic-variant-fixtures.json": "a58d704f4348d51c2144e19387d2f65523a76cb99fa78359858661a2ad0ddd7b",
+        "tests/utility/compiler/colors.mjs": "790bb46e7def8d8c1d00ea52553e0dfa808591c909d58b5ec4027b20ee31b94f",
+        "tests/utility/compiler/colors-fixtures.json": "6075cd36591cd31a296cceeaa2322b150bc9bd562a79a80f3e5732ba3960552a",
+        "tests/utility/compiler/typography.mjs": "9552735f50db52f6604ef3ea6d56d1406ceda8223562b8820f23e9f63c875d17",
+        "tests/utility/compiler/typography-fixtures.json": "bb30f21908540b8c7f66e81818a0b9ee36d3e2310a9aaea3c5593fa8da850e5e",
+        "tests/utility/compiler/imports.mjs": "a2b473f694e1becb25fe85d83e148efb45faaab9443f0820dce50580864697f1",
+        "tests/utility/compiler/imports-fixtures.json": "797a31f03f162e24dce98c8254e06c43e181a069c2725e3779c5e2bb3aec13f7",
+        "tests/utility/compiler/borders.mjs": "7c74473bf9a9f3dc76c5884d36308c498d56895131e0694062906d8ef21faeab",
+        "tests/utility/compiler/borders-fixtures.json": "d423c92a95fe8b31c9671876b2b80e7ddcc01360c8e69671f0b215134497a630",
+        "tests/utility/compiler/backgrounds.mjs": "03bfce667238aee9913daed04a1bc059a9fb68ff042fb81a678fcb5123f28a28",
+        "tests/utility/compiler/backgrounds-fixtures.json": "17e3482bad8f5c123d1c562fcb6807f8ea1c57b7844d76bfa2729fd9a0222246",
+        "tests/utility/compiler/gradients.mjs": "a4371a460c792bdf41bbff5442b97e91580943fb9f2ec2d0defa24de07808c2b",
+        "tests/utility/compiler/gradients-fixtures.json": "0c74d62c08eeb79fe6a08fce886e0d27f81c09a7edf58d839cbca70c71c6227e",
+        "tests/utility/compiler/transforms.mjs": "bbd5acd920e282d1df860c109ba6652b760775c1dd3a8d6fd58e9c2c59b5ce9b",
+        "tests/utility/compiler/transforms-fixtures.json": "23d8432d5591eacce2d57adc17afea110785e62ed97bb3c905705303f0eacd0d",
+        "tests/utility/compiler/theme.mjs": "100f629247f4dfa180f098cf181051231d7ae36674dc3e5b13dd4af6828a85ee",
+        "tests/utility/compiler/theme-fixtures.json": "c26fed0bb7e71ecf5555233daa08505fd19746fb8b3811b36518fb63ac321b03",
+        "tests/utility/compiler/filters.mjs": "612de34dedc5a5281dc334b7bd67957e5f07e8a30c6a91a8d2234776a7f647d2",
+        "tests/utility/compiler/filters-fixtures.json": "566c96337aa8a7a7aca6eaeb90a20fdddbe0b3665a4a1752c4647fb67a36937f",
+        "tests/utility/compiler/shadows.mjs": "ae7b1a1de6c6bffc1bbcc26d445c140f9fb743dc4c1a6128fff9c42dee980e4a",
+        "tests/utility/compiler/shadows-fixtures.json": "2024ad84aae7e36884b434f4ccb5e22e425fd07042e71524b8989577b41df532",
+        "tests/utility/compiler/prefix.mjs": "8ff1ebd6aa2076689b7cb6a64819930613a0e59f6de509b5919cb282eb97ba4a",
+        "tests/utility/compiler/prefix-fixtures.json": "edd3320b06d095c54463c66b84b8d0e75919c68de5234e2485e1f6a85c98c4e3",
+        "tests/utility/compiler/motion.mjs": "193547f3e3e59703665ca3bfbb15c82b382b6721e95408ab169a444a97c38910",
+        "tests/utility/compiler/motion-fixtures.json": "8300bc29f03135e54206a004330dafb37201ebb32e2c6e8697bb628445d9b9c1",
+        "tests/utility/compiler/grid.mjs": "11808107e65753d44439e2495c3f610ed50906dab2f4e2621160293566c53828",
+        "tests/utility/compiler/grid-fixtures.json": "9c53ff6b99b03d06edeb5262b21adcd4377cda751ec7df2a48ee15e4607c3921",
+        "tests/utility/compiler/layout.mjs": "092db6298b85e77a9137bc004a292d2c5b195b2614cbf056be28a078d633441c",
+        "tests/utility/compiler/layout-fixtures.json": "ec1a2d7cd4f642b5a5183dcbd523fb6a1ba1bdbf02b4030921a00553e4eb684e",
+        "tests/utility/compiler/functions.mjs": "983a8ebc8d8c2240bcd81ee007324d01fc22d5927f95bdbb6f111ad12e8a031d",
+        "tests/utility/compiler/functions-fixtures.json": "87ec7b906ea4f8bbb8c234ee52d5885bcc7bc426e453a3ec22a08bf40ec98875",
+        "tests/utility/compiler/legacy-theme.mjs": "14b35eeb7fc3c388d2cc187e5f9fe45d9ef1b12d3e02e5352ca9b1303cd8d1f0",
+        "tests/utility/compiler/legacy-theme-fixtures.json": "7aa5ade92b393b461c77cfa5052a838ab5a2b88730fc56b5bbb182b9f69ef803",
+        "tests/utility/compiler/legacy-theme-boundaries.json": "39f09513c162c89142f292f84177e118000115c2c62b2793a55d5f83899bcd58",
+        "tests/utility/compiler/masks.mjs": "50d675c9f53bc485af277cd7a19c7e680ee737f7a42b068e30fed53aff5116eb",
+        "tests/utility/compiler/masks-fixtures.json": "1c742b06c4447ae654d2b1c4fd7502ecbd30ab61b0164e9b91edbb4bd7e5d5e3",
+        "tests/utility/compiler/miscellaneous.mjs": "58b07552d4def072012d0dc8a8618ee595753dbd6b5dd8f03326904e5253b564",
+        "tests/utility/compiler/miscellaneous-fixtures.json": "be46167c4386f799ed67459b838be15c0909d0de97d158bd1ed211aaff292842",
+        "tests/utility/compiler/structural-spacing.mjs": "3a2ea2e0173cf3a4913cd203821f27f90205876b6546f8be483d31abae90e0f4",
+        "tests/utility/compiler/structural-spacing-fixtures.json": "5a70cfb678b7d233b32419d48dd8a2937711f0a51213e6d3d865f22f14747073",
+        "tests/utility/compiler/effects-complete.mjs": "a364ac02e41de11470941eb72dbf9d5c2fb42c228103893e7f1f8676a0450ba0",
+        "tests/utility/compiler/effects-complete-fixtures.json": "4176d82b518053f865f981d880d5eaf6c81a0d9e01d48bfdd8ecc89540625c02",
+        "tests/utility/compiler/arbitrary-properties.mjs": "49d8d920e68b6155c0c76efc29980add13f440d6d62f5c76b22f653b7e364876",
+        "tests/utility/compiler/arbitrary-properties-fixtures.json": "af3aca9e7a365624cf06f082c1d430dae715ef8a31664f66bfeeb39c4f1b157f",
+        "tests/utility/compiler/custom-utilities.mjs": "da0c8dfc61d455987c3fd4c631b7a5e6438d9381d68fce430c826f2ece916ae3",
+        "tests/utility/compiler/custom-utilities-fixtures.json": "228386a61bcef551f06de7bee49ed2570ef3102f0513f859e06d41208c9cc1f1",
+        "tests/utility/compiler/custom-variants.mjs": "7103d021c16b3c499481383d393f29fea7022f946347ce448f385070b2017f43",
+        "tests/utility/compiler/custom-variants-fixtures.json": "c2ba33b5193555cb2e08ad5a904d8fd49544438faeeefa4d0c8f95c8bdb0b6b9",
+        "tests/utility/compiler/parser-errors.mjs": "355d9c42cc34331ee959949d1f4cded25d91ade3dad0b595caa8fbf8036e2716",
+        "tests/utility/compiler/parser-errors-fixtures.json": "2b8b7f83421357e5a4c3225fe4560b827c045cd0a39013a19ec05961fcbc4f81",
+        "tests/utility/compiler/apply.mjs": "08da78848f20fac5e5858dda39365f945c6c5abd7721703aebf7ebf3e6800ae8",
+        "tests/utility/compiler/apply-fixtures.json": "0558aa0081904a7da8ccd39f2e33c1ea55765c85d0b901bc283928f49a3b9ed9",
+        "tests/utility/compiler/variant-parameters.mjs": "d9329917d6f0a9b05585266c1701b486e2a3f5c98bd8ba842690df3f1d0895a3",
+        "tests/utility/compiler/variant-parameters-fixtures.json": "c906acfbae47c75654160b115cb50b2097bbbbc4733f423930914e4aec1e8de1",
+        "tests/utility/compiler/source-directives.mjs": "99366b79ba261df963f53d7b1af70d8e28c9c66dbbc4a533d3bdbfba39b4f211",
+        "tests/utility/compiler/source-directives-fixtures.json": "e958112df1c5bc1411f55487524ce9758813814a26b0e8c33b489a98e97b0993",
+        "tests/utility/compiler/external-variables.mjs": "3eb2b0b935e88779ef27801a83e62c75ceb54b2740d6c12c6a8065a8338a35e3",
+        "tests/utility/compiler/external-variables-fixtures.json": "c78a44a145f8f210bd22d0a8fd908895c5f622af018123de42408ce372ba5bb5",
+        "tests/utility/compiler/source-pipeline.mjs": "3daee0eb6238379842a7c5d0c9e05faacf3825e7c745bc145ee1710fcf9117f6",
+        "tests/utility/compiler/source-pipeline-fixtures.json": "00cd02da8810dd8ef6c3db69ff8d50f960172261291900d038f1e295bd5af402",
+        "tests/utility/compiler/public-api.mjs": "3f5bebee34fcff60cfd5c71dc3d18b06ebbf7f7e683f5ed03db91d3b8415a03c",
+        "tests/utility/compiler/public-api-fixtures.json": "8adcc911077b8e79a8774eb4c04893aab95cc6b811d58a80af33d81fbcd20c86",
+        "tests/utility/compiler/utf16.mjs": "a07c2a7d8c931fd1909ac0af76dacc333ee97b01d5c517082db1b35ecdde2c8d",
+        "tests/utility/compiler/utf16-fixtures.json": "54344f1f45e4db9c42133af3352a6cf83867809570914bc5b91f3ea8b8d79efe",
+        "tests/utility/compiler/design-system-completions.mjs": "3efcba02c3d7a66b040f8d3d57131b2c0b25c9b5834972247519ca46f027c210"
+      }
+    },
+    {
+      "name": "cn-generated-data",
+      "version": "0.4.0-b7ec0fce43d824a60517fab508584eb860fdf717",
+      "origin": "https://github.com/shadcn-ui/cn",
+      "license": "MIT; upstream/cn/LICENSE and LICENSE-TAILWIND-MERGE",
+      "import_rule": "Default config/tables and tooling emission decoder only. Generated by upstream/cn/generate.py against the locked oracle; runtime merging/config/table compilation are Rust ports under src/cn.",
+      "files": {
+        "crates/rustify-style/upstream/cn/LICENSE": "00ff8408e93e2ecc4d90c0edeabdf434100c3aff50acc5d330e17eccd4a3faa5",
+        "crates/rustify-style/upstream/cn/LICENSE-TAILWIND-MERGE": "d4c70c7ce38cea8778f0aed3fc0bef0a9dbd27f13bd8b6773cbd6d37941971e5",
+        "crates/rustify-style/upstream/cn/NOTICE.md": "a5cb2be722369ddde8121e18e07adaeb34892d7825a6037b10dbcd87de7ab3bc",
+        "crates/rustify-style/upstream/cn/config.rs": "1098952db8c5c01227298d79670cb3672c1b8645592d26ad6304432a375e33a8",
+        "crates/rustify-style/upstream/cn/default-config.json": "825d6fe3a743139fe2646973872081b85d6f9c781e317f3b069410843ce72b56",
+        "crates/rustify-style/upstream/cn/emit-placeholders.json": "5ee5f00c48910ad39d2850c01e59cf82137f9a915b0eab091e6e65312e35aee8",
+        "crates/rustify-style/upstream/cn/emit-template.txt": "6cb9d3d15beb7fef32482a6de8f66d538e2ed03c2a3f67eacae0f89f06808784",
+        "crates/rustify-style/upstream/cn/generate.py": "94e99bf34151c1f9b4882437c55f0981d7490d7a9ff61ede65f5a80f6402fd39",
+        "crates/rustify-style/upstream/cn/tables.rs": "8ed255a456a82831b515b46913e491ef461300d02beba7f9d87477c9743747f1",
+        "crates/rustify-style/upstream/cn/unicode-emission.fixture.json": "26b7db15a704b56044b01348d058c91dc29fa5bcfb98c299eea167765e34f18b"
+      },
+      "upstream_inventory": "tests/utility/cn/inventory.json"
+    },
+    {
+      "name": "tailwind-compiler-data",
+      "version": "4.1.13-1334c99db8fd26c8ea065375dd9259800863f072",
+      "origin": "https://github.com/tailwindlabs/tailwindcss",
+      "license": "MIT; crates/rustify-style/upstream/tailwind/LICENSE",
+      "import_rule": "Fixed root/property-order metadata, full default CSS theme, immutable legacy default values/dependencies generated completion definitions and structural AST templates for static utilities/variants. Generation uses the pinned development oracle; production parsing, resolution and AST instantiation are Rust. Full compatibility remains pending.",
+      "files": {
+        "crates/rustify-style/upstream/tailwind/LICENSE": "60e0b68c0f35c078eef3a5d29419d0b03ff84ec1df9c3f9d6e39a519a5ae7985",
+        "crates/rustify-style/upstream/tailwind/PROVENANCE.json": "8c692dbe369e054d365dafd53e136272e7c6e355333f7c84d62c0300f5335d65",
+        "crates/rustify-style/upstream/tailwind/registry.rs": "c8ef04ad131d64d246310a32215d4aa36206fc7c8a4332a04de472cc5a4b2832",
+        "crates/rustify-style/upstream/tailwind/theme.css": "5d1f0002f98471fa59bc53ec2bd2488ff3e4661d965f7fa665408218d63187cb",
+        "crates/rustify-style/upstream/tailwind/static-data.rs": "29b7bd0683f18637df0312c2fdc1627ec4d950b124cb94cf5f4abecb098e8013",
+        "crates/rustify-style/upstream/tailwind/variant-static-data.rs": "938e0acda5dbe700dfeb15e2dd98aec0bee7b764a9d35dd34cee7565263dc7f3",
+        "crates/rustify-style/upstream/tailwind/legacy-theme-data.rs": "f4faad201c9f8acf5a14af50703d7508934fd86a48b2338518203163ec32c587",
+        "crates/rustify-style/src/compiler/public_api/design_system/completions.json": "babf07391382ff3192432cd18641b45b782fd00ef73c2756a8099449287083f3"
+      },
+      "provenance": "crates/rustify-style/upstream/tailwind/PROVENANCE.json"
+    },
+    {
+      "name": "tailwind-scanner-rule-data",
+      "version": "4.1.13-1334c99db8fd26c8ea065375dd9259800863f072",
+      "origin": "https://github.com/tailwindlabs/tailwindcss",
+      "license": "MIT; crates/rustify-style/upstream/LICENSE-TAILWIND and src/scanner/LICENSE-IGNORE",
+      "import_rule": "Copied fixed source-extension/directory defaults and ignore license only; host and virtual source algorithms are adapted Rust under src/scanner, not an imported filesystem/thread runtime.",
+      "files": {
+        "crates/rustify-style/src/scanner/LICENSE-IGNORE": "0f96a83840e146e43c0ec96a22ec1f392e0680e6c1226e6f3ba87e0740af850f",
+        "crates/rustify-style/src/scanner/fixtures/binary-extensions.txt": "6c95bf208645736dd74490c1740bba5f33893f514c8ba534b2b20cfe64326088",
+        "crates/rustify-style/src/scanner/fixtures/ignored-content-dirs.txt": "6f70dbcbdac4a63a0f64091584ee5512e5dd07bab17479ee9a598c3ef3df0a3f",
+        "crates/rustify-style/src/scanner/fixtures/ignored-extensions.txt": "749167ac9bc0a6daaccaf14a56aa41b8b9befd2755b7d7a27ad8cb762230b65e",
+        "crates/rustify-style/src/scanner/fixtures/ignored-files.txt": "14d3c2a7aa939b238d6b2d6d5c6e6559bbabfbe572490f14c6c0513427577b9e",
+        "crates/rustify-style/src/scanner/fixtures/template-extensions.txt": "fded6e73769361c4ef6a07cc7c4b1c2f66b3bb9223b8004a6f391b3b6558dff0"
+      },
+      "upstream_inventory": "tests/utility/scanner/inventory.json"
     }
   ],
   "rust_ui": {
@@ -1628,7 +1836,8 @@
       "crates/rustify-components/src/button.rs": {
         "source": "app_crates/registry/src/ui/button.rs",
         "sha256": "152dc00e00a5ba99794a79aba1d1009160ba35c9506b63814154061fe07886c9",
-        "state": "rewritten"
+        "state": "rewritten",
+        "rewrite_note": "Class fragments retained; caller-last merge uses Rust cn. Variant types generated by pure class_variants instead of old derives."
       },
       "crates/rustify-components/src/checkbox.rs": {
         "source": "app_crates/registry/src/ui/checkbox.rs",
@@ -1658,12 +1867,14 @@
       "crates/rustify-components/src/macros/clx.rs": {
         "source": "crates/leptos_ui/src/clx.rs",
         "sha256": "24521409d6a592f5486cd2fd551bcdbf6404c5a25e14a6120accd190e7c558fb",
-        "state": "rewritten"
+        "state": "rewritten",
+        "rewrite_note": "Class fragments retained; caller-last merge uses Rust cn. Variant types generated by pure class_variants instead of old derives."
       },
       "crates/rustify-components/src/macros/variants.rs": {
         "source": "crates/leptos_ui/src/variants.rs",
         "sha256": "83a4a376205452dd026c3344753be265eafd4e9ac0d030db619f4e922356c2dd",
-        "state": "rewritten"
+        "state": "rewritten",
+        "rewrite_note": "Class fragments retained; caller-last merge uses Rust cn. Variant types generated by pure class_variants instead of old derives."
       },
       "crates/rustify-components/src/menu.rs": {
         "source": "app_crates/registry/src/ui/dropdown_menu.rs",
@@ -1729,6 +1940,30 @@
       "the eighteen categories": "Every class string carries the `rui` prefix, so a host page's unprefixed utilities and ours are different classes. Every control is controlled: the value comes from the application and a user action is a request, which is what Switch, Tabs and RadioGroup did not have - each held its own state and could not report a change. `disabled` and `read_only` are signals on all of them; a read-only control takes the click and puts itself back. Every `style=` attribute is gone (a static one is written with setAttribute and a strict policy refuses it); Progress uses the `style:` directive instead. The `icons` dependency is gone with its `leptos/nightly` requirement, and so are `strum` and `validator`; icon.rs is ours. Checkbox and Radio became the browser's own controls under a drawn box rather than a `<button role=checkbox>`, so the keyboard and form participation are the platform's.",
       "the four that float": "dialog, select, dropdown_menu (menu.rs) and tooltip arrived with 1,700 lines that included `format!`-built inline `<script>` doing the measuring, the flipping, the outside-click and the Escape key, plus `document.currentScript` and a `window.ScrollLock` global. All of it is gone: they are layers on the SDK's overlay stack (P1 M4), which owns anchoring, the Escape order, the focus trap and the return of focus. What was kept is the look. What was added is the part they never had: role=dialog with aria-modal and a title the dialog is labelled by, role=menu/menuitem with the arrow keys, combobox/listbox/option with aria-activedescendant, and role=tooltip attached to the control it describes on focus as well as on hover.",
       "slider.css": "every selector moved under `[data-rustify-scope]` and onto `data-name`; it selected `input[type=range]` bare, which restyles the host page's own range controls (F28, and what V1's host-control comparison fails on). The second thumb variant and the `--slider-track` variable no token table defined are dropped; the box-shadow that paints the filled track is kept."
+    }
+  },
+  "style_ports": {
+    "scanner": {
+      "upstream_commit": "1334c99db8fd26c8ea065375dd9259800863f072",
+      "origin": "Tailwind Oxide scanner and its ignore fork",
+      "implementation": "crates/rustify-style/src/scanner",
+      "source_mapping": "tests/utility/scanner/inventory.json",
+      "verification_snapshot": "tests/utility/scanner/source-verification.json",
+      "policy": "Rewritten code is maintained locally; copied immutable data alone is in vendor verification."
+    },
+    "cn": {
+      "upstream_commit": "b7ec0fce43d824a60517fab508584eb860fdf717",
+      "implementation": "crates/rustify-style/src/cn",
+      "source_mapping": "tests/utility/cn/inventory.json",
+      "license_notice": "crates/rustify-style/upstream/cn/NOTICE.md",
+      "build_coverage": "tests/utility/cn/build-coverage.json"
+    },
+    "compiler": {
+      "upstream_commit": "1334c99db8fd26c8ea065375dd9259800863f072",
+      "implementation": "crates/rustify-style/src/compiler",
+      "source_mapping": "crates/rustify-style/upstream/tailwind/PROVENANCE.json",
+      "compatibility_status": "Partial; full conformance pending",
+      "coverage": "tests/utility/compiler/coverage.json"
     }
   }
 }

@@ -1,0 +1,12 @@
+Isolated directory holding only tests/utility/compiler/oracle/{package.json,package-lock.json}
+(no root node_modules, no other Tailwind install), resolved the way utility-runtime.spec.ts does:
+
+before `npm ci`:  createRequire(resolve('tests/utility/compiler/oracle/package.json'))('tailwindcss/package.json')
+                  -> MODULE_NOT_FOUND
+step added to verify.yml (utility-lab job only):
+                  npm ci --ignore-scripts --prefix tests/utility/compiler/oracle   (run with --prefer-offline locally)
+                  -> found 0 vulnerabilities; node_modules: jiti, tailwindcss, typescript
+after:            tailwindcss/package.json version 4.1.13
+                  compile('@theme inline { --spacing: 4px; } @tailwind utilities;').build(['p-2']) -> "padding: calc(4px * 2);"
+Workflow parses: ruby -ryaml -e 'YAML.load_file(".github/workflows/verify.yml")' -> ok
+Remote GitHub Actions run: not performed.

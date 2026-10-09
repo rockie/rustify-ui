@@ -1,0 +1,1252 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "1334c99db8fd26c8ea065375dd9259800863f072",
+  "oracleVersion": "4.1.13",
+  "staticVariantRoots": [
+    "*",
+    "**",
+    "active",
+    "after",
+    "any-pointer-coarse",
+    "any-pointer-fine",
+    "any-pointer-none",
+    "autofill",
+    "backdrop",
+    "before",
+    "checked",
+    "contrast-less",
+    "contrast-more",
+    "dark",
+    "default",
+    "details-content",
+    "disabled",
+    "empty",
+    "enabled",
+    "even",
+    "file",
+    "first",
+    "first-letter",
+    "first-line",
+    "first-of-type",
+    "focus",
+    "focus-visible",
+    "focus-within",
+    "forced-colors",
+    "hover",
+    "in-range",
+    "indeterminate",
+    "inert",
+    "invalid",
+    "inverted-colors",
+    "landscape",
+    "last",
+    "last-of-type",
+    "ltr",
+    "marker",
+    "motion-reduce",
+    "motion-safe",
+    "noscript",
+    "odd",
+    "only",
+    "only-of-type",
+    "open",
+    "optional",
+    "out-of-range",
+    "placeholder",
+    "placeholder-shown",
+    "pointer-coarse",
+    "pointer-fine",
+    "pointer-none",
+    "portrait",
+    "print",
+    "read-only",
+    "required",
+    "rtl",
+    "selection",
+    "starting",
+    "target",
+    "user-invalid",
+    "user-valid",
+    "valid",
+    "visited"
+  ],
+  "cases": [
+    {
+      "id": "variant:*:w-[137px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "*:w-[137px]"
+      ],
+      "expectedCss": ".\\*\\:w-\\[137px\\] {\n  :is(& > *) {\n    width: 137px;\n  }\n}\n"
+    },
+    {
+      "id": "variant:*:content-[\"probe\"]!",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "*:content-[\"probe\"]!"
+      ],
+      "expectedCss": "@layer properties;\n.\\*\\:content-\\[\\\"probe\\\"\\]\\! {\n  :is(& > *) {\n    --tw-content: \"probe\" !important;\n    content: var(--tw-content) !important;\n  }\n}\n@property --tw-content {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: \"\";\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-content: \"\";\n    }\n  }\n}\n"
+    },
+    {
+      "id": "variant:**:w-[137px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "**:w-[137px]"
+      ],
+      "expectedCss": ".\\*\\*\\:w-\\[137px\\] {\n  :is(& *) {\n    width: 137px;\n  }\n}\n"
+    },
+    {
+      "id": "variant:**:content-[\"probe\"]!",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "**:content-[\"probe\"]!"
+      ],
+      "expectedCss": "@layer properties;\n.\\*\\*\\:content-\\[\\\"probe\\\"\\]\\! {\n  :is(& *) {\n    --tw-content: \"probe\" !important;\n    content: var(--tw-content) !important;\n  }\n}\n@property --tw-content {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: \"\";\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-content: \"\";\n    }\n  }\n}\n"
+    },
+    {
+      "id": "variant:active:w-[137px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "active:w-[137px]"
+      ],
+      "expectedCss": ".active\\:w-\\[137px\\] {\n  &:active {\n    width: 137px;\n  }\n}\n"
+    },
+    {
+      "id": "variant:active:content-[\"probe\"]!",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "active:content-[\"probe\"]!"
+      ],
+      "expectedCss": "@layer properties;\n.active\\:content-\\[\\\"probe\\\"\\]\\! {\n  &:active {\n    --tw-content: \"probe\" !important;\n    content: var(--tw-content) !important;\n  }\n}\n@property --tw-content {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: \"\";\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-content: \"\";\n    }\n  }\n}\n"
+    },
+    {
+      "id": "variant:after:w-[137px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "after:w-[137px]"
+      ],
+      "expectedCss": "@layer properties;\n.after\\:w-\\[137px\\] {\n  &::after {\n    content: var(--tw-content);\n    width: 137px;\n  }\n}\n@property --tw-content {\n  syntax: \"*\";\n  initial-value: \"\";\n  inherits: false;\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-content: \"\";\n    }\n  }\n}\n"
+    },
+    {
+      "id": "variant:after:content-[\"probe\"]!",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "after:content-[\"probe\"]!"
+      ],
+      "expectedCss": "@layer properties;\n.after\\:content-\\[\\\"probe\\\"\\]\\! {\n  &::after {\n    content: var(--tw-content);\n    --tw-content: \"probe\" !important;\n    content: var(--tw-content) !important;\n  }\n}\n@property --tw-content {\n  syntax: \"*\";\n  initial-value: \"\";\n  inherits: false;\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-content: \"\";\n    }\n  }\n}\n"
+    },
+    {
+      "id": "variant:any-pointer-coarse:w-[137px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "any-pointer-coarse:w-[137px]"
+      ],
+      "expectedCss": ".any-pointer-coarse\\:w-\\[137px\\] {\n  @media (any-pointer: coarse) {\n    width: 137px;\n  }\n}\n"
+    },
+    {
+      "id": "variant:any-pointer-coarse:content-[\"probe\"]!",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "any-pointer-coarse:content-[\"probe\"]!"
+      ],
+      "expectedCss": "@layer properties;\n.any-pointer-coarse\\:content-\\[\\\"probe\\\"\\]\\! {\n  @media (any-pointer: coarse) {\n    --tw-content: \"probe\" !important;\n    content: var(--tw-content) !important;\n  }\n}\n@property --tw-content {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: \"\";\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-content: \"\";\n    }\n  }\n}\n"
+    },
+    {
+      "id": "variant:any-pointer-fine:w-[137px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "any-pointer-fine:w-[137px]"
+      ],
+      "expectedCss": ".any-pointer-fine\\:w-\\[137px\\] {\n  @media (any-pointer: fine) {\n    width: 137px;\n  }\n}\n"
+    },
+    {
+      "id": "variant:any-pointer-fine:content-[\"probe\"]!",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "any-pointer-fine:content-[\"probe\"]!"
+      ],
+      "expectedCss": "@layer properties;\n.any-pointer-fine\\:content-\\[\\\"probe\\\"\\]\\! {\n  @media (any-pointer: fine) {\n    --tw-content: \"probe\" !important;\n    content: var(--tw-content) !important;\n  }\n}\n@property --tw-content {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: \"\";\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-content: \"\";\n    }\n  }\n}\n"
+    },
+    {
+      "id": "variant:any-pointer-none:w-[137px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "any-pointer-none:w-[137px]"
+      ],
+      "expectedCss": ".any-pointer-none\\:w-\\[137px\\] {\n  @media (any-pointer: none) {\n    width: 137px;\n  }\n}\n"
+    },
+    {
+      "id": "variant:any-pointer-none:content-[\"probe\"]!",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "any-pointer-none:content-[\"probe\"]!"
+      ],
+      "expectedCss": "@layer properties;\n.any-pointer-none\\:content-\\[\\\"probe\\\"\\]\\! {\n  @media (any-pointer: none) {\n    --tw-content: \"probe\" !important;\n    content: var(--tw-content) !important;\n  }\n}\n@property --tw-content {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: \"\";\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-content: \"\";\n    }\n  }\n}\n"
+    },
+    {
+      "id": "variant:autofill:w-[137px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "autofill:w-[137px]"
+      ],
+      "expectedCss": ".autofill\\:w-\\[137px\\] {\n  &:autofill {\n    width: 137px;\n  }\n}\n"
+    },
+    {
+      "id": "variant:autofill:content-[\"probe\"]!",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "autofill:content-[\"probe\"]!"
+      ],
+      "expectedCss": "@layer properties;\n.autofill\\:content-\\[\\\"probe\\\"\\]\\! {\n  &:autofill {\n    --tw-content: \"probe\" !important;\n    content: var(--tw-content) !important;\n  }\n}\n@property --tw-content {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: \"\";\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-content: \"\";\n    }\n  }\n}\n"
+    },
+    {
+      "id": "variant:backdrop:w-[137px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "backdrop:w-[137px]"
+      ],
+      "expectedCss": ".backdrop\\:w-\\[137px\\] {\n  &::backdrop {\n    width: 137px;\n  }\n}\n"
+    },
+    {
+      "id": "variant:backdrop:content-[\"probe\"]!",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "backdrop:content-[\"probe\"]!"
+      ],
+      "expectedCss": "@layer properties;\n.backdrop\\:content-\\[\\\"probe\\\"\\]\\! {\n  &::backdrop {\n    --tw-content: \"probe\" !important;\n    content: var(--tw-content) !important;\n  }\n}\n@property --tw-content {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: \"\";\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-content: \"\";\n    }\n  }\n}\n"
+    },
+    {
+      "id": "variant:before:w-[137px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "before:w-[137px]"
+      ],
+      "expectedCss": "@layer properties;\n.before\\:w-\\[137px\\] {\n  &::before {\n    content: var(--tw-content);\n    width: 137px;\n  }\n}\n@property --tw-content {\n  syntax: \"*\";\n  initial-value: \"\";\n  inherits: false;\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-content: \"\";\n    }\n  }\n}\n"
+    },
+    {
+      "id": "variant:before:content-[\"probe\"]!",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "before:content-[\"probe\"]!"
+      ],
+      "expectedCss": "@layer properties;\n.before\\:content-\\[\\\"probe\\\"\\]\\! {\n  &::before {\n    content: var(--tw-content);\n    --tw-content: \"probe\" !important;\n    content: var(--tw-content) !important;\n  }\n}\n@property --tw-content {\n  syntax: \"*\";\n  initial-value: \"\";\n  inherits: false;\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-content: \"\";\n    }\n  }\n}\n"
+    },
+    {
+      "id": "variant:checked:w-[137px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "checked:w-[137px]"
+      ],
+      "expectedCss": ".checked\\:w-\\[137px\\] {\n  &:checked {\n    width: 137px;\n  }\n}\n"
+    },
+    {
+      "id": "variant:checked:content-[\"probe\"]!",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "checked:content-[\"probe\"]!"
+      ],
+      "expectedCss": "@layer properties;\n.checked\\:content-\\[\\\"probe\\\"\\]\\! {\n  &:checked {\n    --tw-content: \"probe\" !important;\n    content: var(--tw-content) !important;\n  }\n}\n@property --tw-content {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: \"\";\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-content: \"\";\n    }\n  }\n}\n"
+    },
+    {
+      "id": "variant:contrast-less:w-[137px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "contrast-less:w-[137px]"
+      ],
+      "expectedCss": ".contrast-less\\:w-\\[137px\\] {\n  @media (prefers-contrast: less) {\n    width: 137px;\n  }\n}\n"
+    },
+    {
+      "id": "variant:contrast-less:content-[\"probe\"]!",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "contrast-less:content-[\"probe\"]!"
+      ],
+      "expectedCss": "@layer properties;\n.contrast-less\\:content-\\[\\\"probe\\\"\\]\\! {\n  @media (prefers-contrast: less) {\n    --tw-content: \"probe\" !important;\n    content: var(--tw-content) !important;\n  }\n}\n@property --tw-content {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: \"\";\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-content: \"\";\n    }\n  }\n}\n"
+    },
+    {
+      "id": "variant:contrast-more:w-[137px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "contrast-more:w-[137px]"
+      ],
+      "expectedCss": ".contrast-more\\:w-\\[137px\\] {\n  @media (prefers-contrast: more) {\n    width: 137px;\n  }\n}\n"
+    },
+    {
+      "id": "variant:contrast-more:content-[\"probe\"]!",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "contrast-more:content-[\"probe\"]!"
+      ],
+      "expectedCss": "@layer properties;\n.contrast-more\\:content-\\[\\\"probe\\\"\\]\\! {\n  @media (prefers-contrast: more) {\n    --tw-content: \"probe\" !important;\n    content: var(--tw-content) !important;\n  }\n}\n@property --tw-content {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: \"\";\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-content: \"\";\n    }\n  }\n}\n"
+    },
+    {
+      "id": "variant:dark:w-[137px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "dark:w-[137px]"
+      ],
+      "expectedCss": ".dark\\:w-\\[137px\\] {\n  @media (prefers-color-scheme: dark) {\n    width: 137px;\n  }\n}\n"
+    },
+    {
+      "id": "variant:dark:content-[\"probe\"]!",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "dark:content-[\"probe\"]!"
+      ],
+      "expectedCss": "@layer properties;\n.dark\\:content-\\[\\\"probe\\\"\\]\\! {\n  @media (prefers-color-scheme: dark) {\n    --tw-content: \"probe\" !important;\n    content: var(--tw-content) !important;\n  }\n}\n@property --tw-content {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: \"\";\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-content: \"\";\n    }\n  }\n}\n"
+    },
+    {
+      "id": "variant:default:w-[137px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "default:w-[137px]"
+      ],
+      "expectedCss": ".default\\:w-\\[137px\\] {\n  &:default {\n    width: 137px;\n  }\n}\n"
+    },
+    {
+      "id": "variant:default:content-[\"probe\"]!",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "default:content-[\"probe\"]!"
+      ],
+      "expectedCss": "@layer properties;\n.default\\:content-\\[\\\"probe\\\"\\]\\! {\n  &:default {\n    --tw-content: \"probe\" !important;\n    content: var(--tw-content) !important;\n  }\n}\n@property --tw-content {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: \"\";\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-content: \"\";\n    }\n  }\n}\n"
+    },
+    {
+      "id": "variant:details-content:w-[137px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "details-content:w-[137px]"
+      ],
+      "expectedCss": ".details-content\\:w-\\[137px\\] {\n  &::details-content {\n    width: 137px;\n  }\n}\n"
+    },
+    {
+      "id": "variant:details-content:content-[\"probe\"]!",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "details-content:content-[\"probe\"]!"
+      ],
+      "expectedCss": "@layer properties;\n.details-content\\:content-\\[\\\"probe\\\"\\]\\! {\n  &::details-content {\n    --tw-content: \"probe\" !important;\n    content: var(--tw-content) !important;\n  }\n}\n@property --tw-content {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: \"\";\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-content: \"\";\n    }\n  }\n}\n"
+    },
+    {
+      "id": "variant:disabled:w-[137px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "disabled:w-[137px]"
+      ],
+      "expectedCss": ".disabled\\:w-\\[137px\\] {\n  &:disabled {\n    width: 137px;\n  }\n}\n"
+    },
+    {
+      "id": "variant:disabled:content-[\"probe\"]!",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "disabled:content-[\"probe\"]!"
+      ],
+      "expectedCss": "@layer properties;\n.disabled\\:content-\\[\\\"probe\\\"\\]\\! {\n  &:disabled {\n    --tw-content: \"probe\" !important;\n    content: var(--tw-content) !important;\n  }\n}\n@property --tw-content {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: \"\";\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-content: \"\";\n    }\n  }\n}\n"
+    },
+    {
+      "id": "variant:empty:w-[137px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "empty:w-[137px]"
+      ],
+      "expectedCss": ".empty\\:w-\\[137px\\] {\n  &:empty {\n    width: 137px;\n  }\n}\n"
+    },
+    {
+      "id": "variant:empty:content-[\"probe\"]!",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "empty:content-[\"probe\"]!"
+      ],
+      "expectedCss": "@layer properties;\n.empty\\:content-\\[\\\"probe\\\"\\]\\! {\n  &:empty {\n    --tw-content: \"probe\" !important;\n    content: var(--tw-content) !important;\n  }\n}\n@property --tw-content {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: \"\";\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-content: \"\";\n    }\n  }\n}\n"
+    },
+    {
+      "id": "variant:enabled:w-[137px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "enabled:w-[137px]"
+      ],
+      "expectedCss": ".enabled\\:w-\\[137px\\] {\n  &:enabled {\n    width: 137px;\n  }\n}\n"
+    },
+    {
+      "id": "variant:enabled:content-[\"probe\"]!",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "enabled:content-[\"probe\"]!"
+      ],
+      "expectedCss": "@layer properties;\n.enabled\\:content-\\[\\\"probe\\\"\\]\\! {\n  &:enabled {\n    --tw-content: \"probe\" !important;\n    content: var(--tw-content) !important;\n  }\n}\n@property --tw-content {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: \"\";\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-content: \"\";\n    }\n  }\n}\n"
+    },
+    {
+      "id": "variant:even:w-[137px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "even:w-[137px]"
+      ],
+      "expectedCss": ".even\\:w-\\[137px\\] {\n  &:nth-child(even) {\n    width: 137px;\n  }\n}\n"
+    },
+    {
+      "id": "variant:even:content-[\"probe\"]!",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "even:content-[\"probe\"]!"
+      ],
+      "expectedCss": "@layer properties;\n.even\\:content-\\[\\\"probe\\\"\\]\\! {\n  &:nth-child(even) {\n    --tw-content: \"probe\" !important;\n    content: var(--tw-content) !important;\n  }\n}\n@property --tw-content {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: \"\";\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-content: \"\";\n    }\n  }\n}\n"
+    },
+    {
+      "id": "variant:file:w-[137px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "file:w-[137px]"
+      ],
+      "expectedCss": ".file\\:w-\\[137px\\] {\n  &::file-selector-button {\n    width: 137px;\n  }\n}\n"
+    },
+    {
+      "id": "variant:file:content-[\"probe\"]!",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "file:content-[\"probe\"]!"
+      ],
+      "expectedCss": "@layer properties;\n.file\\:content-\\[\\\"probe\\\"\\]\\! {\n  &::file-selector-button {\n    --tw-content: \"probe\" !important;\n    content: var(--tw-content) !important;\n  }\n}\n@property --tw-content {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: \"\";\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-content: \"\";\n    }\n  }\n}\n"
+    },
+    {
+      "id": "variant:first:w-[137px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "first:w-[137px]"
+      ],
+      "expectedCss": ".first\\:w-\\[137px\\] {\n  &:first-child {\n    width: 137px;\n  }\n}\n"
+    },
+    {
+      "id": "variant:first:content-[\"probe\"]!",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "first:content-[\"probe\"]!"
+      ],
+      "expectedCss": "@layer properties;\n.first\\:content-\\[\\\"probe\\\"\\]\\! {\n  &:first-child {\n    --tw-content: \"probe\" !important;\n    content: var(--tw-content) !important;\n  }\n}\n@property --tw-content {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: \"\";\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-content: \"\";\n    }\n  }\n}\n"
+    },
+    {
+      "id": "variant:first-letter:w-[137px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "first-letter:w-[137px]"
+      ],
+      "expectedCss": ".first-letter\\:w-\\[137px\\] {\n  &::first-letter {\n    width: 137px;\n  }\n}\n"
+    },
+    {
+      "id": "variant:first-letter:content-[\"probe\"]!",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "first-letter:content-[\"probe\"]!"
+      ],
+      "expectedCss": "@layer properties;\n.first-letter\\:content-\\[\\\"probe\\\"\\]\\! {\n  &::first-letter {\n    --tw-content: \"probe\" !important;\n    content: var(--tw-content) !important;\n  }\n}\n@property --tw-content {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: \"\";\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-content: \"\";\n    }\n  }\n}\n"
+    },
+    {
+      "id": "variant:first-line:w-[137px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "first-line:w-[137px]"
+      ],
+      "expectedCss": ".first-line\\:w-\\[137px\\] {\n  &::first-line {\n    width: 137px;\n  }\n}\n"
+    },
+    {
+      "id": "variant:first-line:content-[\"probe\"]!",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "first-line:content-[\"probe\"]!"
+      ],
+      "expectedCss": "@layer properties;\n.first-line\\:content-\\[\\\"probe\\\"\\]\\! {\n  &::first-line {\n    --tw-content: \"probe\" !important;\n    content: var(--tw-content) !important;\n  }\n}\n@property --tw-content {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: \"\";\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-content: \"\";\n    }\n  }\n}\n"
+    },
+    {
+      "id": "variant:first-of-type:w-[137px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "first-of-type:w-[137px]"
+      ],
+      "expectedCss": ".first-of-type\\:w-\\[137px\\] {\n  &:first-of-type {\n    width: 137px;\n  }\n}\n"
+    },
+    {
+      "id": "variant:first-of-type:content-[\"probe\"]!",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "first-of-type:content-[\"probe\"]!"
+      ],
+      "expectedCss": "@layer properties;\n.first-of-type\\:content-\\[\\\"probe\\\"\\]\\! {\n  &:first-of-type {\n    --tw-content: \"probe\" !important;\n    content: var(--tw-content) !important;\n  }\n}\n@property --tw-content {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: \"\";\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-content: \"\";\n    }\n  }\n}\n"
+    },
+    {
+      "id": "variant:focus:w-[137px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "focus:w-[137px]"
+      ],
+      "expectedCss": ".focus\\:w-\\[137px\\] {\n  &:focus {\n    width: 137px;\n  }\n}\n"
+    },
+    {
+      "id": "variant:focus:content-[\"probe\"]!",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "focus:content-[\"probe\"]!"
+      ],
+      "expectedCss": "@layer properties;\n.focus\\:content-\\[\\\"probe\\\"\\]\\! {\n  &:focus {\n    --tw-content: \"probe\" !important;\n    content: var(--tw-content) !important;\n  }\n}\n@property --tw-content {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: \"\";\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-content: \"\";\n    }\n  }\n}\n"
+    },
+    {
+      "id": "variant:focus-visible:w-[137px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "focus-visible:w-[137px]"
+      ],
+      "expectedCss": ".focus-visible\\:w-\\[137px\\] {\n  &:focus-visible {\n    width: 137px;\n  }\n}\n"
+    },
+    {
+      "id": "variant:focus-visible:content-[\"probe\"]!",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "focus-visible:content-[\"probe\"]!"
+      ],
+      "expectedCss": "@layer properties;\n.focus-visible\\:content-\\[\\\"probe\\\"\\]\\! {\n  &:focus-visible {\n    --tw-content: \"probe\" !important;\n    content: var(--tw-content) !important;\n  }\n}\n@property --tw-content {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: \"\";\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-content: \"\";\n    }\n  }\n}\n"
+    },
+    {
+      "id": "variant:focus-within:w-[137px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "focus-within:w-[137px]"
+      ],
+      "expectedCss": ".focus-within\\:w-\\[137px\\] {\n  &:focus-within {\n    width: 137px;\n  }\n}\n"
+    },
+    {
+      "id": "variant:focus-within:content-[\"probe\"]!",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "focus-within:content-[\"probe\"]!"
+      ],
+      "expectedCss": "@layer properties;\n.focus-within\\:content-\\[\\\"probe\\\"\\]\\! {\n  &:focus-within {\n    --tw-content: \"probe\" !important;\n    content: var(--tw-content) !important;\n  }\n}\n@property --tw-content {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: \"\";\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-content: \"\";\n    }\n  }\n}\n"
+    },
+    {
+      "id": "variant:forced-colors:w-[137px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "forced-colors:w-[137px]"
+      ],
+      "expectedCss": ".forced-colors\\:w-\\[137px\\] {\n  @media (forced-colors: active) {\n    width: 137px;\n  }\n}\n"
+    },
+    {
+      "id": "variant:forced-colors:content-[\"probe\"]!",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "forced-colors:content-[\"probe\"]!"
+      ],
+      "expectedCss": "@layer properties;\n.forced-colors\\:content-\\[\\\"probe\\\"\\]\\! {\n  @media (forced-colors: active) {\n    --tw-content: \"probe\" !important;\n    content: var(--tw-content) !important;\n  }\n}\n@property --tw-content {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: \"\";\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-content: \"\";\n    }\n  }\n}\n"
+    },
+    {
+      "id": "variant:hover:w-[137px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "hover:w-[137px]"
+      ],
+      "expectedCss": ".hover\\:w-\\[137px\\] {\n  &:hover {\n    @media (hover: hover) {\n      width: 137px;\n    }\n  }\n}\n"
+    },
+    {
+      "id": "variant:hover:content-[\"probe\"]!",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "hover:content-[\"probe\"]!"
+      ],
+      "expectedCss": "@layer properties;\n.hover\\:content-\\[\\\"probe\\\"\\]\\! {\n  &:hover {\n    @media (hover: hover) {\n      --tw-content: \"probe\" !important;\n      content: var(--tw-content) !important;\n    }\n  }\n}\n@property --tw-content {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: \"\";\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-content: \"\";\n    }\n  }\n}\n"
+    },
+    {
+      "id": "variant:in-range:w-[137px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "in-range:w-[137px]"
+      ],
+      "expectedCss": ".in-range\\:w-\\[137px\\] {\n  &:in-range {\n    width: 137px;\n  }\n}\n"
+    },
+    {
+      "id": "variant:in-range:content-[\"probe\"]!",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "in-range:content-[\"probe\"]!"
+      ],
+      "expectedCss": "@layer properties;\n.in-range\\:content-\\[\\\"probe\\\"\\]\\! {\n  &:in-range {\n    --tw-content: \"probe\" !important;\n    content: var(--tw-content) !important;\n  }\n}\n@property --tw-content {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: \"\";\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-content: \"\";\n    }\n  }\n}\n"
+    },
+    {
+      "id": "variant:indeterminate:w-[137px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "indeterminate:w-[137px]"
+      ],
+      "expectedCss": ".indeterminate\\:w-\\[137px\\] {\n  &:indeterminate {\n    width: 137px;\n  }\n}\n"
+    },
+    {
+      "id": "variant:indeterminate:content-[\"probe\"]!",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "indeterminate:content-[\"probe\"]!"
+      ],
+      "expectedCss": "@layer properties;\n.indeterminate\\:content-\\[\\\"probe\\\"\\]\\! {\n  &:indeterminate {\n    --tw-content: \"probe\" !important;\n    content: var(--tw-content) !important;\n  }\n}\n@property --tw-content {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: \"\";\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-content: \"\";\n    }\n  }\n}\n"
+    },
+    {
+      "id": "variant:inert:w-[137px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "inert:w-[137px]"
+      ],
+      "expectedCss": ".inert\\:w-\\[137px\\] {\n  &:is([inert], [inert] *) {\n    width: 137px;\n  }\n}\n"
+    },
+    {
+      "id": "variant:inert:content-[\"probe\"]!",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "inert:content-[\"probe\"]!"
+      ],
+      "expectedCss": "@layer properties;\n.inert\\:content-\\[\\\"probe\\\"\\]\\! {\n  &:is([inert], [inert] *) {\n    --tw-content: \"probe\" !important;\n    content: var(--tw-content) !important;\n  }\n}\n@property --tw-content {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: \"\";\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-content: \"\";\n    }\n  }\n}\n"
+    },
+    {
+      "id": "variant:invalid:w-[137px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "invalid:w-[137px]"
+      ],
+      "expectedCss": ".invalid\\:w-\\[137px\\] {\n  &:invalid {\n    width: 137px;\n  }\n}\n"
+    },
+    {
+      "id": "variant:invalid:content-[\"probe\"]!",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "invalid:content-[\"probe\"]!"
+      ],
+      "expectedCss": "@layer properties;\n.invalid\\:content-\\[\\\"probe\\\"\\]\\! {\n  &:invalid {\n    --tw-content: \"probe\" !important;\n    content: var(--tw-content) !important;\n  }\n}\n@property --tw-content {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: \"\";\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-content: \"\";\n    }\n  }\n}\n"
+    },
+    {
+      "id": "variant:inverted-colors:w-[137px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "inverted-colors:w-[137px]"
+      ],
+      "expectedCss": ".inverted-colors\\:w-\\[137px\\] {\n  @media (inverted-colors: inverted) {\n    width: 137px;\n  }\n}\n"
+    },
+    {
+      "id": "variant:inverted-colors:content-[\"probe\"]!",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "inverted-colors:content-[\"probe\"]!"
+      ],
+      "expectedCss": "@layer properties;\n.inverted-colors\\:content-\\[\\\"probe\\\"\\]\\! {\n  @media (inverted-colors: inverted) {\n    --tw-content: \"probe\" !important;\n    content: var(--tw-content) !important;\n  }\n}\n@property --tw-content {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: \"\";\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-content: \"\";\n    }\n  }\n}\n"
+    },
+    {
+      "id": "variant:landscape:w-[137px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "landscape:w-[137px]"
+      ],
+      "expectedCss": ".landscape\\:w-\\[137px\\] {\n  @media (orientation: landscape) {\n    width: 137px;\n  }\n}\n"
+    },
+    {
+      "id": "variant:landscape:content-[\"probe\"]!",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "landscape:content-[\"probe\"]!"
+      ],
+      "expectedCss": "@layer properties;\n.landscape\\:content-\\[\\\"probe\\\"\\]\\! {\n  @media (orientation: landscape) {\n    --tw-content: \"probe\" !important;\n    content: var(--tw-content) !important;\n  }\n}\n@property --tw-content {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: \"\";\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-content: \"\";\n    }\n  }\n}\n"
+    },
+    {
+      "id": "variant:last:w-[137px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "last:w-[137px]"
+      ],
+      "expectedCss": ".last\\:w-\\[137px\\] {\n  &:last-child {\n    width: 137px;\n  }\n}\n"
+    },
+    {
+      "id": "variant:last:content-[\"probe\"]!",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "last:content-[\"probe\"]!"
+      ],
+      "expectedCss": "@layer properties;\n.last\\:content-\\[\\\"probe\\\"\\]\\! {\n  &:last-child {\n    --tw-content: \"probe\" !important;\n    content: var(--tw-content) !important;\n  }\n}\n@property --tw-content {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: \"\";\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-content: \"\";\n    }\n  }\n}\n"
+    },
+    {
+      "id": "variant:last-of-type:w-[137px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "last-of-type:w-[137px]"
+      ],
+      "expectedCss": ".last-of-type\\:w-\\[137px\\] {\n  &:last-of-type {\n    width: 137px;\n  }\n}\n"
+    },
+    {
+      "id": "variant:last-of-type:content-[\"probe\"]!",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "last-of-type:content-[\"probe\"]!"
+      ],
+      "expectedCss": "@layer properties;\n.last-of-type\\:content-\\[\\\"probe\\\"\\]\\! {\n  &:last-of-type {\n    --tw-content: \"probe\" !important;\n    content: var(--tw-content) !important;\n  }\n}\n@property --tw-content {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: \"\";\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-content: \"\";\n    }\n  }\n}\n"
+    },
+    {
+      "id": "variant:ltr:w-[137px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "ltr:w-[137px]"
+      ],
+      "expectedCss": ".ltr\\:w-\\[137px\\] {\n  &:where(:dir(ltr), [dir=\"ltr\"], [dir=\"ltr\"] *) {\n    width: 137px;\n  }\n}\n"
+    },
+    {
+      "id": "variant:ltr:content-[\"probe\"]!",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "ltr:content-[\"probe\"]!"
+      ],
+      "expectedCss": "@layer properties;\n.ltr\\:content-\\[\\\"probe\\\"\\]\\! {\n  &:where(:dir(ltr), [dir=\"ltr\"], [dir=\"ltr\"] *) {\n    --tw-content: \"probe\" !important;\n    content: var(--tw-content) !important;\n  }\n}\n@property --tw-content {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: \"\";\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-content: \"\";\n    }\n  }\n}\n"
+    },
+    {
+      "id": "variant:marker:w-[137px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "marker:w-[137px]"
+      ],
+      "expectedCss": ".marker\\:w-\\[137px\\] {\n  & *::marker {\n    width: 137px;\n  }\n  &::marker {\n    width: 137px;\n  }\n  & *::-webkit-details-marker {\n    width: 137px;\n  }\n  &::-webkit-details-marker {\n    width: 137px;\n  }\n}\n"
+    },
+    {
+      "id": "variant:marker:content-[\"probe\"]!",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "marker:content-[\"probe\"]!"
+      ],
+      "expectedCss": "@layer properties;\n.marker\\:content-\\[\\\"probe\\\"\\]\\! {\n  & *::marker {\n    --tw-content: \"probe\" !important;\n    content: var(--tw-content) !important;\n  }\n  &::marker {\n    --tw-content: \"probe\" !important;\n    content: var(--tw-content) !important;\n  }\n  & *::-webkit-details-marker {\n    --tw-content: \"probe\" !important;\n    content: var(--tw-content) !important;\n  }\n  &::-webkit-details-marker {\n    --tw-content: \"probe\" !important;\n    content: var(--tw-content) !important;\n  }\n}\n@property --tw-content {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: \"\";\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-content: \"\";\n    }\n  }\n}\n"
+    },
+    {
+      "id": "variant:motion-reduce:w-[137px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "motion-reduce:w-[137px]"
+      ],
+      "expectedCss": ".motion-reduce\\:w-\\[137px\\] {\n  @media (prefers-reduced-motion: reduce) {\n    width: 137px;\n  }\n}\n"
+    },
+    {
+      "id": "variant:motion-reduce:content-[\"probe\"]!",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "motion-reduce:content-[\"probe\"]!"
+      ],
+      "expectedCss": "@layer properties;\n.motion-reduce\\:content-\\[\\\"probe\\\"\\]\\! {\n  @media (prefers-reduced-motion: reduce) {\n    --tw-content: \"probe\" !important;\n    content: var(--tw-content) !important;\n  }\n}\n@property --tw-content {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: \"\";\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-content: \"\";\n    }\n  }\n}\n"
+    },
+    {
+      "id": "variant:motion-safe:w-[137px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "motion-safe:w-[137px]"
+      ],
+      "expectedCss": ".motion-safe\\:w-\\[137px\\] {\n  @media (prefers-reduced-motion: no-preference) {\n    width: 137px;\n  }\n}\n"
+    },
+    {
+      "id": "variant:motion-safe:content-[\"probe\"]!",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "motion-safe:content-[\"probe\"]!"
+      ],
+      "expectedCss": "@layer properties;\n.motion-safe\\:content-\\[\\\"probe\\\"\\]\\! {\n  @media (prefers-reduced-motion: no-preference) {\n    --tw-content: \"probe\" !important;\n    content: var(--tw-content) !important;\n  }\n}\n@property --tw-content {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: \"\";\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-content: \"\";\n    }\n  }\n}\n"
+    },
+    {
+      "id": "variant:noscript:w-[137px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "noscript:w-[137px]"
+      ],
+      "expectedCss": ".noscript\\:w-\\[137px\\] {\n  @media (scripting: none) {\n    width: 137px;\n  }\n}\n"
+    },
+    {
+      "id": "variant:noscript:content-[\"probe\"]!",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "noscript:content-[\"probe\"]!"
+      ],
+      "expectedCss": "@layer properties;\n.noscript\\:content-\\[\\\"probe\\\"\\]\\! {\n  @media (scripting: none) {\n    --tw-content: \"probe\" !important;\n    content: var(--tw-content) !important;\n  }\n}\n@property --tw-content {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: \"\";\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-content: \"\";\n    }\n  }\n}\n"
+    },
+    {
+      "id": "variant:odd:w-[137px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "odd:w-[137px]"
+      ],
+      "expectedCss": ".odd\\:w-\\[137px\\] {\n  &:nth-child(odd) {\n    width: 137px;\n  }\n}\n"
+    },
+    {
+      "id": "variant:odd:content-[\"probe\"]!",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "odd:content-[\"probe\"]!"
+      ],
+      "expectedCss": "@layer properties;\n.odd\\:content-\\[\\\"probe\\\"\\]\\! {\n  &:nth-child(odd) {\n    --tw-content: \"probe\" !important;\n    content: var(--tw-content) !important;\n  }\n}\n@property --tw-content {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: \"\";\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-content: \"\";\n    }\n  }\n}\n"
+    },
+    {
+      "id": "variant:only:w-[137px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "only:w-[137px]"
+      ],
+      "expectedCss": ".only\\:w-\\[137px\\] {\n  &:only-child {\n    width: 137px;\n  }\n}\n"
+    },
+    {
+      "id": "variant:only:content-[\"probe\"]!",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "only:content-[\"probe\"]!"
+      ],
+      "expectedCss": "@layer properties;\n.only\\:content-\\[\\\"probe\\\"\\]\\! {\n  &:only-child {\n    --tw-content: \"probe\" !important;\n    content: var(--tw-content) !important;\n  }\n}\n@property --tw-content {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: \"\";\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-content: \"\";\n    }\n  }\n}\n"
+    },
+    {
+      "id": "variant:only-of-type:w-[137px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "only-of-type:w-[137px]"
+      ],
+      "expectedCss": ".only-of-type\\:w-\\[137px\\] {\n  &:only-of-type {\n    width: 137px;\n  }\n}\n"
+    },
+    {
+      "id": "variant:only-of-type:content-[\"probe\"]!",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "only-of-type:content-[\"probe\"]!"
+      ],
+      "expectedCss": "@layer properties;\n.only-of-type\\:content-\\[\\\"probe\\\"\\]\\! {\n  &:only-of-type {\n    --tw-content: \"probe\" !important;\n    content: var(--tw-content) !important;\n  }\n}\n@property --tw-content {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: \"\";\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-content: \"\";\n    }\n  }\n}\n"
+    },
+    {
+      "id": "variant:open:w-[137px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "open:w-[137px]"
+      ],
+      "expectedCss": ".open\\:w-\\[137px\\] {\n  &:is([open], :popover-open, :open) {\n    width: 137px;\n  }\n}\n"
+    },
+    {
+      "id": "variant:open:content-[\"probe\"]!",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "open:content-[\"probe\"]!"
+      ],
+      "expectedCss": "@layer properties;\n.open\\:content-\\[\\\"probe\\\"\\]\\! {\n  &:is([open], :popover-open, :open) {\n    --tw-content: \"probe\" !important;\n    content: var(--tw-content) !important;\n  }\n}\n@property --tw-content {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: \"\";\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-content: \"\";\n    }\n  }\n}\n"
+    },
+    {
+      "id": "variant:optional:w-[137px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "optional:w-[137px]"
+      ],
+      "expectedCss": ".optional\\:w-\\[137px\\] {\n  &:optional {\n    width: 137px;\n  }\n}\n"
+    },
+    {
+      "id": "variant:optional:content-[\"probe\"]!",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "optional:content-[\"probe\"]!"
+      ],
+      "expectedCss": "@layer properties;\n.optional\\:content-\\[\\\"probe\\\"\\]\\! {\n  &:optional {\n    --tw-content: \"probe\" !important;\n    content: var(--tw-content) !important;\n  }\n}\n@property --tw-content {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: \"\";\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-content: \"\";\n    }\n  }\n}\n"
+    },
+    {
+      "id": "variant:out-of-range:w-[137px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "out-of-range:w-[137px]"
+      ],
+      "expectedCss": ".out-of-range\\:w-\\[137px\\] {\n  &:out-of-range {\n    width: 137px;\n  }\n}\n"
+    },
+    {
+      "id": "variant:out-of-range:content-[\"probe\"]!",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "out-of-range:content-[\"probe\"]!"
+      ],
+      "expectedCss": "@layer properties;\n.out-of-range\\:content-\\[\\\"probe\\\"\\]\\! {\n  &:out-of-range {\n    --tw-content: \"probe\" !important;\n    content: var(--tw-content) !important;\n  }\n}\n@property --tw-content {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: \"\";\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-content: \"\";\n    }\n  }\n}\n"
+    },
+    {
+      "id": "variant:placeholder:w-[137px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "placeholder:w-[137px]"
+      ],
+      "expectedCss": ".placeholder\\:w-\\[137px\\] {\n  &::placeholder {\n    width: 137px;\n  }\n}\n"
+    },
+    {
+      "id": "variant:placeholder:content-[\"probe\"]!",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "placeholder:content-[\"probe\"]!"
+      ],
+      "expectedCss": "@layer properties;\n.placeholder\\:content-\\[\\\"probe\\\"\\]\\! {\n  &::placeholder {\n    --tw-content: \"probe\" !important;\n    content: var(--tw-content) !important;\n  }\n}\n@property --tw-content {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: \"\";\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-content: \"\";\n    }\n  }\n}\n"
+    },
+    {
+      "id": "variant:placeholder-shown:w-[137px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "placeholder-shown:w-[137px]"
+      ],
+      "expectedCss": ".placeholder-shown\\:w-\\[137px\\] {\n  &:placeholder-shown {\n    width: 137px;\n  }\n}\n"
+    },
+    {
+      "id": "variant:placeholder-shown:content-[\"probe\"]!",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "placeholder-shown:content-[\"probe\"]!"
+      ],
+      "expectedCss": "@layer properties;\n.placeholder-shown\\:content-\\[\\\"probe\\\"\\]\\! {\n  &:placeholder-shown {\n    --tw-content: \"probe\" !important;\n    content: var(--tw-content) !important;\n  }\n}\n@property --tw-content {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: \"\";\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-content: \"\";\n    }\n  }\n}\n"
+    },
+    {
+      "id": "variant:pointer-coarse:w-[137px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "pointer-coarse:w-[137px]"
+      ],
+      "expectedCss": ".pointer-coarse\\:w-\\[137px\\] {\n  @media (pointer: coarse) {\n    width: 137px;\n  }\n}\n"
+    },
+    {
+      "id": "variant:pointer-coarse:content-[\"probe\"]!",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "pointer-coarse:content-[\"probe\"]!"
+      ],
+      "expectedCss": "@layer properties;\n.pointer-coarse\\:content-\\[\\\"probe\\\"\\]\\! {\n  @media (pointer: coarse) {\n    --tw-content: \"probe\" !important;\n    content: var(--tw-content) !important;\n  }\n}\n@property --tw-content {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: \"\";\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-content: \"\";\n    }\n  }\n}\n"
+    },
+    {
+      "id": "variant:pointer-fine:w-[137px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "pointer-fine:w-[137px]"
+      ],
+      "expectedCss": ".pointer-fine\\:w-\\[137px\\] {\n  @media (pointer: fine) {\n    width: 137px;\n  }\n}\n"
+    },
+    {
+      "id": "variant:pointer-fine:content-[\"probe\"]!",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "pointer-fine:content-[\"probe\"]!"
+      ],
+      "expectedCss": "@layer properties;\n.pointer-fine\\:content-\\[\\\"probe\\\"\\]\\! {\n  @media (pointer: fine) {\n    --tw-content: \"probe\" !important;\n    content: var(--tw-content) !important;\n  }\n}\n@property --tw-content {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: \"\";\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-content: \"\";\n    }\n  }\n}\n"
+    },
+    {
+      "id": "variant:pointer-none:w-[137px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "pointer-none:w-[137px]"
+      ],
+      "expectedCss": ".pointer-none\\:w-\\[137px\\] {\n  @media (pointer: none) {\n    width: 137px;\n  }\n}\n"
+    },
+    {
+      "id": "variant:pointer-none:content-[\"probe\"]!",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "pointer-none:content-[\"probe\"]!"
+      ],
+      "expectedCss": "@layer properties;\n.pointer-none\\:content-\\[\\\"probe\\\"\\]\\! {\n  @media (pointer: none) {\n    --tw-content: \"probe\" !important;\n    content: var(--tw-content) !important;\n  }\n}\n@property --tw-content {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: \"\";\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-content: \"\";\n    }\n  }\n}\n"
+    },
+    {
+      "id": "variant:portrait:w-[137px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "portrait:w-[137px]"
+      ],
+      "expectedCss": ".portrait\\:w-\\[137px\\] {\n  @media (orientation: portrait) {\n    width: 137px;\n  }\n}\n"
+    },
+    {
+      "id": "variant:portrait:content-[\"probe\"]!",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "portrait:content-[\"probe\"]!"
+      ],
+      "expectedCss": "@layer properties;\n.portrait\\:content-\\[\\\"probe\\\"\\]\\! {\n  @media (orientation: portrait) {\n    --tw-content: \"probe\" !important;\n    content: var(--tw-content) !important;\n  }\n}\n@property --tw-content {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: \"\";\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-content: \"\";\n    }\n  }\n}\n"
+    },
+    {
+      "id": "variant:print:w-[137px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "print:w-[137px]"
+      ],
+      "expectedCss": ".print\\:w-\\[137px\\] {\n  @media print {\n    width: 137px;\n  }\n}\n"
+    },
+    {
+      "id": "variant:print:content-[\"probe\"]!",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "print:content-[\"probe\"]!"
+      ],
+      "expectedCss": "@layer properties;\n.print\\:content-\\[\\\"probe\\\"\\]\\! {\n  @media print {\n    --tw-content: \"probe\" !important;\n    content: var(--tw-content) !important;\n  }\n}\n@property --tw-content {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: \"\";\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-content: \"\";\n    }\n  }\n}\n"
+    },
+    {
+      "id": "variant:read-only:w-[137px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "read-only:w-[137px]"
+      ],
+      "expectedCss": ".read-only\\:w-\\[137px\\] {\n  &:read-only {\n    width: 137px;\n  }\n}\n"
+    },
+    {
+      "id": "variant:read-only:content-[\"probe\"]!",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "read-only:content-[\"probe\"]!"
+      ],
+      "expectedCss": "@layer properties;\n.read-only\\:content-\\[\\\"probe\\\"\\]\\! {\n  &:read-only {\n    --tw-content: \"probe\" !important;\n    content: var(--tw-content) !important;\n  }\n}\n@property --tw-content {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: \"\";\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-content: \"\";\n    }\n  }\n}\n"
+    },
+    {
+      "id": "variant:required:w-[137px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "required:w-[137px]"
+      ],
+      "expectedCss": ".required\\:w-\\[137px\\] {\n  &:required {\n    width: 137px;\n  }\n}\n"
+    },
+    {
+      "id": "variant:required:content-[\"probe\"]!",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "required:content-[\"probe\"]!"
+      ],
+      "expectedCss": "@layer properties;\n.required\\:content-\\[\\\"probe\\\"\\]\\! {\n  &:required {\n    --tw-content: \"probe\" !important;\n    content: var(--tw-content) !important;\n  }\n}\n@property --tw-content {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: \"\";\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-content: \"\";\n    }\n  }\n}\n"
+    },
+    {
+      "id": "variant:rtl:w-[137px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "rtl:w-[137px]"
+      ],
+      "expectedCss": ".rtl\\:w-\\[137px\\] {\n  &:where(:dir(rtl), [dir=\"rtl\"], [dir=\"rtl\"] *) {\n    width: 137px;\n  }\n}\n"
+    },
+    {
+      "id": "variant:rtl:content-[\"probe\"]!",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "rtl:content-[\"probe\"]!"
+      ],
+      "expectedCss": "@layer properties;\n.rtl\\:content-\\[\\\"probe\\\"\\]\\! {\n  &:where(:dir(rtl), [dir=\"rtl\"], [dir=\"rtl\"] *) {\n    --tw-content: \"probe\" !important;\n    content: var(--tw-content) !important;\n  }\n}\n@property --tw-content {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: \"\";\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-content: \"\";\n    }\n  }\n}\n"
+    },
+    {
+      "id": "variant:selection:w-[137px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "selection:w-[137px]"
+      ],
+      "expectedCss": ".selection\\:w-\\[137px\\] {\n  & *::selection {\n    width: 137px;\n  }\n  &::selection {\n    width: 137px;\n  }\n}\n"
+    },
+    {
+      "id": "variant:selection:content-[\"probe\"]!",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "selection:content-[\"probe\"]!"
+      ],
+      "expectedCss": "@layer properties;\n.selection\\:content-\\[\\\"probe\\\"\\]\\! {\n  & *::selection {\n    --tw-content: \"probe\" !important;\n    content: var(--tw-content) !important;\n  }\n  &::selection {\n    --tw-content: \"probe\" !important;\n    content: var(--tw-content) !important;\n  }\n}\n@property --tw-content {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: \"\";\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-content: \"\";\n    }\n  }\n}\n"
+    },
+    {
+      "id": "variant:starting:w-[137px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "starting:w-[137px]"
+      ],
+      "expectedCss": ".starting\\:w-\\[137px\\] {\n  @starting-style {\n    width: 137px;\n  }\n}\n"
+    },
+    {
+      "id": "variant:starting:content-[\"probe\"]!",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "starting:content-[\"probe\"]!"
+      ],
+      "expectedCss": "@layer properties;\n.starting\\:content-\\[\\\"probe\\\"\\]\\! {\n  @starting-style {\n    --tw-content: \"probe\" !important;\n    content: var(--tw-content) !important;\n  }\n}\n@property --tw-content {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: \"\";\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-content: \"\";\n    }\n  }\n}\n"
+    },
+    {
+      "id": "variant:target:w-[137px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "target:w-[137px]"
+      ],
+      "expectedCss": ".target\\:w-\\[137px\\] {\n  &:target {\n    width: 137px;\n  }\n}\n"
+    },
+    {
+      "id": "variant:target:content-[\"probe\"]!",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "target:content-[\"probe\"]!"
+      ],
+      "expectedCss": "@layer properties;\n.target\\:content-\\[\\\"probe\\\"\\]\\! {\n  &:target {\n    --tw-content: \"probe\" !important;\n    content: var(--tw-content) !important;\n  }\n}\n@property --tw-content {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: \"\";\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-content: \"\";\n    }\n  }\n}\n"
+    },
+    {
+      "id": "variant:user-invalid:w-[137px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "user-invalid:w-[137px]"
+      ],
+      "expectedCss": ".user-invalid\\:w-\\[137px\\] {\n  &:user-invalid {\n    width: 137px;\n  }\n}\n"
+    },
+    {
+      "id": "variant:user-invalid:content-[\"probe\"]!",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "user-invalid:content-[\"probe\"]!"
+      ],
+      "expectedCss": "@layer properties;\n.user-invalid\\:content-\\[\\\"probe\\\"\\]\\! {\n  &:user-invalid {\n    --tw-content: \"probe\" !important;\n    content: var(--tw-content) !important;\n  }\n}\n@property --tw-content {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: \"\";\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-content: \"\";\n    }\n  }\n}\n"
+    },
+    {
+      "id": "variant:user-valid:w-[137px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "user-valid:w-[137px]"
+      ],
+      "expectedCss": ".user-valid\\:w-\\[137px\\] {\n  &:user-valid {\n    width: 137px;\n  }\n}\n"
+    },
+    {
+      "id": "variant:user-valid:content-[\"probe\"]!",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "user-valid:content-[\"probe\"]!"
+      ],
+      "expectedCss": "@layer properties;\n.user-valid\\:content-\\[\\\"probe\\\"\\]\\! {\n  &:user-valid {\n    --tw-content: \"probe\" !important;\n    content: var(--tw-content) !important;\n  }\n}\n@property --tw-content {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: \"\";\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-content: \"\";\n    }\n  }\n}\n"
+    },
+    {
+      "id": "variant:valid:w-[137px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "valid:w-[137px]"
+      ],
+      "expectedCss": ".valid\\:w-\\[137px\\] {\n  &:valid {\n    width: 137px;\n  }\n}\n"
+    },
+    {
+      "id": "variant:valid:content-[\"probe\"]!",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "valid:content-[\"probe\"]!"
+      ],
+      "expectedCss": "@layer properties;\n.valid\\:content-\\[\\\"probe\\\"\\]\\! {\n  &:valid {\n    --tw-content: \"probe\" !important;\n    content: var(--tw-content) !important;\n  }\n}\n@property --tw-content {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: \"\";\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-content: \"\";\n    }\n  }\n}\n"
+    },
+    {
+      "id": "variant:visited:w-[137px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "visited:w-[137px]"
+      ],
+      "expectedCss": ".visited\\:w-\\[137px\\] {\n  &:visited {\n    width: 137px;\n  }\n}\n"
+    },
+    {
+      "id": "variant:visited:content-[\"probe\"]!",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "visited:content-[\"probe\"]!"
+      ],
+      "expectedCss": "@layer properties;\n.visited\\:content-\\[\\\"probe\\\"\\]\\! {\n  &:visited {\n    --tw-content: \"probe\" !important;\n    content: var(--tw-content) !important;\n  }\n}\n@property --tw-content {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: \"\";\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-content: \"\";\n    }\n  }\n}\n"
+    },
+    {
+      "id": "variant:before:hover:w-[137px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "before:hover:w-[137px]"
+      ],
+      "expectedCss": "@layer properties;\n.before\\:hover\\:w-\\[137px\\] {\n  &::before {\n    content: var(--tw-content);\n    &:hover {\n      @media (hover: hover) {\n        width: 137px;\n      }\n    }\n  }\n}\n@property --tw-content {\n  syntax: \"*\";\n  initial-value: \"\";\n  inherits: false;\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-content: \"\";\n    }\n  }\n}\n"
+    },
+    {
+      "id": "variant:hover:before:w-[137px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "hover:before:w-[137px]"
+      ],
+      "expectedCss": "@layer properties;\n.hover\\:before\\:w-\\[137px\\] {\n  &:hover {\n    @media (hover: hover) {\n      &::before {\n        content: var(--tw-content);\n        width: 137px;\n      }\n    }\n  }\n}\n@property --tw-content {\n  syntax: \"*\";\n  initial-value: \"\";\n  inherits: false;\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-content: \"\";\n    }\n  }\n}\n"
+    },
+    {
+      "id": "variant:selection:hover:w-[137px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "selection:hover:w-[137px]"
+      ],
+      "expectedCss": ".selection\\:hover\\:w-\\[137px\\] {\n  & *::selection {\n    &:hover {\n      @media (hover: hover) {\n        width: 137px;\n      }\n    }\n  }\n  &::selection {\n    &:hover {\n      @media (hover: hover) {\n        width: 137px;\n      }\n    }\n  }\n}\n"
+    },
+    {
+      "id": "variant:hover:selection:w-[137px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "hover:selection:w-[137px]"
+      ],
+      "expectedCss": ".hover\\:selection\\:w-\\[137px\\] {\n  &:hover {\n    @media (hover: hover) {\n      & *::selection {\n        width: 137px;\n      }\n      &::selection {\n        width: 137px;\n      }\n    }\n  }\n}\n"
+    },
+    {
+      "id": "variant:dark:focus:w-[137px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "dark:focus:w-[137px]"
+      ],
+      "expectedCss": ".dark\\:focus\\:w-\\[137px\\] {\n  @media (prefers-color-scheme: dark) {\n    &:focus {\n      width: 137px;\n    }\n  }\n}\n"
+    },
+    {
+      "id": "variant:motion-safe:hover:w-[137px]",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "motion-safe:hover:w-[137px]"
+      ],
+      "expectedCss": ".motion-safe\\:hover\\:w-\\[137px\\] {\n  @media (prefers-reduced-motion: no-preference) {\n    &:hover {\n      @media (hover: hover) {\n        width: 137px;\n      }\n    }\n  }\n}\n"
+    },
+    {
+      "id": "variant:sorted-union",
+      "input": "@tailwind utilities;",
+      "candidates": [
+        "*:w-[137px]",
+        "**:w-[137px]",
+        "active:w-[137px]",
+        "after:w-[137px]",
+        "any-pointer-coarse:w-[137px]",
+        "any-pointer-fine:w-[137px]",
+        "any-pointer-none:w-[137px]",
+        "autofill:w-[137px]",
+        "backdrop:w-[137px]",
+        "before:w-[137px]",
+        "checked:w-[137px]",
+        "contrast-less:w-[137px]",
+        "contrast-more:w-[137px]",
+        "dark:w-[137px]",
+        "default:w-[137px]",
+        "details-content:w-[137px]",
+        "disabled:w-[137px]",
+        "empty:w-[137px]",
+        "enabled:w-[137px]",
+        "even:w-[137px]",
+        "file:w-[137px]",
+        "first:w-[137px]",
+        "first-letter:w-[137px]",
+        "first-line:w-[137px]",
+        "first-of-type:w-[137px]",
+        "focus:w-[137px]",
+        "focus-visible:w-[137px]",
+        "focus-within:w-[137px]",
+        "forced-colors:w-[137px]",
+        "hover:w-[137px]",
+        "in-range:w-[137px]",
+        "indeterminate:w-[137px]",
+        "inert:w-[137px]",
+        "invalid:w-[137px]",
+        "inverted-colors:w-[137px]",
+        "landscape:w-[137px]",
+        "last:w-[137px]",
+        "last-of-type:w-[137px]",
+        "ltr:w-[137px]",
+        "marker:w-[137px]",
+        "motion-reduce:w-[137px]",
+        "motion-safe:w-[137px]",
+        "noscript:w-[137px]",
+        "odd:w-[137px]",
+        "only:w-[137px]",
+        "only-of-type:w-[137px]",
+        "open:w-[137px]",
+        "optional:w-[137px]",
+        "out-of-range:w-[137px]",
+        "placeholder:w-[137px]",
+        "placeholder-shown:w-[137px]",
+        "pointer-coarse:w-[137px]",
+        "pointer-fine:w-[137px]",
+        "pointer-none:w-[137px]",
+        "portrait:w-[137px]",
+        "print:w-[137px]",
+        "read-only:w-[137px]",
+        "required:w-[137px]",
+        "rtl:w-[137px]",
+        "selection:w-[137px]",
+        "starting:w-[137px]",
+        "target:w-[137px]",
+        "user-invalid:w-[137px]",
+        "user-valid:w-[137px]",
+        "valid:w-[137px]",
+        "visited:w-[137px]"
+      ],
+      "expectedCss": "@layer properties;\n.\\*\\:w-\\[137px\\] {\n  :is(& > *) {\n    width: 137px;\n  }\n}\n.\\*\\*\\:w-\\[137px\\] {\n  :is(& *) {\n    width: 137px;\n  }\n}\n.first-letter\\:w-\\[137px\\] {\n  &::first-letter {\n    width: 137px;\n  }\n}\n.first-line\\:w-\\[137px\\] {\n  &::first-line {\n    width: 137px;\n  }\n}\n.marker\\:w-\\[137px\\] {\n  & *::marker {\n    width: 137px;\n  }\n  &::marker {\n    width: 137px;\n  }\n  & *::-webkit-details-marker {\n    width: 137px;\n  }\n  &::-webkit-details-marker {\n    width: 137px;\n  }\n}\n.selection\\:w-\\[137px\\] {\n  & *::selection {\n    width: 137px;\n  }\n  &::selection {\n    width: 137px;\n  }\n}\n.file\\:w-\\[137px\\] {\n  &::file-selector-button {\n    width: 137px;\n  }\n}\n.placeholder\\:w-\\[137px\\] {\n  &::placeholder {\n    width: 137px;\n  }\n}\n.backdrop\\:w-\\[137px\\] {\n  &::backdrop {\n    width: 137px;\n  }\n}\n.details-content\\:w-\\[137px\\] {\n  &::details-content {\n    width: 137px;\n  }\n}\n.before\\:w-\\[137px\\] {\n  &::before {\n    content: var(--tw-content);\n    width: 137px;\n  }\n}\n.after\\:w-\\[137px\\] {\n  &::after {\n    content: var(--tw-content);\n    width: 137px;\n  }\n}\n.first\\:w-\\[137px\\] {\n  &:first-child {\n    width: 137px;\n  }\n}\n.last\\:w-\\[137px\\] {\n  &:last-child {\n    width: 137px;\n  }\n}\n.only\\:w-\\[137px\\] {\n  &:only-child {\n    width: 137px;\n  }\n}\n.odd\\:w-\\[137px\\] {\n  &:nth-child(odd) {\n    width: 137px;\n  }\n}\n.even\\:w-\\[137px\\] {\n  &:nth-child(even) {\n    width: 137px;\n  }\n}\n.first-of-type\\:w-\\[137px\\] {\n  &:first-of-type {\n    width: 137px;\n  }\n}\n.last-of-type\\:w-\\[137px\\] {\n  &:last-of-type {\n    width: 137px;\n  }\n}\n.only-of-type\\:w-\\[137px\\] {\n  &:only-of-type {\n    width: 137px;\n  }\n}\n.visited\\:w-\\[137px\\] {\n  &:visited {\n    width: 137px;\n  }\n}\n.target\\:w-\\[137px\\] {\n  &:target {\n    width: 137px;\n  }\n}\n.open\\:w-\\[137px\\] {\n  &:is([open], :popover-open, :open) {\n    width: 137px;\n  }\n}\n.default\\:w-\\[137px\\] {\n  &:default {\n    width: 137px;\n  }\n}\n.checked\\:w-\\[137px\\] {\n  &:checked {\n    width: 137px;\n  }\n}\n.indeterminate\\:w-\\[137px\\] {\n  &:indeterminate {\n    width: 137px;\n  }\n}\n.placeholder-shown\\:w-\\[137px\\] {\n  &:placeholder-shown {\n    width: 137px;\n  }\n}\n.autofill\\:w-\\[137px\\] {\n  &:autofill {\n    width: 137px;\n  }\n}\n.optional\\:w-\\[137px\\] {\n  &:optional {\n    width: 137px;\n  }\n}\n.required\\:w-\\[137px\\] {\n  &:required {\n    width: 137px;\n  }\n}\n.valid\\:w-\\[137px\\] {\n  &:valid {\n    width: 137px;\n  }\n}\n.invalid\\:w-\\[137px\\] {\n  &:invalid {\n    width: 137px;\n  }\n}\n.user-valid\\:w-\\[137px\\] {\n  &:user-valid {\n    width: 137px;\n  }\n}\n.user-invalid\\:w-\\[137px\\] {\n  &:user-invalid {\n    width: 137px;\n  }\n}\n.in-range\\:w-\\[137px\\] {\n  &:in-range {\n    width: 137px;\n  }\n}\n.out-of-range\\:w-\\[137px\\] {\n  &:out-of-range {\n    width: 137px;\n  }\n}\n.read-only\\:w-\\[137px\\] {\n  &:read-only {\n    width: 137px;\n  }\n}\n.empty\\:w-\\[137px\\] {\n  &:empty {\n    width: 137px;\n  }\n}\n.focus-within\\:w-\\[137px\\] {\n  &:focus-within {\n    width: 137px;\n  }\n}\n.hover\\:w-\\[137px\\] {\n  &:hover {\n    @media (hover: hover) {\n      width: 137px;\n    }\n  }\n}\n.focus\\:w-\\[137px\\] {\n  &:focus {\n    width: 137px;\n  }\n}\n.focus-visible\\:w-\\[137px\\] {\n  &:focus-visible {\n    width: 137px;\n  }\n}\n.active\\:w-\\[137px\\] {\n  &:active {\n    width: 137px;\n  }\n}\n.enabled\\:w-\\[137px\\] {\n  &:enabled {\n    width: 137px;\n  }\n}\n.disabled\\:w-\\[137px\\] {\n  &:disabled {\n    width: 137px;\n  }\n}\n.inert\\:w-\\[137px\\] {\n  &:is([inert], [inert] *) {\n    width: 137px;\n  }\n}\n.motion-safe\\:w-\\[137px\\] {\n  @media (prefers-reduced-motion: no-preference) {\n    width: 137px;\n  }\n}\n.motion-reduce\\:w-\\[137px\\] {\n  @media (prefers-reduced-motion: reduce) {\n    width: 137px;\n  }\n}\n.contrast-more\\:w-\\[137px\\] {\n  @media (prefers-contrast: more) {\n    width: 137px;\n  }\n}\n.contrast-less\\:w-\\[137px\\] {\n  @media (prefers-contrast: less) {\n    width: 137px;\n  }\n}\n.portrait\\:w-\\[137px\\] {\n  @media (orientation: portrait) {\n    width: 137px;\n  }\n}\n.landscape\\:w-\\[137px\\] {\n  @media (orientation: landscape) {\n    width: 137px;\n  }\n}\n.ltr\\:w-\\[137px\\] {\n  &:where(:dir(ltr), [dir=\"ltr\"], [dir=\"ltr\"] *) {\n    width: 137px;\n  }\n}\n.rtl\\:w-\\[137px\\] {\n  &:where(:dir(rtl), [dir=\"rtl\"], [dir=\"rtl\"] *) {\n    width: 137px;\n  }\n}\n.dark\\:w-\\[137px\\] {\n  @media (prefers-color-scheme: dark) {\n    width: 137px;\n  }\n}\n.starting\\:w-\\[137px\\] {\n  @starting-style {\n    width: 137px;\n  }\n}\n.print\\:w-\\[137px\\] {\n  @media print {\n    width: 137px;\n  }\n}\n.forced-colors\\:w-\\[137px\\] {\n  @media (forced-colors: active) {\n    width: 137px;\n  }\n}\n.inverted-colors\\:w-\\[137px\\] {\n  @media (inverted-colors: inverted) {\n    width: 137px;\n  }\n}\n.pointer-none\\:w-\\[137px\\] {\n  @media (pointer: none) {\n    width: 137px;\n  }\n}\n.pointer-coarse\\:w-\\[137px\\] {\n  @media (pointer: coarse) {\n    width: 137px;\n  }\n}\n.pointer-fine\\:w-\\[137px\\] {\n  @media (pointer: fine) {\n    width: 137px;\n  }\n}\n.any-pointer-none\\:w-\\[137px\\] {\n  @media (any-pointer: none) {\n    width: 137px;\n  }\n}\n.any-pointer-coarse\\:w-\\[137px\\] {\n  @media (any-pointer: coarse) {\n    width: 137px;\n  }\n}\n.any-pointer-fine\\:w-\\[137px\\] {\n  @media (any-pointer: fine) {\n    width: 137px;\n  }\n}\n.noscript\\:w-\\[137px\\] {\n  @media (scripting: none) {\n    width: 137px;\n  }\n}\n@property --tw-content {\n  syntax: \"*\";\n  initial-value: \"\";\n  inherits: false;\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-content: \"\";\n    }\n  }\n}\n"
+    }
+  ]
+}

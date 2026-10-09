@@ -25,8 +25,8 @@ macro_rules! clx {
         ) -> impl ::leptos::prelude::IntoView {
             use ::leptos::prelude::*;
 
-            let merged = $crate::macros::merge(
-                $crate::tw_merge::tw_join!($($base_class),+),
+            let merged = $crate::macros::reactive_merge(
+                $crate::cn::join_text(&[$($base_class),+]),
                 &class,
             );
 
@@ -56,8 +56,8 @@ macro_rules! void {
         ) -> impl ::leptos::prelude::IntoView {
             use ::leptos::prelude::*;
 
-            let merged = $crate::macros::merge(
-                $crate::tw_merge::tw_join!($($base_class),+),
+            let merged = $crate::macros::reactive_merge(
+                $crate::cn::join_text(&[$($base_class),+]),
                 &class,
             );
 

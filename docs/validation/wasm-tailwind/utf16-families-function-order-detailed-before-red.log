@@ -1,0 +1,943 @@
+{"functionOrderCases":15,"entryComparisons":30,"completePrefixBuildAndSettledGraphs":true,"failures":[{"name":"plain-first","mode":"sync","message":"plain-first","expectedError":null,"actualError":null,"expectedTrace":[["plain","color-mix(in oklab, red 50%, transparent)",0],["custom","color-mix(in oklab, blue 25%, transparent)",0]],"actualTrace":[["custom","color-mix(in oklab, blue 25%, transparent)",0],["plain","color-mix(in oklab, red 50%, transparent)",0]]},{"name":"plain-first","mode":"async","message":"plain-first","expectedError":null,"actualError":null,"expectedTrace":[["plain","color-mix(in oklab, red 50%, transparent)",2],["custom","color-mix(in oklab, blue 25%, transparent)",2]],"actualTrace":[["custom","color-mix(in oklab, blue 25%, transparent)",2],["plain","color-mix(in oklab, red 50%, transparent)",2]]},{"name":"alternating","mode":"sync","message":"alternating","expectedError":null,"actualError":null,"expectedTrace":[["plain","color-mix(in oklab, red 50%, transparent)",0],["custom","color-mix(in oklab, blue 25%, transparent)",0],["other","color-mix(in oklab, green 75%, transparent)",0],["second-custom","color-mix(in oklab, black 25%, transparent)",0]],"actualTrace":[["custom","color-mix(in oklab, blue 25%, transparent)",0],["second-custom","color-mix(in oklab, black 25%, transparent)",0],["plain","color-mix(in oklab, red 50%, transparent)",0],["other","color-mix(in oklab, green 75%, transparent)",0]]},{"name":"alternating","mode":"async","message":"alternating","expectedError":null,"actualError":null,"expectedTrace":[["plain","color-mix(in oklab, red 50%, transparent)",2],["custom","color-mix(in oklab, blue 25%, transparent)",2],["other","color-mix(in oklab, green 75%, transparent)",2],["second-custom","color-mix(in oklab, black 25%, transparent)",2]],"actualTrace":[["custom","color-mix(in oklab, blue 25%, transparent)",2],["second-custom","color-mix(in oklab, black 25%, transparent)",2],["plain","color-mix(in oklab, red 50%, transparent)",2],["other","color-mix(in oklab, green 75%, transparent)",2]]},{"name":"plain-before-custom-error","mode":"sync","message":"plain-before-custom-error","expectedError":["Error","The --spacing(…) function requires that the `--spacing` theme variable exists, but it was not found."],"actualError":["Error","The --spacing(…) function requires that the `--spacing` theme variable exists, but it was not found."],"expectedTrace":[["plain","color-mix(in oklab, red 50%, transparent)",0]],"actualTrace":[]},{"name":"plain-before-custom-error","mode":"async","message":"plain-before-custom-error","expectedError":["Error","The --spacing(…) function requires that the `--spacing` theme variable exists, but it was not found."],"actualError":["Error","The --spacing(…) function requires that the `--spacing` theme variable exists, but it was not found."],"expectedTrace":[["plain","color-mix(in oklab, red 50%, transparent)",2]],"actualTrace":[]},{"name":"plain-error-before-custom","mode":"sync","message":"plain-error-before-custom","expectedError":["Error","The --spacing(…) function requires that the `--spacing` theme variable exists, but it was not found."],"actualError":["Error","The --spacing(…) function requires that the `--spacing` theme variable exists, but it was not found."],"expectedTrace":[],"actualTrace":[["custom","color-mix(in oklab, blue 25%, transparent)",0]]},{"name":"plain-error-before-custom","mode":"async","message":"plain-error-before-custom","expectedError":["Error","The --spacing(…) function requires that the `--spacing` theme variable exists, but it was not found."],"actualError":["Error","The --spacing(…) function requires that the `--spacing` theme variable exists, but it was not found."],"expectedTrace":[],"actualTrace":[["custom","color-mix(in oklab, blue 25%, transparent)",2]]},{"name":"two-errors-plain-first","mode":"sync","message":"two-errors-plain-first","expectedError":["Error","The --alpha(…) function requires a color and an alpha value, e.g.: `--alpha(red / 50%)`"],"actualError":["Error","The --spacing(…) function requires that the `--spacing` theme variable exists, but it was not found."],"expectedTrace":[],"actualTrace":[]},{"name":"two-errors-plain-first","mode":"async","message":"two-errors-plain-first","expectedError":["Error","The --alpha(…) function requires a color and an alpha value, e.g.: `--alpha(red / 50%)`"],"actualError":["Error","The --spacing(…) function requires that the `--spacing` theme variable exists, but it was not found."],"expectedTrace":[],"actualTrace":[]},{"name":"context-first","mode":"sync","message":"context-first","expectedError":null,"actualError":null,"expectedTrace":[["plain","color-mix(in oklab, red 50%, transparent)",0],["custom","color-mix(in oklab, blue 25%, transparent)",0],["other","color-mix(in oklab, green 75%, transparent)",0]],"actualTrace":[["custom","color-mix(in oklab, blue 25%, transparent)",0],["plain","color-mix(in oklab, red 50%, transparent)",0],["other","color-mix(in oklab, green 75%, transparent)",0]]},{"name":"context-first","mode":"async","message":"context-first","expectedError":null,"actualError":null,"expectedTrace":[["plain","color-mix(in oklab, red 50%, transparent)",2],["custom","color-mix(in oklab, blue 25%, transparent)",2],["other","color-mix(in oklab, green 75%, transparent)",2]],"actualTrace":[["custom","color-mix(in oklab, blue 25%, transparent)",2],["plain","color-mix(in oklab, red 50%, transparent)",2],["other","color-mix(in oklab, green 75%, transparent)",2]]},{"name":"context-error","mode":"sync","message":"context-error","expectedError":["Error","The --spacing(…) function requires that the `--spacing` theme variable exists, but it was not found."],"actualError":["Error","The --spacing(…) function requires that the `--spacing` theme variable exists, but it was not found."],"expectedTrace":[["plain","color-mix(in oklab, red 50%, transparent)",0]],"actualTrace":[]},{"name":"context-error","mode":"async","message":"context-error","expectedError":["Error","The --spacing(…) function requires that the `--spacing` theme variable exists, but it was not found."],"actualError":["Error","The --spacing(…) function requires that the `--spacing` theme variable exists, but it was not found."],"expectedTrace":[["plain","color-mix(in oklab, red 50%, transparent)",2]],"actualTrace":[]},{"name":"theme-error","mode":"sync","message":"theme-error","expectedError":["Error","The --spacing(…) function requires that the `--spacing` theme variable exists, but it was not found."],"actualError":["Error","The --spacing(…) function requires that the `--spacing` theme variable exists, but it was not found."],"expectedTrace":[["plain","color-mix(in oklab, red 50%, transparent)",0]],"actualTrace":[]},{"name":"theme-error","mode":"async","message":"theme-error","expectedError":["Error","The --spacing(…) function requires that the `--spacing` theme variable exists, but it was not found."],"actualError":["Error","The --spacing(…) function requires that the `--spacing` theme variable exists, but it was not found."],"expectedTrace":[["plain","color-mix(in oklab, red 50%, transparent)",2]],"actualTrace":[]},{"name":"source-first","mode":"sync","message":"source-first","expectedError":null,"actualError":null,"expectedTrace":[["plain","color-mix(in oklab, red 50%, transparent)",0],["custom","color-mix(in oklab, blue 25%, transparent)",0],["other","color-mix(in oklab, green 75%, transparent)",0]],"actualTrace":[["custom","color-mix(in oklab, blue 25%, transparent)",0],["plain","color-mix(in oklab, red 50%, transparent)",0],["other","color-mix(in oklab, green 75%, transparent)",0]]},{"name":"source-first","mode":"async","message":"source-first","expectedError":null,"actualError":null,"expectedTrace":[["plain","color-mix(in oklab, red 50%, transparent)",2],["custom","color-mix(in oklab, blue 25%, transparent)",2],["other","color-mix(in oklab, green 75%, transparent)",2]],"actualTrace":[["custom","color-mix(in oklab, blue 25%, transparent)",2],["plain","color-mix(in oklab, red 50%, transparent)",2],["other","color-mix(in oklab, green 75%, transparent)",2]]},{"name":"author-at-root","mode":"sync","message":"author-at-root","expectedError":null,"actualError":null,"expectedTrace":[["custom","color-mix(in oklab, blue 25%, transparent)",0],["plain","color-mix(in oklab, red 50%, transparent)",0]],"actualTrace":[["custom","color-mix(in oklab, blue 25%, transparent)",0],["plain","color-mix(in oklab, red 50%, transparent)",0]]},{"name":"author-at-root","mode":"async","message":"author-at-root","expectedError":null,"actualError":null,"expectedTrace":[["custom","color-mix(in oklab, blue 25%, transparent)",2],["plain","color-mix(in oklab, red 50%, transparent)",2]],"actualTrace":[["custom","color-mix(in oklab, blue 25%, transparent)",2],["plain","color-mix(in oklab, red 50%, transparent)",2]]}],"actualWasm":true,"wasmBytes":2395545,"fullFailedSetupConformance":"pending"}
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: function traversal order and shared views
++ actual - expected
+
++ [
++   {
++     actualError: null,
++     actualTrace: [
++       [
++         'custom',
++         'color-mix(in oklab, blue 25%, transparent)',
++         0
++       ],
++       [
++         'plain',
++         'color-mix(in oklab, red 50%, transparent)',
++         0
++       ]
++     ],
++     expectedError: null,
++     expectedTrace: [
++       [
++         'plain',
++         'color-mix(in oklab, red 50%, transparent)',
++         0
++       ],
++       [
++         'custom',
++         'color-mix(in oklab, blue 25%, transparent)',
++         0
++       ]
++     ],
++     message: 'plain-first',
++     mode: 'sync',
++     name: 'plain-first'
++   },
++   {
++     actualError: null,
++     actualTrace: [
++       [
++         'custom',
++         'color-mix(in oklab, blue 25%, transparent)',
++         2
++       ],
++       [
++         'plain',
++         'color-mix(in oklab, red 50%, transparent)',
++         2
++       ]
++     ],
++     expectedError: null,
++     expectedTrace: [
++       [
++         'plain',
++         'color-mix(in oklab, red 50%, transparent)',
++         2
++       ],
++       [
++         'custom',
++         'color-mix(in oklab, blue 25%, transparent)',
++         2
++       ]
++     ],
++     message: 'plain-first',
++     mode: 'async',
++     name: 'plain-first'
++   },
++   {
++     actualError: null,
++     actualTrace: [
++       [
++         'custom',
++         'color-mix(in oklab, blue 25%, transparent)',
++         0
++       ],
++       [
++         'second-custom',
++         'color-mix(in oklab, black 25%, transparent)',
++         0
++       ],
++       [
++         'plain',
++         'color-mix(in oklab, red 50%, transparent)',
++         0
++       ],
++       [
++         'other',
++         'color-mix(in oklab, green 75%, transparent)',
++         0
++       ]
++     ],
++     expectedError: null,
++     expectedTrace: [
++       [
++         'plain',
++         'color-mix(in oklab, red 50%, transparent)',
++         0
++       ],
++       [
++         'custom',
++         'color-mix(in oklab, blue 25%, transparent)',
++         0
++       ],
++       [
++         'other',
++         'color-mix(in oklab, green 75%, transparent)',
++         0
++       ],
++       [
++         'second-custom',
++         'color-mix(in oklab, black 25%, transparent)',
++         0
++       ]
++     ],
++     message: 'alternating',
++     mode: 'sync',
++     name: 'alternating'
++   },
++   {
++     actualError: null,
++     actualTrace: [
++       [
++         'custom',
++         'color-mix(in oklab, blue 25%, transparent)',
++         2
++       ],
++       [
++         'second-custom',
++         'color-mix(in oklab, black 25%, transparent)',
++         2
++       ],
++       [
++         'plain',
++         'color-mix(in oklab, red 50%, transparent)',
++         2
++       ],
++       [
++         'other',
++         'color-mix(in oklab, green 75%, transparent)',
++         2
++       ]
++     ],
++     expectedError: null,
++     expectedTrace: [
++       [
++         'plain',
++         'color-mix(in oklab, red 50%, transparent)',
++         2
++       ],
++       [
++         'custom',
++         'color-mix(in oklab, blue 25%, transparent)',
++         2
++       ],
++       [
++         'other',
++         'color-mix(in oklab, green 75%, transparent)',
++         2
++       ],
++       [
++         'second-custom',
++         'color-mix(in oklab, black 25%, transparent)',
++         2
++       ]
++     ],
++     message: 'alternating',
++     mode: 'async',
++     name: 'alternating'
++   },
++   {
++     actualError: [
++       'Error',
++       'The --spacing(…) function requires that the `--spacing` theme variable exists, but it was not found.'
++     ],
++     actualTrace: [],
++     expectedError: [
++       'Error',
++       'The --spacing(…) function requires that the `--spacing` theme variable exists, but it was not found.'
++     ],
++     expectedTrace: [
++       [
++         'plain',
++         'color-mix(in oklab, red 50%, transparent)',
++         0
++       ]
++     ],
++     message: 'plain-before-custom-error',
++     mode: 'sync',
++     name: 'plain-before-custom-error'
++   },
++   {
++     actualError: [
++       'Error',
++       'The --spacing(…) function requires that the `--spacing` theme variable exists, but it was not found.'
++     ],
++     actualTrace: [],
++     expectedError: [
++       'Error',
++       'The --spacing(…) function requires that the `--spacing` theme variable exists, but it was not found.'
++     ],
++     expectedTrace: [
++       [
++         'plain',
++         'color-mix(in oklab, red 50%, transparent)',
++         2
++       ]
++     ],
++     message: 'plain-before-custom-error',
++     mode: 'async',
++     name: 'plain-before-custom-error'
++   },
++   {
++     actualError: [
++       'Error',
++       'The --spacing(…) function requires that the `--spacing` theme variable exists, but it was not found.'
++     ],
++     actualTrace: [
++       [
++         'custom',
++         'color-mix(in oklab, blue 25%, transparent)',
++         0
++       ]
++     ],
++     expectedError: [
++       'Error',
++       'The --spacing(…) function requires that the `--spacing` theme variable exists, but it was not found.'
++     ],
++     expectedTrace: [],
++     message: 'plain-error-before-custom',
++     mode: 'sync',
++     name: 'plain-error-before-custom'
++   },
++   {
++     actualError: [
++       'Error',
++       'The --spacing(…) function requires that the `--spacing` theme variable exists, but it was not found.'
++     ],
++     actualTrace: [
++       [
++         'custom',
++         'color-mix(in oklab, blue 25%, transparent)',
++         2
++       ]
++     ],
++     expectedError: [
++       'Error',
++       'The --spacing(…) function requires that the `--spacing` theme variable exists, but it was not found.'
++     ],
++     expectedTrace: [],
++     message: 'plain-error-before-custom',
++     mode: 'async',
++     name: 'plain-error-before-custom'
++   },
++   {
++     actualError: [
++       'Error',
++       'The --spacing(…) function requires that the `--spacing` theme variable exists, but it was not found.'
++     ],
++     actualTrace: [],
++     expectedError: [
++       'Error',
++       'The --alpha(…) function requires a color and an alpha value, e.g.: `--alpha(red / 50%)`'
++     ],
++     expectedTrace: [],
++     message: 'two-errors-plain-first',
++     mode: 'sync',
++     name: 'two-errors-plain-first'
++   },
++   {
++     actualError: [
++       'Error',
++       'The --spacing(…) function requires that the `--spacing` theme variable exists, but it was not found.'
++     ],
++     actualTrace: [],
++     expectedError: [
++       'Error',
++       'The --alpha(…) function requires a color and an alpha value, e.g.: `--alpha(red / 50%)`'
++     ],
++     expectedTrace: [],
++     message: 'two-errors-plain-first',
++     mode: 'async',
++     name: 'two-errors-plain-first'
++   },
++   {
++     actualError: null,
++     actualTrace: [
++       [
++         'custom',
++         'color-mix(in oklab, blue 25%, transparent)',
++         0
++       ],
++       [
++         'plain',
++         'color-mix(in oklab, red 50%, transparent)',
++         0
++       ],
++       [
++         'other',
++         'color-mix(in oklab, green 75%, transparent)',
++         0
++       ]
++     ],
++     expectedError: null,
++     expectedTrace: [
++       [
++         'plain',
++         'color-mix(in oklab, red 50%, transparent)',
++         0
++       ],
++       [
++         'custom',
++         'color-mix(in oklab, blue 25%, transparent)',
++         0
++       ],
++       [
++         'other',
++         'color-mix(in oklab, green 75%, transparent)',
++         0
++       ]
++     ],
++     message: 'context-first',
++     mode: 'sync',
++     name: 'context-first'
++   },
++   {
++     actualError: null,
++     actualTrace: [
++       [
++         'custom',
++         'color-mix(in oklab, blue 25%, transparent)',
++         2
++       ],
++       [
++         'plain',
++         'color-mix(in oklab, red 50%, transparent)',
++         2
++       ],
++       [
++         'other',
++         'color-mix(in oklab, green 75%, transparent)',
++         2
++       ]
++     ],
++     expectedError: null,
++     expectedTrace: [
++       [
++         'plain',
++         'color-mix(in oklab, red 50%, transparent)',
++         2
++       ],
++       [
++         'custom',
++         'color-mix(in oklab, blue 25%, transparent)',
++         2
++       ],
++       [
++         'other',
++         'color-mix(in oklab, green 75%, transparent)',
++         2
++       ]
++     ],
++     message: 'context-first',
++     mode: 'async',
++     name: 'context-first'
++   },
++   {
++     actualError: [
++       'Error',
++       'The --spacing(…) function requires that the `--spacing` theme variable exists, but it was not found.'
++     ],
++     actualTrace: [],
++     expectedError: [
++       'Error',
++       'The --spacing(…) function requires that the `--spacing` theme variable exists, but it was not found.'
++     ],
++     expectedTrace: [
++       [
++         'plain',
++         'color-mix(in oklab, red 50%, transparent)',
++         0
++       ]
++     ],
++     message: 'context-error',
++     mode: 'sync',
++     name: 'context-error'
++   },
++   {
++     actualError: [
++       'Error',
++       'The --spacing(…) function requires that the `--spacing` theme variable exists, but it was not found.'
++     ],
++     actualTrace: [],
++     expectedError: [
++       'Error',
++       'The --spacing(…) function requires that the `--spacing` theme variable exists, but it was not found.'
++     ],
++     expectedTrace: [
++       [
++         'plain',
++         'color-mix(in oklab, red 50%, transparent)',
++         2
++       ]
++     ],
++     message: 'context-error',
++     mode: 'async',
++     name: 'context-error'
++   },
++   {
++     actualError: [
++       'Error',
++       'The --spacing(…) function requires that the `--spacing` theme variable exists, but it was not found.'
++     ],
++     actualTrace: [],
++     expectedError: [
++       'Error',
++       'The --spacing(…) function requires that the `--spacing` theme variable exists, but it was not found.'
++     ],
++     expectedTrace: [
++       [
++         'plain',
++         'color-mix(in oklab, red 50%, transparent)',
++         0
++       ]
++     ],
++     message: 'theme-error',
++     mode: 'sync',
++     name: 'theme-error'
++   },
++   {
++     actualError: [
++       'Error',
++       'The --spacing(…) function requires that the `--spacing` theme variable exists, but it was not found.'
++     ],
++     actualTrace: [],
++     expectedError: [
++       'Error',
++       'The --spacing(…) function requires that the `--spacing` theme variable exists, but it was not found.'
++     ],
++     expectedTrace: [
++       [
++         'plain',
++         'color-mix(in oklab, red 50%, transparent)',
++         2
++       ]
++     ],
++     message: 'theme-error',
++     mode: 'async',
++     name: 'theme-error'
++   },
++   {
++     actualError: null,
++     actualTrace: [
++       [
++         'custom',
++         'color-mix(in oklab, blue 25%, transparent)',
++         0
++       ],
++       [
++         'plain',
++         'color-mix(in oklab, red 50%, transparent)',
++         0
++       ],
++       [
++         'other',
++         'color-mix(in oklab, green 75%, transparent)',
++         0
++       ]
++     ],
++     expectedError: null,
++     expectedTrace: [
++       [
++         'plain',
++         'color-mix(in oklab, red 50%, transparent)',
++         0
++       ],
++       [
++         'custom',
++         'color-mix(in oklab, blue 25%, transparent)',
++         0
++       ],
++       [
++         'other',
++         'color-mix(in oklab, green 75%, transparent)',
++         0
++       ]
++     ],
++     message: 'source-first',
++     mode: 'sync',
++     name: 'source-first'
++   },
++   {
++     actualError: null,
++     actualTrace: [
++       [
++         'custom',
++         'color-mix(in oklab, blue 25%, transparent)',
++         2
++       ],
++       [
++         'plain',
++         'color-mix(in oklab, red 50%, transparent)',
++         2
++       ],
++       [
++         'other',
++         'color-mix(in oklab, green 75%, transparent)',
++         2
++       ]
++     ],
++     expectedError: null,
++     expectedTrace: [
++       [
++         'plain',
++         'color-mix(in oklab, red 50%, transparent)',
++         2
++       ],
++       [
++         'custom',
++         'color-mix(in oklab, blue 25%, transparent)',
++         2
++       ],
++       [
++         'other',
++         'color-mix(in oklab, green 75%, transparent)',
++         2
++       ]
++     ],
++     message: 'source-first',
++     mode: 'async',
++     name: 'source-first'
++   },
++   {
++     actualError: null,
++     actualTrace: [
++       [
++         'custom',
++         'color-mix(in oklab, blue 25%, transparent)',
++         0
++       ],
++       [
++         'plain',
++         'color-mix(in oklab, red 50%, transparent)',
++         0
++       ]
++     ],
++     expectedError: null,
++     expectedTrace: [
++       [
++         'custom',
++         'color-mix(in oklab, blue 25%, transparent)',
++         0
++       ],
++       [
++         'plain',
++         'color-mix(in oklab, red 50%, transparent)',
++         0
++       ]
++     ],
++     message: 'author-at-root',
++     mode: 'sync',
++     name: 'author-at-root'
++   },
++   {
++     actualError: null,
++     actualTrace: [
++       [
++         'custom',
++         'color-mix(in oklab, blue 25%, transparent)',
++         2
++       ],
++       [
++         'plain',
++         'color-mix(in oklab, red 50%, transparent)',
++         2
++       ]
++     ],
++     expectedError: null,
++     expectedTrace: [
++       [
++         'custom',
++         'color-mix(in oklab, blue 25%, transparent)',
++         2
++       ],
++       [
++         'plain',
++         'color-mix(in oklab, red 50%, transparent)',
++         2
++       ]
++     ],
++     message: 'author-at-root',
++     mode: 'async',
++     name: 'author-at-root'
++   }
++ ]
+- []
+
+    at file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/compiler/run-public-ast-function-order-wasm.mjs:118:8 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: [
+    {
+      name: 'plain-first',
+      mode: 'sync',
+      message: 'plain-first',
+      expectedError: null,
+      actualError: null,
+      expectedTrace: [
+        [ 'plain', 'color-mix(in oklab, red 50%, transparent)', 0 ],
+        [ 'custom', 'color-mix(in oklab, blue 25%, transparent)', 0 ]
+      ],
+      actualTrace: [
+        [ 'custom', 'color-mix(in oklab, blue 25%, transparent)', 0 ],
+        [ 'plain', 'color-mix(in oklab, red 50%, transparent)', 0 ]
+      ]
+    },
+    {
+      name: 'plain-first',
+      mode: 'async',
+      message: 'plain-first',
+      expectedError: null,
+      actualError: null,
+      expectedTrace: [
+        [ 'plain', 'color-mix(in oklab, red 50%, transparent)', 2 ],
+        [ 'custom', 'color-mix(in oklab, blue 25%, transparent)', 2 ]
+      ],
+      actualTrace: [
+        [ 'custom', 'color-mix(in oklab, blue 25%, transparent)', 2 ],
+        [ 'plain', 'color-mix(in oklab, red 50%, transparent)', 2 ]
+      ]
+    },
+    {
+      name: 'alternating',
+      mode: 'sync',
+      message: 'alternating',
+      expectedError: null,
+      actualError: null,
+      expectedTrace: [
+        [ 'plain', 'color-mix(in oklab, red 50%, transparent)', 0 ],
+        [ 'custom', 'color-mix(in oklab, blue 25%, transparent)', 0 ],
+        [ 'other', 'color-mix(in oklab, green 75%, transparent)', 0 ],
+        [
+          'second-custom',
+          'color-mix(in oklab, black 25%, transparent)',
+          0
+        ]
+      ],
+      actualTrace: [
+        [ 'custom', 'color-mix(in oklab, blue 25%, transparent)', 0 ],
+        [
+          'second-custom',
+          'color-mix(in oklab, black 25%, transparent)',
+          0
+        ],
+        [ 'plain', 'color-mix(in oklab, red 50%, transparent)', 0 ],
+        [ 'other', 'color-mix(in oklab, green 75%, transparent)', 0 ]
+      ]
+    },
+    {
+      name: 'alternating',
+      mode: 'async',
+      message: 'alternating',
+      expectedError: null,
+      actualError: null,
+      expectedTrace: [
+        [ 'plain', 'color-mix(in oklab, red 50%, transparent)', 2 ],
+        [ 'custom', 'color-mix(in oklab, blue 25%, transparent)', 2 ],
+        [ 'other', 'color-mix(in oklab, green 75%, transparent)', 2 ],
+        [
+          'second-custom',
+          'color-mix(in oklab, black 25%, transparent)',
+          2
+        ]
+      ],
+      actualTrace: [
+        [ 'custom', 'color-mix(in oklab, blue 25%, transparent)', 2 ],
+        [
+          'second-custom',
+          'color-mix(in oklab, black 25%, transparent)',
+          2
+        ],
+        [ 'plain', 'color-mix(in oklab, red 50%, transparent)', 2 ],
+        [ 'other', 'color-mix(in oklab, green 75%, transparent)', 2 ]
+      ]
+    },
+    {
+      name: 'plain-before-custom-error',
+      mode: 'sync',
+      message: 'plain-before-custom-error',
+      expectedError: [
+        'Error',
+        'The --spacing(…) function requires that the `--spacing` theme variable exists, but it was not found.'
+      ],
+      actualError: [
+        'Error',
+        'The --spacing(…) function requires that the `--spacing` theme variable exists, but it was not found.'
+      ],
+      expectedTrace: [ [ 'plain', 'color-mix(in oklab, red 50%, transparent)', 0 ] ],
+      actualTrace: []
+    },
+    {
+      name: 'plain-before-custom-error',
+      mode: 'async',
+      message: 'plain-before-custom-error',
+      expectedError: [
+        'Error',
+        'The --spacing(…) function requires that the `--spacing` theme variable exists, but it was not found.'
+      ],
+      actualError: [
+        'Error',
+        'The --spacing(…) function requires that the `--spacing` theme variable exists, but it was not found.'
+      ],
+      expectedTrace: [ [ 'plain', 'color-mix(in oklab, red 50%, transparent)', 2 ] ],
+      actualTrace: []
+    },
+    {
+      name: 'plain-error-before-custom',
+      mode: 'sync',
+      message: 'plain-error-before-custom',
+      expectedError: [
+        'Error',
+        'The --spacing(…) function requires that the `--spacing` theme variable exists, but it was not found.'
+      ],
+      actualError: [
+        'Error',
+        'The --spacing(…) function requires that the `--spacing` theme variable exists, but it was not found.'
+      ],
+      expectedTrace: [],
+      actualTrace: [ [ 'custom', 'color-mix(in oklab, blue 25%, transparent)', 0 ] ]
+    },
+    {
+      name: 'plain-error-before-custom',
+      mode: 'async',
+      message: 'plain-error-before-custom',
+      expectedError: [
+        'Error',
+        'The --spacing(…) function requires that the `--spacing` theme variable exists, but it was not found.'
+      ],
+      actualError: [
+        'Error',
+        'The --spacing(…) function requires that the `--spacing` theme variable exists, but it was not found.'
+      ],
+      expectedTrace: [],
+      actualTrace: [ [ 'custom', 'color-mix(in oklab, blue 25%, transparent)', 2 ] ]
+    },
+    {
+      name: 'two-errors-plain-first',
+      mode: 'sync',
+      message: 'two-errors-plain-first',
+      expectedError: [
+        'Error',
+        'The --alpha(…) function requires a color and an alpha value, e.g.: `--alpha(red / 50%)`'
+      ],
+      actualError: [
+        'Error',
+        'The --spacing(…) function requires that the `--spacing` theme variable exists, but it was not found.'
+      ],
+      expectedTrace: [],
+      actualTrace: []
+    },
+    {
+      name: 'two-errors-plain-first',
+      mode: 'async',
+      message: 'two-errors-plain-first',
+      expectedError: [
+        'Error',
+        'The --alpha(…) function requires a color and an alpha value, e.g.: `--alpha(red / 50%)`'
+      ],
+      actualError: [
+        'Error',
+        'The --spacing(…) function requires that the `--spacing` theme variable exists, but it was not found.'
+      ],
+      expectedTrace: [],
+      actualTrace: []
+    },
+    {
+      name: 'context-first',
+      mode: 'sync',
+      message: 'context-first',
+      expectedError: null,
+      actualError: null,
+      expectedTrace: [
+        [ 'plain', 'color-mix(in oklab, red 50%, transparent)', 0 ],
+        [ 'custom', 'color-mix(in oklab, blue 25%, transparent)', 0 ],
+        [ 'other', 'color-mix(in oklab, green 75%, transparent)', 0 ]
+      ],
+      actualTrace: [
+        [ 'custom', 'color-mix(in oklab, blue 25%, transparent)', 0 ],
+        [ 'plain', 'color-mix(in oklab, red 50%, transparent)', 0 ],
+        [ 'other', 'color-mix(in oklab, green 75%, transparent)', 0 ]
+      ]
+    },
+    {
+      name: 'context-first',
+      mode: 'async',
+      message: 'context-first',
+      expectedError: null,
+      actualError: null,
+      expectedTrace: [
+        [ 'plain', 'color-mix(in oklab, red 50%, transparent)', 2 ],
+        [ 'custom', 'color-mix(in oklab, blue 25%, transparent)', 2 ],
+        [ 'other', 'color-mix(in oklab, green 75%, transparent)', 2 ]
+      ],
+      actualTrace: [
+        [ 'custom', 'color-mix(in oklab, blue 25%, transparent)', 2 ],
+        [ 'plain', 'color-mix(in oklab, red 50%, transparent)', 2 ],
+        [ 'other', 'color-mix(in oklab, green 75%, transparent)', 2 ]
+      ]
+    },
+    {
+      name: 'context-error',
+      mode: 'sync',
+      message: 'context-error',
+      expectedError: [
+        'Error',
+        'The --spacing(…) function requires that the `--spacing` theme variable exists, but it was not found.'
+      ],
+      actualError: [
+        'Error',
+        'The --spacing(…) function requires that the `--spacing` theme variable exists, but it was not found.'
+      ],
+      expectedTrace: [ [ 'plain', 'color-mix(in oklab, red 50%, transparent)', 0 ] ],
+      actualTrace: []
+    },
+    {
+      name: 'context-error',
+      mode: 'async',
+      message: 'context-error',
+      expectedError: [
+        'Error',
+        'The --spacing(…) function requires that the `--spacing` theme variable exists, but it was not found.'
+      ],
+      actualError: [
+        'Error',
+        'The --spacing(…) function requires that the `--spacing` theme variable exists, but it was not found.'
+      ],
+      expectedTrace: [ [ 'plain', 'color-mix(in oklab, red 50%, transparent)', 2 ] ],
+      actualTrace: []
+    },
+    {
+      name: 'theme-error',
+      mode: 'sync',
+      message: 'theme-error',
+      expectedError: [
+        'Error',
+        'The --spacing(…) function requires that the `--spacing` theme variable exists, but it was not found.'
+      ],
+      actualError: [
+        'Error',
+        'The --spacing(…) function requires that the `--spacing` theme variable exists, but it was not found.'
+      ],
+      expectedTrace: [ [ 'plain', 'color-mix(in oklab, red 50%, transparent)', 0 ] ],
+      actualTrace: []
+    },
+    {
+      name: 'theme-error',
+      mode: 'async',
+      message: 'theme-error',
+      expectedError: [
+        'Error',
+        'The --spacing(…) function requires that the `--spacing` theme variable exists, but it was not found.'
+      ],
+      actualError: [
+        'Error',
+        'The --spacing(…) function requires that the `--spacing` theme variable exists, but it was not found.'
+      ],
+      expectedTrace: [ [ 'plain', 'color-mix(in oklab, red 50%, transparent)', 2 ] ],
+      actualTrace: []
+    },
+    {
+      name: 'source-first',
+      mode: 'sync',
+      message: 'source-first',
+      expectedError: null,
+      actualError: null,
+      expectedTrace: [
+        [ 'plain', 'color-mix(in oklab, red 50%, transparent)', 0 ],
+        [ 'custom', 'color-mix(in oklab, blue 25%, transparent)', 0 ],
+        [ 'other', 'color-mix(in oklab, green 75%, transparent)', 0 ]
+      ],
+      actualTrace: [
+        [ 'custom', 'color-mix(in oklab, blue 25%, transparent)', 0 ],
+        [ 'plain', 'color-mix(in oklab, red 50%, transparent)', 0 ],
+        [ 'other', 'color-mix(in oklab, green 75%, transparent)', 0 ]
+      ]
+    },
+    {
+      name: 'source-first',
+      mode: 'async',
+      message: 'source-first',
+      expectedError: null,
+      actualError: null,
+      expectedTrace: [
+        [ 'plain', 'color-mix(in oklab, red 50%, transparent)', 2 ],
+        [ 'custom', 'color-mix(in oklab, blue 25%, transparent)', 2 ],
+        [ 'other', 'color-mix(in oklab, green 75%, transparent)', 2 ]
+      ],
+      actualTrace: [
+        [ 'custom', 'color-mix(in oklab, blue 25%, transparent)', 2 ],
+        [ 'plain', 'color-mix(in oklab, red 50%, transparent)', 2 ],
+        [ 'other', 'color-mix(in oklab, green 75%, transparent)', 2 ]
+      ]
+    },
+    {
+      name: 'author-at-root',
+      mode: 'sync',
+      message: 'author-at-root',
+      expectedError: null,
+      actualError: null,
+      expectedTrace: [
+        [ 'custom', 'color-mix(in oklab, blue 25%, transparent)', 0 ],
+        [ 'plain', 'color-mix(in oklab, red 50%, transparent)', 0 ]
+      ],
+      actualTrace: [
+        [ 'custom', 'color-mix(in oklab, blue 25%, transparent)', 0 ],
+        [ 'plain', 'color-mix(in oklab, red 50%, transparent)', 0 ]
+      ]
+    },
+    {
+      name: 'author-at-root',
+      mode: 'async',
+      message: 'author-at-root',
+      expectedError: null,
+      actualError: null,
+      expectedTrace: [
+        [ 'custom', 'color-mix(in oklab, blue 25%, transparent)', 2 ],
+        [ 'plain', 'color-mix(in oklab, red 50%, transparent)', 2 ]
+      ],
+      actualTrace: [
+        [ 'custom', 'color-mix(in oklab, blue 25%, transparent)', 2 ],
+        [ 'plain', 'color-mix(in oklab, red 50%, transparent)', 2 ]
+      ]
+    }
+  ],
+  expected: [],
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v26.1.0

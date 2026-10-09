@@ -1,0 +1,19 @@
+{
+  "protocol_version": 1,
+  "profile": "release",
+  "base": "/",
+  "group": "all",
+  "files_sha256": {
+    "app.css": "ccbb5e2d25c1b8efecf35afe614ea3721418434a88caf1e7c9f9898722cbf26c",
+    "app.js": "6317da986081e6475b23bf9044a1a48fb026481570e760b85daa04273a5483c5",
+    "extractor/style.js": "6c41607a4ed8c79e8153a7c210862eb894ee7c8bf4687d233d5514064b13c1eb",
+    "extractor/style_bg.wasm": "436fcc9145bcee27960a8eb32acd1e624c174edfdbb564dd37cee80b3400b34d",
+    "index.html": "8e83e2e8ed01a0d64560b5a6d60031841c2b883467e4f754dc0d19a3e0520aa3",
+    "official.css": "332864299adb3cde96f70f972c1669adcac88288e01a86f5123676c665192e4d",
+    "probe.css": "5aaf336a5cf9df09a4cedf653f47f73b200ce5fb9af79226766b550dbdb79aae",
+    "scanner-fixtures.json": "4e1cfcb6e6f055f87b465bbef5e9a6817909178ba7cbf7fc3e4b13a113de68ee",
+    "worker.js": "2ef28f4eb250b73711d0c00c7101ceb20c8ac8babc15ed6bd8d8e768ac6c48fc",
+    "worker/style.js": "8faa97b19aff8a39a7a4ded7345f4251ef9306cbd34da370d2fb4aaba9888203",
+    "worker/style_bg.wasm": "2a0472e2c93a60d7efd4f1c89175ebba2aea44f7b4fba3a7cb6864cb7f94cf2a"
+  }
+}

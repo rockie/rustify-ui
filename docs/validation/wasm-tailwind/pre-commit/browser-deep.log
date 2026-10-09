@@ -1,0 +1,22 @@
+npm notice run rustify-ui-browser-tests@0.1.0 npx
+npm notice run 'playwright' test --project=utility-lab-deep --workers=1 --reporter=line --output=docs/validation/wasm-tailwind/pre-commit/browser-deep-results --grep scoped keyframes|a keyframes name|keyframes names keep|a public property|rebuild releases|nested owners|scoped relation|configuration replacement|SDK ensure installs scanner-free CSS|GPU draws compiled colors|clearing utility ownership restores the ordinary Button
+
+Running 12 tests using 1 worker
+
+(node:21762) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1/12] [utility-lab-deep] › tests/browser/utility-gpu.spec.ts:72:5 › clearing utility ownership restores the ordinary Button pixels and events
+[2/12] [utility-lab-deep] › tests/browser/utility-gpu.spec.ts:409:5 › GPU draws compiled colors, geometry and real font glyphs alongside scoped DOM
+[3/12] [utility-lab-deep] › tests/browser/utility-gpu.spec.ts:957:5 › configuration replacement publishes new DOM and GPU programs and retains pixels on failed installation
+[4/12] [utility-lab-deep] › tests/browser/utility-runtime.spec.ts:262:5 › SDK ensure installs scanner-free CSS, coalesces requests and isolates independent scopes
+[5/12] [utility-lab-deep] › tests/browser/utility-runtime.spec.ts:419:5 › nested owners stop outer rules and disposal removes the owned stylesheet
+[6/12] [utility-lab-deep] › tests/browser/utility-runtime.spec.ts:468:5 › scoped relation variants and arbitrary selectors retain conditional matching
+[7/12] [utility-lab-deep] › tests/browser/utility-runtime.spec.ts:676:5 › configuration replacement commits raw component classes and CSS together and rolls failures back
+[8/12] [utility-lab-deep] › tests/browser/utility-runtime.spec.ts:804:5 › scoped keyframes follow theme animation variables, aliases and fallbacks in each owner
+[9/12] [utility-lab-deep] › tests/browser/utility-runtime.spec.ts:843:5 › a keyframes name that is also a timing keyword keeps the timing variable intact
+[10/12] [utility-lab-deep] › tests/browser/utility-runtime.spec.ts:875:5 › keyframes names keep their slot after substitution, math times and numeric iterations
+[11/12] [utility-lab-deep] › tests/browser/utility-runtime.spec.ts:933:5 › a public property carrying a keyframes name follows overrides, and one with conflicting uses is refused
+[12/12] [utility-lab-deep] › tests/browser/utility-runtime.spec.ts:990:5 › rebuild releases inactive candidates and keeps the seed, DOM and named classes
+  12 passed (13.3s)

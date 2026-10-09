@@ -100,7 +100,7 @@ mod dom {
         let input = draft.on_input();
         let invalid_draft = draft.invalid();
         view! {
-            <div class=crate::macros::merge(FIELD, &class) data-name="ColorField">
+            <div class=crate::macros::reactive_merge(FIELD, &class) data-name="ColorField">
                 <span
                     class=SWATCH
                     data-name="ColorSwatch"

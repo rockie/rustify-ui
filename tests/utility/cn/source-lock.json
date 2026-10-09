@@ -1,0 +1,157 @@
+{
+  "schemaVersion": 1,
+  "repository": "https://github.com/shadcn-ui/cn",
+  "commit": "b7ec0fce43d824a60517fab508584eb860fdf717",
+  "packageVersion": "0.4.0",
+  "provenance": "Commit specified by WASM-TAILWIND.md and the supplied downloaded tree. SHA-256 locks every inspected source and upstream test; this archive has no Git object database, so the commit identity is a supplied provenance claim, not independently proven here.",
+  "files": [
+    {
+      "path": "LICENSE",
+      "sha256": "00ff8408e93e2ecc4d90c0edeabdf434100c3aff50acc5d330e17eccd4a3faa5"
+    },
+    {
+      "path": "README.md",
+      "sha256": "3400d662664177651e8d9ba5043844a75f6b8612d522ade9a1e312f5fe2c6ca1"
+    },
+    {
+      "path": "package.json",
+      "sha256": "a047013e94fa01d1a2c6cb72283c3b4bcc74d3f315d1a4c82eb3f9481766ad84"
+    },
+    {
+      "path": "packages/cn/CHANGELOG.md",
+      "sha256": "83489d4fb9194d78c00f456b10f729e6e056beab9c12c875da26eb1b977c1306"
+    },
+    {
+      "path": "packages/cn/bin/cn.mjs",
+      "sha256": "2f64fc28c778c714d63b7501274582c901bf7318920ce93a11dc513f5134eb5f"
+    },
+    {
+      "path": "packages/cn/package.json",
+      "sha256": "28a94c818eb556445f8f1a2ae45568929fb0cf9cc981a7bb6ccfe4db45d0f833"
+    },
+    {
+      "path": "packages/cn/scripts/check-dts.mjs",
+      "sha256": "38e1c44d47fad92560bf09563b949553e0709c63772715243c2e4228f7e44b85"
+    },
+    {
+      "path": "packages/cn/scripts/compile-tables.mjs",
+      "sha256": "c085ec5d518f94440ad9b97557d4fddc2467436e89d1721994c3cffff678df5d"
+    },
+    {
+      "path": "packages/cn/src/build.ts",
+      "sha256": "aa63dc2de55851b611feab9cfe74054b093819713f86c2ecd0901250de66f130"
+    },
+    {
+      "path": "packages/cn/src/compiler.ts",
+      "sha256": "31592dc0eaa0e8afefd00ed1aa15c1e257d1de16f203dc1a9ed1aae8a78db4c7"
+    },
+    {
+      "path": "packages/cn/src/config.ts",
+      "sha256": "91de24439c76dbd2a79ae3d6fee762379043e97665659eebf7ecc1a95d60668a"
+    },
+    {
+      "path": "packages/cn/src/default-config.generated.ts",
+      "sha256": "59ccd587fe0e34199116b351abbe8f1b023d65b1c9c579d5a57c5d049c437b4c"
+    },
+    {
+      "path": "packages/cn/src/engine.ts",
+      "sha256": "1d8e57c8b05c2246344dfd95f58d275dfb62b230e391bf901a7387beb084d71b"
+    },
+    {
+      "path": "packages/cn/src/index.ts",
+      "sha256": "bf4a95e73b6016053042ecf8b2747fddd57ccb083d5394d0392c9dbcb0bfc177"
+    },
+    {
+      "path": "packages/cn/src/lite.ts",
+      "sha256": "96c8e2d8a381c973a15578a9a0689901920f034caab8231b7bba6c17560c31da"
+    },
+    {
+      "path": "packages/cn/src/next.ts",
+      "sha256": "7b31dbf5a5377583e084d7fbb23811a066bd8744c262d330263050c1c35d1eec"
+    },
+    {
+      "path": "packages/cn/src/tables.generated.ts",
+      "sha256": "6277d92981d5847d32c0cf4e0fcfd3acb6057a0e036becdb721f1001bd821cdb"
+    },
+    {
+      "path": "packages/cn/src/theme-css.ts",
+      "sha256": "7807268b07d711750ffd9b5edd87eceadc7f5f24c9b69aabbdeff7d7f2037ee1"
+    },
+    {
+      "path": "packages/cn/src/types.ts",
+      "sha256": "670f7b6b08349d1ae04bb1d05e5c7e2f1e1a280fea03f51f26175078a2829b39"
+    },
+    {
+      "path": "packages/cn/src/validators.ts",
+      "sha256": "88fe1a6262b0c2e2a409919710f0d60d7659e402dbfea03d8b978d56c8dc41b5"
+    },
+    {
+      "path": "packages/cn/src/vite.ts",
+      "sha256": "a7a0ec13a05a0ad987b8c267f7359489e967b26056b5a38243567a6dbd323c73"
+    },
+    {
+      "path": "packages/cn/tsconfig.json",
+      "sha256": "1ddb45722a39b7a58ea72887b17024507e308c2bf84180a0eccf9d8f6306c6c3"
+    },
+    {
+      "path": "packages/cn/tsdown.config.ts",
+      "sha256": "6790180abfe8e58eb9daa864c2fbd10eef9df58b35728eb39ff4bd694bc6b2d9"
+    },
+    {
+      "path": "packages/conformance/tests/bounds.mjs",
+      "sha256": "49834083aab227da2e739caa43664983fea1cf9461b0afb04bd71c0347b068f7"
+    },
+    {
+      "path": "packages/conformance/tests/cli.mjs",
+      "sha256": "e666a225e0789b1c92419466ab9d13fa9c7fc51fb00a869e0b11f258ea4b9299"
+    },
+    {
+      "path": "packages/conformance/tests/correctness.mjs",
+      "sha256": "e2415ddfd11155eb6775063bc82758f034537a3ef0b0b05408cdff133718061b"
+    },
+    {
+      "path": "packages/conformance/tests/custom-config.mjs",
+      "sha256": "262649d07ac02b8af9ff4cfc877631b448dfcdaff9230f22fa3fa8db367e8002"
+    },
+    {
+      "path": "packages/conformance/tests/default-config.mjs",
+      "sha256": "c6e5a3879722b543a3b2fe9e4da1659b0fe013bd6949467180a433d2cdd7ac09"
+    },
+    {
+      "path": "packages/conformance/tests/fuzz.mjs",
+      "sha256": "bf521083ee3d6c9a667671867d569ed54c1ebd6e85eec746f78ca350785d99dc"
+    },
+    {
+      "path": "packages/conformance/tests/hardening.mjs",
+      "sha256": "977b87be50265e5387144d5ef46163380eadc202a3be3428f4c18bb21b2705e3"
+    },
+    {
+      "path": "packages/conformance/tests/join.mjs",
+      "sha256": "62addc141a680e53b00d76346fc4fc6eac8d1c3545b198feb65c81f8505b55c0"
+    },
+    {
+      "path": "packages/conformance/tests/logical.mjs",
+      "sha256": "b3a96acb734a4339bf5773929b182b13538dd774f291c24088fb8305290ea1c4"
+    },
+    {
+      "path": "packages/conformance/tests/plugins.mjs",
+      "sha256": "ab8f557cba3049d99dabbda85fadf940de74bdde3e3d90f575f7601a2bc2547f"
+    },
+    {
+      "path": "packages/conformance/tests/reference.mjs",
+      "sha256": "976205a4c4b6e2b01bd63ac65e02f8cd09ac8683884882c1980525a12282658b"
+    },
+    {
+      "path": "packages/conformance/tests/table-encoding.mjs",
+      "sha256": "1339ba48890b83357b43db455e1eed69687281bee5d26f5082aaa5d1fc02621a"
+    },
+    {
+      "path": "packages/conformance/tests/theme-css.mjs",
+      "sha256": "3b8a2b4e8a6de5697d39b6285acd4a8de76c86940053a855b5ca2c741cd268e8"
+    },
+    {
+      "path": "pnpm-lock.yaml",
+      "sha256": "9019d0e13ac6e20bb0dee5d67c0dd16766c4eee9bd03bf6d595316ecc0c62942"
+    }
+  ]
+}

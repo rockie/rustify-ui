@@ -1,0 +1,34 @@
+mbx[warning]: Unix-domain cache session listener unavailable; using FIFO transport: failed to bind cache session listener at /var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/mbx-session-Pujz6C/cache-agent.sock: Operation not permitted (os error 1)
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 6.45s
+     Running unittests src/lib.rs (/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-utf16-verified-54mkl3kq/cargo-target/debug/deps/rustify_style-7a67d48e3c4c51f4)
+
+running 17 tests
+test compiler::public_api::design_system::canonical_text_tests::public_json_preserves_lone_units_in_object_keys_and_values ... ok
+test compiler::candidate::canonical_text_tests::canonical_candidate_syntax_uses_original_units_and_js_trim ... ok
+test compiler::public_api::compile_ast::canonical_text_tests::shared_public_graph_allocations_are_charged_once ... ok
+test compiler::public_api::compile_ast::canonical_text_tests::ast_build_preserves_candidate_and_authored_text_units ... ok
+test compiler::public_api::design_system::canonical_text_tests::candidate_print_and_emission_preserve_arbitrary_value_units ... ok
+test compiler::public_api::compile_ast::canonical_text_tests::theme_setup_replaces_original_arrays_and_shares_emitted_declarations ... ok
+test compiler::public_api::compile_ast::canonical_text_tests::caller_effects_share_generated_nodes_and_publish_after_preflight ... ok
+test compiler::public_api::compile_ast::canonical_text_tests::apply_locations_accept_javascript_number_offsets ... ok
+test compiler::public_api::compile_ast::canonical_text_tests::candidate_cache_retains_unoptimized_children_shared_with_output ... ok
+test compiler::candidate::canonical_text_tests::type_hints_are_extracted_after_decoding_and_parenthesis_rewriting ... ok
+test compiler::public_api::compile_ast::canonical_text_tests::rejected_output_does_not_publish_generated_declaration_identities ... ok
+test compiler::public_api::compile_ast::canonical_text_tests::multiple_apply_candidates_preserve_each_source_and_tuple_sharing ... ok
+test compiler::public_api::design_system::canonical_text_tests::public_object_order_survives_decode_overwrite_and_roundtrip ... ok
+test compiler::public_api::design_system::canonical_text_tests::reserved_cache_failure_rolls_back_new_metadata_and_vec_capacity ... ok
+test compiler::public_api::design_system::canonical_text_tests::dynamic_theme_completion_names_preserve_original_units ... ok
+test compiler::public_api::compile_ast::canonical_text_tests::graph_json_measurement_matches_original_units_and_shared_wire_expansion ... ok
+test compiler::candidate::canonical_text_tests::candidate_tagged_json_roundtrip_preserves_all_units_and_field_order ... ok
+
+test result: ok. 17 passed; 0 failed; 0 ignored; 0 measured; 294 filtered out; finished in 0.23s
+
+mbx[cache]: 0 hits, 1 misses; 0 B downloaded, 0 B uploaded, 340.0 MiB stored locally

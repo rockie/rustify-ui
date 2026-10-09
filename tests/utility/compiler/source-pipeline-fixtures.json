@@ -1,0 +1,1031 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "1334c99db8fd26c8ea065375dd9259800863f072",
+  "oracleVersion": "4.1.13",
+  "cases": [
+    {
+      "id": "pipeline:0",
+      "input": "@theme { --color-brand: #123456; --color-alias: var(--color-brand); --spacing: 4px; } @tailwind utilities;",
+      "entry": "/app/input.css",
+      "base": "/app",
+      "assets": [
+        {
+          "id": "/app/pkg/utilities.css",
+          "content": "@tailwind utilities; @source \"../shared/**\";"
+        }
+      ],
+      "files": [
+        {
+          "path": "app/.gitignore",
+          "content": "ignored/\n"
+        },
+        {
+          "path": "app/src/main.rs",
+          "content": "view! { <div class=\"w-[137px] bg-brand p-2\"> }"
+        },
+        {
+          "path": "app/src/view.html",
+          "content": "<p class=\"hidden text-brand\">var(--color-alias)</p>"
+        },
+        {
+          "path": "app/src/private/secret.html",
+          "content": "<div class=\"w-[999px]\">"
+        },
+        {
+          "path": "app/shared/sample.html",
+          "content": "<div class=\"h-[72px]\">"
+        },
+        {
+          "path": "app/outside.html",
+          "content": "<div class=\"w-[159px]\">"
+        },
+        {
+          "path": "app/ignored/test.html",
+          "content": "<div class=\"w-[666px]\">"
+        },
+        {
+          "path": "app/theme.css",
+          "content": ".x {color:var(--color-brand)} .flex { --not-used: red; }"
+        }
+      ],
+      "directories": [
+        "app/.git",
+        "app/src",
+        "app/shared"
+      ],
+      "steps": [
+        {
+          "operation": "scan",
+          "expectedCandidates": [
+            "--color-alias",
+            "--color-brand",
+            "bg-brand",
+            "class",
+            "h-[72px]",
+            "hidden",
+            "p-2",
+            "text-brand",
+            "view!",
+            "w-[137px]",
+            "w-[159px]",
+            "w-[999px]"
+          ],
+          "expectedCss": ":root, :host {\n  --color-brand: #123456;\n  --color-alias: var(--color-brand);\n  --spacing: 4px;\n}\n.hidden {\n  display: none;\n}\n.h-\\[72px\\] {\n  height: 72px;\n}\n.w-\\[137px\\] {\n  width: 137px;\n}\n.w-\\[159px\\] {\n  width: 159px;\n}\n.w-\\[999px\\] {\n  width: 999px;\n}\n.bg-brand {\n  background-color: var(--color-brand);\n}\n.p-2 {\n  padding: calc(var(--spacing) * 2);\n}\n.text-brand {\n  color: var(--color-brand);\n}\n"
+        },
+        {
+          "operation": "scan",
+          "expectedCandidates": [
+            "--color-alias",
+            "--color-brand",
+            "bg-brand",
+            "class",
+            "h-[72px]",
+            "hidden",
+            "p-2",
+            "text-brand",
+            "view!",
+            "w-[137px]",
+            "w-[159px]",
+            "w-[999px]"
+          ],
+          "expectedCss": ":root, :host {\n  --color-brand: #123456;\n  --color-alias: var(--color-brand);\n  --spacing: 4px;\n}\n.hidden {\n  display: none;\n}\n.h-\\[72px\\] {\n  height: 72px;\n}\n.w-\\[137px\\] {\n  width: 137px;\n}\n.w-\\[159px\\] {\n  width: 159px;\n}\n.w-\\[999px\\] {\n  width: 999px;\n}\n.bg-brand {\n  background-color: var(--color-brand);\n}\n.p-2 {\n  padding: calc(var(--spacing) * 2);\n}\n.text-brand {\n  color: var(--color-brand);\n}\n"
+        },
+        {
+          "operation": "put",
+          "path": "app/src/main.rs",
+          "content": "view! { <div class=\"w-[147px]\"> }"
+        },
+        {
+          "operation": "scan",
+          "expectedCandidates": [
+            "--color-alias",
+            "--color-brand",
+            "bg-brand",
+            "class",
+            "h-[72px]",
+            "hidden",
+            "p-2",
+            "text-brand",
+            "view!",
+            "w-[137px]",
+            "w-[147px]",
+            "w-[159px]",
+            "w-[999px]"
+          ],
+          "expectedCss": ":root, :host {\n  --color-brand: #123456;\n  --color-alias: var(--color-brand);\n  --spacing: 4px;\n}\n.hidden {\n  display: none;\n}\n.h-\\[72px\\] {\n  height: 72px;\n}\n.w-\\[137px\\] {\n  width: 137px;\n}\n.w-\\[147px\\] {\n  width: 147px;\n}\n.w-\\[159px\\] {\n  width: 159px;\n}\n.w-\\[999px\\] {\n  width: 999px;\n}\n.bg-brand {\n  background-color: var(--color-brand);\n}\n.p-2 {\n  padding: calc(var(--spacing) * 2);\n}\n.text-brand {\n  color: var(--color-brand);\n}\n"
+        },
+        {
+          "operation": "change",
+          "changed": [
+            {
+              "content": "bg-brand var(--color-alias)",
+              "extension": "html"
+            }
+          ],
+          "expectedCandidates": [],
+          "expectedCss": ":root, :host {\n  --color-brand: #123456;\n  --color-alias: var(--color-brand);\n  --spacing: 4px;\n}\n.hidden {\n  display: none;\n}\n.h-\\[72px\\] {\n  height: 72px;\n}\n.w-\\[137px\\] {\n  width: 137px;\n}\n.w-\\[147px\\] {\n  width: 147px;\n}\n.w-\\[159px\\] {\n  width: 159px;\n}\n.w-\\[999px\\] {\n  width: 999px;\n}\n.bg-brand {\n  background-color: var(--color-brand);\n}\n.p-2 {\n  padding: calc(var(--spacing) * 2);\n}\n.text-brand {\n  color: var(--color-brand);\n}\n"
+        },
+        {
+          "operation": "remove",
+          "path": "app/src/view.html"
+        },
+        {
+          "operation": "scan",
+          "expectedCandidates": [
+            "--color-alias",
+            "--color-brand",
+            "bg-brand",
+            "class",
+            "h-[72px]",
+            "hidden",
+            "p-2",
+            "text-brand",
+            "view!",
+            "w-[137px]",
+            "w-[147px]",
+            "w-[159px]",
+            "w-[999px]"
+          ],
+          "expectedCss": ":root, :host {\n  --color-brand: #123456;\n  --color-alias: var(--color-brand);\n  --spacing: 4px;\n}\n.hidden {\n  display: none;\n}\n.h-\\[72px\\] {\n  height: 72px;\n}\n.w-\\[137px\\] {\n  width: 137px;\n}\n.w-\\[147px\\] {\n  width: 147px;\n}\n.w-\\[159px\\] {\n  width: 159px;\n}\n.w-\\[999px\\] {\n  width: 999px;\n}\n.bg-brand {\n  background-color: var(--color-brand);\n}\n.p-2 {\n  padding: calc(var(--spacing) * 2);\n}\n.text-brand {\n  color: var(--color-brand);\n}\n"
+        }
+      ]
+    },
+    {
+      "id": "pipeline:1",
+      "input": "@theme { --color-brand: #123456; --color-alias: var(--color-brand); --spacing: 4px; } @tailwind utilities source(none);",
+      "entry": "/app/input.css",
+      "base": "/app",
+      "assets": [
+        {
+          "id": "/app/pkg/utilities.css",
+          "content": "@tailwind utilities; @source \"../shared/**\";"
+        }
+      ],
+      "files": [
+        {
+          "path": "app/.gitignore",
+          "content": "ignored/\n"
+        },
+        {
+          "path": "app/src/main.rs",
+          "content": "view! { <div class=\"w-[137px] bg-brand p-2\"> }"
+        },
+        {
+          "path": "app/src/view.html",
+          "content": "<p class=\"hidden text-brand\">var(--color-alias)</p>"
+        },
+        {
+          "path": "app/src/private/secret.html",
+          "content": "<div class=\"w-[999px]\">"
+        },
+        {
+          "path": "app/shared/sample.html",
+          "content": "<div class=\"h-[72px]\">"
+        },
+        {
+          "path": "app/outside.html",
+          "content": "<div class=\"w-[159px]\">"
+        },
+        {
+          "path": "app/ignored/test.html",
+          "content": "<div class=\"w-[666px]\">"
+        },
+        {
+          "path": "app/theme.css",
+          "content": ".x {color:var(--color-brand)} .flex { --not-used: red; }"
+        }
+      ],
+      "directories": [
+        "app/.git",
+        "app/src",
+        "app/shared"
+      ],
+      "steps": [
+        {
+          "operation": "scan",
+          "expectedCandidates": [],
+          "expectedCss": ""
+        },
+        {
+          "operation": "scan",
+          "expectedCandidates": [],
+          "expectedCss": ""
+        },
+        {
+          "operation": "put",
+          "path": "app/src/main.rs",
+          "content": "view! { <div class=\"w-[147px]\"> }"
+        },
+        {
+          "operation": "scan",
+          "expectedCandidates": [],
+          "expectedCss": ""
+        },
+        {
+          "operation": "change",
+          "changed": [
+            {
+              "content": "bg-brand var(--color-alias)",
+              "extension": "html"
+            }
+          ],
+          "expectedCandidates": [
+            "--color-alias",
+            "bg-brand"
+          ],
+          "expectedCss": ":root, :host {\n  --color-brand: #123456;\n  --color-alias: var(--color-brand);\n}\n.bg-brand {\n  background-color: var(--color-brand);\n}\n"
+        },
+        {
+          "operation": "remove",
+          "path": "app/src/view.html"
+        },
+        {
+          "operation": "scan",
+          "expectedCandidates": [
+            "--color-alias",
+            "bg-brand"
+          ],
+          "expectedCss": ":root, :host {\n  --color-brand: #123456;\n  --color-alias: var(--color-brand);\n}\n.bg-brand {\n  background-color: var(--color-brand);\n}\n"
+        }
+      ]
+    },
+    {
+      "id": "pipeline:2",
+      "input": "@theme { --color-brand: #123456; --color-alias: var(--color-brand); --spacing: 4px; } @tailwind utilities source(\"./src\");",
+      "entry": "/app/input.css",
+      "base": "/app",
+      "assets": [
+        {
+          "id": "/app/pkg/utilities.css",
+          "content": "@tailwind utilities; @source \"../shared/**\";"
+        }
+      ],
+      "files": [
+        {
+          "path": "app/.gitignore",
+          "content": "ignored/\n"
+        },
+        {
+          "path": "app/src/main.rs",
+          "content": "view! { <div class=\"w-[137px] bg-brand p-2\"> }"
+        },
+        {
+          "path": "app/src/view.html",
+          "content": "<p class=\"hidden text-brand\">var(--color-alias)</p>"
+        },
+        {
+          "path": "app/src/private/secret.html",
+          "content": "<div class=\"w-[999px]\">"
+        },
+        {
+          "path": "app/shared/sample.html",
+          "content": "<div class=\"h-[72px]\">"
+        },
+        {
+          "path": "app/outside.html",
+          "content": "<div class=\"w-[159px]\">"
+        },
+        {
+          "path": "app/ignored/test.html",
+          "content": "<div class=\"w-[666px]\">"
+        },
+        {
+          "path": "app/theme.css",
+          "content": ".x {color:var(--color-brand)} .flex { --not-used: red; }"
+        }
+      ],
+      "directories": [
+        "app/.git",
+        "app/src",
+        "app/shared"
+      ],
+      "steps": [
+        {
+          "operation": "scan",
+          "expectedCandidates": [
+            "--color-alias",
+            "bg-brand",
+            "class",
+            "hidden",
+            "p-2",
+            "text-brand",
+            "view!",
+            "w-[137px]",
+            "w-[999px]"
+          ],
+          "expectedCss": ":root, :host {\n  --color-brand: #123456;\n  --color-alias: var(--color-brand);\n  --spacing: 4px;\n}\n.hidden {\n  display: none;\n}\n.w-\\[137px\\] {\n  width: 137px;\n}\n.w-\\[999px\\] {\n  width: 999px;\n}\n.bg-brand {\n  background-color: var(--color-brand);\n}\n.p-2 {\n  padding: calc(var(--spacing) * 2);\n}\n.text-brand {\n  color: var(--color-brand);\n}\n"
+        },
+        {
+          "operation": "scan",
+          "expectedCandidates": [
+            "--color-alias",
+            "bg-brand",
+            "class",
+            "hidden",
+            "p-2",
+            "text-brand",
+            "view!",
+            "w-[137px]",
+            "w-[999px]"
+          ],
+          "expectedCss": ":root, :host {\n  --color-brand: #123456;\n  --color-alias: var(--color-brand);\n  --spacing: 4px;\n}\n.hidden {\n  display: none;\n}\n.w-\\[137px\\] {\n  width: 137px;\n}\n.w-\\[999px\\] {\n  width: 999px;\n}\n.bg-brand {\n  background-color: var(--color-brand);\n}\n.p-2 {\n  padding: calc(var(--spacing) * 2);\n}\n.text-brand {\n  color: var(--color-brand);\n}\n"
+        },
+        {
+          "operation": "put",
+          "path": "app/src/main.rs",
+          "content": "view! { <div class=\"w-[147px]\"> }"
+        },
+        {
+          "operation": "scan",
+          "expectedCandidates": [
+            "--color-alias",
+            "bg-brand",
+            "class",
+            "hidden",
+            "p-2",
+            "text-brand",
+            "view!",
+            "w-[137px]",
+            "w-[147px]",
+            "w-[999px]"
+          ],
+          "expectedCss": ":root, :host {\n  --color-brand: #123456;\n  --color-alias: var(--color-brand);\n  --spacing: 4px;\n}\n.hidden {\n  display: none;\n}\n.w-\\[137px\\] {\n  width: 137px;\n}\n.w-\\[147px\\] {\n  width: 147px;\n}\n.w-\\[999px\\] {\n  width: 999px;\n}\n.bg-brand {\n  background-color: var(--color-brand);\n}\n.p-2 {\n  padding: calc(var(--spacing) * 2);\n}\n.text-brand {\n  color: var(--color-brand);\n}\n"
+        },
+        {
+          "operation": "change",
+          "changed": [
+            {
+              "content": "bg-brand var(--color-alias)",
+              "extension": "html"
+            }
+          ],
+          "expectedCandidates": [],
+          "expectedCss": ":root, :host {\n  --color-brand: #123456;\n  --color-alias: var(--color-brand);\n  --spacing: 4px;\n}\n.hidden {\n  display: none;\n}\n.w-\\[137px\\] {\n  width: 137px;\n}\n.w-\\[147px\\] {\n  width: 147px;\n}\n.w-\\[999px\\] {\n  width: 999px;\n}\n.bg-brand {\n  background-color: var(--color-brand);\n}\n.p-2 {\n  padding: calc(var(--spacing) * 2);\n}\n.text-brand {\n  color: var(--color-brand);\n}\n"
+        },
+        {
+          "operation": "remove",
+          "path": "app/src/view.html"
+        },
+        {
+          "operation": "scan",
+          "expectedCandidates": [
+            "--color-alias",
+            "bg-brand",
+            "class",
+            "hidden",
+            "p-2",
+            "text-brand",
+            "view!",
+            "w-[137px]",
+            "w-[147px]",
+            "w-[999px]"
+          ],
+          "expectedCss": ":root, :host {\n  --color-brand: #123456;\n  --color-alias: var(--color-brand);\n  --spacing: 4px;\n}\n.hidden {\n  display: none;\n}\n.w-\\[137px\\] {\n  width: 137px;\n}\n.w-\\[147px\\] {\n  width: 147px;\n}\n.w-\\[999px\\] {\n  width: 999px;\n}\n.bg-brand {\n  background-color: var(--color-brand);\n}\n.p-2 {\n  padding: calc(var(--spacing) * 2);\n}\n.text-brand {\n  color: var(--color-brand);\n}\n"
+        }
+      ]
+    },
+    {
+      "id": "pipeline:3",
+      "input": "@theme { --color-brand: #123456; --color-alias: var(--color-brand); --spacing: 4px; } @tailwind utilities source(none); @source \"./src/**/*.{html,rs}\";",
+      "entry": "/app/input.css",
+      "base": "/app",
+      "assets": [
+        {
+          "id": "/app/pkg/utilities.css",
+          "content": "@tailwind utilities; @source \"../shared/**\";"
+        }
+      ],
+      "files": [
+        {
+          "path": "app/.gitignore",
+          "content": "ignored/\n"
+        },
+        {
+          "path": "app/src/main.rs",
+          "content": "view! { <div class=\"w-[137px] bg-brand p-2\"> }"
+        },
+        {
+          "path": "app/src/view.html",
+          "content": "<p class=\"hidden text-brand\">var(--color-alias)</p>"
+        },
+        {
+          "path": "app/src/private/secret.html",
+          "content": "<div class=\"w-[999px]\">"
+        },
+        {
+          "path": "app/shared/sample.html",
+          "content": "<div class=\"h-[72px]\">"
+        },
+        {
+          "path": "app/outside.html",
+          "content": "<div class=\"w-[159px]\">"
+        },
+        {
+          "path": "app/ignored/test.html",
+          "content": "<div class=\"w-[666px]\">"
+        },
+        {
+          "path": "app/theme.css",
+          "content": ".x {color:var(--color-brand)} .flex { --not-used: red; }"
+        }
+      ],
+      "directories": [
+        "app/.git",
+        "app/src",
+        "app/shared"
+      ],
+      "steps": [
+        {
+          "operation": "scan",
+          "expectedCandidates": [
+            "--color-alias",
+            "bg-brand",
+            "class",
+            "hidden",
+            "p-2",
+            "text-brand",
+            "view!",
+            "w-[137px]",
+            "w-[999px]"
+          ],
+          "expectedCss": ":root, :host {\n  --color-brand: #123456;\n  --color-alias: var(--color-brand);\n  --spacing: 4px;\n}\n.hidden {\n  display: none;\n}\n.w-\\[137px\\] {\n  width: 137px;\n}\n.w-\\[999px\\] {\n  width: 999px;\n}\n.bg-brand {\n  background-color: var(--color-brand);\n}\n.p-2 {\n  padding: calc(var(--spacing) * 2);\n}\n.text-brand {\n  color: var(--color-brand);\n}\n"
+        },
+        {
+          "operation": "scan",
+          "expectedCandidates": [
+            "--color-alias",
+            "bg-brand",
+            "class",
+            "hidden",
+            "p-2",
+            "text-brand",
+            "view!",
+            "w-[137px]",
+            "w-[999px]"
+          ],
+          "expectedCss": ":root, :host {\n  --color-brand: #123456;\n  --color-alias: var(--color-brand);\n  --spacing: 4px;\n}\n.hidden {\n  display: none;\n}\n.w-\\[137px\\] {\n  width: 137px;\n}\n.w-\\[999px\\] {\n  width: 999px;\n}\n.bg-brand {\n  background-color: var(--color-brand);\n}\n.p-2 {\n  padding: calc(var(--spacing) * 2);\n}\n.text-brand {\n  color: var(--color-brand);\n}\n"
+        },
+        {
+          "operation": "put",
+          "path": "app/src/main.rs",
+          "content": "view! { <div class=\"w-[147px]\"> }"
+        },
+        {
+          "operation": "scan",
+          "expectedCandidates": [
+            "--color-alias",
+            "bg-brand",
+            "class",
+            "hidden",
+            "p-2",
+            "text-brand",
+            "view!",
+            "w-[137px]",
+            "w-[147px]",
+            "w-[999px]"
+          ],
+          "expectedCss": ":root, :host {\n  --color-brand: #123456;\n  --color-alias: var(--color-brand);\n  --spacing: 4px;\n}\n.hidden {\n  display: none;\n}\n.w-\\[137px\\] {\n  width: 137px;\n}\n.w-\\[147px\\] {\n  width: 147px;\n}\n.w-\\[999px\\] {\n  width: 999px;\n}\n.bg-brand {\n  background-color: var(--color-brand);\n}\n.p-2 {\n  padding: calc(var(--spacing) * 2);\n}\n.text-brand {\n  color: var(--color-brand);\n}\n"
+        },
+        {
+          "operation": "change",
+          "changed": [
+            {
+              "content": "bg-brand var(--color-alias)",
+              "extension": "html"
+            }
+          ],
+          "expectedCandidates": [],
+          "expectedCss": ":root, :host {\n  --color-brand: #123456;\n  --color-alias: var(--color-brand);\n  --spacing: 4px;\n}\n.hidden {\n  display: none;\n}\n.w-\\[137px\\] {\n  width: 137px;\n}\n.w-\\[147px\\] {\n  width: 147px;\n}\n.w-\\[999px\\] {\n  width: 999px;\n}\n.bg-brand {\n  background-color: var(--color-brand);\n}\n.p-2 {\n  padding: calc(var(--spacing) * 2);\n}\n.text-brand {\n  color: var(--color-brand);\n}\n"
+        },
+        {
+          "operation": "remove",
+          "path": "app/src/view.html"
+        },
+        {
+          "operation": "scan",
+          "expectedCandidates": [
+            "--color-alias",
+            "bg-brand",
+            "class",
+            "hidden",
+            "p-2",
+            "text-brand",
+            "view!",
+            "w-[137px]",
+            "w-[147px]",
+            "w-[999px]"
+          ],
+          "expectedCss": ":root, :host {\n  --color-brand: #123456;\n  --color-alias: var(--color-brand);\n  --spacing: 4px;\n}\n.hidden {\n  display: none;\n}\n.w-\\[137px\\] {\n  width: 137px;\n}\n.w-\\[147px\\] {\n  width: 147px;\n}\n.w-\\[999px\\] {\n  width: 999px;\n}\n.bg-brand {\n  background-color: var(--color-brand);\n}\n.p-2 {\n  padding: calc(var(--spacing) * 2);\n}\n.text-brand {\n  color: var(--color-brand);\n}\n"
+        }
+      ]
+    },
+    {
+      "id": "pipeline:4",
+      "input": "@theme { --color-brand: #123456; --color-alias: var(--color-brand); --spacing: 4px; } @tailwind utilities source(none); @source \"./src/**\"; @source not \"./src/private/**\";",
+      "entry": "/app/input.css",
+      "base": "/app",
+      "assets": [
+        {
+          "id": "/app/pkg/utilities.css",
+          "content": "@tailwind utilities; @source \"../shared/**\";"
+        }
+      ],
+      "files": [
+        {
+          "path": "app/.gitignore",
+          "content": "ignored/\n"
+        },
+        {
+          "path": "app/src/main.rs",
+          "content": "view! { <div class=\"w-[137px] bg-brand p-2\"> }"
+        },
+        {
+          "path": "app/src/view.html",
+          "content": "<p class=\"hidden text-brand\">var(--color-alias)</p>"
+        },
+        {
+          "path": "app/src/private/secret.html",
+          "content": "<div class=\"w-[999px]\">"
+        },
+        {
+          "path": "app/shared/sample.html",
+          "content": "<div class=\"h-[72px]\">"
+        },
+        {
+          "path": "app/outside.html",
+          "content": "<div class=\"w-[159px]\">"
+        },
+        {
+          "path": "app/ignored/test.html",
+          "content": "<div class=\"w-[666px]\">"
+        },
+        {
+          "path": "app/theme.css",
+          "content": ".x {color:var(--color-brand)} .flex { --not-used: red; }"
+        }
+      ],
+      "directories": [
+        "app/.git",
+        "app/src",
+        "app/shared"
+      ],
+      "steps": [
+        {
+          "operation": "scan",
+          "expectedCandidates": [
+            "--color-alias",
+            "bg-brand",
+            "class",
+            "hidden",
+            "p-2",
+            "text-brand",
+            "view!",
+            "w-[137px]"
+          ],
+          "expectedCss": ":root, :host {\n  --color-brand: #123456;\n  --color-alias: var(--color-brand);\n  --spacing: 4px;\n}\n.hidden {\n  display: none;\n}\n.w-\\[137px\\] {\n  width: 137px;\n}\n.bg-brand {\n  background-color: var(--color-brand);\n}\n.p-2 {\n  padding: calc(var(--spacing) * 2);\n}\n.text-brand {\n  color: var(--color-brand);\n}\n"
+        },
+        {
+          "operation": "scan",
+          "expectedCandidates": [
+            "--color-alias",
+            "bg-brand",
+            "class",
+            "hidden",
+            "p-2",
+            "text-brand",
+            "view!",
+            "w-[137px]"
+          ],
+          "expectedCss": ":root, :host {\n  --color-brand: #123456;\n  --color-alias: var(--color-brand);\n  --spacing: 4px;\n}\n.hidden {\n  display: none;\n}\n.w-\\[137px\\] {\n  width: 137px;\n}\n.bg-brand {\n  background-color: var(--color-brand);\n}\n.p-2 {\n  padding: calc(var(--spacing) * 2);\n}\n.text-brand {\n  color: var(--color-brand);\n}\n"
+        },
+        {
+          "operation": "put",
+          "path": "app/src/main.rs",
+          "content": "view! { <div class=\"w-[147px]\"> }"
+        },
+        {
+          "operation": "scan",
+          "expectedCandidates": [
+            "--color-alias",
+            "bg-brand",
+            "class",
+            "hidden",
+            "p-2",
+            "text-brand",
+            "view!",
+            "w-[137px]",
+            "w-[147px]"
+          ],
+          "expectedCss": ":root, :host {\n  --color-brand: #123456;\n  --color-alias: var(--color-brand);\n  --spacing: 4px;\n}\n.hidden {\n  display: none;\n}\n.w-\\[137px\\] {\n  width: 137px;\n}\n.w-\\[147px\\] {\n  width: 147px;\n}\n.bg-brand {\n  background-color: var(--color-brand);\n}\n.p-2 {\n  padding: calc(var(--spacing) * 2);\n}\n.text-brand {\n  color: var(--color-brand);\n}\n"
+        },
+        {
+          "operation": "change",
+          "changed": [
+            {
+              "content": "bg-brand var(--color-alias)",
+              "extension": "html"
+            }
+          ],
+          "expectedCandidates": [],
+          "expectedCss": ":root, :host {\n  --color-brand: #123456;\n  --color-alias: var(--color-brand);\n  --spacing: 4px;\n}\n.hidden {\n  display: none;\n}\n.w-\\[137px\\] {\n  width: 137px;\n}\n.w-\\[147px\\] {\n  width: 147px;\n}\n.bg-brand {\n  background-color: var(--color-brand);\n}\n.p-2 {\n  padding: calc(var(--spacing) * 2);\n}\n.text-brand {\n  color: var(--color-brand);\n}\n"
+        },
+        {
+          "operation": "remove",
+          "path": "app/src/view.html"
+        },
+        {
+          "operation": "scan",
+          "expectedCandidates": [
+            "--color-alias",
+            "bg-brand",
+            "class",
+            "hidden",
+            "p-2",
+            "text-brand",
+            "view!",
+            "w-[137px]",
+            "w-[147px]"
+          ],
+          "expectedCss": ":root, :host {\n  --color-brand: #123456;\n  --color-alias: var(--color-brand);\n  --spacing: 4px;\n}\n.hidden {\n  display: none;\n}\n.w-\\[137px\\] {\n  width: 137px;\n}\n.w-\\[147px\\] {\n  width: 147px;\n}\n.bg-brand {\n  background-color: var(--color-brand);\n}\n.p-2 {\n  padding: calc(var(--spacing) * 2);\n}\n.text-brand {\n  color: var(--color-brand);\n}\n"
+        }
+      ]
+    },
+    {
+      "id": "pipeline:5",
+      "input": "@theme { --color-brand: #123456; --color-alias: var(--color-brand); --spacing: 4px; } @tailwind utilities; @source not \"./src/private/**\"; @source inline(\"block\"); @source not inline(\"hidden\");",
+      "entry": "/app/input.css",
+      "base": "/app",
+      "assets": [
+        {
+          "id": "/app/pkg/utilities.css",
+          "content": "@tailwind utilities; @source \"../shared/**\";"
+        }
+      ],
+      "files": [
+        {
+          "path": "app/.gitignore",
+          "content": "ignored/\n"
+        },
+        {
+          "path": "app/src/main.rs",
+          "content": "view! { <div class=\"w-[137px] bg-brand p-2\"> }"
+        },
+        {
+          "path": "app/src/view.html",
+          "content": "<p class=\"hidden text-brand\">var(--color-alias)</p>"
+        },
+        {
+          "path": "app/src/private/secret.html",
+          "content": "<div class=\"w-[999px]\">"
+        },
+        {
+          "path": "app/shared/sample.html",
+          "content": "<div class=\"h-[72px]\">"
+        },
+        {
+          "path": "app/outside.html",
+          "content": "<div class=\"w-[159px]\">"
+        },
+        {
+          "path": "app/ignored/test.html",
+          "content": "<div class=\"w-[666px]\">"
+        },
+        {
+          "path": "app/theme.css",
+          "content": ".x {color:var(--color-brand)} .flex { --not-used: red; }"
+        }
+      ],
+      "directories": [
+        "app/.git",
+        "app/src",
+        "app/shared"
+      ],
+      "steps": [
+        {
+          "operation": "scan",
+          "expectedCandidates": [
+            "--color-alias",
+            "--color-brand",
+            "bg-brand",
+            "class",
+            "h-[72px]",
+            "hidden",
+            "p-2",
+            "text-brand",
+            "view!",
+            "w-[137px]",
+            "w-[159px]"
+          ],
+          "expectedCss": ":root, :host {\n  --color-brand: #123456;\n  --color-alias: var(--color-brand);\n  --spacing: 4px;\n}\n.block {\n  display: block;\n}\n.h-\\[72px\\] {\n  height: 72px;\n}\n.w-\\[137px\\] {\n  width: 137px;\n}\n.w-\\[159px\\] {\n  width: 159px;\n}\n.bg-brand {\n  background-color: var(--color-brand);\n}\n.p-2 {\n  padding: calc(var(--spacing) * 2);\n}\n.text-brand {\n  color: var(--color-brand);\n}\n"
+        },
+        {
+          "operation": "scan",
+          "expectedCandidates": [
+            "--color-alias",
+            "--color-brand",
+            "bg-brand",
+            "class",
+            "h-[72px]",
+            "hidden",
+            "p-2",
+            "text-brand",
+            "view!",
+            "w-[137px]",
+            "w-[159px]"
+          ],
+          "expectedCss": ":root, :host {\n  --color-brand: #123456;\n  --color-alias: var(--color-brand);\n  --spacing: 4px;\n}\n.block {\n  display: block;\n}\n.h-\\[72px\\] {\n  height: 72px;\n}\n.w-\\[137px\\] {\n  width: 137px;\n}\n.w-\\[159px\\] {\n  width: 159px;\n}\n.bg-brand {\n  background-color: var(--color-brand);\n}\n.p-2 {\n  padding: calc(var(--spacing) * 2);\n}\n.text-brand {\n  color: var(--color-brand);\n}\n"
+        },
+        {
+          "operation": "put",
+          "path": "app/src/main.rs",
+          "content": "view! { <div class=\"w-[147px]\"> }"
+        },
+        {
+          "operation": "scan",
+          "expectedCandidates": [
+            "--color-alias",
+            "--color-brand",
+            "bg-brand",
+            "class",
+            "h-[72px]",
+            "hidden",
+            "p-2",
+            "text-brand",
+            "view!",
+            "w-[137px]",
+            "w-[147px]",
+            "w-[159px]"
+          ],
+          "expectedCss": ":root, :host {\n  --color-brand: #123456;\n  --color-alias: var(--color-brand);\n  --spacing: 4px;\n}\n.block {\n  display: block;\n}\n.h-\\[72px\\] {\n  height: 72px;\n}\n.w-\\[137px\\] {\n  width: 137px;\n}\n.w-\\[147px\\] {\n  width: 147px;\n}\n.w-\\[159px\\] {\n  width: 159px;\n}\n.bg-brand {\n  background-color: var(--color-brand);\n}\n.p-2 {\n  padding: calc(var(--spacing) * 2);\n}\n.text-brand {\n  color: var(--color-brand);\n}\n"
+        },
+        {
+          "operation": "change",
+          "changed": [
+            {
+              "content": "bg-brand var(--color-alias)",
+              "extension": "html"
+            }
+          ],
+          "expectedCandidates": [],
+          "expectedCss": ":root, :host {\n  --color-brand: #123456;\n  --color-alias: var(--color-brand);\n  --spacing: 4px;\n}\n.block {\n  display: block;\n}\n.h-\\[72px\\] {\n  height: 72px;\n}\n.w-\\[137px\\] {\n  width: 137px;\n}\n.w-\\[147px\\] {\n  width: 147px;\n}\n.w-\\[159px\\] {\n  width: 159px;\n}\n.bg-brand {\n  background-color: var(--color-brand);\n}\n.p-2 {\n  padding: calc(var(--spacing) * 2);\n}\n.text-brand {\n  color: var(--color-brand);\n}\n"
+        },
+        {
+          "operation": "remove",
+          "path": "app/src/view.html"
+        },
+        {
+          "operation": "scan",
+          "expectedCandidates": [
+            "--color-alias",
+            "--color-brand",
+            "bg-brand",
+            "class",
+            "h-[72px]",
+            "hidden",
+            "p-2",
+            "text-brand",
+            "view!",
+            "w-[137px]",
+            "w-[147px]",
+            "w-[159px]"
+          ],
+          "expectedCss": ":root, :host {\n  --color-brand: #123456;\n  --color-alias: var(--color-brand);\n  --spacing: 4px;\n}\n.block {\n  display: block;\n}\n.h-\\[72px\\] {\n  height: 72px;\n}\n.w-\\[137px\\] {\n  width: 137px;\n}\n.w-\\[147px\\] {\n  width: 147px;\n}\n.w-\\[159px\\] {\n  width: 159px;\n}\n.bg-brand {\n  background-color: var(--color-brand);\n}\n.p-2 {\n  padding: calc(var(--spacing) * 2);\n}\n.text-brand {\n  color: var(--color-brand);\n}\n"
+        }
+      ]
+    },
+    {
+      "id": "pipeline:6",
+      "input": "@theme { --color-brand: #123456; --color-alias: var(--color-brand); --spacing: 4px; } @import \"pkg/utilities.css\" source(\"../src\");",
+      "entry": "/app/input.css",
+      "base": "/app",
+      "assets": [
+        {
+          "id": "/app/pkg/utilities.css",
+          "content": "@tailwind utilities; @source \"../shared/**\";"
+        }
+      ],
+      "files": [
+        {
+          "path": "app/.gitignore",
+          "content": "ignored/\n"
+        },
+        {
+          "path": "app/src/main.rs",
+          "content": "view! { <div class=\"w-[137px] bg-brand p-2\"> }"
+        },
+        {
+          "path": "app/src/view.html",
+          "content": "<p class=\"hidden text-brand\">var(--color-alias)</p>"
+        },
+        {
+          "path": "app/src/private/secret.html",
+          "content": "<div class=\"w-[999px]\">"
+        },
+        {
+          "path": "app/shared/sample.html",
+          "content": "<div class=\"h-[72px]\">"
+        },
+        {
+          "path": "app/outside.html",
+          "content": "<div class=\"w-[159px]\">"
+        },
+        {
+          "path": "app/ignored/test.html",
+          "content": "<div class=\"w-[666px]\">"
+        },
+        {
+          "path": "app/theme.css",
+          "content": ".x {color:var(--color-brand)} .flex { --not-used: red; }"
+        }
+      ],
+      "directories": [
+        "app/.git",
+        "app/src",
+        "app/shared"
+      ],
+      "steps": [
+        {
+          "operation": "scan",
+          "expectedCandidates": [],
+          "expectedCss": ""
+        },
+        {
+          "operation": "scan",
+          "expectedCandidates": [],
+          "expectedCss": ""
+        },
+        {
+          "operation": "put",
+          "path": "app/src/main.rs",
+          "content": "view! { <div class=\"w-[147px]\"> }"
+        },
+        {
+          "operation": "scan",
+          "expectedCandidates": [],
+          "expectedCss": ""
+        },
+        {
+          "operation": "change",
+          "changed": [
+            {
+              "content": "bg-brand var(--color-alias)",
+              "extension": "html"
+            }
+          ],
+          "expectedCandidates": [
+            "--color-alias",
+            "bg-brand"
+          ],
+          "expectedCss": ":root, :host {\n  --color-brand: #123456;\n  --color-alias: var(--color-brand);\n}\n.bg-brand {\n  background-color: var(--color-brand);\n}\n"
+        },
+        {
+          "operation": "remove",
+          "path": "app/src/view.html"
+        },
+        {
+          "operation": "scan",
+          "expectedCandidates": [
+            "--color-alias",
+            "bg-brand"
+          ],
+          "expectedCss": ":root, :host {\n  --color-brand: #123456;\n  --color-alias: var(--color-brand);\n}\n.bg-brand {\n  background-color: var(--color-brand);\n}\n"
+        }
+      ]
+    },
+    {
+      "id": "pipeline:7",
+      "input": "@theme { --color-brand: #123456; --color-alias: var(--color-brand); --spacing: 4px; } @reference \"pkg/utilities.css\"; @tailwind utilities source(\"./src\");",
+      "entry": "/app/input.css",
+      "base": "/app",
+      "assets": [
+        {
+          "id": "/app/pkg/utilities.css",
+          "content": "@tailwind utilities; @source \"../shared/**\";"
+        }
+      ],
+      "files": [
+        {
+          "path": "app/.gitignore",
+          "content": "ignored/\n"
+        },
+        {
+          "path": "app/src/main.rs",
+          "content": "view! { <div class=\"w-[137px] bg-brand p-2\"> }"
+        },
+        {
+          "path": "app/src/view.html",
+          "content": "<p class=\"hidden text-brand\">var(--color-alias)</p>"
+        },
+        {
+          "path": "app/src/private/secret.html",
+          "content": "<div class=\"w-[999px]\">"
+        },
+        {
+          "path": "app/shared/sample.html",
+          "content": "<div class=\"h-[72px]\">"
+        },
+        {
+          "path": "app/outside.html",
+          "content": "<div class=\"w-[159px]\">"
+        },
+        {
+          "path": "app/ignored/test.html",
+          "content": "<div class=\"w-[666px]\">"
+        },
+        {
+          "path": "app/theme.css",
+          "content": ".x {color:var(--color-brand)} .flex { --not-used: red; }"
+        }
+      ],
+      "directories": [
+        "app/.git",
+        "app/src",
+        "app/shared"
+      ],
+      "steps": [
+        {
+          "operation": "scan",
+          "expectedCandidates": [
+            "--color-alias",
+            "bg-brand",
+            "class",
+            "hidden",
+            "p-2",
+            "text-brand",
+            "view!",
+            "w-[137px]",
+            "w-[999px]"
+          ],
+          "expectedCss": ":root, :host {\n  --color-brand: #123456;\n  --color-alias: var(--color-brand);\n  --spacing: 4px;\n}\n.hidden {\n  display: none;\n}\n.w-\\[137px\\] {\n  width: 137px;\n}\n.w-\\[999px\\] {\n  width: 999px;\n}\n.bg-brand {\n  background-color: var(--color-brand);\n}\n.p-2 {\n  padding: calc(var(--spacing) * 2);\n}\n.text-brand {\n  color: var(--color-brand);\n}\n"
+        },
+        {
+          "operation": "scan",
+          "expectedCandidates": [
+            "--color-alias",
+            "bg-brand",
+            "class",
+            "hidden",
+            "p-2",
+            "text-brand",
+            "view!",
+            "w-[137px]",
+            "w-[999px]"
+          ],
+          "expectedCss": ":root, :host {\n  --color-brand: #123456;\n  --color-alias: var(--color-brand);\n  --spacing: 4px;\n}\n.hidden {\n  display: none;\n}\n.w-\\[137px\\] {\n  width: 137px;\n}\n.w-\\[999px\\] {\n  width: 999px;\n}\n.bg-brand {\n  background-color: var(--color-brand);\n}\n.p-2 {\n  padding: calc(var(--spacing) * 2);\n}\n.text-brand {\n  color: var(--color-brand);\n}\n"
+        },
+        {
+          "operation": "put",
+          "path": "app/src/main.rs",
+          "content": "view! { <div class=\"w-[147px]\"> }"
+        },
+        {
+          "operation": "scan",
+          "expectedCandidates": [
+            "--color-alias",
+            "bg-brand",
+            "class",
+            "hidden",
+            "p-2",
+            "text-brand",
+            "view!",
+            "w-[137px]",
+            "w-[147px]",
+            "w-[999px]"
+          ],
+          "expectedCss": ":root, :host {\n  --color-brand: #123456;\n  --color-alias: var(--color-brand);\n  --spacing: 4px;\n}\n.hidden {\n  display: none;\n}\n.w-\\[137px\\] {\n  width: 137px;\n}\n.w-\\[147px\\] {\n  width: 147px;\n}\n.w-\\[999px\\] {\n  width: 999px;\n}\n.bg-brand {\n  background-color: var(--color-brand);\n}\n.p-2 {\n  padding: calc(var(--spacing) * 2);\n}\n.text-brand {\n  color: var(--color-brand);\n}\n"
+        },
+        {
+          "operation": "change",
+          "changed": [
+            {
+              "content": "bg-brand var(--color-alias)",
+              "extension": "html"
+            }
+          ],
+          "expectedCandidates": [],
+          "expectedCss": ":root, :host {\n  --color-brand: #123456;\n  --color-alias: var(--color-brand);\n  --spacing: 4px;\n}\n.hidden {\n  display: none;\n}\n.w-\\[137px\\] {\n  width: 137px;\n}\n.w-\\[147px\\] {\n  width: 147px;\n}\n.w-\\[999px\\] {\n  width: 999px;\n}\n.bg-brand {\n  background-color: var(--color-brand);\n}\n.p-2 {\n  padding: calc(var(--spacing) * 2);\n}\n.text-brand {\n  color: var(--color-brand);\n}\n"
+        },
+        {
+          "operation": "remove",
+          "path": "app/src/view.html"
+        },
+        {
+          "operation": "scan",
+          "expectedCandidates": [
+            "--color-alias",
+            "bg-brand",
+            "class",
+            "hidden",
+            "p-2",
+            "text-brand",
+            "view!",
+            "w-[137px]",
+            "w-[147px]",
+            "w-[999px]"
+          ],
+          "expectedCss": ":root, :host {\n  --color-brand: #123456;\n  --color-alias: var(--color-brand);\n  --spacing: 4px;\n}\n.hidden {\n  display: none;\n}\n.w-\\[137px\\] {\n  width: 137px;\n}\n.w-\\[147px\\] {\n  width: 147px;\n}\n.w-\\[999px\\] {\n  width: 999px;\n}\n.bg-brand {\n  background-color: var(--color-brand);\n}\n.p-2 {\n  padding: calc(var(--spacing) * 2);\n}\n.text-brand {\n  color: var(--color-brand);\n}\n"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,2776 @@
+{
+  "schemaVersion": 1,
+  "baseline": {
+    "rootCommit": "fb288564caed23f79e34bd8ac28dae2f6f44bfeb",
+    "captureStatus": "captured",
+    "oldPackages": {
+      "tw_merge": "0.1.21",
+      "tw_merge_variants": "0.1.9"
+    },
+    "policy": "Historical migration snapshots only. Fixed cn is the merge oracle; differences must be classified rather than changing cn to preserve old errors. Future tests read JSON without an old package dependency.",
+    "evidence": {
+      "preCaptureBuild": "mbx build --locked -p rustify-components --lib",
+      "preCaptureTests": "mbx test --locked -p rustify-components --lib macros::",
+      "testResult": "6 passed; 0 failed; 83 filtered out",
+      "captureMethod": "temporary Rust binary linked against freshly built rustify-components; invokes actual ButtonClass/variants! APIs and macros::merge. Capture program and old dependency are not retained in future tests.",
+      "captureSourceSha256": "091447a11b90a4501134b901855f5b848450eaa690684a50941d981ee326f063",
+      "captureOutputSha256": "0b860ba397d1b5e6735dacf571c930eec076a64f5218fdb71be85b5440df616c",
+      "rlibAtCapture": "target/debug/librustify_components.rlib",
+      "caseCount": 125
+    },
+    "oldPackageProvenance": [
+      {
+        "name": "tw_merge",
+        "version": "0.1.21",
+        "license": "MIT",
+        "repository": "https://github.com/rust-ui/ui/tree/main/crates/tw_merge",
+        "inspectedFiles": [
+          {
+            "path": "Cargo.toml",
+            "sha256": "df056c59d2011aae64e1e976e3bace8724b8a614a2398f72289f8530c4240f13"
+          },
+          {
+            "path": "src/lib.rs",
+            "sha256": "3454ef4d6703516e5dffb96ef9dac2d94465f4607f1d0e547f9f7cd1867a660e"
+          }
+        ]
+      },
+      {
+        "name": "tw_merge_variants",
+        "version": "0.1.9",
+        "license": "MIT",
+        "repository": "https://github.com/rust-ui/ui/tree/main/crates/tw_merge",
+        "inspectedFiles": [
+          {
+            "path": "Cargo.toml",
+            "sha256": "e75f638dbfe659188a2875b0097e3a193c8e78099dc58063909cf8fbcdc8f186"
+          },
+          {
+            "path": "src/class_macro.rs",
+            "sha256": "afc0b30c2b02bfae20704fac49602f3971a3efd8a79926bce9fe464f7113c554"
+          },
+          {
+            "path": "src/variant_macro.rs",
+            "sha256": "86d809e7b312ff75f05160f269212b0bdab0ebb72a64bc571017576359e04720"
+          }
+        ]
+      }
+    ]
+  },
+  "sources": [
+    {
+      "path": "crates/rustify-components/src/button.rs",
+      "sha256": "ffa6efcffe08df6ff9a2135a7f518aeba0604270f24bd454f49eb8aaa3406014"
+    },
+    {
+      "path": "crates/rustify-components/src/catalog.rs",
+      "sha256": "614bb91f26c40be9a0a9f7ab9d40acec564cf836a00f3e86fea7cf9a238b1ebb"
+    },
+    {
+      "path": "crates/rustify-components/src/checkbox.rs",
+      "sha256": "8818704024c8fcbe8d8c1bd4f6880bdcbf2c814abcd69a754967d89c51bb8372"
+    },
+    {
+      "path": "crates/rustify-components/src/color_field.rs",
+      "sha256": "cf7664ccf2f8ff69aa7f64f82ea277150fd03208592350965e7796b11e62a331"
+    },
+    {
+      "path": "crates/rustify-components/src/data_table/keys.rs",
+      "sha256": "4681723854e5671143b5f4f1249be9b3dd6062851c62fa441ffcf002c332b17b"
+    },
+    {
+      "path": "crates/rustify-components/src/data_table/mod.rs",
+      "sha256": "b2178a06c8e14c3915a14f19dd85870007f263b9aa69681c10a1509df6f5b8bd"
+    },
+    {
+      "path": "crates/rustify-components/src/data_table/view.rs",
+      "sha256": "d6ec9f19ab2db7eebfb2635c9bd0d76bfc6c0e27063ca1f933cef774cf3f48e3"
+    },
+    {
+      "path": "crates/rustify-components/src/data_table/window.rs",
+      "sha256": "5e01c3820cb2e39e853687e94b6a1a0c8d42e94e58c66e34bbbcf833502cce8c"
+    },
+    {
+      "path": "crates/rustify-components/src/dialog.rs",
+      "sha256": "3a0c4a19a5981310dea76651392157b0610aadde45851ff7599ddc3a58dff8e0"
+    },
+    {
+      "path": "crates/rustify-components/src/dom.rs",
+      "sha256": "7b27aa7f2c4128e4cb7ed66920d0d5220da391db654edb209cdaafe7c21c7a15"
+    },
+    {
+      "path": "crates/rustify-components/src/drop_zone.rs",
+      "sha256": "588e891bc291a3e71dff69ffa1a904a95ada32f81b976c0a1f3d44e1b5bbfc2d"
+    },
+    {
+      "path": "crates/rustify-components/src/file_picker.rs",
+      "sha256": "6d88216a7985130bc9114b03de8ffe8088f964d6fa48dbfa67574e560e296659"
+    },
+    {
+      "path": "crates/rustify-components/src/form/field.rs",
+      "sha256": "ffd090b64f7364726888bc0ed3eb306622d6400762b6ed163435cff3a2a9d843"
+    },
+    {
+      "path": "crates/rustify-components/src/form/mod.rs",
+      "sha256": "3424a3117767556e422cea94e777227bf7eb1859eadac573f02ba3ce6573d3f8"
+    },
+    {
+      "path": "crates/rustify-components/src/form/provider.rs",
+      "sha256": "48a94b3aff642f78461e7e0a7cf8c9f6b1b896dc59809b74cf6d1bbf8ab787a2"
+    },
+    {
+      "path": "crates/rustify-components/src/form/submit.rs",
+      "sha256": "1974b1a266fbebed9baf09aecd9c30145d7af0b9ae41353e4500ccb29e9aa72d"
+    },
+    {
+      "path": "crates/rustify-components/src/icon.rs",
+      "sha256": "1b0b85fd8b8e351bf780c1e71e46615f72fcc49a7cdece922760b680fe5d59ff"
+    },
+    {
+      "path": "crates/rustify-components/src/id.rs",
+      "sha256": "4eaac9572de9cfe588d4c70a349b7abe776ce19bde6b85a3b0b5fd3fc4994d33"
+    },
+    {
+      "path": "crates/rustify-components/src/input.rs",
+      "sha256": "2441d03d54e06926122803b2fe8768b45865848d126d845389088bec03eb3a57"
+    },
+    {
+      "path": "crates/rustify-components/src/label.rs",
+      "sha256": "5026ebeb3c4d5b1870029293cb90b7e08f4fa610f8935d5293fac2234d91a48f"
+    },
+    {
+      "path": "crates/rustify-components/src/lib.rs",
+      "sha256": "755ddc2bef117b2e1115249017473f032bdee3e8b162fa35a6d62bb98ce75244"
+    },
+    {
+      "path": "crates/rustify-components/src/link.rs",
+      "sha256": "f4f8092f4edb532be1f7576f5074c9ca8b7035bfcdd13f7265309df0817dd406"
+    },
+    {
+      "path": "crates/rustify-components/src/macros/clx.rs",
+      "sha256": "570c14eea26ef6ab1dcafbf6ed4ab9b4a309ef74e917e4817fb7ff06f0943f64"
+    },
+    {
+      "path": "crates/rustify-components/src/macros/mod.rs",
+      "sha256": "a65d6c7bc42985625318c8d6a697908ec15bd0b577315f456128e28a448b566e"
+    },
+    {
+      "path": "crates/rustify-components/src/macros/variants.rs",
+      "sha256": "9b9b589108eab6b9411bdf788c84aab0388fde6bf1202cbb338feab0fb273899"
+    },
+    {
+      "path": "crates/rustify-components/src/menu.rs",
+      "sha256": "e9f909f3f19c6d8273a5323d6bac9d166663597e173945737d54372c3fe07dad"
+    },
+    {
+      "path": "crates/rustify-components/src/number_field.rs",
+      "sha256": "6adc00ab1854f35622836570ca36af88b4a4920e74735e2fd7f39694328cad89"
+    },
+    {
+      "path": "crates/rustify-components/src/progress.rs",
+      "sha256": "d2c66c8054b4d736b8b33e01a4b50d4be114c7113175d2e1205be9075a989108"
+    },
+    {
+      "path": "crates/rustify-components/src/radio.rs",
+      "sha256": "8ea390c048e20307ed9d5e384dd110f3a27272a8bcd08ace613c77facce342d1"
+    },
+    {
+      "path": "crates/rustify-components/src/roving.rs",
+      "sha256": "5e97ae7ff450c80043370f2a725519eea0b9474ac86d113eff6f9f3c0267cffc"
+    },
+    {
+      "path": "crates/rustify-components/src/scroll_area.rs",
+      "sha256": "adba7eab129afe32000d71b68b9d42246e701ee4a1b4e5b7a3bef7679f4d897a"
+    },
+    {
+      "path": "crates/rustify-components/src/select.rs",
+      "sha256": "e0ea5d507f81bcb2457b1a03b2d2bd32a4c678399a552a86d6937104184baf16"
+    },
+    {
+      "path": "crates/rustify-components/src/slider.rs",
+      "sha256": "ba9161bd69f102ebcf50f4f72d8938db95a3641689f0b956beb6e05b81135205"
+    },
+    {
+      "path": "crates/rustify-components/src/spinner.rs",
+      "sha256": "a026e3d79399338e34c0129a9b3618526d95fb8f23c25494126b79788ecf9389"
+    },
+    {
+      "path": "crates/rustify-components/src/switch.rs",
+      "sha256": "5591dc1901abecda245de6b79538d6f2a5daad21f716c3cc9496e62bfb6e0ed2"
+    },
+    {
+      "path": "crates/rustify-components/src/tabs.rs",
+      "sha256": "6814e5045995d0f2c3a428bda86e34f371a62fef18c255f05fa5d6a77b7f52f1"
+    },
+    {
+      "path": "crates/rustify-components/src/textarea.rs",
+      "sha256": "dbf5733bce689df52855b002600e5f2bbd717cf62ce3596794ba6d7ea59821c0"
+    },
+    {
+      "path": "crates/rustify-components/src/toast.rs",
+      "sha256": "b017c2d3ab2f48121ed7c6b0288a95a4b6e65677e81363bf65ea55c1f8d1d4bc"
+    },
+    {
+      "path": "crates/rustify-components/src/toggle_group.rs",
+      "sha256": "ea389f25dcb59eded97c1623871206ed78ffa6a451bb609e168a1a4d4d13c000"
+    },
+    {
+      "path": "crates/rustify-components/src/tooltip.rs",
+      "sha256": "2d59c6cdd94f482c4b1643e092144189232d33a4a837adbb07e593a49399f3fa"
+    },
+    {
+      "path": "crates/rustify-components/src/tree.rs",
+      "sha256": "787ba447ba12d8d5877fc504056c09c10b63fc8f13722b5d28fbd7570e077c1b"
+    },
+    {
+      "path": "crates/rustify-components/src/workspace/command_palette.rs",
+      "sha256": "638bccaa8bc5d36508af7cf2e994624222e3f0b554a13ab9df3bc1d33ffb019e"
+    },
+    {
+      "path": "crates/rustify-components/src/workspace/mod.rs",
+      "sha256": "7cdf07a15d8dd7be8bea202305e390c416ab767e09996562381b09f81ac36207"
+    },
+    {
+      "path": "crates/rustify-components/src/workspace/panel_tabs.rs",
+      "sha256": "dbddb402b29034cd7a90e019fe08145ff7e5d70af52b9c2407607e06ace33ab9"
+    },
+    {
+      "path": "crates/rustify-components/src/workspace/splitter.rs",
+      "sha256": "ff2d501f0b9a66fd39949275b8d16a03109b1b8ba1c7594073e7f6e2e8212c77"
+    }
+  ],
+  "apis": [
+    {
+      "name": "macros::merge",
+      "syntax": "merge(base: impl AsRef<str>, class: &str) -> String",
+      "usedBy": "all component caller class overrides",
+      "source": "crates/rustify-components/src/macros/mod.rs:21",
+      "migrationRequirement": "used_syntax_and_type_required"
+    },
+    {
+      "name": "clx!",
+      "syntax": "clx! {Name, element, base_expr [, base_expr ...] [,]}",
+      "usedBy": "component-catalog Panel/Row and TestCard expansion",
+      "source": "crates/rustify-components/src/macros/clx.rs:19",
+      "migrationRequirement": "used_syntax_and_type_required"
+    },
+    {
+      "name": "void!",
+      "syntax": "void! {Name, element, base_expr [, base_expr ...] [,]}",
+      "usedBy": "TestRule expansion",
+      "source": "crates/rustify-components/src/macros/clx.rs:51",
+      "migrationRequirement": "used_syntax_and_type_required"
+    },
+    {
+      "name": "variants! types",
+      "syntax": "variants! {Name {base: literal, variants: {variant: {First: literal [, Arm: literal ...]}, size: {First: literal [, Arm: literal ...]}}}}",
+      "usedBy": "Button; TestBadge and Chip component forms recurse to this arm",
+      "source": "crates/rustify-components/src/macros/variants.rs:185",
+      "migrationRequirement": "used_syntax_and_type_required"
+    },
+    {
+      "name": "variants! variant-only types",
+      "syntax": "variants! {Name {base: literal, variants: {variant: {First: literal [, Arm: literal ...]}}}}",
+      "usedBy": "public macro arm; no in-repo expansion found",
+      "source": "crates/rustify-components/src/macros/variants.rs:231",
+      "migrationRequirement": "existing_local_public_macro_arm; no production repository usage found"
+    },
+    {
+      "name": "variants! component",
+      "syntax": "types syntax + component: {element: ident}",
+      "usedBy": "component-catalog Chip and TestBadge",
+      "source": "crates/rustify-components/src/macros/variants.rs:36",
+      "migrationRequirement": "used_syntax_and_type_required"
+    },
+    {
+      "name": "variants! link component",
+      "syntax": "types syntax + component: {element: ident, link: true}",
+      "usedBy": "TestNav expansion",
+      "source": "crates/rustify-components/src/macros/variants.rs:97",
+      "migrationRequirement": "used_syntax_and_type_required"
+    },
+    {
+      "name": "IntoTailwindClass::with_class",
+      "syntax": "Class {variant, size}.with_class(impl AsRef<str>) -> String",
+      "usedBy": "Button and generated components; String and &str arguments in tests",
+      "source": "crates/rustify-components/src/button.rs:81",
+      "migrationRequirement": "used_syntax_and_type_required"
+    },
+    {
+      "name": "AsTailwindClass::as_class",
+      "syntax": "variant.as_class() -> &str",
+      "usedBy": "old derive-generated Class implementation; not called by hand in repository",
+      "source": "tw_merge_variants-0.1.9/src/class_macro.rs",
+      "migrationRequirement": "used_syntax_and_type_required"
+    },
+    {
+      "name": "Default + Clone + Copy",
+      "syntax": "Variant::default(); Size::default(); Class is Clone+Copy",
+      "usedBy": "Signal defaults and generated components; first enum arm is default, including Chip Yes",
+      "source": "crates/rustify-components/src/macros/variants.rs",
+      "migrationRequirement": "used_syntax_and_type_required"
+    },
+    {
+      "name": "public generated methods",
+      "syntax": "Class::builder(), instance.into_builder(), builder.variant(), builder.size(), builder.build(), to_class(), with_class(), From<Class>, From<Builder>",
+      "usedBy": "public old derive outputs; no handwritten builder/to_class use found in repository",
+      "source": "tw_merge_variants-0.1.9/src/class_macro.rs",
+      "migrationRequirement": "builder_methods_unused_and_not_required_by_current_repository_usage; to_class/with_class are captured common class conversion APIs"
+    },
+    {
+      "name": "old public re-export",
+      "syntax": "rustify_components::tw_merge::*",
+      "usedBy": "macro expansion resolves old traits and join/merge macros; exported transitively to consumers",
+      "source": "crates/rustify-components/src/lib.rs:104",
+      "migrationRequirement": "used_syntax_and_type_required"
+    }
+  ],
+  "callSites": [
+    {
+      "path": "crates/rustify-components/src/button.rs",
+      "line": 81,
+      "expression": ".with_class(class.get())",
+      "migrationStatus": "pending"
+    },
+    {
+      "path": "crates/rustify-components/src/checkbox.rs",
+      "line": 48,
+      "expression": "class=crate::macros::merge(\"relative inline-block size-4 shrink-0\", &class)",
+      "migrationStatus": "pending"
+    },
+    {
+      "path": "crates/rustify-components/src/color_field.rs",
+      "line": 103,
+      "expression": "<div class=crate::macros::merge(FIELD, &class) data-name=\"ColorField\">",
+      "migrationStatus": "pending"
+    },
+    {
+      "path": "crates/rustify-components/src/data_table/view.rs",
+      "line": 371,
+      "expression": "class=crate::macros::merge(GRID, &class)",
+      "migrationStatus": "pending"
+    },
+    {
+      "path": "crates/rustify-components/src/dialog.rs",
+      "line": 50,
+      "expression": "let panel_class = StoredValue::new(crate::macros::merge(PANEL, &class));",
+      "migrationStatus": "pending"
+    },
+    {
+      "path": "crates/rustify-components/src/drop_zone.rs",
+      "line": 59,
+      "expression": "crate::macros::merge(",
+      "migrationStatus": "pending"
+    },
+    {
+      "path": "crates/rustify-components/src/file_picker.rs",
+      "line": 43,
+      "expression": "class=crate::macros::merge(FIELD, &class)",
+      "migrationStatus": "pending"
+    },
+    {
+      "path": "crates/rustify-components/src/form/field.rs",
+      "line": 63,
+      "expression": "class=crate::macros::merge(\"flex flex-col gap-1.5\", &class)",
+      "migrationStatus": "pending"
+    },
+    {
+      "path": "crates/rustify-components/src/form/submit.rs",
+      "line": 80,
+      "expression": "class=crate::macros::merge(\"text-sm text-muted-foreground\", &class)",
+      "migrationStatus": "pending"
+    },
+    {
+      "path": "crates/rustify-components/src/icon.rs",
+      "line": 72,
+      "expression": "class=crate::macros::merge(BASE, &class)",
+      "migrationStatus": "pending"
+    },
+    {
+      "path": "crates/rustify-components/src/input.rs",
+      "line": 93,
+      "expression": "class=crate::macros::merge(BASE, &class)",
+      "migrationStatus": "pending"
+    },
+    {
+      "path": "crates/rustify-components/src/label.rs",
+      "line": 24,
+      "expression": "class=crate::macros::merge(BASE, &class)",
+      "migrationStatus": "pending"
+    },
+    {
+      "path": "crates/rustify-components/src/lib.rs",
+      "line": 104,
+      "expression": "pub use tw_merge;",
+      "migrationStatus": "pending"
+    },
+    {
+      "path": "crates/rustify-components/src/link.rs",
+      "line": 48,
+      "expression": "class=crate::macros::merge(BASE, &class)",
+      "migrationStatus": "pending"
+    },
+    {
+      "path": "crates/rustify-components/src/macros/clx.rs",
+      "line": 28,
+      "expression": "let merged = $crate::macros::merge(",
+      "migrationStatus": "pending"
+    },
+    {
+      "path": "crates/rustify-components/src/macros/clx.rs",
+      "line": 29,
+      "expression": "$crate::tw_merge::tw_join!($($base_class),+),",
+      "migrationStatus": "pending"
+    },
+    {
+      "path": "crates/rustify-components/src/macros/clx.rs",
+      "line": 59,
+      "expression": "let merged = $crate::macros::merge(",
+      "migrationStatus": "pending"
+    },
+    {
+      "path": "crates/rustify-components/src/macros/clx.rs",
+      "line": 60,
+      "expression": "$crate::tw_merge::tw_join!($($base_class),+),",
+      "migrationStatus": "pending"
+    },
+    {
+      "path": "crates/rustify-components/src/macros/mod.rs",
+      "line": 22,
+      "expression": "tw_merge::tw_merge!(base.as_ref(), class)",
+      "migrationStatus": "pending"
+    },
+    {
+      "path": "crates/rustify-components/src/macros/mod.rs",
+      "line": 110,
+      "expression": "use tw_merge::IntoTailwindClass;",
+      "migrationStatus": "pending"
+    },
+    {
+      "path": "crates/rustify-components/src/macros/mod.rs",
+      "line": 115,
+      "expression": "assert_eq!(outline.with_class(String::new()), \"inline-flex border px-3\");",
+      "migrationStatus": "pending"
+    },
+    {
+      "path": "crates/rustify-components/src/macros/mod.rs",
+      "line": 122,
+      "expression": "default.with_class(\"bg-secondary\"),",
+      "migrationStatus": "pending"
+    },
+    {
+      "path": "crates/rustify-components/src/macros/variants.rs",
+      "line": 79,
+      "expression": ".with_class(class.try_get().unwrap_or_default())",
+      "migrationStatus": "pending"
+    },
+    {
+      "path": "crates/rustify-components/src/macros/variants.rs",
+      "line": 142,
+      "expression": ".with_class(class.try_get().unwrap_or_default())",
+      "migrationStatus": "pending"
+    },
+    {
+      "path": "crates/rustify-components/src/macros/variants.rs",
+      "line": 204,
+      "expression": "use $crate::tw_merge::*;",
+      "migrationStatus": "pending"
+    },
+    {
+      "path": "crates/rustify-components/src/macros/variants.rs",
+      "line": 243,
+      "expression": "use $crate::tw_merge::*;",
+      "migrationStatus": "pending"
+    },
+    {
+      "path": "crates/rustify-components/src/menu.rs",
+      "line": 185,
+      "expression": "let panel_class = StoredValue::new(crate::macros::merge(PANEL, &class));",
+      "migrationStatus": "pending"
+    },
+    {
+      "path": "crates/rustify-components/src/number_field.rs",
+      "line": 157,
+      "expression": "class=crate::macros::merge(BASE, &class)",
+      "migrationStatus": "pending"
+    },
+    {
+      "path": "crates/rustify-components/src/progress.rs",
+      "line": 33,
+      "expression": "class=crate::macros::merge(TRACK, &class)",
+      "migrationStatus": "pending"
+    },
+    {
+      "path": "crates/rustify-components/src/radio.rs",
+      "line": 65,
+      "expression": "class=crate::macros::merge(\"flex flex-col gap-3\", &class)",
+      "migrationStatus": "pending"
+    },
+    {
+      "path": "crates/rustify-components/src/scroll_area.rs",
+      "line": 57,
+      "expression": "class=crate::macros::merge(format!(\"{BASE} {}\", boundary.class()), &class)",
+      "migrationStatus": "pending"
+    },
+    {
+      "path": "crates/rustify-components/src/select.rs",
+      "line": 172,
+      "expression": "class=crate::macros::merge(TRIGGER, &class)",
+      "migrationStatus": "pending"
+    },
+    {
+      "path": "crates/rustify-components/src/slider.rs",
+      "line": 48,
+      "expression": "class=crate::macros::merge(\"w-full\", &class)",
+      "migrationStatus": "pending"
+    },
+    {
+      "path": "crates/rustify-components/src/spinner.rs",
+      "line": 24,
+      "expression": "class=crate::macros::merge(\"inline-flex text-muted-foreground\", &class)",
+      "migrationStatus": "pending"
+    },
+    {
+      "path": "crates/rustify-components/src/switch.rs",
+      "line": 35,
+      "expression": "class=crate::macros::merge(TRACK, &class)",
+      "migrationStatus": "pending"
+    },
+    {
+      "path": "crates/rustify-components/src/tabs.rs",
+      "line": 138,
+      "expression": "class=crate::macros::merge(\"flex gap-2 flex-col\", &class)",
+      "migrationStatus": "pending"
+    },
+    {
+      "path": "crates/rustify-components/src/tabs.rs",
+      "line": 203,
+      "expression": "class=crate::macros::merge(\"flex-1 text-sm outline-none\", &class)",
+      "migrationStatus": "pending"
+    },
+    {
+      "path": "crates/rustify-components/src/textarea.rs",
+      "line": 50,
+      "expression": "class=crate::macros::merge(BASE, &class)",
+      "migrationStatus": "pending"
+    },
+    {
+      "path": "crates/rustify-components/src/toast.rs",
+      "line": 47,
+      "expression": "class=crate::macros::merge(&base, &class)",
+      "migrationStatus": "pending"
+    },
+    {
+      "path": "crates/rustify-components/src/toast.rs",
+      "line": 100,
+      "expression": "class=crate::macros::merge(REGION, &class)",
+      "migrationStatus": "pending"
+    },
+    {
+      "path": "crates/rustify-components/src/toggle_group.rs",
+      "line": 166,
+      "expression": "class=crate::macros::merge(&base, &class)",
+      "migrationStatus": "pending"
+    },
+    {
+      "path": "crates/rustify-components/src/toggle_group.rs",
+      "line": 187,
+      "expression": "class=crate::macros::merge(ITEM, if toolbar { \"text-card-foreground\" } else { \"\" })",
+      "migrationStatus": "pending"
+    },
+    {
+      "path": "crates/rustify-components/src/tooltip.rs",
+      "line": 70,
+      "expression": "let content_class = StoredValue::new(crate::macros::merge(CONTENT, &class));",
+      "migrationStatus": "pending"
+    },
+    {
+      "path": "crates/rustify-components/src/tree.rs",
+      "line": 205,
+      "expression": "class=crate::macros::merge(TREE, &class)",
+      "migrationStatus": "pending"
+    },
+    {
+      "path": "crates/rustify-components/src/workspace/panel_tabs.rs",
+      "line": 106,
+      "expression": "class=crate::macros::merge(STRIP, &class)",
+      "migrationStatus": "pending"
+    }
+  ],
+  "defaults": {
+    "ButtonVariant": "Default",
+    "ButtonSize": "Default",
+    "ChipVariant": "Yes",
+    "ChipSize": "Default"
+  },
+  "cases": [
+    {
+      "id": "Button.Default.Default.default",
+      "kind": "button_classes",
+      "variant": "Default",
+      "size": "Default",
+      "rawFragments": [
+        "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:border-destructive",
+        "bg-primary text-primary-foreground hover:bg-primary/90",
+        "h-9 px-4 py-2"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "source": {
+        "path": "crates/rustify-components/src/button.rs",
+        "symbol": "variants! Button"
+      },
+      "oldOutput": "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-[3px] aria-invalid:border-destructive bg-primary text-primary-foreground hover:bg-primary/90 h-9 px-4 py-2",
+      "requiredMigration": true
+    },
+    {
+      "id": "Button.Default.Default.caller",
+      "kind": "button_classes",
+      "variant": "Default",
+      "size": "Default",
+      "rawFragments": [
+        "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:border-destructive",
+        "bg-primary text-primary-foreground hover:bg-primary/90",
+        "h-9 px-4 py-2"
+      ],
+      "callerClass": "bg-[#123456] p-6 hover:bg-secondary text-xl",
+      "status": "captured_migration_pending",
+      "source": {
+        "path": "crates/rustify-components/src/button.rs",
+        "symbol": "variants! Button"
+      },
+      "oldOutput": "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-[3px] aria-invalid:border-destructive text-primary-foreground h-9 bg-[#123456] p-6 hover:bg-secondary text-xl",
+      "requiredMigration": true
+    },
+    {
+      "id": "Button.Default.Sm.default",
+      "kind": "button_classes",
+      "variant": "Default",
+      "size": "Sm",
+      "rawFragments": [
+        "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:border-destructive",
+        "bg-primary text-primary-foreground hover:bg-primary/90",
+        "h-8 px-3 text-xs"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "source": {
+        "path": "crates/rustify-components/src/button.rs",
+        "symbol": "variants! Button"
+      },
+      "oldOutput": "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-[3px] aria-invalid:border-destructive bg-primary text-primary-foreground hover:bg-primary/90 h-8 px-3 text-xs",
+      "requiredMigration": true
+    },
+    {
+      "id": "Button.Default.Sm.caller",
+      "kind": "button_classes",
+      "variant": "Default",
+      "size": "Sm",
+      "rawFragments": [
+        "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:border-destructive",
+        "bg-primary text-primary-foreground hover:bg-primary/90",
+        "h-8 px-3 text-xs"
+      ],
+      "callerClass": "bg-[#123456] p-6 hover:bg-secondary text-xl",
+      "status": "captured_migration_pending",
+      "source": {
+        "path": "crates/rustify-components/src/button.rs",
+        "symbol": "variants! Button"
+      },
+      "oldOutput": "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-[3px] aria-invalid:border-destructive text-primary-foreground h-8 bg-[#123456] p-6 hover:bg-secondary text-xl",
+      "requiredMigration": true
+    },
+    {
+      "id": "Button.Default.Lg.default",
+      "kind": "button_classes",
+      "variant": "Default",
+      "size": "Lg",
+      "rawFragments": [
+        "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:border-destructive",
+        "bg-primary text-primary-foreground hover:bg-primary/90",
+        "h-10 px-6"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "source": {
+        "path": "crates/rustify-components/src/button.rs",
+        "symbol": "variants! Button"
+      },
+      "oldOutput": "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-[3px] aria-invalid:border-destructive bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-6",
+      "requiredMigration": true
+    },
+    {
+      "id": "Button.Default.Lg.caller",
+      "kind": "button_classes",
+      "variant": "Default",
+      "size": "Lg",
+      "rawFragments": [
+        "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:border-destructive",
+        "bg-primary text-primary-foreground hover:bg-primary/90",
+        "h-10 px-6"
+      ],
+      "callerClass": "bg-[#123456] p-6 hover:bg-secondary text-xl",
+      "status": "captured_migration_pending",
+      "source": {
+        "path": "crates/rustify-components/src/button.rs",
+        "symbol": "variants! Button"
+      },
+      "oldOutput": "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-[3px] aria-invalid:border-destructive text-primary-foreground h-10 bg-[#123456] p-6 hover:bg-secondary text-xl",
+      "requiredMigration": true
+    },
+    {
+      "id": "Button.Default.Icon.default",
+      "kind": "button_classes",
+      "variant": "Default",
+      "size": "Icon",
+      "rawFragments": [
+        "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:border-destructive",
+        "bg-primary text-primary-foreground hover:bg-primary/90",
+        "size-9 p-0"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "source": {
+        "path": "crates/rustify-components/src/button.rs",
+        "symbol": "variants! Button"
+      },
+      "oldOutput": "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-[3px] aria-invalid:border-destructive bg-primary text-primary-foreground hover:bg-primary/90 size-9 p-0",
+      "requiredMigration": true
+    },
+    {
+      "id": "Button.Default.Icon.caller",
+      "kind": "button_classes",
+      "variant": "Default",
+      "size": "Icon",
+      "rawFragments": [
+        "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:border-destructive",
+        "bg-primary text-primary-foreground hover:bg-primary/90",
+        "size-9 p-0"
+      ],
+      "callerClass": "bg-[#123456] p-6 hover:bg-secondary text-xl",
+      "status": "captured_migration_pending",
+      "source": {
+        "path": "crates/rustify-components/src/button.rs",
+        "symbol": "variants! Button"
+      },
+      "oldOutput": "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium shrink-0 select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-[3px] aria-invalid:border-destructive text-primary-foreground size-9 bg-[#123456] p-6 hover:bg-secondary text-xl",
+      "requiredMigration": true
+    },
+    {
+      "id": "Button.Secondary.Default.default",
+      "kind": "button_classes",
+      "variant": "Secondary",
+      "size": "Default",
+      "rawFragments": [
+        "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:border-destructive",
+        "bg-secondary text-secondary-foreground hover:bg-secondary/80",
+        "h-9 px-4 py-2"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "source": {
+        "path": "crates/rustify-components/src/button.rs",
+        "symbol": "variants! Button"
+      },
+      "oldOutput": "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-[3px] aria-invalid:border-destructive bg-secondary text-secondary-foreground hover:bg-secondary/80 h-9 px-4 py-2",
+      "requiredMigration": true
+    },
+    {
+      "id": "Button.Secondary.Default.caller",
+      "kind": "button_classes",
+      "variant": "Secondary",
+      "size": "Default",
+      "rawFragments": [
+        "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:border-destructive",
+        "bg-secondary text-secondary-foreground hover:bg-secondary/80",
+        "h-9 px-4 py-2"
+      ],
+      "callerClass": "bg-[#123456] p-6 hover:bg-secondary text-xl",
+      "status": "captured_migration_pending",
+      "source": {
+        "path": "crates/rustify-components/src/button.rs",
+        "symbol": "variants! Button"
+      },
+      "oldOutput": "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-[3px] aria-invalid:border-destructive text-secondary-foreground h-9 bg-[#123456] p-6 hover:bg-secondary text-xl",
+      "requiredMigration": true
+    },
+    {
+      "id": "Button.Secondary.Sm.default",
+      "kind": "button_classes",
+      "variant": "Secondary",
+      "size": "Sm",
+      "rawFragments": [
+        "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:border-destructive",
+        "bg-secondary text-secondary-foreground hover:bg-secondary/80",
+        "h-8 px-3 text-xs"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "source": {
+        "path": "crates/rustify-components/src/button.rs",
+        "symbol": "variants! Button"
+      },
+      "oldOutput": "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-[3px] aria-invalid:border-destructive bg-secondary text-secondary-foreground hover:bg-secondary/80 h-8 px-3 text-xs",
+      "requiredMigration": true
+    },
+    {
+      "id": "Button.Secondary.Sm.caller",
+      "kind": "button_classes",
+      "variant": "Secondary",
+      "size": "Sm",
+      "rawFragments": [
+        "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:border-destructive",
+        "bg-secondary text-secondary-foreground hover:bg-secondary/80",
+        "h-8 px-3 text-xs"
+      ],
+      "callerClass": "bg-[#123456] p-6 hover:bg-secondary text-xl",
+      "status": "captured_migration_pending",
+      "source": {
+        "path": "crates/rustify-components/src/button.rs",
+        "symbol": "variants! Button"
+      },
+      "oldOutput": "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-[3px] aria-invalid:border-destructive text-secondary-foreground h-8 bg-[#123456] p-6 hover:bg-secondary text-xl",
+      "requiredMigration": true
+    },
+    {
+      "id": "Button.Secondary.Lg.default",
+      "kind": "button_classes",
+      "variant": "Secondary",
+      "size": "Lg",
+      "rawFragments": [
+        "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:border-destructive",
+        "bg-secondary text-secondary-foreground hover:bg-secondary/80",
+        "h-10 px-6"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "source": {
+        "path": "crates/rustify-components/src/button.rs",
+        "symbol": "variants! Button"
+      },
+      "oldOutput": "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-[3px] aria-invalid:border-destructive bg-secondary text-secondary-foreground hover:bg-secondary/80 h-10 px-6",
+      "requiredMigration": true
+    },
+    {
+      "id": "Button.Secondary.Lg.caller",
+      "kind": "button_classes",
+      "variant": "Secondary",
+      "size": "Lg",
+      "rawFragments": [
+        "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:border-destructive",
+        "bg-secondary text-secondary-foreground hover:bg-secondary/80",
+        "h-10 px-6"
+      ],
+      "callerClass": "bg-[#123456] p-6 hover:bg-secondary text-xl",
+      "status": "captured_migration_pending",
+      "source": {
+        "path": "crates/rustify-components/src/button.rs",
+        "symbol": "variants! Button"
+      },
+      "oldOutput": "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-[3px] aria-invalid:border-destructive text-secondary-foreground h-10 bg-[#123456] p-6 hover:bg-secondary text-xl",
+      "requiredMigration": true
+    },
+    {
+      "id": "Button.Secondary.Icon.default",
+      "kind": "button_classes",
+      "variant": "Secondary",
+      "size": "Icon",
+      "rawFragments": [
+        "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:border-destructive",
+        "bg-secondary text-secondary-foreground hover:bg-secondary/80",
+        "size-9 p-0"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "source": {
+        "path": "crates/rustify-components/src/button.rs",
+        "symbol": "variants! Button"
+      },
+      "oldOutput": "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-[3px] aria-invalid:border-destructive bg-secondary text-secondary-foreground hover:bg-secondary/80 size-9 p-0",
+      "requiredMigration": true
+    },
+    {
+      "id": "Button.Secondary.Icon.caller",
+      "kind": "button_classes",
+      "variant": "Secondary",
+      "size": "Icon",
+      "rawFragments": [
+        "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:border-destructive",
+        "bg-secondary text-secondary-foreground hover:bg-secondary/80",
+        "size-9 p-0"
+      ],
+      "callerClass": "bg-[#123456] p-6 hover:bg-secondary text-xl",
+      "status": "captured_migration_pending",
+      "source": {
+        "path": "crates/rustify-components/src/button.rs",
+        "symbol": "variants! Button"
+      },
+      "oldOutput": "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium shrink-0 select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-[3px] aria-invalid:border-destructive text-secondary-foreground size-9 bg-[#123456] p-6 hover:bg-secondary text-xl",
+      "requiredMigration": true
+    },
+    {
+      "id": "Button.Outline.Default.default",
+      "kind": "button_classes",
+      "variant": "Outline",
+      "size": "Default",
+      "rawFragments": [
+        "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:border-destructive",
+        "border border-border bg-background hover:bg-muted",
+        "h-9 px-4 py-2"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "source": {
+        "path": "crates/rustify-components/src/button.rs",
+        "symbol": "variants! Button"
+      },
+      "oldOutput": "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-[3px] aria-invalid:border-destructive border border-border bg-background hover:bg-muted h-9 px-4 py-2",
+      "requiredMigration": true
+    },
+    {
+      "id": "Button.Outline.Default.caller",
+      "kind": "button_classes",
+      "variant": "Outline",
+      "size": "Default",
+      "rawFragments": [
+        "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:border-destructive",
+        "border border-border bg-background hover:bg-muted",
+        "h-9 px-4 py-2"
+      ],
+      "callerClass": "bg-[#123456] p-6 hover:bg-secondary text-xl",
+      "status": "captured_migration_pending",
+      "source": {
+        "path": "crates/rustify-components/src/button.rs",
+        "symbol": "variants! Button"
+      },
+      "oldOutput": "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-[3px] aria-invalid:border-destructive border border-border h-9 bg-[#123456] p-6 hover:bg-secondary text-xl",
+      "requiredMigration": true
+    },
+    {
+      "id": "Button.Outline.Sm.default",
+      "kind": "button_classes",
+      "variant": "Outline",
+      "size": "Sm",
+      "rawFragments": [
+        "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:border-destructive",
+        "border border-border bg-background hover:bg-muted",
+        "h-8 px-3 text-xs"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "source": {
+        "path": "crates/rustify-components/src/button.rs",
+        "symbol": "variants! Button"
+      },
+      "oldOutput": "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-[3px] aria-invalid:border-destructive border border-border bg-background hover:bg-muted h-8 px-3 text-xs",
+      "requiredMigration": true
+    },
+    {
+      "id": "Button.Outline.Sm.caller",
+      "kind": "button_classes",
+      "variant": "Outline",
+      "size": "Sm",
+      "rawFragments": [
+        "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:border-destructive",
+        "border border-border bg-background hover:bg-muted",
+        "h-8 px-3 text-xs"
+      ],
+      "callerClass": "bg-[#123456] p-6 hover:bg-secondary text-xl",
+      "status": "captured_migration_pending",
+      "source": {
+        "path": "crates/rustify-components/src/button.rs",
+        "symbol": "variants! Button"
+      },
+      "oldOutput": "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-[3px] aria-invalid:border-destructive border border-border h-8 bg-[#123456] p-6 hover:bg-secondary text-xl",
+      "requiredMigration": true
+    },
+    {
+      "id": "Button.Outline.Lg.default",
+      "kind": "button_classes",
+      "variant": "Outline",
+      "size": "Lg",
+      "rawFragments": [
+        "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:border-destructive",
+        "border border-border bg-background hover:bg-muted",
+        "h-10 px-6"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "source": {
+        "path": "crates/rustify-components/src/button.rs",
+        "symbol": "variants! Button"
+      },
+      "oldOutput": "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-[3px] aria-invalid:border-destructive border border-border bg-background hover:bg-muted h-10 px-6",
+      "requiredMigration": true
+    },
+    {
+      "id": "Button.Outline.Lg.caller",
+      "kind": "button_classes",
+      "variant": "Outline",
+      "size": "Lg",
+      "rawFragments": [
+        "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:border-destructive",
+        "border border-border bg-background hover:bg-muted",
+        "h-10 px-6"
+      ],
+      "callerClass": "bg-[#123456] p-6 hover:bg-secondary text-xl",
+      "status": "captured_migration_pending",
+      "source": {
+        "path": "crates/rustify-components/src/button.rs",
+        "symbol": "variants! Button"
+      },
+      "oldOutput": "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-[3px] aria-invalid:border-destructive border border-border h-10 bg-[#123456] p-6 hover:bg-secondary text-xl",
+      "requiredMigration": true
+    },
+    {
+      "id": "Button.Outline.Icon.default",
+      "kind": "button_classes",
+      "variant": "Outline",
+      "size": "Icon",
+      "rawFragments": [
+        "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:border-destructive",
+        "border border-border bg-background hover:bg-muted",
+        "size-9 p-0"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "source": {
+        "path": "crates/rustify-components/src/button.rs",
+        "symbol": "variants! Button"
+      },
+      "oldOutput": "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-[3px] aria-invalid:border-destructive border border-border bg-background hover:bg-muted size-9 p-0",
+      "requiredMigration": true
+    },
+    {
+      "id": "Button.Outline.Icon.caller",
+      "kind": "button_classes",
+      "variant": "Outline",
+      "size": "Icon",
+      "rawFragments": [
+        "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:border-destructive",
+        "border border-border bg-background hover:bg-muted",
+        "size-9 p-0"
+      ],
+      "callerClass": "bg-[#123456] p-6 hover:bg-secondary text-xl",
+      "status": "captured_migration_pending",
+      "source": {
+        "path": "crates/rustify-components/src/button.rs",
+        "symbol": "variants! Button"
+      },
+      "oldOutput": "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium shrink-0 select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-[3px] aria-invalid:border-destructive border border-border size-9 bg-[#123456] p-6 hover:bg-secondary text-xl",
+      "requiredMigration": true
+    },
+    {
+      "id": "Button.Ghost.Default.default",
+      "kind": "button_classes",
+      "variant": "Ghost",
+      "size": "Default",
+      "rawFragments": [
+        "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:border-destructive",
+        "hover:bg-muted hover:text-foreground",
+        "h-9 px-4 py-2"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "source": {
+        "path": "crates/rustify-components/src/button.rs",
+        "symbol": "variants! Button"
+      },
+      "oldOutput": "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-[3px] aria-invalid:border-destructive hover:bg-muted hover:text-foreground h-9 px-4 py-2",
+      "requiredMigration": true
+    },
+    {
+      "id": "Button.Ghost.Default.caller",
+      "kind": "button_classes",
+      "variant": "Ghost",
+      "size": "Default",
+      "rawFragments": [
+        "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:border-destructive",
+        "hover:bg-muted hover:text-foreground",
+        "h-9 px-4 py-2"
+      ],
+      "callerClass": "bg-[#123456] p-6 hover:bg-secondary text-xl",
+      "status": "captured_migration_pending",
+      "source": {
+        "path": "crates/rustify-components/src/button.rs",
+        "symbol": "variants! Button"
+      },
+      "oldOutput": "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-[3px] aria-invalid:border-destructive hover:text-foreground h-9 bg-[#123456] p-6 hover:bg-secondary text-xl",
+      "requiredMigration": true
+    },
+    {
+      "id": "Button.Ghost.Sm.default",
+      "kind": "button_classes",
+      "variant": "Ghost",
+      "size": "Sm",
+      "rawFragments": [
+        "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:border-destructive",
+        "hover:bg-muted hover:text-foreground",
+        "h-8 px-3 text-xs"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "source": {
+        "path": "crates/rustify-components/src/button.rs",
+        "symbol": "variants! Button"
+      },
+      "oldOutput": "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-[3px] aria-invalid:border-destructive hover:bg-muted hover:text-foreground h-8 px-3 text-xs",
+      "requiredMigration": true
+    },
+    {
+      "id": "Button.Ghost.Sm.caller",
+      "kind": "button_classes",
+      "variant": "Ghost",
+      "size": "Sm",
+      "rawFragments": [
+        "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:border-destructive",
+        "hover:bg-muted hover:text-foreground",
+        "h-8 px-3 text-xs"
+      ],
+      "callerClass": "bg-[#123456] p-6 hover:bg-secondary text-xl",
+      "status": "captured_migration_pending",
+      "source": {
+        "path": "crates/rustify-components/src/button.rs",
+        "symbol": "variants! Button"
+      },
+      "oldOutput": "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-[3px] aria-invalid:border-destructive hover:text-foreground h-8 bg-[#123456] p-6 hover:bg-secondary text-xl",
+      "requiredMigration": true
+    },
+    {
+      "id": "Button.Ghost.Lg.default",
+      "kind": "button_classes",
+      "variant": "Ghost",
+      "size": "Lg",
+      "rawFragments": [
+        "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:border-destructive",
+        "hover:bg-muted hover:text-foreground",
+        "h-10 px-6"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "source": {
+        "path": "crates/rustify-components/src/button.rs",
+        "symbol": "variants! Button"
+      },
+      "oldOutput": "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-[3px] aria-invalid:border-destructive hover:bg-muted hover:text-foreground h-10 px-6",
+      "requiredMigration": true
+    },
+    {
+      "id": "Button.Ghost.Lg.caller",
+      "kind": "button_classes",
+      "variant": "Ghost",
+      "size": "Lg",
+      "rawFragments": [
+        "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:border-destructive",
+        "hover:bg-muted hover:text-foreground",
+        "h-10 px-6"
+      ],
+      "callerClass": "bg-[#123456] p-6 hover:bg-secondary text-xl",
+      "status": "captured_migration_pending",
+      "source": {
+        "path": "crates/rustify-components/src/button.rs",
+        "symbol": "variants! Button"
+      },
+      "oldOutput": "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-[3px] aria-invalid:border-destructive hover:text-foreground h-10 bg-[#123456] p-6 hover:bg-secondary text-xl",
+      "requiredMigration": true
+    },
+    {
+      "id": "Button.Ghost.Icon.default",
+      "kind": "button_classes",
+      "variant": "Ghost",
+      "size": "Icon",
+      "rawFragments": [
+        "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:border-destructive",
+        "hover:bg-muted hover:text-foreground",
+        "size-9 p-0"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "source": {
+        "path": "crates/rustify-components/src/button.rs",
+        "symbol": "variants! Button"
+      },
+      "oldOutput": "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-[3px] aria-invalid:border-destructive hover:bg-muted hover:text-foreground size-9 p-0",
+      "requiredMigration": true
+    },
+    {
+      "id": "Button.Ghost.Icon.caller",
+      "kind": "button_classes",
+      "variant": "Ghost",
+      "size": "Icon",
+      "rawFragments": [
+        "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:border-destructive",
+        "hover:bg-muted hover:text-foreground",
+        "size-9 p-0"
+      ],
+      "callerClass": "bg-[#123456] p-6 hover:bg-secondary text-xl",
+      "status": "captured_migration_pending",
+      "source": {
+        "path": "crates/rustify-components/src/button.rs",
+        "symbol": "variants! Button"
+      },
+      "oldOutput": "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium shrink-0 select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-[3px] aria-invalid:border-destructive hover:text-foreground size-9 bg-[#123456] p-6 hover:bg-secondary text-xl",
+      "requiredMigration": true
+    },
+    {
+      "id": "Button.Accent.Default.default",
+      "kind": "button_classes",
+      "variant": "Accent",
+      "size": "Default",
+      "rawFragments": [
+        "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:border-destructive",
+        "bg-accent text-accent-foreground hover:bg-accent/80",
+        "h-9 px-4 py-2"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "source": {
+        "path": "crates/rustify-components/src/button.rs",
+        "symbol": "variants! Button"
+      },
+      "oldOutput": "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-[3px] aria-invalid:border-destructive bg-accent text-accent-foreground hover:bg-accent/80 h-9 px-4 py-2",
+      "requiredMigration": true
+    },
+    {
+      "id": "Button.Accent.Default.caller",
+      "kind": "button_classes",
+      "variant": "Accent",
+      "size": "Default",
+      "rawFragments": [
+        "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:border-destructive",
+        "bg-accent text-accent-foreground hover:bg-accent/80",
+        "h-9 px-4 py-2"
+      ],
+      "callerClass": "bg-[#123456] p-6 hover:bg-secondary text-xl",
+      "status": "captured_migration_pending",
+      "source": {
+        "path": "crates/rustify-components/src/button.rs",
+        "symbol": "variants! Button"
+      },
+      "oldOutput": "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-[3px] aria-invalid:border-destructive text-accent-foreground h-9 bg-[#123456] p-6 hover:bg-secondary text-xl",
+      "requiredMigration": true
+    },
+    {
+      "id": "Button.Accent.Sm.default",
+      "kind": "button_classes",
+      "variant": "Accent",
+      "size": "Sm",
+      "rawFragments": [
+        "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:border-destructive",
+        "bg-accent text-accent-foreground hover:bg-accent/80",
+        "h-8 px-3 text-xs"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "source": {
+        "path": "crates/rustify-components/src/button.rs",
+        "symbol": "variants! Button"
+      },
+      "oldOutput": "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-[3px] aria-invalid:border-destructive bg-accent text-accent-foreground hover:bg-accent/80 h-8 px-3 text-xs",
+      "requiredMigration": true
+    },
+    {
+      "id": "Button.Accent.Sm.caller",
+      "kind": "button_classes",
+      "variant": "Accent",
+      "size": "Sm",
+      "rawFragments": [
+        "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:border-destructive",
+        "bg-accent text-accent-foreground hover:bg-accent/80",
+        "h-8 px-3 text-xs"
+      ],
+      "callerClass": "bg-[#123456] p-6 hover:bg-secondary text-xl",
+      "status": "captured_migration_pending",
+      "source": {
+        "path": "crates/rustify-components/src/button.rs",
+        "symbol": "variants! Button"
+      },
+      "oldOutput": "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-[3px] aria-invalid:border-destructive text-accent-foreground h-8 bg-[#123456] p-6 hover:bg-secondary text-xl",
+      "requiredMigration": true
+    },
+    {
+      "id": "Button.Accent.Lg.default",
+      "kind": "button_classes",
+      "variant": "Accent",
+      "size": "Lg",
+      "rawFragments": [
+        "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:border-destructive",
+        "bg-accent text-accent-foreground hover:bg-accent/80",
+        "h-10 px-6"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "source": {
+        "path": "crates/rustify-components/src/button.rs",
+        "symbol": "variants! Button"
+      },
+      "oldOutput": "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-[3px] aria-invalid:border-destructive bg-accent text-accent-foreground hover:bg-accent/80 h-10 px-6",
+      "requiredMigration": true
+    },
+    {
+      "id": "Button.Accent.Lg.caller",
+      "kind": "button_classes",
+      "variant": "Accent",
+      "size": "Lg",
+      "rawFragments": [
+        "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:border-destructive",
+        "bg-accent text-accent-foreground hover:bg-accent/80",
+        "h-10 px-6"
+      ],
+      "callerClass": "bg-[#123456] p-6 hover:bg-secondary text-xl",
+      "status": "captured_migration_pending",
+      "source": {
+        "path": "crates/rustify-components/src/button.rs",
+        "symbol": "variants! Button"
+      },
+      "oldOutput": "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-[3px] aria-invalid:border-destructive text-accent-foreground h-10 bg-[#123456] p-6 hover:bg-secondary text-xl",
+      "requiredMigration": true
+    },
+    {
+      "id": "Button.Accent.Icon.default",
+      "kind": "button_classes",
+      "variant": "Accent",
+      "size": "Icon",
+      "rawFragments": [
+        "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:border-destructive",
+        "bg-accent text-accent-foreground hover:bg-accent/80",
+        "size-9 p-0"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "source": {
+        "path": "crates/rustify-components/src/button.rs",
+        "symbol": "variants! Button"
+      },
+      "oldOutput": "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-[3px] aria-invalid:border-destructive bg-accent text-accent-foreground hover:bg-accent/80 size-9 p-0",
+      "requiredMigration": true
+    },
+    {
+      "id": "Button.Accent.Icon.caller",
+      "kind": "button_classes",
+      "variant": "Accent",
+      "size": "Icon",
+      "rawFragments": [
+        "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:border-destructive",
+        "bg-accent text-accent-foreground hover:bg-accent/80",
+        "size-9 p-0"
+      ],
+      "callerClass": "bg-[#123456] p-6 hover:bg-secondary text-xl",
+      "status": "captured_migration_pending",
+      "source": {
+        "path": "crates/rustify-components/src/button.rs",
+        "symbol": "variants! Button"
+      },
+      "oldOutput": "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium shrink-0 select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-[3px] aria-invalid:border-destructive text-accent-foreground size-9 bg-[#123456] p-6 hover:bg-secondary text-xl",
+      "requiredMigration": true
+    },
+    {
+      "id": "Button.Destructive.Default.default",
+      "kind": "button_classes",
+      "variant": "Destructive",
+      "size": "Default",
+      "rawFragments": [
+        "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:border-destructive",
+        "bg-destructive text-destructive-foreground hover:bg-destructive/90",
+        "h-9 px-4 py-2"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "source": {
+        "path": "crates/rustify-components/src/button.rs",
+        "symbol": "variants! Button"
+      },
+      "oldOutput": "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-[3px] aria-invalid:border-destructive bg-destructive text-destructive-foreground hover:bg-destructive/90 h-9 px-4 py-2",
+      "requiredMigration": true
+    },
+    {
+      "id": "Button.Destructive.Default.caller",
+      "kind": "button_classes",
+      "variant": "Destructive",
+      "size": "Default",
+      "rawFragments": [
+        "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:border-destructive",
+        "bg-destructive text-destructive-foreground hover:bg-destructive/90",
+        "h-9 px-4 py-2"
+      ],
+      "callerClass": "bg-[#123456] p-6 hover:bg-secondary text-xl",
+      "status": "captured_migration_pending",
+      "source": {
+        "path": "crates/rustify-components/src/button.rs",
+        "symbol": "variants! Button"
+      },
+      "oldOutput": "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-[3px] aria-invalid:border-destructive text-destructive-foreground h-9 bg-[#123456] p-6 hover:bg-secondary text-xl",
+      "requiredMigration": true
+    },
+    {
+      "id": "Button.Destructive.Sm.default",
+      "kind": "button_classes",
+      "variant": "Destructive",
+      "size": "Sm",
+      "rawFragments": [
+        "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:border-destructive",
+        "bg-destructive text-destructive-foreground hover:bg-destructive/90",
+        "h-8 px-3 text-xs"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "source": {
+        "path": "crates/rustify-components/src/button.rs",
+        "symbol": "variants! Button"
+      },
+      "oldOutput": "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-[3px] aria-invalid:border-destructive bg-destructive text-destructive-foreground hover:bg-destructive/90 h-8 px-3 text-xs",
+      "requiredMigration": true
+    },
+    {
+      "id": "Button.Destructive.Sm.caller",
+      "kind": "button_classes",
+      "variant": "Destructive",
+      "size": "Sm",
+      "rawFragments": [
+        "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:border-destructive",
+        "bg-destructive text-destructive-foreground hover:bg-destructive/90",
+        "h-8 px-3 text-xs"
+      ],
+      "callerClass": "bg-[#123456] p-6 hover:bg-secondary text-xl",
+      "status": "captured_migration_pending",
+      "source": {
+        "path": "crates/rustify-components/src/button.rs",
+        "symbol": "variants! Button"
+      },
+      "oldOutput": "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-[3px] aria-invalid:border-destructive text-destructive-foreground h-8 bg-[#123456] p-6 hover:bg-secondary text-xl",
+      "requiredMigration": true
+    },
+    {
+      "id": "Button.Destructive.Lg.default",
+      "kind": "button_classes",
+      "variant": "Destructive",
+      "size": "Lg",
+      "rawFragments": [
+        "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:border-destructive",
+        "bg-destructive text-destructive-foreground hover:bg-destructive/90",
+        "h-10 px-6"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "source": {
+        "path": "crates/rustify-components/src/button.rs",
+        "symbol": "variants! Button"
+      },
+      "oldOutput": "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-[3px] aria-invalid:border-destructive bg-destructive text-destructive-foreground hover:bg-destructive/90 h-10 px-6",
+      "requiredMigration": true
+    },
+    {
+      "id": "Button.Destructive.Lg.caller",
+      "kind": "button_classes",
+      "variant": "Destructive",
+      "size": "Lg",
+      "rawFragments": [
+        "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:border-destructive",
+        "bg-destructive text-destructive-foreground hover:bg-destructive/90",
+        "h-10 px-6"
+      ],
+      "callerClass": "bg-[#123456] p-6 hover:bg-secondary text-xl",
+      "status": "captured_migration_pending",
+      "source": {
+        "path": "crates/rustify-components/src/button.rs",
+        "symbol": "variants! Button"
+      },
+      "oldOutput": "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-[3px] aria-invalid:border-destructive text-destructive-foreground h-10 bg-[#123456] p-6 hover:bg-secondary text-xl",
+      "requiredMigration": true
+    },
+    {
+      "id": "Button.Destructive.Icon.default",
+      "kind": "button_classes",
+      "variant": "Destructive",
+      "size": "Icon",
+      "rawFragments": [
+        "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:border-destructive",
+        "bg-destructive text-destructive-foreground hover:bg-destructive/90",
+        "size-9 p-0"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "source": {
+        "path": "crates/rustify-components/src/button.rs",
+        "symbol": "variants! Button"
+      },
+      "oldOutput": "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-[3px] aria-invalid:border-destructive bg-destructive text-destructive-foreground hover:bg-destructive/90 size-9 p-0",
+      "requiredMigration": true
+    },
+    {
+      "id": "Button.Destructive.Icon.caller",
+      "kind": "button_classes",
+      "variant": "Destructive",
+      "size": "Icon",
+      "rawFragments": [
+        "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:border-destructive",
+        "bg-destructive text-destructive-foreground hover:bg-destructive/90",
+        "size-9 p-0"
+      ],
+      "callerClass": "bg-[#123456] p-6 hover:bg-secondary text-xl",
+      "status": "captured_migration_pending",
+      "source": {
+        "path": "crates/rustify-components/src/button.rs",
+        "symbol": "variants! Button"
+      },
+      "oldOutput": "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium shrink-0 select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-[3px] aria-invalid:border-destructive text-destructive-foreground size-9 bg-[#123456] p-6 hover:bg-secondary text-xl",
+      "requiredMigration": true
+    },
+    {
+      "id": "Button.Link.Default.default",
+      "kind": "button_classes",
+      "variant": "Link",
+      "size": "Default",
+      "rawFragments": [
+        "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:border-destructive",
+        "text-primary underline-offset-4 hover:underline",
+        "h-9 px-4 py-2"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "source": {
+        "path": "crates/rustify-components/src/button.rs",
+        "symbol": "variants! Button"
+      },
+      "oldOutput": "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-[3px] aria-invalid:border-destructive text-primary underline-offset-4 hover:underline h-9 px-4 py-2",
+      "requiredMigration": true
+    },
+    {
+      "id": "Button.Link.Default.caller",
+      "kind": "button_classes",
+      "variant": "Link",
+      "size": "Default",
+      "rawFragments": [
+        "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:border-destructive",
+        "text-primary underline-offset-4 hover:underline",
+        "h-9 px-4 py-2"
+      ],
+      "callerClass": "bg-[#123456] p-6 hover:bg-secondary text-xl",
+      "status": "captured_migration_pending",
+      "source": {
+        "path": "crates/rustify-components/src/button.rs",
+        "symbol": "variants! Button"
+      },
+      "oldOutput": "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-[3px] aria-invalid:border-destructive text-primary underline-offset-4 hover:underline h-9 bg-[#123456] p-6 hover:bg-secondary text-xl",
+      "requiredMigration": true
+    },
+    {
+      "id": "Button.Link.Sm.default",
+      "kind": "button_classes",
+      "variant": "Link",
+      "size": "Sm",
+      "rawFragments": [
+        "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:border-destructive",
+        "text-primary underline-offset-4 hover:underline",
+        "h-8 px-3 text-xs"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "source": {
+        "path": "crates/rustify-components/src/button.rs",
+        "symbol": "variants! Button"
+      },
+      "oldOutput": "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-[3px] aria-invalid:border-destructive text-primary underline-offset-4 hover:underline h-8 px-3 text-xs",
+      "requiredMigration": true
+    },
+    {
+      "id": "Button.Link.Sm.caller",
+      "kind": "button_classes",
+      "variant": "Link",
+      "size": "Sm",
+      "rawFragments": [
+        "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:border-destructive",
+        "text-primary underline-offset-4 hover:underline",
+        "h-8 px-3 text-xs"
+      ],
+      "callerClass": "bg-[#123456] p-6 hover:bg-secondary text-xl",
+      "status": "captured_migration_pending",
+      "source": {
+        "path": "crates/rustify-components/src/button.rs",
+        "symbol": "variants! Button"
+      },
+      "oldOutput": "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-[3px] aria-invalid:border-destructive text-primary underline-offset-4 hover:underline h-8 bg-[#123456] p-6 hover:bg-secondary text-xl",
+      "requiredMigration": true
+    },
+    {
+      "id": "Button.Link.Lg.default",
+      "kind": "button_classes",
+      "variant": "Link",
+      "size": "Lg",
+      "rawFragments": [
+        "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:border-destructive",
+        "text-primary underline-offset-4 hover:underline",
+        "h-10 px-6"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "source": {
+        "path": "crates/rustify-components/src/button.rs",
+        "symbol": "variants! Button"
+      },
+      "oldOutput": "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-[3px] aria-invalid:border-destructive text-primary underline-offset-4 hover:underline h-10 px-6",
+      "requiredMigration": true
+    },
+    {
+      "id": "Button.Link.Lg.caller",
+      "kind": "button_classes",
+      "variant": "Link",
+      "size": "Lg",
+      "rawFragments": [
+        "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:border-destructive",
+        "text-primary underline-offset-4 hover:underline",
+        "h-10 px-6"
+      ],
+      "callerClass": "bg-[#123456] p-6 hover:bg-secondary text-xl",
+      "status": "captured_migration_pending",
+      "source": {
+        "path": "crates/rustify-components/src/button.rs",
+        "symbol": "variants! Button"
+      },
+      "oldOutput": "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-[3px] aria-invalid:border-destructive text-primary underline-offset-4 hover:underline h-10 bg-[#123456] p-6 hover:bg-secondary text-xl",
+      "requiredMigration": true
+    },
+    {
+      "id": "Button.Link.Icon.default",
+      "kind": "button_classes",
+      "variant": "Link",
+      "size": "Icon",
+      "rawFragments": [
+        "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:border-destructive",
+        "text-primary underline-offset-4 hover:underline",
+        "size-9 p-0"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "source": {
+        "path": "crates/rustify-components/src/button.rs",
+        "symbol": "variants! Button"
+      },
+      "oldOutput": "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-[3px] aria-invalid:border-destructive text-primary underline-offset-4 hover:underline size-9 p-0",
+      "requiredMigration": true
+    },
+    {
+      "id": "Button.Link.Icon.caller",
+      "kind": "button_classes",
+      "variant": "Link",
+      "size": "Icon",
+      "rawFragments": [
+        "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:border-destructive",
+        "text-primary underline-offset-4 hover:underline",
+        "size-9 p-0"
+      ],
+      "callerClass": "bg-[#123456] p-6 hover:bg-secondary text-xl",
+      "status": "captured_migration_pending",
+      "source": {
+        "path": "crates/rustify-components/src/button.rs",
+        "symbol": "variants! Button"
+      },
+      "oldOutput": "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium shrink-0 select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-[3px] aria-invalid:border-destructive text-primary underline-offset-4 hover:underline size-9 bg-[#123456] p-6 hover:bg-secondary text-xl",
+      "requiredMigration": true
+    },
+    {
+      "id": "existing_merge_contract.1",
+      "kind": "merge",
+      "rawFragments": [
+        "bg-primary p-2"
+      ],
+      "callerClass": "bg-secondary",
+      "status": "captured_migration_pending",
+      "source": {
+        "path": "crates/rustify-components/src/macros/mod.rs",
+        "symbol": "tests / expansion"
+      },
+      "oldOutput": "p-2 bg-secondary",
+      "requiredMigration": true
+    },
+    {
+      "id": "existing_merge_contract.2",
+      "kind": "merge",
+      "rawFragments": [
+        "bg-primary"
+      ],
+      "callerClass": "p-2",
+      "status": "captured_migration_pending",
+      "source": {
+        "path": "crates/rustify-components/src/macros/mod.rs",
+        "symbol": "tests / expansion"
+      },
+      "oldOutput": "bg-primary p-2",
+      "requiredMigration": true
+    },
+    {
+      "id": "existing_merge_contract.3",
+      "kind": "merge",
+      "rawFragments": [
+        "hover:bg-primary"
+      ],
+      "callerClass": "bg-secondary",
+      "status": "captured_migration_pending",
+      "source": {
+        "path": "crates/rustify-components/src/macros/mod.rs",
+        "symbol": "tests / expansion"
+      },
+      "oldOutput": "hover:bg-primary bg-secondary",
+      "requiredMigration": true
+    },
+    {
+      "id": "existing_merge_contract.4",
+      "kind": "merge",
+      "rawFragments": [
+        "inline-flex p-4 bg-card"
+      ],
+      "callerClass": "p-6",
+      "status": "captured_migration_pending",
+      "source": {
+        "path": "crates/rustify-components/src/macros/mod.rs",
+        "symbol": "tests / expansion"
+      },
+      "oldOutput": "inline-flex bg-card p-6",
+      "requiredMigration": true
+    },
+    {
+      "id": "existing_merge_contract.5",
+      "kind": "merge",
+      "rawFragments": [
+        "bg-primary hover:bg-primary/90"
+      ],
+      "callerClass": "hover:bg-secondary",
+      "status": "captured_migration_pending",
+      "source": {
+        "path": "crates/rustify-components/src/macros/mod.rs",
+        "symbol": "tests / expansion"
+      },
+      "oldOutput": "bg-primary hover:bg-secondary",
+      "requiredMigration": true
+    },
+    {
+      "id": "existing_merge_contract.6",
+      "kind": "merge",
+      "rawFragments": [
+        "inline-flex bg-primary px-2"
+      ],
+      "callerClass": "bg-secondary",
+      "status": "captured_migration_pending",
+      "source": {
+        "path": "crates/rustify-components/src/macros/mod.rs",
+        "symbol": "tests / expansion"
+      },
+      "oldOutput": "inline-flex px-2 bg-secondary",
+      "requiredMigration": true
+    },
+    {
+      "id": "existing_merge_contract.7",
+      "kind": "merge",
+      "rawFragments": [
+        "inline-flex border px-3"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "source": {
+        "path": "crates/rustify-components/src/macros/mod.rs",
+        "symbol": "tests / expansion"
+      },
+      "oldOutput": "inline-flex border px-3",
+      "requiredMigration": true
+    },
+    {
+      "id": "crates/rustify-components/src/checkbox.rs:BOX",
+      "source": {
+        "path": "crates/rustify-components/src/checkbox.rs",
+        "line": 6,
+        "symbol": "BOX"
+      },
+      "rawFragments": [
+        "pointer-events-none absolute inset-0 flex items-center justify-center rounded-[4px] border border-border bg-input text-primary-foreground transition-colors peer-checked:bg-primary peer-checked:border-primary peer-focus-visible:ring-ring/50 peer-focus-visible:ring-[3px] peer-disabled:opacity-50 peer-aria-invalid:border-destructive peer-aria-invalid:ring-destructive/40 peer-aria-invalid:ring-[3px]"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "kind": "component_constant_classes",
+      "oldOutput": "pointer-events-none absolute inset-0 flex items-center justify-center rounded-[4px] border border-border bg-input text-primary-foreground transition-colors peer-checked:bg-primary peer-checked:border-primary peer-focus-visible:ring-[3px] peer-disabled:opacity-50 peer-aria-invalid:border-destructive peer-aria-invalid:ring-[3px]",
+      "requiredMigration": true
+    },
+    {
+      "id": "crates/rustify-components/src/checkbox.rs:INPUT",
+      "source": {
+        "path": "crates/rustify-components/src/checkbox.rs",
+        "line": 7,
+        "symbol": "INPUT"
+      },
+      "rawFragments": [
+        "peer absolute inset-0 size-full m-0 opacity-0 cursor-pointer disabled:cursor-not-allowed"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "kind": "component_constant_classes",
+      "oldOutput": "peer absolute inset-0 size-full m-0 opacity-0 cursor-pointer disabled:cursor-not-allowed",
+      "requiredMigration": true
+    },
+    {
+      "id": "crates/rustify-components/src/color_field.rs:FIELD",
+      "source": {
+        "path": "crates/rustify-components/src/color_field.rs",
+        "line": 42,
+        "symbol": "FIELD"
+      },
+      "rawFragments": [
+        "flex items-center gap-2"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "kind": "component_constant_classes",
+      "oldOutput": "flex items-center gap-2",
+      "requiredMigration": true
+    },
+    {
+      "id": "crates/rustify-components/src/color_field.rs:INPUT",
+      "source": {
+        "path": "crates/rustify-components/src/color_field.rs",
+        "line": 43,
+        "symbol": "INPUT"
+      },
+      "rawFragments": [
+        "flex h-9 w-full min-w-0 rounded-md border border-border bg-input text-foreground px-3 py-1 font-mono text-sm transition-colors outline-none placeholder:text-muted-foreground focus-visible:ring-ring/50 focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 read-only:bg-muted aria-invalid:border-destructive aria-invalid:ring-destructive/40"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "kind": "component_constant_classes",
+      "oldOutput": "flex h-9 w-full min-w-0 rounded-md border border-border bg-input text-foreground px-3 py-1 font-mono text-sm transition-colors outline-none placeholder:text-muted-foreground focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 read-only:bg-muted aria-invalid:border-destructive aria-invalid:ring-destructive/40",
+      "requiredMigration": true
+    },
+    {
+      "id": "crates/rustify-components/src/color_field.rs:SWATCH",
+      "source": {
+        "path": "crates/rustify-components/src/color_field.rs",
+        "line": 44,
+        "symbol": "SWATCH"
+      },
+      "rawFragments": [
+        "size-9 shrink-0 rounded-md border border-border"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "kind": "component_constant_classes",
+      "oldOutput": "size-9 shrink-0 rounded-md border border-border",
+      "requiredMigration": true
+    },
+    {
+      "id": "crates/rustify-components/src/data_table/view.rs:GRID",
+      "source": {
+        "path": "crates/rustify-components/src/data_table/view.rs",
+        "line": 11,
+        "symbol": "GRID"
+      },
+      "rawFragments": [
+        "relative flex flex-col min-h-0 border border-border rounded-md bg-background text-sm outline-none focus-visible:ring-ring/50 focus-visible:ring-[3px]"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "kind": "component_constant_classes",
+      "oldOutput": "relative flex flex-col min-h-0 border border-border rounded-md bg-background text-sm outline-none focus-visible:ring-[3px]",
+      "requiredMigration": true
+    },
+    {
+      "id": "crates/rustify-components/src/data_table/view.rs:HEADER",
+      "source": {
+        "path": "crates/rustify-components/src/data_table/view.rs",
+        "line": 12,
+        "symbol": "HEADER"
+      },
+      "rawFragments": [
+        "flex shrink-0 overflow-hidden border-b border-border bg-muted font-medium text-muted-foreground"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "kind": "component_constant_classes",
+      "oldOutput": "flex shrink-0 overflow-hidden border-b border-border bg-muted font-medium text-muted-foreground",
+      "requiredMigration": true
+    },
+    {
+      "id": "crates/rustify-components/src/data_table/view.rs:HEADER_CELL",
+      "source": {
+        "path": "crates/rustify-components/src/data_table/view.rs",
+        "line": 13,
+        "symbol": "HEADER_CELL"
+      },
+      "rawFragments": [
+        "shrink-0 truncate px-2 py-1 text-left cursor-default select-none"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "kind": "component_constant_classes",
+      "oldOutput": "shrink-0 truncate px-2 py-1 text-left cursor-default select-none",
+      "requiredMigration": true
+    },
+    {
+      "id": "crates/rustify-components/src/data_table/view.rs:HEADER_BUTTON",
+      "source": {
+        "path": "crates/rustify-components/src/data_table/view.rs",
+        "line": 14,
+        "symbol": "HEADER_BUTTON"
+      },
+      "rawFragments": [
+        "w-full truncate bg-transparent border-0 p-0 text-left font-medium text-inherit cursor-pointer outline-none focus-visible:ring-ring/50 focus-visible:ring-2"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "kind": "component_constant_classes",
+      "oldOutput": "w-full truncate bg-transparent border-0 p-0 text-left font-medium text-inherit cursor-pointer outline-none focus-visible:ring-ring/50 focus-visible:ring-2",
+      "requiredMigration": true
+    },
+    {
+      "id": "crates/rustify-components/src/data_table/view.rs:SCROLLER",
+      "source": {
+        "path": "crates/rustify-components/src/data_table/view.rs",
+        "line": 15,
+        "symbol": "SCROLLER"
+      },
+      "rawFragments": [
+        "relative flex-1 min-h-0 overflow-auto"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "kind": "component_constant_classes",
+      "oldOutput": "relative flex-1 min-h-0 overflow-auto",
+      "requiredMigration": true
+    },
+    {
+      "id": "crates/rustify-components/src/data_table/view.rs:ROW",
+      "source": {
+        "path": "crates/rustify-components/src/data_table/view.rs",
+        "line": 16,
+        "symbol": "ROW"
+      },
+      "rawFragments": [
+        "absolute left-0 flex w-full items-center border-b border-border/50 aria-selected:bg-accent"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "kind": "component_constant_classes",
+      "oldOutput": "absolute left-0 flex w-full items-center border-b border-border/50 aria-selected:bg-accent",
+      "requiredMigration": true
+    },
+    {
+      "id": "crates/rustify-components/src/dialog.rs:PANEL",
+      "source": {
+        "path": "crates/rustify-components/src/dialog.rs",
+        "line": 18,
+        "symbol": "PANEL"
+      },
+      "rawFragments": [
+        "relative w-full max-w-lg rounded-lg border border-border bg-popover text-popover-foreground p-6 shadow-lg flex flex-col gap-4"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "kind": "component_constant_classes",
+      "oldOutput": "relative w-full max-w-lg rounded-lg border border-border bg-popover text-popover-foreground p-6 shadow-lg flex flex-col gap-4",
+      "requiredMigration": true
+    },
+    {
+      "id": "crates/rustify-components/src/dialog.rs:TITLE_BAR",
+      "source": {
+        "path": "crates/rustify-components/src/dialog.rs",
+        "line": 19,
+        "symbol": "TITLE_BAR"
+      },
+      "rawFragments": [
+        "flex items-start gap-4"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "kind": "component_constant_classes",
+      "oldOutput": "flex items-start gap-4",
+      "requiredMigration": true
+    },
+    {
+      "id": "crates/rustify-components/src/dialog.rs:BACKDROP",
+      "source": {
+        "path": "crates/rustify-components/src/dialog.rs",
+        "line": 20,
+        "symbol": "BACKDROP"
+      },
+      "rawFragments": [
+        "fixed inset-0 bg-foreground/30"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "kind": "component_constant_classes",
+      "oldOutput": "fixed inset-0 bg-foreground/30",
+      "requiredMigration": true
+    },
+    {
+      "id": "crates/rustify-components/src/dialog.rs:CLOSE",
+      "source": {
+        "path": "crates/rustify-components/src/dialog.rs",
+        "line": 21,
+        "symbol": "CLOSE"
+      },
+      "rawFragments": [
+        "-me-2 -mt-2 shrink-0 rounded-sm p-1 text-muted-foreground transition-colors cursor-pointer outline-none hover:bg-muted focus-visible:ring-ring/50 focus-visible:ring-[3px]"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "kind": "component_constant_classes",
+      "oldOutput": "-me-2 -mt-2 shrink-0 rounded-sm p-1 text-muted-foreground transition-colors cursor-pointer outline-none hover:bg-muted focus-visible:ring-[3px]",
+      "requiredMigration": true
+    },
+    {
+      "id": "crates/rustify-components/src/drop_zone.rs:ZONE",
+      "source": {
+        "path": "crates/rustify-components/src/drop_zone.rs",
+        "line": 16,
+        "symbol": "ZONE"
+      },
+      "rawFragments": [
+        "flex flex-col items-center justify-center gap-2 rounded-md border border-dashed border-border bg-background p-6 text-sm text-muted-foreground transition-colors"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "kind": "component_constant_classes",
+      "oldOutput": "flex flex-col items-center justify-center gap-2 rounded-md border border-dashed border-border bg-background p-6 text-sm text-muted-foreground transition-colors",
+      "requiredMigration": true
+    },
+    {
+      "id": "crates/rustify-components/src/drop_zone.rs:OVER",
+      "source": {
+        "path": "crates/rustify-components/src/drop_zone.rs",
+        "line": 17,
+        "symbol": "OVER"
+      },
+      "rawFragments": [
+        "border-primary text-foreground"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "kind": "component_constant_classes",
+      "oldOutput": "border-primary text-foreground",
+      "requiredMigration": true
+    },
+    {
+      "id": "crates/rustify-components/src/file_picker.rs:FIELD",
+      "source": {
+        "path": "crates/rustify-components/src/file_picker.rs",
+        "line": 10,
+        "symbol": "FIELD"
+      },
+      "rawFragments": [
+        "block w-full text-sm text-muted-foreground file:mr-3 file:rounded-md file:border file:border-border file:bg-secondary file:px-3 file:py-1.5 file:text-sm file:text-foreground file:cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-ring/50 focus-visible:ring-[3px]"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "kind": "component_constant_classes",
+      "oldOutput": "block w-full text-sm text-muted-foreground file:mr-3 file:rounded-md file:border file:border-border file:bg-secondary file:px-3 file:py-1.5 file:text-sm file:text-foreground file:cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-[3px]",
+      "requiredMigration": true
+    },
+    {
+      "id": "crates/rustify-components/src/icon.rs:BASE",
+      "source": {
+        "path": "crates/rustify-components/src/icon.rs",
+        "line": 10,
+        "symbol": "BASE"
+      },
+      "rawFragments": [
+        "inline-block shrink-0 size-4"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "kind": "component_constant_classes",
+      "oldOutput": "inline-block shrink-0 size-4",
+      "requiredMigration": true
+    },
+    {
+      "id": "crates/rustify-components/src/input.rs:BASE",
+      "source": {
+        "path": "crates/rustify-components/src/input.rs",
+        "line": 5,
+        "symbol": "BASE"
+      },
+      "rawFragments": [
+        "flex h-9 w-full min-w-0 rounded-md border border-border bg-input text-foreground px-3 py-1 text-sm transition-colors outline-none placeholder:text-muted-foreground focus-visible:ring-ring/50 focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 read-only:bg-muted aria-invalid:border-destructive aria-invalid:ring-destructive/40"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "kind": "component_constant_classes",
+      "oldOutput": "flex h-9 w-full min-w-0 rounded-md border border-border bg-input text-foreground px-3 py-1 text-sm transition-colors outline-none placeholder:text-muted-foreground focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 read-only:bg-muted aria-invalid:border-destructive aria-invalid:ring-destructive/40",
+      "requiredMigration": true
+    },
+    {
+      "id": "crates/rustify-components/src/label.rs:BASE",
+      "source": {
+        "path": "crates/rustify-components/src/label.rs",
+        "line": 5,
+        "symbol": "BASE"
+      },
+      "rawFragments": [
+        "flex items-center gap-2 text-sm leading-none font-medium select-none text-foreground"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "kind": "component_constant_classes",
+      "oldOutput": "flex items-center gap-2 text-sm leading-none font-medium select-none text-foreground",
+      "requiredMigration": true
+    },
+    {
+      "id": "crates/rustify-components/src/link.rs:BASE",
+      "source": {
+        "path": "crates/rustify-components/src/link.rs",
+        "line": 10,
+        "symbol": "BASE"
+      },
+      "rawFragments": [
+        "text-primary underline-offset-4 rounded-sm hover:underline outline-none focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-disabled:pointer-events-none aria-disabled:opacity-50"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "kind": "component_constant_classes",
+      "oldOutput": "text-primary underline-offset-4 rounded-sm hover:underline outline-none focus-visible:ring-[3px] aria-disabled:pointer-events-none aria-disabled:opacity-50",
+      "requiredMigration": true
+    },
+    {
+      "id": "crates/rustify-components/src/menu.rs:PANEL",
+      "source": {
+        "path": "crates/rustify-components/src/menu.rs",
+        "line": 147,
+        "symbol": "PANEL"
+      },
+      "rawFragments": [
+        "m-0 min-w-40 list-none rounded-md border border-border bg-popover text-popover-foreground p-1 shadow-lg"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "kind": "component_constant_classes",
+      "oldOutput": "m-0 min-w-40 list-none rounded-md border border-border bg-popover text-popover-foreground p-1 shadow-lg",
+      "requiredMigration": true
+    },
+    {
+      "id": "crates/rustify-components/src/menu.rs:ITEM",
+      "source": {
+        "path": "crates/rustify-components/src/menu.rs",
+        "line": 150,
+        "symbol": "ITEM"
+      },
+      "rawFragments": [
+        "flex w-full items-center gap-2 rounded-sm px-2 py-1.5 text-sm text-popover-foreground text-left transition-colors outline-none cursor-pointer hover:bg-muted focus-visible:bg-muted aria-disabled:opacity-50 aria-disabled:cursor-not-allowed aria-disabled:hover:bg-transparent"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "kind": "component_constant_classes",
+      "oldOutput": "flex w-full items-center gap-2 rounded-sm px-2 py-1.5 text-sm text-popover-foreground text-left transition-colors outline-none cursor-pointer hover:bg-muted focus-visible:bg-muted aria-disabled:opacity-50 aria-disabled:cursor-not-allowed aria-disabled:hover:bg-transparent",
+      "requiredMigration": true
+    },
+    {
+      "id": "crates/rustify-components/src/menu.rs:HEADING",
+      "source": {
+        "path": "crates/rustify-components/src/menu.rs",
+        "line": 151,
+        "symbol": "HEADING"
+      },
+      "rawFragments": [
+        "px-2 py-1.5 text-xs font-medium text-muted-foreground select-none"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "kind": "component_constant_classes",
+      "oldOutput": "px-2 py-1.5 text-xs font-medium text-muted-foreground select-none",
+      "requiredMigration": true
+    },
+    {
+      "id": "crates/rustify-components/src/menu.rs:SEPARATOR",
+      "source": {
+        "path": "crates/rustify-components/src/menu.rs",
+        "line": 152,
+        "symbol": "SEPARATOR"
+      },
+      "rawFragments": [
+        "-mx-1 my-1 h-px bg-border"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "kind": "component_constant_classes",
+      "oldOutput": "-mx-1 my-1 h-px bg-border",
+      "requiredMigration": true
+    },
+    {
+      "id": "crates/rustify-components/src/menu.rs:HINT",
+      "source": {
+        "path": "crates/rustify-components/src/menu.rs",
+        "line": 153,
+        "symbol": "HINT"
+      },
+      "rawFragments": [
+        "ms-auto ps-4 text-xs tracking-widest text-muted-foreground"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "kind": "component_constant_classes",
+      "oldOutput": "ms-auto ps-4 text-xs tracking-widest text-muted-foreground",
+      "requiredMigration": true
+    },
+    {
+      "id": "crates/rustify-components/src/number_field.rs:BASE",
+      "source": {
+        "path": "crates/rustify-components/src/number_field.rs",
+        "line": 66,
+        "symbol": "BASE"
+      },
+      "rawFragments": [
+        "flex h-9 w-full min-w-0 rounded-md border border-border bg-input text-foreground px-3 py-1 text-sm tabular-nums transition-colors outline-none placeholder:text-muted-foreground focus-visible:ring-ring/50 focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 read-only:bg-muted aria-invalid:border-destructive aria-invalid:ring-destructive/40"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "kind": "component_constant_classes",
+      "oldOutput": "flex h-9 w-full min-w-0 rounded-md border border-border bg-input text-foreground px-3 py-1 text-sm tabular-nums transition-colors outline-none placeholder:text-muted-foreground focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 read-only:bg-muted aria-invalid:border-destructive aria-invalid:ring-destructive/40",
+      "requiredMigration": true
+    },
+    {
+      "id": "crates/rustify-components/src/progress.rs:TRACK",
+      "source": {
+        "path": "crates/rustify-components/src/progress.rs",
+        "line": 5,
+        "symbol": "TRACK"
+      },
+      "rawFragments": [
+        "relative h-2 w-full overflow-hidden rounded-full bg-secondary"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "kind": "component_constant_classes",
+      "oldOutput": "relative h-2 w-full overflow-hidden rounded-full bg-secondary",
+      "requiredMigration": true
+    },
+    {
+      "id": "crates/rustify-components/src/progress.rs:FILL",
+      "source": {
+        "path": "crates/rustify-components/src/progress.rs",
+        "line": 6,
+        "symbol": "FILL"
+      },
+      "rawFragments": [
+        "h-full bg-primary transition-[width]"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "kind": "component_constant_classes",
+      "oldOutput": "h-full bg-primary transition-[width]",
+      "requiredMigration": true
+    },
+    {
+      "id": "crates/rustify-components/src/radio.rs:DOT",
+      "source": {
+        "path": "crates/rustify-components/src/radio.rs",
+        "line": 12,
+        "symbol": "DOT"
+      },
+      "rawFragments": [
+        "pointer-events-none absolute inset-0 flex items-center justify-center rounded-full border border-border bg-input text-primary transition-colors peer-checked:border-primary peer-focus-visible:ring-ring/50 peer-focus-visible:ring-[3px] peer-disabled:opacity-50"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "kind": "component_constant_classes",
+      "oldOutput": "pointer-events-none absolute inset-0 flex items-center justify-center rounded-full border border-border bg-input text-primary transition-colors peer-checked:border-primary peer-focus-visible:ring-[3px] peer-disabled:opacity-50",
+      "requiredMigration": true
+    },
+    {
+      "id": "crates/rustify-components/src/radio.rs:INPUT",
+      "source": {
+        "path": "crates/rustify-components/src/radio.rs",
+        "line": 13,
+        "symbol": "INPUT"
+      },
+      "rawFragments": [
+        "peer absolute inset-0 size-full m-0 opacity-0 cursor-pointer disabled:cursor-not-allowed"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "kind": "component_constant_classes",
+      "oldOutput": "peer absolute inset-0 size-full m-0 opacity-0 cursor-pointer disabled:cursor-not-allowed",
+      "requiredMigration": true
+    },
+    {
+      "id": "crates/rustify-components/src/scroll_area.rs:BASE",
+      "source": {
+        "path": "crates/rustify-components/src/scroll_area.rs",
+        "line": 11,
+        "symbol": "BASE"
+      },
+      "rawFragments": [
+        "relative overflow-auto rounded-md outline-none focus-visible:ring-ring/50 focus-visible:ring-[3px]"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "kind": "component_constant_classes",
+      "oldOutput": "relative overflow-auto rounded-md outline-none focus-visible:ring-[3px]",
+      "requiredMigration": true
+    },
+    {
+      "id": "crates/rustify-components/src/select.rs:TRIGGER",
+      "source": {
+        "path": "crates/rustify-components/src/select.rs",
+        "line": 13,
+        "symbol": "TRIGGER"
+      },
+      "rawFragments": [
+        "flex h-9 w-full items-center justify-between gap-2 rounded-md border border-border bg-input px-3 py-1 text-sm text-foreground transition-colors cursor-pointer outline-none focus-visible:ring-ring/50 focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "kind": "component_constant_classes",
+      "oldOutput": "flex h-9 w-full items-center justify-between gap-2 rounded-md border border-border bg-input px-3 py-1 text-sm text-foreground transition-colors cursor-pointer outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive",
+      "requiredMigration": true
+    },
+    {
+      "id": "crates/rustify-components/src/select.rs:PANEL",
+      "source": {
+        "path": "crates/rustify-components/src/select.rs",
+        "line": 14,
+        "symbol": "PANEL"
+      },
+      "rawFragments": [
+        "min-w-40 max-h-64 overflow-auto rounded-md border border-border bg-popover text-popover-foreground p-1 shadow-lg outline-none"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "kind": "component_constant_classes",
+      "oldOutput": "min-w-40 max-h-64 overflow-auto rounded-md border border-border bg-popover text-popover-foreground p-1 shadow-lg outline-none",
+      "requiredMigration": true
+    },
+    {
+      "id": "crates/rustify-components/src/select.rs:OPTION",
+      "source": {
+        "path": "crates/rustify-components/src/select.rs",
+        "line": 15,
+        "symbol": "OPTION"
+      },
+      "rawFragments": [
+        "flex w-full items-center gap-2 rounded-sm px-2 py-1.5 text-sm text-popover-foreground cursor-pointer aria-disabled:opacity-50 aria-disabled:cursor-not-allowed"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "kind": "component_constant_classes",
+      "oldOutput": "flex w-full items-center gap-2 rounded-sm px-2 py-1.5 text-sm text-popover-foreground cursor-pointer aria-disabled:opacity-50 aria-disabled:cursor-not-allowed",
+      "requiredMigration": true
+    },
+    {
+      "id": "crates/rustify-components/src/switch.rs:TRACK",
+      "source": {
+        "path": "crates/rustify-components/src/switch.rs",
+        "line": 5,
+        "symbol": "TRACK"
+      },
+      "rawFragments": [
+        "inline-flex h-6 w-11 shrink-0 items-center rounded-full border-2 border-transparent transition-colors cursor-pointer outline-none bg-border aria-checked:bg-primary focus-visible:ring-ring/50 focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "kind": "component_constant_classes",
+      "oldOutput": "inline-flex h-6 w-11 shrink-0 items-center rounded-full border-2 border-transparent transition-colors cursor-pointer outline-none bg-border aria-checked:bg-primary focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50",
+      "requiredMigration": true
+    },
+    {
+      "id": "crates/rustify-components/src/switch.rs:KNOB",
+      "source": {
+        "path": "crates/rustify-components/src/switch.rs",
+        "line": 6,
+        "symbol": "KNOB"
+      },
+      "rawFragments": [
+        "pointer-events-none block size-5 rounded-full bg-background transition-transform"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "kind": "component_constant_classes",
+      "oldOutput": "pointer-events-none block size-5 rounded-full bg-background transition-transform",
+      "requiredMigration": true
+    },
+    {
+      "id": "crates/rustify-components/src/tabs.rs:LIST",
+      "source": {
+        "path": "crates/rustify-components/src/tabs.rs",
+        "line": 12,
+        "symbol": "LIST"
+      },
+      "rawFragments": [
+        "inline-flex w-fit items-center justify-center rounded-lg bg-muted p-[3px] text-muted-foreground"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "kind": "component_constant_classes",
+      "oldOutput": "inline-flex w-fit items-center justify-center rounded-lg bg-muted p-[3px] text-muted-foreground",
+      "requiredMigration": true
+    },
+    {
+      "id": "crates/rustify-components/src/tabs.rs:TRIGGER",
+      "source": {
+        "path": "crates/rustify-components/src/tabs.rs",
+        "line": 13,
+        "symbol": "TRIGGER"
+      },
+      "rawFragments": [
+        "inline-flex items-center justify-center gap-1.5 rounded-md border border-transparent px-2.5 py-1 text-sm font-medium whitespace-nowrap transition-all cursor-pointer select-none outline-none focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-selected:bg-background aria-selected:text-foreground disabled:pointer-events-none disabled:opacity-50"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "kind": "component_constant_classes",
+      "oldOutput": "inline-flex items-center justify-center gap-1.5 rounded-md border border-transparent px-2.5 py-1 text-sm font-medium whitespace-nowrap transition-all cursor-pointer select-none outline-none focus-visible:ring-[3px] aria-selected:bg-background aria-selected:text-foreground disabled:pointer-events-none disabled:opacity-50",
+      "requiredMigration": true
+    },
+    {
+      "id": "crates/rustify-components/src/textarea.rs:BASE",
+      "source": {
+        "path": "crates/rustify-components/src/textarea.rs",
+        "line": 6,
+        "symbol": "BASE"
+      },
+      "rawFragments": [
+        "flex min-h-16 w-full rounded-md border border-border bg-input text-foreground px-3 py-2 text-sm transition-colors outline-none placeholder:text-muted-foreground focus-visible:ring-ring/50 focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 read-only:bg-muted aria-invalid:border-destructive aria-invalid:ring-destructive/40"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "kind": "component_constant_classes",
+      "oldOutput": "flex min-h-16 w-full rounded-md border border-border bg-input text-foreground px-3 py-2 text-sm transition-colors outline-none placeholder:text-muted-foreground focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 read-only:bg-muted aria-invalid:border-destructive aria-invalid:ring-destructive/40",
+      "requiredMigration": true
+    },
+    {
+      "id": "crates/rustify-components/src/toast.rs:REGION",
+      "source": {
+        "path": "crates/rustify-components/src/toast.rs",
+        "line": 14,
+        "symbol": "REGION"
+      },
+      "rawFragments": [
+        "fixed bottom-4 end-4 z-50 flex max-w-sm flex-col items-end gap-2"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "kind": "component_constant_classes",
+      "oldOutput": "fixed bottom-4 end-4 z-50 flex max-w-sm flex-col items-end gap-2",
+      "requiredMigration": true
+    },
+    {
+      "id": "crates/rustify-components/src/toast.rs:CARD",
+      "source": {
+        "path": "crates/rustify-components/src/toast.rs",
+        "line": 15,
+        "symbol": "CARD"
+      },
+      "rawFragments": [
+        "flex w-full items-start gap-3 rounded-md border border-border bg-popover px-4 py-3 text-sm text-popover-foreground shadow-lg"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "kind": "component_constant_classes",
+      "oldOutput": "flex w-full items-start gap-3 rounded-md border border-border bg-popover px-4 py-3 text-sm text-popover-foreground shadow-lg",
+      "requiredMigration": true
+    },
+    {
+      "id": "crates/rustify-components/src/toast.rs:DISMISS",
+      "source": {
+        "path": "crates/rustify-components/src/toast.rs",
+        "line": 16,
+        "symbol": "DISMISS"
+      },
+      "rawFragments": [
+        "shrink-0 rounded-sm p-0.5 text-muted-foreground transition-colors cursor-pointer outline-none hover:bg-muted focus-visible:ring-ring/50 focus-visible:ring-[3px]"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "kind": "component_constant_classes",
+      "oldOutput": "shrink-0 rounded-sm p-0.5 text-muted-foreground transition-colors cursor-pointer outline-none hover:bg-muted focus-visible:ring-[3px]",
+      "requiredMigration": true
+    },
+    {
+      "id": "crates/rustify-components/src/toggle_group.rs:GROUP",
+      "source": {
+        "path": "crates/rustify-components/src/toggle_group.rs",
+        "line": 13,
+        "symbol": "GROUP"
+      },
+      "rawFragments": [
+        "inline-flex w-fit items-center gap-1"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "kind": "component_constant_classes",
+      "oldOutput": "inline-flex w-fit items-center gap-1",
+      "requiredMigration": true
+    },
+    {
+      "id": "crates/rustify-components/src/toggle_group.rs:TOOLBAR",
+      "source": {
+        "path": "crates/rustify-components/src/toggle_group.rs",
+        "line": 14,
+        "symbol": "TOOLBAR"
+      },
+      "rawFragments": [
+        "inline-flex w-fit items-center gap-1 rounded-md border border-border bg-card p-1"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "kind": "component_constant_classes",
+      "oldOutput": "inline-flex w-fit items-center gap-1 rounded-md border border-border bg-card p-1",
+      "requiredMigration": true
+    },
+    {
+      "id": "crates/rustify-components/src/toggle_group.rs:ITEM",
+      "source": {
+        "path": "crates/rustify-components/src/toggle_group.rs",
+        "line": 16,
+        "symbol": "ITEM"
+      },
+      "rawFragments": [
+        "inline-flex h-9 min-w-9 items-center justify-center gap-2 rounded-md px-3 text-sm font-medium whitespace-nowrap text-foreground transition-colors outline-none cursor-pointer select-none hover:bg-muted focus-visible:ring-ring/50 focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50 aria-pressed:bg-primary aria-pressed:text-primary-foreground aria-pressed:hover:bg-primary/90"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "kind": "component_constant_classes",
+      "oldOutput": "inline-flex h-9 min-w-9 items-center justify-center gap-2 rounded-md px-3 text-sm font-medium whitespace-nowrap text-foreground transition-colors outline-none cursor-pointer select-none hover:bg-muted focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50 aria-pressed:bg-primary aria-pressed:text-primary-foreground aria-pressed:hover:bg-primary/90",
+      "requiredMigration": true
+    },
+    {
+      "id": "crates/rustify-components/src/tooltip.rs:CONTENT",
+      "source": {
+        "path": "crates/rustify-components/src/tooltip.rs",
+        "line": 13,
+        "symbol": "CONTENT"
+      },
+      "rawFragments": [
+        "rounded-md bg-foreground text-background px-2.5 py-1.5 text-xs whitespace-nowrap shadow-lg"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "kind": "component_constant_classes",
+      "oldOutput": "rounded-md bg-foreground text-background px-2.5 py-1.5 text-xs whitespace-nowrap shadow-lg",
+      "requiredMigration": true
+    },
+    {
+      "id": "crates/rustify-components/src/tree.rs:TREE",
+      "source": {
+        "path": "crates/rustify-components/src/tree.rs",
+        "line": 21,
+        "symbol": "TREE"
+      },
+      "rawFragments": [
+        "flex flex-col gap-0.5 overflow-auto p-1 text-sm outline-none"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "kind": "component_constant_classes",
+      "oldOutput": "flex flex-col gap-0.5 overflow-auto p-1 text-sm outline-none",
+      "requiredMigration": true
+    },
+    {
+      "id": "crates/rustify-components/src/tree.rs:ITEM",
+      "source": {
+        "path": "crates/rustify-components/src/tree.rs",
+        "line": 23,
+        "symbol": "ITEM"
+      },
+      "rawFragments": [
+        "flex w-full items-center gap-1 rounded px-2 py-1 text-left cursor-pointer select-none outline-none hover:bg-accent/50 focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-selected:bg-accent"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "kind": "component_constant_classes",
+      "oldOutput": "flex w-full items-center gap-1 rounded px-2 py-1 text-left cursor-pointer select-none outline-none hover:bg-accent/50 focus-visible:ring-[3px] aria-selected:bg-accent",
+      "requiredMigration": true
+    },
+    {
+      "id": "crates/rustify-components/src/workspace/command_palette.rs:PANEL",
+      "source": {
+        "path": "crates/rustify-components/src/workspace/command_palette.rs",
+        "line": 12,
+        "symbol": "PANEL"
+      },
+      "rawFragments": [
+        "w-[32rem] max-w-full rounded-lg border border-border bg-popover text-popover-foreground shadow-lg overflow-hidden"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "kind": "component_constant_classes",
+      "oldOutput": "w-[32rem] max-w-full rounded-lg border border-border bg-popover text-popover-foreground shadow-lg overflow-hidden",
+      "requiredMigration": true
+    },
+    {
+      "id": "crates/rustify-components/src/workspace/command_palette.rs:SEARCH",
+      "source": {
+        "path": "crates/rustify-components/src/workspace/command_palette.rs",
+        "line": 14,
+        "symbol": "SEARCH"
+      },
+      "rawFragments": [
+        "w-full border-0 border-b border-border bg-transparent px-4 py-3 text-sm text-popover-foreground outline-none placeholder:text-muted-foreground"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "kind": "component_constant_classes",
+      "oldOutput": "w-full border-0 border-b border-border bg-transparent px-4 py-3 text-sm text-popover-foreground outline-none placeholder:text-muted-foreground",
+      "requiredMigration": true
+    },
+    {
+      "id": "crates/rustify-components/src/workspace/command_palette.rs:ITEM",
+      "source": {
+        "path": "crates/rustify-components/src/workspace/command_palette.rs",
+        "line": 15,
+        "symbol": "ITEM"
+      },
+      "rawFragments": [
+        "flex w-full items-center justify-between gap-3 px-4 py-2 text-sm text-popover-foreground cursor-pointer aria-disabled:opacity-50 aria-disabled:cursor-not-allowed"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "kind": "component_constant_classes",
+      "oldOutput": "flex w-full items-center justify-between gap-3 px-4 py-2 text-sm text-popover-foreground cursor-pointer aria-disabled:opacity-50 aria-disabled:cursor-not-allowed",
+      "requiredMigration": true
+    },
+    {
+      "id": "crates/rustify-components/src/workspace/panel_tabs.rs:STRIP",
+      "source": {
+        "path": "crates/rustify-components/src/workspace/panel_tabs.rs",
+        "line": 13,
+        "symbol": "STRIP"
+      },
+      "rawFragments": [
+        "flex items-stretch gap-1 border-b border-border overflow-x-auto"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "kind": "component_constant_classes",
+      "oldOutput": "flex items-stretch gap-1 border-b border-border overflow-x-auto",
+      "requiredMigration": true
+    },
+    {
+      "id": "crates/rustify-components/src/workspace/panel_tabs.rs:TAB",
+      "source": {
+        "path": "crates/rustify-components/src/workspace/panel_tabs.rs",
+        "line": 14,
+        "symbol": "TAB"
+      },
+      "rawFragments": [
+        "group inline-flex items-center gap-1.5 rounded-t-md border border-transparent px-3 py-1.5 text-sm whitespace-nowrap cursor-pointer outline-none transition-colors hover:bg-muted focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-selected:bg-background aria-selected:border-border aria-selected:text-foreground"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "kind": "component_constant_classes",
+      "oldOutput": "group inline-flex items-center gap-1.5 rounded-t-md border border-transparent px-3 py-1.5 text-sm whitespace-nowrap cursor-pointer outline-none transition-colors hover:bg-muted focus-visible:ring-[3px] aria-selected:bg-background aria-selected:border-border aria-selected:text-foreground",
+      "requiredMigration": true
+    },
+    {
+      "id": "variant.first_default",
+      "kind": "variant_generated_api",
+      "rawFragments": [
+        "inline-flex",
+        "bg-primary",
+        "px-2"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "source": {
+        "path": "crates/rustify-components/src/macros/variants.rs",
+        "symbol": "variants! type-only arms; exercised temporary capture expansion"
+      },
+      "oldOutput": "inline-flex bg-primary px-2",
+      "requiredMigration": true
+    },
+    {
+      "id": "variant.builder_default",
+      "kind": "variant_generated_api",
+      "rawFragments": [
+        "inline-flex",
+        "bg-primary",
+        "px-2"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "source": {
+        "path": "crates/rustify-components/src/macros/variants.rs",
+        "symbol": "variants! type-only arms; exercised temporary capture expansion"
+      },
+      "oldOutput": "inline-flex bg-primary px-2",
+      "requiredMigration": false
+    },
+    {
+      "id": "variant.builder_fields",
+      "kind": "variant_generated_api",
+      "rawFragments": [
+        "inline-flex",
+        "border",
+        "px-3"
+      ],
+      "callerClass": "px-5",
+      "status": "captured_migration_pending",
+      "source": {
+        "path": "crates/rustify-components/src/macros/variants.rs",
+        "symbol": "variants! type-only arms; exercised temporary capture expansion"
+      },
+      "oldOutput": "inline-flex border px-5",
+      "requiredMigration": false
+    },
+    {
+      "id": "variant.into_builder",
+      "kind": "variant_generated_api",
+      "rawFragments": [
+        "inline-flex",
+        "border",
+        "px-3"
+      ],
+      "callerClass": "px-5",
+      "status": "captured_migration_pending",
+      "source": {
+        "path": "crates/rustify-components/src/macros/variants.rs",
+        "symbol": "variants! type-only arms; exercised temporary capture expansion"
+      },
+      "oldOutput": "inline-flex border px-5",
+      "requiredMigration": false
+    },
+    {
+      "id": "variant.enum_as_class",
+      "kind": "variant_generated_api",
+      "rawFragments": [
+        "border"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "source": {
+        "path": "crates/rustify-components/src/macros/variants.rs",
+        "symbol": "variants! type-only arms; exercised temporary capture expansion"
+      },
+      "oldOutput": "border",
+      "requiredMigration": true
+    },
+    {
+      "id": "variant.only_default",
+      "kind": "variant_generated_api",
+      "rawFragments": [
+        "inline-flex",
+        "bg-primary"
+      ],
+      "callerClass": "",
+      "status": "captured_migration_pending",
+      "source": {
+        "path": "crates/rustify-components/src/macros/variants.rs",
+        "symbol": "variants! type-only arms; exercised temporary capture expansion"
+      },
+      "oldOutput": "inline-flex bg-primary",
+      "requiredMigration": true
+    },
+    {
+      "id": "variant.only_caller",
+      "kind": "variant_generated_api",
+      "rawFragments": [
+        "inline-flex",
+        "border"
+      ],
+      "callerClass": "bg-secondary",
+      "status": "captured_migration_pending",
+      "source": {
+        "path": "crates/rustify-components/src/macros/variants.rs",
+        "symbol": "variants! type-only arms; exercised temporary capture expansion"
+      },
+      "oldOutput": "inline-flex border bg-secondary",
+      "requiredMigration": true
+    }
+  ],
+  "browserPresentationStatus": "pending",
+  "gaps": [
+    "Dynamic component branch/class combinations require browser coverage; class snapshots do not prove rendering."
+  ]
+}

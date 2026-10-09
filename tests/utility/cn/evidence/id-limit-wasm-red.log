@@ -1,0 +1,36 @@
+{
+  "mode": "wasm",
+  "tokens": 2097152,
+  "utf16Units": 26151865,
+  "expected": {
+    "name": "Error",
+    "message": "cn: too many distinct classes in one merge"
+  },
+  "actual": null
+}
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
++ actual - expected
+
++ null
+- {
+-   message: 'cn: too many distinct classes in one merge',
+-   name: 'Error'
+- }
+
+    at file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/cn/id-limit.mjs:28:8 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: null,
+  expected: {
+    name: 'Error',
+    message: 'cn: too many distinct classes in one merge'
+  },
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v26.1.0

@@ -54,18 +54,18 @@ pub fn DropZone(
             "idle"
         }
     };
-    let classes = move || {
+    let classes = crate::macros::reactive_merge_with(move || {
         let over = depth.get() > 0 && !disabled.get();
-        crate::macros::merge(
-            ZONE,
-            &format!(
+        vec![
+            ZONE.to_string(),
+            format!(
                 "{} {} {}",
                 if over { OVER } else { "" },
                 if disabled.get() { OFF } else { "" },
                 class,
             ),
-        )
-    };
+        ]
+    });
     view! {
         <div
             class=classes

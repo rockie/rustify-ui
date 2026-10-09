@@ -1,0 +1,228 @@
+{
+  "baseline_head": "92ee1862885a372fca9c6fdfa6907b560c556efa",
+  "observed_at": "2026-10-09T18:23:56.189614+08:00",
+  "checks": [
+    {
+      "name": "fmt",
+      "command": [
+        "cargo",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 1.8,
+      "log": "fmt.log"
+    },
+    {
+      "name": "workspace-tests",
+      "command": [
+        "mbx",
+        "test",
+        "--locked",
+        "--workspace",
+        "--lib",
+        "--bins"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 94.44,
+      "log": "workspace-tests.log"
+    },
+    {
+      "name": "style-all-features",
+      "command": [
+        "mbx",
+        "test",
+        "--locked",
+        "-p",
+        "rustify-style",
+        "--all-features",
+        "--lib"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 95.37,
+      "log": "style-all-features.log"
+    },
+    {
+      "name": "facade-tests",
+      "command": [
+        "mbx",
+        "test",
+        "--locked",
+        "-p",
+        "rustify-style-wasm",
+        "--all-features",
+        "--lib"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 7.7,
+      "log": "facade-tests.log"
+    },
+    {
+      "name": "sdk-utility-tests",
+      "command": [
+        "mbx",
+        "test",
+        "--locked",
+        "-p",
+        "rustify-ui",
+        "--features",
+        "utility",
+        "--lib"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 16.41,
+      "log": "sdk-utility-tests.log"
+    },
+    {
+      "name": "clippy",
+      "command": [
+        "mbx",
+        "clippy",
+        "--locked",
+        "--workspace",
+        "--all-targets",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.56,
+      "log": "clippy.log"
+    },
+    {
+      "name": "sources",
+      "command": [
+        "mbx",
+        "xtask",
+        "sources",
+        "verify"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 14.16,
+      "log": "sources.log"
+    },
+    {
+      "name": "css",
+      "command": [
+        "mbx",
+        "xtask",
+        "css",
+        "--check"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 1.44,
+      "log": "css.log"
+    },
+    {
+      "name": "catalog",
+      "command": [
+        "mbx",
+        "xtask",
+        "catalog",
+        "--write",
+        "docs/components.md",
+        "--check"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.53,
+      "log": "catalog.log"
+    },
+    {
+      "name": "build-root",
+      "command": [
+        "mbx",
+        "xtask",
+        "build-web",
+        "--example",
+        "utility-lab",
+        "--release"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 4.76,
+      "log": "build-root.log"
+    },
+    {
+      "name": "build-deep",
+      "command": [
+        "mbx",
+        "xtask",
+        "build-web",
+        "--example",
+        "utility-lab",
+        "--release",
+        "--base",
+        "/tools/utility-lab/"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 4.07,
+      "log": "build-deep.log"
+    },
+    {
+      "name": "browser-root",
+      "command": [
+        "npx",
+        "--no-install",
+        "playwright",
+        "test",
+        "--project=utility-lab",
+        "--workers=1",
+        "--reporter=line",
+        "--output=docs/validation/wasm-tailwind/pre-commit/browser-root-results",
+        "--grep",
+        "scoped keyframes|a keyframes name|keyframes names keep|a public property|rebuild releases|nested owners|scoped relation|configuration replacement|SDK ensure installs scanner-free CSS|GPU draws compiled colors|clearing utility ownership restores the ordinary Button"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 18.94,
+      "log": "browser-root.log"
+    },
+    {
+      "name": "browser-deep",
+      "command": [
+        "npx",
+        "--no-install",
+        "playwright",
+        "test",
+        "--project=utility-lab-deep",
+        "--workers=1",
+        "--reporter=line",
+        "--output=docs/validation/wasm-tailwind/pre-commit/browser-deep-results",
+        "--grep",
+        "scoped keyframes|a keyframes name|keyframes names keep|a public property|rebuild releases|nested owners|scoped relation|configuration replacement|SDK ensure installs scanner-free CSS|GPU draws compiled colors|clearing utility ownership restores the ordinary Button"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 14.1,
+      "log": "browser-deep.log"
+    },
+    {
+      "name": "staged-diff",
+      "command": [
+        "git",
+        "diff",
+        "--cached",
+        "--check",
+        "--",
+        "Cargo.toml",
+        "Cargo.lock",
+        ".github/workflows/verify.yml",
+        "crates/rustify-style",
+        "crates/rustify-style-wasm",
+        "crates/rustify-ui",
+        "crates/rustify-components",
+        "examples/utility-lab",
+        "xtask",
+        "web/utility-worker.js",
+        "playwright.config.ts",
+        "sources.lock.json",
+        "docs/architecture.md",
+        "docs/utility.md",
+        "README.md",
+        ":(exclude)crates/rustify-style/upstream/oxide/extractor/pre_processors/slim.rs"
+      ],
+      "exit_code": 0,
+      "log": "staged-diff.log",
+      "exclusion": "slim.rs lines 320/323 intentionally retain spaces inside the vendored expected output string; verified in test_embedded_ruby_percent_w_extraction"
+    }
+  ]
+}

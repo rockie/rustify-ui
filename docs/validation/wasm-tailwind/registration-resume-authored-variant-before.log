@@ -1,0 +1,167 @@
+{"registrationCases":48,"entryComparisons":96,"completePrefixAndSettledGraphs":true,"failures":[{"name":"authored-unknown-after-theme","mode":"sync","expectedError":["Error","Cannot use `@variant` with unknown variant: missing"],"actualError":["Error","Cannot use `@variant` with unknown variant: missing"],"errorMatches":true,"epochMatches":true,"prefixMatches":false,"settledMatches":false,"expectedTrace":[],"actualTrace":[]},{"name":"authored-unknown-after-theme","mode":"async","expectedError":["Error","Cannot use `@variant` with unknown variant: missing"],"actualError":["Error","Cannot use `@variant` with unknown variant: missing"],"errorMatches":true,"epochMatches":true,"prefixMatches":false,"settledMatches":false,"expectedTrace":[],"actualTrace":[]},{"name":"utility-authored-unknown-after-theme","mode":"sync","expectedError":["Error","Cannot use `@variant` with unknown variant: missing"],"actualError":["Error","Cannot use `@variant` with unknown variant: missing"],"errorMatches":true,"epochMatches":true,"prefixMatches":false,"settledMatches":false,"expectedTrace":[],"actualTrace":[]},{"name":"utility-authored-unknown-after-theme","mode":"async","expectedError":["Error","Cannot use `@variant` with unknown variant: missing"],"actualError":["Error","Cannot use `@variant` with unknown variant: missing"],"errorMatches":true,"epochMatches":true,"prefixMatches":false,"settledMatches":false,"expectedTrace":[],"actualTrace":[]}],"actualWasm":true,"wasmBytes":2501063,"fullRegistrationConformance":"pending"}
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: initial registration order and completed mutation prefix
++ actual - expected
+
++ [
++   {
++     actualError: [
++       'Error',
++       'Cannot use `@variant` with unknown variant: missing'
++     ],
++     actualTrace: [],
++     epochMatches: true,
++     errorMatches: true,
++     expectedError: [
++       'Error',
++       'Cannot use `@variant` with unknown variant: missing'
++     ],
++     expectedTrace: [],
++     mode: 'sync',
++     name: 'authored-unknown-after-theme',
++     prefixMatches: false,
++     settledMatches: false
++   },
++   {
++     actualError: [
++       'Error',
++       'Cannot use `@variant` with unknown variant: missing'
++     ],
++     actualTrace: [],
++     epochMatches: true,
++     errorMatches: true,
++     expectedError: [
++       'Error',
++       'Cannot use `@variant` with unknown variant: missing'
++     ],
++     expectedTrace: [],
++     mode: 'async',
++     name: 'authored-unknown-after-theme',
++     prefixMatches: false,
++     settledMatches: false
++   },
++   {
++     actualError: [
++       'Error',
++       'Cannot use `@variant` with unknown variant: missing'
++     ],
++     actualTrace: [],
++     epochMatches: true,
++     errorMatches: true,
++     expectedError: [
++       'Error',
++       'Cannot use `@variant` with unknown variant: missing'
++     ],
++     expectedTrace: [],
++     mode: 'sync',
++     name: 'utility-authored-unknown-after-theme',
++     prefixMatches: false,
++     settledMatches: false
++   },
++   {
++     actualError: [
++       'Error',
++       'Cannot use `@variant` with unknown variant: missing'
++     ],
++     actualTrace: [],
++     epochMatches: true,
++     errorMatches: true,
++     expectedError: [
++       'Error',
++       'Cannot use `@variant` with unknown variant: missing'
++     ],
++     expectedTrace: [],
++     mode: 'async',
++     name: 'utility-authored-unknown-after-theme',
++     prefixMatches: false,
++     settledMatches: false
++   }
++ ]
+- []
+
+    at file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/compiler/run-public-ast-registration-wasm.mjs:174:8 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: [
+    {
+      name: 'authored-unknown-after-theme',
+      mode: 'sync',
+      expectedError: [
+        'Error',
+        'Cannot use `@variant` with unknown variant: missing'
+      ],
+      actualError: [
+        'Error',
+        'Cannot use `@variant` with unknown variant: missing'
+      ],
+      errorMatches: true,
+      epochMatches: true,
+      prefixMatches: false,
+      settledMatches: false,
+      expectedTrace: [],
+      actualTrace: []
+    },
+    {
+      name: 'authored-unknown-after-theme',
+      mode: 'async',
+      expectedError: [
+        'Error',
+        'Cannot use `@variant` with unknown variant: missing'
+      ],
+      actualError: [
+        'Error',
+        'Cannot use `@variant` with unknown variant: missing'
+      ],
+      errorMatches: true,
+      epochMatches: true,
+      prefixMatches: false,
+      settledMatches: false,
+      expectedTrace: [],
+      actualTrace: []
+    },
+    {
+      name: 'utility-authored-unknown-after-theme',
+      mode: 'sync',
+      expectedError: [
+        'Error',
+        'Cannot use `@variant` with unknown variant: missing'
+      ],
+      actualError: [
+        'Error',
+        'Cannot use `@variant` with unknown variant: missing'
+      ],
+      errorMatches: true,
+      epochMatches: true,
+      prefixMatches: false,
+      settledMatches: false,
+      expectedTrace: [],
+      actualTrace: []
+    },
+    {
+      name: 'utility-authored-unknown-after-theme',
+      mode: 'async',
+      expectedError: [
+        'Error',
+        'Cannot use `@variant` with unknown variant: missing'
+      ],
+      actualError: [
+        'Error',
+        'Cannot use `@variant` with unknown variant: missing'
+      ],
+      errorMatches: true,
+      epochMatches: true,
+      prefixMatches: false,
+      settledMatches: false,
+      expectedTrace: [],
+      actualTrace: []
+    }
+  ],
+  expected: [],
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v26.1.0

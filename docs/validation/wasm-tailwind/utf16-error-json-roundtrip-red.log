@@ -1,0 +1,31 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 7.18s
+     Running unittests src/lib.rs (target/debug/deps/rustify_style-4ed64bbe76d78d97)
+
+running 1 test
+test compiler::public_api::tests::utf16_function_errors_match_fixed_oracle_units ... FAILED
+
+failures:
+
+---- compiler::public_api::tests::utf16_function_errors_match_fixed_oracle_units stdout ----
+
+thread 'compiler::public_api::tests::utf16_function_errors_match_fixed_oracle_units' (1909295) panicked at crates/rustify-style/src/compiler/../../../../tests/utility/compiler/public-api-native.rs:483:73:
+called `Result::unwrap()` on an `Err` value: Error("unexpected end of hex escape", line: 1, column: 105)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    compiler::public_api::tests::utf16_function_errors_match_fixed_oracle_units
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 183 filtered out; finished in 0.05s
+
+error: test failed, to rerun pass `-p rustify-style --lib`
+mbx[cache]: 0 hits, 0 misses, 1 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: 1h 50m saved across 3032 builds. put it toward something with a progress bar.

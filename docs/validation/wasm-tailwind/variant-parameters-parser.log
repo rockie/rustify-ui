@@ -1,0 +1,44 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 5.35s
+     Running unittests src/lib.rs (target/debug/deps/rustify_style-4ed64bbe76d78d97)
+
+running 1 test
+test compiler::tests::variant_parameter_matrix_matches_official_css_and_errors ... FAILED
+
+failures:
+
+---- compiler::tests::variant_parameter_matrix_matches_official_css_and_errors stdout ----
+
+thread 'compiler::tests::variant_parameter_matrix_matches_official_css_and_errors' (15443992) panicked at crates/rustify-style/src/compiler/tests.rs:142:5:
+30 mismatches; first cases: [
+    "\"variant-parameters:base:aria--\": actual \"\", expected String(\".aria--\\\\:flex {\\n  &[aria--=\\\"true\\\"] {\\n    display: flex;\\n  }\\n}\\n\"), pending []",
+    "\"variant-parameters:themed:aria--\": actual \"\", expected String(\".aria--\\\\:flex {\\n  &[aria--=\\\"true\\\"] {\\n    display: flex;\\n  }\\n}\\n\"), pending []",
+    "\"variant-parameters:base:data--\": actual \"\", expected String(\".data--\\\\:flex {\\n  &[data--] {\\n    display: flex;\\n  }\\n}\\n\"), pending []",
+    "\"variant-parameters:themed:data--\": actual \"\", expected String(\".data--\\\\:flex {\\n  &[data--] {\\n    display: flex;\\n  }\\n}\\n\"), pending []",
+    "\"variant-parameters:base:nth-1e+21\": actual \"\", expected String(\".nth-1e\\\\+21\\\\:flex {\\n  &:nth-child(1e+21) {\\n    display: flex;\\n  }\\n}\\n\"), pending []",
+    "\"variant-parameters:themed:nth-1e+21\": actual \"\", expected String(\".nth-1e\\\\+21\\\\:flex {\\n  &:nth-child(1e+21) {\\n    display: flex;\\n  }\\n}\\n\"), pending []",
+    "\"variant-parameters:base:nth-last-1e+21\": actual \"\", expected String(\".nth-last-1e\\\\+21\\\\:flex {\\n  &:nth-last-child(1e+21) {\\n    display: flex;\\n  }\\n}\\n\"), pending []",
+    "\"variant-parameters:themed:nth-last-1e+21\": actual \"\", expected String(\".nth-last-1e\\\\+21\\\\:flex {\\n  &:nth-last-child(1e+21) {\\n    display: flex;\\n  }\\n}\\n\"), pending []",
+    "\"variant-parameters:base:nth-of-type-1e+21\": actual \"\", expected String(\".nth-of-type-1e\\\\+21\\\\:flex {\\n  &:nth-of-type(1e+21) {\\n    display: flex;\\n  }\\n}\\n\"), pending []",
+    "\"variant-parameters:themed:nth-of-type-1e+21\": actual \"\", expected String(\".nth-of-type-1e\\\\+21\\\\:flex {\\n  &:nth-of-type(1e+21) {\\n    display: flex;\\n  }\\n}\\n\"), pending []",
+    "\"variant-parameters:base:nth-last-of-type-1e+21\": actual \"\", expected String(\".nth-last-of-type-1e\\\\+21\\\\:flex {\\n  &:nth-last-of-type(1e+21) {\\n    display: flex;\\n  }\\n}\\n\"), pending []",
+    "\"variant-parameters:themed:nth-last-of-type-1e+21\": actual \"\", expected String(\".nth-last-of-type-1e\\\\+21\\\\:flex {\\n  &:nth-last-of-type(1e+21) {\\n    display: flex;\\n  }\\n}\\n\"), pending []",
+]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    compiler::tests::variant_parameter_matrix_matches_official_css_and_errors
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 124 filtered out; finished in 0.96s
+
+error: test failed, to rerun pass `-p rustify-style --lib`
+mbx[cache]: 0 hits, 0 misses, 1 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: 577.5 GiB logical of target/ belonged to checkouts that no longer exist. neither does it.

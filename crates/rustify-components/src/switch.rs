@@ -32,7 +32,7 @@ pub fn Switch(
             type="button"
             role="switch"
             id=id
-            class=crate::macros::merge(TRACK, &class)
+            class=crate::macros::reactive_merge(TRACK, &class)
             data-name="Switch"
             data-testid=test_id
             data-state=move || if checked.get() { "checked" } else { "unchecked" }

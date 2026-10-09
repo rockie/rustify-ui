@@ -103,7 +103,7 @@ pub fn PanelTabs(
 
     view! {
         <div
-            class=crate::macros::merge(STRIP, &class)
+            class=crate::macros::reactive_merge(STRIP, &class)
             data-name="PanelTabs"
             data-testid=test_id
             role="tablist"

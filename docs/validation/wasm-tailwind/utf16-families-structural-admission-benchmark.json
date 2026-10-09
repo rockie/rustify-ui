@@ -1,0 +1,109 @@
+{
+  "before": {
+    "scope": "public AST constructor with sixteen interleaved ordinary/custom function pairs and four builds",
+    "samples": [
+      {
+        "constructorP95Ms": 0.4662909999999556,
+        "buildP95Ms": 0.34495800000001964,
+        "sessionsPerSecond": 660.2895549297126,
+        "outputSha256": "ab887eeeb6d5b52d0bb806db70cd39ea329801c09cae30e6b22e6c00a13ff65f",
+        "sessions": 200,
+        "builds": 800
+      },
+      {
+        "constructorP95Ms": 0.4709169999999858,
+        "buildP95Ms": 0.34350000000006276,
+        "sessionsPerSecond": 699.7603758063098,
+        "outputSha256": "ab887eeeb6d5b52d0bb806db70cd39ea329801c09cae30e6b22e6c00a13ff65f",
+        "sessions": 200,
+        "builds": 800
+      },
+      {
+        "constructorP95Ms": 0.3942090000000462,
+        "buildP95Ms": 0.28845799999999144,
+        "sessionsPerSecond": 741.222079378021,
+        "outputSha256": "ab887eeeb6d5b52d0bb806db70cd39ea329801c09cae30e6b22e6c00a13ff65f",
+        "sessions": 200,
+        "builds": 800
+      },
+      {
+        "constructorP95Ms": 0.40991699999995035,
+        "buildP95Ms": 0.2892500000000382,
+        "sessionsPerSecond": 737.575539121528,
+        "outputSha256": "ab887eeeb6d5b52d0bb806db70cd39ea329801c09cae30e6b22e6c00a13ff65f",
+        "sessions": 200,
+        "builds": 800
+      },
+      {
+        "constructorP95Ms": 0.392708999999968,
+        "buildP95Ms": 0.28899999999998727,
+        "sessionsPerSecond": 741.1055760364814,
+        "outputSha256": "ab887eeeb6d5b52d0bb806db70cd39ea329801c09cae30e6b22e6c00a13ff65f",
+        "sessions": 200,
+        "builds": 800
+      }
+    ],
+    "constructorP95Ms": 0.40991699999995035,
+    "buildP95Ms": 0.2892500000000382,
+    "sessionsPerSecond": 737.575539121528,
+    "wasmBytes": 2402880,
+    "wasmSha256": "2db05b76becd80459dcb6f60f7579d4cd5268d6475745b31f55161efbb112095",
+    "actualWasm": true,
+    "finalPerformanceAcceptance": "pending"
+  },
+  "after": {
+    "scope": "public AST constructor with sixteen interleaved ordinary/custom function pairs and four builds",
+    "samples": [
+      {
+        "constructorP95Ms": 0.40620799999999235,
+        "buildP95Ms": 0.30150000000003274,
+        "sessionsPerSecond": 728.0725030033626,
+        "outputSha256": "ab887eeeb6d5b52d0bb806db70cd39ea329801c09cae30e6b22e6c00a13ff65f",
+        "sessions": 200,
+        "builds": 800
+      },
+      {
+        "constructorP95Ms": 0.5055409999999938,
+        "buildP95Ms": 0.35891700000001947,
+        "sessionsPerSecond": 672.901566222807,
+        "outputSha256": "ab887eeeb6d5b52d0bb806db70cd39ea329801c09cae30e6b22e6c00a13ff65f",
+        "sessions": 200,
+        "builds": 800
+      },
+      {
+        "constructorP95Ms": 0.38487499999996544,
+        "buildP95Ms": 0.2863750000000209,
+        "sessionsPerSecond": 746.3159976565679,
+        "outputSha256": "ab887eeeb6d5b52d0bb806db70cd39ea329801c09cae30e6b22e6c00a13ff65f",
+        "sessions": 200,
+        "builds": 800
+      },
+      {
+        "constructorP95Ms": 0.37770799999998417,
+        "buildP95Ms": 0.28120899999998983,
+        "sessionsPerSecond": 758.4627855493882,
+        "outputSha256": "ab887eeeb6d5b52d0bb806db70cd39ea329801c09cae30e6b22e6c00a13ff65f",
+        "sessions": 200,
+        "builds": 800
+      },
+      {
+        "constructorP95Ms": 0.37570899999991525,
+        "buildP95Ms": 0.28166699999997036,
+        "sessionsPerSecond": 757.6569531459029,
+        "outputSha256": "ab887eeeb6d5b52d0bb806db70cd39ea329801c09cae30e6b22e6c00a13ff65f",
+        "sessions": 200,
+        "builds": 800
+      }
+    ],
+    "constructorP95Ms": 0.38487499999996544,
+    "buildP95Ms": 0.2863750000000209,
+    "sessionsPerSecond": 746.3159976565679,
+    "wasmBytes": 2416177,
+    "wasmSha256": "cd4048509b0b183fb26262fdebee8c35e904902558e0300ca4c2ef7c3c61961b",
+    "actualWasm": true,
+    "finalPerformanceAcceptance": "pending"
+  },
+  "serial": true,
+  "concurrentBuildsOrTests": false,
+  "interpretation": "Local descriptive mixed-function workload only; no optimization or final performance claim; Promise and allocator peak pending"
+}

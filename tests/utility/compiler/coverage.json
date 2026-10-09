@@ -1,0 +1,359 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "1334c99db8fd26c8ea065375dd9259800863f072",
+  "status": "partial",
+  "fullConformance": "pending",
+  "verifiedSlices": [
+    {
+      "name": "static utility registry",
+      "fixture": "static-fixtures.json",
+      "generator": "static.mjs --check",
+      "roots": 889,
+      "comparisons": 2674,
+      "native": "passed",
+      "wasm": "passed"
+    },
+    {
+      "name": "static variants except responsive/theme variants",
+      "fixture": "variant-fixtures.json",
+      "generator": "variants.mjs --check",
+      "roots": 66,
+      "comparisons": 139,
+      "native": "passed",
+      "wasm": "passed"
+    },
+    {
+      "name": "ring/shadow/content/pseudo and radius subset",
+      "fixture": "effects-fixtures.json",
+      "generator": "effects.mjs --check",
+      "comparisons": 72,
+      "native": "passed",
+      "wasm": "passed"
+    },
+    {
+      "name": "spacing, sizing and layout spacingUtility families",
+      "fixture": "functional-spacing-fixtures.json",
+      "generator": "functional-spacing.mjs --check",
+      "roots": 83,
+      "comparisons": 5999,
+      "native": "passed",
+      "wasm": "passed"
+    },
+    {
+      "name": "compound, attribute, positional, supports, responsive and container variant slices",
+      "fixture": "dynamic-variant-fixtures.json",
+      "generator": "dynamic-variants.mjs --check",
+      "comparisons": 517,
+      "native": "passed",
+      "wasm": "passed"
+    },
+    {
+      "name": "color branches with opacity and interpretation boundaries",
+      "fixture": "colors-fixtures.json",
+      "generator": "colors.mjs --check",
+      "roots": 19,
+      "comparisons": 2329,
+      "pendingBoundaryCases": 0,
+      "native": "passed",
+      "wasm": "passed"
+    },
+    {
+      "name": "font family/weight/size/line-height/tracking/stretch",
+      "fixture": "typography-fixtures.json",
+      "generator": "typography.mjs --check",
+      "roots": 6,
+      "comparisons": 1452,
+      "native": "passed",
+      "wasm": "passed"
+    },
+    {
+      "name": "virtual imports and references with relative origins, import/media options and registry traversal",
+      "fixture": "imports-fixtures.json",
+      "generator": "imports.mjs --check",
+      "comparisons": 129,
+      "native": "passed",
+      "wasm": "passed",
+      "errorCases": 14
+    },
+    {
+      "name": "border/divide/outline/stroke widths, decoration thickness/offset and opacity",
+      "fixture": "borders-fixtures.json",
+      "generator": "borders.mjs --check",
+      "roots": 19,
+      "comparisons": 5889,
+      "native": "passed",
+      "wasm": "passed"
+    },
+    {
+      "name": "background image/position/size",
+      "fixture": "backgrounds-fixtures.json",
+      "generator": "backgrounds.mjs --check",
+      "roots": 3,
+      "comparisons": 1370,
+      "native": "passed",
+      "wasm": "passed",
+      "promotedPrefixCases": 54
+    },
+    {
+      "name": "linear/conic/radial gradients and color/position stops",
+      "fixture": "gradients-fixtures.json",
+      "generator": "gradients.mjs --check",
+      "roots": 8,
+      "comparisons": 3594,
+      "native": "passed",
+      "wasm": "passed",
+      "promotedPrefixCases": 96
+    },
+    {
+      "name": "origin/perspective/translate/scale/rotate/skew/transform",
+      "fixture": "transforms-fixtures.json",
+      "generator": "transforms.mjs --check",
+      "roots": 34,
+      "staticRegressionRoots": 50,
+      "comparisons": 13334,
+      "native": "passed",
+      "wasm": "passed",
+      "promotedPrefixCases": 408
+    },
+    {
+      "name": "theme dependencies, keyframes, cycles, reset and complete default CSS theme inputs",
+      "fixture": "theme-fixtures.json",
+      "generator": "theme.mjs --check",
+      "comparisons": 43,
+      "native": "passed",
+      "wasm": "passed"
+    },
+    {
+      "name": "filter/backdrop-filter, effects and drop-shadow",
+      "fixture": "filters-fixtures.json",
+      "generator": "filters.mjs --check",
+      "roots": 22,
+      "staticRegressionRoots": 3,
+      "comparisons": 11884,
+      "native": "passed",
+      "wasm": "passed",
+      "promotedPrefixCases": 264
+    },
+    {
+      "name": "text/box/inset shadows and rings",
+      "fixture": "shadows-fixtures.json",
+      "generator": "shadows.mjs --check",
+      "roots": 6,
+      "staticRegressionRoots": 4,
+      "comparisons": 15991,
+      "promotedPrefixCases": 72,
+      "native": "passed",
+      "wasm": "passed"
+    },
+    {
+      "name": "theme prefix variable emission, candidate placement and invalid-prefix errors",
+      "fixture": "prefix-fixtures.json",
+      "generator": "prefix.mjs --check",
+      "comparisons": 38,
+      "errorCases": 4,
+      "native": "passed",
+      "wasm": "passed"
+    },
+    {
+      "name": "animation/transition/delay/duration/ease and theme-sensitive static roots",
+      "fixture": "motion-fixtures.json",
+      "generator": "motion.mjs --check",
+      "roots": 5,
+      "staticRegressionRoots": 12,
+      "comparisons": 5003,
+      "native": "passed",
+      "wasm": "passed"
+    },
+    {
+      "name": "grid placement/span/tracks/flow and auto tracks",
+      "fixture": "grid-fixtures.json",
+      "generator": "grid.mjs --check",
+      "roots": 18,
+      "staticRegressionRoots": 25,
+      "comparisons": 16772,
+      "native": "passed",
+      "wasm": "passed"
+    },
+    {
+      "name": "flex/order/columns/object position and legacy grow/shrink",
+      "fixture": "layout-fixtures.json",
+      "generator": "layout.mjs --check",
+      "roots": 9,
+      "comparisons": 8911,
+      "native": "passed",
+      "wasm": "passed",
+      "staticRegressionRoots": 34
+    },
+    {
+      "name": "CSS functions across authored/candidate/theme/at-rule/keyframe/property inputs",
+      "fixture": "functions-fixtures.json",
+      "generator": "functions.mjs --check",
+      "roots": 4,
+      "comparisons": 266,
+      "native": "passed",
+      "wasm": "passed",
+      "errorCases": 11
+    },
+    {
+      "name": "built-in legacy theme namespaces, CSS override options, tuple paths and escaping",
+      "fixture": "legacy-theme-fixtures.json",
+      "generator": "legacy-theme.mjs --check",
+      "roots": 119,
+      "comparisons": 785,
+      "native": "passed",
+      "wasm": "passed",
+      "errorCases": 24,
+      "dynamicNamespaceDependencies": 50,
+      "pendingUtf16Fixture": "legacy-theme-boundaries.json",
+      "pendingUtf16Cases": 4,
+      "fullCssDefaultCacheBytes": 4194304
+    },
+    {
+      "name": "mask image/position/size, edge stops and linear/radial/conic gradients",
+      "fixture": "masks-fixtures.json",
+      "generator": "masks.mjs --check",
+      "roots": 27,
+      "staticRegressionRoots": 56,
+      "comparisons": 23350,
+      "native": "passed",
+      "wasm": "passed"
+    },
+    {
+      "name": "list/line-clamp/indent/align/z/aspect/cursor/containment/container and legacy max-w-screen",
+      "fixture": "miscellaneous-fixtures.json",
+      "generator": "miscellaneous.mjs --check",
+      "roots": 14,
+      "staticRegressionRoots": 69,
+      "comparisons": 10835,
+      "native": "passed",
+      "wasm": "passed"
+    },
+    {
+      "name": "border spacing and sibling spacing with recursive AST and virtual sorting",
+      "fixture": "structural-spacing-fixtures.json",
+      "generator": "structural-spacing.mjs --check",
+      "roots": 7,
+      "staticRegressionRoots": 9,
+      "comparisons": 6102,
+      "native": "passed",
+      "wasm": "passed"
+    },
+    {
+      "name": "rounded and content with theme collisions and arbitrary modifiers",
+      "fixture": "effects-complete-fixtures.json",
+      "generator": "effects-complete.mjs --check",
+      "roots": 16,
+      "staticRegressionRoots": 31,
+      "comparisons": 17039,
+      "native": "passed",
+      "wasm": "passed"
+    },
+    {
+      "name": "arbitrary property opacity modifiers and candidate boundaries",
+      "fixture": "arbitrary-properties-fixtures.json",
+      "generator": "arbitrary-properties.mjs --check",
+      "properties": 11,
+      "comparisons": 21112,
+      "native": "passed",
+      "wasm": "passed"
+    },
+    {
+      "name": "CSS-native custom utilities with value and modifier substitution",
+      "fixture": "custom-utilities-fixtures.json",
+      "generator": "custom-utilities.mjs --check",
+      "comparisons": 19524,
+      "configurationErrors": 41,
+      "warningCases": 1304,
+      "native": "passed",
+      "wasm": "passed"
+    },
+    {
+      "name": "CSS-native custom variants and authored variant applications with slot identities and resource ordering",
+      "fixture": "custom-variants-fixtures.json",
+      "generator": "custom-variants.mjs --check",
+      "comparisons": 5909,
+      "configurationErrors": 933,
+      "incrementalCases": 12,
+      "incrementalComparisons": 72,
+      "native": "passed",
+      "wasm": "passed",
+      "cssCases": 5849
+    },
+    {
+      "name": "CSS parser EOF, comments, strings, custom properties and arbitrary candidate errors",
+      "fixture": "parser-errors-fixtures.json",
+      "generator": "parser-errors.mjs --check",
+      "comparisons": 2011,
+      "configurationErrors": 183,
+      "reusedCases": 15,
+      "native": "passed",
+      "wasm": "passed"
+    },
+    {
+      "name": "CSS-native apply dependency sorting, cycle errors, strict diagnostics and AST substitution",
+      "fixture": "apply-fixtures.json",
+      "generator": "apply.mjs --check",
+      "cssCases": 3273,
+      "comparisons": 3303,
+      "configurationErrors": 1465,
+      "incrementalCases": 6,
+      "incrementalComparisons": 36,
+      "reusedCases": 6,
+      "native": "passed",
+      "wasm": "passed"
+    },
+    {
+      "name": "fixed-theme built-in variant parser JSON shapes, parameters, compounds and ordering",
+      "fixture": "variant-parameters-fixtures.json",
+      "generator": "variant-parameters.mjs --check",
+      "registries": 12,
+      "staticRoots": 66,
+      "functionalRoots": 12,
+      "compoundRoots": 5,
+      "cssCases": 6719,
+      "reusedCases": 84,
+      "comparisons": 6803,
+      "errorCases": 24,
+      "parseCases": 6673,
+      "parseNullCases": 2963,
+      "parserLimitCases": 24,
+      "native": "passed",
+      "wasm": "passed"
+    },
+    {
+      "name": "inline source expansion, exclusions, path discovery metadata and import/media base contexts",
+      "fixture": "source-directives-fixtures.json",
+      "generator": "source-directives.mjs --check",
+      "cssCases": 1607,
+      "comparisons": 1682,
+      "errorCases": 303,
+      "incrementalCases": 15,
+      "incrementalComparisons": 90,
+      "pendingMetadataCases": 0,
+      "native": "passed",
+      "wasm": "passed",
+      "metadataCases": 1607
+    }
+  ],
+  "pending": [
+    "functional utility registry full parameterization",
+    "full variant parser/parameterization",
+    "theme dependency and keyframe closure",
+    "virtual imports/references and directive transforms",
+    "full parser and errors/API conformance",
+    "non-scalar UTF-16 theme identifiers and primitive path output",
+    "connecting compiler source metadata to Scanner and virtual source inputs"
+  ],
+  "wasmRunner": "mbx xtask utility-conformance --check --group compiler-slice",
+  "fullGate": "mbx xtask utility-conformance --check",
+  "totalComparisons": 214861,
+  "pendingBoundaryCases": 0,
+  "pendingFeatureCases": 4,
+  "errorCases": 3002,
+  "incrementalComparisons": 198,
+  "totalCssCases": 214696,
+  "variantParseCases": 6673,
+  "variantParseNullCases": 2963,
+  "variantParserLimitCases": 24,
+  "sourceMetadataCases": 1607
+}

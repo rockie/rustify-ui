@@ -1,0 +1,298 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: caller-source-array: constructor
++ actual - expected
+... Skipped lines
+
+  {
+    records: [
+      {
+        array: true,
+        fields: [
+...
+            {
++             reference: 5
+-             reference: 4
+            }
+          ],
+          [
+            '2',
+            {
++             reference: 10
+-             reference: 9
+            }
+          ]
+        ]
+      },
+      {
+...
+            'kind',
++           'at-rule'
+-           'declaration'
+          ],
+          [
++           'name',
++           '@apply'
+-           'property',
+-           'display'
+          ],
+          [
++           'params',
+-           'value',
+            'block'
+          ],
+          [
++           'nodes',
+-           'important',
+-           false
+-         ],
+-         [
+-           'src',
+            {
++             reference: 4
+-             undefined: true
+            }
+          ]
+        ]
+      },
+      {
++       array: true,
++       fields: []
++     },
++     {
+        array: false,
+        fields: [
+          [
+            'kind',
+            'rule'
+...
+            {
++             reference: 6
+-             reference: 5
+            }
+          ]
+        ]
+      },
+      {
+...
+            {
++             reference: 7
+-             reference: 6
+            }
+          ]
+        ]
+      },
+      {
+...
+            {
++             reference: 8
+-             reference: 7
+            }
+          ]
+        ]
+      },
+      {
+...
+            {
++             reference: 9
+-             reference: 8
+            }
+          ],
+          [
+            '1',
+            7.5
+...
+            {
++             reference: 11
+-             reference: 10
+            }
+          ],
+          [
+            'context',
+            {
++             reference: 12
+-             reference: 11
+            }
+          ]
+        ]
+      },
+      {
+...
+      {
++       reference: 5
+-       reference: 4
+      },
+      {
+        reference: 2
+      },
+      {
++       reference: 9
+-       reference: 8
+      }
+    ]
+  }
+
+    at file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/compiler/run-public-ast-custom-origin-wasm.mjs:69:12 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: {
+    roots: [
+      { reference: 0 },
+      { reference: 1 },
+      { reference: 5 },
+      { reference: 2 },
+      { reference: 9 }
+    ],
+    records: [
+      {
+        array: true,
+        fields: [ [ '0', [Object] ], [ '1', [Object] ], [ '2', [Object] ] ]
+      },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'rule' ],
+          [ 'selector', '.b' ],
+          [ 'nodes', [Object] ]
+        ]
+      },
+      { array: true, fields: [ [ '0', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'at-rule' ],
+          [ 'name', '@apply' ],
+          [ 'params', 'block' ],
+          [ 'nodes', [Object] ]
+        ]
+      },
+      { array: true, fields: [] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'rule' ],
+          [ 'selector', '.a' ],
+          [ 'nodes', [Object] ]
+        ]
+      },
+      { array: true, fields: [ [ '0', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'declaration' ],
+          [ 'property', 'display' ],
+          [ 'value', 'flex' ],
+          [ 'important', false ],
+          [ 'src', [Object] ]
+        ]
+      },
+      {
+        array: true,
+        fields: [ [ '0', [Object] ], [ '1', 7.5 ], [ '2', 11.5 ] ]
+      },
+      {
+        array: false,
+        fields: [
+          [ 'file', 'source.css' ],
+          [ 'code', '@apply flex;' ],
+          [ 'body', [Object] ]
+        ]
+      },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'context' ],
+          [ 'name', '@tailwind' ],
+          [ 'params', 'utilities' ],
+          [ 'nodes', [Object] ],
+          [ 'context', [Object] ]
+        ]
+      },
+      { array: true, fields: [] },
+      { array: false, fields: [] }
+    ]
+  },
+  expected: {
+    roots: [
+      { reference: 0 },
+      { reference: 1 },
+      { reference: 4 },
+      { reference: 2 },
+      { reference: 8 }
+    ],
+    records: [
+      {
+        array: true,
+        fields: [ [ '0', [Object] ], [ '1', [Object] ], [ '2', [Object] ] ]
+      },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'rule' ],
+          [ 'selector', '.b' ],
+          [ 'nodes', [Object] ]
+        ]
+      },
+      { array: true, fields: [ [ '0', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'declaration' ],
+          [ 'property', 'display' ],
+          [ 'value', 'block' ],
+          [ 'important', false ],
+          [ 'src', [Object] ]
+        ]
+      },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'rule' ],
+          [ 'selector', '.a' ],
+          [ 'nodes', [Object] ]
+        ]
+      },
+      { array: true, fields: [ [ '0', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'declaration' ],
+          [ 'property', 'display' ],
+          [ 'value', 'flex' ],
+          [ 'important', false ],
+          [ 'src', [Object] ]
+        ]
+      },
+      {
+        array: true,
+        fields: [ [ '0', [Object] ], [ '1', 7.5 ], [ '2', 11.5 ] ]
+      },
+      {
+        array: false,
+        fields: [
+          [ 'file', 'source.css' ],
+          [ 'code', '@apply flex;' ],
+          [ 'body', [Object] ]
+        ]
+      },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'context' ],
+          [ 'name', '@tailwind' ],
+          [ 'params', 'utilities' ],
+          [ 'nodes', [Object] ],
+          [ 'context', [Object] ]
+        ]
+      },
+      { array: true, fields: [] },
+      { array: false, fields: [] }
+    ]
+  },
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v26.1.0

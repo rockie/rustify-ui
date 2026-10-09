@@ -1,0 +1,65 @@
+mbx[warning]: Unix-domain cache session listener unavailable; using FIFO transport: failed to bind cache session listener at /var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/mbx-session-oGEK6P/cache-agent.sock: Operation not permitted (os error 1)
+error[E0277]: the trait bound `&mut PublicValue: Clone` is not satisfied
+   --> crates/rustify-style/src/compiler/public_api/design_system.rs:324:72
+    |
+324 |     ([$($value:expr),* $(,)?]) => { PublicValue::Array(Arc::new(vec![$(PublicValue::from(&$value)),*])) };
+    |                                                                        ^^^^^^^^^^^ the trait `Clone` is not implemented for `&mut PublicValue`
+    |
+   ::: crates/rustify-style/src/compiler/public_api/compile_ast.rs:198:48
+    |
+198 | ...                   .or_insert_with(|| public_json!([source, location.start, location.end]));
+    |                                          ---------------------------------------------------- in this macro invocation
+    |
+help: the trait `Clone` is implemented for `PublicValue`
+   --> crates/rustify-style/src/compiler/public_api/design_system.rs:73:10
+    |
+ 73 | #[derive(Clone, Debug, PartialEq, Eq)]
+    |          ^^^^^
+    = note: `Clone` is implemented for `&PublicValue`, but not for `&mut PublicValue`
+note: required for `PublicValue` to implement `From<&&mut PublicValue>`
+   --> crates/rustify-style/src/compiler/public_api/design_system.rs:257:36
+    |
+257 | impl<T: Clone + Into<PublicValue>> From<&T> for PublicValue {
+    |         -----                      ^^^^^^^^     ^^^^^^^^^^^
+    |         |
+    |         unsatisfied trait bound introduced here
+
+error[E0277]: the trait bound `PublicValue: From<&mut PublicValue>` is not satisfied
+   --> crates/rustify-style/src/compiler/public_api/design_system.rs:324:72
+    |
+324 |     ([$($value:expr),* $(,)?]) => { PublicValue::Array(Arc::new(vec![$(PublicValue::from(&$value)),*])) };
+    |                                                                        ^^^^^^^^^^^ unsatisfied trait bound
+    |
+   ::: crates/rustify-style/src/compiler/public_api/compile_ast.rs:198:48
+    |
+198 | ...                   .or_insert_with(|| public_json!([source, location.start, location.end]));
+    |                                          ---------------------------------------------------- in this macro invocation
+    |
+help: the trait `From<&mut PublicValue>` is not implemented for `PublicValue`
+   --> crates/rustify-style/src/compiler/public_api/design_system.rs:74:1
+    |
+ 74 | pub enum PublicValue {
+    | ^^^^^^^^^^^^^^^^^^^^
+    = help: `PublicValue` implements trait `From<T>`:
+              From<&T>
+              From<&str>
+              From<Text>
+              From<Vec<T>>
+              From<bool>
+              From<std::option::Option<T>>
+              From<std::string::String>
+              From<u32>
+            and 2 others
+    = note: required for `&mut PublicValue` to implement `Into<PublicValue>`
+note: required for `PublicValue` to implement `From<&&mut PublicValue>`
+   --> crates/rustify-style/src/compiler/public_api/design_system.rs:257:36
+    |
+257 | impl<T: Clone + Into<PublicValue>> From<&T> for PublicValue {
+    |                 -----------------  ^^^^^^^^     ^^^^^^^^^^^
+    |                 |
+    |                 unsatisfied trait bound introduced here
+    = note: this error originates in the macro `public_json` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+For more information about this error, try `rustc --explain E0277`.
+error: could not compile `rustify-style` (lib) due to 2 previous errors
+mbx[cache]: 0 hits, 1 misses; 0 B downloaded, 0 B uploaded, 0 B stored locally

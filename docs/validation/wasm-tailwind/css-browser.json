@@ -1,0 +1,70 @@
+{
+  "project": "utility-baseline",
+  "headed": false,
+  "channel": "chrome",
+  "cases": [
+    {
+      "name": "strict CSP accepts staged scoped sheets, nesting and registered properties",
+      "status": "passed",
+      "evidence": [
+        {
+          "before": {
+            "width": "725.625px",
+            "background": "rgb(29, 41, 57)"
+          },
+          "staged": {
+            "width": "725.625px",
+            "background": "rgb(29, 41, 57)"
+          },
+          "installed": {
+            "width": "137px",
+            "background": "rgb(18, 52, 86)",
+            "nestedColor": "rgb(21, 112, 239)",
+            "propertyWidth": "9px"
+          },
+          "outside": {
+            "width": "725.625px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          "boundary": {
+            "width": "725.625px",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          "cleaned": {
+            "width": "725.625px",
+            "background": "rgb(29, 41, 57)"
+          },
+          "sheetCountBefore": 0,
+          "sheetCountAfter": 0,
+          "violations": []
+        }
+      ]
+    },
+    {
+      "name": "strict CSP installs official Tailwind dependencies and nested pseudo selectors",
+      "status": "passed",
+      "evidence": [
+        {
+          "width": "137px",
+          "background": "rgb(18, 52, 86)",
+          "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgb(255, 255, 255) 0px 0px 0px 3px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+          "beforeContent": "\"probe\"",
+          "outsideWidth": "725.625px",
+          "stagingMs": 0.09999999403953552,
+          "installMs": 0,
+          "cssBytes": 2583,
+          "cleanedWidth": "725.625px",
+          "violations": []
+        }
+      ]
+    },
+    {
+      "name": "strict CSP probe fixtures remain readable at desktop and mobile widths",
+      "status": "passed",
+      "evidence": [
+        "docs/validation/wasm-tailwind/baseline-desktop.png",
+        "docs/validation/wasm-tailwind/baseline-mobile.png"
+      ]
+    }
+  ]
+}

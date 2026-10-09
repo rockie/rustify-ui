@@ -1,0 +1,9 @@
+# F-04 修后 host 检查（2026-10-08，dirty@53652fc）
+## style-tests
+test result: ok. 527 passed; 0 failed; 12 ignored; 0 measured; 0 filtered out; finished in 83.97s
+## facade-tests
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+## clippy -p rustify-style --all-features --all-targets -D warnings
+exit 0
+## cargo fmt --all -- --check
+exit 0

@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>WASM-TAILWIND · Rust/WASM 类名合并、扫描与动态 utility 编译 · 计划总结</title>
+<style>
+  :root { color-scheme: light dark; }
+  html, body { background: Canvas; color: CanvasText; }
+  body { font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", Roboto, "Helvetica Neue", Arial, sans-serif; margin: 0; }
+  main { max-width: 56rem; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+  h1 { font-size: 1.6rem; line-height: 1.3; margin: 0 0 .25rem; }
+  h2 { font-size: 1.2rem; margin: 2rem 0 .5rem; border-bottom: 1px solid color-mix(in srgb, CanvasText 20%, transparent); padding-bottom: .25rem; }
+  h3 { font-size: 1.05rem; margin: 1.25rem 0 .4rem; }
+  p, li { margin: .5rem 0; }
+  ul, ol { padding-left: 1.4rem; }
+  dl { margin: .5rem 0; }
+  dt { font-weight: 600; margin-top: .5rem; }
+  dd { margin: .15rem 0 .25rem 1rem; }
+  code, kbd, pre { font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", "Courier New", monospace; font-size: .92em; }
+  pre { background: color-mix(in srgb, CanvasText 6%, transparent); padding: .75rem .9rem; border-radius: 6px; overflow-x: auto; }
+  blockquote { border-left: 3px solid color-mix(in srgb, CanvasText 30%, transparent); margin: .75rem 0; padding: .15rem .9rem; color: color-mix(in srgb, CanvasText 80%, transparent); }
+  table { width: 100%; border-collapse: collapse; margin: .75rem 0; font-size: .92rem; }
+  th, td { text-align: left; padding: .4rem .55rem; border-bottom: 1px solid color-mix(in srgb, CanvasText 14%, transparent); vertical-align: top; }
+  th { background: color-mix(in srgb, CanvasText 6%, transparent); }
+  .pill { display: inline-block; padding: 1px 8px; border-radius: 999px; font-size: .8rem; background: color-mix(in srgb, CanvasText 10%, transparent); }
+  .ok { color: #1a7f37; }
+  .warn { color: #b8860b; }
+  .err { color: #b91c1c; }
+  .muted { color: color-mix(in srgb, CanvasText 65%, transparent); }
+  .kv { display: grid; grid-template-columns: max-content 1fr; gap: .15rem .9rem; font-size: .95rem; }
+  .toc { font-size: .95rem; background: color-mix(in srgb, CanvasText 5%, transparent); padding: .75rem 1rem; border-radius: 6px; }
+  .toc ol { margin: .25rem 0; }
+  .callout { border: 1px solid color-mix(in srgb, #b8860b 50%, transparent); background: color-mix(in srgb, #b8860b 8%, transparent); padding: .6rem .9rem; border-radius: 6px; margin: .75rem 0; }
+  .callout b { color: #b8860b; }
+  .ok-callout { border-color: color-mix(in srgb, #1a7f37 50%, transparent); background: color-mix(in srgb, #1a7f37 7%, transparent); }
+  .ok-callout b { color: #1a7f37; }
+  details { margin: .4rem 0; }
+  summary { cursor: pointer; }
+</style>
+</head>
+<body>
+<main>
+
+<header>
+  <h1>WASM-TAILWIND · 计划总结</h1>
+  <p class="muted">来源：<code>docs/plan/WASM-TAILWIND.md</code>（计划正文 482 行）+ M1–M7 完成记录 + R1–R5 评审报告 + <code>WASM-TAILWIND.review.md</code> 计划评审。本总结只把已经写下来的事实重新组织，不修订计划。</p>
+  <p>
+    <span class="pill">计划状态：已完成 7/7</span>
+    <span class="pill">R5 评审：通过验收</span>
+    <span class="pill">远端 CI：未实际运行</span>
+  </p>
+</header>
+
+<nav class="toc" aria-label="目录">
+  <b>目录</b>
+  <ol>
+    <li><a href="#tldr">一句话定位</a></li>
+    <li><a href="#what">做出了什么：按里程碑拆</a></li>
+    <li><a href="#review">评审修复经过：R1 → R5 怎么把缺陷关闭</a></li>
+    <li><a href="#verify">读者自己怎么验证</a></li>
+    <li><a href="#boundaries">当前契约与边界</a></li>
+    <li><a href="#unverified">未重验、不能抵扣、未覆盖</a></li>
+    <li><a href="#numbers">关键数据附录</a></li>
+  </ol>
+</nav>
+
+<h2 id="tldr">1. 一句话定位</h2>
+<p>用 Rust 写一套 <b>cn（className merge）</b>、<b>scanner</b>、<b>Tailwind v4 兼容 compiler</b>，编译成 WASM，在浏览器里 <b>module Worker</b> 跑；JS 侧 <code>UtilityScope</code> 接收类名、CSS scope、DOM 类和组件上下文，吐回 <code>CSSStyleSheet</code> + 有限 <b>GPU 投影</b>，实现 <b>动态 utility 编译</b>，替代 Tailwind 的 JS 编译管线。所有权 <b>从生产端到浏览器都来自 Rust</b>，cn 0.4.0 与 Tailwind 4.1.13 的运行时与 registry 被冻结进测试，组件迁移、scope 变换、配置事务与 GPU 真实绘制都已在 strict CSP、Chrome 154、macOS arm64 / Apple M5 Pro 下回归。</p>
+
+<h2 id="what">2. 做出了什么：按里程碑拆</h2>
+
+<p>七步走，按时序归并到一起。每一项都对应一份记录（<code>docs/validation/wasm-tailwind/M{1..7}.md</code>），这里只挑要做的事与结果数字。</p>
+
+<h3>§2.1 M1 · 锁基线 + 拆风险门</h3>
+<ul>
+  <li>把 cn 0.4.0 的 <b>947 runtime / 5 compiler / 25 validator / 3 cache / 12 build</b>、Tailwind 4.1.13 的 <b>1,171 utility roots / 88 variants</b>、scanner 抽取闭包与 <b>125 旧组件输出</b> 全部锁进 <code>tests/utility/</code>，固定 oracle；仅证明快照完整，不是兼容通过。</li>
+  <li>提供严格 CSP / 单线程 module Worker 的真实 Chrome baseline：<b>5 项</b> 通过，0 CSP 放宽，含 <code>baseline-desktop.png</code> / <code>baseline-mobile.png</code> 截图。</li>
+  <li>V-11 描述性测量：scanner facade 完整产物 58,000 bytes，p50 .4 ms / p95 .5 ms；CSSOM replaceSync p50 0 / p95 .1 ms；既有 fusion 119 帧 p50 8.3 / p95 9.1 ms。固定 JS 上游，不是新 Rust 性能。</li>
+</ul>
+
+<h3>§2.2 M2 · cn + 组件迁移 + 完整 Scanner</h3>
+<ul>
+  <li><code>crates/rustify-style/src/cn/</code> 纯 Rust 默认表 / tagged 输入 / 条件拼接 / 验证器 / 主题 callback / 表编译 / JS·TS 输出 / token subset / build 核心 / 有界缓存。组件 <code>cn::class_variants!</code> 与 <code>IntoTailwindClass::raw_class</code> 保留原始片段，组件只在 caller 最后合并一次。</li>
+  <li>scanner 共享真实 + 虚拟源树的选择 / ignore / glob / 增量 / 位置；24 共享 corpus native/WASM 相同；plain WASM <code>imports=[]</code>，<code>sharedMemory=false</code>。</li>
+  <li>旧包完整删除（用户明确决策，取代原 F-01 保留建议）：<code>mbx tree --workspace --all-features --target all --edges normal,build,dev --locked</code> 验证全 workspace graph / 锁文件 / 组件源码 / 公开导出无 <code>tw_merge</code>。</li>
+  <li>数字：cn native 13 / scnner native 124 / 组件 90 / core 164 / facade 2 全部通过；74 历史输出差异仅"新增原本错误删除的 ring 颜色"，无 token 被改。生产 cn bundle frozen <b>714,887 bytes</b>、生产 host <b>56/56</b>、947+56 runtime、31 native、2 项 strict clippy；WASM 当前 <b>2,137,348 bytes</b>（SHA <code>cd39e9bf…f0b</code>）、JS 43,725 bytes。</li>
+</ul>
+
+<h3>§2.3 M3 · 第一条动态 DOM 编译路径</h3>
+<ul>
+  <li><code>UtilityScope</code> 接收 <code>ScopeRoots</code> 与调用方正数 limits，独立 module Worker 跑 <code>CompilerSession</code>。</li>
+  <li>路径：<code>prepare → staged CSSStyleSheet → adoption → 主线程快照 → ack</code>。CSSOM 失败 nack 保留旧快照；ack 丢失用已安装快照恢复；retry 用新 epoch 重放。</li>
+  <li>JS 只调 Web API、校验传输身份、操作 CSSOM、清理资源；MutationObserver 读 classList 与新增子树，<b>不调 extractor</b>。dispose / abort 用 JS bound cleanup 终止 Worker、断开 observer、清理 stylesheet / owner；trap 清理不依赖 Rust Drop。</li>
+  <li>数字：<b>SDK 228 项</b> 通过，3 项 RED→GREEN 是真实队列回归；root + subpath 浏览器 9 + 4 项通过；WASM 1,183 通过 / 0 失败（partial slice，非 V-5 完整）。</li>
+</ul>
+
+<h3>§2.4 M4 · 固定版本 compiler 兼容范围</h3>
+<ul>
+  <li>把 upstream tailwindcss <b>34 个测试文件 / 1,398 项</b> 逐条入账：<b>1,183 rust_passed / 0 failed / 173 excluded_js_module / 33 excluded_js_helper / 7 excluded_js_api / 1 checked_internal_entry / 1 upstream_skipped</b>。</li>
+  <li>三组门 <code>compiler-api</code> / <code>compiler-slice</code> / <code>compiler-upstream</code> 串行通过：216,133 CSS / 1,607 metadata / 3,002 error / 6,673 variant JSON（host 数字）；实际 WASM 仍跑 216,133 CSS / 4 UTF-16 / 1,607 metadata / 3,002 errors / 6,673 variantParse。fix-bench seed: <b>889 root</b> 任意分批/乱序/插入 discard 后逐字相等官方 union CSS，5,000+ 候选分批 == 一次性结果。</li>
+  <li>6 个阶段历史保留：raw 归一化 / theme publication / variant ownership / raw functions / upstream exec / M4 final。每个阶段都把"上一个阶段未达成的"列为不声明项，例如完整 setup allocator 峰值、captured host 投影、单一 ownership 移交。</li>
+  <li>V-11 描述性：variant 构造 p95 <b>+12.39%</b>（同负载不可归因），<b>+91.7%</b> 在 16 个 nested variant/custom 模板下；raw theme 构造开销 <b>+15.6%</b>，全部 pending 定位。</li>
+</ul>
+
+<h3>§2.5 M5 · GPU utility 求值与实际控件</h3>
+<ul>
+  <li>GPU 给 cascade / state / 主题 / layout / Button 默认值与文字基线；DOM/GPU 真实 <b>137×72、padding 7、#123456 / #abcdef</b> 像素采样通过（Canvas2D 与期望 RGBA 偏差 ≤ 2）。</li>
+  <li>嵌套 custom 目标在 DOM 生效，GPU 严格拒绝并保留上次成功绘制（computed / applied / drawn），移开指针恢复 DOM 边框。文字 / None 基线（行盒换行差异 + GPU 单行裁剪）作为 M5 未完项保留。</li>
+  <li>自 2026-10-08 文字换行行盒落地后再次复验：root49 + deep44，0 skip / flaky / unexpected。</li>
+</ul>
+
+<h3>§2.6 M6 · SDK 扫描集成 + 评审修复</h3>
+<ul>
+  <li>扫描器：<code>UtilityScope::scan_content</code> / <code>scan_sources</code> 接入共享 FIFO，保序，仅相邻直接类名批次合并；安装前验证 CSS、完整报告缓存与合并候选；失败保留旧 snapshot，ack 丢失保留新 snapshot 并以它 retry。生产 bundle 默认 compiler-only，<code>--utility-scanner</code> 显式启用。</li>
+  <li>配置事务：<code>UtilityScope::replace_config</code> 先合并登记的 raw 片段，保留 callback 在主 realm；同 epoch supersede 旧队列，事务持有预合并结果，提交不重复调 callback。ack 丢失不回退已安装状态；<code>flush()</code> 是 FIFO barrier。安装失败 / 配置回调 / CSS 配置均保留旧 class / CSS / programs。</li>
+  <li>评审修复承担在 M6：见 §3。</li>
+  <li>收口：root53 + deep47（compiler-only），5 + 5（scanner）；cn JS/WASM crossing 947/947；demo cn 输入 / 语言（中英 / navigator.languages）；V-9 边界：候选恰好到上限可装、再多一个 <code>candidate_count</code> 且 revision / 宽度不变，<code>@apply</code> 循环 / <code>ast_depth</code> 嵌套 / 远程 <code>@import</code> 各自返回结构化错误。</li>
+</ul>
+
+<h3>§2.7 M7 · 全范围终验与开发者交付</h3>
+<ul>
+  <li>root + deep 同一 release 串行，0 skip / flaky / unexpected。final main build_id <b><code>9926118ec160f77a</code></b>（R5 未变），compiler-only Worker <b><code>a65f0b9a…01ac</code></b>（R5）；<code>scanner_enabled=false</code>。</li>
+  <li>运行期公共入口与失败 / 恢复写进 <code>docs/utility.md</code>。</li>
+  <li>明确未做（不能抵扣）：完整 Vite HMR / Next 项目未启动（M2 已覆盖生产宿主差分核心）；Windows / Linux 原生与其他浏览器未验证；原生 Makepad 窗口按计划排除；性能测量时系统负载偏高，无 SLO；<b>远端 GitHub Actions 未实际运行</b>，CI 安装步骤仅在隔离目录用 oracle 锁文件复现成功；<b>scanner 浏览器只在 R1–R3 历史与父尺寸阶段复跑，R4 / R5 复审只跑 compiler-only</b>。</li>
+</ul>
+
+<h2 id="review">3. 评审修复经过：R1 → R5 怎么把缺陷关闭</h2>
+
+<p>开发计划期间同步执行 5 轮代码评审（<code>WASM-TAILWIND.code-review{,.r2,.r3,.r4,.r5}.md</code>）。每轮都用"独立干净 release + 真实 Chrome + 隔离 native 工程"三方对照。R5 复审对 R4 给的两项作如下关闭：F-08 真正修好；F-04 改为"收窄契约后不再适用"。下面是经过的简表，方便理解修复的边界。</p>
+
+<table>
+  <thead>
+    <tr><th>ID</th><th>来源</th><th>问题</th><th>状态</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>F-01</td><td>R1</td>
+      <td>scope 关键帧引用未跟随非 inline <code>--animate-*</code> 主题变量，动画不运行</td>
+      <td class="ok">R1 已修复</td>
+    </tr>
+    <tr>
+      <td>F-02</td><td>R1</td>
+      <td>SDK 无活动集合重建入口，历史候选占满配额后无恢复路径</td>
+      <td class="ok">R1 已修复（<code>UtilityScope::rebuild(active)</code>）</td>
+    </tr>
+    <tr>
+      <td>F-03</td><td>R1</td>
+      <td>新增 browser CI 没安装独立 Tailwind oracle</td>
+      <td class="ok">R1 已修复（utility-lab 矩阵用 oracle 锁文件安装；远端 Actions 未实际跑）</td>
+    </tr>
+    <tr>
+      <td>F-04</td><td>R2，沿用 R3 / R4</td>
+      <td>把 timing 变量当作关键帧名；<br>同一变量兼 timing + 名称时全局改写；<br>公开 token 被改写后外部普通消费者（如 <code>transition-timing-function: var(--v)</code>）失效</td>
+      <td class="warn">R4 用"收窄契约 + 提交前拒绝"代替原值保留。<br>当前：单一用途照常改名，<b>多版本用途返回 <code>UnsupportedFeature</code></b> 并保留旧 revision。</td>
+    </tr>
+    <tr>
+      <td>F-05</td><td>R3</td>
+      <td><code>var()</code> 代换未推进整条 shorthand 槽位，名称漏改</td>
+      <td class="ok">R3 已修复（按声明和 fallback 展开 + 推进状态集合）</td>
+    </tr>
+    <tr>
+      <td>F-06</td><td>R3</td>
+      <td>数学时长函数（<code>calc(10s)</code> / <code>min(10s,12s)</code>）被当作 easing</td>
+      <td class="ok">R3 已修复（按结果量纲 + easing 函数白名单）</td>
+    </tr>
+    <tr>
+      <td>F-07</td><td>R3</td>
+      <td>无单位数值未占 iteration 槽，<code>animation: 2 10s infinite linear</code> 的 <code>infinite</code> 被当迭代</td>
+      <td class="ok">R3 已修复（区分 number / time，数值占 iteration）</td>
+    </tr>
+    <tr>
+      <td>F-08</td><td>R4</td>
+      <td>私有副本切断公开 token 的外部覆盖，<code>setProperty('--v','none')</code> 停不了动画</td>
+      <td class="ok">R4 已修复（<code>plan()</code> 对多版本公开变量直接拒绝；<code>--tw-*</code> 内部变量仍保留副本）</td>
+    </tr>
+  </tbody>
+</table>
+
+<p class="muted">修复路径：<code>crates/rustify-style/src/scope.rs</code>、<code>crates/rustify-ui/src/utility/{browser,state,cn}.rs</code>、<code>examples/utility-lab/{src/main.rs,app.js}</code>、<code>tests/browser/utility-runtime.spec.ts</code>、<code>docs/utility.md</code>、计划 §5.4 第 6 步。R5 复审同时锁了精确的 scope / runtime-test / plan diff，可按评审 <code>source-snapshot/</code> 复现修复增量。</p>
+
+<h2 id="verify">4. 读者自己怎么验证</h2>
+
+<p>所有命令都在仓根执行。环境按 M1 锁定的：<b>Rust 1.98.1（mbx 编译缓存）/ Node 26.1.0 / Chrome 154.0.8037.98 / macOS arm64 / Apple M5 Pro</b>。其他平台与浏览器未经验证。</p>
+
+<h3>§4.1 复跑单元 + facade</h3>
+<pre><code># cn / scanner / compiler 单测
+mbx test --locked -p rustify-style --all-features --lib
+# 533 项通过，0 failed，12 ignored（ignored 不计通过）；耗时约 90s
+mbx test --locked -p rustify-style-wasm --no-default-features --features compiler,scanner --lib
+# 12 passed / 0 failed
+# SDK + 组件
+mbx test --locked -p rustify-ui -p rustify-components --features rustify-components/utility --lib
+# SDK 301 / 组件 94 passed / 0 failed
+# xtask
+mbx test --locked -p xtask
+# 37 项通过</code></pre>
+
+<h3>§4.2 复跑完整 upstream 兼容门（V-5）</h3>
+<pre><code>node tests/utility/reference.mjs --check compiler-full
+# → 调 mbx xtask utility-conformance --check，依次跑 compiler-api / compiler-slice / compiler-upstream
+# 上游 34 测试文件 1,398 项 1,183 通过 / 0 failed（其余按账本处置）
+mbx xtask utility-conformance --check --group compiler-api
+mbx xtask utility-conformance --check --group compiler-slice
+# 实际 WASM 216,133 CSS / 1,607 metadata / 3,002 error / 6,673 variant JSON
+# 完整 V-5 兼容门 fullConformance 仍 pending（4 项 UTF-16 / 1 fullUtf16Conformance / fullPublicValueConformance）</code></pre>
+
+<h3>§4.3 复跑浏览器（严格 CSP / Chrome / strict serve）</h3>
+<pre><code># 1. 编译 compiler-only release
+mbx xtask build-web --example utility-lab --release
+# 2. 串行跑两个 project；workers=1，单核串行
+RUSTIFY_XTASK=$PWD/target/debug/xtask \
+  npx playwright test --project=utility-lab --workers=1 --reporter=line \
+    --output=/tmp/wt-root utility-runtime.spec.ts utility-faults.spec.ts
+RUSTIFY_XTASK=$PWD/target/debug/xtask \
+  npx playwright test --project=utility-lab-deep --workers=1 --reporter=line \
+    --output=/tmp/wt-deep utility-runtime.spec.ts
+# 3. 如要复跑 scanner-enabled
+mbx xtask build-web --example utility-lab --release --utility-scanner
+# 然后跑 utility-lab-scanner / utility-lab-scanner-deep
+# 4. 跑完后恢复 compiler-only</code></pre>
+
+<p>R5 复审用 <code>node docs/validation/wasm-tailwind/code-review-r5/sdk-probe.mjs</code> 在独立 strict port serve 上跑；R3/R4 用 <code>animation-probe.mjs</code>；R1 用 <code>animation</code> / <code>history</code> / <code>ci-oracle</code> 三种 mode。复现脚本与隔离 native 工程在 <code>docs/validation/wasm-tailwind/code-review-r{1..5}/</code> 各自目录里。</p>
+
+<h3>§4.4 看主路径是否生效</h3>
+<p>utility-lab 的 <code>w-[137px]</code> / <code>bg-[#123456]</code> 高度/前景/圆角在同一 revision 内合并；重复 ensure 不产生新 revision；独立 / 嵌套 scope 不串；scope 外样本不受影响。手机 390px 无横向溢出（截图 <code>utility-lab/m6-cn/locale-results/…/chinese-mobile.png</code> 之类）。</p>
+
+<h3>§4.5 复跑本轮 R1–R4 任一回归</h3>
+<p>每个评审的 <code>source-snapshot/</code> 存了精确 patch 增量与测试 patch；按报告里的"复现"块用对应 <code>probe.mjs</code> 即可。M6 修复后 host <code>scope::tests</code> 多了 <code>…a_public_property_whose_uses_need_different_names_is_reported</code> 等用例；浏览器 <code>utility-runtime.spec.ts</code> 多了 "a public property carrying a keyframes name follows overrides, and one with conflicting uses is refused"。</p>
+
+<h2 id="boundaries">5. 当前契约与边界</h2>
+
+<div class="callout">
+  <b>公开 token 的关键帧值改写规则（当前契约）</b>：当一个 <code>--animate-*</code> 公开 token 只流入动画（如 <code>--animate-card: card 1s …</code>）时，值里的关键帧名仍改为本 owner 名（<code>rustify-&lt;owner&gt;-card</code>），元素上 <code>style.setProperty('--animate-card','none')</code> 可停动画，scope 根上 <code>none</code> 停全部相关动画。当同一公开 token 还要被其他用途（timing、<code>animation-name</code> 列表、动画外的普通引用）改写时，提交前直接返回 <code>UnsupportedFeature</code>（<code>"custom property --x used both as a keyframes name and with another meaning"</code>），保留旧 revision。<code>--tw-*</code> 内部变量仍按 owner 改名并保留副本。
+</div>
+
+<p>其他边界，全部来自计划与评审：</p>
+<ul>
+  <li>外部 inline style / 应用自有 CSS / JS 对公开 token 的赋值在 scope 变换时按"未知值"处理；若其后的关键帧名与关键字同名，会报上述 <code>UnsupportedFeature</code>。</li>
+  <li>scope 变换为单 owner，<b>不依赖</b> Rust Drop 终止 Worker / observer / stylesheet，必须走 JS bound cleanup 路径；trap / 超时需显式 retry + 新 epoch + 重放 committed 输入。无无限自动重启。</li>
+  <li>scanner 默认 <b>不进入主 bundle</b>；生产 bundle 是 compiler-only；要启 scanner 必须显式 <code>--utility-scanner</code>，并以 <code>scanner_enabled=true</code> 重建。Worker 入口来自 main manifest 的协议 export，不混用。</li>
+  <li><code>flush()</code> 是 FIFO barrier；未安装时初始化空输入，已有安装时返回 snapshot，不重复 Worker 编译。</li>
+  <li>GPU 对嵌套功能分支明确报 <code>Unsupported</code>，DOM CSS 仍完整保留；调用方在安全 props 阶段消费已安装 report；GPU 在等待 drawn revision 时不出错也不假装完成。</li>
+  <li>性能：plan 没有数值 SLO；M4 raw variant 构造 p95 +91.7% 仍未定位；media/theme 负载下数字仅描述当前负载。</li>
+  <li>CI：R1 F-03 修复后 <code>npm ci --ignore-scripts --prefix tests/utility/compiler/oracle</code> 在隔离目录复现成功；<b>远端 GitHub Actions 未实际运行</b>，不在本轮结果中。</li>
+</ul>
+
+<h2 id="unverified">6. 未重验、不能抵扣、未覆盖</h2>
+
+<div class="callout">
+  <b>这一节是 Wasm-Tailwind 真实风险所在，不要从 M1–M7 / R1–R5 表面数字误判为「全通过」。</b>
+</div>
+
+<ul>
+  <li><b>V-5 完整兼容门</b>：<code>fullConformance / fullUtf16Conformance / fullPublicValueConformance</code> 仍 pending。4 项 legacy UTF-16 boundary 已 unit 相等，但 486 项完整 UTF-16 输入矩阵未通过；non-scalar candidate guards 在 79 / 79 case 上仍 RED，是 V-5 未关闭项。</li>
+  <li><b>全 setup allocator 峰值</b>：当前各门记录阈值是 fixture 同步保守边界（utilities 22,324 / theme 40,734 / apply 56,502 / 函数失败 13,794 / apply 失败 28,902 等），不是全局峰值证明。</li>
+  <li><b>V-11 性能</b>：variant 构造 p95 +12.39% / +91.7%，raw theme +15.6%，均未归因或优化；本轮无 p50 / p95 承诺；测量时系统负载偏高。</li>
+  <li><b>远端 CI</b>：GitHub Actions 未实际跑；CI 文件 hash 未变；本轮只用隔离目录复现 oracle 安装步骤。</li>
+  <li><b>操作系统 / 浏览器</b>：仅 macOS arm64 / Apple M5 Pro / Chrome 154。Windows / Linux / 其他浏览器未验证；原生 Makepad 窗口按计划排除。</li>
+  <li><b>Vite HMR / Next 项目</b>：未启动；M2 覆盖生产宿主差分核心，不代替完整项目。</li>
+  <li><b>scanner 浏览器最新复跑</b>：R1 / R2 / R3 复审有 5+5 浏览器；R4 / R5 复审只跑 compiler-only，scanner 浏览器被列入"未重建并重跑"。</li>
+  <li><b>Worker 内存</b>：浏览器 Worker 内存需要跨源隔离才能测，目前以 Node 中同一 facade 的线性内存高水位代替，未测。</li>
+  <li><b>完整 Source/host 投影</b>：captured host 投影、动态 Proxy / 外部 loader callback、shared 节点 / Source 图全契约仍是未完成项。</li>
+  <li><b>完整 helper / 公开 API</b>：compileAst / DesignSystem / helper / source-map / Features / Polyfills / warnings 仍在 fixture / pending。</li>
+  <li><b>历史脏数据</b>：所有改动都基于 <code>53652fcc…</code> HEAD 的 dirty 工作树，<b>未提交、未推送、未发布</b>；release manifest 全部以工作树中编译产物为准。</li>
+  <li><b>M5 缺口</b>：窄按钮 DOM 换行 / GPU 单行裁剪差异保留；文字 / None 基线在 M5 未完项中。</li>
+  <li><b>评测生成器</b>：review-r4 / r5 共有 8 + 9 = 17 个反例探针，本总结未复述其完整对照；详见对应 <code>animation-probe.json</code> / <code>cascade-sdk-browser.json</code>。</li>
+</ul>
+
+<h2 id="numbers">7. 关键数据附录</h2>
+
+<h3>§7.1 锁定的版本与基线</h3>
+<div class="kv">
+  <div>cn 版本</div><div>0.4.0（runtime 947 + 56；native 31）</div>
+  <div>Tailwind 版本</div><div>4.1.13（registry / source 已锁，2 冻结输出）</div>
+  <div>Oracle 入口</div><div><code>tests/utility/cn</code> / <code>tests/utility/compiler</code> / <code>tests/utility/scanner</code> / <code>tests/utility/migration</code></div>
+  <div>Rust toolchain</div><div>1.98.1（mbx 编译缓存）</div>
+  <div>JS / 浏览器</div><div>Node 26.1.0 / Chrome 154.0.8037.98</div>
+  <div>机器</div><div>macOS arm64 / Apple M5 Pro</div>
+  <div>HEAD</div><div><code>53652fcc…</code>（dirty，未提交）</div>
+</div>
+
+<h3>§7.2 关键测试与浏览器数</h3>
+<div class="kv">
+  <div>R5 单元 + facade</div><div>style 533 + facade 12，0 failed，12 ignored（不计通过）</div>
+  <div>R5 浏览器（compiler-only）</div><div>root 8 + deep 8 passed，0 failed</div>
+  <div>R5 native 对照（隔离工程）</div><div>8 合法输入，其中 5 个 R4 接受的公开冲突输入被拒绝</div>
+  <div>R5 SDK 探针</div><div>两 SDK 入口 root + deep 全部断言通过；5 个 R4 冲突替换报 <code>unsupported_feature</code>，CSS / revision 不变</div>
+  <div>M2 数字（cn / scanner / 组件 / core / facade）</div><div>13 / 124 / 90 / 164 / 2，0 failed</div>
+  <div>M4 上游账本</div><div>1,183 passed / 0 failed / 173 excluded_js_module / 33 excluded_js_helper / 7 excluded_js_api / 1 checked_internal_entry / 1 upstream_skipped</div>
+  <div>M4 actual WASM 兼容</div><div>216,133 CSS / 4 UTF-16 / 1,607 metadata / 3,002 errors / 6,673 variantParse</div>
+  <div>M7 终验</div><div>root + deep 同一 release 串行通过，0 skip / flaky / unexpected</div>
+</div>
+
+<h3>§7.3 关键 build / 产物身份</h3>
+<div class="kv">
+  <div>最终 main build_id</div><div><code>9926118ec160f77a</code>（R5 未变）</div>
+  <div>最终 compiler-only Worker</div><div><code>a65f0b9a2a382faf69c4065ce51e7befae11bb38f91607d7cffa7d75ad9101ac</code>（R5）</div>
+  <div>scanner_enabled</div><div>compiler-only <b>false</b>；scanner-enabled true（需显式构建）</div>
+  <div>M2 生产 cn bundle</div><div>WASM 2,137,348 bytes（SHA <code>cd39e9bf…f0b</code>）；JS 43,725 bytes</div>
+  <div>最终 main + Worker WASM</div><div>~11 MB（compiler-only release，per M7 / R5 size_report；非 V-11 承诺）</div>
+</div>
+
+<h3>§7.4 R1–R5 关键证据路径</h3>
+<ul>
+  <li><code>docs/validation/wasm-tailwind/code-review-r1/</code>：<code>animation.json</code> / <code>history.json</code> / <code>ci-oracle.json</code> / <code>repro.mjs</code></li>
+  <li><code>code-review-r2/</code>：<code>probe.mjs</code> / <code>facade-comparison.mjs</code> / <code>comparison-browser.mjs</code> / <code>probe.json</code></li>
+  <li><code>code-review-r3/</code>：<code>animation-probe.mjs</code> / <code>facade-probe.mjs</code> / <code>scope.rs</code> + 测试全文 snapshot</li>
+  <li><code>code-review-r4/</code>：<code>scope-r3-to-r4.diff</code> / <code>runtime-tests-r3-to-r4.diff</code> / <code>candidate-cases.json</code> / 13 探针</li>
+  <li><code>code-review-r5/</code>：<code>scope.rs.diff</code> / <code>utility-runtime.spec.ts.diff</code> / <code>WASM-TAILWIND.md.diff</code> / <code>sdk-probe.mjs</code> / 5 组 R4 公开冲突输入</li>
+</ul>
+
+<h3>§7.5 SDLC 与台账</h3>
+<ul>
+  <li>SDLC 计划对象：<code>be9305f5-b240-453b-bb54-5ff7d0ed7970</code>（<code>.xgent-ai/sdlc/status/plan/be9305f5…</code>）</li>
+  <li>当前重点：R5 复审 <code>03a93f04-5364-4e76-ab5c-f47fe6fa8851</code> 通过验收</li>
+  <li>台账入口：<code>.xgent-ai/sdlc/index.md</code></li>
+</ul>
+
+<hr>
+<p class="muted">本总结不改写计划、记录或评审报告；只把已经写下的事实重新组织。如果某处数字与原文不一致，以原文为准并回改本总结。报告出处：<code>docs/plan/WASM-TAILWIND.md</code> + <code>docs/validation/wasm-tailwind/M{1..7}.md</code> + <code>docs/plan/WASM-TAILWIND.{review,code-review,code-review.r2,code-review.r3,code-review.r4,code-review.r5}.md</code>。</p>
+
+</main>
+</body>
+</html>

@@ -202,7 +202,7 @@ pub fn Tree(
     let aria_label = (!aria_label.is_empty()).then_some(aria_label);
     view! {
         <div
-            class=crate::macros::merge(TREE, &class)
+            class=crate::macros::reactive_merge(TREE, &class)
             data-name="Tree"
             data-testid=test_id
             role="tree"

@@ -1,0 +1,23 @@
+{
+  "baseScript": "tests/utility/compiler/bench-media-source-wasm.mjs",
+  "baseSha256": "d1130984077de9ef21f239fd09ba8fc4ff49a832cbbf3b6a25dc1962f653117e",
+  "scriptPath": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-raw-variant-benchmark-4yx4fq1i/benchmark.mjs",
+  "scriptSha256": "320f4f04853b8e8b78d47679e7910083c5cd76453ae3fd2dd47c1daa8241b0d4",
+  "source": "import assert from 'node:assert/strict'\nimport {createHash} from 'node:crypto'\nimport {readFile} from 'node:fs/promises'\nimport {resolve} from 'node:path'\nimport {performance} from 'node:perf_hooks'\nimport {pathToFileURL} from 'node:url'\n\nconst directory=resolve(process.argv[2] ?? 'target/utility-conformance/compiler-api')\nconst facade=await import(pathToFileURL(resolve(directory,'style.js')))\nconst bytes=await readFile(resolve(directory,'style_bg.wasm'))\nawait facade.default({module_or_path:bytes})\nconst limits={input_bytes:262144,asset_bytes:262144,candidate_count:1024,ast_depth:32,\n  css_bytes:262144,queued_bytes:262144,cache_bytes:16000000}\nconst config=JSON.stringify({limits,options:{from:'entry.css',base:'/discover'}})\nfunction fixture() {\n  const decl=(property,value)=>({kind:'declaration',property,value,important:false})\n  const at=(name,params,nodes=[])=>({kind:'at-rule',name,params,nodes})\n  const rule=(selector,nodes)=>({kind:'rule',selector,nodes})\n  return [at('@custom-variant','interaction',[\n    rule('&:hover',[at('@slot','')]),rule('&:focus',[at('@slot','')]),\n  ]),...Array.from({length:16},(_,i)=>rule(`.probe-${i}`,[\n    at('@variant',i%2?'hover':'interaction',[at('@variant','focus',[decl('width',`${i+1}px`)])]),\n  ])),at('@tailwind','utilities')]\n}\n// Full identity and mutation prefixes are checked by the independent graph gates.\nfunction shape(nodes) {\n  return nodes.map(node => ({kind:node.kind,...Object.fromEntries(['name','params','selector','property','value','important'].filter(key => key in node).map(key => [key,node[key]])),\n    ...('nodes' in node ? {nodes:shape(node.nodes)} : {})}))\n}\nfunction sample() {\n  const constructors=[],builds=[],hash=createHash('sha256')\n  const started=performance.now()\n  for (let session=0;session<100;session++) {\n    const input=fixture(), start=performance.now()\n    const compiler=new facade.AstCompiler(input,config)\n    constructors.push(performance.now()-start)\n    try {\n      for (const batch of [[],['block'],['flex'],['interaction:block']]) {\n        const before=performance.now(), output=compiler.build(batch)\n        builds.push(performance.now()-before)\n        hash.update(JSON.stringify(shape(output)))\n      }\n    } finally { compiler.free() }\n  }\n  const elapsed=performance.now()-started\n  const p95=values => values.sort((a,b) => a-b)[Math.ceil(values.length*0.95)-1]\n  return {constructorP95Ms:p95(constructors),buildP95Ms:p95(builds),sessionsPerSecond:100000/elapsed,\n    outputSha256:hash.digest('hex'),sessions:100,builds:400}\n}\nsample()\nconst samples=Array.from({length:5},sample)\nassert(samples.every(value => value.outputSha256===samples[0].outputSha256))\nconst median=field => samples.map(value => value[field]).sort((a,b) => a-b)[2]\nconsole.log(JSON.stringify({scope:'public AST constructor with sixteen nested authored variants with a custom template and four builds',\n  samples,constructorP95Ms:median('constructorP95Ms'),buildP95Ms:median('buildP95Ms'),\n  sessionsPerSecond:median('sessionsPerSecond'),wasmBytes:bytes.length,\n  wasmSha256:createHash('sha256').update(bytes).digest('hex'),actualWasm:true,finalPerformanceAcceptance:'pending'}))\n",
+  "samples": 5,
+  "sessionsPerSample": 100,
+  "buildsPerSample": 400,
+  "batches": [
+    [],
+    [
+      "block"
+    ],
+    [
+      "flex"
+    ],
+    [
+      "interaction:block"
+    ]
+  ],
+  "limitsUnchanged": true
+}

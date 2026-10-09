@@ -1,0 +1,848 @@
+{
+  "updatedAt": "2026-10-06T21:59:02+11:00",
+  "baseline": "dirty@ef766ce50005546d861e32a4a1c45b4f4a03f0d7",
+  "previousEvidence": "postcompat-normalize-evidence.json",
+  "sourceHashes": {
+    "Cargo.toml": "dee97baccd454f9bf74ccd8c4bac69e47579d2284b5f07bcb39f73a22d5f871a",
+    "Cargo.lock": "3e1069d4610684c784ddd750ddd9a20132d9f749d3aa660f0bf1d7887ef4577c",
+    "mise.toml": "b39792f4c61600ed818b759bb8f9316b217372135b4b0eae097305ceec761f79",
+    "sources.lock.json": "f07a22046a145b10b7dda5c4ccb949ee1ffc00673a57f5ab3dc1a1c15b0ceb6d",
+    "xtask/src/utility.rs": "ab39be91590e377f01d0d1e19c05f82187b128c9f1f715116bb61be545d6184d",
+    "examples/utility-lab/src/button_baseline.rs": "24fa5304273db11881fd299a899da09e2f553bf4f4c062e524ca0187a1591978",
+    "examples/utility-lab/app.js": "6f3a56cd6526f6d2d7288d940ebc655c77063591627fdeb402ecb4271ea5d8c7",
+    "tests/browser/utility-gpu.spec.ts": "6c49b586391536d7eba5b5e39642d106638102b2a8770c6ead9b6f82f5c6ac57",
+    "tests/utility/compiler/run-public-ast-registration-wasm.mjs": "f23954ff6e4c0f4482ea8427f4057776a73f465edd45efdaa134a6727a632efb",
+    "tests/utility/compiler/run-public-ast-media-source-wasm.mjs": "09137e228eb0a99ef1c8d803265ff6af73170dd744a48da431525bea85f58eca",
+    "tests/utility/compiler/run-public-ast-ownership-wasm.mjs": "dcdd681044323d3a8f26c295a63fa9961f5699d7dcdc0f3fef894e8c7ba10fac",
+    "tests/utility/compiler/bench-media-source-wasm.mjs": "d1130984077de9ef21f239fd09ba8fc4ff49a832cbbf3b6a25dc1962f653117e",
+    "crates/rustify-style/src/compiler/registration.rs": "e12541b3ac0a1ddda780e5b487e3b91ee953ba0151bdd341f81f92b71895884e",
+    "crates/rustify-style/src/compiler/theme.rs": "63345a14f129704bc41d748ad24d3e658f752d232319d13e28bc17a8a041d10c",
+    "crates/rustify-style/src/compiler/custom_utilities.rs": "565c48533eb8c02fac637885d981d9ec484cc24fd2acfff9d0ca3932b0ae40a6",
+    "crates/rustify-style/src/compiler/custom_variants.rs": "dc8db45d6846eb042a572c52051f0dce39dd423be54bba78566c89134c59cedc",
+    "crates/rustify-style/src/compiler/public_api/compile_ast.rs": "ee424d20890148253b27966f4eea15af6381e7aa1ea6567dc788541f4e68a516",
+    "crates/rustify-style/src/compiler/mod.rs": "0977fc62c8fe2ba83d719cc044a5d50e05fe7f0445ec0052e1fe3a8b75f3ae24",
+    "crates/rustify-style/src/compiler/variants.rs": "0b60904768e92d8e9cf569699363098c77101ad2ca94f2865c8316095ef2e6dd",
+    "crates/rustify-style/src/compiler/origin/current.rs": "e48e222e499cfb3809310d5d2b51891fe058a0aa4b7320c1ddbb055dcdbb0f8d"
+  },
+  "evidenceFiles": {
+    "raw-theme-baseline.json": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-baseline.json",
+      "bytes": 199,
+      "sha256": "bb7adccdc66331c997afed18f44d8727f2ee1c15bbc7d30116e919e961a273c8"
+    },
+    "raw-theme-before-noop-evidence.json": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-before-noop-evidence.json",
+      "bytes": 25271,
+      "sha256": "9440dbcd9a06a95177b449d88e92f498003deabddd011634a19b067a1f52d58e"
+    },
+    "raw-theme-before-noop-records.log": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-before-noop-records.log",
+      "bytes": 800,
+      "sha256": "a86c899f4bfa1aa5857e4e82c08bccde31bdfcb8a5ac4f805a7aef659dbea876"
+    },
+    "raw-theme-before-red.log": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-before-red.log",
+      "bytes": 544189,
+      "sha256": "bd0f92730beac78baaf3e5cbc0cb638e63e2342732396ff4df850406d5ed13e1"
+    },
+    "raw-theme-benchmark-after.json": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-benchmark-after.json",
+      "bytes": 1460,
+      "sha256": "79600b167172c2af9bbe79d70058a1bf50e28757b6b361901dc8c4fcc98b9830"
+    },
+    "raw-theme-benchmark-before.json": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-benchmark-before.json",
+      "bytes": 1461,
+      "sha256": "761542525ff1bcdc5f41fb11d45636849192aa9278fb93f766839e43ed77e03c"
+    },
+    "raw-theme-benchmark-cpu.json": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-benchmark-cpu.json",
+      "bytes": 2887,
+      "sha256": "bf7c893c094b3f6323d98e079020360047cf3437e157176d4c54ed45c3f5a58d"
+    },
+    "raw-theme-browser-deep.json": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-browser-deep.json",
+      "bytes": 2972490,
+      "sha256": "98d8b668a6533fb6789d54ceea8850abd3ad14c5aa6c27f5cd2125f9904280d4"
+    },
+    "raw-theme-browser-deep.log": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-browser-deep.log",
+      "bytes": 208,
+      "sha256": "180c8cd744e5b7f47452dca80a147e55e7499c2d613361e3f8857a9232e9ee94"
+    },
+    "raw-theme-browser-root.json": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-browser-root.json",
+      "bytes": 2977747,
+      "sha256": "4436a30cbb03630a1f1f53c9ee55634460091f770a502ece14423eb5ebca01a2"
+    },
+    "raw-theme-browser-root.log": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-browser-root.log",
+      "bytes": 203,
+      "sha256": "0d74c5479d46b9684dbde3104fe7345125078b8f5ef6ee273fbd3d350026f090"
+    },
+    "raw-theme-budget-probe.log": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-budget-probe.log",
+      "bytes": 7763,
+      "sha256": "328ba7fdae68ef3b60e337a61ab9ab381453b45703d57dc61cb325cccc086a72"
+    },
+    "raw-theme-build-deep-verified.log": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-build-deep-verified.log",
+      "bytes": 8736,
+      "sha256": "6bb2d38f71d89387f8cef9194243e680449ebeb4f6bf37ae3fd2f7ac5a62ae11"
+    },
+    "raw-theme-build-deep.log": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-build-deep.log",
+      "bytes": 8768,
+      "sha256": "307b8ed67de7cee78bc7430154605f56d695c8ce486afc39a49189687bde6077"
+    },
+    "raw-theme-build-root-verified.log": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-build-root-verified.log",
+      "bytes": 9033,
+      "sha256": "dff5993c31cba1f559393570beffaa54e7d271d0029e9d74cda5314158727241"
+    },
+    "raw-theme-build-root.log": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-build-root.log",
+      "bytes": 9141,
+      "sha256": "3a07ebc796660c529f7e80e2158bb8187fd2f27feb14c52e72e8ecbfef40dce5"
+    },
+    "raw-theme-compiler-api-final.log": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-compiler-api-final.log",
+      "bytes": 58539,
+      "sha256": "df3850d024f961aa19e3f3f8de63b1a55105570bd48697e107513a04e114f768"
+    },
+    "raw-theme-compiler-api-verified.log": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-compiler-api-verified.log",
+      "bytes": 58720,
+      "sha256": "e425ca83e6079b90dcdb5c42cb3dc54adf8bacd36cd7246f35488c85ae4fc174"
+    },
+    "raw-theme-compiler-api.log": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-compiler-api.log",
+      "bytes": 20000,
+      "sha256": "b845d8a2b53ae9f5c6891abeb2426b3f45884eb98118b1c875045b16ccde1392"
+    },
+    "raw-theme-compiler-slice.log": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-compiler-slice.log",
+      "bytes": 45021,
+      "sha256": "56f1c07c55da061e28d717b67c019fca5b19dd98295aa85af84efd8e1412ff9f"
+    },
+    "raw-theme-core-clippy.log": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-core-clippy.log",
+      "bytes": 647,
+      "sha256": "764ddaf6a75753f2cef7ffe25c909006fc37f0fcb4727dbb54b7694a20dbf98c"
+    },
+    "raw-theme-diff-check.log": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-diff-check.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "raw-theme-diff-final.log": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-diff-final.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "raw-theme-docs-verified.log": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-docs-verified.log",
+      "bytes": 1233,
+      "sha256": "a8ee4578081fb9ddaa1fd732b1911ece4fcb413cf6faeef0a4c34486278ab9f9"
+    },
+    "raw-theme-facade-clippy.log": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-facade-clippy.log",
+      "bytes": 875,
+      "sha256": "92f07487bd728b3d6eb503a1598d00133fe80b282f3cab167a0fff5a4d24b089"
+    },
+    "raw-theme-facade.log": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-facade.log",
+      "bytes": 2248,
+      "sha256": "f54bb5bbaa8f0a7b7afc7103c9bb80f8ea7e67a6e639807ede33ee64882ac365"
+    },
+    "raw-theme-final-api.log": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-final-api.log",
+      "bytes": 58577,
+      "sha256": "16e3c08c78eaf6ec5cbc487ab985258ae1d2bff7983a7fecf4e4e6570f9c27d6"
+    },
+    "raw-theme-final-benchmark-after.json": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-final-benchmark-after.json",
+      "bytes": 1462,
+      "sha256": "2f5136dd1b7d3c46561aa26064abd42dccc9658c2f8a0bafe01812f7520ddcf7"
+    },
+    "raw-theme-final-benchmark-before.json": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-final-benchmark-before.json",
+      "bytes": 1464,
+      "sha256": "60f4fedc900b77e4ac63b20fb1448d97b6c9eeecf0fb3a88453ba44b16562537"
+    },
+    "raw-theme-final-benchmark-cpu.json": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-final-benchmark-cpu.json",
+      "bytes": 2769,
+      "sha256": "4bc1bb2ad0e8c159048feca3d79d228447d3000e71f01471babe9ef7e9ef6b80"
+    },
+    "raw-theme-final-browser-deep.json": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-final-browser-deep.json",
+      "bytes": 2972276,
+      "sha256": "24493435f807fe69b207d23842fda8e1bc61a48fafefee334c025716131f60f3"
+    },
+    "raw-theme-final-browser-deep.log": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-final-browser-deep.log",
+      "bytes": 214,
+      "sha256": "fb8a9f24979b388383a2d35cd0484010965e8d79a83add87f634959f5aa0086d"
+    },
+    "raw-theme-final-browser-root.json": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-final-browser-root.json",
+      "bytes": 2977362,
+      "sha256": "74cb6aad8f7790d07af687b5f11f21e1512027f446ed9fde2414b29465de21c3"
+    },
+    "raw-theme-final-browser-root.log": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-final-browser-root.log",
+      "bytes": 209,
+      "sha256": "7bc3cecef95520352acabd0ff56ed5e36399bb8e33f3274f2dca922f892a0a25"
+    },
+    "raw-theme-final-build-deep.log": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-final-build-deep.log",
+      "bytes": 8778,
+      "sha256": "40dd87534611a36ff573f245a8ad2f78f84225768c0022fbd5404df95536e505"
+    },
+    "raw-theme-final-build-root.log": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-final-build-root.log",
+      "bytes": 9051,
+      "sha256": "1044bf5064fe7bf332ee6d532eda83435b82d56c05b9af9e06755c5256143842"
+    },
+    "raw-theme-final-core-clippy.log": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-final-core-clippy.log",
+      "bytes": 677,
+      "sha256": "61c59569a3cebfb31d510ea4d715cb5612ae46f4e7ebcf5a3aed715d70bf6db4"
+    },
+    "raw-theme-final-facade-clippy.log": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-final-facade-clippy.log",
+      "bytes": 794,
+      "sha256": "059002a05aa18ecefd7ed5b9bc828b7b19b288df17f16f0e46d3909416ccad2e"
+    },
+    "raw-theme-final-facade.log": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-final-facade.log",
+      "bytes": 2153,
+      "sha256": "1964b141368297a4a0674ca7a9fdbb0ee5cd232f124f9f50a91999b13272ea83"
+    },
+    "raw-theme-final-fmt.log": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-final-fmt.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "raw-theme-final-native.log": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-final-native.log",
+      "bytes": 40449,
+      "sha256": "c4997aba8f231d8164643e41661cdbdd99c3db35e52308f2956a81f90e8e7206"
+    },
+    "raw-theme-final-ownership-red.log": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-final-ownership-red.log",
+      "bytes": 65829,
+      "sha256": "65cd59e4035467ec761d9381d94974dfcfbf842ce40cf106ae7842c8e2508e49"
+    },
+    "raw-theme-final-products.json": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-final-products.json",
+      "bytes": 2485,
+      "sha256": "65524e4cda86f344c4302a21e123d7c58bbbca5727dd894e0ede6948b6210dd7"
+    },
+    "raw-theme-final-slice.log": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-final-slice.log",
+      "bytes": 45070,
+      "sha256": "c600245b55935a20dfe293dbf1f77323bb81ac301e39c12b875932892299392f"
+    },
+    "raw-theme-fmt-final.log": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-fmt-final.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "raw-theme-fmt.log": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-fmt.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "raw-theme-hotpath-after.json": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-hotpath-after.json",
+      "bytes": 1488,
+      "sha256": "21d404418b48a70ea18e57dccb6e9a859c7f8aa12b4063a50f0bd1dd0958def7"
+    },
+    "raw-theme-hotpath-before.json": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-hotpath-before.json",
+      "bytes": 1492,
+      "sha256": "e00f294f48ed052ec6b7b9487bbb67ece2c45c954fd626c5cccc9ffc7fb4f27b"
+    },
+    "raw-theme-hotpath-fixture.json": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-hotpath-fixture.json",
+      "bytes": 3891,
+      "sha256": "68962dfab2159311723de21f96fec097053d1de5f40f443f541b6719952f818e"
+    },
+    "raw-theme-native-before-red.log": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-native-before-red.log",
+      "bytes": 1546,
+      "sha256": "00dd150821ce2652482299a5a944430fd07aa9e35e40399d310cecfdfe7d31c3"
+    },
+    "raw-theme-native-targeted.log": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-native-targeted.log",
+      "bytes": 1665,
+      "sha256": "b39fc40f5bbba019f7138ceda496c52e4138b45cc6f4924a1f21d5a35fe97c7e"
+    },
+    "raw-theme-native-verified.log": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-native-verified.log",
+      "bytes": 40461,
+      "sha256": "f9c30a406e54d604e72e7ccb5d2cd5e8eec56b3c0a220a8c2aecb6a6d7ff96c2"
+    },
+    "raw-theme-native.log": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-native.log",
+      "bytes": 60983,
+      "sha256": "de585909336918bd2c4da74fb54fe19d45bf5b3dde976cb419ef4fca6fe7fab7"
+    },
+    "raw-theme-ownership-final-red.log": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-ownership-final-red.log",
+      "bytes": 65829,
+      "sha256": "18ed69ecfc5232ead11ddb5243ee0cd0dfd39edc451f959835fded4b92fcde4f"
+    },
+    "raw-theme-ownership-verified-red.log": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-ownership-verified-red.log",
+      "bytes": 65829,
+      "sha256": "3c2639d6c3d7ed1f15d9bd3ed9ffff667809481744dfa4fa9f65688010c482d1"
+    },
+    "raw-theme-products-restored.json": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-products-restored.json",
+      "bytes": 2473,
+      "sha256": "7d9444273d1dda2ff6e5a22030069a9df33b25a5afd27dfbaeae92100b30d480"
+    },
+    "raw-theme-xtask.log": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-xtask.log",
+      "bytes": 3891,
+      "sha256": "d2901e2455bec210fcd7a45c2ceae909975a0463c918bce19b4a6ff174da9216"
+    },
+    "registration-resume-build-workspace.json": {
+      "path": "docs/validation/wasm-tailwind/registration-resume-build-workspace.json",
+      "bytes": 5528,
+      "sha256": "1583a003f6e131ece1dc590b34614d2236f7383de3e2598781990ce2402114ce"
+    },
+    "registration-resume-lifecycle-clippy.log": {
+      "path": "docs/validation/wasm-tailwind/registration-resume-lifecycle-clippy.log",
+      "bytes": 23556,
+      "sha256": "82dbeff877789b842771248ca618b4b5a75aeb75c62082b0f5bea922db6ef950"
+    },
+    "registration-resume-sources.log": {
+      "path": "docs/validation/wasm-tailwind/registration-resume-sources.log",
+      "bytes": 13429,
+      "sha256": "4a4be14b3f6a20ce95b32de4f836e0ccd32500825091a6c1814890cba40660e8"
+    },
+    "registration-resume-xtask-clippy.log": {
+      "path": "docs/validation/wasm-tailwind/registration-resume-xtask-clippy.log",
+      "bytes": 1169,
+      "sha256": "3ec89b3fd58a4bcf30d8c299434dfac52dcbf1565a93763bcfc89c7fb6fab2e2"
+    }
+  },
+  "artifacts": {
+    "compiler-api": {
+      "path": "target/utility-conformance/compiler-api/style_bg.wasm",
+      "bytes": 2515813,
+      "sha256": "7d6b26786649916de4ae56c3fb6c6e8ca012936659f924c1e14ec8568379feff"
+    },
+    "compiler": {
+      "path": "target/utility-conformance/compiler/style_bg.wasm",
+      "bytes": 1754617,
+      "sha256": "cd4a7275140275d4be184b357302eed40d64a1bd5ba086b967b6bcf942435896"
+    }
+  },
+  "gates": {
+    "nativeTests": 367,
+    "facadeTests": 13,
+    "xtaskTests": 37,
+    "registration": {
+      "registrationCases": 48,
+      "entryComparisons": 96,
+      "completePrefixAndSettledGraphs": true,
+      "failures": 0,
+      "actualWasm": true,
+      "wasmBytes": 2515813,
+      "fullRegistrationConformance": "pending"
+    },
+    "media": {
+      "cases": 2,
+      "entryComparisons": 4,
+      "failures": 0
+    },
+    "compilerSlice": {
+      "compilerSmoke": "passed",
+      "scannerEnabled": false,
+      "officialNesting": "passed",
+      "cssFunctionBindingsAndLimits": "passed",
+      "customUtilityBindingsAndLimits": "passed",
+      "customVariantBindingsAndLimits": "passed",
+      "legacyCacheLimitsAndRecovery": "passed",
+      "sliceCases": 214909,
+      "incrementalComparisons": 1470,
+      "incrementalCases": 246,
+      "cssComparisons": 216133,
+      "pendingBoundaryCases": 0,
+      "pendingFeatureCases": 0,
+      "utf16OutputCases": 4,
+      "sourceMetadataCases": 1607,
+      "errorCases": 3002,
+      "variantParseCases": 6673,
+      "variantParseNullCases": 2963,
+      "variantReusedCases": 84,
+      "variantParserLimitCases": 24,
+      "wasmBytes": 1754617,
+      "imports": [
+        "__wbg_length_d52ee452c5be0c99",
+        "__wbg_charCodeAt_90635349fbda9f5f",
+        "__wbg___wbindgen_throw_5d9e815e6fdf150f",
+        "__wbg___wbindgen_is_string_c4f7cb494a2a21f1",
+        "__wbindgen_init_externref_table",
+        "__wbindgen_generic_0000000000000001"
+      ],
+      "sharedMemory": false,
+      "fullConformance": "pending"
+    },
+    "ledger": {
+      "sourcesVerified": 109,
+      "originalSourceCalls": 1215,
+      "originalTestCalls": 1125,
+      "originalParameterizationCalls": 10,
+      "originalSuiteCalls": 80,
+      "parameterBuilders": 11,
+      "expandedTests": 1398,
+      "staticallyExpandedTests": 1398,
+      "unresolvedTests": 0,
+      "upstreamSkippedTests": 1,
+      "assertionTemplates": 1851,
+      "assertionTemplateEdges": 2140,
+      "controlledAssertionTemplates": 45,
+      "externalSnapshotExports": 13,
+      "matchedExternalSnapshotExports": 13,
+      "suggestedScopeCorrections": 3,
+      "validatedTests": 0,
+      "validatedAssertions": 0,
+      "adjudicatedExclusions": 0,
+      "unownedAssertionTemplates": 0
+    },
+    "browser": {
+      "root": {
+        "log": "raw-theme-final-browser-root.json",
+        "startTime": "2026-10-06T10:54:00.779Z",
+        "duration": 42140.61,
+        "expected": 46,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0,
+        "errors": 0
+      },
+      "deep": {
+        "log": "raw-theme-final-browser-deep.json",
+        "startTime": "2026-10-06T10:56:35.889Z",
+        "duration": 38101.761,
+        "expected": 41,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0,
+        "errors": 0
+      }
+    },
+    "logicalCacheThresholds": [
+      {
+        "actualWasm": true,
+        "sharedMemory": false,
+        "wasmBytes": 2515813,
+        "utilitiesMutationCases": 8,
+        "constructorAndBuildPhases": 38,
+        "noOpIdentities": 12,
+        "originalSetterExceptions": 3,
+        "cacheBoundaries": 4,
+        "twoBuildCacheThreshold": 22324,
+        "fullInputMutationConformance": "pending"
+      },
+      {
+        "themeSetupCases": 18,
+        "constructorAndBuildPhases": 105,
+        "noOpIdentities": 29,
+        "originalConstructorExceptions": 2,
+        "cacheBoundaries": 3,
+        "constructorCacheThreshold": 46386,
+        "actualWasm": true,
+        "sharedMemory": false,
+        "wasmBytes": 2515813,
+        "fullInputMutationConformance": "pending"
+      },
+      {
+        "applyInputCases": 15,
+        "constructorAndBuildPhases": 90,
+        "noOpIdentities": 18,
+        "originalConstructorExceptions": 2,
+        "cacheBoundaries": 3,
+        "constructorCacheThreshold": 56502,
+        "actualWasm": true,
+        "sharedMemory": false,
+        "wasmBytes": 2515813,
+        "fullInputMutationConformance": "pending"
+      },
+      {
+        "functionFailureCases": 12,
+        "originalHostExceptionCases": 4,
+        "cacheBoundaries": 3,
+        "semanticFailureCacheThreshold": 14842,
+        "quotaNoWriteCases": 1,
+        "actualWasm": true,
+        "sharedMemory": false,
+        "wasmBytes": 2515813,
+        "fullFailedSetupConformance": "pending"
+      },
+      {
+        "applyFailureCases": 16,
+        "entries": 2,
+        "checks": 32,
+        "failures": [],
+        "hostExceptionChecks": 8,
+        "cacheBoundaries": 3,
+        "semanticFailureCacheThreshold": 30058,
+        "asyncQuotaNoWriteCases": 2,
+        "actualWasm": true,
+        "wasmBytes": 2515813,
+        "fullFailedSetupConformance": "pending"
+      }
+    ]
+  },
+  "ownershipRed": {
+    "cases": 7,
+    "entryComparisons": 14,
+    "passed": 12,
+    "failures": 2,
+    "diagnostics": [
+      {
+        "name": "authored-success-before-failure",
+        "mode": "sync"
+      },
+      {
+        "name": "authored-success-before-failure",
+        "mode": "async"
+      }
+    ],
+    "defaultGate": false,
+    "log": "raw-theme-final-ownership-red.log"
+  },
+  "products": {
+    "root": {
+      "mainBuildId": "b063f40bd16e0972",
+      "workerBuildId": "cb71056800540e648a0405e79f600c6670a972b4dd1e9ee14c8b00e2b5ae736c",
+      "scannerEnabled": false,
+      "sizeReport": {
+        "wasm": 11226913,
+        "js": 246562,
+        "css": 35072,
+        "fonts": 51732356,
+        "images": 20701,
+        "data": 19812,
+        "total": 63281416
+      },
+      "mainWasm": {
+        "path": "target/makepad-wasm-app/release/utility-lab/utility-lab.wasm",
+        "bytes": 9486990,
+        "sha256": "b063f40bd16e0972f4fae917c117d0726225beb7e3d599514b4c45980ee9efeb"
+      },
+      "workerWasm": {
+        "path": "target/makepad-wasm-app/release/utility-lab/utility/compiler/style_bg.wasm",
+        "bytes": 1739923,
+        "sha256": "810b4a81aafd6c5a75a1b8914de9098693baf803b21d471227c635d40aa1fac7"
+      },
+      "manifest": {
+        "path": "docs/validation/wasm-tailwind/raw-theme-final-browser/manifests/root-main-manifest.json",
+        "bytes": 3114,
+        "sha256": "7d165108ca09d9b1c47e7733f199a14f8dbf5ff2a8c87a6b85a43b4cf5613953"
+      },
+      "workerManifest": {
+        "path": "docs/validation/wasm-tailwind/raw-theme-final-browser/manifests/root-worker-manifest.json",
+        "bytes": 592,
+        "sha256": "971d378e129694f551f299b386e74f03db1405b6a1dc9c8807ecc40a9b0386e6"
+      },
+      "mainManifestSelfItem": {
+        "reported": null,
+        "actual": 3114
+      },
+      "sizeCheckExcludesMainManifestSelfItem": true
+    },
+    "deep": {
+      "mainBuildId": "b063f40bd16e0972",
+      "workerBuildId": "cb71056800540e648a0405e79f600c6670a972b4dd1e9ee14c8b00e2b5ae736c",
+      "scannerEnabled": false,
+      "sizeReport": {
+        "wasm": 11226913,
+        "js": 246562,
+        "css": 35072,
+        "fonts": 51732356,
+        "images": 20701,
+        "data": 22998,
+        "total": 63284602
+      },
+      "mainWasm": {
+        "path": "target/makepad-wasm-app/release/utility-lab@tools-utility-lab/utility-lab.wasm",
+        "bytes": 9486990,
+        "sha256": "b063f40bd16e0972f4fae917c117d0726225beb7e3d599514b4c45980ee9efeb"
+      },
+      "workerWasm": {
+        "path": "target/makepad-wasm-app/release/utility-lab@tools-utility-lab/utility/compiler/style_bg.wasm",
+        "bytes": 1739923,
+        "sha256": "810b4a81aafd6c5a75a1b8914de9098693baf803b21d471227c635d40aa1fac7"
+      },
+      "manifest": {
+        "path": "docs/validation/wasm-tailwind/raw-theme-final-browser/manifests/deep-main-manifest.json",
+        "bytes": 3165,
+        "sha256": "253d7af6445a5d77ace4ce5ff988c785430d97e815cfc1f5cc5e4a10d0f569c5"
+      },
+      "workerManifest": {
+        "path": "docs/validation/wasm-tailwind/raw-theme-final-browser/manifests/deep-worker-manifest.json",
+        "bytes": 592,
+        "sha256": "971d378e129694f551f299b386e74f03db1405b6a1dc9c8807ecc40a9b0386e6"
+      },
+      "mainManifestSelfItem": {
+        "reported": 3114,
+        "actual": 3165
+      },
+      "sizeCheckExcludesMainManifestSelfItem": true
+    }
+  },
+  "benchmark": {
+    "raw-theme-final-benchmark-before.json": {
+      "scope": "public AST constructor with sixteen media source blocks and four builds",
+      "samples": [
+        {
+          "constructorP95Ms": 0.8508749999999736,
+          "buildP95Ms": 0.3324999999999818,
+          "sessionsPerSecond": 593.5748490464962,
+          "outputSha256": "5fd45470353f800d2e198fad88da86ae25dd6d8ba7ca5f46232ceedebe529c89",
+          "sessions": 100,
+          "builds": 400
+        },
+        {
+          "constructorP95Ms": 0.6270420000000172,
+          "buildP95Ms": 0.29795799999999417,
+          "sessionsPerSecond": 628.0986224880187,
+          "outputSha256": "5fd45470353f800d2e198fad88da86ae25dd6d8ba7ca5f46232ceedebe529c89",
+          "sessions": 100,
+          "builds": 400
+        },
+        {
+          "constructorP95Ms": 0.6053329999999733,
+          "buildP95Ms": 0.28166699999997036,
+          "sessionsPerSecond": 648.265818598408,
+          "outputSha256": "5fd45470353f800d2e198fad88da86ae25dd6d8ba7ca5f46232ceedebe529c89",
+          "sessions": 100,
+          "builds": 400
+        },
+        {
+          "constructorP95Ms": 0.6128339999999071,
+          "buildP95Ms": 0.27033400000004804,
+          "sessionsPerSecond": 652.6279136516104,
+          "outputSha256": "5fd45470353f800d2e198fad88da86ae25dd6d8ba7ca5f46232ceedebe529c89",
+          "sessions": 100,
+          "builds": 400
+        },
+        {
+          "constructorP95Ms": 0.628832999999986,
+          "buildP95Ms": 0.28079200000001947,
+          "sessionsPerSecond": 642.0820594612552,
+          "outputSha256": "5fd45470353f800d2e198fad88da86ae25dd6d8ba7ca5f46232ceedebe529c89",
+          "sessions": 100,
+          "builds": 400
+        }
+      ],
+      "constructorP95Ms": 0.6270420000000172,
+      "buildP95Ms": 0.28166699999997036,
+      "sessionsPerSecond": 642.0820594612552,
+      "wasmBytes": 2516045,
+      "wasmSha256": "383d13103cef9e121e73f9c456fbe366c24722fc00933775adf08a77c637fe5b",
+      "actualWasm": true,
+      "finalPerformanceAcceptance": "pending"
+    },
+    "raw-theme-final-benchmark-after.json": {
+      "scope": "public AST constructor with sixteen media source blocks and four builds",
+      "samples": [
+        {
+          "constructorP95Ms": 1.001958000000002,
+          "buildP95Ms": 0.3744580000000042,
+          "sessionsPerSecond": 553.9540896699334,
+          "outputSha256": "5fd45470353f800d2e198fad88da86ae25dd6d8ba7ca5f46232ceedebe529c89",
+          "sessions": 100,
+          "builds": 400
+        },
+        {
+          "constructorP95Ms": 0.7177499999999668,
+          "buildP95Ms": 0.3154579999999214,
+          "sessionsPerSecond": 601.5159706249676,
+          "outputSha256": "5fd45470353f800d2e198fad88da86ae25dd6d8ba7ca5f46232ceedebe529c89",
+          "sessions": 100,
+          "builds": 400
+        },
+        {
+          "constructorP95Ms": 0.6146250000000464,
+          "buildP95Ms": 0.2860000000000582,
+          "sessionsPerSecond": 640.9088970050174,
+          "outputSha256": "5fd45470353f800d2e198fad88da86ae25dd6d8ba7ca5f46232ceedebe529c89",
+          "sessions": 100,
+          "builds": 400
+        },
+        {
+          "constructorP95Ms": 0.6252920000000586,
+          "buildP95Ms": 0.2777089999999589,
+          "sessionsPerSecond": 642.8783794260094,
+          "outputSha256": "5fd45470353f800d2e198fad88da86ae25dd6d8ba7ca5f46232ceedebe529c89",
+          "sessions": 100,
+          "builds": 400
+        },
+        {
+          "constructorP95Ms": 0.7050000000000409,
+          "buildP95Ms": 0.30475000000001273,
+          "sessionsPerSecond": 605.5241960293272,
+          "outputSha256": "5fd45470353f800d2e198fad88da86ae25dd6d8ba7ca5f46232ceedebe529c89",
+          "sessions": 100,
+          "builds": 400
+        }
+      ],
+      "constructorP95Ms": 0.7050000000000409,
+      "buildP95Ms": 0.30475000000001273,
+      "sessionsPerSecond": 605.5241960293272,
+      "wasmBytes": 2515813,
+      "wasmSha256": "7d6b26786649916de4ae56c3fb6c6e8ca012936659f924c1e14ec8568379feff",
+      "actualWasm": true,
+      "finalPerformanceAcceptance": "pending"
+    },
+    "raw-theme-hotpath-before.json": {
+      "scope": "public AST constructor with 128 theme variables, declaration/keyframe functions and four builds",
+      "samples": [
+        {
+          "constructorP95Ms": 1.6702909999999633,
+          "buildP95Ms": 0.22570799999999736,
+          "sessionsPerSecond": 429.1114954262271,
+          "outputSha256": "8fc0781d2881207a30acee71c6c0950a2f0fee9d87ad0083b9650714b34d9bd7",
+          "sessions": 100,
+          "builds": 400
+        },
+        {
+          "constructorP95Ms": 1.6238749999999982,
+          "buildP95Ms": 0.21620900000004895,
+          "sessionsPerSecond": 440.09968257810385,
+          "outputSha256": "8fc0781d2881207a30acee71c6c0950a2f0fee9d87ad0083b9650714b34d9bd7",
+          "sessions": 100,
+          "builds": 400
+        },
+        {
+          "constructorP95Ms": 1.6113339999999425,
+          "buildP95Ms": 0.21054099999992104,
+          "sessionsPerSecond": 445.1012972437249,
+          "outputSha256": "8fc0781d2881207a30acee71c6c0950a2f0fee9d87ad0083b9650714b34d9bd7",
+          "sessions": 100,
+          "builds": 400
+        },
+        {
+          "constructorP95Ms": 1.6397080000000415,
+          "buildP95Ms": 0.21145799999999326,
+          "sessionsPerSecond": 444.21370010577806,
+          "outputSha256": "8fc0781d2881207a30acee71c6c0950a2f0fee9d87ad0083b9650714b34d9bd7",
+          "sessions": 100,
+          "builds": 400
+        },
+        {
+          "constructorP95Ms": 1.609958000000006,
+          "buildP95Ms": 0.2104580000000169,
+          "sessionsPerSecond": 445.6642433242628,
+          "outputSha256": "8fc0781d2881207a30acee71c6c0950a2f0fee9d87ad0083b9650714b34d9bd7",
+          "sessions": 100,
+          "builds": 400
+        }
+      ],
+      "constructorP95Ms": 1.6238749999999982,
+      "buildP95Ms": 0.21145799999999326,
+      "sessionsPerSecond": 444.21370010577806,
+      "wasmBytes": 2516045,
+      "wasmSha256": "383d13103cef9e121e73f9c456fbe366c24722fc00933775adf08a77c637fe5b",
+      "actualWasm": true,
+      "finalPerformanceAcceptance": "pending"
+    },
+    "raw-theme-hotpath-after.json": {
+      "scope": "public AST constructor with 128 theme variables, declaration/keyframe functions and four builds",
+      "samples": [
+        {
+          "constructorP95Ms": 1.9115409999999997,
+          "buildP95Ms": 0.22433300000000145,
+          "sessionsPerSecond": 391.3704138745258,
+          "outputSha256": "8fc0781d2881207a30acee71c6c0950a2f0fee9d87ad0083b9650714b34d9bd7",
+          "sessions": 100,
+          "builds": 400
+        },
+        {
+          "constructorP95Ms": 1.8767080000000078,
+          "buildP95Ms": 0.216542000000004,
+          "sessionsPerSecond": 397.6417189817698,
+          "outputSha256": "8fc0781d2881207a30acee71c6c0950a2f0fee9d87ad0083b9650714b34d9bd7",
+          "sessions": 100,
+          "builds": 400
+        },
+        {
+          "constructorP95Ms": 1.9005000000000791,
+          "buildP95Ms": 0.22187499999995453,
+          "sessionsPerSecond": 395.1807705037072,
+          "outputSha256": "8fc0781d2881207a30acee71c6c0950a2f0fee9d87ad0083b9650714b34d9bd7",
+          "sessions": 100,
+          "builds": 400
+        },
+        {
+          "constructorP95Ms": 1.8644580000000133,
+          "buildP95Ms": 0.21670799999992596,
+          "sessionsPerSecond": 401.6089789036691,
+          "outputSha256": "8fc0781d2881207a30acee71c6c0950a2f0fee9d87ad0083b9650714b34d9bd7",
+          "sessions": 100,
+          "builds": 400
+        },
+        {
+          "constructorP95Ms": 1.8635000000001583,
+          "buildP95Ms": 0.2179999999998472,
+          "sessionsPerSecond": 403.27553780553507,
+          "outputSha256": "8fc0781d2881207a30acee71c6c0950a2f0fee9d87ad0083b9650714b34d9bd7",
+          "sessions": 100,
+          "builds": 400
+        }
+      ],
+      "constructorP95Ms": 1.8767080000000078,
+      "buildP95Ms": 0.2179999999998472,
+      "sessionsPerSecond": 397.6417189817698,
+      "wasmBytes": 2515813,
+      "wasmSha256": "7d6b26786649916de4ae56c3fb6c6e8ca012936659f924c1e14ec8568379feff",
+      "actualWasm": true,
+      "finalPerformanceAcceptance": "pending"
+    }
+  },
+  "benchmarkLimitations": "Finite media and theme/keyframe scopes only; observed constructor regression retained, no performance improvement or final allocator/performance acceptance.",
+  "memoBudgetBasis": {
+    "toolchain": "rustc 1.98.1 (48a229cea 2026-09-01)",
+    "source": "https://raw.githubusercontent.com/rust-lang/rust/48a229ceaefd4985c50990b14116b6d856af0985/library/alloc/src/collections/btree/node.rs",
+    "B": 6,
+    "capacity": 11,
+    "minimumLengthAfterSplit": 5,
+    "scope": "temporary freeze memo, insertion reserve followed by whole-map retained upper bound",
+    "allocatorPeakAcceptance": "pending"
+  },
+  "remaining": [
+    "postcompat single owner and one lowering handoff",
+    "authored variant completed mutation prefix",
+    "full setup/host/allocation admission and peak proof",
+    "captured host projection, Proxy and external loader callbacks",
+    "full upstream test/assertion/exclusion ledger",
+    "M5 full rendered support/default matrix and old examples",
+    "M6 shared budgets/callbacks/cn/demo/old behavior",
+    "M7 full conformance/performance/CI acceptance",
+    "raw synthetic root/functions and authored variant ownership before one handoff",
+    "observed 128-variable theme constructor p95 regression, profile and resolve before performance acceptance"
+  ],
+  "goalStatus": "active",
+  "milestonesCompleted": 3,
+  "milestonesTotal": 7,
+  "postcompatRawFunctionalNormalization": true,
+  "postcompatRawThemePublication": true,
+  "orderedThemeKeyframeFunctionEffects": true,
+  "singleLoweringHandoff": false,
+  "validationRecords": {
+    "docs": "raw-theme-docs-verified.log",
+    "records": "raw-theme-records-verified.log"
+  },
+  "themeKeyframeNoopEditsSkipped": true,
+  "historicalIntermediateEvidence": "raw-theme-before-noop-evidence.json",
+  "themeHotpathConstructorRegressionPercent": 15.569732892002763
+}

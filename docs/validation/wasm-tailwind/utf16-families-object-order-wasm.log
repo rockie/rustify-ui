@@ -1,0 +1,27 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: bg-card/50.0.value
++ actual - expected
+
+  [
+    'kind',
++   'fraction',
+    'value',
+-   'fraction'
+  ]
+
+    at compareKeys (file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/compiler/run-public-object-order-wasm.mjs:29:10)
+    at compareKeys (file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/compiler/run-public-object-order-wasm.mjs:31:44)
+    at compareKeys (file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/compiler/run-public-object-order-wasm.mjs:31:44)
+    at file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/compiler/run-public-object-order-wasm.mjs:40:5 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: [ 'kind', 'fraction', 'value' ],
+  expected: [ 'kind', 'value', 'fraction' ],
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v26.1.0

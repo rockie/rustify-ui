@@ -1,0 +1,82 @@
+[
+  {
+    "id": "outside-override",
+    "input": ":root { --name: card; } @keyframes card { to { opacity: 0.3; } } @keyframes other { to { opacity: 0.7; } } .motion { animation: var(--name) 10s ease infinite; } .plain { font-family: var(--name); }",
+    "before_r4": {
+      "css": "@scope ([data-rustify-style-owner=\"review-r4\"]) to ([data-rustify-style-owner]) {\n  :scope {\n    --name: rustify-review-r4-card;\n    --rustify-review-r4-k1-name: card;\n  }\n  .motion {\n    animation: var(--name) 10s ease infinite;\n  }\n  .plain {\n    font-family: var(--rustify-review-r4-k1-name);\n  }\n}\n@keyframes rustify-review-r4-card {\n  to {\n    opacity: 0.3;\n  }\n}\n@keyframes rustify-review-r4-other {\n  to {\n    opacity: 0.7;\n  }\n}\n"
+    },
+    "after_r5": {
+      "error": "UnsupportedFeature { feature: \"custom property `--name` used both as a keyframes name and with another meaning\" }"
+    }
+  },
+  {
+    "id": "multi-inherit",
+    "input": ":root { --v: linear; } @keyframes linear { to { opacity: .5; } } .motion { animation-name: var(--v); animation-duration: 10s; } .other { transition-timing-function: var(--v); }",
+    "before_r4": {
+      "css": "@scope ([data-rustify-style-owner=\"review-r4\"]) to ([data-rustify-style-owner]) {\n  :scope {\n    --v: rustify-review-r4-linear;\n    --rustify-review-r4-k1-v: linear;\n  }\n  .motion {\n    animation-name: var(--v);\n    animation-duration: 10s;\n  }\n  .other {\n    transition-timing-function: var(--rustify-review-r4-k1-v);\n  }\n}\n@keyframes rustify-review-r4-linear {\n  to {\n    opacity: .5;\n  }\n}\n"
+    },
+    "after_r5": {
+      "error": "UnsupportedFeature { feature: \"custom property `--v` used both as a keyframes name and with another meaning\" }"
+    }
+  },
+  {
+    "id": "alias-mixed",
+    "input": ":root { --v: linear; --a:var(--v); } @keyframes linear { to { opacity: .3; } } .motion { animation-name: var(--a); animation-duration: 10s; } .other { transition-timing-function: var(--a); }",
+    "before_r4": {
+      "css": "@scope ([data-rustify-style-owner=\"review-r4\"]) to ([data-rustify-style-owner]) {\n  :scope {\n    --v: rustify-review-r4-linear;\n    --rustify-review-r4-k1-v: linear;\n    --a: var(--v);\n    --rustify-review-r4-k1-a: var(--rustify-review-r4-k1-v);\n  }\n  .motion {\n    animation-name: var(--a);\n    animation-duration: 10s;\n  }\n  .other {\n    transition-timing-function: var(--rustify-review-r4-k1-a);\n  }\n}\n@keyframes rustify-review-r4-linear {\n  to {\n    opacity: .3;\n  }\n}\n"
+    },
+    "after_r5": {
+      "error": "UnsupportedFeature { feature: \"custom property `--a` used both as a keyframes name and with another meaning\" }"
+    }
+  },
+  {
+    "id": "public-inline-consumer",
+    "input": ":root { --v: linear; } @keyframes linear { to { opacity: .3; } } .motion { animation-name: var(--v); animation-duration: 10s; }",
+    "before_r4": {
+      "css": "@scope ([data-rustify-style-owner=\"review-r4\"]) to ([data-rustify-style-owner]) {\n  :scope {\n    --v: rustify-review-r4-linear;\n  }\n  .motion {\n    animation-name: var(--v);\n    animation-duration: 10s;\n  }\n}\n@keyframes rustify-review-r4-linear {\n  to {\n    opacity: .3;\n  }\n}\n"
+    },
+    "after_r5": {
+      "css": "@scope ([data-rustify-style-owner=\"review-r4\"]) to ([data-rustify-style-owner]) {\n  :scope {\n    --v: rustify-review-r4-linear;\n  }\n  .motion {\n    animation-name: var(--v);\n    animation-duration: 10s;\n  }\n}\n@keyframes rustify-review-r4-linear {\n  to {\n    opacity: .3;\n  }\n}\n"
+    }
+  },
+  {
+    "id": "external-disable-name",
+    "input": ":root { --v: linear; } @keyframes card { to { opacity: .3; } } @keyframes linear { to { opacity: .5; } } .motion { animation: card 10s var(--v) infinite; } .other { animation-name: var(--v); animation-duration: 10s; }",
+    "before_r4": {
+      "css": "@scope ([data-rustify-style-owner=\"review-r4\"]) to ([data-rustify-style-owner]) {\n  :scope {\n    --v: linear;\n    --rustify-review-r4-k1-v: rustify-review-r4-linear;\n  }\n  .motion {\n    animation: rustify-review-r4-card 10s var(--v) infinite;\n  }\n  .other {\n    animation-name: var(--rustify-review-r4-k1-v);\n    animation-duration: 10s;\n  }\n}\n@keyframes rustify-review-r4-card {\n  to {\n    opacity: .3;\n  }\n}\n@keyframes rustify-review-r4-linear {\n  to {\n    opacity: .5;\n  }\n}\n"
+    },
+    "after_r5": {
+      "error": "UnsupportedFeature { feature: \"custom property `--v` used both as a keyframes name and with another meaning\" }"
+    }
+  },
+  {
+    "id": "external-disable-cyclic",
+    "input": ":root { --v: linear; --a: var(--v); } @keyframes linear { to { opacity: .3; } } .plain { transition-timing-function: var(--v); } .motion { animation-name: var(--a); animation-duration: 10s; }",
+    "before_r4": {
+      "css": "@scope ([data-rustify-style-owner=\"review-r4\"]) to ([data-rustify-style-owner]) {\n  :scope {\n    --v: linear;\n    --rustify-review-r4-k1-v: rustify-review-r4-linear;\n    --a: var(--rustify-review-r4-k1-v);\n  }\n  .plain {\n    transition-timing-function: var(--v);\n  }\n  .motion {\n    animation-name: var(--a);\n    animation-duration: 10s;\n  }\n}\n@keyframes rustify-review-r4-linear {\n  to {\n    opacity: .3;\n  }\n}\n"
+    },
+    "after_r5": {
+      "error": "UnsupportedFeature { feature: \"custom property `--v` used both as a keyframes name and with another meaning\" }"
+    }
+  },
+  {
+    "id": "internal-mixed",
+    "input": "@keyframes card { to { opacity: 0; } } @keyframes linear { to { opacity: 0.5; } } .motion { --tw-ease: linear; animation: card 10s var(--tw-ease) infinite; } .other { animation-name: var(--tw-ease); } .plain { transition-timing-function: var(--tw-ease); }",
+    "before_r4": {
+      "css": "@scope ([data-rustify-style-owner=\"review-r4\"]) to ([data-rustify-style-owner]) {\n  .motion {\n    --rustify-review-r4-tw-ease: linear;\n    --rustify-review-r4-k1-tw-ease: rustify-review-r4-linear;\n    animation: rustify-review-r4-card 10s var(--rustify-review-r4-tw-ease) infinite;\n  }\n  .other {\n    animation-name: var(--rustify-review-r4-k1-tw-ease);\n  }\n  .plain {\n    transition-timing-function: var(--rustify-review-r4-tw-ease);\n  }\n}\n@keyframes rustify-review-r4-card {\n  to {\n    opacity: 0;\n  }\n}\n@keyframes rustify-review-r4-linear {\n  to {\n    opacity: 0.5;\n  }\n}\n"
+    },
+    "after_r5": {
+      "css": "@scope ([data-rustify-style-owner=\"review-r4\"]) to ([data-rustify-style-owner]) {\n  .motion {\n    --rustify-review-r4-tw-ease: linear;\n    --rustify-review-r4-k1-tw-ease: rustify-review-r4-linear;\n    animation: rustify-review-r4-card 10s var(--rustify-review-r4-tw-ease) infinite;\n  }\n  .other {\n    animation-name: var(--rustify-review-r4-k1-tw-ease);\n  }\n  .plain {\n    transition-timing-function: var(--rustify-review-r4-tw-ease);\n  }\n}\n@keyframes rustify-review-r4-card {\n  to {\n    opacity: 0;\n  }\n}\n@keyframes rustify-review-r4-linear {\n  to {\n    opacity: 0.5;\n  }\n}\n"
+    }
+  },
+  {
+    "id": "same-rewrite",
+    "input": ":root { --name: card; --a: var(--name); } @keyframes card { to { opacity: 0.3; } } .motion { animation: 10s ease var(--name); } .other { animation-name: var(--a); animation-duration: 10s; }",
+    "before_r4": {
+      "css": "@scope ([data-rustify-style-owner=\"review-r4\"]) to ([data-rustify-style-owner]) {\n  :scope {\n    --name: rustify-review-r4-card;\n    --a: var(--name);\n  }\n  .motion {\n    animation: 10s ease var(--name);\n  }\n  .other {\n    animation-name: var(--a);\n    animation-duration: 10s;\n  }\n}\n@keyframes rustify-review-r4-card {\n  to {\n    opacity: 0.3;\n  }\n}\n"
+    },
+    "after_r5": {
+      "css": "@scope ([data-rustify-style-owner=\"review-r4\"]) to ([data-rustify-style-owner]) {\n  :scope {\n    --name: rustify-review-r4-card;\n    --a: var(--name);\n  }\n  .motion {\n    animation: 10s ease var(--name);\n  }\n  .other {\n    animation-name: var(--a);\n    animation-duration: 10s;\n  }\n}\n@keyframes rustify-review-r4-card {\n  to {\n    opacity: 0.3;\n  }\n}\n"
+    }
+  }
+]

@@ -1,0 +1,12 @@
+== upstream-units
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 2.77s
+mbx[cache]: 0 hits, 1 misses, 2 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: 37.3 GiB of outputs materialized by reflink. the copy machine stays off.
+== compiler-api
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.50s
+mbx[cache]: 0 hits, 0 misses, 1 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: 18354 compilations served. ask rustc how many it remembers doing.
+== compiler
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.20s
+mbx[cache]: 0 hits, 0 misses, 1 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: lent the same 37.3 GiB to every checkout at once. none of them has checked.

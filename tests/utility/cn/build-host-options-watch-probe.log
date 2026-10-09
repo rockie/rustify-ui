@@ -1,0 +1,13 @@
+{
+  "events": [
+    [
+      "rename",
+      "cn-tables.mjs"
+    ],
+    [
+      "rename",
+      "src/index.ts"
+    ]
+  ],
+  "changed": true
+}

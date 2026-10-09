@@ -1,0 +1,18 @@
+mbx[warning]: Unix-domain cache session listener unavailable; using FIFO transport: failed to bind cache session listener at /var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/mbx-session-x1dFdl/cache-agent.sock: Operation not permitted (os error 1)
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling registration-existing-value-prototype v0.0.0 (/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-utf16-verified-54mkl3kq/registration-existing-value-mutants)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.37s
+     Running `mbx-launch /private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-utf16-verified-54mkl3kq/cargo-target/debug/registration-existing-value-prototype`
+mbx[cache]: 0 hits, 1 misses; 0 B downloaded, 0 B uploaded, 1.1 MiB stored locally
+
+thread 'main' (3939299) panicked at existing-value-prototype.rs:94:5:
+assertion `left == right` failed: shared-array aliases read current storage
+  left: [String(Text([114, 101, 109, 111, 118, 101, 100])), String(Text([107, 101, 112, 116]))]
+ right: [String(Text([107, 101, 112, 116]))]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace

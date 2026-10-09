@@ -14,6 +14,7 @@ use std::process::Command;
 pub struct BuildRequest {
     pub example: String,
     pub release: bool,
+    pub utility_scanner: bool,
     /// Where the product will be served from. `/` for the ordinary case.
     pub base: String,
 }
@@ -111,6 +112,7 @@ pub fn build(request: &BuildRequest) -> Result<PathBuf, String> {
             .map_err(|e| format!("cannot clear {}: {e}", app.display()))?;
     }
     run_cargo_makepad(&root, request)?;
+    copy_bindgen_snippets(&root, &app, profile(request))?;
 
     let wasm_path = app.join(format!("{}.wasm", request.example));
     let wasm = std::fs::read(&wasm_path).map_err(|e| format!("{}: {e}", wasm_path.display()))?;
@@ -144,17 +146,30 @@ pub fn build(request: &BuildRequest) -> Result<PathBuf, String> {
     if vendor.is_dir() {
         copy_tree(&vendor, &app.join("vendor"))?;
     }
-    match utilities {
+    let static_css = match utilities {
         Utilities::Compile(input) => {
-            crate::tailwind::compile(&input, &app.join("tailwind.css"), true)?
+            let path = app.join("tailwind.css");
+            crate::tailwind::compile(&input, &path, true)?;
+            Some(path)
         }
-        Utilities::Committed => copy(
-            &root.join("crates/rustify-components/css/rustify.css"),
-            &app.join("rustify.css"),
-        )?,
-        Utilities::None => {}
-    }
+        Utilities::Committed => {
+            let path = app.join("rustify.css");
+            copy(
+                &root.join("crates/rustify-components/css/rustify.css"),
+                &path,
+            )?;
+            Some(path)
+        }
+        Utilities::None => None,
+    };
 
+    crate::utility::product_bundle(
+        &root,
+        &app,
+        &wasm,
+        request.utility_scanner,
+        static_css.as_deref(),
+    )?;
     finish(request, &app, "/", &bridge.hash.to_string(), &wasm)?;
 
     let base = crate::serve::normalize_base(&request.base);
@@ -443,6 +458,35 @@ fn copy_tree(from: &Path, to: &Path) -> Result<(), String> {
     Ok(())
 }
 
+// cargo-makepad copies its own platform glue; wasm-bindgen writes local JS
+// modules beside the target wasm. Ship only packages imported by this build.
+fn copy_bindgen_snippets(root: &Path, app: &Path, profile: &str) -> Result<(), String> {
+    let glue =
+        std::fs::read_to_string(app.join("bindgen.js")).map_err(|error| error.to_string())?;
+    let source = root
+        .join("target/wasm32-unknown-unknown")
+        .join(profile)
+        .join("snippets");
+    for quote in ['\'', '"'] {
+        let marker = format!("{quote}./snippets/");
+        for tail in glue.split(&marker).skip(1) {
+            let path = tail
+                .split(quote)
+                .next()
+                .ok_or("invalid bindgen snippet import")?;
+            let package = path
+                .split('/')
+                .next()
+                .ok_or("empty bindgen snippet package")?;
+            if package.is_empty() || package == "." || package == ".." || package.contains('\\') {
+                return Err("invalid bindgen snippet package".into());
+            }
+            copy_tree(&source.join(package), &app.join("snippets").join(package))?;
+        }
+    }
+    Ok(())
+}
+
 fn copy(from: &Path, to: &Path) -> Result<(), String> {
     if let Some(parent) = to.parent() {
         std::fs::create_dir_all(parent).map_err(|e| e.to_string())?;
@@ -460,6 +504,27 @@ fn write(path: &Path, bytes: &[u8]) -> Result<(), String> {
 mod tests {
     use super::rebase_index;
     use super::*;
+
+    #[test]
+    fn ships_only_snippet_packages_imported_by_the_current_glue() {
+        let root = std::env::temp_dir().join(format!("rustify-snippets-{}", std::process::id()));
+        let target = root.join("target/wasm32-unknown-unknown/release/snippets");
+        let app = root.join("app");
+        std::fs::create_dir_all(target.join("current/web")).unwrap();
+        std::fs::create_dir_all(target.join("stale")).unwrap();
+        std::fs::create_dir_all(&app).unwrap();
+        std::fs::write(target.join("current/web/host.js"), "export const host = 1;").unwrap();
+        std::fs::write(target.join("stale/old.js"), "stale").unwrap();
+        std::fs::write(
+            app.join("bindgen.js"),
+            "import{host}from'./snippets/current/web/host.js';",
+        )
+        .unwrap();
+        copy_bindgen_snippets(&root, &app, "release").unwrap();
+        assert!(app.join("snippets/current/web/host.js").is_file());
+        assert!(!app.join("snippets/stale").exists());
+        std::fs::remove_dir_all(root).unwrap();
+    }
 
     #[test]
     fn compressed_sizes_are_what_a_compressing_host_would_send() {
@@ -526,6 +591,7 @@ mod tests {
             &super::BuildRequest {
                 example: "fusion-basic".to_string(),
                 release: true,
+                utility_scanner: false,
                 base: "/".to_string(),
             },
         );
@@ -534,6 +600,7 @@ mod tests {
             &super::BuildRequest {
                 example: "fusion-basic".to_string(),
                 release: true,
+                utility_scanner: false,
                 base: "/tools/demo/".to_string(),
             },
         );

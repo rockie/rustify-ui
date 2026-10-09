@@ -1,0 +1,33 @@
+mbx[warning]: Unix-domain cache session listener unavailable; using FIFO transport: failed to bind cache session listener at /var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/mbx-session-vcJo66/cache-agent.sock: Operation not permitted (os error 1)
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 6.49s
+     Running unittests src/lib.rs (/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-utf16-verified-54mkl3kq/cargo-target/debug/deps/rustify_style-7a67d48e3c4c51f4)
+
+running 1 test
+test compiler::tests::unused_nested_theme_is_pruned_after_rule_optimization ... FAILED
+
+failures:
+
+---- compiler::tests::unused_nested_theme_is_pruned_after_rule_optimization stdout ----
+
+thread 'compiler::tests::unused_nested_theme_is_pruned_after_rule_optimization' (3208483) panicked at crates/rustify-style/src/compiler/tests.rs:747:5:
+assertion `left == right` failed
+  left: Text([])
+ right: ".nested {\n  :root, :host {\n  }\n}\n"
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    compiler::tests::unused_nested_theme_is_pruned_after_rule_optimization
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 311 filtered out; finished in 0.01s
+
+error: test failed, to rerun pass `-p rustify-style --lib`
+mbx[cache]: 0 hits, 1 misses; 0 B downloaded, 0 B uploaded, 340.0 MiB stored locally

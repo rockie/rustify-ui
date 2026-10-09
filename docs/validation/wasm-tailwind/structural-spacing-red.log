@@ -1,0 +1,51 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 4.12s
+     Running unittests src/lib.rs (target/debug/deps/rustify_style-d8a92cb6940dfdfd)
+
+running 2 tests
+test compiler::structural_spacing::tests::sibling_ast_keeps_important_local_and_resources_first_seen_without_virtual_sort_css ... FAILED
+test compiler::structural_spacing::tests::structural_spacing_branches_match_official_fixtures_and_prefix ... FAILED
+
+failures:
+
+---- compiler::structural_spacing::tests::sibling_ast_keeps_important_local_and_resources_first_seen_without_virtual_sort_css stdout ----
+
+thread 'compiler::structural_spacing::tests::sibling_ast_keeps_important_local_and_resources_first_seen_without_virtual_sort_css' (13665793) panicked at crates/rustify-style/src/compiler/structural_spacing.rs:124:9:
+assertion `left == right` failed
+  left: []
+ right: ["--tw-border-spacing-x", "--tw-border-spacing-y", "--tw-space-y-reverse", "--tw-space-x-reverse"]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- compiler::structural_spacing::tests::structural_spacing_branches_match_official_fixtures_and_prefix stdout ----
+
+thread 'compiler::structural_spacing::tests::structural_spacing_branches_match_official_fixtures_and_prefix' (13665794) panicked at crates/rustify-style/src/compiler/structural_spacing.rs:96:9:
+5182 mismatches; first cases: [
+    "structural-spacing:root=border-spacing:value=<default>:empty: actual=\"\" expected=\"\" pending=[CandidateDiagnostic { candidate: \"border-spacing\", kind: PendingFamily, family: Some(\"border-spacing\") }]",
+    "structural-spacing:root=border-spacing:value=card:empty: actual=\"\" expected=\"\" pending=[CandidateDiagnostic { candidate: \"border-spacing-card\", kind: PendingFamily, family: Some(\"border-spacing\") }]",
+    "structural-spacing:root=border-spacing:value=alias:empty: actual=\"\" expected=\"\" pending=[CandidateDiagnostic { candidate: \"border-spacing-alias\", kind: PendingFamily, family: Some(\"border-spacing\") }]",
+    "structural-spacing:root=border-spacing:value=1.5:empty: actual=\"\" expected=\"\" pending=[CandidateDiagnostic { candidate: \"border-spacing-1.5\", kind: PendingFamily, family: Some(\"border-spacing\") }]",
+    "structural-spacing:root=border-spacing:value=1/2:empty: actual=\"\" expected=\"\" pending=[CandidateDiagnostic { candidate: \"border-spacing-1/2\", kind: PendingFamily, family: Some(\"border-spacing\") }]",
+    "structural-spacing:root=border-spacing:value=missing:empty: actual=\"\" expected=\"\" pending=[CandidateDiagnostic { candidate: \"border-spacing-missing\", kind: PendingFamily, family: Some(\"border-spacing\") }]",
+    "structural-spacing:root=border-spacing:value=px:empty: actual=\"\" expected=\"@layer properties;\\n.border-spacing-px {\\n  --tw-border-spacing-x: 1px;\\n  --tw-border-spacing-y: 1px;\\n  border-spacing: var(--tw-border-spacing-x) var(--tw-border-spacing-y);\\n}\\n@property --tw-border-spacing-x {\\n  syntax: \\\"<length>\\\";\\n  inherits: false;\\n  initial-value: 0;\\n}\\n@property --tw-border-spacing-y {\\n  syntax: \\\"<length>\\\";\\n  inherits: false;\\n  initial-value: 0;\\n}\\n@layer properties {\\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\\n    *, ::before, ::after, ::backdrop {\\n      --tw-border-spacing-x: 0;\\n      --tw-border-spacing-y: 0;\\n    }\\n  }\\n}\\n\" pending=[CandidateDiagnostic { candidate: \"border-spacing-px\", kind: PendingFamily, family: Some(\"border-spacing\") }]",
+    "structural-spacing:root=border-spacing:value=reverse:empty: actual=\"\" expected=\"\" pending=[CandidateDiagnostic { candidate: \"border-spacing-reverse\", kind: PendingFamily, family: Some(\"border-spacing\") }]",
+    "structural-spacing:root=border-spacing:value=auto:empty: actual=\"\" expected=\"\" pending=[CandidateDiagnostic { candidate: \"border-spacing-auto\", kind: PendingFamily, family: Some(\"border-spacing\") }]",
+    "structural-spacing:root=border-spacing:value=full:empty: actual=\"\" expected=\"\" pending=[CandidateDiagnostic { candidate: \"border-spacing-full\", kind: PendingFamily, family: Some(\"border-spacing\") }]",
+]
+
+
+failures:
+    compiler::structural_spacing::tests::sibling_ast_keeps_important_local_and_resources_first_seen_without_virtual_sort_css
+    compiler::structural_spacing::tests::structural_spacing_branches_match_official_fixtures_and_prefix
+
+test result: FAILED. 0 passed; 2 failed; 0 ignored; 0 measured; 77 filtered out; finished in 0.67s
+
+error: test failed, to rerun pass `-p rustify-style --lib`
+mbx[cache]: 0 hits, 0 misses, 1 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: swept up 556.6 GiB logical so far. the broom is content-addressed.

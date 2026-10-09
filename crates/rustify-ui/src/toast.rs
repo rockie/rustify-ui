@@ -227,7 +227,7 @@ mod dom {
         /// button that dismisses it.
         #[prop(optional, into)]
         render: Option<Callback<Toast, AnyView>>,
-        #[prop(optional, into)] class: String,
+        #[prop(optional, into)] class: Signal<String>,
         #[prop(optional, into)] test_id: String,
     ) -> impl IntoView {
         let toasts = use_toasts();
@@ -238,7 +238,7 @@ mod dom {
             view! {
                 <Portal mount=root>
                     <div
-                        class=class.clone()
+                        class=move || class.get()
                         data-testid=test_id.clone()
                         role="status"
                         aria-live="polite"

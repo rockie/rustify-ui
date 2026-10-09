@@ -1,0 +1,70 @@
+diff --git a/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/wasm-tailwind/code-review-r3/source-snapshot/tests/browser/utility-runtime.spec.ts b/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser/utility-runtime.spec.ts
+index 6604547..520517c 100644
+--- a/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/wasm-tailwind/code-review-r3/source-snapshot/tests/browser/utility-runtime.spec.ts
++++ b/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser/utility-runtime.spec.ts
+@@ -872,6 +872,65 @@ test('a keyframes name that is also a timing keyword keeps the timing variable i
+     expect(errors).toEqual([]);
+ });
+ 
++test('keyframes names keep their slot after substitution, math times and numeric iterations', async ({page}, info) => {
++    const errors: string[] = [];
++    page.on('pageerror', error => errors.push(error.message));
++    page.on('console', message => { if (message.type() === 'error') errors.push(message.text()); });
++    await ready(page);
++    const cases = [
++        {id: 'shared-role', css: ':root { --ease: linear; } @keyframes card { to { opacity: 0; } } @keyframes linear { to { opacity: 0.5; } } .motion { animation: card 10s var(--ease) infinite; } .other { animation-name: var(--ease); animation-duration: 10s; }'},
++        {id: 'var-before', css: ':root { --x: linear; } @keyframes ease { to { opacity: 0.3; } } .motion { animation: var(--x) 10s ease infinite; }'},
++        {id: 'var-name', css: ':root { --name: linear; } @keyframes linear { to { opacity: 0.3; } } .motion { animation: 10s ease var(--name) infinite; }'},
++        {id: 'var-fallback', css: ':root { --x: ease; } @keyframes linear { to { opacity: 0.3; } } .motion { animation: var(--x, linear) 10s linear infinite; }'},
++        {id: 'time-calc', css: '@keyframes card { to { opacity: 0.3; } } .motion { animation: calc(10s) linear card infinite; }'},
++        {id: 'time-min', css: '@keyframes card { to { opacity: 0.3; } } .motion { animation: min(10s, 12s) linear card infinite; }'},
++        {id: 'iteration', css: '@keyframes infinite { to { opacity: 0.3; } } .motion { animation: 2 10s infinite linear; }'},
++        {id: 'iteration-fraction', css: '@keyframes infinite { to { opacity: 0.3; } } .motion { animation: 0.5 10s infinite linear; }'},
++    ];
++    const result = await page.evaluate(async cases => {
++        const api = (window as any).__utility_lab;
++        const read = (element: Element) => {
++            const animations = element.getAnimations() as CSSAnimation[];
++            const frames = animations[0] ? (animations[0].effect as KeyframeEffect).getKeyframes() : [];
++            const style = getComputedStyle(element);
++            return {name: style.animationName, timing: style.animationTimingFunction, duration: style.animationDuration,
++                iteration: style.animationIterationCount, count: animations.length, opacity: frames.at(-1)?.opacity};
++        };
++        const samples = (parent: Element) => ['motion', 'other'].map(className => {
++            const element = document.createElement('div'); element.className = className; parent.append(element); return element;
++        });
++        const rows = [];
++        for (const {id, css} of cases) {
++            const scope = `slot-${id}`;
++            const root = document.createElement('div'); root.id = scope; document.querySelector('main')!.append(root);
++            api.mount(scope, 10000, `${css} @tailwind utilities;`);
++            const scoped = samples(document.getElementById(`${scope}-frame`)!);
++            const report = await api.ensure(scope, []);
++            const owner = root.dataset.rustifyStyleOwner;
++            const actual = scoped.map(read);
++            api.dispose(scope); root.remove();
++            const reference = document.createElement('div'); reference.id = `${scope}-reference`; document.querySelector('main')!.append(reference);
++            const plain = samples(reference);
++            const sheet = new CSSStyleSheet(); sheet.replaceSync(css.replaceAll(':root', `#${reference.id}`));
++            document.adoptedStyleSheets = [...document.adoptedStyleSheets, sheet];
++            const expected = plain.map(read);
++            document.adoptedStyleSheets = document.adoptedStyleSheets.filter(known => known !== sheet); reference.remove();
++            rows.push({id, owner, css: report.css, actual, expected});
++        }
++        return rows;
++    }, cases);
++    for (const row of result) {
++        row.actual.forEach((actual, index) => {
++            const expected = row.expected[index];
++            if (expected.name === 'none') { expect(actual, `${row.id}[${index}]`).toEqual(expected); return; }
++            expect(expected.count, `${row.id}[${index}] reference`).toBe(1);
++            expect(actual, `${row.id}[${index}]`).toEqual({...expected, name: `rustify-${row.owner}-${expected.name}`});
++        });
++    }
++    await info.attach('keyframes slots after substitution', {body: JSON.stringify(result, null, 2), contentType: 'application/json'});
++    expect(errors).toEqual([]);
++});
++
+ test('rebuild releases inactive candidates and keeps the seed, DOM and named classes', async ({page}, info) => {
+     const errors: string[] = [];
+     page.on('pageerror', error => errors.push(error.message));

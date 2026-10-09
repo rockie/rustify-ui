@@ -1,0 +1,9 @@
+{
+  "passed": 38,
+  "failures": [
+    {
+      "name": "actual-CLI-transform-Symbol-throw-format",
+      "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:\n+ actual - expected\n\n  {\n    status: 1,\n+   stderr: 'cn: \\n',\n-   stderr: 'cn: Symbol(rustify-cli-symbol)\\n',\n    stdout: ''\n  }\n\n    at file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/cn/run-build-host.mjs:194:420\n    at async check (file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/cn/run-build-host.mjs:29:35)\n    at async file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/cn/run-build-host.mjs:193:3"
+    }
+  ]
+}

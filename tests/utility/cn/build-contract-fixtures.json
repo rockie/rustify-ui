@@ -1,0 +1,1480 @@
+{
+  "schemaVersion": 1,
+  "commit": "b7ec0fce43d824a60517fab508584eb860fdf717",
+  "files": {
+    "src/view.html": "<div class=\"p-2 p-4\"></div>",
+    "src/component.tsx": "hover:p-2 hover:p-4",
+    "src/noext": "m-2 m-4",
+    ".hidden/view.html": "p-2",
+    ".git/view.html": "p-2",
+    "node_modules/hidden/view.html": "p-2",
+    "node_modules/allowed/view.html": "m-4",
+    "dist/view.html": "p-2",
+    "public/.dot.html": "p-2",
+    "docs/view.mdx": "text-lg",
+    "literal[1].html": "p-2",
+    "themes/main.css": "/* @theme { --shadow-comment: 0; } */ @import url(\"./imported.css\"); @import \"package/theme.css\"; @theme inline { --radius-*: initial; --radius-card: 1px; --text-hero: 1px; --text-hero--line-height: 1; --color-brand: red; --font-brand: serif; --shadow-gone: initial; }",
+    "themes/imported.css": "@import \"./cycle.css\"; @theme { --shadow-card: 1px; --shadow-gone: 1px; --font-weight-book: 550; }",
+    "themes/cycle.css": "@import \"./main.css\"; @theme { --text-shadow-label: 1px; }",
+    "themes/reset.css": "@theme { --*: initial; --blur-first: 1px; --blur-first: initial; --blur-last: 2px; --radius-card: initial; }",
+    "plain.css": "/* @theme */ .x {}",
+    "themes/unclosed.css": "@theme {",
+    "themes/unclosed-unicode.css": "@theme { --shadow-odd: initial😀",
+    "themes/unicode.css": "@themeé { --shadow-é: 1px; }",
+    "public/cr\r.html": "p-2",
+    "public/line.html\n": "p-4",
+    "tokens.txt": "p-2 p-4 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "safelist.txt": "m-2﻿m-4",
+    "extension.json": "{\"prefix\":\"tw\",\"extend\":{\"theme\":{\"shadow\":[\"panel\"]}}}",
+    "config.mjs": "export default config=>({...config,prefix:\"tw\"})",
+    "../outside.html": "p-4"
+  },
+  "links": {
+    "alias": "src",
+    "src/cycle": "..",
+    "src/broken.html": "../missing.html",
+    "node_modules/srclink": "../src"
+  },
+  "globs": [
+    {
+      "patterns": [
+        "**/*.html"
+      ],
+      "expected": {
+        "files": [
+          "alias/view.html",
+          "literal[1].html",
+          "public/.dot.html",
+          "public/cr\r.html",
+          "src/view.html"
+        ],
+        "skippedUnreadable": 0
+      }
+    },
+    {
+      "patterns": [
+        "src"
+      ],
+      "expected": {
+        "files": [
+          "src/component.tsx",
+          "src/cycle/config.mjs",
+          "src/cycle/docs/view.mdx",
+          "src/cycle/extension.json",
+          "src/cycle/literal[1].html",
+          "src/cycle/plain.css",
+          "src/cycle/public/.dot.html",
+          "src/cycle/public/cr\r.html",
+          "src/cycle/public/line.html\n",
+          "src/cycle/safelist.txt",
+          "src/cycle/themes/cycle.css",
+          "src/cycle/themes/imported.css",
+          "src/cycle/themes/main.css",
+          "src/cycle/themes/reset.css",
+          "src/cycle/themes/unclosed-unicode.css",
+          "src/cycle/themes/unclosed.css",
+          "src/cycle/themes/unicode.css",
+          "src/cycle/tokens.txt",
+          "src/noext",
+          "src/view.html"
+        ],
+        "skippedUnreadable": 0
+      }
+    },
+    {
+      "patterns": [
+        "./src\\**\\*.{html,tsx}"
+      ],
+      "expected": {
+        "files": [
+          "src/component.tsx",
+          "src/view.html"
+        ],
+        "skippedUnreadable": 0
+      }
+    },
+    {
+      "patterns": [
+        "node_modules/allowed/*.html",
+        "**/*.html"
+      ],
+      "expected": {
+        "files": [
+          "node_modules/allowed/view.html",
+          "alias/view.html",
+          "literal[1].html",
+          "node_modules/hidden/view.html",
+          "node_modules/srclink/view.html",
+          "public/.dot.html",
+          "public/cr\r.html",
+          "src/view.html"
+        ],
+        "skippedUnreadable": 0
+      }
+    },
+    {
+      "patterns": [
+        ".hidden/*.html"
+      ],
+      "expected": {
+        "files": [
+          ".hidden/view.html"
+        ],
+        "skippedUnreadable": 0
+      }
+    },
+    {
+      "patterns": [
+        ".git/*.html"
+      ],
+      "expected": {
+        "files": [],
+        "skippedUnreadable": 0
+      }
+    },
+    {
+      "patterns": [
+        ".git"
+      ],
+      "expected": {
+        "files": [
+          ".git/view.html"
+        ],
+        "skippedUnreadable": 0
+      }
+    },
+    {
+      "patterns": [
+        "node_modules"
+      ],
+      "expected": {
+        "files": [
+          "node_modules/allowed/view.html",
+          "node_modules/hidden/view.html",
+          "node_modules/srclink/component.tsx",
+          "node_modules/srclink/cycle/config.mjs",
+          "node_modules/srclink/cycle/docs/view.mdx",
+          "node_modules/srclink/cycle/extension.json",
+          "node_modules/srclink/cycle/literal[1].html",
+          "node_modules/srclink/cycle/plain.css",
+          "node_modules/srclink/cycle/public/.dot.html",
+          "node_modules/srclink/cycle/public/cr\r.html",
+          "node_modules/srclink/cycle/public/line.html\n",
+          "node_modules/srclink/cycle/safelist.txt",
+          "node_modules/srclink/cycle/themes/cycle.css",
+          "node_modules/srclink/cycle/themes/imported.css",
+          "node_modules/srclink/cycle/themes/main.css",
+          "node_modules/srclink/cycle/themes/reset.css",
+          "node_modules/srclink/cycle/themes/unclosed-unicode.css",
+          "node_modules/srclink/cycle/themes/unclosed.css",
+          "node_modules/srclink/cycle/themes/unicode.css",
+          "node_modules/srclink/cycle/tokens.txt",
+          "node_modules/srclink/noext",
+          "node_modules/srclink/view.html"
+        ],
+        "skippedUnreadable": 0
+      }
+    },
+    {
+      "patterns": [
+        "src",
+        "alias/**/*.html"
+      ],
+      "expected": {
+        "files": [
+          "src/component.tsx",
+          "src/cycle/config.mjs",
+          "src/cycle/docs/view.mdx",
+          "src/cycle/extension.json",
+          "src/cycle/literal[1].html",
+          "src/cycle/plain.css",
+          "src/cycle/public/.dot.html",
+          "src/cycle/public/cr\r.html",
+          "src/cycle/public/line.html\n",
+          "src/cycle/safelist.txt",
+          "src/cycle/themes/cycle.css",
+          "src/cycle/themes/imported.css",
+          "src/cycle/themes/main.css",
+          "src/cycle/themes/reset.css",
+          "src/cycle/themes/unclosed-unicode.css",
+          "src/cycle/themes/unclosed.css",
+          "src/cycle/themes/unicode.css",
+          "src/cycle/tokens.txt",
+          "src/noext",
+          "src/view.html",
+          "alias/view.html"
+        ],
+        "skippedUnreadable": 0
+      }
+    },
+    {
+      "patterns": [
+        "../outside.html"
+      ],
+      "expected": {
+        "files": [
+          "../outside.html"
+        ],
+        "skippedUnreadable": 0
+      }
+    },
+    {
+      "patterns": [
+        "src/**/*.html",
+        "src/**/*.html"
+      ],
+      "expected": {
+        "files": [
+          "src/view.html"
+        ],
+        "skippedUnreadable": 0
+      }
+    },
+    {
+      "patterns": [
+        "literal[1].html"
+      ],
+      "expected": {
+        "files": [
+          "literal[1].html"
+        ],
+        "skippedUnreadable": 0
+      }
+    },
+    {
+      "patterns": [
+        "src/*.{html,tsx}"
+      ],
+      "expected": {
+        "files": [
+          "src/component.tsx",
+          "src/view.html"
+        ],
+        "skippedUnreadable": 0
+      }
+    },
+    {
+      "patterns": [
+        "src/?.html"
+      ],
+      "expected": {
+        "files": [],
+        "skippedUnreadable": 0
+      }
+    },
+    {
+      "patterns": [
+        "src/{oops"
+      ],
+      "expected": {
+        "error": "unclosed { in glob: src/{oops"
+      }
+    }
+  ],
+  "matchers": [
+    {
+      "patterns": [
+        "**/*.html"
+      ],
+      "expected": [
+        {
+          "path": "src/view.html",
+          "matched": true
+        },
+        {
+          "path": "src/noext",
+          "matched": false
+        },
+        {
+          "path": "node_modules/hidden/view.html",
+          "matched": false
+        },
+        {
+          "path": "node_modules/allowed/view.html",
+          "matched": false
+        },
+        {
+          "path": ".hidden/view.html",
+          "matched": false
+        },
+        {
+          "path": ".git/view.html",
+          "matched": false
+        },
+        {
+          "path": "../outside.html",
+          "matched": false
+        },
+        {
+          "path": "public/.dot.html",
+          "matched": true
+        }
+      ]
+    },
+    {
+      "patterns": [
+        "**/*.html",
+        "node_modules/allowed/*.html"
+      ],
+      "expected": [
+        {
+          "path": "src/view.html",
+          "matched": true
+        },
+        {
+          "path": "src/noext",
+          "matched": false
+        },
+        {
+          "path": "node_modules/hidden/view.html",
+          "matched": true
+        },
+        {
+          "path": "node_modules/allowed/view.html",
+          "matched": true
+        },
+        {
+          "path": ".hidden/view.html",
+          "matched": false
+        },
+        {
+          "path": ".git/view.html",
+          "matched": false
+        },
+        {
+          "path": "../outside.html",
+          "matched": false
+        },
+        {
+          "path": "public/.dot.html",
+          "matched": true
+        }
+      ]
+    },
+    {
+      "patterns": [
+        "src"
+      ],
+      "expected": [
+        {
+          "path": "src/view.html",
+          "matched": true
+        },
+        {
+          "path": "src/noext",
+          "matched": true
+        },
+        {
+          "path": "node_modules/hidden/view.html",
+          "matched": false
+        },
+        {
+          "path": "node_modules/allowed/view.html",
+          "matched": false
+        },
+        {
+          "path": ".hidden/view.html",
+          "matched": false
+        },
+        {
+          "path": ".git/view.html",
+          "matched": false
+        },
+        {
+          "path": "../outside.html",
+          "matched": false
+        },
+        {
+          "path": "public/.dot.html",
+          "matched": false
+        }
+      ]
+    },
+    {
+      "patterns": [
+        ".git"
+      ],
+      "expected": [
+        {
+          "path": "src/view.html",
+          "matched": false
+        },
+        {
+          "path": "src/noext",
+          "matched": false
+        },
+        {
+          "path": "node_modules/hidden/view.html",
+          "matched": false
+        },
+        {
+          "path": "node_modules/allowed/view.html",
+          "matched": false
+        },
+        {
+          "path": ".hidden/view.html",
+          "matched": false
+        },
+        {
+          "path": ".git/view.html",
+          "matched": true
+        },
+        {
+          "path": "../outside.html",
+          "matched": false
+        },
+        {
+          "path": "public/.dot.html",
+          "matched": false
+        }
+      ]
+    },
+    {
+      "patterns": [
+        ".hidden/*.html"
+      ],
+      "expected": [
+        {
+          "path": "src/view.html",
+          "matched": false
+        },
+        {
+          "path": "src/noext",
+          "matched": false
+        },
+        {
+          "path": "node_modules/hidden/view.html",
+          "matched": false
+        },
+        {
+          "path": "node_modules/allowed/view.html",
+          "matched": false
+        },
+        {
+          "path": ".hidden/view.html",
+          "matched": true
+        },
+        {
+          "path": ".git/view.html",
+          "matched": false
+        },
+        {
+          "path": "../outside.html",
+          "matched": false
+        },
+        {
+          "path": "public/.dot.html",
+          "matched": false
+        }
+      ]
+    },
+    {
+      "patterns": [
+        "../outside.html"
+      ],
+      "expected": [
+        {
+          "path": "src/view.html",
+          "matched": false
+        },
+        {
+          "path": "src/noext",
+          "matched": false
+        },
+        {
+          "path": "node_modules/hidden/view.html",
+          "matched": false
+        },
+        {
+          "path": "node_modules/allowed/view.html",
+          "matched": false
+        },
+        {
+          "path": ".hidden/view.html",
+          "matched": false
+        },
+        {
+          "path": ".git/view.html",
+          "matched": false
+        },
+        {
+          "path": "../outside.html",
+          "matched": false
+        },
+        {
+          "path": "public/.dot.html",
+          "matched": false
+        }
+      ]
+    },
+    {
+      "patterns": [
+        "src/{oops"
+      ],
+      "expected": {
+        "error": "unclosed { in glob: src/{oops"
+      }
+    }
+  ],
+  "themes": [
+    {
+      "entries": [
+        "themes/main.css"
+      ],
+      "expected": {
+        "extension": {
+          "extend": {
+            "theme": {
+              "text-shadow": [
+                "label"
+              ],
+              "shadow": [
+                "card"
+              ],
+              "font-weight": [
+                "book"
+              ],
+              "text": [
+                "hero"
+              ]
+            }
+          },
+          "override": {
+            "theme": {
+              "radius": [
+                "card"
+              ]
+            }
+          }
+        },
+        "files": [
+          "themes/main.css",
+          "themes/imported.css",
+          "themes/cycle.css"
+        ]
+      }
+    },
+    {
+      "entries": [
+        "themes/main.css",
+        "themes/reset.css"
+      ],
+      "expected": {
+        "extension": {
+          "override": {
+            "theme": {
+              "radius": [],
+              "inset-shadow": [],
+              "drop-shadow": [],
+              "text-shadow": [
+                "label"
+              ],
+              "font-weight": [
+                "book"
+              ],
+              "perspective": [],
+              "breakpoint": [],
+              "container": [],
+              "tracking": [],
+              "spacing": [],
+              "leading": [],
+              "animate": [],
+              "shadow": [
+                "card"
+              ],
+              "aspect": [],
+              "blur": [
+                "last"
+              ],
+              "ease": [],
+              "text": [
+                "hero"
+              ]
+            }
+          }
+        },
+        "files": [
+          "themes/main.css",
+          "themes/imported.css",
+          "themes/cycle.css",
+          "themes/reset.css"
+        ]
+      }
+    },
+    {
+      "entries": [
+        "themes/reset.css",
+        "themes/main.css"
+      ],
+      "expected": {
+        "extension": {
+          "override": {
+            "theme": {
+              "inset-shadow": [],
+              "drop-shadow": [],
+              "text-shadow": [
+                "label"
+              ],
+              "font-weight": [
+                "book"
+              ],
+              "perspective": [],
+              "breakpoint": [],
+              "container": [],
+              "tracking": [],
+              "spacing": [],
+              "leading": [],
+              "animate": [],
+              "radius": [
+                "card"
+              ],
+              "shadow": [
+                "card"
+              ],
+              "aspect": [],
+              "blur": [
+                "last"
+              ],
+              "ease": [],
+              "text": [
+                "hero"
+              ]
+            }
+          }
+        },
+        "files": [
+          "themes/reset.css",
+          "themes/main.css",
+          "themes/imported.css",
+          "themes/cycle.css"
+        ]
+      }
+    },
+    {
+      "entries": [
+        "themes/unclosed.css"
+      ],
+      "expected": {
+        "extension": {},
+        "files": [
+          "themes/unclosed.css"
+        ]
+      }
+    },
+    {
+      "entries": [
+        "themes/unclosed-unicode.css"
+      ],
+      "expected": {
+        "extension": {
+          "extend": {
+            "theme": {
+              "shadow": [
+                "odd"
+              ]
+            }
+          }
+        },
+        "files": [
+          "themes/unclosed-unicode.css"
+        ]
+      }
+    },
+    {
+      "entries": [
+        "themes/unicode.css"
+      ],
+      "expected": {
+        "extension": {
+          "extend": {
+            "theme": {
+              "shadow": [
+                "é"
+              ]
+            }
+          }
+        },
+        "files": [
+          "themes/unicode.css"
+        ]
+      }
+    },
+    {
+      "entries": [
+        "themes/missing.css"
+      ],
+      "expected": {
+        "error": "cannot read css <project>/themes/missing.css: ENOENT: no such file or directory, open '<project>/themes/missing.css'"
+      }
+    }
+  ],
+  "discovery": [
+    {
+      "css": "@theme {}",
+      "expected": true
+    },
+    {
+      "css": "/* @theme */",
+      "expected": true
+    },
+    {
+      "css": "@themeish {}",
+      "expected": false
+    },
+    {
+      "css": "@import \"tailwindcss\";",
+      "expected": true
+    },
+    {
+      "css": "@import url( \"tailwindcss/theme.css\");",
+      "expected": true
+    },
+    {
+      "css": "/* @import \"tailwindcss\" */",
+      "expected": true
+    },
+    {
+      "css": "@import \"./tailwindcss\";",
+      "expected": false
+    },
+    {
+      "css": "@themeé {}",
+      "expected": true
+    },
+    {
+      "css": "@import﻿\"tailwindcss\";",
+      "expected": true
+    },
+    {
+      "css": "@import\"tailwindcss\";",
+      "expected": false
+    }
+  ],
+  "builds": [
+    {
+      "id": "discovery",
+      "options": {
+        "content": [
+          "src/**/*.html"
+        ]
+      },
+      "expected": {
+        "tokens": [
+          "/div",
+          "class=",
+          "div",
+          "p-2",
+          "p-4"
+        ],
+        "longTokens": [],
+        "scannedFiles": 1,
+        "cssFiles": [
+          "plain.css",
+          "themes/cycle.css",
+          "themes/main.css",
+          "themes/imported.css",
+          "themes/reset.css",
+          "themes/unclosed-unicode.css",
+          "themes/unclosed.css",
+          "themes/unicode.css"
+        ],
+        "groups": [],
+        "warnings": [],
+        "sourceSha256": "725af5068a0148be92667fdcfa5d18445943b7220d60294d7f8dacbba9c523be"
+      }
+    },
+    {
+      "id": "tokensNoCap",
+      "options": {
+        "tokens": "tokens.txt",
+        "css": false,
+        "safelist": "safelist.txt"
+      },
+      "expected": {
+        "tokens": [
+          "m-2",
+          "m-4",
+          "p-2",
+          "p-4"
+        ],
+        "longTokens": [
+          8193
+        ],
+        "scannedFiles": 0,
+        "cssFiles": [],
+        "groups": [
+          "p",
+          "m"
+        ],
+        "warnings": [],
+        "sourceSha256": "61b7cda847e1ad3f86384b20679ef307dcdee54235f1088ec662f2e4c9638610"
+      }
+    },
+    {
+      "id": "fullSkipsInputs",
+      "options": {
+        "full": true,
+        "css": false,
+        "tokens": "missing.txt",
+        "safelist": "missing.txt"
+      },
+      "expected": {
+        "tokens": [],
+        "longTokens": [],
+        "scannedFiles": 0,
+        "cssFiles": [],
+        "groups": [
+          "aspect",
+          "container",
+          "container-type",
+          "container-named",
+          "columns",
+          "break-after",
+          "break-before",
+          "break-inside",
+          "box-decoration",
+          "box",
+          "display",
+          "sr",
+          "float",
+          "clear",
+          "isolation",
+          "object-fit",
+          "object-position",
+          "overflow",
+          "overflow-x",
+          "overflow-y",
+          "overscroll",
+          "overscroll-x",
+          "overscroll-y",
+          "position",
+          "inset",
+          "inset-x",
+          "inset-y",
+          "start",
+          "end",
+          "inset-bs",
+          "inset-be",
+          "top",
+          "right",
+          "bottom",
+          "left",
+          "visibility",
+          "z",
+          "basis",
+          "flex-direction",
+          "flex-wrap",
+          "flex",
+          "grow",
+          "shrink",
+          "order",
+          "grid-cols",
+          "col-start-end",
+          "col-start",
+          "col-end",
+          "grid-rows",
+          "row-start-end",
+          "row-start",
+          "row-end",
+          "grid-flow",
+          "auto-cols",
+          "auto-rows",
+          "gap",
+          "gap-x",
+          "gap-y",
+          "justify-content",
+          "justify-items",
+          "justify-self",
+          "align-content",
+          "align-items",
+          "align-self",
+          "place-content",
+          "place-items",
+          "place-self",
+          "p",
+          "px",
+          "py",
+          "ps",
+          "pe",
+          "pbs",
+          "pbe",
+          "pt",
+          "pr",
+          "pb",
+          "pl",
+          "m",
+          "mx",
+          "my",
+          "ms",
+          "me",
+          "mbs",
+          "mbe",
+          "mt",
+          "mr",
+          "mb",
+          "ml",
+          "space-x",
+          "space-x-reverse",
+          "space-y",
+          "space-y-reverse",
+          "size",
+          "inline-size",
+          "min-inline-size",
+          "max-inline-size",
+          "block-size",
+          "min-block-size",
+          "max-block-size",
+          "w",
+          "min-w",
+          "max-w",
+          "h",
+          "min-h",
+          "max-h",
+          "font-size",
+          "font-smoothing",
+          "font-style",
+          "font-weight",
+          "font-stretch",
+          "font-family",
+          "font-features",
+          "fvn-normal",
+          "fvn-ordinal",
+          "fvn-slashed-zero",
+          "fvn-figure",
+          "fvn-spacing",
+          "fvn-fraction",
+          "tracking",
+          "line-clamp",
+          "leading",
+          "list-image",
+          "list-style-position",
+          "list-style-type",
+          "text-alignment",
+          "placeholder-color",
+          "text-color",
+          "text-decoration",
+          "text-decoration-style",
+          "text-decoration-thickness",
+          "text-decoration-color",
+          "underline-offset",
+          "text-transform",
+          "text-overflow",
+          "text-wrap",
+          "indent",
+          "tab-size",
+          "vertical-align",
+          "whitespace",
+          "break",
+          "wrap",
+          "hyphens",
+          "content",
+          "bg-attachment",
+          "bg-clip",
+          "bg-origin",
+          "bg-position",
+          "bg-repeat",
+          "bg-size",
+          "bg-image",
+          "bg-color",
+          "gradient-from-pos",
+          "gradient-via-pos",
+          "gradient-to-pos",
+          "gradient-from",
+          "gradient-via",
+          "gradient-to",
+          "rounded",
+          "rounded-s",
+          "rounded-e",
+          "rounded-t",
+          "rounded-r",
+          "rounded-b",
+          "rounded-l",
+          "rounded-ss",
+          "rounded-se",
+          "rounded-ee",
+          "rounded-es",
+          "rounded-tl",
+          "rounded-tr",
+          "rounded-br",
+          "rounded-bl",
+          "border-w",
+          "border-w-x",
+          "border-w-y",
+          "border-w-s",
+          "border-w-e",
+          "border-w-bs",
+          "border-w-be",
+          "border-w-t",
+          "border-w-r",
+          "border-w-b",
+          "border-w-l",
+          "divide-x",
+          "divide-x-reverse",
+          "divide-y",
+          "divide-y-reverse",
+          "border-style",
+          "divide-style",
+          "border-color",
+          "border-color-x",
+          "border-color-y",
+          "border-color-s",
+          "border-color-e",
+          "border-color-bs",
+          "border-color-be",
+          "border-color-t",
+          "border-color-r",
+          "border-color-b",
+          "border-color-l",
+          "divide-color",
+          "outline-style",
+          "outline-offset",
+          "outline-w",
+          "outline-color",
+          "shadow",
+          "shadow-color",
+          "inset-shadow",
+          "inset-shadow-color",
+          "ring-w",
+          "ring-w-inset",
+          "ring-color",
+          "ring-offset-w",
+          "ring-offset-color",
+          "inset-ring-w",
+          "inset-ring-color",
+          "text-shadow",
+          "text-shadow-color",
+          "opacity",
+          "mix-blend",
+          "bg-blend",
+          "mask-clip",
+          "mask-composite",
+          "mask-image-linear-pos",
+          "mask-image-linear-from-pos",
+          "mask-image-linear-to-pos",
+          "mask-image-linear-from-color",
+          "mask-image-linear-to-color",
+          "mask-image-t-from-pos",
+          "mask-image-t-to-pos",
+          "mask-image-t-from-color",
+          "mask-image-t-to-color",
+          "mask-image-r-from-pos",
+          "mask-image-r-to-pos",
+          "mask-image-r-from-color",
+          "mask-image-r-to-color",
+          "mask-image-b-from-pos",
+          "mask-image-b-to-pos",
+          "mask-image-b-from-color",
+          "mask-image-b-to-color",
+          "mask-image-l-from-pos",
+          "mask-image-l-to-pos",
+          "mask-image-l-from-color",
+          "mask-image-l-to-color",
+          "mask-image-x-from-pos",
+          "mask-image-x-to-pos",
+          "mask-image-x-from-color",
+          "mask-image-x-to-color",
+          "mask-image-y-from-pos",
+          "mask-image-y-to-pos",
+          "mask-image-y-from-color",
+          "mask-image-y-to-color",
+          "mask-image-radial",
+          "mask-image-radial-from-pos",
+          "mask-image-radial-to-pos",
+          "mask-image-radial-from-color",
+          "mask-image-radial-to-color",
+          "mask-image-radial-shape",
+          "mask-image-radial-size",
+          "mask-image-radial-pos",
+          "mask-image-conic-pos",
+          "mask-image-conic-from-pos",
+          "mask-image-conic-to-pos",
+          "mask-image-conic-from-color",
+          "mask-image-conic-to-color",
+          "mask-mode",
+          "mask-origin",
+          "mask-position",
+          "mask-repeat",
+          "mask-size",
+          "mask-type",
+          "mask-image",
+          "filter",
+          "blur",
+          "brightness",
+          "contrast",
+          "drop-shadow",
+          "drop-shadow-color",
+          "grayscale",
+          "hue-rotate",
+          "invert",
+          "saturate",
+          "sepia",
+          "backdrop-filter",
+          "backdrop-blur",
+          "backdrop-brightness",
+          "backdrop-contrast",
+          "backdrop-grayscale",
+          "backdrop-hue-rotate",
+          "backdrop-invert",
+          "backdrop-opacity",
+          "backdrop-saturate",
+          "backdrop-sepia",
+          "border-collapse",
+          "border-spacing",
+          "border-spacing-x",
+          "border-spacing-y",
+          "table-layout",
+          "caption",
+          "transition",
+          "transition-behavior",
+          "duration",
+          "ease",
+          "delay",
+          "animate",
+          "backface",
+          "perspective",
+          "perspective-origin",
+          "rotate",
+          "rotate-x",
+          "rotate-y",
+          "rotate-z",
+          "scale",
+          "scale-x",
+          "scale-y",
+          "scale-z",
+          "scale-3d",
+          "skew",
+          "skew-x",
+          "skew-y",
+          "transform",
+          "transform-origin",
+          "transform-style",
+          "translate",
+          "translate-x",
+          "translate-y",
+          "translate-z",
+          "translate-none",
+          "zoom",
+          "accent",
+          "appearance",
+          "caret-color",
+          "color-scheme",
+          "cursor",
+          "field-sizing",
+          "pointer-events",
+          "resize",
+          "scroll-behavior",
+          "scrollbar-thumb-color",
+          "scrollbar-track-color",
+          "scrollbar-gutter",
+          "scrollbar-w",
+          "scroll-m",
+          "scroll-mx",
+          "scroll-my",
+          "scroll-ms",
+          "scroll-me",
+          "scroll-mbs",
+          "scroll-mbe",
+          "scroll-mt",
+          "scroll-mr",
+          "scroll-mb",
+          "scroll-ml",
+          "scroll-p",
+          "scroll-px",
+          "scroll-py",
+          "scroll-ps",
+          "scroll-pe",
+          "scroll-pbs",
+          "scroll-pbe",
+          "scroll-pt",
+          "scroll-pr",
+          "scroll-pb",
+          "scroll-pl",
+          "snap-align",
+          "snap-stop",
+          "snap-type",
+          "snap-strictness",
+          "touch",
+          "touch-x",
+          "touch-y",
+          "touch-pz",
+          "select",
+          "will-change",
+          "fill",
+          "stroke-w",
+          "stroke",
+          "forced-color-adjust",
+          "contain",
+          "contain-size",
+          "contain-layout",
+          "contain-paint",
+          "contain-style"
+        ],
+        "warnings": [],
+        "sourceSha256": "cb7b149d1d3d6380a8d60a7b7f55626b37380aac957215b4ba306ce7387db800"
+      }
+    },
+    {
+      "id": "configTransform",
+      "options": {
+        "tokens": "tokens.txt",
+        "css": false,
+        "config": "config.mjs"
+      },
+      "expected": {
+        "tokens": [
+          "p-2",
+          "p-4"
+        ],
+        "longTokens": [
+          8193
+        ],
+        "scannedFiles": 0,
+        "cssFiles": [],
+        "groups": [],
+        "warnings": [],
+        "sourceSha256": "e4af560a57e6531e9db2ab14bbdd5c4dbddfa70c923fbd94edcea9972b33e341"
+      }
+    },
+    {
+      "id": "longWarning",
+      "options": {
+        "content": [
+          "long.html"
+        ],
+        "css": false
+      },
+      "expected": {
+        "tokens": [
+          "class=",
+          "p-2"
+        ],
+        "longTokens": [],
+        "scannedFiles": 1,
+        "cssFiles": [],
+        "groups": [
+          "p"
+        ],
+        "warnings": [
+          "skipped 1 candidate token(s) longer than 8192 chars"
+        ],
+        "sourceSha256": "f1ce099642b8a57c40268e82f3af42d42d54fcc2ad548ed10ff26adf8fde9576"
+      }
+    },
+    {
+      "id": "outputExcluded",
+      "options": {
+        "content": [
+          "self/*.html"
+        ],
+        "css": false,
+        "out": "self/tables.html"
+      },
+      "expected": {
+        "error": "no files matched the content globs; pass --content or use --full"
+      }
+    },
+    {
+      "id": "outputAliasExcluded",
+      "options": {
+        "content": [
+          "outputs/*.html"
+        ],
+        "css": false,
+        "out": "outputs/tables.html"
+      },
+      "expected": {
+        "tokens": [
+          "m-4"
+        ],
+        "longTokens": [],
+        "scannedFiles": 1,
+        "cssFiles": [],
+        "groups": [
+          "m"
+        ],
+        "warnings": [],
+        "sourceSha256": "2691b635ad658df227a25b5cb29ba29a9cebe9dd58e85a9836ac72c6dc62525d"
+      }
+    },
+    {
+      "id": "missingSafelist",
+      "options": {
+        "tokens": "tokens.txt",
+        "safelist": "missing.txt",
+        "css": false
+      },
+      "expected": {
+        "error": "cannot read safelist missing.txt: ENOENT: no such file or directory, open '<project>/missing.txt'"
+      }
+    },
+    {
+      "id": "missingImport",
+      "options": {
+        "tokens": "tokens.txt",
+        "css": "themes/broken.css"
+      },
+      "expected": {
+        "error": "cannot read css <project>/themes/missing.css (imported from <project>/themes/broken.css): ENOENT: no such file or directory, open '<project>/themes/missing.css'"
+      }
+    },
+    {
+      "id": "outputDirectory",
+      "options": {
+        "full": true,
+        "css": false,
+        "out": "."
+      },
+      "expected": {
+        "error": "cannot write .: EISDIR: illegal operation on a directory, open '<project>'"
+      }
+    }
+  ],
+  "coalescing": {
+    "builds": 2,
+    "same": true,
+    "lastSame": true,
+    "changed": false
+  },
+  "cli": [
+    {
+      "id": "help",
+      "args": [],
+      "expected": {
+        "stdout": "Usage: cn build [options]\n\nOptions:\n  --content <glob>     source globs to scan (repeatable or comma-separated;\n                       braces like *.{ts,tsx} are supported; a literal\n                       directory scans every file in it)\n                       default: **/*.{js,jsx,ts,tsx,html,vue,svelte,astro,mdx}\n  -o, --out <path>     output module path (default: cn-tables.mjs; .ts emits TS)\n  --safelist <file>    extra class names, whitespace-separated\n  --config <file>      config extension module (default export)\n  --tokens <file>      pre-extracted tokens (skips scanning)\n  --full               keep all class groups (no subsetting)\n  --css <file>         read @theme scales from this stylesheet only\n                       default: every .css under cwd that imports Tailwind\n                       or declares a theme\n  --no-css             do not read theme scales from stylesheets\n  --cwd <dir>          base directory (default: process.cwd())\n  -q, --quiet          suppress summary output\n  -h, --help           show this help\n  -v, --version        show version\n\n",
+        "stderr": "",
+        "exitCode": 0
+      }
+    },
+    {
+      "id": "version",
+      "args": [
+        "--version"
+      ],
+      "expected": {
+        "stdout": "0.4.0\n",
+        "stderr": "",
+        "exitCode": 0
+      }
+    },
+    {
+      "id": "unknownCommand",
+      "args": [
+        "serve"
+      ],
+      "expected": {
+        "stdout": "",
+        "stderr": "cn: unknown command \"serve\" (expected: build)\n",
+        "exitCode": 1
+      }
+    },
+    {
+      "id": "missingValue",
+      "args": [
+        "build",
+        "--out"
+      ],
+      "expected": {
+        "stdout": "",
+        "stderr": "cn: missing value for --out\n",
+        "exitCode": 1
+      }
+    },
+    {
+      "id": "unknownOption",
+      "args": [
+        "build",
+        "--oops"
+      ],
+      "expected": {
+        "stdout": "",
+        "stderr": "cn: unknown option \"--oops\"\n",
+        "exitCode": 1
+      }
+    },
+    {
+      "id": "helpPriority",
+      "args": [
+        "bad",
+        "--version",
+        "--help"
+      ],
+      "expected": {
+        "stdout": "Usage: cn build [options]\n\nOptions:\n  --content <glob>     source globs to scan (repeatable or comma-separated;\n                       braces like *.{ts,tsx} are supported; a literal\n                       directory scans every file in it)\n                       default: **/*.{js,jsx,ts,tsx,html,vue,svelte,astro,mdx}\n  -o, --out <path>     output module path (default: cn-tables.mjs; .ts emits TS)\n  --safelist <file>    extra class names, whitespace-separated\n  --config <file>      config extension module (default export)\n  --tokens <file>      pre-extracted tokens (skips scanning)\n  --full               keep all class groups (no subsetting)\n  --css <file>         read @theme scales from this stylesheet only\n                       default: every .css under cwd that imports Tailwind\n                       or declares a theme\n  --no-css             do not read theme scales from stylesheets\n  --cwd <dir>          base directory (default: process.cwd())\n  -q, --quiet          suppress summary output\n  -h, --help           show this help\n  -v, --version        show version\n\n",
+        "stderr": "",
+        "exitCode": 0
+      }
+    },
+    {
+      "id": "quiet",
+      "args": [
+        "build",
+        "--cwd",
+        "<project>",
+        "--full",
+        "--no-css",
+        "--out",
+        "cli-quiet.mjs",
+        "--quiet"
+      ],
+      "expected": {
+        "stdout": "",
+        "stderr": "",
+        "exitCode": 0
+      }
+    },
+    {
+      "id": "summary",
+      "args": [
+        "build",
+        "--cwd",
+        "<project>",
+        "--content",
+        "src/**/*.{html,tsx},docs/*.mdx",
+        "--no-css",
+        "--out",
+        "cli-summary.mjs"
+      ],
+      "expected": {
+        "stdout": "cn build: scanned 3 files, 4 candidate tokens, 3/384 class groups kept\n  → cli-summary.mjs (3.7 KB source, 1.4 KB gzip)\n",
+        "stderr": "",
+        "exitCode": 0
+      }
+    },
+    {
+      "id": "fullSummary",
+      "args": [
+        "build",
+        "--cwd",
+        "<project>",
+        "--full",
+        "--no-css",
+        "-o",
+        "cli-full.mjs"
+      ],
+      "expected": {
+        "stdout": "cn build: all class groups kept (--full)\n  → cli-full.mjs (13.7 KB source, 5.3 KB gzip)\n",
+        "stderr": "",
+        "exitCode": 0
+      }
+    }
+  ],
+  "tools": {
+    "vite": {
+      "name": "cn:build",
+      "deleteIgnored": true,
+      "updateChanged": true
+    },
+    "next": {
+      "passed": {
+        "phase": "phase-production-build",
+        "context": {
+          "probe": 7
+        },
+        "outputExists": true
+      },
+      "result": {
+        "test": true
+      }
+    }
+  }
+}

@@ -6,11 +6,18 @@ license.workspace = true
 publish.workspace = true
 description = "Experimental SDK fusing Leptos CSR DOM with Makepad GPU regions"
 
+[features]
+default = []
+utility = ["dep:rustify-style", "dep:futures-channel", "dep:wasm-bindgen"]
+
 [dependencies]
 serde = { version = "=1.0.229", features = ["derive"] }
-serde_json = "=1.0.151"
+serde_json = { version = "=1.0.151", features = ["raw_value"] }
 leptos.workspace = true
 rustify-makepad = { path = "../rustify-makepad" }
+rustify-style = { path = "../rustify-style", default-features = false, features = ["cn", "protocol"], optional = true }
+futures-channel = { version = "0.3", optional = true }
+wasm-bindgen = { workspace = true, optional = true }
 # DOM handles have to sit in Leptos context values, which are Send + Sync.
 send_wrapper = "0.6"
 # The router reads and writes `history.state`, which is a JS object; there is no

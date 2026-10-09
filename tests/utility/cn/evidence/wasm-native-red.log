@@ -1,0 +1,17 @@
+{
+  "fixedCases": 947,
+  "passed": 946,
+  "failures": [
+    {
+      "id": "join-clsx-5",
+      "actual": {
+        "ok": true,
+        "value": "1 2 x 01"
+      },
+      "expected": {
+        "ok": true,
+        "value": "1 2 x 01 "
+      }
+    }
+  ]
+}

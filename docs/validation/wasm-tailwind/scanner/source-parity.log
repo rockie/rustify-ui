@@ -1,0 +1,59 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.79s
+     Running unittests src/lib.rs (target/debug/deps/rustify_style-757a5485ad368562)
+
+running 42 tests
+test scanner::upstream_native_tests::scanner::it_includes_skipped_by_default_extensions_with_a_specific_source ... ok
+test scanner::upstream_native_tests::scanner::it_should_ignore_binary_files ... ok
+test scanner::upstream_native_tests::scanner::it_respects_gitignore_in_workspace_root ... ok
+test scanner::upstream_native_tests::scanner::it_should_ignore_known_extensions ... ok
+test scanner::upstream_native_tests::scanner::it_should_not_ignore_folders_that_end_with_a_binary_extension ... ok
+test scanner::upstream_native_tests::scanner::it_should_ignore_known_files ... ok
+test scanner::upstream_native_tests::scanner::it_should_find_new_extensions ... ok
+test scanner::upstream_native_tests::scanner::it_should_list_all_files_in_the_public_folder_explicitly_except_ignored_files ... ok
+test scanner::upstream_native_tests::scanner::it_respects_gitignore_in_workspace_root_for_manual_globs ... ok
+test scanner::upstream_native_tests::scanner::it_should_list_all_files_in_the_public_folder_explicitly ... ok
+test scanner::upstream_native_tests::scanner::it_should_include_defined_extensions_that_are_ignored_by_default ... ok
+test scanner::upstream_native_tests::scanner::it_should_be_possible_to_scan_in_the_parent_directory ... ok
+test scanner::upstream_native_tests::scanner::it_should_ignore_negated_custom_sources ... ok
+test scanner::upstream_native_tests::scanner::it_should_list_nested_folders_explicitly_in_the_public_folder ... ok
+test scanner::upstream_native_tests::scanner::it_should_ignore_and_expand_nested_ignored_folders ... ok
+test scanner::upstream_native_tests::scanner::test_allow_default_ignored_files ... ok
+test scanner::upstream_native_tests::scanner::test_allow_default_ignored_files_via_gitignore ... ok
+test scanner::upstream_native_tests::scanner::test_explicitly_ignore_explicitly_allowed_files ... ok
+test scanner::upstream_native_tests::scanner::it_should_scan_absolute_paths ... ok
+test scanner::upstream_native_tests::scanner::test_extract_used_css_variables_from_css ... ok
+test scanner::upstream_native_tests::scanner::test_allow_explicit_node_modules_paths ... ok
+test scanner::upstream_native_tests::scanner::it_should_scan_content_paths ... ok
+test scanner::upstream_native_tests::scanner::it_should_scan_content_paths_even_when_they_are_git_ignored ... ok
+test scanner::upstream_native_tests::scanner::it_should_work_with_a_set_of_root_files ... ok
+test scanner::upstream_native_tests::scanner::it_should_use_a_glob_for_top_level_folders ... ok
+test scanner::upstream_native_tests::scanner::test_ignore_files_can_be_included_with_custom_source_rule ... ok
+test scanner::upstream_native_tests::scanner::test_globs_with_recursive_symlinks ... ok
+test scanner::upstream_native_tests::scanner::it_should_scan_files_without_extensions ... ok
+test scanner::upstream_native_tests::scanner::it_should_work_with_a_set_of_root_files_and_ignore_ignored_files ... ok
+test scanner::upstream_native_tests::scanner::it_should_scan_for_utilities ... ok
+test scanner::upstream_native_tests::scanner::it_should_scan_folders_with_extensions ... ok
+test scanner::upstream_native_tests::scanner::it_should_work_with_manual_glob_only ... ok
+test scanner::upstream_native_tests::scanner::it_should_scan_next_dynamic_folders ... ok
+test scanner::upstream_native_tests::scanner::test_works_with_filenames_containing_glob_characters ... ok
+test scanner::upstream_native_tests::scanner::test_manually_scanning_files_should_follow_all_rules ... ok
+test scanner::upstream_native_tests::scanner::test_partial_globs_with_symlinks ... ok
+test scanner::upstream_native_tests::scanner::test_glob_with_symlinks ... ok
+test scanner::upstream_native_tests::scanner::test_ignore_node_modules_without_gitignore ... ok
+test scanner::upstream_native_tests::scanner::test_ignore_gitignore_in_node_modules_source ... ok
+test scanner::upstream_native_tests::scanner::test_works_with_utf8_special_character_paths ... ok
+test scanner::upstream_native_tests::scanner::skips_ignore_files_outside_of_a_repo ... ok
+test scanner::upstream_native_tests::scanner::it_should_pick_up_new_files ... ok
+
+test result: ok. 42 passed; 0 failed; 0 ignored; 0 measured; 90 filtered out; finished in 0.44s
+
+mbx[cache]: 0 hits, 0 misses, 1 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: escorted 481.9 GiB logical of ownerless outputs off the premises.

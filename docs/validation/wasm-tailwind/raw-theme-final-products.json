@@ -1,0 +1,56 @@
+[
+  {
+    "source": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-tailwind-browser-v_c2md8x/target/makepad-wasm-app/release/utility-lab",
+    "destination": "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/makepad-wasm-app/release/utility-lab",
+    "previousProduct": "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/makepad-wasm-app/release/utility-lab@before-raw-theme-final",
+    "assets": [
+      {
+        "file": "build-manifest.json",
+        "bytes": 3114,
+        "sha256": "7d165108ca09d9b1c47e7733f199a14f8dbf5ff2a8c87a6b85a43b4cf5613953"
+      },
+      {
+        "file": "utility/build-manifest.json",
+        "bytes": 592,
+        "sha256": "971d378e129694f551f299b386e74f03db1405b6a1dc9c8807ecc40a9b0386e6"
+      },
+      {
+        "file": "utility-lab.wasm",
+        "bytes": 9486990,
+        "sha256": "b063f40bd16e0972f4fae917c117d0726225beb7e3d599514b4c45980ee9efeb"
+      },
+      {
+        "file": "utility/compiler/style_bg.wasm",
+        "bytes": 1739923,
+        "sha256": "810b4a81aafd6c5a75a1b8914de9098693baf803b21d471227c635d40aa1fac7"
+      }
+    ]
+  },
+  {
+    "source": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-tailwind-browser-v_c2md8x/target/makepad-wasm-app/release/utility-lab@tools-utility-lab",
+    "destination": "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/makepad-wasm-app/release/utility-lab@tools-utility-lab",
+    "previousProduct": "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/makepad-wasm-app/release/utility-lab@tools-utility-lab@before-raw-theme-final",
+    "assets": [
+      {
+        "file": "build-manifest.json",
+        "bytes": 3165,
+        "sha256": "253d7af6445a5d77ace4ce5ff988c785430d97e815cfc1f5cc5e4a10d0f569c5"
+      },
+      {
+        "file": "utility/build-manifest.json",
+        "bytes": 592,
+        "sha256": "971d378e129694f551f299b386e74f03db1405b6a1dc9c8807ecc40a9b0386e6"
+      },
+      {
+        "file": "utility-lab.wasm",
+        "bytes": 9486990,
+        "sha256": "b063f40bd16e0972f4fae917c117d0726225beb7e3d599514b4c45980ee9efeb"
+      },
+      {
+        "file": "utility/compiler/style_bg.wasm",
+        "bytes": 1739923,
+        "sha256": "810b4a81aafd6c5a75a1b8914de9098693baf803b21d471227c635d40aa1fac7"
+      }
+    ]
+  }
+]

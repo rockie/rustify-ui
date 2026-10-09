@@ -1,0 +1,77 @@
+{
+  "review": "R2",
+  "baseline": {
+    "review_id": "dc69f529-230c-40b8-b49f-48ad6369dca2",
+    "review_event_id": "fbf07aa3-c9fe-471e-9541-164cca645533",
+    "disposition_event_id": "f796dd42-6b6f-4ad6-91d2-4e17cf13ab71",
+    "observed_at": "2026-10-08T16:50:26+08:00",
+    "head": "53652fcc405a2679df19eb10e252efd4a4236f50",
+    "fingerprint": "b7960e9bf77e09986df7964d41bcbcc41ac53227fa2e637174b077981186c71b",
+    "plan_sha256": "2fe12bedb3ac9b5d08c064f81ea90cd4a1691f33047955822b81c2aef8384b3a",
+    "previous_sha256": "fb7348d09f1d462340db49801cde5a0807944523b1745ba39aeed1cdd9af7209",
+    "input_count": 4762
+  },
+  "host": {
+    "style": {
+      "passed": 526,
+      "failed": 0,
+      "ignored": 12
+    },
+    "sdk": {
+      "passed": 301,
+      "failed": 0
+    },
+    "components": {
+      "passed": 94,
+      "failed": 0
+    },
+    "facade": {
+      "passed": 12,
+      "failed": 0
+    }
+  },
+  "browser": {
+    "root": {
+      "passed": 55,
+      "duration_s": 54.8
+    },
+    "deep": {
+      "passed": 49,
+      "duration_s": 50.1
+    },
+    "scanner_root": {
+      "passed": 5,
+      "duration_s": 11.6
+    },
+    "scanner_deep": {
+      "passed": 5,
+      "duration_s": 11.1
+    }
+  },
+  "probe": {
+    "entry": "http://127.0.0.1:61771/",
+    "csp": "Strict",
+    "F04": {
+      "current_active_animations": 0,
+      "unscoped_reference_active_animations": 1,
+      "retained_facade_active_animations": 1
+    },
+    "rebuild_install_failure": "preserved snapshot",
+    "rebuild_ack_timeout": "replayed last installed candidates",
+    "scanner_active_variable": "preserved after rebuild and retry"
+  },
+  "ci": {
+    "exact_relative_path_install": "passed",
+    "oracle_version": "4.1.13",
+    "workflow_yaml": "parsed",
+    "initial_absolute_prefix_adaptation": "failed EUSAGE, not used as product defect evidence",
+    "remote_actions": "not run"
+  },
+  "limitations": [
+    "R1 dirty source content not recoverable from hashes; exact repair diff unavailable",
+    "not a full M1-M7 or upstream conformance review",
+    "no performance rerun",
+    "no full workspace/fmt/clippy/source verification rerun"
+  ],
+  "final_products": "compiler-only root/subpath restored"
+}

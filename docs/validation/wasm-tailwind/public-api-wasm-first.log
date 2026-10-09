@@ -1,0 +1,125 @@
+warning: method `ordered_tokens` is never used
+  --> crates/rustify-style/src/compiler/theme.rs:41:19
+   |
+40 | impl Theme {
+   | ---------- method in this implementation
+41 |     pub(super) fn ordered_tokens(&self) -> impl Iterator<Item = (String, &ThemeToken)> {
+   |                   ^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+{"compileCases":59,"compileBuilds":313,"errorCases":1,"warningCases":1,"compileAstCases":9,"compileAstBuilds":61,"designSystemCases":3,"designSystemMethods":12,"implementationStatus":"pending"}
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+warning: method `ordered_tokens` is never used
+  --> crates/rustify-style/src/compiler/theme.rs:41:19
+   |
+40 | impl Theme {
+   | ---------- method in this implementation
+41 |     pub(super) fn ordered_tokens(&self) -> impl Iterator<Item = (String, &ThemeToken)> {
+   |                   ^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `rustify-style` (lib test) generated 1 warning
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 4.08s
+     Running unittests src/lib.rs (target/debug/deps/rustify_style-4ed64bbe76d78d97)
+
+running 36 tests
+test compiler::public_api::compile_ast::tests::oversized_public_input_is_rejected_before_ast_conversion ... ok
+test compiler::public_api::compile_ast::tests::deeply_nested_public_input_is_rejected_before_serializing_or_cloning ... ok
+test compiler::public_api::compile_ast::tests::unused_virtual_assets_do_not_contribute_locations_or_syntax_errors ... ok
+test compiler::public_api::compile_ast::tests::duplicate_at_rule_headers_keep_distinct_sources ... ok
+test compiler::public_api::compile_ast::tests::public_input_budget_counts_escaped_json_and_from_without_allocating_output ... ok
+test compiler::public_api::compile_ast::tests::nested_identical_selectors_keep_inner_and_outer_sources ... ok
+test compiler::public_api::compile_ast::tests::removed_rule_does_not_shift_duplicate_selector_sources ... ok
+test compiler::public_api::compile_ast::tests::public_ast_input_and_retained_objects_obey_limits ... ok
+test compiler::public_api::compile_ast::tests::duplicate_selectors_keep_each_rule_and_apply_source ... ok
+test compiler::public_api::compile_ast::tests::failed_ast_build_preserves_the_last_array_and_candidate_commit ... ok
+test compiler::public_api::source_map::tests::line_table_retains_non_scalar_units_and_upstream_offset_clamping ... ok
+test compiler::public_api::source_map::tests::equal_text_sources_remain_distinct_and_mappings_share_decoded_handles ... ok
+test compiler::public_api::source_map::tests::translation_preserves_absent_destination_and_ignores_absent_source ... ok
+test compiler::public_api::tests::each_apply_candidate_overrides_custom_utility_provenance_with_its_own_span ... ok
+test compiler::public_api::tests::public_banner_counts_toward_the_output_limit_before_commit ... ok
+test compiler::public_api::tests::public_function_helper_checks_unchanged_text_against_output_bytes ... ok
+test compiler::public_api::tests::failed_output_ast_budget_keeps_previous_source_map_and_can_retry ... ok
+test compiler::public_api::tests::source_map_limit_keeps_revision_and_previous_map_on_repeated_failure ... ok
+test compiler::public_api::tests::tracked_custom_candidates_charge_each_structured_cloned_source ... ok
+test compiler::public_api::tests::repeated_noop_builds_and_maps_do_not_accumulate_internal_budget ... ok
+test compiler::public_api::tests::untracked_imports_and_candidates_do_not_allocate_source_objects ... ok
+test compiler::public_api::design_system::tests::candidate_parse_print_and_compile_ast_nodes_match_fixed_public_api ... FAILED
+test compiler::public_api::design_system::tests::all_class_completions_match_the_fixed_upstream_digest ... FAILED
+test compiler::public_api::tests::discovery_base_is_independent_of_source_path ... ok
+test compiler::public_api::tests::missing_public_loader_reports_the_official_error ... ok
+test compiler::public_api::tests::feature_masks_match_fixed_upstream ... ok
+test compiler::public_api::compile_ast::tests::every_public_ast_build_matches_fixed_upstream_structure_and_identity ... ok
+test compiler::public_api::design_system::tests::theme_resolution_and_variable_tracking_match_fixed_public_api ... FAILED
+test compiler::public_api::design_system::tests::class_order_css_and_cached_variant_order_match_fixed_public_api ... FAILED
+test compiler::public_api::tests::virtual_stylesheet_loader_arguments_match_fixed_upstream ... ok
+test compiler::public_api::design_system::tests::variant_parse_print_and_selector_completions_match_fixed_public_api ... FAILED
+test compiler::public_api::tests::warning_messages_match_fixed_upstream ... ok
+test compiler::public_api::tests::every_initial_source_map_matches_fixed_upstream ... ok
+test compiler::public_api::tests::polyfill_flags_match_fixed_upstream_css ... ok
+test compiler::public_api::tests::every_string_api_build_matches_fixed_upstream_css ... ok
+test compiler::public_api::tests::every_built_source_map_matches_fixed_upstream ... ok
+
+failures:
+
+---- compiler::public_api::design_system::tests::candidate_parse_print_and_compile_ast_nodes_match_fixed_public_api stdout ----
+
+thread 'compiler::public_api::design_system::tests::candidate_parse_print_and_compile_ast_nodes_match_fixed_public_api' (1414103) panicked at crates/rustify-style/src/compiler/public_api/../../../../../tests/utility/compiler/design-system-native.rs:20:13:
+assertion `left == right` failed: "design:base" parse "flex"
+  left: Array []
+ right: Array [Object {"kind": String("static"), "root": String("flex"), "variants": Array [], "important": Bool(false), "raw": String("flex")}, Object {"kind": String("functional"), "root": String("flex"), "modifier": Null, "value": Null, "variants": Array [], "important": Bool(false), "raw": String("flex")}]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- compiler::public_api::design_system::tests::all_class_completions_match_the_fixed_upstream_digest stdout ----
+
+thread 'compiler::public_api::design_system::tests::all_class_completions_match_the_fixed_upstream_digest' (1414102) panicked at crates/rustify-style/src/compiler/public_api/../../../../../tests/utility/compiler/design-system-native.rs:58:9:
+assertion `left == right` failed: "design:base" class count
+  left: 0
+ right: 7257
+
+---- compiler::public_api::design_system::tests::theme_resolution_and_variable_tracking_match_fixed_public_api stdout ----
+
+thread 'compiler::public_api::design_system::tests::theme_resolution_and_variable_tracking_match_fixed_public_api' (1414105) panicked at crates/rustify-style/src/compiler/public_api/../../../../../tests/utility/compiler/design-system-native.rs:88:68:
+assertion `left == right` failed
+  left: Object {"undefined": Bool(true)}
+ right: String(".25rem")
+
+---- compiler::public_api::design_system::tests::class_order_css_and_cached_variant_order_match_fixed_public_api stdout ----
+
+thread 'compiler::public_api::design_system::tests::class_order_css_and_cached_variant_order_match_fixed_public_api' (1414104) panicked at crates/rustify-style/src/compiler/public_api/../../../../../tests/utility/compiler/design-system-native.rs:76:9:
+assertion `left == right` failed: "design:base" class order
+  left: Array []
+ right: Array [Array [String("missing"), Null], Array [String("w-1/2"), Object {"bigint": String("2")}], Array [String("-m-2"), Object {"bigint": String("0")}], Array [String("[--probe:var(--color-brand)]"), Object {"bigint": String("5")}], Array [String("active:probe"), Object {"bigint": String("8")}], Array [String("group-hover/card:probe"), Object {"bigint": String("6")}], Array [String("hover:underline!"), Object {"bigint": String("7")}], Array [String("bg-brand/50"), Object {"bigint": String("4")}], Array [String("w-[137px]"), Object {"bigint": String("3")}], Array [String("flex"), Object {"bigint": String("1")}], Array [String("flex"), Object {"bigint": String("1")}], Array [String("--color-brand"), Null]]
+
+---- compiler::public_api::design_system::tests::variant_parse_print_and_selector_completions_match_fixed_public_api stdout ----
+
+thread 'compiler::public_api::design_system::tests::variant_parse_print_and_selector_completions_match_fixed_public_api' (1414106) panicked at crates/rustify-style/src/compiler/public_api/../../../../../tests/utility/compiler/design-system-native.rs:36:13:
+assertion `left == right` failed: "design:base" parse "hover"
+  left: Null
+ right: Object {"kind": String("static"), "root": String("hover")}
+
+
+failures:
+    compiler::public_api::design_system::tests::all_class_completions_match_the_fixed_upstream_digest
+    compiler::public_api::design_system::tests::candidate_parse_print_and_compile_ast_nodes_match_fixed_public_api
+    compiler::public_api::design_system::tests::class_order_css_and_cached_variant_order_match_fixed_public_api
+    compiler::public_api::design_system::tests::theme_resolution_and_variable_tracking_match_fixed_public_api
+    compiler::public_api::design_system::tests::variant_parse_print_and_selector_completions_match_fixed_public_api
+
+test result: FAILED. 31 passed; 5 failed; 0 ignored; 0 measured; 139 filtered out; finished in 0.27s
+
+error: test failed, to rerun pass `-p rustify-style --lib`
+mbx[cache]: 0 hits, 0 misses, 1 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: escorted 711.0 GiB logical of ownerless outputs off the premises.
+mbx test --locked -p rustify-style --no-default-features --features compiler --lib compiler::public_api:: failed: exit status: 101
+mbx[cache]: 0 hits, 0 misses, 3 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: your deleted worktrees left 711.0 GiB logical behind. left. past tense.

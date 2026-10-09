@@ -1,0 +1,253 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: raw-sort: build ["block"] input/output graph
++ actual - expected
+... Skipped lines
+
+  {
+    records: [
+      {
+        array: true,
+        fields: [
+...
+            'selector',
++           '.block'
+-           '.\\[--tw-sort\\:display\\]'
+          ],
+          [
+            'nodes',
+            {
+              reference: 4
+...
+            'property',
++           'display'
+-           '--tw-sort'
+          ],
+          [
+            'value',
++           'block'
+-           'display'
+          ],
+          [
+            'important',
+            false
+          ]
+...
+            'selector',
++           '.\\[--tw-sort\\:display\\]'
+-           '.block'
+          ],
+          [
+            'nodes',
+            {
+              reference: 7
+...
+            'property',
++           '--tw-sort'
+-           'display'
+          ],
+          [
+            'value',
++           'display'
+-           'block'
+          ],
+          [
+            'important',
+            false
+          ]
+...
+            {
++             reference: 5
+-             reference: 8
+            }
+          ]
+        ]
+      }
+    ],
+
+    at file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/compiler/run-public-ast-mutations-wasm.mjs:60:14 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: {
+    roots: [
+      { reference: 0 },
+      { reference: 1 },
+      { reference: 10 },
+      { reference: 11 },
+      { reference: 12 },
+      { reference: 14 }
+    ],
+    records: [
+      { array: true, fields: [ [ '0', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'context' ],
+          [ 'name', '@tailwind' ],
+          [ 'params', 'utilities' ],
+          [ 'nodes', [Object] ],
+          [ 'extra', 'retained' ],
+          [ 'context', [Object] ]
+        ]
+      },
+      { array: true, fields: [ [ '0', [Object] ], [ '1', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'rule' ],
+          [ 'selector', '.block' ],
+          [ 'nodes', [Object] ]
+        ]
+      },
+      { array: true, fields: [ [ '0', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'declaration' ],
+          [ 'property', 'display' ],
+          [ 'value', 'block' ],
+          [ 'important', false ]
+        ]
+      },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'rule' ],
+          [ 'selector', '.\\[--tw-sort\\:display\\]' ],
+          [ 'nodes', [Object] ]
+        ]
+      },
+      { array: true, fields: [ [ '0', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'declaration' ],
+          [ 'property', '--tw-sort' ],
+          [ 'value', 'display' ],
+          [ 'important', false ]
+        ]
+      },
+      { array: false, fields: [] },
+      { array: true, fields: [] },
+      {
+        array: false,
+        fields: [ [ 'file', 'entry\ud800.css' ], [ 'code', 'source\udc00' ] ]
+      },
+      { array: true, fields: [ [ '0', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'comment' ],
+          [
+            'value',
+            '! tailwindcss v4.1.13 | MIT License | https://tailwindcss.com '
+          ]
+        ]
+      },
+      { array: true, fields: [ [ '0', [Object] ], [ '1', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'rule' ],
+          [ 'selector', '.block' ],
+          [ 'nodes', [Object] ]
+        ]
+      },
+      { array: true, fields: [ [ '0', [Object] ] ] }
+    ]
+  },
+  expected: {
+    roots: [
+      { reference: 0 },
+      { reference: 1 },
+      { reference: 10 },
+      { reference: 11 },
+      { reference: 12 },
+      { reference: 14 }
+    ],
+    records: [
+      { array: true, fields: [ [ '0', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'context' ],
+          [ 'name', '@tailwind' ],
+          [ 'params', 'utilities' ],
+          [ 'nodes', [Object] ],
+          [ 'extra', 'retained' ],
+          [ 'context', [Object] ]
+        ]
+      },
+      { array: true, fields: [ [ '0', [Object] ], [ '1', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'rule' ],
+          [ 'selector', '.\\[--tw-sort\\:display\\]' ],
+          [ 'nodes', [Object] ]
+        ]
+      },
+      { array: true, fields: [ [ '0', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'declaration' ],
+          [ 'property', '--tw-sort' ],
+          [ 'value', 'display' ],
+          [ 'important', false ]
+        ]
+      },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'rule' ],
+          [ 'selector', '.block' ],
+          [ 'nodes', [Object] ]
+        ]
+      },
+      { array: true, fields: [ [ '0', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'declaration' ],
+          [ 'property', 'display' ],
+          [ 'value', 'block' ],
+          [ 'important', false ]
+        ]
+      },
+      { array: false, fields: [] },
+      { array: true, fields: [] },
+      {
+        array: false,
+        fields: [ [ 'file', 'entry\ud800.css' ], [ 'code', 'source\udc00' ] ]
+      },
+      { array: true, fields: [ [ '0', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'comment' ],
+          [
+            'value',
+            '! tailwindcss v4.1.13 | MIT License | https://tailwindcss.com '
+          ]
+        ]
+      },
+      { array: true, fields: [ [ '0', [Object] ], [ '1', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'rule' ],
+          [ 'selector', '.block' ],
+          [ 'nodes', [Object] ]
+        ]
+      },
+      { array: true, fields: [ [ '0', [Object] ] ] }
+    ]
+  },
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v26.1.0

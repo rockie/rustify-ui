@@ -1,0 +1,109 @@
+{
+  "observedAt": "2026-10-06T15:21:33+11:00",
+  "scope": "public AST constructor with sixteen repeated tracked imports and four builds",
+  "before": {
+    "scope": "public AST constructor with sixteen repeated tracked imports and four builds",
+    "samples": [
+      {
+        "constructorP95Ms": 1.2617500000000064,
+        "buildP95Ms": 0.4418749999999818,
+        "sessionsPerSecond": 355.86814000726633,
+        "outputSha256": "a123d62c776bc635bda402dddccd89fd7edeaf2ac973716a07d762fe031b799d",
+        "sessions": 100,
+        "builds": 400
+      },
+      {
+        "constructorP95Ms": 1.2791250000000218,
+        "buildP95Ms": 0.43679099999997106,
+        "sessionsPerSecond": 358.0762006636971,
+        "outputSha256": "a123d62c776bc635bda402dddccd89fd7edeaf2ac973716a07d762fe031b799d",
+        "sessions": 100,
+        "builds": 400
+      },
+      {
+        "constructorP95Ms": 1.3803329999998368,
+        "buildP95Ms": 0.4675830000001042,
+        "sessionsPerSecond": 347.62214822652186,
+        "outputSha256": "a123d62c776bc635bda402dddccd89fd7edeaf2ac973716a07d762fe031b799d",
+        "sessions": 100,
+        "builds": 400
+      },
+      {
+        "constructorP95Ms": 1.2578340000000026,
+        "buildP95Ms": 0.4298750000000382,
+        "sessionsPerSecond": 361.76434235174924,
+        "outputSha256": "a123d62c776bc635bda402dddccd89fd7edeaf2ac973716a07d762fe031b799d",
+        "sessions": 100,
+        "builds": 400
+      },
+      {
+        "constructorP95Ms": 1.2844159999999647,
+        "buildP95Ms": 0.4298750000000382,
+        "sessionsPerSecond": 359.623187255941,
+        "outputSha256": "a123d62c776bc635bda402dddccd89fd7edeaf2ac973716a07d762fe031b799d",
+        "sessions": 100,
+        "builds": 400
+      }
+    ],
+    "constructorP95Ms": 1.2791250000000218,
+    "buildP95Ms": 0.43679099999997106,
+    "sessionsPerSecond": 358.0762006636971,
+    "wasmBytes": 2326589,
+    "wasmSha256": "fbee304e6b2a0053110ebf176c0ad078e83c78b6189faa463f03401d32adb8e3",
+    "actualWasm": true,
+    "finalPerformanceAcceptance": "pending"
+  },
+  "after": {
+    "scope": "public AST constructor with sixteen repeated tracked imports and four builds",
+    "samples": [
+      {
+        "constructorP95Ms": 1.5026249999999663,
+        "buildP95Ms": 0.5300419999999804,
+        "sessionsPerSecond": 305.26723379070893,
+        "outputSha256": "a123d62c776bc635bda402dddccd89fd7edeaf2ac973716a07d762fe031b799d",
+        "sessions": 100,
+        "builds": 400
+      },
+      {
+        "constructorP95Ms": 1.4664579999999887,
+        "buildP95Ms": 0.5154169999999567,
+        "sessionsPerSecond": 318.1305377082115,
+        "outputSha256": "a123d62c776bc635bda402dddccd89fd7edeaf2ac973716a07d762fe031b799d",
+        "sessions": 100,
+        "builds": 400
+      },
+      {
+        "constructorP95Ms": 1.576082999999926,
+        "buildP95Ms": 0.5519999999999072,
+        "sessionsPerSecond": 320.9431023466883,
+        "outputSha256": "a123d62c776bc635bda402dddccd89fd7edeaf2ac973716a07d762fe031b799d",
+        "sessions": 100,
+        "builds": 400
+      },
+      {
+        "constructorP95Ms": 1.2576660000001993,
+        "buildP95Ms": 0.4318749999999909,
+        "sessionsPerSecond": 360.7898419879757,
+        "outputSha256": "a123d62c776bc635bda402dddccd89fd7edeaf2ac973716a07d762fe031b799d",
+        "sessions": 100,
+        "builds": 400
+      },
+      {
+        "constructorP95Ms": 1.3131249999999,
+        "buildP95Ms": 0.45575000000008004,
+        "sessionsPerSecond": 350.080554585852,
+        "outputSha256": "a123d62c776bc635bda402dddccd89fd7edeaf2ac973716a07d762fe031b799d",
+        "sessions": 100,
+        "builds": 400
+      }
+    ],
+    "constructorP95Ms": 1.4664579999999887,
+    "buildP95Ms": 0.5154169999999567,
+    "sessionsPerSecond": 320.9431023466883,
+    "wasmBytes": 2377827,
+    "wasmSha256": "6ca5b09857ec71647adb801bf21e9bb4373bf445a83edb6f8561231e5dfc36e5",
+    "actualWasm": true,
+    "finalPerformanceAcceptance": "pending"
+  },
+  "interpretation": "Descriptive serial local measurement; constructor/build p95 increased. CSS-bearing fields match; complete identity is checked separately. M7 performance and allocator acceptance remain pending."
+}

@@ -1,0 +1,20 @@
+mbx[warning]: Unix-domain cache session listener unavailable; using FIFO transport: failed to bind cache session listener at /var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/mbx-session-DyuBpA/cache-agent.sock: Operation not permitted (os error 1)
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+    Checking rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+warning: unused import: `Visit`
+ --> crates/rustify-style/src/compiler/origin/current.rs:4:44
+  |
+4 | pub(in crate::compiler) use walk::{Action, Visit};
+  |                                            ^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: `rustify-style` (lib) generated 1 warning (run `cargo fix --lib -p rustify-style` to apply 1 suggestion)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 1.63s
+mbx[cache]: 0 hits, 1 misses; 0 B downloaded, 0 B uploaded, 2.7 MiB stored locally

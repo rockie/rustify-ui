@@ -1,0 +1,112 @@
+{
+  "observedAt": "2026-10-06T12:49:45+11:00",
+  "scope": "public AST constructor with sixteen static custom definitions and four builds",
+  "before": {
+    "scope": "public AST constructor with sixteen static custom definitions and four builds",
+    "samples": [
+      {
+        "constructorP95Ms": 0.12887499999999363,
+        "buildP95Ms": 0.07774999999998045,
+        "sessionsPerSecond": 3204.4391993471536,
+        "outputSha256": "13b5ed10432912ca5389cbf3a889d3ecf96fe7bc6553158d17104ce516c043e7",
+        "sessions": 200,
+        "builds": 800
+      },
+      {
+        "constructorP95Ms": 0.12029200000000628,
+        "buildP95Ms": 0.06958399999999187,
+        "sessionsPerSecond": 3344.840532469848,
+        "outputSha256": "13b5ed10432912ca5389cbf3a889d3ecf96fe7bc6553158d17104ce516c043e7",
+        "sessions": 200,
+        "builds": 800
+      },
+      {
+        "constructorP95Ms": 0.11954199999996717,
+        "buildP95Ms": 0.07137500000004593,
+        "sessionsPerSecond": 3357.9630408148496,
+        "outputSha256": "13b5ed10432912ca5389cbf3a889d3ecf96fe7bc6553158d17104ce516c043e7",
+        "sessions": 200,
+        "builds": 800
+      },
+      {
+        "constructorP95Ms": 0.14083299999998644,
+        "buildP95Ms": 0.06929200000001856,
+        "sessionsPerSecond": 3372.8186969641106,
+        "outputSha256": "13b5ed10432912ca5389cbf3a889d3ecf96fe7bc6553158d17104ce516c043e7",
+        "sessions": 200,
+        "builds": 800
+      },
+      {
+        "constructorP95Ms": 0.11649999999997362,
+        "buildP95Ms": 0.06895800000000918,
+        "sessionsPerSecond": 3394.375519763752,
+        "outputSha256": "13b5ed10432912ca5389cbf3a889d3ecf96fe7bc6553158d17104ce516c043e7",
+        "sessions": 200,
+        "builds": 800
+      }
+    ],
+    "constructorP95Ms": 0.12029200000000628,
+    "buildP95Ms": 0.06958399999999187,
+    "sessionsPerSecond": 3357.9630408148496,
+    "wasmBytes": 2194416,
+    "wasmSha256": "a4cc1fea16906d343499834537aa11441b38715f7d0f3c78df240c1c7ef0347c",
+    "actualWasm": true,
+    "finalPerformanceAcceptance": "pending"
+  },
+  "after": {
+    "scope": "public AST constructor with sixteen static custom definitions and four builds",
+    "samples": [
+      {
+        "constructorP95Ms": 0.1425000000000125,
+        "buildP95Ms": 0.08545800000001691,
+        "sessionsPerSecond": 2870.203966309029,
+        "outputSha256": "13b5ed10432912ca5389cbf3a889d3ecf96fe7bc6553158d17104ce516c043e7",
+        "sessions": 200,
+        "builds": 800
+      },
+      {
+        "constructorP95Ms": 0.13900000000001,
+        "buildP95Ms": 0.07787500000000591,
+        "sessionsPerSecond": 2995.385234622909,
+        "outputSha256": "13b5ed10432912ca5389cbf3a889d3ecf96fe7bc6553158d17104ce516c043e7",
+        "sessions": 200,
+        "builds": 800
+      },
+      {
+        "constructorP95Ms": 0.1290000000000191,
+        "buildP95Ms": 0.07679200000001174,
+        "sessionsPerSecond": 3042.175997912824,
+        "outputSha256": "13b5ed10432912ca5389cbf3a889d3ecf96fe7bc6553158d17104ce516c043e7",
+        "sessions": 200,
+        "builds": 800
+      },
+      {
+        "constructorP95Ms": 0.158457999999996,
+        "buildP95Ms": 0.08004099999999426,
+        "sessionsPerSecond": 2973.9813656572974,
+        "outputSha256": "13b5ed10432912ca5389cbf3a889d3ecf96fe7bc6553158d17104ce516c043e7",
+        "sessions": 200,
+        "builds": 800
+      },
+      {
+        "constructorP95Ms": 0.13283300000000509,
+        "buildP95Ms": 0.07875000000001364,
+        "sessionsPerSecond": 3009.48174843366,
+        "outputSha256": "13b5ed10432912ca5389cbf3a889d3ecf96fe7bc6553158d17104ce516c043e7",
+        "sessions": 200,
+        "builds": 800
+      }
+    ],
+    "constructorP95Ms": 0.13900000000001,
+    "buildP95Ms": 0.07875000000001364,
+    "sessionsPerSecond": 2995.385234622909,
+    "wasmBytes": 2266255,
+    "wasmSha256": "1950b5d2eb605a44eb8030c3f1bf6ac09b06f965fd4131b2235ce24a13c68e7b",
+    "actualWasm": true,
+    "finalPerformanceAcceptance": "pending"
+  },
+  "baseline": "preserved pre-origin custom-removal module at /private/tmp/rustify-native-origin-before/compiler-api",
+  "isolation": "same environment, preserved pre-origin module and current final release module; measured serially, five samples plus warmup; no source swap",
+  "outputDigest": "serialized output JSON only; arbitrary field and alias fidelity independently covered by complete custom and origin runners",
+  "fullPerformanceConformance": "pending"
+}

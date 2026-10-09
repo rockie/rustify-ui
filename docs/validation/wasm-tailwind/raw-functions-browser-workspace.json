@@ -1,0 +1,130 @@
+{
+  "workspace": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-tailwind-browser-v_c2md8x",
+  "changedCopies": [],
+  "configurationCopies": [
+    {
+      "path": "Cargo.toml",
+      "sha256": "dee97baccd454f9bf74ccd8c4bac69e47579d2284b5f07bcb39f73a22d5f871a"
+    },
+    {
+      "path": "Cargo.lock",
+      "sha256": "3e1069d4610684c784ddd750ddd9a20132d9f749d3aa660f0bf1d7887ef4577c"
+    },
+    {
+      "path": "mise.toml",
+      "sha256": "b39792f4c61600ed818b759bb8f9316b217372135b4b0eae097305ceec761f79"
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "870c9e350f686935fee2008cac80dfa3e0c08bedf641669de9c6507cb1084dd3"
+    },
+    {
+      "path": "package.json",
+      "sha256": "bcc6c3b17887ae0ddac11f39b9cb32cf51c2c4ebfb67414f0863ab1624528c90"
+    },
+    {
+      "path": "playwright.config.ts",
+      "sha256": "04d4c6ae6028bb7dc515a796dd42e7a11b48adbded3fbff33f69a8ac15aca3af"
+    },
+    {
+      "path": "sources.lock.json",
+      "sha256": "f07a22046a145b10b7dda5c4ccb949ee1ffc00673a57f5ab3dc1a1c15b0ceb6d"
+    },
+    {
+      "path": ".cargo/config.toml",
+      "sha256": "716b49c90c25aeeebc4b0359b111a62927d166a1d7f02c4fe83b89d55fb74887"
+    },
+    {
+      "path": "xtask/Cargo.toml",
+      "sha256": "5c0cb6c003e57cba452e1a65d3aa93e9a4e2e2e870cb67774c658b4bfb1b477e"
+    },
+    {
+      "path": "xtask/src/serve.rs",
+      "sha256": "f95b4fec14523c94e9f40384be565d91b4010c3f12ffc18e35c03ad363688e6d"
+    },
+    {
+      "path": "xtask/src/bridge.rs",
+      "sha256": "a2f9bdb9b37fd33768757096693d8a9d22993354f56798d6d4aa18ab0c1a8535"
+    },
+    {
+      "path": "xtask/src/utility.rs",
+      "sha256": "424534feaddf099b0406573a54a82bc0dfc374b526d96dc1a443fda214c8ac7c"
+    },
+    {
+      "path": "xtask/src/build.rs",
+      "sha256": "899115b677b19d255108e2a837c91fad71e94423609d9354442cae098260d00a"
+    },
+    {
+      "path": "xtask/src/catalog.rs",
+      "sha256": "1fb7ad79a239c729eb99498b6bc78715ebb5ed9c524b0dcc981e3cab2f511f7b"
+    },
+    {
+      "path": "xtask/src/doctor.rs",
+      "sha256": "a72d62c190141d8cc5c1fb46d7e06a0e5db539905e6eda5f030e1d0d77775fc1"
+    },
+    {
+      "path": "xtask/src/verify.rs",
+      "sha256": "bc964c6354bb6b222f2dbec13beef19949efa72ee4e2e0350eb9061b96d42f3c"
+    },
+    {
+      "path": "xtask/src/main.rs",
+      "sha256": "02a6572472c8dc9be6c87c5ba6050eb0d1e7aacda79677dd1adc506c6357626e"
+    },
+    {
+      "path": "xtask/src/tailwind.rs",
+      "sha256": "c19c63ffe169c06973b4d9382f0d8efdaf9a25c6b505210bb450f92e00063ba4"
+    },
+    {
+      "path": "xtask/src/css.rs",
+      "sha256": "651b5c6307a6bf88e57d80d50451cb5ce80b781fcbacdc2f05b6c6ebc7c4e83d"
+    },
+    {
+      "path": "xtask/src/sources.rs",
+      "sha256": "90abc3fa7d948cbb438b3eda35ef57b2997869c22e06e611a43b7adc1feb92de"
+    },
+    {
+      "path": "xtask/src/utility/seed.rs",
+      "sha256": "0148521feea35bc182ab0ad97a412f383017c1eb3571e615ef9c33bf2c923052"
+    }
+  ],
+  "symlinks": [
+    {
+      "path": "ref",
+      "target": "/Users/rockie/Documents/gh-rockie/rustify-ui/ref"
+    },
+    {
+      "path": "crates",
+      "target": "/Users/rockie/Documents/gh-rockie/rustify-ui/crates"
+    },
+    {
+      "path": "web",
+      "target": "/Users/rockie/Documents/gh-rockie/rustify-ui/web"
+    },
+    {
+      "path": "node_modules",
+      "target": "/Users/rockie/Documents/gh-rockie/rustify-ui/node_modules"
+    },
+    {
+      "path": "tests",
+      "target": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests"
+    },
+    {
+      "path": "docs",
+      "target": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs"
+    },
+    {
+      "path": "examples",
+      "target": "/Users/rockie/Documents/gh-rockie/rustify-ui/examples"
+    },
+    {
+      "path": "makepad",
+      "target": "/Users/rockie/Documents/gh-rockie/rustify-ui/makepad"
+    },
+    {
+      "path": "scripts",
+      "target": "/Users/rockie/Documents/gh-rockie/rustify-ui/scripts"
+    }
+  ],
+  "toolchain": "1.98.1",
+  "explicitRustc": "/Users/rockie/.rustup/toolchains/1.98.1-aarch64-apple-darwin/bin/rustc"
+}

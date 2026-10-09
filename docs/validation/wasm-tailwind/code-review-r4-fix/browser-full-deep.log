@@ -1,0 +1,58 @@
+npm notice run rustify-ui-browser-tests@0.1.0 npx
+npm notice run 'playwright' test --project=utility-lab-deep --workers=1 --reporter=line --output=/private/tmp/claude-501/-Users-rockie-Documents-gh-rockie-rustify-ui/9ef565ca-24d6-4f8d-aacc-2f3038b0b1f0/scratchpad/full-deep
+
+Running 52 tests using 1 worker
+
+[1/52] [utility-lab-deep] › tests/browser/utility-gpu.spec.ts:72:5 › clearing utility ownership restores the ordinary Button pixels and events
+[2/52] [utility-lab-deep] › tests/browser/utility-gpu.spec.ts:155:7 › clearing utility ownership restores the latest theme without another baseline setter
+[3/52] [utility-lab-deep] › tests/browser/utility-gpu.spec.ts:155:7 › clearing utility ownership restores the latest palette without another baseline setter
+[4/52] [utility-lab-deep] › tests/browser/utility-gpu.spec.ts:212:5 › clearing utility ownership restores untouched Script Button defaults
+[5/52] [utility-lab-deep] › tests/browser/utility-gpu.spec.ts:259:5 › GPU percentages use the parent content box and follow its real resize
+[6/52] [utility-lab-deep] › tests/browser/utility-gpu.spec.ts:313:5 › inline and path sources with media theme options drive scoped DOM and GPU
+[7/52] [utility-lab-deep] › tests/browser/utility-gpu.spec.ts:359:5 › applied utility dependencies drive DOM and GPU and survive an installation failure
+[8/52] [utility-lab-deep] › tests/browser/utility-gpu.spec.ts:409:5 › GPU draws compiled colors, geometry and real font glyphs alongside scoped DOM
+[9/52] [utility-lab-deep] › tests/browser/utility-gpu.spec.ts:445:5 › CSS functions resolve runtime candidates once and drive actual DOM and GPU pixels
+[10/52] [utility-lab-deep] › tests/browser/utility-gpu.spec.ts:486:5 › CSS-native utilities drive scoped DOM and GPU while nested branches retain the drawn style
+[11/52] [utility-lab-deep] › tests/browser/utility-gpu.spec.ts:521:5 › authored custom variants apply DOM hover and preserve the last drawn GPU style on rejection
+[12/52] [utility-lab-deep] › tests/browser/utility-gpu.spec.ts:558:5 › arbitrary properties with modifiers drive actual DOM and GPU pixels
+[13/52] [utility-lab-deep] › tests/browser/utility-gpu.spec.ts:573:5 › mask CSS applies to DOM while GPU rejects its unsupported property and retains its drawn style
+[14/52] [utility-lab-deep] › tests/browser/utility-gpu.spec.ts:589:5 › strict GPU rejection retains the drawn style, partial reports skipped properties and deleting classes restores defaults
+[15/52] [utility-lab-deep] › tests/browser/utility-gpu.spec.ts:614:5 › GPU responds to pointer, keyboard focus-visible and disabled input without recompiling
+[16/52] [utility-lab-deep] › tests/browser/utility-gpu.spec.ts:641:5 › GPU media uses the browser viewport, and alpha color blocks match DOM pixels
+[17/52] [utility-lab-deep] › tests/browser/utility-gpu.spec.ts:661:5 › GPU applies text resources, row layout, shadows and rings from compiler bindings
+[18/52] [utility-lab-deep] › tests/browser/utility-gpu.spec.ts:727:5 › GPU text wraps, leads and tracks on the same lines as the DOM
+[19/52] [utility-lab-deep] › tests/browser/utility-gpu.spec.ts:764:5 › GPU ring offset, ring and shadow layers paint the same bands as the DOM
+[20/52] [utility-lab-deep] › tests/browser/utility-gpu.spec.ts:804:5 › GPU per-side spacing, size, min/max and column alignment place boxes where the DOM does
+[21/52] [utility-lab-deep] › tests/browser/utility-gpu.spec.ts:847:5 › GPU restores its latest committed programs after a real WebGL context loss
+[22/52] [utility-lab-deep] › tests/browser/utility-gpu.spec.ts:866:5 › terminal GPU initialization failure explains recovery while DOM editing remains usable
+[23/52] [utility-lab-deep] › tests/browser/utility-gpu.spec.ts:885:5 › all non-button GPU boundaries are visible and the desktop comparison frames align
+[24/52] [utility-lab-deep] › tests/browser/utility-gpu.spec.ts:904:5 › live ThemeScope and ThemeBoundary update colors, dark conditions and host rem without recompiling
+[25/52] [utility-lab-deep] › tests/browser/utility-gpu.spec.ts:957:5 › configuration replacement publishes new DOM and GPU programs and retains pixels on failed installation
+[26/52] [utility-lab-deep] › tests/browser/utility-runtime.spec.ts:10:5 › manifest seed preserves static utility order on first ensure, replacement and retry
+[27/52] [utility-lab-deep] › tests/browser/utility-runtime.spec.ts:79:5 › a modified seed is rejected before installation and explicit retry keeps committed styles
+[28/52] [utility-lab-deep] › tests/browser/utility-runtime.spec.ts:99:5 › seed count and transfer budgets reject init without retaining a half initialized session
+[29/52] [utility-lab-deep] › tests/browser/utility-runtime.spec.ts:128:5 › real DOM components use scope cn on raw fragments and react to caller and size changes
+[30/52] [utility-lab-deep] › tests/browser/utility-runtime.spec.ts:180:5 › parser recovery preserves authored important values and valid compound variants
+[31/52] [utility-lab-deep] › tests/browser/utility-runtime.spec.ts:221:5 › structural spacing, container and line clamp keep their actual browser semantics
+[32/52] [utility-lab-deep] › tests/browser/utility-runtime.spec.ts:262:5 › SDK ensure installs scanner-free CSS, coalesces requests and isolates independent scopes
+[33/52] [utility-lab-deep] › tests/browser/utility-runtime.spec.ts:315:5 › controls apply classes and fit desktop and mobile
+[34/52] [utility-lab-deep] › tests/browser/utility-runtime.spec.ts:334:5 › base, override and conditional classes merge through the scope cn before both previews apply them
+[35/52] [utility-lab-deep] › tests/browser/utility-runtime.spec.ts:369:5 › switching language re-renders labels and live statuses without touching inputs or styles
+[36/52] [utility-lab-deep] › tests/browser/utility-runtime.spec.ts:408:9 › a reader who prefers Chinese › starts in Chinese
+[37/52] [utility-lab-deep] › tests/browser/utility-runtime.spec.ts:419:5 › nested owners stop outer rules and disposal removes the owned stylesheet
+[38/52] [utility-lab-deep] › tests/browser/utility-runtime.spec.ts:441:5 › classList changes and newly added subtrees compile through the bounded observer without scanner
+[39/52] [utility-lab-deep] › tests/browser/utility-runtime.spec.ts:468:5 › scoped relation variants and arbitrary selectors retain conditional matching
+[40/52] [utility-lab-deep] › tests/browser/utility-runtime.spec.ts:510:5 › arbitrary responsive conditions follow the browser viewport at both sizes
+[41/52] [utility-lab-deep] › tests/browser/utility-runtime.spec.ts:529:5 › color alpha and scoped placeholder selectors retain their browser semantics
+[42/52] [utility-lab-deep] › tests/browser/utility-runtime.spec.ts:570:5 › external variable inputs install live theme dependencies without utility selectors
+[43/52] [utility-lab-deep] › tests/browser/utility-runtime.spec.ts:601:5 › compiler-only Worker diagnoses disabled scanning and keeps its session usable
+[44/52] [utility-lab-deep] › tests/browser/utility-runtime.spec.ts:655:5 › non-scalar compiler output keeps its UTF-16 units across Worker and SDK installation
+[45/52] [utility-lab-deep] › tests/browser/utility-runtime.spec.ts:676:5 › configuration replacement commits raw component classes and CSS together and rolls failures back
+[46/52] [utility-lab-deep] › tests/browser/utility-runtime.spec.ts:734:5 › configuration ack loss replays the installed cn and compiler configuration
+[47/52] [utility-lab-deep] › tests/browser/utility-runtime.spec.ts:769:5 › rapid configuration edits supersede old work and retain same epoch additions
+[48/52] [utility-lab-deep] › tests/browser/utility-runtime.spec.ts:804:5 › scoped keyframes follow theme animation variables, aliases and fallbacks in each owner
+[49/52] [utility-lab-deep] › tests/browser/utility-runtime.spec.ts:843:5 › a keyframes name that is also a timing keyword keeps the timing variable intact
+[50/52] [utility-lab-deep] › tests/browser/utility-runtime.spec.ts:875:5 › keyframes names keep their slot after substitution, math times and numeric iterations
+[51/52] [utility-lab-deep] › tests/browser/utility-runtime.spec.ts:933:5 › a public property carrying a keyframes name follows overrides, and one with conflicting uses is refused
+[52/52] [utility-lab-deep] › tests/browser/utility-runtime.spec.ts:990:5 › rebuild releases inactive candidates and keeps the seed, DOM and named classes
+  52 passed (47.4s)

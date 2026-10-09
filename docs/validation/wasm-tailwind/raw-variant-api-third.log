@@ -1,0 +1,330 @@
+{"sourcesVerified":109,"originalSourceCalls":1215,"originalTestCalls":1125,"originalParameterizationCalls":10,"originalSuiteCalls":80,"parameterBuilders":11,"expandedTests":1398,"staticallyExpandedTests":1398,"unresolvedTests":0,"upstreamSkippedTests":1,"assertionTemplates":1851,"assertionTemplateEdges":2140,"controlledAssertionTemplates":45,"externalSnapshotExports":13,"matchedExternalSnapshotExports":13,"suggestedScopeCorrections":3,"validatedTests":0,"validatedAssertions":0,"adjudicatedExclusions":0,"unownedAssertionTemplates":0}
+ok each builder is not a registration; suite and test rows form a product
+ok literal let tables and prefix loops expand without executing callbacks
+ok unknown table and registration loop remain unresolved and retain source calls
+ok skip and only modifiers propagate from suites
+ok array mutations invalidate static tables
+ok assert and assertion-count controls are retained; unowned helpers are visible
+ok suite parameters do not inherit shadowed literal declarations
+ok unsupported for argument semantics and control flow are not guessed
+ok assertion locators preserve runtime multiplicity uncertainty
+ok fixed source edges, compare, parser and snapshots remain complete and pending
+{"checks":10,"summary":{"sourcesVerified":109,"originalSourceCalls":1215,"originalTestCalls":1125,"originalParameterizationCalls":10,"originalSuiteCalls":80,"parameterBuilders":11,"expandedTests":1398,"staticallyExpandedTests":1398,"unresolvedTests":0,"upstreamSkippedTests":1,"assertionTemplates":1851,"assertionTemplateEdges":2140,"controlledAssertionTemplates":45,"externalSnapshotExports":13,"matchedExternalSnapshotExports":13,"suggestedScopeCorrections":3,"validatedTests":0,"validatedAssertions":0,"adjudicatedExclusions":0,"unownedAssertionTemplates":0}}
+{"compileCases":59,"compileBuilds":313,"errorCases":1,"warningCases":1,"compileAstCases":9,"compileAstBuilds":61,"designSystemCases":3,"designSystemMethods":12,"implementationStatus":"pending"}
+{"definitions":214,"sha256":"babf07391382ff3192432cd18641b45b782fd00ef73c2756a8099449287083f3","sourceSha256":"1e8df70d3357ca477c6a2a4c4fe818627d444969f0790bf9f5538ad467078293"}
+{"cases":75}
+[WARN ] RUSTC_WRAPPER is already set to /Users/rockie/Library/Caches/mbx/shims/rust/40661912850f2f9bc4c49132506c839bb6a855d88da9cb71e9c6bf9783fffa66/mbx-rustc; deferring to it, so this build is not cached
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 4.45s
+     Running unittests src/lib.rs (target/debug/deps/rustify_style-7a67d48e3c4c51f4)
+
+running 84 tests
+test compiler::public_api::compile_ast::canonical_text_tests::import_begin_refusal_preserves_the_original_receiver_and_program ... ok
+test compiler::public_api::compile_ast::canonical_text_tests::import_views_follow_earlier_array_storage ... ok
+test compiler::public_api::compile_ast::canonical_text_tests::failed_custom_function_retains_the_preceding_ordinary_assignment ... ok
+test compiler::public_api::compile_ast::canonical_text_tests::shared_public_graph_allocations_are_charged_once ... ok
+test compiler::public_api::compile_ast::canonical_text_tests::failed_setup_retains_completed_function_events_on_the_original_object ... ok
+test compiler::public_api::compile_ast::canonical_text_tests::failed_apply_retains_completed_replacements_on_the_original_array ... ok
+test compiler::public_api::compile_ast::canonical_text_tests::caller_effects_share_generated_nodes_and_publish_after_preflight ... ok
+test compiler::public_api::compile_ast::canonical_text_tests::repeated_imports_publish_fresh_sources_and_share_their_output_declarations ... ok
+test compiler::public_api::compile_ast::canonical_text_tests::rejected_failed_setup_does_not_authorize_a_mutation_prefix ... ok
+test compiler::public_api::compile_ast::canonical_text_tests::import_begin_and_complete_keep_raw_slots_context_and_captured_versions ... ok
+test compiler::public_api::compile_ast::canonical_text_tests::rejected_output_does_not_publish_generated_declaration_identities ... ok
+test compiler::public_api::compile_ast::canonical_text_tests::apply_setup_splices_raw_nodes_and_shares_optimized_declarations ... ok
+test compiler::public_api::compile_ast::canonical_text_tests::apply_locations_accept_javascript_number_offsets ... ok
+test compiler::public_api::compile_ast::canonical_text_tests::ast_build_preserves_candidate_and_authored_text_units ... ok
+test compiler::public_api::compile_ast::canonical_text_tests::source_location_cache_keeps_address_identity_alive ... ok
+test compiler::public_api::compile_ast::canonical_text_tests::candidate_cache_retains_unoptimized_children_shared_with_output ... ok
+test compiler::public_api::compile_ast::canonical_text_tests::multiple_apply_candidates_preserve_each_source_and_tuple_sharing ... ok
+test compiler::public_api::compile_ast::canonical_text_tests::utility_removal_visits_shared_context_arrays_once ... ok
+test compiler::public_api::compile_ast::setup::tests::parallel_import_failure_selects_first_settlement_instead_of_first_ast_visit ... ok
+test compiler::public_api::compile_ast::canonical_text_tests::theme_setup_replaces_original_arrays_and_shares_emitted_declarations ... ok
+test compiler::public_api::compile_ast::tests::duplicate_at_rule_headers_keep_distinct_sources ... ok
+test compiler::public_api::compile_ast::setup::tests::task_launched_before_failed_begin_keeps_its_context_and_source_until_quiescence ... ok
+test compiler::public_api::compile_ast::tests::duplicate_selectors_keep_each_rule_and_apply_source ... ok
+test compiler::public_api::compile_ast::tests::failed_ast_build_preserves_the_last_array_and_candidate_commit ... ok
+test compiler::public_api::compile_ast::tests::nested_identical_selectors_keep_inner_and_outer_sources ... ok
+test compiler::public_api::compile_ast::tests::oversized_public_input_is_rejected_before_ast_conversion ... ok
+test compiler::public_api::compile_ast::tests::public_ast_input_and_retained_objects_obey_limits ... ok
+test compiler::public_api::compile_ast::tests::public_input_budget_counts_escaped_json_and_from_without_allocating_output ... ok
+test compiler::public_api::compile_ast::tests::deeply_nested_public_input_is_rejected_before_serializing_or_cloning ... ok
+test compiler::public_api::compile_ast::tests::unused_virtual_assets_do_not_contribute_locations_or_syntax_errors ... ok
+test compiler::public_api::compile_ast::tests::removed_rule_does_not_shift_duplicate_selector_sources ... ok
+test compiler::public_api::design_system::canonical_text_tests::candidate_print_and_emission_preserve_arbitrary_value_units ... ok
+test compiler::public_api::design_system::canonical_text_tests::public_json_preserves_lone_units_in_object_keys_and_values ... ok
+test compiler::public_api::design_system::canonical_text_tests::public_object_order_survives_decode_overwrite_and_roundtrip ... ok
+test compiler::public_api::design_system::canonical_text_tests::reserved_cache_failure_rolls_back_new_metadata_and_vec_capacity ... ok
+test compiler::public_api::compile_ast::setup::tests::failed_parser_source_owner_is_reserved_before_any_host_write ... ok
+test compiler::public_api::design_system::tests::theme_entries_preserve_import_sources_without_tracking_design_system_root ... ok
+test compiler::public_api::design_system::canonical_text_tests::dynamic_theme_completion_names_preserve_original_units ... ok
+test compiler::public_api::design_system::tests::theme_tracking_budgets_unknown_variables_and_small_parser_allocations ... ok
+test compiler::public_api::design_system::tests::theme_tracking_decodes_escaped_keys_and_reports_invalid_code_points ... ok
+test compiler::public_api::design_system::tests::theme_tracking_limit_preserves_all_used_bits_and_retained_bytes ... ok
+test compiler::public_api::design_system::tests::theme_tracking_preserves_encounter_order_before_range_failure ... ok
+test compiler::public_api::design_system::tests::candidate_arbitrary_variant_preserves_the_original_cache_key ... ok
+test compiler::public_api::design_system::tests::cached_public_values_share_the_session_budget_before_cloning ... ok
+test compiler::public_api::source_map::tests::equal_text_sources_remain_distinct_and_mappings_share_decoded_handles ... ok
+test compiler::public_api::source_map::tests::line_table_retains_non_scalar_units_and_upstream_offset_clamping ... ok
+test compiler::public_api::source_map::tests::printed_map_tracks_raw_ast_units_and_emitted_line_columns ... ok
+test compiler::public_api::source_map::tests::retained_ast_bytes_charges_each_text_field_spare_capacity ... ok
+test compiler::public_api::source_map::tests::translation_preserves_absent_destination_and_ignores_absent_source ... ok
+test compiler::public_api::tests::cached_syntax_error_charges_utf16_allocation_capacity ... ok
+test compiler::public_api::compile_ast::tests::every_public_ast_build_matches_fixed_upstream_structure_and_identity ... ok
+test compiler::public_api::design_system::tests::theme_entry_output_obeys_the_shared_cache_budget ... ok
+test compiler::public_api::design_system::tests::respect_important_can_be_disabled_without_disabling_candidate_important ... ok
+test compiler::public_api::tests::error_json_keeps_all_existing_variant_fields_and_accepts_reordered_syntax ... ok
+test compiler::public_api::design_system::tests::completion_quota_rejects_before_metadata_allocation_and_preserves_cached_candidates ... ok
+test compiler::public_api::tests::each_apply_candidate_overrides_custom_utility_provenance_with_its_own_span ... ok
+test compiler::public_api::tests::failed_output_ast_budget_keeps_previous_source_map_and_can_retry ... ok
+test compiler::public_api::design_system::tests::edited_candidate_payload_obeys_input_limits_before_utility_generation ... ok
+test compiler::public_api::design_system::tests::theme_resolution_and_variable_tracking_match_fixed_public_api ... ok
+test compiler::public_api::design_system::tests::candidate_parse_print_and_compile_ast_nodes_match_fixed_public_api ... ok
+test compiler::public_api::tests::public_banner_counts_toward_the_output_limit_before_commit ... ok
+test compiler::public_api::tests::public_function_helper_checks_unchanged_text_against_output_bytes ... ok
+test compiler::public_api::tests::repeated_noop_builds_and_maps_do_not_accumulate_internal_budget ... ok
+test compiler::public_api::tests::source_map_limit_keeps_revision_and_previous_map_on_repeated_failure ... ok
+test compiler::public_api::tests::syntax_error_display_preserves_scalars_and_escapes_isolated_units ... ok
+test compiler::public_api::tests::tracked_custom_candidates_charge_each_structured_cloned_source ... ok
+test compiler::public_api::tests::untracked_imports_and_candidates_do_not_allocate_source_objects ... ok
+test compiler::public_api::compile_ast::canonical_text_tests::graph_json_measurement_matches_original_units_and_shared_wire_expansion ... ok
+test compiler::public_api::tests::utf16_function_errors_match_fixed_oracle_units ... ok
+test compiler::public_api::design_system::tests::variant_order_preserves_distinct_raw_cache_keys_with_equal_json_values ... ok
+test compiler::public_api::design_system::tests::custom_functional_completions_resolve_literals_spacing_and_theme_namespaces ... ok
+test compiler::public_api::design_system::tests::class_order_css_and_cached_variant_order_match_fixed_public_api ... ok
+test compiler::public_api::tests::missing_public_loader_reports_the_official_error ... ok
+test compiler::public_api::tests::feature_masks_match_fixed_upstream ... ok
+test compiler::public_api::tests::discovery_base_is_independent_of_source_path ... ok
+test compiler::public_api::tests::every_initial_source_map_matches_fixed_upstream ... ok
+test compiler::public_api::tests::polyfill_flags_match_fixed_upstream_css ... ok
+test compiler::public_api::tests::virtual_stylesheet_loader_arguments_match_fixed_upstream ... ok
+test compiler::public_api::tests::warning_messages_match_fixed_upstream ... ok
+test compiler::public_api::tests::every_string_api_build_matches_fixed_upstream_css ... ok
+test compiler::public_api::design_system::tests::variant_parse_print_and_selector_completions_match_fixed_public_api ... ok
+test compiler::public_api::design_system::tests::theme_entries_keep_all_original_utf16_keys_and_values ... ok
+test compiler::public_api::tests::every_built_source_map_matches_fixed_upstream ... ok
+test compiler::public_api::design_system::tests::all_class_completions_match_the_fixed_upstream_digest ... ok
+
+test result: ok. 84 passed; 0 failed; 0 ignored; 0 measured; 283 filtered out; finished in 0.70s
+
+mbx[cache]: 0 hits, 0 misses, 1 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: 16232 compilations, each compiled once and served warm ever since
+[WARN ] RUSTC_WRAPPER is already set to /Users/rockie/Library/Caches/mbx/shims/rust/40661912850f2f9bc4c49132506c839bb6a855d88da9cb71e9c6bf9783fffa66/mbx-rustc; deferring to it, so this build is not cached
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.04s
+     Running unittests src/lib.rs (target/debug/deps/rustify_style-7a67d48e3c4c51f4)
+
+running 9 tests
+test compiler::utf16_value_tests::utf16_segmentation_keeps_delimiters_inside_escaped_quoted_and_nested_text ... ok
+test compiler::utf16_value_tests::utf16_function_names_and_words_keep_frozen_sample_units ... ok
+test compiler::utf16_value_tests::utf16_arbitrary_math_trim_end_uses_ecmascript_whitespace_units ... ok
+test compiler::utf16_value_tests::utf16_parser_edge_shapes_follow_fixed_reference ... ok
+test compiler::utf16_value_tests::frozen_utf16_authored_values_keep_expected_units_and_node_shapes ... ok
+test compiler::utf16_value_tests::utf16_arbitrary_decoding_preserves_url_and_first_argument_units ... ok
+test compiler::utf16_value_tests::utf16_arbitrary_math_formatting_keeps_raw_units_and_reference_operator_rules ... ok
+test compiler::utf16_value_tests::typed_value_nodes_roundtrip_all_code_units_in_every_text_field ... ok
+test compiler::utf16_value_tests::frozen_utf16_function_helpers_keep_inputs_outputs_and_typed_node_json ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 358 filtered out; finished in 0.08s
+
+[WARN ] RUSTC_WRAPPER is already set to /Users/rockie/Library/Caches/mbx/shims/rust/40661912850f2f9bc4c49132506c839bb6a855d88da9cb71e9c6bf9783fffa66/mbx-rustc; deferring to it, so this build is not cached
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.04s
+     Running unittests src/lib.rs (target/debug/deps/rustify_style-7a67d48e3c4c51f4)
+
+running 7 tests
+test compiler::utf16_declaration_tests::canonical_declaration_retains_text_capacity_and_charges_source_allocations ... ok
+test compiler::utf16_declaration_tests::canonical_declaration_scope_keeps_raw_units_and_source_identity ... ok
+test compiler::utf16_declaration_tests::canonical_declaration_clones_preserve_provenance_and_shared_identity_graphs ... ok
+test compiler::utf16_declaration_tests::canonical_declaration_json_preserves_scalar_schema_and_every_utf16_unit ... ok
+test compiler::utf16_declaration_tests::canonical_declaration_emitter_matches_frozen_property_and_value_units ... ok
+test compiler::utf16_declaration_tests::canonical_declaration_deduplication_keeps_last_equal_units_and_distinct_units ... ok
+test compiler::utf16_declaration_tests::canonical_declaration_functions_match_all_frozen_outputs_without_losing_metadata ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 360 filtered out; finished in 0.08s
+
+[WARN ] RUSTC_WRAPPER is already set to /Users/rockie/Library/Caches/mbx/shims/rust/40661912850f2f9bc4c49132506c839bb6a855d88da9cb71e9c6bf9783fffa66/mbx-rustc; deferring to it, so this build is not cached
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.04s
+     Running unittests src/lib.rs (target/debug/deps/rustify_style-7a67d48e3c4c51f4)
+
+running 7 tests
+test compiler::utf16_theme_tests::theme_overwrites_keep_selected_source_metadata_through_emission ... ok
+test compiler::utf16_theme_tests::theme_text_storage_and_prepared_cache_charge_real_utf16_capacity ... ok
+test compiler::utf16_theme_tests::prepared_theme_values_keep_raw_text_and_reference_output_separate ... ok
+test compiler::utf16_theme_tests::theme_dependency_words_and_cycles_preserve_non_scalar_keys ... ok
+test compiler::utf16_theme_tests::theme_default_overwrite_reset_and_ignored_namespaces_share_one_text_map ... ok
+test compiler::utf16_theme_tests::frozen_modes_resolve_raw_and_reference_fallbacks_without_changing_units ... ok
+test compiler::utf16_theme_tests::every_frozen_theme_observation_keeps_order_aliases_and_raw_units ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 360 filtered out; finished in 0.03s
+
+[WARN ] RUSTC_WRAPPER is already set to /Users/rockie/Library/Caches/mbx/shims/rust/40661912850f2f9bc4c49132506c839bb6a855d88da9cb71e9c6bf9783fffa66/mbx-rustc; deferring to it, so this build is not cached
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.04s
+     Running unittests src/lib.rs (target/debug/deps/rustify_style-7a67d48e3c4c51f4)
+
+running 12 tests
+test compiler::utf16_ast_fields_tests::opaque_at_rule_name_and_leaf_comment_emit_original_units ... ok
+test compiler::utf16_ast_fields_tests::remaining_fields_keep_utf16_capacity_and_source_storage_is_deduplicated_by_handle ... ok
+test compiler::utf16_ast_fields_tests::public_source_maps_count_units_and_keep_equal_text_origins_distinct ... ok
+test compiler::utf16_ast_fields_tests::reference_context_pruning_preserves_visible_opaque_headers_and_sources ... ok
+test compiler::utf16_ast_fields_tests::scalar_ast_json_keeps_existing_field_names_and_omits_provenance ... ok
+test compiler::utf16_ast_fields_tests::fresh_nested_clones_keep_text_and_spans_with_one_fresh_source_handle ... ok
+test compiler::utf16_ast_fields_tests::stylesheet_scope_maps_text_globals_and_animation_without_changing_opaque_fields_or_sources ... ok
+test compiler::utf16_ast_fields_tests::at_rule_function_params_keep_oracle_spacing_units_children_and_provenance ... ok
+test compiler::utf16_ast_fields_tests::direct_selector_comment_and_at_rule_emission_matches_27_frozen_css_observations ... ok
+test compiler::utf16_ast_fields_tests::context_base_and_source_base_decode_every_unit_without_tag_order_dependency ... ok
+test compiler::utf16_ast_fields_tests::selector_and_comment_decode_every_unit_inside_nested_tag_last_json ... ok
+test compiler::utf16_ast_fields_tests::at_rule_name_and_params_decode_every_unit_with_nested_and_leaf_forms ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 355 filtered out; finished in 0.07s
+
+[WARN ] RUSTC_WRAPPER is already set to /Users/rockie/Library/Caches/mbx/shims/rust/40661912850f2f9bc4c49132506c839bb6a855d88da9cb71e9c6bf9783fffa66/mbx-rustc; deferring to it, so this build is not cached
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.04s
+     Running unittests src/lib.rs (target/debug/deps/rustify_style-7a67d48e3c4c51f4)
+
+running 15 tests
+test compiler::utf16_parser_tests::canonical_parser_depth_and_text_input_byte_limits_are_enforced ... ok
+test compiler::utf16_parser_tests::parser_preserves_custom_property_comments_but_removes_ordinary_comments ... ok
+test compiler::utf16_parser_tests::parser_grammar_transforms_newlines_and_reports_unit_offsets_without_replacement ... ok
+test compiler::utf16_parser_tests::plain_compile_keeps_original_non_scalar_source_and_maps_without_normalizing_css ... ok
+test compiler::utf16_parser_tests::text_input_and_virtual_asset_content_reach_both_native_and_public_import_parsers ... ok
+test compiler::utf16_parser_tests::scalar_convenience_entries_agree_with_canonical_text_parser_and_compiler ... ok
+test compiler::utf16_parser_tests::theme_keyframe_usage_splits_ecmascript_whitespace_and_distinct_names ... ok
+test compiler::utf16_parser_tests::theme_keyframe_usage_keeps_original_animation_name_units ... ok
+test compiler::utf16_parser_tests::raw_license_comment_parser_preserves_every_unit_and_full_source_span ... ok
+test compiler::utf16_parser_tests::bom_crlf_and_license_hoisting_keep_original_unit_offsets_and_source_identity ... ok
+test compiler::utf16_parser_tests::production_parser_errors_match_18_frozen_messages_with_original_surrogates ... ok
+test compiler::utf16_parser_tests::production_parsed_map_blocks_match_all_10_frozen_raw_theme_observations ... ok
+test compiler::utf16_parser_tests::production_parser_reads_all_92_authored_fixture_inputs_without_scalar_staging ... ok
+test compiler::utf16_parser_tests::scalar_candidate_theme_index_results_keep_original_non_scalar_declarations ... ok
+test compiler::utf16_parser_tests::compile_text_matches_156_authored_map_and_error_cases_with_scalar_candidates ... ok
+
+test result: ok. 15 passed; 0 failed; 0 ignored; 0 measured; 352 filtered out; finished in 0.06s
+
+[WARN ] RUSTC_WRAPPER is already set to /Users/rockie/Library/Caches/mbx/shims/rust/40661912850f2f9bc4c49132506c839bb6a855d88da9cb71e9c6bf9783fffa66/mbx-rustc; deferring to it, so this build is not cached
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.04s
+     Running unittests src/lib.rs (target/debug/deps/rustify_style-7a67d48e3c4c51f4)
+
+running 7 tests
+test compiler::utf16_error_tests::features_none_preserves_original_units_without_variable_usage_analysis ... ok
+test compiler::utf16_error_tests::failed_external_variable_build_preserves_report_cache_and_allows_retry ... ok
+test compiler::utf16_error_tests::range_error_diagnostic_escapes_do_not_change_message_or_cached_capacity ... ok
+test compiler::utf16_error_tests::range_error_typed_json_preserves_isolated_units_and_reordered_fields ... ok
+test compiler::utf16_error_tests::theme_dependency_variables_do_not_become_direct_usage_errors ... ok
+test compiler::utf16_error_tests::setup_and_initial_ast_defer_authored_keyframe_and_function_output_usage ... ok
+test compiler::utf16_error_tests::frozen_errors_retain_all_61_setup_build_phases_classes_and_message_units ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 360 filtered out; finished in 0.05s
+
+[WARN ] RUSTC_WRAPPER is already set to /Users/rockie/Library/Caches/mbx/shims/rust/40661912850f2f9bc4c49132506c839bb6a855d88da9cb71e9c6bf9783fffa66/mbx-rustc; deferring to it, so this build is not cached
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+   Compiling rustify-style-wasm v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style-wasm)
+mbx[progress]: 15s elapsed; 0 hits, 0 misses, 1 bypassed, 0 not looked up; ~0s compiler work saved
+    Finished `release` profile [optimized] target(s) in 17.87s
+mbx[cache]: 0 hits, 0 misses, 1 incremental, 1 bypassed; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: the checkouts are gone. their 882.9 GiB logical has gone to join them.
+{"cssBuilds":313,"maps":371,"mappings":6970,"astBuilds":61,"designCases":3,"classCompletions":21771,"selectorProbes":756,"boundaryCases":37,"actualWasm":true,"sharedMemory":false,"wasmBytes":2536349,"fullApiConformance":"pending"}
+{"cases":486,"cssMatches":425,"errorPhaseMessageMatches":61,"themeObservations":111,"themeMatches":111,"failedObservations":0,"failedCases":0,"actualWasm":true,"sharedMemory":false,"wasmBytes":2536349,"errorNameConformance":"checked with real Error/RangeError prototypes and original name/message units","fullUtf16Conformance":"pending","fullPublicValueConformance":"pending"}
+{"candidates":49,"variants":28,"identities":92,"astBuilds":7,"actualWasm":true,"sharedMemory":false,"wasmBytes":2536349,"fullPublicValueConformance":"pending"}
+{"objects":121,"actualWasm":true,"sharedMemory":false,"wasmBytes":2536349,"fullPublicValueConformance":"pending"}
+{"registrationCases":48,"entryComparisons":96,"completePrefixAndSettledGraphs":true,"failures":[],"actualWasm":true,"wasmBytes":2536349,"fullRegistrationConformance":"pending"}
+{"scope":"actual-WASM supplementary media source/Stop diagnostic","cases":2,"entryComparisons":4,"failures":0,"actualWasm":true,"wasmBytes":2536349,"comparisons":[{"condition":"source(\"./src\")","mode":"sync","matches":true,"expected":{"error":["Error","`@utility empty` is empty. Utilities should include at least one property."],"trace":[["first","utilities source(\"./src\")"],["second","utilities source(\"./src\")"]],"prefix":{"roots":[{"reference":0},{"reference":11},{"reference":12},{"reference":4},{"reference":13},{"reference":5},{"reference":14},{"reference":9},{"reference":15}],"records":[{"array":true,"fields":[["0",{"reference":1}],["1",{"reference":6}],["2",{"reference":9}]]},{"array":false,"fields":[["kind","context"],["context",{"reference":2}],["nodes",{"reference":3}]]},{"array":false,"fields":[["sourceBase","/scope"]]},{"array":true,"fields":[["0",{"reference":4}]]},{"array":false,"fields":[["kind","at-rule"],["name","@tailwind"],["params","utilities source(\"./src\")"],["nodes",{"reference":5}]]},{"array":true,"fields":[]},{"array":false,"fields":[["kind","context"],["context",{"reference":7}],["nodes",{"reference":8}]]},{"array":false,"fields":[["sourceBase","/scope"]]},{"array":true,"fields":[]},{"array":false,"fields":[["kind","at-rule"],["name","@utility"],["params","empty"],["nodes",{"reference":10}]]},{"array":true,"fields":[]},{"array":false,"fields":[["kind","at-rule"],["name","@media"],["params","source(\"./src\")"],["nodes",{"reference":12}]]},{"array":true,"fields":[["0",{"reference":1}],["1",{"reference":6}]]},{"array":false,"fields":[["kind","at-rule"],["name","@tailwind"],["params","utilities source(\"./src\")"],["nodes",{"reference":14}]]},{"array":true,"fields":[]},{"array":true,"fields":[["0",{"reference":16}],["1",{"reference":17}]]},{"array":true,"fields":[["0","first"],["1","utilities source(\"./src\")"]]},{"array":true,"fields":[["0","second"],["1","utilities source(\"./src\")"]]}]},"settled":{"roots":[{"reference":0},{"reference":11},{"reference":12},{"reference":4},{"reference":13},{"reference":5},{"reference":14},{"reference":9},{"reference":15}],"records":[{"array":true,"fields":[["0",{"reference":1}],["1",{"reference":6}],["2",{"reference":9}]]},{"array":false,"fields":[["kind","context"],["context",{"reference":2}],["nodes",{"reference":3}]]},{"array":false,"fields":[["sourceBase","/scope"]]},{"array":true,"fields":[["0",{"reference":4}]]},{"array":false,"fields":[["kind","at-rule"],["name","@tailwind"],["params","utilities source(\"./src\")"],["nodes",{"reference":5}]]},{"array":true,"fields":[]},{"array":false,"fields":[["kind","context"],["context",{"reference":7}],["nodes",{"reference":8}]]},{"array":false,"fields":[["sourceBase","/scope"]]},{"array":true,"fields":[]},{"array":false,"fields":[["kind","at-rule"],["name","@utility"],["params","empty"],["nodes",{"reference":10}]]},{"array":true,"fields":[]},{"array":false,"fields":[["kind","at-rule"],["name","@media"],["params","source(\"./src\")"],["nodes",{"reference":12}]]},{"array":true,"fields":[["0",{"reference":1}],["1",{"reference":6}]]},{"array":false,"fields":[["kind","at-rule"],["name","@tailwind"],["params","utilities source(\"./src\")"],["nodes",{"reference":14}]]},{"array":true,"fields":[]},{"array":true,"fields":[["0",{"reference":16}],["1",{"reference":17}]]},{"array":true,"fields":[["0","first"],["1","utilities source(\"./src\")"]]},{"array":true,"fields":[["0","second"],["1","utilities source(\"./src\")"]]}]}},"actual":{"error":["Error","`@utility empty` is empty. Utilities should include at least one property."],"trace":[["first","utilities source(\"./src\")"],["second","utilities source(\"./src\")"]],"prefix":{"roots":[{"reference":0},{"reference":11},{"reference":12},{"reference":4},{"reference":13},{"reference":5},{"reference":14},{"reference":9},{"reference":15}],"records":[{"array":true,"fields":[["0",{"reference":1}],["1",{"reference":6}],["2",{"reference":9}]]},{"array":false,"fields":[["kind","context"],["context",{"reference":2}],["nodes",{"reference":3}]]},{"array":false,"fields":[["sourceBase","/scope"]]},{"array":true,"fields":[["0",{"reference":4}]]},{"array":false,"fields":[["kind","at-rule"],["name","@tailwind"],["params","utilities source(\"./src\")"],["nodes",{"reference":5}]]},{"array":true,"fields":[]},{"array":false,"fields":[["kind","context"],["context",{"reference":7}],["nodes",{"reference":8}]]},{"array":false,"fields":[["sourceBase","/scope"]]},{"array":true,"fields":[]},{"array":false,"fields":[["kind","at-rule"],["name","@utility"],["params","empty"],["nodes",{"reference":10}]]},{"array":true,"fields":[]},{"array":false,"fields":[["kind","at-rule"],["name","@media"],["params","source(\"./src\")"],["nodes",{"reference":12}]]},{"array":true,"fields":[["0",{"reference":1}],["1",{"reference":6}]]},{"array":false,"fields":[["kind","at-rule"],["name","@tailwind"],["params","utilities source(\"./src\")"],["nodes",{"reference":14}]]},{"array":true,"fields":[]},{"array":true,"fields":[["0",{"reference":16}],["1",{"reference":17}]]},{"array":true,"fields":[["0","first"],["1","utilities source(\"./src\")"]]},{"array":true,"fields":[["0","second"],["1","utilities source(\"./src\")"]]}]},"settled":{"roots":[{"reference":0},{"reference":11},{"reference":12},{"reference":4},{"reference":13},{"reference":5},{"reference":14},{"reference":9},{"reference":15}],"records":[{"array":true,"fields":[["0",{"reference":1}],["1",{"reference":6}],["2",{"reference":9}]]},{"array":false,"fields":[["kind","context"],["context",{"reference":2}],["nodes",{"reference":3}]]},{"array":false,"fields":[["sourceBase","/scope"]]},{"array":true,"fields":[["0",{"reference":4}]]},{"array":false,"fields":[["kind","at-rule"],["name","@tailwind"],["params","utilities source(\"./src\")"],["nodes",{"reference":5}]]},{"array":true,"fields":[]},{"array":false,"fields":[["kind","context"],["context",{"reference":7}],["nodes",{"reference":8}]]},{"array":false,"fields":[["sourceBase","/scope"]]},{"array":true,"fields":[]},{"array":false,"fields":[["kind","at-rule"],["name","@utility"],["params","empty"],["nodes",{"reference":10}]]},{"array":true,"fields":[]},{"array":false,"fields":[["kind","at-rule"],["name","@media"],["params","source(\"./src\")"],["nodes",{"reference":12}]]},{"array":true,"fields":[["0",{"reference":1}],["1",{"reference":6}]]},{"array":false,"fields":[["kind","at-rule"],["name","@tailwind"],["params","utilities source(\"./src\")"],["nodes",{"reference":14}]]},{"array":true,"fields":[]},{"array":true,"fields":[["0",{"reference":16}],["1",{"reference":17}]]},{"array":true,"fields":[["0","first"],["1","utilities source(\"./src\")"]]},{"array":true,"fields":[["0","second"],["1","utilities source(\"./src\")"]]}]}}},{"condition":"source(\"./src\")","mode":"async","matches":true,"expected":{"error":["Error","`@utility empty` is empty. Utilities should include at least one property."],"trace":[["first","utilities source(\"./src\")"],["second","utilities source(\"./src\")"]],"prefix":{"roots":[{"reference":0},{"reference":11},{"reference":12},{"reference":4},{"reference":13},{"reference":5},{"reference":14},{"reference":9},{"reference":15}],"records":[{"array":true,"fields":[["0",{"reference":1}],["1",{"reference":6}],["2",{"reference":9}]]},{"array":false,"fields":[["kind","context"],["context",{"reference":2}],["nodes",{"reference":3}]]},{"array":false,"fields":[["sourceBase","/scope"]]},{"array":true,"fields":[["0",{"reference":4}]]},{"array":false,"fields":[["kind","at-rule"],["name","@tailwind"],["params","utilities source(\"./src\")"],["nodes",{"reference":5}]]},{"array":true,"fields":[]},{"array":false,"fields":[["kind","context"],["context",{"reference":7}],["nodes",{"reference":8}]]},{"array":false,"fields":[["sourceBase","/scope"]]},{"array":true,"fields":[]},{"array":false,"fields":[["kind","at-rule"],["name","@utility"],["params","empty"],["nodes",{"reference":10}]]},{"array":true,"fields":[]},{"array":false,"fields":[["kind","at-rule"],["name","@media"],["params","source(\"./src\")"],["nodes",{"reference":12}]]},{"array":true,"fields":[["0",{"reference":1}],["1",{"reference":6}]]},{"array":false,"fields":[["kind","at-rule"],["name","@tailwind"],["params","utilities source(\"./src\")"],["nodes",{"reference":14}]]},{"array":true,"fields":[]},{"array":true,"fields":[["0",{"reference":16}],["1",{"reference":17}]]},{"array":true,"fields":[["0","first"],["1","utilities source(\"./src\")"]]},{"array":true,"fields":[["0","second"],["1","utilities source(\"./src\")"]]}]},"settled":{"roots":[{"reference":0},{"reference":11},{"reference":12},{"reference":4},{"reference":13},{"reference":5},{"reference":14},{"reference":9},{"reference":15}],"records":[{"array":true,"fields":[["0",{"reference":1}],["1",{"reference":6}],["2",{"reference":9}]]},{"array":false,"fields":[["kind","context"],["context",{"reference":2}],["nodes",{"reference":3}]]},{"array":false,"fields":[["sourceBase","/scope"]]},{"array":true,"fields":[["0",{"reference":4}]]},{"array":false,"fields":[["kind","at-rule"],["name","@tailwind"],["params","utilities source(\"./src\")"],["nodes",{"reference":5}]]},{"array":true,"fields":[]},{"array":false,"fields":[["kind","context"],["context",{"reference":7}],["nodes",{"reference":8}]]},{"array":false,"fields":[["sourceBase","/scope"]]},{"array":true,"fields":[]},{"array":false,"fields":[["kind","at-rule"],["name","@utility"],["params","empty"],["nodes",{"reference":10}]]},{"array":true,"fields":[]},{"array":false,"fields":[["kind","at-rule"],["name","@media"],["params","source(\"./src\")"],["nodes",{"reference":12}]]},{"array":true,"fields":[["0",{"reference":1}],["1",{"reference":6}]]},{"array":false,"fields":[["kind","at-rule"],["name","@tailwind"],["params","utilities source(\"./src\")"],["nodes",{"reference":14}]]},{"array":true,"fields":[]},{"array":true,"fields":[["0",{"reference":16}],["1",{"reference":17}]]},{"array":true,"fields":[["0","first"],["1","utilities source(\"./src\")"]]},{"array":true,"fields":[["0","second"],["1","utilities source(\"./src\")"]]}]}},"actual":{"error":["Error","`@utility empty` is empty. Utilities should include at least one property."],"trace":[["first","utilities source(\"./src\")"],["second","utilities source(\"./src\")"]],"prefix":{"roots":[{"reference":0},{"reference":11},{"reference":12},{"reference":4},{"reference":13},{"reference":5},{"reference":14},{"reference":9},{"reference":15}],"records":[{"array":true,"fields":[["0",{"reference":1}],["1",{"reference":6}],["2",{"reference":9}]]},{"array":false,"fields":[["kind","context"],["context",{"reference":2}],["nodes",{"reference":3}]]},{"array":false,"fields":[["sourceBase","/scope"]]},{"array":true,"fields":[["0",{"reference":4}]]},{"array":false,"fields":[["kind","at-rule"],["name","@tailwind"],["params","utilities source(\"./src\")"],["nodes",{"reference":5}]]},{"array":true,"fields":[]},{"array":false,"fields":[["kind","context"],["context",{"reference":7}],["nodes",{"reference":8}]]},{"array":false,"fields":[["sourceBase","/scope"]]},{"array":true,"fields":[]},{"array":false,"fields":[["kind","at-rule"],["name","@utility"],["params","empty"],["nodes",{"reference":10}]]},{"array":true,"fields":[]},{"array":false,"fields":[["kind","at-rule"],["name","@media"],["params","source(\"./src\")"],["nodes",{"reference":12}]]},{"array":true,"fields":[["0",{"reference":1}],["1",{"reference":6}]]},{"array":false,"fields":[["kind","at-rule"],["name","@tailwind"],["params","utilities source(\"./src\")"],["nodes",{"reference":14}]]},{"array":true,"fields":[]},{"array":true,"fields":[["0",{"reference":16}],["1",{"reference":17}]]},{"array":true,"fields":[["0","first"],["1","utilities source(\"./src\")"]]},{"array":true,"fields":[["0","second"],["1","utilities source(\"./src\")"]]}]},"settled":{"roots":[{"reference":0},{"reference":11},{"reference":12},{"reference":4},{"reference":13},{"reference":5},{"reference":14},{"reference":9},{"reference":15}],"records":[{"array":true,"fields":[["0",{"reference":1}],["1",{"reference":6}],["2",{"reference":9}]]},{"array":false,"fields":[["kind","context"],["context",{"reference":2}],["nodes",{"reference":3}]]},{"array":false,"fields":[["sourceBase","/scope"]]},{"array":true,"fields":[["0",{"reference":4}]]},{"array":false,"fields":[["kind","at-rule"],["name","@tailwind"],["params","utilities source(\"./src\")"],["nodes",{"reference":5}]]},{"array":true,"fields":[]},{"array":false,"fields":[["kind","context"],["context",{"reference":7}],["nodes",{"reference":8}]]},{"array":false,"fields":[["sourceBase","/scope"]]},{"array":true,"fields":[]},{"array":false,"fields":[["kind","at-rule"],["name","@utility"],["params","empty"],["nodes",{"reference":10}]]},{"array":true,"fields":[]},{"array":false,"fields":[["kind","at-rule"],["name","@media"],["params","source(\"./src\")"],["nodes",{"reference":12}]]},{"array":true,"fields":[["0",{"reference":1}],["1",{"reference":6}]]},{"array":false,"fields":[["kind","at-rule"],["name","@tailwind"],["params","utilities source(\"./src\")"],["nodes",{"reference":14}]]},{"array":true,"fields":[]},{"array":true,"fields":[["0",{"reference":16}],["1",{"reference":17}]]},{"array":true,"fields":[["0","first"],["1","utilities source(\"./src\")"]]},{"array":true,"fields":[["0","second"],["1","utilities source(\"./src\")"]]}]}}},{"condition":"print source(\"./src\")","mode":"sync","matches":true,"expected":{"error":["Error","`@utility empty` is empty. Utilities should include at least one property."],"trace":[["first","utilities source(\"./src\")"],["second","utilities source(\"./src\")"]],"prefix":{"roots":[{"reference":0},{"reference":1},{"reference":2},{"reference":6},{"reference":13},{"reference":7},{"reference":14},{"reference":11},{"reference":15}],"records":[{"array":true,"fields":[["0",{"reference":1}],["1",{"reference":11}]]},{"array":false,"fields":[["kind","at-rule"],["name","@media"],["params","print"],["nodes",{"reference":2}]]},{"array":true,"fields":[["0",{"reference":3}],["1",{"reference":8}]]},{"array":false,"fields":[["kind","context"],["context",{"reference":4}],["nodes",{"reference":5}]]},{"array":false,"fields":[["sourceBase","/scope"]]},{"array":true,"fields":[["0",{"reference":6}]]},{"array":false,"fields":[["kind","at-rule"],["name","@tailwind"],["params","utilities source(\"./src\")"],["nodes",{"reference":7}]]},{"array":true,"fields":[]},{"array":false,"fields":[["kind","context"],["context",{"reference":9}],["nodes",{"reference":10}]]},{"array":false,"fields":[["sourceBase","/scope"]]},{"array":true,"fields":[]},{"array":false,"fields":[["kind","at-rule"],["name","@utility"],["params","empty"],["nodes",{"reference":12}]]},{"array":true,"fields":[]},{"array":false,"fields":[["kind","at-rule"],["name","@tailwind"],["params","utilities source(\"./src\")"],["nodes",{"reference":14}]]},{"array":true,"fields":[]},{"array":true,"fields":[["0",{"reference":16}],["1",{"reference":17}]]},{"array":true,"fields":[["0","first"],["1","utilities source(\"./src\")"]]},{"array":true,"fields":[["0","second"],["1","utilities source(\"./src\")"]]}]},"settled":{"roots":[{"reference":0},{"reference":1},{"reference":2},{"reference":6},{"reference":13},{"reference":7},{"reference":14},{"reference":11},{"reference":15}],"records":[{"array":true,"fields":[["0",{"reference":1}],["1",{"reference":11}]]},{"array":false,"fields":[["kind","at-rule"],["name","@media"],["params","print"],["nodes",{"reference":2}]]},{"array":true,"fields":[["0",{"reference":3}],["1",{"reference":8}]]},{"array":false,"fields":[["kind","context"],["context",{"reference":4}],["nodes",{"reference":5}]]},{"array":false,"fields":[["sourceBase","/scope"]]},{"array":true,"fields":[["0",{"reference":6}]]},{"array":false,"fields":[["kind","at-rule"],["name","@tailwind"],["params","utilities source(\"./src\")"],["nodes",{"reference":7}]]},{"array":true,"fields":[]},{"array":false,"fields":[["kind","context"],["context",{"reference":9}],["nodes",{"reference":10}]]},{"array":false,"fields":[["sourceBase","/scope"]]},{"array":true,"fields":[]},{"array":false,"fields":[["kind","at-rule"],["name","@utility"],["params","empty"],["nodes",{"reference":12}]]},{"array":true,"fields":[]},{"array":false,"fields":[["kind","at-rule"],["name","@tailwind"],["params","utilities source(\"./src\")"],["nodes",{"reference":14}]]},{"array":true,"fields":[]},{"array":true,"fields":[["0",{"reference":16}],["1",{"reference":17}]]},{"array":true,"fields":[["0","first"],["1","utilities source(\"./src\")"]]},{"array":true,"fields":[["0","second"],["1","utilities source(\"./src\")"]]}]}},"actual":{"error":["Error","`@utility empty` is empty. Utilities should include at least one property."],"trace":[["first","utilities source(\"./src\")"],["second","utilities source(\"./src\")"]],"prefix":{"roots":[{"reference":0},{"reference":1},{"reference":2},{"reference":6},{"reference":13},{"reference":7},{"reference":14},{"reference":11},{"reference":15}],"records":[{"array":true,"fields":[["0",{"reference":1}],["1",{"reference":11}]]},{"array":false,"fields":[["kind","at-rule"],["name","@media"],["params","print"],["nodes",{"reference":2}]]},{"array":true,"fields":[["0",{"reference":3}],["1",{"reference":8}]]},{"array":false,"fields":[["kind","context"],["context",{"reference":4}],["nodes",{"reference":5}]]},{"array":false,"fields":[["sourceBase","/scope"]]},{"array":true,"fields":[["0",{"reference":6}]]},{"array":false,"fields":[["kind","at-rule"],["name","@tailwind"],["params","utilities source(\"./src\")"],["nodes",{"reference":7}]]},{"array":true,"fields":[]},{"array":false,"fields":[["kind","context"],["context",{"reference":9}],["nodes",{"reference":10}]]},{"array":false,"fields":[["sourceBase","/scope"]]},{"array":true,"fields":[]},{"array":false,"fields":[["kind","at-rule"],["name","@utility"],["params","empty"],["nodes",{"reference":12}]]},{"array":true,"fields":[]},{"array":false,"fields":[["kind","at-rule"],["name","@tailwind"],["params","utilities source(\"./src\")"],["nodes",{"reference":14}]]},{"array":true,"fields":[]},{"array":true,"fields":[["0",{"reference":16}],["1",{"reference":17}]]},{"array":true,"fields":[["0","first"],["1","utilities source(\"./src\")"]]},{"array":true,"fields":[["0","second"],["1","utilities source(\"./src\")"]]}]},"settled":{"roots":[{"reference":0},{"reference":1},{"reference":2},{"reference":6},{"reference":13},{"reference":7},{"reference":14},{"reference":11},{"reference":15}],"records":[{"array":true,"fields":[["0",{"reference":1}],["1",{"reference":11}]]},{"array":false,"fields":[["kind","at-rule"],["name","@media"],["params","print"],["nodes",{"reference":2}]]},{"array":true,"fields":[["0",{"reference":3}],["1",{"reference":8}]]},{"array":false,"fields":[["kind","context"],["context",{"reference":4}],["nodes",{"reference":5}]]},{"array":false,"fields":[["sourceBase","/scope"]]},{"array":true,"fields":[["0",{"reference":6}]]},{"array":false,"fields":[["kind","at-rule"],["name","@tailwind"],["params","utilities source(\"./src\")"],["nodes",{"reference":7}]]},{"array":true,"fields":[]},{"array":false,"fields":[["kind","context"],["context",{"reference":9}],["nodes",{"reference":10}]]},{"array":false,"fields":[["sourceBase","/scope"]]},{"array":true,"fields":[]},{"array":false,"fields":[["kind","at-rule"],["name","@utility"],["params","empty"],["nodes",{"reference":12}]]},{"array":true,"fields":[]},{"array":false,"fields":[["kind","at-rule"],["name","@tailwind"],["params","utilities source(\"./src\")"],["nodes",{"reference":14}]]},{"array":true,"fields":[]},{"array":true,"fields":[["0",{"reference":16}],["1",{"reference":17}]]},{"array":true,"fields":[["0","first"],["1","utilities source(\"./src\")"]]},{"array":true,"fields":[["0","second"],["1","utilities source(\"./src\")"]]}]}}},{"condition":"print source(\"./src\")","mode":"async","matches":true,"expected":{"error":["Error","`@utility empty` is empty. Utilities should include at least one property."],"trace":[["first","utilities source(\"./src\")"],["second","utilities source(\"./src\")"]],"prefix":{"roots":[{"reference":0},{"reference":1},{"reference":2},{"reference":6},{"reference":13},{"reference":7},{"reference":14},{"reference":11},{"reference":15}],"records":[{"array":true,"fields":[["0",{"reference":1}],["1",{"reference":11}]]},{"array":false,"fields":[["kind","at-rule"],["name","@media"],["params","print"],["nodes",{"reference":2}]]},{"array":true,"fields":[["0",{"reference":3}],["1",{"reference":8}]]},{"array":false,"fields":[["kind","context"],["context",{"reference":4}],["nodes",{"reference":5}]]},{"array":false,"fields":[["sourceBase","/scope"]]},{"array":true,"fields":[["0",{"reference":6}]]},{"array":false,"fields":[["kind","at-rule"],["name","@tailwind"],["params","utilities source(\"./src\")"],["nodes",{"reference":7}]]},{"array":true,"fields":[]},{"array":false,"fields":[["kind","context"],["context",{"reference":9}],["nodes",{"reference":10}]]},{"array":false,"fields":[["sourceBase","/scope"]]},{"array":true,"fields":[]},{"array":false,"fields":[["kind","at-rule"],["name","@utility"],["params","empty"],["nodes",{"reference":12}]]},{"array":true,"fields":[]},{"array":false,"fields":[["kind","at-rule"],["name","@tailwind"],["params","utilities source(\"./src\")"],["nodes",{"reference":14}]]},{"array":true,"fields":[]},{"array":true,"fields":[["0",{"reference":16}],["1",{"reference":17}]]},{"array":true,"fields":[["0","first"],["1","utilities source(\"./src\")"]]},{"array":true,"fields":[["0","second"],["1","utilities source(\"./src\")"]]}]},"settled":{"roots":[{"reference":0},{"reference":1},{"reference":2},{"reference":6},{"reference":13},{"reference":7},{"reference":14},{"reference":11},{"reference":15}],"records":[{"array":true,"fields":[["0",{"reference":1}],["1",{"reference":11}]]},{"array":false,"fields":[["kind","at-rule"],["name","@media"],["params","print"],["nodes",{"reference":2}]]},{"array":true,"fields":[["0",{"reference":3}],["1",{"reference":8}]]},{"array":false,"fields":[["kind","context"],["context",{"reference":4}],["nodes",{"reference":5}]]},{"array":false,"fields":[["sourceBase","/scope"]]},{"array":true,"fields":[["0",{"reference":6}]]},{"array":false,"fields":[["kind","at-rule"],["name","@tailwind"],["params","utilities source(\"./src\")"],["nodes",{"reference":7}]]},{"array":true,"fields":[]},{"array":false,"fields":[["kind","context"],["context",{"reference":9}],["nodes",{"reference":10}]]},{"array":false,"fields":[["sourceBase","/scope"]]},{"array":true,"fields":[]},{"array":false,"fields":[["kind","at-rule"],["name","@utility"],["params","empty"],["nodes",{"reference":12}]]},{"array":true,"fields":[]},{"array":false,"fields":[["kind","at-rule"],["name","@tailwind"],["params","utilities source(\"./src\")"],["nodes",{"reference":14}]]},{"array":true,"fields":[]},{"array":true,"fields":[["0",{"reference":16}],["1",{"reference":17}]]},{"array":true,"fields":[["0","first"],["1","utilities source(\"./src\")"]]},{"array":true,"fields":[["0","second"],["1","utilities source(\"./src\")"]]}]}},"actual":{"error":["Error","`@utility empty` is empty. Utilities should include at least one property."],"trace":[["first","utilities source(\"./src\")"],["second","utilities source(\"./src\")"]],"prefix":{"roots":[{"reference":0},{"reference":1},{"reference":2},{"reference":6},{"reference":13},{"reference":7},{"reference":14},{"reference":11},{"reference":15}],"records":[{"array":true,"fields":[["0",{"reference":1}],["1",{"reference":11}]]},{"array":false,"fields":[["kind","at-rule"],["name","@media"],["params","print"],["nodes",{"reference":2}]]},{"array":true,"fields":[["0",{"reference":3}],["1",{"reference":8}]]},{"array":false,"fields":[["kind","context"],["context",{"reference":4}],["nodes",{"reference":5}]]},{"array":false,"fields":[["sourceBase","/scope"]]},{"array":true,"fields":[["0",{"reference":6}]]},{"array":false,"fields":[["kind","at-rule"],["name","@tailwind"],["params","utilities source(\"./src\")"],["nodes",{"reference":7}]]},{"array":true,"fields":[]},{"array":false,"fields":[["kind","context"],["context",{"reference":9}],["nodes",{"reference":10}]]},{"array":false,"fields":[["sourceBase","/scope"]]},{"array":true,"fields":[]},{"array":false,"fields":[["kind","at-rule"],["name","@utility"],["params","empty"],["nodes",{"reference":12}]]},{"array":true,"fields":[]},{"array":false,"fields":[["kind","at-rule"],["name","@tailwind"],["params","utilities source(\"./src\")"],["nodes",{"reference":14}]]},{"array":true,"fields":[]},{"array":true,"fields":[["0",{"reference":16}],["1",{"reference":17}]]},{"array":true,"fields":[["0","first"],["1","utilities source(\"./src\")"]]},{"array":true,"fields":[["0","second"],["1","utilities source(\"./src\")"]]}]},"settled":{"roots":[{"reference":0},{"reference":1},{"reference":2},{"reference":6},{"reference":13},{"reference":7},{"reference":14},{"reference":11},{"reference":15}],"records":[{"array":true,"fields":[["0",{"reference":1}],["1",{"reference":11}]]},{"array":false,"fields":[["kind","at-rule"],["name","@media"],["params","print"],["nodes",{"reference":2}]]},{"array":true,"fields":[["0",{"reference":3}],["1",{"reference":8}]]},{"array":false,"fields":[["kind","context"],["context",{"reference":4}],["nodes",{"reference":5}]]},{"array":false,"fields":[["sourceBase","/scope"]]},{"array":true,"fields":[["0",{"reference":6}]]},{"array":false,"fields":[["kind","at-rule"],["name","@tailwind"],["params","utilities source(\"./src\")"],["nodes",{"reference":7}]]},{"array":true,"fields":[]},{"array":false,"fields":[["kind","context"],["context",{"reference":9}],["nodes",{"reference":10}]]},{"array":false,"fields":[["sourceBase","/scope"]]},{"array":true,"fields":[]},{"array":false,"fields":[["kind","at-rule"],["name","@utility"],["params","empty"],["nodes",{"reference":12}]]},{"array":true,"fields":[]},{"array":false,"fields":[["kind","at-rule"],["name","@tailwind"],["params","utilities source(\"./src\")"],["nodes",{"reference":14}]]},{"array":true,"fields":[]},{"array":true,"fields":[["0",{"reference":16}],["1",{"reference":17}]]},{"array":true,"fields":[["0","first"],["1","utilities source(\"./src\")"]]},{"array":true,"fields":[["0","second"],["1","utilities source(\"./src\")"]]}]}}}],"fullRegistrationConformance":"pending"}
+{"graphCases":27,"identityChecks":10,"graphObjects":1013,"boundaries":4,"recoveries":2,"actualWasm":true,"sharedMemory":false,"wasmBytes":2536349,"inputMutationConformance":"pending","singleCandidateApplyLocations":"checked","applyLocationConformance":"pending","multiCandidateApplyLocations":16,"fullPublicObjectGraphConformance":"pending"}
+{"actualWasm":true,"sharedMemory":false,"wasmBytes":2536349,"utilitiesMutationCases":8,"constructorAndBuildPhases":38,"noOpIdentities":12,"originalSetterExceptions":3,"cacheBoundaries":4,"twoBuildCacheThreshold":22324,"fullInputMutationConformance":"pending"}
+{"themeSetupCases":18,"constructorAndBuildPhases":105,"noOpIdentities":29,"originalConstructorExceptions":2,"cacheBoundaries":3,"constructorCacheThreshold":46386,"actualWasm":true,"sharedMemory":false,"wasmBytes":2536349,"fullInputMutationConformance":"pending"}
+{"applyInputCases":15,"constructorAndBuildPhases":90,"noOpIdentities":18,"originalConstructorExceptions":2,"cacheBoundaries":3,"constructorCacheThreshold":56502,"actualWasm":true,"sharedMemory":false,"wasmBytes":2536349,"fullInputMutationConformance":"pending"}
+{"scope":"full custom utility input graph","customInputCases":14,"constructorAndBuildPhases":84,"noOpIdentities":20,"actualWasm":true,"sharedMemory":false,"wasmBytes":2536349,"fullInputMutationConformance":"pending"}
+{"customOriginCases":5,"constructorAndBuildPhases":30,"actualWasm":true,"wasmBytes":2536349}
+{"importGraphCases":21,"originalArrayOrderCases":1,"mediaOptionsCases":5,"phases":107,"objects":3191,"actualWasm":true,"wasmBytes":2536349,"fullImportConformance":"pending","failedSetupPrefix":"pending"}
+{"functionFailureCases":12,"originalHostExceptionCases":4,"cacheBoundaries":3,"semanticFailureCacheThreshold":14842,"quotaNoWriteCases":1,"actualWasm":true,"sharedMemory":false,"wasmBytes":2536349,"fullFailedSetupConformance":"pending"}
+{"applyFailureCases":16,"entries":2,"checks":32,"failures":[],"hostExceptionChecks":8,"cacheBoundaries":3,"semanticFailureCacheThreshold":30058,"asyncQuotaNoWriteCases":2,"actualWasm":true,"wasmBytes":2536349,"fullFailedSetupConformance":"pending"}
+{"functionOrderCases":19,"entryComparisons":38,"completePrefixBuildAndSettledGraphs":true,"originalHostExceptionChecks":8,"failures":[],"actualWasm":true,"wasmBytes":2536349,"fullFailedSetupConformance":"pending"}
+{"importFailureCases":15,"originalHostExceptionCases":5,"settlementPriorityCases":1,"noWriteQuotaCases":4,"sourceOwnerQuotaControls":1,"failedCases":[],"phase":"compileAst rejection and retained task quiescence","deeperAsyncHorizon":"prefix and retained tasks compared through eight nested imports","actualWasm":true,"wasmBytes":2536349,"fullImportFailureConformance":"pending"}
+{"asyncCases":20,"externalMicrotaskMarkers":true,"completePrefixAndSettledGraphs":true,"failures":[],"orphanCases":6,"orphanFailures":[],"originalOrphanHostExceptionCases":1,"quotaNoWriteCases":4,"actualWasm":true,"wasmBytes":2536349,"externalLoaderCallbacks":"pending","fullAsyncApiConformance":"pending"}
+{"sharedDagLevels":18,"growth":65536,"maximumGrowth":131072}
+{"boundaries":19,"recoveries":12,"sharedDagLevels":18,"growth":65536,"maximumGrowth":131072,"actualWasm":true,"sharedMemory":false,"wasmBytes":2536349,"fullTemporaryBudgetConformance":"pending"}
+{"valueCases":75,"errorCases":18,"boundaryCases":8,"actualWasm":true,"sharedMemory":false,"fullUtf16Conformance":"pending"}
+{"decodeCases":306,"boundaryCases":9,"allCodeUnits":65536,"actualWasm":true,"sharedMemory":false,"fullUtf16Conformance":"pending"}
+{"cssCases":111,"themeObservations":111,"trackingCases":20,"boundaryCases":6,"candidateObservationCasesPending":0,"actualWasm":true,"sharedMemory":false,"wasmBytes":2536349,"fullUtf16Conformance":"pending","fullPublicValueConformance":"pending"}
+{"sourceCases":18,"maps":36,"sourceIdentityChecks":24,"budgetCases":2,"actualWasm":true,"sharedMemory":false,"wasmBytes":2536349,"fullPublicValueConformance":"pending"}
+{"cssCases":8,"maps":8,"mappings":48,"actualWasm":true,"sharedMemory":false,"wasmBytes":2536349,"fullSourceCandidateIngress":"pending","fullUtf16Conformance":"pending","fullPublicValueConformance":"pending"}
+{"selectedCases":156,"cssCases":102,"compileErrors":54,"maps":102,"mappings":576,"boundaryCases":11,"actualWasm":true,"sharedMemory":false,"wasmBytes":2536349,"remainingCompilerMatrixCases":330,"fullUtf16Conformance":"pending","fullPublicValueConformance":"pending"}
+{"errorCases":61,"compileErrors":59,"buildErrors":2,"rangeErrors":6,"recoveryCases":3,"protocolErrors":1,"actualWasm":true,"sharedMemory":false,"wasmBytes":2536349,"fullUtf16Conformance":"pending"}
+[WARN ] RUSTC_WRAPPER is already set to /Users/rockie/Library/Caches/mbx/shims/rust/40661912850f2f9bc4c49132506c839bb6a855d88da9cb71e9c6bf9783fffa66/mbx-rustc; deferring to it, so this build is not cached
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.04s
+     Running unittests src/lib.rs (target/debug/deps/rustify_style-7a67d48e3c4c51f4)
+
+running 1 test
+test compiler::utf16_family_tests::theme_payloads_reach_all_family_outputs_as_original_utf16_units ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 366 filtered out; finished in 0.42s
+
+{"families":22,"cases":560,"oracleVersion":"4.1.13"}
+{"families":22,"cases":560,"cssMatches":560,"failedCases":0,"actualWasm":true,"sharedMemory":false,"wasmBytes":2536349,"fullUtf16Conformance":"pending"}
+{"root":"shadow","marker":"$`","growth":0,"maximumGrowth":4000000}
+{"root":"drop-shadow","marker":"$`","growth":0,"maximumGrowth":4000000}
+{"root":"shadow","marker":"$'","growth":0,"maximumGrowth":4000000}
+{"expansionCases":3,"recoveries":3,"boundaryCases":108,"boundaryRecoveries":36,"failedCases":0,"actualWasm":true,"sharedMemory":false,"wasmBytes":2536349,"fullTemporaryBudgetConformance":"pending"}
+{"animationCases":23,"cssComparisons":69,"maps":69,"actualWasm":true,"sharedMemory":false,"wasmBytes":2536349,"fullUtf16Conformance":"pending"}
+mbx[cache]: 0 hits, 0 misses, 3 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: 35.1 GiB shared among checkouts that each believe they are an only child.

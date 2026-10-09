@@ -71,13 +71,16 @@ macro_rules! variants {
             ) -> impl ::leptos::prelude::IntoView {
                 use ::leptos::prelude::*;
 
-                let computed = move || {
-                    [<$component Class>] {
+                let computed = $crate::macros::reactive_merge_with(move || {
+                    let classes = [<$component Class>] {
                         variant: variant.try_get().unwrap_or_default(),
                         size: size.try_get().unwrap_or_default(),
-                    }
-                    .with_class(class.try_get().unwrap_or_default())
-                };
+                    };
+                    vec![
+                        $crate::cn::IntoTailwindClass::raw_class(&classes).into_owned(),
+                        class.try_get().unwrap_or_default(),
+                    ]
+                });
 
                 ::leptos::view! {
                     <$element
@@ -134,13 +137,16 @@ macro_rules! variants {
             ) -> impl ::leptos::prelude::IntoView {
                 use ::leptos::prelude::*;
 
-                let computed = move || {
-                    [<$component Class>] {
+                let computed = $crate::macros::reactive_merge_with(move || {
+                    let classes = [<$component Class>] {
                         variant: variant.try_get().unwrap_or_default(),
                         size: size.try_get().unwrap_or_default(),
-                    }
-                    .with_class(class.try_get().unwrap_or_default())
-                };
+                    };
+                    vec![
+                        $crate::cn::IntoTailwindClass::raw_class(&classes).into_owned(),
+                        class.try_get().unwrap_or_default(),
+                    ]
+                });
 
                 match href {
                     Some(href) => {
@@ -197,31 +203,16 @@ macro_rules! variants {
         }
     ) => {
         $crate::paste::paste! {
-            // The glob is what the derives need: they generate code naming the
-            // traits by their bare names. Whether every name in it is used
-            // depends on which arm expanded, so the warning is not a finding.
-            #[allow(unused_imports)]
-            use $crate::tw_merge::*;
-
-            #[derive(TwClass, Clone, Copy)]
-            #[tw(class = $base_class)]
-            pub struct [<$component Class>] {
-                pub variant: [<$component Variant>],
-                pub size: [<$component Size>],
-            }
-
-            #[derive(TwVariant)]
-            pub enum [<$component Variant>] {
-                #[tw(default, class = $first_variant_class)]
-                $first_variant,
-                $(#[tw(class = $variant_class)] $variant_key,)*
-            }
-
-            #[derive(TwVariant)]
-            pub enum [<$component Size>] {
-                #[tw(default, class = $first_size_class)]
-                $first_size,
-                $(#[tw(class = $size_class)] $size_key,)*
+            $crate::cn::class_variants! {
+                [<$component Class>] {
+                    base: $base_class,
+                    variant: [<$component Variant>] {
+                        $first_variant: $first_variant_class $(, $variant_key: $variant_class)*
+                    },
+                    size: [<$component Size>] {
+                        $first_size: $first_size_class $(, $size_key: $size_class)*
+                    }
+                }
             }
         }
     };
@@ -239,20 +230,13 @@ macro_rules! variants {
         }
     ) => {
         $crate::paste::paste! {
-            #[allow(unused_imports)]
-            use $crate::tw_merge::*;
-
-            #[derive(TwClass, Clone, Copy)]
-            #[tw(class = $base_class)]
-            pub struct [<$component Class>] {
-                pub variant: [<$component Variant>],
-            }
-
-            #[derive(TwVariant)]
-            pub enum [<$component Variant>] {
-                #[tw(default, class = $first_variant_class)]
-                $first_variant,
-                $(#[tw(class = $variant_class)] $variant_key,)*
+            $crate::cn::class_variants! {
+                [<$component Class>] {
+                    base: $base_class,
+                    variant: [<$component Variant>] {
+                        $first_variant: $first_variant_class $(, $variant_key: $variant_class)*
+                    }
+                }
             }
         }
     };

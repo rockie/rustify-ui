@@ -1,0 +1,191 @@
+{
+  "style_tests": {
+    "passed": 532,
+    "failed": 0,
+    "ignored": 12
+  },
+  "facade_tests": {
+    "passed": 12,
+    "failed": 0
+  },
+  "browser": {
+    "chrome": "154.0.8037.98",
+    "root_passed": 7,
+    "deep_passed": 7
+  },
+  "r3_probe": [
+    {
+      "case": "fixed",
+      "matches_reference": true,
+      "valid_reference": true
+    },
+    {
+      "case": "var-before",
+      "matches_reference": true,
+      "valid_reference": true
+    },
+    {
+      "case": "var-name",
+      "matches_reference": true,
+      "valid_reference": true
+    },
+    {
+      "case": "var-fallback",
+      "matches_reference": true,
+      "valid_reference": true
+    },
+    {
+      "case": "time-calc",
+      "matches_reference": true,
+      "valid_reference": true
+    },
+    {
+      "case": "time-min",
+      "matches_reference": true,
+      "valid_reference": true
+    },
+    {
+      "case": "iteration",
+      "matches_reference": true,
+      "valid_reference": true
+    },
+    {
+      "case": "iteration-before-name",
+      "matches_reference": true,
+      "valid_reference": false
+    },
+    {
+      "case": "shared-role",
+      "matches_reference": true,
+      "valid_reference": true
+    }
+  ],
+  "findings": [
+    {
+      "entry": "root",
+      "finding": "F-08",
+      "case": "multi-inherit",
+      "versions": {
+        "raw": {
+          "variable": "ease-in",
+          "transition": "ease-in"
+        },
+        "r3": {
+          "variable": "ease-in",
+          "transition": "ease-in"
+        },
+        "r4": {
+          "variable": "ease-in",
+          "transition": "linear"
+        },
+        "sdk": {
+          "variable": "ease-in",
+          "transition": "linear"
+        }
+      }
+    },
+    {
+      "entry": "root",
+      "finding": "F-04",
+      "case": "public-inline-consumer",
+      "raw_transition": "linear",
+      "r3_transition": "ease",
+      "r4_transition": "ease",
+      "sdk_transition": "ease"
+    },
+    {
+      "entry": "root",
+      "finding": "F-08",
+      "case": "external-disable-name",
+      "versions": {
+        "raw": {
+          "variable": "none",
+          "name": "none",
+          "count": 0
+        },
+        "r3": {
+          "variable": "none",
+          "name": "none",
+          "count": 0
+        },
+        "r4": {
+          "variable": "none",
+          "name": "rustify-review-r4-linear",
+          "count": 1
+        },
+        "sdk": {
+          "variable": "none",
+          "name": "rustify-338f93b0-9457-484c-84ad-dff11d0cce60-linear",
+          "count": 1
+        }
+      }
+    },
+    {
+      "entry": "deep",
+      "finding": "F-08",
+      "case": "multi-inherit",
+      "versions": {
+        "raw": {
+          "variable": "ease-in",
+          "transition": "ease-in"
+        },
+        "r3": {
+          "variable": "ease-in",
+          "transition": "ease-in"
+        },
+        "r4": {
+          "variable": "ease-in",
+          "transition": "linear"
+        },
+        "sdk": {
+          "variable": "ease-in",
+          "transition": "linear"
+        }
+      }
+    },
+    {
+      "entry": "deep",
+      "finding": "F-04",
+      "case": "public-inline-consumer",
+      "raw_transition": "linear",
+      "r3_transition": "ease",
+      "r4_transition": "ease",
+      "sdk_transition": "ease"
+    },
+    {
+      "entry": "deep",
+      "finding": "F-08",
+      "case": "external-disable-name",
+      "versions": {
+        "raw": {
+          "variable": "none",
+          "name": "none",
+          "count": 0
+        },
+        "r3": {
+          "variable": "none",
+          "name": "none",
+          "count": 0
+        },
+        "r4": {
+          "variable": "none",
+          "name": "rustify-review-r4-linear",
+          "count": 1
+        },
+        "sdk": {
+          "variable": "none",
+          "name": "rustify-4436c5be-585a-4cf1-9fdb-e02276d75fc6-linear",
+          "count": 1
+        }
+      }
+    }
+  ],
+  "root_errors": [],
+  "deep_errors": [],
+  "root_requests": [],
+  "deep_requests": [],
+  "deep_csp": [],
+  "r3_probe_csp": [],
+  "native_replay_identical": true,
+  "old_scope_sha256": "7a8bcaf626ac6a89745039d02de0f617917a2a788f8e744bf2588fb91e24a0d4"
+}

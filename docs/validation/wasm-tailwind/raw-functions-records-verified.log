@@ -1,0 +1,31 @@
+{
+  "sourceHashesVerified": 26,
+  "evidenceFilesVerified": 142,
+  "artifactsVerified": 2,
+  "browserProductsVerified": 2,
+  "configurationCopiesVerified": 21,
+  "native": 368,
+  "functionOrder": {
+    "cases": 19,
+    "entryComparisons": 38,
+    "hostExceptions": 8,
+    "failures": 0
+  },
+  "ownership": {
+    "cases": 14,
+    "entryComparisons": 28,
+    "passed": 28,
+    "failures": 0,
+    "defaultGate": true
+  },
+  "browserTests": 87,
+  "mediaThemeVariantBenchmarkShapes": "each pair equal",
+  "observedVariantConstructorChangePercent": 12.388946927739063,
+  "fullPerformanceAcceptance": "pending",
+  "upstreamRuntimeAssertionsAndExclusions": 0,
+  "singleLoweringHandoff": "pending",
+  "goalStatus": "paused",
+  "progress": "3/7",
+  "documentationHashesVerified": 8,
+  "docs": "no errors"
+}

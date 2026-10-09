@@ -1,0 +1,33 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 4.03s
+     Running unittests src/lib.rs (target/debug/deps/rustify_style-4ed64bbe76d78d97)
+
+running 1 test
+test compiler::tests::reference_custom_branches_do_not_change_rule_sorting ... FAILED
+
+failures:
+
+---- compiler::tests::reference_custom_branches_do_not_change_rule_sorting stdout ----
+
+thread 'compiler::tests::reference_custom_branches_do_not_change_rule_sorting' (14056597) panicked at crates/rustify-style/src/compiler/tests.rs:89:5:
+assertion `left == right` failed
+  left: ".zulu {\n  color: red;\n}\n.alpha {\n  color: blue;\n}\n"
+ right: ".alpha {\n  color: blue;\n}\n.zulu {\n  color: red;\n}\n"
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    compiler::tests::reference_custom_branches_do_not_change_rule_sorting
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 100 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p rustify-style --lib`
+mbx[cache]: 0 hits, 0 misses, 1 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: the sweep found 668.4 GiB logical nobody would miss. nobody has.

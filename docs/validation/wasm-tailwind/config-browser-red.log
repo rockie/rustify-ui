@@ -1,0 +1,33 @@
+npm notice run rustify-ui-browser-tests@0.1.0 npx
+npm notice run 'playwright' test --project=utility-lab --workers=1 utility-runtime.spec.ts -g configuration replacement commits
+
+Running 1 test using 1 worker
+
+(node:8169) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 [utility-lab] › tests/browser/utility-runtime.spec.ts:468:5 › configuration replacement commits raw component classes and CSS together and rolls failures back (941ms)
+
+
+  1) [utility-lab] › tests/browser/utility-runtime.spec.ts:468:5 › configuration replacement commits raw component classes and CSS together and rolls failures back 
+
+    Error: page.evaluate: TypeError: api.report is not a function
+        at read (eval at evaluate (:311:30), <anonymous>:13:21)
+        at eval (eval at evaluate (:311:30), <anonymous>:15:20)
+        at async <anonymous>:337:30
+        at read (eval at evaluate (:311:30), <anonymous>:13:21)
+        at eval (eval at evaluate (:311:30), <anonymous>:15:20)
+        at async <anonymous>:337:30
+        at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser/utility-runtime.spec.ts:474:31
+
+    Error Context: test-results/utility-runtime-configurat-3679c-her-and-rolls-failures-back-utility-lab/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/utility-runtime-configurat-3679c-her-and-rolls-failures-back-utility-lab/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/utility-runtime-configurat-3679c-her-and-rolls-failures-back-utility-lab/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [utility-lab] › tests/browser/utility-runtime.spec.ts:468:5 › configuration replacement commits raw component classes and CSS together and rolls failures back 

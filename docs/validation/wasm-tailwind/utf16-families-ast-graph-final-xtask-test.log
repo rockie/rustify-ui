@@ -1,0 +1,58 @@
+mbx[warning]: Unix-domain cache session listener unavailable; using FIFO transport: failed to bind cache session listener at /var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/mbx-session-CrStoM/cache-agent.sock: Operation not permitted (os error 1)
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+   Compiling rustify-components v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-components)
+   Compiling xtask v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/xtask)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 4.28s
+warning: the following packages contain code that will be rejected by a future version of Rust: proc-macro-error2 v2.0.1
+note: to see what the problems were, use the option `--future-incompat-report`, or run `cargo report future-incompatibilities --id 1`
+     Running unittests src/main.rs (/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-utf16-verified-54mkl3kq/cargo-target/debug/deps/xtask-35be26abe30553e3)
+
+running 37 tests
+test build::tests::the_base_is_normalised_the_way_serve_normalises_it ... ok
+test build::tests::a_build_for_the_root_still_names_its_files_from_the_root ... ok
+test build::tests::a_build_for_a_sub_path_has_its_own_directory ... ok
+test css::tests::a_line_only_one_side_has_is_reported_against_the_end_of_file ... ok
+test bridge::tests::module_exports_hash_and_factory_with_the_source_verbatim ... ok
+test bridge::tests::message_string_is_decoded_from_the_from_wasm_layout ... ok
+test build::tests::a_build_for_a_sub_path_names_its_own_files_absolutely ... ok
+test css::tests::a_long_line_is_cut_around_where_it_differs ... ok
+test css::tests::the_first_differing_line_is_reported_with_both_sides ... ok
+test doctor::tests::lock_version_reads_the_package_block ... ok
+test build::tests::sizes_are_bucketed_by_extension ... ok
+test doctor::tests::mise_pin_reads_a_string_and_an_inline_table ... ok
+test serve::fault_tests::a_fault_names_the_file_it_breaks ... ok
+test serve::fault_tests::each_kind_of_damage_is_the_one_it_says ... ok
+test serve::fault_tests::a_stale_bridge_claims_a_hash_the_wasm_does_not_have ... ok
+test serve::tests::a_route_is_answered_with_the_application_and_a_missing_file_is_not ... ok
+test serve::tests::base_paths_are_normalized_to_slash_wrapped_form ... ok
+test serve::tests::strict_policy_allows_wasm_but_no_script_eval ... ok
+test sources::tests::modified_added_and_removed_files_are_classified ... ok
+test sources::tests::unchanged_tree_reports_no_drift ... ok
+test sources::tests::list_fingerprint_is_order_independent_and_content_sensitive ... ok
+test tailwind::tests::only_the_pinned_version_is_accepted ... ok
+test tailwind::tests::the_banner_names_the_version ... ok
+test utility::seed::tests::unlayered_utilities_are_seeded_without_base_or_property_selectors ... ok
+test utility::seed::tests::generated_layer_keeps_escaped_candidates_and_excludes_nested_context ... ok
+test verify::tests::the_three_suites_ask_for_different_things ... ok
+test serve::tests::requests_resolve_inside_the_base_and_never_escape_the_root ... ok
+test tailwind::tests::mise_pins_the_version_this_checks_for ... ok
+test build::tests::an_examples_input_compiles_only_the_sources_it_names ... ok
+test sources::tests::target_links_are_excluded_even_when_the_cache_is_missing ... ok
+test serve::tests::a_revalidation_is_answered_only_for_the_version_the_browser_has ... ok
+test verify::tests::a_blank_form_is_not_a_handed_in_record ... ok
+test verify::tests::every_later_record_is_prepared ... ok
+test build::tests::an_example_with_its_own_input_compiles_it_and_one_without_links_the_committed_sheet ... ok
+test utility::seed::tests::committed_css_seed_contains_generated_classes_only ... ok
+test build::tests::ships_only_snippet_packages_imported_by_the_current_glue ... ok
+test build::tests::compressed_sizes_are_what_a_compressing_host_would_send ... ok
+
+test result: ok. 37 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+mbx[cache]: 0 hits, 3 misses; 0 B downloaded, 0 B uploaded, 80.2 MiB stored locally

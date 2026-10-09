@@ -77,7 +77,7 @@ pub fn FormStatus(
     };
     view! {
         <p
-            class=crate::macros::merge("text-sm text-muted-foreground", &class)
+            class=crate::macros::reactive_merge("text-sm text-muted-foreground", &class)
             data-name="FormStatus"
             data-testid=test_id
             data-state=move || {

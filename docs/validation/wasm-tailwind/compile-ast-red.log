@@ -1,0 +1,31 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 5.40s
+     Running unittests src/lib.rs (target/debug/deps/rustify_style-4ed64bbe76d78d97)
+
+running 1 test
+test compiler::public_api::compile_ast::tests::every_public_ast_build_matches_fixed_upstream_structure_and_identity ... FAILED
+
+failures:
+
+---- compiler::public_api::compile_ast::tests::every_public_ast_build_matches_fixed_upstream_structure_and_identity stdout ----
+
+thread 'compiler::public_api::compile_ast::tests::every_public_ast_build_matches_fixed_upstream_structure_and_identity' (638767) panicked at crates/rustify-style/src/compiler/public_api/../../../../../tests/utility/compiler/compile-ast-native.rs:17:34:
+"ast:passthrough-empty": PendingFeature { feature: "compileAst" }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    compiler::public_api::compile_ast::tests::every_public_ast_build_matches_fixed_upstream_structure_and_identity
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 148 filtered out; finished in 0.09s
+
+error: test failed, to rerun pass `-p rustify-style --lib`
+mbx[cache]: 0 hits, 0 misses, 1 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: 25.8 GiB shared among checkouts that each believe they are an only child.

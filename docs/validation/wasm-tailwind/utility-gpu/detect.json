@@ -1,0 +1,13 @@
+[
+  {
+    "antipattern": "design-system-font",
+    "name": "Font outside DESIGN.md",
+    "description": "A font is used that is not declared in DESIGN.md typography. Use the documented type system or update DESIGN.md if this is an intentional brand addition.",
+    "severity": "warning",
+    "category": "quality",
+    "file": "/Users/rockie/Documents/gh-rockie/rustify-ui/examples/utility-lab/index.html",
+    "line": 0,
+    "snippet": "textarea \"w-[137px] bg-[#123456] h-[72px] text-[#f\" uses mono; not declared in DESIGN.md typography",
+    "ignoreValue": "mono"
+  }
+]

@@ -1,0 +1,130 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: custom-failure: failed function prefix
++ actual - expected
+... Skipped lines
+
+  {
+    records: [
+      {
+        array: true,
+        fields: [
+...
+            'value',
++           '--alpha(red / 50%)'
+-           'color-mix(in oklab, red 50%, transparent)'
+          ],
+          [
+            'important',
+            false
+          ]
+...
+        array: true,
++       fields: []
+-       fields: [
+-         [
+-           '0',
+-           'color-mix(in oklab, red 50%, transparent)'
+-         ]
+-       ]
+      }
+    ],
+    roots: [
+      {
+        reference: 0
+
+    at file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/compiler/run-public-ast-failed-setup-wasm.mjs:56:9 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: {
+    roots: [
+      { reference: 0 },
+      { reference: 2 },
+      { reference: 3 },
+      { reference: 4 },
+      { reference: 5 }
+    ],
+    records: [
+      { array: true, fields: [ [ '0', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'at-rule' ],
+          [ 'name', '@utility' ],
+          [ 'params', 'card' ],
+          [ 'nodes', [Object] ]
+        ]
+      },
+      { array: true, fields: [ [ '0', [Object] ], [ '1', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'declaration' ],
+          [ 'property', 'color' ],
+          [ 'value', '--alpha(red / 50%)' ],
+          [ 'important', false ]
+        ]
+      },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'declaration' ],
+          [ 'property', 'padding' ],
+          [ 'value', '--spacing(2)' ],
+          [ 'important', false ]
+        ]
+      },
+      { array: true, fields: [] }
+    ]
+  },
+  expected: {
+    roots: [
+      { reference: 0 },
+      { reference: 2 },
+      { reference: 3 },
+      { reference: 4 },
+      { reference: 5 }
+    ],
+    records: [
+      { array: true, fields: [ [ '0', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'at-rule' ],
+          [ 'name', '@utility' ],
+          [ 'params', 'card' ],
+          [ 'nodes', [Object] ]
+        ]
+      },
+      { array: true, fields: [ [ '0', [Object] ], [ '1', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'declaration' ],
+          [ 'property', 'color' ],
+          [ 'value', 'color-mix(in oklab, red 50%, transparent)' ],
+          [ 'important', false ]
+        ]
+      },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'declaration' ],
+          [ 'property', 'padding' ],
+          [ 'value', '--spacing(2)' ],
+          [ 'important', false ]
+        ]
+      },
+      {
+        array: true,
+        fields: [ [ '0', 'color-mix(in oklab, red 50%, transparent)' ] ]
+      }
+    ]
+  },
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v26.1.0

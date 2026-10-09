@@ -154,7 +154,7 @@ mod dom {
                 autocomplete="off"
                 spellcheck="false"
                 id=id
-                class=crate::macros::merge(BASE, &class)
+                class=crate::macros::reactive_merge(BASE, &class)
                 data-name="NumberField"
                 data-testid=test_id
                 aria-label=aria_label

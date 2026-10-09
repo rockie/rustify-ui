@@ -1,0 +1,120 @@
+{
+  "schemaVersion": 1,
+  "meaning": "Rustify additions are distinct from upstream compatibility. Probe verification does not imply production runtime delivery.",
+  "contracts": [
+    {
+      "id": "wasm-memory-extractor",
+      "status": "implemented",
+      "path": "crates/rustify-style-wasm/src/lib.rs",
+      "evidence_or_exit": "24 memory + 12 virtual source cases /51 operations verified; public source Worker/demo integration pending"
+    },
+    {
+      "id": "worker-candidate-transport",
+      "status": "runtime-slice-verified",
+      "path": "crates/rustify-ui/src/utility/browser.rs",
+      "evidence_or_exit": "SDK uses independent compiler-only Worker; protocol/runtime/epoch/request identity and bundle resource SHA verified in real Chrome; complete runtime configurations pending"
+    },
+    {
+      "id": "strict-csp-stylesheet-installation",
+      "status": "runtime-slice-verified",
+      "path": "crates/rustify-ui/web/utility-host.js",
+      "evidence_or_exit": "staged sheet adoption, native report publication then ack; browser injection verified nack failure preserves revision; full global resource families pending"
+    },
+    {
+      "id": "cn-wasm-parameters-and-callbacks",
+      "status": "crossing-slice-verified",
+      "path": "crates/rustify-style-wasm/src/cn.rs",
+      "evidence_or_exit": "actual JsValue/UTF16/callback/function identity/throw/reentry tested; final evidence in cn/evidence/wasm-native.json; build realm and browser configuration epoch pending"
+    },
+    {
+      "id": "component-raw-fragments-and-config-epoch",
+      "status": "static-verified-dynamic-pending",
+      "path": "crates/rustify-components/",
+      "evidence_or_exit": "125 migration oracle cases,90 component tests,24 real Chrome regressions passed; committed config epoch rerender pending"
+    },
+    {
+      "id": "ensure-complete-runtime-class-names",
+      "status": "runtime-slice-verified",
+      "path": "crates/rustify-ui/src/utility/",
+      "evidence_or_exit": "scanner-free 137px/#123456 dynamic rules, completion coalescing, repeated revision no-op and scope isolation verified root/subpath"
+    },
+    {
+      "id": "prepare-install-commit-and-revision",
+      "status": "runtime-slice-verified",
+      "path": "crates/rustify-ui/src/utility/",
+      "evidence_or_exit": "CSSOM failure nacks and preserves prior; lost ack retains newly installed snapshot; explicit new epoch replay verified"
+    },
+    {
+      "id": "scope-observer-and-batching",
+      "status": "runtime-slice-verified",
+      "path": "crates/rustify-ui/src/utility/",
+      "evidence_or_exit": "classList/subtree, nested-owner exclusion, queue coalescing/shared byte limit verified; complete resource/fault matrix pending"
+    },
+    {
+      "id": "configuration-replacement",
+      "status": "pending",
+      "path": "crates/rustify-ui/src/utility/",
+      "evidence_or_exit": "cn and CSS/programs atomically switch; failure retains old"
+    },
+    {
+      "id": "resource-limits",
+      "status": "core-slice-verified",
+      "path": "crates/rustify-style/",
+      "evidence_or_exit": "positive caller limits, AST/assets/cache/candidates/css/queued bytes tested for compiler; full cn facade/runtime queue/allocator bounds pending"
+    },
+    {
+      "id": "deadlines-and-worker-recovery",
+      "status": "runtime-slice-verified",
+      "path": "crates/rustify-ui/src/utility/",
+      "evidence_or_exit": "bounded request/manifest deadline and ack timeout/retry from installed snapshot verified; full late-reply/config-failure matrix pending"
+    },
+    {
+      "id": "dispose-and-instance-abort",
+      "status": "runtime-slice-verified",
+      "path": "crates/rustify-ui/web/utility-host.js",
+      "evidence_or_exit": "bound JS cleanup releases Worker/observer/sheet/owner on real WASM trap; independent WASM instance remains working"
+    },
+    {
+      "id": "global-resource-namespaces",
+      "status": "core-slice-verified",
+      "path": "crates/rustify-style/src/scope.rs",
+      "evidence_or_exit": "AST scope and --tw property/keyframe reference rename unit test; full selectors/keyframes families pending"
+    },
+    {
+      "id": "gpu-capability-projection",
+      "status": "pending",
+      "path": "crates/rustify-ui/src/utility/",
+      "evidence_or_exit": "full numeric snapshots, strict/partial, concrete unsupported diagnostics"
+    },
+    {
+      "id": "gpu-state-viewport-theme-and-removal",
+      "status": "pending",
+      "path": "crates/rustify-ui/src/utility/",
+      "evidence_or_exit": "self conditions, hover media, modality, drawn revision, restore defaults"
+    },
+    {
+      "id": "root-subpath-static-dynamic-builds",
+      "status": "dynamic-slice-verified-static-regression-pending",
+      "path": "xtask/src/build.rs",
+      "evidence_or_exit": "feature-export based independent bundle; only current bindgen snippet imports copied; root9/subpath4 browsers passed; full static-feature and seed matrix pending"
+    },
+    {
+      "id": "utility-lab-interactions",
+      "status": "dom-slice-verified-gpu-pending",
+      "path": "examples/utility-lab/",
+      "evidence_or_exit": "minimal input/apply/CSS diagnostics/isolated DOM preview root/subpath and mobile verified; source/dual GPU/theme/config/language pending"
+    },
+    {
+      "id": "full-fault-and-compatibility-regression",
+      "status": "pending",
+      "path": "tests/browser/utility-*.spec.ts",
+      "evidence_or_exit": "two instances/scopes, GL loss, old themes/components, no TS production"
+    },
+    {
+      "id": "native-wasm-performance-and-size-comparison",
+      "status": "pending",
+      "path": "xtask/src/utility.rs",
+      "evidence_or_exit": "separate internal/crossing, throughput/cold/warm/no-op/CSSOM/GPU/memory/bytes"
+    }
+  ]
+}

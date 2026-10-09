@@ -1,0 +1,120 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
++ actual - expected
+... Skipped lines
+
+  [
+    [
+      '--root',
+      {
+        options: 8,
+...
+        options: 8,
+-       src: [
+-         {
+-           code: '@theme static { --first: red; --second: blue; --lone: �; }',
+-           file: '/virtual/a.css'
+-         },
+-         16,
+-         28
+-       ],
+        value: 'red'
+      }
+    ],
+    [
+      '--second',
+      {
+        options: 8,
+-       src: [
+-         {
+-           code: '@theme static { --first: red; --second: blue; --lone: �; }',
+-           file: '/virtual/a.css'
+-         },
+-         30,
+-         44
+-       ],
+        value: 'blue'
+      }
+    ],
+    [
+      '--lone',
+      {
+        options: 8,
+-       src: [
+-         {
+-           code: '@theme static { --first: red; --second: blue; --lone: �; }',
+-           file: '/virtual/a.css'
+-         },
+-         46,
+-         55
+-       ],
+        value: '�'
+      }
+    ]
+  ]
+
+    at file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/compiler/run-utf16-theme-sources-wasm.mjs:31:14 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: [
+    [ '--root', { value: 'root', options: 8 } ],
+    [ '--first', { value: 'red', options: 8 } ],
+    [ '--second', { value: 'blue', options: 8 } ],
+    [ '--lone', { value: '�', options: 8 } ]
+  ],
+  expected: [
+    [ '--root', { value: 'root', options: 8 } ],
+    [
+      '--first',
+      {
+        value: 'red',
+        options: 8,
+        src: [
+          {
+            file: '/virtual/a.css',
+            code: '@theme static { --first: red; --second: blue; --lone: �; }'
+          },
+          16,
+          28
+        ]
+      }
+    ],
+    [
+      '--second',
+      {
+        value: 'blue',
+        options: 8,
+        src: [
+          {
+            file: '/virtual/a.css',
+            code: '@theme static { --first: red; --second: blue; --lone: �; }'
+          },
+          30,
+          44
+        ]
+      }
+    ],
+    [
+      '--lone',
+      {
+        value: '�',
+        options: 8,
+        src: [
+          {
+            file: '/virtual/a.css',
+            code: '@theme static { --first: red; --second: blue; --lone: �; }'
+          },
+          46,
+          55
+        ]
+      }
+    ]
+  ],
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v26.1.0

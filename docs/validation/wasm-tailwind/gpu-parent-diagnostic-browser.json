@@ -1,0 +1,450 @@
+{
+  "config": {
+    "argv": [
+      "/Users/rockie/.nvm/versions/node/v26.1.0/bin/node",
+      "/Users/rockie/Documents/gh-rockie/rustify-ui/node_modules/.bin/playwright",
+      "test",
+      "--project=utility-lab",
+      "--workers=1",
+      "--grep",
+      "GPU percentages",
+      "--output=docs/validation/wasm-tailwind/gpu-parent/diagnostic-results",
+      "--reporter=json"
+    ],
+    "configFile": "/Users/rockie/Documents/gh-rockie/rustify-ui/playwright.config.ts",
+    "rootDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": {},
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/wasm-tailwind/gpu-parent/diagnostic-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "utility-lab-scanner",
+        "name": "utility-lab-scanner",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "utility-scanner.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/wasm-tailwind/gpu-parent/diagnostic-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "utility-lab-scanner-deep",
+        "name": "utility-lab-scanner-deep",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "utility-scanner.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/wasm-tailwind/gpu-parent/diagnostic-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "utility-lab",
+        "name": "utility-lab",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "utility-runtime.spec.ts",
+          "utility-faults.spec.ts",
+          "utility-gpu.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/wasm-tailwind/gpu-parent/diagnostic-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "utility-lab-deep",
+        "name": "utility-lab-deep",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "utility-runtime.spec.ts",
+          "utility-gpu.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/wasm-tailwind/gpu-parent/diagnostic-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "utility-baseline",
+        "name": "utility-baseline",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "utility-baseline.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/wasm-tailwind/gpu-parent/diagnostic-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "fusion-basic",
+        "name": "fusion-basic",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "p3-restart.spec.ts",
+          "m1-probes.spec.ts",
+          "m2-runtime.spec.ts",
+          "m3-state.spec.ts",
+          "m4-geometry.spec.ts",
+          "m4-overlay.spec.ts",
+          "m6-mainpath.spec.ts",
+          "p2-navigation.spec.ts",
+          "p3-instances.spec.ts",
+          "p3-b0.spec.ts",
+          "p3-idle.spec.ts",
+          "p3-memory.spec.ts",
+          "p3-endurance.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/wasm-tailwind/gpu-parent/diagnostic-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "property-workbench",
+        "name": "property-workbench",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "p3-restart.spec.ts",
+          "m3-workbench.spec.ts",
+          "m5-text.spec.ts",
+          "m5-semantics.spec.ts",
+          "m6-theme.spec.ts",
+          "m6-async.spec.ts",
+          "m6-components.spec.ts",
+          "m7-recovery.spec.ts",
+          "m8-baseline.spec.ts",
+          "m8-network.spec.ts",
+          "m8-endurance.spec.ts",
+          "p2-form.spec.ts",
+          "p2-deeplink.spec.ts",
+          "p2-workspace.spec.ts",
+          "p2-drag.spec.ts",
+          "p2-clipboard-files.spec.ts",
+          "p2-zoom.spec.ts",
+          "p2-ime.spec.ts",
+          "p3-policy.spec.ts",
+          "p3-faults.spec.ts",
+          "p3-diagnostics.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/wasm-tailwind/gpu-parent/diagnostic-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "component-catalog",
+        "name": "component-catalog",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "p3-restart.spec.ts",
+          "p2-catalog.spec.ts",
+          "p2-theme.spec.ts",
+          "p2-semantics.spec.ts",
+          "p2-i18n.spec.ts",
+          "p2-reflow.spec.ts",
+          "p2-a11y.spec.ts",
+          "p3-policy.spec.ts",
+          "catalog-inputs.spec.ts",
+          "theme-compat.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/wasm-tailwind/gpu-parent/diagnostic-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "theme-studio",
+        "name": "theme-studio",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [
+          "theme-compat.spec.ts",
+          "theme-export-runtime.spec.ts"
+        ],
+        "testMatch": [
+          "theme-*.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/wasm-tailwind/gpu-parent/diagnostic-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "theme-studio-deep",
+        "name": "theme-studio-deep",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "theme-deployment.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/wasm-tailwind/gpu-parent/diagnostic-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "theme-export",
+        "name": "theme-export",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "theme-export-runtime.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/wasm-tailwind/gpu-parent/diagnostic-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "theme-export-deep",
+        "name": "theme-export-deep",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "theme-export-runtime.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/wasm-tailwind/gpu-parent/diagnostic-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "data-workbench",
+        "name": "data-workbench",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "p3-restart.spec.ts",
+          "p3-probes.spec.ts",
+          "p3-table.spec.ts",
+          "p3-jobs.spec.ts",
+          "p3-scene.spec.ts",
+          "p3-memory.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/wasm-tailwind/gpu-parent/diagnostic-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "budget-scene",
+        "name": "budget-scene",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "p3-budget-scene.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/wasm-tailwind/gpu-parent/diagnostic-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "workbench-deep",
+        "name": "workbench-deep",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "p2-deeplink.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/wasm-tailwind/gpu-parent/diagnostic-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "deployment",
+        "name": "deployment",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "m7-deployment.spec.ts"
+        ],
+        "timeout": 120000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "utility-gpu.spec.ts",
+      "file": "utility-gpu.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "GPU percentages use the parent content box and follow its real resize",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "utility-lab",
+              "projectName": "utility-lab",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 840,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 7\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"candidate\": \"gap-0\",\u001b[39m\n\u001b[31m+     \"family\": \"gap\",\u001b[39m\n\u001b[31m+     \"kind\": \"invalid_value\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 7\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"candidate\": \"gap-0\",\u001b[39m\n\u001b[31m+     \"family\": \"gap\",\u001b[39m\n\u001b[31m+     \"kind\": \"invalid_value\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m\n    at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser/utility-gpu.spec.ts:42:106",
+                    "location": {
+                      "file": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser/utility-gpu.spec.ts",
+                      "column": 106,
+                      "line": 42
+                    },
+                    "snippet": "  40 |   await info.attach('Parent geometry compiler input', {body: JSON.stringify(compilation, null, 2), contentType: 'application/json'});\n  41 |   expect(compilation.unsupported).toEqual([]);\n> 42 |   expect(compilation.rejected.filter((item: any) => [...container, ...button].includes(item.candidate))).toEqual([]);\n     |                                                                                                          ^\n  43 |   const revision = await apply(page, button, [container, ['w-[60px]', 'h-[20px]'], ['w-[69px]', 'h-[69px]']]);\n  44 |   const fixed = await drawn(page, revision);\n  45 |   expect(fixed.container.geometry.slice(2)).toEqual([300, 220]);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser/utility-gpu.spec.ts",
+                        "column": 106,
+                        "line": 42
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 7\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"candidate\": \"gap-0\",\u001b[39m\n\u001b[31m+     \"family\": \"gap\",\u001b[39m\n\u001b[31m+     \"kind\": \"invalid_value\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n  40 |   await info.attach('Parent geometry compiler input', {body: JSON.stringify(compilation, null, 2), contentType: 'application/json'});\n  41 |   expect(compilation.unsupported).toEqual([]);\n> 42 |   expect(compilation.rejected.filter((item: any) => [...container, ...button].includes(item.candidate))).toEqual([]);\n     |                                                                                                          ^\n  43 |   const revision = await apply(page, button, [container, ['w-[60px]', 'h-[20px]'], ['w-[69px]', 'h-[69px]']]);\n  44 |   const fixed = await drawn(page, revision);\n  45 |   expect(fixed.container.geometry.slice(2)).toEqual([300, 220]);\n    at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser/utility-gpu.spec.ts:42:106"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T10:49:26.329Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "Parent geometry compiler input",
+                      "contentType": "application/json",
+                      "body": "ewogICJyZXZpc2lvbiI6IDEsCiAgImNoYW5nZWQiOiB0cnVlLAogICJjc3MiOiAiQHNjb3BlIChbZGF0YS1ydXN0aWZ5LXN0eWxlLW93bmVyPVwiNjYzMjQwNDEtYjZmZS00MDIzLTg4ZWEtNzBjNmJjZWQ1YTUyXCJdKSB0byAoW2RhdGEtcnVzdGlmeS1zdHlsZS1vd25lcl0pIHtcbiAgQGxheWVyIHByb3BlcnRpZXM7XG4gIC5oLVxcWzIwcHhcXF0ge1xuICAgIGhlaWdodDogMjBweDtcbiAgfVxuICAuaC1cXFs1MFxcJVxcXSB7XG4gICAgaGVpZ2h0OiA1MCU7XG4gIH1cbiAgLmgtXFxbNjlweFxcXSB7XG4gICAgaGVpZ2h0OiA2OXB4O1xuICB9XG4gIC5oLVxcWzIyMHB4XFxdIHtcbiAgICBoZWlnaHQ6IDIyMHB4O1xuICB9XG4gIC53LVxcWzUwXFwlXFxdIHtcbiAgICB3aWR0aDogNTAlO1xuICB9XG4gIC53LVxcWzYwcHhcXF0ge1xuICAgIHdpZHRoOiA2MHB4O1xuICB9XG4gIC53LVxcWzY5cHhcXF0ge1xuICAgIHdpZHRoOiA2OXB4O1xuICB9XG4gIC53LVxcWzMwMHB4XFxdIHtcbiAgICB3aWR0aDogMzAwcHg7XG4gIH1cbiAgLm1heC13LVxcWzEyMHB4XFxdIHtcbiAgICBtYXgtd2lkdGg6IDEyMHB4O1xuICB9XG4gIC5taW4tdy1cXFsxMDBweFxcXSB7XG4gICAgbWluLXdpZHRoOiAxMDBweDtcbiAgfVxuICAuZmxleC1jb2wge1xuICAgIGZsZXgtZGlyZWN0aW9uOiBjb2x1bW47XG4gIH1cbiAgLml0ZW1zLXN0YXJ0IHtcbiAgICBhbGlnbi1pdGVtczogZmxleC1zdGFydDtcbiAgfVxuICAuanVzdGlmeS1zdGFydCB7XG4gICAganVzdGlmeS1jb250ZW50OiBmbGV4LXN0YXJ0O1xuICB9XG4gIC5ib3JkZXItMiB7XG4gICAgYm9yZGVyLXN0eWxlOiB2YXIoLS1ydXN0aWZ5LTY2MzI0MDQxLWI2ZmUtNDAyMy04OGVhLTcwYzZiY2VkNWE1Mi10dy1ib3JkZXItc3R5bGUpO1xuICAgIGJvcmRlci13aWR0aDogMnB4O1xuICB9XG4gIC5iZy1cXFtcXCMxMjM0NTZcXF0ge1xuICAgIGJhY2tncm91bmQtY29sb3I6ICMxMjM0NTY7XG4gIH1cbiAgLnAtXFxbMTBcXCVcXF0ge1xuICAgIHBhZGRpbmc6IDEwJTtcbiAgfVxuICAucC1cXFsxMHB4XFxdIHtcbiAgICBwYWRkaW5nOiAxMHB4O1xuICB9XG4gIEBsYXllciBwcm9wZXJ0aWVzIHtcbiAgICBAc3VwcG9ydHMgKCgtd2Via2l0LWh5cGhlbnM6IG5vbmUpIGFuZCAobm90IChtYXJnaW4tdHJpbTogaW5saW5lKSkpIG9yICgoLW1vei1vcmllbnQ6IGlubGluZSkgYW5kIChub3QgKGNvbG9yOnJnYihmcm9tIHJlZCByIGcgYikpKSkge1xuICAgICAgKiwgOjpiZWZvcmUsIDo6YWZ0ZXIsIDo6YmFja2Ryb3Age1xuICAgICAgICAtLXJ1c3RpZnktNjYzMjQwNDEtYjZmZS00MDIzLTg4ZWEtNzBjNmJjZWQ1YTUyLXR3LWJvcmRlci1zdHlsZTogc29saWQ7XG4gICAgICB9XG4gICAgfVxuICB9XG59XG5AcHJvcGVydHkgLS1ydXN0aWZ5LTY2MzI0MDQxLWI2ZmUtNDAyMy04OGVhLTcwYzZiY2VkNWE1Mi10dy1ib3JkZXItc3R5bGUge1xuICBzeW50YXg6IFwiKlwiO1xuICBpbmhlcml0czogZmFsc2U7XG4gIGluaXRpYWwtdmFsdWU6IHNvbGlkO1xufVxuIiwKICAiYWRtaXR0ZWQiOiBbCiAgICAiaC1bMjBweF0iLAogICAgImgtWzUwJV0iLAogICAgImgtWzY5cHhdIiwKICAgICJoLVsyMjBweF0iLAogICAgInctWzUwJV0iLAogICAgInctWzYwcHhdIiwKICAgICJ3LVs2OXB4XSIsCiAgICAidy1bMzAwcHhdIiwKICAgICJtYXgtdy1bMTIwcHhdIiwKICAgICJtaW4tdy1bMTAwcHhdIiwKICAgICJmbGV4LWNvbCIsCiAgICAiaXRlbXMtc3RhcnQiLAogICAgImp1c3RpZnktc3RhcnQiLAogICAgImJvcmRlci0yIiwKICAgICJiZy1bIzEyMzQ1Nl0iLAogICAgInAtWzEwJV0iLAogICAgInAtWzEwcHhdIgogIF0sCiAgInJlamVjdGVkIjogWwogICAgewogICAgICAiY2FuZGlkYXRlIjogImdhcC0wIiwKICAgICAgImtpbmQiOiAiaW52YWxpZF92YWx1ZSIsCiAgICAgICJmYW1pbHkiOiAiZ2FwIgogICAgfSwKICAgIHsKICAgICAgImNhbmRpZGF0ZSI6ICJuZXN0ZWQtc2xvdCIsCiAgICAgICJraW5kIjogInVua25vd25fdXRpbGl0eSIsCiAgICAgICJmYW1pbHkiOiBudWxsCiAgICB9LAogICAgewogICAgICAiY2FuZGlkYXRlIjogInByZXZpZXciLAogICAgICAia2luZCI6ICJ1bmtub3duX3V0aWxpdHkiLAogICAgICAiZmFtaWx5IjogbnVsbAogICAgfSwKICAgIHsKICAgICAgImNhbmRpZGF0ZSI6ICJwcmV2aWV3LWNvbnRlbnQiLAogICAgICAia2luZCI6ICJ1bmtub3duX3V0aWxpdHkiLAogICAgICAiZmFtaWx5IjogbnVsbAogICAgfSwKICAgIHsKICAgICAgImNhbmRpZGF0ZSI6ICJzYW1wbGUiLAogICAgICAia2luZCI6ICJ1bmtub3duX3V0aWxpdHkiLAogICAgICAiZmFtaWx5IjogbnVsbAogICAgfSwKICAgIHsKICAgICAgImNhbmRpZGF0ZSI6ICJzYW1wbGUtc3dhdGNoIiwKICAgICAgImtpbmQiOiAidW5rbm93bl91dGlsaXR5IiwKICAgICAgImZhbWlseSI6IG51bGwKICAgIH0sCiAgICB7CiAgICAgICJjYW5kaWRhdGUiOiAic2FtcGxlLXRleHQiLAogICAgICAia2luZCI6ICJ1bmtub3duX3V0aWxpdHkiLAogICAgICAiZmFtaWx5IjogbnVsbAogICAgfQogIF0sCiAgInVuc3VwcG9ydGVkIjogW10sCiAgImdwdV9wcm9ncmFtcyI6IFsKICAgIHsKICAgICAgImNhbmRpZGF0ZSI6ICJoLVsyMHB4XSIsCiAgICAgICJjb25kaXRpb25zIjogW10sCiAgICAgICJkZWNsYXJhdGlvbnMiOiBbCiAgICAgICAgewogICAgICAgICAgInByb3BlcnR5IjogImhlaWdodCIsCiAgICAgICAgICAidmFsdWUiOiB7CiAgICAgICAgICAgICJraW5kIjogInBpeGVscyIsCiAgICAgICAgICAgICJ2YWx1ZSI6ICIyMCIKICAgICAgICAgIH0sCiAgICAgICAgICAiaW1wb3J0YW50IjogZmFsc2UKICAgICAgICB9CiAgICAgIF0sCiAgICAgICJjYXNjYWRlX29yZGVyIjogMAogICAgfSwKICAgIHsKICAgICAgImNhbmRpZGF0ZSI6ICJoLVs1MCVdIiwKICAgICAgImNvbmRpdGlvbnMiOiBbXSwKICAgICAgImRlY2xhcmF0aW9ucyI6IFsKICAgICAgICB7CiAgICAgICAgICAicHJvcGVydHkiOiAiaGVpZ2h0IiwKICAgICAgICAgICJ2YWx1ZSI6IHsKICAgICAgICAgICAgImtpbmQiOiAia2V5d29yZCIsCiAgICAgICAgICAgICJ2YWx1ZSI6ICI1MCUiCiAgICAgICAgICB9LAogICAgICAgICAgImltcG9ydGFudCI6IGZhbHNlCiAgICAgICAgfQogICAgICBdLAogICAgICAiY2FzY2FkZV9vcmRlciI6IDEKICAgIH0sCiAgICB7CiAgICAgICJjYW5kaWRhdGUiOiAiaC1bNjlweF0iLAogICAgICAiY29uZGl0aW9ucyI6IFtdLAogICAgICAiZGVjbGFyYXRpb25zIjogWwogICAgICAgIHsKICAgICAgICAgICJwcm9wZXJ0eSI6ICJoZWlnaHQiLAogICAgICAgICAgInZhbHVlIjogewogICAgICAgICAgICAia2luZCI6ICJwaXhlbHMiLAogICAgICAgICAgICAidmFsdWUiOiAiNjkiCiAgICAgICAgICB9LAogICAgICAgICAgImltcG9ydGFudCI6IGZhbHNlCiAgICAgICAgfQogICAgICBdLAogICAgICAiY2FzY2FkZV9vcmRlciI6IDIKICAgIH0sCiAgICB7CiAgICAgICJjYW5kaWRhdGUiOiAiaC1bMjIwcHhdIiwKICAgICAgImNvbmRpdGlvbnMiOiBbXSwKICAgICAgImRlY2xhcmF0aW9ucyI6IFsKICAgICAgICB7CiAgICAgICAgICAicHJvcGVydHkiOiAiaGVpZ2h0IiwKICAgICAgICAgICJ2YWx1ZSI6IHsKICAgICAgICAgICAgImtpbmQiOiAicGl4ZWxzIiwKICAgICAgICAgICAgInZhbHVlIjogIjIyMCIKICAgICAgICAgIH0sCiAgICAgICAgICAiaW1wb3J0YW50IjogZmFsc2UKICAgICAgICB9CiAgICAgIF0sCiAgICAgICJjYXNjYWRlX29yZGVyIjogMwogICAgfSwKICAgIHsKICAgICAgImNhbmRpZGF0ZSI6ICJ3LVs1MCVdIiwKICAgICAgImNvbmRpdGlvbnMiOiBbXSwKICAgICAgImRlY2xhcmF0aW9ucyI6IFsKICAgICAgICB7CiAgICAgICAgICAicHJvcGVydHkiOiAid2lkdGgiLAogICAgICAgICAgInZhbHVlIjogewogICAgICAgICAgICAia2luZCI6ICJrZXl3b3JkIiwKICAgICAgICAgICAgInZhbHVlIjogIjUwJSIKICAgICAgICAgIH0sCiAgICAgICAgICAiaW1wb3J0YW50IjogZmFsc2UKICAgICAgICB9CiAgICAgIF0sCiAgICAgICJjYXNjYWRlX29yZGVyIjogNAogICAgfSwKICAgIHsKICAgICAgImNhbmRpZGF0ZSI6ICJ3LVs2MHB4XSIsCiAgICAgICJjb25kaXRpb25zIjogW10sCiAgICAgICJkZWNsYXJhdGlvbnMiOiBbCiAgICAgICAgewogICAgICAgICAgInByb3BlcnR5IjogIndpZHRoIiwKICAgICAgICAgICJ2YWx1ZSI6IHsKICAgICAgICAgICAgImtpbmQiOiAicGl4ZWxzIiwKICAgICAgICAgICAgInZhbHVlIjogIjYwIgogICAgICAgICAgfSwKICAgICAgICAgICJpbXBvcnRhbnQiOiBmYWxzZQogICAgICAgIH0KICAgICAgXSwKICAgICAgImNhc2NhZGVfb3JkZXIiOiA1CiAgICB9LAogICAgewogICAgICAiY2FuZGlkYXRlIjogInctWzY5cHhdIiwKICAgICAgImNvbmRpdGlvbnMiOiBbXSwKICAgICAgImRlY2xhcmF0aW9ucyI6IFsKICAgICAgICB7CiAgICAgICAgICAicHJvcGVydHkiOiAid2lkdGgiLAogICAgICAgICAgInZhbHVlIjogewogICAgICAgICAgICAia2luZCI6ICJwaXhlbHMiLAogICAgICAgICAgICAidmFsdWUiOiAiNjkiCiAgICAgICAgICB9LAogICAgICAgICAgImltcG9ydGFudCI6IGZhbHNlCiAgICAgICAgfQogICAgICBdLAogICAgICAiY2FzY2FkZV9vcmRlciI6IDYKICAgIH0sCiAgICB7CiAgICAgICJjYW5kaWRhdGUiOiAidy1bMzAwcHhdIiwKICAgICAgImNvbmRpdGlvbnMiOiBbXSwKICAgICAgImRlY2xhcmF0aW9ucyI6IFsKICAgICAgICB7CiAgICAgICAgICAicHJvcGVydHkiOiAid2lkdGgiLAogICAgICAgICAgInZhbHVlIjogewogICAgICAgICAgICAia2luZCI6ICJwaXhlbHMiLAogICAgICAgICAgICAidmFsdWUiOiAiMzAwIgogICAgICAgICAgfSwKICAgICAgICAgICJpbXBvcnRhbnQiOiBmYWxzZQogICAgICAgIH0KICAgICAgXSwKICAgICAgImNhc2NhZGVfb3JkZXIiOiA3CiAgICB9LAogICAgewogICAgICAiY2FuZGlkYXRlIjogIm1heC13LVsxMjBweF0iLAogICAgICAiY29uZGl0aW9ucyI6IFtdLAogICAgICAiZGVjbGFyYXRpb25zIjogWwogICAgICAgIHsKICAgICAgICAgICJwcm9wZXJ0eSI6ICJtYXgtd2lkdGgiLAogICAgICAgICAgInZhbHVlIjogewogICAgICAgICAgICAia2luZCI6ICJwaXhlbHMiLAogICAgICAgICAgICAidmFsdWUiOiAiMTIwIgogICAgICAgICAgfSwKICAgICAgICAgICJpbXBvcnRhbnQiOiBmYWxzZQogICAgICAgIH0KICAgICAgXSwKICAgICAgImNhc2NhZGVfb3JkZXIiOiA4CiAgICB9LAogICAgewogICAgICAiY2FuZGlkYXRlIjogIm1pbi13LVsxMDBweF0iLAogICAgICAiY29uZGl0aW9ucyI6IFtdLAogICAgICAiZGVjbGFyYXRpb25zIjogWwogICAgICAgIHsKICAgICAgICAgICJwcm9wZXJ0eSI6ICJtaW4td2lkdGgiLAogICAgICAgICAgInZhbHVlIjogewogICAgICAgICAgICAia2luZCI6ICJwaXhlbHMiLAogICAgICAgICAgICAidmFsdWUiOiAiMTAwIgogICAgICAgICAgfSwKICAgICAgICAgICJpbXBvcnRhbnQiOiBmYWxzZQogICAgICAgIH0KICAgICAgXSwKICAgICAgImNhc2NhZGVfb3JkZXIiOiA5CiAgICB9LAogICAgewogICAgICAiY2FuZGlkYXRlIjogImZsZXgtY29sIiwKICAgICAgImNvbmRpdGlvbnMiOiBbXSwKICAgICAgImRlY2xhcmF0aW9ucyI6IFsKICAgICAgICB7CiAgICAgICAgICAicHJvcGVydHkiOiAiZmxleC1kaXJlY3Rpb24iLAogICAgICAgICAgInZhbHVlIjogewogICAgICAgICAgICAia2luZCI6ICJrZXl3b3JkIiwKICAgICAgICAgICAgInZhbHVlIjogImNvbHVtbiIKICAgICAgICAgIH0sCiAgICAgICAgICAiaW1wb3J0YW50IjogZmFsc2UKICAgICAgICB9CiAgICAgIF0sCiAgICAgICJjYXNjYWRlX29yZGVyIjogMTAKICAgIH0sCiAgICB7CiAgICAgICJjYW5kaWRhdGUiOiAiaXRlbXMtc3RhcnQiLAogICAgICAiY29uZGl0aW9ucyI6IFtdLAogICAgICAiZGVjbGFyYXRpb25zIjogWwogICAgICAgIHsKICAgICAgICAgICJwcm9wZXJ0eSI6ICJhbGlnbi1pdGVtcyIsCiAgICAgICAgICAidmFsdWUiOiB7CiAgICAgICAgICAgICJraW5kIjogImtleXdvcmQiLAogICAgICAgICAgICAidmFsdWUiOiAiZmxleC1zdGFydCIKICAgICAgICAgIH0sCiAgICAgICAgICAiaW1wb3J0YW50IjogZmFsc2UKICAgICAgICB9CiAgICAgIF0sCiAgICAgICJjYXNjYWRlX29yZGVyIjogMTEKICAgIH0sCiAgICB7CiAgICAgICJjYW5kaWRhdGUiOiAianVzdGlmeS1zdGFydCIsCiAgICAgICJjb25kaXRpb25zIjogW10sCiAgICAgICJkZWNsYXJhdGlvbnMiOiBbCiAgICAgICAgewogICAgICAgICAgInByb3BlcnR5IjogImp1c3RpZnktY29udGVudCIsCiAgICAgICAgICAidmFsdWUiOiB7CiAgICAgICAgICAgICJraW5kIjogImtleXdvcmQiLAogICAgICAgICAgICAidmFsdWUiOiAiZmxleC1zdGFydCIKICAgICAgICAgIH0sCiAgICAgICAgICAiaW1wb3J0YW50IjogZmFsc2UKICAgICAgICB9CiAgICAgIF0sCiAgICAgICJjYXNjYWRlX29yZGVyIjogMTIKICAgIH0sCiAgICB7CiAgICAgICJjYW5kaWRhdGUiOiAiYm9yZGVyLTIiLAogICAgICAiY29uZGl0aW9ucyI6IFtdLAogICAgICAiZGVjbGFyYXRpb25zIjogWwogICAgICAgIHsKICAgICAgICAgICJwcm9wZXJ0eSI6ICJib3JkZXItc3R5bGUiLAogICAgICAgICAgInZhbHVlIjogewogICAgICAgICAgICAia2luZCI6ICJjc3NfZXhwcmVzc2lvbiIsCiAgICAgICAgICAgICJ2YWx1ZSI6ICJ2YXIoLS10dy1ib3JkZXItc3R5bGUpIgogICAgICAgICAgfSwKICAgICAgICAgICJpbXBvcnRhbnQiOiBmYWxzZQogICAgICAgIH0sCiAgICAgICAgewogICAgICAgICAgInByb3BlcnR5IjogImJvcmRlci13aWR0aCIsCiAgICAgICAgICAidmFsdWUiOiB7CiAgICAgICAgICAgICJraW5kIjogInBpeGVscyIsCiAgICAgICAgICAgICJ2YWx1ZSI6ICIyIgogICAgICAgICAgfSwKICAgICAgICAgICJpbXBvcnRhbnQiOiBmYWxzZQogICAgICAgIH0KICAgICAgXSwKICAgICAgImNhc2NhZGVfb3JkZXIiOiAxMwogICAgfSwKICAgIHsKICAgICAgImNhbmRpZGF0ZSI6ICJiZy1bIzEyMzQ1Nl0iLAogICAgICAiY29uZGl0aW9ucyI6IFtdLAogICAgICAiZGVjbGFyYXRpb25zIjogWwogICAgICAgIHsKICAgICAgICAgICJwcm9wZXJ0eSI6ICJiYWNrZ3JvdW5kLWNvbG9yIiwKICAgICAgICAgICJ2YWx1ZSI6IHsKICAgICAgICAgICAgImtpbmQiOiAiY29sb3IiLAogICAgICAgICAgICAidmFsdWUiOiAiIzEyMzQ1NiIKICAgICAgICAgIH0sCiAgICAgICAgICAiaW1wb3J0YW50IjogZmFsc2UKICAgICAgICB9CiAgICAgIF0sCiAgICAgICJjYXNjYWRlX29yZGVyIjogMTQKICAgIH0sCiAgICB7CiAgICAgICJjYW5kaWRhdGUiOiAicC1bMTAlXSIsCiAgICAgICJjb25kaXRpb25zIjogW10sCiAgICAgICJkZWNsYXJhdGlvbnMiOiBbCiAgICAgICAgewogICAgICAgICAgInByb3BlcnR5IjogInBhZGRpbmciLAogICAgICAgICAgInZhbHVlIjogewogICAgICAgICAgICAia2luZCI6ICJrZXl3b3JkIiwKICAgICAgICAgICAgInZhbHVlIjogIjEwJSIKICAgICAgICAgIH0sCiAgICAgICAgICAiaW1wb3J0YW50IjogZmFsc2UKICAgICAgICB9CiAgICAgIF0sCiAgICAgICJjYXNjYWRlX29yZGVyIjogMTUKICAgIH0sCiAgICB7CiAgICAgICJjYW5kaWRhdGUiOiAicC1bMTBweF0iLAogICAgICAiY29uZGl0aW9ucyI6IFtdLAogICAgICAiZGVjbGFyYXRpb25zIjogWwogICAgICAgIHsKICAgICAgICAgICJwcm9wZXJ0eSI6ICJwYWRkaW5nIiwKICAgICAgICAgICJ2YWx1ZSI6IHsKICAgICAgICAgICAgImtpbmQiOiAicGl4ZWxzIiwKICAgICAgICAgICAgInZhbHVlIjogIjEwIgogICAgICAgICAgfSwKICAgICAgICAgICJpbXBvcnRhbnQiOiBmYWxzZQogICAgICAgIH0KICAgICAgXSwKICAgICAgImNhc2NhZGVfb3JkZXIiOiAxNgogICAgfQogIF0sCiAgImdwdV92YXJpYWJsZXMiOiB7CiAgICAiLS10dy1ib3JkZXItc3R5bGUiOiAic29saWQiCiAgfSwKICAibWV0cmljcyI6IHsKICAgICJwYXJzZWRfY2FuZGlkYXRlcyI6IDE4LAogICAgImdlbmVyYXRlZF9jYW5kaWRhdGVzIjogMTcsCiAgICAiY2FjaGVfZW50cmllcyI6IDI0LAogICAgImNhY2hlX2J5dGVzIjogNDYwOCwKICAgICJvdXRwdXRfYnl0ZXMiOiAxMzc1CiAgfQp9"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/wasm-tailwind/gpu-parent/diagnostic-results/utility-gpu-GPU-percentage-e7ba5--and-follow-its-real-resize-utility-lab/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/wasm-tailwind/gpu-parent/diagnostic-results/utility-gpu-GPU-percentage-e7ba5--and-follow-its-real-resize-utility-lab/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser/utility-gpu.spec.ts",
+                    "column": 106,
+                    "line": 42
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "16680e39cdda4ee2503a-4c077981764833683b37",
+          "file": "utility-gpu.spec.ts",
+          "line": 31,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-05T10:49:25.996Z",
+    "duration": 1779.839,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}

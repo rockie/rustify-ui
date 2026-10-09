@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "p50": [
+    {
+      "workload": "cn.cnVariadicWarm",
+      "unit": "ns/call",
+      "jsReference": 88.215,
+      "rustNative": 420.19,
+      "rustWasmCrossing": 1920.4658400000003
+    },
+    {
+      "workload": "cn.cnSingleWarm",
+      "unit": "ns/call",
+      "jsReference": 16.27708999999996,
+      "rustNative": 159.61541,
+      "rustWasmCrossing": 935.1687500000004
+    },
+    {
+      "workload": "cn.mergeStringWarm",
+      "unit": "ns/call",
+      "jsReference": 13.601250000000109,
+      "rustNative": 113.675,
+      "rustWasmCrossing": 696.3454199999977
+    },
+    {
+      "workload": "cn.mergeUncached",
+      "unit": "ns/call",
+      "jsReference": 287.13374999999985,
+      "rustNative": 407.84625,
+      "rustWasmCrossing": 1341.186660000003
+    },
+    {
+      "workload": "cn.clsxJoinOnly",
+      "unit": "ns/call",
+      "jsReference": 20.91709000000037,
+      "rustNative": 60.98666,
+      "rustWasmCrossing": 1589.5716600000014
+    },
+    {
+      "workload": "cn.createConfigAndFirstMerge",
+      "unit": "ns/call",
+      "jsReference": 973801.0500000002,
+      "rustNative": 633282.3,
+      "rustWasmCrossing": 10223062.500000017
+    },
+    {
+      "workload": "compiler.cold",
+      "unit": "ms",
+      "jsReference": 0.150459000000005,
+      "rustNative": 0.010167,
+      "rustWasmSession": 0.03395799999998417
+    },
+    {
+      "workload": "compiler.warm",
+      "unit": "ms",
+      "jsReference": 0.037624999999998465,
+      "rustNative": 0.044292000000000005,
+      "rustWasmSession": 0.18612499999926513
+    },
+    {
+      "workload": "compiler.noOp",
+      "unit": "ms",
+      "jsReference": 0.00016699999999758577,
+      "rustNative": 0.000292,
+      "rustWasmSession": 0.2046250000003056
+    },
+    {
+      "workload": "compiler.batch(1396 candidates)",
+      "unit": "ms",
+      "rustNative": 19.010625,
+      "rustWasmSession": 27.24512499999946
+    }
+  ]
+}

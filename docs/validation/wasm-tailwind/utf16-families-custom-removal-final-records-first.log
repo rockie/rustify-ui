@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/private/tmp/rustify-custom-removal-record-check.py", line 41, in <module>
+    assert 'imported Source and declarations: original/input/output object graph' in (records/'utf16-families-custom-removal-final-input-mutations-red.log').read_text()
+AssertionError

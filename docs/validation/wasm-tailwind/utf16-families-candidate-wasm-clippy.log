@@ -1,0 +1,30 @@
+mbx[warning]: Unix-domain cache session listener unavailable; using FIFO transport: failed to bind cache session listener at /var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/mbx-session-CORQQo/cache-agent.sock: Operation not permitted (os error 1)
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+    Checking rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+    Checking rustify-style-wasm v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style-wasm)
+error: unnecessary use of `clone` to create a slice from a reference
+   --> crates/rustify-style-wasm/src/session.rs:346:47
+    |
+346 |             let input = serde_json::to_string(&[candidate.clone()]).unwrap();
+    |                                               ^^^^^^^^^^^^^^^^^^^^ help: try: `std::slice::from_ref(&candidate)`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.98.0/index.html#cloned_ref_to_slice_refs
+    = note: `-D clippy::cloned-ref-to-slice-refs` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::cloned_ref_to_slice_refs)]`
+
+error: unnecessary use of `clone` to create a slice from a reference
+   --> crates/rustify-style-wasm/src/session.rs:444:43
+    |
+444 |         let input = serde_json::to_string(&[candidate.clone()]).unwrap();
+    |                                           ^^^^^^^^^^^^^^^^^^^^ help: try: `std::slice::from_ref(&candidate)`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.98.0/index.html#cloned_ref_to_slice_refs
+
+error: could not compile `rustify-style-wasm` (lib test) due to 2 previous errors
+mbx[cache]: 0 hits, 3 misses; 0 B downloaded, 0 B uploaded, 3.0 MiB stored locally

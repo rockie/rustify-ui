@@ -11,7 +11,7 @@ pub mod variants;
 
 /// Merges a component's own classes with the caller's, caller last.
 ///
-/// It exists as a function rather than a `tw_merge!` call inside each macro so
+/// It exists as a function rather than an engine call inside each macro so
 /// that the whole crate has one answer about what merging means.
 ///
 /// The component classes are the same unprefixed utilities an application
@@ -19,12 +19,183 @@ pub mod variants;
 /// same state, replaces it. Without the merge both would reach the element,
 /// and the order of the stylesheet, not the caller, would decide which shows.
 pub fn merge(base: impl AsRef<str>, class: &str) -> String {
-    tw_merge::tw_merge!(base.as_ref(), class)
+    crate::cn::merge(&[base.as_ref(), class])
+}
+
+/// Retains raw component and caller classes and recomputes them when the
+/// enclosing utility scope commits a new cn configuration.
+pub fn reactive_merge(
+    base: impl AsRef<str>,
+    class: &str,
+) -> impl Fn() -> String + Send + Sync + Copy + 'static {
+    let base = base.as_ref().to_owned();
+    let class = class.to_owned();
+    reactive_merge_with(move || vec![base.clone(), class.clone()])
+}
+
+/// The reactive form for components whose variant, size or caller classes
+/// change. Each evaluation passes the original fragments to cn exactly once.
+pub fn reactive_merge_with(
+    fragments: impl Fn() -> Vec<String> + Send + Sync + 'static,
+) -> impl Fn() -> String + Send + Sync + Copy + 'static {
+    use leptos::prelude::*;
+
+    #[cfg(feature = "utility")]
+    let context = use_context::<rustify_ui::utility::CnContext>();
+    #[cfg(feature = "utility")]
+    let registration = context.as_ref().and_then(|context| {
+        let id = match context.register(untrack(&fragments)) {
+            Ok(id) => Some(id),
+            Err(error) => {
+                context.report_error(error);
+                None
+            }
+        };
+        let cleanup_context = context.clone();
+        on_cleanup(move || {
+            if let Some(id) = id {
+                cleanup_context.unregister(id);
+            }
+        });
+        id
+    });
+    let computed = Memo::new(move |previous: Option<&String>| {
+        let fragments = fragments();
+        let raw: Vec<&str> = fragments.iter().map(String::as_str).collect();
+        #[cfg(feature = "utility")]
+        if let Some(context) = &context {
+            if let Some(id) = registration {
+                if let Err(error) = context.update(id, fragments.clone()) {
+                    context.report_error(error);
+                    return previous
+                        .cloned()
+                        .unwrap_or_else(|| crate::cn::join_text(&raw));
+                }
+            }
+            let merged = match registration {
+                Some(id) => context.merge_registered(id, &raw),
+                None => context.merge(&raw),
+            };
+            return match merged {
+                Ok(class) => class,
+                Err(error) => {
+                    context.report_error(error);
+                    previous
+                        .cloned()
+                        .unwrap_or_else(|| crate::cn::join_text(&raw))
+                }
+            };
+        }
+        #[cfg(not(feature = "utility"))]
+        let _ = previous;
+        crate::cn::merge(&raw)
+    });
+    move || computed.get()
 }
 
 #[cfg(test)]
 mod tests {
-    use super::merge;
+    use super::{merge, reactive_merge_with};
+    use leptos::prelude::*;
+
+    #[test]
+    fn reactive_classes_restore_raw_base_after_caller_override_is_removed() {
+        let owner = Owner::new();
+        owner.with(|| {
+            let caller = RwSignal::new("p-4".to_string());
+            let class = reactive_merge_with(move || vec!["p-2 bg-primary".into(), caller.get()]);
+            assert_eq!(class(), "bg-primary p-4");
+            caller.set(String::new());
+            assert_eq!(class(), "p-2 bg-primary");
+        });
+    }
+
+    #[test]
+    fn reactive_classes_merge_once_for_each_source_change() {
+        use std::sync::{
+            atomic::{AtomicUsize, Ordering},
+            Arc,
+        };
+
+        let owner = Owner::new();
+        owner.with(|| {
+            let caller = RwSignal::new("p-4".to_string());
+            let evaluations = Arc::new(AtomicUsize::new(0));
+            let observed = evaluations.clone();
+            let class = reactive_merge_with(move || {
+                observed.fetch_add(1, Ordering::Relaxed);
+                vec!["p-2".into(), caller.get()]
+            });
+            assert_eq!(class(), "p-4");
+            assert_eq!(class(), "p-4");
+            assert_eq!(evaluations.load(Ordering::Relaxed), 1);
+            caller.set("p-8".into());
+            assert_eq!(class(), "p-8");
+            assert_eq!(class(), "p-8");
+            assert_eq!(evaluations.load(Ordering::Relaxed), 2);
+        });
+    }
+
+    #[cfg(feature = "utility")]
+    #[test]
+    fn scoped_merge_keeps_classes_from_disjoint_custom_groups() {
+        use crate::cn::{ClassGroupDef, Cn, Config};
+        let mut config = Config::default();
+        config.class_groups.retain(|(name, _)| name != "p");
+        config.class_groups.extend([
+            (
+                "small-padding".into(),
+                vec![ClassGroupDef::Literal("p-2".into())],
+            ),
+            (
+                "large-padding".into(),
+                vec![ClassGroupDef::Literal("p-4".into())],
+            ),
+        ]);
+        Owner::new().with(|| {
+            let context = rustify_ui::utility::CnContext::new(Cn::new(config).unwrap(), 4096);
+            provide_context(context);
+            let class = reactive_merge_with(|| vec!["p-2".into(), "p-4".into()]);
+            assert_eq!(class(), "p-2 p-4");
+        });
+    }
+
+    #[cfg(feature = "utility")]
+    #[test]
+    fn scoped_callback_failure_keeps_the_last_successful_class() {
+        use crate::cn::{ClassGroupDef, Cn, CnError, Config};
+        use std::{cell::Cell, rc::Rc};
+        let fail = Rc::new(Cell::new(false));
+        let flag = fail.clone();
+        let mut config = Config::default();
+        config.class_groups.push((
+            "probe".into(),
+            vec![ClassGroupDef::Object(vec![(
+                "probe".into(),
+                vec![ClassGroupDef::Validator(Rc::new(move |_| {
+                    if flag.get() {
+                        Err(CnError::new("fixture callback failed"))
+                    } else {
+                        Ok(true)
+                    }
+                }))],
+            )])],
+        ));
+        Owner::new().with(|| {
+            let context = rustify_ui::utility::CnContext::new(Cn::new(config).unwrap(), 4096);
+            provide_context(context.clone());
+            let caller = RwSignal::new("probe-one".to_string());
+            let class = reactive_merge_with(move || vec!["p-2".into(), caller.get()]);
+            assert_eq!(class(), "p-2 probe-one");
+            fail.set(true);
+            caller.set("probe-two".into());
+            assert_eq!(class(), "p-2 probe-one");
+            assert_eq!(
+                context.last_error().as_deref(),
+                Some("fixture callback failed")
+            );
+        });
+    }
 
     #[test]
     fn a_later_class_replaces_an_earlier_one_of_the_same_kind() {
@@ -107,7 +278,7 @@ mod expansion {
 
     #[test]
     fn a_variant_carries_its_own_classes_and_the_callers() {
-        use tw_merge::IntoTailwindClass;
+        use crate::cn::IntoTailwindClass;
         let outline = TestBadgeClass {
             variant: TestBadgeVariant::Outline,
             size: TestBadgeSize::Lg,

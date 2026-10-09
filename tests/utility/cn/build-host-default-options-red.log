@@ -1,0 +1,9 @@
+{
+  "passed": 27,
+  "failures": [
+    {
+      "name": "pure-source-default-options-and-UTF16-extraction",
+      "error": "TypeError: Reflect.get called on non-object\n    at file:///Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/utility-conformance/cn/style.js:621:33\n    at handleError (file:///Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/utility-conformance/cn/style.js:943:18)\n    at __wbg_get_989d0a1309644f2b (file:///Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/utility-conformance/cn/style.js:620:57)\n    at rustify_style_wasm.wasm.js_sys[2be875191f1f6241]::Reflect::get::__wbg_get_989d0a1309644f2b externref shim (wasm://wasm/rustify_style_wasm.wasm-0084dfd2:wasm-function[2003]:0x162bfa)\n    at rustify_style_wasm.wasm.js_sys[2be875191f1f6241]::Reflect::get (wasm://wasm/rustify_style_wasm.wasm-0084dfd2:wasm-function[1665]:0x15ee81)\n    at rustify_style_wasm.wasm.rustify_style_wasm[ce60c4b1f1633208]::cn_build::cn_compile_to_source (wasm://wasm/rustify_style_wasm.wasm-0084dfd2:wasm-function[258]:0xe5a38)\n    at rustify_style_wasm.wasm.cn_compile_to_source (wasm://wasm/rustify_style_wasm.wasm-0084dfd2:wasm-function[1520]:0x15c197)\n    at rustify_style_wasm.wasm.cn_compile_to_source externref shim (wasm://wasm/rustify_style_wasm.wasm-0084dfd2:wasm-function[1884]:0x161c16)\n    at rustify_style_wasm.wasm.cn_compile_to_source externref shim multivalue shim (wasm://wasm/rustify_style_wasm.wasm-0084dfd2:wasm-function[1827]:0x16123c)\n    at Module.cn_compile_to_source (file:///Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/utility-conformance/cn/style.js:388:22)"
+    }
+  ]
+}

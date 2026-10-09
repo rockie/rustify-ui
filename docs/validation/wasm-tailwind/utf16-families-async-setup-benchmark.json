@@ -1,0 +1,109 @@
+{
+  "observedAt": "2026-10-06T15:45:15+11:00",
+  "scope": "public AST constructor with sixteen repeated tracked imports and four builds",
+  "before": {
+    "scope": "public AST constructor with sixteen repeated tracked imports and four builds",
+    "samples": [
+      {
+        "constructorP95Ms": 1.3193749999999795,
+        "buildP95Ms": 0.4549170000000231,
+        "sessionsPerSecond": 340.69987911525385,
+        "outputSha256": "a123d62c776bc635bda402dddccd89fd7edeaf2ac973716a07d762fe031b799d",
+        "sessions": 100,
+        "builds": 400
+      },
+      {
+        "constructorP95Ms": 1.313541999999984,
+        "buildP95Ms": 0.4564170000001013,
+        "sessionsPerSecond": 344.56040337686426,
+        "outputSha256": "a123d62c776bc635bda402dddccd89fd7edeaf2ac973716a07d762fe031b799d",
+        "sessions": 100,
+        "builds": 400
+      },
+      {
+        "constructorP95Ms": 1.3745840000001408,
+        "buildP95Ms": 0.47524999999996,
+        "sessionsPerSecond": 334.2924283390107,
+        "outputSha256": "a123d62c776bc635bda402dddccd89fd7edeaf2ac973716a07d762fe031b799d",
+        "sessions": 100,
+        "builds": 400
+      },
+      {
+        "constructorP95Ms": 1.2953330000000278,
+        "buildP95Ms": 0.4387090000000171,
+        "sessionsPerSecond": 346.8808120096854,
+        "outputSha256": "a123d62c776bc635bda402dddccd89fd7edeaf2ac973716a07d762fe031b799d",
+        "sessions": 100,
+        "builds": 400
+      },
+      {
+        "constructorP95Ms": 1.2852080000000115,
+        "buildP95Ms": 0.4417080000000624,
+        "sessionsPerSecond": 349.4873675606698,
+        "outputSha256": "a123d62c776bc635bda402dddccd89fd7edeaf2ac973716a07d762fe031b799d",
+        "sessions": 100,
+        "builds": 400
+      }
+    ],
+    "constructorP95Ms": 1.313541999999984,
+    "buildP95Ms": 0.4549170000000231,
+    "sessionsPerSecond": 344.56040337686426,
+    "wasmBytes": 2377827,
+    "wasmSha256": "6ca5b09857ec71647adb801bf21e9bb4373bf445a83edb6f8561231e5dfc36e5",
+    "actualWasm": true,
+    "finalPerformanceAcceptance": "pending"
+  },
+  "after": {
+    "scope": "public AST constructor with sixteen repeated tracked imports and four builds",
+    "samples": [
+      {
+        "constructorP95Ms": 1.3032919999999422,
+        "buildP95Ms": 0.4432079999999132,
+        "sessionsPerSecond": 347.6886743456608,
+        "outputSha256": "a123d62c776bc635bda402dddccd89fd7edeaf2ac973716a07d762fe031b799d",
+        "sessions": 100,
+        "builds": 400
+      },
+      {
+        "constructorP95Ms": 1.35612500000002,
+        "buildP95Ms": 0.45383300000003146,
+        "sessionsPerSecond": 345.688529449638,
+        "outputSha256": "a123d62c776bc635bda402dddccd89fd7edeaf2ac973716a07d762fe031b799d",
+        "sessions": 100,
+        "builds": 400
+      },
+      {
+        "constructorP95Ms": 1.3712499999999181,
+        "buildP95Ms": 0.4787499999999909,
+        "sessionsPerSecond": 339.54517075514434,
+        "outputSha256": "a123d62c776bc635bda402dddccd89fd7edeaf2ac973716a07d762fe031b799d",
+        "sessions": 100,
+        "builds": 400
+      },
+      {
+        "constructorP95Ms": 1.2837910000000647,
+        "buildP95Ms": 0.4347499999998945,
+        "sessionsPerSecond": 353.83189665258146,
+        "outputSha256": "a123d62c776bc635bda402dddccd89fd7edeaf2ac973716a07d762fe031b799d",
+        "sessions": 100,
+        "builds": 400
+      },
+      {
+        "constructorP95Ms": 1.29362500000002,
+        "buildP95Ms": 0.4322500000000673,
+        "sessionsPerSecond": 355.08994142368846,
+        "outputSha256": "a123d62c776bc635bda402dddccd89fd7edeaf2ac973716a07d762fe031b799d",
+        "sessions": 100,
+        "builds": 400
+      }
+    ],
+    "constructorP95Ms": 1.3032919999999422,
+    "buildP95Ms": 0.4432079999999132,
+    "sessionsPerSecond": 347.6886743456608,
+    "wasmBytes": 2396618,
+    "wasmSha256": "e88ebc8d9928739e844ba60ad1d3ac84d9ca3bd135fc72c0db570e983d819f53",
+    "actualWasm": true,
+    "finalPerformanceAcceptance": "pending"
+  },
+  "interpretation": "Descriptive serial measurement of the existing synchronous constructor; small differences do not establish an optimization. New Promise entry performance, unified allocator peaks and M7 acceptance remain pending."
+}

@@ -1,0 +1,41 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 5.27s
+     Running unittests src/lib.rs (target/debug/deps/rustify_style-4ed64bbe76d78d97)
+
+running 1 test
+test compiler::apply::tests::applications_match_official_css_errors_and_incremental_builds ... FAILED
+
+failures:
+
+---- compiler::apply::tests::applications_match_official_css_errors_and_incremental_builds stdout ----
+
+thread 'compiler::apply::tests::applications_match_official_css_errors_and_incremental_builds' (14601517) panicked at crates/rustify-style/src/compiler/apply.rs:310:9:
+118 differences; first cases: [
+    "\"apply:ordinary:empty:root:bg-(color:--probe)/50\": actual [\"background-color: var(--probe);\\n@supports (color: color-mix(in lab, red, red)) {\\n  background-color: color-mix(in oklab, var(--probe) 50%, transparent);\\n}\\n\"]; expected [\"background-color: color-mix(in oklab, var(--probe) 50%, transparent);\\n\"]",
+    "\"apply:ordinary:empty:style:unknown:also-unknown:hover:block\": error Syntax { offset: 0, message: \"Cannot apply utility class `unknown:also-unknown:hover:block` because the `unknown` and `also-unknown` variants does not exist.\" }; expected \"Cannot apply utility class `unknown:also-unknown:hover:block` because the `unknown` and `also-unknown` variants do not exist.\"",
+    "\"apply:ordinary:empty:root:unknown:also-unknown:hover:block\": error Syntax { offset: 0, message: \"Cannot apply utility class `unknown:also-unknown:hover:block` because the `unknown` and `also-unknown` variants does not exist.\" }; expected \"Cannot apply utility class `unknown:also-unknown:hover:block` because the `unknown` and `also-unknown` variants do not exist.\"",
+    "\"apply:ordinary:empty:nested:unknown:also-unknown:hover:block\": error Syntax { offset: 0, message: \"Cannot apply utility class `unknown:also-unknown:hover:block` because the `unknown` and `also-unknown` variants does not exist.\" }; expected \"Cannot apply utility class `unknown:also-unknown:hover:block` because the `unknown` and `also-unknown` variants do not exist.\"",
+    "\"apply:ordinary:empty:media:unknown:also-unknown:hover:block\": error Syntax { offset: 0, message: \"Cannot apply utility class `unknown:also-unknown:hover:block` because the `unknown` and `also-unknown` variants does not exist.\" }; expected \"Cannot apply utility class `unknown:also-unknown:hover:block` because the `unknown` and `also-unknown` variants do not exist.\"",
+    "\"apply:ordinary:empty:layer:unknown:also-unknown:hover:block\": error Syntax { offset: 0, message: \"Cannot apply utility class `unknown:also-unknown:hover:block` because the `unknown` and `also-unknown` variants does not exist.\" }; expected \"Cannot apply utility class `unknown:also-unknown:hover:block` because the `unknown` and `also-unknown` variants do not exist.\"",
+    "\"apply:ordinary:base:root:bg-alias/50\": actual [\":root, :host {\\n  --color-brand: #123456;\\n  --color-alias: var(--color-brand);\\n}\\nbackground-color: color-mix(in srgb, #123456 50%, transparent);\\n@supports (color: color-mix(in lab, red, red)) {\\n  background-color: color-mix(in oklab, var(--color-alias) 50%, transparent);\\n}\\n\"]; expected [\":root, :host {\\n  --color-brand: #123456;\\n  --color-alias: var(--color-brand);\\n}\\nbackground-color: color-mix(in oklab, var(--color-alias) 50%, transparent);\\n\"]",
+    "\"apply:ordinary:base:root:bg-brand/muted\": actual [\":root, :host {\\n  --color-brand: #123456;\\n  --opacity-muted: .35;\\n}\\nbackground-color: color-mix(in srgb, #123456 .35, transparent);\\n@supports (color: color-mix(in lab, red, red)) {\\n  background-color: color-mix(in oklab, var(--color-brand) var(--opacity-muted), transparent);\\n}\\n\"]; expected [\":root, :host {\\n  --color-brand: #123456;\\n  --opacity-muted: .35;\\n}\\nbackground-color: color-mix(in oklab, var(--color-brand) var(--opacity-muted), transparent);\\n\"]",
+]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    compiler::apply::tests::applications_match_official_css_errors_and_incremental_builds
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 118 filtered out; finished in 0.90s
+
+error: test failed, to rerun pass `-p rustify-style --lib`
+mbx[cache]: 0 hits, 0 misses, 1 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[gc]: evicted 5065 objects and 524 action results (15.5 GiB logical); 89.9 GiB logical remain
+mbx[savings]: 1h 34m of compilation avoided across 2238 builds. imagine the fan noise. now stop.

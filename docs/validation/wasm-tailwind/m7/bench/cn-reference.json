@@ -1,0 +1,156 @@
+{
+  "schemaVersion": 1,
+  "measuredAt": "2026-10-07T01:00:17.379Z",
+  "upstreamCommit": "b7ec0fce43d824a60517fab508584eb860fdf717",
+  "environment": {
+    "node": "v26.1.0",
+    "v8": "14.6.202.34-node.19",
+    "platform": "darwin",
+    "arch": "arm64",
+    "osRelease": "27.0.0",
+    "cpuModel": "Apple M5 Pro",
+    "logicalCpus": 15,
+    "totalMemoryBytes": 51539607552,
+    "loadAverage": [
+      8.849609375,
+      12.22607421875,
+      8.4208984375
+    ]
+  },
+  "corpus": {
+    "fixtureSha256": "49d4702335b939794ee43a3d29a82b15eea3fd7847f6f04c2da80112623c5543",
+    "inputs": 186,
+    "chars": 3873,
+    "variantShape": "base + upstream battery input + caller override"
+  },
+  "protocol": {
+    "warmupCalls": "min(callsPerSample,20000)",
+    "samples": 7,
+    "iterations": 100000,
+    "build": "fixed upstream source executed by Node 26 native TypeScript stripping",
+    "coldDefinition": "new config merger plus lazy compilation and first merge; module imports already warm",
+    "performanceGate": "measurement only; no invented SLO"
+  },
+  "measurements": {
+    "cnVariadicWarm": {
+      "unit": "ns/call",
+      "callsPerSample": 100000,
+      "samples": 7,
+      "p50": 88.215,
+      "p95": 98.21665999999992,
+      "sortedSamples": [
+        87.31583,
+        87.97875000000006,
+        88.01166000000009,
+        88.215,
+        90.16041999999999,
+        96.4070799999999,
+        98.21665999999992
+      ]
+    },
+    "cnSingleWarm": {
+      "unit": "ns/call",
+      "callsPerSample": 100000,
+      "samples": 7,
+      "p50": 16.27708999999996,
+      "p95": 24.547919999999976,
+      "sortedSamples": [
+        15.82334000000003,
+        15.851250000000048,
+        16.03625000000008,
+        16.27708999999996,
+        16.37749999999997,
+        19.313339999999926,
+        24.547919999999976
+      ]
+    },
+    "mergeStringWarm": {
+      "unit": "ns/call",
+      "callsPerSample": 100000,
+      "samples": 7,
+      "p50": 13.601250000000107,
+      "p95": 19.179579999999987,
+      "sortedSamples": [
+        13.370830000000069,
+        13.376660000000127,
+        13.519579999999962,
+        13.601250000000107,
+        14.522499999999923,
+        15.400419999999997,
+        19.179579999999987
+      ]
+    },
+    "mergeUncached": {
+      "unit": "ns/call",
+      "callsPerSample": 100000,
+      "samples": 7,
+      "p50": 287.13374999999985,
+      "p95": 293.20625000000007,
+      "sortedSamples": [
+        278.1204199999999,
+        284.38874999999996,
+        287.00125000000014,
+        287.13374999999985,
+        289.68458999999996,
+        291.56542,
+        293.20625000000007
+      ]
+    },
+    "clsxJoinOnly": {
+      "unit": "ns/call",
+      "callsPerSample": 100000,
+      "samples": 7,
+      "p50": 20.91709000000037,
+      "p95": 22.078750000000014,
+      "sortedSamples": [
+        20.229170000000067,
+        20.681670000000167,
+        20.689580000000092,
+        20.91709000000037,
+        20.990830000000074,
+        21.16166000000021,
+        22.078750000000014
+      ]
+    },
+    "createConfigAndFirstMerge": {
+      "unit": "ns/call",
+      "callsPerSample": 40,
+      "samples": 7,
+      "p50": 973801.0500000002,
+      "p95": 1083389.5999999982,
+      "sortedSamples": [
+        877537.4999999997,
+        950944.7999999992,
+        972309.3750000003,
+        973801.0500000002,
+        1032979.1749999998,
+        1059497.925000001,
+        1083389.5999999982
+      ]
+    }
+  },
+  "memory": {
+    "before": {
+      "rss": 100909056,
+      "heapTotal": 15368192,
+      "heapUsed": 11563280,
+      "external": 6743444,
+      "arrayBuffers": 898292
+    },
+    "after": {
+      "rss": 189186048,
+      "heapTotal": 84312064,
+      "heapUsed": 36331832,
+      "external": 9310316,
+      "arrayBuffers": 3465124
+    },
+    "interpretation": "process-level snapshots, not retained engine memory or a leak bound"
+  },
+  "sink": 48,
+  "pending": [
+    "Rust internal native/release",
+    "Rust internal WASM/release",
+    "JS/WASM crossing",
+    "headed browser comparison"
+  ]
+}

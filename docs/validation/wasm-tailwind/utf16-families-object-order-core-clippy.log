@@ -1,0 +1,13 @@
+mbx[warning]: Unix-domain cache session listener unavailable; using FIFO transport: failed to bind cache session listener at /var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/mbx-session-RulQar/cache-agent.sock: Operation not permitted (os error 1)
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+    Checking indexmap v2.14.2
+    Checking serde_json v1.0.151
+    Checking rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 4.41s
+mbx[cache]: 0 hits, 0 misses, 4 not looked up; 0 B downloaded, 0 B uploaded, 4.5 MiB stored locally

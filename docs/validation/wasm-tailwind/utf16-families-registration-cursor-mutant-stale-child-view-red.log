@@ -1,0 +1,103 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: visitor-child-reassignment-is-current
++ actual - expected
+... Skipped lines
+
+  {
+    arrays: [
+      [
+        0
+      ],
+...
+        context: {},
++       node: 0,
+-       node: 1,
+        parent: 2,
+        path: [
+          2,
++         0
+-         1
+        ]
+      }
+    ]
+  }
+
+    at file:///Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/wasm-tailwind/registration-design/run-cursor-prototype.mjs:145:10 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: {
+    arrays: [ [ 0 ], [ 1 ], [ 2 ] ],
+    deferred: [],
+    effects: [ { array: 1, node: 2, type: 'children' } ],
+    error: null,
+    nodes: [
+      {
+        children: null,
+        context: {},
+        kind: 'at-rule',
+        operation: null,
+        tag: 'old'
+      },
+      {
+        children: null,
+        context: {},
+        kind: 'at-rule',
+        operation: null,
+        tag: 'new'
+      },
+      {
+        children: 1,
+        context: {},
+        kind: 'at-rule',
+        operation: { array: 1, type: 'children' },
+        tag: 'switch'
+      }
+    ],
+    stopped: false,
+    visits: [
+      { context: {}, node: 2, parent: null, path: [ 2 ] },
+      { context: {}, node: 0, parent: 2, path: [ 2, 0 ] }
+    ]
+  },
+  expected: {
+    error: null,
+    stopped: false,
+    visits: [
+      { node: 2, parent: null, path: [ 2 ], context: {} },
+      { node: 1, parent: 2, path: [ 2, 1 ], context: {} }
+    ],
+    effects: [ { type: 'children', node: 2, array: 1 } ],
+    arrays: [ [ 0 ], [ 1 ], [ 2 ] ],
+    nodes: [
+      {
+        kind: 'at-rule',
+        tag: 'old',
+        children: null,
+        context: {},
+        operation: null
+      },
+      {
+        kind: 'at-rule',
+        tag: 'new',
+        children: null,
+        context: {},
+        operation: null
+      },
+      {
+        kind: 'at-rule',
+        tag: 'switch',
+        children: 1,
+        context: {},
+        operation: { type: 'children', array: 1 }
+      }
+    ],
+    deferred: []
+  },
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v26.1.0

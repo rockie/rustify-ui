@@ -1,0 +1,13 @@
+npm notice run rustify-ui-browser-tests@0.1.0 npx
+npm notice run 'playwright' test --project=component-catalog theme-compat.spec.ts p2-theme.spec.ts --output=docs/validation/wasm-tailwind/text-layout/catalog-results --reporter=line
+
+Running 7 tests using 1 worker
+
+[1/7] [component-catalog] › tests/browser/p2-theme.spec.ts:53:9 › M2 V3: a theme both halves adopt › every switch is in force two frames after the click
+[2/7] [component-catalog] › tests/browser/p2-theme.spec.ts:75:9 › M2 V3: a theme both halves adopt › the region's pixels move with the panel, not after it
+[3/7] [component-catalog] › tests/browser/p2-theme.spec.ts:93:9 › M2 V3: a theme both halves adopt › a control's four states are four different things to look at
+[4/7] [component-catalog] › tests/browser/p2-theme.spec.ts:139:9 › M2 V3: a theme both halves adopt › less motion is less motion, in the stylesheet and in the region
+[5/7] [component-catalog] › tests/browser/p2-theme.spec.ts:170:9 › M2 V3: a theme both halves adopt › the region's spinner turns, and stops when the scope asks it to
+[6/7] [component-catalog] › tests/browser/p2-theme.spec.ts:204:9 › M2 V3: a theme both halves adopt › the host page is not part of the scope's theme
+[7/7] [component-catalog] › tests/browser/theme-compat.spec.ts:6:5 › one Tailwind product retains legacy geometry and elevation beside v4
+  7 passed (16.3s)

@@ -1,0 +1,5 @@
+- Ground：已完成native/public/history调查与合成，外部原始意图未知。
+- Sketch：已完成两个独立结构候选和匿名评审；审后更正phase顺序，原始与注释版hash保留。
+- Agree：无人工checkpoint；候选A仅作为条件性实验基础，完整合同见synthesis.md。
+- Implement：六种native carrier、checked两克隆根、成功注册/函数事件、raw/优化字段和canonical Source tuple接入；14场景84阶段与5组alias图30阶段、322 native及完整既有回归通过。import 21+顺序/107阶段、media搬移apply及Source owner保活也已通过；函数阶段12失败图/4原异常与额度边界、跨crate failed outcome也已通过；导入加载失败4图仍RED，完整import/其余精确事件/语义失败前缀、快照裁剪与统一生产峰值仍待完成。
+- Scrap：尚未触发；出现重复同步例外、不可控保留或无预算clone时重做结构，不能弱化完整custom/metadata验收或更广loader/Source/失败时序检查。

@@ -1,0 +1,18 @@
+{
+  "fixedCases": 947,
+  "passed": 947,
+  "failures": []
+}
+{
+  "extraPassed": 50,
+  "failures": [
+    {
+      "id": "config/marker-proxy-read-timing",
+      "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:\n+ actual - expected\n\n  [\n    'keys',\n-   'keys',\n    'v',\n    'v'\n  ]\n"
+    },
+    {
+      "id": "config/single-empty-string-triggers-lazy-config",
+      "error": "AssertionError [ERR_ASSERTION]: Missing expected exception."
+    }
+  ]
+}

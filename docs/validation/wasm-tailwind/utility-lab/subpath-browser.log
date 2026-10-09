@@ -1,0 +1,13 @@
+npm notice run rustify-ui-browser-tests@0.1.0 npx
+npm notice run 'playwright' test --project utility-lab-deep --workers=1 utility-runtime.spec.ts
+
+Running 4 tests using 1 worker
+
+(node:82875) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 [utility-lab-deep] › tests/browser/utility-runtime.spec.ts:8:5 › SDK ensure installs scanner-free CSS, coalesces requests and isolates independent scopes (380ms)
+  ✓  2 [utility-lab-deep] › tests/browser/utility-runtime.spec.ts:60:5 › controls apply classes and fit desktop and mobile (502ms)
+  ✓  3 [utility-lab-deep] › tests/browser/utility-runtime.spec.ts:78:5 › nested owners stop outer rules and disposal removes the owned stylesheet (207ms)
+  ✓  4 [utility-lab-deep] › tests/browser/utility-runtime.spec.ts:98:5 › classList changes and newly added subtrees compile through the bounded observer without scanner (262ms)
+
+  4 passed (4.8s)

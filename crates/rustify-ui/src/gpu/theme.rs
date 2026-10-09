@@ -18,10 +18,7 @@ pub fn rgba_color(color: Rgba) -> Vec4f {
     )
 }
 
-/// Makepad layout uses 72 points per inch and CSS uses 96 pixels per inch.
-pub fn css_px_to_points(px: f64) -> f32 {
-    (px * 72.0 / 96.0) as f32
-}
+pub use crate::theme::css_px_to_points;
 
 /// Applies the packaged font, point size and shaping letter spacing.
 /// Returns whether the drawing changed, so callers can avoid idle redraws.

@@ -1,0 +1,64 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 4.07s
+     Running unittests src/lib.rs (target/debug/deps/rustify_style-4ed64bbe76d78d97)
+
+running 6 tests
+test compiler::utf16_error_tests::range_error_typed_json_preserves_isolated_units_and_reordered_fields ... FAILED
+test compiler::utf16_error_tests::setup_and_initial_ast_defer_authored_keyframe_and_function_output_usage ... FAILED
+test compiler::utf16_error_tests::features_none_preserves_original_units_without_variable_usage_analysis ... FAILED
+test compiler::utf16_error_tests::theme_dependency_variables_do_not_become_direct_usage_errors ... ok
+test compiler::utf16_error_tests::failed_external_variable_build_preserves_report_cache_and_allows_retry ... FAILED
+test compiler::utf16_error_tests::frozen_errors_retain_all_61_setup_build_phases_classes_and_message_units ... FAILED
+
+failures:
+
+---- compiler::utf16_error_tests::range_error_typed_json_preserves_isolated_units_and_reordered_fields stdout ----
+
+thread 'compiler::utf16_error_tests::range_error_typed_json_preserves_isolated_units_and_reordered_fields' (2678569) panicked at crates/rustify-style/src/compiler/../../../../tests/utility/compiler/utf16-error-native.rs:192:67:
+called `Result::unwrap()` on an `Err` value: Error("unknown variant `range_error`, expected one of `syntax`, `limit`, `invalid_limit`, `unsupported_feature`, `pending_feature`, `pending_prepared`, `stale_prepared`, `revision_exhausted`, `duplicate_asset`, `missing_asset`", line: 1, column: 21)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- compiler::utf16_error_tests::setup_and_initial_ast_defer_authored_keyframe_and_function_output_usage stdout ----
+
+thread 'compiler::utf16_error_tests::setup_and_initial_ast_defer_authored_keyframe_and_function_output_usage' (2678570) panicked at crates/rustify-style/src/compiler/../../../../tests/utility/compiler/utf16-error-native.rs:99:53:
+called `Result::unwrap()` on an `Err` value: Syntax { offset: 0, message: Text([73, 110, 118, 97, 108, 105, 100, 32, 99, 111, 100, 101, 32, 112, 111, 105, 110, 116, 32, 49, 49, 49, 52, 49, 49, 50]) }
+
+---- compiler::utf16_error_tests::features_none_preserves_original_units_without_variable_usage_analysis stdout ----
+
+thread 'compiler::utf16_error_tests::features_none_preserves_original_units_without_variable_usage_analysis' (2678567) panicked at crates/rustify-style/src/compiler/../../../../tests/utility/compiler/utf16-error-native.rs:118:46:
+called `Result::unwrap()` on an `Err` value: Syntax { offset: 0, message: Text([73, 110, 118, 97, 108, 105, 100, 32, 99, 111, 100, 101, 32, 112, 111, 105, 110, 116, 32, 49, 49, 49, 52, 49, 49, 50]) }
+
+---- compiler::utf16_error_tests::failed_external_variable_build_preserves_report_cache_and_allows_retry stdout ----
+
+thread 'compiler::utf16_error_tests::failed_external_variable_build_preserves_report_cache_and_allows_retry' (2678566) panicked at crates/rustify-style/src/compiler/../../../../tests/utility/compiler/utf16-error-native.rs:43:5:
+assertion `left == right` failed
+  left: "syntax"
+ right: "range_error"
+
+---- compiler::utf16_error_tests::frozen_errors_retain_all_61_setup_build_phases_classes_and_message_units stdout ----
+
+thread 'compiler::utf16_error_tests::frozen_errors_retain_all_61_setup_build_phases_classes_and_message_units' (2678568) panicked at crates/rustify-style/src/compiler/../../../../tests/utility/compiler/utf16-error-native.rs:43:5:
+assertion `left == right` failed
+  left: "syntax"
+ right: "range_error"
+
+
+failures:
+    compiler::utf16_error_tests::failed_external_variable_build_preserves_report_cache_and_allows_retry
+    compiler::utf16_error_tests::features_none_preserves_original_units_without_variable_usage_analysis
+    compiler::utf16_error_tests::frozen_errors_retain_all_61_setup_build_phases_classes_and_message_units
+    compiler::utf16_error_tests::range_error_typed_json_preserves_isolated_units_and_reordered_fields
+    compiler::utf16_error_tests::setup_and_initial_ast_defer_authored_keyframe_and_function_output_usage
+
+test result: FAILED. 1 passed; 5 failed; 0 ignored; 0 measured; 241 filtered out; finished in 0.03s
+
+error: test failed, to rerun pass `-p rustify-style --lib`
+mbx[cache]: 0 hits, 0 misses, 1 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: every checkout believes it owns 28.4 GiB of outputs. the disk keeps one copy and says nothing.

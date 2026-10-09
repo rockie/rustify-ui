@@ -1,0 +1,503 @@
+{
+  "container": {
+    "attempted_revision": 1,
+    "applied_revision": 1,
+    "drawn_revision": 1,
+    "geometry": [
+      0,
+      0,
+      498,
+      262
+    ],
+    "status": "applied",
+    "diagnostics": [],
+    "state": {
+      "hover": false,
+      "active": false,
+      "focused": false,
+      "focus_visible": false,
+      "disabled": false,
+      "modality": "programmatic"
+    },
+    "computed": {
+      "background": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "color": [
+        0.11372549019607843,
+        0.1607843137254902,
+        0.2235294117647059,
+        1
+      ],
+      "border_colors": [
+        [
+          0.5215686274509804,
+          0.5607843137254902,
+          0.6196078431372549,
+          1
+        ],
+        [
+          0.5215686274509804,
+          0.5607843137254902,
+          0.6196078431372549,
+          1
+        ],
+        [
+          0.5215686274509804,
+          0.5607843137254902,
+          0.6196078431372549,
+          1
+        ],
+        [
+          0.5215686274509804,
+          0.5607843137254902,
+          0.6196078431372549,
+          1
+        ]
+      ],
+      "padding": [
+        24,
+        24,
+        24,
+        24
+      ],
+      "gap": [
+        12,
+        12
+      ],
+      "width": {
+        "kind": "auto"
+      },
+      "height": {
+        "kind": "auto"
+      },
+      "min_width": {
+        "kind": "px",
+        "value": 0
+      },
+      "min_height": {
+        "kind": "px",
+        "value": 0
+      },
+      "max_width": {
+        "kind": "unbounded"
+      },
+      "max_height": {
+        "kind": "unbounded"
+      },
+      "flow": "column",
+      "items": "start",
+      "justify": "start",
+      "radii": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "border_widths": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "opacity": 1,
+      "font": {
+        "requested": [
+          "IBM Plex Sans",
+          "sans-serif"
+        ],
+        "family": "IBM Plex Sans",
+        "resource_path": "makepad_widgets/resources/IBMPlexSans-Text.ttf",
+        "fallback": false
+      },
+      "font_size_px": 14,
+      "font_size_points": 10.5,
+      "font_weight": 400,
+      "line_height": {
+        "kind": "normal"
+      },
+      "letter_spacing_em": 0,
+      "shadows": []
+    }
+  },
+  "button": {
+    "attempted_revision": 1,
+    "applied_revision": 1,
+    "drawn_revision": 1,
+    "geometry": [
+      24,
+      24,
+      137,
+      72
+    ],
+    "status": "applied",
+    "diagnostics": [],
+    "state": {
+      "hover": false,
+      "active": false,
+      "focused": false,
+      "focus_visible": false,
+      "disabled": false,
+      "modality": "programmatic"
+    },
+    "computed": {
+      "background": [
+        0.07058823529411765,
+        0.20392156862745098,
+        0.33725490196078434,
+        1
+      ],
+      "color": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "border_colors": [
+        [
+          0.6705882352941176,
+          0.803921568627451,
+          0.9372549019607843,
+          1
+        ],
+        [
+          0.6705882352941176,
+          0.803921568627451,
+          0.9372549019607843,
+          1
+        ],
+        [
+          0.6705882352941176,
+          0.803921568627451,
+          0.9372549019607843,
+          1
+        ],
+        [
+          0.6705882352941176,
+          0.803921568627451,
+          0.9372549019607843,
+          1
+        ]
+      ],
+      "padding": [
+        7,
+        7,
+        7,
+        7
+      ],
+      "gap": [
+        0,
+        0
+      ],
+      "width": {
+        "kind": "px",
+        "value": 137
+      },
+      "height": {
+        "kind": "px",
+        "value": 72
+      },
+      "min_width": {
+        "kind": "px",
+        "value": 0
+      },
+      "min_height": {
+        "kind": "px",
+        "value": 0
+      },
+      "max_width": {
+        "kind": "unbounded"
+      },
+      "max_height": {
+        "kind": "unbounded"
+      },
+      "flow": "row",
+      "items": "center",
+      "justify": "start",
+      "radii": [
+        8,
+        8,
+        8,
+        8
+      ],
+      "border_widths": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "opacity": 1,
+      "font": {
+        "requested": [
+          "IBM Plex Sans",
+          "sans-serif"
+        ],
+        "family": "IBM Plex Sans",
+        "resource_path": "makepad_widgets/resources/IBMPlexSans-Text.ttf",
+        "fallback": false
+      },
+      "font_size_px": 15,
+      "font_size_points": 11.25,
+      "font_weight": 400,
+      "line_height": {
+        "kind": "px",
+        "value": 21
+      },
+      "letter_spacing_em": 0,
+      "shadows": []
+    }
+  },
+  "text": {
+    "attempted_revision": 1,
+    "applied_revision": 1,
+    "drawn_revision": 1,
+    "geometry": [
+      24,
+      108,
+      65.75800323486328,
+      18.19999885559082
+    ],
+    "status": "applied",
+    "diagnostics": [],
+    "state": {
+      "hover": false,
+      "active": false,
+      "focused": false,
+      "focus_visible": false,
+      "disabled": false,
+      "modality": "programmatic"
+    },
+    "computed": {
+      "background": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "color": [
+        0.11372549019607843,
+        0.1607843137254902,
+        0.2235294117647059,
+        1
+      ],
+      "border_colors": [
+        [
+          0.5215686274509804,
+          0.5607843137254902,
+          0.6196078431372549,
+          1
+        ],
+        [
+          0.5215686274509804,
+          0.5607843137254902,
+          0.6196078431372549,
+          1
+        ],
+        [
+          0.5215686274509804,
+          0.5607843137254902,
+          0.6196078431372549,
+          1
+        ],
+        [
+          0.5215686274509804,
+          0.5607843137254902,
+          0.6196078431372549,
+          1
+        ]
+      ],
+      "padding": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "gap": [
+        8,
+        8
+      ],
+      "width": {
+        "kind": "auto"
+      },
+      "height": {
+        "kind": "auto"
+      },
+      "min_width": {
+        "kind": "px",
+        "value": 0
+      },
+      "min_height": {
+        "kind": "px",
+        "value": 0
+      },
+      "max_width": {
+        "kind": "unbounded"
+      },
+      "max_height": {
+        "kind": "unbounded"
+      },
+      "flow": "column",
+      "items": "start",
+      "justify": "start",
+      "radii": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "border_widths": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "opacity": 1,
+      "font": {
+        "requested": [
+          "IBM Plex Sans",
+          "sans-serif"
+        ],
+        "family": "IBM Plex Sans",
+        "resource_path": "makepad_widgets/resources/IBMPlexSans-Text.ttf",
+        "fallback": false
+      },
+      "font_size_px": 14,
+      "font_size_points": 10.5,
+      "font_weight": 400,
+      "line_height": {
+        "kind": "normal"
+      },
+      "letter_spacing_em": 0,
+      "shadows": []
+    }
+  },
+  "swatch": {
+    "attempted_revision": 1,
+    "applied_revision": 1,
+    "drawn_revision": 1,
+    "geometry": [
+      24,
+      138.19999885559082,
+      40,
+      40
+    ],
+    "status": "applied",
+    "diagnostics": [],
+    "state": {
+      "hover": false,
+      "active": false,
+      "focused": false,
+      "focus_visible": false,
+      "disabled": false,
+      "modality": "programmatic"
+    },
+    "computed": {
+      "background": [
+        0.08235294117647059,
+        0.4392156862745098,
+        0.9372549019607843,
+        1
+      ],
+      "color": [
+        0.11372549019607843,
+        0.1607843137254902,
+        0.2235294117647059,
+        1
+      ],
+      "border_colors": [
+        [
+          0.5215686274509804,
+          0.5607843137254902,
+          0.6196078431372549,
+          1
+        ],
+        [
+          0.5215686274509804,
+          0.5607843137254902,
+          0.6196078431372549,
+          1
+        ],
+        [
+          0.5215686274509804,
+          0.5607843137254902,
+          0.6196078431372549,
+          1
+        ],
+        [
+          0.5215686274509804,
+          0.5607843137254902,
+          0.6196078431372549,
+          1
+        ]
+      ],
+      "padding": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "gap": [
+        8,
+        8
+      ],
+      "width": {
+        "kind": "px",
+        "value": 40
+      },
+      "height": {
+        "kind": "px",
+        "value": 40
+      },
+      "min_width": {
+        "kind": "px",
+        "value": 0
+      },
+      "min_height": {
+        "kind": "px",
+        "value": 0
+      },
+      "max_width": {
+        "kind": "unbounded"
+      },
+      "max_height": {
+        "kind": "unbounded"
+      },
+      "flow": "column",
+      "items": "start",
+      "justify": "start",
+      "radii": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "border_widths": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "opacity": 1,
+      "font": {
+        "requested": [
+          "IBM Plex Sans",
+          "sans-serif"
+        ],
+        "family": "IBM Plex Sans",
+        "resource_path": "makepad_widgets/resources/IBMPlexSans-Text.ttf",
+        "fallback": false
+      },
+      "font_size_px": 14,
+      "font_size_points": 10.5,
+      "font_weight": 400,
+      "line_height": {
+        "kind": "normal"
+      },
+      "letter_spacing_em": 0,
+      "shadows": []
+    }
+  }
+}

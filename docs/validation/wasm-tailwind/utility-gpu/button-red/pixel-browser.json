@@ -1,0 +1,429 @@
+{
+  "config": {
+    "argv": [
+      "/Users/rockie/.nvm/versions/node/v26.1.0/bin/node",
+      "/Users/rockie/Documents/gh-rockie/rustify-ui/node_modules/.bin/playwright",
+      "test",
+      "--project=utility-lab",
+      "--workers=1",
+      "utility-gpu.spec.ts",
+      "-g",
+      "GPU draws compiled"
+    ],
+    "configFile": "/Users/rockie/Documents/gh-rockie/rustify-ui/playwright.config.ts",
+    "rootDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": {},
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "utility-lab",
+        "name": "utility-lab",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "utility-runtime.spec.ts",
+          "utility-faults.spec.ts",
+          "utility-gpu.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "utility-lab-deep",
+        "name": "utility-lab-deep",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "utility-runtime.spec.ts",
+          "utility-gpu.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "utility-baseline",
+        "name": "utility-baseline",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "utility-baseline.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "fusion-basic",
+        "name": "fusion-basic",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "p3-restart.spec.ts",
+          "m1-probes.spec.ts",
+          "m2-runtime.spec.ts",
+          "m3-state.spec.ts",
+          "m4-geometry.spec.ts",
+          "m4-overlay.spec.ts",
+          "m6-mainpath.spec.ts",
+          "p2-navigation.spec.ts",
+          "p3-instances.spec.ts",
+          "p3-b0.spec.ts",
+          "p3-idle.spec.ts",
+          "p3-memory.spec.ts",
+          "p3-endurance.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "property-workbench",
+        "name": "property-workbench",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "p3-restart.spec.ts",
+          "m3-workbench.spec.ts",
+          "m5-text.spec.ts",
+          "m5-semantics.spec.ts",
+          "m6-theme.spec.ts",
+          "m6-async.spec.ts",
+          "m6-components.spec.ts",
+          "m7-recovery.spec.ts",
+          "m8-baseline.spec.ts",
+          "m8-network.spec.ts",
+          "m8-endurance.spec.ts",
+          "p2-form.spec.ts",
+          "p2-deeplink.spec.ts",
+          "p2-workspace.spec.ts",
+          "p2-drag.spec.ts",
+          "p2-clipboard-files.spec.ts",
+          "p2-zoom.spec.ts",
+          "p2-ime.spec.ts",
+          "p3-policy.spec.ts",
+          "p3-faults.spec.ts",
+          "p3-diagnostics.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "component-catalog",
+        "name": "component-catalog",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "p3-restart.spec.ts",
+          "p2-catalog.spec.ts",
+          "p2-theme.spec.ts",
+          "p2-semantics.spec.ts",
+          "p2-i18n.spec.ts",
+          "p2-reflow.spec.ts",
+          "p2-a11y.spec.ts",
+          "p3-policy.spec.ts",
+          "catalog-inputs.spec.ts",
+          "theme-compat.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "theme-studio",
+        "name": "theme-studio",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [
+          "theme-compat.spec.ts",
+          "theme-export-runtime.spec.ts"
+        ],
+        "testMatch": [
+          "theme-*.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "theme-studio-deep",
+        "name": "theme-studio-deep",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "theme-deployment.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "theme-export",
+        "name": "theme-export",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "theme-export-runtime.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "theme-export-deep",
+        "name": "theme-export-deep",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "theme-export-runtime.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "data-workbench",
+        "name": "data-workbench",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "p3-restart.spec.ts",
+          "p3-probes.spec.ts",
+          "p3-table.spec.ts",
+          "p3-jobs.spec.ts",
+          "p3-scene.spec.ts",
+          "p3-memory.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "budget-scene",
+        "name": "budget-scene",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "p3-budget-scene.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "workbench-deep",
+        "name": "workbench-deep",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "p2-deeplink.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "deployment",
+        "name": "deployment",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "m7-deployment.spec.ts"
+        ],
+        "timeout": 120000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/browser.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "utility-gpu.spec.ts",
+      "file": "utility-gpu.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "GPU draws compiled colors, geometry and real font glyphs alongside scoped DOM",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "utility-lab",
+              "projectName": "utility-lab",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 1115,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 2\u001b[39m\n\u001b[31m+ Received  + 2\u001b[39m\n\n\u001b[2m  Array [\u001b[22m\n\u001b[2m    171,\u001b[22m\n\u001b[32m-   205,\u001b[39m\n\u001b[32m-   239,\u001b[39m\n\u001b[31m+   191,\u001b[39m\n\u001b[31m+   211,\u001b[39m\n\u001b[2m  ]\u001b[22m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 2\u001b[39m\n\u001b[31m+ Received  + 2\u001b[39m\n\n\u001b[2m  Array [\u001b[22m\n\u001b[2m    171,\u001b[22m\n\u001b[32m-   205,\u001b[39m\n\u001b[32m-   239,\u001b[39m\n\u001b[31m+   191,\u001b[39m\n\u001b[31m+   211,\u001b[39m\n\u001b[2m  ]\u001b[22m\n    at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser/utility-gpu.spec.ts:52:30",
+                    "location": {
+                      "file": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser/utility-gpu.spec.ts",
+                      "column": 30,
+                      "line": 52
+                    },
+                    "snippet": "  50 |   expect(pixel(png, x + 8, y + 8).slice(0, 3)).toEqual([18, 52, 86]);\n  51 |   const border = pixel(png, x + w / 2 + 1, y + 1);\n> 52 |   expect(border.slice(0, 3)).toEqual([171, 205, 239]);\n     |                              ^\n  53 |   let whiteInk = 0;\n  54 |   for (let py = y + 12; py < y + h - 12; py++) for (let px = x + 8; px < x + w - 8; px++) {\n  55 |     if (pixel(png, px, py).slice(0, 3).every(value => value > 220)) whiteInk++;"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser/utility-gpu.spec.ts",
+                        "column": 30,
+                        "line": 52
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 2\u001b[39m\n\u001b[31m+ Received  + 2\u001b[39m\n\n\u001b[2m  Array [\u001b[22m\n\u001b[2m    171,\u001b[22m\n\u001b[32m-   205,\u001b[39m\n\u001b[32m-   239,\u001b[39m\n\u001b[31m+   191,\u001b[39m\n\u001b[31m+   211,\u001b[39m\n\u001b[2m  ]\u001b[22m\n\n  50 |   expect(pixel(png, x + 8, y + 8).slice(0, 3)).toEqual([18, 52, 86]);\n  51 |   const border = pixel(png, x + w / 2 + 1, y + 1);\n> 52 |   expect(border.slice(0, 3)).toEqual([171, 205, 239]);\n     |                              ^\n  53 |   let whiteInk = 0;\n  54 |   for (let py = y + 12; py < y + h - 12; py++) for (let px = x + 8; px < x + w - 8; px++) {\n  55 |     if (pixel(png, px, py).slice(0, 3).every(value => value > 220)) whiteInk++;\n    at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser/utility-gpu.spec.ts:52:30"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-04T10:30:03.156Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "GPU canvas pixels",
+                      "contentType": "image/png",
+                      "body": "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"
+                    },
+                    {
+                      "name": "GPU actual drawn report",
+                      "contentType": "application/json",
+                      "body": "ewogICJjb250YWluZXIiOiB7CiAgICAiYXR0ZW1wdGVkX3JldmlzaW9uIjogMSwKICAgICJhcHBsaWVkX3JldmlzaW9uIjogMSwKICAgICJkcmF3bl9yZXZpc2lvbiI6IDEsCiAgICAiZ2VvbWV0cnkiOiBbCiAgICAgIDAsCiAgICAgIDAsCiAgICAgIDQ5OCwKICAgICAgMjYyCiAgICBdLAogICAgInN0YXR1cyI6ICJhcHBsaWVkIiwKICAgICJkaWFnbm9zdGljcyI6IFtdLAogICAgInN0YXRlIjogewogICAgICAiaG92ZXIiOiBmYWxzZSwKICAgICAgImFjdGl2ZSI6IGZhbHNlLAogICAgICAiZm9jdXNlZCI6IGZhbHNlLAogICAgICAiZm9jdXNfdmlzaWJsZSI6IGZhbHNlLAogICAgICAiZGlzYWJsZWQiOiBmYWxzZSwKICAgICAgIm1vZGFsaXR5IjogInByb2dyYW1tYXRpYyIKICAgIH0sCiAgICAiY29tcHV0ZWQiOiB7CiAgICAgICJiYWNrZ3JvdW5kIjogWwogICAgICAgIDAsCiAgICAgICAgMCwKICAgICAgICAwLAogICAgICAgIDAKICAgICAgXSwKICAgICAgImNvbG9yIjogWwogICAgICAgIDAuMTEzNzI1NDkwMTk2MDc4NDMsCiAgICAgICAgMC4xNjA3ODQzMTM3MjU0OTAyLAogICAgICAgIDAuMjIzNTI5NDExNzY0NzA1OSwKICAgICAgICAxCiAgICAgIF0sCiAgICAgICJib3JkZXJfY29sb3JzIjogWwogICAgICAgIFsKICAgICAgICAgIDAuNTIxNTY4NjI3NDUwOTgwNCwKICAgICAgICAgIDAuNTYwNzg0MzEzNzI1NDkwMiwKICAgICAgICAgIDAuNjE5NjA3ODQzMTM3MjU0OSwKICAgICAgICAgIDEKICAgICAgICBdLAogICAgICAgIFsKICAgICAgICAgIDAuNTIxNTY4NjI3NDUwOTgwNCwKICAgICAgICAgIDAuNTYwNzg0MzEzNzI1NDkwMiwKICAgICAgICAgIDAuNjE5NjA3ODQzMTM3MjU0OSwKICAgICAgICAgIDEKICAgICAgICBdLAogICAgICAgIFsKICAgICAgICAgIDAuNTIxNTY4NjI3NDUwOTgwNCwKICAgICAgICAgIDAuNTYwNzg0MzEzNzI1NDkwMiwKICAgICAgICAgIDAuNjE5NjA3ODQzMTM3MjU0OSwKICAgICAgICAgIDEKICAgICAgICBdLAogICAgICAgIFsKICAgICAgICAgIDAuNTIxNTY4NjI3NDUwOTgwNCwKICAgICAgICAgIDAuNTYwNzg0MzEzNzI1NDkwMiwKICAgICAgICAgIDAuNjE5NjA3ODQzMTM3MjU0OSwKICAgICAgICAgIDEKICAgICAgICBdCiAgICAgIF0sCiAgICAgICJwYWRkaW5nIjogWwogICAgICAgIDI0LAogICAgICAgIDI0LAogICAgICAgIDI0LAogICAgICAgIDI0CiAgICAgIF0sCiAgICAgICJnYXAiOiBbCiAgICAgICAgMTIsCiAgICAgICAgMTIKICAgICAgXSwKICAgICAgIndpZHRoIjogewogICAgICAgICJraW5kIjogImF1dG8iCiAgICAgIH0sCiAgICAgICJoZWlnaHQiOiB7CiAgICAgICAgImtpbmQiOiAiYXV0byIKICAgICAgfSwKICAgICAgIm1pbl93aWR0aCI6IHsKICAgICAgICAia2luZCI6ICJweCIsCiAgICAgICAgInZhbHVlIjogMAogICAgICB9LAogICAgICAibWluX2hlaWdodCI6IHsKICAgICAgICAia2luZCI6ICJweCIsCiAgICAgICAgInZhbHVlIjogMAogICAgICB9LAogICAgICAibWF4X3dpZHRoIjogewogICAgICAgICJraW5kIjogInVuYm91bmRlZCIKICAgICAgfSwKICAgICAgIm1heF9oZWlnaHQiOiB7CiAgICAgICAgImtpbmQiOiAidW5ib3VuZGVkIgogICAgICB9LAogICAgICAiZmxvdyI6ICJjb2x1bW4iLAogICAgICAiaXRlbXMiOiAic3RhcnQiLAogICAgICAianVzdGlmeSI6ICJzdGFydCIsCiAgICAgICJyYWRpaSI6IFsKICAgICAgICAwLAogICAgICAgIDAsCiAgICAgICAgMCwKICAgICAgICAwCiAgICAgIF0sCiAgICAgICJib3JkZXJfd2lkdGhzIjogWwogICAgICAgIDAsCiAgICAgICAgMCwKICAgICAgICAwLAogICAgICAgIDAKICAgICAgXSwKICAgICAgIm9wYWNpdHkiOiAxLAogICAgICAiZm9udCI6IHsKICAgICAgICAicmVxdWVzdGVkIjogWwogICAgICAgICAgIklCTSBQbGV4IFNhbnMiLAogICAgICAgICAgInNhbnMtc2VyaWYiCiAgICAgICAgXSwKICAgICAgICAiZmFtaWx5IjogIklCTSBQbGV4IFNhbnMiLAogICAgICAgICJyZXNvdXJjZV9wYXRoIjogIm1ha2VwYWRfd2lkZ2V0cy9yZXNvdXJjZXMvSUJNUGxleFNhbnMtVGV4dC50dGYiLAogICAgICAgICJmYWxsYmFjayI6IGZhbHNlCiAgICAgIH0sCiAgICAgICJmb250X3NpemVfcHgiOiAxNCwKICAgICAgImZvbnRfc2l6ZV9wb2ludHMiOiAxMC41LAogICAgICAiZm9udF93ZWlnaHQiOiA0MDAsCiAgICAgICJsaW5lX2hlaWdodCI6IHsKICAgICAgICAia2luZCI6ICJub3JtYWwiCiAgICAgIH0sCiAgICAgICJsZXR0ZXJfc3BhY2luZ19lbSI6IDAsCiAgICAgICJzaGFkb3dzIjogW10KICAgIH0KICB9LAogICJidXR0b24iOiB7CiAgICAiYXR0ZW1wdGVkX3JldmlzaW9uIjogMSwKICAgICJhcHBsaWVkX3JldmlzaW9uIjogMSwKICAgICJkcmF3bl9yZXZpc2lvbiI6IDEsCiAgICAiZ2VvbWV0cnkiOiBbCiAgICAgIDI0LAogICAgICAyNCwKICAgICAgMTM3LAogICAgICA3MgogICAgXSwKICAgICJzdGF0dXMiOiAiYXBwbGllZCIsCiAgICAiZGlhZ25vc3RpY3MiOiBbXSwKICAgICJzdGF0ZSI6IHsKICAgICAgImhvdmVyIjogZmFsc2UsCiAgICAgICJhY3RpdmUiOiBmYWxzZSwKICAgICAgImZvY3VzZWQiOiBmYWxzZSwKICAgICAgImZvY3VzX3Zpc2libGUiOiBmYWxzZSwKICAgICAgImRpc2FibGVkIjogZmFsc2UsCiAgICAgICJtb2RhbGl0eSI6ICJwcm9ncmFtbWF0aWMiCiAgICB9LAogICAgImNvbXB1dGVkIjogewogICAgICAiYmFja2dyb3VuZCI6IFsKICAgICAgICAwLjA3MDU4ODIzNTI5NDExNzY1LAogICAgICAgIDAuMjAzOTIxNTY4NjI3NDUwOTgsCiAgICAgICAgMC4zMzcyNTQ5MDE5NjA3ODQzNCwKICAgICAgICAxCiAgICAgIF0sCiAgICAgICJjb2xvciI6IFsKICAgICAgICAxLAogICAgICAgIDEsCiAgICAgICAgMSwKICAgICAgICAxCiAgICAgIF0sCiAgICAgICJib3JkZXJfY29sb3JzIjogWwogICAgICAgIFsKICAgICAgICAgIDAuNjcwNTg4MjM1Mjk0MTE3NiwKICAgICAgICAgIDAuODAzOTIxNTY4NjI3NDUxLAogICAgICAgICAgMC45MzcyNTQ5MDE5NjA3ODQzLAogICAgICAgICAgMQogICAgICAgIF0sCiAgICAgICAgWwogICAgICAgICAgMC42NzA1ODgyMzUyOTQxMTc2LAogICAgICAgICAgMC44MDM5MjE1Njg2Mjc0NTEsCiAgICAgICAgICAwLjkzNzI1NDkwMTk2MDc4NDMsCiAgICAgICAgICAxCiAgICAgICAgXSwKICAgICAgICBbCiAgICAgICAgICAwLjY3MDU4ODIzNTI5NDExNzYsCiAgICAgICAgICAwLjgwMzkyMTU2ODYyNzQ1MSwKICAgICAgICAgIDAuOTM3MjU0OTAxOTYwNzg0MywKICAgICAgICAgIDEKICAgICAgICBdLAogICAgICAgIFsKICAgICAgICAgIDAuNjcwNTg4MjM1Mjk0MTE3NiwKICAgICAgICAgIDAuODAzOTIxNTY4NjI3NDUxLAogICAgICAgICAgMC45MzcyNTQ5MDE5NjA3ODQzLAogICAgICAgICAgMQogICAgICAgIF0KICAgICAgXSwKICAgICAgInBhZGRpbmciOiBbCiAgICAgICAgNywKICAgICAgICA3LAogICAgICAgIDcsCiAgICAgICAgNwogICAgICBdLAogICAgICAiZ2FwIjogWwogICAgICAgIDAsCiAgICAgICAgMAogICAgICBdLAogICAgICAid2lkdGgiOiB7CiAgICAgICAgImtpbmQiOiAicHgiLAogICAgICAgICJ2YWx1ZSI6IDEzNwogICAgICB9LAogICAgICAiaGVpZ2h0IjogewogICAgICAgICJraW5kIjogInB4IiwKICAgICAgICAidmFsdWUiOiA3MgogICAgICB9LAogICAgICAibWluX3dpZHRoIjogewogICAgICAgICJraW5kIjogInB4IiwKICAgICAgICAidmFsdWUiOiAwCiAgICAgIH0sCiAgICAgICJtaW5faGVpZ2h0IjogewogICAgICAgICJraW5kIjogInB4IiwKICAgICAgICAidmFsdWUiOiAwCiAgICAgIH0sCiAgICAgICJtYXhfd2lkdGgiOiB7CiAgICAgICAgImtpbmQiOiAidW5ib3VuZGVkIgogICAgICB9LAogICAgICAibWF4X2hlaWdodCI6IHsKICAgICAgICAia2luZCI6ICJ1bmJvdW5kZWQiCiAgICAgIH0sCiAgICAgICJmbG93IjogInJvdyIsCiAgICAgICJpdGVtcyI6ICJjZW50ZXIiLAogICAgICAianVzdGlmeSI6ICJzdGFydCIsCiAgICAgICJyYWRpaSI6IFsKICAgICAgICA4LAogICAgICAgIDgsCiAgICAgICAgOCwKICAgICAgICA4CiAgICAgIF0sCiAgICAgICJib3JkZXJfd2lkdGhzIjogWwogICAgICAgIDIsCiAgICAgICAgMiwKICAgICAgICAyLAogICAgICAgIDIKICAgICAgXSwKICAgICAgIm9wYWNpdHkiOiAxLAogICAgICAiZm9udCI6IHsKICAgICAgICAicmVxdWVzdGVkIjogWwogICAgICAgICAgIklCTSBQbGV4IFNhbnMiLAogICAgICAgICAgInNhbnMtc2VyaWYiCiAgICAgICAgXSwKICAgICAgICAiZmFtaWx5IjogIklCTSBQbGV4IFNhbnMiLAogICAgICAgICJyZXNvdXJjZV9wYXRoIjogIm1ha2VwYWRfd2lkZ2V0cy9yZXNvdXJjZXMvSUJNUGxleFNhbnMtVGV4dC50dGYiLAogICAgICAgICJmYWxsYmFjayI6IGZhbHNlCiAgICAgIH0sCiAgICAgICJmb250X3NpemVfcHgiOiAxNSwKICAgICAgImZvbnRfc2l6ZV9wb2ludHMiOiAxMS4yNSwKICAgICAgImZvbnRfd2VpZ2h0IjogNDAwLAogICAgICAibGluZV9oZWlnaHQiOiB7CiAgICAgICAgImtpbmQiOiAicHgiLAogICAgICAgICJ2YWx1ZSI6IDIxCiAgICAgIH0sCiAgICAgICJsZXR0ZXJfc3BhY2luZ19lbSI6IDAsCiAgICAgICJzaGFkb3dzIjogW10KICAgIH0KICB9LAogICJ0ZXh0IjogewogICAgImF0dGVtcHRlZF9yZXZpc2lvbiI6IDEsCiAgICAiYXBwbGllZF9yZXZpc2lvbiI6IDEsCiAgICAiZHJhd25fcmV2aXNpb24iOiAxLAogICAgImdlb21ldHJ5IjogWwogICAgICAyNCwKICAgICAgMTA4LAogICAgICA2NS43NTgwMDMyMzQ4NjMyOCwKICAgICAgMTguMTk5OTk4ODU1NTkwODIKICAgIF0sCiAgICAic3RhdHVzIjogImFwcGxpZWQiLAogICAgImRpYWdub3N0aWNzIjogW10sCiAgICAic3RhdGUiOiB7CiAgICAgICJob3ZlciI6IGZhbHNlLAogICAgICAiYWN0aXZlIjogZmFsc2UsCiAgICAgICJmb2N1c2VkIjogZmFsc2UsCiAgICAgICJmb2N1c192aXNpYmxlIjogZmFsc2UsCiAgICAgICJkaXNhYmxlZCI6IGZhbHNlLAogICAgICAibW9kYWxpdHkiOiAicHJvZ3JhbW1hdGljIgogICAgfSwKICAgICJjb21wdXRlZCI6IHsKICAgICAgImJhY2tncm91bmQiOiBbCiAgICAgICAgMCwKICAgICAgICAwLAogICAgICAgIDAsCiAgICAgICAgMAogICAgICBdLAogICAgICAiY29sb3IiOiBbCiAgICAgICAgMC4xMTM3MjU0OTAxOTYwNzg0MywKICAgICAgICAwLjE2MDc4NDMxMzcyNTQ5MDIsCiAgICAgICAgMC4yMjM1Mjk0MTE3NjQ3MDU5LAogICAgICAgIDEKICAgICAgXSwKICAgICAgImJvcmRlcl9jb2xvcnMiOiBbCiAgICAgICAgWwogICAgICAgICAgMC41MjE1Njg2Mjc0NTA5ODA0LAogICAgICAgICAgMC41NjA3ODQzMTM3MjU0OTAyLAogICAgICAgICAgMC42MTk2MDc4NDMxMzcyNTQ5LAogICAgICAgICAgMQogICAgICAgIF0sCiAgICAgICAgWwogICAgICAgICAgMC41MjE1Njg2Mjc0NTA5ODA0LAogICAgICAgICAgMC41NjA3ODQzMTM3MjU0OTAyLAogICAgICAgICAgMC42MTk2MDc4NDMxMzcyNTQ5LAogICAgICAgICAgMQogICAgICAgIF0sCiAgICAgICAgWwogICAgICAgICAgMC41MjE1Njg2Mjc0NTA5ODA0LAogICAgICAgICAgMC41NjA3ODQzMTM3MjU0OTAyLAogICAgICAgICAgMC42MTk2MDc4NDMxMzcyNTQ5LAogICAgICAgICAgMQogICAgICAgIF0sCiAgICAgICAgWwogICAgICAgICAgMC41MjE1Njg2Mjc0NTA5ODA0LAogICAgICAgICAgMC41NjA3ODQzMTM3MjU0OTAyLAogICAgICAgICAgMC42MTk2MDc4NDMxMzcyNTQ5LAogICAgICAgICAgMQogICAgICAgIF0KICAgICAgXSwKICAgICAgInBhZGRpbmciOiBbCiAgICAgICAgMCwKICAgICAgICAwLAogICAgICAgIDAsCiAgICAgICAgMAogICAgICBdLAogICAgICAiZ2FwIjogWwogICAgICAgIDgsCiAgICAgICAgOAogICAgICBdLAogICAgICAid2lkdGgiOiB7CiAgICAgICAgImtpbmQiOiAiYXV0byIKICAgICAgfSwKICAgICAgImhlaWdodCI6IHsKICAgICAgICAia2luZCI6ICJhdXRvIgogICAgICB9LAogICAgICAibWluX3dpZHRoIjogewogICAgICAgICJraW5kIjogInB4IiwKICAgICAgICAidmFsdWUiOiAwCiAgICAgIH0sCiAgICAgICJtaW5faGVpZ2h0IjogewogICAgICAgICJraW5kIjogInB4IiwKICAgICAgICAidmFsdWUiOiAwCiAgICAgIH0sCiAgICAgICJtYXhfd2lkdGgiOiB7CiAgICAgICAgImtpbmQiOiAidW5ib3VuZGVkIgogICAgICB9LAogICAgICAibWF4X2hlaWdodCI6IHsKICAgICAgICAia2luZCI6ICJ1bmJvdW5kZWQiCiAgICAgIH0sCiAgICAgICJmbG93IjogImNvbHVtbiIsCiAgICAgICJpdGVtcyI6ICJzdGFydCIsCiAgICAgICJqdXN0aWZ5IjogInN0YXJ0IiwKICAgICAgInJhZGlpIjogWwogICAgICAgIDAsCiAgICAgICAgMCwKICAgICAgICAwLAogICAgICAgIDAKICAgICAgXSwKICAgICAgImJvcmRlcl93aWR0aHMiOiBbCiAgICAgICAgMCwKICAgICAgICAwLAogICAgICAgIDAsCiAgICAgICAgMAogICAgICBdLAogICAgICAib3BhY2l0eSI6IDEsCiAgICAgICJmb250IjogewogICAgICAgICJyZXF1ZXN0ZWQiOiBbCiAgICAgICAgICAiSUJNIFBsZXggU2FucyIsCiAgICAgICAgICAic2Fucy1zZXJpZiIKICAgICAgICBdLAogICAgICAgICJmYW1pbHkiOiAiSUJNIFBsZXggU2FucyIsCiAgICAgICAgInJlc291cmNlX3BhdGgiOiAibWFrZXBhZF93aWRnZXRzL3Jlc291cmNlcy9JQk1QbGV4U2Fucy1UZXh0LnR0ZiIsCiAgICAgICAgImZhbGxiYWNrIjogZmFsc2UKICAgICAgfSwKICAgICAgImZvbnRfc2l6ZV9weCI6IDE0LAogICAgICAiZm9udF9zaXplX3BvaW50cyI6IDEwLjUsCiAgICAgICJmb250X3dlaWdodCI6IDQwMCwKICAgICAgImxpbmVfaGVpZ2h0IjogewogICAgICAgICJraW5kIjogIm5vcm1hbCIKICAgICAgfSwKICAgICAgImxldHRlcl9zcGFjaW5nX2VtIjogMCwKICAgICAgInNoYWRvd3MiOiBbXQogICAgfQogIH0sCiAgInN3YXRjaCI6IHsKICAgICJhdHRlbXB0ZWRfcmV2aXNpb24iOiAxLAogICAgImFwcGxpZWRfcmV2aXNpb24iOiAxLAogICAgImRyYXduX3JldmlzaW9uIjogMSwKICAgICJnZW9tZXRyeSI6IFsKICAgICAgMjQsCiAgICAgIDEzOC4xOTk5OTg4NTU1OTA4MiwKICAgICAgNDAsCiAgICAgIDQwCiAgICBdLAogICAgInN0YXR1cyI6ICJhcHBsaWVkIiwKICAgICJkaWFnbm9zdGljcyI6IFtdLAogICAgInN0YXRlIjogewogICAgICAiaG92ZXIiOiBmYWxzZSwKICAgICAgImFjdGl2ZSI6IGZhbHNlLAogICAgICAiZm9jdXNlZCI6IGZhbHNlLAogICAgICAiZm9jdXNfdmlzaWJsZSI6IGZhbHNlLAogICAgICAiZGlzYWJsZWQiOiBmYWxzZSwKICAgICAgIm1vZGFsaXR5IjogInByb2dyYW1tYXRpYyIKICAgIH0sCiAgICAiY29tcHV0ZWQiOiB7CiAgICAgICJiYWNrZ3JvdW5kIjogWwogICAgICAgIDAuMDgyMzUyOTQxMTc2NDcwNTksCiAgICAgICAgMC40MzkyMTU2ODYyNzQ1MDk4LAogICAgICAgIDAuOTM3MjU0OTAxOTYwNzg0MywKICAgICAgICAxCiAgICAgIF0sCiAgICAgICJjb2xvciI6IFsKICAgICAgICAwLjExMzcyNTQ5MDE5NjA3ODQzLAogICAgICAgIDAuMTYwNzg0MzEzNzI1NDkwMiwKICAgICAgICAwLjIyMzUyOTQxMTc2NDcwNTksCiAgICAgICAgMQogICAgICBdLAogICAgICAiYm9yZGVyX2NvbG9ycyI6IFsKICAgICAgICBbCiAgICAgICAgICAwLjUyMTU2ODYyNzQ1MDk4MDQsCiAgICAgICAgICAwLjU2MDc4NDMxMzcyNTQ5MDIsCiAgICAgICAgICAwLjYxOTYwNzg0MzEzNzI1NDksCiAgICAgICAgICAxCiAgICAgICAgXSwKICAgICAgICBbCiAgICAgICAgICAwLjUyMTU2ODYyNzQ1MDk4MDQsCiAgICAgICAgICAwLjU2MDc4NDMxMzcyNTQ5MDIsCiAgICAgICAgICAwLjYxOTYwNzg0MzEzNzI1NDksCiAgICAgICAgICAxCiAgICAgICAgXSwKICAgICAgICBbCiAgICAgICAgICAwLjUyMTU2ODYyNzQ1MDk4MDQsCiAgICAgICAgICAwLjU2MDc4NDMxMzcyNTQ5MDIsCiAgICAgICAgICAwLjYxOTYwNzg0MzEzNzI1NDksCiAgICAgICAgICAxCiAgICAgICAgXSwKICAgICAgICBbCiAgICAgICAgICAwLjUyMTU2ODYyNzQ1MDk4MDQsCiAgICAgICAgICAwLjU2MDc4NDMxMzcyNTQ5MDIsCiAgICAgICAgICAwLjYxOTYwNzg0MzEzNzI1NDksCiAgICAgICAgICAxCiAgICAgICAgXQogICAgICBdLAogICAgICAicGFkZGluZyI6IFsKICAgICAgICAwLAogICAgICAgIDAsCiAgICAgICAgMCwKICAgICAgICAwCiAgICAgIF0sCiAgICAgICJnYXAiOiBbCiAgICAgICAgOCwKICAgICAgICA4CiAgICAgIF0sCiAgICAgICJ3aWR0aCI6IHsKICAgICAgICAia2luZCI6ICJweCIsCiAgICAgICAgInZhbHVlIjogNDAKICAgICAgfSwKICAgICAgImhlaWdodCI6IHsKICAgICAgICAia2luZCI6ICJweCIsCiAgICAgICAgInZhbHVlIjogNDAKICAgICAgfSwKICAgICAgIm1pbl93aWR0aCI6IHsKICAgICAgICAia2luZCI6ICJweCIsCiAgICAgICAgInZhbHVlIjogMAogICAgICB9LAogICAgICAibWluX2hlaWdodCI6IHsKICAgICAgICAia2luZCI6ICJweCIsCiAgICAgICAgInZhbHVlIjogMAogICAgICB9LAogICAgICAibWF4X3dpZHRoIjogewogICAgICAgICJraW5kIjogInVuYm91bmRlZCIKICAgICAgfSwKICAgICAgIm1heF9oZWlnaHQiOiB7CiAgICAgICAgImtpbmQiOiAidW5ib3VuZGVkIgogICAgICB9LAogICAgICAiZmxvdyI6ICJjb2x1bW4iLAogICAgICAiaXRlbXMiOiAic3RhcnQiLAogICAgICAianVzdGlmeSI6ICJzdGFydCIsCiAgICAgICJyYWRpaSI6IFsKICAgICAgICAwLAogICAgICAgIDAsCiAgICAgICAgMCwKICAgICAgICAwCiAgICAgIF0sCiAgICAgICJib3JkZXJfd2lkdGhzIjogWwogICAgICAgIDAsCiAgICAgICAgMCwKICAgICAgICAwLAogICAgICAgIDAKICAgICAgXSwKICAgICAgIm9wYWNpdHkiOiAxLAogICAgICAiZm9udCI6IHsKICAgICAgICAicmVxdWVzdGVkIjogWwogICAgICAgICAgIklCTSBQbGV4IFNhbnMiLAogICAgICAgICAgInNhbnMtc2VyaWYiCiAgICAgICAgXSwKICAgICAgICAiZmFtaWx5IjogIklCTSBQbGV4IFNhbnMiLAogICAgICAgICJyZXNvdXJjZV9wYXRoIjogIm1ha2VwYWRfd2lkZ2V0cy9yZXNvdXJjZXMvSUJNUGxleFNhbnMtVGV4dC50dGYiLAogICAgICAgICJmYWxsYmFjayI6IGZhbHNlCiAgICAgIH0sCiAgICAgICJmb250X3NpemVfcHgiOiAxNCwKICAgICAgImZvbnRfc2l6ZV9wb2ludHMiOiAxMC41LAogICAgICAiZm9udF93ZWlnaHQiOiA0MDAsCiAgICAgICJsaW5lX2hlaWdodCI6IHsKICAgICAgICAia2luZCI6ICJub3JtYWwiCiAgICAgIH0sCiAgICAgICJsZXR0ZXJfc3BhY2luZ19lbSI6IDAsCiAgICAgICJzaGFkb3dzIjogW10KICAgIH0KICB9Cn0="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/utility-gpu-GPU-draws-comp-13818-glyphs-alongside-scoped-DOM-utility-lab/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/utility-gpu-GPU-draws-comp-13818-glyphs-alongside-scoped-DOM-utility-lab/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser/utility-gpu.spec.ts",
+                    "column": 30,
+                    "line": 52
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "16680e39cdda4ee2503a-c00e679faa9e99cd4be2",
+          "file": "utility-gpu.spec.ts",
+          "line": 31,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-04T10:30:02.022Z",
+    "duration": 3024.815,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}

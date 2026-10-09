@@ -1,0 +1,68 @@
+mbx[warning]: Unix-domain cache session listener unavailable; using FIFO transport: failed to bind cache session listener at /var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/mbx-session-iCuD6d/cache-agent.sock: Operation not permitted (os error 1)
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+     Locking 15 packages to latest Rust 1.98.1 compatible versions
+   Compiling rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+   Compiling registration-existing-value-prototype v0.0.0 (/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-utf16-verified-54mkl3kq/registration-existing-value)
+error[E0277]: the trait bound `Text: Borrow<str>` is not satisfied
+   --> /Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/wasm-tailwind/registration-design/existing-value-prototype.rs:76:65
+    |
+ 76 |     let Value::Array(children) = value.as_object().unwrap().get("nodes").unwrap() else {
+    |                                                             --- ^^^^^^^ the trait `Borrow<str>` is not implemented for `Text`
+    |                                                             |
+    |                                                             required by a bound introduced by this call
+    |
+    = note: required for `str` to implement `equivalent::Equivalent<Text>`
+note: required by a bound in `indexmap::map::IndexMap::<K, V, S>::get`
+   --> /Users/rockie/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/indexmap-2.14.2/src/map.rs:830:28
+    |
+828 |     pub fn get<Q>(&self, key: &Q) -> Option<&V>
+    |            --- required by a bound in this associated function
+829 |     where
+830 |         Q: ?Sized + Hash + Equivalent<K>,
+    |                            ^^^^^^^^^^^^^ required by this bound in `IndexMap::<K, V, S>::get`
+
+error[E0277]: the trait bound `Text: Borrow<str>` is not satisfied
+   --> /Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/wasm-tailwind/registration-design/existing-value-prototype.rs:151:57
+    |
+151 |         overlay.current(&left).as_object().unwrap().get("tag"),
+    |                                                     --- ^^^^^ the trait `Borrow<str>` is not implemented for `Text`
+    |                                                     |
+    |                                                     required by a bound introduced by this call
+    |
+    = note: required for `str` to implement `equivalent::Equivalent<Text>`
+note: required by a bound in `indexmap::map::IndexMap::<K, V, S>::get`
+   --> /Users/rockie/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/indexmap-2.14.2/src/map.rs:830:28
+    |
+828 |     pub fn get<Q>(&self, key: &Q) -> Option<&V>
+    |            --- required by a bound in this associated function
+829 |     where
+830 |         Q: ?Sized + Hash + Equivalent<K>,
+    |                            ^^^^^^^^^^^^^ required by this bound in `IndexMap::<K, V, S>::get`
+
+error[E0277]: the trait bound `Text: Borrow<str>` is not satisfied
+   --> /Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/wasm-tailwind/registration-design/existing-value-prototype.rs:155:49
+    |
+155 |         object_version.as_object().unwrap().get("tag"),
+    |                                             --- ^^^^^ the trait `Borrow<str>` is not implemented for `Text`
+    |                                             |
+    |                                             required by a bound introduced by this call
+    |
+    = note: required for `str` to implement `equivalent::Equivalent<Text>`
+note: required by a bound in `indexmap::map::IndexMap::<K, V, S>::get`
+   --> /Users/rockie/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/indexmap-2.14.2/src/map.rs:830:28
+    |
+828 |     pub fn get<Q>(&self, key: &Q) -> Option<&V>
+    |            --- required by a bound in this associated function
+829 |     where
+830 |         Q: ?Sized + Hash + Equivalent<K>,
+    |                            ^^^^^^^^^^^^^ required by this bound in `IndexMap::<K, V, S>::get`
+
+For more information about this error, try `rustc --explain E0277`.
+error: could not compile `registration-existing-value-prototype` (bin "registration-existing-value-prototype") due to 3 previous errors
+mbx[cache]: 0 hits, 1 misses, 1 not looked up; 0 B downloaded, 0 B uploaded, 57.7 MiB stored locally

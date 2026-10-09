@@ -1,0 +1,24 @@
+npm notice run rustify-ui-browser-tests@0.1.0 npx
+npm notice run 'playwright' test --project=utility-lab --workers=1 utility-runtime.spec.ts utility-fault.spec.ts utility-gpu.spec.ts
+
+Running 15 tests using 1 worker
+
+(node:54272) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 [utility-lab] › tests/browser/utility-gpu.spec.ts:31:5 › GPU draws compiled colors, geometry and real font glyphs alongside scoped DOM (974ms)
+  ✓   2 [utility-lab] › tests/browser/utility-gpu.spec.ts:67:5 › strict GPU rejection retains the drawn style, partial reports skipped properties and deleting classes restores defaults (604ms)
+  ✓   3 [utility-lab] › tests/browser/utility-gpu.spec.ts:92:5 › GPU responds to pointer, keyboard focus-visible and disabled input without recompiling (670ms)
+  ✓   4 [utility-lab] › tests/browser/utility-gpu.spec.ts:119:5 › GPU media uses the browser viewport, and alpha color blocks match DOM pixels (708ms)
+  ✓   5 [utility-lab] › tests/browser/utility-gpu.spec.ts:139:5 › GPU applies text resources, row layout, shadows and rings from compiler bindings (692ms)
+  ✓   6 [utility-lab] › tests/browser/utility-gpu.spec.ts:163:5 › GPU restores its latest committed programs after a real WebGL context loss (895ms)
+  ✓   7 [utility-lab] › tests/browser/utility-gpu.spec.ts:182:5 › terminal GPU initialization failure explains recovery while DOM editing remains usable (1.7s)
+  ✓   8 [utility-lab] › tests/browser/utility-gpu.spec.ts:201:5 › all non-button GPU boundaries are visible and the desktop comparison frames align (647ms)
+  ✓   9 [utility-lab] › tests/browser/utility-runtime.spec.ts:8:5 › SDK ensure installs scanner-free CSS, coalesces requests and isolates independent scopes (525ms)
+  ✓  10 [utility-lab] › tests/browser/utility-runtime.spec.ts:60:5 › controls apply classes and fit desktop and mobile (746ms)
+  ✓  11 [utility-lab] › tests/browser/utility-runtime.spec.ts:78:5 › nested owners stop outer rules and disposal removes the owned stylesheet (501ms)
+  ✓  12 [utility-lab] › tests/browser/utility-runtime.spec.ts:100:5 › classList changes and newly added subtrees compile through the bounded observer without scanner (538ms)
+  ✓  13 [utility-lab] › tests/browser/utility-runtime.spec.ts:127:5 › scoped relation variants and arbitrary selectors retain conditional matching (494ms)
+  ✓  14 [utility-lab] › tests/browser/utility-runtime.spec.ts:169:5 › arbitrary responsive conditions follow the browser viewport at both sizes (514ms)
+  ✓  15 [utility-lab] › tests/browser/utility-runtime.spec.ts:188:5 › color alpha and scoped placeholder selectors retain their browser semantics (475ms)
+
+  15 passed (13.2s)

@@ -1,0 +1,59 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling crc32fast v1.5.2
+   Compiling aho-corasick v1.1.5
+   Compiling adler2 v2.0.1
+   Compiling regex-syntax v0.8.11
+   Compiling simd-adler32 v0.3.10
+   Compiling indexmap v2.14.2
+   Compiling ryu-js v1.0.3
+   Compiling wasm-bindgen-futures v0.4.78
+   Compiling miniz_oxide v0.9.1
+   Compiling flate2 v1.1.10
+   Compiling serde_json v1.0.151
+   Compiling regex-automata v0.4.18
+   Compiling regex v1.13.1
+   Compiling rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+   Compiling rustify-style-wasm v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style-wasm)
+    Finished `release` profile [optimized] target(s) in 10.64s
+mbx[cache]: 1 hits, 12 misses, 1 not looked up, 1 bypassed; 0 B downloaded, 0 B uploaded, 40.0 MiB stored locally
+mbx[gc]: removed 4 target directories (3.8 GiB logical, 0 abandoned and 4 live); 99.4 GiB logical remain
+mbx[gc]: evicted 416 objects and 60 action results (4.3 GiB logical); 90.0 GiB logical remain
+mbx[savings]: 1018.4 GiB logical of target/ belonged to checkouts that no longer exist. neither does it.
+npm notice run rustify-ui-browser-tests@0.1.0 npx
+npm notice run 'playwright' test --project=utility-baseline --workers=1 utility-baseline.spec.ts -g cn WASM facade
+
+Running 1 test using 1 worker
+
+  ✘  1 [utility-baseline] › tests/browser/utility-baseline.spec.ts:109:5 › cn WASM facade answers every fixed runtime case from the page realm under strict CSP (1.8s)
+
+
+  1) [utility-baseline] › tests/browser/utility-baseline.spec.ts:109:5 › cn WASM facade answers every fixed runtime case from the page realm under strict CSP 
+
+    Error: page.evaluate: ReferenceError: SharedArrayBuffer is not defined
+        at window.utilityProbe.cn (http://127.0.0.1:4185/app.js:178:54)
+        at async <anonymous>:337:30
+        at window.utilityProbe.cn (http://127.0.0.1:4185/app.js:178:54)
+        at async <anonymous>:337:30
+        at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser/utility-baseline.spec.ts:114:31
+
+    Error Context: test-results/utility-baseline-cn-WASM-f-caf62-page-realm-under-strict-CSP-utility-baseline/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/utility-baseline-cn-WASM-f-caf62-page-realm-under-strict-CSP-utility-baseline/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/utility-baseline-cn-WASM-f-caf62-page-realm-under-strict-CSP-utility-baseline/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [utility-baseline] › tests/browser/utility-baseline.spec.ts:109:5 › cn WASM facade answers every fixed runtime case from the page realm under strict CSP 
+npx playwright test --project=utility-baseline --workers=1 utility-baseline.spec.ts -g cn WASM facade failed: exit status: 1
+mbx[cache]: 0 hits, 0 misses, 1 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: cleaned up 1018.4 GiB logical after checkouts that left without saying goodbye.

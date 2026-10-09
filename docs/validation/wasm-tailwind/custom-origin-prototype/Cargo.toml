@@ -1,0 +1,11 @@
+[package]
+name = "rustify-custom-origin-prototype"
+version = "0.0.0"
+edition = "2021"
+publish = false
+
+[workspace]
+
+[dependencies]
+rustify-style = { path = "../../../../crates/rustify-style", default-features = false, features = ["compiler"] }
+serde_json = "1"

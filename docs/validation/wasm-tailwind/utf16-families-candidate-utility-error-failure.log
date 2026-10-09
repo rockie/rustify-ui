@@ -1,0 +1,50 @@
+mbx[warning]: Unix-domain cache session listener unavailable; using FIFO transport: failed to bind cache session listener at /var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/mbx-session-kdNwaI/cache-agent.sock: Operation not permitted (os error 1)
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling icu_normalizer v2.3.0
+   Compiling leptos_macro v0.8.17
+   Compiling rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+   Compiling idna_adapter v1.2.2
+   Compiling idna v1.1.0
+   Compiling url v2.5.8
+   Compiling server_fn v0.8.13
+   Compiling leptos_server v0.8.7
+   Compiling leptos v0.8.20
+   Compiling rustify-ui v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 3.78s
+warning: the following packages contain code that will be rejected by a future version of Rust: proc-macro-error2 v2.0.1
+note: to see what the problems were, use the option `--future-incompat-report`, or run `cargo report future-incompatibilities --id 1`
+     Running unittests src/lib.rs (/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-utf16-verified-54mkl3kq/cargo-target/debug/deps/rustify_ui-c3caf73793b24f4e)
+
+running 3 tests
+test utility::state::tests::utility_error_syntax_message_decodes_original_lone_units_in_both_field_orders ... FAILED
+test utility::state::tests::utility_error_range_message_decodes_original_lone_units_in_both_field_orders ... FAILED
+test utility::state::tests::utility_error_scalar_variants_keep_existing_json_schema_and_required_fields ... ok
+
+failures:
+
+---- utility::state::tests::utility_error_syntax_message_decodes_original_lone_units_in_both_field_orders stdout ----
+
+thread 'utility::state::tests::utility_error_syntax_message_decodes_original_lone_units_in_both_field_orders' (2983573) panicked at crates/rustify-ui/src/utility/state.rs:679:73:
+called `Result::unwrap()` on an `Err` value: Error("unexpected end of hex escape", line: 1, column: 78)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- utility::state::tests::utility_error_range_message_decodes_original_lone_units_in_both_field_orders stdout ----
+
+thread 'utility::state::tests::utility_error_range_message_decodes_original_lone_units_in_both_field_orders' (2983571) panicked at crates/rustify-ui/src/utility/state.rs:706:73:
+called `Result::unwrap()` on an `Err` value: Error("unexpected end of hex escape", line: 1, column: 66)
+
+
+failures:
+    utility::state::tests::utility_error_range_message_decodes_original_lone_units_in_both_field_orders
+    utility::state::tests::utility_error_syntax_message_decodes_original_lone_units_in_both_field_orders
+
+test result: FAILED. 1 passed; 2 failed; 0 ignored; 0 measured; 295 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p rustify-ui --lib`
+mbx[cache]: 0 hits, 0 misses, 10 not looked up; 0 B downloaded, 0 B uploaded, 58.7 MiB stored locally

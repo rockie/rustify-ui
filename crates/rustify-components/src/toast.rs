@@ -44,7 +44,7 @@ pub fn Toast(
     let base = format!("{CARD} {}", tone(toast.tone));
     view! {
         <div
-            class=crate::macros::merge(&base, &class)
+            class=crate::macros::reactive_merge(base, &class)
             data-name="Toast"
             data-tone=toast.tone.key()
             data-testid=test_id.clone()
@@ -97,7 +97,7 @@ pub fn Toaster(
     view! {
         <ToastRegion
             render=render
-            class=crate::macros::merge(REGION, &class)
+            class=Signal::derive(crate::macros::reactive_merge(REGION, &class))
             test_id=test_id
         />
     }

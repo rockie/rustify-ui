@@ -1,0 +1,110 @@
+{
+  "observedAt": "2026-10-06T13:41:46+11:00",
+  "scope": "public AST constructor with sixteen repeated tracked imports and four builds",
+  "before": {
+    "scope": "public AST constructor with sixteen repeated tracked imports and four builds",
+    "samples": [
+      {
+        "constructorP95Ms": 0.23362500000001774,
+        "buildP95Ms": 0.4267089999999598,
+        "sessionsPerSecond": 553.5250687712,
+        "outputSha256": "a123d62c776bc635bda402dddccd89fd7edeaf2ac973716a07d762fe031b799d",
+        "sessions": 100,
+        "builds": 400
+      },
+      {
+        "constructorP95Ms": 0.24858299999999645,
+        "buildP95Ms": 0.4181670000000395,
+        "sessionsPerSecond": 560.9061074699017,
+        "outputSha256": "a123d62c776bc635bda402dddccd89fd7edeaf2ac973716a07d762fe031b799d",
+        "sessions": 100,
+        "builds": 400
+      },
+      {
+        "constructorP95Ms": 0.3415830000000142,
+        "buildP95Ms": 0.558832999999936,
+        "sessionsPerSecond": 486.9821561410593,
+        "outputSha256": "a123d62c776bc635bda402dddccd89fd7edeaf2ac973716a07d762fe031b799d",
+        "sessions": 100,
+        "builds": 400
+      },
+      {
+        "constructorP95Ms": 0.23012499999992997,
+        "buildP95Ms": 0.4285419999999931,
+        "sessionsPerSecond": 551.0197204006918,
+        "outputSha256": "a123d62c776bc635bda402dddccd89fd7edeaf2ac973716a07d762fe031b799d",
+        "sessions": 100,
+        "builds": 400
+      },
+      {
+        "constructorP95Ms": 0.23554200000012315,
+        "buildP95Ms": 0.4261670000000777,
+        "sessionsPerSecond": 552.7032505959413,
+        "outputSha256": "a123d62c776bc635bda402dddccd89fd7edeaf2ac973716a07d762fe031b799d",
+        "sessions": 100,
+        "builds": 400
+      }
+    ],
+    "constructorP95Ms": 0.23554200000012315,
+    "buildP95Ms": 0.4267089999999598,
+    "sessionsPerSecond": 552.7032505959413,
+    "wasmBytes": 2266255,
+    "wasmSha256": "1950b5d2eb605a44eb8030c3f1bf6ac09b06f965fd4131b2235ce24a13c68e7b",
+    "actualWasm": true,
+    "finalPerformanceAcceptance": "pending"
+  },
+  "after": {
+    "scope": "public AST constructor with sixteen repeated tracked imports and four builds",
+    "samples": [
+      {
+        "constructorP95Ms": 1.3525419999999713,
+        "buildP95Ms": 0.46649999999999636,
+        "sessionsPerSecond": 334.6115024269941,
+        "outputSha256": "a123d62c776bc635bda402dddccd89fd7edeaf2ac973716a07d762fe031b799d",
+        "sessions": 100,
+        "builds": 400
+      },
+      {
+        "constructorP95Ms": 1.3637499999999818,
+        "buildP95Ms": 0.4735000000000582,
+        "sessionsPerSecond": 330.47540953132386,
+        "outputSha256": "a123d62c776bc635bda402dddccd89fd7edeaf2ac973716a07d762fe031b799d",
+        "sessions": 100,
+        "builds": 400
+      },
+      {
+        "constructorP95Ms": 1.4306249999999636,
+        "buildP95Ms": 0.48537499999997635,
+        "sessionsPerSecond": 330.6421366880479,
+        "outputSha256": "a123d62c776bc635bda402dddccd89fd7edeaf2ac973716a07d762fe031b799d",
+        "sessions": 100,
+        "builds": 400
+      },
+      {
+        "constructorP95Ms": 1.4122079999999642,
+        "buildP95Ms": 0.48949999999990723,
+        "sessionsPerSecond": 332.3582772374877,
+        "outputSha256": "a123d62c776bc635bda402dddccd89fd7edeaf2ac973716a07d762fe031b799d",
+        "sessions": 100,
+        "builds": 400
+      },
+      {
+        "constructorP95Ms": 1.3268749999999727,
+        "buildP95Ms": 0.44450000000006185,
+        "sessionsPerSecond": 342.6611406846713,
+        "outputSha256": "a123d62c776bc635bda402dddccd89fd7edeaf2ac973716a07d762fe031b799d",
+        "sessions": 100,
+        "builds": 400
+      }
+    ],
+    "constructorP95Ms": 1.3637499999999818,
+    "buildP95Ms": 0.4735000000000582,
+    "sessionsPerSecond": 332.3582772374877,
+    "wasmBytes": 2323697,
+    "wasmSha256": "12ce4c6925e3b40438d26601ac93e01072ed31d9cc3baf8c059af8f087b483ec",
+    "actualWasm": true,
+    "finalPerformanceAcceptance": "pending"
+  },
+  "comparison": "CSS-bearing AST fields only; source fields and input identity intentionally differ and are covered by graph gates",
+  "finalPerformanceAcceptance": "pending"
+}

@@ -1,0 +1,18 @@
+== docs/plan/WASM-TAILWIND.md
+  [错误] docs/plan/WASM-TAILWIND.md:28 链接目标不存在：FEATURE.records/M1.md
+  [错误] docs/plan/WASM-TAILWIND.md:155 引用的路径不存在：gpu/theme.rs
+  [错误] docs/plan/WASM-TAILWIND.md:156 引用的路径不存在：macros/clx.rs
+  [错误] docs/plan/WASM-TAILWIND.md:156 引用的路径不存在：macros/variants.rs
+  [错误] docs/plan/WASM-TAILWIND.md:396 引用的路径不存在：utility-faults.spec.ts
+  [提示] docs/plan/WASM-TAILWIND.md AI 腔词汇：里程碑×15，闭环×5，只需×1
+  [统计] {'标记': {}, 'Mermaid 图': 0, 'HTML 图链接': 0}
+== docs/validation/wasm-tailwind/M4.md
+  [错误] docs/validation/wasm-tailwind/M4.md:20 残留模板占位符：[value]
+  [提示] docs/validation/wasm-tailwind/M4.md AI 腔词汇：里程碑×3，harness×6
+  [统计] {'标记': {}, 'Mermaid 图': 0, 'HTML 图链接': 0}
+== crates/rustify-style/src/compiler/README.md
+  [统计] {'标记': {}, 'Mermaid 图': 0, 'HTML 图链接': 0}
+== tests/utility/compiler/README.md
+  [统计] {'标记': {}, 'Mermaid 图': 0, 'HTML 图链接': 0}
+
+共 6 个错误

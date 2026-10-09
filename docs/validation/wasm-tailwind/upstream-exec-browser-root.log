@@ -1,0 +1,54 @@
+npm notice run rustify-ui-browser-tests@0.1.0 npx
+npm notice run 'playwright' test --project=utility-lab --workers=1 --reporter=json,line
+
+Running 46 tests using 1 worker
+
+[1/46] [utility-lab] › tests/browser/utility-faults.spec.ts:8:5 › failed CSSOM installation nacks preparation, preserves the installed revision and permits retry
+[2/46] [utility-lab] › tests/browser/utility-faults.spec.ts:36:5 › Worker timeout preserves installed CSS and explicit retry replays in a fresh epoch
+[3/46] [utility-lab] › tests/browser/utility-faults.spec.ts:69:5 › instance trap releases Worker, observer, owner attribute and installed stylesheet through JS abort cleanup
+[4/46] [utility-lab] › tests/browser/utility-faults.spec.ts:86:5 › a second WASM instance keeps its compiler and stylesheet when the first instance traps
+[5/46] [utility-lab] › tests/browser/utility-faults.spec.ts:110:5 › a Worker construction failure leaves the root available for a later mount
+[6/46] [utility-lab] › tests/browser/utility-gpu.spec.ts:72:5 › clearing utility ownership restores the ordinary Button pixels and events
+[7/46] [utility-lab] › tests/browser/utility-gpu.spec.ts:155:7 › clearing utility ownership restores the latest theme without another baseline setter
+[8/46] [utility-lab] › tests/browser/utility-gpu.spec.ts:155:7 › clearing utility ownership restores the latest palette without another baseline setter
+[9/46] [utility-lab] › tests/browser/utility-gpu.spec.ts:212:5 › clearing utility ownership restores untouched Script Button defaults
+[10/46] [utility-lab] › tests/browser/utility-gpu.spec.ts:259:5 › GPU percentages use the parent content box and follow its real resize
+[11/46] [utility-lab] › tests/browser/utility-gpu.spec.ts:313:5 › inline and path sources with media theme options drive scoped DOM and GPU
+[12/46] [utility-lab] › tests/browser/utility-gpu.spec.ts:359:5 › applied utility dependencies drive DOM and GPU and survive an installation failure
+[13/46] [utility-lab] › tests/browser/utility-gpu.spec.ts:409:5 › GPU draws compiled colors, geometry and real font glyphs alongside scoped DOM
+[14/46] [utility-lab] › tests/browser/utility-gpu.spec.ts:445:5 › CSS functions resolve runtime candidates once and drive actual DOM and GPU pixels
+[15/46] [utility-lab] › tests/browser/utility-gpu.spec.ts:486:5 › CSS-native utilities drive scoped DOM and GPU while nested branches retain the drawn style
+[16/46] [utility-lab] › tests/browser/utility-gpu.spec.ts:521:5 › authored custom variants apply DOM hover and preserve the last drawn GPU style on rejection
+[17/46] [utility-lab] › tests/browser/utility-gpu.spec.ts:558:5 › arbitrary properties with modifiers drive actual DOM and GPU pixels
+[18/46] [utility-lab] › tests/browser/utility-gpu.spec.ts:573:5 › mask CSS applies to DOM while GPU rejects its unsupported property and retains its drawn style
+[19/46] [utility-lab] › tests/browser/utility-gpu.spec.ts:589:5 › strict GPU rejection retains the drawn style, partial reports skipped properties and deleting classes restores defaults
+[20/46] [utility-lab] › tests/browser/utility-gpu.spec.ts:614:5 › GPU responds to pointer, keyboard focus-visible and disabled input without recompiling
+[21/46] [utility-lab] › tests/browser/utility-gpu.spec.ts:641:5 › GPU media uses the browser viewport, and alpha color blocks match DOM pixels
+[22/46] [utility-lab] › tests/browser/utility-gpu.spec.ts:661:5 › GPU applies text resources, row layout, shadows and rings from compiler bindings
+[23/46] [utility-lab] › tests/browser/utility-gpu.spec.ts:685:5 › GPU restores its latest committed programs after a real WebGL context loss
+[24/46] [utility-lab] › tests/browser/utility-gpu.spec.ts:704:5 › terminal GPU initialization failure explains recovery while DOM editing remains usable
+[25/46] [utility-lab] › tests/browser/utility-gpu.spec.ts:723:5 › all non-button GPU boundaries are visible and the desktop comparison frames align
+[26/46] [utility-lab] › tests/browser/utility-gpu.spec.ts:742:5 › live ThemeScope and ThemeBoundary update colors, dark conditions and host rem without recompiling
+[27/46] [utility-lab] › tests/browser/utility-gpu.spec.ts:795:5 › configuration replacement publishes new DOM and GPU programs and retains pixels on failed installation
+[28/46] [utility-lab] › tests/browser/utility-runtime.spec.ts:10:5 › manifest seed preserves static utility order on first ensure, replacement and retry
+[29/46] [utility-lab] › tests/browser/utility-runtime.spec.ts:79:5 › a modified seed is rejected before installation and explicit retry keeps committed styles
+[30/46] [utility-lab] › tests/browser/utility-runtime.spec.ts:99:5 › seed count and transfer budgets reject init without retaining a half initialized session
+[31/46] [utility-lab] › tests/browser/utility-runtime.spec.ts:128:5 › real DOM components use scope cn on raw fragments and react to caller and size changes
+[32/46] [utility-lab] › tests/browser/utility-runtime.spec.ts:180:5 › parser recovery preserves authored important values and valid compound variants
+[33/46] [utility-lab] › tests/browser/utility-runtime.spec.ts:221:5 › structural spacing, container and line clamp keep their actual browser semantics
+[34/46] [utility-lab] › tests/browser/utility-runtime.spec.ts:262:5 › SDK ensure installs scanner-free CSS, coalesces requests and isolates independent scopes
+[35/46] [utility-lab] › tests/browser/utility-runtime.spec.ts:315:5 › controls apply classes and fit desktop and mobile
+[36/46] [utility-lab] › tests/browser/utility-runtime.spec.ts:334:5 › nested owners stop outer rules and disposal removes the owned stylesheet
+[37/46] [utility-lab] › tests/browser/utility-runtime.spec.ts:356:5 › classList changes and newly added subtrees compile through the bounded observer without scanner
+[38/46] [utility-lab] › tests/browser/utility-runtime.spec.ts:383:5 › scoped relation variants and arbitrary selectors retain conditional matching
+[39/46] [utility-lab] › tests/browser/utility-runtime.spec.ts:425:5 › arbitrary responsive conditions follow the browser viewport at both sizes
+[40/46] [utility-lab] › tests/browser/utility-runtime.spec.ts:444:5 › color alpha and scoped placeholder selectors retain their browser semantics
+[41/46] [utility-lab] › tests/browser/utility-runtime.spec.ts:485:5 › external variable inputs install live theme dependencies without utility selectors
+[42/46] [utility-lab] › tests/browser/utility-runtime.spec.ts:516:5 › compiler-only Worker diagnoses disabled scanning and keeps its session usable
+[43/46] [utility-lab] › tests/browser/utility-runtime.spec.ts:570:5 › non-scalar compiler output keeps its UTF-16 units across Worker and SDK installation
+[WebServer] request failed: Broken pipe (os error 32)
+
+[44/46] [utility-lab] › tests/browser/utility-runtime.spec.ts:591:5 › configuration replacement commits raw component classes and CSS together and rolls failures back
+[45/46] [utility-lab] › tests/browser/utility-runtime.spec.ts:649:5 › configuration ack loss replays the installed cn and compiler configuration
+[46/46] [utility-lab] › tests/browser/utility-runtime.spec.ts:684:5 › rapid configuration edits supersede old work and retain same epoch additions
+  46 passed (43.3s)

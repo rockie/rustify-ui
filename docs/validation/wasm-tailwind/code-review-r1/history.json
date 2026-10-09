@@ -1,0 +1,31 @@
+{
+  "retained": {
+    "hadCandidate": true,
+    "activeMatches": 0,
+    "stillRetained": true,
+    "beforeRevision": 2,
+    "afterRevision": 3
+  },
+  "quota": {
+    "baseline": 233,
+    "limit": 234,
+    "count": 234,
+    "replacementFailure": {
+      "kind": "compile",
+      "error": {
+        "kind": "limit",
+        "resource": "candidate_count",
+        "limit": 234
+      }
+    },
+    "failure": {
+      "kind": "compile",
+      "error": {
+        "kind": "limit",
+        "resource": "candidate_count",
+        "limit": 234
+      }
+    }
+  },
+  "pageErrors": []
+}

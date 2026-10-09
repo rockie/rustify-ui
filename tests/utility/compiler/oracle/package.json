@@ -1,0 +1,14 @@
+{
+  "name": "rustify-utility-compiler-oracle",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "check": "node ../reference.mjs --check",
+    "generate": "node ../reference.mjs --write"
+  },
+  "devDependencies": {
+    "tailwindcss": "4.1.13",
+    "jiti": "2.7.0",
+    "typescript": "5.9.3"
+  }
+}

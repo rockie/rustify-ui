@@ -1,0 +1,4 @@
+/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-components/css/rustify.css is not what the input produces; run `mbx xtask css` and commit the result (28725 bytes committed, 28770 bytes generated)
+first difference, line 444:
+  committed:   .p-\[3px\] {
+  generated:   .p-8 {

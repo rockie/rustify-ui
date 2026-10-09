@@ -1,0 +1,43 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+warning: unreachable `else` clause
+  --> crates/rustify-style/src/compiler/../../../../tests/utility/compiler/source-pipeline.rs:28:72
+   |
+28 |                     let SourceTree::Virtual(tree) = scanner.tree_mut() else { panic!("virtual fixture") };
+   |                     -------------------------------------------------- ^^^^
+   |                     |
+   |                     assigning to binding pattern will always succeed
+   |
+   = note: this pattern always matches, so the else clause is unreachable
+   = note: `#[warn(irrefutable_let_patterns)]` on by default
+
+warning: `rustify-style` (lib test) generated 1 warning
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 7.20s
+     Running unittests src/lib.rs (target/debug/deps/rustify_style-9a830b1fe16a397c)
+
+running 1 test
+test compiler::source_pipeline_tests::css_selected_sources_and_variables_match_official_scanner_compiler_pipeline ... FAILED
+
+failures:
+
+---- compiler::source_pipeline_tests::css_selected_sources_and_variables_match_official_scanner_compiler_pipeline stdout ----
+
+thread 'compiler::source_pipeline_tests::css_selected_sources_and_variables_match_official_scanner_compiler_pipeline' (15930625) panicked at crates/rustify-style/src/compiler/../../../../tests/utility/compiler/source-pipeline.rs:16:103:
+called `Result::unwrap()` on an `Err` value: MissingSourceInformation("compiler source selection is not connected")
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    compiler::source_pipeline_tests::css_selected_sources_and_variables_match_official_scanner_compiler_pipeline
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 227 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p rustify-style --lib`
+mbx[cache]: 0 hits, 0 misses, 1 not looked up; 0 B downloaded, 0 B uploaded, 315.7 MiB stored locally
+mbx[savings]: 577.5 GiB logical of outputs had survived their checkouts. an unnatural state, now corrected.

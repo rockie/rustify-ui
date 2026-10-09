@@ -1,0 +1,71 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.40s
+     Running unittests src/lib.rs (target/debug/deps/rustify_style-d8a92cb6940dfdfd)
+
+running 1 test
+test compiler::variants::tests::dynamic_variants_match_official_css_and_union_order ... FAILED
+
+failures:
+
+---- compiler::variants::tests::dynamic_variants_match_official_css_and_union_order stdout ----
+
+thread 'compiler::variants::tests::dynamic_variants_match_official_css_and_union_order' (12046269) panicked at crates/rustify-style/src/compiler/variants.rs:763:9:
+10 differences:
+"dynamic-variant:aria-(--state):flex"
+actual: ""
+expected: String(".aria-\\(--state\\)\\:flex {\n  &[aria-var(--state)] {\n    display: flex;\n  }\n}\n")
+pending: []
+"dynamic-variant:data-(--state):flex"
+actual: ""
+expected: String(".data-\\(--state\\)\\:flex {\n  &[data-var(--state)] {\n    display: flex;\n  }\n}\n")
+pending: []
+"dynamic-variant:nth-(--count):flex"
+actual: ""
+expected: String(".nth-\\(--count\\)\\:flex {\n  &:nth-child(var(--count)) {\n    display: flex;\n  }\n}\n")
+pending: []
+"dynamic-variant:supports-(--condition):flex"
+actual: ""
+expected: String(".supports-\\(--condition\\)\\:flex {\n  @supports var(--condition) {\n    display: flex;\n  }\n}\n")
+pending: []
+"dynamic-variant:group-hover/[card_name]:flex"
+actual: ".group-hover\\/\\[card_name\\]\\:flex {\n  &:is(:where(.group\\/card_name):hover *) {\n    @media (hover: hover) {\n      display: flex;\n    }\n  }\n}\n"
+expected: String(".group-hover\\/\\[card_name\\]\\:flex {\n  &:is(:where(.group\\/card name):hover *) {\n    @media (hover: hover) {\n      display: flex;\n    }\n  }\n}\n")
+pending: []
+"dynamic-variant:peer-hover/[card_name]:flex"
+actual: ".peer-hover\\/\\[card_name\\]\\:flex {\n  &:is(:where(.peer\\/card_name):hover ~ *) {\n    @media (hover: hover) {\n      display: flex;\n    }\n  }\n}\n"
+expected: String(".peer-hover\\/\\[card_name\\]\\:flex {\n  &:is(:where(.peer\\/card name):hover ~ *) {\n    @media (hover: hover) {\n      display: flex;\n    }\n  }\n}\n")
+pending: []
+"dynamic-variant:group-hover/(--name):flex"
+actual: ".group-hover\\/\\(--name\\)\\:flex {\n  &:is(:where(.group\\/\\(--name\\)):hover *) {\n    @media (hover: hover) {\n      display: flex;\n    }\n  }\n}\n"
+expected: String(".group-hover\\/\\(--name\\)\\:flex {\n  &:is(:where(.group\\/var(--name)):hover *) {\n    @media (hover: hover) {\n      display: flex;\n    }\n  }\n}\n")
+pending: []
+"dynamic-variant:@sm/[side_bar]:flex"
+actual: ".\\@sm\\/\\[side_bar\\]\\:flex {\n  @container [side_bar] (width >= 24rem) {\n    display: flex;\n  }\n}\n"
+expected: String(".\\@sm\\/\\[side_bar\\]\\:flex {\n  @container side bar (width >= 24rem) {\n    display: flex;\n  }\n}\n")
+pending: []
+"dynamic-variant:@sm/(--name):flex"
+actual: ".\\@sm\\/\\(--name\\)\\:flex {\n  @container (--name) (width >= 24rem) {\n    display: flex;\n  }\n}\n"
+expected: String(".\\@sm\\/\\(--name\\)\\:flex {\n  @container var(--name) (width >= 24rem) {\n    display: flex;\n  }\n}\n")
+pending: []
+"dynamic-variant:boundary:union"
+actual: ".not-not-focus\\:flex {\n  &:not(*:not(*:focus)) {\n    display: flex;\n  }\n}\n.not-not-dark\\:flex {\n  @media (prefers-color-scheme: dark) {\n    display: flex;\n  }\n}\n.group-not-focus\\:flex {\n  &:is(:where(.group):not(*:focus) *) {\n    display: flex;\n  }\n}\n.group-hover\\/\\(--name\\)\\:flex {\n  &:is(:where(.group\\/\\(--name\\)):hover *) {\n    @media (hover: hover) {\n      display: flex;\n    }\n  }\n}\n.group-hover\\/\\[card_name\\]\\:flex {\n  &:is(:where(.group\\/card_name):hover *) {\n    @media (hover: hover) {\n      display: flex;\n    }\n  }\n}\n.group-hover\\/\\[\u{e000}\\]\\:flex {\n  &:is(:where(.group\\/\u{e000}):hover *) {\n    @media (hover: hover) {\n      display: flex;\n    }\n  }\n}\n.group-hover\\/\\[😀\\]\\:flex {\n  &:is(:where(.group\\/😀):hover *) {\n    @media (hover: hover) {\n      display: flex;\n    }\n  }\n}\n.group-has-\\[\\&_p\\]\\:flex {\n  &:is(:where(.group):has(* p) *) {\n    display: flex;\n  }\n}\n.peer-hover\\/\\[card_name\\]\\:flex {\n  &:is(:where(.peer\\/card_name):hover ~ *) {\n    @media (hover: hover) {\n      display: flex;\n    }\n  }\n}\n.has-group-\\[\\&_p\\]\\:flex {\n  &:has(*:is(:where(.group) p *)) {\n    display: flex;\n  }\n}\n.data-\\[\u{e000}\\]\\:flex {\n  &[data-\u{e000}] {\n    display: flex;\n  }\n}\n.data-\\[😀\\]\\:flex {\n  &[data-😀] {\n    display: flex;\n  }\n}\n.\\@sm\\/\\(--name\\)\\:flex {\n  @container (--name) (width >= 24rem) {\n    display: flex;\n  }\n}\n.\\@sm\\/\\[side_bar\\]\\:flex {\n  @container [side_bar] (width >= 24rem) {\n    display: flex;\n  }\n}\n.\\[\\&\\:is\\(\\:hover\\,\\:focus\\)\\]\\:flex {\n  &:is(:hover,:focus) {\n    display: flex;\n  }\n}\n.\\[\\@media_\\(width\\>500px\\)\\]\\:flex {\n  @media (width>500px) {\n    display: flex;\n  }\n}\n"
+expected: String(".not-not-focus\\:flex {\n  &:not(*:not(*:focus)) {\n    display: flex;\n  }\n}\n.not-not-dark\\:flex {\n  @media (prefers-color-scheme: dark) {\n    display: flex;\n  }\n}\n.group-not-focus\\:flex {\n  &:is(:where(.group):not(*:focus) *) {\n    display: flex;\n  }\n}\n.group-hover\\/\\[card_name\\]\\:flex {\n  &:is(:where(.group\\/card name):hover *) {\n    @media (hover: hover) {\n      display: flex;\n    }\n  }\n}\n.group-hover\\/\\(--name\\)\\:flex {\n  &:is(:where(.group\\/var(--name)):hover *) {\n    @media (hover: hover) {\n      display: flex;\n    }\n  }\n}\n.group-hover\\/\\[😀\\]\\:flex {\n  &:is(:where(.group\\/😀):hover *) {\n    @media (hover: hover) {\n      display: flex;\n    }\n  }\n}\n.group-hover\\/\\[\u{e000}\\]\\:flex {\n  &:is(:where(.group\\/\u{e000}):hover *) {\n    @media (hover: hover) {\n      display: flex;\n    }\n  }\n}\n.group-has-\\[\\&_p\\]\\:flex {\n  &:is(:where(.group):has(* p) *) {\n    display: flex;\n  }\n}\n.peer-hover\\/\\[card_name\\]\\:flex {\n  &:is(:where(.peer\\/card name):hover ~ *) {\n    @media (hover: hover) {\n      display: flex;\n    }\n  }\n}\n.has-group-\\[\\&_p\\]\\:flex {\n  &:has(*:is(:where(.group) p *)) {\n    display: flex;\n  }\n}\n.aria-\\(--state\\)\\:flex {\n  &[aria-var(--state)] {\n    display: flex;\n  }\n}\n.data-\\(--state\\)\\:flex {\n  &[data-var(--state)] {\n    display: flex;\n  }\n}\n.data-\\[😀\\]\\:flex {\n  &[data-😀] {\n    display: flex;\n  }\n}\n.data-\\[\u{e000}\\]\\:flex {\n  &[data-\u{e000}] {\n    display: flex;\n  }\n}\n.nth-\\(--count\\)\\:flex {\n  &:nth-child(var(--count)) {\n    display: flex;\n  }\n}\n.supports-\\(--condition\\)\\:flex {\n  @supports var(--condition) {\n    display: flex;\n  }\n}\n.\\@sm\\/\\(--name\\)\\:flex {\n  @container var(--name) (width >= 24rem) {\n    display: flex;\n  }\n}\n.\\@sm\\/\\[side_bar\\]\\:flex {\n  @container side bar (width >= 24rem) {\n    display: flex;\n  }\n}\n.\\[\\&\\:is\\(\\:hover\\,\\:focus\\)\\]\\:flex {\n  &:is(:hover,:focus) {\n    display: flex;\n  }\n}\n.\\[\\@media_\\(width\\>500px\\)\\]\\:flex {\n  @media (width>500px) {\n    display: flex;\n  }\n}\n")
+pending: []
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    compiler::variants::tests::dynamic_variants_match_official_css_and_union_order
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 34 filtered out; finished in 0.04s
+
+error: test failed, to rerun pass `-p rustify-style --lib`
+mbx[cache]: 0 hits, 0 misses, 1 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: 551.6 GiB logical of old files removed to date. the broom sends its regards.

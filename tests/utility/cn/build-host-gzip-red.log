@@ -1,0 +1,9 @@
+{
+  "passed": 33,
+  "failures": [
+    {
+      "name": "CLI-gzip-boundary-original-Node-zlib",
+      "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n+ actual - expected\n\n  'cn build: all class groups kept (--full)\\n' +\n+   '  → x.mjs (10.7 KB source, 5.9 KB gzip)\\n'\n-   '  → x.mjs (10.7 KB source, 5.8 KB gzip)\\n'\n\n    at file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/cn/run-build-host.mjs:170:110\n    at check (file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/cn/run-build-host.mjs:29:41)\n    at file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/cn/run-build-host.mjs:168:9"
+    }
+  ]
+}

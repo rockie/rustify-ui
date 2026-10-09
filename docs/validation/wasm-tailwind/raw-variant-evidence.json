@@ -1,0 +1,1182 @@
+{
+  "updatedAt": "2026-10-06T22:34:56+11:00",
+  "baseline": "dirty@ef766ce50005546d861e32a4a1c45b4f4a03f0d7",
+  "previousEvidence": "raw-theme-evidence.json",
+  "sourceHashes": {
+    "Cargo.toml": "dee97baccd454f9bf74ccd8c4bac69e47579d2284b5f07bcb39f73a22d5f871a",
+    "Cargo.lock": "3e1069d4610684c784ddd750ddd9a20132d9f749d3aa660f0bf1d7887ef4577c",
+    "mise.toml": "b39792f4c61600ed818b759bb8f9316b217372135b4b0eae097305ceec761f79",
+    "sources.lock.json": "f07a22046a145b10b7dda5c4ccb949ee1ffc00673a57f5ab3dc1a1c15b0ceb6d",
+    "xtask/src/utility.rs": "424534feaddf099b0406573a54a82bc0dfc374b526d96dc1a443fda214c8ac7c",
+    "examples/utility-lab/src/button_baseline.rs": "24fa5304273db11881fd299a899da09e2f553bf4f4c062e524ca0187a1591978",
+    "examples/utility-lab/app.js": "6f3a56cd6526f6d2d7288d940ebc655c77063591627fdeb402ecb4271ea5d8c7",
+    "tests/browser/utility-gpu.spec.ts": "6c49b586391536d7eba5b5e39642d106638102b2a8770c6ead9b6f82f5c6ac57",
+    "tests/utility/compiler/run-public-ast-registration-wasm.mjs": "f23954ff6e4c0f4482ea8427f4057776a73f465edd45efdaa134a6727a632efb",
+    "tests/utility/compiler/run-public-ast-media-source-wasm.mjs": "09137e228eb0a99ef1c8d803265ff6af73170dd744a48da431525bea85f58eca",
+    "tests/utility/compiler/run-public-ast-ownership-wasm.mjs": "d02030bfde57df93b269f593694317d97eb624f50e2a3b19db1e15c2056bbbcf",
+    "tests/utility/compiler/bench-media-source-wasm.mjs": "d1130984077de9ef21f239fd09ba8fc4ff49a832cbbf3b6a25dc1962f653117e",
+    "crates/rustify-style/src/compiler/registration.rs": "595766fd05c6bf8749d9a4591c0c00032c5ef75554b95e516cafcaae2c00d1ad",
+    "crates/rustify-style/src/compiler/theme.rs": "63345a14f129704bc41d748ad24d3e658f752d232319d13e28bc17a8a041d10c",
+    "crates/rustify-style/src/compiler/custom_utilities.rs": "4ab6166cc9849b8ec9cbfa375f5b0d28fe7e02b5ad8f9776d46a9c90824859dd",
+    "crates/rustify-style/src/compiler/custom_variants.rs": "f8cad8f31c10ea0eb64c40353c2f780d5ff7ff02589be80fe7a20b9615f3ccc7",
+    "crates/rustify-style/src/compiler/public_api/compile_ast.rs": "c2adc72041b2ce22822b1910803dc15c8c0fbdd2bfaa0f1384d0b2c95855c2ae",
+    "crates/rustify-style/src/compiler/mod.rs": "01ffb64634ff51bfd1316a19d2cab47ef10078169d822ac95ede55ff33d151b8",
+    "crates/rustify-style/src/compiler/variants.rs": "b020e7c139156c62cc89773d44b5cfb0de9b2a463eaf2fefe44b8f7b5d8bf82d",
+    "crates/rustify-style/src/compiler/origin/current.rs": "e48e222e499cfb3809310d5d2b51891fe058a0aa4b7320c1ddbb055dcdbb0f8d",
+    "crates/rustify-style/src/compiler/origin.rs": "f9f0a94afd7bd501bc618ecbfae758ad36d54b0e494864a914f7e0937243c296",
+    "crates/rustify-style/src/compiler/public_api.rs": "11ce83beebc62356887bda07a2252ab4628658ff5642b4d536b6483a0cf8e960"
+  },
+  "gates": {
+    "nativeTests": 367,
+    "nativeLog": "raw-variant-final-slice.log",
+    "nativeGroups": [
+      357,
+      10
+    ],
+    "facadeTests": 13,
+    "xtaskTests": 37,
+    "registration": {
+      "registrationCases": 48,
+      "entryComparisons": 96,
+      "completePrefixAndSettledGraphs": true,
+      "failures": [],
+      "actualWasm": true,
+      "wasmBytes": 2537784,
+      "fullRegistrationConformance": "pending"
+    },
+    "ownership": {
+      "ownershipCases": 14,
+      "entryComparisons": 28,
+      "completePrefixAndSettledGraphs": true,
+      "failures": [],
+      "actualWasm": true,
+      "wasmBytes": 2537784,
+      "fullOwnershipConformance": "pending"
+    },
+    "media": {
+      "cases": 2,
+      "entryComparisons": 4,
+      "failures": 0
+    },
+    "compilerSlice": {
+      "compilerSmoke": "passed",
+      "scannerEnabled": false,
+      "officialNesting": "passed",
+      "cssFunctionBindingsAndLimits": "passed",
+      "customUtilityBindingsAndLimits": "passed",
+      "customVariantBindingsAndLimits": "passed",
+      "legacyCacheLimitsAndRecovery": "passed",
+      "sliceCases": 214909,
+      "incrementalComparisons": 1470,
+      "incrementalCases": 246,
+      "cssComparisons": 216133,
+      "pendingBoundaryCases": 0,
+      "pendingFeatureCases": 0,
+      "utf16OutputCases": 4,
+      "sourceMetadataCases": 1607,
+      "errorCases": 3002,
+      "variantParseCases": 6673,
+      "variantParseNullCases": 2963,
+      "variantReusedCases": 84,
+      "variantParserLimitCases": 24,
+      "wasmBytes": 1776578,
+      "imports": [
+        "__wbg_length_d52ee452c5be0c99",
+        "__wbg_charCodeAt_90635349fbda9f5f",
+        "__wbg___wbindgen_throw_5d9e815e6fdf150f",
+        "__wbg___wbindgen_is_string_c4f7cb494a2a21f1",
+        "__wbindgen_init_externref_table",
+        "__wbindgen_generic_0000000000000001"
+      ],
+      "sharedMemory": false,
+      "fullConformance": "pending"
+    },
+    "ledger": {
+      "sourcesVerified": 109,
+      "originalSourceCalls": 1215,
+      "originalTestCalls": 1125,
+      "originalParameterizationCalls": 10,
+      "originalSuiteCalls": 80,
+      "parameterBuilders": 11,
+      "expandedTests": 1398,
+      "staticallyExpandedTests": 1398,
+      "unresolvedTests": 0,
+      "upstreamSkippedTests": 1,
+      "assertionTemplates": 1851,
+      "assertionTemplateEdges": 2140,
+      "controlledAssertionTemplates": 45,
+      "externalSnapshotExports": 13,
+      "matchedExternalSnapshotExports": 13,
+      "suggestedScopeCorrections": 3,
+      "validatedTests": 0,
+      "validatedAssertions": 0,
+      "adjudicatedExclusions": 0,
+      "unownedAssertionTemplates": 0
+    },
+    "logicalCacheThresholds": [
+      {
+        "actualWasm": true,
+        "sharedMemory": false,
+        "wasmBytes": 2537784,
+        "utilitiesMutationCases": 8,
+        "constructorAndBuildPhases": 38,
+        "noOpIdentities": 12,
+        "originalSetterExceptions": 3,
+        "cacheBoundaries": 4,
+        "twoBuildCacheThreshold": 22324,
+        "fullInputMutationConformance": "pending"
+      },
+      {
+        "themeSetupCases": 18,
+        "constructorAndBuildPhases": 105,
+        "noOpIdentities": 29,
+        "originalConstructorExceptions": 2,
+        "cacheBoundaries": 3,
+        "constructorCacheThreshold": 46386,
+        "actualWasm": true,
+        "sharedMemory": false,
+        "wasmBytes": 2537784,
+        "fullInputMutationConformance": "pending"
+      },
+      {
+        "applyInputCases": 15,
+        "constructorAndBuildPhases": 90,
+        "noOpIdentities": 18,
+        "originalConstructorExceptions": 2,
+        "cacheBoundaries": 3,
+        "constructorCacheThreshold": 56502,
+        "actualWasm": true,
+        "sharedMemory": false,
+        "wasmBytes": 2537784,
+        "fullInputMutationConformance": "pending"
+      },
+      {
+        "functionFailureCases": 12,
+        "originalHostExceptionCases": 4,
+        "cacheBoundaries": 3,
+        "semanticFailureCacheThreshold": 14842,
+        "quotaNoWriteCases": 1,
+        "actualWasm": true,
+        "sharedMemory": false,
+        "wasmBytes": 2537784,
+        "fullFailedSetupConformance": "pending"
+      },
+      {
+        "applyFailureCases": 16,
+        "entries": 2,
+        "checks": 32,
+        "failures": [],
+        "hostExceptionChecks": 8,
+        "cacheBoundaries": 3,
+        "semanticFailureCacheThreshold": 30058,
+        "asyncQuotaNoWriteCases": 2,
+        "actualWasm": true,
+        "wasmBytes": 2537784,
+        "fullFailedSetupConformance": "pending"
+      }
+    ],
+    "browser": {
+      "root": {
+        "log": "raw-variant-browser-root.json",
+        "startTime": "2026-10-06T11:28:54.526Z",
+        "duration": 42127.284999999996,
+        "expected": 46,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0,
+        "errors": 0
+      },
+      "deep": {
+        "log": "raw-variant-browser-deep.json",
+        "startTime": "2026-10-06T11:30:15.250Z",
+        "duration": 40163.123,
+        "expected": 41,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0,
+        "errors": 0
+      }
+    }
+  },
+  "goalStatus": "active",
+  "milestonesCompleted": 3,
+  "milestonesTotal": 7,
+  "remaining": [
+    "full raw synthetic-root/functions and once-only ownership handoff",
+    "pre-import typed lowering and native adapter",
+    "full admission/host projection/allocator peaks",
+    "full upstream runtime assertion ledger",
+    "construction profiling/performance and M5–M7"
+  ],
+  "sourceSnapshotFrozenForValidation": true,
+  "artifacts": {
+    "compiler-api": {
+      "path": "target/utility-conformance/compiler-api/style_bg.wasm",
+      "bytes": 2537784,
+      "sha256": "8fde6c0089d9bec584b03c787bc84d851eed2d872ee747d2bdbf221b0bdddd01"
+    },
+    "compiler": {
+      "path": "target/utility-conformance/compiler/style_bg.wasm",
+      "bytes": 1776578,
+      "sha256": "fac7b40b10535ab87bc8d435450718f2d514f5ac18ece4c841c6ffdac3f8f748"
+    }
+  },
+  "products": {
+    "root": {
+      "mainBuildId": "b063f40bd16e0972",
+      "workerBuildId": "13199231838193c861eb97dbf3c0eb59ff80e116b9670ae1064ca2a2f4bccc21",
+      "scannerEnabled": false,
+      "sizeReport": {
+        "wasm": 11249858,
+        "js": 246562,
+        "css": 35072,
+        "fonts": 51732356,
+        "images": 20701,
+        "data": 19812,
+        "total": 63304361
+      },
+      "mainWasm": {
+        "path": "target/makepad-wasm-app/release/utility-lab/utility-lab.wasm",
+        "bytes": 9486990,
+        "sha256": "b063f40bd16e0972f4fae917c117d0726225beb7e3d599514b4c45980ee9efeb"
+      },
+      "workerWasm": {
+        "path": "target/makepad-wasm-app/release/utility-lab/utility/compiler/style_bg.wasm",
+        "bytes": 1762868,
+        "sha256": "be0a39d41ae78a111b6c4248a364fdb0ffc600b59ef87f3d9fe3324b261f909f"
+      },
+      "manifest": {
+        "path": "docs/validation/wasm-tailwind/raw-variant-browser/manifests/root-main-manifest.json",
+        "bytes": 3114,
+        "sha256": "eb2ecd649370598f2abe295bed780135a94f482203fbe106506ff9792b9ee2d1"
+      },
+      "workerManifest": {
+        "path": "docs/validation/wasm-tailwind/raw-variant-browser/manifests/root-worker-manifest.json",
+        "bytes": 592,
+        "sha256": "9df206a58266a26fc172dcb426a84abfedf26a66656eea41270cb98089db16bf"
+      },
+      "workerFileHashesVerified": 4,
+      "mainSizeMismatches": []
+    },
+    "deep": {
+      "mainBuildId": "b063f40bd16e0972",
+      "workerBuildId": "13199231838193c861eb97dbf3c0eb59ff80e116b9670ae1064ca2a2f4bccc21",
+      "scannerEnabled": false,
+      "sizeReport": {
+        "wasm": 11249858,
+        "js": 246562,
+        "css": 35072,
+        "fonts": 51732356,
+        "images": 20701,
+        "data": 22998,
+        "total": 63307547
+      },
+      "mainWasm": {
+        "path": "target/makepad-wasm-app/release/utility-lab@tools-utility-lab/utility-lab.wasm",
+        "bytes": 9486990,
+        "sha256": "b063f40bd16e0972f4fae917c117d0726225beb7e3d599514b4c45980ee9efeb"
+      },
+      "workerWasm": {
+        "path": "target/makepad-wasm-app/release/utility-lab@tools-utility-lab/utility/compiler/style_bg.wasm",
+        "bytes": 1762868,
+        "sha256": "be0a39d41ae78a111b6c4248a364fdb0ffc600b59ef87f3d9fe3324b261f909f"
+      },
+      "manifest": {
+        "path": "docs/validation/wasm-tailwind/raw-variant-browser/manifests/deep-main-manifest.json",
+        "bytes": 3165,
+        "sha256": "ef52db66202cb517085b59eadfa9dbaa2f8986922d9115ed52e9fd73deea99b3"
+      },
+      "workerManifest": {
+        "path": "docs/validation/wasm-tailwind/raw-variant-browser/manifests/deep-worker-manifest.json",
+        "bytes": 592,
+        "sha256": "9df206a58266a26fc172dcb426a84abfedf26a66656eea41270cb98089db16bf"
+      },
+      "workerFileHashesVerified": 4,
+      "mainSizeMismatches": [
+        {
+          "file": "build-manifest.json",
+          "reported": 3114,
+          "actual": 3165
+        }
+      ]
+    }
+  },
+  "benchmarks": {
+    "media": {
+      "logs": {
+        "before": "raw-variant-media-benchmark-before.json",
+        "after": "raw-variant-media-benchmark-after.json"
+      },
+      "measurements": {
+        "before": {
+          "scope": "public AST constructor with sixteen media source blocks and four builds",
+          "samples": [
+            {
+              "constructorP95Ms": 0.6620840000000214,
+              "buildP95Ms": 0.2963750000000118,
+              "sessionsPerSecond": 613.515752016933,
+              "outputSha256": "5fd45470353f800d2e198fad88da86ae25dd6d8ba7ca5f46232ceedebe529c89",
+              "sessions": 100,
+              "builds": 400
+            },
+            {
+              "constructorP95Ms": 0.6910830000000487,
+              "buildP95Ms": 0.311540999999977,
+              "sessionsPerSecond": 609.3964384714873,
+              "outputSha256": "5fd45470353f800d2e198fad88da86ae25dd6d8ba7ca5f46232ceedebe529c89",
+              "sessions": 100,
+              "builds": 400
+            },
+            {
+              "constructorP95Ms": 0.8405830000000378,
+              "buildP95Ms": 0.3588750000000118,
+              "sessionsPerSecond": 549.0540931771259,
+              "outputSha256": "5fd45470353f800d2e198fad88da86ae25dd6d8ba7ca5f46232ceedebe529c89",
+              "sessions": 100,
+              "builds": 400
+            },
+            {
+              "constructorP95Ms": 0.6766250000000582,
+              "buildP95Ms": 0.309833000000026,
+              "sessionsPerSecond": 605.2468864692963,
+              "outputSha256": "5fd45470353f800d2e198fad88da86ae25dd6d8ba7ca5f46232ceedebe529c89",
+              "sessions": 100,
+              "builds": 400
+            },
+            {
+              "constructorP95Ms": 0.6837920000000395,
+              "buildP95Ms": 0.29045799999994415,
+              "sessionsPerSecond": 622.090753709605,
+              "outputSha256": "5fd45470353f800d2e198fad88da86ae25dd6d8ba7ca5f46232ceedebe529c89",
+              "sessions": 100,
+              "builds": 400
+            }
+          ],
+          "constructorP95Ms": 0.6837920000000395,
+          "buildP95Ms": 0.309833000000026,
+          "sessionsPerSecond": 609.3964384714873,
+          "wasmBytes": 2515813,
+          "wasmSha256": "7d6b26786649916de4ae56c3fb6c6e8ca012936659f924c1e14ec8568379feff",
+          "actualWasm": true,
+          "finalPerformanceAcceptance": "pending"
+        },
+        "after": {
+          "scope": "public AST constructor with sixteen media source blocks and four builds",
+          "samples": [
+            {
+              "constructorP95Ms": 0.9415830000000369,
+              "buildP95Ms": 0.3790000000000191,
+              "sessionsPerSecond": 561.6798158251884,
+              "outputSha256": "5fd45470353f800d2e198fad88da86ae25dd6d8ba7ca5f46232ceedebe529c89",
+              "sessions": 100,
+              "builds": 400
+            },
+            {
+              "constructorP95Ms": 0.7271660000000111,
+              "buildP95Ms": 0.3210000000000264,
+              "sessionsPerSecond": 595.8246100886512,
+              "outputSha256": "5fd45470353f800d2e198fad88da86ae25dd6d8ba7ca5f46232ceedebe529c89",
+              "sessions": 100,
+              "builds": 400
+            },
+            {
+              "constructorP95Ms": 0.6979999999999791,
+              "buildP95Ms": 0.3095829999999751,
+              "sessionsPerSecond": 601.6887900113643,
+              "outputSha256": "5fd45470353f800d2e198fad88da86ae25dd6d8ba7ca5f46232ceedebe529c89",
+              "sessions": 100,
+              "builds": 400
+            },
+            {
+              "constructorP95Ms": 0.6694579999999632,
+              "buildP95Ms": 0.29308400000002166,
+              "sessionsPerSecond": 623.6330392527293,
+              "outputSha256": "5fd45470353f800d2e198fad88da86ae25dd6d8ba7ca5f46232ceedebe529c89",
+              "sessions": 100,
+              "builds": 400
+            },
+            {
+              "constructorP95Ms": 0.6622079999999642,
+              "buildP95Ms": 0.29033400000002985,
+              "sessionsPerSecond": 620.44794790719,
+              "outputSha256": "5fd45470353f800d2e198fad88da86ae25dd6d8ba7ca5f46232ceedebe529c89",
+              "sessions": 100,
+              "builds": 400
+            }
+          ],
+          "constructorP95Ms": 0.6979999999999791,
+          "buildP95Ms": 0.3095829999999751,
+          "sessionsPerSecond": 601.6887900113643,
+          "wasmBytes": 2537784,
+          "wasmSha256": "8fde6c0089d9bec584b03c787bc84d851eed2d872ee747d2bdbf221b0bdddd01",
+          "actualWasm": true,
+          "finalPerformanceAcceptance": "pending"
+        }
+      },
+      "cssBearingShapesEqual": true,
+      "constructorChangePercent": 2.077824835613584,
+      "finalPerformanceAcceptance": "pending"
+    },
+    "theme": {
+      "logs": {
+        "before": "raw-variant-theme-benchmark-before.json",
+        "after": "raw-variant-theme-benchmark-after.json"
+      },
+      "measurements": {
+        "before": {
+          "scope": "public AST constructor with 128 theme variables, declaration/keyframe functions and four builds",
+          "samples": [
+            {
+              "constructorP95Ms": 2.216415999999981,
+              "buildP95Ms": 0.25258300000001555,
+              "sessionsPerSecond": 354.6247566684606,
+              "outputSha256": "8fc0781d2881207a30acee71c6c0950a2f0fee9d87ad0083b9650714b34d9bd7",
+              "sessions": 100,
+              "builds": 400
+            },
+            {
+              "constructorP95Ms": 2.1741250000000036,
+              "buildP95Ms": 0.2416249999999991,
+              "sessionsPerSecond": 360.1358964161865,
+              "outputSha256": "8fc0781d2881207a30acee71c6c0950a2f0fee9d87ad0083b9650714b34d9bd7",
+              "sessions": 100,
+              "builds": 400
+            },
+            {
+              "constructorP95Ms": 2.5573329999999714,
+              "buildP95Ms": 0.31520799999998417,
+              "sessionsPerSecond": 341.93367768904136,
+              "outputSha256": "8fc0781d2881207a30acee71c6c0950a2f0fee9d87ad0083b9650714b34d9bd7",
+              "sessions": 100,
+              "builds": 400
+            },
+            {
+              "constructorP95Ms": 2.4615830000000187,
+              "buildP95Ms": 0.2756249999999909,
+              "sessionsPerSecond": 342.6208327657676,
+              "outputSha256": "8fc0781d2881207a30acee71c6c0950a2f0fee9d87ad0083b9650714b34d9bd7",
+              "sessions": 100,
+              "builds": 400
+            },
+            {
+              "constructorP95Ms": 2.0160000000000764,
+              "buildP95Ms": 0.23016699999993762,
+              "sessionsPerSecond": 384.64743906177745,
+              "outputSha256": "8fc0781d2881207a30acee71c6c0950a2f0fee9d87ad0083b9650714b34d9bd7",
+              "sessions": 100,
+              "builds": 400
+            }
+          ],
+          "constructorP95Ms": 2.216415999999981,
+          "buildP95Ms": 0.25258300000001555,
+          "sessionsPerSecond": 354.6247566684606,
+          "wasmBytes": 2515813,
+          "wasmSha256": "7d6b26786649916de4ae56c3fb6c6e8ca012936659f924c1e14ec8568379feff",
+          "actualWasm": true,
+          "finalPerformanceAcceptance": "pending"
+        },
+        "after": {
+          "scope": "public AST constructor with 128 theme variables, declaration/keyframe functions and four builds",
+          "samples": [
+            {
+              "constructorP95Ms": 2.1585829999999646,
+              "buildP95Ms": 0.2695420000000013,
+              "sessionsPerSecond": 354.1907920035153,
+              "outputSha256": "8fc0781d2881207a30acee71c6c0950a2f0fee9d87ad0083b9650714b34d9bd7",
+              "sessions": 100,
+              "builds": 400
+            },
+            {
+              "constructorP95Ms": 2.283207999999945,
+              "buildP95Ms": 0.26491699999996854,
+              "sessionsPerSecond": 344.0208170574217,
+              "outputSha256": "8fc0781d2881207a30acee71c6c0950a2f0fee9d87ad0083b9650714b34d9bd7",
+              "sessions": 100,
+              "builds": 400
+            },
+            {
+              "constructorP95Ms": 2.323833000000036,
+              "buildP95Ms": 0.26729100000000017,
+              "sessionsPerSecond": 342.72186642380296,
+              "outputSha256": "8fc0781d2881207a30acee71c6c0950a2f0fee9d87ad0083b9650714b34d9bd7",
+              "sessions": 100,
+              "builds": 400
+            },
+            {
+              "constructorP95Ms": 2.018374999999878,
+              "buildP95Ms": 0.23412500000017644,
+              "sessionsPerSecond": 378.65914902036167,
+              "outputSha256": "8fc0781d2881207a30acee71c6c0950a2f0fee9d87ad0083b9650714b34d9bd7",
+              "sessions": 100,
+              "builds": 400
+            },
+            {
+              "constructorP95Ms": 2.027917000000116,
+              "buildP95Ms": 0.2527499999998781,
+              "sessionsPerSecond": 371.64583824021986,
+              "outputSha256": "8fc0781d2881207a30acee71c6c0950a2f0fee9d87ad0083b9650714b34d9bd7",
+              "sessions": 100,
+              "builds": 400
+            }
+          ],
+          "constructorP95Ms": 2.1585829999999646,
+          "buildP95Ms": 0.26491699999996854,
+          "sessionsPerSecond": 354.1907920035153,
+          "wasmBytes": 2537784,
+          "wasmSha256": "8fde6c0089d9bec584b03c787bc84d851eed2d872ee747d2bdbf221b0bdddd01",
+          "actualWasm": true,
+          "finalPerformanceAcceptance": "pending"
+        }
+      },
+      "cssBearingShapesEqual": true,
+      "constructorChangePercent": -2.6093025857969354,
+      "finalPerformanceAcceptance": "pending"
+    },
+    "variant": {
+      "logs": {
+        "before": "raw-variant-variant-benchmark-before.json",
+        "after": "raw-variant-variant-benchmark-after.json"
+      },
+      "measurements": {
+        "before": {
+          "scope": "public AST constructor with sixteen nested authored variants with a custom template and four builds",
+          "samples": [
+            {
+              "constructorP95Ms": 0.8821249999999736,
+              "buildP95Ms": 1.0443750000000591,
+              "sessionsPerSecond": 227.12442947365375,
+              "outputSha256": "583541ff49317afb7935ad5a1f986c0de32ade013a05519b86e106410e44cdf2",
+              "sessions": 100,
+              "builds": 400
+            },
+            {
+              "constructorP95Ms": 0.9029170000001159,
+              "buildP95Ms": 1.1266660000001139,
+              "sessionsPerSecond": 221.35551307310385,
+              "outputSha256": "583541ff49317afb7935ad5a1f986c0de32ade013a05519b86e106410e44cdf2",
+              "sessions": 100,
+              "builds": 400
+            },
+            {
+              "constructorP95Ms": 0.756249999999909,
+              "buildP95Ms": 0.9771660000001248,
+              "sessionsPerSecond": 234.87773910220895,
+              "outputSha256": "583541ff49317afb7935ad5a1f986c0de32ade013a05519b86e106410e44cdf2",
+              "sessions": 100,
+              "builds": 400
+            },
+            {
+              "constructorP95Ms": 0.7619159999999283,
+              "buildP95Ms": 0.9532500000000255,
+              "sessionsPerSecond": 240.29308566882466,
+              "outputSha256": "583541ff49317afb7935ad5a1f986c0de32ade013a05519b86e106410e44cdf2",
+              "sessions": 100,
+              "builds": 400
+            },
+            {
+              "constructorP95Ms": 0.7272499999999127,
+              "buildP95Ms": 0.9450419999998303,
+              "sessionsPerSecond": 242.85868983230296,
+              "outputSha256": "583541ff49317afb7935ad5a1f986c0de32ade013a05519b86e106410e44cdf2",
+              "sessions": 100,
+              "builds": 400
+            }
+          ],
+          "constructorP95Ms": 0.7619159999999283,
+          "buildP95Ms": 0.9771660000001248,
+          "sessionsPerSecond": 234.87773910220895,
+          "wasmBytes": 2515813,
+          "wasmSha256": "7d6b26786649916de4ae56c3fb6c6e8ca012936659f924c1e14ec8568379feff",
+          "actualWasm": true,
+          "finalPerformanceAcceptance": "pending"
+        },
+        "after": {
+          "scope": "public AST constructor with sixteen nested authored variants with a custom template and four builds",
+          "samples": [
+            {
+              "constructorP95Ms": 1.7603339999999434,
+              "buildP95Ms": 1.1459999999999582,
+              "sessionsPerSecond": 203.05317536454183,
+              "outputSha256": "583541ff49317afb7935ad5a1f986c0de32ade013a05519b86e106410e44cdf2",
+              "sessions": 100,
+              "builds": 400
+            },
+            {
+              "constructorP95Ms": 1.6016669999999067,
+              "buildP95Ms": 1.0671659999998155,
+              "sessionsPerSecond": 202.02457268918977,
+              "outputSha256": "583541ff49317afb7935ad5a1f986c0de32ade013a05519b86e106410e44cdf2",
+              "sessions": 100,
+              "builds": 400
+            },
+            {
+              "constructorP95Ms": 1.4609170000001086,
+              "buildP95Ms": 1.0086670000000595,
+              "sessionsPerSecond": 208.0165055605527,
+              "outputSha256": "583541ff49317afb7935ad5a1f986c0de32ade013a05519b86e106410e44cdf2",
+              "sessions": 100,
+              "builds": 400
+            },
+            {
+              "constructorP95Ms": 1.308708999999908,
+              "buildP95Ms": 0.90949999999998,
+              "sessionsPerSecond": 226.42590263055823,
+              "outputSha256": "583541ff49317afb7935ad5a1f986c0de32ade013a05519b86e106410e44cdf2",
+              "sessions": 100,
+              "builds": 400
+            },
+            {
+              "constructorP95Ms": 1.3499579999997877,
+              "buildP95Ms": 0.9598750000000109,
+              "sessionsPerSecond": 220.40218991615885,
+              "outputSha256": "583541ff49317afb7935ad5a1f986c0de32ade013a05519b86e106410e44cdf2",
+              "sessions": 100,
+              "builds": 400
+            }
+          ],
+          "constructorP95Ms": 1.4609170000001086,
+          "buildP95Ms": 1.0086670000000595,
+          "sessionsPerSecond": 208.0165055605527,
+          "wasmBytes": 2537784,
+          "wasmSha256": "8fde6c0089d9bec584b03c787bc84d851eed2d872ee747d2bdbf221b0bdddd01",
+          "actualWasm": true,
+          "finalPerformanceAcceptance": "pending"
+        }
+      },
+      "cssBearingShapesEqual": true,
+      "constructorChangePercent": 91.74252804774359,
+      "finalPerformanceAcceptance": "pending"
+    }
+  },
+  "benchmarkLimitations": "After this task's builds, native/browser checks had finished, pairs ran serially: warmup then five samples of 100 sessions and 400 builds. Local descriptive CSS-bearing shape equality is separate from graph conformance. Variant construction overhead increased and requires profiling; the preceding raw-theme phase regression obligation remains open.",
+  "postcompatRawAuthoredVariants": true,
+  "opaqueCallerBodyEdges": true,
+  "selectedLiveTemplateReadOnClone": true,
+  "currentClonedPerVariant": false,
+  "allHeaderValidationRemoved": true,
+  "typedRecursiveAuthoredTransformRemoved": true,
+  "singleLoweringHandoff": "pending",
+  "defaultOwnershipGate": true,
+  "evidenceFiles": {
+    "raw-variant-api-first.log": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-api-first.log",
+      "bytes": 59454,
+      "sha256": "35498073329cf1d0356d11639724a0ef7cd1bda5ce57a954642b2a9966429fbf"
+    },
+    "raw-variant-api-fourth.log": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-api-fourth.log",
+      "bytes": 58801,
+      "sha256": "b50825b67f67dc4c0de0484cedc2f02f7708c56423a19d51a9b42d6e05c6a535"
+    },
+    "raw-variant-api-second.log": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-api-second.log",
+      "bytes": 58849,
+      "sha256": "1f0f7028a0b83536f74af62538cbec91a364ba810dfcd55707884e60434caf0f"
+    },
+    "raw-variant-api-source.log": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-api-source.log",
+      "bytes": 59064,
+      "sha256": "897a2ea82a7d2dbd0028e649f86e55b86313876a5a48bb611ff67eadab4a2feb"
+    },
+    "raw-variant-api-third.log": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-api-third.log",
+      "bytes": 58751,
+      "sha256": "2ceefcf4803fee5ee681d8daef635bf15cf76aa7efdf4e7bc88e58ae4bbd4c60"
+    },
+    "raw-variant-api.log": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-api.log",
+      "bytes": 58331,
+      "sha256": "4adff6e06b0c1916efd6d511caeb7457089f8a2c595c300586c3171667831cc9"
+    },
+    "raw-variant-baseline.json": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-baseline.json",
+      "bytes": 435,
+      "sha256": "6b4fc9ca34eff3060c4cd80d425bf5aead8e07ff23506a9e13842a7e739df311"
+    },
+    "raw-variant-before-red.log": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-before-red.log",
+      "bytes": 65829,
+      "sha256": "65cd59e4035467ec761d9381d94974dfcfbf842ce40cf106ae7842c8e2508e49"
+    },
+    "raw-variant-benchmark-cpu.log": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-benchmark-cpu.log",
+      "bytes": 58284,
+      "sha256": "54f947cc0f7a27f670915cb12dbabf9ab15b4c8c14645fd16dedcd1179ebec2e"
+    },
+    "raw-variant-browser-deep.json": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-browser-deep.json",
+      "bytes": 2972048,
+      "sha256": "dac3168cf5f636e9007bf0bf51176608e904d3c611f7aca2bc4ad0711bd70c36"
+    },
+    "raw-variant-browser-deep.log": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-browser-deep.log",
+      "bytes": 210,
+      "sha256": "200586476eecad3f6426f4e1e4af7152f7a72be2512e0c16369213e7e3b7f0ec"
+    },
+    "raw-variant-browser-root.json": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-browser-root.json",
+      "bytes": 2977464,
+      "sha256": "7deb0cb8dd69c53d0bf7e09647c8a40a9ed8cc8f6f4893721de02c7e345c8f4f"
+    },
+    "raw-variant-browser-root.log": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-browser-root.log",
+      "bytes": 205,
+      "sha256": "93ff88450b5ac3540f4c3a2cd0a3398c4d8633660e22f78f4608c32d68a1461e"
+    },
+    "raw-variant-browser-workspace.json": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-browser-workspace.json",
+      "bytes": 4046,
+      "sha256": "c3922645c20d8bc5e7968cd7a5d2dd53ecd7e6b0533ad21e8441cb26fa3e3b65"
+    },
+    "raw-variant-build-deep.log": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-build-deep.log",
+      "bytes": 8773,
+      "sha256": "ec7eb510f33d5f70cbe5a2e8788d5537dde461e4e4a5ab16ae9ef6627a5f90c7"
+    },
+    "raw-variant-build-root.log": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-build-root.log",
+      "bytes": 9037,
+      "sha256": "9cb734c256a8af587b4a711b702f10460a103e79b925f8a25c6a8e07427b0077"
+    },
+    "raw-variant-core-clippy.log": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-core-clippy.log",
+      "bytes": 602,
+      "sha256": "bde56fdbf5c2ce0de463a39eeff95c88026e2a62daa5e86a18b7535e2fe0081c"
+    },
+    "raw-variant-diff.log": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-diff.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "raw-variant-docs-first.log": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-docs-first.log",
+      "bytes": 1343,
+      "sha256": "8714b2f579681ecd07e21038f7a74f2a5cef971fbc130ba8662652dea3b83a12"
+    },
+    "raw-variant-expanded-before-red.log": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-expanded-before-red.log",
+      "bytes": 607924,
+      "sha256": "15b14cbcd54e247e2cbb2b42ce216626e1194ccc7104a72ee19f7a9de94a985c"
+    },
+    "raw-variant-facade-clippy.log": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-facade-clippy.log",
+      "bytes": 722,
+      "sha256": "772a130e5ebae5bc683db277efd0431e5eda3791a5d1e11d1fa9e6451ade62e0"
+    },
+    "raw-variant-facade.log": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-facade.log",
+      "bytes": 2158,
+      "sha256": "4e2baf2b3f065e50c823c40cb453ce008d171b1a8b09dbe7717ca023305a5a6c"
+    },
+    "raw-variant-final-core-clippy.log": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-final-core-clippy.log",
+      "bytes": 628,
+      "sha256": "e5ecb29ec9751625adeace38976d339c9e7f5406cd3bbee53b2e7754dd778c66"
+    },
+    "raw-variant-final-facade-clippy.log": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-final-facade-clippy.log",
+      "bytes": 759,
+      "sha256": "68156fc68db634a6dc02d995ccfb8f897df3ed4ef9b9ca5d4e5dd71d4c20c006"
+    },
+    "raw-variant-final-facade.log": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-final-facade.log",
+      "bytes": 2147,
+      "sha256": "bbaf162b5d80ae682e26886eeb8d445cec3aeaea74266af045dbf74a5096e94b"
+    },
+    "raw-variant-final-fmt.log": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-final-fmt.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "raw-variant-final-slice.log": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-final-slice.log",
+      "bytes": 45301,
+      "sha256": "435addedf4b666e1e7093a2264c0a8b403718a2b3254103d61b82cff4caa8910"
+    },
+    "raw-variant-fmt.log": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-fmt.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "raw-variant-format.log": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-format.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "raw-variant-hotpath-fixture.json": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-hotpath-fixture.json",
+      "bytes": 3815,
+      "sha256": "57d1f85448e60255498919b3fa5374447c5204ad01163a8ce75223bb0c749300"
+    },
+    "raw-variant-media-benchmark-after.json": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-media-benchmark-after.json",
+      "bytes": 1461,
+      "sha256": "f5104b9d654557119ff2b8b32206aa20361f69030aaa1a32d54a0c7b65618684"
+    },
+    "raw-variant-media-benchmark-before.json": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-media-benchmark-before.json",
+      "bytes": 1457,
+      "sha256": "6d2e0cdbd07fb82886dafc149cc6d70f470d02a8c78442c5236eefd3a59a6ea7"
+    },
+    "raw-variant-native-first.log": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-native-first.log",
+      "bytes": 2283,
+      "sha256": "37e440fb35a46262741d996fa31320827c81e7745b3c7121db893f70a4d63caf"
+    },
+    "raw-variant-native-matrix.log": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-native-matrix.log",
+      "bytes": 5517,
+      "sha256": "5c35b7b7d8f36ae426be216d692bfb7cbb715bffb5b08ea64f06da2c5692889a"
+    },
+    "raw-variant-native-slot-verified.log": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-native-slot-verified.log",
+      "bytes": 913,
+      "sha256": "59d7533251b338c90ac6dbdecb467a09c94da94cceb69101cc027aba6dbcb558"
+    },
+    "raw-variant-native-slot.log": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-native-slot.log",
+      "bytes": 7735,
+      "sha256": "1eee7a8987a8f42a0956d317cb59b2d9d5843dcdcd1424e68bc9dfa881168834"
+    },
+    "raw-variant-native-verified.log": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-native-verified.log",
+      "bytes": 40036,
+      "sha256": "432ecb30220092415f9fe2190cff61551f2bb243c271e0738578e9587ac42924"
+    },
+    "raw-variant-native.log": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-native.log",
+      "bytes": 65352,
+      "sha256": "436ea67aa28f94a48bd2c2e4eabe818c5df974ff479194c64c30b7725ce6b9af"
+    },
+    "raw-variant-ownership-first.log": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-ownership-first.log",
+      "bytes": 763244,
+      "sha256": "0026075f6f4f3aef9f54b1dcd4ffb5d35054652cad779923b9a23cde67a325a8"
+    },
+    "raw-variant-ownership-second.log": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-ownership-second.log",
+      "bytes": 433094,
+      "sha256": "fb51a14cb3e1023fd3d9b43142dd387b1dc781a47d0dd080c9a2c21524ac85a5"
+    },
+    "raw-variant-ownership-source.log": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-ownership-source.log",
+      "bytes": 302334,
+      "sha256": "fd429670482fcf69899aa2e0eb5d76c104c62abfa38d0a4c3e1ffbf3de188065"
+    },
+    "raw-variant-ownership-third.log": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-ownership-third.log",
+      "bytes": 226974,
+      "sha256": "be5569eb62bbb3cbdcb01e5761e1e0f10dbee2d265c95834348cfa37075f1370"
+    },
+    "raw-variant-ownership-verified.log": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-ownership-verified.log",
+      "bytes": 171,
+      "sha256": "1c9b560ed6986a691531140426947e5393c1c57875d5ccf6880cb0fe9b98c078"
+    },
+    "raw-variant-products.json": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-products.json",
+      "bytes": 2477,
+      "sha256": "3ac430390a7d1a72d6623c528f7a813fce357449e4e48c886cebd37893713208"
+    },
+    "raw-variant-resources-before-red.log": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-resources-before-red.log",
+      "bytes": 904296,
+      "sha256": "448cf126cbd89c55411f805d92cdab96251674037b07a9ae3c6fff3667056d59"
+    },
+    "raw-variant-slice.log": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-slice.log",
+      "bytes": 45144,
+      "sha256": "a070517dce61a61fd7bc6e5a75494e4e21114ec511e6e46306fcf4d511bc1028"
+    },
+    "raw-variant-source-build-deep.log": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-source-build-deep.log",
+      "bytes": 8761,
+      "sha256": "0ffea40f453631c68f1a010e37903dd7413183d9d4ab6e568446f0e12f2bbaed"
+    },
+    "raw-variant-source-build-root.log": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-source-build-root.log",
+      "bytes": 9015,
+      "sha256": "dadf89d7f44ddb70e00be1824705c127f1312dd2dc78aea5760b43b490a42ee6"
+    },
+    "raw-variant-theme-benchmark-after.json": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-theme-benchmark-after.json",
+      "bytes": 1488,
+      "sha256": "89c49fbd27de69d3d52c19c74f7a8bc647e65fdeb49ae13fdd2bbd2ce38056d8"
+    },
+    "raw-variant-theme-benchmark-before.json": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-theme-benchmark-before.json",
+      "bytes": 1489,
+      "sha256": "ee44cd5ec4c8b3ef3fd6195b7c119845141ec32787f4511df08cd5c0a2f5efba"
+    },
+    "raw-variant-variant-benchmark-after.json": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-variant-benchmark-after.json",
+      "bytes": 1490,
+      "sha256": "8035789154182a44d40e46ddf3ffbf8d0a6bf2eacac2deb2b7b069ca7a857508"
+    },
+    "raw-variant-variant-benchmark-before.json": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-variant-benchmark-before.json",
+      "bytes": 1494,
+      "sha256": "a4670f0d77912b48ab4fd1fdddb86f7f9ac2109b9328354fbd08a9f3d3d33de7"
+    },
+    "raw-variant-xtask-clippy.log": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-xtask-clippy.log",
+      "bytes": 1068,
+      "sha256": "569d10eac67e9fe0384cb8b080a34611a3c64ab30c7c0ccf91029c6192a11bac"
+    },
+    "raw-variant-xtask.log": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-xtask.log",
+      "bytes": 3919,
+      "sha256": "ae29057eba374e331f54ff2c356124b6b4a06d288959c2588b7b195bc058ac08"
+    },
+    "raw-variant-browser/deep-results/.last-run.json": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-browser/deep-results/.last-run.json",
+      "bytes": 45,
+      "sha256": "91d1c43004802cd49950d78eb11c8fa7d05da8ffffe219a8b13b2f561bc00903"
+    },
+    "raw-variant-browser/deep-results/utility-gpu-CSS-functions--af6f3-e-actual-DOM-and-GPU-pixels-utility-lab-deep/gpu-css-functions.png": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-browser/deep-results/utility-gpu-CSS-functions--af6f3-e-actual-DOM-and-GPU-pixels-utility-lab-deep/gpu-css-functions.png",
+      "bytes": 113892,
+      "sha256": "6bc1841199ef80e2cc49a4dc00d58c2b1792d00b7b07c132ed6ebaaa9a3a54a9"
+    },
+    "raw-variant-browser/deep-results/utility-gpu-CSS-native-uti-d4bee-ches-retain-the-drawn-style-utility-lab-deep/custom-utility.png": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-browser/deep-results/utility-gpu-CSS-native-uti-d4bee-ches-retain-the-drawn-style-utility-lab-deep/custom-utility.png",
+      "bytes": 113360,
+      "sha256": "b08f0a5c6c691a4aa693fabc4f02167ba170da607872750fb4936a8dda3f9e51"
+    },
+    "raw-variant-browser/deep-results/utility-gpu-GPU-draws-comp-13818-glyphs-alongside-scoped-DOM-utility-lab-deep/desktop.png": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-browser/deep-results/utility-gpu-GPU-draws-comp-13818-glyphs-alongside-scoped-DOM-utility-lab-deep/desktop.png",
+      "bytes": 113961,
+      "sha256": "e139f8041e09756a34dd7dcfe298e12ea9cd812ff2b77e63c1fbc6af6dddeadd"
+    },
+    "raw-variant-browser/deep-results/utility-gpu-GPU-draws-comp-13818-glyphs-alongside-scoped-DOM-utility-lab-deep/mobile.png": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-browser/deep-results/utility-gpu-GPU-draws-comp-13818-glyphs-alongside-scoped-DOM-utility-lab-deep/mobile.png",
+      "bytes": 105825,
+      "sha256": "adc507b91ea5a4b78f60b9260c250cb229fdc5abc33787735dae8855151298d4"
+    },
+    "raw-variant-browser/deep-results/utility-gpu-GPU-percentage-e7ba5--and-follow-its-real-resize-utility-lab-deep/parent-content.png": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-browser/deep-results/utility-gpu-GPU-percentage-e7ba5--and-follow-its-real-resize-utility-lab-deep/parent-content.png",
+      "bytes": 108129,
+      "sha256": "c4913dd82421a70caf27d7a7f6b2aee796baa912ceffe4ed7e4128918d469c9f"
+    },
+    "raw-variant-browser/deep-results/utility-gpu-all-non-button-2c399-top-comparison-frames-align-utility-lab-deep/gpu-boundaries.png": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-browser/deep-results/utility-gpu-all-non-button-2c399-top-comparison-frames-align-utility-lab-deep/gpu-boundaries.png",
+      "bytes": 148111,
+      "sha256": "2be15c3de66f005b4cb99f3bbeb778f0233fc4f27cbacb5289cc2054152a374f"
+    },
+    "raw-variant-browser/deep-results/utility-gpu-applied-utilit-ea2c4-ive-an-installation-failure-utility-lab-deep/applied-utility.png": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-browser/deep-results/utility-gpu-applied-utilit-ea2c4-ive-an-installation-failure-utility-lab-deep/applied-utility.png",
+      "bytes": 112560,
+      "sha256": "bf6ff31f30eb9914ef0917576923dfe80d22fc09fcde83616485d5eda4d4aee7"
+    },
+    "raw-variant-browser/deep-results/utility-gpu-arbitrary-prop-42d0e-e-actual-DOM-and-GPU-pixels-utility-lab-deep/arbitrary-property.png": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-browser/deep-results/utility-gpu-arbitrary-prop-42d0e-e-actual-DOM-and-GPU-pixels-utility-lab-deep/arbitrary-property.png",
+      "bytes": 113360,
+      "sha256": "b08f0a5c6c691a4aa693fabc4f02167ba170da607872750fb4936a8dda3f9e51"
+    },
+    "raw-variant-browser/deep-results/utility-gpu-authored-custo-36aba-rawn-GPU-style-on-rejection-utility-lab-deep/custom-variant.png": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-browser/deep-results/utility-gpu-authored-custo-36aba-rawn-GPU-style-on-rejection-utility-lab-deep/custom-variant.png",
+      "bytes": 124525,
+      "sha256": "dc5d1e4caca31a429dba8e2e6596fa937332dcfa3786613b43ef24942012f83b"
+    },
+    "raw-variant-browser/deep-results/utility-gpu-clearing-utili-1811d-out-another-baseline-setter-utility-lab-deep/button-none-live-palette.png": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-browser/deep-results/utility-gpu-clearing-utili-1811d-out-another-baseline-setter-utility-lab-deep/button-none-live-palette.png",
+      "bytes": 5678,
+      "sha256": "0a23470bea2210e525fc04ba51bb5a5957925547e14d4ac13abcdf2a813f13d2"
+    },
+    "raw-variant-browser/deep-results/utility-gpu-clearing-utili-36a0c-ry-Button-pixels-and-events-utility-lab-deep/button-none.png": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-browser/deep-results/utility-gpu-clearing-utili-36a0c-ry-Button-pixels-and-events-utility-lab-deep/button-none.png",
+      "bytes": 5918,
+      "sha256": "242f9fe93b82f9f692cc7113975e2d02b49830f3958fb97ee321777547d68a3c"
+    },
+    "raw-variant-browser/deep-results/utility-gpu-clearing-utili-4535a-ched-Script-Button-defaults-utility-lab-deep/button-none-script.png": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-browser/deep-results/utility-gpu-clearing-utili-4535a-ched-Script-Button-defaults-utility-lab-deep/button-none-script.png",
+      "bytes": 7130,
+      "sha256": "83acd7ee7849cb94988f46122c27567ffd8be64bc0ca38fa07521d9417614e8d"
+    },
+    "raw-variant-browser/deep-results/utility-gpu-clearing-utili-a9b22-out-another-baseline-setter-utility-lab-deep/button-none-live-theme.png": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-browser/deep-results/utility-gpu-clearing-utili-a9b22-out-another-baseline-setter-utility-lab-deep/button-none-live-theme.png",
+      "bytes": 5678,
+      "sha256": "0a23470bea2210e525fc04ba51bb5a5957925547e14d4ac13abcdf2a813f13d2"
+    },
+    "raw-variant-browser/deep-results/utility-gpu-configuration--1c218-xels-on-failed-installation-utility-lab-deep/configuration-gpu.png": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-browser/deep-results/utility-gpu-configuration--1c218-xels-on-failed-installation-utility-lab-deep/configuration-gpu.png",
+      "bytes": 112254,
+      "sha256": "1ab3d27b3ed4043603c76d6afd3c67950fdf8761a7f24b0f8a2bc303e4a8b7ba"
+    },
+    "raw-variant-browser/deep-results/utility-gpu-inline-and-pat-fe70f-ns-drive-scoped-DOM-and-GPU-utility-lab-deep/source-options.png": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-browser/deep-results/utility-gpu-inline-and-pat-fe70f-ns-drive-scoped-DOM-and-GPU-utility-lab-deep/source-options.png",
+      "bytes": 113244,
+      "sha256": "760e84b956a3a38a9bb7823e36ac98b05166b7b337ae0dc1d733732bd1f42800"
+    },
+    "raw-variant-browser/deep-results/utility-gpu-live-ThemeScop-1a10b-ost-rem-without-recompiling-utility-lab-deep/gpu-theme-boundary.png": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-browser/deep-results/utility-gpu-live-ThemeScop-1a10b-ost-rem-without-recompiling-utility-lab-deep/gpu-theme-boundary.png",
+      "bytes": 123509,
+      "sha256": "c1684d4f849fa03743070449aaa4e51bf841b0610d9a1ec82dfcb4c89b30deb4"
+    },
+    "raw-variant-browser/deep-results/utility-gpu-terminal-GPU-i-e6220--DOM-editing-remains-usable-utility-lab-deep/gpu-terminal-failure.png": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-browser/deep-results/utility-gpu-terminal-GPU-i-e6220--DOM-editing-remains-usable-utility-lab-deep/gpu-terminal-failure.png",
+      "bytes": 114868,
+      "sha256": "85ce5f05830554ad7899252a8296259742bfd69df8476121d6edfe37ad970ee7"
+    },
+    "raw-variant-browser/deep-results/utility-runtime-controls-a-5a183--and-fit-desktop-and-mobile-utility-lab-deep/desktop.png": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-browser/deep-results/utility-runtime-controls-a-5a183--and-fit-desktop-and-mobile-utility-lab-deep/desktop.png",
+      "bytes": 114192,
+      "sha256": "0b805107d26113905b41c25a57ec8a0b98eb2cec38e89c9210e06ac6e7ffd70a"
+    },
+    "raw-variant-browser/deep-results/utility-runtime-controls-a-5a183--and-fit-desktop-and-mobile-utility-lab-deep/mobile.png": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-browser/deep-results/utility-runtime-controls-a-5a183--and-fit-desktop-and-mobile-utility-lab-deep/mobile.png",
+      "bytes": 106443,
+      "sha256": "905923f0b66f1061cb8629b9dff7b5aa2ed39e46e65497a6e0f293214475e6b4"
+    },
+    "raw-variant-browser/deep-results/utility-runtime-real-DOM-c-2993e--to-caller-and-size-changes-utility-lab-deep/cn-component.png": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-browser/deep-results/utility-runtime-real-DOM-c-2993e--to-caller-and-size-changes-utility-lab-deep/cn-component.png",
+      "bytes": 2606,
+      "sha256": "f45949b19602410bbda8530449950308d3db019e25378ee4100d56d1edf17f8c"
+    },
+    "raw-variant-browser/manifests/deep-main-manifest.json": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-browser/manifests/deep-main-manifest.json",
+      "bytes": 3165,
+      "sha256": "ef52db66202cb517085b59eadfa9dbaa2f8986922d9115ed52e9fd73deea99b3"
+    },
+    "raw-variant-browser/manifests/deep-worker-manifest.json": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-browser/manifests/deep-worker-manifest.json",
+      "bytes": 592,
+      "sha256": "9df206a58266a26fc172dcb426a84abfedf26a66656eea41270cb98089db16bf"
+    },
+    "raw-variant-browser/manifests/root-main-manifest.json": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-browser/manifests/root-main-manifest.json",
+      "bytes": 3114,
+      "sha256": "eb2ecd649370598f2abe295bed780135a94f482203fbe106506ff9792b9ee2d1"
+    },
+    "raw-variant-browser/manifests/root-worker-manifest.json": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-browser/manifests/root-worker-manifest.json",
+      "bytes": 592,
+      "sha256": "9df206a58266a26fc172dcb426a84abfedf26a66656eea41270cb98089db16bf"
+    },
+    "raw-variant-browser/root-results/.last-run.json": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-browser/root-results/.last-run.json",
+      "bytes": 45,
+      "sha256": "91d1c43004802cd49950d78eb11c8fa7d05da8ffffe219a8b13b2f561bc00903"
+    },
+    "raw-variant-browser/root-results/utility-gpu-CSS-functions--af6f3-e-actual-DOM-and-GPU-pixels-utility-lab/gpu-css-functions.png": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-browser/root-results/utility-gpu-CSS-functions--af6f3-e-actual-DOM-and-GPU-pixels-utility-lab/gpu-css-functions.png",
+      "bytes": 113892,
+      "sha256": "6bc1841199ef80e2cc49a4dc00d58c2b1792d00b7b07c132ed6ebaaa9a3a54a9"
+    },
+    "raw-variant-browser/root-results/utility-gpu-CSS-native-uti-d4bee-ches-retain-the-drawn-style-utility-lab/custom-utility.png": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-browser/root-results/utility-gpu-CSS-native-uti-d4bee-ches-retain-the-drawn-style-utility-lab/custom-utility.png",
+      "bytes": 113360,
+      "sha256": "b08f0a5c6c691a4aa693fabc4f02167ba170da607872750fb4936a8dda3f9e51"
+    },
+    "raw-variant-browser/root-results/utility-gpu-GPU-draws-comp-13818-glyphs-alongside-scoped-DOM-utility-lab/desktop.png": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-browser/root-results/utility-gpu-GPU-draws-comp-13818-glyphs-alongside-scoped-DOM-utility-lab/desktop.png",
+      "bytes": 113961,
+      "sha256": "e139f8041e09756a34dd7dcfe298e12ea9cd812ff2b77e63c1fbc6af6dddeadd"
+    },
+    "raw-variant-browser/root-results/utility-gpu-GPU-draws-comp-13818-glyphs-alongside-scoped-DOM-utility-lab/mobile.png": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-browser/root-results/utility-gpu-GPU-draws-comp-13818-glyphs-alongside-scoped-DOM-utility-lab/mobile.png",
+      "bytes": 105825,
+      "sha256": "adc507b91ea5a4b78f60b9260c250cb229fdc5abc33787735dae8855151298d4"
+    },
+    "raw-variant-browser/root-results/utility-gpu-GPU-percentage-e7ba5--and-follow-its-real-resize-utility-lab/parent-content.png": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-browser/root-results/utility-gpu-GPU-percentage-e7ba5--and-follow-its-real-resize-utility-lab/parent-content.png",
+      "bytes": 108129,
+      "sha256": "c4913dd82421a70caf27d7a7f6b2aee796baa912ceffe4ed7e4128918d469c9f"
+    },
+    "raw-variant-browser/root-results/utility-gpu-all-non-button-2c399-top-comparison-frames-align-utility-lab/gpu-boundaries.png": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-browser/root-results/utility-gpu-all-non-button-2c399-top-comparison-frames-align-utility-lab/gpu-boundaries.png",
+      "bytes": 148111,
+      "sha256": "2be15c3de66f005b4cb99f3bbeb778f0233fc4f27cbacb5289cc2054152a374f"
+    },
+    "raw-variant-browser/root-results/utility-gpu-applied-utilit-ea2c4-ive-an-installation-failure-utility-lab/applied-utility.png": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-browser/root-results/utility-gpu-applied-utilit-ea2c4-ive-an-installation-failure-utility-lab/applied-utility.png",
+      "bytes": 112560,
+      "sha256": "bf6ff31f30eb9914ef0917576923dfe80d22fc09fcde83616485d5eda4d4aee7"
+    },
+    "raw-variant-browser/root-results/utility-gpu-arbitrary-prop-42d0e-e-actual-DOM-and-GPU-pixels-utility-lab/arbitrary-property.png": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-browser/root-results/utility-gpu-arbitrary-prop-42d0e-e-actual-DOM-and-GPU-pixels-utility-lab/arbitrary-property.png",
+      "bytes": 113360,
+      "sha256": "b08f0a5c6c691a4aa693fabc4f02167ba170da607872750fb4936a8dda3f9e51"
+    },
+    "raw-variant-browser/root-results/utility-gpu-authored-custo-36aba-rawn-GPU-style-on-rejection-utility-lab/custom-variant.png": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-browser/root-results/utility-gpu-authored-custo-36aba-rawn-GPU-style-on-rejection-utility-lab/custom-variant.png",
+      "bytes": 124525,
+      "sha256": "dc5d1e4caca31a429dba8e2e6596fa937332dcfa3786613b43ef24942012f83b"
+    },
+    "raw-variant-browser/root-results/utility-gpu-clearing-utili-1811d-out-another-baseline-setter-utility-lab/button-none-live-palette.png": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-browser/root-results/utility-gpu-clearing-utili-1811d-out-another-baseline-setter-utility-lab/button-none-live-palette.png",
+      "bytes": 5678,
+      "sha256": "0a23470bea2210e525fc04ba51bb5a5957925547e14d4ac13abcdf2a813f13d2"
+    },
+    "raw-variant-browser/root-results/utility-gpu-clearing-utili-36a0c-ry-Button-pixels-and-events-utility-lab/button-none.png": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-browser/root-results/utility-gpu-clearing-utili-36a0c-ry-Button-pixels-and-events-utility-lab/button-none.png",
+      "bytes": 5918,
+      "sha256": "242f9fe93b82f9f692cc7113975e2d02b49830f3958fb97ee321777547d68a3c"
+    },
+    "raw-variant-browser/root-results/utility-gpu-clearing-utili-4535a-ched-Script-Button-defaults-utility-lab/button-none-script.png": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-browser/root-results/utility-gpu-clearing-utili-4535a-ched-Script-Button-defaults-utility-lab/button-none-script.png",
+      "bytes": 7130,
+      "sha256": "83acd7ee7849cb94988f46122c27567ffd8be64bc0ca38fa07521d9417614e8d"
+    },
+    "raw-variant-browser/root-results/utility-gpu-clearing-utili-a9b22-out-another-baseline-setter-utility-lab/button-none-live-theme.png": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-browser/root-results/utility-gpu-clearing-utili-a9b22-out-another-baseline-setter-utility-lab/button-none-live-theme.png",
+      "bytes": 5678,
+      "sha256": "0a23470bea2210e525fc04ba51bb5a5957925547e14d4ac13abcdf2a813f13d2"
+    },
+    "raw-variant-browser/root-results/utility-gpu-configuration--1c218-xels-on-failed-installation-utility-lab/configuration-gpu.png": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-browser/root-results/utility-gpu-configuration--1c218-xels-on-failed-installation-utility-lab/configuration-gpu.png",
+      "bytes": 112254,
+      "sha256": "1ab3d27b3ed4043603c76d6afd3c67950fdf8761a7f24b0f8a2bc303e4a8b7ba"
+    },
+    "raw-variant-browser/root-results/utility-gpu-inline-and-pat-fe70f-ns-drive-scoped-DOM-and-GPU-utility-lab/source-options.png": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-browser/root-results/utility-gpu-inline-and-pat-fe70f-ns-drive-scoped-DOM-and-GPU-utility-lab/source-options.png",
+      "bytes": 113244,
+      "sha256": "760e84b956a3a38a9bb7823e36ac98b05166b7b337ae0dc1d733732bd1f42800"
+    },
+    "raw-variant-browser/root-results/utility-gpu-live-ThemeScop-1a10b-ost-rem-without-recompiling-utility-lab/gpu-theme-boundary.png": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-browser/root-results/utility-gpu-live-ThemeScop-1a10b-ost-rem-without-recompiling-utility-lab/gpu-theme-boundary.png",
+      "bytes": 123509,
+      "sha256": "c1684d4f849fa03743070449aaa4e51bf841b0610d9a1ec82dfcb4c89b30deb4"
+    },
+    "raw-variant-browser/root-results/utility-gpu-terminal-GPU-i-e6220--DOM-editing-remains-usable-utility-lab/gpu-terminal-failure.png": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-browser/root-results/utility-gpu-terminal-GPU-i-e6220--DOM-editing-remains-usable-utility-lab/gpu-terminal-failure.png",
+      "bytes": 114868,
+      "sha256": "85ce5f05830554ad7899252a8296259742bfd69df8476121d6edfe37ad970ee7"
+    },
+    "raw-variant-browser/root-results/utility-runtime-controls-a-5a183--and-fit-desktop-and-mobile-utility-lab/desktop.png": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-browser/root-results/utility-runtime-controls-a-5a183--and-fit-desktop-and-mobile-utility-lab/desktop.png",
+      "bytes": 114192,
+      "sha256": "0b805107d26113905b41c25a57ec8a0b98eb2cec38e89c9210e06ac6e7ffd70a"
+    },
+    "raw-variant-browser/root-results/utility-runtime-controls-a-5a183--and-fit-desktop-and-mobile-utility-lab/mobile.png": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-browser/root-results/utility-runtime-controls-a-5a183--and-fit-desktop-and-mobile-utility-lab/mobile.png",
+      "bytes": 106443,
+      "sha256": "905923f0b66f1061cb8629b9dff7b5aa2ed39e46e65497a6e0f293214475e6b4"
+    },
+    "raw-variant-browser/root-results/utility-runtime-real-DOM-c-2993e--to-caller-and-size-changes-utility-lab/cn-component.png": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-browser/root-results/utility-runtime-real-DOM-c-2993e--to-caller-and-size-changes-utility-lab/cn-component.png",
+      "bytes": 2606,
+      "sha256": "f45949b19602410bbda8530449950308d3db019e25378ee4100d56d1edf17f8c"
+    },
+    "raw-variant-docs-verified.log": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-docs-verified.log",
+      "bytes": 1233,
+      "sha256": "2922b2168e84da879d9c47404b3d6cc54505129924364b66d828254eb09e67ed"
+    }
+  },
+  "validationRecords": {
+    "docs": "raw-variant-docs-verified.log",
+    "records": "raw-variant-records-verified.log"
+  },
+  "documentationHashes": {
+    "docs/plan/WASM-TAILWIND.md": "8bd3a9a91a327f09627987fce68ec827ad593b5423420f580f52e78dad4236a0",
+    "docs/validation/wasm-tailwind/M4.md": "3d5c9ee6c4a19ba8691c2bca53f58a3ba2cd8f51c87010d7aaada3d28743fa0d",
+    "docs/validation/wasm-tailwind/M5.md": "0c1873c289956283490f50923480b598e20b3b8e262b3e5513dcc43a6727320e",
+    "docs/validation/wasm-tailwind/M6.md": "324714d822868e189833657c0becfadf317e98b3ed9f5e0133975ed21a4eebcb",
+    "tests/utility/compiler/README.md": "f00f8c9f3126cfed18b5f2ea0b7ae7aa78b29c4e633f463a957e54eb42babd07",
+    "crates/rustify-style/src/compiler/README.md": "1d934b82ee3efc40d97e5e6fa4f72e6c8de8600233d2bdea43427bf933948dea",
+    "docs/validation/wasm-tailwind/registration-design/README.md": "460550096caaf9061869d7d76b18232bc65edf7c4eccd0a4a9b20454b27652f9",
+    "docs/validation/wasm-tailwind/registration-design/synthesis.md": "e3c247b13912ac639deb97b069d8dd1742f2652f9c846d3841f8138f00bfad3f"
+  },
+  "documentationCheck": "no errors; terminology hints retained"
+}

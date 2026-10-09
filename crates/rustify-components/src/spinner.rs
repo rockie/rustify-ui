@@ -21,7 +21,7 @@ pub fn Spinner(
     };
     view! {
         <span
-            class=crate::macros::merge("inline-flex text-muted-foreground", &class)
+            class=crate::macros::reactive_merge("inline-flex text-muted-foreground", &class)
             data-name="Spinner"
             data-testid=test_id
             role="status"

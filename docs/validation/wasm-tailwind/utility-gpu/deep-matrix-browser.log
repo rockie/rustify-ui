@@ -1,0 +1,15 @@
+npm notice run rustify-ui-browser-tests@0.1.0 npx
+npm notice run 'playwright' test --project=utility-lab-deep --workers=1 utility-gpu.spec.ts
+
+Running 6 tests using 1 worker
+
+(node:34224) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 [utility-lab-deep] › tests/browser/utility-gpu.spec.ts:31:5 › GPU draws compiled colors, geometry and real font glyphs alongside scoped DOM (966ms)
+  ✓  2 [utility-lab-deep] › tests/browser/utility-gpu.spec.ts:65:5 › strict GPU rejection retains the drawn style, partial reports skipped properties and deleting classes restores defaults (673ms)
+  ✓  3 [utility-lab-deep] › tests/browser/utility-gpu.spec.ts:87:5 › GPU responds to pointer, keyboard focus-visible and disabled input without recompiling (621ms)
+  ✓  4 [utility-lab-deep] › tests/browser/utility-gpu.spec.ts:114:5 › GPU media uses the browser viewport, and alpha color blocks match DOM pixels (691ms)
+  ✓  5 [utility-lab-deep] › tests/browser/utility-gpu.spec.ts:134:5 › GPU applies text resources, row layout, shadows and rings from compiler bindings (706ms)
+  ✓  6 [utility-lab-deep] › tests/browser/utility-gpu.spec.ts:158:5 › GPU restores its latest committed programs after a real WebGL context loss (837ms)
+
+  6 passed (6.9s)

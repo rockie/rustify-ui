@@ -22,6 +22,16 @@ jobs:
       # do not run under `--lib`.
       - name: Unit tests
         run: mbx test --workspace --lib --bins
+      # Features the workspace run leaves off: the style crate's compiler and
+      # scanner, its Worker facade, and the SDK's runtime utilities. The
+      # upstream Tailwind conformance gate needs the local-only ref/ tree and
+      # runs by hand (`mbx xtask utility-conformance --check`).
+      - name: Style compiler, scanner and Worker facade
+        run: |
+          mbx test --locked -p rustify-style --all-features --lib
+          mbx test --locked -p rustify-style-wasm --no-default-features --features compiler,scanner --lib
+      - name: SDK runtime utilities
+        run: mbx test --locked -p rustify-ui -p rustify-components --features rustify-components/utility --lib
       - name: Independent theme consumer tests
         run: mbx test --locked --manifest-path tests/theme-export/Cargo.toml --workspace --bins
       - name: Makepad text layout and shaping checks
@@ -71,6 +81,9 @@ jobs:
           - name: theme-studio
             examples: theme-studio
             sub_path: theme-studio
+          - name: utility-lab
+            examples: utility-lab
+            sub_path: ""
     steps:
       - uses: actions/checkout@v4
       - name: Rust, mbx and Tailwind from mise.toml
@@ -85,6 +98,11 @@ jobs:
       - name: Build the sub-path copy
         if: matrix.sub_path != ''
         run: mbx xtask build-web --example ${{ matrix.sub_path }} --release --base /tools/demo/
+      # The default compiler-only Worker; the scanner build is a separate
+      # product (`--utility-scanner`) checked by hand.
+      - name: Build the utility-lab sub-path copy
+        if: matrix.name == 'utility-lab'
+        run: mbx xtask build-web --example utility-lab --release --base /tools/utility-lab/
       - name: Independent exported theme consumers
         if: matrix.name == 'theme-studio'
         run: |
@@ -162,6 +180,7 @@ jobs:
             projects: -c tests/vellum/playwright.config.ts
           - name: theme-studio
           - name: exported themes
+          - name: utility-lab
     env:
       RUSTIFY_XTASK: ${{ github.workspace }}/target/debug/xtask
     steps:
@@ -189,9 +208,22 @@ jobs:
         if: matrix.name == 'exported themes'
       - name: Install pinned Playwright
         run: npm ci && npx playwright install --with-deps chromium
+      # utility-runtime.spec.ts compares against the pinned Tailwind, which has its own lock.
+      - name: Install the pinned Tailwind oracle
+        if: matrix.name == 'utility-lab'
+        run: npm ci --ignore-scripts --prefix tests/utility/compiler/oracle
       - name: Regression tier (Playwright Chromium; not the macOS Chrome pass gate)
-        if: matrix.name != 'theme-studio' && matrix.name != 'exported themes'
+        if: matrix.name != 'theme-studio' && matrix.name != 'exported themes' && matrix.name != 'utility-lab'
         run: npx playwright test ${{ matrix.projects }}
+      - name: Utility Lab root and sub-path regression
+        if: matrix.name == 'utility-lab'
+        run: |
+          status=0
+          npx playwright test --project=utility-lab --workers=1 --output=test-results/utility-lab || status=$?
+          cp test-results/browser.json test-results/utility-lab.json 2>/dev/null || true
+          npx playwright test --project=utility-lab-deep --workers=1 --output=test-results/utility-lab-deep || status=$?
+          cp test-results/browser.json test-results/utility-lab-deep.json 2>/dev/null || true
+          exit $status
       - name: Theme Studio root and sub-path regression
         if: matrix.name == 'theme-studio'
         run: |

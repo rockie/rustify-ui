@@ -1,0 +1,109 @@
+{
+  "observedAt": "2026-10-06T15:57:44+11:00",
+  "scope": "public AST synchronous constructor with six direct apply directives and four builds",
+  "before": {
+    "scope": "public AST constructor with six direct apply directives and four builds",
+    "samples": [
+      {
+        "constructorP95Ms": 0.5721659999999815,
+        "buildP95Ms": 0.26208299999996143,
+        "sessionsPerSecond": 728.5816361042336,
+        "outputSha256": "f7a086c0f290081b17a5f080839b2314c2a2c36a98c318647b8f415963f5ab6a",
+        "sessions": 200,
+        "builds": 800
+      },
+      {
+        "constructorP95Ms": 0.5605830000000651,
+        "buildP95Ms": 0.2597079999999323,
+        "sessionsPerSecond": 732.5309677466616,
+        "outputSha256": "f7a086c0f290081b17a5f080839b2314c2a2c36a98c318647b8f415963f5ab6a",
+        "sessions": 200,
+        "builds": 800
+      },
+      {
+        "constructorP95Ms": 0.537375000000111,
+        "buildP95Ms": 0.25116700000000947,
+        "sessionsPerSecond": 746.1518394071721,
+        "outputSha256": "f7a086c0f290081b17a5f080839b2314c2a2c36a98c318647b8f415963f5ab6a",
+        "sessions": 200,
+        "builds": 800
+      },
+      {
+        "constructorP95Ms": 0.5350419999999758,
+        "buildP95Ms": 0.24620800000002419,
+        "sessionsPerSecond": 757.1883209471272,
+        "outputSha256": "f7a086c0f290081b17a5f080839b2314c2a2c36a98c318647b8f415963f5ab6a",
+        "sessions": 200,
+        "builds": 800
+      },
+      {
+        "constructorP95Ms": 0.5317909999998847,
+        "buildP95Ms": 0.24841700000001765,
+        "sessionsPerSecond": 756.178211347175,
+        "outputSha256": "f7a086c0f290081b17a5f080839b2314c2a2c36a98c318647b8f415963f5ab6a",
+        "sessions": 200,
+        "builds": 800
+      }
+    ],
+    "constructorP95Ms": 0.537375000000111,
+    "buildP95Ms": 0.25116700000000947,
+    "sessionsPerSecond": 746.1518394071721,
+    "wasmBytes": 2396618,
+    "wasmSha256": "e88ebc8d9928739e844ba60ad1d3ac84d9ca3bd135fc72c0db570e983d819f53",
+    "actualWasm": true,
+    "finalPerformanceAcceptance": "pending"
+  },
+  "after": {
+    "scope": "public AST constructor with six direct apply directives and four builds",
+    "samples": [
+      {
+        "constructorP95Ms": 0.5495409999999765,
+        "buildP95Ms": 0.25579199999998536,
+        "sessionsPerSecond": 751.0551141441922,
+        "outputSha256": "f7a086c0f290081b17a5f080839b2314c2a2c36a98c318647b8f415963f5ab6a",
+        "sessions": 200,
+        "builds": 800
+      },
+      {
+        "constructorP95Ms": 0.5389579999999796,
+        "buildP95Ms": 0.257041000000072,
+        "sessionsPerSecond": 760.6372736216542,
+        "outputSha256": "f7a086c0f290081b17a5f080839b2314c2a2c36a98c318647b8f415963f5ab6a",
+        "sessions": 200,
+        "builds": 800
+      },
+      {
+        "constructorP95Ms": 0.5496250000001055,
+        "buildP95Ms": 0.24829199999999219,
+        "sessionsPerSecond": 765.0292374857579,
+        "outputSha256": "f7a086c0f290081b17a5f080839b2314c2a2c36a98c318647b8f415963f5ab6a",
+        "sessions": 200,
+        "builds": 800
+      },
+      {
+        "constructorP95Ms": 0.5992499999999836,
+        "buildP95Ms": 0.27354099999979553,
+        "sessionsPerSecond": 733.6397196212404,
+        "outputSha256": "f7a086c0f290081b17a5f080839b2314c2a2c36a98c318647b8f415963f5ab6a",
+        "sessions": 200,
+        "builds": 800
+      },
+      {
+        "constructorP95Ms": 0.6111670000000231,
+        "buildP95Ms": 0.2775000000001455,
+        "sessionsPerSecond": 716.3330196391652,
+        "outputSha256": "f7a086c0f290081b17a5f080839b2314c2a2c36a98c318647b8f415963f5ab6a",
+        "sessions": 200,
+        "builds": 800
+      }
+    ],
+    "constructorP95Ms": 0.5496250000001055,
+    "buildP95Ms": 0.257041000000072,
+    "sessionsPerSecond": 751.0551141441922,
+    "wasmBytes": 2395545,
+    "wasmSha256": "1a1df02bff3ef81eff3d81c9171a410488df775d624be17f8e4ebebd49fa41a5",
+    "actualWasm": true,
+    "finalPerformanceAcceptance": "pending"
+  },
+  "interpretation": "Descriptive serial local measurement of the unchanged successful synchronous apply workload; five post-warmup samples per module. No optimization or M7 acceptance claim. Promise entry performance and unified allocator peaks remain pending."
+}

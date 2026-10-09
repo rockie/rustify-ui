@@ -1,0 +1,18 @@
+npm notice run rustify-ui-browser-tests@0.1.0 npx
+npm notice run 'playwright' test --project utility-lab --workers=1 utility-runtime.spec.ts utility-faults.spec.ts
+
+Running 9 tests using 1 worker
+
+(node:82542) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 [utility-lab] › tests/browser/utility-faults.spec.ts:8:5 › failed CSSOM installation nacks preparation, preserves the installed revision and permits retry (360ms)
+  ✓  2 [utility-lab] › tests/browser/utility-faults.spec.ts:36:5 › Worker timeout preserves installed CSS and explicit retry replays in a fresh epoch (1.3s)
+  ✓  3 [utility-lab] › tests/browser/utility-faults.spec.ts:69:5 › instance trap releases Worker, observer, owner attribute and installed stylesheet through JS abort cleanup (246ms)
+  ✓  4 [utility-lab] › tests/browser/utility-faults.spec.ts:86:5 › a second WASM instance keeps its compiler and stylesheet when the first instance traps (261ms)
+  ✓  5 [utility-lab] › tests/browser/utility-faults.spec.ts:110:5 › a Worker construction failure leaves the root available for a later mount (218ms)
+  ✓  6 [utility-lab] › tests/browser/utility-runtime.spec.ts:8:5 › SDK ensure installs scanner-free CSS, coalesces requests and isolates independent scopes (186ms)
+  ✓  7 [utility-lab] › tests/browser/utility-runtime.spec.ts:60:5 › controls apply classes and fit desktop and mobile (370ms)
+  ✓  8 [utility-lab] › tests/browser/utility-runtime.spec.ts:78:5 › nested owners stop outer rules and disposal removes the owned stylesheet (190ms)
+  ✓  9 [utility-lab] › tests/browser/utility-runtime.spec.ts:98:5 › classList changes and newly added subtrees compile through the bounded observer without scanner (249ms)
+
+  9 passed (6.0s)

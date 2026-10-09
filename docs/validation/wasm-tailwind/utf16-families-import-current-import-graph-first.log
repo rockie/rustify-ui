@@ -1,0 +1,435 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: theme-options: constructor
++ actual - expected
+... Skipped lines
+
+  {
+    records: [
+      {
+        array: true,
+        fields: [
+...
+            {
++             reference: 15
+-             reference: 16
+            }
+          ]
+        ]
+      },
+      {
+...
+            'kind',
++           'at-rule'
+-           'rule'
+          ],
+          [
++           'name',
++           '@theme'
+-           'selector',
+-           ':root, :host'
+          ],
+          [
++           'params',
++           ' inline'
++         ],
++         [
+            'nodes',
+            {
+              reference: 8
+            }
+          ],
+...
+            {
++             reference: 13
+-             reference: 15
+            }
+          ],
++         [
++           'dst',
++           {
++             reference: 14
++           }
++         ]
+        ]
+      },
+      {
+        array: true,
+        fields: [
+...
+            'kind',
++           'declaration'
+-           'context'
+          ],
+          [
++           'property',
++           '--color-card'
++         ],
++         [
++           'value',
++           'red'
++         ],
++         [
++           'important',
++           false
++         ],
++         [
++           'src',
+-           'context',
+            {
+              reference: 10
+            }
+          ],
+          [
++           'dst',
+-           'nodes',
+            {
++             reference: 12
+-             reference: 11
+            }
+          ]
+        ]
+      },
+      {
+-       array: false,
+-       fields: [
+-         [
+-           'theme',
+-           true
+-         ]
+-       ]
+-     },
+-     {
+        array: true,
+        fields: [
+          [
+            '0',
+            {
++             reference: 11
+-             reference: 12
+            }
+          ],
++         [
++           '1',
++           9
++         ],
++         [
++           '2',
++           26
++         ]
+        ]
+      },
+      {
+        array: false,
+        fields: [
+          [
++           'file',
++           '/mapped/one.css'
+-           'kind',
+-           'declaration'
+          ],
+          [
++           'code',
++           '@theme { --color-card: red; }'
+-           'property',
+-           '--color-card'
+          ],
+-         [
+-           'value',
+-           'red'
+-         ],
+-         [
+-           'important',
+-           false
+-         ],
+-         [
+-           'src',
+-           {
+-             reference: 13
+-           }
+-         ]
+        ]
+      },
+      {
+        array: true,
+        fields: [
+...
+            {
++             reference: 11
+-             reference: 14
+            }
+          ],
+          [
+            '1',
+            9
+...
+      {
++       array: true,
+-       array: false,
+        fields: [
+          [
++           '0',
++           {
++             reference: 11
++           }
+-           'file',
+-           '/mapped/one.css'
+          ],
+          [
++           '1',
++           0
+-           'code',
+-           '@theme { --color-card: red; }'
+          ],
++         [
++           '2',
++           7
++         ]
+        ]
+      },
+      {
+        array: true,
+        fields: [
+...
+            {
++             reference: 11
+-             reference: 14
+            }
+          ],
+          [
+            '1',
+            0
+...
+            {
++             reference: 16
+-             reference: 17
+            }
+          ],
+          [
+            'context',
+            {
++             reference: 17
+-             reference: 18
+            }
+          ]
+        ]
+      },
+      {
+...
+            {
++             reference: 19
+-             reference: 20
+            }
+          ]
+        ]
+      },
+      {
+...
+      {
++       reference: 18
+-       reference: 19
+      },
+      {
++       reference: 15
+-       reference: 16
+      }
+    ]
+  }
+
+    at file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/compiler/run-public-ast-import-input-wasm.mjs:77:12 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: {
+    roots: [ { reference: 0 }, { reference: 18 }, { reference: 15 } ],
+    records: [
+      { array: true, fields: [ [ '0', [Object] ], [ '1', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'context' ],
+          [ 'context', [Object] ],
+          [ 'nodes', [Object] ]
+        ]
+      },
+      { array: false, fields: [] },
+      { array: true, fields: [ [ '0', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'context' ],
+          [ 'context', [Object] ],
+          [ 'nodes', [Object] ]
+        ]
+      },
+      { array: false, fields: [ [ 'base', '/discover' ] ] },
+      { array: true, fields: [ [ '0', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'at-rule' ],
+          [ 'name', '@theme' ],
+          [ 'params', ' inline' ],
+          [ 'nodes', [Object] ],
+          [ 'src', [Object] ],
+          [ 'dst', [Object] ]
+        ]
+      },
+      { array: true, fields: [ [ '0', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'declaration' ],
+          [ 'property', '--color-card' ],
+          [ 'value', 'red' ],
+          [ 'important', false ],
+          [ 'src', [Object] ],
+          [ 'dst', [Object] ]
+        ]
+      },
+      {
+        array: true,
+        fields: [ [ '0', [Object] ], [ '1', 9 ], [ '2', 26 ] ]
+      },
+      {
+        array: false,
+        fields: [
+          [ 'file', '/mapped/one.css' ],
+          [ 'code', '@theme { --color-card: red; }' ]
+        ]
+      },
+      {
+        array: true,
+        fields: [ [ '0', [Object] ], [ '1', 9 ], [ '2', 26 ] ]
+      },
+      {
+        array: true,
+        fields: [ [ '0', [Object] ], [ '1', 0 ], [ '2', 7 ] ]
+      },
+      {
+        array: true,
+        fields: [ [ '0', [Object] ], [ '1', 0 ], [ '2', 7 ] ]
+      },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'context' ],
+          [ 'name', '@tailwind' ],
+          [ 'params', 'utilities' ],
+          [ 'nodes', [Object] ],
+          [ 'context', [Object] ]
+        ]
+      },
+      { array: true, fields: [] },
+      { array: false, fields: [] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'at-rule' ],
+          [ 'name', '@import' ],
+          [ 'params', '"one.css" theme(inline)' ],
+          [ 'nodes', [Object] ]
+        ]
+      },
+      { array: true, fields: [] }
+    ]
+  },
+  expected: {
+    roots: [ { reference: 0 }, { reference: 19 }, { reference: 16 } ],
+    records: [
+      { array: true, fields: [ [ '0', [Object] ], [ '1', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'context' ],
+          [ 'context', [Object] ],
+          [ 'nodes', [Object] ]
+        ]
+      },
+      { array: false, fields: [] },
+      { array: true, fields: [ [ '0', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'context' ],
+          [ 'context', [Object] ],
+          [ 'nodes', [Object] ]
+        ]
+      },
+      { array: false, fields: [ [ 'base', '/discover' ] ] },
+      { array: true, fields: [ [ '0', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'rule' ],
+          [ 'selector', ':root, :host' ],
+          [ 'nodes', [Object] ],
+          [ 'src', [Object] ]
+        ]
+      },
+      { array: true, fields: [ [ '0', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'context' ],
+          [ 'context', [Object] ],
+          [ 'nodes', [Object] ]
+        ]
+      },
+      { array: false, fields: [ [ 'theme', true ] ] },
+      { array: true, fields: [ [ '0', [Object] ] ] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'declaration' ],
+          [ 'property', '--color-card' ],
+          [ 'value', 'red' ],
+          [ 'important', false ],
+          [ 'src', [Object] ]
+        ]
+      },
+      {
+        array: true,
+        fields: [ [ '0', [Object] ], [ '1', 9 ], [ '2', 26 ] ]
+      },
+      {
+        array: false,
+        fields: [
+          [ 'file', '/mapped/one.css' ],
+          [ 'code', '@theme { --color-card: red; }' ]
+        ]
+      },
+      {
+        array: true,
+        fields: [ [ '0', [Object] ], [ '1', 0 ], [ '2', 7 ] ]
+      },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'context' ],
+          [ 'name', '@tailwind' ],
+          [ 'params', 'utilities' ],
+          [ 'nodes', [Object] ],
+          [ 'context', [Object] ]
+        ]
+      },
+      { array: true, fields: [] },
+      { array: false, fields: [] },
+      {
+        array: false,
+        fields: [
+          [ 'kind', 'at-rule' ],
+          [ 'name', '@import' ],
+          [ 'params', '"one.css" theme(inline)' ],
+          [ 'nodes', [Object] ]
+        ]
+      },
+      { array: true, fields: [] }
+    ]
+  },
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v26.1.0

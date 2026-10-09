@@ -1,0 +1,32 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 4.01s
+     Running unittests src/lib.rs (target/debug/deps/rustify_style-d8a92cb6940dfdfd)
+
+running 1 test
+test compiler::functions::tests::oversized_function_expansion_rejects_the_batch_without_committing_candidates ... FAILED
+
+failures:
+
+---- compiler::functions::tests::oversized_function_expansion_rejects_the_batch_without_committing_candidates stdout ----
+
+thread 'compiler::functions::tests::oversized_function_expansion_rejects_the_batch_without_committing_candidates' (13073541) panicked at crates/rustify-style/src/compiler/functions.rs:355:9:
+assertion failed: matches!(result, Err(CompileError::Limit { resource, limit: 80 }) if resource
+    == "css_bytes")
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    compiler::functions::tests::oversized_function_expansion_rejects_the_batch_without_committing_candidates
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 66 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p rustify-style --lib`
+mbx[cache]: 0 hits, 0 misses, 1 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: 1h 26m not spent compiling, over 2039 builds. what you did instead is between you and the terminal.

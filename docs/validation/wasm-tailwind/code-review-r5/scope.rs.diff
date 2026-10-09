@@ -1,0 +1,89 @@
+--- R4/crates/rustify-style/src/scope.rs
++++ current/crates/rustify-style/src/scope.rs
+@@ -362,9 +362,10 @@
+ /// Decides keyframes references after var() substitution. A custom property is
+ /// expanded to each of its declarations in the stylesheet, and a word is renamed
+ /// only when it is the keyframes name in every layer state those values can
+-/// produce. A property whose uses need different renames gets one owner-private
+-/// copy per extra version, declared beside each of its declarations so that it
+-/// cascades the same way; version 0 stays in the public declaration.
++/// produce, including inside the property's own declarations. An internal property
++/// whose uses need different renames gets one owner-private copy per extra version,
++/// declared beside each of its declarations so that it cascades the same way;
++/// version 0 stays in the original declaration. A public one is reported instead.
+ struct References<'a> {
+     owner: &'a str,
+     keyframes: &'a BTreeMap<Text, Text>,
+@@ -642,7 +643,8 @@
+         resolved: BTreeMap::new(),
+         active: BTreeSet::new(),
+     };
+-    // Uses in document order: the first use of a property decides its public value.
++    // Uses in document order: the first use of a property decides the value its own
++    // declaration keeps.
+     for (index, (property, value)) in declarations.iter().enumerate() {
+         let usage = if property == "animation" {
+             Use::Shorthand(EMPTY)
+@@ -669,6 +671,16 @@
+     let mut copies = vec![Vec::new(); declarations.len()];
+     let mut copied = BTreeMap::new();
+     for (name, versions) in versions {
++        // A copy is fixed where the property is declared, so it cannot follow what
++        // the application sets on a public property later; only internal ones get it.
++        if versions.len() > 1 && !name.starts_with("--tw-") {
++            return Err(CompileError::UnsupportedFeature {
++                feature: format!(
++                    "custom property `{}` used both as a keyframes name and with another meaning",
++                    String::from_utf16_lossy(name.units())
++                ),
++            });
++        }
+         for (position, &index) in declared[&name].iter().enumerate() {
+             values[index] = Some(versions[0][position].clone());
+             copies[index] = (1..versions.len())
+@@ -910,17 +922,34 @@
+     }
+ 
+     #[test]
+-    fn a_property_used_as_timing_and_as_name_gets_a_copy_for_each_use() {
+-        let css = scoped(":root { --ease: linear; } @keyframes card { to { opacity: 0; } } @keyframes linear { to { opacity: 0.5; } } .motion { animation: card 10s var(--ease) infinite; } .other { animation-name: var(--ease); animation-duration: 10s; } .fade { transition-timing-function: var(--ease); }", "alpha").unwrap();
+-        assert!(css.contains("--ease: linear;"));
+-        assert!(css.contains("--rustify-alpha-k1-ease: rustify-alpha-linear;"));
+-        assert!(css.contains("animation: rustify-alpha-card 10s var(--ease) infinite"));
+-        assert!(css.contains("animation-name: var(--rustify-alpha-k1-ease)"));
+-        assert!(css.contains("transition-timing-function: var(--ease)"));
+-        let other = scoped(":root { --ease: linear; } @keyframes linear { to { opacity: 0.5; } } .other { animation-name: var(--ease); } .fade { transition-timing-function: var(--ease); }", "beta").unwrap();
+-        assert!(other.contains("--ease: rustify-beta-linear;"));
+-        assert!(other.contains("--rustify-beta-k1-ease: linear;"));
+-        assert!(other.contains("transition-timing-function: var(--rustify-beta-k1-ease)"));
++    fn a_public_property_whose_uses_need_different_names_is_reported() {
++        for css in [
++            ":root { --ease: linear; } @keyframes card { to { opacity: 0; } } @keyframes linear { to { opacity: 0.5; } } .motion { animation: card 10s var(--ease) infinite; } .other { animation-name: var(--ease); animation-duration: 10s; }",
++            ":root { --v: linear; } @keyframes linear { to { opacity: 0.5; } } .motion { animation-name: var(--v); } .other { transition-timing-function: var(--v); }",
++            ":root { --v: linear; } @keyframes linear { to { opacity: 0.5; } } .fade { transition-timing-function: var(--v); } .motion { animation-name: var(--v); }",
++            ":root { --v: linear; --a: var(--v); } @keyframes linear { to { opacity: 0.3; } } .motion { animation-name: var(--a); } .other { transition-timing-function: var(--a); }",
++        ] {
++            assert!(
++                matches!(scoped(css, "alpha"), Err(CompileError::UnsupportedFeature { feature }) if feature.contains("custom property")),
++                "{css}"
++            );
++        }
++        let css = scoped(":root { --v: linear; } @keyframes linear { to { opacity: 0.3; } } .motion { animation-name: var(--v); animation-duration: 10s; } .plain { color: var(--color); }", "alpha").unwrap();
++        assert!(css.contains("--v: rustify-alpha-linear;"));
++        assert!(css.contains("animation-name: var(--v);"));
++        assert!(!css.contains("-k1-"));
++    }
++
++    #[test]
++    fn an_internal_property_gets_a_copy_for_each_use() {
++        let css = scoped("@keyframes card { to { opacity: 0; } } @keyframes linear { to { opacity: 0.5; } } .motion { --tw-ease: linear; animation: card 10s var(--tw-ease) infinite; } .other { animation-name: var(--tw-ease); } .fade { transition-timing-function: var(--tw-ease); }", "alpha").unwrap();
++        assert!(css.contains("--rustify-alpha-tw-ease: linear;"));
++        assert!(css.contains("--rustify-alpha-k1-tw-ease: rustify-alpha-linear;"));
++        assert!(
++            css.contains("animation: rustify-alpha-card 10s var(--rustify-alpha-tw-ease) infinite")
++        );
++        assert!(css.contains("animation-name: var(--rustify-alpha-k1-tw-ease)"));
++        assert!(css.contains("transition-timing-function: var(--rustify-alpha-tw-ease)"));
+     }
+ 
+     #[test]

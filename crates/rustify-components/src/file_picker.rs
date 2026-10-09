@@ -40,7 +40,7 @@ pub fn FilePicker(
         <input
             type="file"
             id=id
-            class=crate::macros::merge(FIELD, &class)
+            class=crate::macros::reactive_merge(FIELD, &class)
             data-name="FilePicker"
             data-testid=test_id
             aria-label=aria_label

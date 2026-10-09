@@ -1,0 +1,546 @@
+{
+  "updatedAt": "2026-10-06T21:10:01+11:00",
+  "baseline": "dirty@ef766ce50005546d861e32a4a1c45b4f4a03f0d7",
+  "previousEvidence": "registration-resume-evidence.json",
+  "sourceHashes": {
+    "Cargo.toml": "dee97baccd454f9bf74ccd8c4bac69e47579d2284b5f07bcb39f73a22d5f871a",
+    "Cargo.lock": "3e1069d4610684c784ddd750ddd9a20132d9f749d3aa660f0bf1d7887ef4577c",
+    "mise.toml": "b39792f4c61600ed818b759bb8f9316b217372135b4b0eae097305ceec761f79",
+    "sources.lock.json": "f07a22046a145b10b7dda5c4ccb949ee1ffc00673a57f5ab3dc1a1c15b0ceb6d",
+    "xtask/src/utility.rs": "ab39be91590e377f01d0d1e19c05f82187b128c9f1f715116bb61be545d6184d",
+    "examples/utility-lab/src/button_baseline.rs": "24fa5304273db11881fd299a899da09e2f553bf4f4c062e524ca0187a1591978",
+    "examples/utility-lab/app.js": "6f3a56cd6526f6d2d7288d940ebc655c77063591627fdeb402ecb4271ea5d8c7",
+    "tests/browser/utility-gpu.spec.ts": "6c49b586391536d7eba5b5e39642d106638102b2a8770c6ead9b6f82f5c6ac57",
+    "tests/utility/compiler/run-public-ast-registration-wasm.mjs": "f23954ff6e4c0f4482ea8427f4057776a73f465edd45efdaa134a6727a632efb",
+    "tests/utility/compiler/run-public-ast-media-source-wasm.mjs": "09137e228eb0a99ef1c8d803265ff6af73170dd744a48da431525bea85f58eca",
+    "tests/utility/compiler/run-public-ast-ownership-wasm.mjs": "5b82a1d74ce8245a6e56416b3faca629ceb9de8dbf3bd00d416c3236124b2ab6",
+    "tests/utility/compiler/bench-media-source-wasm.mjs": "d1130984077de9ef21f239fd09ba8fc4ff49a832cbbf3b6a25dc1962f653117e",
+    "crates/rustify-style/src/compiler/registration.rs": "ab3abe273670150fee31889a78527264261f03be2e5d8c2617ca405235bc1f39",
+    "crates/rustify-style/src/compiler/theme.rs": "68d54851c4ac71ba31ed11f887720efb487c1ef28525ba890f9b94fdfde49fc4",
+    "crates/rustify-style/src/compiler/custom_utilities.rs": "e9c998d2e9d7961f7f6bc2b844292074131006c55fd252ca1b3a1c96c7a89746",
+    "crates/rustify-style/src/compiler/custom_variants.rs": "dc8db45d6846eb042a572c52051f0dce39dd423be54bba78566c89134c59cedc",
+    "crates/rustify-style/src/compiler/public_api/compile_ast.rs": "2a9fad205109e6c2123eaa497a312e36aa967479df729fb003e9f6afddf6752c",
+    "crates/rustify-style/src/compiler/mod.rs": "dd11ff194e94b4f5adea4a7e2dbbb436076ef4312a73966d799afeca42bd8976",
+    "crates/rustify-style/src/compiler/variants.rs": "0b60904768e92d8e9cf569699363098c77101ad2ca94f2865c8316095ef2e6dd"
+  },
+  "evidenceFiles": {
+    "postcompat-normalize-compiler-api.log": {
+      "path": "docs/validation/wasm-tailwind/postcompat-normalize-compiler-api.log",
+      "bytes": 58554,
+      "sha256": "fe0035d31422065dae09092bb603a52453e624162ca2ce96d03abfda4350b2a0"
+    },
+    "postcompat-normalize-compiler-slice.log": {
+      "path": "docs/validation/wasm-tailwind/postcompat-normalize-compiler-slice.log",
+      "bytes": 44709,
+      "sha256": "f18b8005c2f4f5c63c1564e8dace0412ae9a07e36e61f27f77bdf0e482c40437"
+    },
+    "postcompat-normalize-native.log": {
+      "path": "docs/validation/wasm-tailwind/postcompat-normalize-native.log",
+      "bytes": 39685,
+      "sha256": "1364d5235e95c94b5e0fdf32c5991eb4ce1dabe6a641078fcdfd28d8c0c98248"
+    },
+    "postcompat-normalize-native-targeted-verified.log": {
+      "path": "docs/validation/wasm-tailwind/postcompat-normalize-native-targeted-verified.log",
+      "bytes": 1576,
+      "sha256": "2c7a10ae450f14b3cb735b5afb837f815e4bf0ef3011cf8e08eb02932091a7e1"
+    },
+    "postcompat-normalize-facade.log": {
+      "path": "docs/validation/wasm-tailwind/postcompat-normalize-facade.log",
+      "bytes": 2153,
+      "sha256": "7a122cf66ecee21aae61200b2d69cc187f2db970f4a5af17848e4c1cb0f2335c"
+    },
+    "postcompat-normalize-xtask.log": {
+      "path": "docs/validation/wasm-tailwind/postcompat-normalize-xtask.log",
+      "bytes": 3905,
+      "sha256": "1d01462e2aa4fab058f5b597f29b04d020cfdeac40d63336bfe5460ffab78366"
+    },
+    "postcompat-normalize-clippy.log": {
+      "path": "docs/validation/wasm-tailwind/postcompat-normalize-clippy.log",
+      "bytes": 749,
+      "sha256": "8f07141ec0002289181863107524fb718bd1b8e73c81513096639a85836ddbaa"
+    },
+    "postcompat-normalize-fmt.log": {
+      "path": "docs/validation/wasm-tailwind/postcompat-normalize-fmt.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "postcompat-normalize-build-root.log": {
+      "path": "docs/validation/wasm-tailwind/postcompat-normalize-build-root.log",
+      "bytes": 9044,
+      "sha256": "816a6454d017dcc0b9de482c007a5989f144d78b7f49725834406d5b65bd54c8"
+    },
+    "postcompat-normalize-build-deep.log": {
+      "path": "docs/validation/wasm-tailwind/postcompat-normalize-build-deep.log",
+      "bytes": 8767,
+      "sha256": "75408fdefee7db4c27d28d5c71d9903f5f737137f4cbe8d72bbb6f354c17d509"
+    },
+    "postcompat-normalize-browser-root.json": {
+      "path": "docs/validation/wasm-tailwind/postcompat-normalize-browser-root.json",
+      "bytes": 2977290,
+      "sha256": "b8ce8996e0dac7e27f8869d20a0a5878d2cf569b190f201d1052520e073d270d"
+    },
+    "postcompat-normalize-browser-deep.json": {
+      "path": "docs/validation/wasm-tailwind/postcompat-normalize-browser-deep.json",
+      "bytes": 2972201,
+      "sha256": "10558e2c7bb0d90d08a90eb999688bcd0753bca36c5e5a59eb55227fe493ec1f"
+    },
+    "postcompat-normalize-ownership-before-red.log": {
+      "path": "docs/validation/wasm-tailwind/postcompat-normalize-ownership-before-red.log",
+      "bytes": 506237,
+      "sha256": "2a56b42f1c033e26b03ac31c60126659dd7c46125d7699cfb98a7f53387e3b20"
+    },
+    "postcompat-normalize-ownership-verified-red.log": {
+      "path": "docs/validation/wasm-tailwind/postcompat-normalize-ownership-verified-red.log",
+      "bytes": 269915,
+      "sha256": "38ea267d6a773ce988ee21c342083461a643df3f58032a533071a86b137393dd"
+    },
+    "postcompat-normalize-config-before.json": {
+      "path": "docs/validation/wasm-tailwind/postcompat-normalize-config-before.json",
+      "bytes": 192,
+      "sha256": "7f0d029617452c0176ec5f1da3feab5384fb267575d1b8bf09d516cc97352854"
+    },
+    "postcompat-normalize-config-after.json": {
+      "path": "docs/validation/wasm-tailwind/postcompat-normalize-config-after.json",
+      "bytes": 258,
+      "sha256": "2036d48c17e1f9a5f1e1c8d42d77ca7ebda20881761abdec3be81052e820617f"
+    },
+    "postcompat-normalize-benchmark.json": {
+      "path": "docs/validation/wasm-tailwind/postcompat-normalize-benchmark.json",
+      "bytes": 1462,
+      "sha256": "bc4492b7f823a2f79e48d1e14661715f4251ef683e0ab371dea01244d2003160"
+    },
+    "postcompat-normalize-benchmark-paired-before.json": {
+      "path": "docs/validation/wasm-tailwind/postcompat-normalize-benchmark-paired-before.json",
+      "bytes": 1458,
+      "sha256": "be6830b470162f86a2f1faac464e53e23f9524fa982ab1191f8b17a856d1d8ad"
+    },
+    "postcompat-normalize-benchmark-paired-after.json": {
+      "path": "docs/validation/wasm-tailwind/postcompat-normalize-benchmark-paired-after.json",
+      "bytes": 1463,
+      "sha256": "32cecfcbfd07bbf8f55b0c94dbb911c9f77a236e06bf58a26693dba254cf20bc"
+    },
+    "postcompat-normalize-benchmark-cpu.log": {
+      "path": "docs/validation/wasm-tailwind/postcompat-normalize-benchmark-cpu.log",
+      "bytes": 1674,
+      "sha256": "df3a0bc1d3b454806a2f8ccd75e9502fd2e90a9dbe4a409ad8fdf3dc44aef498"
+    },
+    "postcompat-normalize-products-restored.json": {
+      "path": "docs/validation/wasm-tailwind/postcompat-normalize-products-restored.json",
+      "bytes": 2495,
+      "sha256": "a990e3d9fe1dd2aca52e4c043ebffa9c33e1106273e7a1f61ca6af2e68792840"
+    },
+    "registration-resume-build-workspace.json": {
+      "path": "docs/validation/wasm-tailwind/registration-resume-build-workspace.json",
+      "bytes": 5528,
+      "sha256": "1583a003f6e131ece1dc590b34614d2236f7383de3e2598781990ce2402114ce"
+    },
+    "registration-resume-lifecycle-clippy.log": {
+      "path": "docs/validation/wasm-tailwind/registration-resume-lifecycle-clippy.log",
+      "bytes": 23556,
+      "sha256": "82dbeff877789b842771248ca618b4b5a75aeb75c62082b0f5bea922db6ef950"
+    },
+    "registration-resume-xtask-clippy.log": {
+      "path": "docs/validation/wasm-tailwind/registration-resume-xtask-clippy.log",
+      "bytes": 1169,
+      "sha256": "3ec89b3fd58a4bcf30d8c299434dfac52dcbf1565a93763bcfc89c7fb6fab2e2"
+    },
+    "registration-resume-sources.log": {
+      "path": "docs/validation/wasm-tailwind/registration-resume-sources.log",
+      "bytes": 13429,
+      "sha256": "4a4be14b3f6a20ce95b32de4f836e0ccd32500825091a6c1814890cba40660e8"
+    }
+  },
+  "artifacts": {
+    "compiler-api": {
+      "path": "target/utility-conformance/compiler-api/style_bg.wasm",
+      "bytes": 2516045,
+      "sha256": "383d13103cef9e121e73f9c456fbe366c24722fc00933775adf08a77c637fe5b"
+    },
+    "compiler": {
+      "path": "target/utility-conformance/compiler/style_bg.wasm",
+      "bytes": 1754232,
+      "sha256": "e53d327d90e9d4fc2028b445c50f2f18c4041cc53a03b760360b687edff25419"
+    }
+  },
+  "gates": {
+    "nativeTests": 364,
+    "facadeTests": 13,
+    "xtaskTests": 37,
+    "registration": {
+      "registrationCases": 48,
+      "entryComparisons": 96,
+      "completePrefixAndSettledGraphs": true,
+      "actualWasm": true,
+      "wasmBytes": 2516045,
+      "fullRegistrationConformance": "pending",
+      "failures": 0
+    },
+    "media": {
+      "cases": 2,
+      "entryComparisons": 4,
+      "failures": 0
+    },
+    "compilerSlice": {
+      "compilerSmoke": "passed",
+      "scannerEnabled": false,
+      "officialNesting": "passed",
+      "cssFunctionBindingsAndLimits": "passed",
+      "customUtilityBindingsAndLimits": "passed",
+      "customVariantBindingsAndLimits": "passed",
+      "legacyCacheLimitsAndRecovery": "passed",
+      "sliceCases": 214909,
+      "incrementalComparisons": 1470,
+      "incrementalCases": 246,
+      "cssComparisons": 216133,
+      "pendingBoundaryCases": 0,
+      "pendingFeatureCases": 0,
+      "utf16OutputCases": 4,
+      "sourceMetadataCases": 1607,
+      "errorCases": 3002,
+      "variantParseCases": 6673,
+      "variantParseNullCases": 2963,
+      "variantReusedCases": 84,
+      "variantParserLimitCases": 24,
+      "wasmBytes": 1754232,
+      "imports": [
+        "__wbg_length_d52ee452c5be0c99",
+        "__wbg_charCodeAt_90635349fbda9f5f",
+        "__wbg___wbindgen_throw_5d9e815e6fdf150f",
+        "__wbg___wbindgen_is_string_c4f7cb494a2a21f1",
+        "__wbindgen_init_externref_table",
+        "__wbindgen_generic_0000000000000001"
+      ],
+      "sharedMemory": false,
+      "fullConformance": "pending"
+    },
+    "ledger": {
+      "sourcesVerified": 109,
+      "originalSourceCalls": 1215,
+      "originalTestCalls": 1125,
+      "originalParameterizationCalls": 10,
+      "originalSuiteCalls": 80,
+      "parameterBuilders": 11,
+      "expandedTests": 1398,
+      "staticallyExpandedTests": 1398,
+      "unresolvedTests": 0,
+      "upstreamSkippedTests": 1,
+      "assertionTemplates": 1851,
+      "assertionTemplateEdges": 2140,
+      "controlledAssertionTemplates": 45,
+      "externalSnapshotExports": 13,
+      "matchedExternalSnapshotExports": 13,
+      "suggestedScopeCorrections": 3,
+      "validatedTests": 0,
+      "validatedAssertions": 0,
+      "adjudicatedExclusions": 0,
+      "unownedAssertionTemplates": 0
+    },
+    "browser": {
+      "root": {
+        "log": "postcompat-normalize-browser-root.json",
+        "startTime": "2026-10-06T10:02:13.977Z",
+        "duration": 48898.105,
+        "expected": 46,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "deep": {
+        "log": "postcompat-normalize-browser-deep.json",
+        "startTime": "2026-10-06T10:03:54.686Z",
+        "duration": 39268.996,
+        "expected": 41,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      }
+    }
+  },
+  "ownershipRed": {
+    "cases": 4,
+    "entryComparisons": 8,
+    "passed": 4,
+    "failures": 4,
+    "diagnostics": [
+      {
+        "name": "authored-success-before-failure",
+        "mode": "sync"
+      },
+      {
+        "name": "authored-success-before-failure",
+        "mode": "async"
+      },
+      {
+        "name": "theme-publication-before-functions",
+        "mode": "sync"
+      },
+      {
+        "name": "theme-publication-before-functions",
+        "mode": "async"
+      }
+    ],
+    "green": [
+      "shared-variant-utility-declaration/sync",
+      "shared-variant-utility-declaration/async",
+      "shared-variant-two-utilities/sync",
+      "shared-variant-two-utilities/async"
+    ],
+    "defaultGate": false,
+    "log": "postcompat-normalize-ownership-verified-red.log"
+  },
+  "products": {
+    "root": {
+      "mainBuildId": "b063f40bd16e0972",
+      "workerBuildId": "0d6c5f34ab393749e6e0ce97285be5a38252113c8f46fa4a1109fe33d53a0a63",
+      "scannerEnabled": false,
+      "sizeReport": {
+        "wasm": 11225912,
+        "js": 246562,
+        "css": 35072,
+        "fonts": 51732356,
+        "images": 20701,
+        "data": 19812,
+        "total": 63280415
+      },
+      "mainWasm": {
+        "path": "target/makepad-wasm-app/release/utility-lab/utility-lab.wasm",
+        "bytes": 9486990,
+        "sha256": "b063f40bd16e0972f4fae917c117d0726225beb7e3d599514b4c45980ee9efeb"
+      },
+      "workerWasm": {
+        "path": "target/makepad-wasm-app/release/utility-lab/utility/compiler/style_bg.wasm",
+        "bytes": 1738922,
+        "sha256": "f697d13222b7238bd34e0bec97c8e8920a5d901dca8a990e63b49a72bea27933"
+      },
+      "manifest": {
+        "path": "docs/validation/wasm-tailwind/postcompat-normalize-browser/manifests/root-main-manifest.json",
+        "bytes": 3114,
+        "sha256": "892c87380d5f56490ec1577ba5b32ccae506d05a04b8a1ae57cbaa2408960f77"
+      },
+      "workerManifest": {
+        "path": "docs/validation/wasm-tailwind/postcompat-normalize-browser/manifests/root-worker-manifest.json",
+        "bytes": 592,
+        "sha256": "61b4e6efcce4341d04b896e89d45f94417187a188e257e1fa2f2780618aed2e7"
+      },
+      "mainManifestSelfItem": {
+        "reported": null,
+        "actual": 3114
+      },
+      "sizeCheckExcludesMainManifestSelfItem": true
+    },
+    "deep": {
+      "mainBuildId": "b063f40bd16e0972",
+      "workerBuildId": "0d6c5f34ab393749e6e0ce97285be5a38252113c8f46fa4a1109fe33d53a0a63",
+      "scannerEnabled": false,
+      "sizeReport": {
+        "wasm": 11225912,
+        "js": 246562,
+        "css": 35072,
+        "fonts": 51732356,
+        "images": 20701,
+        "data": 22998,
+        "total": 63283601
+      },
+      "mainWasm": {
+        "path": "target/makepad-wasm-app/release/utility-lab@tools-utility-lab/utility-lab.wasm",
+        "bytes": 9486990,
+        "sha256": "b063f40bd16e0972f4fae917c117d0726225beb7e3d599514b4c45980ee9efeb"
+      },
+      "workerWasm": {
+        "path": "target/makepad-wasm-app/release/utility-lab@tools-utility-lab/utility/compiler/style_bg.wasm",
+        "bytes": 1738922,
+        "sha256": "f697d13222b7238bd34e0bec97c8e8920a5d901dca8a990e63b49a72bea27933"
+      },
+      "manifest": {
+        "path": "docs/validation/wasm-tailwind/postcompat-normalize-browser/manifests/deep-main-manifest.json",
+        "bytes": 3165,
+        "sha256": "faccbde5594b5bd83a6dd0e652e6b9d8529d66003a94e8692214a4a4f4b81b89"
+      },
+      "workerManifest": {
+        "path": "docs/validation/wasm-tailwind/postcompat-normalize-browser/manifests/deep-worker-manifest.json",
+        "bytes": 592,
+        "sha256": "61b4e6efcce4341d04b896e89d45f94417187a188e257e1fa2f2780618aed2e7"
+      },
+      "mainManifestSelfItem": {
+        "reported": 3114,
+        "actual": 3165
+      },
+      "sizeCheckExcludesMainManifestSelfItem": true
+    }
+  },
+  "benchmark": {
+    "postcompat-normalize-benchmark.json": {
+      "scope": "public AST constructor with sixteen media source blocks and four builds",
+      "samples": [
+        {
+          "constructorP95Ms": 1.1938749999999914,
+          "buildP95Ms": 0.5099589999999807,
+          "sessionsPerSecond": 435.49992061489706,
+          "outputSha256": "5fd45470353f800d2e198fad88da86ae25dd6d8ba7ca5f46232ceedebe529c89",
+          "sessions": 100,
+          "builds": 400
+        },
+        {
+          "constructorP95Ms": 0.7970839999999271,
+          "buildP95Ms": 0.3694580000000087,
+          "sessionsPerSecond": 542.0239046851398,
+          "outputSha256": "5fd45470353f800d2e198fad88da86ae25dd6d8ba7ca5f46232ceedebe529c89",
+          "sessions": 100,
+          "builds": 400
+        },
+        {
+          "constructorP95Ms": 0.7384579999999232,
+          "buildP95Ms": 0.35295799999994415,
+          "sessionsPerSecond": 555.248882343689,
+          "outputSha256": "5fd45470353f800d2e198fad88da86ae25dd6d8ba7ca5f46232ceedebe529c89",
+          "sessions": 100,
+          "builds": 400
+        },
+        {
+          "constructorP95Ms": 0.8265420000000177,
+          "buildP95Ms": 0.38220799999999144,
+          "sessionsPerSecond": 515.3636341382025,
+          "outputSha256": "5fd45470353f800d2e198fad88da86ae25dd6d8ba7ca5f46232ceedebe529c89",
+          "sessions": 100,
+          "builds": 400
+        },
+        {
+          "constructorP95Ms": 0.688083000000006,
+          "buildP95Ms": 0.2952499999998963,
+          "sessionsPerSecond": 615.5298198160792,
+          "outputSha256": "5fd45470353f800d2e198fad88da86ae25dd6d8ba7ca5f46232ceedebe529c89",
+          "sessions": 100,
+          "builds": 400
+        }
+      ],
+      "constructorP95Ms": 0.7970839999999271,
+      "buildP95Ms": 0.3694580000000087,
+      "sessionsPerSecond": 542.0239046851398,
+      "wasmBytes": 2516045,
+      "wasmSha256": "383d13103cef9e121e73f9c456fbe366c24722fc00933775adf08a77c637fe5b",
+      "actualWasm": true,
+      "finalPerformanceAcceptance": "pending"
+    },
+    "postcompat-normalize-benchmark-paired-before.json": {
+      "scope": "public AST constructor with sixteen media source blocks and four builds",
+      "samples": [
+        {
+          "constructorP95Ms": 1.3612919999999917,
+          "buildP95Ms": 0.6234170000000177,
+          "sessionsPerSecond": 392.8381673706654,
+          "outputSha256": "5fd45470353f800d2e198fad88da86ae25dd6d8ba7ca5f46232ceedebe529c89",
+          "sessions": 100,
+          "builds": 400
+        },
+        {
+          "constructorP95Ms": 1.003041000000053,
+          "buildP95Ms": 0.4157079999999951,
+          "sessionsPerSecond": 517.2519695985154,
+          "outputSha256": "5fd45470353f800d2e198fad88da86ae25dd6d8ba7ca5f46232ceedebe529c89",
+          "sessions": 100,
+          "builds": 400
+        },
+        {
+          "constructorP95Ms": 0.86912499999994,
+          "buildP95Ms": 0.3797079999999369,
+          "sessionsPerSecond": 551.2490509696339,
+          "outputSha256": "5fd45470353f800d2e198fad88da86ae25dd6d8ba7ca5f46232ceedebe529c89",
+          "sessions": 100,
+          "builds": 400
+        },
+        {
+          "constructorP95Ms": 1.1501659999998992,
+          "buildP95Ms": 0.5007499999999254,
+          "sessionsPerSecond": 488.3068813426488,
+          "outputSha256": "5fd45470353f800d2e198fad88da86ae25dd6d8ba7ca5f46232ceedebe529c89",
+          "sessions": 100,
+          "builds": 400
+        },
+        {
+          "constructorP95Ms": 1.5522500000001855,
+          "buildP95Ms": 0.6620829999999387,
+          "sessionsPerSecond": 335.8965509564405,
+          "outputSha256": "5fd45470353f800d2e198fad88da86ae25dd6d8ba7ca5f46232ceedebe529c89",
+          "sessions": 100,
+          "builds": 400
+        }
+      ],
+      "constructorP95Ms": 1.1501659999998992,
+      "buildP95Ms": 0.5007499999999254,
+      "sessionsPerSecond": 488.3068813426488,
+      "wasmBytes": 2457010,
+      "wasmSha256": "71a1a3a37c452d8e32aca0df22d37383e297e0ca75bdbbcd884132a74c1bb985",
+      "actualWasm": true,
+      "finalPerformanceAcceptance": "pending"
+    },
+    "postcompat-normalize-benchmark-paired-after.json": {
+      "scope": "public AST constructor with sixteen media source blocks and four builds",
+      "samples": [
+        {
+          "constructorP95Ms": 0.9325829999999655,
+          "buildP95Ms": 0.41262499999999136,
+          "sessionsPerSecond": 492.963865132481,
+          "outputSha256": "5fd45470353f800d2e198fad88da86ae25dd6d8ba7ca5f46232ceedebe529c89",
+          "sessions": 100,
+          "builds": 400
+        },
+        {
+          "constructorP95Ms": 1.0119580000000497,
+          "buildP95Ms": 0.4237500000000409,
+          "sessionsPerSecond": 477.2550207860548,
+          "outputSha256": "5fd45470353f800d2e198fad88da86ae25dd6d8ba7ca5f46232ceedebe529c89",
+          "sessions": 100,
+          "builds": 400
+        },
+        {
+          "constructorP95Ms": 1.0110830000000988,
+          "buildP95Ms": 0.4932499999999891,
+          "sessionsPerSecond": 434.17240769223247,
+          "outputSha256": "5fd45470353f800d2e198fad88da86ae25dd6d8ba7ca5f46232ceedebe529c89",
+          "sessions": 100,
+          "builds": 400
+        },
+        {
+          "constructorP95Ms": 0.9740830000000642,
+          "buildP95Ms": 0.38158400000008896,
+          "sessionsPerSecond": 500.0466693556508,
+          "outputSha256": "5fd45470353f800d2e198fad88da86ae25dd6d8ba7ca5f46232ceedebe529c89",
+          "sessions": 100,
+          "builds": 400
+        },
+        {
+          "constructorP95Ms": 0.697166000000152,
+          "buildP95Ms": 0.30416700000000674,
+          "sessionsPerSecond": 592.7597385445858,
+          "outputSha256": "5fd45470353f800d2e198fad88da86ae25dd6d8ba7ca5f46232ceedebe529c89",
+          "sessions": 100,
+          "builds": 400
+        }
+      ],
+      "constructorP95Ms": 0.9740830000000642,
+      "buildP95Ms": 0.41262499999999136,
+      "sessionsPerSecond": 492.963865132481,
+      "wasmBytes": 2516045,
+      "wasmSha256": "383d13103cef9e121e73f9c456fbe366c24722fc00933775adf08a77c637fe5b",
+      "actualWasm": true,
+      "finalPerformanceAcceptance": "pending"
+    }
+  },
+  "benchmarkLimitations": "Concurrent system CPU activity observed; retain all measurements. No final performance or allocator-peak acceptance.",
+  "remaining": [
+    "postcompat single owner and one lowering handoff",
+    "authored variant completed mutation prefix",
+    "raw theme publication before function substitution",
+    "full setup/host/allocation admission and peak proof",
+    "captured host projection, Proxy and external loader callbacks",
+    "full upstream test/assertion/exclusion ledger",
+    "M5 full rendered support/default matrix and old examples",
+    "M6 shared budgets/callbacks/cn/demo/old behavior",
+    "M7 full conformance/performance/CI acceptance"
+  ],
+  "goalStatus": "active",
+  "milestonesCompleted": 3,
+  "milestonesTotal": 7,
+  "postcompatRawFunctionalNormalization": true,
+  "singleLoweringHandoff": false
+}

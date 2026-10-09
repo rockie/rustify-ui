@@ -1,0 +1,179 @@
+[
+  {
+    "id": "fixed",
+    "css": [
+      {
+        "owner": null,
+        "lines": [
+          "@keyframes card {",
+          "@keyframes linear {",
+          "  animation: card 1s var(--ease) infinite;"
+        ]
+      },
+      {
+        "owner": "review-r3",
+        "lines": [
+          "    animation: rustify-review-r3-card 1s var(--ease) infinite;",
+          "@keyframes rustify-review-r3-card {",
+          "@keyframes rustify-review-r3-linear {"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "var-before",
+    "css": [
+      {
+        "owner": null,
+        "lines": [
+          "@keyframes ease {",
+          "  animation: var(--x) 10s ease infinite;"
+        ]
+      },
+      {
+        "owner": "review-r3",
+        "lines": [
+          "    animation: var(--x) 10s ease infinite;",
+          "@keyframes rustify-review-r3-ease {"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "var-name",
+    "css": [
+      {
+        "owner": null,
+        "lines": [
+          "@keyframes linear {",
+          "  animation: 10s ease var(--name) infinite;"
+        ]
+      },
+      {
+        "owner": "review-r3",
+        "lines": [
+          "    animation: 10s ease var(--name) infinite;",
+          "@keyframes rustify-review-r3-linear {"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "var-fallback",
+    "css": [
+      {
+        "owner": null,
+        "lines": [
+          "@keyframes linear {",
+          "  animation: var(--x, linear) 10s linear infinite;"
+        ]
+      },
+      {
+        "owner": "review-r3",
+        "lines": [
+          "    animation: var(--x, linear) 10s rustify-review-r3-linear infinite;",
+          "@keyframes rustify-review-r3-linear {"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "time-calc",
+    "css": [
+      {
+        "owner": null,
+        "lines": [
+          "@keyframes card {",
+          "  animation: calc(10s) linear card infinite;"
+        ]
+      },
+      {
+        "owner": "review-r3",
+        "lines": [
+          "    animation: calc(10s) linear card infinite;",
+          "@keyframes rustify-review-r3-card {"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "time-min",
+    "css": [
+      {
+        "owner": null,
+        "lines": [
+          "@keyframes card {",
+          "  animation: min(10s, 12s) linear card infinite;"
+        ]
+      },
+      {
+        "owner": "review-r3",
+        "lines": [
+          "    animation: min(10s, 12s) linear card infinite;",
+          "@keyframes rustify-review-r3-card {"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "iteration",
+    "css": [
+      {
+        "owner": null,
+        "lines": [
+          "@keyframes infinite {",
+          "  animation: 2 10s infinite linear;"
+        ]
+      },
+      {
+        "owner": "review-r3",
+        "lines": [
+          "    animation: 2 10s infinite linear;",
+          "@keyframes rustify-review-r3-infinite {"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "iteration-before-name",
+    "css": [
+      {
+        "owner": null,
+        "lines": [
+          "@keyframes infinite {",
+          "  animation: 10s infinite 2 linear;"
+        ]
+      },
+      {
+        "owner": "review-r3",
+        "lines": [
+          "    animation: 10s infinite 2 linear;",
+          "@keyframes rustify-review-r3-infinite {"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "shared-role",
+    "css": [
+      {
+        "owner": null,
+        "lines": [
+          "@keyframes card {",
+          "@keyframes linear {",
+          "  animation: card 10s var(--ease) infinite;",
+          "  animation-name: var(--ease);"
+        ]
+      },
+      {
+        "owner": "review-r3",
+        "lines": [
+          "    animation: rustify-review-r3-card 10s var(--ease) infinite;",
+          "    animation-name: var(--ease);",
+          "@keyframes rustify-review-r3-card {",
+          "@keyframes rustify-review-r3-linear {"
+        ]
+      }
+    ]
+  }
+]

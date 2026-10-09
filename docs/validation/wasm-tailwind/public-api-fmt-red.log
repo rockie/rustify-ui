@@ -1,0 +1,12 @@
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/xtask/src/utility.rs:208:
+         run(
+             &root,
+             "node",
+[31m-            &["tests/utility/compiler/design-system-completions.mjs", "--check"],
+(B[m[32m+            &[
+(B[m[32m+                "tests/utility/compiler/design-system-completions.mjs",
+(B[m[32m+                "--check",
+(B[m[32m+            ],
+(B[m         )?;
+         run(
+             &root,

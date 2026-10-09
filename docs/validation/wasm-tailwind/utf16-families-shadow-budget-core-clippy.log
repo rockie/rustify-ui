@@ -1,0 +1,34 @@
+mbx[warning]: Unix-domain cache session listener unavailable; using FIFO transport: failed to bind cache session listener at /var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/mbx-session-LzGian/cache-agent.sock: Operation not permitted (os error 1)
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+    Checking rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+error: this `if` has identical blocks
+   --> crates/rustify-style/src/compiler/shadows.rs:190:74
+    |
+190 |               let increment = if high && (0xdc00..=0xdfff).contains(&unit) {
+    |  __________________________________________________________________________^
+191 | |                 1
+192 | |             } else if unit < 0x80 {
+    | |_____________^
+    |
+note: same as this
+   --> crates/rustify-style/src/compiler/shadows.rs:192:35
+    |
+192 |               } else if unit < 0x80 {
+    |  ___________________________________^
+193 | |                 1
+194 | |             } else if unit < 0x800 {
+    | |_____________^
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.98.0/index.html#if_same_then_else
+    = note: `-D clippy::if-same-then-else` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::if_same_then_else)]`
+
+error: could not compile `rustify-style` (lib) due to 1 previous error
+warning: build failed, waiting for other jobs to finish...
+error: could not compile `rustify-style` (lib test) due to 1 previous error
+mbx[cache]: 0 hits, 2 misses; 0 B downloaded, 0 B uploaded, 0 B stored locally

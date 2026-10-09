@@ -1,0 +1,1247 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+    Checking rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+error: expected a pattern, found an expression
+  --> crates/rustify-style/src/compiler/backgrounds.rs:63:21
+   |
+63 |                 Err(DiagnosticKind::PendingFamily.into()) => {}
+   |                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ not a pattern
+   |
+   = note: arbitrary expressions are not allowed in patterns: <https://doc.rust-lang.org/book/ch19-00-patterns.html>
+help: consider moving the expression to a match arm guard
+   |
+63 -                 Err(DiagnosticKind::PendingFamily.into()) => {}
+63 +                 Err(val) if val == DiagnosticKind::PendingFamily.into() => {}
+   |
+help: consider extracting the expression into a `const`
+   |
+61 +             const VAL: /* Type */ = DiagnosticKind::PendingFamily.into();
+62 |             match super::colors::compile(root, Some(value), modifier, theme, &mut BTreeSet::new()) {
+63 |                 Ok(Some(_)) => return Ok(None),
+64 ~                 Err(VAL) => {}
+   |
+
+error: expected a pattern, found an expression
+   --> crates/rustify-style/src/compiler/borders.rs:126:13
+    |
+126 |         Err(DiagnosticKind::PendingFamily.into()) => {}
+    |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ not a pattern
+    |
+    = note: arbitrary expressions are not allowed in patterns: <https://doc.rust-lang.org/book/ch19-00-patterns.html>
+help: consider moving the expression to a match arm guard
+    |
+126 -         Err(DiagnosticKind::PendingFamily.into()) => {}
+126 +         Err(val) if val == DiagnosticKind::PendingFamily.into() => {}
+    |
+help: consider extracting the expression into a `const`
+    |
+124 +     const VAL: /* Type */ = DiagnosticKind::PendingFamily.into();
+125 |     match super::colors::compile(root, Some(value), modifier, theme, &mut BTreeSet::new()) {
+126 |         Ok(Some(_)) => return Ok(None),
+127 ~         Err(VAL) => {}
+    |
+
+error: expected a pattern, found an expression
+   --> crates/rustify-style/src/compiler/typography.rs:294:21
+    |
+294 |                 Err(DiagnosticKind::PendingFamily.into()) => {}
+    |                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ not a pattern
+    |
+    = note: arbitrary expressions are not allowed in patterns: <https://doc.rust-lang.org/book/ch19-00-patterns.html>
+help: consider moving the expression to a match arm guard
+    |
+294 -                 Err(DiagnosticKind::PendingFamily.into()) => {}
+294 +                 Err(val) if val == DiagnosticKind::PendingFamily.into() => {}
+    |
+help: consider extracting the expression into a `const`
+    |
+292 +             const VAL: /* Type */ = DiagnosticKind::PendingFamily.into();
+293 |             match super::colors::compile(root, Some(value), modifier, theme, &mut BTreeSet::new()) {
+294 |                 Ok(Some(_)) => return Ok(None),
+295 ~                 Err(VAL) => {}
+    |
+
+error[E0308]: mismatched types
+  --> crates/rustify-style/src/compiler/borders.rs:72:28
+   |
+72 |                     .ok_or(DiagnosticKind::InvalidValue)
+   |                      ----- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `FamilyFailure`, found `DiagnosticKind`
+   |                      |
+   |                      arguments to this method are incorrect
+   |
+help: the return type of this call is `DiagnosticKind` due to the type of the argument passed
+  --> crates/rustify-style/src/compiler/borders.rs:70:17
+   |
+70 | /                 theme
+71 | |                     .resolve(&format!("--{}", namespaces[0]), used)?
+72 | |                     .ok_or(DiagnosticKind::InvalidValue)
+   | |____________________________----------------------------^
+   |                              |
+   |                              this argument influences the return type of `ok_or`
+note: method defined here
+  --> /rustc/48a229ceaefd4985c50990b14116b6d856af0985/library/core/src/option.rs:1333:17
+help: try wrapping the expression in `compiler::utilities::FamilyFailure::Candidate`
+   |
+72 |                     .ok_or(compiler::utilities::FamilyFailure::Candidate(DiagnosticKind::InvalidValue))
+   |                            ++++++++++++++++++++++++++++++++++++++++++++++                            +
+
+error[E0277]: the `?` operator can only be used in a closure that returns `Result` or `Option` (or another type that implements `FromResidual`)
+   --> crates/rustify-style/src/compiler/colors.rs:640:70
+    |
+637 |         if modifier.is_none_or(|modifier| {
+    |                                ---------- this function should return `Result` or `Option` to accept `?`
+...
+640 |                 || resolve_named(modifier, &["leading"], theme, used)?.is_some()
+    |                                                                      ^ cannot use the `?` operator in a closure that returns `bool`
+
+error[E0277]: the `?` operator can only be used in a closure that returns `Result` or `Option` (or another type that implements `FromResidual`)
+   --> crates/rustify-style/src/compiler/colors.rs:642:56
+    |
+637 |         if modifier.is_none_or(|modifier| {
+    |                                ---------- this function should return `Result` or `Option` to accept `?`
+...
+642 |                     && theme.resolve("--spacing", used)?.is_some()
+    |                                                        ^ cannot use the `?` operator in a closure that returns `bool`
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/colors.rs:689:17
+    |
+689 |                 DiagnosticKind::PendingFamily
+    |                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `FamilyFailure`, found `DiagnosticKind`
+    |
+help: try wrapping the expression in `compiler::utilities::FamilyFailure::Candidate`
+    |
+689 |                 compiler::utilities::FamilyFailure::Candidate(DiagnosticKind::PendingFamily)
+    |                 ++++++++++++++++++++++++++++++++++++++++++++++                             +
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/colors.rs:691:17
+    |
+691 |                 DiagnosticKind::InvalidValue
+    |                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `FamilyFailure`, found `DiagnosticKind`
+    |
+help: try wrapping the expression in `compiler::utilities::FamilyFailure::Candidate`
+    |
+691 |                 compiler::utilities::FamilyFailure::Candidate(DiagnosticKind::InvalidValue)
+    |                 ++++++++++++++++++++++++++++++++++++++++++++++                            +
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/colors.rs:705:28
+    |
+705 |                 return Err(other_interpretation(root, modifier, theme, used));
+    |                        --- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `FamilyFailure`, found `DiagnosticKind`
+    |                        |
+    |                        arguments to this enum variant are incorrect
+    |
+help: the type constructed contains `DiagnosticKind` due to the type of the argument passed
+   --> crates/rustify-style/src/compiler/colors.rs:705:24
+    |
+705 |                 return Err(other_interpretation(root, modifier, theme, used));
+    |                        ^^^^-------------------------------------------------^
+    |                            |
+    |                            this argument influences the type of `Err`
+note: tuple variant defined here
+   --> /rustc/48a229ceaefd4985c50990b14116b6d856af0985/library/core/src/result.rs:566:4
+help: try wrapping the expression in `compiler::utilities::FamilyFailure::Candidate`
+    |
+705 |                 return Err(compiler::utilities::FamilyFailure::Candidate(other_interpretation(root, modifier, theme, used)));
+    |                            ++++++++++++++++++++++++++++++++++++++++++++++                                                 +
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/colors.rs:715:28
+    |
+715 |                 return Err(other_interpretation(root, modifier, theme, used));
+    |                        --- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `FamilyFailure`, found `DiagnosticKind`
+    |                        |
+    |                        arguments to this enum variant are incorrect
+    |
+help: the type constructed contains `DiagnosticKind` due to the type of the argument passed
+   --> crates/rustify-style/src/compiler/colors.rs:715:24
+    |
+715 |                 return Err(other_interpretation(root, modifier, theme, used));
+    |                        ^^^^-------------------------------------------------^
+    |                            |
+    |                            this argument influences the type of `Err`
+note: tuple variant defined here
+   --> /rustc/48a229ceaefd4985c50990b14116b6d856af0985/library/core/src/result.rs:566:4
+help: try wrapping the expression in `compiler::utilities::FamilyFailure::Candidate`
+    |
+715 |                 return Err(compiler::utilities::FamilyFailure::Candidate(other_interpretation(root, modifier, theme, used)));
+    |                            ++++++++++++++++++++++++++++++++++++++++++++++                                                 +
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/colors.rs:723:31
+    |
+723 |             .and_then(|color| as_color(color, modifier, theme, used));
+    |                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `Option<_>`, found `Result<Option<String>, FamilyFailure>`
+    |
+    = note: expected enum `std::option::Option<_>`
+               found enum `Result<std::option::Option<std::string::String>, FamilyFailure>`
+help: consider using `Result::expect` to unwrap the `Result<std::option::Option<std::string::String>, FamilyFailure>` value, panicking if the value is a `Result::Err`
+    |
+723 |             .and_then(|color| as_color(color, modifier, theme, used).expect("REASON"));
+    |                                                                     +++++++++++++++++
+
+error[E0277]: the `?` operator can only be used in a closure that returns `Result` or `Option` (or another type that implements `FromResidual`)
+   --> crates/rustify-style/src/compiler/colors.rs:734:68
+    |
+733 |                 if namespace.is_some_and(|namespace| {
+    |                                          ----------- this function should return `Result` or `Option` to accept `?`
+734 |                     resolve_named(value, &[namespace], theme, used)?.is_some()
+    |                                                                    ^ cannot use the `?` operator in a closure that returns `bool`
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/colors.rs:750:32
+    |
+750 |                     return Err(other_interpretation(root, modifier, theme, used));
+    |                            --- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `FamilyFailure`, found `DiagnosticKind`
+    |                            |
+    |                            arguments to this enum variant are incorrect
+    |
+help: the type constructed contains `DiagnosticKind` due to the type of the argument passed
+   --> crates/rustify-style/src/compiler/colors.rs:750:28
+    |
+750 |                     return Err(other_interpretation(root, modifier, theme, used));
+    |                            ^^^^-------------------------------------------------^
+    |                                |
+    |                                this argument influences the type of `Err`
+note: tuple variant defined here
+   --> /rustc/48a229ceaefd4985c50990b14116b6d856af0985/library/core/src/result.rs:566:4
+help: try wrapping the expression in `compiler::utilities::FamilyFailure::Candidate`
+    |
+750 |                     return Err(compiler::utilities::FamilyFailure::Candidate(other_interpretation(root, modifier, theme, used)));
+    |                                ++++++++++++++++++++++++++++++++++++++++++++++                                                 +
+
+error[E0308]: `match` arms have incompatible types
+   --> crates/rustify-style/src/compiler/colors.rs:753:13
+    |
+695 |       let color = match value {
+    |  _________________-
+696 | |         CandidateValue::Arbitrary { value, data_type } => {
+697 | |             if data_type
+698 | |                 .as_deref()
+...   |
+707 | |             as_color(value.clone(), modifier, theme, used)
+    | |             ---------------------------------------------- this is found to be of type `Result<std::option::Option<std::string::String>, FamilyFailure>`
+...   |
+753 | |             color
+    | |             ^^^^^ expected `Result<Option<String>, FamilyFailure>`, found `Option<_>`
+754 | |         }
+755 | |     }
+    | |_____- `match` arms have incompatible types
+    |
+    = note: expected enum `Result<std::option::Option<std::string::String>, FamilyFailure>`
+               found enum `std::option::Option<_>`
+help: consider using `Option::expect` to unwrap the `std::option::Option<_>` value, panicking if the value is an `Option::None`
+    |
+754 |         }.expect("REASON")
+    |          +++++++++++++++++
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/custom_utilities.rs:874:59
+    |
+874 |                     .find(|key| theme.tokens.contains_key(key));
+    |                                              ------------ ^^^ expected `&Text`, found `&String`
+    |                                              |
+    |                                              arguments to this method are incorrect
+    |
+    = note: expected reference `&Text`
+               found reference `&std::string::String`
+note: method defined here
+   --> /rustc/48a229ceaefd4985c50990b14116b6d856af0985/library/alloc/src/collections/btree/map.rs:979:11
+
+error[E0599]: no method named `filter` found for enum `Result<std::option::Option<std::string::String>, CompileError>` in the current scope
+   --> crates/rustify-style/src/compiler/custom_utilities.rs:885:26
+    |
+883 |                       if let Some(resolved) = theme
+    |  _____________________________________________-
+884 | |                         .resolve(&key, &mut BTreeSet::new())
+885 | |                         .filter(|value| !value.is_empty())
+    | |                         -^^^^^^ `Result<std::option::Option<std::string::String>, CompileError>` is not an iterator
+    | |_________________________|
+    |
+    |
+help: call `.into_iter()` first
+    |
+885 |                         .into_iter().filter(|value| !value.is_empty())
+    |                          ++++++++++++
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/effects.rs:158:13
+    |
+158 |             DiagnosticKind::InvalidValue
+    |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `FamilyFailure`, found `DiagnosticKind`
+    |
+help: try wrapping the expression in `compiler::utilities::FamilyFailure::Candidate`
+    |
+158 |             compiler::utilities::FamilyFailure::Candidate(DiagnosticKind::InvalidValue)
+    |             ++++++++++++++++++++++++++++++++++++++++++++++                            +
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/effects.rs:160:13
+    |
+160 |             DiagnosticKind::PendingFamily
+    |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `FamilyFailure`, found `DiagnosticKind`
+    |
+help: try wrapping the expression in `compiler::utilities::FamilyFailure::Candidate`
+    |
+160 |             compiler::utilities::FamilyFailure::Candidate(DiagnosticKind::PendingFamily)
+    |             ++++++++++++++++++++++++++++++++++++++++++++++                             +
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/effects.rs:200:28
+    |
+200 |                       if let Some(color) = color(
+    |  ____________________________^^^^^^^^^^^___-
+    | |                            |
+    | |                            expected `Result<Option<String>, FamilyFailure>`, found `Option<_>`
+201 | |                         &CandidateValue::Named {
+202 | |                             value: value.clone(),
+203 | |                         },
+...   |
+206 | |                         used,
+207 | |                     ) {
+    | |_____________________- this expression has type `Result<std::option::Option<std::string::String>, FamilyFailure>`
+    |
+    = note: expected enum `Result<std::option::Option<std::string::String>, FamilyFailure>`
+               found enum `std::option::Option<_>`
+help: try wrapping the pattern in `Ok`
+    |
+200 |                     if let Ok(Some(color)) = color(
+    |                            +++           +
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/effects.rs:256:28
+    |
+256 |                     if let Some(color) = color(value, "box-shadow-color", theme, used) {
+    |                            ^^^^^^^^^^^   --------------------------------------------- this expression has type `Result<std::option::Option<std::string::String>, FamilyFailure>`
+    |                            |
+    |                            expected `Result<Option<String>, FamilyFailure>`, found `Option<_>`
+    |
+    = note: expected enum `Result<std::option::Option<std::string::String>, FamilyFailure>`
+               found enum `std::option::Option<_>`
+help: try wrapping the pattern in `Ok`
+    |
+256 |                     if let Ok(Some(color)) = color(value, "box-shadow-color", theme, used) {
+    |                            +++           +
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/effects.rs:281:40
+    |
+281 |                 value.and_then(|value| color(value, "box-shadow-color", theme, used))
+    |                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `Option<_>`, found `Result<Option<String>, FamilyFailure>`
+    |
+    = note: expected enum `std::option::Option<_>`
+               found enum `Result<std::option::Option<std::string::String>, FamilyFailure>`
+help: consider using `Result::expect` to unwrap the `Result<std::option::Option<std::string::String>, FamilyFailure>` value, panicking if the value is a `Result::Err`
+    |
+281 |                 value.and_then(|value| color(value, "box-shadow-color", theme, used).expect("REASON"))
+    |                                                                                     +++++++++++++++++
+
+error[E0277]: the `?` operator can only be used on `Option`s, not `Result`s, in a closure that returns `Option`
+   --> crates/rustify-style/src/compiler/filters.rs:136:85
+    |
+136 |                 .find_map(|namespace| theme.resolve(&format!("--{namespace}"), used)?)
+    |                           ----------- this function returns an `Option`             ^ use `.ok()?` if you want to discard the `Result<Infallible, CompileError>` error information
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/filters.rs:137:24
+    |
+137 |                 .ok_or(DiagnosticKind::InvalidValue)
+    |                  ----- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `FamilyFailure`, found `DiagnosticKind`
+    |                  |
+    |                  arguments to this method are incorrect
+    |
+help: the return type of this call is `DiagnosticKind` due to the type of the argument passed
+   --> crates/rustify-style/src/compiler/filters.rs:134:13
+    |
+134 | /             namespaces
+135 | |                 .iter()
+136 | |                 .find_map(|namespace| theme.resolve(&format!("--{namespace}"), used)?)
+137 | |                 .ok_or(DiagnosticKind::InvalidValue)
+    | |________________________----------------------------^
+    |                          |
+    |                          this argument influences the return type of `ok_or`
+note: method defined here
+   --> /rustc/48a229ceaefd4985c50990b14116b6d856af0985/library/core/src/option.rs:1333:17
+help: try wrapping the expression in `compiler::utilities::FamilyFailure::Candidate`
+    |
+137 |                 .ok_or(compiler::utilities::FamilyFailure::Candidate(DiagnosticKind::InvalidValue))
+    |                        ++++++++++++++++++++++++++++++++++++++++++++++                            +
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/filters.rs:179:16
+    |
+171 |   fn alpha_modifier(modifier: Option<&str>) -> Result<Option<String>, super::utilities::FamilyFailure> {
+    |                                                ------------------------------------------------------- expected `Result<std::option::Option<std::string::String>, FamilyFailure>` because of return type
+...
+179 |           return super::value::decode_arbitrary(value, usize::MAX)
+    |  ________________^
+180 | |             .map(Some)
+181 | |             .map_err(|_| DiagnosticKind::InvalidValue);
+    | |______________________________________________________^ expected `Result<Option<String>, FamilyFailure>`, found `Result<Option<String>, DiagnosticKind>`
+    |
+    = note: expected enum `Result<_, FamilyFailure>`
+               found enum `Result<_, DiagnosticKind>`
+help: use `?` to coerce and return an appropriate `Err`, and wrap the resulting value in `Ok` so the expression remains of type `Result`
+    |
+179 ~         return Ok(super::value::decode_arbitrary(value, usize::MAX)
+180 |             .map(Some)
+181 ~             .map_err(|_| DiagnosticKind::InvalidValue)?);
+    |
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/filters.rs:219:5
+    |
+218 | fn segment(value: &str, delimiter: char) -> Result<Vec<&str>, super::utilities::FamilyFailure> {
+    |                                             -------------------------------------------------- expected `Result<Vec<&str>, FamilyFailure>` because of return type
+219 |     super::value::segment(value, delimiter, usize::MAX).map_err(|_| DiagnosticKind::InvalidValue)
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `Result<Vec<&str>, FamilyFailure>`, found `Result<Vec<&str>, DiagnosticKind>`
+    |
+    = note: expected enum `Result<Vec<&_>, FamilyFailure>`
+               found enum `Result<Vec<&_>, DiagnosticKind>`
+help: use `?` to coerce and return an appropriate `Err`, and wrap the resulting value in `Ok` so the expression remains of type `Result`
+    |
+219 |     Ok(super::value::segment(value, delimiter, usize::MAX).map_err(|_| DiagnosticKind::InvalidValue)?)
+    |     +++                                                                                             ++
+
+error[E0599]: no method named `ok_or` found for enum `Result<T, E>` in the current scope
+   --> crates/rustify-style/src/compiler/filters.rs:332:22
+    |
+331 |                   let color = as_color(value.clone(), modifier, theme, used)
+    |  _____________________________-
+332 | |                     .ok_or(DiagnosticKind::InvalidValue)?;
+    | |                     -^^^^^ method not found in `Result<std::option::Option<std::string::String>, FamilyFailure>`
+    | |_____________________|
+    |
+    |
+note: the method `ok_or` exists on the type `std::option::Option<std::string::String>`
+   --> /rustc/48a229ceaefd4985c50990b14116b6d856af0985/library/core/src/option.rs:1333:4
+help: use the `?` operator to extract the `std::option::Option<std::string::String>` value, propagating a `Result::Err` value to the caller
+    |
+331 |                 let color = as_color(value.clone(), modifier, theme, used)?
+    |                                                                           +
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/filters.rs:368:35
+    |
+368 |                 .and_then(|color| as_color(color, modifier, theme, used))
+    |                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `Option<_>`, found `Result<Option<String>, FamilyFailure>`
+    |
+    = note: expected enum `std::option::Option<_>`
+               found enum `Result<std::option::Option<std::string::String>, FamilyFailure>`
+help: consider using `Result::expect` to unwrap the `Result<std::option::Option<std::string::String>, FamilyFailure>` value, panicking if the value is a `Result::Err`
+    |
+368 |                 .and_then(|color| as_color(color, modifier, theme, used).expect("REASON"))
+    |                                                                         +++++++++++++++++
+
+error[E0277]: can't compare `str` with `&str`
+   --> crates/rustify-style/src/compiler/filters.rs:374:38
+    |
+374 | ...                   if color == "inherit" {
+    |                                ^^ no implementation for `str == &str`
+    |
+    = help: the trait `PartialEq<&str>` is not implemented for `str`
+help: consider dereferencing here
+    |
+374 |                             if color == *"inherit" {
+    |                                         +
+
+error[E0277]: the size for values of type `str` cannot be known at compilation time
+   --> crates/rustify-style/src/compiler/filters.rs:362:21
+    |
+362 |                 let color = match value.as_str() {
+    |                     ^^^^^ doesn't have a size known at compile-time
+    |
+    = help: the trait `Sized` is not implemented for `str`
+    = note: all local variables must have a statically known size
+
+error[E0277]: the size for values of type `str` cannot be known at compilation time
+   --> crates/rustify-style/src/compiler/filters.rs:362:29
+    |
+362 |                   let color = match value.as_str() {
+    |  _____________________________^
+363 | |                     "current" => Some("currentcolor".into()),
+364 | |                     "inherit" | "transparent" => Some(value.clone()),
+365 | |                     _ => resolve_named(value, &["drop-shadow-color", "color"], theme, used)?,
+...   |
+368 | |                 .and_then(|color| as_color(color, modifier, theme, used))
+369 | |                 .ok_or(DiagnosticKind::InvalidValue)?;
+    | |_____________________________________________________^ doesn't have a size known at compile-time
+    |
+    = help: the trait `Sized` is not implemented for `str`
+    = note: all local variables must have a statically known size
+
+error[E0277]: the size for values of type `str` cannot be known at compilation time
+   --> crates/rustify-style/src/compiler/filters.rs:362:29
+    |
+362 |                   let color = match value.as_str() {
+    |  _____________________________^
+363 | |                     "current" => Some("currentcolor".into()),
+364 | |                     "inherit" | "transparent" => Some(value.clone()),
+365 | |                     _ => resolve_named(value, &["drop-shadow-color", "color"], theme, used)?,
+...   |
+368 | |                 .and_then(|color| as_color(color, modifier, theme, used))
+369 | |                 .ok_or(DiagnosticKind::InvalidValue)?;
+    | |____________________________________________________^ doesn't have a size known at compile-time
+    |
+    = help: the trait `Sized` is not implemented for `str`
+note: required by an implicit `Sized` bound in `Result`
+   --> /rustc/48a229ceaefd4985c50990b14116b6d856af0985/library/core/src/result.rs:557:0
+
+error[E0277]: the size for values of type `str` cannot be known at compilation time
+   --> crates/rustify-style/src/compiler/filters.rs:369:18
+    |
+369 |                 .ok_or(DiagnosticKind::InvalidValue)?;
+    |                  ^^^^^ doesn't have a size known at compile-time
+    |
+    = help: the trait `Sized` is not implemented for `str`
+note: required by a bound in `std::option::Option::<T>::ok_or`
+   --> /rustc/48a229ceaefd4985c50990b14116b6d856af0985/library/core/src/option.rs:1333:4
+
+error[E0277]: the size for values of type `str` cannot be known at compilation time
+   --> crates/rustify-style/src/compiler/filters.rs:368:18
+    |
+368 |                 .and_then(|color| as_color(color, modifier, theme, used))
+    |                  ^^^^^^^^ doesn't have a size known at compile-time
+    |
+    = help: the trait `Sized` is not implemented for `str`
+note: required by an implicit `Sized` bound in `std::option::Option::<T>::and_then`
+   --> /rustc/48a229ceaefd4985c50990b14116b6d856af0985/library/core/src/option.rs:1537:4
+
+error[E0277]: the size for values of type `str` cannot be known at compilation time
+   --> crates/rustify-style/src/compiler/filters.rs:369:53
+    |
+369 |                 .ok_or(DiagnosticKind::InvalidValue)?;
+    |                                                     ^ doesn't have a size known at compile-time
+    |
+    = help: the trait `Sized` is not implemented for `str`
+note: required by an implicit `Sized` bound in `ControlFlow`
+   --> /rustc/48a229ceaefd4985c50990b14116b6d856af0985/library/core/src/ops/control_flow.rs:89:0
+
+error[E0277]: the size for values of type `str` cannot be known at compilation time
+   --> crates/rustify-style/src/compiler/filters.rs:362:29
+    |
+362 |                   let color = match value.as_str() {
+    |  _____________________________^
+363 | |                     "current" => Some("currentcolor".into()),
+364 | |                     "inherit" | "transparent" => Some(value.clone()),
+365 | |                     _ => resolve_named(value, &["drop-shadow-color", "color"], theme, used)?,
+...   |
+368 | |                 .and_then(|color| as_color(color, modifier, theme, used))
+369 | |                 .ok_or(DiagnosticKind::InvalidValue)?;
+    | |_____________________________________________________^ doesn't have a size known at compile-time
+    |
+    = help: the trait `Sized` is not implemented for `str`
+note: required by an implicit `Sized` bound in `ControlFlow`
+   --> /rustc/48a229ceaefd4985c50990b14116b6d856af0985/library/core/src/ops/control_flow.rs:89:0
+
+error[E0308]: `if` and `else` have incompatible types
+   --> crates/rustify-style/src/compiler/filters.rs:377:33
+    |
+374 | / ...                   if color == "inherit" {
+375 | | ...                       color
+    | |                           ----- expected because of this
+376 | | ...                   } else {
+377 | | ...                       with_alpha(&color, "var(--tw-drop-shadow-alpha)")
+    | |                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `str`, found `String`
+378 | | ...                   },
+    | |_______________________- `if` and `else` have incompatible types
+
+error[E0308]: mismatched types
+  --> crates/rustify-style/src/compiler/gradients.rs:37:16
+   |
+29 |   fn interpolation(modifier: Option<&str>) -> Result<String, super::utilities::FamilyFailure> {
+   |                                               ----------------------------------------------- expected `Result<std::string::String, FamilyFailure>` because of return type
+...
+37 |           return super::value::decode_arbitrary(value, usize::MAX)
+   |  ________________^
+38 | |             .map_err(|_| DiagnosticKind::InvalidValue);
+   | |______________________________________________________^ expected `Result<String, FamilyFailure>`, found `Result<String, DiagnosticKind>`
+   |
+   = note: expected enum `Result<_, FamilyFailure>`
+              found enum `Result<_, DiagnosticKind>`
+help: use `?` to coerce and return an appropriate `Err`, and wrap the resulting value in `Ok` so the expression remains of type `Result`
+   |
+37 ~         return Ok(super::value::decode_arbitrary(value, usize::MAX)
+38 ~             .map_err(|_| DiagnosticKind::InvalidValue)?);
+   |
+
+error[E0599]: no method named `ok_or` found for enum `Result<T, E>` in the current scope
+   --> crates/rustify-style/src/compiler/gradients.rs:129:26
+    |
+128 | /                     as_color(value.clone(), modifier, theme, used)
+129 | |                         .ok_or(DiagnosticKind::InvalidValue)?,
+    | |                         -^^^^^ method not found in `Result<std::option::Option<std::string::String>, FamilyFailure>`
+    | |_________________________|
+    |
+    |
+note: the method `ok_or` exists on the type `std::option::Option<std::string::String>`
+   --> /rustc/48a229ceaefd4985c50990b14116b6d856af0985/library/core/src/option.rs:1333:4
+help: use the `?` operator to extract the `std::option::Option<std::string::String>` value, propagating a `Result::Err` value to the caller
+    |
+128 |                     as_color(value.clone(), modifier, theme, used)?
+    |                                                                   +
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/gradients.rs:141:31
+    |
+141 |             .and_then(|value| as_color(value, modifier, theme, used));
+    |                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `Option<_>`, found `Result<Option<String>, FamilyFailure>`
+    |
+    = note: expected enum `std::option::Option<_>`
+               found enum `Result<std::option::Option<std::string::String>, FamilyFailure>`
+help: consider using `Result::expect` to unwrap the `Result<std::option::Option<std::string::String>, FamilyFailure>` value, panicking if the value is a `Result::Err`
+    |
+141 |             .and_then(|value| as_color(value, modifier, theme, used).expect("REASON"));
+    |                                                                     +++++++++++++++++
+
+error[E0277]: the `?` operator can only be used on `Option`s, not `Result`s, in a closure that returns `Option`
+  --> crates/rustify-style/src/compiler/grid.rs:93:85
+   |
+93 |                 .and_then(|namespace| theme.resolve(&format!("--{namespace}"), used)?)
+   |                           ----------- this function returns an `Option`             ^ use `.ok()?` if you want to discard the `Result<Infallible, CompileError>` error information
+
+error[E0277]: the `?` operator can only be used on `Option`s, not `Result`s, in a closure that returns `Option`
+   --> crates/rustify-style/src/compiler/grid.rs:112:18
+    |
+106 |             let resolved = namespace.and_then(|namespace| {
+    |                                               ----------- this function returns an `Option`
+...
+112 |                 )?
+    |                  ^ use `.ok()?` if you want to discard the `Result<Infallible, FamilyFailure>` error information
+
+error[E0277]: the `?` operator can only be used on `Option`s, not `Result`s, in a closure that returns `Option`
+  --> crates/rustify-style/src/compiler/layout.rs:80:85
+   |
+80 |                 .find_map(|namespace| theme.resolve(&format!("--{namespace}"), used)?)
+   |                           ----------- this function returns an `Option`             ^ use `.ok()?` if you want to discard the `Result<Infallible, CompileError>` error information
+
+error[E0425]: cannot find function `token_default` in this scope
+   --> crates/rustify-style/src/compiler/legacy_theme.rs:356:32
+    |
+356 |                 base.default = token_default(theme, &namespace)?;
+    |                                ^^^^^^^^^^^^^ not found in this scope
+
+error[E0599]: no method named `ok_or` found for enum `Result<T, E>` in the current scope
+   --> crates/rustify-style/src/compiler/masks.rs:232:18
+    |
+230 |               return as_color(value.clone(), modifier, theme, used)
+    |  ____________________-
+231 | |                 .map(|value| (value, "color"))
+232 | |                 .ok_or(DiagnosticKind::InvalidValue);
+    | |                 -^^^^^ method not found in `Result<(std::option::Option<std::string::String>, &str), FamilyFailure>`
+    | |_________________|
+    |
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/masks.rs:249:16
+    |
+249 |         if let Some(color) = as_color(color, modifier, theme, used) {
+    |                ^^^^^^^^^^^   -------------------------------------- this expression has type `Result<std::option::Option<std::string::String>, FamilyFailure>`
+    |                |
+    |                expected `Result<Option<String>, FamilyFailure>`, found `Option<_>`
+    |
+    = note: expected enum `Result<std::option::Option<std::string::String>, FamilyFailure>`
+               found enum `std::option::Option<_>`
+help: try wrapping the pattern in `Ok`
+    |
+249 |         if let Ok(Some(color)) = as_color(color, modifier, theme, used) {
+    |                +++           +
+
+error[E0277]: the `?` operator can only be used on `Option`s, not `Result`s, in a closure that returns `Option`
+  --> crates/rustify-style/src/compiler/miscellaneous.rs:90:85
+   |
+90 |                 .find_map(|namespace| theme.resolve(&format!("--{namespace}"), used)?)
+   |                           ----------- this function returns an `Option`             ^ use `.ok()?` if you want to discard the `Result<Infallible, CompileError>` error information
+
+error[E0277]: the `?` operator can only be used in a function that returns `Result` or `Option` (or another type that implements `FromResidual`)
+  --> crates/rustify-style/src/compiler/motion.rs:34:63
+   |
+32 | fn transition(value: String, theme: &Theme, used: &mut BTreeSet<crate::text::Text>) -> MotionOutput {
+   | --------------------------------------------------------------------------------------------------- this function should return `Result` or `Option` to accept `?`
+33 |     let timing = theme
+34 |         .resolve("--default-transition-timing-function", used)?
+   |                                                               ^ cannot use the `?` operator in a function that returns `MotionOutput`
+
+error[E0277]: the `?` operator can only be used in a function that returns `Result` or `Option` (or another type that implements `FromResidual`)
+  --> crates/rustify-style/src/compiler/motion.rs:37:56
+   |
+32 | fn transition(value: String, theme: &Theme, used: &mut BTreeSet<crate::text::Text>) -> MotionOutput {
+   | --------------------------------------------------------------------------------------------------- this function should return `Result` or `Option` to accept `?`
+...
+37 |         .resolve("--default-transition-duration", used)?
+   |                                                        ^ cannot use the `?` operator in a function that returns `MotionOutput`
+
+error[E0308]: mismatched types
+  --> crates/rustify-style/src/compiler/motion.rs:76:24
+   |
+76 |                 .ok_or(DiagnosticKind::InvalidValue)
+   |                  ----- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `FamilyFailure`, found `DiagnosticKind`
+   |                  |
+   |                  arguments to this method are incorrect
+   |
+help: the return type of this call is `DiagnosticKind` due to the type of the argument passed
+  --> crates/rustify-style/src/compiler/motion.rs:74:13
+   |
+74 | /             theme
+75 | |                 .resolve(&format!("--{namespace}"), used)?
+76 | |                 .ok_or(DiagnosticKind::InvalidValue)
+   | |________________________----------------------------^
+   |                          |
+   |                          this argument influences the return type of `ok_or`
+note: method defined here
+  --> /rustc/48a229ceaefd4985c50990b14116b6d856af0985/library/core/src/option.rs:1333:17
+help: try wrapping the expression in `compiler::utilities::FamilyFailure::Candidate`
+   |
+76 |                 .ok_or(compiler::utilities::FamilyFailure::Candidate(DiagnosticKind::InvalidValue))
+   |                        ++++++++++++++++++++++++++++++++++++++++++++++                            +
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/public_api/design_system.rs:449:58
+    |
+449 |         let Some(token) = self.compiler.theme.tokens.get(path) else {
+    |                                                      --- ^^^^ expected `&Text`, found `&str`
+    |                                                      |
+    |                                                      arguments to this method are incorrect
+    |
+    = note: expected reference `&Text`
+               found reference `&str`
+note: method defined here
+   --> /rustc/48a229ceaefd4985c50990b14116b6d856af0985/library/alloc/src/collections/btree/map.rs:717:11
+
+error[E0308]: `if` and `else` have incompatible types
+   --> crates/rustify-style/src/compiler/public_api/design_system.rs:456:13
+    |
+453 |           let value = if force_inline {
+    |  _____________________-
+454 | |             Some(token.value.clone())
+    | |             ------------------------- expected because of this
+455 | |         } else {
+456 | |             self.compiler.theme.resolve(path, &mut used)
+    | |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `Option<Text>`, found `Result<Option<String>, CompileError>`
+457 | |         };
+    | |_________- `if` and `else` have incompatible types
+    |
+    = note: expected enum `std::option::Option<Text>`
+               found enum `Result<std::option::Option<std::string::String>, CompileError>`
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/public_api/design_system.rs:472:51
+    |
+472 |             json!([self.compiler.theme.prefix_key(&name),{"value":token.value,"options":options,"src":undefined()}])
+    |                                        ---------- ^^^^^ expected `&str`, found `&&Text`
+    |                                        |
+    |                                        arguments to this method are incorrect
+    |
+    = note: expected reference `&str`
+               found reference `&&Text`
+note: method defined here
+   --> crates/rustify-style/src/compiler/theme.rs:292:12
+    |
+292 |     pub fn prefix_key(&self, name: &str) -> String {
+    |            ^^^^^^^^^^        ----------
+
+error[E0599]: no method named `strip_prefix` found for struct `Text` in the current scope
+   --> crates/rustify-style/src/compiler/public_api/design_system.rs:486:22
+    |
+485 | /                 variable
+486 | |                     .strip_prefix(&format!("--{prefix}-"))
+    | |                     -^^^^^^^^^^^^ method not found in `Text`
+    | |_____________________|
+    |
+    |
+   ::: crates/rustify-style/src/text.rs:9:1
+    |
+  9 |   pub struct Text(Vec<u16>);
+    |   --------------- method `strip_prefix` not found for this struct
+
+error[E0599]: no method named `strip_prefix` found for reference `&Text` in the current scope
+   --> crates/rustify-style/src/compiler/public_api/design_system.rs:524:34
+    |
+524 | ...                   name.strip_prefix("--breakpoint-").map(str::to_string)
+    |                            ^^^^^^^^^^^^ method not found in `&Text`
+
+error[E0608]: cannot index into a value of type `&Text`
+   --> crates/rustify-style/src/compiler/public_api/design_system.rs:882:33
+    |
+882 |             if !ignored && !name[2..].contains("--") {
+    |                                 ^^^^^
+
+error[E0599]: no method named `strip_prefix` found for reference `&Text` in the current scope
+   --> crates/rustify-style/src/compiler/public_api/design_system.rs:883:41
+    |
+883 |                 if let Some(key) = name.strip_prefix(&prefix) {
+    |                                         ^^^^^^^^^^^^ method not found in `&Text`
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/public_api/design_system.rs:982:46
+    |
+982 |                 if theme.tokens.contains_key(key) {
+    |                                 ------------ ^^^ expected `&Text`, found `&str`
+    |                                 |
+    |                                 arguments to this method are incorrect
+    |
+    = note: expected reference `&Text`
+               found reference `&str`
+note: method defined here
+   --> /rustc/48a229ceaefd4985c50990b14116b6d856af0985/library/alloc/src/collections/btree/map.rs:979:11
+
+error[E0308]: mismatched types
+    --> crates/rustify-style/src/compiler/public_api/design_system.rs:1006:66
+     |
+1006 |                     .is_some_and(|key| theme.tokens.contains_key(key))
+     |                                                     ------------ ^^^ expected `&Text`, found `&str`
+     |                                                     |
+     |                                                     arguments to this method are incorrect
+     |
+     = note: expected reference `&Text`
+                found reference `&str`
+note: method defined here
+    --> /rustc/48a229ceaefd4985c50990b14116b6d856af0985/library/alloc/src/collections/btree/map.rs:979:11
+
+error[E0308]: mismatched types
+    --> crates/rustify-style/src/compiler/public_api/design_system.rs:1162:42
+     |
+1162 |     } else if theme.tokens.contains_key(&format!("--breakpoint-{root}")) {
+     |                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `Text`, found `String`
+     |
+help: call `Into::into` on this expression to convert `std::string::String` into `Text`
+     |
+1162 |     } else if theme.tokens.contains_key(&format!("--breakpoint-{root}").into()) {
+     |                                                                        +++++++
+
+error[E0308]: mismatched types
+    --> crates/rustify-style/src/compiler/public_api/design_system.rs:1188:19
+     |
+1188 |             .get(&format!("--breakpoint-{root}"))
+     |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `Text`, found `String`
+     |
+help: call `Into::into` on this expression to convert `std::string::String` into `Text`
+     |
+1188 |             .get(&format!("--breakpoint-{root}").into())
+     |                                                 +++++++
+
+error[E0308]: mismatched types
+    --> crates/rustify-style/src/compiler/public_api/design_system.rs:1186:16
+     |
+1183 |   fn breakpoint_value(variant: &Value, theme: &Theme) -> Option<String> {
+     |                                                          -------------- expected `std::option::Option<std::string::String>` because of return type
+...
+1186 |           return theme
+     |  ________________^
+1187 | |             .tokens
+1188 | |             .get(&format!("--breakpoint-{root}"))
+1189 | |             .map(|token| token.value.clone());
+     | |_____________________________________________^ expected `Option<String>`, found `Option<Text>`
+     |
+     = note: expected enum `std::option::Option<std::string::String>`
+                found enum `std::option::Option<Text>`
+
+error[E0308]: mismatched types
+    --> crates/rustify-style/src/compiler/public_api/design_system.rs:1200:19
+     |
+1200 |               .get(&format!(
+     |  ___________________^
+1201 | |                 "--{}-{value}",
+1202 | |                 if root.starts_with('@') {
+1203 | |                     "container"
+...    |
+1207 | |             ))?
+     | |_____________^ expected `Text`, found `String`
+     |
+help: call `Into::into` on this expression to convert `std::string::String` into `Text`
+     |
+1207 |             ).into())?
+     |              +++++++
+
+error[E0308]: `if` and `else` have incompatible types
+    --> crates/rustify-style/src/compiler/public_api/design_system.rs:1198:9
+     |
+1195 |        let value = if variant["value"]["kind"] == "arbitrary" {
+     |  __________________-
+1196 | |          value.to_string()
+     | |          ----------------- expected because of this
+1197 | |      } else {
+1198 | |/         theme
+1199 | ||             .tokens
+1200 | ||             .get(&format!(
+1201 | ||                 "--{}-{value}",
+...    ||
+1208 | ||             .value
+1209 | ||             .clone()
+     | ||____________________^ expected `String`, found `Text`
+1210 | |      };
+     | |______- `if` and `else` have incompatible types
+
+error[E0277]: the `?` operator can only be used on `Option`s, not `Result`s, in a function that returns `Option`
+  --> crates/rustify-style/src/compiler/shadows.rs:65:59
+   |
+55 | / fn named_color(
+56 | |     value: &str,
+57 | |     modifier: Option<&str>,
+58 | |     namespaces: &[&str],
+59 | |     theme: &Theme,
+60 | |     used: &mut BTreeSet<crate::text::Text>,
+61 | | ) -> Option<String> {
+   | |___________________- this function returns an `Option`
+...
+65 |           _ => resolve_named(value, namespaces, theme, used)?,
+   |                                                             ^ use `.ok()?` if you want to discard the `Result<Infallible, FamilyFailure>` error information
+
+error[E0308]: mismatched types
+  --> crates/rustify-style/src/compiler/shadows.rs:68:23
+   |
+68 |     .and_then(|color| as_color(color, modifier, theme, used))
+   |                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `Option<_>`, found `Result<Option<String>, FamilyFailure>`
+   |
+   = note: expected enum `std::option::Option<_>`
+              found enum `Result<std::option::Option<std::string::String>, FamilyFailure>`
+help: consider using `Result::expect` to unwrap the `Result<std::option::Option<std::string::String>, FamilyFailure>` value, panicking if the value is a `Result::Err`
+   |
+68 |     .and_then(|color| as_color(color, modifier, theme, used).expect("REASON"))
+   |                                                             +++++++++++++++++
+
+error[E0308]: mismatched types
+  --> crates/rustify-style/src/compiler/shadows.rs:79:16
+   |
+71 |   fn alpha_modifier(modifier: Option<&str>) -> Result<Option<String>, super::utilities::FamilyFailure> {
+   |                                                ------------------------------------------------------- expected `Result<std::option::Option<std::string::String>, FamilyFailure>` because of return type
+...
+79 |           return super::value::decode_arbitrary(value, usize::MAX)
+   |  ________________^
+80 | |             .map(Some)
+81 | |             .map_err(|_| DiagnosticKind::InvalidValue);
+   | |______________________________________________________^ expected `Result<Option<String>, FamilyFailure>`, found `Result<Option<String>, DiagnosticKind>`
+   |
+   = note: expected enum `Result<_, FamilyFailure>`
+              found enum `Result<_, DiagnosticKind>`
+help: use `?` to coerce and return an appropriate `Err`, and wrap the resulting value in `Ok` so the expression remains of type `Result`
+   |
+79 ~         return Ok(super::value::decode_arbitrary(value, usize::MAX)
+80 |             .map(Some)
+81 ~             .map_err(|_| DiagnosticKind::InvalidValue)?);
+   |
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/shadows.rs:119:5
+    |
+118 | fn segment(value: &str, delimiter: char) -> Result<Vec<&str>, super::utilities::FamilyFailure> {
+    |                                             -------------------------------------------------- expected `Result<Vec<&str>, FamilyFailure>` because of return type
+119 |     super::value::segment(value, delimiter, usize::MAX).map_err(|_| DiagnosticKind::InvalidValue)
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `Result<Vec<&str>, FamilyFailure>`, found `Result<Vec<&str>, DiagnosticKind>`
+    |
+    = note: expected enum `Result<Vec<&_>, FamilyFailure>`
+               found enum `Result<Vec<&_>, DiagnosticKind>`
+help: use `?` to coerce and return an appropriate `Err`, and wrap the resulting value in `Ok` so the expression remains of type `Result`
+    |
+119 |     Ok(super::value::segment(value, delimiter, usize::MAX).map_err(|_| DiagnosticKind::InvalidValue)?)
+    |     +++                                                                                             ++
+
+error[E0599]: no method named `ok_or` found for enum `Result<T, E>` in the current scope
+   --> crates/rustify-style/src/compiler/shadows.rs:250:22
+    |
+249 |                   let color = as_color(value.clone(), modifier, theme, used)
+    |  _____________________________-
+250 | |                     .ok_or(DiagnosticKind::InvalidValue)?;
+    | |                     -^^^^^ method not found in `Result<std::option::Option<std::string::String>, FamilyFailure>`
+    | |_____________________|
+    |
+    |
+note: the method `ok_or` exists on the type `std::option::Option<std::string::String>`
+   --> /rustc/48a229ceaefd4985c50990b14116b6d856af0985/library/core/src/option.rs:1333:4
+help: use the `?` operator to extract the `std::option::Option<std::string::String>` value, propagating a `Result::Err` value to the caller
+    |
+249 |                 let color = as_color(value.clone(), modifier, theme, used)?
+    |                                                                           +
+
+error[E0277]: the `?` operator can only be used in a function that returns `Result` or `Option` (or another type that implements `FromResidual`)
+   --> crates/rustify-style/src/compiler/shadows.rs:341:47
+    |
+322 | / fn ring_width(
+323 | |     root: &str,
+324 | |     value: String,
+325 | |     theme: &Theme,
+326 | |     used: &mut BTreeSet<crate::text::Text>,
+327 | | ) -> ShadowOutput {
+    | |_________________- this function should return `Result` or `Option` to accept `?`
+...
+341 |               .raw("--default-ring-color", used)?
+    |                                                 ^ cannot use the `?` operator in a function that returns `ShadowOutput`
+
+error[E0599]: no method named `ok_or` found for enum `Result<T, E>` in the current scope
+   --> crates/rustify-style/src/compiler/shadows.rs:402:26
+    |
+401 | /                     as_color(value.clone(), modifier, theme, used)
+402 | |                         .ok_or(DiagnosticKind::InvalidValue)?,
+    | |                         -^^^^^ method not found in `Result<std::option::Option<std::string::String>, FamilyFailure>`
+    | |_________________________|
+    |
+    |
+note: the method `ok_or` exists on the type `std::option::Option<std::string::String>`
+   --> /rustc/48a229ceaefd4985c50990b14116b6d856af0985/library/core/src/option.rs:1333:4
+help: use the `?` operator to extract the `std::option::Option<std::string::String>` value, propagating a `Result::Err` value to the caller
+    |
+401 |                     as_color(value.clone(), modifier, theme, used)?
+    |                                                                   +
+
+error[E0599]: no method named `sort_by` found for enum `Result<T, E>` in the current scope
+  --> crates/rustify-style/src/compiler/static_utilities.rs:94:21
+   |
+94 |         breakpoints.sort_by(|left, right| compare_breakpoints(left, right));
+   |                     ^^^^^^^ method not found in `Result<Vec<std::string::String>, CompileError>`
+   |
+note: the method `sort_by` exists on the type `Vec<std::string::String>`
+  --> /rustc/48a229ceaefd4985c50990b14116b6d856af0985/library/alloc/src/slice.rs:192:4
+help: consider using `Result::expect` to unwrap the `Vec<std::string::String>` value, panicking if the value is a `Result::Err`
+   |
+94 |         breakpoints.expect("REASON").sort_by(|left, right| compare_breakpoints(left, right));
+   |                    +++++++++++++++++
+
+error[E0599]: no method named `len` found for enum `Result<T, E>` in the current scope
+  --> crates/rustify-style/src/compiler/static_utilities.rs:96:37
+   |
+96 |         let count = 2 + breakpoints.len();
+   |                                     ^^^ method not found in `Result<Vec<std::string::String>, CompileError>`
+   |
+note: the method `len` exists on the type `Vec<std::string::String>`
+  --> /rustc/48a229ceaefd4985c50990b14116b6d856af0985/library/alloc/src/vec/mod.rs:3063:4
+help: consider using `Result::expect` to unwrap the `Vec<std::string::String>` value, panicking if the value is a `Result::Err`
+   |
+96 |         let count = 2 + breakpoints.expect("REASON").len();
+   |                                    +++++++++++++++++
+
+error[E0277]: `Vec<std::string::String>` doesn't implement `std::fmt::Display`
+   --> crates/rustify-style/src/compiler/static_utilities.rs:102:44
+    |
+102 |                 params: format!("(width >= {breakpoint})"),
+    |                                            ^^^^^^^^^^^^ `Vec<std::string::String>` cannot be formatted with the default formatter
+    |
+    = help: the trait `std::fmt::Display` is not implemented for `Vec<std::string::String>`
+    = note: in format strings you may be able to use `{:?}` (or {:#?} for pretty-print) instead
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/static_utilities.rs:103:59
+    |
+103 |                 nodes: Some(vec![declaration("max-width", breakpoint)]),
+    |                                  -----------              ^^^^^^^^^^ expected `String`, found `Vec<String>`
+    |                                  |
+    |                                  arguments to this function are incorrect
+    |
+    = note: expected struct `std::string::String`
+               found struct `Vec<std::string::String>`
+note: expected because the closure was earlier called with an argument of type `_`
+   --> crates/rustify-style/src/compiler/static_utilities.rs:95:51
+    |
+ 95 |         let mut nodes = vec![declaration("width", "100%".into())];
+    |                              -----------          ^^^^^^^^^^^^^ expected because this argument is of type `_`
+    |                              |
+    |                              in this closure call
+note: closure parameter defined here
+   --> crates/rustify-style/src/compiler/static_utilities.rs:84:40
+    |
+ 84 |     let declaration = |property: &str, value: String| AstNode::Declaration {
+    |                                        ^^^^^^^^^^^^^
+
+error[E0593]: closure is expected to take 1 argument, but it takes 0 arguments
+   --> crates/rustify-style/src/compiler/static_utilities.rs:125:10
+    |
+125 |         .unwrap_or_else(|| "ease".into());
+    |          ^^^^^^^^^^^^^^ -- takes 0 arguments
+    |          |
+    |          expected closure that takes 1 argument
+    |
+help: consider changing the closure to take and ignore the expected argument
+    |
+125 |         .unwrap_or_else(|_| "ease".into());
+    |                          +
+
+error[E0593]: closure is expected to take 1 argument, but it takes 0 arguments
+   --> crates/rustify-style/src/compiler/static_utilities.rs:128:10
+    |
+128 |         .unwrap_or_else(|| "0s".into());
+    |          ^^^^^^^^^^^^^^ -- takes 0 arguments
+    |          |
+    |          expected closure that takes 1 argument
+    |
+help: consider changing the closure to take and ignore the expected argument
+    |
+128 |         .unwrap_or_else(|_| "0s".into());
+    |                          +
+
+error[E0277]: `std::option::Option<std::string::String>` doesn't implement `std::fmt::Display`
+   --> crates/rustify-style/src/compiler/static_utilities.rs:134:41
+    |
+134 |                 format!("var(--tw-ease, {timing})"),
+    |                                         ^^^^^^^^ `std::option::Option<std::string::String>` cannot be formatted with the default formatter
+    |
+    = help: the trait `std::fmt::Display` is not implemented for `std::option::Option<std::string::String>`
+    = note: in format strings you may be able to use `{:?}` (or {:#?} for pretty-print) instead
+
+error[E0277]: `std::option::Option<std::string::String>` doesn't implement `std::fmt::Display`
+   --> crates/rustify-style/src/compiler/static_utilities.rs:138:45
+    |
+138 |                 format!("var(--tw-duration, {duration})"),
+    |                                             ^^^^^^^^^^ `std::option::Option<std::string::String>` cannot be formatted with the default formatter
+    |
+    = help: the trait `std::fmt::Display` is not implemented for `std::option::Option<std::string::String>`
+    = note: in format strings you may be able to use `{:?}` (or {:#?} for pretty-print) instead
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/typography.rs:256:28
+    |
+256 |                       if let Some((family, options)) = resolve_with(
+    |  ____________________________^^^^^^^^^^^^^^^^^^^^^^^___-
+    | |                            |
+    | |                            expected `Result<Option<(String, Vec<...>)>, ...>`, found `Option<_>`
+257 | |                         value,
+258 | |                         "font",
+259 | |                         &["--font-feature-settings", "--font-variation-settings"],
+260 | |                         theme,
+261 | |                         used,
+262 | |                     ) {
+    | |_____________________- this expression has type `Result<Option<(String, Vec<Option<String>>)>, FamilyFailure>`
+    |
+    = note: expected enum `Result<std::option::Option<(std::string::String, Vec<std::option::Option<std::string::String>>)>, FamilyFailure>`
+               found enum `std::option::Option<_>`
+    = note: the full name for the type has been written to '/Users/rockie/Documents/gh-rockie/rustify-ui/target/debug/deps/rustify_style-b2cafd600d6c4a42.long-type-14152427814856466214.txt'
+    = note: consider using `--verbose` to print the full type name to the console
+help: try wrapping the pattern in `Ok`
+    |
+256 |                     if let Ok(Some((family, options))) = resolve_with(
+    |                            +++                       +
+
+error[E0599]: no method named `ok_or` found for enum `Result<T, E>` in the current scope
+   --> crates/rustify-style/src/compiler/typography.rs:311:18
+    |
+300 |                   CandidateValue::Named { value } => resolve_with(
+    |  ____________________________________________________-
+301 | |                     value,
+302 | |                     "text",
+303 | |                     if modifier.is_some() {
+...   |
+311 | |                 .ok_or(DiagnosticKind::InvalidValue)?,
+    | |                 -^^^^^ method not found in `Result<Option<(String, Vec<Option<String>>)>, FamilyFailure>`
+    | |_________________|
+    |
+    |
+note: the method `ok_or` exists on the type `std::option::Option<(std::string::String, Vec<std::option::Option<std::string::String>>)>`
+   --> /rustc/48a229ceaefd4985c50990b14116b6d856af0985/library/core/src/option.rs:1333:4
+    = note: the full name for the type has been written to '/Users/rockie/Documents/gh-rockie/rustify-ui/target/debug/deps/rustify_style-b2cafd600d6c4a42.long-type-14152427814856466214.txt'
+    = note: consider using `--verbose` to print the full type name to the console
+help: use the `?` operator to extract the `std::option::Option<(std::string::String, Vec<std::option::Option<std::string::String>>)>` value, propagating a `Result::Err` value to the caller
+    |
+310 |                 )?
+    |                  +
+
+error[E0599]: no method named `ok_or` found for enum `Result<T, E>` in the current scope
+   --> crates/rustify-style/src/compiler/typography.rs:317:56
+    |
+317 |                     line_height(modifier, theme, used).ok_or(DiagnosticKind::InvalidValue)?,
+    |                                                        ^^^^^ method not found in `Result<std::option::Option<std::string::String>, FamilyFailure>`
+    |
+note: the method `ok_or` exists on the type `std::option::Option<std::string::String>`
+   --> /rustc/48a229ceaefd4985c50990b14116b6d856af0985/library/core/src/option.rs:1333:4
+help: use the `?` operator to extract the `std::option::Option<std::string::String>` value, propagating a `Result::Err` value to the caller
+    |
+317 |                     line_height(modifier, theme, used)?.ok_or(DiagnosticKind::InvalidValue)?,
+    |                                                       +
+
+error[E0599]: no method named `ok_or_else` found for enum `Result<T, E>` in the current scope
+   --> crates/rustify-style/src/compiler/utilities.rs:157:22
+    |
+156 | /                 super::colors::as_color(value.clone(), modifier.as_deref(), theme, &mut used)
+157 | |                     .ok_or_else(|| diagnostic(candidate, DiagnosticKind::InvalidValue, family))?;
+    | |_____________________-^^^^^^^^^^
+    |
+note: the method `ok_or_else` exists on the type `std::option::Option<std::string::String>`
+   --> /rustc/48a229ceaefd4985c50990b14116b6d856af0985/library/core/src/option.rs:1359:4
+help: use the `?` operator to extract the `std::option::Option<std::string::String>` value, propagating a `Result::Err` value to the caller
+    |
+156 |                 super::colors::as_color(value.clone(), modifier.as_deref(), theme, &mut used)?
+    |                                                                                              +
+help: there is a method `or_else` with a similar name
+    |
+157 -                     .ok_or_else(|| diagnostic(candidate, DiagnosticKind::InvalidValue, family))?;
+157 +                     .or_else(|| diagnostic(candidate, DiagnosticKind::InvalidValue, family))?;
+    |
+
+error[E0308]: mismatched types
+  --> crates/rustify-style/src/compiler/variants.rs:28:39
+   |
+28 |         && theme.tokens.contains_key(&format!("--breakpoint-{root}"))
+   |                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `Text`, found `String`
+   |
+help: call `Into::into` on this expression to convert `std::string::String` into `Text`
+   |
+28 |         && theme.tokens.contains_key(&format!("--breakpoint-{root}").into())
+   |                                                                     +++++++
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/variants.rs:632:19
+    |
+632 |             .get(&format!("--breakpoint-{root}"))
+    |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `Text`, found `String`
+    |
+help: call `Into::into` on this expression to convert `std::string::String` into `Text`
+    |
+632 |             .get(&format!("--breakpoint-{root}").into())
+    |                                                 +++++++
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/variants.rs:647:23
+    |
+647 |                 .get(&format!("--{namespace}-{value}"))
+    |                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `Text`, found `String`
+    |
+help: call `Into::into` on this expression to convert `std::string::String` into `Text`
+    |
+647 |                 .get(&format!("--{namespace}-{value}").into())
+    |                                                       +++++++
+
+error[E0308]: `if` and `else` have incompatible types
+   --> crates/rustify-style/src/compiler/variants.rs:645:13
+    |
+642 |            let result = if arbitrary {
+    |  _______________________-
+643 | |              Some(value)
+    | |              ----------- expected because of this
+644 | |          } else {
+645 | |/             theme
+646 | ||                 .tokens
+647 | ||                 .get(&format!("--{namespace}-{value}"))
+648 | ||                 .map(|t| t.value.clone())
+    | ||_________________________________________^ expected `Option<String>`, found `Option<Text>`
+649 | |          };
+    | |__________- `if` and `else` have incompatible types
+    |
+    = note: expected enum `std::option::Option<std::string::String>`
+               found enum `std::option::Option<Text>`
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/variants.rs:760:56
+    |
+760 |                 if let Some(token) = theme.tokens.get(&format!("--breakpoint-{root}")) {
+    |                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `Text`, found `String`
+    |
+help: call `Into::into` on this expression to convert `std::string::String` into `Text`
+    |
+760 |                 if let Some(token) = theme.tokens.get(&format!("--breakpoint-{root}").into()) {
+    |                                                                                      +++++++
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/variants.rs:763:32
+    |
+763 |                         value: token.value.clone(),
+    |                                ^^^^^^^^^^^^^^^^^^^ expected `String`, found `Text`
+
+Some errors have detailed explanations: E0277, E0308, E0425, E0593, E0599, E0608.
+For more information about an error, try `rustc --explain E0277`.
+error: could not compile `rustify-style` (lib) due to 88 previous errors
+mbx[cache]: 0 hits, 0 misses, 1 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: 13704 compilations served. ask rustc how many it remembers doing.

@@ -1,0 +1,148 @@
+{
+  "recorded_at_utc": "2026-10-04T06:14:42.416840+00:00",
+  "scope": "M2 scanner source core; source JS/Worker/panel integration remains main-task work",
+  "upstream_commit": "1334c99db8fd26c8ea065375dd9259800863f072",
+  "production_files": [
+    {
+      "path": "crates/rustify-style/src/scanner.rs",
+      "sha256": "a3e618051b704cc81bdafc3b8592487c7d09f5844a26d209160ed383911b27bf"
+    },
+    {
+      "path": "crates/rustify-style/src/scanner/LICENSE-IGNORE",
+      "sha256": "0f96a83840e146e43c0ec96a22ec1f392e0680e6c1226e6f3ba87e0740af850f"
+    },
+    {
+      "path": "crates/rustify-style/src/scanner/discovery.rs",
+      "sha256": "f3f79b29d4ad06b9b6219177cce936c75ac8421a0e28b403b86d4dbb19ae6eb5"
+    },
+    {
+      "path": "crates/rustify-style/src/scanner/fixtures/binary-extensions.txt",
+      "sha256": "6c95bf208645736dd74490c1740bba5f33893f514c8ba534b2b20cfe64326088"
+    },
+    {
+      "path": "crates/rustify-style/src/scanner/fixtures/ignored-content-dirs.txt",
+      "sha256": "6f70dbcbdac4a63a0f64091584ee5512e5dd07bab17479ee9a598c3ef3df0a3f"
+    },
+    {
+      "path": "crates/rustify-style/src/scanner/fixtures/ignored-extensions.txt",
+      "sha256": "749167ac9bc0a6daaccaf14a56aa41b8b9befd2755b7d7a27ad8cb762230b65e"
+    },
+    {
+      "path": "crates/rustify-style/src/scanner/fixtures/ignored-files.txt",
+      "sha256": "14d3c2a7aa939b238d6b2d6d5c6e6559bbabfbe572490f14c6c0513427577b9e"
+    },
+    {
+      "path": "crates/rustify-style/src/scanner/fixtures/template-extensions.txt",
+      "sha256": "fded6e73769361c4ef6a07cc7c4b1c2f66b3bb9223b8004a6f391b3b6558dff0"
+    },
+    {
+      "path": "crates/rustify-style/src/scanner/rules.rs",
+      "sha256": "141a15deba0980c5e8a30582b78bb88b5b59f5238591ac439b56aa1ad399cc06"
+    },
+    {
+      "path": "crates/rustify-style/src/scanner/source.rs",
+      "sha256": "ee288b2815396f81a3b56a6009e696a88198ca9750d6be7c8c5f29786eae3be0"
+    },
+    {
+      "path": "crates/rustify-style/src/scanner/sources.rs",
+      "sha256": "c9d516d108f9fa273d9d539484d9a925a55e2a26ab38a788aeb3412dba0a9be1"
+    },
+    {
+      "path": "crates/rustify-style/src/scanner/tree.rs",
+      "sha256": "3fb0915228f16519411981bbfed4560c6524d0197951cac528ef82f692a018ba"
+    }
+  ],
+  "source_fixture_sha256": "c3d5c3bc2b2af42ce8ba504fa2393f8d7d888dce850b6a3970036304c6edccea",
+  "source_fixtures": 12,
+  "operations": 51,
+  "native_red": {
+    "command": "mbx test --locked -p rustify-style --no-default-features --features scanner-fs --lib scanner::upstream_native_tests",
+    "exit_code": 101,
+    "passed": 12,
+    "failed": 30,
+    "cause": "Source scan stub returned empty candidates before wiring full extraction."
+  },
+  "delta_red": {
+    "command": "mbx test --locked -p rustify-style --no-default-features --features scanner --lib scanner::source::tests::pending_source_and_raw_changes_return_sorted_delta",
+    "exit_code": 101,
+    "passed": 0,
+    "failed": 1,
+    "actual": [
+      "p-9",
+      "flex"
+    ],
+    "expected": [
+      "flex",
+      "p-9"
+    ],
+    "log": "../../../docs/validation/wasm-tailwind/scanner/source-delta-red.log"
+  },
+  "native_green": {
+    "command": "mbx test --locked -p rustify-style --no-default-features --features scanner-fs --lib",
+    "exit_code": 0,
+    "passed": 124,
+    "failed": 0,
+    "ignored_original_upstream_performance_tests": 12,
+    "original_native_scanner_tests": 42,
+    "native_virtual_parity": "Each original Scanner operation is also run against a concrete virtual snapshot, with unchanged upstream expected outputs.",
+    "log": "../../../docs/validation/wasm-tailwind/scanner/source-full.log"
+  },
+  "oracle": {
+    "command": "python3 tests/utility/scanner/reference.py",
+    "exit_code": 0,
+    "memory_cases": 24,
+    "source_cases": 12,
+    "source_operations": 51,
+    "log": "../../../docs/validation/wasm-tailwind/scanner/source-oracle.log"
+  },
+  "clippy": {
+    "command": "mbx clippy --locked -p rustify-style --no-default-features --features scanner-fs --all-targets -- -D warnings",
+    "exit_code": 0,
+    "log": "../../../docs/validation/wasm-tailwind/scanner/source-clippy.log"
+  },
+  "wasm_build": {
+    "command": "mbx build --locked -p rustify-style --no-default-features --features scanner --example scanner-source-probe --release --target wasm32-unknown-unknown",
+    "exit_code": 0,
+    "log": "../../../docs/validation/wasm-tailwind/scanner/source-wasm-build.log"
+  },
+  "wasm_execution": {
+    "command": "node tests/utility/scanner/run-source-wasm.mjs",
+    "exit_code": 0,
+    "cases": 12,
+    "operations": 51,
+    "failures": 0,
+    "imports": [],
+    "shared_memory": false,
+    "bytes": 1829040,
+    "sha256": "9f655658e857ce64090bc02360158973ca5cebabe3a9e3bee938ed3634f3ccc3",
+    "size_note": "Test-only embedded serde/corpus probe, not production package size.",
+    "log": "source-wasm.json"
+  },
+  "wasm_scanner_fs_check": {
+    "command": "mbx check --locked -p rustify-style --no-default-features --features scanner-fs --target wasm32-unknown-unknown",
+    "exit_code": 0,
+    "boundary": "NativeSourceTree and std filesystem calls use scanner-fs AND non-wasm target guards.",
+    "log": "../../../docs/validation/wasm-tailwind/scanner/source-wasm-check.log"
+  },
+  "wasm_dependencies": {
+    "command": "mbx tree --locked -p rustify-style --no-default-features --features scanner-fs --target wasm32-unknown-unknown --edges normal",
+    "absent": [
+      "rayon",
+      "crossbeam",
+      "ignore",
+      "walkdir",
+      "globwalk",
+      "getrandom"
+    ],
+    "log": "source-wasm-dependencies.txt"
+  },
+  "intentional_contract_adaptations": [
+    "Explicitly unavailable virtual paths produce MissingSourceInformation. Complete snapshots declare omitted paths absent.",
+    "Invalid UTF-8 source bytes return InvalidUtf8 rather than invoking the upstream unsafe string conversion or Vue UTF-8 panic.",
+    "WASM virtual paths use POSIX roots; actual native tests run on macOS, other OS behavior remains unverified."
+  ],
+  "unexplained_differences_in_run_fixed_corpora": [],
+  "remaining_integration": [
+    "JS/WASM source JSON facade and Worker/source-panel integration are main-task work; plain WASM source probe already executes the shared core corpus."
+  ]
+}

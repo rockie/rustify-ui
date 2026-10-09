@@ -1,0 +1,419 @@
+mbx[warning]: Unix-domain cache session listener unavailable; using FIFO transport: failed to bind cache session listener at /var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/mbx-session-XD7h7J/cache-agent.sock: Operation not permitted (os error 1)
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+    Checking rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+error[E0308]: `match` arms have incompatible types
+   --> crates/rustify-style/src/compiler/effects.rs:129:17
+    |
+123 |           let resolved = match value {
+    |                          ----------- `match` arms have incompatible types
+124 |               None if modifier.is_none() => theme.resolve("--radius", used)?,
+    |                                             -------------------------------- this is found to be of type `std::option::Option<std::string::String>`
+...
+129 | /                 resolve_named(
+130 | |                     fraction.as_deref().unwrap_or(value),
+131 | |                     &["radius"],
+132 | |                     theme,
+133 | |                     used,
+134 | |                 )?
+    | |__________________^ expected `Option<String>`, found `Option<Text>`
+    |
+    = note: expected enum `std::option::Option<std::string::String>`
+               found enum `std::option::Option<text::Text>`
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/filters.rs:157:27
+    |
+157 |                 return Ok(value);
+    |                        -- ^^^^^ expected `String`, found `Text`
+    |                        |
+    |                        arguments to this enum variant are incorrect
+    |
+help: the type constructed contains `text::Text` due to the type of the argument passed
+   --> crates/rustify-style/src/compiler/filters.rs:157:24
+    |
+157 |                 return Ok(value);
+    |                        ^^^-----^
+    |                           |
+    |                           this argument influences the type of `Ok`
+note: tuple variant defined here
+   --> /rustc/48a229ceaefd4985c50990b14116b6d856af0985/library/core/src/result.rs:561:4
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/filters.rs:344:38
+    |
+344 |                 let color = as_color(value.clone(), modifier, theme, used)?
+    |                             -------- ^^^^^^^^^^^^^ expected `Text`, found `String`
+    |                             |
+    |                             arguments to this function are incorrect
+    |
+note: function defined here
+   --> crates/rustify-style/src/compiler/colors.rs:365:15
+    |
+365 | pub(super) fn as_color(
+    |               ^^^^^^^^
+366 |     color: Text,
+    |     -----------
+help: call `Into::into` on this expression to convert `std::string::String` into `text::Text`
+    |
+344 |                 let color = as_color(value.clone().into(), modifier, theme, used)?
+    |                                                   +++++++
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/filters.rs:350:40
+    |
+350 | ...                   with_alpha(&color, "var(--tw-drop-shadow-alpha)"),
+    |                       ---------- ^^^^^^ expected `&str`, found `&Text`
+    |                       |
+    |                       arguments to this function are incorrect
+    |
+    = note: expected reference `&str`
+               found reference `&text::Text`
+note: function defined here
+   --> crates/rustify-style/src/compiler/filters.rs:206:4
+    |
+206 | fn with_alpha(color: &str, alpha: &str) -> String {
+    |    ^^^^^^^^^^ -----------
+
+error[E0308]: `match` arms have incompatible types
+   --> crates/rustify-style/src/compiler/filters.rs:378:26
+    |
+375 |                   let color = match value.as_str() {
+    |  _____________________________-
+376 | |                     "current" => Some("currentcolor".into()),
+    | |                                  --------------------------- this is found to be of type `std::option::Option<std::string::String>`
+377 | |                     "inherit" | "transparent" => Some(value.clone()),
+    | |                                                  ------------------- this is found to be of type `std::option::Option<std::string::String>`
+378 | |                     _ => resolve_named(value, &["drop-shadow-color", "color"], theme, used)?,
+    | |                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `Option<String>`, found `Option<Text>`
+379 | |                 }
+    | |_________________- `match` arms have incompatible types
+    |
+    = note: expected enum `std::option::Option<std::string::String>`
+               found enum `std::option::Option<text::Text>`
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/filters.rs:391:44
+    |
+391 | ...                   with_alpha(&color, "var(--tw-drop-shadow-alpha)")
+    |                       ---------- ^^^^^^ expected `&str`, found `&Text`
+    |                       |
+    |                       arguments to this function are incorrect
+    |
+    = note: expected reference `&str`
+               found reference `&text::Text`
+note: function defined here
+   --> crates/rustify-style/src/compiler/filters.rs:206:4
+    |
+206 | fn with_alpha(color: &str, alpha: &str) -> String {
+    |    ^^^^^^^^^^ -----------
+
+error[E0308]: `if` and `else` have incompatible types
+   --> crates/rustify-style/src/compiler/filters.rs:391:33
+    |
+388 | / ...                   if color == "inherit" {
+389 | | ...                       color
+    | |                           ----- expected because of this
+390 | | ...                   } else {
+391 | | ...                       with_alpha(&color, "var(--tw-drop-shadow-alpha)")
+    | |                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `Text`, found `String`
+392 | | ...                   },
+    | |_______________________- `if` and `else` have incompatible types
+
+error[E0308]: `match` arms have incompatible types
+   --> crates/rustify-style/src/compiler/filters.rs:369:13
+    |
+329 |       let (raw, resolved) = match value {
+    |                             ----------- `match` arms have incompatible types
+...
+337 |               (raw, Some(resolved))
+    |               --------------------- this is found to be of type `(std::string::String, std::option::Option<std::string::String>)`
+...
+360 |               (value.clone(), None)
+    |               --------------------- this is found to be of type `(std::string::String, std::option::Option<std::string::String>)`
+...
+369 | /             if let Some((raw, resolved)) = raw.zip(resolved) {
+370 | |                 if modifier.is_some() && alpha.is_none() {
+371 | |                     return Err(DiagnosticKind::InvalidValue.into());
+...   |
+397 | |                 ));
+398 | |             }
+    | |_____________^ expected `(String, Option<String>)`, found `(String, Option<Text>)`
+    |
+    = note: expected tuple `(std::string::String, std::option::Option<std::string::String>)`
+               found tuple `(std::string::String, std::option::Option<text::Text>)`
+
+error[E0277]: the size for values of type `str` cannot be known at compilation time
+   --> crates/rustify-style/src/compiler/filters.rs:406:29
+    |
+406 |     let value = if let Some(resolved) = resolved {
+    |                             ^^^^^^^^ doesn't have a size known at compile-time
+    |
+    = help: the trait `Sized` is not implemented for `str`
+    = note: all local variables must have a statically known size
+
+error[E0277]: the size for values of type `str` cannot be known at compilation time
+   --> crates/rustify-style/src/compiler/filters.rs:406:24
+    |
+406 |     let value = if let Some(resolved) = resolved {
+    |                        ^^^^^^^^^^^^^^ doesn't have a size known at compile-time
+    |
+    = help: the trait `Sized` is not implemented for `str`
+note: required by a bound in `Some`
+   --> /rustc/48a229ceaefd4985c50990b14116b6d856af0985/library/core/src/option.rs:606:4
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/gradients.rs:130:30
+    |
+130 |                     as_color(value.clone(), modifier, theme, used)?.ok_or(
+    |                     -------- ^^^^^^^^^^^^^ expected `Text`, found `String`
+    |                     |
+    |                     arguments to this function are incorrect
+    |
+note: function defined here
+   --> crates/rustify-style/src/compiler/colors.rs:365:15
+    |
+365 | pub(super) fn as_color(
+    |               ^^^^^^^^
+366 |     color: Text,
+    |     -----------
+help: call `Into::into` on this expression to convert `std::string::String` into `text::Text`
+    |
+130 |                     as_color(value.clone().into(), modifier, theme, used)?.ok_or(
+    |                                           +++++++
+
+error[E0308]: `if` and `else` have incompatible types
+   --> crates/rustify-style/src/compiler/gradients.rs:129:17
+    |
+118 | /              if matches!(
+119 | |                  data_type
+120 | |                      .as_deref()
+121 | |                      .or_else(|| inferred_type("decoration", value)),
+...   |
+127 | |                  (value.clone(), true)
+    | |                  --------------------- expected because of this
+128 | |              } else {
+129 | |/                 (
+130 | ||                     as_color(value.clone(), modifier, theme, used)?.ok_or(
+131 | ||                         super::utilities::FamilyFailure::Candidate(DiagnosticKind::InvalidValue),
+132 | ||                     )?,
+133 | ||                     false,
+134 | ||                 )
+    | ||_________________^ expected `(String, bool)`, found `(Text, bool)`
+135 | |              }
+    | |______________- `if` and `else` have incompatible types
+    |
+    = note: expected tuple `(std::string::String, _)`
+               found tuple `(text::Text, _)`
+
+error[E0308]: `match` arms have incompatible types
+   --> crates/rustify-style/src/compiler/gradients.rs:141:22
+    |
+138 |               let color = match value.as_str() {
+    |  _________________________-
+139 | |                 "current" => Some("currentcolor".into()),
+    | |                              --------------------------- this is found to be of type `std::option::Option<std::string::String>`
+140 | |                 "inherit" | "transparent" => Some(value.clone()),
+    | |                                              ------------------- this is found to be of type `std::option::Option<std::string::String>`
+141 | |                 _ => resolve_named(value, &["background-color", "color"], theme, used)?,
+    | |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `Option<String>`, found `Option<Text>`
+142 | |             }
+    | |_____________- `match` arms have incompatible types
+    |
+    = note: expected enum `std::option::Option<std::string::String>`
+               found enum `std::option::Option<text::Text>`
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/gradients.rs:156:29
+    |
+156 | / ...                   value
+157 | | ...                       .strip_suffix('%')
+158 | | ...                       .filter(|number| canonical_nonnegative(number, true))
+159 | | ...                       .map(|_| value.clone())
+    | |_________________________________________________^ expected `Option<Text>`, found `Option<String>`
+    |
+    = note: expected enum `std::option::Option<text::Text>`
+               found enum `std::option::Option<std::string::String>`
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/masks.rs:230:29
+    |
+230 |             return as_color(value.clone(), modifier, theme, used)?
+    |                    -------- ^^^^^^^^^^^^^ expected `Text`, found `String`
+    |                    |
+    |                    arguments to this function are incorrect
+    |
+note: function defined here
+   --> crates/rustify-style/src/compiler/colors.rs:365:15
+    |
+365 | pub(super) fn as_color(
+    |               ^^^^^^^^
+366 |     color: Text,
+    |     -----------
+help: call `Into::into` on this expression to convert `std::string::String` into `text::Text`
+    |
+230 |             return as_color(value.clone().into(), modifier, theme, used)?
+    |                                          +++++++
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/masks.rs:230:20
+    |
+226 |   ) -> Result<(String, &'static str), super::utilities::FamilyFailure> {
+    |        --------------------------------------------------------------- expected `Result<(std::string::String, &'static str), FamilyFailure>` because of return type
+...
+230 |               return as_color(value.clone(), modifier, theme, used)?
+    |  ____________________^
+231 | |                 .map(|value| (value, "color"))
+232 | |                 .ok_or(super::utilities::FamilyFailure::Candidate(
+233 | |                     DiagnosticKind::InvalidValue,
+234 | |                 ));
+    | |__________________^ expected `Result<(String, &str), FamilyFailure>`, found `Result<(Text, &str), FamilyFailure>`
+    |
+    = note: expected enum `Result<(std::string::String, &'static _), _>`
+               found enum `Result<(text::Text, &_), _>`
+
+error[E0308]: `match` arms have incompatible types
+   --> crates/rustify-style/src/compiler/masks.rs:247:14
+    |
+244 |       let color = match value.as_str() {
+    |                   -------------------- `match` arms have incompatible types
+245 |           "current" => Some("currentcolor".into()),
+    |                        --------------------------- this is found to be of type `std::option::Option<std::string::String>`
+246 |           "inherit" | "transparent" => Some(value.clone()),
+    |                                        ------------------- this is found to be of type `std::option::Option<std::string::String>`
+247 |           _ => resolve_named(value, &["background-color", "color"], theme, used)?
+    |  ______________^
+248 | |             .filter(|value| !value.is_empty()),
+    | |______________________________________________^ expected `Option<String>`, found `Option<Text>`
+    |
+    = note: expected enum `std::option::Option<std::string::String>`
+               found enum `std::option::Option<text::Text>`
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/masks.rs:252:24
+    |
+252 |             return Ok((color, "color"));
+    |                        ^^^^^ expected `String`, found `Text`
+
+error[E0308]: mismatched types
+  --> crates/rustify-style/src/compiler/shadows.rs:69:24
+   |
+61 | ) -> Result<Option<String>, super::utilities::FamilyFailure> {
+   |      ------------------------------------------------------- expected `Result<std::option::Option<std::string::String>, FamilyFailure>` because of return type
+...
+69 |         Some(color) => as_color(color, modifier, theme, used),
+   |                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `Result<Option<String>, FamilyFailure>`, found `Result<Option<Text>, FamilyFailure>`
+   |
+   = note: expected enum `Result<std::option::Option<std::string::String>, _>`
+              found enum `Result<std::option::Option<text::Text>, _>`
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/shadows.rs:260:38
+    |
+260 |                 let color = as_color(value.clone(), modifier, theme, used)?
+    |                             -------- ^^^^^^^^^^^^^ expected `Text`, found `String`
+    |                             |
+    |                             arguments to this function are incorrect
+    |
+note: function defined here
+   --> crates/rustify-style/src/compiler/colors.rs:365:15
+    |
+365 | pub(super) fn as_color(
+    |               ^^^^^^^^
+366 |     color: Text,
+    |     -----------
+help: call `Into::into` on this expression to convert `std::string::String` into `text::Text`
+    |
+260 |                 let color = as_color(value.clone().into(), modifier, theme, used)?
+    |                                                   +++++++
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/shadows.rs:262:40
+    |
+262 |                 return Ok(color_output(color));
+    |                           ------------ ^^^^^ expected `String`, found `Text`
+    |                           |
+    |                           arguments to this function are incorrect
+    |
+note: closure parameter defined here
+   --> crates/rustify-style/src/compiler/shadows.rs:239:25
+    |
+239 |     let color_output = |color: String| {
+    |                         ^^^^^^^^^^^^^
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/shadows.rs:412:30
+    |
+412 |                     as_color(value.clone(), modifier, theme, used)?
+    |                     -------- ^^^^^^^^^^^^^ expected `Text`, found `String`
+    |                     |
+    |                     arguments to this function are incorrect
+    |
+note: function defined here
+   --> crates/rustify-style/src/compiler/colors.rs:365:15
+    |
+365 | pub(super) fn as_color(
+    |               ^^^^^^^^
+366 |     color: Text,
+    |     -----------
+help: call `Into::into` on this expression to convert `std::string::String` into `text::Text`
+    |
+412 |                     as_color(value.clone().into(), modifier, theme, used)?
+    |                                           +++++++
+
+error[E0308]: `?` operator has incompatible types
+   --> crates/rustify-style/src/compiler/shadows.rs:412:21
+    |
+412 | /                     as_color(value.clone(), modifier, theme, used)?
+413 | |                         .ok_or(DiagnosticKind::InvalidValue)?,
+    | |_____________________________________________________________^ expected `String`, found `Text`
+    |
+    = note: `?` operator cannot convert from `text::Text` to `std::string::String`
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/shadows.rs:425:29
+    |
+425 |                 .or_else(|| canonical_nonnegative(value, true).then(|| format!("{value}px")));
+    |                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `Option<Text>`, found `Option<String>`
+    |
+    = note: expected enum `std::option::Option<text::Text>`
+               found enum `std::option::Option<std::string::String>`
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/shadows.rs:430:41
+    |
+430 |                 return ring_width(root, width, theme, used);
+    |                        ----------       ^^^^^ expected `String`, found `Text`
+    |                        |
+    |                        arguments to this function are incorrect
+    |
+note: function defined here
+   --> crates/rustify-style/src/compiler/shadows.rs:333:4
+    |
+333 | fn ring_width(
+    |    ^^^^^^^^^^
+334 |     root: &str,
+335 |     value: String,
+    |     -------------
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/utilities.rs:286:32
+    |
+ 88 |     let mut declarations: Vec<(crate::text::Text, crate::text::Text)> = Vec::new();
+    |                           ------------------------------------------- expected due to this type
+...
+286 |                 declarations = effect.declarations;
+    |                                ^^^^^^^^^^^^^^^^^^^ expected `Vec<(Text, Text)>`, found `Vec<(String, String)>`
+    |
+    = note: expected struct `Vec<(text::Text, text::Text)>`
+               found struct `Vec<(std::string::String, std::string::String)>`
+
+Some errors have detailed explanations: E0277, E0308.
+For more information about an error, try `rustc --explain E0277`.
+error: could not compile `rustify-style` (lib test) due to 26 previous errors
+mbx[cache]: 0 hits, 0 misses, 1 not looked up; 0 B downloaded, 0 B uploaded, 0 B stored locally

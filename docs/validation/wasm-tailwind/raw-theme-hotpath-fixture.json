@@ -1,0 +1,25 @@
+{
+  "baseScript": "tests/utility/compiler/bench-media-source-wasm.mjs",
+  "baseSha256": "d1130984077de9ef21f239fd09ba8fc4ff49a832cbbf3b6a25dc1962f653117e",
+  "scriptPath": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-raw-theme-benchmark-wjzdhbgm/benchmark.mjs",
+  "scriptSha256": "1b1ace5c2730acd372f9c99e48c5d1a2778df5e89907102104c46bde6ebb4c5e",
+  "themeVariables": 128,
+  "keyframeRules": 1,
+  "samples": 5,
+  "sessionsPerSample": 100,
+  "buildsPerSample": 400,
+  "batches": [
+    [],
+    [
+      "block"
+    ],
+    [
+      "animate-spin"
+    ],
+    [
+      "flex"
+    ]
+  ],
+  "source": "import assert from 'node:assert/strict'\nimport {createHash} from 'node:crypto'\nimport {readFile} from 'node:fs/promises'\nimport {resolve} from 'node:path'\nimport {performance} from 'node:perf_hooks'\nimport {pathToFileURL} from 'node:url'\n\nconst directory=resolve(process.argv[2] ?? 'target/utility-conformance/compiler-api')\nconst facade=await import(pathToFileURL(resolve(directory,'style.js')))\nconst bytes=await readFile(resolve(directory,'style_bg.wasm'))\nawait facade.default({module_or_path:bytes})\nconst limits={input_bytes:262144,asset_bytes:262144,candidate_count:1024,ast_depth:32,\n  css_bytes:262144,queued_bytes:262144,cache_bytes:16000000}\nconst config=JSON.stringify({limits,options:{from:'entry.css',base:'/discover'}})\nfunction fixture() {\n  const decl=(property,value)=>({kind:'declaration',property,value,important:false})\n  return [{kind:'at-rule',name:'@theme',params:'',nodes:[\n    decl('--spacing','.25rem'),decl('--animate-spin','spin 1s linear infinite'),decl('--x','--spacing(2)'),\n    ...Array.from({length:125},(_,index)=>decl(`--probe-${index}`,`${index}px`)),\n    {kind:'at-rule',name:'@keyframes',params:'spin',nodes:[{kind:'rule',selector:'to',nodes:[\n      decl('transform','rotate(360deg)'),decl('width','--spacing(2)')\n    ]}]}\n  ]},{kind:'at-rule',name:'@tailwind',params:'utilities',nodes:[]}]\n}\n// Full identity and mutation prefixes are checked by the independent graph gates.\nfunction shape(nodes) {\n  return nodes.map(node => ({kind:node.kind,...Object.fromEntries(['name','params','selector','property','value','important'].filter(key => key in node).map(key => [key,node[key]])),\n    ...('nodes' in node ? {nodes:shape(node.nodes)} : {})}))\n}\nfunction sample() {\n  const constructors=[],builds=[],hash=createHash('sha256')\n  const started=performance.now()\n  for (let session=0;session<100;session++) {\n    const input=fixture(), start=performance.now()\n    const compiler=new facade.AstCompiler(input,config)\n    constructors.push(performance.now()-start)\n    try {\n      for (const batch of [[],['block'],['animate-spin'],['flex']]) {\n        const before=performance.now(), output=compiler.build(batch)\n        builds.push(performance.now()-before)\n        hash.update(JSON.stringify(shape(output)))\n      }\n    } finally { compiler.free() }\n  }\n  const elapsed=performance.now()-started\n  const p95=values => values.sort((a,b) => a-b)[Math.ceil(values.length*0.95)-1]\n  return {constructorP95Ms:p95(constructors),buildP95Ms:p95(builds),sessionsPerSecond:100000/elapsed,\n    outputSha256:hash.digest('hex'),sessions:100,builds:400}\n}\nsample()\nconst samples=Array.from({length:5},sample)\nassert(samples.every(value => value.outputSha256===samples[0].outputSha256))\nconst median=field => samples.map(value => value[field]).sort((a,b) => a-b)[2]\nconsole.log(JSON.stringify({scope:'public AST constructor with 128 theme variables, declaration/keyframe functions and four builds',\n  samples,constructorP95Ms:median('constructorP95Ms'),buildP95Ms:median('buildP95Ms'),\n  sessionsPerSecond:median('sessionsPerSecond'),wasmBytes:bytes.length,\n  wasmSha256:createHash('sha256').update(bytes).digest('hex'),actualWasm:true,finalPerformanceAcceptance:'pending'}))\n",
+  "limitsUnchanged": true
+}

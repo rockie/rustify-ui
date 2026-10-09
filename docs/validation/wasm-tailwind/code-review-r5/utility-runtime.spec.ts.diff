@@ -1,0 +1,74 @@
+--- R4/tests/browser/utility-runtime.spec.ts
++++ current/tests/browser/utility-runtime.spec.ts
+@@ -878,7 +878,6 @@
+     page.on('console', message => { if (message.type() === 'error') errors.push(message.text()); });
+     await ready(page);
+     const cases = [
+-        {id: 'shared-role', css: ':root { --ease: linear; } @keyframes card { to { opacity: 0; } } @keyframes linear { to { opacity: 0.5; } } .motion { animation: card 10s var(--ease) infinite; } .other { animation-name: var(--ease); animation-duration: 10s; }'},
+         {id: 'var-before', css: ':root { --x: linear; } @keyframes ease { to { opacity: 0.3; } } .motion { animation: var(--x) 10s ease infinite; }'},
+         {id: 'var-name', css: ':root { --name: linear; } @keyframes linear { to { opacity: 0.3; } } .motion { animation: 10s ease var(--name) infinite; }'},
+         {id: 'var-fallback', css: ':root { --x: ease; } @keyframes linear { to { opacity: 0.3; } } .motion { animation: var(--x, linear) 10s linear infinite; }'},
+@@ -931,6 +930,63 @@
+     expect(errors).toEqual([]);
+ });
+ 
++test('a public property carrying a keyframes name follows overrides, and one with conflicting uses is refused', async ({page}, info) => {
++    const errors: string[] = [];
++    page.on('pageerror', error => errors.push(error.message));
++    page.on('console', message => { if (message.type() === 'error') errors.push(message.text()); });
++    await ready(page);
++    const result = await page.evaluate(async () => {
++        const api = (window as any).__utility_lab;
++        const id = 'animation-public';
++        const root = document.createElement('div'); root.id = id; document.querySelector('main')!.append(root);
++        api.mount(id, 10000, ':root { --v: linear; --a: var(--v); } @keyframes linear { to { opacity: 0.5; } } .motion { animation-name: var(--v); animation-duration: 10s; } .alias { animation-name: var(--a); animation-duration: 10s; } @tailwind utilities;');
++        const frame = document.getElementById(`${id}-frame`)!;
++        const [motion, alias, other] = ['motion', 'alias', 'motion'].map(className => {
++            const element = document.createElement('div'); element.className = className; frame.append(element); return element;
++        });
++        const report = await api.ensure(id, []);
++        const owner = root.dataset.rustifyStyleOwner;
++        const read = (element: HTMLElement) => {
++            const animations = element.getAnimations() as CSSAnimation[];
++            const frames = animations[0] ? (animations[0].effect as KeyframeEffect).getKeyframes() : [];
++            return {variable: getComputedStyle(element).getPropertyValue('--v').trim(), name: getComputedStyle(element).animationName,
++                count: animations.length, opacity: frames.at(-1)?.opacity};
++        };
++        const before = [motion, alias, other].map(read);
++        other.style.setProperty('--v', 'none');
++        const element = [motion, other].map(read);
++        root.style.setProperty('--v', 'none');
++        const inherited = [motion, alias].map(read);
++        root.style.removeProperty('--v');
++        const fail = async (css: string) => {
++            try { await api.replace(id, css); return null; } catch (error) { return JSON.parse(String(error)); }
++        };
++        const shared = await fail(':root { --ease: linear; } @keyframes card { to { opacity: 0; } } @keyframes linear { to { opacity: 0.5; } } .motion { animation: card 10s var(--ease) infinite; } .alias { animation-name: var(--ease); animation-duration: 10s; } @tailwind utilities;');
++        const plain = await fail(':root { --v: linear; } @keyframes linear { to { opacity: 0.5; } } .motion { animation-name: var(--v); animation-duration: 10s; } .alias { transition-timing-function: var(--v); } @tailwind utilities;');
++        const after = api.report(id);
++        const kept = [motion, alias].map(read);
++        api.dispose(id);
++        return {owner, css: report.css, revision: report.revision, before, element, inherited, shared, plain,
++            afterRevision: after.revision, afterCss: after.css, kept};
++    });
++    const named = {variable: `rustify-${result.owner}-linear`, name: `rustify-${result.owner}-linear`, count: 1, opacity: '0.5'};
++    const stopped = {variable: 'none', name: 'none', count: 0, opacity: undefined};
++    expect(result.css).toContain(`--v: rustify-${result.owner}-linear`);
++    expect(result.css).not.toContain('-k1-');
++    expect(result.before).toEqual([named, named, named]);
++    expect(result.element).toEqual([named, stopped]);
++    expect(result.inherited).toEqual([stopped, stopped]);
++    expect(result.shared).toEqual({kind: 'compile', error: {kind: 'unsupported_feature',
++        feature: 'custom property `--ease` used both as a keyframes name and with another meaning'}});
++    expect(result.plain).toEqual({kind: 'compile', error: {kind: 'unsupported_feature',
++        feature: 'custom property `--v` used both as a keyframes name and with another meaning'}});
++    expect(result.afterRevision).toBe(result.revision);
++    expect(result.afterCss).toBe(result.css);
++    expect(result.kept).toEqual([named, named]);
++    await info.attach('public keyframes properties', {body: JSON.stringify(result, null, 2), contentType: 'application/json'});
++    expect(errors).toEqual([]);
++});
++
+ test('rebuild releases inactive candidates and keeps the seed, DOM and named classes', async ({page}, info) => {
+     const errors: string[] = [];
+     page.on('pageerror', error => errors.push(error.message));

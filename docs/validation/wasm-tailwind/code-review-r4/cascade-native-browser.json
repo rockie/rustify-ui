@@ -1,0 +1,2805 @@
+{
+  "browser": "154.0.8037.98",
+  "cases": [
+    {
+      "id": "outside-override",
+      "input": ":root { --name: card; } @keyframes card { to { opacity: 0.3; } } @keyframes other { to { opacity: 0.7; } } .motion { animation: var(--name) 10s ease infinite; } .plain { font-family: var(--name); }",
+      "versions": {
+        "raw": {
+          "css": "#probe-outside-override-raw { --name: card; } @keyframes card { to { opacity: 0.3; } } @keyframes other { to { opacity: 0.7; } } .motion { animation: var(--name) 10s ease infinite; } .plain { font-family: var(--name); }",
+          "before": {
+            "motion": {
+              "variable": "",
+              "name": "card",
+              "timing": "ease",
+              "duration": "10s",
+              "iteration": "infinite",
+              "count": 1,
+              "lastOpacity": "0.3",
+              "transition": "ease",
+              "font": "Times"
+            },
+            "plain": {
+              "variable": "",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "card"
+            },
+            "other": {
+              "variable": "",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            }
+          },
+          "after": {
+            "motion": {
+              "variable": "",
+              "name": "card",
+              "timing": "ease",
+              "duration": "10s",
+              "iteration": "infinite",
+              "count": 1,
+              "lastOpacity": "0.3",
+              "transition": "ease",
+              "font": "Times"
+            },
+            "plain": {
+              "variable": "",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "serif"
+            },
+            "other": {
+              "variable": "",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            }
+          }
+        },
+        "r3": {
+          "owner": "review-r4",
+          "css": "@scope ([data-rustify-style-owner=\"review-r4\"]) to ([data-rustify-style-owner]) {\n  :scope {\n    --name: rustify-review-r4-card;\n  }\n  .motion {\n    animation: var(--name) 10s ease infinite;\n  }\n  .plain {\n    font-family: var(--name);\n  }\n}\n@keyframes rustify-review-r4-card {\n  to {\n    opacity: 0.3;\n  }\n}\n@keyframes rustify-review-r4-other {\n  to {\n    opacity: 0.7;\n  }\n}\n",
+          "before": {
+            "motion": {
+              "variable": "",
+              "name": "rustify-review-r4-card",
+              "timing": "ease",
+              "duration": "10s",
+              "iteration": "infinite",
+              "count": 1,
+              "lastOpacity": "0.3",
+              "transition": "ease",
+              "font": "Times"
+            },
+            "plain": {
+              "variable": "",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "rustify-review-r4-card"
+            },
+            "other": {
+              "variable": "",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            }
+          },
+          "after": {
+            "motion": {
+              "variable": "",
+              "name": "rustify-review-r4-card",
+              "timing": "ease",
+              "duration": "10s",
+              "iteration": "infinite",
+              "count": 1,
+              "lastOpacity": "0.3",
+              "transition": "ease",
+              "font": "Times"
+            },
+            "plain": {
+              "variable": "",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "serif"
+            },
+            "other": {
+              "variable": "",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            }
+          }
+        },
+        "r4": {
+          "owner": "review-r4",
+          "css": "@scope ([data-rustify-style-owner=\"review-r4\"]) to ([data-rustify-style-owner]) {\n  :scope {\n    --name: rustify-review-r4-card;\n    --rustify-review-r4-k1-name: card;\n  }\n  .motion {\n    animation: var(--name) 10s ease infinite;\n  }\n  .plain {\n    font-family: var(--rustify-review-r4-k1-name);\n  }\n}\n@keyframes rustify-review-r4-card {\n  to {\n    opacity: 0.3;\n  }\n}\n@keyframes rustify-review-r4-other {\n  to {\n    opacity: 0.7;\n  }\n}\n",
+          "before": {
+            "motion": {
+              "variable": "",
+              "name": "rustify-review-r4-card",
+              "timing": "ease",
+              "duration": "10s",
+              "iteration": "infinite",
+              "count": 1,
+              "lastOpacity": "0.3",
+              "transition": "ease",
+              "font": "Times"
+            },
+            "plain": {
+              "variable": "",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "card"
+            },
+            "other": {
+              "variable": "",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            }
+          },
+          "after": {
+            "motion": {
+              "variable": "",
+              "name": "rustify-review-r4-card",
+              "timing": "ease",
+              "duration": "10s",
+              "iteration": "infinite",
+              "count": 1,
+              "lastOpacity": "0.3",
+              "transition": "ease",
+              "font": "Times"
+            },
+            "plain": {
+              "variable": "",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "card"
+            },
+            "other": {
+              "variable": "",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "cascade-inherit",
+      "input": ":root { --ease: linear; --alias: var(--ease); } @keyframes card { to { opacity: 0; } } @keyframes linear { to { opacity: .5; } } .motion { --ease: ease; animation: card 10s var(--alias) infinite; } .other { animation-name: var(--alias); animation-duration: 10s; }",
+      "versions": {
+        "raw": {
+          "css": "#probe-cascade-inherit-raw { --ease: linear; --alias: var(--ease); } @keyframes card { to { opacity: 0; } } @keyframes linear { to { opacity: .5; } } .motion { --ease: ease; animation: card 10s var(--alias) infinite; } .other { animation-name: var(--alias); animation-duration: 10s; }",
+          "before": {
+            "motion": {
+              "variable": "",
+              "name": "card",
+              "timing": "linear",
+              "duration": "10s",
+              "iteration": "infinite",
+              "count": 1,
+              "lastOpacity": "0",
+              "transition": "ease",
+              "font": "Times"
+            },
+            "plain": {
+              "variable": "",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            },
+            "other": {
+              "variable": "",
+              "name": "linear",
+              "timing": "ease",
+              "duration": "10s",
+              "iteration": "1",
+              "count": 1,
+              "lastOpacity": "0.5",
+              "transition": "ease",
+              "font": "Times"
+            }
+          },
+          "after": {
+            "motion": {
+              "variable": "",
+              "name": "card",
+              "timing": "linear",
+              "duration": "10s",
+              "iteration": "infinite",
+              "count": 1,
+              "lastOpacity": "0",
+              "transition": "ease",
+              "font": "Times"
+            },
+            "plain": {
+              "variable": "",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            },
+            "other": {
+              "variable": "",
+              "name": "linear",
+              "timing": "ease",
+              "duration": "10s",
+              "iteration": "1",
+              "count": 1,
+              "lastOpacity": "0.5",
+              "transition": "ease",
+              "font": "Times"
+            }
+          }
+        },
+        "r3": {
+          "owner": "review-r4",
+          "css": "@scope ([data-rustify-style-owner=\"review-r4\"]) to ([data-rustify-style-owner]) {\n  :scope {\n    --ease: rustify-review-r4-linear;\n    --alias: var(--ease);\n  }\n  .motion {\n    --ease: ease;\n    animation: rustify-review-r4-card 10s var(--alias) infinite;\n  }\n  .other {\n    animation-name: var(--alias);\n    animation-duration: 10s;\n  }\n}\n@keyframes rustify-review-r4-card {\n  to {\n    opacity: 0;\n  }\n}\n@keyframes rustify-review-r4-linear {\n  to {\n    opacity: .5;\n  }\n}\n",
+          "before": {
+            "motion": {
+              "variable": "",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            },
+            "plain": {
+              "variable": "",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            },
+            "other": {
+              "variable": "",
+              "name": "rustify-review-r4-linear",
+              "timing": "ease",
+              "duration": "10s",
+              "iteration": "1",
+              "count": 1,
+              "lastOpacity": "0.5",
+              "transition": "ease",
+              "font": "Times"
+            }
+          },
+          "after": {
+            "motion": {
+              "variable": "",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            },
+            "plain": {
+              "variable": "",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            },
+            "other": {
+              "variable": "",
+              "name": "rustify-review-r4-linear",
+              "timing": "ease",
+              "duration": "10s",
+              "iteration": "1",
+              "count": 1,
+              "lastOpacity": "0.5",
+              "transition": "ease",
+              "font": "Times"
+            }
+          }
+        },
+        "r4": {
+          "owner": "review-r4",
+          "css": "@scope ([data-rustify-style-owner=\"review-r4\"]) to ([data-rustify-style-owner]) {\n  :scope {\n    --ease: linear;\n    --rustify-review-r4-k1-ease: rustify-review-r4-linear;\n    --alias: var(--ease);\n    --rustify-review-r4-k1-alias: var(--rustify-review-r4-k1-ease);\n  }\n  .motion {\n    --ease: ease;\n    --rustify-review-r4-k1-ease: ease;\n    animation: rustify-review-r4-card 10s var(--alias) infinite;\n  }\n  .other {\n    animation-name: var(--rustify-review-r4-k1-alias);\n    animation-duration: 10s;\n  }\n}\n@keyframes rustify-review-r4-card {\n  to {\n    opacity: 0;\n  }\n}\n@keyframes rustify-review-r4-linear {\n  to {\n    opacity: .5;\n  }\n}\n",
+          "before": {
+            "motion": {
+              "variable": "",
+              "name": "rustify-review-r4-card",
+              "timing": "linear",
+              "duration": "10s",
+              "iteration": "infinite",
+              "count": 1,
+              "lastOpacity": "0",
+              "transition": "ease",
+              "font": "Times"
+            },
+            "plain": {
+              "variable": "",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            },
+            "other": {
+              "variable": "",
+              "name": "rustify-review-r4-linear",
+              "timing": "ease",
+              "duration": "10s",
+              "iteration": "1",
+              "count": 1,
+              "lastOpacity": "0.5",
+              "transition": "ease",
+              "font": "Times"
+            }
+          },
+          "after": {
+            "motion": {
+              "variable": "",
+              "name": "rustify-review-r4-card",
+              "timing": "linear",
+              "duration": "10s",
+              "iteration": "infinite",
+              "count": 1,
+              "lastOpacity": "0",
+              "transition": "ease",
+              "font": "Times"
+            },
+            "plain": {
+              "variable": "",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            },
+            "other": {
+              "variable": "",
+              "name": "rustify-review-r4-linear",
+              "timing": "ease",
+              "duration": "10s",
+              "iteration": "1",
+              "count": 1,
+              "lastOpacity": "0.5",
+              "transition": "ease",
+              "font": "Times"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "global-keyword",
+      "input": ":root { --motion: initial; } @keyframes card { to { opacity: .3; } } .motion { animation: var(--motion, card 10s) ; }",
+      "versions": {
+        "raw": {
+          "css": "#probe-global-keyword-raw { --motion: initial; } @keyframes card { to { opacity: .3; } } .motion { animation: var(--motion, card 10s) ; }",
+          "before": {
+            "motion": {
+              "variable": "",
+              "name": "card",
+              "timing": "ease",
+              "duration": "10s",
+              "iteration": "1",
+              "count": 1,
+              "lastOpacity": "0.3",
+              "transition": "ease",
+              "font": "Times"
+            },
+            "plain": {
+              "variable": "",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            },
+            "other": {
+              "variable": "",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            }
+          },
+          "after": {
+            "motion": {
+              "variable": "",
+              "name": "card",
+              "timing": "ease",
+              "duration": "10s",
+              "iteration": "1",
+              "count": 1,
+              "lastOpacity": "0.3",
+              "transition": "ease",
+              "font": "Times"
+            },
+            "plain": {
+              "variable": "",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            },
+            "other": {
+              "variable": "",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            }
+          }
+        },
+        "r3": {
+          "owner": "review-r4",
+          "css": "@scope ([data-rustify-style-owner=\"review-r4\"]) to ([data-rustify-style-owner]) {\n  :scope {\n    --motion: initial;\n  }\n  .motion {\n    animation: var(--motion, rustify-review-r4-card 10s);\n  }\n}\n@keyframes rustify-review-r4-card {\n  to {\n    opacity: .3;\n  }\n}\n",
+          "before": {
+            "motion": {
+              "variable": "",
+              "name": "rustify-review-r4-card",
+              "timing": "ease",
+              "duration": "10s",
+              "iteration": "1",
+              "count": 1,
+              "lastOpacity": "0.3",
+              "transition": "ease",
+              "font": "Times"
+            },
+            "plain": {
+              "variable": "",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            },
+            "other": {
+              "variable": "",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            }
+          },
+          "after": {
+            "motion": {
+              "variable": "",
+              "name": "rustify-review-r4-card",
+              "timing": "ease",
+              "duration": "10s",
+              "iteration": "1",
+              "count": 1,
+              "lastOpacity": "0.3",
+              "transition": "ease",
+              "font": "Times"
+            },
+            "plain": {
+              "variable": "",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            },
+            "other": {
+              "variable": "",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            }
+          }
+        },
+        "r4": {
+          "owner": "review-r4",
+          "css": "@scope ([data-rustify-style-owner=\"review-r4\"]) to ([data-rustify-style-owner]) {\n  :scope {\n    --motion: initial;\n  }\n  .motion {\n    animation: var(--motion, rustify-review-r4-card 10s);\n  }\n}\n@keyframes rustify-review-r4-card {\n  to {\n    opacity: .3;\n  }\n}\n",
+          "before": {
+            "motion": {
+              "variable": "",
+              "name": "rustify-review-r4-card",
+              "timing": "ease",
+              "duration": "10s",
+              "iteration": "1",
+              "count": 1,
+              "lastOpacity": "0.3",
+              "transition": "ease",
+              "font": "Times"
+            },
+            "plain": {
+              "variable": "",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            },
+            "other": {
+              "variable": "",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            }
+          },
+          "after": {
+            "motion": {
+              "variable": "",
+              "name": "rustify-review-r4-card",
+              "timing": "ease",
+              "duration": "10s",
+              "iteration": "1",
+              "count": 1,
+              "lastOpacity": "0.3",
+              "transition": "ease",
+              "font": "Times"
+            },
+            "plain": {
+              "variable": "",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            },
+            "other": {
+              "variable": "",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "none-name",
+      "input": "@keyframes none { to { opacity: 0.3; } } .motion { animation-name: none; animation-duration: 10s; }",
+      "versions": {
+        "raw": {
+          "css": "@keyframes none { to { opacity: 0.3; } } .motion { animation-name: none; animation-duration: 10s; }",
+          "before": {
+            "motion": {
+              "variable": "",
+              "name": "none",
+              "timing": "ease",
+              "duration": "10s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            },
+            "plain": {
+              "variable": "",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            },
+            "other": {
+              "variable": "",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            }
+          },
+          "after": {
+            "motion": {
+              "variable": "",
+              "name": "none",
+              "timing": "ease",
+              "duration": "10s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            },
+            "plain": {
+              "variable": "",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            },
+            "other": {
+              "variable": "",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            }
+          }
+        },
+        "r3": {
+          "owner": "review-r4",
+          "css": "@scope ([data-rustify-style-owner=\"review-r4\"]) to ([data-rustify-style-owner]) {\n  .motion {\n    animation-name: rustify-review-r4-none;\n    animation-duration: 10s;\n  }\n}\n@keyframes rustify-review-r4-none {\n  to {\n    opacity: 0.3;\n  }\n}\n",
+          "before": {
+            "motion": {
+              "variable": "",
+              "name": "rustify-review-r4-none",
+              "timing": "ease",
+              "duration": "10s",
+              "iteration": "1",
+              "count": 1,
+              "lastOpacity": "0.3",
+              "transition": "ease",
+              "font": "Times"
+            },
+            "plain": {
+              "variable": "",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            },
+            "other": {
+              "variable": "",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            }
+          },
+          "after": {
+            "motion": {
+              "variable": "",
+              "name": "rustify-review-r4-none",
+              "timing": "ease",
+              "duration": "10s",
+              "iteration": "1",
+              "count": 1,
+              "lastOpacity": "0.3",
+              "transition": "ease",
+              "font": "Times"
+            },
+            "plain": {
+              "variable": "",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            },
+            "other": {
+              "variable": "",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            }
+          }
+        },
+        "r4": {
+          "owner": "review-r4",
+          "css": "@scope ([data-rustify-style-owner=\"review-r4\"]) to ([data-rustify-style-owner]) {\n  .motion {\n    animation-name: rustify-review-r4-none;\n    animation-duration: 10s;\n  }\n}\n@keyframes rustify-review-r4-none {\n  to {\n    opacity: 0.3;\n  }\n}\n",
+          "before": {
+            "motion": {
+              "variable": "",
+              "name": "rustify-review-r4-none",
+              "timing": "ease",
+              "duration": "10s",
+              "iteration": "1",
+              "count": 1,
+              "lastOpacity": "0.3",
+              "transition": "ease",
+              "font": "Times"
+            },
+            "plain": {
+              "variable": "",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            },
+            "other": {
+              "variable": "",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            }
+          },
+          "after": {
+            "motion": {
+              "variable": "",
+              "name": "rustify-review-r4-none",
+              "timing": "ease",
+              "duration": "10s",
+              "iteration": "1",
+              "count": 1,
+              "lastOpacity": "0.3",
+              "transition": "ease",
+              "font": "Times"
+            },
+            "plain": {
+              "variable": "",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            },
+            "other": {
+              "variable": "",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "default-registered",
+      "input": "@property --tw-name { syntax: \"*\"; inherits: false; initial-value: linear; } @keyframes linear { to { opacity: 0.3; } } .motion { animation: 10s ease var(--tw-name); }",
+      "versions": {
+        "raw": {
+          "css": "@property --tw-name { syntax: \"*\"; inherits: false; initial-value: linear; } @keyframes linear { to { opacity: 0.3; } } .motion { animation: 10s ease var(--tw-name); }",
+          "before": {
+            "motion": {
+              "variable": "",
+              "name": "linear",
+              "timing": "ease",
+              "duration": "10s",
+              "iteration": "1",
+              "count": 1,
+              "lastOpacity": "0.3",
+              "transition": "ease",
+              "font": "Times"
+            },
+            "plain": {
+              "variable": "",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            },
+            "other": {
+              "variable": "",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            }
+          },
+          "after": {
+            "motion": {
+              "variable": "",
+              "name": "linear",
+              "timing": "ease",
+              "duration": "10s",
+              "iteration": "1",
+              "count": 1,
+              "lastOpacity": "0.3",
+              "transition": "ease",
+              "font": "Times"
+            },
+            "plain": {
+              "variable": "",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            },
+            "other": {
+              "variable": "",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            }
+          }
+        },
+        "r3": {
+          "owner": "review-r4",
+          "css": "@scope ([data-rustify-style-owner=\"review-r4\"]) to ([data-rustify-style-owner]) {\n  .motion {\n    animation: 10s ease var(--rustify-review-r4-tw-name);\n  }\n}\n@property --rustify-review-r4-tw-name {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: linear;\n}\n@keyframes rustify-review-r4-linear {\n  to {\n    opacity: 0.3;\n  }\n}\n",
+          "before": {
+            "motion": {
+              "variable": "",
+              "name": "linear",
+              "timing": "ease",
+              "duration": "10s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            },
+            "plain": {
+              "variable": "",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            },
+            "other": {
+              "variable": "",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            }
+          },
+          "after": {
+            "motion": {
+              "variable": "",
+              "name": "linear",
+              "timing": "ease",
+              "duration": "10s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            },
+            "plain": {
+              "variable": "",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            },
+            "other": {
+              "variable": "",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            }
+          }
+        },
+        "r4": {
+          "owner": "review-r4",
+          "css": "@scope ([data-rustify-style-owner=\"review-r4\"]) to ([data-rustify-style-owner]) {\n  .motion {\n    animation: 10s ease var(--rustify-review-r4-tw-name);\n  }\n}\n@property --rustify-review-r4-tw-name {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: linear;\n}\n@keyframes rustify-review-r4-linear {\n  to {\n    opacity: 0.3;\n  }\n}\n",
+          "before": {
+            "motion": {
+              "variable": "",
+              "name": "linear",
+              "timing": "ease",
+              "duration": "10s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            },
+            "plain": {
+              "variable": "",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            },
+            "other": {
+              "variable": "",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            }
+          },
+          "after": {
+            "motion": {
+              "variable": "",
+              "name": "linear",
+              "timing": "ease",
+              "duration": "10s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            },
+            "plain": {
+              "variable": "",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            },
+            "other": {
+              "variable": "",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "multi-inherit",
+      "input": ":root { --v: linear; } @keyframes linear { to { opacity: .5; } } .motion { animation-name: var(--v); animation-duration: 10s; } .other { transition-timing-function: var(--v); }",
+      "versions": {
+        "raw": {
+          "css": "#probe-multi-inherit-raw { --v: linear; } @keyframes linear { to { opacity: .5; } } .motion { animation-name: var(--v); animation-duration: 10s; } .other { transition-timing-function: var(--v); }",
+          "before": {
+            "motion": {
+              "variable": "linear",
+              "name": "linear",
+              "timing": "ease",
+              "duration": "10s",
+              "iteration": "1",
+              "count": 1,
+              "lastOpacity": "0.5",
+              "transition": "ease",
+              "font": "Times"
+            },
+            "plain": {
+              "variable": "linear",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            },
+            "other": {
+              "variable": "linear",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "linear",
+              "font": "Times"
+            }
+          },
+          "after": {
+            "motion": {
+              "variable": "linear",
+              "name": "linear",
+              "timing": "ease",
+              "duration": "10s",
+              "iteration": "1",
+              "count": 1,
+              "lastOpacity": "0.5",
+              "transition": "ease",
+              "font": "Times"
+            },
+            "plain": {
+              "variable": "linear",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            },
+            "other": {
+              "variable": "ease-in",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease-in",
+              "font": "Times"
+            }
+          }
+        },
+        "r3": {
+          "owner": "review-r4",
+          "css": "@scope ([data-rustify-style-owner=\"review-r4\"]) to ([data-rustify-style-owner]) {\n  :scope {\n    --v: rustify-review-r4-linear;\n  }\n  .motion {\n    animation-name: var(--v);\n    animation-duration: 10s;\n  }\n  .other {\n    transition-timing-function: var(--v);\n  }\n}\n@keyframes rustify-review-r4-linear {\n  to {\n    opacity: .5;\n  }\n}\n",
+          "before": {
+            "motion": {
+              "variable": "rustify-review-r4-linear",
+              "name": "rustify-review-r4-linear",
+              "timing": "ease",
+              "duration": "10s",
+              "iteration": "1",
+              "count": 1,
+              "lastOpacity": "0.5",
+              "transition": "ease",
+              "font": "Times"
+            },
+            "plain": {
+              "variable": "rustify-review-r4-linear",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            },
+            "other": {
+              "variable": "rustify-review-r4-linear",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            }
+          },
+          "after": {
+            "motion": {
+              "variable": "rustify-review-r4-linear",
+              "name": "rustify-review-r4-linear",
+              "timing": "ease",
+              "duration": "10s",
+              "iteration": "1",
+              "count": 1,
+              "lastOpacity": "0.5",
+              "transition": "ease",
+              "font": "Times"
+            },
+            "plain": {
+              "variable": "rustify-review-r4-linear",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            },
+            "other": {
+              "variable": "ease-in",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease-in",
+              "font": "Times"
+            }
+          }
+        },
+        "r4": {
+          "owner": "review-r4",
+          "css": "@scope ([data-rustify-style-owner=\"review-r4\"]) to ([data-rustify-style-owner]) {\n  :scope {\n    --v: rustify-review-r4-linear;\n    --rustify-review-r4-k1-v: linear;\n  }\n  .motion {\n    animation-name: var(--v);\n    animation-duration: 10s;\n  }\n  .other {\n    transition-timing-function: var(--rustify-review-r4-k1-v);\n  }\n}\n@keyframes rustify-review-r4-linear {\n  to {\n    opacity: .5;\n  }\n}\n",
+          "before": {
+            "motion": {
+              "variable": "rustify-review-r4-linear",
+              "name": "rustify-review-r4-linear",
+              "timing": "ease",
+              "duration": "10s",
+              "iteration": "1",
+              "count": 1,
+              "lastOpacity": "0.5",
+              "transition": "ease",
+              "font": "Times"
+            },
+            "plain": {
+              "variable": "rustify-review-r4-linear",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            },
+            "other": {
+              "variable": "rustify-review-r4-linear",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "linear",
+              "font": "Times"
+            }
+          },
+          "after": {
+            "motion": {
+              "variable": "rustify-review-r4-linear",
+              "name": "rustify-review-r4-linear",
+              "timing": "ease",
+              "duration": "10s",
+              "iteration": "1",
+              "count": 1,
+              "lastOpacity": "0.5",
+              "transition": "ease",
+              "font": "Times"
+            },
+            "plain": {
+              "variable": "rustify-review-r4-linear",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            },
+            "other": {
+              "variable": "ease-in",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "linear",
+              "font": "Times"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "var-timing-overridden",
+      "input": ":root { --v: linear; } @keyframes card { to { opacity: .3; } } @keyframes linear { to { opacity: .5; } } .motion { animation: card 10s var(--v) infinite; } .other { animation-name: var(--v); animation-duration: 10s; }",
+      "versions": {
+        "raw": {
+          "css": "#probe-var-timing-overridden-raw { --v: linear; } @keyframes card { to { opacity: .3; } } @keyframes linear { to { opacity: .5; } } .motion { animation: card 10s var(--v) infinite; } .other { animation-name: var(--v); animation-duration: 10s; }",
+          "before": {
+            "motion": {
+              "variable": "linear",
+              "name": "card",
+              "timing": "linear",
+              "duration": "10s",
+              "iteration": "infinite",
+              "count": 1,
+              "lastOpacity": "0.3",
+              "transition": "ease",
+              "font": "Times"
+            },
+            "plain": {
+              "variable": "linear",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            },
+            "other": {
+              "variable": "linear",
+              "name": "linear",
+              "timing": "ease",
+              "duration": "10s",
+              "iteration": "1",
+              "count": 1,
+              "lastOpacity": "0.5",
+              "transition": "ease",
+              "font": "Times"
+            }
+          },
+          "after": {
+            "motion": {
+              "variable": "linear",
+              "name": "card",
+              "timing": "linear",
+              "duration": "10s",
+              "iteration": "infinite",
+              "count": 1,
+              "lastOpacity": "0.3",
+              "transition": "ease",
+              "font": "Times"
+            },
+            "plain": {
+              "variable": "linear",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            },
+            "other": {
+              "variable": "linear",
+              "name": "linear",
+              "timing": "ease",
+              "duration": "10s",
+              "iteration": "1",
+              "count": 1,
+              "lastOpacity": "0.5",
+              "transition": "ease",
+              "font": "Times"
+            }
+          }
+        },
+        "r3": {
+          "owner": "review-r4",
+          "css": "@scope ([data-rustify-style-owner=\"review-r4\"]) to ([data-rustify-style-owner]) {\n  :scope {\n    --v: rustify-review-r4-linear;\n  }\n  .motion {\n    animation: rustify-review-r4-card 10s var(--v) infinite;\n  }\n  .other {\n    animation-name: var(--v);\n    animation-duration: 10s;\n  }\n}\n@keyframes rustify-review-r4-card {\n  to {\n    opacity: .3;\n  }\n}\n@keyframes rustify-review-r4-linear {\n  to {\n    opacity: .5;\n  }\n}\n",
+          "before": {
+            "motion": {
+              "variable": "rustify-review-r4-linear",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            },
+            "plain": {
+              "variable": "rustify-review-r4-linear",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            },
+            "other": {
+              "variable": "rustify-review-r4-linear",
+              "name": "rustify-review-r4-linear",
+              "timing": "ease",
+              "duration": "10s",
+              "iteration": "1",
+              "count": 1,
+              "lastOpacity": "0.5",
+              "transition": "ease",
+              "font": "Times"
+            }
+          },
+          "after": {
+            "motion": {
+              "variable": "rustify-review-r4-linear",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            },
+            "plain": {
+              "variable": "rustify-review-r4-linear",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            },
+            "other": {
+              "variable": "rustify-review-r4-linear",
+              "name": "rustify-review-r4-linear",
+              "timing": "ease",
+              "duration": "10s",
+              "iteration": "1",
+              "count": 1,
+              "lastOpacity": "0.5",
+              "transition": "ease",
+              "font": "Times"
+            }
+          }
+        },
+        "r4": {
+          "owner": "review-r4",
+          "css": "@scope ([data-rustify-style-owner=\"review-r4\"]) to ([data-rustify-style-owner]) {\n  :scope {\n    --v: linear;\n    --rustify-review-r4-k1-v: rustify-review-r4-linear;\n  }\n  .motion {\n    animation: rustify-review-r4-card 10s var(--v) infinite;\n  }\n  .other {\n    animation-name: var(--rustify-review-r4-k1-v);\n    animation-duration: 10s;\n  }\n}\n@keyframes rustify-review-r4-card {\n  to {\n    opacity: .3;\n  }\n}\n@keyframes rustify-review-r4-linear {\n  to {\n    opacity: .5;\n  }\n}\n",
+          "before": {
+            "motion": {
+              "variable": "linear",
+              "name": "rustify-review-r4-card",
+              "timing": "linear",
+              "duration": "10s",
+              "iteration": "infinite",
+              "count": 1,
+              "lastOpacity": "0.3",
+              "transition": "ease",
+              "font": "Times"
+            },
+            "plain": {
+              "variable": "linear",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            },
+            "other": {
+              "variable": "linear",
+              "name": "rustify-review-r4-linear",
+              "timing": "ease",
+              "duration": "10s",
+              "iteration": "1",
+              "count": 1,
+              "lastOpacity": "0.5",
+              "transition": "ease",
+              "font": "Times"
+            }
+          },
+          "after": {
+            "motion": {
+              "variable": "linear",
+              "name": "rustify-review-r4-card",
+              "timing": "linear",
+              "duration": "10s",
+              "iteration": "infinite",
+              "count": 1,
+              "lastOpacity": "0.3",
+              "transition": "ease",
+              "font": "Times"
+            },
+            "plain": {
+              "variable": "linear",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            },
+            "other": {
+              "variable": "linear",
+              "name": "rustify-review-r4-linear",
+              "timing": "ease",
+              "duration": "10s",
+              "iteration": "1",
+              "count": 1,
+              "lastOpacity": "0.5",
+              "transition": "ease",
+              "font": "Times"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "cycle-fallback",
+      "input": ":root { --a: var(--b); --b: var(--a); } @keyframes card { to { opacity: .3; } } .motion { animation: var(--a, card 10s) linear; }",
+      "versions": {
+        "raw": {
+          "css": "#probe-cycle-fallback-raw { --a: var(--b); --b: var(--a); } @keyframes card { to { opacity: .3; } } .motion { animation: var(--a, card 10s) linear; }",
+          "before": {
+            "motion": {
+              "variable": "",
+              "name": "card",
+              "timing": "linear",
+              "duration": "10s",
+              "iteration": "1",
+              "count": 1,
+              "lastOpacity": "0.3",
+              "transition": "ease",
+              "font": "Times"
+            },
+            "plain": {
+              "variable": "",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            },
+            "other": {
+              "variable": "",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            }
+          },
+          "after": {
+            "motion": {
+              "variable": "",
+              "name": "card",
+              "timing": "linear",
+              "duration": "10s",
+              "iteration": "1",
+              "count": 1,
+              "lastOpacity": "0.3",
+              "transition": "ease",
+              "font": "Times"
+            },
+            "plain": {
+              "variable": "",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            },
+            "other": {
+              "variable": "",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            }
+          }
+        },
+        "r3": {
+          "owner": "review-r4",
+          "css": "@scope ([data-rustify-style-owner=\"review-r4\"]) to ([data-rustify-style-owner]) {\n  :scope {\n    --a: var(--b);\n    --b: var(--a);\n  }\n  .motion {\n    animation: var(--a, rustify-review-r4-card 10s) linear;\n  }\n}\n@keyframes rustify-review-r4-card {\n  to {\n    opacity: .3;\n  }\n}\n",
+          "before": {
+            "motion": {
+              "variable": "",
+              "name": "rustify-review-r4-card",
+              "timing": "linear",
+              "duration": "10s",
+              "iteration": "1",
+              "count": 1,
+              "lastOpacity": "0.3",
+              "transition": "ease",
+              "font": "Times"
+            },
+            "plain": {
+              "variable": "",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            },
+            "other": {
+              "variable": "",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            }
+          },
+          "after": {
+            "motion": {
+              "variable": "",
+              "name": "rustify-review-r4-card",
+              "timing": "linear",
+              "duration": "10s",
+              "iteration": "1",
+              "count": 1,
+              "lastOpacity": "0.3",
+              "transition": "ease",
+              "font": "Times"
+            },
+            "plain": {
+              "variable": "",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            },
+            "other": {
+              "variable": "",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            }
+          }
+        },
+        "r4": {
+          "owner": "review-r4",
+          "css": "@scope ([data-rustify-style-owner=\"review-r4\"]) to ([data-rustify-style-owner]) {\n  :scope {\n    --a: var(--b);\n    --b: var(--a);\n  }\n  .motion {\n    animation: var(--a, rustify-review-r4-card 10s) linear;\n  }\n}\n@keyframes rustify-review-r4-card {\n  to {\n    opacity: .3;\n  }\n}\n",
+          "before": {
+            "motion": {
+              "variable": "",
+              "name": "rustify-review-r4-card",
+              "timing": "linear",
+              "duration": "10s",
+              "iteration": "1",
+              "count": 1,
+              "lastOpacity": "0.3",
+              "transition": "ease",
+              "font": "Times"
+            },
+            "plain": {
+              "variable": "",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            },
+            "other": {
+              "variable": "",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            }
+          },
+          "after": {
+            "motion": {
+              "variable": "",
+              "name": "rustify-review-r4-card",
+              "timing": "linear",
+              "duration": "10s",
+              "iteration": "1",
+              "count": 1,
+              "lastOpacity": "0.3",
+              "transition": "ease",
+              "font": "Times"
+            },
+            "plain": {
+              "variable": "",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            },
+            "other": {
+              "variable": "",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "inherited-keyframe",
+      "input": ":root { --v: card; } .motion { --v: inherit; animation: 10s ease var(--v); } @keyframes card { to { opacity: .3; } }",
+      "versions": {
+        "raw": {
+          "css": "#probe-inherited-keyframe-raw { --v: card; } .motion { --v: inherit; animation: 10s ease var(--v); } @keyframes card { to { opacity: .3; } }",
+          "before": {
+            "motion": {
+              "variable": "card",
+              "name": "card",
+              "timing": "ease",
+              "duration": "10s",
+              "iteration": "1",
+              "count": 1,
+              "lastOpacity": "0.3",
+              "transition": "ease",
+              "font": "Times"
+            },
+            "plain": {
+              "variable": "card",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            },
+            "other": {
+              "variable": "card",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            }
+          },
+          "after": {
+            "motion": {
+              "variable": "card",
+              "name": "card",
+              "timing": "ease",
+              "duration": "10s",
+              "iteration": "1",
+              "count": 1,
+              "lastOpacity": "0.3",
+              "transition": "ease",
+              "font": "Times"
+            },
+            "plain": {
+              "variable": "card",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            },
+            "other": {
+              "variable": "card",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            }
+          }
+        },
+        "r3": {
+          "owner": "review-r4",
+          "css": "@scope ([data-rustify-style-owner=\"review-r4\"]) to ([data-rustify-style-owner]) {\n  :scope {\n    --v: rustify-review-r4-card;\n  }\n  .motion {\n    --v: inherit;\n    animation: 10s ease var(--v);\n  }\n}\n@keyframes rustify-review-r4-card {\n  to {\n    opacity: .3;\n  }\n}\n",
+          "before": {
+            "motion": {
+              "variable": "rustify-review-r4-card",
+              "name": "rustify-review-r4-card",
+              "timing": "ease",
+              "duration": "10s",
+              "iteration": "1",
+              "count": 1,
+              "lastOpacity": "0.3",
+              "transition": "ease",
+              "font": "Times"
+            },
+            "plain": {
+              "variable": "rustify-review-r4-card",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            },
+            "other": {
+              "variable": "rustify-review-r4-card",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            }
+          },
+          "after": {
+            "motion": {
+              "variable": "rustify-review-r4-card",
+              "name": "rustify-review-r4-card",
+              "timing": "ease",
+              "duration": "10s",
+              "iteration": "1",
+              "count": 1,
+              "lastOpacity": "0.3",
+              "transition": "ease",
+              "font": "Times"
+            },
+            "plain": {
+              "variable": "rustify-review-r4-card",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            },
+            "other": {
+              "variable": "rustify-review-r4-card",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            }
+          }
+        },
+        "r4": {
+          "owner": "review-r4",
+          "css": "@scope ([data-rustify-style-owner=\"review-r4\"]) to ([data-rustify-style-owner]) {\n  :scope {\n    --v: rustify-review-r4-card;\n  }\n  .motion {\n    --v: inherit;\n    animation: 10s ease var(--v);\n  }\n}\n@keyframes rustify-review-r4-card {\n  to {\n    opacity: .3;\n  }\n}\n",
+          "before": {
+            "motion": {
+              "variable": "rustify-review-r4-card",
+              "name": "rustify-review-r4-card",
+              "timing": "ease",
+              "duration": "10s",
+              "iteration": "1",
+              "count": 1,
+              "lastOpacity": "0.3",
+              "transition": "ease",
+              "font": "Times"
+            },
+            "plain": {
+              "variable": "rustify-review-r4-card",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            },
+            "other": {
+              "variable": "rustify-review-r4-card",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            }
+          },
+          "after": {
+            "motion": {
+              "variable": "rustify-review-r4-card",
+              "name": "rustify-review-r4-card",
+              "timing": "ease",
+              "duration": "10s",
+              "iteration": "1",
+              "count": 1,
+              "lastOpacity": "0.3",
+              "transition": "ease",
+              "font": "Times"
+            },
+            "plain": {
+              "variable": "rustify-review-r4-card",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            },
+            "other": {
+              "variable": "rustify-review-r4-card",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "alias-mixed",
+      "input": ":root { --v: linear; --a:var(--v); } @keyframes linear { to { opacity: .3; } } .motion { animation-name: var(--a); animation-duration: 10s; } .other { transition-timing-function: var(--a); }",
+      "versions": {
+        "raw": {
+          "css": "#probe-alias-mixed-raw { --v: linear; --a:var(--v); } @keyframes linear { to { opacity: .3; } } .motion { animation-name: var(--a); animation-duration: 10s; } .other { transition-timing-function: var(--a); }",
+          "before": {
+            "motion": {
+              "variable": "linear",
+              "name": "linear",
+              "timing": "ease",
+              "duration": "10s",
+              "iteration": "1",
+              "count": 1,
+              "lastOpacity": "0.3",
+              "transition": "ease",
+              "font": "Times"
+            },
+            "plain": {
+              "variable": "linear",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            },
+            "other": {
+              "variable": "linear",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "linear",
+              "font": "Times"
+            }
+          },
+          "after": {
+            "motion": {
+              "variable": "linear",
+              "name": "linear",
+              "timing": "ease",
+              "duration": "10s",
+              "iteration": "1",
+              "count": 1,
+              "lastOpacity": "0.3",
+              "transition": "ease",
+              "font": "Times"
+            },
+            "plain": {
+              "variable": "linear",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            },
+            "other": {
+              "variable": "ease-in",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "linear",
+              "font": "Times"
+            }
+          }
+        },
+        "r3": {
+          "owner": "review-r4",
+          "css": "@scope ([data-rustify-style-owner=\"review-r4\"]) to ([data-rustify-style-owner]) {\n  :scope {\n    --v: rustify-review-r4-linear;\n    --a: var(--v);\n  }\n  .motion {\n    animation-name: var(--a);\n    animation-duration: 10s;\n  }\n  .other {\n    transition-timing-function: var(--a);\n  }\n}\n@keyframes rustify-review-r4-linear {\n  to {\n    opacity: .3;\n  }\n}\n",
+          "before": {
+            "motion": {
+              "variable": "rustify-review-r4-linear",
+              "name": "rustify-review-r4-linear",
+              "timing": "ease",
+              "duration": "10s",
+              "iteration": "1",
+              "count": 1,
+              "lastOpacity": "0.3",
+              "transition": "ease",
+              "font": "Times"
+            },
+            "plain": {
+              "variable": "rustify-review-r4-linear",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            },
+            "other": {
+              "variable": "rustify-review-r4-linear",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            }
+          },
+          "after": {
+            "motion": {
+              "variable": "rustify-review-r4-linear",
+              "name": "rustify-review-r4-linear",
+              "timing": "ease",
+              "duration": "10s",
+              "iteration": "1",
+              "count": 1,
+              "lastOpacity": "0.3",
+              "transition": "ease",
+              "font": "Times"
+            },
+            "plain": {
+              "variable": "rustify-review-r4-linear",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            },
+            "other": {
+              "variable": "ease-in",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            }
+          }
+        },
+        "r4": {
+          "owner": "review-r4",
+          "css": "@scope ([data-rustify-style-owner=\"review-r4\"]) to ([data-rustify-style-owner]) {\n  :scope {\n    --v: rustify-review-r4-linear;\n    --rustify-review-r4-k1-v: linear;\n    --a: var(--v);\n    --rustify-review-r4-k1-a: var(--rustify-review-r4-k1-v);\n  }\n  .motion {\n    animation-name: var(--a);\n    animation-duration: 10s;\n  }\n  .other {\n    transition-timing-function: var(--rustify-review-r4-k1-a);\n  }\n}\n@keyframes rustify-review-r4-linear {\n  to {\n    opacity: .3;\n  }\n}\n",
+          "before": {
+            "motion": {
+              "variable": "rustify-review-r4-linear",
+              "name": "rustify-review-r4-linear",
+              "timing": "ease",
+              "duration": "10s",
+              "iteration": "1",
+              "count": 1,
+              "lastOpacity": "0.3",
+              "transition": "ease",
+              "font": "Times"
+            },
+            "plain": {
+              "variable": "rustify-review-r4-linear",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            },
+            "other": {
+              "variable": "rustify-review-r4-linear",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "linear",
+              "font": "Times"
+            }
+          },
+          "after": {
+            "motion": {
+              "variable": "rustify-review-r4-linear",
+              "name": "rustify-review-r4-linear",
+              "timing": "ease",
+              "duration": "10s",
+              "iteration": "1",
+              "count": 1,
+              "lastOpacity": "0.3",
+              "transition": "ease",
+              "font": "Times"
+            },
+            "plain": {
+              "variable": "rustify-review-r4-linear",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            },
+            "other": {
+              "variable": "ease-in",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "linear",
+              "font": "Times"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "public-inline-consumer",
+      "input": ":root { --v: linear; } @keyframes linear { to { opacity: .3; } } .motion { animation-name: var(--v); animation-duration: 10s; }",
+      "versions": {
+        "raw": {
+          "css": "#probe-public-inline-consumer-raw { --v: linear; } @keyframes linear { to { opacity: .3; } } .motion { animation-name: var(--v); animation-duration: 10s; }",
+          "before": {
+            "motion": {
+              "variable": "linear",
+              "name": "linear",
+              "timing": "ease",
+              "duration": "10s",
+              "iteration": "1",
+              "count": 1,
+              "lastOpacity": "0.3",
+              "transition": "ease",
+              "font": "Times"
+            },
+            "plain": {
+              "variable": "linear",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "linear",
+              "font": "Times"
+            },
+            "other": {
+              "variable": "linear",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            }
+          },
+          "after": {
+            "motion": {
+              "variable": "linear",
+              "name": "linear",
+              "timing": "ease",
+              "duration": "10s",
+              "iteration": "1",
+              "count": 1,
+              "lastOpacity": "0.3",
+              "transition": "ease",
+              "font": "Times"
+            },
+            "plain": {
+              "variable": "linear",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "linear",
+              "font": "Times"
+            },
+            "other": {
+              "variable": "linear",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            }
+          }
+        },
+        "r3": {
+          "owner": "review-r4",
+          "css": "@scope ([data-rustify-style-owner=\"review-r4\"]) to ([data-rustify-style-owner]) {\n  :scope {\n    --v: rustify-review-r4-linear;\n  }\n  .motion {\n    animation-name: var(--v);\n    animation-duration: 10s;\n  }\n}\n@keyframes rustify-review-r4-linear {\n  to {\n    opacity: .3;\n  }\n}\n",
+          "before": {
+            "motion": {
+              "variable": "rustify-review-r4-linear",
+              "name": "rustify-review-r4-linear",
+              "timing": "ease",
+              "duration": "10s",
+              "iteration": "1",
+              "count": 1,
+              "lastOpacity": "0.3",
+              "transition": "ease",
+              "font": "Times"
+            },
+            "plain": {
+              "variable": "rustify-review-r4-linear",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            },
+            "other": {
+              "variable": "rustify-review-r4-linear",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            }
+          },
+          "after": {
+            "motion": {
+              "variable": "rustify-review-r4-linear",
+              "name": "rustify-review-r4-linear",
+              "timing": "ease",
+              "duration": "10s",
+              "iteration": "1",
+              "count": 1,
+              "lastOpacity": "0.3",
+              "transition": "ease",
+              "font": "Times"
+            },
+            "plain": {
+              "variable": "rustify-review-r4-linear",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            },
+            "other": {
+              "variable": "rustify-review-r4-linear",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            }
+          }
+        },
+        "r4": {
+          "owner": "review-r4",
+          "css": "@scope ([data-rustify-style-owner=\"review-r4\"]) to ([data-rustify-style-owner]) {\n  :scope {\n    --v: rustify-review-r4-linear;\n  }\n  .motion {\n    animation-name: var(--v);\n    animation-duration: 10s;\n  }\n}\n@keyframes rustify-review-r4-linear {\n  to {\n    opacity: .3;\n  }\n}\n",
+          "before": {
+            "motion": {
+              "variable": "rustify-review-r4-linear",
+              "name": "rustify-review-r4-linear",
+              "timing": "ease",
+              "duration": "10s",
+              "iteration": "1",
+              "count": 1,
+              "lastOpacity": "0.3",
+              "transition": "ease",
+              "font": "Times"
+            },
+            "plain": {
+              "variable": "rustify-review-r4-linear",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            },
+            "other": {
+              "variable": "rustify-review-r4-linear",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            }
+          },
+          "after": {
+            "motion": {
+              "variable": "rustify-review-r4-linear",
+              "name": "rustify-review-r4-linear",
+              "timing": "ease",
+              "duration": "10s",
+              "iteration": "1",
+              "count": 1,
+              "lastOpacity": "0.3",
+              "transition": "ease",
+              "font": "Times"
+            },
+            "plain": {
+              "variable": "rustify-review-r4-linear",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            },
+            "other": {
+              "variable": "rustify-review-r4-linear",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "external-disable-name",
+      "input": ":root { --v: linear; } @keyframes card { to { opacity: .3; } } @keyframes linear { to { opacity: .5; } } .motion { animation: card 10s var(--v) infinite; } .other { animation-name: var(--v); animation-duration: 10s; }",
+      "versions": {
+        "raw": {
+          "css": "#probe-external-disable-name-raw { --v: linear; } @keyframes card { to { opacity: .3; } } @keyframes linear { to { opacity: .5; } } .motion { animation: card 10s var(--v) infinite; } .other { animation-name: var(--v); animation-duration: 10s; }",
+          "before": {
+            "motion": {
+              "variable": "linear",
+              "name": "card",
+              "timing": "linear",
+              "duration": "10s",
+              "iteration": "infinite",
+              "count": 1,
+              "lastOpacity": "0.3",
+              "transition": "ease",
+              "font": "Times"
+            },
+            "plain": {
+              "variable": "linear",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            },
+            "other": {
+              "variable": "linear",
+              "name": "linear",
+              "timing": "ease",
+              "duration": "10s",
+              "iteration": "1",
+              "count": 1,
+              "lastOpacity": "0.5",
+              "transition": "ease",
+              "font": "Times"
+            }
+          },
+          "after": {
+            "motion": {
+              "variable": "linear",
+              "name": "card",
+              "timing": "linear",
+              "duration": "10s",
+              "iteration": "infinite",
+              "count": 1,
+              "lastOpacity": "0.3",
+              "transition": "ease",
+              "font": "Times"
+            },
+            "plain": {
+              "variable": "linear",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            },
+            "other": {
+              "variable": "none",
+              "name": "none",
+              "timing": "ease",
+              "duration": "10s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            }
+          }
+        },
+        "r3": {
+          "owner": "review-r4",
+          "css": "@scope ([data-rustify-style-owner=\"review-r4\"]) to ([data-rustify-style-owner]) {\n  :scope {\n    --v: rustify-review-r4-linear;\n  }\n  .motion {\n    animation: rustify-review-r4-card 10s var(--v) infinite;\n  }\n  .other {\n    animation-name: var(--v);\n    animation-duration: 10s;\n  }\n}\n@keyframes rustify-review-r4-card {\n  to {\n    opacity: .3;\n  }\n}\n@keyframes rustify-review-r4-linear {\n  to {\n    opacity: .5;\n  }\n}\n",
+          "before": {
+            "motion": {
+              "variable": "rustify-review-r4-linear",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            },
+            "plain": {
+              "variable": "rustify-review-r4-linear",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            },
+            "other": {
+              "variable": "rustify-review-r4-linear",
+              "name": "rustify-review-r4-linear",
+              "timing": "ease",
+              "duration": "10s",
+              "iteration": "1",
+              "count": 1,
+              "lastOpacity": "0.5",
+              "transition": "ease",
+              "font": "Times"
+            }
+          },
+          "after": {
+            "motion": {
+              "variable": "rustify-review-r4-linear",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            },
+            "plain": {
+              "variable": "rustify-review-r4-linear",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            },
+            "other": {
+              "variable": "none",
+              "name": "none",
+              "timing": "ease",
+              "duration": "10s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            }
+          }
+        },
+        "r4": {
+          "owner": "review-r4",
+          "css": "@scope ([data-rustify-style-owner=\"review-r4\"]) to ([data-rustify-style-owner]) {\n  :scope {\n    --v: linear;\n    --rustify-review-r4-k1-v: rustify-review-r4-linear;\n  }\n  .motion {\n    animation: rustify-review-r4-card 10s var(--v) infinite;\n  }\n  .other {\n    animation-name: var(--rustify-review-r4-k1-v);\n    animation-duration: 10s;\n  }\n}\n@keyframes rustify-review-r4-card {\n  to {\n    opacity: .3;\n  }\n}\n@keyframes rustify-review-r4-linear {\n  to {\n    opacity: .5;\n  }\n}\n",
+          "before": {
+            "motion": {
+              "variable": "linear",
+              "name": "rustify-review-r4-card",
+              "timing": "linear",
+              "duration": "10s",
+              "iteration": "infinite",
+              "count": 1,
+              "lastOpacity": "0.3",
+              "transition": "ease",
+              "font": "Times"
+            },
+            "plain": {
+              "variable": "linear",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            },
+            "other": {
+              "variable": "linear",
+              "name": "rustify-review-r4-linear",
+              "timing": "ease",
+              "duration": "10s",
+              "iteration": "1",
+              "count": 1,
+              "lastOpacity": "0.5",
+              "transition": "ease",
+              "font": "Times"
+            }
+          },
+          "after": {
+            "motion": {
+              "variable": "linear",
+              "name": "rustify-review-r4-card",
+              "timing": "linear",
+              "duration": "10s",
+              "iteration": "infinite",
+              "count": 1,
+              "lastOpacity": "0.3",
+              "transition": "ease",
+              "font": "Times"
+            },
+            "plain": {
+              "variable": "linear",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            },
+            "other": {
+              "variable": "none",
+              "name": "rustify-review-r4-linear",
+              "timing": "ease",
+              "duration": "10s",
+              "iteration": "1",
+              "count": 1,
+              "lastOpacity": "0.5",
+              "transition": "ease",
+              "font": "Times"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "external-disable-cyclic",
+      "input": ":root { --v: linear; --a: var(--v); } @keyframes linear { to { opacity: .3; } } .plain { transition-timing-function: var(--v); } .motion { animation-name: var(--a); animation-duration: 10s; }",
+      "versions": {
+        "raw": {
+          "css": "#probe-external-disable-cyclic-raw { --v: linear; --a: var(--v); } @keyframes linear { to { opacity: .3; } } .plain { transition-timing-function: var(--v); } .motion { animation-name: var(--a); animation-duration: 10s; }",
+          "before": {
+            "motion": {
+              "variable": "linear",
+              "name": "linear",
+              "timing": "ease",
+              "duration": "10s",
+              "iteration": "1",
+              "count": 1,
+              "lastOpacity": "0.3",
+              "transition": "ease",
+              "font": "Times"
+            },
+            "plain": {
+              "variable": "linear",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "linear",
+              "font": "Times"
+            },
+            "other": {
+              "variable": "linear",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            }
+          },
+          "after": {
+            "motion": {
+              "variable": "none",
+              "name": "none",
+              "timing": "ease",
+              "duration": "10s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            },
+            "plain": {
+              "variable": "none",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            },
+            "other": {
+              "variable": "none",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            }
+          }
+        },
+        "r3": {
+          "owner": "review-r4",
+          "css": "@scope ([data-rustify-style-owner=\"review-r4\"]) to ([data-rustify-style-owner]) {\n  :scope {\n    --v: rustify-review-r4-linear;\n    --a: var(--v);\n  }\n  .plain {\n    transition-timing-function: var(--v);\n  }\n  .motion {\n    animation-name: var(--a);\n    animation-duration: 10s;\n  }\n}\n@keyframes rustify-review-r4-linear {\n  to {\n    opacity: .3;\n  }\n}\n",
+          "before": {
+            "motion": {
+              "variable": "rustify-review-r4-linear",
+              "name": "rustify-review-r4-linear",
+              "timing": "ease",
+              "duration": "10s",
+              "iteration": "1",
+              "count": 1,
+              "lastOpacity": "0.3",
+              "transition": "ease",
+              "font": "Times"
+            },
+            "plain": {
+              "variable": "rustify-review-r4-linear",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            },
+            "other": {
+              "variable": "rustify-review-r4-linear",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            }
+          },
+          "after": {
+            "motion": {
+              "variable": "none",
+              "name": "none",
+              "timing": "ease",
+              "duration": "10s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            },
+            "plain": {
+              "variable": "none",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            },
+            "other": {
+              "variable": "none",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            }
+          }
+        },
+        "r4": {
+          "owner": "review-r4",
+          "css": "@scope ([data-rustify-style-owner=\"review-r4\"]) to ([data-rustify-style-owner]) {\n  :scope {\n    --v: linear;\n    --rustify-review-r4-k1-v: rustify-review-r4-linear;\n    --a: var(--rustify-review-r4-k1-v);\n  }\n  .plain {\n    transition-timing-function: var(--v);\n  }\n  .motion {\n    animation-name: var(--a);\n    animation-duration: 10s;\n  }\n}\n@keyframes rustify-review-r4-linear {\n  to {\n    opacity: .3;\n  }\n}\n",
+          "before": {
+            "motion": {
+              "variable": "linear",
+              "name": "rustify-review-r4-linear",
+              "timing": "ease",
+              "duration": "10s",
+              "iteration": "1",
+              "count": 1,
+              "lastOpacity": "0.3",
+              "transition": "ease",
+              "font": "Times"
+            },
+            "plain": {
+              "variable": "linear",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "linear",
+              "font": "Times"
+            },
+            "other": {
+              "variable": "linear",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            }
+          },
+          "after": {
+            "motion": {
+              "variable": "none",
+              "name": "rustify-review-r4-linear",
+              "timing": "ease",
+              "duration": "10s",
+              "iteration": "1",
+              "count": 1,
+              "lastOpacity": "0.3",
+              "transition": "ease",
+              "font": "Times"
+            },
+            "plain": {
+              "variable": "none",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            },
+            "other": {
+              "variable": "none",
+              "name": "none",
+              "timing": "ease",
+              "duration": "0s",
+              "iteration": "1",
+              "count": 0,
+              "transition": "ease",
+              "font": "Times"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "manifests": null,
+  "errors": [],
+  "requests": []
+}

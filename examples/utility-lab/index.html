@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Utility Lab · Rustify UI</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="./runtime.css">
+  <link rel="stylesheet" href="./theme-fonts.css">
+  <link rel="stylesheet" href="./app.css">
+  <script type="module" src="./app.js"></script>
+</head>
+<body>
+  <main>
+    <header><div><h1>Utility Lab</h1><p data-i18n="subtitle">Apply complete class names to a live, isolated preview.</p></div>
+      <div class="language"><label for="language" data-i18n="language">Language</label><select id="language"><option value="en" lang="en">English</option><option value="zh" lang="zh-CN">简体中文</option></select></div></header>
+    <form id="controls">
+      <label for="classes" data-i18n="classes">Classes</label>
+      <textarea id="classes" rows="3" spellcheck="false" aria-describedby="merged-status">w-[137px] bg-[#123456] h-[72px] text-[#ffffff] rounded-[8px]</textarea>
+      <div class="merge-inputs">
+        <div><label for="override-classes" data-i18n="override">Override classes</label><input id="override-classes" type="text" spellcheck="false" autocomplete="off" aria-describedby="merged-status"></div>
+        <div><label for="conditional-classes" data-i18n="conditional">Conditional classes</label><input id="conditional-classes" type="text" spellcheck="false" autocomplete="off" aria-describedby="merged-status">
+          <label class="check"><input id="conditional-enabled" type="checkbox"> <span data-i18n="includeConditional">Include conditional classes</span></label></div>
+      </div>
+      <div class="merged"><span data-i18n="merged">Merged classes</span><output id="merged" for="classes override-classes conditional-classes"></output></div>
+      <p id="merged-status" class="field-status"></p>
+      <div class="actions"><button id="apply" type="submit" disabled data-i18n="apply">Apply classes</button><button id="retry" type="button" disabled data-i18n="retry">Restart compiler</button><button id="export" type="button" disabled data-i18n="export">Copy CSS</button></div>
+      <div class="gpu-options"><label><input id="partial" type="checkbox"> <span data-i18n="partial">Apply supported GPU properties only</span></label><label><input id="disabled" type="checkbox"> <span data-i18n="disable">Disable sample button</span></label></div>
+      <details class="node-inputs"><summary data-i18n="nodeInputs">Container, text and color block classes</summary>
+        <label for="container-classes" data-i18n="containerClasses">Container classes</label><textarea id="container-classes" rows="2" spellcheck="false"></textarea>
+        <label for="text-classes" data-i18n="textClasses">Text classes</label><textarea id="text-classes" rows="2" spellcheck="false"></textarea>
+        <label for="swatch-classes" data-i18n="swatchClasses">Color block classes</label><textarea id="swatch-classes" rows="2" spellcheck="false"></textarea>
+      </details>
+      <p id="status" role="status" aria-live="polite">Starting preview…</p>
+    </form>
+    <details id="source-panel">
+      <summary data-i18n="scanSummary">Scan source text</summary>
+      <p data-i18n="scanIntro">Generate rules from HTML source, then apply complete preview classes above.</p>
+      <form id="source-controls">
+        <label for="source" data-i18n="htmlSource">HTML source</label>
+        <textarea id="source" rows="4" spellcheck="false" aria-describedby="source-status"></textarea>
+        <div class="actions"><button id="scan" type="submit" disabled data-i18n="scan">Scan source</button></div>
+        <p id="source-status" role="status" aria-live="polite">Checking scanner availability…</p>
+        <pre id="source-result" data-i18n-label="sourceResult" aria-label="Compiled source candidates"></pre>
+      </form>
+    </details>
+    <div class="previews">
+      <section aria-labelledby="preview-heading"><h2 id="preview-heading" data-i18n="domPreview">DOM preview</h2><p data-i18n="domIntro">Updates after the generated stylesheet is installed.</p><div id="scope-a" class="preview"></div></section>
+      <section aria-labelledby="gpu-heading"><h2 id="gpu-heading" data-i18n="gpuPreview">GPU preview</h2><p data-i18n="gpuIntro">Supported properties update after compilation. Unsupported properties keep the previous appearance.</p><div id="gpu-board"></div></section>
+    </div>
+    <section class="isolation" aria-labelledby="isolation-heading"><h2 id="isolation-heading" data-i18n="isolation">Independent scope</h2><p data-i18n="isolationIntro">Uses its own compiler and stylesheet.</p><div id="scope-b" class="preview"></div></section>
+    <details><summary data-i18n="cssSummary">Generated CSS and diagnostics</summary><pre id="report">Apply classes to generate a stylesheet.</pre></details>
+    <div id="outside" class="w-[137px] bg-[#123456]" data-i18n="outside">Outside every utility scope</div>
+  </main>
+</body>
+</html>

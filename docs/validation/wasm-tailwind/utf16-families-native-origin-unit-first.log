@@ -1,0 +1,48 @@
+mbx[warning]: Unix-domain cache session listener unavailable; using FIFO transport: failed to bind cache session listener at /var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/mbx-session-0bqQyC/cache-agent.sock: Operation not permitted (os error 1)
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+error[E0277]: the trait bound `design_system::PublicValue: From<{float}>` is not satisfied
+   --> crates/rustify-style/src/compiler/public_api/design_system.rs:324:72
+    |
+324 |     ([$($value:expr),* $(,)?]) => { PublicValue::Array(Arc::new(vec![$(PublicValue::from(&$value)),*])) };
+    |                                                                        ^^^^^^^^^^^ unsatisfied trait bound
+    |
+   ::: crates/rustify-style/src/compiler/origin.rs:437:21
+    |
+437 |         let tuple = public_json!([source, 0.5, 7.5]);
+    |                     -------------------------------- in this macro invocation
+    |
+help: the trait `From<{float}>` is not implemented for `design_system::PublicValue`
+   --> crates/rustify-style/src/compiler/public_api/design_system.rs:74:1
+    |
+ 74 | pub enum PublicValue {
+    | ^^^^^^^^^^^^^^^^^^^^
+    = help: `design_system::PublicValue` implements trait `From<T>`:
+              From<&T>
+              From<&str>
+              From<Vec<T>>
+              From<bool>
+              From<std::option::Option<T>>
+              From<std::string::String>
+              From<text::Text>
+              From<u32>
+            and 2 others
+    = note: required for `{float}` to implement `Into<design_system::PublicValue>`
+note: required for `design_system::PublicValue` to implement `From<&{float}>`
+   --> crates/rustify-style/src/compiler/public_api/design_system.rs:257:36
+    |
+257 | impl<T: Clone + Into<PublicValue>> From<&T> for PublicValue {
+    |                 -----------------  ^^^^^^^^     ^^^^^^^^^^^
+    |                 |
+    |                 unsatisfied trait bound introduced here
+    = note: this error originates in the macro `public_json` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+For more information about this error, try `rustc --explain E0277`.
+error: could not compile `rustify-style` (lib test) due to 1 previous error
+mbx[cache]: 0 hits, 1 misses; 0 B downloaded, 0 B uploaded, 0 B stored locally

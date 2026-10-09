@@ -1,0 +1,22 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.97s
+     Running unittests src/lib.rs (target/debug/deps/rustify_style-6fef85b76bb136c3)
+
+running 5 tests
+test compiler::legacy_theme::tests::authored_legacy_theme_cannot_publish_metadata_above_caller_budget ... ok
+test compiler::legacy_theme::tests::explicit_legacy_budget_charges_initial_and_candidate_metrics ... ok
+test compiler::legacy_theme::tests::legacy_cache_charges_owned_dynamic_namespace_data_once ... ok
+test compiler::legacy_theme::tests::failed_lazy_legacy_cache_preserves_commit_and_allows_plain_candidates ... ok
+test compiler::legacy_theme::tests::legacy_theme_matches_all_default_namespaces_and_css_overrides ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 98 filtered out; finished in 3.60s
+
+mbx[cache]: 0 hits, 0 misses, 1 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: 481.9 GiB logical of outputs had survived their checkouts. an unnatural state, now corrected.

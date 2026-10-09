@@ -1,0 +1,157 @@
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui/src/gpu/utility/model.rs:701:
+         let mut requested = props(UtilityNodeKind::ColorBlock, 7, "width", "50%");
+         requested.programs = Arc::from([
+             requested.programs[0].clone(),
+[31m-            props(UtilityNodeKind::ColorBlock, 7, "padding", "10%")
+(B[m[31m-                .programs[0]
+(B[m[31m-                .clone(),
+(B[m[32m+            props(UtilityNodeKind::ColorBlock, 7, "padding", "10%").programs[0].clone(),
+(B[m         ]);
+         model.apply(requested);
+         assert_eq!(model.report().status, GpuResolutionStatus::Rejected);
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui/src/utility/gpu/../../gpu/utility/model.rs:701:
+         let mut requested = props(UtilityNodeKind::ColorBlock, 7, "width", "50%");
+         requested.programs = Arc::from([
+             requested.programs[0].clone(),
+[31m-            props(UtilityNodeKind::ColorBlock, 7, "padding", "10%")
+(B[m[31m-                .programs[0]
+(B[m[31m-                .clone(),
+(B[m[32m+            props(UtilityNodeKind::ColorBlock, 7, "padding", "10%").programs[0].clone(),
+(B[m         ]);
+         model.apply(requested);
+         assert_eq!(model.report().status, GpuResolutionStatus::Rejected);
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui/src/utility/gpu/tests.rs:4:
+ fn non_scalar_variable_values_are_visible_gpu_failures_without_replacing_the_previous_style() {
+     let theme = theme();
+     let mut context = context(&theme);
+[31m-    context.variables.insert("--probe".into(), rustify_style::text::Text::from_units(vec![0xd800]));
+(B[m[32m+    context.variables.insert(
+(B[m[32m+        "--probe".into(),
+(B[m[32m+        rustify_style::text::Text::from_units(vec![0xd800]),
+(B[m[32m+    );
+(B[m     let before = context.base_style.clone();
+[31m-    let resolved = resolve_gpu(&[css("width", 0, "width", "var(--probe)")], &theme, &context);
+(B[m[32m+    let resolved = resolve_gpu(
+(B[m[32m+        &[css("width", 0, "width", "var(--probe)")],
+(B[m[32m+        &theme,
+(B[m[32m+        &context,
+(B[m[32m+    );
+(B[m     assert_eq!(resolved.style, before);
+     assert_eq!(resolved.status, GpuResolutionStatus::Rejected);
+[31m-    assert!(resolved.diagnostics.iter().any(|item| item.reason.contains("non-scalar")));
+(B[m[32m+    assert!(resolved
+(B[m[32m+        .diagnostics
+(B[m[32m+        .iter()
+(B[m[32m+        .any(|item| item.reason.contains("non-scalar")));
+(B[m }
+ use crate::theme::{font_context, resolve, Theme, ThemeDocument, ThemeMode};
+ use rustify_style::program::{GpuCondition, GpuDeclaration, GpuValue};
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui/src/utility/gpu/tests.rs:203:
+     );
+     let mut context = context;
+     for index in 0..70 {
+[31m-        context
+(B[m[31m-            .variables
+(B[m[31m-            .insert(format!("--v{index}").into(), format!("var(--v{})", index + 1).into());
+(B[m[32m+        context.variables.insert(
+(B[m[32m+            format!("--v{index}").into(),
+(B[m[32m+            format!("var(--v{})", index + 1).into(),
+(B[m[32m+        );
+(B[m     }
+     context.variables.insert("--v70".into(), "4px".into());
+     assert_eq!(
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui/src/utility/gpu/values.rs:37:
+     pub fn new(variables: BTreeMap<Text, Text>) -> Self {
+         let graph: BTreeMap<_, _> = variables
+             .iter()
+[31m-            .map(|(name, value)| (name.clone(), value.to_utf8().ok().and_then(|value| references(&value).ok()).unwrap_or_default().into_iter().map(Text::from).collect::<Vec<_>>()))
+(B[m[32m+            .map(|(name, value)| {
+(B[m[32m+                (
+(B[m[32m+                    name.clone(),
+(B[m[32m+                    value
+(B[m[32m+                        .to_utf8()
+(B[m[32m+                        .ok()
+(B[m[32m+                        .and_then(|value| references(&value).ok())
+(B[m[32m+                        .unwrap_or_default()
+(B[m[32m+                        .into_iter()
+(B[m[32m+                        .map(Text::from)
+(B[m[32m+                        .collect::<Vec<_>>(),
+(B[m[32m+                )
+(B[m[32m+            })
+(B[m             .collect();
+         let mut marks = BTreeMap::<Text, u8>::new();
+         let mut cyclic = BTreeSet::new();
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui/src/utility/gpu/values.rs:115:
+             } else if let Some(value) = self.variables.get(&Text::from(name)) {
+                 match value.to_utf8() {
+                     Ok(value) => self.substitute(&value, depth + 1, remaining),
+[31m-                    Err(_) => Err(ValueError { message: format!("non-scalar custom property {name} is unsupported on GPU"), fatal: true }),
+(B[m[32m+                    Err(_) => Err(ValueError {
+(B[m[32m+                        message: format!("non-scalar custom property {name} is unsupported on GPU"),
+(B[m[32m+                        fatal: true,
+(B[m[32m+                    }),
+(B[m                 }
+             } else {
+                 Err(invalid(format!("unbound custom property {name}")))
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/examples/utility-lab/src/main.rs:405:
+     #[wasm_bindgen]
+     pub async fn utility_lab_scan_content(id: String, content: String) -> Result<String, JsValue> {
+         let content: Vec<SourceContent> = serde_json::from_str(&content).map_err(error)?;
+[31m-        let snapshot = scope(&id)?.scan_content(&content).await.map_err(|failure| {
+(B[m[31m-            error(serde_json::to_string(&failure).unwrap_or_else(|_| failure.to_string()))
+(B[m[31m-        })?;
+(B[m[32m+        let snapshot = scope(&id)?
+(B[m[32m+            .scan_content(&content)
+(B[m[32m+            .await
+(B[m[32m+            .map_err(|failure| {
+(B[m[32m+                error(serde_json::to_string(&failure).unwrap_or_else(|_| failure.to_string()))
+(B[m[32m+            })?;
+(B[m         serde_json::to_string(&*snapshot.report).map_err(error)
+     }
+     #[wasm_bindgen]
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/examples/utility-lab/src/main.rs:414:
+     pub async fn utility_lab_scan_sources(id: String, sources: String) -> Result<String, JsValue> {
+         let sources: SourceSnapshot = serde_json::from_str(&sources).map_err(error)?;
+[31m-        let snapshot = scope(&id)?.scan_sources(&sources).await.map_err(|failure| {
+(B[m[31m-            error(serde_json::to_string(&failure).unwrap_or_else(|_| failure.to_string()))
+(B[m[31m-        })?;
+(B[m[32m+        let snapshot = scope(&id)?
+(B[m[32m+            .scan_sources(&sources)
+(B[m[32m+            .await
+(B[m[32m+            .map_err(|failure| {
+(B[m[32m+                error(serde_json::to_string(&failure).unwrap_or_else(|_| failure.to_string()))
+(B[m[32m+            })?;
+(B[m         serde_json::to_string(&*snapshot.report).map_err(error)
+     }
+     #[wasm_bindgen]
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/xtask/src/utility.rs:45:
+         .map_err(|error| format!("style wasm-bindgen: {error:#}"))
+ }
+ 
+[31m-pub fn product_bundle(
+(B[m[31m-    root: &Path,
+(B[m[31m-    app: &Path,
+(B[m[31m-    wasm: &[u8],
+(B[m[31m-    scanner: bool,
+(B[m[31m-) -> Result<(), String> {
+(B[m[32m+pub fn product_bundle(root: &Path, app: &Path, wasm: &[u8], scanner: bool) -> Result<(), String> {
+(B[m     let module = wasmi::Module::new(&wasmi::Engine::default(), wasm)
+         .map_err(|error| format!("utility feature detection: {error}"))?;
+     if !module
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/xtask/src/utility.rs:64:
+         };
+     }
+     let output = app.join("utility");
+[31m-    facade(root, &output.join("compiler"), if scanner { "compiler,scanner" } else { "compiler" })?;
+(B[m[32m+    facade(
+(B[m[32m+        root,
+(B[m[32m+        &output.join("compiler"),
+(B[m[32m+        if scanner {
+(B[m[32m+            "compiler,scanner"
+(B[m[32m+        } else {
+(B[m[32m+            "compiler"
+(B[m[32m+        },
+(B[m[32m+    )?;
+(B[m     std::fs::copy(
+         root.join("web/utility-worker.js"),
+         output.join("utility-worker.js"),

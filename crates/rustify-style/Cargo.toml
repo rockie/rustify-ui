@@ -1,0 +1,52 @@
+[package]
+name = "rustify-style"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[features]
+default = ["cn"]
+cn = ["dep:serde", "dep:serde_json", "dep:regex", "dep:ryu-js", "dep:flate2"]
+scanner = ["dep:bstr", "dep:regex", "dep:classification-macros", "dep:fast-glob", "dep:bexpand", "dep:globset"]
+scanner-fs = ["scanner"]
+protocol = ["dep:serde", "dep:serde_json"]
+compiler = ["protocol", "dep:indexmap"]
+
+[dependencies]
+indexmap = { version = "2", features = ["serde"], optional = true }
+bstr = { version = "1.11.3", optional = true }
+regex = { version = "1.11.1", optional = true }
+classification-macros = { path = "upstream/classification-macros", optional = true }
+serde = { version = "1", features = ["derive"], optional = true }
+serde_json = { version = "1", features = ["preserve_order", "raw_value"], optional = true }
+ryu-js = { version = "1", optional = true }
+flate2 = { version = "1", default-features = false, features = ["rust_backend"], optional = true }
+fast-glob = { version = "0.4.3", optional = true }
+bexpand = { version = "1.2.0", optional = true }
+globset = { version = "0.4.16", optional = true }
+
+[dev-dependencies]
+sha2 = "0.10"
+pretty_assertions = "1.4.1"
+unicode-width = "0.2.0"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+[target.'cfg(not(target_arch = "wasm32"))'.dev-dependencies]
+tempfile = "3.13.0"
+
+[[example]]
+name = "scanner-probe"
+crate-type = ["cdylib"]
+required-features = ["scanner"]
+
+[[example]]
+name = "scanner-source-probe"
+path = "../../tests/utility/scanner/source-probe.rs"
+crate-type = ["cdylib"]
+required-features = ["scanner"]
+
+[[example]]
+name = "utility-bench"
+required-features = ["cn", "compiler"]

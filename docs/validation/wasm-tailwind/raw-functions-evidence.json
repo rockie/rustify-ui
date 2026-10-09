@@ -1,0 +1,1406 @@
+{
+  "updatedAt": "2026-10-06T23:14:06+11:00",
+  "baseline": "dirty@ef766ce50005546d861e32a4a1c45b4f4a03f0d7",
+  "previousEvidence": "raw-variant-evidence.json",
+  "sourceHashes": {
+    "Cargo.lock": "3e1069d4610684c784ddd750ddd9a20132d9f749d3aa660f0bf1d7887ef4577c",
+    "Cargo.toml": "dee97baccd454f9bf74ccd8c4bac69e47579d2284b5f07bcb39f73a22d5f871a",
+    "crates/rustify-style/src/compiler/custom_utilities.rs": "208af691bc73075601989d6f1a145aa57f949910095e6df69d44243c54ffec53",
+    "crates/rustify-style/src/compiler/custom_variants.rs": "f8cad8f31c10ea0eb64c40353c2f780d5ff7ff02589be80fe7a20b9615f3ccc7",
+    "crates/rustify-style/src/compiler/functions.rs": "2a7e415520035328693bcaf6b81ee380b50e005c5922d954a144801687637711",
+    "crates/rustify-style/src/compiler/imports.rs": "32aaab5425a68b3dd61d420a43fc8c30cc5e7cb2ab8ac9a9ebba1c37361ad362",
+    "crates/rustify-style/src/compiler/mod.rs": "f79dd173d8d02acabebb47237aa025b1b7d87bfa7398084beb9d2b5bc6bbe32a",
+    "crates/rustify-style/src/compiler/origin.rs": "b095b939ed3b941b69a4909f4dfc39b3adeeca9385f4c84187373f3ac4b7ce3c",
+    "crates/rustify-style/src/compiler/origin/current.rs": "1637d65d89c279fec567fbf2ad6bddf9fb0b4d7b0ea499390016b55731f94823",
+    "crates/rustify-style/src/compiler/origin/current/walk.rs": "c45085b7684b9475cbfd5d80e9e118239d7b62de8b6a06523a7d78424822fca4",
+    "crates/rustify-style/src/compiler/public_api.rs": "11ce83beebc62356887bda07a2252ab4628658ff5642b4d536b6483a0cf8e960",
+    "crates/rustify-style/src/compiler/public_api/compile_ast.rs": "5e54bcffc57c947346ac94efe3481c82e1991f541eee9170a6af892500fddd8a",
+    "crates/rustify-style/src/compiler/registration.rs": "a4ffc82874382457ffa0cd7a3e0f2aea423699e7cf5a5ba3c9d6758c3879c0b1",
+    "crates/rustify-style/src/compiler/theme.rs": "abccfd1a604e96fad6247120a498a6e00596e57a5ee684d9b2ac245265f048a0",
+    "crates/rustify-style/src/compiler/variants.rs": "b020e7c139156c62cc89773d44b5cfb0de9b2a463eaf2fefe44b8f7b5d8bf82d",
+    "examples/utility-lab/app.js": "6f3a56cd6526f6d2d7288d940ebc655c77063591627fdeb402ecb4271ea5d8c7",
+    "examples/utility-lab/src/button_baseline.rs": "24fa5304273db11881fd299a899da09e2f553bf4f4c062e524ca0187a1591978",
+    "mise.toml": "b39792f4c61600ed818b759bb8f9316b217372135b4b0eae097305ceec761f79",
+    "sources.lock.json": "f07a22046a145b10b7dda5c4ccb949ee1ffc00673a57f5ab3dc1a1c15b0ceb6d",
+    "tests/browser/utility-gpu.spec.ts": "6c49b586391536d7eba5b5e39642d106638102b2a8770c6ead9b6f82f5c6ac57",
+    "tests/utility/compiler/bench-media-source-wasm.mjs": "d1130984077de9ef21f239fd09ba8fc4ff49a832cbbf3b6a25dc1962f653117e",
+    "tests/utility/compiler/run-public-ast-function-order-wasm.mjs": "1ecb86dce612c3de8abbc3b356c3485f0303e14ff6135702495092e6eaf925d4",
+    "tests/utility/compiler/run-public-ast-media-source-wasm.mjs": "09137e228eb0a99ef1c8d803265ff6af73170dd744a48da431525bea85f58eca",
+    "tests/utility/compiler/run-public-ast-ownership-wasm.mjs": "d02030bfde57df93b269f593694317d97eb624f50e2a3b19db1e15c2056bbbcf",
+    "tests/utility/compiler/run-public-ast-registration-wasm.mjs": "f23954ff6e4c0f4482ea8427f4057776a73f465edd45efdaa134a6727a632efb",
+    "xtask/src/utility.rs": "424534feaddf099b0406573a54a82bc0dfc374b526d96dc1a443fda214c8ac7c"
+  },
+  "gates": {
+    "nativeTests": 368,
+    "nativeLog": "raw-functions-final-slice.log",
+    "nativeGroups": [
+      358,
+      10
+    ],
+    "facadeTests": 13,
+    "xtaskTests": 37,
+    "registration": {
+      "registrationCases": 48,
+      "entryComparisons": 96,
+      "completePrefixAndSettledGraphs": true,
+      "failures": [],
+      "actualWasm": true,
+      "wasmBytes": 2541729,
+      "fullRegistrationConformance": "pending"
+    },
+    "ownership": {
+      "ownershipCases": 14,
+      "entryComparisons": 28,
+      "completePrefixAndSettledGraphs": true,
+      "failures": [],
+      "actualWasm": true,
+      "wasmBytes": 2541729,
+      "fullOwnershipConformance": "pending"
+    },
+    "media": {
+      "cases": 2,
+      "entryComparisons": 4,
+      "failures": 0
+    },
+    "compilerSlice": {
+      "compilerSmoke": "passed",
+      "scannerEnabled": false,
+      "officialNesting": "passed",
+      "cssFunctionBindingsAndLimits": "passed",
+      "customUtilityBindingsAndLimits": "passed",
+      "customVariantBindingsAndLimits": "passed",
+      "legacyCacheLimitsAndRecovery": "passed",
+      "sliceCases": 214909,
+      "incrementalComparisons": 1470,
+      "incrementalCases": 246,
+      "cssComparisons": 216133,
+      "pendingBoundaryCases": 0,
+      "pendingFeatureCases": 0,
+      "utf16OutputCases": 4,
+      "sourceMetadataCases": 1607,
+      "errorCases": 3002,
+      "variantParseCases": 6673,
+      "variantParseNullCases": 2963,
+      "variantReusedCases": 84,
+      "variantParserLimitCases": 24,
+      "wasmBytes": 1780241,
+      "imports": [
+        "__wbg_length_d52ee452c5be0c99",
+        "__wbg_charCodeAt_90635349fbda9f5f",
+        "__wbg___wbindgen_throw_5d9e815e6fdf150f",
+        "__wbg___wbindgen_is_string_c4f7cb494a2a21f1",
+        "__wbindgen_init_externref_table",
+        "__wbindgen_generic_0000000000000001"
+      ],
+      "sharedMemory": false,
+      "fullConformance": "pending"
+    },
+    "ledger": {
+      "sourcesVerified": 109,
+      "originalSourceCalls": 1215,
+      "originalTestCalls": 1125,
+      "originalParameterizationCalls": 10,
+      "originalSuiteCalls": 80,
+      "parameterBuilders": 11,
+      "expandedTests": 1398,
+      "staticallyExpandedTests": 1398,
+      "unresolvedTests": 0,
+      "upstreamSkippedTests": 1,
+      "assertionTemplates": 1851,
+      "assertionTemplateEdges": 2140,
+      "controlledAssertionTemplates": 45,
+      "externalSnapshotExports": 13,
+      "matchedExternalSnapshotExports": 13,
+      "suggestedScopeCorrections": 3,
+      "validatedTests": 0,
+      "validatedAssertions": 0,
+      "adjudicatedExclusions": 0,
+      "unownedAssertionTemplates": 0
+    },
+    "logicalCacheThresholds": [
+      {
+        "actualWasm": true,
+        "sharedMemory": false,
+        "wasmBytes": 2541729,
+        "utilitiesMutationCases": 8,
+        "constructorAndBuildPhases": 38,
+        "noOpIdentities": 12,
+        "originalSetterExceptions": 3,
+        "cacheBoundaries": 4,
+        "twoBuildCacheThreshold": 22324,
+        "fullInputMutationConformance": "pending"
+      },
+      {
+        "themeSetupCases": 18,
+        "constructorAndBuildPhases": 105,
+        "noOpIdentities": 29,
+        "originalConstructorExceptions": 2,
+        "cacheBoundaries": 3,
+        "constructorCacheThreshold": 46386,
+        "actualWasm": true,
+        "sharedMemory": false,
+        "wasmBytes": 2541729,
+        "fullInputMutationConformance": "pending"
+      },
+      {
+        "applyInputCases": 15,
+        "constructorAndBuildPhases": 90,
+        "noOpIdentities": 18,
+        "originalConstructorExceptions": 2,
+        "cacheBoundaries": 3,
+        "constructorCacheThreshold": 56502,
+        "actualWasm": true,
+        "sharedMemory": false,
+        "wasmBytes": 2541729,
+        "fullInputMutationConformance": "pending"
+      },
+      {
+        "functionFailureCases": 12,
+        "originalHostExceptionCases": 4,
+        "cacheBoundaries": 3,
+        "semanticFailureCacheThreshold": 13794,
+        "quotaNoWriteCases": 1,
+        "actualWasm": true,
+        "sharedMemory": false,
+        "wasmBytes": 2541729,
+        "fullFailedSetupConformance": "pending"
+      },
+      {
+        "applyFailureCases": 16,
+        "entries": 2,
+        "checks": 32,
+        "failures": [],
+        "hostExceptionChecks": 8,
+        "cacheBoundaries": 3,
+        "semanticFailureCacheThreshold": 31312,
+        "asyncQuotaNoWriteCases": 2,
+        "actualWasm": true,
+        "wasmBytes": 2541729,
+        "fullFailedSetupConformance": "pending"
+      }
+    ],
+    "browser": {
+      "root": {
+        "log": "raw-functions-browser-root.json",
+        "startTime": "2026-10-06T12:03:41.767Z",
+        "duration": 42787.885,
+        "expected": 46,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0,
+        "errors": 0
+      },
+      "deep": {
+        "log": "raw-functions-browser-deep.json",
+        "startTime": "2026-10-06T12:05:06.298Z",
+        "duration": 40373.734,
+        "expected": 41,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0,
+        "errors": 0
+      }
+    },
+    "functionOrder": {
+      "functionOrderCases": 19,
+      "entryComparisons": 38,
+      "completePrefixBuildAndSettledGraphs": true,
+      "originalHostExceptionChecks": 8,
+      "failures": [],
+      "actualWasm": true,
+      "wasmBytes": 2541729,
+      "fullFailedSetupConformance": "pending"
+    }
+  },
+  "goalStatus": "paused",
+  "milestonesCompleted": 3,
+  "milestonesTotal": 7,
+  "remaining": [
+    "complete raw synthetic-root representation and remaining apply/once-only ownership handoff",
+    "pre-import typed lowering and native adapter",
+    "full admission/host projection/allocator peaks",
+    "full upstream runtime assertion ledger",
+    "construction profiling/performance, including the new variant overhead, and M5–M7"
+  ],
+  "sourceSnapshotFrozenForValidation": true,
+  "artifacts": {
+    "compiler-api": {
+      "path": "target/utility-conformance/compiler-api/style_bg.wasm",
+      "bytes": 2541729,
+      "sha256": "30e957d2ab63b2751a7c0d2b4ae2b62c9ec858eb7e7a916bc98bf39e843e4dfc"
+    },
+    "compiler": {
+      "path": "target/utility-conformance/compiler/style_bg.wasm",
+      "bytes": 1780241,
+      "sha256": "4ed3fe252038da96af6116d387c1e577b2554d9c1eebf0b1153f3774eac28e6e"
+    }
+  },
+  "products": {
+    "root": {
+      "mainBuildId": "b063f40bd16e0972",
+      "workerBuildId": "c71ba164383a06c062df9087292307cb8ac5cc17be1a5c82292d42caab0d602e",
+      "scannerEnabled": false,
+      "sizeReport": {
+        "wasm": 11254611,
+        "js": 246562,
+        "css": 35072,
+        "fonts": 51732356,
+        "images": 20701,
+        "data": 19812,
+        "total": 63309114
+      },
+      "mainWasm": {
+        "path": "target/makepad-wasm-app/release/utility-lab/utility-lab.wasm",
+        "bytes": 9486990,
+        "sha256": "b063f40bd16e0972f4fae917c117d0726225beb7e3d599514b4c45980ee9efeb"
+      },
+      "workerWasm": {
+        "path": "target/makepad-wasm-app/release/utility-lab/utility/compiler/style_bg.wasm",
+        "bytes": 1767621,
+        "sha256": "2cb4c09b205e4176d68790612baa35c0c49ec092d4d953a145f701ee39d5d6fd"
+      },
+      "manifest": {
+        "path": "target/makepad-wasm-app/release/utility-lab/build-manifest.json",
+        "bytes": 3114,
+        "sha256": "2dcfd6ac3c64c25ff3061f8521ebb2381f5e6eaea5ea12c7eb17fc60da360eea"
+      },
+      "workerManifest": {
+        "path": "target/makepad-wasm-app/release/utility-lab/utility/build-manifest.json",
+        "bytes": 592,
+        "sha256": "89e05a578ece2944fd3d6941a91b9370ada042b5e1758df015608452041b18e2"
+      },
+      "workerFileHashesVerified": 4,
+      "mainSizeMismatches": {}
+    },
+    "deep": {
+      "mainBuildId": "b063f40bd16e0972",
+      "workerBuildId": "c71ba164383a06c062df9087292307cb8ac5cc17be1a5c82292d42caab0d602e",
+      "scannerEnabled": false,
+      "sizeReport": {
+        "wasm": 11254611,
+        "js": 246562,
+        "css": 35072,
+        "fonts": 51732356,
+        "images": 20701,
+        "data": 22998,
+        "total": 63312300
+      },
+      "mainWasm": {
+        "path": "target/makepad-wasm-app/release/utility-lab@tools-utility-lab/utility-lab.wasm",
+        "bytes": 9486990,
+        "sha256": "b063f40bd16e0972f4fae917c117d0726225beb7e3d599514b4c45980ee9efeb"
+      },
+      "workerWasm": {
+        "path": "target/makepad-wasm-app/release/utility-lab@tools-utility-lab/utility/compiler/style_bg.wasm",
+        "bytes": 1767621,
+        "sha256": "2cb4c09b205e4176d68790612baa35c0c49ec092d4d953a145f701ee39d5d6fd"
+      },
+      "manifest": {
+        "path": "target/makepad-wasm-app/release/utility-lab@tools-utility-lab/build-manifest.json",
+        "bytes": 3165,
+        "sha256": "c3041cf1bea84406c3e826a9ff963bb04e672b42b6da9379b7f17cf2a6261a56"
+      },
+      "workerManifest": {
+        "path": "target/makepad-wasm-app/release/utility-lab@tools-utility-lab/utility/build-manifest.json",
+        "bytes": 592,
+        "sha256": "89e05a578ece2944fd3d6941a91b9370ada042b5e1758df015608452041b18e2"
+      },
+      "workerFileHashesVerified": 4,
+      "mainSizeMismatches": {
+        "build-manifest.json": {
+          "reported": 3114,
+          "actual": 3165
+        }
+      }
+    }
+  },
+  "benchmarks": {
+    "media": {
+      "logs": {
+        "before": "raw-functions-media-benchmark-before.json",
+        "after": "raw-functions-media-benchmark-after.json"
+      },
+      "measurements": {
+        "before": {
+          "scope": "public AST constructor with sixteen media source blocks and four builds",
+          "samples": [
+            {
+              "constructorP95Ms": 0.828583999999978,
+              "buildP95Ms": 0.3721659999999929,
+              "sessionsPerSecond": 545.1176875017461,
+              "outputSha256": "5fd45470353f800d2e198fad88da86ae25dd6d8ba7ca5f46232ceedebe529c89",
+              "sessions": 100,
+              "builds": 400
+            },
+            {
+              "constructorP95Ms": 0.7314999999999827,
+              "buildP95Ms": 0.3405840000000353,
+              "sessionsPerSecond": 571.0909489862843,
+              "outputSha256": "5fd45470353f800d2e198fad88da86ae25dd6d8ba7ca5f46232ceedebe529c89",
+              "sessions": 100,
+              "builds": 400
+            },
+            {
+              "constructorP95Ms": 1.18587500000001,
+              "buildP95Ms": 0.5531670000000304,
+              "sessionsPerSecond": 403.90617663422955,
+              "outputSha256": "5fd45470353f800d2e198fad88da86ae25dd6d8ba7ca5f46232ceedebe529c89",
+              "sessions": 100,
+              "builds": 400
+            },
+            {
+              "constructorP95Ms": 1.1822090000000571,
+              "buildP95Ms": 0.49033299999996416,
+              "sessionsPerSecond": 408.16187755573867,
+              "outputSha256": "5fd45470353f800d2e198fad88da86ae25dd6d8ba7ca5f46232ceedebe529c89",
+              "sessions": 100,
+              "builds": 400
+            },
+            {
+              "constructorP95Ms": 1.0154999999999745,
+              "buildP95Ms": 0.45470899999986614,
+              "sessionsPerSecond": 444.7514870343799,
+              "outputSha256": "5fd45470353f800d2e198fad88da86ae25dd6d8ba7ca5f46232ceedebe529c89",
+              "sessions": 100,
+              "builds": 400
+            }
+          ],
+          "constructorP95Ms": 1.0154999999999745,
+          "buildP95Ms": 0.45470899999986614,
+          "sessionsPerSecond": 444.7514870343799,
+          "wasmBytes": 2537784,
+          "wasmSha256": "8fde6c0089d9bec584b03c787bc84d851eed2d872ee747d2bdbf221b0bdddd01",
+          "actualWasm": true,
+          "finalPerformanceAcceptance": "pending"
+        },
+        "after": {
+          "scope": "public AST constructor with sixteen media source blocks and four builds",
+          "samples": [
+            {
+              "constructorP95Ms": 0.9182500000000005,
+              "buildP95Ms": 0.42687499999999545,
+              "sessionsPerSecond": 482.9145811175503,
+              "outputSha256": "5fd45470353f800d2e198fad88da86ae25dd6d8ba7ca5f46232ceedebe529c89",
+              "sessions": 100,
+              "builds": 400
+            },
+            {
+              "constructorP95Ms": 0.9180840000000217,
+              "buildP95Ms": 0.4109579999999369,
+              "sessionsPerSecond": 503.8941570323153,
+              "outputSha256": "5fd45470353f800d2e198fad88da86ae25dd6d8ba7ca5f46232ceedebe529c89",
+              "sessions": 100,
+              "builds": 400
+            },
+            {
+              "constructorP95Ms": 0.790958000000046,
+              "buildP95Ms": 0.35275000000001455,
+              "sessionsPerSecond": 544.1403229064708,
+              "outputSha256": "5fd45470353f800d2e198fad88da86ae25dd6d8ba7ca5f46232ceedebe529c89",
+              "sessions": 100,
+              "builds": 400
+            },
+            {
+              "constructorP95Ms": 1.243249999999989,
+              "buildP95Ms": 0.5575420000000122,
+              "sessionsPerSecond": 458.6684313292428,
+              "outputSha256": "5fd45470353f800d2e198fad88da86ae25dd6d8ba7ca5f46232ceedebe529c89",
+              "sessions": 100,
+              "builds": 400
+            },
+            {
+              "constructorP95Ms": 0.842583999999988,
+              "buildP95Ms": 0.3592500000002019,
+              "sessionsPerSecond": 534.177570357102,
+              "outputSha256": "5fd45470353f800d2e198fad88da86ae25dd6d8ba7ca5f46232ceedebe529c89",
+              "sessions": 100,
+              "builds": 400
+            }
+          ],
+          "constructorP95Ms": 0.9180840000000217,
+          "buildP95Ms": 0.4109579999999369,
+          "sessionsPerSecond": 503.8941570323153,
+          "wasmBytes": 2541729,
+          "wasmSha256": "30e957d2ab63b2751a7c0d2b4ae2b62c9ec858eb7e7a916bc98bf39e843e4dfc",
+          "actualWasm": true,
+          "finalPerformanceAcceptance": "pending"
+        }
+      },
+      "cssBearingShapesEqual": true,
+      "constructorChangePercent": -9.592909896598256,
+      "finalPerformanceAcceptance": "pending"
+    },
+    "theme": {
+      "logs": {
+        "before": "raw-functions-theme-benchmark-before.json",
+        "after": "raw-functions-theme-benchmark-after.json"
+      },
+      "measurements": {
+        "before": {
+          "scope": "public AST constructor with 128 theme variables, declaration/keyframe functions and four builds",
+          "samples": [
+            {
+              "constructorP95Ms": 2.3125,
+              "buildP95Ms": 0.28770900000000665,
+              "sessionsPerSecond": 336.91104790285505,
+              "outputSha256": "8fc0781d2881207a30acee71c6c0950a2f0fee9d87ad0083b9650714b34d9bd7",
+              "sessions": 100,
+              "builds": 400
+            },
+            {
+              "constructorP95Ms": 2.863375000000019,
+              "buildP95Ms": 0.3641249999999445,
+              "sessionsPerSecond": 310.4582114213093,
+              "outputSha256": "8fc0781d2881207a30acee71c6c0950a2f0fee9d87ad0083b9650714b34d9bd7",
+              "sessions": 100,
+              "builds": 400
+            },
+            {
+              "constructorP95Ms": 2.5918750000000728,
+              "buildP95Ms": 0.33054200000015044,
+              "sessionsPerSecond": 320.5303274272746,
+              "outputSha256": "8fc0781d2881207a30acee71c6c0950a2f0fee9d87ad0083b9650714b34d9bd7",
+              "sessions": 100,
+              "builds": 400
+            },
+            {
+              "constructorP95Ms": 2.346166999999923,
+              "buildP95Ms": 0.2815419999999449,
+              "sessionsPerSecond": 329.8278133900195,
+              "outputSha256": "8fc0781d2881207a30acee71c6c0950a2f0fee9d87ad0083b9650714b34d9bd7",
+              "sessions": 100,
+              "builds": 400
+            },
+            {
+              "constructorP95Ms": 2.5522909999999683,
+              "buildP95Ms": 0.3415829999999005,
+              "sessionsPerSecond": 316.6597463317936,
+              "outputSha256": "8fc0781d2881207a30acee71c6c0950a2f0fee9d87ad0083b9650714b34d9bd7",
+              "sessions": 100,
+              "builds": 400
+            }
+          ],
+          "constructorP95Ms": 2.5522909999999683,
+          "buildP95Ms": 0.33054200000015044,
+          "sessionsPerSecond": 320.5303274272746,
+          "wasmBytes": 2537784,
+          "wasmSha256": "8fde6c0089d9bec584b03c787bc84d851eed2d872ee747d2bdbf221b0bdddd01",
+          "actualWasm": true,
+          "finalPerformanceAcceptance": "pending"
+        },
+        "after": {
+          "scope": "public AST constructor with 128 theme variables, declaration/keyframe functions and four builds",
+          "samples": [
+            {
+              "constructorP95Ms": 2.419499999999971,
+              "buildP95Ms": 0.28899999999998727,
+              "sessionsPerSecond": 325.8417779384569,
+              "outputSha256": "8fc0781d2881207a30acee71c6c0950a2f0fee9d87ad0083b9650714b34d9bd7",
+              "sessions": 100,
+              "builds": 400
+            },
+            {
+              "constructorP95Ms": 2.37175000000002,
+              "buildP95Ms": 0.26737500000001546,
+              "sessionsPerSecond": 338.68469259495544,
+              "outputSha256": "8fc0781d2881207a30acee71c6c0950a2f0fee9d87ad0083b9650714b34d9bd7",
+              "sessions": 100,
+              "builds": 400
+            },
+            {
+              "constructorP95Ms": 2.2760829999999714,
+              "buildP95Ms": 0.2580839999998261,
+              "sessionsPerSecond": 345.04036069939633,
+              "outputSha256": "8fc0781d2881207a30acee71c6c0950a2f0fee9d87ad0083b9650714b34d9bd7",
+              "sessions": 100,
+              "builds": 400
+            },
+            {
+              "constructorP95Ms": 2.4553750000000036,
+              "buildP95Ms": 0.29683300000010604,
+              "sessionsPerSecond": 322.84325940708044,
+              "outputSha256": "8fc0781d2881207a30acee71c6c0950a2f0fee9d87ad0083b9650714b34d9bd7",
+              "sessions": 100,
+              "builds": 400
+            },
+            {
+              "constructorP95Ms": 2.5624159999999847,
+              "buildP95Ms": 0.3255420000000413,
+              "sessionsPerSecond": 304.52566987257677,
+              "outputSha256": "8fc0781d2881207a30acee71c6c0950a2f0fee9d87ad0083b9650714b34d9bd7",
+              "sessions": 100,
+              "builds": 400
+            }
+          ],
+          "constructorP95Ms": 2.419499999999971,
+          "buildP95Ms": 0.28899999999998727,
+          "sessionsPerSecond": 325.8417779384569,
+          "wasmBytes": 2541729,
+          "wasmSha256": "30e957d2ab63b2751a7c0d2b4ae2b62c9ec858eb7e7a916bc98bf39e843e4dfc",
+          "actualWasm": true,
+          "finalPerformanceAcceptance": "pending"
+        }
+      },
+      "cssBearingShapesEqual": true,
+      "constructorChangePercent": -5.202815823117312,
+      "finalPerformanceAcceptance": "pending"
+    },
+    "variant": {
+      "logs": {
+        "before": "raw-functions-variant-benchmark-before.json",
+        "after": "raw-functions-variant-benchmark-after.json"
+      },
+      "measurements": {
+        "before": {
+          "scope": "public AST constructor with sixteen nested authored variants with a custom template and four builds",
+          "samples": [
+            {
+              "constructorP95Ms": 1.382249999999999,
+              "buildP95Ms": 1.026707999999985,
+              "sessionsPerSecond": 209.32103075209994,
+              "outputSha256": "583541ff49317afb7935ad5a1f986c0de32ade013a05519b86e106410e44cdf2",
+              "sessions": 100,
+              "builds": 400
+            },
+            {
+              "constructorP95Ms": 1.5725840000000062,
+              "buildP95Ms": 1.1640830000001188,
+              "sessionsPerSecond": 200.73082762205448,
+              "outputSha256": "583541ff49317afb7935ad5a1f986c0de32ade013a05519b86e106410e44cdf2",
+              "sessions": 100,
+              "builds": 400
+            },
+            {
+              "constructorP95Ms": 3.099042000000054,
+              "buildP95Ms": 2.0121670000000904,
+              "sessionsPerSecond": 147.77915651133227,
+              "outputSha256": "583541ff49317afb7935ad5a1f986c0de32ade013a05519b86e106410e44cdf2",
+              "sessions": 100,
+              "builds": 400
+            },
+            {
+              "constructorP95Ms": 2.366541999999754,
+              "buildP95Ms": 1.6290000000003602,
+              "sessionsPerSecond": 143.2598994406333,
+              "outputSha256": "583541ff49317afb7935ad5a1f986c0de32ade013a05519b86e106410e44cdf2",
+              "sessions": 100,
+              "builds": 400
+            },
+            {
+              "constructorP95Ms": 2.2082909999999174,
+              "buildP95Ms": 1.8273340000000644,
+              "sessionsPerSecond": 134.83355129109484,
+              "outputSha256": "583541ff49317afb7935ad5a1f986c0de32ade013a05519b86e106410e44cdf2",
+              "sessions": 100,
+              "builds": 400
+            }
+          ],
+          "constructorP95Ms": 2.2082909999999174,
+          "buildP95Ms": 1.6290000000003602,
+          "sessionsPerSecond": 147.77915651133227,
+          "wasmBytes": 2537784,
+          "wasmSha256": "8fde6c0089d9bec584b03c787bc84d851eed2d872ee747d2bdbf221b0bdddd01",
+          "actualWasm": true,
+          "finalPerformanceAcceptance": "pending"
+        },
+        "after": {
+          "scope": "public AST constructor with sixteen nested authored variants with a custom template and four builds",
+          "samples": [
+            {
+              "constructorP95Ms": 2.5412919999999986,
+              "buildP95Ms": 1.6386670000001686,
+              "sessionsPerSecond": 144.39756410666314,
+              "outputSha256": "583541ff49317afb7935ad5a1f986c0de32ade013a05519b86e106410e44cdf2",
+              "sessions": 100,
+              "builds": 400
+            },
+            {
+              "constructorP95Ms": 2.341000000000122,
+              "buildP95Ms": 1.6278330000000096,
+              "sessionsPerSecond": 145.66018224969963,
+              "outputSha256": "583541ff49317afb7935ad5a1f986c0de32ade013a05519b86e106410e44cdf2",
+              "sessions": 100,
+              "builds": 400
+            },
+            {
+              "constructorP95Ms": 2.4818749999999454,
+              "buildP95Ms": 1.7399580000001151,
+              "sessionsPerSecond": 140.05759168169956,
+              "outputSha256": "583541ff49317afb7935ad5a1f986c0de32ade013a05519b86e106410e44cdf2",
+              "sessions": 100,
+              "builds": 400
+            },
+            {
+              "constructorP95Ms": 2.643167000000176,
+              "buildP95Ms": 1.923207999999704,
+              "sessionsPerSecond": 138.98930228945002,
+              "outputSha256": "583541ff49317afb7935ad5a1f986c0de32ade013a05519b86e106410e44cdf2",
+              "sessions": 100,
+              "builds": 400
+            },
+            {
+              "constructorP95Ms": 2.0644579999998314,
+              "buildP95Ms": 1.5162499999996726,
+              "sessionsPerSecond": 146.40688229472295,
+              "outputSha256": "583541ff49317afb7935ad5a1f986c0de32ade013a05519b86e106410e44cdf2",
+              "sessions": 100,
+              "builds": 400
+            }
+          ],
+          "constructorP95Ms": 2.4818749999999454,
+          "buildP95Ms": 1.6386670000001686,
+          "sessionsPerSecond": 144.39756410666314,
+          "wasmBytes": 2541729,
+          "wasmSha256": "30e957d2ab63b2751a7c0d2b4ae2b62c9ec858eb7e7a916bc98bf39e843e4dfc",
+          "actualWasm": true,
+          "finalPerformanceAcceptance": "pending"
+        }
+      },
+      "cssBearingShapesEqual": true,
+      "constructorChangePercent": 12.388946927739063,
+      "finalPerformanceAcceptance": "pending"
+    }
+  },
+  "benchmarkLimitations": "After all of this task's builds, native and browser checks had finished, the three pairs ran serially: warmup then five samples of 100 sessions and 400 builds. Local descriptive CSS-bearing shape equality is separate from graph conformance. The new variant constructor overhead is 12.39%; the preceding 91.74% variant and raw-theme regression profiling obligations remain open. No full performance acceptance.",
+  "postcompatRawAuthoredVariants": true,
+  "opaqueCallerBodyEdges": true,
+  "selectedLiveTemplateReadOnClone": true,
+  "currentClonedPerVariant": false,
+  "allHeaderValidationRemoved": true,
+  "typedRecursiveAuthoredTransformRemoved": true,
+  "singleLoweringHandoff": "pending",
+  "defaultOwnershipGate": true,
+  "evidenceFiles": {
+    "raw-functions-api.log": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-api.log",
+      "bytes": 59564,
+      "sha256": "3214c4509b3c341362a38d35372c2f82dbe08614491dddb5fe5b4c15f3baa0b7"
+    },
+    "raw-functions-baseline.json": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-baseline.json",
+      "bytes": 439,
+      "sha256": "4e4015ab458fbd6de5a3ac576ff41b8bd14d0259a0652ac2318884149de0a766"
+    },
+    "raw-functions-before-red.log": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-before-red.log",
+      "bytes": 1576,
+      "sha256": "90d758ca6959a064cd2807791b013b15060e237e941d8b4de3a7814f447af02f"
+    },
+    "raw-functions-benchmark-cpu.log": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-benchmark-cpu.log",
+      "bytes": 5497,
+      "sha256": "a335b2184988793df7bc33af64974d671024f728df237814e7e420440dfb1398"
+    },
+    "raw-functions-browser-deep-pre-final.json": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser-deep-pre-final.json",
+      "bytes": 2972082,
+      "sha256": "e8f400b663166bb813808afbbcbfa6ad21b11202939bcffbd68b408ed90bd147"
+    },
+    "raw-functions-browser-deep-pre-final.log": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser-deep-pre-final.log",
+      "bytes": 212,
+      "sha256": "36d4eace1d7a956cd7965d0ad18ca4574413aab75f5e1b84426f195317bdbe5f"
+    },
+    "raw-functions-browser-deep.json": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser-deep.json",
+      "bytes": 2972558,
+      "sha256": "ac5fcd434635e724cb86f4f27ac62c45b6106c485616bfe0ca43ccd57c38e763"
+    },
+    "raw-functions-browser-deep.log": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser-deep.log",
+      "bytes": 212,
+      "sha256": "36d4eace1d7a956cd7965d0ad18ca4574413aab75f5e1b84426f195317bdbe5f"
+    },
+    "raw-functions-browser-root-pre-final.json": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser-root-pre-final.json",
+      "bytes": 2977974,
+      "sha256": "6a63eda7deb123cd6df60536a2c8d2650f97f67414e2775fb8bb7755745c161d"
+    },
+    "raw-functions-browser-root-pre-final.log": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser-root-pre-final.log",
+      "bytes": 207,
+      "sha256": "5ef86fd36f42e09024ca32677b57e793b10c22d8212e0d1e3b685319326ae612"
+    },
+    "raw-functions-browser-root.json": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser-root.json",
+      "bytes": 2977489,
+      "sha256": "df41f450df5a395efb28ddd39bf5a3d013723cabb77b2afbedbaf396320aa235"
+    },
+    "raw-functions-browser-root.log": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser-root.log",
+      "bytes": 207,
+      "sha256": "5ef86fd36f42e09024ca32677b57e793b10c22d8212e0d1e3b685319326ae612"
+    },
+    "raw-functions-browser-workspace.json": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser-workspace.json",
+      "bytes": 4016,
+      "sha256": "8f2fd100ec4d85d00a8af0a4ab28b9e7f7e18c828c0f647e14829a226240d971"
+    },
+    "raw-functions-build-deep-pre-final.log": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-build-deep-pre-final.log",
+      "bytes": 8755,
+      "sha256": "a15fb870fa9078af0c3d5d5e1040f5bf02ea8139b7b88069bf70395f0f151fcb"
+    },
+    "raw-functions-build-deep.log": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-build-deep.log",
+      "bytes": 8754,
+      "sha256": "3ade05ce1e081d82fe20520a325338c1d416910b8642989d49397e9002513d94"
+    },
+    "raw-functions-build-root-pre-final.log": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-build-root-pre-final.log",
+      "bytes": 9044,
+      "sha256": "d7caa7c63c86c19eca8be453b990737afbcce61fd909d7f1fb43775082ccf28d"
+    },
+    "raw-functions-build-root.log": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-build-root.log",
+      "bytes": 9019,
+      "sha256": "3556ee210c6fa09e827ef47f9d6cad71cad7fb687cec666cc3297912f8678071"
+    },
+    "raw-functions-change.diff": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-change.diff",
+      "bytes": 27758,
+      "sha256": "031025e0ad89f64f3bdca3da0418f5c88cc95c53ccbc66c9e431fb60b83030de"
+    },
+    "raw-functions-core-clippy.log": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-core-clippy.log",
+      "bytes": 2370,
+      "sha256": "d4c11edc0266bf4e92e6d692ae215ac891545c06e454482b21140c7dc623dfc4"
+    },
+    "raw-functions-diff.log": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-diff.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "raw-functions-docs-verified.log": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-docs-verified.log",
+      "bytes": 1233,
+      "sha256": "2922b2168e84da879d9c47404b3d6cc54505129924364b66d828254eb09e67ed"
+    },
+    "raw-functions-final-api-pre-final.log": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-final-api-pre-final.log",
+      "bytes": 58811,
+      "sha256": "e20085028c09b9caee555ca59fdeb6e99e75010cf31a184eac6373abef4446b6"
+    },
+    "raw-functions-final-api.log": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-final-api.log",
+      "bytes": 58824,
+      "sha256": "e624b83a92a264b14e2fa5e03601502cf64fcdb0221c8c77eeb65309c697bb9f"
+    },
+    "raw-functions-final-core-clippy-pre-final.log": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-final-core-clippy-pre-final.log",
+      "bytes": 761,
+      "sha256": "cb36c2a901c767237035e563ca238f30c77b028db3936b884c9017ba4d7c2a11"
+    },
+    "raw-functions-final-core-clippy.log": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-final-core-clippy.log",
+      "bytes": 835,
+      "sha256": "f47a59571ad87a4deeba8a0f476b664cb7f80cd32ab620f6fe867dcb346005a5"
+    },
+    "raw-functions-final-facade-clippy-pre-final.log": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-final-facade-clippy-pre-final.log",
+      "bytes": 882,
+      "sha256": "267e20fc9f376f92c81842ba8b288496c6d4a195d2b07fd107d237f199e36314"
+    },
+    "raw-functions-final-facade-clippy.log": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-final-facade-clippy.log",
+      "bytes": 835,
+      "sha256": "729581a38799b248b9d709de060a0355539810228cc39b5886e9993ef30e2d45"
+    },
+    "raw-functions-final-facade-pre-final.log": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-final-facade-pre-final.log",
+      "bytes": 2159,
+      "sha256": "5a1f84603e5339c05d116a18edfcf999a90cbbf8316e2484752fdd5ecc34ed04"
+    },
+    "raw-functions-final-facade.log": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-final-facade.log",
+      "bytes": 2322,
+      "sha256": "cff86b488ae8b078eb340d6593e1162b74785a2ae5a2acddab38ef321c3952eb"
+    },
+    "raw-functions-final-fmt-pre-final.log": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-final-fmt-pre-final.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "raw-functions-final-fmt.log": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-final-fmt.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "raw-functions-final-slice-pre-final.log": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-final-slice-pre-final.log",
+      "bytes": 45221,
+      "sha256": "d6b32afd8fc693db624d56bc56f56db06a6d26460c1a6fd8e704047fdb044f87"
+    },
+    "raw-functions-final-slice.log": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-final-slice.log",
+      "bytes": 45410,
+      "sha256": "0b1927408c378006457c8ebb16b1f9bff612e5ddfc130c1341ea7ee610fc5603"
+    },
+    "raw-functions-legacy-targeted.log": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-legacy-targeted.log",
+      "bytes": 1033,
+      "sha256": "909503ffd890045d98d717806ec6295692956bacfbbd34cfd768fd19f959237f"
+    },
+    "raw-functions-media-benchmark-after.json": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-media-benchmark-after.json",
+      "bytes": 1459,
+      "sha256": "190de37bf8ff291e9819edbacdb2af12a6d72115442120e7b2c38daaa9270a3c"
+    },
+    "raw-functions-media-benchmark-before.json": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-media-benchmark-before.json",
+      "bytes": 1463,
+      "sha256": "139958931e76e26ba05adf168e266b971730c7ef51c45e35d4eb1ff20a8487e6"
+    },
+    "raw-functions-native.log": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-native.log",
+      "bytes": 75129,
+      "sha256": "469470d64adbe784a7b3a262a2ff0b697fb5b1635e3c03cf1fb4f40e45b65461"
+    },
+    "raw-functions-products-pre-final.json": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-products-pre-final.json",
+      "bytes": 2523,
+      "sha256": "bdb0d5d6e0ea5669f69f4a5b7fe3ccda52985da2071de8f6c5d7f6d6bf13fe02"
+    },
+    "raw-functions-products.json": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-products.json",
+      "bytes": 2553,
+      "sha256": "94fdcc8cc7627dd430289a987426176db9b73511bfe2ccceecf1046a2075d449"
+    },
+    "raw-functions-source-snapshot.json": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-source-snapshot.json",
+      "bytes": 3008,
+      "sha256": "4c462499e69563b493f7c73306dd272d14d3388b58f2a52ec650a556afcc1eb9"
+    },
+    "raw-functions-targeted.log": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-targeted.log",
+      "bytes": 1989,
+      "sha256": "3328d8446a129beb8ab87e85bf52363da658be87eadbe76a9123a56004b211f8"
+    },
+    "raw-functions-theme-benchmark-after.json": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-theme-benchmark-after.json",
+      "bytes": 1489,
+      "sha256": "8bbee27f5d867c84a093e498d60cfe1a521f6036f3ab13cec3cee40d69298c24"
+    },
+    "raw-functions-theme-benchmark-before.json": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-theme-benchmark-before.json",
+      "bytes": 1475,
+      "sha256": "40c1275addeae0008917f86d54333c10ffca885133dc5ac1bc84fd3764c0f3ef"
+    },
+    "raw-functions-variant-benchmark-after.json": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-variant-benchmark-after.json",
+      "bytes": 1492,
+      "sha256": "cc393397c16edc48d4527b951d3575e2ec912e0f41cb7012ba698e6436106cec"
+    },
+    "raw-functions-variant-benchmark-before.json": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-variant-benchmark-before.json",
+      "bytes": 1490,
+      "sha256": "c6761985ee6cd82eedff61656207e347c012d3f21bb23d4136bfe34eefae0fb7"
+    },
+    "raw-functions-xtask-clippy.log": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-xtask-clippy.log",
+      "bytes": 1060,
+      "sha256": "c64a0524d910853663dd30050ca9b5024df14886781e22380f6fd7367391fb30"
+    },
+    "raw-functions-xtask-verified.log": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-xtask-verified.log",
+      "bytes": 3901,
+      "sha256": "1f70d8efe4313c59c7d9feb6856884d51ba158aab261ae08795d01725c31114d"
+    },
+    "raw-functions-xtask.log": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-xtask.log",
+      "bytes": 316,
+      "sha256": "772ff33839565794ce7f8df9e2e2061b2503bcfb74c17489a76926220f500f1e"
+    },
+    "raw-functions-browser/deep-results/.last-run.json": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/deep-results/.last-run.json",
+      "bytes": 45,
+      "sha256": "91d1c43004802cd49950d78eb11c8fa7d05da8ffffe219a8b13b2f561bc00903"
+    },
+    "raw-functions-browser/deep-results/utility-gpu-CSS-functions--af6f3-e-actual-DOM-and-GPU-pixels-utility-lab-deep/gpu-css-functions.png": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/deep-results/utility-gpu-CSS-functions--af6f3-e-actual-DOM-and-GPU-pixels-utility-lab-deep/gpu-css-functions.png",
+      "bytes": 113892,
+      "sha256": "6bc1841199ef80e2cc49a4dc00d58c2b1792d00b7b07c132ed6ebaaa9a3a54a9"
+    },
+    "raw-functions-browser/deep-results/utility-gpu-CSS-native-uti-d4bee-ches-retain-the-drawn-style-utility-lab-deep/custom-utility.png": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/deep-results/utility-gpu-CSS-native-uti-d4bee-ches-retain-the-drawn-style-utility-lab-deep/custom-utility.png",
+      "bytes": 113360,
+      "sha256": "b08f0a5c6c691a4aa693fabc4f02167ba170da607872750fb4936a8dda3f9e51"
+    },
+    "raw-functions-browser/deep-results/utility-gpu-GPU-draws-comp-13818-glyphs-alongside-scoped-DOM-utility-lab-deep/desktop.png": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/deep-results/utility-gpu-GPU-draws-comp-13818-glyphs-alongside-scoped-DOM-utility-lab-deep/desktop.png",
+      "bytes": 113961,
+      "sha256": "e139f8041e09756a34dd7dcfe298e12ea9cd812ff2b77e63c1fbc6af6dddeadd"
+    },
+    "raw-functions-browser/deep-results/utility-gpu-GPU-draws-comp-13818-glyphs-alongside-scoped-DOM-utility-lab-deep/mobile.png": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/deep-results/utility-gpu-GPU-draws-comp-13818-glyphs-alongside-scoped-DOM-utility-lab-deep/mobile.png",
+      "bytes": 105825,
+      "sha256": "adc507b91ea5a4b78f60b9260c250cb229fdc5abc33787735dae8855151298d4"
+    },
+    "raw-functions-browser/deep-results/utility-gpu-GPU-percentage-e7ba5--and-follow-its-real-resize-utility-lab-deep/parent-content.png": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/deep-results/utility-gpu-GPU-percentage-e7ba5--and-follow-its-real-resize-utility-lab-deep/parent-content.png",
+      "bytes": 108129,
+      "sha256": "c4913dd82421a70caf27d7a7f6b2aee796baa912ceffe4ed7e4128918d469c9f"
+    },
+    "raw-functions-browser/deep-results/utility-gpu-all-non-button-2c399-top-comparison-frames-align-utility-lab-deep/gpu-boundaries.png": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/deep-results/utility-gpu-all-non-button-2c399-top-comparison-frames-align-utility-lab-deep/gpu-boundaries.png",
+      "bytes": 148111,
+      "sha256": "2be15c3de66f005b4cb99f3bbeb778f0233fc4f27cbacb5289cc2054152a374f"
+    },
+    "raw-functions-browser/deep-results/utility-gpu-applied-utilit-ea2c4-ive-an-installation-failure-utility-lab-deep/applied-utility.png": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/deep-results/utility-gpu-applied-utilit-ea2c4-ive-an-installation-failure-utility-lab-deep/applied-utility.png",
+      "bytes": 112560,
+      "sha256": "bf6ff31f30eb9914ef0917576923dfe80d22fc09fcde83616485d5eda4d4aee7"
+    },
+    "raw-functions-browser/deep-results/utility-gpu-arbitrary-prop-42d0e-e-actual-DOM-and-GPU-pixels-utility-lab-deep/arbitrary-property.png": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/deep-results/utility-gpu-arbitrary-prop-42d0e-e-actual-DOM-and-GPU-pixels-utility-lab-deep/arbitrary-property.png",
+      "bytes": 113360,
+      "sha256": "b08f0a5c6c691a4aa693fabc4f02167ba170da607872750fb4936a8dda3f9e51"
+    },
+    "raw-functions-browser/deep-results/utility-gpu-authored-custo-36aba-rawn-GPU-style-on-rejection-utility-lab-deep/custom-variant.png": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/deep-results/utility-gpu-authored-custo-36aba-rawn-GPU-style-on-rejection-utility-lab-deep/custom-variant.png",
+      "bytes": 124525,
+      "sha256": "dc5d1e4caca31a429dba8e2e6596fa937332dcfa3786613b43ef24942012f83b"
+    },
+    "raw-functions-browser/deep-results/utility-gpu-clearing-utili-1811d-out-another-baseline-setter-utility-lab-deep/button-none-live-palette.png": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/deep-results/utility-gpu-clearing-utili-1811d-out-another-baseline-setter-utility-lab-deep/button-none-live-palette.png",
+      "bytes": 5678,
+      "sha256": "0a23470bea2210e525fc04ba51bb5a5957925547e14d4ac13abcdf2a813f13d2"
+    },
+    "raw-functions-browser/deep-results/utility-gpu-clearing-utili-36a0c-ry-Button-pixels-and-events-utility-lab-deep/button-none.png": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/deep-results/utility-gpu-clearing-utili-36a0c-ry-Button-pixels-and-events-utility-lab-deep/button-none.png",
+      "bytes": 5918,
+      "sha256": "242f9fe93b82f9f692cc7113975e2d02b49830f3958fb97ee321777547d68a3c"
+    },
+    "raw-functions-browser/deep-results/utility-gpu-clearing-utili-4535a-ched-Script-Button-defaults-utility-lab-deep/button-none-script.png": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/deep-results/utility-gpu-clearing-utili-4535a-ched-Script-Button-defaults-utility-lab-deep/button-none-script.png",
+      "bytes": 7130,
+      "sha256": "83acd7ee7849cb94988f46122c27567ffd8be64bc0ca38fa07521d9417614e8d"
+    },
+    "raw-functions-browser/deep-results/utility-gpu-clearing-utili-a9b22-out-another-baseline-setter-utility-lab-deep/button-none-live-theme.png": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/deep-results/utility-gpu-clearing-utili-a9b22-out-another-baseline-setter-utility-lab-deep/button-none-live-theme.png",
+      "bytes": 5678,
+      "sha256": "0a23470bea2210e525fc04ba51bb5a5957925547e14d4ac13abcdf2a813f13d2"
+    },
+    "raw-functions-browser/deep-results/utility-gpu-configuration--1c218-xels-on-failed-installation-utility-lab-deep/configuration-gpu.png": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/deep-results/utility-gpu-configuration--1c218-xels-on-failed-installation-utility-lab-deep/configuration-gpu.png",
+      "bytes": 112254,
+      "sha256": "1ab3d27b3ed4043603c76d6afd3c67950fdf8761a7f24b0f8a2bc303e4a8b7ba"
+    },
+    "raw-functions-browser/deep-results/utility-gpu-inline-and-pat-fe70f-ns-drive-scoped-DOM-and-GPU-utility-lab-deep/source-options.png": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/deep-results/utility-gpu-inline-and-pat-fe70f-ns-drive-scoped-DOM-and-GPU-utility-lab-deep/source-options.png",
+      "bytes": 113244,
+      "sha256": "760e84b956a3a38a9bb7823e36ac98b05166b7b337ae0dc1d733732bd1f42800"
+    },
+    "raw-functions-browser/deep-results/utility-gpu-live-ThemeScop-1a10b-ost-rem-without-recompiling-utility-lab-deep/gpu-theme-boundary.png": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/deep-results/utility-gpu-live-ThemeScop-1a10b-ost-rem-without-recompiling-utility-lab-deep/gpu-theme-boundary.png",
+      "bytes": 123509,
+      "sha256": "c1684d4f849fa03743070449aaa4e51bf841b0610d9a1ec82dfcb4c89b30deb4"
+    },
+    "raw-functions-browser/deep-results/utility-gpu-terminal-GPU-i-e6220--DOM-editing-remains-usable-utility-lab-deep/gpu-terminal-failure.png": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/deep-results/utility-gpu-terminal-GPU-i-e6220--DOM-editing-remains-usable-utility-lab-deep/gpu-terminal-failure.png",
+      "bytes": 114868,
+      "sha256": "85ce5f05830554ad7899252a8296259742bfd69df8476121d6edfe37ad970ee7"
+    },
+    "raw-functions-browser/deep-results/utility-runtime-controls-a-5a183--and-fit-desktop-and-mobile-utility-lab-deep/desktop.png": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/deep-results/utility-runtime-controls-a-5a183--and-fit-desktop-and-mobile-utility-lab-deep/desktop.png",
+      "bytes": 114192,
+      "sha256": "0b805107d26113905b41c25a57ec8a0b98eb2cec38e89c9210e06ac6e7ffd70a"
+    },
+    "raw-functions-browser/deep-results/utility-runtime-controls-a-5a183--and-fit-desktop-and-mobile-utility-lab-deep/mobile.png": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/deep-results/utility-runtime-controls-a-5a183--and-fit-desktop-and-mobile-utility-lab-deep/mobile.png",
+      "bytes": 106443,
+      "sha256": "905923f0b66f1061cb8629b9dff7b5aa2ed39e46e65497a6e0f293214475e6b4"
+    },
+    "raw-functions-browser/deep-results/utility-runtime-real-DOM-c-2993e--to-caller-and-size-changes-utility-lab-deep/cn-component.png": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/deep-results/utility-runtime-real-DOM-c-2993e--to-caller-and-size-changes-utility-lab-deep/cn-component.png",
+      "bytes": 2606,
+      "sha256": "f45949b19602410bbda8530449950308d3db019e25378ee4100d56d1edf17f8c"
+    },
+    "raw-functions-browser/deep-results-pre-final/.last-run.json": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/deep-results-pre-final/.last-run.json",
+      "bytes": 45,
+      "sha256": "91d1c43004802cd49950d78eb11c8fa7d05da8ffffe219a8b13b2f561bc00903"
+    },
+    "raw-functions-browser/deep-results-pre-final/utility-gpu-CSS-functions--af6f3-e-actual-DOM-and-GPU-pixels-utility-lab-deep/gpu-css-functions.png": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/deep-results-pre-final/utility-gpu-CSS-functions--af6f3-e-actual-DOM-and-GPU-pixels-utility-lab-deep/gpu-css-functions.png",
+      "bytes": 113892,
+      "sha256": "6bc1841199ef80e2cc49a4dc00d58c2b1792d00b7b07c132ed6ebaaa9a3a54a9"
+    },
+    "raw-functions-browser/deep-results-pre-final/utility-gpu-CSS-native-uti-d4bee-ches-retain-the-drawn-style-utility-lab-deep/custom-utility.png": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/deep-results-pre-final/utility-gpu-CSS-native-uti-d4bee-ches-retain-the-drawn-style-utility-lab-deep/custom-utility.png",
+      "bytes": 113360,
+      "sha256": "b08f0a5c6c691a4aa693fabc4f02167ba170da607872750fb4936a8dda3f9e51"
+    },
+    "raw-functions-browser/deep-results-pre-final/utility-gpu-GPU-draws-comp-13818-glyphs-alongside-scoped-DOM-utility-lab-deep/desktop.png": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/deep-results-pre-final/utility-gpu-GPU-draws-comp-13818-glyphs-alongside-scoped-DOM-utility-lab-deep/desktop.png",
+      "bytes": 113961,
+      "sha256": "e139f8041e09756a34dd7dcfe298e12ea9cd812ff2b77e63c1fbc6af6dddeadd"
+    },
+    "raw-functions-browser/deep-results-pre-final/utility-gpu-GPU-draws-comp-13818-glyphs-alongside-scoped-DOM-utility-lab-deep/mobile.png": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/deep-results-pre-final/utility-gpu-GPU-draws-comp-13818-glyphs-alongside-scoped-DOM-utility-lab-deep/mobile.png",
+      "bytes": 105825,
+      "sha256": "adc507b91ea5a4b78f60b9260c250cb229fdc5abc33787735dae8855151298d4"
+    },
+    "raw-functions-browser/deep-results-pre-final/utility-gpu-GPU-percentage-e7ba5--and-follow-its-real-resize-utility-lab-deep/parent-content.png": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/deep-results-pre-final/utility-gpu-GPU-percentage-e7ba5--and-follow-its-real-resize-utility-lab-deep/parent-content.png",
+      "bytes": 108129,
+      "sha256": "c4913dd82421a70caf27d7a7f6b2aee796baa912ceffe4ed7e4128918d469c9f"
+    },
+    "raw-functions-browser/deep-results-pre-final/utility-gpu-all-non-button-2c399-top-comparison-frames-align-utility-lab-deep/gpu-boundaries.png": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/deep-results-pre-final/utility-gpu-all-non-button-2c399-top-comparison-frames-align-utility-lab-deep/gpu-boundaries.png",
+      "bytes": 148111,
+      "sha256": "2be15c3de66f005b4cb99f3bbeb778f0233fc4f27cbacb5289cc2054152a374f"
+    },
+    "raw-functions-browser/deep-results-pre-final/utility-gpu-applied-utilit-ea2c4-ive-an-installation-failure-utility-lab-deep/applied-utility.png": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/deep-results-pre-final/utility-gpu-applied-utilit-ea2c4-ive-an-installation-failure-utility-lab-deep/applied-utility.png",
+      "bytes": 112560,
+      "sha256": "bf6ff31f30eb9914ef0917576923dfe80d22fc09fcde83616485d5eda4d4aee7"
+    },
+    "raw-functions-browser/deep-results-pre-final/utility-gpu-arbitrary-prop-42d0e-e-actual-DOM-and-GPU-pixels-utility-lab-deep/arbitrary-property.png": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/deep-results-pre-final/utility-gpu-arbitrary-prop-42d0e-e-actual-DOM-and-GPU-pixels-utility-lab-deep/arbitrary-property.png",
+      "bytes": 113360,
+      "sha256": "b08f0a5c6c691a4aa693fabc4f02167ba170da607872750fb4936a8dda3f9e51"
+    },
+    "raw-functions-browser/deep-results-pre-final/utility-gpu-authored-custo-36aba-rawn-GPU-style-on-rejection-utility-lab-deep/custom-variant.png": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/deep-results-pre-final/utility-gpu-authored-custo-36aba-rawn-GPU-style-on-rejection-utility-lab-deep/custom-variant.png",
+      "bytes": 124525,
+      "sha256": "dc5d1e4caca31a429dba8e2e6596fa937332dcfa3786613b43ef24942012f83b"
+    },
+    "raw-functions-browser/deep-results-pre-final/utility-gpu-clearing-utili-1811d-out-another-baseline-setter-utility-lab-deep/button-none-live-palette.png": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/deep-results-pre-final/utility-gpu-clearing-utili-1811d-out-another-baseline-setter-utility-lab-deep/button-none-live-palette.png",
+      "bytes": 5678,
+      "sha256": "0a23470bea2210e525fc04ba51bb5a5957925547e14d4ac13abcdf2a813f13d2"
+    },
+    "raw-functions-browser/deep-results-pre-final/utility-gpu-clearing-utili-36a0c-ry-Button-pixels-and-events-utility-lab-deep/button-none.png": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/deep-results-pre-final/utility-gpu-clearing-utili-36a0c-ry-Button-pixels-and-events-utility-lab-deep/button-none.png",
+      "bytes": 5918,
+      "sha256": "242f9fe93b82f9f692cc7113975e2d02b49830f3958fb97ee321777547d68a3c"
+    },
+    "raw-functions-browser/deep-results-pre-final/utility-gpu-clearing-utili-4535a-ched-Script-Button-defaults-utility-lab-deep/button-none-script.png": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/deep-results-pre-final/utility-gpu-clearing-utili-4535a-ched-Script-Button-defaults-utility-lab-deep/button-none-script.png",
+      "bytes": 7130,
+      "sha256": "83acd7ee7849cb94988f46122c27567ffd8be64bc0ca38fa07521d9417614e8d"
+    },
+    "raw-functions-browser/deep-results-pre-final/utility-gpu-clearing-utili-a9b22-out-another-baseline-setter-utility-lab-deep/button-none-live-theme.png": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/deep-results-pre-final/utility-gpu-clearing-utili-a9b22-out-another-baseline-setter-utility-lab-deep/button-none-live-theme.png",
+      "bytes": 5678,
+      "sha256": "0a23470bea2210e525fc04ba51bb5a5957925547e14d4ac13abcdf2a813f13d2"
+    },
+    "raw-functions-browser/deep-results-pre-final/utility-gpu-configuration--1c218-xels-on-failed-installation-utility-lab-deep/configuration-gpu.png": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/deep-results-pre-final/utility-gpu-configuration--1c218-xels-on-failed-installation-utility-lab-deep/configuration-gpu.png",
+      "bytes": 112254,
+      "sha256": "1ab3d27b3ed4043603c76d6afd3c67950fdf8761a7f24b0f8a2bc303e4a8b7ba"
+    },
+    "raw-functions-browser/deep-results-pre-final/utility-gpu-inline-and-pat-fe70f-ns-drive-scoped-DOM-and-GPU-utility-lab-deep/source-options.png": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/deep-results-pre-final/utility-gpu-inline-and-pat-fe70f-ns-drive-scoped-DOM-and-GPU-utility-lab-deep/source-options.png",
+      "bytes": 113244,
+      "sha256": "760e84b956a3a38a9bb7823e36ac98b05166b7b337ae0dc1d733732bd1f42800"
+    },
+    "raw-functions-browser/deep-results-pre-final/utility-gpu-live-ThemeScop-1a10b-ost-rem-without-recompiling-utility-lab-deep/gpu-theme-boundary.png": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/deep-results-pre-final/utility-gpu-live-ThemeScop-1a10b-ost-rem-without-recompiling-utility-lab-deep/gpu-theme-boundary.png",
+      "bytes": 123509,
+      "sha256": "c1684d4f849fa03743070449aaa4e51bf841b0610d9a1ec82dfcb4c89b30deb4"
+    },
+    "raw-functions-browser/deep-results-pre-final/utility-gpu-terminal-GPU-i-e6220--DOM-editing-remains-usable-utility-lab-deep/gpu-terminal-failure.png": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/deep-results-pre-final/utility-gpu-terminal-GPU-i-e6220--DOM-editing-remains-usable-utility-lab-deep/gpu-terminal-failure.png",
+      "bytes": 114868,
+      "sha256": "85ce5f05830554ad7899252a8296259742bfd69df8476121d6edfe37ad970ee7"
+    },
+    "raw-functions-browser/deep-results-pre-final/utility-runtime-controls-a-5a183--and-fit-desktop-and-mobile-utility-lab-deep/desktop.png": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/deep-results-pre-final/utility-runtime-controls-a-5a183--and-fit-desktop-and-mobile-utility-lab-deep/desktop.png",
+      "bytes": 114192,
+      "sha256": "0b805107d26113905b41c25a57ec8a0b98eb2cec38e89c9210e06ac6e7ffd70a"
+    },
+    "raw-functions-browser/deep-results-pre-final/utility-runtime-controls-a-5a183--and-fit-desktop-and-mobile-utility-lab-deep/mobile.png": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/deep-results-pre-final/utility-runtime-controls-a-5a183--and-fit-desktop-and-mobile-utility-lab-deep/mobile.png",
+      "bytes": 106443,
+      "sha256": "905923f0b66f1061cb8629b9dff7b5aa2ed39e46e65497a6e0f293214475e6b4"
+    },
+    "raw-functions-browser/deep-results-pre-final/utility-runtime-real-DOM-c-2993e--to-caller-and-size-changes-utility-lab-deep/cn-component.png": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/deep-results-pre-final/utility-runtime-real-DOM-c-2993e--to-caller-and-size-changes-utility-lab-deep/cn-component.png",
+      "bytes": 2606,
+      "sha256": "f45949b19602410bbda8530449950308d3db019e25378ee4100d56d1edf17f8c"
+    },
+    "raw-functions-browser/manifests/deep-main-manifest.json": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/manifests/deep-main-manifest.json",
+      "bytes": 3165,
+      "sha256": "c3041cf1bea84406c3e826a9ff963bb04e672b42b6da9379b7f17cf2a6261a56"
+    },
+    "raw-functions-browser/manifests/deep-worker-manifest.json": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/manifests/deep-worker-manifest.json",
+      "bytes": 592,
+      "sha256": "89e05a578ece2944fd3d6941a91b9370ada042b5e1758df015608452041b18e2"
+    },
+    "raw-functions-browser/manifests/root-main-manifest.json": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/manifests/root-main-manifest.json",
+      "bytes": 3114,
+      "sha256": "2dcfd6ac3c64c25ff3061f8521ebb2381f5e6eaea5ea12c7eb17fc60da360eea"
+    },
+    "raw-functions-browser/manifests/root-worker-manifest.json": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/manifests/root-worker-manifest.json",
+      "bytes": 592,
+      "sha256": "89e05a578ece2944fd3d6941a91b9370ada042b5e1758df015608452041b18e2"
+    },
+    "raw-functions-browser/manifests-pre-final/deep-main-manifest.json": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/manifests-pre-final/deep-main-manifest.json",
+      "bytes": 3165,
+      "sha256": "b0a4414df7a8030ba435384b0e62ca11afc7240cb3724e7bf728efeb51374699"
+    },
+    "raw-functions-browser/manifests-pre-final/deep-worker-manifest.json": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/manifests-pre-final/deep-worker-manifest.json",
+      "bytes": 592,
+      "sha256": "674a98a14ee32502819264e459f3971bdabff83ca6bf8904ea613b933f6b063e"
+    },
+    "raw-functions-browser/manifests-pre-final/root-main-manifest.json": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/manifests-pre-final/root-main-manifest.json",
+      "bytes": 3114,
+      "sha256": "8399852f03da9cb0bfa1c783889329fbd33ddee5b6bfa154112f221d2ecb91d9"
+    },
+    "raw-functions-browser/manifests-pre-final/root-worker-manifest.json": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/manifests-pre-final/root-worker-manifest.json",
+      "bytes": 592,
+      "sha256": "674a98a14ee32502819264e459f3971bdabff83ca6bf8904ea613b933f6b063e"
+    },
+    "raw-functions-browser/root-results/.last-run.json": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/root-results/.last-run.json",
+      "bytes": 45,
+      "sha256": "91d1c43004802cd49950d78eb11c8fa7d05da8ffffe219a8b13b2f561bc00903"
+    },
+    "raw-functions-browser/root-results/utility-gpu-CSS-functions--af6f3-e-actual-DOM-and-GPU-pixels-utility-lab/gpu-css-functions.png": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/root-results/utility-gpu-CSS-functions--af6f3-e-actual-DOM-and-GPU-pixels-utility-lab/gpu-css-functions.png",
+      "bytes": 113892,
+      "sha256": "6bc1841199ef80e2cc49a4dc00d58c2b1792d00b7b07c132ed6ebaaa9a3a54a9"
+    },
+    "raw-functions-browser/root-results/utility-gpu-CSS-native-uti-d4bee-ches-retain-the-drawn-style-utility-lab/custom-utility.png": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/root-results/utility-gpu-CSS-native-uti-d4bee-ches-retain-the-drawn-style-utility-lab/custom-utility.png",
+      "bytes": 113360,
+      "sha256": "b08f0a5c6c691a4aa693fabc4f02167ba170da607872750fb4936a8dda3f9e51"
+    },
+    "raw-functions-browser/root-results/utility-gpu-GPU-draws-comp-13818-glyphs-alongside-scoped-DOM-utility-lab/desktop.png": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/root-results/utility-gpu-GPU-draws-comp-13818-glyphs-alongside-scoped-DOM-utility-lab/desktop.png",
+      "bytes": 113961,
+      "sha256": "e139f8041e09756a34dd7dcfe298e12ea9cd812ff2b77e63c1fbc6af6dddeadd"
+    },
+    "raw-functions-browser/root-results/utility-gpu-GPU-draws-comp-13818-glyphs-alongside-scoped-DOM-utility-lab/mobile.png": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/root-results/utility-gpu-GPU-draws-comp-13818-glyphs-alongside-scoped-DOM-utility-lab/mobile.png",
+      "bytes": 105825,
+      "sha256": "adc507b91ea5a4b78f60b9260c250cb229fdc5abc33787735dae8855151298d4"
+    },
+    "raw-functions-browser/root-results/utility-gpu-GPU-percentage-e7ba5--and-follow-its-real-resize-utility-lab/parent-content.png": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/root-results/utility-gpu-GPU-percentage-e7ba5--and-follow-its-real-resize-utility-lab/parent-content.png",
+      "bytes": 108129,
+      "sha256": "c4913dd82421a70caf27d7a7f6b2aee796baa912ceffe4ed7e4128918d469c9f"
+    },
+    "raw-functions-browser/root-results/utility-gpu-all-non-button-2c399-top-comparison-frames-align-utility-lab/gpu-boundaries.png": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/root-results/utility-gpu-all-non-button-2c399-top-comparison-frames-align-utility-lab/gpu-boundaries.png",
+      "bytes": 148111,
+      "sha256": "2be15c3de66f005b4cb99f3bbeb778f0233fc4f27cbacb5289cc2054152a374f"
+    },
+    "raw-functions-browser/root-results/utility-gpu-applied-utilit-ea2c4-ive-an-installation-failure-utility-lab/applied-utility.png": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/root-results/utility-gpu-applied-utilit-ea2c4-ive-an-installation-failure-utility-lab/applied-utility.png",
+      "bytes": 112560,
+      "sha256": "bf6ff31f30eb9914ef0917576923dfe80d22fc09fcde83616485d5eda4d4aee7"
+    },
+    "raw-functions-browser/root-results/utility-gpu-arbitrary-prop-42d0e-e-actual-DOM-and-GPU-pixels-utility-lab/arbitrary-property.png": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/root-results/utility-gpu-arbitrary-prop-42d0e-e-actual-DOM-and-GPU-pixels-utility-lab/arbitrary-property.png",
+      "bytes": 113360,
+      "sha256": "b08f0a5c6c691a4aa693fabc4f02167ba170da607872750fb4936a8dda3f9e51"
+    },
+    "raw-functions-browser/root-results/utility-gpu-authored-custo-36aba-rawn-GPU-style-on-rejection-utility-lab/custom-variant.png": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/root-results/utility-gpu-authored-custo-36aba-rawn-GPU-style-on-rejection-utility-lab/custom-variant.png",
+      "bytes": 124525,
+      "sha256": "dc5d1e4caca31a429dba8e2e6596fa937332dcfa3786613b43ef24942012f83b"
+    },
+    "raw-functions-browser/root-results/utility-gpu-clearing-utili-1811d-out-another-baseline-setter-utility-lab/button-none-live-palette.png": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/root-results/utility-gpu-clearing-utili-1811d-out-another-baseline-setter-utility-lab/button-none-live-palette.png",
+      "bytes": 5678,
+      "sha256": "0a23470bea2210e525fc04ba51bb5a5957925547e14d4ac13abcdf2a813f13d2"
+    },
+    "raw-functions-browser/root-results/utility-gpu-clearing-utili-36a0c-ry-Button-pixels-and-events-utility-lab/button-none.png": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/root-results/utility-gpu-clearing-utili-36a0c-ry-Button-pixels-and-events-utility-lab/button-none.png",
+      "bytes": 5918,
+      "sha256": "242f9fe93b82f9f692cc7113975e2d02b49830f3958fb97ee321777547d68a3c"
+    },
+    "raw-functions-browser/root-results/utility-gpu-clearing-utili-4535a-ched-Script-Button-defaults-utility-lab/button-none-script.png": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/root-results/utility-gpu-clearing-utili-4535a-ched-Script-Button-defaults-utility-lab/button-none-script.png",
+      "bytes": 7130,
+      "sha256": "83acd7ee7849cb94988f46122c27567ffd8be64bc0ca38fa07521d9417614e8d"
+    },
+    "raw-functions-browser/root-results/utility-gpu-clearing-utili-a9b22-out-another-baseline-setter-utility-lab/button-none-live-theme.png": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/root-results/utility-gpu-clearing-utili-a9b22-out-another-baseline-setter-utility-lab/button-none-live-theme.png",
+      "bytes": 5678,
+      "sha256": "0a23470bea2210e525fc04ba51bb5a5957925547e14d4ac13abcdf2a813f13d2"
+    },
+    "raw-functions-browser/root-results/utility-gpu-configuration--1c218-xels-on-failed-installation-utility-lab/configuration-gpu.png": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/root-results/utility-gpu-configuration--1c218-xels-on-failed-installation-utility-lab/configuration-gpu.png",
+      "bytes": 112254,
+      "sha256": "1ab3d27b3ed4043603c76d6afd3c67950fdf8761a7f24b0f8a2bc303e4a8b7ba"
+    },
+    "raw-functions-browser/root-results/utility-gpu-inline-and-pat-fe70f-ns-drive-scoped-DOM-and-GPU-utility-lab/source-options.png": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/root-results/utility-gpu-inline-and-pat-fe70f-ns-drive-scoped-DOM-and-GPU-utility-lab/source-options.png",
+      "bytes": 113244,
+      "sha256": "760e84b956a3a38a9bb7823e36ac98b05166b7b337ae0dc1d733732bd1f42800"
+    },
+    "raw-functions-browser/root-results/utility-gpu-live-ThemeScop-1a10b-ost-rem-without-recompiling-utility-lab/gpu-theme-boundary.png": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/root-results/utility-gpu-live-ThemeScop-1a10b-ost-rem-without-recompiling-utility-lab/gpu-theme-boundary.png",
+      "bytes": 123509,
+      "sha256": "c1684d4f849fa03743070449aaa4e51bf841b0610d9a1ec82dfcb4c89b30deb4"
+    },
+    "raw-functions-browser/root-results/utility-gpu-terminal-GPU-i-e6220--DOM-editing-remains-usable-utility-lab/gpu-terminal-failure.png": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/root-results/utility-gpu-terminal-GPU-i-e6220--DOM-editing-remains-usable-utility-lab/gpu-terminal-failure.png",
+      "bytes": 114868,
+      "sha256": "85ce5f05830554ad7899252a8296259742bfd69df8476121d6edfe37ad970ee7"
+    },
+    "raw-functions-browser/root-results/utility-runtime-controls-a-5a183--and-fit-desktop-and-mobile-utility-lab/desktop.png": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/root-results/utility-runtime-controls-a-5a183--and-fit-desktop-and-mobile-utility-lab/desktop.png",
+      "bytes": 114192,
+      "sha256": "0b805107d26113905b41c25a57ec8a0b98eb2cec38e89c9210e06ac6e7ffd70a"
+    },
+    "raw-functions-browser/root-results/utility-runtime-controls-a-5a183--and-fit-desktop-and-mobile-utility-lab/mobile.png": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/root-results/utility-runtime-controls-a-5a183--and-fit-desktop-and-mobile-utility-lab/mobile.png",
+      "bytes": 106443,
+      "sha256": "905923f0b66f1061cb8629b9dff7b5aa2ed39e46e65497a6e0f293214475e6b4"
+    },
+    "raw-functions-browser/root-results/utility-runtime-real-DOM-c-2993e--to-caller-and-size-changes-utility-lab/cn-component.png": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/root-results/utility-runtime-real-DOM-c-2993e--to-caller-and-size-changes-utility-lab/cn-component.png",
+      "bytes": 2606,
+      "sha256": "f45949b19602410bbda8530449950308d3db019e25378ee4100d56d1edf17f8c"
+    },
+    "raw-functions-browser/root-results-pre-final/.last-run.json": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/root-results-pre-final/.last-run.json",
+      "bytes": 45,
+      "sha256": "91d1c43004802cd49950d78eb11c8fa7d05da8ffffe219a8b13b2f561bc00903"
+    },
+    "raw-functions-browser/root-results-pre-final/utility-gpu-CSS-functions--af6f3-e-actual-DOM-and-GPU-pixels-utility-lab/gpu-css-functions.png": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/root-results-pre-final/utility-gpu-CSS-functions--af6f3-e-actual-DOM-and-GPU-pixels-utility-lab/gpu-css-functions.png",
+      "bytes": 113892,
+      "sha256": "6bc1841199ef80e2cc49a4dc00d58c2b1792d00b7b07c132ed6ebaaa9a3a54a9"
+    },
+    "raw-functions-browser/root-results-pre-final/utility-gpu-CSS-native-uti-d4bee-ches-retain-the-drawn-style-utility-lab/custom-utility.png": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/root-results-pre-final/utility-gpu-CSS-native-uti-d4bee-ches-retain-the-drawn-style-utility-lab/custom-utility.png",
+      "bytes": 113360,
+      "sha256": "b08f0a5c6c691a4aa693fabc4f02167ba170da607872750fb4936a8dda3f9e51"
+    },
+    "raw-functions-browser/root-results-pre-final/utility-gpu-GPU-draws-comp-13818-glyphs-alongside-scoped-DOM-utility-lab/desktop.png": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/root-results-pre-final/utility-gpu-GPU-draws-comp-13818-glyphs-alongside-scoped-DOM-utility-lab/desktop.png",
+      "bytes": 113961,
+      "sha256": "e139f8041e09756a34dd7dcfe298e12ea9cd812ff2b77e63c1fbc6af6dddeadd"
+    },
+    "raw-functions-browser/root-results-pre-final/utility-gpu-GPU-draws-comp-13818-glyphs-alongside-scoped-DOM-utility-lab/mobile.png": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/root-results-pre-final/utility-gpu-GPU-draws-comp-13818-glyphs-alongside-scoped-DOM-utility-lab/mobile.png",
+      "bytes": 105825,
+      "sha256": "adc507b91ea5a4b78f60b9260c250cb229fdc5abc33787735dae8855151298d4"
+    },
+    "raw-functions-browser/root-results-pre-final/utility-gpu-GPU-percentage-e7ba5--and-follow-its-real-resize-utility-lab/parent-content.png": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/root-results-pre-final/utility-gpu-GPU-percentage-e7ba5--and-follow-its-real-resize-utility-lab/parent-content.png",
+      "bytes": 108129,
+      "sha256": "c4913dd82421a70caf27d7a7f6b2aee796baa912ceffe4ed7e4128918d469c9f"
+    },
+    "raw-functions-browser/root-results-pre-final/utility-gpu-all-non-button-2c399-top-comparison-frames-align-utility-lab/gpu-boundaries.png": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/root-results-pre-final/utility-gpu-all-non-button-2c399-top-comparison-frames-align-utility-lab/gpu-boundaries.png",
+      "bytes": 148111,
+      "sha256": "2be15c3de66f005b4cb99f3bbeb778f0233fc4f27cbacb5289cc2054152a374f"
+    },
+    "raw-functions-browser/root-results-pre-final/utility-gpu-applied-utilit-ea2c4-ive-an-installation-failure-utility-lab/applied-utility.png": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/root-results-pre-final/utility-gpu-applied-utilit-ea2c4-ive-an-installation-failure-utility-lab/applied-utility.png",
+      "bytes": 112560,
+      "sha256": "bf6ff31f30eb9914ef0917576923dfe80d22fc09fcde83616485d5eda4d4aee7"
+    },
+    "raw-functions-browser/root-results-pre-final/utility-gpu-arbitrary-prop-42d0e-e-actual-DOM-and-GPU-pixels-utility-lab/arbitrary-property.png": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/root-results-pre-final/utility-gpu-arbitrary-prop-42d0e-e-actual-DOM-and-GPU-pixels-utility-lab/arbitrary-property.png",
+      "bytes": 113360,
+      "sha256": "b08f0a5c6c691a4aa693fabc4f02167ba170da607872750fb4936a8dda3f9e51"
+    },
+    "raw-functions-browser/root-results-pre-final/utility-gpu-authored-custo-36aba-rawn-GPU-style-on-rejection-utility-lab/custom-variant.png": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/root-results-pre-final/utility-gpu-authored-custo-36aba-rawn-GPU-style-on-rejection-utility-lab/custom-variant.png",
+      "bytes": 124525,
+      "sha256": "dc5d1e4caca31a429dba8e2e6596fa937332dcfa3786613b43ef24942012f83b"
+    },
+    "raw-functions-browser/root-results-pre-final/utility-gpu-clearing-utili-1811d-out-another-baseline-setter-utility-lab/button-none-live-palette.png": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/root-results-pre-final/utility-gpu-clearing-utili-1811d-out-another-baseline-setter-utility-lab/button-none-live-palette.png",
+      "bytes": 5678,
+      "sha256": "0a23470bea2210e525fc04ba51bb5a5957925547e14d4ac13abcdf2a813f13d2"
+    },
+    "raw-functions-browser/root-results-pre-final/utility-gpu-clearing-utili-36a0c-ry-Button-pixels-and-events-utility-lab/button-none.png": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/root-results-pre-final/utility-gpu-clearing-utili-36a0c-ry-Button-pixels-and-events-utility-lab/button-none.png",
+      "bytes": 5918,
+      "sha256": "242f9fe93b82f9f692cc7113975e2d02b49830f3958fb97ee321777547d68a3c"
+    },
+    "raw-functions-browser/root-results-pre-final/utility-gpu-clearing-utili-4535a-ched-Script-Button-defaults-utility-lab/button-none-script.png": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/root-results-pre-final/utility-gpu-clearing-utili-4535a-ched-Script-Button-defaults-utility-lab/button-none-script.png",
+      "bytes": 7130,
+      "sha256": "83acd7ee7849cb94988f46122c27567ffd8be64bc0ca38fa07521d9417614e8d"
+    },
+    "raw-functions-browser/root-results-pre-final/utility-gpu-clearing-utili-a9b22-out-another-baseline-setter-utility-lab/button-none-live-theme.png": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/root-results-pre-final/utility-gpu-clearing-utili-a9b22-out-another-baseline-setter-utility-lab/button-none-live-theme.png",
+      "bytes": 5678,
+      "sha256": "0a23470bea2210e525fc04ba51bb5a5957925547e14d4ac13abcdf2a813f13d2"
+    },
+    "raw-functions-browser/root-results-pre-final/utility-gpu-configuration--1c218-xels-on-failed-installation-utility-lab/configuration-gpu.png": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/root-results-pre-final/utility-gpu-configuration--1c218-xels-on-failed-installation-utility-lab/configuration-gpu.png",
+      "bytes": 112254,
+      "sha256": "1ab3d27b3ed4043603c76d6afd3c67950fdf8761a7f24b0f8a2bc303e4a8b7ba"
+    },
+    "raw-functions-browser/root-results-pre-final/utility-gpu-inline-and-pat-fe70f-ns-drive-scoped-DOM-and-GPU-utility-lab/source-options.png": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/root-results-pre-final/utility-gpu-inline-and-pat-fe70f-ns-drive-scoped-DOM-and-GPU-utility-lab/source-options.png",
+      "bytes": 113244,
+      "sha256": "760e84b956a3a38a9bb7823e36ac98b05166b7b337ae0dc1d733732bd1f42800"
+    },
+    "raw-functions-browser/root-results-pre-final/utility-gpu-live-ThemeScop-1a10b-ost-rem-without-recompiling-utility-lab/gpu-theme-boundary.png": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/root-results-pre-final/utility-gpu-live-ThemeScop-1a10b-ost-rem-without-recompiling-utility-lab/gpu-theme-boundary.png",
+      "bytes": 123509,
+      "sha256": "c1684d4f849fa03743070449aaa4e51bf841b0610d9a1ec82dfcb4c89b30deb4"
+    },
+    "raw-functions-browser/root-results-pre-final/utility-gpu-terminal-GPU-i-e6220--DOM-editing-remains-usable-utility-lab/gpu-terminal-failure.png": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/root-results-pre-final/utility-gpu-terminal-GPU-i-e6220--DOM-editing-remains-usable-utility-lab/gpu-terminal-failure.png",
+      "bytes": 114868,
+      "sha256": "85ce5f05830554ad7899252a8296259742bfd69df8476121d6edfe37ad970ee7"
+    },
+    "raw-functions-browser/root-results-pre-final/utility-runtime-controls-a-5a183--and-fit-desktop-and-mobile-utility-lab/desktop.png": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/root-results-pre-final/utility-runtime-controls-a-5a183--and-fit-desktop-and-mobile-utility-lab/desktop.png",
+      "bytes": 114356,
+      "sha256": "6dd258d988861cab70f2f05930ae06bd6ecbf8c17eb64027e9c8c51c93715643"
+    },
+    "raw-functions-browser/root-results-pre-final/utility-runtime-controls-a-5a183--and-fit-desktop-and-mobile-utility-lab/mobile.png": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/root-results-pre-final/utility-runtime-controls-a-5a183--and-fit-desktop-and-mobile-utility-lab/mobile.png",
+      "bytes": 106443,
+      "sha256": "905923f0b66f1061cb8629b9dff7b5aa2ed39e46e65497a6e0f293214475e6b4"
+    },
+    "raw-functions-browser/root-results-pre-final/utility-runtime-real-DOM-c-2993e--to-caller-and-size-changes-utility-lab/cn-component.png": {
+      "path": "docs/validation/wasm-tailwind/raw-functions-browser/root-results-pre-final/utility-runtime-real-DOM-c-2993e--to-caller-and-size-changes-utility-lab/cn-component.png",
+      "bytes": 2606,
+      "sha256": "f45949b19602410bbda8530449950308d3db019e25378ee4100d56d1edf17f8c"
+    },
+    "raw-theme-hotpath-fixture.json": {
+      "path": "docs/validation/wasm-tailwind/raw-theme-hotpath-fixture.json",
+      "bytes": 3891,
+      "sha256": "68962dfab2159311723de21f96fec097053d1de5f40f443f541b6719952f818e"
+    },
+    "raw-variant-hotpath-fixture.json": {
+      "path": "docs/validation/wasm-tailwind/raw-variant-hotpath-fixture.json",
+      "bytes": 3815,
+      "sha256": "57d1f85448e60255498919b3fa5374447c5204ad01163a8ce75223bb0c749300"
+    }
+  },
+  "validationRecords": {
+    "docs": "raw-functions-docs-verified.log",
+    "records": "raw-functions-records-verified.log"
+  },
+  "documentationHashes": {
+    "docs/plan/WASM-TAILWIND.md": "5ce2bf817d36147ff95dc72df8fc4abc1a5905322b8c1d8eb75591fd3493c9b7",
+    "docs/validation/wasm-tailwind/M4.md": "37b2930e5208ed22770ca1e0b45b461d62516d540d20403789b139c408599ae0",
+    "docs/validation/wasm-tailwind/M5.md": "edaccfdea44d52963fe1a4769fdc58d155af1c8af63b634a5dd5c1fe40c687b2",
+    "docs/validation/wasm-tailwind/M6.md": "9e4b12d01754b0fd422a4cc6e9b2d2109fe83a9f8e91d97a2444f3bb7122e844",
+    "tests/utility/compiler/README.md": "6afdf561011bd6dc246156bf589ba0bcd86a67777ecb13c3351fb9168de182a7",
+    "crates/rustify-style/src/compiler/README.md": "a34c58ed776a676a23540216ef929898e4fb35723f4fbcc2ac7fc66591ab8c71",
+    "docs/validation/wasm-tailwind/registration-design/README.md": "1b1a29ad7081a38c15e0a3f081689d6fd9ced5a1cc5fbd60a2744f4dbb99c72e",
+    "docs/validation/wasm-tailwind/registration-design/synthesis.md": "41bf7647411d11c0ffa03340a3b81be2b36c9fb1910bd4cefd69bc11b191a4d3"
+  },
+  "documentationCheck": "passed",
+  "postcompatRawFunctions": true,
+  "utilityCompletionsCapturedBeforeFunctions": true,
+  "setupFunctionEditsRemoved": true,
+  "separateFunctionFailureJournalRemoved": true,
+  "duplicateThemeKeyframeSubstitutionRemoved": true,
+  "pauseReason": "User requested stopping after this step and resuming in a new conversation."
+}

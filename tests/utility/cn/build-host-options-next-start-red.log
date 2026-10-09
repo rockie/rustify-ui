@@ -1,0 +1,9 @@
+{
+  "passed": 53,
+  "failures": [
+    {
+      "name": "options-Next-factory-builder-and-development-cwd-read-order",
+      "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:\n+ actual - expected\n\n  [\n    'get:cwd',\n    'get:content',\n-   'get:cwd',\n-   'get:out',\n-   'get:css',\n-   'get:config',\n-   'get:full',\n-   'get:tokens',\n-   'get:content',\n-   'get:safelist',\n-   'get:full'\n  ]\n\n    at sameReads (file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/cn/build-options-cases.mjs:6:126)\n    at file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/cn/build-options-cases.mjs:49:381\n    at check (file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/cn/run-build-host.mjs:30:41)\n    at optionsCases (file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/cn/build-options-cases.mjs:48:8)\n    at async file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/cn/run-build-host.mjs:210:3"
+    }
+  ]
+}

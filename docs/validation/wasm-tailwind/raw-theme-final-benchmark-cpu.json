@@ -1,0 +1,102 @@
+[
+  {
+    "pid": 81285,
+    "cpuPercent": 44.9,
+    "command": "/Applications/Docker.app/Contents/MacOS/Docker Desktop.app/Contents/Frameworks/Docker Desktop Helper (Renderer).app/Contents/MacOS/Docker Desktop Helper (Renderer)"
+  },
+  {
+    "pid": 81267,
+    "cpuPercent": 40.9,
+    "command": "/System/Library/Frameworks/Virtualization.framework/Versions/A/XPCServices/com.apple.Virtualization.VirtualMachine.xpc/Contents/MacOS/com.apple.Virtualization.VirtualMachine"
+  },
+  {
+    "pid": 47380,
+    "cpuPercent": 11.9,
+    "command": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/154.0.8037.93/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer)"
+  },
+  {
+    "pid": 89673,
+    "cpuPercent": 11.2,
+    "command": "claude"
+  },
+  {
+    "pid": 404,
+    "cpuPercent": 9.9,
+    "command": "/System/Library/PrivateFrameworks/SkyLight.framework/Resources/WindowServer"
+  },
+  {
+    "pid": 67070,
+    "cpuPercent": 8.9,
+    "command": "spi"
+  },
+  {
+    "pid": 701,
+    "cpuPercent": 7.8,
+    "command": "/Applications/VLC.app/Contents/MacOS/VLC"
+  },
+  {
+    "pid": 81161,
+    "cpuPercent": 7.7,
+    "command": "/Applications/Docker.app/Contents/MacOS/com.docker.backend"
+  },
+  {
+    "pid": 552,
+    "cpuPercent": 6.0,
+    "command": "/usr/sbin/coreaudiod"
+  },
+  {
+    "pid": 96538,
+    "cpuPercent": 6.0,
+    "command": "claude"
+  },
+  {
+    "pid": 91696,
+    "cpuPercent": 5.1,
+    "command": "/Users/rockie/.codex/packages/app-server-daemon/releases/0.160.1-aarch64-apple-darwin/bin/codex"
+  },
+  {
+    "pid": 36730,
+    "cpuPercent": 4.6,
+    "command": "/System/Library/Frameworks/VideoToolbox.framework/Versions/A/XPCServices/VTDecoderXPCService.xpc/Contents/MacOS/VTDecoderXPCService"
+  },
+  {
+    "pid": 37574,
+    "cpuPercent": 4.2,
+    "command": "/Applications/WeChat.app/Contents/MacOS/WeChatAppEx.app/Contents/Frameworks/WeChatAppEx Framework.framework/Versions/C/Helpers/WeChatAppEx Helper (Renderer).app/Contents/MacOS/WeChatAppEx Helper (Renderer)"
+  },
+  {
+    "pid": 78671,
+    "cpuPercent": 3.8,
+    "command": "codex"
+  },
+  {
+    "pid": 34541,
+    "cpuPercent": 3.8,
+    "command": "codex"
+  },
+  {
+    "pid": 95616,
+    "cpuPercent": 3.7,
+    "command": "codex"
+  },
+  {
+    "pid": 54275,
+    "cpuPercent": 3.6,
+    "command": "/Users/rockie/.local/bin/herdr"
+  },
+  {
+    "pid": 405,
+    "cpuPercent": 3.2,
+    "command": "/System/Library/PrivateFrameworks/TCC.framework/Support/tccd"
+  },
+  {
+    "pid": 649,
+    "cpuPercent": 3.1,
+    "command": "/System/Library/DriverExtensions/AppleCentauriAlpha.dext/AppleCentauriAlpha"
+  },
+  {
+    "pid": 664,
+    "cpuPercent": 2.5,
+    "command": "/System/Library/PrivateFrameworks/TCC.framework/Support/tccd"
+  }
+]

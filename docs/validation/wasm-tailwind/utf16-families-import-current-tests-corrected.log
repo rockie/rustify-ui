@@ -1,0 +1,23 @@
+mbx[warning]: Unix-domain cache session listener unavailable; using FIFO transport: failed to bind cache session listener at /var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/mbx-session-tEmPsu/cache-agent.sock: Operation not permitted (os error 1)
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 7.17s
+     Running unittests src/lib.rs (/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-utf16-verified-54mkl3kq/cargo-target/debug/deps/rustify_style-7a67d48e3c4c51f4)
+
+running 6 tests
+test compiler::public_api::compile_ast::canonical_text_tests::import_begin_refusal_preserves_the_original_receiver_and_program ... ok
+test compiler::public_api::compile_ast::canonical_text_tests::import_views_follow_earlier_array_storage ... ok
+test compiler::public_api::compile_ast::canonical_text_tests::import_begin_and_complete_keep_raw_slots_context_and_captured_versions ... ok
+test compiler::public_api::compile_ast::setup::tests::parallel_import_failure_selects_first_settlement_instead_of_first_ast_visit ... ok
+test compiler::utf16_parser_tests::text_input_and_virtual_asset_content_reach_both_native_and_public_import_parsers ... ok
+test compiler::public_api::design_system::tests::theme_entries_preserve_import_sources_without_tracking_design_system_root ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 340 filtered out; finished in 0.01s
+
+mbx[cache]: 0 hits, 1 misses; 0 B downloaded, 0 B uploaded, 341.4 MiB stored locally

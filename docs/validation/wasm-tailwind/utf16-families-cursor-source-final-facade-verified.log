@@ -1,0 +1,31 @@
+mbx[warning]: Unix-domain cache session listener unavailable; using FIFO transport: failed to bind cache session listener at /var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/mbx-session-jnh9ws/cache-agent.sock: Operation not permitted (os error 1)
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+   Compiling rustify-style-wasm v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style-wasm)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 3.39s
+     Running unittests src/lib.rs (/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-utf16-verified-54mkl3kq/cargo-target/debug/deps/rustify_style_wasm-fbc7e0d0bd2f394b)
+
+running 13 tests
+test session::tests::variant_metadata_reader_keeps_queued_limit_priority ... ok
+test public_api::design_system::tests::javascript_storage_counts_original_utf16_units ... ok
+test public_api::design_system::tests::crossing_scratch_tracks_active_path_and_current_text_chunk ... ok
+test session::tests::invalid_candidate_json_recovers_without_creating_pending_text_cache ... ok
+test session::tests::scoped_facade_does_not_publish_uninstalled_preparation ... ok
+test session::tests::initial_css_report_uses_the_same_scope_as_prepared_reports ... ok
+test session::tests::variant_metadata_reader_counts_pair_and_lone_logical_input_bytes ... ok
+test session::tests::replacement_configuration_is_staged_until_commit_and_discard_keeps_old_cache ... ok
+test session::tests::prepared_reply_preserves_variable_candidates_for_recovery ... ok
+test session::tests::prepare_commit_discard_keep_a_single_owned_snapshot ... ok
+test session::tests::replacing_configuration_stages_and_discards_without_mutating_committed_state ... ok
+test session::tests::candidate_json_retains_raw_units_through_prepare_commit_discard_and_replacement ... ok
+test public_api::design_system::tests::class_list_progressive_peak_fits_original_public_quota ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.63s
+
+mbx[cache]: 0 hits, 2 misses; 0 B downloaded, 0 B uploaded, 74.5 MiB stored locally

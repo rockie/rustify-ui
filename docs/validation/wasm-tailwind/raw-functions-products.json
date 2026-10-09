@@ -1,0 +1,58 @@
+[
+  {
+    "scope": "root",
+    "source": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-tailwind-browser-v_c2md8x/target/makepad-wasm-app/release/utility-lab",
+    "destination": "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/makepad-wasm-app/release/utility-lab",
+    "previousProduct": "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/makepad-wasm-app/release/utility-lab@before-raw-functions-keyframe-final",
+    "assets": [
+      {
+        "file": "build-manifest.json",
+        "bytes": 3114,
+        "sha256": "2dcfd6ac3c64c25ff3061f8521ebb2381f5e6eaea5ea12c7eb17fc60da360eea"
+      },
+      {
+        "file": "utility/build-manifest.json",
+        "bytes": 592,
+        "sha256": "89e05a578ece2944fd3d6941a91b9370ada042b5e1758df015608452041b18e2"
+      },
+      {
+        "file": "utility-lab.wasm",
+        "bytes": 9486990,
+        "sha256": "b063f40bd16e0972f4fae917c117d0726225beb7e3d599514b4c45980ee9efeb"
+      },
+      {
+        "file": "utility/compiler/style_bg.wasm",
+        "bytes": 1767621,
+        "sha256": "2cb4c09b205e4176d68790612baa35c0c49ec092d4d953a145f701ee39d5d6fd"
+      }
+    ]
+  },
+  {
+    "scope": "deep",
+    "source": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-tailwind-browser-v_c2md8x/target/makepad-wasm-app/release/utility-lab@tools-utility-lab",
+    "destination": "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/makepad-wasm-app/release/utility-lab@tools-utility-lab",
+    "previousProduct": "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/makepad-wasm-app/release/utility-lab@tools-utility-lab@before-raw-functions-keyframe-final",
+    "assets": [
+      {
+        "file": "build-manifest.json",
+        "bytes": 3165,
+        "sha256": "c3041cf1bea84406c3e826a9ff963bb04e672b42b6da9379b7f17cf2a6261a56"
+      },
+      {
+        "file": "utility/build-manifest.json",
+        "bytes": 592,
+        "sha256": "89e05a578ece2944fd3d6941a91b9370ada042b5e1758df015608452041b18e2"
+      },
+      {
+        "file": "utility-lab.wasm",
+        "bytes": 9486990,
+        "sha256": "b063f40bd16e0972f4fae917c117d0726225beb7e3d599514b4c45980ee9efeb"
+      },
+      {
+        "file": "utility/compiler/style_bg.wasm",
+        "bytes": 1767621,
+        "sha256": "2cb4c09b205e4176d68790612baa35c0c49ec092d4d953a145f701ee39d5d6fd"
+      }
+    ]
+  }
+]

@@ -1,0 +1,29 @@
+mbx[warning]: Unix-domain cache session listener unavailable; using FIFO transport: failed to bind cache session listener at /var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/mbx-session-wwtn6q/cache-agent.sock: Operation not permitted (os error 1)
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 7.39s
+     Running unittests src/lib.rs (/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-utf16-verified-54mkl3kq/cargo-target/debug/deps/rustify_style-7a67d48e3c4c51f4)
+
+running 1 test
+allowance refusal: retained=255912 requested=6072 total=261984 limit=256000
+
+thread 'compiler::public_api::compile_ast::tests::every_public_ast_build_matches_fixed_upstream_structure_and_identity' (4138630) panicked at crates/rustify-style/src/compiler/public_api/../../../../../tests/utility/compiler/compile-ast-native.rs:25:33:
+"ast:import": Limit { resource: "cache_bytes", limit: 256000 }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test compiler::public_api::compile_ast::tests::every_public_ast_build_matches_fixed_upstream_structure_and_identity ... FAILED
+
+failures:
+
+failures:
+    compiler::public_api::compile_ast::tests::every_public_ast_build_matches_fixed_upstream_structure_and_identity
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 345 filtered out; finished in 0.12s
+
+error: test failed, to rerun pass `-p rustify-style --lib`
+mbx[cache]: 0 hits, 1 misses; 0 B downloaded, 0 B uploaded, 341.4 MiB stored locally

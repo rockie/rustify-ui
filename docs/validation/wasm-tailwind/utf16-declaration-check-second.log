@@ -1,0 +1,231 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+    Checking rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+error[E0283]: type annotations needed
+   --> crates/rustify-style/src/compiler/theme.rs:494:54
+    |
+492 | ...                   let mut node = AstNode::declaration(
+    |                                      -------------------- required by a bound introduced by this call
+493 | ...                       super::candidate::escape_text(&self.prefix_key_text(text_key)),
+494 | ...                       token.output_value().into(),
+    |                                                ^^^^
+    |
+    = note: the type must implement `Into<Text>`
+note: required by a bound in `AstNode::declaration`
+   --> crates/rustify-style/src/compiler/ast.rs:121:63
+    |
+121 |     pub fn declaration(property: impl Into<Text>, value: impl Into<Text>) -> Self {
+    |                                                               ^^^^^^^^^^ required by this bound in `AstNode::declaration`
+help: try using a fully qualified path to specify the expected types
+    |
+494 -                                 token.output_value().into(),
+494 +                                 <&str as Into<T>>::into(token.output_value()),
+    |
+help: consider removing this method call, as the receiver has type `&str` and `&str: Into<Text>` trivially holds
+    |
+494 -                                 token.output_value().into(),
+494 +                                 token.output_value(),
+    |
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/utilities.rs:102:44
+    |
+102 |                         declarations.push((property.clone(), value.clone()));
+    |                                            ^^^^^^^^^^^^^^^^ expected `String`, found `Text`
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/utilities.rs:102:62
+    |
+102 |                         declarations.push((property.clone(), value.clone()));
+    |                                                              ^^^^^^^^^^^^^ expected `String`, found `Text`
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/utilities.rs:120:44
+    |
+120 |                         declarations.push((property.clone(), value.clone()));
+    |                                            ^^^^^^^^^^^^^^^^ expected `String`, found `Text`
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/utilities.rs:120:62
+    |
+120 |                         declarations.push((property.clone(), value.clone()));
+    |                                                              ^^^^^^^^^^^^^ expected `String`, found `Text`
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/utilities.rs:173:44
+    |
+173 |                         declarations.push((property.clone(), value.clone()));
+    |                                            ^^^^^^^^^^^^^^^^ expected `String`, found `Text`
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/utilities.rs:173:62
+    |
+173 |                         declarations.push((property.clone(), value.clone()));
+    |                                                              ^^^^^^^^^^^^^ expected `String`, found `Text`
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/utilities.rs:197:44
+    |
+197 |                         declarations.push((property.clone(), value.clone()));
+    |                                            ^^^^^^^^^^^^^^^^ expected `String`, found `Text`
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/utilities.rs:197:62
+    |
+197 |                         declarations.push((property.clone(), value.clone()));
+    |                                                              ^^^^^^^^^^^^^ expected `String`, found `Text`
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/utilities.rs:221:44
+    |
+221 |                         declarations.push((property.clone(), value.clone()));
+    |                                            ^^^^^^^^^^^^^^^^ expected `String`, found `Text`
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/utilities.rs:221:62
+    |
+221 |                         declarations.push((property.clone(), value.clone()));
+    |                                                              ^^^^^^^^^^^^^ expected `String`, found `Text`
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/utilities.rs:251:44
+    |
+251 |                         declarations.push((property.clone(), value.clone()));
+    |                                            ^^^^^^^^^^^^^^^^ expected `String`, found `Text`
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/utilities.rs:251:62
+    |
+251 |                         declarations.push((property.clone(), value.clone()));
+    |                                                              ^^^^^^^^^^^^^ expected `String`, found `Text`
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/utilities.rs:308:44
+    |
+308 |                         declarations.push((property.clone(), value.clone()));
+    |                                            ^^^^^^^^^^^^^^^^ expected `String`, found `Text`
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/utilities.rs:308:62
+    |
+308 |                         declarations.push((property.clone(), value.clone()));
+    |                                                              ^^^^^^^^^^^^^ expected `String`, found `Text`
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/utilities.rs:332:44
+    |
+332 |                         declarations.push((property.clone(), value.clone()));
+    |                                            ^^^^^^^^^^^^^^^^ expected `String`, found `Text`
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/utilities.rs:332:62
+    |
+332 |                         declarations.push((property.clone(), value.clone()));
+    |                                                              ^^^^^^^^^^^^^ expected `String`, found `Text`
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/utilities.rs:398:13
+    |
+398 |             property,
+    |             ^^^^^^^^ expected `Text`, found `String`
+    |
+help: call `Into::into` on this expression to convert `std::string::String` into `Text`
+    |
+398 |             property: property.into(),
+    |             +++++++++         +++++++
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/utilities.rs:399:13
+    |
+399 |             value,
+    |             ^^^^^ expected `Text`, found `String`
+    |
+help: call `Into::into` on this expression to convert `std::string::String` into `Text`
+    |
+399 |             value: value.into(),
+    |             ++++++      +++++++
+
+error[E0277]: can't compare `&str` with `Text`
+   --> crates/rustify-style/src/compiler/utilities.rs:572:43
+    |
+572 |                     .position(|item| item == value)
+    |                                           ^^ no implementation for `&str == Text`
+    |
+    = help: the trait `PartialEq<Text>` is not implemented for `&str`
+    = help: the following other types implement trait `PartialEq<Rhs>`:
+              `&str` implements `PartialEq<ByteStr>`
+              `&str` implements `PartialEq<ByteString>`
+              `&str` implements `PartialEq<Cow<'_, str>>`
+              `&str` implements `PartialEq<OsString>`
+              `&str` implements `PartialEq<serde_json::Value>`
+              `&str` implements `PartialEq<std::string::String>`
+              `str` implements `PartialEq<ByteStr>`
+              `str` implements `PartialEq<ByteString>`
+            and 8 others
+    = note: required for `&&str` to implement `PartialEq<&Text>`
+
+error[E0277]: can't compare `&str` with `Text`
+   --> crates/rustify-style/src/compiler/utilities.rs:581:39
+    |
+581 |                 .position(|item| item == property)
+    |                                       ^^ no implementation for `&str == Text`
+    |
+    = help: the trait `PartialEq<Text>` is not implemented for `&str`
+    = help: the following other types implement trait `PartialEq<Rhs>`:
+              `&str` implements `PartialEq<ByteStr>`
+              `&str` implements `PartialEq<ByteString>`
+              `&str` implements `PartialEq<Cow<'_, str>>`
+              `&str` implements `PartialEq<OsString>`
+              `&str` implements `PartialEq<serde_json::Value>`
+              `&str` implements `PartialEq<std::string::String>`
+              `str` implements `PartialEq<ByteStr>`
+              `str` implements `PartialEq<ByteString>`
+            and 8 others
+    = note: required for `&&str` to implement `PartialEq<&Text>`
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/utilities.rs:604:44
+    |
+604 |                 super::functions::in_value(value, theme, false, limits.ast_depth, limits.css_bytes)
+    |                 -------------------------- ^^^^^ expected `&str`, found `&Text`
+    |                 |
+    |                 arguments to this function are incorrect
+    |
+    = note: expected reference `&str`
+               found reference `&Text`
+note: function defined here
+   --> crates/rustify-style/src/compiler/functions.rs:372:15
+    |
+372 | pub(super) fn in_value(
+    |               ^^^^^^^^
+373 |     value: &str,
+    |     -----------
+
+error[E0308]: mismatched types
+   --> crates/rustify-style/src/compiler/utilities.rs:607:17
+    |
+606 |             declarations.push(gpu_declaration(
+    |                               --------------- arguments to this function are incorrect
+607 |                 property,
+    |                 ^^^^^^^^ expected `&str`, found `&Text`
+    |
+    = note: expected reference `&str`
+               found reference `&Text`
+note: function defined here
+   --> crates/rustify-style/src/compiler/utilities.rs:466:4
+    |
+466 | fn gpu_declaration(
+    |    ^^^^^^^^^^^^^^^
+467 |     property: &str,
+    |     --------------
+
+Some errors have detailed explanations: E0277, E0283, E0308.
+For more information about an error, try `rustc --explain E0277`.
+error: could not compile `rustify-style` (lib) due to 23 previous errors
+mbx[cache]: 0 hits, 0 misses, 1 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: escorted 786.7 GiB logical of ownerless outputs off the premises.

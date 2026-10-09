@@ -1,0 +1,5337 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "1334c99db8fd26c8ea065375dd9259800863f072",
+  "oracleVersion": "4.1.13",
+  "cases": [
+    {
+      "id": "import:relative-theme",
+      "input": "@import \"./theme.css\"; @tailwind utilities;",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand"
+      ],
+      "loaded": [
+        {
+          "uri": "./theme.css",
+          "base": "/app",
+          "path": "/app/theme.css"
+        }
+      ],
+      "expectedCss": ":root, :host {\n  --spacing: 4px;\n  --color-brand: #123456;\n}\n.bg-brand {\n  background-color: var(--color-brand);\n}\n.p-3 {\n  padding: calc(var(--spacing) * 3);\n}\n"
+    },
+    {
+      "id": "import:bare-package",
+      "input": "@import \"package/theme.css\"; @tailwind utilities;",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand"
+      ],
+      "loaded": [
+        {
+          "uri": "package/theme.css",
+          "base": "/app",
+          "path": "package/theme.css"
+        }
+      ],
+      "expectedCss": ":root, :host {\n  --spacing: 7px;\n  --color-brand: #abcdef;\n}\n.bg-brand {\n  background-color: var(--color-brand);\n}\n.p-3 {\n  padding: calc(var(--spacing) * 3);\n}\n"
+    },
+    {
+      "id": "import:nested-relative",
+      "input": "@import \"parts/body.css\";",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand"
+      ],
+      "loaded": [
+        {
+          "uri": "parts/body.css",
+          "base": "/app",
+          "path": "/app/parts/body.css"
+        },
+        {
+          "uri": "../theme.css",
+          "base": "/app/parts",
+          "path": "/app/theme.css"
+        }
+      ],
+      "expectedCss": ":root, :host {\n  --spacing: 4px;\n  --color-brand: #123456;\n}\n.custom {\n  color: red;\n}\n.bg-brand {\n  background-color: var(--color-brand);\n}\n.p-3 {\n  padding: calc(var(--spacing) * 3);\n}\n"
+    },
+    {
+      "id": "import:duplicate",
+      "input": "@import \"plain.css\"; @import \"./plain.css\"; @tailwind utilities;",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand"
+      ],
+      "loaded": [
+        {
+          "uri": "plain.css",
+          "base": "/app",
+          "path": "/app/plain.css"
+        },
+        {
+          "uri": "./plain.css",
+          "base": "/app",
+          "path": "/app/plain.css"
+        }
+      ],
+      "expectedCss": ".imported {\n  color: red;\n}\n.imported {\n  color: red;\n}\n"
+    },
+    {
+      "id": "import:empty-layer-after-theme-pruning",
+      "input": "@import \"theme.css\" layer(components); @tailwind utilities;",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "flex"
+      ],
+      "loaded": [
+        {
+          "uri": "theme.css",
+          "base": "/app",
+          "path": "/app/theme.css"
+        }
+      ],
+      "expectedCss": ".flex {\n  display: flex;\n}\n"
+    },
+    {
+      "id": "import:empty-layer",
+      "input": "@layer utilities {} @tailwind utilities;",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "flex"
+      ],
+      "loaded": [],
+      "expectedCss": "@layer utilities;\n.flex {\n  display: flex;\n}\n"
+    },
+    {
+      "id": "import:layer",
+      "input": "@import \"plain.css\" layer; @tailwind utilities;",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "flex"
+      ],
+      "loaded": [
+        {
+          "uri": "plain.css",
+          "base": "/app",
+          "path": "/app/plain.css"
+        }
+      ],
+      "expectedCss": "@layer {\n  .imported {\n    color: red;\n  }\n}\n.flex {\n  display: flex;\n}\n"
+    },
+    {
+      "id": "import:layer screen",
+      "input": "@import \"plain.css\" layer screen; @tailwind utilities;",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "flex"
+      ],
+      "loaded": [
+        {
+          "uri": "plain.css",
+          "base": "/app",
+          "path": "/app/plain.css"
+        }
+      ],
+      "expectedCss": "@media screen {\n  @layer {\n    .imported {\n      color: red;\n    }\n  }\n}\n.flex {\n  display: flex;\n}\n"
+    },
+    {
+      "id": "import:layer supports(display:grid)",
+      "input": "@import \"plain.css\" layer supports(display:grid); @tailwind utilities;",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "flex"
+      ],
+      "loaded": [
+        {
+          "uri": "plain.css",
+          "base": "/app",
+          "path": "/app/plain.css"
+        }
+      ],
+      "expectedCss": "@supports (display:grid) {\n  @layer {\n    .imported {\n      color: red;\n    }\n  }\n}\n.flex {\n  display: flex;\n}\n"
+    },
+    {
+      "id": "import:layer supports((display:grid)) print",
+      "input": "@import \"plain.css\" layer supports((display:grid)) print; @tailwind utilities;",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "flex"
+      ],
+      "loaded": [
+        {
+          "uri": "plain.css",
+          "base": "/app",
+          "path": "/app/plain.css"
+        }
+      ],
+      "expectedCss": "@supports (display:grid) {\n  @media print {\n    @layer {\n      .imported {\n        color: red;\n      }\n    }\n  }\n}\n.flex {\n  display: flex;\n}\n"
+    },
+    {
+      "id": "import:layer(utilities)",
+      "input": "@import \"plain.css\" layer(utilities); @tailwind utilities;",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "flex"
+      ],
+      "loaded": [
+        {
+          "uri": "plain.css",
+          "base": "/app",
+          "path": "/app/plain.css"
+        }
+      ],
+      "expectedCss": "@layer utilities {\n  .imported {\n    color: red;\n  }\n}\n.flex {\n  display: flex;\n}\n"
+    },
+    {
+      "id": "import:layer(utilities) screen",
+      "input": "@import \"plain.css\" layer(utilities) screen; @tailwind utilities;",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "flex"
+      ],
+      "loaded": [
+        {
+          "uri": "plain.css",
+          "base": "/app",
+          "path": "/app/plain.css"
+        }
+      ],
+      "expectedCss": "@media screen {\n  @layer utilities {\n    .imported {\n      color: red;\n    }\n  }\n}\n.flex {\n  display: flex;\n}\n"
+    },
+    {
+      "id": "import:layer(utilities) supports(display:grid)",
+      "input": "@import \"plain.css\" layer(utilities) supports(display:grid); @tailwind utilities;",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "flex"
+      ],
+      "loaded": [
+        {
+          "uri": "plain.css",
+          "base": "/app",
+          "path": "/app/plain.css"
+        }
+      ],
+      "expectedCss": "@supports (display:grid) {\n  @layer utilities {\n    .imported {\n      color: red;\n    }\n  }\n}\n.flex {\n  display: flex;\n}\n"
+    },
+    {
+      "id": "import:layer(utilities) supports((display:grid)) print",
+      "input": "@import \"plain.css\" layer(utilities) supports((display:grid)) print; @tailwind utilities;",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "flex"
+      ],
+      "loaded": [
+        {
+          "uri": "plain.css",
+          "base": "/app",
+          "path": "/app/plain.css"
+        }
+      ],
+      "expectedCss": "@supports (display:grid) {\n  @media print {\n    @layer utilities {\n      .imported {\n        color: red;\n      }\n    }\n  }\n}\n.flex {\n  display: flex;\n}\n"
+    },
+    {
+      "id": "import:media-with-theme",
+      "input": "@import \"parts/body.css\" screen and (width > 500px);",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand"
+      ],
+      "loaded": [
+        {
+          "uri": "parts/body.css",
+          "base": "/app",
+          "path": "/app/parts/body.css"
+        },
+        {
+          "uri": "../theme.css",
+          "base": "/app/parts",
+          "path": "/app/theme.css"
+        }
+      ],
+      "expectedCss": "@media screen and (width > 500px) {\n  :root, :host {\n    --spacing: 4px;\n    --color-brand: #123456;\n  }\n  .custom {\n    color: red;\n  }\n  .bg-brand {\n    background-color: var(--color-brand);\n  }\n  .p-3 {\n    padding: calc(var(--spacing) * 3);\n  }\n}\n"
+    },
+    {
+      "id": "import:reference-theme",
+      "input": "@reference \"theme.css\"; @tailwind utilities;",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand"
+      ],
+      "loaded": [
+        {
+          "uri": "theme.css",
+          "base": "/app",
+          "path": "/app/theme.css"
+        }
+      ],
+      "expectedCss": ".bg-brand {\n  background-color: var(--color-brand, #123456);\n}\n.p-3 {\n  padding: calc(var(--spacing, 4px) * 3);\n}\n"
+    },
+    {
+      "id": "import:reference-css-hidden",
+      "input": "@reference \"reference.css\"; @tailwind utilities;",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand"
+      ],
+      "loaded": [
+        {
+          "uri": "reference.css",
+          "base": "/app",
+          "path": "/app/reference.css"
+        }
+      ],
+      "expectedCss": ".bg-brand {\n  background-color: var(--color-brand, #123456);\n}\n.p-3 {\n  padding: calc(var(--spacing, 4px) * 3);\n}\n"
+    },
+    {
+      "id": "import:import-reference",
+      "input": "@import \"reference.css\" reference; @tailwind utilities;",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand"
+      ],
+      "loaded": [
+        {
+          "uri": "reference.css",
+          "base": "/app",
+          "path": "/app/reference.css"
+        }
+      ],
+      "expectedCss": ".bg-brand {\n  background-color: var(--color-brand, #123456);\n}\n.p-3 {\n  padding: calc(var(--spacing, 4px) * 3);\n}\n"
+    },
+    {
+      "id": "import:reference-under-layer",
+      "input": "@import \"reference.css\" layer(utilities) reference; @tailwind utilities;",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand"
+      ],
+      "loaded": [
+        {
+          "uri": "reference.css",
+          "base": "/app",
+          "path": "/app/reference.css"
+        }
+      ],
+      "expectedCss": ".bg-brand {\n  background-color: var(--color-brand, #123456);\n}\n.p-3 {\n  padding: calc(var(--spacing, 4px) * 3);\n}\n"
+    },
+    {
+      "id": "import:reference-then-local-theme",
+      "input": "@reference \"theme.css\"; @theme { --color-brand: #abcdef; } @tailwind utilities;",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand"
+      ],
+      "loaded": [
+        {
+          "uri": "theme.css",
+          "base": "/app",
+          "path": "/app/theme.css"
+        }
+      ],
+      "expectedCss": ".bg-brand {\n  background-color: var(--color-brand);\n}\n.p-3 {\n  padding: calc(var(--spacing, 4px) * 3);\n}\n"
+    },
+    {
+      "id": "import:local-theme-then-reference",
+      "input": "@theme { --color-brand: #abcdef; } @reference \"theme.css\"; @tailwind utilities;",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand"
+      ],
+      "loaded": [
+        {
+          "uri": "theme.css",
+          "base": "/app",
+          "path": "/app/theme.css"
+        }
+      ],
+      "expectedCss": ".bg-brand {\n  background-color: var(--color-brand, #123456);\n}\n.p-3 {\n  padding: calc(var(--spacing, 4px) * 3);\n}\n"
+    },
+    {
+      "id": "import:import-reference-with-media",
+      "input": "@import \"reference.css\" screen reference; @tailwind utilities;",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand"
+      ],
+      "loaded": [
+        {
+          "uri": "reference.css",
+          "base": "/app",
+          "path": "/app/reference.css"
+        }
+      ],
+      "expectedCss": ".bg-brand {\n  background-color: var(--color-brand, #123456);\n}\n.p-3 {\n  padding: calc(var(--spacing, 4px) * 3);\n}\n"
+    },
+    {
+      "id": "import:media-reference-input",
+      "input": "@media reference { @theme { --spacing: 4px; --color-brand: #123456; } .hidden { color:red; } } @tailwind utilities;",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand"
+      ],
+      "loaded": [],
+      "expectedCss": ".bg-brand {\n  background-color: var(--color-brand, #123456);\n}\n.p-3 {\n  padding: calc(var(--spacing, 4px) * 3);\n}\n"
+    },
+    {
+      "id": "import:ordinary-nested",
+      "input": "@media screen { @import \"plain.css\"; } @tailwind utilities;",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "flex"
+      ],
+      "loaded": [
+        {
+          "uri": "plain.css",
+          "base": "/app",
+          "path": "/app/plain.css"
+        }
+      ],
+      "expectedCss": "@media screen {\n  .imported {\n    color: red;\n  }\n}\n.flex {\n  display: flex;\n}\n"
+    },
+    {
+      "id": "import:retained-\"https://example.test/a.css\"",
+      "input": "@import \"https://example.test/a.css\"; @tailwind utilities;",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "flex"
+      ],
+      "loaded": [],
+      "expectedCss": "@import \"https://example.test/a.css\";\n.flex {\n  display: flex;\n}\n"
+    },
+    {
+      "id": "import:retained-\"http://example.test/a.css\"",
+      "input": "@import \"http://example.test/a.css\"; @tailwind utilities;",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "flex"
+      ],
+      "loaded": [],
+      "expectedCss": "@import \"http://example.test/a.css\";\n.flex {\n  display: flex;\n}\n"
+    },
+    {
+      "id": "import:retained-\"data:text/css,body{}\"",
+      "input": "@import \"data:text/css,body{}\"; @tailwind utilities;",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "flex"
+      ],
+      "loaded": [],
+      "expectedCss": "@import \"data:text/css,body{}\";\n.flex {\n  display: flex;\n}\n"
+    },
+    {
+      "id": "import:retained-url(\"https://example.test/a.css\")",
+      "input": "@import url(\"https://example.test/a.css\"); @tailwind utilities;",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "flex"
+      ],
+      "loaded": [],
+      "expectedCss": "@import url(\"https://example.test/a.css\");\n.flex {\n  display: flex;\n}\n"
+    },
+    {
+      "id": "import:retained-url(local.css)",
+      "input": "@import url(local.css); @tailwind utilities;",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "flex"
+      ],
+      "loaded": [],
+      "expectedCss": "@import url(local.css);\n.flex {\n  display: flex;\n}\n"
+    },
+    {
+      "id": "import:retained-unquoted.css",
+      "input": "@import unquoted.css; @tailwind utilities;",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "flex"
+      ],
+      "loaded": [],
+      "expectedCss": "@import unquoted.css;\n.flex {\n  display: flex;\n}\n"
+    },
+    {
+      "id": "import:retained-reference-\"https://example.test/a.css\"",
+      "input": "@reference \"https://example.test/a.css\"; @tailwind utilities;",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "flex"
+      ],
+      "loaded": [],
+      "expectedCss": ".flex {\n  display: flex;\n}\n"
+    },
+    {
+      "id": "import:retained-reference-url(local.css)",
+      "input": "@reference url(local.css); @tailwind utilities;",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "flex"
+      ],
+      "loaded": [],
+      "expectedCss": ".flex {\n  display: flex;\n}\n"
+    },
+    {
+      "id": "import:retained-reference-unquoted.css",
+      "input": "@reference unquoted.css; @tailwind utilities;",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "flex"
+      ],
+      "loaded": [],
+      "expectedCss": ".flex {\n  display: flex;\n}\n"
+    },
+    {
+      "id": "import:option:import:theme(inline)",
+      "input": "@import \"theme.css\" theme(inline); @tailwind utilities;",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "tw:bg-brand",
+        "app:p-3",
+        "app:bg-brand"
+      ],
+      "loaded": [
+        {
+          "uri": "theme.css",
+          "base": "/app",
+          "path": "/app/theme.css"
+        }
+      ],
+      "expectedCss": ".bg-brand {\n  background-color: #123456;\n}\n.p-3 {\n  padding: calc(4px * 3);\n}\n"
+    },
+    {
+      "id": "import:option:media:theme(inline)",
+      "input": "@media theme(inline) { @theme { --spacing: 4px; --color-brand: #123456; } } @tailwind utilities;",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "tw:bg-brand",
+        "app:p-3",
+        "app:bg-brand"
+      ],
+      "loaded": [],
+      "expectedCss": ".bg-brand {\n  background-color: #123456;\n}\n.p-3 {\n  padding: calc(4px * 3);\n}\n"
+    },
+    {
+      "id": "import:option:import:theme(reference)",
+      "input": "@import \"theme.css\" theme(reference); @tailwind utilities;",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "tw:bg-brand",
+        "app:p-3",
+        "app:bg-brand"
+      ],
+      "loaded": [
+        {
+          "uri": "theme.css",
+          "base": "/app",
+          "path": "/app/theme.css"
+        }
+      ],
+      "expectedCss": ".bg-brand {\n  background-color: var(--color-brand, #123456);\n}\n.p-3 {\n  padding: calc(var(--spacing, 4px) * 3);\n}\n"
+    },
+    {
+      "id": "import:option:media:theme(reference)",
+      "input": "@media theme(reference) { @theme { --spacing: 4px; --color-brand: #123456; } } @tailwind utilities;",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "tw:bg-brand",
+        "app:p-3",
+        "app:bg-brand"
+      ],
+      "loaded": [],
+      "expectedCss": ".bg-brand {\n  background-color: var(--color-brand, #123456);\n}\n.p-3 {\n  padding: calc(var(--spacing, 4px) * 3);\n}\n"
+    },
+    {
+      "id": "import:option:import:theme(default)",
+      "input": "@import \"theme.css\" theme(default); @tailwind utilities;",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "tw:bg-brand",
+        "app:p-3",
+        "app:bg-brand"
+      ],
+      "loaded": [
+        {
+          "uri": "theme.css",
+          "base": "/app",
+          "path": "/app/theme.css"
+        }
+      ],
+      "expectedCss": ":root, :host {\n  --spacing: 4px;\n  --color-brand: #123456;\n}\n.bg-brand {\n  background-color: var(--color-brand);\n}\n.p-3 {\n  padding: calc(var(--spacing) * 3);\n}\n"
+    },
+    {
+      "id": "import:option:media:theme(default)",
+      "input": "@media theme(default) { @theme { --spacing: 4px; --color-brand: #123456; } } @tailwind utilities;",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "tw:bg-brand",
+        "app:p-3",
+        "app:bg-brand"
+      ],
+      "loaded": [],
+      "expectedCss": ":root, :host {\n  --spacing: 4px;\n  --color-brand: #123456;\n}\n.bg-brand {\n  background-color: var(--color-brand);\n}\n.p-3 {\n  padding: calc(var(--spacing) * 3);\n}\n"
+    },
+    {
+      "id": "import:option:import:theme(static)",
+      "input": "@import \"theme.css\" theme(static); @tailwind utilities;",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "tw:bg-brand",
+        "app:p-3",
+        "app:bg-brand"
+      ],
+      "loaded": [
+        {
+          "uri": "theme.css",
+          "base": "/app",
+          "path": "/app/theme.css"
+        }
+      ],
+      "expectedCss": ":root, :host {\n  --spacing: 4px;\n  --color-brand: #123456;\n}\n.bg-brand {\n  background-color: var(--color-brand);\n}\n.p-3 {\n  padding: calc(var(--spacing) * 3);\n}\n"
+    },
+    {
+      "id": "import:option:media:theme(static)",
+      "input": "@media theme(static) { @theme { --spacing: 4px; --color-brand: #123456; } } @tailwind utilities;",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "tw:bg-brand",
+        "app:p-3",
+        "app:bg-brand"
+      ],
+      "loaded": [],
+      "expectedCss": ":root, :host {\n  --spacing: 4px;\n  --color-brand: #123456;\n}\n.bg-brand {\n  background-color: var(--color-brand);\n}\n.p-3 {\n  padding: calc(var(--spacing) * 3);\n}\n"
+    },
+    {
+      "id": "import:option:import:theme(inline reference)",
+      "input": "@import \"theme.css\" theme(inline reference); @tailwind utilities;",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "tw:bg-brand",
+        "app:p-3",
+        "app:bg-brand"
+      ],
+      "loaded": [
+        {
+          "uri": "theme.css",
+          "base": "/app",
+          "path": "/app/theme.css"
+        }
+      ],
+      "expectedCss": ".bg-brand {\n  background-color: #123456;\n}\n.p-3 {\n  padding: calc(4px * 3);\n}\n"
+    },
+    {
+      "id": "import:option:media:theme(inline reference)",
+      "input": "@media theme(inline reference) { @theme { --spacing: 4px; --color-brand: #123456; } } @tailwind utilities;",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "tw:bg-brand",
+        "app:p-3",
+        "app:bg-brand"
+      ],
+      "loaded": [],
+      "expectedCss": ".bg-brand {\n  background-color: #123456;\n}\n.p-3 {\n  padding: calc(4px * 3);\n}\n"
+    },
+    {
+      "id": "import:option:import:theme(static default)",
+      "input": "@import \"theme.css\" theme(static default); @tailwind utilities;",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "tw:bg-brand",
+        "app:p-3",
+        "app:bg-brand"
+      ],
+      "loaded": [
+        {
+          "uri": "theme.css",
+          "base": "/app",
+          "path": "/app/theme.css"
+        }
+      ],
+      "expectedCss": ":root, :host {\n  --spacing: 4px;\n  --color-brand: #123456;\n}\n.bg-brand {\n  background-color: var(--color-brand);\n}\n.p-3 {\n  padding: calc(var(--spacing) * 3);\n}\n"
+    },
+    {
+      "id": "import:option:media:theme(static default)",
+      "input": "@media theme(static default) { @theme { --spacing: 4px; --color-brand: #123456; } } @tailwind utilities;",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "tw:bg-brand",
+        "app:p-3",
+        "app:bg-brand"
+      ],
+      "loaded": [],
+      "expectedCss": ":root, :host {\n  --spacing: 4px;\n  --color-brand: #123456;\n}\n.bg-brand {\n  background-color: var(--color-brand);\n}\n.p-3 {\n  padding: calc(var(--spacing) * 3);\n}\n"
+    },
+    {
+      "id": "import:option:import:theme(unknown)",
+      "input": "@import \"theme.css\" theme(unknown); @tailwind utilities;",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "tw:bg-brand",
+        "app:p-3",
+        "app:bg-brand"
+      ],
+      "loaded": [
+        {
+          "uri": "theme.css",
+          "base": "/app",
+          "path": "/app/theme.css"
+        }
+      ],
+      "expectedCss": ":root, :host {\n  --spacing: 4px;\n  --color-brand: #123456;\n}\n.bg-brand {\n  background-color: var(--color-brand);\n}\n.p-3 {\n  padding: calc(var(--spacing) * 3);\n}\n"
+    },
+    {
+      "id": "import:option:media:theme(unknown)",
+      "input": "@media theme(unknown) { @theme { --spacing: 4px; --color-brand: #123456; } } @tailwind utilities;",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "tw:bg-brand",
+        "app:p-3",
+        "app:bg-brand"
+      ],
+      "loaded": [],
+      "expectedCss": ":root, :host {\n  --spacing: 4px;\n  --color-brand: #123456;\n}\n.bg-brand {\n  background-color: var(--color-brand);\n}\n.p-3 {\n  padding: calc(var(--spacing) * 3);\n}\n"
+    },
+    {
+      "id": "import:option:import:theme()",
+      "input": "@import \"theme.css\" theme(); @tailwind utilities;",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "tw:bg-brand",
+        "app:p-3",
+        "app:bg-brand"
+      ],
+      "loaded": [
+        {
+          "uri": "theme.css",
+          "base": "/app",
+          "path": "/app/theme.css"
+        }
+      ],
+      "expectedCss": ":root, :host {\n  --spacing: 4px;\n  --color-brand: #123456;\n}\n.bg-brand {\n  background-color: var(--color-brand);\n}\n.p-3 {\n  padding: calc(var(--spacing) * 3);\n}\n"
+    },
+    {
+      "id": "import:option:media:theme()",
+      "input": "@media theme() { @theme { --spacing: 4px; --color-brand: #123456; } } @tailwind utilities;",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "tw:bg-brand",
+        "app:p-3",
+        "app:bg-brand"
+      ],
+      "loaded": [],
+      "expectedCss": ":root, :host {\n  --spacing: 4px;\n  --color-brand: #123456;\n}\n.bg-brand {\n  background-color: var(--color-brand);\n}\n.p-3 {\n  padding: calc(var(--spacing) * 3);\n}\n"
+    },
+    {
+      "id": "import:option:import:prefix(tw)",
+      "input": "@import \"theme.css\" prefix(tw); @tailwind utilities;",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "tw:bg-brand",
+        "app:p-3",
+        "app:bg-brand"
+      ],
+      "loaded": [
+        {
+          "uri": "theme.css",
+          "base": "/app",
+          "path": "/app/theme.css"
+        }
+      ],
+      "expectedCss": ":root, :host {\n  --tw-spacing: 4px;\n  --tw-color-brand: #123456;\n}\n.tw\\:bg-brand {\n  background-color: var(--tw-color-brand);\n}\n.tw\\:p-3 {\n  padding: calc(var(--tw-spacing) * 3);\n}\n"
+    },
+    {
+      "id": "import:option:media:prefix(tw)",
+      "input": "@media prefix(tw) { @theme { --spacing: 4px; --color-brand: #123456; } } @tailwind utilities;",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "tw:bg-brand",
+        "app:p-3",
+        "app:bg-brand"
+      ],
+      "loaded": [],
+      "expectedCss": ":root, :host {\n  --tw-spacing: 4px;\n  --tw-color-brand: #123456;\n}\n.tw\\:bg-brand {\n  background-color: var(--tw-color-brand);\n}\n.tw\\:p-3 {\n  padding: calc(var(--tw-spacing) * 3);\n}\n"
+    },
+    {
+      "id": "import:option:import:prefix()",
+      "input": "@import \"theme.css\" prefix(); @tailwind utilities;",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "tw:bg-brand",
+        "app:p-3",
+        "app:bg-brand"
+      ],
+      "loaded": [
+        {
+          "uri": "theme.css",
+          "base": "/app",
+          "path": "/app/theme.css"
+        }
+      ],
+      "expectedCss": ":root, :host {\n  --spacing: 4px;\n  --color-brand: #123456;\n}\n.bg-brand {\n  background-color: var(--color-brand);\n}\n.p-3 {\n  padding: calc(var(--spacing) * 3);\n}\n"
+    },
+    {
+      "id": "import:option:media:prefix()",
+      "input": "@media prefix() { @theme { --spacing: 4px; --color-brand: #123456; } } @tailwind utilities;",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "tw:bg-brand",
+        "app:p-3",
+        "app:bg-brand"
+      ],
+      "loaded": [],
+      "expectedCss": ":root, :host {\n  --spacing: 4px;\n  --color-brand: #123456;\n}\n.bg-brand {\n  background-color: var(--color-brand);\n}\n.p-3 {\n  padding: calc(var(--spacing) * 3);\n}\n"
+    },
+    {
+      "id": "import:option:import:prefix(TW)",
+      "input": "@import \"theme.css\" prefix(TW); @tailwind utilities;",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "tw:bg-brand",
+        "app:p-3",
+        "app:bg-brand"
+      ],
+      "loaded": [
+        {
+          "uri": "theme.css",
+          "base": "/app",
+          "path": "/app/theme.css"
+        }
+      ],
+      "expectedError": "The prefix \"TW\" is invalid. Prefixes must be lowercase ASCII letters (a-z) only."
+    },
+    {
+      "id": "import:option:media:prefix(TW)",
+      "input": "@media prefix(TW) { @theme { --spacing: 4px; --color-brand: #123456; } } @tailwind utilities;",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "tw:bg-brand",
+        "app:p-3",
+        "app:bg-brand"
+      ],
+      "loaded": [],
+      "expectedError": "The prefix \"TW\" is invalid. Prefixes must be lowercase ASCII letters (a-z) only."
+    },
+    {
+      "id": "import:option:import:prefix(tw) prefix(app)",
+      "input": "@import \"theme.css\" prefix(tw) prefix(app); @tailwind utilities;",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "tw:bg-brand",
+        "app:p-3",
+        "app:bg-brand"
+      ],
+      "loaded": [
+        {
+          "uri": "theme.css",
+          "base": "/app",
+          "path": "/app/theme.css"
+        }
+      ],
+      "expectedCss": ":root, :host {\n  --app-spacing: 4px;\n  --app-color-brand: #123456;\n}\n.app\\:bg-brand {\n  background-color: var(--app-color-brand);\n}\n.app\\:p-3 {\n  padding: calc(var(--app-spacing) * 3);\n}\n"
+    },
+    {
+      "id": "import:option:media:prefix(tw) prefix(app)",
+      "input": "@media prefix(tw) prefix(app) { @theme { --spacing: 4px; --color-brand: #123456; } } @tailwind utilities;",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "tw:bg-brand",
+        "app:p-3",
+        "app:bg-brand"
+      ],
+      "loaded": [],
+      "expectedCss": ":root, :host {\n  --app-spacing: 4px;\n  --app-color-brand: #123456;\n}\n.app\\:bg-brand {\n  background-color: var(--app-color-brand);\n}\n.app\\:p-3 {\n  padding: calc(var(--app-spacing) * 3);\n}\n"
+    },
+    {
+      "id": "import:option:import:theme(prefix(tw))",
+      "input": "@import \"theme.css\" theme(prefix(tw)); @tailwind utilities;",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "tw:bg-brand",
+        "app:p-3",
+        "app:bg-brand"
+      ],
+      "loaded": [
+        {
+          "uri": "theme.css",
+          "base": "/app",
+          "path": "/app/theme.css"
+        }
+      ],
+      "expectedCss": ":root, :host {\n  --tw-spacing: 4px;\n  --tw-color-brand: #123456;\n}\n.tw\\:bg-brand {\n  background-color: var(--tw-color-brand);\n}\n.tw\\:p-3 {\n  padding: calc(var(--tw-spacing) * 3);\n}\n"
+    },
+    {
+      "id": "import:option:media:theme(prefix(tw))",
+      "input": "@media theme(prefix(tw)) { @theme { --spacing: 4px; --color-brand: #123456; } } @tailwind utilities;",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "tw:bg-brand",
+        "app:p-3",
+        "app:bg-brand"
+      ],
+      "loaded": [],
+      "expectedCss": ":root, :host {\n  --tw-spacing: 4px;\n  --tw-color-brand: #123456;\n}\n.tw\\:bg-brand {\n  background-color: var(--tw-color-brand);\n}\n.tw\\:p-3 {\n  padding: calc(var(--tw-spacing) * 3);\n}\n"
+    },
+    {
+      "id": "import:option:import:theme(inline) prefix(tw)",
+      "input": "@import \"theme.css\" theme(inline) prefix(tw); @tailwind utilities;",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "tw:bg-brand",
+        "app:p-3",
+        "app:bg-brand"
+      ],
+      "loaded": [
+        {
+          "uri": "theme.css",
+          "base": "/app",
+          "path": "/app/theme.css"
+        }
+      ],
+      "expectedCss": ".tw\\:bg-brand {\n  background-color: #123456;\n}\n.tw\\:p-3 {\n  padding: calc(4px * 3);\n}\n"
+    },
+    {
+      "id": "import:option:media:theme(inline) prefix(tw)",
+      "input": "@media theme(inline) prefix(tw) { @theme { --spacing: 4px; --color-brand: #123456; } } @tailwind utilities;",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "tw:bg-brand",
+        "app:p-3",
+        "app:bg-brand"
+      ],
+      "loaded": [],
+      "expectedCss": ".tw\\:bg-brand {\n  background-color: #123456;\n}\n.tw\\:p-3 {\n  padding: calc(4px * 3);\n}\n"
+    },
+    {
+      "id": "import:option:import:prefix(tw) theme(inline)",
+      "input": "@import \"theme.css\" prefix(tw) theme(inline); @tailwind utilities;",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "tw:bg-brand",
+        "app:p-3",
+        "app:bg-brand"
+      ],
+      "loaded": [
+        {
+          "uri": "theme.css",
+          "base": "/app",
+          "path": "/app/theme.css"
+        }
+      ],
+      "expectedCss": ".tw\\:bg-brand {\n  background-color: #123456;\n}\n.tw\\:p-3 {\n  padding: calc(4px * 3);\n}\n"
+    },
+    {
+      "id": "import:option:media:prefix(tw) theme(inline)",
+      "input": "@media prefix(tw) theme(inline) { @theme { --spacing: 4px; --color-brand: #123456; } } @tailwind utilities;",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "tw:bg-brand",
+        "app:p-3",
+        "app:bg-brand"
+      ],
+      "loaded": [],
+      "expectedCss": ".tw\\:bg-brand {\n  background-color: #123456;\n}\n.tw\\:p-3 {\n  padding: calc(4px * 3);\n}\n"
+    },
+    {
+      "id": "import:option:import:theme(reference) important",
+      "input": "@import \"theme.css\" theme(reference) important; @tailwind utilities;",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "tw:bg-brand",
+        "app:p-3",
+        "app:bg-brand"
+      ],
+      "loaded": [
+        {
+          "uri": "theme.css",
+          "base": "/app",
+          "path": "/app/theme.css"
+        }
+      ],
+      "expectedCss": ".bg-brand {\n  background-color: var(--color-brand, #123456) !important;\n}\n.p-3 {\n  padding: calc(var(--spacing, 4px) * 3) !important;\n}\n"
+    },
+    {
+      "id": "import:option:media:theme(reference) important",
+      "input": "@media theme(reference) important { @theme { --spacing: 4px; --color-brand: #123456; } } @tailwind utilities;",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "tw:bg-brand",
+        "app:p-3",
+        "app:bg-brand"
+      ],
+      "loaded": [],
+      "expectedCss": ".bg-brand {\n  background-color: var(--color-brand, #123456) !important;\n}\n.p-3 {\n  padding: calc(var(--spacing, 4px) * 3) !important;\n}\n"
+    },
+    {
+      "id": "import:option:import:source(none)",
+      "input": "@import \"theme.css\" source(none); @tailwind utilities;",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "tw:bg-brand",
+        "app:p-3",
+        "app:bg-brand"
+      ],
+      "loaded": [
+        {
+          "uri": "theme.css",
+          "base": "/app",
+          "path": "/app/theme.css"
+        }
+      ],
+      "expectedCss": ":root, :host {\n  --spacing: 4px;\n  --color-brand: #123456;\n}\n.bg-brand {\n  background-color: var(--color-brand);\n}\n.p-3 {\n  padding: calc(var(--spacing) * 3);\n}\n"
+    },
+    {
+      "id": "import:option:media:source(none)",
+      "input": "@media source(none) { @theme { --spacing: 4px; --color-brand: #123456; } } @tailwind utilities;",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "tw:bg-brand",
+        "app:p-3",
+        "app:bg-brand"
+      ],
+      "loaded": [],
+      "expectedCss": ":root, :host {\n  --spacing: 4px;\n  --color-brand: #123456;\n}\n.bg-brand {\n  background-color: var(--color-brand);\n}\n.p-3 {\n  padding: calc(var(--spacing) * 3);\n}\n"
+    },
+    {
+      "id": "import:option:import:source(unquoted)",
+      "input": "@import \"theme.css\" source(unquoted); @tailwind utilities;",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "tw:bg-brand",
+        "app:p-3",
+        "app:bg-brand"
+      ],
+      "loaded": [
+        {
+          "uri": "theme.css",
+          "base": "/app",
+          "path": "/app/theme.css"
+        }
+      ],
+      "expectedCss": ":root, :host {\n  --spacing: 4px;\n  --color-brand: #123456;\n}\n.bg-brand {\n  background-color: var(--color-brand);\n}\n.p-3 {\n  padding: calc(var(--spacing) * 3);\n}\n"
+    },
+    {
+      "id": "import:option:media:source(unquoted)",
+      "input": "@media source(unquoted) { @theme { --spacing: 4px; --color-brand: #123456; } } @tailwind utilities;",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "tw:bg-brand",
+        "app:p-3",
+        "app:bg-brand"
+      ],
+      "loaded": [],
+      "expectedCss": ":root, :host {\n  --spacing: 4px;\n  --color-brand: #123456;\n}\n.bg-brand {\n  background-color: var(--color-brand);\n}\n.p-3 {\n  padding: calc(var(--spacing) * 3);\n}\n"
+    },
+    {
+      "id": "import:option:import:important",
+      "input": "@import \"theme.css\" important; @tailwind utilities;",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "tw:bg-brand",
+        "app:p-3",
+        "app:bg-brand"
+      ],
+      "loaded": [
+        {
+          "uri": "theme.css",
+          "base": "/app",
+          "path": "/app/theme.css"
+        }
+      ],
+      "expectedCss": ":root, :host {\n  --spacing: 4px;\n  --color-brand: #123456;\n}\n.bg-brand {\n  background-color: var(--color-brand) !important;\n}\n.p-3 {\n  padding: calc(var(--spacing) * 3) !important;\n}\n"
+    },
+    {
+      "id": "import:option:media:important",
+      "input": "@media important { @theme { --spacing: 4px; --color-brand: #123456; } } @tailwind utilities;",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "tw:bg-brand",
+        "app:p-3",
+        "app:bg-brand"
+      ],
+      "loaded": [],
+      "expectedCss": ":root, :host {\n  --spacing: 4px;\n  --color-brand: #123456;\n}\n.bg-brand {\n  background-color: var(--color-brand) !important;\n}\n.p-3 {\n  padding: calc(var(--spacing) * 3) !important;\n}\n"
+    },
+    {
+      "id": "import:body-option:theme(inline)",
+      "input": "@import \"parts/body.css\" theme(inline);",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "flex",
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "tw:bg-brand"
+      ],
+      "loaded": [
+        {
+          "uri": "parts/body.css",
+          "base": "/app",
+          "path": "/app/parts/body.css"
+        },
+        {
+          "uri": "../theme.css",
+          "base": "/app/parts",
+          "path": "/app/theme.css"
+        }
+      ],
+      "expectedCss": ".custom {\n  color: red;\n}\n.flex {\n  display: flex;\n}\n.bg-brand {\n  background-color: #123456;\n}\n.p-3 {\n  padding: calc(4px * 3);\n}\n"
+    },
+    {
+      "id": "import:media-option:theme(inline)",
+      "input": "@media theme(inline) { .probe { color: red; } @theme { --spacing: 4px; } @tailwind utilities; }",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "flex",
+        "p-3",
+        "tw:p-3"
+      ],
+      "loaded": [],
+      "expectedCss": ".probe {\n  color: red;\n}\n.flex {\n  display: flex;\n}\n.p-3 {\n  padding: calc(4px * 3);\n}\n"
+    },
+    {
+      "id": "import:body-option:theme(reference)",
+      "input": "@import \"parts/body.css\" theme(reference);",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "flex",
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "tw:bg-brand"
+      ],
+      "loaded": [
+        {
+          "uri": "parts/body.css",
+          "base": "/app",
+          "path": "/app/parts/body.css"
+        },
+        {
+          "uri": "../theme.css",
+          "base": "/app/parts",
+          "path": "/app/theme.css"
+        }
+      ],
+      "expectedError": "Files imported with `@import \"…\" theme(reference)` must only contain `@theme` blocks.\nUse `@reference \"…\";` instead."
+    },
+    {
+      "id": "import:media-option:theme(reference)",
+      "input": "@media theme(reference) { .probe { color: red; } @theme { --spacing: 4px; } @tailwind utilities; }",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "flex",
+        "p-3",
+        "tw:p-3"
+      ],
+      "loaded": [],
+      "expectedError": "Files imported with `@import \"…\" theme(reference)` must only contain `@theme` blocks.\nUse `@reference \"…\";` instead."
+    },
+    {
+      "id": "import:body-option:prefix(tw)",
+      "input": "@import \"parts/body.css\" prefix(tw);",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "flex",
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "tw:bg-brand"
+      ],
+      "loaded": [
+        {
+          "uri": "parts/body.css",
+          "base": "/app",
+          "path": "/app/parts/body.css"
+        },
+        {
+          "uri": "../theme.css",
+          "base": "/app/parts",
+          "path": "/app/theme.css"
+        }
+      ],
+      "expectedCss": ":root, :host {\n  --tw-spacing: 4px;\n  --tw-color-brand: #123456;\n}\n.custom {\n  color: red;\n}\n.tw\\:bg-brand {\n  background-color: var(--tw-color-brand);\n}\n.tw\\:p-3 {\n  padding: calc(var(--tw-spacing) * 3);\n}\n"
+    },
+    {
+      "id": "import:media-option:prefix(tw)",
+      "input": "@media prefix(tw) { .probe { color: red; } @theme { --spacing: 4px; } @tailwind utilities; }",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "flex",
+        "p-3",
+        "tw:p-3"
+      ],
+      "loaded": [],
+      "expectedCss": ".probe {\n  color: red;\n}\n:root, :host {\n  --tw-spacing: 4px;\n}\n.tw\\:p-3 {\n  padding: calc(var(--tw-spacing) * 3);\n}\n"
+    },
+    {
+      "id": "import:body-option:source(none)",
+      "input": "@import \"parts/body.css\" source(none);",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "flex",
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "tw:bg-brand"
+      ],
+      "loaded": [
+        {
+          "uri": "parts/body.css",
+          "base": "/app",
+          "path": "/app/parts/body.css"
+        },
+        {
+          "uri": "../theme.css",
+          "base": "/app/parts",
+          "path": "/app/theme.css"
+        }
+      ],
+      "expectedCss": ":root, :host {\n  --spacing: 4px;\n  --color-brand: #123456;\n}\n.custom {\n  color: red;\n}\n.flex {\n  display: flex;\n}\n.bg-brand {\n  background-color: var(--color-brand);\n}\n.p-3 {\n  padding: calc(var(--spacing) * 3);\n}\n"
+    },
+    {
+      "id": "import:media-option:source(none)",
+      "input": "@media source(none) { .probe { color: red; } @theme { --spacing: 4px; } @tailwind utilities; }",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "flex",
+        "p-3",
+        "tw:p-3"
+      ],
+      "loaded": [],
+      "expectedCss": ".probe {\n  color: red;\n}\n:root, :host {\n  --spacing: 4px;\n}\n.flex {\n  display: flex;\n}\n.p-3 {\n  padding: calc(var(--spacing) * 3);\n}\n"
+    },
+    {
+      "id": "import:body-option:source(unquoted)",
+      "input": "@import \"parts/body.css\" source(unquoted);",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "flex",
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "tw:bg-brand"
+      ],
+      "loaded": [
+        {
+          "uri": "parts/body.css",
+          "base": "/app",
+          "path": "/app/parts/body.css"
+        },
+        {
+          "uri": "../theme.css",
+          "base": "/app/parts",
+          "path": "/app/theme.css"
+        }
+      ],
+      "expectedError": "`source(…)` paths must be quoted."
+    },
+    {
+      "id": "import:media-option:source(unquoted)",
+      "input": "@media source(unquoted) { .probe { color: red; } @theme { --spacing: 4px; } @tailwind utilities; }",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "flex",
+        "p-3",
+        "tw:p-3"
+      ],
+      "loaded": [],
+      "expectedError": "`source(…)` paths must be quoted."
+    },
+    {
+      "id": "import:body-option:important",
+      "input": "@import \"parts/body.css\" important;",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "flex",
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "tw:bg-brand"
+      ],
+      "loaded": [
+        {
+          "uri": "parts/body.css",
+          "base": "/app",
+          "path": "/app/parts/body.css"
+        },
+        {
+          "uri": "../theme.css",
+          "base": "/app/parts",
+          "path": "/app/theme.css"
+        }
+      ],
+      "expectedCss": ":root, :host {\n  --spacing: 4px;\n  --color-brand: #123456;\n}\n.custom {\n  color: red;\n}\n.flex {\n  display: flex !important;\n}\n.bg-brand {\n  background-color: var(--color-brand) !important;\n}\n.p-3 {\n  padding: calc(var(--spacing) * 3) !important;\n}\n"
+    },
+    {
+      "id": "import:media-option:important",
+      "input": "@media important { .probe { color: red; } @theme { --spacing: 4px; } @tailwind utilities; }",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "flex",
+        "p-3",
+        "tw:p-3"
+      ],
+      "loaded": [],
+      "expectedCss": ".probe {\n  color: red;\n}\n:root, :host {\n  --spacing: 4px;\n}\n.flex {\n  display: flex !important;\n}\n.p-3 {\n  padding: calc(var(--spacing) * 3) !important;\n}\n"
+    },
+    {
+      "id": "import:body-option:important screen",
+      "input": "@import \"parts/body.css\" important screen;",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "flex",
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "tw:bg-brand"
+      ],
+      "loaded": [
+        {
+          "uri": "parts/body.css",
+          "base": "/app",
+          "path": "/app/parts/body.css"
+        },
+        {
+          "uri": "../theme.css",
+          "base": "/app/parts",
+          "path": "/app/theme.css"
+        }
+      ],
+      "expectedCss": "@media screen {\n  :root, :host {\n    --spacing: 4px;\n    --color-brand: #123456;\n  }\n  .custom {\n    color: red;\n  }\n  .flex {\n    display: flex !important;\n  }\n  .bg-brand {\n    background-color: var(--color-brand) !important;\n  }\n  .p-3 {\n    padding: calc(var(--spacing) * 3) !important;\n  }\n}\n"
+    },
+    {
+      "id": "import:media-option:important screen",
+      "input": "@media important screen { .probe { color: red; } @theme { --spacing: 4px; } @tailwind utilities; }",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "flex",
+        "p-3",
+        "tw:p-3"
+      ],
+      "loaded": [],
+      "expectedCss": "@media screen {\n  .probe {\n    color: red;\n  }\n  :root, :host {\n    --spacing: 4px;\n  }\n  .flex {\n    display: flex !important;\n  }\n  .p-3 {\n    padding: calc(var(--spacing) * 3) !important;\n  }\n}\n"
+    },
+    {
+      "id": "import:body-option:screen important",
+      "input": "@import \"parts/body.css\" screen important;",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "flex",
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "tw:bg-brand"
+      ],
+      "loaded": [
+        {
+          "uri": "parts/body.css",
+          "base": "/app",
+          "path": "/app/parts/body.css"
+        },
+        {
+          "uri": "../theme.css",
+          "base": "/app/parts",
+          "path": "/app/theme.css"
+        }
+      ],
+      "expectedCss": "@media screen {\n  :root, :host {\n    --spacing: 4px;\n    --color-brand: #123456;\n  }\n  .custom {\n    color: red;\n  }\n  .flex {\n    display: flex !important;\n  }\n  .bg-brand {\n    background-color: var(--color-brand) !important;\n  }\n  .p-3 {\n    padding: calc(var(--spacing) * 3) !important;\n  }\n}\n"
+    },
+    {
+      "id": "import:media-option:screen important",
+      "input": "@media screen important { .probe { color: red; } @theme { --spacing: 4px; } @tailwind utilities; }",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "flex",
+        "p-3",
+        "tw:p-3"
+      ],
+      "loaded": [],
+      "expectedCss": "@media screen {\n  .probe {\n    color: red;\n  }\n  :root, :host {\n    --spacing: 4px;\n  }\n  .flex {\n    display: flex !important;\n  }\n  .p-3 {\n    padding: calc(var(--spacing) * 3) !important;\n  }\n}\n"
+    },
+    {
+      "id": "import:body-option:reference important",
+      "input": "@import \"parts/body.css\" reference important;",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "flex",
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "tw:bg-brand"
+      ],
+      "loaded": [
+        {
+          "uri": "parts/body.css",
+          "base": "/app",
+          "path": "/app/parts/body.css"
+        },
+        {
+          "uri": "../theme.css",
+          "base": "/app/parts",
+          "path": "/app/theme.css"
+        }
+      ],
+      "expectedCss": ""
+    },
+    {
+      "id": "import:media-option:reference important",
+      "input": "@media reference important { .probe { color: red; } @theme { --spacing: 4px; } @tailwind utilities; }",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "flex",
+        "p-3",
+        "tw:p-3"
+      ],
+      "loaded": [],
+      "expectedCss": "@media reference important { .probe { color: red; } @theme { --spacing: 4px; } @tailwind utilities; }"
+    },
+    {
+      "id": "import:nested:theme(inline):theme(reference)",
+      "input": "@media theme(inline) { @media theme(reference) { @theme { --spacing: 4px; --color-brand: #123456; } .probe { color: red; } @tailwind utilities; } }",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "app:p-3"
+      ],
+      "loaded": [],
+      "expectedError": "Files imported with `@import \"…\" theme(reference)` must only contain `@theme` blocks.\nUse `@reference \"…\";` instead."
+    },
+    {
+      "id": "import:nested:theme(inline):theme(default)",
+      "input": "@media theme(inline) { @media theme(default) { @theme { --spacing: 4px; --color-brand: #123456; } .probe { color: red; } @tailwind utilities; } }",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "app:p-3"
+      ],
+      "loaded": [],
+      "expectedCss": ".probe {\n  color: red;\n}\n.bg-brand {\n  background-color: #123456;\n}\n.p-3 {\n  padding: calc(4px * 3);\n}\n"
+    },
+    {
+      "id": "import:nested:theme(inline):prefix(app)",
+      "input": "@media theme(inline) { @media prefix(app) { @theme { --spacing: 4px; --color-brand: #123456; } .probe { color: red; } @tailwind utilities; } }",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "app:p-3"
+      ],
+      "loaded": [],
+      "expectedCss": ".probe {\n  color: red;\n}\n.app\\:p-3 {\n  padding: calc(4px * 3);\n}\n"
+    },
+    {
+      "id": "import:nested:theme(inline):important",
+      "input": "@media theme(inline) { @media important { @theme { --spacing: 4px; --color-brand: #123456; } .probe { color: red; } @tailwind utilities; } }",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "app:p-3"
+      ],
+      "loaded": [],
+      "expectedCss": ".probe {\n  color: red;\n}\n.bg-brand {\n  background-color: #123456 !important;\n}\n.p-3 {\n  padding: calc(4px * 3) !important;\n}\n"
+    },
+    {
+      "id": "import:nested:theme(inline):reference",
+      "input": "@media theme(inline) { @media reference { @theme { --spacing: 4px; --color-brand: #123456; } .probe { color: red; } @tailwind utilities; } }",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "app:p-3"
+      ],
+      "loaded": [],
+      "expectedCss": "@media theme(inline) { @media reference { @theme { --spacing: 4px; --color-brand: #123456; } .probe { color: red; } @tailwind utilities; } }"
+    },
+    {
+      "id": "import:nested:theme(inline):print",
+      "input": "@media theme(inline) { @media print { @theme { --spacing: 4px; --color-brand: #123456; } .probe { color: red; } @tailwind utilities; } }",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "app:p-3"
+      ],
+      "loaded": [],
+      "expectedCss": ""
+    },
+    {
+      "id": "import:nested:theme(default):theme(reference)",
+      "input": "@media theme(default) { @media theme(reference) { @theme { --spacing: 4px; --color-brand: #123456; } .probe { color: red; } @tailwind utilities; } }",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "app:p-3"
+      ],
+      "loaded": [],
+      "expectedError": "Files imported with `@import \"…\" theme(reference)` must only contain `@theme` blocks.\nUse `@reference \"…\";` instead."
+    },
+    {
+      "id": "import:nested:theme(default):theme(default)",
+      "input": "@media theme(default) { @media theme(default) { @theme { --spacing: 4px; --color-brand: #123456; } .probe { color: red; } @tailwind utilities; } }",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "app:p-3"
+      ],
+      "loaded": [],
+      "expectedCss": ":root, :host {\n  --spacing: 4px;\n  --color-brand: #123456;\n}\n.probe {\n  color: red;\n}\n.bg-brand {\n  background-color: var(--color-brand);\n}\n.p-3 {\n  padding: calc(var(--spacing) * 3);\n}\n"
+    },
+    {
+      "id": "import:nested:theme(default):prefix(app)",
+      "input": "@media theme(default) { @media prefix(app) { @theme { --spacing: 4px; --color-brand: #123456; } .probe { color: red; } @tailwind utilities; } }",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "app:p-3"
+      ],
+      "loaded": [],
+      "expectedCss": ":root, :host {\n  --app-spacing: 4px;\n}\n.probe {\n  color: red;\n}\n.app\\:p-3 {\n  padding: calc(var(--app-spacing) * 3);\n}\n"
+    },
+    {
+      "id": "import:nested:theme(default):important",
+      "input": "@media theme(default) { @media important { @theme { --spacing: 4px; --color-brand: #123456; } .probe { color: red; } @tailwind utilities; } }",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "app:p-3"
+      ],
+      "loaded": [],
+      "expectedCss": ":root, :host {\n  --spacing: 4px;\n  --color-brand: #123456;\n}\n.probe {\n  color: red;\n}\n.bg-brand {\n  background-color: var(--color-brand) !important;\n}\n.p-3 {\n  padding: calc(var(--spacing) * 3) !important;\n}\n"
+    },
+    {
+      "id": "import:nested:theme(default):reference",
+      "input": "@media theme(default) { @media reference { @theme { --spacing: 4px; --color-brand: #123456; } .probe { color: red; } @tailwind utilities; } }",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "app:p-3"
+      ],
+      "loaded": [],
+      "expectedCss": "@media theme(default) { @media reference { @theme { --spacing: 4px; --color-brand: #123456; } .probe { color: red; } @tailwind utilities; } }"
+    },
+    {
+      "id": "import:nested:theme(default):print",
+      "input": "@media theme(default) { @media print { @theme { --spacing: 4px; --color-brand: #123456; } .probe { color: red; } @tailwind utilities; } }",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "app:p-3"
+      ],
+      "loaded": [],
+      "expectedCss": "@media print {\n  :root, :host {\n    --spacing: 4px;\n    --color-brand: #123456;\n  }\n  .probe {\n    color: red;\n  }\n  .bg-brand {\n    background-color: var(--color-brand);\n  }\n  .p-3 {\n    padding: calc(var(--spacing) * 3);\n  }\n}\n"
+    },
+    {
+      "id": "import:nested:theme(static):theme(reference)",
+      "input": "@media theme(static) { @media theme(reference) { @theme { --spacing: 4px; --color-brand: #123456; } .probe { color: red; } @tailwind utilities; } }",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "app:p-3"
+      ],
+      "loaded": [],
+      "expectedError": "Files imported with `@import \"…\" theme(reference)` must only contain `@theme` blocks.\nUse `@reference \"…\";` instead."
+    },
+    {
+      "id": "import:nested:theme(static):theme(default)",
+      "input": "@media theme(static) { @media theme(default) { @theme { --spacing: 4px; --color-brand: #123456; } .probe { color: red; } @tailwind utilities; } }",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "app:p-3"
+      ],
+      "loaded": [],
+      "expectedCss": ":root, :host {\n  --spacing: 4px;\n  --color-brand: #123456;\n}\n.probe {\n  color: red;\n}\n.bg-brand {\n  background-color: var(--color-brand);\n}\n.p-3 {\n  padding: calc(var(--spacing) * 3);\n}\n"
+    },
+    {
+      "id": "import:nested:theme(static):prefix(app)",
+      "input": "@media theme(static) { @media prefix(app) { @theme { --spacing: 4px; --color-brand: #123456; } .probe { color: red; } @tailwind utilities; } }",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "app:p-3"
+      ],
+      "loaded": [],
+      "expectedCss": ":root, :host {\n  --app-spacing: 4px;\n  --app-color-brand: #123456;\n}\n.probe {\n  color: red;\n}\n.app\\:p-3 {\n  padding: calc(var(--app-spacing) * 3);\n}\n"
+    },
+    {
+      "id": "import:nested:theme(static):important",
+      "input": "@media theme(static) { @media important { @theme { --spacing: 4px; --color-brand: #123456; } .probe { color: red; } @tailwind utilities; } }",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "app:p-3"
+      ],
+      "loaded": [],
+      "expectedCss": ":root, :host {\n  --spacing: 4px;\n  --color-brand: #123456;\n}\n.probe {\n  color: red;\n}\n.bg-brand {\n  background-color: var(--color-brand) !important;\n}\n.p-3 {\n  padding: calc(var(--spacing) * 3) !important;\n}\n"
+    },
+    {
+      "id": "import:nested:theme(static):reference",
+      "input": "@media theme(static) { @media reference { @theme { --spacing: 4px; --color-brand: #123456; } .probe { color: red; } @tailwind utilities; } }",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "app:p-3"
+      ],
+      "loaded": [],
+      "expectedCss": "@media theme(static) { @media reference { @theme { --spacing: 4px; --color-brand: #123456; } .probe { color: red; } @tailwind utilities; } }"
+    },
+    {
+      "id": "import:nested:theme(static):print",
+      "input": "@media theme(static) { @media print { @theme { --spacing: 4px; --color-brand: #123456; } .probe { color: red; } @tailwind utilities; } }",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "app:p-3"
+      ],
+      "loaded": [],
+      "expectedCss": "@media print {\n  :root, :host {\n    --spacing: 4px;\n    --color-brand: #123456;\n  }\n  .probe {\n    color: red;\n  }\n  .bg-brand {\n    background-color: var(--color-brand);\n  }\n  .p-3 {\n    padding: calc(var(--spacing) * 3);\n  }\n}\n"
+    },
+    {
+      "id": "import:nested:prefix(tw):theme(reference)",
+      "input": "@media prefix(tw) { @media theme(reference) { @theme { --spacing: 4px; --color-brand: #123456; } .probe { color: red; } @tailwind utilities; } }",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "app:p-3"
+      ],
+      "loaded": [],
+      "expectedError": "Files imported with `@import \"…\" theme(reference)` must only contain `@theme` blocks.\nUse `@reference \"…\";` instead."
+    },
+    {
+      "id": "import:nested:prefix(tw):theme(default)",
+      "input": "@media prefix(tw) { @media theme(default) { @theme { --spacing: 4px; --color-brand: #123456; } .probe { color: red; } @tailwind utilities; } }",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "app:p-3"
+      ],
+      "loaded": [],
+      "expectedCss": ":root, :host {\n  --tw-spacing: 4px;\n}\n.probe {\n  color: red;\n}\n.tw\\:p-3 {\n  padding: calc(var(--tw-spacing) * 3);\n}\n"
+    },
+    {
+      "id": "import:nested:prefix(tw):prefix(app)",
+      "input": "@media prefix(tw) { @media prefix(app) { @theme { --spacing: 4px; --color-brand: #123456; } .probe { color: red; } @tailwind utilities; } }",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "app:p-3"
+      ],
+      "loaded": [],
+      "expectedCss": ":root, :host {\n  --app-spacing: 4px;\n}\n.probe {\n  color: red;\n}\n.app\\:p-3 {\n  padding: calc(var(--app-spacing) * 3);\n}\n"
+    },
+    {
+      "id": "import:nested:prefix(tw):important",
+      "input": "@media prefix(tw) { @media important { @theme { --spacing: 4px; --color-brand: #123456; } .probe { color: red; } @tailwind utilities; } }",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "app:p-3"
+      ],
+      "loaded": [],
+      "expectedCss": ":root, :host {\n  --tw-spacing: 4px;\n}\n.probe {\n  color: red;\n}\n.tw\\:p-3 {\n  padding: calc(var(--tw-spacing) * 3) !important;\n}\n"
+    },
+    {
+      "id": "import:nested:prefix(tw):reference",
+      "input": "@media prefix(tw) { @media reference { @theme { --spacing: 4px; --color-brand: #123456; } .probe { color: red; } @tailwind utilities; } }",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "app:p-3"
+      ],
+      "loaded": [],
+      "expectedCss": "@media prefix(tw) { @media reference { @theme { --spacing: 4px; --color-brand: #123456; } .probe { color: red; } @tailwind utilities; } }"
+    },
+    {
+      "id": "import:nested:prefix(tw):print",
+      "input": "@media prefix(tw) { @media print { @theme { --spacing: 4px; --color-brand: #123456; } .probe { color: red; } @tailwind utilities; } }",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "app:p-3"
+      ],
+      "loaded": [],
+      "expectedCss": "@media print {\n  :root, :host {\n    --tw-spacing: 4px;\n  }\n  .probe {\n    color: red;\n  }\n  .tw\\:p-3 {\n    padding: calc(var(--tw-spacing) * 3);\n  }\n}\n"
+    },
+    {
+      "id": "import:nested:important:theme(reference)",
+      "input": "@media important { @media theme(reference) { @theme { --spacing: 4px; --color-brand: #123456; } .probe { color: red; } @tailwind utilities; } }",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "app:p-3"
+      ],
+      "loaded": [],
+      "expectedError": "Files imported with `@import \"…\" theme(reference)` must only contain `@theme` blocks.\nUse `@reference \"…\";` instead."
+    },
+    {
+      "id": "import:nested:important:theme(default)",
+      "input": "@media important { @media theme(default) { @theme { --spacing: 4px; --color-brand: #123456; } .probe { color: red; } @tailwind utilities; } }",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "app:p-3"
+      ],
+      "loaded": [],
+      "expectedCss": ":root, :host {\n  --spacing: 4px;\n  --color-brand: #123456;\n}\n.probe {\n  color: red;\n}\n.bg-brand {\n  background-color: var(--color-brand) !important;\n}\n.p-3 {\n  padding: calc(var(--spacing) * 3) !important;\n}\n"
+    },
+    {
+      "id": "import:nested:important:prefix(app)",
+      "input": "@media important { @media prefix(app) { @theme { --spacing: 4px; --color-brand: #123456; } .probe { color: red; } @tailwind utilities; } }",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "app:p-3"
+      ],
+      "loaded": [],
+      "expectedCss": ":root, :host {\n  --app-spacing: 4px;\n}\n.probe {\n  color: red;\n}\n.app\\:p-3 {\n  padding: calc(var(--app-spacing) * 3) !important;\n}\n"
+    },
+    {
+      "id": "import:nested:important:important",
+      "input": "@media important { @media important { @theme { --spacing: 4px; --color-brand: #123456; } .probe { color: red; } @tailwind utilities; } }",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "app:p-3"
+      ],
+      "loaded": [],
+      "expectedCss": ":root, :host {\n  --spacing: 4px;\n  --color-brand: #123456;\n}\n.probe {\n  color: red;\n}\n.bg-brand {\n  background-color: var(--color-brand) !important;\n}\n.p-3 {\n  padding: calc(var(--spacing) * 3) !important;\n}\n"
+    },
+    {
+      "id": "import:nested:important:reference",
+      "input": "@media important { @media reference { @theme { --spacing: 4px; --color-brand: #123456; } .probe { color: red; } @tailwind utilities; } }",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "app:p-3"
+      ],
+      "loaded": [],
+      "expectedCss": "@media important { @media reference { @theme { --spacing: 4px; --color-brand: #123456; } .probe { color: red; } @tailwind utilities; } }"
+    },
+    {
+      "id": "import:nested:important:print",
+      "input": "@media important { @media print { @theme { --spacing: 4px; --color-brand: #123456; } .probe { color: red; } @tailwind utilities; } }",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "app:p-3"
+      ],
+      "loaded": [],
+      "expectedCss": "@media print {\n  :root, :host {\n    --spacing: 4px;\n    --color-brand: #123456;\n  }\n  .probe {\n    color: red;\n  }\n  .bg-brand {\n    background-color: var(--color-brand) !important;\n  }\n  .p-3 {\n    padding: calc(var(--spacing) * 3) !important;\n  }\n}\n"
+    },
+    {
+      "id": "import:nested:reference:theme(reference)",
+      "input": "@media reference { @media theme(reference) { @theme { --spacing: 4px; --color-brand: #123456; } .probe { color: red; } @tailwind utilities; } }",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "app:p-3"
+      ],
+      "loaded": [],
+      "expectedError": "Files imported with `@import \"…\" theme(reference)` must only contain `@theme` blocks.\nUse `@reference \"…\";` instead."
+    },
+    {
+      "id": "import:nested:reference:theme(default)",
+      "input": "@media reference { @media theme(default) { @theme { --spacing: 4px; --color-brand: #123456; } .probe { color: red; } @tailwind utilities; } }",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "app:p-3"
+      ],
+      "loaded": [],
+      "expectedCss": "@media reference { @media theme(default) { @theme { --spacing: 4px; --color-brand: #123456; } .probe { color: red; } @tailwind utilities; } }"
+    },
+    {
+      "id": "import:nested:reference:prefix(app)",
+      "input": "@media reference { @media prefix(app) { @theme { --spacing: 4px; --color-brand: #123456; } .probe { color: red; } @tailwind utilities; } }",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "app:p-3"
+      ],
+      "loaded": [],
+      "expectedCss": "@media reference { @media prefix(app) { @theme { --spacing: 4px; --color-brand: #123456; } .probe { color: red; } @tailwind utilities; } }"
+    },
+    {
+      "id": "import:nested:reference:important",
+      "input": "@media reference { @media important { @theme { --spacing: 4px; --color-brand: #123456; } .probe { color: red; } @tailwind utilities; } }",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "app:p-3"
+      ],
+      "loaded": [],
+      "expectedCss": "@media reference { @media important { @theme { --spacing: 4px; --color-brand: #123456; } .probe { color: red; } @tailwind utilities; } }"
+    },
+    {
+      "id": "import:nested:reference:reference",
+      "input": "@media reference { @media reference { @theme { --spacing: 4px; --color-brand: #123456; } .probe { color: red; } @tailwind utilities; } }",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "app:p-3"
+      ],
+      "loaded": [],
+      "expectedCss": "@media reference { @media reference { @theme { --spacing: 4px; --color-brand: #123456; } .probe { color: red; } @tailwind utilities; } }"
+    },
+    {
+      "id": "import:nested:reference:print",
+      "input": "@media reference { @media print { @theme { --spacing: 4px; --color-brand: #123456; } .probe { color: red; } @tailwind utilities; } }",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "app:p-3"
+      ],
+      "loaded": [],
+      "expectedCss": "@media reference { @media print { @theme { --spacing: 4px; --color-brand: #123456; } .probe { color: red; } @tailwind utilities; } }"
+    },
+    {
+      "id": "import:nested:screen:theme(reference)",
+      "input": "@media screen { @media theme(reference) { @theme { --spacing: 4px; --color-brand: #123456; } .probe { color: red; } @tailwind utilities; } }",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "app:p-3"
+      ],
+      "loaded": [],
+      "expectedError": "Files imported with `@import \"…\" theme(reference)` must only contain `@theme` blocks.\nUse `@reference \"…\";` instead."
+    },
+    {
+      "id": "import:nested:screen:theme(default)",
+      "input": "@media screen { @media theme(default) { @theme { --spacing: 4px; --color-brand: #123456; } .probe { color: red; } @tailwind utilities; } }",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "app:p-3"
+      ],
+      "loaded": [],
+      "expectedCss": "@media screen {\n  :root, :host {\n    --spacing: 4px;\n    --color-brand: #123456;\n  }\n  .probe {\n    color: red;\n  }\n  .bg-brand {\n    background-color: var(--color-brand);\n  }\n  .p-3 {\n    padding: calc(var(--spacing) * 3);\n  }\n}\n"
+    },
+    {
+      "id": "import:nested:screen:prefix(app)",
+      "input": "@media screen { @media prefix(app) { @theme { --spacing: 4px; --color-brand: #123456; } .probe { color: red; } @tailwind utilities; } }",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "app:p-3"
+      ],
+      "loaded": [],
+      "expectedCss": "@media screen {\n  :root, :host {\n    --app-spacing: 4px;\n  }\n  .probe {\n    color: red;\n  }\n  .app\\:p-3 {\n    padding: calc(var(--app-spacing) * 3);\n  }\n}\n"
+    },
+    {
+      "id": "import:nested:screen:important",
+      "input": "@media screen { @media important { @theme { --spacing: 4px; --color-brand: #123456; } .probe { color: red; } @tailwind utilities; } }",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "app:p-3"
+      ],
+      "loaded": [],
+      "expectedCss": "@media screen {\n  :root, :host {\n    --spacing: 4px;\n    --color-brand: #123456;\n  }\n  .probe {\n    color: red;\n  }\n  .bg-brand {\n    background-color: var(--color-brand) !important;\n  }\n  .p-3 {\n    padding: calc(var(--spacing) * 3) !important;\n  }\n}\n"
+    },
+    {
+      "id": "import:nested:screen:reference",
+      "input": "@media screen { @media reference { @theme { --spacing: 4px; --color-brand: #123456; } .probe { color: red; } @tailwind utilities; } }",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "app:p-3"
+      ],
+      "loaded": [],
+      "expectedCss": "@media screen { @media reference { @theme { --spacing: 4px; --color-brand: #123456; } .probe { color: red; } @tailwind utilities; } }"
+    },
+    {
+      "id": "import:nested:screen:print",
+      "input": "@media screen { @media print { @theme { --spacing: 4px; --color-brand: #123456; } .probe { color: red; } @tailwind utilities; } }",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3",
+        "bg-brand",
+        "tw:p-3",
+        "app:p-3"
+      ],
+      "loaded": [],
+      "expectedCss": "@media screen {\n  @media print {\n    :root, :host {\n      --spacing: 4px;\n      --color-brand: #123456;\n    }\n    .probe {\n      color: red;\n    }\n    .bg-brand {\n      background-color: var(--color-brand);\n    }\n    .p-3 {\n      padding: calc(var(--spacing) * 3);\n    }\n  }\n}\n"
+    },
+    {
+      "id": "import:important-outside-utility",
+      "input": "@media important { .probe { color: red; } } @tailwind utilities;",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "flex"
+      ],
+      "loaded": [],
+      "expectedCss": ".probe {\n  color: red;\n}\n.flex {\n  display: flex !important;\n}\n"
+    },
+    {
+      "id": "import:important-after-utility",
+      "input": "@tailwind utilities; @media important { .probe { color: red; } }",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "flex"
+      ],
+      "loaded": [],
+      "expectedCss": ".flex {\n  display: flex !important;\n}\n.probe {\n  color: red;\n}\n"
+    },
+    {
+      "id": "import:first-tailwind-ignores-source-on-duplicate",
+      "input": "@tailwind utilities; @tailwind utilities source(unquoted);",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "flex"
+      ],
+      "loaded": [],
+      "expectedCss": ".flex {\n  display: flex;\n}\n"
+    },
+    {
+      "id": "import:source-none-import-utility",
+      "input": "@import \"parts/body.css\" source(none);",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "p-3"
+      ],
+      "loaded": [
+        {
+          "uri": "parts/body.css",
+          "base": "/app",
+          "path": "/app/parts/body.css"
+        },
+        {
+          "uri": "../theme.css",
+          "base": "/app/parts",
+          "path": "/app/theme.css"
+        }
+      ],
+      "expectedCss": ":root, :host {\n  --spacing: 4px;\n}\n.custom {\n  color: red;\n}\n.p-3 {\n  padding: calc(var(--spacing) * 3);\n}\n"
+    },
+    {
+      "id": "import:media-traversal:@theme { @media theme(inline) { --x:red; } } @tailwind utilities;",
+      "input": "@theme { @media theme(inline) { --x:red; } } @tailwind utilities;",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "flex"
+      ],
+      "loaded": [],
+      "expectedError": "`@theme` blocks must only contain custom properties or `@keyframes`.\n\n  @theme {\n>   @media theme(inline) {\n>     --x: red;\n>   }\n  }\n  "
+    },
+    {
+      "id": "import:media-traversal:@custom-variant foo { @media important { @slot; } } @tailwind utilities;",
+      "input": "@custom-variant foo { @media important { @slot; } } @tailwind utilities;",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "flex"
+      ],
+      "loaded": [],
+      "expectedCss": ".flex {\n  display: flex;\n}\n"
+    },
+    {
+      "id": "import:media-traversal:@custom-variant foo { @media theme(reference) { color:red; @slot; } } @tailwind utilities;",
+      "input": "@custom-variant foo { @media theme(reference) { color:red; @slot; } } @tailwind utilities;",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "flex"
+      ],
+      "loaded": [],
+      "expectedCss": ".flex {\n  display: flex;\n}\n"
+    },
+    {
+      "id": "import:media-traversal:@variant foo { @media important { @slot; } } @tailwind utilities;",
+      "input": "@variant foo { @media important { @slot; } } @tailwind utilities;",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "flex"
+      ],
+      "loaded": [],
+      "expectedCss": ".flex {\n  display: flex;\n}\n"
+    },
+    {
+      "id": "import:media-traversal:@utility foo { @media important { color:red; } } @tailwind utilities;",
+      "input": "@utility foo { @media important { color:red; } } @tailwind utilities;",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "flex"
+      ],
+      "loaded": [],
+      "expectedCss": ".flex {\n  display: flex !important;\n}\n"
+    },
+    {
+      "id": "import:media-traversal:@custom-variant foo { @source inline(\"hidden\"); @slot; } @tailwind utilities;",
+      "input": "@custom-variant foo { @source inline(\"hidden\"); @slot; } @tailwind utilities;",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "flex"
+      ],
+      "loaded": [],
+      "expectedCss": ".flex {\n  display: flex;\n}\n"
+    },
+    {
+      "id": "import:media-traversal:@custom-variant foo { @tailwind utilities source(unquoted); @slot; } @tailwind utilities;",
+      "input": "@custom-variant foo { @tailwind utilities source(unquoted); @slot; } @tailwind utilities;",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "flex"
+      ],
+      "loaded": [],
+      "expectedCss": ".flex {\n  display: flex;\n}\n"
+    },
+    {
+      "id": "import:media-traversal:@variant foo { @source inline(\"hidden\"); @slot; } @tailwind utilities;",
+      "input": "@variant foo { @source inline(\"hidden\"); @slot; } @tailwind utilities;",
+      "entry": "/app/input.css",
+      "assets": [
+        {
+          "id": "/app/theme.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; }"
+        },
+        {
+          "id": "/app/parts/body.css",
+          "content": "@import \"../theme.css\"; .custom { color: red; } @tailwind utilities;"
+        },
+        {
+          "id": "/app/plain.css",
+          "content": ".imported { color: red; }"
+        },
+        {
+          "id": "package/theme.css",
+          "content": "@theme { --spacing: 7px; --color-brand: #abcdef; }"
+        },
+        {
+          "id": "/app/reference.css",
+          "content": "@theme { --spacing: 4px; --color-brand: #123456; } .hidden { color: red; } @tailwind utilities;"
+        }
+      ],
+      "candidates": [
+        "flex"
+      ],
+      "loaded": [],
+      "expectedCss": ".flex {\n  display: flex;\n}\n"
+    }
+  ]
+}

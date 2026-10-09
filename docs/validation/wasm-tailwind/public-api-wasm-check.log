@@ -1,0 +1,50 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling proc-macro2 v1.0.107
+   Compiling quote v1.0.47
+   Compiling wasm-bindgen-shared v0.2.128
+   Compiling rustversion v1.0.23
+   Compiling serde_core v1.0.229
+   Compiling zmij v1.0.23
+    Checking unicode-ident v1.0.24
+    Checking hashbrown v0.17.1
+    Checking equivalent v1.0.2
+   Compiling serde_json v1.0.151
+   Compiling serde v1.0.229
+    Checking futures-core v0.3.34
+    Checking cfg-if v1.0.4
+    Checking slab v0.4.12
+    Checking pin-project-lite v0.2.17
+    Checking futures-task v0.3.34
+    Checking itoa v1.0.18
+    Checking memchr v2.8.3
+    Checking once_cell v1.21.4
+    Checking indexmap v2.14.2
+    Checking futures-util v0.3.34
+   Compiling syn v3.0.5
+   Compiling wasm-bindgen-macro-support v0.2.128
+   Compiling serde_derive v1.0.229
+   Compiling wasm-bindgen-macro v0.2.128
+   Compiling wasm-bindgen v0.2.128
+    Checking rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+    Checking js-sys v0.3.105
+warning: method `ordered_tokens` is never used
+  --> crates/rustify-style/src/compiler/theme.rs:41:19
+   |
+40 | impl Theme {
+   | ---------- method in this implementation
+41 |     pub(super) fn ordered_tokens(&self) -> impl Iterator<Item = (String, &ThemeToken)> {
+   |                   ^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `rustify-style` (lib) generated 1 warning
+    Checking rustify-style-wasm v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style-wasm)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 3.55s
+mbx[cache]: 28 hits, 10 misses, 4 not looked up; 0 B downloaded, 0 B uploaded, 10.5 MiB stored locally
+mbx[savings]: 13534 compilations on file. the box remembers.

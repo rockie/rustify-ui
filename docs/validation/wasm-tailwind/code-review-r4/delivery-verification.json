@@ -1,0 +1,26 @@
+{
+  "local_links_checked": 170,
+  "errors": [],
+  "events": [
+    {
+      "event": "452d7fee-065b-4c92-8ed5-42f7387822b4",
+      "state": "review-recorded",
+      "facet": "review"
+    },
+    {
+      "event": "ac052f8a-ba5e-4fd4-870a-9c497d6ab632",
+      "state": "review-pending",
+      "facet": "disposition"
+    }
+  ],
+  "included_events_match": true,
+  "expected_ledger_input_changes": [
+    ".xgent-ai/sdlc/events/review/index.md",
+    ".xgent-ai/sdlc/index.md",
+    ".xgent-ai/sdlc/status/plan/be9305f5-b240-453b-bb54-5ff7d0ed7970.md",
+    ".xgent-ai/sdlc/status/review/index.md"
+  ],
+  "unexpected_input_changes": [],
+  "head": "53652fcc405a2679df19eb10e252efd4a4236f50",
+  "report_sha256": "ed08909879bd2682fae2f8486017701433d726173dfa78776816b4f8728e2776"
+}

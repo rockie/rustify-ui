@@ -1,0 +1,30 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.05s
+     Running unittests src/lib.rs (target/debug/deps/rustify_style-4ed64bbe76d78d97)
+
+running 1 test
+test compiler::tests::removed_custom_sort_declarations_do_not_keep_theme_variables_alive ... FAILED
+
+failures:
+
+---- compiler::tests::removed_custom_sort_declarations_do_not_keep_theme_variables_alive stdout ----
+
+thread 'compiler::tests::removed_custom_sort_declarations_do_not_keep_theme_variables_alive' (14050246) panicked at crates/rustify-style/src/compiler/tests.rs:59:5:
+assertion `left == right` failed
+  left: ":root, :host {\n  --color-brand: #123456;\n}\n"
+ right: ""
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    compiler::tests::removed_custom_sort_declarations_do_not_keep_theme_variables_alive
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 98 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p rustify-style --lib`

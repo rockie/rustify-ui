@@ -1,0 +1,28 @@
+{
+  "baseline": "1334c99db8fd26c8ea065375dd9259800863f072",
+  "sourceSha256": "17ed5fb1a5f5e4573768ba97d54a1002bc258f3ec677f37abd73022efcabcdaf",
+  "prototype": "isolated native cursor, no production integration",
+  "cases": [
+    "shared-array-removal-visible-to-second-context",
+    "legacy-rename-and-removal-before-error",
+    "replace-0-continue",
+    "replace-0-skip",
+    "replace-0-stop",
+    "replace-1-continue",
+    "replace-1-skip",
+    "replace-1-stop",
+    "replace-2-continue",
+    "replace-2-skip",
+    "replace-2-stop",
+    "nested-stop-propagates",
+    "context-overrides-false-and-empty-preserves-parent",
+    "deferred-body-reads-later-shared-array-removal",
+    "visitor-child-reassignment-is-current",
+    "shared-array-edit-visible-after-earlier-occurrence",
+    "ordinary-at-root-establishes-parent",
+    "semantic-error-stops-before-later-array-write"
+  ],
+  "comparisons": 18,
+  "passed": 18,
+  "fullRegistrationConformance": "pending"
+}
