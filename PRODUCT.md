@@ -8,10 +8,11 @@ web
 
 ## Product Purpose
 
-Rustify UI 是实验性的 Rust UI SDK：在同一个浏览器页面和 wasm 实例中组合 Leptos DOM 与 Makepad WebGL2，由应用统一拥有状态，通过 props 和 typed actions 与 GPU region 通信。现有能力和运行边界以 README.md、docs/architecture.md 为准。
+Rustify UI 是面向复杂 Web 工具的实验性 Rust 集成 SDK：Leptos CSR 负责 DOM 界面与应用状态，Makepad WebGL2 负责需要 GPU 绘制的交互内容，Rustify 负责两者的状态、生命周期、输入与浮层协作。两者在同一个浏览器页面和 wasm 实例中运行，由应用统一拥有状态，通过 props 和 typed actions 与 GPU region 通信。现有能力和运行边界以 README.md、docs/architecture.md 为准。
 
 ## Capabilities and Constraints
 
+- 新任务按职责选择呈现路径，默认只实现需要的一端；用户明确要求两端支持，或实际跨区协作需要时，才覆盖两端。共享状态、主题与动作语义不要求组件或 CSS 能力双端对等，不为目录或演示对称扩大范围。
 - 主题系统在 DOM 与 GPU 之间共享语义值，保留多作用域隔离能力。
 - 2026-10-03 用户确认：新增基于 Tailwind CSS v4 的主题系统及 demo site，尽量完整复刻本地 `ref/tweakcn-main` 的编辑体验，第一期同时覆盖 DOM 与 Makepad GPU。
 - 同日确认：本期完成本地编辑体验；AI 生成、账号云端保存、社区发布和外部网站预览留待后续。
@@ -19,6 +20,8 @@ Rustify UI 是实验性的 Rust UI SDK：在同一个浏览器页面和 wasm 实
 - 字体资源、GPU 呈现差异、导入格式和兼容策略由对应开发计划明确，不把浏览器 CSS 支持等同于 GPU 支持。
 
 ## Operating Context
+
+当前尚未选定具体业务场景。新增能力以当前需求为依据，不为假设场景预建另一端的组件、样式或布局能力。
 
 现有仓库包含组件目录、属性工作台、数据工作台和 Vellum 等示例。主题编辑站面向选择预设、调整主题、查看真实组件和导出可用于应用的主题这一工作流程。目标使用者推定为采用或评估 Rustify UI 的开发者与设计人员。
 
@@ -28,6 +31,7 @@ Rustify UI 是实验性的 Rust UI SDK：在同一个浏览器页面和 wasm 实
 
 ## Evidence on Hand
 
+- AGENTS.md：项目定位与新任务的实现范围约束。
 - README.md：产品定位、开发入口和运行限制。
 - crates/rustify-ui/src/theme.rs：现有主题、作用域与局部覆盖。
 - crates/rustify-components/css/sdk.css：Tailwind v4 集成与作用域 token。

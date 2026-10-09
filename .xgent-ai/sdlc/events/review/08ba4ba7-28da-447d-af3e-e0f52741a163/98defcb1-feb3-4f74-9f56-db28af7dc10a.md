@@ -1,0 +1,29 @@
+---
+schema_version: 3
+event_id: "98defcb1-feb3-4f74-9f56-db28af7dc10a"
+object_id: "08ba4ba7-28da-447d-af3e-e0f52741a163"
+kind: "review"
+title: "初始注册 existing-value 补充设计评审"
+artifact: "docs/validation/wasm-tailwind/registration-design/review-existing-value.md"
+facet: "review"
+scope: "M4 existing-value design"
+state: "review-recorded"
+source_state: "Insufficient evidence for adoption"
+evidence_status: "stale"
+observed_at: "2026-10-07T10:37:52+11:00"
+predecessors: []
+baseline: {"head": "53652fcc405a2679df19eb10e252efd4a4236f50", "branch": "main", "worktree": "dirty"}
+sources: [{"path": "docs/validation/wasm-tailwind/registration-design/review-existing-value.md", "revision": "sha256:e667d7845f2f0ee29d7d5cd2d676eb2887b09173172a1b1a75af914404c6b699", "anchor": "M4 existing-value design"}, {"path": "docs/validation/wasm-tailwind/registration-design/README.md", "revision": "sha256:1b1a29ad7081a38c15e0a3f081689d6fd9ced5a1cc5fbd60a2744f4dbb99c72e", "anchor": "Implement"}]
+relations: [{"type": "reviews", "target": "be9305f5-b240-453b-bb54-5ff7d0ed7970", "scope": "M4 existing-value design"}, {"type": "rechecks", "target": "c84e8f89-9119-4d80-9bc2-71b67b0e99cf", "scope": "M4 existing-value design"}]
+review_type: "other"
+---
+
+# 初始化观察：初始注册 existing-value 补充设计评审 · review
+
+- 事实与证据：实际报告有目标、范围与结论。补充比较优先实验 existing-value/COW，列 anchor/edge、lease、费用和 downstream ownership 未满足合同；README 记录部分实现。
+- 校准依据：按协议 v3 / 状态模型 v2 独立判断本维度；历史活动时间不由本次导入时间推定。
+- 未完项与限制：纸面比较与心智逆序不算独立实验；后续生产结构变更，仍需 host/完整准入/峰值与 ownership 证据。
+- 下一步及解除条件：沿 M6/M7 剩余准入和 ownership 范围核对，保留既有 M4 门。
+
+- [docs/validation/wasm-tailwind/registration-design/review-existing-value.md · M4 existing-value design](../../../../../docs/validation/wasm-tailwind/registration-design/review-existing-value.md)
+- [docs/validation/wasm-tailwind/registration-design/README.md · Implement](../../../../../docs/validation/wasm-tailwind/registration-design/README.md)

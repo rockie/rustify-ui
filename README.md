@@ -2,6 +2,8 @@
 
 Rustify UI is an experimental Rust SDK for combining Leptos CSR components and Makepad WebGL2 rendering in a browser application. Leptos owns the DOM, layout and reactive application state; each `GpuRegion` renders into a canvas positioned by the DOM. Applications send props into regions and receive typed actions back.
 
+Each task implements only the rendering path it needs. Work on both paths requires an explicit requirement or a concrete need for cooperation across DOM and GPU regions. Shared state and theme tokens do not require matching component sets or CSS support. A specific application use case has not yet been selected.
+
 This repository contains the SDK, DOM components, a Makepad fork and six runnable examples. The workspace is version `0.1.0`, with publishing disabled. Start here to build an example; use the [quick start](docs/quickstart.md) to write a region or integrate the components into an application.
 
 ## Quick start

@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "design-system-font",
+        "value": "mono",
+        "files": [
+          "examples/utility-lab/index.html"
+        ],
+        "createdAt": "2026-10-05T02:43:48.672Z",
+        "reason": "Agent: DESIGN.md typography color-code declares Liberation Mono; utility-lab code input and CSS output use that existing family. The detector reports mono from the documented font name."
+      }
+    ]
+  }
+}
