@@ -2,7 +2,7 @@
 
 ## Prerequisites
 
-- `mise` (2026.9.2 or newer). `mise install` installs what `mise.toml` pins: Rust 1.98.1 (stable) with `rustfmt`, `clippy` and the wasm32 target; mbx 1.15.0, the compiler cache every build goes through; and Tailwind's standalone CLI 4.1.13, which generates the component stylesheet without Node and which `build-web` needs for an example with a Tailwind input of its own (`RUSTIFY_TAILWIND=<path>` points at another copy of that version). Nothing else is installed silently.
+- `mise` (2026.9.2 or newer). `mise install` installs what `mise.toml` pins: Rust 1.99.0 (stable) with `rustfmt`, `clippy` and the wasm32 target; mbx 1.15.0, the compiler cache every build goes through; and Tailwind's standalone CLI 4.1.13, which generates the component stylesheet without Node and which `build-web` needs for an example with a Tailwind input of its own (`RUSTIFY_TAILWIND=<path>` points at another copy of that version). Nothing else is installed silently.
 - After installing Rust, mise runs `scripts/link-libllvm.sh`, which puts a link to the toolchain's `libLLVM` next to `rust-lld`. mbx starts the toolchain's Cargo without rustup's proxy, so without that link the wasm link cannot load LLVM. `mbx xtask doctor` reports a toolchain that is missing the link.
 - Node 26 and npm for the browser tests: `npm ci` then `npx playwright install chromium`.
 - Google Chrome on macOS for the manual pass gate.

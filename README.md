@@ -14,7 +14,7 @@ Install and activate mise before running the commands below. The repository's [m
 
 | Tool | Version | Purpose |
 | --- | --- | --- |
-| Rust | `1.98.1` stable | Includes `rustfmt`, `clippy` and the `wasm32-unknown-unknown` target |
+| Rust | `1.99.0` stable | Includes `rustfmt`, `clippy` and the `wasm32-unknown-unknown` target |
 | mbx (mr-boxington) | `1.15.0` | Compiler cache used by the workspace and nested wasm builds |
 | Tailwind standalone CLI | `4.1.13` | Generates component CSS and compiles example Tailwind inputs |
 
