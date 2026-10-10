@@ -46,17 +46,17 @@
 
 - 最近更新：2026-10-10T17:20:00+08:00
 - 当前进度：1/9 个里程碑完成
-- 当前状态：M1 已完成（待提交）；M2 未开始
+- 当前状态：M1 已完成并提交（179c5ec）；M2 未开始
 - 最近完成：M1（默认纯 DOM SDK 可用，GPU 兼容收口）
-- 下一步：在 M1 提交点提交并回填 SHA；然后开始 M2（固定 Chromium 与 Slow 4G 参数已于 2026-10-10 确认，见 §9.3）
+- 下一步：开始 M2（固定 Chromium 与 Slow 4G 参数已于 2026-10-10 确认，见 §9.3）
 - 当前阻塞：无
-- 代码基线：dirty@91e81b81ecee53153b9d5df7b74fd843bfafb8c8（改前基线 worktree `../rustify-ui-docs-ssg-baseline-91e81b8` 保留）
+- 代码基线：179c5ec（改前基线 worktree `../rustify-ui-docs-ssg-baseline-91e81b8` 保留）
 
 ### 完成记录
 
 | Milestone | 状态 | 更新时间 | 简要记录 | 实现与验收记录 | 提交 |
 | --- | --- | --- | --- | --- | --- |
-| M1 | 已完成 | 2026-10-10T17:20:00+08:00 | 默认 DOM SDK、中性 runtime/DOM loader、GPU opt-in 与示例迁移；V-1/V-2 仓内外、V-15 矩阵通过，V-3 全部适用原回归 604 例通过（theme-studio 整项目重跑 65/65） | [M1 记录](../validation/docs-ssg-p1/M1.md) | 待提交 |
+| M1 | 已完成 | 2026-10-10T17:20:00+08:00 | 默认 DOM SDK、中性 runtime/DOM loader、GPU opt-in 与示例迁移；V-1/V-2 仓内外、V-15 矩阵通过，V-3 全部适用原回归 604 例通过（theme-studio 整项目重跑 65/65） | [M1 记录](../validation/docs-ssg-p1/M1.md) | 179c5ec |
 
 ## 0. 需求、范围与决策
 
