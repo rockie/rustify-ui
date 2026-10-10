@@ -44,19 +44,19 @@
 
 ### 恢复快照
 
-- 最近更新：尚未开始
-- 当前进度：0/9 个里程碑完成
-- 当前状态：尚未开始
-- 最近完成：无
-- 下一步：在独立 worktree 采集 b0a6bc5 的 7 示例/theme-export 改前基线，再按 M1 交付 DOM 构建、启动与实例生命周期
-- 当前阻塞：无；设备、固定 Chrome、性能与远端推送门按 §11 在对应里程碑出口前确认
-- 代码基线：dirty@b0a6bc5b9010e57d1f0d758a37af573ea0712faa
+- 最近更新：2026-10-10T17:20:00+08:00
+- 当前进度：1/9 个里程碑完成
+- 当前状态：M1 已完成（待提交）；M2 未开始
+- 最近完成：M1（默认纯 DOM SDK 可用，GPU 兼容收口）
+- 下一步：在 M1 提交点提交并回填 SHA；然后开始 M2（固定 Chromium 与 Slow 4G 参数已于 2026-10-10 确认，见 §9.3）
+- 当前阻塞：无
+- 代码基线：dirty@91e81b81ecee53153b9d5df7b74fd843bfafb8c8（改前基线 worktree `../rustify-ui-docs-ssg-baseline-91e81b8` 保留）
 
 ### 完成记录
 
 | Milestone | 状态 | 更新时间 | 简要记录 | 实现与验收记录 | 提交 |
 | --- | --- | --- | --- | --- | --- |
-| — | — | — | 尚未开始任何里程碑 | — | — |
+| M1 | 已完成 | 2026-10-10T17:20:00+08:00 | 默认 DOM SDK、中性 runtime/DOM loader、GPU opt-in 与示例迁移；V-1/V-2 仓内外、V-15 矩阵通过，V-3 全部适用原回归 604 例通过（theme-studio 整项目重跑 65/65） | [M1 记录](../validation/docs-ssg-p1/M1.md) | 待提交 |
 
 ## 0. 需求、范围与决策
 
@@ -231,10 +231,10 @@ WORK-* 均沿用 [PRD §3、§7.2](../PRD-DOCS-SSG.md)；下表列出本期 AC �
 
 - `gpu = [dep:rustify-makepad, csr]`，GPU 模块/资源入口同时 gate `gpu` 与必要 target 条件。components 提供 `gpu → rustify-ui/gpu` 便利转发，默认不启用。`utility` 的 GPU resolver 同样 gate，不让仅 DOM utility 间接引用 GPU API。
 - SDK 中性 hooks 包含 signal、defer、defer_after、observe_resize 和实例标识；对应 SDK 启动函数在 mount 前校验，未初始化返回明确 startup 错误，不让 `unwrap_or_default()` 静默丢失 abort 保护。GPU loader 将现 hooks 注入中性 SDK 和 Makepad；GPU region 仍走旧 host。
-- ★ SDK runtime 的 DOM 工厂通过 `#[wasm_bindgen(module="/web/dom-runtime.js")]` 引用 crate 内 JS，bindgen 自动带出 snippets；模块只定义工厂、不保留实例可变状态、不依赖其他模块 import，遵循 [JS snippets](https://wasm-bindgen.github.io/wasm-bindgen/reference/js-snippets.html) 的 crate-relative/target-web 合同。SDK 提供协议号、创建 DOM hooks、boot 三个 Rust 原语；外部应用按 fixture 的薄封装导出 `rustify_runtime_protocol`、`rustify_dom_create_host`、`rustify_runtime_boot`。loader 读取 SDK 协议、创建带相同协议号/instance_id 的 hooks，经 Rust boot 再校验后才调用应用启动入口；缺导出/协议不一致明确拒启并释放本次 host，不能回退裸 mount。GPU boot 也校验同一中性协议，不更改其 bridge hash 合同。
+- ★ SDK runtime 的 DOM 工厂通过 `#[wasm_bindgen(module="/web/dom-runtime.js")]` 引用 crate 内 JS，bindgen 自动带出 snippets；模块只定义工厂、不保留实例可变状态、不依赖其他模块 import，遵循 [JS snippets](https://wasm-bindgen.github.io/wasm-bindgen/reference/js-snippets.html) 的 crate-relative/target-web 合同。SDK 以 `#[wasm_bindgen]` 直接导出 `rustify_runtime_protocol`、`rustify_dom_create_host`（仅未开 gpu 时编译）、`rustify_runtime_boot` 三个原语，依赖 SDK 的应用自动带出，无需薄封装。loader 读取 SDK 协议、创建带相同协议号/instance_id 的 hooks，经 Rust boot 再校验后才调用应用启动入口；缺导出/协议不一致明确拒启并释放本次 host，不能回退裸 mount。GPU boot 也校验同一中性协议，不更改其 bridge hash 合同。
 - ★ `rustify_ui::runtime::{DOM_LOADER_JS, DOM_RUNTIME_CSS}` 在宿主目标也可读取，components 提供 `CSS` 常量，编入现有 `crates/rustify-components/css/rustify.css`。模板内 `export-dom-assets` 仅用 Rust 标准库把 loader/基础 CSS/组件 CSS 写到 public/，资源来自与 wasm 相同 SDK/components rev，不要求作者访问 Cargo 缓存、手抄 snippets 路径或调用仓根 xtask。小型应用外部 app.js 与 HTML 由 fixture 提供，所有脚本同源，遵循现 Strict CSP，不用内联脚本/style。
 - DOM loader 只导入普通 wasm-bindgen glue 与中性 JS，不 import message_bridge、embedded、Makepad env，不校验 Makepad schema、不碰 `window.makepad_resource_base`。编译共享模块、独立 wasm 实例和带实例 query 的 glue 维持现有隔离方式。
-- DOM fatal 顺序：标死 → abort listeners → 释放本实例 URL 标记与登记的页面资源 → 取消 timer/deferred/observer → 通知页面。export boundary、DOM 事件 error/rejection 的 glue URL 归属与既有 loader 一致；普通 Rust Result 错误不升级为 trap。失败提示由活 JS 显示，重启沿用现有最多 3 次限制。
+- DOM fatal 顺序：标死 → abort listeners → 释放本实例 URL 标记与登记的页面资源 → 取消 timer/deferred/observer → 通知页面。export boundary、DOM 事件 error/rejection 的 glue URL 归属与既有 loader 一致；非 fat-LTO 构建的 panic 在 V8 默认 10 帧内到不了 glue 帧，DOM loader 仅上调（≥200、不下调）`Error.stackTraceLimit` 保住归属；普通 Rust Result 错误不升级为 trap。失败提示由活 JS 显示，重启沿用现有最多 3 次限制。
 - mount/dispose 的 Owner cleanup→DOM unmount、浮层焦点回归与 URL 所有权不改；resize 回调必须 abort 后断开，toast timer/job 不能进入已死实例。GPU 开启时 `Pace` 保持原 reexport，`accept/submit` 与 RegionApp 的 Makepad 类型签名不改；默认 DOM 枚举仅在未开 GPU 时编译，避免 trait 返回类型不匹配，也不改变流合并规则。
 - ★ `tests/dom-only/` 独立 workspace 通过路径依赖构建默认配置；新增仓内 `mbx xtask build-dom --manifest-path … --output …` 使用普通 `mbx build --target wasm32-unknown-unknown` 加现有同版本 bindgen 库，不调用 cargo-makepad。另将完整 consumer 复制到仓外临时目录，SDK/components 只用 file:// git 候选 rev，根 patch 不复制。M1 可将本次相关源码快照放进临时 git 仓并提交成验证候选，记录 SHA/文件指纹；这不替代 M1 检查通过后的主树提交。M1 的 V-1/V-2 执行下面同一配方，M9 用已授权推送的 GitHub rev 重验。
 
@@ -403,7 +403,7 @@ cargo install --git https://github.com/rockie/rustify-ui --rev <上个已验证�
 | --- | --- | --- | --- |
 | V-1 | F17/AC-1、5；N4/AC-1–2：独立 DOM/CLI graph 含 build deps，按 §3.1 包名规则无 Makepad；附通用库来源核对；GPU API 负向编译、opt-in 正向构建 | ★ `mbx xtask docs-verify --group features`；隔离 `tests/dom-only/` 与仓外无 patch 的 git 消费者，逐包 metadata/tree 及产物检查 | M1 DOM/GPU 切片；M2 补 CLI 图；M7 重跑；M8 受影响重跑 |
 | V-2 | F17/AC-2–3：两 DOM 实例 toast、resize、listener/observer/timer abort；boot 遗漏/协议不匹配明确失败；trap 隔离与重启上限；clipboard::available() 为真 | ★ docs config `--project=dom-only`；仓内与仓外普通 Cargo/bindgen 的真实 release wasm；仓外仅 git SDK/components 依赖，照 §4.1 配方，不用 xtask/根 patch；与 GPU hooks 同合同对照 | M1 T-1/T-2 汇合门；M8 回归；M9 远端 SHA 配方重验 |
-| V-3 | F17/AC-4 全部原回归通过；C-2：7 GPU 示例及 theme-export 兼容基线，不用“失败未增加”替代全部通过 | 既有 build-web/root+子路径；theme-export 的 build.sh/root+子路径及 `mbx test --locked --manifest-path tests/theme-export/Cargo.toml --workspace --bins`；逐一 regression project，Vellum 用现 config；具体基线/触发见 §9.2 | b0a6bc5 改前基线、M1 全范围退出；M2 与后续里程碑有横切变化时，退出或下一提交点前重跑受影响范围；M7/M8 复核触发范围 |
+| V-3 | F17/AC-4 全部原回归通过；C-2：7 GPU 示例及 theme-export 兼容基线，不用“失败未增加”替代全部通过 | 既有 build-web/root+子路径；theme-export 的 build.sh/root+子路径及 `mbx test --locked --manifest-path tests/theme-export/Cargo.toml --workspace --bins`；逐一 regression project，Vellum 用现 config；具体基线/触发见 §9.2 | 91e81b8 改前基线（§9.2）、M1 全范围退出；M2 与后续里程碑有横切变化时，退出或下一提交点前重跑受影响范围；M7/M8 复核触发范围 |
 | V-4 | F2/AC-1–3、F3/AC-1、3、F15/AC-1–2，N5/AC-3 标题跳级诊断：SSR/span/GFM/anchor；五种 alert 语义/样式及同份文件 GitHub 可读；自定义 id、表格 class 无 style；高亮 class 不进候选，含 block scope 的 span 在浏览器仍 inline；跨源/被 CSP 禁止资源拒绝；恰 3 错 | ★ `mbx test --locked -p rustify-docs` 与 CLI 集成测试；11 语言/grammar context/畸形输入 fixture；M3 的 GitHub 源格式核对先用本地原文件，M9 对已授权可达文件做 GitHub 预览核对；computed display 在 M5 用 V-8 同页补证 | M2 SSR/样式/grammar 切片；M3 内容全组；M5 样式浏览器切片；M7/M8 受影响重跑；M9 模板与 GitHub 核对 |
 | V-5 | F1/AC-1、3、4 的 new/build 侧：成功页数、缺 rustc/非空/失败无残留，模板 ignore 生效；纯内容无站点编译。dev 侧由 V-9 验收 | ★ CLI 集成组；受限 PATH、空/非空临时目录；仅允许 doctor 的 rustc --version，监测 cargo/编译工具执行；new→build 后核对 git status | M4 new/build 切片；M7 复测；M8 受影响重跑；M9 生成 README 变更后复测 |
 | V-6 | F2/AC-4 发布侧、F11/AC-1–3、F14/AC-1–2：草稿过滤、元数据缺 URL/non-git、可索引页面 sitemap/robots、指纹反向依赖失效、CSS url 与 logo 引用链、源码不发布；草稿 dev 侧由 V-9 验收 | ★ `mbx xtask docs-verify --group artifacts`；根/子路径 fixture，逐字节/URL/资源图断言；manifest mode=production | M4 build 切片；M7 安全收口（含 M5 新资源）；M8 受影响重跑；M9 模板变更后复测 |
@@ -420,7 +420,7 @@ cargo install --git https://github.com/rockie/rustify-ui --rev <上个已验证�
 ### 9.2 运行编排与实际入口
 
 - `playwright.docs.config.ts` 与现 GPU config 分开，项目名为 V-2/V-7–V-9 指定的名字；统一入口为 `npx playwright test -c playwright.docs.config.ts --project=<单个项目名>`；每个命令恰好一个 project，服务仅起该 project，端口由 OS 分配/单次配置传入，所有 Playwright invocation 串行。docs config 可加入 Firefox/WebKit项目，不把它们声称Safari。
-- F17 的 7 示例是 fusion-basic、component-catalog、property-workbench、data-workbench、vellum、theme-studio、utility-lab；另覆盖 theme-export 消费者。基线在独立 worktree 固定 `b0a6bc5b9010e57d1f0d758a37af573ea0712faa`，不把主树改动混入改前数据；用现配置逐一登记适用 regression project 的 spec/通过/失败/跳过清单及环境，随后在候选上对照同一清单。根 config 覆盖 fusion-basic、property-workbench、component-catalog、data-workbench、deployment、workbench-deep、theme-studio/deep、theme-export/deep、utility-lab/scanner/deep/scanner-deep；Vellum 按其独立 config。对应根/子路径产物分别构建，theme-export 还执行其独立宿主测试与两次 build.sh，保留 THEME_FONTS 等资源。utility-baseline/theme-text 不依赖此 SDK，不新增到本次 GPU 回归范围；不以 smoke 代替原有完整用例。
+- F17 的 7 示例是 fusion-basic、component-catalog、property-workbench、data-workbench、vellum、theme-studio、utility-lab；另覆盖 theme-export 消费者。基线在独立 worktree 固定开工 HEAD `91e81b8`（相对计划调查时的 `b0a6bc5` 只多了 `8e0ece1` 的 Rust 1.99.0 升级及其 makepad 弃用修复与文档提交，取它使基线与候选同一工具链），不把主树改动混入改前数据；用现配置逐一登记适用 regression project 的 spec/通过/失败/跳过清单及环境，随后在候选上对照同一清单。根 config 覆盖 fusion-basic、property-workbench、component-catalog、data-workbench、deployment、workbench-deep、theme-studio/deep、theme-export/deep、utility-lab/scanner/deep/scanner-deep；Vellum 按其独立 config。对应根/子路径产物分别构建，theme-export 还执行其独立宿主测试与两次 build.sh，保留 THEME_FONTS 等资源。utility-baseline/theme-text 不依赖此 SDK，不新增到本次 GPU 回归范围；不以 smoke 代替原有完整用例。
 - 基线已有失败/不稳定项单列并定位，不能靠重试或“失败集合不扩大”判 F17/AC-4 通过；M1 退出仍要求全部适用原回归通过，既有失败未消除时保存证据并阻塞出口，若需范围豁免另请用户决定，不能自动改变 PRD。SDK/components、根 Cargo.toml/Cargo.lock 或启动 JS 改动时，由本里程碑判断受影响 project，最迟在其退出/下一提交点前重跑；无法证明不受影响时跑全范围，M7/M8 核对复用证据的代码/依赖/输入/环境。
 - `mbx xtask docs-verify` ★ 分组只编排库/CLI 测试、fixture 构建、浏览器/测量；阶段全组覆盖本期需求，不给消费者增加 mbx/Node 条件。其依赖不链接 rustify-docs，不为 CSP 等值测试引入 SSR；读源字面值或对照 HTTP 字符串。host/SSR 的调用保持独立，矩阵如下；每格 test 与 clippy 分次运行，不能合并成一条 workspace union。
 - CLI/framework依赖的完整图与默认DOM消费者图分别检查，含build dependencies。`cargo install --git`可在本地file git候选上排练；最终锁SHA的安装必须针对可达真实提交验证，不把安装工作树算发布。
@@ -441,7 +441,7 @@ cargo install --git https://github.com/rockie/rustify-ui --rev <上个已验证�
 - 读者指标：Apple Silicon macOS Chrome稳定；M2冻结Chrome版本和Slow 4G实际参数；375px、CPU4倍，每页冷缓存5次取中位；HTML/CSS/脚本体积求各文件gzip -9字节之和，按PRD排除图片/字体，不把首帧后基础交互JS漏算。LCP/CLS在页内observer采集，404服务也要参加。
 - 作者指标：依赖与编译缓存就绪；保存完成的见证时间与浏览器渲染见证时间落在同一可校准测量时轴，不能直接相减进程和浏览器不同time origin。每项5次取中位；完整构建每次先清空测试out，不清用户产物；new计时不含CLI安装、不触发站点编译。报告实际输入/硬件/版本与前后数据。
 - 千次保存逐次写独特内容并等待浏览器见到这一revision再写下一次，期间不重启，不能把1000个事件合并后只看最后一次冒充通过；watch overflow/SSE断线负向另测。
-- 性能 Chrome 固定版本与兼容矩阵最新稳定版分别登记，不混用。M2 前确认固定版本来源与冻结副本/实际 Slow 4G 参数；M5 退出前确认 Firefox/WebKit 可执行文件或下载授权、真实 Firefox/Safari、设备与走查人。Playwright 的 Firefox/WebKit 只提供早期引擎回归，不替代真实 Firefox 最新稳定版或 Safari/手机出口。
+- 性能 Chrome 固定版本与兼容矩阵最新稳定版分别登记，不混用。固定版本与 Slow 4G 参数已由用户 2026-10-10 确认：性能测量固定使用 Playwright 1.63.0 锁定的 Chromium 153.0.8010.12（本机 `ms-playwright/chromium-1243`，不随系统 Chrome 更新；记录中注明不是 Google 品牌稳定版）；Slow 4G 取 Lighthouse 模拟口径，经 CDP `Network.emulateNetworkConditions` 施加 latency 150 ms、下行 1.6×1024 kbit/s（209,715 B/s）、上行 750 kbit/s（96,000 B/s），不乘 DevTools 的 3.75 延迟与 0.9 吞吐系数，CPU 用 `Emulation.setCPUThrottlingRate` 4 倍；M5 退出前确认 Firefox/WebKit 可执行文件或下载授权、真实 Firefox/Safari、设备与走查人。Playwright 的 Firefox/WebKit 只提供早期引擎回归，不替代真实 Firefox 最新稳定版或 Safari/手机出口。
 - 真机默认通过显式 `preview --host <本机局域网地址>` 访问只读 production 产物，dev 保持 loopback；M5 登记设备可达 URL 与网络条件。局域网 HTTP 不是安全上下文，复制不可用时显示失败状态并保留手选，不冒称复制成功；完整复制成功路径在 loopback/用户提供的 HTTPS 入口验收。用户可提供 HTTPS 静态托管或隧道作为入口，未经明确指示不安装隧道服务、不上传。缺真实 Safari/手机时请求设备/真人走查，不用引擎仿真替代。保存实际入口、主路径、关键边界、console/失败请求与截图，并确认最新产物。
 
 **V-14 分阶段判据与归属**：M2 的 T-8 固定 12 份指南的正文/图片分布、生成种子与源指纹，交付 500 页/中英各半的 B 语料和页内采时 harness。M2 尚无正式 build/dev，使用 B 片段数组与 SSR 最小壳演练：11 语言覆盖及全部 grammar 正则检查必须通过，最大最小壳的 HTML+CSS+全部基础 JS gzip -9 总量≤100 KB；500 页冷全量渲染与样式生成≤20 s；缓存命中后的配置变化全站重渲染和内存代提交必须<1 s，并报告留给 watch/SSE/浏览器的余量。这些仅为必要的风险门，不能当正式 AC 通过；任一不满足即 no-go，先修复瓶颈/替换局部依赖，重测后才退出 M2。
@@ -469,7 +469,7 @@ F17 是P1最先交付能力，M1退出前不开始站点实现。依赖落在必
 
 | # | 里程碑 | 前置依赖 | 内容与并行边界 | 验证/退出条件 |
 | --- | --- | --- | --- | --- |
-| M1 | 默认纯DOM SDK可用，GPU兼容收口 | 固定 b0a6bc5 的 7 示例/theme-export 基线与启动/清理合同 | 主实施者负责 Cargo/SDK 公共出口/loader；DOM host、隔离及仓外 git fixture 在契约稳定后推进；7 示例与 theme-export 两包显式 gpu/独立锁更新，所有浏览器串行 | V-1 的 DOM/GPU 切片、V-2 仓内/仓外汇合门、V-3 全范围（含 theme-export 宿主/build/两 project）、V-15 适用矩阵；F17 全部 AC 成立，文档明确 gpu；回写「实施进度」 |
+| M1 | 默认纯DOM SDK可用，GPU兼容收口 | 固定 91e81b8 的 7 示例/theme-export 基线（§9.2）与启动/清理合同 | 主实施者负责 Cargo/SDK 公共出口/loader；DOM host、隔离及仓外 git fixture 在契约稳定后推进；7 示例与 theme-export 两包显式 gpu/独立锁更新，所有浏览器串行 | V-1 的 DOM/GPU 切片、V-2 仓内/仓外汇合门、V-3 全范围（含 theme-export 宿主/build/两 project）、V-15 适用矩阵；F17 全部 AC 成立，文档明确 gpu；回写「实施进度」 |
 | M2 | 宿主SSG与原生工具链最小纵切片 | M1退出，V-1无依赖污染；§3/§4模式及 CLI 构建契约固定 | SSR最小页→显式候选→native CSS/minify/前缀高亮；实现片段缓存/有界并行，T-8 交付 B 生成器与 harness；锁依赖/许可、校验安装 profile/来源，同步 CI 分模式入口，冻结测量环境；不扩其余控件SSR | V-1 补 CLI 图、V-4 SSR/CSS/11语言切片、V-14 §9.3 的 go/no-go 门、V-15 组合矩阵与受影响 V-3；失败修复/重测后才退出，不放宽合同；回写「实施进度」 |
 | M3 | 可校验的Markdown内容图 | M2解析/渲染公开合同及V-4切片 | parser/links/anchors与代码片段可分任务，共享Page/Diagnostic单人；统一 writer/lang/标题属性与 raw HTML/CSP 资源规则集中集成 | V-4 内容全组（computed display 留 M5，GitHub 可达预览留 M9）；恰 3 错、span 与片段同源；回写「实施进度」 |
 | M4 | 内容模板与可部署静态产物 | M3内容图V-4；M2渲染与风险门 | CLI new/build/check/preview、production manifest、私有输出事务/ignore；模板/meta 可并行，manifest/URL/锁主实施者单写；交付显式 preview --host | V-5/V-6 的 new/build 侧、V-7 HTTP/preview/base 切片、V-10 事务/模式/并发基本门、V-14 完整 B 构建/字节早期数据、V-15；不含尚未实现的 dev 侧；回写「实施进度」 |
@@ -502,7 +502,7 @@ F17 是P1最先交付能力，M1退出前不开始站点实现。依赖落在必
 | --- | --- | --- | --- | --- |
 | SSR/原生依赖与 git 安装 profile 尚无实测 | 未来实现风险，默认主题必须真 HTML且无内联样式 | M2 实施者排练 file:// 安装根 profile/patch/lock、无额外系统依赖/serde 锁兼容、11 语言全部 grammar、SSR/CSS/体积；临时验证提交不冒称交付 | M2 出口/下游依赖前 | 当前否；实测失败阻塞出口 |
 | 性能当前无 Docs 基线 | 不能宣称满足预算或虚报 PoC | 用户已于 2026-10-10 确认合同；T-8/M2 风险门→M4 构建→M5 加载→M6 保存→M8 正式收口，超限在当阶段优化/复测 | M2/M4/M5/M6 各出口及 M8 | 当前否；未达标阻塞相应出口 |
-| 固定 Chrome 来源/冻结副本待确认 | 系统稳定版自动更新会破坏性能口径 | M2 实施者与用户确认已有可固定可执行文件及参数，缺时请求来源/下载授权；不自行安装浏览器 | M2 冻结测量前 | 不阻塞 M1；缺环境阻塞 M2 风险门 |
+| 固定 Chrome 来源/冻结副本 | 系统稳定版自动更新会破坏性能口径 | 已解除：用户 2026-10-10 确认 Playwright Chromium 153.0.8010.12 与 Lighthouse 模拟 Slow 4G 参数（§9.3）；不自行安装浏览器 | M2 冻结测量前 | 否 |
 | Firefox/WebKit、真实 Firefox/Safari、手机和走查人未确认 | 引擎回归与真实矩阵需要各自证据，手机不能访问 loopback | M5 负责人确认现有可执行文件/下载授权、真实设备/走查人，登记 preview --host 的可达 URL；HTTP 复制拒绝/手选及安全入口成功路径分别验 | M5 出口确认/早期冒烟，M8 完整矩阵 | 不阻塞 M1；缺环境阻塞 M5/M8 相应出口 |
 | GUI 与全 GPU 回归成本/既有失败 | 不完整基线会掩盖 SDK 横切回归 | M1 在固定 worktree 建全范围清单，全部适用原回归须通过；既有失败定位并阻塞出口，未经用户裁定不豁免。后续按 §9.2 触发；不增加 headed GPU 性能承诺 | M1 出口及横切改动提交前 | 验证门，未过不得开始站点实现 |
 | 远端候选推送授权/方式未提供 | 本地安装不能证明 GitHub SHA 可安装 | M9 先对具体已提交候选完成 file:// 安装/配方，给出可审阅候选与结果后取得用户推送指示，再对同 SHA GitHub URL 验证；拒绝/缺授权保持 M9 阻塞 | M9 远端阶段前 | 不阻塞前序实施；未授权阻塞 M9 完成 |
@@ -511,7 +511,7 @@ F17 是P1最先交付能力，M1退出前不开始站点实现。依赖落在必
 | 既有未提交PRD/台账、其他活动计划共享SDK | 证据未随Git共享；共享改动不能混入本期提交 | 主实施者开工核对dirty文件与他人任务；只提交本期改动，记录起始SHA和实际diff | 每次写入/提交前 | 无已证实冲突；冲突时停相应写入 |
 
 - 最终状态：**Ready**。D9–D11 已由用户于 2026-10-10 确认并写入决策表、ADR 与相关契约；C-5 的名称、完整矩阵与阈值及 C-6 的平台范围已确认，不自动放宽。剩余各项都是带负责人与最晚确认点的环境、授权或验证门，只阻塞对应里程碑出口，不影响开工。
-- 文档修订不计实施。原独立评审结论保留，处置另记；实施仍 0/9。环境/实测与 M9 推送是已登记的后续门，既不把未来实现当通过，也不据此额外阻塞 M1 基线采集。
+- 文档修订不计实施。原独立评审结论保留，处置另记；实施进度以「实施进度」为准。环境/实测与 M9 推送是已登记的后续门，既不把未来实现当通过，也不据此额外阻塞 M1 基线采集。
 
 ## 12. 已知坑与历史教训
 

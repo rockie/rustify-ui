@@ -203,7 +203,7 @@ mod dom {
         }
 
         fn hide_after(self, seq: u64, wait: f64) {
-            rustify_makepad::defer_after(wait.ceil() as i32, move || {
+            crate::runtime::defer_after(wait.ceil() as i32, move || {
                 let expiry = self.toasts.try_maybe_update(|toasts| {
                     let expiry = toasts.expire(seq, now());
                     (expiry == Expiry::Hidden, expiry)

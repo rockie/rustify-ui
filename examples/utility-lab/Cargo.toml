@@ -6,8 +6,8 @@ license.workspace = true
 publish.workspace = true
 
 [dependencies]
-leptos.workspace = true
-rustify-ui = { path = "../../crates/rustify-ui", features = ["utility"] }
+leptos = { workspace = true, features = ["csr"] }
+rustify-ui = { path = "../../crates/rustify-ui", features = ["gpu", "utility"] }
 rustify-style = { path = "../../crates/rustify-style", default-features = false, features = ["protocol"] }
 serde_json = "1"
 

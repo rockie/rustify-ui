@@ -1,6 +1,7 @@
 //! Scope-owned runtime utility compilation with an independent Worker.
 
 mod cn;
+#[cfg(feature = "gpu")]
 pub mod gpu;
 mod state;
 pub use cn::CnContext;

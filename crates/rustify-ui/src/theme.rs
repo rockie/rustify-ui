@@ -15,7 +15,7 @@ mod document;
 mod fonts;
 mod metrics;
 mod resolve;
-#[cfg(target_arch = "wasm32")]
+#[cfg(all(target_arch = "wasm32", feature = "gpu"))]
 pub use fonts::gpu_font_family;
 pub use fonts::{
     dom_font_stack, font_context, FontSlot, ThemeFont, FONT_FACES, FONT_FALLBACKS,

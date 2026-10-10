@@ -100,6 +100,11 @@ pub use select::{Select, SelectOption};
 #[cfg(target_arch = "wasm32")]
 pub use tooltip::Tooltip;
 
+/// The stylesheet every class these components use compiles to: the
+/// committed `css/rustify.css`. Readable on any target, so a build step can
+/// write the copy that matches the components it was compiled with.
+pub const CSS: &str = include_str!("../css/rustify.css");
+
 /// Re-exported for the macros: a caller writes `clx!` or `variants!` without
 /// having to take a dependency on the crates their expansion happens to use.
 pub use paste;

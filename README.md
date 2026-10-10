@@ -1,6 +1,6 @@
 # Rustify UI
 
-Rustify UI is an experimental Rust SDK for combining Leptos CSR components and Makepad WebGL2 rendering in a browser application. Leptos owns the DOM, layout and reactive application state; each `GpuRegion` renders into a canvas positioned by the DOM. Applications send props into regions and receive typed actions back.
+Rustify UI is an experimental Rust SDK for Leptos CSR applications in the browser, with Makepad WebGL2 rendering as an opt-in. Leptos owns the DOM, layout and reactive application state. The default build is DOM only and links no Makepad; with the SDK's `gpu` feature, each `GpuRegion` renders into a canvas positioned by the DOM, and applications send props into regions and receive typed actions back.
 
 Each task implements only the rendering path it needs. Work on both paths requires an explicit requirement or a concrete need for cooperation across DOM and GPU regions. Shared state and theme tokens do not require matching component sets or CSS support. A specific application use case has not yet been selected.
 
@@ -81,6 +81,9 @@ Use `mbx` for compilation, tests and Clippy, including builds in the Makepad for
 ```sh
 cargo fmt --all -- --check
 mbx test --workspace --lib --bins
+mbx test --locked -p rustify-ui --lib            # and -p rustify-components; each also
+mbx test --locked -p rustify-ui --features gpu --lib   # with GPU regions,
+mbx test --locked -p rustify-ui --no-default-features --features ssr --lib   # and for SSR
 mbx test --locked --manifest-path tests/theme-export/Cargo.toml --workspace --bins
 sh tests/theme-text/run.sh --lib
 mbx clippy --workspace --all-targets -- -D warnings
@@ -131,6 +134,13 @@ mbx xtask build-web --example property-workbench --release
 npx playwright test --project=property-workbench m3-workbench.spec.ts
 ```
 
+The DOM-only consumer has a configuration of its own, with its server on port 4190:
+
+```sh
+mbx xtask docs-verify --group features   # builds it, and checks its graph and product carry no Makepad
+npx playwright test -c playwright.docs.config.ts --project=dom-only
+```
+
 Vellum has its own configuration:
 
 ```sh
@@ -164,7 +174,9 @@ The default `regression` tier checks behaviour. `RUSTIFY_TIER=evidence` runs tag
 
 ## Runtime and deployment boundaries
 
-One application instance contains both Leptos and Makepad in one wasm instance. A page can start multiple independent instances with separate memory and host hooks. A trap ends every scope and region in the affected instance. Restarts are capped at three per slot because dead-instance memory remains until the page unloads.
+A DOM application depends on `rustify-ui` and `rustify-components` with their default features and is built with plain Cargo and the wasm-bindgen CLI; the [quick start](docs/quickstart.md#a-dom-application-without-gpu-regions) has the recipe, and it needs none of this repository's tooling. GPU regions are the `gpu` feature, which every example here turns on.
+
+One application instance contains Leptos and, with `gpu`, Makepad in one wasm instance. A page can start multiple independent instances with separate memory and host hooks. A trap ends every scope and region in the affected instance. Restarts are capped at three per slot because dead-instance memory remains until the page unloads.
 
 Build output supports plain static hosting without cross-origin isolation. The preview server applies a strict Content Security Policy that allows WebAssembly through `'wasm-unsafe-eval'`, without JavaScript `'unsafe-eval'`. For sub-path hosting, build and serve with the same `--base`; use `--spa` when the application needs deep-link fallback. See the [deployment contract](docs/compatibility.md#deployment-contract).
 
@@ -174,13 +186,14 @@ This preview uses single-threaded wasm and WebGL2. It provides no WebGPU backend
 
 | Path | Contents |
 | --- | --- |
-| [crates/rustify-ui](crates/rustify-ui/) | Public SDK: mounting, GPU regions, themes, routing, overlays, text, files, tasks and selection |
+| [crates/rustify-ui](crates/rustify-ui/) | Public SDK: mounting, the runtime host and DOM loader, themes, routing, overlays, text, files, tasks, selection, and GPU regions with the `gpu` feature |
 | [crates/rustify-components](crates/rustify-components/) | DOM components, forms, workspace controls and Tailwind styles |
 | [crates/rustify-makepad](crates/rustify-makepad/) | Private Makepad integration and browser host |
 | [makepad](makepad/) | Checked-in Makepad fork and wasm build tooling |
-| [web](web/) | Instance loader and runtime styles |
+| [web](web/) | Instance loader and runtime styles of a GPU build (a DOM build's are in `crates/rustify-ui/web/`) |
 | [xtask](xtask/) | Build, preview, diagnostics, stylesheet generation and verification commands |
 | [tests/browser](tests/browser/) and [tests/vellum](tests/vellum/) | Browser regression and evidence checks |
+| [tests/dom-only](tests/dom-only/) | An outside consumer's DOM application and the GPU feature probes ([playwright.docs.config.ts](playwright.docs.config.ts)) |
 | [docs/plan](docs/plan/), [docs/validation](docs/validation/) and [docs/reports](docs/reports/) | Development plans, validation records and release reports |
 
 Read the [architecture](docs/architecture.md) for runtime ownership and lifecycle contracts, and the [component reference](docs/components.md) for supported controls. Application guides cover [navigation](docs/navigation.md), [workspace layout](docs/workspace.md), [forms](docs/forms.md), [localisation](docs/i18n.md), [large data](docs/data.md) and [full theme integration](docs/themes.md).

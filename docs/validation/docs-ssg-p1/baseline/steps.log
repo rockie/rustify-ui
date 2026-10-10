@@ -1,0 +1,65 @@
+=== 2026-10-10 15:06:48 +0800 start host-theme-export
+=== 2026-10-10 15:07:03 +0800 end host-theme-export status=0
+=== 2026-10-10 15:07:03 +0800 start build-fusion-basic
+=== 2026-10-10 15:07:53 +0800 end build-fusion-basic status=0
+=== 2026-10-10 15:07:53 +0800 start build-property-workbench
+=== 2026-10-10 15:08:32 +0800 end build-property-workbench status=0
+=== 2026-10-10 15:08:32 +0800 start build-component-catalog
+=== 2026-10-10 15:09:11 +0800 end build-component-catalog status=0
+=== 2026-10-10 15:09:11 +0800 start build-data-workbench
+=== 2026-10-10 15:09:41 +0800 end build-data-workbench status=0
+=== 2026-10-10 15:09:41 +0800 start build-vellum
+=== 2026-10-10 15:10:25 +0800 end build-vellum status=0
+=== 2026-10-10 15:10:25 +0800 start build-theme-studio
+=== 2026-10-10 15:11:39 +0800 end build-theme-studio status=0
+=== 2026-10-10 15:11:39 +0800 start build-utility-lab
+=== 2026-10-10 15:12:20 +0800 end build-utility-lab status=0
+=== 2026-10-10 15:12:20 +0800 start build-fusion-basic-demo
+=== 2026-10-10 15:12:24 +0800 end build-fusion-basic-demo status=0
+=== 2026-10-10 15:12:24 +0800 start build-property-workbench-demo
+=== 2026-10-10 15:12:28 +0800 end build-property-workbench-demo status=0
+=== 2026-10-10 15:12:28 +0800 start build-theme-studio-demo
+=== 2026-10-10 15:12:34 +0800 end build-theme-studio-demo status=0
+=== 2026-10-10 15:12:34 +0800 start build-utility-lab-deep
+=== 2026-10-10 15:12:38 +0800 end build-utility-lab-deep status=0
+=== 2026-10-10 15:12:38 +0800 start fetch-theme-export
+=== 2026-10-10 15:12:38 +0800 end fetch-theme-export status=0
+=== 2026-10-10 15:12:38 +0800 start build-theme-export-root
+=== 2026-10-10 15:13:14 +0800 end build-theme-export-root status=0
+=== 2026-10-10 15:13:14 +0800 start build-theme-export-sub
+=== 2026-10-10 15:13:31 +0800 end build-theme-export-sub status=0
+=== 2026-10-10 15:13:31 +0800 start pw component-catalog
+=== 2026-10-10 15:16:25 +0800 end pw component-catalog status=0
+=== 2026-10-10 15:16:25 +0800 start pw data-workbench
+=== 2026-10-10 15:19:04 +0800 end pw data-workbench status=0
+=== 2026-10-10 15:19:04 +0800 start pw deployment
+=== 2026-10-10 15:21:15 +0800 end pw deployment status=0
+=== 2026-10-10 15:21:15 +0800 start pw workbench-deep
+=== 2026-10-10 15:22:34 +0800 end pw workbench-deep status=0
+=== 2026-10-10 15:22:34 +0800 start pw theme-studio
+=== 2026-10-10 15:27:10 +0800 end pw theme-studio status=0
+=== 2026-10-10 15:27:10 +0800 start pw theme-studio-deep
+=== 2026-10-10 15:27:28 +0800 end pw theme-studio-deep status=0
+=== 2026-10-10 15:27:28 +0800 start pw theme-export
+=== 2026-10-10 15:27:32 +0800 end pw theme-export status=0
+=== 2026-10-10 15:27:32 +0800 start pw theme-export-deep
+=== 2026-10-10 15:27:36 +0800 end pw theme-export-deep status=0
+=== 2026-10-10 15:27:36 +0800 start pw utility-lab
+=== 2026-10-10 15:28:37 +0800 end pw utility-lab status=0
+=== 2026-10-10 15:28:37 +0800 start pw utility-lab-deep
+=== 2026-10-10 15:29:30 +0800 end pw utility-lab-deep status=0
+=== 2026-10-10 15:29:30 +0800 start build-utility-lab-scanner
+=== 2026-10-10 15:29:58 +0800 end build-utility-lab-scanner status=0
+=== 2026-10-10 15:29:58 +0800 start build-utility-lab-scanner-deep
+=== 2026-10-10 15:30:02 +0800 end build-utility-lab-scanner-deep status=0
+=== 2026-10-10 15:30:02 +0800 start pw utility-lab-scanner
+=== 2026-10-10 15:30:17 +0800 end pw utility-lab-scanner status=0
+=== 2026-10-10 15:30:17 +0800 start pw utility-lab-scanner-deep
+=== 2026-10-10 15:30:27 +0800 end pw utility-lab-scanner-deep status=0
+=== 2026-10-10 15:30:27 +0800 start pw vellum
+=== 2026-10-10 15:33:06 +0800 end pw vellum status=1
+=== 2026-10-10 15:33:06 +0800 start pw property-workbench
+=== 2026-10-10 15:42:24 +0800 end pw property-workbench status=0
+=== 2026-10-10 15:42:24 +0800 start pw fusion-basic
+=== 2026-10-10 15:53:40 +0800 end pw fusion-basic status=0
+=== 2026-10-10 15:53:40 +0800 baseline done

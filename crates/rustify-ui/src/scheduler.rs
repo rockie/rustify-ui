@@ -7,7 +7,24 @@
 
 use std::collections::VecDeque;
 
+#[cfg(feature = "gpu")]
 pub use rustify_makepad::Pace;
+
+/// How the scope admits one action.
+///
+/// The same type as the Makepad integration's when GPU regions are on, so a
+/// region app's actions need no conversion; this definition, with the same
+/// two cases and the same meaning, when they are off.
+#[cfg(not(feature = "gpu"))]
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum Pace {
+    /// Queued in order and never merged.
+    Discrete,
+    /// Only the most recent one is worth delivering - of *this* stream. The
+    /// name is what makes that true: streams supersede themselves and
+    /// nothing else.
+    Continuous(&'static str),
+}
 
 /// Arrival order of an accepted action within a scope. Monotonic, and only
 /// spent on actions that were actually accepted.

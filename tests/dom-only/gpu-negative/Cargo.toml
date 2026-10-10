@@ -1,0 +1,12 @@
+[package]
+name = "gpu-negative"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+# Not a member of the fixture workspace: it is meant not to compile.
+[workspace]
+
+# The defaults, which do not include GPU regions.
+[dependencies]
+rustify-ui = { path = "../../../crates/rustify-ui" }

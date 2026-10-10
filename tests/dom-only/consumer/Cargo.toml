@@ -1,0 +1,24 @@
+[package]
+name = "dom-consumer"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+# The application is the wasm library; `export-dom-assets` is a host program
+# that writes the loader and the stylesheets the same SDK release ships.
+[lib]
+crate-type = ["cdylib"]
+
+[[bin]]
+name = "export-dom-assets"
+path = "src/bin/export-dom-assets.rs"
+
+[dependencies]
+rustify-ui = { path = "../../../crates/rustify-ui" }
+rustify-components = { path = "../../../crates/rustify-components" }
+leptos = { version = "=0.8.22", features = ["csr"] }
+
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+wasm-bindgen = "=0.2.128"
+js-sys = "=0.3.105"
+web-sys = { version = "=0.3.105", features = ["Document", "Element", "HtmlElement", "Window"] }

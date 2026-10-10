@@ -23,6 +23,10 @@ pub enum UiError {
     /// one of those, and a second owner would be two answers to where the user
     /// is.
     UrlOwnerConflict,
+    /// Nothing started this instance's runtime, so a scope would have no host
+    /// to end its listeners and tasks if the instance failed. Boot it through
+    /// the loader, then mount.
+    RuntimeNotStarted,
 }
 
 impl fmt::Display for UiError {
@@ -35,6 +39,7 @@ impl fmt::Display for UiError {
             Self::Disposed => f.write_str("that object has been deleted"),
             Self::Timeout => f.write_str("no answer before the deadline"),
             Self::UrlOwnerConflict => f.write_str("another scope owns this page's URL"),
+            Self::RuntimeNotStarted => f.write_str("the runtime has not been started"),
         }
     }
 }
@@ -99,6 +104,8 @@ pub enum ErrorKind {
     /// newer one was started, or the data changed under it. Informational -
     /// the view it would have replaced is untouched, which is the point.
     JobCancelled,
+    /// A scope was mounted before the runtime had a host. Nothing was mounted.
+    RuntimeNotStarted,
 }
 
 /// Whether an entry is something that went wrong or something that happened.
@@ -122,7 +129,7 @@ impl Severity {
 }
 
 impl ErrorKind {
-    pub const ALL: [ErrorKind; 17] = [
+    pub const ALL: [ErrorKind; 18] = [
         Self::InvalidContainer,
         Self::OccupiedContainer,
         Self::UnsupportedCapability,
@@ -140,6 +147,7 @@ impl ErrorKind {
         Self::NavigationBlocked,
         Self::NavigationBusy,
         Self::JobCancelled,
+        Self::RuntimeNotStarted,
     ];
 
     /// The name the diagnostics ring and the host notice both print.
@@ -162,6 +170,7 @@ impl ErrorKind {
             Self::NavigationBlocked => "NavigationBlocked",
             Self::NavigationBusy => "NavigationBusy",
             Self::JobCancelled => "JobCancelled",
+            Self::RuntimeNotStarted => "RuntimeNotStarted",
         }
     }
 
@@ -204,6 +213,7 @@ impl ErrorKind {
             Self::NavigationBlocked => "nothing: a guard refused, and the application was told",
             Self::NavigationBusy => "ask again once the router has finished putting the user back",
             Self::JobCancelled => "nothing: the view it would have replaced is the one still shown",
+            Self::RuntimeNotStarted => "start the instance with the loader's boot(), then mount",
         }
     }
 }
@@ -227,6 +237,7 @@ impl UiError {
             Self::GpuUnavailable => Some(ErrorKind::GpuInitFailed),
             Self::Disposed => Some(ErrorKind::Disposed),
             Self::UrlOwnerConflict => Some(ErrorKind::UrlOwnerConflict),
+            Self::RuntimeNotStarted => Some(ErrorKind::RuntimeNotStarted),
             Self::NotFound | Self::Timeout => None,
         }
     }
@@ -573,7 +584,7 @@ pub fn runtime_id() -> u32 {
 /// Without this the failure is a log line inside the fork and nothing else:
 /// the region carries on drawing what it can, which is the right behaviour,
 /// but nobody is told that a file they deployed did not arrive.
-#[cfg(target_arch = "wasm32")]
+#[cfg(all(target_arch = "wasm32", feature = "gpu"))]
 pub fn watch_assets() {
     use rustify_makepad::makepad_widgets::makepad_platform::script::res::on_resource_failure;
     on_resource_failure(std::rc::Rc::new(|path: &str, error: &str| {
@@ -590,7 +601,9 @@ pub fn watch_assets() {
     }));
 }
 
-#[cfg(not(target_arch = "wasm32"))]
+/// Nothing to watch without GPU regions: a DOM asset that fails is the
+/// browser's to report.
+#[cfg(not(all(target_arch = "wasm32", feature = "gpu")))]
 pub fn watch_assets() {}
 
 /// Records one entry in this runtime's bounded record.
@@ -717,7 +730,7 @@ mod tests {
 
     #[test]
     fn the_registered_kinds_are_all_there() {
-        assert_eq!(ErrorKind::ALL.len(), 17);
+        assert_eq!(ErrorKind::ALL.len(), 18);
         let names: Vec<&str> = ErrorKind::ALL.iter().map(|kind| kind.name()).collect();
         assert_eq!(
             names,
@@ -739,6 +752,7 @@ mod tests {
                 "NavigationBlocked",
                 "NavigationBusy",
                 "JobCancelled",
+                "RuntimeNotStarted",
             ]
         );
         // No duplicates, and every one of them says what to do next.

@@ -20,6 +20,11 @@ export class InstanceDead extends Error {
     }
 }
 
+/// The protocol of the hooks the SDK's own runtime is handed: the same host
+/// the regions use, so the SDK's listeners, tasks and size observers end with
+/// it. Compared with the SDK's constant before anything is created.
+const RUNTIME_PROTOCOL = 1;
+
 /// How many times one slot may be restarted.
 ///
 /// Every restart evaluates a fresh copy of the generated glue under a new URL,
@@ -142,6 +147,15 @@ async function start(wasm_url, on_fatal, number, restarts) {
         );
     }
 
+    const runtime_protocol =
+        typeof glue.rustify_runtime_protocol === "function" ? glue.rustify_runtime_protocol() : null;
+    if (runtime_protocol !== RUNTIME_PROTOCOL) {
+        throw new StartupError(
+            "BuildContractMismatch",
+            `this loader speaks runtime protocol ${RUNTIME_PROTOCOL} and the wasm ${runtime_protocol}; redeploy matching assets`
+        );
+    }
+
     message_classes ??= create_message_classes(ToWasmMsg, FromWasmMsg);
     const instance = { number, fatal: null, hooks: null, restarts };
     // The runtime owns the page-level resources this instance takes out, and
@@ -188,6 +202,9 @@ async function start(wasm_url, on_fatal, number, restarts) {
     window.addEventListener("unhandledrejection", attribute_rejection, listening);
 
     glue.rustify_makepad_boot(hooks);
+    hooks.protocol = RUNTIME_PROTOCOL;
+    hooks.instance = number;
+    glue.rustify_runtime_boot(hooks);
     // The build the runtime came from, so a diagnostic can be matched to the
     // source it was produced by. The bridge hash is the one identifier the
     // page and the wasm have already agreed on.

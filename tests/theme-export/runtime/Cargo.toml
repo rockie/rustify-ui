@@ -5,6 +5,6 @@ edition = "2021"
 publish = false
 
 [dependencies]
-rustify-ui = { path = "../../../crates/rustify-ui" }
+rustify-ui = { path = "../../../crates/rustify-ui", features = ["gpu"] }
 leptos = { version = "=0.8.22", features = ["csr"] }
 wasm-bindgen = "=0.2.128"

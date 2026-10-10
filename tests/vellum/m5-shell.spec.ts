@@ -322,7 +322,11 @@ async function firstLoadState(page: Page) {
             };
         });
         // In name order: the order they were set in differs between a load and a remount.
-        const attributes = (element: Element | null) => element ? [...element.attributes].map(({ name, value }) => [name, value]).sort() : null;
+        // Which claim holds the scope root is an identity, like an instance
+        // number: the theme provider takes a fresh one on every mount, so a
+        // reset that remounts holds a different one. That the root is
+        // claimed is state; by which claim is not.
+        const attributes = (element: Element | null) => element ? [...element.attributes].map(({ name, value }) => [name, name === "data-rustify-theme-owner" ? "claimed" : value]).sort() : null;
         return {
             snapshot,
             url: location.href,

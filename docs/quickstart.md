@@ -56,6 +56,13 @@ mbx xtask css --check                # the component stylesheet is in step with 
 mbx clippy --workspace --all-targets -- -D warnings
 cargo fmt --all -- --check           # the fork under makepad/ is excluded by its rustfmt.toml
 mbx xtask sources verify             # drift of makepad/ against the import record
+# The SDK and the components in each of their three builds: the default (DOM
+# only), with GPU regions, and on a host for server-side rendering.
+mbx test --locked -p rustify-ui --lib
+mbx test --locked -p rustify-ui --features gpu --lib
+mbx test --locked -p rustify-ui --no-default-features --features ssr --lib
+mbx xtask docs-verify --group features   # the default graph and product carry no Makepad
+npx playwright test -c playwright.docs.config.ts --project=dom-only   # the DOM build's lifecycle
 npx playwright test --project=component-catalog              # one example's regression checks
 RUSTIFY_TIER=evidence npx playwright test --project=budget   # the measurements, on request
 cd makepad && mbx test -p cargo-makepad
@@ -203,7 +210,70 @@ vocabulary is the application's. `format_number` and `format_date` go through
 `Intl` with an options object the application builds, because what a value
 *means* decides how it should be written. See `docs/i18n.md`.
 
+## A DOM application without GPU regions
+
+The SDK's default features are DOM only: `rustify-ui` and `rustify-components`
+without `gpu` link no Makepad, and the GPU API (`GpuRegion`, `RegionApp`,
+`RegionId`, `RegionState`, `makepad_widgets`) does not compile. Everything else -
+`mount`, the overlay stack, toasts, jobs, `listen`, `defer`, `observe_resize`,
+routing, themes and the components - works the same. What such an application
+needs is stable Rust with the `wasm32-unknown-unknown` target, the wasm-bindgen
+CLI at the SDK's pinned version, and nothing from this repository's tooling: no
+mbx, no xtask, no Node, no Makepad.
+
+The application is a `cdylib` whose exports start it, plus a small host program
+that writes the SDK's loader and stylesheets beside the wasm.
+[`tests/dom-only/consumer`](../tests/dom-only/consumer/) is the complete
+fixture; its `Cargo.toml` names the two crates (by path here; a consumer names
+them by git URL and revision) and `src/bin/export-dom-assets.rs` is the host
+program. To build it:
+
+```sh
+cargo install wasm-bindgen-cli --version 0.2.128 --locked
+RUSTFLAGS="${RUSTFLAGS:+$RUSTFLAGS }--cfg=web_sys_unstable_apis" \
+  cargo build --locked --release --target wasm32-unknown-unknown --lib
+wasm-bindgen target/wasm32-unknown-unknown/release/dom_consumer.wasm \
+  --target web --out-name app --out-dir public/pkg
+cargo run --locked --bin export-dom-assets
+```
+
+`public/` is then a static directory: the page's own `index.html` and `app.js`,
+`pkg/` from wasm-bindgen (keep it whole: the SDK's runtime is in `pkg/snippets/`),
+and `rustify-dom-loader.js`, `rustify-runtime.css` and `rustify.css`. The page
+script boots one instance and then calls the application's own start:
+
+```js
+import { boot, show_fatal } from "./rustify-dom-loader.js";
+
+const runtime = await boot({ glue_url: "./pkg/app.js", wasm_url: "./pkg/app_bg.wasm", on_fatal });
+runtime.app.my_app_mount("app");
+```
+
+`glue_url` and `wasm_url` resolve against the loader. `boot` checks that the
+wasm speaks the loader's runtime protocol, creates the instance's host and
+starts it; only then may the application mount, and `mount` called any earlier
+- from a `#[wasm_bindgen(start)]` function, say - is refused with
+`RuntimeNotStarted`. The loader and the wasm come from the same release of the
+SDK because the host program that writes the loader is compiled with it. The
+`web_sys_unstable_apis` flag is what makes `clipboard::available()` true; the
+browser's permission rules still decide each copy and paste.
+
+Inside this repository the same build is `mbx xtask build-dom --manifest-path
+tests/dom-only/consumer/Cargo.toml` (to `target/dom/dom-consumer/`), served with
+`mbx xtask serve --dir target/dom/dom-consumer`, and checked with
+`mbx xtask docs-verify --group features` and
+`npx playwright test -c playwright.docs.config.ts --project=dom-only`.
+
 ## Writing a GPU region
+
+GPU regions are the SDK's `gpu` feature, which the examples turn on:
+
+```toml
+rustify-ui = { path = "../../crates/rustify-ui", features = ["gpu"] }
+```
+
+A GPU application is built with `mbx xtask build-web` and booted by
+`web/loader.js`, which hands one host to both Makepad and the SDK runtime.
 
 A region is a Makepad app that implements `RegionApp`: it declares its widget tree with `script_mod!`, projects host state in through `apply_props`, and pushes typed actions into the outbox while handling events. The host renders it with `GpuRegion`, passing a `Signal` of props and an action callback; every change to the signal is applied at the region's next safe point, and actions arrive after the pump that produced them.
 
@@ -268,7 +338,7 @@ inside an override is handed the patched table, so both halves draw with the
 same numbers. `rustify_components::CATALOG` (printed in `docs/components.md`)
 says which categories exist and what each of them supports.
 
-`rustify_ui::mount(container, config, view)` returns an `AppHandle`; disposing it runs the scope's cleanups (destroying its regions) and unmounts the DOM. The page loads the wasm through `web/loader.js` (`boot(...)`), which validates the bridge fingerprint and hands the host hooks to the runtime before the application's own exported entry points are called. `examples/fusion-basic/app.js` is the reference page script.
+`rustify_ui::mount(container, config, view)` returns an `AppHandle`; disposing it runs the scope's cleanups (destroying its regions) and unmounts the DOM. A GPU build's page loads the wasm through `web/loader.js` (`boot(...)`), which validates the bridge fingerprint and the runtime protocol and hands the host hooks to the runtime before the application's own exported entry points are called; `examples/fusion-basic/app.js` is the reference page script. A DOM build boots through the SDK's own loader instead ([above](#a-dom-application-without-gpu-regions)); `tests/dom-only/consumer/public/app.js` is its reference.
 
 ## More than one application on a page
 

@@ -76,6 +76,19 @@ where
     N: IntoView,
     N::State: 'static,
 {
+    // Before anything else: a scope whose listeners and tasks nothing could
+    // end when the instance fails is worse than no scope.
+    #[cfg(target_arch = "wasm32")]
+    if !crate::runtime::booted() {
+        record(
+            note(
+                ErrorKind::RuntimeNotStarted,
+                "mount was called before the runtime was started",
+            )
+            .in_scope(config.scope.clone()),
+        );
+        return Err(UiError::RuntimeNotStarted);
+    }
     if !container.is_connected() {
         record(
             note(

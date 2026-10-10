@@ -1,0 +1,15 @@
+73:  1) [theme-studio] › tests/browser/theme-acceptance.spec.ts:335:5 › actual Chrome 200% page zoom preserves editing, GPU comparison and export 
+74-
+75-    Error: cdpSession.send: Protocol error (Page.captureScreenshot): Unable to capture screenshot
+76-
+77-      368 |             // Capture the browser view directly: a CSS-sized clip would be
+78-      369 |             // scaled again by browser zoom and crop the compositor surface.
+79-    > 370 |             const { data } = await cdp.send("Page.captureScreenshot", { format: "png", fromSurface: false });
+80-          |                                        ^
+81-      371 |             const path = info.outputPath(`${name}.png`);
+82-      372 |             await writeFile(path, Buffer.from(data, "base64"));
+83-      373 |             await info.attach(name, { path, contentType: "image/png" });
+84-        at captureZoom (/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser/theme-acceptance.spec.ts:370:40)
+85-        at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser/theme-acceptance.spec.ts:376:15
+86-
+87-    Error Context: test-results/theme-acceptance-actual-Ch-0e115-g-GPU-comparison-and-export-theme-studio/error-context.md

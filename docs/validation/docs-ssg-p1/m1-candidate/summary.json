@@ -1,0 +1,599 @@
+[
+ {
+  "project": "component-catalog",
+  "specs": 10,
+  "passed": 75,
+  "unexpected": 0,
+  "skipped": 0,
+  "flaky": 0,
+  "notPassed": [],
+  "perSpec": {
+   "catalog-inputs.spec.ts": {
+    "passed": 24,
+    "unexpected": 0,
+    "skipped": 0,
+    "flaky": 0
+   },
+   "p2-a11y.spec.ts": {
+    "passed": 4,
+    "unexpected": 0,
+    "skipped": 0,
+    "flaky": 0
+   },
+   "p2-catalog.spec.ts": {
+    "passed": 17,
+    "unexpected": 0,
+    "skipped": 0,
+    "flaky": 0
+   },
+   "p2-i18n.spec.ts": {
+    "passed": 9,
+    "unexpected": 0,
+    "skipped": 0,
+    "flaky": 0
+   },
+   "p2-reflow.spec.ts": {
+    "passed": 2,
+    "unexpected": 0,
+    "skipped": 0,
+    "flaky": 0
+   },
+   "p2-semantics.spec.ts": {
+    "passed": 9,
+    "unexpected": 0,
+    "skipped": 0,
+    "flaky": 0
+   },
+   "p2-theme.spec.ts": {
+    "passed": 6,
+    "unexpected": 0,
+    "skipped": 0,
+    "flaky": 0
+   },
+   "p3-policy.spec.ts": {
+    "passed": 1,
+    "unexpected": 0,
+    "skipped": 0,
+    "flaky": 0
+   },
+   "p3-restart.spec.ts": {
+    "passed": 2,
+    "unexpected": 0,
+    "skipped": 0,
+    "flaky": 0
+   },
+   "theme-compat.spec.ts": {
+    "passed": 1,
+    "unexpected": 0,
+    "skipped": 0,
+    "flaky": 0
+   }
+  }
+ },
+ {
+  "project": "data-workbench",
+  "specs": 4,
+  "passed": 51,
+  "unexpected": 0,
+  "skipped": 0,
+  "flaky": 0,
+  "notPassed": [],
+  "perSpec": {
+   "p3-jobs.spec.ts": {
+    "passed": 18,
+    "unexpected": 0,
+    "skipped": 0,
+    "flaky": 0
+   },
+   "p3-restart.spec.ts": {
+    "passed": 2,
+    "unexpected": 0,
+    "skipped": 0,
+    "flaky": 0
+   },
+   "p3-scene.spec.ts": {
+    "passed": 11,
+    "unexpected": 0,
+    "skipped": 0,
+    "flaky": 0
+   },
+   "p3-table.spec.ts": {
+    "passed": 20,
+    "unexpected": 0,
+    "skipped": 0,
+    "flaky": 0
+   }
+  }
+ },
+ {
+  "project": "deployment",
+  "specs": 1,
+  "passed": 6,
+  "unexpected": 0,
+  "skipped": 0,
+  "flaky": 0,
+  "notPassed": [],
+  "perSpec": {
+   "m7-deployment.spec.ts": {
+    "passed": 6,
+    "unexpected": 0,
+    "skipped": 0,
+    "flaky": 0
+   }
+  }
+ },
+ {
+  "project": "fusion-basic",
+  "specs": 10,
+  "passed": 64,
+  "unexpected": 0,
+  "skipped": 0,
+  "flaky": 0,
+  "notPassed": [],
+  "perSpec": {
+   "m1-probes.spec.ts": {
+    "passed": 8,
+    "unexpected": 0,
+    "skipped": 0,
+    "flaky": 0
+   },
+   "m2-runtime.spec.ts": {
+    "passed": 11,
+    "unexpected": 0,
+    "skipped": 0,
+    "flaky": 0
+   },
+   "m3-state.spec.ts": {
+    "passed": 3,
+    "unexpected": 0,
+    "skipped": 0,
+    "flaky": 0
+   },
+   "m4-geometry.spec.ts": {
+    "passed": 5,
+    "unexpected": 0,
+    "skipped": 0,
+    "flaky": 0
+   },
+   "m4-overlay.spec.ts": {
+    "passed": 9,
+    "unexpected": 0,
+    "skipped": 0,
+    "flaky": 0
+   },
+   "m6-mainpath.spec.ts": {
+    "passed": 3,
+    "unexpected": 0,
+    "skipped": 0,
+    "flaky": 0
+   },
+   "p2-navigation.spec.ts": {
+    "passed": 10,
+    "unexpected": 0,
+    "skipped": 0,
+    "flaky": 0
+   },
+   "p3-b0.spec.ts": {
+    "passed": 4,
+    "unexpected": 0,
+    "skipped": 0,
+    "flaky": 0
+   },
+   "p3-instances.spec.ts": {
+    "passed": 9,
+    "unexpected": 0,
+    "skipped": 0,
+    "flaky": 0
+   },
+   "p3-restart.spec.ts": {
+    "passed": 2,
+    "unexpected": 0,
+    "skipped": 0,
+    "flaky": 0
+   }
+  }
+ },
+ {
+  "project": "property-workbench",
+  "specs": 16,
+  "passed": 126,
+  "unexpected": 0,
+  "skipped": 0,
+  "flaky": 0,
+  "notPassed": [],
+  "perSpec": {
+   "m3-workbench.spec.ts": {
+    "passed": 21,
+    "unexpected": 0,
+    "skipped": 0,
+    "flaky": 0
+   },
+   "m5-semantics.spec.ts": {
+    "passed": 5,
+    "unexpected": 0,
+    "skipped": 0,
+    "flaky": 0
+   },
+   "m5-text.spec.ts": {
+    "passed": 8,
+    "unexpected": 0,
+    "skipped": 0,
+    "flaky": 0
+   },
+   "m6-async.spec.ts": {
+    "passed": 4,
+    "unexpected": 0,
+    "skipped": 0,
+    "flaky": 0
+   },
+   "m6-components.spec.ts": {
+    "passed": 15,
+    "unexpected": 0,
+    "skipped": 0,
+    "flaky": 0
+   },
+   "m6-theme.spec.ts": {
+    "passed": 3,
+    "unexpected": 0,
+    "skipped": 0,
+    "flaky": 0
+   },
+   "m7-recovery.spec.ts": {
+    "passed": 8,
+    "unexpected": 0,
+    "skipped": 0,
+    "flaky": 0
+   },
+   "p2-clipboard-files.spec.ts": {
+    "passed": 12,
+    "unexpected": 0,
+    "skipped": 0,
+    "flaky": 0
+   },
+   "p2-deeplink.spec.ts": {
+    "passed": 6,
+    "unexpected": 0,
+    "skipped": 0,
+    "flaky": 0
+   },
+   "p2-drag.spec.ts": {
+    "passed": 14,
+    "unexpected": 0,
+    "skipped": 0,
+    "flaky": 0
+   },
+   "p2-form.spec.ts": {
+    "passed": 9,
+    "unexpected": 0,
+    "skipped": 0,
+    "flaky": 0
+   },
+   "p2-ime.spec.ts": {
+    "passed": 5,
+    "unexpected": 0,
+    "skipped": 0,
+    "flaky": 0
+   },
+   "p2-workspace.spec.ts": {
+    "passed": 11,
+    "unexpected": 0,
+    "skipped": 0,
+    "flaky": 0
+   },
+   "p2-zoom.spec.ts": {
+    "passed": 2,
+    "unexpected": 0,
+    "skipped": 0,
+    "flaky": 0
+   },
+   "p3-policy.spec.ts": {
+    "passed": 1,
+    "unexpected": 0,
+    "skipped": 0,
+    "flaky": 0
+   },
+   "p3-restart.spec.ts": {
+    "passed": 2,
+    "unexpected": 0,
+    "skipped": 0,
+    "flaky": 0
+   }
+  }
+ },
+ {
+  "project": "theme-export-deep",
+  "specs": 1,
+  "passed": 9,
+  "unexpected": 0,
+  "skipped": 0,
+  "flaky": 0,
+  "notPassed": [],
+  "perSpec": {
+   "theme-export-runtime.spec.ts": {
+    "passed": 9,
+    "unexpected": 0,
+    "skipped": 0,
+    "flaky": 0
+   }
+  }
+ },
+ {
+  "project": "theme-export",
+  "specs": 1,
+  "passed": 9,
+  "unexpected": 0,
+  "skipped": 0,
+  "flaky": 0,
+  "notPassed": [],
+  "perSpec": {
+   "theme-export-runtime.spec.ts": {
+    "passed": 9,
+    "unexpected": 0,
+    "skipped": 0,
+    "flaky": 0
+   }
+  }
+ },
+ {
+  "project": "theme-studio-deep",
+  "specs": 1,
+  "passed": 2,
+  "unexpected": 0,
+  "skipped": 0,
+  "flaky": 0,
+  "notPassed": [],
+  "perSpec": {
+   "theme-deployment.spec.ts": {
+    "passed": 2,
+    "unexpected": 0,
+    "skipped": 0,
+    "flaky": 0
+   }
+  }
+ },
+ {
+  "project": "theme-studio",
+  "specs": 11,
+  "passed": 64,
+  "unexpected": 1,
+  "skipped": 0,
+  "flaky": 0,
+  "notPassed": [
+   "unexpected: theme-acceptance.spec.ts › actual Chrome 200% page zoom preserves editing, GPU comparison and export"
+  ],
+  "perSpec": {
+   "theme-acceptance.spec.ts": {
+    "passed": 9,
+    "unexpected": 1,
+    "skipped": 0,
+    "flaky": 0
+   },
+   "theme-deployment.spec.ts": {
+    "passed": 2,
+    "unexpected": 0,
+    "skipped": 0,
+    "flaky": 0
+   },
+   "theme-dom.spec.ts": {
+    "passed": 6,
+    "unexpected": 0,
+    "skipped": 0,
+    "flaky": 0
+   },
+   "theme-editor.spec.ts": {
+    "passed": 13,
+    "unexpected": 0,
+    "skipped": 0,
+    "flaky": 0
+   },
+   "theme-exchange.spec.ts": {
+    "passed": 8,
+    "unexpected": 0,
+    "skipped": 0,
+    "flaky": 0
+   },
+   "theme-gpu.spec.ts": {
+    "passed": 5,
+    "unexpected": 0,
+    "skipped": 0,
+    "flaky": 0
+   },
+   "theme-review.spec.ts": {
+    "passed": 3,
+    "unexpected": 0,
+    "skipped": 0,
+    "flaky": 0
+   },
+   "theme-scenes.spec.ts": {
+    "passed": 9,
+    "unexpected": 0,
+    "skipped": 0,
+    "flaky": 0
+   },
+   "theme-scroll.spec.ts": {
+    "passed": 2,
+    "unexpected": 0,
+    "skipped": 0,
+    "flaky": 0
+   },
+   "theme-startup.spec.ts": {
+    "passed": 1,
+    "unexpected": 0,
+    "skipped": 0,
+    "flaky": 0
+   },
+   "theme-storage.spec.ts": {
+    "passed": 6,
+    "unexpected": 0,
+    "skipped": 0,
+    "flaky": 0
+   }
+  }
+ },
+ {
+  "project": "utility-lab-deep",
+  "specs": 2,
+  "passed": 52,
+  "unexpected": 0,
+  "skipped": 0,
+  "flaky": 0,
+  "notPassed": [],
+  "perSpec": {
+   "utility-gpu.spec.ts": {
+    "passed": 25,
+    "unexpected": 0,
+    "skipped": 0,
+    "flaky": 0
+   },
+   "utility-runtime.spec.ts": {
+    "passed": 27,
+    "unexpected": 0,
+    "skipped": 0,
+    "flaky": 0
+   }
+  }
+ },
+ {
+  "project": "utility-lab-scanner-deep",
+  "specs": 1,
+  "passed": 5,
+  "unexpected": 0,
+  "skipped": 0,
+  "flaky": 0,
+  "notPassed": [],
+  "perSpec": {
+   "utility-scanner.spec.ts": {
+    "passed": 5,
+    "unexpected": 0,
+    "skipped": 0,
+    "flaky": 0
+   }
+  }
+ },
+ {
+  "project": "utility-lab-scanner",
+  "specs": 1,
+  "passed": 5,
+  "unexpected": 0,
+  "skipped": 0,
+  "flaky": 0,
+  "notPassed": [],
+  "perSpec": {
+   "utility-scanner.spec.ts": {
+    "passed": 5,
+    "unexpected": 0,
+    "skipped": 0,
+    "flaky": 0
+   }
+  }
+ },
+ {
+  "project": "utility-lab",
+  "specs": 3,
+  "passed": 58,
+  "unexpected": 0,
+  "skipped": 0,
+  "flaky": 0,
+  "notPassed": [],
+  "perSpec": {
+   "utility-faults.spec.ts": {
+    "passed": 6,
+    "unexpected": 0,
+    "skipped": 0,
+    "flaky": 0
+   },
+   "utility-gpu.spec.ts": {
+    "passed": 25,
+    "unexpected": 0,
+    "skipped": 0,
+    "flaky": 0
+   },
+   "utility-runtime.spec.ts": {
+    "passed": 27,
+    "unexpected": 0,
+    "skipped": 0,
+    "flaky": 0
+   }
+  }
+ },
+ {
+  "project": "vellum",
+  "specs": 8,
+  "passed": 71,
+  "unexpected": 0,
+  "skipped": 3,
+  "flaky": 0,
+  "notPassed": [
+   "skipped: m3-webgpu.spec.ts › headed Chrome records original WebGPU versus Canvas rendering on identical starter pages",
+   "skipped: m8-ui.spec.ts › headed UI edits and WebGL context recovery preserve document and visible pixels",
+   "skipped: m8-ui.spec.ts › headed Chrome records Rust WebGL2 versus original WebGPU on six matched views"
+  ],
+  "perSpec": {
+   "m2-scene.spec.ts": {
+    "passed": 6,
+    "unexpected": 0,
+    "skipped": 0,
+    "flaky": 0
+   },
+   "m3-raster.spec.ts": {
+    "passed": 7,
+    "unexpected": 0,
+    "skipped": 0,
+    "flaky": 0
+   },
+   "m3-webgpu.spec.ts": {
+    "passed": 0,
+    "unexpected": 0,
+    "skipped": 1,
+    "flaky": 0
+   },
+   "m4-pointer.spec.ts": {
+    "passed": 12,
+    "unexpected": 0,
+    "skipped": 0,
+    "flaky": 0
+   },
+   "m5-shell.spec.ts": {
+    "passed": 11,
+    "unexpected": 0,
+    "skipped": 0,
+    "flaky": 0
+   },
+   "m6-edit.spec.ts": {
+    "passed": 13,
+    "unexpected": 0,
+    "skipped": 0,
+    "flaky": 0
+   },
+   "m7-files.spec.ts": {
+    "passed": 22,
+    "unexpected": 0,
+    "skipped": 0,
+    "flaky": 0
+   },
+   "m8-ui.spec.ts": {
+    "passed": 0,
+    "unexpected": 0,
+    "skipped": 2,
+    "flaky": 0
+   }
+  }
+ },
+ {
+  "project": "workbench-deep",
+  "specs": 1,
+  "passed": 6,
+  "unexpected": 0,
+  "skipped": 0,
+  "flaky": 0,
+  "notPassed": [],
+  "perSpec": {
+   "p2-deeplink.spec.ts": {
+    "passed": 6,
+    "unexpected": 0,
+    "skipped": 0,
+    "flaky": 0
+   }
+  }
+ }
+]

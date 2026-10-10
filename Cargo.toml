@@ -24,7 +24,9 @@ license = "MIT"
 publish = false
 
 [workspace.dependencies]
-leptos = { version = "=0.8.22", features = ["csr"] }
+# No rendering mode here: each package picks csr or ssr for itself, so a
+# server-side consumer is not handed the browser's effects by the workspace.
+leptos = { version = "=0.8.22" }
 wasm-bindgen = "=0.2.128"
 js-sys = "=0.3.105"
 web-sys = "=0.3.105"

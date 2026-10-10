@@ -1,0 +1,9 @@
+[package]
+name = "gpu-opt-in"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+# Asks for GPU regions, so the region API is there.
+[dependencies]
+rustify-ui = { path = "../../../crates/rustify-ui", features = ["gpu"] }

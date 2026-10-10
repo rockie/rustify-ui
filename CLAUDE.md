@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-Rustify UI is an experimental SDK that runs Leptos (CSR, DOM) and Makepad (GPU, WebGL2) in one browser page and one wasm module. Leptos owns the DOM and all application state; each `GpuRegion` owns a Makepad `Cx` that draws into a canvas the DOM laid out. The two never share widgets or state: the application projects state into a region as props and receives typed actions back. `docs/architecture.md` (runtime contracts) and `docs/quickstart.md` are the entry points.
+Rustify UI is an experimental SDK that runs Leptos (CSR, DOM) and, as an opt-in, Makepad (GPU, WebGL2) in one browser page and one wasm module. The SDK's default build is DOM only and links no Makepad; its `gpu` feature (which every example turns on) adds regions. Leptos owns the DOM and all application state; each `GpuRegion` owns a Makepad `Cx` that draws into a canvas the DOM laid out. The two never share widgets or state: the application projects state into a region as props and receives typed actions back. `docs/architecture.md` (runtime contracts) and `docs/quickstart.md` are the entry points.
 
 ## Toolchain
 
@@ -26,6 +26,12 @@ mbx clippy --workspace --all-targets -- -D warnings
 mbx xtask sources verify                       # makepad/ drift against sources.lock.json
 mbx xtask css --check                          # committed stylesheet matches the class strings
 mbx xtask catalog --write docs/components.md --check
+# The SDK's builds one at a time (also -p rustify-components): DOM default, GPU, SSR
+mbx test --locked -p rustify-ui --lib
+mbx test --locked -p rustify-ui --features gpu --lib
+mbx test --locked -p rustify-ui --no-default-features --features ssr --lib
+mbx xtask docs-verify --group features [--external]   # default graph/product carry no Makepad; GPU switch both ways
+mbx xtask build-dom --manifest-path tests/dom-only/consumer/Cargo.toml   # to target/dom/dom-consumer/
 
 # Build and serve an example; output is target/makepad-wasm-app/<profile>/<example>/
 mbx xtask build-web --example fusion-basic --release
@@ -62,7 +68,7 @@ VELLUM_TWIN=baseline VELLUM_BASELINE_DIR=../rustify-ui-vellum-baseline RUSTIFY_T
 
 The workspace excludes `makepad/` (a fork with its own workspace) and `ref/`.
 
-- `crates/rustify-ui` is the public SDK.
+- `crates/rustify-ui` is the public SDK. Features: `csr` (default), `ssr` (host rendering, built on its own) and `gpu` (Makepad regions, off by default). `src/runtime.rs` is the neutral host binding every instance boots (`rustify_runtime_boot`, protocol `runtime::PROTOCOL`); a DOM build's loader, host and stylesheet live in `crates/rustify-ui/web/` (`dom-loader.js` and `dom-runtime.css` as `runtime::DOM_LOADER_JS`/`DOM_RUNTIME_CSS`, `dom-runtime.js` as a wasm-bindgen snippet). `rustify_components::CSS` is the committed stylesheet.
 - `crates/rustify-components` holds the DOM component catalogue of twenty-four categories:
   - The `clx!` / `variants!` class macros, forked from Rust/UI.
   - `CATALOG`, from which `docs/components.md` is generated.
@@ -72,7 +78,8 @@ The workspace excludes `makepad/` (a fork with its own workspace) and `ref/`.
   - The pump entry points exported to JS, deferred props and the action outbox.
   - `web/embedded.js`, the JS host for a region's canvas and GL.
 - `makepad/` is a hard fork of the Makepad wasm closure, trimmed to the browser backend. It is first-class source: edit it directly, and `sources verify` reports the edits as attributable drift. The embedding changes are in `platform/src/os/web/*`, `platform/src/{action,cx}.rs`, `libs/wasm_bridge` and `tools/cargo_makepad`, which is reduced to the single-threaded browser build.
-- `web/loader.js` and `web/runtime.css` are the page boot. `boot()` instantiates one wasm instance, checks the bridge fingerprint, installs host hooks and owns the static failure notice.
+- `web/loader.js` and `web/runtime.css` are a GPU build's page boot. `boot()` instantiates one wasm instance, checks the bridge fingerprint and the runtime protocol, hands one host to both Makepad and the SDK runtime and owns the static failure notice. A DOM build boots through the SDK's own `dom-loader.js` instead.
+- `tests/dom-only/` is its own workspace: an outside consumer's DOM application built with plain Cargo and wasm-bindgen (`consumer/`), and the GPU opt-in and negative compile probes. Its browser checks run under `playwright.docs.config.ts` (`--project=dom-only`, port 4190); `DOM_ONLY_DIR` points them at another build, such as the one `docs-verify --external` makes outside the repository.
 - `examples/*` each have `src/` (the Rust app), `index.html`, and an `app.js` page script. The script calls `boot()` and exposes a `window.__<example>` handle that the Playwright specs drive.
 - `xtask build-web` runs the fork's `cargo-makepad` through `mbx`, pulls the generated message-bridge JS out of the wasm with `wasmi` and ships it as a static ES module, then writes `build-manifest.json`. There is no runtime codegen, which is what keeps the strict CSP.
 - Stylesheets in `build-web`: an example with a `tailwind.css` of its own (component-catalog) has it compiled with the mise-pinned CLI, minified, to `tailwind.css` in the product, which its page links; nothing generated is committed, and the build fails up front when the CLI is missing or the wrong version. An example without one that depends on `rustify-components` gets the committed `rustify.css` copied in, and needs no Tailwind.
@@ -84,7 +91,8 @@ Runtime contracts to know before touching the runtime (the full list is in `docs
   - A trap kills only its own instance. The loader then aborts that instance's page-level listeners, clears its `data-rustify-url-owner` mark, drops its tasks, destroys its regions, and only then shows the notice.
   - A slot restarts at most three times.
   - Within one instance, `mount()` scopes live and die together.
-- **Page-level listeners** go through `rustify_ui::listen` (inside the SDK, `listener_options`), so they carry the instance's abort signal: `panic = "abort"` runs no destructors. What the instance holds that is not a listener goes through `release_on_abort`.
+- **Runtime first.** `mount` refuses with `RuntimeNotStarted` until a loader has started the instance's runtime. Both loaders compare the wasm's runtime protocol with their own, and the boot checks the hooks' again.
+- **Page-level listeners** go through `rustify_ui::listen` (inside the SDK, `runtime::listener_options`), so they carry the instance's abort signal: `panic = "abort"` runs no destructors. What the instance holds that is not a listener goes through `release_on_abort`.
 - **Pump.** JS calls `rustify_region_process(region, msg)`, and the region's `Cx` is taken out of the registry for the whole pump. Deferred `apply` closures run first, so a re-entrant `apply` only queues. Actions reach the application after the pump returns.
 - **Controlled values.** A control never holds the value it shows. Each input is a request, and the control is put back in step with whatever the application decided. The one exception is a `rustify_ui::Draft` field (number, colour): only while it has focus it keeps the typed text, and leaving it returns to the application's value.
 - **Action streams.** `Pace::Continuous("<name>")` states supersede only their own stream. Discrete events are never merged or reordered.

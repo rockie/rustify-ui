@@ -2,6 +2,7 @@ mod bridge;
 mod build;
 mod catalog;
 mod css;
+mod docs;
 mod doctor;
 mod serve;
 mod sources;
@@ -17,8 +18,10 @@ mbx xtask <command> [options]
 
   doctor
   build-web --example <name> [--release] [--base /path/] [--utility-scanner]
+  build-dom --manifest-path <Cargo.toml> [--output <directory>]
   serve       --example <name> [--release] [--base /path/] [--spa] [--port N] [--csp strict|no-wasm|off]
               [--fault missing:<path>|corrupt:<path>|truncated:<path>|stale-bridge]
+  serve       --dir <directory> [--base /path/] [--spa] [--port N] [--csp strict|no-wasm|off]
   css         [--check]
               (RUSTIFY_TAILWIND=<path> runs that tailwindcss instead of the one on PATH)
   catalog     --write <path> [--check]
@@ -30,6 +33,7 @@ mbx xtask <command> [options]
   utility-build --group cn|compiler-api [--output <directory>]
   utility-bench [--out <directory>]
   verify      --suite p1|p2 [--no-browser] [--no-build]
+  docs-verify --group features [--external [--git <url> --rev <sha>]]
 ";
 
 fn main() {
@@ -37,6 +41,8 @@ fn main() {
     let result = match args.first().map(String::as_str) {
         Some("doctor") => doctor::run(),
         Some("build-web") => build_web(&args[1..]).map(|_| ()),
+        Some("build-dom") => docs::build_dom(&args[1..]),
+        Some("docs-verify") => docs::verify(&args[1..]),
         Some("serve") => serve_example(&args[1..]),
         Some("css") => css::run(&args[1..]),
         Some("catalog") => catalog::run(&args[1..]),
@@ -111,6 +117,26 @@ fn report_size(args: &[String]) -> Result<(), String> {
 }
 
 fn serve_example(args: &[String]) -> Result<(), String> {
+    // Any static directory, such as a DOM build: no build manifest to agree
+    // with, and the same policy and server as an example.
+    if let Some(dir) = option(args, "--dir") {
+        let root = std::path::PathBuf::from(dir);
+        if !root.join("index.html").is_file() {
+            return Err(format!("{} has no index.html", root.display()));
+        }
+        let port = match option(args, "--port") {
+            Some(value) => value.parse().map_err(|_| format!("invalid port {value}"))?,
+            None => 0,
+        };
+        return serve::serve(ServeConfig {
+            root,
+            base: serve::normalize_base(option(args, "--base").unwrap_or("/")),
+            port,
+            csp: CspMode::parse(option(args, "--csp").unwrap_or("strict"))?,
+            spa: args.iter().any(|a| a == "--spa"),
+            fault: std::sync::Mutex::new(None),
+        });
+    }
     let request = build_request(args)?;
     let root = build::app_dir(&build::repo_root(), &request);
     if !root.join("index.html").is_file() {

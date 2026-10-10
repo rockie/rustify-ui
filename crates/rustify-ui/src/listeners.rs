@@ -29,17 +29,16 @@ mod dom {
 
     /// How this instance's page-level listeners are registered.
     ///
-    /// Bare options when there is no host yet - a scope mounted before the
-    /// runtime booted has nothing to be aborted by, and is no worse off than it
-    /// was. Callers that also want capture or passive set those on what they
-    /// get back.
+    /// Bare options only when there is no host, which a scope never sees:
+    /// `mount` refuses to start one before the runtime has. Callers that also
+    /// want capture or passive set those on what they get back.
     pub(crate) fn page_level() -> AddEventListenerOptions {
-        rustify_makepad::listener_options().unwrap_or_default()
+        crate::runtime::listener_options().unwrap_or_default()
     }
 
     /// The signal behind [`page_level`].
     fn instance_signal() -> Option<AbortSignal> {
-        rustify_makepad::listener_options()?.get_signal()
+        crate::runtime::listener_options()?.get_signal()
     }
 
     /// Whether this instance has failed.

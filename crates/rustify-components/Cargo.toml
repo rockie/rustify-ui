@@ -7,12 +7,18 @@ publish.workspace = true
 description = "DOM components for the Rustify UI SDK, forked from Rust/UI and rewritten to be controlled, CSP-clean and reachable"
 
 [features]
-default = []
+default = ["csr"]
+csr = ["rustify-ui/csr", "leptos/csr"]
+ssr = ["rustify-ui/ssr", "leptos/ssr"]
+# A convenience for an application that also draws GPU regions; the
+# components themselves draw none.
+gpu = ["rustify-ui/gpu"]
 utility = ["rustify-ui/utility"]
 
 [dependencies]
 leptos.workspace = true
-rustify-ui = { path = "../rustify-ui" }
+# Without its defaults, so that this crate's own csr or ssr is the only one.
+rustify-ui = { path = "../rustify-ui", default-features = false }
 # Class-string merging. Pure Rust, no Leptos feature: the component crate
 # decides what a class list means, not the library that merges it.
 rustify-style = { path = "../rustify-style" }

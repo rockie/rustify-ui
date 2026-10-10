@@ -111,7 +111,7 @@ pub fn dom_font_stack(font: &super::ResolvedFont) -> String {
 }
 
 /// Build the GPU family from the resolved resource, with CJK and emoji fallbacks.
-#[cfg(target_arch = "wasm32")]
+#[cfg(all(target_arch = "wasm32", feature = "gpu"))]
 pub fn gpu_font_family(
     cx: &mut crate::makepad_widgets::Cx,
     font: &super::ResolvedFont,
@@ -133,6 +133,8 @@ mod tests {
     use super::*;
     use crate::theme::{resolve, Theme, ThemeDocument, ThemeMode};
 
+    // The packaged faces are the GPU build's resources; a DOM build ships none.
+    #[cfg(feature = "gpu")]
     #[test]
     fn catalogue_resources_exist_and_cover_all_slots() {
         let root = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))

@@ -32,6 +32,19 @@ jobs:
           mbx test --locked -p rustify-style-wasm --no-default-features --features compiler,scanner --lib
       - name: SDK runtime utilities
         run: mbx test --locked -p rustify-ui -p rustify-components --features rustify-components/utility --lib
+      # Each of the SDK's builds on its own: the default is DOM only, `gpu`
+      # adds Makepad regions, and `ssr` renders on a host. The workspace run
+      # above unifies features, so it proves none of them.
+      - name: SDK and components in their DOM, GPU and SSR builds
+        run: |
+          for package in rustify-ui rustify-components; do
+            mbx test --locked -p "$package" --lib
+            mbx test --locked -p "$package" --features gpu --lib
+            mbx test --locked -p "$package" --no-default-features --features ssr --lib
+            mbx clippy --locked -p "$package" --all-targets -- -D warnings
+            mbx clippy --locked -p "$package" --features gpu --all-targets -- -D warnings
+            mbx clippy --locked -p "$package" --no-default-features --features ssr --all-targets -- -D warnings
+          done
       - name: Independent theme consumer tests
         run: mbx test --locked --manifest-path tests/theme-export/Cargo.toml --workspace --bins
       - name: Makepad text layout and shaping checks
@@ -51,6 +64,34 @@ jobs:
         run: mbx xtask css --check
       - name: Capability document is in step with the catalogue
         run: mbx xtask catalog --write docs/components.md --check
+
+  # A DOM application as an outside consumer builds it: its dependency graph
+  # and product carry no Makepad, the GPU API compiles only with `gpu`, and
+  # its instances keep the runtime's lifecycle contract in a browser.
+  dom-only:
+    name: DOM-only SDK
+    runs-on: macos-14
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Rust, mbx and Tailwind from mise.toml
+        uses: jdx/mise-action@v4
+      - uses: jdx/mr-boxington-action@v1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 26
+      - name: Default graph, product and GPU switch
+        run: mbx xtask docs-verify --group features
+      - name: Install pinned Playwright
+        run: npm ci && npx playwright install --with-deps chromium
+      - name: DOM-only browser checks
+        run: npx playwright test -c playwright.docs.config.ts --project=dom-only
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: dom-only-results
+          path: test-results/docs
+          retention-days: 7
 
   # The regression tier. Each example is built once, and its product is
   # handed to the test jobs as an artifact, so a shard does not spend four

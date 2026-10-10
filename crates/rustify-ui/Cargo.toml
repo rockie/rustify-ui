@@ -4,20 +4,26 @@ version.workspace = true
 edition.workspace = true
 license.workspace = true
 publish.workspace = true
-description = "Experimental SDK fusing Leptos CSR DOM with Makepad GPU regions"
+description = "Experimental SDK for Leptos DOM applications, with Makepad GPU regions as an opt-in"
 
 [features]
-default = []
-utility = ["dep:rustify-style", "dep:futures-channel", "dep:wasm-bindgen"]
+default = ["csr"]
+# Client-side rendering in the browser: the DOM runtime, its host and every
+# browser module.
+csr = ["leptos/csr"]
+# Rendering on a host into HTML. Built on its own, never together with csr.
+ssr = ["leptos/ssr"]
+# Makepad GPU regions. Off by default: a DOM application links no Makepad.
+gpu = ["dep:rustify-makepad", "csr"]
+utility = ["dep:rustify-style", "dep:futures-channel"]
 
 [dependencies]
 serde = { version = "=1.0.229", features = ["derive"] }
 serde_json = { version = "=1.0.151", features = ["raw_value"] }
 leptos.workspace = true
-rustify-makepad = { path = "../rustify-makepad" }
+rustify-makepad = { path = "../rustify-makepad", optional = true }
 rustify-style = { path = "../rustify-style", default-features = false, features = ["cn", "protocol"], optional = true }
 futures-channel = { version = "0.3", optional = true }
-wasm-bindgen = { workspace = true, optional = true }
 # DOM handles have to sit in Leptos context values, which are Send + Sync.
 send_wrapper = "0.6"
 # The router reads and writes `history.state`, which is a JS object; there is no
@@ -70,6 +76,8 @@ web-sys = { workspace = true, features = [
 [target.'cfg(target_arch = "wasm32")'.dependencies]
 # `JsFuture`, to await the two clipboard promises.
 wasm-bindgen-futures = "0.4.78"
+# The runtime host binding and the JS module it ships as a snippet.
+wasm-bindgen.workspace = true
 
 [lints.rust]
 # `web_sys_unstable_apis` is web-sys's own flag rather than one cargo knows

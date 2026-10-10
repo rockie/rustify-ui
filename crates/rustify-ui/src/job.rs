@@ -195,7 +195,7 @@ impl<T> Job<T> {
 pub fn run<T: 'static>(mut job: Job<T>, on_end: impl FnOnce(Ended<T>) + 'static) {
     match job.slice() {
         Some(end) => on_end(end),
-        None => rustify_makepad::defer(move || run(job, on_end)),
+        None => crate::runtime::defer(move || run(job, on_end)),
     }
 }
 

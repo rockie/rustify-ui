@@ -1,5 +1,8 @@
-//! Rustify UI: experimental SDK for composing Leptos CSR DOM with Makepad GPU
-//! regions inside one browser page and one wasm module.
+//! Rustify UI: experimental SDK for Leptos DOM applications in the browser.
+//!
+//! The default build is DOM only and links no Makepad. Makepad GPU regions,
+//! drawn into canvases the DOM laid out inside the same page and wasm module,
+//! are the `gpu` feature.
 
 pub mod binding;
 pub mod clipboard;
@@ -11,15 +14,17 @@ pub mod files;
 pub mod form;
 #[cfg(target_arch = "wasm32")]
 mod frame;
-#[cfg(target_arch = "wasm32")]
+#[cfg(all(target_arch = "wasm32", feature = "gpu"))]
 pub mod gpu;
 pub mod i18n;
 pub mod job;
 mod listeners;
 pub mod mount;
 pub mod overlay;
+#[cfg(feature = "gpu")]
 pub mod region;
 pub mod router;
+pub mod runtime;
 pub mod scheduler;
 pub mod selection;
 pub mod shortcut;
@@ -44,8 +49,10 @@ pub use i18n::{Direction, Locale, Message};
 pub use job::{Budget, Ended, Job, Step};
 pub use mount::{mount, AppHandle, MountConfig, ScopeRoots};
 pub use overlay::{LayerId, LocalRect};
+#[cfg(feature = "gpu")]
 pub use region::{GpuRegion, RegionState};
 pub use router::{Arrival, History, Location, Navigation, Params, Route, Routes};
+#[cfg(feature = "gpu")]
 pub use rustify_makepad::RegionId;
 pub use scheduler::{Admission, Pace, Scheduler, Seq};
 pub use selection::{Counts, Selection};
@@ -63,7 +70,7 @@ pub use draft::Draft;
 pub use drag::{provide_drags, use_drags, DragHandle};
 #[cfg(target_arch = "wasm32")]
 pub use frame::{next_frame, FrameHandle};
-#[cfg(target_arch = "wasm32")]
+#[cfg(all(target_arch = "wasm32", feature = "gpu"))]
 pub use gpu::{
     Glyph as RegionGlyph, RustifyButton, RustifyCheckBox, RustifyDropDown, RustifyIcon,
     RustifyProgress, RustifyRadio, RustifySlider, RustifySpinner, RustifyTabBar, RustifyToggle,
@@ -81,9 +88,9 @@ pub use router::{
     navigate, provide_routes, use_location, use_params, use_route, Link, NavigationGuard,
 };
 #[cfg(target_arch = "wasm32")]
-pub use rustify_makepad::{
-    defer, defer_after, makepad_widgets, observe_resize, RegionApp, ResizeObservation,
-};
+pub use runtime::{defer, defer_after, observe_resize, ResizeObservation};
+#[cfg(all(target_arch = "wasm32", feature = "gpu"))]
+pub use rustify_makepad::{makepad_widgets, RegionApp};
 #[cfg(target_arch = "wasm32")]
 pub use shortcut::is_text_entry;
 #[cfg(target_arch = "wasm32")]

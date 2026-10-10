@@ -698,6 +698,7 @@ mod dom {
             let top = RwSignal::new(0.0f64);
             let registered = RwSignal::new(None::<LayerId>);
             let size_watch = StoredValue::new(None::<SendWrapper<crate::ResizeObservation>>);
+            let anchor_watch = StoredValue::new(None::<SendWrapper<crate::ResizeObservation>>);
             let returns_to: StoredValue<Option<SendWrapper<Element>>> = StoredValue::new(None);
             // Dropped with the layer, which takes the listener with it.
             let tab_loop = StoredValue::new(None::<Listener>);
@@ -734,6 +735,22 @@ mod dom {
                     left.set(x);
                     top.set(y);
                 }
+            });
+
+            // An anchor that grows or shrinks moves where the layer belongs as
+            // surely as a scroll does, and neither the window nor the layer
+            // would say so. Observed through the runtime host like the layer's
+            // own size, so a failed instance stops hearing about it.
+            Effect::new(move || {
+                let observed = match anchor.get() {
+                    Anchor::Element(element) => Some((*element).clone()),
+                    Anchor::Region { canvas, .. } => Some((*canvas).clone()),
+                    Anchor::Centred => None,
+                };
+                anchor_watch.set_value(observed.and_then(|element| {
+                    crate::observe_resize(&element, move || moved.update(|n| *n += 1))
+                        .map(SendWrapper::new)
+                }));
             });
 
             Effect::new({
@@ -786,6 +803,7 @@ mod dom {
 
             on_cleanup(move || {
                 size_watch.set_value(None);
+                anchor_watch.set_value(None);
                 if let Some(id) = registered.get_untracked() {
                     stack.remove(id);
                 }
