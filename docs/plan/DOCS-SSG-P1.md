@@ -46,20 +46,20 @@
 
 - 最近更新：2026-10-10T19:10:00+08:00
 - 当前进度：4/9 个里程碑完成
-- 当前状态：M4 已完成（`new`/`build`/`preview`、内容模板、元数据/404/sitemap/robots/manifest、全部引用资源指纹化、发布事务与锁、`docs-verify --group artifacts|reliability`、docs-root/docs-subpath/docs-meta 浏览器项目；`m4-evidence.sh` 41 项全过，7 示例产物逐字节不变）；M2–M4 在本提交点提交
+- 当前状态：M4 已完成（`new`/`build`/`preview`、内容模板、元数据/404/sitemap/robots/manifest、全部引用资源指纹化、发布事务与锁、`docs-verify --group artifacts|reliability`、docs-root/docs-subpath/docs-meta 浏览器项目；`m4-evidence.sh` 41 项全过，7 示例产物逐字节不变）；M2–M4 已提交 9442f5d
 - 最近完成：M4（内容模板与可部署静态产物）
 - 下一步：M5——先用 impeccable 完成默认阅读主题与 dev 诊断两份 surface brief，再做静态壳/首页布局/logo 与基础交互增强（主题、复制、代码分组、移动菜单、目录高亮）；退出前需用户确认 Firefox/WebKit 可执行文件或下载授权、真实 Firefox/Safari、真机与走查人（§9.3、§11）
 - 当前阻塞：无（M5 出口的设备/走查人确认届时请求用户）
-- 代码基线：dirty@39978d1（M1 已提交 179c5ec；M2–M4 待本提交点提交）
+- 代码基线：9442f5d（M1 179c5ec；M2–M4 9442f5d；`.xgent-ai` 台账改动按仓库惯例未纳入）
 
 ### 完成记录
 
 | Milestone | 状态 | 更新时间 | 简要记录 | 实现与验收记录 | 提交 |
 | --- | --- | --- | --- | --- | --- |
 | M1 | 已完成 | 2026-10-10T17:20:00+08:00 | 默认 DOM SDK、中性 runtime/DOM loader、GPU opt-in 与示例迁移；V-1/V-2 仓内外、V-15 矩阵通过，V-3 全部适用原回归 604 例通过（theme-studio 整项目重跑 65/65） | [M1 记录](../validation/docs-ssg-p1/M1.md) | 179c5ec |
-| M2 | 已完成 | 2026-10-10T18:10:00+08:00 | rustify-docs 库与 CLI 骨架、SSR 页面、原生样式/压缩/前缀高亮、片段缓存与并行、B 语料与采时 harness；风险门 195 ms/33 ms/22.8 KB 通过，git 安装排练、V-15 矩阵通过，示例产物逐字节不变 | [M2 记录](../validation/docs-ssg-p1/M2.md) | 待提交 |
-| M3 | 已完成 | 2026-10-10T18:30:00+08:00 | 内容图、原始 HTML 检查、代码分组/引用、自动链接、首页与页头链接、`sidebar.group` 与 `check`；库 80 例、端到端 5 例、CLI 集成 8 例通过，恰 3 错与宽覆盖 fixture 符合预期，B 0 错且风险门复测通过 | [M3 记录](../validation/docs-ssg-p1/M3.md) | 待提交 |
-| M4 | 已完成 | 2026-10-10T19:10:00+08:00 | `new`/`build`/`preview` 与内容模板、元数据/404/站点文件/manifest、资源指纹、发布事务与锁；V-5/V-6/V-10 基本门、V-7 三项目各 5/5、B 完整构建中位 347 ms、V-15 矩阵与安装排练通过，示例产物逐字节不变 | [M4 记录](../validation/docs-ssg-p1/M4.md) | 待提交 |
+| M2 | 已完成 | 2026-10-10T18:10:00+08:00 | rustify-docs 库与 CLI 骨架、SSR 页面、原生样式/压缩/前缀高亮、片段缓存与并行、B 语料与采时 harness；风险门 195 ms/33 ms/22.8 KB 通过，git 安装排练、V-15 矩阵通过，示例产物逐字节不变 | [M2 记录](../validation/docs-ssg-p1/M2.md) | 9442f5d |
+| M3 | 已完成 | 2026-10-10T18:30:00+08:00 | 内容图、原始 HTML 检查、代码分组/引用、自动链接、首页与页头链接、`sidebar.group` 与 `check`；库 80 例、端到端 5 例、CLI 集成 8 例通过，恰 3 错与宽覆盖 fixture 符合预期，B 0 错且风险门复测通过 | [M3 记录](../validation/docs-ssg-p1/M3.md) | 9442f5d |
+| M4 | 已完成 | 2026-10-10T19:10:00+08:00 | `new`/`build`/`preview` 与内容模板、元数据/404/站点文件/manifest、资源指纹、发布事务与锁；V-5/V-6/V-10 基本门、V-7 三项目各 5/5、B 完整构建中位 347 ms、V-15 矩阵与安装排练通过，示例产物逐字节不变 | [M4 记录](../validation/docs-ssg-p1/M4.md) | 9442f5d |
 
 ## 0. 需求、范围与决策
 
