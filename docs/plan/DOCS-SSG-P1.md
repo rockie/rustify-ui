@@ -44,19 +44,22 @@
 
 ### 恢复快照
 
-- 最近更新：2026-10-10T17:20:00+08:00
-- 当前进度：1/9 个里程碑完成
-- 当前状态：M1 已完成并提交（179c5ec）；M2 未开始
-- 最近完成：M1（默认纯 DOM SDK 可用，GPU 兼容收口）
-- 下一步：开始 M2（固定 Chromium 与 Slow 4G 参数已于 2026-10-10 确认，见 §9.3）
-- 当前阻塞：无
-- 代码基线：179c5ec（改前基线 worktree `../rustify-ui-docs-ssg-baseline-91e81b8` 保留）
+- 最近更新：2026-10-10T19:10:00+08:00
+- 当前进度：4/9 个里程碑完成
+- 当前状态：M4 已完成（`new`/`build`/`preview`、内容模板、元数据/404/sitemap/robots/manifest、全部引用资源指纹化、发布事务与锁、`docs-verify --group artifacts|reliability`、docs-root/docs-subpath/docs-meta 浏览器项目；`m4-evidence.sh` 41 项全过，7 示例产物逐字节不变）；M2–M4 在本提交点提交
+- 最近完成：M4（内容模板与可部署静态产物）
+- 下一步：M5——先用 impeccable 完成默认阅读主题与 dev 诊断两份 surface brief，再做静态壳/首页布局/logo 与基础交互增强（主题、复制、代码分组、移动菜单、目录高亮）；退出前需用户确认 Firefox/WebKit 可执行文件或下载授权、真实 Firefox/Safari、真机与走查人（§9.3、§11）
+- 当前阻塞：无（M5 出口的设备/走查人确认届时请求用户）
+- 代码基线：dirty@39978d1（M1 已提交 179c5ec；M2–M4 待本提交点提交）
 
 ### 完成记录
 
 | Milestone | 状态 | 更新时间 | 简要记录 | 实现与验收记录 | 提交 |
 | --- | --- | --- | --- | --- | --- |
 | M1 | 已完成 | 2026-10-10T17:20:00+08:00 | 默认 DOM SDK、中性 runtime/DOM loader、GPU opt-in 与示例迁移；V-1/V-2 仓内外、V-15 矩阵通过，V-3 全部适用原回归 604 例通过（theme-studio 整项目重跑 65/65） | [M1 记录](../validation/docs-ssg-p1/M1.md) | 179c5ec |
+| M2 | 已完成 | 2026-10-10T18:10:00+08:00 | rustify-docs 库与 CLI 骨架、SSR 页面、原生样式/压缩/前缀高亮、片段缓存与并行、B 语料与采时 harness；风险门 195 ms/33 ms/22.8 KB 通过，git 安装排练、V-15 矩阵通过，示例产物逐字节不变 | [M2 记录](../validation/docs-ssg-p1/M2.md) | 待提交 |
+| M3 | 已完成 | 2026-10-10T18:30:00+08:00 | 内容图、原始 HTML 检查、代码分组/引用、自动链接、首页与页头链接、`sidebar.group` 与 `check`；库 80 例、端到端 5 例、CLI 集成 8 例通过，恰 3 错与宽覆盖 fixture 符合预期，B 0 错且风险门复测通过 | [M3 记录](../validation/docs-ssg-p1/M3.md) | 待提交 |
+| M4 | 已完成 | 2026-10-10T19:10:00+08:00 | `new`/`build`/`preview` 与内容模板、元数据/404/站点文件/manifest、资源指纹、发布事务与锁；V-5/V-6/V-10 基本门、V-7 三项目各 5/5、B 完整构建中位 347 ms、V-15 矩阵与安装排练通过，示例产物逐字节不变 | [M4 记录](../validation/docs-ssg-p1/M4.md) | 待提交 |
 
 ## 0. 需求、范围与决策
 
@@ -207,10 +210,10 @@ WORK-* 均沿用 [PRD §3、§7.2](../PRD-DOCS-SSG.md)；下表列出本期 AC �
 
 | 对象 | 关键字段与约束 | 生命周期/权威来源 | 查询与索引 |
 | --- | --- | --- | --- |
-| 站点配置 | `schema_version=1`；site.name/description/lang；site.url 可缺；site.base 规范为 `/` 或 `/segments/`；content.dir=`content`、assets.dir=`static`、build.out=`dist`；repo.url/ref/path/edit_url；theme.primary 可缺或 `{light,dark}`（两项必填的 #RRGGBB）；theme.logo 可缺、同源本地路径或 `{light,dark}`；nav.groups/top/social；dev.port=4188（拟新增默认值，避开现浏览器配置4173–4187，冲突自动回退） | 作者 TOML。路径相对工程根，logo 两项均进资源图；out 不得为根/输入目录或其祖先，不追随出界 symlink | 一次读取并验证；base 的 URL 生成全图共用 |
+| 站点配置 | `schema_version=1`；site.name/description/lang；site.url 可缺；site.base 规范为 `/` 或 `/segments/`；site.image 可缺（分享图，本地 PNG/JPEG/GIF/WebP，仅有 site.url 时输出）；content.dir=`content`、assets.dir=`static`、build.out=`dist`；repo.url/ref/path/edit_url；theme.primary 可缺或 `{light,dark}`（两项必填的 #RRGGBB）；theme.logo 可缺、同源本地路径或 `{light,dark}`；nav.groups/top/social；dev.port=4188（拟新增默认值，避开现浏览器配置4173–4187，冲突自动回退） | 作者 TOML。路径相对工程根，logo 两项均进资源图；out 不得为根/输入目录或其祖先，不追随出界 symlink | 一次读取并验证；base 的 URL 生成全图共用 |
 | frontmatter | title、description、lang（缺省取 site.lang）、sidebar.label/order/group、draft、index（默认 true，搜索引擎索引声明，独立于 search/ai）、search、ai、toc.levels；首页 `layout=home`、tagline、actions、features | YAML；lang 为有效语言标签；title 可取首个 H1，无两者则报错；search/ai 仅保留作者声明，本期不产索引。首页 action 为普通链接，支持两个主操作 | 路由由文件派生：index.md → 同目录 `/`；其他 .md → `/<stem>/`；规范化后的重复、404 保留路由冲突报错 |
 | Page/Heading | 工程相对源路径、源码 span、route/title/lang、描述、草稿、标题层级/id、渲染片段、代码原文、依赖 | 分析阶段派生；一页只呈现一个 H1（复用正文标题或由 frontmatter 生成，不重复） | route→Page、Page→Heading id、文件→依赖者、Page→类集合；内存 map，一次整批建图 |
-| 资源 | 来源相对路径、字节 SHA-256、MIME、稳定输出路径 | static 中可发布文件、已引用图片、框架生成文件；拒绝秘密路径和出界符号链接；删除引用后不再复制内容附件 | 内容地址的资源图，引用者随内容 hash 更新；不按 mtime 判相等 |
+| 资源 | 来源相对路径、字节 SHA-256、MIME、稳定输出路径 | 页面或主题引用的文件（含 static 中被引用者与 logo）一律按内容指纹进 `assets/files/`；static 目录另按原路径发布供外部已知地址；框架生成文件指纹化；生成器保留 `assets/{site,mode,share}.*` 与 `assets/files/` 前缀及站点根文件名，static 占用即报错；拒绝秘密路径和出界符号链接；删除引用后不再复制内容附件 | 内容地址的资源图，引用者随内容 hash 更新；不按 mtime 判相等 |
 | 产物 manifest | schema_version、mode（必须 production）、base、cli_version、页面/文件相对路径及 digest、build_id | 从输出字节派生；不含本机路径、环境变量、时间戳、随机值；cli_version 的独立版本规则见 §8 | preview 必须读取，非 production/未知模式与 base mismatch 拒启；部署文件清单与回滚识别 |
 | dev 状态 | 输入快照、依赖图、last-good 完整代、递增 revision、诊断、当前请求页、片段缓存 | 全部在进程内；不写 build.out、不持有生产输出锁，不是持久业务数据 | 增量失效和 SSE；开发消息与草稿不进生产 manifest，允许 dev 运行期间另行 build |
 
@@ -338,7 +341,7 @@ M2 将新 docs 包加入 workspace 时，同步 CI/README/CLAUDE 的矩阵入口
 - 正文 near 16px，行高与间距继承现有阅读风格；用中/英文实际样本核对英文 60–80 字符、中文 30–45 字的行宽，不凭 `ch` 单位宣称达标。heading scroll-margin 避开固定页头；目录 scroll spy 选视口顶部章节，首个/末个与短章节有稳定规则。
 - theme-mode 同源外部小脚本在 head 同步执行、CSS 首次绘制前读以 base 隔离的 localStorage 键；取值仅 system/light/dark；存储拒绝不影响切换，系统模式用 matchMedia/CSS media。无脚本按系统 CSS 呈现，模式控件清楚不可交互而非假按钮。
 - 静态 html 带 `data-rustify-scope data-theme="system"`，无需 mount 才有 token。文档虚拟 CSS 输入移除 SDK 的 `@source "../src"`，显式候选由 §5.4 提供；文档 dark 变体覆盖显式 data-theme=dark 和 prefers-color-scheme:dark 下的 system 根，显式 light 不受系统深色影响。同步为两种深色路径写 token，不改 SDK 的作用域语义和默认 CSS。
-- 阅读主题默认浅色 primary/ring=`#175cd3`、background=`#f9fafb`、按钮前景=`#ffffff`；深色 primary/ring=`#53b1fd`、background=`#0c111d`、按钮前景=`#0c111d`。沿用其余语义 token 后逐项验正文、次级文案与高亮配色；这些是拟实现值，不是浏览器实测。Button/Link 通过调用方 class 与 tw_merge 覆盖半透明 focus，使用 3px 不透明指示与 2px 间隔，验指示与每种相邻表面 ≥3:1；链接/普通文字 ≥4.5:1。hover/active 同验，避免 alpha 状态降低对比度；不修改全 SDK 默认值。
+- 阅读主题默认浅色 primary/ring=`#175cd3`、background=`#f9fafb`、按钮前景=`#ffffff`；深色 primary/ring=`#53b1fd`、background=`#0c111d`、按钮前景按 D11 规则取黑白中对比较高者（`#000000`）。沿用其余语义 token 后逐项验正文、次级文案与高亮配色；这些是拟实现值，不是浏览器实测。Button/Link 通过调用方 class 与 tw_merge 覆盖半透明 focus，使用 3px 不透明指示与 2px 间隔，验指示与每种相邻表面 ≥3:1；链接/普通文字 ≥4.5:1。hover/active 同验，避免 alpha 状态降低对比度；不修改全 SDK 默认值。
 - 基础 JS 不引入 Leptos/wasm/runtime compiler：主题、复制、代码分组、移动菜单增强、目录高亮。无脚本时所有代码分组全部可读、导航和目录都是锚点；脚本失败不藏正文，不留不可达代码。
 - 页面 html 的 lang 取 frontmatter.lang 或 site.lang；界面目录按语言主标签选择 en/zh（包括跳到正文、复制/成功/失败、目录、上一页/下一页、主题、草稿与诊断）。其他有效语言标签保留正文 lang，界面回退英文并在界面容器标 lang=en；P1 不增加语言路由或语言切换。V-13 同时检查中文页、英文页与回退页的文案和 lang。
 - 本期布局只用 SSR 安全的语义 HTML 与 Button/Link/Icon；不挂 ThemeScope/OverlayStack 来渲染静态页面。主色/logo 从配置生成外部 CSS/本地资源，亮暗两态焦点、链接、按钮同步；不在 HTML 塞 style 或内联启动脚本。

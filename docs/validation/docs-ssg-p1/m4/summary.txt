@@ -1,0 +1,42 @@
+started 2026-10-10 18:58:28 +0800
+fmt status=0
+fmt-dom-only status=0
+workspace-test status=0
+workspace-clippy status=0
+rustify-ui-default-test status=0
+rustify-ui-gpu-test status=0
+rustify-ui-ssr-test status=0
+rustify-ui-default-clippy status=0
+rustify-ui-gpu-clippy status=0
+rustify-ui-ssr-clippy status=0
+rustify-components-default-test status=0
+rustify-components-gpu-test status=0
+rustify-components-ssr-test status=0
+rustify-components-default-clippy status=0
+rustify-components-gpu-clippy status=0
+rustify-components-ssr-clippy status=0
+rustify-docs-test status=0
+rustify-docs-clippy status=0
+rustify-docs-cli-test status=0
+rustify-docs-cli-clippy status=0
+docs-cli-build status=0
+docs-cli-build-info status=0
+sdk-utility-test status=0
+theme-export-test status=0
+sources status=0
+css status=0
+catalog status=0
+features status=0
+performance status=0
+artifacts status=0
+reliability status=0
+toolchain status=0
+browser-docs-root status=0
+browser-docs-subpath status=0
+browser-docs-meta status=0
+licenses packages=242 new_since_m3=0: 
+products-build-179c5ec status=0
+products-build-candidate status=0
+products-identical status=0
+product files compared:      336
+done 2026-10-10 19:08:08 +0800

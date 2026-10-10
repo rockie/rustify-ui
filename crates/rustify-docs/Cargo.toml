@@ -1,0 +1,39 @@
+[package]
+name = "rustify-docs"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+publish.workspace = true
+description = "Rustify Docs: Markdown content rendered on the host into a static documentation site"
+
+[dependencies]
+# Host rendering only. The SDK and the components are asked for `ssr` and
+# nothing else, so this crate's graph never carries the browser's effects,
+# the DOM runtime or a GPU region.
+leptos = { workspace = true, features = ["ssr"] }
+rustify-ui = { path = "../rustify-ui", default-features = false, features = ["ssr"] }
+rustify-components = { path = "../rustify-components", default-features = false, features = ["ssr"] }
+# The Tailwind 4.1.13 compiler port, given explicit candidates; no scanner.
+rustify-style = { path = "../rustify-style", default-features = false, features = ["compiler"] }
+# Parsing with source offsets; the HTML writer is this crate's own.
+pulldown-cmark = { version = "0.13.4", default-features = false, features = ["html"] }
+# Highlighting into class names at build time, with the pure-Rust regex
+# engine. two-face carries the grammars syntect's own set lacks (TOML,
+# TypeScript), precompiled for that engine.
+syntect = { version = "5.3.0", default-features = false, features = ["parsing", "regex-fancy", "dump-load"] }
+two-face = { version = "0.5.2", default-features = false, features = ["syntect-fancy"] }
+# Minification and lowering of the compiled CSS, in process.
+lightningcss = { version = "1.0.0-alpha.72", default-features = false }
+sha2 = "0.10.9"
+unicode-normalization = "0.1.25"
+# Author HTML is checked as a browser tokenizes it (WHATWG), with spans.
+html5gum = "0.8.4"
+# Frontmatter and the site configuration, with locations for diagnostics.
+serde = { version = "1", features = ["derive"] }
+# A production output's manifest.
+serde_json = "1"
+serde_yaml_ng = "0.10.0"
+toml = "1.1"
+
+[dev-dependencies]
+flate2 = "1.1.9"

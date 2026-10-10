@@ -15,10 +15,23 @@ const domOnlyDir = process.env.DOM_ONLY_DIR || "target/dom/dom-consumer";
 const domOnlyPort = Number(process.env.DOM_ONLY_PORT || 4190);
 const xtask = process.env.RUSTIFY_XTASK || "mbx xtask";
 
-type Server = "dom-only";
+/// The documentation site's fixture, built by `tests/docs-ssg/serve.sh` and
+/// served at the root and under a base by `rustify-docs preview`, and under
+/// a base by a static host that sends no headers (`docs-meta`).
+const docsPorts = { "docs-root": 4191, "docs-subpath": 4192, "docs-meta": 4193 } as const;
+const docsBases = { "docs-root": "/", "docs-subpath": "/rustify-ui/", "docs-meta": "/rustify-ui/" } as const;
+const docsVariants = { "docs-root": "root", "docs-subpath": "subpath", "docs-meta": "meta" } as const;
+type Docs = keyof typeof docsPorts;
+const docsProjects = Object.keys(docsPorts) as Docs[];
+const docsUrl = (name: Docs) => `http://127.0.0.1:${docsPorts[name]}${docsBases[name]}`;
+
+type Server = "dom-only" | Docs;
 
 const serversOf: Record<string, Server[]> = {
     "dom-only": ["dom-only"],
+    "docs-root": ["docs-root"],
+    "docs-subpath": ["docs-subpath"],
+    "docs-meta": ["docs-meta"],
 };
 
 function requestedProjects(argv: string[]): string[] {
@@ -64,8 +77,21 @@ export default defineConfig({
             testMatch: ["dom-only/**/*.spec.ts"],
             use: { baseURL: `http://127.0.0.1:${domOnlyPort}/` },
         },
+        ...docsProjects.map((name) => ({
+            name,
+            testMatch: ["docs-ssg/**/*.spec.ts"],
+            use: { baseURL: docsUrl(name) },
+        })),
     ],
-    webServer: ([["dom-only", `${xtask} serve --dir ${domOnlyDir} --port ${domOnlyPort}`, `http://127.0.0.1:${domOnlyPort}/`]] as const)
+    webServer: (
+        [
+            ["dom-only", `${xtask} serve --dir ${domOnlyDir} --port ${domOnlyPort}`, `http://127.0.0.1:${domOnlyPort}/`],
+            ...docsProjects.map(
+                (name) => [name, `sh tests/docs-ssg/serve.sh ${docsVariants[name]} ${docsPorts[name]}`, docsUrl(name)] as const,
+            ),
+        ] as const
+    )
         .filter(([server]) => wanted(server))
-        .map(([, command, url]) => ({ command, url, reuseExistingServer: false, timeout: 120_000 })),
+        // The docs servers may build the CLI first.
+        .map(([, command, url]) => ({ command, url, reuseExistingServer: false, timeout: 600_000 })),
 });

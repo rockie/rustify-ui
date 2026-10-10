@@ -1,0 +1,38 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+    Checking indexmap v2.14.2
+    Checking serde_json v1.0.151
+    Checking web-sys v0.3.105
+    Checking hydration_context v0.3.2
+    Checking icu_normalizer v2.3.0
+   Compiling sha2 v0.10.9
+   Compiling getrandom v0.4.3
+    Checking leptos_hot_reload v0.8.7
+    Checking leptos_config v0.8.10
+    Checking reactive_graph v0.2.15
+    Checking codee v0.3.5
+   Compiling uuid v1.26.0
+   Compiling wasm_split_macros v0.2.2
+    Checking gloo-utils v0.2.0
+    Checking wasm-streams v0.5.0
+   Compiling leptos_macro v0.8.19
+    Checking reactive_stores v0.4.4
+    Checking gloo-net v0.6.0
+    Checking tachys v0.2.19
+    Checking leptos_dom v0.8.8
+    Checking wasm_split_helpers v0.2.3
+    Checking idna_adapter v1.2.2
+    Checking idna v1.1.0
+    Checking url v2.5.8
+    Checking server_fn v0.8.13
+    Checking leptos_server v0.8.8
+    Checking leptos v0.8.22
+    Checking rustify-ui v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 2.68s
+mbx[cache]: 19 hits, 10 misses, 2 incremental; 0 B downloaded, 0 B uploaded, 9.9 MiB stored locally
+mbx[savings]: 3h 36m refunded over 5234 builds. no receipt necessary.

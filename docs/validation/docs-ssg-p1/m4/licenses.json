@@ -1,0 +1,1700 @@
+{
+ "package": "rustify-docs-cli",
+ "edges": "normal and build, every target, resolved for this package alone (cargo tree -p)",
+ "packages": [
+  {
+   "name": "adler2",
+   "version": "2.0.1",
+   "license": "0BSD OR MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "ahash",
+   "version": "0.8.12",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "aho-corasick",
+   "version": "1.1.5",
+   "license": "Unlicense OR MIT",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "any_spawner",
+   "version": "0.3.0",
+   "license": "MIT",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "anyhow",
+   "version": "1.0.104",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "async-lock",
+   "version": "3.4.2",
+   "license": "Apache-2.0 OR MIT",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "async-once-cell",
+   "version": "0.5.4",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "async-trait",
+   "version": "0.1.92",
+   "license": "MIT OR Apache-2.0",
+   "source": "proc-macro",
+   "new_since_m3": false
+  },
+  {
+   "name": "attribute-derive",
+   "version": "0.11.0",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "attribute-derive-macro",
+   "version": "0.11.0",
+   "license": "MIT",
+   "source": "proc-macro",
+   "new_since_m3": false
+  },
+  {
+   "name": "base16",
+   "version": "0.2.1",
+   "license": "CC0-1.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "base64",
+   "version": "0.22.1",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "bincode",
+   "version": "1.3.3",
+   "license": "MIT",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "bit-set",
+   "version": "0.8.0",
+   "license": "Apache-2.0 OR MIT",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "bit-vec",
+   "version": "0.8.0",
+   "license": "Apache-2.0 OR MIT",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "bitflags",
+   "version": "2.10.0",
+   "license": "MIT OR Apache-2.0",
+   "source": "path",
+   "new_since_m3": false
+  },
+  {
+   "name": "block-buffer",
+   "version": "0.10.4",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "bumpalo",
+   "version": "3.20.3",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "bytes",
+   "version": "1.12.1",
+   "license": "MIT",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "camino",
+   "version": "1.2.5",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "cfg-if",
+   "version": "1.0.4",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "codee",
+   "version": "0.3.5",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "collection_literals",
+   "version": "1.0.3",
+   "license": "MIT",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "config",
+   "version": "0.15.25",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "const-str",
+   "version": "1.1.0",
+   "license": "MIT",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "const_format",
+   "version": "0.2.36",
+   "license": "Zlib",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "const_format_proc_macros",
+   "version": "0.2.34",
+   "license": "Zlib",
+   "source": "proc-macro",
+   "new_since_m3": false
+  },
+  {
+   "name": "const_str_slice_concat",
+   "version": "0.1.0",
+   "license": "MIT",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "convert_case",
+   "version": "0.11.0",
+   "license": "MIT",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "convert_case",
+   "version": "0.6.0",
+   "license": "MIT",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "convert_case_extras",
+   "version": "0.2.0",
+   "license": "MIT",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "cpufeatures",
+   "version": "0.2.17",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "crc32fast",
+   "version": "1.5.2",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "crypto-common",
+   "version": "0.1.7",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "cssparser",
+   "version": "0.37.0",
+   "license": "MPL-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "cssparser-color",
+   "version": "0.5.0",
+   "license": "MPL-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "cssparser-macros",
+   "version": "0.7.1",
+   "license": "MPL-2.0",
+   "source": "proc-macro",
+   "new_since_m3": false
+  },
+  {
+   "name": "data-encoding",
+   "version": "2.11.1",
+   "license": "MIT",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "derive-where",
+   "version": "1.7.0",
+   "license": "MIT OR Apache-2.0",
+   "source": "proc-macro",
+   "new_since_m3": false
+  },
+  {
+   "name": "digest",
+   "version": "0.10.7",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "displaydoc",
+   "version": "0.2.7",
+   "license": "MIT OR Apache-2.0",
+   "source": "proc-macro",
+   "new_since_m3": false
+  },
+  {
+   "name": "drain_filter_polyfill",
+   "version": "0.1.3",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "dtoa",
+   "version": "1.0.11",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "dtoa-short",
+   "version": "0.3.5",
+   "license": "MPL-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "either",
+   "version": "1.18.0",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "either_of",
+   "version": "0.1.9",
+   "license": "MIT",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "equivalent",
+   "version": "1.0.2",
+   "license": "Apache-2.0 OR MIT",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "erased",
+   "version": "0.1.2",
+   "license": "MIT",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "event-listener",
+   "version": "5.4.2",
+   "license": "Apache-2.0 OR MIT",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "event-listener-strategy",
+   "version": "0.5.4",
+   "license": "Apache-2.0 OR MIT",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "fancy-regex",
+   "version": "0.16.2",
+   "license": "MIT",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "fastrand",
+   "version": "2.5.0",
+   "license": "Apache-2.0 OR MIT",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "flate2",
+   "version": "1.1.10",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "fnv",
+   "version": "1.0.7",
+   "license": "Apache-2.0 / MIT",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "form_urlencoded",
+   "version": "1.2.2",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "futures",
+   "version": "0.3.34",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "futures-channel",
+   "version": "0.3.34",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "futures-core",
+   "version": "0.3.34",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "futures-executor",
+   "version": "0.3.34",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "futures-io",
+   "version": "0.3.34",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "futures-macro",
+   "version": "0.3.34",
+   "license": "MIT OR Apache-2.0",
+   "source": "proc-macro",
+   "new_since_m3": false
+  },
+  {
+   "name": "futures-sink",
+   "version": "0.3.34",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "futures-task",
+   "version": "0.3.34",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "futures-util",
+   "version": "0.3.34",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "generic-array",
+   "version": "0.14.7",
+   "license": "MIT",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "getrandom",
+   "version": "0.3.4",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "getrandom",
+   "version": "0.4.3",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "gloo-net",
+   "version": "0.6.0",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "gloo-utils",
+   "version": "0.2.0",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "guardian",
+   "version": "1.3.0",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "hashbrown",
+   "version": "0.17.1",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "html-escape",
+   "version": "0.2.15",
+   "license": "MIT",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "html5gum",
+   "version": "0.8.4",
+   "license": "MIT",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "http",
+   "version": "1.5.0",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "hydration_context",
+   "version": "0.3.2",
+   "license": "MIT",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "icu_collections",
+   "version": "2.3.0",
+   "license": "Unicode-3.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "icu_locale_core",
+   "version": "2.3.0",
+   "license": "Unicode-3.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "icu_normalizer",
+   "version": "2.3.0",
+   "license": "Unicode-3.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "icu_normalizer_data",
+   "version": "2.3.0",
+   "license": "Unicode-3.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "icu_properties",
+   "version": "2.3.0",
+   "license": "Unicode-3.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "icu_properties_data",
+   "version": "2.3.0",
+   "license": "Unicode-3.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "icu_provider",
+   "version": "2.3.1",
+   "license": "Unicode-3.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "idna",
+   "version": "1.1.0",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "idna_adapter",
+   "version": "1.2.2",
+   "license": "Apache-2.0 OR MIT",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "indexmap",
+   "version": "2.14.2",
+   "license": "Apache-2.0 OR MIT",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "interpolator",
+   "version": "0.5.0",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "inventory",
+   "version": "0.3.24",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "itertools",
+   "version": "0.10.5",
+   "license": "MIT/Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "itertools",
+   "version": "0.14.0",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "itoa",
+   "version": "1.0.18",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "jetscii",
+   "version": "0.5.3",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "js-sys",
+   "version": "0.3.105",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "konst",
+   "version": "0.2.20",
+   "license": "Zlib",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "konst_macro_rules",
+   "version": "0.2.19",
+   "license": "Zlib",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "lazy_static",
+   "version": "1.5.1",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "leptos",
+   "version": "0.8.22",
+   "license": "MIT",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "leptos_config",
+   "version": "0.8.10",
+   "license": "MIT",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "leptos_dom",
+   "version": "0.8.8",
+   "license": "MIT",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "leptos_hot_reload",
+   "version": "0.8.7",
+   "license": "MIT",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "leptos_macro",
+   "version": "0.8.19",
+   "license": "MIT",
+   "source": "proc-macro",
+   "new_since_m3": false
+  },
+  {
+   "name": "leptos_server",
+   "version": "0.8.8",
+   "license": "MIT",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "libc",
+   "version": "0.2.189",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "lightningcss",
+   "version": "1.0.0-alpha.72",
+   "license": "MPL-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "lightningcss-derive",
+   "version": "1.0.0-alpha.43",
+   "license": "MPL-2.0",
+   "source": "proc-macro",
+   "new_since_m3": false
+  },
+  {
+   "name": "litemap",
+   "version": "0.8.3",
+   "license": "Unicode-3.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "log",
+   "version": "0.4.34",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "manyhow",
+   "version": "0.14.0",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "manyhow-macros",
+   "version": "0.14.0",
+   "license": "MIT OR Apache-2.0",
+   "source": "proc-macro",
+   "new_since_m3": false
+  },
+  {
+   "name": "memchr",
+   "version": "2.8.3",
+   "license": "Unlicense OR MIT",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "miniz_oxide",
+   "version": "0.9.1",
+   "license": "MIT OR Zlib OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "next_tuple",
+   "version": "0.1.0",
+   "license": "MIT",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "oco_ref",
+   "version": "0.2.1",
+   "license": "MIT",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "once_cell",
+   "version": "1.21.4",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "or_poisoned",
+   "version": "0.1.0",
+   "license": "MIT",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "parcel_selectors",
+   "version": "0.28.3",
+   "license": "MPL-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "parking",
+   "version": "2.2.1",
+   "license": "Apache-2.0 OR MIT",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "paste",
+   "version": "1.0.15",
+   "license": "MIT OR Apache-2.0",
+   "source": "proc-macro",
+   "new_since_m3": false
+  },
+  {
+   "name": "pastey",
+   "version": "0.1.1",
+   "license": "MIT OR Apache-2.0",
+   "source": "proc-macro",
+   "new_since_m3": false
+  },
+  {
+   "name": "pathdiff",
+   "version": "0.2.3",
+   "license": "MIT/Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "percent-encoding",
+   "version": "2.3.2",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "phf",
+   "version": "0.11.3",
+   "license": "MIT",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "phf",
+   "version": "0.13.1",
+   "license": "MIT",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "phf_codegen",
+   "version": "0.11.3",
+   "license": "MIT",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "phf_generator",
+   "version": "0.11.3",
+   "license": "MIT",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "phf_generator",
+   "version": "0.13.1",
+   "license": "MIT",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "phf_macros",
+   "version": "0.13.1",
+   "license": "MIT",
+   "source": "proc-macro",
+   "new_since_m3": false
+  },
+  {
+   "name": "phf_shared",
+   "version": "0.11.3",
+   "license": "MIT",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "phf_shared",
+   "version": "0.13.1",
+   "license": "MIT",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "pin-project",
+   "version": "1.1.13",
+   "license": "Apache-2.0 OR MIT",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "pin-project-internal",
+   "version": "1.1.13",
+   "license": "Apache-2.0 OR MIT",
+   "source": "proc-macro",
+   "new_since_m3": false
+  },
+  {
+   "name": "pin-project-lite",
+   "version": "0.2.17",
+   "license": "Apache-2.0 OR MIT",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "potential_utf",
+   "version": "0.1.6",
+   "license": "Unicode-3.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "precomputed-hash",
+   "version": "0.1.1",
+   "license": "MIT",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "prettyplease",
+   "version": "0.3.0",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "proc-macro-utils",
+   "version": "0.10.0",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "proc-macro2",
+   "version": "1.0.107",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "proc-macro2-diagnostics",
+   "version": "0.11.0",
+   "license": "MIT/Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "pulldown-cmark",
+   "version": "0.13.4",
+   "license": "MIT",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "pulldown-cmark-escape",
+   "version": "0.11.0",
+   "license": "MIT",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "quote",
+   "version": "1.0.47",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "quote-use",
+   "version": "0.9.0",
+   "license": "MIT",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "quote-use-macros",
+   "version": "0.9.0",
+   "license": "MIT",
+   "source": "proc-macro",
+   "new_since_m3": false
+  },
+  {
+   "name": "r-efi",
+   "version": "5.3.0",
+   "license": "MIT OR Apache-2.0 OR LGPL-2.1-or-later",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "r-efi",
+   "version": "6.0.0",
+   "license": "MIT OR Apache-2.0 OR LGPL-2.1-or-later",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "rand",
+   "version": "0.8.8",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "rand_core",
+   "version": "0.6.4",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "reactive_graph",
+   "version": "0.2.15",
+   "license": "MIT",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "reactive_stores",
+   "version": "0.4.4",
+   "license": "MIT",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "reactive_stores_macro",
+   "version": "0.4.4",
+   "license": "MIT",
+   "source": "proc-macro",
+   "new_since_m3": false
+  },
+  {
+   "name": "regex",
+   "version": "1.13.1",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "regex-automata",
+   "version": "0.4.18",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "regex-syntax",
+   "version": "0.8.11",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "rstml",
+   "version": "0.13.1",
+   "license": "MIT",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "rustc-hash",
+   "version": "2.1.3",
+   "license": "Apache-2.0 OR MIT",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "rustc_version",
+   "version": "0.4.1",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "rustify-components",
+   "version": "0.1.0",
+   "license": "MIT",
+   "source": "path",
+   "new_since_m3": false
+  },
+  {
+   "name": "rustify-docs",
+   "version": "0.1.0",
+   "license": "MIT",
+   "source": "path",
+   "new_since_m3": false
+  },
+  {
+   "name": "rustify-docs-cli",
+   "version": "0.1.0",
+   "license": "MIT",
+   "source": "path",
+   "new_since_m3": false
+  },
+  {
+   "name": "rustify-style",
+   "version": "0.1.0",
+   "license": "MIT",
+   "source": "path",
+   "new_since_m3": false
+  },
+  {
+   "name": "rustify-ui",
+   "version": "0.1.0",
+   "license": "MIT",
+   "source": "path",
+   "new_since_m3": false
+  },
+  {
+   "name": "rustversion",
+   "version": "1.0.23",
+   "license": "MIT OR Apache-2.0",
+   "source": "proc-macro",
+   "new_since_m3": false
+  },
+  {
+   "name": "ryu",
+   "version": "1.0.23",
+   "license": "Apache-2.0 OR BSL-1.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "ryu-js",
+   "version": "1.0.3",
+   "license": "Apache-2.0 OR BSL-1.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "same-file",
+   "version": "1.0.6",
+   "license": "Unlicense/MIT",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "semver",
+   "version": "1.0.28",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "send_wrapper",
+   "version": "0.6.0",
+   "license": "MIT/Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "serde",
+   "version": "1.0.229",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "serde_core",
+   "version": "1.0.229",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "serde_derive",
+   "version": "1.0.229",
+   "license": "MIT OR Apache-2.0",
+   "source": "proc-macro",
+   "new_since_m3": false
+  },
+  {
+   "name": "serde_json",
+   "version": "1.0.151",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "serde_qs",
+   "version": "0.15.0",
+   "license": "MIT/Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "serde_spanned",
+   "version": "1.1.1",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "serde_yaml_ng",
+   "version": "0.10.0",
+   "license": "MIT",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "server_fn",
+   "version": "0.8.13",
+   "license": "MIT",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "server_fn_macro",
+   "version": "0.8.12",
+   "license": "MIT",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "server_fn_macro_default",
+   "version": "0.8.6",
+   "license": "MIT",
+   "source": "proc-macro",
+   "new_since_m3": false
+  },
+  {
+   "name": "sha2",
+   "version": "0.10.9",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "simd-adler32",
+   "version": "0.3.10",
+   "license": "MIT",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "siphasher",
+   "version": "1.0.4",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "slab",
+   "version": "0.4.12",
+   "license": "MIT",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "slotmap",
+   "version": "1.1.1",
+   "license": "Zlib",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "smallvec",
+   "version": "1.15.1",
+   "license": "MIT OR Apache-2.0",
+   "source": "path",
+   "new_since_m3": false
+  },
+  {
+   "name": "stable_deref_trait",
+   "version": "1.2.1",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "syn",
+   "version": "1.0.109",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "syn",
+   "version": "2.0.119",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "syn",
+   "version": "3.0.5",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "synstructure",
+   "version": "0.13.2",
+   "license": "MIT",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "syntect",
+   "version": "5.3.0",
+   "license": "MIT",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "tachys",
+   "version": "0.2.19",
+   "license": "MIT",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "thiserror",
+   "version": "1.0.69",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "thiserror",
+   "version": "2.0.20",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "thiserror-impl",
+   "version": "1.0.69",
+   "license": "MIT OR Apache-2.0",
+   "source": "proc-macro",
+   "new_since_m3": false
+  },
+  {
+   "name": "thiserror-impl",
+   "version": "2.0.20",
+   "license": "MIT OR Apache-2.0",
+   "source": "proc-macro",
+   "new_since_m3": false
+  },
+  {
+   "name": "throw_error",
+   "version": "0.3.1",
+   "license": "MIT",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "tinystr",
+   "version": "0.8.4",
+   "license": "Unicode-3.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "tinyvec",
+   "version": "1.13.3",
+   "license": "Zlib OR Apache-2.0 OR MIT",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "toml",
+   "version": "1.1.5+spec-1.1.0",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "toml_datetime",
+   "version": "1.1.1+spec-1.1.0",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "toml_parser",
+   "version": "1.1.3+spec-1.1.0",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "toml_writer",
+   "version": "1.1.3+spec-1.1.0",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "two-face",
+   "version": "0.5.2+bat-0.26.1",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "typed-builder",
+   "version": "0.23.2",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "typed-builder-macro",
+   "version": "0.23.2",
+   "license": "MIT OR Apache-2.0",
+   "source": "proc-macro",
+   "new_since_m3": false
+  },
+  {
+   "name": "typenum",
+   "version": "1.20.1",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "unicase",
+   "version": "2.10.0",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "unicode-ident",
+   "version": "1.0.24",
+   "license": "(MIT OR Apache-2.0) AND Unicode-3.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "unicode-normalization",
+   "version": "0.1.25",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "unicode-segmentation",
+   "version": "1.13.3",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "unicode-xid",
+   "version": "0.2.6",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "unsafe-libyaml",
+   "version": "0.2.11",
+   "license": "MIT",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "url",
+   "version": "2.5.8",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "utf8_iter",
+   "version": "1.0.4",
+   "license": "Apache-2.0 OR MIT",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "uuid",
+   "version": "1.26.0",
+   "license": "Apache-2.0 OR MIT",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "version_check",
+   "version": "0.9.5",
+   "license": "MIT/Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "walkdir",
+   "version": "2.5.0",
+   "license": "Unlicense/MIT",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "wasip2",
+   "version": "1.0.4+wasi-0.2.12",
+   "license": "Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "wasm-bindgen",
+   "version": "0.2.128",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "wasm-bindgen-futures",
+   "version": "0.4.78",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "wasm-bindgen-macro",
+   "version": "0.2.128",
+   "license": "MIT OR Apache-2.0",
+   "source": "proc-macro",
+   "new_since_m3": false
+  },
+  {
+   "name": "wasm-bindgen-macro-support",
+   "version": "0.2.128",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "wasm-bindgen-shared",
+   "version": "0.2.128",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "wasm-streams",
+   "version": "0.5.0",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "wasm_split_helpers",
+   "version": "0.2.3",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "wasm_split_macros",
+   "version": "0.2.2",
+   "license": "MIT OR Apache-2.0",
+   "source": "proc-macro",
+   "new_since_m3": false
+  },
+  {
+   "name": "web-sys",
+   "version": "0.3.105",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "winapi-util",
+   "version": "0.1.11",
+   "license": "Unlicense OR MIT",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "windows-link",
+   "version": "0.2.1",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "windows-sys",
+   "version": "0.61.2",
+   "license": "MIT OR Apache-2.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "winnow",
+   "version": "1.0.4",
+   "license": "MIT",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "wit-bindgen",
+   "version": "0.57.1",
+   "license": "Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "writeable",
+   "version": "0.6.4",
+   "license": "Unicode-3.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "xxhash-rust",
+   "version": "0.8.18",
+   "license": "BSL-1.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "yoke",
+   "version": "0.8.3",
+   "license": "Unicode-3.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "yoke-derive",
+   "version": "0.8.2",
+   "license": "Unicode-3.0",
+   "source": "proc-macro",
+   "new_since_m3": false
+  },
+  {
+   "name": "zerocopy",
+   "version": "0.8.62",
+   "license": "BSD-2-Clause OR Apache-2.0 OR MIT",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "zerocopy-derive",
+   "version": "0.8.62",
+   "license": "BSD-2-Clause OR Apache-2.0 OR MIT",
+   "source": "proc-macro",
+   "new_since_m3": false
+  },
+  {
+   "name": "zerofrom",
+   "version": "0.1.8",
+   "license": "Unicode-3.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "zerofrom-derive",
+   "version": "0.1.7",
+   "license": "Unicode-3.0",
+   "source": "proc-macro",
+   "new_since_m3": false
+  },
+  {
+   "name": "zerotrie",
+   "version": "0.2.5",
+   "license": "Unicode-3.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "zerovec",
+   "version": "0.11.8",
+   "license": "Unicode-3.0",
+   "source": "crates.io",
+   "new_since_m3": false
+  },
+  {
+   "name": "zerovec-derive",
+   "version": "0.11.6",
+   "license": "Unicode-3.0",
+   "source": "proc-macro",
+   "new_since_m3": false
+  },
+  {
+   "name": "zmij",
+   "version": "1.0.23",
+   "license": "MIT",
+   "source": "crates.io",
+   "new_since_m3": false
+  }
+ ]
+}

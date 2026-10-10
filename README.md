@@ -80,13 +80,17 @@ Use `mbx` for compilation, tests and Clippy, including builds in the Makepad for
 
 ```sh
 cargo fmt --all -- --check
-mbx test --workspace --lib --bins
+mbx test --locked --workspace --exclude rustify-docs --exclude rustify-docs-cli --lib --bins
+mbx test --locked -p rustify-docs                # the docs library and CLI, each on its own:
+mbx test --locked -p rustify-docs-cli            # they render with `ssr`, the workspace with `csr`
+mbx build --locked -p rustify-docs-cli --profile docs-cli
 mbx test --locked -p rustify-ui --lib            # and -p rustify-components; each also
 mbx test --locked -p rustify-ui --features gpu --lib   # with GPU regions,
 mbx test --locked -p rustify-ui --no-default-features --features ssr --lib   # and for SSR
 mbx test --locked --manifest-path tests/theme-export/Cargo.toml --workspace --bins
 sh tests/theme-text/run.sh --lib
-mbx clippy --workspace --all-targets -- -D warnings
+mbx clippy --locked --workspace --exclude rustify-docs --exclude rustify-docs-cli --all-targets -- -D warnings
+mbx clippy --locked -p rustify-docs --all-targets -- -D warnings   # and -p rustify-docs-cli
 mbx xtask sources verify
 mbx xtask css --check
 mbx xtask catalog --write docs/components.md --check
@@ -139,6 +143,14 @@ The DOM-only consumer has a configuration of its own, with its server on port 41
 ```sh
 mbx xtask docs-verify --group features   # builds it, and checks its graph and product carry no Makepad
 npx playwright test -c playwright.docs.config.ts --project=dom-only
+```
+
+The documentation site generator's built fixture site runs under the same configuration, one project per command: served by `rustify-docs preview` at the root and under `/rustify-ui/`, and by a static host that sends no headers:
+
+```sh
+npx playwright test -c playwright.docs.config.ts --project=docs-root
+npx playwright test -c playwright.docs.config.ts --project=docs-subpath
+npx playwright test -c playwright.docs.config.ts --project=docs-meta
 ```
 
 Vellum has its own configuration:
@@ -194,6 +206,7 @@ This preview uses single-threaded wasm and WebGL2. It provides no WebGPU backend
 | [xtask](xtask/) | Build, preview, diagnostics, stylesheet generation and verification commands |
 | [tests/browser](tests/browser/) and [tests/vellum](tests/vellum/) | Browser regression and evidence checks |
 | [tests/dom-only](tests/dom-only/) | An outside consumer's DOM application and the GPU feature probes ([playwright.docs.config.ts](playwright.docs.config.ts)) |
+| [crates/rustify-docs](crates/rustify-docs/), [crates/rustify-docs-cli](crates/rustify-docs-cli/) and [tests/docs-ssg](tests/docs-ssg/) | Rustify Docs, the documentation site generator ([author's reference](docs/docs-ssg.md)), and its fixtures |
 | [docs/plan](docs/plan/), [docs/validation](docs/validation/) and [docs/reports](docs/reports/) | Development plans, validation records and release reports |
 
 Read the [architecture](docs/architecture.md) for runtime ownership and lifecycle contracts, and the [component reference](docs/components.md) for supported controls. Application guides cover [navigation](docs/navigation.md), [workspace layout](docs/workspace.md), [forms](docs/forms.md), [localisation](docs/i18n.md), [large data](docs/data.md) and [full theme integration](docs/themes.md).

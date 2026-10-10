@@ -1,0 +1,101 @@
+{
+  "environment": {
+    "os": "macOS 27.0.1",
+    "arch": "aarch64",
+    "cpu": "Apple M5 Pro",
+    "logical_cpus": 15,
+    "memory_bytes": "51539607552",
+    "rustc": "rustc 1.99.0 (b940084d7 2026-09-28)",
+    "load_average": "{ 11.90 24.51 22.32 }"
+  },
+  "corpus": {
+    "pages": 500,
+    "seed": 1592636672,
+    "profile_sha256": "7c090aa2064f0c843164f70c7488ea9f3514c7f43bf96ece66de6dae06e306d5",
+    "digest": "49ead46fbead6d5feb3366125ae046bba7b982c4231d158559c1f462c5604c4d"
+  },
+  "timing": {
+    "pages": 500,
+    "committed_pages": 500,
+    "workers": 15,
+    "read_ms": 85.7,
+    "cold": {
+      "highlighter_ms": 1.8,
+      "fragments_ms": 171.2,
+      "generate_ms": 22.4,
+      "render_and_style_ms": 195.5,
+      "write_ms": 68.8,
+      "misses": 500
+    },
+    "hot_config_ms": [
+      33.296291,
+      31.560167,
+      32.336208,
+      33.983332999999995,
+      35.26075
+    ],
+    "hot_config_median_ms": 33.3,
+    "hot_config_hits": [
+      500,
+      500,
+      500,
+      500,
+      500
+    ],
+    "hot_body_ms": [
+      33.458458,
+      33.594625,
+      33.963208,
+      33.710833,
+      31.565291
+    ],
+    "hot_body_median_ms": 33.6,
+    "html_bytes": 25827377,
+    "css_bytes": 27859,
+    "candidates": 104,
+    "stylesheet": "assets/site.c1a94023b8.css",
+    "out": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/perf/site"
+  },
+  "sizes": {
+    "shared_gzip": 8152,
+    "files_gzip": {
+      "assets/mode.64fba40012.js": 426,
+      "assets/site.206ef5637e.js": 1535,
+      "assets/site.c1a94023b8.css": 6191
+    },
+    "largest_content": {
+      "path": "zh/g08/page-020/index.html",
+      "raw": 107011,
+      "gzip": 14642,
+      "total": 22794
+    },
+    "home": {
+      "path": "index.html",
+      "raw": 89708,
+      "gzip": 11302,
+      "total": 19454
+    }
+  },
+  "checks": [
+    {
+      "check": "cold render and stylesheet of 500 pages",
+      "passed": true,
+      "detail": "195.5 ms (limit 20000 ms)"
+    },
+    {
+      "check": "configuration change, all pages re-rendered and committed (median of 5)",
+      "passed": true,
+      "detail": "33.3 ms (limit < 1000 ms; 966.7 ms left for watch, SSE and the browser)"
+    },
+    {
+      "check": "largest content page: HTML + CSS + scripts, gzip -9",
+      "passed": true,
+      "detail": "22794 bytes (zh/g08/page-020/index.html = 107011 raw / 14642 gzip + 8152 shared; limit 100000)"
+    },
+    {
+      "check": "home page: HTML + CSS + scripts, gzip -9",
+      "passed": true,
+      "detail": "19454 bytes (89708 raw / 11302 gzip + 8152 shared; limit 100000)"
+    }
+  ]
+}

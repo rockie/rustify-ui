@@ -83,7 +83,7 @@ pub fn Button(
             class.get(),
         ]
     });
-    view! {
+    let button = view! {
         <button
             type="button"
             class=computed
@@ -105,5 +105,48 @@ pub fn Button(
         >
             {children()}
         </button>
+    };
+    // Rendered on a host, a property has nowhere to go: the state is written
+    // as the attribute, which a browser reflects into the same property.
+    #[cfg(feature = "ssr")]
+    let button = button.attr("disabled", disabled.get_untracked());
+    button
+}
+
+#[cfg(all(test, feature = "ssr", not(target_arch = "wasm32")))]
+mod tests {
+    use super::*;
+
+    fn render(disabled: bool) -> String {
+        let owner = Owner::new();
+        let html = owner.with(|| {
+            view! {
+                <Button on_click=|| {} disabled=disabled unavailable=true aria_label="Save" expanded=Some(false)>
+                    "Save"
+                </Button>
+            }
+            .to_html()
+        });
+        drop(owner);
+        html
+    }
+
+    #[test]
+    fn host_rendering_writes_the_state_as_attributes() {
+        let html = render(true);
+        assert!(html.starts_with("<button type=\"button\""), "{html}");
+        assert!(
+            html.contains("\" disabled ") || html.contains("\" disabled>"),
+            "{html}"
+        );
+        assert!(html.contains("aria-disabled=\"true\""), "{html}");
+        assert!(html.contains("aria-expanded=\"false\""), "{html}");
+        assert!(html.contains("aria-label=\"Save\""), "{html}");
+        assert!(html.ends_with(">Save</button>"), "{html}");
+        let enabled = render(false);
+        assert!(
+            !enabled.contains(" disabled>") && !enabled.contains(" disabled "),
+            "{enabled}"
+        );
     }
 }

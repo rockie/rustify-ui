@@ -1,0 +1,17 @@
+CLI source: file:///var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-verify/candidate.git at 47b8a864bcdad259c6bd5d30d407353fb2253c6e
+    Updating git repository `file:///var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-verify/candidate.git`
+  Installing rustify-docs-cli v0.1.0 (file:///var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-verify/candidate.git?rev=47b8a864bcdad259c6bd5d30d407353fb2253c6e#47b8a864)
+    Updating crates.io index
+    Finished `docs-cli` profile [optimized] target(s) in 5.84s
+  Installing /var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-verify/cli-install/bin/rustify-docs
+   Installed package `rustify-docs-cli v0.1.0 (file:///var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-verify/candidate.git?rev=47b8a864bcdad259c6bd5d30d407353fb2253c6e#47b8a864)` (executable `rustify-docs`)
+warning: be sure to add `/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-verify/cli-install/bin` to your PATH to be able to run the installed binaries
+installed in 5.9 s
+rustify-docs 0.1.0
+rustify-docs 0.1.0
+panic: unwind
+grammars: syntect-5.3.0+two-face-0.5.2+bat-0.26.1+fancy
+panic probe: recovered
+rustify-docs-cli v0.1.0 (file:///var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-verify/candidate.git?rev=47b8a864bcdad259c6bd5d30d407353fb2253c6e#47b8a864):
+    rustify-docs
+toolchain: rustify-docs installed from 47b8a864bcdad259c6bd5d30d407353fb2253c6e with the docs-cli profile; 450608 bytes

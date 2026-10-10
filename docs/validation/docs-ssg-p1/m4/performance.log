@@ -1,0 +1,10 @@
+reference site B: 500 pages, digest ecb43f7911fe7512bae279a0214aad39647052c28c3bd7c9a67f6745e4a889ac
+rustify-docs build of B into an empty output: median 346.9 ms of [486.573459, 350.35791700000004, 342.670042, 346.92974999999996, 339.06904199999997]; 500 pages, 511 files, 26424802 bytes
+pass B analyses without a problem, so the timings are of a site that would publish: 0 error(s), 0 warning(s)
+pass cold render and stylesheet of 500 pages: 191.5 ms (limit 20000 ms)
+pass rustify-docs build of 500 pages into an empty output (median of 5): 346.9 ms (limit 20000 ms), 500 pages
+pass configuration change, all pages re-rendered and committed (median of 5): 54.6 ms (limit < 1000 ms; 945.4 ms left for watch, SSE and the browser)
+pass largest content page: HTML + CSS + scripts, gzip -9: 23112 bytes (zh/g04/page-024/index.html = 108080 raw / 14841 gzip + 8271 shared; limit 100000)
+pass home page: HTML + CSS + scripts, gzip -9: 19796 bytes (90710 raw / 11525 gzip + 8271 shared; limit 100000)
+report: /Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p1/m4/performance.json
+site: /Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/perf/site

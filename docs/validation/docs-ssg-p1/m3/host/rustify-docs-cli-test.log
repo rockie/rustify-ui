@@ -1,0 +1,31 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-docs-cli v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-docs-cli)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.95s
+     Running unittests src/main.rs (target/debug/deps/rustify_docs-90ed23fb66a52b14)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/check.rs (target/debug/deps/check-07ce1617cb0b97bc)
+
+running 8 tests
+test help_and_version ... ok
+test configuration_errors_are_located_in_the_configuration ... ok
+test usage_errors_exit_with_two_and_touch_nothing ... ok
+test three_known_errors_are_exactly_three_located_errors ... ok
+test the_configuration_defaults_to_the_working_directory ... ok
+test text_mode_reports_on_stderr_with_locations_and_a_conclusion ... ok
+test warnings_fail_only_when_denied ... ok
+test a_clean_site_passes_and_check_writes_nothing ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.66s
+
+mbx[cache]: 0 hits, 0 misses, 3 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: 1.3 TiB logical of target/ belonged to checkouts that no longer exist. neither does it.

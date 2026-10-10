@@ -3,6 +3,8 @@ mod build;
 mod catalog;
 mod css;
 mod docs;
+mod docs_corpus;
+mod docs_perf;
 mod doctor;
 mod serve;
 mod sources;
@@ -34,6 +36,8 @@ mbx xtask <command> [options]
   utility-bench [--out <directory>]
   verify      --suite p1|p2 [--no-browser] [--no-build]
   docs-verify --group features [--external [--git <url> --rev <sha>]]
+  docs-verify --group performance|toolchain
+  docs-corpus --profile | --out <dir> [--seed <n>]
 ";
 
 fn main() {
@@ -43,6 +47,7 @@ fn main() {
         Some("build-web") => build_web(&args[1..]).map(|_| ()),
         Some("build-dom") => docs::build_dom(&args[1..]),
         Some("docs-verify") => docs::verify(&args[1..]),
+        Some("docs-corpus") => docs_corpus::run(&args[1..]),
         Some("serve") => serve_example(&args[1..]),
         Some("css") => css::run(&args[1..]),
         Some("catalog") => catalog::run(&args[1..]),

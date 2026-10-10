@@ -1,0 +1,140 @@
+//! A page's YAML frontmatter: split off with its offsets, then read with
+//! every key known.
+
+use std::ops::Range;
+
+use serde::Deserialize;
+
+use crate::diagnostic::Issue;
+
+/// Where the frontmatter is in a file, if there is one: the YAML between
+/// the fences, and where the Markdown after the closing fence starts.
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct Split {
+    pub yaml: Range<usize>,
+    pub body: usize,
+}
+
+/// Finds `---` frontmatter at the very start of `text`. A file that opens a
+/// fence and never closes it is an error at the opening fence, rather than a
+/// page whose whole text is metadata.
+pub fn split(text: &str) -> Result<Option<Split>, Issue> {
+    let first = match text.find('\n') {
+        Some(end) => &text[..end],
+        None => text,
+    };
+    if first.trim_end_matches('\r') != "---" {
+        return Ok(None);
+    }
+    let start = first.len() + 1;
+    let mut offset = start;
+    for line in text[start..].split_inclusive('\n') {
+        let bare = line.trim_end_matches(['\n', '\r']);
+        if bare == "---" || bare == "..." {
+            return Ok(Some(Split {
+                yaml: start..offset,
+                body: offset + line.len(),
+            }));
+        }
+        offset += line.len();
+    }
+    Err(Issue::error(
+        0..first.len(),
+        "frontmatter-unclosed",
+        "the frontmatter opened here is never closed",
+    )
+    .suggest("end it with a line holding only `---`"))
+}
+
+#[derive(Clone, Debug, Default, Deserialize, PartialEq, Eq)]
+#[serde(deny_unknown_fields)]
+pub struct Sidebar {
+    pub label: Option<String>,
+    pub order: Option<i64>,
+    pub group: Option<String>,
+}
+
+#[derive(Clone, Debug, Default, Deserialize, PartialEq, Eq)]
+#[serde(deny_unknown_fields)]
+pub struct Toc {
+    /// The heading levels listed, as `[2, 3]`.
+    pub levels: Option<[u8; 2]>,
+}
+
+#[derive(Clone, Debug, Deserialize, PartialEq, Eq)]
+#[serde(deny_unknown_fields)]
+pub struct Action {
+    pub text: String,
+    pub link: String,
+}
+
+#[derive(Clone, Debug, Deserialize, PartialEq, Eq)]
+#[serde(deny_unknown_fields)]
+pub struct Feature {
+    pub title: String,
+    pub details: String,
+}
+
+#[derive(Clone, Copy, Debug, Default, Deserialize, PartialEq, Eq)]
+#[serde(rename_all = "lowercase")]
+pub enum Layout {
+    #[default]
+    Doc,
+    Home,
+}
+
+/// What a page says about itself.
+#[derive(Clone, Debug, Default, Deserialize, PartialEq, Eq)]
+#[serde(deny_unknown_fields)]
+pub struct Front {
+    pub title: Option<String>,
+    pub description: Option<String>,
+    pub lang: Option<String>,
+    #[serde(default)]
+    pub sidebar: Sidebar,
+    #[serde(default)]
+    pub draft: bool,
+    /// Whether search engines may index the page. Independent of `search`
+    /// and `ai`, which only record the author's wish for later phases.
+    pub index: Option<bool>,
+    pub search: Option<bool>,
+    pub ai: Option<bool>,
+    #[serde(default)]
+    pub toc: Toc,
+    #[serde(default)]
+    pub layout: Layout,
+    pub tagline: Option<String>,
+    #[serde(default)]
+    pub actions: Vec<Action>,
+    #[serde(default)]
+    pub features: Vec<Feature>,
+}
+
+/// Reads the frontmatter of `text` (a whole file). Errors are located in the
+/// file; a file without frontmatter has the default.
+pub fn parse(text: &str) -> Result<(Front, usize), Issue> {
+    let Some(split) = split(text)? else {
+        return Ok((Front::default(), 0));
+    };
+    let yaml = &text[split.yaml.clone()];
+    if yaml.trim().is_empty() {
+        return Ok((Front::default(), split.body));
+    }
+    match serde_yaml_ng::from_str::<Front>(yaml) {
+        Ok(front) => Ok((front, split.body)),
+        Err(error) => {
+            let at = error.location().map_or(split.yaml.start, |location| {
+                split.yaml.start + location.index()
+            });
+            let message = error.to_string();
+            // serde_yaml_ng appends " at line N column M"; the diagnostic
+            // carries the position itself.
+            let message = message
+                .split(" at line ")
+                .next()
+                .unwrap_or(&message)
+                .to_owned();
+            Err(Issue::error(at..at, "frontmatter", message))
+        }
+    }
+}

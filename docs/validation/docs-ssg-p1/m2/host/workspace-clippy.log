@@ -1,0 +1,66 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+    Checking once_cell v1.21.4
+    Checking serde_json v1.0.151
+   Compiling cpufeatures v0.2.17
+   Compiling getrandom v0.4.3
+    Checking wasm-bindgen v0.2.128
+    Checking rustify-makepad v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-makepad)
+    Checking bitflags v2.10.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/bitflags)
+    Checking libc v0.2.189
+    Checking unicode-general-category v1.1.0
+    Checking yansi v1.0.1
+    Checking rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+    Checking codee v0.3.5
+    Checking diff v0.1.13
+   Compiling sha2 v0.10.9
+    Checking fastrand v2.5.0
+    Checking syn v2.0.119
+   Compiling uuid v1.26.0
+    Checking wasmparser v0.245.1
+    Checking wasmparser v0.228.0
+    Checking js-sys v0.3.105
+    Checking pulldown-cmark v0.13.4
+    Checking pretty_assertions v1.4.1
+   Compiling wasm_split_macros v0.2.2
+   Compiling leptos_macro v0.8.19
+    Checking classification-macros v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style/upstream/classification-macros)
+    Checking wasm-bindgen-futures v0.4.78
+    Checking web-sys v0.3.105
+    Checking wasmi v2.0.0
+    Checking walrus v0.26.5
+    Checking any_spawner v0.3.0
+    Checking errno v0.3.14
+    Checking wasm-bindgen-cli-support v0.2.128
+    Checking reactive_graph v0.2.15
+    Checking rustix v1.1.5
+    Checking gloo-utils v0.2.0
+    Checking wasm-streams v0.5.0
+    Checking reactive_stores v0.4.4
+    Checking gloo-net v0.6.0
+    Checking wasm_split_helpers v0.2.3
+    Checking tachys v0.2.19
+    Checking server_fn v0.8.13
+    Checking tempfile v3.27.0
+    Checking leptos_dom v0.8.8
+    Checking leptos_server v0.8.8
+    Checking rustify-style-wasm v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style-wasm)
+    Checking leptos v0.8.22
+    Checking rustify-ui v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui)
+    Checking rustify-components v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-components)
+    Checking vellum v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/examples/vellum)
+    Checking utility-lab v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/examples/utility-lab)
+    Checking fusion-basic v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/examples/fusion-basic)
+    Checking property-workbench v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/examples/property-workbench)
+    Checking data-workbench v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/examples/data-workbench)
+    Checking xtask v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/xtask)
+    Checking theme-studio v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/examples/theme-studio)
+    Checking component-catalog v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/examples/component-catalog)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 4.99s
+mbx[cache]: 40 hits, 33 misses, 3 not looked up, 29 incremental; 0 B downloaded, 0 B uploaded, 10.1 MiB stored locally
+mbx[savings]: 1.6 TiB logical of old files removed to date. the broom sends its regards.

@@ -1,0 +1,149 @@
+{
+  "environment": {
+    "os": "macOS 27.0.1",
+    "arch": "aarch64",
+    "cpu": "Apple M5 Pro",
+    "logical_cpus": 15,
+    "memory_bytes": "51539607552",
+    "rustc": "rustc 1.99.0 (b940084d7 2026-09-28)",
+    "load_average": "{ 7.63 11.72 13.61 }"
+  },
+  "corpus": {
+    "pages": 500,
+    "seed": 1592636672,
+    "profile_sha256": "7c090aa2064f0c843164f70c7488ea9f3514c7f43bf96ece66de6dae06e306d5",
+    "digest": "ecb43f7911fe7512bae279a0214aad39647052c28c3bd7c9a67f6745e4a889ac"
+  },
+  "timing": {
+    "pages": 501,
+    "committed_pages": 501,
+    "workers": 15,
+    "read_ms": 24.8,
+    "errors": 0,
+    "warnings": 0,
+    "cold": {
+      "analyze_ms": 155.5,
+      "generate_ms": 36.0,
+      "render_and_style_ms": 191.5,
+      "write_ms": 107.2
+    },
+    "hot_config_ms": [
+      54.636,
+      53.362,
+      55.811625,
+      54.178666,
+      55.752458
+    ],
+    "hot_config_median_ms": 54.6,
+    "hot_config_misses": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "hot_body_ms": [
+      56.515917,
+      53.732707999999995,
+      53.359708,
+      53.393708999999994,
+      52.089125
+    ],
+    "hot_body_median_ms": 53.4,
+    "html_bytes": 26272614,
+    "css_bytes": 28429,
+    "candidates": 112,
+    "stylesheet": "assets/site.10e2323d54.css",
+    "out": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/perf/site"
+  },
+  "build": {
+    "rounds_ms": [
+      486.573459,
+      350.35791700000004,
+      342.670042,
+      346.92974999999996,
+      339.06904199999997
+    ],
+    "median_ms": 346.92974999999996,
+    "pages": 500,
+    "files": 511,
+    "bytes": 26424802,
+    "largest": [
+      {
+        "path": "zh/g04/page-024/index.html",
+        "bytes": 108080
+      },
+      {
+        "path": "zh/g06/page-022/index.html",
+        "bytes": 108056
+      },
+      {
+        "path": "zh/g07/page-021/index.html",
+        "bytes": 108056
+      },
+      {
+        "path": "zh/g01/page-003/index.html",
+        "bytes": 108053
+      },
+      {
+        "path": "zh/g04/page-012/index.html",
+        "bytes": 108047
+      }
+    ],
+    "warnings": 1
+  },
+  "sizes": {
+    "shared_gzip": 8271,
+    "files_gzip": {
+      "assets/files/logo.d070a7e79d.svg": 173,
+      "assets/mode.64fba40012.js": 426,
+      "assets/share.9f8be38eaf.png": 800,
+      "assets/site.10e2323d54.css": 6310,
+      "assets/site.206ef5637e.js": 1535
+    },
+    "largest_content": {
+      "path": "zh/g04/page-024/index.html",
+      "raw": 108080,
+      "gzip": 14841,
+      "total": 23112
+    },
+    "home": {
+      "path": "index.html",
+      "raw": 90710,
+      "gzip": 11525,
+      "total": 19796
+    }
+  },
+  "checks": [
+    {
+      "check": "B analyses without a problem, so the timings are of a site that would publish",
+      "passed": true,
+      "detail": "0 error(s), 0 warning(s)"
+    },
+    {
+      "check": "cold render and stylesheet of 500 pages",
+      "passed": true,
+      "detail": "191.5 ms (limit 20000 ms)"
+    },
+    {
+      "check": "rustify-docs build of 500 pages into an empty output (median of 5)",
+      "passed": true,
+      "detail": "346.9 ms (limit 20000 ms), 500 pages"
+    },
+    {
+      "check": "configuration change, all pages re-rendered and committed (median of 5)",
+      "passed": true,
+      "detail": "54.6 ms (limit < 1000 ms; 945.4 ms left for watch, SSE and the browser)"
+    },
+    {
+      "check": "largest content page: HTML + CSS + scripts, gzip -9",
+      "passed": true,
+      "detail": "23112 bytes (zh/g04/page-024/index.html = 108080 raw / 14841 gzip + 8271 shared; limit 100000)"
+    },
+    {
+      "check": "home page: HTML + CSS + scripts, gzip -9",
+      "passed": true,
+      "detail": "19796 bytes (90710 raw / 11525 gzip + 8271 shared; limit 100000)"
+    }
+  ]
+}

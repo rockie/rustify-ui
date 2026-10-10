@@ -19,9 +19,11 @@ jobs:
       - name: Format
         run: cargo fmt --all -- --check
       # `--bins` as well: xtask and the examples are binaries, and their tests
-      # do not run under `--lib`.
+      # do not run under `--lib`. The docs packages render on the host with
+      # `ssr`; built together with the browser packages, Cargo would unify
+      # both modes into one Leptos, so they run on their own below.
       - name: Unit tests
-        run: mbx test --workspace --lib --bins
+        run: mbx test --locked --workspace --exclude rustify-docs --exclude rustify-docs-cli --lib --bins
       # Features the workspace run leaves off: the style crate's compiler and
       # scanner, its Worker facade, and the SDK's runtime utilities. The
       # upstream Tailwind conformance gate needs the local-only ref/ tree and
@@ -45,6 +47,13 @@ jobs:
             mbx clippy --locked -p "$package" --features gpu --all-targets -- -D warnings
             mbx clippy --locked -p "$package" --no-default-features --features ssr --all-targets -- -D warnings
           done
+      - name: Docs library and CLI, each on its own
+        run: |
+          for package in rustify-docs rustify-docs-cli; do
+            mbx test --locked -p "$package"
+            mbx clippy --locked -p "$package" --all-targets -- -D warnings
+          done
+          mbx build --locked -p rustify-docs-cli --profile docs-cli
       - name: Independent theme consumer tests
         run: mbx test --locked --manifest-path tests/theme-export/Cargo.toml --workspace --bins
       - name: Makepad text layout and shaping checks
@@ -56,7 +65,7 @@ jobs:
         run: mbx test --manifest-path platform/script/Cargo.toml
         working-directory: makepad
       - name: Clippy
-        run: mbx clippy --workspace --all-targets -- -D warnings
+        run: mbx clippy --locked --workspace --exclude rustify-docs --exclude rustify-docs-cli --all-targets -- -D warnings
       - name: Source record
         run: mbx xtask sources verify
       # The Tailwind CLI is the standalone binary mise.toml pins; no Node.
@@ -90,6 +99,36 @@ jobs:
         if: always()
         with:
           name: dom-only-results
+          path: test-results/docs
+          retention-days: 7
+
+  # A built documentation site as readers reach it: through `rustify-docs
+  # preview` at the root and under a base path, and through a static host
+  # that sends no headers and rewrites nothing. One project per command.
+  docs-site:
+    name: docs site
+    runs-on: macos-14
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Rust, mbx and Tailwind from mise.toml
+        uses: jdx/mise-action@v4
+      - uses: jdx/mr-boxington-action@v1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 26
+      - name: Install pinned Playwright
+        run: npm ci && npx playwright install --with-deps chromium
+      - name: Served by preview at the root
+        run: npx playwright test -c playwright.docs.config.ts --project=docs-root
+      - name: Served by preview under a base
+        run: npx playwright test -c playwright.docs.config.ts --project=docs-subpath
+      - name: Served by a static host with the policy in each page only
+        run: npx playwright test -c playwright.docs.config.ts --project=docs-meta
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: docs-site-results
           path: test-results/docs
           retention-days: 7
 

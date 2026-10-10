@@ -1,0 +1,18 @@
+schema_version = 1
+
+[site]
+name = "{{name}}"
+description = "Documentation written in Markdown and built with Rustify Docs."
+lang = "en"
+# The address the site is published at. With it, every page gets a canonical
+# address and a link-preview image, and the build writes a sitemap. Its path
+# must equal `base`.
+# url = "https://example.com/"
+base = "/"
+
+[theme]
+logo = "static/logo.svg"
+
+[[nav.groups]]
+label = "Guide"
+dir = "guide"

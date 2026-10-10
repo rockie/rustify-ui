@@ -18,9 +18,12 @@ Rustify UI is an experimental SDK that runs Leptos (CSR, DOM) and, as an opt-in,
 ```sh
 # Host checks (CI's `host` job)
 cargo fmt --all -- --check                     # makepad/ opts out via its own rustfmt.toml
-mbx test --workspace --lib --bins             # --bins: xtask and the examples are binaries
+mbx test --locked --workspace --exclude rustify-docs --exclude rustify-docs-cli --lib --bins   # --bins: xtask and the examples are binaries
 mbx test -p rustify-ui --lib router::          # one crate, filtered
-mbx clippy --workspace --all-targets -- -D warnings
+mbx clippy --locked --workspace --exclude rustify-docs --exclude rustify-docs-cli --all-targets -- -D warnings
+# The docs packages render on the host with `ssr`; each runs on its own, never in a workspace union
+mbx test --locked -p rustify-docs                # and -p rustify-docs-cli; clippy likewise
+mbx build --locked -p rustify-docs-cli --profile docs-cli   # the profile the CLI installs with (panic=unwind)
 (cd makepad && mbx test)                       # the fork is its own workspace
 (cd makepad && mbx test --manifest-path platform/script/Cargo.toml)
 mbx xtask sources verify                       # makepad/ drift against sources.lock.json
@@ -30,7 +33,12 @@ mbx xtask catalog --write docs/components.md --check
 mbx test --locked -p rustify-ui --lib
 mbx test --locked -p rustify-ui --features gpu --lib
 mbx test --locked -p rustify-ui --no-default-features --features ssr --lib
-mbx xtask docs-verify --group features [--external]   # default graph/product carry no Makepad; GPU switch both ways
+mbx xtask docs-verify --group features [--external]   # default graph/product carry no Makepad; GPU switch both ways; docs graphs host-only
+mbx xtask docs-verify --group performance             # reference site B: cold render, warm config re-render, page weight, real `build`
+mbx xtask docs-verify --group artifacts               # what a build publishes: addresses, manifest, site files, fingerprints; new -> build compiles nothing
+mbx xtask docs-verify --group reliability             # output transaction, lock and recovery; failed builds keep the old output; preview refusals
+mbx xtask docs-verify --group toolchain               # `cargo install --git … --profile docs-cli` from a working-tree commit
+mbx xtask docs-corpus --out <dir>                     # write reference site B (profile frozen in tests/docs-ssg/b-profile.json)
 mbx xtask build-dom --manifest-path tests/dom-only/consumer/Cargo.toml   # to target/dom/dom-consumer/
 
 # Build and serve an example; output is target/makepad-wasm-app/<profile>/<example>/
@@ -80,6 +88,7 @@ The workspace excludes `makepad/` (a fork with its own workspace) and `ref/`.
 - `makepad/` is a hard fork of the Makepad wasm closure, trimmed to the browser backend. It is first-class source: edit it directly, and `sources verify` reports the edits as attributable drift. The embedding changes are in `platform/src/os/web/*`, `platform/src/{action,cx}.rs`, `libs/wasm_bridge` and `tools/cargo_makepad`, which is reduced to the single-threaded browser build.
 - `web/loader.js` and `web/runtime.css` are a GPU build's page boot. `boot()` instantiates one wasm instance, checks the bridge fingerprint and the runtime protocol, hands one host to both Makepad and the SDK runtime and owns the static failure notice. A DOM build boots through the SDK's own `dom-loader.js` instead.
 - `tests/dom-only/` is its own workspace: an outside consumer's DOM application built with plain Cargo and wasm-bindgen (`consumer/`), and the GPU opt-in and negative compile probes. Its browser checks run under `playwright.docs.config.ts` (`--project=dom-only`, port 4190); `DOM_ONLY_DIR` points them at another build, such as the one `docs-verify --external` makes outside the repository.
+- `crates/rustify-docs` (library) and `crates/rustify-docs-cli` (the `rustify-docs` binary) are the documentation site generator: Markdown to a static site rendered on the host with `ssr`, never a workspace-union build. `docs/docs-ssg.md` is the author's reference. The same config runs a built fixture site in the browser: `--project=docs-root` (preview at `/`, port 4191), `docs-subpath` (preview at `/rustify-ui/`, 4192) and `docs-meta` (a header-less static host, 4193); `tests/docs-ssg/serve.sh` rebuilds the `docs-cli` binary and the fixture first.
 - `examples/*` each have `src/` (the Rust app), `index.html`, and an `app.js` page script. The script calls `boot()` and exposes a `window.__<example>` handle that the Playwright specs drive.
 - `xtask build-web` runs the fork's `cargo-makepad` through `mbx`, pulls the generated message-bridge JS out of the wasm with `wasmi` and ships it as a static ES module, then writes `build-manifest.json`. There is no runtime codegen, which is what keeps the strict CSP.
 - Stylesheets in `build-web`: an example with a `tailwind.css` of its own (component-catalog) has it compiled with the mise-pinned CLI, minified, to `tailwind.css` in the product, which its page links; nothing generated is committed, and the build fails up front when the CLI is missing or the wrong version. An example without one that depends on `rustify-components` gets the committed `rustify.css` copied in, and needs no Tailwind.

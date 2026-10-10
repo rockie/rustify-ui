@@ -1,0 +1,23 @@
+[package]
+name = "rustify-docs-cli"
+# Its own version, not the workspace's: it changes whenever the binary's
+# sources, embedded assets or resolved dependencies change, and both
+# `--version` and a production manifest's `cli_version` report it.
+version = "0.1.0"
+edition.workspace = true
+license.workspace = true
+publish.workspace = true
+description = "The rustify-docs command: new, dev, build, preview and check for Rustify Docs sites"
+
+[[bin]]
+name = "rustify-docs"
+path = "src/main.rs"
+
+[dependencies]
+rustify-docs = { path = "../rustify-docs" }
+# `--format json` writes one object; the escaping is serde_json's.
+serde_json = "1"
+
+[dev-dependencies]
+# The integration tests check the manifest's digests.
+sha2 = "0.10.9"

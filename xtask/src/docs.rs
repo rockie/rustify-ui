@@ -28,7 +28,11 @@ const FIXTURE: &str = "tests/dom-only";
 
 const USAGE: &str = "\
 mbx xtask build-dom --manifest-path <Cargo.toml> [--output <directory>]
-mbx xtask docs-verify --group features [--external [--git <url> --rev <sha>]]";
+mbx xtask docs-verify --group features [--external [--git <url> --rev <sha>]]
+mbx xtask docs-verify --group performance [--report <file>]
+mbx xtask docs-verify --group artifacts
+mbx xtask docs-verify --group reliability
+mbx xtask docs-verify --group toolchain";
 
 pub fn build_dom(args: &[String]) -> Result<(), String> {
     let manifest = option(args, "--manifest-path").ok_or(USAGE)?;
@@ -47,8 +51,36 @@ pub fn verify(args: &[String]) -> Result<(), String> {
             external(git, rev)
         }
         Some("features") => features(),
+        Some("performance") => crate::docs_perf::performance(args),
+        Some("toolchain") => toolchain(),
+        // What a production build publishes: every address under the base
+        // and resolvable, the manifest, the site files, fingerprints that
+        // change with their content alone, nothing private; and `new` ->
+        // `build` with nothing compiled.
+        Some("artifacts") => docs_tests(&[
+            &["-p", "rustify-docs", "--test", "generate"],
+            &["-p", "rustify-docs-cli", "--test", "artifacts"],
+            &["-p", "rustify-docs-cli", "--test", "new_build"],
+        ]),
+        // The output transaction, its recovery and its lock; reproducible
+        // bytes; failed builds that keep the old output; preview's refusals.
+        Some("reliability") => docs_tests(&[
+            &["-p", "rustify-docs", "--lib", "--", "publish::"],
+            &["-p", "rustify-docs-cli", "--test", "reliability"],
+        ]),
         _ => Err(USAGE.to_string()),
     }
+}
+
+/// Runs the docs packages' tests, each package on its own: they build with
+/// `ssr`, which a workspace-wide run would unify with the browser crates'.
+fn docs_tests(runs: &[&[&str]]) -> Result<(), String> {
+    for run_args in runs {
+        let mut command = Command::new("mbx");
+        command.args(["test", "--locked"]).args(*run_args);
+        run(&mut command, &format!("mbx test {}", run_args.join(" ")))?;
+    }
+    Ok(())
 }
 
 fn absolute(path: &Path) -> Result<PathBuf, String> {
@@ -549,6 +581,138 @@ fn check_library_copies(root: &Path) -> Result<(), String> {
     Ok(())
 }
 
+/// The `-sys` packages a docs graph may hold, and why each needs no system
+/// library on macOS.
+const SYS_ALLOWED: &[(&str, &str)] = &[
+    (
+        "js-sys",
+        "wasm-bindgen's JavaScript bindings: Rust declarations, nothing linked on the host",
+    ),
+    (
+        "web-sys",
+        "wasm-bindgen's DOM bindings: Rust declarations, nothing linked on the host",
+    ),
+    (
+        "windows-sys",
+        "Windows API declarations, used only when the target is Windows",
+    ),
+];
+
+/// Build tools a docs graph must not pull in: each one is a program or a
+/// system library an author would have to install beside Rust.
+const TOOL_PACKAGES: &[&str] = &[
+    "cmake",
+    "pkg-config",
+    "vcpkg",
+    "bindgen",
+    "openssl",
+    "openssl-sys",
+    "onig",
+    "onig_sys",
+    "libz-sys",
+    "libgit2-sys",
+    "curl-sys",
+];
+
+/// Features that must not be on in a host-rendering graph.
+const BROWSER_FEATURES: &[(&str, &[&str])] = &[
+    ("leptos", &["csr", "hydrate"]),
+    ("reactive_graph", &["effects"]),
+    ("rustify-ui", &["csr", "gpu"]),
+    ("rustify-components", &["csr", "gpu"]),
+];
+
+/// The docs library and the CLI, each on its own: no Makepad, no `-sys`
+/// package outside the allowlist, no build tool, and no browser rendering
+/// mode switched on.
+fn check_docs_graphs(root: &Path) -> Result<(), String> {
+    let manifest = root.join("Cargo.toml");
+    for package in ["rustify-docs", "rustify-docs-cli"] {
+        let lines = graph(&mut mbx(), &manifest, package)?;
+        check_graph(&format!("{package} (alone)"), &lines)?;
+        let names: BTreeSet<&str> = lines
+            .iter()
+            .filter_map(|line| line.split_whitespace().next())
+            .collect();
+        let sys: Vec<&str> = names
+            .iter()
+            .copied()
+            .filter(|name| name.ends_with("-sys") || name.ends_with("_sys"))
+            .collect();
+        for name in &sys {
+            match SYS_ALLOWED.iter().find(|(allowed, _)| allowed == name) {
+                Some((_, why)) => println!("  {name}: {why}"),
+                None => {
+                    return Err(format!(
+                        "{package} pulls in {name}, which may need a system library"
+                    ))
+                }
+            }
+        }
+        let tools: Vec<&&str> = TOOL_PACKAGES
+            .iter()
+            .filter(|tool| names.contains(**tool))
+            .collect();
+        if !tools.is_empty() {
+            return Err(format!(
+                "{package} pulls in {tools:?}, which need a tool or library beside Rust"
+            ));
+        }
+        let output = mbx()
+            .args([
+                "tree",
+                "--locked",
+                "--edges",
+                "normal,build",
+                "--target",
+                "all",
+                "--prefix",
+                "none",
+                "--no-dedupe",
+                "--format",
+                "{p} {f}",
+                "--package",
+                package,
+                "--manifest-path",
+            ])
+            .arg(&manifest)
+            .output()
+            .map_err(|error| format!("cargo tree: {error}"))?;
+        if !output.status.success() {
+            return Err(format!(
+                "cargo tree: {}",
+                String::from_utf8_lossy(&output.stderr)
+            ));
+        }
+        let text = String::from_utf8_lossy(&output.stdout);
+        for (crate_name, forbidden) in BROWSER_FEATURES {
+            for line in text
+                .lines()
+                .filter(|line| line.split_whitespace().next() == Some(*crate_name))
+            {
+                let features: BTreeSet<&str> = line
+                    .split_whitespace()
+                    .last()
+                    .unwrap_or("")
+                    .split(',')
+                    .collect();
+                let on: Vec<&&str> = forbidden
+                    .iter()
+                    .filter(|feature| features.contains(**feature))
+                    .collect();
+                if !on.is_empty() {
+                    return Err(format!("{package}: {crate_name} has {on:?} on: {line}"));
+                }
+            }
+        }
+        println!(
+            "  no csr, hydrate, effects or gpu feature; {} -sys package(s), no build tool",
+            sys.len()
+        );
+    }
+    Ok(())
+}
+
 fn features() -> Result<(), String> {
     let root = crate::build::repo_root();
     let fixture = root.join(FIXTURE);
@@ -561,6 +725,7 @@ fn features() -> Result<(), String> {
     check_product(&output)?;
     check_gpu_switch(mbx, &fixture)?;
     check_library_copies(&root)?;
+    check_docs_graphs(&root)?;
     println!(
         "features: the default build is DOM only; the product is {}",
         output.display()
@@ -774,6 +939,92 @@ fn external(git: Option<&str>, rev: Option<&str>) -> Result<(), String> {
         public.display()
     );
     println!("serve it with: DOM_ONLY_DIR={} npx playwright test -c playwright.docs.config.ts --project=dom-only", public.display());
+    Ok(())
+}
+
+/// The CLI installed the way the documentation says, from a commit: plain
+/// Cargo with a cleared environment, `cargo install --git … --locked
+/// --profile docs-cli`, into a root outside the repository. The installed
+/// binary must report the root workspace's `docs-cli` profile (it unwinds)
+/// and recover from a panic, and `cargo install --list` must name the
+/// commit it came from.
+fn toolchain() -> Result<(), String> {
+    let root = crate::build::repo_root();
+    let work = scratch();
+    std::fs::create_dir_all(&work).map_err(|error| error.to_string())?;
+    let (url, rev) = candidate(&root, &work)?;
+    println!("CLI source: {url} at {rev}");
+    let install_root = work.join("cli-install");
+    if install_root.exists() {
+        std::fs::remove_dir_all(&install_root).map_err(|error| error.to_string())?;
+    }
+    let sysroot = sysroot()?;
+    let cargo = || {
+        let mut command = plain_cargo(&sysroot);
+        command
+            .current_dir(&work)
+            .env("CARGO_TARGET_DIR", work.join("cli-target"));
+        command
+    };
+    let started = std::time::Instant::now();
+    run(
+        cargo()
+            .args([
+                "install",
+                "--git",
+                &url,
+                "--rev",
+                &rev,
+                "--locked",
+                "--profile",
+                "docs-cli",
+                "--root",
+            ])
+            .arg(&install_root)
+            .arg("rustify-docs-cli"),
+        "cargo install --profile docs-cli",
+    )?;
+    println!("installed in {:.1} s", started.elapsed().as_secs_f64());
+    let binary = install_root.join("bin/rustify-docs");
+    let output = |args: &[&str]| -> Result<(bool, String), String> {
+        let output = Command::new(&binary)
+            .args(args)
+            .env_clear()
+            .env("PATH", "/usr/bin:/bin")
+            .output()
+            .map_err(|error| format!("{}: {error}", binary.display()))?;
+        Ok((
+            output.status.success(),
+            String::from_utf8_lossy(&output.stdout).into_owned(),
+        ))
+    };
+    let (_, version) = output(&["--version"])?;
+    let (_, info) = output(&["--build-info"])?;
+    let (recovered, probe) = output(&["__panic-probe"])?;
+    print!("{version}{info}");
+    if !info.contains("panic: unwind") {
+        return Err(format!("the installed binary does not unwind:\n{info}"));
+    }
+    if !recovered || probe.trim() != "recovered" {
+        return Err("the installed binary did not recover from a panic".into());
+    }
+    println!("panic probe: recovered");
+    let listed = cargo()
+        .args(["install", "--list", "--root"])
+        .arg(&install_root)
+        .output()
+        .map_err(|error| error.to_string())?;
+    let listed = String::from_utf8_lossy(&listed.stdout).into_owned();
+    print!("{listed}");
+    if !listed.contains(&rev) {
+        return Err(format!("cargo install --list does not name {rev}"));
+    }
+    println!(
+        "toolchain: rustify-docs installed from {rev} with the docs-cli profile; {} bytes",
+        std::fs::metadata(&binary)
+            .map(|meta| meta.len())
+            .unwrap_or(0)
+    );
     Ok(())
 }
 

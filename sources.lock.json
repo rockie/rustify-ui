@@ -1817,6 +1817,21 @@
         "crates/rustify-style/src/scanner/fixtures/template-extensions.txt": "fded6e73769361c4ef6a07cc7c4b1c2f66b3bb9223b8004a6f391b3b6558dff0"
       },
       "upstream_inventory": "tests/utility/scanner/inventory.json"
+    },
+    {
+      "name": "tailwind-docs-inputs",
+      "version": "4.1.13",
+      "origin": "npm registry tarball tailwindcss-4.1.13.tgz (sha512-i+zidfmTqtwquj4hMEwdjshYYgMbOrPzb9a0M3ZgNa0JMoZeFC6bxZvO8yr8ozS6ix2SDz0+mvryPeBs2TFE+w==), the copy tests/utility/compiler/oracle installs",
+      "imported_on": "2026-10-10",
+      "license": "MIT (crates/rustify-docs/assets/tailwindcss/LICENSE, Tailwind Labs, Inc.)",
+      "used_by": "crates/rustify-docs",
+      "purpose": "the theme and preflight layers of a Rustify Docs stylesheet, compiled in process by rustify-style so a site build needs no Tailwind CLI",
+      "import_rule": "theme.css, preflight.css and LICENSE, byte for byte; utilities come from the compiler itself",
+      "files": {
+        "crates/rustify-docs/assets/tailwindcss/LICENSE": "60e0b68c0f35c078eef3a5d29419d0b03ff84ec1df9c3f9d6e39a519a5ae7985",
+        "crates/rustify-docs/assets/tailwindcss/preflight.css": "fa2d5ae43ae561061b7ce348b89636dbdc6cd71ab5992d4e1cdd046d0b4f28f9",
+        "crates/rustify-docs/assets/tailwindcss/theme.css": "5d1f0002f98471fa59bc53ec2bd2488ff3e4661d965f7fa665408218d63187cb"
+      }
     }
   ],
   "rust_ui": {

@@ -1,0 +1,106 @@
+{
+  "environment": {
+    "os": "macOS 27.0.1",
+    "arch": "aarch64",
+    "cpu": "Apple M5 Pro",
+    "logical_cpus": 15,
+    "memory_bytes": "51539607552",
+    "rustc": "rustc 1.99.0 (b940084d7 2026-09-28)",
+    "load_average": "{ 8.06 7.01 10.10 }"
+  },
+  "corpus": {
+    "pages": 500,
+    "seed": 1592636672,
+    "profile_sha256": "7c090aa2064f0c843164f70c7488ea9f3514c7f43bf96ece66de6dae06e306d5",
+    "digest": "ecb43f7911fe7512bae279a0214aad39647052c28c3bd7c9a67f6745e4a889ac"
+  },
+  "timing": {
+    "pages": 500,
+    "committed_pages": 500,
+    "workers": 15,
+    "read_ms": 31.6,
+    "errors": 0,
+    "warnings": 0,
+    "cold": {
+      "analyze_ms": 156.7,
+      "generate_ms": 19.5,
+      "render_and_style_ms": 176.2,
+      "write_ms": 62.7
+    },
+    "hot_config_ms": [
+      35.011708000000006,
+      33.7165,
+      33.603584,
+      33.508708,
+      33.40725
+    ],
+    "hot_config_median_ms": 33.6,
+    "hot_config_misses": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "hot_body_ms": [
+      34.062125,
+      34.268458,
+      33.493834,
+      33.645624999999995,
+      33.519167
+    ],
+    "hot_body_median_ms": 33.6,
+    "html_bytes": 25752055,
+    "css_bytes": 27859,
+    "candidates": 104,
+    "stylesheet": "assets/site.c1a94023b8.css",
+    "out": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/perf/site"
+  },
+  "sizes": {
+    "shared_gzip": 8152,
+    "files_gzip": {
+      "assets/mode.64fba40012.js": 426,
+      "assets/site.206ef5637e.js": 1535,
+      "assets/site.c1a94023b8.css": 6191
+    },
+    "largest_content": {
+      "path": "zh/g04/page-024/index.html",
+      "raw": 107050,
+      "gzip": 14630,
+      "total": 22782
+    },
+    "home": {
+      "path": "index.html",
+      "raw": 89732,
+      "gzip": 11331,
+      "total": 19483
+    }
+  },
+  "checks": [
+    {
+      "check": "B analyses without a problem, so the timings are of a site that would publish",
+      "passed": true,
+      "detail": "0 error(s), 0 warning(s)"
+    },
+    {
+      "check": "cold render and stylesheet of 500 pages",
+      "passed": true,
+      "detail": "176.2 ms (limit 20000 ms)"
+    },
+    {
+      "check": "configuration change, all pages re-rendered and committed (median of 5)",
+      "passed": true,
+      "detail": "33.6 ms (limit < 1000 ms; 966.4 ms left for watch, SSE and the browser)"
+    },
+    {
+      "check": "largest content page: HTML + CSS + scripts, gzip -9",
+      "passed": true,
+      "detail": "22782 bytes (zh/g04/page-024/index.html = 107050 raw / 14630 gzip + 8152 shared; limit 100000)"
+    },
+    {
+      "check": "home page: HTML + CSS + scripts, gzip -9",
+      "passed": true,
+      "detail": "19483 bytes (89732 raw / 11331 gzip + 8152 shared; limit 100000)"
+    }
+  ]
+}

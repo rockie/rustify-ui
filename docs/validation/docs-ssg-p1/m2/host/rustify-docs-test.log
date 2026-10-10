@@ -1,0 +1,70 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.39s
+     Running unittests src/lib.rs (target/debug/deps/rustify_docs-baea2a063b1e3f52)
+
+running 46 tests
+test escape::tests::text_and_attributes ... ok
+test escape::tests::urls_are_encoded_then_escaped ... ok
+test color::tests::known_ratios ... ok
+test generation::tests::page_paths ... ok
+test highlight::tests::palette_keeps_contrast_on_code_backgrounds ... ok
+test highlight::tests::theme_css_has_both_dark_roots_and_no_bare_colours_elsewhere ... ok
+test highlight::tests::grammar_version_matches_the_lock ... ok
+test labels::tests::primary_subtag_picks_the_language ... ok
+test generation::tests::parallel_map_keeps_order_on_any_worker_count ... ok
+test diagnostic::tests::positions_are_one_based_and_count_characters ... ok
+test classes::tests::attributes_not_text ... ok
+test classes::tests::comments_raw_text_and_templates_are_skipped ... ok
+test classes::tests::unquoted_self_closing_and_escaped_values ... ok
+test markdown::tests::footnotes_tasks_strikethrough_and_raw_html ... ok
+test markdown::tests::heading_classes_and_duplicate_explicit_ids_are_errors ... ok
+test markdown::tests::links_images_and_summary ... ok
+test generation::tests::the_cache_renders_each_distinct_source_once_and_forgets_dropped_ones ... ok
+test highlight::tests::unknown_and_missing_tags_are_plain_escaped_text ... ok
+test markdown::tests::headings_get_github_ids_and_explicit_ids_win ... ok
+test markdown::tests::unknown_language_is_plain_with_its_tag ... ok
+test markdown::tests::tables_align_with_classes_not_styles ... ok
+test markdown::tests::offsets_are_file_offsets ... ok
+test shell::tests::csp_is_the_strict_serve_policy ... ok
+test shell::tests::csp_meta_drops_only_frame_ancestors ... ok
+test slug::tests::duplicates_and_explicit_ids ... ok
+test slug::tests::github_compatible_ids ... ok
+test style::tests::alert_titles_keep_contrast_on_the_muted_background ... ok
+test style::tests::brand_tokens_set_ring_and_foreground ... ok
+test style::tests::default_reading_theme_values ... ok
+test shell::tests::a_page_is_a_complete_static_document ... ok
+test shell::tests::a_third_language_keeps_its_lang_and_marks_the_interface_english ... ok
+test style::tests::the_sdk_layer_loses_its_source_and_gains_the_document_dark_variant ... ok
+test shell::tests::content_h1_is_not_doubled_and_chinese_labels_are_used ... ok
+test markdown::tests::fence_info_errors_are_located ... ok
+test highlight::tests::text_survives_highlighting ... ok
+test highlight::tests::lines_are_balanced_and_carry_no_newline ... ok
+test style::tests::only_the_candidates_become_utilities ... ok
+test markdown::tests::code_blocks_keep_raw_text_and_mark_lines ... ok
+test style::tests::dark_utilities_follow_both_dark_roots ... ok
+test style::tests::the_site_stylesheet_is_minified_and_carries_tokens_and_palette ... ok
+test markdown::tests::interface_strings_carry_english_inside_foreign_content ... ok
+test markdown::tests::the_five_alerts ... ok
+test generation::tests::a_generation_is_byte_stable_and_names_files_by_content ... ok
+test highlight::tests::every_language_has_its_grammar_and_highlights ... ok
+test highlight::tests::malformed_input_keeps_its_text_in_every_language ... ok
+mbx[progress]: 15s elapsed; 0 hits, 0 misses, 0 bypassed, 0 not looked up; ~0s compiler work saved
+mbx[progress]: 30s elapsed; 0 hits, 0 misses, 0 bypassed, 0 not looked up; ~0s compiler work saved
+test highlight::tests::every_grammar_regex_compiles ... ok
+
+test result: ok. 46 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 37.56s
+
+   Doc-tests rustify_docs
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+mbx[cache]: 0 hits, 0 misses, 1 bypassed; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: 29639 compilations served. ask rustc how many it remembers doing.

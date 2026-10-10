@@ -13,5 +13,7 @@ rustify-style = { path = "../crates/rustify-style", default-features = false, fe
 serde = { version = "1", features = ["derive"] }
 serde_json = { version = "1", features = ["preserve_order"] }
 sha2 = "0.10"
+# Reads the guides' structure for the reference site B profile.
+pulldown-cmark = { version = "0.13.4", default-features = false }
 wasmi = "2.0"
 wasm-bindgen-cli-support = "=0.2.128"

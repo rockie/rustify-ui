@@ -1,0 +1,11 @@
+checking tests/docs-ssg/fixtures/three-errors
+error[broken-anchor]: content/guide.md has no heading `#no-such-heading`
+  --> content/index.md:8:5
+  = help: link to an existing heading's id; ids are the heading text in lower case with spaces as `-`
+error[missing-image]: `missing.png` does not exist
+  --> content/index.md:10:1
+  = help: check the path; it is relative to this page, or to the asset directory when it starts with `/`
+error[inline-script]: a script written into the page is not allowed: the site's content security policy would block it
+  --> content/index.md:12:1
+  = help: put behaviour in the theme's scripts and styling in classes; reference media from static/
+check: 2 pages, 3 error(s), 0 warning(s); first: content/guide.md has no heading `#no-such-heading`

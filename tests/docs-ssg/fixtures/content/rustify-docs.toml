@@ -1,0 +1,28 @@
+schema_version = 1
+
+[site]
+name = "Fixture Docs"
+description = "Every P1 Markdown feature, rendered."
+lang = "en"
+url = "https://example.com/docs/"
+base = "/docs/"
+
+[repo]
+url = "https://github.com/example/fixture"
+ref = "main"
+
+[theme]
+primary = { light = "#175cd3", dark = "#53b1fd" }
+logo = "static/logo.svg"
+
+[[nav.groups]]
+label = "Guide"
+dir = "guide"
+
+[[nav.groups]]
+label = "Reference"
+items = ["reference/api.md"]
+
+[[nav.top]]
+label = "GitHub"
+link = "https://github.com/example/fixture"

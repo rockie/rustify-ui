@@ -51,9 +51,11 @@ the existing product.
 ## Verification commands
 
 ```sh
-mbx test --workspace --lib --bins    # --bins: xtask and the examples are binaries
+mbx test --locked --workspace --exclude rustify-docs --exclude rustify-docs-cli --lib --bins    # --bins: xtask and the examples are binaries
 mbx xtask css --check                # the component stylesheet is in step with the classes
-mbx clippy --workspace --all-targets -- -D warnings
+mbx clippy --locked --workspace --exclude rustify-docs --exclude rustify-docs-cli --all-targets -- -D warnings
+mbx test --locked -p rustify-docs     # the docs library and CLI render on the host; each runs alone
+mbx test --locked -p rustify-docs-cli
 cargo fmt --all -- --check           # the fork under makepad/ is excluded by its rustfmt.toml
 mbx xtask sources verify             # drift of makepad/ against the import record
 # The SDK and the components in each of their three builds: the default (DOM
@@ -63,6 +65,7 @@ mbx test --locked -p rustify-ui --features gpu --lib
 mbx test --locked -p rustify-ui --no-default-features --features ssr --lib
 mbx xtask docs-verify --group features   # the default graph and product carry no Makepad
 npx playwright test -c playwright.docs.config.ts --project=dom-only   # the DOM build's lifecycle
+npx playwright test -c playwright.docs.config.ts --project=docs-root  # a built docs site (also docs-subpath, docs-meta)
 npx playwright test --project=component-catalog              # one example's regression checks
 RUSTIFY_TIER=evidence npx playwright test --project=budget   # the measurements, on request
 cd makepad && mbx test -p cargo-makepad

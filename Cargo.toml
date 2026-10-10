@@ -4,6 +4,8 @@ members = [
     "crates/rustify-style",
     "crates/rustify-style-wasm",
     "crates/rustify-components",
+    "crates/rustify-docs",
+    "crates/rustify-docs-cli",
     "crates/rustify-ui",
     "crates/rustify-makepad",
     "examples/component-catalog",
@@ -40,3 +42,14 @@ smallvec = { path = "makepad/libs/smallvec" }
 codegen-units = 1
 lto = "fat"
 panic = "abort"
+
+# The `rustify-docs` CLI is installed and measured with this profile. A dev
+# server has to survive a panic in one generation and keep serving the last
+# good one, which needs unwinding; the wasm release builds above keep abort,
+# which their instance isolation depends on. Cargo only reads profiles from
+# the workspace root, so `cargo install --git … --profile docs-cli` is the
+# documented install command.
+[profile.docs-cli]
+inherits = "release"
+panic = "unwind"
+lto = "thin"

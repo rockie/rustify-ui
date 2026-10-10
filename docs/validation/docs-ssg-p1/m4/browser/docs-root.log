@@ -1,0 +1,31 @@
+npm notice run rustify-ui-browser-tests@0.1.0 npx
+npm notice run 'playwright' test -c playwright.docs.config.ts --project=docs-root
+[WebServer]       ┌─────────┐  mr boxington
+[WebServer]      ╱ ═══════ ╱│
+[WebServer]     ╱─────────╱ │
+[WebServer]     │ •    (◉)│≡│
+[WebServer]     │  ◟▄▄▄◞  │ ╱
+[WebServer]     │   ◀◆▶   │╱
+[WebServer]     └─────────┘
+[WebServer]     Finished `docs-cli` profile [optimized] target(s) in 0.20s
+[WebServer] building /Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/http/root/site into /Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/http/root/dist
+[WebServer] warning[no-git-history]: pages show no last-updated date: not a git repository (or any of the parent directories): .git
+[WebServer]   = help: build inside a git repository with the content committed
+[WebServer] build: 4 pages and 404.html in /Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/http/root/dist: 70.9 KB in 16 files, 1 warning(s), 43 ms
+[WebServer] largest pages:
+[WebServer]      10.7 KB  guide/setup/index.html
+[WebServer]       7.2 KB  reference/api/index.html
+[WebServer]       5.7 KB  guide/index.html
+[WebServer]       3.8 KB  index.html
+[WebServer]       3.6 KB  404.html
+[WebServer] serving /Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/http/root/dist (built by rustify-docs 0.1.0, build 46f757d1d381eb4d) until stopped
+
+Running 5 tests using 1 worker
+
+  ✓  1 [docs-root] › tests/docs-ssg/http.spec.ts:49:5 › every page links only to pages that load whole, under the base, from this origin (266ms)
+  ✓  2 [docs-root] › tests/docs-ssg/http.spec.ts:98:5 › an anchor link lands on its heading, Chinese ones included (141ms)
+  ✓  3 [docs-root] › tests/docs-ssg/http.spec.ts:105:5 › an address with nothing behind it is a real 404 that looks like the site, at any depth (180ms)
+  ✓  4 [docs-root] › tests/docs-ssg/http.spec.ts:121:5 › the policy arrives as a header where the host can send one, and in every page (72ms)
+  ✓  5 [docs-root] › tests/docs-ssg/http.spec.ts:141:5 › a directory without its slash is redirected, and nothing outside the base is served (3ms)
+
+  5 passed (2.1s)

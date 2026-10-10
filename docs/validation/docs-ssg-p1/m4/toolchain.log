@@ -1,0 +1,34 @@
+CLI source: file:///var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-verify/candidate.git at da114af8ed4d6a079f26ab1a05543031fbc21dfd
+    Updating git repository `file:///var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-verify/candidate.git`
+  Installing rustify-docs-cli v0.1.0 (file:///var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-verify/candidate.git?rev=da114af8ed4d6a079f26ab1a05543031fbc21dfd#da114af8)
+    Updating crates.io index
+   Compiling toml_parser v1.1.3+spec-1.1.0
+   Compiling toml_datetime v1.1.1+spec-1.1.0
+   Compiling serde_spanned v1.1.1
+   Compiling toml_writer v1.1.3+spec-1.1.0
+   Compiling jetscii v0.5.3
+   Compiling ryu v1.0.23
+   Compiling unsafe-libyaml v0.2.11
+   Compiling toml v1.1.5+spec-1.1.0
+   Compiling serde_yaml_ng v0.10.0
+   Compiling html5gum v0.8.4
+   Compiling config v0.15.25
+   Compiling leptos_config v0.8.10
+   Compiling leptos v0.8.22
+   Compiling rustify-ui v0.1.0 (/Users/rockie/.cargo/git/checkouts/candidate-b381c9b8681ffdfc/da114af/crates/rustify-ui)
+   Compiling rustify-components v0.1.0 (/Users/rockie/.cargo/git/checkouts/candidate-b381c9b8681ffdfc/da114af/crates/rustify-components)
+   Compiling rustify-docs v0.1.0 (/Users/rockie/.cargo/git/checkouts/candidate-b381c9b8681ffdfc/da114af/crates/rustify-docs)
+   Compiling rustify-docs-cli v0.1.0 (/Users/rockie/.cargo/git/checkouts/candidate-b381c9b8681ffdfc/da114af/crates/rustify-docs-cli)
+    Finished `docs-cli` profile [optimized] target(s) in 42.16s
+  Installing /var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-verify/cli-install/bin/rustify-docs
+   Installed package `rustify-docs-cli v0.1.0 (file:///var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-verify/candidate.git?rev=da114af8ed4d6a079f26ab1a05543031fbc21dfd#da114af8)` (executable `rustify-docs`)
+warning: be sure to add `/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-verify/cli-install/bin` to your PATH to be able to run the installed binaries
+installed in 42.2 s
+rustify-docs 0.1.0
+rustify-docs 0.1.0
+panic: unwind
+grammars: syntect-5.3.0+two-face-0.5.2+bat-0.26.1+fancy
+panic probe: recovered
+rustify-docs-cli v0.1.0 (file:///var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-verify/candidate.git?rev=da114af8ed4d6a079f26ab1a05543031fbc21dfd#da114af8):
+    rustify-docs
+toolchain: rustify-docs installed from da114af8ed4d6a079f26ab1a05543031fbc21dfd with the docs-cli profile; 13059248 bytes

@@ -30,6 +30,28 @@ on:
     - cron: "17 3 * * 1"
 
 jobs:
+  # The docs site generator on reference site B: cold render, warm
+  # re-render after a configuration change, and page weight. A runner is not
+  # the reference machine the plan's figures are taken on, so this is the
+  # regression signal; the acceptance numbers are recorded by hand.
+  docs-performance:
+    name: docs performance gate
+    runs-on: macos-14
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Rust, mbx and Tailwind from mise.toml
+        uses: jdx/mise-action@v4
+      - uses: jdx/mr-boxington-action@v1
+      - name: Reference site B
+        run: mbx xtask docs-verify --group performance --report test-results/docs-performance.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: docs-performance
+          path: test-results/docs-performance.json
+          retention-days: 30
+
   evidence:
     name: evidence tier
     runs-on: macos-14
