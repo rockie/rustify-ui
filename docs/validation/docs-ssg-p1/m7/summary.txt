@@ -1,0 +1,33 @@
+started 2026-10-10 21:31:39 +0800
+fmt status=1
+sources-verify status=0
+css-check status=0
+catalog-check status=0
+workspace-test status=0
+workspace-clippy status=0
+rustify-ui-default-test status=0
+rustify-ui-default-clippy status=0
+rustify-ui-gpu-test status=0
+rustify-ui-gpu-clippy status=0
+rustify-ui-ssr-test status=0
+rustify-ui-ssr-clippy status=0
+rustify-components-default-test status=0
+rustify-components-default-clippy status=0
+rustify-components-gpu-test status=0
+rustify-components-gpu-clippy status=0
+rustify-components-ssr-test status=0
+rustify-components-ssr-clippy status=0
+rustify-docs-test status=0
+rustify-docs-clippy status=0
+rustify-docs-cli-test status=0
+rustify-docs-cli-clippy status=0
+docs-cli-build status=0
+build-info status=0
+features status=0
+artifacts status=0
+reliability status=0
+toolchain status=0
+browser-docs-root status=0
+browser-docs-meta status=0
+browser-docs-dev status=0
+done 2026-10-10 21:36:27 +0800

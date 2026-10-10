@@ -379,3 +379,99 @@ fn a_changed_file_renames_itself_and_changes_only_what_references_it() {
         );
     }
 }
+
+#[test]
+fn a_logo_pair_and_the_share_image_are_published_by_content() {
+    let temp = fixture_at("/docs/");
+    temp.write(
+        "site/static/logo-dark.svg",
+        &temp
+            .read("site/static/logo.svg")
+            .replace("#175cd3", "#53b1fd"),
+    );
+    temp.edit(
+        "site/rustify-docs.toml",
+        "logo = \"static/logo.svg\"",
+        "logo = { light = \"static/logo.svg\", dark = \"static/logo-dark.svg\" }",
+    );
+    let files = build(&temp, &[]);
+    let named = |prefix: &str| -> String {
+        files
+            .keys()
+            .find(|name| name.starts_with(prefix))
+            .unwrap_or_else(|| panic!("no {prefix}*"))
+            .clone()
+    };
+    let light = named("assets/files/logo.");
+    let dark = named("assets/files/logo-dark.");
+    let share = named("assets/share.");
+    for page in ["index.html", "guide/setup/index.html", "404.html"] {
+        let html = text_of(&files, page);
+        assert!(
+            html.contains(&format!(r#"<img src="/docs/{light}" alt="" width="24" height="24" class="h-6 w-auto dark:hidden">"#)),
+            "{page}"
+        );
+        assert!(
+            html.contains(&format!(r#"<img src="/docs/{dark}" alt="" width="24" height="24" class="hidden h-6 w-auto dark:block">"#)),
+            "{page}"
+        );
+    }
+    // Without `site.image`, link previews show the framework's own card,
+    // at its absolute address.
+    assert!(text_of(&files, "index.html").contains(&format!(
+        r#"<meta property="og:image" content="https://docs.example.net/docs/{share}">"#
+    )));
+
+    // A change to the dark logo renames it alone.
+    temp.edit("site/static/logo-dark.svg", "#53b1fd", "#84caff");
+    let after = build(&temp, &[]);
+    assert!(after.contains_key(&light));
+    assert!(!after.contains_key(&dark));
+    assert!(after.contains_key(&share));
+
+    // With `site.image`, that file is the card and the framework's is not
+    // published.
+    std::fs::write(temp.path("site/static/card.png"), SHARE_PNG).unwrap();
+    temp.edit(
+        "site/rustify-docs.toml",
+        "base = \"/docs/\"",
+        "base = \"/docs/\"\nimage = \"static/card.png\"",
+    );
+    let with_card = build(&temp, &[]);
+    let card = with_card
+        .keys()
+        .find(|name| name.starts_with("assets/files/card."))
+        .expect("the card, by content");
+    assert!(!with_card
+        .keys()
+        .any(|name| name.starts_with("assets/share.")));
+    assert!(text_of(&with_card, "index.html").contains(&format!(
+        r#"<meta property="og:image" content="https://docs.example.net/docs/{card}">"#
+    )));
+}
+
+/// A 1×1 PNG.
+const SHARE_PNG: &[u8] = &[
+    0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a, 0x00, 0x00, 0x00, 0x0d, 0x49, 0x48, 0x44, 0x52,
+    0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x01, 0x08, 0x06, 0x00, 0x00, 0x00, 0x1f, 0x15, 0xc4,
+    0x89, 0x00, 0x00, 0x00, 0x0d, 0x49, 0x44, 0x41, 0x54, 0x78, 0x9c, 0x63, 0xf8, 0xff, 0xff, 0x3f,
+    0x00, 0x05, 0xfe, 0x02, 0xfe, 0xa7, 0x35, 0x81, 0x84, 0x00, 0x00, 0x00, 0x00, 0x49, 0x45, 0x4e,
+    0x44, 0xae, 0x42, 0x60, 0x82,
+];
+
+#[test]
+fn a_built_site_carries_no_gpu_runtime() {
+    let files = build(&fixture_at("/"), &[]);
+    for (path, bytes) in &files {
+        assert!(!path.ends_with(".wasm"), "{path}");
+        let text = String::from_utf8_lossy(bytes).to_ascii_lowercase();
+        for needle in [
+            "makepad",
+            "webgl",
+            "wasm-bindgen",
+            "webassembly.instantiate",
+        ] {
+            assert!(!text.contains(needle), "{path} mentions {needle}");
+        }
+    }
+}

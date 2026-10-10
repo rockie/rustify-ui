@@ -11,6 +11,8 @@ use rustify_docs::generation;
 use rustify_docs::highlight::Highlighter;
 use rustify_docs::publish::{self, Area, LockError, Manifest, Recovery};
 
+mod dev;
+mod links;
 mod new;
 mod preview;
 mod report;
@@ -24,6 +26,16 @@ const VERSION: &str = env!("CARGO_PKG_VERSION");
 /// the install command's `--profile docs-cli` is what selects it.
 const UNWINDS: bool = cfg!(panic = "unwind");
 
+/// How tests make a command fail where it otherwise would not:
+/// `panic:<marker>` makes a `dev` build panic on a page containing
+/// `<marker>`; `stop:<step>` halts `build` at that step of publishing (see
+/// `publish::Step`) until it is killed. Not part of the command's interface.
+const FAULT_VARIABLE: &str = "RUSTIFY_DOCS_FAULT";
+
+/// How to install this command so that it unwinds.
+const INSTALL: &str =
+    "cargo install --git https://github.com/rockie/rustify-ui --locked --profile docs-cli rustify-docs-cli";
+
 fn help() -> String {
     format!(
         "rustify-docs {VERSION}\n\
@@ -31,12 +43,12 @@ fn help() -> String {
          Usage: rustify-docs <command> [options]\n\n\
          Commands:\n\
          \x20 new <dir> [--template content]   Create a site in a new or empty directory\n\
-         \x20 check                            Report every problem in the site without writing anything\n\
+         \x20 check [--external-links]         Report every problem in the site without writing anything\n\
          \x20 build [--base <path>] [--out <dir>]\n\
          \x20                                  Write the production site (default: build.out)\n\
          \x20 preview [--dir <dir>] [--base <path>] [--port <n>] [--host <address>]\n\
          \x20                                  Serve a production build as a static host would\n\
-         \x20 dev                              Serve the site and rebuild on save (not in this build yet)\n\n\
+         \x20 dev [--port <n>]                 Serve the site from memory and update open pages on save\n\n\
          Options:\n\
          \x20 --config <path>        The site's rustify-docs.toml (default: ./rustify-docs.toml)\n\
          \x20 --format text|json     How check and build report (json: one object on stdout)\n\
@@ -44,13 +56,17 @@ fn help() -> String {
          \x20 --version              Print the version\n\
          \x20 --build-info           Print how this binary was built\n\
          \x20 -h, --help             Print this help\n\n\
-         check and build work offline; check changes no file. preview listens on\n\
+         check and build work offline; check changes no file, and requests the\n\
+         site's links to other sites only with --external-links. preview listens on\n\
          127.0.0.1:{} unless told otherwise (the next free port if that one is\n\
-         taken; --port 0 lets the system choose). Exit status: 0 on success, 1\n\
+         taken; --port 0 lets the system choose). dev listens on 127.0.0.1 at\n\
+         dev.port (default {}; likewise the next free port if taken), shows drafts\n\
+         and writes nothing. Exit status: 0 on success, 1\n\
          when the site has errors (or, with --deny-warnings, warnings) or a\n\
          command fails, 2 for a usage error.\n\n\
          Supported on macOS. Linux and Windows are not verified.\n",
-        preview::DEFAULT_PORT
+        preview::DEFAULT_PORT,
+        rustify_docs::config::DEFAULT_DEV_PORT
     )
 }
 
@@ -242,11 +258,18 @@ fn load(config: &Path, base: Option<&str>) -> Result<(Project, Vec<Diagnostic>),
 }
 
 /// Everything `check` and `build` share: the analysis and the generation,
-/// in memory.
+/// in memory. With `external_links` (only `check` asks), the links to other
+/// sites are requested too, and how many addresses that was is returned.
 fn analyse(
     project: &Project,
     mut diagnostics: Vec<Diagnostic>,
-) -> (Vec<Diagnostic>, Option<generation::Generation>, usize) {
+    external_links: bool,
+) -> (
+    Vec<Diagnostic>,
+    Option<generation::Generation>,
+    usize,
+    Option<usize>,
+) {
     let (snapshot, dates, problems) = content::read_inputs(project);
     diagnostics.extend(problems);
     let highlighter = Highlighter::new();
@@ -263,6 +286,11 @@ fn analyse(
     let pages = analysis.published().count();
     let ok = analysis.errors() == 0;
     diagnostics.extend(analysis.diagnostics.iter().cloned());
+    let checked = external_links.then(|| {
+        let (problems, checked) = links::check(project, &snapshot, &analysis, VERSION);
+        diagnostics.extend(problems);
+        checked
+    });
     let generation = if ok {
         match generation::generate(project, &snapshot, &analysis, &dates, workers) {
             Ok(generation) => Some(generation),
@@ -276,14 +304,16 @@ fn analyse(
     };
     diagnostics.sort();
     diagnostics.dedup();
-    (diagnostics, generation, pages)
+    (diagnostics, generation, pages, checked)
 }
 
 fn check(args: &[String]) -> ExitCode {
-    if args.iter().any(|arg| arg == "--external-links") {
-        return usage("--external-links is not in this build yet; check runs offline");
-    }
-    let args = match Args::parse(args, &["--config", "--format"], &["--deny-warnings"], 0) {
+    let args = match Args::parse(
+        args,
+        &["--config", "--format"],
+        &["--deny-warnings", "--external-links"],
+        0,
+    ) {
         Ok(args) => args,
         Err(message) => return usage(message),
     };
@@ -292,17 +322,21 @@ fn check(args: &[String]) -> ExitCode {
         Err(message) => return usage(message),
     };
     let deny = args.flag("--deny-warnings");
+    let external = args.flag("--external-links");
     let config = args.config();
-    let conclusion = |pages: usize, diagnostics: &[Diagnostic]| {
+    let conclusion = |pages: usize, checked: Option<usize>, diagnostics: &[Diagnostic]| {
         let first = first_error(diagnostics)
             .map(|first| format!("; first: {first}"))
             .unwrap_or_default();
-        move |summary: &Summary| format!("check: {pages} pages, {}{first}", counts(summary))
+        let links = checked
+            .map(|checked| format!(", {checked} external address(es) checked"))
+            .unwrap_or_default();
+        move |summary: &Summary| format!("check: {pages} pages{links}, {}{first}", counts(summary))
     };
     let (project, diagnostics) = match load(&config, None) {
         Ok(loaded) => loaded,
         Err(diagnostics) => {
-            let done = conclusion(0, &diagnostics);
+            let done = conclusion(0, None, &diagnostics);
             return report(
                 &diagnostics,
                 format,
@@ -315,15 +349,13 @@ fn check(args: &[String]) -> ExitCode {
     if format == Format::Text {
         eprintln!("checking {}", absolute(&project.root).display());
     }
-    let (diagnostics, _, pages) = analyse(&project, diagnostics);
-    let done = conclusion(pages, &diagnostics);
-    report(
-        &diagnostics,
-        format,
-        deny,
-        serde_json::json!({ "pages": pages }),
-        done,
-    )
+    let (diagnostics, _, pages, checked) = analyse(&project, diagnostics, external);
+    let done = conclusion(pages, checked, &diagnostics);
+    let mut extra = serde_json::json!({ "pages": pages });
+    if let Some(checked) = checked {
+        extra["external_addresses"] = checked.into();
+    }
+    report(&diagnostics, format, deny, extra, done)
 }
 
 fn kilobytes(bytes: u64) -> String {
@@ -412,6 +444,11 @@ fn build(args: &[String]) -> ExitCode {
         ),
         Err(message) => return fail("build", message),
     }
+    // Refused before anything is rendered: an output that is not this
+    // tool's to replace.
+    if let Err(message) = publish::replaceable(&area.out) {
+        return fail("build", message);
+    }
     if format == Format::Text {
         eprintln!(
             "building {} into {}",
@@ -419,7 +456,7 @@ fn build(args: &[String]) -> ExitCode {
             area.out.display()
         );
     }
-    let (diagnostics, generation, pages) = analyse(&project, diagnostics);
+    let (diagnostics, generation, pages, _) = analyse(&project, diagnostics, false);
     let blocked = Summary::of(&diagnostics, deny);
     let Some(mut generation) = generation.filter(|_| blocked.success()) else {
         let done = failed(&diagnostics);
@@ -432,7 +469,18 @@ fn build(args: &[String]) -> ExitCode {
         );
     };
     publish::add_manifest(&mut generation.files, &project.config.site.base, VERSION);
-    if let Err(message) = publish::publish(&lock, &generation.files) {
+    let stop_at = std::env::var(FAULT_VARIABLE)
+        .ok()
+        .and_then(|value| value.strip_prefix("stop:").map(str::to_owned));
+    let mut at = |step: publish::Step| {
+        if stop_at.as_deref() == Some(step.name()) {
+            eprintln!("build: stopped at {} ({FAULT_VARIABLE})", step.name());
+            loop {
+                std::thread::sleep(std::time::Duration::from_secs(3600));
+            }
+        }
+    };
+    if let Err(message) = publish::publish_with(&lock, &generation.files, &mut at) {
         let mut diagnostics = diagnostics;
         diagnostics.push(Diagnostic::general(Severity::Error, "write", message));
         let done = failed(&diagnostics);
@@ -514,6 +562,28 @@ fn preview(args: &[String]) -> ExitCode {
             }
         },
     };
+    // A build that stopped half-way may have moved the output aside: say
+    // that, rather than that there is no build.
+    if let Ok(area) = Area::of(&dir) {
+        if area.unfinished() {
+            return match publish::lock(&area, false) {
+                Err(LockError::Busy) => fail(
+                    "preview",
+                    format!(
+                        "{} is being built; preview it when the build ends",
+                        area.out.display()
+                    ),
+                ),
+                _ => fail(
+                    "preview",
+                    format!(
+                        "a build of {} stopped half-way; run `rustify-docs build` to recover it",
+                        area.out.display()
+                    ),
+                ),
+            };
+        }
+    }
     let manifest = match Manifest::read(&dir) {
         Ok(manifest) => manifest,
         Err(message) => {
@@ -576,7 +646,7 @@ fn preview(args: &[String]) -> ExitCode {
     }
     let not_found =
         std::fs::read(area.out.join("404.html")).unwrap_or_else(|_| b"404 not found\n".to_vec());
-    let listener = match preview::bind(&host, port) {
+    let listener = match preview::bind(&host, port, preview::DEFAULT_PORT) {
         Ok(listener) => listener,
         Err(message) => return fail("preview", message),
     };
@@ -602,6 +672,22 @@ fn preview(args: &[String]) -> ExitCode {
     ExitCode::SUCCESS
 }
 
+fn dev(args: &[String]) -> ExitCode {
+    let args = match Args::parse(args, &["--config", "--port"], &[], 0) {
+        Ok(args) => args,
+        Err(message) => return usage(message),
+    };
+    let port = match args.get("--port").map(str::parse::<u16>) {
+        None => None,
+        Some(Ok(port)) => Some(port),
+        Some(Err(_)) => return usage("--port takes a number from 0 to 65535"),
+    };
+    dev::run(dev::Options {
+        config: args.config(),
+        port,
+    })
+}
+
 fn new_site(args: &[String]) -> ExitCode {
     let args = match Args::parse(args, &["--template"], &[], 1) {
         Ok(args) => args,
@@ -615,7 +701,7 @@ fn new_site(args: &[String]) -> ExitCode {
         Ok(rustc) => {
             eprintln!("{rustc}");
             println!(
-                "created {}\nnext:\n  cd {}\n  rustify-docs build && rustify-docs preview",
+                "created {}\nnext:\n  cd {}\n  rustify-docs dev",
                 dir.display(),
                 dir.display()
             );
@@ -645,10 +731,7 @@ fn main() -> ExitCode {
         Some("build") => build(&args[1..]),
         Some("preview") => preview(&args[1..]),
         Some("new") => new_site(&args[1..]),
-        Some("dev") => {
-            eprintln!("rustify-docs {VERSION}: `dev` is not in this build yet");
-            ExitCode::from(2)
-        }
+        Some("dev") => dev(&args[1..]),
         Some(other) => usage(format!("unknown command `{other}`")),
     }
 }

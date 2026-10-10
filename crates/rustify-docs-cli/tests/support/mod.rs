@@ -299,3 +299,157 @@ pub fn get(url: &str) -> (u16, BTreeMap<String, String>, Vec<u8>) {
         .collect();
     (status, headers, body)
 }
+
+/// A running `dev`, stopped when dropped.
+pub struct Dev {
+    pub child: Child,
+    /// `http://127.0.0.1:<port>/<base>`.
+    pub url: String,
+    /// What it wrote to stderr, as it goes.
+    pub log: std::sync::Arc<std::sync::Mutex<String>>,
+}
+
+impl Dev {
+    /// Starts `dev --port 0` in `dir` with `args` and `env`, and waits for
+    /// its address. `Err` holds what it printed when it exited instead.
+    pub fn start(dir: &Path, args: &[&str], env: &[(&str, &str)]) -> Result<Self, String> {
+        Self::start_with(dir, &[&["--port", "0"], args].concat(), env)
+    }
+
+    /// As `start`, without choosing the port.
+    pub fn start_with(dir: &Path, args: &[&str], env: &[(&str, &str)]) -> Result<Self, String> {
+        use std::io::{BufRead, BufReader, Read};
+        let mut command = Command::new(BIN);
+        command
+            .arg("dev")
+            .args(args)
+            .current_dir(dir)
+            .stdout(Stdio::piped())
+            .stderr(Stdio::piped());
+        for (name, value) in env {
+            command.env(name, value);
+        }
+        let mut child = command.spawn().unwrap();
+        let log = std::sync::Arc::new(std::sync::Mutex::new(String::new()));
+        let mut stderr = child.stderr.take().unwrap();
+        let sink = log.clone();
+        std::thread::spawn(move || {
+            let mut buffer = [0u8; 4096];
+            while let Ok(n) = stderr.read(&mut buffer) {
+                if n == 0 {
+                    break;
+                }
+                sink.lock()
+                    .unwrap()
+                    .push_str(&String::from_utf8_lossy(&buffer[..n]));
+            }
+        });
+        let mut line = String::new();
+        BufReader::new(child.stdout.take().unwrap())
+            .read_line(&mut line)
+            .unwrap();
+        match line.strip_prefix("dev: ") {
+            Some(url) => Ok(Self {
+                child,
+                url: url.trim().to_owned(),
+                log,
+            }),
+            None => {
+                let _ = child.wait();
+                std::thread::sleep(std::time::Duration::from_millis(100));
+                let text = log.lock().unwrap().clone();
+                Err(format!("{line}{text}"))
+            }
+        }
+    }
+
+    /// `http://127.0.0.1:<port>`.
+    pub fn origin(&self) -> String {
+        let rest = self.url.strip_prefix("http://").unwrap();
+        format!("http://{}", &rest[..rest.find('/').unwrap()])
+    }
+
+    pub fn log(&self) -> String {
+        self.log.lock().unwrap().clone()
+    }
+
+    /// The event stream a page at `path` (a copy of build `good`) opens.
+    pub fn events(&self, path: &str, good: u64) -> Events {
+        Events::open(&self.origin(), path, good)
+    }
+}
+
+impl Drop for Dev {
+    fn drop(&mut self) {
+        let _ = self.child.kill();
+        let _ = self.child.wait();
+    }
+}
+
+/// `dev`'s server-sent events, read as a page would.
+pub struct Events {
+    reader: std::io::BufReader<std::net::TcpStream>,
+}
+
+impl Events {
+    pub fn open(origin: &str, path: &str, good: u64) -> Self {
+        use std::io::{BufRead, Write};
+        let host = origin.strip_prefix("http://").unwrap();
+        let mut stream = std::net::TcpStream::connect(host).unwrap();
+        let encoded: String = path
+            .bytes()
+            .map(|b| match b {
+                b'A'..=b'Z' | b'a'..=b'z' | b'0'..=b'9' | b'-' | b'.' | b'_' => {
+                    (b as char).to_string()
+                }
+                _ => format!("%{b:02X}"),
+            })
+            .collect();
+        write!(
+            stream,
+            "GET /__rustify-docs/events?path={encoded}&good={good} HTTP/1.1\r\nHost: {host}\r\n\r\n"
+        )
+        .unwrap();
+        stream
+            .set_read_timeout(Some(std::time::Duration::from_secs(20)))
+            .unwrap();
+        let mut reader = std::io::BufReader::new(stream);
+        loop {
+            let mut line = String::new();
+            reader.read_line(&mut line).unwrap();
+            if line == "\r\n" || line.is_empty() {
+                break;
+            }
+        }
+        Self { reader }
+    }
+
+    /// The next state the server sends.
+    pub fn next(&mut self) -> serde_json::Value {
+        use std::io::BufRead;
+        loop {
+            let mut line = String::new();
+            let read = self.reader.read_line(&mut line).expect("an event in time");
+            assert!(read > 0, "the event stream ended");
+            if let Some(data) = line.strip_prefix("data: ") {
+                return serde_json::from_str(data).unwrap();
+            }
+        }
+    }
+
+    /// The first state that satisfies `wanted`.
+    pub fn until(&mut self, wanted: impl Fn(&serde_json::Value) -> bool) -> serde_json::Value {
+        loop {
+            let state = self.next();
+            if wanted(&state) {
+                return state;
+            }
+        }
+    }
+}
+
+/// The body of a GET as text.
+pub fn get_text(url: &str) -> (u16, String) {
+    let (status, _, body) = get(url);
+    (status, String::from_utf8_lossy(&body).into_owned())
+}

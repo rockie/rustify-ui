@@ -145,6 +145,26 @@ pub fn parse_srcset(value: &str) -> Vec<(String, String)> {
     candidates
 }
 
+/// Whether a link opens another site in a new window without cutting that
+/// window's handle on this one (`rel="noopener"`, or `noreferrer`, which
+/// implies it). `attribute` looks an attribute up by its lowercase name.
+fn opens_unguarded_window(attribute: impl Fn(&str) -> Option<String>) -> bool {
+    let Some(target) = attribute("target") else {
+        return false;
+    };
+    let target = target.trim().to_ascii_lowercase();
+    if target.is_empty() || matches!(target.as_str(), "_self" | "_parent" | "_top") {
+        return false;
+    }
+    let href = attribute("href").unwrap_or_default();
+    if !is_cross_origin(&href, false) {
+        return false;
+    }
+    let rel = attribute("rel").unwrap_or_default().to_ascii_lowercase();
+    !rel.split_ascii_whitespace()
+        .any(|rel| rel == "noopener" || rel == "noreferrer")
+}
+
 /// The raw value range of an attribute, given the span html5gum reports for
 /// it (name through value).
 fn value_range(source: &str, span: Range<usize>) -> Option<Range<usize>> {
@@ -189,6 +209,22 @@ pub fn check(chunk: &str) -> (Vec<Issue>, Vec<UrlSlot>) {
                     .suggest("put behaviour in the theme's scripts and styling in classes; reference media from static/"),
             );
             continue;
+        }
+        let attribute = |key: &str| {
+            tag.attributes
+                .iter()
+                .find(|(name, _)| name.eq_ignore_ascii_case(key.as_bytes()))
+                .map(|(_, value)| String::from_utf8_lossy(&value.value).into_owned())
+        };
+        if matches!(name.as_str(), "a" | "area") && opens_unguarded_window(attribute) {
+            issues.push(
+                Issue::error(
+                    tag_span.clone(),
+                    "new-window-opener",
+                    "this link opens another site in a new window without rel=\"noopener\"",
+                )
+                .suggest("add rel=\"noopener\", or drop target"),
+            );
         }
         if name == "img"
             && !tag
@@ -304,6 +340,9 @@ pub fn check_document(html: &str) -> Vec<String> {
                     "style" | "iframe" | "frame" | "object" | "embed" | "base" => {
                         problems.push(format!("a <{name}> element"))
                     }
+                    "a" | "area" if opens_unguarded_window(attribute) => problems.push(format!(
+                        "a new-window <{name}> to another site without rel=\"noopener\""
+                    )),
                     "link" => {
                         let rel = attribute("rel").unwrap_or_default().to_ascii_lowercase();
                         let loads = rel.split_ascii_whitespace().any(|rel| {
@@ -385,6 +424,31 @@ mod tests {
         assert_eq!(
             found,
             [("missing-alt", crate::diagnostic::Severity::Warning)]
+        );
+    }
+
+    #[test]
+    fn a_new_window_to_another_site_needs_noopener() {
+        assert_eq!(
+            rules("<a href=\"https://x.example\" target=\"_blank\">x</a>"),
+            ["new-window-opener"]
+        );
+        assert_eq!(
+            rules("<A HREF=//x.example TARGET=Help REL=external>x</A>"),
+            ["new-window-opener"]
+        );
+        for fine in [
+            "<a href=\"https://x.example\" target=\"_blank\" rel=\"noopener\">x</a>",
+            "<a href=\"https://x.example\" target=\"_blank\" rel=\"external noreferrer\">x</a>",
+            "<a href=\"https://x.example\" target=\"_self\">x</a>",
+            "<a href=\"https://x.example\">x</a>",
+            "<a href=\"guide.md\" target=\"_blank\">x</a>",
+        ] {
+            assert!(rules(fine).is_empty(), "{fine}");
+        }
+        assert_eq!(
+            check_document("<a href=\"https://x.example\" target=_blank>x</a>"),
+            ["a new-window <a> to another site without rel=\"noopener\""]
         );
     }
 

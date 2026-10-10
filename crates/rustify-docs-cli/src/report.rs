@@ -59,21 +59,21 @@ pub fn text(diagnostic: &Diagnostic) -> String {
     out
 }
 
+/// One diagnostic as `--format json` and `dev`'s pages receive it.
+pub fn diagnostic_json(d: &Diagnostic) -> serde_json::Value {
+    serde_json::json!({
+        "severity": d.severity.as_str(),
+        "rule": d.rule,
+        "file": d.file,
+        "line": d.line,
+        "column": d.column,
+        "message": d.message,
+        "suggestion": d.suggestion,
+    })
+}
+
 pub fn json(diagnostics: &[Diagnostic], summary: &Summary, extra: serde_json::Value) -> String {
-    let list: Vec<serde_json::Value> = diagnostics
-        .iter()
-        .map(|d| {
-            serde_json::json!({
-                "severity": d.severity.as_str(),
-                "rule": d.rule,
-                "file": d.file,
-                "line": d.line,
-                "column": d.column,
-                "message": d.message,
-                "suggestion": d.suggestion,
-            })
-        })
-        .collect();
+    let list: Vec<serde_json::Value> = diagnostics.iter().map(diagnostic_json).collect();
     let mut summary_json =
         serde_json::json!({ "errors": summary.errors, "warnings": summary.warnings });
     if let (Some(target), serde_json::Value::Object(extra)) = (summary_json.as_object_mut(), extra)

@@ -1,0 +1,2 @@
+dev failed: this rustify-docs was built to abort on a panic, so one failed build would end the session; install it with the docs-cli profile:
+  cargo install --git https://github.com/rockie/rustify-ui --locked --profile docs-cli rustify-docs-cli

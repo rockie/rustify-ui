@@ -125,6 +125,13 @@ jobs:
         run: npx playwright test -c playwright.docs.config.ts --project=docs-subpath
       - name: Served by a static host with the policy in each page only
         run: npx playwright test -c playwright.docs.config.ts --project=docs-meta
+      - name: rustify-docs dev, a save at a time
+        run: npx playwright test -c playwright.docs.config.ts --project=docs-dev
+      # Playwright's WebKit is an early engine check, not Safari.
+      - name: Install Playwright WebKit
+        run: npx playwright install --with-deps webkit
+      - name: WebKit engine smoke
+        run: npx playwright test -c playwright.docs.config.ts --project=docs-webkit
       - uses: actions/upload-artifact@v4
         if: always()
         with:

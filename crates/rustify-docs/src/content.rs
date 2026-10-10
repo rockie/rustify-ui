@@ -316,8 +316,9 @@ impl FragmentKey {
 }
 
 /// Fragments by key. Entries an analysis no longer uses are dropped, so the
-/// cache tracks the site rather than its history.
-#[derive(Default)]
+/// cache tracks the site rather than its history. A clone shares the
+/// fragments, so a generation can work on one and be thrown away whole.
+#[derive(Clone, Default)]
 pub struct FragmentCache {
     entries: HashMap<FragmentKey, Arc<Fragment>>,
     pub hits: usize,
@@ -393,6 +394,9 @@ pub struct Analysis {
     pub social: Vec<Target>,
     /// Project-relative files the pages reference, to be published.
     pub resources: BTreeSet<String>,
+    /// Project-relative files the pages include source from, read or not:
+    /// what else `dev` watches.
+    pub includes: BTreeSet<String>,
     pub diagnostics: Vec<Diagnostic>,
 }
 
@@ -519,6 +523,7 @@ pub fn analyze(
     }
     let mut drafts = Vec::new();
     let mut routes: BTreeMap<String, usize> = BTreeMap::new();
+    let mut included = BTreeSet::new();
     for (path, text) in &snapshot.markdown {
         let file = file_of(path);
         let (front, body_offset) = match frontmatter::parse(text) {
@@ -578,6 +583,7 @@ pub fn analyze(
         let mut includes = IncludeFiles::default();
         for include in markdown::include_paths(body) {
             let read = read_include(project, &include);
+            included.insert(include.clone());
             includes.0.insert(include, read);
         }
         let key = FragmentKey::of(body, body_offset, &lang, &includes);
@@ -1019,6 +1025,7 @@ pub fn analyze(
         top,
         social,
         resources,
+        includes: included,
         diagnostics,
     }
 }

@@ -1,12 +1,115 @@
-/* The reading theme's rules that no utility expresses: Markdown content,
-   code blocks, alerts and footnotes. Imported into the components layer, so a
-   utility on the same element still wins. Colours are the semantic tokens
-   the generated token rules set on the page root; nothing here picks one. */
+/* The reading theme's rules that no utility expresses: the page's columns,
+   Markdown content, code, alerts, the home page and the browser's own
+   surfaces. Imported into the components layer, so a utility on the same
+   element still wins. Colours are the semantic tokens the generated token
+   rules set on the page root, mixed where a tint is needed; nothing here
+   picks a hue of its own. */
+
+:root {
+  --rd-measure: 36rem;
+  --rd-header: 3.5rem;
+  /* One radius for every panel: code, tables, alerts, images, the pager. */
+  --rd-radius: 0.375rem;
+  scrollbar-color: color-mix(in oklab, var(--muted-foreground) 45%, transparent) transparent;
+}
+
+::selection {
+  background: color-mix(in oklab, var(--primary) 24%, var(--background));
+  color: var(--foreground);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Every interactive element shows where focus is: an opaque 3px ring with
+   a 2px gap, in the ring colour, which is the brand's primary. */
+:where(a, button, summary, [tabindex]):focus-visible {
+  outline: 3px solid var(--ring);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* The header. */
+.rd-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+  color: var(--foreground);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.rd-brand span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rd-mode-switch {
+  display: flex;
+  gap: 0.125rem;
+  padding: 0.1875rem;
+  border: 1px solid var(--secondary);
+  border-radius: 0.5rem;
+  flex: none;
+}
+
+.rd-mode-switch[hidden] {
+  display: none;
+}
+
+.rd-mode-option {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.1875rem 0.5rem;
+  border-radius: 0.3125rem;
+  color: var(--muted-foreground);
+  font-size: 0.8125rem;
+  line-height: 1.25rem;
+  cursor: pointer;
+}
+
+.rd-mode-icon {
+  display: inline-flex;
+}
+
+/* On a narrow screen the icons carry the switch; the words stay for
+   assistive technology. */
+@media (max-width: 30rem) {
+  .rd-mode-option {
+    padding-inline: 0.4375rem;
+  }
+
+  .rd-mode-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}
+
+.rd-mode-option:hover {
+  color: var(--foreground);
+}
+
+.rd-mode-option[aria-pressed="true"] {
+  background: var(--secondary);
+  color: var(--foreground);
+  font-weight: 500;
+}
 
 /* One column under 768px, sidebar and article to 1279px with the table of
-   contents above the article, and three columns from 1280px. The sidebar
-   and the contents are native <details>: closed by default on a narrow
-   screen without any script, and shown open where there is room. */
+   contents above the article, and three columns from 1280px. Below its
+   width each navigation is a native <details> panel that works without
+   script; from it, a plain column. One of the two is always
+   display: none. */
 .rd-layout {
   grid-template-areas: "sidebar" "toc" "main";
   grid-template-columns: minmax(0, 1fr);
@@ -24,6 +127,59 @@
   grid-area: main;
 }
 
+.rd-sidebar-wide,
+.rd-toc-wide {
+  display: none;
+}
+
+.rd-sidebar-narrow,
+.rd-toc-narrow {
+  border-bottom: 1px solid var(--secondary);
+}
+
+.rd-sidebar-narrow > summary,
+.rd-toc-narrow > summary {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding-block: 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  list-style: none;
+  cursor: pointer;
+}
+
+.rd-sidebar-narrow > summary::-webkit-details-marker,
+.rd-toc-narrow > summary::-webkit-details-marker {
+  display: none;
+}
+
+/* A drawn chevron that turns when the panel opens. */
+.rd-sidebar-narrow > summary::after,
+.rd-toc-narrow > summary::after {
+  width: 0.4375rem;
+  height: 0.4375rem;
+  margin-top: -0.1875rem;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  content: "";
+  transform: rotate(45deg);
+}
+
+.rd-sidebar-narrow[open] > summary::after,
+.rd-toc-narrow[open] > summary::after {
+  margin-top: 0.1875rem;
+  transform: rotate(225deg);
+}
+
+.rd-sidebar-narrow[open] > nav {
+  padding-bottom: 1rem;
+}
+
+.rd-toc-narrow[open] > nav {
+  padding-bottom: 0.75rem;
+}
+
 @media (min-width: 48rem) {
   .rd-layout {
     grid-template-areas: "sidebar toc" "sidebar main";
@@ -31,13 +187,22 @@
     grid-template-rows: auto 1fr;
   }
 
-  .rd-toc {
-    padding-top: 1.5rem;
+  .rd-sidebar-narrow {
+    display: none;
   }
 
-  .rd-sidebar::details-content {
-    content-visibility: visible;
+  .rd-sidebar-wide {
     display: block;
+    position: sticky;
+    top: var(--rd-header);
+    max-height: calc(100vh - var(--rd-header));
+    padding-block: 3rem;
+    overflow-y: auto;
+  }
+
+  .rd-toc {
+    max-width: var(--rd-measure);
+    padding-top: 1.5rem;
   }
 }
 
@@ -52,20 +217,64 @@
     padding-top: 0;
   }
 
-  .rd-toc::details-content {
-    content-visibility: visible;
+  .rd-toc-narrow {
+    display: none;
+  }
+
+  .rd-toc-wide {
     display: block;
+    position: sticky;
+    top: var(--rd-header);
+    max-height: calc(100vh - var(--rd-header));
+    padding-block: 3rem;
+    overflow-y: auto;
   }
 }
 
+.rd-toc-wide > p {
+  margin-bottom: 0.5rem;
+  color: var(--foreground);
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.rd-toc ul {
+  font-size: 0.875rem;
+}
+
+.rd-toc li + li {
+  margin-top: 0.125rem;
+}
+
+.rd-toc-sub {
+  padding-left: 0.75rem;
+}
+
+.rd-toc a {
+  display: block;
+  padding-block: 0.1875rem;
+  color: var(--muted-foreground);
+  line-height: 1.4;
+  text-decoration: none;
+}
+
+.rd-toc a:hover {
+  color: var(--foreground);
+}
+
+.rd-toc a[aria-current="location"] {
+  color: var(--primary);
+  font-weight: 500;
+}
+
 .rd-nav section + section {
-  margin-top: 1.5rem;
+  margin-top: 1.75rem;
 }
 
 .rd-nav h2 {
   margin-bottom: 0.5rem;
   color: var(--foreground);
-  font-size: 0.875rem;
+  font-size: 0.8125rem;
   font-weight: 600;
 }
 
@@ -76,13 +285,16 @@
 .rd-nav a {
   display: block;
   margin-left: -1px;
-  padding: 0.25rem 0 0.25rem 0.75rem;
+  padding: 0.3125rem 0 0.3125rem 0.875rem;
   border-left: 1px solid transparent;
   color: var(--muted-foreground);
   font-size: 0.875rem;
+  line-height: 1.4;
+  text-decoration: none;
 }
 
 .rd-nav a:hover {
+  border-left-color: var(--border);
   color: var(--foreground);
 }
 
@@ -92,63 +304,102 @@
   font-weight: 500;
 }
 
-.rd-nav a:focus-visible {
-  outline: 3px solid var(--ring);
-  outline-offset: 2px;
+/* The article column and its measure: about 75 Latin characters or 36
+   Chinese ones a line at 16px. Code and tables share the column. */
+.rd-column {
+  max-width: var(--rd-measure);
+}
+
+.rd-title,
+.rd-prose h1 {
+  color: var(--foreground);
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  text-wrap: balance;
+}
+
+.rd-title {
+  margin-bottom: 1.5rem;
+}
+
+.rd-draft {
+  width: fit-content;
+  margin-bottom: 1rem;
+  padding: 0.0625rem 0.5rem;
+  border: 1px solid var(--warning);
+  border-radius: var(--rd-radius);
+  color: var(--foreground);
+  font-size: 0.8125rem;
+  font-weight: 500;
 }
 
 .rd-prose {
   font-size: 1rem;
-  line-height: 1.7;
+  line-height: 1.75;
   overflow-wrap: break-word;
 }
 
 .rd-prose > * + * {
-  margin-top: 1rem;
+  margin-top: 1.125rem;
 }
 
-.rd-prose :is(h1, h2, h3, h4, h5, h6) {
+.rd-prose > h1 + * {
+  margin-top: 1.5rem;
+}
+
+.rd-prose :is(h2, h3, h4, h5, h6) {
   color: var(--foreground);
   line-height: 1.3;
-  scroll-margin-top: 5rem;
+  text-wrap: balance;
+  scroll-margin-top: calc(var(--rd-header) + 1.5rem);
 }
 
-.rd-prose h1 {
-  font-size: 2rem;
-  font-weight: 700;
-  letter-spacing: -0.01em;
+.rd-prose h1,
+.rd-prose [id] {
+  scroll-margin-top: calc(var(--rd-header) + 1.5rem);
 }
 
 .rd-prose h2 {
-  margin-top: 2.5rem;
-  padding-bottom: 0.375rem;
+  margin-top: 3rem;
+  padding-bottom: 0.5rem;
   border-bottom: 1px solid var(--secondary);
-  font-size: 1.5rem;
+  font-size: 1.375rem;
   font-weight: 650;
+  letter-spacing: -0.01em;
 }
 
 .rd-prose h3 {
-  margin-top: 2rem;
-  font-size: 1.25rem;
+  margin-top: 2.25rem;
+  font-size: 1.125rem;
   font-weight: 600;
 }
 
 .rd-prose :is(h4, h5, h6) {
-  margin-top: 1.5rem;
-  font-size: 1.0625rem;
+  margin-top: 1.75rem;
+  font-size: 1rem;
   font-weight: 600;
+}
+
+.rd-prose :is(h2, h3, h4, h5, h6) + * {
+  margin-top: 0.75rem;
 }
 
 .rd-prose a {
   color: var(--primary);
   text-decoration: underline;
+  text-decoration-thickness: 1px;
   text-underline-offset: 0.2em;
 }
 
-.rd-prose a:focus-visible {
-  outline: 3px solid var(--ring);
-  outline-offset: 2px;
-  border-radius: 2px;
+.rd-prose a:hover {
+  text-decoration-thickness: 2px;
+}
+
+.rd-prose strong {
+  color: var(--foreground);
+  font-weight: 600;
 }
 
 .rd-prose :is(ul, ol) {
@@ -163,79 +414,125 @@
   list-style: decimal;
 }
 
+.rd-prose li::marker {
+  color: var(--muted-foreground);
+}
+
 .rd-prose li + li,
 .rd-prose li > :is(ul, ol) {
-  margin-top: 0.25rem;
+  margin-top: 0.375rem;
 }
 
 .rd-prose li:has(> input[type="checkbox"]) {
   list-style: none;
-  margin-left: -1.25rem;
+  margin-left: -1.5rem;
 }
 
+/* Task boxes are drawn from the palette: a list's record, not a control,
+   so neither the browser's grey disabled look nor a pointer. The check is
+   in the colour button labels take on the primary, per mode. */
 .rd-prose li > input[type="checkbox"] {
-  display: inline-block;
-  margin-right: 0.25rem;
-  vertical-align: middle;
+  width: 1rem;
+  height: 1rem;
+  margin: 0 0.5rem 0 0;
+  border: 1px solid var(--border);
+  border-radius: 0.25rem;
+  background: var(--background);
+  vertical-align: -0.1875rem;
+  appearance: none;
+  opacity: 1;
+  cursor: default;
+}
+
+.rd-prose li > input[type="checkbox"]:checked {
+  border-color: var(--primary);
+  background: var(--primary) var(--rd-check) center / 0.75rem no-repeat;
 }
 
 .rd-prose :not(pre) > code {
   padding: 0.125rem 0.375rem;
-  border-radius: 4px;
-  background: var(--muted);
+  border-radius: 0.25rem;
+  background: var(--rd-code-bg);
   font-size: 0.875em;
 }
 
 .rd-prose blockquote {
   padding-left: 1rem;
-  border-left: 3px solid var(--border);
+  border-left: 1px solid var(--border);
   color: var(--muted-foreground);
 }
 
 .rd-prose hr {
+  margin-block: 2.5rem;
   border-color: var(--secondary);
 }
 
 .rd-prose img {
-  border-radius: var(--radius);
+  border-radius: var(--rd-radius);
+}
+
+.rd-icon {
+  display: inline-block;
+  flex: none;
+  width: 1em;
+  height: 1em;
 }
 
 /* A wide table scrolls inside its own box rather than the page. */
 .rd-table {
   overflow-x: auto;
+  border: 1px solid var(--secondary);
+  border-radius: var(--rd-radius);
 }
 
 .rd-table table {
   min-width: 100%;
   font-size: 0.9375rem;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.5;
 }
 
 .rd-table :is(th, td) {
-  padding: 0.5rem 0.75rem;
-  border: 1px solid var(--secondary);
+  padding: 0.5rem 0.875rem;
   vertical-align: top;
 }
 
+.rd-table tr + tr :is(th, td),
+.rd-table tbody tr :is(th, td) {
+  border-top: 1px solid var(--secondary);
+}
+
 .rd-table th {
-  background: var(--muted);
+  background: var(--rd-code-bg);
   font-weight: 600;
   text-align: start;
 }
 
+/* GitHub's five alerts: a tint of the alert's hue on the page, a hairline
+   of it around, and its drawn icon beside the title. */
 .markdown-alert {
-  padding: 0.75rem 1rem;
-  border-left: 4px solid var(--rd-alert);
-  border-radius: 0 var(--radius) var(--radius) 0;
-  background: var(--muted);
+  padding: 0.875rem 1rem;
+  border: 1px solid color-mix(in oklab, var(--rd-alert) 38%, var(--background));
+  border-radius: var(--rd-radius);
+  background: color-mix(in oklab, var(--rd-alert) 7%, var(--background));
 }
 
 .markdown-alert > * + * {
-  margin-top: 0.5rem;
+  margin-top: 0.375rem;
 }
 
 .markdown-alert-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   color: var(--rd-alert-text);
   font-weight: 600;
+  line-height: 1.5;
+}
+
+.markdown-alert-title .rd-icon {
+  width: 1.125rem;
+  height: 1.125rem;
 }
 
 .markdown-alert-note {
@@ -263,10 +560,11 @@
   --rd-alert-text: var(--rd-caution-text);
 }
 
+/* Code. */
 .rd-code {
-  margin-block: 1.25rem;
+  margin-block: 1.5rem;
   border: 1px solid var(--secondary);
-  border-radius: var(--radius);
+  border-radius: var(--rd-radius);
   background: var(--rd-code-bg);
   overflow: hidden;
 }
@@ -276,35 +574,68 @@
   align-items: center;
   justify-content: space-between;
   gap: 0.5rem;
-  min-height: 2.25rem;
-  padding: 0.25rem 0.5rem 0.25rem 1rem;
+  min-height: 2.5rem;
+  padding: 0.25rem 0.375rem 0.25rem 1rem;
   border-bottom: 1px solid var(--secondary);
   color: var(--muted-foreground);
   font-size: 0.8125rem;
 }
 
+.rd-code-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .rd-copy {
-  padding: 0.125rem 0.5rem;
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  color: var(--foreground);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  flex: none;
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--rd-radius);
+  color: var(--muted-foreground);
+  font-size: 0.8125rem;
   cursor: pointer;
 }
 
-.rd-copy:focus-visible {
-  outline: 3px solid var(--ring);
-  outline-offset: 2px;
+.rd-copy[hidden] {
+  display: none;
 }
 
+.rd-copy:hover {
+  background: color-mix(in oklab, var(--foreground) 7%, transparent);
+  color: var(--foreground);
+}
+
+.rd-copy[data-state="copied"] {
+  color: var(--rd-tip-text);
+}
+
+.rd-copy[data-state="failed"] {
+  color: var(--rd-caution-text);
+}
+
+/* A line that runs past the panel shows that it does: a soft edge on the
+   side with more to scroll to, which the panel's own colour covers at the
+   ends (backgrounds attached to the content scroll with it; those attached
+   to the box do not). */
 .rd-code-pre {
-  padding-block: 0.75rem;
+  padding-block: 0.875rem;
   overflow-x: auto;
+  background:
+    linear-gradient(to right, var(--rd-code-bg) 40%, transparent) left / 2rem 100% no-repeat local,
+    linear-gradient(to left, var(--rd-code-bg) 40%, transparent) right / 2rem 100% no-repeat local,
+    linear-gradient(to right, color-mix(in oklab, var(--foreground) 14%, transparent), transparent) left / 0.875rem 100% no-repeat scroll,
+    linear-gradient(to left, color-mix(in oklab, var(--foreground) 14%, transparent), transparent) right / 0.875rem 100% no-repeat scroll;
   font-size: 0.875rem;
-  line-height: 1.6;
+  line-height: 1.65;
+  tab-size: 4;
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in oklab, var(--muted-foreground) 55%, transparent) transparent;
 }
 
 .rd-code-pre:focus-visible {
-  outline: 3px solid var(--ring);
   outline-offset: -3px;
 }
 
@@ -334,14 +665,88 @@
   width: 3ch;
   margin-right: 1.5ch;
   color: var(--muted-foreground);
+  font-variant-numeric: tabular-nums;
   text-align: right;
   content: counter(rd-line);
   counter-increment: rd-line;
   user-select: none;
 }
 
+/* A code group reads as consecutive blocks without script; with it, one
+   panel shows under a row of tabs and the others wait hidden. */
+.rd-code-group[data-rd-enhanced] {
+  margin-block: 1.5rem;
+  border: 1px solid var(--secondary);
+  border-radius: var(--rd-radius);
+  background: var(--rd-code-bg);
+  overflow: hidden;
+}
+
+.rd-code-group[data-rd-enhanced] .rd-code {
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+}
+
+.rd-code-group[data-rd-enhanced] .rd-code-bar {
+  display: none;
+}
+
+.rd-code-tabs {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding-inline: 0.5rem 0.375rem;
+  border-bottom: 1px solid var(--secondary);
+}
+
+.rd-code-tablist {
+  display: flex;
+  align-items: stretch;
+  gap: 0.25rem;
+  min-width: 0;
+  overflow-x: auto;
+}
+
+.rd-code-tabs[hidden] {
+  display: none;
+}
+
+.rd-code-tabs [role="tab"] {
+  padding: 0.5rem 0.5rem 0.4375rem;
+  border-bottom: 2px solid transparent;
+  color: var(--muted-foreground);
+  font-size: 0.8125rem;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.rd-code-tabs [role="tab"]:hover {
+  color: var(--foreground);
+}
+
+.rd-code-tabs [role="tab"][aria-selected="true"] {
+  border-bottom-color: var(--primary);
+  color: var(--foreground);
+  font-weight: 500;
+}
+
+.rd-code-tabs [role="tab"]:focus-visible {
+  outline-offset: -3px;
+}
+
+.rd-code-tabs .rd-copy {
+  margin-left: auto;
+}
+
+/* Footnotes. */
 .rd-footnote-ref {
   font-size: 0.75em;
+  font-variant-numeric: tabular-nums;
+}
+
+.rd-footnote-ref a {
+  text-decoration: none;
 }
 
 .rd-footnotes {
@@ -357,11 +762,203 @@
   list-style: decimal;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
+.rd-footnotes li > p {
+  display: inline;
+}
 
+.rd-footnote-back {
+  display: inline-flex;
+  vertical-align: -0.125rem;
+}
+
+/* After the article: where to edit it, when it changed, what comes next. */
+.rd-page-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1.5rem;
+  margin-top: 3rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--secondary);
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
+}
+
+.rd-page-meta a {
+  color: var(--primary);
+  text-decoration: none;
+}
+
+.rd-page-meta a:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.rd-page-meta time {
+  font-variant-numeric: tabular-nums;
+}
+
+.rd-pager {
+  display: grid;
+  gap: 0.75rem;
+  margin-top: 2rem;
+}
+
+@media (min-width: 40rem) {
+  .rd-pager {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.rd-pager a {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+  height: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--secondary);
+  border-radius: var(--rd-radius);
+  text-decoration: none;
+}
+
+.rd-pager a:hover {
+  border-color: var(--primary);
+}
+
+.rd-pager [data-rd-next] {
+  align-items: flex-end;
+  text-align: end;
+}
+
+@media (min-width: 40rem) {
+  .rd-pager [data-rd-next] {
+    grid-column: 2;
+  }
+}
+
+.rd-pager-label {
+  color: var(--muted-foreground);
+  font-size: 0.8125rem;
+}
+
+.rd-pager-title {
+  color: var(--primary);
+  font-weight: 500;
+}
+
+/* The home page: identity, positioning and the two ways in at the top,
+   then what the project offers, each a title and a sentence between
+   hairlines. No cards. */
+.rd-home {
+  padding-block: 4rem 5rem;
+}
+
+.rd-hero {
+  max-width: 44rem;
+}
+
+.rd-home-title {
+  color: var(--foreground);
+  font-size: clamp(2.25rem, 1.6rem + 2.6vw, 3.25rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.08;
+  text-wrap: balance;
+}
+
+.rd-tagline {
+  max-width: 36rem;
+  margin-top: 1rem;
+  color: var(--muted-foreground);
+  font-size: 1.1875rem;
+  line-height: 1.55;
+  text-wrap: pretty;
+}
+
+.rd-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 2rem;
+}
+
+.rd-action {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  padding: 0 1.25rem;
+  border: 1px solid transparent;
+  border-radius: 0.5rem;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.rd-action-primary {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+/* Mixed toward the text colour: darker on a light page, lighter on a dark
+   one, so the label keeps or gains contrast. */
+.rd-action-primary:hover {
+  background: color-mix(in oklab, var(--primary) 86%, var(--foreground));
+}
+
+.rd-action-secondary {
+  border-color: var(--border);
+  color: var(--foreground);
+}
+
+.rd-action-secondary:hover {
+  background: var(--secondary);
+}
+
+.rd-features {
+  display: grid;
+  gap: 0 2.5rem;
+  margin-top: 4rem;
+}
+
+@media (min-width: 40rem) {
+  .rd-features:not([data-columns="1"]) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 64rem) {
+  .rd-features[data-columns="3"] {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.rd-features li {
+  padding-block: 1.25rem 1.5rem;
+  border-top: 1px solid var(--secondary);
+}
+
+.rd-features h2 {
+  color: var(--foreground);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.rd-features p {
+  margin-top: 0.375rem;
+  color: var(--muted-foreground);
+  line-height: 1.6;
+}
+
+.rd-home-prose {
+  max-width: var(--rd-measure);
+  margin-top: 3rem;
+}
+
+.rd-home-prose:empty {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
   [data-rustify-scope] [data-name] {
     transition-duration: 0ms;
   }

@@ -47,7 +47,7 @@ pub fn options() -> Options {
 
 /// A version for everything above that decides a fragment's bytes; part of
 /// the fragment cache key.
-pub const WRITER_VERSION: u32 = 2;
+pub const WRITER_VERSION: u32 = 4;
 
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct Heading {
@@ -446,11 +446,13 @@ impl<'a> Writer<'a> {
                 self.push("<hr>\n");
             }
             Event::TaskListMarker(checked) => {
-                self.push(if checked {
-                    "<input type=\"checkbox\" disabled checked> "
-                } else {
-                    "<input type=\"checkbox\" disabled> "
-                });
+                // Named, so the box is not an unlabelled control; its state
+                // and the item's text follow.
+                let task = self.context.labels.task;
+                self.push(&format!(
+                    "<input type=\"checkbox\" disabled{} aria-label=\"{task}\"> ",
+                    if checked { " checked" } else { "" }
+                ));
             }
             Event::InlineMath(_) | Event::DisplayMath(_) => {}
         }
@@ -596,7 +598,9 @@ impl<'a> Writer<'a> {
         }
         let mut open = String::from("<div class=\"rd-code-group\" data-rd-group=\"");
         escape_html_into(&mut open, &group.name);
-        open.push_str("\">\n<div class=\"rd-code-tabs\" role=\"tablist\" hidden>");
+        open.push_str(
+            "\">\n<div class=\"rd-code-tabs\" hidden><div class=\"rd-code-tablist\" role=\"tablist\">",
+        );
         for (i, label) in group.labels.iter().enumerate() {
             open.push_str(&format!(
                 "<button type=\"button\" role=\"tab\" aria-selected=\"{}\" data-rd-tab=\"{i}\">",
@@ -605,7 +609,7 @@ impl<'a> Writer<'a> {
             escape_html_into(&mut open, label);
             open.push_str("</button>");
         }
-        open.push_str("</div>\n");
+        open.push_str("</div></div>\n");
         let start = group.start;
         self.buf().insert(start, &open);
         self.push("</div>\n");
@@ -663,7 +667,8 @@ impl<'a> Writer<'a> {
                         let (name, title) = self.alert(kind);
                         let lang = self.ui_lang();
                         self.push(&format!(
-                            "<div class=\"markdown-alert markdown-alert-{name}\" role=\"note\">\n<p class=\"markdown-alert-title\"{lang}>{title}</p>\n"
+                            "<div class=\"markdown-alert markdown-alert-{name}\" role=\"note\">\n<p class=\"markdown-alert-title\"{lang}>{}{title}</p>\n",
+                            crate::icons::alert(name)
                         ));
                     }
                 }
@@ -1092,8 +1097,12 @@ impl<'a> Writer<'a> {
         html.push_str("</span><button type=\"button\" class=\"rd-copy\" data-rd-copy hidden");
         html.push_str(self.ui_lang());
         html.push('>');
+        html.push_str(&crate::icons::copy());
+        html.push_str("<span class=\"rd-copy-label\">");
         html.push_str(self.context.labels.copy);
-        html.push_str("</button></figcaption>\n<pre class=\"rd-code-pre\" tabindex=\"0\"><code>");
+        html.push_str(
+            "</span></button></figcaption>\n<pre class=\"rd-code-pre\" tabindex=\"0\"><code>",
+        );
         for (index, line) in highlighted.lines.iter().enumerate() {
             let number = index + 1;
             if block.highlight.iter().any(|range| range.contains(&number)) {
@@ -1153,8 +1162,9 @@ impl<'a> Writer<'a> {
                     self.buf().append(body);
                 }
                 self.push(&format!(
-                    " <a href=\"#fnref-{slug}\" class=\"rd-footnote-back\" aria-label=\"{}\"{lang}>↩</a></li>\n",
-                    labels.back_to_reference
+                    " <a href=\"#fnref-{slug}\" class=\"rd-footnote-back\" aria-label=\"{}\"{lang}>{}</a></li>\n",
+                    labels.back_to_reference,
+                    crate::icons::back()
                 ));
             }
             self.push("</ol>\n</section>\n");
@@ -1362,7 +1372,10 @@ mod tests {
             let page = md(&format!("> [!{marker}]\n> Body.\n"));
             assert_eq!(
                 page.html,
-                format!("<div class=\"markdown-alert markdown-alert-{name}\" role=\"note\">\n<p class=\"markdown-alert-title\">{title}</p>\n<p>Body.</p>\n</div>\n")
+                format!(
+                    "<div class=\"markdown-alert markdown-alert-{name}\" role=\"note\">\n<p class=\"markdown-alert-title\">{}{title}</p>\n<p>Body.</p>\n</div>\n",
+                    crate::icons::alert(name)
+                )
             );
         }
         assert_eq!(
@@ -1379,21 +1392,24 @@ mod tests {
             true,
             &IncludeFiles::default(),
         );
+        assert!(page.html.contains(&format!(
+            "<p class=\"markdown-alert-title\" lang=\"en\">{}Tip</p>",
+            crate::icons::alert("tip")
+        )));
+        assert!(page.html.contains("data-rd-copy hidden lang=\"en\"><svg"));
         assert!(page
             .html
-            .contains("<p class=\"markdown-alert-title\" lang=\"en\">Tip</p>"));
-        assert!(page
-            .html
-            .contains("data-rd-copy hidden lang=\"en\">Copy</button>"));
+            .contains("<span class=\"rd-copy-label\">Copy</span></button>"));
         let zh = render_with(
             "> [!TIP]\n> 提示内容\n",
             &labels::ZH,
             false,
             &IncludeFiles::default(),
         );
-        assert!(zh
-            .html
-            .contains("<p class=\"markdown-alert-title\">提示</p>"));
+        assert!(zh.html.contains(&format!(
+            "<p class=\"markdown-alert-title\">{}提示</p>",
+            crate::icons::alert("tip")
+        )));
     }
 
     #[test]
@@ -1529,7 +1545,7 @@ mod tests {
         let page = md(source);
         assert!(page.issues.is_empty(), "{:?}", page.issues);
         let html = &page.html;
-        assert!(html.starts_with("<div class=\"rd-code-group\" data-rd-group=\"install\">\n<div class=\"rd-code-tabs\" role=\"tablist\" hidden><button type=\"button\" role=\"tab\" aria-selected=\"true\" data-rd-tab=\"0\">Cargo</button><button type=\"button\" role=\"tab\" aria-selected=\"false\" data-rd-tab=\"1\">Manifest</button></div>\n<figure class=\"rd-code\" data-lang=\"sh\" data-rd-tab-panel=\"0\">"), "{html}");
+        assert!(html.starts_with("<div class=\"rd-code-group\" data-rd-group=\"install\">\n<div class=\"rd-code-tabs\" hidden><div class=\"rd-code-tablist\" role=\"tablist\"><button type=\"button\" role=\"tab\" aria-selected=\"true\" data-rd-tab=\"0\">Cargo</button><button type=\"button\" role=\"tab\" aria-selected=\"false\" data-rd-tab=\"1\">Manifest</button></div></div>\n<figure class=\"rd-code\" data-lang=\"sh\" data-rd-tab-panel=\"0\">"), "{html}");
         assert!(html.contains("data-rd-tab-panel=\"1\""));
         assert!(html.trim_end().ends_with("</figure>\n</div>"));
         assert!(!html.contains("rustify:"));
@@ -1604,9 +1620,9 @@ mod tests {
         assert!(page.html.contains(
             "<li id=\"fn-n\"><p>The note.</p> <a href=\"#fnref-n\" class=\"rd-footnote-back\""
         ));
-        assert!(page
-            .html
-            .contains("<li><input type=\"checkbox\" disabled checked> done</li>"));
+        assert!(page.html.contains(
+            "<li><input type=\"checkbox\" disabled checked aria-label=\"Task\"> done</li>"
+        ));
         assert!(page.html.contains("<del>old</del>"));
     }
 

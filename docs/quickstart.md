@@ -65,7 +65,7 @@ mbx test --locked -p rustify-ui --features gpu --lib
 mbx test --locked -p rustify-ui --no-default-features --features ssr --lib
 mbx xtask docs-verify --group features   # the default graph and product carry no Makepad
 npx playwright test -c playwright.docs.config.ts --project=dom-only   # the DOM build's lifecycle
-npx playwright test -c playwright.docs.config.ts --project=docs-root  # a built docs site (also docs-subpath, docs-meta)
+npx playwright test -c playwright.docs.config.ts --project=docs-root  # a built docs site (also docs-subpath, docs-meta; docs-dev for rustify-docs dev)
 npx playwright test --project=component-catalog              # one example's regression checks
 RUSTIFY_TIER=evidence npx playwright test --project=budget   # the measurements, on request
 cd makepad && mbx test -p cargo-makepad

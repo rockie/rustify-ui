@@ -17,6 +17,9 @@ pub struct Labels {
     pub copy: &'static str,
     pub copied: &'static str,
     pub copy_failed: &'static str,
+    /// The copy button's own word for a refusal; `copy_failed` is what is
+    /// announced.
+    pub copy_failed_short: &'static str,
     pub plain_text: &'static str,
     pub footnotes: &'static str,
     pub back_to_reference: &'static str,
@@ -35,6 +38,35 @@ pub struct Labels {
     pub back_home: &'static str,
     pub last_updated: &'static str,
     pub edit_page: &'static str,
+    /// A task list's box: its accessible name, the item's text following.
+    pub task: &'static str,
+    /// What `dev` adds while an author writes; `{n}` is a number.
+    pub dev: DevLabels,
+}
+
+/// The words of `dev`'s problem panel and of the page shown when nothing
+/// has built yet.
+#[derive(Debug, serde::Serialize)]
+pub struct DevLabels {
+    /// The panel's name.
+    pub problems: &'static str,
+    pub error_one: &'static str,
+    pub error_other: &'static str,
+    pub warning_one: &'static str,
+    pub warning_other: &'static str,
+    /// Each problem's severity, said before its rule.
+    pub error: &'static str,
+    pub warning: &'static str,
+    /// After the count while an older version is shown.
+    pub last_good: &'static str,
+    /// After the count when no version has built.
+    pub no_last_good: &'static str,
+    pub revision: &'static str,
+    pub hide: &'static str,
+    /// Announced when the problems are gone.
+    pub fixed: &'static str,
+    pub shell_title: &'static str,
+    pub shell_body: &'static str,
 }
 
 pub const EN: Labels = Labels {
@@ -46,7 +78,8 @@ pub const EN: Labels = Labels {
     caution: "Caution",
     copy: "Copy",
     copied: "Copied",
-    copy_failed: "Copy failed: select the code to copy it",
+    copy_failed: "Copy failed: the code is selected, copy it by hand",
+    copy_failed_short: "Copy failed",
     plain_text: "Text",
     footnotes: "Footnotes",
     back_to_reference: "Back to reference",
@@ -65,6 +98,23 @@ pub const EN: Labels = Labels {
     back_home: "Back to the home page",
     last_updated: "Last updated",
     edit_page: "Edit this page",
+    task: "Task",
+    dev: DevLabels {
+        problems: "Problems",
+        error_one: "{n} error",
+        error_other: "{n} errors",
+        warning_one: "{n} warning",
+        warning_other: "{n} warnings",
+        error: "Error",
+        warning: "Warning",
+        last_good: "showing the last good version",
+        no_last_good: "nothing has built yet",
+        revision: "revision {n}",
+        hide: "Hide problems",
+        fixed: "Problems fixed; the page is up to date",
+        shell_title: "The site does not build yet",
+        shell_body: "Fix the problems listed and save: this page reloads by itself.",
+    },
 };
 
 pub const ZH: Labels = Labels {
@@ -76,7 +126,8 @@ pub const ZH: Labels = Labels {
     caution: "小心",
     copy: "复制",
     copied: "已复制",
-    copy_failed: "复制失败：请选中代码后手动复制",
+    copy_failed: "复制失败：代码已选中，请手动复制",
+    copy_failed_short: "复制失败",
     plain_text: "文本",
     footnotes: "脚注",
     back_to_reference: "返回引用处",
@@ -95,6 +146,23 @@ pub const ZH: Labels = Labels {
     back_home: "返回首页",
     last_updated: "最后更新",
     edit_page: "编辑此页",
+    task: "任务",
+    dev: DevLabels {
+        problems: "问题",
+        error_one: "{n} 个错误",
+        error_other: "{n} 个错误",
+        warning_one: "{n} 个警告",
+        warning_other: "{n} 个警告",
+        error: "错误",
+        warning: "警告",
+        last_good: "显示上一个可用版本",
+        no_last_good: "尚无可用版本",
+        revision: "第 {n} 版",
+        hide: "收起问题",
+        fixed: "问题已修复，页面为最新",
+        shell_title: "站点暂时无法构建",
+        shell_body: "修正列出的问题并保存，本页会自动刷新。",
+    },
 };
 
 /// The labels for a page in `lang`, and whether they need a `lang` of their

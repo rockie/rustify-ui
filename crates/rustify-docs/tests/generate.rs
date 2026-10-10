@@ -190,7 +190,7 @@ fn every_page_has_unique_metadata_and_the_site_files_list_what_may_be_indexed() 
         .unwrap();
     contains(
         &api,
-        &format!(r#"<img src="/docs/{logo}" alt="" class="h-6 w-auto">"#),
+        &format!(r#"<img src="/docs/{logo}" alt="" width="24" height="24" class="h-6 w-auto">"#),
     );
 
     let sitemap = text(files, "sitemap.xml");
@@ -305,8 +305,11 @@ fn links_anchors_images_and_repository_files_resolve_under_the_base() {
         r#"<a href="/docs/reference/api/">API reference</a>"#,
     );
     // The site name is the current page on the home page alone.
-    contains(&home, r#"href="/docs/" aria-current="page""#);
-    assert!(!setup.contains(r#"href="/docs/" aria-current="page""#));
+    contains(
+        &home,
+        r#"<a href="/docs/" aria-current="page" class="rd-brand">"#,
+    );
+    assert!(!setup.contains(r#"<a href="/docs/" aria-current="page""#));
     contains(
         &setup,
         r#"<a href="/docs/guide/setup/" aria-current="page">Setup</a>"#,
@@ -330,7 +333,10 @@ fn gfm_alerts_tables_tasks_footnotes_and_code_render_without_inline_style() {
     ] {
         contains(
             &both,
-            &format!("<div class=\"markdown-alert markdown-alert-{kind}\" role=\"note\">\n<p class=\"markdown-alert-title\">{title}</p>"),
+            &format!(
+                "<div class=\"markdown-alert markdown-alert-{kind}\" role=\"note\">\n<p class=\"markdown-alert-title\">{}{title}</p>",
+                rustify_docs::icons::alert(kind)
+            ),
         );
     }
 
@@ -341,7 +347,7 @@ fn gfm_alerts_tables_tasks_footnotes_and_code_render_without_inline_style() {
     );
     contains(
         body,
-        r#"<li><input type="checkbox" disabled checked> Install</li>"#,
+        r#"<li><input type="checkbox" disabled checked aria-label="Task"> Install</li>"#,
     );
     contains(
         body,
@@ -358,7 +364,10 @@ fn gfm_alerts_tables_tasks_footnotes_and_code_render_without_inline_style() {
         body,
         r#"<div class="rd-code-group" data-rd-group="install">"#,
     );
-    contains(body, r#"<div class="rd-code-tabs" role="tablist" hidden>"#);
+    contains(
+        body,
+        r#"<div class="rd-code-tabs" hidden><div class="rd-code-tablist" role="tablist">"#,
+    );
     contains(body, r#"data-lang="sh" data-rd-tab-panel="0""#);
     contains(body, r#"data-lang="toml" data-rd-tab-panel="1""#);
     contains(

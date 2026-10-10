@@ -44,13 +44,13 @@
 
 ### 恢复快照
 
-- 最近更新：2026-10-10T19:10:00+08:00
-- 当前进度：4/9 个里程碑完成
-- 当前状态：M4 已完成（`new`/`build`/`preview`、内容模板、元数据/404/sitemap/robots/manifest、全部引用资源指纹化、发布事务与锁、`docs-verify --group artifacts|reliability`、docs-root/docs-subpath/docs-meta 浏览器项目；`m4-evidence.sh` 41 项全过，7 示例产物逐字节不变）；M2–M4 已提交 9442f5d
-- 最近完成：M4（内容模板与可部署静态产物）
-- 下一步：M5——先用 impeccable 完成默认阅读主题与 dev 诊断两份 surface brief，再做静态壳/首页布局/logo 与基础交互增强（主题、复制、代码分组、移动菜单、目录高亮）；退出前需用户确认 Firefox/WebKit 可执行文件或下载授权、真实 Firefox/Safari、真机与走查人（§9.3、§11）
-- 当前阻塞：无（M5 出口的设备/走查人确认届时请求用户）
-- 代码基线：9442f5d（M1 179c5ec；M2–M4 9442f5d；`.xgent-ai` 台账改动按仓库惯例未纳入）
+- 最近更新：2026-10-10T21:40:00+08:00
+- 当前进度：6/9 个里程碑完成
+- 当前状态：M7 已完成（`check --external-links`、发布事务的真实故障注入与输出归属加固、N7 收口、仅 Rust+CLI 的禁网作者演练、V-15 全矩阵），M5–M7 在 M7 提交点提交；M5 只差用户的真实 Safari/手机走查结果
+- 最近完成：M7（最小工具链、安全与恢复收口）
+- 下一步：M8——先做不依赖真实设备的部分：500 页正式性能组与同一服务实例上的 1000 次逐次可见保存、watch 丢事件/SSE 断线负向、§9.4 UAT 串联；收到走查结果后按 [M5 记录](../validation/docs-ssg-p1/M5.md)「未完项」回填并重跑 docs-subpath/meta/webkit，M5 记完成；M8 出口还需用户的真实 Firefox（M8 前安装）与 Safari/手机完整矩阵
+- 当前阻塞：M5 的 V-12 真实 Safari/手机走查结果待用户（服务已起：127.0.0.1:4192、192.168.16.116:4194）；M8 真实浏览器矩阵需用户安装 Firefox 并走查
+- 代码基线：dirty@d0e6913 → 待 M7 提交（路径见 M5、M6、M7 记录头部）
 
 ### 完成记录
 
@@ -60,6 +60,9 @@
 | M2 | 已完成 | 2026-10-10T18:10:00+08:00 | rustify-docs 库与 CLI 骨架、SSR 页面、原生样式/压缩/前缀高亮、片段缓存与并行、B 语料与采时 harness；风险门 195 ms/33 ms/22.8 KB 通过，git 安装排练、V-15 矩阵通过，示例产物逐字节不变 | [M2 记录](../validation/docs-ssg-p1/M2.md) | 9442f5d |
 | M3 | 已完成 | 2026-10-10T18:30:00+08:00 | 内容图、原始 HTML 检查、代码分组/引用、自动链接、首页与页头链接、`sidebar.group` 与 `check`；库 80 例、端到端 5 例、CLI 集成 8 例通过，恰 3 错与宽覆盖 fixture 符合预期，B 0 错且风险门复测通过 | [M3 记录](../validation/docs-ssg-p1/M3.md) | 9442f5d |
 | M4 | 已完成 | 2026-10-10T19:10:00+08:00 | `new`/`build`/`preview` 与内容模板、元数据/404/站点文件/manifest、资源指纹、发布事务与锁；V-5/V-6/V-10 基本门、V-7 三项目各 5/5、B 完整构建中位 347 ms、V-15 矩阵与安装排练通过，示例产物逐字节不变 | [M4 记录](../validation/docs-ssg-p1/M4.md) | 9442f5d |
+| M6 | 已完成 | 2026-10-10T21:15:00+08:00 | `rustify-docs dev`：每轮全量输入+内容键片段缓存、受影响页按两代字节比较刷新并保滚动、失败/panic 保留上一代、诊断面板（finish review ship）；V-9 浏览器 9/9 与 CLI 9 例、abort 构建拒绝 dev、B 保存可见中位 177/172/169 ms 与短轮 20 次 ≤178 ms | [M6 记录](../validation/docs-ssg-p1/M6.md) | 待提交 |
+| M7 | 已完成 | 2026-10-10T21:40:00+08:00 | `check --external-links`（rustls+内置根证书、去重/并发/超时、失败即报错）、发布三步骤真实 SIGKILL/磁盘满/权限/损坏 manifest/并发注入与输出归属加固、新窗站外链接需 noopener、零机器路径泄漏；V-15 矩阵、features/artifacts/reliability/toolchain 四组（禁网作者演练只调用 2 次 `rustc --version`）、docs-root/meta/dev 全过 | [M7 记录](../validation/docs-ssg-p1/M7.md) | 待提交 |
+| M5 | 进行中 | 2026-10-10T21:10:00+08:00 | 默认阅读主题、finish review（ship）、终验脚本全过（三项目各 20/20、WebKit 19+1、LCP ≤740 ms/CLS 0），axe 接入后修两处 critical、零违规；Firefox 引擎环境缺口按用户决定 M8 前补真实 Firefox；只差真实 Safari/手机走查 | [M5 记录](../validation/docs-ssg-p1/M5.md) | — |
 
 ## 0. 需求、范围与决策
 
@@ -188,7 +191,7 @@ WORK-* 均沿用 [PRD §3、§7.2](../PRD-DOCS-SSG.md)；下表列出本期 AC �
 | `tests/docs-ssg/` ★、`tests/dom-only/` ★、`playwright.docs.config.ts` ★ | 内容/性能 fixture、B 语料生成器与测量 harness（M2 负责）；隔离 DOM、仓外 git 消费者配方与负向编译工程；新 docs 浏览器项目 |
 | `xtask/src/main.rs`、`xtask/src/docs.rs` ★、`.github/workflows/{verify,evidence}.yml` | 仓内 DOM fixture/build-bindgen 与 docs 验证入口，复用现 CI 分层；消费者不需要 xtask/mbx |
 | `README.md`、`CLAUDE.md`、`docs/quickstart.md`、`docs/architecture.md`、`docs/docs-ssg.md` ★ | 默认行为、GPU 开关、分模式检查入口、安装与 CLI、托管合同及限制 |
-| `.impeccable/surfaces/rustify-docs-default-theme.md` ★、`.impeccable/surfaces/rustify-docs-dev-diagnostics.md` ★、`DESIGN.docs-ssg.md` ★ | M5 的两份 surface brief、阅读主题规则与 finish review；先设计后实现，不在计划期预填验收 |
+| `.impeccable/surfaces/crates-rustify-docs-src-shell-rs.md` ★（默认阅读主题）、`.impeccable/surfaces/crates-rustify-docs-assets-dev-js.md` ★（dev 诊断；文件名由 impeccable 按主目标路径生成）、`DESIGN.docs-ssg.md` ★ | M5 的两份 surface brief、阅读主题规则与 finish review；先设计后实现，不在计划期预填验收 |
 
 ## 2. 模块、接口与依赖
 
@@ -317,7 +320,7 @@ M2 将新 docs 包加入 workspace 时，同步 CI/README/CLAUDE 的矩阵入口
 
 ### 5.5 dev 失效、错误恢复与滚动
 
-- watch 所有内容、配置、static 和已引用片段源文件；一次更新事务内使用同一输入快照。结构变化重算路由/导航，配置变化按影响失效全站，单页正文改变只更新本页和实际反向依赖；图片改变刷新引用页，删除文件重新诊断依赖者。P1 的“源文件修改”只重读片段，不做 Rust 编译。
+- watch 所有内容、配置、static 和已引用片段源文件；一次更新事务内使用同一输入快照。结构变化重算路由/导航，配置变化按影响失效全站，单页正文改变只更新本页和实际反向依赖；图片改变刷新引用页，删除文件重新诊断依赖者。P1 的“源文件修改”只重读片段，不做 Rust 编译。实现上每轮重读全部输入快照、按内容键复用片段，受影响页面由新旧两代输出逐字节比较（含删除）确定，反向依赖因此不另建显式图，也不按 mtime 判断；失败的一轮（即便诊断相同）推进 revision；成功且字节与诊断均未变的一轮不推进、不广播。
 - 正文/高亮片段按内容与引用片段字节 hash、grammar 版本、解析/高亮选项及语言缓存。配置只改布局/导航/品牌时复用片段，仍重渲全部受影响页面与样式后整代提交；改变解析选项时按键失效。共享不可变语法集，页面渲染使用独立 Owner，按 available_parallelism 限制工作数，不跨线程共享可变 Owner/compiler。M2 用 T-8 测 500 页配置热渲染余量，M6 用真实 watch/SSE/浏览器复测 ≤1 s；不能只提交当前页来绕过完整代合同。
 - 单写入队列归并同时保存，构建期间的新 revision 排到下一轮，不丢最终快照。native watch overflow 时重扫相对路径/字节指纹，不要求重启；SSE 重连读当前 revision 与错误状态。
 - D10 的 docs-cli profile 必须编为 panic=unwind。每代分析/渲染外层 catch_unwind，把 panic 转为一条“本代构建失败”的诊断，不换 last-good、不退出服务；丢弃该代 Owner/可变 compiler/cache 更新，下一代从已提交片段/语法数据重建，不能复用已损坏的可变对象。CLI 在 panic=abort 的误用构建下明确拒绝 dev 并给出正确安装命令；单测通过不算证据，M6 用该 profile 的真实二进制注入 panic，M9 用安装后二进制重验。普通语法错误走 Result，OOM/OS 强杀不承诺进程内恢复。
@@ -348,7 +351,7 @@ M2 将新 docs 包加入 workspace 时，同步 CI/README/CLAUDE 的矩阵入口
 - D11：primary 浅深成对，缺省用本节阅读主题值；logo 单路径在两态复用，成对时 CSS 控制对应资源的可见性，无脚本也跟随系统。按钮前景按每态 primary 在黑/白中选择较高对比者；链接、focus 和按钮各态/hover 的计算值不满足 §7 时 check 定位配置警告，deny-warnings 非零。颜色格式非法、缺成对字段、缺 logo 是错误；低对比色不静默改值。V-8/V-13 含有效品牌色与故意低对比 fixture，logo 是否清楚仍用实际浏览器核对。
 - 默认主题浅深对比度、可见 focus、地标、lang/一个 H1、reduced-motion 均验。主题/复制/分组/菜单的键盘质量本期验证；完整搜索/语言/演示键盘与 VoiceOver 终验仍按 N5 分期，不能提前标整条通过。
 
-M5 在 T-6/T-7 前先用 impeccable 完成默认阅读主题与 dev 诊断的两份 surface brief，记录标题层级、正文/侧栏/目录宽度、页头、代码/alert、间距对齐、模式、动效、键盘及空/错误状态；阅读主题规则写入 DESIGN.docs-ssg.md。实现后在同一产物基线上完成 finish review，M6 按该 brief 集成实际诊断状态并验证。不以既有 Theme Studio 的设计或本节文本代替这些记录。
+M5 在 T-6/T-7 前先用 impeccable 完成默认阅读主题与 dev 诊断的两份 surface brief，记录标题层级、正文/侧栏/目录宽度、页头、代码/alert、间距对齐、模式、动效、键盘及空/错误状态；阅读主题规则在实现与 finish review 后由 impeccable documenter 依实际产物写入 DESIGN.docs-ssg.md（不先写规则再实现）。用户 2026-10-10 确认：首页为安静的文档入口（身份、一句定位、两个主操作、特性网格，无插画/装饰卡片）；代码块随模式用浅/深面板；dev 诊断为右下浮动面板、可收成键盘可达标记。实现后在同一产物基线上完成 finish review，M6 按该 brief 集成实际诊断状态并验证。不以既有 Theme Studio 的设计或本节文本代替这些记录。
 
 ## 7. NFR、安全与运行保障
 
@@ -444,7 +447,7 @@ cargo install --git https://github.com/rockie/rustify-ui --rev <上个已验证�
 - 读者指标：Apple Silicon macOS Chrome稳定；M2冻结Chrome版本和Slow 4G实际参数；375px、CPU4倍，每页冷缓存5次取中位；HTML/CSS/脚本体积求各文件gzip -9字节之和，按PRD排除图片/字体，不把首帧后基础交互JS漏算。LCP/CLS在页内observer采集，404服务也要参加。
 - 作者指标：依赖与编译缓存就绪；保存完成的见证时间与浏览器渲染见证时间落在同一可校准测量时轴，不能直接相减进程和浏览器不同time origin。每项5次取中位；完整构建每次先清空测试out，不清用户产物；new计时不含CLI安装、不触发站点编译。报告实际输入/硬件/版本与前后数据。
 - 千次保存逐次写独特内容并等待浏览器见到这一revision再写下一次，期间不重启，不能把1000个事件合并后只看最后一次冒充通过；watch overflow/SSE断线负向另测。
-- 性能 Chrome 固定版本与兼容矩阵最新稳定版分别登记，不混用。固定版本与 Slow 4G 参数已由用户 2026-10-10 确认：性能测量固定使用 Playwright 1.63.0 锁定的 Chromium 153.0.8010.12（本机 `ms-playwright/chromium-1243`，不随系统 Chrome 更新；记录中注明不是 Google 品牌稳定版）；Slow 4G 取 Lighthouse 模拟口径，经 CDP `Network.emulateNetworkConditions` 施加 latency 150 ms、下行 1.6×1024 kbit/s（209,715 B/s）、上行 750 kbit/s（96,000 B/s），不乘 DevTools 的 3.75 延迟与 0.9 吞吐系数，CPU 用 `Emulation.setCPUThrottlingRate` 4 倍；M5 退出前确认 Firefox/WebKit 可执行文件或下载授权、真实 Firefox/Safari、设备与走查人。Playwright 的 Firefox/WebKit 只提供早期引擎回归，不替代真实 Firefox 最新稳定版或 Safari/手机出口。
+- 性能 Chrome 固定版本与兼容矩阵最新稳定版分别登记，不混用。固定版本与 Slow 4G 参数已由用户 2026-10-10 确认：性能测量固定使用 Playwright 1.63.0 锁定的 Chromium 153.0.8010.12（本机 `ms-playwright/chromium-1243`，不随系统 Chrome 更新；记录中注明不是 Google 品牌稳定版）；Slow 4G 取 Lighthouse 模拟口径，经 CDP `Network.emulateNetworkConditions` 施加 latency 150 ms、下行 1.6×1024 kbit/s（209,715 B/s）、上行 750 kbit/s（96,000 B/s），不乘 DevTools 的 3.75 延迟与 0.9 吞吐系数，CPU 用 `Emulation.setCPUThrottlingRate` 4 倍；M5 退出前确认 Firefox/WebKit 可执行文件或下载授权、真实 Firefox/Safari、设备与走查人（用户 2026-10-10 授权安装 Playwright Firefox/WebKit 做引擎冒烟；真实 Safari 与手机由用户按清单走查，本机无 Firefox 应用）。Playwright 的 Firefox/WebKit 只提供早期引擎回归，不替代真实 Firefox 最新稳定版或 Safari/手机出口。用户 2026-10-10 决定：Playwright Firefox 155（firefox-1543）在本机 macOS 27.0.1 无法启动，记为 M5 引擎冒烟的环境缺口，不升级 Playwright（保持性能用 Chromium 153），M8 前由用户安装 Firefox 稳定版按同一清单手动走查；V-13 新增 `@axe-core/playwright` 开发依赖。
 - 真机默认通过显式 `preview --host <本机局域网地址>` 访问只读 production 产物，dev 保持 loopback；M5 登记设备可达 URL 与网络条件。局域网 HTTP 不是安全上下文，复制不可用时显示失败状态并保留手选，不冒称复制成功；完整复制成功路径在 loopback/用户提供的 HTTPS 入口验收。用户可提供 HTTPS 静态托管或隧道作为入口，未经明确指示不安装隧道服务、不上传。缺真实 Safari/手机时请求设备/真人走查，不用引擎仿真替代。保存实际入口、主路径、关键边界、console/失败请求与截图，并确认最新产物。
 
 **V-14 分阶段判据与归属**：M2 的 T-8 固定 12 份指南的正文/图片分布、生成种子与源指纹，交付 500 页/中英各半的 B 语料和页内采时 harness。M2 尚无正式 build/dev，使用 B 片段数组与 SSR 最小壳演练：11 语言覆盖及全部 grammar 正则检查必须通过，最大最小壳的 HTML+CSS+全部基础 JS gzip -9 总量≤100 KB；500 页冷全量渲染与样式生成≤20 s；缓存命中后的配置变化全站重渲染和内存代提交必须<1 s，并报告留给 watch/SSE/浏览器的余量。这些仅为必要的风险门，不能当正式 AC 通过；任一不满足即 no-go，先修复瓶颈/替换局部依赖，重测后才退出 M2。
@@ -506,7 +509,7 @@ F17 是P1最先交付能力，M1退出前不开始站点实现。依赖落在必
 | SSR/原生依赖与 git 安装 profile 尚无实测 | 未来实现风险，默认主题必须真 HTML且无内联样式 | M2 实施者排练 file:// 安装根 profile/patch/lock、无额外系统依赖/serde 锁兼容、11 语言全部 grammar、SSR/CSS/体积；临时验证提交不冒称交付 | M2 出口/下游依赖前 | 当前否；实测失败阻塞出口 |
 | 性能当前无 Docs 基线 | 不能宣称满足预算或虚报 PoC | 用户已于 2026-10-10 确认合同；T-8/M2 风险门→M4 构建→M5 加载→M6 保存→M8 正式收口，超限在当阶段优化/复测 | M2/M4/M5/M6 各出口及 M8 | 当前否；未达标阻塞相应出口 |
 | 固定 Chrome 来源/冻结副本 | 系统稳定版自动更新会破坏性能口径 | 已解除：用户 2026-10-10 确认 Playwright Chromium 153.0.8010.12 与 Lighthouse 模拟 Slow 4G 参数（§9.3）；不自行安装浏览器 | M2 冻结测量前 | 否 |
-| Firefox/WebKit、真实 Firefox/Safari、手机和走查人未确认 | 引擎回归与真实矩阵需要各自证据，手机不能访问 loopback | M5 负责人确认现有可执行文件/下载授权、真实设备/走查人，登记 preview --host 的可达 URL；HTTP 复制拒绝/手选及安全入口成功路径分别验 | M5 出口确认/早期冒烟，M8 完整矩阵 | 不阻塞 M1；缺环境阻塞 M5/M8 相应出口 |
+| Firefox/WebKit、真实 Firefox/Safari、手机和走查人（2026-10-10 用户已授权安装 Playwright Firefox/WebKit，真实 Safari/手机由用户走查；本机无 Firefox 应用） | 引擎回归与真实矩阵需要各自证据，手机不能访问 loopback | M5 负责人确认现有可执行文件/下载授权、真实设备/走查人，登记 preview --host 的可达 URL；HTTP 复制拒绝/手选及安全入口成功路径分别验。Playwright Firefox 本机无法启动，按用户决定 M8 前以真实 Firefox 手动走查补齐（§9.3） | M5 出口确认/早期冒烟，M8 完整矩阵 | 不阻塞 M1；缺环境阻塞 M5/M8 相应出口 |
 | GUI 与全 GPU 回归成本/既有失败 | 不完整基线会掩盖 SDK 横切回归 | M1 在固定 worktree 建全范围清单，全部适用原回归须通过；既有失败定位并阻塞出口，未经用户裁定不豁免。后续按 §9.2 触发；不增加 headed GPU 性能承诺 | M1 出口及横切改动提交前 | 验证门，未过不得开始站点实现 |
 | 远端候选推送授权/方式未提供 | 本地安装不能证明 GitHub SHA 可安装 | M9 先对具体已提交候选完成 file:// 安装/配方，给出可审阅候选与结果后取得用户推送指示，再对同 SHA GitHub URL 验证；拒绝/缺授权保持 M9 阻塞 | M9 远端阶段前 | 不阻塞前序实施；未授权阻塞 M9 完成 |
 | P1 CLI 仅承诺 macOS（C-6） | Linux CI（如 GitHub Pages 常见流水线）或 Windows 上建站不在本期承诺内 | 文档与 CLI 帮助如实写明；P2 官方站改用 Linux CI 或用户需要其他平台时，重评平台范围并补对应原生环境的 V-11 | P2 官方站部署方案确定前 | 否 |

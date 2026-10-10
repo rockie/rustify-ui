@@ -17,7 +17,21 @@ path = "src/main.rs"
 rustify-docs = { path = "../rustify-docs" }
 # `--format json` writes one object; the escaping is serde_json's.
 serde_json = "1"
+# `dev` watches the site's files: FSEvents on macOS, part of the system.
+notify = "8.2.0"
+# `check --external-links`, the one request the command ever makes: TLS in
+# Rust (rustls on ring) with the bundled Mozilla roots, so no system TLS
+# library or certificate store is involved.
+ureq = { version = "3.4.2", default-features = false, features = ["rustls"] }
 
 [dev-dependencies]
 # The integration tests check the manifest's digests.
 sha2 = "0.10.9"
+
+# notify's backend on the BSDs and iOS: never built for the macOS this
+# command supports, but resolved into Cargo.lock. Its newer releases need a
+# bitflags newer than the one the workspace patches in from Makepad; these
+# use bitflags 1.
+[target.'cfg(any(target_os = "freebsd", target_os = "openbsd", target_os = "netbsd", target_os = "dragonfly", target_os = "ios"))'.dependencies]
+kqueue = "=1.1.1"
+kqueue-sys = "=1.0.4"

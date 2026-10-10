@@ -262,7 +262,8 @@ fn usage_errors_exit_with_two_and_touch_nothing() {
         vec!["check", "--format", "xml", "--config", config],
         vec!["check", "--config"],
         vec!["check", "--bogus"],
-        vec!["check", "--external-links", "--config", config],
+        // Only check requests other sites.
+        vec!["build", "--external-links", "--config", config],
         vec!["no-such-command"],
     ] {
         let output = run(&args);

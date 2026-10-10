@@ -19,7 +19,8 @@ Supported on macOS. Linux and Windows are not verified.
 | Command | What it does |
 | --- | --- |
 | `rustify-docs new <dir> [--template content]` | Creates a site (a home page, two guide pages, `static/`, a README and a `.gitignore`) in a new or empty directory. |
-| `rustify-docs check [--format text\|json] [--deny-warnings]` | Reads the whole site and reports every problem at once. It writes no file and makes no network request. |
+| `rustify-docs dev [--port <n>]` | Serves the site from memory while you write, drafts included, and updates the open pages on every save. It writes nothing. |
+| `rustify-docs check [--format text\|json] [--deny-warnings] [--external-links]` | Reads the whole site and reports every problem at once. It writes no file and, unless `--external-links` is given, makes no network request. |
 | `rustify-docs build [--base <path>] [--out <dir>] [--format text\|json] [--deny-warnings]` | Checks the site the same way, then writes it to `build.out` (default `dist/`). |
 | `rustify-docs preview [--dir <dir>] [--base <path>] [--port <n>] [--host <address>]` | Serves a production build the way a static host would, without rebuilding it. |
 
@@ -27,14 +28,25 @@ Every command takes `--config <path>` for a `rustify-docs.toml` elsewhere
 than the working directory. `--out` and `--dir` are relative to the working
 directory, as paths on a command line are; paths inside `rustify-docs.toml`
 are relative to the project. `--base` builds for another base path than
-`site.base` (it must still match `site.url`'s path). `dev` is not in this
-build yet; it says so and exits with status 2.
+`site.base` (it must still match `site.url`'s path).
 
-`new` first checks that `rustc --version` runs (a content site compiles
-nothing, but sites with components of their own will), then refuses a
+`new` and `dev` first check that `rustc --version` runs (a content site
+compiles nothing, but sites with components of their own will); without it
+they stop before writing, watching or listening. `new` then refuses a
 directory that is not empty, and writes the site into a temporary sibling
 that it renames into place only when every file is written: a failure
 leaves nothing behind. `new` and `build` never run Cargo or a compiler.
+
+`check --external-links` also requests every link to another site (in
+pages, home page actions, `nav.top` and `nav.social`): each address once
+however often it is linked, eight at a time, within 5 seconds to connect and
+10 to answer, following up to five redirects, with GET where a server
+refuses HEAD. An address that answers 400 or more is an `external-link`
+error, and one that cannot be reached (no network, a timeout, a TLS failure)
+an `external-link-unreachable` error, at every place it is written: a link
+that could not be checked is never counted as working. TLS uses bundled
+root certificates, not the system's. With `--format json` the summary adds
+`external_addresses`, the number of addresses requested.
 
 Exit status: 0 on success; 1 when the site has errors (with
 `--deny-warnings`, warnings too) or the command fails; 2 for a usage error.
@@ -274,7 +286,11 @@ site's content security policy would block them in a reader's browser:
 
 `<a href>`, `<img src>` and the other URLs in raw HTML resolve exactly like
 Markdown's, base and all. An `<img>` without an `alt` attribute is a
-warning.
+warning. A link that opens another site in a new window (`target="_blank"`
+or any named target) must say `rel="noopener"` (or `noreferrer`), or it is an
+error (`new-window-opener`): the page it opens could otherwise script this
+one. Links written in Markdown never open new windows, and those to other
+sites always carry `rel="noopener"`.
 
 ### Code blocks
 
@@ -419,19 +435,68 @@ A build writes the whole new site into a private work area beside the
 output, `<output's parent>/.rustify-docs/<name>-<hash>/`, and only when all
 of it is written and checked does it swap: the old output moves aside, the
 new one moves into place, the old one is deleted. A build that fails, at any
-point, leaves the previous output byte for byte; one that is killed is
-finished or undone by the next build. A first build that fails leaves no
-output at all.
+point, leaves the previous output byte for byte (a full disk or a refused
+permission included); one that is killed is finished or undone by the next
+build: killed before the swap, the old output stays; between the two
+renames, the next build puts it back; after them, the next build finishes
+the clean-up. Until then `preview` refuses the output and says a build
+stopped half-way. A first build that fails leaves no output at all.
 
 One output has one writer: a build takes the work area's lock, a preview
 shares it. A build while a preview of the same output runs (or another
-build) stops at once and says so, rather than waiting. A directory that is
-not empty and has no manifest is never replaced, nor can the output be the
-project, a directory holding it, or the content or asset directory.
+build) stops at once and says so, rather than waiting; the lock goes with
+the process holding it, so a killed build never leaves it taken. A build
+replaces only a directory it can tell is a previous production build: one
+that is not empty and has no manifest, or whose manifest is damaged or not
+`production`, is never replaced (remove it yourself), and neither is a
+symbolic link (give the directory it points to). The output cannot be the
+project, a directory holding it, the content or asset directory, or inside
+a `.git` or `.rustify-docs` directory. These refusals come before anything
+is rendered.
 
 Ignore `dist/` and `.rustify-docs/` in version control; `new` writes a
 `.gitignore` that does. With `--out` elsewhere, ignore that directory and
 the `.rustify-docs/` beside it.
+
+## Writing with `dev`
+
+`dev` builds the site once, then serves it from memory on the loopback
+interface: at `dev.port` (default `4188`; the system picks another port when
+that one is taken, and `dev` says which), or at `--port`, which must be free
+(`--port 0` lets the system pick). It prints the address and keeps running
+until stopped.
+
+- **Every save is a new build.** It watches `rustify-docs.toml`, the content
+  and asset directories and every file a page includes, and never the
+  output. Saves that arrive together, or while a build runs, make one build
+  afterwards; the last save always shows. Each build reads all of its inputs
+  again, so nothing is missed when the system drops change events.
+- **Only the pages a build changed reload**, and they come back to where you
+  were reading (and to the code tabs you chose). A paragraph reloads its own
+  page; an included file or an image, the pages that use it; the
+  configuration or the logo, every page.
+- **A build that fails changes nothing you see.** The page stays the last
+  version that built; a panel at the bottom right (a sheet along the bottom
+  on a phone) lists every problem by file, with its line and column and what
+  to do. Hide it and a marker keeps the count and opens it again. Saving the
+  same mistake again updates it; the next build that succeeds clears both by
+  itself, without taking focus. The terminal shows the same problems.
+  Warnings alone wait behind the marker.
+- **While nothing has built** (the first build failed), every address shows
+  a page saying so, with the panel; it becomes the site at the first build
+  that succeeds.
+- **A failure inside `rustify-docs`** (a panic) is one more problem in the
+  panel: the session goes on, and the next build starts afresh. This needs
+  the command installed with `--profile docs-cli`; a build that aborts on a
+  panic refuses to run `dev`.
+- **Drafts are shown**, marked "Draft" in the page and in the sidebar, and a
+  page linking to one gets a warning (in `check` and `build` it is an
+  error).
+- **Nothing is written.** `dev` writes no file in the project or the output
+  directory and takes no lock on the output, so `rustify-docs build` can run
+  beside it. Pages served by `dev` load its panel script from
+  `/__rustify-docs/`, which a production build never contains.
+- Pages show the last-updated dates the repository had when `dev` started.
 
 ## Previewing and hosting
 
@@ -464,6 +529,46 @@ the files as they are.
 default-src 'none'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; media-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'
 ```
 
+## The default theme
+
+Every page is complete before any script runs: the navigation, the table of
+contents and every code tab are there to read and follow. The theme's two
+small scripts (one in `<head>`, one deferred) add what needs a script, and
+a failure in either hides nothing.
+
+- **Colour mode.** Pages follow the reader's system light or dark setting.
+  The System / Light / Dark switch in the header (shown only when script
+  runs) overrides it, applies before the first paint on later pages, and is
+  remembered per site base. Where storage is refused, the switch still works
+  for the page in view.
+- **Layout.** From 1280 px: navigation, article and table of contents side
+  by side. From 768 px: the table of contents folds above the article. Below
+  768 px: one column with the menu and the contents as panels that open and
+  close without script; with script, following a link or pressing Escape
+  closes them. Nothing scrolls sideways down to 320 px; wide code and tables
+  scroll in their own box.
+- **Code.** Each block's Copy button copies its exact text (never line
+  numbers or highlighting) and says "Copied". Where the browser refuses (an
+  `http://` address other than `localhost`, or a denied permission) the
+  button says "Copy failed", the code is selected so it can be copied by
+  hand, and a screen reader hears the same. Code groups show one tab at a
+  time; choosing one switches every group of the same name on the page and
+  is remembered on the next pages. Arrow keys, Home and End move between
+  tabs.
+- **Table of contents.** The section being read is marked as the page
+  scrolls; at the end of a page the last section is.
+- **Images.** Raster images and SVGs with a fixed size get their width and
+  height written into the page, so the text below does not move when they
+  load. An SVG with only a `viewBox` scales to the column.
+- **Home page.** `layout: home` shows the title, the tagline and the
+  `actions` as buttons (the first one filled), then `features` as a list of
+  titles and sentences, then any Markdown on the page. A leading `# Title`
+  in that Markdown is the title already shown and is not repeated.
+- **Brand.** `theme.primary` colours links, the current location, focus
+  rings and the primary action in each mode; button labels are black or
+  white, whichever reads better. A single `theme.logo` shows in both modes;
+  a light/dark pair switches with the mode, without script.
+
 ## Diagnostics
 
 Errors stop a build; warnings do not, unless `--deny-warnings` is given.
@@ -482,6 +587,10 @@ Errors stop a build; warnings do not, unless `--deny-warnings` is given.
 | `heading-attribute`, `duplicate-heading-id` | error | A heading attribute other than `{#id}`; one explicit id twice |
 | `broken-link`, `broken-anchor`, `empty-link` | error | A link to a page, file or heading that does not exist |
 | `draft-link` | error (warning in `dev`) | A published page linking to a draft |
+| `new-window-opener` | error | Author HTML opening another site in a new window (`target`) without `rel="noopener"` |
+| `external-link` | error (`check --external-links` only) | A link to another site answered 400 or more |
+| `external-link-unreachable` | error (`check --external-links` only) | A link to another site could not be requested at all |
+| `internal` | error (`dev` only) | A build stopped inside rustify-docs; the last good version is still served |
 | `repo-link` | error | A link to a repository file without `[repo]` |
 | `script-url` | error | A `javascript:`, `vbscript:` or `data:` link |
 | `missing-image`, `missing-media` | error | An image or media file that does not exist |

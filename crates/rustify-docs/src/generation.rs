@@ -17,13 +17,21 @@ use sha2::{Digest, Sha256};
 use crate::content::{Analysis, Diagnostic, Project, Snapshot, Target};
 use crate::diagnostic::Severity;
 use crate::escape::escape_url_into;
+use crate::frontmatter::Layout;
 use crate::history::Dates;
-use crate::shell::{self, AssetUrls, Meta, Page, Site};
+use crate::imagesize::Size;
+use crate::markdown::RefKind;
+use crate::shell::{self, AssetUrls, Home, Logo, Meta, Page, Site};
 use crate::style::{self, Brand};
 
 /// The framework's own scripts, shipped with every site.
 pub const MODE_SCRIPT: &str = include_str!("../assets/mode.js");
 pub const SITE_SCRIPT: &str = include_str!("../assets/site.js");
+
+/// What `dev` adds to the pages it serves (at [`shell::DEV_SCRIPT_URL`] and
+/// [`shell::DEV_STYLE_URL`]); no production build contains either.
+pub const DEV_SCRIPT: &str = include_str!("../assets/dev.js");
+pub const DEV_STYLE: &str = include_str!("../assets/dev.css");
 
 /// Stands in for the stylesheet's URL until the stylesheet, whose name
 /// depends on the classes the pages use, exists.
@@ -139,12 +147,15 @@ pub fn resource_output(path: &str, bytes: &[u8]) -> String {
     }
 }
 
-/// The article of page `index`, with every slot filled in.
+/// The article of page `index`, with every slot filled in. An image whose
+/// tag gives no size gets its file's, so the page reserves its box before it
+/// loads.
 pub fn article(
     analysis: &Analysis,
     index: usize,
     site: &Site,
     outputs: &BTreeMap<String, String>,
+    sizes: &BTreeMap<String, Size>,
 ) -> String {
     let page = &analysis.pages[index];
     let fragment = &page.fragment;
@@ -172,10 +183,33 @@ pub fn article(
                 }
                 url
             }
-            Target::Resource(path) => match published(path) {
-                Some(url) => url,
-                None => continue,
-            },
+            Target::Resource(path) => {
+                let Some(url) = published(path) else {
+                    continue;
+                };
+                let image = page.fragment.references[slot.reference].kind == RefKind::Image;
+                let rest = &html[slot.html.end..];
+                let tag = &rest[..rest.find('>').unwrap_or(rest.len())];
+                match sizes.get(path) {
+                    Some(size)
+                        if image
+                            && size.absolute
+                            && rest.starts_with('"')
+                            && !tag.contains(" width=")
+                            && !tag.contains(" height=") =>
+                    {
+                        out.push_str(&html[at..slot.html.start]);
+                        escape_url_into(&mut out, &url);
+                        out.push_str(&format!(
+                            "\" width=\"{}\" height=\"{}",
+                            size.width, size.height
+                        ));
+                        at = slot.html.end;
+                        continue;
+                    }
+                    _ => url,
+                }
+            }
             Target::Repository(url) => {
                 // Written as a path, published as a link to another site:
                 // it gets the `rel` such links get, unless it has its own.
@@ -218,6 +252,31 @@ pub fn article(
     }
     out.push_str(&html[at..]);
     out
+}
+
+/// Where a resolved target points, as a URL for this generation; `None`
+/// for a URL kept as written.
+fn target_url(
+    analysis: &Analysis,
+    target: &Target,
+    site: &Site,
+    outputs: &BTreeMap<String, String>,
+) -> Option<String> {
+    match target {
+        Target::Page { page, anchor } => {
+            let mut url = site.url(&analysis.pages[*page].route);
+            if let Some(anchor) = anchor.as_deref().filter(|anchor| !anchor.is_empty()) {
+                url.push('#');
+                url.push_str(anchor);
+            }
+            Some(url)
+        }
+        Target::Resource(path) => outputs
+            .get(path)
+            .map(|output| site.url(&format!("/{output}"))),
+        Target::Repository(url) => Some(url.clone()),
+        Target::Keep | Target::Srcset(_) => None,
+    }
 }
 
 /// A `<title>` for every page, unique across the site: `Title | Site`, and
@@ -347,6 +406,7 @@ pub fn generate(
         stylesheet: STYLESHEET_PLACEHOLDER.into(),
         mode_script: site.url(&format!("/{mode_path}")),
         site_script: site.url(&format!("/{site_path}")),
+        dev: analysis.mode == crate::content::Mode::Dev,
     };
     // `https://example.com/docs/` with base `/docs/` is origin
     // `https://example.com`; a root-relative URL appended to it is absolute.
@@ -373,6 +433,7 @@ pub fn generate(
         }
     }
     let mut outputs: BTreeMap<String, String> = BTreeMap::new();
+    let mut sizes: BTreeMap<String, Size> = BTreeMap::new();
     for path in &analysis.resources {
         let bytes: Arc<[u8]> = match snapshot.files.get(path) {
             Some(bytes) => bytes.clone(),
@@ -382,6 +443,9 @@ pub fn generate(
             },
         };
         let output = resource_output(path, &bytes);
+        if let Some(size) = crate::imagesize::size(&bytes) {
+            sizes.insert(path.clone(), size);
+        }
         outputs.insert(path.clone(), output.clone());
         files.insert(output, bytes);
     }
@@ -391,7 +455,15 @@ pub fn generate(
                 .get(path)
                 .map(|output| site.url(&format!("/{output}")))
         };
-        Some((url(&logo.light)?, url(&logo.dark)?))
+        // Shown 24 px high; its width follows from its shape.
+        let width = sizes
+            .get(&logo.light)
+            .map(|size| ((24 * size.width + size.height / 2) / size.height).max(1));
+        Some(Logo {
+            light: url(&logo.light)?,
+            dark: url(&logo.dark)?,
+            width,
+        })
     });
     // A link preview needs the image's absolute address, so it is shown
     // only when the site's URL is known.
@@ -422,7 +494,38 @@ pub fn generate(
     let rendered: Vec<(String, String, BTreeSet<String>)> =
         parallel_map(&published, workers, |&i| {
             let page = &analysis.pages[i];
-            let article = article(analysis, i, &site, &outputs);
+            let mut article = article(analysis, i, &site, &outputs, &sizes);
+            let home = (page.front.layout == Layout::Home).then(|| {
+                // The hero carries the page's one H1; a leading `# Title` in
+                // the Markdown is that title, not a second heading.
+                if article.starts_with("<h1") {
+                    if let Some(end) = article.find("</h1>") {
+                        let cut = end + "</h1>".len();
+                        let cut = cut + usize::from(article[cut..].starts_with('\n'));
+                        article.replace_range(..cut, "");
+                    }
+                }
+                Home {
+                    tagline: page.front.tagline.as_deref(),
+                    actions: page
+                        .front
+                        .actions
+                        .iter()
+                        .zip(&page.action_targets)
+                        .map(|(action, target)| {
+                            let url = target_url(analysis, target, &site, &outputs)
+                                .unwrap_or_else(|| action.link.trim().to_owned());
+                            (action.text.as_str(), url)
+                        })
+                        .collect(),
+                    features: page
+                        .front
+                        .features
+                        .iter()
+                        .map(|feature| (feature.title.as_str(), feature.details.as_str()))
+                        .collect(),
+                }
+            });
             let levels = page
                 .front
                 .toc
@@ -443,7 +546,7 @@ pub fn generate(
                     draft: page.draft,
                     article: &article,
                     headings: &page.fragment.headings,
-                    article_has_h1: page.fragment.h1_count > 0,
+                    article_has_h1: page.fragment.h1_count > 0 || home.is_some(),
                     toc_levels: levels,
                     meta: Meta {
                         canonical: canonical.as_deref(),
@@ -453,6 +556,7 @@ pub fn generate(
                         updated: dates.get(&page.file).map(String::as_str),
                         edit_url: edit_url.as_deref(),
                     },
+                    home,
                 },
             );
             let mut classes = BTreeSet::new();
@@ -530,6 +634,69 @@ pub fn generate(
         files,
         stylesheet_path,
         pages: page_count,
+        candidates: candidates.len(),
+    })
+}
+
+/// Where [`dev_shell`] puts its page.
+pub const DEV_SHELL_PAGE: &str = "index.html";
+
+/// What `dev` serves while nothing has built: the site's shell saying so
+/// (at [`DEV_SHELL_PAGE`]) with the stylesheet and scripts it needs, under
+/// the configuration's base and in its language and colours.
+pub fn dev_shell(project: &Project) -> Result<Generation, Vec<Diagnostic>> {
+    let config = &project.config;
+    let mode_path = format!("assets/mode.{}.js", fingerprint(MODE_SCRIPT.as_bytes()));
+    let site_path = format!("assets/site.{}.js", fingerprint(SITE_SCRIPT.as_bytes()));
+    let mut site = Site {
+        name: config.site.name.clone(),
+        lang: config.site.lang.clone(),
+        base: config.site.base.clone(),
+        nav: Vec::new(),
+        assets: AssetUrls::default(),
+        logo: None,
+    };
+    site.assets = AssetUrls {
+        stylesheet: STYLESHEET_PLACEHOLDER.into(),
+        mode_script: site.url(&format!("/{mode_path}")),
+        site_script: site.url(&format!("/{site_path}")),
+        dev: true,
+    };
+    let html = shell::render_dev_shell(&site);
+    let mut candidates: BTreeSet<String> = crate::classes::SCRIPT_STATE_CLASSES
+        .iter()
+        .map(|class| class.to_string())
+        .collect();
+    crate::classes::collect(&html, &mut candidates);
+    let brand = match &config.primary {
+        Some(primary) => Brand {
+            primary_light: primary.light.clone(),
+            primary_dark: primary.dark.clone(),
+        },
+        None => Brand::default(),
+    };
+    let css = style::site_css(&candidates, &brand).map_err(|error| {
+        vec![Diagnostic::general(
+            Severity::Error,
+            "stylesheet",
+            error.to_string(),
+        )]
+    })?;
+    let stylesheet_path = format!("assets/site.{}.css", fingerprint(css.as_bytes()));
+    let html = html.replacen(
+        STYLESHEET_PLACEHOLDER,
+        &site.url(&format!("/{stylesheet_path}")),
+        1,
+    );
+    let mut files: BTreeMap<String, Arc<[u8]>> = BTreeMap::new();
+    files.insert(DEV_SHELL_PAGE.to_owned(), Arc::from(html.into_bytes()));
+    files.insert(stylesheet_path.clone(), Arc::from(css.into_bytes()));
+    files.insert(mode_path, Arc::from(MODE_SCRIPT.as_bytes()));
+    files.insert(site_path, Arc::from(SITE_SCRIPT.as_bytes()));
+    Ok(Generation {
+        files,
+        stylesheet_path,
+        pages: 1,
         candidates: candidates.len(),
     })
 }

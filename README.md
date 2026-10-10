@@ -151,6 +151,7 @@ The documentation site generator's built fixture site runs under the same config
 npx playwright test -c playwright.docs.config.ts --project=docs-root
 npx playwright test -c playwright.docs.config.ts --project=docs-subpath
 npx playwright test -c playwright.docs.config.ts --project=docs-meta
+npx playwright test -c playwright.docs.config.ts --project=docs-dev   # rustify-docs dev, each test on its own copy
 ```
 
 Vellum has its own configuration:

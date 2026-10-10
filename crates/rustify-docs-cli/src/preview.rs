@@ -66,7 +66,7 @@ pub fn mime(path: &Path) -> &'static str {
 
 /// Percent-decodes a request path; `None` for one that does not decode to
 /// UTF-8 or holds a NUL or a backslash.
-fn decode(path: &str) -> Option<String> {
+pub fn decode(path: &str) -> Option<String> {
     let bytes = path.as_bytes();
     let mut out = Vec::with_capacity(bytes.len());
     let mut i = 0;
@@ -221,9 +221,9 @@ fn handle(mut stream: TcpStream, site: &Site) -> std::io::Result<()> {
     }
 }
 
-/// Binds `host:port`. Without an explicit port, a busy default falls back
+/// Binds `host:port`. Without an explicit port, a busy `default` falls back
 /// to a port the system picks; an explicit busy port is an error.
-pub fn bind(host: &str, port: Option<u16>) -> Result<TcpListener, String> {
+pub fn bind(host: &str, port: Option<u16>, default: u16) -> Result<TcpListener, String> {
     let address = |port: u16| -> Result<SocketAddr, String> {
         let text = if host.contains(':') {
             format!("[{host}]:{port}")
@@ -237,7 +237,7 @@ pub fn bind(host: &str, port: Option<u16>) -> Result<TcpListener, String> {
         Some(port) => TcpListener::bind(address(port)?)
             .map_err(|error| format!("cannot listen on {host}:{port}: {error}")),
         None => {
-            let (default, any) = (address(DEFAULT_PORT)?, address(0)?);
+            let (default, any) = (address(default)?, address(0)?);
             TcpListener::bind(default)
                 .or_else(|_| TcpListener::bind(any))
                 .map_err(|error| format!("cannot listen on {host}: {error}"))

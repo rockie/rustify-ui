@@ -1,0 +1,21 @@
+/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p1/m7/host/rustify-docs-test.log:     Running unittests src/lib.rs (target/debug/deps/rustify_docs-803287cb7fb29f3f)
+/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p1/m7/host/rustify-docs-test.log:test result: ok. 94 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 36.90s
+/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p1/m7/host/rustify-docs-test.log:     Running tests/generate.rs (target/debug/deps/generate-d8226ea9156efa57)
+/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p1/m7/host/rustify-docs-test.log:test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.91s
+/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p1/m7/host/rustify-docs-test.log:test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p1/m7/host/rustify-docs-cli-test.log:     Running unittests src/main.rs (target/debug/deps/rustify_docs-4941487e692ecdb0)
+/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p1/m7/host/rustify-docs-cli-test.log:test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p1/m7/host/rustify-docs-cli-test.log:     Running tests/artifacts.rs (target/debug/deps/artifacts-5510978de05134a7)
+/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p1/m7/host/rustify-docs-cli-test.log:test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.22s
+/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p1/m7/host/rustify-docs-cli-test.log:     Running tests/check.rs (target/debug/deps/check-6ef3fd779dffaf4b)
+/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p1/m7/host/rustify-docs-cli-test.log:test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.40s
+/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p1/m7/host/rustify-docs-cli-test.log:     Running tests/dev.rs (target/debug/deps/dev-40f7add669959345)
+/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p1/m7/host/rustify-docs-cli-test.log:test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.98s
+/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p1/m7/host/rustify-docs-cli-test.log:     Running tests/external.rs (target/debug/deps/external-87c9908fe5443ab8)
+/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p1/m7/host/rustify-docs-cli-test.log:test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.14s
+/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p1/m7/host/rustify-docs-cli-test.log:     Running tests/faults.rs (target/debug/deps/faults-1316c0f6929c6aeb)
+/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p1/m7/host/rustify-docs-cli-test.log:test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.43s
+/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p1/m7/host/rustify-docs-cli-test.log:     Running tests/new_build.rs (target/debug/deps/new_build-a8d0bf39ac2518a4)
+/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p1/m7/host/rustify-docs-cli-test.log:test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.06s
+/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p1/m7/host/rustify-docs-cli-test.log:     Running tests/reliability.rs (target/debug/deps/reliability-4e4af49d69d0b1d3)
+/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p1/m7/host/rustify-docs-cli-test.log:test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.15s

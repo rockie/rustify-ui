@@ -32,6 +32,12 @@ const serversOf: Record<string, Server[]> = {
     "docs-root": ["docs-root"],
     "docs-subpath": ["docs-subpath"],
     "docs-meta": ["docs-meta"],
+    // Early engine regressions only: Playwright's Firefox and WebKit builds
+    // are not the stable Firefox or Safari a reader runs (plan §9.3).
+    "docs-firefox": ["docs-subpath"],
+    "docs-webkit": ["docs-subpath"],
+    // `rustify-docs dev`: each test starts its own on a copy of the fixture.
+    "docs-dev": [],
 };
 
 function requestedProjects(argv: string[]): string[] {
@@ -80,8 +86,25 @@ export default defineConfig({
         ...docsProjects.map((name) => ({
             name,
             testMatch: ["docs-ssg/**/*.spec.ts"],
+            testIgnore: ["docs-ssg/dev.spec.ts"],
             use: { baseURL: docsUrl(name) },
         })),
+        {
+            name: "docs-firefox",
+            testMatch: ["docs-ssg/**/*.spec.ts"],
+            testIgnore: ["docs-ssg/dev.spec.ts"],
+            use: { ...devices["Desktop Firefox"], baseURL: docsUrl("docs-subpath"), launchOptions: {} },
+        },
+        {
+            name: "docs-webkit",
+            testMatch: ["docs-ssg/**/*.spec.ts"],
+            testIgnore: ["docs-ssg/dev.spec.ts"],
+            use: { ...devices["Desktop Safari"], baseURL: docsUrl("docs-subpath"), launchOptions: {} },
+        },
+        {
+            name: "docs-dev",
+            testMatch: ["docs-ssg/dev.spec.ts"],
+        },
     ],
     webServer: (
         [

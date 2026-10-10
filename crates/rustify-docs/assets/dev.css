@@ -1,0 +1,279 @@
+/* rustify-docs dev: the problem panel and its marker, in a corner of the
+   page the author is reading. Served only by `dev`; no production build
+   contains it. Colours are the theme's tokens, so both modes follow. */
+
+.rd-dev {
+  /* The panel's inner rules: a hairline that stands off the popover surface
+     in both modes, which the secondary surface does not in dark. */
+  --rd-dev-divider: color-mix(in srgb, var(--border) 35%, var(--popover, var(--background)));
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 60;
+  color: var(--foreground);
+  font-size: 0.875rem;
+  line-height: 1.45;
+}
+
+.rd-dev[hidden],
+.rd-dev [hidden] {
+  display: none;
+}
+
+.rd-dev-panel {
+  display: flex;
+  flex-direction: column;
+  width: min(26.25rem, calc(100vw - 2rem));
+  max-height: 60vh;
+  border: 1px solid var(--border);
+  border-radius: var(--rd-radius, 0.375rem);
+  background: var(--popover, var(--background));
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+/* Counts on the first line, the state of the page under them; the revision
+   and the hide button keep to the first line. */
+.rd-dev-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.5rem 0.5rem 0.5rem 0.875rem;
+  border-bottom: 1px solid var(--rd-dev-divider);
+}
+
+.rd-dev-summary {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  padding-top: 0.375rem;
+  font-weight: 600;
+}
+
+.rd-dev-state {
+  display: block;
+  color: var(--muted-foreground);
+  font-size: 0.8125rem;
+  font-weight: 400;
+}
+
+.rd-dev-count-error {
+  color: var(--rd-caution-text, var(--destructive));
+}
+
+.rd-dev-count-warning {
+  color: var(--rd-warning-text, var(--foreground));
+}
+
+.rd-dev-revision {
+  flex: none;
+  padding-top: 0.5rem;
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.rd-dev-hide {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: var(--rd-radius, 0.375rem);
+  color: var(--muted-foreground);
+  cursor: pointer;
+}
+
+.rd-dev-hide:hover {
+  background: var(--secondary);
+  color: var(--foreground);
+}
+
+.rd-dev-hide svg,
+.rd-dev-marker svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.rd-dev-list {
+  margin: 0;
+  padding: 0.25rem 0 0.5rem;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+/* One rule between files; the problems of a file are set apart by space. */
+.rd-dev-list > section + section {
+  margin-top: 0.375rem;
+  padding-top: 0.25rem;
+  border-top: 1px solid var(--rd-dev-divider);
+}
+
+.rd-dev-file {
+  margin: 0;
+  padding: 0.5rem 0.875rem 0.125rem;
+  color: var(--foreground);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.75rem;
+  font-weight: 600;
+  overflow-wrap: break-word;
+}
+
+.rd-dev-items {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.rd-dev-item {
+  padding: 0.5rem 0.875rem;
+}
+
+.rd-dev-where {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.625rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.75rem;
+}
+
+.rd-dev-location {
+  color: var(--muted-foreground);
+  font-variant-numeric: tabular-nums;
+}
+
+.rd-dev-item[data-severity="error"] .rd-dev-rule {
+  color: var(--rd-caution-text, var(--destructive));
+}
+
+.rd-dev-item[data-severity="warning"] .rd-dev-rule {
+  color: var(--rd-warning-text, var(--foreground));
+}
+
+.rd-dev-message {
+  margin: 0.125rem 0 0;
+  overflow-wrap: break-word;
+}
+
+.rd-dev-suggestion {
+  margin: 0.125rem 0 0;
+  color: var(--muted-foreground);
+  overflow-wrap: break-word;
+}
+
+/* What a message quotes: a path, a name, a value. */
+.rd-dev-code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.8125rem;
+}
+
+.rd-dev-marker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  max-width: calc(100vw - 2rem);
+  padding: 0.375rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--popover, var(--background));
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  color: var(--foreground);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.rd-dev-marker:hover {
+  background: var(--secondary);
+}
+
+.rd-dev-hide:focus-visible,
+.rd-dev-marker:focus-visible {
+  outline: 3px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.rd-dev-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* While nothing has built, the problems are the page's content: the list
+   sits in the article's column, open, with nothing to hide it. */
+.rd-dev.rd-dev-inline {
+  position: static;
+  margin-top: 1.5rem;
+}
+
+.rd-dev-inline .rd-dev-panel {
+  width: 100%;
+  max-height: none;
+  border-color: var(--secondary);
+  box-shadow: none;
+  animation: none;
+}
+
+.rd-dev-inline .rd-dev-list {
+  overflow: visible;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .rd-dev-panel {
+    animation: rd-dev-in 120ms ease-out;
+  }
+
+  @keyframes rd-dev-in {
+    from {
+      opacity: 0;
+      transform: translateY(0.375rem);
+    }
+  }
+}
+
+/* A phone: the panel becomes a sheet along the bottom edge. */
+@media (max-width: 639px) {
+  .rd-dev {
+    right: 0;
+    left: 0;
+    bottom: 0;
+  }
+
+  .rd-dev-panel {
+    width: 100%;
+    max-height: 50vh;
+    border-width: 1px 0 0;
+    border-radius: var(--rd-radius, 0.375rem) var(--rd-radius, 0.375rem) 0 0;
+  }
+
+  .rd-dev-marker {
+    display: flex;
+    width: calc(100% - 1.5rem);
+    margin: 0 0.75rem 0.75rem;
+    border-radius: var(--rd-radius, 0.375rem);
+  }
+
+  .rd-dev-hide {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  .rd-dev-revision {
+    padding-top: 0.75rem;
+  }
+
+  .rd-dev-summary {
+    padding-top: 0.625rem;
+  }
+
+  .rd-dev-inline .rd-dev-panel {
+    border-width: 1px;
+    border-radius: var(--rd-radius, 0.375rem);
+  }
+}

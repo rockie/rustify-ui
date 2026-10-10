@@ -36,7 +36,8 @@ mbx xtask <command> [options]
   utility-bench [--out <directory>]
   verify      --suite p1|p2 [--no-browser] [--no-build]
   docs-verify --group features [--external [--git <url> --rev <sha>]]
-  docs-verify --group performance|toolchain
+  docs-verify --group performance
+  docs-verify --group toolchain [--git <url> --rev <sha>]
   docs-corpus --profile | --out <dir> [--seed <n>]
 ";
 

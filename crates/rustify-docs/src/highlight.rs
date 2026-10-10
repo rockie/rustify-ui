@@ -310,7 +310,8 @@ struct Rule {
 }
 
 /// The palette. Each colour keeps at least 4.5:1 against its mode's code
-/// background ([`CODE_BACKGROUND`]), which a test checks. Later rules win
+/// background ([`CODE_BACKGROUND`]) and marked-line background
+/// ([`LINE_HIGHLIGHT`]), which a test checks. Later rules win
 /// over earlier ones of the same specificity.
 const RULES: &[Rule] = &[
     Rule {
@@ -441,6 +442,9 @@ const RULES: &[Rule] = &[
 /// The code background each palette is checked against, light then dark.
 /// The default theme's stylesheet paints code blocks with these.
 pub const CODE_BACKGROUND: (&str, &str) = ("#f2f4f7", "#161b26");
+
+/// The background of a line a fence marks with `highlight`, light then dark.
+pub const LINE_HIGHLIGHT: (&str, &str) = ("#e3ebf8", "#1f2a3d");
 
 /// The selector for a dotted scope: every atom as a class.
 fn selector(scope: &str) -> String {
@@ -747,6 +751,8 @@ mod tests {
             for (color, background) in [
                 (rule.light, CODE_BACKGROUND.0),
                 (rule.dark, CODE_BACKGROUND.1),
+                (rule.light, LINE_HIGHLIGHT.0),
+                (rule.dark, LINE_HIGHLIGHT.1),
             ] {
                 if color == "inherit" {
                     continue;

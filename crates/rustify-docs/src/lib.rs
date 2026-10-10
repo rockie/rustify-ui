@@ -9,6 +9,10 @@
 //! library; nothing here compiles a site's Rust, because a content site has
 //! none.
 
+// A page's view is one nested Leptos type; erasing it (`into_any`) needs
+// more query depth than the default allows.
+#![recursion_limit = "256"]
+
 pub mod autolink;
 pub mod classes;
 pub mod color;
@@ -21,6 +25,8 @@ pub mod generation;
 pub mod highlight;
 pub mod history;
 pub mod html_check;
+pub mod icons;
+pub mod imagesize;
 pub mod include;
 pub mod labels;
 pub mod markdown;

@@ -299,6 +299,14 @@ pub fn check_out(project: &crate::content::Project, out: &Path) -> Result<(), St
     };
     let out = normal(out);
     let root = normal(&project.root);
+    if out.components().any(|part| {
+        matches!(part, std::path::Component::Normal(name) if name == ".git" || name == ".rustify-docs")
+    }) {
+        return Err(format!(
+            "the output {} is inside a repository's or this tool's own directory",
+            out.display()
+        ));
+    }
     let overlaps = |a: &Path, b: &Path| a.starts_with(b) || b.starts_with(a);
     if root.starts_with(&out) {
         return Err(format!(
@@ -323,20 +331,63 @@ pub fn check_out(project: &crate::content::Project, out: &Path) -> Result<(), St
 }
 
 /// Whether `out` may be replaced: it does not exist, is empty, or holds a
-/// previous build (its manifest).
+/// previous production build (a manifest that reads as one). A directory
+/// whose owner cannot be confirmed, a damaged manifest included, is never
+/// replaced; nor is a symbolic link, whose target a swap would not reach.
 pub fn replaceable(out: &Path) -> Result<(), String> {
+    if fs::symlink_metadata(out).is_ok_and(|meta| meta.file_type().is_symlink()) {
+        return Err(format!(
+            "{} is a symbolic link; give the directory it points to as the output",
+            out.display()
+        ));
+    }
     match fs::read_dir(out) {
         Err(error) if error.kind() == io::ErrorKind::NotFound => Ok(()),
         Err(error) => Err(io_error("reading", out, error)),
         Ok(mut entries) => {
-            if entries.next().is_none() || out.join(MANIFEST_FILE).is_file() {
-                Ok(())
-            } else {
-                Err(format!(
+            if entries.next().is_none() {
+                return Ok(());
+            }
+            if !out.join(MANIFEST_FILE).is_file() {
+                return Err(format!(
                     "{} holds files that no build wrote (it has no {MANIFEST_FILE}); it is not replaced",
                     out.display()
-                ))
+                ));
             }
+            match Manifest::read(out) {
+                Ok(manifest) if manifest.mode == PRODUCTION => Ok(()),
+                Ok(manifest) => Err(format!(
+                    "{} holds a `{}` output, not a production build; it is not replaced",
+                    out.display(),
+                    manifest.mode
+                )),
+                Err(message) => Err(format!(
+                    "{message}; whatever wrote it, the directory is not replaced: remove it and build again"
+                )),
+            }
+        }
+    }
+}
+
+/// A point in [`publish_with`] at which the old output is in a known state:
+/// what a crash right there must leave recoverable.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum Step {
+    /// The new site is written into the staging directory; the old output
+    /// is untouched.
+    Staged,
+    /// The old output has been moved aside; nothing is at the output path.
+    MovedAside,
+    /// The new site is the output; the old one is still in the backup.
+    SwappedIn,
+}
+
+impl Step {
+    pub fn name(self) -> &'static str {
+        match self {
+            Step::Staged => "staged",
+            Step::MovedAside => "moved-aside",
+            Step::SwappedIn => "swapped-in",
         }
     }
 }
@@ -344,6 +395,16 @@ pub fn replaceable(out: &Path) -> Result<(), String> {
 /// Writes `files` as the output of `lock`'s area, replacing what was there
 /// only once all of it is written. Call [`recover`] first.
 pub fn publish(lock: &Lock, files: &BTreeMap<String, Arc<[u8]>>) -> Result<(), String> {
+    publish_with(lock, files, &mut |_| {})
+}
+
+/// [`publish`], telling `at` each [`Step`] as it is reached; how the
+/// recovery of a build stopped at each one is tested.
+pub fn publish_with(
+    lock: &Lock,
+    files: &BTreeMap<String, Arc<[u8]>>,
+    at: &mut dyn FnMut(Step),
+) -> Result<(), String> {
     assert!(lock.exclusive, "publishing needs the exclusive lock");
     let area = &lock.area;
     replaceable(&area.out)?;
@@ -369,10 +430,16 @@ pub fn publish(lock: &Lock, files: &BTreeMap<String, Arc<[u8]>>) -> Result<(), S
         return Err(error);
     }
 
+    at(Step::Staged);
     fs::write(&journal, "swap\n").map_err(|e| io_error("writing", &journal, e))?;
     let had_output = area.out.exists();
     if had_output {
-        fs::rename(&area.out, &backup).map_err(|e| io_error("moving aside", &area.out, e))?;
+        if let Err(error) = fs::rename(&area.out, &backup) {
+            let _ = remove_tree(&staging);
+            let _ = fs::remove_file(&journal);
+            return Err(io_error("moving aside", &area.out, error));
+        }
+        at(Step::MovedAside);
     }
     if let Err(error) = fs::rename(&staging, &area.out) {
         let failed = io_error("moving into place", &area.out, error);
@@ -385,6 +452,7 @@ pub fn publish(lock: &Lock, files: &BTreeMap<String, Arc<[u8]>>) -> Result<(), S
         let _ = fs::remove_file(&journal);
         return Err(failed);
     }
+    at(Step::SwappedIn);
     remove_tree(&backup).map_err(|e| io_error("removing", &backup, e))?;
     fs::remove_file(&journal).map_err(|e| io_error("removing", &journal, e))?;
     Ok(())

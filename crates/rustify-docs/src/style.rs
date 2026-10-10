@@ -115,10 +115,6 @@ pub fn foreground_on(background: &str) -> &'static str {
     }
 }
 
-fn hex(color: u32) -> String {
-    format!("#{color:06x}")
-}
-
 /// The token values for one mode: the SDK theme's, with the reading theme's
 /// colours and the tokens only documentation pages use.
 fn mode_tokens(theme: rustify_ui::Theme, primary: &str, code_background: &str) -> String {
@@ -155,11 +151,17 @@ fn mode_tokens(theme: rustify_ui::Theme, primary: &str, code_background: &str) -
         css.push_str(&format!("--rd-{name}:{edge};--rd-{name}-text:{text};"));
     }
     css.push_str(&format!("--rd-code-bg:{code_background};"));
+    // A task box's check, drawn in the colour button labels take on the
+    // primary.
+    let check = foreground_on(primary).replace('#', "%23");
+    css.push_str(&format!(
+        "--rd-check:url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='{check}' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m3.5 8.5 3 3 6-7'/%3E%3C/svg%3E\");"
+    ));
+    let line = highlight::LINE_HIGHLIGHT;
     css.push_str(&format!(
         "--rd-line-hl:{};",
-        if dark { "#1f2a3d" } else { "#e3ebf8" }
+        if dark { line.1 } else { line.0 }
     ));
-    let _ = hex;
     css
 }
 

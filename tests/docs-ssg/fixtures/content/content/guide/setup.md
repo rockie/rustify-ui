@@ -47,4 +47,19 @@ The source is [on GitHub](../../src/example.rs).
 > [!WARNING]
 > Drafts are left out of a production build.
 
+Once installed, the same choice applies here:
+
+<!-- rustify:code-group name="install" -->
+
+```sh title="Cargo"
+cargo install --list
+```
+
+```toml title="Config"
+[site]
+name = "Docs"
+```
+
+<!-- rustify:end-code-group -->
+
 [^first]: A page is a Markdown file under `content/`.

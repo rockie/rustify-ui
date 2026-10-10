@@ -32,7 +32,7 @@ mbx xtask docs-verify --group features [--external [--git <url> --rev <sha>]]
 mbx xtask docs-verify --group performance [--report <file>]
 mbx xtask docs-verify --group artifacts
 mbx xtask docs-verify --group reliability
-mbx xtask docs-verify --group toolchain";
+mbx xtask docs-verify --group toolchain [--git <url> --rev <sha>]";
 
 pub fn build_dom(args: &[String]) -> Result<(), String> {
     let manifest = option(args, "--manifest-path").ok_or(USAGE)?;
@@ -52,7 +52,7 @@ pub fn verify(args: &[String]) -> Result<(), String> {
         }
         Some("features") => features(),
         Some("performance") => crate::docs_perf::performance(args),
-        Some("toolchain") => toolchain(),
+        Some("toolchain") => toolchain(option(args, "--git"), option(args, "--rev")),
         // What a production build publishes: every address under the base
         // and resolvable, the manifest, the site files, fingerprints that
         // change with their content alone, nothing private; and `new` ->
@@ -62,11 +62,19 @@ pub fn verify(args: &[String]) -> Result<(), String> {
             &["-p", "rustify-docs-cli", "--test", "artifacts"],
             &["-p", "rustify-docs-cli", "--test", "new_build"],
         ]),
-        // The output transaction, its recovery and its lock; reproducible
-        // bytes; failed builds that keep the old output; preview's refusals.
+        // The output transaction, its recovery and its lock, under real
+        // kills, a full disk and refused permissions; reproducible bytes;
+        // failed builds that keep the old output; preview's refusals and
+        // address handling; outputs and files a build never touches; author
+        // HTML the policy refuses, in every disguise; the machine's paths
+        // and values kept out; links to other sites requested only on
+        // request, and failures reported as failures.
         Some("reliability") => docs_tests(&[
-            &["-p", "rustify-docs", "--lib", "--", "publish::"],
+            &["-p", "rustify-docs", "--lib"],
+            &["-p", "rustify-docs-cli", "--bin", "rustify-docs"],
             &["-p", "rustify-docs-cli", "--test", "reliability"],
+            &["-p", "rustify-docs-cli", "--test", "faults"],
+            &["-p", "rustify-docs-cli", "--test", "external"],
         ]),
         _ => Err(USAGE.to_string()),
     }
@@ -596,6 +604,18 @@ const SYS_ALLOWED: &[(&str, &str)] = &[
         "windows-sys",
         "Windows API declarations, used only when the target is Windows",
     ),
+    (
+        "fsevent-sys",
+        "macOS FSEvents for `dev`'s watcher: links the CoreServices and CoreFoundation frameworks, part of macOS; no build script",
+    ),
+    (
+        "inotify-sys",
+        "Linux inotify declarations over libc, used only when the target is Linux or Android",
+    ),
+    (
+        "kqueue-sys",
+        "BSD kqueue declarations over libc, used only when the target is a BSD or iOS; no build script",
+    ),
 ];
 
 /// Build tools a docs graph must not pull in: each one is a program or a
@@ -942,23 +962,81 @@ fn external(git: Option<&str>, rev: Option<&str>) -> Result<(), String> {
     Ok(())
 }
 
+/// What an author's machine must not need: Node and its package tools, the
+/// Tailwind CLI, the wasm build tools, this repository's compiler cache,
+/// containers and browsers. The walkthrough's PATH must offer none of them.
+const NOT_NEEDED: &[&str] = &[
+    "node",
+    "npm",
+    "npx",
+    "tailwindcss",
+    "wasm-pack",
+    "wasm-bindgen",
+    "mbx",
+    "docker",
+    "podman",
+    "chromium",
+    "google-chrome",
+    "firefox",
+];
+
+const SANDBOX: &str = "/usr/bin/sandbox-exec";
+
+/// No network at all, loopback included. A developer's machine may run an
+/// HTTP proxy on loopback (this one does), and a request handed to it leaves
+/// the machine, so a profile that let loopback through would witness nothing.
+const OFFLINE: &str = "(version 1)(allow default)(deny network*)";
+
+/// The servers: listening and answering stay allowed, and the only
+/// connections they may open are to loopback and local sockets.
+const LOOPBACK: &str = "(version 1)(allow default)(deny network-outbound)\
+    (allow network-outbound (remote ip \"localhost:*\"))\
+    (allow network-outbound (remote unix-socket))";
+
+/// An address that answers whenever there is a network. Added to the site
+/// for the offline link check, so that `unreachable` can only mean that the
+/// sandbox held and that the CLI did not pass the failure off as a success.
+const PROBE_LINK: &str = "https://www.rust-lang.org/";
+
+/// The production output's own description of itself.
+const MANIFEST: &str = "rustify-docs-manifest.json";
+
+/// How long a server may take to print its address, and an HTTP exchange to
+/// finish: a hang fails the check instead of stalling it.
+const SERVER_START: std::time::Duration = std::time::Duration::from_secs(60);
+const HTTP_TIMEOUT: std::time::Duration = std::time::Duration::from_secs(20);
+
 /// The CLI installed the way the documentation says, from a commit: plain
 /// Cargo with a cleared environment, `cargo install --git … --locked
-/// --profile docs-cli`, into a root outside the repository. The installed
-/// binary must report the root workspace's `docs-cli` profile (it unwinds)
-/// and recover from a panic, and `cargo install --list` must name the
-/// commit it came from.
-fn toolchain() -> Result<(), String> {
+/// --profile docs-cli`, into a root outside the repository. The commit is a
+/// snapshot of the working tree, or the one `--git` and `--rev` name. The
+/// installed binary must report the root workspace's `docs-cli` profile (it
+/// unwinds) and recover from a panic, and `cargo install --list` must name
+/// the commit it came from. Then an author uses it with nothing but Rust
+/// beside it (see `walkthrough`).
+fn toolchain(git: Option<&str>, rev: Option<&str>) -> Result<(), String> {
+    if !cfg!(target_os = "macos") {
+        return Err(
+            "the toolchain group runs on macOS, the one platform the CLI supports; \
+             its network witness is sandbox-exec"
+                .into(),
+        );
+    }
     let root = crate::build::repo_root();
     let work = scratch();
     std::fs::create_dir_all(&work).map_err(|error| error.to_string())?;
-    let (url, rev) = candidate(&root, &work)?;
+    let (url, rev) = match (git, rev) {
+        (Some(url), Some(rev)) => (url.to_string(), rev.to_string()),
+        (None, None) => candidate(&root, &work)?,
+        _ => return Err("--git and --rev go together".into()),
+    };
+    let sysroot = sysroot()?;
+    environment(&sysroot)?;
     println!("CLI source: {url} at {rev}");
     let install_root = work.join("cli-install");
     if install_root.exists() {
         std::fs::remove_dir_all(&install_root).map_err(|error| error.to_string())?;
     }
-    let sysroot = sysroot()?;
     let cargo = || {
         let mut command = plain_cargo(&sysroot);
         command
@@ -1019,13 +1097,493 @@ fn toolchain() -> Result<(), String> {
     if !listed.contains(&rev) {
         return Err(format!("cargo install --list does not name {rev}"));
     }
+
+    walkthrough(&sysroot, &binary, &work.join("author"))?;
     println!(
-        "toolchain: rustify-docs installed from {rev} with the docs-cli profile; {} bytes",
+        "toolchain: {} installed from {rev} with the docs-cli profile ({} bytes, unwinds); \
+         new, check, build, preview and dev ran with only Rust and the CLI on PATH, \
+         check and build with no network; nothing was compiled",
+        version.trim(),
         std::fs::metadata(&binary)
             .map(|meta| meta.len())
             .unwrap_or(0)
     );
     Ok(())
+}
+
+/// The machine the check ran on, for the record: the CLI is promised on
+/// macOS alone, so the system's version and architecture are part of the
+/// evidence, and so is the Rust that built and checks it.
+fn environment(sysroot: &Path) -> Result<(), String> {
+    let text = |command: &mut Command| -> Result<String, String> {
+        let what = command.get_program().to_string_lossy().into_owned();
+        let output = command
+            .output()
+            .map_err(|error| format!("{what}: {error}"))?;
+        if !output.status.success() {
+            return Err(format!(
+                "{what}: {}",
+                String::from_utf8_lossy(&output.stderr)
+            ));
+        }
+        Ok(String::from_utf8_lossy(&output.stdout).trim().to_string())
+    };
+    let system = |program: &str, args: &[&str]| {
+        let mut command = Command::new(program);
+        command.args(args).env_clear().env("PATH", "/usr/bin:/bin");
+        command
+    };
+    let version = text(&mut system("/usr/bin/sw_vers", &["-productVersion"]))?;
+    let build = text(&mut system("/usr/bin/sw_vers", &["-buildVersion"]))?;
+    let arch = text(&mut system("/usr/bin/uname", &["-m"]))?;
+    let mut rustc = Command::new(sysroot.join("bin/rustc"));
+    rustc.arg("-vV").env_clear().env("PATH", "/usr/bin:/bin");
+    let rustc = text(&mut rustc)?;
+    let cargo = text(plain_cargo(sysroot).arg("-V"))?;
+    println!("environment: macOS {version} ({build}) on {arch}");
+    for line in rustc.lines() {
+        println!("  {line}");
+    }
+    println!("  {cargo}");
+    Ok(())
+}
+
+/// Quotes `path` for a POSIX shell.
+fn shell_quoted(path: &Path) -> String {
+    format!("'{}'", path.display().to_string().replace('\'', "'\\''"))
+}
+
+/// An author's machine with Rust and the CLI on it and nothing else.
+struct Author {
+    binary: PathBuf,
+    dir: PathBuf,
+    home: PathBuf,
+    tmp: PathBuf,
+    log: PathBuf,
+    path: String,
+}
+
+impl Author {
+    /// Lays the machine out in `dir`: an empty home, a temporary directory,
+    /// and stand-ins for `rustc` and `cargo` that log each call and run the
+    /// real program, so that whatever the CLI runs is both answered and seen.
+    fn new(sysroot: &Path, binary: &Path, dir: &Path) -> Result<Self, String> {
+        use std::os::unix::fs::PermissionsExt;
+        if dir.exists() {
+            std::fs::remove_dir_all(dir).map_err(|error| format!("{}: {error}", dir.display()))?;
+        }
+        let home = dir.join("home");
+        let tmp = dir.join("tmp");
+        let tools = dir.join("tools");
+        let log = dir.join("tools.log");
+        for created in [&home, &tmp, &tools] {
+            std::fs::create_dir_all(created)
+                .map_err(|error| format!("{}: {error}", created.display()))?;
+        }
+        std::fs::write(&log, "").map_err(|error| error.to_string())?;
+        for tool in ["rustc", "cargo"] {
+            let script = format!(
+                "#!/bin/sh\nprintf '%s\\n' \"{tool} $*\" >> {}\nexec {} \"$@\"\n",
+                shell_quoted(&log),
+                shell_quoted(&sysroot.join("bin").join(tool))
+            );
+            let stand_in = tools.join(tool);
+            std::fs::write(&stand_in, script).map_err(|error| error.to_string())?;
+            std::fs::set_permissions(&stand_in, std::fs::Permissions::from_mode(0o755))
+                .map_err(|error| error.to_string())?;
+        }
+        let installed = binary
+            .parent()
+            .ok_or_else(|| format!("{} has no directory", binary.display()))?;
+        Ok(Self {
+            binary: binary.to_path_buf(),
+            dir: dir.to_path_buf(),
+            home,
+            tmp,
+            log,
+            path: format!("{}:{}:/usr/bin:/bin", tools.display(), installed.display()),
+        })
+    }
+
+    /// Fails if any PATH directory offers a program an author must not need.
+    fn check_path(&self) -> Result<(), String> {
+        let found: Vec<String> = self
+            .path
+            .split(':')
+            .flat_map(|dir| NOT_NEEDED.iter().map(move |tool| Path::new(dir).join(tool)))
+            .filter(|path| path.symlink_metadata().is_ok())
+            .map(|path| path.display().to_string())
+            .collect();
+        if found.is_empty() {
+            Ok(())
+        } else {
+            Err(format!(
+                "the author's PATH offers what an author must not need: {}",
+                found.join(", ")
+            ))
+        }
+    }
+
+    /// The installed CLI under `profile`, with only the author's variables:
+    /// nothing of this process's environment, no proxy among it, gets in.
+    fn command(&self, profile: &str, cwd: &Path, args: &[&str]) -> Command {
+        let mut command = Command::new(SANDBOX);
+        command
+            .args(["-p", profile])
+            .arg(&self.binary)
+            .args(args)
+            .current_dir(cwd)
+            .env_clear()
+            .env("PATH", &self.path)
+            .env("HOME", &self.home)
+            .env("TMPDIR", &self.tmp);
+        command
+    }
+
+    /// Runs a command that must succeed.
+    fn run(
+        &self,
+        profile: &str,
+        cwd: &Path,
+        args: &[&str],
+    ) -> Result<std::process::Output, String> {
+        let output = self
+            .command(profile, cwd, args)
+            .output()
+            .map_err(|error| format!("{SANDBOX}: {error}"))?;
+        if !output.status.success() {
+            return Err(format!(
+                "`rustify-docs {}` failed ({}) in {}:\n{}{}",
+                args.join(" "),
+                output.status,
+                cwd.display(),
+                String::from_utf8_lossy(&output.stdout),
+                String::from_utf8_lossy(&output.stderr)
+            ));
+        }
+        Ok(output)
+    }
+
+    fn calls(&self) -> Result<Vec<String>, String> {
+        Ok(std::fs::read_to_string(&self.log)
+            .map_err(|error| format!("{}: {error}", self.log.display()))?
+            .lines()
+            .map(str::to_owned)
+            .collect())
+    }
+}
+
+/// The line of a command's report that starts with `prefix`, or its last.
+fn conclusion(output: &std::process::Output, prefix: &str) -> String {
+    let text = String::from_utf8_lossy(&output.stderr);
+    text.lines()
+        .find(|line| line.starts_with(prefix))
+        .or_else(|| text.lines().rev().find(|line| !line.trim().is_empty()))
+        .unwrap_or_default()
+        .to_string()
+}
+
+/// An author's first session with the installed binary, on a machine that
+/// has Rust and the CLI and nothing else (see `Author`). `new`, `check` and
+/// `build` run with no network at all and must succeed; `check
+/// --external-links` must call every external address unreachable rather
+/// than working; the servers, with loopback only, must serve the site; and
+/// the only toolchain call is the `rustc --version` check, since a content
+/// site compiles nothing. Leaves nothing behind when it passes; when it does
+/// not, `dir` stays for a look.
+fn walkthrough(sysroot: &Path, binary: &Path, dir: &Path) -> Result<(), String> {
+    let author = Author::new(sysroot, binary, dir)?;
+    author.check_path()?;
+    println!(
+        "author: empty HOME, PATH={}, no other variable; none of {} on PATH",
+        author.path,
+        NOT_NEEDED.join(", ")
+    );
+
+    let created = author.run(OFFLINE, dir, &["new", "site"])?;
+    let site = dir.join("site");
+    println!(
+        "new (no network): {}; toolchain check: {}",
+        String::from_utf8_lossy(&created.stdout)
+            .lines()
+            .next()
+            .unwrap_or_default(),
+        conclusion(&created, "rustc ")
+    );
+    let checked = author.run(OFFLINE, &site, &["check"])?;
+    println!("check (no network): {}", conclusion(&checked, "check: "));
+    let built = author.run(OFFLINE, &site, &["build"])?;
+    println!("build (no network): {}", conclusion(&built, "build: "));
+    published(&site.join("dist"))?;
+
+    let (addresses, _) = offline_link_check(&author, &site)?;
+    println!(
+        "check --external-links (no network), the site as created: external_addresses: {addresses}; {}",
+        if addresses == 0 {
+            "exit 0, nothing to request"
+        } else {
+            "each an error, exit 1"
+        }
+    );
+    let page = site.join("content/guide/writing-pages.md");
+    let mut text = std::fs::read_to_string(&page).map_err(|error| error.to_string())?;
+    text.push_str(&format!("\nOffline link probe: [Rust]({PROBE_LINK}).\n"));
+    std::fs::write(&page, text).map_err(|error| error.to_string())?;
+    let (addresses, unreachable) = offline_link_check(&author, &site)?;
+    let probe = unreachable
+        .iter()
+        .find(|(url, _)| url == PROBE_LINK)
+        .ok_or_else(|| format!("check --external-links did not find {PROBE_LINK}"))?;
+    println!(
+        "check --external-links (no network), a link to {PROBE_LINK} added: \
+         external_addresses: {addresses}, each an error; exit 1: {}",
+        probe.1
+    );
+
+    println!(
+        "preview (loopback only): {}",
+        serve_and_fetch(&author, &site, &["preview", "--port", "0"], "preview")?
+    );
+    println!(
+        "dev (loopback only): {}",
+        serve_and_fetch(&author, &site, &["dev", "--port", "0"], "dev")?
+    );
+
+    let calls = author.calls()?;
+    if calls.is_empty() {
+        return Err(
+            "the toolchain stand-ins logged nothing: `new` and `dev` did not find rustc on PATH"
+                .into(),
+        );
+    }
+    if calls.iter().any(|call| call != "rustc --version") {
+        return Err(format!(
+            "a content site must run nothing but `rustc --version`, and the toolchain stand-ins logged:\n  {}",
+            calls.join("\n  ")
+        ));
+    }
+    println!(
+        "toolchain calls: {} x `rustc --version` (new and dev check for Rust); no cargo, nothing compiled",
+        calls.len()
+    );
+    std::fs::remove_dir_all(dir).map_err(|error| format!("{}: {error}", dir.display()))?;
+    Ok(())
+}
+
+/// The production output a build published: its pages, and a manifest that
+/// says it is one.
+fn published(dist: &Path) -> Result<(), String> {
+    for page in ["index.html", "guide/getting-started/index.html", "404.html"] {
+        if !dist.join(page).is_file() {
+            return Err(format!(
+                "the build published no {page} in {}",
+                dist.display()
+            ));
+        }
+    }
+    let manifest: serde_json::Value = serde_json::from_slice(
+        &std::fs::read(dist.join(MANIFEST))
+            .map_err(|error| format!("{}: {error}", dist.join(MANIFEST).display()))?,
+    )
+    .map_err(|error| format!("{MANIFEST}: {error}"))?;
+    if manifest["mode"] != "production" {
+        return Err(format!(
+            "{MANIFEST} has mode {}, not production",
+            manifest["mode"]
+        ));
+    }
+    println!(
+        "published: index.html, guide/getting-started/index.html, 404.html; {MANIFEST} mode production, {} files",
+        manifest["files"].as_array().map_or(0, Vec::len)
+    );
+    Ok(())
+}
+
+/// `check --external-links --format json` with no network. Every external
+/// address it finds must come back as `external-link-unreachable`, an
+/// error, and none as answering; with any found the command fails, with
+/// none it succeeds. Returns how many it found and, for each one reported,
+/// the address and the diagnostic's message.
+fn offline_link_check(
+    author: &Author,
+    site: &Path,
+) -> Result<(u64, Vec<(String, String)>), String> {
+    let args = ["check", "--external-links", "--format", "json"];
+    let output = author
+        .command(OFFLINE, site, &args)
+        .output()
+        .map_err(|error| format!("{SANDBOX}: {error}"))?;
+    let report: serde_json::Value = serde_json::from_slice(&output.stdout).map_err(|error| {
+        format!(
+            "`rustify-docs {}` printed no JSON object ({error}):\n{}{}",
+            args.join(" "),
+            String::from_utf8_lossy(&output.stdout),
+            String::from_utf8_lossy(&output.stderr)
+        )
+    })?;
+    let addresses = report["summary"]["external_addresses"]
+        .as_u64()
+        .ok_or("check --external-links reported no summary.external_addresses")?;
+    let mut unreachable: Vec<(String, String)> = Vec::new();
+    for diagnostic in report["diagnostics"]
+        .as_array()
+        .map(Vec::as_slice)
+        .unwrap_or_default()
+    {
+        let rule = diagnostic["rule"].as_str().unwrap_or_default();
+        if !rule.starts_with("external-link") {
+            continue;
+        }
+        let message = diagnostic["message"].as_str().unwrap_or_default();
+        if rule != "external-link-unreachable" || diagnostic["severity"] != "error" {
+            return Err(format!(
+                "with no network, check --external-links reported an answer: {} {rule}: {message}",
+                diagnostic["severity"]
+            ));
+        }
+        let url = message.split('`').nth(1).unwrap_or(message).to_string();
+        if !unreachable.iter().any(|(seen, _)| *seen == url) {
+            unreachable.push((url, message.to_string()));
+        }
+    }
+    if unreachable.len() as u64 != addresses {
+        return Err(format!(
+            "check --external-links found {addresses} external address(es) but called {} unreachable: {:?}",
+            unreachable.len(),
+            unreachable
+        ));
+    }
+    let succeeded = output.status.success() && report["success"] == true;
+    let failed = !output.status.success() && report["success"] == false;
+    if addresses > 0 && !failed {
+        return Err(format!(
+            "with no network and {addresses} external address(es), check --external-links did not fail ({})",
+            output.status
+        ));
+    }
+    if addresses == 0 && !succeeded {
+        return Err(format!(
+            "with no external address, check --external-links failed ({}):\n{}",
+            output.status,
+            String::from_utf8_lossy(&output.stdout)
+        ));
+    }
+    Ok((addresses, unreachable))
+}
+
+/// A server that is stopped however the walkthrough leaves it.
+struct Server(std::process::Child);
+
+impl Drop for Server {
+    fn drop(&mut self) {
+        let _ = self.0.kill();
+        let _ = self.0.wait();
+    }
+}
+
+/// Starts `rustify-docs <args>` (a server) in `site` with loopback only,
+/// reads the address it prints first, fetches the home page and a guide page
+/// from it, and stops it. Returns what was fetched, for the record.
+fn serve_and_fetch(
+    author: &Author,
+    site: &Path,
+    args: &[&str],
+    label: &str,
+) -> Result<String, String> {
+    use std::io::BufRead;
+    let what = format!("`rustify-docs {}`", args.join(" "));
+    // Its progress goes to a file: a pipe nobody reads could fill and stall it.
+    let errors = author.dir.join(format!("{label}.stderr"));
+    let errors_file = std::fs::File::create(&errors).map_err(|error| error.to_string())?;
+    let child = author
+        .command(LOOPBACK, site, args)
+        .stdout(std::process::Stdio::piped())
+        .stderr(errors_file)
+        .spawn()
+        .map_err(|error| format!("{SANDBOX}: {error}"))?;
+    let mut server = Server(child);
+    let stderr = || std::fs::read_to_string(&errors).unwrap_or_default();
+    let stdout = server.0.stdout.take().ok_or("the server has no stdout")?;
+    let (sender, receiver) = std::sync::mpsc::channel();
+    std::thread::spawn(move || {
+        let mut line = String::new();
+        let read = std::io::BufReader::new(stdout).read_line(&mut line);
+        let _ = sender.send(read.map(|_| line));
+    });
+    let line = match receiver.recv_timeout(SERVER_START) {
+        Ok(Ok(line)) if !line.trim().is_empty() => line.trim().to_string(),
+        Ok(Ok(_)) => {
+            return Err(format!(
+                "{what} ended without printing its address:\n{}",
+                stderr()
+            ))
+        }
+        Ok(Err(error)) => return Err(format!("{what}: {error}")),
+        Err(_) => {
+            return Err(format!(
+                "{what} printed no address within {} s:\n{}",
+                SERVER_START.as_secs(),
+                stderr()
+            ))
+        }
+    };
+    let prefix = format!("{label}: http://");
+    let rest = line
+        .strip_prefix(&prefix)
+        .ok_or_else(|| format!("{what} printed `{line}`, not `{prefix}…`"))?;
+    let (authority, base) = rest.split_at(rest.find('/').unwrap_or(rest.len()));
+    let base = if base.is_empty() { "/" } else { base };
+    let mut fetched = Vec::new();
+    for page in ["", "guide/getting-started/"] {
+        let path = format!("{base}{page}");
+        let (status, bytes) = http_get(authority, &path)?;
+        if status != 200 {
+            return Err(format!(
+                "{what}: GET {path} answered {status}:\n{}",
+                stderr()
+            ));
+        }
+        fetched.push(format!("GET {path} 200 ({bytes} bytes)"));
+    }
+    drop(server);
+    Ok(format!("{line}; {}; stopped", fetched.join(", ")))
+}
+
+/// One GET over HTTP/1.1 that closes the connection. Returns the status and
+/// the body's length.
+fn http_get(authority: &str, path: &str) -> Result<(u16, usize), String> {
+    use std::io::{Read, Write};
+    let what = format!("GET http://{authority}{path}");
+    let address: std::net::SocketAddr = authority
+        .parse()
+        .map_err(|error| format!("{what}: {error}"))?;
+    let mut stream = std::net::TcpStream::connect_timeout(&address, HTTP_TIMEOUT)
+        .map_err(|error| format!("{what}: {error}"))?;
+    stream
+        .set_read_timeout(Some(HTTP_TIMEOUT))
+        .and_then(|()| stream.set_write_timeout(Some(HTTP_TIMEOUT)))
+        .map_err(|error| format!("{what}: {error}"))?;
+    stream
+        .write_all(
+            format!("GET {path} HTTP/1.1\r\nHost: {authority}\r\nConnection: close\r\n\r\n")
+                .as_bytes(),
+        )
+        .map_err(|error| format!("{what}: {error}"))?;
+    let mut response = Vec::new();
+    stream
+        .read_to_end(&mut response)
+        .map_err(|error| format!("{what}: {error}"))?;
+    let status = String::from_utf8_lossy(&response)
+        .lines()
+        .next()
+        .and_then(|line| line.split_whitespace().nth(1))
+        .and_then(|code| code.parse().ok())
+        .ok_or_else(|| format!("{what}: no HTTP status line"))?;
+    let body = response
+        .windows(4)
+        .position(|window| window == b"\r\n\r\n")
+        .map_or(0, |at| response.len() - at - 4);
+    Ok((status, body))
 }
 
 #[cfg(test)]
@@ -1076,5 +1634,11 @@ mod tests {
             modules.into_iter().collect::<Vec<_>>(),
             ["env".to_string(), "wbg".to_string()]
         );
+    }
+
+    #[test]
+    fn stand_in_paths_are_quoted_for_the_shell() {
+        assert_eq!(shell_quoted(Path::new("/tmp/a b")), "'/tmp/a b'");
+        assert_eq!(shell_quoted(Path::new("/tmp/it's")), "'/tmp/it'\\''s'");
     }
 }

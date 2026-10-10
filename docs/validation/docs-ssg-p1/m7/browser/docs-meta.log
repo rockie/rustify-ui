@@ -1,0 +1,38 @@
+npm notice run rustify-ui-browser-tests@0.1.0 npx
+npm notice run 'playwright' test -c playwright.docs.config.ts --project=docs-meta
+[WebServer] building /Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/http/meta/site into /Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/http/meta/dist
+[WebServer] warning[no-git-history]: pages show no last-updated date: not a git repository (or any of the parent directories): .git
+[WebServer]   = help: build inside a git repository with the content committed
+[WebServer] build: 4 pages and 404.html in /Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/http/meta/dist: 93.2 KB in 16 files, 1 warning(s), 42 ms
+[WebServer] largest pages:
+[WebServer]      15.8 KB  guide/setup/index.html
+[WebServer]       9.6 KB  guide/index.html
+[WebServer]       8.1 KB  reference/api/index.html
+[WebServer]       4.4 KB  index.html
+[WebServer]       4.4 KB  404.html
+
+Running 21 tests using 1 worker
+
+  ✓   1 [docs-meta] › tests/docs-ssg/http.spec.ts:49:5 › every page links only to pages that load whole, under the base, from this origin (174ms)
+  ✓   2 [docs-meta] › tests/docs-ssg/http.spec.ts:98:5 › an anchor link lands on its heading, Chinese ones included (118ms)
+  ✓   3 [docs-meta] › tests/docs-ssg/http.spec.ts:105:5 › an address with nothing behind it is a real 404 that looks like the site, at any depth (160ms)
+  ✓   4 [docs-meta] › tests/docs-ssg/http.spec.ts:121:5 › the policy arrives as a header where the host can send one, and in every page (76ms)
+  ✓   5 [docs-meta] › tests/docs-ssg/http.spec.ts:141:5 › a directory without its slash is redirected, and nothing outside the base is served (4ms)
+  ✓   6 [docs-meta] › tests/docs-ssg/theme.spec.ts:60:9 › colour mode › the first frame follows the system, and a stored choice before any paint (125ms)
+  ✓   7 [docs-meta] › tests/docs-ssg/theme.spec.ts:85:9 › colour mode › the switch changes, marks and keeps the mode across pages (142ms)
+  ✓   8 [docs-meta] › tests/docs-ssg/theme.spec.ts:100:9 › colour mode › refused storage leaves the system mode and a switch that still works (98ms)
+  ✓   9 [docs-meta] › tests/docs-ssg/theme.spec.ts:125:9 › code › copy hands over the block's text exactly and says so (212ms)
+  ✓  10 [docs-meta] › tests/docs-ssg/theme.spec.ts:138:9 › code › a refused clipboard says so and selects the code for copying by hand (191ms)
+  ✓  11 [docs-meta] › tests/docs-ssg/theme.spec.ts:153:9 › code › a code group shows one tab, switches its namesakes and remembers across pages (166ms)
+  ✓  12 [docs-meta] › tests/docs-ssg/theme.spec.ts:178:9 › code › highlighting spans stay inline, block scopes included (74ms)
+  ✓  13 [docs-meta] › tests/docs-ssg/theme.spec.ts:189:9 › navigation › the sidebar marks the page, and the contents follow the reader to the last section (963ms)
+  ✓  14 [docs-meta] › tests/docs-ssg/theme.spec.ts:210:9 › navigation › on a phone the menu and the contents are panels that close on a link and on Escape (195ms)
+  ✓  15 [docs-meta] › tests/docs-ssg/theme.spec.ts:228:9 › navigation › the columns follow the width, and nothing scrolls sideways down to 320 px or at 200 % (262ms)
+  ✓  16 [docs-meta] › tests/docs-ssg/theme.spec.ts:253:9 › without script › everything reads, every code tab is shown and nothing pretends to be a control (109ms)
+  ✓  17 [docs-meta] › tests/docs-ssg/theme.spec.ts:275:9 › reading quality › one h1, landmarks and the page's language (141ms)
+  ✓  18 [docs-meta] › tests/docs-ssg/theme.spec.ts:290:9 › reading quality › text, links, alerts and actions reach AA contrast in both modes (267ms)
+  ✓  19 [docs-meta] › tests/docs-ssg/theme.spec.ts:321:9 › reading quality › focus is an opaque ring with a gap, and the logo shows in both modes (165ms)
+  ✓  20 [docs-meta] › tests/docs-ssg/theme.spec.ts:344:9 › reading quality › axe finds no serious or critical WCAG A/AA violation, wide and narrow, in both modes (4.5s)
+  ✓  21 [docs-meta] › tests/docs-ssg/theme.spec.ts:367:9 › reading quality › reduced motion turns smooth scrolling off (63ms)
+
+  21 passed (9.1s)

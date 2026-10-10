@@ -8,8 +8,8 @@
 
 use leptos::prelude::*;
 use leptos::tachys::html::attribute::custom::CustomAttribute;
-use rustify_components::{provide_current_path, Link, LinkMatch};
 
+use crate::escape::escape_html_into;
 use crate::labels::{self, Labels};
 use crate::markdown::Heading;
 
@@ -42,6 +42,13 @@ pub struct NavGroup {
     pub items: Vec<NavItem>,
 }
 
+/// Where `dev` serves what it adds to every page: the problem panel's
+/// script and style, and the stream of build results. Outside the site's
+/// base, and never part of a production build.
+pub const DEV_PREFIX: &str = "/__rustify-docs/";
+pub const DEV_SCRIPT_URL: &str = "/__rustify-docs/dev.js";
+pub const DEV_STYLE_URL: &str = "/__rustify-docs/dev.css";
+
 /// Where a build put the shared files, already joined with the base.
 #[derive(Clone, Debug, Default, PartialEq, Eq)]
 pub struct AssetUrls {
@@ -49,6 +56,8 @@ pub struct AssetUrls {
     /// Runs in `<head>`, before first paint, to apply a stored mode.
     pub mode_script: String,
     pub site_script: String,
+    /// Pages served by `dev`: they load its panel and follow its builds.
+    pub dev: bool,
 }
 
 /// What every page of a site shares.
@@ -60,9 +69,17 @@ pub struct Site {
     pub base: String,
     pub nav: Vec<NavGroup>,
     pub assets: AssetUrls,
-    /// The logo's URL in light and in dark mode; the same URL twice for one
-    /// image.
-    pub logo: Option<(String, String)>,
+    pub logo: Option<Logo>,
+}
+
+/// The site's logo: its URL in light and in dark mode (the same twice for
+/// one image), and its width at the header's 24 px height when known, so
+/// the header keeps its layout before the image loads.
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct Logo {
+    pub light: String,
+    pub dark: String,
+    pub width: Option<u32>,
 }
 
 impl Site {
@@ -131,6 +148,18 @@ pub struct Page<'a> {
     /// The heading levels the table of contents lists.
     pub toc_levels: (u8, u8),
     pub meta: Meta<'a>,
+    /// A page with `layout: home`.
+    pub home: Option<Home<'a>>,
+}
+
+/// What a home page shows above its own Markdown.
+#[derive(Clone, Debug, Default)]
+pub struct Home<'a> {
+    pub tagline: Option<&'a str>,
+    /// Each action's text and its resolved URL; the first is the primary.
+    pub actions: Vec<(&'a str, String)>,
+    /// Each feature's title and one-sentence details.
+    pub features: Vec<(&'a str, &'a str)>,
 }
 
 /// The page served for an address with nothing at it: the site's shell, one
@@ -163,6 +192,38 @@ pub fn render_not_found(site: &Site) -> String {
                 noindex: true,
                 ..Meta::default()
             },
+            home: None,
+        },
+    )
+}
+
+/// What `dev` serves while no version of the site has built: the site's
+/// shell with one heading saying so. The problems themselves are listed by
+/// the panel the page loads.
+pub fn render_dev_shell(site: &Site) -> String {
+    let (labels, _) = labels::for_lang(&site.lang);
+    let mut article = String::from("<p>");
+    crate::escape::escape_html_into(&mut article, labels.dev.shell_body);
+    article.push_str("</p>\n");
+    let document_title = format!("{} | {}", labels.dev.shell_title, site.name);
+    render_page(
+        site,
+        &Page {
+            route: DEV_PREFIX,
+            document_title: &document_title,
+            title: labels.dev.shell_title,
+            description: Some(labels.dev.shell_body),
+            lang: &site.lang,
+            draft: false,
+            article: &article,
+            headings: &[],
+            article_has_h1: false,
+            toc_levels: (2, 3),
+            meta: Meta {
+                noindex: true,
+                ..Meta::default()
+            },
+            home: None,
         },
     )
 }
@@ -193,7 +254,6 @@ pub fn render_page(site: &Site, page: &Page) -> String {
 }
 
 fn page_view(site: &Site, page: &Page) -> impl IntoView {
-    provide_current_path(Signal::stored(site.url(page.route)));
     let (labels, foreign) = labels::for_lang(page.lang);
     let ui_lang = foreign.then_some(labels.lang);
     let document_title = page.document_title.to_owned();
@@ -209,9 +269,10 @@ fn page_view(site: &Site, page: &Page) -> impl IntoView {
         .iter()
         .filter(|heading| heading.level >= page.toc_levels.0 && heading.level <= page.toc_levels.1)
         .collect();
-    let (previous, next) = site.neighbours(page.route);
-    // The article's one H1 is the content's own when it has one.
-    let heading = (!page.article_has_h1).then(|| page.title.to_owned());
+    let body = match &page.home {
+        Some(home) => home_layout(page, home).into_any(),
+        None => doc_layout(site, page, &toc, labels, ui_lang).into_any(),
+    };
     view! {
         <html lang=page.lang.to_owned() data-rustify-scope="" data-theme="system" data-rd-base=site.base.clone()>
             <head>
@@ -233,8 +294,15 @@ fn page_view(site: &Site, page: &Page) -> impl IntoView {
                 <meta name="twitter:description" content=description />
                 {meta.image.map(|url| view! { <meta name="twitter:image" content=url.to_owned() /> })}
                 <link rel="stylesheet" href=site.assets.stylesheet.clone() />
+                {site.assets.dev.then(|| view! { <link rel="stylesheet" href=DEV_STYLE_URL /> })}
                 <script src=site.assets.mode_script.clone()></script>
                 <script src=site.assets.site_script.clone() defer=""></script>
+                {site.assets.dev.then(|| {
+                    let words = serde_json::to_string(&labels.dev).unwrap_or_default();
+                    view! {
+                        <script src=DEV_SCRIPT_URL defer="" data-labels=words data-lang=ui_lang.unwrap_or(page.lang).to_owned()></script>
+                    }
+                })}
             </head>
             <body class="min-h-screen bg-background text-foreground antialiased">
                 <a
@@ -244,32 +312,101 @@ fn page_view(site: &Site, page: &Page) -> impl IntoView {
                 >
                     {labels.skip_to_content}
                 </a>
-                {header(site, labels, ui_lang)}
-                <div class="rd-layout mx-auto grid max-w-[90rem] gap-x-8 px-4 md:px-6">
-                    {sidebar(site, page.route, labels, ui_lang)}
-                    {table_of_contents(&toc, labels, ui_lang)}
-                    <main id="content" class="rd-main min-w-0 py-8 md:py-10">
-                        {page.draft.then(|| view! {
-                            <p class="mb-4 w-fit rounded-md border border-border px-2 py-0.5 text-sm text-muted-foreground" lang=ui_lang>
-                                {labels.draft}
-                            </p>
-                        })}
-                        {heading.map(|title| view! { <h1 class="mb-6 text-3xl font-bold tracking-tight">{title}</h1> })}
-                        <article class="rd-prose max-w-3xl" inner_html=ARTICLE></article>
-                        {page_footer(meta, labels, ui_lang)}
-                        {pager(site, previous, next, labels, ui_lang)}
-                    </main>
-                </div>
+                {header(site, page.route == "/", labels, ui_lang)}
+                {body}
                 <p
                     id="rd-status"
                     class="sr-only"
                     aria-live="polite"
                     data-copied=labels.copied
                     data-copy-failed=labels.copy_failed
+                    data-copy-failed-short=labels.copy_failed_short
                     lang=ui_lang
                 ></p>
             </body>
         </html>
+    }
+}
+
+/// A content page: the sidebar, the table of contents and the article with
+/// its footer and the previous/next links.
+fn doc_layout(
+    site: &Site,
+    page: &Page,
+    toc: &[&Heading],
+    labels: &'static Labels,
+    ui_lang: Option<&'static str>,
+) -> impl IntoView {
+    let (previous, next) = site.neighbours(page.route);
+    // The article's one H1 is the content's own when it has one.
+    let heading = (!page.article_has_h1).then(|| page.title.to_owned());
+    view! {
+        <div class="rd-layout mx-auto grid max-w-[76rem] gap-x-10 px-4 md:px-6">
+            {sidebar(site, page.route, labels, ui_lang)}
+            {table_of_contents(toc, labels, ui_lang)}
+            <main id="content" class="rd-main min-w-0 py-8 md:py-12">
+                <div class="rd-column">
+                    {page.draft.then(|| view! {
+                        <p class="rd-draft" lang=ui_lang>{labels.draft}</p>
+                    })}
+                    {heading.map(|title| view! { <h1 class="rd-title">{title}</h1> })}
+                    <article class="rd-prose" inner_html=ARTICLE></article>
+                    {page_footer(page.meta, labels, ui_lang)}
+                    {pager(site, previous, next, labels, ui_lang)}
+                </div>
+            </main>
+        </div>
+    }
+}
+
+/// The home page: who the site is for, where to start, what it offers, then
+/// whatever the page's Markdown adds. No sidebar: it is the way in.
+fn home_layout(page: &Page, home: &Home) -> impl IntoView {
+    let actions = home
+        .actions
+        .iter()
+        .enumerate()
+        .map(|(i, (text, url))| {
+            let class = if i == 0 {
+                "rd-action rd-action-primary"
+            } else {
+                "rd-action rd-action-secondary"
+            };
+            view! { <a href=url.clone() class=class>{text.to_string()}</a> }
+        })
+        .collect_view();
+    let features = (!home.features.is_empty()).then(|| {
+        let items = home
+            .features
+            .iter()
+            .map(|(title, details)| {
+                view! {
+                    <li>
+                        <h2>{title.to_string()}</h2>
+                        <p>{details.to_string()}</p>
+                    </li>
+                }
+            })
+            .collect_view();
+        // Two or four go in pairs, any other count in threes, so the
+        // hairline rows never end in an empty column.
+        let columns = match home.features.len() {
+            1 => "1",
+            2 | 4 => "2",
+            _ => "3",
+        };
+        view! { <ul class="rd-features" data-columns=columns>{items}</ul> }
+    });
+    view! {
+        <main id="content" class="rd-home mx-auto max-w-[76rem] px-4 md:px-6">
+            <div class="rd-hero">
+                <h1 class="rd-home-title">{page.title.to_owned()}</h1>
+                {home.tagline.map(|tagline| view! { <p class="rd-tagline">{tagline.to_owned()}</p> })}
+                {(!home.actions.is_empty()).then(|| view! { <p class="rd-actions">{actions}</p> })}
+            </div>
+            {features}
+            <article class="rd-prose rd-home-prose" inner_html=ARTICLE></article>
+        </main>
     }
 }
 
@@ -281,26 +418,32 @@ fn open_graph(property: &'static str, content: String) -> impl IntoView {
         .attr("content", content)
 }
 
-fn header(site: &Site, labels: &'static Labels, ui_lang: Option<&'static str>) -> impl IntoView {
+fn header(
+    site: &Site,
+    at_home: bool,
+    labels: &'static Labels,
+    ui_lang: Option<&'static str>,
+) -> impl IntoView {
     let name = site.name.clone();
     // The name says what the logo shows, so the logo is decoration. A pair
     // switches with the mode through CSS, with or without script.
-    let logo = site.logo.clone().map(|(light, dark)| {
-        if light == dark {
-            view! { <img src=light alt="" class="h-6 w-auto" /> }.into_any()
+    let logo = site.logo.clone().map(|logo| {
+        let width = logo.width.map(|width| width.to_string());
+        if logo.light == logo.dark {
+            view! { <img src=logo.light alt="" width=width height="24" class="h-6 w-auto" /> }.into_any()
         } else {
             view! {
-                <img src=light alt="" class="h-6 w-auto dark:hidden" />
-                <img src=dark alt="" class="hidden h-6 w-auto dark:block" />
+                <img src=logo.light alt="" width=width.clone() height="24" class="h-6 w-auto dark:hidden" />
+                <img src=logo.dark alt="" width=width height="24" class="hidden h-6 w-auto dark:block" />
             }
             .into_any()
         }
     });
     view! {
         <header class="sticky top-0 z-40 border-b border-secondary bg-background">
-            <div class="mx-auto flex h-14 max-w-[90rem] items-center gap-4 px-4 md:px-6">
-                <Link href=site.url("/") match_=LinkMatch::Exact class="inline-flex items-center gap-2 font-semibold text-foreground no-underline">{logo}{name}</Link>
-                <div class="ml-auto flex items-center gap-1" data-rd-mode-switch="" hidden="" role="group" aria-label=labels.theme lang=ui_lang>
+            <div class="mx-auto flex h-14 max-w-[76rem] items-center gap-4 px-4 md:px-6">
+                <a href=site.url("/") class="rd-brand" aria-current=at_home.then_some("page")>{logo}<span>{name}</span></a>
+                <div class="rd-mode-switch ml-auto" data-rd-mode-switch="" hidden="" role="group" aria-label=labels.theme lang=ui_lang>
                     {mode_button("system", labels.theme_system)}
                     {mode_button("light", labels.theme_light)}
                     {mode_button("dark", labels.theme_dark)}
@@ -312,85 +455,105 @@ fn header(site: &Site, labels: &'static Labels, ui_lang: Option<&'static str>) -
 
 fn mode_button(mode: &'static str, label: &'static str) -> impl IntoView {
     view! {
-        <button
-            type="button"
-            class="rounded-md px-2 py-1 text-sm text-muted-foreground hover:bg-muted aria-pressed:bg-secondary aria-pressed:text-foreground"
-            data-rd-mode=mode
-            aria-pressed="false"
-        >
-            {label}
+        <button type="button" class="rd-mode-option" data-rd-mode=mode aria-pressed="false">
+            <span class="rd-mode-icon" inner_html=crate::icons::mode(mode)></span>
+            <span class="rd-mode-label">{label}</span>
         </button>
     }
 }
 
+/// The sidebar's entries as HTML: hundreds on every page of a large site,
+/// each a bare link styled by one `.rd-nav` rule instead of a class list
+/// repeated per entry, written once and placed in both navigations.
+fn sidebar_entries(site: &Site, route: &str, labels: &'static Labels) -> String {
+    let mut html = String::new();
+    for group in site.groups_for(route) {
+        html.push_str("<section><h2>");
+        escape_html_into(&mut html, &group.label);
+        html.push_str("</h2><ul>");
+        for item in &group.items {
+            html.push_str("<li><a href=\"");
+            escape_html_into(&mut html, &site.url(&item.route));
+            html.push('"');
+            if item.route == route {
+                html.push_str(" aria-current=\"page\"");
+            }
+            html.push('>');
+            escape_html_into(&mut html, &item.title);
+            if item.draft {
+                html.push_str(" · ");
+                html.push_str(labels.draft);
+            }
+            html.push_str("</a></li>");
+        }
+        html.push_str("</ul></section>");
+    }
+    html
+}
+
+/// The site's navigation, twice: a plain column from 768 px, and on a
+/// narrower screen a native <details> menu, closed until opened, that works
+/// without script. Only one is displayed at a width; the other is
+/// `display: none`, so focus and assistive technology meet one navigation.
+/// (A closed <details> shown by CSS alone is not in WebKit's accessibility
+/// tree, so the wide column cannot be one.)
 fn sidebar(
     site: &Site,
     route: &str,
     labels: &'static Labels,
     ui_lang: Option<&'static str>,
 ) -> impl IntoView {
-    let groups: Vec<&NavGroup> = site.groups_for(route).collect();
-    // Hundreds of entries on every page: each is a bare link, styled by one
-    // `.rd-nav` rule instead of a class list repeated per entry.
-    let entries = groups
-        .into_iter()
-        .map(|group| {
-            let items = group
-                .items
-                .iter()
-                .map(|item| {
-                    let current = (item.route == route).then_some("page");
-                    let title = if item.draft {
-                        format!("{} · {}", item.title, labels.draft)
-                    } else {
-                        item.title.clone()
-                    };
-                    view! { <li><a href=site.url(&item.route) aria-current=current>{title}</a></li> }
-                })
-                .collect_view();
-            view! {
-                <section>
-                    <h2>{group.label.clone()}</h2>
-                    <ul>{items}</ul>
-                </section>
-            }
-        })
-        .collect_view();
+    let entries = sidebar_entries(site, route, labels);
     view! {
-        <details class="rd-sidebar md:sticky md:top-14 md:max-h-[calc(100vh-3.5rem)] md:overflow-y-auto md:py-8">
-            <summary class="cursor-pointer py-3 text-sm font-medium md:hidden" lang=ui_lang>{labels.menu}</summary>
-            <nav class="rd-nav" aria-label=labels.menu lang=ui_lang>{entries}</nav>
-        </details>
+        <div class="rd-sidebar">
+            <nav class="rd-nav rd-sidebar-wide" aria-label=labels.menu lang=ui_lang inner_html=entries.clone()></nav>
+            <details class="rd-sidebar-narrow">
+                <summary lang=ui_lang>{labels.menu}</summary>
+                <nav class="rd-nav" aria-label=labels.menu lang=ui_lang inner_html=entries></nav>
+            </details>
+        </div>
     }
 }
 
+/// The page's headings as list items for the table of contents.
+fn toc_entries(toc: &[&Heading]) -> String {
+    let mut html = String::new();
+    for heading in toc {
+        html.push_str("<li");
+        if heading.level > 2 {
+            html.push_str(" class=\"rd-toc-sub\"");
+        }
+        html.push_str("><a href=\"#");
+        escape_html_into(&mut html, &heading.id);
+        html.push_str("\" data-rd-toc-link=\"\">");
+        escape_html_into(&mut html, &heading.text);
+        html.push_str("</a></li>");
+    }
+    html
+}
+
+/// The table of contents, twice for the same reason as the sidebar: a
+/// column from 1280 px, a <details> panel above the article below that.
 fn table_of_contents(
     toc: &[&Heading],
     labels: &'static Labels,
     ui_lang: Option<&'static str>,
 ) -> impl IntoView {
     (!toc.is_empty()).then(|| {
-        let entries = toc
-            .iter()
-            .map(|heading| {
-                let indent = if heading.level > 2 { "pl-3" } else { "" };
-                view! {
-                    <li class=indent>
-                        <a href=format!("#{}", heading.id) class="block py-0.5 text-muted-foreground hover:text-foreground aria-[current=location]:font-medium aria-[current=location]:text-primary" data-rd-toc-link="">
-                            {heading.text.clone()}
-                        </a>
-                    </li>
-                }
-            })
-            .collect_view();
+        let entries = toc_entries(toc);
         view! {
-            <details class="rd-toc text-sm xl:sticky xl:top-14 xl:max-h-[calc(100vh-3.5rem)] xl:overflow-y-auto xl:py-10">
-                <summary class="cursor-pointer py-2 font-medium xl:hidden" lang=ui_lang>{labels.on_this_page}</summary>
-                <nav aria-label=labels.on_this_page lang=ui_lang>
-                    <p class="mb-2 hidden font-semibold xl:block">{labels.on_this_page}</p>
-                    <ul class="space-y-1">{entries}</ul>
+            <div class="rd-toc">
+                <nav class="rd-toc-wide" aria-label=labels.on_this_page lang=ui_lang>
+                    <p>{labels.on_this_page}</p>
+                    <ul inner_html=entries.clone()></ul>
                 </nav>
-            </details>
+                <details class="rd-toc-narrow">
+                    <summary lang=ui_lang>{labels.on_this_page}</summary>
+                    <nav aria-label=labels.on_this_page lang=ui_lang>
+                        <ul inner_html=entries></ul>
+                    </nav>
+                </details>
+            </div>
         }
     })
 }
@@ -401,7 +564,7 @@ fn page_footer(
     ui_lang: Option<&'static str>,
 ) -> impl IntoView {
     let edit = meta.edit_url.map(|url| {
-        view! { <a href=url.to_owned() rel="noopener" class="text-primary hover:underline" lang=ui_lang>{labels.edit_page}</a> }
+        view! { <a href=url.to_owned() rel="noopener" lang=ui_lang>{labels.edit_page}</a> }
     });
     let updated = meta.updated.map(|date| {
         view! {
@@ -414,7 +577,7 @@ fn page_footer(
     });
     (edit.is_some() || updated.is_some()).then(|| {
         view! {
-            <footer class="mt-10 flex flex-wrap items-center gap-x-6 gap-y-2 border-t border-secondary pt-4 text-sm text-muted-foreground">
+            <footer class="rd-page-meta">
                 {edit}
                 {updated}
             </footer>
@@ -429,19 +592,19 @@ fn pager(
     labels: &'static Labels,
     ui_lang: Option<&'static str>,
 ) -> impl IntoView {
-    let link = |item: &NavItem, label: &'static str, align: &'static str| {
+    let link = |item: &NavItem, label: &'static str, is_next: bool| {
         view! {
-            <a href=site.url(&item.route) class=format!("flex flex-col rounded-md border border-border px-4 py-3 hover:border-primary {align}")>
-                <span class="text-xs text-muted-foreground" lang=ui_lang>{label}</span>
-                <span class="font-medium text-primary">{item.title.clone()}</span>
+            <a href=site.url(&item.route) rel=if is_next { "next" } else { "prev" } data-rd-next=is_next.then_some("")>
+                <span class="rd-pager-label" lang=ui_lang>{label}</span>
+                <span class="rd-pager-title">{item.title.clone()}</span>
             </a>
         }
     };
     (previous.is_some() || next.is_some()).then(|| {
         view! {
-            <nav class="mt-12 grid gap-4 border-t border-secondary pt-6 sm:grid-cols-2" aria-label=format!("{} / {}", labels.previous, labels.next)>
-                <div>{previous.map(|item| link(item, labels.previous, ""))}</div>
-                <div>{next.map(|item| link(item, labels.next, "sm:text-right"))}</div>
+            <nav class="rd-pager" aria-label=format!("{} / {}", labels.previous, labels.next)>
+                {previous.map(|item| link(item, labels.previous, false))}
+                {next.map(|item| link(item, labels.next, true))}
             </nav>
         }
     })
@@ -483,6 +646,7 @@ mod tests {
                 stylesheet: "/rustify-ui/assets/site.css".into(),
                 mode_script: "/rustify-ui/assets/mode.js".into(),
                 site_script: "/rustify-ui/assets/site.js".into(),
+                dev: false,
             },
             logo: None,
         }
@@ -512,6 +676,7 @@ mod tests {
                 article_has_h1: fragment.h1_count > 0,
                 toc_levels: (2, 3),
                 meta: Meta::default(),
+                home: None,
             },
         )
     }
@@ -541,8 +706,11 @@ mod tests {
         assert!(html.contains("<a href=\"#install\""));
         assert!(html.contains("<a href=\"#check\""));
         // Neighbours in sidebar order.
-        assert!(html.contains("<a href=\"/rustify-ui/\" class=\"flex flex-col"));
-        assert!(html.contains("<a href=\"/rustify-ui/next/\" class=\"flex flex-col"));
+        assert!(
+            html.contains("<a href=\"/rustify-ui/\" rel=\"prev\">"),
+            "{html}"
+        );
+        assert!(html.contains("<a href=\"/rustify-ui/next/\" rel=\"next\" data-rd-next=\"\">"));
         assert!(
             html.contains("Next steps · Draft</a>"),
             "draft marker in the sidebar"
