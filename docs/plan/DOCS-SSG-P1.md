@@ -46,11 +46,11 @@
 
 - 最近更新：2026-10-10T21:40:00+08:00
 - 当前进度：6/9 个里程碑完成
-- 当前状态：M7 已完成（`check --external-links`、发布事务的真实故障注入与输出归属加固、N7 收口、仅 Rust+CLI 的禁网作者演练、V-15 全矩阵），M5–M7 在 M7 提交点提交；M5 只差用户的真实 Safari/手机走查结果
+- 当前状态：M7 已完成（`check --external-links`、发布事务的真实故障注入与输出归属加固、N7 收口、仅 Rust+CLI 的禁网作者演练、V-15 全矩阵），M5–M7 已于 1d239ff 提交；M5 只差用户的真实 Safari/手机走查结果
 - 最近完成：M7（最小工具链、安全与恢复收口）
 - 下一步：M8——先做不依赖真实设备的部分：500 页正式性能组与同一服务实例上的 1000 次逐次可见保存、watch 丢事件/SSE 断线负向、§9.4 UAT 串联；收到走查结果后按 [M5 记录](../validation/docs-ssg-p1/M5.md)「未完项」回填并重跑 docs-subpath/meta/webkit，M5 记完成；M8 出口还需用户的真实 Firefox（M8 前安装）与 Safari/手机完整矩阵
 - 当前阻塞：M5 的 V-12 真实 Safari/手机走查结果待用户（服务已起：127.0.0.1:4192、192.168.16.116:4194）；M8 真实浏览器矩阵需用户安装 Firefox 并走查
-- 代码基线：dirty@d0e6913 → 待 M7 提交（路径见 M5、M6、M7 记录头部）
+- 代码基线：`1d239ff`（M1 179c5ec、M2–M4 9442f5d、M5–M7 1d239ff；M5 的走查回填与 M8 改动在其后，下一提交点 M8）
 
 ### 完成记录
 
@@ -60,8 +60,8 @@
 | M2 | 已完成 | 2026-10-10T18:10:00+08:00 | rustify-docs 库与 CLI 骨架、SSR 页面、原生样式/压缩/前缀高亮、片段缓存与并行、B 语料与采时 harness；风险门 195 ms/33 ms/22.8 KB 通过，git 安装排练、V-15 矩阵通过，示例产物逐字节不变 | [M2 记录](../validation/docs-ssg-p1/M2.md) | 9442f5d |
 | M3 | 已完成 | 2026-10-10T18:30:00+08:00 | 内容图、原始 HTML 检查、代码分组/引用、自动链接、首页与页头链接、`sidebar.group` 与 `check`；库 80 例、端到端 5 例、CLI 集成 8 例通过，恰 3 错与宽覆盖 fixture 符合预期，B 0 错且风险门复测通过 | [M3 记录](../validation/docs-ssg-p1/M3.md) | 9442f5d |
 | M4 | 已完成 | 2026-10-10T19:10:00+08:00 | `new`/`build`/`preview` 与内容模板、元数据/404/站点文件/manifest、资源指纹、发布事务与锁；V-5/V-6/V-10 基本门、V-7 三项目各 5/5、B 完整构建中位 347 ms、V-15 矩阵与安装排练通过，示例产物逐字节不变 | [M4 记录](../validation/docs-ssg-p1/M4.md) | 9442f5d |
-| M6 | 已完成 | 2026-10-10T21:15:00+08:00 | `rustify-docs dev`：每轮全量输入+内容键片段缓存、受影响页按两代字节比较刷新并保滚动、失败/panic 保留上一代、诊断面板（finish review ship）；V-9 浏览器 9/9 与 CLI 9 例、abort 构建拒绝 dev、B 保存可见中位 177/172/169 ms 与短轮 20 次 ≤178 ms | [M6 记录](../validation/docs-ssg-p1/M6.md) | 待提交 |
-| M7 | 已完成 | 2026-10-10T21:40:00+08:00 | `check --external-links`（rustls+内置根证书、去重/并发/超时、失败即报错）、发布三步骤真实 SIGKILL/磁盘满/权限/损坏 manifest/并发注入与输出归属加固、新窗站外链接需 noopener、零机器路径泄漏；V-15 矩阵、features/artifacts/reliability/toolchain 四组（禁网作者演练只调用 2 次 `rustc --version`）、docs-root/meta/dev 全过 | [M7 记录](../validation/docs-ssg-p1/M7.md) | 待提交 |
+| M6 | 已完成 | 2026-10-10T21:15:00+08:00 | `rustify-docs dev`：每轮全量输入+内容键片段缓存、受影响页按两代字节比较刷新并保滚动、失败/panic 保留上一代、诊断面板（finish review ship）；V-9 浏览器 9/9 与 CLI 9 例、abort 构建拒绝 dev、B 保存可见中位 177/172/169 ms 与短轮 20 次 ≤178 ms | [M6 记录](../validation/docs-ssg-p1/M6.md) | 1d239ff |
+| M7 | 已完成 | 2026-10-10T21:40:00+08:00 | `check --external-links`（rustls+内置根证书、去重/并发/超时、失败即报错）、发布三步骤真实 SIGKILL/磁盘满/权限/损坏 manifest/并发注入与输出归属加固、新窗站外链接需 noopener、零机器路径泄漏；V-15 矩阵、features/artifacts/reliability/toolchain 四组（禁网作者演练只调用 2 次 `rustc --version`）、docs-root/meta/dev 全过 | [M7 记录](../validation/docs-ssg-p1/M7.md) | 1d239ff |
 | M5 | 进行中 | 2026-10-10T21:10:00+08:00 | 默认阅读主题、finish review（ship）、终验脚本全过（三项目各 20/20、WebKit 19+1、LCP ≤740 ms/CLS 0），axe 接入后修两处 critical、零违规；Firefox 引擎环境缺口按用户决定 M8 前补真实 Firefox；只差真实 Safari/手机走查 | [M5 记录](../validation/docs-ssg-p1/M5.md) | — |
 
 ## 0. 需求、范围与决策
