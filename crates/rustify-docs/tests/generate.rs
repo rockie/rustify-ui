@@ -357,6 +357,71 @@ fn files_keep_their_fragment_and_a_class_loads_its_image_from_the_site() {
 }
 
 #[test]
+fn css_resource_decoding_and_entity_spans_survive_generation() {
+    let (project, mut snapshot) = load();
+    let red: Arc<[u8]> =
+        Arc::from(b"<svg xmlns='http://www.w3.org/2000/svg'><rect fill='red'/></svg>".as_slice());
+    let blue: Arc<[u8]> =
+        Arc::from(b"<svg xmlns='http://www.w3.org/2000/svg'><rect fill='blue'/></svg>".as_slice());
+    snapshot
+        .files
+        .insert("static/assets/bg one.svg".into(), red.clone());
+    snapshot
+        .files
+        .insert("static/assets/bg_one.svg".into(), blue.clone());
+    snapshot
+        .files
+        .insert("content/=/bg.svg".into(), red.clone());
+    let values = [
+        "URL('/assets/bg_one.svg')",
+        "url('/assets/bg_one.svg')",
+        r"URL('/assets/bg\_one.svg')",
+        r"url('/assets/bg\_one.svg')",
+        "URL('/assets/bg%20one.svg')",
+        "url('/assets/bg%20one.svg')",
+        "url&#40=/bg.svg)",
+        "url&#40;=/bg.svg)",
+        "url(&#34=/bg.svg&#34)",
+        "url(&#34;=/bg.svg&#34;)",
+    ];
+    let body = values
+        .iter()
+        .map(|value| format!("<div class=\"[background-image:{value}]\"></div>\n"))
+        .collect::<String>();
+    snapshot.markdown.insert(
+        "index.md".into(),
+        Arc::from(format!(
+            "---\ndescription: Resources\n---\n# Resources\n\n{body}"
+        )),
+    );
+    let (analysis, generation) = build(&project, &snapshot, Mode::Production, 2);
+    assert_eq!(analysis.errors(), 0, "{:?}", analysis.diagnostics);
+    let html = text(&generation.files, "index.html");
+    let (_, slots) = rustify_docs::html_check::check(article(&html));
+    let css = text(&generation.files, &generation.stylesheet_path);
+    let loads = rustify_docs::style::urls(&css);
+    assert_eq!(slots.len(), values.len());
+    for (i, slot) in slots.iter().enumerate() {
+        assert!(loads.contains(&slot.value), "{}: {loads:?}", values[i]);
+        let path = slot
+            .value
+            .strip_prefix("/docs/")
+            .unwrap()
+            .replace("%20", " ");
+        assert_eq!(
+            generation.files[&path],
+            if [1, 2, 3].contains(&i) {
+                blue.clone()
+            } else {
+                red.clone()
+            },
+            "{}",
+            values[i]
+        );
+    }
+}
+
+#[test]
 fn a_generation_cannot_load_an_absent_file_under_its_assets_prefix() {
     let (project, snapshot) = load();
     let mut analysis = content::analyze(

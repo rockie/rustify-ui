@@ -149,17 +149,31 @@ pub fn parse_srcset(value: &str) -> Vec<(String, String)> {
     candidates
 }
 
-/// IDs actually present in an HTML fragment, in output order. Captured
+/// IDs in the document tree, in output order. Template contents and
 /// Markdown buffers which were never emitted contribute nothing here.
 pub(crate) fn ids(html: &str) -> Vec<String> {
     let mut ids = Vec::new();
+    let mut templates = 0usize;
     let mut emitter = html5gum::DefaultEmitter::default();
     emitter.naively_switch_states(true);
     for token in Tokenizer::new_with_emitter(html, emitter) {
-        if let Ok(Token::StartTag(tag)) = token {
-            if let Some(id) = tag.attributes.get(b"id".as_slice()) {
-                ids.push(String::from_utf8_lossy(id).into_owned());
+        match token {
+            Ok(Token::StartTag(tag)) => {
+                if templates == 0 {
+                    if let Some(id) = tag.attributes.get(b"id".as_slice()) {
+                        ids.push(String::from_utf8_lossy(id).into_owned());
+                    }
+                }
+                // The template itself belongs to the document; its contents
+                // belong to a separate fragment, including nested templates.
+                if tag.name.eq_ignore_ascii_case(b"template") {
+                    templates += 1;
+                }
             }
+            Ok(Token::EndTag(tag)) if tag.name.eq_ignore_ascii_case(b"template") => {
+                templates = templates.saturating_sub(1);
+            }
+            _ => {}
         }
     }
     ids
@@ -231,7 +245,8 @@ fn attribute_spans(raw: &str) -> Vec<Range<usize>> {
         let rest = &raw[at..];
         if rest.starts_with('&') {
             let mut end = 1;
-            if rest.as_bytes().get(end) == Some(&b'#') {
+            let numeric = rest.as_bytes().get(end) == Some(&b'#');
+            if numeric {
                 end += 1;
                 let hex = matches!(rest.as_bytes().get(end), Some(b'x' | b'X'));
                 end += usize::from(hex);
@@ -253,7 +268,9 @@ fn attribute_spans(raw: &str) -> Vec<Range<usize>> {
                     end += 1;
                 }
             }
-            if matches!(rest.as_bytes().get(end), Some(b';' | b'=')) {
+            if rest.as_bytes().get(end) == Some(&b';')
+                || (!numeric && rest.as_bytes().get(end) == Some(&b'='))
+            {
                 end += 1;
             }
             let entity = &rest[..end];
@@ -754,6 +771,60 @@ mod tests {
         let (_, slots) = check(html);
         assert_eq!(slots[0].value, "˻g.svg");
         assert_eq!(&html[slots[0].span.clone()], "&#x2fbg.svg");
+    }
+
+    #[test]
+    fn numeric_entities_leave_the_following_equals_out_of_a_url_rewrite() {
+        for value in [
+            "url&#40=/bg.svg)",
+            "url&#40;=/bg.svg)",
+            "url&#x28=/bg.svg)",
+            "url(&#34=/bg.svg&#34)",
+            "url(&#34;=/bg.svg&#34;)",
+            "url(&#x22=/bg.svg&#x22)",
+        ] {
+            let html = format!("<div class=\"[background-image:{value}]\"></div>");
+            let (issues, slots) = check(&html);
+            assert!(issues.is_empty(), "{issues:?}");
+            assert_eq!(slots.len(), 1, "{html}: {slots:?}");
+            assert_eq!(slots[0].value, "=/bg.svg", "{html}");
+            assert_eq!(&html[slots[0].span.clone()], "=/bg.svg", "{html}");
+            let mut rewritten = html;
+            rewritten.replace_range(slots[0].span.clone(), "/assets/bg.svg");
+            assert_eq!(check(&rewritten).1[0].value, "/assets/bg.svg");
+        }
+        // A named reference followed by '=' stays literal in an attribute.
+        let html = "<div class=\"bg-[url(&amp=bg.svg)]\"></div>";
+        assert_eq!(check(html).1[0].value, "&amp=bg.svg");
+    }
+
+    #[test]
+    fn class_resources_use_the_compilers_arbitrary_value_decoding() {
+        for (value, expected, raw) in [
+            ("URL('/bg_one.svg')", "/bg one.svg", "/bg_one.svg"),
+            ("url('/bg_one.svg')", "/bg_one.svg", "/bg_one.svg"),
+            (r"URL('/bg\_one.svg')", "/bg_one.svg", r"/bg\_one.svg"),
+            (r"url('/bg\_one.svg')", "/bg_one.svg", r"/bg\_one.svg"),
+            ("URL('/bg%20one.svg')", "/bg%20one.svg", "/bg%20one.svg"),
+            ("url('/bg%20one.svg')", "/bg%20one.svg", "/bg%20one.svg"),
+        ] {
+            let html = format!("<div class=\"[background-image:{value}]\"></div>");
+            let (issues, slots) = check(&html);
+            assert!(issues.is_empty(), "{issues:?}");
+            assert_eq!(slots.len(), 1, "{html}: {slots:?}");
+            assert_eq!(slots[0].value, expected, "{html}");
+            assert_eq!(&html[slots[0].span.clone()], raw, "{html}");
+        }
+        let html =
+            "<div class=\"[background-image:URL('/bg_one.svg'),_url('/bg_two.svg')]\"></div>";
+        assert_eq!(
+            check(html)
+                .1
+                .iter()
+                .map(|slot| slot.value.as_str())
+                .collect::<Vec<_>>(),
+            ["/bg one.svg", "/bg_two.svg"]
+        );
     }
 
     #[test]

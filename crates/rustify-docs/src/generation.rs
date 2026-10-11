@@ -206,7 +206,11 @@ pub fn article(
                         .replace('(', "%28")
                         .replace(')', "%29")
                         .replace('\'', "%27");
-                    escape_url_into(&mut out, &url);
+                    let mut encoded = String::new();
+                    escape_url_into(&mut encoded, &url);
+                    // A rewritten file name is literal, even in functions
+                    // where the utility compiler treats '_' as a space.
+                    out.push_str(&encoded.replace('_', "\\_"));
                     at = slot.html.end;
                     continue;
                 }

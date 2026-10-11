@@ -1,0 +1,160 @@
+npm notice run rustify-ui-browser-tests@0.1.0 npx
+npm notice run 'playwright' test -c playwright.docs.config.ts --project=docs-dev --grep snapshot attachment|arbitrary CSS resources|template contents --reporter=list --output=target/docs-ssg/r3-fix/browser-red
+
+Running 4 tests using 1 worker
+
+(node:38688) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 [docs-dev] › tests/docs-ssg/dev.spec.ts:249:9 › a snapshot attachment in content/manual.pdf recovers when only its target is restored (10.9s)
+(node:38769) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  2 [docs-dev] › tests/docs-ssg/dev.spec.ts:249:9 › a snapshot attachment in static/manual.pdf recovers when only its target is restored (10.5s)
+(node:38850) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  3 [docs-dev] › tests/docs-ssg/dev.spec.ts:282:5 › arbitrary CSS resources keep numeric entity delimiters and compiler URL decoding (10.3s)
+(node:39098) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  4 [docs-dev] › tests/docs-ssg/dev.spec.ts:321:5 › template contents are rejected as anchors while their holder and ordinary IDs navigate (10.2s)
+
+
+  1) [docs-dev] › tests/docs-ssg/dev.spec.ts:249:9 › a snapshot attachment in content/manual.pdf recovers when only its target is restored
+
+    Error: expect(locator).not.toHaveAttribute(expected) failed
+
+    Locator:  getByRole('link', { name: 'Download', exact: true })
+    Expected: not "/docs/assets/files/manual.cef3d43882.pdf"
+    Received: "/docs/assets/files/manual.cef3d43882.pdf"
+    Timeout:  10000ms
+
+    Call log:
+      - Expect "not toHaveAttribute" getByRole('link', { name: 'Download', exact: true }) with timeout 10000ms
+      - waiting for getByRole('link', { name: 'Download', exact: true })
+        24 × locator resolved to <a href="/docs/assets/files/manual.cef3d43882.pdf">Download</a>
+           - unexpected value "/docs/assets/files/manual.cef3d43882.pdf"
+
+
+      271 |         const failed = await seen(page);
+      272 |         site.write("brand/real.pdf", "restored attachment");
+    > 273 |         await expect(link).not.toHaveAttribute("href", original!);
+          |                                ^
+      274 |         await expect(page.getByRole("dialog")).toBeHidden();
+      275 |         expect(await (await page.request.get(new URL((await link.getAttribute("href"))!, page.url()).href)).text()).toBe("restored attachment");
+      276 |         await nextResult(api, failed);
+        at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/docs-ssg/dev.spec.ts:273:32
+
+    Error Context: target/docs-ssg/r3-fix/browser-red/docs-ssg-dev-a-snapshot-at-46e60-only-its-target-is-restored-docs-dev/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    target/docs-ssg/r3-fix/browser-red/docs-ssg-dev-a-snapshot-at-46e60-only-its-target-is-restored-docs-dev/trace.zip
+    Usage:
+
+        npx playwright show-trace target/docs-ssg/r3-fix/browser-red/docs-ssg-dev-a-snapshot-at-46e60-only-its-target-is-restored-docs-dev/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [docs-dev] › tests/docs-ssg/dev.spec.ts:249:9 › a snapshot attachment in static/manual.pdf recovers when only its target is restored
+
+    Error: expect(locator).not.toHaveAttribute(expected) failed
+
+    Locator:  getByRole('link', { name: 'Download', exact: true })
+    Expected: not "/docs/assets/files/manual.cef3d43882.pdf"
+    Received: "/docs/assets/files/manual.cef3d43882.pdf"
+    Timeout:  10000ms
+
+    Call log:
+      - Expect "not toHaveAttribute" getByRole('link', { name: 'Download', exact: true }) with timeout 10000ms
+      - waiting for getByRole('link', { name: 'Download', exact: true })
+        24 × locator resolved to <a href="/docs/assets/files/manual.cef3d43882.pdf">Download</a>
+           - unexpected value "/docs/assets/files/manual.cef3d43882.pdf"
+
+
+      271 |         const failed = await seen(page);
+      272 |         site.write("brand/real.pdf", "restored attachment");
+    > 273 |         await expect(link).not.toHaveAttribute("href", original!);
+          |                                ^
+      274 |         await expect(page.getByRole("dialog")).toBeHidden();
+      275 |         expect(await (await page.request.get(new URL((await link.getAttribute("href"))!, page.url()).href)).text()).toBe("restored attachment");
+      276 |         await nextResult(api, failed);
+        at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/docs-ssg/dev.spec.ts:273:32
+
+    Error Context: target/docs-ssg/r3-fix/browser-red/docs-ssg-dev-a-snapshot-at-68de1-only-its-target-is-restored-docs-dev/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    target/docs-ssg/r3-fix/browser-red/docs-ssg-dev-a-snapshot-at-68de1-only-its-target-is-restored-docs-dev/trace.zip
+    Usage:
+
+        npx playwright show-trace target/docs-ssg/r3-fix/browser-red/docs-ssg-dev-a-snapshot-at-68de1-only-its-target-is-restored-docs-dev/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [docs-dev] › tests/docs-ssg/dev.spec.ts:282:5 › arbitrary CSS resources keep numeric entity delimiters and compiler URL decoding
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('heading', { name: 'Resources', exact: true })
+    Expected: visible
+    Timeout: 10000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('heading', { name: 'Resources', exact: true }) with timeout 10000ms
+      - waiting for getByRole('heading', { name: 'Resources', exact: true })
+
+
+      306 |     const server = await dev();
+      307 |     await page.goto(server.url);
+    > 308 |     await expect(page.getByRole("heading", { name: "Resources", exact: true })).toBeVisible();
+          |                                                                                 ^
+      309 |     for (let i = 0; i < classes.length; i++) {
+      310 |         const background = await page.locator(`#resource-${i}`).evaluate((element) => getComputedStyle(element).backgroundImage);
+      311 |         expect(background, classes[i]).not.toBe("none");
+        at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/docs-ssg/dev.spec.ts:308:81
+
+    Error Context: target/docs-ssg/r3-fix/browser-red/docs-ssg-dev-arbitrary-CSS-3457e-s-and-compiler-URL-decoding-docs-dev/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    target/docs-ssg/r3-fix/browser-red/docs-ssg-dev-arbitrary-CSS-3457e-s-and-compiler-URL-decoding-docs-dev/trace.zip
+    Usage:
+
+        npx playwright show-trace target/docs-ssg/r3-fix/browser-red/docs-ssg-dev-arbitrary-CSS-3457e-s-and-compiler-URL-decoding-docs-dev/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [docs-dev] › tests/docs-ssg/dev.spec.ts:321:5 › template contents are rejected as anchors while their holder and ordinary IDs navigate
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByRole('region', { name: '2 errors · nothing has built yet' })
+    Expected substring: "broken-anchor"
+    Timeout: 10000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toContainText" getByRole('region', { name: '2 errors · nothing has built yet' }) with timeout 10000ms
+      - waiting for getByRole('region', { name: '2 errors · nothing has built yet' })
+
+
+      327 |     const server = await dev();
+      328 |     await page.goto(server.url);
+    > 329 |     await expect(page.getByRole("region", { name: "2 errors · nothing has built yet" })).toContainText("broken-anchor");
+          |                                                                                          ^
+      330 |     site.write("content/index.md", body);
+      331 |     await expect(page.getByRole("heading", { name: "Templates", exact: true })).toBeVisible();
+      332 |     expect(await page.evaluate(() => ({
+        at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/docs-ssg/dev.spec.ts:329:90
+
+    Error Context: target/docs-ssg/r3-fix/browser-red/docs-ssg-dev-template-cont-4c7c7-r-and-ordinary-IDs-navigate-docs-dev/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    target/docs-ssg/r3-fix/browser-red/docs-ssg-dev-template-cont-4c7c7-r-and-ordinary-IDs-navigate-docs-dev/trace.zip
+    Usage:
+
+        npx playwright show-trace target/docs-ssg/r3-fix/browser-red/docs-ssg-dev-template-cont-4c7c7-r-and-ordinary-IDs-navigate-docs-dev/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4 failed
+    [docs-dev] › tests/docs-ssg/dev.spec.ts:249:9 › a snapshot attachment in content/manual.pdf recovers when only its target is restored
+    [docs-dev] › tests/docs-ssg/dev.spec.ts:249:9 › a snapshot attachment in static/manual.pdf recovers when only its target is restored
+    [docs-dev] › tests/docs-ssg/dev.spec.ts:282:5 › arbitrary CSS resources keep numeric entity delimiters and compiler URL decoding
+    [docs-dev] › tests/docs-ssg/dev.spec.ts:321:5 › template contents are rejected as anchors while their holder and ordinary IDs navigate

@@ -1,0 +1,19 @@
+{
+  "baseline": "dirty@1f0fc5ed21d7937a1297528ad38cdefe6b95f721",
+  "branch": "main",
+  "algorithm": "SHA-256 of listed tracked code/test file bytes",
+  "paths": {
+    "crates/rustify-docs-cli/tests/dev.rs": "3bab0d806c4733220b18cd1778a861f017a18062a7d8a506b2ff5bb443350118",
+    "crates/rustify-docs/src/content.rs": "31f34decf0ce86ceb4bd5b7fdbaf01a797002fc95fbdd5cdeb421f2a3927b535",
+    "crates/rustify-docs/src/generation.rs": "3fc7798bfb8e2c5178cbf2dd206ff30b0d20515a6d8e906dfbe88d61d4859003",
+    "crates/rustify-docs/src/html_check.rs": "6ec9892c924d6b15b6c814c154dce143cfd4a905b26125563390d3860e871a99",
+    "crates/rustify-docs/src/markdown.rs": "258a413200fce9ccb16d213b79548c8f3cf7da9249cbfe0b1e0eba310d060f68",
+    "crates/rustify-docs/src/style.rs": "d2938c5fb1bdceca33d183c7fc0a1b2ca327c8a8987e45fa273d931ebde2ae3b",
+    "crates/rustify-docs/tests/generate.rs": "912d18c3a3442b9b573eb8019702f5fbcebced05be986e85283c0e2612d538c0",
+    "tests/docs-ssg/dev.spec.ts": "a4dacebb20c0daa1cd611565edfb63b2d088ceaf9f3e269498acb3abb5bdd68a"
+  },
+  "before_binary_sha256": "bbf7e600256ba9e2b48c9916f8361248480d17515c2e93c306adf6df25696dbf",
+  "after_binary_sha256": "9fa8a2b428afb30612af32607691616be38c621265e22b859fde86ec386224c0",
+  "report": "bc3560b1bfa527661549d0363418a53da751b6547c955fe7f8a710a139e3cd67",
+  "plan_at_start": "dfef91894461fbf32b8f9ad44b65473fbe28073cc60834a5548ab1cd7d9121d2"
+}

@@ -1,0 +1,26 @@
+npm notice run rustify-ui-browser-tests@0.1.0 npx
+npm notice run 'playwright' test -c playwright.docs.config.ts --project=docs-dev --reporter=list --output=target/docs-ssg/r3-fix/browser/docs-dev
+
+Running 15 tests using 1 worker
+
+(node:61117) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+rustc 1.99.0 (b940084d7 2026-09-28)
+  ✓   1 [docs-dev] › tests/docs-ssg/dev-uat.spec.ts:89:5 › UAT-1 and UAT-2: new, dev, three pages within a minute; then saves, a mistake and its fix in one session (3.4s)
+rustc 1.99.0 (b940084d7 2026-09-28)
+  ✓   2 [docs-dev] › tests/docs-ssg/dev.spec.ts:146:5 › a new site is readable at once: the home page and its two pages (356ms)
+  ✓   3 [docs-dev] › tests/docs-ssg/dev.spec.ts:181:5 › a save reloads the page it changed in place and leaves the others (1.8s)
+  ✓   4 [docs-dev] › tests/docs-ssg/dev.spec.ts:209:5 › a real symlink target save refreshes its image and survives deletion and recovery (505ms)
+  ✓   5 [docs-dev] › tests/docs-ssg/dev.spec.ts:249:9 › a snapshot attachment in content/manual.pdf recovers when only its target is restored (435ms)
+  ✓   6 [docs-dev] › tests/docs-ssg/dev.spec.ts:249:9 › a snapshot attachment in static/manual.pdf recovers when only its target is restored (416ms)
+  ✓   7 [docs-dev] › tests/docs-ssg/dev.spec.ts:282:5 › arbitrary CSS resources keep numeric entity delimiters and compiler URL decoding (228ms)
+  ✓   8 [docs-dev] › tests/docs-ssg/dev.spec.ts:321:5 › template contents are rejected as anchors while their holder and ordinary IDs navigate (349ms)
+  ✓   9 [docs-dev] › tests/docs-ssg/dev.spec.ts:350:5 › a failed build keeps the page readable under a panel that hides to a marker and clears on the fix (623ms)
+  ✓  10 [docs-dev] › tests/docs-ssg/dev.spec.ts:397:5 › while nothing has built, every page says so, and becomes the site once it builds (254ms)
+  ✓  11 [docs-dev] › tests/docs-ssg/dev.spec.ts:417:5 › a restarted dev brings an open page up to date (1.0s)
+  ✓  12 [docs-dev] › tests/docs-ssg/dev.spec.ts:428:5 › a panic in a build is one more problem, and the next build is served (330ms)
+  ✓  13 [docs-dev] › tests/docs-ssg/dev.spec.ts:444:5 › the panel speaks the page's language (223ms)
+  ✓  14 [docs-dev] › tests/docs-ssg/dev.spec.ts:454:5 › on a phone the panel is a sheet along the bottom and nothing scrolls sideways (338ms)
+  ✓  15 [docs-dev] › tests/docs-ssg/dev.spec.ts:476:5 › axe finds no serious or critical problem with the panel open or hidden, in both modes (1.4s)
+
+  15 passed (12.6s)

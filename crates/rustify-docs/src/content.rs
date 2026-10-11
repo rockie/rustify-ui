@@ -309,22 +309,25 @@ fn walk(
         if is_private(&child) {
             continue;
         }
-        let Ok(meta) = std::fs::metadata(&path) else {
-            continue;
-        };
         if entry.file_type().is_ok_and(|kind| kind.is_symlink()) {
+            // A missing target still needs to wake dev when it is restored.
+            // Watching it does not authorize the read below.
+            if let Some(target) = watched_source(root, &path) {
+                linked.insert(target);
+            }
             // A link is followed only while it stays inside the project and
             // leads to nothing private.
             match real_source(root, &path) {
-                Ok(target) => {
-                    linked.insert(target);
-                }
+                Ok(_) => {}
                 Err(refusal) => {
                     problems.extend(refusal.walk_problem(&child, "symbolic link"));
                     continue;
                 }
             }
         }
+        let Ok(meta) = std::fs::metadata(&path) else {
+            continue;
+        };
         if meta.is_dir() {
             walk(&path, &child, root, out, linked, problems);
         } else if meta.is_file() {
@@ -345,10 +348,10 @@ pub fn snapshot(project: &Project) -> (Snapshot, Vec<Diagnostic>) {
         if std::fs::symlink_metadata(&full).is_err() {
             continue;
         }
+        if let Some(target) = watched_source(&root, &full).filter(|target| target != dir) {
+            snapshot.linked.insert(target);
+        }
         match real_source(&root, &full) {
-            Ok(target) if target != *dir => {
-                snapshot.linked.insert(target);
-            }
             Ok(_) => {}
             Err(refusal) => {
                 problems.extend(refusal.walk_problem(dir, "directory"));
@@ -2583,6 +2586,78 @@ pub(crate) mod tests {
             2,
             "{:?}",
             analysis.diagnostics
+        );
+    }
+
+    #[test]
+    fn links_only_target_ids_in_the_document_not_template_contents() {
+        let body = format!("{FRONT}# Home\n\n<template id=\"holder\"><span id=\"ghost\">Hidden</span><template id=\"nested\"><b id=\"deep\">Hidden</b></template></template>\n\n<p id=\"visible\">Visible</p>\n\n[Holder](#holder) [Visible](#visible) [Other holder](other.md#holder) [Other visible](other.md#visible)\n\n[Ghost](#ghost) [Nested](#nested) [Deep](other.md#deep) [Other ghost](other.md#ghost)\n");
+        let fixture = Fixture::new(&[
+            ("rustify-docs.toml", CONFIG),
+            ("content/index.md", &body),
+            ("content/other.md", &body),
+        ]);
+        let (_, _, analysis) = fixture.analyze(Mode::Production);
+        let errors = errors(&analysis);
+        assert_eq!(errors.len(), 8, "{errors:?}");
+        assert!(errors.iter().all(|error| error.0 == "broken-anchor"));
+        for page in &analysis.pages {
+            assert_eq!(page.fragment.anchors, ["home", "holder", "visible"]);
+        }
+    }
+
+    #[cfg(unix)]
+    #[test]
+    fn snapshot_links_keep_safe_recovery_targets_when_missing() {
+        let fixture = Fixture::new(&[
+            ("rustify-docs.toml", CONFIG),
+            (
+                "content/index.md",
+                &format!("{FRONT}# Home\n\n[Download](manual.pdf) [Static](/manual.pdf)\n"),
+            ),
+            ("brand/real.pdf", "original attachment"),
+        ]);
+        for alias in ["content/manual.pdf", "static/manual.pdf"] {
+            link(
+                &fixture.root.join("brand/real.pdf"),
+                &fixture.root.join(alias),
+            );
+        }
+        let (project, initial, analysis) = fixture.analyze(Mode::Dev);
+        assert_eq!(analysis.errors(), 0, "{:?}", analysis.diagnostics);
+        assert!(initial.linked.contains("brand/real.pdf"));
+        std::fs::remove_file(fixture.root.join("brand/real.pdf")).unwrap();
+        let (_, missing, failed) = fixture.analyze(Mode::Dev);
+        assert_eq!(failed.errors(), 2, "{:?}", failed.diagnostics);
+        assert!(
+            missing.linked.contains("brand/real.pdf"),
+            "{:?}",
+            missing.linked
+        );
+        assert!(!missing.files.contains_key("content/manual.pdf"));
+        std::fs::write(fixture.root.join("brand/real.pdf"), "restored attachment").unwrap();
+        let (_, restored, analysis) = fixture.analyze(Mode::Dev);
+        assert_eq!(analysis.errors(), 0, "{:?}", analysis.diagnostics);
+        assert_eq!(
+            &*restored.files["content/manual.pdf"],
+            b"restored attachment"
+        );
+
+        // A dependency is not permission to read a private or external target.
+        link(
+            &fixture.root.join(".env"),
+            &fixture.root.join("content/private.pdf"),
+        );
+        let outside = Outside::new(&fixture, &[]);
+        std::fs::create_dir_all(&outside.0).unwrap();
+        link(
+            &outside.0.join("missing.pdf"),
+            &fixture.root.join("static/outside.pdf"),
+        );
+        let (missing, _) = snapshot(&project);
+        assert_eq!(
+            missing.linked,
+            BTreeSet::from(["brand/real.pdf".to_owned()])
         );
     }
 

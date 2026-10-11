@@ -1,0 +1,13 @@
+{
+  "progress": "8/9",
+  "milestone_rows": 8,
+  "recent": "M8",
+  "disposition_tables": "aligned",
+  "links": "new links and completion records readable",
+  "reports": "R1-R3 unchanged",
+  "code_fingerprints": "8/8 match",
+  "checks": "performance/save/production passed",
+  "progress_check": "manual; no plan-specific checker found; illustrative FEATURE.records path excluded",
+  "plan_body": "milestone definition rows restored; entire body after progress matches original HEAD",
+  "log_normalization": "trailing whitespace and blank EOF lines removed from task-owned logs only"
+}

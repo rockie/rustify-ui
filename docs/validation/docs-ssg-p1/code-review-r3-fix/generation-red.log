@@ -1,0 +1,31 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-docs v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-docs)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 6.19s
+     Running tests/generate.rs (target/debug/deps/generate-d7be114e43c8e25e)
+
+running 1 test
+test css_resource_decoding_and_entity_spans_survive_generation ... FAILED
+
+failures:
+
+---- css_resource_decoding_and_entity_spans_survive_generation stdout ----
+
+thread 'css_resource_decoding_and_entity_spans_survive_generation' (28347845) panicked at crates/rustify-docs/tests/generate.rs:38:14:
+styles compile: [Diagnostic { file: None, line: None, column: None, severity: Error, rule: "stylesheet", message: "minifying the stylesheet: Unexpected token BadUrl(\"/docs/assets/files/bg.e81c7ccdf4.svg\\\"\") at :246:23", suggestion: None }]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    css_resource_decoding_and_entity_spans_survive_generation
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 10 filtered out; finished in 0.43s
+
+error: test failed, to rerun pass `-p rustify-docs --test generate`
+mbx[cache]: 0 hits, 0 misses, 2 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: 40549 compilations dispensed from stock. inventory immaculate.

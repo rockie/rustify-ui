@@ -1,0 +1,45 @@
+npm notice run rustify-ui-browser-tests@0.1.0 npx
+npm notice run 'playwright' test -c playwright.docs.config.ts --project=docs-dev --grep template contents --reporter=list --output=target/docs-ssg/r3-fix/template-red
+
+Running 1 test using 1 worker
+
+(node:53078) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 [docs-dev] › tests/docs-ssg/dev.spec.ts:321:5 › template contents are rejected as anchors while their holder and ordinary IDs navigate (10.3s)
+
+
+  1) [docs-dev] › tests/docs-ssg/dev.spec.ts:321:5 › template contents are rejected as anchors while their holder and ordinary IDs navigate
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByRole('region', { name: '2 errors · nothing has built yet' })
+    Expected substring: "broken-anchor"
+    Timeout: 10000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toContainText" getByRole('region', { name: '2 errors · nothing has built yet' }) with timeout 10000ms
+      - waiting for getByRole('region', { name: '2 errors · nothing has built yet' })
+
+
+      328 |     const server = await dev();
+      329 |     await page.goto(server.url);
+    > 330 |     await expect(page.getByRole("region", { name: "2 errors · nothing has built yet" })).toContainText("broken-anchor");
+          |                                                                                          ^
+      331 |     site.write("content/index.md", body);
+      332 |     await expect(page.getByRole("heading", { name: "Templates", exact: true })).toBeVisible();
+      333 |     expect(await page.evaluate(() => ({
+        at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/docs-ssg/dev.spec.ts:330:90
+
+    Error Context: target/docs-ssg/r3-fix/template-red/docs-ssg-dev-template-cont-4c7c7-r-and-ordinary-IDs-navigate-docs-dev/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    target/docs-ssg/r3-fix/template-red/docs-ssg-dev-template-cont-4c7c7-r-and-ordinary-IDs-navigate-docs-dev/trace.zip
+    Usage:
+
+        npx playwright show-trace target/docs-ssg/r3-fix/template-red/docs-ssg-dev-template-cont-4c7c7-r-and-ordinary-IDs-navigate-docs-dev/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [docs-dev] › tests/docs-ssg/dev.spec.ts:321:5 › template contents are rejected as anchors while their holder and ordinary IDs navigate

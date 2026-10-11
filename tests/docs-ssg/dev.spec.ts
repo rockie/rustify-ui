@@ -245,6 +245,108 @@ test("a real symlink target save refreshes its image and survives deletion and r
     expect(errors).toEqual([]);
 });
 
+for (const [alias, url] of [["content/manual.pdf", "../manual.pdf"], ["static/manual.pdf", "/manual.pdf"]]) {
+    test(`a snapshot attachment in ${alias} recovers when only its target is restored`, async ({ context }) => {
+        mkdirSync(path.join(site.root, "brand"));
+        site.write("brand/real.pdf", "original attachment");
+        symlinkSync("../brand/real.pdf", path.join(site.root, alias));
+        site.edit("content/guide/index.md", "Then write a page.", `Then write a page.\n\n[Download](${url})`);
+        const server = await dev();
+        const page = await context.newPage();
+        const errors: string[] = [];
+        page.on("pageerror", (error) => errors.push(error.message));
+        page.on("console", (message) => { if (message.type() === "error") errors.push(message.text()); });
+        page.on("response", (response) => { if (response.status() >= 400) errors.push(`${response.status()} ${response.url()}`); });
+        await page.goto(`${server.url}guide/`);
+        const link = page.getByRole("link", { name: "Download", exact: true });
+        const original = await link.getAttribute("href");
+        const api = await context.newPage();
+        await api.goto(`${server.url}reference/api/`);
+        await expect(api.locator(".rd-dev")).toHaveAttribute("data-revision", /\d+/);
+        await mark(api);
+        await mark(page);
+        rmSync(path.join(site.root, "brand/real.pdf"));
+        await expect(page.getByRole("dialog")).toContainText("broken-link");
+        expect(await kept(page), "deletion leaves the last good page readable").toBe(true);
+        const failed = await seen(page);
+        site.write("brand/real.pdf", "restored attachment");
+        await expect(link).not.toHaveAttribute("href", original!);
+        await expect(page.getByRole("dialog")).toBeHidden();
+        expect(await (await page.request.get(new URL((await link.getAttribute("href"))!, page.url()).href)).text()).toBe("restored attachment");
+        await nextResult(api, failed);
+        expect(await kept(api), "the unrelated page remains mounted").toBe(true);
+        expect(errors).toEqual([]);
+    });
+}
+
+test("arbitrary CSS resources keep numeric entity delimiters and compiler URL decoding", async ({ page }) => {
+    mkdirSync(path.join(site.root, "static/assets"));
+    mkdirSync(path.join(site.root, "content/="));
+    const svg = '<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40"><rect width="40" height="40" fill="red"/></svg>';
+    site.write("static/assets/bg one.svg", svg);
+    site.write("static/assets/bg_one.svg", svg.replace("red", "blue"));
+    site.write("content/=/bg.svg", svg);
+    const classes = [
+        "[background-image:URL('/assets/bg_one.svg')]",
+        "[background-image:url('/assets/bg_one.svg')]",
+        "[background-image:URL('/assets/bg\\_one.svg')]",
+        "[background-image:url('/assets/bg\\_one.svg')]",
+        "[background-image:URL('/assets/bg%20one.svg')]",
+        "[background-image:url('/assets/bg%20one.svg')]",
+        "[background-image:url&#40=/bg.svg)]",
+        "[background-image:url&#40;=/bg.svg)]",
+        "[background-image:url(&#34=/bg.svg&#34)]",
+        "[background-image:url(&#34;=/bg.svg&#34;)]",
+    ];
+    site.write("content/index.md", `---\ndescription: CSS resources\n---\n# Resources\n\n${classes.map((value, i) => `<div id="resource-${i}" class="w-10 h-10 ${value}">Background ${i}</div>`).join("\n")}\n`);
+    const errors: string[] = [];
+    page.on("pageerror", (error) => errors.push(error.message));
+    page.on("console", (message) => { if (message.type() === "error") errors.push(message.text()); });
+    page.on("response", (response) => { if (response.status() >= 400) errors.push(`${response.status()} ${response.url()}`); });
+    const server = await dev();
+    await page.goto(server.url);
+    await expect(page.getByRole("heading", { name: "Resources", exact: true })).toBeVisible();
+    for (let i = 0; i < classes.length; i++) {
+        const background = await page.locator(`#resource-${i}`).evaluate((element) => getComputedStyle(element).backgroundImage);
+        expect(background, classes[i]).not.toBe("none");
+        const url = background.match(/^url\("(.*)"\)$/)![1];
+        const response = await page.request.get(url);
+        expect(response.ok(), classes[i]).toBe(true);
+        expect(await response.text()).toContain(`fill="${[1, 2, 3].includes(i) ? "blue" : "red"}"`);
+    }
+    expect(errors).toEqual([]);
+    await test.info().attach("resources.png", { body: await page.screenshot(), contentType: "image/png" });
+});
+
+test("template contents are rejected as anchors while their holder and ordinary IDs navigate", async ({ page }) => {
+    site.write("rustify-docs.toml", `${site.read("rustify-docs.toml")}\n[[nav.groups]]\nlabel = "Anchors"\nitems = ["index.md", "other.md"]\n`);
+    const body = '---\ndescription: Template anchors\n---\n# Templates\n\n<template id="holder"><span id="ghost">Hidden</span><template id="nested"><b id="deep">Hidden</b></template></template>\n\n<p id="visible">Visible</p>\n\n[Holder](#holder) [Visible](#visible) [Other holder](other.md#holder)\n';
+    site.write("content/index.md", `${body}\n[Ghost](#ghost) [Deep](other.md#deep)\n`);
+    site.write("content/other.md", body);
+    const errors: string[] = [];
+    page.on("pageerror", (error) => errors.push(error.message));
+    const server = await dev();
+    await page.goto(server.url);
+    await expect(page.getByRole("region", { name: "2 errors · nothing has built yet" })).toContainText("broken-anchor");
+    site.write("content/index.md", body);
+    await expect(page.getByRole("heading", { name: "Templates", exact: true })).toBeVisible();
+    expect(await page.evaluate(() => ({
+        holder: document.getElementById("holder")?.tagName,
+        ghost: document.getElementById("ghost"),
+        nested: document.getElementById("nested"),
+        deep: document.getElementById("deep"),
+        stored: document.querySelector<HTMLTemplateElement>("#holder")!.content.getElementById("ghost")?.tagName,
+    }))).toEqual({ holder: "TEMPLATE", ghost: null, nested: null, deep: null, stored: "SPAN" });
+    await page.getByRole("link", { name: "Visible", exact: true }).click();
+    expect(new URL(page.url()).hash).toBe("#visible");
+    await page.getByRole("link", { name: "Holder", exact: true }).click();
+    expect(new URL(page.url()).hash).toBe("#holder");
+    await page.getByRole("link", { name: "Other holder", exact: true }).click();
+    await expect(page).toHaveURL(/\/other\/#holder$/);
+    expect(await page.locator("#holder").count()).toBe(1);
+    expect(errors).toEqual([]);
+});
+
 test("a failed build keeps the page readable under a panel that hides to a marker and clears on the fix", async ({ page }) => {
     const server = await dev();
     await page.goto(`${server.url}guide/setup/`);

@@ -1,0 +1,19 @@
+{
+  "binary": "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/r3-fix/before-bin",
+  "binary_sha256": "bbf7e600256ba9e2b48c9916f8361248480d17515c2e93c306adf6df25696dbf",
+  "source_head": "1f0fc5ed21d7937a1297528ad38cdefe6b95f721",
+  "corpus": {
+    "pages": 500,
+    "seed": 1592636672,
+    "profile_sha256": "7c090aa2064f0c843164f70c7488ea9f3514c7f43bf96ece66de6dae06e306d5",
+    "digest": "ecb43f7911fe7512bae279a0214aad39647052c28c3bd7c9a67f6745e4a889ac"
+  },
+  "build_rounds_ms": [
+    471.0775,
+    381.89449999999994,
+    362.0464999999999,
+    371.2079580000001,
+    386.254584
+  ],
+  "build_median_ms": 381.89449999999994
+}

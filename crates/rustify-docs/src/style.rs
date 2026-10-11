@@ -281,10 +281,22 @@ pub fn urls(css: &str) -> Vec<String> {
         .collect()
 }
 
-/// CSS URL tokens, with the source ranges of their arguments. In arbitrary
-/// utility values, a leading underscore becomes whitespace before a
-/// function; underscores within URL arguments remain part of the path.
+/// CSS URL tokens, with the source ranges of their arguments. Arbitrary
+/// utility values use the compiler's decoding, retaining the original
+/// argument ranges for a rewrite in the class.
 pub(crate) fn url_ranges(css: &str, arbitrary: bool) -> Vec<(String, Range<usize>)> {
+    fn decoded_url(token: &str, arbitrary: bool, original: &str) -> Option<String> {
+        if !arbitrary {
+            return Some(original.to_owned());
+        }
+        let decoded =
+            rustify_style::compiler::value::decode_arbitrary(token, CSS_DEPTH_LIMIT).ok()?;
+        url_ranges(&decoded, false)
+            .into_iter()
+            .next()
+            .map(|(url, _)| url)
+    }
+
     fn walk(
         parser: &mut Parser<'_, '_>,
         css: &str,
@@ -309,7 +321,9 @@ pub(crate) fn url_ranges(css: &str, arbitrary: bool) -> Vec<(String, Range<usize
                         let raw = &raw[open + 1..raw.len() - 1];
                         let lead = raw.len() - raw.trim_start().len();
                         let at = start + open + 1 + lead;
-                        urls.push((url.to_string(), at..at + raw.trim().len()));
+                        if let Some(url) = decoded_url(&css[start..end], arbitrary, &url) {
+                            urls.push((url, at..at + raw.trim().len()));
+                        }
                     }
                 }
                 Token::Function(name)
@@ -317,20 +331,21 @@ pub(crate) fn url_ranges(css: &str, arbitrary: bool) -> Vec<(String, Range<usize
                         || (arbitrary
                             && name.trim_start_matches('_').eq_ignore_ascii_case("url")) =>
                 {
+                    let mut found = None;
                     let _: Result<(), cssparser::ParseError<'_, ()>> =
                         parser.parse_nested_block(|inner| {
                             inner.skip_whitespace();
                             let start = inner.position();
                             if let Ok(Token::QuotedString(value)) = inner.next().cloned() {
                                 let end = inner.position().byte_index();
-                                urls.push((value.to_string(), start.byte_index() + 1..end - 1));
+                                found = Some((value.to_string(), start.byte_index() + 1..end - 1));
                             } else {
                                 while inner.next().is_ok() {}
                                 let raw = inner.slice_from(start).trim();
                                 let input = format!("url({raw})");
                                 let mut input = ParserInput::new(&input);
                                 if let Ok(url) = Parser::new(&mut input).expect_url() {
-                                    urls.push((
+                                    found = Some((
                                         url.to_string(),
                                         start.byte_index()..start.byte_index() + raw.len(),
                                     ));
@@ -339,6 +354,12 @@ pub(crate) fn url_ranges(css: &str, arbitrary: bool) -> Vec<(String, Range<usize
                             while inner.next().is_ok() {}
                             Ok(())
                         });
+                    if let Some((url, range)) = found {
+                        let end = parser.position().byte_index();
+                        if let Some(url) = decoded_url(&css[start..end], arbitrary, &url) {
+                            urls.push((url, range));
+                        }
+                    }
                 }
                 Token::Function(_)
                 | Token::ParenthesisBlock

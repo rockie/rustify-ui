@@ -382,6 +382,78 @@ fn a_burst_of_saves_ends_on_the_last_one() {
 
 #[cfg(unix)]
 #[test]
+fn snapshot_attachment_symlinks_recover_without_a_markdown_save() {
+    for (alias, url) in [
+        ("content/manual.pdf", "../manual.pdf"),
+        ("static/manual.pdf", "/manual.pdf"),
+    ] {
+        let temp = copy_fixture("content");
+        temp.write("site/brand/real.pdf", "original attachment");
+        std::os::unix::fs::symlink("../brand/real.pdf", temp.path(&format!("site/{alias}")))
+            .unwrap();
+        temp.edit(
+            "site/content/guide/index.md",
+            "Then write a page.",
+            &format!("Then write a page.\n\n[Download]({url})"),
+        );
+        let dev = Dev::start(&temp.path("site"), &[], &[]).unwrap();
+        let page = format!("{}guide/", dev.url);
+        let (_, original) = get_text(&page);
+        let mut changed = dev.events("/docs/guide/", good_of(&original));
+        changed.next();
+        let (_, other) = get_text(&format!("{}reference/api/", dev.url));
+        let mut stable = dev.events("/docs/reference/api/", good_of(&other));
+        stable.next();
+        std::fs::remove_file(temp.path("site/brand/real.pdf")).unwrap();
+        let failed = changed.until(|state| state["ok"] == false);
+        assert_eq!(failed["reload"], false);
+        assert!(failed["diagnostics"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .any(|d| d["rule"] == "broken-link"));
+        assert_eq!(
+            get_text(&page).1,
+            original,
+            "last good page after deleting {alias}"
+        );
+        temp.write("site/brand/real.pdf", "restored attachment");
+        let started = Instant::now();
+        while get_text(&page).1 == original {
+            assert!(
+                started.elapsed() < Duration::from_secs(10),
+                "restoring {alias}'s target never updated its page"
+            );
+            std::thread::sleep(Duration::from_millis(50));
+        }
+        let restored = changed.until(|state| state["ok"] == true);
+        assert_eq!(restored["reload"], true, "{alias}");
+        assert!(restored["diagnostics"].as_array().unwrap().is_empty());
+        assert_eq!(
+            stable.until(|state| revision(state) >= revision(&restored))["reload"],
+            false
+        );
+        let (_, updated) = get_text(&page);
+        assert_ne!(updated, original, "{alias}");
+        let href = updated
+            .split("Download</a>")
+            .next()
+            .unwrap()
+            .rsplit("href=\"")
+            .next()
+            .unwrap()
+            .split('"')
+            .next()
+            .unwrap();
+        assert_eq!(
+            get_text(&format!("{}{href}", dev.origin())).1,
+            "restored attachment"
+        );
+    }
+}
+
+#[cfg(unix)]
+#[test]
 fn a_symlink_target_outside_the_snapshot_refreshes_and_recovers() {
     let temp = copy_fixture("content");
     temp.write(

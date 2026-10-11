@@ -1,0 +1,31 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-docs-cli v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-docs-cli)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.09s
+     Running tests/dev.rs (target/debug/deps/dev-23a129b3abce2a91)
+
+running 1 test
+test snapshot_attachment_symlinks_recover_without_a_markdown_save ... FAILED
+
+failures:
+
+---- snapshot_attachment_symlinks_recover_without_a_markdown_save stdout ----
+
+thread 'snapshot_attachment_symlinks_recover_without_a_markdown_save' (28351758) panicked at crates/rustify-docs-cli/tests/dev.rs:414:13:
+restoring content/manual.pdf's target never updated its page
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    snapshot_attachment_symlinks_recover_without_a_markdown_save
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 12 filtered out; finished in 11.03s
+
+error: test failed, to rerun pass `-p rustify-docs-cli --test dev`
+mbx[cache]: 0 hits, 0 misses, 1 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: has quietly disposed of 1.9 TiB logical of build leftovers. nobody saw anything.
