@@ -50,7 +50,7 @@
 - 最近完成：M8（P1 跨浏览器、部署与性能终验）
 - 下一步：M9——README、CLI 帮助、生成 README 写入已验证完整 SHA 与 CLI 版本（必要时递增 `rustify-docs-cli` 版本，§8）；对已提交候选 `docs-verify --group toolchain --git file://… --rev <SHA>` 与 `features --external`（DOM 配方）、安装后二进制的 panic 子集（V-9）、GitHub 预览核对（V-4）、V-5/V-6 受模板影响切片、V-15；然后请用户授权推送方式，推送后对 GitHub 同 SHA 重验
 - 当前阻塞：无（M9 远端阶段需要用户的推送授权与方式，届时再问）
-- 代码基线：见完成记录（M1 179c5ec、M2–M4 9442f5d、M5–M7 1d239ff、M5/M8 收口见 M8 行）
+- 代码基线：`72418b3`（M1 179c5ec、M2–M4 9442f5d、M5–M7 1d239ff、M5/M8 收口 72418b3）；工作树仅剩用户另行提交的 `.xgent-ai` 台账
 
 ### 完成记录
 
@@ -62,8 +62,8 @@
 | M4 | 已完成 | 2026-10-10T19:10:00+08:00 | `new`/`build`/`preview` 与内容模板、元数据/404/站点文件/manifest、资源指纹、发布事务与锁；V-5/V-6/V-10 基本门、V-7 三项目各 5/5、B 完整构建中位 347 ms、V-15 矩阵与安装排练通过，示例产物逐字节不变 | [M4 记录](../validation/docs-ssg-p1/M4.md) | 9442f5d |
 | M6 | 已完成 | 2026-10-10T21:15:00+08:00 | `rustify-docs dev`：每轮全量输入+内容键片段缓存、受影响页按两代字节比较刷新并保滚动、失败/panic 保留上一代、诊断面板（finish review ship）；V-9 浏览器 9/9 与 CLI 9 例、abort 构建拒绝 dev、B 保存可见中位 177/172/169 ms 与短轮 20 次 ≤178 ms | [M6 记录](../validation/docs-ssg-p1/M6.md) | 1d239ff |
 | M7 | 已完成 | 2026-10-10T21:40:00+08:00 | `check --external-links`（rustls+内置根证书、去重/并发/超时、失败即报错）、发布三步骤真实 SIGKILL/磁盘满/权限/损坏 manifest/并发注入与输出归属加固、新窗站外链接需 noopener、零机器路径泄漏；V-15 矩阵、features/artifacts/reliability/toolchain 四组（禁网作者演练只调用 2 次 `rustc --version`）、docs-root/meta/dev 全过 | [M7 记录](../validation/docs-ssg-p1/M7.md) | 1d239ff |
-| M5 | 已完成 | 2026-10-11T11:35:00+08:00 | 默认阅读主题、finish review（ship）、axe 零违规；Chromium 三项目各 21/21、WebKit 20+1 跳过、B 最大页 LCP ≤740 ms/CLS 0；用户确认真实 macOS Safari 27.0.1 与手机走查通过；Firefox 移出本期（用户决定） | [M5 记录](../validation/docs-ssg-p1/M5.md) | 1d239ff、待提交 |
-| M8 | 已完成 | 2026-10-11T11:35:00+08:00 | V-15、features/artifacts/reliability/toolchain、B 完整构建 359 ms、LCP 724/740/532 ms、CLS 0、最大页 26.2 KB、保存可见 175/170/176 ms、1000/1000 次可见无重启、new→首页 333 ms、§9.4 UAT 串联；真实 Chrome 154、Safari 27.0.1 与手机走查通过，Firefox 移出本期 | [M8 记录](../validation/docs-ssg-p1/M8.md) | 待提交 |
+| M5 | 已完成 | 2026-10-11T11:35:00+08:00 | 默认阅读主题、finish review（ship）、axe 零违规；Chromium 三项目各 21/21、WebKit 20+1 跳过、B 最大页 LCP ≤740 ms/CLS 0；用户确认真实 macOS Safari 27.0.1 与手机走查通过；Firefox 移出本期（用户决定） | [M5 记录](../validation/docs-ssg-p1/M5.md) | 1d239ff、72418b3 |
+| M8 | 已完成 | 2026-10-11T11:35:00+08:00 | V-15、features/artifacts/reliability/toolchain、B 完整构建 359 ms、LCP 724/740/532 ms、CLS 0、最大页 26.2 KB、保存可见 175/170/176 ms、1000/1000 次可见无重启、new→首页 333 ms、§9.4 UAT 串联；真实 Chrome 154、Safari 27.0.1 与手机走查通过，Firefox 移出本期 | [M8 记录](../validation/docs-ssg-p1/M8.md) | 72418b3 |
 
 ## 0. 需求、范围与决策
 
