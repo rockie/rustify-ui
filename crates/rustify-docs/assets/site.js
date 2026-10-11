@@ -216,8 +216,18 @@
   // reached it, and the last one once the page can scroll no further. Both
   // copies (the column and the panel) follow.
   var entries = [];
+  // The fragment is the id percent-encoded; one written as is (a `%` with
+  // no escape after it) is taken whole rather than stopping the script.
+  var fragmentId = function (href) {
+    var raw = href.slice(1);
+    try {
+      return decodeURIComponent(raw);
+    } catch (malformed) {
+      return raw;
+    }
+  };
   document.querySelectorAll("[data-rd-toc-link]").forEach(function (link) {
-    var id = decodeURIComponent(link.getAttribute("href").slice(1));
+    var id = fragmentId(link.getAttribute("href"));
     var entry = entries.filter(function (known) {
       return known.heading.id === id;
     })[0];

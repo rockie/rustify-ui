@@ -247,6 +247,88 @@ test.describe("navigation", () => {
     });
 });
 
+test.describe("header links", () => {
+    test("are in the header from 768 px and in a row of their own below, marking the guide", async ({ page }) => {
+        const errors: string[] = [];
+        page.on("pageerror", (error) => errors.push(error.message));
+        await page.setViewportSize({ width: 1280, height: 800 });
+        await page.goto(`${base()}guide/setup/`);
+        const links = page.getByRole("navigation", { name: "Site links" });
+        await expect(links).toHaveCount(1);
+        await expect(page.getByRole("banner").getByRole("navigation", { name: "Site links" })).toBeVisible();
+        await expect(links.getByRole("link", { name: "Guide" })).toHaveAttribute("aria-current", "true");
+        await expect(links.getByRole("link", { name: "GitHub" })).toHaveAttribute("rel", "noopener");
+        await expect(links.getByRole("link", { name: "Mastodon" })).toBeVisible();
+        await links.getByRole("link", { name: "Guide" }).click();
+        await expect(page).toHaveURL(new RegExp(`${base()}guide/$`));
+        await expect(links.getByRole("link", { name: "Guide" })).toHaveAttribute("aria-current", "page");
+        for (const width of [375, 320]) {
+            await page.setViewportSize({ width, height: 740 });
+            for (const path of ["", "guide/setup/", "no/such/page/"]) {
+                await page.goto(`${base()}${path}`);
+                await noHorizontalScroll(page);
+                const row = page.getByRole("navigation", { name: "Site links" });
+                await expect(row, `${width} ${path}`).toHaveCount(1);
+                await expect(row.getByRole("link", { name: "Guide" })).toBeVisible();
+                await row.getByRole("link", { name: "Mastodon" }).scrollIntoViewIfNeeded();
+                await expect(row.getByRole("link", { name: "Mastodon" })).toBeInViewport();
+                await noHorizontalScroll(page);
+            }
+        }
+        expect(errors).toEqual([]);
+    });
+});
+
+test.describe("unusual content", () => {
+    test("a heading id with % neither breaks the contents nor the narrow menus", async ({ page }) => {
+        const errors: string[] = [];
+        page.on("pageerror", (error) => errors.push(error.message));
+        // Short enough that the heading reaches the line before the page
+        // ends, where the last section would be marked instead.
+        await page.setViewportSize({ width: 1280, height: 320 });
+        await page.goto(`${base()}guide/`);
+        const toc = page.locator(".rd-toc-wide");
+        await expect(toc.locator('a[href="#100%25"]')).toHaveText("All done");
+        await page.evaluate(() => {
+            const top = document.getElementById("100%")!.getBoundingClientRect().top;
+            window.scrollBy(0, top - 80);
+        });
+        await expect(toc.locator('a[aria-current="location"]')).toHaveAttribute("href", "#100%25");
+        await page.setViewportSize({ width: 375, height: 740 });
+        const menu = page.locator("details.rd-sidebar-narrow");
+        await menu.locator("summary").click();
+        await expect(menu).toHaveAttribute("open", "");
+        await page.keyboard.press("Escape");
+        await expect(menu).not.toHaveAttribute("open", "");
+        const contents = page.locator("details.rd-toc-narrow");
+        await contents.locator("summary").click();
+        await contents.getByRole("link", { name: "All done" }).click();
+        await expect(page.locator('[id="100%"]')).toBeInViewport();
+        expect(errors).toEqual([]);
+    });
+
+    test("an SVG symbol keeps its fragment, and a class's background loads from the site", async ({ page }) => {
+        const failed: string[] = [];
+        page.on("response", (response) => {
+            if (response.status() >= 400) failed.push(`${response.status()} ${response.url()}`);
+        });
+        await page.goto(`${base()}guide/`);
+        const mark = page.getByRole("img", { name: "The fixture's mark" });
+        await expect(mark.locator("use")).toHaveAttribute("href", new RegExp(`^${base()}assets/files/sprite\\.[0-9a-f]{10}\\.svg#mark$`));
+        await expect.poll(() => mark.locator("use").evaluate((use) => {
+            const box = (use as SVGUseElement).getBBox();
+            return `${box.width}x${box.height}`;
+        })).toBe("40x40");
+        const banner = page.getByRole("img", { name: "A banner" });
+        const image = await banner.evaluate((element) => getComputedStyle(element).backgroundImage);
+        expect(image).toMatch(new RegExp(`assets/files/banner\\.[0-9a-f]{10}\\.svg`));
+        const url = image.slice(image.indexOf("(") + 1, image.lastIndexOf(")")).replace(/^"|"$/g, "");
+        const loaded = await page.evaluate(async (url) => (await fetch(url)).status, url);
+        expect(loaded).toBe(200);
+        expect(failed).toEqual([]);
+    });
+});
+
 test.describe("without script", () => {
     test.use({ javaScriptEnabled: false });
 

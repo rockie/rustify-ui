@@ -29,6 +29,12 @@ Then write a page.
 
 <a href="setup.md#check-the-version">Check the version</a> when you are done.
 
+## All done {#100%}
+
+<p><svg width="40" height="40" role="img" aria-label="The fixture's mark"><use href="/sprite.svg#mark"></use></svg></p>
+
+<div class="h-10 bg-[url(/banner.svg)] bg-no-repeat" role="img" aria-label="A banner"></div>
+
 ## Check your install
 
 <!-- rustify:code-group name="install" -->

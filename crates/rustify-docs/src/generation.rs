@@ -21,7 +21,7 @@ use crate::frontmatter::Layout;
 use crate::history::Dates;
 use crate::imagesize::Size;
 use crate::markdown::RefKind;
-use crate::shell::{self, AssetUrls, Home, Logo, Meta, Page, Site};
+use crate::shell::{self, AssetUrls, HeaderLink, Home, Logo, Meta, Page, Site};
 use crate::style::{self, Brand};
 
 /// The framework's own scripts, shipped with every site.
@@ -147,6 +147,22 @@ pub fn resource_output(path: &str, bytes: &[u8]) -> String {
     }
 }
 
+/// What follows a file's path in a URL as written: its `?query` and
+/// `#fragment`, which the URL of the file as published keeps.
+fn url_suffix(url: &str) -> &str {
+    url.find(['?', '#']).map_or("", |at| &url[at..])
+}
+
+/// A page's URL with an anchor on it.
+fn page_url(site: &Site, route: &str, anchor: Option<&str>) -> String {
+    let mut url = site.url(route);
+    if let Some(anchor) = anchor.filter(|anchor| !anchor.is_empty()) {
+        url.push('#');
+        url.push_str(&crate::escape::encode_fragment(anchor));
+    }
+    url
+}
+
 /// The article of page `index`, with every slot filled in. An image whose
 /// tag gives no size gets its file's, so the page reserves its box before it
 /// loads.
@@ -170,24 +186,31 @@ pub fn article(
             .map(|output| site.url(&format!("/{output}")))
     };
     for slot in slots {
+        let reference = &page.fragment.references[slot.reference];
         let url = match &page.targets[slot.reference] {
             Target::Keep => continue,
             Target::Page {
                 page: target,
                 anchor,
-            } => {
-                let mut url = site.url(&analysis.pages[*target].route);
-                if let Some(anchor) = anchor.as_deref().filter(|anchor| !anchor.is_empty()) {
-                    url.push('#');
-                    url.push_str(anchor);
-                }
-                url
-            }
+            } => page_url(site, &analysis.pages[*target].route, anchor.as_deref()),
             Target::Resource(path) => {
                 let Some(url) = published(path) else {
                     continue;
                 };
-                let image = page.fragment.references[slot.reference].kind == RefKind::Image;
+                let url = url + url_suffix(&reference.destination);
+                if reference.kind == RefKind::ClassImage {
+                    // Inside `url(…)` in a class, where a bracket or a quote
+                    // would end the value.
+                    out.push_str(&html[at..slot.html.start]);
+                    let url = url
+                        .replace('(', "%28")
+                        .replace(')', "%29")
+                        .replace('\'', "%27");
+                    escape_url_into(&mut out, &url);
+                    at = slot.html.end;
+                    continue;
+                }
+                let image = reference.kind == RefKind::Image;
                 let rest = &html[slot.html.end..];
                 let tag = &rest[..rest.find('>').unwrap_or(rest.len())];
                 match sizes.get(path) {
@@ -235,6 +258,7 @@ pub fn article(
                         .file
                         .as_deref()
                         .and_then(published)
+                        .map(|url| url + url_suffix(&candidate.url))
                         .unwrap_or_else(|| candidate.url.clone());
                     escape_url_into(&mut out, &url);
                     if !candidate.descriptor.is_empty() {
@@ -254,29 +278,53 @@ pub fn article(
     out
 }
 
-/// Where a resolved target points, as a URL for this generation; `None`
-/// for a URL kept as written.
+/// Where a resolved target, written as `written`, points: a URL for this
+/// generation, or `written` itself for a URL kept as written.
 fn target_url(
     analysis: &Analysis,
     target: &Target,
+    written: &str,
     site: &Site,
     outputs: &BTreeMap<String, String>,
-) -> Option<String> {
+) -> String {
     match target {
         Target::Page { page, anchor } => {
-            let mut url = site.url(&analysis.pages[*page].route);
-            if let Some(anchor) = anchor.as_deref().filter(|anchor| !anchor.is_empty()) {
-                url.push('#');
-                url.push_str(anchor);
-            }
-            Some(url)
+            page_url(site, &analysis.pages[*page].route, anchor.as_deref())
         }
-        Target::Resource(path) => outputs
-            .get(path)
-            .map(|output| site.url(&format!("/{output}"))),
-        Target::Repository(url) => Some(url.clone()),
-        Target::Keep | Target::Srcset(_) => None,
+        Target::Resource(path) => match outputs.get(path) {
+            Some(output) => site.url(&format!("/{output}")) + url_suffix(written),
+            None => written.to_owned(),
+        },
+        Target::Repository(url) => url.clone(),
+        Target::Keep | Target::Srcset(_) => written.to_owned(),
     }
+}
+
+/// The configuration's header links, resolved.
+fn header_links(
+    analysis: &Analysis,
+    links: &[crate::config::NavLink],
+    targets: &[Target],
+    site: &Site,
+    outputs: &BTreeMap<String, String>,
+) -> Vec<HeaderLink> {
+    links
+        .iter()
+        .zip(targets)
+        .map(|(link, target)| {
+            let written = link.link.trim();
+            HeaderLink {
+                label: link.label.clone(),
+                url: target_url(analysis, target, written, site, outputs),
+                route: match target {
+                    Target::Page { page, .. } => Some(analysis.pages[*page].route.clone()),
+                    _ => None,
+                },
+                external: crate::markdown::is_external(written)
+                    || matches!(target, Target::Repository(_)),
+            }
+        })
+        .collect()
 }
 
 /// A `<title>` for every page, unique across the site: `Title | Site`, and
@@ -399,6 +447,8 @@ pub fn generate(
         lang: config.site.lang.clone(),
         base: config.site.base.clone(),
         nav: analysis.nav.clone(),
+        top: Vec::new(),
+        social: Vec::new(),
         assets: AssetUrls::default(),
         logo: None,
     };
@@ -435,12 +485,14 @@ pub fn generate(
     let mut outputs: BTreeMap<String, String> = BTreeMap::new();
     let mut sizes: BTreeMap<String, Size> = BTreeMap::new();
     for path in &analysis.resources {
-        let bytes: Arc<[u8]> = match snapshot.files.get(path) {
-            Some(bytes) => bytes.clone(),
-            None => match std::fs::read(project.root.join(path)) {
-                Ok(bytes) => Arc::from(bytes),
-                Err(_) => continue,
-            },
+        // Read and checked by the analysis; nothing else is read here.
+        let Some(bytes) = snapshot
+            .files
+            .get(path)
+            .or_else(|| analysis.outside.get(path))
+            .cloned()
+        else {
+            continue;
         };
         let output = resource_output(path, &bytes);
         if let Some(size) = crate::imagesize::size(&bytes) {
@@ -467,6 +519,14 @@ pub fn generate(
     });
     // A link preview needs the image's absolute address, so it is shown
     // only when the site's URL is known.
+    site.top = header_links(analysis, &config.nav.top, &analysis.top, &site, &outputs);
+    site.social = header_links(
+        analysis,
+        &config.nav.social,
+        &analysis.social,
+        &site,
+        &outputs,
+    );
     let share_image = match &config.site.image {
         Some((path, _)) => outputs.get(path).cloned(),
         None if origin.is_some() => {
@@ -513,8 +573,8 @@ pub fn generate(
                         .iter()
                         .zip(&page.action_targets)
                         .map(|(action, target)| {
-                            let url = target_url(analysis, target, &site, &outputs)
-                                .unwrap_or_else(|| action.link.trim().to_owned());
+                            let url =
+                                target_url(analysis, target, action.link.trim(), &site, &outputs);
                             (action.text.as_str(), url)
                         })
                         .collect(),
@@ -586,6 +646,23 @@ pub fn generate(
             error.to_string(),
         )]
     })?;
+    // What the stylesheet loads is checked like what a page loads: data, or
+    // a file this site publishes. A class's own URL was rewritten to one.
+    let own_files = site.url("/assets/");
+    let strays: Vec<Diagnostic> = style::urls(&css)
+        .into_iter()
+        .filter(|url| !url.starts_with("data:") && !url.starts_with(&own_files))
+        .map(|url| {
+            Diagnostic::general(
+                Severity::Error,
+                "output-check",
+                format!("the generated stylesheet loads `{url}`, which is not a file the site publishes"),
+            )
+        })
+        .collect();
+    if !strays.is_empty() {
+        return Err(strays);
+    }
     let stylesheet_path = format!("assets/site.{}.css", fingerprint(css.as_bytes()));
     let stylesheet_url = site.url(&format!("/{stylesheet_path}"));
     let mut pages: Vec<(String, String)> = rendered
@@ -653,6 +730,8 @@ pub fn dev_shell(project: &Project) -> Result<Generation, Vec<Diagnostic>> {
         lang: config.site.lang.clone(),
         base: config.site.base.clone(),
         nav: Vec::new(),
+        top: Vec::new(),
+        social: Vec::new(),
         assets: AssetUrls::default(),
         logo: None,
     };

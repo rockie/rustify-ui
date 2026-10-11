@@ -82,6 +82,9 @@ pub enum Mode {
 #[derive(Clone, Debug)]
 pub struct Project {
     pub root: PathBuf,
+    /// The configuration's file name in `root`: `rustify-docs.toml`, unless
+    /// the project was loaded from another.
+    pub config_file: String,
     pub config: Config,
     pub config_text: String,
 }
@@ -89,25 +92,39 @@ pub struct Project {
 impl Project {
     /// Reads `rustify-docs.toml` in `root`.
     pub fn load(root: &Path) -> Result<(Self, Vec<Diagnostic>), Vec<Diagnostic>> {
-        let path = root.join(config::FILE_NAME);
-        let text = std::fs::read_to_string(&path).map_err(|error| {
+        Self::load_file(&root.join(config::FILE_NAME))
+    }
+
+    /// Reads the configuration at `path`; the project is the directory that
+    /// holds it.
+    pub fn load_file(path: &Path) -> Result<(Self, Vec<Diagnostic>), Vec<Diagnostic>> {
+        let root = match path.parent() {
+            Some(parent) if !parent.as_os_str().is_empty() => parent.to_path_buf(),
+            _ => PathBuf::from("."),
+        };
+        let name = path
+            .file_name()
+            .map_or_else(|| config::FILE_NAME.into(), |name| name.to_string_lossy());
+        let name = name.as_ref();
+        let text = std::fs::read_to_string(path).map_err(|error| {
             vec![Diagnostic::in_file(
-                config::FILE_NAME,
+                name,
                 Severity::Error,
                 "config-missing",
-                format!("cannot read {}: {error}", config::FILE_NAME),
+                format!("cannot read {name}: {error}"),
             )]
         })?;
         let locate = |issues: Vec<Issue>| -> Vec<Diagnostic> {
             issues
                 .into_iter()
-                .map(|issue| Diagnostic::located(config::FILE_NAME, &text, issue))
+                .map(|issue| Diagnostic::located(name, &text, issue))
                 .collect()
         };
         match config::parse(&text) {
             Ok((config, warnings)) => Ok((
                 Self {
-                    root: root.to_path_buf(),
+                    root,
+                    config_file: name.to_owned(),
                     config,
                     config_text: text.clone(),
                 },
@@ -146,6 +163,98 @@ pub struct Snapshot {
     pub markdown: BTreeMap<String, Arc<str>>,
     /// Project-relative path to bytes, for the files a page may reference.
     pub files: BTreeMap<String, Arc<[u8]>>,
+    /// Where the symbolic links in those directories really lead, relative
+    /// to the project: what `dev` watches besides the directories.
+    pub linked: BTreeSet<String>,
+}
+
+/// Why a file the site names may not be read.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+enum Refusal {
+    Missing,
+    /// It is reached through a symbolic link that leads out of the project.
+    Outside,
+    /// It, or what a link to it leads to, is a private file.
+    Private,
+}
+
+/// The project's root as the file system resolves it, symbolic links and
+/// all; what every real path is compared with.
+fn real_root(project: &Project) -> PathBuf {
+    std::fs::canonicalize(&project.root).unwrap_or_else(|_| project.root.clone())
+}
+
+/// Where `path` really leads, relative to `root` (a real root): refused
+/// when that is outside the project, or private.
+fn real_source(root: &Path, path: &Path) -> Result<String, Refusal> {
+    let real = std::fs::canonicalize(path).map_err(|_| Refusal::Missing)?;
+    let relative = real.strip_prefix(root).map_err(|_| Refusal::Outside)?;
+    let relative = relative.to_string_lossy().replace('\\', "/");
+    if is_private(&relative) {
+        return Err(Refusal::Private);
+    }
+    Ok(relative)
+}
+
+/// The bytes of the project file `path` (project-relative) names, read
+/// only when neither the name nor what it really is says it is private and
+/// it stays inside the project.
+fn read_source(project: &Project, root: &Path, path: &str) -> Result<Vec<u8>, Refusal> {
+    if is_private(path) {
+        return Err(Refusal::Private);
+    }
+    let full = project.root.join(path);
+    real_source(root, &full)?;
+    match std::fs::metadata(&full) {
+        Ok(meta) if meta.is_file() => std::fs::read(&full).map_err(|_| Refusal::Missing),
+        _ => Err(Refusal::Missing),
+    }
+}
+
+impl Refusal {
+    /// The error for a reference to a refused file, made by `locate` where
+    /// the reference is written: `what` is how the message names it,
+    /// `missing` the rule when the file does not exist.
+    fn issue(
+        self,
+        locate: &dyn Fn(&'static str, String) -> Issue,
+        what: &str,
+        missing: &'static str,
+    ) -> Issue {
+        match self {
+            Self::Missing => locate(missing, format!("{what} does not exist")),
+            Self::Outside => locate(
+                "symlink-outside",
+                format!("{what} leads out of the project through a symbolic link; it is not read"),
+            )
+            .suggest("copy the file into the project"),
+            Self::Private => locate(
+                "private-file",
+                format!("{what} is a private file, which is never published"),
+            )
+            .suggest("reference a file that holds only what the site may show"),
+        }
+    }
+
+    /// The error for a link in the content or asset directory that leads
+    /// somewhere refused.
+    fn walk_problem(self, file: &str, what: &str) -> Option<Diagnostic> {
+        match self {
+            Self::Missing => None,
+            Self::Outside => Some(Diagnostic::in_file(
+                file,
+                Severity::Error,
+                "symlink-outside",
+                format!("this {what} points outside the project; it is not read"),
+            )),
+            Self::Private => Some(Diagnostic::in_file(
+                file,
+                Severity::Error,
+                "private-file",
+                format!("this {what} leads to a private file; it is not read"),
+            )),
+        }
+    }
 }
 
 fn walk(
@@ -153,6 +262,7 @@ fn walk(
     relative: &str,
     root: &Path,
     out: &mut Vec<(String, PathBuf)>,
+    linked: &mut BTreeSet<String>,
     problems: &mut Vec<Diagnostic>,
 ) {
     let Ok(entries) = std::fs::read_dir(dir) else {
@@ -168,30 +278,28 @@ fn walk(
         } else {
             format!("{relative}/{name}")
         };
-        if name == ".git" || name == ".rustify-docs" {
+        // Never read, so never published, whatever else names them.
+        if is_private(&child) {
             continue;
         }
         let Ok(meta) = std::fs::metadata(&path) else {
             continue;
         };
         if entry.file_type().is_ok_and(|kind| kind.is_symlink()) {
-            // A link is followed only while it stays inside the project.
-            let inside = std::fs::canonicalize(&path)
-                .ok()
-                .zip(std::fs::canonicalize(root).ok())
-                .is_some_and(|(target, root)| target.starts_with(root));
-            if !inside {
-                problems.push(Diagnostic::in_file(
-                    &child,
-                    Severity::Error,
-                    "symlink-outside",
-                    "this symbolic link points outside the project; it is not read",
-                ));
-                continue;
+            // A link is followed only while it stays inside the project and
+            // leads to nothing private.
+            match real_source(root, &path) {
+                Ok(target) => {
+                    linked.insert(target);
+                }
+                Err(refusal) => {
+                    problems.extend(refusal.walk_problem(&child, "symbolic link"));
+                    continue;
+                }
             }
         }
         if meta.is_dir() {
-            walk(&path, &child, root, out, problems);
+            walk(&path, &child, root, out, linked, problems);
         } else if meta.is_file() {
             out.push((child, path));
         }
@@ -203,13 +311,30 @@ pub fn snapshot(project: &Project) -> (Snapshot, Vec<Diagnostic>) {
     let mut snapshot = Snapshot::default();
     let mut problems = Vec::new();
     let config = &project.config;
+    let root = real_root(project);
     for dir in [&config.content_dir, &config.assets_dir] {
+        // The directory itself, or one on its path, may be a link too.
+        let full = project.root.join(dir);
+        if std::fs::symlink_metadata(&full).is_err() {
+            continue;
+        }
+        match real_source(&root, &full) {
+            Ok(target) if target != *dir => {
+                snapshot.linked.insert(target);
+            }
+            Ok(_) => {}
+            Err(refusal) => {
+                problems.extend(refusal.walk_problem(dir, "directory"));
+                continue;
+            }
+        }
         let mut files = Vec::new();
         walk(
-            &project.root.join(dir),
+            &full,
             dir,
-            &project.root,
+            &root,
             &mut files,
+            &mut snapshot.linked,
             &mut problems,
         );
         for (relative, path) in files {
@@ -394,6 +519,13 @@ pub struct Analysis {
     pub social: Vec<Target>,
     /// Project-relative files the pages reference, to be published.
     pub resources: BTreeSet<String>,
+    /// The bytes of the resources outside the content and asset
+    /// directories, read once, when they were found to be the project's to
+    /// publish.
+    pub outside: BTreeMap<String, Arc<[u8]>>,
+    /// Project-relative files the pages and the configuration name as
+    /// resources, found or not: with `includes`, what else `dev` watches.
+    pub referenced: BTreeSet<String>,
     /// Project-relative files the pages include source from, read or not:
     /// what else `dev` watches.
     pub includes: BTreeSet<String>,
@@ -424,18 +556,45 @@ impl Analysis {
 }
 
 /// Reads an include's file, if it is one the project may expose.
-fn read_include(project: &Project, path: &str) -> Result<String, String> {
-    if is_private(path) {
-        return Err("this file is private and is never included".into());
+fn read_include(project: &Project, root: &Path, path: &str) -> Result<String, String> {
+    let bytes = read_source(project, root, path).map_err(|refusal| {
+        match refusal {
+            Refusal::Missing => "the file does not exist",
+            Refusal::Outside => "the file is outside the project",
+            Refusal::Private => "this file is private and is never included",
+        }
+        .to_owned()
+    })?;
+    String::from_utf8(bytes).map_err(|_| "the file is not readable UTF-8 text".into())
+}
+
+/// The files analysis reads besides the snapshot: those outside the content
+/// and asset directories that pages and the configuration name, each read
+/// once.
+struct Sources<'a> {
+    project: &'a Project,
+    snapshot: &'a Snapshot,
+    root: PathBuf,
+    outside: BTreeMap<String, Arc<[u8]>>,
+    /// Every project file a resource reference named, found or not.
+    named: BTreeSet<String>,
+}
+
+impl Sources<'_> {
+    /// Whether the project file `path` names may be published; the first
+    /// time a file outside the snapshot is named, it is read.
+    fn get(&mut self, path: &str) -> Result<(), Refusal> {
+        self.named.insert(path.to_owned());
+        if is_private(path) {
+            return Err(Refusal::Private);
+        }
+        if self.snapshot.files.contains_key(path) || self.outside.contains_key(path) {
+            return Ok(());
+        }
+        let bytes = read_source(self.project, &self.root, path)?;
+        self.outside.insert(path.to_owned(), Arc::from(bytes));
+        Ok(())
     }
-    let full = project.root.join(path);
-    let canonical =
-        std::fs::canonicalize(&full).map_err(|_| "the file does not exist".to_owned())?;
-    let root = std::fs::canonicalize(&project.root).map_err(|e| e.to_string())?;
-    if !canonical.starts_with(&root) {
-        return Err("the file is outside the project".into());
-    }
-    std::fs::read_to_string(&canonical).map_err(|_| "the file is not readable UTF-8 text".into())
 }
 
 /// Splits `url` into its path and its `#fragment`.
@@ -511,6 +670,13 @@ pub fn analyze(
     let content_dir = &config.content_dir;
     let mut diagnostics = Vec::new();
     let file_of = |path: &str| format!("{content_dir}/{path}");
+    let mut sources = Sources {
+        project,
+        snapshot,
+        root: real_root(project),
+        outside: BTreeMap::new(),
+        named: BTreeSet::new(),
+    };
 
     // Pages: frontmatter, route, includes.
     struct Draft {
@@ -582,7 +748,7 @@ pub fn analyze(
         let body = &text[body_offset..];
         let mut includes = IncludeFiles::default();
         for include in markdown::include_paths(body) {
-            let read = read_include(project, &include);
+            let read = read_include(project, &sources.root, &include);
             included.insert(include.clone());
             includes.0.insert(include, read);
         }
@@ -739,6 +905,35 @@ pub fn analyze(
             action_targets: Vec::new(),
         });
     }
+    if !pages.iter().any(|page| mode == Mode::Dev || !page.draft) {
+        let (message, suggestion) = if !project.content_root().is_dir() {
+            (
+                format!(
+                    "the content directory `{content_dir}` does not exist, so the site has no page"
+                ),
+                format!(
+                    "create it with an `index.md`, or set content.dir in {}",
+                    project.config_file
+                ),
+            )
+        } else if pages.is_empty() {
+            (
+                format!(
+                    "`{content_dir}` holds no page, so the site would have only its not-found page"
+                ),
+                format!("add a Markdown page, such as `{content_dir}/index.md`"),
+            )
+        } else {
+            (
+                format!("every page in `{content_dir}` is a draft, so a production build would publish none"),
+                "set `draft: false` on the pages that are ready".to_owned(),
+            )
+        };
+        diagnostics.push(
+            Diagnostic::in_file(content_dir, Severity::Error, "no-pages", message)
+                .with_suggestion(suggestion),
+        );
+    }
     let routes: BTreeMap<String, usize> = pages
         .iter()
         .enumerate()
@@ -805,11 +1000,10 @@ pub fn analyze(
                     &mut found,
                     &issue,
                 ),
-                RefKind::Image | RefKind::Media | RefKind::Srcset => {
+                RefKind::Image | RefKind::Media | RefKind::Srcset | RefKind::ClassImage => {
                     let image = reference.kind != RefKind::Media;
                     resolve_resource(
-                        project,
-                        snapshot,
+                        &mut sources,
                         dir,
                         url,
                         image,
@@ -863,6 +1057,12 @@ pub fn analyze(
         for issue in found {
             diagnostics.push(Diagnostic::located(&pages[i].file, &text, issue));
         }
+        // A file only an action names is published all the same.
+        for target in &action_targets {
+            if let Target::Resource(path) = target {
+                resources.insert(path.clone());
+            }
+        }
         pages[i].targets = targets;
         pages[i].action_targets = action_targets;
     }
@@ -893,7 +1093,7 @@ pub fn analyze(
             .collect();
         for issue in found {
             diagnostics.push(Diagnostic::located(
-                config::FILE_NAME,
+                &project.config_file,
                 &project.config_text,
                 issue,
             ));
@@ -902,47 +1102,46 @@ pub fn analyze(
     };
     let top = config_links(&config.nav.top);
     let social = config_links(&config.nav.social);
+    for target in top.iter().chain(&social) {
+        if let Target::Resource(path) = target {
+            resources.insert(path.clone());
+        }
+    }
 
     // Navigation.
     let nav = navigation(project, snapshot, &pages, mode, &by_path, &mut diagnostics);
 
-    // The logo and the brand colours.
-    if let Some(logo) = &config.logo {
-        for path in [&logo.light, &logo.dark] {
-            if snapshot.files.contains_key(path) || project.root.join(path).is_file() {
+    // The logo, the link-preview image and the brand colours.
+    let logos = config.logo.iter().flat_map(|logo| {
+        [&logo.light, &logo.dark]
+            .into_iter()
+            .map(|path| (path, &logo.span, "theme.logo", "logo-missing"))
+    });
+    let image = config
+        .site
+        .image
+        .iter()
+        .map(|(path, span)| (path, span, "site.image", "image-missing"));
+    for (path, span, key, missing) in logos.chain(image) {
+        match sources.get(path) {
+            Ok(()) => {
                 resources.insert(path.clone());
-            } else {
-                diagnostics.push(Diagnostic::located(
-                    config::FILE_NAME,
-                    &project.config_text,
-                    Issue::error(
-                        logo.span.clone(),
-                        "logo-missing",
-                        format!("theme.logo `{path}` does not exist"),
-                    ),
-                ));
             }
-        }
-    }
-    if let Some((path, span)) = &config.site.image {
-        if snapshot.files.contains_key(path) || project.root.join(path).is_file() {
-            resources.insert(path.clone());
-        } else {
-            diagnostics.push(Diagnostic::located(
-                config::FILE_NAME,
+            Err(refusal) => diagnostics.push(Diagnostic::located(
+                &project.config_file,
                 &project.config_text,
-                Issue::error(
-                    span.clone(),
-                    "image-missing",
-                    format!("site.image `{path}` does not exist"),
+                refusal.issue(
+                    &|rule, message| Issue::error(span.clone(), rule, message),
+                    &format!("{key} `{path}`"),
+                    missing,
                 ),
-            ));
+            )),
         }
     }
     if config.site.url.is_none() {
         diagnostics.push(
             Diagnostic::in_file(
-                config::FILE_NAME,
+                &project.config_file,
                 Severity::Warning,
                 "missing-site-url",
                 "site.url is not set, so pages have no canonical address or preview image and there is no sitemap",
@@ -995,7 +1194,7 @@ pub fn analyze(
             let button = crate::color::contrast(foreground, color).unwrap_or(0.0);
             if link < 4.5 {
                 diagnostics.push(Diagnostic::located(
-                    config::FILE_NAME,
+                    &project.config_file,
                     &project.config_text,
                     Issue::warning(span.clone(), "brand-contrast", format!("{color} as link text on the {mode_name} background is {link:.2}:1; text needs 4.5:1"))
                         .suggest(format!("pick a {} {mode_name} primary", if mode_name == "light" { "darker" } else { "lighter" })),
@@ -1003,7 +1202,7 @@ pub fn analyze(
             }
             if button < 4.5 {
                 diagnostics.push(Diagnostic::located(
-                    config::FILE_NAME,
+                    &project.config_file,
                     &project.config_text,
                     Issue::warning(
                         span.clone(),
@@ -1025,6 +1224,8 @@ pub fn analyze(
         top,
         social,
         resources,
+        outside: sources.outside,
+        referenced: sources.named,
         includes: included,
         diagnostics,
     }
@@ -1062,13 +1263,9 @@ fn resolve_link(
     let fragment = fragment.map(percent_decode);
     let check_anchor = |page: usize, found: &mut Vec<Issue>| {
         if let Some(anchor) = fragment.as_deref().filter(|anchor| !anchor.is_empty()) {
-            let known = pages[page]
-                .fragment
-                .headings
-                .iter()
-                .any(|heading| heading.id == anchor)
-                || anchor.starts_with("fn-")
-                || anchor.starts_with("fnref-");
+            let fragment = &pages[page].fragment;
+            let known = fragment.headings.iter().any(|heading| heading.id == anchor)
+                || fragment.anchors.iter().any(|id| id == anchor);
             if !known {
                 found.push(
                     issue("broken-anchor", format!("{} has no heading `#{anchor}`", pages[page].file))
@@ -1108,6 +1305,8 @@ fn resolve_link(
         return Target::Keep;
     }
     let decoded = percent_decode(path);
+    // A file's address may carry a query, which a published file keeps.
+    let file_part = |path: &str| path.split('?').next().unwrap_or_default().to_owned();
     if let Some(absolute) = decoded.strip_prefix('/') {
         // A site route, or a file in the asset directory.
         let route = if absolute.is_empty() || absolute.ends_with('/') {
@@ -1118,7 +1317,7 @@ fn resolve_link(
         if let Some(&target) = routes.get(&route) {
             return to_page(target, found);
         }
-        let asset = format!("{}/{absolute}", project.config.assets_dir);
+        let asset = format!("{}/{}", project.config.assets_dir, file_part(absolute));
         if snapshot.files.contains_key(&asset) {
             return Target::Resource(asset);
         }
@@ -1153,7 +1352,7 @@ fn resolve_link(
                     }
                 };
             }
-            let file = format!("{}/{joined}", project.config.content_dir);
+            let file = format!("{}/{}", project.config.content_dir, file_part(&joined));
             if snapshot.files.contains_key(&file) && !is_private(&file) {
                 return Target::Resource(file);
             }
@@ -1202,10 +1401,8 @@ fn resolve_link(
     }
 }
 
-#[allow(clippy::too_many_arguments)]
 fn resolve_resource(
-    project: &Project,
-    snapshot: &Snapshot,
+    sources: &mut Sources,
     dir: &str,
     url: &str,
     image: bool,
@@ -1241,27 +1438,38 @@ fn resolve_resource(
         }
         let (path, _) = split_fragment(&candidate);
         let path = percent_decode(path.split('?').next().unwrap_or(""));
+        let config = &sources.project.config;
         let file = match path.strip_prefix('/') {
-            Some(absolute) => Some(format!("{}/{absolute}", project.config.assets_dir)),
-            None => join(&format!("{}/{dir}", project.config.content_dir), &path),
+            Some(absolute) => Some(format!("{}/{absolute}", config.assets_dir)),
+            None => join(&format!("{}/{dir}", config.content_dir), &path),
         };
-        match file {
-            Some(file)
-                if !is_private(&file)
-                    && (snapshot.files.contains_key(&file)
-                        || project.root.join(&file).is_file()) =>
-            {
+        let refusal = match &file {
+            Some(file) => sources.get(file).err(),
+            None => Some(Refusal::Missing),
+        };
+        match (file, refusal) {
+            (Some(file), None) => {
                 resolved.push(SrcsetCandidate {
                     file: Some(file),
                     url: candidate.clone(),
                     descriptor: descriptor.clone(),
                 });
             }
-            _ => {
-                found.push(
-                    issue(if image { "missing-image" } else { "missing-media" }, format!("`{candidate}` does not exist"))
-                        .suggest("check the path; it is relative to this page, or to the asset directory when it starts with `/`"),
+            (_, refusal) => {
+                let missing = if image {
+                    "missing-image"
+                } else {
+                    "missing-media"
+                };
+                let mut problem = refusal.unwrap_or(Refusal::Missing).issue(
+                    issue,
+                    &format!("`{candidate}`"),
+                    missing,
                 );
+                if problem.rule == missing {
+                    problem = problem.suggest("check the path; it is relative to this page, or to the asset directory when it starts with `/`");
+                }
+                found.push(problem);
                 keep(&mut resolved);
             }
         }
@@ -1367,7 +1575,7 @@ fn navigation(
                 "nav-unknown-group",
                 format!(
                     "sidebar.group `{label}` is not a nav group in {}",
-                    config::FILE_NAME
+                    project.config_file
                 ),
             )
             .suggest(format!("use one of: {}", names.join(", "))),
@@ -1408,7 +1616,7 @@ fn navigation(
                     .collect();
                 if found.is_empty() {
                     diagnostics.push(Diagnostic::located(
-                        config::FILE_NAME,
+                        &project.config_file,
                         &project.config_text,
                         Issue::warning(
                             span.clone(),
@@ -1426,7 +1634,7 @@ fn navigation(
                         Some(&i) if shown(&pages[i]) => found.push(i),
                         Some(_) => {}
                         None => diagnostics.push(Diagnostic::located(
-                            config::FILE_NAME,
+                            &project.config_file,
                             &project.config_text,
                             Issue::error(
                                 span.clone(),
@@ -2077,6 +2285,239 @@ pub(crate) mod tests {
                 ("brand-contrast".to_owned(), Severity::Warning),
             ]
         );
+    }
+
+    /// A directory beside a fixture, outside its project; removed when
+    /// dropped.
+    #[cfg(unix)]
+    struct Outside(PathBuf);
+
+    #[cfg(unix)]
+    impl Outside {
+        fn new(fixture: &Fixture, files: &[(&str, &str)]) -> Self {
+            let dir = fixture.root.with_extension("outside");
+            let _ = std::fs::remove_dir_all(&dir);
+            for (path, text) in files {
+                let path = dir.join(path);
+                std::fs::create_dir_all(path.parent().unwrap()).unwrap();
+                std::fs::write(path, text).unwrap();
+            }
+            Self(dir)
+        }
+    }
+
+    #[cfg(unix)]
+    impl Drop for Outside {
+        fn drop(&mut self) {
+            let _ = std::fs::remove_dir_all(&self.0);
+        }
+    }
+
+    #[cfg(unix)]
+    fn link(target: &Path, at: &Path) {
+        std::fs::create_dir_all(at.parent().unwrap()).unwrap();
+        std::os::unix::fs::symlink(target, at).unwrap();
+    }
+
+    /// Whether any input the analysis read, or would publish, holds `marker`.
+    fn holds(snapshot: &Snapshot, analysis: &Analysis, marker: &str) -> bool {
+        let found = |bytes: &[u8]| bytes.windows(marker.len()).any(|w| w == marker.as_bytes());
+        snapshot.files.values().any(|bytes| found(bytes))
+            || snapshot
+                .markdown
+                .values()
+                .any(|text| found(text.as_bytes()))
+            || analysis.outside.values().any(|bytes| found(bytes))
+            || analysis
+                .pages
+                .iter()
+                .any(|page| found(page.fragment.html.as_bytes()))
+    }
+
+    #[cfg(unix)]
+    #[test]
+    fn nothing_is_read_through_a_link_out_of_the_project() {
+        let fixture = Fixture::new(&[
+            ("rustify-docs.toml", CONFIG),
+            (
+                "content/index.md",
+                "---\ndescription: d\n---\n# Home\n\n![far](../images/far.svg) ![near](../brand/near.svg) ![shared](shared/near.svg)\n",
+            ),
+            ("brand/near.svg", "<svg/>"),
+        ]);
+        let outside = Outside::new(
+            &fixture,
+            &[
+                ("static/x.txt", "OUTSIDE"),
+                ("far.svg", "<svg>OUTSIDE</svg>"),
+            ],
+        );
+        // The asset directory itself, and a directory on an image's path.
+        link(&outside.0.join("static"), &fixture.root.join("static"));
+        link(&outside.0, &fixture.root.join("images"));
+        // A link that stays inside the project is followed.
+        link(
+            &fixture.root.join("brand"),
+            &fixture.root.join("content/shared"),
+        );
+        let (_, snapshot, analysis) = fixture.analyze(Mode::Production);
+        assert_eq!(
+            errors(&analysis),
+            [
+                (
+                    "symlink-outside".to_owned(),
+                    "content/index.md".to_owned(),
+                    6
+                ),
+                ("symlink-outside".to_owned(), "static".to_owned(), 0),
+            ]
+        );
+        assert!(!holds(&snapshot, &analysis, "OUTSIDE"));
+        assert_eq!(
+            analysis.resources.iter().collect::<Vec<_>>(),
+            ["brand/near.svg", "content/shared/near.svg"]
+        );
+    }
+
+    #[cfg(unix)]
+    #[test]
+    fn a_private_file_stays_private_under_any_name() {
+        let config = format!("{CONFIG}[theme]\nlogo = \".env\"\n");
+        let fixture = Fixture::new(&[
+            ("rustify-docs.toml", config.as_str()),
+            (
+                "content/index.md",
+                "---\ndescription: d\n---\n# Home\n\n![alias](alias.svg)\n\n<!-- rustify:include path=\"notes.txt\" -->\n",
+            ),
+            (".env", "SECRET=PRIVATE"),
+            ("static/.DS_Store", "PRIVATE"),
+        ]);
+        link(
+            &fixture.root.join(".env"),
+            &fixture.root.join("static/public.txt"),
+        );
+        link(
+            &fixture.root.join(".env"),
+            &fixture.root.join("content/alias.svg"),
+        );
+        link(&fixture.root.join(".env"), &fixture.root.join("notes.txt"));
+        let (_, snapshot, analysis) = fixture.analyze(Mode::Production);
+        let mut rules: Vec<(String, String)> = errors(&analysis)
+            .into_iter()
+            .map(|(rule, file, _)| (file, rule))
+            .collect();
+        rules.sort();
+        assert_eq!(
+            rules,
+            [
+                ("content/alias.svg".to_owned(), "private-file".to_owned()),
+                ("content/index.md".to_owned(), "include-missing".to_owned()),
+                ("content/index.md".to_owned(), "private-file".to_owned()),
+                ("rustify-docs.toml".to_owned(), "private-file".to_owned()),
+                ("static/public.txt".to_owned(), "private-file".to_owned()),
+            ]
+        );
+        assert!(!holds(&snapshot, &analysis, "PRIVATE"));
+        assert!(analysis.resources.is_empty(), "{:?}", analysis.resources);
+    }
+
+    #[test]
+    fn private_markdown_is_never_a_page() {
+        let fixture = Fixture::new(&[
+            ("rustify-docs.toml", CONFIG),
+            ("content/index.md", &format!("{FRONT}# Home\n")),
+            ("content/.env.md", &format!("{FRONT}# PRIVATE\n")),
+            ("content/.env/notes.md", &format!("{FRONT}# PRIVATE\n")),
+            ("content/guide/local.env", "PRIVATE"),
+        ]);
+        let (_, snapshot, analysis) = fixture.analyze(Mode::Production);
+        assert!(errors(&analysis).is_empty(), "{:?}", analysis.diagnostics);
+        assert_eq!(
+            analysis
+                .pages
+                .iter()
+                .map(|p| p.route.as_str())
+                .collect::<Vec<_>>(),
+            ["/"]
+        );
+        assert!(!holds(&snapshot, &analysis, "PRIVATE"));
+        assert!(analysis
+            .nav
+            .iter()
+            .all(|group| group.items.iter().all(|item| item.route == "/")));
+    }
+
+    #[test]
+    fn files_only_actions_and_header_links_name_are_published() {
+        let config = format!(
+            "{CONFIG}[[nav.top]]\nlabel = \"Spec\"\nlink = \"/spec.pdf\"\n[[nav.social]]\nlabel = \"Feed\"\nlink = \"feed.xml\"\n"
+        );
+        let fixture = Fixture::new(&[
+            ("rustify-docs.toml", config.as_str()),
+            (
+                "content/index.md",
+                "---\nlayout: home\nactions:\n  - text: Manual\n    link: manual.pdf#page=2\n---\n# Home\n",
+            ),
+            ("content/manual.pdf", "%PDF"),
+            ("content/feed.xml", "<feed/>"),
+            ("static/spec.pdf", "%PDF"),
+        ]);
+        let (_, _, analysis) = fixture.analyze(Mode::Production);
+        assert!(errors(&analysis).is_empty(), "{:?}", analysis.diagnostics);
+        assert_eq!(
+            analysis.resources.iter().collect::<Vec<_>>(),
+            ["content/feed.xml", "content/manual.pdf", "static/spec.pdf"]
+        );
+    }
+
+    #[test]
+    fn a_site_with_nothing_to_publish_is_an_error() {
+        let fixture = Fixture::new(&[("rustify-docs.toml", CONFIG), ("static/logo.svg", "<svg/>")]);
+        let (_, _, analysis) = fixture.analyze(Mode::Production);
+        assert_eq!(
+            errors(&analysis),
+            [("no-pages".to_owned(), "content".to_owned(), 0)]
+        );
+        let fixture = Fixture::new(&[
+            ("rustify-docs.toml", CONFIG),
+            (
+                "content/soon.md",
+                "---\ndescription: d\ndraft: true\n---\n# Soon\n",
+            ),
+        ]);
+        let (_, _, production) = fixture.analyze(Mode::Production);
+        assert_eq!(
+            errors(&production),
+            [("no-pages".to_owned(), "content".to_owned(), 0)]
+        );
+        // dev shows drafts, so a draft is something to show.
+        let (_, _, dev) = fixture.analyze(Mode::Dev);
+        assert!(errors(&dev).is_empty(), "{:?}", dev.diagnostics);
+    }
+
+    #[test]
+    fn footnote_anchors_are_the_ids_the_page_has() {
+        let fixture = Fixture::new(&[
+            ("rustify-docs.toml", CONFIG),
+            (
+                "content/index.md",
+                &format!("{FRONT}# Home\n\nA claim[^n] and [its note](#fn-n), [back](#fnref-n), [there](other.md#fn-o), [lost](#fn-never-defined), [gone](other.md#fnref-x).\n\n[^n]: The note.\n"),
+            ),
+            (
+                "content/other.md",
+                &format!("{FRONT}# Other\n\nTwice[^o] over[^o].\n\n[^o]: Its note.\n"),
+            ),
+        ]);
+        let (_, _, analysis) = fixture.analyze(Mode::Production);
+        assert_eq!(
+            errors(&analysis),
+            [
+                ("broken-anchor".to_owned(), "content/index.md".to_owned(), 6),
+                ("broken-anchor".to_owned(), "content/index.md".to_owned(), 6),
+            ]
+        );
+        let other = &analysis.pages[analysis.routes["/other/"]];
+        assert_eq!(other.fragment.anchors, ["fnref-o", "fnref-o-2", "fn-o"]);
     }
 
     #[test]

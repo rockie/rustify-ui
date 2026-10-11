@@ -242,6 +242,120 @@ fn site_files_list_what_may_be_indexed_and_nothing_private_ships() {
 }
 
 #[test]
+fn a_file_only_a_home_action_names_is_published_and_its_link_resolves() {
+    let temp = fixture_at("/rustify-ui/");
+    temp.write("site/content/manual.pdf", "%PDF-1.4 manual");
+    temp.edit(
+        "site/content/index.md",
+        "  - text: Reference\n    link: reference/api.md\n",
+        "  - text: Reference\n    link: manual.pdf#page=2\n",
+    );
+    let files = build(&temp, &[]);
+    let home = text_of(&files, "index.html");
+    let manual = files
+        .keys()
+        .find(|path| path.starts_with("assets/files/manual."))
+        .expect("the manual is published");
+    assert!(
+        home.contains(&format!("href=\"/rustify-ui/{manual}#page=2\"")),
+        "{home}"
+    );
+    addresses_resolve(&files, "/rustify-ui/", "https://docs.example.net");
+}
+
+#[cfg(unix)]
+#[test]
+fn nothing_private_or_outside_the_project_ships_under_another_name() {
+    use std::os::unix::fs::symlink;
+    /// Builds, expecting the build to be refused for `rule` with the
+    /// previous output left as it was.
+    fn refused(temp: &Temp, rule: &str, before: &Files) {
+        let output = run_in(&temp.path("site"), &["build", "--format", "json"]);
+        assert_eq!(output.status.code(), Some(1), "{}", stdout(&output));
+        let report: serde_json::Value = serde_json::from_slice(&output.stdout).unwrap();
+        assert!(
+            report["diagnostics"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .any(|d| d["rule"] == rule && d["severity"] == "error"),
+            "{rule} in {report:#}"
+        );
+        assert_eq!(&tree(&temp.path("site/dist")), before);
+    }
+    let fresh = || {
+        let temp = fixture_at("/docs/");
+        temp.write("site/.env", "SECRET=PRIVATE_MARKER");
+        temp.write("outside/static/x.txt", "OUTSIDE_MARKER");
+        temp.write("outside/far.svg", "<svg>OUTSIDE_MARKER</svg>");
+        let before = build(&temp, &[]);
+        (temp, before)
+    };
+
+    // The asset directory, or a directory on an image's path, leading out.
+    let (temp, before) = fresh();
+    std::fs::rename(temp.path("site/static"), temp.path("site/static-real")).unwrap();
+    symlink(temp.path("outside/static"), temp.path("site/static")).unwrap();
+    refused(&temp, "symlink-outside", &before);
+    let (temp, before) = fresh();
+    symlink(temp.path("outside"), temp.path("site/images")).unwrap();
+    temp.edit(
+        "site/content/guide/index.md",
+        "Read the setup page first.",
+        "Read the setup page first. ![Far](../../images/far.svg)",
+    );
+    refused(&temp, "symlink-outside", &before);
+
+    // A private file under a public name: a static file, an include, the logo.
+    let (temp, before) = fresh();
+    symlink(temp.path("site/.env"), temp.path("site/static/public.txt")).unwrap();
+    refused(&temp, "private-file", &before);
+    let (temp, before) = fresh();
+    symlink(temp.path("site/.env"), temp.path("site/notes.txt")).unwrap();
+    temp.edit(
+        "site/content/guide/index.md",
+        "Read the setup page first.",
+        "Read the setup page first.\n\n<!-- rustify:include path=\"notes.txt\" -->\n",
+    );
+    refused(&temp, "include-missing", &before);
+    let (temp, before) = fresh();
+    temp.edit(
+        "site/rustify-docs.toml",
+        "logo = \"static/logo.svg\"",
+        "logo = \".env\"",
+    );
+    refused(&temp, "private-file", &before);
+
+    // A private page is no page; a link that stays inside the project is
+    // followed.
+    let (temp, _) = fresh();
+    temp.write(
+        "site/content/.env.md",
+        "---\ndescription: d\n---\n# PRIVATE_MARKER\n",
+    );
+    temp.write(
+        "site/content/.env/notes.md",
+        "---\ndescription: d\n---\n# PRIVATE_MARKER\n",
+    );
+    temp.write("site/brand/mark.svg", "<svg>INSIDE_MARKER</svg>");
+    symlink(
+        temp.path("site/brand/mark.svg"),
+        temp.path("site/static/mark.svg"),
+    )
+    .unwrap();
+    let files = build(&temp, &[]);
+    assert!(files.contains_key("mark.svg"));
+    for (path, bytes) in &files {
+        let text = String::from_utf8_lossy(bytes);
+        assert!(!path.contains(".env"), "{path} published");
+        assert!(
+            !text.contains("PRIVATE_MARKER") && !text.contains("OUTSIDE_MARKER"),
+            "{path} holds a marker"
+        );
+    }
+}
+
+#[test]
 fn without_a_url_there_is_no_canonical_address_or_sitemap_and_a_warning() {
     let temp = fixture_at("/docs/");
     temp.edit(
@@ -364,20 +478,49 @@ fn a_changed_file_renames_itself_and_changes_only_what_references_it() {
     expected.sort();
     assert_eq!(changed, expected);
 
+    // A class's background image is the stylesheet's: it renames, so does
+    // the stylesheet, and every page that loads it changes; the scripts do
+    // not.
+    temp.edit("site/static/banner.svg", "#53b1fd", "#2e90fa");
+    let fourth = build(&temp, &[]);
+    let (renamed, changed) = differences(&third, &fourth);
+    assert_eq!(renamed, ["assets/files/banner.#.svg", "assets/site.#.css"]);
+    let mut expected: Vec<String> = fourth
+        .keys()
+        .filter(|path| path.ends_with(".html"))
+        .cloned()
+        .collect();
+    expected.extend([
+        "banner.svg".to_owned(),
+        "rustify-docs-manifest.json".to_owned(),
+    ]);
+    expected.sort();
+    assert_eq!(changed, expected);
+
     // The stylesheet loads nothing from elsewhere, and nothing it names is
     // missing.
-    let css_path = third
+    let css_path = fourth
         .keys()
         .find(|p| p.starts_with("assets/site.") && p.ends_with(".css"))
         .unwrap();
-    let css = text_of(&third, css_path);
+    let css = text_of(&fourth, css_path);
+    let mut published = 0;
     for rest in css.split("url(").skip(1) {
         let url = rest.split(')').next().unwrap().trim_matches(['"', '\'']);
-        assert!(
-            url.starts_with("data:") || url.starts_with('#'),
-            "the stylesheet loads {url}"
-        );
+        if let Some(file) = url.strip_prefix("/docs/") {
+            assert!(
+                fourth.contains_key(file),
+                "the stylesheet loads {url}, not published"
+            );
+            published += 1;
+        } else {
+            assert!(
+                url.starts_with("data:") || url.starts_with('#'),
+                "the stylesheet loads {url}"
+            );
+        }
     }
+    assert_eq!(published, 1, "the banner");
 }
 
 #[test]

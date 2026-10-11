@@ -92,7 +92,7 @@ fn collect<'a>(
     for link in nav.top.iter().chain(&nav.social) {
         if is_web(&link.link) {
             links.entry(address(&link.link)).or_default().push(Place {
-                file: rustify_docs::config::FILE_NAME.to_owned(),
+                file: project.config_file.clone(),
                 text: &project.config_text,
                 span: link.span.clone(),
             });

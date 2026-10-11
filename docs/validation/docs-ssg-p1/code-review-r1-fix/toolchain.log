@@ -1,0 +1,36 @@
+environment: macOS 27.0.1 (26A434) on arm64
+  rustc 1.99.0 (b940084d7 2026-09-28)
+  binary: rustc
+  commit-hash: b940084d7eb6a299eb4bfeb8e34901bc051e7ac4
+  commit-date: 2026-09-28
+  host: aarch64-apple-darwin
+  release: 1.99.0
+  LLVM version: 23.1.1
+  cargo 1.99.0 (5f94df478 2026-08-27)
+CLI source: file:///var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-verify/candidate.git at 06fa92fdf65e225cbcc3b38cf7976df73a8e99da
+    Updating git repository `file:///var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-verify/candidate.git`
+  Installing rustify-docs-cli v0.1.0 (file:///var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-verify/candidate.git?rev=06fa92fdf65e225cbcc3b38cf7976df73a8e99da#06fa92fd)
+    Updating crates.io index
+    Finished `docs-cli` profile [optimized] target(s) in 6.52s
+  Installing /var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-verify/cli-install/bin/rustify-docs
+   Installed package `rustify-docs-cli v0.1.0 (file:///var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-verify/candidate.git?rev=06fa92fdf65e225cbcc3b38cf7976df73a8e99da#06fa92fd)` (executable `rustify-docs`)
+warning: be sure to add `/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-verify/cli-install/bin` to your PATH to be able to run the installed binaries
+installed in 6.5 s
+rustify-docs 0.1.0
+rustify-docs 0.1.0
+panic: unwind
+grammars: syntect-5.3.0+two-face-0.5.2+bat-0.26.1+fancy
+panic probe: recovered
+rustify-docs-cli v0.1.0 (file:///var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-verify/candidate.git?rev=06fa92fdf65e225cbcc3b38cf7976df73a8e99da#06fa92fd):
+    rustify-docs
+author: empty HOME, PATH=/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-verify/author/tools:/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-verify/cli-install/bin:/usr/bin:/bin, no other variable; none of node, npm, npx, tailwindcss, wasm-pack, wasm-bindgen, mbx, docker, podman, chromium, google-chrome, firefox on PATH
+new (no network): created site; toolchain check: rustc 1.99.0 (b940084d7 2026-09-28)
+check (no network): check: 3 pages, 0 error(s), 2 warning(s)
+build (no network): build: 3 pages and 404.html in /private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-verify/author/site/dist: 67.5 KB in 12 files, 2 warning(s), 36 ms
+published: index.html, guide/getting-started/index.html, 404.html; rustify-docs-manifest.json mode production, 11 files
+check --external-links (no network), the site as created: external_addresses: 0; exit 0, nothing to request
+check --external-links (no network), a link to https://www.rust-lang.org/ added: external_addresses: 1, each an error; exit 1: `https://www.rust-lang.org/` could not be checked: io: failed to lookup address information: nodename nor servname provided, or not known
+preview (loopback only): preview: http://127.0.0.1:49776/; GET / 200 (4206 bytes), GET /guide/getting-started/ 200 (7960 bytes); stopped
+dev (loopback only): dev: http://127.0.0.1:49779/; GET / 200 (5138 bytes), GET /guide/getting-started/ 200 (8892 bytes); stopped
+toolchain calls: 2 x `rustc --version` (new and dev check for Rust); no cargo, nothing compiled
+toolchain: rustify-docs 0.1.0 installed from 06fa92fdf65e225cbcc3b38cf7976df73a8e99da with the docs-cli profile (15672432 bytes, unwinds); new, check, build, preview and dev ran with only Rust and the CLI on PATH, check and build with no network; nothing was compiled

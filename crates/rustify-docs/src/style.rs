@@ -268,6 +268,30 @@ pub fn minify(css: &str) -> Result<String, StyleError> {
     Ok(printed.code)
 }
 
+/// Every URL the stylesheet loads: the values of its `url(…)`s, quotes
+/// removed. A `url\(` escaped in a selector is a class name, not a load.
+pub fn urls(css: &str) -> Vec<String> {
+    let mut urls = Vec::new();
+    let mut from = 0;
+    while let Some(at) = css[from..].find("url(") {
+        let open = from + at + "url(".len();
+        let rest = css[open..].trim_start();
+        let (value, end) = match rest.chars().next() {
+            Some(quote @ ('"' | '\'')) => match rest[1..].find(quote) {
+                Some(end) => (&rest[1..1 + end], 1 + end),
+                None => break,
+            },
+            _ => match rest.find(')') {
+                Some(end) => (rest[..end].trim_end(), end),
+                None => break,
+            },
+        };
+        urls.push(value.to_owned());
+        from = css.len() - rest.len() + end;
+    }
+    urls
+}
+
 /// The site's stylesheet: utilities for `candidates`, the brand's tokens and
 /// the highlighting palette, minified.
 pub fn site_css(candidates: &BTreeSet<String>, brand: &Brand) -> Result<String, StyleError> {
@@ -326,6 +350,31 @@ mod tests {
         assert!(css.contains(".rd-prose"));
         // Nesting is lowered for Safari 16.4.
         assert!(!css.contains("&"), "{css}");
+    }
+
+    #[test]
+    fn the_urls_a_stylesheet_loads() {
+        let css = ".bg-\\[url\\(\\/a\\.svg\\)\\]{background-image:url(/a.svg)}.x{mask:url( \"/b c.svg\" ) no-repeat}:root{--c:url('data:image/svg+xml,%3Csvg/%3E')}";
+        assert_eq!(
+            urls(css),
+            ["/a.svg", "/b c.svg", "data:image/svg+xml,%3Csvg/%3E"]
+        );
+        let css = site_css(
+            &set(&["bg-[url(/docs/assets/files/a.0123456789.svg)]"]),
+            &Brand::default(),
+        )
+        .unwrap();
+        let found = urls(&css);
+        assert!(
+            found.contains(&"/docs/assets/files/a.0123456789.svg".to_owned()),
+            "{found:?}"
+        );
+        assert!(
+            found
+                .iter()
+                .all(|url| url.starts_with("data:") || url.starts_with("/docs/assets/")),
+            "{found:?}"
+        );
     }
 
     #[test]

@@ -85,6 +85,7 @@ fn the_fixture_generates_without_a_problem_and_byte_for_byte_again() {
     let expected_exact = [
         ".nojekyll",
         "404.html",
+        "banner.svg",
         "guide/index.html",
         "guide/setup/index.html",
         "index.html",
@@ -92,10 +93,13 @@ fn the_fixture_generates_without_a_problem_and_byte_for_byte_again() {
         "reference/api/index.html",
         "robots.txt",
         "sitemap.xml",
+        "sprite.svg",
     ];
     let expected_fingerprinted = [
+        ("assets/files/banner.", ".svg"),
         ("assets/files/logo.", ".svg"),
         ("assets/files/pipeline.", ".svg"),
+        ("assets/files/sprite.", ".svg"),
         ("assets/mode.", ".js"),
         ("assets/share.", ".png"),
         ("assets/site.", ".css"),
@@ -314,6 +318,64 @@ fn links_anchors_images_and_repository_files_resolve_under_the_base() {
         &setup,
         r#"<a href="/docs/guide/setup/" aria-current="page">Setup</a>"#,
     );
+}
+
+#[test]
+fn files_keep_their_fragment_and_a_class_loads_its_image_from_the_site() {
+    let (project, snapshot) = load();
+    let (_, generation) = build(&project, &snapshot, Mode::Production, 2);
+    let files = &generation.files;
+    let published = |prefix: &str| {
+        files
+            .keys()
+            .find(|name| name.starts_with(prefix))
+            .unwrap_or_else(|| panic!("{prefix}* is not published"))
+            .clone()
+    };
+    let sprite = published("assets/files/sprite.");
+    let banner = published("assets/files/banner.");
+    let guide = text(files, "guide/index.html");
+    let body = article(&guide);
+    contains(body, &format!(r#"<use href="/docs/{sprite}#mark"></use>"#));
+    let class = format!("bg-[url(/docs/{banner})]");
+    contains(body, &format!(r#"<div class="h-10 {class} bg-no-repeat""#));
+    // The stylesheet loads the published file, and nothing else but data.
+    let css = text(files, &generation.stylesheet_path);
+    let urls = rustify_docs::style::urls(&css);
+    assert!(urls.contains(&format!("/docs/{banner}")), "{urls:?}");
+    assert!(
+        urls.iter()
+            .all(|url| url.starts_with("data:") || url.starts_with("/docs/assets/files/")),
+        "{urls:?}"
+    );
+    // A heading id with a `%` is a whole fragment in the contents.
+    contains(
+        &guide,
+        r##"<a href="#100%25" data-rd-toc-link="">All done</a>"##,
+    );
+    contains(body, r#"<h2 id="100%">All done</h2>"#);
+}
+
+#[test]
+fn header_links_are_on_every_page_and_mark_the_guide() {
+    let (project, snapshot) = load();
+    let (_, generation) = build(&project, &snapshot, Mode::Production, 2);
+    let files = &generation.files;
+    let links = |current: &str| {
+        format!(
+            r#"<ul class="rd-header-links"><li><a href="/docs/guide/"{current}>Guide</a></li><li><a href="https://github.com/example/fixture" rel="noopener">GitHub</a></li></ul><ul class="rd-header-social"><li><a href="https://mastodon.example/@fixture" rel="noopener">Mastodon</a></li></ul>"#
+        )
+    };
+    for (page, current) in [
+        ("index.html", ""),
+        ("404.html", ""),
+        ("reference/api/index.html", ""),
+        ("guide/index.html", r#" aria-current="page""#),
+        ("guide/setup/index.html", r#" aria-current="true""#),
+    ] {
+        let html = text(files, page);
+        assert_eq!(html.matches(&links(current)).count(), 2, "{page}:\n{html}");
+    }
 }
 
 #[test]

@@ -71,6 +71,9 @@ pub enum RefKind {
     Media,
     /// One URL of a raw `srcset`; the slot holds the whole attribute.
     Srcset,
+    /// An image a raw element's class loads through the stylesheet; the
+    /// slot is the URL inside the class's `url(…)`.
+    ClassImage,
 }
 
 /// A URL as written, with where it was written.
@@ -112,6 +115,9 @@ pub struct CodeGroup {
 pub struct Fragment {
     pub html: String,
     pub headings: Vec<Heading>,
+    /// The ids the page's footnotes give their references and notes, which
+    /// a link may target as it targets a heading's.
+    pub anchors: Vec<String>,
     /// The text of the first level-one heading.
     pub title: Option<String>,
     pub h1_count: usize,
@@ -503,6 +509,7 @@ impl<'a> Writer<'a> {
                 UrlRole::Resource { image: true } => RefKind::Image,
                 UrlRole::Resource { image: false } => RefKind::Media,
                 UrlRole::Srcset => RefKind::Srcset,
+                UrlRole::ClassImage => RefKind::ClassImage,
             };
             let reference = self.out.references.len();
             self.out.references.push(Reference {
@@ -954,6 +961,7 @@ impl<'a> Writer<'a> {
         self.push(&format!(
             "<sup class=\"rd-footnote-ref\"><a href=\"#fn-{slug}\" id=\"{reference_id}\">{number}</a></sup>"
         ));
+        self.out.anchors.push(reference_id);
     }
 
     fn fenced_block(&mut self, code: CodeCapture) {
@@ -1155,6 +1163,7 @@ impl<'a> Writer<'a> {
             for label in &order {
                 let slug = slugify(label);
                 self.push(&format!("<li id=\"fn-{slug}\">"));
+                self.out.anchors.push(format!("fn-{slug}"));
                 if let Some(index) = footnotes.iter().position(|(defined, _)| defined == label) {
                     let (_, mut body) = footnotes.swap_remove(index);
                     let trimmed = body.html.trim_end().len();

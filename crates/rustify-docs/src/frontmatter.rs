@@ -26,6 +26,18 @@ pub fn split(text: &str) -> Result<Option<Split>, Issue> {
     if first.trim_end_matches('\r') != "---" {
         return Ok(None);
     }
+    let unclosed = || {
+        Issue::error(
+            0..first.len(),
+            "frontmatter-unclosed",
+            "the frontmatter opened here is never closed",
+        )
+        .suggest("end it with a line holding only `---`")
+    };
+    // A fence with no line after it has nothing to close it.
+    if first.len() == text.len() {
+        return Err(unclosed());
+    }
     let start = first.len() + 1;
     let mut offset = start;
     for line in text[start..].split_inclusive('\n') {
@@ -38,12 +50,7 @@ pub fn split(text: &str) -> Result<Option<Split>, Issue> {
         }
         offset += line.len();
     }
-    Err(Issue::error(
-        0..first.len(),
-        "frontmatter-unclosed",
-        "the frontmatter opened here is never closed",
-    )
-    .suggest("end it with a line holding only `---`"))
+    Err(unclosed())
 }
 
 #[derive(Clone, Debug, Default, Deserialize, PartialEq, Eq)]
@@ -136,5 +143,36 @@ pub fn parse(text: &str) -> Result<(Front, usize), Issue> {
                 .to_owned();
             Err(Issue::error(at..at, "frontmatter", message))
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn an_opening_fence_with_nothing_after_it_is_unclosed() {
+        for text in ["---", "---\r", "---\n", "---\ntitle: A\n"] {
+            let issue = split(text).expect_err(text);
+            assert_eq!(issue.rule, "frontmatter-unclosed", "{text:?}");
+            assert_eq!(issue.span.start, 0, "{text:?}");
+        }
+    }
+
+    #[test]
+    fn crlf_frontmatter_closes() {
+        let text = "---\r\ntitle: A\r\n---\r\n# A\r\n";
+        let split = split(text).unwrap().unwrap();
+        assert_eq!(&text[split.yaml.clone()], "title: A\r\n");
+        assert_eq!(&text[split.body..], "# A\r\n");
+        assert_eq!(parse(text).unwrap().0.title.as_deref(), Some("A"));
+        assert_eq!(split.body, parse(text).unwrap().1);
+    }
+
+    #[test]
+    fn no_fence_no_frontmatter() {
+        assert_eq!(split("# A\n").unwrap(), None);
+        assert_eq!(split("").unwrap(), None);
+        assert_eq!(split("--").unwrap(), None);
     }
 }

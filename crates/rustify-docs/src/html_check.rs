@@ -26,6 +26,10 @@ pub enum UrlRole {
     Resource { image: bool },
     /// A `srcset`, which lists several image URLs.
     Srcset,
+    /// An image a class loads through the stylesheet: the URL in a
+    /// `url(…)` such as `bg-[url(/bg.svg)]`, which the class carries into
+    /// the stylesheet as written.
+    ClassImage,
 }
 
 /// A URL attribute in author HTML.
@@ -165,6 +169,29 @@ fn opens_unguarded_window(attribute: impl Fn(&str) -> Option<String>) -> bool {
         .any(|rel| rel == "noopener" || rel == "noreferrer")
 }
 
+/// The URLs of the `url(…)`s in a class attribute's raw value, each with
+/// its range in `value`, quotes excluded.
+fn class_urls(value: &str) -> Vec<(String, Range<usize>)> {
+    let mut urls = Vec::new();
+    let mut from = 0;
+    while let Some(at) = value[from..].find("url(") {
+        let open = from + at + "url(".len();
+        let (start, close) = match value[open..].chars().next() {
+            Some(quote @ ('"' | '\'')) => (
+                open + 1,
+                value[open + 1..].find(quote).map(|end| open + 1 + end),
+            ),
+            _ => (open, value[open..].find(')').map(|end| open + end)),
+        };
+        let Some(end) = close else {
+            break;
+        };
+        urls.push((value[start..end].to_owned(), start..end));
+        from = end;
+    }
+    urls
+}
+
 /// The raw value range of an attribute, given the span html5gum reports for
 /// it (name through value).
 fn value_range(source: &str, span: Range<usize>) -> Option<Range<usize>> {
@@ -272,6 +299,30 @@ pub fn check(chunk: &str) -> (Vec<Issue>, Vec<UrlSlot>) {
                 ));
                 continue;
             }
+            // A class's `url(…)` is loaded by the stylesheet the class
+            // becomes: a resource like any other, rewritten in the class.
+            if attribute == "class" {
+                let Some(range) = value_range(chunk, value.span.start..value.span.end) else {
+                    continue;
+                };
+                for (url, at) in class_urls(&chunk[range.clone()]) {
+                    if is_cross_origin(&url, true) {
+                        issues.push(
+                            Issue::error(span.clone(), "cross-origin-resource", format!("a class loads `{url}` from another origin, which the policy blocks"))
+                                .suggest("download it into static/ and reference it from there"),
+                        );
+                    } else if !url.trim_start().to_ascii_lowercase().starts_with("data:") {
+                        slots.push(UrlSlot {
+                            span: range.start + at.start..range.start + at.end,
+                            role: UrlRole::ClassImage,
+                            value: url,
+                            element: name.clone(),
+                            attribute: attribute.clone(),
+                        });
+                    }
+                }
+                continue;
+            }
             let Some(role) = url_role(&name, &attribute) else {
                 continue;
             };
@@ -376,7 +427,7 @@ pub fn check_document(html: &str) -> Vec<String> {
                         let image =
                             matches!(role, UrlRole::Srcset | UrlRole::Resource { image: true });
                         let urls: Vec<String> = match role {
-                            UrlRole::Link => Vec::new(),
+                            UrlRole::Link | UrlRole::ClassImage => Vec::new(),
                             UrlRole::Srcset => parse_srcset(&value)
                                 .into_iter()
                                 .map(|(url, _)| url)
@@ -551,6 +602,32 @@ mod tests {
         assert_eq!(slots[1].role, UrlRole::Resource { image: true });
         let (_, slots) = check("<a href=\"a&amp;b.md\">x</a>");
         assert_eq!(slots[0].value, "a&b.md");
+    }
+
+    #[test]
+    fn urls_in_class_values_are_resources_too() {
+        let html = "<div class=\"h-10 bg-[url(/bg.svg)] mask-[url('icons/m.svg#i')]\"></div><p class='bg-[url(\"data:image/svg+xml,%3Csvg/%3E\")]'></p>";
+        let (issues, slots) = check(html);
+        assert!(issues.is_empty(), "{issues:?}");
+        let found: Vec<(&str, &str, UrlRole)> = slots
+            .iter()
+            .map(|slot| (&html[slot.span.clone()], slot.value.as_str(), slot.role))
+            .collect();
+        assert_eq!(
+            found,
+            [
+                ("/bg.svg", "/bg.svg", UrlRole::ClassImage),
+                ("icons/m.svg#i", "icons/m.svg#i", UrlRole::ClassImage),
+            ]
+        );
+        assert_eq!(
+            rules("<div class=\"bg-[url(https://cdn.example/x.png)]\"></div>"),
+            ["cross-origin-resource"]
+        );
+        assert_eq!(
+            rules("<div class=\"bg-[url(//cdn.example/x.png)]\"></div>"),
+            ["cross-origin-resource"]
+        );
     }
 
     #[test]

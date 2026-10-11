@@ -245,9 +245,10 @@ fn counts(summary: &Summary) -> String {
     )
 }
 
-/// Reads the project at `config`, with `--base` applied.
+/// Reads the project whose configuration is `config`, with `--base`
+/// applied.
 fn load(config: &Path, base: Option<&str>) -> Result<(Project, Vec<Diagnostic>), Vec<Diagnostic>> {
-    let (mut project, diagnostics) = Project::load(&project_root(config))?;
+    let (mut project, diagnostics) = Project::load_file(config)?;
     if let Some(base) = base {
         project
             .config
@@ -402,34 +403,51 @@ fn build(args: &[String]) -> ExitCode {
             );
         }
     };
+    // A failure before anything is rendered: the output cannot be written.
+    // JSON still gets its one object, the problem as its diagnostic.
+    let refuse = |rule: &str, message: String| {
+        if format == Format::Text {
+            return fail("build", message);
+        }
+        let mut diagnostics = diagnostics.clone();
+        diagnostics.push(Diagnostic::general(Severity::Error, rule, message));
+        let done = failed(&diagnostics);
+        report(
+            &diagnostics,
+            format,
+            deny,
+            serde_json::json!({ "pages": 0 }),
+            done,
+        )
+    };
     let out = match args.get("--out") {
         Some(out) => absolute(Path::new(out)),
         None => absolute(&project.root.join(&project.config.out_dir)),
     };
     if let Err(message) = publish::check_out(&project, &out) {
-        return fail("build", message);
+        return refuse("output", message);
     }
     if let Some(parent) = out.parent() {
         if let Err(error) = std::fs::create_dir_all(parent) {
-            return fail("build", format!("{}: {error}", parent.display()));
+            return refuse("output", format!("{}: {error}", parent.display()));
         }
     }
     let area = match Area::of(&out) {
         Ok(area) => area,
-        Err(message) => return fail("build", message),
+        Err(message) => return refuse("output", message),
     };
     let lock = match publish::lock(&area, true) {
         Ok(lock) => lock,
         Err(LockError::Busy) => {
-            return fail(
-                "build",
+            return refuse(
+                "output-busy",
                 format!(
                     "{} is in use by another build or a preview; stop it and build again",
                     area.out.display()
                 ),
             )
         }
-        Err(LockError::Io(message)) => return fail("build", message),
+        Err(LockError::Io(message)) => return refuse("output", message),
     };
     match publish::recover(&lock) {
         Ok(Recovery::Clean) => {}
@@ -442,12 +460,12 @@ fn build(args: &[String]) -> ExitCode {
                 _ => "completed",
             }
         ),
-        Err(message) => return fail("build", message),
+        Err(message) => return refuse("write", message),
     }
     // Refused before anything is rendered: an output that is not this
     // tool's to replace.
     if let Err(message) = publish::replaceable(&area.out) {
-        return fail("build", message);
+        return refuse("output", message);
     }
     if format == Format::Text {
         eprintln!(
@@ -549,7 +567,7 @@ fn preview(args: &[String]) -> ExitCode {
     let host = args.get("--host").unwrap_or("127.0.0.1").to_owned();
     let dir = match args.get("--dir") {
         Some(dir) => absolute(Path::new(dir)),
-        None => match Project::load(&project_root(&args.config())) {
+        None => match Project::load_file(&args.config()) {
             Ok((project, _)) => absolute(&project.root.join(&project.config.out_dir)),
             Err(diagnostics) => {
                 for diagnostic in &diagnostics {
@@ -557,7 +575,7 @@ fn preview(args: &[String]) -> ExitCode {
                 }
                 return fail(
                     "preview",
-                    "give --dir, or run it where rustify-docs.toml is",
+                    "give --dir, or --config naming the site's configuration (default: ./rustify-docs.toml)",
                 );
             }
         },

@@ -47,6 +47,24 @@ pub fn escape_url_into(out: &mut String, url: &str) {
     escape_html_into(out, &encoded);
 }
 
+/// Percent-encodes an element id for a URL's `#fragment`: the bytes a
+/// fragment may not carry raw (controls, space, `"`, `<`, `>` and the
+/// backquote), and `%` and `#`,
+/// which in an id are characters, not escapes. A browser decodes the
+/// fragment again when it looks the element up. Other text, non-ASCII
+/// included, stays as written.
+pub fn encode_fragment(id: &str) -> String {
+    let mut out = String::with_capacity(id.len());
+    for c in id.chars() {
+        if c.is_ascii_control() || matches!(c, ' ' | '"' | '<' | '>' | '`' | '%' | '#') {
+            out.push_str(&format!("%{:02X}", c as u32));
+        } else {
+            out.push(c);
+        }
+    }
+    out
+}
+
 /// Percent-encodes a URL path built from file names: every byte but the
 /// unreserved ones, `/` and the sub-delimiters a path segment may carry raw.
 /// Unlike [`escape_url_into`] it encodes `%`, `#` and `?` too, because here
@@ -102,6 +120,15 @@ mod tests {
         out.clear();
         escape_url_into(&mut out, "/中文/%20ok/it's");
         assert_eq!(out, "/%E4%B8%AD%E6%96%87/%20ok/it&#39;s");
+    }
+
+    #[test]
+    fn fragments_keep_ids_whole() {
+        assert_eq!(encode_fragment("install-the-cli"), "install-the-cli");
+        assert_eq!(encode_fragment("100%"), "100%25");
+        assert_eq!(encode_fragment("a%20b"), "a%2520b");
+        assert_eq!(encode_fragment("a b#\"c\""), "a%20b%23%22c%22");
+        assert_eq!(encode_fragment("数据-api"), "数据-api");
     }
 
     #[test]

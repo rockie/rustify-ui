@@ -65,6 +65,78 @@ fn a_failed_build_keeps_the_previous_output_and_reports_why() {
     assert_eq!(tree(&site.join("dist")), before);
 }
 
+/// `build --format json`'s report: exactly one JSON object on stdout.
+fn json_report(output: &std::process::Output) -> serde_json::Value {
+    serde_json::from_slice(&output.stdout).unwrap_or_else(|error| {
+        panic!(
+            "stdout is not one JSON object ({error}):\n{}\nstderr:\n{}",
+            stdout(output),
+            stderr(output)
+        )
+    })
+}
+
+#[test]
+fn a_refused_output_is_reported_in_json_as_well() {
+    let temp = content();
+    let site = temp.path("site");
+    let refused = run_in(&site, &["build", "--format", "json", "--out", "content"]);
+    assert_eq!(refused.status.code(), Some(1));
+    let report = json_report(&refused);
+    assert_eq!(report["success"], false);
+    assert_eq!(report["summary"]["errors"], 1);
+    assert_eq!(report["diagnostics"][0]["rule"], "output");
+    assert!(report["diagnostics"][0]["message"]
+        .as_str()
+        .unwrap()
+        .contains("overlaps the content directory"));
+
+    // One being previewed is busy.
+    succeeded(&run_in(&site, &["build"]));
+    let preview = Preview::start(&site, &[]).unwrap();
+    let busy = run_in(&site, &["build", "--format", "json"]);
+    assert_eq!(busy.status.code(), Some(1));
+    let report = json_report(&busy);
+    assert_eq!(report["diagnostics"][0]["rule"], "output-busy");
+    drop(preview);
+
+    // Text mode says the same on stderr, as before.
+    let text = run_in(&site, &["build", "--out", "content"]);
+    assert_eq!(text.status.code(), Some(1));
+    assert!(stdout(&text).is_empty());
+    assert!(stderr(&text).contains("overlaps the content directory"));
+}
+
+#[test]
+fn a_site_left_without_pages_fails_and_keeps_what_was_published() {
+    let temp = content();
+    let site = temp.path("site");
+    succeeded(&run_in(&site, &["build"]));
+    let before = tree(&site.join("dist"));
+    std::fs::remove_dir_all(site.join("content")).unwrap();
+    std::fs::create_dir_all(site.join("content")).unwrap();
+    temp.write(
+        "site/content/later.md",
+        "---\ndescription: d\ndraft: true\n---\n# Later\n",
+    );
+    let failed = run_in(&site, &["build", "--format", "json"]);
+    assert_eq!(failed.status.code(), Some(1));
+    let report = json_report(&failed);
+    let rules: Vec<&str> = report["diagnostics"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .filter(|d| d["severity"] == "error")
+        .map(|d| d["rule"].as_str().unwrap())
+        .collect();
+    assert!(rules.contains(&"no-pages"), "{report:#}");
+    assert_eq!(
+        tree(&site.join("dist")),
+        before,
+        "the old output, byte for byte"
+    );
+}
+
 #[test]
 fn a_successful_build_reports_its_size_and_largest_pages() {
     let temp = content();

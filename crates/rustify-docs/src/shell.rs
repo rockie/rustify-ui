@@ -49,6 +49,20 @@ pub const DEV_PREFIX: &str = "/__rustify-docs/";
 pub const DEV_SCRIPT_URL: &str = "/__rustify-docs/dev.js";
 pub const DEV_STYLE_URL: &str = "/__rustify-docs/dev.css";
 
+/// A link the configuration adds to the header: one of `nav.top`, or of
+/// `nav.social` after them.
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct HeaderLink {
+    pub label: String,
+    /// Resolved: under the site's base, or another site's.
+    pub url: String,
+    /// The route of the page it links to, if it links to one. A reader on
+    /// that page, or on a page under it, is shown that they are there.
+    pub route: Option<String>,
+    /// Another site's address, which gets `rel="noopener"`.
+    pub external: bool,
+}
+
 /// Where a build put the shared files, already joined with the base.
 #[derive(Clone, Debug, Default, PartialEq, Eq)]
 pub struct AssetUrls {
@@ -68,6 +82,9 @@ pub struct Site {
     /// `/` or `/segments/`.
     pub base: String,
     pub nav: Vec<NavGroup>,
+    /// The header's links (`nav.top`) and the social ones (`nav.social`).
+    pub top: Vec<HeaderLink>,
+    pub social: Vec<HeaderLink>,
     pub assets: AssetUrls,
     pub logo: Option<Logo>,
 }
@@ -312,7 +329,7 @@ fn page_view(site: &Site, page: &Page) -> impl IntoView {
                 >
                     {labels.skip_to_content}
                 </a>
-                {header(site, page.route == "/", labels, ui_lang)}
+                {header(site, page.route, labels, ui_lang)}
                 {body}
                 <p
                     id="rd-status"
@@ -418,13 +435,59 @@ fn open_graph(property: &'static str, content: String) -> impl IntoView {
         .attr("content", content)
 }
 
+/// The configuration's header links as HTML, the current one marked: the
+/// page it links to (`page`), or the section a page under it belongs to.
+fn header_entries(site: &Site, route: &str) -> String {
+    let mut html = String::new();
+    for (class, links) in [
+        ("rd-header-links", &site.top),
+        ("rd-header-social", &site.social),
+    ] {
+        if links.is_empty() {
+            continue;
+        }
+        html.push_str(&format!("<ul class=\"{class}\">"));
+        for link in links {
+            html.push_str("<li><a href=\"");
+            escape_html_into(&mut html, &link.url);
+            html.push('"');
+            match link.route.as_deref() {
+                Some(target) if target == route => html.push_str(" aria-current=\"page\""),
+                Some(target) if target != "/" && route.starts_with(target) => {
+                    html.push_str(" aria-current=\"true\"")
+                }
+                _ => {}
+            }
+            if link.external {
+                html.push_str(" rel=\"noopener\"");
+            }
+            html.push('>');
+            escape_html_into(&mut html, &link.label);
+            html.push_str("</a></li>");
+        }
+        html.push_str("</ul>");
+    }
+    html
+}
+
+/// The header bar, and the configuration's links: in the bar from 768 px,
+/// and below that in a row of their own under it (one of the two is always
+/// `display: none`), so a narrow screen never scrolls sideways for them.
 fn header(
     site: &Site,
-    at_home: bool,
+    route: &str,
     labels: &'static Labels,
     ui_lang: Option<&'static str>,
 ) -> impl IntoView {
+    let at_home = route == "/";
     let name = site.name.clone();
+    let entries = header_entries(site, route);
+    let links = (!entries.is_empty()).then(|| {
+        view! { <nav class="rd-header-nav rd-header-nav-wide" aria-label=labels.site_links lang=ui_lang inner_html=entries.clone()></nav> }
+    });
+    let narrow = (!entries.is_empty()).then(|| {
+        view! { <nav class="rd-header-nav rd-header-nav-narrow" aria-label=labels.site_links lang=ui_lang inner_html=entries></nav> }
+    });
     // The name says what the logo shows, so the logo is decoration. A pair
     // switches with the mode through CSS, with or without script.
     let logo = site.logo.clone().map(|logo| {
@@ -443,13 +506,15 @@ fn header(
         <header class="sticky top-0 z-40 border-b border-secondary bg-background">
             <div class="mx-auto flex h-14 max-w-[76rem] items-center gap-4 px-4 md:px-6">
                 <a href=site.url("/") class="rd-brand" aria-current=at_home.then_some("page")>{logo}<span>{name}</span></a>
-                <div class="rd-mode-switch ml-auto" data-rd-mode-switch="" hidden="" role="group" aria-label=labels.theme lang=ui_lang>
+                {links}
+                <div class="rd-mode-switch" data-rd-mode-switch="" hidden="" role="group" aria-label=labels.theme lang=ui_lang>
                     {mode_button("system", labels.theme_system)}
                     {mode_button("light", labels.theme_light)}
                     {mode_button("dark", labels.theme_dark)}
                 </div>
             </div>
         </header>
+        {narrow}
     }
 }
 
@@ -524,7 +589,7 @@ fn toc_entries(toc: &[&Heading]) -> String {
             html.push_str(" class=\"rd-toc-sub\"");
         }
         html.push_str("><a href=\"#");
-        escape_html_into(&mut html, &heading.id);
+        escape_html_into(&mut html, &crate::escape::encode_fragment(&heading.id));
         html.push_str("\" data-rd-toc-link=\"\">");
         escape_html_into(&mut html, &heading.text);
         html.push_str("</a></li>");
@@ -642,6 +707,8 @@ mod tests {
                     },
                 ],
             }],
+            top: Vec::new(),
+            social: Vec::new(),
             assets: AssetUrls {
                 stylesheet: "/rustify-ui/assets/site.css".into(),
                 mode_script: "/rustify-ui/assets/mode.js".into(),
@@ -719,6 +786,86 @@ mod tests {
         assert!(!html.contains("style="));
         assert!(!html.contains("<script>"));
         assert!(!html.contains(".wasm"));
+    }
+
+    #[test]
+    fn header_links_are_in_the_header_and_mark_where_the_reader_is() {
+        let mut site = site();
+        site.top = vec![
+            HeaderLink {
+                label: "Setup".into(),
+                url: "/rustify-ui/setup/".into(),
+                route: Some("/setup/".into()),
+                external: false,
+            },
+            HeaderLink {
+                label: "Home".into(),
+                url: "/rustify-ui/".into(),
+                route: Some("/".into()),
+                external: false,
+            },
+        ];
+        site.social = vec![HeaderLink {
+            label: "GitHub".into(),
+            url: "https://github.com/example".into(),
+            route: None,
+            external: true,
+        }];
+        let page = |route: &str| {
+            render_page(
+                &site,
+                &Page {
+                    route,
+                    document_title: "Setup | Docs",
+                    title: "Setup",
+                    description: None,
+                    lang: "en",
+                    draft: false,
+                    article: "<p>x</p>",
+                    headings: &[],
+                    article_has_h1: false,
+                    toc_levels: (2, 3),
+                    meta: Meta::default(),
+                    home: None,
+                },
+            )
+        };
+        let html = page("/setup/install/");
+        let links = "<ul class=\"rd-header-links\"><li><a href=\"/rustify-ui/setup/\" aria-current=\"true\">Setup</a></li><li><a href=\"/rustify-ui/\">Home</a></li></ul><ul class=\"rd-header-social\"><li><a href=\"https://github.com/example\" rel=\"noopener\">GitHub</a></li></ul>";
+        // Once in the header bar, once in a row of its own under it.
+        assert_eq!(html.matches(links).count(), 2, "{html}");
+        assert!(
+            html.contains(
+                "<nav aria-label=\"Site links\" class=\"rd-header-nav rd-header-nav-wide\">"
+            ),
+            "{html}"
+        );
+        assert!(html.contains(
+            "</header><nav aria-label=\"Site links\" class=\"rd-header-nav rd-header-nav-narrow\">"
+        ));
+        let html = page("/setup/");
+        assert!(html.contains("<a href=\"/rustify-ui/setup/\" aria-current=\"page\">Setup</a>"));
+        let html = page("/");
+        assert!(html.contains("<a href=\"/rustify-ui/\" aria-current=\"page\">Home</a>"));
+        assert!(html.contains("<a href=\"/rustify-ui/setup/\">Setup</a>"));
+        // A site without them has neither navigation.
+        assert!(!render("x\n", "/setup/", "en").contains("rd-header-nav"));
+    }
+
+    #[test]
+    fn contents_links_encode_their_fragment() {
+        let html = render(
+            "## Done {#100%}\n\n## Space {#a%20b}\n\n## 安装\n",
+            "/setup/",
+            "en",
+        );
+        assert!(
+            html.contains("<a href=\"#100%25\" data-rd-toc-link=\"\">Done</a>"),
+            "{html}"
+        );
+        assert!(html.contains("<a href=\"#a%2520b\" data-rd-toc-link=\"\">Space</a>"));
+        assert!(html.contains("<a href=\"#安装\" data-rd-toc-link=\"\">安装</a>"));
+        assert!(html.contains("<h2 id=\"100%\">Done</h2>"));
     }
 
     #[test]

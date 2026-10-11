@@ -1,0 +1,124 @@
+{
+  "browser": "153.0.8010.12",
+  "cases": [
+    {
+      "name": "header-links",
+      "entry": "http://127.0.0.1:59731/docs/",
+      "errors": [],
+      "consoleErrors": [],
+      "failed": [],
+      "status": 200,
+      "csp": [],
+      "topCount": 1,
+      "socialCount": 1
+    },
+    {
+      "name": "home-resource",
+      "entry": "http://127.0.0.1:59737/docs/",
+      "errors": [],
+      "consoleErrors": [],
+      "failed": [],
+      "status": 200,
+      "csp": [],
+      "href": "/docs/assets/files/manual.12ebad4663.pdf",
+      "downloadUrl": "http://127.0.0.1:59737/docs/assets/files/manual.12ebad4663.pdf",
+      "downloadStatus": 200,
+      "downloadIsTheManual": true
+    },
+    {
+      "name": "css-external",
+      "refused": true,
+      "build": {
+        "schema_version": 1,
+        "success": false,
+        "diagnostics": [
+          {
+            "severity": "warning",
+            "rule": "no-git-history",
+            "file": null,
+            "line": null,
+            "column": null,
+            "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+            "suggestion": "build inside a git repository with the content committed"
+          },
+          {
+            "severity": "error",
+            "rule": "cross-origin-resource",
+            "file": "content/index.md",
+            "line": 9,
+            "column": 6,
+            "message": "a class loads `https://example.invalid/review.png` from another origin, which the policy blocks",
+            "suggestion": "download it into static/ and reference it from there"
+          }
+        ],
+        "summary": {
+          "errors": 1,
+          "warnings": 1,
+          "pages": 0
+        }
+      }
+    },
+    {
+      "name": "css-local",
+      "entry": "http://127.0.0.1:59745/docs/",
+      "errors": [],
+      "consoleErrors": [],
+      "failed": [],
+      "status": 200,
+      "csp": []
+    },
+    {
+      "name": "svg-fragment",
+      "entry": "http://127.0.0.1:59753/docs/",
+      "errors": [],
+      "consoleErrors": [],
+      "failed": [],
+      "status": 200,
+      "csp": [],
+      "asPublished": {
+        "width": 40,
+        "height": 40,
+        "href": "/docs/assets/files/sprite.77a678540f.svg#mark"
+      },
+      "before": {
+        "width": 40,
+        "height": 40,
+        "href": "/docs/assets/files/sprite.77a678540f.svg#mark"
+      },
+      "withFragmentRestored": {
+        "width": 0,
+        "height": 0,
+        "href": "/docs/assets/files/sprite.77a678540f.svg#mark#mark"
+      }
+    },
+    {
+      "name": "toc-percent",
+      "entry": "http://127.0.0.1:59761/docs/",
+      "errors": [],
+      "consoleErrors": [],
+      "failed": [],
+      "status": 200,
+      "csp": [],
+      "tocHrefs": [
+        "#100%25",
+        "#finish",
+        "#100%25",
+        "#finish"
+      ],
+      "activeToc": 2,
+      "menuStillOpenAfterEscape": false
+    },
+    {
+      "name": "watch-resource",
+      "entry": "http://127.0.0.1:59778/docs/",
+      "errors": [],
+      "consoleErrors": [],
+      "failed": [],
+      "status": 200,
+      "csp": [],
+      "before": "/docs/assets/files/mark.106eb81194.svg",
+      "afterResourceOnlySave": "/docs/assets/files/mark.c763668ac8.svg",
+      "afterContentSave": "/docs/assets/files/mark.c763668ac8.svg"
+    }
+  ]
+}

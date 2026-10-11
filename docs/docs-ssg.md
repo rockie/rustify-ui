@@ -25,7 +25,9 @@ Supported on macOS. Linux and Windows are not verified.
 | `rustify-docs preview [--dir <dir>] [--base <path>] [--port <n>] [--host <address>]` | Serves a production build the way a static host would, without rebuilding it. |
 
 Every command takes `--config <path>` for a `rustify-docs.toml` elsewhere
-than the working directory. `--out` and `--dir` are relative to the working
+than the working directory, or a configuration file of another name: that
+file is the one read (and, in `dev`, watched), its directory is the
+project, and its problems are reported under its name. `--out` and `--dir` are relative to the working
 directory, as paths on a command line are; paths inside `rustify-docs.toml`
 are relative to the project. `--base` builds for another base path than
 `site.base` (it must still match `site.url`'s path).
@@ -54,7 +56,9 @@ Text output goes to stderr and ends with the conclusion, such as
 `check: 4 pages, 0 error(s), 1 warning(s)`; a successful build ends with its
 page count, total size, file count, warnings and time, followed by its five
 largest pages, and a failed one with its error count and the first error.
-With `--format json`, stdout holds exactly one JSON object and nothing else:
+With `--format json`, stdout holds exactly one JSON object and nothing else,
+also when a build is refused before it starts (an output it may not replace
+or that another build or a preview holds: rules `output`, `output-busy`):
 
 ```json
 {
@@ -105,8 +109,16 @@ every file under the asset directory at its own path (for addresses others
 know, such as `/favicon.ico`), and every file a page or the theme links to or
 shows, under `assets/files/` and named by its content, wherever it lives.
 Files whose names mark them as private (`.env`, `.env.*`, `*.env`, `.git`,
-`.DS_Store`, `.rustify-docs`) are never read for publishing, and a symbolic
-link that points outside the project is not followed.
+`.DS_Store`, `.rustify-docs`), and everything under a directory so named,
+are never read for publishing: not as a page (`content/.env.md` is none),
+not as a file, not as an include, a logo or a preview image. A symbolic
+link is followed only while it leads to a file inside the project that is
+not private, whatever the link is called; one that leads outside
+(`symlink-outside`) or to a private file (`private-file`) is an error, and
+so is a content or asset directory that is itself such a link. A site with
+no page to publish (an empty or missing content directory, or nothing but
+drafts) is an error (`no-pages`), so a build never replaces a site with an
+empty one.
 
 ## `rustify-docs.toml`
 
@@ -166,7 +178,11 @@ and `site.image` must exist. A page's edit link is `edit_url`, then
 `nav.top`, `nav.social` and a home page's `actions` are links like any other:
 `guide/setup.md`, `/guide/setup/` and `https://…` resolve and are checked the
 same way (a relative path in the configuration is relative to the content
-directory).
+directory), and a file only they name is published like one a page names.
+`nav.top` links, then `nav.social` ones, show on every page: in the header
+from 768 px, and in a row under it below that. The link to the page in view
+is marked, and so is one whose page the page in view is under (a "Guide"
+link to `guide/index.md` on every page under `/guide/`).
 
 Without `[[nav.groups]]` the sidebar lists every page in one group named
 after the site, plus one group per `sidebar.group` a page names. With groups,
@@ -226,7 +242,9 @@ on both:
 > works on the site and not on GitHub. Prefer the automatic id when the file
 > must read on both.
 
-Footnotes link as `#fn-<name>` and back as `#fnref-<name>`.
+Footnotes link as `#fn-<name>` and back as `#fnref-<name>` (`#fnref-<name>-2`
+for a second reference), and a link may target those ids like a heading's;
+a footnote id the page does not have is a `broken-anchor`.
 
 ### Alerts
 
@@ -281,11 +299,14 @@ site's content security policy would block them in a reader's browser:
 - `<iframe>`, `<frame>` (`embedded-frame`), `<object>`, `<embed>`
   (`embedded-plugin`), `<base>`, `<meta>` and `<link>`;
 - anything the page would load from another origin: `img`, `srcset`,
-  `source`, `video`, `audio`, `poster`, `track` and SVG `href` must name a
-  file in the project (an `img` may also use a `data:` URL).
+  `source`, `video`, `audio`, `poster`, `track`, SVG `href` and the `url(…)`
+  in a class such as `bg-[url(/hero.svg)]` must name a file in the project
+  (an image may also use a `data:` URL).
 
 `<a href>`, `<img src>` and the other URLs in raw HTML resolve exactly like
-Markdown's, base and all. An `<img>` without an `alt` attribute is a
+Markdown's, base and all, and keep their `?query` and `#fragment`
+(`<use href="/icons.svg#mark">`). A class's `url(…)` does too: the class is
+rewritten to the published file, so the stylesheet loads it under the base. An `<img>` without an `alt` attribute is a
 warning. A link that opens another site in a new window (`target="_blank"`
 or any named target) must say `rel="noopener"` (or `noreferrer`), or it is an
 error (`new-window-opener`): the page it opens could otherwise script this
@@ -607,6 +628,8 @@ Errors stop a build; warnings do not, unless `--deny-warnings` is given.
 | `logo-missing` | error | `theme.logo` naming a file that does not exist |
 | `brand-contrast` | warning | A primary colour below 4.5:1 for links or button labels |
 | `symlink-outside`, `unreadable`, `not-utf8` | error | An input that cannot be read safely |
+| `private-file` | error | A link, image, logo or preview image that is, or leads to, a private file |
+| `no-pages` | error | Nothing to publish: no content directory, no page, or only drafts |
 | `image-missing` | error | `site.image` naming a file that does not exist |
 | `missing-site-url` | warning | No `site.url`: no canonical addresses, preview image or sitemap |
 | `no-git-history` | warning | No readable git history: pages show no last-updated date |
@@ -614,5 +637,6 @@ Errors stop a build; warnings do not, unless `--deny-warnings` is given.
 | `output-check`, `stylesheet` | error | A generated page that breaks the policy; a stylesheet that does not compile (a defect of the tool, reported rather than published) |
 | `base` | error | `--base` that does not match `site.url` |
 | `write` | error | The output could not be written; the previous output is kept |
+| `output`, `output-busy` | error | An output the build may not replace, or one another build or a preview holds |
 
 `check` never changes a file to fix a problem.

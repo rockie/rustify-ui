@@ -243,6 +243,65 @@ fn configuration_errors_are_located_in_the_configuration() {
 }
 
 #[test]
+fn the_configuration_named_is_the_one_read_and_located() {
+    let page = "---\ndescription: d\n---\n# Home\n";
+    let custom = "schema_version = 1\n[site]\nname = \"Custom\"\nurl = \"https://example.com/\"\n";
+    let project = Project::new(&[
+        ("rustify-docs.toml", "NOT TOML"),
+        ("custom.toml", custom),
+        ("content/index.md", page),
+    ]);
+    let (code, report, _) = check_json(&project.0.join("custom.toml"), &[]);
+    assert_eq!(code, Some(0), "{report:#}");
+    assert_eq!(report["summary"]["errors"], 0);
+
+    // Its problems are located in it, not in the default file.
+    let broken = format!("{custom}[[nav.top]]\nlabel = \"Gone\"\nlink = \"gone.md\"\n");
+    std::fs::write(project.0.join("custom.toml"), broken).unwrap();
+    std::fs::remove_file(project.config()).unwrap();
+    let (code, report, _) = check_json(&project.0.join("custom.toml"), &[]);
+    assert_eq!(code, Some(1));
+    let errors: Vec<(&str, &str, u64)> = report["diagnostics"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .filter(|d| d["severity"] == "error")
+        .map(|d| {
+            (
+                d["rule"].as_str().unwrap(),
+                d["file"].as_str().unwrap(),
+                d["line"].as_u64().unwrap(),
+            )
+        })
+        .collect();
+    assert_eq!(errors, [("broken-link", "custom.toml", 7)]);
+}
+
+#[test]
+fn an_opening_fence_alone_is_an_unclosed_frontmatter_error() {
+    for text in ["---", "---\r"] {
+        let project = Project::new(&[
+            (
+                "rustify-docs.toml",
+                "schema_version = 1\n[site]\nname = \"D\"\nurl = \"https://example.com/\"\n",
+            ),
+            ("content/index.md", text),
+        ]);
+        let (code, report, stderr) = check_json(&project.config(), &[]);
+        assert_eq!(code, Some(1), "{text:?}: {stderr}");
+        let unclosed = report["diagnostics"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|d| d["rule"] == "frontmatter-unclosed")
+            .unwrap_or_else(|| panic!("{report:#}"));
+        assert_eq!(unclosed["file"], "content/index.md");
+        assert_eq!(unclosed["line"], 1);
+        assert_eq!(unclosed["column"], 1);
+    }
+}
+
+#[test]
 fn the_configuration_defaults_to_the_working_directory() {
     let output = Command::new(BIN)
         .args(["check", "--format", "json"])

@@ -372,6 +372,7 @@ Depth cues come from state, not elevation:
   - Below 30rem the words become visually hidden and the icons carry the switch.
   - The switch ships `hidden` and appears only once `site.js` runs.
   - `mode.js` applies a stored choice synchronously in `<head>`. The storage key is per base path. When storage is refused, the page stays on system mode.
+- **Header links (`nav.top`, then `nav.social`):** muted 0.875rem links at weight 500, 1.25rem apart, the social group after a 1px `secondary` hairline. Hover turns a link foreground. The link to the page in view (`aria-current="page"`) or to the section it is under (`aria-current="true"`) is primary. From 48rem they sit in the bar before the mode switch and scroll sideways inside it if they must. Below that they are a row of their own under the header with a bottom hairline, scrolling sideways by themselves, so the page never does. The row is not sticky. One of the two navigations is always `display: none`.
 
 ### Sidebar rail
 

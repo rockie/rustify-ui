@@ -171,6 +171,55 @@ fn a_save_reloads_the_pages_it_changed_and_no_others() {
 }
 
 #[test]
+fn an_image_outside_the_content_and_asset_directories_refreshes_its_page() {
+    let temp = copy_fixture("content");
+    temp.write(
+        "site/images/mark.svg",
+        "<svg xmlns=\"http://www.w3.org/2000/svg\"/>",
+    );
+    temp.edit(
+        "site/content/guide/index.md",
+        "Read the setup page first.",
+        "Read the setup page first. ![Mark](../../images/mark.svg)",
+    );
+    let dev = Dev::start(&temp.path("site"), &[], &[]).unwrap();
+    let (_, before) = get_text(&format!("{}guide/", dev.url));
+    assert!(before.contains("/assets/files/mark."), "{before}");
+    let mut guide = dev.events("/docs/guide/", good_of(&before));
+    let mut api = dev.events("/docs/reference/api/", good_of(&before));
+    let hello = guide.next();
+    api.next();
+    // Saved alone, the image is a new build that reloads its page only.
+    temp.edit("site/images/mark.svg", "/>", "><!-- changed --></svg>");
+    let changed = guide.until(|state| revision(state) > revision(&hello));
+    assert_eq!(changed["reload"], true);
+    let other = api.until(|state| revision(state) == revision(&changed));
+    assert_eq!(other["reload"], false);
+    let (_, after) = get_text(&format!("{}guide/", dev.url));
+    assert_ne!(before, after);
+}
+
+#[test]
+fn dev_reads_the_configuration_it_is_given() {
+    let temp = copy_fixture("content");
+    let custom = temp
+        .read("site/rustify-docs.toml")
+        .replace("Fixture Docs", "Custom Docs");
+    temp.write("site/custom.toml", &custom);
+    temp.write("site/rustify-docs.toml", "NOT TOML");
+    let dev = Dev::start(&temp.path("site"), &["--config", "custom.toml"], &[]).unwrap();
+    let (_, html) = get_text(&dev.url);
+    assert!(html.contains("Custom Docs"), "{html}");
+    let mut home = dev.events("/docs/", good_of(&html));
+    let hello = home.next();
+    // A save to the file it read is a new build; one to the default is not.
+    temp.edit("site/custom.toml", "Custom Docs", "Custom Handbook");
+    let changed = home.until(|state| revision(state) > revision(&hello));
+    assert_eq!(changed["reload"], true);
+    assert!(get_text(&dev.url).1.contains("Custom Handbook"));
+}
+
+#[test]
 fn a_failed_build_keeps_the_last_good_one_until_it_is_fixed() {
     let temp = copy_fixture("content");
     let dev = Dev::start(&temp.path("site"), &[], &[]).unwrap();

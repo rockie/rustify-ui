@@ -24,5 +24,13 @@ label = "Reference"
 items = ["reference/api.md"]
 
 [[nav.top]]
+label = "Guide"
+link = "guide/index.md"
+
+[[nav.top]]
 label = "GitHub"
 link = "https://github.com/example/fixture"
+
+[[nav.social]]
+label = "Mastodon"
+link = "https://mastodon.example/@fixture"

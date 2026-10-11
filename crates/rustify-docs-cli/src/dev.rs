@@ -88,7 +88,8 @@ struct Shared {
 }
 
 /// Which changed paths matter: the configuration, the content and asset
-/// directories, and the files pages include; never the output.
+/// directories and what their links lead to, and the other files the site
+/// reads (included source, referenced images, the logo); never the output.
 struct Filter {
     config: PathBuf,
     dirs: Vec<PathBuf>,
@@ -96,17 +97,40 @@ struct Filter {
     ignored: Vec<PathBuf>,
 }
 
+/// What one round read beyond the content and asset directories: the
+/// project-relative files it named, found or not, and where the links in
+/// those directories lead.
+#[derive(Default)]
+struct Read<'a> {
+    files: Vec<&'a BTreeSet<String>>,
+    linked: Option<&'a BTreeSet<String>>,
+}
+
 impl Filter {
-    fn of(root: &Path, project: &Project, includes: &BTreeSet<String>) -> Self {
+    fn of(root: &Path, project: &Project, read: Read) -> Self {
         let config = &project.config;
         let out = root.join(&config.out_dir);
+        let mut dirs = vec![
+            root.join(&config.content_dir),
+            root.join(&config.assets_dir),
+        ];
+        // A link may lead to a file or to a directory; either way, what is
+        // under it.
+        dirs.extend(
+            read.linked
+                .into_iter()
+                .flatten()
+                .map(|path| root.join(path)),
+        );
         Self {
-            config: root.join(rustify_docs::config::FILE_NAME),
-            dirs: vec![
-                root.join(&config.content_dir),
-                root.join(&config.assets_dir),
-            ],
-            files: includes.iter().map(|path| root.join(path)).collect(),
+            config: root.join(&project.config_file),
+            dirs,
+            files: read
+                .files
+                .into_iter()
+                .flatten()
+                .map(|path| root.join(path))
+                .collect(),
             ignored: vec![out],
         }
     }
@@ -153,6 +177,8 @@ enum Outcome {
 /// The builder's own state between rounds.
 struct Builder {
     root: PathBuf,
+    /// The configuration file, in `root`.
+    config: PathBuf,
     highlighter: Highlighter,
     /// The fragments of the last round that finished; a round works on a
     /// copy and its copy replaces this only when it finishes.
@@ -222,7 +248,7 @@ impl Builder {
     }
 
     fn build(&self, cache: &mut FragmentCache) -> (Outcome, Option<Filter>) {
-        let (project, mut diagnostics) = match Project::load(&self.root) {
+        let (project, mut diagnostics) = match Project::load_file(&self.config) {
             Ok(loaded) => loaded,
             Err(diagnostics) => {
                 return (
@@ -257,7 +283,14 @@ impl Builder {
             &self.highlighter,
             self.workers,
         );
-        let filter = Filter::of(&self.root, &project, &analysis.includes);
+        let filter = Filter::of(
+            &self.root,
+            &project,
+            Read {
+                files: vec![&analysis.includes, &analysis.referenced],
+                linked: Some(&snapshot.linked),
+            },
+        );
         diagnostics.extend(analysis.diagnostics.iter().cloned());
         if has_errors(&diagnostics) {
             let outcome = Outcome::Failed {
@@ -764,7 +797,11 @@ pub fn run(options: Options) -> ExitCode {
         Ok(root) => root,
         Err(error) => return fail(format!("{}: {error}", root.display())),
     };
-    let project = match Project::load(&root) {
+    let config = match options.config.file_name() {
+        Some(name) => root.join(name),
+        None => root.join(rustify_docs::config::FILE_NAME),
+    };
+    let project = match Project::load_file(&config) {
         Ok((project, _)) => project,
         Err(diagnostics) => {
             for diagnostic in &diagnostics {
@@ -772,7 +809,7 @@ pub fn run(options: Options) -> ExitCode {
             }
             return fail(format!(
                 "{} has errors; fix them and run dev again",
-                rustify_docs::config::FILE_NAME
+                config.display()
             ));
         }
     };
@@ -788,7 +825,7 @@ pub fn run(options: Options) -> ExitCode {
         .ok()
         .and_then(|value| value.strip_prefix("panic:").map(str::to_owned));
 
-    let filter = Arc::new(RwLock::new(Filter::of(&root, &project, &BTreeSet::new())));
+    let filter = Arc::new(RwLock::new(Filter::of(&root, &project, Read::default())));
     let (changes, rounds) = mpsc::channel::<()>();
     let watch_filter = filter.clone();
     let mut watcher =
@@ -824,6 +861,7 @@ pub fn run(options: Options) -> ExitCode {
     });
     let mut builder = Builder {
         root: root.clone(),
+        config,
         highlighter: Highlighter::new(),
         cache: FragmentCache::default(),
         dates,
@@ -1036,6 +1074,45 @@ mod tests {
         assert!(!filter.relevant(&root.join("content/.git/HEAD")));
         assert!(!filter.relevant(&root.join(".rustify-docs/dist/lock")));
         assert!(!filter.relevant(&root.join("README.md")));
+    }
+
+    #[test]
+    fn the_filter_follows_what_a_round_read() {
+        let (project, _) = Project::load_file(Path::new(concat!(
+            env!("CARGO_MANIFEST_DIR"),
+            "/../../tests/docs-ssg/fixtures/content/rustify-docs.toml"
+        )))
+        .unwrap();
+        let root = Path::new("/p");
+        let includes: BTreeSet<String> = ["src/example.rs".to_owned()].into();
+        let referenced: BTreeSet<String> =
+            ["images/mark.svg".to_owned(), "brand/logo.svg".to_owned()].into();
+        let linked: BTreeSet<String> = ["shared".to_owned()].into();
+        let filter = Filter::of(
+            root,
+            &project,
+            Read {
+                files: vec![&includes, &referenced],
+                linked: Some(&linked),
+            },
+        );
+        for path in [
+            "rustify-docs.toml",
+            "src/example.rs",
+            "images/mark.svg",
+            "brand/logo.svg",
+            "shared/a.svg",
+        ] {
+            assert!(filter.relevant(&root.join(path)), "{path}");
+        }
+        for path in [
+            "images/other.svg",
+            "brand",
+            "dist/index.html",
+            "custom.toml",
+        ] {
+            assert!(!filter.relevant(&root.join(path)), "{path}");
+        }
     }
 
     #[test]
