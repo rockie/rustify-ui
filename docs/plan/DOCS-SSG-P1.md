@@ -46,11 +46,11 @@
 
 - 最近更新：2026-10-11T12:45:00+08:00
 - 当前进度：8/9 个里程碑完成
-- 当前状态：M1–M8 已完成；代码评审 R1（[报告](DOCS-SSG-P1.code-review.md)）的 14 项均已修复并验证（逐项见 M3–M7 记录「评审修复」，复验见 [M8 记录](../validation/docs-ssg-p1/M8.md#评审修复后复验)），修复已提交，待复审
+- 当前状态：M1–M8 已完成；代码评审 R1（[报告](DOCS-SSG-P1.code-review.md)）的 14 项均已修复并验证（逐项见 M3–M7 记录「评审修复」，复验见 [M8 记录](../validation/docs-ssg-p1/M8.md#评审修复后复验)），修复已提交（`12113ab`），待复审
 - 最近完成：M8（P1 跨浏览器、部署与性能终验）
 - 下一步：先以 review-code 复审 R1 修复；通过后 M9——README、CLI 帮助、生成 README 写入已验证完整 SHA 与 CLI 版本（必要时递增 `rustify-docs-cli` 版本，§8）；对已提交候选 `docs-verify --group toolchain --git file://… --rev <SHA>` 与 `features --external`（DOM 配方）、安装后二进制的 panic 子集（V-9）、GitHub 预览核对（V-4）、V-5/V-6 受模板影响切片、V-15；然后请用户授权推送方式，推送后对 GitHub 同 SHA 重验
 - 当前阻塞：无（M9 远端阶段需要用户的推送授权与方式，届时再问）。待用户决定：R1 修复新呈现的页头链接是否在真实 Safari/手机复走（Chromium 三项目与 WebKit 已覆盖，见 M8 记录）
-- 代码基线：`72418b3`（M1 179c5ec、M2–M4 9442f5d、M5–M7 1d239ff、M5/M8 收口 72418b3）；工作树仅剩用户另行提交的 `.xgent-ai` 台账
+- 代码基线：`12113ab`（M1 179c5ec、M2–M4 9442f5d、M5–M7 1d239ff、M5/M8 收口 72418b3、R1 修复 12113ab）；工作树仅剩用户另行提交的 `.xgent-ai` 台账与评审报告及其证据（`DOCS-SSG-P1.code-review.md`、`docs/validation/docs-ssg-p1/code-review-r1/`）
 
 ### 完成记录
 
@@ -58,11 +58,11 @@
 | --- | --- | --- | --- | --- | --- |
 | M1 | 已完成 | 2026-10-10T17:20:00+08:00 | 默认 DOM SDK、中性 runtime/DOM loader、GPU opt-in 与示例迁移；V-1/V-2 仓内外、V-15 矩阵通过，V-3 全部适用原回归 604 例通过（theme-studio 整项目重跑 65/65） | [M1 记录](../validation/docs-ssg-p1/M1.md) | 179c5ec |
 | M2 | 已完成 | 2026-10-10T18:10:00+08:00 | rustify-docs 库与 CLI 骨架、SSR 页面、原生样式/压缩/前缀高亮、片段缓存与并行、B 语料与采时 harness；风险门 195 ms/33 ms/22.8 KB 通过，git 安装排练、V-15 矩阵通过，示例产物逐字节不变 | [M2 记录](../validation/docs-ssg-p1/M2.md) | 9442f5d |
-| M3 | 已完成 | 2026-10-11T12:40:00+08:00 | 内容图、原始 HTML 检查、代码分组/引用、自动链接、首页与页头链接、`sidebar.group` 与 `check`；库 80 例、端到端 5 例、CLI 集成 8 例通过，恰 3 错与宽覆盖 fixture 符合预期，B 0 错且风险门复测通过；R1 修复 F-08、F-14 | [M3 记录](../validation/docs-ssg-p1/M3.md) | 9442f5d |
-| M4 | 已完成 | 2026-10-11T12:40:00+08:00 | `new`/`build`/`preview` 与内容模板、元数据/404/站点文件/manifest、资源指纹、发布事务与锁；V-5/V-6/V-10 基本门、V-7 三项目各 5/5、B 完整构建中位 347 ms、V-15 矩阵与安装排练通过，示例产物逐字节不变；R1 修复 F-05、F-07、F-09–F-11 | [M4 记录](../validation/docs-ssg-p1/M4.md) | 9442f5d |
-| M6 | 已完成 | 2026-10-11T12:40:00+08:00 | `rustify-docs dev`：每轮全量输入+内容键片段缓存、受影响页按两代字节比较刷新并保滚动、失败/panic 保留上一代、诊断面板（finish review ship）；V-9 浏览器 9/9 与 CLI 9 例、abort 构建拒绝 dev、B 保存可见中位 177/172/169 ms 与短轮 20 次 ≤178 ms；R1 修复 F-13 | [M6 记录](../validation/docs-ssg-p1/M6.md) | 1d239ff |
-| M7 | 已完成 | 2026-10-11T12:40:00+08:00 | `check --external-links`（rustls+内置根证书、去重/并发/超时、失败即报错）、发布三步骤真实 SIGKILL/磁盘满/权限/损坏 manifest/并发注入与输出归属加固、新窗站外链接需 noopener、零机器路径泄漏；V-15 矩阵、features/artifacts/reliability/toolchain 四组（禁网作者演练只调用 2 次 `rustc --version`）、docs-root/meta/dev 全过；R1 修复 F-01–F-03、F-06 | [M7 记录](../validation/docs-ssg-p1/M7.md) | 1d239ff |
-| M5 | 已完成 | 2026-10-11T12:40:00+08:00 | 默认阅读主题、finish review（ship）、axe 零违规；Chromium 三项目各 21/21、WebKit 20+1 跳过、B 最大页 LCP ≤740 ms/CLS 0；用户确认真实 macOS Safari 27.0.1 与手机走查通过；Firefox 移出本期（用户决定）；R1 修复 F-04、F-12（页头链接真机复走待用户决定） | [M5 记录](../validation/docs-ssg-p1/M5.md) | 1d239ff、72418b3 |
+| M3 | 已完成 | 2026-10-11T12:40:00+08:00 | 内容图、原始 HTML 检查、代码分组/引用、自动链接、首页与页头链接、`sidebar.group` 与 `check`；库 80 例、端到端 5 例、CLI 集成 8 例通过，恰 3 错与宽覆盖 fixture 符合预期，B 0 错且风险门复测通过；R1 修复 F-08、F-14 | [M3 记录](../validation/docs-ssg-p1/M3.md) | 9442f5d；修复 12113ab |
+| M4 | 已完成 | 2026-10-11T12:40:00+08:00 | `new`/`build`/`preview` 与内容模板、元数据/404/站点文件/manifest、资源指纹、发布事务与锁；V-5/V-6/V-10 基本门、V-7 三项目各 5/5、B 完整构建中位 347 ms、V-15 矩阵与安装排练通过，示例产物逐字节不变；R1 修复 F-05、F-07、F-09–F-11 | [M4 记录](../validation/docs-ssg-p1/M4.md) | 9442f5d；修复 12113ab |
+| M6 | 已完成 | 2026-10-11T12:40:00+08:00 | `rustify-docs dev`：每轮全量输入+内容键片段缓存、受影响页按两代字节比较刷新并保滚动、失败/panic 保留上一代、诊断面板（finish review ship）；V-9 浏览器 9/9 与 CLI 9 例、abort 构建拒绝 dev、B 保存可见中位 177/172/169 ms 与短轮 20 次 ≤178 ms；R1 修复 F-13 | [M6 记录](../validation/docs-ssg-p1/M6.md) | 1d239ff；修复 12113ab |
+| M7 | 已完成 | 2026-10-11T12:40:00+08:00 | `check --external-links`（rustls+内置根证书、去重/并发/超时、失败即报错）、发布三步骤真实 SIGKILL/磁盘满/权限/损坏 manifest/并发注入与输出归属加固、新窗站外链接需 noopener、零机器路径泄漏；V-15 矩阵、features/artifacts/reliability/toolchain 四组（禁网作者演练只调用 2 次 `rustc --version`）、docs-root/meta/dev 全过；R1 修复 F-01–F-03、F-06 | [M7 记录](../validation/docs-ssg-p1/M7.md) | 1d239ff；修复 12113ab |
+| M5 | 已完成 | 2026-10-11T12:40:00+08:00 | 默认阅读主题、finish review（ship）、axe 零违规；Chromium 三项目各 21/21、WebKit 20+1 跳过、B 最大页 LCP ≤740 ms/CLS 0；用户确认真实 macOS Safari 27.0.1 与手机走查通过；Firefox 移出本期（用户决定）；R1 修复 F-04、F-12（页头链接真机复走待用户决定） | [M5 记录](../validation/docs-ssg-p1/M5.md) | 1d239ff、72418b3；修复 12113ab |
 | M8 | 已完成 | 2026-10-11T12:40:00+08:00 | V-15、features/artifacts/reliability/toolchain、B 完整构建 359 ms、LCP 724/740/532 ms、CLS 0、最大页 26.2 KB、保存可见 175/170/176 ms、1000/1000 次可见无重启、new→首页 333 ms、§9.4 UAT 串联；真实 Chrome 154、Safari 27.0.1 与手机走查通过，Firefox 移出本期；R1 修复后受影响检查复验通过 | [M8 记录](../validation/docs-ssg-p1/M8.md) | 72418b3 |
 
 ## 0. 需求、范围与决策
