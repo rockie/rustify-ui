@@ -1,0 +1,41 @@
+{
+  "baseline": "dirty@3069107cf4990e15db6ad3ddddddd520bcc86838",
+  "branch": "main",
+  "time": "2026-10-11T23:07:35+08:00",
+  "files": {
+    "Cargo.lock": "a9b2f6752705244728e9d2247fe0f06f43f29b1af0669d1dedea23fc210e26da",
+    "crates/rustify-docs-cli/Cargo.toml": "576c1c7f98c70716ca62eb8ecde8a84c30a732132ed4648a5981f8d1227ac8dd",
+    "crates/rustify-docs-cli/tests/check.rs": "fc030877bcc8ed897372e42f9df73a6d47aeb9d89fcb3c2eaacf773d85470aed",
+    "crates/rustify-docs/src/content.rs": "e31f030bdd3cbed75ee36d9ad2eb543d48c52483abbe321889a71cceca504ed3",
+    "crates/rustify-docs/src/html_check.rs": "57fe06f2495a7a32a88f592ffe3f9bb98a2e68d91d088e3f894c75d1f50ad4a3",
+    "crates/rustify-docs/src/markdown.rs": "20d53791dcf9a2600715002507a4504bf0a72d1dd62fc1a45034094c0aa009e2",
+    "tests/docs-ssg/dev.spec.ts": "88019714c307bc39307ae2cf4f4ef7584d8606b5c80c941cb340f0a31e7d7507"
+  },
+  "binary_hashes": {
+    "target/docs-ssg/r5-fix/before": "3b417045be01e49eca9bdba63c10d1697deba58f2907de8d1a50f2cc076545cc",
+    "target/docs-cli/rustify-docs": "f281a1bd80c44f7032a129bfd93cef37df4b3abdf34aed6de43d08a9282aebb7"
+  },
+  "rust": {
+    "library-test": 134,
+    "cli-test": 73
+  },
+  "browser": {
+    "docs-dev": 21,
+    "docs-subpath": 24,
+    "docs-root": 24,
+    "docs-meta": 24
+  },
+  "environment": {
+    "os": "macOS 27.0.1",
+    "arch": "aarch64",
+    "cpu": "Apple M5 Pro",
+    "logical_cpus": 15,
+    "memory_bytes": "51539607552",
+    "rustc": "rustc 1.99.0 (b940084d7 2026-09-28)",
+    "load_average": "{ 9.87 7.47 6.56 }"
+  },
+  "playwright": "1.63.0",
+  "node": "v26.1.0",
+  "mbx": "mbx 1.15.0",
+  "source_report_sha256": "e5becdb4941c1cda3434feb0ee905b38979e7e9212224764826a43ef5a52e340"
+}

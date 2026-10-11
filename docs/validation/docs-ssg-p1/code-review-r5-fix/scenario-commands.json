@@ -1,0 +1,61 @@
+[
+  {
+    "name": "namespace-production",
+    "command": [
+      "node",
+      "docs/validation/docs-ssg-p1/code-review-r5/verify.cjs",
+      "target/docs-ssg/r4-fix/before",
+      "target/docs-cli/rustify-docs",
+      "docs/validation/docs-ssg-p1/code-review-r5-fix/namespace"
+    ],
+    "exit": 0,
+    "seconds": 5.102
+  },
+  {
+    "name": "body-production",
+    "command": [
+      "node",
+      "docs/validation/docs-ssg-p1/code-review-r5-fix/body-production.cjs",
+      "target/docs-ssg/r5-fix/before",
+      "target/docs-cli/rustify-docs",
+      "docs/validation/docs-ssg-p1/code-review-r5-fix"
+    ],
+    "exit": 0,
+    "seconds": 1.437
+  },
+  {
+    "name": "performance",
+    "command": [
+      "mbx",
+      "xtask",
+      "docs-verify",
+      "--group",
+      "performance",
+      "--report",
+      "docs/validation/docs-ssg-p1/code-review-r5-fix/performance.json"
+    ],
+    "exit": 0,
+    "seconds": 46.362
+  },
+  {
+    "name": "save",
+    "command": [
+      "node",
+      "tests/docs-ssg/harness/measure-save.mjs",
+      "--bin",
+      "target/docs-cli/rustify-docs",
+      "--site",
+      "target/docs-ssg/perf/b",
+      "--page",
+      "/zh/g04/page-024/",
+      "--samples",
+      "5",
+      "--short",
+      "20",
+      "--out",
+      "docs/validation/docs-ssg-p1/code-review-r5-fix/save.json"
+    ],
+    "exit": 0,
+    "seconds": 13.108
+  }
+]

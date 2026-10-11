@@ -1,0 +1,639 @@
+{
+  "baseline_before": "3069107cf4990e15db6ad3ddddddd520bcc86838",
+  "baseline_after": "dirty@3069107cf4990e15db6ad3ddddddd520bcc86838",
+  "binary_hashes": {
+    "before": "3b417045be01e49eca9bdba63c10d1697deba58f2907de8d1a50f2cc076545cc",
+    "after": "f281a1bd80c44f7032a129bfd93cef37df4b3abdf34aed6de43d08a9282aebb7"
+  },
+  "corpus": {
+    "pages": 500,
+    "seed": 1592636672,
+    "profile_sha256": "7c090aa2064f0c843164f70c7488ea9f3514c7f43bf96ece66de6dae06e306d5",
+    "digest": "ecb43f7911fe7512bae279a0214aad39647052c28c3bd7c9a67f6745e4a889ac"
+  },
+  "rounds_ms": {
+    "before": [
+      548.374625,
+      432.6730409999999,
+      399.925458,
+      386.5075829999998,
+      393.3978749999998
+    ],
+    "after": [
+      451.913542,
+      423.0374159999999,
+      382.59587500000026,
+      384.11566600000003,
+      422.73199999999986
+    ]
+  },
+  "median_ms": {
+    "before": 399.925458,
+    "after": 422.73199999999986
+  },
+  "method": "Five interleaved before/after builds; fresh empty output per run; monotonic wall time; same frozen B corpus and host.",
+  "product_files_equal_excluding_manifest": 510,
+  "product_fingerprint": "b3966054af263321efd4f6a00151a9491e00e8745e14f1dab3a76a57083e7e49",
+  "commands": [
+    {
+      "command": [
+        "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/r5-fix/before",
+        "build",
+        "--config",
+        "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/perf/b/rustify-docs.toml",
+        "--out",
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-r5-perf-tkpc4nhp/before-0",
+        "--format",
+        "json"
+      ],
+      "exit": 0,
+      "ms": 548.374625,
+      "report": {
+        "schema_version": 1,
+        "success": true,
+        "diagnostics": [
+          {
+            "severity": "warning",
+            "rule": "no-git-history",
+            "file": null,
+            "line": null,
+            "column": null,
+            "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+            "suggestion": "build inside a git repository with the content committed"
+          }
+        ],
+        "summary": {
+          "errors": 0,
+          "warnings": 1,
+          "pages": 500,
+          "files": 511,
+          "bytes": 34847456,
+          "largest": [
+            {
+              "path": "zh/g04/page-024/index.html",
+              "bytes": 128318
+            },
+            {
+              "path": "zh/g04/page-012/index.html",
+              "bytes": 128303
+            },
+            {
+              "path": "zh/g06/page-022/index.html",
+              "bytes": 128303
+            },
+            {
+              "path": "zh/g07/page-021/index.html",
+              "bytes": 128303
+            },
+            {
+              "path": "zh/g01/page-003/index.html",
+              "bytes": 128291
+            }
+          ],
+          "out": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-r5-perf-tkpc4nhp/before-0",
+          "milliseconds": 516
+        }
+      }
+    },
+    {
+      "command": [
+        "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-cli/rustify-docs",
+        "build",
+        "--config",
+        "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/perf/b/rustify-docs.toml",
+        "--out",
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-r5-perf-tkpc4nhp/after-0",
+        "--format",
+        "json"
+      ],
+      "exit": 0,
+      "ms": 451.913542,
+      "report": {
+        "schema_version": 1,
+        "success": true,
+        "diagnostics": [
+          {
+            "severity": "warning",
+            "rule": "no-git-history",
+            "file": null,
+            "line": null,
+            "column": null,
+            "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+            "suggestion": "build inside a git repository with the content committed"
+          }
+        ],
+        "summary": {
+          "errors": 0,
+          "warnings": 1,
+          "pages": 500,
+          "files": 511,
+          "bytes": 34847456,
+          "largest": [
+            {
+              "path": "zh/g04/page-024/index.html",
+              "bytes": 128318
+            },
+            {
+              "path": "zh/g04/page-012/index.html",
+              "bytes": 128303
+            },
+            {
+              "path": "zh/g06/page-022/index.html",
+              "bytes": 128303
+            },
+            {
+              "path": "zh/g07/page-021/index.html",
+              "bytes": 128303
+            },
+            {
+              "path": "zh/g01/page-003/index.html",
+              "bytes": 128291
+            }
+          ],
+          "out": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-r5-perf-tkpc4nhp/after-0",
+          "milliseconds": 422
+        }
+      }
+    },
+    {
+      "command": [
+        "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/r5-fix/before",
+        "build",
+        "--config",
+        "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/perf/b/rustify-docs.toml",
+        "--out",
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-r5-perf-tkpc4nhp/before-1",
+        "--format",
+        "json"
+      ],
+      "exit": 0,
+      "ms": 432.6730409999999,
+      "report": {
+        "schema_version": 1,
+        "success": true,
+        "diagnostics": [
+          {
+            "severity": "warning",
+            "rule": "no-git-history",
+            "file": null,
+            "line": null,
+            "column": null,
+            "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+            "suggestion": "build inside a git repository with the content committed"
+          }
+        ],
+        "summary": {
+          "errors": 0,
+          "warnings": 1,
+          "pages": 500,
+          "files": 511,
+          "bytes": 34847456,
+          "largest": [
+            {
+              "path": "zh/g04/page-024/index.html",
+              "bytes": 128318
+            },
+            {
+              "path": "zh/g04/page-012/index.html",
+              "bytes": 128303
+            },
+            {
+              "path": "zh/g06/page-022/index.html",
+              "bytes": 128303
+            },
+            {
+              "path": "zh/g07/page-021/index.html",
+              "bytes": 128303
+            },
+            {
+              "path": "zh/g01/page-003/index.html",
+              "bytes": 128291
+            }
+          ],
+          "out": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-r5-perf-tkpc4nhp/before-1",
+          "milliseconds": 420
+        }
+      }
+    },
+    {
+      "command": [
+        "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-cli/rustify-docs",
+        "build",
+        "--config",
+        "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/perf/b/rustify-docs.toml",
+        "--out",
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-r5-perf-tkpc4nhp/after-1",
+        "--format",
+        "json"
+      ],
+      "exit": 0,
+      "ms": 423.0374159999999,
+      "report": {
+        "schema_version": 1,
+        "success": true,
+        "diagnostics": [
+          {
+            "severity": "warning",
+            "rule": "no-git-history",
+            "file": null,
+            "line": null,
+            "column": null,
+            "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+            "suggestion": "build inside a git repository with the content committed"
+          }
+        ],
+        "summary": {
+          "errors": 0,
+          "warnings": 1,
+          "pages": 500,
+          "files": 511,
+          "bytes": 34847456,
+          "largest": [
+            {
+              "path": "zh/g04/page-024/index.html",
+              "bytes": 128318
+            },
+            {
+              "path": "zh/g04/page-012/index.html",
+              "bytes": 128303
+            },
+            {
+              "path": "zh/g06/page-022/index.html",
+              "bytes": 128303
+            },
+            {
+              "path": "zh/g07/page-021/index.html",
+              "bytes": 128303
+            },
+            {
+              "path": "zh/g01/page-003/index.html",
+              "bytes": 128291
+            }
+          ],
+          "out": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-r5-perf-tkpc4nhp/after-1",
+          "milliseconds": 408
+        }
+      }
+    },
+    {
+      "command": [
+        "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/r5-fix/before",
+        "build",
+        "--config",
+        "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/perf/b/rustify-docs.toml",
+        "--out",
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-r5-perf-tkpc4nhp/before-2",
+        "--format",
+        "json"
+      ],
+      "exit": 0,
+      "ms": 399.925458,
+      "report": {
+        "schema_version": 1,
+        "success": true,
+        "diagnostics": [
+          {
+            "severity": "warning",
+            "rule": "no-git-history",
+            "file": null,
+            "line": null,
+            "column": null,
+            "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+            "suggestion": "build inside a git repository with the content committed"
+          }
+        ],
+        "summary": {
+          "errors": 0,
+          "warnings": 1,
+          "pages": 500,
+          "files": 511,
+          "bytes": 34847456,
+          "largest": [
+            {
+              "path": "zh/g04/page-024/index.html",
+              "bytes": 128318
+            },
+            {
+              "path": "zh/g04/page-012/index.html",
+              "bytes": 128303
+            },
+            {
+              "path": "zh/g06/page-022/index.html",
+              "bytes": 128303
+            },
+            {
+              "path": "zh/g07/page-021/index.html",
+              "bytes": 128303
+            },
+            {
+              "path": "zh/g01/page-003/index.html",
+              "bytes": 128291
+            }
+          ],
+          "out": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-r5-perf-tkpc4nhp/before-2",
+          "milliseconds": 385
+        }
+      }
+    },
+    {
+      "command": [
+        "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-cli/rustify-docs",
+        "build",
+        "--config",
+        "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/perf/b/rustify-docs.toml",
+        "--out",
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-r5-perf-tkpc4nhp/after-2",
+        "--format",
+        "json"
+      ],
+      "exit": 0,
+      "ms": 382.59587500000026,
+      "report": {
+        "schema_version": 1,
+        "success": true,
+        "diagnostics": [
+          {
+            "severity": "warning",
+            "rule": "no-git-history",
+            "file": null,
+            "line": null,
+            "column": null,
+            "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+            "suggestion": "build inside a git repository with the content committed"
+          }
+        ],
+        "summary": {
+          "errors": 0,
+          "warnings": 1,
+          "pages": 500,
+          "files": 511,
+          "bytes": 34847456,
+          "largest": [
+            {
+              "path": "zh/g04/page-024/index.html",
+              "bytes": 128318
+            },
+            {
+              "path": "zh/g04/page-012/index.html",
+              "bytes": 128303
+            },
+            {
+              "path": "zh/g06/page-022/index.html",
+              "bytes": 128303
+            },
+            {
+              "path": "zh/g07/page-021/index.html",
+              "bytes": 128303
+            },
+            {
+              "path": "zh/g01/page-003/index.html",
+              "bytes": 128291
+            }
+          ],
+          "out": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-r5-perf-tkpc4nhp/after-2",
+          "milliseconds": 371
+        }
+      }
+    },
+    {
+      "command": [
+        "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/r5-fix/before",
+        "build",
+        "--config",
+        "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/perf/b/rustify-docs.toml",
+        "--out",
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-r5-perf-tkpc4nhp/before-3",
+        "--format",
+        "json"
+      ],
+      "exit": 0,
+      "ms": 386.5075829999998,
+      "report": {
+        "schema_version": 1,
+        "success": true,
+        "diagnostics": [
+          {
+            "severity": "warning",
+            "rule": "no-git-history",
+            "file": null,
+            "line": null,
+            "column": null,
+            "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+            "suggestion": "build inside a git repository with the content committed"
+          }
+        ],
+        "summary": {
+          "errors": 0,
+          "warnings": 1,
+          "pages": 500,
+          "files": 511,
+          "bytes": 34847456,
+          "largest": [
+            {
+              "path": "zh/g04/page-024/index.html",
+              "bytes": 128318
+            },
+            {
+              "path": "zh/g04/page-012/index.html",
+              "bytes": 128303
+            },
+            {
+              "path": "zh/g06/page-022/index.html",
+              "bytes": 128303
+            },
+            {
+              "path": "zh/g07/page-021/index.html",
+              "bytes": 128303
+            },
+            {
+              "path": "zh/g01/page-003/index.html",
+              "bytes": 128291
+            }
+          ],
+          "out": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-r5-perf-tkpc4nhp/before-3",
+          "milliseconds": 375
+        }
+      }
+    },
+    {
+      "command": [
+        "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-cli/rustify-docs",
+        "build",
+        "--config",
+        "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/perf/b/rustify-docs.toml",
+        "--out",
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-r5-perf-tkpc4nhp/after-3",
+        "--format",
+        "json"
+      ],
+      "exit": 0,
+      "ms": 384.11566600000003,
+      "report": {
+        "schema_version": 1,
+        "success": true,
+        "diagnostics": [
+          {
+            "severity": "warning",
+            "rule": "no-git-history",
+            "file": null,
+            "line": null,
+            "column": null,
+            "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+            "suggestion": "build inside a git repository with the content committed"
+          }
+        ],
+        "summary": {
+          "errors": 0,
+          "warnings": 1,
+          "pages": 500,
+          "files": 511,
+          "bytes": 34847456,
+          "largest": [
+            {
+              "path": "zh/g04/page-024/index.html",
+              "bytes": 128318
+            },
+            {
+              "path": "zh/g04/page-012/index.html",
+              "bytes": 128303
+            },
+            {
+              "path": "zh/g06/page-022/index.html",
+              "bytes": 128303
+            },
+            {
+              "path": "zh/g07/page-021/index.html",
+              "bytes": 128303
+            },
+            {
+              "path": "zh/g01/page-003/index.html",
+              "bytes": 128291
+            }
+          ],
+          "out": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-r5-perf-tkpc4nhp/after-3",
+          "milliseconds": 373
+        }
+      }
+    },
+    {
+      "command": [
+        "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/r5-fix/before",
+        "build",
+        "--config",
+        "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/perf/b/rustify-docs.toml",
+        "--out",
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-r5-perf-tkpc4nhp/before-4",
+        "--format",
+        "json"
+      ],
+      "exit": 0,
+      "ms": 393.3978749999998,
+      "report": {
+        "schema_version": 1,
+        "success": true,
+        "diagnostics": [
+          {
+            "severity": "warning",
+            "rule": "no-git-history",
+            "file": null,
+            "line": null,
+            "column": null,
+            "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+            "suggestion": "build inside a git repository with the content committed"
+          }
+        ],
+        "summary": {
+          "errors": 0,
+          "warnings": 1,
+          "pages": 500,
+          "files": 511,
+          "bytes": 34847456,
+          "largest": [
+            {
+              "path": "zh/g04/page-024/index.html",
+              "bytes": 128318
+            },
+            {
+              "path": "zh/g04/page-012/index.html",
+              "bytes": 128303
+            },
+            {
+              "path": "zh/g06/page-022/index.html",
+              "bytes": 128303
+            },
+            {
+              "path": "zh/g07/page-021/index.html",
+              "bytes": 128303
+            },
+            {
+              "path": "zh/g01/page-003/index.html",
+              "bytes": 128291
+            }
+          ],
+          "out": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-r5-perf-tkpc4nhp/before-4",
+          "milliseconds": 381
+        }
+      }
+    },
+    {
+      "command": [
+        "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-cli/rustify-docs",
+        "build",
+        "--config",
+        "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/perf/b/rustify-docs.toml",
+        "--out",
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-r5-perf-tkpc4nhp/after-4",
+        "--format",
+        "json"
+      ],
+      "exit": 0,
+      "ms": 422.73199999999986,
+      "report": {
+        "schema_version": 1,
+        "success": true,
+        "diagnostics": [
+          {
+            "severity": "warning",
+            "rule": "no-git-history",
+            "file": null,
+            "line": null,
+            "column": null,
+            "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+            "suggestion": "build inside a git repository with the content committed"
+          }
+        ],
+        "summary": {
+          "errors": 0,
+          "warnings": 1,
+          "pages": 500,
+          "files": 511,
+          "bytes": 34847456,
+          "largest": [
+            {
+              "path": "zh/g04/page-024/index.html",
+              "bytes": 128318
+            },
+            {
+              "path": "zh/g04/page-012/index.html",
+              "bytes": 128303
+            },
+            {
+              "path": "zh/g06/page-022/index.html",
+              "bytes": 128303
+            },
+            {
+              "path": "zh/g07/page-021/index.html",
+              "bytes": 128303
+            },
+            {
+              "path": "zh/g01/page-003/index.html",
+              "bytes": 128291
+            }
+          ],
+          "out": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-r5-perf-tkpc4nhp/after-4",
+          "milliseconds": 410
+        }
+      }
+    }
+  ]
+}

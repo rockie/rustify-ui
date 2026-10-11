@@ -1,0 +1,12 @@
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-docs-cli/tests/check.rs:68:
+             assert!(html.contains("href=\"#target\""), "{html}");
+         }
+         let home = std::fs::read_to_string(project.0.join("dist/index.html")).unwrap();
+[31m-        assert!(home.contains(&format!("href=\"{base}other/#target\"")), "{home}");
+(B[m[32m+        assert!(
+(B[m[32m+            home.contains(&format!("href=\"{base}other/#target\"")),
+(B[m[32m+            "{home}"
+(B[m[32m+        );
+(B[m         let before = tree(&project.0.join("dist"));
+         std::fs::write(
+             project.0.join("content/index.md"),

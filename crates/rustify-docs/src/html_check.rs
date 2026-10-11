@@ -14,7 +14,7 @@
 use std::ops::Range;
 
 use dom_query::Document;
-use html5ever::{local_name, ns, tendril::TendrilSink, QualName};
+use html5ever::{parse_document, tendril::TendrilSink};
 use html5gum::{Token, Tokenizer};
 
 use crate::diagnostic::Issue;
@@ -154,14 +154,11 @@ pub fn parse_srcset(value: &str) -> Vec<(String, String)> {
 /// IDs in the document tree, in output order. Template contents and
 /// Markdown buffers which were never emitted contribute nothing here.
 pub(crate) fn ids(html: &str) -> Vec<String> {
-    let dom = html5ever::parse_fragment(
-        Document::fragment_sink(),
-        Default::default(),
-        QualName::new(None, ns!(html), local_name!("article")),
-        Vec::new(),
-        true,
-    )
-    .one(html);
+    // SSR writes the article into an existing body. A fragment parser
+    // ignores body tags instead of merging their attributes into that body.
+    let dom = parse_document(Document::default(), Default::default()).one(format!(
+        "<!doctype html><html><head></head><body><article>{html}</article></body></html>"
+    ));
     // HTML template contents are separate fragments, not descendants.
     // Foreign elements named template retain their ordinary children.
     dom.root()
@@ -572,6 +569,26 @@ pub fn check_document(html: &str) -> Vec<String> {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn body_ids_follow_document_attribute_merging_and_template_boundaries() {
+        for (html, expected) in [
+            (
+                r#"<h1 id="heading">Heading</h1><body id="target">Text</body>"#,
+                vec!["target", "heading"],
+            ),
+            (
+                r#"<body id="target"><body id="ignored"><h2 id="visible">Visible</h2>"#,
+                vec!["target", "visible"],
+            ),
+            (
+                r#"<template id="holder"><body id="ghost"><span id="hidden"></span></template><body id="target"><h2 id="visible">Visible</h2>"#,
+                vec!["target", "holder", "visible"],
+            ),
+        ] {
+            assert_eq!(ids(html), expected, "{html}");
+        }
+    }
 
     #[test]
     fn foreign_templates_keep_their_document_ids() {

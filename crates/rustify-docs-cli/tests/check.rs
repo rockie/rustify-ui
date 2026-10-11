@@ -37,6 +37,56 @@ fn check_json(config: &Path, extra: &[&str]) -> (Option<i32>, Value, String) {
 }
 
 #[test]
+fn body_targets_pass_check_and_build_at_both_bases() {
+    let body = "---\ndescription: Body anchor\n---\n# Body anchor\n\n<body id=\"target\">\n\nText\n\n</body>\n\n<template id=\"holder\"><body id=\"ghost\"><span id=\"hidden\">Hidden</span></template>\n\n[Target](#target) [Other target](other.md#target)\n";
+    for base in ["/", "/docs/"] {
+        let config = format!("schema_version=1\n[site]\nname='Body anchors'\nurl='https://example.com{base}'\nbase='{base}'\n[[nav.groups]]\nlabel='Pages'\nitems=['index.md','other.md']\n");
+        let project = Project::new(&[
+            ("rustify-docs.toml", &config),
+            ("content/index.md", body),
+            ("content/other.md", body),
+        ]);
+        let build = || {
+            run(&[
+                "build",
+                "--config",
+                project.config().to_str().unwrap(),
+                "--format",
+                "json",
+            ])
+        };
+        let (code, report, _) = check_json(&project.config(), &[]);
+        assert_eq!(code, Some(0), "{base}: {report}");
+        let output = build();
+        assert!(
+            output.status.success(),
+            "{}",
+            String::from_utf8_lossy(&output.stdout)
+        );
+        for file in ["dist/index.html", "dist/other/index.html"] {
+            let html = std::fs::read_to_string(project.0.join(file)).unwrap();
+            assert!(html.contains("href=\"#target\""), "{html}");
+        }
+        let home = std::fs::read_to_string(project.0.join("dist/index.html")).unwrap();
+        assert!(
+            home.contains(&format!("href=\"{base}other/#target\"")),
+            "{home}"
+        );
+        let before = tree(&project.0.join("dist"));
+        std::fs::write(
+            project.0.join("content/index.md"),
+            format!("{body}\n[Ghost](#ghost) [Other ghost](other.md#ghost)\n"),
+        )
+        .unwrap();
+        let (code, report, _) = check_json(&project.config(), &[]);
+        assert_eq!(code, Some(1));
+        assert_eq!(report["summary"]["errors"], 2);
+        assert_eq!(build().status.code(), Some(1));
+        assert_eq!(tree(&project.0.join("dist")), before);
+    }
+}
+
+#[test]
 fn foreign_template_targets_pass_check_and_build() {
     for markup in [
         "<svg><template/></svg>",

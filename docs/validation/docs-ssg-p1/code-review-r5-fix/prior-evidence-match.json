@@ -1,0 +1,143 @@
+{
+  "prior_baseline": "f7a3e941cba709a6fd2669f0656414473a08ce55",
+  "prior_record": "docs/validation/docs-ssg-p1/M8.md#r4-\u4fee\u590d\u540e\u590d\u9a8c",
+  "resolved_dependencies_unchanged": true,
+  "cli_version": [
+    "0.1.1",
+    "0.1.2"
+  ],
+  "groups": [
+    {
+      "path": "crates/rustify-ui",
+      "files": 61,
+      "sha256_map": "4ea477e59356a58235be5da5c0bbda8eb97a6b8a9aaecbae307a9239f007fc42",
+      "changed": []
+    },
+    {
+      "path": "crates/rustify-components",
+      "files": 54,
+      "sha256_map": "3828b6ef447400f86aa1c7b32508fd07c0c36f7924a300abbe2f954acc0e0818",
+      "changed": []
+    },
+    {
+      "path": "crates/rustify-makepad",
+      "files": 8,
+      "sha256_map": "7fbc4e2b6cce788047ed323b06494058db4b515b98bdc2cf040a8f788cfc9c42",
+      "changed": []
+    },
+    {
+      "path": "crates/rustify-style",
+      "files": 145,
+      "sha256_map": "e390cc91476529351fb1477efac2afac101d9036edffdf30c2fcbd9982206a4e",
+      "changed": []
+    },
+    {
+      "path": "makepad",
+      "files": 1247,
+      "sha256_map": "511864c6e78b2279477b6360e3eff39668f82d1d0b5c2f768ddb69758be0ec63",
+      "changed": []
+    },
+    {
+      "path": "web",
+      "files": 4,
+      "sha256_map": "0ea8b3ea2ea4500c5572c2aff40e0689598dfc074cf1078c0c1a506c64cb8e83",
+      "changed": []
+    },
+    {
+      "path": "examples",
+      "files": 140,
+      "sha256_map": "7c5d4ea22f0676b21048d9cce70acfcddb05796e56b8933da6c54177b625391b",
+      "changed": []
+    },
+    {
+      "path": "tests/dom-only",
+      "files": 13,
+      "sha256_map": "3752bb0c84a729a60fe7d6c077bed1a9408aa20cddd6bab6cff26143b2576d3a",
+      "changed": []
+    },
+    {
+      "path": "tests/theme-export",
+      "files": 11,
+      "sha256_map": "3fac90d38ce33fdf5e8e6bb6fe8ebf45546a6f0f9faa86680f17a2c7212303ee",
+      "changed": []
+    },
+    {
+      "path": "crates/rustify-docs/assets",
+      "files": 9,
+      "sha256_map": "e8f46e2c7001d603c07c65c8b2e2695ee17d039c834d9ad02de6f0ab9415f771",
+      "changed": []
+    },
+    {
+      "path": "crates/rustify-docs-cli/src",
+      "files": 6,
+      "sha256_map": "cd770bb55c902be46c569e4312b3f545e9268418f4f4eb194300c1ab1c496228",
+      "changed": []
+    },
+    {
+      "path": "xtask/src",
+      "files": 15,
+      "sha256_map": "a696c9bbc7f5df920a517fb180c9e8062c9b34cae9cfab8e9719c2333262242c",
+      "changed": []
+    },
+    {
+      "path": "tests/docs-ssg/harness",
+      "files": 3,
+      "sha256_map": "96cc399aabcecf7621b4b9784d501738d5fcd3a6d10c69d91331df8c3e05b7f6",
+      "changed": []
+    },
+    {
+      "path": "Cargo.toml",
+      "files": 1,
+      "sha256_map": "b4f2460402a21265e3a155ea8d1445cf2d1adbaf7aed6bc22e0d91eec56d9430",
+      "changed": []
+    },
+    {
+      "path": "mise.toml",
+      "files": 1,
+      "sha256_map": "0180c942b1363305fc5c4878d6aee5df21ed892638bbe3c40058ec5db800642c",
+      "changed": []
+    },
+    {
+      "path": "package.json",
+      "files": 1,
+      "sha256_map": "a2625637563f1749c3c577cde85637cade6c9a8115cd38241e5b6de143680f36",
+      "changed": []
+    },
+    {
+      "path": "package-lock.json",
+      "files": 1,
+      "sha256_map": "88c612a4236ffe7d96b9a512fb8e301ebc1e4312dfcb9edd5e91752c44f1ae8e",
+      "changed": []
+    },
+    {
+      "path": "playwright.docs.config.ts",
+      "files": 1,
+      "sha256_map": "097530590bd58e3bb5708eff8baee477fcbfaa4fb0b859fb961e6b13c3bad152",
+      "changed": []
+    },
+    {
+      "path": "tests/docs-ssg/b-profile.json",
+      "files": 1,
+      "sha256_map": "c70fca13e0f9b234da2240b4f0f54ee9e9b8a0507ceacbae7781dded31210b5c",
+      "changed": []
+    },
+    {
+      "path": "sources.lock.json",
+      "files": 1,
+      "sha256_map": "60370ba58c05736c539693569e1ab3d338ba93688d500b8fb716e87f419dc257",
+      "changed": []
+    },
+    {
+      "path": "crates/rustify-docs/Cargo.toml",
+      "files": 1,
+      "sha256_map": "43b306ca9a2cfeab613c0fe58313e3933326144551153f791cf313e5923552a9",
+      "changed": []
+    },
+    {
+      "path": "crates/rustify-docs/src/shell.rs",
+      "files": 1,
+      "sha256_map": "640b0bbb39c25eb9dcf3f28a3300fb820d0ee6844183521b6c716167f697d3b1",
+      "changed": []
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+reference site B: 500 pages, digest ecb43f7911fe7512bae279a0214aad39647052c28c3bd7c9a67f6745e4a889ac
+rustify-docs build of B into an empty output: median 419.5 ms of [837.316917, 419.494709, 415.783083, 416.298209, 428.285667]; 500 pages, 511 files, 34847456 bytes
+pass B analyses without a problem, so the timings are of a site that would publish: 0 error(s), 0 warning(s)
+pass cold render and stylesheet of 500 pages: 208.0 ms (limit 20000 ms)
+pass rustify-docs build of 500 pages into an empty output (median of 5): 419.5 ms (limit 20000 ms), 500 pages
+pass configuration change, all pages re-rendered and committed (median of 5): 59.4 ms (limit < 1000 ms; 940.6 ms left for watch, SSE and the browser)
+pass largest content page: HTML + CSS + scripts, gzip -9: 26388 bytes (zh/g04/page-024/index.html = 128318 raw / 15260 gzip + 11128 shared; limit 100000)
+pass home page: HTML + CSS + scripts, gzip -9: 22475 bytes (92554 raw / 11347 gzip + 11128 shared; limit 100000)
+report: docs/validation/docs-ssg-p1/code-review-r5-fix/performance.json
+site: /Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/perf/site
+mbx[savings]: 98.0 GiB in every checkout, 98.0 GiB on disk. arithmetic declined to comment.

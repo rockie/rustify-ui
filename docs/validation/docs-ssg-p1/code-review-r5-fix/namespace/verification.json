@@ -1,0 +1,3636 @@
+{
+  "before": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/r4-fix/before",
+  "after": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-cli/rustify-docs",
+  "binary_hashes": {
+    "before": "9fa8a2b428afb30612af32607691616be38c621265e22b859fde86ec386224c0",
+    "after": "8b1d5f104ea7ecd661d776649faf4d8be0acbda7796b1763eff234a6312ca84f"
+  },
+  "browser": "153.0.8010.12",
+  "work": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-r5-products-z5Ejn6",
+  "cases": [
+    {
+      "name": "svg-template-selfclose",
+      "base": "/",
+      "entry": "http://127.0.0.1:60239/",
+      "baseline": {
+        "exit": 1,
+        "report": {
+          "schema_version": 1,
+          "success": false,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            },
+            {
+              "severity": "error",
+              "rule": "broken-anchor",
+              "file": "content/index.md",
+              "line": 10,
+              "column": 1,
+              "message": "content/index.md has no heading `#visible`",
+              "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+            },
+            {
+              "severity": "error",
+              "rule": "broken-anchor",
+              "file": "content/index.md",
+              "line": 10,
+              "column": 21,
+              "message": "content/other.md has no heading `#visible`",
+              "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+            },
+            {
+              "severity": "error",
+              "rule": "broken-anchor",
+              "file": "content/other.md",
+              "line": 10,
+              "column": 1,
+              "message": "content/other.md has no heading `#visible`",
+              "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+            },
+            {
+              "severity": "error",
+              "rule": "broken-anchor",
+              "file": "content/other.md",
+              "line": 10,
+              "column": 21,
+              "message": "content/other.md has no heading `#visible`",
+              "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+            }
+          ],
+          "summary": {
+            "errors": 4,
+            "warnings": 1,
+            "pages": 0
+          }
+        },
+        "stderr": ""
+      },
+      "checked": {
+        "exit": 0,
+        "report": {
+          "schema_version": 1,
+          "success": true,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            }
+          ],
+          "summary": {
+            "errors": 0,
+            "warnings": 1,
+            "pages": 2
+          }
+        },
+        "stderr": ""
+      },
+      "built": {
+        "exit": 0,
+        "report": {
+          "schema_version": 1,
+          "success": true,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            }
+          ],
+          "summary": {
+            "errors": 0,
+            "warnings": 1,
+            "pages": 2,
+            "files": 11,
+            "bytes": 65382,
+            "largest": [
+              {
+                "path": "index.html",
+                "bytes": 4860
+              },
+              {
+                "path": "other/index.html",
+                "bytes": 4841
+              },
+              {
+                "path": "404.html",
+                "bytes": 4035
+              }
+            ],
+            "out": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-r5-products-z5Ejn6/root-svg-template-selfclose/dist",
+            "milliseconds": 21
+          }
+        },
+        "stderr": ""
+      },
+      "refused": {
+        "exit": 1,
+        "report": {
+          "schema_version": 1,
+          "success": false,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            },
+            {
+              "severity": "error",
+              "rule": "broken-anchor",
+              "file": "content/index.md",
+              "line": 12,
+              "column": 1,
+              "message": "content/index.md has no heading `#absent`",
+              "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+            },
+            {
+              "severity": "error",
+              "rule": "broken-anchor",
+              "file": "content/index.md",
+              "line": 12,
+              "column": 18,
+              "message": "content/other.md has no heading `#absent`",
+              "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+            }
+          ],
+          "summary": {
+            "errors": 2,
+            "warnings": 1,
+            "pages": 0
+          }
+        },
+        "stderr": ""
+      },
+      "output_preserved": true,
+      "actual": [
+        {
+          "id": "anchors",
+          "namespace": "http://www.w3.org/1999/xhtml",
+          "content": false
+        },
+        {
+          "id": "visible",
+          "namespace": "http://www.w3.org/1999/xhtml",
+          "content": false
+        }
+      ],
+      "errors": []
+    },
+    {
+      "name": "svg-template-pair",
+      "base": "/",
+      "entry": "http://127.0.0.1:60248/",
+      "baseline": {
+        "exit": 1,
+        "report": {
+          "schema_version": 1,
+          "success": false,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            },
+            {
+              "severity": "error",
+              "rule": "broken-anchor",
+              "file": "content/index.md",
+              "line": 11,
+              "column": 1,
+              "message": "content/index.md has no heading `#circle`",
+              "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+            },
+            {
+              "severity": "error",
+              "rule": "broken-anchor",
+              "file": "content/index.md",
+              "line": 11,
+              "column": 19,
+              "message": "content/other.md has no heading `#circle`",
+              "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+            },
+            {
+              "severity": "error",
+              "rule": "broken-anchor",
+              "file": "content/other.md",
+              "line": 11,
+              "column": 1,
+              "message": "content/other.md has no heading `#circle`",
+              "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+            },
+            {
+              "severity": "error",
+              "rule": "broken-anchor",
+              "file": "content/other.md",
+              "line": 11,
+              "column": 19,
+              "message": "content/other.md has no heading `#circle`",
+              "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+            }
+          ],
+          "summary": {
+            "errors": 4,
+            "warnings": 1,
+            "pages": 0
+          }
+        },
+        "stderr": ""
+      },
+      "checked": {
+        "exit": 0,
+        "report": {
+          "schema_version": 1,
+          "success": true,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            }
+          ],
+          "summary": {
+            "errors": 0,
+            "warnings": 1,
+            "pages": 2
+          }
+        },
+        "stderr": ""
+      },
+      "built": {
+        "exit": 0,
+        "report": {
+          "schema_version": 1,
+          "success": true,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            }
+          ],
+          "summary": {
+            "errors": 0,
+            "warnings": 1,
+            "pages": 2,
+            "files": 11,
+            "bytes": 65806,
+            "largest": [
+              {
+                "path": "index.html",
+                "bytes": 5072
+              },
+              {
+                "path": "other/index.html",
+                "bytes": 5053
+              },
+              {
+                "path": "404.html",
+                "bytes": 4035
+              }
+            ],
+            "out": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-r5-products-z5Ejn6/root-svg-template-pair/dist",
+            "milliseconds": 19
+          }
+        },
+        "stderr": ""
+      },
+      "refused": {
+        "exit": 1,
+        "report": {
+          "schema_version": 1,
+          "success": false,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            },
+            {
+              "severity": "error",
+              "rule": "broken-anchor",
+              "file": "content/index.md",
+              "line": 14,
+              "column": 1,
+              "message": "content/index.md has no heading `#absent`",
+              "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+            },
+            {
+              "severity": "error",
+              "rule": "broken-anchor",
+              "file": "content/index.md",
+              "line": 14,
+              "column": 18,
+              "message": "content/other.md has no heading `#absent`",
+              "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+            }
+          ],
+          "summary": {
+            "errors": 2,
+            "warnings": 1,
+            "pages": 0
+          }
+        },
+        "stderr": ""
+      },
+      "output_preserved": true,
+      "actual": [
+        {
+          "id": "anchors",
+          "namespace": "http://www.w3.org/1999/xhtml",
+          "content": false
+        },
+        {
+          "id": "svg-holder",
+          "namespace": "http://www.w3.org/2000/svg",
+          "content": false
+        },
+        {
+          "id": "circle",
+          "namespace": "http://www.w3.org/2000/svg",
+          "content": false
+        },
+        {
+          "id": "visible",
+          "namespace": "http://www.w3.org/1999/xhtml",
+          "content": false
+        }
+      ],
+      "errors": []
+    },
+    {
+      "name": "nested-svg-template",
+      "base": "/",
+      "entry": "http://127.0.0.1:60403/",
+      "baseline": {
+        "exit": 1,
+        "report": {
+          "schema_version": 1,
+          "success": false,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            },
+            {
+              "severity": "error",
+              "rule": "broken-anchor",
+              "file": "content/index.md",
+              "line": 11,
+              "column": 1,
+              "message": "content/index.md has no heading `#visible`",
+              "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+            },
+            {
+              "severity": "error",
+              "rule": "broken-anchor",
+              "file": "content/index.md",
+              "line": 11,
+              "column": 21,
+              "message": "content/other.md has no heading `#visible`",
+              "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+            },
+            {
+              "severity": "error",
+              "rule": "broken-anchor",
+              "file": "content/other.md",
+              "line": 11,
+              "column": 1,
+              "message": "content/other.md has no heading `#visible`",
+              "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+            },
+            {
+              "severity": "error",
+              "rule": "broken-anchor",
+              "file": "content/other.md",
+              "line": 11,
+              "column": 21,
+              "message": "content/other.md has no heading `#visible`",
+              "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+            }
+          ],
+          "summary": {
+            "errors": 4,
+            "warnings": 1,
+            "pages": 0
+          }
+        },
+        "stderr": ""
+      },
+      "checked": {
+        "exit": 0,
+        "report": {
+          "schema_version": 1,
+          "success": true,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            }
+          ],
+          "summary": {
+            "errors": 0,
+            "warnings": 1,
+            "pages": 2
+          }
+        },
+        "stderr": ""
+      },
+      "built": {
+        "exit": 0,
+        "report": {
+          "schema_version": 1,
+          "success": true,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            }
+          ],
+          "summary": {
+            "errors": 0,
+            "warnings": 1,
+            "pages": 2,
+            "files": 11,
+            "bytes": 65590,
+            "largest": [
+              {
+                "path": "index.html",
+                "bytes": 4964
+              },
+              {
+                "path": "other/index.html",
+                "bytes": 4945
+              },
+              {
+                "path": "404.html",
+                "bytes": 4035
+              }
+            ],
+            "out": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-r5-products-z5Ejn6/root-nested-svg-template/dist",
+            "milliseconds": 21
+          }
+        },
+        "stderr": ""
+      },
+      "refused": {
+        "exit": 1,
+        "report": {
+          "schema_version": 1,
+          "success": false,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            },
+            {
+              "severity": "error",
+              "rule": "broken-anchor",
+              "file": "content/index.md",
+              "line": 13,
+              "column": 1,
+              "message": "content/index.md has no heading `#absent`",
+              "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+            },
+            {
+              "severity": "error",
+              "rule": "broken-anchor",
+              "file": "content/index.md",
+              "line": 13,
+              "column": 18,
+              "message": "content/other.md has no heading `#absent`",
+              "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+            }
+          ],
+          "summary": {
+            "errors": 2,
+            "warnings": 1,
+            "pages": 0
+          }
+        },
+        "stderr": ""
+      },
+      "output_preserved": true,
+      "actual": [
+        {
+          "id": "anchors",
+          "namespace": "http://www.w3.org/1999/xhtml",
+          "content": false
+        },
+        {
+          "id": "holder",
+          "namespace": "http://www.w3.org/1999/xhtml",
+          "content": true
+        },
+        {
+          "id": "visible",
+          "namespace": "http://www.w3.org/1999/xhtml",
+          "content": false
+        }
+      ],
+      "errors": []
+    },
+    {
+      "name": "html-template-control",
+      "base": "/",
+      "entry": "http://127.0.0.1:60414/",
+      "baseline": {
+        "exit": 0,
+        "report": {
+          "schema_version": 1,
+          "success": true,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            }
+          ],
+          "summary": {
+            "errors": 0,
+            "warnings": 1,
+            "pages": 2,
+            "files": 11,
+            "bytes": 65694,
+            "largest": [
+              {
+                "path": "index.html",
+                "bytes": 5016
+              },
+              {
+                "path": "other/index.html",
+                "bytes": 4997
+              },
+              {
+                "path": "404.html",
+                "bytes": 4035
+              }
+            ],
+            "out": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-r5-products-z5Ejn6/root-html-template-control/before-dist",
+            "milliseconds": 22
+          }
+        },
+        "stderr": ""
+      },
+      "checked": {
+        "exit": 0,
+        "report": {
+          "schema_version": 1,
+          "success": true,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            }
+          ],
+          "summary": {
+            "errors": 0,
+            "warnings": 1,
+            "pages": 2
+          }
+        },
+        "stderr": ""
+      },
+      "built": {
+        "exit": 0,
+        "report": {
+          "schema_version": 1,
+          "success": true,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            }
+          ],
+          "summary": {
+            "errors": 0,
+            "warnings": 1,
+            "pages": 2,
+            "files": 11,
+            "bytes": 65694,
+            "largest": [
+              {
+                "path": "index.html",
+                "bytes": 5016
+              },
+              {
+                "path": "other/index.html",
+                "bytes": 4997
+              },
+              {
+                "path": "404.html",
+                "bytes": 4035
+              }
+            ],
+            "out": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-r5-products-z5Ejn6/root-html-template-control/dist",
+            "milliseconds": 21
+          }
+        },
+        "stderr": ""
+      },
+      "refused": {
+        "exit": 1,
+        "report": {
+          "schema_version": 1,
+          "success": false,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            },
+            {
+              "severity": "error",
+              "rule": "broken-anchor",
+              "file": "content/index.md",
+              "line": 13,
+              "column": 1,
+              "message": "content/index.md has no heading `#ghost`",
+              "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+            },
+            {
+              "severity": "error",
+              "rule": "broken-anchor",
+              "file": "content/index.md",
+              "line": 13,
+              "column": 17,
+              "message": "content/other.md has no heading `#ghost`",
+              "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+            }
+          ],
+          "summary": {
+            "errors": 2,
+            "warnings": 1,
+            "pages": 0
+          }
+        },
+        "stderr": ""
+      },
+      "output_preserved": true,
+      "actual": [
+        {
+          "id": "anchors",
+          "namespace": "http://www.w3.org/1999/xhtml",
+          "content": false
+        },
+        {
+          "id": "holder",
+          "namespace": "http://www.w3.org/1999/xhtml",
+          "content": true
+        },
+        {
+          "id": "visible",
+          "namespace": "http://www.w3.org/1999/xhtml",
+          "content": false
+        }
+      ],
+      "errors": []
+    },
+    {
+      "name": "html-template-selfclose",
+      "base": "/",
+      "entry": "http://127.0.0.1:60489/",
+      "baseline": {
+        "exit": 0,
+        "report": {
+          "schema_version": 1,
+          "success": true,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            }
+          ],
+          "summary": {
+            "errors": 0,
+            "warnings": 1,
+            "pages": 2,
+            "files": 11,
+            "bytes": 65608,
+            "largest": [
+              {
+                "path": "index.html",
+                "bytes": 4973
+              },
+              {
+                "path": "other/index.html",
+                "bytes": 4954
+              },
+              {
+                "path": "404.html",
+                "bytes": 4035
+              }
+            ],
+            "out": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-r5-products-z5Ejn6/root-html-template-selfclose/before-dist",
+            "milliseconds": 21
+          }
+        },
+        "stderr": ""
+      },
+      "checked": {
+        "exit": 0,
+        "report": {
+          "schema_version": 1,
+          "success": true,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            }
+          ],
+          "summary": {
+            "errors": 0,
+            "warnings": 1,
+            "pages": 2
+          }
+        },
+        "stderr": ""
+      },
+      "built": {
+        "exit": 0,
+        "report": {
+          "schema_version": 1,
+          "success": true,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            }
+          ],
+          "summary": {
+            "errors": 0,
+            "warnings": 1,
+            "pages": 2,
+            "files": 11,
+            "bytes": 65608,
+            "largest": [
+              {
+                "path": "index.html",
+                "bytes": 4973
+              },
+              {
+                "path": "other/index.html",
+                "bytes": 4954
+              },
+              {
+                "path": "404.html",
+                "bytes": 4035
+              }
+            ],
+            "out": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-r5-products-z5Ejn6/root-html-template-selfclose/dist",
+            "milliseconds": 21
+          }
+        },
+        "stderr": ""
+      },
+      "refused": {
+        "exit": 1,
+        "report": {
+          "schema_version": 1,
+          "success": false,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            },
+            {
+              "severity": "error",
+              "rule": "broken-anchor",
+              "file": "content/index.md",
+              "line": 13,
+              "column": 1,
+              "message": "content/index.md has no heading `#ghost`",
+              "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+            },
+            {
+              "severity": "error",
+              "rule": "broken-anchor",
+              "file": "content/index.md",
+              "line": 13,
+              "column": 17,
+              "message": "content/other.md has no heading `#ghost`",
+              "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+            }
+          ],
+          "summary": {
+            "errors": 2,
+            "warnings": 1,
+            "pages": 0
+          }
+        },
+        "stderr": ""
+      },
+      "output_preserved": true,
+      "actual": [
+        {
+          "id": "anchors",
+          "namespace": "http://www.w3.org/1999/xhtml",
+          "content": false
+        },
+        {
+          "id": "holder",
+          "namespace": "http://www.w3.org/1999/xhtml",
+          "content": true
+        },
+        {
+          "id": "visible",
+          "namespace": "http://www.w3.org/1999/xhtml",
+          "content": false
+        }
+      ],
+      "errors": []
+    },
+    {
+      "name": "foreignObject",
+      "base": "/",
+      "entry": "http://127.0.0.1:60498/",
+      "baseline": {
+        "exit": 0,
+        "report": {
+          "schema_version": 1,
+          "success": true,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            }
+          ],
+          "summary": {
+            "errors": 0,
+            "warnings": 1,
+            "pages": 2,
+            "files": 11,
+            "bytes": 65748,
+            "largest": [
+              {
+                "path": "index.html",
+                "bytes": 5043
+              },
+              {
+                "path": "other/index.html",
+                "bytes": 5024
+              },
+              {
+                "path": "404.html",
+                "bytes": 4035
+              }
+            ],
+            "out": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-r5-products-z5Ejn6/root-foreignObject/before-dist",
+            "milliseconds": 20
+          }
+        },
+        "stderr": ""
+      },
+      "checked": {
+        "exit": 0,
+        "report": {
+          "schema_version": 1,
+          "success": true,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            }
+          ],
+          "summary": {
+            "errors": 0,
+            "warnings": 1,
+            "pages": 2
+          }
+        },
+        "stderr": ""
+      },
+      "built": {
+        "exit": 0,
+        "report": {
+          "schema_version": 1,
+          "success": true,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            }
+          ],
+          "summary": {
+            "errors": 0,
+            "warnings": 1,
+            "pages": 2,
+            "files": 11,
+            "bytes": 65748,
+            "largest": [
+              {
+                "path": "index.html",
+                "bytes": 5043
+              },
+              {
+                "path": "other/index.html",
+                "bytes": 5024
+              },
+              {
+                "path": "404.html",
+                "bytes": 4035
+              }
+            ],
+            "out": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-r5-products-z5Ejn6/root-foreignObject/dist",
+            "milliseconds": 19
+          }
+        },
+        "stderr": ""
+      },
+      "refused": {
+        "exit": 1,
+        "report": {
+          "schema_version": 1,
+          "success": false,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            },
+            {
+              "severity": "error",
+              "rule": "broken-anchor",
+              "file": "content/index.md",
+              "line": 13,
+              "column": 1,
+              "message": "content/index.md has no heading `#ghost`",
+              "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+            },
+            {
+              "severity": "error",
+              "rule": "broken-anchor",
+              "file": "content/index.md",
+              "line": 13,
+              "column": 17,
+              "message": "content/other.md has no heading `#ghost`",
+              "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+            }
+          ],
+          "summary": {
+            "errors": 2,
+            "warnings": 1,
+            "pages": 0
+          }
+        },
+        "stderr": ""
+      },
+      "output_preserved": true,
+      "actual": [
+        {
+          "id": "anchors",
+          "namespace": "http://www.w3.org/1999/xhtml",
+          "content": false
+        },
+        {
+          "id": "holder",
+          "namespace": "http://www.w3.org/1999/xhtml",
+          "content": true
+        },
+        {
+          "id": "visible",
+          "namespace": "http://www.w3.org/1999/xhtml",
+          "content": false
+        }
+      ],
+      "errors": []
+    },
+    {
+      "name": "desc",
+      "base": "/",
+      "entry": "http://127.0.0.1:60507/",
+      "baseline": {
+        "exit": 0,
+        "report": {
+          "schema_version": 1,
+          "success": true,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            }
+          ],
+          "summary": {
+            "errors": 0,
+            "warnings": 1,
+            "pages": 2,
+            "files": 11,
+            "bytes": 65712,
+            "largest": [
+              {
+                "path": "index.html",
+                "bytes": 5025
+              },
+              {
+                "path": "other/index.html",
+                "bytes": 5006
+              },
+              {
+                "path": "404.html",
+                "bytes": 4035
+              }
+            ],
+            "out": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-r5-products-z5Ejn6/root-desc/before-dist",
+            "milliseconds": 20
+          }
+        },
+        "stderr": ""
+      },
+      "checked": {
+        "exit": 0,
+        "report": {
+          "schema_version": 1,
+          "success": true,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            }
+          ],
+          "summary": {
+            "errors": 0,
+            "warnings": 1,
+            "pages": 2
+          }
+        },
+        "stderr": ""
+      },
+      "built": {
+        "exit": 0,
+        "report": {
+          "schema_version": 1,
+          "success": true,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            }
+          ],
+          "summary": {
+            "errors": 0,
+            "warnings": 1,
+            "pages": 2,
+            "files": 11,
+            "bytes": 65712,
+            "largest": [
+              {
+                "path": "index.html",
+                "bytes": 5025
+              },
+              {
+                "path": "other/index.html",
+                "bytes": 5006
+              },
+              {
+                "path": "404.html",
+                "bytes": 4035
+              }
+            ],
+            "out": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-r5-products-z5Ejn6/root-desc/dist",
+            "milliseconds": 20
+          }
+        },
+        "stderr": ""
+      },
+      "refused": {
+        "exit": 1,
+        "report": {
+          "schema_version": 1,
+          "success": false,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            },
+            {
+              "severity": "error",
+              "rule": "broken-anchor",
+              "file": "content/index.md",
+              "line": 13,
+              "column": 1,
+              "message": "content/index.md has no heading `#ghost`",
+              "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+            },
+            {
+              "severity": "error",
+              "rule": "broken-anchor",
+              "file": "content/index.md",
+              "line": 13,
+              "column": 17,
+              "message": "content/other.md has no heading `#ghost`",
+              "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+            }
+          ],
+          "summary": {
+            "errors": 2,
+            "warnings": 1,
+            "pages": 0
+          }
+        },
+        "stderr": ""
+      },
+      "output_preserved": true,
+      "actual": [
+        {
+          "id": "anchors",
+          "namespace": "http://www.w3.org/1999/xhtml",
+          "content": false
+        },
+        {
+          "id": "holder",
+          "namespace": "http://www.w3.org/1999/xhtml",
+          "content": true
+        },
+        {
+          "id": "visible",
+          "namespace": "http://www.w3.org/1999/xhtml",
+          "content": false
+        }
+      ],
+      "errors": []
+    },
+    {
+      "name": "title",
+      "base": "/",
+      "entry": "http://127.0.0.1:60516/",
+      "baseline": {
+        "exit": 1,
+        "report": {
+          "schema_version": 1,
+          "success": false,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            },
+            {
+              "severity": "error",
+              "rule": "broken-anchor",
+              "file": "content/index.md",
+              "line": 10,
+              "column": 1,
+              "message": "content/index.md has no heading `#holder`",
+              "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+            },
+            {
+              "severity": "error",
+              "rule": "broken-anchor",
+              "file": "content/index.md",
+              "line": 10,
+              "column": 19,
+              "message": "content/other.md has no heading `#holder`",
+              "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+            },
+            {
+              "severity": "error",
+              "rule": "broken-anchor",
+              "file": "content/other.md",
+              "line": 10,
+              "column": 1,
+              "message": "content/other.md has no heading `#holder`",
+              "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+            },
+            {
+              "severity": "error",
+              "rule": "broken-anchor",
+              "file": "content/other.md",
+              "line": 10,
+              "column": 19,
+              "message": "content/other.md has no heading `#holder`",
+              "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+            }
+          ],
+          "summary": {
+            "errors": 4,
+            "warnings": 1,
+            "pages": 0
+          }
+        },
+        "stderr": ""
+      },
+      "checked": {
+        "exit": 0,
+        "report": {
+          "schema_version": 1,
+          "success": true,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            }
+          ],
+          "summary": {
+            "errors": 0,
+            "warnings": 1,
+            "pages": 2
+          }
+        },
+        "stderr": ""
+      },
+      "built": {
+        "exit": 0,
+        "report": {
+          "schema_version": 1,
+          "success": true,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            }
+          ],
+          "summary": {
+            "errors": 0,
+            "warnings": 1,
+            "pages": 2,
+            "files": 11,
+            "bytes": 65716,
+            "largest": [
+              {
+                "path": "index.html",
+                "bytes": 5027
+              },
+              {
+                "path": "other/index.html",
+                "bytes": 5008
+              },
+              {
+                "path": "404.html",
+                "bytes": 4035
+              }
+            ],
+            "out": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-r5-products-z5Ejn6/root-title/dist",
+            "milliseconds": 20
+          }
+        },
+        "stderr": ""
+      },
+      "refused": {
+        "exit": 1,
+        "report": {
+          "schema_version": 1,
+          "success": false,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            },
+            {
+              "severity": "error",
+              "rule": "broken-anchor",
+              "file": "content/index.md",
+              "line": 13,
+              "column": 1,
+              "message": "content/index.md has no heading `#ghost`",
+              "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+            },
+            {
+              "severity": "error",
+              "rule": "broken-anchor",
+              "file": "content/index.md",
+              "line": 13,
+              "column": 17,
+              "message": "content/other.md has no heading `#ghost`",
+              "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+            }
+          ],
+          "summary": {
+            "errors": 2,
+            "warnings": 1,
+            "pages": 0
+          }
+        },
+        "stderr": ""
+      },
+      "output_preserved": true,
+      "actual": [
+        {
+          "id": "anchors",
+          "namespace": "http://www.w3.org/1999/xhtml",
+          "content": false
+        },
+        {
+          "id": "holder",
+          "namespace": "http://www.w3.org/1999/xhtml",
+          "content": true
+        },
+        {
+          "id": "visible",
+          "namespace": "http://www.w3.org/1999/xhtml",
+          "content": false
+        }
+      ],
+      "errors": []
+    },
+    {
+      "name": "math-text",
+      "base": "/",
+      "entry": "http://127.0.0.1:60525/",
+      "baseline": {
+        "exit": 0,
+        "report": {
+          "schema_version": 1,
+          "success": true,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            }
+          ],
+          "summary": {
+            "errors": 0,
+            "warnings": 1,
+            "pages": 2,
+            "files": 11,
+            "bytes": 65720,
+            "largest": [
+              {
+                "path": "index.html",
+                "bytes": 5029
+              },
+              {
+                "path": "other/index.html",
+                "bytes": 5010
+              },
+              {
+                "path": "404.html",
+                "bytes": 4035
+              }
+            ],
+            "out": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-r5-products-z5Ejn6/root-math-text/before-dist",
+            "milliseconds": 21
+          }
+        },
+        "stderr": ""
+      },
+      "checked": {
+        "exit": 0,
+        "report": {
+          "schema_version": 1,
+          "success": true,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            }
+          ],
+          "summary": {
+            "errors": 0,
+            "warnings": 1,
+            "pages": 2
+          }
+        },
+        "stderr": ""
+      },
+      "built": {
+        "exit": 0,
+        "report": {
+          "schema_version": 1,
+          "success": true,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            }
+          ],
+          "summary": {
+            "errors": 0,
+            "warnings": 1,
+            "pages": 2,
+            "files": 11,
+            "bytes": 65720,
+            "largest": [
+              {
+                "path": "index.html",
+                "bytes": 5029
+              },
+              {
+                "path": "other/index.html",
+                "bytes": 5010
+              },
+              {
+                "path": "404.html",
+                "bytes": 4035
+              }
+            ],
+            "out": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-r5-products-z5Ejn6/root-math-text/dist",
+            "milliseconds": 21
+          }
+        },
+        "stderr": ""
+      },
+      "refused": {
+        "exit": 1,
+        "report": {
+          "schema_version": 1,
+          "success": false,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            },
+            {
+              "severity": "error",
+              "rule": "broken-anchor",
+              "file": "content/index.md",
+              "line": 13,
+              "column": 1,
+              "message": "content/index.md has no heading `#ghost`",
+              "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+            },
+            {
+              "severity": "error",
+              "rule": "broken-anchor",
+              "file": "content/index.md",
+              "line": 13,
+              "column": 17,
+              "message": "content/other.md has no heading `#ghost`",
+              "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+            }
+          ],
+          "summary": {
+            "errors": 2,
+            "warnings": 1,
+            "pages": 0
+          }
+        },
+        "stderr": ""
+      },
+      "output_preserved": true,
+      "actual": [
+        {
+          "id": "anchors",
+          "namespace": "http://www.w3.org/1999/xhtml",
+          "content": false
+        },
+        {
+          "id": "holder",
+          "namespace": "http://www.w3.org/1999/xhtml",
+          "content": true
+        },
+        {
+          "id": "visible",
+          "namespace": "http://www.w3.org/1999/xhtml",
+          "content": false
+        }
+      ],
+      "errors": []
+    },
+    {
+      "name": "math-annotation",
+      "base": "/",
+      "entry": "http://127.0.0.1:60535/",
+      "baseline": {
+        "exit": 0,
+        "report": {
+          "schema_version": 1,
+          "success": true,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            }
+          ],
+          "summary": {
+            "errors": 0,
+            "warnings": 1,
+            "pages": 2,
+            "files": 11,
+            "bytes": 65798,
+            "largest": [
+              {
+                "path": "index.html",
+                "bytes": 5068
+              },
+              {
+                "path": "other/index.html",
+                "bytes": 5049
+              },
+              {
+                "path": "404.html",
+                "bytes": 4035
+              }
+            ],
+            "out": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-r5-products-z5Ejn6/root-math-annotation/before-dist",
+            "milliseconds": 31
+          }
+        },
+        "stderr": ""
+      },
+      "checked": {
+        "exit": 0,
+        "report": {
+          "schema_version": 1,
+          "success": true,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            }
+          ],
+          "summary": {
+            "errors": 0,
+            "warnings": 1,
+            "pages": 2
+          }
+        },
+        "stderr": ""
+      },
+      "built": {
+        "exit": 0,
+        "report": {
+          "schema_version": 1,
+          "success": true,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            }
+          ],
+          "summary": {
+            "errors": 0,
+            "warnings": 1,
+            "pages": 2,
+            "files": 11,
+            "bytes": 65798,
+            "largest": [
+              {
+                "path": "index.html",
+                "bytes": 5068
+              },
+              {
+                "path": "other/index.html",
+                "bytes": 5049
+              },
+              {
+                "path": "404.html",
+                "bytes": 4035
+              }
+            ],
+            "out": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-r5-products-z5Ejn6/root-math-annotation/dist",
+            "milliseconds": 21
+          }
+        },
+        "stderr": ""
+      },
+      "refused": {
+        "exit": 1,
+        "report": {
+          "schema_version": 1,
+          "success": false,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            },
+            {
+              "severity": "error",
+              "rule": "broken-anchor",
+              "file": "content/index.md",
+              "line": 13,
+              "column": 1,
+              "message": "content/index.md has no heading `#ghost`",
+              "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+            },
+            {
+              "severity": "error",
+              "rule": "broken-anchor",
+              "file": "content/index.md",
+              "line": 13,
+              "column": 17,
+              "message": "content/other.md has no heading `#ghost`",
+              "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+            }
+          ],
+          "summary": {
+            "errors": 2,
+            "warnings": 1,
+            "pages": 0
+          }
+        },
+        "stderr": ""
+      },
+      "output_preserved": true,
+      "actual": [
+        {
+          "id": "anchors",
+          "namespace": "http://www.w3.org/1999/xhtml",
+          "content": false
+        },
+        {
+          "id": "holder",
+          "namespace": "http://www.w3.org/1999/xhtml",
+          "content": true
+        },
+        {
+          "id": "visible",
+          "namespace": "http://www.w3.org/1999/xhtml",
+          "content": false
+        }
+      ],
+      "errors": []
+    },
+    {
+      "name": "svg-template-selfclose",
+      "base": "/docs/",
+      "entry": "http://127.0.0.1:60580/docs/",
+      "baseline": {
+        "exit": 1,
+        "report": {
+          "schema_version": 1,
+          "success": false,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            },
+            {
+              "severity": "error",
+              "rule": "broken-anchor",
+              "file": "content/index.md",
+              "line": 10,
+              "column": 1,
+              "message": "content/index.md has no heading `#visible`",
+              "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+            },
+            {
+              "severity": "error",
+              "rule": "broken-anchor",
+              "file": "content/index.md",
+              "line": 10,
+              "column": 21,
+              "message": "content/other.md has no heading `#visible`",
+              "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+            },
+            {
+              "severity": "error",
+              "rule": "broken-anchor",
+              "file": "content/other.md",
+              "line": 10,
+              "column": 1,
+              "message": "content/other.md has no heading `#visible`",
+              "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+            },
+            {
+              "severity": "error",
+              "rule": "broken-anchor",
+              "file": "content/other.md",
+              "line": 10,
+              "column": 21,
+              "message": "content/other.md has no heading `#visible`",
+              "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+            }
+          ],
+          "summary": {
+            "errors": 4,
+            "warnings": 1,
+            "pages": 0
+          }
+        },
+        "stderr": ""
+      },
+      "checked": {
+        "exit": 0,
+        "report": {
+          "schema_version": 1,
+          "success": true,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            }
+          ],
+          "summary": {
+            "errors": 0,
+            "warnings": 1,
+            "pages": 2
+          }
+        },
+        "stderr": ""
+      },
+      "built": {
+        "exit": 0,
+        "report": {
+          "schema_version": 1,
+          "success": true,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            }
+          ],
+          "summary": {
+            "errors": 0,
+            "warnings": 1,
+            "pages": 2,
+            "files": 11,
+            "bytes": 65602,
+            "largest": [
+              {
+                "path": "index.html",
+                "bytes": 4935
+              },
+              {
+                "path": "other/index.html",
+                "bytes": 4916
+              },
+              {
+                "path": "404.html",
+                "bytes": 4085
+              }
+            ],
+            "out": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-r5-products-z5Ejn6/subpath-svg-template-selfclose/dist",
+            "milliseconds": 22
+          }
+        },
+        "stderr": ""
+      },
+      "refused": {
+        "exit": 1,
+        "report": {
+          "schema_version": 1,
+          "success": false,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            },
+            {
+              "severity": "error",
+              "rule": "broken-anchor",
+              "file": "content/index.md",
+              "line": 12,
+              "column": 1,
+              "message": "content/index.md has no heading `#absent`",
+              "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+            },
+            {
+              "severity": "error",
+              "rule": "broken-anchor",
+              "file": "content/index.md",
+              "line": 12,
+              "column": 18,
+              "message": "content/other.md has no heading `#absent`",
+              "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+            }
+          ],
+          "summary": {
+            "errors": 2,
+            "warnings": 1,
+            "pages": 0
+          }
+        },
+        "stderr": ""
+      },
+      "output_preserved": true,
+      "actual": [
+        {
+          "id": "anchors",
+          "namespace": "http://www.w3.org/1999/xhtml",
+          "content": false
+        },
+        {
+          "id": "visible",
+          "namespace": "http://www.w3.org/1999/xhtml",
+          "content": false
+        }
+      ],
+      "errors": []
+    },
+    {
+      "name": "svg-template-pair",
+      "base": "/docs/",
+      "entry": "http://127.0.0.1:60591/docs/",
+      "baseline": {
+        "exit": 1,
+        "report": {
+          "schema_version": 1,
+          "success": false,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            },
+            {
+              "severity": "error",
+              "rule": "broken-anchor",
+              "file": "content/index.md",
+              "line": 11,
+              "column": 1,
+              "message": "content/index.md has no heading `#circle`",
+              "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+            },
+            {
+              "severity": "error",
+              "rule": "broken-anchor",
+              "file": "content/index.md",
+              "line": 11,
+              "column": 19,
+              "message": "content/other.md has no heading `#circle`",
+              "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+            },
+            {
+              "severity": "error",
+              "rule": "broken-anchor",
+              "file": "content/other.md",
+              "line": 11,
+              "column": 1,
+              "message": "content/other.md has no heading `#circle`",
+              "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+            },
+            {
+              "severity": "error",
+              "rule": "broken-anchor",
+              "file": "content/other.md",
+              "line": 11,
+              "column": 19,
+              "message": "content/other.md has no heading `#circle`",
+              "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+            }
+          ],
+          "summary": {
+            "errors": 4,
+            "warnings": 1,
+            "pages": 0
+          }
+        },
+        "stderr": ""
+      },
+      "checked": {
+        "exit": 0,
+        "report": {
+          "schema_version": 1,
+          "success": true,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            }
+          ],
+          "summary": {
+            "errors": 0,
+            "warnings": 1,
+            "pages": 2
+          }
+        },
+        "stderr": ""
+      },
+      "built": {
+        "exit": 0,
+        "report": {
+          "schema_version": 1,
+          "success": true,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            }
+          ],
+          "summary": {
+            "errors": 0,
+            "warnings": 1,
+            "pages": 2,
+            "files": 11,
+            "bytes": 66046,
+            "largest": [
+              {
+                "path": "index.html",
+                "bytes": 5157
+              },
+              {
+                "path": "other/index.html",
+                "bytes": 5138
+              },
+              {
+                "path": "404.html",
+                "bytes": 4085
+              }
+            ],
+            "out": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-r5-products-z5Ejn6/subpath-svg-template-pair/dist",
+            "milliseconds": 20
+          }
+        },
+        "stderr": ""
+      },
+      "refused": {
+        "exit": 1,
+        "report": {
+          "schema_version": 1,
+          "success": false,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            },
+            {
+              "severity": "error",
+              "rule": "broken-anchor",
+              "file": "content/index.md",
+              "line": 14,
+              "column": 1,
+              "message": "content/index.md has no heading `#absent`",
+              "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+            },
+            {
+              "severity": "error",
+              "rule": "broken-anchor",
+              "file": "content/index.md",
+              "line": 14,
+              "column": 18,
+              "message": "content/other.md has no heading `#absent`",
+              "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+            }
+          ],
+          "summary": {
+            "errors": 2,
+            "warnings": 1,
+            "pages": 0
+          }
+        },
+        "stderr": ""
+      },
+      "output_preserved": true,
+      "actual": [
+        {
+          "id": "anchors",
+          "namespace": "http://www.w3.org/1999/xhtml",
+          "content": false
+        },
+        {
+          "id": "svg-holder",
+          "namespace": "http://www.w3.org/2000/svg",
+          "content": false
+        },
+        {
+          "id": "circle",
+          "namespace": "http://www.w3.org/2000/svg",
+          "content": false
+        },
+        {
+          "id": "visible",
+          "namespace": "http://www.w3.org/1999/xhtml",
+          "content": false
+        }
+      ],
+      "errors": []
+    },
+    {
+      "name": "nested-svg-template",
+      "base": "/docs/",
+      "entry": "http://127.0.0.1:60600/docs/",
+      "baseline": {
+        "exit": 1,
+        "report": {
+          "schema_version": 1,
+          "success": false,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            },
+            {
+              "severity": "error",
+              "rule": "broken-anchor",
+              "file": "content/index.md",
+              "line": 11,
+              "column": 1,
+              "message": "content/index.md has no heading `#visible`",
+              "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+            },
+            {
+              "severity": "error",
+              "rule": "broken-anchor",
+              "file": "content/index.md",
+              "line": 11,
+              "column": 21,
+              "message": "content/other.md has no heading `#visible`",
+              "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+            },
+            {
+              "severity": "error",
+              "rule": "broken-anchor",
+              "file": "content/other.md",
+              "line": 11,
+              "column": 1,
+              "message": "content/other.md has no heading `#visible`",
+              "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+            },
+            {
+              "severity": "error",
+              "rule": "broken-anchor",
+              "file": "content/other.md",
+              "line": 11,
+              "column": 21,
+              "message": "content/other.md has no heading `#visible`",
+              "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+            }
+          ],
+          "summary": {
+            "errors": 4,
+            "warnings": 1,
+            "pages": 0
+          }
+        },
+        "stderr": ""
+      },
+      "checked": {
+        "exit": 0,
+        "report": {
+          "schema_version": 1,
+          "success": true,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            }
+          ],
+          "summary": {
+            "errors": 0,
+            "warnings": 1,
+            "pages": 2
+          }
+        },
+        "stderr": ""
+      },
+      "built": {
+        "exit": 0,
+        "report": {
+          "schema_version": 1,
+          "success": true,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            }
+          ],
+          "summary": {
+            "errors": 0,
+            "warnings": 1,
+            "pages": 2,
+            "files": 11,
+            "bytes": 65820,
+            "largest": [
+              {
+                "path": "index.html",
+                "bytes": 5044
+              },
+              {
+                "path": "other/index.html",
+                "bytes": 5025
+              },
+              {
+                "path": "404.html",
+                "bytes": 4085
+              }
+            ],
+            "out": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-r5-products-z5Ejn6/subpath-nested-svg-template/dist",
+            "milliseconds": 20
+          }
+        },
+        "stderr": ""
+      },
+      "refused": {
+        "exit": 1,
+        "report": {
+          "schema_version": 1,
+          "success": false,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            },
+            {
+              "severity": "error",
+              "rule": "broken-anchor",
+              "file": "content/index.md",
+              "line": 13,
+              "column": 1,
+              "message": "content/index.md has no heading `#absent`",
+              "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+            },
+            {
+              "severity": "error",
+              "rule": "broken-anchor",
+              "file": "content/index.md",
+              "line": 13,
+              "column": 18,
+              "message": "content/other.md has no heading `#absent`",
+              "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+            }
+          ],
+          "summary": {
+            "errors": 2,
+            "warnings": 1,
+            "pages": 0
+          }
+        },
+        "stderr": ""
+      },
+      "output_preserved": true,
+      "actual": [
+        {
+          "id": "anchors",
+          "namespace": "http://www.w3.org/1999/xhtml",
+          "content": false
+        },
+        {
+          "id": "holder",
+          "namespace": "http://www.w3.org/1999/xhtml",
+          "content": true
+        },
+        {
+          "id": "visible",
+          "namespace": "http://www.w3.org/1999/xhtml",
+          "content": false
+        }
+      ],
+      "errors": []
+    },
+    {
+      "name": "html-template-control",
+      "base": "/docs/",
+      "entry": "http://127.0.0.1:60613/docs/",
+      "baseline": {
+        "exit": 0,
+        "report": {
+          "schema_version": 1,
+          "success": true,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            }
+          ],
+          "summary": {
+            "errors": 0,
+            "warnings": 1,
+            "pages": 2,
+            "files": 11,
+            "bytes": 65924,
+            "largest": [
+              {
+                "path": "index.html",
+                "bytes": 5096
+              },
+              {
+                "path": "other/index.html",
+                "bytes": 5077
+              },
+              {
+                "path": "404.html",
+                "bytes": 4085
+              }
+            ],
+            "out": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-r5-products-z5Ejn6/subpath-html-template-control/before-dist",
+            "milliseconds": 21
+          }
+        },
+        "stderr": ""
+      },
+      "checked": {
+        "exit": 0,
+        "report": {
+          "schema_version": 1,
+          "success": true,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            }
+          ],
+          "summary": {
+            "errors": 0,
+            "warnings": 1,
+            "pages": 2
+          }
+        },
+        "stderr": ""
+      },
+      "built": {
+        "exit": 0,
+        "report": {
+          "schema_version": 1,
+          "success": true,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            }
+          ],
+          "summary": {
+            "errors": 0,
+            "warnings": 1,
+            "pages": 2,
+            "files": 11,
+            "bytes": 65924,
+            "largest": [
+              {
+                "path": "index.html",
+                "bytes": 5096
+              },
+              {
+                "path": "other/index.html",
+                "bytes": 5077
+              },
+              {
+                "path": "404.html",
+                "bytes": 4085
+              }
+            ],
+            "out": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-r5-products-z5Ejn6/subpath-html-template-control/dist",
+            "milliseconds": 20
+          }
+        },
+        "stderr": ""
+      },
+      "refused": {
+        "exit": 1,
+        "report": {
+          "schema_version": 1,
+          "success": false,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            },
+            {
+              "severity": "error",
+              "rule": "broken-anchor",
+              "file": "content/index.md",
+              "line": 13,
+              "column": 1,
+              "message": "content/index.md has no heading `#ghost`",
+              "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+            },
+            {
+              "severity": "error",
+              "rule": "broken-anchor",
+              "file": "content/index.md",
+              "line": 13,
+              "column": 17,
+              "message": "content/other.md has no heading `#ghost`",
+              "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+            }
+          ],
+          "summary": {
+            "errors": 2,
+            "warnings": 1,
+            "pages": 0
+          }
+        },
+        "stderr": ""
+      },
+      "output_preserved": true,
+      "actual": [
+        {
+          "id": "anchors",
+          "namespace": "http://www.w3.org/1999/xhtml",
+          "content": false
+        },
+        {
+          "id": "holder",
+          "namespace": "http://www.w3.org/1999/xhtml",
+          "content": true
+        },
+        {
+          "id": "visible",
+          "namespace": "http://www.w3.org/1999/xhtml",
+          "content": false
+        }
+      ],
+      "errors": []
+    },
+    {
+      "name": "html-template-selfclose",
+      "base": "/docs/",
+      "entry": "http://127.0.0.1:60622/docs/",
+      "baseline": {
+        "exit": 0,
+        "report": {
+          "schema_version": 1,
+          "success": true,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            }
+          ],
+          "summary": {
+            "errors": 0,
+            "warnings": 1,
+            "pages": 2,
+            "files": 11,
+            "bytes": 65838,
+            "largest": [
+              {
+                "path": "index.html",
+                "bytes": 5053
+              },
+              {
+                "path": "other/index.html",
+                "bytes": 5034
+              },
+              {
+                "path": "404.html",
+                "bytes": 4085
+              }
+            ],
+            "out": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-r5-products-z5Ejn6/subpath-html-template-selfclose/before-dist",
+            "milliseconds": 21
+          }
+        },
+        "stderr": ""
+      },
+      "checked": {
+        "exit": 0,
+        "report": {
+          "schema_version": 1,
+          "success": true,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            }
+          ],
+          "summary": {
+            "errors": 0,
+            "warnings": 1,
+            "pages": 2
+          }
+        },
+        "stderr": ""
+      },
+      "built": {
+        "exit": 0,
+        "report": {
+          "schema_version": 1,
+          "success": true,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            }
+          ],
+          "summary": {
+            "errors": 0,
+            "warnings": 1,
+            "pages": 2,
+            "files": 11,
+            "bytes": 65838,
+            "largest": [
+              {
+                "path": "index.html",
+                "bytes": 5053
+              },
+              {
+                "path": "other/index.html",
+                "bytes": 5034
+              },
+              {
+                "path": "404.html",
+                "bytes": 4085
+              }
+            ],
+            "out": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-r5-products-z5Ejn6/subpath-html-template-selfclose/dist",
+            "milliseconds": 21
+          }
+        },
+        "stderr": ""
+      },
+      "refused": {
+        "exit": 1,
+        "report": {
+          "schema_version": 1,
+          "success": false,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            },
+            {
+              "severity": "error",
+              "rule": "broken-anchor",
+              "file": "content/index.md",
+              "line": 13,
+              "column": 1,
+              "message": "content/index.md has no heading `#ghost`",
+              "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+            },
+            {
+              "severity": "error",
+              "rule": "broken-anchor",
+              "file": "content/index.md",
+              "line": 13,
+              "column": 17,
+              "message": "content/other.md has no heading `#ghost`",
+              "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+            }
+          ],
+          "summary": {
+            "errors": 2,
+            "warnings": 1,
+            "pages": 0
+          }
+        },
+        "stderr": ""
+      },
+      "output_preserved": true,
+      "actual": [
+        {
+          "id": "anchors",
+          "namespace": "http://www.w3.org/1999/xhtml",
+          "content": false
+        },
+        {
+          "id": "holder",
+          "namespace": "http://www.w3.org/1999/xhtml",
+          "content": true
+        },
+        {
+          "id": "visible",
+          "namespace": "http://www.w3.org/1999/xhtml",
+          "content": false
+        }
+      ],
+      "errors": []
+    },
+    {
+      "name": "foreignObject",
+      "base": "/docs/",
+      "entry": "http://127.0.0.1:60634/docs/",
+      "baseline": {
+        "exit": 0,
+        "report": {
+          "schema_version": 1,
+          "success": true,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            }
+          ],
+          "summary": {
+            "errors": 0,
+            "warnings": 1,
+            "pages": 2,
+            "files": 11,
+            "bytes": 65978,
+            "largest": [
+              {
+                "path": "index.html",
+                "bytes": 5123
+              },
+              {
+                "path": "other/index.html",
+                "bytes": 5104
+              },
+              {
+                "path": "404.html",
+                "bytes": 4085
+              }
+            ],
+            "out": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-r5-products-z5Ejn6/subpath-foreignObject/before-dist",
+            "milliseconds": 20
+          }
+        },
+        "stderr": ""
+      },
+      "checked": {
+        "exit": 0,
+        "report": {
+          "schema_version": 1,
+          "success": true,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            }
+          ],
+          "summary": {
+            "errors": 0,
+            "warnings": 1,
+            "pages": 2
+          }
+        },
+        "stderr": ""
+      },
+      "built": {
+        "exit": 0,
+        "report": {
+          "schema_version": 1,
+          "success": true,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            }
+          ],
+          "summary": {
+            "errors": 0,
+            "warnings": 1,
+            "pages": 2,
+            "files": 11,
+            "bytes": 65978,
+            "largest": [
+              {
+                "path": "index.html",
+                "bytes": 5123
+              },
+              {
+                "path": "other/index.html",
+                "bytes": 5104
+              },
+              {
+                "path": "404.html",
+                "bytes": 4085
+              }
+            ],
+            "out": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-r5-products-z5Ejn6/subpath-foreignObject/dist",
+            "milliseconds": 21
+          }
+        },
+        "stderr": ""
+      },
+      "refused": {
+        "exit": 1,
+        "report": {
+          "schema_version": 1,
+          "success": false,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            },
+            {
+              "severity": "error",
+              "rule": "broken-anchor",
+              "file": "content/index.md",
+              "line": 13,
+              "column": 1,
+              "message": "content/index.md has no heading `#ghost`",
+              "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+            },
+            {
+              "severity": "error",
+              "rule": "broken-anchor",
+              "file": "content/index.md",
+              "line": 13,
+              "column": 17,
+              "message": "content/other.md has no heading `#ghost`",
+              "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+            }
+          ],
+          "summary": {
+            "errors": 2,
+            "warnings": 1,
+            "pages": 0
+          }
+        },
+        "stderr": ""
+      },
+      "output_preserved": true,
+      "actual": [
+        {
+          "id": "anchors",
+          "namespace": "http://www.w3.org/1999/xhtml",
+          "content": false
+        },
+        {
+          "id": "holder",
+          "namespace": "http://www.w3.org/1999/xhtml",
+          "content": true
+        },
+        {
+          "id": "visible",
+          "namespace": "http://www.w3.org/1999/xhtml",
+          "content": false
+        }
+      ],
+      "errors": []
+    },
+    {
+      "name": "desc",
+      "base": "/docs/",
+      "entry": "http://127.0.0.1:60647/docs/",
+      "baseline": {
+        "exit": 0,
+        "report": {
+          "schema_version": 1,
+          "success": true,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            }
+          ],
+          "summary": {
+            "errors": 0,
+            "warnings": 1,
+            "pages": 2,
+            "files": 11,
+            "bytes": 65942,
+            "largest": [
+              {
+                "path": "index.html",
+                "bytes": 5105
+              },
+              {
+                "path": "other/index.html",
+                "bytes": 5086
+              },
+              {
+                "path": "404.html",
+                "bytes": 4085
+              }
+            ],
+            "out": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-r5-products-z5Ejn6/subpath-desc/before-dist",
+            "milliseconds": 20
+          }
+        },
+        "stderr": ""
+      },
+      "checked": {
+        "exit": 0,
+        "report": {
+          "schema_version": 1,
+          "success": true,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            }
+          ],
+          "summary": {
+            "errors": 0,
+            "warnings": 1,
+            "pages": 2
+          }
+        },
+        "stderr": ""
+      },
+      "built": {
+        "exit": 0,
+        "report": {
+          "schema_version": 1,
+          "success": true,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            }
+          ],
+          "summary": {
+            "errors": 0,
+            "warnings": 1,
+            "pages": 2,
+            "files": 11,
+            "bytes": 65942,
+            "largest": [
+              {
+                "path": "index.html",
+                "bytes": 5105
+              },
+              {
+                "path": "other/index.html",
+                "bytes": 5086
+              },
+              {
+                "path": "404.html",
+                "bytes": 4085
+              }
+            ],
+            "out": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-r5-products-z5Ejn6/subpath-desc/dist",
+            "milliseconds": 19
+          }
+        },
+        "stderr": ""
+      },
+      "refused": {
+        "exit": 1,
+        "report": {
+          "schema_version": 1,
+          "success": false,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            },
+            {
+              "severity": "error",
+              "rule": "broken-anchor",
+              "file": "content/index.md",
+              "line": 13,
+              "column": 1,
+              "message": "content/index.md has no heading `#ghost`",
+              "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+            },
+            {
+              "severity": "error",
+              "rule": "broken-anchor",
+              "file": "content/index.md",
+              "line": 13,
+              "column": 17,
+              "message": "content/other.md has no heading `#ghost`",
+              "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+            }
+          ],
+          "summary": {
+            "errors": 2,
+            "warnings": 1,
+            "pages": 0
+          }
+        },
+        "stderr": ""
+      },
+      "output_preserved": true,
+      "actual": [
+        {
+          "id": "anchors",
+          "namespace": "http://www.w3.org/1999/xhtml",
+          "content": false
+        },
+        {
+          "id": "holder",
+          "namespace": "http://www.w3.org/1999/xhtml",
+          "content": true
+        },
+        {
+          "id": "visible",
+          "namespace": "http://www.w3.org/1999/xhtml",
+          "content": false
+        }
+      ],
+      "errors": []
+    },
+    {
+      "name": "title",
+      "base": "/docs/",
+      "entry": "http://127.0.0.1:60656/docs/",
+      "baseline": {
+        "exit": 1,
+        "report": {
+          "schema_version": 1,
+          "success": false,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            },
+            {
+              "severity": "error",
+              "rule": "broken-anchor",
+              "file": "content/index.md",
+              "line": 10,
+              "column": 1,
+              "message": "content/index.md has no heading `#holder`",
+              "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+            },
+            {
+              "severity": "error",
+              "rule": "broken-anchor",
+              "file": "content/index.md",
+              "line": 10,
+              "column": 19,
+              "message": "content/other.md has no heading `#holder`",
+              "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+            },
+            {
+              "severity": "error",
+              "rule": "broken-anchor",
+              "file": "content/other.md",
+              "line": 10,
+              "column": 1,
+              "message": "content/other.md has no heading `#holder`",
+              "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+            },
+            {
+              "severity": "error",
+              "rule": "broken-anchor",
+              "file": "content/other.md",
+              "line": 10,
+              "column": 19,
+              "message": "content/other.md has no heading `#holder`",
+              "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+            }
+          ],
+          "summary": {
+            "errors": 4,
+            "warnings": 1,
+            "pages": 0
+          }
+        },
+        "stderr": ""
+      },
+      "checked": {
+        "exit": 0,
+        "report": {
+          "schema_version": 1,
+          "success": true,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            }
+          ],
+          "summary": {
+            "errors": 0,
+            "warnings": 1,
+            "pages": 2
+          }
+        },
+        "stderr": ""
+      },
+      "built": {
+        "exit": 0,
+        "report": {
+          "schema_version": 1,
+          "success": true,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            }
+          ],
+          "summary": {
+            "errors": 0,
+            "warnings": 1,
+            "pages": 2,
+            "files": 11,
+            "bytes": 65946,
+            "largest": [
+              {
+                "path": "index.html",
+                "bytes": 5107
+              },
+              {
+                "path": "other/index.html",
+                "bytes": 5088
+              },
+              {
+                "path": "404.html",
+                "bytes": 4085
+              }
+            ],
+            "out": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-r5-products-z5Ejn6/subpath-title/dist",
+            "milliseconds": 19
+          }
+        },
+        "stderr": ""
+      },
+      "refused": {
+        "exit": 1,
+        "report": {
+          "schema_version": 1,
+          "success": false,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            },
+            {
+              "severity": "error",
+              "rule": "broken-anchor",
+              "file": "content/index.md",
+              "line": 13,
+              "column": 1,
+              "message": "content/index.md has no heading `#ghost`",
+              "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+            },
+            {
+              "severity": "error",
+              "rule": "broken-anchor",
+              "file": "content/index.md",
+              "line": 13,
+              "column": 17,
+              "message": "content/other.md has no heading `#ghost`",
+              "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+            }
+          ],
+          "summary": {
+            "errors": 2,
+            "warnings": 1,
+            "pages": 0
+          }
+        },
+        "stderr": ""
+      },
+      "output_preserved": true,
+      "actual": [
+        {
+          "id": "anchors",
+          "namespace": "http://www.w3.org/1999/xhtml",
+          "content": false
+        },
+        {
+          "id": "holder",
+          "namespace": "http://www.w3.org/1999/xhtml",
+          "content": true
+        },
+        {
+          "id": "visible",
+          "namespace": "http://www.w3.org/1999/xhtml",
+          "content": false
+        }
+      ],
+      "errors": []
+    },
+    {
+      "name": "math-text",
+      "base": "/docs/",
+      "entry": "http://127.0.0.1:60665/docs/",
+      "baseline": {
+        "exit": 0,
+        "report": {
+          "schema_version": 1,
+          "success": true,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            }
+          ],
+          "summary": {
+            "errors": 0,
+            "warnings": 1,
+            "pages": 2,
+            "files": 11,
+            "bytes": 65950,
+            "largest": [
+              {
+                "path": "index.html",
+                "bytes": 5109
+              },
+              {
+                "path": "other/index.html",
+                "bytes": 5090
+              },
+              {
+                "path": "404.html",
+                "bytes": 4085
+              }
+            ],
+            "out": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-r5-products-z5Ejn6/subpath-math-text/before-dist",
+            "milliseconds": 20
+          }
+        },
+        "stderr": ""
+      },
+      "checked": {
+        "exit": 0,
+        "report": {
+          "schema_version": 1,
+          "success": true,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            }
+          ],
+          "summary": {
+            "errors": 0,
+            "warnings": 1,
+            "pages": 2
+          }
+        },
+        "stderr": ""
+      },
+      "built": {
+        "exit": 0,
+        "report": {
+          "schema_version": 1,
+          "success": true,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            }
+          ],
+          "summary": {
+            "errors": 0,
+            "warnings": 1,
+            "pages": 2,
+            "files": 11,
+            "bytes": 65950,
+            "largest": [
+              {
+                "path": "index.html",
+                "bytes": 5109
+              },
+              {
+                "path": "other/index.html",
+                "bytes": 5090
+              },
+              {
+                "path": "404.html",
+                "bytes": 4085
+              }
+            ],
+            "out": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-r5-products-z5Ejn6/subpath-math-text/dist",
+            "milliseconds": 19
+          }
+        },
+        "stderr": ""
+      },
+      "refused": {
+        "exit": 1,
+        "report": {
+          "schema_version": 1,
+          "success": false,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            },
+            {
+              "severity": "error",
+              "rule": "broken-anchor",
+              "file": "content/index.md",
+              "line": 13,
+              "column": 1,
+              "message": "content/index.md has no heading `#ghost`",
+              "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+            },
+            {
+              "severity": "error",
+              "rule": "broken-anchor",
+              "file": "content/index.md",
+              "line": 13,
+              "column": 17,
+              "message": "content/other.md has no heading `#ghost`",
+              "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+            }
+          ],
+          "summary": {
+            "errors": 2,
+            "warnings": 1,
+            "pages": 0
+          }
+        },
+        "stderr": ""
+      },
+      "output_preserved": true,
+      "actual": [
+        {
+          "id": "anchors",
+          "namespace": "http://www.w3.org/1999/xhtml",
+          "content": false
+        },
+        {
+          "id": "holder",
+          "namespace": "http://www.w3.org/1999/xhtml",
+          "content": true
+        },
+        {
+          "id": "visible",
+          "namespace": "http://www.w3.org/1999/xhtml",
+          "content": false
+        }
+      ],
+      "errors": []
+    },
+    {
+      "name": "math-annotation",
+      "base": "/docs/",
+      "entry": "http://127.0.0.1:60675/docs/",
+      "baseline": {
+        "exit": 0,
+        "report": {
+          "schema_version": 1,
+          "success": true,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            }
+          ],
+          "summary": {
+            "errors": 0,
+            "warnings": 1,
+            "pages": 2,
+            "files": 11,
+            "bytes": 66028,
+            "largest": [
+              {
+                "path": "index.html",
+                "bytes": 5148
+              },
+              {
+                "path": "other/index.html",
+                "bytes": 5129
+              },
+              {
+                "path": "404.html",
+                "bytes": 4085
+              }
+            ],
+            "out": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-r5-products-z5Ejn6/subpath-math-annotation/before-dist",
+            "milliseconds": 20
+          }
+        },
+        "stderr": ""
+      },
+      "checked": {
+        "exit": 0,
+        "report": {
+          "schema_version": 1,
+          "success": true,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            }
+          ],
+          "summary": {
+            "errors": 0,
+            "warnings": 1,
+            "pages": 2
+          }
+        },
+        "stderr": ""
+      },
+      "built": {
+        "exit": 0,
+        "report": {
+          "schema_version": 1,
+          "success": true,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            }
+          ],
+          "summary": {
+            "errors": 0,
+            "warnings": 1,
+            "pages": 2,
+            "files": 11,
+            "bytes": 66028,
+            "largest": [
+              {
+                "path": "index.html",
+                "bytes": 5148
+              },
+              {
+                "path": "other/index.html",
+                "bytes": 5129
+              },
+              {
+                "path": "404.html",
+                "bytes": 4085
+              }
+            ],
+            "out": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-r5-products-z5Ejn6/subpath-math-annotation/dist",
+            "milliseconds": 20
+          }
+        },
+        "stderr": ""
+      },
+      "refused": {
+        "exit": 1,
+        "report": {
+          "schema_version": 1,
+          "success": false,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            },
+            {
+              "severity": "error",
+              "rule": "broken-anchor",
+              "file": "content/index.md",
+              "line": 13,
+              "column": 1,
+              "message": "content/index.md has no heading `#ghost`",
+              "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+            },
+            {
+              "severity": "error",
+              "rule": "broken-anchor",
+              "file": "content/index.md",
+              "line": 13,
+              "column": 17,
+              "message": "content/other.md has no heading `#ghost`",
+              "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+            }
+          ],
+          "summary": {
+            "errors": 2,
+            "warnings": 1,
+            "pages": 0
+          }
+        },
+        "stderr": ""
+      },
+      "output_preserved": true,
+      "actual": [
+        {
+          "id": "anchors",
+          "namespace": "http://www.w3.org/1999/xhtml",
+          "content": false
+        },
+        {
+          "id": "holder",
+          "namespace": "http://www.w3.org/1999/xhtml",
+          "content": true
+        },
+        {
+          "id": "visible",
+          "namespace": "http://www.w3.org/1999/xhtml",
+          "content": false
+        }
+      ],
+      "errors": []
+    }
+  ]
+}

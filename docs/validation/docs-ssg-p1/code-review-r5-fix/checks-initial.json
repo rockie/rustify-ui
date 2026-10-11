@@ -1,0 +1,28 @@
+[
+  {
+    "name": "cli-test",
+    "command": [
+      "mbx",
+      "test",
+      "--locked",
+      "-p",
+      "rustify-docs-cli"
+    ],
+    "exit": 101,
+    "seconds": 18.903,
+    "log": "cli-test-assertion-failure.log"
+  },
+  {
+    "name": "fmt",
+    "command": [
+      "cargo",
+      "fmt",
+      "--all",
+      "--",
+      "--check"
+    ],
+    "exit": 1,
+    "seconds": 1.835,
+    "log": "fmt-before-format.log"
+  }
+]

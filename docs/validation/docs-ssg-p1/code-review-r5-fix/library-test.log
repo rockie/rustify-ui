@@ -1,0 +1,166 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-docs v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-docs)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 9.80s
+     Running unittests src/lib.rs (target/debug/deps/rustify_docs-9e52385b917a0500)
+
+running 123 tests
+test config::tests::languages ... ok
+test color::tests::known_ratios ... ok
+test classes::tests::attributes_not_text ... ok
+test config::tests::unknown_keys_are_errors_with_a_location ... ok
+test classes::tests::comments_raw_text_and_templates_are_skipped ... ok
+test config::tests::defaults ... ok
+test config::tests::schema_version_must_be_one ... ok
+test config::tests::brand_colours_and_logo ... ok
+test config::tests::base_and_url_normalize_together ... ok
+test config::tests::nav_groups_need_one_source ... ok
+test config::tests::output_may_not_overlap_inputs ... ok
+test autolink::tests::gfm_examples ... ok
+test classes::tests::numeric_references_decode_before_class_names_are_split ... ok
+test classes::tests::unquoted_self_closing_and_escaped_values ... ok
+test content::tests::a_private_file_stays_private_under_any_name ... ok
+test content::tests::frontmatter_errors_are_located_and_the_rest_still_analysed ... ok
+test content::tests::images_must_exist_and_stay_local ... ok
+test content::tests::files_only_actions_and_header_links_name_are_published ... ok
+test content::tests::home_actions_and_header_links_resolve_like_content_links ... ok
+test content::tests::a_site_without_its_url_is_warned_and_static_files_keep_clear_of_the_build ... ok
+test content::tests::footnote_anchors_are_the_ids_the_page_has ... ok
+test content::tests::logo_and_brand_contrast ... ok
+test content::tests::links_resolve_to_pages_and_anchors ... ok
+test content::tests::body_anchors_resolve_on_the_same_and_other_pages ... ok
+test content::tests::links_only_target_ids_in_the_document_not_template_contents ... ok
+test content::tests::drafts_are_left_out_and_links_to_them_depend_on_the_mode ... ok
+test content::tests::navigation_from_directories_and_lists ... ok
+test content::tests::links_cannot_target_references_in_an_unrendered_footnote ... ok
+test diagnostic::tests::positions_are_one_based_and_count_characters ... ok
+test escape::tests::fragments_keep_ids_whole ... ok
+test content::tests::nothing_is_read_through_a_link_out_of_the_project ... ok
+test escape::tests::text_and_attributes ... ok
+test escape::tests::paths_from_file_names_encode_url_syntax ... ok
+test escape::tests::urls_are_encoded_then_escaped ... ok
+test frontmatter::tests::an_opening_fence_with_nothing_after_it_is_unclosed ... ok
+test frontmatter::tests::no_fence_no_frontmatter ... ok
+test frontmatter::tests::crlf_frontmatter_closes ... ok
+test generation::tests::page_paths ... ok
+test content::tests::files_outside_the_content_need_the_repository ... ok
+test generation::tests::parallel_map_keeps_order_on_any_worker_count ... ok
+test highlight::tests::grammar_version_matches_the_lock ... ok
+test content::tests::page_languages ... ok
+test content::tests::routes_and_their_conflicts ... ok
+test highlight::tests::palette_keeps_contrast_on_code_backgrounds ... ok
+test content::tests::a_site_with_nothing_to_publish_is_an_error ... ok
+test highlight::tests::theme_css_has_both_dark_roots_and_no_bare_colours_elsewhere ... ok
+test content::tests::private_markdown_is_never_a_page ... ok
+test history::tests::outside_a_repository_there_are_no_dates ... ok
+test history::tests::the_newest_commit_dates_a_file ... ok
+test history::tests::utc_dates ... ok
+test html_check::tests::a_generated_document_loads_its_own_files_and_runs_nothing_inline ... ok
+test html_check::tests::a_new_window_to_another_site_needs_noopener ... ok
+test html_check::tests::an_image_without_alt_is_a_warning ... ok
+test html_check::tests::body_ids_follow_document_attribute_merging_and_template_boundaries ... ok
+test html_check::tests::class_resources_use_the_compilers_arbitrary_value_decoding ... ok
+test html_check::tests::class_urls_decode_entities_and_keep_raw_rewrite_spans ... ok
+test html_check::tests::foreign_templates_keep_their_document_ids ... ok
+test html_check::tests::html_templates_at_foreign_integration_points_have_separate_contents ... ok
+test html_check::tests::malformed_markup_is_read_as_a_browser_would ... ok
+test html_check::tests::numeric_entities_leave_the_following_equals_out_of_a_url_rewrite ... ok
+test html_check::tests::resources_must_stay_on_the_site ... ok
+test html_check::tests::script_in_every_disguise ... ok
+test html_check::tests::slots_cover_the_raw_values ... ok
+test html_check::tests::srcset_candidates_split_as_a_browser_splits_them ... ok
+test html_check::tests::urls_in_class_values_are_resources_too ... ok
+test icons::tests::icons_are_hidden_decoration_with_no_style ... ok
+test imagesize::tests::rasters_by_their_headers ... ok
+test imagesize::tests::svg_sizes_and_shapes ... ok
+test include::tests::directives ... ok
+test include::tests::regions_keep_bytes_and_drop_markers ... ok
+test labels::tests::primary_subtag_picks_the_language ... ok
+test highlight::tests::unknown_and_missing_tags_are_plain_escaped_text ... ok
+test content::tests::sidebar_group_moves_a_page_and_names_groups_without_configuration ... ok
+test markdown::tests::bare_urls_link_like_on_github_but_not_inside_links_or_code ... ok
+test content::tests::includes_read_the_project_and_nothing_outside_it ... ok
+test content::tests::html_integration_templates_reject_same_and_cross_page_ghost_links ... ok
+test content::tests::snapshot_links_keep_safe_recovery_targets_when_missing ... ok
+test content::tests::dependencies_include_real_resource_brand_and_include_targets_when_missing ... ok
+test highlight::tests::lines_are_balanced_and_carry_no_newline ... ok
+test markdown::tests::heading_classes_and_duplicate_explicit_ids_are_errors ... ok
+test markdown::tests::footnotes_tasks_strikethrough ... ok
+test markdown::tests::headings_get_github_ids_and_explicit_ids_win ... ok
+test highlight::tests::text_survives_highlighting ... ok
+test markdown::tests::links_and_images_become_slots ... ok
+test content::tests::code_groups_of_one_name_share_their_tabs_across_the_site ... ok
+test markdown::tests::code_blocks_keep_raw_text_and_mark_lines ... ok
+test markdown::tests::missing_alt_is_a_warning ... ok
+test markdown::tests::offsets_are_file_offsets ... ok
+test publish::tests::a_manifest_is_its_files_and_nothing_of_the_machine ... ok
+test publish::tests::an_interrupted_build_is_finished_or_undone ... ok
+test publish::tests::publishing_replaces_a_build_whole_and_keeps_strangers_out ... ok
+test markdown::tests::raw_html_is_checked_and_its_urls_become_slots ... ok
+test markdown::tests::slots_survive_headings_and_footnotes ... ok
+test markdown::tests::tables_align_with_classes_not_styles ... ok
+test markdown::tests::fence_info_errors_are_located ... ok
+test shell::tests::csp_is_the_strict_serve_policy ... ok
+test content::tests::foreign_template_links_match_document_ids_on_the_same_and_other_pages ... ok
+test shell::tests::csp_meta_drops_only_frame_ancestors ... ok
+test slug::tests::duplicates_and_explicit_ids ... ok
+test content::tests::titles_h1_and_descriptions ... ok
+test slug::tests::github_compatible_ids ... ok
+test style::tests::alert_titles_keep_contrast_on_the_muted_background ... ok
+test style::tests::brand_tokens_set_ring_and_foreground ... ok
+test style::tests::css_url_tokens_skip_strings_comments_and_escaped_selectors ... ok
+test style::tests::default_reading_theme_values ... ok
+test shell::tests::a_page_is_a_complete_static_document ... ok
+test style::tests::the_sdk_layer_loses_its_source_and_gains_the_document_dark_variant ... ok
+test shell::tests::a_third_language_keeps_its_lang_and_marks_the_interface_english ... ok
+test shell::tests::content_h1_is_not_doubled_and_chinese_labels_are_used ... ok
+test shell::tests::contents_links_encode_their_fragment ... ok
+test markdown::tests::includes_render_regions_as_code_and_report_what_is_missing ... ok
+test shell::tests::header_links_are_in_the_header_and_mark_where_the_reader_is ... ok
+test style::tests::only_the_candidates_become_utilities ... ok
+test markdown::tests::interface_strings_carry_english_inside_foreign_content ... ok
+test style::tests::dark_utilities_follow_both_dark_roots ... ok
+test style::tests::the_site_stylesheet_is_minified_and_carries_tokens_and_palette ... ok
+test markdown::tests::code_groups_wrap_their_blocks_and_keep_them_readable_without_script ... ok
+test style::tests::the_urls_a_stylesheet_loads ... ok
+test markdown::tests::the_five_alerts ... ok
+test markdown::tests::code_group_mistakes_are_located ... ok
+test highlight::tests::every_language_has_its_grammar_and_highlights ... ok
+mbx[progress]: 15s elapsed; 0 hits, 0 misses, 0 bypassed, 0 not looked up; ~0s compiler work saved
+test highlight::tests::malformed_input_keeps_its_text_in_every_language ... ok
+mbx[progress]: 30s elapsed; 0 hits, 0 misses, 0 bypassed, 0 not looked up; ~0s compiler work saved
+mbx[progress]: 45s elapsed; 0 hits, 0 misses, 0 bypassed, 0 not looked up; ~0s compiler work saved
+test highlight::tests::every_grammar_regex_compiles ... ok
+
+test result: ok. 123 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 38.55s
+
+     Running tests/generate.rs (target/debug/deps/generate-68f86dcb7c32d35a)
+
+running 11 tests
+test the_not_found_page_works_from_any_depth ... ok
+test gfm_alerts_tables_tasks_footnotes_and_code_render_without_inline_style ... ok
+test every_page_has_unique_metadata_and_the_site_files_list_what_may_be_indexed ... ok
+test links_anchors_images_and_repository_files_resolve_under_the_base ... ok
+test highlighting_and_code_text_stay_out_of_the_stylesheet ... ok
+test a_generation_cannot_load_an_absent_file_under_its_assets_prefix ... ok
+test files_keep_their_fragment_and_a_class_loads_its_image_from_the_site ... ok
+test css_resource_decoding_and_entity_spans_survive_generation ... ok
+test header_links_are_on_every_page_and_mark_the_guide ... ok
+test the_fixture_generates_without_a_problem_and_byte_for_byte_again ... ok
+test drafts_render_marked_in_dev_and_nowhere_in_production ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.05s
+
+   Doc-tests rustify_docs
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+mbx[cache]: 0 hits, 0 misses, 4 incremental, 1 bypassed; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: 1.6 TiB logical of target/ belonged to checkouts that no longer exist. neither does it.

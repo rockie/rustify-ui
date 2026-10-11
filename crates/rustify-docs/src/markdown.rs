@@ -47,7 +47,7 @@ pub fn options() -> Options {
 
 /// A version for everything above that decides a fragment's bytes; part of
 /// the fragment cache key.
-pub const WRITER_VERSION: u32 = 7;
+pub const WRITER_VERSION: u32 = 8;
 
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct Heading {
@@ -115,8 +115,9 @@ pub struct CodeGroup {
 pub struct Fragment {
     pub html: String,
     pub headings: Vec<Heading>,
-    /// Every id in the emitted fragment, including headings, footnotes and
-    /// author HTML. A discarded capture contributes no anchor.
+    /// Every id the emitted fragment contributes to the document, including
+    /// headings, footnotes and author HTML. A discarded capture contributes
+    /// no anchor.
     pub anchors: Vec<String>,
     /// The text of the first level-one heading.
     pub title: Option<String>,

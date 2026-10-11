@@ -2607,6 +2607,23 @@ pub(crate) mod tests {
     }
 
     #[test]
+    fn body_anchors_resolve_on_the_same_and_other_pages() {
+        let body = format!("{FRONT}# Body anchor\n\n<body id=\"target\">\n\nText\n\n</body>\n\n[Target](#target) [Other target](other.md#target)\n");
+        let fixture = Fixture::new(&[
+            ("rustify-docs.toml", CONFIG),
+            ("content/index.md", &body),
+            ("content/other.md", &body),
+        ]);
+        for mode in [Mode::Production, Mode::Dev] {
+            let (_, _, analysis) = fixture.analyze(mode);
+            assert_eq!(analysis.errors(), 0, "{:?}", analysis.diagnostics);
+            for page in &analysis.pages {
+                assert_eq!(page.fragment.anchors, ["target", "body-anchor"]);
+            }
+        }
+    }
+
+    #[test]
     fn foreign_template_links_match_document_ids_on_the_same_and_other_pages() {
         for (markup, targets) in [
             (r#"<svg><template/></svg>"#, vec![]),

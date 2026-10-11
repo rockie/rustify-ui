@@ -1,0 +1,43 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-docs v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-docs)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 9.66s
+     Running unittests src/lib.rs (target/debug/deps/rustify_docs-9e52385b917a0500)
+
+running 2 tests
+test html_check::tests::body_ids_follow_document_attribute_merging_and_template_boundaries ... FAILED
+test content::tests::body_anchors_resolve_on_the_same_and_other_pages ... FAILED
+
+failures:
+
+---- html_check::tests::body_ids_follow_document_attribute_merging_and_template_boundaries stdout ----
+
+thread 'html_check::tests::body_ids_follow_document_attribute_merging_and_template_boundaries' (30269396) panicked at crates/rustify-docs/src/html_check.rs:592:13:
+assertion `left == right` failed: <h1 id="heading">Heading</h1><body id="target">Text</body>
+  left: ["heading"]
+ right: ["target", "heading"]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- content::tests::body_anchors_resolve_on_the_same_and_other_pages stdout ----
+
+thread 'content::tests::body_anchors_resolve_on_the_same_and_other_pages' (30269395) panicked at crates/rustify-docs/src/content.rs:2619:13:
+assertion `left == right` failed: [Diagnostic { file: Some("content/index.md"), line: Some(12), column: Some(1), severity: Error, rule: "broken-anchor", message: "content/index.md has no heading `#target`", suggestion: Some("link to an existing heading's id; ids are the heading text in lower case with spaces as `-`") }, Diagnostic { file: Some("content/index.md"), line: Some(12), column: Some(19), severity: Error, rule: "broken-anchor", message: "content/other.md has no heading `#target`", suggestion: Some("link to an existing heading's id; ids are the heading text in lower case with spaces as `-`") }, Diagnostic { file: Some("content/other.md"), line: Some(12), column: Some(1), severity: Error, rule: "broken-anchor", message: "content/other.md has no heading `#target`", suggestion: Some("link to an existing heading's id; ids are the heading text in lower case with spaces as `-`") }, Diagnostic { file: Some("content/other.md"), line: Some(12), column: Some(19), severity: Error, rule: "broken-anchor", message: "content/other.md has no heading `#target`", suggestion: Some("link to an existing heading's id; ids are the heading text in lower case with spaces as `-`") }]
+  left: 4
+ right: 0
+
+
+failures:
+    content::tests::body_anchors_resolve_on_the_same_and_other_pages
+    html_check::tests::body_ids_follow_document_attribute_merging_and_template_boundaries
+
+test result: FAILED. 0 passed; 2 failed; 0 ignored; 0 measured; 121 filtered out; finished in 0.04s
+
+error: test failed, to rerun pass `-p rustify-docs --lib`
+mbx[cache]: 0 hits, 1 misses, 1 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[gc]: evicted 1217 objects and 213 action results (2.4 GiB logical); 90.0 GiB logical remain
+mbx[savings]: 5h 30m of compilation avoided across 6252 builds. imagine the fan noise. now stop.

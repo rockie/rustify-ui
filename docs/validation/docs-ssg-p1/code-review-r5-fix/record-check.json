@@ -1,0 +1,13 @@
+{
+  "code_and_binaries_match_test_scope": true,
+  "source_report_unchanged": true,
+  "plan_progress": {
+    "completed": 8,
+    "total": 9,
+    "recent": "M8",
+    "milestone_body_unchanged": true
+  },
+  "new_plan_and_record_links_exist": true,
+  "checks_passed": true,
+  "method": "Manual contract checks encoded locally: progress rows, original plan body byte comparison, newly changed Markdown link existence and recorded command/results; existing fixture syntax examples are not file links."
+}

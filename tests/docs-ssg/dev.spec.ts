@@ -347,6 +347,41 @@ test("template contents are rejected as anchors while their holder and ordinary 
     expect(errors).toEqual([]);
 });
 
+for (const base of ["/", "/docs/"]) {
+    test(`body anchors at ${base} navigate on the same and other pages and recover from ghost links`, async ({ page }) => {
+        site.edit("rustify-docs.toml", 'url = "https://example.com/docs/"', `url = "https://example.com${base}"`);
+        site.edit("rustify-docs.toml", 'base = "/docs/"', `base = "${base}"`);
+        site.write("rustify-docs.toml", `${site.read("rustify-docs.toml")}\n[[nav.groups]]\nlabel = "Anchors"\nitems = ["index.md", "other.md"]\n`);
+        const body = '---\ndescription: Body anchor\n---\n# Body anchor\n\n<body id="target">\n\nText\n\n</body>\n\n<template id="holder"><body id="ghost"><span id="hidden">Hidden</span></template>\n\n[Target](#target) [Other target](other.md#target)\n';
+        site.write("content/index.md", body);
+        site.write("content/other.md", body);
+        const errors: string[] = [];
+        page.on("pageerror", (error) => errors.push(error.message));
+        page.on("console", (message) => { if (message.type() === "error") errors.push(message.text()); });
+        page.on("requestfailed", (request) => errors.push(`${request.url()}: ${request.failure()?.errorText}`));
+        const server = await dev();
+        await page.goto(server.url);
+        await expect(page.getByRole("heading", { name: "Body anchor", exact: true })).toBeVisible();
+        expect(await page.evaluate(() => ({
+            target: document.getElementById("target") === document.body,
+            ghost: document.getElementById("ghost"),
+            hidden: document.getElementById("hidden"),
+            stored: document.querySelector<HTMLTemplateElement>("#holder")!.content.getElementById("hidden")?.tagName,
+        }))).toEqual({ target: true, ghost: null, hidden: null, stored: "SPAN" });
+        await page.locator("article").getByRole("link", { name: "Target", exact: true }).click();
+        expect(new URL(page.url()).hash).toBe("#target");
+        await page.locator("article").getByRole("link", { name: "Other target", exact: true }).click();
+        await expect(page).toHaveURL(new RegExp(`${base}other/#target$`));
+        expect(await page.locator("body").getAttribute("id")).toBe("target");
+        site.write("content/index.md", `${body}\n[Ghost](#ghost) [Other ghost](other.md#ghost)\n`);
+        await expect(page.getByRole("dialog", { name: "2 errors · showing the last good version" })).toContainText("broken-anchor");
+        site.write("content/index.md", body);
+        await expect(page.getByRole("dialog", { name: /errors ·/ })).toHaveCount(0);
+        expect(errors).toEqual([]);
+        await test.info().attach("body-anchors.png", { body: await page.screenshot(), contentType: "image/png" });
+    });
+}
+
 for (const [name, markup, ids] of [
     ["self-closing SVG template", '<svg><template id="svg-holder"/></svg>', ["svg-holder"]],
     ["paired SVG template", '<svg><template id="svg-holder"><circle id="circle" r="10"/></template></svg>', ["svg-holder", "circle"]],
