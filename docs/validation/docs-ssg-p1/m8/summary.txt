@@ -1,0 +1,42 @@
+started 2026-10-10 21:44:44 +0800
+fmt status=0
+sources-verify status=0
+workspace-test status=0
+workspace-clippy status=0
+rustify-ui-default-test status=0
+rustify-ui-default-clippy status=0
+rustify-ui-gpu-test status=0
+rustify-ui-gpu-clippy status=0
+rustify-ui-ssr-test status=0
+rustify-ui-ssr-clippy status=0
+rustify-components-default-test status=0
+rustify-components-default-clippy status=0
+rustify-components-gpu-test status=0
+rustify-components-gpu-clippy status=0
+rustify-components-ssr-test status=0
+rustify-components-ssr-clippy status=0
+rustify-docs-test status=0
+rustify-docs-clippy status=0
+rustify-docs-cli-test status=0
+rustify-docs-cli-clippy status=0
+docs-cli-build status=0
+build-info status=0
+features status=0
+artifacts status=0
+reliability status=0
+toolchain status=0
+binary for the dev chains: /var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T//rustify-docs-verify/cli-install/bin/rustify-docs
+performance status=0
+load status=0
+save-1000 status=0
+browser-dom-only status=0
+browser-docs-root status=0
+browser-docs-meta status=0
+browser-docs-dev status=0
+uat10 errors 3 ['broken-anchor', 'missing-image', 'inline-script']
+uat10-offline status=0
+done 2026-10-10 21:53:50 +0800
+final-browser-docs-subpath status=0
+final-browser-docs-webkit status=0
+final-browser-docs-root status=0
+final-browser-docs-meta status=0

@@ -44,13 +44,13 @@
 
 ### 恢复快照
 
-- 最近更新：2026-10-10T21:40:00+08:00
-- 当前进度：6/9 个里程碑完成
-- 当前状态：M7 已完成（`check --external-links`、发布事务的真实故障注入与输出归属加固、N7 收口、仅 Rust+CLI 的禁网作者演练、V-15 全矩阵），M5–M7 已于 1d239ff 提交；M5 只差用户的真实 Safari/手机走查结果
-- 最近完成：M7（最小工具链、安全与恢复收口）
-- 下一步：M8——先做不依赖真实设备的部分：500 页正式性能组与同一服务实例上的 1000 次逐次可见保存、watch 丢事件/SSE 断线负向、§9.4 UAT 串联；收到走查结果后按 [M5 记录](../validation/docs-ssg-p1/M5.md)「未完项」回填并重跑 docs-subpath/meta/webkit，M5 记完成；M8 出口还需用户的真实 Firefox（M8 前安装）与 Safari/手机完整矩阵
-- 当前阻塞：M5 的 V-12 真实 Safari/手机走查结果待用户（服务已起：127.0.0.1:4192、192.168.16.116:4194）；M8 真实浏览器矩阵需用户安装 Firefox 并走查
-- 代码基线：`1d239ff`（M1 179c5ec、M2–M4 9442f5d、M5–M7 1d239ff；M5 的走查回填与 M8 改动在其后，下一提交点 M8）
+- 最近更新：2026-10-11T11:35:00+08:00
+- 当前进度：8/9 个里程碑完成
+- 当前状态：M5、M8 已完成（用户确认真实 macOS Safari 27.0.1 与手机走查通过，真实 Chrome 154 走查通过；Firefox 按用户决定移出本期；走查后 docs-subpath/webkit/root/meta 复验通过）。按用户要求在此停下，下一对话从 M9 开始
+- 最近完成：M8（P1 跨浏览器、部署与性能终验）
+- 下一步：M9——README、CLI 帮助、生成 README 写入已验证完整 SHA 与 CLI 版本（必要时递增 `rustify-docs-cli` 版本，§8）；对已提交候选 `docs-verify --group toolchain --git file://… --rev <SHA>` 与 `features --external`（DOM 配方）、安装后二进制的 panic 子集（V-9）、GitHub 预览核对（V-4）、V-5/V-6 受模板影响切片、V-15；然后请用户授权推送方式，推送后对 GitHub 同 SHA 重验
+- 当前阻塞：无（M9 远端阶段需要用户的推送授权与方式，届时再问）
+- 代码基线：见完成记录（M1 179c5ec、M2–M4 9442f5d、M5–M7 1d239ff、M5/M8 收口见 M8 行）
 
 ### 完成记录
 
@@ -62,7 +62,8 @@
 | M4 | 已完成 | 2026-10-10T19:10:00+08:00 | `new`/`build`/`preview` 与内容模板、元数据/404/站点文件/manifest、资源指纹、发布事务与锁；V-5/V-6/V-10 基本门、V-7 三项目各 5/5、B 完整构建中位 347 ms、V-15 矩阵与安装排练通过，示例产物逐字节不变 | [M4 记录](../validation/docs-ssg-p1/M4.md) | 9442f5d |
 | M6 | 已完成 | 2026-10-10T21:15:00+08:00 | `rustify-docs dev`：每轮全量输入+内容键片段缓存、受影响页按两代字节比较刷新并保滚动、失败/panic 保留上一代、诊断面板（finish review ship）；V-9 浏览器 9/9 与 CLI 9 例、abort 构建拒绝 dev、B 保存可见中位 177/172/169 ms 与短轮 20 次 ≤178 ms | [M6 记录](../validation/docs-ssg-p1/M6.md) | 1d239ff |
 | M7 | 已完成 | 2026-10-10T21:40:00+08:00 | `check --external-links`（rustls+内置根证书、去重/并发/超时、失败即报错）、发布三步骤真实 SIGKILL/磁盘满/权限/损坏 manifest/并发注入与输出归属加固、新窗站外链接需 noopener、零机器路径泄漏；V-15 矩阵、features/artifacts/reliability/toolchain 四组（禁网作者演练只调用 2 次 `rustc --version`）、docs-root/meta/dev 全过 | [M7 记录](../validation/docs-ssg-p1/M7.md) | 1d239ff |
-| M5 | 进行中 | 2026-10-10T21:10:00+08:00 | 默认阅读主题、finish review（ship）、终验脚本全过（三项目各 20/20、WebKit 19+1、LCP ≤740 ms/CLS 0），axe 接入后修两处 critical、零违规；Firefox 引擎环境缺口按用户决定 M8 前补真实 Firefox；只差真实 Safari/手机走查 | [M5 记录](../validation/docs-ssg-p1/M5.md) | — |
+| M5 | 已完成 | 2026-10-11T11:35:00+08:00 | 默认阅读主题、finish review（ship）、axe 零违规；Chromium 三项目各 21/21、WebKit 20+1 跳过、B 最大页 LCP ≤740 ms/CLS 0；用户确认真实 macOS Safari 27.0.1 与手机走查通过；Firefox 移出本期（用户决定） | [M5 记录](../validation/docs-ssg-p1/M5.md) | 1d239ff、待提交 |
+| M8 | 已完成 | 2026-10-11T11:35:00+08:00 | V-15、features/artifacts/reliability/toolchain、B 完整构建 359 ms、LCP 724/740/532 ms、CLS 0、最大页 26.2 KB、保存可见 175/170/176 ms、1000/1000 次可见无重启、new→首页 333 ms、§9.4 UAT 串联；真实 Chrome 154、Safari 27.0.1 与手机走查通过，Firefox 移出本期 | [M8 记录](../validation/docs-ssg-p1/M8.md) | 待提交 |
 
 ## 0. 需求、范围与决策
 
@@ -85,7 +86,7 @@ WORK-* 均沿用 [PRD §3、§7.2](../PRD-DOCS-SSG.md)；下表列出本期 AC �
 | WORK-F17 | 功能 | PRD F17/全部 AC；终验 P1；最先交付 | GPU 默认关闭、DOM 生命周期不退化、7 示例回归 | §4.1；V-1、V-2、V-3 | 全部纳入 |
 | WORK-N1 | 性能 | PRD N1/AC-1–3；终验 P4 | 无 wasm 基础交互、读者加载与体积预算 | §7；V-8、V-14 | P1 纳入 |
 | WORK-N2 | 性能 | PRD N2/AC-1–3；终验 P2 | 保存可见、新建启动与 500 页完整构建预算 | §5.5、§7；V-14 | P1 纳入 |
-| WORK-N3 | 兼容 | PRD N3/AC-1–4；终验 P4 | 静态托管、header/meta CSP、同源请求、浏览器矩阵 | §5.3、§7；V-7、V-12 | P1 纳入 |
+| WORK-N3 | 兼容 | PRD N3/AC-1–4；终验 P4 | 静态托管、header/meta CSP、同源请求、浏览器矩阵 | §5.3、§7；V-7、V-12 | P1 纳入；Firefox 稳定版移出本期（用户 2026-10-11） |
 | WORK-N4 | 可维护性 | PRD N4/全部 AC；终验 P1 | 依赖及产物无 Makepad、最小工具链、离线 build/check | §4、§7；V-1、V-11 | 全部纳入 |
 | WORK-N5 | 可用性 | PRD N5/AC-1、3、5、6；终验 P4 | 对比度、语义、缩放/窄屏、自动化 AA | §6–7；V-8、V-13 | P1 纳入 |
 | WORK-N6 | 可靠性 | PRD N6/全部 AC；终验 P1 | 字节可复现、旧产物保全、定位诊断、千次保存 | §5.3、§5.5、§8；V-10、V-14 | 全部纳入 |
@@ -447,7 +448,7 @@ cargo install --git https://github.com/rockie/rustify-ui --rev <上个已验证�
 - 读者指标：Apple Silicon macOS Chrome稳定；M2冻结Chrome版本和Slow 4G实际参数；375px、CPU4倍，每页冷缓存5次取中位；HTML/CSS/脚本体积求各文件gzip -9字节之和，按PRD排除图片/字体，不把首帧后基础交互JS漏算。LCP/CLS在页内observer采集，404服务也要参加。
 - 作者指标：依赖与编译缓存就绪；保存完成的见证时间与浏览器渲染见证时间落在同一可校准测量时轴，不能直接相减进程和浏览器不同time origin。每项5次取中位；完整构建每次先清空测试out，不清用户产物；new计时不含CLI安装、不触发站点编译。报告实际输入/硬件/版本与前后数据。
 - 千次保存逐次写独特内容并等待浏览器见到这一revision再写下一次，期间不重启，不能把1000个事件合并后只看最后一次冒充通过；watch overflow/SSE断线负向另测。
-- 性能 Chrome 固定版本与兼容矩阵最新稳定版分别登记，不混用。固定版本与 Slow 4G 参数已由用户 2026-10-10 确认：性能测量固定使用 Playwright 1.63.0 锁定的 Chromium 153.0.8010.12（本机 `ms-playwright/chromium-1243`，不随系统 Chrome 更新；记录中注明不是 Google 品牌稳定版）；Slow 4G 取 Lighthouse 模拟口径，经 CDP `Network.emulateNetworkConditions` 施加 latency 150 ms、下行 1.6×1024 kbit/s（209,715 B/s）、上行 750 kbit/s（96,000 B/s），不乘 DevTools 的 3.75 延迟与 0.9 吞吐系数，CPU 用 `Emulation.setCPUThrottlingRate` 4 倍；M5 退出前确认 Firefox/WebKit 可执行文件或下载授权、真实 Firefox/Safari、设备与走查人（用户 2026-10-10 授权安装 Playwright Firefox/WebKit 做引擎冒烟；真实 Safari 与手机由用户按清单走查，本机无 Firefox 应用）。Playwright 的 Firefox/WebKit 只提供早期引擎回归，不替代真实 Firefox 最新稳定版或 Safari/手机出口。用户 2026-10-10 决定：Playwright Firefox 155（firefox-1543）在本机 macOS 27.0.1 无法启动，记为 M5 引擎冒烟的环境缺口，不升级 Playwright（保持性能用 Chromium 153），M8 前由用户安装 Firefox 稳定版按同一清单手动走查；V-13 新增 `@axe-core/playwright` 开发依赖。
+- 性能 Chrome 固定版本与兼容矩阵最新稳定版分别登记，不混用。固定版本与 Slow 4G 参数已由用户 2026-10-10 确认：性能测量固定使用 Playwright 1.63.0 锁定的 Chromium 153.0.8010.12（本机 `ms-playwright/chromium-1243`，不随系统 Chrome 更新；记录中注明不是 Google 品牌稳定版）；Slow 4G 取 Lighthouse 模拟口径，经 CDP `Network.emulateNetworkConditions` 施加 latency 150 ms、下行 1.6×1024 kbit/s（209,715 B/s）、上行 750 kbit/s（96,000 B/s），不乘 DevTools 的 3.75 延迟与 0.9 吞吐系数，CPU 用 `Emulation.setCPUThrottlingRate` 4 倍；M5 退出前确认 Firefox/WebKit 可执行文件或下载授权、真实 Firefox/Safari、设备与走查人（用户 2026-10-10 授权安装 Playwright Firefox/WebKit 做引擎冒烟；真实 Safari 与手机由用户按清单走查，本机无 Firefox 应用）。Playwright 的 Firefox/WebKit 只提供早期引擎回归，不替代真实 Firefox 最新稳定版或 Safari/手机出口。用户 2026-10-10 决定：Playwright Firefox 155（firefox-1543）在本机 macOS 27.0.1 无法启动，记为 M5 引擎冒烟的环境缺口，不升级 Playwright（保持性能用 Chromium 153），M8 前由用户安装 Firefox 稳定版按同一清单手动走查；V-13 新增 `@axe-core/playwright` 开发依赖。用户 2026-10-11 进一步决定：本期不做 Firefox（真实稳定版走查与 Playwright 引擎冒烟一并留后续期），本期 N3/AC-4 浏览器矩阵为 Chrome 稳定版、macOS Safari 与手机。
 - 真机默认通过显式 `preview --host <本机局域网地址>` 访问只读 production 产物，dev 保持 loopback；M5 登记设备可达 URL 与网络条件。局域网 HTTP 不是安全上下文，复制不可用时显示失败状态并保留手选，不冒称复制成功；完整复制成功路径在 loopback/用户提供的 HTTPS 入口验收。用户可提供 HTTPS 静态托管或隧道作为入口，未经明确指示不安装隧道服务、不上传。缺真实 Safari/手机时请求设备/真人走查，不用引擎仿真替代。保存实际入口、主路径、关键边界、console/失败请求与截图，并确认最新产物。
 
 **V-14 分阶段判据与归属**：M2 的 T-8 固定 12 份指南的正文/图片分布、生成种子与源指纹，交付 500 页/中英各半的 B 语料和页内采时 harness。M2 尚无正式 build/dev，使用 B 片段数组与 SSR 最小壳演练：11 语言覆盖及全部 grammar 正则检查必须通过，最大最小壳的 HTML+CSS+全部基础 JS gzip -9 总量≤100 KB；500 页冷全量渲染与样式生成≤20 s；缓存命中后的配置变化全站重渲染和内存代提交必须<1 s，并报告留给 watch/SSE/浏览器的余量。这些仅为必要的风险门，不能当正式 AC 通过；任一不满足即 no-go，先修复瓶颈/替换局部依赖，重测后才退出 M2。
@@ -509,7 +510,7 @@ F17 是P1最先交付能力，M1退出前不开始站点实现。依赖落在必
 | SSR/原生依赖与 git 安装 profile 尚无实测 | 未来实现风险，默认主题必须真 HTML且无内联样式 | M2 实施者排练 file:// 安装根 profile/patch/lock、无额外系统依赖/serde 锁兼容、11 语言全部 grammar、SSR/CSS/体积；临时验证提交不冒称交付 | M2 出口/下游依赖前 | 当前否；实测失败阻塞出口 |
 | 性能当前无 Docs 基线 | 不能宣称满足预算或虚报 PoC | 用户已于 2026-10-10 确认合同；T-8/M2 风险门→M4 构建→M5 加载→M6 保存→M8 正式收口，超限在当阶段优化/复测 | M2/M4/M5/M6 各出口及 M8 | 当前否；未达标阻塞相应出口 |
 | 固定 Chrome 来源/冻结副本 | 系统稳定版自动更新会破坏性能口径 | 已解除：用户 2026-10-10 确认 Playwright Chromium 153.0.8010.12 与 Lighthouse 模拟 Slow 4G 参数（§9.3）；不自行安装浏览器 | M2 冻结测量前 | 否 |
-| Firefox/WebKit、真实 Firefox/Safari、手机和走查人（2026-10-10 用户已授权安装 Playwright Firefox/WebKit，真实 Safari/手机由用户走查；本机无 Firefox 应用） | 引擎回归与真实矩阵需要各自证据，手机不能访问 loopback | M5 负责人确认现有可执行文件/下载授权、真实设备/走查人，登记 preview --host 的可达 URL；HTTP 复制拒绝/手选及安全入口成功路径分别验。Playwright Firefox 本机无法启动，按用户决定 M8 前以真实 Firefox 手动走查补齐（§9.3） | M5 出口确认/早期冒烟，M8 完整矩阵 | 不阻塞 M1；缺环境阻塞 M5/M8 相应出口 |
+| Firefox/WebKit、真实 Firefox/Safari、手机和走查人（2026-10-10 用户已授权安装 Playwright Firefox/WebKit，真实 Safari/手机由用户走查；本机无 Firefox 应用） | 引擎回归与真实矩阵需要各自证据，手机不能访问 loopback | M5 负责人确认现有可执行文件/下载授权、真实设备/走查人，登记 preview --host 的可达 URL；HTTP 复制拒绝/手选及安全入口成功路径分别验。Playwright Firefox 本机无法启动；用户 2026-10-11 决定 Firefox 整体留后续期（§9.3） | M5 出口确认/早期冒烟，M8 完整矩阵 | 不阻塞 M1；缺环境阻塞 M5/M8 相应出口 |
 | GUI 与全 GPU 回归成本/既有失败 | 不完整基线会掩盖 SDK 横切回归 | M1 在固定 worktree 建全范围清单，全部适用原回归须通过；既有失败定位并阻塞出口，未经用户裁定不豁免。后续按 §9.2 触发；不增加 headed GPU 性能承诺 | M1 出口及横切改动提交前 | 验证门，未过不得开始站点实现 |
 | 远端候选推送授权/方式未提供 | 本地安装不能证明 GitHub SHA 可安装 | M9 先对具体已提交候选完成 file:// 安装/配方，给出可审阅候选与结果后取得用户推送指示，再对同 SHA GitHub URL 验证；拒绝/缺授权保持 M9 阻塞 | M9 远端阶段前 | 不阻塞前序实施；未授权阻塞 M9 完成 |
 | P1 CLI 仅承诺 macOS（C-6） | Linux CI（如 GitHub Pages 常见流水线）或 Windows 上建站不在本期承诺内 | 文档与 CLI 帮助如实写明；P2 官方站改用 Linux CI 或用户需要其他平台时，重评平台范围并补对应原生环境的 V-11 | P2 官方站部署方案确定前 | 否 |

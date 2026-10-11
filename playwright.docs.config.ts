@@ -86,24 +86,24 @@ export default defineConfig({
         ...docsProjects.map((name) => ({
             name,
             testMatch: ["docs-ssg/**/*.spec.ts"],
-            testIgnore: ["docs-ssg/dev.spec.ts"],
+            testIgnore: ["docs-ssg/dev*.spec.ts"],
             use: { baseURL: docsUrl(name) },
         })),
         {
             name: "docs-firefox",
             testMatch: ["docs-ssg/**/*.spec.ts"],
-            testIgnore: ["docs-ssg/dev.spec.ts"],
+            testIgnore: ["docs-ssg/dev*.spec.ts"],
             use: { ...devices["Desktop Firefox"], baseURL: docsUrl("docs-subpath"), launchOptions: {} },
         },
         {
             name: "docs-webkit",
             testMatch: ["docs-ssg/**/*.spec.ts"],
-            testIgnore: ["docs-ssg/dev.spec.ts"],
+            testIgnore: ["docs-ssg/dev*.spec.ts"],
             use: { ...devices["Desktop Safari"], baseURL: docsUrl("docs-subpath"), launchOptions: {} },
         },
         {
             name: "docs-dev",
-            testMatch: ["docs-ssg/dev.spec.ts"],
+            testMatch: ["docs-ssg/dev*.spec.ts"],
         },
     ],
     webServer: (

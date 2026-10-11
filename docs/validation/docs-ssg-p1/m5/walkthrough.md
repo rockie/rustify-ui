@@ -34,5 +34,9 @@ target/docs-cli/rustify-docs preview --dir target/docs-ssg/http/subpath/dist --h
 
 | 环境 | 版本 | 走查人/日期 | 结果 | 问题 |
 | --- | --- | --- | --- | --- |
-| macOS Safari | | | | |
-| iOS Safari / Android Chrome | | | | |
+| macOS Safari | Safari 27.0.1（macOS 27.0.1，读自 Safari.app Info.plist） | 用户 / 2026-10-10 | 全部通过（用户确认） | 无 |
+| 手机（局域网 `preview --host`，非安全上下文） | 用户未提供设备型号与版本 | 用户 / 2026-10-10 | 全部通过（用户确认） | 无 |
+| Google Chrome 稳定版 | 154.0.8037.93（macOS 27.0.1） | Claude（经 Claude in Chrome 在用户的 Chrome 中）/ 2026-10-10 | 1–7、9 通过；8、10、11 未做（需改窗口或浏览器设置），见 [../m8/walkthrough-chrome.md](../m8/walkthrough-chrome.md) | 无 |
+| Firefox 稳定版 | — | — | 本期不做（用户 2026-10-11 决定，留后续期；Playwright Firefox 155 本机无法启动） | 已知缺口 |
+
+走查所用产物早于代码分组条与任务框名称两处可访问性修复（不改可见布局）；修复后的同一产物由 `docs-subpath` 21/21 与 `docs-webkit` 20 过 1 跳过复验（2026-10-11）。

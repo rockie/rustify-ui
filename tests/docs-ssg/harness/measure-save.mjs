@@ -13,11 +13,13 @@
 //   static  the logo every page shows (renamed, so every page changes)
 //
 // Then a short round: saves of the page, one after another, each waiting
-// until the page shows it, so no save is merged into the next.
+// until the page shows it, so no save is merged into the next. With
+// `--long N`, the same again N times on the same `dev` (the 1,000-save run),
+// sampling the server's resident memory as it goes.
 //
 //   node tests/docs-ssg/harness/measure-save.mjs --bin target/docs-cli/rustify-docs \
 //     --site target/docs-ssg/perf/b --page /zh/g04/page-024/ [--samples 5] \
-//     [--short 20] [--out report.json]
+//     [--short 20] [--long 1000] [--out report.json]
 
 import { chromium } from "@playwright/test";
 import { spawn, execFileSync } from "node:child_process";
@@ -33,7 +35,7 @@ const LIMIT_MS = 1000;
 
 function args() {
   const argv = process.argv.slice(2);
-  const options = { bin: null, site: null, page: null, samples: 5, short: 20, out: null };
+  const options = { bin: null, site: null, page: null, samples: 5, short: 20, long: 0, out: null };
   for (let i = 0; i < argv.length; i++) {
     const value = argv[i + 1];
     switch (argv[i]) {
@@ -42,6 +44,7 @@ function args() {
       case "--page": options.page = value; i++; break;
       case "--samples": options.samples = Number(value); i++; break;
       case "--short": options.short = Number(value); i++; break;
+      case "--long": options.long = Number(value); i++; break;
       case "--out": options.out = value; i++; break;
       default: throw new Error(`unknown option ${argv[i]}`);
     }
@@ -58,6 +61,19 @@ const median = (values) => {
   return sorted[Math.floor(sorted.length / 2)];
 };
 const round = (value) => Math.round(value * 10) / 10;
+const percentile = (values, p) => {
+  const sorted = [...values].sort((a, b) => a - b);
+  return sorted[Math.min(sorted.length - 1, Math.ceil((p / 100) * sorted.length) - 1)];
+};
+
+/** The process's resident set, in KiB. */
+function rss(pid) {
+  try {
+    return Number(execFileSync("ps", ["-o", "rss=", "-p", String(pid)], { encoding: "utf8" }).trim());
+  } catch {
+    return null;
+  }
+}
 
 /** Starts `dev` on `root` and resolves with its address. */
 function startDev(bin, root) {
@@ -228,6 +244,32 @@ async function main() {
       passed: short.length === options.short && Math.max(...short) <= LIMIT_MS,
       detail: `median ${median(short)} ms, max ${Math.max(...short)} ms`,
     });
+    if (options.long > 0) {
+      const latencies = [];
+      const memory = [{ saves: 0, rss_kib: rss(dev.child.pid) }];
+      for (let i = 1; i <= options.long; i++) {
+        latencies.push((await sample("body")).latency_ms);
+        if (i % 100 === 0) memory.push({ saves: i, rss_kib: rss(dev.child.pid) });
+      }
+      const alive = dev.child.exitCode === null && dev.child.signalCode === null;
+      report.long = {
+        saves: options.long,
+        seen: latencies.length,
+        server_restarted: !alive,
+        median_ms: median(latencies),
+        p95_ms: percentile(latencies, 95),
+        p99_ms: percentile(latencies, 99),
+        max_ms: Math.max(...latencies),
+        over_limit: latencies.filter((latency) => latency > LIMIT_MS).length,
+        memory,
+        latencies_ms: latencies,
+      };
+      report.checks.push({
+        check: `${options.long} saves one after another on one dev, each seen before the next, no restart`,
+        passed: latencies.length === options.long && alive,
+        detail: `median ${median(latencies)} ms, p95 ${percentile(latencies, 95)} ms, max ${Math.max(...latencies)} ms; ${report.long.over_limit} over ${LIMIT_MS} ms; RSS ${memory[0].rss_kib} → ${memory.at(-1).rss_kib} KiB`,
+      });
+    }
     report.dev_log_tail = dev.log().split("\n").slice(-6);
   } finally {
     await browser.close();
