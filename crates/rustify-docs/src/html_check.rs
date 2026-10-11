@@ -13,6 +13,8 @@
 
 use std::ops::Range;
 
+use dom_query::Document;
+use html5ever::{local_name, ns, tendril::TendrilSink, QualName};
 use html5gum::{Token, Tokenizer};
 
 use crate::diagnostic::Issue;
@@ -152,31 +154,21 @@ pub fn parse_srcset(value: &str) -> Vec<(String, String)> {
 /// IDs in the document tree, in output order. Template contents and
 /// Markdown buffers which were never emitted contribute nothing here.
 pub(crate) fn ids(html: &str) -> Vec<String> {
-    let mut ids = Vec::new();
-    let mut templates = 0usize;
-    let mut emitter = html5gum::DefaultEmitter::default();
-    emitter.naively_switch_states(true);
-    for token in Tokenizer::new_with_emitter(html, emitter) {
-        match token {
-            Ok(Token::StartTag(tag)) => {
-                if templates == 0 {
-                    if let Some(id) = tag.attributes.get(b"id".as_slice()) {
-                        ids.push(String::from_utf8_lossy(id).into_owned());
-                    }
-                }
-                // The template itself belongs to the document; its contents
-                // belong to a separate fragment, including nested templates.
-                if tag.name.eq_ignore_ascii_case(b"template") {
-                    templates += 1;
-                }
-            }
-            Ok(Token::EndTag(tag)) if tag.name.eq_ignore_ascii_case(b"template") => {
-                templates = templates.saturating_sub(1);
-            }
-            _ => {}
-        }
-    }
-    ids
+    let dom = html5ever::parse_fragment(
+        Document::fragment_sink(),
+        Default::default(),
+        QualName::new(None, ns!(html), local_name!("article")),
+        Vec::new(),
+        true,
+    )
+    .one(html);
+    // HTML template contents are separate fragments, not descendants.
+    // Foreign elements named template retain their ordinary children.
+    dom.root()
+        .descendants_it()
+        .filter_map(|node| node.id_attr())
+        .map(|id| id.to_string())
+        .collect()
 }
 
 /// Whether a link opens another site in a new window without cutting that
@@ -580,6 +572,56 @@ pub fn check_document(html: &str) -> Vec<String> {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn foreign_templates_keep_their_document_ids() {
+        for (html, expected) in [
+            (
+                r#"<svg><template/></svg><h2 id="visible">Visible</h2>"#,
+                vec!["visible"],
+            ),
+            (
+                r#"<svg><template id="holder"><circle id="circle"/></template></svg><h2 id="visible">Visible</h2>"#,
+                vec!["holder", "circle", "visible"],
+            ),
+            (
+                r#"<template id="holder"><svg><template/></svg></template><h2 id="visible">Visible</h2>"#,
+                vec!["holder", "visible"],
+            ),
+            (
+                r#"<math><template id="holder"><mi id="letter">x</mi></template></math><h2 id="visible">Visible</h2>"#,
+                vec!["holder", "letter", "visible"],
+            ),
+        ] {
+            assert_eq!(ids(html), expected, "{html}");
+        }
+    }
+
+    #[test]
+    fn html_templates_at_foreign_integration_points_have_separate_contents() {
+        for (open, close) in [
+            ("<svg><foreignObject>", "</foreignObject></svg>"),
+            ("<svg><desc>", "</desc></svg>"),
+            ("<svg><title>", "</title></svg>"),
+            ("<math><mtext>", "</mtext></math>"),
+            (
+                "<math><annotation-xml encoding='TEXT/HTML'>",
+                "</annotation-xml></math>",
+            ),
+        ] {
+            let html = format!(
+                r#"{open}<template id="holder"><svg><template id="hidden"><circle id="ghost"/></template></svg></template>{close}<h2 id="visible">Visible</h2>"#
+            );
+            assert_eq!(ids(&html), ["holder", "visible"], "{html}");
+        }
+        // HTML's self-closing flag cannot close a template element.
+        assert_eq!(
+            ids(
+                r#"<template id="holder"/><span id="ghost"></span></template><h2 id="visible">Visible</h2>"#
+            ),
+            ["holder", "visible"]
+        );
+    }
 
     /// The errors, in order; warnings have a test of their own.
     fn rules(html: &str) -> Vec<&'static str> {

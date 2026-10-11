@@ -2606,6 +2606,77 @@ pub(crate) mod tests {
         }
     }
 
+    #[test]
+    fn foreign_template_links_match_document_ids_on_the_same_and_other_pages() {
+        for (markup, targets) in [
+            (r#"<svg><template/></svg>"#, vec![]),
+            (
+                r#"<svg><template id="svg-holder"><circle id="circle" r="10"/></template></svg>"#,
+                vec!["svg-holder", "circle"],
+            ),
+            (
+                r#"<template id="holder"><svg><template/></svg></template>"#,
+                vec!["holder"],
+            ),
+            (
+                r#"<svg><foreignObject><template id="holder"><span id="ghost">Hidden</span><svg><template/></svg></template></foreignObject></svg>"#,
+                vec!["holder"],
+            ),
+        ] {
+            let mut body = format!("{FRONT}# Home\n\n{markup}\n\n## Visible\n\n[Visible](#visible) [Other visible](other.md#visible)\n");
+            for id in &targets {
+                body.push_str(&format!("\n[{id}](#{id}) [Other {id}](other.md#{id})\n"));
+            }
+            let fixture = Fixture::new(&[
+                ("rustify-docs.toml", CONFIG),
+                ("content/index.md", &body),
+                ("content/other.md", &body),
+            ]);
+            for mode in [Mode::Production, Mode::Dev] {
+                let (_, _, analysis) = fixture.analyze(mode);
+                assert_eq!(analysis.errors(), 0, "{markup}: {:?}", analysis.diagnostics);
+                let mut expected = vec!["home"];
+                expected.extend(targets.iter().copied());
+                expected.push("visible");
+                for page in &analysis.pages {
+                    assert_eq!(page.fragment.anchors, expected, "{markup}");
+                }
+            }
+        }
+    }
+
+    #[test]
+    fn html_integration_templates_reject_same_and_cross_page_ghost_links() {
+        for (open, close) in [
+            ("<svg><foreignObject>", "</foreignObject></svg>"),
+            ("<svg><desc>", "</desc></svg>"),
+            ("<svg><title>", "</title></svg>"),
+            ("<math><mtext>", "</mtext></math>"),
+            (
+                "<math><annotation-xml encoding='application/xhtml+xml'>",
+                "</annotation-xml></math>",
+            ),
+        ] {
+            let body = format!("{FRONT}# Home\n\n{open}<template id=\"holder\"><svg><template id=\"nested\"><circle id=\"ghost\"/></template></svg></template>{close}\n\n## Visible\n\n[Holder](#holder) [Visible](#visible)\n\n[Ghost](#ghost) [Other ghost](other.md#ghost)\n");
+            let fixture = Fixture::new(&[
+                ("rustify-docs.toml", CONFIG),
+                ("content/index.md", &body),
+                ("content/other.md", &body),
+            ]);
+            let (_, _, analysis) = fixture.analyze(Mode::Production);
+            let errors = errors(&analysis);
+            assert_eq!(errors.len(), 4, "{open}: {errors:?}");
+            assert!(errors.iter().all(|error| error.0 == "broken-anchor"));
+            for page in &analysis.pages {
+                assert_eq!(
+                    page.fragment.anchors,
+                    ["home", "holder", "visible"],
+                    "{open}"
+                );
+            }
+        }
+    }
+
     #[cfg(unix)]
     #[test]
     fn snapshot_links_keep_safe_recovery_targets_when_missing() {

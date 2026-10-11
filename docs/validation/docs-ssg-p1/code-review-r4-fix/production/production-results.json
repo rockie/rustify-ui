@@ -1,0 +1,340 @@
+{
+  "browser": "153.0.8010.12",
+  "binary": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-cli/rustify-docs",
+  "cases": [
+    {
+      "base": "/",
+      "entry": "http://127.0.0.1:51030/",
+      "build": {
+        "exit": 0,
+        "report": {
+          "schema_version": 1,
+          "success": true,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            }
+          ],
+          "summary": {
+            "errors": 0,
+            "warnings": 1,
+            "pages": 2,
+            "files": 16,
+            "bytes": 68171,
+            "largest": [
+              {
+                "path": "index.html",
+                "bytes": 5771
+              },
+              {
+                "path": "other/index.html",
+                "bytes": 4533
+              },
+              {
+                "path": "404.html",
+                "bytes": 4036
+              }
+            ],
+            "out": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/docs-r3-production-rQxuWu/dist",
+            "milliseconds": 20
+          }
+        }
+      },
+      "invalidAnchors": {
+        "exit": 1,
+        "report": {
+          "schema_version": 1,
+          "success": false,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            },
+            {
+              "severity": "error",
+              "rule": "broken-anchor",
+              "file": "content/index.md",
+              "line": 22,
+              "column": 1,
+              "message": "content/index.md has no heading `#ghost`",
+              "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+            },
+            {
+              "severity": "error",
+              "rule": "broken-anchor",
+              "file": "content/index.md",
+              "line": 22,
+              "column": 17,
+              "message": "content/other.md has no heading `#deep`",
+              "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+            }
+          ],
+          "summary": {
+            "errors": 2,
+            "warnings": 1,
+            "pages": 0
+          }
+        }
+      },
+      "previousOutputPreserved": true,
+      "anchors": {
+        "holder": "TEMPLATE",
+        "ghost": null,
+        "nested": null,
+        "deep": null,
+        "stored": "SPAN"
+      },
+      "resources": [
+        {
+          "input": "URL('/assets/bg_one.svg')",
+          "class": "w-10 h-10 [background-image:URL('/assets/files/bg%20one.106eb81194.svg')]",
+          "background": "url(\"http://127.0.0.1:51030/assets/files/bg%20one.106eb81194.svg\")",
+          "url": "http://127.0.0.1:51030/assets/files/bg%20one.106eb81194.svg",
+          "status": 200
+        },
+        {
+          "input": "url('/assets/bg_one.svg')",
+          "class": "w-10 h-10 [background-image:url('/assets/files/bg\\_one.c763668ac8.svg')]",
+          "background": "url(\"http://127.0.0.1:51030/assets/files/bg_one.c763668ac8.svg\")",
+          "url": "http://127.0.0.1:51030/assets/files/bg_one.c763668ac8.svg",
+          "status": 200
+        },
+        {
+          "input": "URL('/assets/bg\\_one.svg')",
+          "class": "w-10 h-10 [background-image:URL('/assets/files/bg\\_one.c763668ac8.svg')]",
+          "background": "url(\"http://127.0.0.1:51030/assets/files/bg_one.c763668ac8.svg\")",
+          "url": "http://127.0.0.1:51030/assets/files/bg_one.c763668ac8.svg",
+          "status": 200
+        },
+        {
+          "input": "url('/assets/bg\\_one.svg')",
+          "class": "w-10 h-10 [background-image:url('/assets/files/bg\\_one.c763668ac8.svg')]",
+          "background": "url(\"http://127.0.0.1:51030/assets/files/bg_one.c763668ac8.svg\")",
+          "url": "http://127.0.0.1:51030/assets/files/bg_one.c763668ac8.svg",
+          "status": 200
+        },
+        {
+          "input": "URL('/assets/bg%20one.svg')",
+          "class": "w-10 h-10 [background-image:URL('/assets/files/bg%20one.106eb81194.svg')]",
+          "background": "url(\"http://127.0.0.1:51030/assets/files/bg%20one.106eb81194.svg\")",
+          "url": "http://127.0.0.1:51030/assets/files/bg%20one.106eb81194.svg",
+          "status": 200
+        },
+        {
+          "input": "url('/assets/bg%20one.svg')",
+          "class": "w-10 h-10 [background-image:url('/assets/files/bg%20one.106eb81194.svg')]",
+          "background": "url(\"http://127.0.0.1:51030/assets/files/bg%20one.106eb81194.svg\")",
+          "url": "http://127.0.0.1:51030/assets/files/bg%20one.106eb81194.svg",
+          "status": 200
+        },
+        {
+          "input": "url&#40=/bg.svg)",
+          "class": "w-10 h-10 [background-image:url(/assets/files/bg.106eb81194.svg)]",
+          "background": "url(\"http://127.0.0.1:51030/assets/files/bg.106eb81194.svg\")",
+          "url": "http://127.0.0.1:51030/assets/files/bg.106eb81194.svg",
+          "status": 200
+        },
+        {
+          "input": "url&#40;=/bg.svg)",
+          "class": "w-10 h-10 [background-image:url(/assets/files/bg.106eb81194.svg)]",
+          "background": "url(\"http://127.0.0.1:51030/assets/files/bg.106eb81194.svg\")",
+          "url": "http://127.0.0.1:51030/assets/files/bg.106eb81194.svg",
+          "status": 200
+        },
+        {
+          "input": "url(&#34=/bg.svg&#34)",
+          "class": "w-10 h-10 [background-image:url(\"/assets/files/bg.106eb81194.svg\")]",
+          "background": "url(\"http://127.0.0.1:51030/assets/files/bg.106eb81194.svg\")",
+          "url": "http://127.0.0.1:51030/assets/files/bg.106eb81194.svg",
+          "status": 200
+        },
+        {
+          "input": "url(&#34;=/bg.svg&#34;)",
+          "class": "w-10 h-10 [background-image:url(\"/assets/files/bg.106eb81194.svg\")]",
+          "background": "url(\"http://127.0.0.1:51030/assets/files/bg.106eb81194.svg\")",
+          "url": "http://127.0.0.1:51030/assets/files/bg.106eb81194.svg",
+          "status": 200
+        }
+      ],
+      "errors": []
+    },
+    {
+      "base": "/docs/",
+      "entry": "http://127.0.0.1:51052/docs/",
+      "build": {
+        "exit": 0,
+        "report": {
+          "schema_version": 1,
+          "success": true,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            }
+          ],
+          "summary": {
+            "errors": 0,
+            "warnings": 1,
+            "pages": 2,
+            "files": 16,
+            "bytes": 68502,
+            "largest": [
+              {
+                "path": "index.html",
+                "bytes": 5896
+              },
+              {
+                "path": "other/index.html",
+                "bytes": 4603
+              },
+              {
+                "path": "404.html",
+                "bytes": 4086
+              }
+            ],
+            "out": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/docs-r3-production-tdzQof/dist",
+            "milliseconds": 22
+          }
+        }
+      },
+      "invalidAnchors": {
+        "exit": 1,
+        "report": {
+          "schema_version": 1,
+          "success": false,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            },
+            {
+              "severity": "error",
+              "rule": "broken-anchor",
+              "file": "content/index.md",
+              "line": 22,
+              "column": 1,
+              "message": "content/index.md has no heading `#ghost`",
+              "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+            },
+            {
+              "severity": "error",
+              "rule": "broken-anchor",
+              "file": "content/index.md",
+              "line": 22,
+              "column": 17,
+              "message": "content/other.md has no heading `#deep`",
+              "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+            }
+          ],
+          "summary": {
+            "errors": 2,
+            "warnings": 1,
+            "pages": 0
+          }
+        }
+      },
+      "previousOutputPreserved": true,
+      "anchors": {
+        "holder": "TEMPLATE",
+        "ghost": null,
+        "nested": null,
+        "deep": null,
+        "stored": "SPAN"
+      },
+      "resources": [
+        {
+          "input": "URL('/assets/bg_one.svg')",
+          "class": "w-10 h-10 [background-image:URL('/docs/assets/files/bg%20one.106eb81194.svg')]",
+          "background": "url(\"http://127.0.0.1:51052/docs/assets/files/bg%20one.106eb81194.svg\")",
+          "url": "http://127.0.0.1:51052/docs/assets/files/bg%20one.106eb81194.svg",
+          "status": 200
+        },
+        {
+          "input": "url('/assets/bg_one.svg')",
+          "class": "w-10 h-10 [background-image:url('/docs/assets/files/bg\\_one.c763668ac8.svg')]",
+          "background": "url(\"http://127.0.0.1:51052/docs/assets/files/bg_one.c763668ac8.svg\")",
+          "url": "http://127.0.0.1:51052/docs/assets/files/bg_one.c763668ac8.svg",
+          "status": 200
+        },
+        {
+          "input": "URL('/assets/bg\\_one.svg')",
+          "class": "w-10 h-10 [background-image:URL('/docs/assets/files/bg\\_one.c763668ac8.svg')]",
+          "background": "url(\"http://127.0.0.1:51052/docs/assets/files/bg_one.c763668ac8.svg\")",
+          "url": "http://127.0.0.1:51052/docs/assets/files/bg_one.c763668ac8.svg",
+          "status": 200
+        },
+        {
+          "input": "url('/assets/bg\\_one.svg')",
+          "class": "w-10 h-10 [background-image:url('/docs/assets/files/bg\\_one.c763668ac8.svg')]",
+          "background": "url(\"http://127.0.0.1:51052/docs/assets/files/bg_one.c763668ac8.svg\")",
+          "url": "http://127.0.0.1:51052/docs/assets/files/bg_one.c763668ac8.svg",
+          "status": 200
+        },
+        {
+          "input": "URL('/assets/bg%20one.svg')",
+          "class": "w-10 h-10 [background-image:URL('/docs/assets/files/bg%20one.106eb81194.svg')]",
+          "background": "url(\"http://127.0.0.1:51052/docs/assets/files/bg%20one.106eb81194.svg\")",
+          "url": "http://127.0.0.1:51052/docs/assets/files/bg%20one.106eb81194.svg",
+          "status": 200
+        },
+        {
+          "input": "url('/assets/bg%20one.svg')",
+          "class": "w-10 h-10 [background-image:url('/docs/assets/files/bg%20one.106eb81194.svg')]",
+          "background": "url(\"http://127.0.0.1:51052/docs/assets/files/bg%20one.106eb81194.svg\")",
+          "url": "http://127.0.0.1:51052/docs/assets/files/bg%20one.106eb81194.svg",
+          "status": 200
+        },
+        {
+          "input": "url&#40=/bg.svg)",
+          "class": "w-10 h-10 [background-image:url(/docs/assets/files/bg.106eb81194.svg)]",
+          "background": "url(\"http://127.0.0.1:51052/docs/assets/files/bg.106eb81194.svg\")",
+          "url": "http://127.0.0.1:51052/docs/assets/files/bg.106eb81194.svg",
+          "status": 200
+        },
+        {
+          "input": "url&#40;=/bg.svg)",
+          "class": "w-10 h-10 [background-image:url(/docs/assets/files/bg.106eb81194.svg)]",
+          "background": "url(\"http://127.0.0.1:51052/docs/assets/files/bg.106eb81194.svg\")",
+          "url": "http://127.0.0.1:51052/docs/assets/files/bg.106eb81194.svg",
+          "status": 200
+        },
+        {
+          "input": "url(&#34=/bg.svg&#34)",
+          "class": "w-10 h-10 [background-image:url(\"/docs/assets/files/bg.106eb81194.svg\")]",
+          "background": "url(\"http://127.0.0.1:51052/docs/assets/files/bg.106eb81194.svg\")",
+          "url": "http://127.0.0.1:51052/docs/assets/files/bg.106eb81194.svg",
+          "status": 200
+        },
+        {
+          "input": "url(&#34;=/bg.svg&#34;)",
+          "class": "w-10 h-10 [background-image:url(\"/docs/assets/files/bg.106eb81194.svg\")]",
+          "background": "url(\"http://127.0.0.1:51052/docs/assets/files/bg.106eb81194.svg\")",
+          "url": "http://127.0.0.1:51052/docs/assets/files/bg.106eb81194.svg",
+          "status": 200
+        }
+      ],
+      "errors": []
+    }
+  ]
+}

@@ -1,0 +1,545 @@
+{
+  "baseline": "dirty@540462a895a48385761f8db6e3271a714957d818",
+  "source_scope": "scope.json",
+  "commands": [
+    {
+      "argv": [
+        "mbx",
+        "build",
+        "--locked",
+        "-p",
+        "rustify-docs-cli",
+        "--profile",
+        "docs-cli"
+      ],
+      "baseline": "540462a895a48385761f8db6e3271a714957d818 (before production edits)",
+      "exit": 0,
+      "log": "before-build.log",
+      "preserved_binary": "target/docs-ssg/r4-fix/before"
+    },
+    {
+      "argv": [
+        "mbx",
+        "test",
+        "--locked",
+        "-p",
+        "rustify-docs"
+      ],
+      "exit": 0,
+      "log": "library-test.log"
+    },
+    {
+      "argv": [
+        "mbx",
+        "test",
+        "--locked",
+        "-p",
+        "rustify-docs-cli"
+      ],
+      "exit": 0,
+      "log": "cli-test.log"
+    },
+    {
+      "argv": [
+        "mbx",
+        "build",
+        "--locked",
+        "-p",
+        "rustify-docs-cli",
+        "--profile",
+        "docs-cli"
+      ],
+      "exit": 0,
+      "log": "cli-build.log"
+    },
+    {
+      "argv": [
+        "npx",
+        "--no-install",
+        "playwright",
+        "test",
+        "-c",
+        "playwright.docs.config.ts",
+        "--project=docs-dev",
+        "--reporter=list",
+        "--output=target/docs-ssg/r4-fix/browser/docs-dev"
+      ],
+      "env": {
+        "RUSTIFY_DOCS_BIN": "target/docs-cli/rustify-docs"
+      },
+      "exit": 0,
+      "log": "docs-dev.log"
+    },
+    {
+      "argv": [
+        "mbx",
+        "xtask",
+        "docs-verify",
+        "--group",
+        "performance",
+        "--report",
+        "docs/validation/docs-ssg-p1/code-review-r4-fix/performance.json"
+      ],
+      "exit": 0,
+      "log": "performance.log"
+    },
+    {
+      "argv": [
+        "node",
+        "tests/docs-ssg/harness/measure-save.mjs",
+        "--bin",
+        "target/docs-cli/rustify-docs",
+        "--site",
+        "target/docs-ssg/perf/b",
+        "--page",
+        "/zh/g04/page-024/",
+        "--samples",
+        "5",
+        "--short",
+        "20",
+        "--out",
+        "docs/validation/docs-ssg-p1/code-review-r4-fix/save.json"
+      ],
+      "exit": 0,
+      "log": "save.log"
+    },
+    {
+      "argv": [
+        "mbx",
+        "xtask",
+        "docs-verify",
+        "--group",
+        "toolchain"
+      ],
+      "exit": 0,
+      "log": "toolchain.log"
+    },
+    {
+      "label": "fmt",
+      "argv": [
+        "cargo",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "exit": 0,
+      "seconds": 1.79,
+      "log": "fmt.log"
+    },
+    {
+      "label": "library-clippy",
+      "argv": [
+        "mbx",
+        "clippy",
+        "--locked",
+        "-p",
+        "rustify-docs",
+        "--all-targets",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit": 0,
+      "seconds": 12.151,
+      "log": "library-clippy.log"
+    },
+    {
+      "label": "cli-clippy",
+      "argv": [
+        "mbx",
+        "clippy",
+        "--locked",
+        "-p",
+        "rustify-docs-cli",
+        "--all-targets",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit": 0,
+      "seconds": 1.173,
+      "log": "cli-clippy.log"
+    },
+    {
+      "label": "sources",
+      "argv": [
+        "mbx",
+        "xtask",
+        "sources",
+        "verify"
+      ],
+      "exit": 0,
+      "seconds": 14.437,
+      "log": "sources.log"
+    },
+    {
+      "label": "features",
+      "argv": [
+        "mbx",
+        "xtask",
+        "docs-verify",
+        "--group",
+        "features"
+      ],
+      "exit": 0,
+      "seconds": 4.436,
+      "log": "features.log"
+    },
+    {
+      "label": "workspace",
+      "argv": [
+        "mbx",
+        "test",
+        "--locked",
+        "--workspace",
+        "--exclude",
+        "rustify-docs",
+        "--exclude",
+        "rustify-docs-cli",
+        "--lib",
+        "--bins"
+      ],
+      "exit": 0,
+      "seconds": 98.738,
+      "log": "workspace.log"
+    },
+    {
+      "label": "rustify-ui-default-test",
+      "argv": [
+        "mbx",
+        "test",
+        "--locked",
+        "-p",
+        "rustify-ui",
+        "--lib"
+      ],
+      "exit": 0,
+      "seconds": 0.711,
+      "log": "rustify-ui-default-test.log"
+    },
+    {
+      "label": "rustify-ui-default-clippy",
+      "argv": [
+        "mbx",
+        "clippy",
+        "--locked",
+        "-p",
+        "rustify-ui",
+        "--all-targets",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit": 0,
+      "seconds": 0.476,
+      "log": "rustify-ui-default-clippy.log"
+    },
+    {
+      "label": "rustify-ui-gpu-test",
+      "argv": [
+        "mbx",
+        "test",
+        "--locked",
+        "-p",
+        "rustify-ui",
+        "--features",
+        "gpu",
+        "--lib"
+      ],
+      "exit": 0,
+      "seconds": 0.673,
+      "log": "rustify-ui-gpu-test.log"
+    },
+    {
+      "label": "rustify-ui-gpu-clippy",
+      "argv": [
+        "mbx",
+        "clippy",
+        "--locked",
+        "-p",
+        "rustify-ui",
+        "--features",
+        "gpu",
+        "--all-targets",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit": 0,
+      "seconds": 0.465,
+      "log": "rustify-ui-gpu-clippy.log"
+    },
+    {
+      "label": "rustify-ui-ssr-test",
+      "argv": [
+        "mbx",
+        "test",
+        "--locked",
+        "-p",
+        "rustify-ui",
+        "--no-default-features",
+        "--features",
+        "ssr",
+        "--lib"
+      ],
+      "exit": 0,
+      "seconds": 0.589,
+      "log": "rustify-ui-ssr-test.log"
+    },
+    {
+      "label": "rustify-ui-ssr-clippy",
+      "argv": [
+        "mbx",
+        "clippy",
+        "--locked",
+        "-p",
+        "rustify-ui",
+        "--no-default-features",
+        "--features",
+        "ssr",
+        "--all-targets",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit": 0,
+      "seconds": 0.378,
+      "log": "rustify-ui-ssr-clippy.log"
+    },
+    {
+      "label": "rustify-components-default-test",
+      "argv": [
+        "mbx",
+        "test",
+        "--locked",
+        "-p",
+        "rustify-components",
+        "--lib"
+      ],
+      "exit": 0,
+      "seconds": 0.558,
+      "log": "rustify-components-default-test.log"
+    },
+    {
+      "label": "rustify-components-default-clippy",
+      "argv": [
+        "mbx",
+        "clippy",
+        "--locked",
+        "-p",
+        "rustify-components",
+        "--all-targets",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit": 0,
+      "seconds": 0.326,
+      "log": "rustify-components-default-clippy.log"
+    },
+    {
+      "label": "rustify-components-gpu-test",
+      "argv": [
+        "mbx",
+        "test",
+        "--locked",
+        "-p",
+        "rustify-components",
+        "--features",
+        "gpu",
+        "--lib"
+      ],
+      "exit": 0,
+      "seconds": 0.547,
+      "log": "rustify-components-gpu-test.log"
+    },
+    {
+      "label": "rustify-components-gpu-clippy",
+      "argv": [
+        "mbx",
+        "clippy",
+        "--locked",
+        "-p",
+        "rustify-components",
+        "--features",
+        "gpu",
+        "--all-targets",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit": 0,
+      "seconds": 0.549,
+      "log": "rustify-components-gpu-clippy.log"
+    },
+    {
+      "label": "rustify-components-ssr-test",
+      "argv": [
+        "mbx",
+        "test",
+        "--locked",
+        "-p",
+        "rustify-components",
+        "--no-default-features",
+        "--features",
+        "ssr",
+        "--lib"
+      ],
+      "exit": 0,
+      "seconds": 0.701,
+      "log": "rustify-components-ssr-test.log"
+    },
+    {
+      "label": "rustify-components-ssr-clippy",
+      "argv": [
+        "mbx",
+        "clippy",
+        "--locked",
+        "-p",
+        "rustify-components",
+        "--no-default-features",
+        "--features",
+        "ssr",
+        "--all-targets",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit": 0,
+      "seconds": 0.414,
+      "log": "rustify-components-ssr-clippy.log"
+    },
+    {
+      "label": "docs-subpath",
+      "argv": [
+        "npx",
+        "--no-install",
+        "playwright",
+        "test",
+        "-c",
+        "playwright.docs.config.ts",
+        "--project=docs-subpath",
+        "--reporter=list",
+        "--output=target/docs-ssg/r4-fix/browser/docs-subpath"
+      ],
+      "exit": 0,
+      "seconds": 14.584,
+      "log": "docs-subpath.log"
+    },
+    {
+      "label": "docs-root",
+      "argv": [
+        "npx",
+        "--no-install",
+        "playwright",
+        "test",
+        "-c",
+        "playwright.docs.config.ts",
+        "--project=docs-root",
+        "--reporter=list",
+        "--output=target/docs-ssg/r4-fix/browser/docs-root"
+      ],
+      "exit": 0,
+      "seconds": 13.688,
+      "log": "docs-root.log"
+    },
+    {
+      "label": "docs-meta",
+      "argv": [
+        "npx",
+        "--no-install",
+        "playwright",
+        "test",
+        "-c",
+        "playwright.docs.config.ts",
+        "--project=docs-meta",
+        "--reporter=list",
+        "--output=target/docs-ssg/r4-fix/browser/docs-meta"
+      ],
+      "exit": 0,
+      "seconds": 12.378,
+      "log": "docs-meta.log"
+    },
+    {
+      "label": "verification",
+      "argv": [
+        "node",
+        "docs/validation/docs-ssg-p1/code-review-r4-fix/verify.cjs",
+        "target/docs-ssg/r4-fix/before",
+        "target/docs-cli/rustify-docs",
+        "docs/validation/docs-ssg-p1/code-review-r4-fix"
+      ],
+      "exit": 0,
+      "seconds": 4.679,
+      "log": "verification.log"
+    },
+    {
+      "label": "production",
+      "argv": [
+        "node",
+        "docs/validation/docs-ssg-p1/code-review-r3-fix/production.cjs",
+        "target/docs-cli/rustify-docs",
+        "docs/validation/docs-ssg-p1/code-review-r4-fix/production"
+      ],
+      "exit": 0,
+      "seconds": 1.4,
+      "log": "production.log"
+    }
+  ],
+  "experiments": [
+    "verification.json",
+    "performance-comparison.json",
+    "installed-anchors.json"
+  ],
+  "initial_failures": [
+    {
+      "argv": [
+        "mbx",
+        "test",
+        "--locked",
+        "-p",
+        "rustify-docs",
+        "--lib",
+        "template"
+      ],
+      "exit": 101,
+      "log": "library-red.log"
+    },
+    {
+      "argv": [
+        "mbx",
+        "test",
+        "--locked",
+        "-p",
+        "rustify-docs-cli",
+        "--test",
+        "check",
+        "foreign_template_targets"
+      ],
+      "exit": 101,
+      "log": "cli-red.log"
+    },
+    {
+      "argv": [
+        "npx",
+        "--no-install",
+        "playwright",
+        "test",
+        "-c",
+        "playwright.docs.config.ts",
+        "--project=docs-dev",
+        "dev.spec.ts",
+        "-g",
+        "self-closing SVG template",
+        "--reporter=list",
+        "--output=target/docs-ssg/r4-fix/browser-red"
+      ],
+      "env": {
+        "RUSTIFY_DOCS_BIN": "target/docs-ssg/r4-fix/before"
+      },
+      "exit": 1,
+      "log": "browser-red.log"
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+    Checking stable_deref_trait v1.2.1
+   Compiling phf_shared v0.13.1
+   Compiling phf_generator v0.13.1
+    Checking yoke v0.8.3
+    Checking scopeguard v1.2.0
+    Checking new_debug_unreachable v1.0.6
+    Checking parking_lot_core v0.9.12
+   Compiling phf_codegen v0.13.1
+   Compiling string_cache_codegen v0.6.1
+   Compiling phf_macros v0.13.1
+    Checking bit-set v0.8.0
+    Checking lock_api v0.4.14
+    Checking tendril v0.5.1
+   Compiling derive_more-impl v2.1.1
+    Checking servo_arc v0.4.3
+   Compiling selectors v0.38.0
+    Checking foldhash v0.2.0
+    Checking fancy-regex v0.16.2
+    Checking parking_lot v0.12.5
+   Compiling web_atoms v0.2.6
+    Checking phf v0.13.1
+    Checking derive_more v2.1.1
+    Checking string_cache v0.9.0
+    Checking syntect v5.3.0
+    Checking zerovec v0.11.8
+    Checking zerotrie v0.2.5
+    Checking tinystr v0.8.4
+    Checking potential_utf v0.1.6
+    Checking cssparser v0.37.0
+    Checking icu_collections v2.3.0
+    Checking icu_locale_core v2.3.0
+    Checking two-face v0.5.2+bat-0.26.1
+    Checking markup5ever v0.39.0
+    Checking icu_provider v2.3.1
+    Checking html5ever v0.39.0
+    Checking cssparser-color v0.5.0
+    Checking parcel_selectors v0.28.3
+    Checking icu_normalizer v2.3.0
+    Checking icu_properties v2.3.0
+    Checking lightningcss v1.0.0-alpha.72
+    Checking dom_query v0.28.0
+    Checking idna_adapter v1.2.2
+    Checking idna v1.1.0
+    Checking url v2.5.8
+    Checking server_fn v0.8.13
+    Checking leptos_server v0.8.8
+    Checking leptos v0.8.22
+    Checking rustify-ui v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui)
+    Checking rustify-components v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-components)
+    Checking rustify-docs v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-docs)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 11.86s
+mbx[cache]: 11 hits, 0 misses, 45 not looked up; 0 B downloaded, 0 B uploaded, 42.1 MiB stored locally
+mbx[savings]: 40946 compilations retrieved with a straight face.

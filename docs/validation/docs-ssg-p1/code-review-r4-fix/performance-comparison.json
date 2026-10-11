@@ -1,0 +1,31 @@
+{
+  "baseline": "540462a895a48385761f8db6e3271a714957d818",
+  "after": "dirty@540462a895a48385761f8db6e3271a714957d818",
+  "corpus": {
+    "pages": 500,
+    "seed": 1592636672,
+    "profile_sha256": "7c090aa2064f0c843164f70c7488ea9f3514c7f43bf96ece66de6dae06e306d5",
+    "digest": "ecb43f7911fe7512bae279a0214aad39647052c28c3bd7c9a67f6745e4a889ac"
+  },
+  "rounds_ms": {
+    "before": [
+      445.270875,
+      371.02250000000015,
+      393.3113339999999,
+      382.56395799999996,
+      416.5424579999999
+    ],
+    "after": [
+      413.28387499999997,
+      408.45429200000007,
+      398.41133399999995,
+      381.05537499999986,
+      409.1656670000003
+    ]
+  },
+  "median_ms": {
+    "before": 393.3113339999999,
+    "after": 408.45429200000007
+  },
+  "method": "Five interleaved before/after builds; a fresh empty output per run; elapsed monotonic wall time; same frozen B corpus and host."
+}

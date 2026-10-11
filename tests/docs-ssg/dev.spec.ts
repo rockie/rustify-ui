@@ -347,6 +347,68 @@ test("template contents are rejected as anchors while their holder and ordinary 
     expect(errors).toEqual([]);
 });
 
+for (const [name, markup, ids] of [
+    ["self-closing SVG template", '<svg><template id="svg-holder"/></svg>', ["svg-holder"]],
+    ["paired SVG template", '<svg><template id="svg-holder"><circle id="circle" r="10"/></template></svg>', ["svg-holder", "circle"]],
+    ["SVG inside an HTML template", '<template id="holder"><svg><template id="ghost"/></svg></template>', ["holder"]],
+] as const) {
+    test(`${name} preserves document anchors and cross-page navigation`, async ({ page }) => {
+        site.write("rustify-docs.toml", `${site.read("rustify-docs.toml")}\n[[nav.groups]]\nlabel = "Anchors"\nitems = ["index.md", "other.md"]\n`);
+        const body = `---\ndescription: Foreign anchors\n---\n# Foreign anchors\n\n${markup}\n\n## Visible\n\n[Visible](#visible) [Other visible](other.md#visible)\n\n${ids.map((id) => `[${id}](#${id}) [Other ${id}](other.md#${id})`).join("\n")}\n`;
+        site.write("content/index.md", body);
+        site.write("content/other.md", body);
+        const errors: string[] = [];
+        page.on("pageerror", (error) => errors.push(error.message));
+        page.on("console", (message) => { if (message.type() === "error") errors.push(message.text()); });
+        page.on("requestfailed", (request) => errors.push(`${request.url()}: ${request.failure()?.errorText}`));
+        const server = await dev();
+        await page.goto(server.url);
+        await expect(page.getByRole("heading", { name: "Visible", exact: true })).toBeVisible();
+        expect(await page.locator("article [id]").evaluateAll((nodes) => nodes.map((node) => node.id))).toEqual(["foreign-anchors", ...ids, "visible"]);
+        if (ids.some((id) => id === "svg-holder")) {
+            expect(await page.locator("#svg-holder").evaluate((node) => ({ namespace: node.namespaceURI, content: "content" in node }))).toEqual({ namespace: "http://www.w3.org/2000/svg", content: false });
+        }
+        await page.locator("article").getByRole("link", { name: "Visible", exact: true }).click();
+        expect(new URL(page.url()).hash).toBe("#visible");
+        await page.locator("article").getByRole("link", { name: `Other ${ids[0]}`, exact: true }).click();
+        await expect(page).toHaveURL(new RegExp(`/other/#${ids[0]}$`));
+        expect(await page.locator(`[id="${ids[0]}"]`).count()).toBe(1);
+        expect(errors).toEqual([]);
+        await test.info().attach("foreign-anchors.png", { body: await page.screenshot(), contentType: "image/png" });
+    });
+}
+
+test("HTML templates at foreign integration points recover from ghost links", async ({ page }) => {
+    site.write("rustify-docs.toml", `${site.read("rustify-docs.toml")}\n[[nav.groups]]\nlabel = "Anchors"\nitems = ["index.md", "other.md"]\n`);
+    const contexts = [
+        ["<svg><foreignObject>", "</foreignObject></svg>"],
+        ["<svg><desc>", "</desc></svg>"],
+        ["<svg><title>", "</title></svg>"],
+        ["<math><mtext>", "</mtext></math>"],
+        ['<math><annotation-xml encoding="text/html">', "</annotation-xml></math>"],
+    ];
+    const body = `---\ndescription: Integration anchors\n---\n# Integration anchors\n\n${contexts.map(([open, close], i) => `${open}<template id="holder-${i}"><svg><template><circle id="ghost-${i}"/></template></svg></template>${close}`).join("\n\n")}\n\n## Visible\n\n[Visible](#visible) [Other holder](other.md#holder-0)\n`;
+    const invalid = contexts.map((_, i) => `[Ghost ${i}](#ghost-${i}) [Other ghost ${i}](other.md#ghost-${i})`).join("\n");
+    site.write("content/index.md", `${body}\n${invalid}\n`);
+    site.write("content/other.md", body);
+    const errors: string[] = [];
+    page.on("pageerror", (error) => errors.push(error.message));
+    const server = await dev();
+    await page.goto(server.url);
+    await expect(page.getByRole("region", { name: "10 errors · nothing has built yet" })).toContainText("broken-anchor");
+    site.write("content/index.md", body);
+    await expect(page.getByRole("heading", { name: "Visible", exact: true })).toBeVisible();
+    for (let i = 0; i < contexts.length; i++) {
+        expect(await page.locator(`#holder-${i}`).evaluate((node) => ({ namespace: node.namespaceURI, stored: (node as HTMLTemplateElement).content.querySelector("circle")?.id }))).toEqual({ namespace: "http://www.w3.org/1999/xhtml", stored: `ghost-${i}` });
+        expect(await page.locator(`#ghost-${i}`).count()).toBe(0);
+    }
+    await page.locator("article").getByRole("link", { name: "Visible", exact: true }).click();
+    expect(new URL(page.url()).hash).toBe("#visible");
+    await page.locator("article").getByRole("link", { name: "Other holder", exact: true }).click();
+    await expect(page).toHaveURL(/\/other\/#holder-0$/);
+    expect(errors).toEqual([]);
+});
+
 test("a failed build keeps the page readable under a panel that hides to a marker and clears on the fix", async ({ page }) => {
     const server = await dev();
     await page.goto(`${server.url}guide/setup/`);

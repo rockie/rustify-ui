@@ -31,6 +31,10 @@ sha2 = "0.10.9"
 unicode-normalization = "0.1.25"
 # Author HTML is checked as a browser tokenizes it (WHATWG), with spans.
 html5gum = "0.8.4"
+# Document IDs need tree construction: namespaces and template fragments
+# cannot be determined by counting tokenizer tags.
+html5ever = "0.39.0"
+dom_query = { version = "0.28.0", default-features = false }
 # Frontmatter and the site configuration, with locations for diagnostics.
 serde = { version = "1", features = ["derive"] }
 # A production output's manifest.

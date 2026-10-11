@@ -1,0 +1,17 @@
+{
+  "baseline": "dirty@540462a895a48385761f8db6e3271a714957d818",
+  "files": {
+    "Cargo.lock": "fe2eea9b1bdbf7586721bad7c3908d1c70bf2fa557651cb21714a083f2b49085",
+    "crates/rustify-docs/Cargo.toml": "66a557a2d3d32bce40bfd4de5c6ad747c7c384854511a49c2b364f220a708fba",
+    "crates/rustify-docs/src/html_check.rs": "fe466430034fa082e946165497a3c758adca56fffe6c8de871e32bf82746e99c",
+    "crates/rustify-docs/src/markdown.rs": "06e581f2de5b70668a25698d2099acd8b0bcef26bf5339e2a280a6087a3d2cba",
+    "crates/rustify-docs/src/content.rs": "09e500e4b815ee27e6c30b2d275fbb8ad4497d8f17885b464307dd4b80cbd928",
+    "crates/rustify-docs-cli/Cargo.toml": "1407eedba5101e345c7b0e76fe9a68af48328ab3d1ff28330e827554515ce2f2",
+    "crates/rustify-docs-cli/tests/check.rs": "8a2964507e73ece1509a143afadeb8a23c4c947a4453d797d02ad9069ba7f784",
+    "tests/docs-ssg/dev.spec.ts": "964aee21c94ef6cae3ccfb5eabddd92260a93475223838cf1c1df33aac168835"
+  },
+  "binary_hashes": {
+    "target/docs-ssg/r4-fix/before": "9fa8a2b428afb30612af32607691616be38c621265e22b859fde86ec386224c0",
+    "target/docs-cli/rustify-docs": "7332a67f62d63e003b7481eb1f98406aecddd5fec26343d92d2b4afcf135707c"
+  }
+}

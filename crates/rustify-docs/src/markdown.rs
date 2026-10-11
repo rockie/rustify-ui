@@ -47,7 +47,7 @@ pub fn options() -> Options {
 
 /// A version for everything above that decides a fragment's bytes; part of
 /// the fragment cache key.
-pub const WRITER_VERSION: u32 = 6;
+pub const WRITER_VERSION: u32 = 7;
 
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct Heading {

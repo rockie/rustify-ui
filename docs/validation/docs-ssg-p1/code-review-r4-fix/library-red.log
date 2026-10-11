@@ -1,0 +1,62 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-docs v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-docs)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 7.91s
+     Running unittests src/lib.rs (target/debug/deps/rustify_docs-3f69c961dffcf84a)
+
+running 6 tests
+test classes::tests::comments_raw_text_and_templates_are_skipped ... ok
+test html_check::tests::html_templates_at_foreign_integration_points_have_separate_contents ... FAILED
+test html_check::tests::foreign_templates_keep_their_document_ids ... FAILED
+test content::tests::links_only_target_ids_in_the_document_not_template_contents ... ok
+test content::tests::foreign_template_links_match_document_ids_on_the_same_and_other_pages ... FAILED
+test content::tests::html_integration_templates_reject_same_and_cross_page_ghost_links ... FAILED
+
+failures:
+
+---- html_check::tests::html_templates_at_foreign_integration_points_have_separate_contents stdout ----
+
+thread 'html_check::tests::html_templates_at_foreign_integration_points_have_separate_contents' (28601292) panicked at crates/rustify-docs/src/html_check.rs:606:13:
+assertion `left == right` failed: <svg><title><template id="holder"><svg><template id="hidden"><circle id="ghost"/></template></svg></template></title></svg><h2 id="visible">Visible</h2>
+  left: ["visible"]
+ right: ["holder", "visible"]
+
+---- html_check::tests::foreign_templates_keep_their_document_ids stdout ----
+
+thread 'html_check::tests::foreign_templates_keep_their_document_ids' (28601291) panicked at crates/rustify-docs/src/html_check.rs:592:13:
+assertion `left == right` failed: <svg><template/></svg><h2 id="visible">Visible</h2>
+  left: []
+ right: ["visible"]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- content::tests::foreign_template_links_match_document_ids_on_the_same_and_other_pages stdout ----
+
+thread 'content::tests::foreign_template_links_match_document_ids_on_the_same_and_other_pages' (28601288) panicked at crates/rustify-docs/src/content.rs:2628:17:
+assertion `left == right` failed: <svg><template/></svg>: [Diagnostic { file: Some("content/index.md"), line: Some(10), column: Some(1), severity: Error, rule: "broken-anchor", message: "content/index.md has no heading `#visible`", suggestion: Some("link to an existing heading's id; ids are the heading text in lower case with spaces as `-`") }, Diagnostic { file: Some("content/index.md"), line: Some(10), column: Some(21), severity: Error, rule: "broken-anchor", message: "content/other.md has no heading `#visible`", suggestion: Some("link to an existing heading's id; ids are the heading text in lower case with spaces as `-`") }, Diagnostic { file: Some("content/other.md"), line: Some(10), column: Some(1), severity: Error, rule: "broken-anchor", message: "content/other.md has no heading `#visible`", suggestion: Some("link to an existing heading's id; ids are the heading text in lower case with spaces as `-`") }, Diagnostic { file: Some("content/other.md"), line: Some(10), column: Some(21), severity: Error, rule: "broken-anchor", message: "content/other.md has no heading `#visible`", suggestion: Some("link to an existing heading's id; ids are the heading text in lower case with spaces as `-`") }]
+  left: 4
+ right: 0
+
+---- content::tests::html_integration_templates_reject_same_and_cross_page_ghost_links stdout ----
+
+thread 'content::tests::html_integration_templates_reject_same_and_cross_page_ghost_links' (28601289) panicked at crates/rustify-docs/src/content.rs:2656:13:
+assertion `left == right` failed: <svg><title>: [("broken-anchor", "content/index.md", 10), ("broken-anchor", "content/index.md", 12), ("broken-anchor", "content/index.md", 12), ("broken-anchor", "content/other.md", 10), ("broken-anchor", "content/other.md", 12), ("broken-anchor", "content/other.md", 12)]
+  left: 6
+ right: 4
+
+
+failures:
+    content::tests::foreign_template_links_match_document_ids_on_the_same_and_other_pages
+    content::tests::html_integration_templates_reject_same_and_cross_page_ghost_links
+    html_check::tests::foreign_templates_keep_their_document_ids
+    html_check::tests::html_templates_at_foreign_integration_points_have_separate_contents
+
+test result: FAILED. 2 passed; 4 failed; 0 ignored; 0 measured; 115 filtered out; finished in 0.12s
+
+error: test failed, to rerun pass `-p rustify-docs --lib`
+mbx[cache]: 0 hits, 0 misses, 1 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: 40906 compilations served. ask rustc how many it remembers doing.

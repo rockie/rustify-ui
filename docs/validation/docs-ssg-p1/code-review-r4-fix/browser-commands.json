@@ -1,0 +1,78 @@
+[
+  {
+    "label": "docs-subpath",
+    "argv": [
+      "npx",
+      "--no-install",
+      "playwright",
+      "test",
+      "-c",
+      "playwright.docs.config.ts",
+      "--project=docs-subpath",
+      "--reporter=list",
+      "--output=target/docs-ssg/r4-fix/browser/docs-subpath"
+    ],
+    "exit": 0,
+    "seconds": 14.584,
+    "log": "docs-subpath.log"
+  },
+  {
+    "label": "docs-root",
+    "argv": [
+      "npx",
+      "--no-install",
+      "playwright",
+      "test",
+      "-c",
+      "playwright.docs.config.ts",
+      "--project=docs-root",
+      "--reporter=list",
+      "--output=target/docs-ssg/r4-fix/browser/docs-root"
+    ],
+    "exit": 0,
+    "seconds": 13.688,
+    "log": "docs-root.log"
+  },
+  {
+    "label": "docs-meta",
+    "argv": [
+      "npx",
+      "--no-install",
+      "playwright",
+      "test",
+      "-c",
+      "playwright.docs.config.ts",
+      "--project=docs-meta",
+      "--reporter=list",
+      "--output=target/docs-ssg/r4-fix/browser/docs-meta"
+    ],
+    "exit": 0,
+    "seconds": 12.378,
+    "log": "docs-meta.log"
+  },
+  {
+    "label": "verification",
+    "argv": [
+      "node",
+      "docs/validation/docs-ssg-p1/code-review-r4-fix/verify.cjs",
+      "target/docs-ssg/r4-fix/before",
+      "target/docs-cli/rustify-docs",
+      "docs/validation/docs-ssg-p1/code-review-r4-fix"
+    ],
+    "exit": 0,
+    "seconds": 4.679,
+    "log": "verification.log"
+  },
+  {
+    "label": "production",
+    "argv": [
+      "node",
+      "docs/validation/docs-ssg-p1/code-review-r3-fix/production.cjs",
+      "target/docs-cli/rustify-docs",
+      "docs/validation/docs-ssg-p1/code-review-r4-fix/production"
+    ],
+    "exit": 0,
+    "seconds": 1.4,
+    "log": "production.log"
+  }
+]

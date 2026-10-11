@@ -36,6 +36,75 @@ fn check_json(config: &Path, extra: &[&str]) -> (Option<i32>, Value, String) {
     (output.status.code(), report, stderr)
 }
 
+#[test]
+fn foreign_template_targets_pass_check_and_build() {
+    for markup in [
+        "<svg><template/></svg>",
+        r#"<svg><template id="svg-holder"><circle id="circle" r="10"/></template></svg>"#,
+        r#"<template id="holder"><svg><template/></svg></template>"#,
+        r#"<svg><foreignObject><template id="holder"><span id="ghost">Hidden</span><svg><template/></svg></template></foreignObject></svg>"#,
+    ] {
+        let mut body = format!("---\ndescription: Anchors\n---\n# Anchors\n\n{markup}\n\n## Visible\n\n[Visible](#visible) [Other visible](other.md#visible)\n");
+        if markup.contains("circle") {
+            body.push_str("\n[Circle](#circle) [Other circle](other.md#circle)\n");
+        }
+        let project = Project::new(&[
+            ("rustify-docs.toml", "schema_version=1\n[site]\nname='Anchors'\nurl='https://example.com/docs/'\nbase='/docs/'\n[[nav.groups]]\nlabel='Pages'\nitems=['index.md','other.md']\n"),
+            ("content/index.md", &body),
+            ("content/other.md", &body),
+        ]);
+        let (code, report, _) = check_json(&project.config(), &[]);
+        assert_eq!(code, Some(0), "{markup}: {report}");
+        let output = run(&[
+            "build",
+            "--config",
+            project.config().to_str().unwrap(),
+            "--format",
+            "json",
+        ]);
+        assert!(
+            output.status.success(),
+            "{markup}: {}",
+            String::from_utf8_lossy(&output.stdout)
+        );
+        for file in ["dist/index.html", "dist/other/index.html"] {
+            let html = std::fs::read_to_string(project.0.join(file)).unwrap();
+            assert!(html.contains("href=\"/docs/other/#visible\""), "{html}");
+        }
+    }
+}
+
+#[test]
+fn html_template_ghosts_at_integration_points_fail_and_keep_the_output() {
+    let good = "---\ndescription: Anchors\n---\n# Anchors\n\n<svg><foreignObject><template id=\"holder\"><span id=\"ghost\">Hidden</span></template></foreignObject></svg>\n\n## Visible\n\n[Holder](#holder) [Visible](#visible)\n";
+    let project = Project::new(&[
+        ("rustify-docs.toml", "schema_version=1\n[site]\nname='Anchors'\nurl='https://example.com/'\n[[nav.groups]]\nlabel='Pages'\nitems=['index.md','other.md']\n"),
+        ("content/index.md", good),
+        ("content/other.md", good),
+    ]);
+    let build = || {
+        run(&[
+            "build",
+            "--config",
+            project.config().to_str().unwrap(),
+            "--format",
+            "json",
+        ])
+    };
+    assert!(build().status.success());
+    let before = tree(&project.0.join("dist"));
+    std::fs::write(
+        project.0.join("content/index.md"),
+        format!("{good}\n[Ghost](#ghost) [Other ghost](other.md#ghost)\n"),
+    )
+    .unwrap();
+    let (code, report, _) = check_json(&project.config(), &[]);
+    assert_eq!(code, Some(1));
+    assert_eq!(report["summary"]["errors"], 2);
+    assert_eq!(build().status.code(), Some(1));
+    assert_eq!(tree(&project.0.join("dist")), before);
+}
+
 /// A project in a fresh temporary directory, removed when dropped.
 struct Project(PathBuf);
 

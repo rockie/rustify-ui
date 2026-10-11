@@ -1,0 +1,160 @@
+npm notice run rustify-ui-browser-tests@0.1.0 npx
+npm notice run 'playwright' test -c playwright.docs.config.ts --project=docs-dev --reporter=list --output=target/docs-ssg/r4-fix/browser/docs-dev
+
+Running 19 tests using 1 worker
+
+(node:14935) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+rustc 1.99.0 (b940084d7 2026-09-28)
+  ✓   1 [docs-dev] › tests/docs-ssg/dev-uat.spec.ts:89:5 › UAT-1 and UAT-2: new, dev, three pages within a minute; then saves, a mistake and its fix in one session (3.3s)
+rustc 1.99.0 (b940084d7 2026-09-28)
+  ✓   2 [docs-dev] › tests/docs-ssg/dev.spec.ts:146:5 › a new site is readable at once: the home page and its two pages (315ms)
+  ✓   3 [docs-dev] › tests/docs-ssg/dev.spec.ts:181:5 › a save reloads the page it changed in place and leaves the others (1.7s)
+  ✓   4 [docs-dev] › tests/docs-ssg/dev.spec.ts:209:5 › a real symlink target save refreshes its image and survives deletion and recovery (477ms)
+  ✓   5 [docs-dev] › tests/docs-ssg/dev.spec.ts:249:9 › a snapshot attachment in content/manual.pdf recovers when only its target is restored (384ms)
+  ✓   6 [docs-dev] › tests/docs-ssg/dev.spec.ts:249:9 › a snapshot attachment in static/manual.pdf recovers when only its target is restored (386ms)
+  ✓   7 [docs-dev] › tests/docs-ssg/dev.spec.ts:282:5 › arbitrary CSS resources keep numeric entity delimiters and compiler URL decoding (207ms)
+  ✓   8 [docs-dev] › tests/docs-ssg/dev.spec.ts:321:5 › template contents are rejected as anchors while their holder and ordinary IDs navigate (338ms)
+  ✘   9 [docs-dev] › tests/docs-ssg/dev.spec.ts:355:9 › self-closing SVG template preserves document anchors and cross-page navigation (168ms)
+(node:15291) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  10 [docs-dev] › tests/docs-ssg/dev.spec.ts:355:9 › paired SVG template preserves document anchors and cross-page navigation (200ms)
+(node:15342) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  11 [docs-dev] › tests/docs-ssg/dev.spec.ts:355:9 › SVG inside an HTML template preserves document anchors and cross-page navigation (197ms)
+(node:15400) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  12 [docs-dev] › tests/docs-ssg/dev.spec.ts:381:5 › HTML templates at foreign integration points recover from ghost links (303ms)
+(node:15478) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  13 [docs-dev] › tests/docs-ssg/dev.spec.ts:412:5 › a failed build keeps the page readable under a panel that hides to a marker and clears on the fix (689ms)
+  ✓  14 [docs-dev] › tests/docs-ssg/dev.spec.ts:459:5 › while nothing has built, every page says so, and becomes the site once it builds (254ms)
+  ✓  15 [docs-dev] › tests/docs-ssg/dev.spec.ts:479:5 › a restarted dev brings an open page up to date (1.0s)
+  ✓  16 [docs-dev] › tests/docs-ssg/dev.spec.ts:490:5 › a panic in a build is one more problem, and the next build is served (281ms)
+  ✓  17 [docs-dev] › tests/docs-ssg/dev.spec.ts:506:5 › the panel speaks the page's language (258ms)
+  ✓  18 [docs-dev] › tests/docs-ssg/dev.spec.ts:516:5 › on a phone the panel is a sheet along the bottom and nothing scrolls sideways (368ms)
+  ✓  19 [docs-dev] › tests/docs-ssg/dev.spec.ts:538:5 › axe finds no serious or critical problem with the panel open or hidden, in both modes (1.4s)
+
+
+  1) [docs-dev] › tests/docs-ssg/dev.spec.ts:355:9 › self-closing SVG template preserves document anchors and cross-page navigation
+
+    Error: locator.click: Error: strict mode violation: getByRole('link', { name: 'Visible', exact: true }) resolved to 2 elements:
+        1) <a href="#visible" data-rd-toc-link="" aria-current="location">Visible</a> aka getByRole('navigation', { name: 'On this page' }).getByRole('link', { name: 'Visible' })
+        2) <a href="#visible">Visible</a> aka locator('#content').getByRole('link', { name: 'Visible', exact: true })
+
+    Call log:
+      - waiting for getByRole('link', { name: 'Visible', exact: true })
+
+
+      369 |             expect(await page.locator("#svg-holder").evaluate((node) => ({ namespace: node.namespaceURI, content: "content" in node }))).toEqual({ namespace: "http://www.w3.org/2000/svg", content: false });
+      370 |         }
+    > 371 |         await page.getByRole("link", { name: "Visible", exact: true }).click();
+          |                                                                        ^
+      372 |         expect(new URL(page.url()).hash).toBe("#visible");
+      373 |         await page.getByRole("link", { name: `Other ${ids[0]}`, exact: true }).click();
+      374 |         await expect(page).toHaveURL(new RegExp(`/other/#${ids[0]}$`));
+        at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/docs-ssg/dev.spec.ts:371:72
+
+    Error Context: target/docs-ssg/r4-fix/browser/docs-dev/docs-ssg-dev-self-closing--11c14-s-and-cross-page-navigation-docs-dev/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    target/docs-ssg/r4-fix/browser/docs-dev/docs-ssg-dev-self-closing--11c14-s-and-cross-page-navigation-docs-dev/trace.zip
+    Usage:
+
+        npx playwright show-trace target/docs-ssg/r4-fix/browser/docs-dev/docs-ssg-dev-self-closing--11c14-s-and-cross-page-navigation-docs-dev/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [docs-dev] › tests/docs-ssg/dev.spec.ts:355:9 › paired SVG template preserves document anchors and cross-page navigation
+
+    Error: locator.click: Error: strict mode violation: getByRole('link', { name: 'Visible', exact: true }) resolved to 2 elements:
+        1) <a href="#visible" data-rd-toc-link="" aria-current="location">Visible</a> aka getByRole('navigation', { name: 'On this page' }).getByRole('link', { name: 'Visible' })
+        2) <a href="#visible">Visible</a> aka locator('#content').getByRole('link', { name: 'Visible', exact: true })
+
+    Call log:
+      - waiting for getByRole('link', { name: 'Visible', exact: true })
+
+
+      369 |             expect(await page.locator("#svg-holder").evaluate((node) => ({ namespace: node.namespaceURI, content: "content" in node }))).toEqual({ namespace: "http://www.w3.org/2000/svg", content: false });
+      370 |         }
+    > 371 |         await page.getByRole("link", { name: "Visible", exact: true }).click();
+          |                                                                        ^
+      372 |         expect(new URL(page.url()).hash).toBe("#visible");
+      373 |         await page.getByRole("link", { name: `Other ${ids[0]}`, exact: true }).click();
+      374 |         await expect(page).toHaveURL(new RegExp(`/other/#${ids[0]}$`));
+        at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/docs-ssg/dev.spec.ts:371:72
+
+    Error Context: target/docs-ssg/r4-fix/browser/docs-dev/docs-ssg-dev-paired-SVG-te-918b2-s-and-cross-page-navigation-docs-dev/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    target/docs-ssg/r4-fix/browser/docs-dev/docs-ssg-dev-paired-SVG-te-918b2-s-and-cross-page-navigation-docs-dev/trace.zip
+    Usage:
+
+        npx playwright show-trace target/docs-ssg/r4-fix/browser/docs-dev/docs-ssg-dev-paired-SVG-te-918b2-s-and-cross-page-navigation-docs-dev/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [docs-dev] › tests/docs-ssg/dev.spec.ts:355:9 › SVG inside an HTML template preserves document anchors and cross-page navigation
+
+    Error: locator.click: Error: strict mode violation: getByRole('link', { name: 'Visible', exact: true }) resolved to 2 elements:
+        1) <a href="#visible" data-rd-toc-link="" aria-current="location">Visible</a> aka getByRole('navigation', { name: 'On this page' }).getByRole('link', { name: 'Visible' })
+        2) <a href="#visible">Visible</a> aka locator('#content').getByRole('link', { name: 'Visible', exact: true })
+
+    Call log:
+      - waiting for getByRole('link', { name: 'Visible', exact: true })
+
+
+      369 |             expect(await page.locator("#svg-holder").evaluate((node) => ({ namespace: node.namespaceURI, content: "content" in node }))).toEqual({ namespace: "http://www.w3.org/2000/svg", content: false });
+      370 |         }
+    > 371 |         await page.getByRole("link", { name: "Visible", exact: true }).click();
+          |                                                                        ^
+      372 |         expect(new URL(page.url()).hash).toBe("#visible");
+      373 |         await page.getByRole("link", { name: `Other ${ids[0]}`, exact: true }).click();
+      374 |         await expect(page).toHaveURL(new RegExp(`/other/#${ids[0]}$`));
+        at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/docs-ssg/dev.spec.ts:371:72
+
+    Error Context: target/docs-ssg/r4-fix/browser/docs-dev/docs-ssg-dev-SVG-inside-an-b1eb3-s-and-cross-page-navigation-docs-dev/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    target/docs-ssg/r4-fix/browser/docs-dev/docs-ssg-dev-SVG-inside-an-b1eb3-s-and-cross-page-navigation-docs-dev/trace.zip
+    Usage:
+
+        npx playwright show-trace target/docs-ssg/r4-fix/browser/docs-dev/docs-ssg-dev-SVG-inside-an-b1eb3-s-and-cross-page-navigation-docs-dev/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [docs-dev] › tests/docs-ssg/dev.spec.ts:381:5 › HTML templates at foreign integration points recover from ghost links
+
+    Error: locator.click: Error: strict mode violation: getByRole('link', { name: 'Visible', exact: true }) resolved to 2 elements:
+        1) <a href="#visible" data-rd-toc-link="" aria-current="location">Visible</a> aka getByRole('navigation', { name: 'On this page' }).getByRole('link', { name: 'Visible' })
+        2) <a href="#visible">Visible</a> aka locator('#content').getByRole('link', { name: 'Visible' })
+
+    Call log:
+      - waiting for getByRole('link', { name: 'Visible', exact: true })
+
+
+      403 |         expect(await page.locator(`#ghost-${i}`).count()).toBe(0);
+      404 |     }
+    > 405 |     await page.getByRole("link", { name: "Visible", exact: true }).click();
+          |                                                                    ^
+      406 |     expect(new URL(page.url()).hash).toBe("#visible");
+      407 |     await page.getByRole("link", { name: "Other holder", exact: true }).click();
+      408 |     await expect(page).toHaveURL(/\/other\/#holder-0$/);
+        at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/docs-ssg/dev.spec.ts:405:68
+
+    Error Context: target/docs-ssg/r4-fix/browser/docs-dev/docs-ssg-dev-HTML-template-c2c45-ts-recover-from-ghost-links-docs-dev/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    target/docs-ssg/r4-fix/browser/docs-dev/docs-ssg-dev-HTML-template-c2c45-ts-recover-from-ghost-links-docs-dev/trace.zip
+    Usage:
+
+        npx playwright show-trace target/docs-ssg/r4-fix/browser/docs-dev/docs-ssg-dev-HTML-template-c2c45-ts-recover-from-ghost-links-docs-dev/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4 failed
+    [docs-dev] › tests/docs-ssg/dev.spec.ts:355:9 › self-closing SVG template preserves document anchors and cross-page navigation
+    [docs-dev] › tests/docs-ssg/dev.spec.ts:355:9 › paired SVG template preserves document anchors and cross-page navigation
+    [docs-dev] › tests/docs-ssg/dev.spec.ts:355:9 › SVG inside an HTML template preserves document anchors and cross-page navigation
+    [docs-dev] › tests/docs-ssg/dev.spec.ts:381:5 › HTML templates at foreign integration points recover from ghost links
+  15 passed (14.0s)

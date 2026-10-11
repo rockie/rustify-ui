@@ -1,0 +1,298 @@
+[
+  {
+    "label": "fmt",
+    "argv": [
+      "cargo",
+      "fmt",
+      "--all",
+      "--",
+      "--check"
+    ],
+    "exit": 0,
+    "seconds": 1.79,
+    "log": "fmt.log"
+  },
+  {
+    "label": "library-clippy",
+    "argv": [
+      "mbx",
+      "clippy",
+      "--locked",
+      "-p",
+      "rustify-docs",
+      "--all-targets",
+      "--",
+      "-D",
+      "warnings"
+    ],
+    "exit": 0,
+    "seconds": 12.151,
+    "log": "library-clippy.log"
+  },
+  {
+    "label": "cli-clippy",
+    "argv": [
+      "mbx",
+      "clippy",
+      "--locked",
+      "-p",
+      "rustify-docs-cli",
+      "--all-targets",
+      "--",
+      "-D",
+      "warnings"
+    ],
+    "exit": 0,
+    "seconds": 1.173,
+    "log": "cli-clippy.log"
+  },
+  {
+    "label": "sources",
+    "argv": [
+      "mbx",
+      "xtask",
+      "sources",
+      "verify"
+    ],
+    "exit": 0,
+    "seconds": 14.437,
+    "log": "sources.log"
+  },
+  {
+    "label": "features",
+    "argv": [
+      "mbx",
+      "xtask",
+      "docs-verify",
+      "--group",
+      "features"
+    ],
+    "exit": 0,
+    "seconds": 4.436,
+    "log": "features.log"
+  },
+  {
+    "label": "workspace",
+    "argv": [
+      "mbx",
+      "test",
+      "--locked",
+      "--workspace",
+      "--exclude",
+      "rustify-docs",
+      "--exclude",
+      "rustify-docs-cli",
+      "--lib",
+      "--bins"
+    ],
+    "exit": 0,
+    "seconds": 98.738,
+    "log": "workspace.log"
+  },
+  {
+    "label": "rustify-ui-default-test",
+    "argv": [
+      "mbx",
+      "test",
+      "--locked",
+      "-p",
+      "rustify-ui",
+      "--lib"
+    ],
+    "exit": 0,
+    "seconds": 0.711,
+    "log": "rustify-ui-default-test.log"
+  },
+  {
+    "label": "rustify-ui-default-clippy",
+    "argv": [
+      "mbx",
+      "clippy",
+      "--locked",
+      "-p",
+      "rustify-ui",
+      "--all-targets",
+      "--",
+      "-D",
+      "warnings"
+    ],
+    "exit": 0,
+    "seconds": 0.476,
+    "log": "rustify-ui-default-clippy.log"
+  },
+  {
+    "label": "rustify-ui-gpu-test",
+    "argv": [
+      "mbx",
+      "test",
+      "--locked",
+      "-p",
+      "rustify-ui",
+      "--features",
+      "gpu",
+      "--lib"
+    ],
+    "exit": 0,
+    "seconds": 0.673,
+    "log": "rustify-ui-gpu-test.log"
+  },
+  {
+    "label": "rustify-ui-gpu-clippy",
+    "argv": [
+      "mbx",
+      "clippy",
+      "--locked",
+      "-p",
+      "rustify-ui",
+      "--features",
+      "gpu",
+      "--all-targets",
+      "--",
+      "-D",
+      "warnings"
+    ],
+    "exit": 0,
+    "seconds": 0.465,
+    "log": "rustify-ui-gpu-clippy.log"
+  },
+  {
+    "label": "rustify-ui-ssr-test",
+    "argv": [
+      "mbx",
+      "test",
+      "--locked",
+      "-p",
+      "rustify-ui",
+      "--no-default-features",
+      "--features",
+      "ssr",
+      "--lib"
+    ],
+    "exit": 0,
+    "seconds": 0.589,
+    "log": "rustify-ui-ssr-test.log"
+  },
+  {
+    "label": "rustify-ui-ssr-clippy",
+    "argv": [
+      "mbx",
+      "clippy",
+      "--locked",
+      "-p",
+      "rustify-ui",
+      "--no-default-features",
+      "--features",
+      "ssr",
+      "--all-targets",
+      "--",
+      "-D",
+      "warnings"
+    ],
+    "exit": 0,
+    "seconds": 0.378,
+    "log": "rustify-ui-ssr-clippy.log"
+  },
+  {
+    "label": "rustify-components-default-test",
+    "argv": [
+      "mbx",
+      "test",
+      "--locked",
+      "-p",
+      "rustify-components",
+      "--lib"
+    ],
+    "exit": 0,
+    "seconds": 0.558,
+    "log": "rustify-components-default-test.log"
+  },
+  {
+    "label": "rustify-components-default-clippy",
+    "argv": [
+      "mbx",
+      "clippy",
+      "--locked",
+      "-p",
+      "rustify-components",
+      "--all-targets",
+      "--",
+      "-D",
+      "warnings"
+    ],
+    "exit": 0,
+    "seconds": 0.326,
+    "log": "rustify-components-default-clippy.log"
+  },
+  {
+    "label": "rustify-components-gpu-test",
+    "argv": [
+      "mbx",
+      "test",
+      "--locked",
+      "-p",
+      "rustify-components",
+      "--features",
+      "gpu",
+      "--lib"
+    ],
+    "exit": 0,
+    "seconds": 0.547,
+    "log": "rustify-components-gpu-test.log"
+  },
+  {
+    "label": "rustify-components-gpu-clippy",
+    "argv": [
+      "mbx",
+      "clippy",
+      "--locked",
+      "-p",
+      "rustify-components",
+      "--features",
+      "gpu",
+      "--all-targets",
+      "--",
+      "-D",
+      "warnings"
+    ],
+    "exit": 0,
+    "seconds": 0.549,
+    "log": "rustify-components-gpu-clippy.log"
+  },
+  {
+    "label": "rustify-components-ssr-test",
+    "argv": [
+      "mbx",
+      "test",
+      "--locked",
+      "-p",
+      "rustify-components",
+      "--no-default-features",
+      "--features",
+      "ssr",
+      "--lib"
+    ],
+    "exit": 0,
+    "seconds": 0.701,
+    "log": "rustify-components-ssr-test.log"
+  },
+  {
+    "label": "rustify-components-ssr-clippy",
+    "argv": [
+      "mbx",
+      "clippy",
+      "--locked",
+      "-p",
+      "rustify-components",
+      "--no-default-features",
+      "--features",
+      "ssr",
+      "--all-targets",
+      "--",
+      "-D",
+      "warnings"
+    ],
+    "exit": 0,
+    "seconds": 0.414,
+    "log": "rustify-components-ssr-clippy.log"
+  }
+]

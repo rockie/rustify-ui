@@ -1,0 +1,29 @@
+{
+  "binary": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-verify/cli-install/bin/rustify-docs",
+  "cases": [
+    {
+      "input": "<svg><template/></svg>",
+      "exit": 0,
+      "errors": 0,
+      "cli_version": "0.1.1"
+    },
+    {
+      "input": "<svg><template id=\"svg-holder\"><circle id=\"circle\" r=\"10\"/></template></svg>\n\n[Circle](#circle)",
+      "exit": 0,
+      "errors": 0,
+      "cli_version": "0.1.1"
+    },
+    {
+      "input": "<template id=\"holder\"><svg><template/></svg></template>",
+      "exit": 0,
+      "errors": 0,
+      "cli_version": "0.1.1"
+    },
+    {
+      "input": "<svg><foreignObject><template id=\"holder\"><span id=\"ghost\">Hidden</span></template></foreignObject></svg>",
+      "exit": 0,
+      "errors": 0,
+      "cli_version": "0.1.1"
+    }
+  ]
+}
