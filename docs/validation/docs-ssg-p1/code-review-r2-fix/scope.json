@@ -1,0 +1,25 @@
+{
+  "root": "/Users/rockie/Documents/gh-rockie/rustify-ui",
+  "branch": "main",
+  "baseline": "bfbee6d3342b69e062ed513e05e7f812373124bc",
+  "plan_sha256_before": "7ff0e593612202b15b50cc15f7e3a487bd976eab9a192c4432b8ac0d29fe3d9c",
+  "reports": {
+    "docs/plan/DOCS-SSG-P1.code-review.md": "627b456531d17b70b42405bf2ec699dab7c3cfd16e0501e6ded0fc314e7af3d9",
+    "docs/plan/DOCS-SSG-P1.code-review.r2.md": "10e7649afbabd7ffd64732ea28a81eabbcc27e8ab3a8305728466a93348413ed"
+  },
+  "code": {
+    "Cargo.lock": "39f5e73606fa56ad015103d16cd22a6d56487ece45c1b910d3ddd19cf51d91d0",
+    "crates/rustify-docs-cli/tests/artifacts.rs": "85f807e8a637ccf26b5c45841c09e8f70423bd466691759f4abc9ac7fe6a725e",
+    "crates/rustify-docs-cli/tests/dev.rs": "7cbf8de361a28da1d2e1899bf4c4c722fe69247be369941811259f1c89f0f9a7",
+    "crates/rustify-docs/Cargo.toml": "bc4d53be8b1a54ad7ad9b94f0dbb9857285182336ef6f5fa953afcd01cf39211",
+    "crates/rustify-docs/src/classes.rs": "6843c26a62d5465b663f46ee26a47ef22b38ee09fc70b15a8c80e6508ef3ee3c",
+    "crates/rustify-docs/src/content.rs": "b02643dcf964f5e569460e107a500dfc87dbe9f12ace7e123bfe5561609a05bc",
+    "crates/rustify-docs/src/generation.rs": "4d4e346ed665386b401e669a6de27ffc7f45b1543a9d0a10c275aa43a1ac6f95",
+    "crates/rustify-docs/src/html_check.rs": "810865e3194a445a623178ec05e3ae44f420f554f9a2a1ef7e0cab31c2ee7fed",
+    "crates/rustify-docs/src/markdown.rs": "79b69395ed74aef1118d7d9de26b91ad02a135264637ac3a680e1351b6490ee3",
+    "crates/rustify-docs/src/style.rs": "5aef8a09f4b92b4225be133066b6f0ca16ce92168e4f98043c43ddd173844f34",
+    "crates/rustify-docs/tests/generate.rs": "a8e447b6946b077c11c4d5b89b5f9fe75633d9a70af2aada3f7f963e5c89c275",
+    "tests/docs-ssg/dev.spec.ts": "5f802375805bc30a705144985b7a96d73c75c1ada9e839a52e48cfcffcb80ab5"
+  },
+  "rendering": "DOM static HTML/SSR and native CLI; GPU unchanged"
+}

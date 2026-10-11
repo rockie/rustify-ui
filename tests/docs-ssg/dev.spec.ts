@@ -1,7 +1,7 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, Page, test } from "@playwright/test";
 import { ChildProcess, execFileSync, spawn } from "node:child_process";
-import { cpSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { cpSync, mkdirSync, mkdtempSync, readFileSync, renameSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
 import { createServer } from "node:net";
 import { tmpdir } from "node:os";
 import path from "node:path";
@@ -204,6 +204,45 @@ test("a save reloads the page it changed in place and leaves the others", async 
     site.edit("rustify-docs.toml", "Fixture Docs", "Fixture Handbook");
     await expect(api.locator(".rd-brand")).toContainText("Fixture Handbook");
     expect(await kept(api)).toBe(false);
+});
+
+test("a real symlink target save refreshes its image and survives deletion and recovery", async ({ context }) => {
+    mkdirSync(path.join(site.root, "brand"));
+    mkdirSync(path.join(site.root, "images"));
+    const svg = (fill: string) => `<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40"><rect width="40" height="40" fill="${fill}"/></svg>`;
+    site.write("brand/real.svg", svg("red"));
+    symlinkSync("../brand/real.svg", path.join(site.root, "images/mark.svg"));
+    site.edit("content/guide/index.md", "Read the setup page first.", "Read the setup page first. ![Mark](../../images/mark.svg)");
+    const server = await dev();
+    const page = await context.newPage();
+    const errors: string[] = [];
+    page.on("pageerror", error => errors.push(error.message));
+    await page.goto(`${server.url}guide/`);
+    const image = page.getByRole("img", { name: "Mark", exact: true });
+    const original = await image.getAttribute("src");
+    const api = await context.newPage();
+    await api.goto(`${server.url}reference/api/`);
+    await expect(api.locator(".rd-dev")).toHaveAttribute("data-revision", /\d+/);
+    await mark(api);
+    const before = await seen(api);
+    site.write("brand/replacement.svg", svg("blue"));
+    renameSync(path.join(site.root, "brand/replacement.svg"), path.join(site.root, "brand/real.svg"));
+    await expect(image).not.toHaveAttribute("src", original!);
+    const blue = await image.getAttribute("src");
+    expect(await (await page.request.get(new URL(blue!, page.url()).href)).text()).toContain('fill="blue"');
+    await nextResult(api, before);
+    expect(await kept(api), "the page without the image stays mounted").toBe(true);
+    await mark(page);
+    rmSync(path.join(site.root, "brand/real.svg"));
+    await expect(page.getByRole("dialog")).toContainText("missing-image");
+    expect(await kept(page), "deletion keeps the last good page").toBe(true);
+    site.write("brand/real.svg", svg("green"));
+    await expect(image).not.toHaveAttribute("src", blue!);
+    await expect(page.getByRole("dialog")).toBeHidden();
+    const green = await image.getAttribute("src");
+    expect(await (await page.request.get(new URL(green!, page.url()).href)).text()).toContain('fill="green"');
+    expect(await kept(api), "recovery still leaves the unrelated page mounted").toBe(true);
+    expect(errors).toEqual([]);
 });
 
 test("a failed build keeps the page readable under a panel that hides to a marker and clears on the fix", async ({ page }) => {

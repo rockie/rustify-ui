@@ -357,6 +357,33 @@ fn files_keep_their_fragment_and_a_class_loads_its_image_from_the_site() {
 }
 
 #[test]
+fn a_generation_cannot_load_an_absent_file_under_its_assets_prefix() {
+    let (project, snapshot) = load();
+    let mut analysis = content::analyze(
+        &project,
+        &snapshot,
+        Mode::Production,
+        &mut FragmentCache::default(),
+        &Highlighter::new(),
+        1,
+    );
+    assert_eq!(analysis.errors(), 0);
+    let page = analysis.routes["/guide/"];
+    Arc::make_mut(&mut analysis.pages[page].fragment)
+        .html
+        .push_str("<div class=\"[background-image:URL(/docs/assets/missing.svg)]\"></div>");
+    let errors = generation::generate(&project, &snapshot, &analysis, &Default::default(), 1)
+        .err()
+        .expect("an untracked URL must still be checked against the generation");
+    assert!(
+        errors
+            .iter()
+            .any(|d| d.rule == "output-check" && d.message.contains("/docs/assets/missing.svg")),
+        "{errors:?}"
+    );
+}
+
+#[test]
 fn header_links_are_on_every_page_and_mark_the_guide() {
     let (project, snapshot) = load();
     let (_, generation) = build(&project, &snapshot, Mode::Production, 2);

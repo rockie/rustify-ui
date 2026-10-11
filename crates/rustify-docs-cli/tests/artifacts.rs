@@ -618,3 +618,131 @@ fn a_built_site_carries_no_gpu_runtime() {
         }
     }
 }
+
+#[test]
+fn encoded_question_marks_in_file_names_keep_real_url_suffixes() {
+    let temp = Temp::new("encoded-files");
+    temp.write("rustify-docs.toml", "schema_version = 1\n[site]\nname = 'Files'\nurl = 'https://example.com/docs/'\nbase = '/docs/'\n[[nav.top]]\nlabel = 'Content'\nlink = 'manual%3Fv.pdf?download=1#page=2'\n[[nav.social]]\nlabel = 'Static'\nlink = '/manual%3Fv.pdf?download=1#page=2'\n");
+    temp.write("content/index.md", "---\ndescription: Files.\nlayout: home\nactions:\n  - text: Content\n    link: manual%3Fv.pdf?download=1#page=2\n  - text: Static\n    link: /manual%3Fv.pdf?download=1#page=2\n---\n# Files\n\n[Content](manual%3Fv.pdf) [Query](manual%3Fv.pdf?download=1#page=2) [Static](/manual%3Fv.pdf?download=1#page=2) [Normal](plain.pdf?download=1#page=2).\n");
+    temp.write("content/manual?v.pdf", "content attachment");
+    temp.write("content/plain.pdf", "ordinary attachment");
+    temp.write("static/manual?v.pdf", "static attachment");
+    succeeded(&run_in(&temp.0, &["build", "--format", "json"]));
+    let files = tree(&temp.path("dist"));
+    let content = files
+        .iter()
+        .find(|(path, bytes)| {
+            path.starts_with("assets/files/manual?v.") && **bytes == b"content attachment"
+        })
+        .unwrap()
+        .0;
+    let static_file = files
+        .iter()
+        .find(|(path, bytes)| {
+            path.starts_with("assets/files/manual?v.") && **bytes == b"static attachment"
+        })
+        .unwrap()
+        .0;
+    assert_eq!(files[content], b"content attachment");
+    assert_eq!(files["manual?v.pdf"], b"static attachment");
+    let html = text_of(&files, "index.html");
+    let encoded = content.replace('?', "%3F");
+    assert!(
+        html.contains(&format!("href=\"/docs/{encoded}\"")),
+        "{html}"
+    );
+    assert_eq!(
+        html.matches(&format!("href=\"/docs/{encoded}?download=1#page=2\""))
+            .count(),
+        4
+    );
+    assert_eq!(
+        html.matches(&format!(
+            "href=\"/docs/{}?download=1#page=2\"",
+            static_file.replace('?', "%3F")
+        ))
+        .count(),
+        4
+    );
+    let plain = files
+        .keys()
+        .find(|path| path.starts_with("assets/files/plain."))
+        .unwrap();
+    assert!(html.contains(&format!("href=\"/docs/{plain}?download=1#page=2\"")));
+}
+
+#[test]
+fn css_url_tokens_preserve_text_entities_and_document_fragments() {
+    let temp = Temp::new("css-tokens");
+    temp.write("rustify-docs.toml", "schema_version = 1\n[site]\nname = 'CSS'\nurl = 'https://example.com/docs/'\nbase = '/docs/'\n");
+    temp.write("static/bg.svg", "<svg xmlns='http://www.w3.org/2000/svg'/>");
+    temp.write(
+        "content/sprite.svg",
+        "<svg xmlns='http://www.w3.org/2000/svg'><mask id='icon'/></svg>",
+    );
+    temp.write("content/index.md", "---\ndescription: CSS.\n---\n# CSS\n\n<div class=\"before:content-['url(foo)'] h-10 [background-image:URL(/bg.svg)]\">Text</div>\n<div class=\"bg-[url(&#47;bg.svg)]\">Entity</div>\n<div class=\"[background-image:url(&quot;/bg.svg&quot;),url('sprite.svg#icon')]\">Multiple</div>\n<svg><defs><mask id=\"m\"></mask><filter id=\"f\"></filter></defs><rect class=\"[mask:url(#m)] [filter:url(#f)]\"></rect></svg>\n");
+    succeeded(&run_in(&temp.0, &["build", "--format", "json"]));
+    let files = tree(&temp.path("dist"));
+    let css = files
+        .iter()
+        .find(|(path, _)| path.starts_with("assets/site.") && path.ends_with(".css"))
+        .unwrap()
+        .1;
+    let css = String::from_utf8_lossy(css);
+    let urls = rustify_docs::style::urls(&css);
+    assert!(
+        css.contains("url(foo)"),
+        "visible content text survives: {css}"
+    );
+    assert!(!urls.contains(&"foo".into()), "{urls:?}");
+    assert!(
+        urls.contains(&"#m".into()) && urls.contains(&"#f".into()),
+        "{urls:?}"
+    );
+    assert!(
+        urls.iter()
+            .any(|url| url.starts_with("/docs/assets/files/bg.") && url.ends_with(".svg")),
+        "{urls:?}"
+    );
+    assert!(
+        urls.iter()
+            .any(|url| url.starts_with("/docs/assets/files/sprite.") && url.ends_with("#icon")),
+        "{urls:?}"
+    );
+    for fragment in ["m", "f"] {
+        assert!(text_of(&files, "index.html").contains(&format!("id=\"{fragment}\"")));
+    }
+    temp.edit("content/index.md", "url(#m)", "url(#absent)");
+    let old = tree(&temp.path("dist"));
+    let refused = run_in(&temp.0, &["build", "--format", "json"]);
+    assert_eq!(refused.status.code(), Some(1));
+    let report: serde_json::Value = serde_json::from_slice(&refused.stdout).unwrap();
+    assert!(
+        report["diagnostics"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .any(|d| d["rule"] == "broken-anchor"),
+        "{report}"
+    );
+    assert_eq!(tree(&temp.path("dist")), old);
+}
+
+#[test]
+fn a_css_url_with_a_generated_prefix_still_needs_a_published_file() {
+    let temp = fixture_at("/docs/");
+    let old = build(&temp, &[]);
+    temp.write("site/content/index.md", "---\ndescription: Missing CSS file.\n---\n# Home\n\n<div class=\"[background-image:URL(/docs/assets/missing.svg)]\">Missing</div>\n");
+    let refused = run_in(&temp.path("site"), &["build", "--format", "json"]);
+    assert_eq!(refused.status.code(), Some(1), "{}", stdout(&refused));
+    let report: serde_json::Value = serde_json::from_slice(&refused.stdout).unwrap();
+    assert!(
+        report["diagnostics"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .any(|d| d["severity"] == "error" && d["file"] == "content/index.md"),
+        "{report}"
+    );
+    assert_eq!(tree(&temp.path("site/dist")), old);
+}

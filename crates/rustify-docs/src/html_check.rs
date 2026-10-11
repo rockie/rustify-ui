@@ -149,6 +149,22 @@ pub fn parse_srcset(value: &str) -> Vec<(String, String)> {
     candidates
 }
 
+/// IDs actually present in an HTML fragment, in output order. Captured
+/// Markdown buffers which were never emitted contribute nothing here.
+pub(crate) fn ids(html: &str) -> Vec<String> {
+    let mut ids = Vec::new();
+    let mut emitter = html5gum::DefaultEmitter::default();
+    emitter.naively_switch_states(true);
+    for token in Tokenizer::new_with_emitter(html, emitter) {
+        if let Ok(Token::StartTag(tag)) = token {
+            if let Some(id) = tag.attributes.get(b"id".as_slice()) {
+                ids.push(String::from_utf8_lossy(id).into_owned());
+            }
+        }
+    }
+    ids
+}
+
 /// Whether a link opens another site in a new window without cutting that
 /// window's handle on this one (`rel="noopener"`, or `noreferrer`, which
 /// implies it). `attribute` looks an attribute up by its lowercase name.
@@ -169,27 +185,111 @@ fn opens_unguarded_window(attribute: impl Fn(&str) -> Option<String>) -> bool {
         .any(|rel| rel == "noopener" || rel == "noreferrer")
 }
 
-/// The URLs of the `url(…)`s in a class attribute's raw value, each with
-/// its range in `value`, quotes excluded.
+/// URL tokens in arbitrary utility values, excluding quoted content and
+/// arbitrary selector variants. Ranges are in the decoded attribute.
 fn class_urls(value: &str) -> Vec<(String, Range<usize>)> {
     let mut urls = Vec::new();
     let mut from = 0;
-    while let Some(at) = value[from..].find("url(") {
-        let open = from + at + "url(".len();
-        let (start, close) = match value[open..].chars().next() {
-            Some(quote @ ('"' | '\'')) => (
-                open + 1,
-                value[open + 1..].find(quote).map(|end| open + 1 + end),
-            ),
-            _ => (open, value[open..].find(')').map(|end| open + end)),
+    for class in value.split_ascii_whitespace() {
+        let at = from + value[from..].find(class).unwrap_or_default();
+        from = at + class.len();
+        if !class.contains('[') {
+            continue;
+        }
+        if rustify_style::compiler::candidate::parse(class, crate::style::CSS_DEPTH_LIMIT)
+            .map_or(true, |candidates| candidates.is_empty())
+        {
+            continue;
+        }
+        let Ok(parts) =
+            rustify_style::compiler::value::segment(class, ':', crate::style::CSS_DEPTH_LIMIT)
+        else {
+            continue;
         };
-        let Some(end) = close else {
-            break;
+        let Some(base) = parts.last() else { continue };
+        let (Some(open), Some(close)) = (base.find('['), base.rfind(']')) else {
+            continue;
         };
-        urls.push((value[start..end].to_owned(), start..end));
-        from = end;
+        if close <= open {
+            continue;
+        }
+        let start = at + class.len() - base.len() + open + 1;
+        for (url, range) in crate::style::url_ranges(&base[open + 1..close], true) {
+            urls.push((url, start + range.start..start + range.end));
+        }
     }
     urls
+}
+
+/// Decode an attribute while retaining the raw span for each output byte.
+/// Character references use the same HTML tokenizer as the policy check.
+/// This lets a URL rewrite replace `&#47;` without disturbing its class.
+fn attribute_spans(raw: &str) -> Vec<Range<usize>> {
+    let mut spans = Vec::new();
+    let mut at = 0;
+    while at < raw.len() {
+        let rest = &raw[at..];
+        if rest.starts_with('&') {
+            let mut end = 1;
+            if rest.as_bytes().get(end) == Some(&b'#') {
+                end += 1;
+                let hex = matches!(rest.as_bytes().get(end), Some(b'x' | b'X'));
+                end += usize::from(hex);
+                while rest.as_bytes().get(end).is_some_and(|c| {
+                    if hex {
+                        c.is_ascii_hexdigit()
+                    } else {
+                        c.is_ascii_digit()
+                    }
+                }) {
+                    end += 1;
+                }
+            } else {
+                while rest
+                    .as_bytes()
+                    .get(end)
+                    .is_some_and(u8::is_ascii_alphanumeric)
+                {
+                    end += 1;
+                }
+            }
+            if matches!(rest.as_bytes().get(end), Some(b';' | b'=')) {
+                end += 1;
+            }
+            let entity = &rest[..end];
+            let input = format!("<i a=\"{entity}\">");
+            let decoded = Tokenizer::new(input.as_str())
+                .find_map(|token| match token {
+                    Ok(Token::StartTag(tag)) => tag
+                        .attributes
+                        .get(b"a".as_slice())
+                        .map(|value| value.to_vec()),
+                    _ => None,
+                })
+                .unwrap_or_default();
+            if decoded != entity.as_bytes() {
+                spans.extend(std::iter::repeat_n(at..at + end, decoded.len()));
+                at += end;
+                continue;
+            }
+        }
+        let c = rest.chars().next().unwrap_or_default();
+        let len = if rest.starts_with("\r\n") {
+            2
+        } else {
+            c.len_utf8()
+        };
+        let decoded_len = if c == '\r' {
+            1
+        } else if c == '\0' {
+            '\u{fffd}'.len_utf8()
+        } else {
+            len
+        };
+        spans.extend(std::iter::repeat_n(at..at + len, decoded_len));
+        at += len;
+    }
+    spans
 }
 
 /// The raw value range of an attribute, given the span html5gum reports for
@@ -305,7 +405,15 @@ pub fn check(chunk: &str) -> (Vec<Issue>, Vec<UrlSlot>) {
                 let Some(range) = value_range(chunk, value.span.start..value.span.end) else {
                     continue;
                 };
-                for (url, at) in class_urls(&chunk[range.clone()]) {
+                let raw = &chunk[range.clone()];
+                let spans = (raw != decoded).then(|| attribute_spans(raw));
+                for (url, at) in class_urls(&decoded) {
+                    let at = match &spans {
+                        Some(spans) if !at.is_empty() => {
+                            spans[at.start].start..spans[at.end - 1].end
+                        }
+                        _ => at,
+                    };
                     if is_cross_origin(&url, true) {
                         issues.push(
                             Issue::error(span.clone(), "cross-origin-resource", format!("a class loads `{url}` from another origin, which the policy blocks"))
@@ -628,6 +736,24 @@ mod tests {
             rules("<div class=\"bg-[url(//cdn.example/x.png)]\"></div>"),
             ["cross-origin-resource"]
         );
+    }
+
+    #[test]
+    fn class_urls_decode_entities_and_keep_raw_rewrite_spans() {
+        let html = r#"<div class="before:content-['url(text)'] [&amp;[title='url(selector)']]:block [background-image:URL(&#47;bg.svg),_url(&quot;other.svg&quot;)]"></div>"#;
+        let (issues, slots) = check(html);
+        assert!(issues.is_empty(), "{issues:?}");
+        assert_eq!(
+            slots
+                .iter()
+                .map(|slot| (slot.value.as_str(), &html[slot.span.clone()]))
+                .collect::<Vec<_>>(),
+            [("/bg.svg", "&#47;bg.svg"), ("other.svg", "other.svg")]
+        );
+        let html = "<div class='bg-[url(&#x2fbg.svg)]'></div>";
+        let (_, slots) = check(html);
+        assert_eq!(slots[0].value, "˻g.svg");
+        assert_eq!(&html[slots[0].span.clone()], "&#x2fbg.svg");
     }
 
     #[test]

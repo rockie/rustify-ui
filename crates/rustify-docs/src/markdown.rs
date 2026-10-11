@@ -47,7 +47,7 @@ pub fn options() -> Options {
 
 /// A version for everything above that decides a fragment's bytes; part of
 /// the fragment cache key.
-pub const WRITER_VERSION: u32 = 4;
+pub const WRITER_VERSION: u32 = 5;
 
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct Heading {
@@ -115,8 +115,8 @@ pub struct CodeGroup {
 pub struct Fragment {
     pub html: String,
     pub headings: Vec<Heading>,
-    /// The ids the page's footnotes give their references and notes, which
-    /// a link may target as it targets a heading's.
+    /// Every id in the emitted fragment, including headings, footnotes and
+    /// author HTML. A discarded capture contributes no anchor.
     pub anchors: Vec<String>,
     /// The text of the first level-one heading.
     pub title: Option<String>,
@@ -961,7 +961,6 @@ impl<'a> Writer<'a> {
         self.push(&format!(
             "<sup class=\"rd-footnote-ref\"><a href=\"#fn-{slug}\" id=\"{reference_id}\">{number}</a></sup>"
         ));
-        self.out.anchors.push(reference_id);
     }
 
     fn fenced_block(&mut self, code: CodeCapture) {
@@ -1163,7 +1162,6 @@ impl<'a> Writer<'a> {
             for label in &order {
                 let slug = slugify(label);
                 self.push(&format!("<li id=\"fn-{slug}\">"));
-                self.out.anchors.push(format!("fn-{slug}"));
                 if let Some(index) = footnotes.iter().position(|(defined, _)| defined == label) {
                     let (_, mut body) = footnotes.swap_remove(index);
                     let trimmed = body.html.trim_end().len();
@@ -1181,6 +1179,7 @@ impl<'a> Writer<'a> {
         self.out.summary = self.summary;
         let buffer = self.buffers.pop().unwrap_or_default();
         self.out.html = buffer.html;
+        self.out.anchors = html_check::ids(&self.out.html);
         self.out.slots = buffer.slots;
         self.out
     }

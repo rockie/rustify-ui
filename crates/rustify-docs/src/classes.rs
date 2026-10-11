@@ -70,9 +70,9 @@ pub fn collect(html: &str, into: &mut BTreeSet<String>) {
                 }
             }
             if attr.eq_ignore_ascii_case("class") {
-                for class in value.split_ascii_whitespace() {
+                for class in unescape(value).split_ascii_whitespace() {
                     if !class.starts_with(CLASS_PREFIX) {
-                        into.insert(unescape(class));
+                        into.insert(class.to_owned());
                     }
                 }
             }
@@ -92,19 +92,22 @@ fn find_ignoring_case(haystack: &str, needle: &str) -> Option<usize> {
         .position(|window| window.eq_ignore_ascii_case(needle))
 }
 
-/// The few references a class attribute's value can carry in this crate's
-/// output, back to characters. A utility like `w-[calc(100%-1rem)]` reaches
-/// the compiler as written.
+/// Class names as the browser reads the attribute, including numeric and
+/// named character references in author HTML.
 fn unescape(class: &str) -> String {
     if !class.contains('&') {
         return class.to_owned();
     }
-    class
-        .replace("&quot;", "\"")
-        .replace("&#39;", "'")
-        .replace("&lt;", "<")
-        .replace("&gt;", ">")
-        .replace("&amp;", "&")
+    let html = format!("<i class=\"{}\">", class.replace('"', "&quot;"));
+    html5gum::Tokenizer::new(html.as_str())
+        .find_map(|token| match token {
+            Ok(html5gum::Token::StartTag(tag)) => tag
+                .attributes
+                .get(b"class".as_slice())
+                .map(|value| String::from_utf8_lossy(value).into_owned()),
+            _ => None,
+        })
+        .unwrap_or_default()
 }
 
 #[cfg(test)]
@@ -138,6 +141,14 @@ mod tests {
         assert_eq!(
             classes("<img class=w-full src=x><br/><input class=\"a\"/><b class=\"content-[&quot;x&quot;]\">"),
             ["a", "content-[\"x\"]", "w-full"]
+        );
+    }
+
+    #[test]
+    fn numeric_references_decode_before_class_names_are_split() {
+        assert_eq!(
+            classes("<div class=\"before:content-['&#117;rl(foo)'] h&#45;10&#32;w-10\"></div>"),
+            ["before:content-['url(foo)']", "h-10", "w-10"]
         );
     }
 }

@@ -8,6 +8,9 @@
 //! what the target browsers lack and minifies the result.
 
 use std::collections::BTreeSet;
+use std::ops::Range;
+
+use cssparser::{Parser, ParserInput, Token};
 
 use lightningcss::stylesheet::{MinifyOptions, ParserOptions, PrinterOptions, StyleSheet};
 use lightningcss::targets::{Browsers, Targets};
@@ -32,6 +35,7 @@ const DOCS_DARK: &str = "@custom-variant dark {\n  &:where([data-theme=\"dark\"]
 /// The SDK points Tailwind's scanner at its component sources; a site
 /// supplies its candidates itself.
 const SDK_SOURCE: &str = "@source \"../src\";\n";
+pub(crate) const CSS_DEPTH_LIMIT: usize = 128;
 
 /// The roots the two dark palettes apply to: a page set to dark, and a page
 /// following a system that is dark.
@@ -193,7 +197,7 @@ pub fn limits() -> Limits {
         input_bytes: 1 << 20,
         asset_bytes: 1 << 20,
         candidate_count: 50_000,
-        ast_depth: 128,
+        ast_depth: CSS_DEPTH_LIMIT,
         css_bytes: 8 << 20,
         queued_bytes: 8 << 20,
         cache_bytes: 128 << 20,
@@ -271,24 +275,88 @@ pub fn minify(css: &str) -> Result<String, StyleError> {
 /// Every URL the stylesheet loads: the values of its `url(…)`s, quotes
 /// removed. A `url\(` escaped in a selector is a class name, not a load.
 pub fn urls(css: &str) -> Vec<String> {
-    let mut urls = Vec::new();
-    let mut from = 0;
-    while let Some(at) = css[from..].find("url(") {
-        let open = from + at + "url(".len();
-        let rest = css[open..].trim_start();
-        let (value, end) = match rest.chars().next() {
-            Some(quote @ ('"' | '\'')) => match rest[1..].find(quote) {
-                Some(end) => (&rest[1..1 + end], 1 + end),
-                None => break,
-            },
-            _ => match rest.find(')') {
-                Some(end) => (rest[..end].trim_end(), end),
-                None => break,
-            },
-        };
-        urls.push(value.to_owned());
-        from = css.len() - rest.len() + end;
+    url_ranges(css, false)
+        .into_iter()
+        .map(|(url, _)| url)
+        .collect()
+}
+
+/// CSS URL tokens, with the source ranges of their arguments. In arbitrary
+/// utility values, a leading underscore becomes whitespace before a
+/// function; underscores within URL arguments remain part of the path.
+pub(crate) fn url_ranges(css: &str, arbitrary: bool) -> Vec<(String, Range<usize>)> {
+    fn walk(
+        parser: &mut Parser<'_, '_>,
+        css: &str,
+        arbitrary: bool,
+        urls: &mut Vec<(String, Range<usize>)>,
+        depth: usize,
+    ) {
+        if depth > CSS_DEPTH_LIMIT {
+            return;
+        }
+        loop {
+            parser.skip_whitespace();
+            let start = parser.position().byte_index();
+            let Ok(token) = parser.next().cloned() else {
+                break;
+            };
+            match token {
+                Token::UnquotedUrl(url) => {
+                    let end = parser.position().byte_index();
+                    let raw = &css[start..end];
+                    if let Some(open) = raw.find('(') {
+                        let raw = &raw[open + 1..raw.len() - 1];
+                        let lead = raw.len() - raw.trim_start().len();
+                        let at = start + open + 1 + lead;
+                        urls.push((url.to_string(), at..at + raw.trim().len()));
+                    }
+                }
+                Token::Function(name)
+                    if name.eq_ignore_ascii_case("url")
+                        || (arbitrary
+                            && name.trim_start_matches('_').eq_ignore_ascii_case("url")) =>
+                {
+                    let _: Result<(), cssparser::ParseError<'_, ()>> =
+                        parser.parse_nested_block(|inner| {
+                            inner.skip_whitespace();
+                            let start = inner.position();
+                            if let Ok(Token::QuotedString(value)) = inner.next().cloned() {
+                                let end = inner.position().byte_index();
+                                urls.push((value.to_string(), start.byte_index() + 1..end - 1));
+                            } else {
+                                while inner.next().is_ok() {}
+                                let raw = inner.slice_from(start).trim();
+                                let input = format!("url({raw})");
+                                let mut input = ParserInput::new(&input);
+                                if let Ok(url) = Parser::new(&mut input).expect_url() {
+                                    urls.push((
+                                        url.to_string(),
+                                        start.byte_index()..start.byte_index() + raw.len(),
+                                    ));
+                                };
+                            }
+                            while inner.next().is_ok() {}
+                            Ok(())
+                        });
+                }
+                Token::Function(_)
+                | Token::ParenthesisBlock
+                | Token::SquareBracketBlock
+                | Token::CurlyBracketBlock => {
+                    let _: Result<(), cssparser::ParseError<'_, ()>> =
+                        parser.parse_nested_block(|inner| {
+                            walk(inner, css, arbitrary, urls, depth + 1);
+                            Ok(())
+                        });
+                }
+                _ => {}
+            }
+        }
     }
+    let mut urls = Vec::new();
+    let mut input = ParserInput::new(css);
+    walk(&mut Parser::new(&mut input), css, arbitrary, &mut urls, 0);
     urls
 }
 
@@ -375,6 +443,12 @@ mod tests {
                 .all(|url| url.starts_with("data:") || url.starts_with("/docs/assets/")),
             "{found:?}"
         );
+    }
+
+    #[test]
+    fn css_url_tokens_skip_strings_comments_and_escaped_selectors() {
+        let css = r#"/* url(missing) */ .url\(selector\) {content:"url(text)";--text:'URL(other)';background:URL(/real.svg),url("/quoted.svg");mask:url(#m)}"#;
+        assert_eq!(urls(css), ["/real.svg", "/quoted.svg", "#m"]);
     }
 
     #[test]

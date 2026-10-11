@@ -646,12 +646,28 @@ pub fn generate(
             error.to_string(),
         )]
     })?;
-    // What the stylesheet loads is checked like what a page loads: data, or
-    // a file this site publishes. A class's own URL was rewritten to one.
-    let own_files = site.url("/assets/");
+    // Check the actual generation, rather than a path prefix that a
+    // missing file could share. Document fragments were checked per page.
+    let published_urls: BTreeSet<String> = files
+        .keys()
+        .map(|path| site.url(&format!("/{path}")))
+        .collect();
+    let fragments: BTreeSet<&str> = analysis
+        .published()
+        .flat_map(|page| &page.fragment.references)
+        .filter(|reference| {
+            reference.kind == RefKind::ClassImage && reference.destination.starts_with('#')
+        })
+        .map(|reference| reference.destination.as_str())
+        .collect();
     let strays: Vec<Diagnostic> = style::urls(&css)
         .into_iter()
-        .filter(|url| !url.starts_with("data:") && !url.starts_with(&own_files))
+        .filter(|url| {
+            let path = url.split(['?', '#']).next().unwrap_or_default();
+            !url.to_ascii_lowercase().starts_with("data:")
+                && !fragments.contains(url.as_str())
+                && !published_urls.contains(path)
+        })
         .map(|url| {
             Diagnostic::general(
                 Severity::Error,

@@ -1,0 +1,189 @@
+{
+  "chromium": "153.0.8010.12",
+  "binary": [
+    "rustify-docs 0.1.0",
+    "panic: unwind",
+    "grammars: syntect-5.3.0+two-face-0.5.2+bat-0.26.1+fancy"
+  ],
+  "page": "/zh/g04/page-024/",
+  "conditions": {
+    "viewport": {
+      "width": 1280,
+      "height": 720
+    },
+    "throttling": "none: the author's own machine",
+    "limit_ms": 1000
+  },
+  "kinds": {
+    "body": {
+      "median_ms": 178.5,
+      "max_ms": 192.7,
+      "samples": [
+        {
+          "token": "SAVE-body-63632-3",
+          "saved_epoch_ms": 1791701472501.2,
+          "painted_epoch_ms": 1791701472655.1,
+          "latency_ms": 153.9
+        },
+        {
+          "token": "SAVE-body-63632-4",
+          "saved_epoch_ms": 1791701472966.4,
+          "painted_epoch_ms": 1791701473159.1,
+          "latency_ms": 192.7
+        },
+        {
+          "token": "SAVE-body-63632-5",
+          "saved_epoch_ms": 1791701473466.6,
+          "painted_epoch_ms": 1791701473640.7,
+          "latency_ms": 174.1
+        },
+        {
+          "token": "SAVE-body-63632-6",
+          "saved_epoch_ms": 1791701473946.4,
+          "painted_epoch_ms": 1791701474124.9,
+          "latency_ms": 178.5
+        },
+        {
+          "token": "SAVE-body-63632-7",
+          "saved_epoch_ms": 1791701474431.2,
+          "painted_epoch_ms": 1791701474623.9,
+          "latency_ms": 192.7
+        }
+      ]
+    },
+    "config": {
+      "median_ms": 185.5,
+      "max_ms": 191.9,
+      "samples": [
+        {
+          "token": "SAVE-config-63632-8",
+          "saved_epoch_ms": 1791701475431.5,
+          "painted_epoch_ms": 1791701475614.3,
+          "latency_ms": 182.8
+        },
+        {
+          "token": "SAVE-config-63632-9",
+          "saved_epoch_ms": 1791701475918.9,
+          "painted_epoch_ms": 1791701476104.4,
+          "latency_ms": 185.5
+        },
+        {
+          "token": "SAVE-config-63632-10",
+          "saved_epoch_ms": 1791701476410.4,
+          "painted_epoch_ms": 1791701476595.9,
+          "latency_ms": 185.6
+        },
+        {
+          "token": "SAVE-config-63632-11",
+          "saved_epoch_ms": 1791701476899.4,
+          "painted_epoch_ms": 1791701477091.3,
+          "latency_ms": 191.9
+        },
+        {
+          "token": "SAVE-config-63632-12",
+          "saved_epoch_ms": 1791701477395.9,
+          "painted_epoch_ms": 1791701477578.6,
+          "latency_ms": 182.7
+        }
+      ]
+    },
+    "static": {
+      "median_ms": 187.6,
+      "max_ms": 190.2,
+      "samples": [
+        {
+          "token": "SAVE-static-63632-13",
+          "saved_epoch_ms": 1791701478385.4,
+          "painted_epoch_ms": 1791701478575.6,
+          "latency_ms": 190.2
+        },
+        {
+          "token": "SAVE-static-63632-14",
+          "saved_epoch_ms": 1791701478881.8,
+          "painted_epoch_ms": 1791701479067.2,
+          "latency_ms": 185.4
+        },
+        {
+          "token": "SAVE-static-63632-15",
+          "saved_epoch_ms": 1791701479372.3,
+          "painted_epoch_ms": 1791701479561.4,
+          "latency_ms": 189.1
+        },
+        {
+          "token": "SAVE-static-63632-16",
+          "saved_epoch_ms": 1791701479870,
+          "painted_epoch_ms": 1791701480052.8,
+          "latency_ms": 182.8
+        },
+        {
+          "token": "SAVE-static-63632-17",
+          "saved_epoch_ms": 1791701480357.5,
+          "painted_epoch_ms": 1791701480545.1,
+          "latency_ms": 187.6
+        }
+      ]
+    }
+  },
+  "short": {
+    "saves": 20,
+    "seen": 20,
+    "median_ms": 157.1,
+    "max_ms": 187.6,
+    "latencies_ms": [
+      187.6,
+      157.1,
+      151.9,
+      154.5,
+      139.5,
+      157.9,
+      163.4,
+      157,
+      160.7,
+      148.3,
+      163.6,
+      150.9,
+      148.6,
+      159.1,
+      158.9,
+      149.8,
+      161.9,
+      153.2,
+      153.4,
+      157.7
+    ]
+  },
+  "checks": [
+    {
+      "check": "body save visible in the browser (median of 5)",
+      "passed": true,
+      "detail": "178.5 ms (limit 1000 ms)"
+    },
+    {
+      "check": "config save visible in the browser (median of 5)",
+      "passed": true,
+      "detail": "185.5 ms (limit 1000 ms)"
+    },
+    {
+      "check": "static save visible in the browser (median of 5)",
+      "passed": true,
+      "detail": "187.6 ms (limit 1000 ms)"
+    },
+    {
+      "check": "short round: 20 saves one after another, each seen before the next",
+      "passed": true,
+      "detail": "median 157.1 ms, max 187.6 ms"
+    }
+  ],
+  "clock": {
+    "trip": 0.197998046875,
+    "offset": -0.016845703125
+  },
+  "dev_log_tail": [
+    "dev: revision 36: 1 page(s) changed, 0 warning(s), 73 ms",
+    "dev: revision 37: 1 page(s) changed, 0 warning(s), 82 ms",
+    "dev: revision 38: 1 page(s) changed, 0 warning(s), 76 ms",
+    "dev: revision 39: 1 page(s) changed, 0 warning(s), 76 ms",
+    "dev: revision 40: 1 page(s) changed, 0 warning(s), 74 ms",
+    ""
+  ]
+}

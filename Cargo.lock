@@ -2310,6 +2310,7 @@ dependencies = [
 name = "rustify-docs"
 version = "0.1.0"
 dependencies = [
+ "cssparser",
  "flate2",
  "html5gum",
  "leptos",

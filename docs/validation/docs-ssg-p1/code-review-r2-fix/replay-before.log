@@ -1,0 +1,12 @@
+{"case": "css-content-text", "version": "target", "exit": 1, "rules": ["missing-image"]}
+{"case": "css-entity", "version": "target", "exit": 1, "rules": ["missing-image"]}
+{"case": "css-fragment-only", "version": "target", "exit": 1, "rules": ["missing-image"]}
+{"case": "css-query", "version": "target", "exit": 0, "rules": []}
+{"case": "css-unwatched-guard", "version": "target", "exit": 0, "rules": []}
+{"case": "css-uppercase", "version": "target", "exit": 1, "rules": ["output-check"]}
+{"case": "encoded-question-content", "version": "target", "exit": 1, "rules": ["broken-link"]}
+{"case": "encoded-question-static", "version": "target", "exit": 1, "rules": ["broken-link"]}
+{"case": "percent-headings", "version": "target", "exit": 0, "rules": []}
+{"case": "suffix-content", "version": "target", "exit": 0, "rules": []}
+{"case": "unused-footnote", "version": "target", "exit": 0, "rules": []}
+{"work": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/docs-review-r2-replay-twgpehmn"}

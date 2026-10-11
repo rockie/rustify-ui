@@ -1,0 +1,13 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on build directory
+    Checking rustify-docs v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-docs)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 10.86s
+mbx[cache]: 0 hits, 0 misses, 4 not looked up; 0 B downloaded, 0 B uploaded, 1.1 MiB stored locally
+mbx[savings]: 39970 compilations, and the box has forgotten none of them.

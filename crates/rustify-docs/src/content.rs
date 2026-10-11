@@ -196,6 +196,33 @@ fn real_source(root: &Path, path: &Path) -> Result<String, Refusal> {
     Ok(relative)
 }
 
+/// Resolve a dependency even when its last file is missing. An editor may
+/// unlink a symlink's target before writing it back; its next save must
+/// still matter to the watcher. This path never authorizes a read.
+fn watched_source(root: &Path, path: &Path) -> Option<String> {
+    let mut path = path.to_path_buf();
+    let mut tail = PathBuf::new();
+    let mut seen = BTreeSet::new();
+    while seen.insert(path.clone()) {
+        if let Ok(real) = std::fs::canonicalize(&path) {
+            let full = real.join(&tail);
+            let relative = full.strip_prefix(root).ok()?.to_string_lossy();
+            return join("", &relative).filter(|path| !is_private(path));
+        }
+        if let Ok(target) = std::fs::read_link(&path) {
+            path = if target.is_absolute() {
+                target
+            } else {
+                path.parent()?.join(target)
+            };
+        } else {
+            tail = PathBuf::from(path.file_name()?).join(tail);
+            path.pop();
+        }
+    }
+    None
+}
+
 /// The bytes of the project file `path` (project-relative) names, read
 /// only when neither the name nor what it really is says it is private and
 /// it stays inside the project.
@@ -523,8 +550,8 @@ pub struct Analysis {
     /// directories, read once, when they were found to be the project's to
     /// publish.
     pub outside: BTreeMap<String, Arc<[u8]>>,
-    /// Project-relative files the pages and the configuration name as
-    /// resources, found or not: with `includes`, what else `dev` watches.
+    /// Resource and include aliases and their real project-relative
+    /// dependencies, found or not: what else `dev` watches.
     pub referenced: BTreeSet<String>,
     /// Project-relative files the pages include source from, read or not:
     /// what else `dev` watches.
@@ -581,10 +608,18 @@ struct Sources<'a> {
 }
 
 impl Sources<'_> {
+    fn track(&mut self, path: &str) {
+        if self.named.insert(path.to_owned()) {
+            if let Some(real) = watched_source(&self.root, &self.project.root.join(path)) {
+                self.named.insert(real);
+            }
+        }
+    }
+
     /// Whether the project file `path` names may be published; the first
     /// time a file outside the snapshot is named, it is read.
     fn get(&mut self, path: &str) -> Result<(), Refusal> {
-        self.named.insert(path.to_owned());
+        self.track(path);
         if is_private(path) {
             return Err(Refusal::Private);
         }
@@ -748,6 +783,7 @@ pub fn analyze(
         let body = &text[body_offset..];
         let mut includes = IncludeFiles::default();
         for include in markdown::include_paths(body) {
+            sources.track(&include);
             let read = read_include(project, &sources.root, &include);
             included.insert(include.clone());
             includes.0.insert(include, read);
@@ -987,6 +1023,16 @@ pub fn analyze(
             };
             let url = reference.destination.trim();
             let target = match reference.kind {
+                RefKind::ClassImage if url.starts_with('#') => {
+                    let anchor = percent_decode(&url[1..]);
+                    if !page.fragment.anchors.contains(&anchor) {
+                        found.push(issue(
+                            "broken-anchor",
+                            format!("{} has no id `{url}`", page.file),
+                        ));
+                    }
+                    Target::Keep
+                }
                 RefKind::Link => resolve_link(
                     project,
                     snapshot,
@@ -1264,8 +1310,7 @@ fn resolve_link(
     let check_anchor = |page: usize, found: &mut Vec<Issue>| {
         if let Some(anchor) = fragment.as_deref().filter(|anchor| !anchor.is_empty()) {
             let fragment = &pages[page].fragment;
-            let known = fragment.headings.iter().any(|heading| heading.id == anchor)
-                || fragment.anchors.iter().any(|id| id == anchor);
+            let known = fragment.anchors.iter().any(|id| id == anchor);
             if !known {
                 found.push(
                     issue("broken-anchor", format!("{} has no heading `#{anchor}`", pages[page].file))
@@ -1304,9 +1349,8 @@ fn resolve_link(
         }
         return Target::Keep;
     }
-    let decoded = percent_decode(path);
-    // A file's address may carry a query, which a published file keeps.
-    let file_part = |path: &str| path.split('?').next().unwrap_or_default().to_owned();
+    // URL separators are syntax before decoding: `%3F` belongs to a name.
+    let decoded = percent_decode(path.split('?').next().unwrap_or_default());
     if let Some(absolute) = decoded.strip_prefix('/') {
         // A site route, or a file in the asset directory.
         let route = if absolute.is_empty() || absolute.ends_with('/') {
@@ -1317,7 +1361,7 @@ fn resolve_link(
         if let Some(&target) = routes.get(&route) {
             return to_page(target, found);
         }
-        let asset = format!("{}/{}", project.config.assets_dir, file_part(absolute));
+        let asset = format!("{}/{absolute}", project.config.assets_dir);
         if snapshot.files.contains_key(&asset) {
             return Target::Resource(asset);
         }
@@ -1352,7 +1396,7 @@ fn resolve_link(
                     }
                 };
             }
-            let file = format!("{}/{}", project.config.content_dir, file_part(&joined));
+            let file = format!("{}/{joined}", project.config.content_dir);
             if snapshot.files.contains_key(&file) && !is_private(&file) {
                 return Target::Resource(file);
             }
@@ -2517,7 +2561,77 @@ pub(crate) mod tests {
             ]
         );
         let other = &analysis.pages[analysis.routes["/other/"]];
-        assert_eq!(other.fragment.anchors, ["fnref-o", "fnref-o-2", "fn-o"]);
+        assert_eq!(
+            other.fragment.anchors,
+            ["other", "fnref-o", "fnref-o-2", "fn-o"]
+        );
+    }
+
+    #[test]
+    fn links_cannot_target_references_in_an_unrendered_footnote() {
+        let fixture = Fixture::new(&[
+            ("rustify-docs.toml", CONFIG),
+            ("content/index.md", &format!("{FRONT}# Home\n\n[Absent](#fnref-b) and [there](other.md#fnref-b).\n\n[^unused]: Never shown, with a note[^b].\n\n[^b]: Its note.\n")),
+            ("content/other.md", &format!("{FRONT}# Other\n\n[^unused]: Never shown, with a note[^b].\n\n[^b]: Its note.\n")),
+        ]);
+        let (_, _, analysis) = fixture.analyze(Mode::Production);
+        assert_eq!(
+            errors(&analysis)
+                .iter()
+                .filter(|(rule, _, _)| rule == "broken-anchor")
+                .count(),
+            2,
+            "{:?}",
+            analysis.diagnostics
+        );
+    }
+
+    #[cfg(unix)]
+    #[test]
+    fn dependencies_include_real_resource_brand_and_include_targets_when_missing() {
+        let fixture = Fixture::new(&[
+            ("rustify-docs.toml", "schema_version = 1\n[site]\nname = 'D'\nurl = 'https://example.com/'\n[theme]\nlogo = 'images/logo.svg'\n"),
+            ("content/index.md", &format!("{FRONT}# Home\n\n![Mark](../images/mark.svg)\n\n<!-- rustify:include path=\"src/example.rs\" region=\"main\" lang=\"rust\" -->\n")),
+            ("brand/real.svg", "<svg xmlns='http://www.w3.org/2000/svg'/>") ,
+            ("author/real.rs", "// rustify-region:main\nfn main() {}\n// rustify-endregion:main\n"),
+        ]);
+        for alias in ["images/mark.svg", "images/logo.svg"] {
+            link(
+                &fixture.root.join("brand/real.svg"),
+                &fixture.root.join(alias),
+            );
+        }
+        link(
+            &fixture.root.join("author/real.rs"),
+            &fixture.root.join("src/example.rs"),
+        );
+        let (_, _, analysis) = fixture.analyze(Mode::Dev);
+        assert_eq!(analysis.errors(), 0, "{:?}", analysis.diagnostics);
+        let expected = [
+            "images/mark.svg",
+            "images/logo.svg",
+            "brand/real.svg",
+            "src/example.rs",
+            "author/real.rs",
+        ];
+        for path in expected {
+            assert!(
+                analysis.referenced.contains(path),
+                "{path}: {:?}",
+                analysis.referenced
+            );
+        }
+        std::fs::remove_file(fixture.root.join("brand/real.svg")).unwrap();
+        std::fs::remove_file(fixture.root.join("author/real.rs")).unwrap();
+        let (_, _, failed) = fixture.analyze(Mode::Dev);
+        assert!(failed.errors() > 0);
+        for path in expected {
+            assert!(
+                failed.referenced.contains(path),
+                "missing {path}: {:?}",
+                failed.referenced
+            );
+        }
     }
 
     #[test]

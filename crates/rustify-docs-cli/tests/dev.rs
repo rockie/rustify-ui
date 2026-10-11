@@ -379,3 +379,62 @@ fn a_burst_of_saves_ends_on_the_last_one() {
         std::thread::sleep(Duration::from_millis(50));
     }
 }
+
+#[cfg(unix)]
+#[test]
+fn a_symlink_target_outside_the_snapshot_refreshes_and_recovers() {
+    let temp = copy_fixture("content");
+    temp.write(
+        "site/brand/real.svg",
+        "<svg xmlns='http://www.w3.org/2000/svg'><rect fill='red'/></svg>",
+    );
+    std::fs::create_dir_all(temp.path("site/images")).unwrap();
+    std::os::unix::fs::symlink("../brand/real.svg", temp.path("site/images/mark.svg")).unwrap();
+    temp.edit(
+        "site/content/guide/index.md",
+        "Then write a page.",
+        "Then write a page.\n\n![Mark](../../images/mark.svg)",
+    );
+    let dev = Dev::start(&temp.path("site"), &[], &[]).unwrap();
+    let page = format!("{}guide/", dev.url);
+    let (_, original) = get_text(&page);
+    let mut changed = dev.events("/docs/guide/", good_of(&original));
+    changed.next();
+    let (_, other) = get_text(&format!("{}reference/api/", dev.url));
+    let mut stable = dev.events("/docs/reference/api/", good_of(&other));
+    stable.next();
+    // An editor replaces the real file atomically, without touching its alias.
+    temp.write(
+        "site/brand/replacement.svg",
+        "<svg xmlns='http://www.w3.org/2000/svg'><rect fill='blue'/></svg>",
+    );
+    std::fs::rename(
+        temp.path("site/brand/replacement.svg"),
+        temp.path("site/brand/real.svg"),
+    )
+    .unwrap();
+    let saved = changed.until(|state| state["ok"] == true && state["reload"] == true);
+    assert_eq!(
+        stable.until(|state| revision(state) >= revision(&saved))["reload"],
+        false
+    );
+    let (_, updated) = get_text(&page);
+    assert_ne!(original, updated);
+    drop(changed);
+    let mut changed = dev.events("/docs/guide/", good_of(&updated));
+    changed.next();
+    std::fs::remove_file(temp.path("site/brand/real.svg")).unwrap();
+    let failed = changed.until(|state| state["ok"] == false);
+    assert_eq!(failed["reload"], false);
+    assert!(failed["diagnostics"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .any(|d| d["rule"] == "missing-image"));
+    temp.write(
+        "site/brand/real.svg",
+        "<svg xmlns='http://www.w3.org/2000/svg'><rect fill='green'/></svg>",
+    );
+    assert_eq!(changed.until(|state| state["ok"] == true)["reload"], true);
+    assert_eq!(get_text(&page).0, 200);
+}

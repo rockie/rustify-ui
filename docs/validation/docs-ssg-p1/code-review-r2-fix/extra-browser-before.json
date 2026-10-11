@@ -1,0 +1,29 @@
+{
+  "browser": "153.0.8010.12",
+  "cases": [
+    {
+      "name": "watch-symlink",
+      "entry": "http://127.0.0.1:50614/docs/",
+      "before": "/docs/assets/files/mark.106eb81194.svg",
+      "afterRealTargetSave": "/docs/assets/files/mark.106eb81194.svg",
+      "targetSaveServesRed": true,
+      "afterContentSave": "/docs/assets/files/mark.c763668ac8.svg",
+      "contentSaveServesBlue": true,
+      "errors": []
+    },
+    {
+      "name": "css-unwatched-guard",
+      "entry": "http://127.0.0.1:50668/docs/",
+      "background": "url(\"http://127.0.0.1:50668/docs/assets/missing.svg\")",
+      "failed": [
+        {
+          "url": "http://127.0.0.1:50668/docs/assets/missing.svg",
+          "status": 404
+        }
+      ],
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 404 (Not Found)"
+      ]
+    }
+  ]
+}
