@@ -1,0 +1,89 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.35s
+     Running tests/artifacts.rs (target/debug/deps/artifacts-8a4a672484469ecd)
+
+running 13 tests
+test encoded_question_marks_in_file_names_keep_real_url_suffixes ... ok
+test css_url_tokens_preserve_text_entities_and_document_fragments ... ok
+test without_a_url_there_is_no_canonical_address_or_sitemap_and_a_warning ... ok
+test a_file_only_a_home_action_names_is_published_and_its_link_resolves ... ok
+test a_subpath_build_prefixes_every_address_and_every_address_resolves ... ok
+test site_files_list_what_may_be_indexed_and_nothing_private_ships ... ok
+test a_built_site_carries_no_gpu_runtime ... ok
+test the_manifest_is_true_to_the_files ... ok
+test a_css_url_with_a_generated_prefix_still_needs_a_published_file ... ok
+test a_root_build_and_a_base_override_resolve_the_same_way ... ok
+test a_logo_pair_and_the_share_image_are_published_by_content ... ok
+test a_changed_file_renames_itself_and_changes_only_what_references_it ... ok
+test nothing_private_or_outside_the_project_ships_under_another_name ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 5.04s
+
+     Running tests/check.rs (target/debug/deps/check-f32f4d9d90b069dc)
+
+running 13 tests
+test help_and_version ... ok
+test configuration_errors_are_located_in_the_configuration ... ok
+test usage_errors_exit_with_two_and_touch_nothing ... ok
+test three_known_errors_are_exactly_three_located_errors ... ok
+test the_configuration_defaults_to_the_working_directory ... ok
+test text_mode_reports_on_stderr_with_locations_and_a_conclusion ... ok
+test an_opening_fence_alone_is_an_unclosed_frontmatter_error ... ok
+test the_configuration_named_is_the_one_read_and_located ... ok
+test html_template_ghosts_at_integration_points_fail_and_keep_the_output ... ok
+test warnings_fail_only_when_denied ... ok
+test a_clean_site_passes_and_check_writes_nothing ... ok
+test body_targets_pass_check_and_build_at_both_bases ... ok
+test foreign_template_targets_pass_check_and_build ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.11s
+
+     Running tests/dev.rs (target/debug/deps/dev-fe316576a14600bc)
+
+running 13 tests
+test without_rust_dev_stops_before_watching_or_listening ... ok
+test dev_reads_the_configuration_it_is_given ... ok
+test drafts_are_shown_and_marked_and_a_link_to_one_is_a_warning ... ok
+test an_image_outside_the_content_and_asset_directories_refreshes_its_page ... ok
+test a_first_build_that_fails_shows_the_problems_until_one_builds ... ok
+test a_panic_in_a_build_is_a_problem_and_the_session_goes_on ... ok
+test a_burst_of_saves_ends_on_the_last_one ... ok
+test a_new_site_is_served_from_memory_and_nothing_is_written ... ok
+test a_symlink_target_outside_the_snapshot_refreshes_and_recovers ... ok
+test a_failed_build_keeps_the_last_good_one_until_it_is_fixed ... ok
+test a_busy_default_port_falls_back_and_a_busy_explicit_port_is_refused ... ok
+test a_save_reloads_the_pages_it_changed_and_no_others ... ok
+test snapshot_attachment_symlinks_recover_without_a_markdown_save ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.56s
+
+     Running tests/new_build.rs (target/debug/deps/new_build-4c4a4c2b1f927bc2)
+
+running 5 tests
+test without_rust_new_stops_before_writing_anything ... ok
+test new_writes_into_an_empty_directory_and_never_into_a_full_one ... ok
+test a_failed_first_build_leaves_no_output ... ok
+test a_built_site_leaves_the_repository_clean_and_dated ... ok
+test a_new_site_builds_and_nothing_is_compiled ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.95s
+
+     Running tests/reliability.rs (target/debug/deps/reliability-01080fba374943a7)
+
+running 7 tests
+test an_output_never_replaces_the_project_or_a_stranger ... ok
+test a_successful_build_reports_its_size_and_largest_pages ... ok
+test a_refused_output_is_reported_in_json_as_well ... ok
+test a_site_left_without_pages_fails_and_keeps_what_was_published ... ok
+test the_same_input_builds_the_same_bytes ... ok
+test a_failed_build_keeps_the_previous_output_and_reports_why ... ok
+test one_output_has_one_writer_and_previews_need_a_finished_production_build ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.21s
+

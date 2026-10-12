@@ -1,0 +1,17 @@
+{
+  "base": "72418b31c9acd9a1e893950fc45505fed694f05c",
+  "snapshot": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/docs-ssg-review-r2-cxbb1wm5/baseline",
+  "binary": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/docs-ssg-review-r2-cxbb1wm5/baseline-target/docs-cli/rustify-docs",
+  "command": [
+    "mbx",
+    "build",
+    "--locked",
+    "--manifest-path",
+    "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/docs-ssg-review-r2-cxbb1wm5/baseline/Cargo.toml",
+    "-p",
+    "rustify-docs-cli",
+    "--profile",
+    "docs-cli"
+  ],
+  "exit": 0
+}

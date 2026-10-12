@@ -1,0 +1,123 @@
+{
+  "session": "docs-ssg-gaps-plan-review",
+  "preview": {
+    "command": "target/docs-cli/rustify-docs preview --dir <isolated temporary site>/paragraph-before/dist --port 0",
+    "url": "http://127.0.0.1:63742/",
+    "build_id": "77850e72c34aa572",
+    "stopped": true
+  },
+  "desktop": {
+    "viewport_width": 1512,
+    "h1": [
+      {
+        "text": "Home",
+        "id": ""
+      },
+      {
+        "text": "Body",
+        "id": "welcome"
+      }
+    ],
+    "navigation_count": 0,
+    "contentinfo_count": 0,
+    "screenshot": "desktop.png"
+  },
+  "screenshot_paths": {
+    "desktop": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/kimi-webbridge-screenshots/screenshot_20261012_040008.167.png",
+    "narrow": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/kimi-webbridge-screenshots/screenshot_20261012_040304.257.png"
+  },
+  "outputs": {
+    "paths": {
+      "exit_code": 2,
+      "output": ".agents/skills/dev-plan/scripts/check_paths.sh: line 23: syntax error near unexpected token `<'\n"
+    },
+    "progress": {
+      "exit_code": 2,
+      "output": ".agents/skills/dev-plan/scripts/check_progress.sh: line 63: syntax error near unexpected token `<'\n"
+    },
+    "structure": {
+      "exit_code": 0,
+      "output": "WARN: docs/plan/DOCS-SSG-P1-gaps.md:69: 自定义 ID 须人工核对引用：WORK-F2\nWARN: docs/plan/DOCS-SSG-P1-gaps.md:70: 自定义 ID 须人工核对引用：WORK-F7\nWARN: docs/plan/DOCS-SSG-P1-gaps.md:71: 自定义 ID 须人工核对引用：WORK-F15\nWARN: docs/plan/DOCS-SSG-P1-gaps.md:72: 自定义 ID 须人工核对引用：WORK-N3\nWARN: docs/plan/DOCS-SSG-P1-gaps.md:73: 自定义 ID 须人工核对引用：WORK-N5\nWARN: docs/plan/DOCS-SSG-P1-gaps.md:74: 自定义 ID 须人工核对引用：WORK-N6\nWARN: docs/plan/DOCS-SSG-P1-gaps.md:75: 自定义 ID 须人工核对引用：WORK-N1\nWARN: docs/plan/DOCS-SSG-P1-gaps.md:76: 自定义 ID 须人工核对引用：WORK-N2\n计划结构与引用：ERROR 0 · WARN 8（不证明设计或验收有效）\n"
+    },
+    "paths-correct": {
+      "exit_code": 0,
+      "output": "MISSING: docs/project-status/protocol.md\n---\n共检查 2 个路径样式 token,MISSING 1 个。\n(存在的不打印;MISSING 需逐条人工判断:新增(★)/占位路径可忽略,复用/已核实类路径缺失必须修)\n"
+    },
+    "progress-correct": {
+      "exit_code": 0,
+      "output": "WARN:  还剩 2 个里程碑未完成,工作树有 59 个未提交改动,而本计划文件没被改过 —— 若其中已完成某个里程碑,先回写「实施进度」再继续\n---\n进度:0/2 · 里程碑表 2 行 · 记录 0 行(已完成 0) · ERROR 0 · WARN 1\n"
+    },
+    "browser-version": {
+      "exit_code": 0,
+      "output": "{\"ok\":false,\"error\":{\"code\":\"extension_error\",\"message\":\"{\\\"code\\\":-32601,\\\"message\\\":\\\"'Browser.getVersion' wasn't found\\\"}\"}}\n"
+    },
+    "log-install": {
+      "exit_code": 0,
+      "output": "{\"ok\":true,\"data\":{\"identifier\":\"1\"}}\n"
+    },
+    "mobile-width": {
+      "exit_code": 0,
+      "output": "{\"ok\":true,\"data\":{}}\n"
+    },
+    "reload-mobile": {
+      "exit_code": 0,
+      "output": "{\"ok\":true,\"data\":{\"success\":true,\"url\":\"http://127.0.0.1:63742/#welcome\",\"tabId\":1319605132,\"frameId\":\"A746123B0938D6576F17F6E1E7D8F16A\"}}\n"
+    },
+    "mobile-state": {
+      "exit_code": 0,
+      "output": "{\"ok\":true,\"data\":{\"type\":\"object\",\"value\":{\"h1\":[{\"id\":\"\",\"text\":\"Home\",\"top\":121},{\"id\":\"welcome\",\"text\":\"Body\",\"top\":253.875}],\"nav\":0,\"scrollWidth\":375,\"url\":\"http://127.0.0.1:63742/#welcome\",\"userAgent\":\"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36\",\"width\":375}}}\n"
+    },
+    "mobile-snapshot": {
+      "exit_code": 0,
+      "output": "{\"ok\":true,\"data\":{\"url\":\"http://127.0.0.1:63742/#welcome\",\"title\":\"Home | Review Docs\",\"tree\":[{\"role\":\"link\",\"name\":\"Skip to content\",\"ref\":\"@e1\",\"children\":[{\"role\":\"StaticText\",\"name\":\"Skip to content\"}]},{\"role\":\"banner\",\"children\":[{\"role\":\"link\",\"name\":\"Review Docs\",\"ref\":\"@e2\",\"children\":[{\"role\":\"StaticText\",\"name\":\"Review Docs\"}]},{\"role\":\"group\",\"name\":\"Theme\",\"children\":[{\"role\":\"button\",\"name\":\"System\",\"ref\":\"@e3\",\"children\":[{\"role\":\"StaticText\",\"name\":\"System\"}]},{\"role\":\"button\",\"name\":\"Light\",\"ref\":\"@e4\",\"children\":[{\"role\":\"StaticText\",\"name\":\"Light\"}]},{\"role\":\"button\",\"name\":\"Dark\",\"ref\":\"@e5\",\"children\":[{\"role\":\"StaticText\",\"name\":\"Dark\"}]}]}]},{\"role\":\"main\",\"children\":[{\"role\":\"heading\",\"name\":\"Home\",\"children\":[{\"role\":\"StaticText\",\"name\":\"Home\"}]},{\"role\":\"article\",\"children\":[{\"role\":\"StaticText\",\"name\":\"Intro.\"},{\"role\":\"heading\",\"name\":\"Body\",\"children\":[{\"role\":\"StaticText\",\"name\":\"Body\"}]},{\"role\":\"StaticText\",\"name\":\"Body text.\"}]}]},{\"role\":\"paragraph\"}]}}\n"
+    },
+    "mobile-screen": {
+      "exit_code": 0,
+      "output": "{\"ok\":true,\"data\":{\"format\":\"png\",\"path\":\"/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/kimi-webbridge-screenshots/screenshot_20261012_040304.257.png\",\"sizeBytes\":52161,\"mimeType\":\"image/png\"}}\n"
+    },
+    "theme-toggle": {
+      "exit_code": 0,
+      "output": "{\"ok\":true,\"data\":{\"success\":true,\"tag\":\"BUTTON\",\"text\":\"Dark\"}}\n"
+    },
+    "theme-state": {
+      "exit_code": 0,
+      "output": "{\"ok\":true,\"data\":{\"type\":\"object\",\"value\":{\"scrollWidth\":375,\"theme\":\"dark\",\"width\":375}}}\n"
+    },
+    "404-navigation": {
+      "exit_code": 0,
+      "output": "{\"ok\":true,\"data\":{\"success\":true,\"url\":\"http://127.0.0.1:63742/missing/deep/\",\"tabId\":1319605132,\"frameId\":\"A746123B0938D6576F17F6E1E7D8F16A\"}}\n"
+    },
+    "404-snapshot": {
+      "exit_code": 0,
+      "output": "{\"ok\":true,\"data\":{\"url\":\"http://127.0.0.1:63742/missing/deep/\",\"title\":\"Page not found | Review Docs\",\"tree\":[{\"role\":\"link\",\"name\":\"Skip to content\",\"ref\":\"@e1\",\"children\":[{\"role\":\"StaticText\",\"name\":\"Skip to content\"}]},{\"role\":\"banner\",\"children\":[{\"role\":\"link\",\"name\":\"Review Docs\",\"ref\":\"@e2\",\"children\":[{\"role\":\"StaticText\",\"name\":\"Review Docs\"}]},{\"role\":\"group\",\"name\":\"Theme\",\"children\":[{\"role\":\"button\",\"name\":\"System\",\"ref\":\"@e3\",\"children\":[{\"role\":\"StaticText\",\"name\":\"System\"}]},{\"role\":\"button\",\"name\":\"Light\",\"ref\":\"@e4\",\"children\":[{\"role\":\"StaticText\",\"name\":\"Light\"}]},{\"role\":\"button\",\"name\":\"Dark\",\"ref\":\"@e5\",\"children\":[{\"role\":\"StaticText\",\"name\":\"Dark\"}]}]}]},{\"role\":\"group\",\"children\":[{\"role\":\"DisclosureTriangle\",\"name\":\"Menu\",\"children\":[{\"role\":\"StaticText\",\"name\":\"Menu\"}]}]},{\"role\":\"main\",\"children\":[{\"role\":\"heading\",\"name\":\"Page not found\",\"children\":[{\"role\":\"StaticText\",\"name\":\"Page not found\"}]},{\"role\":\"article\",\"children\":[{\"role\":\"StaticText\",\"name\":\"There is no page at this address.\"},{\"role\":\"link\",\"name\":\"Back to the home page\",\"ref\":\"@e6\",\"children\":[{\"role\":\"StaticText\",\"name\":\"Back to the home page\"}]}]}]},{\"role\":\"paragraph\"}]}}\n"
+    },
+    "404-events": {
+      "exit_code": 0,
+      "output": "{\"ok\":true,\"data\":{\"type\":\"object\",\"value\":{\"events\":[],\"h1\":1,\"theme\":\"dark\",\"url\":\"http://127.0.0.1:63742/missing/deep/\"}}}\n"
+    },
+    "network-final": {
+      "exit_code": 0,
+      "output": "{\"ok\":true,\"data\":{\"count\":4,\"requests\":[{\"requestId\":\"8B27AB3F217985DCE0D0D66D332ABB75\",\"url\":\"http://127.0.0.1:63742/missing/deep/\",\"method\":\"GET\",\"status\":404,\"mimeType\":\"text/html\",\"completed\":true},{\"requestId\":\"72684.8\",\"url\":\"http://127.0.0.1:63742/assets/site.8b176a5b45.css\",\"method\":\"GET\",\"status\":200,\"mimeType\":\"text/css\",\"completed\":true},{\"requestId\":\"72684.9\",\"url\":\"http://127.0.0.1:63742/assets/mode.64fba40012.js\",\"method\":\"GET\",\"status\":200,\"mimeType\":\"text/javascript\",\"completed\":true},{\"requestId\":\"72684.10\",\"url\":\"http://127.0.0.1:63742/assets/site.f9e7e4a69a.js\",\"method\":\"GET\",\"status\":200,\"mimeType\":\"text/javascript\",\"completed\":true}]}}\n"
+    },
+    "return-home": {
+      "exit_code": 0,
+      "output": "{\"ok\":true,\"data\":{\"success\":true,\"tag\":\"A\",\"text\":\"Back to the home page\"}}\n"
+    },
+    "return-state": {
+      "exit_code": 0,
+      "output": "{\"ok\":true,\"data\":{\"type\":\"object\",\"value\":{\"events\":[],\"h1\":[{\"id\":\"\",\"text\":\"Home\"},{\"id\":\"welcome\",\"text\":\"Body\"}],\"theme\":\"dark\",\"url\":\"http://127.0.0.1:63742/\"}}}\n"
+    },
+    "clear-viewport": {
+      "exit_code": 0,
+      "output": "{\"ok\":true,\"data\":{}}\n"
+    },
+    "remove-observer": {
+      "exit_code": 0,
+      "output": "{\"ok\":true,\"data\":{}}\n"
+    },
+    "network-stop": {
+      "exit_code": 0,
+      "output": "{\"ok\":true,\"data\":{\"success\":true,\"message\":\"network capture stopped\"}}\n"
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "missing_links": [],
+  "protocol_exact": true,
+  "upstream_ids_verified": [
+    "WORK-F2",
+    "WORK-F7",
+    "WORK-F15",
+    "WORK-N3",
+    "WORK-N5",
+    "WORK-N6",
+    "WORK-N1",
+    "WORK-N2",
+    "WORK-N1",
+    "WORK-N2",
+    "WORK-N5",
+    "WORK-N6"
+  ],
+  "manual_notes": [
+    "check_paths的docs/project-status/protocol.md仅为原样协议兼容说明，本仓实际使用.xgent-ai；不属于缺失复用路径",
+    "八个WORK编号均来自当前PRD；M9已登记为原计划上游ID，不进入本计划两里程碑计数",
+    "进度脚本dirty提示针对既有报告/台账和本次新文档，独立计划0/2未实施"
+  ],
+  "coverage_rows": 65,
+  "coverage_unique": 65
+}

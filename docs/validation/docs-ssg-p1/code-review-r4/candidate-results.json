@@ -1,0 +1,380 @@
+{
+  "base": "1f0fc5ed21d7937a1297528ad38cdefe6b95f721",
+  "target": "540462a895a48385761f8db6e3271a714957d818",
+  "cases": [
+    {
+      "case": "svg-template-pair",
+      "input": "<svg><template id=\"svg-holder\"><circle id=\"circle\" r=\"10\"></circle></template></svg>\n\n[Circle](#circle)",
+      "baseline": {
+        "exit": 0,
+        "report": {
+          "schema_version": 1,
+          "success": true,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            }
+          ],
+          "summary": {
+            "errors": 0,
+            "warnings": 1,
+            "pages": 1,
+            "files": 10,
+            "bytes": 59593,
+            "largest": [
+              {
+                "path": "index.html",
+                "bytes": 4193
+              },
+              {
+                "path": "404.html",
+                "bytes": 3954
+              }
+            ],
+            "out": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-review-r4-kg99gg8l/replayed/candidate-fixtures/svg-template-pair/baseline-dist",
+            "milliseconds": 37
+          }
+        },
+        "stderr": ""
+      },
+      "exit": 1,
+      "stdout": {
+        "schema_version": 1,
+        "success": false,
+        "diagnostics": [
+          {
+            "severity": "warning",
+            "rule": "no-git-history",
+            "file": null,
+            "line": null,
+            "column": null,
+            "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+            "suggestion": "build inside a git repository with the content committed"
+          },
+          {
+            "severity": "error",
+            "rule": "broken-anchor",
+            "file": "content/index.md",
+            "line": 8,
+            "column": 1,
+            "message": "content/index.md has no heading `#circle`",
+            "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+          }
+        ],
+        "summary": {
+          "errors": 1,
+          "warnings": 1,
+          "pages": 0
+        }
+      },
+      "stderr": ""
+    },
+    {
+      "case": "svg-template-selfclose",
+      "input": "<svg><template/></svg>\n\n## Visible\n\n[Visible](#visible)",
+      "baseline": {
+        "exit": 0,
+        "report": {
+          "schema_version": 1,
+          "success": true,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            }
+          ],
+          "summary": {
+            "errors": 0,
+            "warnings": 1,
+            "pages": 1,
+            "files": 10,
+            "bytes": 59910,
+            "largest": [
+              {
+                "path": "index.html",
+                "bytes": 4510
+              },
+              {
+                "path": "404.html",
+                "bytes": 3954
+              }
+            ],
+            "out": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-review-r4-kg99gg8l/replayed/candidate-fixtures/svg-template-selfclose/baseline-dist",
+            "milliseconds": 18
+          }
+        },
+        "stderr": ""
+      },
+      "exit": 1,
+      "stdout": {
+        "schema_version": 1,
+        "success": false,
+        "diagnostics": [
+          {
+            "severity": "warning",
+            "rule": "no-git-history",
+            "file": null,
+            "line": null,
+            "column": null,
+            "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+            "suggestion": "build inside a git repository with the content committed"
+          },
+          {
+            "severity": "error",
+            "rule": "broken-anchor",
+            "file": "content/index.md",
+            "line": 10,
+            "column": 1,
+            "message": "content/index.md has no heading `#visible`",
+            "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+          }
+        ],
+        "summary": {
+          "errors": 1,
+          "warnings": 1,
+          "pages": 0
+        }
+      },
+      "stderr": ""
+    },
+    {
+      "case": "html-template-control",
+      "input": "<template id=\"holder\"><span id=\"ghost\">Hidden</span></template>\n\n## Visible\n\n[Visible](#visible) [Holder](#holder)",
+      "baseline": {
+        "exit": 0,
+        "report": {
+          "schema_version": 1,
+          "success": true,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            }
+          ],
+          "summary": {
+            "errors": 0,
+            "warnings": 1,
+            "pages": 1,
+            "files": 10,
+            "bytes": 59980,
+            "largest": [
+              {
+                "path": "index.html",
+                "bytes": 4580
+              },
+              {
+                "path": "404.html",
+                "bytes": 3954
+              }
+            ],
+            "out": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-review-r4-kg99gg8l/replayed/candidate-fixtures/html-template-control/baseline-dist",
+            "milliseconds": 18
+          }
+        },
+        "stderr": ""
+      },
+      "exit": 0,
+      "stdout": {
+        "schema_version": 1,
+        "success": true,
+        "diagnostics": [
+          {
+            "severity": "warning",
+            "rule": "no-git-history",
+            "file": null,
+            "line": null,
+            "column": null,
+            "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+            "suggestion": "build inside a git repository with the content committed"
+          }
+        ],
+        "summary": {
+          "errors": 0,
+          "warnings": 1,
+          "pages": 1,
+          "files": 10,
+          "bytes": 59980,
+          "largest": [
+            {
+              "path": "index.html",
+              "bytes": 4580
+            },
+            {
+              "path": "404.html",
+              "bytes": 3954
+            }
+          ],
+          "out": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-review-r4-kg99gg8l/replayed/candidate-fixtures/html-template-control/dist",
+          "milliseconds": 30
+        }
+      },
+      "stderr": ""
+    },
+    {
+      "case": "html-template-ghost",
+      "input": "<template id=\"holder\"><span id=\"ghost\">Hidden</span></template>\n\n[Ghost](#ghost)",
+      "baseline": {
+        "exit": 0,
+        "report": {
+          "schema_version": 1,
+          "success": true,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            }
+          ],
+          "summary": {
+            "errors": 0,
+            "warnings": 1,
+            "pages": 1,
+            "files": 10,
+            "bytes": 59570,
+            "largest": [
+              {
+                "path": "index.html",
+                "bytes": 4170
+              },
+              {
+                "path": "404.html",
+                "bytes": 3954
+              }
+            ],
+            "out": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-review-r4-kg99gg8l/replayed/candidate-fixtures/html-template-ghost/baseline-dist",
+            "milliseconds": 20
+          }
+        },
+        "stderr": ""
+      },
+      "exit": 1,
+      "stdout": {
+        "schema_version": 1,
+        "success": false,
+        "diagnostics": [
+          {
+            "severity": "warning",
+            "rule": "no-git-history",
+            "file": null,
+            "line": null,
+            "column": null,
+            "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+            "suggestion": "build inside a git repository with the content committed"
+          },
+          {
+            "severity": "error",
+            "rule": "broken-anchor",
+            "file": "content/index.md",
+            "line": 8,
+            "column": 1,
+            "message": "content/index.md has no heading `#ghost`",
+            "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+          }
+        ],
+        "summary": {
+          "errors": 1,
+          "warnings": 1,
+          "pages": 0
+        }
+      },
+      "stderr": ""
+    },
+    {
+      "case": "nested-svg-template",
+      "input": "<template id=\"holder\"><svg><template/></svg></template>\n\n## Visible\n\n[Visible](#visible)",
+      "baseline": {
+        "exit": 0,
+        "report": {
+          "schema_version": 1,
+          "success": true,
+          "diagnostics": [
+            {
+              "severity": "warning",
+              "rule": "no-git-history",
+              "file": null,
+              "line": null,
+              "column": null,
+              "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+              "suggestion": "build inside a git repository with the content committed"
+            }
+          ],
+          "summary": {
+            "errors": 0,
+            "warnings": 1,
+            "pages": 1,
+            "files": 10,
+            "bytes": 59943,
+            "largest": [
+              {
+                "path": "index.html",
+                "bytes": 4543
+              },
+              {
+                "path": "404.html",
+                "bytes": 3954
+              }
+            ],
+            "out": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-review-r4-kg99gg8l/replayed/candidate-fixtures/nested-svg-template/baseline-dist",
+            "milliseconds": 18
+          }
+        },
+        "stderr": ""
+      },
+      "exit": 1,
+      "stdout": {
+        "schema_version": 1,
+        "success": false,
+        "diagnostics": [
+          {
+            "severity": "warning",
+            "rule": "no-git-history",
+            "file": null,
+            "line": null,
+            "column": null,
+            "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+            "suggestion": "build inside a git repository with the content committed"
+          },
+          {
+            "severity": "error",
+            "rule": "broken-anchor",
+            "file": "content/index.md",
+            "line": 10,
+            "column": 1,
+            "message": "content/index.md has no heading `#visible`",
+            "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+          }
+        ],
+        "summary": {
+          "errors": 1,
+          "warnings": 1,
+          "pages": 0
+        }
+      },
+      "stderr": ""
+    }
+  ],
+  "binary_hashes": {
+    "base": "3618514ed6863b8d6a2903b31610616c37027bc57563da70e8cfa06bbf446df3",
+    "target": "9fa8a2b428afb30612af32607691616be38c621265e22b859fde86ec386224c0"
+  }
+}

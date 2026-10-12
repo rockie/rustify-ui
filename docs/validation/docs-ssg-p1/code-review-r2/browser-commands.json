@@ -1,0 +1,62 @@
+[
+  {
+    "project": "docs-root",
+    "argv": [
+      "node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "playwright.docs.config.ts",
+      "--project=docs-root",
+      "--reporter=list",
+      "--output",
+      "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/docs-ssg-review-r2-cxbb1wm5/docs-root-results"
+    ],
+    "exit": 0,
+    "seconds": 16.73
+  },
+  {
+    "project": "docs-subpath",
+    "argv": [
+      "node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "playwright.docs.config.ts",
+      "--project=docs-subpath",
+      "--reporter=list",
+      "--output",
+      "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/docs-ssg-review-r2-cxbb1wm5/docs-subpath-results"
+    ],
+    "exit": 0,
+    "seconds": 13.55
+  },
+  {
+    "project": "docs-meta",
+    "argv": [
+      "node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "playwright.docs.config.ts",
+      "--project=docs-meta",
+      "--reporter=list",
+      "--output",
+      "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/docs-ssg-review-r2-cxbb1wm5/docs-meta-results"
+    ],
+    "exit": 0,
+    "seconds": 14.64
+  },
+  {
+    "project": "docs-dev",
+    "argv": [
+      "node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "playwright.docs.config.ts",
+      "--project=docs-dev",
+      "--reporter=list",
+      "--output",
+      "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/docs-ssg-review-r2-cxbb1wm5/docs-dev-results"
+    ],
+    "exit": 0,
+    "seconds": 11.22
+  }
+]

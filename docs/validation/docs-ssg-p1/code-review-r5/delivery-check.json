@@ -1,0 +1,23 @@
+{
+  "report_sha256": "e5becdb4941c1cda3434feb0ee905b38979e7e9212224764826a43ef5a52e340",
+  "review_id": "53350840-75ac-44ea-82e1-3b8072575e78",
+  "links_checked_files": 10,
+  "missing_links": [],
+  "index_checks": {
+    ".xgent-ai/sdlc/events/review/53350840-75ac-44ea-82e1-3b8072575e78": {
+      "missing": [],
+      "entries": 2
+    },
+    ".xgent-ai/sdlc/events/review": {
+      "missing": [],
+      "entries": 25
+    },
+    ".xgent-ai/sdlc/status/review": {
+      "missing": [],
+      "entries": 25
+    }
+  },
+  "head": "3069107cf4990e15db6ad3ddddddd520bcc86838",
+  "input_fingerprint": "f2ddf52d45d4dcd5a6048812d152e367b0133d450efa728f95be6de1da040ce8",
+  "fixed_inputs_unchanged": true
+}

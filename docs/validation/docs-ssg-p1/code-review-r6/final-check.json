@@ -1,0 +1,15 @@
+{
+  "report_sha256": "4d01d77d716785485c3c93207530e55b99901c18544f873ad5ccfe3a5838bf0e",
+  "ledger_readback_files": 10,
+  "missing_links": [],
+  "input_changes_only_authorized_ledger": [
+    ".xgent-ai/sdlc/events/plan/526c88c7-a4b3-4ea9-9193-371420b66d1d/index.md",
+    ".xgent-ai/sdlc/events/review/index.md",
+    ".xgent-ai/sdlc/index.md",
+    ".xgent-ai/sdlc/status/plan/526c88c7-a4b3-4ea9-9193-371420b66d1d.md",
+    ".xgent-ai/sdlc/status/review/index.md"
+  ],
+  "unexpected_input_changes": [],
+  "original_plan_and_code_unchanged": true,
+  "index_empty": true
+}

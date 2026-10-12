@@ -1,0 +1,32 @@
+npm notice run rustify-ui-browser-tests@0.1.0 npx
+npm notice run 'playwright' test -c playwright.docs.config.ts --project=docs-dev --output=target/docs-ssg/prd-dev-gaps/browser/docs-dev
+
+Running 21 tests using 1 worker
+
+(node:69226) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+rustc 1.99.0 (b940084d7 2026-09-28)
+  ✓   1 [docs-dev] › tests/docs-ssg/dev-uat.spec.ts:89:5 › UAT-1 and UAT-2: new, dev, three pages within a minute; then saves, a mistake and its fix in one session (3.5s)
+rustc 1.99.0 (b940084d7 2026-09-28)
+  ✓   2 [docs-dev] › tests/docs-ssg/dev.spec.ts:146:5 › a new site is readable at once: the home page and its two pages (310ms)
+  ✓   3 [docs-dev] › tests/docs-ssg/dev.spec.ts:181:5 › a save reloads the page it changed in place and leaves the others (1.8s)
+  ✓   4 [docs-dev] › tests/docs-ssg/dev.spec.ts:209:5 › a real symlink target save refreshes its image and survives deletion and recovery (499ms)
+  ✓   5 [docs-dev] › tests/docs-ssg/dev.spec.ts:249:9 › a snapshot attachment in content/manual.pdf recovers when only its target is restored (404ms)
+  ✓   6 [docs-dev] › tests/docs-ssg/dev.spec.ts:249:9 › a snapshot attachment in static/manual.pdf recovers when only its target is restored (386ms)
+  ✓   7 [docs-dev] › tests/docs-ssg/dev.spec.ts:282:5 › arbitrary CSS resources keep numeric entity delimiters and compiler URL decoding (186ms)
+  ✓   8 [docs-dev] › tests/docs-ssg/dev.spec.ts:321:5 › template contents are rejected as anchors while their holder and ordinary IDs navigate (336ms)
+  ✓   9 [docs-dev] › tests/docs-ssg/dev.spec.ts:351:9 › body anchors at / navigate on the same and other pages and recover from ghost links (411ms)
+  ✓  10 [docs-dev] › tests/docs-ssg/dev.spec.ts:351:9 › body anchors at /docs/ navigate on the same and other pages and recover from ghost links (396ms)
+  ✓  11 [docs-dev] › tests/docs-ssg/dev.spec.ts:390:9 › self-closing SVG template preserves document anchors and cross-page navigation (265ms)
+  ✓  12 [docs-dev] › tests/docs-ssg/dev.spec.ts:390:9 › paired SVG template preserves document anchors and cross-page navigation (244ms)
+  ✓  13 [docs-dev] › tests/docs-ssg/dev.spec.ts:390:9 › SVG inside an HTML template preserves document anchors and cross-page navigation (243ms)
+  ✓  14 [docs-dev] › tests/docs-ssg/dev.spec.ts:416:5 › HTML templates at foreign integration points recover from ghost links (310ms)
+  ✓  15 [docs-dev] › tests/docs-ssg/dev.spec.ts:447:5 › a failed build keeps the page readable under a panel that hides to a marker and clears on the fix (653ms)
+  ✓  16 [docs-dev] › tests/docs-ssg/dev.spec.ts:494:5 › while nothing has built, every page says so, and becomes the site once it builds (234ms)
+  ✓  17 [docs-dev] › tests/docs-ssg/dev.spec.ts:514:5 › a restarted dev brings an open page up to date (1.0s)
+  ✓  18 [docs-dev] › tests/docs-ssg/dev.spec.ts:525:5 › a panic in a build is one more problem, and the next build is served (291ms)
+  ✓  19 [docs-dev] › tests/docs-ssg/dev.spec.ts:541:5 › the panel speaks the page's language (222ms)
+  ✓  20 [docs-dev] › tests/docs-ssg/dev.spec.ts:551:5 › on a phone the panel is a sheet along the bottom and nothing scrolls sideways (332ms)
+  ✓  21 [docs-dev] › tests/docs-ssg/dev.spec.ts:573:5 › axe finds no serious or critical problem with the panel open or hidden, in both modes (1.4s)
+
+  21 passed (13.9s)

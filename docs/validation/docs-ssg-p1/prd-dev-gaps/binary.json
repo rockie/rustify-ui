@@ -1,0 +1,21 @@
+{
+  "binary_sha256": "f281a1bd80c44f7032a129bfd93cef37df4b3abdf34aed6de43d08a9282aebb7",
+  "commands": [
+    {
+      "args": [
+        "--version"
+      ],
+      "exit": 0,
+      "stdout": "rustify-docs 0.1.2\n",
+      "stderr": ""
+    },
+    {
+      "args": [
+        "--build-info"
+      ],
+      "exit": 0,
+      "stdout": "rustify-docs 0.1.2\npanic: unwind\ngrammars: syntect-5.3.0+two-face-0.5.2+bat-0.26.1+fancy\n",
+      "stderr": ""
+    }
+  ]
+}

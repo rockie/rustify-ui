@@ -1,0 +1,622 @@
+{
+  "binary": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-cli/rustify-docs",
+  "work": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-prd-gaps-CefEgs",
+  "cases": [
+    {
+      "name": "template-landmarks",
+      "base": "/",
+      "checked": {
+        "args": [
+          "check",
+          "--config",
+          "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-prd-gaps-CefEgs/template/rustify-docs.toml",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "{\"schema_version\":1,\"success\":true,\"diagnostics\":[{\"severity\":\"warning\",\"rule\":\"no-git-history\",\"file\":null,\"line\":null,\"column\":null,\"message\":\"pages show no last-updated date: not a git repository (or any of the parent directories): .git\",\"suggestion\":\"build inside a git repository with the content committed\"},{\"severity\":\"warning\",\"rule\":\"missing-site-url\",\"file\":\"rustify-docs.toml\",\"line\":null,\"column\":null,\"message\":\"site.url is not set, so pages have no canonical address or preview image and there is no sitemap\",\"suggestion\":\"add `url = \\\"https://…\\\"` under [site], the address the site is published at\"}],\"summary\":{\"errors\":0,\"warnings\":2,\"pages\":3}}\n",
+        "stderr": ""
+      },
+      "built": {
+        "args": [
+          "build",
+          "--config",
+          "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-prd-gaps-CefEgs/template/rustify-docs.toml",
+          "--out",
+          "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-prd-gaps-CefEgs/template/dist",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "{\"schema_version\":1,\"success\":true,\"diagnostics\":[{\"severity\":\"warning\",\"rule\":\"no-git-history\",\"file\":null,\"line\":null,\"column\":null,\"message\":\"pages show no last-updated date: not a git repository (or any of the parent directories): .git\",\"suggestion\":\"build inside a git repository with the content committed\"},{\"severity\":\"warning\",\"rule\":\"missing-site-url\",\"file\":\"rustify-docs.toml\",\"line\":null,\"column\":null,\"message\":\"site.url is not set, so pages have no canonical address or preview image and there is no sitemap\",\"suggestion\":\"add `url = \\\"https://…\\\"` under [site], the address the site is published at\"}],\"summary\":{\"errors\":0,\"warnings\":2,\"pages\":3,\"files\":12,\"bytes\":70199,\"largest\":[{\"path\":\"guide/getting-started/index.html\",\"bytes\":7964},{\"path\":\"guide/writing-pages/index.html\",\"bytes\":5701},{\"path\":\"404.html\",\"bytes\":4232},{\"path\":\"index.html\",\"bytes\":4222}],\"out\":\"/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-prd-gaps-CefEgs/template/dist\",\"milliseconds\":46}}\n",
+        "stderr": ""
+      },
+      "url": "http://127.0.0.1:57984/",
+      "pages": [
+        {
+          "route": "",
+          "status": 200,
+          "h1": [
+            {
+              "text": "template",
+              "id": ""
+            }
+          ],
+          "footerElements": [],
+          "navElements": 0,
+          "ids": [
+            "content",
+            "rd-status"
+          ],
+          "roles": {
+            "banner": 1,
+            "navigation": 0,
+            "main": 1,
+            "contentinfo": 0
+          }
+        },
+        {
+          "route": "guide/getting-started/",
+          "status": 200,
+          "h1": [
+            {
+              "text": "Getting started",
+              "id": "getting-started"
+            }
+          ],
+          "footerElements": [],
+          "navElements": 5,
+          "ids": [
+            "content",
+            "getting-started",
+            "preview-while-you-write",
+            "check-and-build",
+            "rd-status"
+          ],
+          "roles": {
+            "banner": 1,
+            "navigation": 3,
+            "main": 1,
+            "contentinfo": 0
+          }
+        },
+        {
+          "route": "x/y/",
+          "status": 404,
+          "h1": [
+            {
+              "text": "Page not found",
+              "id": ""
+            }
+          ],
+          "footerElements": [],
+          "navElements": 2,
+          "ids": [
+            "content",
+            "rd-status"
+          ],
+          "roles": {
+            "banner": 1,
+            "navigation": 1,
+            "main": 1,
+            "contentinfo": 0
+          }
+        }
+      ],
+      "errors": {
+        "console": [
+          "Failed to load resource: the server responded with a status of 404 (Not Found)"
+        ],
+        "pageerror": [],
+        "failedRequests": []
+      },
+      "previewLog": "preview: http://127.0.0.1:57984/\nserving /private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-prd-gaps-CefEgs/template/dist (built by rustify-docs 0.1.2, build 484a37ff1fce87e1) until stopped\n"
+    },
+    {
+      "name": "root-home-auto",
+      "base": "/",
+      "checked": {
+        "args": [
+          "check",
+          "--config",
+          "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-prd-gaps-CefEgs/root-home-auto/rustify-docs.toml",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "{\"schema_version\":1,\"success\":true,\"diagnostics\":[{\"severity\":\"warning\",\"rule\":\"no-git-history\",\"file\":null,\"line\":null,\"column\":null,\"message\":\"pages show no last-updated date: not a git repository (or any of the parent directories): .git\",\"suggestion\":\"build inside a git repository with the content committed\"}],\"summary\":{\"errors\":0,\"warnings\":1,\"pages\":4}}\n",
+        "stderr": ""
+      },
+      "built": {
+        "args": [
+          "build",
+          "--config",
+          "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-prd-gaps-CefEgs/root-home-auto/rustify-docs.toml",
+          "--out",
+          "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-prd-gaps-CefEgs/root-home-auto/dist",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "{\"schema_version\":1,\"success\":true,\"diagnostics\":[{\"severity\":\"warning\",\"rule\":\"no-git-history\",\"file\":null,\"line\":null,\"column\":null,\"message\":\"pages show no last-updated date: not a git repository (or any of the parent directories): .git\",\"suggestion\":\"build inside a git repository with the content committed\"}],\"summary\":{\"errors\":0,\"warnings\":1,\"pages\":4,\"files\":20,\"bytes\":100742,\"largest\":[{\"path\":\"guide/setup/index.html\",\"bytes\":16738},{\"path\":\"guide/index.html\",\"bytes\":10666},{\"path\":\"reference/api/index.html\",\"bytes\":8746},{\"path\":\"index.html\",\"bytes\":5101},{\"path\":\"404.html\",\"bytes\":5028}],\"out\":\"/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-prd-gaps-CefEgs/root-home-auto/dist\",\"milliseconds\":41}}\n",
+        "stderr": ""
+      },
+      "url": "http://127.0.0.1:58000/",
+      "pages": [
+        {
+          "route": "",
+          "status": 200,
+          "h1": [
+            {
+              "text": "Fixture Docs",
+              "id": ""
+            }
+          ],
+          "footerElements": [],
+          "navElements": 2,
+          "ids": [
+            "content",
+            "rd-status"
+          ],
+          "roles": {
+            "banner": 1,
+            "navigation": 1,
+            "main": 1,
+            "contentinfo": 0
+          }
+        },
+        {
+          "route": "guide/setup/",
+          "status": 200,
+          "h1": [
+            {
+              "text": "Setup",
+              "id": "setup"
+            }
+          ],
+          "footerElements": [],
+          "navElements": 7,
+          "ids": [
+            "content",
+            "setup",
+            "install-the-cli",
+            "rd-tab-1",
+            "rd-tab-2",
+            "rd-panel-1",
+            "rd-panel-2",
+            "check-the-version",
+            "fnref-first",
+            "rd-tab-3",
+            "rd-tab-4",
+            "rd-panel-3",
+            "rd-panel-4",
+            "fn-first",
+            "rd-status"
+          ],
+          "roles": {
+            "banner": 1,
+            "navigation": 4,
+            "main": 1,
+            "contentinfo": 0
+          }
+        }
+      ],
+      "errors": {
+        "console": [],
+        "pageerror": [],
+        "failedRequests": []
+      },
+      "anchor": {
+        "url": "http://127.0.0.1:58000/#fixture-docs",
+        "target": "fixture-docs",
+        "exists": false,
+        "h1": [
+          {
+            "text": "Fixture Docs",
+            "id": ""
+          }
+        ]
+      },
+      "previewLog": "preview: http://127.0.0.1:58000/\nserving /private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-prd-gaps-CefEgs/root-home-auto/dist (built by rustify-docs 0.1.2, build 1698be9184a6bd6a) until stopped\n"
+    },
+    {
+      "name": "root-home-explicit",
+      "base": "/",
+      "checked": {
+        "args": [
+          "check",
+          "--config",
+          "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-prd-gaps-CefEgs/root-home-explicit/rustify-docs.toml",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "{\"schema_version\":1,\"success\":true,\"diagnostics\":[{\"severity\":\"warning\",\"rule\":\"no-git-history\",\"file\":null,\"line\":null,\"column\":null,\"message\":\"pages show no last-updated date: not a git repository (or any of the parent directories): .git\",\"suggestion\":\"build inside a git repository with the content committed\"}],\"summary\":{\"errors\":0,\"warnings\":1,\"pages\":4}}\n",
+        "stderr": ""
+      },
+      "built": {
+        "args": [
+          "build",
+          "--config",
+          "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-prd-gaps-CefEgs/root-home-explicit/rustify-docs.toml",
+          "--out",
+          "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-prd-gaps-CefEgs/root-home-explicit/dist",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "{\"schema_version\":1,\"success\":true,\"diagnostics\":[{\"severity\":\"warning\",\"rule\":\"no-git-history\",\"file\":null,\"line\":null,\"column\":null,\"message\":\"pages show no last-updated date: not a git repository (or any of the parent directories): .git\",\"suggestion\":\"build inside a git repository with the content committed\"}],\"summary\":{\"errors\":0,\"warnings\":1,\"pages\":4,\"files\":20,\"bytes\":100732,\"largest\":[{\"path\":\"guide/setup/index.html\",\"bytes\":16733},{\"path\":\"guide/index.html\",\"bytes\":10666},{\"path\":\"reference/api/index.html\",\"bytes\":8746},{\"path\":\"index.html\",\"bytes\":5096},{\"path\":\"404.html\",\"bytes\":5028}],\"out\":\"/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-prd-gaps-CefEgs/root-home-explicit/dist\",\"milliseconds\":39}}\n",
+        "stderr": ""
+      },
+      "url": "http://127.0.0.1:58018/",
+      "pages": [
+        {
+          "route": "",
+          "status": 200,
+          "h1": [
+            {
+              "text": "Fixture Docs",
+              "id": ""
+            }
+          ],
+          "footerElements": [],
+          "navElements": 2,
+          "ids": [
+            "content",
+            "rd-status"
+          ],
+          "roles": {
+            "banner": 1,
+            "navigation": 1,
+            "main": 1,
+            "contentinfo": 0
+          }
+        },
+        {
+          "route": "guide/setup/",
+          "status": 200,
+          "h1": [
+            {
+              "text": "Setup",
+              "id": "setup"
+            }
+          ],
+          "footerElements": [],
+          "navElements": 7,
+          "ids": [
+            "content",
+            "setup",
+            "install-the-cli",
+            "rd-tab-1",
+            "rd-tab-2",
+            "rd-panel-1",
+            "rd-panel-2",
+            "check-the-version",
+            "fnref-first",
+            "rd-tab-3",
+            "rd-tab-4",
+            "rd-panel-3",
+            "rd-panel-4",
+            "fn-first",
+            "rd-status"
+          ],
+          "roles": {
+            "banner": 1,
+            "navigation": 4,
+            "main": 1,
+            "contentinfo": 0
+          }
+        }
+      ],
+      "errors": {
+        "console": [],
+        "pageerror": [],
+        "failedRequests": []
+      },
+      "anchor": {
+        "url": "http://127.0.0.1:58018/#welcome",
+        "target": "welcome",
+        "exists": false,
+        "h1": [
+          {
+            "text": "Fixture Docs",
+            "id": ""
+          }
+        ]
+      },
+      "previewLog": "preview: http://127.0.0.1:58018/\nserving /private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-prd-gaps-CefEgs/root-home-explicit/dist (built by rustify-docs 0.1.2, build 94bcd850fe25c16f) until stopped\n"
+    },
+    {
+      "name": "subpath-home-auto",
+      "base": "/rustify-ui/",
+      "checked": {
+        "args": [
+          "check",
+          "--config",
+          "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-prd-gaps-CefEgs/subpath-home-auto/rustify-docs.toml",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "{\"schema_version\":1,\"success\":true,\"diagnostics\":[{\"severity\":\"warning\",\"rule\":\"no-git-history\",\"file\":null,\"line\":null,\"column\":null,\"message\":\"pages show no last-updated date: not a git repository (or any of the parent directories): .git\",\"suggestion\":\"build inside a git repository with the content committed\"}],\"summary\":{\"errors\":0,\"warnings\":1,\"pages\":4}}\n",
+        "stderr": ""
+      },
+      "built": {
+        "args": [
+          "build",
+          "--config",
+          "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-prd-gaps-CefEgs/subpath-home-auto/rustify-docs.toml",
+          "--out",
+          "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-prd-gaps-CefEgs/subpath-home-auto/dist",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "{\"schema_version\":1,\"success\":true,\"diagnostics\":[{\"severity\":\"warning\",\"rule\":\"no-git-history\",\"file\":null,\"line\":null,\"column\":null,\"message\":\"pages show no last-updated date: not a git repository (or any of the parent directories): .git\",\"suggestion\":\"build inside a git repository with the content committed\"}],\"summary\":{\"errors\":0,\"warnings\":1,\"pages\":4,\"files\":20,\"bytes\":101909,\"largest\":[{\"path\":\"guide/setup/index.html\",\"bytes\":16980},{\"path\":\"guide/index.html\",\"bytes\":10941},{\"path\":\"reference/api/index.html\",\"bytes\":8966},{\"path\":\"index.html\",\"bytes\":5277},{\"path\":\"404.html\",\"bytes\":5193}],\"out\":\"/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-prd-gaps-CefEgs/subpath-home-auto/dist\",\"milliseconds\":39}}\n",
+        "stderr": ""
+      },
+      "url": "http://127.0.0.1:58035/rustify-ui/",
+      "pages": [
+        {
+          "route": "",
+          "status": 200,
+          "h1": [
+            {
+              "text": "Fixture Docs",
+              "id": ""
+            }
+          ],
+          "footerElements": [],
+          "navElements": 2,
+          "ids": [
+            "content",
+            "rd-status"
+          ],
+          "roles": {
+            "banner": 1,
+            "navigation": 1,
+            "main": 1,
+            "contentinfo": 0
+          }
+        },
+        {
+          "route": "guide/setup/",
+          "status": 200,
+          "h1": [
+            {
+              "text": "Setup",
+              "id": "setup"
+            }
+          ],
+          "footerElements": [],
+          "navElements": 7,
+          "ids": [
+            "content",
+            "setup",
+            "install-the-cli",
+            "rd-tab-1",
+            "rd-tab-2",
+            "rd-panel-1",
+            "rd-panel-2",
+            "check-the-version",
+            "fnref-first",
+            "rd-tab-3",
+            "rd-tab-4",
+            "rd-panel-3",
+            "rd-panel-4",
+            "fn-first",
+            "rd-status"
+          ],
+          "roles": {
+            "banner": 1,
+            "navigation": 4,
+            "main": 1,
+            "contentinfo": 0
+          }
+        }
+      ],
+      "errors": {
+        "console": [],
+        "pageerror": [],
+        "failedRequests": []
+      },
+      "anchor": {
+        "url": "http://127.0.0.1:58035/rustify-ui/#fixture-docs",
+        "target": "fixture-docs",
+        "exists": false,
+        "h1": [
+          {
+            "text": "Fixture Docs",
+            "id": ""
+          }
+        ]
+      },
+      "previewLog": "preview: http://127.0.0.1:58035/rustify-ui/\nserving /private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-prd-gaps-CefEgs/subpath-home-auto/dist (built by rustify-docs 0.1.2, build dc9cbc5e51608be1) until stopped\n"
+    },
+    {
+      "name": "subpath-home-explicit",
+      "base": "/rustify-ui/",
+      "checked": {
+        "args": [
+          "check",
+          "--config",
+          "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-prd-gaps-CefEgs/subpath-home-explicit/rustify-docs.toml",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "{\"schema_version\":1,\"success\":true,\"diagnostics\":[{\"severity\":\"warning\",\"rule\":\"no-git-history\",\"file\":null,\"line\":null,\"column\":null,\"message\":\"pages show no last-updated date: not a git repository (or any of the parent directories): .git\",\"suggestion\":\"build inside a git repository with the content committed\"}],\"summary\":{\"errors\":0,\"warnings\":1,\"pages\":4}}\n",
+        "stderr": ""
+      },
+      "built": {
+        "args": [
+          "build",
+          "--config",
+          "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-prd-gaps-CefEgs/subpath-home-explicit/rustify-docs.toml",
+          "--out",
+          "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-prd-gaps-CefEgs/subpath-home-explicit/dist",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "{\"schema_version\":1,\"success\":true,\"diagnostics\":[{\"severity\":\"warning\",\"rule\":\"no-git-history\",\"file\":null,\"line\":null,\"column\":null,\"message\":\"pages show no last-updated date: not a git repository (or any of the parent directories): .git\",\"suggestion\":\"build inside a git repository with the content committed\"}],\"summary\":{\"errors\":0,\"warnings\":1,\"pages\":4,\"files\":20,\"bytes\":101899,\"largest\":[{\"path\":\"guide/setup/index.html\",\"bytes\":16975},{\"path\":\"guide/index.html\",\"bytes\":10941},{\"path\":\"reference/api/index.html\",\"bytes\":8966},{\"path\":\"index.html\",\"bytes\":5272},{\"path\":\"404.html\",\"bytes\":5193}],\"out\":\"/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-prd-gaps-CefEgs/subpath-home-explicit/dist\",\"milliseconds\":39}}\n",
+        "stderr": ""
+      },
+      "url": "http://127.0.0.1:58052/rustify-ui/",
+      "pages": [
+        {
+          "route": "",
+          "status": 200,
+          "h1": [
+            {
+              "text": "Fixture Docs",
+              "id": ""
+            }
+          ],
+          "footerElements": [],
+          "navElements": 2,
+          "ids": [
+            "content",
+            "rd-status"
+          ],
+          "roles": {
+            "banner": 1,
+            "navigation": 1,
+            "main": 1,
+            "contentinfo": 0
+          }
+        },
+        {
+          "route": "guide/setup/",
+          "status": 200,
+          "h1": [
+            {
+              "text": "Setup",
+              "id": "setup"
+            }
+          ],
+          "footerElements": [],
+          "navElements": 7,
+          "ids": [
+            "content",
+            "setup",
+            "install-the-cli",
+            "rd-tab-1",
+            "rd-tab-2",
+            "rd-panel-1",
+            "rd-panel-2",
+            "check-the-version",
+            "fnref-first",
+            "rd-tab-3",
+            "rd-tab-4",
+            "rd-panel-3",
+            "rd-panel-4",
+            "fn-first",
+            "rd-status"
+          ],
+          "roles": {
+            "banner": 1,
+            "navigation": 4,
+            "main": 1,
+            "contentinfo": 0
+          }
+        }
+      ],
+      "errors": {
+        "console": [],
+        "pageerror": [],
+        "failedRequests": []
+      },
+      "anchor": {
+        "url": "http://127.0.0.1:58052/rustify-ui/#welcome",
+        "target": "welcome",
+        "exists": false,
+        "h1": [
+          {
+            "text": "Fixture Docs",
+            "id": ""
+          }
+        ]
+      },
+      "previewLog": "preview: http://127.0.0.1:58052/rustify-ui/\nserving /private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-prd-gaps-CefEgs/subpath-home-explicit/dist (built by rustify-docs 0.1.2, build 2874abf757b525f3) until stopped\n"
+    },
+    {
+      "name": "raw-heading",
+      "base": "/",
+      "checked": {
+        "args": [
+          "check",
+          "--config",
+          "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-prd-gaps-CefEgs/raw-heading/rustify-docs.toml",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "{\"schema_version\":1,\"success\":true,\"diagnostics\":[{\"severity\":\"warning\",\"rule\":\"no-git-history\",\"file\":null,\"line\":null,\"column\":null,\"message\":\"pages show no last-updated date: not a git repository (or any of the parent directories): .git\",\"suggestion\":\"build inside a git repository with the content committed\"},{\"severity\":\"warning\",\"rule\":\"missing-site-url\",\"file\":\"rustify-docs.toml\",\"line\":null,\"column\":null,\"message\":\"site.url is not set, so pages have no canonical address or preview image and there is no sitemap\",\"suggestion\":\"add `url = \\\"https://…\\\"` under [site], the address the site is published at\"}],\"summary\":{\"errors\":0,\"warnings\":2,\"pages\":4}}\n",
+        "stderr": ""
+      },
+      "built": {
+        "args": [
+          "build",
+          "--config",
+          "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-prd-gaps-CefEgs/raw-heading/rustify-docs.toml",
+          "--out",
+          "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-prd-gaps-CefEgs/raw-heading/dist",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "{\"schema_version\":1,\"success\":true,\"diagnostics\":[{\"severity\":\"warning\",\"rule\":\"no-git-history\",\"file\":null,\"line\":null,\"column\":null,\"message\":\"pages show no last-updated date: not a git repository (or any of the parent directories): .git\",\"suggestion\":\"build inside a git repository with the content committed\"},{\"severity\":\"warning\",\"rule\":\"missing-site-url\",\"file\":\"rustify-docs.toml\",\"line\":null,\"column\":null,\"message\":\"site.url is not set, so pages have no canonical address or preview image and there is no sitemap\",\"suggestion\":\"add `url = \\\"https://…\\\"` under [site], the address the site is published at\"}],\"summary\":{\"errors\":0,\"warnings\":2,\"pages\":4,\"files\":13,\"bytes\":75260,\"largest\":[{\"path\":\"guide/getting-started/index.html\",\"bytes\":8056},{\"path\":\"guide/writing-pages/index.html\",\"bytes\":5933},{\"path\":\"guide/raw/index.html\",\"bytes\":4490},{\"path\":\"404.html\",\"bytes\":4324},{\"path\":\"index.html\",\"bytes\":4222}],\"out\":\"/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-prd-gaps-CefEgs/raw-heading/dist\",\"milliseconds\":33}}\n",
+        "stderr": ""
+      },
+      "url": "http://127.0.0.1:58069/",
+      "pages": [
+        {
+          "route": "guide/raw/",
+          "status": 200,
+          "h1": [
+            {
+              "text": "Markdown title",
+              "id": "markdown-title"
+            },
+            {
+              "text": "Second title",
+              "id": "second"
+            }
+          ],
+          "footerElements": [],
+          "navElements": 3,
+          "ids": [
+            "content",
+            "markdown-title",
+            "second",
+            "skipped",
+            "rd-status"
+          ],
+          "roles": {
+            "banner": 1,
+            "navigation": 2,
+            "main": 1,
+            "contentinfo": 0
+          }
+        }
+      ],
+      "errors": {
+        "console": [],
+        "pageerror": [],
+        "failedRequests": []
+      },
+      "previewLog": "preview: http://127.0.0.1:58069/\nserving /private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-prd-gaps-CefEgs/raw-heading/dist (built by rustify-docs 0.1.2, build 36eaa48ffb59bc90) until stopped\n"
+    }
+  ],
+  "browser": "153.0.8010.12",
+  "new": {
+    "args": [
+      "new",
+      "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-prd-gaps-CefEgs/template"
+    ],
+    "exit": 0,
+    "stdout": "created /var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-prd-gaps-CefEgs/template\nnext:\n  cd /var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-prd-gaps-CefEgs/template\n  rustify-docs dev\n",
+    "stderr": "rustc 1.99.0 (b940084d7 2026-09-28)\n"
+  }
+}

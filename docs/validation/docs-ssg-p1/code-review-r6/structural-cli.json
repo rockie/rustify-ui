@@ -1,0 +1,704 @@
+[
+  {
+    "name": "frameset-first",
+    "root": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-review-r6-cn58nl04/frameset-first",
+    "source": "---\ntitle: Parser context\ndescription: Boundary input\n---\n<frameset id=\"target\"></frameset>\n\n[Target](#target)\n",
+    "base": {
+      "command": [
+        "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/r5-fix/before",
+        "check",
+        "--config",
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-review-r6-cn58nl04/frameset-first/rustify-docs.toml",
+        "--format",
+        "json"
+      ],
+      "exit": 1,
+      "report": {
+        "schema_version": 1,
+        "success": false,
+        "diagnostics": [
+          {
+            "severity": "warning",
+            "rule": "no-git-history",
+            "file": null,
+            "line": null,
+            "column": null,
+            "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+            "suggestion": "build inside a git repository with the content committed"
+          },
+          {
+            "severity": "error",
+            "rule": "broken-anchor",
+            "file": "content/index.md",
+            "line": 7,
+            "column": 1,
+            "message": "content/index.md has no heading `#target`",
+            "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+          }
+        ],
+        "summary": {
+          "errors": 1,
+          "warnings": 1,
+          "pages": 1
+        }
+      }
+    },
+    "target": {
+      "command": [
+        "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-cli/rustify-docs",
+        "check",
+        "--config",
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-review-r6-cn58nl04/frameset-first/rustify-docs.toml",
+        "--format",
+        "json"
+      ],
+      "exit": 1,
+      "report": {
+        "schema_version": 1,
+        "success": false,
+        "diagnostics": [
+          {
+            "severity": "warning",
+            "rule": "no-git-history",
+            "file": null,
+            "line": null,
+            "column": null,
+            "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+            "suggestion": "build inside a git repository with the content committed"
+          },
+          {
+            "severity": "error",
+            "rule": "broken-anchor",
+            "file": "content/index.md",
+            "line": 7,
+            "column": 1,
+            "message": "content/index.md has no heading `#target`",
+            "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+          }
+        ],
+        "summary": {
+          "errors": 1,
+          "warnings": 1,
+          "pages": 1
+        }
+      }
+    }
+  },
+  {
+    "name": "frameset-after-heading",
+    "root": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-review-r6-cn58nl04/frameset-after-heading",
+    "source": "---\ntitle: Parser context\ndescription: Boundary input\n---\n# Heading\n\n<frameset id=\"target\"></frameset>\n\n[Target](#target)\n",
+    "base": {
+      "command": [
+        "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/r5-fix/before",
+        "check",
+        "--config",
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-review-r6-cn58nl04/frameset-after-heading/rustify-docs.toml",
+        "--format",
+        "json"
+      ],
+      "exit": 1,
+      "report": {
+        "schema_version": 1,
+        "success": false,
+        "diagnostics": [
+          {
+            "severity": "warning",
+            "rule": "no-git-history",
+            "file": null,
+            "line": null,
+            "column": null,
+            "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+            "suggestion": "build inside a git repository with the content committed"
+          },
+          {
+            "severity": "error",
+            "rule": "broken-anchor",
+            "file": "content/index.md",
+            "line": 9,
+            "column": 1,
+            "message": "content/index.md has no heading `#target`",
+            "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+          }
+        ],
+        "summary": {
+          "errors": 1,
+          "warnings": 1,
+          "pages": 1
+        }
+      }
+    },
+    "target": {
+      "command": [
+        "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-cli/rustify-docs",
+        "check",
+        "--config",
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-review-r6-cn58nl04/frameset-after-heading/rustify-docs.toml",
+        "--format",
+        "json"
+      ],
+      "exit": 1,
+      "report": {
+        "schema_version": 1,
+        "success": false,
+        "diagnostics": [
+          {
+            "severity": "warning",
+            "rule": "no-git-history",
+            "file": null,
+            "line": null,
+            "column": null,
+            "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+            "suggestion": "build inside a git repository with the content committed"
+          },
+          {
+            "severity": "error",
+            "rule": "broken-anchor",
+            "file": "content/index.md",
+            "line": 9,
+            "column": 1,
+            "message": "content/index.md has no heading `#target`",
+            "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+          }
+        ],
+        "summary": {
+          "errors": 1,
+          "warnings": 1,
+          "pages": 1
+        }
+      }
+    }
+  },
+  {
+    "name": "frameset-empty",
+    "root": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-review-r6-cn58nl04/frameset-empty",
+    "source": "---\ntitle: Parser context\ndescription: Boundary input\n---\n<frameset></frameset>\n\n<div id=\"target\">Visible</div>\n\n[Target](#target)\n",
+    "base": {
+      "command": [
+        "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/r5-fix/before",
+        "check",
+        "--config",
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-review-r6-cn58nl04/frameset-empty/rustify-docs.toml",
+        "--format",
+        "json"
+      ],
+      "exit": 0,
+      "report": {
+        "schema_version": 1,
+        "success": true,
+        "diagnostics": [
+          {
+            "severity": "warning",
+            "rule": "no-git-history",
+            "file": null,
+            "line": null,
+            "column": null,
+            "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+            "suggestion": "build inside a git repository with the content committed"
+          }
+        ],
+        "summary": {
+          "errors": 0,
+          "warnings": 1,
+          "pages": 1
+        }
+      }
+    },
+    "target": {
+      "command": [
+        "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-cli/rustify-docs",
+        "check",
+        "--config",
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-review-r6-cn58nl04/frameset-empty/rustify-docs.toml",
+        "--format",
+        "json"
+      ],
+      "exit": 0,
+      "report": {
+        "schema_version": 1,
+        "success": true,
+        "diagnostics": [
+          {
+            "severity": "warning",
+            "rule": "no-git-history",
+            "file": null,
+            "line": null,
+            "column": null,
+            "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+            "suggestion": "build inside a git repository with the content committed"
+          }
+        ],
+        "summary": {
+          "errors": 0,
+          "warnings": 1,
+          "pages": 1
+        }
+      }
+    }
+  },
+  {
+    "name": "frameset-with-body",
+    "root": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-review-r6-cn58nl04/frameset-with-body",
+    "source": "---\ntitle: Parser context\ndescription: Boundary input\n---\n<body id=\"body\"><frameset id=\"target\"></frameset>\n\n[Target](#target)\n",
+    "base": {
+      "command": [
+        "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/r5-fix/before",
+        "check",
+        "--config",
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-review-r6-cn58nl04/frameset-with-body/rustify-docs.toml",
+        "--format",
+        "json"
+      ],
+      "exit": 1,
+      "report": {
+        "schema_version": 1,
+        "success": false,
+        "diagnostics": [
+          {
+            "severity": "warning",
+            "rule": "no-git-history",
+            "file": null,
+            "line": null,
+            "column": null,
+            "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+            "suggestion": "build inside a git repository with the content committed"
+          },
+          {
+            "severity": "error",
+            "rule": "broken-anchor",
+            "file": "content/index.md",
+            "line": 7,
+            "column": 1,
+            "message": "content/index.md has no heading `#target`",
+            "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+          }
+        ],
+        "summary": {
+          "errors": 1,
+          "warnings": 1,
+          "pages": 1
+        }
+      }
+    },
+    "target": {
+      "command": [
+        "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-cli/rustify-docs",
+        "check",
+        "--config",
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-review-r6-cn58nl04/frameset-with-body/rustify-docs.toml",
+        "--format",
+        "json"
+      ],
+      "exit": 1,
+      "report": {
+        "schema_version": 1,
+        "success": false,
+        "diagnostics": [
+          {
+            "severity": "warning",
+            "rule": "no-git-history",
+            "file": null,
+            "line": null,
+            "column": null,
+            "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+            "suggestion": "build inside a git repository with the content committed"
+          },
+          {
+            "severity": "error",
+            "rule": "broken-anchor",
+            "file": "content/index.md",
+            "line": 7,
+            "column": 1,
+            "message": "content/index.md has no heading `#target`",
+            "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+          }
+        ],
+        "summary": {
+          "errors": 1,
+          "warnings": 1,
+          "pages": 1
+        }
+      }
+    }
+  },
+  {
+    "name": "frameset-after-article-close",
+    "root": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-review-r6-cn58nl04/frameset-after-article-close",
+    "source": "---\ntitle: Parser context\ndescription: Boundary input\n---\n</article>\n<frameset id=\"target\"></frameset>\n\n[Target](#target)\n",
+    "base": {
+      "command": [
+        "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/r5-fix/before",
+        "check",
+        "--config",
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-review-r6-cn58nl04/frameset-after-article-close/rustify-docs.toml",
+        "--format",
+        "json"
+      ],
+      "exit": 1,
+      "report": {
+        "schema_version": 1,
+        "success": false,
+        "diagnostics": [
+          {
+            "severity": "warning",
+            "rule": "no-git-history",
+            "file": null,
+            "line": null,
+            "column": null,
+            "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+            "suggestion": "build inside a git repository with the content committed"
+          },
+          {
+            "severity": "error",
+            "rule": "broken-anchor",
+            "file": "content/index.md",
+            "line": 8,
+            "column": 1,
+            "message": "content/index.md has no heading `#target`",
+            "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+          }
+        ],
+        "summary": {
+          "errors": 1,
+          "warnings": 1,
+          "pages": 1
+        }
+      }
+    },
+    "target": {
+      "command": [
+        "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-cli/rustify-docs",
+        "check",
+        "--config",
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-review-r6-cn58nl04/frameset-after-article-close/rustify-docs.toml",
+        "--format",
+        "json"
+      ],
+      "exit": 1,
+      "report": {
+        "schema_version": 1,
+        "success": false,
+        "diagnostics": [
+          {
+            "severity": "warning",
+            "rule": "no-git-history",
+            "file": null,
+            "line": null,
+            "column": null,
+            "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+            "suggestion": "build inside a git repository with the content committed"
+          },
+          {
+            "severity": "error",
+            "rule": "broken-anchor",
+            "file": "content/index.md",
+            "line": 8,
+            "column": 1,
+            "message": "content/index.md has no heading `#target`",
+            "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+          }
+        ],
+        "summary": {
+          "errors": 1,
+          "warnings": 1,
+          "pages": 1
+        }
+      }
+    }
+  },
+  {
+    "name": "html-id",
+    "root": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-review-r6-cn58nl04/html-id",
+    "source": "---\ntitle: Parser context\ndescription: Boundary input\n---\n<html id=\"target\"><div>Visible</div>\n\n[Target](#target)\n",
+    "base": {
+      "command": [
+        "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/r5-fix/before",
+        "check",
+        "--config",
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-review-r6-cn58nl04/html-id/rustify-docs.toml",
+        "--format",
+        "json"
+      ],
+      "exit": 0,
+      "report": {
+        "schema_version": 1,
+        "success": true,
+        "diagnostics": [
+          {
+            "severity": "warning",
+            "rule": "no-git-history",
+            "file": null,
+            "line": null,
+            "column": null,
+            "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+            "suggestion": "build inside a git repository with the content committed"
+          }
+        ],
+        "summary": {
+          "errors": 0,
+          "warnings": 1,
+          "pages": 1
+        }
+      }
+    },
+    "target": {
+      "command": [
+        "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-cli/rustify-docs",
+        "check",
+        "--config",
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-review-r6-cn58nl04/html-id/rustify-docs.toml",
+        "--format",
+        "json"
+      ],
+      "exit": 0,
+      "report": {
+        "schema_version": 1,
+        "success": true,
+        "diagnostics": [
+          {
+            "severity": "warning",
+            "rule": "no-git-history",
+            "file": null,
+            "line": null,
+            "column": null,
+            "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+            "suggestion": "build inside a git repository with the content committed"
+          }
+        ],
+        "summary": {
+          "errors": 0,
+          "warnings": 1,
+          "pages": 1
+        }
+      }
+    }
+  },
+  {
+    "name": "body-id",
+    "root": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-review-r6-cn58nl04/body-id",
+    "source": "---\ntitle: Parser context\ndescription: Boundary input\n---\n<body id=\"target\"><div>Visible</div>\n\n[Target](#target)\n",
+    "base": {
+      "command": [
+        "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/r5-fix/before",
+        "check",
+        "--config",
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-review-r6-cn58nl04/body-id/rustify-docs.toml",
+        "--format",
+        "json"
+      ],
+      "exit": 1,
+      "report": {
+        "schema_version": 1,
+        "success": false,
+        "diagnostics": [
+          {
+            "severity": "warning",
+            "rule": "no-git-history",
+            "file": null,
+            "line": null,
+            "column": null,
+            "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+            "suggestion": "build inside a git repository with the content committed"
+          },
+          {
+            "severity": "error",
+            "rule": "broken-anchor",
+            "file": "content/index.md",
+            "line": 7,
+            "column": 1,
+            "message": "content/index.md has no heading `#target`",
+            "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+          }
+        ],
+        "summary": {
+          "errors": 1,
+          "warnings": 1,
+          "pages": 1
+        }
+      }
+    },
+    "target": {
+      "command": [
+        "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-cli/rustify-docs",
+        "check",
+        "--config",
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-review-r6-cn58nl04/body-id/rustify-docs.toml",
+        "--format",
+        "json"
+      ],
+      "exit": 0,
+      "report": {
+        "schema_version": 1,
+        "success": true,
+        "diagnostics": [
+          {
+            "severity": "warning",
+            "rule": "no-git-history",
+            "file": null,
+            "line": null,
+            "column": null,
+            "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+            "suggestion": "build inside a git repository with the content committed"
+          }
+        ],
+        "summary": {
+          "errors": 0,
+          "warnings": 1,
+          "pages": 1
+        }
+      }
+    }
+  },
+  {
+    "name": "body-after-main-close",
+    "root": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-review-r6-cn58nl04/body-after-main-close",
+    "source": "---\ntitle: Parser context\ndescription: Boundary input\n---\n</article></div></main>\n<body id=\"target\">Text\n\n[Target](#target)\n",
+    "base": {
+      "command": [
+        "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/r5-fix/before",
+        "check",
+        "--config",
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-review-r6-cn58nl04/body-after-main-close/rustify-docs.toml",
+        "--format",
+        "json"
+      ],
+      "exit": 1,
+      "report": {
+        "schema_version": 1,
+        "success": false,
+        "diagnostics": [
+          {
+            "severity": "warning",
+            "rule": "no-git-history",
+            "file": null,
+            "line": null,
+            "column": null,
+            "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+            "suggestion": "build inside a git repository with the content committed"
+          },
+          {
+            "severity": "error",
+            "rule": "broken-anchor",
+            "file": "content/index.md",
+            "line": 8,
+            "column": 1,
+            "message": "content/index.md has no heading `#target`",
+            "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+          }
+        ],
+        "summary": {
+          "errors": 1,
+          "warnings": 1,
+          "pages": 1
+        }
+      }
+    },
+    "target": {
+      "command": [
+        "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-cli/rustify-docs",
+        "check",
+        "--config",
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-review-r6-cn58nl04/body-after-main-close/rustify-docs.toml",
+        "--format",
+        "json"
+      ],
+      "exit": 0,
+      "report": {
+        "schema_version": 1,
+        "success": true,
+        "diagnostics": [
+          {
+            "severity": "warning",
+            "rule": "no-git-history",
+            "file": null,
+            "line": null,
+            "column": null,
+            "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+            "suggestion": "build inside a git repository with the content committed"
+          }
+        ],
+        "summary": {
+          "errors": 0,
+          "warnings": 1,
+          "pages": 1
+        }
+      }
+    }
+  },
+  {
+    "name": "body-after-frameset",
+    "root": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-review-r6-cn58nl04/body-after-frameset",
+    "source": "---\ntitle: Parser context\ndescription: Boundary input\n---\n<frameset></frameset>\n<body id=\"target\">Text\n\n[Target](#target)\n",
+    "base": {
+      "command": [
+        "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/r5-fix/before",
+        "check",
+        "--config",
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-review-r6-cn58nl04/body-after-frameset/rustify-docs.toml",
+        "--format",
+        "json"
+      ],
+      "exit": 1,
+      "report": {
+        "schema_version": 1,
+        "success": false,
+        "diagnostics": [
+          {
+            "severity": "warning",
+            "rule": "no-git-history",
+            "file": null,
+            "line": null,
+            "column": null,
+            "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+            "suggestion": "build inside a git repository with the content committed"
+          },
+          {
+            "severity": "error",
+            "rule": "broken-anchor",
+            "file": "content/index.md",
+            "line": 8,
+            "column": 1,
+            "message": "content/index.md has no heading `#target`",
+            "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+          }
+        ],
+        "summary": {
+          "errors": 1,
+          "warnings": 1,
+          "pages": 1
+        }
+      }
+    },
+    "target": {
+      "command": [
+        "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-cli/rustify-docs",
+        "check",
+        "--config",
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-review-r6-cn58nl04/body-after-frameset/rustify-docs.toml",
+        "--format",
+        "json"
+      ],
+      "exit": 0,
+      "report": {
+        "schema_version": 1,
+        "success": true,
+        "diagnostics": [
+          {
+            "severity": "warning",
+            "rule": "no-git-history",
+            "file": null,
+            "line": null,
+            "column": null,
+            "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+            "suggestion": "build inside a git repository with the content committed"
+          }
+        ],
+        "summary": {
+          "errors": 0,
+          "warnings": 1,
+          "pages": 1
+        }
+      }
+    }
+  }
+]

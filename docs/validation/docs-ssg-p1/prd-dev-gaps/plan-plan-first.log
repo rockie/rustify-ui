@@ -1,0 +1,74 @@
+WARN: docs/plan/DOCS-SSG-P1-gaps.md:69: 自定义 ID 须人工核对引用：WORK-F2
+WARN: docs/plan/DOCS-SSG-P1-gaps.md:70: 自定义 ID 须人工核对引用：WORK-F7
+WARN: docs/plan/DOCS-SSG-P1-gaps.md:71: 自定义 ID 须人工核对引用：WORK-F15
+WARN: docs/plan/DOCS-SSG-P1-gaps.md:72: 自定义 ID 须人工核对引用：WORK-N3
+WARN: docs/plan/DOCS-SSG-P1-gaps.md:73: 自定义 ID 须人工核对引用：WORK-N5
+WARN: docs/plan/DOCS-SSG-P1-gaps.md:74: 自定义 ID 须人工核对引用：WORK-N6
+WARN: docs/plan/DOCS-SSG-P1-gaps.md:75: 自定义 ID 须人工核对引用：WORK-N1
+WARN: docs/plan/DOCS-SSG-P1-gaps.md:76: 自定义 ID 须人工核对引用：WORK-N2
+ERROR: docs/plan/DOCS-SSG-P1-gaps.md:185: 检查表缺少字段：需求/验收行与可观察结果
+ERROR: docs/plan/DOCS-SSG-P1-gaps.md:13: ID 引用未定义或未在账本登记来源：M9
+ERROR: docs/plan/DOCS-SSG-P1-gaps.md:69: ID 引用未定义或未在账本登记来源：V-1
+ERROR: docs/plan/DOCS-SSG-P1-gaps.md:69: ID 引用未定义或未在账本登记来源：V-4
+ERROR: docs/plan/DOCS-SSG-P1-gaps.md:70: ID 引用未定义或未在账本登记来源：V-1
+ERROR: docs/plan/DOCS-SSG-P1-gaps.md:70: ID 引用未定义或未在账本登记来源：V-4
+ERROR: docs/plan/DOCS-SSG-P1-gaps.md:71: ID 引用未定义或未在账本登记来源：V-2
+ERROR: docs/plan/DOCS-SSG-P1-gaps.md:71: ID 引用未定义或未在账本登记来源：V-3
+ERROR: docs/plan/DOCS-SSG-P1-gaps.md:72: ID 引用未定义或未在账本登记来源：V-4
+ERROR: docs/plan/DOCS-SSG-P1-gaps.md:72: ID 引用未定义或未在账本登记来源：V-6
+ERROR: docs/plan/DOCS-SSG-P1-gaps.md:72: ID 引用未定义或未在账本登记来源：V-7
+ERROR: docs/plan/DOCS-SSG-P1-gaps.md:73: ID 引用未定义或未在账本登记来源：V-2
+ERROR: docs/plan/DOCS-SSG-P1-gaps.md:73: ID 引用未定义或未在账本登记来源：V-4
+ERROR: docs/plan/DOCS-SSG-P1-gaps.md:74: ID 引用未定义或未在账本登记来源：V-3
+ERROR: docs/plan/DOCS-SSG-P1-gaps.md:74: ID 引用未定义或未在账本登记来源：V-5
+ERROR: docs/plan/DOCS-SSG-P1-gaps.md:75: ID 引用未定义或未在账本登记来源：V-5
+ERROR: docs/plan/DOCS-SSG-P1-gaps.md:75: ID 引用未定义或未在账本登记来源：V-7
+ERROR: docs/plan/DOCS-SSG-P1-gaps.md:76: ID 引用未定义或未在账本登记来源：V-5
+ERROR: docs/plan/DOCS-SSG-P1-gaps.md:77: ID 引用未定义或未在账本登记来源：V-5
+ERROR: docs/plan/DOCS-SSG-P1-gaps.md:78: ID 引用未定义或未在账本登记来源：M9
+ERROR: docs/plan/DOCS-SSG-P1-gaps.md:78: ID 引用未定义或未在账本登记来源：M9
+ERROR: docs/plan/DOCS-SSG-P1-gaps.md:78: ID 引用未定义或未在账本登记来源：M9
+ERROR: docs/plan/DOCS-SSG-P1-gaps.md:97: ID 引用未定义或未在账本登记来源：M9
+ERROR: docs/plan/DOCS-SSG-P1-gaps.md:101: ID 引用未定义或未在账本登记来源：M9
+ERROR: docs/plan/DOCS-SSG-P1-gaps.md:166: ID 引用未定义或未在账本登记来源：V-5
+ERROR: docs/plan/DOCS-SSG-P1-gaps.md:167: ID 引用未定义或未在账本登记来源：V-5
+ERROR: docs/plan/DOCS-SSG-P1-gaps.md:168: ID 引用未定义或未在账本登记来源：V-2
+ERROR: docs/plan/DOCS-SSG-P1-gaps.md:168: ID 引用未定义或未在账本登记来源：V-4
+ERROR: docs/plan/DOCS-SSG-P1-gaps.md:168: ID 引用未定义或未在账本登记来源：V-6
+ERROR: docs/plan/DOCS-SSG-P1-gaps.md:169: ID 引用未定义或未在账本登记来源：V-3
+ERROR: docs/plan/DOCS-SSG-P1-gaps.md:169: ID 引用未定义或未在账本登记来源：V-5
+ERROR: docs/plan/DOCS-SSG-P1-gaps.md:177: ID 引用未定义或未在账本登记来源：V-1
+ERROR: docs/plan/DOCS-SSG-P1-gaps.md:177: ID 引用未定义或未在账本登记来源：V-2
+ERROR: docs/plan/DOCS-SSG-P1-gaps.md:177: ID 引用未定义或未在账本登记来源：V-3
+ERROR: docs/plan/DOCS-SSG-P1-gaps.md:177: ID 引用未定义或未在账本登记来源：V-4
+ERROR: docs/plan/DOCS-SSG-P1-gaps.md:178: ID 引用未定义或未在账本登记来源：V-5
+ERROR: docs/plan/DOCS-SSG-P1-gaps.md:179: ID 引用未定义或未在账本登记来源：V-6
+ERROR: docs/plan/DOCS-SSG-P1-gaps.md:179: ID 引用未定义或未在账本登记来源：V-6
+ERROR: docs/plan/DOCS-SSG-P1-gaps.md:181: ID 引用未定义或未在账本登记来源：M9
+ERROR: docs/plan/DOCS-SSG-P1-gaps.md:187: ID 引用未定义或未在账本登记来源：V-1
+ERROR: docs/plan/DOCS-SSG-P1-gaps.md:188: ID 引用未定义或未在账本登记来源：V-2
+ERROR: docs/plan/DOCS-SSG-P1-gaps.md:189: ID 引用未定义或未在账本登记来源：V-3
+ERROR: docs/plan/DOCS-SSG-P1-gaps.md:190: ID 引用未定义或未在账本登记来源：V-4
+ERROR: docs/plan/DOCS-SSG-P1-gaps.md:191: ID 引用未定义或未在账本登记来源：V-5
+ERROR: docs/plan/DOCS-SSG-P1-gaps.md:192: ID 引用未定义或未在账本登记来源：V-6
+ERROR: docs/plan/DOCS-SSG-P1-gaps.md:193: ID 引用未定义或未在账本登记来源：V-7
+ERROR: docs/plan/DOCS-SSG-P1-gaps.md:201: ID 引用未定义或未在账本登记来源：V-1
+ERROR: docs/plan/DOCS-SSG-P1-gaps.md:201: ID 引用未定义或未在账本登记来源：V-2
+ERROR: docs/plan/DOCS-SSG-P1-gaps.md:201: ID 引用未定义或未在账本登记来源：V-3
+ERROR: docs/plan/DOCS-SSG-P1-gaps.md:201: ID 引用未定义或未在账本登记来源：V-4
+ERROR: docs/plan/DOCS-SSG-P1-gaps.md:201: ID 引用未定义或未在账本登记来源：V-5
+ERROR: docs/plan/DOCS-SSG-P1-gaps.md:202: ID 引用未定义或未在账本登记来源：V-6
+ERROR: docs/plan/DOCS-SSG-P1-gaps.md:202: ID 引用未定义或未在账本登记来源：V-4
+ERROR: docs/plan/DOCS-SSG-P1-gaps.md:202: ID 引用未定义或未在账本登记来源：V-5
+ERROR: docs/plan/DOCS-SSG-P1-gaps.md:202: ID 引用未定义或未在账本登记来源：V-6
+ERROR: docs/plan/DOCS-SSG-P1-gaps.md:202: ID 引用未定义或未在账本登记来源：V-7
+ERROR: docs/plan/DOCS-SSG-P1-gaps.md:202: ID 引用未定义或未在账本登记来源：M9
+ERROR: docs/plan/DOCS-SSG-P1-gaps.md:202: ID 引用未定义或未在账本登记来源：V-4
+ERROR: docs/plan/DOCS-SSG-P1-gaps.md:202: ID 引用未定义或未在账本登记来源：V-7
+ERROR: docs/plan/DOCS-SSG-P1-gaps.md:204: ID 引用未定义或未在账本登记来源：M9
+ERROR: docs/plan/DOCS-SSG-P1-gaps.md:210: ID 引用未定义或未在账本登记来源：V-6
+ERROR: docs/plan/DOCS-SSG-P1-gaps.md:211: ID 引用未定义或未在账本登记来源：V-2
+ERROR: docs/plan/DOCS-SSG-P1-gaps.md:211: ID 引用未定义或未在账本登记来源：V-3
+ERROR: docs/plan/DOCS-SSG-P1-gaps.md:212: ID 引用未定义或未在账本登记来源：M9
+ERROR: docs/plan/DOCS-SSG-P1-gaps.md:212: ID 引用未定义或未在账本登记来源：M9
+计划结构与引用：ERROR 65 · WARN 8（不证明设计或验收有效）

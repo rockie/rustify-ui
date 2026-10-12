@@ -1,0 +1,11 @@
+{
+  "command": [
+    "node",
+    "docs/validation/docs-ssg-p1/code-review-r5-fix/body-production.cjs",
+    "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-review-r6-cn58nl04/base-target/docs-cli/rustify-docs",
+    "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-cli/rustify-docs",
+    "docs/validation/docs-ssg-p1/code-review-r6/body-production"
+  ],
+  "exit": 0,
+  "seconds": 2.2640343749999996
+}

@@ -1,0 +1,61 @@
+{
+  "review_id": "5b279eaf-0dc1-4c8f-a54a-672cc942633f",
+  "plan_id": "7c105838-be0d-4f3b-ae5c-9998b8f4cfdc",
+  "observed_at": "2026-10-12T00:46:37.922884+08:00",
+  "created_events": [
+    {
+      "kind": "review",
+      "object": "5b279eaf-0dc1-4c8f-a54a-672cc942633f",
+      "event": "aead01cc-a442-4436-8f50-cc95a7bff03c",
+      "facet": "review",
+      "scope": "P1",
+      "state": "review-recorded",
+      "path": ".xgent-ai/sdlc/events/review/5b279eaf-0dc1-4c8f-a54a-672cc942633f/aead01cc-a442-4436-8f50-cc95a7bff03c.md"
+    },
+    {
+      "kind": "review",
+      "object": "5b279eaf-0dc1-4c8f-a54a-672cc942633f",
+      "event": "7ce61283-ddcf-4411-857a-4a066bb1d9b7",
+      "facet": "disposition",
+      "scope": "P1",
+      "state": "review-pending",
+      "path": ".xgent-ai/sdlc/events/review/5b279eaf-0dc1-4c8f-a54a-672cc942633f/7ce61283-ddcf-4411-857a-4a066bb1d9b7.md"
+    },
+    {
+      "kind": "plan",
+      "object": "7c105838-be0d-4f3b-ae5c-9998b8f4cfdc",
+      "event": "4ad1ee81-60c3-41d4-ba2f-d143f66ca138",
+      "facet": "readiness",
+      "scope": "document",
+      "state": "dev-plan-drafted",
+      "path": ".xgent-ai/sdlc/events/plan/7c105838-be0d-4f3b-ae5c-9998b8f4cfdc/4ad1ee81-60c3-41d4-ba2f-d143f66ca138.md"
+    },
+    {
+      "kind": "plan",
+      "object": "7c105838-be0d-4f3b-ae5c-9998b8f4cfdc",
+      "event": "2856df25-b06e-4e58-ab3d-91232dd0a8fb",
+      "facet": "implementation",
+      "scope": "plan",
+      "state": "dev-plan-not-started",
+      "path": ".xgent-ai/sdlc/events/plan/7c105838-be0d-4f3b-ae5c-9998b8f4cfdc/2856df25-b06e-4e58-ab3d-91232dd0a8fb.md"
+    },
+    {
+      "kind": "plan",
+      "object": "526c88c7-a4b3-4ea9-9193-371420b66d1d",
+      "event": "5b82c906-ba7a-4fcc-ad2a-f55cf5d818d3",
+      "facet": "implementation",
+      "scope": "plan",
+      "state": "dev-plan-in-progress",
+      "path": ".xgent-ai/sdlc/events/plan/526c88c7-a4b3-4ea9-9193-371420b66d1d/5b82c906-ba7a-4fcc-ad2a-f55cf5d818d3.md"
+    },
+    {
+      "kind": "prd",
+      "object": "8917bbeb-7add-4826-95ee-5cdf6bdff735",
+      "event": "61a3a34e-399f-4e61-8737-d4d30ae0ef33",
+      "facet": "document",
+      "scope": "document",
+      "state": "prd-ready",
+      "path": ".xgent-ai/sdlc/events/prd/8917bbeb-7add-4826-95ee-5cdf6bdff735/61a3a34e-399f-4e61-8737-d4d30ae0ef33.md"
+    }
+  ]
+}

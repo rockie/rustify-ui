@@ -1,0 +1,572 @@
+{
+  "browser": "153.0.8010.12",
+  "binaries": {
+    "base": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-review-r5-b45umkpy/base-target/docs-cli/rustify-docs",
+    "target": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-cli/rustify-docs"
+  },
+  "cases": [
+    {
+      "case": "body-id",
+      "version": "base",
+      "build_exit": 0,
+      "report": {
+        "schema_version": 1,
+        "success": true,
+        "diagnostics": [
+          {
+            "severity": "warning",
+            "rule": "no-git-history",
+            "file": null,
+            "line": null,
+            "column": null,
+            "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+            "suggestion": "build inside a git repository with the content committed"
+          }
+        ],
+        "summary": {
+          "errors": 0,
+          "warnings": 1,
+          "pages": 1,
+          "files": 10,
+          "bytes": 59614,
+          "largest": [
+            {
+              "path": "index.html",
+              "bytes": 4186
+            },
+            {
+              "path": "404.html",
+              "bytes": 3982
+            }
+          ],
+          "out": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-review-r5-b45umkpy/extra-cases/body-id/base-dist",
+          "milliseconds": 34
+        }
+      },
+      "entry": "http://127.0.0.1:51532/",
+      "view_only_without_link": false,
+      "actual": {
+        "id": "target",
+        "name": "BODY",
+        "namespace": "http://www.w3.org/1999/xhtml",
+        "inArticle": false
+      },
+      "hash": "#target",
+      "errors": []
+    },
+    {
+      "case": "body-id",
+      "version": "target",
+      "build_exit": 1,
+      "report": {
+        "schema_version": 1,
+        "success": false,
+        "diagnostics": [
+          {
+            "severity": "warning",
+            "rule": "no-git-history",
+            "file": null,
+            "line": null,
+            "column": null,
+            "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+            "suggestion": "build inside a git repository with the content committed"
+          },
+          {
+            "severity": "error",
+            "rule": "broken-anchor",
+            "file": "content/index.md",
+            "line": 12,
+            "column": 1,
+            "message": "content/index.md has no heading `#target`",
+            "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+          }
+        ],
+        "summary": {
+          "errors": 1,
+          "warnings": 1,
+          "pages": 0
+        }
+      },
+      "entry": "http://127.0.0.1:51540/",
+      "view_only_without_link": true,
+      "actual": {
+        "id": "target",
+        "name": "BODY",
+        "namespace": "http://www.w3.org/1999/xhtml",
+        "inArticle": false
+      },
+      "hash": "",
+      "errors": []
+    },
+    {
+      "case": "html-id",
+      "version": "base",
+      "build_exit": 0,
+      "report": {
+        "schema_version": 1,
+        "success": true,
+        "diagnostics": [
+          {
+            "severity": "warning",
+            "rule": "no-git-history",
+            "file": null,
+            "line": null,
+            "column": null,
+            "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+            "suggestion": "build inside a git repository with the content committed"
+          }
+        ],
+        "summary": {
+          "errors": 0,
+          "warnings": 1,
+          "pages": 1,
+          "files": 10,
+          "bytes": 59614,
+          "largest": [
+            {
+              "path": "index.html",
+              "bytes": 4186
+            },
+            {
+              "path": "404.html",
+              "bytes": 3982
+            }
+          ],
+          "out": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-review-r5-b45umkpy/extra-cases/html-id/base-dist",
+          "milliseconds": 18
+        }
+      },
+      "entry": "http://127.0.0.1:51545/",
+      "view_only_without_link": false,
+      "actual": {
+        "id": "target",
+        "name": "HTML",
+        "namespace": "http://www.w3.org/1999/xhtml",
+        "inArticle": false
+      },
+      "hash": "#target",
+      "errors": []
+    },
+    {
+      "case": "html-id",
+      "version": "target",
+      "build_exit": 0,
+      "report": {
+        "schema_version": 1,
+        "success": true,
+        "diagnostics": [
+          {
+            "severity": "warning",
+            "rule": "no-git-history",
+            "file": null,
+            "line": null,
+            "column": null,
+            "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+            "suggestion": "build inside a git repository with the content committed"
+          }
+        ],
+        "summary": {
+          "errors": 0,
+          "warnings": 1,
+          "pages": 1,
+          "files": 10,
+          "bytes": 59614,
+          "largest": [
+            {
+              "path": "index.html",
+              "bytes": 4186
+            },
+            {
+              "path": "404.html",
+              "bytes": 3982
+            }
+          ],
+          "out": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-review-r5-b45umkpy/extra-cases/html-id/target-dist",
+          "milliseconds": 18
+        }
+      },
+      "entry": "http://127.0.0.1:51550/",
+      "view_only_without_link": false,
+      "actual": {
+        "id": "target",
+        "name": "HTML",
+        "namespace": "http://www.w3.org/1999/xhtml",
+        "inArticle": false
+      },
+      "hash": "#target",
+      "errors": []
+    },
+    {
+      "case": "noscript-id",
+      "version": "base",
+      "build_exit": 1,
+      "report": {
+        "schema_version": 1,
+        "success": false,
+        "diagnostics": [
+          {
+            "severity": "warning",
+            "rule": "no-git-history",
+            "file": null,
+            "line": null,
+            "column": null,
+            "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+            "suggestion": "build inside a git repository with the content committed"
+          },
+          {
+            "severity": "error",
+            "rule": "broken-anchor",
+            "file": "content/index.md",
+            "line": 8,
+            "column": 1,
+            "message": "content/index.md has no heading `#target`",
+            "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+          }
+        ],
+        "summary": {
+          "errors": 1,
+          "warnings": 1,
+          "pages": 0
+        }
+      },
+      "entry": "http://127.0.0.1:51555/",
+      "view_only_without_link": true,
+      "actual": null,
+      "hash": "",
+      "errors": []
+    },
+    {
+      "case": "noscript-id",
+      "version": "target",
+      "build_exit": 1,
+      "report": {
+        "schema_version": 1,
+        "success": false,
+        "diagnostics": [
+          {
+            "severity": "warning",
+            "rule": "no-git-history",
+            "file": null,
+            "line": null,
+            "column": null,
+            "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+            "suggestion": "build inside a git repository with the content committed"
+          },
+          {
+            "severity": "error",
+            "rule": "broken-anchor",
+            "file": "content/index.md",
+            "line": 8,
+            "column": 1,
+            "message": "content/index.md has no heading `#target`",
+            "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+          }
+        ],
+        "summary": {
+          "errors": 1,
+          "warnings": 1,
+          "pages": 0
+        }
+      },
+      "entry": "http://127.0.0.1:51560/",
+      "view_only_without_link": true,
+      "actual": null,
+      "hash": "",
+      "errors": []
+    },
+    {
+      "case": "table-foreign",
+      "version": "base",
+      "build_exit": 0,
+      "report": {
+        "schema_version": 1,
+        "success": true,
+        "diagnostics": [
+          {
+            "severity": "warning",
+            "rule": "no-git-history",
+            "file": null,
+            "line": null,
+            "column": null,
+            "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+            "suggestion": "build inside a git repository with the content committed"
+          }
+        ],
+        "summary": {
+          "errors": 0,
+          "warnings": 1,
+          "pages": 1,
+          "files": 10,
+          "bytes": 59625,
+          "largest": [
+            {
+              "path": "index.html",
+              "bytes": 4197
+            },
+            {
+              "path": "404.html",
+              "bytes": 3982
+            }
+          ],
+          "out": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-review-r5-b45umkpy/extra-cases/table-foreign/base-dist",
+          "milliseconds": 19
+        }
+      },
+      "entry": "http://127.0.0.1:51565/",
+      "view_only_without_link": false,
+      "actual": {
+        "id": "target",
+        "name": "template",
+        "namespace": "http://www.w3.org/2000/svg",
+        "inArticle": true
+      },
+      "hash": "#target",
+      "errors": []
+    },
+    {
+      "case": "table-foreign",
+      "version": "target",
+      "build_exit": 0,
+      "report": {
+        "schema_version": 1,
+        "success": true,
+        "diagnostics": [
+          {
+            "severity": "warning",
+            "rule": "no-git-history",
+            "file": null,
+            "line": null,
+            "column": null,
+            "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+            "suggestion": "build inside a git repository with the content committed"
+          }
+        ],
+        "summary": {
+          "errors": 0,
+          "warnings": 1,
+          "pages": 1,
+          "files": 10,
+          "bytes": 59625,
+          "largest": [
+            {
+              "path": "index.html",
+              "bytes": 4197
+            },
+            {
+              "path": "404.html",
+              "bytes": 3982
+            }
+          ],
+          "out": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-review-r5-b45umkpy/extra-cases/table-foreign/target-dist",
+          "milliseconds": 18
+        }
+      },
+      "entry": "http://127.0.0.1:51570/",
+      "view_only_without_link": false,
+      "actual": {
+        "id": "target",
+        "name": "template",
+        "namespace": "http://www.w3.org/2000/svg",
+        "inArticle": true
+      },
+      "hash": "#target",
+      "errors": []
+    },
+    {
+      "case": "math-selfclose",
+      "version": "base",
+      "build_exit": 0,
+      "report": {
+        "schema_version": 1,
+        "success": true,
+        "diagnostics": [
+          {
+            "severity": "warning",
+            "rule": "no-git-history",
+            "file": null,
+            "line": null,
+            "column": null,
+            "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+            "suggestion": "build inside a git repository with the content committed"
+          }
+        ],
+        "summary": {
+          "errors": 0,
+          "warnings": 1,
+          "pages": 1,
+          "files": 10,
+          "bytes": 59619,
+          "largest": [
+            {
+              "path": "index.html",
+              "bytes": 4191
+            },
+            {
+              "path": "404.html",
+              "bytes": 3982
+            }
+          ],
+          "out": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-review-r5-b45umkpy/extra-cases/math-selfclose/base-dist",
+          "milliseconds": 18
+        }
+      },
+      "entry": "http://127.0.0.1:51575/",
+      "view_only_without_link": false,
+      "actual": {
+        "id": "target",
+        "name": "template",
+        "namespace": "http://www.w3.org/1998/Math/MathML",
+        "inArticle": true
+      },
+      "hash": "#target",
+      "errors": []
+    },
+    {
+      "case": "math-selfclose",
+      "version": "target",
+      "build_exit": 0,
+      "report": {
+        "schema_version": 1,
+        "success": true,
+        "diagnostics": [
+          {
+            "severity": "warning",
+            "rule": "no-git-history",
+            "file": null,
+            "line": null,
+            "column": null,
+            "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+            "suggestion": "build inside a git repository with the content committed"
+          }
+        ],
+        "summary": {
+          "errors": 0,
+          "warnings": 1,
+          "pages": 1,
+          "files": 10,
+          "bytes": 59619,
+          "largest": [
+            {
+              "path": "index.html",
+              "bytes": 4191
+            },
+            {
+              "path": "404.html",
+              "bytes": 3982
+            }
+          ],
+          "out": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-review-r5-b45umkpy/extra-cases/math-selfclose/target-dist",
+          "milliseconds": 19
+        }
+      },
+      "entry": "http://127.0.0.1:51580/",
+      "view_only_without_link": false,
+      "actual": {
+        "id": "target",
+        "name": "template",
+        "namespace": "http://www.w3.org/1998/Math/MathML",
+        "inArticle": true
+      },
+      "hash": "#target",
+      "errors": []
+    },
+    {
+      "case": "svg-cdata",
+      "version": "base",
+      "build_exit": 0,
+      "report": {
+        "schema_version": 1,
+        "success": true,
+        "diagnostics": [
+          {
+            "severity": "warning",
+            "rule": "no-git-history",
+            "file": null,
+            "line": null,
+            "column": null,
+            "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+            "suggestion": "build inside a git repository with the content committed"
+          }
+        ],
+        "summary": {
+          "errors": 0,
+          "warnings": 1,
+          "pages": 1,
+          "files": 10,
+          "bytes": 59644,
+          "largest": [
+            {
+              "path": "index.html",
+              "bytes": 4216
+            },
+            {
+              "path": "404.html",
+              "bytes": 3982
+            }
+          ],
+          "out": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-review-r5-b45umkpy/extra-cases/svg-cdata/base-dist",
+          "milliseconds": 18
+        }
+      },
+      "entry": "http://127.0.0.1:51585/",
+      "view_only_without_link": false,
+      "actual": {
+        "id": "target",
+        "name": "g",
+        "namespace": "http://www.w3.org/2000/svg",
+        "inArticle": true
+      },
+      "hash": "#target",
+      "errors": []
+    },
+    {
+      "case": "svg-cdata",
+      "version": "target",
+      "build_exit": 0,
+      "report": {
+        "schema_version": 1,
+        "success": true,
+        "diagnostics": [
+          {
+            "severity": "warning",
+            "rule": "no-git-history",
+            "file": null,
+            "line": null,
+            "column": null,
+            "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+            "suggestion": "build inside a git repository with the content committed"
+          }
+        ],
+        "summary": {
+          "errors": 0,
+          "warnings": 1,
+          "pages": 1,
+          "files": 10,
+          "bytes": 59644,
+          "largest": [
+            {
+              "path": "index.html",
+              "bytes": 4216
+            },
+            {
+              "path": "404.html",
+              "bytes": 3982
+            }
+          ],
+          "out": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-review-r5-b45umkpy/extra-cases/svg-cdata/target-dist",
+          "milliseconds": 17
+        }
+      },
+      "entry": "http://127.0.0.1:51590/",
+      "view_only_without_link": false,
+      "actual": {
+        "id": "target",
+        "name": "g",
+        "namespace": "http://www.w3.org/2000/svg",
+        "inArticle": true
+      },
+      "hash": "#target",
+      "errors": []
+    }
+  ]
+}

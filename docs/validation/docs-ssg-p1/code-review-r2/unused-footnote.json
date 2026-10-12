@@ -1,0 +1,108 @@
+[
+  {
+    "version": "target",
+    "argv": [
+      "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-cli/rustify-docs",
+      "build",
+      "--config",
+      "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/docs-ssg-review-r2-cxbb1wm5/boundaries/unused-footnote/rustify-docs.toml",
+      "--out",
+      "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/docs-ssg-review-r2-cxbb1wm5/boundaries/unused-footnote/dist",
+      "--format",
+      "json"
+    ],
+    "exit": 0,
+    "report": {
+      "schema_version": 1,
+      "success": true,
+      "diagnostics": [
+        {
+          "severity": "warning",
+          "rule": "no-git-history",
+          "file": null,
+          "line": null,
+          "column": null,
+          "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+          "suggestion": "build inside a git repository with the content committed"
+        }
+      ],
+      "summary": {
+        "errors": 0,
+        "warnings": 1,
+        "pages": 1,
+        "files": 10,
+        "bytes": 60124,
+        "largest": [
+          {
+            "path": "index.html",
+            "bytes": 4653
+          },
+          {
+            "path": "404.html",
+            "bytes": 4010
+          }
+        ],
+        "out": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/docs-ssg-review-r2-cxbb1wm5/boundaries/unused-footnote/dist",
+        "milliseconds": 40
+      }
+    },
+    "linked": true,
+    "target_exists": false,
+    "ids": [
+      "fn-b"
+    ]
+  },
+  {
+    "version": "baseline",
+    "argv": [
+      "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/docs-ssg-review-r2-cxbb1wm5/baseline-target/docs-cli/rustify-docs",
+      "build",
+      "--config",
+      "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/docs-ssg-review-r2-cxbb1wm5/boundaries/unused-footnote/rustify-docs.toml",
+      "--out",
+      "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/docs-ssg-review-r2-cxbb1wm5/boundaries/unused-footnote/baseline-dist",
+      "--format",
+      "json"
+    ],
+    "exit": 0,
+    "report": {
+      "schema_version": 1,
+      "success": true,
+      "diagnostics": [
+        {
+          "severity": "warning",
+          "rule": "no-git-history",
+          "file": null,
+          "line": null,
+          "column": null,
+          "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+          "suggestion": "build inside a git repository with the content committed"
+        }
+      ],
+      "summary": {
+        "errors": 0,
+        "warnings": 1,
+        "pages": 1,
+        "files": 10,
+        "bytes": 59094,
+        "largest": [
+          {
+            "path": "index.html",
+            "bytes": 4661
+          },
+          {
+            "path": "404.html",
+            "bytes": 4018
+          }
+        ],
+        "out": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/docs-ssg-review-r2-cxbb1wm5/boundaries/unused-footnote/baseline-dist",
+        "milliseconds": 37
+      }
+    },
+    "linked": true,
+    "target_exists": false,
+    "ids": [
+      "fn-b"
+    ]
+  }
+]

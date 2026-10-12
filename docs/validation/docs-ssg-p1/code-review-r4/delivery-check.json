@@ -1,0 +1,12 @@
+{
+  "report_sha256": "3c3c60669f478b5290299df69e2a23055ef4d3e8884e482facd89b1e2753ffa9",
+  "links_checked_in_files": 10,
+  "missing_links": [],
+  "changed_original_inputs": [],
+  "original_head_unchanged": true,
+  "old_items": 19,
+  "new_findings": [
+    "F-20"
+  ],
+  "checks": "198 Rust, 39 standard browser tests, 20 production requests; all passed"
+}

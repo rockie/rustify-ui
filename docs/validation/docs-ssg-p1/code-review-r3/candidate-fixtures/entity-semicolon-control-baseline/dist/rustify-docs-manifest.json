@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "mode": "production",
+  "base": "/docs/",
+  "cli_version": "0.1.0",
+  "build_id": "43e847e67734227b",
+  "files": [
+    {
+      "path": ".nojekyll",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "404.html",
+      "sha256": "8b77821b3b9cf55fbf1735fa8a00c38b1886835a935681c46ae26d743ef660e1",
+      "bytes": 3975
+    },
+    {
+      "path": "assets/mode.64fba40012.js",
+      "sha256": "64fba40012c49c28eee112c63d79c30fd2329ac04e64ad20aa4a7fdae8eef4d5",
+      "bytes": 702
+    },
+    {
+      "path": "assets/share.9f8be38eaf.png",
+      "sha256": "9f8be38eafa7450a22835777de9ff300878deff236dd54fa9a91e00e206be673",
+      "bytes": 3964
+    },
+    {
+      "path": "assets/site.92c6b3959b.css",
+      "sha256": "92c6b3959bd389e5521840a6c652eec9b6d1d0a5a56d0c49d6215633ed4e9002",
+      "bytes": 33807
+    },
+    {
+      "path": "assets/site.f9e7e4a69a.js",
+      "sha256": "f9e7e4a69aedb37327c5f00dc7a97c05f2dde284338a2ca29ed3e0ddb8625b56",
+      "bytes": 11291
+    },
+    {
+      "path": "index.html",
+      "sha256": "6a81c932bec64857d89ad7b80f0f099840efe195f0b1b949bb0b8cab314df3c5",
+      "bytes": 4161
+    },
+    {
+      "path": "robots.txt",
+      "sha256": "dafb65e374ad38538bae17efe767223768ccc5691445871a77692c8d9c11a841",
+      "bytes": 70
+    },
+    {
+      "path": "sitemap.xml",
+      "sha256": "852dcc39f7097fdccf36a8e4630d7721b10accdb4090da2dde5d495d931198e0",
+      "bytes": 158
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "command": [
+    "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-cli/rustify-docs",
+    "check",
+    "--config",
+    "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-prd-gaps-CefEgs/invalid-lang/rustify-docs.toml",
+    "--format",
+    "json"
+  ],
+  "exit": 1,
+  "source": "---\ntitle: Bad language\ndescription: Language validation probe.\nlang: zh_CN\n---\n\n# Bad language\n\nText.\n",
+  "output": {
+    "schema_version": 1,
+    "success": false,
+    "diagnostics": [
+      {
+        "severity": "warning",
+        "rule": "no-git-history",
+        "file": null,
+        "line": null,
+        "column": null,
+        "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+        "suggestion": "build inside a git repository with the content committed"
+      },
+      {
+        "severity": "error",
+        "rule": "lang",
+        "file": "content/guide/lang.md",
+        "line": null,
+        "column": null,
+        "message": "`zh_CN` is not a language tag",
+        "suggestion": null
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-site-url",
+        "file": "rustify-docs.toml",
+        "line": null,
+        "column": null,
+        "message": "site.url is not set, so pages have no canonical address or preview image and there is no sitemap",
+        "suggestion": "add `url = \"https://\u2026\"` under [site], the address the site is published at"
+      }
+    ],
+    "summary": {
+      "errors": 1,
+      "warnings": 2,
+      "pages": 4
+    }
+  },
+  "stderr": ""
+}

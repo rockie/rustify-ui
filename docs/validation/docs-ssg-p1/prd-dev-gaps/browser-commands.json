@@ -1,0 +1,106 @@
+[
+  {
+    "project": "docs-root",
+    "command": [
+      "npx",
+      "--no-install",
+      "playwright",
+      "test",
+      "-c",
+      "playwright.docs.config.ts",
+      "--project=docs-root",
+      "--output=target/docs-ssg/prd-dev-gaps/browser/docs-root"
+    ],
+    "env": {
+      "RUSTIFY_DOCS_BIN": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-cli/rustify-docs"
+    },
+    "exit": 0,
+    "seconds": 12.989,
+    "stats": {
+      "startTime": "2026-10-11T16:14:33.917Z",
+      "duration": 12026.009,
+      "expected": 24,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    }
+  },
+  {
+    "project": "docs-subpath",
+    "command": [
+      "npx",
+      "--no-install",
+      "playwright",
+      "test",
+      "-c",
+      "playwright.docs.config.ts",
+      "--project=docs-subpath",
+      "--output=target/docs-ssg/prd-dev-gaps/browser/docs-subpath"
+    ],
+    "env": {
+      "RUSTIFY_DOCS_BIN": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-cli/rustify-docs"
+    },
+    "exit": 0,
+    "seconds": 11.853,
+    "stats": {
+      "startTime": "2026-10-11T16:14:46.592Z",
+      "duration": 11206.163,
+      "expected": 24,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    }
+  },
+  {
+    "project": "docs-meta",
+    "command": [
+      "npx",
+      "--no-install",
+      "playwright",
+      "test",
+      "-c",
+      "playwright.docs.config.ts",
+      "--project=docs-meta",
+      "--output=target/docs-ssg/prd-dev-gaps/browser/docs-meta"
+    ],
+    "env": {
+      "RUSTIFY_DOCS_BIN": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-cli/rustify-docs"
+    },
+    "exit": 0,
+    "seconds": 12.53,
+    "stats": {
+      "startTime": "2026-10-11T16:14:58.705Z",
+      "duration": 11623.175,
+      "expected": 24,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    }
+  },
+  {
+    "project": "docs-dev",
+    "command": [
+      "npx",
+      "--no-install",
+      "playwright",
+      "test",
+      "-c",
+      "playwright.docs.config.ts",
+      "--project=docs-dev",
+      "--output=target/docs-ssg/prd-dev-gaps/browser/docs-dev"
+    ],
+    "env": {
+      "RUSTIFY_DOCS_BIN": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-cli/rustify-docs"
+    },
+    "exit": 0,
+    "seconds": 14.824,
+    "stats": {
+      "startTime": "2026-10-11T16:15:11.268Z",
+      "duration": 13883.755000000001,
+      "expected": 21,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    }
+  }
+]

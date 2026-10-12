@@ -1,0 +1,74 @@
+{
+  "target": "1f0fc5ed21d7937a1297528ad38cdefe6b95f721",
+  "base": "bfbee6d3342b69e062ed513e05e7f812373124bc",
+  "date": "2026-10-11T15:45:29.994429+08:00",
+  "input_fingerprint": "9d1ac4b2d5d4dd8fc4c2aa33cb385cc7a45997bfca975a98406fb29ebd368261",
+  "checks": [
+    {
+      "command": "mbx test --locked -p rustify-docs",
+      "exit": 0,
+      "passed": 123
+    },
+    {
+      "command": "mbx test --locked -p rustify-docs-cli",
+      "exit": 0,
+      "passed": 69
+    },
+    {
+      "command": "mbx build --locked -p rustify-docs-cli --profile docs-cli",
+      "exit": 0
+    },
+    {
+      "command": "CARGO_TARGET_DIR=<work>/baseline-target mbx build --offline --locked -p rustify-docs-cli --profile docs-cli",
+      "cwd": "<work>/baseline-source (git archive base)",
+      "exit": 0
+    },
+    {
+      "command": "mbx clippy --locked -p rustify-docs -p rustify-docs-cli --all-targets -- -D warnings",
+      "exit": 0
+    },
+    {
+      "command": "mbx fmt --all -- --check",
+      "exit": 0
+    },
+    {
+      "command": "RUSTIFY_DOCS_BIN=<repo>/target/docs-cli/rustify-docs npx --no-install playwright test --config playwright.docs.config.ts --project docs-dev",
+      "exit": 0,
+      "passed": 11
+    },
+    {
+      "command": "npx --no-install playwright test --config playwright.docs.config.ts --project docs-subpath",
+      "exit": 0,
+      "passed": 24
+    },
+    {
+      "command": "python3 docs/validation/docs-ssg-p1/code-review-r2/replay.py --work <work>/replay",
+      "exit": 0,
+      "cases": 11
+    },
+    {
+      "command": "python3 docs/validation/docs-ssg-p1/code-review-r2/replay.py --baseline <work>/baseline-target/docs-cli/rustify-docs --work <work>/replay-comparison",
+      "exit": 0,
+      "cases": 22
+    },
+    {
+      "command": "node <work>/browser-cases.cjs <work>/replay",
+      "exit": 0,
+      "browser_cases": 8
+    },
+    {
+      "command": "node <work>/candidates.cjs <work>",
+      "exit": 0,
+      "cases": 4
+    },
+    {
+      "command": "node <work>/css-candidates.cjs <work>",
+      "exit": 0,
+      "cases": 6
+    }
+  ],
+  "binaries": {
+    "target/docs-cli/rustify-docs": "bbf7e600256ba9e2b48c9916f8361248480d17515c2e93c306adf6df25696dbf",
+    "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/docs-review-r3-qfog5ro6/baseline-target/docs-cli/rustify-docs": "b963895f058431e0da3f233f3e0aa0b5f6277049f5ad4f5549cfbf2bc5406800"
+  }
+}

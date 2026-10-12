@@ -1,0 +1,38 @@
+[
+  {
+    "command": [
+      "mbx",
+      "tree",
+      "--locked",
+      "-p",
+      "rustify-docs",
+      "--edges",
+      "normal,build",
+      "--target",
+      "all",
+      "--prefix",
+      "none"
+    ],
+    "exit": 0,
+    "distinct_package_names": 248,
+    "forbidden": []
+  },
+  {
+    "command": [
+      "mbx",
+      "tree",
+      "--locked",
+      "-p",
+      "rustify-docs-cli",
+      "--edges",
+      "normal,build",
+      "--target",
+      "all",
+      "--prefix",
+      "none"
+    ],
+    "exit": 0,
+    "distinct_package_names": 282,
+    "forbidden": []
+  }
+]

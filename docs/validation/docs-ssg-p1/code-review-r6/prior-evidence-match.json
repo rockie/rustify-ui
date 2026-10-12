@@ -1,0 +1,16 @@
+{
+  "source": "docs/validation/docs-ssg-p1/M8.md#r5-\u4fee\u590d\u540e\u590d\u9a8c",
+  "source_snapshot": "dirty@3069107cf4990e15db6ad3ddddddd520bcc86838",
+  "current_code": "998ee180e339ede6793c548bf4f035e8cbb9dd1f",
+  "inputs": {
+    "Cargo.lock": true,
+    "crates/rustify-docs-cli/Cargo.toml": true,
+    "crates/rustify-docs-cli/tests/check.rs": true,
+    "crates/rustify-docs/src/content.rs": true,
+    "crates/rustify-docs/src/html_check.rs": true,
+    "crates/rustify-docs/src/markdown.rs": true,
+    "tests/docs-ssg/dev.spec.ts": true
+  },
+  "all_match": true,
+  "report_sha256": "e5becdb4941c1cda3434feb0ee905b38979e7e9212224764826a43ef5a52e340"
+}

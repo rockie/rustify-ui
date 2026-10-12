@@ -1,0 +1,84 @@
+[
+  {
+    "name": "library-test",
+    "command": [
+      "mbx",
+      "test",
+      "--locked",
+      "-p",
+      "rustify-docs"
+    ],
+    "exit": 0,
+    "seconds": 44.896909083
+  },
+  {
+    "name": "cli-test",
+    "command": [
+      "mbx",
+      "test",
+      "--locked",
+      "-p",
+      "rustify-docs-cli"
+    ],
+    "exit": 0,
+    "seconds": 27.820221375000003
+  },
+  {
+    "name": "cli-build",
+    "command": [
+      "mbx",
+      "build",
+      "--locked",
+      "-p",
+      "rustify-docs-cli",
+      "--profile",
+      "docs-cli"
+    ],
+    "exit": 0,
+    "seconds": 18.112039999999993
+  },
+  {
+    "name": "docs-clippy",
+    "command": [
+      "mbx",
+      "clippy",
+      "--locked",
+      "-p",
+      "rustify-docs",
+      "--all-targets",
+      "--",
+      "-D",
+      "warnings"
+    ],
+    "exit": 0,
+    "seconds": 0.7690424160000049
+  },
+  {
+    "name": "cli-clippy",
+    "command": [
+      "mbx",
+      "clippy",
+      "--locked",
+      "-p",
+      "rustify-docs-cli",
+      "--all-targets",
+      "--",
+      "-D",
+      "warnings"
+    ],
+    "exit": 0,
+    "seconds": 0.5833763329999897
+  },
+  {
+    "name": "fmt",
+    "command": [
+      "cargo",
+      "fmt",
+      "--all",
+      "--",
+      "--check"
+    ],
+    "exit": 0,
+    "seconds": 1.523914583000007
+  }
+]

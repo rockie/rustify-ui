@@ -1,0 +1,202 @@
+[
+  {
+    "argv": [
+      "mbx",
+      "test",
+      "--locked",
+      "-p",
+      "rustify-docs"
+    ],
+    "cwd": "/Users/rockie/Documents/gh-rockie/rustify-ui",
+    "log": "library-test.log",
+    "exit_code": 0
+  },
+  {
+    "argv": [
+      "mbx",
+      "test",
+      "--locked",
+      "-p",
+      "rustify-docs-cli"
+    ],
+    "cwd": "/Users/rockie/Documents/gh-rockie/rustify-ui",
+    "log": "cli-test.log",
+    "exit_code": 0
+  },
+  {
+    "argv": [
+      "mbx",
+      "build",
+      "--locked",
+      "-p",
+      "rustify-docs-cli",
+      "--profile",
+      "docs-cli"
+    ],
+    "cwd": "/Users/rockie/Documents/gh-rockie/rustify-ui",
+    "log": "cli-build.log",
+    "exit_code": 0
+  },
+  {
+    "argv": [
+      "mbx",
+      "clippy",
+      "--locked",
+      "-p",
+      "rustify-docs",
+      "--all-targets",
+      "--",
+      "-D",
+      "warnings"
+    ],
+    "cwd": "/Users/rockie/Documents/gh-rockie/rustify-ui",
+    "log": "docs-clippy.log",
+    "exit_code": 0
+  },
+  {
+    "argv": [
+      "mbx",
+      "clippy",
+      "--locked",
+      "-p",
+      "rustify-docs-cli",
+      "--all-targets",
+      "--",
+      "-D",
+      "warnings"
+    ],
+    "cwd": "/Users/rockie/Documents/gh-rockie/rustify-ui",
+    "log": "cli-clippy.log",
+    "exit_code": 0
+  },
+  {
+    "argv": [
+      "cargo",
+      "fmt",
+      "--all",
+      "--",
+      "--check"
+    ],
+    "cwd": "/Users/rockie/Documents/gh-rockie/rustify-ui",
+    "log": "fmt.log",
+    "exit_code": 0
+  },
+  {
+    "argv": [
+      "mbx",
+      "tree",
+      "--locked",
+      "--offline",
+      "-p",
+      "rustify-docs-cli",
+      "-e",
+      "normal,build"
+    ],
+    "cwd": "/Users/rockie/Documents/gh-rockie/rustify-ui",
+    "log": "cli-tree.log",
+    "exit_code": 0
+  },
+  {
+    "argv": [
+      "mbx",
+      "build",
+      "--offline",
+      "--locked",
+      "-p",
+      "rustify-docs-cli",
+      "--profile",
+      "docs-cli"
+    ],
+    "cwd": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-review-r5-b45umkpy/baseline",
+    "log": "baseline-build.log",
+    "exit_code": 1
+  },
+  {
+    "argv": [
+      "mbx",
+      "build",
+      "--offline",
+      "--locked",
+      "-p",
+      "rustify-docs-cli",
+      "--profile",
+      "docs-cli"
+    ],
+    "cwd": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-review-r5-b45umkpy/baseline",
+    "log": "baseline-build-retry.log",
+    "exit_code": 0,
+    "env": {
+      "CARGO_TARGET_DIR": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-review-r5-b45umkpy/base-target",
+      "PATH_prefix": "/Users/rockie/.rustup/toolchains/1.99.0-aarch64-apple-darwin/bin"
+    }
+  },
+  {
+    "argv": [
+      "npx",
+      "--no-install",
+      "playwright",
+      "test",
+      "-c",
+      "playwright.docs.config.ts",
+      "--project=docs-dev",
+      "--output=docs/validation/docs-ssg-p1/code-review-r5/docs-dev-output"
+    ],
+    "env": {
+      "RUSTIFY_DOCS_BIN": "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-cli/rustify-docs",
+      "PLAYWRIGHT_JSON_OUTPUT_FILE": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p1/code-review-r5/docs-dev-results.json"
+    },
+    "cwd": "/Users/rockie/Documents/gh-rockie/rustify-ui",
+    "log": "docs-dev.log",
+    "exit_code": 0
+  },
+  {
+    "argv": [
+      "npx",
+      "--no-install",
+      "playwright",
+      "test",
+      "-c",
+      "playwright.docs.config.ts",
+      "--project=docs-subpath",
+      "--output=docs/validation/docs-ssg-p1/code-review-r5/docs-subpath-output"
+    ],
+    "env": {
+      "RUSTIFY_DOCS_BIN": "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-cli/rustify-docs",
+      "PLAYWRIGHT_JSON_OUTPUT_FILE": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p1/code-review-r5/docs-subpath-results.json"
+    },
+    "cwd": "/Users/rockie/Documents/gh-rockie/rustify-ui",
+    "log": "docs-subpath.log",
+    "exit_code": 0
+  },
+  {
+    "argv": [
+      "node",
+      "docs/validation/docs-ssg-p1/code-review-r5/verify.cjs",
+      "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-review-r5-b45umkpy/base-target/docs-cli/rustify-docs",
+      "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-cli/rustify-docs",
+      "docs/validation/docs-ssg-p1/code-review-r5"
+    ],
+    "log": "namespace-browser.log",
+    "exit_code": 0
+  },
+  {
+    "argv": [
+      "node",
+      "docs/validation/docs-ssg-p1/code-review-r5/structural-browser.cjs",
+      "docs/validation/docs-ssg-p1/code-review-r5"
+    ],
+    "log": "structural-browser.log",
+    "exit_code": 0
+  },
+  {
+    "argv": [
+      "python3",
+      "docs/validation/docs-ssg-p1/code-review-r5/reproduce-body.py",
+      "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-review-r5-b45umkpy/base-target/docs-cli/rustify-docs",
+      "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-cli/rustify-docs",
+      "docs/validation/docs-ssg-p1/code-review-r5/body-reproduction.json"
+    ],
+    "log": "body-reproduction.log",
+    "exit_code": 0
+  }
+]

@@ -1,0 +1,13 @@
+[
+  {
+    "title": "WHATWG HTML \u2014 in body insertion mode",
+    "url": "https://html.spec.whatwg.org/multipage/parsing.html#parsing-main-inbody",
+    "observed_date": "2026-10-11",
+    "section": "13.2.6.4.7, body start tag",
+    "source_lines": [
+      2848,
+      2854
+    ],
+    "paraphrase": "A body start tag is ignored in a fragment without an existing body stack entry; in document parsing, previously absent attributes are merged onto the existing body, unless a template is open."
+  }
+]

@@ -1,0 +1,19 @@
+
+Running 10 tests using 1 worker
+
+(node:5972) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+rustc 1.99.0 (b940084d7 2026-09-28)
+  ✓   1 [docs-dev] › tests/docs-ssg/dev-uat.spec.ts:89:5 › UAT-1 and UAT-2: new, dev, three pages within a minute; then saves, a mistake and its fix in one session (3.3s)
+rustc 1.99.0 (b940084d7 2026-09-28)
+  ✓   2 [docs-dev] › tests/docs-ssg/dev.spec.ts:146:5 › a new site is readable at once: the home page and its two pages (348ms)
+  ✓   3 [docs-dev] › tests/docs-ssg/dev.spec.ts:181:5 › a save reloads the page it changed in place and leaves the others (1.8s)
+  ✓   4 [docs-dev] › tests/docs-ssg/dev.spec.ts:209:5 › a failed build keeps the page readable under a panel that hides to a marker and clears on the fix (667ms)
+  ✓   5 [docs-dev] › tests/docs-ssg/dev.spec.ts:256:5 › while nothing has built, every page says so, and becomes the site once it builds (259ms)
+  ✓   6 [docs-dev] › tests/docs-ssg/dev.spec.ts:276:5 › a restarted dev brings an open page up to date (1.1s)
+  ✓   7 [docs-dev] › tests/docs-ssg/dev.spec.ts:287:5 › a panic in a build is one more problem, and the next build is served (330ms)
+  ✓   8 [docs-dev] › tests/docs-ssg/dev.spec.ts:303:5 › the panel speaks the page's language (265ms)
+  ✓   9 [docs-dev] › tests/docs-ssg/dev.spec.ts:313:5 › on a phone the panel is a sheet along the bottom and nothing scrolls sideways (456ms)
+  ✓  10 [docs-dev] › tests/docs-ssg/dev.spec.ts:335:5 › axe finds no serious or critical problem with the panel open or hidden, in both modes (1.6s)
+
+  10 passed (10.8s)

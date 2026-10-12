@@ -1,0 +1,19 @@
+
+Running 12 tests using 1 worker
+
+(node:21951) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 [dom-only] › tests/dom-only/dom-only.spec.ts:136:9 › a DOM application starts without Makepad › the page loads the DOM loader, the glue and the SDK runtime, and nothing of Makepad (152ms)
+  ✓   2 [dom-only] › tests/dom-only/dom-only.spec.ts:150:9 › a DOM application starts without Makepad › toast, dialog, size observer and page listener work in one scope (1.3s)
+  ✓   3 [dom-only] › tests/dom-only/dom-only.spec.ts:225:9 › a DOM application starts without Makepad › a scope is not mounted before the runtime has started (109ms)
+  ✓   4 [dom-only] › tests/dom-only/dom-only.spec.ts:246:9 › a DOM application starts without Makepad › the runtime refuses hooks of another protocol, and a second start (88ms)
+  ✓   5 [dom-only] › tests/dom-only/dom-only.spec.ts:278:9 › a DOM application starts without Makepad › a loader of another protocol refuses to start and leaves nothing behind (99ms)
+  ✓   6 [dom-only] › tests/dom-only/dom-only.spec.ts:298:9 › a DOM application starts without Makepad › a host created for another protocol is released, not started (93ms)
+  ✓   7 [dom-only] › tests/dom-only/dom-only.spec.ts:318:13 › one instance fails, the other does not › a trap through an export the page called reaches its own instance only (979ms)
+  ✓   8 [dom-only] › tests/dom-only/dom-only.spec.ts:318:13 › one instance fails, the other does not › a trap through a DOM event handler reaches its own instance only (1.0s)
+  ✓   9 [dom-only] › tests/dom-only/dom-only.spec.ts:318:13 › one instance fails, the other does not › a trap through a task the host was running reaches its own instance only (1.0s)
+  ✓  10 [dom-only] › tests/dom-only/dom-only.spec.ts:318:13 › one instance fails, the other does not › a trap through the page's own simulation reaches its own instance only (992ms)
+  ✓  11 [dom-only] › tests/dom-only/dom-only.spec.ts:379:9 › one instance fails, the other does not › two instances start under the release policy with nothing refused (111ms)
+  ✓  12 [dom-only] › tests/dom-only/dom-only.spec.ts:390:9 › one instance fails, the other does not › a slot may be restarted three times and then only reloading is left (302ms)
+
+  12 passed (8.8s)

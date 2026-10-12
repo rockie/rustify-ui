@@ -1,0 +1,62 @@
+{
+  "base": "1f0fc5ed21d7937a1297528ad38cdefe6b95f721",
+  "target": "540462a895a48385761f8db6e3271a714957d818",
+  "browser": "153.0.8010.12",
+  "checks": [
+    {
+      "command": "mbx test --locked -p rustify-docs",
+      "result": "128 passed (117 unit + 11 generation)",
+      "evidence": "rustify-docs-test.log"
+    },
+    {
+      "command": "mbx test --locked -p rustify-docs-cli",
+      "result": "70 passed",
+      "evidence": "rustify-docs-cli-test.log"
+    },
+    {
+      "command": "mbx build --locked -p rustify-docs-cli --profile docs-cli",
+      "result": "exit 0",
+      "evidence": "cli-build.log"
+    },
+    {
+      "command": "CARGO_TARGET_DIR=<isolated base-target> mbx build --offline --locked -p rustify-docs-cli --profile docs-cli",
+      "result": "base snapshot exit 0",
+      "evidence": "baseline-build.log"
+    },
+    {
+      "command": "mbx clippy --locked -p rustify-docs -p rustify-docs-cli --all-targets -- -D warnings",
+      "result": "exit 0",
+      "evidence": "clippy.log"
+    },
+    {
+      "command": "cargo fmt --all -- --check",
+      "result": "exit 0",
+      "evidence": "fmt.log"
+    },
+    {
+      "command": "RUSTIFY_DOCS_BIN=<rebuilt target> npx --no-install playwright test -c playwright.docs.config.ts --project=docs-dev --reporter=list --output=<isolated output>",
+      "result": "15 passed",
+      "evidence": "docs-dev.log"
+    },
+    {
+      "command": "RUSTIFY_DOCS_BIN=<rebuilt target> npx --no-install playwright test -c playwright.docs.config.ts --project=docs-subpath --reporter=list --output=<isolated output>",
+      "result": "24 passed",
+      "evidence": "docs-subpath.log"
+    },
+    {
+      "command": "node docs/validation/docs-ssg-p1/code-review-r3-fix/production.cjs target/docs-cli/rustify-docs <isolated evidence>/production",
+      "result": "2 bases, 20 resources, previous output preservation, anchor checks; exit 0",
+      "evidence": "production/production-results.json"
+    },
+    {
+      "command": "python3 <isolated evidence>/reproduce.py <isolated baseline binary> target/docs-cli/rustify-docs <isolated evidence>/replayed",
+      "result": "five inputs per version; three regressions and two controls",
+      "evidence": "candidate-results.json"
+    },
+    {
+      "command": "node <isolated evidence>/candidate-browser.cjs <isolated evidence>/replayed target/docs-cli/rustify-docs <isolated baseline binary>",
+      "result": "10 products checked, expected DOM namespaces and IDs, no browser errors; exit 0",
+      "evidence": "candidate-browser-results.json"
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+[
+  {
+    "command": [
+      "npx",
+      "--no-install",
+      "playwright",
+      "test",
+      "-c",
+      "playwright.docs.config.ts",
+      "--project=docs-dev",
+      "--reporter=list",
+      "--output=target/docs-ssg/review-r6/browser/docs-dev"
+    ],
+    "env": {
+      "RUSTIFY_DOCS_BIN": "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-cli/rustify-docs"
+    },
+    "exit": 0,
+    "seconds": 16.412176958
+  },
+  {
+    "command": [
+      "npx",
+      "--no-install",
+      "playwright",
+      "test",
+      "-c",
+      "playwright.docs.config.ts",
+      "--project=docs-subpath",
+      "--reporter=list",
+      "--output=target/docs-ssg/review-r6/browser/docs-subpath"
+    ],
+    "env": {
+      "RUSTIFY_DOCS_BIN": "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-cli/rustify-docs"
+    },
+    "exit": 0,
+    "seconds": 14.467048875000003
+  }
+]

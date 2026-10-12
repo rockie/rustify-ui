@@ -1,0 +1,61 @@
+{
+  "browser": "153.0.8010.12",
+  "binary": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-cli/rustify-docs",
+  "sysroot": "/Users/rockie/.rustup/toolchains/1.99.0-aarch64-apple-darwin",
+  "method": "Five independent new/dev sites; PATH contains only actual rustc and CLI symlinks. Node/browser belong to the harness. Start: Node performance epoch immediately before new; end: browser performance epoch on double requestAnimationFrame after DOMContentLoaded. Browser process prestarted; contexts cold. Port 0. No site compilation.",
+  "samples": [
+    {
+      "started_epoch_ms": 1791736931082.3647,
+      "painted_epoch_ms": 1791736931274.5,
+      "clock_offset_ms": 0.01318359375,
+      "clock_half_trip_ms": 0.19921875,
+      "latency_ms": 192.1220703125,
+      "headings": [
+        "site-0"
+      ]
+    },
+    {
+      "started_epoch_ms": 1791736931282.3484,
+      "painted_epoch_ms": 1791736931416.2,
+      "clock_offset_ms": -0.0654296875,
+      "clock_half_trip_ms": 0.150146484375,
+      "latency_ms": 133.9169921875,
+      "headings": [
+        "site-1"
+      ]
+    },
+    {
+      "started_epoch_ms": 1791736931421.5671,
+      "painted_epoch_ms": 1791736931562.9,
+      "clock_offset_ms": -0.11767578125,
+      "clock_half_trip_ms": 0.2471923828125,
+      "latency_ms": 141.450439453125,
+      "headings": [
+        "site-2"
+      ]
+    },
+    {
+      "started_epoch_ms": 1791736931570.5632,
+      "painted_epoch_ms": 1791736931707.8,
+      "clock_offset_ms": -0.0693359375,
+      "clock_half_trip_ms": 0.141357421875,
+      "latency_ms": 137.30615234375,
+      "headings": [
+        "site-3"
+      ]
+    },
+    {
+      "started_epoch_ms": 1791736931712.595,
+      "painted_epoch_ms": 1791736931847.4,
+      "clock_offset_ms": 0.065185546875,
+      "clock_half_trip_ms": 0.1693115234375,
+      "latency_ms": 134.73974609375,
+      "headings": [
+        "site-4"
+      ]
+    }
+  ],
+  "median_ms": 137.30615234375,
+  "limit_ms": 60000,
+  "pass": true
+}

@@ -1,0 +1,128 @@
+{
+  "cases": [
+    {
+      "name": "template-anchor",
+      "version": "target",
+      "exit": 0,
+      "report": {
+        "schema_version": 1,
+        "success": true,
+        "diagnostics": [
+          {
+            "severity": "warning",
+            "rule": "no-git-history",
+            "file": null,
+            "line": null,
+            "column": null,
+            "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+            "suggestion": "build inside a git repository with the content committed"
+          }
+        ],
+        "summary": {
+          "errors": 0,
+          "warnings": 1,
+          "pages": 1,
+          "files": 10,
+          "bytes": 59741,
+          "largest": [
+            {
+              "path": "index.html",
+              "bytes": 4280
+            },
+            {
+              "path": "404.html",
+              "bytes": 4000
+            }
+          ],
+          "out": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/docs-review-r3-qfog5ro6/candidate-fixtures/template-target/dist",
+          "milliseconds": 53
+        }
+      },
+      "entry": "http://127.0.0.1:62569/docs/",
+      "document": {
+        "target": null,
+        "templateTarget": "<span id=\"ghost\">Not a document target</span>",
+        "templateElement": "TEMPLATE"
+      },
+      "afterClick": {
+        "hash": "#ghost",
+        "target": null,
+        "scrollY": 0
+      },
+      "errors": []
+    },
+    {
+      "name": "template-anchor",
+      "version": "baseline",
+      "exit": 1,
+      "report": {
+        "schema_version": 1,
+        "success": false,
+        "diagnostics": [
+          {
+            "severity": "warning",
+            "rule": "no-git-history",
+            "file": null,
+            "line": null,
+            "column": null,
+            "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+            "suggestion": "build inside a git repository with the content committed"
+          },
+          {
+            "severity": "error",
+            "rule": "broken-anchor",
+            "file": "content/index.md",
+            "line": 8,
+            "column": 1,
+            "message": "content/index.md has no heading `#ghost`",
+            "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+          }
+        ],
+        "summary": {
+          "errors": 1,
+          "warnings": 1,
+          "pages": 0
+        }
+      }
+    },
+    {
+      "name": "attachment-symlink-recovery",
+      "version": "target",
+      "entry": "http://127.0.0.1:62581/docs/",
+      "originalHref": "/docs/assets/files/manual.cef3d43882.pdf",
+      "revision": 1,
+      "deletionRevision": 2,
+      "deletionPanel": "1 error\n·\nshowing the last good version\n\nrevision 2\ncontent/index.md\n6:1\nError:\nbroken-link\n\nthere is no file content/manual.pdf",
+      "observedAfterRestore": [
+        2,
+        2,
+        2
+      ],
+      "stillFailed": true,
+      "contentSaveRevision": 3,
+      "fixedHref": "/docs/assets/files/manual.f270077170.pdf",
+      "restored": "restored attachment",
+      "errors": []
+    },
+    {
+      "name": "attachment-symlink-recovery",
+      "version": "baseline",
+      "entry": "http://127.0.0.1:62628/docs/",
+      "originalHref": "/docs/assets/files/manual.cef3d43882.pdf",
+      "revision": 1,
+      "deletionRevision": 2,
+      "deletionPanel": "1 error\n·\nshowing the last good version\n\nrevision 2\ncontent/index.md\n6:1\nError:\nbroken-link\n\nthere is no file content/manual.pdf",
+      "observedAfterRestore": [
+        2,
+        2,
+        2
+      ],
+      "stillFailed": true,
+      "contentSaveRevision": 3,
+      "fixedHref": "/docs/assets/files/manual.f270077170.pdf",
+      "restored": "restored attachment",
+      "errors": []
+    }
+  ],
+  "browser": "153.0.8010.12"
+}

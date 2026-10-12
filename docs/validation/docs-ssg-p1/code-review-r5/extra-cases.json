@@ -1,0 +1,128 @@
+[
+  {
+    "case": "body-id",
+    "root": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-review-r5-b45umkpy/extra-cases/body-id",
+    "markup": "<body id=\"target\">\n\nText\n\n</body>",
+    "anchor": "target",
+    "exit": 1,
+    "diagnostics": [
+      {
+        "severity": "warning",
+        "rule": "no-git-history",
+        "file": null,
+        "line": null,
+        "column": null,
+        "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+        "suggestion": "build inside a git repository with the content committed"
+      },
+      {
+        "severity": "error",
+        "rule": "broken-anchor",
+        "file": "content/index.md",
+        "line": 12,
+        "column": 1,
+        "message": "content/index.md has no heading `#target`",
+        "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+      }
+    ]
+  },
+  {
+    "case": "html-id",
+    "root": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-review-r5-b45umkpy/extra-cases/html-id",
+    "markup": "<html id=\"target\">\n\nText\n\n</html>",
+    "anchor": "target",
+    "exit": 0,
+    "diagnostics": [
+      {
+        "severity": "warning",
+        "rule": "no-git-history",
+        "file": null,
+        "line": null,
+        "column": null,
+        "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+        "suggestion": "build inside a git repository with the content committed"
+      }
+    ]
+  },
+  {
+    "case": "noscript-id",
+    "root": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-review-r5-b45umkpy/extra-cases/noscript-id",
+    "markup": "<noscript><div id=\"target\">Fallback</div></noscript>",
+    "anchor": "target",
+    "exit": 1,
+    "diagnostics": [
+      {
+        "severity": "warning",
+        "rule": "no-git-history",
+        "file": null,
+        "line": null,
+        "column": null,
+        "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+        "suggestion": "build inside a git repository with the content committed"
+      },
+      {
+        "severity": "error",
+        "rule": "broken-anchor",
+        "file": "content/index.md",
+        "line": 8,
+        "column": 1,
+        "message": "content/index.md has no heading `#target`",
+        "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+      }
+    ]
+  },
+  {
+    "case": "table-foreign",
+    "root": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-review-r5-b45umkpy/extra-cases/table-foreign",
+    "markup": "<table><svg><template id=\"target\"/></svg></table>",
+    "anchor": "target",
+    "exit": 0,
+    "diagnostics": [
+      {
+        "severity": "warning",
+        "rule": "no-git-history",
+        "file": null,
+        "line": null,
+        "column": null,
+        "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+        "suggestion": "build inside a git repository with the content committed"
+      }
+    ]
+  },
+  {
+    "case": "math-selfclose",
+    "root": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-review-r5-b45umkpy/extra-cases/math-selfclose",
+    "markup": "<math><template id=\"target\"/></math>",
+    "anchor": "target",
+    "exit": 0,
+    "diagnostics": [
+      {
+        "severity": "warning",
+        "rule": "no-git-history",
+        "file": null,
+        "line": null,
+        "column": null,
+        "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+        "suggestion": "build inside a git repository with the content committed"
+      }
+    ]
+  },
+  {
+    "case": "svg-cdata",
+    "root": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-review-r5-b45umkpy/extra-cases/svg-cdata",
+    "markup": "<svg><![CDATA[<template id=\"ghost\"/>]]><g id=\"target\"/></svg>",
+    "anchor": "target",
+    "exit": 0,
+    "diagnostics": [
+      {
+        "severity": "warning",
+        "rule": "no-git-history",
+        "file": null,
+        "line": null,
+        "column": null,
+        "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+        "suggestion": "build inside a git repository with the content committed"
+      }
+    ]
+  }
+]

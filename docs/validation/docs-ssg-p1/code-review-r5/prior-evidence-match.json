@@ -1,0 +1,14 @@
+{
+  "matched_files": [
+    "Cargo.lock",
+    "crates/rustify-docs/Cargo.toml",
+    "crates/rustify-docs/src/html_check.rs",
+    "crates/rustify-docs/src/markdown.rs",
+    "crates/rustify-docs/src/content.rs",
+    "crates/rustify-docs-cli/Cargo.toml",
+    "crates/rustify-docs-cli/tests/check.rs",
+    "tests/docs-ssg/dev.spec.ts"
+  ],
+  "different_files": [],
+  "r4_report_sha256": "3c3c60669f478b5290299df69e2a23055ef4d3e8884e482facd89b1e2753ffa9"
+}

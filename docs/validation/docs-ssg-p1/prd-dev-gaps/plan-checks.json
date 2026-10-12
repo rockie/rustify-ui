@@ -1,0 +1,29 @@
+[
+  {
+    "name": "paths",
+    "command": [
+      "/Users/rockie/Documents/gh-rockie/rustify-ui/.agents/skills/dev-plan/scripts/check_paths.sh",
+      "docs/plan/DOCS-SSG-P1-gaps.md",
+      "/Users/rockie/Documents/gh-rockie/rustify-ui"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "plan",
+    "command": [
+      "python3",
+      "/Users/rockie/Documents/gh-rockie/rustify-ui/.agents/skills/dev-plan/scripts/check_plan.py",
+      "docs/plan/DOCS-SSG-P1-gaps.md"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "progress",
+    "command": [
+      "/Users/rockie/Documents/gh-rockie/rustify-ui/.agents/skills/dev-plan/scripts/check_progress.sh",
+      "docs/plan/DOCS-SSG-P1-gaps.md",
+      "/Users/rockie/Documents/gh-rockie/rustify-ui"
+    ],
+    "exit": 0
+  }
+]

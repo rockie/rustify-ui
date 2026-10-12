@@ -1,0 +1,10 @@
+{
+  "command": [
+    "node",
+    "docs/validation/docs-ssg-p1/code-review-r6/context-browser.cjs",
+    "docs/validation/docs-ssg-p1/code-review-r6"
+  ],
+  "exit": 0,
+  "seconds": 2.5554856669999997,
+  "initial_failure": "locator\u9650\u5b9aarticle\uff0c\u800c\u5173\u95edarticle\u7684\u8f93\u5165\u4f1a\u628a\u94fe\u63a5\u653e\u5230article\u5916\uff1b\u6539\u7528\u53ef\u8bbf\u95ee\u540d\u79f0\u5b9a\u4f4d"
+}

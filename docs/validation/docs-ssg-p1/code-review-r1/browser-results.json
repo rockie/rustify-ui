@@ -1,0 +1,122 @@
+{
+  "browser": "153.0.8010.12",
+  "cases": [
+    {
+      "name": "header-links",
+      "entry": "http://127.0.0.1:62236/docs/",
+      "errors": [],
+      "consoleErrors": [],
+      "failed": [],
+      "status": 200,
+      "csp": [],
+      "topCount": 0,
+      "socialCount": 0
+    },
+    {
+      "name": "home-resource",
+      "entry": "http://127.0.0.1:62241/docs/",
+      "errors": [],
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 404 (Not Found)"
+      ],
+      "failed": [
+        {
+          "url": "http://127.0.0.1:62241/docs/manual.pdf",
+          "status": 404
+        }
+      ],
+      "status": 200,
+      "csp": [],
+      "href": "manual.pdf",
+      "downloadStatus": 404,
+      "downloadUrl": "http://127.0.0.1:62241/docs/manual.pdf"
+    },
+    {
+      "name": "css-external",
+      "entry": "http://127.0.0.1:62250/docs/",
+      "errors": [],
+      "consoleErrors": [
+        "Loading the image 'https://example.invalid/review.png' violates the following Content Security Policy directive: \"img-src 'self' data:\". The action has been blocked.",
+        "Loading the image 'https://example.invalid/review.png' violates the following Content Security Policy directive: \"img-src 'self' data:\". The action has been blocked."
+      ],
+      "failed": [],
+      "status": 200,
+      "csp": [
+        {
+          "blocked": "https://example.invalid/review.png",
+          "directive": "img-src"
+        },
+        {
+          "blocked": "https://example.invalid/review.png",
+          "directive": "img-src"
+        }
+      ]
+    },
+    {
+      "name": "css-local",
+      "entry": "http://127.0.0.1:62255/docs/",
+      "errors": [],
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 404 (Not Found)"
+      ],
+      "failed": [
+        {
+          "url": "http://127.0.0.1:62255/bg.svg",
+          "status": 404
+        }
+      ],
+      "status": 200,
+      "csp": []
+    },
+    {
+      "name": "svg-fragment",
+      "entry": "http://127.0.0.1:62261/docs/",
+      "errors": [],
+      "consoleErrors": [],
+      "failed": [],
+      "status": 200,
+      "csp": [],
+      "before": {
+        "width": 0,
+        "height": 0,
+        "href": "/docs/assets/files/sprite.77a678540f.svg"
+      },
+      "withFragmentRestored": {
+        "width": 40,
+        "height": 40,
+        "href": "/docs/assets/files/sprite.77a678540f.svg#mark"
+      }
+    },
+    {
+      "name": "toc-percent",
+      "entry": "http://127.0.0.1:62268/docs/",
+      "errors": [
+        "URI malformed"
+      ],
+      "consoleErrors": [],
+      "failed": [],
+      "status": 200,
+      "csp": [],
+      "tocHrefs": [
+        "#100%",
+        "#finish",
+        "#100%",
+        "#finish"
+      ],
+      "activeToc": 0,
+      "menuStillOpenAfterEscape": true
+    },
+    {
+      "name": "watch-resource",
+      "entry": "http://127.0.0.1:62273/docs/",
+      "errors": [],
+      "consoleErrors": [],
+      "failed": [],
+      "status": 200,
+      "csp": [],
+      "before": "/docs/assets/files/mark.106eb81194.svg",
+      "afterResourceOnlySave": "/docs/assets/files/mark.106eb81194.svg",
+      "afterContentSave": "/docs/assets/files/mark.c763668ac8.svg"
+    }
+  ]
+}

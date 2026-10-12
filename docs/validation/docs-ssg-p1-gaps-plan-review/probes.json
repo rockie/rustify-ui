@@ -1,0 +1,231 @@
+{
+  "work": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/docs-ssg-gaps-plan-review-58c1t7ns",
+  "binary": "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-cli/rustify-docs",
+  "binary_sha256": "f281a1bd80c44f7032a129bfd93cef37df4b3abdf34aed6de43d08a9282aebb7",
+  "cases": [
+    {
+      "case": "leading",
+      "source": "---\ntitle: Home\ndescription: Review fixture\nlayout: home\n---\n# Body {#welcome}\n\nBody text.\n",
+      "config": "schema_version = 1\n[site]\nname = \"Review Docs\"\nlang = \"en\"\nbase = \"/\"\n",
+      "commands": [
+        {
+          "args": [
+            "check",
+            "--format",
+            "json",
+            "--config",
+            "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/docs-ssg-gaps-plan-review-58c1t7ns/leading/rustify-docs.toml"
+          ],
+          "exit": 0,
+          "stdout": "{\"schema_version\":1,\"success\":true,\"diagnostics\":[{\"severity\":\"warning\",\"rule\":\"no-git-history\",\"file\":null,\"line\":null,\"column\":null,\"message\":\"pages show no last-updated date: not a git repository (or any of the parent directories): .git\",\"suggestion\":\"build inside a git repository with the content committed\"},{\"severity\":\"warning\",\"rule\":\"missing-site-url\",\"file\":\"rustify-docs.toml\",\"line\":null,\"column\":null,\"message\":\"site.url is not set, so pages have no canonical address or preview image and there is no sitemap\",\"suggestion\":\"add `url = \\\"https://…\\\"` under [site], the address the site is published at\"}],\"summary\":{\"errors\":0,\"warnings\":2,\"pages\":1}}\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "build",
+            "--format",
+            "json",
+            "--config",
+            "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/docs-ssg-gaps-plan-review-58c1t7ns/leading/rustify-docs.toml",
+            "--out",
+            "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/docs-ssg-gaps-plan-review-58c1t7ns/leading/dist"
+          ],
+          "exit": 0,
+          "stdout": "{\"schema_version\":1,\"success\":true,\"diagnostics\":[{\"severity\":\"warning\",\"rule\":\"no-git-history\",\"file\":null,\"line\":null,\"column\":null,\"message\":\"pages show no last-updated date: not a git repository (or any of the parent directories): .git\",\"suggestion\":\"build inside a git repository with the content committed\"},{\"severity\":\"warning\",\"rule\":\"missing-site-url\",\"file\":\"rustify-docs.toml\",\"line\":null,\"column\":null,\"message\":\"site.url is not set, so pages have no canonical address or preview image and there is no sitemap\",\"suggestion\":\"add `url = \\\"https://…\\\"` under [site], the address the site is published at\"}],\"summary\":{\"errors\":0,\"warnings\":2,\"pages\":1,\"files\":8,\"bytes\":54193,\"largest\":[{\"path\":\"404.html\",\"bytes\":3823},{\"path\":\"index.html\",\"bytes\":3390}],\"out\":\"/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/docs-ssg-gaps-plan-review-58c1t7ns/leading/dist\",\"milliseconds\":18}}\n",
+          "stderr": ""
+        }
+      ],
+      "output": {
+        "path": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/docs-ssg-gaps-plan-review-58c1t7ns/leading/dist/index.html",
+        "sha256": "6d2099ac79aab67fc20178f08af8e8f5ee34c0b42a6a59c8aad1b11a13270e64",
+        "h1_attributes": [
+          {
+            "class": "rd-home-title"
+          }
+        ],
+        "navigation_count": 0
+      }
+    },
+    {
+      "case": "paragraph-before",
+      "source": "---\ntitle: Home\ndescription: Review fixture\nlayout: home\n---\nIntro.\n\n# Body {#welcome}\n\nBody text.\n",
+      "config": "schema_version = 1\n[site]\nname = \"Review Docs\"\nlang = \"en\"\nbase = \"/\"\n",
+      "commands": [
+        {
+          "args": [
+            "check",
+            "--format",
+            "json",
+            "--config",
+            "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/docs-ssg-gaps-plan-review-58c1t7ns/paragraph-before/rustify-docs.toml"
+          ],
+          "exit": 0,
+          "stdout": "{\"schema_version\":1,\"success\":true,\"diagnostics\":[{\"severity\":\"warning\",\"rule\":\"no-git-history\",\"file\":null,\"line\":null,\"column\":null,\"message\":\"pages show no last-updated date: not a git repository (or any of the parent directories): .git\",\"suggestion\":\"build inside a git repository with the content committed\"},{\"severity\":\"warning\",\"rule\":\"missing-site-url\",\"file\":\"rustify-docs.toml\",\"line\":null,\"column\":null,\"message\":\"site.url is not set, so pages have no canonical address or preview image and there is no sitemap\",\"suggestion\":\"add `url = \\\"https://…\\\"` under [site], the address the site is published at\"}],\"summary\":{\"errors\":0,\"warnings\":2,\"pages\":1}}\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "build",
+            "--format",
+            "json",
+            "--config",
+            "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/docs-ssg-gaps-plan-review-58c1t7ns/paragraph-before/rustify-docs.toml",
+            "--out",
+            "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/docs-ssg-gaps-plan-review-58c1t7ns/paragraph-before/dist"
+          ],
+          "exit": 0,
+          "stdout": "{\"schema_version\":1,\"success\":true,\"diagnostics\":[{\"severity\":\"warning\",\"rule\":\"no-git-history\",\"file\":null,\"line\":null,\"column\":null,\"message\":\"pages show no last-updated date: not a git repository (or any of the parent directories): .git\",\"suggestion\":\"build inside a git repository with the content committed\"},{\"severity\":\"warning\",\"rule\":\"missing-site-url\",\"file\":\"rustify-docs.toml\",\"line\":null,\"column\":null,\"message\":\"site.url is not set, so pages have no canonical address or preview image and there is no sitemap\",\"suggestion\":\"add `url = \\\"https://…\\\"` under [site], the address the site is published at\"}],\"summary\":{\"errors\":0,\"warnings\":2,\"pages\":1,\"files\":8,\"bytes\":54234,\"largest\":[{\"path\":\"404.html\",\"bytes\":3823},{\"path\":\"index.html\",\"bytes\":3431}],\"out\":\"/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/docs-ssg-gaps-plan-review-58c1t7ns/paragraph-before/dist\",\"milliseconds\":16}}\n",
+          "stderr": ""
+        }
+      ],
+      "output": {
+        "path": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/docs-ssg-gaps-plan-review-58c1t7ns/paragraph-before/dist/index.html",
+        "sha256": "f153c5f44b27c8838483b588707d715b4a8fd113213983a65fc154ccd94ab6e2",
+        "h1_attributes": [
+          {
+            "class": "rd-home-title"
+          },
+          {
+            "id": "welcome"
+          }
+        ],
+        "navigation_count": 0
+      }
+    },
+    {
+      "case": "comment-before",
+      "source": "---\ntitle: Home\ndescription: Review fixture\nlayout: home\n---\n<!-- intro -->\n\n# Body {#welcome}\n\nBody text.\n",
+      "config": "schema_version = 1\n[site]\nname = \"Review Docs\"\nlang = \"en\"\nbase = \"/\"\n",
+      "commands": [
+        {
+          "args": [
+            "check",
+            "--format",
+            "json",
+            "--config",
+            "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/docs-ssg-gaps-plan-review-58c1t7ns/comment-before/rustify-docs.toml"
+          ],
+          "exit": 0,
+          "stdout": "{\"schema_version\":1,\"success\":true,\"diagnostics\":[{\"severity\":\"warning\",\"rule\":\"no-git-history\",\"file\":null,\"line\":null,\"column\":null,\"message\":\"pages show no last-updated date: not a git repository (or any of the parent directories): .git\",\"suggestion\":\"build inside a git repository with the content committed\"},{\"severity\":\"warning\",\"rule\":\"missing-site-url\",\"file\":\"rustify-docs.toml\",\"line\":null,\"column\":null,\"message\":\"site.url is not set, so pages have no canonical address or preview image and there is no sitemap\",\"suggestion\":\"add `url = \\\"https://…\\\"` under [site], the address the site is published at\"}],\"summary\":{\"errors\":0,\"warnings\":2,\"pages\":1}}\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "build",
+            "--format",
+            "json",
+            "--config",
+            "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/docs-ssg-gaps-plan-review-58c1t7ns/comment-before/rustify-docs.toml",
+            "--out",
+            "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/docs-ssg-gaps-plan-review-58c1t7ns/comment-before/dist"
+          ],
+          "exit": 0,
+          "stdout": "{\"schema_version\":1,\"success\":true,\"diagnostics\":[{\"severity\":\"warning\",\"rule\":\"no-git-history\",\"file\":null,\"line\":null,\"column\":null,\"message\":\"pages show no last-updated date: not a git repository (or any of the parent directories): .git\",\"suggestion\":\"build inside a git repository with the content committed\"},{\"severity\":\"warning\",\"rule\":\"missing-site-url\",\"file\":\"rustify-docs.toml\",\"line\":null,\"column\":null,\"message\":\"site.url is not set, so pages have no canonical address or preview image and there is no sitemap\",\"suggestion\":\"add `url = \\\"https://…\\\"` under [site], the address the site is published at\"}],\"summary\":{\"errors\":0,\"warnings\":2,\"pages\":1,\"files\":8,\"bytes\":54235,\"largest\":[{\"path\":\"404.html\",\"bytes\":3823},{\"path\":\"index.html\",\"bytes\":3432}],\"out\":\"/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/docs-ssg-gaps-plan-review-58c1t7ns/comment-before/dist\",\"milliseconds\":16}}\n",
+          "stderr": ""
+        }
+      ],
+      "output": {
+        "path": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/docs-ssg-gaps-plan-review-58c1t7ns/comment-before/dist/index.html",
+        "sha256": "3c183149ebb157ed8d5bb04330e262d067f1be178fafa5fc6ed4c39ef8956d44",
+        "h1_attributes": [
+          {
+            "class": "rd-home-title"
+          },
+          {
+            "id": "welcome"
+          }
+        ],
+        "navigation_count": 0
+      }
+    },
+    {
+      "case": "wrapped-raw",
+      "source": "---\ntitle: Home\ndescription: Review fixture\nlayout: home\n---\n<div><h1 id=\"welcome\">Body</h1></div>\n\nBody text.\n",
+      "config": "schema_version = 1\n[site]\nname = \"Review Docs\"\nlang = \"en\"\nbase = \"/\"\n",
+      "commands": [
+        {
+          "args": [
+            "check",
+            "--format",
+            "json",
+            "--config",
+            "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/docs-ssg-gaps-plan-review-58c1t7ns/wrapped-raw/rustify-docs.toml"
+          ],
+          "exit": 0,
+          "stdout": "{\"schema_version\":1,\"success\":true,\"diagnostics\":[{\"severity\":\"warning\",\"rule\":\"no-git-history\",\"file\":null,\"line\":null,\"column\":null,\"message\":\"pages show no last-updated date: not a git repository (or any of the parent directories): .git\",\"suggestion\":\"build inside a git repository with the content committed\"},{\"severity\":\"warning\",\"rule\":\"missing-site-url\",\"file\":\"rustify-docs.toml\",\"line\":null,\"column\":null,\"message\":\"site.url is not set, so pages have no canonical address or preview image and there is no sitemap\",\"suggestion\":\"add `url = \\\"https://…\\\"` under [site], the address the site is published at\"}],\"summary\":{\"errors\":0,\"warnings\":2,\"pages\":1}}\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "build",
+            "--format",
+            "json",
+            "--config",
+            "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/docs-ssg-gaps-plan-review-58c1t7ns/wrapped-raw/rustify-docs.toml",
+            "--out",
+            "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/docs-ssg-gaps-plan-review-58c1t7ns/wrapped-raw/dist"
+          ],
+          "exit": 0,
+          "stdout": "{\"schema_version\":1,\"success\":true,\"diagnostics\":[{\"severity\":\"warning\",\"rule\":\"no-git-history\",\"file\":null,\"line\":null,\"column\":null,\"message\":\"pages show no last-updated date: not a git repository (or any of the parent directories): .git\",\"suggestion\":\"build inside a git repository with the content committed\"},{\"severity\":\"warning\",\"rule\":\"missing-site-url\",\"file\":\"rustify-docs.toml\",\"line\":null,\"column\":null,\"message\":\"site.url is not set, so pages have no canonical address or preview image and there is no sitemap\",\"suggestion\":\"add `url = \\\"https://…\\\"` under [site], the address the site is published at\"}],\"summary\":{\"errors\":0,\"warnings\":2,\"pages\":1,\"files\":8,\"bytes\":54231,\"largest\":[{\"path\":\"404.html\",\"bytes\":3823},{\"path\":\"index.html\",\"bytes\":3428}],\"out\":\"/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/docs-ssg-gaps-plan-review-58c1t7ns/wrapped-raw/dist\",\"milliseconds\":17}}\n",
+          "stderr": ""
+        }
+      ],
+      "output": {
+        "path": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/docs-ssg-gaps-plan-review-58c1t7ns/wrapped-raw/dist/index.html",
+        "sha256": "5875ffb242d20ed3e4fcfeebd338801db1c4e6b3a9ce7a44b6c85d9f336749dc",
+        "h1_attributes": [
+          {
+            "class": "rd-home-title"
+          },
+          {
+            "id": "welcome"
+          }
+        ],
+        "navigation_count": 0
+      }
+    },
+    {
+      "case": "no-actions",
+      "source": "---\ntitle: Home\ndescription: Review fixture\nlayout: home\n---\nBody text.\n",
+      "config": "schema_version = 1\n[site]\nname = \"Review Docs\"\nlang = \"en\"\nbase = \"/\"\n",
+      "commands": [
+        {
+          "args": [
+            "check",
+            "--format",
+            "json",
+            "--config",
+            "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/docs-ssg-gaps-plan-review-58c1t7ns/no-actions/rustify-docs.toml"
+          ],
+          "exit": 0,
+          "stdout": "{\"schema_version\":1,\"success\":true,\"diagnostics\":[{\"severity\":\"warning\",\"rule\":\"no-git-history\",\"file\":null,\"line\":null,\"column\":null,\"message\":\"pages show no last-updated date: not a git repository (or any of the parent directories): .git\",\"suggestion\":\"build inside a git repository with the content committed\"},{\"severity\":\"warning\",\"rule\":\"missing-site-url\",\"file\":\"rustify-docs.toml\",\"line\":null,\"column\":null,\"message\":\"site.url is not set, so pages have no canonical address or preview image and there is no sitemap\",\"suggestion\":\"add `url = \\\"https://…\\\"` under [site], the address the site is published at\"}],\"summary\":{\"errors\":0,\"warnings\":2,\"pages\":1}}\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "build",
+            "--format",
+            "json",
+            "--config",
+            "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/docs-ssg-gaps-plan-review-58c1t7ns/no-actions/rustify-docs.toml",
+            "--out",
+            "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/docs-ssg-gaps-plan-review-58c1t7ns/no-actions/dist"
+          ],
+          "exit": 0,
+          "stdout": "{\"schema_version\":1,\"success\":true,\"diagnostics\":[{\"severity\":\"warning\",\"rule\":\"no-git-history\",\"file\":null,\"line\":null,\"column\":null,\"message\":\"pages show no last-updated date: not a git repository (or any of the parent directories): .git\",\"suggestion\":\"build inside a git repository with the content committed\"},{\"severity\":\"warning\",\"rule\":\"missing-site-url\",\"file\":\"rustify-docs.toml\",\"line\":null,\"column\":null,\"message\":\"site.url is not set, so pages have no canonical address or preview image and there is no sitemap\",\"suggestion\":\"add `url = \\\"https://…\\\"` under [site], the address the site is published at\"}],\"summary\":{\"errors\":0,\"warnings\":2,\"pages\":1,\"files\":8,\"bytes\":54193,\"largest\":[{\"path\":\"404.html\",\"bytes\":3823},{\"path\":\"index.html\",\"bytes\":3390}],\"out\":\"/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/docs-ssg-gaps-plan-review-58c1t7ns/no-actions/dist\",\"milliseconds\":16}}\n",
+          "stderr": ""
+        }
+      ],
+      "output": {
+        "path": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/docs-ssg-gaps-plan-review-58c1t7ns/no-actions/dist/index.html",
+        "sha256": "6d2099ac79aab67fc20178f08af8e8f5ee34c0b42a6a59c8aad1b11a13270e64",
+        "h1_attributes": [
+          {
+            "class": "rd-home-title"
+          }
+        ],
+        "navigation_count": 0
+      }
+    }
+  ]
+}

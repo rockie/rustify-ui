@@ -1,0 +1,20 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+   Compiling ring v0.17.14
+mbx[warning]: cc cache bypassed: compiler invocation names no output file
+   Compiling rustls v0.23.45
+   Compiling rustls-webpki v0.103.15
+   Compiling ureq v3.4.2
+   Compiling rustify-docs-cli v0.1.1 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-docs-cli)
+mbx[progress]: 15s elapsed; 1 hits, 4 misses, 26 bypassed, 0 not looked up; ~0s compiler work saved
+    Finished `docs-cli` profile [optimized] target(s) in 28.39s
+mbx[cache]: 1 hits, 5 misses, 1 incremental, 26 bypassed; 0 B downloaded, 0 B uploaded, 3.3 MiB stored locally
+mbx[savings]: every checkout believes it owns 97.2 GiB of outputs. the disk keeps one copy and says nothing.

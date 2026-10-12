@@ -1,0 +1,9 @@
+rustc 1.99.0 (b940084d7 2026-09-28)
+dev: pages show no last-updated date: not a git repository (or any of the parent directories): .git
+dev: revision 1: 2 page(s) changed, 0 warning(s), 11 ms
+watching /private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/docs-review-r3-qfog5ro6/candidate-fixtures/attachment-watch-baseline; drafts are shown, nothing is written, stop with Ctrl-C
+dev: http://127.0.0.1:62628/docs/
+error[broken-link]: there is no file `content/manual.pdf`
+  --> content/index.md:6:1
+dev: revision 2 failed: 1 error(s), 0 warning(s), 8 ms; still serving revision 1
+dev: revision 3: 1 page(s) changed, 0 warning(s), 8 ms

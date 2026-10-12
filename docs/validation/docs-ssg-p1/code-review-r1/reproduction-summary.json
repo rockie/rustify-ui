@@ -1,0 +1,164 @@
+{
+  "work": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-review-r1-final",
+  "cases": 18,
+  "results": [
+    {
+      "case": "header-links",
+      "command": "build",
+      "exit": 0,
+      "header_labels_in_html": {
+        "Top link visible": false,
+        "Social link visible": false
+      },
+      "success": true,
+      "errors": 0
+    },
+    {
+      "case": "home-resource",
+      "command": "build",
+      "exit": 0,
+      "download_href": [
+        "manual.pdf"
+      ],
+      "manual_published": [],
+      "success": true,
+      "errors": 0
+    },
+    {
+      "case": "external-static-root",
+      "command": "build",
+      "exit": 0,
+      "outside_file_published": [
+        "outside.txt"
+      ],
+      "success": true,
+      "errors": 0
+    },
+    {
+      "case": "private-symlink",
+      "command": "build",
+      "exit": 0,
+      "private_bytes_published": [
+        "public.txt"
+      ],
+      "success": true,
+      "errors": 0
+    },
+    {
+      "case": "private-markdown",
+      "command": "build",
+      "exit": 0,
+      "private_page_published": [
+        "index.html",
+        "404.html",
+        ".env/index.html"
+      ],
+      "success": true,
+      "errors": 0
+    },
+    {
+      "case": "css-external",
+      "command": "build",
+      "exit": 0,
+      "external_url_in_css": true,
+      "success": true,
+      "errors": 0
+    },
+    {
+      "case": "svg-fragment",
+      "command": "build",
+      "exit": 0,
+      "use_href": [
+        "/docs/assets/files/sprite.77a678540f.svg"
+      ],
+      "success": true,
+      "errors": 0
+    },
+    {
+      "case": "frontmatter-no-newline",
+      "command": "check",
+      "exit": 101,
+      "success": null,
+      "errors": null
+    },
+    {
+      "case": "alternate-config",
+      "command": "check",
+      "exit": 1,
+      "success": false,
+      "errors": 1
+    },
+    {
+      "case": "no-content",
+      "command": "build",
+      "exit": 0,
+      "success": true,
+      "errors": 0
+    },
+    {
+      "case": "json-output-error",
+      "command": "build",
+      "exit": 1,
+      "success": null,
+      "errors": null
+    },
+    {
+      "case": "toc-percent",
+      "command": "build",
+      "exit": 0,
+      "success": true,
+      "errors": 0
+    },
+    {
+      "case": "css-local",
+      "command": "build",
+      "exit": 0,
+      "success": true,
+      "errors": 0
+    },
+    {
+      "case": "external-image",
+      "command": "build",
+      "exit": 0,
+      "outside_image_published": [
+        "assets/files/public.f0097fe34c.svg"
+      ],
+      "success": true,
+      "errors": 0
+    },
+    {
+      "case": "watch-resource",
+      "command": "build",
+      "exit": 0,
+      "success": true,
+      "errors": 0
+    },
+    {
+      "case": "private-logo",
+      "command": "build",
+      "exit": 0,
+      "private_bytes_published": [
+        "assets/files/.env.f04fa0513b"
+      ],
+      "success": true,
+      "errors": 0
+    },
+    {
+      "case": "private-include-alias",
+      "command": "build",
+      "exit": 0,
+      "private_bytes_in_html": true,
+      "success": true,
+      "errors": 0
+    },
+    {
+      "case": "missing-footnote-anchor",
+      "command": "build",
+      "exit": 0,
+      "link_published": true,
+      "target_exists": false,
+      "success": true,
+      "errors": 0
+    }
+  ]
+}

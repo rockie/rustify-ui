@@ -1,0 +1,20 @@
+{
+  "command": [
+    "mbx",
+    "build",
+    "--offline",
+    "--locked",
+    "-p",
+    "rustify-docs-cli",
+    "--profile",
+    "docs-cli"
+  ],
+  "cwd": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-review-r6-cn58nl04/baseline",
+  "CARGO_TARGET_DIR": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-review-r6-cn58nl04/base-target",
+  "PATH_prefix": "/Users/rockie/.cargo/bin",
+  "base": "3069107cf4990e15db6ad3ddddddd520bcc86838",
+  "exit": 0,
+  "seconds": 32.036200042000004,
+  "binary": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-review-r6-cn58nl04/base-target/docs-cli/rustify-docs",
+  "binary_sha256": "3883b3012576fc0d163f9f176eff37427c6ebb4279ac26459ccd850274899ed0"
+}

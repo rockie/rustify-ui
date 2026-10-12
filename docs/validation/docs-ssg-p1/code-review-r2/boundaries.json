@@ -1,0 +1,442 @@
+[
+  {
+    "case": "encoded-question-content",
+    "argv": [
+      "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-cli/rustify-docs",
+      "build",
+      "--config",
+      "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/docs-ssg-review-r2-cxbb1wm5/boundaries/encoded-question-content/rustify-docs.toml",
+      "--format",
+      "json"
+    ],
+    "exit": 1,
+    "report": {
+      "schema_version": 1,
+      "success": false,
+      "diagnostics": [
+        {
+          "severity": "warning",
+          "rule": "no-git-history",
+          "file": null,
+          "line": null,
+          "column": null,
+          "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+          "suggestion": "build inside a git repository with the content committed"
+        },
+        {
+          "severity": "error",
+          "rule": "broken-link",
+          "file": "content/index.md",
+          "line": 7,
+          "column": 1,
+          "message": "there is no file `content/manual`",
+          "suggestion": null
+        }
+      ],
+      "summary": {
+        "errors": 1,
+        "warnings": 1,
+        "pages": 0
+      }
+    },
+    "stderr": ""
+  },
+  {
+    "case": "encoded-question-static",
+    "argv": [
+      "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-cli/rustify-docs",
+      "build",
+      "--config",
+      "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/docs-ssg-review-r2-cxbb1wm5/boundaries/encoded-question-static/rustify-docs.toml",
+      "--format",
+      "json"
+    ],
+    "exit": 1,
+    "report": {
+      "schema_version": 1,
+      "success": false,
+      "diagnostics": [
+        {
+          "severity": "warning",
+          "rule": "no-git-history",
+          "file": null,
+          "line": null,
+          "column": null,
+          "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+          "suggestion": "build inside a git repository with the content committed"
+        },
+        {
+          "severity": "error",
+          "rule": "broken-link",
+          "file": "content/index.md",
+          "line": 7,
+          "column": 1,
+          "message": "no page or file at `/manual%3Fv.pdf`",
+          "suggestion": null
+        }
+      ],
+      "summary": {
+        "errors": 1,
+        "warnings": 1,
+        "pages": 0
+      }
+    },
+    "stderr": ""
+  },
+  {
+    "case": "suffix-content",
+    "argv": [
+      "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-cli/rustify-docs",
+      "build",
+      "--config",
+      "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/docs-ssg-review-r2-cxbb1wm5/boundaries/suffix-content/rustify-docs.toml",
+      "--format",
+      "json"
+    ],
+    "exit": 0,
+    "report": {
+      "schema_version": 1,
+      "success": true,
+      "diagnostics": [
+        {
+          "severity": "warning",
+          "rule": "no-git-history",
+          "file": null,
+          "line": null,
+          "column": null,
+          "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+          "suggestion": "build inside a git repository with the content committed"
+        }
+      ],
+      "summary": {
+        "errors": 0,
+        "warnings": 1,
+        "pages": 1,
+        "files": 11,
+        "bytes": 59873,
+        "largest": [
+          {
+            "path": "index.html",
+            "bytes": 4219
+          },
+          {
+            "path": "404.html",
+            "bytes": 4010
+          }
+        ],
+        "out": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/docs-ssg-review-r2-cxbb1wm5/boundaries/suffix-content/dist",
+        "milliseconds": 30
+      }
+    },
+    "stderr": ""
+  },
+  {
+    "case": "percent-headings",
+    "argv": [
+      "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-cli/rustify-docs",
+      "build",
+      "--config",
+      "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/docs-ssg-review-r2-cxbb1wm5/boundaries/percent-headings/rustify-docs.toml",
+      "--format",
+      "json"
+    ],
+    "exit": 0,
+    "report": {
+      "schema_version": 1,
+      "success": true,
+      "diagnostics": [
+        {
+          "severity": "warning",
+          "rule": "no-git-history",
+          "file": null,
+          "line": null,
+          "column": null,
+          "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+          "suggestion": "build inside a git repository with the content committed"
+        }
+      ],
+      "summary": {
+        "errors": 0,
+        "warnings": 1,
+        "pages": 1,
+        "files": 10,
+        "bytes": 60120,
+        "largest": [
+          {
+            "path": "index.html",
+            "bytes": 4649
+          },
+          {
+            "path": "404.html",
+            "bytes": 4010
+          }
+        ],
+        "out": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/docs-ssg-review-r2-cxbb1wm5/boundaries/percent-headings/dist",
+        "milliseconds": 19
+      }
+    },
+    "stderr": ""
+  },
+  {
+    "case": "css-fragment-only",
+    "argv": [
+      "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-cli/rustify-docs",
+      "build",
+      "--config",
+      "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/docs-ssg-review-r2-cxbb1wm5/boundaries/css-fragment-only/rustify-docs.toml",
+      "--format",
+      "json"
+    ],
+    "exit": 1,
+    "report": {
+      "schema_version": 1,
+      "success": false,
+      "diagnostics": [
+        {
+          "severity": "warning",
+          "rule": "no-git-history",
+          "file": null,
+          "line": null,
+          "column": null,
+          "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+          "suggestion": "build inside a git repository with the content committed"
+        },
+        {
+          "severity": "error",
+          "rule": "missing-image",
+          "file": "content/index.md",
+          "line": 7,
+          "column": 69,
+          "message": "`#m` does not exist",
+          "suggestion": "check the path; it is relative to this page, or to the asset directory when it starts with `/`"
+        }
+      ],
+      "summary": {
+        "errors": 1,
+        "warnings": 1,
+        "pages": 0
+      }
+    },
+    "stderr": ""
+  },
+  {
+    "case": "css-content-text",
+    "argv": [
+      "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-cli/rustify-docs",
+      "build",
+      "--config",
+      "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/docs-ssg-review-r2-cxbb1wm5/boundaries/css-content-text/rustify-docs.toml",
+      "--format",
+      "json"
+    ],
+    "exit": 1,
+    "report": {
+      "schema_version": 1,
+      "success": false,
+      "diagnostics": [
+        {
+          "severity": "warning",
+          "rule": "no-git-history",
+          "file": null,
+          "line": null,
+          "column": null,
+          "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+          "suggestion": "build inside a git repository with the content committed"
+        },
+        {
+          "severity": "error",
+          "rule": "missing-image",
+          "file": "content/index.md",
+          "line": 7,
+          "column": 1,
+          "message": "`foo` does not exist",
+          "suggestion": "check the path; it is relative to this page, or to the asset directory when it starts with `/`"
+        }
+      ],
+      "summary": {
+        "errors": 1,
+        "warnings": 1,
+        "pages": 0
+      }
+    },
+    "stderr": ""
+  },
+  {
+    "case": "css-query",
+    "argv": [
+      "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-cli/rustify-docs",
+      "build",
+      "--config",
+      "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/docs-ssg-review-r2-cxbb1wm5/boundaries/css-query/rustify-docs.toml",
+      "--format",
+      "json"
+    ],
+    "exit": 0,
+    "report": {
+      "schema_version": 1,
+      "success": true,
+      "diagnostics": [
+        {
+          "severity": "warning",
+          "rule": "no-git-history",
+          "file": null,
+          "line": null,
+          "column": null,
+          "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+          "suggestion": "build inside a git repository with the content committed"
+        }
+      ],
+      "summary": {
+        "errors": 0,
+        "warnings": 1,
+        "pages": 1,
+        "files": 12,
+        "bytes": 60380,
+        "largest": [
+          {
+            "path": "index.html",
+            "bytes": 4221
+          },
+          {
+            "path": "404.html",
+            "bytes": 4010
+          }
+        ],
+        "out": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/docs-ssg-review-r2-cxbb1wm5/boundaries/css-query/dist",
+        "milliseconds": 19
+      }
+    },
+    "stderr": ""
+  },
+  {
+    "case": "css-entity",
+    "argv": [
+      "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-cli/rustify-docs",
+      "build",
+      "--config",
+      "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/docs-ssg-review-r2-cxbb1wm5/boundaries/css-entity/rustify-docs.toml",
+      "--format",
+      "json"
+    ],
+    "exit": 1,
+    "report": {
+      "schema_version": 1,
+      "success": false,
+      "diagnostics": [
+        {
+          "severity": "warning",
+          "rule": "no-git-history",
+          "file": null,
+          "line": null,
+          "column": null,
+          "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+          "suggestion": "build inside a git repository with the content committed"
+        },
+        {
+          "severity": "error",
+          "rule": "missing-image",
+          "file": "content/index.md",
+          "line": 7,
+          "column": 1,
+          "message": "`&#47;bg.svg` does not exist",
+          "suggestion": "check the path; it is relative to this page, or to the asset directory when it starts with `/`"
+        }
+      ],
+      "summary": {
+        "errors": 1,
+        "warnings": 1,
+        "pages": 0
+      }
+    },
+    "stderr": ""
+  },
+  {
+    "case": "css-uppercase",
+    "argv": [
+      "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-cli/rustify-docs",
+      "build",
+      "--config",
+      "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/docs-ssg-review-r2-cxbb1wm5/boundaries/css-uppercase/rustify-docs.toml",
+      "--format",
+      "json"
+    ],
+    "exit": 1,
+    "report": {
+      "schema_version": 1,
+      "success": false,
+      "diagnostics": [
+        {
+          "severity": "error",
+          "rule": "output-check",
+          "file": null,
+          "line": null,
+          "column": null,
+          "message": "the generated stylesheet loads `/bg.svg`, which is not a file the site publishes",
+          "suggestion": null
+        },
+        {
+          "severity": "warning",
+          "rule": "no-git-history",
+          "file": null,
+          "line": null,
+          "column": null,
+          "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+          "suggestion": "build inside a git repository with the content committed"
+        }
+      ],
+      "summary": {
+        "errors": 1,
+        "warnings": 1,
+        "pages": 0
+      }
+    },
+    "stderr": ""
+  },
+  {
+    "case": "css-unwatched-guard",
+    "argv": [
+      "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-cli/rustify-docs",
+      "build",
+      "--config",
+      "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/docs-ssg-review-r2-cxbb1wm5/boundaries/css-unwatched-guard/rustify-docs.toml",
+      "--format",
+      "json"
+    ],
+    "exit": 0,
+    "report": {
+      "schema_version": 1,
+      "success": true,
+      "diagnostics": [
+        {
+          "severity": "warning",
+          "rule": "no-git-history",
+          "file": null,
+          "line": null,
+          "column": null,
+          "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+          "suggestion": "build inside a git repository with the content committed"
+        }
+      ],
+      "summary": {
+        "errors": 0,
+        "warnings": 1,
+        "pages": 1,
+        "files": 10,
+        "bytes": 59802,
+        "largest": [
+          {
+            "path": "index.html",
+            "bytes": 4207
+          },
+          {
+            "path": "404.html",
+            "bytes": 4010
+          }
+        ],
+        "out": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/docs-ssg-review-r2-cxbb1wm5/boundaries/css-unwatched-guard/dist",
+        "milliseconds": 17
+      }
+    },
+    "stderr": ""
+  }
+]

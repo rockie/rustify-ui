@@ -1,0 +1,269 @@
+{
+  "browser": "153.0.8010.12",
+  "cases": [
+    {
+      "name": "uppercase-underscore",
+      "version": "target",
+      "exit": 1,
+      "report": {
+        "schema_version": 1,
+        "success": false,
+        "diagnostics": [
+          {
+            "severity": "warning",
+            "rule": "no-git-history",
+            "file": null,
+            "line": null,
+            "column": null,
+            "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+            "suggestion": "build inside a git repository with the content committed"
+          },
+          {
+            "severity": "error",
+            "rule": "missing-image",
+            "file": "content/index.md",
+            "line": 6,
+            "column": 1,
+            "message": "`/assets/bg_one.svg` does not exist",
+            "suggestion": "check the path; it is relative to this page, or to the asset directory when it starts with `/`"
+          }
+        ],
+        "summary": {
+          "errors": 1,
+          "warnings": 1,
+          "pages": 0
+        }
+      }
+    },
+    {
+      "name": "uppercase-underscore",
+      "version": "baseline",
+      "exit": 0,
+      "report": {
+        "schema_version": 1,
+        "success": true,
+        "diagnostics": [
+          {
+            "severity": "warning",
+            "rule": "no-git-history",
+            "file": null,
+            "line": null,
+            "column": null,
+            "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+            "suggestion": "build inside a git repository with the content committed"
+          }
+        ],
+        "summary": {
+          "errors": 0,
+          "warnings": 1,
+          "pages": 1,
+          "files": 11,
+          "bytes": 59894,
+          "largest": [
+            {
+              "path": "index.html",
+              "bytes": 4114
+            },
+            {
+              "path": "404.html",
+              "bytes": 3935
+            }
+          ],
+          "out": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/docs-review-r3-qfog5ro6/candidate-fixtures/uppercase-underscore-baseline/dist",
+          "milliseconds": 36
+        }
+      },
+      "entry": "http://127.0.0.1:63459/",
+      "actual": {
+        "class": "h-10 w-10 [background-image:URL('/assets/bg_one.svg')]",
+        "background": "url(\"http://127.0.0.1:63459/assets/bg%20one.svg\")"
+      },
+      "decodedSource": "h-10 w-10 [background-image:URL('/assets/bg_one.svg')]",
+      "errors": []
+    },
+    {
+      "name": "entity-paren-equals",
+      "version": "target",
+      "exit": 0,
+      "report": {
+        "schema_version": 1,
+        "success": true,
+        "diagnostics": [
+          {
+            "severity": "warning",
+            "rule": "no-git-history",
+            "file": null,
+            "line": null,
+            "column": null,
+            "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+            "suggestion": "build inside a git repository with the content committed"
+          }
+        ],
+        "summary": {
+          "errors": 0,
+          "warnings": 1,
+          "pages": 1,
+          "files": 11,
+          "bytes": 59933,
+          "largest": [
+            {
+              "path": "index.html",
+              "bytes": 4184
+            },
+            {
+              "path": "404.html",
+              "bytes": 3975
+            }
+          ],
+          "out": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/docs-review-r3-qfog5ro6/candidate-fixtures/entity-paren-equals-target/dist",
+          "milliseconds": 28
+        }
+      },
+      "entry": "http://127.0.0.1:63468/docs/",
+      "actual": {
+        "class": "h-10 w-10 [background-image:url/docs/assets/files/bg.106eb81194.svg)]",
+        "background": "none"
+      },
+      "decodedSource": "h-10 w-10 [background-image:url(=/bg.svg)]",
+      "errors": []
+    },
+    {
+      "name": "entity-paren-equals",
+      "version": "baseline",
+      "exit": 0,
+      "report": {
+        "schema_version": 1,
+        "success": true,
+        "diagnostics": [
+          {
+            "severity": "warning",
+            "rule": "no-git-history",
+            "file": null,
+            "line": null,
+            "column": null,
+            "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+            "suggestion": "build inside a git repository with the content committed"
+          }
+        ],
+        "summary": {
+          "errors": 0,
+          "warnings": 1,
+          "pages": 1,
+          "files": 10,
+          "bytes": 59635,
+          "largest": [
+            {
+              "path": "index.html",
+              "bytes": 4160
+            },
+            {
+              "path": "404.html",
+              "bytes": 3975
+            }
+          ],
+          "out": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/docs-review-r3-qfog5ro6/candidate-fixtures/entity-paren-equals-baseline/dist",
+          "milliseconds": 20
+        }
+      },
+      "entry": "http://127.0.0.1:63473/docs/",
+      "actual": {
+        "class": "h-10 w-10 [background-image:url(=/bg.svg)]",
+        "background": "none"
+      },
+      "decodedSource": "h-10 w-10 [background-image:url(=/bg.svg)]",
+      "errors": []
+    },
+    {
+      "name": "entity-semicolon-control",
+      "version": "target",
+      "exit": 0,
+      "report": {
+        "schema_version": 1,
+        "success": true,
+        "diagnostics": [
+          {
+            "severity": "warning",
+            "rule": "no-git-history",
+            "file": null,
+            "line": null,
+            "column": null,
+            "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+            "suggestion": "build inside a git repository with the content committed"
+          }
+        ],
+        "summary": {
+          "errors": 0,
+          "warnings": 1,
+          "pages": 1,
+          "files": 11,
+          "bytes": 60070,
+          "largest": [
+            {
+              "path": "index.html",
+              "bytes": 4189
+            },
+            {
+              "path": "404.html",
+              "bytes": 3975
+            }
+          ],
+          "out": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/docs-review-r3-qfog5ro6/candidate-fixtures/entity-semicolon-control-target/dist",
+          "milliseconds": 20
+        }
+      },
+      "entry": "http://127.0.0.1:63478/docs/",
+      "actual": {
+        "class": "h-10 w-10 [background-image:url(/docs/assets/files/bg.106eb81194.svg)]",
+        "background": "url(\"http://127.0.0.1:63478/docs/assets/files/bg.106eb81194.svg\")"
+      },
+      "decodedSource": "h-10 w-10 [background-image:url(=/bg.svg)]",
+      "errors": []
+    },
+    {
+      "name": "entity-semicolon-control",
+      "version": "baseline",
+      "exit": 0,
+      "report": {
+        "schema_version": 1,
+        "success": true,
+        "diagnostics": [
+          {
+            "severity": "warning",
+            "rule": "no-git-history",
+            "file": null,
+            "line": null,
+            "column": null,
+            "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+            "suggestion": "build inside a git repository with the content committed"
+          }
+        ],
+        "summary": {
+          "errors": 0,
+          "warnings": 1,
+          "pages": 1,
+          "files": 10,
+          "bytes": 59636,
+          "largest": [
+            {
+              "path": "index.html",
+              "bytes": 4161
+            },
+            {
+              "path": "404.html",
+              "bytes": 3975
+            }
+          ],
+          "out": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/docs-review-r3-qfog5ro6/candidate-fixtures/entity-semicolon-control-baseline/dist",
+          "milliseconds": 20
+        }
+      },
+      "entry": "http://127.0.0.1:63484/docs/",
+      "actual": {
+        "class": "h-10 w-10 [background-image:url(=/bg.svg)]",
+        "background": "none"
+      },
+      "decodedSource": "h-10 w-10 [background-image:url(=/bg.svg)]",
+      "errors": []
+    }
+  ]
+}

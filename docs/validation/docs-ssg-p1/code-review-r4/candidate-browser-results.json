@@ -1,0 +1,209 @@
+{
+  "browser": "153.0.8010.12",
+  "cases": [
+    {
+      "case": "svg-template-pair",
+      "version": "base",
+      "entry": "http://127.0.0.1:50472/",
+      "actual": {
+        "visible": null,
+        "circle": {
+          "tag": "circle",
+          "namespace": "http://www.w3.org/2000/svg",
+          "templateContent": false
+        },
+        "svg-holder": {
+          "tag": "template",
+          "namespace": "http://www.w3.org/2000/svg",
+          "templateContent": false
+        },
+        "holder": null,
+        "ghost": null
+      },
+      "hash": "",
+      "errors": []
+    },
+    {
+      "case": "svg-template-pair",
+      "version": "target-without-link",
+      "entry": "http://127.0.0.1:50479/",
+      "actual": {
+        "visible": null,
+        "circle": {
+          "tag": "circle",
+          "namespace": "http://www.w3.org/2000/svg",
+          "templateContent": false
+        },
+        "svg-holder": {
+          "tag": "template",
+          "namespace": "http://www.w3.org/2000/svg",
+          "templateContent": false
+        },
+        "holder": null,
+        "ghost": null
+      },
+      "hash": "",
+      "errors": []
+    },
+    {
+      "case": "svg-template-selfclose",
+      "version": "base",
+      "entry": "http://127.0.0.1:50484/",
+      "actual": {
+        "visible": {
+          "tag": "H2",
+          "namespace": "http://www.w3.org/1999/xhtml",
+          "templateContent": false
+        },
+        "circle": null,
+        "svg-holder": null,
+        "holder": null,
+        "ghost": null
+      },
+      "hash": "#visible",
+      "errors": []
+    },
+    {
+      "case": "svg-template-selfclose",
+      "version": "target-without-link",
+      "entry": "http://127.0.0.1:50489/",
+      "actual": {
+        "visible": {
+          "tag": "H2",
+          "namespace": "http://www.w3.org/1999/xhtml",
+          "templateContent": false
+        },
+        "circle": null,
+        "svg-holder": null,
+        "holder": null,
+        "ghost": null
+      },
+      "hash": "",
+      "errors": []
+    },
+    {
+      "case": "html-template-control",
+      "version": "base",
+      "entry": "http://127.0.0.1:50494/",
+      "actual": {
+        "visible": {
+          "tag": "H2",
+          "namespace": "http://www.w3.org/1999/xhtml",
+          "templateContent": false
+        },
+        "circle": null,
+        "svg-holder": null,
+        "holder": {
+          "tag": "TEMPLATE",
+          "namespace": "http://www.w3.org/1999/xhtml",
+          "templateContent": true
+        },
+        "ghost": null
+      },
+      "hash": "",
+      "errors": []
+    },
+    {
+      "case": "html-template-control",
+      "version": "target-without-link",
+      "entry": "http://127.0.0.1:50499/",
+      "actual": {
+        "visible": {
+          "tag": "H2",
+          "namespace": "http://www.w3.org/1999/xhtml",
+          "templateContent": false
+        },
+        "circle": null,
+        "svg-holder": null,
+        "holder": {
+          "tag": "TEMPLATE",
+          "namespace": "http://www.w3.org/1999/xhtml",
+          "templateContent": true
+        },
+        "ghost": null
+      },
+      "hash": "",
+      "errors": []
+    },
+    {
+      "case": "html-template-ghost",
+      "version": "base",
+      "entry": "http://127.0.0.1:50508/",
+      "actual": {
+        "visible": null,
+        "circle": null,
+        "svg-holder": null,
+        "holder": {
+          "tag": "TEMPLATE",
+          "namespace": "http://www.w3.org/1999/xhtml",
+          "templateContent": true
+        },
+        "ghost": null
+      },
+      "hash": "",
+      "errors": []
+    },
+    {
+      "case": "html-template-ghost",
+      "version": "target-without-link",
+      "entry": "http://127.0.0.1:50515/",
+      "actual": {
+        "visible": null,
+        "circle": null,
+        "svg-holder": null,
+        "holder": {
+          "tag": "TEMPLATE",
+          "namespace": "http://www.w3.org/1999/xhtml",
+          "templateContent": true
+        },
+        "ghost": null
+      },
+      "hash": "",
+      "errors": []
+    },
+    {
+      "case": "nested-svg-template",
+      "version": "base",
+      "entry": "http://127.0.0.1:50523/",
+      "actual": {
+        "visible": {
+          "tag": "H2",
+          "namespace": "http://www.w3.org/1999/xhtml",
+          "templateContent": false
+        },
+        "circle": null,
+        "svg-holder": null,
+        "holder": {
+          "tag": "TEMPLATE",
+          "namespace": "http://www.w3.org/1999/xhtml",
+          "templateContent": true
+        },
+        "ghost": null
+      },
+      "hash": "",
+      "errors": []
+    },
+    {
+      "case": "nested-svg-template",
+      "version": "target-without-link",
+      "entry": "http://127.0.0.1:50528/",
+      "actual": {
+        "visible": {
+          "tag": "H2",
+          "namespace": "http://www.w3.org/1999/xhtml",
+          "templateContent": false
+        },
+        "circle": null,
+        "svg-holder": null,
+        "holder": {
+          "tag": "TEMPLATE",
+          "namespace": "http://www.w3.org/1999/xhtml",
+          "templateContent": true
+        },
+        "ghost": null
+      },
+      "hash": "",
+      "errors": []
+    }
+  ]
+}

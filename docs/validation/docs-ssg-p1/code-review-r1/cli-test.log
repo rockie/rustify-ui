@@ -1,0 +1,120 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling ring v0.17.14
+   Compiling rustls v0.23.45
+   Compiling rustls-webpki v0.103.15
+   Compiling ureq v3.4.2
+   Compiling rustify-docs-cli v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-docs-cli)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.91s
+     Running unittests src/main.rs (target/debug/deps/rustify_docs-4941487e692ecdb0)
+
+running 10 tests
+test dev::tests::query_values_decode ... ok
+test links::tests::addresses_drop_fragments_and_only_the_web_is_checked ... ok
+test dev::tests::served_pages_say_which_run_and_build_they_are ... ok
+test dev::tests::dropped_events_and_watcher_errors_read_everything_again ... ok
+test dev::tests::page_keys_ignore_existence ... ok
+test new::tests::names_are_quoted_where_the_template_quotes_them ... ok
+test dev::tests::the_filter_watches_inputs_and_never_the_output ... ok
+test dev::tests::requests_map_onto_the_generation ... ok
+test dev::tests::a_page_reloads_only_when_its_own_build_output_changed ... ok
+test preview::tests::requests_map_onto_the_output_and_nothing_else ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/artifacts.rs (target/debug/deps/artifacts-5510978de05134a7)
+
+running 8 tests
+test a_built_site_carries_no_gpu_runtime ... ok
+test site_files_list_what_may_be_indexed_and_nothing_private_ships ... ok
+test the_manifest_is_true_to_the_files ... ok
+test without_a_url_there_is_no_canonical_address_or_sitemap_and_a_warning ... ok
+test a_subpath_build_prefixes_every_address_and_every_address_resolves ... ok
+test a_root_build_and_a_base_override_resolve_the_same_way ... ok
+test a_logo_pair_and_the_share_image_are_published_by_content ... ok
+test a_changed_file_renames_itself_and_changes_only_what_references_it ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.05s
+
+     Running tests/check.rs (target/debug/deps/check-6ef3fd779dffaf4b)
+
+running 8 tests
+test help_and_version ... ok
+test configuration_errors_are_located_in_the_configuration ... ok
+test usage_errors_exit_with_two_and_touch_nothing ... ok
+test the_configuration_defaults_to_the_working_directory ... ok
+test text_mode_reports_on_stderr_with_locations_and_a_conclusion ... ok
+test three_known_errors_are_exactly_three_located_errors ... ok
+test warnings_fail_only_when_denied ... ok
+test a_clean_site_passes_and_check_writes_nothing ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.47s
+
+     Running tests/dev.rs (target/debug/deps/dev-40f7add669959345)
+
+running 9 tests
+test without_rust_dev_stops_before_watching_or_listening ... ok
+test a_first_build_that_fails_shows_the_problems_until_one_builds ... ok
+test drafts_are_shown_and_marked_and_a_link_to_one_is_a_warning ... ok
+test a_panic_in_a_build_is_a_problem_and_the_session_goes_on ... ok
+test a_burst_of_saves_ends_on_the_last_one ... ok
+test a_new_site_is_served_from_memory_and_nothing_is_written ... ok
+test a_failed_build_keeps_the_last_good_one_until_it_is_fixed ... ok
+test a_busy_default_port_falls_back_and_a_busy_explicit_port_is_refused ... ok
+test a_save_reloads_the_pages_it_changed_and_no_others ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.32s
+
+     Running tests/external.rs (target/debug/deps/external-87c9908fe5443ab8)
+
+running 2 tests
+test without_the_flag_check_requests_nothing ... ok
+test each_address_is_asked_once_and_failures_are_errors_where_written ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.14s
+
+     Running tests/faults.rs (target/debug/deps/faults-1316c0f6929c6aeb)
+
+running 9 tests
+test outputs_that_are_not_a_build_output_are_refused ... ok
+test an_output_whose_owner_cannot_be_confirmed_is_never_replaced ... ok
+test private_files_and_links_out_of_the_project_never_ship ... ok
+test no_machine_path_user_or_environment_value_reaches_the_output ... ok
+test author_html_the_policy_refuses_fails_check_and_build_where_written ... ok
+test one_writer_at_a_time_and_a_killed_build_lets_go ... ok
+test a_refused_permission_keeps_the_previous_output ... ok
+mbx[progress]: 15s elapsed; 6 hits, 0 misses, 0 bypassed, 0 not looked up; ~0s compiler work saved
+test a_build_killed_at_each_step_of_publishing_is_recovered_by_the_next ... ok
+test a_full_disk_keeps_the_previous_output ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 13.81s
+
+     Running tests/new_build.rs (target/debug/deps/new_build-a8d0bf39ac2518a4)
+
+running 5 tests
+test without_rust_new_stops_before_writing_anything ... ok
+test new_writes_into_an_empty_directory_and_never_into_a_full_one ... ok
+test a_built_site_leaves_the_repository_clean_and_dated ... ok
+test a_failed_first_build_leaves_no_output ... ok
+test a_new_site_builds_and_nothing_is_compiled ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.16s
+
+     Running tests/reliability.rs (target/debug/deps/reliability-4e4af49d69d0b1d3)
+
+running 5 tests
+test an_output_never_replaces_the_project_or_a_stranger ... ok
+test a_successful_build_reports_its_size_and_largest_pages ... ok
+test the_same_input_builds_the_same_bytes ... ok
+test a_failed_build_keeps_the_previous_output_and_reports_why ... ok
+test one_output_has_one_writer_and_previews_need_a_finished_production_build ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.28s
+
+mbx[cache]: 6 hits, 0 misses, 9 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: 36706 compilations old. not one compiled twice.

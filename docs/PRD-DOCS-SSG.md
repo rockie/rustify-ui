@@ -163,7 +163,7 @@ rustify-ui 自身也有同样的问题：
 ## 3. 需求条目
 
 > 共 17 条功能需求（WORK-F1–F17）和 7 条非功能需求（WORK-N1–N7），全部未写入 SPMS，编号为工作号。跨期需求在条目开头标出终验期；单期需求的验收不加期次前缀。参考环境如下，各条 NFR 只补充自己的口径：
-> - 参考机：Apple Silicon 的 macOS。兼容性用 Chrome 最新稳定版；P1 性能按 WORK-N1 的已批准合同固定 Chromium 153，分别登记。
+> - 参考机：Apple Silicon 的 macOS。兼容性默认用 Chrome 最新稳定版；P1 本轮按 WORK-N3 的 D-04 例外使用现有 Chrome 模拟与真实 Safari。P1 性能按 WORK-N1 的已批准合同固定 Chromium 153，分别登记。
 > - 参考站点 A：rustify-ui 文档站，P2 起才存在。
 > - 参考站点 B：500 页、中英各半的内容站；单页正文长度与图片数量按 rustify-ui 现有 12 份指南的分布生成。搜索语料另按 1,000 页计。
 > - 性能数值在页面内用浏览器性能计时测得，不以自动化工具的操作耗时代替；完整测量合同见 WORK-N1、WORK-N2。
@@ -659,7 +659,7 @@ rustify-ui 自身也有同样的问题：
   - CSP：与仓库部署契约逐字一致的严格 CSP（E11），即 `default-src 'none'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; media-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'`。
   - CSP 交付（D11）：能设置响应头的托管与 `preview` 以响应头交付上述完整策略。每页另内置一份 meta 策略，内容是上述策略去掉 `frame-ancestors` 后的全部指令（该指令无法通过 meta 生效，见 CSP3 §6.4.2）；只能依靠 meta 的托管因此不能阻止页面被其他站点嵌入，部署说明写明这一差异。
   - 托管条件：①目录地址返回该目录下的 `index.html`，不需要重写规则；②支持自定义错误页，对不存在的地址以 404 状态返回产物中基路径根部的 `404.html`（例如 GitHub Pages 使用发布内容根部的 `404.html`）；③按扩展名返回正确的内容类型，其中 `.wasm` 为 `application/wasm`。不满足这三条的托管不在支持范围内。是否支持设置响应头只影响 CSP 的交付方式。
-  - 浏览器范围：P1 已批准例外为 Chrome 最新稳定版、真实 macOS Safari，以及 iPhone/Safari、Android/Chrome 各一台，登记实际设备/OS/浏览器版本。用户已将 Firefox 的真实稳定版与 Playwright 引擎验收一并后移，恢复期尚未指定；P4 的 AC-6 保留完整矩阵。依据[原计划 §9.3](plan/DOCS-SSG-P1.md#93-性能千次保存与真实环境合同)及[差异报告 D-01/D-03](plan/DOCS-SSG-P1.prd-dev-gaps.md#4-决策账本)；仿真、旧手机未标版本的记录不能替代修后同产物真机证据。
+  - 浏览器范围：用户 2026-10-12 明确批准 [D-04](validation/docs-ssg-p1-gaps/m2/browser-decision.json)：P1 本轮以现有 Google Chrome 154.0.8037.98 的手机尺寸/触控模拟及真实 macOS Safari 收口；桌面 Chrome 最新稳定版、iPhone/Safari 与 Android/Chrome 真机一并留后续补验，具体补验期未指定。Firefox 的真实稳定版与 Playwright 引擎验收仍按 D-01 后移；P4 的 AC-6 保留完整矩阵。依据[原计划 §9.3](plan/DOCS-SSG-P1.md#93-性能千次保存与真实环境合同)及[本轮 M2](validation/docs-ssg-p1-gaps/M2.md)。模拟记录标明实际 Chrome 版本、视口和触控参数，不记为手机 OS、Safari/WebKit 或实体设备通过；旧真机事实保留其历史范围。
 - **依赖**：DEP-5、DEP-9。
 
 > **分期与终验**：本需求跨 P1 / P4 交付，**终验期 = P4**。
@@ -669,7 +669,7 @@ rustify-ui 自身也有同样的问题：
 | AC-1 | 产物部署到满足托管条件、但不支持重写规则的静态托管的根路径或任意子路径后（与构建时声明的基路径一致），所有页面、资源、站内链接与锚点均可用，失效引用为 0；基路径下任意深度的不存在地址以 404 状态显示站点的 404 页 | P1 |
 | AC-2 | 以响应头交付上述完整策略时，浏览全部页面并使用当期全部内置交互，CSP 违规为 0；每页内置的 meta 策略与完整策略除 `frame-ancestors` 外逐项一致，只有 meta 策略生效时同样零违规；产物不要求跨源隔离响应头 | P1 |
 | AC-3 | 默认配置的产物在浏览时只向站点自身的源发起请求 | P1 |
-| AC-4 | 各期出口时，桌面 Chrome、Firefox、Safari 最新稳定版通过该期已交付的读者端验收（P1 按上述已批准例外执行）；iOS Safari 与 Android Chrome 最新版在 375 px 宽度下能完成该期已交付的阅读、导航与主题切换 | P1 |
+| AC-4 | 各期出口时，桌面 Chrome、Firefox、Safari 最新稳定版通过该期已交付的读者端验收；iOS Safari 与 Android Chrome 最新版在 375 px 宽度下能完成该期已交付的阅读、导航与主题切换。P1 本轮按上述用户已批准的 D-04 例外执行 | P1 |
 | AC-5 | 浏览器禁用脚本时，全部内容页的正文、侧栏、页内目录与上一页、下一页可用；搜索入口和演示交互说明需要启用脚本，演示仍显示初始画面与源码 | P4 |
 | AC-6 | 桌面 Chrome、Firefox、Safari 最新稳定版通过全部读者端验收；iOS Safari 与 Android Chrome 最新版在 375 px 宽度下能完成阅读、导航、搜索和主题切换 | P4 |
 
@@ -804,7 +804,7 @@ rustify-ui 自身也有同样的问题：
 | --- | --- | --- | --- | --- | --- |
 | Q1 | 非阻塞 | 产品名和 CLI 命令名 | 产品名 Rustify Docs，命令 `rustify-docs`，与仓库名保持一致；改名不影响需求含义 | 用户 | P1 计划定稿前 |
 | Q2 | 非阻塞 | 发布渠道：crates.io 还是 git | 先用 `cargo install --git` 安装、站点以 git 依赖引用框架，因为工作区目前 `publish = false`；渠道不改变验收 | 用户 | P4 出口前 |
-| Q3 | 非阻塞；P1 例外已确认 | 浏览器矩阵 | P1 按 WORK-N3 已批准范围执行；Firefox 的恢复期继续跟踪，P4 完整矩阵保留。真实设备与稳定浏览器通过情况以修后产物证据为准 | 用户 | Firefox 恢复期及 P4 出口前 |
+| Q3 | 非阻塞；P1 例外已确认 | 浏览器矩阵 | P1 本轮按 WORK-N3/D-04 执行；最新版 Chrome、两种手机真机及 Firefox 的恢复期继续跟踪，具体期次未指定，P4 完整矩阵保留。模拟、真实设备和稳定浏览器证据分别登记 | 用户 | 后续补验及 P4 出口前 |
 | Q4 | 非阻塞 | rustify-ui 文档站部署在哪里 | GitHub Pages 的 `/rustify-ui/` 子路径。它满足 WORK-N3 的托管条件（以发布内容根部的 `404.html` 作为错误页），但不能设置响应头，因此按 D11 只交付 meta 策略、不交付 `frame-ancestors`。部署位置影响 CSP 的交付方式，验收按 WORK-F16/AC-3 进行；换成能设响应头的托管不改变需求 | 用户 | P2 出口前 |
 | Q5 | 非阻塞；P1 测量合同已确认 | G1 与 WORK-N1、N2 中的提案阈值及后续期测量校准 | P1 引擎、CDP 条件、冷缓存与五次中位数按 WORK-N1 已确认合同执行，原数值预算保持。G1、后续期阈值与校准继续跟踪，只能收紧或说明理由后放宽；WORK-N1/AC-4 起点仍为首次内容绘制 | 用户与框架维护者 | 相应后续期计划定稿前 |
 | Q6 | 非阻塞 | 默认语言的地址形式 | 默认语言位于基路径根部，其他语言加前缀；不影响能力，只影响地址外观 | 用户 | P3 计划定稿前 |

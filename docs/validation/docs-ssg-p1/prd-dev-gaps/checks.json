@@ -1,0 +1,50 @@
+[
+  {
+    "name": "library-test",
+    "command": [
+      "mbx",
+      "test",
+      "--locked",
+      "-p",
+      "rustify-docs"
+    ],
+    "exit": 0,
+    "seconds": 42.521
+  },
+  {
+    "name": "cli-test",
+    "command": [
+      "mbx",
+      "test",
+      "--locked",
+      "-p",
+      "rustify-docs-cli",
+      "--test",
+      "check",
+      "--test",
+      "new_build",
+      "--test",
+      "artifacts",
+      "--test",
+      "reliability",
+      "--test",
+      "dev"
+    ],
+    "exit": 0,
+    "seconds": 11.504
+  },
+  {
+    "name": "cli-build",
+    "command": [
+      "mbx",
+      "build",
+      "--locked",
+      "-p",
+      "rustify-docs-cli",
+      "--profile",
+      "docs-cli"
+    ],
+    "exit": 0,
+    "seconds": 0.503
+  }
+]

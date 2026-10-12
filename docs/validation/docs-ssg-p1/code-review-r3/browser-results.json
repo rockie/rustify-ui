@@ -1,0 +1,125 @@
+{
+  "browser": "153.0.8010.12",
+  "cases": [
+    {
+      "name": "css-content-text",
+      "entry": "http://127.0.0.1:58214/docs/",
+      "computed": [
+        {
+          "class": "before:content-['url(foo)']",
+          "background": "none",
+          "mask": "none",
+          "before": "\"url(foo)\""
+        }
+      ],
+      "downloads": [],
+      "errors": []
+    },
+    {
+      "name": "css-entity",
+      "entry": "http://127.0.0.1:58221/docs/",
+      "computed": [
+        {
+          "class": "bg-[url(/docs/assets/files/bg.106eb81194.svg)] h-20",
+          "background": "url(\"http://127.0.0.1:58221/docs/assets/files/bg.106eb81194.svg\")",
+          "mask": "none",
+          "before": "none"
+        }
+      ],
+      "downloads": [],
+      "errors": []
+    },
+    {
+      "name": "css-fragment-only",
+      "entry": "http://127.0.0.1:58228/docs/",
+      "computed": [
+        {
+          "class": "[mask:url(#m)]",
+          "background": "none",
+          "mask": "url(\"#m\")",
+          "before": "none"
+        }
+      ],
+      "downloads": [],
+      "errors": []
+    },
+    {
+      "name": "css-mask-rendered",
+      "entry": "http://127.0.0.1:58233/docs/",
+      "computed": [
+        {
+          "class": "[mask:url(#m)]",
+          "background": "none",
+          "mask": "url(\"#m\")",
+          "before": "none"
+        }
+      ],
+      "downloads": [],
+      "maskPixels": {
+        "center": [
+          255,
+          0,
+          0
+        ],
+        "corner": [
+          249,
+          250,
+          251
+        ]
+      },
+      "errors": []
+    },
+    {
+      "name": "css-query",
+      "entry": "http://127.0.0.1:58238/docs/",
+      "computed": [
+        {
+          "class": "bg-[url(/docs/assets/files/bg.106eb81194.svg?x=1&y=2)] h-20",
+          "background": "url(\"http://127.0.0.1:58238/docs/assets/files/bg.106eb81194.svg?x=1&y=2\")",
+          "mask": "none",
+          "before": "none"
+        }
+      ],
+      "downloads": [],
+      "errors": []
+    },
+    {
+      "name": "css-uppercase",
+      "entry": "http://127.0.0.1:58245/docs/",
+      "computed": [
+        {
+          "class": "[background-image:URL(/docs/assets/files/bg.106eb81194.svg)] h-20",
+          "background": "url(\"http://127.0.0.1:58245/docs/assets/files/bg.106eb81194.svg\")",
+          "mask": "none",
+          "before": "none"
+        }
+      ],
+      "downloads": [],
+      "errors": []
+    },
+    {
+      "name": "encoded-question-content",
+      "entry": "http://127.0.0.1:58254/docs/",
+      "computed": [],
+      "downloads": [
+        {
+          "href": "http://127.0.0.1:58254/docs/assets/files/manual%3Fv.c5c2e8be6a.pdf",
+          "body": "%PDF-1.4 fixture"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "name": "encoded-question-static",
+      "entry": "http://127.0.0.1:58260/docs/",
+      "computed": [],
+      "downloads": [
+        {
+          "href": "http://127.0.0.1:58260/docs/assets/files/manual%3Fv.c5c2e8be6a.pdf",
+          "body": "%PDF-1.4 fixture"
+        }
+      ],
+      "errors": []
+    }
+  ]
+}

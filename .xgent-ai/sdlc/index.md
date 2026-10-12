@@ -19,8 +19,8 @@
 - [THEME-STUDIO](status/plan/0222c547-cbeb-412a-8c3e-3399b943670e.md)：6/6 历史交付；F-01/F-02 已修复验证，后续共享改动与独立复审待核对。
 - [VELLUM](status/plan/fb86407f-8889-4844-99a0-a0e6a580a27f.md)：8/8 历史交付；后续相关提交及共享改动未由原终验覆盖。
 - [融合 Leptos CSR 与 Makepad 的框架 PRD](status/prd/cc008e52-5073-46aa-aa2f-864f262e41b0.md)：完整版本 Q1–Q3 定稿问题尚未关闭；P1–P3 分期封板不等于完整 PRD 达标。
-- [DOCS-SSG 静态文档站框架与 CLI PRD](status/prd/8917bbeb-7add-4826-95ee-5cdf6bdff735.md)：[完整评审](status/review/4a0edc00-c638-4313-af24-7726f88bc321.md)的 10 项意见已修订并复核（review-applied），规范状态 `prd-ready`；用户新增决策 D11–D14，其中 D12 把 AI 输出收窄为 HTML 加 llms.txt。[P1 计划](status/plan/526c88c7-a4b3-4ea9-9193-371420b66d1d.md)已承接；代码未改，未写 SPMS、未提交。
-- [DOCS-SSG-P1](status/plan/526c88c7-a4b3-4ea9-9193-371420b66d1d.md)：D9–D11 已由用户 2026-10-10 定案（[决策记录](../../docs/plan/DOCS-SSG-P1.decisions.md)；D10 平台选“仅 macOS”，新增 C-6），当前 **Ready**（dev-plan-ready），0/9 未开始；[评审处置](status/review/accc055e-a23c-4390-a62a-fa30c447653f.md)节仍写待决策，未改写。设备/固定 Chrome/性能/推送仍是后续里程碑门。下一步按 M1 实施，先采集 b0a6bc5 改前基线。
+- [DOCS-SSG PRD](status/prd/8917bbeb-7add-4826-95ee-5cdf6bdff735.md)：文档规范状态prd-ready，已批准矩阵/测量合同待同步；P1原计划已8/9，四项交付遗漏、真机及M9缺证见[覆盖报告](status/review/5b279eaf-0dc1-4c8f-a54a-672cc942633f.md)。P2–P4终验保留，未写SPMS。
+- [DOCS-SSG-P1](status/plan/526c88c7-a4b3-4ea9-9193-371420b66d1d.md)：9/9完成；固定安装1b81de2（CLI0.1.4）、最终交付945398c、回填be2cf15。本地115+远端34浏览器、219 Docs Rust、1091 CSR/GPU工作区及模式矩阵/真实安装升级回滚通过；GitHub同SHA安装/SDK/源预览完成。独立gaps2/2，D-04最新版Chrome及两手机延期、P4完整矩阵保留。下一步由用户以review-code评审原计划。
 
 ## 初始化范围与验证边界
 

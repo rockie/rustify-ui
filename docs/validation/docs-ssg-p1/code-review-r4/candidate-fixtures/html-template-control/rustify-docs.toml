@@ -1,0 +1,8 @@
+schema_version=1
+[site]
+name="Review"
+url="https://example.net/"
+base="/"
+[[nav.groups]]
+label="Pages"
+items=["index.md"]

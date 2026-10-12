@@ -6,6 +6,7 @@
 | --- | --- | --- | --- |
 | 526c88c7-a4b3-4ea9-9193-371420b66d1d | [DOCS-SSG-P1](../../../../docs/plan/DOCS-SSG-P1.md) | [526c88c7](526c88c7-a4b3-4ea9-9193-371420b66d1d.md) | 活动 |
 | 7493fc99-98cd-4d7e-aaa7-ac842d36d490 | [DX-REFINE](../../../../docs/plan/DX-REFINE.md) | [7493fc99](7493fc99-98cd-4d7e-aaa7-ac842d36d490.md) | 活动 |
+| 7c105838-be0d-4f3b-ae5c-9998b8f4cfdc | [DOCS-SSG-P1-gaps](../../../../docs/plan/DOCS-SSG-P1-gaps.md) | [对象](7c105838-be0d-4f3b-ae5c-9998b8f4cfdc.md) | 活动 |
 | 9d18c85f-ac5e-4c1d-9c21-c938474537eb | [P1 · WASM UI（封板）](../../../../docs/plan/P1-WASM-UI.md) | [9d18c85f](9d18c85f-ac5e-4c1d-9c21-c938474537eb.md) | 归档（原文 Closed） |
 | 2b5473ac-f692-467b-8024-8fe191345859 | [P2 · WASM UI（封板）](../../../../docs/plan/P2-WASM-UI.md) | [2b5473ac](2b5473ac-f692-467b-8024-8fe191345859.md) | 归档（原文 Closed） |
 | 41817647-c138-4651-a076-a022339fd6bc | [P3 · WASM UI（封板）](../../../../docs/plan/P3-WASM-UI.md) | [41817647](41817647-c138-4651-a076-a022339fd6bc.md) | 归档（原文 Closed） |
