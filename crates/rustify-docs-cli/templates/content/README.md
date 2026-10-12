@@ -3,6 +3,35 @@
 A documentation site written in Markdown and built with
 [Rustify Docs](https://github.com/rockie/rustify-ui/blob/main/docs/docs-ssg.md).
 
+Generated with Rustify Docs {{version}}. Install version {{install-version}}
+from source revision `{{revision}}` on macOS with stable Rust:
+
+```sh
+{{install}}
+rustify-docs --version
+rustify-docs --build-info
+cargo install --list
+```
+
+Reinstall or upgrade to that revision:
+
+```sh
+{{install}} --force
+```
+
+Roll back to the previous version, 0.1.3:
+
+```sh
+{{rollback}}
+```
+
+Check `rustify-docs --version`, the source revision in `cargo install --list`
+and `manifest.cli_version` in a fresh build's `rustify-docs-manifest.json`.
+Stop and restart `dev` after an upgrade or rollback to discard its in-memory
+build cache. `build` starts from the complete inputs each time. Deploy the
+whole rebuilt `dist/` with its matching manifest; keep a complete prior build
+to restore it without mixing assets.
+
 | Command | What it does |
 | --- | --- |
 | `rustify-docs dev` | Serves the site on your machine and updates it as you save |

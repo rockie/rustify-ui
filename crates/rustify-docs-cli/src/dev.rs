@@ -784,7 +784,7 @@ pub fn run(options: Options) -> ExitCode {
     if !crate::UNWINDS {
         return fail(format!(
             "this rustify-docs was built to abort on a panic, so one failed build would end the session; install it with the docs-cli profile:\n  {}",
-            crate::INSTALL
+            crate::install()
         ));
     }
     // Rust first, before anything is watched or listened on.

@@ -7,6 +7,38 @@ mod support;
 use support::*;
 
 #[test]
+fn help_and_generated_readme_pin_the_same_installable_source() {
+    let temp = Temp::new("installation");
+    let tools = Toolchain::new(&temp, true);
+    let helped = tools.run_in(&temp.0, &["--help"]);
+    succeeded(&helped);
+    let help = stdout(&helped);
+    let install = help
+        .lines()
+        .find(|line| line.trim().starts_with("cargo install --git "))
+        .expect("help gives a git installation command")
+        .trim();
+    let revision = install
+        .split_whitespace()
+        .skip_while(|arg| *arg != "--rev")
+        .nth(1)
+        .expect("installation pins a source revision");
+    assert_eq!(revision.len(), 40);
+    assert!(revision.bytes().all(|byte| byte.is_ascii_hexdigit()));
+    assert!(install.contains("--locked --profile docs-cli"));
+
+    succeeded(&tools.run_in(&temp.0, &["new", "my-docs"]));
+    let readme = temp.read("my-docs/README.md");
+    assert!(readme.contains(install), "{readme}");
+    for text in ["--force", "cargo install --list", "0.1.3", revision] {
+        assert!(help.contains(text), "{help}");
+        assert!(readme.contains(text), "{readme}");
+    }
+    assert!(!readme.contains("{{"), "{readme}");
+    assert_eq!(tools.calls(), ["rustc --version"]);
+}
+
+#[test]
 fn a_new_site_builds_and_nothing_is_compiled() {
     let temp = Temp::new("new");
     let tools = Toolchain::new(&temp, true);

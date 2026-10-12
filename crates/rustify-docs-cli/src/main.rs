@@ -20,6 +20,9 @@ mod report;
 use report::{Format, Summary};
 
 const VERSION: &str = env!("CARGO_PKG_VERSION");
+const SOURCE_REVISION: &str = env!("RUSTIFY_DOCS_SOURCE_REVISION");
+const PREVIOUS_REVISION: &str = "42757c627cb69456d241ba0de51b34f1ad85be3d";
+const PREVIOUS_VERSION: &str = "0.1.3";
 
 /// Whether this binary unwinds on a panic. `dev` keeps serving the last good
 /// generation after a panic in a new one, which only an unwinding build can;
@@ -33,8 +36,34 @@ const UNWINDS: bool = cfg!(panic = "unwind");
 const FAULT_VARIABLE: &str = "RUSTIFY_DOCS_FAULT";
 
 /// How to install this command so that it unwinds.
-const INSTALL: &str =
-    "cargo install --git https://github.com/rockie/rustify-ui --locked --profile docs-cli rustify-docs-cli";
+fn install() -> String {
+    format!(
+        "cargo install --git https://github.com/rockie/rustify-ui --rev {} --locked --profile docs-cli rustify-docs-cli",
+        install_revision()
+    )
+}
+
+fn install_revision() -> &'static str {
+    if SOURCE_REVISION.is_empty() {
+        PREVIOUS_REVISION
+    } else {
+        SOURCE_REVISION
+    }
+}
+
+fn install_version() -> &'static str {
+    if SOURCE_REVISION.is_empty() {
+        PREVIOUS_VERSION
+    } else {
+        VERSION
+    }
+}
+
+fn rollback() -> String {
+    format!(
+        "cargo install --git https://github.com/rockie/rustify-ui --rev {PREVIOUS_REVISION} --locked --profile docs-cli --force rustify-docs-cli"
+    )
+}
 
 fn help() -> String {
     format!(
@@ -64,17 +93,37 @@ fn help() -> String {
          and writes nothing. Exit status: 0 on success, 1\n\
          when the site has errors (or, with --deny-warnings, warnings) or a\n\
          command fails, 2 for a usage error.\n\n\
-         Supported on macOS. Linux and Windows are not verified.\n",
+         Supported on macOS. Linux and Windows are not verified.\n\n\
+         Install rustify-docs {} from {}:\n\
+         \x20 {}\n\
+         \x20 cargo install --list\n\
+         Reinstall or upgrade to that revision:\n\
+         \x20 {} --force\n\
+         Roll back to rustify-docs {PREVIOUS_VERSION}:\n\
+         \x20 {}\n\
+         Verify --version, cargo install --list and a fresh build's\n\
+         manifest.cli_version after installing. Archive builds without git\n\
+         metadata use the previous pinned version for installation.\n",
         preview::DEFAULT_PORT,
-        rustify_docs::config::DEFAULT_DEV_PORT
+        rustify_docs::config::DEFAULT_DEV_PORT,
+        install_version(),
+        install_revision(),
+        install(),
+        install(),
+        rollback(),
     )
 }
 
 fn build_info() -> String {
     format!(
-        "rustify-docs {VERSION}\npanic: {}\ngrammars: {}\n",
+        "rustify-docs {VERSION}\npanic: {}\ngrammars: {}\nsource: {}\n",
         if UNWINDS { "unwind" } else { "abort" },
-        rustify_docs::highlight::GRAMMAR_VERSION
+        rustify_docs::highlight::GRAMMAR_VERSION,
+        if SOURCE_REVISION.is_empty() {
+            "unknown"
+        } else {
+            SOURCE_REVISION
+        }
     )
 }
 

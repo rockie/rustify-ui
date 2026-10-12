@@ -66,6 +66,11 @@ fn quoted(text: &str) -> String {
 /// quotes it, as written elsewhere.
 fn fill(template: &str, name: &str) -> String {
     template
+        .replace("{{version}}", crate::VERSION)
+        .replace("{{install-version}}", crate::install_version())
+        .replace("{{revision}}", crate::install_revision())
+        .replace("{{install}}", &crate::install())
+        .replace("{{rollback}}", &crate::rollback())
         .replace("\"{{name}}\"", &format!("\"{}\"", quoted(name)))
         .replace("{{name}}", name)
 }
@@ -145,5 +150,7 @@ mod tests {
         assert_eq!(toml, "name = \"a \\\"b\\\"\"\n");
         let markdown = fill("title: \"{{name}}\"\n\n# {{name}}\n", "a \"b\"");
         assert_eq!(markdown, "title: \"a \\\"b\\\"\"\n\n# a \"b\"\n");
+        let named = fill("name = \"{{name}}\"\n# {{name}}\n", "site{{version}}");
+        assert_eq!(named, "name = \"site{{version}}\"\n# site{{version}}\n");
     }
 }
