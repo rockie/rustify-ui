@@ -1,0 +1,619 @@
+{
+  "config": {
+    "argv": [
+      "/Users/rockie/.nvm/versions/node/v26.1.0/bin/node",
+      "/Users/rockie/Documents/gh-rockie/rustify-ui/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "playwright.docs.config.ts",
+      "--project=dom-only"
+    ],
+    "configFile": "/Users/rockie/Documents/gh-rockie/rustify-ui/playwright.docs.config.ts",
+    "rootDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": {},
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "dom-only",
+        "name": "dom-only",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "dom-only/**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "docs-root",
+        "name": "docs-root",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [
+          "docs-ssg/dev*.spec.ts"
+        ],
+        "testMatch": [
+          "docs-ssg/**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "docs-subpath",
+        "name": "docs-subpath",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [
+          "docs-ssg/dev*.spec.ts"
+        ],
+        "testMatch": [
+          "docs-ssg/**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "docs-meta",
+        "name": "docs-meta",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [
+          "docs-ssg/dev*.spec.ts"
+        ],
+        "testMatch": [
+          "docs-ssg/**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "docs-firefox",
+        "name": "docs-firefox",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [
+          "docs-ssg/dev*.spec.ts"
+        ],
+        "testMatch": [
+          "docs-ssg/**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "docs-webkit",
+        "name": "docs-webkit",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [
+          "docs-ssg/dev*.spec.ts"
+        ],
+        "testMatch": [
+          "docs-ssg/**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "docs-dev",
+        "name": "docs-dev",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/dev*.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/docs/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "dom-only/dom-only.spec.ts",
+      "file": "dom-only/dom-only.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "a DOM application starts without Makepad",
+          "file": "dom-only/dom-only.spec.ts",
+          "line": 135,
+          "column": 6,
+          "specs": [
+            {
+              "title": "the page loads the DOM loader, the glue and the SDK runtime, and nothing of Makepad",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "dom-only",
+                  "projectName": "dom-only",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 259,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-12T14:36:27.498Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0f05bdb503671b5c9627-9f8cb4685adb14350c4b",
+              "file": "dom-only/dom-only.spec.ts",
+              "line": 136,
+              "column": 9
+            },
+            {
+              "title": "toast, dialog, size observer and page listener work in one scope",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "dom-only",
+                  "projectName": "dom-only",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1251,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-12T14:36:28.055Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0f05bdb503671b5c9627-e1ab9b417d9d84a574c8",
+              "file": "dom-only/dom-only.spec.ts",
+              "line": 150,
+              "column": 9
+            },
+            {
+              "title": "a scope is not mounted before the runtime has started",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "dom-only",
+                  "projectName": "dom-only",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 191,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-12T14:36:29.313Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0f05bdb503671b5c9627-65ba7546f7f0fda9447e",
+              "file": "dom-only/dom-only.spec.ts",
+              "line": 225,
+              "column": 9
+            },
+            {
+              "title": "the runtime refuses hooks of another protocol, and a second start",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "dom-only",
+                  "projectName": "dom-only",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 139,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-12T14:36:29.510Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0f05bdb503671b5c9627-7bf5f5405926ccc07459",
+              "file": "dom-only/dom-only.spec.ts",
+              "line": 246,
+              "column": 9
+            },
+            {
+              "title": "a loader of another protocol refuses to start and leaves nothing behind",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "dom-only",
+                  "projectName": "dom-only",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 158,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-12T14:36:29.656Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0f05bdb503671b5c9627-9395a5d0f0097558cd76",
+              "file": "dom-only/dom-only.spec.ts",
+              "line": 278,
+              "column": 9
+            },
+            {
+              "title": "a host created for another protocol is released, not started",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "dom-only",
+                  "projectName": "dom-only",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 133,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-12T14:36:29.818Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0f05bdb503671b5c9627-d3d8ed85df09848adf8b",
+              "file": "dom-only/dom-only.spec.ts",
+              "line": 298,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "one instance fails, the other does not",
+          "file": "dom-only/dom-only.spec.ts",
+          "line": 316,
+          "column": 6,
+          "specs": [
+            {
+              "title": "a trap through an export the page called reaches its own instance only",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "dom-only",
+                  "projectName": "dom-only",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1038,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-12T14:36:29.956Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0f05bdb503671b5c9627-e0b35405b80387d4ab51",
+              "file": "dom-only/dom-only.spec.ts",
+              "line": 318,
+              "column": 13
+            },
+            {
+              "title": "a trap through a DOM event handler reaches its own instance only",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "dom-only",
+                  "projectName": "dom-only",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1071,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-12T14:36:30.999Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0f05bdb503671b5c9627-f39c32fcffcb7e4f3b11",
+              "file": "dom-only/dom-only.spec.ts",
+              "line": 318,
+              "column": 13
+            },
+            {
+              "title": "a trap through a task the host was running reaches its own instance only",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "dom-only",
+                  "projectName": "dom-only",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1032,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-12T14:36:32.078Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0f05bdb503671b5c9627-d412bda9ce54e0b7d977",
+              "file": "dom-only/dom-only.spec.ts",
+              "line": 318,
+              "column": 13
+            },
+            {
+              "title": "a trap through the page's own simulation reaches its own instance only",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "dom-only",
+                  "projectName": "dom-only",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1051,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-12T14:36:33.118Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0f05bdb503671b5c9627-210183832e1df2a8d3f0",
+              "file": "dom-only/dom-only.spec.ts",
+              "line": 318,
+              "column": 13
+            },
+            {
+              "title": "two instances start under the release policy with nothing refused",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "dom-only",
+                  "projectName": "dom-only",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 140,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-12T14:36:34.176Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0f05bdb503671b5c9627-7eb9a14580a136eb5db1",
+              "file": "dom-only/dom-only.spec.ts",
+              "line": 379,
+              "column": 9
+            },
+            {
+              "title": "a slot may be restarted three times and then only reloading is left",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "dom-only",
+                  "projectName": "dom-only",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 337,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-12T14:36:34.320Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0f05bdb503671b5c9627-da0a1004cdb41a2372e3",
+              "file": "dom-only/dom-only.spec.ts",
+              "line": 390,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-12T14:36:20.812Z",
+    "duration": 13899.616,
+    "expected": 12,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

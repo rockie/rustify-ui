@@ -1,0 +1,40 @@
+== README.md
+  [错误] README.md:40 引用的路径不存在：target/makepad-wasm-app/release/fusion-basic/
+  [统计] {'标记': {}, 'Mermaid 图': 0, 'HTML 图链接': 0}
+== docs/docs-ssg.md
+  [错误] docs/docs-ssg.md:60 引用的路径不存在：rustify-docs-manifest.json
+  [错误] docs/docs-ssg.md:75 引用的路径不存在：static/
+  [错误] docs/docs-ssg.md:78 引用的路径不存在：dist/
+  [错误] docs/docs-ssg.md:163 引用的路径不存在：name.md
+  [错误] docs/docs-ssg.md:164 引用的路径不存在：404.md
+  [错误] docs/docs-ssg.md:169 引用的路径不存在：assets/files/
+  [错误] docs/docs-ssg.md:170 引用的路径不存在：.env
+  [错误] docs/docs-ssg.md:172 引用的路径不存在：content/.env.md
+  [错误] docs/docs-ssg.md:234 引用的路径不存在：…/edit/main/docs/content/guide/setup.md
+  [错误] docs/docs-ssg.md:238 引用的路径不存在：guide/setup.md
+  [错误] docs/docs-ssg.md:244 引用的路径不存在：guide/index.md
+  [错误] docs/docs-ssg.md:335 引用的路径不存在：../reference/api.md#数据-api
+  [错误] docs/docs-ssg.md:336 引用的路径不存在：guide/
+  [错误] docs/docs-ssg.md:339 引用的路径不存在：diagram.svg
+  [错误] docs/docs-ssg.md:339 引用的路径不存在：files/report.pdf
+  [错误] docs/docs-ssg.md:340 引用的路径不存在：../../src/example.rs
+  [错误] docs/docs-ssg.md:346 引用的路径不存在：.md
+  [错误] docs/docs-ssg.md:512 引用的路径不存在：robots.txt
+  [错误] docs/docs-ssg.md:546 引用的路径不存在：.rustify-docs/
+  [错误] docs/docs-ssg.md:606 引用的路径不存在：404.html
+  [错误] docs/docs-ssg.md:607 引用的路径不存在：.css
+  [错误] docs/docs-ssg.md:607 引用的路径不存在：.js
+  [错误] docs/docs-ssg.md:607 引用的路径不存在：.svg
+  [错误] docs/docs-ssg.md:607 引用的路径不存在：.json
+  [统计] {'标记': {}, 'Mermaid 图': 0, 'HTML 图链接': 0}
+== docs/quickstart.md
+  [错误] docs/quickstart.md:231 引用的路径不存在：src/bin/export-dom-assets.rs
+  [错误] docs/quickstart.md:253 引用的路径不存在：public/
+  [错误] docs/quickstart.md:254 引用的路径不存在：pkg/
+  [错误] docs/quickstart.md:254 引用的路径不存在：pkg/snippets/
+  [错误] docs/quickstart.md:255 引用的路径不存在：rustify-dom-loader.js
+  [错误] docs/quickstart.md:255 引用的路径不存在：rustify-runtime.css
+  [提示] docs/quickstart.md AI 腔词汇：simply×1
+  [统计] {'标记': {}, 'Mermaid 图': 0, 'HTML 图链接': 0}
+
+共 31 个错误

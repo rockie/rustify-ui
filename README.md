@@ -190,7 +190,7 @@ The default `regression` tier checks behaviour. `RUSTIFY_TIER=evidence` runs tag
 Rustify Docs builds a static site from Markdown with navigation, themes and
 highlighted code, without compiling a site's Rust. Content pages load no wasm;
 authors need stable Rust and the CLI. Node, Tailwind and Makepad are not needed.
-The validated CLI candidate is `0.1.4`, from this pinned source revision:
+The validated CLI is `0.1.4`, from this pinned source revision:
 
 ```sh
 cargo install --git https://github.com/rockie/rustify-ui --rev 1b81de25f23a25702f61dbfd3d0ecdfe323d4d44 --locked --profile docs-cli rustify-docs-cli
@@ -202,8 +202,8 @@ cd my-docs
 rustify-docs dev
 ```
 
-This candidate passed installation from local git on macOS arm64 with Rust
-1.99.0. Its GitHub installation is pending the candidate push and verification.
+This revision passed installation from both local git and GitHub on macOS
+arm64 with Rust 1.99.0, including upgrade and rollback source checks.
 Linux and Windows are not verified. See the [author's reference](docs/docs-ssg.md#install-and-maintain-the-cli)
 for build, preview, hosting, upgrade and rollback commands, and the
 [DOM consumer recipe](docs/quickstart.md#a-dom-application-without-gpu-regions)

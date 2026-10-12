@@ -236,8 +236,8 @@ rustify-ui = { git = "https://github.com/rockie/rustify-ui", rev = "1b81de25f23a
 rustify-components = { git = "https://github.com/rockie/rustify-ui", rev = "1b81de25f23a25702f61dbfd3d0ecdfe323d4d44" }
 ```
 
-This source passed the consumer recipe from local git, without the root
-workspace's patches; GitHub verification is pending the candidate push.
+This source passed the consumer recipe from both local git and GitHub,
+without the root workspace's patches, including the DOM browser checks.
 Keep the fixture's other dependency versions, let Cargo resolve these git
 dependencies once, then commit the resulting `Cargo.lock`. To build it:
 

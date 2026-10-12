@@ -44,13 +44,13 @@
 
 ### 恢复快照
 
-- 最近更新：2026-10-12T22:07:16.318349+08:00
-- 当前进度：8/9 个里程碑完成
-- 当前状态：M1–M8 保留完成；gaps 2/2 已提交；M9 本地安装与文档出口通过，等待远端授权与复验
-- 最近完成：M8（P1 跨浏览器、部署与性能终验）
-- 下一步：就 CLI 0.1.4 安装候选完整 SHA 取得推送授权/方式；随后对同 SHA GitHub URL 重验 toolchain、仓外 DOM、安装后 panic 与 Markdown 源预览，关闭 M9
-- 当前阻塞：尚未取得具体候选推送授权/方式；GitHub 同 SHA 安装、SDK 配方与源格式预览未执行
-- 代码基线：安装候选 `1b81de25f23a25702f61dbfd3d0ecdfe323d4d44`（CLI 0.1.4 / writer 9），本地 file:// 与真实升级回滚、115 浏览器、V-15 通过；验收器去掉共享 target 后重验。原实现/R1–R5/gaps SHA 保留。原报告/台账 dirty 未纳入，未推送；[M9 证据](../validation/docs-ssg-p1/M9.md)
+- 最近更新：2026-10-12T22:46:34.054038+08:00
+- 当前进度：9/9 个里程碑完成
+- 当前状态：P1 实施与本期出口完成；本地/同 SHA GitHub 安装、仓外 DOM、安装后 panic 和源 Markdown 预览均通过
+- 最近完成：M9（可安装交付与维护文档）
+- 下一步：由用户使用 review-code，以 `docs/plan/DOCS-SSG-P1.md` 为参数评审本计划；最新版 Chrome 与两种实体手机按 D-04 留后续补验，P4 完整矩阵保持
+- 当前阻塞：无
+- 代码基线：固定安装候选 `1b81de25f23a25702f61dbfd3d0ecdfe323d4d44`（CLI 0.1.4 / writer 9）；用户已授权 origin/main 推送并完成同候选远端复验。本地验收/文档3d54bd3、回填54c0f01；最终提交见下方M9行。[完成核查](../validation/docs-ssg-p1/m9/completion-audit.md)与[M9证据](../validation/docs-ssg-p1/M9.md)保留本轮/复用/延期范围。原报告及其他台账 dirty 保留，未纳入本轮交付提交
 
 ### 完成记录
 
@@ -64,7 +64,7 @@
 | M7 | 已完成 | 2026-10-11T16:34:55+08:00 | `check --external-links`（rustls+内置根证书、去重/并发/超时、失败即报错）、发布三步骤真实 SIGKILL/磁盘满/权限/损坏 manifest/并发注入与输出归属加固、新窗站外链接需 noopener、零机器路径泄漏；V-15 矩阵、features/artifacts/reliability/toolchain 四组（禁网作者演练只调用 2 次 `rustc --version`）、docs-root/meta/dev 全过；R1 修复 F-01–F-03、F-06；R2 续修 F-06、新增 F-16/F-17：CSS token、实体与文档片段、实际发布集合检查；原生工具链/安全门通过；R3 续修 F-16、新增 F-19：数字实体范围与 compiler 任意值解码一致，生成路径防二次 underscore 解码 | [M7 记录](../validation/docs-ssg-p1/M7.md) | 1d239ff；修复 12113ab；修复 a297dbd；修复 016110f |
 | M5 | 已完成 | 2026-10-11T12:40:00+08:00 | 默认阅读主题、finish review（ship）、axe 零违规；Chromium 三项目各 21/21、WebKit 20+1 跳过、B 最大页 LCP ≤740 ms/CLS 0；用户确认真实 macOS Safari 27.0.1 与手机走查通过；Firefox 移出本期（用户决定）；R1 修复 F-04、F-12（页头链接真机复走待用户决定） | [M5 记录](../validation/docs-ssg-p1/M5.md) | 1d239ff、72418b3；修复 12113ab |
 | M8 | 已完成 | 2026-10-11T23:15:15+08:00 | 原终验与 R1–R4 证据保留；R5 复验 207 Rust、93 Chromium、24 份 production 文档 ID/导航/拒绝保全与 500 页/短轮保存通过；未重验的真机、GPU、安装与长轮证据按原范围保留，待独立复审 | [M8 记录](../validation/docs-ssg-p1/M8.md) | 72418b3；修复 a297dbd；修复 016110f；修复 f7a3e94；修复 998ee18 |
-| M9 | 阻塞 | 2026-10-12T22:07:16.318349+08:00 | CLI0.1.4候选1b81de2：本地安装/升级回滚、219 Docs Rust/115浏览器及V-15通过；安装验收缓存偏差已修正并复验；待远端授权与同SHA GitHub复验 | [M9 记录](../validation/docs-ssg-p1/M9.md) | 候选 1b81de2；本地验收/文档 3d54bd3；最终交付待远端出口 |
+| M9 | 已完成 | 2026-10-12T22:46:34.054038+08:00 | CLI0.1.4固定候选1b81de2：本地/同SHA GitHub安装、帮助/模板/manifest、仓外DOM、安装后panic和真实GitHub源预览通过；219 Docs Rust、115本地+34远端浏览器及V-15通过；D-04延期项保留 | [M9 记录](../validation/docs-ssg-p1/M9.md) | 候选 1b81de2；本地验收/文档 3d54bd3；待提交 |
 
 ## 0. 需求、范围与决策
 

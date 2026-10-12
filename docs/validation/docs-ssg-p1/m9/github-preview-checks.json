@@ -1,0 +1,23 @@
+{
+  "source_candidate": "1b81de25f23a25702f61dbfd3d0ecdfe323d4d44",
+  "alerts": [
+    "caution",
+    "important",
+    "note",
+    "tip",
+    "warning"
+  ],
+  "gfm_table": true,
+  "task_list": true,
+  "footnote": true,
+  "code_fences": true,
+  "frontmatter_table": true,
+  "custom_id_displayed_literally": true,
+  "include_comment_not_expanded_on_github": true,
+  "urls": [
+    "https://github.com/rockie/rustify-ui/blob/1b81de25f23a25702f61dbfd3d0ecdfe323d4d44/tests/docs-ssg/fixtures/content/content/guide/index.md",
+    "https://github.com/rockie/rustify-ui/blob/1b81de25f23a25702f61dbfd3d0ecdfe323d4d44/tests/docs-ssg/fixtures/content/content/guide/setup.md#install-the-cli"
+  ],
+  "method": "Actual logged-in GitHub preview through kimi-webbridge",
+  "result": "passed"
+}

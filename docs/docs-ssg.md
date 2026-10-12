@@ -18,9 +18,9 @@ Supported on macOS. Linux and Windows are not verified.
 
 The CLI is distributed from git, with its dependencies locked and the
 workspace's `docs-cli` profile, which unwinds so that `dev` can recover from a
-failed build. The candidate below is version **0.1.4**, verified from local
-git on macOS arm64 with Rust 1.99.0; GitHub installation remains pending the
-candidate push and the same-source verification.
+failed build. The pinned version below is **0.1.4**, verified from both local
+git and GitHub on macOS arm64 with Rust 1.99.0. The source revision, profile,
+generated template and production manifest were checked after installation.
 
 ```sh
 cargo install --git https://github.com/rockie/rustify-ui --rev 1b81de25f23a25702f61dbfd3d0ecdfe323d4d44 --locked --profile docs-cli rustify-docs-cli

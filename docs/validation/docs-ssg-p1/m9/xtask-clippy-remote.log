@@ -1,0 +1,25 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+    Blocking waiting for file lock on package cache
+mbx[progress]: 15s elapsed; 0 hits, 0 misses, 0 bypassed, 0 not looked up; ~0s compiler work saved
+mbx[progress]: 30s elapsed; 0 hits, 0 misses, 0 bypassed, 0 not looked up; ~0s compiler work saved
+mbx[progress]: 45s elapsed; 0 hits, 0 misses, 0 bypassed, 0 not looked up; ~0s compiler work saved
+mbx[progress]: 1m elapsed; 0 hits, 0 misses, 0 bypassed, 0 not looked up; ~0s compiler work saved
+mbx[progress]: 1m 15s elapsed; 0 hits, 0 misses, 0 bypassed, 0 not looked up; ~0s compiler work saved
+mbx[progress]: 1m 30s elapsed; 0 hits, 0 misses, 0 bypassed, 0 not looked up; ~0s compiler work saved
+mbx[progress]: 1m 45s elapsed; 0 hits, 0 misses, 0 bypassed, 0 not looked up; ~0s compiler work saved
+mbx[progress]: 2m elapsed; 0 hits, 0 misses, 0 bypassed, 0 not looked up; ~0s compiler work saved
+mbx[progress]: 3m elapsed; 0 hits, 0 misses, 0 bypassed, 0 not looked up; ~0s compiler work saved
+mbx[progress]: 4m elapsed; 0 hits, 0 misses, 0 bypassed, 0 not looked up; ~0s compiler work saved
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Checking xtask v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/xtask)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 4m 23s
+mbx[cache]: 0 hits, 0 misses, 2 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: cleaned up 1.6 TiB logical after checkouts that left without saying goodbye.

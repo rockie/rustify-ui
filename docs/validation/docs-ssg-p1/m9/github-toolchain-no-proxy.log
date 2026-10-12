@@ -1,0 +1,14 @@
+environment: macOS 27.0.1 (26A434) on arm64
+  rustc 1.99.0 (b940084d7 2026-09-28)
+  binary: rustc
+  commit-hash: b940084d7eb6a299eb4bfeb8e34901bc051e7ac4
+  commit-date: 2026-09-28
+  host: aarch64-apple-darwin
+  release: 1.99.0
+  LLVM version: 23.1.1
+  cargo 1.99.0 (5f94df478 2026-08-27)
+CLI source: https://github.com/rockie/rustify-ui at 1b81de25f23a25702f61dbfd3d0ecdfe323d4d44
+    Updating git repository `https://github.com/rockie/rustify-ui`
+warning: spurious network error (3 tries remaining): error receiving data from socket: Broken pipe; class=Net (12)
+warning: spurious network error (2 tries remaining): failed to connect to github.com: Operation timed out; class=Os (2)
+warning: spurious network error (1 try remaining): failed to connect to github.com: Operation timed out; class=Os (2)

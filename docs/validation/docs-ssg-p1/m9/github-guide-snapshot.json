@@ -1,0 +1,315 @@
+{
+  "url": "https://github.com/rockie/rustify-ui/blob/1b81de25f23a25702f61dbfd3d0ecdfe323d4d44/tests/docs-ssg/fixtures/content/content/guide/index.md",
+  "title": "rustify-ui/tests/docs-ssg/fixtures/content/content/guide/index.md at 1b81de25f23a25702f61dbfd3d0ecdfe323d4d44 · rockie/rustify-ui",
+  "article": {
+    "role": "article",
+    "children": [
+      {
+        "role": "table",
+        "children": [
+          {
+            "role": "row",
+            "children": [
+              {
+                "role": "rowheader",
+                "name": "description",
+                "children": [
+                  {
+                    "role": "StaticText",
+                    "name": "description"
+                  }
+                ]
+              },
+              {
+                "role": "cell",
+                "name": "Where the guide starts.",
+                "children": [
+                  {
+                    "role": "StaticText",
+                    "name": "Where the guide starts."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "role": "row",
+            "children": [
+              {
+                "role": "rowheader",
+                "name": "sidebar",
+                "children": [
+                  {
+                    "role": "StaticText",
+                    "name": "sidebar"
+                  }
+                ]
+              },
+              {
+                "role": "cell",
+                "children": [
+                  {
+                    "role": "table",
+                    "children": [
+                      {
+                        "role": "row",
+                        "children": [
+                          {
+                            "role": "columnheader",
+                            "name": "order",
+                            "children": [
+                              {
+                                "role": "StaticText",
+                                "name": "order"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "role": "row",
+                        "children": [
+                          {
+                            "role": "cell",
+                            "name": "1",
+                            "children": [
+                              {
+                                "role": "StaticText",
+                                "name": "1"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "role": "heading",
+        "name": "Guide",
+        "children": [
+          {
+            "role": "StaticText",
+            "name": "Guide"
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Permalink: Guide",
+        "ref": "@e122"
+      },
+      {
+        "role": "paragraph",
+        "children": [
+          {
+            "role": "StaticText",
+            "name": "This guide covers "
+          },
+          {
+            "role": "link",
+            "name": "setup",
+            "ref": "@e123",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "setup"
+              }
+            ]
+          },
+          {
+            "role": "StaticText",
+            "name": " and the "
+          },
+          {
+            "role": "link",
+            "name": "reference",
+            "ref": "@e124",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "reference"
+              }
+            ]
+          },
+          {
+            "role": "StaticText",
+            "name": "."
+          }
+        ]
+      },
+      {
+        "role": "StaticText",
+        "name": "Tip"
+      },
+      {
+        "role": "paragraph",
+        "children": [
+          {
+            "role": "StaticText",
+            "name": "Start with "
+          },
+          {
+            "role": "code",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "check"
+              }
+            ]
+          },
+          {
+            "role": "StaticText",
+            "name": "; it changes nothing."
+          }
+        ]
+      },
+      {
+        "role": "StaticText",
+        "name": "Important"
+      },
+      {
+        "role": "StaticText",
+        "name": "Every link is resolved before a build is published."
+      },
+      {
+        "role": "StaticText",
+        "name": "Caution"
+      },
+      {
+        "role": "StaticText",
+        "name": "A page with inline script is refused."
+      },
+      {
+        "role": "heading",
+        "name": "Steps",
+        "children": [
+          {
+            "role": "StaticText",
+            "name": "Steps"
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Permalink: Steps",
+        "ref": "@e125"
+      },
+      {
+        "role": "StaticText",
+        "name": "Read the setup page first."
+      },
+      {
+        "role": "heading",
+        "name": "Steps",
+        "children": [
+          {
+            "role": "StaticText",
+            "name": "Steps"
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Permalink: Steps",
+        "ref": "@e126"
+      },
+      {
+        "role": "StaticText",
+        "name": "Then write a page."
+      },
+      {
+        "role": "link",
+        "name": "The build pipeline",
+        "ref": "@e127",
+        "children": [
+          {
+            "role": "image",
+            "name": "The build pipeline"
+          }
+        ]
+      },
+      {
+        "role": "paragraph",
+        "children": [
+          {
+            "role": "link",
+            "name": "Check the version",
+            "ref": "@e128",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "Check the version"
+              }
+            ]
+          },
+          {
+            "role": "StaticText",
+            "name": " when you are done."
+          }
+        ]
+      },
+      {
+        "role": "heading",
+        "name": "All done {#100%}",
+        "children": [
+          {
+            "role": "StaticText",
+            "name": "All done {#100%}"
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Permalink: All done {#100%}",
+        "ref": "@e129"
+      },
+      {
+        "role": "heading",
+        "name": "Check your install",
+        "children": [
+          {
+            "role": "StaticText",
+            "name": "Check your install"
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Permalink: Check your install",
+        "ref": "@e130"
+      },
+      {
+        "role": "StaticText",
+        "name": "rustify-docs --version"
+      },
+      {
+        "role": "button",
+        "name": "Copy code to clipboard",
+        "ref": "@e131"
+      },
+      {
+        "role": "StaticText",
+        "name": "schema_version"
+      },
+      {
+        "role": "StaticText",
+        "name": " = "
+      },
+      {
+        "role": "StaticText",
+        "name": "1"
+      },
+      {
+        "role": "button",
+        "name": "Copy code to clipboard",
+        "ref": "@e132"
+      }
+    ]
+  }
+}

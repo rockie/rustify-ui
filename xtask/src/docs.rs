@@ -771,6 +771,22 @@ fn plain_cargo(sysroot: &Path) -> Command {
         .env("PATH", format!("{}:/usr/bin:/bin", bin.display()))
         .env("RUSTC", bin.join("rustc"))
         .env("TMPDIR", std::env::temp_dir());
+    // Git installation and dependency resolution still need the machine's
+    // network route. The author's offline walkthrough has its own environment.
+    for name in [
+        "HTTP_PROXY",
+        "HTTPS_PROXY",
+        "ALL_PROXY",
+        "NO_PROXY",
+        "http_proxy",
+        "https_proxy",
+        "all_proxy",
+        "no_proxy",
+    ] {
+        if let Some(value) = std::env::var_os(name) {
+            command.env(name, value);
+        }
+    }
     command
 }
 
