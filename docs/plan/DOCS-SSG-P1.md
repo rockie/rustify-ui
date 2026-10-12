@@ -50,7 +50,7 @@
 - 最近完成：M8（P1 跨浏览器、部署与性能终验）
 - 下一步：先按 [DOCS-SSG-P1-gaps](DOCS-SSG-P1-gaps.md#实施进度实施期持续更新) 补 V-6，并由用户发起本轮候选代码评审；收口后 M9 对 CLI 0.1.3 / writer 9 候选重新定安装 SHA，执行原 file:// 与 GitHub 同 SHA 安装、帮助/模板/仓外DOM/安装后二进制/预览及 V-15，远端仍先取得推送授权与方式
 - 当前阻塞：gaps M2/V-6 的最新稳定 Chrome、真实 Safari 及两手机同产物证据待补；原 M9 的安装与远端授权门保留，本次未执行
-- 代码基线：原实现与 R1–R5 修复 SHA 保留在完成记录；本轮基线 `aabcd958` 之后的 gaps 候选为 CLI `0.1.3`、writer `9`，提交与指纹见 [gaps M1](../validation/docs-ssg-p1-gaps/M1.md)。旧性能/真机事实保留其历史范围；原用户报告与 SDLC dirty 资料未纳入本轮候选
+- 代码基线：原实现与 R1–R5 修复 SHA 保留在完成记录；本轮已提交 gaps 候选 `42757c6` 为 CLI `0.1.3`、writer `9`，提交与指纹见 [gaps M1](../validation/docs-ssg-p1-gaps/M1.md)。旧性能/真机事实保留其历史范围；原用户报告与 SDLC dirty 资料未纳入本轮候选
 
 
 
