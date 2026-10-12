@@ -362,6 +362,149 @@ fn configuration_errors_are_located_in_the_configuration() {
 }
 
 #[test]
+fn invalid_language_uses_its_yaml_value_location_and_a_repair_in_both_formats() {
+    for source in [
+        "---\ntitle: english\ndescription: english\nlang: english\n---\n# Home\n",
+        "---\ntitle: 中文\ndescription: english\nlang: english\n---\n# Home\n",
+        "---\n{title: 中文, description: english, lang: english}\n---\n# Home\n",
+    ] {
+        let project = Project::new(&[
+            (
+                "rustify-docs.toml",
+                "schema_version=1\n[site]\nname='D'\nurl='https://example.com/'\n",
+            ),
+            ("content/index.md", source),
+        ]);
+        let (code, report, _) = check_json(&project.config(), &[]);
+        assert_eq!(code, Some(1));
+        let problem = report["diagnostics"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|d| d["rule"] == "lang")
+            .unwrap();
+        let flow = source.contains("{title:");
+        assert_eq!(problem["line"], if flow { 2 } else { 4 });
+        assert_eq!(problem["column"], if flow { 41 } else { 7 });
+        assert!(problem["suggestion"]
+            .as_str()
+            .is_some_and(|s| s.contains("en")));
+        let output = run(&["check", "--config", project.config().to_str().unwrap()]);
+        let message = String::from_utf8(output.stderr).unwrap();
+        let location = if flow {
+            "content/index.md:2:41"
+        } else {
+            "content/index.md:4:7"
+        };
+        assert!(
+            message.contains(location) && message.contains("= help:"),
+            "{message}"
+        );
+    }
+}
+
+#[test]
+fn heading_semantics_refuse_bad_builds_without_replacing_the_last_output() {
+    let good = "---\ntitle: Home\ndescription: d\nlayout: home\n---\n# Home\n\n## Next\n";
+    let project = Project::new(&[
+        (
+            "rustify-docs.toml",
+            "schema_version=1\n[site]\nname='D'\nurl='https://example.com/'\n",
+        ),
+        ("content/index.md", good),
+    ]);
+    let build = |extra: &[&str]| {
+        let config = project.config();
+        let mut args = vec![
+            "build",
+            "--config",
+            config.to_str().unwrap(),
+            "--format",
+            "json",
+        ];
+        args.extend_from_slice(extra);
+        Command::new(BIN).args(args).output().unwrap()
+    };
+    assert!(build(&[]).status.success());
+    let before = tree(&project.0.join("dist"));
+    for (bad, rule, line, column, deny) in [
+        (
+            "---\ndescription: d\n---\n# One\n\n<H1>Two</H1>\n",
+            "multiple-h1",
+            6,
+            1,
+            false,
+        ),
+        (
+            "---\ntitle: Home\nlayout: home\n---\nIntro\n\n# Two\n",
+            "multiple-h1",
+            7,
+            1,
+            false,
+        ),
+        (
+            "---\ntitle: Home\nlayout: home\n---\n<!-- comment -->\n\n# Two\n",
+            "multiple-h1",
+            7,
+            1,
+            false,
+        ),
+        (
+            "---\ntitle: Home\nlayout: home\n---\n<div><h1>Two</h1></div>\n",
+            "multiple-h1",
+            5,
+            6,
+            false,
+        ),
+        (
+            "---\ntitle: Home\nlayout: home\n---\n<H1>Two</H1>\n",
+            "multiple-h1",
+            5,
+            1,
+            false,
+        ),
+        (
+            "---\ndescription: d\n---\n# One\n\n<h4>Deep</h4>\n",
+            "heading-skip",
+            6,
+            1,
+            true,
+        ),
+    ] {
+        std::fs::write(project.0.join("content/index.md"), bad).unwrap();
+        let extra = if deny {
+            vec!["--deny-warnings"]
+        } else {
+            vec![]
+        };
+        let (code, report, _) = check_json(&project.config(), &extra);
+        assert_eq!(code, Some(1), "{bad}: {report}");
+        let checked = report["diagnostics"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|d| d["rule"] == rule)
+            .unwrap();
+        assert_eq!(
+            (checked["line"].as_u64(), checked["column"].as_u64()),
+            (Some(line), Some(column))
+        );
+        let output = build(&extra);
+        assert_eq!(output.status.code(), Some(1));
+        let built: Value = serde_json::from_slice(&output.stdout).unwrap();
+        assert_eq!(
+            built["diagnostics"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|d| d["rule"] == rule),
+            Some(checked)
+        );
+        assert_eq!(tree(&project.0.join("dist")), before);
+    }
+}
+
+#[test]
 fn the_configuration_named_is_the_one_read_and_located() {
     let page = "---\ndescription: d\n---\n# Home\n";
     let custom = "schema_version = 1\n[site]\nname = \"Custom\"\nurl = \"https://example.com/\"\n";

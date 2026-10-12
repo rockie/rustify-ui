@@ -1,0 +1,37 @@
+{
+  "binary_sha256": "0f8e3d17f77a44b5adaf8a87e859aef56859af3c44d476412871e1487d15b7fc",
+  "sites": [
+    {
+      "name": "full-root",
+      "out": "target/docs-ssg/gaps/matrix/full-root/dist",
+      "base": "/",
+      "build_id": "20b8177b8968dea1",
+      "cli_version": "0.1.3",
+      "manifest_sha256": "ebff9034ce27645809c0cf8f3d68f31adba5fe48af60ccb4b5ea3e18101c1b75"
+    },
+    {
+      "name": "full-subpath",
+      "out": "target/docs-ssg/gaps/matrix/full-subpath/dist",
+      "base": "/rustify-ui/",
+      "build_id": "2396ec929964d45a",
+      "cli_version": "0.1.3",
+      "manifest_sha256": "08be039ee3704c1f757115082f16c00d475be846b5e060cc3c03361a6f202589"
+    },
+    {
+      "name": "home-root",
+      "out": "target/docs-ssg/gaps/matrix/home-root/dist",
+      "base": "/",
+      "build_id": "7d3b014d194f540e",
+      "cli_version": "0.1.3",
+      "manifest_sha256": "55db2c10336dc375ebb2e94c2af3f4d83fa04fb82c597bc96e046232aafcd946"
+    },
+    {
+      "name": "home-subpath",
+      "out": "target/docs-ssg/gaps/matrix/home-subpath/dist",
+      "base": "/rustify-ui/",
+      "build_id": "9ed78f60566f8b2f",
+      "cli_version": "0.1.3",
+      "manifest_sha256": "2827f017b9cff301daea824757e98527a7454568e08ef61ce9c19a5e8cf75bd9"
+    }
+  ]
+}

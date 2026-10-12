@@ -47,7 +47,7 @@ pub fn options() -> Options {
 
 /// A version for everything above that decides a fragment's bytes; part of
 /// the fragment cache key.
-pub const WRITER_VERSION: u32 = 8;
+pub const WRITER_VERSION: u32 = 9;
 
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct Heading {
@@ -55,7 +55,7 @@ pub struct Heading {
     pub id: String,
     /// The heading's text, without markup.
     pub text: String,
-    /// Whether the id came from `{#id}`.
+    /// Whether the author supplied the id through `{#id}` or raw HTML.
     pub explicit: bool,
     pub span: Range<usize>,
 }
@@ -122,6 +122,8 @@ pub struct Fragment {
     /// The text of the first level-one heading.
     pub title: Option<String>,
     pub h1_count: usize,
+    /// The id (possibly empty) of an effective H1 the home layout merges.
+    pub leading_h1: Option<String>,
     /// The first top-level paragraph's text, for a description.
     pub summary: Option<String>,
     /// Every URL the content wrote, Markdown and raw HTML alike.
@@ -193,6 +195,7 @@ pub fn render(source: &str, offset: usize, context: &Context) -> Fragment {
 struct Buffer {
     html: String,
     slots: Vec<Slot>,
+    headings: Vec<html_check::HeadingSource>,
 }
 
 impl Buffer {
@@ -203,6 +206,15 @@ impl Buffer {
             html: slot.html.start + base..slot.html.end + base,
             reference: slot.reference,
         }));
+        self.headings.extend(
+            other
+                .headings
+                .into_iter()
+                .map(|source| html_check::HeadingSource {
+                    html: source.html.start + base..source.html.end + base,
+                    ..source
+                }),
+        );
     }
 
     /// Inserts `text` at `at`, moving the slots after it.
@@ -211,6 +223,11 @@ impl Buffer {
         for slot in &mut self.slots {
             if slot.html.start >= at {
                 slot.html = slot.html.start + text.len()..slot.html.end + text.len();
+            }
+        }
+        for source in &mut self.headings {
+            if source.html.start >= at {
+                source.html = source.html.start + text.len()..source.html.end + text.len();
             }
         }
     }
@@ -503,6 +520,12 @@ impl<'a> Writer<'a> {
             });
         }
         let base = self.buf().html.len();
+        self.buf().headings.push(html_check::HeadingSource {
+            html: base..base + html.len(),
+            span: span.clone(),
+            raw: true,
+            explicit: true,
+        });
         self.buf().html.push_str(html);
         for slot in slots {
             let kind = match slot.role {
@@ -881,25 +904,19 @@ impl<'a> Writer<'a> {
             Some(id) => id,
             None => self.slugger.next(&text),
         };
-        if level == 1 {
-            self.out.h1_count += 1;
-            if self.out.title.is_none() {
-                self.out.title = Some(text.clone());
-            }
-        }
         let mut open = format!("<h{level} id=\"");
         escape_html_into(&mut open, &id);
         open.push_str("\">");
+        let start = self.buf().html.len();
+        self.buf().headings.push(html_check::HeadingSource {
+            html: start..start + open.len(),
+            span: heading.span,
+            raw: false,
+            explicit,
+        });
         self.push(&open);
         self.buf().append(inner);
         self.push(&format!("</h{level}>\n"));
-        self.out.headings.push(Heading {
-            level,
-            id,
-            text,
-            explicit,
-            span: heading.span,
-        });
     }
 
     fn alert(&self, kind: BlockQuoteKind) -> (&'static str, &'static str) {
@@ -1178,9 +1195,27 @@ impl<'a> Writer<'a> {
             self.push("</ol>\n</section>\n");
         }
         self.out.summary = self.summary;
-        let buffer = self.buffers.pop().unwrap_or_default();
+        let mut buffer = self.buffers.pop().unwrap_or_default();
+        buffer
+            .headings
+            .sort_unstable_by_key(|source| source.html.start);
         self.out.html = buffer.html;
-        self.out.anchors = html_check::ids(&self.out.html);
+        let semantics = html_check::semantics(&self.out.html, &buffer.headings);
+        self.out.anchors = semantics.anchors;
+        self.out.headings = semantics.headings;
+        self.out.leading_h1 = semantics.leading_h1;
+        self.out.h1_count = self
+            .out
+            .headings
+            .iter()
+            .filter(|heading| heading.level == 1)
+            .count();
+        self.out.title = self
+            .out
+            .headings
+            .iter()
+            .find(|heading| heading.level == 1)
+            .map(|heading| heading.text.clone());
         self.out.slots = buffer.slots;
         self.out
     }
@@ -1351,6 +1386,20 @@ mod tests {
             .html
             .contains("<h3 id=\"code--more\"><code>code</code> &amp; more</h3>"));
         assert!(page.headings[1].explicit && !page.headings[2].explicit);
+    }
+
+    #[test]
+    fn effective_headings_handle_foreign_titles_and_raw_text_without_leaking_analysis_markup() {
+        let page = md("<svg><title><h1 id=\"title\">Visible</h1></title></svg>\n");
+        assert_eq!(page.h1_count, 1);
+        assert_eq!(page.headings[0].span.start, 12);
+        assert!(page.headings[0].explicit);
+        let raw = md("<h1><textarea><h2>Text</h2></textarea></h1>\n");
+        assert_eq!(raw.h1_count, 1);
+        assert_eq!(raw.headings.len(), 1);
+        assert!(!raw.headings[0].explicit);
+        assert_eq!(raw.title.as_deref(), Some("<h2>Text</h2>"));
+        assert!(!raw.html.contains("data-rd-heading-origin"));
     }
 
     #[test]

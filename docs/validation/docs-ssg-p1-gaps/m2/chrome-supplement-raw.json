@@ -1,0 +1,456 @@
+[
+  {
+    "action": "navigate",
+    "args": {
+      "url": "http://192.168.123.44:58895/rustify-ui/raw/#%3C%2Fh1%3E"
+    },
+    "response": {
+      "ok": true,
+      "data": {
+        "success": true,
+        "url": "http://192.168.123.44:58895/rustify-ui/raw/#%3C%2Fh1%3E",
+        "tabId": 1319605167,
+        "frameId": "FD0752F69F9FDB802F39D90F1AE071CC"
+      }
+    }
+  },
+  {
+    "action": "evaluate",
+    "args": {
+      "code": "JSON.stringify({url:location.href,lang:document.documentElement.lang,h1:document.querySelector(\"h1\")?.id,article:document.querySelector(\"article\")?.textContent,actions:[...document.querySelectorAll(\".rd-actions a\")].map(a=>({text:a.textContent,lang:a.lang})),errors:window.__docsqa})"
+    },
+    "response": {
+      "ok": true,
+      "data": {
+        "type": "string",
+        "value": "{\"url\":\"http://192.168.123.44:58895/rustify-ui/raw/#%3C%2Fh1%3E\",\"lang\":\"fr\",\"h1\":\"</h1>\",\"article\":\"Same Automatic\\n\",\"actions\":[{\"text\":\"Lire\",\"lang\":\"fr\"}],\"errors\":{\"errors\":[],\"csp\":[]}}"
+      }
+    }
+  },
+  {
+    "action": "snapshot",
+    "args": {},
+    "response": {
+      "ok": true,
+      "data": {
+        "url": "http://192.168.123.44:58895/rustify-ui/raw/#%3C%2Fh1%3E",
+        "title": "Raw | Home semantics",
+        "tree": [
+          {
+            "role": "link",
+            "name": "Skip to content",
+            "ref": "@e1",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "Skip to content"
+              }
+            ]
+          },
+          {
+            "role": "banner",
+            "children": [
+              {
+                "role": "link",
+                "name": "Home semantics",
+                "ref": "@e2",
+                "children": [
+                  {
+                    "role": "StaticText",
+                    "name": "Home semantics"
+                  }
+                ]
+              },
+              {
+                "role": "group",
+                "name": "Theme",
+                "children": [
+                  {
+                    "role": "button",
+                    "name": "System",
+                    "ref": "@e3",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "System"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "button",
+                    "name": "Light",
+                    "ref": "@e4",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Light"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "button",
+                    "name": "Dark",
+                    "ref": "@e5",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Dark"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "role": "main",
+            "children": [
+              {
+                "role": "heading",
+                "name": "Raw",
+                "children": [
+                  {
+                    "role": "StaticText",
+                    "name": "Raw"
+                  }
+                ]
+              },
+              {
+                "role": "navigation",
+                "name": "Start reading",
+                "children": [
+                  {
+                    "role": "link",
+                    "name": "Lire",
+                    "ref": "@e6",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Lire"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "role": "article",
+                "children": [
+                  {
+                    "role": "paragraph",
+                    "children": [
+                      {
+                        "role": "link",
+                        "name": "Same",
+                        "ref": "@e7",
+                        "children": [
+                          {
+                            "role": "StaticText",
+                            "name": "Same"
+                          }
+                        ]
+                      },
+                      {
+                        "role": "StaticText",
+                        "name": " "
+                      },
+                      {
+                        "role": "link",
+                        "name": "Automatic",
+                        "ref": "@e8",
+                        "children": [
+                          {
+                            "role": "StaticText",
+                            "name": "Automatic"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "role": "contentinfo",
+            "children": [
+              {
+                "role": "navigation",
+                "name": "Footer links",
+                "children": [
+                  {
+                    "role": "link",
+                    "name": "Back to the home page",
+                    "ref": "@e9",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Back to the home page"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "role": "paragraph"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "action": "network",
+    "args": {
+      "cmd": "list"
+    },
+    "response": {
+      "ok": true,
+      "data": {
+        "count": 30,
+        "requests": [
+          {
+            "requestId": "55ECF5255FE1E5C39F1D70E4721EA3F5",
+            "url": "http://192.168.123.44:58894/",
+            "method": "GET",
+            "status": 200,
+            "mimeType": "text/html",
+            "completed": true
+          },
+          {
+            "requestId": "95529.2",
+            "url": "http://192.168.123.44:58894/assets/site.35f3d29a83.css",
+            "method": "GET",
+            "status": 200,
+            "mimeType": "text/css",
+            "completed": true
+          },
+          {
+            "requestId": "95529.3",
+            "url": "http://192.168.123.44:58894/assets/mode.64fba40012.js",
+            "method": "GET",
+            "status": 200,
+            "mimeType": "text/javascript",
+            "completed": true
+          },
+          {
+            "requestId": "95529.4",
+            "url": "http://192.168.123.44:58894/assets/site.f9e7e4a69a.js",
+            "method": "GET",
+            "status": 200,
+            "mimeType": "text/javascript",
+            "completed": true
+          },
+          {
+            "requestId": "95529.5",
+            "url": "http://192.168.123.44:58894/assets/files/logo.74e1314b2a.svg",
+            "method": "GET",
+            "status": 200,
+            "mimeType": "image/svg+xml",
+            "completed": true
+          },
+          {
+            "requestId": "95529.6",
+            "url": "http://192.168.123.44:58894/favicon.ico",
+            "method": "GET",
+            "status": 404,
+            "mimeType": "text/html",
+            "completed": true
+          },
+          {
+            "requestId": "95529.7",
+            "url": "http://192.168.123.44:58894/favicon.ico",
+            "method": "GET",
+            "status": 404,
+            "mimeType": "text/html",
+            "completed": true
+          },
+          {
+            "requestId": "7B89D7F704AE5D8818C1AEFD84F84D11",
+            "url": "http://192.168.123.44:58894/guide/",
+            "method": "GET",
+            "status": 200,
+            "mimeType": "text/html",
+            "completed": true
+          },
+          {
+            "requestId": "95529.9",
+            "url": "http://192.168.123.44:58894/assets/site.35f3d29a83.css",
+            "method": "GET",
+            "status": 200,
+            "mimeType": "text/css",
+            "completed": true
+          },
+          {
+            "requestId": "95529.10",
+            "url": "http://192.168.123.44:58894/assets/mode.64fba40012.js",
+            "method": "GET",
+            "status": 200,
+            "mimeType": "text/javascript",
+            "completed": true
+          },
+          {
+            "requestId": "95529.11",
+            "url": "http://192.168.123.44:58894/assets/site.f9e7e4a69a.js",
+            "method": "GET",
+            "status": 200,
+            "mimeType": "text/javascript",
+            "completed": true
+          },
+          {
+            "requestId": "95529.12",
+            "url": "http://192.168.123.44:58894/assets/files/logo.74e1314b2a.svg",
+            "method": "GET",
+            "status": 200,
+            "mimeType": "image/svg+xml",
+            "completed": true
+          },
+          {
+            "requestId": "95529.13",
+            "url": "http://192.168.123.44:58894/assets/files/sprite.f2357e6c39.svg",
+            "method": "GET",
+            "status": 200,
+            "mimeType": "image/svg+xml",
+            "completed": true
+          },
+          {
+            "requestId": "95529.14",
+            "url": "http://192.168.123.44:58894/assets/files/pipeline.9304f52f12.svg",
+            "method": "GET",
+            "status": 200,
+            "mimeType": "image/svg+xml",
+            "completed": true
+          },
+          {
+            "requestId": "95529.15",
+            "url": "http://192.168.123.44:58894/assets/files/banner.e79172d719.svg",
+            "method": "GET",
+            "status": 200,
+            "mimeType": "image/svg+xml",
+            "completed": true
+          },
+          {
+            "requestId": "645C6B87DB534C8E7244EC062F3FCF01",
+            "url": "http://192.168.123.44:58894/reference/api/",
+            "method": "GET",
+            "status": 200,
+            "mimeType": "text/html",
+            "completed": true
+          },
+          {
+            "requestId": "95529.17",
+            "url": "http://192.168.123.44:58894/assets/site.35f3d29a83.css",
+            "method": "GET",
+            "status": 200,
+            "mimeType": "text/css",
+            "completed": true
+          },
+          {
+            "requestId": "95529.18",
+            "url": "http://192.168.123.44:58894/assets/mode.64fba40012.js",
+            "method": "GET",
+            "status": 200,
+            "mimeType": "text/javascript",
+            "completed": true
+          },
+          {
+            "requestId": "95529.19",
+            "url": "http://192.168.123.44:58894/assets/site.f9e7e4a69a.js",
+            "method": "GET",
+            "status": 200,
+            "mimeType": "text/javascript",
+            "completed": true
+          },
+          {
+            "requestId": "95529.20",
+            "url": "http://192.168.123.44:58894/assets/files/logo.74e1314b2a.svg",
+            "method": "GET",
+            "status": 200,
+            "mimeType": "image/svg+xml",
+            "completed": true
+          },
+          {
+            "requestId": "3967E5E520205E10633FFEAA4A1322D4",
+            "url": "http://192.168.123.44:58894/a/b/c/missing/",
+            "method": "GET",
+            "status": 404,
+            "mimeType": "text/html",
+            "completed": true
+          },
+          {
+            "requestId": "95529.22",
+            "url": "http://192.168.123.44:58894/assets/site.35f3d29a83.css",
+            "method": "GET",
+            "status": 200,
+            "mimeType": "text/css",
+            "completed": true
+          },
+          {
+            "requestId": "95529.23",
+            "url": "http://192.168.123.44:58894/assets/mode.64fba40012.js",
+            "method": "GET",
+            "status": 200,
+            "mimeType": "text/javascript",
+            "completed": true
+          },
+          {
+            "requestId": "95529.24",
+            "url": "http://192.168.123.44:58894/assets/site.f9e7e4a69a.js",
+            "method": "GET",
+            "status": 200,
+            "mimeType": "text/javascript",
+            "completed": true
+          },
+          {
+            "requestId": "95529.25",
+            "url": "http://192.168.123.44:58894/assets/files/logo.74e1314b2a.svg",
+            "method": "GET",
+            "status": 200,
+            "mimeType": "image/svg+xml",
+            "completed": true
+          },
+          {
+            "requestId": "FE9E9E6ADF134FF3DCA103FD79594368",
+            "url": "http://192.168.123.44:58895/rustify-ui/raw/",
+            "method": "GET",
+            "status": 200,
+            "mimeType": "text/html",
+            "completed": true
+          },
+          {
+            "requestId": "95529.27",
+            "url": "http://192.168.123.44:58895/rustify-ui/assets/site.a7d0aa99e1.css",
+            "method": "GET",
+            "status": 200,
+            "mimeType": "text/css",
+            "completed": true
+          },
+          {
+            "requestId": "95529.28",
+            "url": "http://192.168.123.44:58895/rustify-ui/assets/mode.64fba40012.js",
+            "method": "GET",
+            "status": 200,
+            "mimeType": "text/javascript",
+            "completed": true
+          },
+          {
+            "requestId": "95529.29",
+            "url": "http://192.168.123.44:58895/rustify-ui/assets/site.f9e7e4a69a.js",
+            "method": "GET",
+            "status": 200,
+            "mimeType": "text/javascript",
+            "completed": true
+          },
+          {
+            "requestId": "95529.30",
+            "url": "http://192.168.123.44:58895/favicon.ico",
+            "method": "GET",
+            "status": 404,
+            "mimeType": "text/html",
+            "completed": true
+          }
+        ]
+      }
+    }
+  }
+]

@@ -1,0 +1,258 @@
+{
+  "chromium": "153.0.8010.12",
+  "conditions": {
+    "viewport": {
+      "width": 375,
+      "height": 667
+    },
+    "cpu_slowdown": 4,
+    "network": {
+      "offline": false,
+      "latency": 150,
+      "downloadThroughput": 209715.2,
+      "uploadThroughput": 96000
+    },
+    "cache": "disabled; a fresh context per sample",
+    "samples": 5,
+    "settle_ms": 1500
+  },
+  "pages": [
+    {
+      "path": "/",
+      "status": 200,
+      "lcp_ms": 732,
+      "cls": 0,
+      "fcp_ms": 732,
+      "lcp_element": "li",
+      "transfer_bytes": 140054,
+      "wasm_requests": 0,
+      "cross_origin_requests": 0,
+      "csp_violations": [],
+      "samples": [
+        {
+          "lcp": 740,
+          "cls": 0,
+          "fcp": 740,
+          "shifts": 0,
+          "navigation": {
+            "transfer": 92854,
+            "body": 92554,
+            "responseEnd": 765.4000000357628,
+            "domContentLoaded": 874.6000000238419,
+            "load": 876
+          }
+        },
+        {
+          "lcp": 732,
+          "cls": 0,
+          "fcp": 732,
+          "shifts": 0,
+          "navigation": {
+            "transfer": 92854,
+            "body": 92554,
+            "responseEnd": 765.1999999880791,
+            "domContentLoaded": 881.3000000119209,
+            "load": 882.6999999880791
+          }
+        },
+        {
+          "lcp": 732,
+          "cls": 0,
+          "fcp": 732,
+          "shifts": 0,
+          "navigation": {
+            "transfer": 92854,
+            "body": 92554,
+            "responseEnd": 772.1999999880791,
+            "domContentLoaded": 889.1999999880791,
+            "load": 889.6999999880791
+          }
+        },
+        {
+          "lcp": 720,
+          "cls": 0,
+          "fcp": 720,
+          "shifts": 0,
+          "navigation": {
+            "transfer": 92854,
+            "body": 92554,
+            "responseEnd": 765.6000000238419,
+            "domContentLoaded": 881.1999999880791,
+            "load": 882.4000000357628
+          }
+        },
+        {
+          "lcp": 720,
+          "cls": 0,
+          "fcp": 720,
+          "shifts": 0,
+          "navigation": {
+            "transfer": 92854,
+            "body": 92554,
+            "responseEnd": 765.6999999880791,
+            "domContentLoaded": 881.8000000119209,
+            "load": 883.3000000119209
+          }
+        }
+      ]
+    },
+    {
+      "path": "/zh/g04/page-024/",
+      "status": 200,
+      "lcp_ms": 744,
+      "cls": 0,
+      "fcp_ms": 744,
+      "lcp_element": "li",
+      "transfer_bytes": 175818,
+      "wasm_requests": 0,
+      "cross_origin_requests": 0,
+      "csp_violations": [],
+      "samples": [
+        {
+          "lcp": 772,
+          "cls": 0,
+          "fcp": 772,
+          "shifts": 0,
+          "navigation": {
+            "transfer": 128618,
+            "body": 128318,
+            "responseEnd": 1001.0999999642372,
+            "domContentLoaded": 1017.5999999642372,
+            "load": 1017.6999999880791
+          }
+        },
+        {
+          "lcp": 744,
+          "cls": 0,
+          "fcp": 744,
+          "shifts": 0,
+          "navigation": {
+            "transfer": 128618,
+            "body": 128318,
+            "responseEnd": 1000.8999999761581,
+            "domContentLoaded": 1016.3999999761581,
+            "load": 1016.5
+          }
+        },
+        {
+          "lcp": 744,
+          "cls": 0,
+          "fcp": 744,
+          "shifts": 0,
+          "navigation": {
+            "transfer": 128618,
+            "body": 128318,
+            "responseEnd": 1001.8999999761581,
+            "domContentLoaded": 1016.2999999523163,
+            "load": 1016.3999999761581
+          }
+        },
+        {
+          "lcp": 740,
+          "cls": 0,
+          "fcp": 740,
+          "shifts": 0,
+          "navigation": {
+            "transfer": 128618,
+            "body": 128318,
+            "responseEnd": 1000.6999999880791,
+            "domContentLoaded": 1017.5,
+            "load": 1017.5
+          }
+        },
+        {
+          "lcp": 744,
+          "cls": 0,
+          "fcp": 744,
+          "shifts": 0,
+          "navigation": {
+            "transfer": 128618,
+            "body": 128318,
+            "responseEnd": 1001.3000000119209,
+            "domContentLoaded": 1016.5,
+            "load": 1016.8999999761581
+          }
+        }
+      ]
+    },
+    {
+      "path": "/no/such/page/",
+      "status": 404,
+      "lcp_ms": 532,
+      "cls": 0,
+      "fcp_ms": 532,
+      "lcp_element": "h1",
+      "transfer_bytes": 51432,
+      "wasm_requests": 0,
+      "cross_origin_requests": 0,
+      "csp_violations": [],
+      "samples": [
+        {
+          "lcp": 532,
+          "cls": 0,
+          "fcp": 532,
+          "shifts": 0,
+          "navigation": {
+            "transfer": 4232,
+            "body": 3932,
+            "responseEnd": 171,
+            "domContentLoaded": 716.8000000119209,
+            "load": 717.5
+          }
+        },
+        {
+          "lcp": 532,
+          "cls": 0,
+          "fcp": 532,
+          "shifts": 0,
+          "navigation": {
+            "transfer": 4232,
+            "body": 3932,
+            "responseEnd": 170.80000001192093,
+            "domContentLoaded": 718,
+            "load": 718.6999999880791
+          }
+        },
+        {
+          "lcp": 532,
+          "cls": 0,
+          "fcp": 532,
+          "shifts": 0,
+          "navigation": {
+            "transfer": 4232,
+            "body": 3932,
+            "responseEnd": 171.19999998807907,
+            "domContentLoaded": 717.4000000357628,
+            "load": 718.3000000119209
+          }
+        },
+        {
+          "lcp": 536,
+          "cls": 0,
+          "fcp": 536,
+          "shifts": 0,
+          "navigation": {
+            "transfer": 4232,
+            "body": 3932,
+            "responseEnd": 170.69999998807907,
+            "domContentLoaded": 717.8999999761581,
+            "load": 718.0999999642372
+          }
+        },
+        {
+          "lcp": 548,
+          "cls": 0,
+          "fcp": 548,
+          "shifts": 0,
+          "navigation": {
+            "transfer": 4232,
+            "body": 3932,
+            "responseEnd": 170.80000001192093,
+            "domContentLoaded": 715.6999999880791,
+            "load": 716.6999999880791
+          }
+        }
+      ]
+    }
+  ]
+}

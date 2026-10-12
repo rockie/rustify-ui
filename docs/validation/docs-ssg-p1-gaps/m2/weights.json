@@ -1,0 +1,35 @@
+[
+  {
+    "kind": "home",
+    "path": "index.html",
+    "gzip9_bytes": 22590,
+    "files": {
+      "index.html": 11440,
+      "assets/mode.64fba40012.js": 426,
+      "assets/site.f9e7e4a69a.js": 3539,
+      "assets/site.c23be2aca3.css": 7185
+    }
+  },
+  {
+    "kind": "content",
+    "path": "zh/g04/page-024/index.html",
+    "gzip9_bytes": 26485,
+    "files": {
+      "zh/g04/page-024/index.html": 15335,
+      "assets/mode.64fba40012.js": 426,
+      "assets/site.f9e7e4a69a.js": 3539,
+      "assets/site.c23be2aca3.css": 7185
+    }
+  },
+  {
+    "kind": "404",
+    "path": "404.html",
+    "gzip9_bytes": 12606,
+    "files": {
+      "404.html": 1456,
+      "assets/mode.64fba40012.js": 426,
+      "assets/site.f9e7e4a69a.js": 3539,
+      "assets/site.c23be2aca3.css": 7185
+    }
+  }
+]

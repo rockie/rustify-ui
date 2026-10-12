@@ -135,6 +135,8 @@ components:
     height: "2.75rem"
   action-secondary-hover:
     backgroundColor: "{colors.secondary}"
+  site-footer:
+    textColor: "{colors.primary}"
   mode-option:
     textColor: "{colors.muted-foreground}"
     rounded: "{rounded.mode-option}"
@@ -301,7 +303,7 @@ Highlighting is emitted as `hl-` classes, and each colour is held at 4.5:1 or be
 
 - **Home title** (700, `clamp(2.25rem, 1.6rem + 2.6vw, 3.25rem)`, 1.08, −0.03em, balanced): the site name on the home page only.
 - **Tagline** (400, 1.1875rem, 1.55, muted, max 36rem, `pretty` wrap): one line of positioning under the home title.
-- **Page title / H1** (700, 2rem, 1.2, −0.02em, balanced): exactly one per page. The title becomes the H1 unless the article has its own.
+- **Page title / H1** (700, 2rem, 1.2, −0.02em, balanced): exactly one per page. The title becomes the H1 unless the article has its own. Markdown and effective raw HTML headings share the single-H1 and no-skipped-level checks; code, comments and HTML template contents are excluded. The home hero merges only the existing leading lowercase H1 form and retains its id. An author H1 that does not merge is a located error.
 - **H2** (650, 1.375rem, 1.3, −0.01em): 3rem above, with a hairline underline and 0.5rem padding.
 - **H3** (600, 1.125rem): 2.25rem above. **H4–H6** (600, 1rem): 1.75rem above.
 - **Body** (400, 1rem, 1.75): the article text at a 36rem measure, about 75 Latin or 36 CJK characters per line. Blocks are separated by 1.125rem.
@@ -330,9 +332,13 @@ Highlighting is emitted as `hl-` classes, and each colour is held at 4.5:1 or be
 - **Home page:** no sidebar.
   - Block padding is 4rem top and 5rem bottom. The hero is at most 44rem wide, the tagline at most 36rem.
   - Actions sit 2rem below with 0.75rem gaps.
+  - Nonempty actions form the named Start reading navigation. Actions remain optional.
   - Features begin 4rem below. They are one column, two from 40rem, and three from 64rem only when the count is 3, 5 or more (2 and 4 stay in pairs).
   - The page's own Markdown follows at the measure, 3rem down.
 - **Anchors:** headings and any `[id]` scroll to `header + 1.5rem` below the top.
+- **Site footer:** every home, content and 404 page ends with a body-level footer outside main, behind a 1px `secondary` hairline. It has 1.5rem block padding and one underlined primary link at 0.875rem in the named Footer links navigation, returning to the site's base. It does not depend on home actions, header links, dates or an edit URL. Local page metadata stays inside the article column.
+
+The surface's incremental component sidecar is [.impeccable/docs-ssg.design.json](.impeccable/docs-ssg.design.json). Its source is this document; the root `.impeccable/design.json` continues to describe the SDK and Theme Studio.
 
 ## Elevation & Depth
 

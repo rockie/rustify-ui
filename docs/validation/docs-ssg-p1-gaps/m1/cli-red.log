@@ -1,0 +1,61 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-docs-cli v0.1.2 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-docs-cli)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.56s
+     Running tests/check.rs (target/debug/deps/check-f32f4d9d90b069dc)
+
+running 15 tests
+test configuration_errors_are_located_in_the_configuration ... ok
+test usage_errors_exit_with_two_and_touch_nothing ... ok
+test invalid_language_uses_its_yaml_value_location_and_a_repair_in_both_formats ... FAILED
+test text_mode_reports_on_stderr_with_locations_and_a_conclusion ... ok
+test the_configuration_defaults_to_the_working_directory ... ok
+test three_known_errors_are_exactly_three_located_errors ... ok
+test help_and_version ... ok
+test an_opening_fence_alone_is_an_unclosed_frontmatter_error ... ok
+test the_configuration_named_is_the_one_read_and_located ... ok
+test html_template_ghosts_at_integration_points_fail_and_keep_the_output ... ok
+test heading_semantics_refuse_bad_builds_without_replacing_the_last_output ... FAILED
+test warnings_fail_only_when_denied ... ok
+test a_clean_site_passes_and_check_writes_nothing ... ok
+test body_targets_pass_check_and_build_at_both_bases ... ok
+test foreign_template_targets_pass_check_and_build ... ok
+
+failures:
+
+---- invalid_language_uses_its_yaml_value_location_and_a_repair_in_both_formats stdout ----
+
+thread 'invalid_language_uses_its_yaml_value_location_and_a_repair_in_both_formats' (32036471) panicked at crates/rustify-docs-cli/tests/check.rs:379:9:
+assertion `left == right` failed
+  left: Null
+ right: 4
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- heading_semantics_refuse_bad_builds_without_replacing_the_last_output stdout ----
+
+thread 'heading_semantics_refuse_bad_builds_without_replacing_the_last_output' (32036468) panicked at crates/rustify-docs-cli/tests/check.rs:415:9:
+assertion `left == right` failed: ---
+description: d
+---
+# One
+
+<H1>Two</H1>
+: {"schema_version":1,"success":true,"diagnostics":[{"severity":"warning","rule":"no-git-history","file":null,"line":null,"column":null,"message":"pages show no last-updated date: not a git repository (or any of the parent directories): .git","suggestion":"build inside a git repository with the content committed"}],"summary":{"errors":0,"warnings":1,"pages":1}}
+  left: Some(0)
+ right: Some(1)
+
+
+failures:
+    heading_semantics_refuse_bad_builds_without_replacing_the_last_output
+    invalid_language_uses_its_yaml_value_location_and_a_repair_in_both_formats
+
+test result: FAILED. 13 passed; 2 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.05s
+
+error: test failed, to rerun pass `-p rustify-docs-cli --test check`
+mbx[cache]: 0 hits, 0 misses, 3 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: 45470 compilations, and the box has forgotten none of them.

@@ -1,0 +1,30 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.37s
+     Running tests/dev.rs (target/debug/deps/dev-fe316576a14600bc)
+
+running 1 test
+test located_semantic_failures_keep_last_good_and_clear_after_repair ... FAILED
+
+failures:
+
+---- located_semantic_failures_keep_last_good_and_clear_after_repair stdout ----
+
+thread 'located_semantic_failures_keep_last_good_and_clear_after_repair' (32040325) panicked at crates/rustify-docs-cli/tests/dev.rs:282:9:
+assertion `left == right` failed
+  left: (None, None)
+ right: (Some(4), Some(7))
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    located_semantic_failures_keep_last_good_and_clear_after_repair
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 13 filtered out; finished in 1.34s
+
+error: test failed, to rerun pass `-p rustify-docs-cli --test dev`

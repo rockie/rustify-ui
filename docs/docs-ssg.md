@@ -88,6 +88,11 @@ there, and `suggestion` is `null` when there is nothing more specific to say
 than the message. Diagnostics are sorted by file, line, column, severity and
 rule, and each appears once.
 
+Content errors such as an invalid `lang`, a second H1 or a skipped heading
+level point to the YAML value or heading in the original file and include
+a repair. `check`, `build` and `dev` report the same location and advice.
+An I/O or output-lock failure has no invented source position.
+
 ## Project layout
 
 ```text
@@ -217,12 +222,14 @@ strikethrough, alerts and extended autolinks (`www.example.com`,
 
 A page has one top-level heading. When the frontmatter gives the title and
 the page also starts with `# heading`, that heading is the page's title and
-is not repeated; a second `#` heading is an error (`multiple-h1`). A heading
+is not repeated; a second H1 is an error (`multiple-h1`). Markdown and
+raw HTML headings share this rule, in their effective document order. Code,
+comments and HTML template contents contribute no document heading. A heading
 that skips a level (`##` straight to `####`) is a warning (`heading-skip`).
 
 ### Heading anchors
 
-Every heading gets the id GitHub gives it, so `guide.md#some-heading` lands
+Every Markdown heading gets the id GitHub gives it, so `guide.md#some-heading` lands
 on both:
 
 - The text is NFKC-normalized and lower-cased. Letters and digits of every
@@ -235,6 +242,13 @@ on both:
   accepted; a class or another attribute is an error (`heading-attribute`),
   and two headings with one explicit id are an error
   (`duplicate-heading-id`). Automatic ids step around explicit ones.
+
+Raw HTML headings keep the `id` their author writes. Without an id they
+still participate in heading checks, but have no table-of-contents link.
+When a home page merges its leading H1, only that heading's own id moves
+to the hero. IDs on its discarded children are removed from the page's
+anchor set; a link to one is a `broken-anchor`. Put that target in the
+remaining content instead.
 
 > [!WARNING]
 > GitHub does not read `{#id}`: it shows the braces as part of the heading
@@ -582,13 +596,43 @@ a failure in either hides nothing.
   height written into the page, so the text below does not move when they
   load. An SVG with only a `viewBox` scales to the column.
 - **Home page.** `layout: home` shows the title, the tagline and the
-  `actions` as buttons (the first one filled), then `features` as a list of
+  optional `actions` as a named reading navigation (the first button filled), then `features` as a list of
   titles and sentences, then any Markdown on the page. A leading `# Title`
-  in that Markdown is the title already shown and is not repeated.
+  in that Markdown is merged into the hero and keeps its automatic or explicit
+  id there. The existing merge rule also accepts a leading lowercase
+  `<h1 …>…</h1>`. An H1 after introductory text or a comment, inside a
+  container, or written as `<H1>` does not merge: it is a second H1 beside
+  the hero, diagnosed at its source. Use H2 or start the body with `# Title`.
+  Authored action text keeps the page's language even when interface labels
+  fall back to English.
+- **Landmarks.** Home, content and 404 pages have a header, navigation,
+  main and site footer. The footer sits outside main and has a named
+  navigation with a return-home link under the site's base. It remains
+  available without script, home actions, header links, git dates or an
+  edit URL. Page-specific edit links and dates keep their own conditions.
 - **Brand.** `theme.primary` colours links, the current location, focus
   rings and the primary action in each mode; button labels are black or
   white, whichever reads better. A single `theme.logo` shows in both modes;
   a light/dark pair switches with the mode, without script.
+
+### Browser and measurement scope
+
+P1 checks require the latest stable Google Chrome and real macOS Safari,
+plus an iPhone/Safari and an Android/Chrome, with actual versions recorded.
+Firefox's real-browser and Playwright-engine checks are deferred for P1;
+their resumption phase is still undecided. P4 retains the full browser matrix.
+Engine emulation and narrow screenshots supplement device checks.
+
+Performance uses the frozen Playwright Chromium `153.0.8010.12`, separately
+from stable-browser compatibility. At 375 px, CPU slowdown is 4×; CDP network
+conditions are latency 150 ms, download 209,715 B/s and upload 96,000 B/s.
+This is the approved P1 measurement contract, rather than the unmodified
+DevTools Slow 4G preset. Each page type's largest page gets five cold-cache
+samples, judged by its median. The budgets remain LCP ≤2.5 s, CLS ≤0.1 and
+HTML + CSS + all basic scripts ≤100 KB as the sum of each file's gzip-9 size.
+See the [frozen contract](plan/DOCS-SSG-P1.md#93-性能千次保存与真实环境合同)
+and [current verification record](validation/docs-ssg-p1-gaps/M2.md) for
+results and device evidence still to supply.
 
 ## Diagnostics
 
@@ -603,7 +647,7 @@ Errors stop a build; warnings do not, unless `--deny-warnings` is given.
 | `route-conflict`, `reserved-route` | error | Two pages with one address; a page at `/404/` |
 | `missing-title` | error | A page with no title and no `#` heading |
 | `missing-description` | error / warning | No description and no paragraph to take one from (error); no `description:` (warning) |
-| `multiple-h1` | error | A second top-level heading |
+| `multiple-h1` | error | A second effective H1, including a home author's H1 that does not merge into the hero |
 | `heading-skip` | warning | A heading more than one level below the one before |
 | `heading-attribute`, `duplicate-heading-id` | error | A heading attribute other than `{#id}`; one explicit id twice |
 | `broken-link`, `broken-anchor`, `empty-link` | error | A link to a page, file or heading that does not exist |

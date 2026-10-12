@@ -1,0 +1,7 @@
+{
+  "files": 511,
+  "equal": true,
+  "differences": [],
+  "performance_binary": "target/docs-cli/rustify-docs",
+  "browser_binary": "target/docs-ssg/gaps/rustify-docs-candidate"
+}

@@ -562,14 +562,18 @@ pub fn generate(
             let home = (page.front.layout == Layout::Home).then(|| {
                 // The hero carries the page's one H1; a leading `# Title` in
                 // the Markdown is that title, not a second heading.
-                if article.starts_with("<h1") {
-                    if let Some(end) = article.find("</h1>") {
-                        let cut = end + "</h1>".len();
+                if page.fragment.leading_h1.is_some() {
+                    if let Some(cut) = crate::html_check::leading_h1_end(&article) {
                         let cut = cut + usize::from(article[cut..].starts_with('\n'));
                         article.replace_range(..cut, "");
                     }
                 }
                 Home {
+                    heading_id: page
+                        .fragment
+                        .leading_h1
+                        .as_deref()
+                        .filter(|id| !id.is_empty()),
                     tagline: page.front.tagline.as_deref(),
                     actions: page
                         .front

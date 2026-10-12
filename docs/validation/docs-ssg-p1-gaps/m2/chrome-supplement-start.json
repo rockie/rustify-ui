@@ -1,0 +1,347 @@
+[
+  {
+    "action": "network",
+    "args": {
+      "cmd": "start"
+    },
+    "response": {
+      "ok": true,
+      "data": {
+        "success": true,
+        "message": "network capture started"
+      }
+    }
+  },
+  {
+    "action": "cdp",
+    "args": {
+      "method": "Page.addScriptToEvaluateOnNewDocument",
+      "params": {
+        "source": "window.__docsqa={errors:[],csp:[]};addEventListener(\"error\",e=>__docsqa.errors.push(e.message));addEventListener(\"unhandledrejection\",e=>__docsqa.errors.push(String(e.reason)));addEventListener(\"securitypolicyviolation\",e=>__docsqa.csp.push(e.violatedDirective+\" \"+e.blockedURI));"
+      }
+    },
+    "response": {
+      "ok": true,
+      "data": {
+        "identifier": "1"
+      }
+    }
+  },
+  {
+    "action": "navigate",
+    "args": {
+      "url": "http://192.168.123.44:58894/"
+    },
+    "response": {
+      "ok": true,
+      "data": {
+        "success": true,
+        "url": "http://192.168.123.44:58894/",
+        "tabId": 1319605167,
+        "frameId": "FD0752F69F9FDB802F39D90F1AE071CC"
+      }
+    }
+  },
+  {
+    "action": "snapshot",
+    "args": {},
+    "response": {
+      "ok": true,
+      "data": {
+        "url": "http://192.168.123.44:58894/",
+        "title": "Fixture Docs",
+        "tree": [
+          {
+            "role": "link",
+            "name": "Skip to content",
+            "ref": "@e1",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "Skip to content"
+              }
+            ]
+          },
+          {
+            "role": "banner",
+            "children": [
+              {
+                "role": "link",
+                "name": "Fixture Docs",
+                "ref": "@e2",
+                "children": [
+                  {
+                    "role": "StaticText",
+                    "name": "Fixture Docs"
+                  }
+                ]
+              },
+              {
+                "role": "navigation",
+                "name": "Site links",
+                "children": [
+                  {
+                    "role": "list",
+                    "children": [
+                      {
+                        "role": "link",
+                        "name": "Guide",
+                        "ref": "@e3",
+                        "children": [
+                          {
+                            "role": "StaticText",
+                            "name": "Guide"
+                          }
+                        ]
+                      },
+                      {
+                        "role": "link",
+                        "name": "GitHub",
+                        "ref": "@e4",
+                        "children": [
+                          {
+                            "role": "StaticText",
+                            "name": "GitHub"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "role": "list",
+                    "children": [
+                      {
+                        "role": "link",
+                        "name": "Mastodon",
+                        "ref": "@e5",
+                        "children": [
+                          {
+                            "role": "StaticText",
+                            "name": "Mastodon"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "role": "group",
+                "name": "Theme",
+                "children": [
+                  {
+                    "role": "button",
+                    "name": "System",
+                    "ref": "@e6",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "System"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "button",
+                    "name": "Light",
+                    "ref": "@e7",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Light"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "button",
+                    "name": "Dark",
+                    "ref": "@e8",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Dark"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "role": "main",
+            "children": [
+              {
+                "role": "heading",
+                "name": "Fixture Docs",
+                "children": [
+                  {
+                    "role": "StaticText",
+                    "name": "Fixture Docs"
+                  }
+                ]
+              },
+              {
+                "role": "StaticText",
+                "name": "Markdown in, a static site out."
+              },
+              {
+                "role": "navigation",
+                "name": "Start reading",
+                "children": [
+                  {
+                    "role": "link",
+                    "name": "Get started",
+                    "ref": "@e9",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Get started"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "Reference",
+                    "ref": "@e10",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Reference"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "role": "list",
+                "children": [
+                  {
+                    "role": "listitem",
+                    "children": [
+                      {
+                        "role": "heading",
+                        "name": "Static",
+                        "children": [
+                          {
+                            "role": "StaticText",
+                            "name": "Static"
+                          }
+                        ]
+                      },
+                      {
+                        "role": "StaticText",
+                        "name": "Every page is complete HTML."
+                      }
+                    ]
+                  },
+                  {
+                    "role": "listitem",
+                    "children": [
+                      {
+                        "role": "heading",
+                        "name": "Checked",
+                        "children": [
+                          {
+                            "role": "StaticText",
+                            "name": "Checked"
+                          }
+                        ]
+                      },
+                      {
+                        "role": "StaticText",
+                        "name": "Every link is resolved before a build is published."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "role": "article",
+                "children": [
+                  {
+                    "role": "paragraph",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Start with the "
+                      },
+                      {
+                        "role": "link",
+                        "name": "guide",
+                        "ref": "@e11",
+                        "children": [
+                          {
+                            "role": "StaticText",
+                            "name": "guide"
+                          }
+                        ]
+                      },
+                      {
+                        "role": "StaticText",
+                        "name": " or read the "
+                      },
+                      {
+                        "role": "link",
+                        "name": "API reference",
+                        "ref": "@e12",
+                        "children": [
+                          {
+                            "role": "StaticText",
+                            "name": "API reference"
+                          }
+                        ]
+                      },
+                      {
+                        "role": "StaticText",
+                        "name": "."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "role": "contentinfo",
+            "children": [
+              {
+                "role": "navigation",
+                "name": "Footer links",
+                "children": [
+                  {
+                    "role": "link",
+                    "name": "Back to the home page",
+                    "ref": "@e13",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Back to the home page"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "role": "paragraph"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "action": "screenshot",
+    "args": {
+      "path": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p1-gaps/m2/chrome-real-home.png"
+    },
+    "response": {
+      "ok": true,
+      "data": {
+        "format": "png",
+        "path": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p1-gaps/m2/chrome-real-home.png",
+        "sizeBytes": 258590,
+        "mimeType": "image/png"
+      }
+    }
+  }
+]

@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-12T09:31:30.670050+08:00",
+  "title": "Rustify Docs reading theme",
+  "extensions": {},
+  "components": [
+    {
+      "name": "Site footer",
+      "kind": "nav",
+      "refersTo": "site-footer",
+      "description": "A body-level footer on home, content and 404 pages, with a named return-home navigation independent of optional metadata or header links.",
+      "html": "<footer class=\"rd-site-footer\"><nav aria-label=\"Footer links\"><a href=\"/\">Back to the home page</a></nav></footer>",
+      "css": ".rd-site-footer {\n  padding-block: 1.5rem;\n  border-top: 1px solid var(--secondary);\n  font-size: 0.875rem;\n}\n.rd-site-footer a {\n  color: var(--primary);\n  text-decoration: underline;\n  text-underline-offset: 0.2em;\n}"
+    }
+  ],
+  "narrative": {
+    "rules": [
+      {
+        "name": "Document landmarks and headings",
+        "body": "Home, content and 404 pages have a header, navigation, main and site footer. Effective Markdown and raw HTML headings obey one H1 and no skipped levels. A leading home H1 merges into the hero with its id; an unmerged author H1 is a located error.",
+        "section": "layout"
+      }
+    ]
+  }
+}

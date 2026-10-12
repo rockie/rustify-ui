@@ -262,6 +262,69 @@ fn a_failed_build_keeps_the_last_good_one_until_it_is_fixed() {
 }
 
 #[test]
+fn located_semantic_failures_keep_last_good_and_clear_after_repair() {
+    let temp = copy_fixture("content");
+    let original = temp.read("site/content/index.md");
+    let dev = Dev::start(&temp.path("site"), &[], &[]).unwrap();
+    let (_, html) = get_text(&dev.url);
+    let mut home = dev.events("/docs/", good_of(&html));
+    home.next();
+    for (bad, rule, line, column) in [
+        (
+            "---\ntitle: Home\nlayout: home\nlang: english\n---\n# Home\n",
+            "lang",
+            4,
+            7,
+        ),
+        (
+            "---\ntitle: Home\nlayout: home\n---\nIntro\n\n# Home\n",
+            "multiple-h1",
+            7,
+            1,
+        ),
+        (
+            "---\ntitle: Home\nlayout: home\n---\n<!-- comment -->\n\n# Home\n",
+            "multiple-h1",
+            7,
+            1,
+        ),
+        (
+            "---\ntitle: Home\nlayout: home\n---\n<div><h1>Home</h1></div>\n",
+            "multiple-h1",
+            5,
+            6,
+        ),
+        (
+            "---\ntitle: Home\nlayout: home\n---\n<H1>Home</H1>\n",
+            "multiple-h1",
+            5,
+            1,
+        ),
+    ] {
+        temp.write("site/content/index.md", bad);
+        let failed = home.until(|state| state["ok"] == false);
+        let problem = failed["diagnostics"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|d| d["rule"] == rule)
+            .unwrap();
+        assert_eq!(
+            (problem["line"].as_u64(), problem["column"].as_u64()),
+            (Some(line), Some(column))
+        );
+        assert!(problem["suggestion"]
+            .as_str()
+            .is_some_and(|s| !s.is_empty()));
+        assert_eq!(failed["reload"], false);
+        assert!(get_text(&dev.url).1.contains("Fixture Docs"));
+        temp.write("site/content/index.md", &original);
+        let fixed = home.until(|state| state["ok"] == true);
+        assert_eq!(fixed["errors"], 0);
+    }
+}
+
+#[test]
 fn a_first_build_that_fails_shows_the_problems_until_one_builds() {
     let temp = copy_fixture("content");
     temp.edit(

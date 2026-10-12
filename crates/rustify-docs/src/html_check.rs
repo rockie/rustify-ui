@@ -154,18 +154,169 @@ pub fn parse_srcset(value: &str) -> Vec<(String, String)> {
 /// IDs in the document tree, in output order. Template contents and
 /// Markdown buffers which were never emitted contribute nothing here.
 pub(crate) fn ids(html: &str) -> Vec<String> {
+    semantics(html, &[]).anchors
+}
+
+/// An emitted heading tag or raw HTML chunk, mapped back to its source.
+pub(crate) struct HeadingSource {
+    pub html: Range<usize>,
+    pub span: Range<usize>,
+    pub raw: bool,
+    pub explicit: bool,
+}
+
+pub(crate) struct Semantics {
+    pub anchors: Vec<String>,
+    pub headings: Vec<crate::markdown::Heading>,
+    pub leading_h1: Option<String>,
+}
+
+/// The existing leading-H1 merge boundary, at an actual closing tag rather
+/// than matching text inside an attribute.
+pub(crate) fn leading_h1_end(html: &str) -> Option<usize> {
+    if !html.starts_with("<h1") {
+        return None;
+    }
+    let mut emitter = html5gum::DefaultEmitter::new_with_span();
+    emitter.naively_switch_states(true);
+    let mut templates = 0usize;
+    for token in Tokenizer::new_with_emitter(html, emitter) {
+        match token {
+            Ok(Token::StartTag(tag)) if tag.name.as_slice() == b"template" && !tag.self_closing => {
+                templates += 1
+            }
+            Ok(Token::EndTag(tag)) if tag.name.as_slice() == b"template" => {
+                templates = templates.saturating_sub(1)
+            }
+            Ok(Token::EndTag(tag))
+                if templates == 0
+                    && tag.name.as_slice() == b"h1"
+                    && html.get(tag.span.start..tag.span.end) == Some("</h1>") =>
+            {
+                return Some(tag.span.end)
+            }
+            _ => {}
+        }
+    }
+    None
+}
+
+pub(crate) fn semantics(html: &str, sources: &[HeadingSource]) -> Semantics {
+    // Mark a private analysis copy, never the published HTML. The tree
+    // builder then decides which source tags became document headings,
+    // including template isolation and foreign-content integration points.
+    let mut annotated = String::with_capacity(html.len());
+    let mut marker = "data-rd-heading-origin".to_owned();
+    while html.contains(&marker) {
+        marker.push('_');
+    }
+    let mut origins = Vec::new();
+    let mut at = 0;
+    // Tokenize candidate tags even in foreign <title>/<desc>. Only the
+    // tree builder can decide whether their children are HTML headings.
+    let emitter = html5gum::DefaultEmitter::new_with_span();
+    for token in Tokenizer::new_with_emitter(html, emitter) {
+        let Ok(Token::StartTag(tag)) = token else {
+            continue;
+        };
+        if !matches!(
+            tag.name.as_slice(),
+            b"h1" | b"h2" | b"h3" | b"h4" | b"h5" | b"h6"
+        ) {
+            continue;
+        }
+        let start = tag.span.start;
+        let origin = sources.partition_point(|source| source.html.end <= start);
+        let source = sources
+            .get(origin)
+            .filter(|source| source.html.contains(&start));
+        origins.push(source.map(|source| {
+            let span = if source.raw {
+                let offset = source.span.start + start - source.html.start;
+                offset..(offset + tag.span.end - start).min(source.span.end)
+            } else {
+                source.span.clone()
+            };
+            (span, source.explicit, start)
+        }));
+        let insert = start + 3;
+        annotated.push_str(&html[at..insert]);
+        annotated.push_str(&format!(" {marker}=\"{}\"", origins.len() - 1));
+        at = insert;
+    }
+    annotated.push_str(&html[at..]);
     // SSR writes the article into an existing body. A fragment parser
     // ignores body tags instead of merging their attributes into that body.
     let dom = parse_document(Document::default(), Default::default()).one(format!(
-        "<!doctype html><html><head></head><body><article>{html}</article></body></html>"
+        "<!doctype html><html><head></head><body><article>{annotated}</article></body></html>"
     ));
     // HTML template contents are separate fragments, not descendants.
     // Foreign elements named template retain their ordinary children.
-    dom.root()
-        .descendants_it()
-        .filter_map(|node| node.id_attr())
-        .map(|id| id.to_string())
-        .collect()
+    let mut result = Semantics {
+        anchors: Vec::new(),
+        headings: Vec::new(),
+        leading_h1: None,
+    };
+    for node in dom.root().descendants_it() {
+        if let Some(id) = node.id_attr() {
+            result.anchors.push(id.to_string());
+        }
+        let Some(name) = node.qual_name_ref() else {
+            continue;
+        };
+        if name.ns.as_ref() != "http://www.w3.org/1999/xhtml" {
+            continue;
+        }
+        let level = match name.local.as_ref() {
+            "h1" => 1,
+            "h2" => 2,
+            "h3" => 3,
+            "h4" => 4,
+            "h5" => 5,
+            "h6" => 6,
+            _ => continue,
+        };
+        let Some((span, explicit, start)) = node
+            .attr(&marker)
+            .and_then(|value| value.parse::<usize>().ok())
+            .and_then(|i| origins.get(i))
+            .and_then(Option::as_ref)
+        else {
+            continue;
+        };
+        let id = node.id_attr().map_or_else(String::new, |id| id.to_string());
+        if level == 1 && *start == 0 && leading_h1_end(html).is_some() {
+            result.leading_h1 = Some(id.clone());
+        }
+        result.headings.push(crate::markdown::Heading {
+            level,
+            id,
+            text: heading_text(&node.text(), &marker)
+                .split_whitespace()
+                .collect::<Vec<_>>()
+                .join(" "),
+            explicit: *explicit && node.id_attr().is_some(),
+            span: span.clone(),
+        });
+    }
+    result
+}
+
+fn heading_text(text: &str, marker: &str) -> String {
+    // An annotation inside raw text (e.g. textarea) stays text in the DOM.
+    // The chosen marker was absent from the input, so remove only ours.
+    let prefix = format!(" {marker}=\"");
+    let mut rest = text;
+    let mut clean = String::with_capacity(text.len());
+    while let Some((before, after)) = rest.split_once(&prefix) {
+        clean.push_str(before);
+        let Some((_, tail)) = after.split_once('"') else {
+            break;
+        };
+        rest = tail;
+    }
+    clean.push_str(rest);
+    clean
 }
 
 /// Whether a link opens another site in a new window without cutting that

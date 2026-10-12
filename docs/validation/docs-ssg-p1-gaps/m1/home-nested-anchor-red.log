@@ -1,0 +1,34 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-docs v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-docs)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 10.18s
+     Running unittests src/lib.rs (target/debug/deps/rustify_docs-9e52385b917a0500)
+
+running 1 test
+test content::tests::home_links_cannot_target_markup_discarded_with_the_leading_h1 ... FAILED
+
+failures:
+
+---- content::tests::home_links_cannot_target_markup_discarded_with_the_leading_h1 stdout ----
+
+thread 'content::tests::home_links_cannot_target_markup_discarded_with_the_leading_h1' (32259542) panicked at crates/rustify-docs/src/content.rs:2253:13:
+assertion `left == right` failed: []
+  left: 0
+ right: 1
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    content::tests::home_links_cannot_target_markup_discarded_with_the_leading_h1
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 126 filtered out; finished in 0.03s
+
+error: test failed, to rerun pass `-p rustify-docs --lib`
+mbx[cache]: 0 hits, 0 misses, 3 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[gc]: evicted 0 objects and 0 action results (9.0 MiB logical); 90.0 GiB logical remain
+mbx[savings]: found 1.6 TiB logical of target/ whose checkouts left long ago. the estate has been settled.

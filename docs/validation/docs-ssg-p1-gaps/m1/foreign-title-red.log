@@ -1,0 +1,42 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-docs v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-docs)
+warning: function `ids` is never used
+   --> crates/rustify-docs/src/html_check.rs:156:15
+    |
+156 | pub(crate) fn ids(html: &str) -> Vec<String> {
+    |               ^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `rustify-docs` (lib) generated 1 warning
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.75s
+     Running unittests src/lib.rs (target/debug/deps/rustify_docs-9e52385b917a0500)
+
+running 1 test
+test markdown::tests::effective_headings_handle_foreign_titles_and_raw_text_without_leaking_analysis_markup ... FAILED
+
+failures:
+
+---- markdown::tests::effective_headings_handle_foreign_titles_and_raw_text_without_leaking_analysis_markup stdout ----
+
+thread 'markdown::tests::effective_headings_handle_foreign_titles_and_raw_text_without_leaking_analysis_markup' (32050227) panicked at crates/rustify-docs/src/markdown.rs:1394:9:
+assertion `left == right` failed
+  left: 0
+ right: 1
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    markdown::tests::effective_headings_handle_foreign_titles_and_raw_text_without_leaking_analysis_markup
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 125 filtered out; finished in 0.03s
+
+error: test failed, to rerun pass `-p rustify-docs --lib`
+mbx[cache]: 0 hits, 0 misses, 3 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: 45470 compilations served. the monocle stays on.

@@ -1,0 +1,301 @@
+{
+  "config": {
+    "argv": [
+      "/Users/rockie/.nvm/versions/node/v26.1.0/bin/node",
+      "/Users/rockie/Documents/gh-rockie/rustify-ui/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "playwright.docs.config.ts",
+      "--project=docs-subpath",
+      "home.spec.ts"
+    ],
+    "configFile": "/Users/rockie/Documents/gh-rockie/rustify-ui/playwright.docs.config.ts",
+    "rootDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": {},
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "dom-only",
+        "name": "dom-only",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "dom-only/**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "docs-root",
+        "name": "docs-root",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [
+          "docs-ssg/dev*.spec.ts"
+        ],
+        "testMatch": [
+          "docs-ssg/**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "docs-subpath",
+        "name": "docs-subpath",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [
+          "docs-ssg/dev*.spec.ts"
+        ],
+        "testMatch": [
+          "docs-ssg/**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "docs-meta",
+        "name": "docs-meta",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [
+          "docs-ssg/dev*.spec.ts"
+        ],
+        "testMatch": [
+          "docs-ssg/**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "docs-firefox",
+        "name": "docs-firefox",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [
+          "docs-ssg/dev*.spec.ts"
+        ],
+        "testMatch": [
+          "docs-ssg/**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "docs-webkit",
+        "name": "docs-webkit",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [
+          "docs-ssg/dev*.spec.ts"
+        ],
+        "testMatch": [
+          "docs-ssg/**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "docs-dev",
+        "name": "docs-dev",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/dev*.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/docs/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "docs-ssg/home.spec.ts",
+      "file": "docs-ssg/home.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "home anchors and empty navigation work with script true",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "docs-subpath",
+              "projectName": "docs-subpath",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2282,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [
+                    {
+                      "buffer": "YnVpbGRpbmcgL3Zhci9mb2xkZXJzL2N2L3BuN3AxdjdzNzM3Y3FsdDYwNWp5bDdsbTAwMDBnbi9UL3J1c3RpZnktZG9jcy1ob21lLVpwVVhPZiBpbnRvIC9wcml2YXRlL3Zhci9mb2xkZXJzL2N2L3BuN3AxdjdzNzM3Y3FsdDYwNWp5bDdsbTAwMDBnbi9UL3J1c3RpZnktZG9jcy1ob21lLVpwVVhPZi9kaXN0Cndhcm5pbmdbbm8tZ2l0LWhpc3RvcnldOiBwYWdlcyBzaG93IG5vIGxhc3QtdXBkYXRlZCBkYXRlOiBub3QgYSBnaXQgcmVwb3NpdG9yeSAob3IgYW55IG9mIHRoZSBwYXJlbnQgZGlyZWN0b3JpZXMpOiAuZ2l0CiAgPSBoZWxwOiBidWlsZCBpbnNpZGUgYSBnaXQgcmVwb3NpdG9yeSB3aXRoIHRoZSBjb250ZW50IGNvbW1pdHRlZApidWlsZDogNCBwYWdlcyBhbmQgNDA0Lmh0bWwgaW4gL3ByaXZhdGUvdmFyL2ZvbGRlcnMvY3YvcG43cDF2N3M3MzdjcWx0NjA1anlsN2xtMDAwMGduL1QvcnVzdGlmeS1kb2NzLWhvbWUtWnBVWE9mL2Rpc3Q6IDcxLjkgS0IgaW4gMTMgZmlsZXMsIDEgd2FybmluZyhzKSwgMjEgbXMKbGFyZ2VzdCBwYWdlczoKICAgICAgNC44IEtCICBndWlkZS9pbmRleC5odG1sCiAgICAgIDQuMiBLQiAgNDA0Lmh0bWwKICAgICAgNC4xIEtCICBpbmRleC5odG1sCiAgICAgIDQuMCBLQiAgZXhwbGljaXQvaW5kZXguaHRtbAogICAgICAzLjggS0IgIGVtcHR5L2luZGV4Lmh0bWwK"
+                    }
+                  ],
+                  "retry": 0,
+                  "startTime": "2026-10-12T01:27:42.192Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6cbcdf356bdd9ca1a033-911b17d600d6b3e298dd",
+          "file": "docs-ssg/home.spec.ts",
+          "line": 47,
+          "column": 9
+        },
+        {
+          "title": "home anchors and empty navigation work with script false",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "docs-subpath",
+              "projectName": "docs-subpath",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1941,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-12T01:27:44.647Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6cbcdf356bdd9ca1a033-1bd481e39fca2af6bebd",
+          "file": "docs-ssg/home.spec.ts",
+          "line": 47,
+          "column": 9
+        },
+        {
+          "title": "the empty home and its footer pass accessibility checks in both modes",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "docs-subpath",
+              "projectName": "docs-subpath",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 541,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-12T01:27:46.591Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6cbcdf356bdd9ca1a033-c3d24414c852fc98f039",
+          "file": "docs-ssg/home.spec.ts",
+          "line": 105,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-12T01:27:41.660Z",
+    "duration": 5513.133,
+    "expected": 3,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

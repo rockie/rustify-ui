@@ -143,6 +143,30 @@ async function kept(page: Page): Promise<boolean> {
 
 const BROKEN = "[Broken](missing.md)";
 
+test("semantic diagnostics locate the source, preserve the home, and clear on repair", async ({ page }) => {
+    const original = site.read("content/index.md");
+    const server = await dev();
+    await page.goto(server.url);
+    await mark(page);
+    for (const [source, rule, location] of [
+        ["---\ntitle: Home\nlayout: home\nlang: english\n---\n# Home\n", "lang", "4:7"],
+        ["---\ntitle: Home\nlayout: home\n---\nIntro\n\n# Home\n", "multiple-h1", "7:1"],
+        ["---\ntitle: Home\nlayout: home\n---\n<div><h1>Home</h1></div>\n", "multiple-h1", "5:6"],
+        ["---\ntitle: Home\nlayout: home\n---\n<H1>Home</H1>\n", "multiple-h1", "5:1"],
+    ]) {
+        site.write("content/index.md", source);
+        const panel = page.getByRole("dialog");
+        await expect(panel).toBeVisible();
+        await expect(panel).toContainText(rule);
+        await expect(panel.locator(".rd-dev-location")).toHaveText(location);
+        await expect(panel.locator(".rd-dev-suggestion")).not.toBeEmpty();
+        await expect(page.locator("h1")).toHaveText("Fixture Docs");
+        expect(await kept(page)).toBe(true);
+        site.write("content/index.md", original);
+        await expect(panel).toBeHidden();
+    }
+});
+
 test("a new site is readable at once: the home page and its two pages", async ({ page }) => {
     const target = path.join(site.dir, "new-site");
     execFileSync(bin, ["new", target]);

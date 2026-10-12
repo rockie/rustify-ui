@@ -114,7 +114,7 @@ test("an address with nothing behind it is a real 404 that looks like the site, 
         expect(await page.evaluate(() => window.__violations)).toEqual([]);
     }
     expect(seen.failures.every((failure) => failure.endsWith(" 404"))).toBe(true);
-    await page.getByRole("link", { name: "Back to the home page" }).click();
+    await page.getByRole("main").getByRole("link", { name: "Back to the home page" }).click();
     await expect(page).toHaveURL(`${origin()}${base()}`);
 });
 

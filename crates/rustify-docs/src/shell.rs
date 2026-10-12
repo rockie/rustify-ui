@@ -172,6 +172,8 @@ pub struct Page<'a> {
 /// What a home page shows above its own Markdown.
 #[derive(Clone, Debug, Default)]
 pub struct Home<'a> {
+    /// The existing anchor of the leading author H1 merged into the hero.
+    pub heading_id: Option<&'a str>,
     pub tagline: Option<&'a str>,
     /// Each action's text and its resolved URL; the first is the primary.
     pub actions: Vec<(&'a str, String)>,
@@ -284,10 +286,14 @@ fn page_view(site: &Site, page: &Page) -> impl IntoView {
     let toc: Vec<&Heading> = page
         .headings
         .iter()
-        .filter(|heading| heading.level >= page.toc_levels.0 && heading.level <= page.toc_levels.1)
+        .filter(|heading| {
+            !heading.id.is_empty()
+                && heading.level >= page.toc_levels.0
+                && heading.level <= page.toc_levels.1
+        })
         .collect();
     let body = match &page.home {
-        Some(home) => home_layout(page, home).into_any(),
+        Some(home) => home_layout(page, home, labels, ui_lang).into_any(),
         None => doc_layout(site, page, &toc, labels, ui_lang).into_any(),
     };
     view! {
@@ -331,6 +337,11 @@ fn page_view(site: &Site, page: &Page) -> impl IntoView {
                 </a>
                 {header(site, page.route, labels, ui_lang)}
                 {body}
+                <footer class="rd-site-footer mx-auto max-w-[76rem] px-4 md:px-6">
+                    <nav aria-label=labels.footer_links lang=ui_lang>
+                        <a href=site.url("/")>{labels.back_home}</a>
+                    </nav>
+                </footer>
                 <p
                     id="rd-status"
                     class="sr-only"
@@ -378,7 +389,12 @@ fn doc_layout(
 
 /// The home page: who the site is for, where to start, what it offers, then
 /// whatever the page's Markdown adds. No sidebar: it is the way in.
-fn home_layout(page: &Page, home: &Home) -> impl IntoView {
+fn home_layout(
+    page: &Page,
+    home: &Home,
+    labels: &'static Labels,
+    ui_lang: Option<&'static str>,
+) -> impl IntoView {
     let actions = home
         .actions
         .iter()
@@ -389,7 +405,7 @@ fn home_layout(page: &Page, home: &Home) -> impl IntoView {
             } else {
                 "rd-action rd-action-secondary"
             };
-            view! { <a href=url.clone() class=class>{text.to_string()}</a> }
+            view! { <a href=url.clone() class=class lang=ui_lang.map(|_| page.lang.to_owned())>{text.to_string()}</a> }
         })
         .collect_view();
     let features = (!home.features.is_empty()).then(|| {
@@ -417,9 +433,9 @@ fn home_layout(page: &Page, home: &Home) -> impl IntoView {
     view! {
         <main id="content" class="rd-home mx-auto max-w-[76rem] px-4 md:px-6">
             <div class="rd-hero">
-                <h1 class="rd-home-title">{page.title.to_owned()}</h1>
+                <h1 class="rd-home-title" id=home.heading_id.map(str::to_owned)>{page.title.to_owned()}</h1>
                 {home.tagline.map(|tagline| view! { <p class="rd-tagline">{tagline.to_owned()}</p> })}
-                {(!home.actions.is_empty()).then(|| view! { <p class="rd-actions">{actions}</p> })}
+                {(!home.actions.is_empty()).then(|| view! { <nav class="rd-actions" aria-label=labels.start_reading lang=ui_lang>{actions}</nav> })}
             </div>
             {features}
             <article class="rd-prose rd-home-prose" inner_html=ARTICLE></article>

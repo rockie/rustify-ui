@@ -366,6 +366,9 @@ test.describe("reading quality", () => {
             await expect(page.locator("h1")).toHaveCount(1);
             await expect(page.getByRole("banner")).toHaveCount(1);
             await expect(page.getByRole("main")).toHaveCount(1);
+            await expect(page.getByRole("contentinfo")).toHaveCount(1);
+            expect(await page.getByRole("navigation").count()).toBeGreaterThan(0);
+            await expect(page.getByRole("contentinfo").getByRole("link")).toHaveAttribute("href", base());
         }
     });
 
@@ -393,6 +396,7 @@ test.describe("reading quality", () => {
             await page.goto(base());
             expect(await contrast(page, ".rd-action-primary"), `${scheme}: primary action`).toBeGreaterThanOrEqual(4.5);
             expect(await contrast(page, ".rd-tagline"), `${scheme}: tagline`).toBeGreaterThanOrEqual(4.5);
+            expect(await contrast(page, ".rd-site-footer a"), `${scheme}: footer link`).toBeGreaterThanOrEqual(4.5);
             expect(await contrast(page, ".rd-features p"), `${scheme}: feature text`).toBeGreaterThanOrEqual(4.5);
             await page.locator(".rd-action-primary").hover();
             expect(await contrast(page, ".rd-action-primary"), `${scheme}: primary action, hovered`).toBeGreaterThanOrEqual(4.5);

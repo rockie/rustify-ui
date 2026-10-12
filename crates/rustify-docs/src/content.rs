@@ -773,11 +773,17 @@ pub fn analyze(
         let lang = match &front.lang {
             Some(lang) if config::valid_lang(lang) => lang.clone(),
             Some(lang) => {
-                diagnostics.push(Diagnostic::in_file(
-                    &file,
-                    Severity::Error,
-                    "lang",
-                    format!("`{lang}` is not a language tag"),
+                diagnostics.push(frontmatter::language_issue(text).map_or_else(
+                    || {
+                        Diagnostic::in_file(
+                            &file,
+                            Severity::Error,
+                            "lang",
+                            format!("`{lang}` is not a language tag"),
+                        )
+                        .with_suggestion("use a language tag such as `en`, `zh-CN` or `fr`")
+                    },
+                    |issue| Diagnostic::located(&file, text, issue),
                 ));
                 config.site.lang.clone()
             }
@@ -837,7 +843,7 @@ pub fn analyze(
 
     let mut pages: Vec<Page> = Vec::with_capacity(drafts.len());
     for draft in drafts {
-        let fragment = cache.entries[&draft.key].clone();
+        let mut fragment = cache.entries[&draft.key].clone();
         let file = file_of(&draft.path);
         let text = &snapshot.markdown[&draft.path];
         for issue in &fragment.issues {
@@ -861,12 +867,31 @@ pub fn analyze(
                 draft.path.clone()
             }
         };
-        if fragment.h1_count > 1 {
+        let home = draft.front.layout == Layout::Home;
+        let merged = home && fragment.leading_h1.is_some();
+        if merged {
+            if let Some(end) = crate::html_check::leading_h1_end(&fragment.html) {
+                let mut projected = String::from("<h1");
+                if let Some(id) = fragment.leading_h1.as_deref().filter(|id| !id.is_empty()) {
+                    projected.push_str(" id=\"");
+                    crate::escape::escape_html_into(&mut projected, id);
+                    projected.push('"');
+                }
+                projected.push_str("></h1>");
+                projected.push_str(&fragment.html[end..]);
+                // Layout changes which author nodes ship. Keep the cached
+                // source fragment reusable for ordinary content pages.
+                let anchors = crate::html_check::ids(&projected);
+                Arc::make_mut(&mut fragment).anchors = anchors;
+            }
+        }
+        let generated_h1 = home || fragment.h1_count == 0;
+        if fragment.h1_count + usize::from(generated_h1) - usize::from(merged) > 1 {
             let second = fragment
                 .headings
                 .iter()
                 .filter(|h| h.level == 1)
-                .nth(1)
+                .nth(usize::from(!home || merged))
                 .map_or(0, |h| h.span.start);
             diagnostics.push(Diagnostic::located(
                 &file,
@@ -876,7 +901,11 @@ pub fn analyze(
                     "multiple-h1",
                     "a page has one top-level heading; this is the second",
                 )
-                .suggest("make it a `##` heading"),
+                .suggest(if home && !merged {
+                    "make it an H2 (`##`) heading, or start the body with `# Title` to merge it into the home title"
+                } else {
+                    "make it a `##` heading"
+                }),
             ));
         }
         let mut previous = if fragment.h1_count > 0 || draft.front.title.is_some() {
@@ -884,7 +913,10 @@ pub fn analyze(
         } else {
             0
         };
-        for heading in &fragment.headings {
+        if home && !draft.front.features.is_empty() {
+            previous = 2;
+        }
+        for heading in fragment.headings.iter().skip(usize::from(merged)) {
             if previous > 0 && heading.level > previous + 1 {
                 diagnostics.push(Diagnostic::located(
                     &file,
@@ -2139,6 +2171,115 @@ pub(crate) mod tests {
     }
 
     #[test]
+    fn raw_and_markdown_headings_share_visible_document_semantics() {
+        for body in [
+            "# One\n\n<H1>Two</H1>\n\n<h4>Deep</h4>\n",
+            "<h1>One</h1>\n\n# Two\n\n#### Deep\n",
+            "<div><h1>One</h1><h1>Two</h1><h4>Deep</h4></div>\n",
+            "# One\n\n<svg><foreignObject><h1>Two</h1><h4>Deep</h4></foreignObject></svg>\n",
+        ] {
+            let source = format!("---\ndescription: d\n---\n{body}");
+            let fixture =
+                Fixture::new(&[("rustify-docs.toml", CONFIG), ("content/index.md", &source)]);
+            let (_, _, analysis) = fixture.analyze(Mode::Production);
+            let rules: Vec<_> = analysis
+                .diagnostics
+                .iter()
+                .map(|d| d.rule.as_str())
+                .collect();
+            assert_eq!(
+                rules,
+                ["multiple-h1", "heading-skip"],
+                "{source}: {:#?}",
+                analysis.diagnostics
+            );
+            for problem in &analysis.diagnostics {
+                assert!(problem.line.is_some() && problem.column.is_some());
+                assert!(problem.suggestion.is_some());
+            }
+        }
+        let fixture = Fixture::new(&[
+            ("rustify-docs.toml", CONFIG),
+            ("content/index.md", "---\ndescription: d\n---\n# One\n\n<template><h1>Hidden</h1><h4>Hidden</h4></template>\n\n<!-- <h1>Comment</h1> -->\n\n```html\n<h1>Code</h1>\n```\n\n## Visible\n"),
+        ]);
+        let (_, _, analysis) = fixture.analyze(Mode::Production);
+        assert!(
+            analysis.diagnostics.is_empty(),
+            "{:#?}",
+            analysis.diagnostics
+        );
+    }
+
+    #[test]
+    fn home_hero_rejects_h1s_outside_the_existing_leading_rule() {
+        for body in [
+            "Intro.\n\n# Author\n",
+            "<!-- comment -->\n\n# Author\n",
+            "<div><h1>Author</h1></div>\n",
+            "<H1>Author</H1>\n",
+        ] {
+            let source = format!("---\ntitle: Home\nlayout: home\n---\n{body}");
+            let fixture =
+                Fixture::new(&[("rustify-docs.toml", CONFIG), ("content/index.md", &source)]);
+            let (_, _, analysis) = fixture.analyze(Mode::Production);
+            let problem = analysis
+                .diagnostics
+                .iter()
+                .find(|d| d.rule == "multiple-h1")
+                .unwrap_or_else(|| panic!("{source}: {:#?}", analysis.diagnostics));
+            assert_eq!(
+                problem.line,
+                Some(if body.starts_with("Intro") || body.starts_with("<!--") {
+                    7
+                } else {
+                    5
+                })
+            );
+            assert_eq!(
+                problem.column,
+                Some(if body.starts_with("<div>") { 6 } else { 1 })
+            );
+            assert!(problem.suggestion.as_deref().unwrap().contains("H2"));
+        }
+        for body in [
+            "",
+            "# Author\n\n## Next\n",
+            "<h1 id=\"author\">Author</h1>\n",
+            "<template><h1>Hidden</h1></template>\n",
+            "<!-- <h1>Hidden</h1> -->\n",
+        ] {
+            let source = format!("---\ntitle: Home\nlayout: home\n---\n{body}");
+            let fixture =
+                Fixture::new(&[("rustify-docs.toml", CONFIG), ("content/index.md", &source)]);
+            let (_, _, analysis) = fixture.analyze(Mode::Production);
+            assert!(
+                analysis.diagnostics.is_empty(),
+                "{source}: {:#?}",
+                analysis.diagnostics
+            );
+        }
+    }
+
+    #[test]
+    fn home_links_cannot_target_markup_discarded_with_the_leading_h1() {
+        for layout in ["home", "doc"] {
+            let source = format!("---\ntitle: Home\ndescription: d\nlayout: {layout}\n---\n# Home <span id=\"inside\">title</span>\n\n[Inside](#inside)\n");
+            let fixture =
+                Fixture::new(&[("rustify-docs.toml", CONFIG), ("content/index.md", &source)]);
+            let (_, _, analysis) = fixture.analyze(Mode::Production);
+            assert_eq!(
+                analysis.errors(),
+                usize::from(layout == "home"),
+                "{:#?}",
+                analysis.diagnostics
+            );
+            if layout == "home" {
+                assert_eq!(analysis.diagnostics[0].rule, "broken-anchor");
+            }
+        }
+    }
+
+    #[test]
     fn frontmatter_errors_are_located_and_the_rest_still_analysed() {
         let fixture = Fixture::new(&[
             ("rustify-docs.toml", CONFIG),
@@ -2816,7 +2957,7 @@ pub(crate) mod tests {
         assert_eq!(langs, ["zh-CN", "en", "zh-CN"]);
         assert_eq!(
             errors(&analysis),
-            [("lang".to_owned(), "content/c.md".to_owned(), 0)]
+            [("lang".to_owned(), "content/c.md".to_owned(), 3)]
         );
     }
 }

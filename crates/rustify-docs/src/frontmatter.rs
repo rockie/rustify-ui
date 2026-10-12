@@ -146,6 +146,59 @@ pub fn parse(text: &str) -> Result<(Front, usize), Issue> {
     }
 }
 
+/// Ask YAML's deserializer to locate the language scalar itself, retaining
+/// the other successfully parsed fields and avoiding a search for its value.
+pub(crate) fn language_issue(text: &str) -> Option<Issue> {
+    fn language<'de, D: serde::Deserializer<'de>>(deserializer: D) -> Result<String, D::Error> {
+        struct Tag;
+        impl serde::de::Visitor<'_> for Tag {
+            type Value = String;
+            fn expecting(&self, formatter: &mut std::fmt::Formatter) -> std::fmt::Result {
+                formatter.write_str("a language tag")
+            }
+            fn visit_str<E: serde::de::Error>(self, value: &str) -> Result<String, E> {
+                if crate::config::valid_lang(value) {
+                    Ok(value.to_owned())
+                } else {
+                    Err(E::custom(format!("`{value}` is not a language tag")))
+                }
+            }
+        }
+        deserializer.deserialize_string(Tag)
+    }
+    #[derive(Deserialize)]
+    struct Language {
+        #[serde(rename = "lang", deserialize_with = "language")]
+        _lang: String,
+    }
+    let split = split(text).ok()??;
+    let yaml = &text[split.yaml.clone()];
+    let error = serde_yaml_ng::from_str::<Language>(yaml).err()?;
+    let location = error.location()?;
+    let line_start: usize = yaml
+        .split_inclusive('\n')
+        .take(location.line() - 1)
+        .map(str::len)
+        .sum();
+    let column = yaml[line_start..]
+        .char_indices()
+        .nth(location.column() - 1)
+        .map_or(0, |(at, _)| at);
+    let at = split.yaml.start + line_start + column;
+    Some(
+        Issue::error(
+            at..at,
+            "lang",
+            error
+                .to_string()
+                .split(" at line ")
+                .next()
+                .unwrap_or_default(),
+        )
+        .suggest("use a language tag such as `en`, `zh-CN` or `fr`"),
+    )
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

@@ -1,0 +1,135 @@
+npm notice run rustify-ui-browser-tests@0.1.0 npx
+npm notice run 'playwright' test -c playwright.docs.config.ts --project=docs-root home.spec.ts
+[WebServer] building /Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/http/root/site into /Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/http/root/dist
+[WebServer] warning[no-git-history]: pages show no last-updated date: not a git repository (or any of the parent directories): .git
+[WebServer]   = help: build inside a git repository with the content committed
+[WebServer] build: 4 pages and 404.html in /Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/http/root/dist: 99.4 KB in 20 files, 1 warning(s), 88 ms
+[WebServer] largest pages:
+[WebServer]      16.5 KB  guide/setup/index.html
+[WebServer]      10.6 KB  guide/index.html
+[WebServer]       8.7 KB  reference/api/index.html
+[WebServer]       5.1 KB  index.html
+[WebServer]       5.1 KB  404.html
+[WebServer] serving /Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/http/root/dist (built by rustify-docs 0.1.3, build 1915fe568ddf4e8f) until stopped
+
+Running 3 tests using 1 worker
+
+(node:80969) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+building /var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-home-tHbd3M into /private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-home-tHbd3M/dist
+warning[no-git-history]: pages show no last-updated date: not a git repository (or any of the parent directories): .git
+  = help: build inside a git repository with the content committed
+build: 5 pages and 404.html in /private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-home-tHbd3M/dist: 75.4 KB in 14 files, 1 warning(s), 21 ms
+largest pages:
+      4.6 KB  guide/index.html
+      4.1 KB  404.html
+      4.0 KB  raw/index.html
+      3.9 KB  index.html
+      3.9 KB  explicit/index.html
+  ✘  1 [docs-root] › tests/docs-ssg/home.spec.ts:47:9 › home anchors and empty navigation work with script true (10.5s)
+(node:81008) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+building /var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-home-mqRiq1 into /private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-home-mqRiq1/dist
+warning[no-git-history]: pages show no last-updated date: not a git repository (or any of the parent directories): .git
+  = help: build inside a git repository with the content committed
+build: 5 pages and 404.html in /private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-home-mqRiq1/dist: 75.4 KB in 14 files, 1 warning(s), 23 ms
+largest pages:
+      4.6 KB  guide/index.html
+      4.1 KB  404.html
+      4.0 KB  raw/index.html
+      3.9 KB  index.html
+      3.9 KB  explicit/index.html
+  ✘  2 [docs-root] › tests/docs-ssg/home.spec.ts:47:9 › home anchors and empty navigation work with script false (10.3s)
+(node:81046) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+building /var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-home-ifTA3g into /private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-home-ifTA3g/dist
+warning[no-git-history]: pages show no last-updated date: not a git repository (or any of the parent directories): .git
+  = help: build inside a git repository with the content committed
+build: 5 pages and 404.html in /private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-home-ifTA3g/dist: 75.4 KB in 14 files, 1 warning(s), 26 ms
+largest pages:
+      4.6 KB  guide/index.html
+      4.1 KB  404.html
+      4.0 KB  raw/index.html
+      3.9 KB  index.html
+      3.9 KB  explicit/index.html
+  ✓  3 [docs-root] › tests/docs-ssg/home.spec.ts:109:5 › the empty home and its footer pass accessibility checks in both modes (560ms)
+
+
+  1) [docs-root] › tests/docs-ssg/home.spec.ts:47:9 › home anchors and empty navigation work with script true 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  getByRole('navigation', { name: 'Start reading' }).getByRole('link', { name: 'Lire' })
+    Expected: "fr"
+    Received: ""
+    Timeout:  10000ms
+
+    Call log:
+      - Expect "toHaveAttribute" getByRole('navigation', { name: 'Start reading' }).getByRole('link', { name: 'Lire' }) with timeout 10000ms
+      - waiting for getByRole('navigation', { name: 'Start reading' }).getByRole('link', { name: 'Lire' })
+        24 × locator resolved to <a href="/guide/" class="rd-action rd-action-primary">Lire</a>
+           - unexpected value "null"
+
+
+      63 |                 if (route === "raw/") {
+      64 |                     await expect(page.locator("article")).toHaveText("Same Automatic");
+    > 65 |                     await expect(page.getByRole("navigation", { name: "Start reading" }).getByRole("link", { name: "Lire" })).toHaveAttribute("lang", "fr");
+         |                                                                                                                               ^
+      66 |                 }
+      67 |                 await expect(title).toBeInViewport();
+      68 |                 if (script && [1280, 375].includes(width)) {
+        at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/docs-ssg/home.spec.ts:65:127
+
+    Error Context: test-results/docs/docs-ssg-home-home-anchors-98821-ation-work-with-script-true-docs-root/error-context.md
+
+    Error Context: test-results/docs/docs-ssg-home-home-anchors-98821-ation-work-with-script-true-docs-root/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/docs/docs-ssg-home-home-anchors-98821-ation-work-with-script-true-docs-root/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/docs/docs-ssg-home-home-anchors-98821-ation-work-with-script-true-docs-root/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [docs-root] › tests/docs-ssg/home.spec.ts:47:9 › home anchors and empty navigation work with script false 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  getByRole('navigation', { name: 'Start reading' }).getByRole('link', { name: 'Lire' })
+    Expected: "fr"
+    Received: ""
+    Timeout:  10000ms
+
+    Call log:
+      - Expect "toHaveAttribute" getByRole('navigation', { name: 'Start reading' }).getByRole('link', { name: 'Lire' }) with timeout 10000ms
+      - waiting for getByRole('navigation', { name: 'Start reading' }).getByRole('link', { name: 'Lire' })
+        24 × locator resolved to <a href="/guide/" class="rd-action rd-action-primary">Lire</a>
+           - unexpected value "null"
+
+
+      63 |                 if (route === "raw/") {
+      64 |                     await expect(page.locator("article")).toHaveText("Same Automatic");
+    > 65 |                     await expect(page.getByRole("navigation", { name: "Start reading" }).getByRole("link", { name: "Lire" })).toHaveAttribute("lang", "fr");
+         |                                                                                                                               ^
+      66 |                 }
+      67 |                 await expect(title).toBeInViewport();
+      68 |                 if (script && [1280, 375].includes(width)) {
+        at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/docs-ssg/home.spec.ts:65:127
+
+    Error Context: test-results/docs/docs-ssg-home-home-anchors-069b3-tion-work-with-script-false-docs-root/error-context.md
+
+    Error Context: test-results/docs/docs-ssg-home-home-anchors-069b3-tion-work-with-script-false-docs-root/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/docs/docs-ssg-home-home-anchors-069b3-tion-work-with-script-false-docs-root/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/docs/docs-ssg-home-home-anchors-069b3-tion-work-with-script-false-docs-root/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [docs-root] › tests/docs-ssg/home.spec.ts:47:9 › home anchors and empty navigation work with script true 
+    [docs-root] › tests/docs-ssg/home.spec.ts:47:9 › home anchors and empty navigation work with script false 
+  1 passed (23.1s)

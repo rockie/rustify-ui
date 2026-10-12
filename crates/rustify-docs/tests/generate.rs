@@ -127,6 +127,130 @@ fn the_fixture_generates_without_a_problem_and_byte_for_byte_again() {
 }
 
 #[test]
+fn merged_home_headings_keep_their_automatic_and_explicit_targets() {
+    for base in ["/", "/docs/"] {
+        for (heading, id) in [
+            ("# Home", "home"),
+            ("# Home {#入口}", "入口"),
+            ("<h1 id=\"raw\">Home</h1>", "raw"),
+        ] {
+            let (mut project, mut snapshot) = load();
+            project.config.site.base = base.into();
+            snapshot.markdown.insert(
+                "index.md".into(),
+                Arc::from(format!(
+                    "---\ntitle: Home\nlayout: home\n---\n{heading}\n\n[Here](#{id})\n"
+                )),
+            );
+            let (analysis, generation) = build(&project, &snapshot, Mode::Production, 1);
+            assert_eq!(analysis.errors(), 0, "{:#?}", analysis.diagnostics);
+            let home = text(&generation.files, "index.html");
+            contains(&home, &format!("id=\"{id}\""));
+            assert_eq!(home.matches("<h1").count(), 1, "{home}");
+            assert!(!article(&home).contains("<h1"));
+        }
+    }
+}
+
+#[test]
+fn home_merge_ends_at_a_close_tag_and_escapes_the_transferred_id() {
+    let (project, mut snapshot) = load();
+    snapshot.markdown.insert(
+        "index.md".into(),
+        Arc::from("---\ntitle: Home\nlayout: home\n---\n<h1 id=\"</h1>\">Home</h1>\n\nBody.\n"),
+    );
+    let (analysis, generation) = build(&project, &snapshot, Mode::Production, 1);
+    assert_eq!(analysis.errors(), 0);
+    let html = text(&generation.files, "index.html");
+    let dom = dom_query::Document::from(html.as_str());
+    assert_eq!(dom.select("main h1").attr("id").as_deref(), Some("</h1>"));
+    assert_eq!(dom.select("article").text().trim(), "Body.");
+    snapshot.markdown.insert("index.md".into(), Arc::from("---\ntitle: Home\nlayout: home\n---\n<h1>Home<template><h1>Hidden</h1></template> tail</h1>\n\nBody.\n"));
+    let (_, generation) = build(&project, &snapshot, Mode::Production, 1);
+    let html = text(&generation.files, "index.html");
+    let dom = dom_query::Document::from(html.as_str());
+    assert_eq!(dom.select("article").text().trim(), "Body.");
+}
+
+#[test]
+fn all_default_pages_have_a_site_footer_without_optional_metadata_or_links() {
+    for base in ["/", "/docs/"] {
+        let (mut project, mut snapshot) = load();
+        project.config.site.base = base.into();
+        project.config.nav.top.clear();
+        project.config.nav.social.clear();
+        project.config.nav.groups.clear();
+        project.config.repo = None;
+        snapshot.markdown.clear();
+        snapshot.markdown.insert(
+            "index.md".into(),
+            Arc::from("---\ntitle: Home\nlayout: home\n---\n"),
+        );
+        snapshot.markdown.insert(
+            "guide/index.md".into(),
+            Arc::from("---\ndescription: d\n---\n# Guide\n"),
+        );
+        let (analysis, generation) = build(&project, &snapshot, Mode::Production, 1);
+        assert_eq!(analysis.errors(), 0, "{:#?}", analysis.diagnostics);
+        for file in ["index.html", "guide/index.html", "404.html"] {
+            let html = text(&generation.files, file);
+            let dom = dom_query::Document::from(html.as_str());
+            let footer = dom.select("body > footer");
+            assert_eq!(footer.length(), 1, "{file}: {html}");
+            assert_eq!(footer.select("nav[aria-label] a").length(), 1);
+            assert_eq!(footer.select("a").attr("href").as_deref(), Some(base));
+        }
+    }
+}
+
+#[test]
+fn local_metadata_and_header_links_keep_their_conditions_beside_the_site_footer() {
+    for edited in [false, true] {
+        for dated in [false, true] {
+            for header_links in [false, true] {
+                let (mut project, snapshot) = load();
+                project.config.repo.as_mut().unwrap().edit_url =
+                    edited.then(|| "https://example.com/edit".into());
+                if !header_links {
+                    project.config.nav.top.clear();
+                    project.config.nav.social.clear();
+                }
+                let (analysis, _) = build(&project, &snapshot, Mode::Production, 1);
+                let dates = if dated {
+                    BTreeMap::from([("content/guide/index.md".into(), "2026-10-12".into())])
+                } else {
+                    BTreeMap::new()
+                };
+                let generation =
+                    generation::generate(&project, &snapshot, &analysis, &dates, 1).unwrap();
+                let html = text(&generation.files, "guide/index.html");
+                let dom = dom_query::Document::from(html.as_str());
+                assert_eq!(
+                    dom.select("body > footer nav a").attr("href").as_deref(),
+                    Some("/docs/")
+                );
+                assert_eq!(
+                    dom.select("main .rd-page-meta").length(),
+                    usize::from(edited || dated)
+                );
+                assert_eq!(
+                    dom.select("main .rd-page-meta a").length(),
+                    usize::from(edited)
+                );
+                assert_eq!(
+                    dom.select("main .rd-page-meta time").length(),
+                    usize::from(dated)
+                );
+                assert_eq!(
+                    dom.select(".rd-header-nav").length(),
+                    if header_links { 2 } else { 0 }
+                );
+            }
+        }
+    }
+}
+
+#[test]
 fn every_page_has_unique_metadata_and_the_site_files_list_what_may_be_indexed() {
     let (project, snapshot) = load();
     let (_, generation) = build(&project, &snapshot, Mode::Production, 2);
