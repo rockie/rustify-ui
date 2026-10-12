@@ -64,7 +64,7 @@
 | M7 | 已完成 | 2026-10-11T16:34:55+08:00 | `check --external-links`（rustls+内置根证书、去重/并发/超时、失败即报错）、发布三步骤真实 SIGKILL/磁盘满/权限/损坏 manifest/并发注入与输出归属加固、新窗站外链接需 noopener、零机器路径泄漏；V-15 矩阵、features/artifacts/reliability/toolchain 四组（禁网作者演练只调用 2 次 `rustc --version`）、docs-root/meta/dev 全过；R1 修复 F-01–F-03、F-06；R2 续修 F-06、新增 F-16/F-17：CSS token、实体与文档片段、实际发布集合检查；原生工具链/安全门通过；R3 续修 F-16、新增 F-19：数字实体范围与 compiler 任意值解码一致，生成路径防二次 underscore 解码 | [M7 记录](../validation/docs-ssg-p1/M7.md) | 1d239ff；修复 12113ab；修复 a297dbd；修复 016110f |
 | M5 | 已完成 | 2026-10-11T12:40:00+08:00 | 默认阅读主题、finish review（ship）、axe 零违规；Chromium 三项目各 21/21、WebKit 20+1 跳过、B 最大页 LCP ≤740 ms/CLS 0；用户确认真实 macOS Safari 27.0.1 与手机走查通过；Firefox 移出本期（用户决定）；R1 修复 F-04、F-12（页头链接真机复走待用户决定） | [M5 记录](../validation/docs-ssg-p1/M5.md) | 1d239ff、72418b3；修复 12113ab |
 | M8 | 已完成 | 2026-10-11T23:15:15+08:00 | 原终验与 R1–R4 证据保留；R5 复验 207 Rust、93 Chromium、24 份 production 文档 ID/导航/拒绝保全与 500 页/短轮保存通过；未重验的真机、GPU、安装与长轮证据按原范围保留，待独立复审 | [M8 记录](../validation/docs-ssg-p1/M8.md) | 72418b3；修复 a297dbd；修复 016110f；修复 f7a3e94；修复 998ee18 |
-| M9 | 阻塞 | 2026-10-12T22:07:16.318349+08:00 | CLI0.1.4候选1b81de2：本地安装/升级回滚、219 Docs Rust/115浏览器及V-15通过；安装验收缓存偏差已修正并复验；待远端授权与同SHA GitHub复验 | [M9 记录](../validation/docs-ssg-p1/M9.md) | 候选 1b81de2；最终交付待远端出口 |
+| M9 | 阻塞 | 2026-10-12T22:07:16.318349+08:00 | CLI0.1.4候选1b81de2：本地安装/升级回滚、219 Docs Rust/115浏览器及V-15通过；安装验收缓存偏差已修正并复验；待远端授权与同SHA GitHub复验 | [M9 记录](../validation/docs-ssg-p1/M9.md) | 候选 1b81de2；本地验收/文档 3d54bd3；最终交付待远端出口 |
 
 ## 0. 需求、范围与决策
 
