@@ -1,0 +1,24 @@
+{
+  "entries": [
+    {
+      "url": "http://127.0.0.1:52252/",
+      "status": 200,
+      "manifest_sha256": "ebff9034ce27645809c0cf8f3d68f31adba5fe48af60ccb4b5ea3e18101c1b75"
+    },
+    {
+      "url": "http://127.0.0.1:53233/rustify-ui/",
+      "status": 200,
+      "manifest_sha256": "08be039ee3704c1f757115082f16c00d475be846b5e060cc3c03361a6f202589"
+    },
+    {
+      "url": "http://127.0.0.1:53327/",
+      "status": 200,
+      "manifest_sha256": "55db2c10336dc375ebb2e94c2af3f4d83fa04fb82c597bc96e046232aafcd946"
+    },
+    {
+      "url": "http://127.0.0.1:53478/rustify-ui/",
+      "status": 200,
+      "manifest_sha256": "2827f017b9cff301daea824757e98527a7454568e08ef61ce9c19a5e8cf75bd9"
+    }
+  ]
+}

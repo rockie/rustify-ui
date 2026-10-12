@@ -1,0 +1,855 @@
+{
+  "note": "Safari native MCP interactive terminal responses were incomplete for long results. Assertions rely on complete short evaluate results and saved page/screenshot files; subsequent full protocol is in protocol.jsonl.",
+  "observations": [
+    {
+      "time": "2026-10-12T05:47:21.102Z",
+      "phase": "connection",
+      "transport": "/usr/bin/safaridriver --mcp",
+      "handle": "page-BE38D567-7D9E-4AFD-8673-D1DB9B7F0417",
+      "initial_webdriver_error": "The session timed out while connecting to a Safari instance. The following asynchronous operation timed out: Request creation of a new automation session"
+    },
+    {
+      "time": "2026-10-12T05:49:18.672Z",
+      "request": {
+        "jsonrpc": "2.0",
+        "id": 4,
+        "method": "tools/call",
+        "params": {
+          "name": "get_page_content",
+          "arguments": {
+            "region": "entire_page",
+            "format": "textTree",
+            "maxWordsPerParagraph": 100,
+            "savePath": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p1-gaps/m2/safari/full-root-home.txt"
+          }
+        }
+      },
+      "output": "{\"id\":4,\"jsonrpc\":\"2.0\",\"result\":{\"content\":[{\"text\":\"Saved output to '/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p1-gaps/m2/safari/full-root-home.txt' (1.1 kB).\",\"type\":\"text\"}]}}\r\n"
+    },
+    {
+      "time": "2026-10-12T05:50:08.422Z",
+      "request": {
+        "jsonrpc": "2.0",
+        "id": 5,
+        "method": "tools/call",
+        "params": {
+          "name": "evaluate_javascript",
+          "arguments": {
+            "expression": "return {ua:navigator.userAgent,platform:navigator.platform,url:location.href,secure:isSecureContext,width:innerWidth,height:innerHeight,dpr:devicePixelRatio,theme:document.documentElement.dataset.theme,h1:[...document.querySelectorAll('h1')].map(e=>({id:e.id,text:e.textContent})),roles:{header:document.querySelectorAll('body>header').length,main:document.querySelectorAll('main').length,footer:document.querySelectorAll('body>footer').length,nav:document.querySelectorAll('nav').length},overflow:document.documentElement.scrollWidth-innerWidth};"
+          }
+        }
+      },
+      "output": "{\"id\":5,\"jsonrpc\":\"2.0\",\"result\":{\"content\":[{\"text\":\"{\\\"ua\\\":\\\"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.0.1 Safari/605.1.15\\\",\\\"platform\\\":\\\"MacIntel\\\",\\\"url\\\":\\\"http://192.168.16.131:59381/\\\",\\\"secure\\\":false,\\\"width\\\":1024,\\\"height\\\":664,\\\"dpr\\\":2,\\\"theme\\\":\\\"system\\\",\\\"h1\\\":[{\\\"id\\\":\\\"fixture-docs\\\",\\\"text\\\":\\\"Fixture Docs\\\"}],\\\"roles\\\":{\\\"header\\\":1,\\\"main\\\":1,\\\"footer\\\":1,\\\"nav\\\":4},\\\"overflow\\\":0}\",\"type\":\"text\"}]}}\r\n"
+    },
+    {
+      "time": "2026-10-12T05:50:09.527Z",
+      "request": {
+        "jsonrpc": "2.0",
+        "id": 6,
+        "method": "tools/call",
+        "params": {
+          "name": "browser_console_messages",
+          "arguments": {
+            "clear": false,
+            "level_filter": [
+              "error",
+              "warn"
+            ]
+          }
+        }
+      },
+      "output": "{\"id\":6,\"jsonrpc\":\"2.0\",\"result\":{\"content\":[{\"text\":\"[]\",\"type\":\"text\"}]}}\r\n"
+    },
+    {
+      "time": "2026-10-12T05:50:10.630Z",
+      "request": {
+        "jsonrpc": "2.0",
+        "id": 7,
+        "method": "tools/call",
+        "params": {
+          "name": "list_network_requests",
+          "arguments": {
+            "clear": false,
+            "filter": {
+              "status_min": 400
+            }
+          }
+        }
+      },
+      "output": "{\"id\":7,\"jsonrpc\":\"2.0\",\"result\":{\"content\":[{\"text\":\"{\\\"count\\\":0,\\\"requests\\\":[]}\",\"type\":\"text\"}]}}\r\n"
+    },
+    {
+      "time": "2026-10-12T05:50:57.089Z",
+      "request": {
+        "jsonrpc": "2.0",
+        "id": 8,
+        "method": "tools/call",
+        "params": {
+          "name": "set_viewport_size",
+          "arguments": {
+            "width": 1280,
+            "height": 800
+          }
+        }
+      },
+      "output": "{\"id\":8,\"jsonrpc\":\"2.0\",\"result\":{\"content\":[{\"text\":\"Viewport set to 1280x800\",\"type\":\"text\"}]}}\r\n"
+    },
+    {
+      "time": "2026-10-12T05:50:58.194Z",
+      "request": {
+        "jsonrpc": "2.0",
+        "id": 9,
+        "method": "tools/call",
+        "params": {
+          "name": "get_page_content",
+          "arguments": {
+            "region": "entire_page",
+            "format": "textTree",
+            "maxWordsPerParagraph": 100,
+            "savePath": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/gaps/safari-page.json"
+          }
+        }
+      },
+      "output": "{\"id\":9,\"jsonrpc\":\"2.0\",\"result\":{\"content\":[{\"text\":\"Saved output to '/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/gaps/safari-page.json' (1.1 kB).\",\"type\":\"text\"}]}}\r\n"
+    },
+    {
+      "time": "2026-10-12T05:50:59.299Z",
+      "request": {
+        "jsonrpc": "2.0",
+        "id": 10,
+        "method": "tools/call",
+        "params": {
+          "name": "screenshot",
+          "arguments": {
+            "savePath": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p1-gaps/m2/safari/full-root-home-1280.png",
+            "full_page": true
+          }
+        }
+      },
+      "output": "{\"id\":10,\"jsonrpc\":\"2.0\",\"result\":{\"content\":[{\"text\":\"Saved screenshot to '/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p1-gaps/m2/safari/full-root-home-1280.png' (157.7 kB).\",\"type\":\"text\"}]}}\r\n"
+    },
+    {
+      "time": "2026-10-12T05:51:00.404Z",
+      "request": {
+        "jsonrpc": "2.0",
+        "id": 11,
+        "method": "tools/call",
+        "params": {
+          "name": "page_interactions",
+          "arguments": {
+            "interactions": [
+              {
+                "type": "click",
+                "node": "83",
+                "purpose": "Open the guide through the home action"
+              }
+            ]
+          }
+        }
+      },
+      "output": ""
+    },
+    {
+      "time": "2026-10-12T05:52:13.902Z",
+      "pending_reply": 11,
+      "output": "{\"id\":11,\"jsonrpc\":\"2.0\",\"result\":{\"content\":[{\"text\":\"{\\\"url\\\":\\\"http:\\\\/\\\\/192.168.16.131:59381\\\\/guide\\\\/\\\",\\\"successful\\\":1,\\\"requested\\\":1,\\\"title\\\":\\\"Guide | Fixture Docs\\\",\\\"content\\\":\\\"[full update — 124% changed]\\\\nroot\\\\n\\\\tlink uid=216 url=guide#content 'Skip to content'\\\\n\\\\toverlay\\\\n\\\\t\\\\tlink uid=217 url=:59381 'Fixture Docs'\\\\n\\\\t\\\\t\\\\timage uid=218 class=w-auto src=logo.74e1314b2a.svg\\\\n\\\\t\\\\tnavigation label='Site links'\\\\n\\\\t\\\\t\\\\tlist\\\\n\\\\t\\\\t\\\\t\\\\tlink uid=219 'Guide'\\\\n\\\\t\\\\t\\\\t\\\\tlink uid=220 url=github.com\\\\/example\\\\/fixture\\\\n\\\\t\\\\t\\\\tlist\\\\n\\\\t\\\\t\\\\t\\\\tlink uid=221 url=mastodon.example\\\\/@fixture\\\\n\\\\t\\\\tlabel=Theme\\\\n\\\\t\\\\t\\\\tbutton uid=222 'System'\\\\n\\\\t\\\\t\\\\tbutton uid=223 'Light'\\\\n\\\\t\\\\t\\\\tbutton uid=224 'Dark'\\\\n\\\\tnavigation label=Menu\\\\n\\\\t\\\\tsection\\\\n\\\\t\\\\t\\\\t'Guide'\\\\n\\\\t\\\\t\\\\tlist\\\\n\\\\t\\\\t\\\\t\\\\tlink uid=225 'Guide'\\\\n\\\\t\\\\t\\\\t\\\\tlink uid=226 url=:59381\\\\/guide\\\\/setup\\\\n\\\\t\\\\tsection\\\\n\\\\t\\\\t\\\\t'Reference'\\\\n\\\\t\\\\t\\\\tlist\\\\n\\\\t\\\\t\\\\t\\\\tlink uid=227 url=:59381\\\\/referen"
+    },
+    {
+      "time": "2026-10-12T05:52:15.076Z",
+      "request": {
+        "jsonrpc": "2.0",
+        "id": 12,
+        "method": "tools/call",
+        "params": {
+          "name": "get_page_content",
+          "arguments": {
+            "region": "entire_page",
+            "format": "textTree",
+            "maxWordsPerParagraph": 100,
+            "savePath": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/gaps/safari-page.json"
+          }
+        }
+      },
+      "output": "{\"id\":12,\"jsonrpc\":\"2.0\",\"result\":{\"content\":[{\"text\":\"Saved output to '/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/gaps/safari-page.json' (2.2 kB).\",\"type\":\"text\"}]}}\r\n"
+    },
+    {
+      "time": "2026-10-12T05:53:06.741Z",
+      "request": {
+        "jsonrpc": "2.0",
+        "id": 13,
+        "method": "tools/call",
+        "params": {
+          "name": "evaluate_javascript",
+          "arguments": {
+            "expression": "return {url:location.href,width:innerWidth,overflow:document.documentElement.scrollWidth-innerWidth,h1:document.querySelectorAll('h1').length,header:document.querySelectorAll('body>header').length,main:document.querySelectorAll('main').length,footer:document.querySelectorAll('body>footer').length,current:document.querySelector('.rd-sidebar-wide [aria-current=page]').textContent,headings:[...document.querySelectorAll('article h2,article h3')].map(e=>e.id)};"
+          }
+        }
+      },
+      "output": "{\"id\":13,\"jsonrpc\":\"2.0\",\"result\":{\"content\":[{\"text\":\"{\\\"url\\\":\\\"http://192.168.16.131:59381/guide/\\\",\\\"width\\\":1280,\\\"overflow\\\":0,\\\"h1\\\":1,\\\"header\\\":1,\\\"main\\\":1,\\\"footer\\\":1,\\\"current\\\":\\\"Guide\\\",\\\"headings\\\":[\\\"steps\\\",\\\"steps-1\\\",\\\"100%\\\",\\\"check-your-install\\\"]}\",\"type\":\"text\"}]}}\r\n"
+    },
+    {
+      "time": "2026-10-12T05:53:09.845Z",
+      "request": {
+        "jsonrpc": "2.0",
+        "id": 14,
+        "method": "tools/call",
+        "params": {
+          "name": "page_interactions",
+          "arguments": {
+            "interactions": [
+              {
+                "type": "click",
+                "node": "224",
+                "purpose": "Choose dark theme"
+              },
+              {
+                "type": "click",
+                "node": "239",
+                "purpose": "Open Setup with the next-page link"
+              }
+            ]
+          }
+        }
+      },
+      "output": "{\"id\":14,\"jsonrpc\":\"2.0\",\"result\":{\"content\":[{\"text\":\"{\\\"format\\\":\\\"textTree\\\",\\\"title\\\":\\\"Setup | Fixture Docs\\\",\\\"successful\\\":2,\\\"requested\\\":2,\\\"steps\\\":[\\\"Clicked on button with class “rd-mode-option”, with rendered text “Dark”\\\",\\\"Clicked on link with href “\\\\/guide\\\\/setup\\\\/”, with rendered text “Next Setup”\\\"],\\\"content\\\":\\\"[full update — 125% changed]\\\\nroot\\\\n\\\\tlink uid=370 url=setup#content 'Skip to content'\\\\n\\\\toverlay\\\\n\\\\t\\\\tlink uid=371 url=:59381 'Fixture Docs'\\\\n\\\\t\\\\t\\\\timage uid=372 class=w-auto src=logo.74e1314b2a.svg\\\\n\\\\t\\\\tnavigation label='Site links'\\\\n\\\\t\\\\t\\\\tlist\\\\n\\\\t\\\\t\\\\t\\\\tlink uid=373 url=:59381\\\\/guide\\\\n\\\\t\\\\t\\\\t\\\\tlink uid=374 url=github.com\\\\/example\\\\/fixture\\\\n\\\\t\\\\t\\\\tlist\\\\n\\\\t\\\\t\\\\t\\\\tlink uid=375 url=mastodon.example\\\\/@fixture\\\\n\\\\t\\\\tlabel=Theme\\\\n\\\\t\\\\t\\\\tbutton uid=376 'System'\\\\n\\\\t\\\\t\\\\tbutton uid=377 'Light'\\\\n\\\\t\\\\t\\\\tbutton uid=378 'Dark'\\\\n\\\\tnavigation label=Menu\\\\n\\\\t\\\\tsection\\\\n\\\\t\\\\t\\\\t'Guide'\\\\n\\\\t\\\\t\\\\tlist\\\\n\\\\t\\\\t\\\\t\\\\tlink ui"
+    },
+    {
+      "time": "2026-10-12T05:53:12.949Z",
+      "request": {
+        "jsonrpc": "2.0",
+        "id": 15,
+        "method": "tools/call",
+        "params": {
+          "name": "get_page_content",
+          "arguments": {
+            "region": "entire_page",
+            "format": "textTree",
+            "maxWordsPerParagraph": 100,
+            "savePath": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/gaps/safari-page.json"
+          }
+        }
+      },
+      "output": "{\"id\":15,\"jsonrpc\":\"2.0\",\"result\":{\"content\":[{\"text\":\"Saved output to '/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/gaps/safari-page.json' (2.9 kB).\",\"type\":\"text\"}]}}\r\n"
+    },
+    {
+      "time": "2026-10-12T05:53:16.054Z",
+      "request": {
+        "jsonrpc": "2.0",
+        "id": 16,
+        "method": "tools/call",
+        "params": {
+          "name": "evaluate_javascript",
+          "arguments": {
+            "expression": "return {url:location.href,theme:document.documentElement.dataset.theme,bg:getComputedStyle(document.body).backgroundColor,current:document.querySelector('.rd-sidebar-wide [aria-current=page]').textContent,headerGuide:document.querySelector('.rd-top a[aria-current]').textContent,overflow:document.documentElement.scrollWidth-innerWidth,headings:[...document.querySelectorAll('article h2,article h3')].map(e=>e.id)};"
+          }
+        }
+      },
+      "output": "{\"id\":16,\"jsonrpc\":\"2.0\",\"result\":{\"content\":[{\"text\":\"Tool error: Command failed: evaluateJavaScriptFunction: A JavaScript exception occured: null is not an object (evaluating 'document.querySelector('.rd-top a[aria-current]').textContent')\",\"type\":\"text\"}],\"isError\":true}}\r\n"
+    },
+    {
+      "time": "2026-10-12T05:54:31.482Z",
+      "request": {
+        "jsonrpc": "2.0",
+        "id": 17,
+        "method": "tools/call",
+        "params": {
+          "name": "evaluate_javascript",
+          "arguments": {
+            "expression": "return {url:location.href,theme:document.documentElement.dataset.theme,bg:getComputedStyle(document.body).backgroundColor,current:document.querySelector('.rd-sidebar-wide [aria-current=page]').textContent,headerGuide:[...document.querySelectorAll('header nav a')].filter(e=>e.hasAttribute('aria-current')).map(e=>e.textContent),overflow:document.documentElement.scrollWidth-innerWidth};"
+          }
+        }
+      },
+      "output": "{\"id\":17,\"jsonrpc\":\"2.0\",\"result\":{\"content\":[{\"text\":\"{\\\"url\\\":\\\"http://192.168.16.131:59381/guide/setup/\\\",\\\"theme\\\":\\\"dark\\\",\\\"bg\\\":\\\"rgb(12, 17, 29)\\\",\\\"current\\\":\\\"Setup\\\",\\\"headerGuide\\\":[\\\"Guide\\\"],\\\"overflow\\\":0}\",\"type\":\"text\"}]}}\r\n"
+    },
+    {
+      "time": "2026-10-12T05:54:34.587Z",
+      "request": {
+        "jsonrpc": "2.0",
+        "id": 18,
+        "method": "tools/call",
+        "params": {
+          "name": "screenshot",
+          "arguments": {
+            "savePath": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p1-gaps/m2/safari/full-root-setup-dark-1280.png",
+            "full_page": true
+          }
+        }
+      },
+      "output": "{\"id\":18,\"jsonrpc\":\"2.0\",\"result\":{\"content\":[{\"text\":\"Saved screenshot to '/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p1-gaps/m2/safari/full-root-setup-dark-1280.png' (460.4 kB).\",\"type\":\"text\"}]}}\r\n"
+    },
+    {
+      "time": "2026-10-12T05:54:37.692Z",
+      "request": {
+        "jsonrpc": "2.0",
+        "id": 19,
+        "method": "tools/call",
+        "params": {
+          "name": "page_interactions",
+          "arguments": {
+            "interactions": [
+              {
+                "type": "click",
+                "node": "392",
+                "scrollToVisible": true,
+                "purpose": "Copy the example source over insecure LAN HTTP"
+              }
+            ]
+          }
+        }
+      },
+      "output": "{\"id\":19,\"jsonrpc\":\"2.0\",\"result\":{\"content\":[{\"text\":\"{\\\"requested\\\":1,\\\"successful\\\":1,\\\"content\\\":\\\"[diff — 5% changed]\\\\n---\\\\n  \\\\t\\\\timage uid=391 src=pipeline.9304f52f12.svg alt='The pipeline'\\\\n  \\\\t\\\\t'src\\\\/example.rs'\\\\n- \\\\t\\\\tbutton uid=392 'Copy'\\\\n- \\\\t\\\\t'fn main() {\\\\\\\\n    println!(\\\\\\\\\\\\\\\"hello\\\\\\\\\\\\\\\");\\\\\\\\n}'\\\\n+ \\\\t\\\\tbutton uid=392 'Copy failed'\\\\n+ \\\\t\\\\t'fn main() {\\\\\\\\n    println!(\\\\\\\\\\\\\\\"hello\\\\\\\\\\\\\\\");\\\\\\\\n}' selected=[0,36]\\\\n  \\\\t\\\\t'The source is'\\\\n---\\\\n  \\\\tnavigation label='Footer links'\\\\n  \\\\t\\\\tlink uid=400 url=:59381 'Back to the home page'\\\\n+ \\\\t'Copy failed: the code is selected, copy it by hand'\\\",\\\"url\\\":\\\"http:\\\\/\\\\/192.168.16.131:59381\\\\/guide\\\\/setup\\\\/\\\",\\\"title\\\":\\\"Setup | Fixture Docs\\\",\\\"format\\\":\\\"textTree\\\",\\\"steps\\\":[\\\"Clicked on button with class “rd-copy”, with rendered text “Copy”\\\"]}\",\"type\":\"text\"}]}}\r\n"
+    },
+    {
+      "time": "2026-10-12T05:54:40.797Z",
+      "request": {
+        "jsonrpc": "2.0",
+        "id": 20,
+        "method": "tools/call",
+        "params": {
+          "name": "evaluate_javascript",
+          "arguments": {
+            "expression": "return {secure:isSecureContext,copy:document.querySelector('figure.rd-code[data-rd-code] [data-rd-copy]')?.dataset.state,status:document.querySelector('#rd-status').textContent,selection:String(getSelection()),states:[...document.querySelectorAll('[data-rd-copy]')].map(e=>e.dataset.state)};"
+          }
+        }
+      },
+      "output": "{\"id\":20,\"jsonrpc\":\"2.0\",\"result\":{\"content\":[{\"text\":\"{\\\"secure\\\":false,\\\"copy\\\":null,\\\"status\\\":\\\"Copy failed: the code is selected, copy it by hand\\\",\\\"selection\\\":\\\"fn main() {\\\\n    println!(\\\\\\\"hello\\\\\\\");\\\\n}\\\\n\\\",\\\"states\\\":[null,null,null,\\\"failed\\\",null,null,null]}\",\"type\":\"text\"}]}}\r\n"
+    },
+    {
+      "time": "2026-10-12T05:54:43.903Z",
+      "request": {
+        "jsonrpc": "2.0",
+        "id": 21,
+        "method": "tools/call",
+        "params": {
+          "name": "page_interactions",
+          "arguments": {
+            "interactions": [
+              {
+                "type": "click",
+                "node": "383",
+                "purpose": "Follow the ordinary heading anchor from the table of contents"
+              }
+            ]
+          }
+        }
+      },
+      "output": "{\"id\":21,\"jsonrpc\":\"2.0\",\"result\":{\"content\":[{\"text\":\"{\\\"steps\\\":[\\\"Clicked on link with href “#check-the-version”, with rendered text “Check the version”\\\"],\\\"requested\\\":1,\\\"successful\\\":1,\\\"title\\\":\\\"Setup | Fixture Docs\\\",\\\"format\\\":\\\"textTree\\\",\\\"content\\\":\\\"[diff — 2% changed]\\\\n---\\\\n  \\\\t\\\\timage uid=391 src=pipeline.9304f52f12.svg alt='The pipeline'\\\\n  \\\\t\\\\t'src\\\\/example.rs'\\\\n- \\\\t\\\\tbutton uid=392 'Copy failed'\\\\n+ \\\\t\\\\tbutton uid=392 'Copy'\\\\n  \\\\t\\\\t'fn main() {\\\\\\\\n    println!(\\\\\\\\\\\\\\\"hello\\\\\\\\\\\\\\\");\\\\\\\\n}' selected=[0,36]\\\",\\\"url\\\":\\\"http:\\\\/\\\\/192.168.16.131:59381\\\\/guide\\\\/setup\\\\/#check-the-version\\\"}\",\"type\":\"text\"}]}}\r\n"
+    },
+    {
+      "time": "2026-10-12T05:54:47.008Z",
+      "request": {
+        "jsonrpc": "2.0",
+        "id": 22,
+        "method": "tools/call",
+        "params": {
+          "name": "evaluate_javascript",
+          "arguments": {
+            "expression": "var h=document.getElementById('check-the-version');return {hash:location.hash,top:h.getBoundingClientRect().top,headerBottom:document.querySelector('body>header').getBoundingClientRect().bottom,visible:h.getBoundingClientRect().top>=document.querySelector('body>header').getBoundingClientRect().bottom};"
+          }
+        }
+      },
+      "output": "{\"id\":22,\"jsonrpc\":\"2.0\",\"result\":{\"content\":[{\"text\":\"{\\\"hash\\\":\\\"#check-the-version\\\",\\\"top\\\":79.828125,\\\"headerBottom\\\":57,\\\"visible\\\":true}\",\"type\":\"text\"}]}}\r\n"
+    },
+    {
+      "time": "2026-10-12T05:56:39.304Z",
+      "request": {
+        "jsonrpc": "2.0",
+        "id": 23,
+        "method": "tools/call",
+        "params": {
+          "name": "set_viewport_size",
+          "arguments": {
+            "width": 375,
+            "height": 740
+          }
+        }
+      },
+      "output": "{\"id\":23,\"jsonrpc\":\"2.0\",\"result\":{\"content\":[{\"text\":\"Viewport set to 375x740\",\"type\":\"text\"}]}}\r\n"
+    },
+    {
+      "time": "2026-10-12T05:56:42.409Z",
+      "request": {
+        "jsonrpc": "2.0",
+        "id": 24,
+        "method": "tools/call",
+        "params": {
+          "name": "evaluate_javascript",
+          "arguments": {
+            "expression": "return {width:innerWidth,overflow:document.documentElement.scrollWidth-innerWidth,sidebar:getComputedStyle(document.querySelector('.rd-sidebar-wide')).display,menu:getComputedStyle(document.querySelector('.rd-sidebar-narrow')).display,table:[...document.querySelectorAll('.rd-table')].map(e=>({width:e.clientWidth,scroll:e.scrollWidth,overflow:getComputedStyle(e).overflowX})),code:[...document.querySelectorAll('.rd-code-pre')].filter(e=>e.offsetWidth).map(e=>({width:e.clientWidth,scroll:e.scrollWidth,overflow:getComputedStyle(e).overflowX}))};"
+          }
+        }
+      },
+      "output": "{\"id\":24,\"jsonrpc\":\"2.0\",\"result\":{\"content\":[{\"text\":\"{\\\"width\\\":375,\\\"overflow\\\":0,\\\"sidebar\\\":\\\"none\\\",\\\"menu\\\":\\\"block\\\",\\\"table\\\":[{\\\"width\\\":341,\\\"scroll\\\":341,\\\"overflow\\\":\\\"auto\\\"}],\\\"code\\\":[{\\\"width\\\":341,\\\"scroll\\\":370,\\\"overflow\\\":\\\"auto\\\"},{\\\"width\\\":341,\\\"scroll\\\":341,\\\"overflow\\\":\\\"auto\\\"},{\\\"width\\\":341,\\\"scroll\\\":341,\\\"overflow\\\":\\\"auto\\\"}]}\",\"type\":\"text\"}]}}\r\n"
+    },
+    {
+      "time": "2026-10-12T05:56:45.513Z",
+      "request": {
+        "jsonrpc": "2.0",
+        "id": 25,
+        "method": "tools/call",
+        "params": {
+          "name": "get_page_content",
+          "arguments": {
+            "region": "entire_page",
+            "format": "textTree",
+            "maxWordsPerParagraph": 100,
+            "savePath": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/gaps/safari-page.json"
+          }
+        }
+      },
+      "output": "{\"id\":25,\"jsonrpc\":\"2.0\",\"result\":{\"content\":[{\"text\":\"Saved output to '/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/gaps/safari-page.json' (3.0 kB).\",\"type\":\"text\"}]}}\r\n"
+    },
+    {
+      "time": "2026-10-12T05:56:48.619Z",
+      "request": {
+        "jsonrpc": "2.0",
+        "id": 26,
+        "method": "tools/call",
+        "params": {
+          "name": "screenshot",
+          "arguments": {
+            "savePath": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p1-gaps/m2/safari/full-root-setup-dark-375.png",
+            "full_page": true
+          }
+        }
+      },
+      "output": "{\"id\":26,\"jsonrpc\":\"2.0\",\"result\":{\"content\":[{\"text\":\"Saved screenshot to '/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p1-gaps/m2/safari/full-root-setup-dark-375.png' (299.7 kB).\",\"type\":\"text\"}]}}\r\n"
+    },
+    {
+      "time": "2026-10-12T05:56:51.783Z",
+      "request": {
+        "jsonrpc": "2.0",
+        "id": 27,
+        "method": "tools/call",
+        "params": {
+          "name": "browser_console_messages",
+          "arguments": {
+            "clear": false,
+            "level_filter": [
+              "error",
+              "warn"
+            ]
+          }
+        }
+      },
+      "output": "{\"id\":27,\"jsonrpc\":\"2.0\",\"result\":{\"content\":[{\"text\":\"[]\",\"type\":\"text\"}]}}\r\n"
+    },
+    {
+      "time": "2026-10-12T05:56:54.889Z",
+      "request": {
+        "jsonrpc": "2.0",
+        "id": 28,
+        "method": "tools/call",
+        "params": {
+          "name": "list_network_requests",
+          "arguments": {
+            "clear": false,
+            "filter": {
+              "status_min": 400
+            }
+          }
+        }
+      },
+      "output": "{\"id\":28,\"jsonrpc\":\"2.0\",\"result\":{\"content\":[{\"text\":\"{\\\"count\\\":0,\\\"requests\\\":[]}\",\"type\":\"text\"}]}}\r\n"
+    },
+    {
+      "time": "2026-10-12T05:56:57.994Z",
+      "request": {
+        "jsonrpc": "2.0",
+        "id": 29,
+        "method": "tools/call",
+        "params": {
+          "name": "list_network_requests",
+          "arguments": {
+            "clear": false,
+            "filter": {
+              "status_min": 0,
+              "status_max": 0
+            }
+          }
+        }
+      },
+      "output": "{\"id\":29,\"jsonrpc\":\"2.0\",\"result\":{\"content\":[{\"text\":\"{\\\"count\\\":0,\\\"requests\\\":[]}\",\"type\":\"text\"}]}}\r\n"
+    },
+    {
+      "time": "2026-10-12T05:58:36.753Z",
+      "request": {
+        "jsonrpc": "2.0",
+        "id": 30,
+        "method": "tools/call",
+        "params": {
+          "name": "evaluate_javascript",
+          "arguments": {
+            "expression": "document.querySelector('details.rd-sidebar-narrow summary').click();return {menuOpen:document.querySelector('details.rd-sidebar-narrow').open};"
+          }
+        }
+      },
+      "output": "{\"id\":30,\"jsonrpc\":\"2.0\",\"result\":{\"content\":[{\"text\":\"{\\\"menuOpen\\\":true}\",\"type\":\"text\"}]}}\r\n"
+    },
+    {
+      "time": "2026-10-12T05:58:39.860Z",
+      "request": {
+        "jsonrpc": "2.0",
+        "id": 31,
+        "method": "tools/call",
+        "params": {
+          "name": "page_interactions",
+          "arguments": {
+            "interactions": [
+              {
+                "type": "click",
+                "node": "605",
+                "purpose": "Follow Guide from the narrow sidebar"
+              }
+            ]
+          }
+        }
+      },
+      "output": "{\"id\":31,\"jsonrpc\":\"2.0\",\"result\":{\"content\":[{\"text\":\"{\\\"content\\\":\\\"[full update — 126% changed]\\\\nroot\\\\n\\\\tlink uid=718 url=guide#content 'Skip to content'\\\\n\\\\toverlay\\\\n\\\\t\\\\tlink uid=719 url=:59381 'Fixture Docs'\\\\n\\\\t\\\\t\\\\timage uid=720 class=w-auto src=logo.74e1314b2a.svg\\\\n\\\\t\\\\tlabel=Theme\\\\n\\\\t\\\\t\\\\tbutton uid=721 'System'\\\\n\\\\t\\\\t\\\\tbutton uid=722 'Light'\\\\n\\\\t\\\\t\\\\tbutton uid=723 'Dark'\\\\n\\\\tnavigation label='Site links'\\\\n\\\\t\\\\tlist\\\\n\\\\t\\\\t\\\\tlink uid=724 'Guide'\\\\n\\\\t\\\\t\\\\tlink uid=725 url=github.com\\\\/example\\\\/fixture\\\\n\\\\t\\\\tlist\\\\n\\\\t\\\\t\\\\tlink uid=726 url=mastodon.example\\\\/@fixture\\\\n\\\\t'Menu'\\\\n\\\\tnavigation label=Menu\\\\n\\\\t\\\\tsection\\\\n\\\\t\\\\t\\\\tlist\\\\n\\\\t\\\\t\\\\t\\\\tlink uid=727\\\\n\\\\t\\\\t\\\\t\\\\tlink uid=728 url=:59381\\\\/guide\\\\/setup\\\\n\\\\t\\\\tsection\\\\n\\\\t\\\\t\\\\tlist\\\\n\\\\t\\\\t\\\\t\\\\tlink uid=729 url=:59381\\\\/reference\\\\/api\\\\n\\\\t'On this page'\\\\n\\\\tnavigation label='On this page'\\\\n\\\\t\\\\tlist\\\\n\\\\t\\\\t\\\\tlink uid=730 url=guide#steps\\\\n\\\\t\\\\t\\\\tlink uid=731 url=guide#steps-1\\\\n\\\\t\\\\t\\\\tlink ui"
+    },
+    {
+      "time": "2026-10-12T05:58:42.968Z",
+      "request": {
+        "jsonrpc": "2.0",
+        "id": 32,
+        "method": "tools/call",
+        "params": {
+          "name": "get_page_content",
+          "arguments": {
+            "region": "entire_page",
+            "format": "textTree",
+            "maxWordsPerParagraph": 100,
+            "savePath": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/gaps/safari-page.json"
+          }
+        }
+      },
+      "output": "{\"id\":32,\"jsonrpc\":\"2.0\",\"result\":{\"content\":[{\"text\":\"Saved output to '/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/gaps/safari-page.json' (2.1 kB).\",\"type\":\"text\"}]}}\r\n"
+    },
+    {
+      "time": "2026-10-12T05:58:46.073Z",
+      "request": {
+        "jsonrpc": "2.0",
+        "id": 33,
+        "method": "tools/call",
+        "params": {
+          "name": "evaluate_javascript",
+          "arguments": {
+            "expression": "return {url:location.href,theme:document.documentElement.dataset.theme,menuOpen:document.querySelector('details.rd-sidebar-narrow').open,overflow:document.documentElement.scrollWidth-innerWidth};"
+          }
+        }
+      },
+      "output": "{\"id\":33,\"jsonrpc\":\"2.0\",\"result\":{\"content\":[{\"text\":\"{\\\"url\\\":\\\"http://192.168.16.131:59381/guide/\\\",\\\"theme\\\":\\\"dark\\\",\\\"menuOpen\\\":false,\\\"overflow\\\":0}\",\"type\":\"text\"}]}}\r\n"
+    },
+    {
+      "time": "2026-10-12T05:59:13.194Z",
+      "request": {
+        "jsonrpc": "2.0",
+        "id": 34,
+        "method": "tools/call",
+        "params": {
+          "name": "evaluate_javascript",
+          "arguments": {
+            "expression": "document.querySelector('details.rd-toc-narrow summary').click();return {tocOpen:document.querySelector('details.rd-toc-narrow').open};"
+          }
+        }
+      },
+      "output": "{\"id\":34,\"jsonrpc\":\"2.0\",\"result\":{\"content\":[{\"text\":\"{\\\"tocOpen\\\":true}\",\"type\":\"text\"}]}}\r\n"
+    },
+    {
+      "time": "2026-10-12T05:59:16.299Z",
+      "request": {
+        "jsonrpc": "2.0",
+        "id": 35,
+        "method": "tools/call",
+        "params": {
+          "name": "page_interactions",
+          "arguments": {
+            "interactions": [
+              {
+                "type": "click",
+                "node": "731",
+                "purpose": "Follow the second automatically disambiguated heading in the narrow contents panel"
+              }
+            ]
+          }
+        }
+      },
+      "output": "{\"id\":35,\"jsonrpc\":\"2.0\",\"result\":{\"content\":[{\"text\":\"{\\\"successful\\\":1,\\\"steps\\\":[\\\"Clicked on link with href “#steps-1”, with rendered text “Steps”\\\"],\\\"url\\\":\\\"http:\\\\/\\\\/192.168.16.131:59381\\\\/guide\\\\/#steps-1\\\",\\\"content\\\":\\\"(no changes)\\\",\\\"title\\\":\\\"Guide | Fixture Docs\\\",\\\"requested\\\":1,\\\"format\\\":\\\"textTree\\\"}\",\"type\":\"text\"}]}}\r\n"
+    },
+    {
+      "time": "2026-10-12T05:59:19.405Z",
+      "request": {
+        "jsonrpc": "2.0",
+        "id": 36,
+        "method": "tools/call",
+        "params": {
+          "name": "evaluate_javascript",
+          "arguments": {
+            "expression": "return {hash:location.hash,tocOpen:document.querySelector('details.rd-toc-narrow').open,targetTop:document.getElementById('steps-1').getBoundingClientRect().top,headerBottom:document.querySelector('body>header').getBoundingClientRect().bottom};"
+          }
+        }
+      },
+      "output": "{\"id\":36,\"jsonrpc\":\"2.0\",\"result\":{\"content\":[{\"text\":\"{\\\"hash\\\":\\\"#steps-1\\\",\\\"tocOpen\\\":false,\\\"targetTop\\\":79.984375,\\\"headerBottom\\\":57}\",\"type\":\"text\"}]}}\r\n"
+    },
+    {
+      "time": "2026-10-12T05:59:22.509Z",
+      "request": {
+        "jsonrpc": "2.0",
+        "id": 37,
+        "method": "tools/call",
+        "params": {
+          "name": "page_interactions",
+          "arguments": {
+            "interactions": [
+              {
+                "type": "click",
+                "node": "722",
+                "purpose": "Return to light theme"
+              },
+              {
+                "type": "click",
+                "node": "735",
+                "scrollToVisible": true,
+                "purpose": "Open the Chinese API reference through its body link"
+              }
+            ]
+          }
+        }
+      },
+      "output": "{\"id\":37,\"jsonrpc\":\"2.0\",\"result\":{\"content\":[{\"text\":\"{\\\"content\\\":\\\"[full update — 130% changed]\\\\nroot\\\\n\\\\tlink uid=915 url=api#content '跳到正文'\\\\n\\\\toverlay\\\\n\\\\t\\\\tlink uid=916 url=:59381 'Fixture Docs'\\\\n\\\\t\\\\t\\\\timage uid=917 class=w-auto src=logo.74e1314b2a.svg\\\\n\\\\t\\\\tlabel=主题\\\\n\\\\t\\\\t\\\\tbutton uid=918 '跟随系统'\\\\n\\\\t\\\\t\\\\tbutton uid=919 class=rd-mode-option '浅色'\\\\n\\\\t\\\\t\\\\tbutton uid=920 class=rd-mode-option '深色'\\\\n\\\\tnavigation label=站点链接\\\\n\\\\t\\\\tlist\\\\n\\\\t\\\\t\\\\tlink uid=921 url=:59381\\\\/guide\\\\n\\\\t\\\\t\\\\tlink uid=922 url=github.com\\\\/example\\\\/fixture\\\\n\\\\t\\\\tlist\\\\n\\\\t\\\\t\\\\tlink uid=923 url=mastodon.example\\\\/@fixture\\\\n\\\\t'菜单'\\\\n\\\\tnavigation label=菜单\\\\n\\\\t\\\\tsection\\\\n\\\\t\\\\t\\\\tlist\\\\n\\\\t\\\\t\\\\t\\\\tlink uid=924 url=:59381\\\\/guide\\\\n\\\\t\\\\t\\\\t\\\\tlink uid=925 url=:59381\\\\/guide\\\\/setup\\\\n\\\\t\\\\tsection\\\\n\\\\t\\\\t\\\\tlist\\\\n\\\\t\\\\t\\\\t\\\\tlink uid=926\\\\n\\\\t'本页目录'\\\\n\\\\tnavigation label=本页目录\\\\n\\\\t\\\\tlist\\\\n\\\\t\\\\t\\\\tlink uid=927\\\\n\\\\tarticle\\\\n\\\\t\\\\t'API "
+    },
+    {
+      "time": "2026-10-12T05:59:25.615Z",
+      "request": {
+        "jsonrpc": "2.0",
+        "id": 38,
+        "method": "tools/call",
+        "params": {
+          "name": "get_page_content",
+          "arguments": {
+            "region": "entire_page",
+            "format": "textTree",
+            "maxWordsPerParagraph": 100,
+            "savePath": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/gaps/safari-page.json"
+          }
+        }
+      },
+      "output": "{\"id\":38,\"jsonrpc\":\"2.0\",\"result\":{\"content\":[{\"text\":\"Saved output to '/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/gaps/safari-page.json' (1.4 kB).\",\"type\":\"text\"}]}}\r\n"
+    },
+    {
+      "time": "2026-10-12T06:00:11.201Z",
+      "request": {
+        "jsonrpc": "2.0",
+        "id": 39,
+        "method": "tools/call",
+        "params": {
+          "name": "evaluate_javascript",
+          "arguments": {
+            "expression": "return {url:location.href,lang:document.documentElement.lang,theme:document.documentElement.dataset.theme,targetTop:document.getElementById('数据-api').getBoundingClientRect().top,headerBottom:document.querySelector('body>header').getBoundingClientRect().bottom,overflow:document.documentElement.scrollWidth-innerWidth};"
+          }
+        }
+      },
+      "output": "{\"id\":39,\"jsonrpc\":\"2.0\",\"result\":{\"content\":[{\"text\":\"{\\\"url\\\":\\\"http://192.168.16.131:59381/reference/api/#%E6%95%B0%E6%8D%AE-api\\\",\\\"lang\\\":\\\"zh-CN\\\",\\\"theme\\\":\\\"light\\\",\\\"targetTop\\\":166.390625,\\\"headerBottom\\\":57,\\\"overflow\\\":0}\",\"type\":\"text\"}]}}\r\n"
+    },
+    {
+      "time": "2026-10-12T06:00:14.306Z",
+      "request": {
+        "jsonrpc": "2.0",
+        "id": 40,
+        "method": "tools/call",
+        "params": {
+          "name": "navigate_to_url",
+          "arguments": {
+            "url": "http://192.168.16.131:59381/a/b/c/missing/"
+          }
+        }
+      },
+      "output": "{\"id\":40,\"jsonrpc\":\"2.0\",\"result\":{\"content\":[{\"text\":\"{\\\"content\\\":\\\"root\\\\n\\\\tlink uid=62 url=missing#content 'Skip to content'\\\\n\\\\toverlay\\\\n\\\\t\\\\tlink uid=63 url=:59381 'Fixture Docs'\\\\n\\\\t\\\\t\\\\timage uid=64 class=w-auto src=logo.74e1314b2a.svg\\\\n\\\\t\\\\tlabel=Theme\\\\n\\\\t\\\\t\\\\tbutton uid=65 'System'\\\\n\\\\t\\\\t\\\\tbutton uid=66 'Light'\\\\n\\\\t\\\\t\\\\tbutton uid=67 'Dark'\\\\n\\\\tnavigation label='Site links'\\\\n\\\\t\\\\tlist\\\\n\\\\t\\\\t\\\\tlink uid=68 url=:59381\\\\/guide\\\\n\\\\t\\\\t\\\\tlink uid=69 url=github.com\\\\/example\\\\/fixture\\\\n\\\\t\\\\tlist\\\\n\\\\t\\\\t\\\\tlink uid=70 url=mastodon.example\\\\/@fixture\\\\n\\\\t'Menu'\\\\n\\\\tnavigation label=Menu\\\\n\\\\t\\\\tsection\\\\n\\\\t\\\\t\\\\tlist\\\\n\\\\t\\\\t\\\\t\\\\tlink uid=71 url=:59381\\\\/guide\\\\n\\\\t\\\\t\\\\t\\\\tlink uid=72 url=:59381\\\\/guide\\\\/setup\\\\n\\\\t\\\\tsection\\\\n\\\\t\\\\t\\\\tlist\\\\n\\\\t\\\\t\\\\t\\\\tlink uid=73 url=:59381\\\\/reference\\\\/api\\\\n\\\\t'Page not found'\\\\n\\\\tarticle\\\\n\\\\t\\\\t'There is no page at this address.'\\\\n\\\\t\\\\tlink uid=74 url=:59381 'Back to the home page'\\\\n\\\\tnavigation label='Footer links'\\\\n\\\\t\\\\tlink"
+    },
+    {
+      "time": "2026-10-12T06:00:17.411Z",
+      "request": {
+        "jsonrpc": "2.0",
+        "id": 41,
+        "method": "tools/call",
+        "params": {
+          "name": "evaluate_javascript",
+          "arguments": {
+            "expression": "return {url:location.href,title:document.title,h1:[...document.querySelectorAll('h1')].map(e=>e.textContent),roles:{header:document.querySelectorAll('body>header').length,nav:document.querySelectorAll('nav').length,main:document.querySelectorAll('main').length,footer:document.querySelectorAll('body>footer').length},css:[...document.styleSheets].map(e=>e.href),overflow:document.documentElement.scrollWidth-innerWidth};"
+          }
+        }
+      },
+      "output": "{\"id\":41,\"jsonrpc\":\"2.0\",\"result\":{\"content\":[{\"text\":\"{\\\"url\\\":\\\"http://192.168.16.131:59381/a/b/c/missing/\\\",\\\"title\\\":\\\"Page not found | Fixture Docs\\\",\\\"h1\\\":[\\\"Page not found\\\"],\\\"roles\\\":{\\\"header\\\":1,\\\"nav\\\":5,\\\"main\\\":1,\\\"footer\\\":1},\\\"css\\\":[\\\"http://192.168.16.131:59381/assets/site.35f3d29a83.css\\\"],\\\"overflow\\\":0}\",\"type\":\"text\"}]}}\r\n"
+    },
+    {
+      "time": "2026-10-12T06:00:20.516Z",
+      "request": {
+        "jsonrpc": "2.0",
+        "id": 42,
+        "method": "tools/call",
+        "params": {
+          "name": "list_network_requests",
+          "arguments": {
+            "clear": false,
+            "filter": {
+              "status_min": 400
+            }
+          }
+        }
+      },
+      "output": "{\"id\":42,\"jsonrpc\":\"2.0\",\"result\":{\"content\":[{\"text\":\"{\\\"count\\\":0,\\\"requests\\\":[]}\",\"type\":\"text\"}]}}\r\n"
+    },
+    {
+      "time": "2026-10-12T06:00:23.621Z",
+      "request": {
+        "jsonrpc": "2.0",
+        "id": 43,
+        "method": "tools/call",
+        "params": {
+          "name": "browser_console_messages",
+          "arguments": {
+            "clear": false,
+            "level_filter": [
+              "error",
+              "warn"
+            ]
+          }
+        }
+      },
+      "output": "{\"id\":43,\"jsonrpc\":\"2.0\",\"result\":{\"content\":[{\"text\":\"[]\",\"type\":\"text\"}]}}\r\n"
+    },
+    {
+      "time": "2026-10-12T06:00:26.728Z",
+      "request": {
+        "jsonrpc": "2.0",
+        "id": 44,
+        "method": "tools/call",
+        "params": {
+          "name": "get_page_content",
+          "arguments": {
+            "region": "entire_page",
+            "format": "textTree",
+            "maxWordsPerParagraph": 100,
+            "savePath": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/gaps/safari-page.json"
+          }
+        }
+      },
+      "output": "{\"id\":44,\"jsonrpc\":\"2.0\",\"result\":{\"content\":[{\"text\":\"Saved output to '/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/gaps/safari-page.json' (1.0 kB).\",\"type\":\"text\"}]}}\r\n"
+    },
+    {
+      "time": "2026-10-12T06:00:29.834Z",
+      "request": {
+        "jsonrpc": "2.0",
+        "id": 45,
+        "method": "tools/call",
+        "params": {
+          "name": "screenshot",
+          "arguments": {
+            "savePath": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p1-gaps/m2/safari/full-root-404-375.png",
+            "full_page": true
+          }
+        }
+      },
+      "output": "{\"id\":45,\"jsonrpc\":\"2.0\",\"result\":{\"content\":[{\"text\":\"Saved screenshot to '/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p1-gaps/m2/safari/full-root-404-375.png' (64.2 kB).\",\"type\":\"text\"}]}}\r\n"
+    },
+    {
+      "time": "2026-10-12T06:06:26.845Z",
+      "request": {
+        "jsonrpc": "2.0",
+        "id": 46,
+        "method": "tools/call",
+        "params": {
+          "name": "evaluate_javascript",
+          "arguments": {
+            "expression": "return {nav:performance.getEntriesByType('navigation').map(e=>({url:e.name,status:e.responseStatus})),resources:performance.getEntriesByType('resource').map(e=>({url:e.name,status:e.responseStatus,bytes:e.transferSize}))};"
+          }
+        }
+      },
+      "output": "{\"id\":46,\"jsonrpc\":\"2.0\",\"result\":{\"content\":[{\"text\":\"{\\\"nav\\\":[{\\\"url\\\":\\\"http://192.168.16.131:59381/a/b/c/missing/\\\",\\\"status\\\":null}],\\\"resources\\\":[{\\\"url\\\":\\\"http://192.168.16.131:59381/assets/site.35f3d29a83.css\\\",\\\"status\\\":null,\\\"bytes\\\":34604},{\\\"url\\\":\\\"http://192.168.16.131:59381/assets/mode.64fba40012.js\\\",\\\"status\\\":null,\\\"bytes\\\":1002},{\\\"url\\\":\\\"http://192.168.16.131:59381/assets/site.f9e7e4a69a.js\\\",\\\"status\\\":null,\\\"bytes\\\":11591},{\\\"url\\\":\\\"http://192.168.16.131:59381/assets/files/logo.74e1314b2a.svg\\\",\\\"status\\\":null,\\\"bytes\\\":419}]}\",\"type\":\"text\"}]}}\r\n"
+    },
+    {
+      "time": "2026-10-12T06:06:29.950Z",
+      "request": {
+        "jsonrpc": "2.0",
+        "id": 47,
+        "method": "tools/call",
+        "params": {
+          "name": "list_network_requests",
+          "arguments": {
+            "clear": false
+          }
+        }
+      },
+      "output": "{\"id\":47,\"jsonrpc\":\"2.0\",\"result\":{\"content\":[{\"text\":\"{\\\"count\\\":28,\\\"requests\\\":[{\\\"duration_ms\\\":0,\\\"initiator\\\":{\\\"type\\\":\\\"other\\\"},\\\"method\\\":\\\"GET\\\",\\\"mime_type\\\":\\\"text/html\\\",\\\"request_id\\\":\\\"0.209\\\",\\\"response_size_bytes\\\":10815,\\\"started_at_iso8601\\\":\\\"2026-10-12T05:50:59.318Z\\\",\\\"status\\\":200,\\\"url\\\":\\\"http://192.168.16.131:59381/guide/\\\"},{\\\"duration_ms\\\":0,\\\"initiator\\\":{\\\"type\\\":\\\"parser\\\",\\\"url\\\":\\\"http://192.168.16.131:59381/guide/\\\"},\\\"method\\\":\\\"GET\\\",\\\"mime_type\\\":\\\"text/css\\\",\\\"request_id\\\":\\\"0.213\\\",\\\"response_size_bytes\\\":34304,\\\"started_at_iso8601\\\":\\\"2026-10-12T05:50:59.342Z\\\",\\\"status\\\":200,\\\"url\\\":\\\"http://192.168.16.131:59381/assets/site.35f3d29a83.css\\\"},{\\\"duration_ms\\\":0,\\\"initiator\\\":{\\\"type\\\":\\\"parser\\\",\\\"url\\\":\\\"http://192.168.16.131:59381/guide/\\\"},\\\"method\\\":\\\"GET\\\",\\\"mime_type\\\":\\\"text/javascript\\\",\\\"request_id\\\":\\\"0.214\\\",\\\"response_size_bytes\\\":702,\\\"started_at_iso8601\\\":\\\"2026-10-12T05:50:59.345Z\\\",\\\"status\\\":200,\\\"url\\\":\\\"http://192.168.16.131:59381/assets/mode.64fba40"
+    },
+    {
+      "time": "2026-10-12T06:06:38.058Z",
+      "request": {
+        "jsonrpc": "2.0",
+        "id": 48,
+        "method": "tools/call",
+        "params": {
+          "name": "page_interactions",
+          "arguments": {
+            "interactions": [
+              {
+                "type": "click",
+                "node": "74",
+                "purpose": "Return from the real 404 page to the root home"
+              }
+            ]
+          }
+        }
+      },
+      "output": ""
+    },
+    {
+      "time": "2026-10-12T06:06:41.163Z",
+      "request": {
+        "jsonrpc": "2.0",
+        "id": 49,
+        "method": "tools/call",
+        "params": {
+          "name": "evaluate_javascript",
+          "arguments": {
+            "expression": "return {url:location.href,h1:document.querySelector('h1').textContent};"
+          }
+        }
+      },
+      "output": "{\"id\":49,\"jsonrpc\":\"2.0\",\"result\":{\"content\":[{\"text\":\"{\\\"url\\\":\\\"http://192.168.16.131:59381/a/b/c/missing/\\\",\\\"h1\\\":\\\"Page not found\\\"}\",\"type\":\"text\"}]}}\r\n"
+    },
+    {
+      "time": "2026-10-12T06:06:44.270Z",
+      "request": {
+        "jsonrpc": "2.0",
+        "id": 50,
+        "method": "tools/call",
+        "params": {
+          "name": "navigate_to_url",
+          "arguments": {
+            "url": "http://192.168.16.131:59389/rustify-ui/"
+          }
+        }
+      },
+      "output": "{\"id\":50,\"jsonrpc\":\"2.0\",\"result\":{\"content\":[{\"text\":\"{\\\"format\\\":\\\"textTree\\\",\\\"title\\\":\\\"Page not found | Fixture Docs\\\",\\\"content\\\":\\\"root\\\\n\\\\tlink uid=62 url=missing#content 'Skip to content'\\\\n\\\\toverlay\\\\n\\\\t\\\\tlink uid=63 url=:59381 'Fixture Docs'\\\\n\\\\t\\\\t\\\\timage uid=64 class=w-auto src=logo.74e1314b2a.svg\\\\n\\\\t\\\\tlabel=Theme\\\\n\\\\t\\\\t\\\\tbutton uid=65 'System'\\\\n\\\\t\\\\t\\\\tbutton uid=66 'Light'\\\\n\\\\t\\\\t\\\\tbutton uid=67 'Dark'\\\\n\\\\tnavigation label='Site links'\\\\n\\\\t\\\\tlist\\\\n\\\\t\\\\t\\\\tlink uid=68 url=:59381\\\\/guide\\\\n\\\\t\\\\t\\\\tlink uid=69 url=github.com\\\\/example\\\\/fixture\\\\n\\\\t\\\\tlist\\\\n\\\\t\\\\t\\\\tlink uid=70 url=mastodon.example\\\\/@fixture\\\\n\\\\t'Menu'\\\\n\\\\tnavigation label=Menu\\\\n\\\\t\\\\tsection\\\\n\\\\t\\\\t\\\\tlist\\\\n\\\\t\\\\t\\\\t\\\\tlink uid=71 url=:59381\\\\/guide\\\\n\\\\t\\\\t\\\\t\\\\tlink uid=72 url=:59381\\\\/guide\\\\/setup\\\\n\\\\t\\\\tsection\\\\n\\\\t\\\\t\\\\tlist\\\\n\\\\t\\\\t\\\\t\\\\tlink uid=73 url=:59381\\\\/reference\\\\/api\\\\n\\\\t'Page not found'\\\\n\\\\tarticle\\\\n\\\\t\\\\t'There is no page at this address.'\\\\n\\\\t\\\\tlink uid=74 url=:59381 'Back"
+    },
+    {
+      "time": "2026-10-12T06:06:47.376Z",
+      "request": {
+        "jsonrpc": "2.0",
+        "id": 51,
+        "method": "tools/call",
+        "params": {
+          "name": "get_page_content",
+          "arguments": {
+            "region": "entire_page",
+            "format": "textTree",
+            "maxWordsPerParagraph": 100,
+            "savePath": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/gaps/safari-page.json"
+          }
+        }
+      },
+      "output": "{\"id\":51,\"jsonrpc\":\"2.0\",\"result\":{\"content\":[{\"text\":\"Saved output to '/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/gaps/safari-page.json' (1.0 kB).\",\"type\":\"text\"}]}}\r\n"
+    }
+  ]
+}

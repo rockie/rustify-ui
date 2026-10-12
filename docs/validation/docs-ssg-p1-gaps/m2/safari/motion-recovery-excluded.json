@@ -1,0 +1,20 @@
+{
+  "observedAt": "2026-10-12T12:22:32.889Z",
+  "query": "\"RUSTIFY_MOTION:\" + btoa(JSON.stringify({url:location.href,reduce:matchMedia(\"(prefers-reduced-motion: reduce)\").matches,scroll:getComputedStyle(document.documentElement).scrollBehavior}))",
+  "motionBefore": 0,
+  "developerBefore": 0,
+  "fragments": [
+    "全部",
+    "评估",
+    "错误",
+    "警告",
+    "打印",
+    "控制台打开于：20:22:44",
+    "\"RUSTIFY_MOTION:\" + btoa(JSON.stringify({url:location.href,reduce:matchMedia(\"(prefers-reduced-motion: reduce)\").matches,scroll:getComputedStyle(document.documentElement).scrollBehavior}))",
+    "\"RUSTIFY_MOTION:eyJ1cmwiOiJodHRwOi8vMTkyLjE2OC4xNi4xMTY6NDE5NC9ydXN0aWZ5LXVpL2d1aWRlL3NldHVwLyNmbi1maXJzdCIsInJlZHVjZSI6dHJ1ZSwic2Nyb2xsIjoiYXV0byJ9\" = $1"
+  ],
+  "motionAfter": 0,
+  "developerAfter": 0,
+  "excluded_from_acceptance": true,
+  "reason": "The result came from 192.168.16.116:4194; its production identity was not verified. The later localhost sample has both native URL and production fingerprint proof."
+}

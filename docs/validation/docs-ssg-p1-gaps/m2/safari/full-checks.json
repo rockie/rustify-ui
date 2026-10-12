@@ -1,0 +1,329 @@
+[
+  {
+    "check": "full-root/home-action",
+    "result": {
+      "url": "http://127.0.0.1:52252/guide/",
+      "width": 1280,
+      "theme": "light",
+      "h1": 1,
+      "header": 1,
+      "main": 1,
+      "footer": 1,
+      "current": "Guide",
+      "headerCurrent": [
+        "Guide"
+      ],
+      "overflow": 0,
+      "modeHidden": false
+    }
+  },
+  {
+    "check": "full-root/setup-dark",
+    "result": {
+      "url": "http://127.0.0.1:52252/guide/setup/",
+      "width": 1280,
+      "theme": "dark",
+      "h1": 1,
+      "header": 1,
+      "main": 1,
+      "footer": 1,
+      "current": "Setup",
+      "headerCurrent": [
+        "Guide"
+      ],
+      "overflow": 0,
+      "modeHidden": false
+    }
+  },
+  {
+    "check": "full-root/ordinary-anchor",
+    "result": {
+      "hash": "#check-the-version",
+      "top": 79.828125,
+      "headerBottom": 57
+    }
+  },
+  {
+    "check": "full-root/narrow",
+    "result": {
+      "url": "http://127.0.0.1:52252/guide/setup/#check-the-version",
+      "width": 375,
+      "theme": "dark",
+      "h1": 1,
+      "header": 1,
+      "main": 1,
+      "footer": 1,
+      "current": "Setup",
+      "headerCurrent": [
+        "Guide"
+      ],
+      "overflow": 0,
+      "modeHidden": false
+    }
+  },
+  {
+    "check": "full-root/Chinese-anchor-light",
+    "result": {
+      "url": "http://127.0.0.1:52252/reference/api/#%E6%95%B0%E6%8D%AE-api",
+      "lang": "zh-CN",
+      "theme": "light",
+      "hash": "#数据-api",
+      "top": 166.390625,
+      "headerBottom": 57,
+      "overflow": 0
+    }
+  },
+  {
+    "check": "full-root/404",
+    "result": {
+      "url": "http://127.0.0.1:52252/a/b/c/missing/",
+      "width": 375,
+      "theme": "light",
+      "h1": 1,
+      "header": 1,
+      "main": 1,
+      "footer": 1,
+      "current": null,
+      "headerCurrent": [],
+      "overflow": 0,
+      "modeHidden": false
+    }
+  },
+  {
+    "check": "full-root/network",
+    "result": {
+      "total": 75,
+      "nonSuccess": [
+        {
+          "duration_ms": 0,
+          "initiator": {
+            "type": "other"
+          },
+          "method": "GET",
+          "mime_type": "text/html",
+          "request_id": "0.3860",
+          "response_size_bytes": 5353,
+          "started_at_iso8601": "2026-10-12T06:22:47.757Z",
+          "status": 404,
+          "url": "http://127.0.0.1:53233/favicon.ico"
+        },
+        {
+          "duration_ms": 0,
+          "initiator": {
+            "type": "other"
+          },
+          "method": "GET",
+          "mime_type": "text/html",
+          "request_id": "0.4707",
+          "response_size_bytes": 5353,
+          "started_at_iso8601": "2026-10-12T06:22:50.319Z",
+          "status": 404,
+          "url": "http://127.0.0.1:53233/rustify-ui/a/b/c/missing/"
+        },
+        {
+          "duration_ms": 0,
+          "initiator": {
+            "type": "other"
+          },
+          "method": "GET",
+          "mime_type": "text/html",
+          "request_id": "0.5908",
+          "response_size_bytes": 5177,
+          "started_at_iso8601": "2026-10-12T06:24:53.223Z",
+          "status": 404,
+          "url": "http://127.0.0.1:52252/a/b/c/missing/"
+        }
+      ]
+    }
+  },
+  {
+    "check": "full-root/404-return",
+    "result": {
+      "url": "http://127.0.0.1:52252/"
+    }
+  },
+  {
+    "check": "full-subpath/home-action",
+    "result": {
+      "url": "http://127.0.0.1:53233/rustify-ui/guide/",
+      "width": 1280,
+      "theme": "light",
+      "h1": 1,
+      "header": 1,
+      "main": 1,
+      "footer": 1,
+      "current": "Guide",
+      "headerCurrent": [
+        "Guide"
+      ],
+      "overflow": 0,
+      "modeHidden": false
+    }
+  },
+  {
+    "check": "full-subpath/setup-dark",
+    "result": {
+      "url": "http://127.0.0.1:53233/rustify-ui/guide/setup/",
+      "width": 1280,
+      "theme": "dark",
+      "h1": 1,
+      "header": 1,
+      "main": 1,
+      "footer": 1,
+      "current": "Setup",
+      "headerCurrent": [
+        "Guide"
+      ],
+      "overflow": 0,
+      "modeHidden": false
+    }
+  },
+  {
+    "check": "full-subpath/ordinary-anchor",
+    "result": {
+      "hash": "#check-the-version",
+      "top": 79.828125,
+      "headerBottom": 57
+    }
+  },
+  {
+    "check": "full-subpath/narrow",
+    "result": {
+      "url": "http://127.0.0.1:53233/rustify-ui/guide/setup/#check-the-version",
+      "width": 375,
+      "theme": "dark",
+      "h1": 1,
+      "header": 1,
+      "main": 1,
+      "footer": 1,
+      "current": "Setup",
+      "headerCurrent": [
+        "Guide"
+      ],
+      "overflow": 0,
+      "modeHidden": false
+    }
+  },
+  {
+    "check": "full-subpath/Chinese-anchor-light",
+    "result": {
+      "url": "http://127.0.0.1:53233/rustify-ui/reference/api/#%E6%95%B0%E6%8D%AE-api",
+      "lang": "zh-CN",
+      "theme": "light",
+      "hash": "#数据-api",
+      "top": 166.390625,
+      "headerBottom": 57,
+      "overflow": 0
+    }
+  },
+  {
+    "check": "full-subpath/404",
+    "result": {
+      "url": "http://127.0.0.1:53233/rustify-ui/a/b/c/missing/",
+      "width": 375,
+      "theme": "light",
+      "h1": 1,
+      "header": 1,
+      "main": 1,
+      "footer": 1,
+      "current": null,
+      "headerCurrent": [],
+      "overflow": 0,
+      "modeHidden": false
+    }
+  },
+  {
+    "check": "full-subpath/network",
+    "result": {
+      "total": 109,
+      "nonSuccess": [
+        {
+          "duration_ms": 0,
+          "initiator": {
+            "type": "other"
+          },
+          "method": "GET",
+          "mime_type": "text/html",
+          "request_id": "0.3860",
+          "response_size_bytes": 5353,
+          "started_at_iso8601": "2026-10-12T06:22:47.757Z",
+          "status": 404,
+          "url": "http://127.0.0.1:53233/favicon.ico"
+        },
+        {
+          "duration_ms": 0,
+          "initiator": {
+            "type": "other"
+          },
+          "method": "GET",
+          "mime_type": "text/html",
+          "request_id": "0.4707",
+          "response_size_bytes": 5353,
+          "started_at_iso8601": "2026-10-12T06:22:50.319Z",
+          "status": 404,
+          "url": "http://127.0.0.1:53233/rustify-ui/a/b/c/missing/"
+        },
+        {
+          "duration_ms": 0,
+          "initiator": {
+            "type": "other"
+          },
+          "method": "GET",
+          "mime_type": "text/html",
+          "request_id": "0.5908",
+          "response_size_bytes": 5177,
+          "started_at_iso8601": "2026-10-12T06:24:53.223Z",
+          "status": 404,
+          "url": "http://127.0.0.1:52252/a/b/c/missing/"
+        },
+        {
+          "duration_ms": 0,
+          "initiator": {
+            "type": "other"
+          },
+          "method": "GET",
+          "mime_type": "text/html",
+          "request_id": "0.6922",
+          "response_size_bytes": 5353,
+          "started_at_iso8601": "2026-10-12T06:24:56.634Z",
+          "status": 404,
+          "url": "http://127.0.0.1:53233/rustify-ui/a/b/c/missing/"
+        }
+      ]
+    }
+  },
+  {
+    "check": "full-subpath/404-return",
+    "result": {
+      "url": "http://127.0.0.1:53233/rustify-ui/"
+    }
+  },
+  {
+    "check": "console",
+    "result": [
+      {
+        "browsingContextHandle": "page-958CD1D6-3A1D-49E2-B51E-EA9EEF909F6F",
+        "type": "console",
+        "level": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "method": "log",
+        "timestamp": 1791786293.226181
+      },
+      {
+        "browsingContextHandle": "page-958CD1D6-3A1D-49E2-B51E-EA9EEF909F6F",
+        "type": "console",
+        "level": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "method": "log",
+        "timestamp": 1791786296.637273
+      }
+    ]
+  },
+  {
+    "check": "motion",
+    "result": {
+      "reduce": false,
+      "scrollBehavior": "smooth"
+    }
+  }
+]

@@ -1,0 +1,19 @@
+{
+  "id": "D-04",
+  "observed_at": "2026-10-12T12:51:00.307316+00:00",
+  "source": "User messages and asynchronous clarification in the current session",
+  "user_instruction": "用chrome模拟吧，以后再跑真机",
+  "user_confirmation": "一起延期，本轮用现有 Chrome 模拟和真实 Safari 收口",
+  "current_gate": {
+    "chrome": "Installed Google Chrome 154.0.8037.98 with mobile viewport and touch emulation",
+    "safari": "Real macOS Safari 27.0.1, including actual 200% page zoom, disabled JavaScript, and system Reduced Motion"
+  },
+  "deferred": [
+    "Desktop Google Chrome latest stable walkthrough",
+    "Physical iPhone/Safari walkthrough",
+    "Physical Android/Chrome walkthrough"
+  ],
+  "followup_phase": null,
+  "p4_full_matrix_retained": true,
+  "frozen_performance_contract_unchanged": true
+}

@@ -1,0 +1,40 @@
+{
+  "observed_at": "2026-10-12T12:34:50.262612+00:00",
+  "reported_by": "user",
+  "iphone": {
+    "model": "iPhone 14 Pro",
+    "ios_version": null,
+    "ipv4": "192.168.16.135",
+    "safari_url": "http://192.168.16.133:62159/",
+    "safari_result": "Keeps loading; no Fixture Docs homepage reported",
+    "chrome_on_iphone_result": "Also unable to load; not an Android/Chrome combination",
+    "hostname_url": "http://RockiedeMacBook-Pro.local:62159/",
+    "hostname_result": "Keeps loading",
+    "walkthrough_performed": false,
+    "same_wifi_as_mac": true,
+    "later_ip_result": "User reported: 无法访问此网站; browser unspecified"
+  },
+  "android": {
+    "available": false
+  },
+  "desktop_chrome": {
+    "can_update_now": false,
+    "latest_stable_walkthrough_performed": false
+  },
+  "mac_network": {
+    "ipv4": "192.168.16.133",
+    "interface": "en0",
+    "route_to_iphone": "192.168.16.0/24 on en0",
+    "firewall": "disabled",
+    "preview_listen": "0.0.0.0:62159",
+    "local_ip_http_status": 200,
+    "local_hostname_http_status": 200,
+    "manifest_sha256": "ebff9034ce27645809c0cf8f3d68f31adba5fe48af60ccb4b5ea3e18101c1b75",
+    "arp_to_iphone": "incomplete",
+    "ping": "2 sent, 0 received",
+    "packet_capture": "Not performed: /dev/bpf0 permission denied"
+  },
+  "root_cause": null,
+  "next_check": "Physical-device verification deferred by user decision D-04; no further network or proxy changes performed",
+  "deferred_by": "browser-decision.json"
+}

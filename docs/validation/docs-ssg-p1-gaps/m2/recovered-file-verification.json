@@ -1,0 +1,49 @@
+{
+  "observed_at": "2026-10-12T12:34:50.171254+00:00",
+  "sites": [
+    {
+      "name": "full-root",
+      "files_verified": 19,
+      "css": [
+        {
+          "path": "assets/site.35f3d29a83.css",
+          "sha256": "35f3d29a833f167198d7142a6a312f0b87e3161606c0bd35e7b681596d4d15ba",
+          "bytes": 34304
+        }
+      ]
+    },
+    {
+      "name": "full-subpath",
+      "files_verified": 19,
+      "css": [
+        {
+          "path": "assets/site.6b6f8adaf1.css",
+          "sha256": "6b6f8adaf1d687fb5c7d670f979ac2889105915c9cd5d4a0dfa17d68b8b2140c",
+          "bytes": 34327
+        }
+      ]
+    },
+    {
+      "name": "home-root",
+      "files_verified": 13,
+      "css": [
+        {
+          "path": "assets/site.a7d0aa99e1.css",
+          "sha256": "a7d0aa99e13363e7a317aee60d4ae4fd04725d24e32bfe3c768cb088f6730898",
+          "bytes": 34003
+        }
+      ]
+    },
+    {
+      "name": "home-subpath",
+      "files_verified": 13,
+      "css": [
+        {
+          "path": "assets/site.a7d0aa99e1.css",
+          "sha256": "a7d0aa99e13363e7a317aee60d4ae4fd04725d24e32bfe3c768cb088f6730898",
+          "bytes": 34003
+        }
+      ]
+    }
+  ]
+}

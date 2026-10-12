@@ -1,0 +1,534 @@
+[
+  {
+    "check": "home-root/automatic/1280",
+    "result": {
+      "url": "http://127.0.0.1:53327/#home",
+      "width": 1280,
+      "h1": [
+        {
+          "id": "home",
+          "text": "Home",
+          "top": 121
+        }
+      ],
+      "headerBottom": 57,
+      "header": 1,
+      "main": 1,
+      "footer": 1,
+      "nav": 2,
+      "overflow": 0,
+      "modeHidden": false,
+      "article": "Same Explicit",
+      "pageLang": "en",
+      "actionLang": "",
+      "footerHref": "/",
+      "manifest_sha256": "55db2c10336dc375ebb2e94c2af3f4d83fa04fb82c597bc96e046232aafcd946"
+    }
+  },
+  {
+    "check": "home-root/automatic/1280/links",
+    "result": {
+      "same": "http://127.0.0.1:53327/#home",
+      "cross": "http://127.0.0.1:53327/explicit/#%E5%85%A5%E5%8F%A3",
+      "crossId": "入口"
+    }
+  },
+  {
+    "check": "home-root/explicit/1280",
+    "result": {
+      "url": "http://127.0.0.1:53327/explicit/#%E5%85%A5%E5%8F%A3",
+      "width": 1280,
+      "h1": [
+        {
+          "id": "入口",
+          "text": "Explicit",
+          "top": 121
+        }
+      ],
+      "headerBottom": 57,
+      "header": 1,
+      "main": 1,
+      "footer": 1,
+      "nav": 1,
+      "overflow": 0,
+      "modeHidden": false,
+      "article": "Same Automatic",
+      "pageLang": "fr",
+      "actionLang": null,
+      "footerHref": "/",
+      "manifest_sha256": "55db2c10336dc375ebb2e94c2af3f4d83fa04fb82c597bc96e046232aafcd946"
+    }
+  },
+  {
+    "check": "home-root/explicit/1280/links",
+    "result": {
+      "same": "http://127.0.0.1:53327/explicit/#%E5%85%A5%E5%8F%A3",
+      "cross": "http://127.0.0.1:53327/#home",
+      "crossId": "home"
+    }
+  },
+  {
+    "check": "home-root/raw/1280",
+    "result": {
+      "url": "http://127.0.0.1:53327/raw/#%3C%2Fh1%3E",
+      "width": 1280,
+      "h1": [
+        {
+          "id": "</h1>",
+          "text": "Raw",
+          "top": 121
+        }
+      ],
+      "headerBottom": 57,
+      "header": 1,
+      "main": 1,
+      "footer": 1,
+      "nav": 2,
+      "overflow": 0,
+      "modeHidden": false,
+      "article": "Same Automatic",
+      "pageLang": "fr",
+      "actionLang": "fr",
+      "footerHref": "/",
+      "manifest_sha256": "55db2c10336dc375ebb2e94c2af3f4d83fa04fb82c597bc96e046232aafcd946"
+    }
+  },
+  {
+    "check": "home-root/raw/1280/links",
+    "result": {
+      "same": "http://127.0.0.1:53327/raw/#%3C%2Fh1%3E",
+      "cross": "http://127.0.0.1:53327/#home",
+      "crossId": "home"
+    }
+  },
+  {
+    "check": "home-root/empty/1280",
+    "result": {
+      "url": "http://127.0.0.1:53327/empty/",
+      "width": 1280,
+      "h1": [
+        {
+          "id": "",
+          "text": "Empty",
+          "top": 121
+        }
+      ],
+      "headerBottom": 57,
+      "header": 1,
+      "main": 1,
+      "footer": 1,
+      "nav": 1,
+      "overflow": 0,
+      "modeHidden": false,
+      "article": "",
+      "pageLang": "en",
+      "actionLang": null,
+      "footerHref": "/"
+    }
+  },
+  {
+    "check": "home-root/footer/1280",
+    "result": {
+      "url": "http://127.0.0.1:53327/"
+    }
+  },
+  {
+    "check": "home-root/automatic/375",
+    "result": {
+      "url": "http://127.0.0.1:53327/#home",
+      "width": 375,
+      "h1": [
+        {
+          "id": "home",
+          "text": "Home",
+          "top": 121
+        }
+      ],
+      "headerBottom": 57,
+      "header": 1,
+      "main": 1,
+      "footer": 1,
+      "nav": 2,
+      "overflow": 0,
+      "modeHidden": false,
+      "article": "Same Explicit",
+      "pageLang": "en",
+      "actionLang": "",
+      "footerHref": "/",
+      "manifest_sha256": "55db2c10336dc375ebb2e94c2af3f4d83fa04fb82c597bc96e046232aafcd946"
+    }
+  },
+  {
+    "check": "home-root/automatic/375/links",
+    "result": {
+      "same": "http://127.0.0.1:53327/#home",
+      "cross": "http://127.0.0.1:53327/explicit/#%E5%85%A5%E5%8F%A3",
+      "crossId": "入口"
+    }
+  },
+  {
+    "check": "home-root/explicit/375",
+    "result": {
+      "url": "http://127.0.0.1:53327/explicit/#%E5%85%A5%E5%8F%A3",
+      "width": 375,
+      "h1": [
+        {
+          "id": "入口",
+          "text": "Explicit",
+          "top": 121
+        }
+      ],
+      "headerBottom": 57,
+      "header": 1,
+      "main": 1,
+      "footer": 1,
+      "nav": 1,
+      "overflow": 0,
+      "modeHidden": false,
+      "article": "Same Automatic",
+      "pageLang": "fr",
+      "actionLang": null,
+      "footerHref": "/",
+      "manifest_sha256": "55db2c10336dc375ebb2e94c2af3f4d83fa04fb82c597bc96e046232aafcd946"
+    }
+  },
+  {
+    "check": "home-root/explicit/375/links",
+    "result": {
+      "same": "http://127.0.0.1:53327/explicit/#%E5%85%A5%E5%8F%A3",
+      "cross": "http://127.0.0.1:53327/#home",
+      "crossId": "home"
+    }
+  },
+  {
+    "check": "home-root/raw/375",
+    "result": {
+      "url": "http://127.0.0.1:53327/raw/#%3C%2Fh1%3E",
+      "width": 375,
+      "h1": [
+        {
+          "id": "</h1>",
+          "text": "Raw",
+          "top": 121
+        }
+      ],
+      "headerBottom": 57,
+      "header": 1,
+      "main": 1,
+      "footer": 1,
+      "nav": 2,
+      "overflow": 0,
+      "modeHidden": false,
+      "article": "Same Automatic",
+      "pageLang": "fr",
+      "actionLang": "fr",
+      "footerHref": "/",
+      "manifest_sha256": "55db2c10336dc375ebb2e94c2af3f4d83fa04fb82c597bc96e046232aafcd946"
+    }
+  },
+  {
+    "check": "home-root/raw/375/links",
+    "result": {
+      "same": "http://127.0.0.1:53327/raw/#%3C%2Fh1%3E",
+      "cross": "http://127.0.0.1:53327/#home",
+      "crossId": "home"
+    }
+  },
+  {
+    "check": "home-root/empty/375",
+    "result": {
+      "url": "http://127.0.0.1:53327/empty/",
+      "width": 375,
+      "h1": [
+        {
+          "id": "",
+          "text": "Empty",
+          "top": 121
+        }
+      ],
+      "headerBottom": 57,
+      "header": 1,
+      "main": 1,
+      "footer": 1,
+      "nav": 1,
+      "overflow": 0,
+      "modeHidden": false,
+      "article": "",
+      "pageLang": "en",
+      "actionLang": null,
+      "footerHref": "/"
+    }
+  },
+  {
+    "check": "home-root/footer/375",
+    "result": {
+      "url": "http://127.0.0.1:53327/"
+    }
+  },
+  {
+    "check": "home-subpath/automatic/1280",
+    "result": {
+      "url": "http://127.0.0.1:53478/rustify-ui/#home",
+      "width": 1280,
+      "h1": [
+        {
+          "id": "home",
+          "text": "Home",
+          "top": 121
+        }
+      ],
+      "headerBottom": 57,
+      "header": 1,
+      "main": 1,
+      "footer": 1,
+      "nav": 2,
+      "overflow": 0,
+      "modeHidden": false,
+      "article": "Same Explicit",
+      "pageLang": "en",
+      "actionLang": "",
+      "footerHref": "/rustify-ui/",
+      "manifest_sha256": "2827f017b9cff301daea824757e98527a7454568e08ef61ce9c19a5e8cf75bd9"
+    }
+  },
+  {
+    "check": "home-subpath/automatic/1280/links",
+    "result": {
+      "same": "http://127.0.0.1:53478/rustify-ui/#home",
+      "cross": "http://127.0.0.1:53478/rustify-ui/explicit/#%E5%85%A5%E5%8F%A3",
+      "crossId": "入口"
+    }
+  },
+  {
+    "check": "home-subpath/explicit/1280",
+    "result": {
+      "url": "http://127.0.0.1:53478/rustify-ui/explicit/#%E5%85%A5%E5%8F%A3",
+      "width": 1280,
+      "h1": [
+        {
+          "id": "入口",
+          "text": "Explicit",
+          "top": 121
+        }
+      ],
+      "headerBottom": 57,
+      "header": 1,
+      "main": 1,
+      "footer": 1,
+      "nav": 1,
+      "overflow": 0,
+      "modeHidden": false,
+      "article": "Same Automatic",
+      "pageLang": "fr",
+      "actionLang": null,
+      "footerHref": "/rustify-ui/",
+      "manifest_sha256": "2827f017b9cff301daea824757e98527a7454568e08ef61ce9c19a5e8cf75bd9"
+    }
+  },
+  {
+    "check": "home-subpath/explicit/1280/links",
+    "result": {
+      "same": "http://127.0.0.1:53478/rustify-ui/explicit/#%E5%85%A5%E5%8F%A3",
+      "cross": "http://127.0.0.1:53478/rustify-ui/#home",
+      "crossId": "home"
+    }
+  },
+  {
+    "check": "home-subpath/raw/1280",
+    "result": {
+      "url": "http://127.0.0.1:53478/rustify-ui/raw/#%3C%2Fh1%3E",
+      "width": 1280,
+      "h1": [
+        {
+          "id": "</h1>",
+          "text": "Raw",
+          "top": 121
+        }
+      ],
+      "headerBottom": 57,
+      "header": 1,
+      "main": 1,
+      "footer": 1,
+      "nav": 2,
+      "overflow": 0,
+      "modeHidden": false,
+      "article": "Same Automatic",
+      "pageLang": "fr",
+      "actionLang": "fr",
+      "footerHref": "/rustify-ui/",
+      "manifest_sha256": "2827f017b9cff301daea824757e98527a7454568e08ef61ce9c19a5e8cf75bd9"
+    }
+  },
+  {
+    "check": "home-subpath/raw/1280/links",
+    "result": {
+      "same": "http://127.0.0.1:53478/rustify-ui/raw/#%3C%2Fh1%3E",
+      "cross": "http://127.0.0.1:53478/rustify-ui/#home",
+      "crossId": "home"
+    }
+  },
+  {
+    "check": "home-subpath/empty/1280",
+    "result": {
+      "url": "http://127.0.0.1:53478/rustify-ui/empty/",
+      "width": 1280,
+      "h1": [
+        {
+          "id": "",
+          "text": "Empty",
+          "top": 121
+        }
+      ],
+      "headerBottom": 57,
+      "header": 1,
+      "main": 1,
+      "footer": 1,
+      "nav": 1,
+      "overflow": 0,
+      "modeHidden": false,
+      "article": "",
+      "pageLang": "en",
+      "actionLang": null,
+      "footerHref": "/rustify-ui/"
+    }
+  },
+  {
+    "check": "home-subpath/footer/1280",
+    "result": {
+      "url": "http://127.0.0.1:53478/rustify-ui/"
+    }
+  },
+  {
+    "check": "home-subpath/automatic/375",
+    "result": {
+      "url": "http://127.0.0.1:53478/rustify-ui/#home",
+      "width": 375,
+      "h1": [
+        {
+          "id": "home",
+          "text": "Home",
+          "top": 121
+        }
+      ],
+      "headerBottom": 57,
+      "header": 1,
+      "main": 1,
+      "footer": 1,
+      "nav": 2,
+      "overflow": 0,
+      "modeHidden": false,
+      "article": "Same Explicit",
+      "pageLang": "en",
+      "actionLang": "",
+      "footerHref": "/rustify-ui/",
+      "manifest_sha256": "2827f017b9cff301daea824757e98527a7454568e08ef61ce9c19a5e8cf75bd9"
+    }
+  },
+  {
+    "check": "home-subpath/automatic/375/links",
+    "result": {
+      "same": "http://127.0.0.1:53478/rustify-ui/#home",
+      "cross": "http://127.0.0.1:53478/rustify-ui/explicit/#%E5%85%A5%E5%8F%A3",
+      "crossId": "入口"
+    }
+  },
+  {
+    "check": "home-subpath/explicit/375",
+    "result": {
+      "url": "http://127.0.0.1:53478/rustify-ui/explicit/#%E5%85%A5%E5%8F%A3",
+      "width": 375,
+      "h1": [
+        {
+          "id": "入口",
+          "text": "Explicit",
+          "top": 121
+        }
+      ],
+      "headerBottom": 57,
+      "header": 1,
+      "main": 1,
+      "footer": 1,
+      "nav": 1,
+      "overflow": 0,
+      "modeHidden": false,
+      "article": "Same Automatic",
+      "pageLang": "fr",
+      "actionLang": null,
+      "footerHref": "/rustify-ui/",
+      "manifest_sha256": "2827f017b9cff301daea824757e98527a7454568e08ef61ce9c19a5e8cf75bd9"
+    }
+  },
+  {
+    "check": "home-subpath/explicit/375/links",
+    "result": {
+      "same": "http://127.0.0.1:53478/rustify-ui/explicit/#%E5%85%A5%E5%8F%A3",
+      "cross": "http://127.0.0.1:53478/rustify-ui/#home",
+      "crossId": "home"
+    }
+  },
+  {
+    "check": "home-subpath/raw/375",
+    "result": {
+      "url": "http://127.0.0.1:53478/rustify-ui/raw/#%3C%2Fh1%3E",
+      "width": 375,
+      "h1": [
+        {
+          "id": "</h1>",
+          "text": "Raw",
+          "top": 121
+        }
+      ],
+      "headerBottom": 57,
+      "header": 1,
+      "main": 1,
+      "footer": 1,
+      "nav": 2,
+      "overflow": 0,
+      "modeHidden": false,
+      "article": "Same Automatic",
+      "pageLang": "fr",
+      "actionLang": "fr",
+      "footerHref": "/rustify-ui/",
+      "manifest_sha256": "2827f017b9cff301daea824757e98527a7454568e08ef61ce9c19a5e8cf75bd9"
+    }
+  },
+  {
+    "check": "home-subpath/raw/375/links",
+    "result": {
+      "same": "http://127.0.0.1:53478/rustify-ui/raw/#%3C%2Fh1%3E",
+      "cross": "http://127.0.0.1:53478/rustify-ui/#home",
+      "crossId": "home"
+    }
+  },
+  {
+    "check": "home-subpath/empty/375",
+    "result": {
+      "url": "http://127.0.0.1:53478/rustify-ui/empty/",
+      "width": 375,
+      "h1": [
+        {
+          "id": "",
+          "text": "Empty",
+          "top": 121
+        }
+      ],
+      "headerBottom": 57,
+      "header": 1,
+      "main": 1,
+      "footer": 1,
+      "nav": 1,
+      "overflow": 0,
+      "modeHidden": false,
+      "article": "",
+      "pageLang": "en",
+      "actionLang": null,
+      "footerHref": "/rustify-ui/"
+    }
+  },
+  {
+    "check": "home-subpath/footer/375",
+    "result": {
+      "url": "http://127.0.0.1:53478/rustify-ui/"
+    }
+  }
+]

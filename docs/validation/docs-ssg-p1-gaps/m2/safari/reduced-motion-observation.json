@@ -1,0 +1,41 @@
+{
+  "observed_at": "2026-10-12T12:26:16.471Z",
+  "method": "Ordinary Safari Web Inspector through scoped accessibility UI; native Safari URL property confirms navigation",
+  "query": "\"RUSTIFY_MOTION:\" + btoa(JSON.stringify({url:location.href,reduce:matchMedia(\"(prefers-reduced-motion: reduce)\").matches,scroll:getComputedStyle(document.documentElement).scrollBehavior}))",
+  "confirmed_values": {
+    "url": "http://127.0.0.1:53327/",
+    "reduce": true,
+    "scroll": "auto"
+  },
+  "manifest_sha256": "55db2c10336dc375ebb2e94c2af3f4d83fa04fb82c597bc96e046232aafcd946",
+  "manifest_http_status": 200,
+  "raw_evidence": "motion-recovery-raw.json",
+  "scope": "One identified home-root production page. All four production manifests and declared file hashes were verified separately.",
+  "cleanup": {
+    "reduced_motion_before": 0,
+    "reduced_motion_after": 0,
+    "developer_ui_before": 0,
+    "developer_ui_after": 0,
+    "restored": true
+  },
+  "initial_observation": {
+    "method": "Read-only expression in ordinary Safari Web Inspector via accessibility UI",
+    "window_context": "Home semantics task window; the URL part was split into a separate UI fragment and was not completely extracted",
+    "query": "JSON.stringify({url:location.href,reduce:matchMedia(\"(prefers-reduced-motion: reduce)\").matches,scroll:getComputedStyle(document.documentElement).scrollBehavior})",
+    "confirmed_values": {
+      "reduce": true,
+      "scroll": "auto"
+    },
+    "result_ui_fragment": "\",\\\"reduce\\\":true,\\\"scroll\\\":\\\"auto\\\"}\" = $1",
+    "system_setting": {
+      "before": 0,
+      "after": 1
+    },
+    "automation_profile_observation": {
+      "reduce": false,
+      "scroll": "smooth"
+    },
+    "limitation": "Subsequent attempts to capture all four ordinary-window URLs failed when the application window list became empty. This is a single ordinary-window observation, not four captured URL-specific samples.",
+    "cleanup": "Reduced Motion and Safari developer UI visibility still need manual restoration; JavaScript and page zoom were restored."
+  }
+}

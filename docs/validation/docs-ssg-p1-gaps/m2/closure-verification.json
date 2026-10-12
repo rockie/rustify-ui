@@ -1,0 +1,41 @@
+{
+  "observed_at": "2026-10-12T21:19:28.085694+08:00",
+  "source_candidate": "42757c627cb69456d241ba0de51b34f1ad85be3d",
+  "production": [
+    {
+      "name": "full-root",
+      "manifest_sha256": "ebff9034ce27645809c0cf8f3d68f31adba5fe48af60ccb4b5ea3e18101c1b75",
+      "files_verified": 19
+    },
+    {
+      "name": "full-subpath",
+      "manifest_sha256": "08be039ee3704c1f757115082f16c00d475be846b5e060cc3c03361a6f202589",
+      "files_verified": 19
+    },
+    {
+      "name": "home-root",
+      "manifest_sha256": "55db2c10336dc375ebb2e94c2af3f4d83fa04fb82c597bc96e046232aafcd946",
+      "files_verified": 13
+    },
+    {
+      "name": "home-subpath",
+      "manifest_sha256": "2827f017b9cff301daea824757e98527a7454568e08ef61ce9c19a5e8cf75bd9",
+      "files_verified": 13
+    }
+  ],
+  "chrome": {
+    "version": "154.0.8037.98",
+    "runs": 8,
+    "steps": 96,
+    "physical_device": false,
+    "result": "passed"
+  },
+  "safari_motion": {
+    "url": "http://127.0.0.1:53327/",
+    "reduce": true,
+    "scroll": "auto"
+  },
+  "settings_restored": true,
+  "decision": "D-04",
+  "result": "passed"
+}

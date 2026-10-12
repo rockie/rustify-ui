@@ -1,0 +1,52 @@
+{
+  "observedAt": "2026-10-12T12:42:54.919Z",
+  "channel": "chrome",
+  "physicalDevice": false,
+  "runs": [
+    {
+      "profile": "iPhone 14 Pro",
+      "viewport": {
+        "width": 393,
+        "height": 660
+      },
+      "screen": {
+        "width": 393,
+        "height": 852
+      },
+      "deviceScaleFactor": 3,
+      "isMobile": true,
+      "hasTouch": true,
+      "userAgentOverride": false,
+      "javaScriptEnabled": true,
+      "base": "root",
+      "steps": [
+        {
+          "label": "Fixed production fingerprints",
+          "result": "passed",
+          "url": "about:blank"
+        }
+      ],
+      "screenshots": [],
+      "console": [
+        {
+          "type": "error",
+          "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+          "location": {
+            "url": "http://127.0.0.1:52252/favicon.ico",
+            "line": 0,
+            "column": 0,
+            "lineNumber": 0,
+            "columnNumber": 0
+          }
+        }
+      ],
+      "pageErrors": [],
+      "failedRequests": [],
+      "errorResponses": []
+    }
+  ],
+  "version": "154.0.8037.98",
+  "result": "failed",
+  "error": "Error: expect(page).toHaveURL(expected) failed\n\nExpected: \"http://127.0.0.1:52252/guide/setup/\"\nReceived: \"http://127.0.0.1:52252/guide/\"\nTimeout:  5000ms\n\nCall log:\n  - Expect \"toHaveURL\" with timeout 5000ms\n    - waiting for navigation to finish...\n    - navigated to \"http://127.0.0.1:52252/guide/\"\n    14 \u00d7 locator resolved to <html lang=\"en\" data-rd-base=\"/\" data-theme=\"system\" data-rustify-scope=\"\">\u2026</html>\n       - unexpected value \"http://127.0.0.1:52252/guide/\"\n\n    at captureRawStack (/Users/rockie/Documents/gh-rockie/rustify-ui/node_modules/playwright-core/lib/coreBundle.js:8588:17)\n    at callMatcherAsStep (/Users/rockie/Documents/gh-rockie/rustify-ui/node_modules/playwright/lib/matchers/expect.js:13310:57)\n    at Object.toHaveURL (/Users/rockie/Documents/gh-rockie/rustify-ui/node_modules/playwright/lib/matchers/expect.js:13302:23)\n    at /Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p1-gaps/m2/chrome-mobile-simulation.mjs:70:30\n    at async step (/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p1-gaps/m2/chrome-mobile-simulation.mjs:35:9)\n    at async file:///Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p1-gaps/m2/chrome-mobile-simulation.mjs:66:9",
+  "tooling_issue": "The initial runner expected Get started to link directly to Setup. The fixture links it to Guide; the runner now follows Guide to Setup."
+}

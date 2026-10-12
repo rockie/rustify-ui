@@ -1,0 +1,87 @@
+{
+  "observed_at": "2026-10-12T12:18:48.129440+00:00",
+  "lan_host": "192.168.16.133",
+  "binary": "/tmp/rustify-ui-docs-ssg-gaps-42757c6/rustify-docs-recovered",
+  "previews": [
+    {
+      "name": "full-root",
+      "pid": 65813,
+      "port": 52252,
+      "bind": "127.0.0.1",
+      "url": "http://127.0.0.1:52252/",
+      "dir": "/tmp/rustify-ui-docs-ssg-gaps-42757c6/full-root/dist",
+      "http_status": 200,
+      "manifest_sha256": "ebff9034ce27645809c0cf8f3d68f31adba5fe48af60ccb4b5ea3e18101c1b75"
+    },
+    {
+      "name": "full-subpath",
+      "pid": 65817,
+      "port": 53233,
+      "bind": "127.0.0.1",
+      "url": "http://127.0.0.1:53233/rustify-ui/",
+      "dir": "/tmp/rustify-ui-docs-ssg-gaps-42757c6/full-subpath/dist",
+      "http_status": 200,
+      "manifest_sha256": "08be039ee3704c1f757115082f16c00d475be846b5e060cc3c03361a6f202589"
+    },
+    {
+      "name": "home-root",
+      "pid": 65821,
+      "port": 53327,
+      "bind": "127.0.0.1",
+      "url": "http://127.0.0.1:53327/",
+      "dir": "/tmp/rustify-ui-docs-ssg-gaps-42757c6/home-root/dist",
+      "http_status": 200,
+      "manifest_sha256": "55db2c10336dc375ebb2e94c2af3f4d83fa04fb82c597bc96e046232aafcd946"
+    },
+    {
+      "name": "home-subpath",
+      "pid": 65825,
+      "port": 53478,
+      "bind": "127.0.0.1",
+      "url": "http://127.0.0.1:53478/rustify-ui/",
+      "dir": "/tmp/rustify-ui-docs-ssg-gaps-42757c6/home-subpath/dist",
+      "http_status": 200,
+      "manifest_sha256": "2827f017b9cff301daea824757e98527a7454568e08ef61ce9c19a5e8cf75bd9"
+    },
+    {
+      "name": "full-root",
+      "pid": 65829,
+      "port": 62159,
+      "bind": "0.0.0.0",
+      "url": "http://192.168.16.133:62159/",
+      "dir": "/tmp/rustify-ui-docs-ssg-gaps-42757c6/full-root/dist",
+      "http_status": 200,
+      "manifest_sha256": "ebff9034ce27645809c0cf8f3d68f31adba5fe48af60ccb4b5ea3e18101c1b75"
+    },
+    {
+      "name": "full-subpath",
+      "pid": 65833,
+      "port": 62178,
+      "bind": "0.0.0.0",
+      "url": "http://192.168.16.133:62178/rustify-ui/",
+      "dir": "/tmp/rustify-ui-docs-ssg-gaps-42757c6/full-subpath/dist",
+      "http_status": 200,
+      "manifest_sha256": "08be039ee3704c1f757115082f16c00d475be846b5e060cc3c03361a6f202589"
+    },
+    {
+      "name": "home-root",
+      "pid": 65838,
+      "port": 62348,
+      "bind": "0.0.0.0",
+      "url": "http://192.168.16.133:62348/",
+      "dir": "/tmp/rustify-ui-docs-ssg-gaps-42757c6/home-root/dist",
+      "http_status": 200,
+      "manifest_sha256": "55db2c10336dc375ebb2e94c2af3f4d83fa04fb82c597bc96e046232aafcd946"
+    },
+    {
+      "name": "home-subpath",
+      "pid": 65842,
+      "port": 62411,
+      "bind": "0.0.0.0",
+      "url": "http://192.168.16.133:62411/rustify-ui/",
+      "dir": "/tmp/rustify-ui-docs-ssg-gaps-42757c6/home-subpath/dist",
+      "http_status": 200,
+      "manifest_sha256": "2827f017b9cff301daea824757e98527a7454568e08ef61ce9c19a5e8cf75bd9"
+    }
+  ]
+}

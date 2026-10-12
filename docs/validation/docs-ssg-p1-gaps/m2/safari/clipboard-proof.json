@@ -1,0 +1,10 @@
+{
+  "url": "http://127.0.0.1:52252/guide/setup/",
+  "isSecureContext": true,
+  "state": "copied",
+  "status": "Copied",
+  "pbpaste_matches_original": true,
+  "copied_length": 37,
+  "expected_text": "fn main() {\n    println!(\"hello\");\n}\n",
+  "source": "Actual Safari click result and pbpaste comparison in execution output; corresponding browser replies are in protocol.jsonl"
+}

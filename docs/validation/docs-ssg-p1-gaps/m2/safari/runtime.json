@@ -1,0 +1,85 @@
+{
+  "observed_at": "2026-10-12T14:27:37.698421+08:00",
+  "source_commit": "42757c627cb69456d241ba0de51b34f1ad85be3d",
+  "checkout_head": "f8f34543e9b5c27801ee7dac1bc6bbd48bfab473",
+  "browser": "Safari",
+  "browser_version": "27.0.1",
+  "browser_build": "22625.1.29.11.28",
+  "os": "ProductName:\t\tmacOS\nProductVersion:\t\t27.0.1\nBuildVersion:\t\t26A434",
+  "hardware": "Mac17,9\narm64",
+  "participant": "Codex via Safari native MCP; session user assists browser settings",
+  "transport": "/usr/bin/safaridriver --mcp, JSON-RPC over stdio",
+  "binary_sha256": "0f8e3d17f77a44b5adaf8a87e859aef56859af3c44d476412871e1487d15b7fc",
+  "lan_previews": [
+    {
+      "name": "full-root",
+      "pid": 29326,
+      "bind": "0.0.0.0",
+      "url": "http://192.168.123.44:62159/",
+      "manifest_sha256": "ebff9034ce27645809c0cf8f3d68f31adba5fe48af60ccb4b5ea3e18101c1b75"
+    },
+    {
+      "name": "full-subpath",
+      "pid": 29327,
+      "bind": "0.0.0.0",
+      "url": "http://192.168.123.44:62178/rustify-ui/",
+      "manifest_sha256": "08be039ee3704c1f757115082f16c00d475be846b5e060cc3c03361a6f202589"
+    },
+    {
+      "name": "home-root",
+      "pid": 29328,
+      "bind": "0.0.0.0",
+      "url": "http://192.168.123.44:62348/",
+      "manifest_sha256": "55db2c10336dc375ebb2e94c2af3f4d83fa04fb82c597bc96e046232aafcd946"
+    },
+    {
+      "name": "home-subpath",
+      "pid": 29329,
+      "bind": "0.0.0.0",
+      "url": "http://192.168.123.44:62411/rustify-ui/",
+      "manifest_sha256": "2827f017b9cff301daea824757e98527a7454568e08ef61ce9c19a5e8cf75bd9"
+    }
+  ],
+  "safari_previews": [
+    {
+      "name": "full-root",
+      "pid": 20501,
+      "url": "http://127.0.0.1:52252/",
+      "manifest_sha256": "ebff9034ce27645809c0cf8f3d68f31adba5fe48af60ccb4b5ea3e18101c1b75"
+    },
+    {
+      "name": "full-subpath",
+      "pid": 23868,
+      "url": "http://127.0.0.1:53233/rustify-ui/",
+      "manifest_sha256": "08be039ee3704c1f757115082f16c00d475be846b5e060cc3c03361a6f202589"
+    },
+    {
+      "name": "home-root",
+      "pid": 23869,
+      "url": "http://127.0.0.1:53327/",
+      "manifest_sha256": "55db2c10336dc375ebb2e94c2af3f4d83fa04fb82c597bc96e046232aafcd946"
+    },
+    {
+      "name": "home-subpath",
+      "pid": 23870,
+      "url": "http://127.0.0.1:53478/rustify-ui/",
+      "manifest_sha256": "2827f017b9cff301daea824757e98527a7454568e08ef61ce9c19a5e8cf75bd9"
+    }
+  ],
+  "pending": [
+    "Single reduced-motion console observation lacks a fully captured URL",
+    "User restoration of Reduced Motion and developer UI visibility"
+  ],
+  "network_note": "en0 changed from 192.168.123.44 to 192.168.16.131 and back to 192.168.123.44 during this run. Desktop checks use stable loopback URLs; LAN preview listeners now bind 0.0.0.0.",
+  "ordinary_browser_gui": {
+    "pid": 45249,
+    "zoom": "200% verified then restored to 100%",
+    "scripts": "disabled for 1280/640 GUI checks then restored enabled",
+    "screenCaptureAccess": false,
+    "motion": {
+      "observedReduce": true,
+      "observedScroll": "auto",
+      "restorationPending": true
+    }
+  }
+}

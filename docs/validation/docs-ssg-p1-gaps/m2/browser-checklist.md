@@ -1,13 +1,13 @@
 # V-6 · 同候选真实浏览器走查
 
-候选 `rustify-docs 0.1.3`；源码/二进制和四套 production 产物的身份见 [matrix-artifacts.json](matrix-artifacts.json)。本清单尚未获得真人结果，不能按步骤存在判通过。页面可在同一局域网访问；设备是否能到达仍须实测。
+候选 `rustify-docs 0.1.3`；源码/二进制和四套 production 产物的身份见 [matrix-artifacts.json](matrix-artifacts.json)。真实Safari与现有Chrome模拟已按[D-04](browser-decision.json)收口，见[M2记录](../M2.md#本轮收口证据)；最新版Chrome和两种真机明确延期。预览监听0.0.0.0，以下为当前en0地址；网络变化后替换host，端口保持。设备是否能到达仍须实测。
 
 | 产物 | 本次入口 | 重新启动（从仓根执行，端口从新输出读取） |
 | --- | --- | --- |
-| 完整站根路径 | http://192.168.123.44:58894/ | `target/docs-ssg/gaps/rustify-docs-candidate preview --dir target/docs-ssg/gaps/matrix/full-root/dist --host 192.168.123.44 --port 0` |
-| 完整站子路径 | http://192.168.123.44:58893/rustify-ui/ | `target/docs-ssg/gaps/rustify-docs-candidate preview --dir target/docs-ssg/gaps/matrix/full-subpath/dist --host 192.168.123.44 --port 0` |
-| 首页边界根路径 | http://192.168.123.44:58896/ | `target/docs-ssg/gaps/rustify-docs-candidate preview --dir target/docs-ssg/gaps/matrix/home-root/dist --host 192.168.123.44 --port 0` |
-| 首页边界子路径 | http://192.168.123.44:58895/rustify-ui/ | `target/docs-ssg/gaps/rustify-docs-candidate preview --dir target/docs-ssg/gaps/matrix/home-subpath/dist --host 192.168.123.44 --port 0` |
+| 完整站根路径 | http://192.168.123.44:62159/ | `target/docs-ssg/gaps/rustify-docs-candidate preview --dir target/docs-ssg/gaps/matrix/full-root/dist --host 0.0.0.0 --port 0` |
+| 完整站子路径 | http://192.168.123.44:62178/rustify-ui/ | `target/docs-ssg/gaps/rustify-docs-candidate preview --dir target/docs-ssg/gaps/matrix/full-subpath/dist --host 0.0.0.0 --port 0` |
+| 首页边界根路径 | http://192.168.123.44:62348/ | `target/docs-ssg/gaps/rustify-docs-candidate preview --dir target/docs-ssg/gaps/matrix/home-root/dist --host 0.0.0.0 --port 0` |
+| 首页边界子路径 | http://192.168.123.44:62411/rustify-ui/ | `target/docs-ssg/gaps/rustify-docs-candidate preview --dir target/docs-ssg/gaps/matrix/home-subpath/dist --host 0.0.0.0 --port 0` |
 
 localhost 的安全上下文可在同产物上另起默认 loopback preview（命令去掉 `--host`），测试复制成功；HTTP 局域网的复制应显示拒绝并可手选。若已有 HTTPS 入口可用，也可在该入口验证复制成功。
 
@@ -20,4 +20,4 @@ localhost 的安全上下文可在同产物上另起默认 loopback preview（�
 5. 边界站 `empty/`：actions、top/social、日期、编辑入口全空，仍有页头、navigation、main、contentinfo；页脚真实链接返回该产物的基路径首页。两 base、宽窄/无脚本下重复。
 6. 复制一个代码块：在 LAN HTTP 上验证失败说明和手选；在同产物 localhost/已有 HTTPS 上验证成功并核对原文。保留必要截图，以及每步的结果、console 和失败请求。
 
-结果按组合追加到 [M2 记录](../M2.md)，注明未运行/失败/环境缺失。任一组合缺证时 V-6 与 M2 仍未完成。换产物或修代码后，受影响组合须在新的同候选上复验。
+结果按组合追加到 [M2 记录](../M2.md)，注明未运行/失败/环境缺失。本轮按D-04仅以真实Safari和现有Chrome模拟作为V-6出口；延期的真实矩阵项目不记通过。换产物或修代码后，受影响组合须在新的同候选上复验。
