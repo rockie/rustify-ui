@@ -1,0 +1,24 @@
+{
+  "source_candidate": "1b81de25f23a25702f61dbfd3d0ecdfe323d4d44",
+  "cli_version": "0.1.4",
+  "writer_version": 9,
+  "observed_at": "2026-10-12T22:03:17.006928+08:00",
+  "head": "1b81de25f23a25702f61dbfd3d0ecdfe323d4d44",
+  "worktree": "dirty",
+  "files": {
+    "Cargo.lock": "9be57ff12f38149993f9e872afaa3ca6216212c83a59c675e87555317a859054",
+    "crates/rustify-docs-cli/Cargo.toml": "2a8ee54367490f5aa3f88a602251294080a1b6fc873f693f9ea5ea121c513d83",
+    "crates/rustify-docs-cli/build.rs": "ec59e44718025213a73df4a951be5dbcf5e675a3b8f82f8afaf11e96a37e45e5",
+    "crates/rustify-docs-cli/src/main.rs": "36f6b948362f43cafddd3754a4a40759e114f345dbdf3908344fa113903b3e45",
+    "crates/rustify-docs-cli/src/new.rs": "9fc4649e7109749c0f02ae15dac840a4cff29f83b07d33a2890d681417ed7b13",
+    "crates/rustify-docs-cli/src/dev.rs": "ba6d540f178c087b439917b7dd5f80af78d9b62260fd097338faae971c815c2e",
+    "crates/rustify-docs-cli/templates/content/README.md": "5e3fc3d61f78dd8362e9bb9bd887430a006605562d9f09de9307b525d893e4a1",
+    "crates/rustify-docs/src/shell.rs": "a5439739954163fba4517dce87c0da422e1ea839096debc489e38b24f4f180c2",
+    "README.md": "fa7f95cac0f5f1422b3080dd759bcf7137985af99c28eb6cb1fb424bd3fbfcce",
+    "docs/docs-ssg.md": "6b10979dec50bd3c66023b055e501e0315264ffa11ffd2ff4133f3e2b0f98489",
+    "docs/quickstart.md": "193d48406856a3c8779e5f6aad39b6a448efe2315967c674f008cdd4dabc876a",
+    "docs/plan/DOCS-SSG-P1.md": "3f0dd16473fe55077eb4bfaf73b08dbf8eac911c9f893badf5447ee1ac9d02f4",
+    "xtask/src/docs.rs": "4366add93d806d4952f3d1bd7f8c556c6dbe14507ac9020c48aeaa96f678261c"
+  },
+  "limits": "Product sources use the committed candidate; author docs, verification target correction and progress are pending commit. Other original dirty reports and ledger material are excluded."
+}

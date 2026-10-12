@@ -1,0 +1,111 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+    Checking once_cell v1.21.4
+    Checking stable_deref_trait v1.2.1
+    Checking serde v1.0.229
+    Checking serde_json v1.0.151
+   Compiling getrandom v0.4.3
+    Checking bitflags v2.10.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/bitflags)
+    Checking leb128fmt v0.1.0
+    Checking unicode-width v0.2.2
+    Checking libc v0.2.189
+    Checking crossbeam-utils v0.8.23
+    Checking foldhash v0.2.0
+    Checking libm v0.2.16
+    Checking fallible-iterator v0.3.0
+    Checking bumpalo v3.20.3
+    Checking semver v1.0.28
+    Checking yoke v0.8.3
+   Compiling uuid v1.26.0
+    Checking hashbrown v0.16.1
+    Checking wasm-encoder v0.258.0
+    Checking wasm-encoder v0.245.1
+    Checking wasm-bindgen v0.2.128
+   Compiling walrus-macro v0.26.0
+    Checking unicode-general-category v1.1.0
+    Checking gimli v0.32.3
+    Checking crossbeam-epoch v0.9.21
+    Checking leb128 v0.2.7
+    Checking hydration_context v0.3.2
+    Checking oco_ref v0.2.1
+    Checking zerovec v0.11.8
+    Checking zerotrie v0.2.5
+    Checking serde_qs v0.15.0
+    Checking leptos_config v0.8.10
+    Checking rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+    Checking codee v0.3.5
+   Compiling leptos_macro v0.8.19
+    Checking leptos_hot_reload v0.8.7
+    Checking crossbeam-deque v0.8.8
+    Checking cpufeatures v0.2.17
+    Checking wast v258.0.0
+    Checking wasmparser v0.245.1
+    Checking wasmi_core v2.0.0
+    Checking errno v0.3.14
+    Checking sha2 v0.10.9
+    Checking rayon-core v1.13.0
+    Checking wasmparser v0.228.0
+    Checking rustix v1.1.5
+    Checking tinystr v0.8.4
+    Checking potential_utf v0.1.6
+    Checking diff v0.1.13
+    Checking fastrand v2.5.0
+    Checking js-sys v0.3.105
+    Checking wasmi_ir v2.0.0
+    Checking icu_collections v2.3.0
+    Checking rustc-demangle v0.1.28
+    Checking rayon v1.12.0
+    Checking icu_locale_core v2.3.0
+    Checking yansi v1.0.1
+    Checking wasmi_collections v2.0.0
+    Checking spin v0.9.9
+    Checking pretty_assertions v1.4.1
+    Checking pulldown-cmark v0.13.4
+    Checking syn v2.0.119
+    Checking rustify-makepad v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-makepad)
+    Checking tempfile v3.27.0
+    Checking icu_provider v2.3.1
+    Checking icu_properties v2.3.0
+    Checking icu_normalizer v2.3.0
+    Checking id-arena v2.3.0
+    Checking idna_adapter v1.2.2
+    Checking idna v1.1.0
+    Checking wat v1.258.0
+    Checking url v2.5.8
+    Checking wasmi v2.0.0
+    Checking classification-macros v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style/upstream/classification-macros)
+    Checking walrus v0.26.5
+    Checking rustify-style-wasm v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style-wasm)
+    Checking wasm-bindgen-futures v0.4.78
+    Checking web-sys v0.3.105
+    Checking any_spawner v0.3.0
+    Checking reactive_graph v0.2.15
+    Checking wasm-bindgen-cli-support v0.2.128
+    Checking reactive_stores v0.4.4
+    Checking gloo-utils v0.2.0
+    Checking wasm-streams v0.5.0
+    Checking tachys v0.2.19
+    Checking gloo-net v0.6.0
+    Checking server_fn v0.8.13
+    Checking leptos_dom v0.8.8
+    Checking leptos_server v0.8.8
+    Checking leptos v0.8.22
+    Checking rustify-ui v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui)
+    Checking rustify-components v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-components)
+    Checking vellum v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/examples/vellum)
+    Checking utility-lab v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/examples/utility-lab)
+    Checking fusion-basic v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/examples/fusion-basic)
+    Checking property-workbench v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/examples/property-workbench)
+    Checking data-workbench v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/examples/data-workbench)
+    Checking xtask v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/xtask)
+    Checking theme-studio v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/examples/theme-studio)
+    Checking component-catalog v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/examples/component-catalog)
+mbx[progress]: 15s elapsed; 1 hits, 114 misses, 0 bypassed, 0 not looked up; ~444.1ms compiler work saved
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 14.98s
+mbx[cache]: 1 hits, 116 misses, 2 incremental; 0 B downloaded, 0 B uploaded, 125.8 MiB stored locally
+mbx[savings]: 48894 compilations dispensed from stock. inventory immaculate.

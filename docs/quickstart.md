@@ -229,7 +229,17 @@ that writes the SDK's loader and stylesheets beside the wasm.
 [`tests/dom-only/consumer`](../tests/dom-only/consumer/) is the complete
 fixture; its `Cargo.toml` names the two crates (by path here; a consumer names
 them by git URL and revision) and `src/bin/export-dom-assets.rs` is the host
-program. To build it:
+program. Outside this repository, replace the two path dependencies with:
+
+```toml
+rustify-ui = { git = "https://github.com/rockie/rustify-ui", rev = "1b81de25f23a25702f61dbfd3d0ecdfe323d4d44" }
+rustify-components = { git = "https://github.com/rockie/rustify-ui", rev = "1b81de25f23a25702f61dbfd3d0ecdfe323d4d44" }
+```
+
+This source passed the consumer recipe from local git, without the root
+workspace's patches; GitHub verification is pending the candidate push.
+Keep the fixture's other dependency versions, let Cargo resolve these git
+dependencies once, then commit the resulting `Cargo.lock`. To build it:
 
 ```sh
 cargo install wasm-bindgen-cli --version 0.2.128 --locked

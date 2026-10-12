@@ -1,0 +1,30 @@
+[
+  {
+    "project": "dom-only",
+    "command": [
+      "npx",
+      "playwright",
+      "test",
+      "-c",
+      "playwright.docs.config.ts",
+      "--project=dom-only"
+    ],
+    "source": "rustify-docs 0.1.4\npanic: unwind\ngrammars: syntect-5.3.0+two-face-0.5.2+bat-0.26.1+fancy\nsource: 1b81de25f23a25702f61dbfd3d0ecdfe323d4d44\n",
+    "observed_at": "2026-10-12T13:39:19.192729+00:00",
+    "exit_code": 0
+  },
+  {
+    "project": "docs-root",
+    "command": [
+      "npx",
+      "playwright",
+      "test",
+      "-c",
+      "playwright.docs.config.ts",
+      "--project=docs-root"
+    ],
+    "source": "rustify-docs 0.1.4\npanic: unwind\ngrammars: syntect-5.3.0+two-face-0.5.2+bat-0.26.1+fancy\nsource: 1b81de25f23a25702f61dbfd3d0ecdfe323d4d44\n",
+    "observed_at": "2026-10-12T13:40:05.370718+00:00",
+    "exit_code": 1
+  }
+]

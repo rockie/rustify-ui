@@ -1,0 +1,93 @@
+{
+  "observed_at": "2026-10-12T13:53:33.938055+00:00",
+  "source_candidate": "1b81de25f23a25702f61dbfd3d0ecdfe323d4d44",
+  "cli_version": "0.1.4",
+  "binary": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-verify/cli-install/bin/rustify-docs",
+  "binary_sha256": "09aca42971ecf1416c55e1964621220c578e6eefd43fc149edee753a9cc5a4b5",
+  "build_info": "rustify-docs 0.1.4\npanic: unwind\ngrammars: syntect-5.3.0+two-face-0.5.2+bat-0.26.1+fancy\nsource: 1b81de25f23a25702f61dbfd3d0ecdfe323d4d44\n",
+  "help_template_same_install_command": true,
+  "site": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-m9-5ijzy4l_/site",
+  "manifest": {
+    "schema_version": 1,
+    "mode": "production",
+    "base": "/",
+    "cli_version": "0.1.4",
+    "build_id": "c9b8a1c04384f0bf",
+    "files": [
+      {
+        "path": ".nojekyll",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      },
+      {
+        "path": "404.html",
+        "sha256": "2fc416031f3e78477eebd4aafb867502ea89031a652e7aac96f7d76888d8648b",
+        "bytes": 4369
+      },
+      {
+        "path": "assets/files/logo.b7bfe6e0b6.svg",
+        "sha256": "b7bfe6e0b6181b0c760a2719c497fb2f3475b0512cec3862cd34774609187c6a",
+        "bytes": 211
+      },
+      {
+        "path": "assets/mode.64fba40012.js",
+        "sha256": "64fba40012c49c28eee112c63d79c30fd2329ac04e64ad20aa4a7fdae8eef4d5",
+        "bytes": 702
+      },
+      {
+        "path": "assets/site.c23be2aca3.css",
+        "sha256": "c23be2aca33e60ae3d4a72d3bb218e3e90759cbad5a0e083ee86961d6d3bf7d8",
+        "bytes": 34041
+      },
+      {
+        "path": "assets/site.f9e7e4a69a.js",
+        "sha256": "f9e7e4a69aedb37327c5f00dc7a97c05f2dde284338a2ca29ed3e0ddb8625b56",
+        "bytes": 11291
+      },
+      {
+        "path": "guide/getting-started/index.html",
+        "sha256": "9214b1d47f218dafd307d85774588500e048134cb5fb8b438cf5034f4707a25e",
+        "bytes": 8101
+      },
+      {
+        "path": "guide/writing-pages/index.html",
+        "sha256": "f21424d85f76a6ca8c5848b8b68aa82a69cf6e2c38c11eb0a2bb85fc2bc8e798",
+        "bytes": 5838
+      },
+      {
+        "path": "index.html",
+        "sha256": "efe25d78f6ee24496e6f53eaeceec099533022a5626c46337bda996fa8618364",
+        "bytes": 4388
+      },
+      {
+        "path": "logo.svg",
+        "sha256": "b7bfe6e0b6181b0c760a2719c497fb2f3475b0512cec3862cd34774609187c6a",
+        "bytes": 211
+      },
+      {
+        "path": "robots.txt",
+        "sha256": "16ceb5ee3e0dc13aa9adf31a3ebbe45a1d965b8c2b9f72eaf84e5911e140ed95",
+        "bytes": 23
+      }
+    ]
+  },
+  "rollback_upgrade": [
+    {
+      "action": "rollback",
+      "source": "42757c627cb69456d241ba0de51b34f1ad85be3d",
+      "version": "rustify-docs 0.1.3",
+      "installed_source": "rustify-docs-cli v0.1.3 (file:///Users/rockie/Documents/gh-rockie/rustify-ui?rev=42757c627cb69456d241ba0de51b34f1ad85be3d#42757c62):\n    rustify-docs\n",
+      "manifest_cli_version": "0.1.3",
+      "published_files_identical": true
+    },
+    {
+      "action": "upgrade",
+      "source": "1b81de25f23a25702f61dbfd3d0ecdfe323d4d44",
+      "version": "rustify-docs 0.1.4",
+      "installed_source": "rustify-docs-cli v0.1.4 (file:///Users/rockie/Documents/gh-rockie/rustify-ui?rev=1b81de25f23a25702f61dbfd3d0ecdfe323d4d44#1b81de25):\n    rustify-docs\n",
+      "manifest_cli_version": "0.1.4",
+      "published_files_identical": true
+    }
+  ],
+  "result": "passed"
+}

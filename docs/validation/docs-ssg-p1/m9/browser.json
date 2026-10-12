@@ -1,0 +1,72 @@
+[
+  {
+    "project": "dom-only",
+    "command": [
+      "npx",
+      "playwright",
+      "test",
+      "-c",
+      "playwright.docs.config.ts",
+      "--project=dom-only"
+    ],
+    "source": "rustify-docs 0.1.4\npanic: unwind\ngrammars: syntect-5.3.0+two-face-0.5.2+bat-0.26.1+fancy\nsource: 1b81de25f23a25702f61dbfd3d0ecdfe323d4d44\n",
+    "observed_at": "2026-10-12T13:55:25.366741+00:00",
+    "exit_code": 0
+  },
+  {
+    "project": "docs-root",
+    "command": [
+      "npx",
+      "playwright",
+      "test",
+      "-c",
+      "playwright.docs.config.ts",
+      "--project=docs-root"
+    ],
+    "source": "rustify-docs 0.1.4\npanic: unwind\ngrammars: syntect-5.3.0+two-face-0.5.2+bat-0.26.1+fancy\nsource: 1b81de25f23a25702f61dbfd3d0ecdfe323d4d44\n",
+    "observed_at": "2026-10-12T13:55:44.076497+00:00",
+    "exit_code": 0
+  },
+  {
+    "project": "docs-subpath",
+    "command": [
+      "npx",
+      "playwright",
+      "test",
+      "-c",
+      "playwright.docs.config.ts",
+      "--project=docs-subpath"
+    ],
+    "source": "rustify-docs 0.1.4\npanic: unwind\ngrammars: syntect-5.3.0+two-face-0.5.2+bat-0.26.1+fancy\nsource: 1b81de25f23a25702f61dbfd3d0ecdfe323d4d44\n",
+    "observed_at": "2026-10-12T13:56:02.285344+00:00",
+    "exit_code": 0
+  },
+  {
+    "project": "docs-meta",
+    "command": [
+      "npx",
+      "playwright",
+      "test",
+      "-c",
+      "playwright.docs.config.ts",
+      "--project=docs-meta"
+    ],
+    "source": "rustify-docs 0.1.4\npanic: unwind\ngrammars: syntect-5.3.0+two-face-0.5.2+bat-0.26.1+fancy\nsource: 1b81de25f23a25702f61dbfd3d0ecdfe323d4d44\n",
+    "observed_at": "2026-10-12T13:56:21.531306+00:00",
+    "exit_code": 0
+  },
+  {
+    "project": "docs-dev",
+    "command": [
+      "npx",
+      "playwright",
+      "test",
+      "-c",
+      "playwright.docs.config.ts",
+      "--project=docs-dev"
+    ],
+    "source": "rustify-docs 0.1.4\npanic: unwind\ngrammars: syntect-5.3.0+two-face-0.5.2+bat-0.26.1+fancy\nsource: 1b81de25f23a25702f61dbfd3d0ecdfe323d4d44\n",
+    "observed_at": "2026-10-12T13:56:36.919558+00:00",
+    "exit_code": 0
+  }
+]

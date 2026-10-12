@@ -1,0 +1,335 @@
+[
+  {
+    "name": "fmt",
+    "command": [
+      "cargo",
+      "fmt",
+      "--all",
+      "--",
+      "--check"
+    ],
+    "started_at": "2026-10-12T13:26:46.547446+00:00",
+    "exit_code": 0
+  },
+  {
+    "name": "library-test",
+    "command": [
+      "mbx",
+      "test",
+      "--locked",
+      "-p",
+      "rustify-docs"
+    ],
+    "started_at": "2026-10-12T13:26:48.553088+00:00",
+    "exit_code": 0
+  },
+  {
+    "name": "library-clippy",
+    "command": [
+      "mbx",
+      "clippy",
+      "--locked",
+      "-p",
+      "rustify-docs",
+      "--all-targets",
+      "--",
+      "-D",
+      "warnings"
+    ],
+    "started_at": "2026-10-12T13:27:37.793873+00:00",
+    "exit_code": 0
+  },
+  {
+    "name": "cli-clippy",
+    "command": [
+      "mbx",
+      "clippy",
+      "--locked",
+      "-p",
+      "rustify-docs-cli",
+      "--all-targets",
+      "--",
+      "-D",
+      "warnings"
+    ],
+    "started_at": "2026-10-12T13:27:39.448041+00:00",
+    "exit_code": 0
+  },
+  {
+    "name": "rustify-ui-default-test",
+    "command": [
+      "mbx",
+      "test",
+      "--locked",
+      "-p",
+      "rustify-ui",
+      "--lib"
+    ],
+    "started_at": "2026-10-12T13:27:40.499173+00:00",
+    "exit_code": 0
+  },
+  {
+    "name": "rustify-ui-default-clippy",
+    "command": [
+      "mbx",
+      "clippy",
+      "--locked",
+      "-p",
+      "rustify-ui",
+      "--all-targets",
+      "--",
+      "-D",
+      "warnings"
+    ],
+    "started_at": "2026-10-12T13:27:45.300458+00:00",
+    "exit_code": 0
+  },
+  {
+    "name": "rustify-ui-gpu-test",
+    "command": [
+      "mbx",
+      "test",
+      "--locked",
+      "-p",
+      "rustify-ui",
+      "--features",
+      "gpu",
+      "--lib"
+    ],
+    "started_at": "2026-10-12T13:27:48.246134+00:00",
+    "exit_code": 0
+  },
+  {
+    "name": "rustify-ui-gpu-clippy",
+    "command": [
+      "mbx",
+      "clippy",
+      "--locked",
+      "-p",
+      "rustify-ui",
+      "--features",
+      "gpu",
+      "--all-targets",
+      "--",
+      "-D",
+      "warnings"
+    ],
+    "started_at": "2026-10-12T13:27:50.672754+00:00",
+    "exit_code": 0
+  },
+  {
+    "name": "rustify-ui-ssr-test",
+    "command": [
+      "mbx",
+      "test",
+      "--locked",
+      "-p",
+      "rustify-ui",
+      "--no-default-features",
+      "--features",
+      "ssr",
+      "--lib"
+    ],
+    "started_at": "2026-10-12T13:27:51.927605+00:00",
+    "exit_code": 0
+  },
+  {
+    "name": "rustify-ui-ssr-clippy",
+    "command": [
+      "mbx",
+      "clippy",
+      "--locked",
+      "-p",
+      "rustify-ui",
+      "--no-default-features",
+      "--features",
+      "ssr",
+      "--all-targets",
+      "--",
+      "-D",
+      "warnings"
+    ],
+    "started_at": "2026-10-12T13:27:55.306544+00:00",
+    "exit_code": 0
+  },
+  {
+    "name": "rustify-components-default-test",
+    "command": [
+      "mbx",
+      "test",
+      "--locked",
+      "-p",
+      "rustify-components",
+      "--lib"
+    ],
+    "started_at": "2026-10-12T13:27:56.831970+00:00",
+    "exit_code": 0
+  },
+  {
+    "name": "rustify-components-default-clippy",
+    "command": [
+      "mbx",
+      "clippy",
+      "--locked",
+      "-p",
+      "rustify-components",
+      "--all-targets",
+      "--",
+      "-D",
+      "warnings"
+    ],
+    "started_at": "2026-10-12T13:27:59.621980+00:00",
+    "exit_code": 0
+  },
+  {
+    "name": "rustify-components-gpu-test",
+    "command": [
+      "mbx",
+      "test",
+      "--locked",
+      "-p",
+      "rustify-components",
+      "--features",
+      "gpu",
+      "--lib"
+    ],
+    "started_at": "2026-10-12T13:28:01.546857+00:00",
+    "exit_code": 0
+  },
+  {
+    "name": "rustify-components-gpu-clippy",
+    "command": [
+      "mbx",
+      "clippy",
+      "--locked",
+      "-p",
+      "rustify-components",
+      "--features",
+      "gpu",
+      "--all-targets",
+      "--",
+      "-D",
+      "warnings"
+    ],
+    "started_at": "2026-10-12T13:28:03.736556+00:00",
+    "exit_code": 0
+  },
+  {
+    "name": "rustify-components-ssr-test",
+    "command": [
+      "mbx",
+      "test",
+      "--locked",
+      "-p",
+      "rustify-components",
+      "--no-default-features",
+      "--features",
+      "ssr",
+      "--lib"
+    ],
+    "started_at": "2026-10-12T13:28:05.726353+00:00",
+    "exit_code": 0
+  },
+  {
+    "name": "rustify-components-ssr-clippy",
+    "command": [
+      "mbx",
+      "clippy",
+      "--locked",
+      "-p",
+      "rustify-components",
+      "--no-default-features",
+      "--features",
+      "ssr",
+      "--all-targets",
+      "--",
+      "-D",
+      "warnings"
+    ],
+    "started_at": "2026-10-12T13:28:08.119868+00:00",
+    "exit_code": 0
+  },
+  {
+    "name": "csr-workspace-test",
+    "command": [
+      "mbx",
+      "test",
+      "--locked",
+      "--workspace",
+      "--exclude",
+      "rustify-docs",
+      "--exclude",
+      "rustify-docs-cli",
+      "--lib",
+      "--bins"
+    ],
+    "started_at": "2026-10-12T13:28:09.975449+00:00",
+    "exit_code": 0
+  },
+  {
+    "name": "csr-workspace-clippy",
+    "command": [
+      "mbx",
+      "clippy",
+      "--locked",
+      "--workspace",
+      "--exclude",
+      "rustify-docs",
+      "--exclude",
+      "rustify-docs-cli",
+      "--all-targets",
+      "--",
+      "-D",
+      "warnings"
+    ],
+    "started_at": "2026-10-12T13:30:26.808230+00:00",
+    "exit_code": 0
+  },
+  {
+    "name": "sources",
+    "command": [
+      "mbx",
+      "xtask",
+      "sources",
+      "verify"
+    ],
+    "started_at": "2026-10-12T13:30:42.093698+00:00",
+    "exit_code": 0
+  },
+  {
+    "name": "css",
+    "command": [
+      "mbx",
+      "xtask",
+      "css",
+      "--check"
+    ],
+    "started_at": "2026-10-12T13:30:57.259764+00:00",
+    "exit_code": 0
+  },
+  {
+    "name": "catalog",
+    "command": [
+      "mbx",
+      "xtask",
+      "catalog",
+      "--write",
+      "docs/components.md",
+      "--check"
+    ],
+    "started_at": "2026-10-12T13:30:58.810497+00:00",
+    "exit_code": 0
+  },
+  {
+    "name": "features",
+    "command": [
+      "mbx",
+      "xtask",
+      "docs-verify",
+      "--group",
+      "features"
+    ],
+    "started_at": "2026-10-12T13:30:59.426941+00:00",
+    "exit_code": 0
+  }
+]

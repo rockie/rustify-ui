@@ -1,0 +1,385 @@
+{
+  "links": [
+    {
+      "file": "README.md",
+      "label": "quick start",
+      "target": "docs/quickstart.md",
+      "exists": true
+    },
+    {
+      "file": "README.md",
+      "label": "compatibility",
+      "target": "docs/compatibility.md",
+      "exists": true
+    },
+    {
+      "file": "README.md",
+      "label": "mise.toml",
+      "target": "mise.toml",
+      "exists": true
+    },
+    {
+      "file": "README.md",
+      "label": "fusion-basic",
+      "target": "examples/fusion-basic/",
+      "exists": true
+    },
+    {
+      "file": "README.md",
+      "label": "component-catalog",
+      "target": "examples/component-catalog/",
+      "exists": true
+    },
+    {
+      "file": "README.md",
+      "label": "property-workbench",
+      "target": "examples/property-workbench/",
+      "exists": true
+    },
+    {
+      "file": "README.md",
+      "label": "data-workbench",
+      "target": "examples/data-workbench/",
+      "exists": true
+    },
+    {
+      "file": "README.md",
+      "label": "vellum",
+      "target": "examples/vellum/README.md",
+      "exists": true
+    },
+    {
+      "file": "README.md",
+      "label": "theme-studio",
+      "target": "examples/theme-studio/README.md",
+      "exists": true
+    },
+    {
+      "file": "README.md",
+      "label": "utility-lab",
+      "target": "docs/utility.md",
+      "exists": true
+    },
+    {
+      "file": "README.md",
+      "label": "integration guide",
+      "target": "docs/vellum.md",
+      "exists": true
+    },
+    {
+      "file": "README.md",
+      "label": "CI",
+      "target": ".github/workflows/verify.yml",
+      "exists": true
+    },
+    {
+      "file": "README.md",
+      "label": "Tailwind guide",
+      "target": "docs/quickstart.md#using-tailwind-v4-in-your-app",
+      "exists": true
+    },
+    {
+      "file": "README.md",
+      "label": "editor guide",
+      "target": "examples/theme-studio/README.md",
+      "exists": true
+    },
+    {
+      "file": "README.md",
+      "label": "consumer fixture guide",
+      "target": "tests/theme-export/README.md",
+      "exists": true
+    },
+    {
+      "file": "README.md",
+      "label": "verification guide",
+      "target": "docs/quickstart.md#verification-commands",
+      "exists": true
+    },
+    {
+      "file": "README.md",
+      "label": "evidence CI",
+      "target": ".github/workflows/evidence.yml",
+      "exists": true
+    },
+    {
+      "file": "README.md",
+      "label": "author's reference",
+      "target": "docs/docs-ssg.md#install-and-maintain-the-cli",
+      "exists": true
+    },
+    {
+      "file": "README.md",
+      "label": "DOM consumer recipe",
+      "target": "docs/quickstart.md#a-dom-application-without-gpu-regions",
+      "exists": true
+    },
+    {
+      "file": "README.md",
+      "label": "quick start",
+      "target": "docs/quickstart.md#a-dom-application-without-gpu-regions",
+      "exists": true
+    },
+    {
+      "file": "README.md",
+      "label": "deployment contract",
+      "target": "docs/compatibility.md#deployment-contract",
+      "exists": true
+    },
+    {
+      "file": "README.md",
+      "label": "known limitations",
+      "target": "docs/reports/p3/known-limitations.md",
+      "exists": true
+    },
+    {
+      "file": "README.md",
+      "label": "crates/rustify-ui",
+      "target": "crates/rustify-ui/",
+      "exists": true
+    },
+    {
+      "file": "README.md",
+      "label": "crates/rustify-components",
+      "target": "crates/rustify-components/",
+      "exists": true
+    },
+    {
+      "file": "README.md",
+      "label": "crates/rustify-makepad",
+      "target": "crates/rustify-makepad/",
+      "exists": true
+    },
+    {
+      "file": "README.md",
+      "label": "makepad",
+      "target": "makepad/",
+      "exists": true
+    },
+    {
+      "file": "README.md",
+      "label": "web",
+      "target": "web/",
+      "exists": true
+    },
+    {
+      "file": "README.md",
+      "label": "xtask",
+      "target": "xtask/",
+      "exists": true
+    },
+    {
+      "file": "README.md",
+      "label": "tests/browser",
+      "target": "tests/browser/",
+      "exists": true
+    },
+    {
+      "file": "README.md",
+      "label": "tests/vellum",
+      "target": "tests/vellum/",
+      "exists": true
+    },
+    {
+      "file": "README.md",
+      "label": "tests/dom-only",
+      "target": "tests/dom-only/",
+      "exists": true
+    },
+    {
+      "file": "README.md",
+      "label": "playwright.docs.config.ts",
+      "target": "playwright.docs.config.ts",
+      "exists": true
+    },
+    {
+      "file": "README.md",
+      "label": "crates/rustify-docs",
+      "target": "crates/rustify-docs/",
+      "exists": true
+    },
+    {
+      "file": "README.md",
+      "label": "crates/rustify-docs-cli",
+      "target": "crates/rustify-docs-cli/",
+      "exists": true
+    },
+    {
+      "file": "README.md",
+      "label": "tests/docs-ssg",
+      "target": "tests/docs-ssg/",
+      "exists": true
+    },
+    {
+      "file": "README.md",
+      "label": "author's reference",
+      "target": "docs/docs-ssg.md",
+      "exists": true
+    },
+    {
+      "file": "README.md",
+      "label": "docs/plan",
+      "target": "docs/plan/",
+      "exists": true
+    },
+    {
+      "file": "README.md",
+      "label": "docs/validation",
+      "target": "docs/validation/",
+      "exists": true
+    },
+    {
+      "file": "README.md",
+      "label": "docs/reports",
+      "target": "docs/reports/",
+      "exists": true
+    },
+    {
+      "file": "README.md",
+      "label": "architecture",
+      "target": "docs/architecture.md",
+      "exists": true
+    },
+    {
+      "file": "README.md",
+      "label": "component reference",
+      "target": "docs/components.md",
+      "exists": true
+    },
+    {
+      "file": "README.md",
+      "label": "navigation",
+      "target": "docs/navigation.md",
+      "exists": true
+    },
+    {
+      "file": "README.md",
+      "label": "workspace layout",
+      "target": "docs/workspace.md",
+      "exists": true
+    },
+    {
+      "file": "README.md",
+      "label": "forms",
+      "target": "docs/forms.md",
+      "exists": true
+    },
+    {
+      "file": "README.md",
+      "label": "localisation",
+      "target": "docs/i18n.md",
+      "exists": true
+    },
+    {
+      "file": "README.md",
+      "label": "large data",
+      "target": "docs/data.md",
+      "exists": true
+    },
+    {
+      "file": "README.md",
+      "label": "full theme integration",
+      "target": "docs/themes.md",
+      "exists": true
+    },
+    {
+      "file": "README.md",
+      "label": "sources.lock.json",
+      "target": "sources.lock.json",
+      "exists": true
+    },
+    {
+      "file": "README.md",
+      "label": "Makepad",
+      "target": "makepad/LICENSE",
+      "exists": true
+    },
+    {
+      "file": "README.md",
+      "label": "fonts",
+      "target": "makepad/widgets/resources/FONT-LICENSES.md",
+      "exists": true
+    },
+    {
+      "file": "README.md",
+      "label": "Rust/UI component sources",
+      "target": "crates/rustify-components/LICENSE-RUST-UI",
+      "exists": true
+    },
+    {
+      "file": "README.md",
+      "label": "noUiSlider",
+      "target": "examples/property-workbench/vendor/nouislider/LICENSE.md",
+      "exists": true
+    },
+    {
+      "file": "README.md",
+      "label": "Vellum",
+      "target": "examples/vellum/LICENSE-VELLUM",
+      "exists": true
+    },
+    {
+      "file": "README.md",
+      "label": "tweakcn theme data",
+      "target": "examples/theme-studio/vendor/tweakcn/LICENSE",
+      "exists": true
+    },
+    {
+      "file": "docs/docs-ssg.md",
+      "label": "frozen contract",
+      "target": "plan/DOCS-SSG-P1.md#93-\u6027\u80fd\u5343\u6b21\u4fdd\u5b58\u4e0e\u771f\u5b9e\u73af\u5883\u5408\u540c",
+      "exists": true
+    },
+    {
+      "file": "docs/docs-ssg.md",
+      "label": "current verification record",
+      "target": "validation/docs-ssg-p1-gaps/M2.md",
+      "exists": true
+    },
+    {
+      "file": "docs/quickstart.md",
+      "label": "Vellum design editor",
+      "target": "../examples/vellum/",
+      "exists": true
+    },
+    {
+      "file": "docs/quickstart.md",
+      "label": "framework integration guide",
+      "target": "vellum.md",
+      "exists": true
+    },
+    {
+      "file": "docs/quickstart.md",
+      "label": "Theme Studio editor",
+      "target": "../examples/theme-studio/README.md",
+      "exists": true
+    },
+    {
+      "file": "docs/quickstart.md",
+      "label": "theme guide",
+      "target": "themes.md",
+      "exists": true
+    },
+    {
+      "file": "docs/quickstart.md",
+      "label": "theme-v4.css",
+      "target": "../crates/rustify-components/css/theme-v4.css",
+      "exists": true
+    },
+    {
+      "file": "docs/quickstart.md",
+      "label": "mount example",
+      "target": "themes.md#mount-a-browser-scope",
+      "exists": true
+    },
+    {
+      "file": "docs/quickstart.md",
+      "label": "above",
+      "target": "#a-dom-application-without-gpu-regions",
+      "exists": true
+    }
+  ],
+  "result": "passed",
+  "generic_checker_exit_code": 1,
+  "generic_checker_scope": "Generated site paths and code examples are not repository file links; see docs-check.log"
+}

@@ -1,0 +1,48 @@
+mbx[warning]: prediction was not restored: cached action is missing blob 49b2d3c91eb8c7c54a7b2d08a16cadb5b8cc4bc10a528b50acb4d7943b9e3717
+mbx[warning]: prediction was not restored: cached action is missing blob 268ff4545a2ded9d90a776b88b15f7825728ddd47e64a4c32795f12330c345d2
+mbx[warning]: prediction was not restored: cached action is missing blob 540937d439bab3b4217378190ff226fa31077b7709d74592a8acc67f69f9526a
+mbx[warning]: prediction was not restored: cached action is missing blob f2a8c78f5076dd8c21728fe174097ac72d138e4fc83a53d8bb8e3bdb23185b97
+mbx[warning]: prediction was not restored: cached action is missing blob 71a853d9692899e1f72d229bb3a2a54a4afcde2455939dec0b02e7a7b94a5d3a
+mbx[warning]: prediction was not restored: cached action is missing blob f53e25f6c8da13f42db33f6db4e715e6f608982b2d310e7df172731cfbb35e0a
+environment: macOS 27.0.1 (26A434) on arm64
+  rustc 1.99.0 (b940084d7 2026-09-28)
+  binary: rustc
+  commit-hash: b940084d7eb6a299eb4bfeb8e34901bc051e7ac4
+  commit-date: 2026-09-28
+  host: aarch64-apple-darwin
+  release: 1.99.0
+  LLVM version: 23.1.1
+  cargo 1.99.0 (5f94df478 2026-08-27)
+CLI source: file:///Users/rockie/Documents/gh-rockie/rustify-ui at 42757c627cb69456d241ba0de51b34f1ad85be3d
+    Updating git repository `file:///Users/rockie/Documents/gh-rockie/rustify-ui`
+  Installing rustify-docs-cli v0.1.3 (file:///Users/rockie/Documents/gh-rockie/rustify-ui?rev=42757c627cb69456d241ba0de51b34f1ad85be3d#42757c62)
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Updating crates.io index
+    Blocking waiting for file lock on package cache
+   Compiling rustify-docs-cli v0.1.3 (/Users/rockie/.cargo/git/checkouts/rustify-ui-2d63cd2817e50ebf/42757c6/crates/rustify-docs-cli)
+    Finished `docs-cli` profile [optimized] target(s) in 2m 05s
+  Installing /var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-verify/cli-install/bin/rustify-docs
+   Installed package `rustify-docs-cli v0.1.3 (file:///Users/rockie/Documents/gh-rockie/rustify-ui?rev=42757c627cb69456d241ba0de51b34f1ad85be3d#42757c62)` (executable `rustify-docs`)
+warning: be sure to add `/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-verify/cli-install/bin` to your PATH to be able to run the installed binaries
+installed in 125.8 s
+rustify-docs 0.1.3
+rustify-docs 0.1.3
+panic: unwind
+grammars: syntect-5.3.0+two-face-0.5.2+bat-0.26.1+fancy
+panic probe: recovered
+rustify-docs-cli v0.1.3 (file:///Users/rockie/Documents/gh-rockie/rustify-ui?rev=42757c627cb69456d241ba0de51b34f1ad85be3d#42757c62):
+    rustify-docs
+author: empty HOME, PATH=/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-verify/author/tools:/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-verify/cli-install/bin:/usr/bin:/bin, no other variable; none of node, npm, npx, tailwindcss, wasm-pack, wasm-bindgen, mbx, docker, podman, chromium, google-chrome, firefox on PATH
+new (no network): created site; toolchain check: rustc 1.99.0 (b940084d7 2026-09-28)
+check (no network): check: 3 pages, 0 error(s), 2 warning(s)
+build (no network): build: 3 pages and 404.html in /private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-verify/author/site/dist: 68.5 KB in 12 files, 2 warning(s), 42 ms
+published: index.html, guide/getting-started/index.html, 404.html; rustify-docs-manifest.json mode production, 11 files
+check --external-links (no network), the site as created: external_addresses: 0; exit 0, nothing to request
+check --external-links (no network), a link to https://www.rust-lang.org/ added: external_addresses: 1, each an error; exit 1: `https://www.rust-lang.org/` could not be checked: io: failed to lookup address information: nodename nor servname provided, or not known
+preview (loopback only): preview: http://127.0.0.1:59475/; GET / 200 (4198 bytes), GET /guide/getting-started/ 200 (7952 bytes); stopped
+dev (loopback only): dev: http://127.0.0.1:59478/; GET / 200 (5131 bytes), GET /guide/getting-started/ 200 (8885 bytes); stopped
+toolchain calls: 2 x `rustc --version` (new and dev check for Rust); no cargo, nothing compiled
+toolchain: rustify-docs 0.1.3 installed from 42757c627cb69456d241ba0de51b34f1ad85be3d with the docs-cli profile (17026464 bytes, unwinds); new, check, build, preview and dev ran with only Rust and the CLI on PATH, check and build with no network; nothing was compiled
+mbx[cache]: 78 hits, 202 misses, 1 not looked up, 1 incremental, 1 bypassed; 0 B downloaded, 0 B uploaded, 838.1 MiB stored locally
+mbx[savings]: the running total stands at 6h 3m across 6572 builds. nobody is counting except the box.

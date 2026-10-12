@@ -14,6 +14,60 @@ GitHub; where the two differ, the section says so.
 
 Supported on macOS. Linux and Windows are not verified.
 
+## Install and maintain the CLI
+
+The CLI is distributed from git, with its dependencies locked and the
+workspace's `docs-cli` profile, which unwinds so that `dev` can recover from a
+failed build. The candidate below is version **0.1.4**, verified from local
+git on macOS arm64 with Rust 1.99.0; GitHub installation remains pending the
+candidate push and the same-source verification.
+
+```sh
+cargo install --git https://github.com/rockie/rustify-ui --rev 1b81de25f23a25702f61dbfd3d0ecdfe323d4d44 --locked --profile docs-cli rustify-docs-cli
+rustify-docs --version
+rustify-docs --build-info
+cargo install --list
+```
+
+Expect `rustify-docs 0.1.4`, `panic: unwind`, and source
+`1b81de25f23a25702f61dbfd3d0ecdfe323d4d44`. The install listing names that
+revision too. To create and preview a content site:
+
+```sh
+rustify-docs new my-docs
+cd my-docs
+rustify-docs check
+rustify-docs dev
+```
+
+Stop `dev`, then run `rustify-docs build` and `rustify-docs preview` to test
+the production output. No site compilation or network request is needed by
+`new`, `build` or the default `check` after the CLI is installed.
+
+Reinstall or upgrade to this pinned version with `--force`:
+
+```sh
+cargo install --git https://github.com/rockie/rustify-ui --rev 1b81de25f23a25702f61dbfd3d0ecdfe323d4d44 --locked --profile docs-cli --force rustify-docs-cli
+```
+
+The previous verified version is **0.1.3**. Roll back with:
+
+```sh
+cargo install --git https://github.com/rockie/rustify-ui --rev 42757c627cb69456d241ba0de51b34f1ad85be3d --locked --profile docs-cli --force rustify-docs-cli
+```
+
+After either command, check `--version`, the source in `cargo install --list`
+and the `cli_version` in a fresh build's `rustify-docs-manifest.json`.
+Restart `dev` after switching versions to discard its in-memory cache;
+production `build` always reads the complete inputs. Restore a deployment by
+replacing the entire output and its matching manifest with a complete prior
+build. Keep each version's fingerprinted assets together.
+
+`--help` and the generated README use the same source revision recorded at
+CLI compilation. This reads Cargo's existing git metadata using Rust alone;
+it requires no git command or network request. A source archive without
+that metadata reports `source: unknown` and gives the pinned 0.1.3 recipe.
+
 ## Commands
 
 | Command | What it does |

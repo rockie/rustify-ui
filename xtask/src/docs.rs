@@ -1039,9 +1039,9 @@ fn toolchain(git: Option<&str>, rev: Option<&str>) -> Result<(), String> {
     }
     let cargo = || {
         let mut command = plain_cargo(&sysroot);
-        command
-            .current_dir(&work)
-            .env("CARGO_TARGET_DIR", work.join("cli-target"));
+        // Match an author's install: Cargo owns a fresh temporary target.
+        // Reusing the witness's target can accept stale local build artifacts.
+        command.current_dir(&work);
         command
     };
     let started = std::time::Instant::now();
