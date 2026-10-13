@@ -18,9 +18,11 @@ Supported on macOS. Linux and Windows are not verified.
 ## Install and maintain the CLI
 
 This section records the verified P1 content-site release. The Rust examples
-below use the current repository checkout's CLI, version **0.1.10**. Its public
-CLI/framework pair and component-template installation recipe are not yet
-frozen; the pinned P1 install below is for content sites.
+below use the current repository checkout's CLI candidate, version **0.1.11**,
+paired with library revision `676a55771ab77faf8c476a836025d62905a2d3e2`.
+The library revision is committed locally; public availability is pending.
+The installed candidate reports its exact CLI source commit with
+`rustify-docs --build-info`. The pinned P1 install below is for content sites.
 
 The CLI is distributed from git, with its dependencies locked and the
 workspace's `docs-cli` profile, which unwinds so that `dev` can recover from a
@@ -588,8 +590,11 @@ The components template requires an installed CLI with a traceable source
 revision, an explicit paired framework revision and its embedded dependency
 lock. A development checkout without that frozen pair refuses generation;
 it does not write an unlocked project or choose a framework revision for
-the author. The public pair for this checkout's 0.1.10 is still being
-prepared; the verified P1 installation above does not provide this template.
+the author. This checkout's 0.1.11 candidate pins library revision
+`676a55771ab77faf8c476a836025d62905a2d3e2` and embeds its generated dependency
+lock. Public Git availability is still being prepared; the installed CLI's
+`--build-info` identifies its paired C commit. The verified P1 installation
+above does not provide this template.
 
 With a published paired CLI and stable Rust available, install the browser
 target if needed, then create the project:
