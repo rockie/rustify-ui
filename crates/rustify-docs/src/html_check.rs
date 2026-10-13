@@ -750,8 +750,8 @@ pub fn check_document(html: &str) -> Vec<String> {
                                     | "manifest"
                             )
                         });
-                        if let Some(href) =
-                            attribute("href").filter(|href| loads && is_cross_origin(href, false))
+                        if let Some(href) = attribute("href")
+                            .filter(|href| loads && is_cross_origin(href, rel == "icon"))
                         {
                             problems
                                 .push(format!("a <link rel=\"{rel}\"> to another origin: {href}"));
@@ -1152,6 +1152,20 @@ mod tests {
         assert!(check_document(ok).is_empty(), "{:?}", check_document(ok));
         let bad = "<script>alert(1)</script><script src=\"https://cdn.example/x.js\"></script><link rel=\"stylesheet\" href=\"//cdn.example/x.css\"><p style=\"color:red\" onclick=\"x()\">t</p><a href=\"JaVaScRiPt:x\">y</a><img src=\"https://img.example/a.png\"><iframe src=\"/a\"></iframe>";
         assert_eq!(check_document(bad).len(), 9, "{:#?}", check_document(bad));
+    }
+
+    #[test]
+    fn a_data_icon_stays_local_without_allowing_data_stylesheets_or_remote_icons() {
+        assert!(
+            check_document("<link rel=\"icon\" href=\"data:image/svg+xml,%3Csvg/%3E\">").is_empty()
+        );
+        assert!(
+            !check_document("<link rel=\"stylesheet\" href=\"data:text/css,body{}\">").is_empty()
+        );
+        assert!(
+            !check_document("<link rel=\"icon\" href=\"https://other.example/icon.svg\">")
+                .is_empty()
+        );
     }
 
     #[test]

@@ -393,6 +393,7 @@ fn page_view(site: &Site, page: &Page, slots: &LayoutSlots) -> impl IntoView {
                 <meta charset="utf-8" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <meta http-equiv="Content-Security-Policy" content=meta_csp() />
+                <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22/%3E" />
                 <title>{document_title}</title>
                 <meta name="description" content=description.clone() />
                 {meta.noindex.then(|| view! { <meta name="robots" content="noindex" /> })}
@@ -1019,6 +1020,7 @@ mod tests {
         assert!(html.starts_with("<!doctype html><html lang=\"en\" data-rustify-scope=\"\" data-theme=\"system\" data-rd-base=\"/rustify-ui/\"><head><meta charset=\"utf-8\">"), "{html}");
         assert!(html.contains("<meta http-equiv=\"Content-Security-Policy\" content=\"default-src 'none'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; media-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'\">"));
         assert!(html.contains("<title>Setup | Docs</title>"));
+        assert!(html.contains("<link rel=\"icon\" href=\"data:image/svg+xml,"));
         assert!(html.contains("<meta name=\"description\" content=\"Run cargo.\">"));
         // One H1, from the title, because the content has none.
         assert_eq!(html.matches("<h1").count(), 1);
