@@ -1,0 +1,159 @@
+{
+  "cli_version": "0.1.10",
+  "build_id": "02ca880a81fbc46c",
+  "manifest_file_count": 528,
+  "html_including404": 513,
+  "island_pages": 12,
+  "non_island_html": 501,
+  "all_original_author_input_digests_unchanged": true,
+  "all_512_pages_unique_main_skip_ids": true,
+  "demo_candidates_by_gzip": [
+    {
+      "path": "p2/vellum/index.html",
+      "bytes": 159778,
+      "gzip9": 22516,
+      "modules": 1
+    },
+    {
+      "path": "p2/quickstart/index.html",
+      "bytes": 208134,
+      "gzip9": 21713,
+      "modules": 1
+    },
+    {
+      "path": "p2/themes/index.html",
+      "bytes": 188453,
+      "gzip9": 21078,
+      "modules": 1
+    },
+    {
+      "path": "p2/architecture/index.html",
+      "bytes": 148783,
+      "gzip9": 20568,
+      "modules": 1
+    },
+    {
+      "path": "p2/compatibility/index.html",
+      "bytes": 145318,
+      "gzip9": 19415,
+      "modules": 1
+    },
+    {
+      "path": "p2/components/index.html",
+      "bytes": 140320,
+      "gzip9": 18283,
+      "modules": 1
+    },
+    {
+      "path": "p2/data/index.html",
+      "bytes": 150246,
+      "gzip9": 17541,
+      "modules": 1
+    },
+    {
+      "path": "p2/utility/index.html",
+      "bytes": 136205,
+      "gzip9": 16545,
+      "modules": 1
+    },
+    {
+      "path": "p2/workspace/index.html",
+      "bytes": 130204,
+      "gzip9": 14990,
+      "modules": 1
+    },
+    {
+      "path": "p2/navigation/index.html",
+      "bytes": 131969,
+      "gzip9": 14984,
+      "modules": 1
+    },
+    {
+      "path": "p2/forms/index.html",
+      "bytes": 127943,
+      "gzip9": 14247,
+      "modules": 1
+    },
+    {
+      "path": "p2/i18n/index.html",
+      "bytes": 129244,
+      "gzip9": 14214,
+      "modules": 1
+    }
+  ],
+  "demo_candidates_by_bytes": [
+    {
+      "path": "p2/quickstart/index.html",
+      "bytes": 208134,
+      "gzip9": 21713,
+      "modules": 1
+    },
+    {
+      "path": "p2/themes/index.html",
+      "bytes": 188453,
+      "gzip9": 21078,
+      "modules": 1
+    },
+    {
+      "path": "p2/vellum/index.html",
+      "bytes": 159778,
+      "gzip9": 22516,
+      "modules": 1
+    },
+    {
+      "path": "p2/data/index.html",
+      "bytes": 150246,
+      "gzip9": 17541,
+      "modules": 1
+    },
+    {
+      "path": "p2/architecture/index.html",
+      "bytes": 148783,
+      "gzip9": 20568,
+      "modules": 1
+    },
+    {
+      "path": "p2/compatibility/index.html",
+      "bytes": 145318,
+      "gzip9": 19415,
+      "modules": 1
+    },
+    {
+      "path": "p2/components/index.html",
+      "bytes": 140320,
+      "gzip9": 18283,
+      "modules": 1
+    },
+    {
+      "path": "p2/utility/index.html",
+      "bytes": 136205,
+      "gzip9": 16545,
+      "modules": 1
+    },
+    {
+      "path": "p2/navigation/index.html",
+      "bytes": 131969,
+      "gzip9": 14984,
+      "modules": 1
+    },
+    {
+      "path": "p2/workspace/index.html",
+      "bytes": 130204,
+      "gzip9": 14990,
+      "modules": 1
+    },
+    {
+      "path": "p2/i18n/index.html",
+      "bytes": 129244,
+      "gzip9": 14214,
+      "modules": 1
+    },
+    {
+      "path": "p2/forms/index.html",
+      "bytes": 127943,
+      "gzip9": 14247,
+      "modules": 1
+    }
+  ],
+  "passed": true
+}

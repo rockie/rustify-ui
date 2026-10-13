@@ -55,12 +55,23 @@ serde_json = "1"
 serde_yaml_ng = { version = "0.10.0", optional = true }
 toml = { version = "1.1", optional = true }
 
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+web-sys = { workspace = true, features = ["MutationObserver", "MutationObserverInit", "MediaQueryList"] }
+
 [dev-dependencies]
 flate2 = "1.1.9"
 rustify-docs-syntax = { path = "../rustify-docs-syntax" }
 
 [[test]]
 name = "generate"
+required-features = ["pipeline"]
+
+[[test]]
+name = "content_include"
+required-features = ["pipeline"]
+
+[[test]]
+name = "markdown_intro"
 required-features = ["pipeline"]
 
 [[test]]

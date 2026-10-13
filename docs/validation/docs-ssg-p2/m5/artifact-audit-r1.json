@@ -1,0 +1,317 @@
+{
+  "scope": "static published-file audit; does not replace browser or runtime verification",
+  "cli_version": "0.1.8",
+  "build_id": "c24304a030eb28b1",
+  "base": "/rustify-ui/",
+  "file_digests_verified": 53,
+  "pages_including_404": 38,
+  "raw_source_files": [],
+  "known_unneeded_static_file": ".gitkeep",
+  "pages": [
+    {
+      "path": "404.html",
+      "lang": "en",
+      "h1": 1,
+      "main": 1,
+      "island_modules": 0,
+      "scripts_external": true
+    },
+    {
+      "path": "architecture/index.html",
+      "lang": "en",
+      "h1": 1,
+      "main": 1,
+      "island_modules": 0,
+      "scripts_external": true
+    },
+    {
+      "path": "compatibility/index.html",
+      "lang": "en",
+      "h1": 1,
+      "main": 1,
+      "island_modules": 0,
+      "scripts_external": true
+    },
+    {
+      "path": "components/button/index.html",
+      "lang": "en",
+      "h1": 1,
+      "main": 1,
+      "island_modules": 1,
+      "scripts_external": true
+    },
+    {
+      "path": "components/checkbox/index.html",
+      "lang": "en",
+      "h1": 1,
+      "main": 1,
+      "island_modules": 1,
+      "scripts_external": true
+    },
+    {
+      "path": "components/color-field/index.html",
+      "lang": "en",
+      "h1": 1,
+      "main": 1,
+      "island_modules": 1,
+      "scripts_external": true
+    },
+    {
+      "path": "components/data-table/index.html",
+      "lang": "en",
+      "h1": 1,
+      "main": 1,
+      "island_modules": 1,
+      "scripts_external": true
+    },
+    {
+      "path": "components/dialog/index.html",
+      "lang": "en",
+      "h1": 1,
+      "main": 1,
+      "island_modules": 1,
+      "scripts_external": true
+    },
+    {
+      "path": "components/icon/index.html",
+      "lang": "en",
+      "h1": 1,
+      "main": 1,
+      "island_modules": 1,
+      "scripts_external": true
+    },
+    {
+      "path": "components/index.html",
+      "lang": "en",
+      "h1": 1,
+      "main": 1,
+      "island_modules": 0,
+      "scripts_external": true
+    },
+    {
+      "path": "components/label/index.html",
+      "lang": "en",
+      "h1": 1,
+      "main": 1,
+      "island_modules": 1,
+      "scripts_external": true
+    },
+    {
+      "path": "components/link/index.html",
+      "lang": "en",
+      "h1": 1,
+      "main": 1,
+      "island_modules": 1,
+      "scripts_external": true
+    },
+    {
+      "path": "components/loading/index.html",
+      "lang": "en",
+      "h1": 1,
+      "main": 1,
+      "island_modules": 1,
+      "scripts_external": true
+    },
+    {
+      "path": "components/menu/index.html",
+      "lang": "en",
+      "h1": 1,
+      "main": 1,
+      "island_modules": 1,
+      "scripts_external": true
+    },
+    {
+      "path": "components/number-field/index.html",
+      "lang": "en",
+      "h1": 1,
+      "main": 1,
+      "island_modules": 1,
+      "scripts_external": true
+    },
+    {
+      "path": "components/progress/index.html",
+      "lang": "en",
+      "h1": 1,
+      "main": 1,
+      "island_modules": 1,
+      "scripts_external": true
+    },
+    {
+      "path": "components/radio/index.html",
+      "lang": "en",
+      "h1": 1,
+      "main": 1,
+      "island_modules": 1,
+      "scripts_external": true
+    },
+    {
+      "path": "components/scroll-area/index.html",
+      "lang": "en",
+      "h1": 1,
+      "main": 1,
+      "island_modules": 1,
+      "scripts_external": true
+    },
+    {
+      "path": "components/select/index.html",
+      "lang": "en",
+      "h1": 1,
+      "main": 1,
+      "island_modules": 1,
+      "scripts_external": true
+    },
+    {
+      "path": "components/slider/index.html",
+      "lang": "en",
+      "h1": 1,
+      "main": 1,
+      "island_modules": 1,
+      "scripts_external": true
+    },
+    {
+      "path": "components/switch/index.html",
+      "lang": "en",
+      "h1": 1,
+      "main": 1,
+      "island_modules": 1,
+      "scripts_external": true
+    },
+    {
+      "path": "components/tabs/index.html",
+      "lang": "en",
+      "h1": 1,
+      "main": 1,
+      "island_modules": 1,
+      "scripts_external": true
+    },
+    {
+      "path": "components/text-area/index.html",
+      "lang": "en",
+      "h1": 1,
+      "main": 1,
+      "island_modules": 1,
+      "scripts_external": true
+    },
+    {
+      "path": "components/text-field/index.html",
+      "lang": "en",
+      "h1": 1,
+      "main": 1,
+      "island_modules": 1,
+      "scripts_external": true
+    },
+    {
+      "path": "components/toast/index.html",
+      "lang": "en",
+      "h1": 1,
+      "main": 1,
+      "island_modules": 1,
+      "scripts_external": true
+    },
+    {
+      "path": "components/toggle-group/index.html",
+      "lang": "en",
+      "h1": 1,
+      "main": 1,
+      "island_modules": 1,
+      "scripts_external": true
+    },
+    {
+      "path": "components/tooltip/index.html",
+      "lang": "en",
+      "h1": 1,
+      "main": 1,
+      "island_modules": 1,
+      "scripts_external": true
+    },
+    {
+      "path": "components/tree/index.html",
+      "lang": "en",
+      "h1": 1,
+      "main": 1,
+      "island_modules": 1,
+      "scripts_external": true
+    },
+    {
+      "path": "data/index.html",
+      "lang": "en",
+      "h1": 1,
+      "main": 1,
+      "island_modules": 0,
+      "scripts_external": true
+    },
+    {
+      "path": "forms/index.html",
+      "lang": "en",
+      "h1": 1,
+      "main": 1,
+      "island_modules": 0,
+      "scripts_external": true
+    },
+    {
+      "path": "i18n/index.html",
+      "lang": "en",
+      "h1": 1,
+      "main": 1,
+      "island_modules": 0,
+      "scripts_external": true
+    },
+    {
+      "path": "index.html",
+      "lang": "en",
+      "h1": 1,
+      "main": 1,
+      "island_modules": 0,
+      "scripts_external": true
+    },
+    {
+      "path": "navigation/index.html",
+      "lang": "en",
+      "h1": 1,
+      "main": 1,
+      "island_modules": 0,
+      "scripts_external": true
+    },
+    {
+      "path": "quickstart/index.html",
+      "lang": "en",
+      "h1": 1,
+      "main": 1,
+      "island_modules": 0,
+      "scripts_external": true
+    },
+    {
+      "path": "themes/index.html",
+      "lang": "en",
+      "h1": 1,
+      "main": 1,
+      "island_modules": 0,
+      "scripts_external": true
+    },
+    {
+      "path": "utility/index.html",
+      "lang": "en",
+      "h1": 1,
+      "main": 1,
+      "island_modules": 0,
+      "scripts_external": true
+    },
+    {
+      "path": "vellum/index.html",
+      "lang": "en",
+      "h1": 1,
+      "main": 1,
+      "island_modules": 0,
+      "scripts_external": true
+    },
+    {
+      "path": "workspace/index.html",
+      "lang": "en",
+      "h1": 1,
+      "main": 1,
+      "island_modules": 0,
+      "scripts_external": true
+    }
+  ],
+  "passed": true
+}

@@ -66,6 +66,10 @@ struct Good {
 
 /// What every connection reads.
 struct State {
+    sequence: u64,
+    building: bool,
+    phase: &'static str,
+    compile: serde_json::Value,
     /// Moves on whenever what an open page should know changes: a build
     /// that changed something, or one that failed (even with the same
     /// problems as before, so a page can show the save was seen).
@@ -94,7 +98,12 @@ struct Filter {
     config: PathBuf,
     dirs: Vec<PathBuf>,
     files: BTreeSet<PathBuf>,
+    existence: BTreeMap<PathBuf, Option<(PathBuf, bool)>>,
+    ancestors: BTreeMap<PathBuf, Option<DirectoryIdentity>>,
     ignored: Vec<PathBuf>,
+    rust_dirs: BTreeSet<PathBuf>,
+    rust_files: BTreeSet<PathBuf>,
+    build_dirs: BTreeSet<PathBuf>,
 }
 
 /// What one round read beyond the content and asset directories: the
@@ -104,40 +113,152 @@ struct Filter {
 struct Read<'a> {
     files: Vec<&'a BTreeSet<String>>,
     linked: Option<&'a BTreeSet<String>>,
+    inputs: Vec<&'a content::InputReceipts>,
+}
+
+#[derive(PartialEq, Eq)]
+struct DirectoryIdentity {
+    real: PathBuf,
+    directory: bool,
+    #[cfg(unix)]
+    node: (u64, u64),
+    #[cfg(not(unix))]
+    created: Option<std::time::SystemTime>,
+}
+
+fn target_identity(path: &Path) -> Option<(PathBuf, bool)> {
+    let real = std::fs::canonicalize(path).ok()?;
+    let metadata = std::fs::metadata(&real).ok()?;
+    Some((real, metadata.is_dir()))
+}
+
+fn directory_identity(path: &Path) -> Option<DirectoryIdentity> {
+    let real = std::fs::canonicalize(path).ok()?;
+    let metadata = std::fs::metadata(&real).ok()?;
+    #[cfg(unix)]
+    use std::os::unix::fs::MetadataExt;
+    Some(DirectoryIdentity {
+        real,
+        directory: metadata.is_dir(),
+        #[cfg(unix)]
+        node: (metadata.dev(), metadata.ino()),
+        #[cfg(not(unix))]
+        created: metadata.created().ok(),
+    })
+}
+
+fn prospective_file(path: &Path) -> Option<PathBuf> {
+    for parent in path.ancestors() {
+        if let Ok(real) = std::fs::canonicalize(parent) {
+            return if parent == path {
+                Some(real)
+            } else {
+                Some(real.join(path.strip_prefix(parent).ok()?))
+            };
+        }
+    }
+    None
 }
 
 impl Filter {
     fn of(root: &Path, project: &Project, read: Read) -> Self {
         let config = &project.config;
         let out = root.join(&config.out_dir);
-        let mut dirs = vec![
-            root.join(&config.content_dir),
-            root.join(&config.assets_dir),
-        ];
+        let mut dirs = vec![root.join(&config.assets_dir)];
         // A link may lead to a file or to a directory; either way, what is
-        // under it.
-        dirs.extend(
-            read.linked
-                .into_iter()
-                .flatten()
-                .map(|path| root.join(path)),
-        );
+        // under it. Explicit content selection does not authorize a tree.
+        if config.content_include.is_none() {
+            dirs.insert(0, root.join(&config.content_dir));
+            dirs.extend(
+                read.linked
+                    .into_iter()
+                    .flatten()
+                    .map(|path| root.join(path)),
+            );
+        }
+        let mut files: BTreeSet<_> = read
+            .files
+            .into_iter()
+            .flatten()
+            .map(|path| root.join(path))
+            .collect();
+        if let Some((path, _)) = &config.theme_document {
+            files.insert(root.join(path));
+        }
+        let mut existence = BTreeMap::new();
+        let mut ancestors = BTreeMap::new();
+        if let Some(selected) = &config.content_include {
+            let assets = root.join(&config.assets_dir);
+            let mut bytes = BTreeSet::new();
+            files.extend(
+                read.linked
+                    .into_iter()
+                    .flatten()
+                    .map(|path| root.join(path)),
+            );
+            for inputs in read
+                .inputs
+                .iter()
+                .copied()
+                .chain(std::iter::once(&project.inputs))
+            {
+                for (alias, real) in inputs.byte_paths() {
+                    bytes.insert(root.join(alias));
+                    bytes.insert(real.to_path_buf());
+                }
+                for (alias, real, directory) in inputs.existence_paths() {
+                    let alias = root.join(alias);
+                    let original = Some((real.to_path_buf(), directory));
+                    existence
+                        .entry(alias.clone())
+                        .or_insert_with(|| original.clone());
+                    existence.entry(real.to_path_buf()).or_insert(original);
+                    if directory && alias.starts_with(&assets) {
+                        dirs.push(real.to_path_buf());
+                    }
+                }
+            }
+            // `referenced` includes repository targets. They depend on identity,
+            // while actual reads depend on bytes even if another receipt is Exists.
+            files.retain(|path| !existence.contains_key(path));
+            files.extend(bytes);
+            for (path, _) in selected {
+                let alias = root.join(&config.content_dir).join(path);
+                if let Some(real) = prospective_file(&alias) {
+                    files.insert(real);
+                }
+                files.insert(alias);
+            }
+            existence.retain(|path, _| !files.contains(path));
+            let real_root = std::fs::canonicalize(root).unwrap_or_else(|_| root.to_path_buf());
+            for path in files.iter().chain(existence.keys()) {
+                for parent in path
+                    .ancestors()
+                    .skip(1)
+                    .filter(|parent| parent.starts_with(root) || parent.starts_with(&real_root))
+                {
+                    ancestors
+                        .entry(parent.to_path_buf())
+                        .or_insert_with(|| directory_identity(parent));
+                }
+            }
+        }
         Self {
             config: root.join(&project.config_file),
             dirs,
-            files: read
-                .files
-                .into_iter()
-                .flatten()
-                .map(|path| root.join(path))
-                .collect(),
+            files,
+            existence,
+            ancestors,
             ignored: vec![out],
+            rust_dirs: BTreeSet::new(),
+            rust_files: BTreeSet::new(),
+            build_dirs: BTreeSet::new(),
         }
     }
 
     fn relevant(&self, path: &Path) -> bool {
         let private = path.components().any(|part| {
-            matches!(part, Component::Normal(name) if name == ".git" || name == ".rustify-docs")
+            matches!(part, Component::Normal(name) if name == ".git" || name == ".rustify-docs" || name == "target")
         });
         if private || self.ignored.iter().any(|dir| path.starts_with(dir)) {
             return false;
@@ -145,6 +266,24 @@ impl Filter {
         path == self.config
             || self.dirs.iter().any(|dir| path.starts_with(dir))
             || self.files.contains(path)
+            || self.existence.iter().any(|(dependency, original)| {
+                dependency.starts_with(path)
+                    && target_identity(dependency).as_ref() != original.as_ref()
+            })
+            || self.ancestors.iter().any(|(parent, original)| {
+                parent.starts_with(path) && directory_identity(parent).as_ref() != original.as_ref()
+            })
+            || self.rust_files.contains(path)
+            || self.rust_dirs.contains(path)
+            || self
+                .build_dirs
+                .iter()
+                .any(|directory| path.starts_with(directory))
+            || (path.extension().is_some_and(|extension| extension == "rs")
+                && self
+                    .rust_dirs
+                    .iter()
+                    .any(|directory| path.starts_with(directory)))
     }
 }
 
@@ -187,6 +326,8 @@ struct Builder {
     workers: usize,
     fault: Option<String>,
     filter: Arc<RwLock<Filter>>,
+    rust: Option<crate::rust_site::Prepared>,
+    observer: Arc<dyn Fn(crate::rust_site::Progress) + Send + Sync>,
 }
 
 fn sorted(mut diagnostics: Vec<Diagnostic>) -> Vec<Diagnostic> {
@@ -197,6 +338,18 @@ fn sorted(mut diagnostics: Vec<Diagnostic>) -> Vec<Diagnostic> {
 
 fn has_errors(diagnostics: &[Diagnostic]) -> bool {
     diagnostics.iter().any(|d| d.severity == Severity::Error)
+}
+
+fn stale(outcome: &Outcome) -> bool {
+    match outcome {
+        Outcome::Failed { diagnostics, .. } => diagnostics.iter().any(|diagnostic| {
+            matches!(
+                diagnostic.rule.as_str(),
+                "rust-generation-changed" | "render-generation-changed"
+            )
+        }),
+        _ => false,
+    }
 }
 
 fn panic_message(panic: &(dyn std::any::Any + Send)) -> String {
@@ -211,11 +364,12 @@ impl Builder {
     /// One round, on a thread of its own.
     fn round(&mut self) -> Outcome {
         let mut cache = self.cache.clone();
+        let mut rust = self.rust.clone();
         let result = std::thread::scope(|scope| {
             let worker = std::thread::Builder::new()
                 .name("rustify-docs-build".into())
                 .stack_size(8 << 20)
-                .spawn_scoped(scope, || self.build(&mut cache));
+                .spawn_scoped(scope, || self.build(&mut cache, &mut rust));
             match worker {
                 Ok(worker) => worker.join().map_err(|panic| panic_message(&*panic)),
                 Err(error) => Err(format!("no thread to build on: {error}")),
@@ -224,8 +378,14 @@ impl Builder {
         match result {
             Ok((outcome, filter)) => {
                 self.cache = cache;
+                self.rust = rust;
                 if let Some(filter) = filter {
                     if let Ok(mut current) = self.filter.write() {
+                        let mut filter = filter;
+                        filter.rust_dirs.extend(current.rust_dirs.iter().cloned());
+                        filter.rust_files.extend(current.rust_files.iter().cloned());
+                        filter.build_dirs.extend(current.build_dirs.iter().cloned());
+                        filter.ignored.extend(current.ignored.iter().cloned());
                         *current = filter;
                     }
                 }
@@ -247,7 +407,11 @@ impl Builder {
         }
     }
 
-    fn build(&self, cache: &mut FragmentCache) -> (Outcome, Option<Filter>) {
+    fn build(
+        &self,
+        cache: &mut FragmentCache,
+        rust: &mut Option<crate::rust_site::Prepared>,
+    ) -> (Outcome, Option<Filter>) {
         let (project, mut diagnostics) = match Project::load_file(&self.config) {
             Ok(loaded) => loaded,
             Err(diagnostics) => {
@@ -283,12 +447,34 @@ impl Builder {
             &self.highlighter,
             self.workers,
         );
+        let crate::rendering::Build {
+            analysis,
+            extensions,
+            diagnostics: problems,
+            guard,
+            theme,
+            ..
+        } = crate::rendering::build_cached(
+            &project,
+            &snapshot,
+            analysis,
+            cache,
+            &self.highlighter,
+            crate::rust_site::BuildMode::Development,
+            rust.as_ref(),
+            &*self.observer,
+        );
+        diagnostics.extend(problems);
+        if let Some(prepared) = &guard {
+            *rust = Some(prepared.clone());
+        }
         let filter = Filter::of(
             &self.root,
             &project,
             Read {
                 files: vec![&analysis.includes, &analysis.referenced],
                 linked: Some(&snapshot.linked),
+                inputs: vec![&snapshot.inputs, &analysis.inputs],
             },
         );
         diagnostics.extend(analysis.diagnostics.iter().cloned());
@@ -299,21 +485,46 @@ impl Builder {
             };
             return (outcome, Some(filter));
         }
-        let outcome =
-            match generation::generate(&project, &snapshot, &analysis, &self.dates, self.workers) {
-                Ok(generation) => Outcome::Built {
-                    files: generation.files,
-                    base: project.config.site.base.clone(),
+        let generated = generation::generate_extended(
+            &project,
+            &snapshot,
+            &analysis,
+            &self.dates,
+            self.workers,
+            &extensions,
+        );
+        if let Some(guard) = &guard {
+            if let Err(problems) = guard.validate_current() {
+                diagnostics.extend(problems);
+            }
+        }
+        if let Some(theme) = &theme {
+            diagnostics.extend(crate::theme::validate_snapshot(&project, &snapshot, theme));
+        }
+        diagnostics.extend(content::validate_inputs(&project, &snapshot, &analysis));
+        if has_errors(&diagnostics) {
+            return (
+                Outcome::Failed {
                     diagnostics: sorted(diagnostics),
+                    shell: shell(),
                 },
-                Err(problems) => {
-                    diagnostics.extend(problems);
-                    Outcome::Failed {
-                        diagnostics: sorted(diagnostics),
-                        shell: shell(),
-                    }
+                Some(filter),
+            );
+        }
+        let outcome = match generated {
+            Ok(generation) => Outcome::Built {
+                files: generation.files,
+                base: project.config.site.base.clone(),
+                diagnostics: sorted(diagnostics),
+            },
+            Err(problems) => {
+                diagnostics.extend(problems);
+                Outcome::Failed {
+                    diagnostics: sorted(diagnostics),
+                    shell: shell(),
                 }
-            };
+            }
+        };
         (outcome, Some(filter))
     }
 }
@@ -374,6 +585,9 @@ fn commit(shared: &Shared, outcome: Outcome) -> Committed {
             let same_base = state.good.as_ref().is_some_and(|good| good.base == base);
             if changed.is_empty() && same_base && !state.failed && *state.diagnostics == diagnostics
             {
+                state.building = false;
+                state.sequence += 1;
+                shared.changed.notify_all();
                 return Committed::Unchanged;
             }
             state.revision += 1;
@@ -407,6 +621,8 @@ fn commit(shared: &Shared, outcome: Outcome) -> Committed {
             }
         }
     };
+    state.building = false;
+    state.sequence += 1;
     shared.changed.notify_all();
     committed
 }
@@ -489,6 +705,10 @@ fn state_json(session: &str, state: &State, reload: bool) -> String {
     serde_json::json!({
         "session": session,
         "revision": state.revision,
+        "sequence":state.sequence,
+        "building":state.building,
+        "phase":state.phase,
+        "compile":state.compile,
         "good": state.good.as_ref().map(|good| good.revision),
         "ok": !state.failed,
         "reload": reload,
@@ -530,13 +750,13 @@ fn events(mut stream: TcpStream, shared: &Shared, query: &str) -> std::io::Resul
                 .unwrap_or_else(|poisoned| poisoned.into_inner());
             let (state, _) = shared
                 .changed
-                .wait_timeout_while(state, KEEP_ALIVE, |state| Some(state.revision) == seen)
+                .wait_timeout_while(state, KEEP_ALIVE, |state| Some(state.sequence) == seen)
                 .unwrap_or_else(|poisoned| poisoned.into_inner());
-            if Some(state.revision) == seen {
+            if Some(state.sequence) == seen {
                 None
             } else {
-                seen = Some(state.revision);
-                let reload = needs_reload(&state, &path, seen_build);
+                seen = Some(state.sequence);
+                let reload = !state.building && needs_reload(&state, &path, seen_build);
                 if !reload {
                     // The page is the same in the newest build.
                     if let Some(good) = &state.good {
@@ -685,14 +905,20 @@ fn handle(mut stream: TcpStream, shared: &Shared) -> std::io::Result<()> {
             ),
         };
     }
-    let (files, base, build, built) = {
+    let (files, base, build, built, building) = {
         let state = shared
             .state
             .lock()
             .unwrap_or_else(|poisoned| poisoned.into_inner());
         match (&state.good, &state.shell) {
-            (Some(good), _) => (good.files.clone(), good.base.clone(), good.revision, true),
-            (None, Some((files, base))) => (files.clone(), base.clone(), 0, false),
+            (Some(good), _) => (
+                good.files.clone(),
+                good.base.clone(),
+                good.revision,
+                true,
+                state.building,
+            ),
+            (None, Some((files, base))) => (files.clone(), base.clone(), 0, false, state.building),
             (None, None) => {
                 drop(state);
                 return respond(
@@ -760,7 +986,11 @@ fn handle(mut stream: TcpStream, shared: &Shared) -> std::io::Result<()> {
         ),
         // While nothing has built, every page is the shell saying so.
         _ if !built => page(
-            "500 Internal Server Error",
+            if building {
+                "200 OK"
+            } else {
+                "500 Internal Server Error"
+            },
             generation::DEV_SHELL_PAGE,
             &mut stream,
         ),
@@ -773,6 +1003,26 @@ fn session_id() -> String {
         .duration_since(std::time::UNIX_EPOCH)
         .map_or(0, |elapsed| elapsed.as_nanos());
     format!("{:x}-{:x}", std::process::id(), nanos)
+}
+
+fn phase(shared: &Shared, name: &'static str) {
+    let mut state = shared
+        .state
+        .lock()
+        .unwrap_or_else(|poisoned| poisoned.into_inner());
+    state.building = true;
+    state.phase = name;
+    state.sequence += 1;
+    shared.changed.notify_all();
+    eprintln!("dev: {name}");
+}
+
+fn watch_parent(path: &Path) -> Option<PathBuf> {
+    let mut directory = if path.is_dir() { path } else { path.parent()? };
+    while !directory.is_dir() {
+        directory = directory.parent()?;
+    }
+    std::fs::canonicalize(directory).ok()
 }
 
 fn fail(message: impl std::fmt::Display) -> ExitCode {
@@ -813,6 +1063,14 @@ pub fn run(options: Options) -> ExitCode {
             ));
         }
     };
+    let rustc = if project.config.rust.is_some() {
+        match crate::new::doctor_components() {
+            Ok(version) => version,
+            Err(message) => return fail(message),
+        }
+    } else {
+        rustc
+    };
     eprintln!("{rustc}");
     let dates = match rustify_docs::history::read(&root, &project.config.content_dir) {
         Ok(dates) => dates,
@@ -827,6 +1085,7 @@ pub fn run(options: Options) -> ExitCode {
 
     let filter = Arc::new(RwLock::new(Filter::of(&root, &project, Read::default())));
     let (changes, rounds) = mpsc::channel::<()>();
+    let reschedule = changes.clone();
     let watch_filter = filter.clone();
     let mut watcher =
         match notify::recommended_watcher(move |event: notify::Result<notify::Event>| {
@@ -846,18 +1105,95 @@ pub fn run(options: Options) -> ExitCode {
     {
         return fail(format!("cannot watch {}: {error}", root.display()));
     }
+    let watcher = Arc::new(Mutex::new(watcher));
+    let watched = Arc::new(Mutex::new(BTreeSet::from([root.clone()])));
 
     let shared = Arc::new(Shared {
         session: session_id(),
         state: Mutex::new(State {
+            sequence: 0,
+            building: true,
+            phase: "render",
+            compile: serde_json::Value::Null,
             revision: 0,
             good: None,
             failed: false,
             diagnostics: Arc::new(Vec::new()),
             changed_at: HashMap::new(),
-            shell: None,
+            shell: generation::dev_shell_with_status(&project, true)
+                .ok()
+                .map(|shell| (Arc::new(shell.files), project.config.site.base.clone())),
         }),
         changed: Condvar::new(),
+    });
+    let progress_state = shared.clone();
+    let progress_filter = filter.clone();
+    let progress_watcher = watcher.clone();
+    let observer = Arc::new(move |event| {
+        use crate::rust_site::Progress;
+        match event {
+            Progress::Watch(plan) => {
+                {
+                    let mut filter = progress_filter
+                        .write()
+                        .unwrap_or_else(|poisoned| poisoned.into_inner());
+                    filter.rust_dirs.extend(plan.rust_dirs.iter().cloned());
+                    filter.build_dirs.extend(plan.build_dirs.iter().cloned());
+                    filter.rust_files.extend(plan.files.iter().cloned());
+                    for path in &plan.ignored {
+                        if !filter.ignored.contains(path) {
+                            filter.ignored.push(path.clone());
+                        }
+                    }
+                }
+                let paths = plan
+                    .rust_dirs
+                    .iter()
+                    .chain(&plan.build_dirs)
+                    .chain(&plan.files);
+                let mut watched = watched
+                    .lock()
+                    .unwrap_or_else(|poisoned| poisoned.into_inner());
+                let mut watcher = progress_watcher
+                    .lock()
+                    .unwrap_or_else(|poisoned| poisoned.into_inner());
+                for path in paths.filter_map(|path| watch_parent(path)) {
+                    if watched.iter().any(|directory| path.starts_with(directory)) {
+                        continue;
+                    }
+                    match notify::Watcher::watch(
+                        &mut *watcher,
+                        &path,
+                        notify::RecursiveMode::Recursive,
+                    ) {
+                        Ok(()) => {
+                            watched.insert(path);
+                        }
+                        Err(error) => eprintln!("dev: cannot watch {}: {error}", path.display()),
+                    }
+                }
+            }
+            Progress::Host => phase(&progress_state, "host"),
+            Progress::Wasm => phase(&progress_state, "wasm"),
+            Progress::Render { reused } => {
+                phase(&progress_state, "render");
+                if reused {
+                    eprintln!("dev: reusing the compiled Rust generation");
+                }
+            }
+            Progress::Compiled {
+                generation,
+                timings,
+            } => {
+                let mut state = progress_state
+                    .state
+                    .lock()
+                    .unwrap_or_else(|poisoned| poisoned.into_inner());
+                state.compile = serde_json::json!({"generation":generation,"completed_at_ms":timings.host.completed_at_ms.max(timings.wasm.completed_at_ms), "host":crate::rendering::timing(&timings.host),"wasm":crate::rendering::timing(&timings.wasm)});
+                state.sequence += 1;
+                progress_state.changed.notify_all();
+            }
+        }
     });
     let mut builder = Builder {
         root: root.clone(),
@@ -868,12 +1204,10 @@ pub fn run(options: Options) -> ExitCode {
         workers: generation::default_workers(),
         fault,
         filter,
+        rust: None,
+        observer,
     };
     let mut printed = Arc::new(Vec::new());
-    let started = Instant::now();
-    let outcome = builder.round();
-    let committed = commit(&shared, outcome);
-    print(&shared, &committed, started.elapsed(), &mut printed);
 
     let host = "127.0.0.1";
     let listener = match options.port {
@@ -909,7 +1243,7 @@ pub fn run(options: Options) -> ExitCode {
     }
     println!("dev: http://{address}{base}");
     eprintln!(
-        "watching {}; drafts are shown, nothing is written, stop with Ctrl-C",
+        "watching {}; drafts are shown, source and published output are unchanged, stop with Ctrl-C",
         root.display()
     );
     let _ = std::io::stdout().flush();
@@ -924,6 +1258,16 @@ pub fn run(options: Options) -> ExitCode {
         }
     });
 
+    let started = Instant::now();
+    let outcome = builder.round();
+    if stale(&outcome) {
+        eprintln!("dev: inputs changed; discarding the candidate and rebuilding");
+        let _ = reschedule.send(());
+    } else {
+        let committed = commit(&shared, outcome);
+        print(&shared, &committed, started.elapsed(), &mut printed);
+    }
+
     // The builder: one round per burst of saves; saves during a round make
     // the next one.
     while rounds.recv().is_ok() {
@@ -936,7 +1280,13 @@ pub fn run(options: Options) -> ExitCode {
             }
         }
         let started = Instant::now();
+        phase(&shared, "render");
         let outcome = builder.round();
+        if stale(&outcome) {
+            eprintln!("dev: inputs changed; discarding the candidate and rebuilding");
+            let _ = reschedule.send(());
+            continue;
+        }
         let committed = commit(&shared, outcome);
         print(&shared, &committed, started.elapsed(), &mut printed);
     }
@@ -947,6 +1297,162 @@ pub fn run(options: Options) -> ExitCode {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    struct FilterFixture(PathBuf);
+
+    impl FilterFixture {
+        fn new(selected: &str) -> Self {
+            static NEXT: std::sync::atomic::AtomicUsize = std::sync::atomic::AtomicUsize::new(0);
+            let root = std::env::temp_dir().join(format!(
+                "rustify-docs-filter-{}-{}",
+                std::process::id(),
+                NEXT.fetch_add(1, std::sync::atomic::Ordering::Relaxed),
+            ));
+            std::fs::create_dir_all(&root).unwrap();
+            let fixture = Self(std::fs::canonicalize(root).unwrap());
+            fixture.write("rustify-docs.toml", &format!(
+                "schema_version=1\n[site]\nname='Docs'\nurl='https://example.com/'\n[content]\ninclude=['{selected}']\n[repo]\nurl='https://github.com/owner/repo'\nref='main'\n"
+            ));
+            fixture
+        }
+
+        fn write(&self, path: &str, text: &str) {
+            let path = self.0.join(path);
+            std::fs::create_dir_all(path.parent().unwrap()).unwrap();
+            std::fs::write(path, text).unwrap();
+        }
+
+        fn project(&self) -> Project {
+            Project::load(&self.0).unwrap().0
+        }
+
+        fn filter(&self) -> Filter {
+            let project = self.project();
+            let (snapshot, problems) = content::snapshot(&project);
+            assert!(problems.is_empty(), "{problems:?}");
+            let analysis = content::analyze(
+                &project,
+                &snapshot,
+                Mode::Dev,
+                &mut FragmentCache::default(),
+                &Highlighter::new(),
+                1,
+            );
+            assert_eq!(analysis.errors(), 0, "{:?}", analysis.diagnostics);
+            Filter::of(
+                &self.0,
+                &project,
+                Read {
+                    files: vec![&analysis.includes, &analysis.referenced],
+                    linked: Some(&snapshot.linked),
+                    inputs: vec![&snapshot.inputs, &analysis.inputs],
+                },
+            )
+        }
+    }
+
+    impl Drop for FilterFixture {
+        fn drop(&mut self) {
+            let _ = std::fs::remove_dir_all(&self.0);
+        }
+    }
+
+    #[test]
+    fn include_filter_watches_actual_reads_and_ignores_unselected_body_events() {
+        let fixture = FilterFixture::new("index.md");
+        fixture.write("content/index.md", "# Home\n\n![Image](images/icon.svg) [Source](excluded.md)\n\n<!-- rustify:include path=\"README.md\" -->\n");
+        fixture.write("content/images/icon.svg", "<svg width='1' height='1'/>");
+        fixture.write("content/excluded.md", "excluded body");
+        fixture.write("content/validation/evidence.md", "evidence");
+        fixture.write("content/unused.bin", "unreferenced");
+        fixture.write("README.md", "read once as an explicit include");
+        let filter = fixture.filter();
+        for path in [
+            "content/index.md",
+            "content/images/icon.svg",
+            "README.md",
+            "static/new.svg",
+        ] {
+            assert!(filter.relevant(&fixture.0.join(path)), "{path}");
+        }
+        for path in [
+            "content/excluded.md",
+            "content/validation/evidence.md",
+            "content/unused.bin",
+            "content",
+            "content/validation",
+        ] {
+            assert!(!filter.relevant(&fixture.0.join(path)), "{path}");
+        }
+    }
+
+    #[test]
+    fn include_filter_repo_targets_ignore_atomic_body_saves_but_detect_deletion() {
+        let fixture = FilterFixture::new("index.md");
+        fixture.write("content/index.md", "# Home\n\n[Source](excluded.md)\n");
+        fixture.write("content/excluded.md", "old excluded body");
+        let filter = fixture.filter();
+        let excluded = fixture.0.join("content/excluded.md");
+        assert!(!filter.files.contains(&excluded));
+        fixture.write("replacement.md", "new excluded body");
+        std::fs::rename(fixture.0.join("replacement.md"), &excluded).unwrap();
+        assert!(!filter.relevant(&excluded));
+        assert!(!filter.relevant(&fixture.0.join("content")));
+        std::fs::remove_file(&excluded).unwrap();
+        assert!(filter.relevant(&excluded));
+    }
+
+    #[test]
+    fn include_filter_initial_and_failed_selection_recovers_missing_ancestors() {
+        let fixture = FilterFixture::new("guide/nested/index.md");
+        let project = fixture.project();
+        let initial = Filter::of(&fixture.0, &project, Read::default());
+        let content = fixture.0.join("content");
+        std::fs::create_dir(&content).unwrap();
+        assert!(initial.relevant(&content));
+        let (snapshot, _) = content::snapshot(&project);
+        let failed = Filter::of(
+            &fixture.0,
+            &project,
+            Read {
+                inputs: vec![&snapshot.inputs],
+                linked: Some(&snapshot.linked),
+                ..Read::default()
+            },
+        );
+        let nested = content.join("guide/nested");
+        std::fs::create_dir_all(&nested).unwrap();
+        assert!(failed.relevant(&nested));
+        assert!(failed.relevant(&content.join("guide")));
+        assert!(failed.relevant(&nested.join("index.md")));
+        assert!(!failed.relevant(&content.join("validation/unselected.md")));
+    }
+
+    #[cfg(unix)]
+    #[test]
+    fn include_filter_follows_selected_real_paths_and_detects_retarget_and_replacement() {
+        let fixture = FilterFixture::new("index.md");
+        fixture.write("first/index.md", "# Home\n\n[Source](excluded.md)\n");
+        fixture.write("first/excluded.md", "excluded body");
+        fixture.write("second/index.md", "# Home\n\nThe replacement home.\n");
+        let content = fixture.0.join("content");
+        std::os::unix::fs::symlink("first", &content).unwrap();
+        let filter = fixture.filter();
+        assert!(filter.relevant(&fixture.0.join("first/index.md")));
+        assert!(!filter.relevant(&fixture.0.join("first/excluded.md")));
+        assert!(!filter.relevant(&fixture.0.join("first/validation/new.md")));
+        std::fs::remove_file(&content).unwrap();
+        std::os::unix::fs::symlink("second", &content).unwrap();
+        assert!(filter.relevant(&content));
+
+        let filter = fixture.filter();
+        std::fs::rename(fixture.0.join("second"), fixture.0.join("previous")).unwrap();
+        std::fs::create_dir(fixture.0.join("second")).unwrap();
+        assert!(filter.relevant(&fixture.0.join("second")));
+
+        let initial = Filter::of(&fixture.0, &fixture.project(), Read::default());
+        assert!(initial.relevant(&fixture.0.join("second/index.md")));
+    }
 
     fn files(entries: &[(&str, &str)]) -> BTreeMap<String, Arc<[u8]>> {
         entries
@@ -992,6 +1498,10 @@ mod tests {
     #[test]
     fn a_page_reloads_only_when_its_own_build_output_changed() {
         let mut state = State {
+            sequence: 0,
+            building: false,
+            phase: "render",
+            compile: serde_json::Value::Null,
             revision: 0,
             good: None,
             failed: false,
@@ -1062,7 +1572,12 @@ mod tests {
             config: root.join("rustify-docs.toml"),
             dirs: vec![root.join("content"), root.join("static")],
             files: [root.join("src/example.rs")].into_iter().collect(),
+            existence: BTreeMap::new(),
+            ancestors: BTreeMap::new(),
             ignored: vec![root.join("dist")],
+            rust_dirs: BTreeSet::new(),
+            rust_files: BTreeSet::new(),
+            build_dirs: BTreeSet::new(),
         };
         assert!(filter.relevant(&root.join("rustify-docs.toml")));
         assert!(filter.relevant(&root.join("content/guide/a.md")));
@@ -1094,6 +1609,7 @@ mod tests {
             Read {
                 files: vec![&includes, &referenced],
                 linked: Some(&linked),
+                ..Read::default()
             },
         );
         for path in [
@@ -1123,7 +1639,12 @@ mod tests {
             config: root.join("rustify-docs.toml"),
             dirs: vec![root.join("content")],
             files: BTreeSet::new(),
+            existence: BTreeMap::new(),
+            ancestors: BTreeMap::new(),
             ignored: vec![root.join("dist")],
+            rust_dirs: BTreeSet::new(),
+            rust_files: BTreeSet::new(),
+            build_dirs: BTreeSet::new(),
         };
         let event = |path: &str| {
             notify::Event::new(EventKind::Modify(ModifyKind::Any)).add_path(root.join(path))

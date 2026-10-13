@@ -1,0 +1,42 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-docs v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-docs)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 8.70s
+     Running tests/registered_generation.rs (target/debug/deps/registered_generation-239eef530cf49654)
+
+running 2 tests
+test a_hidden_only_source_image_candidate_hashes_its_url_without_renaming_the_selector ... FAILED
+test hidden_candidate_urls_keep_query_fragments_quoted_escapes_and_arbitrary_spaces ... FAILED
+
+failures:
+
+---- a_hidden_only_source_image_candidate_hashes_its_url_without_renaming_the_selector stdout ----
+
+thread 'a_hidden_only_source_image_candidate_hashes_its_url_without_renaming_the_selector' (39569096) panicked at crates/rustify-docs/tests/registered_generation.rs:410:5:
+assertion `left == right` failed
+  left: ["/docs/assets/files/hidden.c3df4b76c1.svg", "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23ffffff' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m3.5 8.5 3 3 6-7'/%3E%3C/svg%3E", "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23000000' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m3.5 8.5 3 3 6-7'/%3E%3C/svg%3E", "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23000000' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m3.5 8.5 3 3 6-7'/%3E%3C/svg%3E"]
+ right: ["/docs/assets/files/hidden.c3df4b76c1.svg"]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- hidden_candidate_urls_keep_query_fragments_quoted_escapes_and_arbitrary_spaces stdout ----
+
+thread 'hidden_candidate_urls_keep_query_fragments_quoted_escapes_and_arbitrary_spaces' (39569097) panicked at crates/rustify-docs/tests/registered_generation.rs:452:9:
+assertion `left == right` failed: bg-[url('static/hidden\_figure.svg?size=2#shape')]
+  left: ["/docs/assets/files/hidden_figure.c3df4b76c1.svg?size=2#shape", "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23ffffff' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m3.5 8.5 3 3 6-7'/%3E%3C/svg%3E", "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23000000' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m3.5 8.5 3 3 6-7'/%3E%3C/svg%3E", "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23000000' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m3.5 8.5 3 3 6-7'/%3E%3C/svg%3E"]
+ right: ["/docs/assets/files/hidden_figure.c3df4b76c1.svg?size=2#shape"]
+
+
+failures:
+    a_hidden_only_source_image_candidate_hashes_its_url_without_renaming_the_selector
+    hidden_candidate_urls_keep_query_fragments_quoted_escapes_and_arbitrary_spaces
+
+test result: FAILED. 0 passed; 2 failed; 0 ignored; 0 measured; 10 filtered out; finished in 0.18s
+
+error: test failed, to rerun pass `-p rustify-docs --test registered_generation`
+mbx[cache]: 0 hits, 0 misses, 2 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: 2.2 TiB logical of build debris binned so far. cargo clean remains unemployed.

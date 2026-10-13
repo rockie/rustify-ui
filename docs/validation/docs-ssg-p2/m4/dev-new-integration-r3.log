@@ -1,0 +1,55 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-docs-cli v0.1.7 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-docs-cli)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.81s
+     Running tests/dev.rs (target/debug/deps/dev-b9ecf4314d1ec1f1)
+
+running 14 tests
+test a_burst_of_saves_ends_on_the_last_one ... ok
+test a_busy_default_port_falls_back_and_a_busy_explicit_port_is_refused ... ok
+test a_failed_build_keeps_the_last_good_one_until_it_is_fixed ... ok
+test a_first_build_that_fails_shows_the_problems_until_one_builds ... ok
+test a_new_site_is_served_from_memory_and_nothing_is_written ... ok
+test a_panic_in_a_build_is_a_problem_and_the_session_goes_on ... ok
+test a_save_reloads_the_pages_it_changed_and_no_others ... ok
+test a_symlink_target_outside_the_snapshot_refreshes_and_recovers ... ok
+test an_image_outside_the_content_and_asset_directories_refreshes_its_page ... ok
+test dev_reads_the_configuration_it_is_given ... ok
+test drafts_are_shown_and_marked_and_a_link_to_one_is_a_warning ... ok
+test located_semantic_failures_keep_last_good_and_clear_after_repair ... mbx[progress]: 15s elapsed; 0 hits, 0 misses, 0 bypassed, 0 not looked up; ~0s compiler work saved
+ok
+test snapshot_attachment_symlinks_recover_without_a_markdown_save ... ok
+test without_rust_dev_stops_before_watching_or_listening ... ok
+
+test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 15.63s
+
+     Running tests/new_build.rs (target/debug/deps/new_build-b425cf70c8fe4699)
+
+running 6 tests
+test a_built_site_leaves_the_repository_clean_and_dated ... ok
+test a_failed_first_build_leaves_no_output ... ok
+test a_new_site_builds_and_nothing_is_compiled ... ok
+test help_and_generated_readme_pin_the_same_installable_source ... ok
+test new_writes_into_an_empty_directory_and_never_into_a_full_one ... ok
+test without_rust_new_stops_before_writing_anything ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.78s
+
+     Running tests/new_components.rs (target/debug/deps/new_components-6bfbaf717a030c52)
+
+running 5 tests
+test components_never_write_into_a_nonempty_directory ... ok
+test components_require_wasm_std_from_the_active_compiler_before_directory_checks ... ok
+test components_ship_a_complete_paired_lock_or_refuse_without_writing ... ok
+test components_toolchain_check_handles_an_unsupported_target_query ... ok
+test components_without_rust_stop_before_checking_the_directory ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.14s
+
+mbx[cache]: 0 hits, 0 misses, 4 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: 57328 compilations served. ask rustc how many it remembers doing.

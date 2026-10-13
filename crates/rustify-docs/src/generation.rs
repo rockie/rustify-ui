@@ -139,6 +139,10 @@ pub struct Extensions {
     pub files: BTreeMap<String, Arc<[u8]>>,
     pub candidates: BTreeSet<String>,
     pub css: String,
+    /// Optional validated @theme mappings consumed by the utility compiler.
+    pub theme_utilities: String,
+    /// Native CSS projected after the reading theme's incumbent defaults.
+    pub theme_css: String,
     /// A project-relative resource path, loaded only by pages with islands.
     pub island_script: Option<String>,
     /// Routes where registered views produced an interactive island.
@@ -151,16 +155,7 @@ pub fn resolved_articles(
     snapshot: &Snapshot,
     analysis: &Analysis,
 ) -> BTreeMap<String, String> {
-    let site = Site {
-        name: project.config.site.name.clone(),
-        lang: project.config.site.lang.clone(),
-        base: project.config.site.base.clone(),
-        nav: Vec::new(),
-        top: Vec::new(),
-        social: Vec::new(),
-        assets: AssetUrls::default(),
-        logo: None,
-    };
+    let site = link_site(project);
     let mut outputs = BTreeMap::new();
     let mut sizes = BTreeMap::new();
     for path in &analysis.resources {
@@ -186,6 +181,37 @@ pub fn resolved_articles(
             )
         })
         .collect()
+}
+
+fn link_site(project: &Project) -> Site {
+    Site {
+        name: project.config.site.name.clone(),
+        lang: project.config.site.lang.clone(),
+        base: project.config.site.base.clone(),
+        nav: Vec::new(),
+        top: Vec::new(),
+        social: Vec::new(),
+        assets: AssetUrls::default(),
+        logo: None,
+    }
+}
+
+pub(crate) fn source_fragment(
+    project: &Project,
+    analysis: &Analysis,
+    fragment: &crate::markdown::Fragment,
+    targets: &[Target],
+) -> String {
+    // Resource paths stay project-relative until the enclosing surface enters
+    // the common resource graph; page and repository links are already resolved.
+    resolve_fragment(
+        analysis,
+        fragment,
+        targets,
+        &link_site(project),
+        |file| Some(file.to_owned()),
+        &BTreeMap::new(),
+    )
 }
 
 /// Where a file the pages reference is published: under `assets/files/`,
@@ -231,20 +257,37 @@ pub fn article(
     sizes: &BTreeMap<String, Size>,
 ) -> String {
     let page = &analysis.pages[index];
-    let fragment = &page.fragment;
+    resolve_fragment(
+        analysis,
+        &page.fragment,
+        &page.targets,
+        site,
+        |file| {
+            outputs
+                .get(file)
+                .map(|output| site.url(&format!("/{output}")))
+        },
+        sizes,
+    )
+}
+
+/// Resolves the same checked URL slots for an article or a layout surface.
+fn resolve_fragment(
+    analysis: &Analysis,
+    fragment: &crate::markdown::Fragment,
+    targets: &[Target],
+    site: &Site,
+    published: impl Fn(&str) -> Option<String>,
+    sizes: &BTreeMap<String, Size>,
+) -> String {
     let html = &fragment.html;
     let mut slots: Vec<&crate::markdown::Slot> = fragment.slots.iter().collect();
     slots.sort_by_key(|slot| slot.html.start);
     let mut out = String::with_capacity(html.len() + 64);
     let mut at = 0;
-    let published = |file: &str| {
-        outputs
-            .get(file)
-            .map(|output| site.url(&format!("/{output}")))
-    };
     for slot in slots {
-        let reference = &page.fragment.references[slot.reference];
-        let url = match &page.targets[slot.reference] {
+        let reference = &fragment.references[slot.reference];
+        let url = match &targets[slot.reference] {
             Target::Keep => continue,
             Target::Page {
                 page: target,
@@ -318,7 +361,7 @@ pub fn article(
                     let url = candidate
                         .file
                         .as_deref()
-                        .and_then(published)
+                        .and_then(&published)
                         .map(|url| url + url_suffix(&candidate.url))
                         .unwrap_or_else(|| candidate.url.clone());
                     escape_url_into(&mut out, &url);
@@ -337,6 +380,81 @@ pub fn article(
     }
     out.push_str(&html[at..]);
     out
+}
+
+fn layout_slots(
+    analysis: &Analysis,
+    route: &str,
+    site: &Site,
+    outputs: &BTreeMap<String, String>,
+    sizes: &BTreeMap<String, Size>,
+) -> shell::LayoutSlots {
+    analysis
+        .slots
+        .get(route)
+        .into_iter()
+        .flat_map(|slots| slots.iter())
+        .map(|(slot, content)| {
+            (
+                *slot,
+                resolve_fragment(
+                    analysis,
+                    &content.fragment,
+                    &content.targets,
+                    site,
+                    |file| {
+                        outputs
+                            .get(file)
+                            .map(|output| site.url(&format!("/{output}")))
+                    },
+                    sizes,
+                ),
+            )
+        })
+        .collect()
+}
+
+/// Source literals remain class selectors when a hidden browser view appears.
+fn resolve_candidate_css(
+    css: &mut String,
+    analysis: &Analysis,
+    site: &Site,
+    outputs: &BTreeMap<String, String>,
+) {
+    if analysis.candidate_urls.is_empty() {
+        return;
+    }
+    for (written, range) in style::url_ranges(css, false).into_iter().rev() {
+        let Some(Target::Resource(path)) = analysis.candidate_urls.get(&written) else {
+            continue;
+        };
+        let Some(output) = outputs.get(path) else {
+            continue;
+        };
+        let url = site.url(&format!("/{output}")) + url_suffix(&written);
+        let mut escaped = String::new();
+        for character in url.chars() {
+            if character.is_ascii_whitespace() || matches!(character, '\'' | '"' | '(' | ')' | '\\')
+            {
+                escaped.push_str(&format!("%{:02X}", character as u32));
+            } else {
+                escaped.push(character);
+            }
+        }
+        css.replace_range(range, &escaped);
+    }
+}
+
+fn island_module(html: &mut String, route: &str, site: &Site, extensions: &Extensions) {
+    if !extensions.island_routes.contains(route) {
+        return;
+    }
+    if let Some(script) = &extensions.island_script {
+        let mut tag = String::from("<script type=\"module\" data-rd-islands-module src=\"");
+        escape_url_into(&mut tag, &site.url(&format!("/{script}")));
+        tag.push_str("\"></script>");
+        *html = html.replacen("</body>", &format!("{tag}</body>"), 1);
+    }
 }
 
 /// Where a resolved target, written as `written`, points: a URL for this
@@ -426,8 +544,17 @@ fn document_titles(
     };
     let mut titles = BTreeMap::new();
     for (title, pages) in by_title {
-        if pages.len() == 1 {
-            titles.insert(pages[0], title);
+        if pages.len() == 1
+            || pages.iter().any(|&i| {
+                matches!(
+                    analysis.pages[i].origin,
+                    crate::content::PageOrigin::Registered(_)
+                )
+            })
+        {
+            for i in pages {
+                titles.insert(i, title.clone());
+            }
             continue;
         }
         let qualified: Vec<(usize, String)> = pages
@@ -457,6 +584,151 @@ fn document_titles(
         }
     }
     titles
+}
+
+fn title_diagnostics(
+    analysis: &Analysis,
+    titles: &BTreeMap<usize, String>,
+    site: &Site,
+) -> Vec<Diagnostic> {
+    let mut groups = BTreeMap::<&str, Vec<usize>>::new();
+    for (&i, title) in titles {
+        groups.entry(title).or_default().push(i);
+    }
+    let (labels, _) = crate::labels::for_lang(&site.lang);
+    let not_found = format!("{} | {}", labels.not_found_title, site.name);
+    groups.into_iter().filter_map(|(title, pages)| {
+        let registered = pages.iter().find(|&&i| matches!(analysis.pages[i].origin, crate::content::PageOrigin::Registered(_)))?;
+        if pages.len() == 1 && title != not_found { return None; }
+        let routes = pages.iter().map(|&i| analysis.pages[i].route.as_str()).collect::<Vec<_>>().join(", ");
+        Some(Diagnostic::in_file(&analysis.pages[*registered].file, Severity::Error,
+            "document-title", format!("registered page document title `{title}` is duplicated by {routes}{}; give the page a unique title", if title == not_found { " and the generated not-found page" } else { "" })))
+    }).collect()
+}
+
+fn insert_output(
+    files: &mut BTreeMap<String, Arc<[u8]>>,
+    path: String,
+    bytes: Arc<[u8]>,
+) -> Result<(), Vec<Diagnostic>> {
+    match files.entry(path) {
+        std::collections::btree_map::Entry::Vacant(entry) => {
+            entry.insert(bytes);
+            Ok(())
+        }
+        std::collections::btree_map::Entry::Occupied(entry) => Err(vec![Diagnostic::in_file(
+            entry.key(),
+            Severity::Error,
+            "output-conflict",
+            "two generated or authored files have the same published path",
+        )]),
+    }
+}
+
+/// Check the actual document trees and the entire output namespace together.
+fn final_documents(
+    files: &BTreeMap<String, Arc<[u8]>>,
+    sources: &BTreeMap<String, String>,
+    site: &Site,
+) -> Vec<Diagnostic> {
+    let mut problems = Vec::new();
+    for path in files.keys() {
+        let mut parent = path.as_str();
+        while let Some((prefix, _)) = parent.rsplit_once('/') {
+            if files.contains_key(prefix) {
+                problems.push(Diagnostic::in_file(
+                    sources.get(path).map_or(path.as_str(), String::as_str),
+                    Severity::Error,
+                    "output-conflict",
+                    format!("published file `{prefix}` is also a directory required by `{path}`"),
+                ));
+            }
+            parent = prefix;
+        }
+    }
+    let mut urls = BTreeMap::new();
+    for path in files.keys() {
+        urls.insert(
+            crate::content::percent_decode(&site.url(&format!("/{path}"))),
+            path.as_str(),
+        );
+        if let Some(directory) = path.strip_suffix("index.html") {
+            let route = crate::content::percent_decode(&site.url(&format!("/{directory}")));
+            urls.insert(route.trim_end_matches('/').to_owned(), path.as_str());
+            urls.insert(route, path.as_str());
+        }
+    }
+    let mut ids = BTreeMap::new();
+    for (path, source) in sources {
+        let html = String::from_utf8_lossy(&files[path]);
+        let mut found = BTreeSet::new();
+        for id in crate::html_check::ids(&html) {
+            if !found.insert(id.clone()) {
+                problems.push(Diagnostic::in_file(
+                    source,
+                    Severity::Error,
+                    "output-check",
+                    format!("generated `{path}` has duplicate document id `#{id}`"),
+                ));
+            }
+        }
+        ids.insert(path.as_str(), found);
+    }
+    for (path, source) in sources {
+        let html = String::from_utf8_lossy(&files[path]);
+        let (_, slots) = crate::html_check::check_rendered(&html);
+        for slot in slots {
+            let references = if slot.role == crate::html_check::UrlRole::Srcset {
+                crate::html_check::parse_srcset(&slot.value)
+                    .into_iter()
+                    .map(|(url, _)| url)
+                    .collect()
+            } else {
+                vec![slot.value]
+            };
+            for url in references {
+                let url = url.trim();
+                if url.starts_with("//") || crate::content::has_scheme(url) {
+                    continue;
+                }
+                let (location, fragment) = url
+                    .split_once('#')
+                    .map_or((url, None), |(path, anchor)| (path, Some(anchor)));
+                let location = location.split('?').next().unwrap_or_default();
+                let target = if location.is_empty() {
+                    Some(path.as_str())
+                } else {
+                    let location = crate::content::percent_decode(location);
+                    let absolute = if location.starts_with('/') {
+                        Some(location)
+                    } else {
+                        let current = site.url(&format!("/{path}"));
+                        let directory = current.rsplit_once('/').map_or("", |(dir, _)| dir);
+                        crate::content::join(directory, &location).map(|path| format!("/{path}"))
+                    };
+                    absolute
+                        .as_ref()
+                        .and_then(|absolute| urls.get(absolute).copied())
+                };
+                let missing = match target {
+                    None => Some(format!("references `{url}`, which is not a file or route the site publishes")),
+                    Some(target) => fragment.filter(|anchor| !anchor.is_empty()).and_then(|anchor| {
+                        let anchor = crate::content::percent_decode(anchor);
+                        ids.get(target).filter(|ids| !ids.contains(&anchor)).map(|_| format!("references `{url}`, but the final `{target}` document has no id `#{anchor}`"))
+                    }),
+                };
+                if let Some(missing) = missing {
+                    problems.push(Diagnostic::in_file(
+                        source,
+                        Severity::Error,
+                        "output-check",
+                        format!("generated `{path}` {missing}"),
+                    ));
+                }
+            }
+        }
+    }
+    problems
 }
 
 /// The site's sitemap: every published page that may be indexed.
@@ -557,7 +829,9 @@ pub fn generate_extended(
     let assets_prefix = format!("{}/", config.assets_dir);
     for (path, bytes) in &snapshot.files {
         if let Some(output) = path.strip_prefix(&assets_prefix) {
-            if !crate::content::is_private(path) {
+            if !crate::content::is_private(path)
+                && !crate::content::is_theme_document(project, path)
+            {
                 files.insert(output.to_owned(), bytes.clone());
             }
         }
@@ -582,14 +856,7 @@ pub fn generate_extended(
         files.insert(output, bytes);
     }
     for (path, bytes) in &extensions.files {
-        if files.insert(path.clone(), bytes.clone()).is_some() {
-            return Err(vec![Diagnostic::in_file(
-                path,
-                Severity::Error,
-                "output-conflict",
-                "a framework asset would replace another published file",
-            )]);
-        }
+        insert_output(&mut files, path.clone(), bytes.clone())?;
     }
     site.logo = config.logo.as_ref().and_then(|logo| {
         let url = |path: &String| {
@@ -632,6 +899,7 @@ pub fn generate_extended(
         .filter(|&i| analysis.mode == crate::content::Mode::Dev || !analysis.pages[i].draft)
         .collect();
     let titles = document_titles(analysis, &published, &site.name);
+    let mut problems = title_diagnostics(analysis, &titles, &site);
     let edit_prefix = config.repo.as_ref().and_then(|repo| {
         let edit = repo.edit_url.as_ref()?;
         let path = if repo.path.is_empty() {
@@ -649,7 +917,15 @@ pub fn generate_extended(
                 .get(&page.route)
                 .cloned()
                 .unwrap_or_else(|| article(analysis, i, &site, &outputs, &sizes));
-            let home = (page.front.layout == Layout::Home).then(|| {
+            let custom_home = page.route == "/"
+                && matches!(page.origin, crate::content::PageOrigin::Registered(_));
+            let home = (page.front.layout == Layout::Home || custom_home).then(|| {
+                if custom_home {
+                    return Home {
+                        custom: true,
+                        ..Home::default()
+                    };
+                }
                 // The hero carries the page's one H1; a leading `# Title` in
                 // the Markdown is that title, not a second heading.
                 if page.fragment.leading_h1.is_some() {
@@ -659,6 +935,7 @@ pub fn generate_extended(
                     }
                 }
                 Home {
+                    custom: false,
                     heading_id: page
                         .fragment
                         .leading_h1
@@ -693,7 +970,8 @@ pub fn generate_extended(
             let edit_url = edit_prefix
                 .as_ref()
                 .map(|prefix| format!("{prefix}{}", page.file));
-            let mut html = shell::render_page(
+            let slots = layout_slots(analysis, &page.route, &site, &outputs, &sizes);
+            let mut html = shell::render_page_with_slots(
                 &site,
                 &Page {
                     route: &page.route,
@@ -704,7 +982,8 @@ pub fn generate_extended(
                     draft: page.draft,
                     article: &article,
                     headings: &page.fragment.headings,
-                    article_has_h1: page.fragment.h1_count > 0 || home.is_some(),
+                    article_has_h1: page.fragment.h1_count > 0
+                        || home.as_ref().is_some_and(|home| !home.custom),
                     toc_levels: levels,
                     meta: Meta {
                         canonical: canonical.as_deref(),
@@ -716,21 +995,16 @@ pub fn generate_extended(
                     },
                     home,
                 },
+                &slots,
             );
-            if extensions.island_routes.contains(&page.route) {
-                if let Some(script) = &extensions.island_script {
-                    let mut tag =
-                        String::from("<script type=\"module\" data-rd-islands-module src=\"");
-                    escape_url_into(&mut tag, &site.url(&format!("/{script}")));
-                    tag.push_str("\"></script>");
-                    html = html.replacen("</body>", &format!("{tag}</body>"), 1);
-                }
-            }
+            island_module(&mut html, &page.route, &site, extensions);
             let mut classes = BTreeSet::new();
             crate::classes::collect(&html, &mut classes);
             (page_path(&page.route), html, classes)
         });
-    let not_found = shell::render_not_found(&site);
+    let slots = layout_slots(analysis, "/404/", &site, &outputs, &sizes);
+    let mut not_found = shell::render_not_found_with_slots(&site, &slots);
+    island_module(&mut not_found, "/404/", &site, extensions);
     let mut candidates: BTreeSet<String> = crate::classes::SCRIPT_STATE_CLASSES
         .iter()
         .map(|class| class.to_string())
@@ -747,7 +1021,13 @@ pub fn generate_extended(
         },
         None => Brand::default(),
     };
-    let mut css = style::site_css(&candidates, &brand).map_err(|error| {
+    let mut css = style::site_css_with_theme(
+        &candidates,
+        &brand,
+        &extensions.theme_utilities,
+        &extensions.theme_css,
+    )
+    .map_err(|error| {
         vec![Diagnostic::general(
             Severity::Error,
             "stylesheet",
@@ -755,6 +1035,7 @@ pub fn generate_extended(
         )]
     })?;
     css.push_str(&extensions.css);
+    resolve_candidate_css(&mut css, analysis, &site, &outputs);
     // Check the actual generation, rather than a path prefix that a
     // missing file could share. Document fragments were checked per page.
     let published_urls: BTreeSet<String> = files
@@ -763,11 +1044,25 @@ pub fn generate_extended(
         .collect();
     let fragments: BTreeSet<&str> = analysis
         .published()
-        .flat_map(|page| &page.fragment.references)
+        .map(|page| page.fragment.as_ref())
+        .chain(
+            analysis
+                .slots
+                .values()
+                .flat_map(|slots| slots.values().map(|slot| slot.fragment.as_ref())),
+        )
+        .flat_map(|fragment| &fragment.references)
         .filter(|reference| {
             reference.kind == RefKind::ClassImage && reference.destination.starts_with('#')
         })
         .map(|reference| reference.destination.as_str())
+        .chain(
+            analysis
+                .candidate_urls
+                .keys()
+                .filter(|url| url.starts_with('#'))
+                .map(String::as_str),
+        )
         .collect();
     let strays: Vec<Diagnostic> = style::urls(&css)
         .into_iter()
@@ -801,7 +1096,21 @@ pub fn generate_extended(
             let problems = crate::html_check::check_document(&html);
             (path.clone(), Arc::from(html.into_bytes()), problems)
         });
-    let mut problems = Vec::new();
+    let mut sources: BTreeMap<String, String> = published
+        .iter()
+        .map(|&i| {
+            let page = &analysis.pages[i];
+            (page_path(&page.route), page.file.clone())
+        })
+        .collect();
+    sources.insert(
+        "404.html".into(),
+        config
+            .rust
+            .as_ref()
+            .map_or("404.html", |rust| rust.registry.as_str())
+            .to_owned(),
+    );
     let page_count = pages.len();
     for (path, bytes, found) in pages {
         for problem in found {
@@ -812,26 +1121,42 @@ pub fn generate_extended(
                 format!("the generated page has {problem}"),
             ));
         }
-        files.insert(path, bytes);
+        insert_output(&mut files, path, bytes)?;
     }
     if !problems.is_empty() {
         return Err(problems);
     }
-    files.insert(stylesheet_path.clone(), Arc::from(css.into_bytes()));
-    files.insert(mode_path, Arc::from(MODE_SCRIPT.as_bytes()));
-    files.insert(site_path, Arc::from(SITE_SCRIPT.as_bytes()));
+    insert_output(
+        &mut files,
+        stylesheet_path.clone(),
+        Arc::from(css.into_bytes()),
+    )?;
+    insert_output(&mut files, mode_path, Arc::from(MODE_SCRIPT.as_bytes()))?;
+    insert_output(&mut files, site_path, Arc::from(SITE_SCRIPT.as_bytes()))?;
 
     // The files a host and its crawlers look for at the root.
     let absolute_route = |route: &str| absolute(&site.url(route)).unwrap_or_default();
     let mut robots = String::from("User-agent: *\nAllow: /\n");
     if origin.is_some() {
         let xml = sitemap(analysis, &published, &absolute_route, dates);
-        files.insert("sitemap.xml".to_owned(), Arc::from(xml.into_bytes()));
+        insert_output(
+            &mut files,
+            "sitemap.xml".to_owned(),
+            Arc::from(xml.into_bytes()),
+        )?;
         robots.push_str(&format!("\nSitemap: {}\n", absolute_route("/sitemap.xml")));
     }
-    files.insert("robots.txt".to_owned(), Arc::from(robots.into_bytes()));
+    insert_output(
+        &mut files,
+        "robots.txt".to_owned(),
+        Arc::from(robots.into_bytes()),
+    )?;
     // GitHub Pages runs Jekyll on a branch unless told not to.
-    files.insert(".nojekyll".to_owned(), Arc::from(&b""[..]));
+    insert_output(&mut files, ".nojekyll".to_owned(), Arc::from(&b""[..]))?;
+    problems.extend(final_documents(&files, &sources, &site));
+    if !problems.is_empty() {
+        return Err(problems);
+    }
     Ok(Generation {
         files,
         stylesheet_path,
@@ -847,6 +1172,14 @@ pub const DEV_SHELL_PAGE: &str = "index.html";
 /// (at [`DEV_SHELL_PAGE`]) with the stylesheet and scripts it needs, under
 /// the configuration's base and in its language and colours.
 pub fn dev_shell(project: &Project) -> Result<Generation, Vec<Diagnostic>> {
+    dev_shell_with_status(project, false)
+}
+
+/// A static first-build page using the same assets as the diagnostic shell.
+pub fn dev_shell_with_status(
+    project: &Project,
+    building: bool,
+) -> Result<Generation, Vec<Diagnostic>> {
     let config = &project.config;
     let mode_path = format!("assets/mode.{}.js", fingerprint(MODE_SCRIPT.as_bytes()));
     let site_path = format!("assets/site.{}.js", fingerprint(SITE_SCRIPT.as_bytes()));
@@ -866,7 +1199,7 @@ pub fn dev_shell(project: &Project) -> Result<Generation, Vec<Diagnostic>> {
         site_script: site.url(&format!("/{site_path}")),
         dev: true,
     };
-    let html = shell::render_dev_shell(&site);
+    let html = shell::render_dev_shell_with_status(&site, building);
     let mut candidates: BTreeSet<String> = crate::classes::SCRIPT_STATE_CLASSES
         .iter()
         .map(|class| class.to_string())

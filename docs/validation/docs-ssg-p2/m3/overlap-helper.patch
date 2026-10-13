@@ -1,0 +1,110 @@
+--- a/crates/rustify-docs-cli/src/rust_site.rs
++++ b/crates/rustify-docs-cli/src/rust_site.rs
+@@ -310,15 +310,60 @@
+         false,
+         metadata.as_ref(),
+     );
+-    let wasm = cargo_build(
+-        &compiler,
+-        &manifest_path,
+-        &target,
+-        &project_root,
+-        wasm_profile,
+-        true,
+-        metadata.as_ref(),
+-    );
++    // The immutable host artifact can describe itself while Cargo builds the
++    // wasm target. Both compilers remain serial; nothing from this worker is
++    // used until both builds and the captured-input checks have succeeded.
++    let (wasm, description) = std::thread::scope(|scope| {
++        let description = match (&host.artifact, &snapshot) {
++            (Some(artifact), Some(snapshot))
++                if host.timing.success
++                    && !diagnostics
++                        .iter()
++                        .chain(&host.diagnostics)
++                        .any(|diagnostic| diagnostic.severity == Severity::Error) =>
++            {
++                Some(
++                    std::thread::Builder::new()
++                        .name("rustify-docs-describe".into())
++                        .spawn_scoped(scope, || -> Result<_, String> {
++                            let helper = immutable_helper(&cache, artifact)?;
++                            let response = invoke_helper(
++                                &helper,
++                                &project_root,
++                                &HelperRequest {
++                                    protocol_version: PROTOCOL_VERSION,
++                                    generation: snapshot.digest.clone(),
++                                    operation: HelperOperation::Describe,
++                                },
++                            )?;
++                            let HelperResult::Describe { description } = response.result else {
++                                return Err(
++                                    "helper returned render data for a describe request".into()
++                                );
++                            };
++                            Ok((helper, description))
++                        }),
++                )
++            }
++            _ => None,
++        };
++        let wasm = cargo_build(
++            &compiler,
++            &manifest_path,
++            &target,
++            &project_root,
++            wasm_profile,
++            true,
++            metadata.as_ref(),
++        );
++        let description = description.map(|worker| {
++            worker
++                .map_err(|error| format!("cannot prepare docs-render on a thread: {error}"))?
++                .join()
++                .map_err(|_| "docs-render preparation thread failed".to_string())?
++        });
++        (wasm, description)
++    });
+     diagnostics.extend(host.diagnostics);
+     diagnostics.extend(wasm.diagnostics);
+     if let Err(error) = inputs.discover_build_inputs() {
+@@ -337,13 +382,9 @@
+     {
+         return (None, diagnostics);
+     }
+-    let (Some(declaration), Some(metadata), Some(snapshot), Some(helper), Some(wasm_path)) = (
+-        declaration,
+-        metadata,
+-        snapshot,
+-        host.artifact,
+-        wasm.artifact,
+-    ) else {
++    let (Some(declaration), Some(metadata), Some(snapshot), Some(description), Some(wasm_path)) =
++        (declaration, metadata, snapshot, description, wasm.artifact)
++    else {
+         diagnostics.push(failure(
+             "rust-artifact",
+             "Cargo succeeded without the expected docs-render executable and cdylib wasm artifacts",
+@@ -352,19 +393,7 @@
+     };
+     let generation = snapshot.digest.clone();
+     let result = (|| -> Result<Prepared, String> {
+-        let helper = immutable_helper(&cache, &helper)?;
+-        let response = invoke_helper(
+-            &helper,
+-            &project_root,
+-            &HelperRequest {
+-                protocol_version: PROTOCOL_VERSION,
+-                generation: generation.clone(),
+-                operation: HelperOperation::Describe,
+-            },
+-        )?;
+-        let HelperResult::Describe { description } = response.result else {
+-            return Err("helper returned render data for a describe request".to_string());
+-        };
++        let (helper, description) = description?;
+         let manifest = declaration.manifest();
+         let runtime = validate_description(&description, &manifest, &metadata.framework_release)?;
+         let mut candidates: BTreeSet<String> =

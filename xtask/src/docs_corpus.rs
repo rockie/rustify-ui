@@ -23,7 +23,8 @@ use crate::option;
 
 const USAGE: &str = "\
 mbx xtask docs-corpus --profile                 refreeze tests/docs-ssg/b-profile.json from docs/*.md
-mbx xtask docs-corpus --out <dir> [--seed <n>]  write reference site B into an empty or absent <dir>";
+mbx xtask docs-corpus --out <dir> [--seed <n>]  write reference site B into an empty or absent <dir>
+mbx xtask docs-corpus --p2 --out <dir> [--seed <n>]  add twelve four-island measurement candidates";
 
 /// The twelve guides the PRD names, in its order.
 pub const GUIDES: [&str; 12] = [
@@ -47,6 +48,43 @@ pub const DEFAULT_SEED: u64 = 0x5eed_b500;
 const GENERATOR_VERSION: u32 = 2;
 const PAGES_PER_LANGUAGE: usize = 250;
 const GROUPS: usize = 10;
+const P2_GENERATOR_VERSION: u32 = 1;
+const P2_RNG_STREAM: u64 = 0x7032_5f69_736c_616e;
+const P2_FIXTURE: &str = "tests/docs-ssg/fixtures/components";
+const P2_TEMPLATE_FILES: [&str; 5] = [
+    "src/catalog.rs",
+    "src/demos.rs",
+    "src/bin/docs-render.rs",
+    "Cargo.toml",
+    "Cargo.lock",
+];
+
+const P2_LIBRARY: &str = r##"#![recursion_limit = "256"]
+
+use rustify_docs::SiteRegistry;
+
+mod catalog;
+pub mod demos;
+
+pub fn site() -> SiteRegistry {
+    rustify_docs::site! {
+        components {
+            Counter { initial: i32 = 2, label: String = "Counter".to_string() } =>
+                |props, children| demos::counter(props.initial, props.label, children),
+        }
+        demos {
+            CatalogProxy => crate::demos::catalog_proxy,
+        }
+    }
+}
+
+#[cfg(all(feature = "hydrate", target_arch = "wasm32"))]
+#[wasm_bindgen::prelude::wasm_bindgen]
+pub fn docs_hydrate() -> Result<(), wasm_bindgen::JsValue> {
+    rustify_docs::hydrate_site(site())
+        .map_err(|error| wasm_bindgen::JsValue::from_str(&error.to_string()))
+}
+"##;
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(tag = "kind", rename_all = "snake_case")]
@@ -107,7 +145,13 @@ pub struct Profile {
 
 pub fn run(args: &[String]) -> Result<(), String> {
     let root = crate::build::repo_root();
+    let p2 = args.iter().any(|a| a == "--p2");
     if args.iter().any(|a| a == "--profile") {
+        if p2 {
+            return Err(
+                "--p2 uses the frozen P1 profile; it cannot be combined with --profile".into(),
+            );
+        }
         let profile = profile(&root)?;
         let json = serde_json::to_string_pretty(&profile).map_err(|e| e.to_string())? + "\n";
         std::fs::create_dir_all(root.join("tests/docs-ssg")).map_err(|e| e.to_string())?;
@@ -125,13 +169,21 @@ pub fn run(args: &[String]) -> Result<(), String> {
             .map_err(|_| format!("--seed {seed}: not a number"))?,
         None => DEFAULT_SEED,
     };
-    let manifest = generate(&root, Path::new(out), seed)?;
-    println!(
-        "reference site B: {} pages, {} files, digest {} (seed {seed:#x}) in {out}",
-        manifest.pages,
-        manifest.files.len(),
-        manifest.digest
-    );
+    if p2 {
+        let manifest = generate_p2(&root, Path::new(out), seed)?;
+        println!(
+            "reference site B P2: {} pages ({} baseline + {} demo candidates), {} files, digest {} (seed {seed:#x}) in {out}",
+            manifest.pages, manifest.baseline_pages, manifest.demo_pages.len(), manifest.files.len(), manifest.digest,
+        );
+    } else {
+        let manifest = generate(&root, Path::new(out), seed)?;
+        println!(
+            "reference site B: {} pages, {} files, digest {} (seed {seed:#x}) in {out}",
+            manifest.pages,
+            manifest.files.len(),
+            manifest.digest
+        );
+    }
     Ok(())
 }
 
@@ -795,6 +847,18 @@ fn config() -> String {
 
 const LOGO: &str = "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\"><rect width=\"32\" height=\"32\" rx=\"6\" fill=\"#175cd3\"/><path d=\"M9 22V10h8a4 4 0 0 1 0 8h-8\" fill=\"none\" stroke=\"#fff\" stroke-width=\"3\"/></svg>\n";
 
+fn baseline_files(profile: &Profile, slots: &[PageSlot], seed: u64) -> BTreeMap<String, Vec<u8>> {
+    let mut files = BTreeMap::new();
+    let mut rng = Rng(seed);
+    for slot in slots {
+        let text = page(profile, slot, slots, &mut rng);
+        files.insert(format!("content/{}", slot.path), text.into_bytes());
+    }
+    files.insert("rustify-docs.toml".into(), config().into_bytes());
+    files.insert("static/logo.svg".into(), LOGO.as_bytes().to_vec());
+    files
+}
+
 pub fn generate(root: &Path, out: &Path, seed: u64) -> Result<Manifest, String> {
     let profile_text = std::fs::read_to_string(root.join(PROFILE))
         .map_err(|e| format!("{PROFILE}: {e}; run `mbx xtask docs-corpus --profile` first"))?;
@@ -815,15 +879,8 @@ pub fn generate(root: &Path, out: &Path, seed: u64) -> Result<Manifest, String> 
     {
         return Err(format!("{} is not empty", out.display()));
     }
-    let mut files: BTreeMap<String, Vec<u8>> = BTreeMap::new();
     let slots = slots();
-    let mut rng = Rng(seed);
-    for slot in &slots {
-        let text = page(&profile, slot, &slots, &mut rng);
-        files.insert(format!("content/{}", slot.path), text.into_bytes());
-    }
-    files.insert("rustify-docs.toml".into(), config().into_bytes());
-    files.insert("static/logo.svg".into(), LOGO.as_bytes().to_vec());
+    let files = baseline_files(&profile, &slots, seed);
     let mut digests = BTreeMap::new();
     let mut all = Sha256::new();
     for (path, bytes) in &files {
@@ -854,9 +911,410 @@ pub fn generate(root: &Path, out: &Path, seed: u64) -> Result<Manifest, String> 
     Ok(manifest)
 }
 
+/// One P2 candidate's source and canonical route; each contains four islands.
+#[derive(Debug, Serialize)]
+pub struct P2Page {
+    pub path: String,
+    pub route: String,
+    pub guide: String,
+}
+
+/// The P2 addition has its own identity; it never rewrites the P1 manifest contract.
+#[derive(Debug, Serialize)]
+pub struct P2Manifest {
+    pub generator_version: u32,
+    pub baseline_generator_version: u32,
+    pub baseline_pages: usize,
+    pub baseline_digest: String,
+    pub seed: u64,
+    pub profile_sha256: String,
+    pub pages: usize,
+    pub languages: BTreeMap<String, usize>,
+    pub demo_pages: Vec<P2Page>,
+    /// Original measurement fixture inputs, before SDK dependency projection.
+    pub template_sha256: BTreeMap<String, String>,
+    /// The actual paired CLI/framework identities; absent for development paths.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub framework_pair: Option<BTreeMap<String, String>>,
+    pub lock_sha256: String,
+    /// Every generated author input, excluding this manifest itself.
+    pub files: BTreeMap<String, String>,
+    /// SHA-256 over every `path sha256` line, in path order.
+    pub digest: String,
+}
+
+fn fingerprints(files: &BTreeMap<String, Vec<u8>>) -> (BTreeMap<String, String>, String) {
+    let mut digests = BTreeMap::new();
+    let mut all = Sha256::new();
+    for (path, bytes) in files {
+        let digest = sha256_hex(bytes);
+        all.update(format!("{path} {digest}\n").as_bytes());
+        digests.insert(path.clone(), digest);
+    }
+    (digests, format!("{:x}", all.finalize()))
+}
+
+/// Writes an independent Rust author project for the B island measurements.
+/// Its original 500 content files are identical to P1; twelve English guide
+/// skeletons add the fixture's CatalogProxy and three matching Counter islands.
+pub fn generate_p2(root: &Path, out: &Path, seed: u64) -> Result<P2Manifest, String> {
+    if out.exists()
+        && std::fs::read_dir(out)
+            .map_err(|e| e.to_string())?
+            .next()
+            .is_some()
+    {
+        return Err(format!("{} is not empty", out.display()));
+    }
+    let profile_bytes = std::fs::read(root.join(PROFILE))
+        .map_err(|e| format!("{PROFILE}: {e}; use the frozen P1 profile"))?;
+    let profile: Profile =
+        serde_json::from_slice(&profile_bytes).map_err(|e| format!("{PROFILE}: {e}"))?;
+    if profile.guides.len() != GUIDES.len() {
+        return Err(format!(
+            "{PROFILE} has {} guides, not {}",
+            profile.guides.len(),
+            GUIDES.len()
+        ));
+    }
+    let base_slots = slots();
+    let mut files = baseline_files(&profile, &base_slots, seed);
+    let baseline_digest = fingerprints(&files).1;
+    let fixture = root.join(P2_FIXTURE);
+    let mut template_sha256 = BTreeMap::new();
+    for path in P2_TEMPLATE_FILES {
+        let mut bytes =
+            std::fs::read(fixture.join(path)).map_err(|e| format!("{P2_FIXTURE}/{path}: {e}"))?;
+        let digest = sha256_hex(&bytes);
+        template_sha256.insert(format!("{P2_FIXTURE}/{path}"), digest);
+        if path == "Cargo.toml" {
+            let mut cargo =
+                String::from_utf8(bytes).map_err(|e| format!("{P2_FIXTURE}/{path}: {e}"))?;
+            for library in ["rustify-ui", "rustify-components", "rustify-docs"] {
+                let old = format!("path = \"../../../../crates/{library}\"");
+                if cargo.matches(&old).count() != 1 {
+                    return Err(format!(
+                        "{P2_FIXTURE}/Cargo.toml must contain exactly one SDK path for {library}"
+                    ));
+                }
+                let sdk = std::fs::canonicalize(root.join("crates").join(library))
+                    .map_err(|e| format!("the local {library} SDK path cannot be resolved: {e}"))?;
+                let sdk = sdk.to_str().ok_or("the local SDK path must be UTF-8")?;
+                let quoted = serde_json::to_string(sdk).map_err(|e| e.to_string())?;
+                cargo = cargo.replacen(&old, &format!("path = {quoted}"), 1);
+            }
+            bytes = cargo.into_bytes();
+        }
+        files.insert(path.to_string(), bytes);
+    }
+    files.insert("src/lib.rs".into(), P2_LIBRARY.as_bytes().to_vec());
+    let proxy = std::fs::read_to_string(fixture.join("content/proxy.md"))
+        .map_err(|e| format!("{P2_FIXTURE}/content/proxy.md: {e}"))?;
+    template_sha256.insert(
+        format!("{P2_FIXTURE}/content/proxy.md"),
+        sha256_hex(proxy.as_bytes()),
+    );
+    let start = proxy
+        .find("\n## All real categories\n")
+        .ok_or("the measurement fixture proxy needs its All real categories section")?;
+    let proxy = &proxy[start..];
+    let mut rng = Rng(seed ^ P2_RNG_STREAM);
+    let mut demo_pages = Vec::new();
+    for (guide, name) in GUIDES.iter().enumerate() {
+        let slot = PageSlot {
+            path: format!("p2/{name}.md"),
+            lang: "en",
+            group: 0,
+            order: guide + 1,
+            guide,
+        };
+        let generated = page(&profile, &slot, &base_slots, &mut rng);
+        let (_, body) = generated
+            .split_once("\n---\n\n")
+            .ok_or("generated B page has no frontmatter boundary")?;
+        let text = format!(
+            "---\ntitle: \"Reference B: {name} DOM measurement\"\ndescription: \"Frozen {name} content distribution, all 24 DOM categories and three matching islands.\"\nlang: en\nsidebar:\n  group: \"P2 demonstrations\"\n  order: {}\n---\n\n{body}{proxy}", guide + 1,
+        );
+        let path = format!("content/{}", slot.path);
+        files.insert(path.clone(), text.into_bytes());
+        demo_pages.push(P2Page {
+            path,
+            route: format!("/p2/{name}/"),
+            guide: (*name).to_string(),
+        });
+    }
+    let mut configuration = config();
+    configuration.push_str("\n[rust]\nmanifest = \"Cargo.toml\"\nregistry = \"src/lib.rs\"\n\n[[nav.groups]]\nlabel = \"P2 demonstrations\"\nitems = [");
+    for (index, name) in GUIDES.iter().enumerate() {
+        if index > 0 {
+            configuration.push_str(", ");
+        }
+        configuration.push_str(&format!("\"p2/{name}.md\""));
+    }
+    configuration.push_str("]\n");
+    files.insert("rustify-docs.toml".into(), configuration.into_bytes());
+    for (path, bytes) in &files {
+        let target = out.join(path);
+        if let Some(parent) = target.parent() {
+            std::fs::create_dir_all(parent).map_err(|e| format!("{}: {e}", parent.display()))?;
+        }
+        std::fs::write(&target, bytes).map_err(|e| format!("{}: {e}", target.display()))?;
+    }
+    let pair = crate::docs::pair_project(root, &out.join("Cargo.toml"), None)?;
+    let framework_pair = if pair["framework_revision"].as_str() == Some("") {
+        None
+    } else {
+        Some(BTreeMap::from([
+            (
+                "candidate_sha".to_string(),
+                pair["candidate_sha"]
+                    .as_str()
+                    .ok_or("pair helper omitted C")?
+                    .to_string(),
+            ),
+            (
+                "framework_revision".to_string(),
+                pair["framework_revision"]
+                    .as_str()
+                    .ok_or("pair helper omitted R")?
+                    .to_string(),
+            ),
+        ]))
+    };
+    for path in ["Cargo.toml", "Cargo.lock"] {
+        files.insert(
+            path.to_string(),
+            std::fs::read(out.join(path)).map_err(|e| format!("{path}: {e}"))?,
+        );
+    }
+    let lock_sha256 = sha256_hex(&files["Cargo.lock"]);
+    let (digests, digest) = fingerprints(&files);
+    let manifest = P2Manifest {
+        generator_version: P2_GENERATOR_VERSION,
+        baseline_generator_version: GENERATOR_VERSION,
+        baseline_pages: base_slots.len(),
+        baseline_digest,
+        seed,
+        profile_sha256: sha256_hex(&profile_bytes),
+        pages: base_slots.len() + demo_pages.len(),
+        languages: BTreeMap::from([
+            ("en".to_string(), PAGES_PER_LANGUAGE + demo_pages.len()),
+            ("zh".to_string(), PAGES_PER_LANGUAGE),
+        ]),
+        demo_pages,
+        template_sha256,
+        framework_pair,
+        lock_sha256,
+        files: digests,
+        digest,
+    };
+    let json = serde_json::to_string_pretty(&manifest).map_err(|e| e.to_string())? + "\n";
+    std::fs::write(out.join("b-p2-manifest.json"), json).map_err(|e| e.to_string())?;
+    Ok(manifest)
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    struct Scratch(PathBuf);
+
+    impl Scratch {
+        fn new() -> Self {
+            static NEXT: std::sync::atomic::AtomicUsize = std::sync::atomic::AtomicUsize::new(0);
+            let stamp = std::time::SystemTime::now()
+                .duration_since(std::time::UNIX_EPOCH)
+                .unwrap()
+                .as_nanos();
+            let path = std::env::temp_dir().join(format!(
+                "rustify-b-corpus-{}-{stamp}-{}",
+                std::process::id(),
+                NEXT.fetch_add(1, std::sync::atomic::Ordering::Relaxed),
+            ));
+            std::fs::create_dir(&path).unwrap();
+            Self(path)
+        }
+    }
+
+    impl Drop for Scratch {
+        fn drop(&mut self) {
+            let _ = std::fs::remove_dir_all(&self.0);
+        }
+    }
+
+    #[test]
+    fn p2_preserves_the_frozen_profile_and_all_original_content_bytes() {
+        let root = crate::build::repo_root();
+        let profile = std::fs::read(root.join(PROFILE)).unwrap();
+        let scratch = Scratch::new();
+        let base = scratch.0.join("p1");
+        let extended = scratch.0.join("p2");
+        let baseline = generate(&root, &base, DEFAULT_SEED).unwrap();
+        let p2 = generate_p2(&root, &extended, DEFAULT_SEED).unwrap();
+        assert_eq!(baseline.generator_version, 2);
+        assert_eq!(baseline.pages, 500);
+        assert_eq!(
+            baseline.languages,
+            BTreeMap::from([("en".to_string(), 250), ("zh".to_string(), 250)])
+        );
+        assert_eq!(p2.baseline_digest, baseline.digest);
+        assert_eq!(p2.profile_sha256, baseline.profile_sha256);
+        assert_eq!(std::fs::read(root.join(PROFILE)).unwrap(), profile);
+        for path in baseline
+            .files
+            .keys()
+            .filter(|path| path.starts_with("content/"))
+        {
+            assert_eq!(
+                std::fs::read(base.join(path)).unwrap(),
+                std::fs::read(extended.join(path)).unwrap(),
+                "{path}"
+            );
+        }
+        assert!(!base.join("Cargo.toml").exists());
+        assert!(!base.join("src").exists());
+        assert!(base.join("b-manifest.json").is_file());
+        assert!(!extended.join("b-manifest.json").exists());
+        assert!(extended.join("b-p2-manifest.json").is_file());
+    }
+
+    #[test]
+    fn p2_candidates_have_four_real_islands_valid_links_and_the_exact_author_sources() {
+        let root = crate::build::repo_root();
+        let scratch = Scratch::new();
+        let out = scratch.0.join("p2");
+        let manifest = generate_p2(&root, &out, DEFAULT_SEED).unwrap();
+        assert_eq!(manifest.pages, 512);
+        assert_eq!(
+            manifest.languages,
+            BTreeMap::from([("en".to_string(), 262), ("zh".to_string(), 250)])
+        );
+        assert_eq!(manifest.demo_pages.len(), 12);
+        assert_eq!(
+            manifest
+                .files
+                .keys()
+                .filter(|path| path.ends_with(".md"))
+                .count(),
+            512
+        );
+        for candidate in &manifest.demo_pages {
+            let path = out.join(&candidate.path);
+            let text = std::fs::read_to_string(&path).unwrap();
+            let mut embeds = Vec::new();
+            let mut capture = None::<(String, String)>;
+            for event in Parser::new(&text) {
+                match event {
+                    Event::Start(Tag::CodeBlock(CodeBlockKind::Fenced(info)))
+                        if matches!(info.as_ref(), "rustify-demo" | "rustify-component") =>
+                    {
+                        capture = Some((info.to_string(), String::new()));
+                    }
+                    Event::Text(body) => {
+                        if let Some((_, text)) = &mut capture {
+                            text.push_str(&body);
+                        }
+                    }
+                    Event::End(TagEnd::CodeBlock) => {
+                        if let Some(block) = capture.take() {
+                            embeds.push(block);
+                        }
+                    }
+                    Event::Start(Tag::Link { dest_url, .. }) => {
+                        let target = path
+                            .parent()
+                            .unwrap()
+                            .join(dest_url.as_ref())
+                            .canonicalize()
+                            .unwrap();
+                        assert!(
+                            target.starts_with(out.canonicalize().unwrap().join("content")),
+                            "{dest_url}"
+                        );
+                        assert!(target.is_file(), "{dest_url}");
+                    }
+                    _ => {}
+                }
+            }
+            assert_eq!(embeds.len(), 4, "{}", candidate.path);
+            assert_eq!(
+                embeds[0],
+                (
+                    "rustify-demo".to_string(),
+                    "name: CatalogProxy\n".to_string()
+                )
+            );
+            assert!(embeds[1..]
+                .iter()
+                .all(|(kind, declaration)| kind == "rustify-component"
+                    && declaration.contains("name: Counter\n")
+                    && declaration.contains("  initial: 2\n")));
+            assert!(embeds[1..].windows(2).all(|pair| pair[0] == pair[1]));
+        }
+        for path in P2_TEMPLATE_FILES
+            .into_iter()
+            .filter(|path| *path != "Cargo.toml" && *path != "Cargo.lock")
+        {
+            assert_eq!(
+                std::fs::read(out.join(path)).unwrap(),
+                std::fs::read(root.join(P2_FIXTURE).join(path)).unwrap(),
+                "{path}"
+            );
+        }
+        let cargo = std::fs::read_to_string(out.join("Cargo.toml")).unwrap();
+        let lock = std::fs::read(out.join("Cargo.lock")).unwrap();
+        let original_lock = std::fs::read(root.join(P2_FIXTURE).join("Cargo.lock")).unwrap();
+        if manifest.framework_pair.is_none() {
+            assert_eq!(lock, original_lock);
+        }
+        for library in ["rustify-ui", "rustify-components", "rustify-docs"] {
+            if let Some(pair) = &manifest.framework_pair {
+                assert!(cargo.contains(&format!(
+                    "{library} = {{ git = \"https://github.com/rockie/rustify-ui\", rev = \"{}\", default-features = false }}",
+                    pair["framework_revision"]
+                )));
+            } else {
+                let sdk = root.join("crates").join(library).canonicalize().unwrap();
+                let path = serde_json::to_string(sdk.to_str().unwrap()).unwrap();
+                assert!(cargo.contains(&format!("path = {path}")));
+            }
+        }
+        assert_eq!(
+            manifest.template_sha256[&format!("{P2_FIXTURE}/Cargo.lock")],
+            sha256_hex(&original_lock)
+        );
+        assert_eq!(manifest.lock_sha256, sha256_hex(&lock));
+        let registry = std::fs::read_to_string(out.join("src/lib.rs")).unwrap();
+        assert!(registry.contains("CatalogProxy => crate::demos::catalog_proxy"));
+        assert!(!registry.contains("BrowserCounter"));
+        assert!(!registry.contains("FailureDemo"));
+        assert!(!registry.contains("slots {"));
+        assert!(!out.join("theme.json").exists());
+    }
+
+    #[test]
+    fn p2_is_reproducible_and_never_overwrites_a_nonempty_project() {
+        let root = crate::build::repo_root();
+        let scratch = Scratch::new();
+        let first = scratch.0.join("first");
+        let second = scratch.0.join("second");
+        let one = generate_p2(&root, &first, 17).unwrap();
+        let two = generate_p2(&root, &second, 17).unwrap();
+        assert_eq!(one.digest, two.digest);
+        assert_eq!(one.files, two.files);
+        assert_eq!(
+            std::fs::read(first.join("b-p2-manifest.json")).unwrap(),
+            std::fs::read(second.join("b-p2-manifest.json")).unwrap()
+        );
+        let before = std::fs::read(first.join("content/index.md")).unwrap();
+        assert!(generate_p2(&root, &first, 18)
+            .unwrap_err()
+            .contains("not empty"));
+        assert_eq!(
+            std::fs::read(first.join("content/index.md")).unwrap(),
+            before
+        );
+    }
 
     #[test]
     fn five_hundred_pages_half_in_each_language() {

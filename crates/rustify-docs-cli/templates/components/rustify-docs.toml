@@ -1,0 +1,17 @@
+schema_version = 1
+
+[site]
+name = "{{name}}"
+description = "Documentation with real Rust components and their exact source."
+lang = "en"
+# Set the public address before publishing. Its path must equal base.
+# url = "https://example.com/"
+base = "/"
+
+[rust]
+manifest = "Cargo.toml"
+registry = "src/lib.rs"
+
+[[nav.groups]]
+label = "Guide"
+dir = "guide"

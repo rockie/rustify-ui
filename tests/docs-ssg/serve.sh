@@ -31,6 +31,9 @@ case $variant in
   *) echo "serve.sh: unknown variant $variant" >&2; exit 2 ;;
 esac
 work=$root/target/docs-ssg/http/$source/$variant
+if [ "$source" = official ] && [ -f "$work/site/.git" ]; then
+  git -C "$root" worktree remove --force "$work/site"
+fi
 rm -rf "$work"
 mkdir -p "$work"
 case $source in
@@ -42,11 +45,49 @@ case $source in
     ;;
   components)
     fixture=$root/tests/docs-ssg/fixtures/components
-    # Keep the author package at its original path. Its relative Cargo
-    # dependencies and source excerpts must match the files compiled.
+    # Empty-R development keeps the original exact paths. A paired C uses
+    # a copied consumer with only its three Git dependencies and lock projected.
+    fixture=$(python3 "$root/scripts/docs-pages-prepare.py" --project "$fixture/Cargo.toml" \
+      --cli "$bin" --out "$work/site" | python3 -c 'import json,sys; print(json.load(sys.stdin)["project"])')
     config=$(mktemp "$fixture/.rustify-docs-browser.XXXXXX")
     trap 'rm -f "$config"' EXIT
     perl -0pe "s#url = \"https://example.com/docs/\"\nbase = \"/docs/\"#url = \"https://docs.example.net$base\"\nbase = \"$base\"#" "$fixture/rustify-docs.toml" > "$config"
+    RUSTIFY_DOCS_CARGO=mbx "$bin" build --config "$config" --out "$work/dist" >&2
+    rm -f "$config"
+    trap - EXIT
+    ;;
+  official)
+    # A paired CLI consumes detached C sources and genuine history; only the
+    # manifest dependencies and lock differ. Empty-R development stays in place.
+    official=$root
+    pair=$(python3 - "$root/scripts/docs-pages-prepare.py" "$bin" <<'PY'
+from pathlib import Path
+import json, runpy, sys
+candidate, framework, _ = runpy.run_path(sys.argv[1])['cli_pair'](Path(sys.argv[2]))
+print(json.dumps({'candidate': candidate, 'framework': framework}))
+PY
+)
+    framework=$(printf '%s' "$pair" | python3 -c 'import json,sys; print(json.load(sys.stdin)["framework"])')
+    if [ -n "$framework" ]; then
+      candidate=$(printf '%s' "$pair" | python3 -c 'import json,sys; print(json.load(sys.stdin)["candidate"])')
+      python3 "$root/scripts/docs-pages-prepare.py" --candidate-sha "$candidate" \
+        --cli "$bin" --out "$work/site" >&2
+      official=$work/site
+    fi
+    config=$(mktemp "$official/.rustify-docs-browser.XXXXXX")
+    trap 'rm -f "$config"' EXIT
+    python3 - "$official/rustify-docs.toml" "$config" "$base" <<'PY'
+from pathlib import Path
+import sys
+source, destination, base = sys.argv[1:]
+text = Path(source).read_text()
+old_url = 'url = "https://rockie.github.io/rustify-ui/"'
+old_base = 'base = "/rustify-ui/"'
+assert text.count(old_url) == text.count(old_base) == 1
+text = text.replace(old_url, 'url = "https://rockie.github.io' + base + '"')
+text = text.replace(old_base, 'base = "' + base + '"')
+Path(destination).write_text(text)
+PY
     RUSTIFY_DOCS_CARGO=mbx "$bin" build --config "$config" --out "$work/dist" >&2
     rm -f "$config"
     trap - EXIT

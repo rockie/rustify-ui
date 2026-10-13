@@ -38,7 +38,7 @@ mbx xtask <command> [options]
   docs-verify --group features [--external [--git <url> --rev <sha>]]
   docs-verify --group performance
   docs-verify --group toolchain [--git <url> --rev <sha>]
-  docs-corpus --profile | --out <dir> [--seed <n>]
+  docs-corpus --profile | [--p2] --out <dir> [--seed <n>]
 ";
 
 fn main() {

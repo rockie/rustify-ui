@@ -1,0 +1,100 @@
+{
+  "scope": "M3 core source files before M4 shared API changes; local recoverable copies only",
+  "files": [
+    {
+      "path": "crates/rustify-docs-cli/src/rust_site.rs",
+      "sha256": "6b4b21914fd8d2bb7d6c13763dfa759ec3581623eff818f3dd7ebb4241021d4c",
+      "copy": "target/docs-ssg/m3-accepted-sources/crates/rustify-docs-cli/src/rust_site.rs"
+    },
+    {
+      "path": "crates/rustify-docs-cli/src/rendering.rs",
+      "sha256": "46ce37926c086ad12296b291301e7f957f45f08c92fca3a9b7d05c6e6d8c67d0",
+      "copy": "target/docs-ssg/m3-accepted-sources/crates/rustify-docs-cli/src/rendering.rs"
+    },
+    {
+      "path": "crates/rustify-docs-cli/src/main.rs",
+      "sha256": "8cc4bc10ecd7e59ca64bfbfb6520c3c944be0f5880de225d97fd3243cb364d92",
+      "copy": "target/docs-ssg/m3-accepted-sources/crates/rustify-docs-cli/src/main.rs"
+    },
+    {
+      "path": "crates/rustify-docs-cli/src/compile_proxy.rs",
+      "sha256": "6ccb59d11883390d2599a0845ed862ff9437325b26a03fdb8b63341767fcc353",
+      "copy": "target/docs-ssg/m3-accepted-sources/crates/rustify-docs-cli/src/compile_proxy.rs"
+    },
+    {
+      "path": "crates/rustify-docs-cli/tests/components.rs",
+      "sha256": "b6d373af9699b9da6984b0e66dcda808e6fa136f1f9fd31bc3a77ceca9d91924",
+      "copy": "target/docs-ssg/m3-accepted-sources/crates/rustify-docs-cli/tests/components.rs"
+    },
+    {
+      "path": "crates/rustify-docs/src/config.rs",
+      "sha256": "adc68ee3ca6de45dea70fed04f662e1f48a09647d19165f8d5ae8d34be1d9f20",
+      "copy": "target/docs-ssg/m3-accepted-sources/crates/rustify-docs/src/config.rs"
+    },
+    {
+      "path": "crates/rustify-docs/src/content.rs",
+      "sha256": "122b74c8cc8a7e38bf532825a82736259e348a76a06704c85bf01a0a0a6b6d15",
+      "copy": "target/docs-ssg/m3-accepted-sources/crates/rustify-docs/src/content.rs"
+    },
+    {
+      "path": "crates/rustify-docs/src/generation.rs",
+      "sha256": "faa75d74fe060247cd30f76cb3ae6becdf1b1c29a3140a64b282b3e1a109974d",
+      "copy": "target/docs-ssg/m3-accepted-sources/crates/rustify-docs/src/generation.rs"
+    },
+    {
+      "path": "crates/rustify-docs/src/html_check.rs",
+      "sha256": "835733d94cd99f6206004ed2ea9f662a76a8762d189268987859c68ee3dcf057",
+      "copy": "target/docs-ssg/m3-accepted-sources/crates/rustify-docs/src/html_check.rs"
+    },
+    {
+      "path": "crates/rustify-docs/src/markdown.rs",
+      "sha256": "e3944f6b61907529d5d11d193fdb3dd1763a8b86f17270d11cf379bb5f3a2f35",
+      "copy": "target/docs-ssg/m3-accepted-sources/crates/rustify-docs/src/markdown.rs"
+    },
+    {
+      "path": "crates/rustify-docs/src/shell.rs",
+      "sha256": "fbedaf4731120ab74fc5e822f80ea78b18a3ac1db9cd164fd2162583ba78aa2a",
+      "copy": "target/docs-ssg/m3-accepted-sources/crates/rustify-docs/src/shell.rs"
+    },
+    {
+      "path": "crates/rustify-docs/src/site.rs",
+      "sha256": "4ea6736315db8f87f2e5f715242cfa9e231c2cfaf9152ec7e8421fb245736a59",
+      "copy": "target/docs-ssg/m3-accepted-sources/crates/rustify-docs/src/site.rs"
+    },
+    {
+      "path": "crates/rustify-docs/src/site/hydrate.rs",
+      "sha256": "f4e0cfb5c10ce21432a8035b0af07696bf10465c8df7d4690fb84e192b20cb46",
+      "copy": "target/docs-ssg/m3-accepted-sources/crates/rustify-docs/src/site/hydrate.rs"
+    },
+    {
+      "path": "crates/rustify-docs/src/site/ssr.rs",
+      "sha256": "9f3bdac9c92088edf1c9127c8e8323054a4d5aaab09d4f6e1866cce69bc873e8",
+      "copy": "target/docs-ssg/m3-accepted-sources/crates/rustify-docs/src/site/ssr.rs"
+    },
+    {
+      "path": "crates/rustify-docs/src/site/registry.rs",
+      "sha256": "e3981c0a946067d7fe49553bcfb41506bf6a6e0bdf02302e94c3f89ccacbefd4",
+      "copy": "target/docs-ssg/m3-accepted-sources/crates/rustify-docs/src/site/registry.rs"
+    },
+    {
+      "path": "crates/rustify-docs/src/style.rs",
+      "sha256": "b8a1202469ed506e5db2889c396ee47d4b25d56807fee25fbac01549f31c246f",
+      "copy": "target/docs-ssg/m3-accepted-sources/crates/rustify-docs/src/style.rs"
+    },
+    {
+      "path": "crates/rustify-docs-cli/src/theme.rs",
+      "sha256": "edfa8e664eebf85e17d9dc35bf65b5e5765f2ffc938f6c5e61a4a6cedb091ae8",
+      "copy": "target/docs-ssg/m3-accepted-sources/crates/rustify-docs-cli/src/theme.rs"
+    },
+    {
+      "path": "crates/rustify-ui/src/theme.rs",
+      "sha256": "548cb793e9d0a7471e9776ee9aeca5312dc926cc55dd485cdc85b087cb22daa8",
+      "copy": "target/docs-ssg/m3-accepted-sources/crates/rustify-ui/src/theme.rs"
+    },
+    {
+      "path": "crates/rustify-ui/src/theme/fonts.rs",
+      "sha256": "0d0926593af675718441246f988da548cc29fac463a299a519cff9d170a7e055",
+      "copy": "target/docs-ssg/m3-accepted-sources/crates/rustify-ui/src/theme/fonts.rs"
+    }
+  ]
+}

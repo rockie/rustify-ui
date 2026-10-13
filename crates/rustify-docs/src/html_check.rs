@@ -169,6 +169,10 @@ pub(crate) struct Semantics {
     pub anchors: Vec<String>,
     pub headings: Vec<crate::markdown::Heading>,
     pub leading_h1: Option<String>,
+    /// Source start tags which actually became nodes in the document tree.
+    pub tags: Vec<Range<usize>>,
+    /// Document and template-fragment nodes, both checked against the policy.
+    pub stored_tags: Vec<Range<usize>>,
 }
 
 /// The existing leading-H1 merge boundary, at an actual closing tag rather
@@ -203,7 +207,7 @@ pub(crate) fn leading_h1_end(html: &str) -> Option<usize> {
 
 pub(crate) fn semantics(html: &str, sources: &[HeadingSource]) -> Semantics {
     // Mark a private analysis copy, never the published HTML. The tree
-    // builder then decides which source tags became document headings,
+    // builder then decides which source tags became document nodes,
     // including template isolation and foreign-content integration points.
     let mut annotated = String::with_capacity(html.len());
     let mut marker = "data-rd-heading-origin".to_owned();
@@ -211,6 +215,7 @@ pub(crate) fn semantics(html: &str, sources: &[HeadingSource]) -> Semantics {
         marker.push('_');
     }
     let mut origins = Vec::new();
+    let mut tags = Vec::new();
     let mut at = 0;
     // Tokenize candidate tags even in foreign <title>/<desc>. Only the
     // tree builder can decide whether their children are HTML headings.
@@ -219,13 +224,8 @@ pub(crate) fn semantics(html: &str, sources: &[HeadingSource]) -> Semantics {
         let Ok(Token::StartTag(tag)) = token else {
             continue;
         };
-        if !matches!(
-            tag.name.as_slice(),
-            b"h1" | b"h2" | b"h3" | b"h4" | b"h5" | b"h6"
-        ) {
-            continue;
-        }
         let start = tag.span.start;
+        tags.push(start..tag.span.end);
         let origin = sources.partition_point(|source| source.html.end <= start);
         let source = sources
             .get(origin)
@@ -239,7 +239,7 @@ pub(crate) fn semantics(html: &str, sources: &[HeadingSource]) -> Semantics {
             };
             (span, source.explicit, start)
         }));
-        let insert = start + 3;
+        let insert = start + 1 + tag.name.len();
         annotated.push_str(&html[at..insert]);
         annotated.push_str(&format!(" {marker}=\"{}\"", origins.len() - 1));
         at = insert;
@@ -256,8 +256,23 @@ pub(crate) fn semantics(html: &str, sources: &[HeadingSource]) -> Semantics {
         anchors: Vec::new(),
         headings: Vec::new(),
         leading_h1: None,
+        tags: Vec::new(),
+        stored_tags: Vec::new(),
     };
+    let mut templates = Vec::new();
     for node in dom.root().descendants_it() {
+        if let Some(fragment) = node
+            .query(|node| node.as_element().and_then(|el| el.template_contents))
+            .flatten()
+        {
+            templates.push(fragment);
+        }
+        let origin = node
+            .attr(&marker)
+            .and_then(|value| value.parse::<usize>().ok());
+        if let Some(tag) = origin.and_then(|i| tags.get(i)) {
+            result.tags.push(tag.clone());
+        }
         if let Some(id) = node.id_attr() {
             result.anchors.push(id.to_string());
         }
@@ -276,11 +291,8 @@ pub(crate) fn semantics(html: &str, sources: &[HeadingSource]) -> Semantics {
             "h6" => 6,
             _ => continue,
         };
-        let Some((span, explicit, start)) = node
-            .attr(&marker)
-            .and_then(|value| value.parse::<usize>().ok())
-            .and_then(|i| origins.get(i))
-            .and_then(Option::as_ref)
+        let Some((span, explicit, start)) =
+            origin.and_then(|i| origins.get(i)).and_then(Option::as_ref)
         else {
             continue;
         };
@@ -299,7 +311,38 @@ pub(crate) fn semantics(html: &str, sources: &[HeadingSource]) -> Semantics {
             span: span.clone(),
         });
     }
+    result.tags.sort_unstable_by_key(|tag| tag.start);
+    result.tags.dedup();
+    while let Some(fragment) = templates.pop() {
+        let Some(root) = dom.tree.get(&fragment) else {
+            continue;
+        };
+        for node in root.descendants_it() {
+            if let Some(fragment) = node
+                .query(|node| node.as_element().and_then(|el| el.template_contents))
+                .flatten()
+            {
+                templates.push(fragment);
+            }
+            if let Some(tag) = node
+                .attr(&marker)
+                .and_then(|value| value.parse::<usize>().ok())
+                .and_then(|i| tags.get(i))
+            {
+                result.stored_tags.push(tag.clone());
+            }
+        }
+    }
+    result.stored_tags.extend(result.tags.iter().cloned());
+    result.stored_tags.sort_unstable_by_key(|tag| tag.start);
+    result.stored_tags.dedup();
     result
+}
+
+pub(crate) fn in_document(span: &Range<usize>, tags: &[Range<usize>]) -> bool {
+    let at = tags.partition_point(|tag| tag.end <= span.start);
+    tags.get(at)
+        .is_some_and(|tag| tag.start <= span.start && span.end <= tag.end)
 }
 
 fn heading_text(text: &str, marker: &str) -> String {
@@ -341,7 +384,7 @@ fn opens_unguarded_window(attribute: impl Fn(&str) -> Option<String>) -> bool {
 
 /// URL tokens in arbitrary utility values, excluding quoted content and
 /// arbitrary selector variants. Ranges are in the decoded attribute.
-fn class_urls(value: &str) -> Vec<(String, Range<usize>)> {
+pub(crate) fn class_urls(value: &str) -> Vec<(String, Range<usize>)> {
     let mut urls = Vec::new();
     let mut from = 0;
     for class in value.split_ascii_whitespace() {
@@ -475,11 +518,43 @@ fn value_range(source: &str, span: Range<usize>) -> Option<Range<usize>> {
 /// Checks one chunk of raw HTML. Issue spans and slots are offsets into
 /// `chunk`; the caller places them in the file and in its output.
 pub fn check(chunk: &str) -> (Vec<Issue>, Vec<UrlSlot>) {
+    let (issues, mut slots) = scan(chunk);
+    if chunk.to_ascii_lowercase().contains("<template") {
+        let tags = semantics(chunk, &[]).tags;
+        slots.retain(|slot| in_document(&slot.span, &tags));
+    }
+    (issues, slots)
+}
+
+/// Checks a complete rendered surface using browser tree contexts. Stored
+/// template markup still obeys the policy, but supplies no document URLs.
+pub fn check_rendered(html: &str) -> (Vec<Issue>, Vec<UrlSlot>) {
+    let semantics = semantics(html, &[]);
+    let (issues, mut slots) = scan_document(html, &semantics.stored_tags);
+    slots.retain(|slot| in_document(&slot.span, &semantics.tags));
+    (issues, slots)
+}
+
+pub(crate) fn scan(chunk: &str) -> (Vec<Issue>, Vec<UrlSlot>) {
+    scan_tokens(chunk, true, None)
+}
+
+/// A complete rendered surface can use the tree builder's actual tokenizer
+/// contexts, including foreign integration points and inert template storage.
+pub(crate) fn scan_document(chunk: &str, tags: &[Range<usize>]) -> (Vec<Issue>, Vec<UrlSlot>) {
+    scan_tokens(chunk, false, Some(tags))
+}
+
+fn scan_tokens(
+    chunk: &str,
+    naive: bool,
+    tags: Option<&[Range<usize>]>,
+) -> (Vec<Issue>, Vec<UrlSlot>) {
     let mut issues = Vec::new();
     let mut slots = Vec::new();
     let mut emitter = html5gum::DefaultEmitter::new_with_span();
     // Inside <script>, <style> and the like, text is text, as in a browser.
-    emitter.naively_switch_states(true);
+    emitter.naively_switch_states(naive);
     for token in Tokenizer::new_with_emitter(chunk, emitter) {
         let Ok(token) = token;
         let Token::StartTag(tag) = token else {
@@ -487,6 +562,9 @@ pub fn check(chunk: &str) -> (Vec<Issue>, Vec<UrlSlot>) {
         };
         let name = String::from_utf8_lossy(&tag.name).to_ascii_lowercase();
         let tag_span = tag.span.start..tag.span.end;
+        if tags.is_some_and(|tags| !in_document(&tag_span, tags)) {
+            continue;
+        }
         if let Some((_, rule, what)) = FORBIDDEN.iter().find(|(element, _, _)| *element == name) {
             issues.push(
                 Issue::error(tag_span.clone(), rule, format!("{what} is not allowed: the site's content security policy would block it"))
@@ -720,6 +798,37 @@ pub fn check_document(html: &str) -> Vec<String> {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn template_urls_do_not_become_document_references() {
+        let html = "<template id='raw'><a href='missing/'>Hidden</a><img alt='' src='missing.svg'></template><a href='visible/'>Visible</a>";
+        let (issues, slots) = check(html);
+        assert!(issues.is_empty(), "{issues:?}");
+        assert_eq!(
+            slots
+                .iter()
+                .map(|slot| slot.value.as_str())
+                .collect::<Vec<_>>(),
+            ["visible/"]
+        );
+        // Inert storage still obeys the CSP policy if activated later.
+        assert_eq!(
+            rules("<template><script>x()</script></template>"),
+            ["inline-script"]
+        );
+    }
+
+    #[test]
+    fn template_urls_follow_foreign_namespace_integration() {
+        for (html, expected) in [
+            ("<svg><template><image href='visible.svg'/></template></svg>", vec!["visible.svg"]),
+            ("<svg><foreignObject><template><a href='hidden/'>Hidden</a></template><a href='visible/'>Visible</a></foreignObject></svg>", vec!["visible/"]),
+            ("<math><mtext><template><img alt='' src='hidden.svg'></template></mtext></math><img alt='' src='visible.svg'>", vec!["visible.svg"]),
+            ("<template/><img alt='' src='hidden.svg'></template><img alt='' src='visible.svg'>", vec!["visible.svg"]),
+        ] {
+            assert_eq!(check(html).1.iter().map(|slot| slot.value.as_str()).collect::<Vec<_>>(), expected, "{html}");
+        }
+    }
 
     #[test]
     fn body_ids_follow_document_attribute_merging_and_template_boundaries() {

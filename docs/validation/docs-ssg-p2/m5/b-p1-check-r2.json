@@ -1,0 +1,1 @@
+{"schema_version":1,"success":true,"diagnostics":[{"severity":"warning","rule":"no-git-history","file":null,"line":null,"column":null,"message":"pages show no last-updated date: not a git repository (or any of the parent directories): .git","suggestion":"build inside a git repository with the content committed"}],"summary":{"errors":0,"warnings":1,"pages":500}}

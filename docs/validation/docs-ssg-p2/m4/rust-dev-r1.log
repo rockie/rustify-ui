@@ -1,0 +1,27 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-docs-cli v0.1.7 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-docs-cli)
+   Compiling rustify-docs v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-docs)
+mbx[progress]: 15s elapsed; 0 hits, 0 misses, 0 bypassed, 1 not looked up; ~0s compiler work saved
+mbx[progress]: 30s elapsed; 0 hits, 0 misses, 0 bypassed, 3 not looked up; ~0s compiler work saved
+mbx[progress]: 45s elapsed; 0 hits, 0 misses, 0 bypassed, 3 not looked up; ~0s compiler work saved
+    Finished `docs-cli` profile [optimized] target(s) in 47.89s
+     Running tests/rust_dev.rs (target/docs-cli/deps/rust_dev-77b78915d3b66c78)
+
+running 1 test
+test real_rust_dev_serves_before_compile_reuses_content_and_preserves_failed_generations ... mbx[progress]: 1m elapsed; 0 hits, 0 misses, 0 bypassed, 3 not looked up; ~0s compiler work saved
+mbx[progress]: 1m 15s elapsed; 0 hits, 0 misses, 0 bypassed, 3 not looked up; ~0s compiler work saved
+mbx[progress]: 1m 30s elapsed; 0 hits, 0 misses, 0 bypassed, 3 not looked up; ~0s compiler work saved
+mbx[progress]: 1m 45s elapsed; 0 hits, 0 misses, 0 bypassed, 3 not looked up; ~0s compiler work saved
+mbx[progress]: 2m elapsed; 0 hits, 0 misses, 0 bypassed, 3 not looked up; ~0s compiler work saved
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 92.80s
+
+mbx[cache]: 0 hits, 0 misses, 3 not looked up, 1 incremental; 0 B downloaded, 0 B uploaded, 56.7 MiB stored locally
+mbx[savings]: swept up 2.2 TiB logical so far. the broom is content-addressed.

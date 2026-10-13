@@ -1,0 +1,285 @@
+{
+  "recorded_at": "2026-10-13T18:52:57.412Z",
+  "binary": {
+    "path": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-cli/rustify-docs",
+    "version": "rustify-docs 0.1.8",
+    "sha256": "95dc81a092ecf4418de130aa8a685f6cb1262f200cb9063d1d0933d9a9c81ea9"
+  },
+  "config_sha256": "bd8ff3a054ec58eec3a8590b3c4d1ab2664e05ea9c54bc9c18f36e9cd0f7f60d",
+  "registry_sha256": "63ec70624fd4301acd67455eed03f774c556dff47ca0cdcb1c08e8c83e0da897",
+  "readme_sha256": "9e0fd678e41eb225967fc808c5adf269fcf32b19eedc46720480e42791deb27e",
+  "manifest": {
+    "schema_version": 1,
+    "mode": "production",
+    "base": "/rustify-ui/",
+    "cli_version": "0.1.8",
+    "build_id": "c24304a030eb28b1",
+    "files": [
+      {
+        "path": ".gitkeep",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      },
+      {
+        "path": ".nojekyll",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      },
+      {
+        "path": "404.html",
+        "sha256": "e7a1c11721f14f4f2347da734bec26f30a8e0e4337287b75d277d24d3b64e74e",
+        "bytes": 9186
+      },
+      {
+        "path": "architecture/index.html",
+        "sha256": "a0cf4a40e8772cd1fa52e25431cf12c6313d35f8e927368a6e68cae5e6ad677e",
+        "bytes": 49597
+      },
+      {
+        "path": "assets/files/theme-document.schema.d97f50ae4a.json",
+        "sha256": "d97f50ae4a55502a3d2c1f8fa11999c469c84b7f138152f20868106ca22207ac",
+        "bytes": 5525
+      },
+      {
+        "path": "assets/islands/a66ac6cbb6401cdc27d6a54f26fae78cfbd87e1aa48f18bbab58c81804a864b7/app.js",
+        "sha256": "3c9a35642f65ab615a26860f6d121ebf6eb79a739cf1af0829373fd468cfb15a",
+        "bytes": 61177
+      },
+      {
+        "path": "assets/islands/a66ac6cbb6401cdc27d6a54f26fae78cfbd87e1aa48f18bbab58c81804a864b7/app_bg.wasm",
+        "sha256": "4111e2cd22323161186d61224da0f9587d79226dd47832cfe92d9b4546371a72",
+        "bytes": 9749187
+      },
+      {
+        "path": "assets/islands/a66ac6cbb6401cdc27d6a54f26fae78cfbd87e1aa48f18bbab58c81804a864b7/dom-loader.js",
+        "sha256": "72c911771f7102b184c18b3f311186c94496a4efd47b9d25e46284d8ad2f5dd1",
+        "bytes": 11686
+      },
+      {
+        "path": "assets/islands/a66ac6cbb6401cdc27d6a54f26fae78cfbd87e1aa48f18bbab58c81804a864b7/dom-runtime.css",
+        "sha256": "7597abd6960f0ed1ce5b365356e5b2c422bf79117a39e0a8575aa447cd350f41",
+        "bytes": 796
+      },
+      {
+        "path": "assets/islands/a66ac6cbb6401cdc27d6a54f26fae78cfbd87e1aa48f18bbab58c81804a864b7/islands.js",
+        "sha256": "ecc0183124465813a93fae273b21263b166b75814d4334c388f1b6f1e0cb9801",
+        "bytes": 2275
+      },
+      {
+        "path": "assets/islands/a66ac6cbb6401cdc27d6a54f26fae78cfbd87e1aa48f18bbab58c81804a864b7/snippets/rustify-ui-4db2f10f10788f4c/web/dom-runtime.js",
+        "sha256": "d3f6018d391b65cfaf609fe1a17d9e47e221c51087a956b9fcd0bc6d11076343",
+        "bytes": 7096
+      },
+      {
+        "path": "assets/mode.5e2c2584b0.js",
+        "sha256": "5e2c2584b0eccb6b7631ffa0f0e110e7316d5f60d532a806bef18f1e017c57cf",
+        "bytes": 6697
+      },
+      {
+        "path": "assets/share.9f8be38eaf.png",
+        "sha256": "9f8be38eafa7450a22835777de9ff300878deff236dd54fa9a91e00e206be673",
+        "bytes": 3964
+      },
+      {
+        "path": "assets/site.2529a0d647.js",
+        "sha256": "2529a0d647cd2b645277e1dc98c9396c87421748f2bc42488d3031c6db6e203a",
+        "bytes": 13629
+      },
+      {
+        "path": "assets/site.29f5f9c9c5.css",
+        "sha256": "29f5f9c9c54d3103153f9ac19ecb56bace511144187416f5de2e8c08bf06731c",
+        "bytes": 76469
+      },
+      {
+        "path": "compatibility/index.html",
+        "sha256": "5b506efb16dd68643b1c180d5c7a80ddbf04c9072fa5a3bc9c51c753b855e7a1",
+        "bytes": 39620
+      },
+      {
+        "path": "components/button/index.html",
+        "sha256": "ce7fb5877411e046bf66a14ec52621a267cb5333a7c178754df907e15f3f0818",
+        "bytes": 112523
+      },
+      {
+        "path": "components/checkbox/index.html",
+        "sha256": "3a592f80daa2022bb9405352ffa517841d06031274263e7ad0b5fc502a4840a5",
+        "bytes": 125521
+      },
+      {
+        "path": "components/color-field/index.html",
+        "sha256": "c8a0d8d38d3bf50e730fc7aa1f460f17e59df2362d3d4c5fde27568788d206d9",
+        "bytes": 99202
+      },
+      {
+        "path": "components/data-table/index.html",
+        "sha256": "a41244b137c674b3db7b04d18779e51d54c7de034ac3f93c1408328f2c31991b",
+        "bytes": 172411
+      },
+      {
+        "path": "components/dialog/index.html",
+        "sha256": "ade12fbfa220a81ce1be4ce58cb08dd691635fd38048f2f56e847a4d48c0fa6a",
+        "bytes": 132573
+      },
+      {
+        "path": "components/icon/index.html",
+        "sha256": "c656a2dfb51a47e96448f1c91911be64a0413a6368e23d9a781139237c2e1d5f",
+        "bytes": 112133
+      },
+      {
+        "path": "components/index.html",
+        "sha256": "93dbe113f5f97ac9a55e08f081e3da8a39bcfba5b304c89328a836e47eb1cc29",
+        "bytes": 34342
+      },
+      {
+        "path": "components/label/index.html",
+        "sha256": "fa30a696e63e27c09d52526e15526bc6eeeaa23fdfd44c846d3343483e673949",
+        "bytes": 107885
+      },
+      {
+        "path": "components/link/index.html",
+        "sha256": "62e4eb4adc043daec28b61fe9b8d67a6b42a51b75c1353f093b4662013513ea1",
+        "bytes": 112371
+      },
+      {
+        "path": "components/loading/index.html",
+        "sha256": "2a545bdf0b05df9361a277d4111228f043406b920cd68250827435b7f198a3c4",
+        "bytes": 110263
+      },
+      {
+        "path": "components/menu/index.html",
+        "sha256": "1ec556207a62b2d86e5483f9ef5274a96fa98858d96dbc86f0f34ce795addd69",
+        "bytes": 144958
+      },
+      {
+        "path": "components/number-field/index.html",
+        "sha256": "b27b84609b56a60d90bdb550d29f59defed6534ca196c5cf6151d8a39ba4f836",
+        "bytes": 100035
+      },
+      {
+        "path": "components/progress/index.html",
+        "sha256": "aa43ea8207393167ed59d24548e1146f96df3d4ef8c604cebfea6e7a66e3772d",
+        "bytes": 131860
+      },
+      {
+        "path": "components/radio/index.html",
+        "sha256": "ee65c5bfcaab40d0104aefcba6737b75fc05dd36e0e2605da130ff16212a1958",
+        "bytes": 128259
+      },
+      {
+        "path": "components/scroll-area/index.html",
+        "sha256": "0e7a32b7a4bb714cdfd0051b8061bbc3081f017f4491b29f127dad86a57ceaca",
+        "bytes": 143819
+      },
+      {
+        "path": "components/select/index.html",
+        "sha256": "a882f81f869370ea2670ea49258327b634d1c18203dc62f82a0fb8ee33bc2bda",
+        "bytes": 132040
+      },
+      {
+        "path": "components/slider/index.html",
+        "sha256": "0f26ba1c77c075eae1672d8cc14d4b174e3b29016039dee9be3dfb8ff8fe2787",
+        "bytes": 124828
+      },
+      {
+        "path": "components/switch/index.html",
+        "sha256": "2efaf7569627a30dc62e53a30e762d662e176114d53f6354bff509dbd559a508",
+        "bytes": 124944
+      },
+      {
+        "path": "components/tabs/index.html",
+        "sha256": "066112239d9542fdf70ea856e76a66ffba34467dc8fcd2930facd296405d272c",
+        "bytes": 143427
+      },
+      {
+        "path": "components/text-area/index.html",
+        "sha256": "a4304ae03a9e4352086102315e40f82989ec28566fb574018c8bdfbbd7ffd89e",
+        "bytes": 96377
+      },
+      {
+        "path": "components/text-field/index.html",
+        "sha256": "2647b23bd90dd8d14e8538224413a35819ebd1d152f3f7b22cc6d631b3d6f95c",
+        "bytes": 98544
+      },
+      {
+        "path": "components/toast/index.html",
+        "sha256": "607f779a064381f1f52d21fbed8dda33563750b761d33f505087ce7598bc31c9",
+        "bytes": 129980
+      },
+      {
+        "path": "components/toggle-group/index.html",
+        "sha256": "762c01d35fd6cb81e1e35ff194caf27d1967b51b97ee7119112fe2842c265b58",
+        "bytes": 132327
+      },
+      {
+        "path": "components/tooltip/index.html",
+        "sha256": "3ff5b483a7388b3e67cf0dc8ab86f30ac36e20e5f685ede547be1b33f39c7eca",
+        "bytes": 126213
+      },
+      {
+        "path": "components/tree/index.html",
+        "sha256": "261bbd2df68ba87dc29cb93be5621f34a0796f31c314a19725e59f88451eb0bf",
+        "bytes": 159957
+      },
+      {
+        "path": "data/index.html",
+        "sha256": "6272d9a8080195da5168259b813c7aec6cb8bd48933d2ec467d9afe4b637b80b",
+        "bytes": 40792
+      },
+      {
+        "path": "forms/index.html",
+        "sha256": "8d2b6c172da01ed918b6167c485ce48d725f35740e5a3b975ef6641e7d28308b",
+        "bytes": 23383
+      },
+      {
+        "path": "i18n/index.html",
+        "sha256": "19dfd4380e7e5be479d881d1f3ce6b94727f556430aac1e53c1a8d63da763da7",
+        "bytes": 26048
+      },
+      {
+        "path": "index.html",
+        "sha256": "e6cd11cabfe8187e4c8cf6b1bafd39e38b4149df876bd379c612ade578bd870d",
+        "bytes": 6453
+      },
+      {
+        "path": "navigation/index.html",
+        "sha256": "9babbd4a5b484902ca264f4e9df8d96c62670103a786cfe97d3b7149c30bc01b",
+        "bytes": 23520
+      },
+      {
+        "path": "quickstart/index.html",
+        "sha256": "7dbd0a24e4affe33c31532a0bfee71fcae89cdc1b9cde20e6dbfdfac56f69d67",
+        "bytes": 120314
+      },
+      {
+        "path": "robots.txt",
+        "sha256": "7d180e0cdfc5af37d4faa5068de03ec8f95288ad45018f031b6754f8d9c934c8",
+        "bytes": 81
+      },
+      {
+        "path": "sitemap.xml",
+        "sha256": "244d4c74019c6bf7351e7d3de84a36621d69b515330131b7b7f7fdade4f197af",
+        "bytes": 3207
+      },
+      {
+        "path": "themes/index.html",
+        "sha256": "060e512656aacce8ef8bf5b67cd99d7db3dd9851ee0c2b2e910e8fd2528cfb31",
+        "bytes": 85861
+      },
+      {
+        "path": "utility/index.html",
+        "sha256": "89e203717b1d7bcfea4ea16ac7eb88a081a3b781fde6e80e8715151c1883416f",
+        "bytes": 31046
+      },
+      {
+        "path": "vellum/index.html",
+        "sha256": "49fbd3c995af1c6af1b9ad3ccc56d1ddf3c49906a732aa72534f147d399d518e",
+        "bytes": 61442
+      },
+      {
+        "path": "workspace/index.html",
+        "sha256": "c7ad0819843c5d4380731d1a8dab7088e47842a4d314a1e8aefd278cb7a32d5c",
+        "bytes": 24592
+      }
+    ]
+  }
+}

@@ -13,11 +13,18 @@ jobs:
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - name: Rust, mbx and Tailwind from mise.toml
         uses: jdx/mise-action@v4
       - uses: jdx/mr-boxington-action@v1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
       - name: Format
         run: cargo fmt --all -- --check
+      - name: CLI for paired measurement and integration consumers
+        run: mbx build --locked -p rustify-docs-cli --profile docs-cli
       # `--bins` as well: xtask and the examples are binaries, and their tests
       # do not run under `--lib`. The docs packages render on the host with
       # `ssr`; built together with the browser packages, Cargo would unify
@@ -68,6 +75,27 @@ jobs:
           cargo fmt --manifest-path tests/dom-only/hydration/Cargo.toml --all -- --check
           cargo fmt --manifest-path tests/docs-ssg/fixtures/components/Cargo.toml --all -- --check
           mbx clippy --locked --manifest-path tests/docs-ssg/fixtures/components/Cargo.toml --no-default-features --features ssr --all-targets -- -D warnings
+      - name: Official documentation site on both targets
+        run: |
+          cargo fmt --manifest-path site/Cargo.toml --all -- --check
+          mbx clippy --locked --manifest-path site/Cargo.toml --no-default-features --features ssr --all-targets -- -D warnings
+          mbx check --locked --manifest-path site/Cargo.toml --no-default-features --features hydrate --target wasm32-unknown-unknown
+          cli="$PWD/target/docs-cli/rustify-docs"
+          candidate=$(python3 - "$cli" <<'PY'
+          from pathlib import Path
+          import runpy, sys
+          candidate, framework, _ = runpy.run_path('scripts/docs-pages-prepare.py')['cli_pair'](Path(sys.argv[1]))
+          print(candidate if framework else '')
+          PY
+          )
+          config="$PWD/rustify-docs.toml"
+          if [ -n "$candidate" ]; then
+            python3 scripts/docs-pages-prepare.py --candidate-sha "$candidate" --cli "$cli" \
+              --out "$RUNNER_TEMP/docs-official-consumer"
+            config="$RUNNER_TEMP/docs-official-consumer/rustify-docs.toml"
+          fi
+          RUSTIFY_DOCS_CARGO=mbx "$cli" check --config "$config" --format json
+          RUSTIFY_DOCS_CARGO=mbx "$cli" build --config "$config"
       - name: Independent theme consumer tests
         run: mbx test --locked --manifest-path tests/theme-export/Cargo.toml --workspace --bins
       - name: Makepad text layout and shaping checks
@@ -100,6 +128,9 @@ jobs:
       - name: Rust, mbx and Tailwind from mise.toml
         uses: jdx/mise-action@v4
       - uses: jdx/mr-boxington-action@v1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
       - uses: actions/setup-node@v4
         with:
           node-version: 26
@@ -127,14 +158,22 @@ jobs:
       - name: Rust, mbx and Tailwind from mise.toml
         uses: jdx/mise-action@v4
       - uses: jdx/mr-boxington-action@v1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
       - uses: actions/setup-node@v4
         with:
           node-version: 26
       - name: Compile the CLI and real author targets before browser startup
         run: |
           mbx build --locked -p rustify-docs-cli --profile docs-cli
-          RUSTIFY_DOCS_CARGO=mbx target/docs-cli/rustify-docs check --config tests/docs-ssg/fixtures/components/rustify-docs.toml --format json
-          RUSTIFY_DOCS_CARGO=mbx target/docs-cli/rustify-docs build --config tests/docs-ssg/fixtures/components/rustify-docs.toml
+          cli="$PWD/target/docs-cli/rustify-docs"
+          project=$(python3 scripts/docs-pages-prepare.py \
+            --project tests/docs-ssg/fixtures/components/Cargo.toml --cli "$cli" \
+            --out "$RUNNER_TEMP/docs-components-consumer" | \
+            python3 -c 'import json,sys; print(json.load(sys.stdin)["project"])')
+          RUSTIFY_DOCS_CARGO=mbx "$cli" check --config "$project/rustify-docs.toml" --format json
+          RUSTIFY_DOCS_CARGO=mbx "$cli" build --config "$project/rustify-docs.toml"
       - name: Install pinned Playwright
         run: npm ci && npx playwright install --with-deps chromium
       - name: Component islands under a base
@@ -158,6 +197,9 @@ jobs:
       - name: Rust, mbx and Tailwind from mise.toml
         uses: jdx/mise-action@v4
       - uses: jdx/mr-boxington-action@v1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
       - uses: actions/setup-node@v4
         with:
           node-version: 26

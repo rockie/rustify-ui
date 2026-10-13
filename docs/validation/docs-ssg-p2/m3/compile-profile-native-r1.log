@@ -1,0 +1,107 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+    Finished `docs-cli` profile [optimized] target(s) in 0.59s
+     Running unittests src/main.rs (target/docs-cli/deps/rustify_docs-6632717838e0553c)
+
+running 1 test
+compile proxy work: /Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/compile-profile-m3-r1
+mbx[progress]: 15s elapsed; 0 hits, 0 misses, 0 bypassed, 0 not looked up; ~0s compiler work saved
+mbx[progress]: 30s elapsed; 0 hits, 0 misses, 0 bypassed, 0 not looked up; ~0s compiler work saved
+compile phase: generation-rendered 1791902587106
+compile phase: generation-validated 1791902587107
+compile phase: prepared-artifacts 1791902587957
+compile phase: immutable-helper 1791902588019
+compile phase: helper-description 1791902588573
+compile phase: source-candidates 1791902588655
+compile phase: bindgen-files 1791902588999
+compile phase: resource-digest 1791902589037
+compile phase: prepared-validated 1791902589072
+compile phase: surfaces-rendered 1791902589186
+compile phase: surfaces-analyzed 1791902589203
+compile phase: markdown-rendered 1791902589296
+compile phase: generation-rendered 1791902589418
+compile phase: generation-validated 1791902589443
+compile proxy/0: native=true, browser=true, compile-end=1791902587858
+mbx[progress]: 45s elapsed; 0 hits, 0 misses, 0 bypassed, 0 not looked up; ~0s compiler work saved
+mbx[progress]: 1m elapsed; 0 hits, 0 misses, 0 bypassed, 0 not looked up; ~0s compiler work saved
+test compile_proxy::compile_to_islands_proxy has been running for over 60 seconds
+compile phase: prepared-artifacts 1791902618649
+compile phase: immutable-helper 1791902618712
+compile phase: helper-description 1791902619366
+compile phase: source-candidates 1791902619435
+compile phase: bindgen-files 1791902619768
+compile phase: resource-digest 1791902619807
+compile phase: prepared-validated 1791902619844
+compile phase: surfaces-rendered 1791902619962
+compile phase: surfaces-analyzed 1791902619979
+compile phase: markdown-rendered 1791902620081
+compile phase: generation-rendered 1791902620206
+compile phase: generation-validated 1791902620241
+mbx[progress]: 1m 15s elapsed; 0 hits, 0 misses, 0 bypassed, 0 not looked up; ~0s compiler work saved
+compile proxy/1: native=true, browser=true, compile-end=1791902618427
+mbx[progress]: 1m 30s elapsed; 0 hits, 0 misses, 0 bypassed, 0 not looked up; ~0s compiler work saved
+compile phase: prepared-artifacts 1791902648688
+compile phase: immutable-helper 1791902648749
+compile phase: helper-description 1791902649329
+compile phase: source-candidates 1791902649407
+compile phase: bindgen-files 1791902649720
+compile phase: resource-digest 1791902649758
+compile phase: prepared-validated 1791902649788
+compile phase: surfaces-rendered 1791902649907
+compile phase: surfaces-analyzed 1791902649924
+compile phase: markdown-rendered 1791902650036
+compile phase: generation-rendered 1791902650157
+compile phase: generation-validated 1791902650192
+mbx[progress]: 1m 45s elapsed; 0 hits, 0 misses, 0 bypassed, 0 not looked up; ~0s compiler work saved
+compile proxy/2: native=true, browser=true, compile-end=1791902648469
+mbx[progress]: 2m elapsed; 0 hits, 0 misses, 0 bypassed, 0 not looked up; ~0s compiler work saved
+compile phase: prepared-artifacts 1791902680056
+compile phase: immutable-helper 1791902680117
+compile phase: helper-description 1791902680665
+compile phase: source-candidates 1791902680749
+compile phase: bindgen-files 1791902681105
+compile phase: resource-digest 1791902681144
+compile phase: prepared-validated 1791902681177
+compile phase: surfaces-rendered 1791902681294
+compile phase: surfaces-analyzed 1791902681310
+compile phase: markdown-rendered 1791902681403
+compile phase: generation-rendered 1791902681525
+compile phase: generation-validated 1791902681553
+compile proxy/3: native=true, browser=true, compile-end=1791902679871
+compile phase: prepared-artifacts 1791902710843
+compile phase: immutable-helper 1791902710903
+compile phase: helper-description 1791902712251
+compile phase: source-candidates 1791902712328
+compile phase: bindgen-files 1791902712652
+compile phase: resource-digest 1791902712691
+compile phase: prepared-validated 1791902712721
+compile phase: surfaces-rendered 1791902712836
+compile phase: surfaces-analyzed 1791902712854
+compile phase: markdown-rendered 1791902712958
+compile phase: generation-rendered 1791902713083
+compile phase: generation-validated 1791902713115
+compile proxy/4: native=true, browser=true, compile-end=1791902710670
+mbx[progress]: 3m elapsed; 0 hits, 0 misses, 0 bypassed, 0 not looked up; ~0s compiler work saved
+compile phase: prepared-artifacts 1791902741043
+compile phase: immutable-helper 1791902741104
+compile phase: helper-description 1791902741641
+compile phase: source-candidates 1791902741719
+compile phase: bindgen-files 1791902742036
+compile phase: resource-digest 1791902742074
+compile phase: prepared-validated 1791902742103
+compile phase: surfaces-rendered 1791902742217
+compile phase: surfaces-analyzed 1791902742233
+compile phase: markdown-rendered 1791902742326
+compile phase: generation-rendered 1791902742448
+compile phase: generation-validated 1791902742478
+compile proxy/5: native=true, browser=true, compile-end=1791902740830
+test compile_proxy::compile_to_islands_proxy ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 64 filtered out; finished in 195.38s
+
+mbx[savings]: the checkouts are gone. their 1.7 TiB logical has gone to join them.

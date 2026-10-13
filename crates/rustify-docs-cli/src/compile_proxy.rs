@@ -63,10 +63,15 @@ fn prepare(repo: &Path, work: &Path) -> (PathBuf, String, Vec<u8>) {
     let fixture = repo.join("tests/docs-ssg/fixtures/components");
     let site = work.join("site");
     assert!(!site.exists(), "choose a fresh proxy work directory");
-    for directory in ["src", "content"] {
+    for directory in ["src", "content", "static"] {
         copy_tree(&fixture.join(directory), &site.join(directory));
     }
-    for file in ["Cargo.toml", "Cargo.lock", "rustify-docs.toml"] {
+    for file in [
+        "Cargo.toml",
+        "Cargo.lock",
+        "rustify-docs.toml",
+        "theme.json",
+    ] {
         fs::copy(fixture.join(file), site.join(file)).unwrap();
     }
     let mut manifest = fs::read_to_string(site.join("Cargo.toml")).unwrap();
@@ -84,6 +89,42 @@ fn prepare(repo: &Path, work: &Path) -> (PathBuf, String, Vec<u8>) {
         );
     }
     fs::write(site.join("Cargo.toml"), manifest).unwrap();
+    // Use the actual CLI binary of this test build; an installed C can also
+    // be selected by the existing browser-harness RUSTIFY_DOCS_BIN variable.
+    let cli = std::env::var_os("RUSTIFY_DOCS_BIN")
+        .map(PathBuf::from)
+        .unwrap_or_else(|| {
+            std::env::current_exe()
+                .unwrap()
+                .parent()
+                .unwrap()
+                .parent()
+                .unwrap()
+                .join("rustify-docs")
+        });
+    assert!(
+        cli.is_file(),
+        "build the same-profile rustify-docs binary first, or set RUSTIFY_DOCS_BIN to the real under-test C"
+    );
+    let output = Command::new("python3")
+        .arg(repo.join("scripts/docs-pages-prepare.py"))
+        .arg("--project")
+        .arg(site.join("Cargo.toml"))
+        .arg("--cli")
+        .arg(cli)
+        .output()
+        .unwrap();
+    assert!(
+        output.status.success(),
+        "{}",
+        String::from_utf8_lossy(&output.stderr)
+    );
+    let pair: Value = serde_json::from_slice(&output.stdout).unwrap();
+    assert_eq!(pair["candidate_sha"], super::SOURCE_REVISION);
+    assert_eq!(
+        pair["framework_revision"],
+        super::EXPECTED_FRAMEWORK_REV.trim()
+    );
     let source = fs::read_to_string(site.join("src/demos.rs")).unwrap();
     assert_eq!(source.matches(PROXY).count(), 1);
     let lock = fs::read(site.join("Cargo.lock")).unwrap();
@@ -239,7 +280,7 @@ fn compile_to_islands_proxy() {
             "os":std::env::consts::OS,"arch":std::env::consts::ARCH,"created_epoch_ms":epoch_ms(),
             "base":"/docs/","page":"/docs/proxy/","profiles":["docs-host","docs-wasm"],
         "cli_build":cli_build,
-            "scope":"M2 compile/render/load proxy; original catalog and counters; not the M4 dev endpoint or A/B largest-page gate",
+            "scope":"compile/render/load proxy with current theme/slots; original catalog and counters; not the M4 dev endpoint or A/B largest-page gate",
         }),
     );
     println!("compile proxy work: {}", work.display());
@@ -309,10 +350,7 @@ fn compile_to_islands_proxy() {
             let files = &generation.as_ref().unwrap().files;
             page_sha = Some(digest(&files["proxy/index.html"]));
             page_bytes = Some(files["proxy/index.html"].len());
-            for (path, bytes) in files
-                .iter()
-                .filter(|(path, _)| path.starts_with("assets/islands/"))
-            {
+            for (path, bytes) in files.iter().filter(|(path, _)| path.starts_with("assets/")) {
                 resources.insert(
                     path.clone(),
                     json!({"sha256":digest(bytes),"bytes":bytes.len()}),

@@ -1,0 +1,10 @@
+import fs from "node:fs";
+import path from "node:path";
+import { spawn } from "node:child_process";
+const out = path.resolve("docs/validation/docs-ssg-p2/m5/imported-theme-browser-r1"); fs.mkdirSync(out);
+const log = fs.openSync(path.join(out, "browser.log"), "wx");
+const args = ["playwright", "test", "-c", "playwright.docs.config.ts", "--project=components-subpath", "tests/docs-ssg/custom.spec.ts", "--grep", "live mode changes", "--reporter=list,json", "--output", path.join(out, "artifacts")];
+fs.writeFileSync(path.join(out, "command.json"), JSON.stringify({ command: ["npx", ...args], binary: path.resolve("target/docs-cli/rustify-docs") }, null, 2) + "\n");
+const child = spawn("npx", args, { stdio: ["ignore", log, log], env: { ...process.env, RUSTIFY_DOCS_BIN: path.resolve("target/docs-cli/rustify-docs"), PLAYWRIGHT_JSON_OUTPUT_NAME: path.join(out, "results.json") } });
+const code = await new Promise((resolve, reject) => { child.on("exit", resolve); child.on("error", reject); }); fs.closeSync(log);
+const stats = JSON.parse(fs.readFileSync(path.join(out, "results.json"), "utf8")).stats; console.log(JSON.stringify({ exit_code: code, stats })); process.exitCode = code ?? 1;

@@ -1,0 +1,134 @@
+name: docs pages
+
+# Pages must already use the GitHub Actions publishing source. This workflow
+# never enables Pages and deploys only an explicitly selected frozen CLI C.
+# https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages
+on:
+  workflow_dispatch:
+    inputs:
+      candidate_sha:
+        description: "Complete frozen CLI C commit SHA (last-good C for rollback)"
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: docs-pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: macos-14
+    timeout-minutes: 90
+    permissions:
+      contents: read
+      pages: read
+    env:
+      CANDIDATE_SHA: ${{ inputs.candidate_sha }}
+      RUSTIFY_DOCS_CARGO: mbx
+    outputs:
+      build_id: ${{ steps.build.outputs.build_id }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.candidate_sha }}
+          fetch-depth: 0
+      - name: Verify the candidate checkout
+        run: |
+          python3 - <<'PY'
+          import os, re, subprocess
+          candidate = os.environ['CANDIDATE_SHA']
+          if not re.fullmatch(r'[0-9a-f]{40}', candidate):
+              raise SystemExit('candidate_sha must be a complete lowercase commit SHA')
+          if subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip() != candidate:
+              raise SystemExit('checkout HEAD does not equal candidate_sha')
+          PY
+      - name: Repository Rust, mbx and Tailwind
+        uses: jdx/mise-action@v4
+      - uses: jdx/mr-boxington-action@v1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Read existing Pages configuration
+        uses: actions/configure-pages@v5
+        with:
+          enablement: false
+      - name: Install the exact Git CLI C
+        run: |
+          mbx install --git https://github.com/rockie/rustify-ui --rev "$CANDIDATE_SHA" \
+            --locked --profile docs-cli --root "$RUNNER_TEMP/docs-cli" rustify-docs-cli
+      - name: Prepare the frozen official consumer
+        run: |
+          mkdir -p "$RUNNER_TEMP/docs-pages-evidence"
+          python3 scripts/docs-pages-prepare.py --candidate-sha "$CANDIDATE_SHA" \
+            --cli "$RUNNER_TEMP/docs-cli/bin/rustify-docs" --out "$RUNNER_TEMP/docs-site" \
+            > "$RUNNER_TEMP/docs-pages-evidence/prepare.json"
+          cp "$RUNNER_TEMP/docs-site/.rustify-docs/pages-prepare.json" "$RUNNER_TEMP/docs-pages-evidence/"
+      - name: Check and build the complete site
+        id: build
+        run: |
+          cli="$RUNNER_TEMP/docs-cli/bin/rustify-docs"
+          config="$RUNNER_TEMP/docs-site/rustify-docs.toml"
+          "$cli" check --config "$config" --format json \
+            > "$RUNNER_TEMP/docs-pages-evidence/check.json" 2> "$RUNNER_TEMP/docs-pages-evidence/check.stderr"
+          "$cli" build --config "$config" --format json \
+            > "$RUNNER_TEMP/docs-pages-evidence/build.json" 2> "$RUNNER_TEMP/docs-pages-evidence/build.stderr"
+          python3 - <<'PY'
+          import json, os, runpy
+          from pathlib import Path
+          root = Path(os.environ['RUNNER_TEMP']) / 'docs-site'
+          receipt = json.loads((root / '.rustify-docs/pages-prepare.json').read_text())
+          helpers = runpy.run_path('scripts/docs-pages-prepare.py')
+          helpers['verify_inputs'](root, receipt['inputs'])
+          manifest = root / 'site/dist/rustify-docs-manifest.json'
+          output = json.loads(manifest.read_text())
+          if output['base'] != '/rustify-ui/' or output['mode'] != 'production':
+              raise SystemExit('the build must publish the official production base')
+          helpers['verify_inputs'](manifest.parent, {entry['path']: entry['sha256'] for entry in output['files']})
+          evidence = Path(os.environ['RUNNER_TEMP']) / 'docs-pages-evidence'
+          (evidence / manifest.name).write_bytes(manifest.read_bytes())
+          (evidence / 'identity.json').write_text(json.dumps({
+              'candidate_sha': receipt['candidate_sha'], 'framework_revision': receipt['framework_revision'],
+              'build_id': output['build_id'], 'cli_version': output['cli_version'],
+              'projection': receipt['projection'],
+          }, indent=2) + '\n')
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as stream:
+              stream.write(f"build_id={output['build_id']}\n")
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as stream:
+              stream.write(f"C: {receipt['candidate_sha']}\n\nR: {receipt['framework_revision']}\n\nBuild: {output['build_id']}\n")
+          PY
+      - name: Preserve source and build evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: docs-pages-evidence-${{ github.run_id }}
+          path: ${{ runner.temp }}/docs-pages-evidence
+          retention-days: 30
+          if-no-files-found: warn
+      - name: Upload the same-run complete Pages artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: ${{ runner.temp }}/docs-site/site/dist
+          retention-days: 1
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy the completed artifact
+        id: deployment
+        uses: actions/deploy-pages@v4
+      - name: Record deployment identity
+        env:
+          BUILD_ID: ${{ needs.build.outputs.build_id }}
+          PAGE_URL: ${{ steps.deployment.outputs.page_url }}
+        run: |
+          printf 'Build: %s\n\nURL: %s\n' "$BUILD_ID" "$PAGE_URL" >> "$GITHUB_STEP_SUMMARY"

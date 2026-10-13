@@ -1,0 +1,42 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+warning: struct `FontResourceDigest` is never constructed
+  --> crates/rustify-ui/src/theme/fonts.rs:76:12
+   |
+76 | pub struct FontResourceDigest {
+   |            ^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: constant `FONT_RESOURCE_DIGESTS` is never used
+  --> crates/rustify-ui/src/theme/fonts.rs:83:11
+   |
+83 | pub const FONT_RESOURCE_DIGESTS: [FontResourceDigest; 7] = [
+   |           ^^^^^^^^^^^^^^^^^^^^^
+
+warning: `rustify-ui` (lib) generated 2 warnings
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.56s
+     Running unittests src/lib.rs (target/debug/deps/rustify_docs-a0443a60ac2534b1)
+
+running 13 tests
+test config::tests::languages ... ok
+test config::tests::unknown_keys_are_errors_with_a_location ... ok
+test config::tests::schema_version_must_be_one ... ok
+test config::tests::defaults ... ok
+test config::tests::registered_navigation_requires_one_source_and_canonical_routes ... ok
+test config::tests::base_and_url_normalize_together ... ok
+test config::tests::component_sites_accept_explicit_rust_inputs ... ok
+test config::tests::rust_inputs_cannot_escape_or_be_replaced_by_output ... ok
+test config::tests::nav_groups_need_one_source ... ok
+test config::tests::output_may_not_overlap_inputs ... ok
+test config::tests::static_theme_and_registered_navigation_are_known_configuration ... ok
+test config::tests::brand_colours_and_logo ... ok
+test config::tests::theme_document_rejects_conflicting_primary_and_unsafe_paths ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 145 filtered out; finished in 0.01s
+

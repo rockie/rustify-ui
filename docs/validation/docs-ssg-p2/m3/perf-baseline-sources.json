@@ -1,0 +1,12 @@
+{
+  "restore_root": "target/docs-ssg/m3-perf-baseline",
+  "hash_algorithm": "sha256 raw file bytes",
+  "files": {
+    "crates/rustify-docs-cli/src/main.rs": "8cc4bc10ecd7e59ca64bfbfb6520c3c944be0f5880de225d97fd3243cb364d92",
+    "crates/rustify-docs-cli/src/rendering.rs": "46ce37926c086ad12296b291301e7f957f45f08c92fca3a9b7d05c6e6d8c67d0",
+    "crates/rustify-docs-cli/src/rust_site.rs": "5f7971f921c03f656b6c27b1039981e05b848d22c230fa9e9e655c98285e7886",
+    "crates/rustify-docs/src/generation.rs": "faa75d74fe060247cd30f76cb3ae6becdf1b1c29a3140a64b282b3e1a109974d",
+    "crates/rustify-docs/src/html_check.rs": "835733d94cd99f6206004ed2ea9f662a76a8762d189268987859c68ee3dcf057"
+  },
+  "scope": "M3 failed dev proxy baseline; only local worktree snapshot, not final candidate"
+}

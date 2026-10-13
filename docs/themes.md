@@ -54,6 +54,27 @@ Lengths accept `px`, `rem` and unitless zero. Every resolved author length is li
 
 For radius `r`, the resolved sm/md/lg/xl corners are `max(0, r−4)`, `max(0, r−2)`, `r` and `r+4`. At `r=6px`, these are 2/4/6/10px. This does not change the legacy 4/6/8px sm/md/lg scale. Shadow sizes resolve to one or two structured layers; color alpha is multiplied by shadow opacity. A legacy conversion starts with zero shadow opacity.
 
+## Static documentation themes
+
+A Rustify Docs site can import the complete JSON exported by Theme Studio:
+
+```toml
+[theme]
+document = "theme.json"
+```
+
+The path is relative to the site project. Keep the document inside the project and outside private files and generated output. It is a build input and is watched during development; it is never published as a download. Do not combine `theme.document` with `theme.primary`: the imported document supplies both primary colors.
+
+`rustify-docs check` and `build` validate both modes with the bundled font catalogue and the same 256 KiB import limit. Unknown tokens and font fallbacks retain the resolver's diagnostics. An invalid import prevents publication. Omitting `document` keeps the reading theme's system fonts and existing appearance.
+
+The generated stylesheet projects the validated colors, spacing, radius, font size and letter spacing onto the page and its interactive scopes. Reading panels use the imported radius. Light and dark use the document values; system mode follows the browser's color preference. The page owns the saved preference and first-frame CSS. Islands attach using their static initial theme, then follow the page mode through their shared reactive context, including floating menus and dialogs.
+
+The CLI contains the same seven font files identified by the SDK catalogue. It publishes only the document's selected packaged faces and the existing Chinese/emoji glyph fallbacks, with each face's notice. Files use same-origin `assets/fonts/<sha256>.ttf` URLs. Generic stacks retain their SDK behavior and need no packaged face. Authors of a content-only site need the installed CLI and JSON file; no Makepad source directory or font download step is required.
+
+The catalogue includes IBM Plex Sans, Noto Sans, Rustify WenKai, Noto Serif, Liberation Mono, JetBrains Mono and Noto Color Emoji. These preserve the repository's existing bytes and font modifications. The bundled Liberation Mono 1.04 uses GPL v2 with its original font exceptions; selecting it also publishes the corresponding source archive beside its full notice. The other six faces use OFL 1.1. See [font notices](../makepad/widgets/resources/FONT-LICENSES.md) and the `docs-static-fonts` entry in [sources.lock.json](../sources.lock.json).
+
+Complete class names in registered Rust sources, including initially hidden branches, contribute to the site's stylesheet. A dynamically assembled class still needs an explicit complete candidate in the source; importing a theme does not enable arbitrary runtime CSS.
+
 ## Mount a browser scope
 
 Compile one Tailwind stylesheet for the application. Import the opt-in mapping after `sdk.css`; this is the order used by [Theme Studio's Tailwind input](../examples/theme-studio/tailwind.css):

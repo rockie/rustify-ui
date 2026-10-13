@@ -16,6 +16,26 @@ pub fn fixture(name: &str) -> PathBuf {
         .join(name)
 }
 
+/// Keep development paths, or project the exact pair emitted by the tested CLI.
+/// The helper writes only the copied author's manifest and lock, never its views.
+pub fn pair_component_project(project: &Path) {
+    let repository = Path::new(env!("CARGO_MANIFEST_DIR")).join("../..");
+    let output = Command::new("python3")
+        .arg(repository.join("scripts/docs-pages-prepare.py"))
+        .arg("--project")
+        .arg(project.join("Cargo.toml"))
+        .args(["--cli", BIN])
+        .output()
+        .expect("the repository's Python 3.12 pair helper runs");
+    succeeded(&output);
+    let pair: serde_json::Value = serde_json::from_slice(&output.stdout).unwrap();
+    assert_eq!(
+        pair["framework_revision"],
+        include_str!("../../assets/framework-revision.txt").trim(),
+        "the tested CLI and its Git source C must have the same paired R"
+    );
+}
+
 /// A fresh temporary directory, removed when dropped.
 pub struct Temp(pub PathBuf);
 
@@ -318,6 +338,13 @@ impl Dev {
 
     /// As `start`, without choosing the port.
     pub fn start_with(dir: &Path, args: &[&str], env: &[(&str, &str)]) -> Result<Self, String> {
+        let dev = Self::start_pending(dir, args, env)?;
+        dev.events("/", 0).until(|state| state["building"] == false);
+        Ok(dev)
+    }
+
+    /// Starts at the printed address, before the initial build has finished.
+    pub fn start_pending(dir: &Path, args: &[&str], env: &[(&str, &str)]) -> Result<Self, String> {
         use std::io::{BufRead, BufReader, Read};
         let mut command = Command::new(BIN);
         command

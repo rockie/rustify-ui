@@ -1,0 +1,179 @@
+{
+  "preview_pid": 64416,
+  "bin": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-cli/rustify-docs",
+  "url": "http://127.0.0.1:52908/rustify-ui/",
+  "errors": [],
+  "chromium": "153.0.8010.12",
+  "before": {
+    "href": "#rui-surface-a3376c2ec5-page-Link-demo-0-link-demo-destination-1",
+    "targetExists": true,
+    "hash": "",
+    "scope": "surface-a3376c2ec5-page-Link-demo-0"
+  },
+  "after": {
+    "hash": "",
+    "active": "<a data-name=\"Link\" data-testid=\"\" href=\"#rui-surface-a3376c2ec5-page-Link-demo-0-link-demo-destination-1\" class=\"text-primary underline-offset-4 rounded-sm hover:underline outline-none focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-disabled:pointer-events-none aria-disabled:opacity-50\">Jump to the destination</a>",
+    "events": [
+      {
+        "at": "document-capture",
+        "defaultPrevented": false,
+        "href": "#rui-surface-a3376c2ec5-page-Link-demo-0-link-demo-destination-1",
+        "path": [
+          {
+            "tag": "A",
+            "scope": null,
+            "name": "Link"
+          },
+          {
+            "tag": "DIV",
+            "scope": null,
+            "name": null
+          },
+          {
+            "tag": "DIV",
+            "scope": null,
+            "name": null
+          },
+          {
+            "tag": "DIV",
+            "scope": null,
+            "name": null
+          },
+          {
+            "tag": "DIV",
+            "scope": "surface-a3376c2ec5-page-Link-demo-0",
+            "name": null
+          },
+          {
+            "tag": "FIELDSET",
+            "scope": null,
+            "name": null
+          },
+          {
+            "tag": "SECTION",
+            "scope": null,
+            "name": null
+          },
+          {
+            "tag": "DIV",
+            "scope": null,
+            "name": null
+          },
+          {
+            "tag": "ARTICLE",
+            "scope": null,
+            "name": null
+          },
+          {
+            "tag": "DIV",
+            "scope": null,
+            "name": null
+          },
+          {
+            "tag": "MAIN",
+            "scope": null,
+            "name": null
+          },
+          {
+            "tag": "DIV",
+            "scope": null,
+            "name": null
+          },
+          {
+            "tag": "BODY",
+            "scope": null,
+            "name": null
+          },
+          {
+            "tag": "HTML",
+            "scope": "",
+            "name": null
+          }
+        ]
+      },
+      {
+        "at": "preventDefault",
+        "target": "Jump to the destination",
+        "href": "#rui-surface-a3376c2ec5-page-Link-demo-0-link-demo-destination-1",
+        "stack": "Error\n    at Event.preventDefault (<anonymous>:6:182)\n    at __wbg_preventDefault_4235a4ccf8540533 (http://127.0.0.1:52908/rustify-ui/assets/islands/a66ac6cbb6401cdc27d6a54f26fae78cfbd87e1aa48f18bbab58c81804a864b7/app.js:822:18)\n    at official_site.wasm.<web_sys[71d3d9a5ad00cf19]::features::gen_Event::Event>::prevent_default::__wbg_preventDefault_4235a4ccf8540533 externref shim (http://127.0.0.1:52908/rustify-ui/assets/islands/a66ac6cbb6401cdc27d6a54f26fae78cfbd87e1aa48f18bbab58c81804a864b7/app_bg.wasm:wasm-function[5322]:0x2614d8)\n    at official_site.wasm.<web_sys[71d3d9a5ad00cf19]::features::gen_Event::Event>::prevent_default (http://127.0.0.1:52908/rustify-ui/assets/islands/a66ac6cbb6401cdc27d6a54f26fae78cfbd87e1aa48f18bbab58c81804a864b7/app_bg.wasm:wasm-function[5249]:0x261218)\n    at official_site.wasm.rustify_ui[1dd75eff40805b6a]::router::browser::provide_router::{closure#1} (http://127.0.0.1:52908/rustify-ui/assets/islands/a66ac6cbb6401cdc27d6a54f26fae78cfbd87e1aa48f18bbab58c81804a864b7/app_bg.wasm:wasm-function[1109]:0x1aeb57)\n    at official_site.wasm.wasm_bindgen[163b47c5955f4fe2]::convert::closures::_::invoke::<web_sys[71d3d9a5ad00cf19]::features::gen_MouseEvent::MouseEvent, (), true> (http://127.0.0.1:52908/rustify-ui/assets/islands/a66ac6cbb6401cdc27d6a54f26fae78cfbd87e1aa48f18bbab58c81804a864b7/app_bg.wasm:wasm-function[4452]:0x25d7dd)\n    at official_site.wasm.wasm_bindgen[163b47c5955f4fe2]::convert::closures::_::invoke::<web_sys[71d3d9a5ad00cf19]::features::gen_MouseEvent::MouseEvent, (), true> externref shim (http://127.0.0.1:52908/rustify-ui/assets/islands/a66ac6cbb6401cdc27d6a54f26fae78cfbd87e1aa48f18bbab58c81804a864b7/app_bg.wasm:wasm-function[4726]:0x25f4f8)\n    at wasm_bindgen_163b47c5955f4fe2___convert__closures_____invoke___web_sys_71d3d9a5ad00cf19___features__gen_MouseEvent__MouseEvent______true_ (http://127.0.0.1:52908/rustify-ui/assets/islands/a66ac6cbb6401cdc27d6a54f26fae78cfbd87e1aa48f18bbab58c81804a864b7/app.js:1140:10)\n    at HTMLDivElement.real (http://127.0.0.1:52908/rustify-ui/assets/islands/a66ac6cbb6401cdc27d6a54f26fae78cfbd87e1aa48f18bbab58c81804a864b7/app.js:1293:20)"
+      },
+      {
+        "at": "document-bubble",
+        "defaultPrevented": true,
+        "href": "#rui-surface-a3376c2ec5-page-Link-demo-0-link-demo-destination-1",
+        "path": [
+          {
+            "tag": "A",
+            "scope": null,
+            "name": "Link"
+          },
+          {
+            "tag": "DIV",
+            "scope": null,
+            "name": null
+          },
+          {
+            "tag": "DIV",
+            "scope": null,
+            "name": null
+          },
+          {
+            "tag": "DIV",
+            "scope": null,
+            "name": null
+          },
+          {
+            "tag": "DIV",
+            "scope": "surface-a3376c2ec5-page-Link-demo-0",
+            "name": null
+          },
+          {
+            "tag": "FIELDSET",
+            "scope": null,
+            "name": null
+          },
+          {
+            "tag": "SECTION",
+            "scope": null,
+            "name": null
+          },
+          {
+            "tag": "DIV",
+            "scope": null,
+            "name": null
+          },
+          {
+            "tag": "ARTICLE",
+            "scope": null,
+            "name": null
+          },
+          {
+            "tag": "DIV",
+            "scope": null,
+            "name": null
+          },
+          {
+            "tag": "MAIN",
+            "scope": null,
+            "name": null
+          },
+          {
+            "tag": "DIV",
+            "scope": null,
+            "name": null
+          },
+          {
+            "tag": "BODY",
+            "scope": null,
+            "name": null
+          },
+          {
+            "tag": "HTML",
+            "scope": "",
+            "name": null
+          }
+        ]
+      }
+    ]
+  }
+}

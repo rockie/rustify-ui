@@ -1,0 +1,32 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-docs v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-docs)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 8.62s
+     Running tests/content_include.rs (target/debug/deps/content_include-52d29f035692fa93)
+
+running 14 tests
+test include_rejects_a_private_path_at_its_config_entry ... ok
+test include_rejects_a_file_outside_the_content_directory_at_its_config_entry ... ok
+test include_rejects_the_second_duplicate_at_its_original_location ... ok
+test include_rejects_globs_even_when_a_literal_matching_name_exists ... ok
+test include_rejects_a_missing_file_at_its_config_entry ... ok
+test absent_include_keeps_recursive_markdown_discovery ... ok
+test an_excluded_markdown_link_without_repo_is_located_in_the_selected_page ... ok
+test deleting_an_excluded_repository_link_target_invalidates_the_original_analysis ... ok
+test retargeting_an_excluded_symlink_invalidates_even_identical_target_bytes ... ok
+test explicit_include_avoids_unselected_markdown_and_unreferenced_binary_reads ... ok
+test an_explicit_empty_include_can_publish_only_a_registered_page ... ok
+test excluded_markdown_links_to_the_repository_without_binding_its_body ... ok
+test raw_html_links_to_excluded_markdown_without_reading_or_publishing_it ... ok
+test a_selected_pages_image_is_read_published_and_bound_to_its_original_bytes ... ok
+
+test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.17s
+
+mbx[cache]: 0 hits, 0 misses, 2 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[gc]: evicted 1368 objects and 298 action results (2.2 GiB logical); 90.0 GiB logical remain
+mbx[savings]: 2.2 TiB logical of build debris has left the building.

@@ -1,0 +1,26 @@
+{
+  "same_workload_stability_only": true,
+  "rows": [
+    {
+      "run": "baseline",
+      "native_whole_round_median_ms": 31694,
+      "native_post_compile_median_ms": 1858,
+      "host_compile_median_ms": 21026,
+      "wasm_compile_median_ms": 8375
+    },
+    {
+      "run": "diagnostic",
+      "native_whole_round_median_ms": 25901,
+      "native_post_compile_median_ms": 1694,
+      "host_compile_median_ms": 16427,
+      "wasm_compile_median_ms": 7650
+    },
+    {
+      "run": "candidate",
+      "native_whole_round_median_ms": 25589,
+      "native_post_compile_median_ms": 1111,
+      "host_compile_median_ms": 16711,
+      "wasm_compile_median_ms": 7509
+    }
+  ]
+}

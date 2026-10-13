@@ -1,0 +1,500 @@
+[WebServer] building /Users/rockie/Documents/gh-rockie/rustify-ui/tests/docs-ssg/fixtures/components into /Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/http/components/subpath/dist
+[WebServer] warning[rust-compile]: warning: method `fallback_element` is never used
+[WebServer]    --> /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui/src/overlay.rs:349:23
+[WebServer]     |
+[WebServer] 284 |     impl OverlayStack {
+[WebServer]     |     ----------------- method in this implementation
+[WebServer] ...
+[WebServer] 349 |         pub(crate) fn fallback_element(&self) -> Element {
+[WebServer]     |                       ^^^^^^^^^^^^^^^^
+[WebServer]     |
+[WebServer]     = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+[WebServer] 
+[WebServer] 
+[WebServer]   --> /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui/src/overlay.rs:349:23
+[WebServer]   = help: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+[WebServer] warning[rust-compile]: warning: field `guest_click` is never read
+[WebServer]    --> /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui/src/router.rs:556:9
+[WebServer]     |
+[WebServer] 549 |     struct Router {
+[WebServer]     |            ------ field in this struct
+[WebServer] ...
+[WebServer] 556 |         guest_click: Option<SendWrapper<Rc<GuestClick>>>,
+[WebServer]     |         ^^^^^^^^^^^
+[WebServer]     |
+[WebServer]     = note: `Router` has a derived impl for the trait `Clone`, but this is intentionally ignored during dead code analysis
+[WebServer] 
+[WebServer] 
+[WebServer]   --> /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui/src/router.rs:556:9
+[WebServer]   = help: `Router` has a derived impl for the trait `Clone`, but this is intentionally ignored during dead code analysis
+[WebServer] warning[not-in-nav]: this page is in no navigation group, so readers can only reach it by a link
+[WebServer]   --> content/index.md
+[WebServer] warning[theme-token]: radius: Light and dark have different author values; editing this common field applies to both
+[WebServer]   --> theme.json
+[WebServer] build: 9 pages and 404.html in /Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/http/components/subpath/dist: 42969.8 KB in 38 files, 4 warning(s), 142878 ms
+[WebServer] largest pages:
+[WebServer]     419.8 KB  custom/index.html
+[WebServer]     134.1 KB  proxy/index.html
+[WebServer]      99.9 KB  counter/index.html
+[WebServer]      91.3 KB  failure/index.html
+[WebServer]      84.3 KB  async/index.html
+[WebServer] serving /Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/http/components/subpath/dist (built by rustify-docs 0.1.6, build e2a7e37132156044) until stopped
+
+Running 12 tests using 1 worker
+
+(node:71465) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘   1 [components-subpath] › tests/docs-ssg/custom.spec.ts:158:1 › registered routes keep declared titles, optional description and ordered ordinary navigation (4.0s)
+(node:71525) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘   2 [components-subpath] › tests/docs-ssg/custom.spec.ts:185:1 › all seven slots share canonical context across Markdown, custom pages and a deep static 404 (3.4s)
+(node:71587) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘   3 [components-subpath] › tests/docs-ssg/custom.spec.ts:205:1 › nested page and slot demos retain actual SSR nodes, source and distinct identities (4.0s)
+(node:71642) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘   4 [components-subpath] › tests/docs-ssg/custom.spec.ts:234:5 › light first frame uses the document theme with a light system before wasm (1.8s)
+(node:71676) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘   5 [components-subpath] › tests/docs-ssg/custom.spec.ts:234:5 › dark first frame uses the document theme with a dark system before wasm (1.7s)
+(node:71706) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘   6 [components-subpath] › tests/docs-ssg/custom.spec.ts:234:5 › system first frame uses the document theme with a light system before wasm (1.9s)
+(node:71744) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘   7 [components-subpath] › tests/docs-ssg/custom.spec.ts:234:5 › system first frame uses the document theme with a dark system before wasm (2.3s)
+(node:71782) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘   8 [components-subpath] › tests/docs-ssg/custom.spec.ts:253:1 › live mode changes reach the theme context and real floating controls, including Rust-only classes (2.3s)
+(node:71816) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘   9 [components-subpath] › tests/docs-ssg/custom.spec.ts:308:1 › the actual browser font responses match the CLI's packaged bytes and neutral digests (929ms)
+(node:71836) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  10 [components-subpath] › tests/docs-ssg/custom.spec.ts:338:1 › custom images and CSS backgrounds enter the same published resource graph (949ms)
+(node:71856) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  11 [components-subpath] › tests/docs-ssg/custom.spec.ts:353:1 › the plain custom page and its slots remain static and load no island resources (608ms)
+(node:71878) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  12 [components-subpath] › tests/docs-ssg/custom.spec.ts:361:1 › no script preserves custom views, sources, navigation and theme at 375px and 200% reflow (3.6s)
+
+
+  1) [components-subpath] › tests/docs-ssg/custom.spec.ts:158:1 › registered routes keep declared titles, optional description and ordered ordinary navigation 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 8
+
+    - Array []
+    + Array [
+    +   "http://127.0.0.1:4196/rustify-ui/assets/fonts/1d4b2f008ac7e02780c19801d4b04dd4538e40215943cc8ad374dba8ec2278c0.ttf Error: response.body: Protocol error (Network.getResponseBody): Request content was evicted from inspector cache
+    + Response body is not available for a response that was navigated away from. Read response.body() before triggering any navigation.",
+    +   "http://127.0.0.1:4196/rustify-ui/assets/fonts/1d4b2f008ac7e02780c19801d4b04dd4538e40215943cc8ad374dba8ec2278c0.ttf Error: response.body: Protocol error (Network.getResponseBody): Request content was evicted from inspector cache
+    + Response body is not available for a response that was navigated away from. Read response.body() before triggering any navigation.",
+    +   "http://127.0.0.1:4196/rustify-ui/assets/fonts/1d4b2f008ac7e02780c19801d4b04dd4538e40215943cc8ad374dba8ec2278c0.ttf Error: response.body: Protocol error (Network.getResponseBody): Request content was evicted from inspector cache
+    + Response body is not available for a response that was navigated away from. Read response.body() before triggering any navigation.",
+    + ]
+
+      58 | async function healthy(page: Page, audit: Audit) {
+      59 |     await Promise.all(audit.pending);
+    > 60 |     expect(audit.errors).toEqual([]);
+         |                          ^
+      61 |     expect(await page.evaluate(() => window.__custom_csp)).toEqual([]);
+      62 |     expect(audit.requests.filter(request => /makepad/i.test(request))).toEqual([]);
+      63 |     expect(audit.requests.filter(request => new URL(request).origin !== new URL(route("./")).origin)).toEqual([]);
+        at healthy (/Users/rockie/Documents/gh-rockie/rustify-ui/tests/docs-ssg/custom.spec.ts:60:26)
+        at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/docs-ssg/custom.spec.ts:182:5
+
+    Error Context: test-results/docs/docs-ssg-custom-registered-b455e-ordered-ordinary-navigation-components-subpath/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/docs/docs-ssg-custom-registered-b455e-ordered-ordinary-navigation-components-subpath/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/docs/docs-ssg-custom-registered-b455e-ordered-ordinary-navigation-components-subpath/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [components-subpath] › tests/docs-ssg/custom.spec.ts:185:1 › all seven slots share canonical context across Markdown, custom pages and a deep static 404 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 7
+
+    - Array []
+    + Array [
+    +   "http://127.0.0.1:4196/rustify-ui/assets/fonts/1d4b2f008ac7e02780c19801d4b04dd4538e40215943cc8ad374dba8ec2278c0.ttf Error: response.body: Protocol error (Network.getResponseBody): Request content was evicted from inspector cache
+    + Response body is not available for a response that was navigated away from. Read response.body() before triggering any navigation.",
+    +   "http://127.0.0.1:4196/rustify-ui/assets/fonts/1d4b2f008ac7e02780c19801d4b04dd4538e40215943cc8ad374dba8ec2278c0.ttf Error: response.body: Protocol error (Network.getResponseBody): Request content was evicted from inspector cache
+    + Response body is not available for a response that was navigated away from. Read response.body() before triggering any navigation.",
+    +   "Failed to load resource: the server responded with a status of 404 (Not Found)",
+    + ]
+
+      58 | async function healthy(page: Page, audit: Audit) {
+      59 |     await Promise.all(audit.pending);
+    > 60 |     expect(audit.errors).toEqual([]);
+         |                          ^
+      61 |     expect(await page.evaluate(() => window.__custom_csp)).toEqual([]);
+      62 |     expect(audit.requests.filter(request => /makepad/i.test(request))).toEqual([]);
+      63 |     expect(audit.requests.filter(request => new URL(request).origin !== new URL(route("./")).origin)).toEqual([]);
+        at healthy (/Users/rockie/Documents/gh-rockie/rustify-ui/tests/docs-ssg/custom.spec.ts:60:26)
+        at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/docs-ssg/custom.spec.ts:202:5
+
+    Error Context: test-results/docs/docs-ssg-custom-all-seven--d9ec9-pages-and-a-deep-static-404-components-subpath/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/docs/docs-ssg-custom-all-seven--d9ec9-pages-and-a-deep-static-404-components-subpath/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/docs/docs-ssg-custom-all-seven--d9ec9-pages-and-a-deep-static-404-components-subpath/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [components-subpath] › tests/docs-ssg/custom.spec.ts:205:1 › nested page and slot demos retain actual SSR nodes, source and distinct identities 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 4
+
+    - Array []
+    + Array [
+    +   "http://127.0.0.1:4196/rustify-ui/assets/fonts/1d4b2f008ac7e02780c19801d4b04dd4538e40215943cc8ad374dba8ec2278c0.ttf Error: response.body: Protocol error (Network.getResponseBody): Request content was evicted from inspector cache
+    + Response body is not available for a response that was navigated away from. Read response.body() before triggering any navigation.",
+    + ]
+
+      58 | async function healthy(page: Page, audit: Audit) {
+      59 |     await Promise.all(audit.pending);
+    > 60 |     expect(audit.errors).toEqual([]);
+         |                          ^
+      61 |     expect(await page.evaluate(() => window.__custom_csp)).toEqual([]);
+      62 |     expect(audit.requests.filter(request => /makepad/i.test(request))).toEqual([]);
+      63 |     expect(audit.requests.filter(request => new URL(request).origin !== new URL(route("./")).origin)).toEqual([]);
+        at healthy (/Users/rockie/Documents/gh-rockie/rustify-ui/tests/docs-ssg/custom.spec.ts:60:26)
+        at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/docs-ssg/custom.spec.ts:230:5
+
+    Error Context: test-results/docs/docs-ssg-custom-nested-pag-7dbe8-rce-and-distinct-identities-components-subpath/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/docs/docs-ssg-custom-nested-pag-7dbe8-rce-and-distinct-identities-components-subpath/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/docs/docs-ssg-custom-nested-pag-7dbe8-rce-and-distinct-identities-components-subpath/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [components-subpath] › tests/docs-ssg/custom.spec.ts:234:5 › light first frame uses the document theme with a light system before wasm 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 4
+
+    - Array []
+    + Array [
+    +   "http://127.0.0.1:4196/rustify-ui/assets/fonts/1d4b2f008ac7e02780c19801d4b04dd4538e40215943cc8ad374dba8ec2278c0.ttf Error: response.body: Protocol error (Network.getResponseBody): Request content was evicted from inspector cache
+    + Response body is not available for a response that was navigated away from. Read response.body() before triggering any navigation.",
+    + ]
+
+      58 | async function healthy(page: Page, audit: Audit) {
+      59 |     await Promise.all(audit.pending);
+    > 60 |     expect(audit.errors).toEqual([]);
+         |                          ^
+      61 |     expect(await page.evaluate(() => window.__custom_csp)).toEqual([]);
+      62 |     expect(audit.requests.filter(request => /makepad/i.test(request))).toEqual([]);
+      63 |     expect(audit.requests.filter(request => new URL(request).origin !== new URL(route("./")).origin)).toEqual([]);
+        at healthy (/Users/rockie/Documents/gh-rockie/rustify-ui/tests/docs-ssg/custom.spec.ts:60:26)
+        at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/docs-ssg/custom.spec.ts:249:9
+
+    Error Context: test-results/docs/docs-ssg-custom-light-firs-9d9ba--a-light-system-before-wasm-components-subpath/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/docs/docs-ssg-custom-light-firs-9d9ba--a-light-system-before-wasm-components-subpath/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/docs/docs-ssg-custom-light-firs-9d9ba--a-light-system-before-wasm-components-subpath/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5) [components-subpath] › tests/docs-ssg/custom.spec.ts:234:5 › dark first frame uses the document theme with a dark system before wasm 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 4
+
+    - Array []
+    + Array [
+    +   "http://127.0.0.1:4196/rustify-ui/assets/fonts/1d4b2f008ac7e02780c19801d4b04dd4538e40215943cc8ad374dba8ec2278c0.ttf Error: response.body: Protocol error (Network.getResponseBody): Request content was evicted from inspector cache
+    + Response body is not available for a response that was navigated away from. Read response.body() before triggering any navigation.",
+    + ]
+
+      58 | async function healthy(page: Page, audit: Audit) {
+      59 |     await Promise.all(audit.pending);
+    > 60 |     expect(audit.errors).toEqual([]);
+         |                          ^
+      61 |     expect(await page.evaluate(() => window.__custom_csp)).toEqual([]);
+      62 |     expect(audit.requests.filter(request => /makepad/i.test(request))).toEqual([]);
+      63 |     expect(audit.requests.filter(request => new URL(request).origin !== new URL(route("./")).origin)).toEqual([]);
+        at healthy (/Users/rockie/Documents/gh-rockie/rustify-ui/tests/docs-ssg/custom.spec.ts:60:26)
+        at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/docs-ssg/custom.spec.ts:249:9
+
+    Error Context: test-results/docs/docs-ssg-custom-dark-first-3d250-h-a-dark-system-before-wasm-components-subpath/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/docs/docs-ssg-custom-dark-first-3d250-h-a-dark-system-before-wasm-components-subpath/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/docs/docs-ssg-custom-dark-first-3d250-h-a-dark-system-before-wasm-components-subpath/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  6) [components-subpath] › tests/docs-ssg/custom.spec.ts:234:5 › system first frame uses the document theme with a light system before wasm 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 4
+
+    - Array []
+    + Array [
+    +   "http://127.0.0.1:4196/rustify-ui/assets/fonts/1d4b2f008ac7e02780c19801d4b04dd4538e40215943cc8ad374dba8ec2278c0.ttf Error: response.body: Protocol error (Network.getResponseBody): Request content was evicted from inspector cache
+    + Response body is not available for a response that was navigated away from. Read response.body() before triggering any navigation.",
+    + ]
+
+      58 | async function healthy(page: Page, audit: Audit) {
+      59 |     await Promise.all(audit.pending);
+    > 60 |     expect(audit.errors).toEqual([]);
+         |                          ^
+      61 |     expect(await page.evaluate(() => window.__custom_csp)).toEqual([]);
+      62 |     expect(audit.requests.filter(request => /makepad/i.test(request))).toEqual([]);
+      63 |     expect(audit.requests.filter(request => new URL(request).origin !== new URL(route("./")).origin)).toEqual([]);
+        at healthy (/Users/rockie/Documents/gh-rockie/rustify-ui/tests/docs-ssg/custom.spec.ts:60:26)
+        at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/docs-ssg/custom.spec.ts:249:9
+
+    Error Context: test-results/docs/docs-ssg-custom-system-fir-a60cb--a-light-system-before-wasm-components-subpath/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/docs/docs-ssg-custom-system-fir-a60cb--a-light-system-before-wasm-components-subpath/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/docs/docs-ssg-custom-system-fir-a60cb--a-light-system-before-wasm-components-subpath/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  7) [components-subpath] › tests/docs-ssg/custom.spec.ts:234:5 › system first frame uses the document theme with a dark system before wasm 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 4
+
+    - Array []
+    + Array [
+    +   "http://127.0.0.1:4196/rustify-ui/assets/fonts/1d4b2f008ac7e02780c19801d4b04dd4538e40215943cc8ad374dba8ec2278c0.ttf Error: response.body: Protocol error (Network.getResponseBody): Request content was evicted from inspector cache
+    + Response body is not available for a response that was navigated away from. Read response.body() before triggering any navigation.",
+    + ]
+
+      58 | async function healthy(page: Page, audit: Audit) {
+      59 |     await Promise.all(audit.pending);
+    > 60 |     expect(audit.errors).toEqual([]);
+         |                          ^
+      61 |     expect(await page.evaluate(() => window.__custom_csp)).toEqual([]);
+      62 |     expect(audit.requests.filter(request => /makepad/i.test(request))).toEqual([]);
+      63 |     expect(audit.requests.filter(request => new URL(request).origin !== new URL(route("./")).origin)).toEqual([]);
+        at healthy (/Users/rockie/Documents/gh-rockie/rustify-ui/tests/docs-ssg/custom.spec.ts:60:26)
+        at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/docs-ssg/custom.spec.ts:249:9
+
+    Error Context: test-results/docs/docs-ssg-custom-system-fir-85355-h-a-dark-system-before-wasm-components-subpath/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/docs/docs-ssg-custom-system-fir-85355-h-a-dark-system-before-wasm-components-subpath/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/docs/docs-ssg-custom-system-fir-85355-h-a-dark-system-before-wasm-components-subpath/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  8) [components-subpath] › tests/docs-ssg/custom.spec.ts:253:1 › live mode changes reach the theme context and real floating controls, including Rust-only classes 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 4
+
+    - Array []
+    + Array [
+    +   "http://127.0.0.1:4196/rustify-ui/assets/fonts/1d4b2f008ac7e02780c19801d4b04dd4538e40215943cc8ad374dba8ec2278c0.ttf Error: response.body: Protocol error (Network.getResponseBody): Request content was evicted from inspector cache
+    + Response body is not available for a response that was navigated away from. Read response.body() before triggering any navigation.",
+    + ]
+
+      58 | async function healthy(page: Page, audit: Audit) {
+      59 |     await Promise.all(audit.pending);
+    > 60 |     expect(audit.errors).toEqual([]);
+         |                          ^
+      61 |     expect(await page.evaluate(() => window.__custom_csp)).toEqual([]);
+      62 |     expect(audit.requests.filter(request => /makepad/i.test(request))).toEqual([]);
+      63 |     expect(audit.requests.filter(request => new URL(request).origin !== new URL(route("./")).origin)).toEqual([]);
+        at healthy (/Users/rockie/Documents/gh-rockie/rustify-ui/tests/docs-ssg/custom.spec.ts:60:26)
+        at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/docs-ssg/custom.spec.ts:305:5
+
+    Error Context: test-results/docs/docs-ssg-custom-live-mode--be0e1-including-Rust-only-classes-components-subpath/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/docs/docs-ssg-custom-live-mode--be0e1-including-Rust-only-classes-components-subpath/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/docs/docs-ssg-custom-live-mode--be0e1-including-Rust-only-classes-components-subpath/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  9) [components-subpath] › tests/docs-ssg/custom.spec.ts:308:1 › the actual browser font responses match the CLI's packaged bytes and neutral digests 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 0
+
+      Array [
+    -   "1d4b2f008ac7e02780c19801d4b04dd4538e40215943cc8ad374dba8ec2278c0",
+        "371924e7480d3d01807fdc1bd30442d0a6651e6b5ea546482f5883d613cf0419",
+        "39ee3c587e10e89669b9ff32703261d10d5f9c4dd5ad147b6b5a1c5200591817",
+        "662a196d58f1183bf2d77428b6d5283fe3f45161ab021bea4036bc98e5cac016",
+        "c8f669ceb2c9c60ccf55198b305e08a997ffca79a38cc7eeb551e643cbe66505",
+      ]
+
+      328 |         observed.add(font.sha256);
+      329 |     }
+    > 330 |     expect([...observed].sort()).toEqual([...expected.keys()].sort());
+          |                                  ^
+      331 |     for (const stylesheet of await page.locator('link[rel="stylesheet"]').evaluateAll(nodes => nodes.map(node => (node as HTMLLinkElement).href))) {
+      332 |         const css = await (await page.request.get(stylesheet)).text();
+      333 |         expect(css).not.toContain("makepad_widgets/resources");
+        at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/docs-ssg/custom.spec.ts:330:34
+
+    Error Context: test-results/docs/docs-ssg-custom-the-actual-fe3ef-d-bytes-and-neutral-digests-components-subpath/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/docs/docs-ssg-custom-the-actual-fe3ef-d-bytes-and-neutral-digests-components-subpath/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/docs/docs-ssg-custom-the-actual-fe3ef-d-bytes-and-neutral-digests-components-subpath/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  10) [components-subpath] › tests/docs-ssg/custom.spec.ts:338:1 › custom images and CSS backgrounds enter the same published resource graph 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 4
+
+    - Array []
+    + Array [
+    +   "http://127.0.0.1:4196/rustify-ui/assets/fonts/1d4b2f008ac7e02780c19801d4b04dd4538e40215943cc8ad374dba8ec2278c0.ttf Error: response.body: Protocol error (Network.getResponseBody): Request content was evicted from inspector cache
+    + Response body is not available for a response that was navigated away from. Read response.body() before triggering any navigation.",
+    + ]
+
+      58 | async function healthy(page: Page, audit: Audit) {
+      59 |     await Promise.all(audit.pending);
+    > 60 |     expect(audit.errors).toEqual([]);
+         |                          ^
+      61 |     expect(await page.evaluate(() => window.__custom_csp)).toEqual([]);
+      62 |     expect(audit.requests.filter(request => /makepad/i.test(request))).toEqual([]);
+      63 |     expect(audit.requests.filter(request => new URL(request).origin !== new URL(route("./")).origin)).toEqual([]);
+        at healthy (/Users/rockie/Documents/gh-rockie/rustify-ui/tests/docs-ssg/custom.spec.ts:60:26)
+        at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/docs-ssg/custom.spec.ts:350:5
+
+    Error Context: test-results/docs/docs-ssg-custom-custom-ima-9dfa0-me-published-resource-graph-components-subpath/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/docs/docs-ssg-custom-custom-ima-9dfa0-me-published-resource-graph-components-subpath/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/docs/docs-ssg-custom-custom-ima-9dfa0-me-published-resource-graph-components-subpath/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  11) [components-subpath] › tests/docs-ssg/custom.spec.ts:353:1 › the plain custom page and its slots remain static and load no island resources 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 4
+
+    - Array []
+    + Array [
+    +   "http://127.0.0.1:4196/rustify-ui/assets/fonts/1d4b2f008ac7e02780c19801d4b04dd4538e40215943cc8ad374dba8ec2278c0.ttf Error: response.body: Protocol error (Network.getResponseBody): Request content was evicted from inspector cache
+    + Response body is not available for a response that was navigated away from. Read response.body() before triggering any navigation.",
+    + ]
+
+      58 | async function healthy(page: Page, audit: Audit) {
+      59 |     await Promise.all(audit.pending);
+    > 60 |     expect(audit.errors).toEqual([]);
+         |                          ^
+      61 |     expect(await page.evaluate(() => window.__custom_csp)).toEqual([]);
+      62 |     expect(audit.requests.filter(request => /makepad/i.test(request))).toEqual([]);
+      63 |     expect(audit.requests.filter(request => new URL(request).origin !== new URL(route("./")).origin)).toEqual([]);
+        at healthy (/Users/rockie/Documents/gh-rockie/rustify-ui/tests/docs-ssg/custom.spec.ts:60:26)
+        at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/docs-ssg/custom.spec.ts:358:5
+
+    Error Context: test-results/docs/docs-ssg-custom-the-plain--40934-nd-load-no-island-resources-components-subpath/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/docs/docs-ssg-custom-the-plain--40934-nd-load-no-island-resources-components-subpath/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/docs/docs-ssg-custom-the-plain--40934-nd-load-no-island-resources-components-subpath/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  12) [components-subpath] › tests/docs-ssg/custom.spec.ts:361:1 › no script preserves custom views, sources, navigation and theme at 375px and 200% reflow 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 6
+
+    - Array []
+    + Array [
+    +   "http://127.0.0.1:4196/rustify-ui/assets/fonts/1d4b2f008ac7e02780c19801d4b04dd4538e40215943cc8ad374dba8ec2278c0.ttf Error: response.body: Protocol error (Network.getResponseBody): Request content was evicted from inspector cache
+    + Response body is not available for a response that was navigated away from. Read response.body() before triggering any navigation.",
+    +   "http://127.0.0.1:4196/rustify-ui/assets/fonts/1d4b2f008ac7e02780c19801d4b04dd4538e40215943cc8ad374dba8ec2278c0.ttf Error: response.body: Protocol error (Network.getResponseBody): Request content was evicted from inspector cache
+    + Response body is not available for a response that was navigated away from. Read response.body() before triggering any navigation.",
+    + ]
+
+      393 |         }
+      394 |         expect(audit.requests.filter(request => /\/assets\/islands\//.test(request) || request.endsWith(".wasm"))).toEqual([]);
+    > 395 |         expect(audit.errors).toEqual([]);
+          |                              ^
+      396 |         await test.info().attach("custom-no-script-audit.json", { body: JSON.stringify({ requests: audit.requests, errors: audit.errors }, null, 2), contentType: "application/json" });
+      397 |     } finally {
+      398 |         await context.close();
+        at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/docs-ssg/custom.spec.ts:395:30
+
+    Error Context: test-results/docs/docs-ssg-custom-no-script--a3ff1-eme-at-375px-and-200-reflow-components-subpath/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/docs/docs-ssg-custom-no-script--a3ff1-eme-at-375px-and-200-reflow-components-subpath/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/docs/docs-ssg-custom-no-script--a3ff1-eme-at-375px-and-200-reflow-components-subpath/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  12 failed
+    [components-subpath] › tests/docs-ssg/custom.spec.ts:158:1 › registered routes keep declared titles, optional description and ordered ordinary navigation 
+    [components-subpath] › tests/docs-ssg/custom.spec.ts:185:1 › all seven slots share canonical context across Markdown, custom pages and a deep static 404 
+    [components-subpath] › tests/docs-ssg/custom.spec.ts:205:1 › nested page and slot demos retain actual SSR nodes, source and distinct identities 
+    [components-subpath] › tests/docs-ssg/custom.spec.ts:234:5 › light first frame uses the document theme with a light system before wasm 
+    [components-subpath] › tests/docs-ssg/custom.spec.ts:234:5 › dark first frame uses the document theme with a dark system before wasm 
+    [components-subpath] › tests/docs-ssg/custom.spec.ts:234:5 › system first frame uses the document theme with a light system before wasm 
+    [components-subpath] › tests/docs-ssg/custom.spec.ts:234:5 › system first frame uses the document theme with a dark system before wasm 
+    [components-subpath] › tests/docs-ssg/custom.spec.ts:253:1 › live mode changes reach the theme context and real floating controls, including Rust-only classes 
+    [components-subpath] › tests/docs-ssg/custom.spec.ts:308:1 › the actual browser font responses match the CLI's packaged bytes and neutral digests 
+    [components-subpath] › tests/docs-ssg/custom.spec.ts:338:1 › custom images and CSS backgrounds enter the same published resource graph 
+    [components-subpath] › tests/docs-ssg/custom.spec.ts:353:1 › the plain custom page and its slots remain static and load no island resources 
+    [components-subpath] › tests/docs-ssg/custom.spec.ts:361:1 › no script preserves custom views, sources, navigation and theme at 375px and 200% reflow 

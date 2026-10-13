@@ -450,6 +450,34 @@ Source uses the existing Function / Full file code-group controls and raw-text t
 
 These static blocks create no island or wasm requirement. Sources: [demo.rs](crates/rustify-docs/src/demo.rs), [builtins.rs](crates/rustify-docs/src/builtins.rs), [docs.css](crates/rustify-docs/assets/docs.css), [mode.js](crates/rustify-docs/assets/mode.js) and [site.js](crates/rustify-docs/assets/site.js). The [M2 design synchronization record](docs/validation/docs-ssg-p2/m2/design-documentation.md) records the generated-artifact comparison, current captures, scoped finish verdict and verification limits; it does not establish full P2 or publication acceptance.
 
+### Registered pages, layout slots and imported themes (P2 M3)
+
+Registered pages share the reading shell, ordinary navigation, headings, source panels and resource rules. Optional descriptions remain optional. The seven slots provide author content within the existing layout: header replaces the brand area while framework navigation and mode remain; footer replaces its content; sidebar top/bottom appear once outside the responsive navigation pair; before/after content surround the article; not-found replaces the generated 404 body while its heading and shared slots remain.
+
+Nested `RenderContext::demo` views use the same canvas, status, source and recovery treatment as fenced demos. A page or slot containing ordinary content creates no interactive island. Give illustrative resource samples visible captions and a graphic that can be distinguished from an empty form control.
+
+An explicit `theme.document` supplies validated light/dark values and packaged font choices; it does not change the default reading theme. Keep the 36rem measure and inherited layout. Project the imported palette, derived utility corners, type size and letter spacing onto the document and scopes; reading panels use its radius. The page owns system preference and first-frame CSS, and attached scopes follow its mode through their shared context, including floating controls. Package the selected same-version font bytes and glyph fallbacks under neutral same-origin digest paths, with their notices.
+
+Keep complete Rust class selectors for initially hidden states. Resolve their resource URL values through the same published resource graph; changing a selector would prevent a later browser branch from finding its style.
+
+The [M3 evidence](docs/validation/docs-ssg-p2/M3.md) and [bounded finish review](docs/validation/docs-ssg-p2/m3/finish-review.md) record the actual browser and image boundaries. The 640 CSS-pixel/DPR-2 no-script capture represents 200% layout zoom emulation across all CSS pixels, including explicit-size author controls. It is not a measurement on a physical device or the user's native browser zoom setting.
+
+### English SDK site (P2 M5)
+
+The official English site is a Read surface in the P1 world: cool neutral surfaces, system sans and mono, a 36rem article measure, hairlines and the existing responsive shell. The configured navigation contains twelve Guides and twenty-four Components destinations in catalogue order. The documentation site uses static DOM content and explicit DOM demo islands; GPU capabilities are described through links to repository examples.
+
+**Home.** The static page has one "Rustify UI" H1, a positioning sentence, and ordinary "Quick start" / "Components" links in the existing primary / secondary action treatment. Both actions remain visible in the 1280px first viewport. Three features cover DOM interfaces, optional GPU regions and static deployment using the existing hairline list. The introduction comes from the repository README through `RenderContext::markdown_intro("README.md")`, then follows at the reading measure.
+
+**Categories and source.** Each of the twenty-four category pages uses CATALOG's description and capabilities with a registered real DOM demo. Retain the existing canvas, stable external status row, project-relative source path, Function / Full file tabs and Copy control. Demo registrations name their source modules directly. Capabilities use a named, keyboard-focusable `rd-table` region: `overflow-x: auto` keeps a wide table inside its own panel, with the existing table type, hairlines and code-background header cells.
+
+**Document links.** The official Link demo explicitly sets `attr:target="_self"` for its fragment destination. This lets the document anchor use native navigation past the island's local router; it is an author choice in that demo. The shell's ordinary navigation and narrow `<details>` continue to use the same ordered destinations under the configured base.
+
+**Default theme scopes.** Within a Docs root, `:root[data-rustify-scope] [data-rustify-scope]` inherits the SDK theme properties from the document. A nested island's light fallback must not replace the active dark or system-dark palette. Imported theme projection is emitted after the default token rules and can supply its explicit values. This is the documentation stylesheet's scope rule, not a change to the SDK's defaults in other applications.
+
+Sources: [site registry](site/src/lib.rs), [official pages](site/src/pages.rs), [Link demo](site/src/demos/basics.rs), [site configuration](rustify-docs.toml), [docs.css](crates/rustify-docs/assets/docs.css) and `tokens_css` / `site_css_with_theme` in [style.rs](crates/rustify-docs/src/style.rs).
+
+The [M5 design synchronization record](docs/validation/docs-ssg-p2/m5/design-documentation.md) separates these source-backed rules from acceptance evidence. The [first finish review](docs/validation/docs-ssg-p2/m5/finish-review.md) recorded `fix` for unreadable dark Data table rows; the [single confirmation](docs/validation/docs-ssg-p2/m5/finish-review-r2.md) recorded `ship` for that resolved fix and visible regressions only. Its nine local Chromium captures cover home, Data table and Quick start first viewports at 1280×900 light/dark and 375×812 light. They do not establish visual acceptance for every page or section, physical phones, Safari, performance or publication; the separate local browser results remain in [M5.md](docs/validation/docs-ssg-p2/M5.md).
+
 ### Tables
 
 - A table scrolls inside its own panel: a hairline border with the panel radius.
@@ -502,7 +530,7 @@ An errata sheet in the corner of the page the author is reading: compact, precis
 
 - **Floating (a last good version exists):** fixed 1rem from the bottom-right corner, z-index 60, `min(26.25rem, 100vw − 2rem)` wide and at most 60vh tall. The list scrolls inside it (`overscroll-behavior: contain`); the head stays.
 - **Bottom sheet (under 640px):** spans the width along the bottom edge, at most 50vh, with only a top border and top-only 6px corners.
-- **Inline (nothing has built yet):** the page is `render_dev_shell`: the site shell with the H1 "The site does not build yet", one sentence ("Fix the problems listed and save: this page reloads by itself."), `noindex`, no TOC. The panel sits 1.5rem below that sentence in the article column, full column width, open, unbounded in height, with no hide button, no marker, no shadow and no entrance.
+- **Inline (nothing has built yet):** `render_dev_shell_with_status` uses the same static site shell, `noindex` and no TOC. During the first build its H1 is "Building your site", followed by "The first dependency build takes longer. Keep this page open: it updates when the site is ready." The failure shell retains "The site does not build yet" and its repair sentence. The panel sits 1.5rem below the sentence in the article column, full column width, open, unbounded in height, with no hide button, no marker, no shadow and no entrance.
 
 **Surface.** `popover` with a 1px edge and the 6px panel radius. The edge is `border` when floating (it must stay visible over any article content) and `secondary` when inline (it is page content, so a hairline like every other panel). Text is `foreground` at 0.875rem/1.45.
 
@@ -518,20 +546,27 @@ An errata sheet in the corner of the page the author is reading: compact, precis
 - **File heading:** an `h2` in mono 0.75rem/600, `foreground`, padded 0.5rem 0.875rem 0.125rem, breaking only after `/`.
 - **Between files:** one `--rd-dev-divider` rule with 0.375rem above and 0.25rem below. The problems of one file are separated by space only (0.5rem 0.875rem item padding), never by rules.
 - **Where row:** mono 0.75rem: the location `line:col` in muted tabular figures, then the rule id in the severity's text hue (`caution-text` for errors, `alert-warning-text` for warnings), prefixed by a visually hidden "Error: " or "Warning: ". The row wraps with 0.25rem/0.625rem gaps.
-- **Message:** `foreground`, 0.125rem below the row.
-- **Suggestion** (when present): muted, 0.125rem below the message.
+- **Message:** `foreground`, 0.125rem below the row. Preserve compiler line breaks with `white-space: pre-wrap`; long text wraps inside the list.
+- **Suggestion** (when present): muted, 0.125rem below the message, with the same preserved line breaks and wrapping.
 - **Quoted text:** what a message or suggestion quotes in backticks is set as `<code>` in mono 0.8125rem with no chip fill, and breaks only after each `/` (a `<wbr>` per slash). Long paths therefore wrap at their segments, never mid-name.
 
 **Marker.** What the panel leaves when hidden: a button at the same corner, `popover` with a 1px `border` edge, the dev float shadow, a 999px pill padded 0.375rem 0.75rem, `secondary` fill on hover. It holds the drawn circled-exclamation icon (1rem) and the one-line summary: "3 errors · 1 warning · showing the last good version", counts coloured as in the head. Under 640px it becomes a full-width box (0.75rem from the sides and bottom) with the 6px panel radius, and its text wraps.
 
+**M4 building feedback.** The same marker can show "Building", the current native-renderer/browser-module/page-rendering phase, retained diagnostic counts and the last-good state. Building and phase text inherit `foreground`; only actual error and warning counts take their semantic hues. The underlying document and controls remain available. An earlier error remains readable while the next save builds; it clears only when the new result clears it. First-build phase and revision use the existing inline panel, not an island, spinner or estimated percentage.
+
+**The Last-Good Feedback Rule.** Change build feedback within the existing dev layer while the last successful document remains available. A completed result clears building; its actual diagnostics determine whether the panel or marker remains.
+
 **States.**
 
+- **First build running:** the static building shell and inline region show the current phase and revision. Heading and explanation exist before the dev script; stage feedback is added by that external script.
+- **Building over last good:** retain the complete page and previous diagnostics, with neutral building/phase text in the existing panel or marker. Building alone does not force a floating panel open or steal focus.
 - **Failed, last good shown:** the page stays the last good version; the panel opens by itself unless the author hid it earlier in this tab (remembered in `sessionStorage` until the problems clear).
 - **Hidden:** only the marker shows.
 - **Warnings only:** the panel does not open by itself; the marker shows the warning count.
 - **Nothing built:** the inline region on the dev shell page.
 - **Same failure saved again:** the revision number updates and the open or hidden choice stays.
-- **Recovered:** a build with no problems hides panel and marker and forgets the hidden choice. A build that changes the page reloads it and restores the scroll position.
+- **Recovered:** once building ends, a result with no problems hides panel and marker and forgets the hidden choice. Warnings retain their marker; the building label clears. A build that changes the page reloads it and restores the scroll position.
+- **Reconnected:** the event stream resynchronizes using the page path, last good revision and dev session. A dropped stream retries; a closed stream is opened again after 1s. A changed page or session reloads through the existing scroll-restoration path. No separate connection banner or recovery action is added.
 - **Language:** every string comes from `DevLabels` (en, zh). The layer carries the page's interface `lang`.
 
 **Motion.** The floating panel enters over 120ms `ease-out` from opacity 0 and 0.375rem lower. Under `prefers-reduced-motion: reduce` there is none, and the inline panel never animates.
@@ -543,7 +578,9 @@ An errata sheet in the corner of the page the author is reading: compact, precis
 - The marker is a button with `aria-controls` on the panel and `aria-expanded`.
 - Focus is never moved by a build, with one exception: when the problems clear while focus is on Hide or the marker, focus continues from the page's `main` (`#content`, without scrolling) instead of dropping to the top of the document. Otherwise only the author's own action moves it: Hide (or Escape inside the floating panel) hides to the marker and focuses it; the marker opens the panel and focuses Hide. The inline list on the nothing-built page has no Hide and ignores Escape.
 - Hide and the marker take the theme's 3px `ring` outline at a 2px offset.
-- One visually hidden `role="status"` paragraph exists from the start. It announces the summary and revision when a failure with errors arrives or its revision changes, and "Problems fixed; the page is up to date" when errors clear. Warnings alone are not announced.
+- One visually hidden `role="status"` paragraph exists from the start. It announces the summary when building starts or its phase changes, the summary and revision when a failure with errors arrives or its revision changes, and "Problems fixed; the page is up to date" when errors clear. Warning-only results are not announced.
+
+The [M4 design synchronization record](docs/validation/docs-ssg-p2/m4/design-documentation.md) links the completed source and nine supplied captures. Its [finish review](docs/validation/docs-ssg-p2/m4/finish-review.md) records `ship` for that visual packet, with no material fix; static captures do not establish focus, speech, reconnect, performance, physical-phone or native-zoom acceptance.
 
 ### States
 

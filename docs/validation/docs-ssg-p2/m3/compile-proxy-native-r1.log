@@ -1,0 +1,34 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+    Finished `docs-cli` profile [optimized] target(s) in 0.68s
+     Running unittests src/main.rs (target/docs-cli/deps/rustify_docs-6632717838e0553c)
+
+running 1 test
+compile proxy work: /Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/compile-proxy-m3-r1
+mbx[progress]: 15s elapsed; 0 hits, 0 misses, 0 bypassed, 0 not looked up; ~0s compiler work saved
+mbx[progress]: 30s elapsed; 0 hits, 0 misses, 0 bypassed, 0 not looked up; ~0s compiler work saved
+mbx[progress]: 45s elapsed; 0 hits, 0 misses, 0 bypassed, 0 not looked up; ~0s compiler work saved
+mbx[progress]: 1m elapsed; 0 hits, 0 misses, 0 bypassed, 0 not looked up; ~0s compiler work saved
+test compile_proxy::compile_to_islands_proxy has been running for over 60 seconds
+mbx[progress]: 1m 15s elapsed; 0 hits, 0 misses, 0 bypassed, 0 not looked up; ~0s compiler work saved
+compile proxy/0: native=true, browser=true, compile-end=1791901515389
+mbx[progress]: 1m 30s elapsed; 0 hits, 0 misses, 0 bypassed, 0 not looked up; ~0s compiler work saved
+mbx[progress]: 1m 45s elapsed; 0 hits, 0 misses, 0 bypassed, 0 not looked up; ~0s compiler work saved
+compile proxy/1: native=true, browser=true, compile-end=1791901547724
+mbx[progress]: 2m elapsed; 0 hits, 0 misses, 0 bypassed, 0 not looked up; ~0s compiler work saved
+compile proxy/2: native=true, browser=true, compile-end=1791901577565
+compile proxy/3: native=true, browser=true, compile-end=1791901611475
+mbx[progress]: 3m elapsed; 0 hits, 0 misses, 0 bypassed, 0 not looked up; ~0s compiler work saved
+compile proxy/4: native=true, browser=true, compile-end=1791901644968
+mbx[progress]: 4m elapsed; 0 hits, 0 misses, 0 bypassed, 0 not looked up; ~0s compiler work saved
+compile proxy/5: native=true, browser=true, compile-end=1791901677655
+test compile_proxy::compile_to_islands_proxy ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 64 filtered out; finished in 242.80s
+
+mbx[savings]: 54455 compilations, each compiled once and served warm ever since

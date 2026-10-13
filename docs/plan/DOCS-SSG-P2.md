@@ -44,11 +44,11 @@
 
 ### 恢复快照
 
-- 最近更新：2026-10-13T19:01:02+08:00
-- 当前进度：2/7 个里程碑完成
-- 当前状态：M1/M2 已完成；M2真实管线、配对、浏览器、两类代理风险门及设计收口通过，M3待开工
-- 最近完成：M2 · 组件嵌入/同源演示、真实离线配对与两类性能代理
-- 下一步：M3接入定制页/七插槽/导航与静态主题字体；开发档时延余量小，新增路径后复测
+- 最近更新：2026-10-14T04:44:52+08:00
+- 当前进度：5/7 个里程碑完成
+- 当前状态：M1–M5已完成；M6配对适配的空R集成/严格检查与源一致性通过，准备真实R/C冻结；集中出口/真人/真机仍待验
+- 最近完成：M5 · 同源英文官方站、真实dev/三浏览器入口、设计确认及B语料增量
+- 下一步：先提交库R，再固定模板GitR与对应lock/CLI C；验证真实C的拒绝/配对/锁/浏览器/正式最大页；真人/实体设备缺口保留
 - 当前阻塞：无技术开工阻塞；用户本轮无法安排首次用户与实体手机，M6 保留验收缺口；候选分发与 Pages 条件按 §11 准备
 - 代码基线：5632d13（M1/M2实现已提交；其他既有工作树改动保留）
 
@@ -56,8 +56,12 @@
 
 | Milestone | 状态 | 更新时间 | 简要记录 | 实现与验收记录 | 提交 |
 | --- | --- | --- | --- | --- | --- |
+| M6 | 进行中 | 2026-10-14T04:44:52+08:00 | 配对适配空R语料6/CLI72/components2/Rust dev3、严格lint/fmt与sources/CSS/catalog一致性通过；安全/原生渠道证据保留，准备提交R/C；集中出口仍待验 | [M6 记录](../validation/docs-ssg-p2/M6.md) | 待提交 |
 | M1 | 已完成 | 2026-10-13T12:53:00+08:00 | V-2 水合 10/10；默认 DOM 12/12；旧示例 58/73/20/72/20 通过，geometry reset 缺陷先红后绿 | [M1 记录](../validation/docs-ssg-p2/M1.md) | 5632d13 |
 | M2 | 已完成 | 2026-10-13T19:01:02+08:00 | release代理371.9ms/位移0、开发档增量中位1944.6ms；配对/错配、subpath20+4/meta24、features/检查与设计收口通过 | [M2 记录](../validation/docs-ssg-p2/M2.md) | 5632d13 |
+| M3 | 已完成 | 2026-10-13T23:31:15+08:00 | Docs229/CLI131、subpath12/meta36、离线Git字体/检查/设计通过；release255.9ms/位移0；开发档失败2369.4ms保留，修正最终1731ms，真实同步/失败保护与受影响检查通过 | [M3 记录](../validation/docs-ssg-p2/M3.md) | 待提交 |
+| M4 | 已完成 | 2026-10-14T01:59:33+08:00 | 已安装模板/README与离线check/build、Rust dev3/3及严格clippy、九图ship/设计同步通过；完整dev五次中位1425.1ms/位移0，content首屏264ms/0wasm，原红与归因保留 | [M4 记录](../validation/docs-ssg-p2/M4.md) | 待提交 |
+| M5 | 已完成 | 2026-10-14T04:02:13+08:00 | CLI0.1.10：官方37页53文件/浏览器46+47+47、Docs262/CLI72、真实dev11与焦点1、设计ship/规范同步；B原500字节未变，512页check/build及最大候选预检通过；原红保留 | [M5 记录](../validation/docs-ssg-p2/M5.md) | 待提交 |
 
 ## 0. 需求、范围与决策
 
@@ -359,7 +363,7 @@ M4 更新 docs/docs-ssg.md 的围栏/site!/client-only/定制页与slot/theme.do
 
 静态主题 binding 只提供 EffectiveTheme/locale，CSS 在构建期已经投影；避免默认 ThemeScope 再写/覆盖导出的根。沿用 export_css 的受校验属性投影与资源规则，对站点 root、scope 和 system selector 做明确适配，不用未经核验的字符串替换整个导出样式。用户 2026-10-13 选择 CLI 内置同版字体/许可，产物只打包引用字体；SDK 的 makepad_widgets/resources 仅作为 resolver 逻辑标识，通过固定资源表映射到 CLI 内置字节。所有字体输出统一为 `assets/fonts/<digest>.<ext>`，CSS 资源映射及注释不保留 Makepad 路径；缺字节报错、未知 family 保留 resolver fallback 诊断，不远程下载。
 
-FONT_FACES六字面与FONT_GLYPH_FALLBACKS去重为七文件：IBMPlexSans-Text.ttf、NotoSans-Regular.ttf、LXGWWenKaiRegular.ttf、NotoSerif-Regular.ttf、LiberationMono-Regular.ttf、jetbrains_mono_variable.ttf、NotoColorEmoji.ttf。M3复制现有同版字节到CLI assets/fonts，保留字体修改/版权/OFL声明并在sources.lock.json登记摘要；C内置表须匹配R的FONT_FACES/回退与资源摘要。helper不用编译这些字节，CLI完整依赖图仍无Makepad。CSS只导出本主题引用的字面及既有glyph回退，随生成资产带相应许可；默认无theme.document仍用P1系统字体且不包字体。
+FONT_FACES六字面与FONT_GLYPH_FALLBACKS去重为七文件：IBMPlexSans-Text.ttf、NotoSans-Regular.ttf、LXGWWenKaiRegular.ttf、NotoSerif-Regular.ttf、LiberationMono-Regular.ttf、jetbrains_mono_variable.ttf、NotoColorEmoji.ttf。M3复制现有同版字节到CLI assets/fonts，保留字体修改/版权及各自许可并在sources.lock.json登记摘要；C内置表须匹配R的FONT_FACES/回退与资源摘要。现有Liberation Mono Version 1.04实际使用GPL v2及原发行版字体例外，内置对应许可和1.04.93.devel首选源码/构建脚本归档，仅引用该字面时随资产输出；其余六字面为OFL1.1。helper不用编译这些字节，CLI完整依赖图仍无Makepad。CSS只导出本主题引用的字面及既有glyph回退，随生成资产带相应许可；默认无theme.document仍用P1系统字体且不包字体。
 
 七文件源字节合计/CLI体积增量与发布/实际请求的字体体积在M3记录，沿用既定V-12预算，不另设假定上限。V-7用英文/中文/emoji样本比较同主题Theme Studio字节/加载与中性路径；纯内容站在git安装CLI、禁网环境也能导入同文档构建，不要求作者持有Makepad目录。
 
@@ -469,7 +473,7 @@ serve.sh 的工作目录按 source/variant 分开；header项目用preview，met
 | V-7 | WORK-F8/AC-5/6：site/demo/Theme Studio同文档light/dark颜色/圆角/字体一致；system首帧；隐藏状态与新class生效；font fallback/missing/冲突、字节同版、无Makepad资源路径；纯内容站导入主题禁网build | 宿主resolve/字体摘要与生成测试；components-subpath的custom.spec.ts；先 `mbx xtask build-web --example theme-studio --release`，再根配置 `npx playwright test --project=theme-studio theme-dom.spec.ts` 用同文档预览（实施时补对应断言），端口4181；随后串行跑docs，不同时占browser/results | M3主题/scanner/字体就绪；V-5复跑证明主题上下文未破坏水合；M6性能和首次帧V-11 |
 | V-8 | WORK-F1/AC-2、WORK-N4、WORK-N2：new components后锁文件就绪，`build --locked`前后lock字节不变；rev/bindgen错配定向拒绝；目录名规范化、缺工具链/非空目录无半成品；helper不含内容编译管线，host/wasm/CLI无Makepad；纯content零编译 | 扩展features/toolchain组；file://候选及受限PATH，取齐依赖后禁网check/build；完整目标图含build deps、产物/import；README试走与示例/链接检查。未改模板的交互由V-9负责 | M4完整模板；M7以GitHub固定SHA安装CLI再跑，同§2.1合同不只测开发二进制 |
 | V-9 | WORK-F1/AC-2、WORK-F13/AC-4、WORK-N2/AC-4、WORK-F5/AC-1/2：候选CLI new components后不改源码，dev可调演示/源码页签逐字符同源；首次building地址/状态与Rust成功/失败/恢复、last-good/滚动；Markdown不调Cargo、注册/lock/path失效、连续保存无过时代；Rust错误为作者原路径/行列，第二次build的path依赖fresh | `npx playwright test -c playwright.docs.config.ts --project=docs-dev dev-rust.spec.ts`；port0稳定临时工程，Cargo JSON fresh计数/epoch事件/可见generation、§6dev设计截图；M7用RUSTIFY_DOCS_BIN指向安装二进制 | M4含未改模板浏览器门与五次编译观测；M6连贯UAT-3及计时，M7安装后必跑；不作为官方站M5的无关前置 |
-| V-10 | WORK-F16/AC-1/2、WORK-N4/N7、WORK-N5/AC-3：12指南/README同源及修改反映；24类集合、侧栏36项可达/有序；排除文档链接转repo URL、validation写入不触发dev、无原始文件/Makepad；lang与正文一致；整站check零错误 | `rustify-docs --config rustify-docs.toml check --format json`/build；official.spec.ts与manifest/CATALOG比较；临时同源副本修改指南/README/排除文件；检查repo映射/请求/目标图、字体中性路径 | M5完整站；M6同冻结候选必复跑；M7实际URL复核 |
+| V-10 | WORK-F16/AC-1/2、WORK-N4/N7、WORK-N5/AC-3：12指南/README同源及修改反映；24类集合、侧栏36项可达/有序；排除文档链接转repo URL、validation写入不触发dev、无原始文件/Makepad；lang与正文一致；整站check零错误 | `rustify-docs check --config rustify-docs.toml --format json`/build；official.spec.ts与manifest/CATALOG比较；临时同源副本修改指南/README/排除文件；检查repo映射/请求/目标图、字体中性路径 | M5完整站；M6同冻结候选必复跑；M7实际URL复核 |
 | V-11 | WORK-N3/AC-2/4、WORK-N5回归、WORK-F16/AC-3本地：两CSP host的全部页面/深链接/404/本期交互，禁JS/主题/320与375px/200%/键盘/读屏，console/CSP/失败请求；首页1280首屏主操作及§6finish基准、正文lang | `npx playwright test -c playwright.docs.config.ts --project=official-root`，official-subpath/official-meta分别串行；真实稳定Chrome/Safari及iPhone Safari/Android Chrome，Firefox依用户2026-10-13决定留P4，P2未验证；axe+人工键盘/VoiceOver，同候选preview/meta | M5局部页面设计验收；M6当期矩阵，缺设备阻塞出口、不套D-04；V-15补真实Pages |
 | V-12 | WORK-N1/AC-4、WORK-N2/AC-2/4及P1性能：五次冷缓存FCP→全部岛响应≤1s/零位移，编译完成→新画面≤2s；content new→首页≤60s、0wasm和原预算；不以boot完成替代输入响应 | performance组/measure-load/measure-save与新增measure-islands，参考A/B按§9.2，记录profile/资源gzip体积/CPU下载解析/余量与epoch映射；CLI调用从本轮固定候选 | M2必做链接全部24类的release wasm代理门及编译后时延探测，超预算先解决资源策略才进M3/M4；M4复测完整dev/new；M6正式最大页/参考站测量，代理不代替正式出口 |
 | V-13 | WORK-F1/AC-5、UAT-15：5位真实首次用户，至少4位15分钟独立完成新建/改页/演示，同源可交互 | 冻结CLI的help给第一条new命令，随后只按生成README；已安装候选可获取，负责人按§9.3招募计时（增量编译计入）；自动化不代替真人 | M6第一阶段冻结/分发后；M7模板/README/配对或产品改变则新候选重跑，非产品记录差异须写复用依据 |
@@ -554,9 +558,9 @@ SDK/components各自执行default/gpu/ssr单包test/clippy与hydrate wasm32 chec
 | P2稳定Chrome/Safari待核验，两类实体手机当前无法安排 | P1 D-04不能当P2豁免 | 用户本轮确认设备渠道无法安排，实体手机保留缺口；本机继续核验可用桌面渠道并记录版本。Firefox按下方新决定延期，其他缺环境明确未验证 | M6/V-11前 | 不阻塞技术实施；真机及其他缺证保留未验证 |
 | M1全部24类静态初态与node/ID接管已实测，site!管线待验 | 站点接线仍可能错绑/布局跳动/受控值不一致 | M1 V-2独立harness及对应回归已通过，证据见M1记录；M2 V-5继续证明site!管线/slot/异步反例 | M2退出 | M1前置已解除；M2管线门仍必做 |
 | 全类release代理已通过，正式最大页待测 | 集成后资源/时延仍需复核 | M2五样本中位371.9ms/位移0，gzip证据见M2记录；M6最大页正式五次 | M6出口 | M2资源风险门已解除；不代替正式页 |
-| 冷构建/隔离已测，开发档代理余量55.4ms | 后续集成可能超过≤2s；用户增量等待计时 | M2四档Cargo历史、feature拆分对照和五次代理已记录；M3新增主题/slot后复测，M4验证完整dev | M3/M4/M6出口 | M2代理通过；完整dev与正式最大页仍待验 |
+| 开发档代理修正后余量269ms | 后续集成仍须守≤2s；用户增量等待计时 | M3失败基线2369.4ms保留；helper准备与wasm编译重叠、两Cargo串行，最终五轮1731ms；M4验证完整dev | M4/M6出口 | M3代理与失败保护通过；完整dev与正式最大页仍待验 |
 | 临时R/C带锁配对已测，完整模板/公开来源待验 | 生成工程身份与固定锁仍须证明 | M2临时Git安装、离线check/build及CLI/库/bindgen错配均通过；M4 V-8补模板与无身份，M7真实GitHub来源再次验证 | M4模板、M7交付前 | M2配对探测通过；不代替模板或公开安装 |
-| 字体打包/许可与体积回归未实施 | 同主题不一致或突破既定预算 | M3使用§5.5内置同版字节/许可并登记来源摘要、体积，V-7禁网/字体对照；M6 V-12前后数据 | M3退出、M6性能出口 | 来源已定；缺许可/字节/体积证据不记交付 |
+| 字体本地门已过，集成体积仍须复核 | 同主题不一致或突破既定预算 | M3七字体/许可/首选源码摘要、实际五字体响应、CLI增量及禁网Git安装均有记录；M6 V-12复核集成体积/性能 | M6性能出口 | M3已交付；不代替正式最大页与实体设备测量 |
 | 白名单新增链接规则及指南现存错误未全量实测 | 官方站check不为零或读取/监视内部证据 | M5修utility坏链接/README指代、vellum译英；V-10对12指南所有错误及排除依赖/写入不重建验收 | M5/V-10 | 可按已定合同实施；未通过不收口 |
 | 私有协议/源码指纹遗漏 | 冷态诊断漏报或新源码配旧结果 | V-3/V-4/V-9验证describe一致、原地前后摘要、连续保存/原路径诊断/依赖fresh；host/wasm串行，不依赖Cargo锁并行 | M2/M4 | 设计明确；缺验证不能解锁相关下游 |
 

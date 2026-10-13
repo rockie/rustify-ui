@@ -1,0 +1,24 @@
+{
+  "scope": "M6 local actual desktop app inventory; no successful native browser session claimed",
+  "apps": [
+    {
+      "app": "Google Chrome",
+      "identifier": "com.google.Chrome",
+      "version": "155.0.8059.40",
+      "build": "8059.40",
+      "inventory_only": true,
+      "path": "/Applications/Google Chrome.app/Contents/Info.plist"
+    },
+    {
+      "app": "Safari",
+      "identifier": "com.apple.Safari",
+      "version": "27.0.1",
+      "build": "22625.1.29.11.28",
+      "inventory_only": true,
+      "path": "/Applications/Safari.app/Contents/Info.plist"
+    }
+  ],
+  "python_default": "Python 3.9.6",
+  "python_existing_312": "Python 3.12.13",
+  "new_tools_installed": false
+}

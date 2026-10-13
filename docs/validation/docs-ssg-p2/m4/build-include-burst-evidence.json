@@ -1,0 +1,330 @@
+{
+  "first": {
+    "session": "b187-18de26fa17c1e678",
+    "revision": 1,
+    "sequence": 9,
+    "building": false,
+    "phase": "render",
+    "compile": {
+      "generation": "6f5e3726aad74063951aea1746fdf3c103f705d8303be2330747e600b1fb7b90",
+      "completed_at_ms": 1791912585732,
+      "host": {
+        "elapsed_ms": 150,
+        "completed_at_ms": 1791912585627,
+        "fresh_artifacts": 264,
+        "compiled_artifacts": 0,
+        "profile": "docs-host",
+        "target": null,
+        "compiler": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-cli-rust-dev-42128-1/compile-gate",
+        "flags": [
+          "build",
+          "--locked",
+          "--message-format",
+          "json",
+          "--no-default-features",
+          "--profile",
+          "docs-host",
+          "--features",
+          "ssr",
+          "--manifest-path",
+          "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-cli-rust-dev-42128-1/site/Cargo.toml",
+          "--target-dir",
+          "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-cli-rust-dev-42128-1/site/.rustify-docs/target",
+          "--bin",
+          "docs-render"
+        ],
+        "success": true
+      },
+      "wasm": {
+        "elapsed_ms": 102,
+        "completed_at_ms": 1791912585732,
+        "fresh_artifacts": 252,
+        "compiled_artifacts": 0,
+        "profile": "docs-wasm",
+        "target": "wasm32-unknown-unknown",
+        "compiler": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-cli-rust-dev-42128-1/compile-gate",
+        "flags": [
+          "build",
+          "--locked",
+          "--message-format",
+          "json",
+          "--no-default-features",
+          "--profile",
+          "docs-wasm",
+          "--features",
+          "hydrate",
+          "--manifest-path",
+          "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-cli-rust-dev-42128-1/site/Cargo.toml",
+          "--target-dir",
+          "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-cli-rust-dev-42128-1/site/.rustify-docs/target",
+          "--lib",
+          "--target",
+          "wasm32-unknown-unknown"
+        ],
+        "success": true
+      }
+    },
+    "good": 1,
+    "ok": true,
+    "reload": true,
+    "errors": 0,
+    "warnings": 4,
+    "diagnostics": [
+      {
+        "severity": "warning",
+        "rule": "rust-compile",
+        "file": "/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui/src/overlay.rs",
+        "line": 349,
+        "column": 23,
+        "message": "warning: method `fallback_element` is never used\n   --> /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui/src/overlay.rs:349:23\n    |\n284 |     impl OverlayStack {\n    |     ----------------- method in this implementation\n...\n349 |         pub(crate) fn fallback_element(&self) -> Element {\n    |                       ^^^^^^^^^^^^^^^^\n    |\n    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default\n\n",
+        "suggestion": "`#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default"
+      },
+      {
+        "severity": "warning",
+        "rule": "rust-compile",
+        "file": "/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui/src/router.rs",
+        "line": 556,
+        "column": 9,
+        "message": "warning: field `guest_click` is never read\n   --> /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui/src/router.rs:556:9\n    |\n549 |     struct Router {\n    |            ------ field in this struct\n...\n556 |         guest_click: Option<SendWrapper<Rc<GuestClick>>>,\n    |         ^^^^^^^^^^^\n    |\n    = note: `Router` has a derived impl for the trait `Clone`, but this is intentionally ignored during dead code analysis\n\n",
+        "suggestion": "`Router` has a derived impl for the trait `Clone`, but this is intentionally ignored during dead code analysis"
+      },
+      {
+        "severity": "warning",
+        "rule": "not-in-nav",
+        "file": "content/index.md",
+        "line": null,
+        "column": null,
+        "message": "this page is in no navigation group, so readers can only reach it by a link",
+        "suggestion": null
+      },
+      {
+        "severity": "warning",
+        "rule": "theme-token",
+        "file": "theme.json",
+        "line": null,
+        "column": null,
+        "message": "radius: Light and dark have different author values; editing this common field applies to both",
+        "suggestion": null
+      }
+    ]
+  },
+  "include_changed": {
+    "session": "b187-18de26fa17c1e678",
+    "revision": 2,
+    "sequence": 15,
+    "building": false,
+    "phase": "render",
+    "compile": {
+      "generation": "014c7047c005d96f6339f8315c8fc609b396df2f5782371a97e29d972eea7c60",
+      "completed_at_ms": 1791912609438,
+      "host": {
+        "elapsed_ms": 15454,
+        "completed_at_ms": 1791912602302,
+        "fresh_artifacts": 262,
+        "compiled_artifacts": 2,
+        "profile": "docs-host",
+        "target": null,
+        "compiler": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-cli-rust-dev-42128-1/compile-gate",
+        "flags": [
+          "build",
+          "--locked",
+          "--message-format",
+          "json",
+          "--no-default-features",
+          "--profile",
+          "docs-host",
+          "--features",
+          "ssr",
+          "--manifest-path",
+          "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-cli-rust-dev-42128-1/site/Cargo.toml",
+          "--target-dir",
+          "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-cli-rust-dev-42128-1/site/.rustify-docs/target",
+          "--bin",
+          "docs-render"
+        ],
+        "success": true
+      },
+      "wasm": {
+        "elapsed_ms": 7131,
+        "completed_at_ms": 1791912609438,
+        "fresh_artifacts": 251,
+        "compiled_artifacts": 1,
+        "profile": "docs-wasm",
+        "target": "wasm32-unknown-unknown",
+        "compiler": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-cli-rust-dev-42128-1/compile-gate",
+        "flags": [
+          "build",
+          "--locked",
+          "--message-format",
+          "json",
+          "--no-default-features",
+          "--profile",
+          "docs-wasm",
+          "--features",
+          "hydrate",
+          "--manifest-path",
+          "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-cli-rust-dev-42128-1/site/Cargo.toml",
+          "--target-dir",
+          "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-cli-rust-dev-42128-1/site/.rustify-docs/target",
+          "--lib",
+          "--target",
+          "wasm32-unknown-unknown"
+        ],
+        "success": true
+      }
+    },
+    "good": 2,
+    "ok": true,
+    "reload": false,
+    "errors": 0,
+    "warnings": 4,
+    "diagnostics": [
+      {
+        "severity": "warning",
+        "rule": "rust-compile",
+        "file": "/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui/src/overlay.rs",
+        "line": 349,
+        "column": 23,
+        "message": "warning: method `fallback_element` is never used\n   --> /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui/src/overlay.rs:349:23\n    |\n284 |     impl OverlayStack {\n    |     ----------------- method in this implementation\n...\n349 |         pub(crate) fn fallback_element(&self) -> Element {\n    |                       ^^^^^^^^^^^^^^^^\n    |\n    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default\n\n",
+        "suggestion": "`#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default"
+      },
+      {
+        "severity": "warning",
+        "rule": "rust-compile",
+        "file": "/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui/src/router.rs",
+        "line": 556,
+        "column": 9,
+        "message": "warning: field `guest_click` is never read\n   --> /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui/src/router.rs:556:9\n    |\n549 |     struct Router {\n    |            ------ field in this struct\n...\n556 |         guest_click: Option<SendWrapper<Rc<GuestClick>>>,\n    |         ^^^^^^^^^^^\n    |\n    = note: `Router` has a derived impl for the trait `Clone`, but this is intentionally ignored during dead code analysis\n\n",
+        "suggestion": "`Router` has a derived impl for the trait `Clone`, but this is intentionally ignored during dead code analysis"
+      },
+      {
+        "severity": "warning",
+        "rule": "not-in-nav",
+        "file": "content/index.md",
+        "line": null,
+        "column": null,
+        "message": "this page is in no navigation group, so readers can only reach it by a link",
+        "suggestion": null
+      },
+      {
+        "severity": "warning",
+        "rule": "theme-token",
+        "file": "theme.json",
+        "line": null,
+        "column": null,
+        "message": "radius: Light and dark have different author values; editing this common field applies to both",
+        "suggestion": null
+      }
+    ]
+  },
+  "latest": {
+    "session": "b187-18de26fa17c1e678",
+    "revision": 3,
+    "sequence": 25,
+    "building": false,
+    "phase": "render",
+    "compile": {
+      "generation": "47d3e8251740ccb2b5e603be809aede1d1bce07d98fdf864e157f7486a46c163",
+      "completed_at_ms": 1791912633532,
+      "host": {
+        "elapsed_ms": 173,
+        "completed_at_ms": 1791912633401,
+        "fresh_artifacts": 264,
+        "compiled_artifacts": 0,
+        "profile": "docs-host",
+        "target": null,
+        "compiler": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-cli-rust-dev-42128-1/compile-gate",
+        "flags": [
+          "build",
+          "--locked",
+          "--message-format",
+          "json",
+          "--no-default-features",
+          "--profile",
+          "docs-host",
+          "--features",
+          "ssr",
+          "--manifest-path",
+          "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-cli-rust-dev-42128-1/site/Cargo.toml",
+          "--target-dir",
+          "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-cli-rust-dev-42128-1/site/.rustify-docs/target",
+          "--bin",
+          "docs-render"
+        ],
+        "success": true
+      },
+      "wasm": {
+        "elapsed_ms": 126,
+        "completed_at_ms": 1791912633532,
+        "fresh_artifacts": 252,
+        "compiled_artifacts": 0,
+        "profile": "docs-wasm",
+        "target": "wasm32-unknown-unknown",
+        "compiler": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-cli-rust-dev-42128-1/compile-gate",
+        "flags": [
+          "build",
+          "--locked",
+          "--message-format",
+          "json",
+          "--no-default-features",
+          "--profile",
+          "docs-wasm",
+          "--features",
+          "hydrate",
+          "--manifest-path",
+          "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-cli-rust-dev-42128-1/site/Cargo.toml",
+          "--target-dir",
+          "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-cli-rust-dev-42128-1/site/.rustify-docs/target",
+          "--lib",
+          "--target",
+          "wasm32-unknown-unknown"
+        ],
+        "success": true
+      }
+    },
+    "good": 3,
+    "ok": true,
+    "reload": false,
+    "errors": 0,
+    "warnings": 4,
+    "diagnostics": [
+      {
+        "severity": "warning",
+        "rule": "rust-compile",
+        "file": "/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui/src/overlay.rs",
+        "line": 349,
+        "column": 23,
+        "message": "warning: method `fallback_element` is never used\n   --> /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui/src/overlay.rs:349:23\n    |\n284 |     impl OverlayStack {\n    |     ----------------- method in this implementation\n...\n349 |         pub(crate) fn fallback_element(&self) -> Element {\n    |                       ^^^^^^^^^^^^^^^^\n    |\n    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default\n\n",
+        "suggestion": "`#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default"
+      },
+      {
+        "severity": "warning",
+        "rule": "rust-compile",
+        "file": "/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui/src/router.rs",
+        "line": 556,
+        "column": 9,
+        "message": "warning: field `guest_click` is never read\n   --> /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui/src/router.rs:556:9\n    |\n549 |     struct Router {\n    |            ------ field in this struct\n...\n556 |         guest_click: Option<SendWrapper<Rc<GuestClick>>>,\n    |         ^^^^^^^^^^^\n    |\n    = note: `Router` has a derived impl for the trait `Clone`, but this is intentionally ignored during dead code analysis\n\n",
+        "suggestion": "`Router` has a derived impl for the trait `Clone`, but this is intentionally ignored during dead code analysis"
+      },
+      {
+        "severity": "warning",
+        "rule": "not-in-nav",
+        "file": "content/index.md",
+        "line": null,
+        "column": null,
+        "message": "this page is in no navigation group, so readers can only reach it by a link",
+        "suggestion": null
+      },
+      {
+        "severity": "warning",
+        "rule": "theme-token",
+        "file": "theme.json",
+        "line": null,
+        "column": null,
+        "message": "radius: Light and dark have different author values; editing this common field applies to both",
+        "suggestion": null
+      }
+    ]
+  },
+  "cli_log": "rustc 1.99.0 (b940084d7 2026-09-28)\ndev: pages show no last-updated date: not a git repository (or any of the parent directories): .git\nwatching /private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-cli-rust-dev-42128-1/site; drafts are shown, source and published output are unchanged, stop with Ctrl-C\ndev: host\ndev: wasm\ndev: inputs changed; discarding the candidate and rebuilding\ndev: render\ndev: host\ndev: wasm\ndev: render\nwarning[rust-compile]: warning: method `fallback_element` is never used\n   --> /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui/src/overlay.rs:349:23\n    |\n284 |     impl OverlayStack {\n    |     ----------------- method in this implementation\n...\n349 |         pub(crate) fn fallback_element(&self) -> Element {\n    |                       ^^^^^^^^^^^^^^^^\n    |\n    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default\n\n\n  --> /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui/src/overlay.rs:349:23\n  = help: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default\nwarning[rust-compile]: warning: field `guest_click` is never read\n   --> /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui/src/router.rs:556:9\n    |\n549 |     struct Router {\n    |            ------ field in this struct\n...\n556 |         guest_click: Option<SendWrapper<Rc<GuestClick>>>,\n    |         ^^^^^^^^^^^\n    |\n    = note: `Router` has a derived impl for the trait `Clone`, but this is intentionally ignored during dead code analysis\n\n\n  --> /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui/src/router.rs:556:9\n  = help: `Router` has a derived impl for the trait `Clone`, but this is intentionally ignored during dead code analysis\nwarning[not-in-nav]: this page is in no navigation group, so readers can only reach it by a link\n  --> content/index.md\nwarning[theme-token]: radius: Light and dark have different author values; editing this common field applies to both\n  --> theme.json\ndev: revision 1: 10 page(s) changed, 4 warning(s), 1298 ms\ndev: render\ndev: host\ndev: wasm\ndev: render\ndev: revision 2: 6 page(s) changed, 4 warning(s), 23716 ms\ndev: render\ndev: host\ndev: wasm\ndev: inputs changed; discarding the candidate and rebuilding\ndev: render\ndev: host\ndev: wasm\ndev: render\ndev: revision 3: 6 page(s) changed, 4 warning(s), 1393 ms\n"
+}

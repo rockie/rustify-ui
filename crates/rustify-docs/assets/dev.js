@@ -167,9 +167,15 @@
   function describe(state, into, stacked) {
     into.textContent = "";
     var parts = [];
+    if (state.building) {
+      parts.push(["building", words.building || "Building"]);
+      if (state.phase && words[state.phase]) parts.push(["building", words[state.phase]]);
+    }
     if (state.errors) parts.push(["error", count(state.errors, words.error_one, words.error_other)]);
     if (state.warnings) parts.push(["warning", count(state.warnings, words.warning_one, words.warning_other)]);
-    var page = state.ok ? null : Number(good) > 0 ? words.last_good : words.no_last_good;
+    var page = null;
+    if (Number(good) > 0 && (state.building || !state.ok)) page = words.last_good;
+    else if (!state.ok && !state.building) page = words.no_last_good;
     parts.forEach(function (part, i) {
       if (i > 0) into.appendChild(document.createTextNode(" · "));
       into.appendChild(element("span", "rd-dev-count-" + part[0], part[1]));
@@ -262,13 +268,13 @@
 
   function show(state) {
     var problems = state.errors + state.warnings;
-    if (problems === 0) {
+    if (problems === 0 && !state.building) {
       // Gone with the problems; a keyboard user who was on it continues
       // from the page's content rather than from the top of the document.
       var focused = root.contains(document.activeElement);
       root.hidden = true;
       open = false;
-      var main = document.getElementById("content");
+      var main = document.querySelector("main");
       if (focused && main) {
         if (!main.hasAttribute("tabindex")) main.tabIndex = -1;
         main.focus({ preventScroll: true });
@@ -291,9 +297,11 @@
     // Which build result this page has seen, shown or not.
     root.setAttribute("data-revision", String(state.revision));
     if (inline || (state.errors > 0 && !stored(hiddenKey))) open = true;
-    if (state.errors + state.warnings === 0) store(hiddenKey, null);
+    if (state.errors + state.warnings === 0 && !state.building) store(hiddenKey, null);
     var text = show(state);
-    if (state.errors > 0 && (last === null || last.revision !== state.revision)) {
+    if (state.building && (last === null || !last.building || last.phase !== state.phase)) {
+      announce(text);
+    } else if (state.errors > 0 && (last === null || last.revision !== state.revision)) {
       announce(text + " · " + revision.textContent);
     } else if (hadErrors && state.errors === 0) {
       announce(words.fixed || "");

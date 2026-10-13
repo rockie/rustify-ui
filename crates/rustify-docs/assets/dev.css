@@ -153,12 +153,14 @@
 .rd-dev-message {
   margin: 0.125rem 0 0;
   overflow-wrap: break-word;
+  white-space: pre-wrap;
 }
 
 .rd-dev-suggestion {
   margin: 0.125rem 0 0;
   color: var(--muted-foreground);
   overflow-wrap: break-word;
+  white-space: pre-wrap;
 }
 
 /* What a message quotes: a path, a name, a value. */

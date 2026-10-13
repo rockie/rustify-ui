@@ -83,6 +83,12 @@ pub struct DevLabels {
     pub fixed: &'static str,
     pub shell_title: &'static str,
     pub shell_body: &'static str,
+    pub building: &'static str,
+    pub building_title: &'static str,
+    pub building_body: &'static str,
+    pub host: &'static str,
+    pub wasm: &'static str,
+    pub render: &'static str,
 }
 
 pub const EN: Labels = Labels {
@@ -133,6 +139,12 @@ pub const EN: Labels = Labels {
         fixed: "Problems fixed; the page is up to date",
         shell_title: "The site does not build yet",
         shell_body: "Fix the problems listed and save: this page reloads by itself.",
+        building: "Building",
+        building_title: "Building your site",
+        building_body: "The first dependency build takes longer. Keep this page open: it updates when the site is ready.",
+        host: "Compiling native renderer",
+        wasm: "Compiling browser module",
+        render: "Rendering pages",
     },
     demo: DemoLabels {
         example: "Interactive example",
@@ -193,6 +205,12 @@ pub const ZH: Labels = Labels {
         fixed: "问题已修复，页面为最新",
         shell_title: "站点暂时无法构建",
         shell_body: "修正列出的问题并保存，本页会自动刷新。",
+        building: "构建中",
+        building_title: "正在构建站点",
+        building_body: "首次构建依赖需要更长时间。保持本页打开，站点就绪后会自动更新。",
+        host: "正在编译原生渲染器",
+        wasm: "正在编译浏览器模块",
+        render: "正在渲染页面",
     },
     demo: DemoLabels {
         example: "交互示例",

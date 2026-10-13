@@ -1,0 +1,533 @@
+{
+  "config": {
+    "argv": [
+      "/Users/rockie/.nvm/versions/node/v26.1.0/bin/node",
+      "/Users/rockie/Documents/gh-rockie/rustify-ui/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "playwright.docs.config.ts",
+      "--project=official-subpath",
+      "tests/docs-ssg/official.spec.ts",
+      "--reporter=list,json",
+      "--output",
+      "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-subpath-r4/artifacts",
+      "--grep",
+      "first frame"
+    ],
+    "configFile": "/Users/rockie/Documents/gh-rockie/rustify-ui/playwright.docs.config.ts",
+    "rootDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": {},
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-subpath-r4/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "dom-only",
+        "name": "dom-only",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [
+          "dom-only/hydration.spec.ts"
+        ],
+        "testMatch": [
+          "dom-only/**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-subpath-r4/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "dom-hydrate",
+        "name": "dom-hydrate",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "dom-only/hydration.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-subpath-r4/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "docs-root",
+        "name": "docs-root",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [
+          "docs-ssg/dev*.spec.ts",
+          "docs-ssg/islands.spec.ts",
+          "docs-ssg/custom.spec.ts",
+          "docs-ssg/official.spec.ts"
+        ],
+        "testMatch": [
+          "docs-ssg/**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-subpath-r4/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "docs-subpath",
+        "name": "docs-subpath",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [
+          "docs-ssg/dev*.spec.ts",
+          "docs-ssg/islands.spec.ts",
+          "docs-ssg/custom.spec.ts",
+          "docs-ssg/official.spec.ts"
+        ],
+        "testMatch": [
+          "docs-ssg/**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-subpath-r4/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "docs-meta",
+        "name": "docs-meta",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [
+          "docs-ssg/dev*.spec.ts",
+          "docs-ssg/islands.spec.ts",
+          "docs-ssg/custom.spec.ts",
+          "docs-ssg/official.spec.ts"
+        ],
+        "testMatch": [
+          "docs-ssg/**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-subpath-r4/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "components-root",
+        "name": "components-root",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/islands.spec.ts",
+          "docs-ssg/custom.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-subpath-r4/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "components-subpath",
+        "name": "components-subpath",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/islands.spec.ts",
+          "docs-ssg/custom.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-subpath-r4/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "components-meta",
+        "name": "components-meta",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/islands.spec.ts",
+          "docs-ssg/custom.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-subpath-r4/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "official-root",
+        "name": "official-root",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/official.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-subpath-r4/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "official-subpath",
+        "name": "official-subpath",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/official.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-subpath-r4/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "official-meta",
+        "name": "official-meta",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/official.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-subpath-r4/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "components-webkit",
+        "name": "components-webkit",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/islands.spec.ts",
+          "docs-ssg/custom.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-subpath-r4/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "docs-firefox",
+        "name": "docs-firefox",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [
+          "docs-ssg/dev*.spec.ts",
+          "docs-ssg/islands.spec.ts",
+          "docs-ssg/custom.spec.ts",
+          "docs-ssg/official.spec.ts"
+        ],
+        "testMatch": [
+          "docs-ssg/**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-subpath-r4/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "docs-webkit",
+        "name": "docs-webkit",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [
+          "docs-ssg/dev*.spec.ts",
+          "docs-ssg/islands.spec.ts",
+          "docs-ssg/custom.spec.ts",
+          "docs-ssg/official.spec.ts"
+        ],
+        "testMatch": [
+          "docs-ssg/**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-subpath-r4/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "docs-dev",
+        "name": "docs-dev",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/dev*.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "docs-ssg/official.spec.ts",
+      "file": "docs-ssg/official.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "the light first frame and mode controls persist across static and island pages",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "official-subpath",
+              "projectName": "official-subpath",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 638,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-13T19:10:39.081Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "official-browser-audit.json",
+                      "contentType": "application/json",
+                      "body": "ewogICJyZXF1ZXN0cyI6IFsKICAgICJodHRwOi8vMTI3LjAuMC4xOjQxOTkvcnVzdGlmeS11aS8iLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDE5OS9ydXN0aWZ5LXVpL2Fzc2V0cy9zaXRlLjI5ZjVmOWM5YzUuY3NzIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQxOTkvcnVzdGlmeS11aS9hc3NldHMvbW9kZS41ZTJjMjU4NGIwLmpzIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQxOTkvcnVzdGlmeS11aS9hc3NldHMvc2l0ZS4yNTI5YTBkNjQ3LmpzIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQxOTkvcnVzdGlmeS11aS9jb21wb25lbnRzL2RhdGEtdGFibGUvIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQxOTkvcnVzdGlmeS11aS9hc3NldHMvc2l0ZS4yOWY1ZjljOWM1LmNzcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MTk5L3J1c3RpZnktdWkvYXNzZXRzL21vZGUuNWUyYzI1ODRiMC5qcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MTk5L3J1c3RpZnktdWkvYXNzZXRzL3NpdGUuMjUyOWEwZDY0Ny5qcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MTk5L3J1c3RpZnktdWkvYXNzZXRzL2lzbGFuZHMvNzUwZThhZDMyNWM1ZWJmZmVkYzk0MmZmNGIzZTU2NWQzMzA0MTk0ODI4ODViMjMwY2Q4M2JhZTY5ZTlmNzk1Ny9pc2xhbmRzLmpzIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQxOTkvcnVzdGlmeS11aS9hc3NldHMvaXNsYW5kcy83NTBlOGFkMzI1YzVlYmZmZWRjOTQyZmY0YjNlNTY1ZDMzMDQxOTQ4Mjg4NWIyMzBjZDgzYmFlNjllOWY3OTU3L2RvbS1sb2FkZXIuanMiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDE5OS9ydXN0aWZ5LXVpL2Fzc2V0cy9pc2xhbmRzLzc1MGU4YWQzMjVjNWViZmZlZGM5NDJmZjRiM2U1NjVkMzMwNDE5NDgyODg1YjIzMGNkODNiYWU2OWU5Zjc5NTcvYXBwX2JnLndhc20iLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDE5OS9ydXN0aWZ5LXVpL2Fzc2V0cy9pc2xhbmRzLzc1MGU4YWQzMjVjNWViZmZlZGM5NDJmZjRiM2U1NjVkMzMwNDE5NDgyODg1YjIzMGNkODNiYWU2OWU5Zjc5NTcvYXBwLmpzIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQxOTkvcnVzdGlmeS11aS9hc3NldHMvaXNsYW5kcy83NTBlOGFkMzI1YzVlYmZmZWRjOTQyZmY0YjNlNTY1ZDMzMDQxOTQ4Mjg4NWIyMzBjZDgzYmFlNjllOWY3OTU3L3NuaXBwZXRzL3J1c3RpZnktdWktNGRiMmYxMGYxMDc4OGY0Yy93ZWIvZG9tLXJ1bnRpbWUuanMiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDE5OS9ydXN0aWZ5LXVpLyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MTk5L3J1c3RpZnktdWkvYXNzZXRzL3NpdGUuMjlmNWY5YzljNS5jc3MiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDE5OS9ydXN0aWZ5LXVpL2Fzc2V0cy9tb2RlLjVlMmMyNTg0YjAuanMiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDE5OS9ydXN0aWZ5LXVpL2Fzc2V0cy9zaXRlLjI1MjlhMGQ2NDcuanMiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDE5OS9ydXN0aWZ5LXVpL2NvbXBvbmVudHMvYnV0dG9uLyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MTk5L3J1c3RpZnktdWkvYXNzZXRzL3NpdGUuMjlmNWY5YzljNS5jc3MiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDE5OS9ydXN0aWZ5LXVpL2Fzc2V0cy9tb2RlLjVlMmMyNTg0YjAuanMiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDE5OS9ydXN0aWZ5LXVpL2Fzc2V0cy9zaXRlLjI1MjlhMGQ2NDcuanMiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDE5OS9ydXN0aWZ5LXVpL2Fzc2V0cy9pc2xhbmRzLzc1MGU4YWQzMjVjNWViZmZlZGM5NDJmZjRiM2U1NjVkMzMwNDE5NDgyODg1YjIzMGNkODNiYWU2OWU5Zjc5NTcvaXNsYW5kcy5qcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MTk5L3J1c3RpZnktdWkvYXNzZXRzL2lzbGFuZHMvNzUwZThhZDMyNWM1ZWJmZmVkYzk0MmZmNGIzZTU2NWQzMzA0MTk0ODI4ODViMjMwY2Q4M2JhZTY5ZTlmNzk1Ny9kb20tbG9hZGVyLmpzIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQxOTkvcnVzdGlmeS11aS9hc3NldHMvaXNsYW5kcy83NTBlOGFkMzI1YzVlYmZmZWRjOTQyZmY0YjNlNTY1ZDMzMDQxOTQ4Mjg4NWIyMzBjZDgzYmFlNjllOWY3OTU3L2FwcF9iZy53YXNtIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQxOTkvcnVzdGlmeS11aS9hc3NldHMvaXNsYW5kcy83NTBlOGFkMzI1YzVlYmZmZWRjOTQyZmY0YjNlNTY1ZDMzMDQxOTQ4Mjg4NWIyMzBjZDgzYmFlNjllOWY3OTU3L2FwcC5qcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MTk5L3J1c3RpZnktdWkvYXNzZXRzL2lzbGFuZHMvNzUwZThhZDMyNWM1ZWJmZmVkYzk0MmZmNGIzZTU2NWQzMzA0MTk0ODI4ODViMjMwY2Q4M2JhZTY5ZTlmNzk1Ny9zbmlwcGV0cy9ydXN0aWZ5LXVpLTRkYjJmMTBmMTA3ODhmNGMvd2ViL2RvbS1ydW50aW1lLmpzIgogIF0sCiAgImZhaWx1cmVzIjogW10sCiAgImNvbnNvbGUiOiBbXSwKICAicGFnZUVycm9ycyI6IFtdLAogICJjc3AiOiBbXSwKICAicmVzcG9uc2VzIjogWwogICAgewogICAgICAidXJsIjogImh0dHA6Ly8xMjcuMC4wLjE6NDE5OS9ydXN0aWZ5LXVpLyIsCiAgICAgICJzdGF0dXMiOiAyMDAsCiAgICAgICJtaW1lIjogInRleHQvaHRtbDsgY2hhcnNldD11dGYtOCIKICAgIH0sCiAgICB7CiAgICAgICJ1cmwiOiAiaHR0cDovLzEyNy4wLjAuMTo0MTk5L3J1c3RpZnktdWkvYXNzZXRzL3NpdGUuMjlmNWY5YzljNS5jc3MiLAogICAgICAic3RhdHVzIjogMjAwLAogICAgICAibWltZSI6ICJ0ZXh0L2NzczsgY2hhcnNldD11dGYtOCIKICAgIH0sCiAgICB7CiAgICAgICJ1cmwiOiAiaHR0cDovLzEyNy4wLjAuMTo0MTk5L3J1c3RpZnktdWkvYXNzZXRzL21vZGUuNWUyYzI1ODRiMC5qcyIsCiAgICAgICJzdGF0dXMiOiAyMDAsCiAgICAgICJtaW1lIjogInRleHQvamF2YXNjcmlwdDsgY2hhcnNldD11dGYtOCIKICAgIH0sCiAgICB7CiAgICAgICJ1cmwiOiAiaHR0cDovLzEyNy4wLjAuMTo0MTk5L3J1c3RpZnktdWkvYXNzZXRzL3NpdGUuMjUyOWEwZDY0Ny5qcyIsCiAgICAgICJzdGF0dXMiOiAyMDAsCiAgICAgICJtaW1lIjogInRleHQvamF2YXNjcmlwdDsgY2hhcnNldD11dGYtOCIKICAgIH0sCiAgICB7CiAgICAgICJ1cmwiOiAiaHR0cDovLzEyNy4wLjAuMTo0MTk5L3J1c3RpZnktdWkvY29tcG9uZW50cy9kYXRhLXRhYmxlLyIsCiAgICAgICJzdGF0dXMiOiAyMDAsCiAgICAgICJtaW1lIjogInRleHQvaHRtbDsgY2hhcnNldD11dGYtOCIKICAgIH0sCiAgICB7CiAgICAgICJ1cmwiOiAiaHR0cDovLzEyNy4wLjAuMTo0MTk5L3J1c3RpZnktdWkvYXNzZXRzL3NpdGUuMjlmNWY5YzljNS5jc3MiLAogICAgICAic3RhdHVzIjogMjAwLAogICAgICAibWltZSI6ICJ0ZXh0L2NzczsgY2hhcnNldD11dGYtOCIKICAgIH0sCiAgICB7CiAgICAgICJ1cmwiOiAiaHR0cDovLzEyNy4wLjAuMTo0MTk5L3J1c3RpZnktdWkvYXNzZXRzL21vZGUuNWUyYzI1ODRiMC5qcyIsCiAgICAgICJzdGF0dXMiOiAyMDAsCiAgICAgICJtaW1lIjogInRleHQvamF2YXNjcmlwdDsgY2hhcnNldD11dGYtOCIKICAgIH0sCiAgICB7CiAgICAgICJ1cmwiOiAiaHR0cDovLzEyNy4wLjAuMTo0MTk5L3J1c3RpZnktdWkvYXNzZXRzL3NpdGUuMjUyOWEwZDY0Ny5qcyIsCiAgICAgICJzdGF0dXMiOiAyMDAsCiAgICAgICJtaW1lIjogInRleHQvamF2YXNjcmlwdDsgY2hhcnNldD11dGYtOCIKICAgIH0sCiAgICB7CiAgICAgICJ1cmwiOiAiaHR0cDovLzEyNy4wLjAuMTo0MTk5L3J1c3RpZnktdWkvYXNzZXRzL2lzbGFuZHMvNzUwZThhZDMyNWM1ZWJmZmVkYzk0MmZmNGIzZTU2NWQzMzA0MTk0ODI4ODViMjMwY2Q4M2JhZTY5ZTlmNzk1Ny9pc2xhbmRzLmpzIiwKICAgICAgInN0YXR1cyI6IDIwMCwKICAgICAgIm1pbWUiOiAidGV4dC9qYXZhc2NyaXB0OyBjaGFyc2V0PXV0Zi04IgogICAgfSwKICAgIHsKICAgICAgInVybCI6ICJodHRwOi8vMTI3LjAuMC4xOjQxOTkvcnVzdGlmeS11aS9hc3NldHMvaXNsYW5kcy83NTBlOGFkMzI1YzVlYmZmZWRjOTQyZmY0YjNlNTY1ZDMzMDQxOTQ4Mjg4NWIyMzBjZDgzYmFlNjllOWY3OTU3L2RvbS1sb2FkZXIuanMiLAogICAgICAic3RhdHVzIjogMjAwLAogICAgICAibWltZSI6ICJ0ZXh0L2phdmFzY3JpcHQ7IGNoYXJzZXQ9dXRmLTgiCiAgICB9LAogICAgewogICAgICAidXJsIjogImh0dHA6Ly8xMjcuMC4wLjE6NDE5OS9ydXN0aWZ5LXVpL2Fzc2V0cy9pc2xhbmRzLzc1MGU4YWQzMjVjNWViZmZlZGM5NDJmZjRiM2U1NjVkMzMwNDE5NDgyODg1YjIzMGNkODNiYWU2OWU5Zjc5NTcvYXBwX2JnLndhc20iLAogICAgICAic3RhdHVzIjogMjAwLAogICAgICAibWltZSI6ICJhcHBsaWNhdGlvbi93YXNtIgogICAgfSwKICAgIHsKICAgICAgInVybCI6ICJodHRwOi8vMTI3LjAuMC4xOjQxOTkvcnVzdGlmeS11aS9hc3NldHMvaXNsYW5kcy83NTBlOGFkMzI1YzVlYmZmZWRjOTQyZmY0YjNlNTY1ZDMzMDQxOTQ4Mjg4NWIyMzBjZDgzYmFlNjllOWY3OTU3L2FwcC5qcyIsCiAgICAgICJzdGF0dXMiOiAyMDAsCiAgICAgICJtaW1lIjogInRleHQvamF2YXNjcmlwdDsgY2hhcnNldD11dGYtOCIKICAgIH0sCiAgICB7CiAgICAgICJ1cmwiOiAiaHR0cDovLzEyNy4wLjAuMTo0MTk5L3J1c3RpZnktdWkvYXNzZXRzL2lzbGFuZHMvNzUwZThhZDMyNWM1ZWJmZmVkYzk0MmZmNGIzZTU2NWQzMzA0MTk0ODI4ODViMjMwY2Q4M2JhZTY5ZTlmNzk1Ny9zbmlwcGV0cy9ydXN0aWZ5LXVpLTRkYjJmMTBmMTA3ODhmNGMvd2ViL2RvbS1ydW50aW1lLmpzIiwKICAgICAgInN0YXR1cyI6IDIwMCwKICAgICAgIm1pbWUiOiAidGV4dC9qYXZhc2NyaXB0OyBjaGFyc2V0PXV0Zi04IgogICAgfSwKICAgIHsKICAgICAgInVybCI6ICJodHRwOi8vMTI3LjAuMC4xOjQxOTkvcnVzdGlmeS11aS8iLAogICAgICAic3RhdHVzIjogMjAwLAogICAgICAibWltZSI6ICJ0ZXh0L2h0bWw7IGNoYXJzZXQ9dXRmLTgiCiAgICB9LAogICAgewogICAgICAidXJsIjogImh0dHA6Ly8xMjcuMC4wLjE6NDE5OS9ydXN0aWZ5LXVpL2Fzc2V0cy9zaXRlLjI5ZjVmOWM5YzUuY3NzIiwKICAgICAgInN0YXR1cyI6IDIwMCwKICAgICAgIm1pbWUiOiAidGV4dC9jc3M7IGNoYXJzZXQ9dXRmLTgiCiAgICB9LAogICAgewogICAgICAidXJsIjogImh0dHA6Ly8xMjcuMC4wLjE6NDE5OS9ydXN0aWZ5LXVpL2Fzc2V0cy9tb2RlLjVlMmMyNTg0YjAuanMiLAogICAgICAic3RhdHVzIjogMjAwLAogICAgICAibWltZSI6ICJ0ZXh0L2phdmFzY3JpcHQ7IGNoYXJzZXQ9dXRmLTgiCiAgICB9LAogICAgewogICAgICAidXJsIjogImh0dHA6Ly8xMjcuMC4wLjE6NDE5OS9ydXN0aWZ5LXVpL2Fzc2V0cy9zaXRlLjI1MjlhMGQ2NDcuanMiLAogICAgICAic3RhdHVzIjogMjAwLAogICAgICAibWltZSI6ICJ0ZXh0L2phdmFzY3JpcHQ7IGNoYXJzZXQ9dXRmLTgiCiAgICB9LAogICAgewogICAgICAidXJsIjogImh0dHA6Ly8xMjcuMC4wLjE6NDE5OS9ydXN0aWZ5LXVpL2NvbXBvbmVudHMvYnV0dG9uLyIsCiAgICAgICJzdGF0dXMiOiAyMDAsCiAgICAgICJtaW1lIjogInRleHQvaHRtbDsgY2hhcnNldD11dGYtOCIKICAgIH0sCiAgICB7CiAgICAgICJ1cmwiOiAiaHR0cDovLzEyNy4wLjAuMTo0MTk5L3J1c3RpZnktdWkvYXNzZXRzL3NpdGUuMjlmNWY5YzljNS5jc3MiLAogICAgICAic3RhdHVzIjogMjAwLAogICAgICAibWltZSI6ICJ0ZXh0L2NzczsgY2hhcnNldD11dGYtOCIKICAgIH0sCiAgICB7CiAgICAgICJ1cmwiOiAiaHR0cDovLzEyNy4wLjAuMTo0MTk5L3J1c3RpZnktdWkvYXNzZXRzL21vZGUuNWUyYzI1ODRiMC5qcyIsCiAgICAgICJzdGF0dXMiOiAyMDAsCiAgICAgICJtaW1lIjogInRleHQvamF2YXNjcmlwdDsgY2hhcnNldD11dGYtOCIKICAgIH0sCiAgICB7CiAgICAgICJ1cmwiOiAiaHR0cDovLzEyNy4wLjAuMTo0MTk5L3J1c3RpZnktdWkvYXNzZXRzL3NpdGUuMjUyOWEwZDY0Ny5qcyIsCiAgICAgICJzdGF0dXMiOiAyMDAsCiAgICAgICJtaW1lIjogInRleHQvamF2YXNjcmlwdDsgY2hhcnNldD11dGYtOCIKICAgIH0sCiAgICB7CiAgICAgICJ1cmwiOiAiaHR0cDovLzEyNy4wLjAuMTo0MTk5L3J1c3RpZnktdWkvYXNzZXRzL2lzbGFuZHMvNzUwZThhZDMyNWM1ZWJmZmVkYzk0MmZmNGIzZTU2NWQzMzA0MTk0ODI4ODViMjMwY2Q4M2JhZTY5ZTlmNzk1Ny9pc2xhbmRzLmpzIiwKICAgICAgInN0YXR1cyI6IDIwMCwKICAgICAgIm1pbWUiOiAidGV4dC9qYXZhc2NyaXB0OyBjaGFyc2V0PXV0Zi04IgogICAgfSwKICAgIHsKICAgICAgInVybCI6ICJodHRwOi8vMTI3LjAuMC4xOjQxOTkvcnVzdGlmeS11aS9hc3NldHMvaXNsYW5kcy83NTBlOGFkMzI1YzVlYmZmZWRjOTQyZmY0YjNlNTY1ZDMzMDQxOTQ4Mjg4NWIyMzBjZDgzYmFlNjllOWY3OTU3L2RvbS1sb2FkZXIuanMiLAogICAgICAic3RhdHVzIjogMjAwLAogICAgICAibWltZSI6ICJ0ZXh0L2phdmFzY3JpcHQ7IGNoYXJzZXQ9dXRmLTgiCiAgICB9LAogICAgewogICAgICAidXJsIjogImh0dHA6Ly8xMjcuMC4wLjE6NDE5OS9ydXN0aWZ5LXVpL2Fzc2V0cy9pc2xhbmRzLzc1MGU4YWQzMjVjNWViZmZlZGM5NDJmZjRiM2U1NjVkMzMwNDE5NDgyODg1YjIzMGNkODNiYWU2OWU5Zjc5NTcvYXBwX2JnLndhc20iLAogICAgICAic3RhdHVzIjogMjAwLAogICAgICAibWltZSI6ICJhcHBsaWNhdGlvbi93YXNtIgogICAgfSwKICAgIHsKICAgICAgInVybCI6ICJodHRwOi8vMTI3LjAuMC4xOjQxOTkvcnVzdGlmeS11aS9hc3NldHMvaXNsYW5kcy83NTBlOGFkMzI1YzVlYmZmZWRjOTQyZmY0YjNlNTY1ZDMzMDQxOTQ4Mjg4NWIyMzBjZDgzYmFlNjllOWY3OTU3L2FwcC5qcyIsCiAgICAgICJzdGF0dXMiOiAyMDAsCiAgICAgICJtaW1lIjogInRleHQvamF2YXNjcmlwdDsgY2hhcnNldD11dGYtOCIKICAgIH0sCiAgICB7CiAgICAgICJ1cmwiOiAiaHR0cDovLzEyNy4wLjAuMTo0MTk5L3J1c3RpZnktdWkvYXNzZXRzL2lzbGFuZHMvNzUwZThhZDMyNWM1ZWJmZmVkYzk0MmZmNGIzZTU2NWQzMzA0MTk0ODI4ODViMjMwY2Q4M2JhZTY5ZTlmNzk1Ny9zbmlwcGV0cy9ydXN0aWZ5LXVpLTRkYjJmMTBmMTA3ODhmNGMvd2ViL2RvbS1ydW50aW1lLmpzIiwKICAgICAgInN0YXR1cyI6IDIwMCwKICAgICAgIm1pbWUiOiAidGV4dC9qYXZhc2NyaXB0OyBjaGFyc2V0PXV0Zi04IgogICAgfQogIF0sCiAgImV4cGVjdGVkNDA0IjogW10sCiAgImV4cGVjdGVkQ29uc29sZSI6IFtdCn0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2d2e215de052a1e7f1c3-b2327e9c4c93b0ba427d",
+          "file": "docs-ssg/official.spec.ts",
+          "line": 259,
+          "column": 64
+        },
+        {
+          "title": "the dark first frame and mode controls persist across static and island pages",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "official-subpath",
+              "projectName": "official-subpath",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 10395,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCSS\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('[data-rustify-island]').locator('fieldset[data-rd-island-controls]').getByRole('grid', { name: 'Example components', exact: true })\nExpected: \u001b[32m\"rgb(\u001b[7m12, 17\u001b[27m, 2\u001b[7m9\u001b[27m)\"\u001b[39m\nReceived: \u001b[31m\"rgb(\u001b[7m249, 250\u001b[27m, 2\u001b[7m51\u001b[27m)\"\u001b[39m\nTimeout:  10000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveCSS\" locator('[data-rustify-island]').locator('fieldset[data-rd-island-controls]').getByRole('grid', { name: 'Example components', exact: true }) with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-rustify-island]').locator('fieldset[data-rd-island-controls]').getByRole('grid', { name: 'Example components', exact: true })\u001b[22m\n\u001b[2m    24 × locator resolved to <div role=\"grid\" data-testid=\"\" aria-rowcount=\"5\" aria-colcount=\"2\" data-name=\"DataTable\" aria-label=\"Example components\" class=\"relative flex flex-col min-h-0 border border-border rounded-md bg-background text-sm outline-none focus-visible:ring-ring/50 focus-visible:ring-[3px] h-48 w-full\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"rgb(249, 250, 251)\"\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCSS\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('[data-rustify-island]').locator('fieldset[data-rd-island-controls]').getByRole('grid', { name: 'Example components', exact: true })\nExpected: \u001b[32m\"rgb(\u001b[7m12, 17\u001b[27m, 2\u001b[7m9\u001b[27m)\"\u001b[39m\nReceived: \u001b[31m\"rgb(\u001b[7m249, 250\u001b[27m, 2\u001b[7m51\u001b[27m)\"\u001b[39m\nTimeout:  10000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveCSS\" locator('[data-rustify-island]').locator('fieldset[data-rd-island-controls]').getByRole('grid', { name: 'Example components', exact: true }) with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-rustify-island]').locator('fieldset[data-rd-island-controls]').getByRole('grid', { name: 'Example components', exact: true })\u001b[22m\n\u001b[2m    24 × locator resolved to <div role=\"grid\" data-testid=\"\" aria-rowcount=\"5\" aria-colcount=\"2\" data-name=\"DataTable\" aria-label=\"Example components\" class=\"relative flex flex-col min-h-0 border border-border rounded-md bg-background text-sm outline-none focus-visible:ring-ring/50 focus-visible:ring-[3px] h-48 w-full\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"rgb(249, 250, 251)\"\u001b[22m\n\n    at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/docs-ssg/official.spec.ts:271:88",
+                    "location": {
+                      "file": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/docs-ssg/official.spec.ts",
+                      "column": 88,
+                      "line": 271
+                    },
+                    "snippet": "  269 |     await page.evaluate(async () => { await Promise.allSettled(document.getAnimations().filter(animation => animation instanceof CSSTransition).map(animation => animation.finished)); });\n  270 |     const colors = await page.locator(\"body\").evaluate(node => ({ foreground: getComputedStyle(node).color, background: getComputedStyle(node).backgroundColor }));\n> 271 |     await expect(field.getByRole(\"grid\", { name: \"Example components\", exact: true })).toHaveCSS(\"background-color\", colors.background);\n      |                                                                                        ^\n  272 |     await expect(field.getByRole(\"gridcell\").first()).toHaveCSS(\"color\", colors.foreground); expect(colors.foreground).not.toBe(colors.background);\n  273 |     await open(page, \"./\");\n  274 |     await page.locator('[data-rd-mode=\"light\"]').press(\"Enter\"); const light = await page.locator(\"body\").evaluate(node => getComputedStyle(node).backgroundColor);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/docs-ssg/official.spec.ts",
+                        "column": 88,
+                        "line": 271
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCSS\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('[data-rustify-island]').locator('fieldset[data-rd-island-controls]').getByRole('grid', { name: 'Example components', exact: true })\nExpected: \u001b[32m\"rgb(\u001b[7m12, 17\u001b[27m, 2\u001b[7m9\u001b[27m)\"\u001b[39m\nReceived: \u001b[31m\"rgb(\u001b[7m249, 250\u001b[27m, 2\u001b[7m51\u001b[27m)\"\u001b[39m\nTimeout:  10000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveCSS\" locator('[data-rustify-island]').locator('fieldset[data-rd-island-controls]').getByRole('grid', { name: 'Example components', exact: true }) with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-rustify-island]').locator('fieldset[data-rd-island-controls]').getByRole('grid', { name: 'Example components', exact: true })\u001b[22m\n\u001b[2m    24 × locator resolved to <div role=\"grid\" data-testid=\"\" aria-rowcount=\"5\" aria-colcount=\"2\" data-name=\"DataTable\" aria-label=\"Example components\" class=\"relative flex flex-col min-h-0 border border-border rounded-md bg-background text-sm outline-none focus-visible:ring-ring/50 focus-visible:ring-[3px] h-48 w-full\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"rgb(249, 250, 251)\"\u001b[22m\n\n\n  269 |     await page.evaluate(async () => { await Promise.allSettled(document.getAnimations().filter(animation => animation instanceof CSSTransition).map(animation => animation.finished)); });\n  270 |     const colors = await page.locator(\"body\").evaluate(node => ({ foreground: getComputedStyle(node).color, background: getComputedStyle(node).backgroundColor }));\n> 271 |     await expect(field.getByRole(\"grid\", { name: \"Example components\", exact: true })).toHaveCSS(\"background-color\", colors.background);\n      |                                                                                        ^\n  272 |     await expect(field.getByRole(\"gridcell\").first()).toHaveCSS(\"color\", colors.foreground); expect(colors.foreground).not.toBe(colors.background);\n  273 |     await open(page, \"./\");\n  274 |     await page.locator('[data-rd-mode=\"light\"]').press(\"Enter\"); const light = await page.locator(\"body\").evaluate(node => getComputedStyle(node).backgroundColor);\n    at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/docs-ssg/official.spec.ts:271:88"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-13T19:10:39.794Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "official-browser-audit.json",
+                      "contentType": "application/json",
+                      "body": "ewogICJyZXF1ZXN0cyI6IFsKICAgICJodHRwOi8vMTI3LjAuMC4xOjQxOTkvcnVzdGlmeS11aS8iLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDE5OS9ydXN0aWZ5LXVpL2Fzc2V0cy9zaXRlLjI5ZjVmOWM5YzUuY3NzIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQxOTkvcnVzdGlmeS11aS9hc3NldHMvbW9kZS41ZTJjMjU4NGIwLmpzIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQxOTkvcnVzdGlmeS11aS9hc3NldHMvc2l0ZS4yNTI5YTBkNjQ3LmpzIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQxOTkvcnVzdGlmeS11aS9jb21wb25lbnRzL2RhdGEtdGFibGUvIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQxOTkvcnVzdGlmeS11aS9hc3NldHMvc2l0ZS4yOWY1ZjljOWM1LmNzcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MTk5L3J1c3RpZnktdWkvYXNzZXRzL21vZGUuNWUyYzI1ODRiMC5qcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MTk5L3J1c3RpZnktdWkvYXNzZXRzL3NpdGUuMjUyOWEwZDY0Ny5qcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MTk5L3J1c3RpZnktdWkvYXNzZXRzL2lzbGFuZHMvNzUwZThhZDMyNWM1ZWJmZmVkYzk0MmZmNGIzZTU2NWQzMzA0MTk0ODI4ODViMjMwY2Q4M2JhZTY5ZTlmNzk1Ny9pc2xhbmRzLmpzIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQxOTkvcnVzdGlmeS11aS9hc3NldHMvaXNsYW5kcy83NTBlOGFkMzI1YzVlYmZmZWRjOTQyZmY0YjNlNTY1ZDMzMDQxOTQ4Mjg4NWIyMzBjZDgzYmFlNjllOWY3OTU3L2RvbS1sb2FkZXIuanMiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDE5OS9ydXN0aWZ5LXVpL2Fzc2V0cy9pc2xhbmRzLzc1MGU4YWQzMjVjNWViZmZlZGM5NDJmZjRiM2U1NjVkMzMwNDE5NDgyODg1YjIzMGNkODNiYWU2OWU5Zjc5NTcvYXBwX2JnLndhc20iLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDE5OS9ydXN0aWZ5LXVpL2Fzc2V0cy9pc2xhbmRzLzc1MGU4YWQzMjVjNWViZmZlZGM5NDJmZjRiM2U1NjVkMzMwNDE5NDgyODg1YjIzMGNkODNiYWU2OWU5Zjc5NTcvYXBwLmpzIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQxOTkvcnVzdGlmeS11aS9hc3NldHMvaXNsYW5kcy83NTBlOGFkMzI1YzVlYmZmZWRjOTQyZmY0YjNlNTY1ZDMzMDQxOTQ4Mjg4NWIyMzBjZDgzYmFlNjllOWY3OTU3L3NuaXBwZXRzL3J1c3RpZnktdWktNGRiMmYxMGYxMDc4OGY0Yy93ZWIvZG9tLXJ1bnRpbWUuanMiCiAgXSwKICAiZmFpbHVyZXMiOiBbXSwKICAiY29uc29sZSI6IFtdLAogICJwYWdlRXJyb3JzIjogW10sCiAgImNzcCI6IFtdLAogICJyZXNwb25zZXMiOiBbCiAgICB7CiAgICAgICJ1cmwiOiAiaHR0cDovLzEyNy4wLjAuMTo0MTk5L3J1c3RpZnktdWkvIiwKICAgICAgInN0YXR1cyI6IDIwMCwKICAgICAgIm1pbWUiOiAidGV4dC9odG1sOyBjaGFyc2V0PXV0Zi04IgogICAgfSwKICAgIHsKICAgICAgInVybCI6ICJodHRwOi8vMTI3LjAuMC4xOjQxOTkvcnVzdGlmeS11aS9hc3NldHMvc2l0ZS4yOWY1ZjljOWM1LmNzcyIsCiAgICAgICJzdGF0dXMiOiAyMDAsCiAgICAgICJtaW1lIjogInRleHQvY3NzOyBjaGFyc2V0PXV0Zi04IgogICAgfSwKICAgIHsKICAgICAgInVybCI6ICJodHRwOi8vMTI3LjAuMC4xOjQxOTkvcnVzdGlmeS11aS9hc3NldHMvbW9kZS41ZTJjMjU4NGIwLmpzIiwKICAgICAgInN0YXR1cyI6IDIwMCwKICAgICAgIm1pbWUiOiAidGV4dC9qYXZhc2NyaXB0OyBjaGFyc2V0PXV0Zi04IgogICAgfSwKICAgIHsKICAgICAgInVybCI6ICJodHRwOi8vMTI3LjAuMC4xOjQxOTkvcnVzdGlmeS11aS9hc3NldHMvc2l0ZS4yNTI5YTBkNjQ3LmpzIiwKICAgICAgInN0YXR1cyI6IDIwMCwKICAgICAgIm1pbWUiOiAidGV4dC9qYXZhc2NyaXB0OyBjaGFyc2V0PXV0Zi04IgogICAgfSwKICAgIHsKICAgICAgInVybCI6ICJodHRwOi8vMTI3LjAuMC4xOjQxOTkvcnVzdGlmeS11aS9jb21wb25lbnRzL2RhdGEtdGFibGUvIiwKICAgICAgInN0YXR1cyI6IDIwMCwKICAgICAgIm1pbWUiOiAidGV4dC9odG1sOyBjaGFyc2V0PXV0Zi04IgogICAgfSwKICAgIHsKICAgICAgInVybCI6ICJodHRwOi8vMTI3LjAuMC4xOjQxOTkvcnVzdGlmeS11aS9hc3NldHMvc2l0ZS4yOWY1ZjljOWM1LmNzcyIsCiAgICAgICJzdGF0dXMiOiAyMDAsCiAgICAgICJtaW1lIjogInRleHQvY3NzOyBjaGFyc2V0PXV0Zi04IgogICAgfSwKICAgIHsKICAgICAgInVybCI6ICJodHRwOi8vMTI3LjAuMC4xOjQxOTkvcnVzdGlmeS11aS9hc3NldHMvbW9kZS41ZTJjMjU4NGIwLmpzIiwKICAgICAgInN0YXR1cyI6IDIwMCwKICAgICAgIm1pbWUiOiAidGV4dC9qYXZhc2NyaXB0OyBjaGFyc2V0PXV0Zi04IgogICAgfSwKICAgIHsKICAgICAgInVybCI6ICJodHRwOi8vMTI3LjAuMC4xOjQxOTkvcnVzdGlmeS11aS9hc3NldHMvc2l0ZS4yNTI5YTBkNjQ3LmpzIiwKICAgICAgInN0YXR1cyI6IDIwMCwKICAgICAgIm1pbWUiOiAidGV4dC9qYXZhc2NyaXB0OyBjaGFyc2V0PXV0Zi04IgogICAgfSwKICAgIHsKICAgICAgInVybCI6ICJodHRwOi8vMTI3LjAuMC4xOjQxOTkvcnVzdGlmeS11aS9hc3NldHMvaXNsYW5kcy83NTBlOGFkMzI1YzVlYmZmZWRjOTQyZmY0YjNlNTY1ZDMzMDQxOTQ4Mjg4NWIyMzBjZDgzYmFlNjllOWY3OTU3L2lzbGFuZHMuanMiLAogICAgICAic3RhdHVzIjogMjAwLAogICAgICAibWltZSI6ICJ0ZXh0L2phdmFzY3JpcHQ7IGNoYXJzZXQ9dXRmLTgiCiAgICB9LAogICAgewogICAgICAidXJsIjogImh0dHA6Ly8xMjcuMC4wLjE6NDE5OS9ydXN0aWZ5LXVpL2Fzc2V0cy9pc2xhbmRzLzc1MGU4YWQzMjVjNWViZmZlZGM5NDJmZjRiM2U1NjVkMzMwNDE5NDgyODg1YjIzMGNkODNiYWU2OWU5Zjc5NTcvZG9tLWxvYWRlci5qcyIsCiAgICAgICJzdGF0dXMiOiAyMDAsCiAgICAgICJtaW1lIjogInRleHQvamF2YXNjcmlwdDsgY2hhcnNldD11dGYtOCIKICAgIH0sCiAgICB7CiAgICAgICJ1cmwiOiAiaHR0cDovLzEyNy4wLjAuMTo0MTk5L3J1c3RpZnktdWkvYXNzZXRzL2lzbGFuZHMvNzUwZThhZDMyNWM1ZWJmZmVkYzk0MmZmNGIzZTU2NWQzMzA0MTk0ODI4ODViMjMwY2Q4M2JhZTY5ZTlmNzk1Ny9hcHBfYmcud2FzbSIsCiAgICAgICJzdGF0dXMiOiAyMDAsCiAgICAgICJtaW1lIjogImFwcGxpY2F0aW9uL3dhc20iCiAgICB9LAogICAgewogICAgICAidXJsIjogImh0dHA6Ly8xMjcuMC4wLjE6NDE5OS9ydXN0aWZ5LXVpL2Fzc2V0cy9pc2xhbmRzLzc1MGU4YWQzMjVjNWViZmZlZGM5NDJmZjRiM2U1NjVkMzMwNDE5NDgyODg1YjIzMGNkODNiYWU2OWU5Zjc5NTcvYXBwLmpzIiwKICAgICAgInN0YXR1cyI6IDIwMCwKICAgICAgIm1pbWUiOiAidGV4dC9qYXZhc2NyaXB0OyBjaGFyc2V0PXV0Zi04IgogICAgfSwKICAgIHsKICAgICAgInVybCI6ICJodHRwOi8vMTI3LjAuMC4xOjQxOTkvcnVzdGlmeS11aS9hc3NldHMvaXNsYW5kcy83NTBlOGFkMzI1YzVlYmZmZWRjOTQyZmY0YjNlNTY1ZDMzMDQxOTQ4Mjg4NWIyMzBjZDgzYmFlNjllOWY3OTU3L3NuaXBwZXRzL3J1c3RpZnktdWktNGRiMmYxMGYxMDc4OGY0Yy93ZWIvZG9tLXJ1bnRpbWUuanMiLAogICAgICAic3RhdHVzIjogMjAwLAogICAgICAibWltZSI6ICJ0ZXh0L2phdmFzY3JpcHQ7IGNoYXJzZXQ9dXRmLTgiCiAgICB9CiAgXSwKICAiZXhwZWN0ZWQ0MDQiOiBbXSwKICAiZXhwZWN0ZWRDb25zb2xlIjogW10KfQ=="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-subpath-r4/artifacts/docs-ssg-official-the-dark-5daf5-oss-static-and-island-pages-official-subpath/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-subpath-r4/artifacts/docs-ssg-official-the-dark-5daf5-oss-static-and-island-pages-official-subpath/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/docs-ssg/official.spec.ts",
+                    "column": 88,
+                    "line": 271
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "2d2e215de052a1e7f1c3-ec5d0e3f6be148e758ee",
+          "file": "docs-ssg/official.spec.ts",
+          "line": 259,
+          "column": 64
+        },
+        {
+          "title": "the system first frame and mode controls persist across static and island pages",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "official-subpath",
+              "projectName": "official-subpath",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 10390,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCSS\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('[data-rustify-island]').locator('fieldset[data-rd-island-controls]').getByRole('grid', { name: 'Example components', exact: true })\nExpected: \u001b[32m\"rgb(\u001b[7m12, 17\u001b[27m, 2\u001b[7m9\u001b[27m)\"\u001b[39m\nReceived: \u001b[31m\"rgb(\u001b[7m249, 250\u001b[27m, 2\u001b[7m51\u001b[27m)\"\u001b[39m\nTimeout:  10000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveCSS\" locator('[data-rustify-island]').locator('fieldset[data-rd-island-controls]').getByRole('grid', { name: 'Example components', exact: true }) with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-rustify-island]').locator('fieldset[data-rd-island-controls]').getByRole('grid', { name: 'Example components', exact: true })\u001b[22m\n\u001b[2m    24 × locator resolved to <div role=\"grid\" data-testid=\"\" aria-rowcount=\"5\" aria-colcount=\"2\" data-name=\"DataTable\" aria-label=\"Example components\" class=\"relative flex flex-col min-h-0 border border-border rounded-md bg-background text-sm outline-none focus-visible:ring-ring/50 focus-visible:ring-[3px] h-48 w-full\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"rgb(249, 250, 251)\"\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCSS\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('[data-rustify-island]').locator('fieldset[data-rd-island-controls]').getByRole('grid', { name: 'Example components', exact: true })\nExpected: \u001b[32m\"rgb(\u001b[7m12, 17\u001b[27m, 2\u001b[7m9\u001b[27m)\"\u001b[39m\nReceived: \u001b[31m\"rgb(\u001b[7m249, 250\u001b[27m, 2\u001b[7m51\u001b[27m)\"\u001b[39m\nTimeout:  10000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveCSS\" locator('[data-rustify-island]').locator('fieldset[data-rd-island-controls]').getByRole('grid', { name: 'Example components', exact: true }) with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-rustify-island]').locator('fieldset[data-rd-island-controls]').getByRole('grid', { name: 'Example components', exact: true })\u001b[22m\n\u001b[2m    24 × locator resolved to <div role=\"grid\" data-testid=\"\" aria-rowcount=\"5\" aria-colcount=\"2\" data-name=\"DataTable\" aria-label=\"Example components\" class=\"relative flex flex-col min-h-0 border border-border rounded-md bg-background text-sm outline-none focus-visible:ring-ring/50 focus-visible:ring-[3px] h-48 w-full\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"rgb(249, 250, 251)\"\u001b[22m\n\n    at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/docs-ssg/official.spec.ts:271:88",
+                    "location": {
+                      "file": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/docs-ssg/official.spec.ts",
+                      "column": 88,
+                      "line": 271
+                    },
+                    "snippet": "  269 |     await page.evaluate(async () => { await Promise.allSettled(document.getAnimations().filter(animation => animation instanceof CSSTransition).map(animation => animation.finished)); });\n  270 |     const colors = await page.locator(\"body\").evaluate(node => ({ foreground: getComputedStyle(node).color, background: getComputedStyle(node).backgroundColor }));\n> 271 |     await expect(field.getByRole(\"grid\", { name: \"Example components\", exact: true })).toHaveCSS(\"background-color\", colors.background);\n      |                                                                                        ^\n  272 |     await expect(field.getByRole(\"gridcell\").first()).toHaveCSS(\"color\", colors.foreground); expect(colors.foreground).not.toBe(colors.background);\n  273 |     await open(page, \"./\");\n  274 |     await page.locator('[data-rd-mode=\"light\"]').press(\"Enter\"); const light = await page.locator(\"body\").evaluate(node => getComputedStyle(node).backgroundColor);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/docs-ssg/official.spec.ts",
+                        "column": 88,
+                        "line": 271
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCSS\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('[data-rustify-island]').locator('fieldset[data-rd-island-controls]').getByRole('grid', { name: 'Example components', exact: true })\nExpected: \u001b[32m\"rgb(\u001b[7m12, 17\u001b[27m, 2\u001b[7m9\u001b[27m)\"\u001b[39m\nReceived: \u001b[31m\"rgb(\u001b[7m249, 250\u001b[27m, 2\u001b[7m51\u001b[27m)\"\u001b[39m\nTimeout:  10000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveCSS\" locator('[data-rustify-island]').locator('fieldset[data-rd-island-controls]').getByRole('grid', { name: 'Example components', exact: true }) with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-rustify-island]').locator('fieldset[data-rd-island-controls]').getByRole('grid', { name: 'Example components', exact: true })\u001b[22m\n\u001b[2m    24 × locator resolved to <div role=\"grid\" data-testid=\"\" aria-rowcount=\"5\" aria-colcount=\"2\" data-name=\"DataTable\" aria-label=\"Example components\" class=\"relative flex flex-col min-h-0 border border-border rounded-md bg-background text-sm outline-none focus-visible:ring-ring/50 focus-visible:ring-[3px] h-48 w-full\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"rgb(249, 250, 251)\"\u001b[22m\n\n\n  269 |     await page.evaluate(async () => { await Promise.allSettled(document.getAnimations().filter(animation => animation instanceof CSSTransition).map(animation => animation.finished)); });\n  270 |     const colors = await page.locator(\"body\").evaluate(node => ({ foreground: getComputedStyle(node).color, background: getComputedStyle(node).backgroundColor }));\n> 271 |     await expect(field.getByRole(\"grid\", { name: \"Example components\", exact: true })).toHaveCSS(\"background-color\", colors.background);\n      |                                                                                        ^\n  272 |     await expect(field.getByRole(\"gridcell\").first()).toHaveCSS(\"color\", colors.foreground); expect(colors.foreground).not.toBe(colors.background);\n  273 |     await open(page, \"./\");\n  274 |     await page.locator('[data-rd-mode=\"light\"]').press(\"Enter\"); const light = await page.locator(\"body\").evaluate(node => getComputedStyle(node).backgroundColor);\n    at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/docs-ssg/official.spec.ts:271:88"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-13T19:10:50.460Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "official-browser-audit.json",
+                      "contentType": "application/json",
+                      "body": "ewogICJyZXF1ZXN0cyI6IFsKICAgICJodHRwOi8vMTI3LjAuMC4xOjQxOTkvcnVzdGlmeS11aS8iLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDE5OS9ydXN0aWZ5LXVpL2Fzc2V0cy9zaXRlLjI5ZjVmOWM5YzUuY3NzIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQxOTkvcnVzdGlmeS11aS9hc3NldHMvbW9kZS41ZTJjMjU4NGIwLmpzIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQxOTkvcnVzdGlmeS11aS9hc3NldHMvc2l0ZS4yNTI5YTBkNjQ3LmpzIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQxOTkvcnVzdGlmeS11aS9jb21wb25lbnRzL2RhdGEtdGFibGUvIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQxOTkvcnVzdGlmeS11aS9hc3NldHMvc2l0ZS4yOWY1ZjljOWM1LmNzcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MTk5L3J1c3RpZnktdWkvYXNzZXRzL21vZGUuNWUyYzI1ODRiMC5qcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MTk5L3J1c3RpZnktdWkvYXNzZXRzL3NpdGUuMjUyOWEwZDY0Ny5qcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MTk5L3J1c3RpZnktdWkvYXNzZXRzL2lzbGFuZHMvNzUwZThhZDMyNWM1ZWJmZmVkYzk0MmZmNGIzZTU2NWQzMzA0MTk0ODI4ODViMjMwY2Q4M2JhZTY5ZTlmNzk1Ny9pc2xhbmRzLmpzIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQxOTkvcnVzdGlmeS11aS9hc3NldHMvaXNsYW5kcy83NTBlOGFkMzI1YzVlYmZmZWRjOTQyZmY0YjNlNTY1ZDMzMDQxOTQ4Mjg4NWIyMzBjZDgzYmFlNjllOWY3OTU3L2RvbS1sb2FkZXIuanMiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDE5OS9ydXN0aWZ5LXVpL2Fzc2V0cy9pc2xhbmRzLzc1MGU4YWQzMjVjNWViZmZlZGM5NDJmZjRiM2U1NjVkMzMwNDE5NDgyODg1YjIzMGNkODNiYWU2OWU5Zjc5NTcvYXBwX2JnLndhc20iLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDE5OS9ydXN0aWZ5LXVpL2Fzc2V0cy9pc2xhbmRzLzc1MGU4YWQzMjVjNWViZmZlZGM5NDJmZjRiM2U1NjVkMzMwNDE5NDgyODg1YjIzMGNkODNiYWU2OWU5Zjc5NTcvYXBwLmpzIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQxOTkvcnVzdGlmeS11aS9hc3NldHMvaXNsYW5kcy83NTBlOGFkMzI1YzVlYmZmZWRjOTQyZmY0YjNlNTY1ZDMzMDQxOTQ4Mjg4NWIyMzBjZDgzYmFlNjllOWY3OTU3L3NuaXBwZXRzL3J1c3RpZnktdWktNGRiMmYxMGYxMDc4OGY0Yy93ZWIvZG9tLXJ1bnRpbWUuanMiCiAgXSwKICAiZmFpbHVyZXMiOiBbXSwKICAiY29uc29sZSI6IFtdLAogICJwYWdlRXJyb3JzIjogW10sCiAgImNzcCI6IFtdLAogICJyZXNwb25zZXMiOiBbCiAgICB7CiAgICAgICJ1cmwiOiAiaHR0cDovLzEyNy4wLjAuMTo0MTk5L3J1c3RpZnktdWkvIiwKICAgICAgInN0YXR1cyI6IDIwMCwKICAgICAgIm1pbWUiOiAidGV4dC9odG1sOyBjaGFyc2V0PXV0Zi04IgogICAgfSwKICAgIHsKICAgICAgInVybCI6ICJodHRwOi8vMTI3LjAuMC4xOjQxOTkvcnVzdGlmeS11aS9hc3NldHMvc2l0ZS4yOWY1ZjljOWM1LmNzcyIsCiAgICAgICJzdGF0dXMiOiAyMDAsCiAgICAgICJtaW1lIjogInRleHQvY3NzOyBjaGFyc2V0PXV0Zi04IgogICAgfSwKICAgIHsKICAgICAgInVybCI6ICJodHRwOi8vMTI3LjAuMC4xOjQxOTkvcnVzdGlmeS11aS9hc3NldHMvbW9kZS41ZTJjMjU4NGIwLmpzIiwKICAgICAgInN0YXR1cyI6IDIwMCwKICAgICAgIm1pbWUiOiAidGV4dC9qYXZhc2NyaXB0OyBjaGFyc2V0PXV0Zi04IgogICAgfSwKICAgIHsKICAgICAgInVybCI6ICJodHRwOi8vMTI3LjAuMC4xOjQxOTkvcnVzdGlmeS11aS9hc3NldHMvc2l0ZS4yNTI5YTBkNjQ3LmpzIiwKICAgICAgInN0YXR1cyI6IDIwMCwKICAgICAgIm1pbWUiOiAidGV4dC9qYXZhc2NyaXB0OyBjaGFyc2V0PXV0Zi04IgogICAgfSwKICAgIHsKICAgICAgInVybCI6ICJodHRwOi8vMTI3LjAuMC4xOjQxOTkvcnVzdGlmeS11aS9jb21wb25lbnRzL2RhdGEtdGFibGUvIiwKICAgICAgInN0YXR1cyI6IDIwMCwKICAgICAgIm1pbWUiOiAidGV4dC9odG1sOyBjaGFyc2V0PXV0Zi04IgogICAgfSwKICAgIHsKICAgICAgInVybCI6ICJodHRwOi8vMTI3LjAuMC4xOjQxOTkvcnVzdGlmeS11aS9hc3NldHMvc2l0ZS4yOWY1ZjljOWM1LmNzcyIsCiAgICAgICJzdGF0dXMiOiAyMDAsCiAgICAgICJtaW1lIjogInRleHQvY3NzOyBjaGFyc2V0PXV0Zi04IgogICAgfSwKICAgIHsKICAgICAgInVybCI6ICJodHRwOi8vMTI3LjAuMC4xOjQxOTkvcnVzdGlmeS11aS9hc3NldHMvbW9kZS41ZTJjMjU4NGIwLmpzIiwKICAgICAgInN0YXR1cyI6IDIwMCwKICAgICAgIm1pbWUiOiAidGV4dC9qYXZhc2NyaXB0OyBjaGFyc2V0PXV0Zi04IgogICAgfSwKICAgIHsKICAgICAgInVybCI6ICJodHRwOi8vMTI3LjAuMC4xOjQxOTkvcnVzdGlmeS11aS9hc3NldHMvc2l0ZS4yNTI5YTBkNjQ3LmpzIiwKICAgICAgInN0YXR1cyI6IDIwMCwKICAgICAgIm1pbWUiOiAidGV4dC9qYXZhc2NyaXB0OyBjaGFyc2V0PXV0Zi04IgogICAgfSwKICAgIHsKICAgICAgInVybCI6ICJodHRwOi8vMTI3LjAuMC4xOjQxOTkvcnVzdGlmeS11aS9hc3NldHMvaXNsYW5kcy83NTBlOGFkMzI1YzVlYmZmZWRjOTQyZmY0YjNlNTY1ZDMzMDQxOTQ4Mjg4NWIyMzBjZDgzYmFlNjllOWY3OTU3L2lzbGFuZHMuanMiLAogICAgICAic3RhdHVzIjogMjAwLAogICAgICAibWltZSI6ICJ0ZXh0L2phdmFzY3JpcHQ7IGNoYXJzZXQ9dXRmLTgiCiAgICB9LAogICAgewogICAgICAidXJsIjogImh0dHA6Ly8xMjcuMC4wLjE6NDE5OS9ydXN0aWZ5LXVpL2Fzc2V0cy9pc2xhbmRzLzc1MGU4YWQzMjVjNWViZmZlZGM5NDJmZjRiM2U1NjVkMzMwNDE5NDgyODg1YjIzMGNkODNiYWU2OWU5Zjc5NTcvZG9tLWxvYWRlci5qcyIsCiAgICAgICJzdGF0dXMiOiAyMDAsCiAgICAgICJtaW1lIjogInRleHQvamF2YXNjcmlwdDsgY2hhcnNldD11dGYtOCIKICAgIH0sCiAgICB7CiAgICAgICJ1cmwiOiAiaHR0cDovLzEyNy4wLjAuMTo0MTk5L3J1c3RpZnktdWkvYXNzZXRzL2lzbGFuZHMvNzUwZThhZDMyNWM1ZWJmZmVkYzk0MmZmNGIzZTU2NWQzMzA0MTk0ODI4ODViMjMwY2Q4M2JhZTY5ZTlmNzk1Ny9hcHBfYmcud2FzbSIsCiAgICAgICJzdGF0dXMiOiAyMDAsCiAgICAgICJtaW1lIjogImFwcGxpY2F0aW9uL3dhc20iCiAgICB9LAogICAgewogICAgICAidXJsIjogImh0dHA6Ly8xMjcuMC4wLjE6NDE5OS9ydXN0aWZ5LXVpL2Fzc2V0cy9pc2xhbmRzLzc1MGU4YWQzMjVjNWViZmZlZGM5NDJmZjRiM2U1NjVkMzMwNDE5NDgyODg1YjIzMGNkODNiYWU2OWU5Zjc5NTcvYXBwLmpzIiwKICAgICAgInN0YXR1cyI6IDIwMCwKICAgICAgIm1pbWUiOiAidGV4dC9qYXZhc2NyaXB0OyBjaGFyc2V0PXV0Zi04IgogICAgfSwKICAgIHsKICAgICAgInVybCI6ICJodHRwOi8vMTI3LjAuMC4xOjQxOTkvcnVzdGlmeS11aS9hc3NldHMvaXNsYW5kcy83NTBlOGFkMzI1YzVlYmZmZWRjOTQyZmY0YjNlNTY1ZDMzMDQxOTQ4Mjg4NWIyMzBjZDgzYmFlNjllOWY3OTU3L3NuaXBwZXRzL3J1c3RpZnktdWktNGRiMmYxMGYxMDc4OGY0Yy93ZWIvZG9tLXJ1bnRpbWUuanMiLAogICAgICAic3RhdHVzIjogMjAwLAogICAgICAibWltZSI6ICJ0ZXh0L2phdmFzY3JpcHQ7IGNoYXJzZXQ9dXRmLTgiCiAgICB9CiAgXSwKICAiZXhwZWN0ZWQ0MDQiOiBbXSwKICAiZXhwZWN0ZWRDb25zb2xlIjogW10KfQ=="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-subpath-r4/artifacts/docs-ssg-official-the-syst-b58d4-oss-static-and-island-pages-official-subpath/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-subpath-r4/artifacts/docs-ssg-official-the-syst-b58d4-oss-static-and-island-pages-official-subpath/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/docs-ssg/official.spec.ts",
+                    "column": 88,
+                    "line": 271
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "2d2e215de052a1e7f1c3-eeeef27fd54a590957ce",
+          "file": "docs-ssg/official.spec.ts",
+          "line": 259,
+          "column": 64
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-13T19:10:35.716Z",
+    "duration": 25323.545,
+    "expected": 1,
+    "skipped": 0,
+    "unexpected": 2,
+    "flaky": 0
+  }
+}

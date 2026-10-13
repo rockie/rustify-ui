@@ -129,9 +129,9 @@ fn new_writes_into_an_empty_directory_and_never_into_a_full_one() {
     assert_eq!(tree(&temp.path("full")).len(), 1);
     assert_eq!(temp.read("full/notes.txt"), "mine");
 
-    let other = tools.run_in(&temp.0, &["new", "next", "--template", "components"]);
+    let other = tools.run_in(&temp.0, &["new", "next", "--template", "unknown"]);
     assert_eq!(other.status.code(), Some(1));
-    assert!(stderr(&other).contains("template `components` is not in this release"));
+    assert!(stderr(&other).contains("template `unknown` is not in this release"));
     assert!(!temp.path("next").exists());
 
     // Nothing half-written is left beside them.

@@ -1,0 +1,41 @@
+{
+  "scope": "native Safari automation availability; one owned about:blank tab only; no existing tabs or content read; no settings changed",
+  "initialize": {
+    "id": 1,
+    "jsonrpc": "2.0",
+    "result": {
+      "capabilities": {
+        "tools": {}
+      },
+      "protocolVersion": "2024-11-05",
+      "serverInfo": {
+        "name": "Safari",
+        "version": "1.0.0"
+      }
+    }
+  },
+  "create": {
+    "id": 2,
+    "jsonrpc": "2.0",
+    "result": {
+      "content": [
+        {
+          "text": "{\"handle\": \"page-8C656451-F42A-4E1C-9C00-5144065E8CEF\"}",
+          "type": "text"
+        }
+      ]
+    }
+  },
+  "close": {
+    "id": 3,
+    "jsonrpc": "2.0",
+    "result": {
+      "content": [
+        {
+          "text": "Closed tab page-8C656451-F42A-4E1C-9C00-5144065E8CEF",
+          "type": "text"
+        }
+      ]
+    }
+  }
+}

@@ -72,12 +72,13 @@ fn an_island_marker_in_readable_text_does_not_load_the_island_runtime() {
         &Highlighter::new(),
         1,
     );
+    let mut articles = generation::resolved_articles(&project, &snapshot, &analysis);
+    articles
+        .get_mut("/guide/")
+        .unwrap()
+        .push_str("<p>Attribute syntax: <code>data-rustify-island=&quot;example&quot;</code></p>");
     let extensions = generation::Extensions {
-        articles: BTreeMap::from([(
-            "/guide/".to_owned(),
-            "<p>Attribute syntax: <code>data-rustify-island=&quot;example&quot;</code></p>"
-                .to_owned(),
-        )]),
+        articles,
         files: BTreeMap::from([(
             "assets/islands/example/islands.js".to_owned(),
             Arc::<[u8]>::from(b"export {};".as_slice()),

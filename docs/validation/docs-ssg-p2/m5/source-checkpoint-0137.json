@@ -1,0 +1,19 @@
+{
+  "baseline": "dirty@2d6b0a73ad887769c0bad209acabd47382659df5",
+  "observed_at": "2026-10-14T01:37:10+08:00",
+  "scope": "M5 source scaffold; not compiled or browser verified",
+  "algorithm": "sha256 over exact file bytes",
+  "files": {
+    "rustify-docs.toml": "bd8ff3a054ec58eec3a8590b3c4d1ab2664e05ea9c54bc9c18f36e9cd0f7f60d",
+    "site/Cargo.toml": "8f8c68471bf1639bd0f95544449403b1329cdb2f15c90c4e6f9fcdb6f8e1d558",
+    "site/src/lib.rs": "63ec70624fd4301acd67455eed03f774c556dff47ca0cdcb1c08e8c83e0da897",
+    "site/src/pages.rs": "c74f8b376d56d73e3b8d199200a4cb37b48807a87a080f562d34a479f2607071",
+    "site/src/bin/docs-render.rs": "7564d2f0e7cb1137bb55077919030bd04ab86c8f27744e2ef8b3d4a4717c0fbd",
+    "site/src/demos/basics.rs": "9c7d50d76197b0aee00008396ca5904c03361c0d9fa34235ec70b5a9fdc89f02",
+    "site/src/demos/choices.rs": "f407ec974556b93c405bf933c9b8994e2b132497f162dc0bb3d3f4518ffbf2e6",
+    "site/src/demos/collections.rs": "ee0dbc6ea072d32e0fe3cf9cd5e22f9cc3c864afdb80bbb2fb5e7ea0fc9688cc",
+    "site/src/demos/feedback.rs": "b12c385ed3eaa2a9bfc8df36579a978731f6f33eb442a7d4121bc6e6ff9401c7",
+    "site/src/demos/fields.rs": "e2e168730187389fb745cb94663e43e48f99fb7ee2130d3a1e1b40b11097efaf",
+    "site/src/demos/mod.rs": "5c04b3540ba0c075c1006b80723182db02454ba37bc653ae17b86ae0c72cc52c"
+  }
+}

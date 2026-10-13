@@ -1,0 +1,124 @@
+{
+  "scope": "counterfactual diagnosis only; excluded from five fixed-position performance samples",
+  "actual_failure": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n14 !== 0\n",
+  "meter_before_ms": 225.20000004768372,
+  "meter_ready_ms": 262,
+  "scroll_timeline_through_ready": [
+    {
+      "at": 16.200000047683716,
+      "scrollY": 0,
+      "viewportY": 369.984375,
+      "documentY": 369.984375,
+      "width": 574,
+      "height": 2455.078125
+    },
+    {
+      "at": 125.10000002384186,
+      "scrollY": 46,
+      "viewportY": 351.984375,
+      "documentY": 397.984375,
+      "width": 574,
+      "height": 2455.078125
+    },
+    {
+      "at": 125.70000004768372,
+      "scrollY": 106,
+      "viewportY": 291.984375,
+      "documentY": 397.984375,
+      "width": 574,
+      "height": 2455.078125
+    },
+    {
+      "at": 142.39999997615814,
+      "scrollY": 146,
+      "viewportY": 251.984375,
+      "documentY": 397.984375,
+      "width": 574,
+      "height": 2455.078125
+    },
+    {
+      "at": 159,
+      "scrollY": 170,
+      "viewportY": 227.984375,
+      "documentY": 397.984375,
+      "width": 574,
+      "height": 2455.078125
+    },
+    {
+      "at": 174.89999997615814,
+      "scrollY": 186,
+      "viewportY": 211.984375,
+      "documentY": 397.984375,
+      "width": 574,
+      "height": 2455.078125
+    },
+    {
+      "at": 191.30000007152557,
+      "scrollY": 198,
+      "viewportY": 199.984375,
+      "documentY": 397.984375,
+      "width": 574,
+      "height": 2455.078125
+    },
+    {
+      "at": 207.70000004768372,
+      "scrollY": 206,
+      "viewportY": 191.984375,
+      "documentY": 397.984375,
+      "width": 574,
+      "height": 2455.078125
+    },
+    {
+      "at": 260.10000002384186,
+      "scrollY": 212,
+      "viewportY": 185.984375,
+      "documentY": 397.984375,
+      "width": 574,
+      "height": 2455.078125
+    },
+    {
+      "at": 261.89999997615814,
+      "scrollY": 220,
+      "viewportY": 177.984375,
+      "documentY": 397.984375,
+      "width": 574,
+      "height": 2455.078125
+    }
+  ],
+  "document_y_values": [
+    369.98438,
+    397.98438
+  ],
+  "width_values": [
+    574
+  ],
+  "height_values": [
+    2455.078125
+  ],
+  "uniform_viewport_y_deltas": [
+    -14.0
+  ],
+  "non_y_deltas": [
+    0
+  ],
+  "hydration_layout_shift_count": 0,
+  "nearest_before_sample": {
+    "at": 207.70000004768372,
+    "scrollY": 206,
+    "viewportY": 191.984375,
+    "documentY": 397.984375,
+    "width": 574,
+    "height": 2455.078125
+  },
+  "nearest_ready_sample": {
+    "at": 261.89999997615814,
+    "scrollY": 220,
+    "viewportY": 177.984375,
+    "documentY": 397.984375,
+    "width": 574,
+    "height": 2455.078125
+  },
+  "scroll_delta_during_hydration": 14,
+  "document_y_delta_during_hydration": 0.0,
+  "confirmed_attribution": "viewport rectangle y moved by the opposite of the ongoing restored scroll; document coordinates/width/height unchanged across the hydration window; no layout shift. Formal five samples use fixed pre-save scroll0 and keep original meter/zero-displacement assertions."
+}

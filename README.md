@@ -4,7 +4,7 @@ Rustify UI is an experimental Rust SDK for Leptos CSR applications in the browse
 
 Each task implements only the rendering path it needs. Work on both paths requires an explicit requirement or a concrete need for cooperation across DOM and GPU regions. Shared state and theme tokens do not require matching component sets or CSS support. A specific application use case has not yet been selected.
 
-This repository contains the SDK, DOM components, a Makepad fork and six runnable examples. The workspace is version `0.1.0`, with publishing disabled. Start here to build an example; use the [quick start](docs/quickstart.md) to write a region or integrate the components into an application.
+This repository contains the SDK, DOM components, a Makepad fork and six runnable examples. The workspace is version `0.1.0`, with publishing disabled. Use the [repository quick start](#quick-start) to build an example; use the [SDK quick start](docs/quickstart.md) to write a region or integrate the components into an application.
 
 ## Quick start
 

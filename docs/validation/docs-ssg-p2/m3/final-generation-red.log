@@ -1,0 +1,70 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-docs v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-docs)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 9.78s
+     Running tests/registered_generation.rs (target/debug/deps/registered_generation-239eef530cf49654)
+
+running 10 tests
+test svg_use_must_name_an_id_that_exists_in_the_final_document ... FAILED
+test island_and_font_assets_cannot_publish_a_parent_file_and_child_path ... FAILED
+test a_theme_document_inside_static_is_input_only_and_never_published ... ok
+test final_document_rejects_an_id_discarded_by_body_attribute_merging ... FAILED
+test slot_ids_cannot_duplicate_framework_or_body_ids ... FAILED
+test output_file_and_directory_segments_cannot_overlap_across_origins ... FAILED
+test final_tree_ignores_template_and_textarea_ghosts_but_keeps_foreign_integration_links ... ok
+test registered_document_titles_cannot_collide_with_markdown_or_its_qualified_title ... FAILED
+test markdown_only_repeated_titles_keep_the_existing_disambiguation ... ok
+test seven_slots_keep_live_ids_and_references_in_the_final_documents ... ok
+
+failures:
+
+---- svg_use_must_name_an_id_that_exists_in_the_final_document stdout ----
+
+thread 'svg_use_must_name_an_id_that_exists_in_the_final_document' (39429686) panicked at crates/rustify-docs/tests/registered_generation.rs:234:5:
+expected output-check: [Diagnostic { file: Some("src/pages.rs"), line: None, column: None, severity: Error, rule: "broken-anchor", message: "/custom/ has no id `#absent`", suggestion: None }]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- island_and_font_assets_cannot_publish_a_parent_file_and_child_path stdout ----
+
+thread 'island_and_font_assets_cannot_publish_a_parent_file_and_child_path' (39429680) panicked at crates/rustify-docs/tests/registered_generation.rs:352:9:
+expected output-conflict, but generated [".nojekyll", "404.html", "assets/islands", "assets/islands/group/app.js", "assets/mode.5e2c2584b0.js", "assets/share.9f8be38eaf.png", "assets/site.2529a0d647.js", "assets/site.c6e8e4fd45.css", "index.html", "robots.txt", "sitemap.xml"]
+
+---- final_document_rejects_an_id_discarded_by_body_attribute_merging stdout ----
+
+thread 'final_document_rejects_an_id_discarded_by_body_attribute_merging' (39429678) panicked at crates/rustify-docs/tests/registered_generation.rs:216:5:
+expected output-check, but generated [".nojekyll", "404.html", "assets/mode.5e2c2584b0.js", "assets/share.9f8be38eaf.png", "assets/site.2529a0d647.js", "assets/site.c6e8e4fd45.css", "custom/index.html", "index.html", "robots.txt", "sitemap.xml"]
+
+---- slot_ids_cannot_duplicate_framework_or_body_ids stdout ----
+
+thread 'slot_ids_cannot_duplicate_framework_or_body_ids' (39429685) panicked at crates/rustify-docs/tests/registered_generation.rs:202:9:
+expected output-check, but generated [".nojekyll", "404.html", "assets/mode.5e2c2584b0.js", "assets/share.9f8be38eaf.png", "assets/site.2529a0d647.js", "assets/site.c6e8e4fd45.css", "custom/index.html", "index.html", "robots.txt", "sitemap.xml"]
+
+---- output_file_and_directory_segments_cannot_overlap_across_origins stdout ----
+
+thread 'output_file_and_directory_segments_cannot_overlap_across_origins' (39429682) panicked at crates/rustify-docs/tests/registered_generation.rs:312:5:
+expected output-conflict, but generated [".nojekyll", "404.html", "assets/mode.5e2c2584b0.js", "assets/share.9f8be38eaf.png", "assets/site.2529a0d647.js", "assets/site.c6e8e4fd45.css", "guide/index.html", "guide/index.html/index.html", "index.html", "robots.txt", "sitemap.xml"]
+
+---- registered_document_titles_cannot_collide_with_markdown_or_its_qualified_title stdout ----
+
+thread 'registered_document_titles_cannot_collide_with_markdown_or_its_qualified_title' (39429683) panicked at crates/rustify-docs/tests/registered_generation.rs:259:9:
+expected document-title, but generated [".nojekyll", "404.html", "assets/mode.5e2c2584b0.js", "assets/share.9f8be38eaf.png", "assets/site.2529a0d647.js", "assets/site.c6e8e4fd45.css", "custom/index.html", "index.html", "one/same/index.html", "robots.txt", "sitemap.xml", "two/same/index.html"]
+
+
+failures:
+    final_document_rejects_an_id_discarded_by_body_attribute_merging
+    island_and_font_assets_cannot_publish_a_parent_file_and_child_path
+    output_file_and_directory_segments_cannot_overlap_across_origins
+    registered_document_titles_cannot_collide_with_markdown_or_its_qualified_title
+    slot_ids_cannot_duplicate_framework_or_body_ids
+    svg_use_must_name_an_id_that_exists_in_the_final_document
+
+test result: FAILED. 4 passed; 6 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.18s
+
+error: test failed, to rerun pass `-p rustify-docs --test registered_generation`
+mbx[cache]: 0 hits, 0 misses, 1 not looked up, 1 incremental; 0 B downloaded, 0 B uploaded, 65.5 MiB stored locally
+mbx[savings]: 53661 compilations, each compiled once and served warm ever since

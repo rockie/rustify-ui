@@ -1,0 +1,36 @@
+{
+  "scope": "actual Git installed local Rtest/Ctest rehearsal; public GitHub install remains M6/M7",
+  "work": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-p2-m4-pair-kha3t0qz/author-trial-gys6td1u",
+  "site": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-p2-m4-pair-kha3t0qz/author-trial-gys6td1u/M4 author docs",
+  "installed_bin": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-p2-m4-pair-kha3t0qz/installed/bin/rustify-docs",
+  "library_revision": "23bb0d88fe61ff96b9e1e3b93de69266b9fa6483",
+  "cli_revision": "733201474914cf40a934729bef23f7ae6017bab7",
+  "version": "0.1.7",
+  "files": [
+    ".gitignore",
+    "Cargo.lock",
+    "Cargo.toml",
+    "README.md",
+    "content/guide/getting-started.md",
+    "content/guide/writing-demos.md",
+    "content/index.md",
+    "rustify-docs.toml",
+    "src/bin/docs-render.rs",
+    "src/demos.rs",
+    "src/lib.rs"
+  ],
+  "package": "m4-author-docs",
+  "lib": "site_docs",
+  "lock_sha256": "b4bc7bdbb94aee3f1f2d204391e10bb85bbe14d17d3fb557dfe7f42f21e1dbb6",
+  "root_record_only_renamed": true,
+  "initial_source_sha256": "8b720362ecfe80c198ff1ba056bfbb71019e7483b5ee343542f8f461e4709110",
+  "commands": [
+    [
+      "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-p2-m4-pair-kha3t0qz/installed/bin/rustify-docs",
+      "new",
+      "M4 author docs",
+      "--template",
+      "components"
+    ]
+  ]
+}

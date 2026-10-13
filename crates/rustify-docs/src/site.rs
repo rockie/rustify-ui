@@ -166,6 +166,16 @@ pub struct RenderResult {
     pub client_only: bool,
     pub diagnostics: Vec<SiteDiagnostic>,
     pub demos: Vec<RenderedDemo>,
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub markdown_intros: Vec<MarkdownIntro>,
+}
+
+/// A static Markdown introduction requested by a registered page or slot.
+/// The pipeline reads and renders it; the helper never embeds source bytes.
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+pub struct MarkdownIntro {
+    pub key: String,
+    pub path: String,
 }
 
 /// An explicit demo in a page or slot uses the same scoped renderer as a fence.
@@ -194,6 +204,15 @@ pub struct Description {
     pub runtime_protocol: u32,
     pub island_protocol: u32,
     pub resources: Vec<ResourceAsset>,
+    pub fonts: Vec<FontResource>,
+}
+
+/// The locked SDK's logical font identities, without bundled font bytes.
+#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
+pub struct FontResource {
+    pub family: String,
+    pub resource_path: String,
+    pub sha256: String,
 }
 
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]

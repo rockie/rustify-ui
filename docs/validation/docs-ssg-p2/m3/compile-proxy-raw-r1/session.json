@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "session": "39504-1791901437386",
+  "samples": 5,
+  "hostname": "RockiedeMacBook-Pro.local",
+  "os": "macos",
+  "arch": "aarch64",
+  "created_epoch_ms": 1791901437386,
+  "base": "/docs/",
+  "page": "/docs/proxy/",
+  "profiles": [
+    "docs-host",
+    "docs-wasm"
+  ],
+  "cli_build": {
+    "required_cargo_profile": "docs-cli",
+    "profile_env": null,
+    "debug_assertions": false,
+    "panic_strategy": "unwind",
+    "test_executable": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-cli/deps/rustify_docs-6632717838e0553c",
+    "profile_evidence": "Root's actual mbx test --profile docs-cli invocation log; no runtime profile override"
+  },
+  "scope": "compile/render/load proxy with current theme/slots; original catalog and counters; not the M4 dev endpoint or A/B largest-page gate"
+}

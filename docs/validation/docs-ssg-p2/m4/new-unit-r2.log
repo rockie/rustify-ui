@@ -1,0 +1,77 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-docs-cli v0.1.7 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-docs-cli)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 11.34s
+     Running unittests src/main.rs (target/debug/deps/rustify_docs-6a1424bec7bfb3a5)
+
+running 5 tests
+test new::tests::components_names_are_literal_in_commands_and_display_text ... ok
+test new::tests::directory_names_become_valid_package_names ... ok
+test new::tests::names_are_quoted_where_the_template_quotes_them ... ok
+test new::tests::renaming_the_lock_changes_only_the_source_free_root_record ... ok
+test new::tests::source_identities_must_be_complete_git_revisions ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 64 filtered out; finished in 0.00s
+
+     Running tests/artifacts.rs (target/debug/deps/artifacts-b652baa1e791b612)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 13 filtered out; finished in 0.00s
+
+     Running tests/check.rs (target/debug/deps/check-b5e13f923e71dc8e)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 15 filtered out; finished in 0.00s
+
+     Running tests/components.rs (target/debug/deps/components-ed4895cde119e320)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 1 filtered out; finished in 0.00s
+
+     Running tests/dev.rs (target/debug/deps/dev-b9ecf4314d1ec1f1)
+mbx[progress]: 15s elapsed; 0 hits, 0 misses, 0 bypassed, 12 not looked up; ~0s compiler work saved
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 14 filtered out; finished in 0.00s
+
+     Running tests/external.rs (target/debug/deps/external-bbf5130a2c195cd6)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 2 filtered out; finished in 0.00s
+
+     Running tests/faults.rs (target/debug/deps/faults-37645ea271ba14e2)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 9 filtered out; finished in 0.00s
+
+     Running tests/new_build.rs (target/debug/deps/new_build-b425cf70c8fe4699)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 6 filtered out; finished in 0.00s
+
+     Running tests/new_components.rs (target/debug/deps/new_components-6bfbaf717a030c52)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 5 filtered out; finished in 0.00s
+
+     Running tests/reliability.rs (target/debug/deps/reliability-00551f28d9645fae)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 7 filtered out; finished in 0.00s
+
+mbx[cache]: 0 hits, 0 misses, 12 not looked up; 0 B downloaded, 0 B uploaded, 322.2 MiB stored locally
+mbx[savings]: 2.2 TiB logical of old files removed while you were busy compiling other things.

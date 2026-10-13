@@ -1,0 +1,54 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+warning: struct `FontResourceDigest` is never constructed
+  --> crates/rustify-ui/src/theme/fonts.rs:76:12
+   |
+76 | pub struct FontResourceDigest {
+   |            ^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: constant `FONT_RESOURCE_DIGESTS` is never used
+  --> crates/rustify-ui/src/theme/fonts.rs:83:11
+   |
+83 | pub const FONT_RESOURCE_DIGESTS: [FontResourceDigest; 7] = [
+   |           ^^^^^^^^^^^^^^^^^^^^^
+
+warning: `rustify-ui` (lib) generated 2 warnings
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.28s
+     Running unittests src/lib.rs (target/debug/deps/rustify_docs-a0443a60ac2534b1)
+
+running 2 tests
+test html_check::tests::template_urls_do_not_become_document_references ... FAILED
+test html_check::tests::template_urls_follow_foreign_namespace_integration ... FAILED
+
+failures:
+
+---- html_check::tests::template_urls_do_not_become_document_references stdout ----
+
+thread 'html_check::tests::template_urls_do_not_become_document_references' (39171253) panicked at crates/rustify-docs/src/html_check.rs:729:9:
+assertion `left == right` failed
+  left: ["missing/", "missing.svg", "visible/"]
+ right: ["visible/"]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- html_check::tests::template_urls_follow_foreign_namespace_integration stdout ----
+
+thread 'html_check::tests::template_urls_follow_foreign_namespace_integration' (39171254) panicked at crates/rustify-docs/src/html_check.rs:751:13:
+assertion `left == right` failed: <svg><foreignObject><template><a href='hidden/'>Hidden</a></template><a href='visible/'>Visible</a></foreignObject></svg>
+  left: ["hidden/", "visible/"]
+ right: ["visible/"]
+
+
+failures:
+    html_check::tests::template_urls_do_not_become_document_references
+    html_check::tests::template_urls_follow_foreign_namespace_integration
+
+test result: FAILED. 0 passed; 2 failed; 0 ignored; 0 measured; 156 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p rustify-docs --lib`

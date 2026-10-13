@@ -1,0 +1,17 @@
+{
+  "mechanism": "overlap immutable host helper Describe with subsequent wasm Cargo; Cargo builds remain serial",
+  "path": "crates/rustify-docs-cli/src/rust_site.rs",
+  "parent_sha256": "5f7971f921c03f656b6c27b1039981e05b848d22c230fa9e9e655c98285e7886",
+  "candidate_sha256": "6b4b21914fd8d2bb7d6c13763dfa759ec3581623eff818f3dd7ebb4241021d4c",
+  "patch_sha256": "571773532b55c3d5ba07b8b69c243afe95722893ffd64232977dffaec6e922d6",
+  "temporary_trace_removed": true,
+  "candidate_confirmation": "passed same-workload stability confirmation; formal largest page remains M6",
+  "confirmation_test_executable": {
+    "path": "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-cli/deps/rustify_docs-6632717838e0553c",
+    "sha256": "5f3f6fa211d61c9fa68ffea292086968f6172d4e6bb5d8aca7d60463127a0bef",
+    "bytes": 56260288
+  },
+  "confirmation_report": "overlap-helper-r2.json",
+  "median_ms": 1731,
+  "budget_remaining_ms": 269
+}

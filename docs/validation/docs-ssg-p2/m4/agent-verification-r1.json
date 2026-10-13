@@ -1,0 +1,70 @@
+{
+  "scope": "M4 local actual validation; no public push/Pages, physical phone/Safari or human UAT",
+  "A": {
+    "status": "pass",
+    "runs": [
+      {
+        "path": "browser-r2/results.json",
+        "passed_case": "first-build/cache workflow"
+      },
+      {
+        "path": "browser-r3/results.json",
+        "passed_case": "Rust/new generation/error/repair workflow"
+      }
+    ],
+    "workspace_identity": "workspace-cli-identity-r2.json",
+    "command": "RUSTIFY_DOCS_BIN=target/docs-cli/rustify-docs npx playwright test -c playwright.docs.config.ts --project=docs-dev dev-components.spec.ts"
+  },
+  "B": {
+    "status": "pass",
+    "new": "template-new-verification-r1.json",
+    "metadata": "template-metadata-cache-r1.json",
+    "check": "template-check-r1.json",
+    "build": "template-build-r1.json",
+    "readme": "template-author-browser-r1.json",
+    "installed_source": "733201474914cf40a934729bef23f7ae6017bab7",
+    "library_source": "23bb0d88fe61ff96b9e1e3b93de69266b9fa6483",
+    "source_transport": "temporary file:// Git pairing, not public GitHub install",
+    "offline_after_cache": true,
+    "lock_unchanged": true
+  },
+  "C": {
+    "native_status": "pass3/3",
+    "native_log": "rust-dev-extended-r1.log",
+    "native_command": "mbx test --locked --profile docs-cli -p rustify-docs-cli --test rust_dev -- --test-threads=1 --nocapture",
+    "clippy_status": "pass",
+    "clippy_log": "rust-dev-clippy-r1.log",
+    "clippy_command": "mbx clippy --locked --profile docs-cli -p rustify-docs-cli --test rust_dev -- -D warnings",
+    "performance_status": "pass5/5 at fixed zero pre-save scroll position; original meter unchanged",
+    "performance": "dev-complete-performance-r2.json",
+    "command": "node docs/validation/docs-ssg-p2/m4/measure-dev-complete.mjs",
+    "median_ms": 1425.10009765625,
+    "limit_ms": 2000,
+    "content_status": "pass",
+    "content": "content-new-home-r1.json",
+    "new_to_home_ms": 264,
+    "content_wasm_requests": 0,
+    "scroll_counterexample": "nonzero restored-scroll counterfactual retained separately; no geometry/text/node normalization used",
+    "scroll_attribution": "dev-scroll-attribution-summary-r1.json",
+    "red_counterexamples_preserved": [
+      "dev-complete-performance-r1.json",
+      "dev-scroll-counterfactual-r1.json",
+      "dev-scroll-attribution-r1.json"
+    ]
+  },
+  "D": {
+    "status": "9 actual images supplied; fresh impeccable review owned by root",
+    "images": "ui-batch-r1/manifest.json",
+    "device_boundary": "Chromium153 desktop +375viewport emulation, not physical phone"
+  },
+  "remaining_m6_gaps": [
+    "public frozen R/C source and GitHub install",
+    "real first author UAT",
+    "physical mobile/Safari and online Pages exit"
+  ],
+  "products_modified": false,
+  "owned_code_modified": [
+    "tests/docs-ssg/dev-components.spec.ts",
+    "crates/rustify-docs-cli/tests/rust_dev.rs"
+  ]
+}

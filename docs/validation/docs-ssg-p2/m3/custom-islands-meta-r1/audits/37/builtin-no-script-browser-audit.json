@@ -1,0 +1,12 @@
+{
+  "requests": [
+    "http://127.0.0.1:4197/rustify-ui/builtins/",
+    "http://127.0.0.1:4197/rustify-ui/assets/site.b3c499257f.css",
+    "http://127.0.0.1:4197/rustify-ui/assets/fonts/371924e7480d3d01807fdc1bd30442d0a6651e6b5ea546482f5883d613cf0419.ttf",
+    "http://127.0.0.1:4197/rustify-ui/assets/fonts/662a196d58f1183bf2d77428b6d5283fe3f45161ab021bea4036bc98e5cac016.ttf"
+  ],
+  "failures": [],
+  "responses": [],
+  "console": [],
+  "pageErrors": []
+}

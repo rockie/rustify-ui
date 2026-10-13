@@ -1,0 +1,202 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+    Finished `docs-cli` profile [optimized] target(s) in 0.54s
+     Running unittests src/main.rs (target/docs-cli/deps/rustify_docs-6632717838e0553c)
+
+running 1 test
+compile proxy work: /Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/compile-profile-m3-r3
+mbx[progress]: 15s elapsed; 0 hits, 0 misses, 0 bypassed, 0 not looked up; ~0s compiler work saved
+mbx[progress]: 30s elapsed; 0 hits, 0 misses, 0 bypassed, 0 not looked up; ~0s compiler work saved
+compile phase: generation-rendered 1791903801175
+compile phase: generation-validated 1791903801175
+compile phase: prepared-artifacts 1791903801818
+compile phase: immutable-helper 1791903801878
+compile phase: describe-spawn-start 1791903801878
+compile phase: describe-spawn-returned 1791903801879
+compile phase: describe-first-byte 1791903802350
+compile phase: describe-exited 1791903802355
+compile phase: describe-parsed 1791903802355
+compile phase: describe-returned 1791903802355
+compile phase: helper-description 1791903802356
+compile phase: source-candidates 1791903802438
+compile phase: bindgen-files 1791903802755
+compile phase: resource-digest 1791903802792
+compile phase: prepared-validated 1791903802824
+compile phase: render-spawn-start 1791903802853
+compile phase: render-spawn-returned 1791903802854
+compile phase: render-first-byte 1791903802858
+compile phase: render-exited 1791903802869
+compile phase: render-parsed 1791903802869
+compile phase: surfaces-rendered 1791903802939
+compile phase: surfaces-analyzed 1791903802955
+compile phase: render-spawn-start 1791903802979
+compile phase: render-spawn-returned 1791903802980
+compile phase: render-first-byte 1791903802984
+compile phase: render-exited 1791903802994
+compile phase: render-parsed 1791903802994
+compile phase: markdown-rendered 1791903803043
+compile phase: generation-rendered 1791903803167
+compile phase: generation-validated 1791903803192
+compile proxy/0: native=true, browser=true, compile-end=1791903801715
+mbx[progress]: 45s elapsed; 0 hits, 0 misses, 0 bypassed, 0 not looked up; ~0s compiler work saved
+mbx[progress]: 1m elapsed; 0 hits, 0 misses, 0 bypassed, 0 not looked up; ~0s compiler work saved
+test compile_proxy::compile_to_islands_proxy has been running for over 60 seconds
+compile phase: prepared-artifacts 1791903828606
+compile phase: immutable-helper 1791903828667
+compile phase: describe-spawn-start 1791903828667
+compile phase: describe-spawn-returned 1791903828667
+compile phase: describe-first-byte 1791903829166
+compile phase: describe-exited 1791903829172
+compile phase: describe-parsed 1791903829172
+compile phase: describe-returned 1791903829172
+compile phase: helper-description 1791903829173
+compile phase: source-candidates 1791903829253
+compile phase: bindgen-files 1791903829570
+compile phase: resource-digest 1791903829608
+compile phase: prepared-validated 1791903829640
+compile phase: render-spawn-start 1791903829671
+compile phase: render-spawn-returned 1791903829672
+compile phase: render-first-byte 1791903829676
+compile phase: render-exited 1791903829687
+compile phase: render-parsed 1791903829687
+compile phase: surfaces-rendered 1791903829758
+compile phase: surfaces-analyzed 1791903829774
+compile phase: render-spawn-start 1791903829804
+compile phase: render-spawn-returned 1791903829804
+compile phase: render-first-byte 1791903829808
+compile phase: render-exited 1791903829819
+compile phase: render-parsed 1791903829819
+compile phase: markdown-rendered 1791903829872
+compile phase: generation-rendered 1791903829992
+compile phase: generation-validated 1791903830016
+compile proxy/1: native=true, browser=true, compile-end=1791903828453
+mbx[progress]: 1m 15s elapsed; 0 hits, 0 misses, 0 bypassed, 0 not looked up; ~0s compiler work saved
+mbx[progress]: 1m 30s elapsed; 0 hits, 0 misses, 0 bypassed, 0 not looked up; ~0s compiler work saved
+compile phase: prepared-artifacts 1791903855176
+compile phase: immutable-helper 1791903855237
+compile phase: describe-spawn-start 1791903855237
+compile phase: describe-spawn-returned 1791903855238
+compile phase: describe-first-byte 1791903855723
+compile phase: describe-exited 1791903855733
+compile phase: describe-parsed 1791903855733
+compile phase: describe-returned 1791903855733
+compile phase: helper-description 1791903855734
+compile phase: source-candidates 1791903855814
+compile phase: bindgen-files 1791903856121
+compile phase: resource-digest 1791903856160
+compile phase: prepared-validated 1791903856187
+compile phase: render-spawn-start 1791903856215
+compile phase: render-spawn-returned 1791903856215
+compile phase: render-first-byte 1791903856220
+compile phase: render-exited 1791903856228
+compile phase: render-parsed 1791903856228
+compile phase: surfaces-rendered 1791903856295
+compile phase: surfaces-analyzed 1791903856311
+compile phase: render-spawn-start 1791903856336
+compile phase: render-spawn-returned 1791903856337
+compile phase: render-first-byte 1791903856341
+compile phase: render-exited 1791903856352
+compile phase: render-parsed 1791903856352
+compile phase: markdown-rendered 1791903856401
+compile phase: generation-rendered 1791903856526
+compile phase: generation-validated 1791903856550
+compile proxy/2: native=true, browser=true, compile-end=1791903855019
+mbx[progress]: 1m 45s elapsed; 0 hits, 0 misses, 0 bypassed, 0 not looked up; ~0s compiler work saved
+compile phase: prepared-artifacts 1791903881543
+compile phase: immutable-helper 1791903881603
+compile phase: describe-spawn-start 1791903881603
+compile phase: describe-spawn-returned 1791903881604
+compile phase: describe-first-byte 1791903882092
+compile phase: describe-exited 1791903882098
+compile phase: describe-parsed 1791903882098
+compile phase: describe-returned 1791903882099
+compile phase: helper-description 1791903882099
+compile phase: source-candidates 1791903882182
+compile phase: bindgen-files 1791903882494
+compile phase: resource-digest 1791903882532
+compile phase: prepared-validated 1791903882564
+compile phase: render-spawn-start 1791903882594
+compile phase: render-spawn-returned 1791903882594
+compile phase: render-first-byte 1791903882598
+compile phase: render-exited 1791903882609
+compile phase: render-parsed 1791903882609
+compile phase: surfaces-rendered 1791903882680
+compile phase: surfaces-analyzed 1791903882695
+compile phase: render-spawn-start 1791903882723
+compile phase: render-spawn-returned 1791903882724
+compile phase: render-first-byte 1791903882728
+compile phase: render-exited 1791903882739
+compile phase: render-parsed 1791903882739
+compile phase: markdown-rendered 1791903882790
+compile phase: generation-rendered 1791903882912
+compile phase: generation-validated 1791903882940
+compile proxy/3: native=true, browser=true, compile-end=1791903881344
+mbx[progress]: 2m elapsed; 0 hits, 0 misses, 0 bypassed, 0 not looked up; ~0s compiler work saved
+compile phase: prepared-artifacts 1791903909036
+compile phase: immutable-helper 1791903909096
+compile phase: describe-spawn-start 1791903909096
+compile phase: describe-spawn-returned 1791903909097
+compile phase: describe-first-byte 1791903909357
+compile phase: describe-exited 1791903909365
+compile phase: describe-parsed 1791903909366
+compile phase: describe-returned 1791903909366
+compile phase: helper-description 1791903909367
+compile phase: source-candidates 1791903909450
+compile phase: bindgen-files 1791903909763
+compile phase: resource-digest 1791903909801
+compile phase: prepared-validated 1791903909826
+compile phase: render-spawn-start 1791903909851
+compile phase: render-spawn-returned 1791903909852
+compile phase: render-first-byte 1791903909856
+compile phase: render-exited 1791903909867
+compile phase: render-parsed 1791903909867
+compile phase: surfaces-rendered 1791903909935
+compile phase: surfaces-analyzed 1791903909951
+compile phase: render-spawn-start 1791903909977
+compile phase: render-spawn-returned 1791903909977
+compile phase: render-first-byte 1791903909981
+compile phase: render-exited 1791903909993
+compile phase: render-parsed 1791903909993
+compile phase: markdown-rendered 1791903910041
+compile phase: generation-rendered 1791903910160
+compile phase: generation-validated 1791903910187
+compile proxy/4: native=true, browser=true, compile-end=1791903908881
+compile phase: prepared-artifacts 1791903937045
+compile phase: immutable-helper 1791903937106
+compile phase: describe-spawn-start 1791903937106
+compile phase: describe-spawn-returned 1791903937107
+compile phase: describe-first-byte 1791903937585
+compile phase: describe-exited 1791903937593
+compile phase: describe-parsed 1791903937594
+compile phase: describe-returned 1791903937594
+compile phase: helper-description 1791903937594
+compile phase: source-candidates 1791903937659
+compile phase: bindgen-files 1791903937975
+compile phase: resource-digest 1791903938014
+compile phase: prepared-validated 1791903938042
+compile phase: render-spawn-start 1791903938071
+compile phase: render-spawn-returned 1791903938072
+compile phase: render-first-byte 1791903938076
+compile phase: render-exited 1791903938087
+compile phase: render-parsed 1791903938087
+compile phase: surfaces-rendered 1791903938156
+compile phase: surfaces-analyzed 1791903938172
+compile phase: render-spawn-start 1791903938197
+compile phase: render-spawn-returned 1791903938198
+compile phase: render-first-byte 1791903938202
+compile phase: render-exited 1791903938213
+compile phase: render-parsed 1791903938213
+compile phase: markdown-rendered 1791903938263
+compile phase: generation-rendered 1791903938384
+compile phase: generation-validated 1791903938408
+compile proxy/5: native=true, browser=true, compile-end=1791903936863
+test compile_proxy::compile_to_islands_proxy ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 64 filtered out; finished in 174.47s
+
+mbx[savings]: 55622 compilations, each compiled once and served warm ever since

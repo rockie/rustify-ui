@@ -21,6 +21,7 @@ mod rendering;
 mod report;
 mod rust_site;
 mod rust_source;
+mod theme;
 
 use report::{Format, Summary};
 
@@ -77,8 +78,9 @@ fn help() -> String {
          Build a documentation site from Markdown.\n\n\
          Usage: rustify-docs <command> [options]\n\n\
          Commands:\n\
-         \x20 new <dir> [--template content]   Create a site in a new or empty directory\n\
-         \x20 check [--external-links]         Report every problem in the site without writing anything\n\
+         \x20 new <dir> [--template content|components]\n\
+         \x20                                  Create a site in a new or empty directory\n\
+         \x20 check [--external-links]         Report problems without changing source or published output\n\
          \x20 build [--base <path>] [--out <dir>]\n\
          \x20                                  Write the production site (default: build.out)\n\
          \x20 preview [--dir <dir>] [--base <path>] [--port <n>] [--host <address>]\n\
@@ -91,12 +93,15 @@ fn help() -> String {
          \x20 --version              Print the version\n\
          \x20 --build-info           Print how this binary was built\n\
          \x20 -h, --help             Print this help\n\n\
-         check and build work offline; check changes no file, and requests the\n\
-         site's links to other sites only with --external-links. preview listens on\n\
+         Content sites work offline. Component sites need stable Rust and the\n\
+         wasm32-unknown-unknown target; after locked dependencies are cached,\n\
+         check and build work offline too. check may write private compilation\n\
+         caches and requests external links only with --external-links. preview listens on\n\
          127.0.0.1:{} unless told otherwise (the next free port if that one is\n\
          taken; --port 0 lets the system choose). dev listens on 127.0.0.1 at\n\
          dev.port (default {}; likewise the next free port if taken), shows drafts\n\
-         and writes nothing. Exit status: 0 on success, 1\n\
+         and leaves source and published output unchanged (component sites use\n\
+         private compilation caches). Exit status: 0 on success, 1\n\
          when the site has errors (or, with --deny-warnings, warnings) or a\n\
          command fails, 2 for a usage error.\n\n\
          Supported on macOS. Linux and Windows are not verified.\n\n\
@@ -373,10 +378,23 @@ fn analyse_once(
         &highlighter,
         workers,
     );
+    let rendering::Build {
+        analysis,
+        extensions,
+        diagnostics: problems,
+        info: rust_build,
+        guard: rust_guard,
+        theme,
+    } = rendering::build(
+        project,
+        &snapshot,
+        analysis,
+        &mut cache,
+        &highlighter,
+        build_mode,
+    );
     let pages = analysis.published().count();
     diagnostics.extend(analysis.diagnostics.iter().cloned());
-    let (extensions, problems, rust_build, rust_guard) =
-        rendering::build(project, &snapshot, &analysis, &highlighter, build_mode);
     diagnostics.extend(problems);
     let checked = external_links.then(|| {
         let (problems, checked) = links::check(project, &snapshot, &analysis, VERSION);
@@ -409,6 +427,18 @@ fn analyse_once(
             diagnostics.extend(problems);
             generation = None;
         }
+    }
+    if let Some(theme) = &theme {
+        let problems = theme::validate_snapshot(project, &snapshot, theme);
+        if !problems.is_empty() {
+            diagnostics.extend(problems);
+            generation = None;
+        }
+    }
+    let problems = content::validate_inputs(project, &snapshot, &analysis);
+    if !problems.is_empty() {
+        diagnostics.extend(problems);
+        generation = None;
     }
     diagnostics.sort();
     diagnostics.dedup();

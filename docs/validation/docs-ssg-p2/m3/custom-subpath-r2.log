@@ -1,0 +1,124 @@
+[WebServer] building /Users/rockie/Documents/gh-rockie/rustify-ui/tests/docs-ssg/fixtures/components into /Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/http/components/subpath/dist
+[WebServer] warning[rust-compile]: warning: method `fallback_element` is never used
+[WebServer]    --> /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui/src/overlay.rs:349:23
+[WebServer]     |
+[WebServer] 284 |     impl OverlayStack {
+[WebServer]     |     ----------------- method in this implementation
+[WebServer] ...
+[WebServer] 349 |         pub(crate) fn fallback_element(&self) -> Element {
+[WebServer]     |                       ^^^^^^^^^^^^^^^^
+[WebServer]     |
+[WebServer]     = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+[WebServer] 
+[WebServer] 
+[WebServer]   --> /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui/src/overlay.rs:349:23
+[WebServer]   = help: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+[WebServer] warning[rust-compile]: warning: field `guest_click` is never read
+[WebServer]    --> /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui/src/router.rs:556:9
+[WebServer]     |
+[WebServer] 549 |     struct Router {
+[WebServer]     |            ------ field in this struct
+[WebServer] ...
+[WebServer] 556 |         guest_click: Option<SendWrapper<Rc<GuestClick>>>,
+[WebServer]     |         ^^^^^^^^^^^
+[WebServer]     |
+[WebServer]     = note: `Router` has a derived impl for the trait `Clone`, but this is intentionally ignored during dead code analysis
+[WebServer] 
+[WebServer] 
+[WebServer]   --> /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui/src/router.rs:556:9
+[WebServer]   = help: `Router` has a derived impl for the trait `Clone`, but this is intentionally ignored during dead code analysis
+[WebServer] warning[not-in-nav]: this page is in no navigation group, so readers can only reach it by a link
+[WebServer]   --> content/index.md
+[WebServer] warning[theme-token]: radius: Light and dark have different author values; editing this common field applies to both
+[WebServer]   --> theme.json
+[WebServer] build: 9 pages and 404.html in /Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/http/components/subpath/dist: 42975.5 KB in 38 files, 4 warning(s), 105918 ms
+[WebServer] largest pages:
+[WebServer]     424.8 KB  custom/index.html
+[WebServer]     134.1 KB  proxy/index.html
+[WebServer]      99.9 KB  counter/index.html
+[WebServer]      91.3 KB  failure/index.html
+[WebServer]      84.3 KB  async/index.html
+[WebServer] serving /Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/http/components/subpath/dist (built by rustify-docs 0.1.6, build cfe406c010954c93) until stopped
+
+Running 12 tests using 1 worker
+
+(node:87751) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 [components-subpath] › tests/docs-ssg/custom.spec.ts:194:1 › registered routes keep declared titles, optional description and ordered ordinary navigation (3.4s)
+  ✘   2 [components-subpath] › tests/docs-ssg/custom.spec.ts:224:1 › all seven slots share canonical context across Markdown, custom pages and a deep static 404 (2.3s)
+(node:87833) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   3 [components-subpath] › tests/docs-ssg/custom.spec.ts:247:1 › nested page and slot demos retain actual SSR nodes, source and distinct identities (3.3s)
+  ✓   4 [components-subpath] › tests/docs-ssg/custom.spec.ts:276:5 › light first frame uses the document theme with a light system before wasm (1.1s)
+  ✓   5 [components-subpath] › tests/docs-ssg/custom.spec.ts:276:5 › dark first frame uses the document theme with a dark system before wasm (1.1s)
+  ✓   6 [components-subpath] › tests/docs-ssg/custom.spec.ts:276:5 › system first frame uses the document theme with a light system before wasm (1.1s)
+  ✓   7 [components-subpath] › tests/docs-ssg/custom.spec.ts:276:5 › system first frame uses the document theme with a dark system before wasm (1.1s)
+  ✓   8 [components-subpath] › tests/docs-ssg/custom.spec.ts:295:1 › live mode changes reach the theme context and real floating controls, including Rust-only classes (1.4s)
+  ✓   9 [components-subpath] › tests/docs-ssg/custom.spec.ts:350:1 › the actual browser font responses match the CLI's packaged bytes and neutral digests (721ms)
+  ✓  10 [components-subpath] › tests/docs-ssg/custom.spec.ts:380:1 › custom images and CSS backgrounds enter the same published resource graph (713ms)
+  ✓  11 [components-subpath] › tests/docs-ssg/custom.spec.ts:395:1 › the plain custom page and its slots remain static and load no island resources (467ms)
+  ✘  12 [components-subpath] › tests/docs-ssg/custom.spec.ts:403:1 › no script preserves custom views, sources, navigation and theme at 375px and 200% reflow (1.2s)
+
+
+  1) [components-subpath] › tests/docs-ssg/custom.spec.ts:224:1 › all seven slots share canonical context across Markdown, custom pages and a deep static 404 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 3
+
+    - Array []
+    + Array [
+    +   "Failed to load resource: the server responded with a status of 404 (Not Found)",
+    + ]
+
+      94 | async function healthy(page: Page, audit: Audit) {
+      95 |     await flushFonts(page, audit);
+    > 96 |     expect(audit.errors).toEqual([]);
+         |                          ^
+      97 |     expect(await page.evaluate(() => window.__custom_csp)).toEqual([]);
+      98 |     expect(audit.requests.filter(request => /makepad/i.test(request))).toEqual([]);
+      99 |     expect(audit.requests.filter(request => new URL(request).origin !== new URL(route("./")).origin)).toEqual([]);
+        at healthy (/Users/rockie/Documents/gh-rockie/rustify-ui/tests/docs-ssg/custom.spec.ts:96:26)
+        at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/docs-ssg/custom.spec.ts:244:5
+
+    Error Context: test-results/docs/docs-ssg-custom-all-seven--d9ec9-pages-and-a-deep-static-404-components-subpath/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/docs/docs-ssg-custom-all-seven--d9ec9-pages-and-a-deep-static-404-components-subpath/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/docs/docs-ssg-custom-all-seven--d9ec9-pages-and-a-deep-static-404-components-subpath/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [components-subpath] › tests/docs-ssg/custom.spec.ts:403:1 › no script preserves custom views, sources, navigation and theme at 375px and 200% reflow 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 16
+    Received: 14
+
+      431 |             expect(zoom.viewport).toBe(width);
+      432 |             expect(zoom.dpr).toBe(scale);
+    > 433 |             expect(parseFloat(zoom.controlFont) * scale).toBe(16 * scale);
+          |                                                          ^
+      434 |             await test.info().attach(`custom-no-script-zoom-${width}.json`, { body: JSON.stringify({ ...zoom, kind: "layout zoom emulation", physicalControlFontPixels: parseFloat(zoom.controlFont) * scale }), contentType: "application/json" });
+      435 |             await page.screenshot({ path: test.info().outputPath(`custom-no-script-${width}.png`), fullPage: true });
+      436 |             await flushFonts(page, audit);
+        at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/docs-ssg/custom.spec.ts:433:58
+
+    Error Context: test-results/docs/docs-ssg-custom-no-script--a3ff1-eme-at-375px-and-200-reflow-components-subpath/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/docs/docs-ssg-custom-no-script--a3ff1-eme-at-375px-and-200-reflow-components-subpath/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/docs/docs-ssg-custom-no-script--a3ff1-eme-at-375px-and-200-reflow-components-subpath/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [components-subpath] › tests/docs-ssg/custom.spec.ts:224:1 › all seven slots share canonical context across Markdown, custom pages and a deep static 404 
+    [components-subpath] › tests/docs-ssg/custom.spec.ts:403:1 › no script preserves custom views, sources, navigation and theme at 375px and 200% reflow 
+  10 passed (2.1m)

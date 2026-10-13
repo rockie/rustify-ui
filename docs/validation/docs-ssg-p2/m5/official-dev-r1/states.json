@@ -1,0 +1,5364 @@
+[
+  {
+    "session": "10fc6-18de2c20b1daa8c8",
+    "revision": 0,
+    "sequence": 0,
+    "building": true,
+    "phase": "render",
+    "compile": null,
+    "good": null,
+    "ok": true,
+    "reload": false,
+    "errors": 0,
+    "warnings": 0,
+    "diagnostics": []
+  },
+  {
+    "session": "10fc6-18de2c20b1daa8c8",
+    "revision": 0,
+    "sequence": 1,
+    "building": true,
+    "phase": "host",
+    "compile": null,
+    "good": null,
+    "ok": true,
+    "reload": false,
+    "errors": 0,
+    "warnings": 0,
+    "diagnostics": []
+  },
+  {
+    "session": "10fc6-18de2c20b1daa8c8",
+    "revision": 0,
+    "sequence": 2,
+    "building": true,
+    "phase": "wasm",
+    "compile": null,
+    "good": null,
+    "ok": true,
+    "reload": false,
+    "errors": 0,
+    "warnings": 0,
+    "diagnostics": []
+  },
+  {
+    "session": "10fc6-18de2c20b1daa8c8",
+    "revision": 0,
+    "sequence": 3,
+    "building": true,
+    "phase": "wasm",
+    "compile": {
+      "generation": "7559881a5b7e254ccd573df64087dabc75b76e91f88a31420437829c3763b6ae",
+      "completed_at_ms": 1791918243630,
+      "host": {
+        "elapsed_ms": 15412,
+        "completed_at_ms": 1791918236942,
+        "fresh_artifacts": 261,
+        "compiled_artifacts": 2,
+        "profile": "docs-host",
+        "target": null,
+        "compiler": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-dev-r1/cargo-observe",
+        "flags": [
+          "build",
+          "--locked",
+          "--message-format",
+          "json",
+          "--no-default-features",
+          "--profile",
+          "docs-host",
+          "--features",
+          "ssr",
+          "--manifest-path",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/site/Cargo.toml",
+          "--target-dir",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/.rustify-docs/target",
+          "--bin",
+          "docs-render"
+        ],
+        "success": true
+      },
+      "wasm": {
+        "elapsed_ms": 6682,
+        "completed_at_ms": 1791918243630,
+        "fresh_artifacts": 250,
+        "compiled_artifacts": 1,
+        "profile": "docs-wasm",
+        "target": "wasm32-unknown-unknown",
+        "compiler": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-dev-r1/cargo-observe",
+        "flags": [
+          "build",
+          "--locked",
+          "--message-format",
+          "json",
+          "--no-default-features",
+          "--profile",
+          "docs-wasm",
+          "--features",
+          "hydrate",
+          "--manifest-path",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/site/Cargo.toml",
+          "--target-dir",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/.rustify-docs/target",
+          "--lib",
+          "--target",
+          "wasm32-unknown-unknown"
+        ],
+        "success": true
+      }
+    },
+    "good": null,
+    "ok": true,
+    "reload": false,
+    "errors": 0,
+    "warnings": 0,
+    "diagnostics": []
+  },
+  {
+    "session": "10fc6-18de2c20b1daa8c8",
+    "revision": 0,
+    "sequence": 4,
+    "building": true,
+    "phase": "render",
+    "compile": {
+      "generation": "7559881a5b7e254ccd573df64087dabc75b76e91f88a31420437829c3763b6ae",
+      "completed_at_ms": 1791918243630,
+      "host": {
+        "elapsed_ms": 15412,
+        "completed_at_ms": 1791918236942,
+        "fresh_artifacts": 261,
+        "compiled_artifacts": 2,
+        "profile": "docs-host",
+        "target": null,
+        "compiler": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-dev-r1/cargo-observe",
+        "flags": [
+          "build",
+          "--locked",
+          "--message-format",
+          "json",
+          "--no-default-features",
+          "--profile",
+          "docs-host",
+          "--features",
+          "ssr",
+          "--manifest-path",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/site/Cargo.toml",
+          "--target-dir",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/.rustify-docs/target",
+          "--bin",
+          "docs-render"
+        ],
+        "success": true
+      },
+      "wasm": {
+        "elapsed_ms": 6682,
+        "completed_at_ms": 1791918243630,
+        "fresh_artifacts": 250,
+        "compiled_artifacts": 1,
+        "profile": "docs-wasm",
+        "target": "wasm32-unknown-unknown",
+        "compiler": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-dev-r1/cargo-observe",
+        "flags": [
+          "build",
+          "--locked",
+          "--message-format",
+          "json",
+          "--no-default-features",
+          "--profile",
+          "docs-wasm",
+          "--features",
+          "hydrate",
+          "--manifest-path",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/site/Cargo.toml",
+          "--target-dir",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/.rustify-docs/target",
+          "--lib",
+          "--target",
+          "wasm32-unknown-unknown"
+        ],
+        "success": true
+      }
+    },
+    "good": null,
+    "ok": true,
+    "reload": false,
+    "errors": 0,
+    "warnings": 0,
+    "diagnostics": []
+  },
+  {
+    "session": "10fc6-18de2c20b1daa8c8",
+    "revision": 1,
+    "sequence": 5,
+    "building": false,
+    "phase": "render",
+    "compile": {
+      "generation": "7559881a5b7e254ccd573df64087dabc75b76e91f88a31420437829c3763b6ae",
+      "completed_at_ms": 1791918243630,
+      "host": {
+        "elapsed_ms": 15412,
+        "completed_at_ms": 1791918236942,
+        "fresh_artifacts": 261,
+        "compiled_artifacts": 2,
+        "profile": "docs-host",
+        "target": null,
+        "compiler": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-dev-r1/cargo-observe",
+        "flags": [
+          "build",
+          "--locked",
+          "--message-format",
+          "json",
+          "--no-default-features",
+          "--profile",
+          "docs-host",
+          "--features",
+          "ssr",
+          "--manifest-path",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/site/Cargo.toml",
+          "--target-dir",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/.rustify-docs/target",
+          "--bin",
+          "docs-render"
+        ],
+        "success": true
+      },
+      "wasm": {
+        "elapsed_ms": 6682,
+        "completed_at_ms": 1791918243630,
+        "fresh_artifacts": 250,
+        "compiled_artifacts": 1,
+        "profile": "docs-wasm",
+        "target": "wasm32-unknown-unknown",
+        "compiler": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-dev-r1/cargo-observe",
+        "flags": [
+          "build",
+          "--locked",
+          "--message-format",
+          "json",
+          "--no-default-features",
+          "--profile",
+          "docs-wasm",
+          "--features",
+          "hydrate",
+          "--manifest-path",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/site/Cargo.toml",
+          "--target-dir",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/.rustify-docs/target",
+          "--lib",
+          "--target",
+          "wasm32-unknown-unknown"
+        ],
+        "success": true
+      }
+    },
+    "good": 1,
+    "ok": true,
+    "reload": true,
+    "errors": 0,
+    "warnings": 14,
+    "diagnostics": [
+      {
+        "severity": "warning",
+        "rule": "rust-compile",
+        "file": "crates/rustify-ui/src/overlay.rs",
+        "line": 349,
+        "column": 23,
+        "message": "warning: method `fallback_element` is never used\n   --> /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui/src/overlay.rs:349:23\n    |\n284 |     impl OverlayStack {\n    |     ----------------- method in this implementation\n...\n349 |         pub(crate) fn fallback_element(&self) -> Element {\n    |                       ^^^^^^^^^^^^^^^^\n    |\n    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default\n\n",
+        "suggestion": "`#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default"
+      },
+      {
+        "severity": "warning",
+        "rule": "rust-compile",
+        "file": "crates/rustify-ui/src/router.rs",
+        "line": 556,
+        "column": 9,
+        "message": "warning: field `guest_click` is never read\n   --> /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui/src/router.rs:556:9\n    |\n549 |     struct Router {\n    |            ------ field in this struct\n...\n556 |         guest_click: Option<SendWrapper<Rc<GuestClick>>>,\n    |         ^^^^^^^^^^^\n    |\n    = note: `Router` has a derived impl for the trait `Clone`, but this is intentionally ignored during dead code analysis\n\n",
+        "suggestion": "`Router` has a derived impl for the trait `Clone`, but this is intentionally ignored during dead code analysis"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/architecture.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/compatibility.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/components.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/data.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/forms.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/i18n.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/navigation.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/quickstart.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/themes.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/utility.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/vellum.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/workspace.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      }
+    ]
+  },
+  {
+    "session": "10fc6-18de2c20b1daa8c8",
+    "revision": 1,
+    "sequence": 6,
+    "building": true,
+    "phase": "render",
+    "compile": {
+      "generation": "7559881a5b7e254ccd573df64087dabc75b76e91f88a31420437829c3763b6ae",
+      "completed_at_ms": 1791918243630,
+      "host": {
+        "elapsed_ms": 15412,
+        "completed_at_ms": 1791918236942,
+        "fresh_artifacts": 261,
+        "compiled_artifacts": 2,
+        "profile": "docs-host",
+        "target": null,
+        "compiler": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-dev-r1/cargo-observe",
+        "flags": [
+          "build",
+          "--locked",
+          "--message-format",
+          "json",
+          "--no-default-features",
+          "--profile",
+          "docs-host",
+          "--features",
+          "ssr",
+          "--manifest-path",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/site/Cargo.toml",
+          "--target-dir",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/.rustify-docs/target",
+          "--bin",
+          "docs-render"
+        ],
+        "success": true
+      },
+      "wasm": {
+        "elapsed_ms": 6682,
+        "completed_at_ms": 1791918243630,
+        "fresh_artifacts": 250,
+        "compiled_artifacts": 1,
+        "profile": "docs-wasm",
+        "target": "wasm32-unknown-unknown",
+        "compiler": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-dev-r1/cargo-observe",
+        "flags": [
+          "build",
+          "--locked",
+          "--message-format",
+          "json",
+          "--no-default-features",
+          "--profile",
+          "docs-wasm",
+          "--features",
+          "hydrate",
+          "--manifest-path",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/site/Cargo.toml",
+          "--target-dir",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/.rustify-docs/target",
+          "--lib",
+          "--target",
+          "wasm32-unknown-unknown"
+        ],
+        "success": true
+      }
+    },
+    "good": 1,
+    "ok": true,
+    "reload": false,
+    "errors": 0,
+    "warnings": 14,
+    "diagnostics": [
+      {
+        "severity": "warning",
+        "rule": "rust-compile",
+        "file": "crates/rustify-ui/src/overlay.rs",
+        "line": 349,
+        "column": 23,
+        "message": "warning: method `fallback_element` is never used\n   --> /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui/src/overlay.rs:349:23\n    |\n284 |     impl OverlayStack {\n    |     ----------------- method in this implementation\n...\n349 |         pub(crate) fn fallback_element(&self) -> Element {\n    |                       ^^^^^^^^^^^^^^^^\n    |\n    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default\n\n",
+        "suggestion": "`#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default"
+      },
+      {
+        "severity": "warning",
+        "rule": "rust-compile",
+        "file": "crates/rustify-ui/src/router.rs",
+        "line": 556,
+        "column": 9,
+        "message": "warning: field `guest_click` is never read\n   --> /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui/src/router.rs:556:9\n    |\n549 |     struct Router {\n    |            ------ field in this struct\n...\n556 |         guest_click: Option<SendWrapper<Rc<GuestClick>>>,\n    |         ^^^^^^^^^^^\n    |\n    = note: `Router` has a derived impl for the trait `Clone`, but this is intentionally ignored during dead code analysis\n\n",
+        "suggestion": "`Router` has a derived impl for the trait `Clone`, but this is intentionally ignored during dead code analysis"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/architecture.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/compatibility.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/components.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/data.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/forms.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/i18n.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/navigation.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/quickstart.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/themes.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/utility.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/vellum.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/workspace.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      }
+    ]
+  },
+  {
+    "session": "10fc6-18de2c20b1daa8c8",
+    "revision": 1,
+    "sequence": 7,
+    "building": true,
+    "phase": "render",
+    "compile": {
+      "generation": "7559881a5b7e254ccd573df64087dabc75b76e91f88a31420437829c3763b6ae",
+      "completed_at_ms": 1791918243630,
+      "host": {
+        "elapsed_ms": 15412,
+        "completed_at_ms": 1791918236942,
+        "fresh_artifacts": 261,
+        "compiled_artifacts": 2,
+        "profile": "docs-host",
+        "target": null,
+        "compiler": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-dev-r1/cargo-observe",
+        "flags": [
+          "build",
+          "--locked",
+          "--message-format",
+          "json",
+          "--no-default-features",
+          "--profile",
+          "docs-host",
+          "--features",
+          "ssr",
+          "--manifest-path",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/site/Cargo.toml",
+          "--target-dir",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/.rustify-docs/target",
+          "--bin",
+          "docs-render"
+        ],
+        "success": true
+      },
+      "wasm": {
+        "elapsed_ms": 6682,
+        "completed_at_ms": 1791918243630,
+        "fresh_artifacts": 250,
+        "compiled_artifacts": 1,
+        "profile": "docs-wasm",
+        "target": "wasm32-unknown-unknown",
+        "compiler": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-dev-r1/cargo-observe",
+        "flags": [
+          "build",
+          "--locked",
+          "--message-format",
+          "json",
+          "--no-default-features",
+          "--profile",
+          "docs-wasm",
+          "--features",
+          "hydrate",
+          "--manifest-path",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/site/Cargo.toml",
+          "--target-dir",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/.rustify-docs/target",
+          "--lib",
+          "--target",
+          "wasm32-unknown-unknown"
+        ],
+        "success": true
+      }
+    },
+    "good": 1,
+    "ok": true,
+    "reload": false,
+    "errors": 0,
+    "warnings": 14,
+    "diagnostics": [
+      {
+        "severity": "warning",
+        "rule": "rust-compile",
+        "file": "crates/rustify-ui/src/overlay.rs",
+        "line": 349,
+        "column": 23,
+        "message": "warning: method `fallback_element` is never used\n   --> /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui/src/overlay.rs:349:23\n    |\n284 |     impl OverlayStack {\n    |     ----------------- method in this implementation\n...\n349 |         pub(crate) fn fallback_element(&self) -> Element {\n    |                       ^^^^^^^^^^^^^^^^\n    |\n    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default\n\n",
+        "suggestion": "`#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default"
+      },
+      {
+        "severity": "warning",
+        "rule": "rust-compile",
+        "file": "crates/rustify-ui/src/router.rs",
+        "line": 556,
+        "column": 9,
+        "message": "warning: field `guest_click` is never read\n   --> /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui/src/router.rs:556:9\n    |\n549 |     struct Router {\n    |            ------ field in this struct\n...\n556 |         guest_click: Option<SendWrapper<Rc<GuestClick>>>,\n    |         ^^^^^^^^^^^\n    |\n    = note: `Router` has a derived impl for the trait `Clone`, but this is intentionally ignored during dead code analysis\n\n",
+        "suggestion": "`Router` has a derived impl for the trait `Clone`, but this is intentionally ignored during dead code analysis"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/architecture.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/compatibility.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/components.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/data.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/forms.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/i18n.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/navigation.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/quickstart.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/themes.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/utility.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/vellum.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/workspace.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      }
+    ]
+  },
+  {
+    "session": "10fc6-18de2c20b1daa8c8",
+    "revision": 2,
+    "sequence": 8,
+    "building": false,
+    "phase": "render",
+    "compile": {
+      "generation": "7559881a5b7e254ccd573df64087dabc75b76e91f88a31420437829c3763b6ae",
+      "completed_at_ms": 1791918243630,
+      "host": {
+        "elapsed_ms": 15412,
+        "completed_at_ms": 1791918236942,
+        "fresh_artifacts": 261,
+        "compiled_artifacts": 2,
+        "profile": "docs-host",
+        "target": null,
+        "compiler": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-dev-r1/cargo-observe",
+        "flags": [
+          "build",
+          "--locked",
+          "--message-format",
+          "json",
+          "--no-default-features",
+          "--profile",
+          "docs-host",
+          "--features",
+          "ssr",
+          "--manifest-path",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/site/Cargo.toml",
+          "--target-dir",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/.rustify-docs/target",
+          "--bin",
+          "docs-render"
+        ],
+        "success": true
+      },
+      "wasm": {
+        "elapsed_ms": 6682,
+        "completed_at_ms": 1791918243630,
+        "fresh_artifacts": 250,
+        "compiled_artifacts": 1,
+        "profile": "docs-wasm",
+        "target": "wasm32-unknown-unknown",
+        "compiler": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-dev-r1/cargo-observe",
+        "flags": [
+          "build",
+          "--locked",
+          "--message-format",
+          "json",
+          "--no-default-features",
+          "--profile",
+          "docs-wasm",
+          "--features",
+          "hydrate",
+          "--manifest-path",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/site/Cargo.toml",
+          "--target-dir",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/.rustify-docs/target",
+          "--lib",
+          "--target",
+          "wasm32-unknown-unknown"
+        ],
+        "success": true
+      }
+    },
+    "good": 2,
+    "ok": true,
+    "reload": true,
+    "errors": 0,
+    "warnings": 12,
+    "diagnostics": [
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/architecture.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/compatibility.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/components.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/data.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/forms.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/i18n.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/navigation.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/quickstart.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/themes.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/utility.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/vellum.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/workspace.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      }
+    ]
+  },
+  {
+    "session": "10fc6-18de2c20b1daa8c8",
+    "revision": 2,
+    "sequence": 9,
+    "building": true,
+    "phase": "render",
+    "compile": {
+      "generation": "7559881a5b7e254ccd573df64087dabc75b76e91f88a31420437829c3763b6ae",
+      "completed_at_ms": 1791918243630,
+      "host": {
+        "elapsed_ms": 15412,
+        "completed_at_ms": 1791918236942,
+        "fresh_artifacts": 261,
+        "compiled_artifacts": 2,
+        "profile": "docs-host",
+        "target": null,
+        "compiler": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-dev-r1/cargo-observe",
+        "flags": [
+          "build",
+          "--locked",
+          "--message-format",
+          "json",
+          "--no-default-features",
+          "--profile",
+          "docs-host",
+          "--features",
+          "ssr",
+          "--manifest-path",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/site/Cargo.toml",
+          "--target-dir",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/.rustify-docs/target",
+          "--bin",
+          "docs-render"
+        ],
+        "success": true
+      },
+      "wasm": {
+        "elapsed_ms": 6682,
+        "completed_at_ms": 1791918243630,
+        "fresh_artifacts": 250,
+        "compiled_artifacts": 1,
+        "profile": "docs-wasm",
+        "target": "wasm32-unknown-unknown",
+        "compiler": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-dev-r1/cargo-observe",
+        "flags": [
+          "build",
+          "--locked",
+          "--message-format",
+          "json",
+          "--no-default-features",
+          "--profile",
+          "docs-wasm",
+          "--features",
+          "hydrate",
+          "--manifest-path",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/site/Cargo.toml",
+          "--target-dir",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/.rustify-docs/target",
+          "--lib",
+          "--target",
+          "wasm32-unknown-unknown"
+        ],
+        "success": true
+      }
+    },
+    "good": 2,
+    "ok": true,
+    "reload": false,
+    "errors": 0,
+    "warnings": 12,
+    "diagnostics": [
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/architecture.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/compatibility.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/components.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/data.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/forms.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/i18n.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/navigation.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/quickstart.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/themes.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/utility.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/vellum.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/workspace.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      }
+    ]
+  },
+  {
+    "session": "10fc6-18de2c20b1daa8c8",
+    "revision": 2,
+    "sequence": 10,
+    "building": true,
+    "phase": "render",
+    "compile": {
+      "generation": "7559881a5b7e254ccd573df64087dabc75b76e91f88a31420437829c3763b6ae",
+      "completed_at_ms": 1791918243630,
+      "host": {
+        "elapsed_ms": 15412,
+        "completed_at_ms": 1791918236942,
+        "fresh_artifacts": 261,
+        "compiled_artifacts": 2,
+        "profile": "docs-host",
+        "target": null,
+        "compiler": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-dev-r1/cargo-observe",
+        "flags": [
+          "build",
+          "--locked",
+          "--message-format",
+          "json",
+          "--no-default-features",
+          "--profile",
+          "docs-host",
+          "--features",
+          "ssr",
+          "--manifest-path",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/site/Cargo.toml",
+          "--target-dir",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/.rustify-docs/target",
+          "--bin",
+          "docs-render"
+        ],
+        "success": true
+      },
+      "wasm": {
+        "elapsed_ms": 6682,
+        "completed_at_ms": 1791918243630,
+        "fresh_artifacts": 250,
+        "compiled_artifacts": 1,
+        "profile": "docs-wasm",
+        "target": "wasm32-unknown-unknown",
+        "compiler": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-dev-r1/cargo-observe",
+        "flags": [
+          "build",
+          "--locked",
+          "--message-format",
+          "json",
+          "--no-default-features",
+          "--profile",
+          "docs-wasm",
+          "--features",
+          "hydrate",
+          "--manifest-path",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/site/Cargo.toml",
+          "--target-dir",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/.rustify-docs/target",
+          "--lib",
+          "--target",
+          "wasm32-unknown-unknown"
+        ],
+        "success": true
+      }
+    },
+    "good": 2,
+    "ok": true,
+    "reload": false,
+    "errors": 0,
+    "warnings": 12,
+    "diagnostics": [
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/architecture.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/compatibility.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/components.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/data.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/forms.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/i18n.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/navigation.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/quickstart.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/themes.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/utility.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/vellum.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/workspace.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      }
+    ]
+  },
+  {
+    "session": "10fc6-18de2c20b1daa8c8",
+    "revision": 3,
+    "sequence": 11,
+    "building": false,
+    "phase": "render",
+    "compile": {
+      "generation": "7559881a5b7e254ccd573df64087dabc75b76e91f88a31420437829c3763b6ae",
+      "completed_at_ms": 1791918243630,
+      "host": {
+        "elapsed_ms": 15412,
+        "completed_at_ms": 1791918236942,
+        "fresh_artifacts": 261,
+        "compiled_artifacts": 2,
+        "profile": "docs-host",
+        "target": null,
+        "compiler": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-dev-r1/cargo-observe",
+        "flags": [
+          "build",
+          "--locked",
+          "--message-format",
+          "json",
+          "--no-default-features",
+          "--profile",
+          "docs-host",
+          "--features",
+          "ssr",
+          "--manifest-path",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/site/Cargo.toml",
+          "--target-dir",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/.rustify-docs/target",
+          "--bin",
+          "docs-render"
+        ],
+        "success": true
+      },
+      "wasm": {
+        "elapsed_ms": 6682,
+        "completed_at_ms": 1791918243630,
+        "fresh_artifacts": 250,
+        "compiled_artifacts": 1,
+        "profile": "docs-wasm",
+        "target": "wasm32-unknown-unknown",
+        "compiler": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-dev-r1/cargo-observe",
+        "flags": [
+          "build",
+          "--locked",
+          "--message-format",
+          "json",
+          "--no-default-features",
+          "--profile",
+          "docs-wasm",
+          "--features",
+          "hydrate",
+          "--manifest-path",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/site/Cargo.toml",
+          "--target-dir",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/.rustify-docs/target",
+          "--lib",
+          "--target",
+          "wasm32-unknown-unknown"
+        ],
+        "success": true
+      }
+    },
+    "good": 3,
+    "ok": true,
+    "reload": false,
+    "errors": 0,
+    "warnings": 12,
+    "diagnostics": [
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/architecture.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/compatibility.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/components.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/data.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/forms.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/i18n.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/navigation.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/quickstart.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/themes.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/utility.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/vellum.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/workspace.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      }
+    ]
+  },
+  {
+    "session": "10fc6-18de2c20b1daa8c8",
+    "revision": 3,
+    "sequence": 12,
+    "building": true,
+    "phase": "render",
+    "compile": {
+      "generation": "7559881a5b7e254ccd573df64087dabc75b76e91f88a31420437829c3763b6ae",
+      "completed_at_ms": 1791918243630,
+      "host": {
+        "elapsed_ms": 15412,
+        "completed_at_ms": 1791918236942,
+        "fresh_artifacts": 261,
+        "compiled_artifacts": 2,
+        "profile": "docs-host",
+        "target": null,
+        "compiler": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-dev-r1/cargo-observe",
+        "flags": [
+          "build",
+          "--locked",
+          "--message-format",
+          "json",
+          "--no-default-features",
+          "--profile",
+          "docs-host",
+          "--features",
+          "ssr",
+          "--manifest-path",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/site/Cargo.toml",
+          "--target-dir",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/.rustify-docs/target",
+          "--bin",
+          "docs-render"
+        ],
+        "success": true
+      },
+      "wasm": {
+        "elapsed_ms": 6682,
+        "completed_at_ms": 1791918243630,
+        "fresh_artifacts": 250,
+        "compiled_artifacts": 1,
+        "profile": "docs-wasm",
+        "target": "wasm32-unknown-unknown",
+        "compiler": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-dev-r1/cargo-observe",
+        "flags": [
+          "build",
+          "--locked",
+          "--message-format",
+          "json",
+          "--no-default-features",
+          "--profile",
+          "docs-wasm",
+          "--features",
+          "hydrate",
+          "--manifest-path",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/site/Cargo.toml",
+          "--target-dir",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/.rustify-docs/target",
+          "--lib",
+          "--target",
+          "wasm32-unknown-unknown"
+        ],
+        "success": true
+      }
+    },
+    "good": 3,
+    "ok": true,
+    "reload": false,
+    "errors": 0,
+    "warnings": 12,
+    "diagnostics": [
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/architecture.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/compatibility.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/components.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/data.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/forms.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/i18n.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/navigation.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/quickstart.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/themes.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/utility.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/vellum.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/workspace.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      }
+    ]
+  },
+  {
+    "session": "10fc6-18de2c20b1daa8c8",
+    "revision": 3,
+    "sequence": 13,
+    "building": true,
+    "phase": "render",
+    "compile": {
+      "generation": "7559881a5b7e254ccd573df64087dabc75b76e91f88a31420437829c3763b6ae",
+      "completed_at_ms": 1791918243630,
+      "host": {
+        "elapsed_ms": 15412,
+        "completed_at_ms": 1791918236942,
+        "fresh_artifacts": 261,
+        "compiled_artifacts": 2,
+        "profile": "docs-host",
+        "target": null,
+        "compiler": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-dev-r1/cargo-observe",
+        "flags": [
+          "build",
+          "--locked",
+          "--message-format",
+          "json",
+          "--no-default-features",
+          "--profile",
+          "docs-host",
+          "--features",
+          "ssr",
+          "--manifest-path",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/site/Cargo.toml",
+          "--target-dir",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/.rustify-docs/target",
+          "--bin",
+          "docs-render"
+        ],
+        "success": true
+      },
+      "wasm": {
+        "elapsed_ms": 6682,
+        "completed_at_ms": 1791918243630,
+        "fresh_artifacts": 250,
+        "compiled_artifacts": 1,
+        "profile": "docs-wasm",
+        "target": "wasm32-unknown-unknown",
+        "compiler": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-dev-r1/cargo-observe",
+        "flags": [
+          "build",
+          "--locked",
+          "--message-format",
+          "json",
+          "--no-default-features",
+          "--profile",
+          "docs-wasm",
+          "--features",
+          "hydrate",
+          "--manifest-path",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/site/Cargo.toml",
+          "--target-dir",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/.rustify-docs/target",
+          "--lib",
+          "--target",
+          "wasm32-unknown-unknown"
+        ],
+        "success": true
+      }
+    },
+    "good": 3,
+    "ok": true,
+    "reload": false,
+    "errors": 0,
+    "warnings": 12,
+    "diagnostics": [
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/architecture.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/compatibility.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/components.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/data.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/forms.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/i18n.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/navigation.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/quickstart.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/themes.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/utility.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/vellum.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/workspace.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      }
+    ]
+  },
+  {
+    "session": "10fc6-18de2c20b1daa8c8",
+    "revision": 4,
+    "sequence": 14,
+    "building": false,
+    "phase": "render",
+    "compile": {
+      "generation": "7559881a5b7e254ccd573df64087dabc75b76e91f88a31420437829c3763b6ae",
+      "completed_at_ms": 1791918243630,
+      "host": {
+        "elapsed_ms": 15412,
+        "completed_at_ms": 1791918236942,
+        "fresh_artifacts": 261,
+        "compiled_artifacts": 2,
+        "profile": "docs-host",
+        "target": null,
+        "compiler": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-dev-r1/cargo-observe",
+        "flags": [
+          "build",
+          "--locked",
+          "--message-format",
+          "json",
+          "--no-default-features",
+          "--profile",
+          "docs-host",
+          "--features",
+          "ssr",
+          "--manifest-path",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/site/Cargo.toml",
+          "--target-dir",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/.rustify-docs/target",
+          "--bin",
+          "docs-render"
+        ],
+        "success": true
+      },
+      "wasm": {
+        "elapsed_ms": 6682,
+        "completed_at_ms": 1791918243630,
+        "fresh_artifacts": 250,
+        "compiled_artifacts": 1,
+        "profile": "docs-wasm",
+        "target": "wasm32-unknown-unknown",
+        "compiler": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-dev-r1/cargo-observe",
+        "flags": [
+          "build",
+          "--locked",
+          "--message-format",
+          "json",
+          "--no-default-features",
+          "--profile",
+          "docs-wasm",
+          "--features",
+          "hydrate",
+          "--manifest-path",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/site/Cargo.toml",
+          "--target-dir",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/.rustify-docs/target",
+          "--lib",
+          "--target",
+          "wasm32-unknown-unknown"
+        ],
+        "success": true
+      }
+    },
+    "good": 3,
+    "ok": false,
+    "reload": false,
+    "errors": 1,
+    "warnings": 12,
+    "diagnostics": [
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/architecture.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/compatibility.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/components.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/data.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/forms.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/i18n.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/navigation.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/quickstart.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "error",
+        "rule": "broken-link",
+        "file": "docs/quickstart.md",
+        "line": 390,
+        "column": 1,
+        "message": "`docs/m5-live-69531-alias.md` does not exist",
+        "suggestion": null
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/themes.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/utility.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/vellum.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/workspace.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      }
+    ]
+  },
+  {
+    "session": "10fc6-18de2c20b1daa8c8",
+    "revision": 4,
+    "sequence": 15,
+    "building": true,
+    "phase": "render",
+    "compile": {
+      "generation": "7559881a5b7e254ccd573df64087dabc75b76e91f88a31420437829c3763b6ae",
+      "completed_at_ms": 1791918243630,
+      "host": {
+        "elapsed_ms": 15412,
+        "completed_at_ms": 1791918236942,
+        "fresh_artifacts": 261,
+        "compiled_artifacts": 2,
+        "profile": "docs-host",
+        "target": null,
+        "compiler": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-dev-r1/cargo-observe",
+        "flags": [
+          "build",
+          "--locked",
+          "--message-format",
+          "json",
+          "--no-default-features",
+          "--profile",
+          "docs-host",
+          "--features",
+          "ssr",
+          "--manifest-path",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/site/Cargo.toml",
+          "--target-dir",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/.rustify-docs/target",
+          "--bin",
+          "docs-render"
+        ],
+        "success": true
+      },
+      "wasm": {
+        "elapsed_ms": 6682,
+        "completed_at_ms": 1791918243630,
+        "fresh_artifacts": 250,
+        "compiled_artifacts": 1,
+        "profile": "docs-wasm",
+        "target": "wasm32-unknown-unknown",
+        "compiler": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-dev-r1/cargo-observe",
+        "flags": [
+          "build",
+          "--locked",
+          "--message-format",
+          "json",
+          "--no-default-features",
+          "--profile",
+          "docs-wasm",
+          "--features",
+          "hydrate",
+          "--manifest-path",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/site/Cargo.toml",
+          "--target-dir",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/.rustify-docs/target",
+          "--lib",
+          "--target",
+          "wasm32-unknown-unknown"
+        ],
+        "success": true
+      }
+    },
+    "good": 3,
+    "ok": false,
+    "reload": false,
+    "errors": 1,
+    "warnings": 12,
+    "diagnostics": [
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/architecture.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/compatibility.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/components.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/data.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/forms.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/i18n.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/navigation.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/quickstart.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "error",
+        "rule": "broken-link",
+        "file": "docs/quickstart.md",
+        "line": 390,
+        "column": 1,
+        "message": "`docs/m5-live-69531-alias.md` does not exist",
+        "suggestion": null
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/themes.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/utility.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/vellum.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/workspace.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      }
+    ]
+  },
+  {
+    "session": "10fc6-18de2c20b1daa8c8",
+    "revision": 4,
+    "sequence": 16,
+    "building": true,
+    "phase": "render",
+    "compile": {
+      "generation": "7559881a5b7e254ccd573df64087dabc75b76e91f88a31420437829c3763b6ae",
+      "completed_at_ms": 1791918243630,
+      "host": {
+        "elapsed_ms": 15412,
+        "completed_at_ms": 1791918236942,
+        "fresh_artifacts": 261,
+        "compiled_artifacts": 2,
+        "profile": "docs-host",
+        "target": null,
+        "compiler": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-dev-r1/cargo-observe",
+        "flags": [
+          "build",
+          "--locked",
+          "--message-format",
+          "json",
+          "--no-default-features",
+          "--profile",
+          "docs-host",
+          "--features",
+          "ssr",
+          "--manifest-path",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/site/Cargo.toml",
+          "--target-dir",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/.rustify-docs/target",
+          "--bin",
+          "docs-render"
+        ],
+        "success": true
+      },
+      "wasm": {
+        "elapsed_ms": 6682,
+        "completed_at_ms": 1791918243630,
+        "fresh_artifacts": 250,
+        "compiled_artifacts": 1,
+        "profile": "docs-wasm",
+        "target": "wasm32-unknown-unknown",
+        "compiler": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-dev-r1/cargo-observe",
+        "flags": [
+          "build",
+          "--locked",
+          "--message-format",
+          "json",
+          "--no-default-features",
+          "--profile",
+          "docs-wasm",
+          "--features",
+          "hydrate",
+          "--manifest-path",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/site/Cargo.toml",
+          "--target-dir",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/.rustify-docs/target",
+          "--lib",
+          "--target",
+          "wasm32-unknown-unknown"
+        ],
+        "success": true
+      }
+    },
+    "good": 3,
+    "ok": false,
+    "reload": false,
+    "errors": 1,
+    "warnings": 12,
+    "diagnostics": [
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/architecture.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/compatibility.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/components.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/data.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/forms.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/i18n.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/navigation.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/quickstart.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "error",
+        "rule": "broken-link",
+        "file": "docs/quickstart.md",
+        "line": 390,
+        "column": 1,
+        "message": "`docs/m5-live-69531-alias.md` does not exist",
+        "suggestion": null
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/themes.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/utility.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/vellum.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/workspace.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      }
+    ]
+  },
+  {
+    "session": "10fc6-18de2c20b1daa8c8",
+    "revision": 5,
+    "sequence": 17,
+    "building": false,
+    "phase": "render",
+    "compile": {
+      "generation": "7559881a5b7e254ccd573df64087dabc75b76e91f88a31420437829c3763b6ae",
+      "completed_at_ms": 1791918243630,
+      "host": {
+        "elapsed_ms": 15412,
+        "completed_at_ms": 1791918236942,
+        "fresh_artifacts": 261,
+        "compiled_artifacts": 2,
+        "profile": "docs-host",
+        "target": null,
+        "compiler": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-dev-r1/cargo-observe",
+        "flags": [
+          "build",
+          "--locked",
+          "--message-format",
+          "json",
+          "--no-default-features",
+          "--profile",
+          "docs-host",
+          "--features",
+          "ssr",
+          "--manifest-path",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/site/Cargo.toml",
+          "--target-dir",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/.rustify-docs/target",
+          "--bin",
+          "docs-render"
+        ],
+        "success": true
+      },
+      "wasm": {
+        "elapsed_ms": 6682,
+        "completed_at_ms": 1791918243630,
+        "fresh_artifacts": 250,
+        "compiled_artifacts": 1,
+        "profile": "docs-wasm",
+        "target": "wasm32-unknown-unknown",
+        "compiler": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-dev-r1/cargo-observe",
+        "flags": [
+          "build",
+          "--locked",
+          "--message-format",
+          "json",
+          "--no-default-features",
+          "--profile",
+          "docs-wasm",
+          "--features",
+          "hydrate",
+          "--manifest-path",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/site/Cargo.toml",
+          "--target-dir",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/.rustify-docs/target",
+          "--lib",
+          "--target",
+          "wasm32-unknown-unknown"
+        ],
+        "success": true
+      }
+    },
+    "good": 5,
+    "ok": true,
+    "reload": false,
+    "errors": 0,
+    "warnings": 12,
+    "diagnostics": [
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/architecture.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/compatibility.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/components.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/data.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/forms.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/i18n.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/navigation.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/quickstart.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/themes.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/utility.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/vellum.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/workspace.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      }
+    ]
+  },
+  {
+    "session": "10fc6-18de2c20b1daa8c8",
+    "revision": 5,
+    "sequence": 18,
+    "building": true,
+    "phase": "render",
+    "compile": {
+      "generation": "7559881a5b7e254ccd573df64087dabc75b76e91f88a31420437829c3763b6ae",
+      "completed_at_ms": 1791918243630,
+      "host": {
+        "elapsed_ms": 15412,
+        "completed_at_ms": 1791918236942,
+        "fresh_artifacts": 261,
+        "compiled_artifacts": 2,
+        "profile": "docs-host",
+        "target": null,
+        "compiler": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-dev-r1/cargo-observe",
+        "flags": [
+          "build",
+          "--locked",
+          "--message-format",
+          "json",
+          "--no-default-features",
+          "--profile",
+          "docs-host",
+          "--features",
+          "ssr",
+          "--manifest-path",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/site/Cargo.toml",
+          "--target-dir",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/.rustify-docs/target",
+          "--bin",
+          "docs-render"
+        ],
+        "success": true
+      },
+      "wasm": {
+        "elapsed_ms": 6682,
+        "completed_at_ms": 1791918243630,
+        "fresh_artifacts": 250,
+        "compiled_artifacts": 1,
+        "profile": "docs-wasm",
+        "target": "wasm32-unknown-unknown",
+        "compiler": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-dev-r1/cargo-observe",
+        "flags": [
+          "build",
+          "--locked",
+          "--message-format",
+          "json",
+          "--no-default-features",
+          "--profile",
+          "docs-wasm",
+          "--features",
+          "hydrate",
+          "--manifest-path",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/site/Cargo.toml",
+          "--target-dir",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/.rustify-docs/target",
+          "--lib",
+          "--target",
+          "wasm32-unknown-unknown"
+        ],
+        "success": true
+      }
+    },
+    "good": 5,
+    "ok": true,
+    "reload": false,
+    "errors": 0,
+    "warnings": 12,
+    "diagnostics": [
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/architecture.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/compatibility.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/components.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/data.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/forms.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/i18n.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/navigation.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/quickstart.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/themes.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/utility.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/vellum.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/workspace.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      }
+    ]
+  },
+  {
+    "session": "10fc6-18de2c20b1daa8c8",
+    "revision": 5,
+    "sequence": 19,
+    "building": true,
+    "phase": "render",
+    "compile": {
+      "generation": "7559881a5b7e254ccd573df64087dabc75b76e91f88a31420437829c3763b6ae",
+      "completed_at_ms": 1791918243630,
+      "host": {
+        "elapsed_ms": 15412,
+        "completed_at_ms": 1791918236942,
+        "fresh_artifacts": 261,
+        "compiled_artifacts": 2,
+        "profile": "docs-host",
+        "target": null,
+        "compiler": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-dev-r1/cargo-observe",
+        "flags": [
+          "build",
+          "--locked",
+          "--message-format",
+          "json",
+          "--no-default-features",
+          "--profile",
+          "docs-host",
+          "--features",
+          "ssr",
+          "--manifest-path",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/site/Cargo.toml",
+          "--target-dir",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/.rustify-docs/target",
+          "--bin",
+          "docs-render"
+        ],
+        "success": true
+      },
+      "wasm": {
+        "elapsed_ms": 6682,
+        "completed_at_ms": 1791918243630,
+        "fresh_artifacts": 250,
+        "compiled_artifacts": 1,
+        "profile": "docs-wasm",
+        "target": "wasm32-unknown-unknown",
+        "compiler": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-dev-r1/cargo-observe",
+        "flags": [
+          "build",
+          "--locked",
+          "--message-format",
+          "json",
+          "--no-default-features",
+          "--profile",
+          "docs-wasm",
+          "--features",
+          "hydrate",
+          "--manifest-path",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/site/Cargo.toml",
+          "--target-dir",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/.rustify-docs/target",
+          "--lib",
+          "--target",
+          "wasm32-unknown-unknown"
+        ],
+        "success": true
+      }
+    },
+    "good": 5,
+    "ok": true,
+    "reload": false,
+    "errors": 0,
+    "warnings": 12,
+    "diagnostics": [
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/architecture.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/compatibility.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/components.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/data.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/forms.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/i18n.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/navigation.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/quickstart.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/themes.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/utility.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/vellum.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/workspace.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      }
+    ]
+  },
+  {
+    "session": "10fc6-18de2c20b1daa8c8",
+    "revision": 5,
+    "sequence": 20,
+    "building": false,
+    "phase": "render",
+    "compile": {
+      "generation": "7559881a5b7e254ccd573df64087dabc75b76e91f88a31420437829c3763b6ae",
+      "completed_at_ms": 1791918243630,
+      "host": {
+        "elapsed_ms": 15412,
+        "completed_at_ms": 1791918236942,
+        "fresh_artifacts": 261,
+        "compiled_artifacts": 2,
+        "profile": "docs-host",
+        "target": null,
+        "compiler": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-dev-r1/cargo-observe",
+        "flags": [
+          "build",
+          "--locked",
+          "--message-format",
+          "json",
+          "--no-default-features",
+          "--profile",
+          "docs-host",
+          "--features",
+          "ssr",
+          "--manifest-path",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/site/Cargo.toml",
+          "--target-dir",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/.rustify-docs/target",
+          "--bin",
+          "docs-render"
+        ],
+        "success": true
+      },
+      "wasm": {
+        "elapsed_ms": 6682,
+        "completed_at_ms": 1791918243630,
+        "fresh_artifacts": 250,
+        "compiled_artifacts": 1,
+        "profile": "docs-wasm",
+        "target": "wasm32-unknown-unknown",
+        "compiler": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-dev-r1/cargo-observe",
+        "flags": [
+          "build",
+          "--locked",
+          "--message-format",
+          "json",
+          "--no-default-features",
+          "--profile",
+          "docs-wasm",
+          "--features",
+          "hydrate",
+          "--manifest-path",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/site/Cargo.toml",
+          "--target-dir",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/.rustify-docs/target",
+          "--lib",
+          "--target",
+          "wasm32-unknown-unknown"
+        ],
+        "success": true
+      }
+    },
+    "good": 5,
+    "ok": true,
+    "reload": false,
+    "errors": 0,
+    "warnings": 12,
+    "diagnostics": [
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/architecture.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/compatibility.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/components.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/data.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/forms.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/i18n.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/navigation.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/quickstart.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/themes.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/utility.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/vellum.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/workspace.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      }
+    ]
+  },
+  {
+    "session": "10fc6-18de2c20b1daa8c8",
+    "revision": 5,
+    "sequence": 21,
+    "building": true,
+    "phase": "render",
+    "compile": {
+      "generation": "7559881a5b7e254ccd573df64087dabc75b76e91f88a31420437829c3763b6ae",
+      "completed_at_ms": 1791918243630,
+      "host": {
+        "elapsed_ms": 15412,
+        "completed_at_ms": 1791918236942,
+        "fresh_artifacts": 261,
+        "compiled_artifacts": 2,
+        "profile": "docs-host",
+        "target": null,
+        "compiler": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-dev-r1/cargo-observe",
+        "flags": [
+          "build",
+          "--locked",
+          "--message-format",
+          "json",
+          "--no-default-features",
+          "--profile",
+          "docs-host",
+          "--features",
+          "ssr",
+          "--manifest-path",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/site/Cargo.toml",
+          "--target-dir",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/.rustify-docs/target",
+          "--bin",
+          "docs-render"
+        ],
+        "success": true
+      },
+      "wasm": {
+        "elapsed_ms": 6682,
+        "completed_at_ms": 1791918243630,
+        "fresh_artifacts": 250,
+        "compiled_artifacts": 1,
+        "profile": "docs-wasm",
+        "target": "wasm32-unknown-unknown",
+        "compiler": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-dev-r1/cargo-observe",
+        "flags": [
+          "build",
+          "--locked",
+          "--message-format",
+          "json",
+          "--no-default-features",
+          "--profile",
+          "docs-wasm",
+          "--features",
+          "hydrate",
+          "--manifest-path",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/site/Cargo.toml",
+          "--target-dir",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/.rustify-docs/target",
+          "--lib",
+          "--target",
+          "wasm32-unknown-unknown"
+        ],
+        "success": true
+      }
+    },
+    "good": 5,
+    "ok": true,
+    "reload": false,
+    "errors": 0,
+    "warnings": 12,
+    "diagnostics": [
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/architecture.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/compatibility.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/components.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/data.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/forms.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/i18n.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/navigation.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/quickstart.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/themes.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/utility.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/vellum.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/workspace.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      }
+    ]
+  },
+  {
+    "session": "10fc6-18de2c20b1daa8c8",
+    "revision": 5,
+    "sequence": 22,
+    "building": true,
+    "phase": "render",
+    "compile": {
+      "generation": "7559881a5b7e254ccd573df64087dabc75b76e91f88a31420437829c3763b6ae",
+      "completed_at_ms": 1791918243630,
+      "host": {
+        "elapsed_ms": 15412,
+        "completed_at_ms": 1791918236942,
+        "fresh_artifacts": 261,
+        "compiled_artifacts": 2,
+        "profile": "docs-host",
+        "target": null,
+        "compiler": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-dev-r1/cargo-observe",
+        "flags": [
+          "build",
+          "--locked",
+          "--message-format",
+          "json",
+          "--no-default-features",
+          "--profile",
+          "docs-host",
+          "--features",
+          "ssr",
+          "--manifest-path",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/site/Cargo.toml",
+          "--target-dir",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/.rustify-docs/target",
+          "--bin",
+          "docs-render"
+        ],
+        "success": true
+      },
+      "wasm": {
+        "elapsed_ms": 6682,
+        "completed_at_ms": 1791918243630,
+        "fresh_artifacts": 250,
+        "compiled_artifacts": 1,
+        "profile": "docs-wasm",
+        "target": "wasm32-unknown-unknown",
+        "compiler": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-dev-r1/cargo-observe",
+        "flags": [
+          "build",
+          "--locked",
+          "--message-format",
+          "json",
+          "--no-default-features",
+          "--profile",
+          "docs-wasm",
+          "--features",
+          "hydrate",
+          "--manifest-path",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/site/Cargo.toml",
+          "--target-dir",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/.rustify-docs/target",
+          "--lib",
+          "--target",
+          "wasm32-unknown-unknown"
+        ],
+        "success": true
+      }
+    },
+    "good": 5,
+    "ok": true,
+    "reload": false,
+    "errors": 0,
+    "warnings": 12,
+    "diagnostics": [
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/architecture.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/compatibility.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/components.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/data.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/forms.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/i18n.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/navigation.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/quickstart.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/themes.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/utility.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/vellum.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/workspace.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      }
+    ]
+  },
+  {
+    "session": "10fc6-18de2c20b1daa8c8",
+    "revision": 6,
+    "sequence": 23,
+    "building": false,
+    "phase": "render",
+    "compile": {
+      "generation": "7559881a5b7e254ccd573df64087dabc75b76e91f88a31420437829c3763b6ae",
+      "completed_at_ms": 1791918243630,
+      "host": {
+        "elapsed_ms": 15412,
+        "completed_at_ms": 1791918236942,
+        "fresh_artifacts": 261,
+        "compiled_artifacts": 2,
+        "profile": "docs-host",
+        "target": null,
+        "compiler": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-dev-r1/cargo-observe",
+        "flags": [
+          "build",
+          "--locked",
+          "--message-format",
+          "json",
+          "--no-default-features",
+          "--profile",
+          "docs-host",
+          "--features",
+          "ssr",
+          "--manifest-path",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/site/Cargo.toml",
+          "--target-dir",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/.rustify-docs/target",
+          "--bin",
+          "docs-render"
+        ],
+        "success": true
+      },
+      "wasm": {
+        "elapsed_ms": 6682,
+        "completed_at_ms": 1791918243630,
+        "fresh_artifacts": 250,
+        "compiled_artifacts": 1,
+        "profile": "docs-wasm",
+        "target": "wasm32-unknown-unknown",
+        "compiler": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-dev-r1/cargo-observe",
+        "flags": [
+          "build",
+          "--locked",
+          "--message-format",
+          "json",
+          "--no-default-features",
+          "--profile",
+          "docs-wasm",
+          "--features",
+          "hydrate",
+          "--manifest-path",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/site/Cargo.toml",
+          "--target-dir",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/.rustify-docs/target",
+          "--lib",
+          "--target",
+          "wasm32-unknown-unknown"
+        ],
+        "success": true
+      }
+    },
+    "good": 5,
+    "ok": false,
+    "reload": false,
+    "errors": 1,
+    "warnings": 12,
+    "diagnostics": [
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/architecture.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/compatibility.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/components.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/data.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/forms.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/i18n.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/navigation.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/quickstart.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "error",
+        "rule": "symlink-outside",
+        "file": "docs/quickstart.md",
+        "line": 390,
+        "column": 1,
+        "message": "`docs/m5-live-69531-alias.md` leads out of the project through a symbolic link; it is not read",
+        "suggestion": "copy the file into the project"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/themes.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/utility.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/vellum.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/workspace.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      }
+    ]
+  },
+  {
+    "session": "10fc6-18de2c20b1daa8c8",
+    "revision": 6,
+    "sequence": 24,
+    "building": true,
+    "phase": "render",
+    "compile": {
+      "generation": "7559881a5b7e254ccd573df64087dabc75b76e91f88a31420437829c3763b6ae",
+      "completed_at_ms": 1791918243630,
+      "host": {
+        "elapsed_ms": 15412,
+        "completed_at_ms": 1791918236942,
+        "fresh_artifacts": 261,
+        "compiled_artifacts": 2,
+        "profile": "docs-host",
+        "target": null,
+        "compiler": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-dev-r1/cargo-observe",
+        "flags": [
+          "build",
+          "--locked",
+          "--message-format",
+          "json",
+          "--no-default-features",
+          "--profile",
+          "docs-host",
+          "--features",
+          "ssr",
+          "--manifest-path",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/site/Cargo.toml",
+          "--target-dir",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/.rustify-docs/target",
+          "--bin",
+          "docs-render"
+        ],
+        "success": true
+      },
+      "wasm": {
+        "elapsed_ms": 6682,
+        "completed_at_ms": 1791918243630,
+        "fresh_artifacts": 250,
+        "compiled_artifacts": 1,
+        "profile": "docs-wasm",
+        "target": "wasm32-unknown-unknown",
+        "compiler": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-dev-r1/cargo-observe",
+        "flags": [
+          "build",
+          "--locked",
+          "--message-format",
+          "json",
+          "--no-default-features",
+          "--profile",
+          "docs-wasm",
+          "--features",
+          "hydrate",
+          "--manifest-path",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/site/Cargo.toml",
+          "--target-dir",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/.rustify-docs/target",
+          "--lib",
+          "--target",
+          "wasm32-unknown-unknown"
+        ],
+        "success": true
+      }
+    },
+    "good": 5,
+    "ok": false,
+    "reload": false,
+    "errors": 1,
+    "warnings": 12,
+    "diagnostics": [
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/architecture.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/compatibility.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/components.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/data.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/forms.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/i18n.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/navigation.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/quickstart.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "error",
+        "rule": "symlink-outside",
+        "file": "docs/quickstart.md",
+        "line": 390,
+        "column": 1,
+        "message": "`docs/m5-live-69531-alias.md` leads out of the project through a symbolic link; it is not read",
+        "suggestion": "copy the file into the project"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/themes.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/utility.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/vellum.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/workspace.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      }
+    ]
+  },
+  {
+    "session": "10fc6-18de2c20b1daa8c8",
+    "revision": 6,
+    "sequence": 25,
+    "building": true,
+    "phase": "render",
+    "compile": {
+      "generation": "7559881a5b7e254ccd573df64087dabc75b76e91f88a31420437829c3763b6ae",
+      "completed_at_ms": 1791918243630,
+      "host": {
+        "elapsed_ms": 15412,
+        "completed_at_ms": 1791918236942,
+        "fresh_artifacts": 261,
+        "compiled_artifacts": 2,
+        "profile": "docs-host",
+        "target": null,
+        "compiler": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-dev-r1/cargo-observe",
+        "flags": [
+          "build",
+          "--locked",
+          "--message-format",
+          "json",
+          "--no-default-features",
+          "--profile",
+          "docs-host",
+          "--features",
+          "ssr",
+          "--manifest-path",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/site/Cargo.toml",
+          "--target-dir",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/.rustify-docs/target",
+          "--bin",
+          "docs-render"
+        ],
+        "success": true
+      },
+      "wasm": {
+        "elapsed_ms": 6682,
+        "completed_at_ms": 1791918243630,
+        "fresh_artifacts": 250,
+        "compiled_artifacts": 1,
+        "profile": "docs-wasm",
+        "target": "wasm32-unknown-unknown",
+        "compiler": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-dev-r1/cargo-observe",
+        "flags": [
+          "build",
+          "--locked",
+          "--message-format",
+          "json",
+          "--no-default-features",
+          "--profile",
+          "docs-wasm",
+          "--features",
+          "hydrate",
+          "--manifest-path",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/site/Cargo.toml",
+          "--target-dir",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/.rustify-docs/target",
+          "--lib",
+          "--target",
+          "wasm32-unknown-unknown"
+        ],
+        "success": true
+      }
+    },
+    "good": 5,
+    "ok": false,
+    "reload": false,
+    "errors": 1,
+    "warnings": 12,
+    "diagnostics": [
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/architecture.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/compatibility.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/components.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/data.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/forms.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/i18n.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/navigation.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/quickstart.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "error",
+        "rule": "symlink-outside",
+        "file": "docs/quickstart.md",
+        "line": 390,
+        "column": 1,
+        "message": "`docs/m5-live-69531-alias.md` leads out of the project through a symbolic link; it is not read",
+        "suggestion": "copy the file into the project"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/themes.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/utility.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/vellum.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/workspace.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      }
+    ]
+  },
+  {
+    "session": "10fc6-18de2c20b1daa8c8",
+    "revision": 7,
+    "sequence": 26,
+    "building": false,
+    "phase": "render",
+    "compile": {
+      "generation": "7559881a5b7e254ccd573df64087dabc75b76e91f88a31420437829c3763b6ae",
+      "completed_at_ms": 1791918243630,
+      "host": {
+        "elapsed_ms": 15412,
+        "completed_at_ms": 1791918236942,
+        "fresh_artifacts": 261,
+        "compiled_artifacts": 2,
+        "profile": "docs-host",
+        "target": null,
+        "compiler": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-dev-r1/cargo-observe",
+        "flags": [
+          "build",
+          "--locked",
+          "--message-format",
+          "json",
+          "--no-default-features",
+          "--profile",
+          "docs-host",
+          "--features",
+          "ssr",
+          "--manifest-path",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/site/Cargo.toml",
+          "--target-dir",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/.rustify-docs/target",
+          "--bin",
+          "docs-render"
+        ],
+        "success": true
+      },
+      "wasm": {
+        "elapsed_ms": 6682,
+        "completed_at_ms": 1791918243630,
+        "fresh_artifacts": 250,
+        "compiled_artifacts": 1,
+        "profile": "docs-wasm",
+        "target": "wasm32-unknown-unknown",
+        "compiler": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-dev-r1/cargo-observe",
+        "flags": [
+          "build",
+          "--locked",
+          "--message-format",
+          "json",
+          "--no-default-features",
+          "--profile",
+          "docs-wasm",
+          "--features",
+          "hydrate",
+          "--manifest-path",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/site/Cargo.toml",
+          "--target-dir",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/.rustify-docs/target",
+          "--lib",
+          "--target",
+          "wasm32-unknown-unknown"
+        ],
+        "success": true
+      }
+    },
+    "good": 7,
+    "ok": true,
+    "reload": false,
+    "errors": 0,
+    "warnings": 12,
+    "diagnostics": [
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/architecture.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/compatibility.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/components.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/data.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/forms.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/i18n.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/navigation.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/quickstart.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/themes.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/utility.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/vellum.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/workspace.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      }
+    ]
+  },
+  {
+    "session": "10fc6-18de2c20b1daa8c8",
+    "revision": 7,
+    "sequence": 27,
+    "building": true,
+    "phase": "render",
+    "compile": {
+      "generation": "7559881a5b7e254ccd573df64087dabc75b76e91f88a31420437829c3763b6ae",
+      "completed_at_ms": 1791918243630,
+      "host": {
+        "elapsed_ms": 15412,
+        "completed_at_ms": 1791918236942,
+        "fresh_artifacts": 261,
+        "compiled_artifacts": 2,
+        "profile": "docs-host",
+        "target": null,
+        "compiler": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-dev-r1/cargo-observe",
+        "flags": [
+          "build",
+          "--locked",
+          "--message-format",
+          "json",
+          "--no-default-features",
+          "--profile",
+          "docs-host",
+          "--features",
+          "ssr",
+          "--manifest-path",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/site/Cargo.toml",
+          "--target-dir",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/.rustify-docs/target",
+          "--bin",
+          "docs-render"
+        ],
+        "success": true
+      },
+      "wasm": {
+        "elapsed_ms": 6682,
+        "completed_at_ms": 1791918243630,
+        "fresh_artifacts": 250,
+        "compiled_artifacts": 1,
+        "profile": "docs-wasm",
+        "target": "wasm32-unknown-unknown",
+        "compiler": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-dev-r1/cargo-observe",
+        "flags": [
+          "build",
+          "--locked",
+          "--message-format",
+          "json",
+          "--no-default-features",
+          "--profile",
+          "docs-wasm",
+          "--features",
+          "hydrate",
+          "--manifest-path",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/site/Cargo.toml",
+          "--target-dir",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/.rustify-docs/target",
+          "--lib",
+          "--target",
+          "wasm32-unknown-unknown"
+        ],
+        "success": true
+      }
+    },
+    "good": 7,
+    "ok": true,
+    "reload": false,
+    "errors": 0,
+    "warnings": 12,
+    "diagnostics": [
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/architecture.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/compatibility.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/components.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/data.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/forms.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/i18n.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/navigation.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/quickstart.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/themes.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/utility.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/vellum.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/workspace.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      }
+    ]
+  },
+  {
+    "session": "10fc6-18de2c20b1daa8c8",
+    "revision": 7,
+    "sequence": 28,
+    "building": true,
+    "phase": "render",
+    "compile": {
+      "generation": "7559881a5b7e254ccd573df64087dabc75b76e91f88a31420437829c3763b6ae",
+      "completed_at_ms": 1791918243630,
+      "host": {
+        "elapsed_ms": 15412,
+        "completed_at_ms": 1791918236942,
+        "fresh_artifacts": 261,
+        "compiled_artifacts": 2,
+        "profile": "docs-host",
+        "target": null,
+        "compiler": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-dev-r1/cargo-observe",
+        "flags": [
+          "build",
+          "--locked",
+          "--message-format",
+          "json",
+          "--no-default-features",
+          "--profile",
+          "docs-host",
+          "--features",
+          "ssr",
+          "--manifest-path",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/site/Cargo.toml",
+          "--target-dir",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/.rustify-docs/target",
+          "--bin",
+          "docs-render"
+        ],
+        "success": true
+      },
+      "wasm": {
+        "elapsed_ms": 6682,
+        "completed_at_ms": 1791918243630,
+        "fresh_artifacts": 250,
+        "compiled_artifacts": 1,
+        "profile": "docs-wasm",
+        "target": "wasm32-unknown-unknown",
+        "compiler": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-dev-r1/cargo-observe",
+        "flags": [
+          "build",
+          "--locked",
+          "--message-format",
+          "json",
+          "--no-default-features",
+          "--profile",
+          "docs-wasm",
+          "--features",
+          "hydrate",
+          "--manifest-path",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/site/Cargo.toml",
+          "--target-dir",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/.rustify-docs/target",
+          "--lib",
+          "--target",
+          "wasm32-unknown-unknown"
+        ],
+        "success": true
+      }
+    },
+    "good": 7,
+    "ok": true,
+    "reload": false,
+    "errors": 0,
+    "warnings": 12,
+    "diagnostics": [
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/architecture.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/compatibility.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/components.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/data.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/forms.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/i18n.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/navigation.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/quickstart.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/themes.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/utility.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/vellum.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/workspace.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      }
+    ]
+  },
+  {
+    "session": "10fc6-18de2c20b1daa8c8",
+    "revision": 8,
+    "sequence": 29,
+    "building": false,
+    "phase": "render",
+    "compile": {
+      "generation": "7559881a5b7e254ccd573df64087dabc75b76e91f88a31420437829c3763b6ae",
+      "completed_at_ms": 1791918243630,
+      "host": {
+        "elapsed_ms": 15412,
+        "completed_at_ms": 1791918236942,
+        "fresh_artifacts": 261,
+        "compiled_artifacts": 2,
+        "profile": "docs-host",
+        "target": null,
+        "compiler": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-dev-r1/cargo-observe",
+        "flags": [
+          "build",
+          "--locked",
+          "--message-format",
+          "json",
+          "--no-default-features",
+          "--profile",
+          "docs-host",
+          "--features",
+          "ssr",
+          "--manifest-path",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/site/Cargo.toml",
+          "--target-dir",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/.rustify-docs/target",
+          "--bin",
+          "docs-render"
+        ],
+        "success": true
+      },
+      "wasm": {
+        "elapsed_ms": 6682,
+        "completed_at_ms": 1791918243630,
+        "fresh_artifacts": 250,
+        "compiled_artifacts": 1,
+        "profile": "docs-wasm",
+        "target": "wasm32-unknown-unknown",
+        "compiler": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-dev-r1/cargo-observe",
+        "flags": [
+          "build",
+          "--locked",
+          "--message-format",
+          "json",
+          "--no-default-features",
+          "--profile",
+          "docs-wasm",
+          "--features",
+          "hydrate",
+          "--manifest-path",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/site/Cargo.toml",
+          "--target-dir",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/.rustify-docs/target",
+          "--lib",
+          "--target",
+          "wasm32-unknown-unknown"
+        ],
+        "success": true
+      }
+    },
+    "good": 8,
+    "ok": true,
+    "reload": false,
+    "errors": 0,
+    "warnings": 12,
+    "diagnostics": [
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/architecture.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/compatibility.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/components.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/data.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/forms.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/i18n.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/navigation.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/quickstart.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/themes.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/utility.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/vellum.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/workspace.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      }
+    ]
+  },
+  {
+    "session": "10fc6-18de2c20b1daa8c8",
+    "revision": 8,
+    "sequence": 30,
+    "building": true,
+    "phase": "render",
+    "compile": {
+      "generation": "7559881a5b7e254ccd573df64087dabc75b76e91f88a31420437829c3763b6ae",
+      "completed_at_ms": 1791918243630,
+      "host": {
+        "elapsed_ms": 15412,
+        "completed_at_ms": 1791918236942,
+        "fresh_artifacts": 261,
+        "compiled_artifacts": 2,
+        "profile": "docs-host",
+        "target": null,
+        "compiler": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-dev-r1/cargo-observe",
+        "flags": [
+          "build",
+          "--locked",
+          "--message-format",
+          "json",
+          "--no-default-features",
+          "--profile",
+          "docs-host",
+          "--features",
+          "ssr",
+          "--manifest-path",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/site/Cargo.toml",
+          "--target-dir",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/.rustify-docs/target",
+          "--bin",
+          "docs-render"
+        ],
+        "success": true
+      },
+      "wasm": {
+        "elapsed_ms": 6682,
+        "completed_at_ms": 1791918243630,
+        "fresh_artifacts": 250,
+        "compiled_artifacts": 1,
+        "profile": "docs-wasm",
+        "target": "wasm32-unknown-unknown",
+        "compiler": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-dev-r1/cargo-observe",
+        "flags": [
+          "build",
+          "--locked",
+          "--message-format",
+          "json",
+          "--no-default-features",
+          "--profile",
+          "docs-wasm",
+          "--features",
+          "hydrate",
+          "--manifest-path",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/site/Cargo.toml",
+          "--target-dir",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/.rustify-docs/target",
+          "--lib",
+          "--target",
+          "wasm32-unknown-unknown"
+        ],
+        "success": true
+      }
+    },
+    "good": 8,
+    "ok": true,
+    "reload": false,
+    "errors": 0,
+    "warnings": 12,
+    "diagnostics": [
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/architecture.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/compatibility.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/components.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/data.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/forms.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/i18n.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/navigation.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/quickstart.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/themes.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/utility.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/vellum.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/workspace.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      }
+    ]
+  },
+  {
+    "session": "10fc6-18de2c20b1daa8c8",
+    "revision": 8,
+    "sequence": 31,
+    "building": true,
+    "phase": "render",
+    "compile": {
+      "generation": "7559881a5b7e254ccd573df64087dabc75b76e91f88a31420437829c3763b6ae",
+      "completed_at_ms": 1791918243630,
+      "host": {
+        "elapsed_ms": 15412,
+        "completed_at_ms": 1791918236942,
+        "fresh_artifacts": 261,
+        "compiled_artifacts": 2,
+        "profile": "docs-host",
+        "target": null,
+        "compiler": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-dev-r1/cargo-observe",
+        "flags": [
+          "build",
+          "--locked",
+          "--message-format",
+          "json",
+          "--no-default-features",
+          "--profile",
+          "docs-host",
+          "--features",
+          "ssr",
+          "--manifest-path",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/site/Cargo.toml",
+          "--target-dir",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/.rustify-docs/target",
+          "--bin",
+          "docs-render"
+        ],
+        "success": true
+      },
+      "wasm": {
+        "elapsed_ms": 6682,
+        "completed_at_ms": 1791918243630,
+        "fresh_artifacts": 250,
+        "compiled_artifacts": 1,
+        "profile": "docs-wasm",
+        "target": "wasm32-unknown-unknown",
+        "compiler": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-dev-r1/cargo-observe",
+        "flags": [
+          "build",
+          "--locked",
+          "--message-format",
+          "json",
+          "--no-default-features",
+          "--profile",
+          "docs-wasm",
+          "--features",
+          "hydrate",
+          "--manifest-path",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/site/Cargo.toml",
+          "--target-dir",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/.rustify-docs/target",
+          "--lib",
+          "--target",
+          "wasm32-unknown-unknown"
+        ],
+        "success": true
+      }
+    },
+    "good": 8,
+    "ok": true,
+    "reload": false,
+    "errors": 0,
+    "warnings": 12,
+    "diagnostics": [
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/architecture.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/compatibility.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/components.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/data.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/forms.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/i18n.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/navigation.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/quickstart.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/themes.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/utility.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/vellum.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/workspace.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      }
+    ]
+  },
+  {
+    "session": "10fc6-18de2c20b1daa8c8",
+    "revision": 9,
+    "sequence": 32,
+    "building": false,
+    "phase": "render",
+    "compile": {
+      "generation": "7559881a5b7e254ccd573df64087dabc75b76e91f88a31420437829c3763b6ae",
+      "completed_at_ms": 1791918243630,
+      "host": {
+        "elapsed_ms": 15412,
+        "completed_at_ms": 1791918236942,
+        "fresh_artifacts": 261,
+        "compiled_artifacts": 2,
+        "profile": "docs-host",
+        "target": null,
+        "compiler": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-dev-r1/cargo-observe",
+        "flags": [
+          "build",
+          "--locked",
+          "--message-format",
+          "json",
+          "--no-default-features",
+          "--profile",
+          "docs-host",
+          "--features",
+          "ssr",
+          "--manifest-path",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/site/Cargo.toml",
+          "--target-dir",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/.rustify-docs/target",
+          "--bin",
+          "docs-render"
+        ],
+        "success": true
+      },
+      "wasm": {
+        "elapsed_ms": 6682,
+        "completed_at_ms": 1791918243630,
+        "fresh_artifacts": 250,
+        "compiled_artifacts": 1,
+        "profile": "docs-wasm",
+        "target": "wasm32-unknown-unknown",
+        "compiler": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-dev-r1/cargo-observe",
+        "flags": [
+          "build",
+          "--locked",
+          "--message-format",
+          "json",
+          "--no-default-features",
+          "--profile",
+          "docs-wasm",
+          "--features",
+          "hydrate",
+          "--manifest-path",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/site/Cargo.toml",
+          "--target-dir",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/.rustify-docs/target",
+          "--lib",
+          "--target",
+          "wasm32-unknown-unknown"
+        ],
+        "success": true
+      }
+    },
+    "good": 9,
+    "ok": true,
+    "reload": true,
+    "errors": 0,
+    "warnings": 12,
+    "diagnostics": [
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/architecture.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/compatibility.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/components.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/data.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/forms.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/i18n.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/navigation.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/quickstart.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/themes.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/utility.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/vellum.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-description",
+        "file": "docs/workspace.md",
+        "line": null,
+        "column": null,
+        "message": "no `description:`; the first paragraph is used",
+        "suggestion": "add `description:` to the frontmatter"
+      }
+    ]
+  }
+]

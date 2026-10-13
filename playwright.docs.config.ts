@@ -31,7 +31,14 @@ const componentsProjects = Object.keys(componentsPorts) as Components[];
 const componentsBase = (name: Components) => name === "components-root" ? "/" : "/rustify-ui/";
 const componentsUrl = (name: Components) => `http://127.0.0.1:${componentsPorts[name]}${componentsBase(name)}`;
 
-type Server = "dom-only" | "dom-hydrate" | Docs | Components;
+const officialPorts = { "official-root": 4198, "official-subpath": 4199, "official-meta": 4200 } as const;
+type Official = keyof typeof officialPorts;
+const officialProjects = Object.keys(officialPorts) as Official[];
+const officialVariant = (name: Official) => name === "official-root" ? "root" : name === "official-meta" ? "meta" : "subpath";
+const officialBase = (name: Official) => name === "official-root" ? "/" : "/rustify-ui/";
+const officialUrl = (name: Official) => `http://127.0.0.1:${officialPorts[name]}${officialBase(name)}`;
+
+type Server = "dom-only" | "dom-hydrate" | Docs | Components | Official;
 
 const serversOf: Record<string, Server[]> = {
     "dom-only": ["dom-only"],
@@ -43,6 +50,9 @@ const serversOf: Record<string, Server[]> = {
     "components-subpath": ["components-subpath"],
     "components-meta": ["components-meta"],
     "components-webkit": ["components-subpath"],
+    "official-root": ["official-root"],
+    "official-subpath": ["official-subpath"],
+    "official-meta": ["official-meta"],
     // Early engine regressions only: Playwright's Firefox and WebKit builds
     // are not the stable Firefox or Safari a reader runs (plan §9.3).
     "docs-firefox": ["docs-subpath"],
@@ -111,6 +121,11 @@ export default defineConfig({
             testMatch: ["docs-ssg/islands.spec.ts", "docs-ssg/custom.spec.ts"],
             use: { baseURL: componentsUrl(name) },
         })),
+        ...officialProjects.map((name) => ({
+            name,
+            testMatch: ["docs-ssg/official.spec.ts"],
+            use: { baseURL: officialUrl(name) },
+        })),
         {
             name: "components-webkit",
             testMatch: ["docs-ssg/islands.spec.ts", "docs-ssg/custom.spec.ts"],
@@ -141,6 +156,7 @@ export default defineConfig({
                 (name) => [name, `sh tests/docs-ssg/serve.sh ${docsVariants[name]} ${docsPorts[name]}`, docsUrl(name)] as const,
             ),
             ...componentsProjects.map((name) => [name, `sh tests/docs-ssg/serve.sh components ${name === "components-root" ? "root" : name === "components-meta" ? "meta" : "subpath"} ${componentsPorts[name]}`, componentsUrl(name)] as const),
+            ...officialProjects.map((name) => [name, `sh tests/docs-ssg/serve.sh official ${officialVariant(name)} ${officialPorts[name]}`, officialUrl(name)] as const),
         ] as const
     )
         .filter(([server]) => wanted(server))

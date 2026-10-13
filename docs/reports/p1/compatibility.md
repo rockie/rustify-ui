@@ -71,8 +71,10 @@ All fonts ship with the build (51,187,844 bytes across ten files) and are
 fetched by a region when it needs them. A first load fetches exactly one of
 them — `IBMPlexSans-Text.ttf`, 181,792 bytes — because that is all the Latin UI
 needs; see [the performance report](performance.md) for the measured transfer.
-Licences are in `makepad/widgets/resources/FONT-LICENSES.md`; every text font
-is OFL 1.1.
+Licences are in `makepad/widgets/resources/FONT-LICENSES.md`; the listed OFL
+faces use OFL 1.1, while the bundled Liberation Mono 1.04 uses GPL v2 with
+the release's font exceptions. This corrects the former blanket OFL claim
+without changing the font bytes measured in P1.
 
 Each region loads the fonts it needs independently, so two regions drawing the
 same script hold two copies in linear memory. That is a recorded cost, not a

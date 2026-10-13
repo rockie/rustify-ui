@@ -1,0 +1,4 @@
+#!/usr/bin/env python3
+import sys,json,time,subprocess,os
+with open("/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-dev-r2/cargo-calls.jsonl",'a') as f: f.write(json.dumps({'argv':sys.argv[1:],'at_ms':time.time()*1000,'pid':os.getpid()})+'\n')
+raise SystemExit(subprocess.call(['mbx']+sys.argv[1:]))

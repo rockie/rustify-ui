@@ -2449,11 +2449,12 @@ dependencies = [
  "toml",
  "two-face",
  "unicode-normalization",
+ "web-sys",
 ]
 
 [[package]]
 name = "rustify-docs-cli"
-version = "0.1.5"
+version = "0.1.10"
 dependencies = [
  "dom_query",
  "kqueue",
@@ -2463,9 +2464,11 @@ dependencies = [
  "rustify-docs",
  "rustify-docs-syntax",
  "rustify-style",
+ "rustify-ui",
  "serde_json",
  "sha2",
  "syn 2.0.119",
+ "toml",
  "ureq",
  "wasm-bindgen-cli-support",
 ]

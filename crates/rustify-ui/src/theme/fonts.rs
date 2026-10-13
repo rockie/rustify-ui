@@ -71,6 +71,53 @@ pub const FONT_GLYPH_FALLBACKS: [FontFace; 2] = [
     },
 ];
 
+/// Identity of an offline face, without embedding the font in a DOM build.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub struct FontResourceDigest {
+    pub family: &'static str,
+    pub resource_path: &'static str,
+    pub sha256: &'static str,
+}
+
+/// The six catalogue faces and glyph fallbacks, deduplicated by resource.
+pub const FONT_RESOURCE_DIGESTS: [FontResourceDigest; 7] = [
+    FontResourceDigest {
+        family: "IBM Plex Sans",
+        resource_path: "makepad_widgets/resources/IBMPlexSans-Text.ttf",
+        sha256: "8c358c56c56f76a28cecb8ca10734c1c9cafa01a752dc8364b9ef7de412437dc",
+    },
+    FontResourceDigest {
+        family: "Noto Sans",
+        resource_path: "makepad_widgets/resources/NotoSans-Regular.ttf",
+        sha256: "371924e7480d3d01807fdc1bd30442d0a6651e6b5ea546482f5883d613cf0419",
+    },
+    FontResourceDigest {
+        family: "Rustify WenKai",
+        resource_path: "makepad_widgets/resources/LXGWWenKaiRegular.ttf",
+        sha256: "1d4b2f008ac7e02780c19801d4b04dd4538e40215943cc8ad374dba8ec2278c0",
+    },
+    FontResourceDigest {
+        family: "Noto Serif",
+        resource_path: "makepad_widgets/resources/NotoSerif-Regular.ttf",
+        sha256: "c8f669ceb2c9c60ccf55198b305e08a997ffca79a38cc7eeb551e643cbe66505",
+    },
+    FontResourceDigest {
+        family: "Liberation Mono",
+        resource_path: "makepad_widgets/resources/LiberationMono-Regular.ttf",
+        sha256: "3e396ddd3d1c7d3dca1fb16dd64802b32f295f856ac10c0c1f2ab1c738196045",
+    },
+    FontResourceDigest {
+        family: "JetBrains Mono",
+        resource_path: "makepad_widgets/resources/jetbrains_mono_variable.ttf",
+        sha256: "662a196d58f1183bf2d77428b6d5283fe3f45161ab021bea4036bc98e5cac016",
+    },
+    FontResourceDigest {
+        family: "Noto Color Emoji",
+        resource_path: "makepad_widgets/resources/NotoColorEmoji.ttf",
+        sha256: "39ee3c587e10e89669b9ff32703261d10d5f9c4dd5ad147b6b5a1c5200591817",
+    },
+];
+
 impl ThemeFont {
     pub const fn face(self) -> FontFace {
         FONT_FACES[self as usize]
@@ -132,6 +179,25 @@ pub fn gpu_font_family(
 mod tests {
     use super::*;
     use crate::theme::{resolve, Theme, ThemeDocument, ThemeMode};
+
+    #[test]
+    fn resource_digests_cover_the_catalogue_and_glyph_fallbacks_once() {
+        let resources: std::collections::BTreeSet<_> = FONT_FACES
+            .into_iter()
+            .chain(FONT_GLYPH_FALLBACKS)
+            .map(|face| (face.family, face.resource_path))
+            .collect();
+        let digests: std::collections::BTreeSet<_> = FONT_RESOURCE_DIGESTS
+            .into_iter()
+            .map(|face| {
+                assert_eq!(face.sha256.len(), 64);
+                assert!(face.sha256.bytes().all(|byte| byte.is_ascii_hexdigit()));
+                (face.family, face.resource_path)
+            })
+            .collect();
+        assert_eq!(resources, digests);
+        assert_eq!(digests.len(), FONT_RESOURCE_DIGESTS.len());
+    }
 
     // The packaged faces are the GPU build's resources; a DOM build ships none.
     #[cfg(feature = "gpu")]

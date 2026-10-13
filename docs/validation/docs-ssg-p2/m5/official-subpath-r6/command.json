@@ -1,0 +1,18 @@
+{
+  "command": [
+    "npx",
+    "playwright",
+    "test",
+    "-c",
+    "playwright.docs.config.ts",
+    "--project=official-subpath",
+    "tests/docs-ssg/official.spec.ts",
+    "--reporter=list,json",
+    "--output",
+    "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-subpath-r6/artifacts",
+    "--grep-invert",
+    "one bounded official"
+  ],
+  "RUSTIFY_DOCS_BIN": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-cli/rustify-docs",
+  "started_at": "2026-10-13T19:54:30.692Z"
+}

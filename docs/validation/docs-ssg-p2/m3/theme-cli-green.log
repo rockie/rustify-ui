@@ -1,0 +1,32 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-docs v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-docs)
+   Compiling rustify-docs-cli v0.1.6 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-docs-cli)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 8.61s
+     Running unittests src/main.rs (target/debug/deps/rustify_docs-889db3c83a4682b6)
+
+running 14 tests
+test theme::tests::generic_unpackaged_fonts_preserve_the_sdk_stack_and_emit_no_fonts ... ok
+test theme::tests::no_import_does_not_prepare_css_or_font_files ... ok
+test theme::tests::a_missing_embedded_face_or_license_is_an_error_without_a_network_fallback ... ok
+test theme::tests::symlinks_must_remain_inside_the_public_project_boundary ... ok
+test theme::tests::document_paths_reject_traversal_private_files_and_generated_output ... ok
+test theme::tests::incomplete_theme_documents_preserve_the_import_errors ... ok
+test theme::tests::invalid_tokens_duplicates_and_oversize_json_fail_before_assets_are_prepared ... ok
+test theme::tests::unknown_tokens_and_font_fallbacks_keep_the_resolvers_diagnostics ... ok
+test theme::tests::input_receipt_keeps_the_exact_imported_bytes_after_the_file_changes ... ok
+test theme::tests::light_dark_and_system_project_the_resolvers_validated_properties ... ok
+test theme::tests::emitted_fonts_are_the_referenced_faces_and_glyph_fallbacks_once ... ok
+test theme::tests::different_mode_faces_are_packaged_together_without_unused_faces ... ok
+test theme::tests::corresponding_source_is_only_emitted_with_the_referenced_liberation_font ... ok
+test theme::tests::all_seven_font_bytes_and_notices_are_paired_with_the_sdk_metadata ... ok
+
+test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 51 filtered out; finished in 1.06s
+
+mbx[cache]: 0 hits, 0 misses, 2 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: 53661 compilations, and the box has forgotten none of them.

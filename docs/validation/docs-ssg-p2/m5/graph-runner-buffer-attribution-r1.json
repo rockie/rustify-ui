@@ -1,0 +1,11 @@
+{
+  "scope": "reproduce verification driver default stdout-buffer refusal; not a product graph gate result",
+  "status": null,
+  "signal": "SIGTERM",
+  "error": {
+    "code": "ENOBUFS",
+    "message": "spawnSync mbx ENOBUFS"
+  },
+  "stdout_bytes": 1049141,
+  "stderr": ""
+}

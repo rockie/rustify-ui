@@ -15,6 +15,13 @@ ref = "main"
 manifest = "Cargo.toml"
 registry = "src/lib.rs"
 
+[theme]
+document = "theme.json"
+
+[[nav.groups]]
+label = "Custom pages"
+routes = ["/custom/", "/plain/"]
+
 [[nav.groups]]
 label = "Examples"
 items = ["counter.md", "builtins.md", "async.md", "client-only.md", "failure.md", "proxy.md"]

@@ -1,0 +1,22 @@
+{
+  "scope": "actual installed CLI content template new→painted homepage; no Rust site compiler",
+  "work": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m4-content-first-ubL2k3",
+  "site": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m4-content-first-ubL2k3/M4 content trial",
+  "created": "created /var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m4-content-first-ubL2k3/M4 content trial\nnext:\n  cd /var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m4-content-first-ubL2k3/M4 content trial\n  rustify-docs dev\n",
+  "started_at_ms": 1791913658793,
+  "requests": [
+    "http://127.0.0.1:58452/",
+    "http://127.0.0.1:58452/assets/site.b91dbd423d.css",
+    "http://127.0.0.1:58452/__rustify-docs/dev.css",
+    "http://127.0.0.1:58452/assets/mode.5e2c2584b0.js",
+    "http://127.0.0.1:58452/assets/site.2529a0d647.js",
+    "http://127.0.0.1:58452/__rustify-docs/dev.js?session=10a89-18de27fa917135b8&good=1",
+    "http://127.0.0.1:58452/assets/files/logo.b7bfe6e0b6.svg",
+    "http://127.0.0.1:58452/__rustify-docs/events?path=%2F&good=1&session=10a89-18de27fa917135b8"
+  ],
+  "errors": [],
+  "csp": [],
+  "home_at_ms": 1791913659057,
+  "new_to_home_ms": 264,
+  "passed": true
+}

@@ -1,0 +1,86 @@
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-docs/tests/registered_generation.rs:165:
+ fn registered_home_custom_and_not_found_skip_targets_avoid_live_body_and_slot_ids() {
+     let fixture = Fixture::new(&[
+         ("rustify-docs.toml", CONFIG),
+[31m-        ("content/guide.md", "---\ndescription: Guide page\n---\n# Guide\n"),
+(B[m[32m+        (
+(B[m[32m+            "content/guide.md",
+(B[m[32m+            "---\ndescription: Guide page\n---\n# Guide\n",
+(B[m[32m+        ),
+(B[m     ]);
+     let surfaces = Surfaces {
+         pages: vec![
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-docs/tests/registered_generation.rs:172:
+[31m-            page("Home", "/", "Registered home", "<h1 id='content'>Home content</h1><a href='#content'>Home anchor</a>"),
+(B[m[31m-            page("Custom", "/custom/", "Custom", "<h2 id='content'>Custom content</h2><a href='#content'>Custom anchor</a>"),
+(B[m[32m+            page(
+(B[m[32m+                "Home",
+(B[m[32m+                "/",
+(B[m[32m+                "Registered home",
+(B[m[32m+                "<h1 id='content'>Home content</h1><a href='#content'>Home anchor</a>",
+(B[m[32m+            ),
+(B[m[32m+            page(
+(B[m[32m+                "Custom",
+(B[m[32m+                "/custom/",
+(B[m[32m+                "Custom",
+(B[m[32m+                "<h2 id='content'>Custom content</h2><a href='#content'>Custom anchor</a>",
+(B[m[32m+            ),
+(B[m         ],
+         slots: BTreeMap::from([
+[31m-            ("/".into(), BTreeMap::from([
+(B[m[31m-                (Slot::Header, "<span id='content-1'>Header</span>".into()),
+(B[m[31m-                (Slot::Footer, "<p id='content-2'>Footer</p>".into()),
+(B[m[31m-            ])),
+(B[m[31m-            ("/custom/".into(), BTreeMap::from([
+(B[m[31m-                (Slot::SidebarTop, "<span id='content-1'>Sidebar</span>".into()),
+(B[m[31m-                (Slot::AfterContent, "<p id='content-2'>After</p>".into()),
+(B[m[31m-            ])),
+(B[m[31m-            ("/404/".into(), BTreeMap::from([
+(B[m[31m-                (Slot::NotFound, "<p id='content'>Missing content</p><a href='#content'>Missing anchor</a>".into()),
+(B[m[31m-                (Slot::Header, "<span id='content-1'>Header</span>".into()),
+(B[m[31m-                (Slot::Footer, "<p id='content-2'>Footer</p>".into()),
+(B[m[31m-            ])),
+(B[m[32m+            (
+(B[m[32m+                "/".into(),
+(B[m[32m+                BTreeMap::from([
+(B[m[32m+                    (Slot::Header, "<span id='content-1'>Header</span>".into()),
+(B[m[32m+                    (Slot::Footer, "<p id='content-2'>Footer</p>".into()),
+(B[m[32m+                ]),
+(B[m[32m+            ),
+(B[m[32m+            (
+(B[m[32m+                "/custom/".into(),
+(B[m[32m+                BTreeMap::from([
+(B[m[32m+                    (
+(B[m[32m+                        Slot::SidebarTop,
+(B[m[32m+                        "<span id='content-1'>Sidebar</span>".into(),
+(B[m[32m+                    ),
+(B[m[32m+                    (Slot::AfterContent, "<p id='content-2'>After</p>".into()),
+(B[m[32m+                ]),
+(B[m[32m+            ),
+(B[m[32m+            (
+(B[m[32m+                "/404/".into(),
+(B[m[32m+                BTreeMap::from([
+(B[m[32m+                    (
+(B[m[32m+                        Slot::NotFound,
+(B[m[32m+                        "<p id='content'>Missing content</p><a href='#content'>Missing anchor</a>"
+(B[m[32m+                            .into(),
+(B[m[32m+                    ),
+(B[m[32m+                    (Slot::Header, "<span id='content-1'>Header</span>".into()),
+(B[m[32m+                    (Slot::Footer, "<p id='content-2'>Footer</p>".into()),
+(B[m[32m+                ]),
+(B[m[32m+            ),
+(B[m         ]),
+         ..Default::default()
+     };
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-docs/tests/registered_generation.rs:210:
+         ..Default::default()
+     };
+     let generation = fixture.generate(&surfaces, &Extensions::default()).unwrap();
+[31m-    assert_eq!(skip_target(&html(&generation, "custom/index.html")), "content");
+(B[m[32m+    assert_eq!(
+(B[m[32m+        skip_target(&html(&generation, "custom/index.html")),
+(B[m[32m+        "content"
+(B[m[32m+    );
+(B[m }
+ 
+ #[test]

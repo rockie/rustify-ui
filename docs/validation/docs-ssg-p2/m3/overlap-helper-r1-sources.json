@@ -1,0 +1,22 @@
+[
+  {
+    "path": "crates/rustify-docs-cli/src/rust_site.rs",
+    "sha256": "9a5a30da39a51ff3ce37a06d13b2883fc18cc8fc58bd81552f8590653fb5bad7",
+    "copy": "target/docs-ssg/m3-overlap-helper-r1-sources/crates/rustify-docs-cli/src/rust_site.rs"
+  },
+  {
+    "path": "crates/rustify-docs-cli/src/compile_proxy.rs",
+    "sha256": "37576a92d64fb4d3552c24a940787bd18832aba27a75e24a4be05c2a85de8941",
+    "copy": "target/docs-ssg/m3-overlap-helper-r1-sources/crates/rustify-docs-cli/src/compile_proxy.rs"
+  },
+  {
+    "path": "crates/rustify-docs-cli/src/main.rs",
+    "sha256": "fa2a1cd868040b90e75651901627ac73578a9f63d66391aa005c37d07110445e",
+    "copy": "target/docs-ssg/m3-overlap-helper-r1-sources/crates/rustify-docs-cli/src/main.rs"
+  },
+  {
+    "path": "crates/rustify-docs-cli/src/rendering.rs",
+    "sha256": "34b0114a2bc1725bc594a28fa8429b63736d943a859d4e5db89f4ade9d43e34d",
+    "copy": "target/docs-ssg/m3-overlap-helper-r1-sources/crates/rustify-docs-cli/src/rendering.rs"
+  }
+]

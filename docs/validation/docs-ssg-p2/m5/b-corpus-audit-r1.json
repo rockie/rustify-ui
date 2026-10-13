@@ -1,0 +1,77 @@
+{
+  "baseline_pages": 500,
+  "identical_original_content_files": 500,
+  "baseline_digest": "ecb43f7911fe7512bae279a0214aad39647052c28c3bd7c9a67f6745e4a889ac",
+  "p2_pages": 512,
+  "p2_languages": {
+    "en": 262,
+    "zh": 250
+  },
+  "demo_pages": [
+    {
+      "path": "content/p2/quickstart.md",
+      "route": "/p2/quickstart/",
+      "guide": "quickstart"
+    },
+    {
+      "path": "content/p2/architecture.md",
+      "route": "/p2/architecture/",
+      "guide": "architecture"
+    },
+    {
+      "path": "content/p2/navigation.md",
+      "route": "/p2/navigation/",
+      "guide": "navigation"
+    },
+    {
+      "path": "content/p2/workspace.md",
+      "route": "/p2/workspace/",
+      "guide": "workspace"
+    },
+    {
+      "path": "content/p2/forms.md",
+      "route": "/p2/forms/",
+      "guide": "forms"
+    },
+    {
+      "path": "content/p2/i18n.md",
+      "route": "/p2/i18n/",
+      "guide": "i18n"
+    },
+    {
+      "path": "content/p2/data.md",
+      "route": "/p2/data/",
+      "guide": "data"
+    },
+    {
+      "path": "content/p2/themes.md",
+      "route": "/p2/themes/",
+      "guide": "themes"
+    },
+    {
+      "path": "content/p2/utility.md",
+      "route": "/p2/utility/",
+      "guide": "utility"
+    },
+    {
+      "path": "content/p2/compatibility.md",
+      "route": "/p2/compatibility/",
+      "guide": "compatibility"
+    },
+    {
+      "path": "content/p2/components.md",
+      "route": "/p2/components/",
+      "guide": "components"
+    },
+    {
+      "path": "content/p2/vellum.md",
+      "route": "/p2/vellum/",
+      "guide": "vellum"
+    }
+  ],
+  "profile_sha256": "7c090aa2064f0c843164f70c7488ea9f3514c7f43bf96ece66de6dae06e306d5",
+  "fixture_lock_sha256": "ba3df35545aff9fc21e81d26b9011a7821af53c6f36e5aa92bb57881e60f15b9",
+  "input_digest": "6052f953c1135b94f16e9e6c1425a8f555c2f1c5b47c523530370f1f07ced3d3",
+  "generated_author_inputs": 520,
+  "passed": true
+}

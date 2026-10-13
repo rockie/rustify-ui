@@ -6,6 +6,7 @@
 //! root (the directory holding the file); the URL base is normalized once
 //! here and every URL the build writes goes through it.
 
+use std::collections::BTreeSet;
 use std::ops::Range;
 
 use serde::Deserialize;
@@ -23,7 +24,7 @@ struct RawConfig {
     schema_version: Spanned<u32>,
     site: RawSite,
     #[serde(default)]
-    content: RawDir,
+    content: RawContent,
     #[serde(default)]
     assets: RawDir,
     #[serde(default)]
@@ -58,6 +59,13 @@ struct RawSite {
 
 #[derive(Default, Deserialize)]
 #[serde(deny_unknown_fields)]
+struct RawContent {
+    dir: Option<Spanned<String>>,
+    include: Option<Vec<Spanned<String>>>,
+}
+
+#[derive(Default, Deserialize)]
+#[serde(deny_unknown_fields)]
 struct RawDir {
     dir: Option<Spanned<String>>,
 }
@@ -82,6 +90,7 @@ struct RawRepo {
 #[derive(Default, Deserialize)]
 #[serde(deny_unknown_fields)]
 struct RawTheme {
+    document: Option<Spanned<String>>,
     primary: Option<Spanned<RawPair>>,
     logo: Option<Spanned<RawLogo>>,
 }
@@ -117,6 +126,7 @@ struct RawGroup {
     label: String,
     dir: Option<Spanned<String>>,
     items: Option<Vec<Spanned<String>>>,
+    routes: Option<Vec<Spanned<String>>>,
     scope: Option<Spanned<String>>,
 }
 
@@ -139,10 +149,15 @@ pub struct Config {
     pub site: SiteConfig,
     /// Directories relative to the project root, normalized with `/`.
     pub content_dir: String,
+    /// Explicit content-relative Markdown files and their configuration spans.
+    /// `None` discovers recursively; an empty list selects no Markdown pages.
+    pub content_include: Option<Vec<(String, Range<usize>)>>,
     pub assets_dir: String,
     pub out_dir: String,
     pub repo: Option<Repo>,
     pub primary: Option<Pair>,
+    /// A project-relative Theme Studio JSON file and its configuration span.
+    pub theme_document: Option<(String, Range<usize>)>,
     pub logo: Option<Logo>,
     pub nav: Nav,
     pub dev_port: u16,
@@ -209,6 +224,8 @@ pub enum GroupSource {
     Dir { dir: String, span: Range<usize> },
     /// These Markdown files, relative to the content directory, in order.
     Items(Vec<(String, Range<usize>)>),
+    /// Registered page routes, without the deployment base, in order.
+    Routes(Vec<(String, Range<usize>)>),
 }
 
 #[derive(Clone, Debug, PartialEq, Eq)]
@@ -367,6 +384,41 @@ pub fn parse(text: &str) -> Result<(Config, Vec<Issue>), Vec<Issue>> {
         let (registry, _) = path(Some(rust.registry), "site/src/lib.rs", "rust.registry");
         RustConfig { manifest, registry }
     });
+    let theme_document = raw
+        .theme
+        .document
+        .map(|document| path(Some(document), "theme.json", "theme.document"));
+    let content_include = raw.content.include.map(|files| {
+        let mut selected = BTreeSet::new();
+        files.into_iter().filter_map(|file| {
+            let span = file.span();
+            let literal = file.into_inner();
+            if literal.contains(['*', '?', '[', ']', '{', '}']) {
+                errors.push(error(span, "content-include", "content.include names literal Markdown files; glob patterns are not supported"));
+                return None;
+            }
+            let file = match relative_path(&literal) {
+                Ok(file) => file,
+                Err(message) => {
+                    errors.push(error(span, "content-include", format!("content.include: {message}")));
+                    return None;
+                }
+            };
+            if !file.ends_with(".md") {
+                errors.push(error(span, "content-include", "content.include must name a Markdown file ending in `.md`"));
+                return None;
+            }
+            if crate::content::is_private(&format!("{content_dir}/{file}")) {
+                errors.push(error(span, "content-include", "content.include cannot select a private path"));
+                return None;
+            }
+            if !selected.insert(file.clone()) {
+                errors.push(error(span, "content-include", format!("content.include lists `{file}` more than once")));
+                return None;
+            }
+            Some((file, span))
+        }).collect()
+    });
     let inside = |inner: &str, outer: &str| {
         outer.is_empty() || inner == outer || inner.starts_with(&format!("{outer}/"))
     };
@@ -390,6 +442,29 @@ pub fn parse(text: &str) -> Result<(Config, Vec<Issue>), Vec<Issue>> {
                     format!("build.out `{out_dir}` would replace {name} `{input}`"),
                 ));
             }
+        }
+    }
+    if let Some((document, span)) = &theme_document {
+        if crate::content::is_private(document) {
+            errors.push(error(
+                span.clone(),
+                "config-path",
+                "theme.document is a private project path",
+            ));
+        }
+        if inside(document, &out_dir) {
+            errors.push(error(
+                out_span.clone(),
+                "config-out",
+                "build.out would replace theme.document",
+            ));
+        }
+        if raw.theme.primary.is_some() {
+            errors.push(error(
+                span.clone(),
+                "config-theme",
+                "theme.document and theme.primary cannot both define the site's theme",
+            ));
         }
     }
     if out_dir.is_empty() {
@@ -581,8 +656,8 @@ pub fn parse(text: &str) -> Result<(Config, Vec<Issue>), Vec<Issue>> {
                 }
             },
         };
-        let source = match (group.dir, group.items) {
-            (Some(dir), None) => match relative_path(dir.get_ref()) {
+        let source = match (group.dir, group.items, group.routes) {
+            (Some(dir), None, None) => match relative_path(dir.get_ref()) {
                 Ok(path) => GroupSource::Dir {
                     dir: path,
                     span: dir.span(),
@@ -596,7 +671,7 @@ pub fn parse(text: &str) -> Result<(Config, Vec<Issue>), Vec<Issue>> {
                     continue;
                 }
             },
-            (None, Some(items)) => {
+            (None, Some(items), None) => {
                 let mut list = Vec::new();
                 for item in items {
                     match relative_path(item.get_ref()) {
@@ -606,12 +681,25 @@ pub fn parse(text: &str) -> Result<(Config, Vec<Issue>), Vec<Issue>> {
                 }
                 GroupSource::Items(list)
             }
+            (None, None, Some(routes)) => {
+                let mut list = Vec::new();
+                for route in routes {
+                    let value = route.get_ref();
+                    match normalize_base(value) {
+                        Ok(normalized) if normalized == *value => {
+                            list.push((normalized, route.span()));
+                        }
+                        _ => errors.push(error(route.span(), "config-nav", "nav.routes needs canonical routes like `/custom/`, without the deployment base, query or fragment")),
+                    }
+                }
+                GroupSource::Routes(list)
+            }
             _ => {
                 errors.push(error(
                     0..0,
                     "config-nav",
                     format!(
-                        "nav group `{}` needs exactly one of `dir` and `items`",
+                        "nav group `{}` needs exactly one of `dir`, `items` and `routes`",
                         group.label
                     ),
                 ));
@@ -654,10 +742,12 @@ pub fn parse(text: &str) -> Result<(Config, Vec<Issue>), Vec<Issue>> {
                 image,
             },
             content_dir,
+            content_include,
             assets_dir,
             out_dir,
             repo,
             primary,
+            theme_document,
             logo,
             nav,
             dev_port: raw.dev.port.unwrap_or(DEFAULT_DEV_PORT),
@@ -717,6 +807,74 @@ mod tests {
                 registry: "site/src/lib.rs".into(),
             })
         );
+    }
+
+    #[test]
+    fn static_theme_and_registered_navigation_are_known_configuration() {
+        let text = format!(
+            "{MINIMAL}[theme]\ndocument = \"themes/paper.json\"\n\
+             [[nav.groups]]\nlabel = \"Examples\"\nroutes = [\"/second/\", \"/first/\"]\n"
+        );
+        assert!(
+            parse(&text).is_ok(),
+            "{}",
+            parse(&text).unwrap_err()[0].message
+        );
+    }
+
+    #[test]
+    fn theme_document_rejects_conflicting_primary_and_unsafe_paths() {
+        let text = format!(
+            "{MINIMAL}[theme]\ndocument = \"themes/paper.json\"\n\
+             primary = {{ light = \"#175cd3\", dark = \"#53b1fd\" }}\n"
+        );
+        let errors = parse(&text).unwrap_err();
+        assert!(errors.iter().any(|issue| issue.rule == "config-theme"));
+        for path in [
+            "../outside.json",
+            "/outside.json",
+            ".git/theme.json",
+            "dist/theme.json",
+        ] {
+            let text = format!("{MINIMAL}[theme]\ndocument = \"{path}\"\n");
+            let errors = parse(&text).unwrap_err();
+            assert!(
+                errors
+                    .iter()
+                    .any(|issue| matches!(issue.rule, "config-path" | "config-out")),
+                "{path}: {errors:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn registered_navigation_requires_one_source_and_canonical_routes() {
+        for extra in ["dir = \"guide\"", "items = [\"guide.md\"]"] {
+            let text = format!(
+                "{MINIMAL}[[nav.groups]]\nlabel = \"Examples\"\nroutes = [\"/custom/\"]\n{extra}\n"
+            );
+            assert!(parse(&text)
+                .unwrap_err()
+                .iter()
+                .any(|issue| issue.rule == "config-nav"));
+        }
+        for route in [
+            "custom/",
+            "/custom",
+            "/a/../b/",
+            "/custom/?query",
+            "/custom/#anchor",
+        ] {
+            let text =
+                format!("{MINIMAL}[[nav.groups]]\nlabel = \"Examples\"\nroutes = [\"{route}\"]\n");
+            assert!(
+                parse(&text)
+                    .unwrap_err()
+                    .iter()
+                    .any(|issue| issue.rule == "config-nav"),
+                "{route}"
+            );
+        }
     }
 
     #[test]

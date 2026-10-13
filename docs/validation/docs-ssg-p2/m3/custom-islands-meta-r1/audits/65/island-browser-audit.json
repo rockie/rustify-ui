@@ -1,0 +1,36 @@
+{
+  "requests": [
+    "http://127.0.0.1:4197/rustify-ui/counter/",
+    "http://127.0.0.1:4197/rustify-ui/assets/site.b3c499257f.css",
+    "http://127.0.0.1:4197/rustify-ui/assets/mode.5e2c2584b0.js",
+    "http://127.0.0.1:4197/rustify-ui/assets/site.2529a0d647.js",
+    "http://127.0.0.1:4197/rustify-ui/assets/islands/465008016dabb818aeee6f6c88af31e07af719ea76a73cb45e17e5bb9a8342d3/islands.js",
+    "http://127.0.0.1:4197/rustify-ui/assets/fonts/371924e7480d3d01807fdc1bd30442d0a6651e6b5ea546482f5883d613cf0419.ttf",
+    "http://127.0.0.1:4197/rustify-ui/assets/fonts/662a196d58f1183bf2d77428b6d5283fe3f45161ab021bea4036bc98e5cac016.ttf",
+    "http://127.0.0.1:4197/rustify-ui/assets/islands/465008016dabb818aeee6f6c88af31e07af719ea76a73cb45e17e5bb9a8342d3/dom-loader.js",
+    "http://127.0.0.1:4197/rustify-ui/assets/islands/465008016dabb818aeee6f6c88af31e07af719ea76a73cb45e17e5bb9a8342d3/app_bg.wasm",
+    "http://127.0.0.1:4197/rustify-ui/assets/islands/465008016dabb818aeee6f6c88af31e07af719ea76a73cb45e17e5bb9a8342d3/app.js",
+    "http://127.0.0.1:4197/rustify-ui/assets/islands/465008016dabb818aeee6f6c88af31e07af719ea76a73cb45e17e5bb9a8342d3/snippets/rustify-ui-4db2f10f10788f4c/web/dom-runtime.js"
+  ],
+  "failures": [],
+  "responses": [],
+  "console": [
+    {
+      "text": "Interactive examples failed {keys: Array(4), error: the generated scope identity does not match}",
+      "url": "http://127.0.0.1:4197/rustify-ui/assets/mode.5e2c2584b0.js"
+    }
+  ],
+  "pageErrors": [],
+  "browser": {
+    "csp": [],
+    "state": "failed",
+    "failure": "the generated scope identity does not match",
+    "stats": {
+      "tasks": 0,
+      "timers": 0,
+      "observers": 0,
+      "errors": 0,
+      "aborted": true
+    }
+  }
+}

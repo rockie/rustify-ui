@@ -1,0 +1,58 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-docs v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-docs)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.34s
+     Running tests/registered_generation.rs (target/debug/deps/registered_generation-239eef530cf49654)
+
+running 16 tests
+test analyzed_svg_use_rejects_an_absent_target_before_generation ... ok
+test markdown_home_content_heading_keeps_the_hero_anchor_and_a_unique_main_target ... FAILED
+test a_hidden_only_source_image_candidate_hashes_its_url_without_renaming_the_selector ... ok
+test a_theme_document_inside_static_is_input_only_and_never_published ... ok
+test final_tree_ignores_template_and_textarea_ghosts_but_keeps_foreign_integration_links ... ok
+test final_document_rejects_an_id_discarded_by_body_attribute_merging ... ok
+test markdown_content_heading_keeps_its_body_anchor_and_a_unique_main_target ... FAILED
+test markdown_only_repeated_titles_keep_the_existing_disambiguation ... ok
+test registered_home_custom_and_not_found_skip_targets_avoid_live_body_and_slot_ids ... FAILED
+test seven_slots_keep_live_ids_and_references_in_the_final_documents ... ok
+test stored_template_and_textarea_content_do_not_reserve_a_live_main_target ... ok
+test registered_document_titles_cannot_collide_with_markdown_or_its_qualified_title ... ok
+test island_and_font_assets_cannot_publish_a_parent_file_and_child_path ... ok
+test hidden_candidate_urls_keep_query_fragments_quoted_escapes_and_arbitrary_spaces ... ok
+test output_file_and_directory_segments_cannot_overlap_across_origins ... ok
+test slot_ids_cannot_duplicate_fixed_framework_or_body_ids ... ok
+
+failures:
+
+---- markdown_home_content_heading_keeps_the_hero_anchor_and_a_unique_main_target stdout ----
+
+thread 'markdown_home_content_heading_keeps_the_hero_anchor_and_a_unique_main_target' (41256018) panicked at crates/rustify-docs/tests/registered_generation.rs:156:10:
+called `Result::unwrap()` on an `Err` value: [Diagnostic { file: Some("content/index.md"), line: None, column: None, severity: Error, rule: "output-check", message: "generated `index.html` has duplicate document id `#content`", suggestion: None }]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- markdown_content_heading_keeps_its_body_anchor_and_a_unique_main_target stdout ----
+
+thread 'markdown_content_heading_keeps_its_body_anchor_and_a_unique_main_target' (41256017) panicked at crates/rustify-docs/tests/registered_generation.rs:137:10:
+called `Result::unwrap()` on an `Err` value: [Diagnostic { file: Some("content/guide.md"), line: None, column: None, severity: Error, rule: "output-check", message: "generated `guide/index.html` has duplicate document id `#content`", suggestion: None }]
+
+---- registered_home_custom_and_not_found_skip_targets_avoid_live_body_and_slot_ids stdout ----
+
+thread 'registered_home_custom_and_not_found_skip_targets_avoid_live_body_and_slot_ids' (41256022) panicked at crates/rustify-docs/tests/registered_generation.rs:192:74:
+called `Result::unwrap()` on an `Err` value: [Diagnostic { file: Some("404.html"), line: None, column: None, severity: Error, rule: "output-check", message: "generated `404.html` has duplicate document id `#content`", suggestion: None }, Diagnostic { file: Some("src/pages.rs"), line: None, column: None, severity: Error, rule: "output-check", message: "generated `custom/index.html` has duplicate document id `#content`", suggestion: None }, Diagnostic { file: Some("src/pages.rs"), line: None, column: None, severity: Error, rule: "output-check", message: "generated `index.html` has duplicate document id `#content`", suggestion: None }]
+
+
+failures:
+    markdown_content_heading_keeps_its_body_anchor_and_a_unique_main_target
+    markdown_home_content_heading_keeps_the_hero_anchor_and_a_unique_main_target
+    registered_home_custom_and_not_found_skip_targets_avoid_live_body_and_slot_ids
+
+test result: FAILED. 13 passed; 3 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.34s
+
+error: test failed, to rerun pass `-p rustify-docs --test registered_generation`
+mbx[cache]: 0 hits, 0 misses, 1 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: escorted 1.7 TiB logical of ownerless outputs off the premises.

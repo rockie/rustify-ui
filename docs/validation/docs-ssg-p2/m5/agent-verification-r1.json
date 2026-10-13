@@ -1,0 +1,206 @@
+{
+  "scope": "M5 local official-site verification; DOM only. Worktree candidate, no distribution, Safari, physical-device, real-user or online-release claim.",
+  "binary": {
+    "path": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-cli/rustify-docs",
+    "version": "rustify-docs 0.1.9",
+    "build_info": "rustify-docs 0.1.9\npanic: unwind\ngrammars: syntect-5.3.0+two-face-0.5.2+bat-0.26.1+fancy\nsource: 2d6b0a73ad887769c0bad209acabd47382659df5",
+    "sha256": "bf39e6ea48bac44d590344e7e72fc3ed2b6f547d869670f9e4b46a260eab60d8"
+  },
+  "browser": {
+    "configured_executable": null,
+    "default_playwright_executable": "/Users/rockie/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing",
+    "scope": "Playwright Chromium local browser verification; no Safari, physical-device, human-user or online release claim"
+  },
+  "projects": [
+    {
+      "project": "official-subpath",
+      "evidence": "docs/validation/docs-ssg-p2/m5/official-subpath-r5",
+      "stats": {
+        "startTime": "2026-10-13T19:16:54.014Z",
+        "duration": 22563.468999999997,
+        "expected": 47,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "command": {
+        "command": [
+          "npx",
+          "playwright",
+          "test",
+          "-c",
+          "playwright.docs.config.ts",
+          "--project=official-subpath",
+          "tests/docs-ssg/official.spec.ts",
+          "--reporter=list,json",
+          "--output",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-subpath-r5/artifacts"
+        ],
+        "RUSTIFY_DOCS_BIN": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-cli/rustify-docs",
+        "started_at": "2026-10-13T19:16:53.266Z"
+      }
+    },
+    {
+      "project": "official-root",
+      "evidence": "docs/validation/docs-ssg-p2/m5/official-root-r2",
+      "stats": {
+        "startTime": "2026-10-13T19:18:29.274Z",
+        "duration": 22652.226000000002,
+        "expected": 47,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "command": {
+        "command": [
+          "npx",
+          "playwright",
+          "test",
+          "-c",
+          "playwright.docs.config.ts",
+          "--project=official-root",
+          "tests/docs-ssg/official.spec.ts",
+          "--reporter=list,json",
+          "--output",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-root-r2/artifacts"
+        ],
+        "RUSTIFY_DOCS_BIN": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-cli/rustify-docs",
+        "started_at": "2026-10-13T19:18:28.519Z"
+      }
+    },
+    {
+      "project": "official-meta",
+      "evidence": "docs/validation/docs-ssg-p2/m5/official-meta-r2",
+      "stats": {
+        "startTime": "2026-10-13T19:19:32.386Z",
+        "duration": 22661.103000000003,
+        "expected": 47,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "command": {
+        "command": [
+          "npx",
+          "playwright",
+          "test",
+          "-c",
+          "playwright.docs.config.ts",
+          "--project=official-meta",
+          "tests/docs-ssg/official.spec.ts",
+          "--reporter=list,json",
+          "--output",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-meta-r2/artifacts"
+        ],
+        "RUSTIFY_DOCS_BIN": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-cli/rustify-docs",
+        "started_at": "2026-10-13T19:19:31.539Z"
+      }
+    }
+  ],
+  "imported_theme": {
+    "stats": {
+      "startTime": "2026-10-13T19:23:20.004Z",
+      "duration": 99185.99,
+      "expected": 1,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "evidence": "docs/validation/docs-ssg-p2/m5/imported-theme-browser-r1"
+  },
+  "actual_root_dev": {
+    "passed": true,
+    "phases": 11,
+    "retained_demo": {
+      "same_root": true,
+      "all_original_nodes": true,
+      "state": "1"
+    },
+    "source_restored": true,
+    "no_errors": true,
+    "evidence": "docs/validation/docs-ssg-p2/m5/official-dev-r2"
+  },
+  "native": {
+    "ssr_clippy": {
+      "exit_code": 0,
+      "manifest": "site/Cargo.toml",
+      "target_dir": "target/m5-site-check",
+      "profile": "docs-host",
+      "features": "ssr",
+      "all_targets": true,
+      "warnings_denied": true,
+      "log": "docs/validation/docs-ssg-p2/m5/site-ssr-clippy-r2.log"
+    },
+    "hydrate_check": {
+      "exit_code": 0,
+      "manifest": "site/Cargo.toml",
+      "target_dir": "target/m5-site-check",
+      "profile": "docs-wasm",
+      "target": "wasm32-unknown-unknown",
+      "features": "hydrate",
+      "log": "docs/validation/docs-ssg-p2/m5/site-hydrate-check-r1.log"
+    },
+    "graphs": {
+      "passed": true,
+      "evidence": "docs/validation/docs-ssg-p2/m5/official-graphs-r2"
+    },
+    "locks": {
+      "unchanged": true,
+      "files": [
+        {
+          "file": "site/Cargo.lock",
+          "sha256": "8612e4296225fcea2a97374b4eaabaef39d8b65412587af8997fcbebe5f8e37f"
+        },
+        {
+          "file": "Cargo.lock",
+          "sha256": "e064c9abce3d3a0de3bb6e591db56bdf14dfc130663178f6bac4d97ecc32e014"
+        }
+      ]
+    }
+  },
+  "final_build": {
+    "cli": "0.1.9",
+    "build_id": "aa807b7d63c1f714",
+    "base": "/rustify-ui/",
+    "files": 53,
+    "pages_including_404": 38,
+    "errors": 0,
+    "warnings": 14,
+    "evidence": "docs/validation/docs-ssg-p2/m5/official-build-r3.json",
+    "audit": "docs/validation/docs-ssg-p2/m5/artifact-audit-r2.json",
+    "same_compiled_wasm": true,
+    "same_compiled_wasm_evidence": "docs/validation/docs-ssg-p2/m5/same-wasm-candidate-r1.json"
+  },
+  "bounded_review": {
+    "first_batch": "docs/validation/docs-ssg-p2/m5/official-subpath-r3/capture-batch",
+    "one_final_batch": "docs/validation/docs-ssg-p2/m5/official-subpath-r5/capture-batch",
+    "images": 9
+  },
+  "preserved_failures": {
+    "link_original": "docs/validation/docs-ssg-p2/m5/official-subpath-r1",
+    "link_exact_poll": "docs/validation/docs-ssg-p2/m5/official-subpath-r2",
+    "link_native_event_probe": "docs/validation/docs-ssg-p2/m5/link-navigation-probe-r1",
+    "default_dark_visual": "docs/validation/docs-ssg-p2/m5/official-subpath-r3/capture-batch/official-category-desktop-dark.png",
+    "default_dark_actual_css": "docs/validation/docs-ssg-p2/m5/dark-table-probe-r2",
+    "default_dark_strict_regression": "docs/validation/docs-ssg-p2/m5/official-subpath-r4",
+    "graph_driver_stdout_buffer": {
+      "product_failure": false,
+      "error": "ENOBUFS",
+      "reproduced": "docs/validation/docs-ssg-p2/m5/graph-runner-buffer-attribution-r1.json",
+      "original": "docs/validation/docs-ssg-p2/m5/official-graphs-r1",
+      "corrected": "docs/validation/docs-ssg-p2/m5/official-graphs-r2"
+    }
+  },
+  "ownership": {
+    "all_own_browser_compiler_preview_dev_processes_closed": true,
+    "previous_unrelated_pid97047_untouched": true,
+    "temporary_source_and_symlink_probes_removed": true,
+    "resource_handoff_to_root": true
+  },
+  "source_changes": {
+    "owned_test": "tests/docs-ssg/official.spec.ts",
+    "evidence_drivers": "docs/validation/docs-ssg-p2/m5/",
+    "authorized_skeleton_cleanup": "site/static/.gitkeep only empty Root-created placeholder",
+    "implementation_fixes": "Root owned Link document target and default Docs scope token inheritance; no SDK/CLI source edits by this agent"
+  }
+}

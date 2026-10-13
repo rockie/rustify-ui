@@ -469,8 +469,11 @@ test("HTML templates at foreign integration points recover from ghost links", as
 });
 
 test("a failed build keeps the page readable under a panel that hides to a marker and clears on the fix", async ({ page }) => {
+    site.write("content/guide/setup.md", `${site.read("content/guide/setup.md")}\n\n## Content\n\nThe author's heading keeps its own anchor.\n`);
     const server = await dev();
     await page.goto(`${server.url}guide/setup/`);
+    await expect(page.locator("h2#content")).toHaveText("Content");
+    await expect(page.locator("main")).toHaveAttribute("id", "content-1");
     await mark(page);
     const before = await seen(page);
     site.edit("content/guide/setup.md", "Run `rustify-docs --version`", `${BROKEN} Run \`rustify-docs --version\``);
@@ -509,7 +512,7 @@ test("a failed build keeps the page readable under a panel that hides to a marke
     await expect(marker).toBeHidden();
     await expect(panel).toBeHidden();
     // Focus was on the marker: it continues from the page's content.
-    await expect(page.locator("#content")).toBeFocused();
+    await expect(page.locator("main")).toBeFocused();
     await expect(page.getByRole("status").filter({ hasText: "Problems fixed" })).toHaveCount(1);
     expect(await kept(page), "the fixed page was the last good one").toBe(true);
     expect(before).toBeGreaterThan(0);

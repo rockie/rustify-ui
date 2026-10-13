@@ -1,0 +1,129 @@
+npm notice run rustify-ui-browser-tests@0.1.0 npx
+npm notice run 'playwright' test -c playwright.docs.config.ts --project=official-subpath tests/docs-ssg/official.spec.ts --reporter=list,json --output /Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/official-subpath-r3/artifacts
+[WebServer] building /Users/rockie/Documents/gh-rockie/rustify-ui into /Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/http/official/subpath/dist
+[WebServer] warning[rust-compile]: warning: method `fallback_element` is never used
+[WebServer]    --> /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui/src/overlay.rs:349:23
+[WebServer]     |
+[WebServer] 284 |     impl OverlayStack {
+[WebServer]     |     ----------------- method in this implementation
+[WebServer] ...
+[WebServer] 349 |         pub(crate) fn fallback_element(&self) -> Element {
+[WebServer]     |                       ^^^^^^^^^^^^^^^^
+[WebServer]     |
+[WebServer]     = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+[WebServer] 
+[WebServer] 
+[WebServer]   --> crates/rustify-ui/src/overlay.rs:349:23
+[WebServer]   = help: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+[WebServer] warning[rust-compile]: warning: field `guest_click` is never read
+[WebServer]    --> /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui/src/router.rs:556:9
+[WebServer]     |
+[WebServer] 549 |     struct Router {
+[WebServer]     |            ------ field in this struct
+[WebServer] ...
+[WebServer] 556 |         guest_click: Option<SendWrapper<Rc<GuestClick>>>,
+[WebServer]     |         ^^^^^^^^^^^
+[WebServer]     |
+[WebServer]     = note: `Router` has a derived impl for the trait `Clone`, but this is intentionally ignored during dead code analysis
+[WebServer] 
+[WebServer] 
+[WebServer]   --> crates/rustify-ui/src/router.rs:556:9
+[WebServer]   = help: `Router` has a derived impl for the trait `Clone`, but this is intentionally ignored during dead code analysis
+[WebServer] warning[missing-description]: no `description:`; the first paragraph is used
+[WebServer]   --> docs/architecture.md
+[WebServer]   = help: add `description:` to the frontmatter
+[WebServer] warning[missing-description]: no `description:`; the first paragraph is used
+[WebServer]   --> docs/compatibility.md
+[WebServer]   = help: add `description:` to the frontmatter
+[WebServer] warning[missing-description]: no `description:`; the first paragraph is used
+[WebServer]   --> docs/components.md
+[WebServer]   = help: add `description:` to the frontmatter
+[WebServer] warning[missing-description]: no `description:`; the first paragraph is used
+[WebServer]   --> docs/data.md
+[WebServer]   = help: add `description:` to the frontmatter
+[WebServer] warning[missing-description]: no `description:`; the first paragraph is used
+[WebServer]   --> docs/forms.md
+[WebServer]   = help: add `description:` to the frontmatter
+[WebServer] warning[missing-description]: no `description:`; the first paragraph is used
+[WebServer]   --> docs/i18n.md
+[WebServer]   = help: add `description:` to the frontmatter
+[WebServer] warning[missing-description]: no `description:`; the first paragraph is used
+[WebServer]   --> docs/navigation.md
+[WebServer]   = help: add `description:` to the frontmatter
+[WebServer] warning[missing-description]: no `description:`; the first paragraph is used
+[WebServer]   --> docs/quickstart.md
+[WebServer]   = help: add `description:` to the frontmatter
+[WebServer] warning[missing-description]: no `description:`; the first paragraph is used
+[WebServer]   --> docs/themes.md
+[WebServer]   = help: add `description:` to the frontmatter
+[WebServer] warning[missing-description]: no `description:`; the first paragraph is used
+[WebServer]   --> docs/utility.md
+[WebServer]   = help: add `description:` to the frontmatter
+[WebServer] warning[missing-description]: no `description:`; the first paragraph is used
+[WebServer]   --> docs/vellum.md
+[WebServer]   = help: add `description:` to the frontmatter
+[WebServer] warning[missing-description]: no `description:`; the first paragraph is used
+[WebServer]   --> docs/workspace.md
+[WebServer]   = help: add `description:` to the frontmatter
+[WebServer] build: 37 pages and 404.html in /Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/http/official/subpath/dist: 13221.3 KB in 53 files, 14 warning(s), 88064 ms
+[WebServer] largest pages:
+[WebServer]     168.4 KB  components/data-table/index.html
+[WebServer]     156.2 KB  components/tree/index.html
+[WebServer]     141.6 KB  components/menu/index.html
+[WebServer]     140.4 KB  components/scroll-area/index.html
+[WebServer]     140.1 KB  components/tabs/index.html
+[WebServer] serving /Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/http/official/subpath/dist (built by rustify-docs 0.1.8, build 65735c210d9158f3) until stopped
+
+Running 47 tests using 1 worker
+
+(node:66961) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 [official-subpath] › tests/docs-ssg/official.spec.ts:200:1 › home has one English title, the original README introduction and two first-viewport ordinary actions (241ms)
+  ✓   2 [official-subpath] › tests/docs-ssg/official.spec.ts:217:1 › the ordinary sidebar contains the exact twelve guides and CATALOG pages in configured order (220ms)
+  ✓   3 [official-subpath] › tests/docs-ssg/official.spec.ts:226:29 › guide quickstart/ is English, reachable and requests no wasm (100ms)
+  ✓   4 [official-subpath] › tests/docs-ssg/official.spec.ts:226:29 › guide architecture/ is English, reachable and requests no wasm (86ms)
+  ✓   5 [official-subpath] › tests/docs-ssg/official.spec.ts:226:29 › guide navigation/ is English, reachable and requests no wasm (80ms)
+  ✓   6 [official-subpath] › tests/docs-ssg/official.spec.ts:226:29 › guide workspace/ is English, reachable and requests no wasm (77ms)
+  ✓   7 [official-subpath] › tests/docs-ssg/official.spec.ts:226:29 › guide forms/ is English, reachable and requests no wasm (76ms)
+  ✓   8 [official-subpath] › tests/docs-ssg/official.spec.ts:226:29 › guide i18n/ is English, reachable and requests no wasm (79ms)
+  ✓   9 [official-subpath] › tests/docs-ssg/official.spec.ts:226:29 › guide data/ is English, reachable and requests no wasm (81ms)
+  ✓  10 [official-subpath] › tests/docs-ssg/official.spec.ts:226:29 › guide themes/ is English, reachable and requests no wasm (96ms)
+  ✓  11 [official-subpath] › tests/docs-ssg/official.spec.ts:226:29 › guide utility/ is English, reachable and requests no wasm (80ms)
+  ✓  12 [official-subpath] › tests/docs-ssg/official.spec.ts:226:29 › guide compatibility/ is English, reachable and requests no wasm (81ms)
+  ✓  13 [official-subpath] › tests/docs-ssg/official.spec.ts:226:29 › guide components/ is English, reachable and requests no wasm (80ms)
+  ✓  14 [official-subpath] › tests/docs-ssg/official.spec.ts:226:29 › guide vellum/ is English, reachable and requests no wasm (85ms)
+  ✓  15 [official-subpath] › tests/docs-ssg/official.spec.ts:232:33 › CATALOG button uses its actual function, source and live control (303ms)
+  ✓  16 [official-subpath] › tests/docs-ssg/official.spec.ts:232:33 › CATALOG label uses its actual function, source and live control (332ms)
+  ✓  17 [official-subpath] › tests/docs-ssg/official.spec.ts:232:33 › CATALOG link uses its actual function, source and live control (1.8s)
+  ✓  18 [official-subpath] › tests/docs-ssg/official.spec.ts:232:33 › CATALOG icon uses its actual function, source and live control (329ms)
+  ✓  19 [official-subpath] › tests/docs-ssg/official.spec.ts:232:33 › CATALOG text field uses its actual function, source and live control (303ms)
+  ✓  20 [official-subpath] › tests/docs-ssg/official.spec.ts:232:33 › CATALOG text area uses its actual function, source and live control (299ms)
+  ✓  21 [official-subpath] › tests/docs-ssg/official.spec.ts:232:33 › CATALOG checkbox uses its actual function, source and live control (319ms)
+  ✓  22 [official-subpath] › tests/docs-ssg/official.spec.ts:232:33 › CATALOG radio uses its actual function, source and live control (309ms)
+  ✓  23 [official-subpath] › tests/docs-ssg/official.spec.ts:232:33 › CATALOG switch uses its actual function, source and live control (302ms)
+  ✓  24 [official-subpath] › tests/docs-ssg/official.spec.ts:232:33 › CATALOG select uses its actual function, source and live control (411ms)
+  ✓  25 [official-subpath] › tests/docs-ssg/official.spec.ts:232:33 › CATALOG slider uses its actual function, source and live control (318ms)
+  ✓  26 [official-subpath] › tests/docs-ssg/official.spec.ts:232:33 › CATALOG progress uses its actual function, source and live control (322ms)
+  ✓  27 [official-subpath] › tests/docs-ssg/official.spec.ts:232:33 › CATALOG loading uses its actual function, source and live control (322ms)
+  ✓  28 [official-subpath] › tests/docs-ssg/official.spec.ts:232:33 › CATALOG tooltip uses its actual function, source and live control (366ms)
+  ✓  29 [official-subpath] › tests/docs-ssg/official.spec.ts:232:33 › CATALOG menu uses its actual function, source and live control (423ms)
+  ✓  30 [official-subpath] › tests/docs-ssg/official.spec.ts:232:33 › CATALOG dialog uses its actual function, source and live control (449ms)
+  ✓  31 [official-subpath] › tests/docs-ssg/official.spec.ts:232:33 › CATALOG tabs uses its actual function, source and live control (367ms)
+  ✓  32 [official-subpath] › tests/docs-ssg/official.spec.ts:232:33 › CATALOG scroll area uses its actual function, source and live control (466ms)
+  ✓  33 [official-subpath] › tests/docs-ssg/official.spec.ts:232:33 › CATALOG data table uses its actual function, source and live control (354ms)
+  ✓  34 [official-subpath] › tests/docs-ssg/official.spec.ts:232:33 › CATALOG tree uses its actual function, source and live control (374ms)
+  ✓  35 [official-subpath] › tests/docs-ssg/official.spec.ts:232:33 › CATALOG toast uses its actual function, source and live control (399ms)
+  ✓  36 [official-subpath] › tests/docs-ssg/official.spec.ts:232:33 › CATALOG number field uses its actual function, source and live control (327ms)
+  ✓  37 [official-subpath] › tests/docs-ssg/official.spec.ts:232:33 › CATALOG color field uses its actual function, source and live control (488ms)
+  ✓  38 [official-subpath] › tests/docs-ssg/official.spec.ts:232:33 › CATALOG toggle group uses its actual function, source and live control (313ms)
+  ✓  39 [official-subpath] › tests/docs-ssg/official.spec.ts:244:1 › without script every official demo keeps its source and native disabled initial view (2.0s)
+  ✓  40 [official-subpath] › tests/docs-ssg/official.spec.ts:259:64 › the light first frame and mode controls persist across static and island pages (319ms)
+  ✓  41 [official-subpath] › tests/docs-ssg/official.spec.ts:259:64 › the dark first frame and mode controls persist across static and island pages (300ms)
+  ✓  42 [official-subpath] › tests/docs-ssg/official.spec.ts:259:64 › the system first frame and mode controls persist across static and island pages (300ms)
+  ✓  43 [official-subpath] › tests/docs-ssg/official.spec.ts:274:195 › 375px retains reading controls, ordered narrow navigation and bounded long source (568ms)
+  ✓  44 [official-subpath] › tests/docs-ssg/official.spec.ts:274:195 › 320px retains reading controls, ordered narrow navigation and bounded long source (572ms)
+  ✓  45 [official-subpath] › tests/docs-ssg/official.spec.ts:274:195 › 200% layout and text emulation retains reading controls, ordered narrow navigation and bounded long source (757ms)
+  ✓  46 [official-subpath] › tests/docs-ssg/official.spec.ts:295:1 › deep not-found retains same-base ordinary navigation (112ms)
+  ✓  47 [official-subpath] › tests/docs-ssg/official.spec.ts:301:1 › one bounded official home, category and guide capture batch records desktop light/dark and narrow reading (1.8s)
+
+  47 passed (1.8m)

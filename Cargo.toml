@@ -19,7 +19,7 @@ members = [
     "examples/utility-lab",
     "xtask",
 ]
-exclude = ["makepad", "ref"]
+exclude = ["makepad", "ref", "site"]
 
 [workspace.package]
 version = "0.1.0"

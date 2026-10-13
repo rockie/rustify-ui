@@ -1,0 +1,411 @@
+{
+  "chromium": "153.0.8010.12",
+  "hardware": {
+    "platform": "darwin",
+    "arch": "arm64",
+    "os": "27.0.0",
+    "cpu": "Apple M5 Pro",
+    "cores": 15
+  },
+  "conditions": {
+    "cpu_slowdown": 1,
+    "network": "unthrottled",
+    "cache": "fresh context, HTTP cache disabled and cleared, service workers blocked",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "input": "native DOM activation plus InputEvent/KeyboardEvent handlers; application results required",
+    "samples": 1,
+    "compression": "gzip level 9 measured from actual response bodies after input endpoint",
+    "streaming_compile": "overlaps download; raw WebAssembly and ResourceTiming windows retained"
+  },
+  "pages": [
+    {
+      "path": "/docs/p2/vellum/",
+      "passed": false,
+      "fcp_to_inputs_median_ms": null,
+      "budget_remaining_ms": null,
+      "samples": [
+        {
+          "valid": false,
+          "status": 404,
+          "failure": "TimeoutError: page.waitForFunction: Timeout 35000ms exceeded.",
+          "errors": [
+            "Failed to load resource: the server responded with a status of 404 (Not Found)"
+          ],
+          "sizes": [
+            {
+              "url": "http://127.0.0.1:56219/docs/p2/vellum/",
+              "bytes": 5965,
+              "gzip9": 1664,
+              "encoding": null
+            },
+            {
+              "url": "http://127.0.0.1:56219/assets/site.593f8bf1d4.css",
+              "bytes": 98662,
+              "gzip9": 15023,
+              "encoding": null
+            },
+            {
+              "url": "http://127.0.0.1:56219/assets/mode.5e2c2584b0.js",
+              "bytes": 6697,
+              "gzip9": 2259,
+              "encoding": null
+            },
+            {
+              "url": "http://127.0.0.1:56219/assets/site.2529a0d647.js",
+              "bytes": 13629,
+              "gzip9": 3995,
+              "encoding": null
+            }
+          ],
+          "raw": {
+            "timeOrigin": 1791921469152.9,
+            "clockBefore": {
+              "epoch": 1791921469156,
+              "monotonic": 4.100000023841858
+            },
+            "earlyDom": {
+              "at": 15.600000023841858,
+              "duration": 0,
+              "islands": 0
+            },
+            "before": null,
+            "after": null,
+            "runtimeReady": null,
+            "hydrateStart": null,
+            "hydrateEnd": null,
+            "ready": null,
+            "inputStart": null,
+            "inputEnd": null,
+            "probes": [],
+            "wasm": [],
+            "mutations": [],
+            "shifts": [],
+            "violations": [],
+            "done": false,
+            "failure": null,
+            "fcp": 20,
+            "clockAfter": {
+              "epoch": 1791921504176,
+              "monotonic": 35023.89999997616
+            },
+            "resources": [
+              {
+                "name": "http://127.0.0.1:56219/assets/site.593f8bf1d4.css",
+                "initiator": "link",
+                "start": 4.699999928474426,
+                "requestStart": 5.100000023841858,
+                "responseStart": 5.399999976158142,
+                "responseEnd": 5.600000023841858,
+                "duration": 0.9000000953674316,
+                "transfer": 98962,
+                "encoded": 98662,
+                "decoded": 98662
+              },
+              {
+                "name": "http://127.0.0.1:56219/assets/mode.5e2c2584b0.js",
+                "initiator": "script",
+                "start": 4.899999976158142,
+                "requestStart": 5.299999952316284,
+                "responseStart": 5.5,
+                "responseEnd": 5.699999928474426,
+                "duration": 0.7999999523162842,
+                "transfer": 6997,
+                "encoded": 6697,
+                "decoded": 6697
+              },
+              {
+                "name": "http://127.0.0.1:56219/assets/site.2529a0d647.js",
+                "initiator": "script",
+                "start": 6.899999976158142,
+                "requestStart": 7.100000023841858,
+                "responseStart": 7.299999952316284,
+                "responseEnd": 7.399999976158142,
+                "duration": 0.5,
+                "transfer": 13929,
+                "encoded": 13629,
+                "decoded": 13629
+              },
+              {
+                "name": "http://127.0.0.1:56219/assets/files/logo.d070a7e79d.svg",
+                "initiator": "img",
+                "start": 8.5,
+                "requestStart": 8.799999952316284,
+                "responseStart": 8.899999976158142,
+                "responseEnd": 9,
+                "duration": 0.5,
+                "transfer": 501,
+                "encoded": 201,
+                "decoded": 201
+              }
+            ],
+            "navigation": {
+              "name": "http://127.0.0.1:56219/docs/p2/vellum/",
+              "entryType": "navigation",
+              "startTime": 0,
+              "duration": 16,
+              "navigationId": 3818,
+              "initiatorType": "navigation",
+              "deliveryType": "",
+              "nextHopProtocol": "http/1.1",
+              "renderBlockingStatus": "non-blocking",
+              "contentType": "text/html",
+              "contentEncoding": "",
+              "workerStart": 0,
+              "workerRouterEvaluationStart": 0,
+              "workerCacheLookupStart": 0,
+              "workerMatchedSourceType": "",
+              "workerFinalSourceType": "",
+              "redirectStart": 0,
+              "redirectEnd": 0,
+              "fetchStart": 0.10000002384185791,
+              "domainLookupStart": 0.6000000238418579,
+              "domainLookupEnd": 0.6999999284744263,
+              "connectStart": 0.6999999284744263,
+              "secureConnectionStart": 0,
+              "connectEnd": 0.8999999761581421,
+              "requestStart": 0.8999999761581421,
+              "responseStart": 1.100000023841858,
+              "firstInterimResponseStart": 0,
+              "finalResponseHeadersStart": 1.100000023841858,
+              "responseEnd": 1.399999976158142,
+              "transferSize": 6265,
+              "encodedBodySize": 5965,
+              "decodedBodySize": 5965,
+              "responseStatus": 404,
+              "serverTiming": [],
+              "unloadEventStart": 0,
+              "unloadEventEnd": 0,
+              "domInteractive": 15.399999976158142,
+              "domContentLoadedEventStart": 15.799999952316284,
+              "domContentLoadedEventEnd": 15.799999952316284,
+              "domComplete": 16,
+              "loadEventStart": 16,
+              "loadEventEnd": 16,
+              "type": "navigate",
+              "redirectCount": 0,
+              "activationStart": 0,
+              "criticalCHRestart": 0,
+              "notRestoredReasons": null,
+              "confidence": {
+                "randomizedTriggerRate": 0.4994798,
+                "value": "high"
+              }
+            }
+          },
+          "phases": {
+            "wasm_download_ms": null,
+            "streaming_compile_window_ms": null,
+            "compile_tail_after_download_ms": null,
+            "wasm_instantiate_ms": null,
+            "runtime_after_instantiate_ms": null,
+            "hydrate_call_ms": null,
+            "attachment_settle_ms": null,
+            "input_results_ms": null
+          },
+          "fcp_to_inputs_ms": null,
+          "input_epoch_ms": null,
+          "hydration_identity": false,
+          "hydration_displacement": 0,
+          "hydration_shifts": [],
+          "clock_jump_ms": 0.20000004768371582
+        }
+      ]
+    },
+    {
+      "path": "/docs/p2/quickstart/",
+      "passed": false,
+      "fcp_to_inputs_median_ms": null,
+      "budget_remaining_ms": null,
+      "samples": [
+        {
+          "valid": false,
+          "status": 404,
+          "failure": "TimeoutError: page.waitForFunction: Timeout 35000ms exceeded.",
+          "errors": [
+            "Failed to load resource: the server responded with a status of 404 (Not Found)"
+          ],
+          "sizes": [
+            {
+              "url": "http://127.0.0.1:56219/docs/p2/quickstart/",
+              "bytes": 5965,
+              "gzip9": 1664,
+              "encoding": null
+            },
+            {
+              "url": "http://127.0.0.1:56219/assets/site.593f8bf1d4.css",
+              "bytes": 98662,
+              "gzip9": 15023,
+              "encoding": null
+            },
+            {
+              "url": "http://127.0.0.1:56219/assets/mode.5e2c2584b0.js",
+              "bytes": 6697,
+              "gzip9": 2259,
+              "encoding": null
+            },
+            {
+              "url": "http://127.0.0.1:56219/assets/site.2529a0d647.js",
+              "bytes": 13629,
+              "gzip9": 3995,
+              "encoding": null
+            }
+          ],
+          "raw": {
+            "timeOrigin": 1791921504230.3,
+            "clockBefore": {
+              "epoch": 1791921504233,
+              "monotonic": 3.399999976158142
+            },
+            "earlyDom": {
+              "at": 14.399999976158142,
+              "duration": 0,
+              "islands": 0
+            },
+            "before": null,
+            "after": null,
+            "runtimeReady": null,
+            "hydrateStart": null,
+            "hydrateEnd": null,
+            "ready": null,
+            "inputStart": null,
+            "inputEnd": null,
+            "probes": [],
+            "wasm": [],
+            "mutations": [],
+            "shifts": [],
+            "violations": [],
+            "done": false,
+            "failure": null,
+            "fcp": 20,
+            "clockAfter": {
+              "epoch": 1791921539250,
+              "monotonic": 35020.700000047684
+            },
+            "resources": [
+              {
+                "name": "http://127.0.0.1:56219/assets/site.593f8bf1d4.css",
+                "initiator": "link",
+                "start": 3.899999976158142,
+                "requestStart": 4.200000047683716,
+                "responseStart": 4.600000023841858,
+                "responseEnd": 4.800000071525574,
+                "duration": 0.9000000953674316,
+                "transfer": 98962,
+                "encoded": 98662,
+                "decoded": 98662
+              },
+              {
+                "name": "http://127.0.0.1:56219/assets/mode.5e2c2584b0.js",
+                "initiator": "script",
+                "start": 4.100000023841858,
+                "requestStart": 4.5,
+                "responseStart": 4.700000047683716,
+                "responseEnd": 4.899999976158142,
+                "duration": 0.7999999523162842,
+                "transfer": 6997,
+                "encoded": 6697,
+                "decoded": 6697
+              },
+              {
+                "name": "http://127.0.0.1:56219/assets/site.2529a0d647.js",
+                "initiator": "script",
+                "start": 5.899999976158142,
+                "requestStart": 6.100000023841858,
+                "responseStart": 6.300000071525574,
+                "responseEnd": 6.399999976158142,
+                "duration": 0.5,
+                "transfer": 13929,
+                "encoded": 13629,
+                "decoded": 13629
+              },
+              {
+                "name": "http://127.0.0.1:56219/assets/files/logo.d070a7e79d.svg",
+                "initiator": "img",
+                "start": 6.899999976158142,
+                "requestStart": 7,
+                "responseStart": 7.200000047683716,
+                "responseEnd": 7.200000047683716,
+                "duration": 0.30000007152557373,
+                "transfer": 501,
+                "encoded": 201,
+                "decoded": 201
+              }
+            ],
+            "navigation": {
+              "name": "http://127.0.0.1:56219/docs/p2/quickstart/",
+              "entryType": "navigation",
+              "startTime": 0,
+              "duration": 14.899999976158142,
+              "navigationId": 7226,
+              "initiatorType": "navigation",
+              "deliveryType": "",
+              "nextHopProtocol": "http/1.1",
+              "renderBlockingStatus": "non-blocking",
+              "contentType": "text/html",
+              "contentEncoding": "",
+              "workerStart": 0,
+              "workerRouterEvaluationStart": 0,
+              "workerCacheLookupStart": 0,
+              "workerMatchedSourceType": "",
+              "workerFinalSourceType": "",
+              "redirectStart": 0,
+              "redirectEnd": 0,
+              "fetchStart": 0.20000004768371582,
+              "domainLookupStart": 0.5,
+              "domainLookupEnd": 0.7000000476837158,
+              "connectStart": 0.7000000476837158,
+              "secureConnectionStart": 0,
+              "connectEnd": 0.7000000476837158,
+              "requestStart": 0.8000000715255737,
+              "responseStart": 1,
+              "firstInterimResponseStart": 0,
+              "finalResponseHeadersStart": 1,
+              "responseEnd": 1,
+              "transferSize": 6265,
+              "encodedBodySize": 5965,
+              "decodedBodySize": 5965,
+              "responseStatus": 404,
+              "serverTiming": [],
+              "unloadEventStart": 0,
+              "unloadEventEnd": 0,
+              "domInteractive": 14.300000071525574,
+              "domContentLoadedEventStart": 14.600000023841858,
+              "domContentLoadedEventEnd": 14.600000023841858,
+              "domComplete": 14.899999976158142,
+              "loadEventStart": 14.899999976158142,
+              "loadEventEnd": 14.899999976158142,
+              "type": "navigate",
+              "redirectCount": 0,
+              "activationStart": 0,
+              "criticalCHRestart": 0,
+              "notRestoredReasons": null,
+              "confidence": {
+                "randomizedTriggerRate": 0.4994798,
+                "value": "high"
+              }
+            }
+          },
+          "phases": {
+            "wasm_download_ms": null,
+            "streaming_compile_window_ms": null,
+            "compile_tail_after_download_ms": null,
+            "wasm_instantiate_ms": null,
+            "runtime_after_instantiate_ms": null,
+            "hydrate_call_ms": null,
+            "attachment_settle_ms": null,
+            "input_results_ms": null
+          },
+          "fcp_to_inputs_ms": null,
+          "input_epoch_ms": null,
+          "hydration_identity": false,
+          "hydration_displacement": 0,
+          "hydration_shifts": [],
+          "clock_jump_ms": 0.30000007152557373
+        }
+      ]
+    }
+  ]
+}

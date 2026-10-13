@@ -1,0 +1,129 @@
+{
+  "diagnostic_only": true,
+  "helper": "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/compile-profile-m3-r1/site/.rustify-docs/helpers/72e6a64f540894b05b0f8a42aea67a2e0f1a6ead7f59c153f46e84a057cc4011/docs-render",
+  "helper_bytes": 33209712,
+  "helper_sha256": "72e6a64f540894b05b0f8a42aea67a2e0f1a6ead7f59c153f46e84a057cc4011",
+  "rows": [
+    {
+      "kind": "fresh-copy-first-run",
+      "sample": 0,
+      "spawn_ms": 1.941042,
+      "first_byte_ms": 707.078083,
+      "read_exit_ms": 1.574125,
+      "parse_ms": 0.574125,
+      "total_ms": 711.167375,
+      "response_bytes": 84149,
+      "response_sha256": "50599f8fdd6ff06d0785063f32af4b36bfb01b4cfd80b9ab5668bac1990d1782"
+    },
+    {
+      "kind": "same-copy-second-run",
+      "sample": 0,
+      "spawn_ms": 3.407166,
+      "first_byte_ms": 3.463959,
+      "read_exit_ms": 1.254916,
+      "parse_ms": 0.580584,
+      "total_ms": 8.706625,
+      "response_bytes": 84149,
+      "response_sha256": "50599f8fdd6ff06d0785063f32af4b36bfb01b4cfd80b9ab5668bac1990d1782"
+    },
+    {
+      "kind": "fresh-copy-first-run",
+      "sample": 1,
+      "spawn_ms": 3.349125,
+      "first_byte_ms": 195.986959,
+      "read_exit_ms": 2.152541,
+      "parse_ms": 0.856959,
+      "total_ms": 202.345584,
+      "response_bytes": 84149,
+      "response_sha256": "50599f8fdd6ff06d0785063f32af4b36bfb01b4cfd80b9ab5668bac1990d1782"
+    },
+    {
+      "kind": "same-copy-second-run",
+      "sample": 1,
+      "spawn_ms": 3.770417,
+      "first_byte_ms": 4.099125,
+      "read_exit_ms": 1.324083,
+      "parse_ms": 0.577333,
+      "total_ms": 9.770958,
+      "response_bytes": 84149,
+      "response_sha256": "50599f8fdd6ff06d0785063f32af4b36bfb01b4cfd80b9ab5668bac1990d1782"
+    },
+    {
+      "kind": "fresh-copy-first-run",
+      "sample": 2,
+      "spawn_ms": 3.477959,
+      "first_byte_ms": 205.97575,
+      "read_exit_ms": 1.568291,
+      "parse_ms": 0.572,
+      "total_ms": 211.594,
+      "response_bytes": 84149,
+      "response_sha256": "50599f8fdd6ff06d0785063f32af4b36bfb01b4cfd80b9ab5668bac1990d1782"
+    },
+    {
+      "kind": "same-copy-second-run",
+      "sample": 2,
+      "spawn_ms": 3.139667,
+      "first_byte_ms": 3.12625,
+      "read_exit_ms": 1.314542,
+      "parse_ms": 0.529375,
+      "total_ms": 8.109834,
+      "response_bytes": 84149,
+      "response_sha256": "50599f8fdd6ff06d0785063f32af4b36bfb01b4cfd80b9ab5668bac1990d1782"
+    },
+    {
+      "kind": "fresh-copy-first-run",
+      "sample": 3,
+      "spawn_ms": 4.235959,
+      "first_byte_ms": 192.987375,
+      "read_exit_ms": 2.197791,
+      "parse_ms": 1.017584,
+      "total_ms": 200.438709,
+      "response_bytes": 84149,
+      "response_sha256": "50599f8fdd6ff06d0785063f32af4b36bfb01b4cfd80b9ab5668bac1990d1782"
+    },
+    {
+      "kind": "same-copy-second-run",
+      "sample": 3,
+      "spawn_ms": 4.506084,
+      "first_byte_ms": 3.931333,
+      "read_exit_ms": 1.325042,
+      "parse_ms": 0.603,
+      "total_ms": 10.365459,
+      "response_bytes": 84149,
+      "response_sha256": "50599f8fdd6ff06d0785063f32af4b36bfb01b4cfd80b9ab5668bac1990d1782"
+    },
+    {
+      "kind": "fresh-copy-first-run",
+      "sample": 4,
+      "spawn_ms": 3.441083,
+      "first_byte_ms": 187.828959,
+      "read_exit_ms": 2.289958,
+      "parse_ms": 0.887042,
+      "total_ms": 194.447042,
+      "response_bytes": 84149,
+      "response_sha256": "50599f8fdd6ff06d0785063f32af4b36bfb01b4cfd80b9ab5668bac1990d1782"
+    },
+    {
+      "kind": "same-copy-second-run",
+      "sample": 4,
+      "spawn_ms": 2.95275,
+      "first_byte_ms": 3.512083,
+      "read_exit_ms": 1.197667,
+      "parse_ms": 0.556083,
+      "total_ms": 8.218583,
+      "response_bytes": 84149,
+      "response_sha256": "50599f8fdd6ff06d0785063f32af4b36bfb01b4cfd80b9ab5668bac1990d1782"
+    },
+    {
+      "kind": "existing-helper",
+      "sample": 0,
+      "spawn_ms": 4.557834,
+      "first_byte_ms": 9.94675,
+      "read_exit_ms": 1.409791,
+      "parse_ms": 0.580125,
+      "total_ms": 16.4945,
+      "response_bytes": 84149,
+      "response_sha256": "50599f8fdd6ff06d0785063f32af4b36bfb01b4cfd80b9ab5668bac1990d1782"
+    }
+  ]
+}

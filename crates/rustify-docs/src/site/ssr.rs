@@ -1,8 +1,11 @@
-use super::registry::{children_view, placeholder_view, provide_environment, PreparedComponent};
+use super::registry::{
+    children_view, placeholder_view, prepare_environment, provide_environment, PreparedComponent,
+    PreparedEnvironment,
+};
 use super::{
-    Description, HelperOperation, HelperRequest, HelperResponse, HelperResult, RenderContext,
-    RenderRequest, RenderResult, RenderTarget, RenderedDemo, ResourceAsset, SiteEnvironment,
-    SiteError, SiteRegistry, PROTOCOL_VERSION,
+    Description, HelperOperation, HelperRequest, HelperResponse, HelperResult, MarkdownIntro,
+    RenderContext, RenderRequest, RenderResult, RenderTarget, RenderedDemo, ResourceAsset,
+    SiteEnvironment, SiteError, SiteRegistry, PROTOCOL_VERSION,
 };
 use any_spawner::{CustomExecutor, Executor, PinnedLocalFuture};
 use hydration_context::{
@@ -16,6 +19,12 @@ use std::io::{self, Write};
 use std::panic::{catch_unwind, AssertUnwindSafe};
 use std::sync::atomic::{AtomicUsize, Ordering};
 use std::sync::{Arc, Mutex, MutexGuard};
+
+#[derive(Clone, Default)]
+struct SurfaceOutputs {
+    demos: Vec<RenderedDemo>,
+    markdown_intros: Vec<MarkdownIntro>,
+}
 
 /// Serves one describe or batch-render request from stdin as one JSON response.
 pub fn serve_site(registry: SiteRegistry) -> Result<(), SiteError> {
@@ -63,10 +72,11 @@ impl SiteRegistry {
                         ));
                     }
                 }
+                let prepared_environment = prepare_environment(&environment);
                 HelperResult::Render {
                     items: items
                         .iter()
-                        .map(|item| self.render(item, &environment))
+                        .map(|item| self.render_prepared(item, &environment, &prepared_environment))
                         .collect(),
                 }
             }
@@ -96,6 +106,14 @@ impl SiteRegistry {
                 asset("islands.js", include_str!("../../assets/islands.js")),
                 asset("sdk-candidates.json", rustify_components::CANDIDATES_JSON),
             ],
+            fonts: rustify_ui::theme::FONT_RESOURCE_DIGESTS
+                .iter()
+                .map(|font| super::FontResource {
+                    family: font.family.to_owned(),
+                    resource_path: font.resource_path.to_owned(),
+                    sha256: font.sha256.to_owned(),
+                })
+                .collect(),
         }
     }
 
@@ -126,7 +144,16 @@ impl SiteRegistry {
 
     /// Renders one target; any diagnostic prevents that target publishing HTML.
     pub fn render(&self, request: &RenderRequest, environment: &SiteEnvironment) -> RenderResult {
-        let nested = Arc::new(Mutex::new(Vec::<RenderedDemo>::new()));
+        self.render_prepared(request, environment, &prepare_environment(environment))
+    }
+
+    fn render_prepared(
+        &self,
+        request: &RenderRequest,
+        environment: &SiteEnvironment,
+        prepared_environment: &Result<PreparedEnvironment, SiteError>,
+    ) -> RenderResult {
+        let nested = Arc::new(Mutex::new(SurfaceOutputs::default()));
         let mut effective_props = None;
         let mut client_only = false;
         let generated = match &request.target {
@@ -137,14 +164,25 @@ impl SiteRegistry {
             } => generate(|| self.prepare_component(name, props.clone())).and_then(|prepared| {
                 effective_props = Some(prepared.props.clone());
                 client_only = prepared.placeholder.is_some();
-                self.render_island(request, environment, Some(prepared), children_html.clone())
+                self.render_island(
+                    request,
+                    environment,
+                    prepared_environment,
+                    Some(prepared),
+                    children_html.clone(),
+                )
             }),
-            RenderTarget::Demo { .. } => {
-                self.render_island(request, environment, None, String::new())
-            }
+            RenderTarget::Demo { .. } => self.render_island(
+                request,
+                environment,
+                prepared_environment,
+                None,
+                String::new(),
+            ),
             RenderTarget::Page { name, route } => self.render_surface(
                 request,
                 environment,
+                prepared_environment,
                 route,
                 Arc::clone(&nested),
                 |context| self.surface_view(name, context),
@@ -152,12 +190,13 @@ impl SiteRegistry {
             RenderTarget::Slot { slot, route } => self.render_surface(
                 request,
                 environment,
+                prepared_environment,
                 route,
                 Arc::clone(&nested),
                 |context| self.slot_view(*slot, context),
             ),
         };
-        let demos = nested
+        let nested = nested
             .lock()
             .unwrap_or_else(|poisoned| poisoned.into_inner())
             .clone();
@@ -165,7 +204,7 @@ impl SiteRegistry {
             Ok((html, css)) => (Some(html), css, Vec::new()),
             Err(error) => (None, String::new(), vec![error]),
         };
-        for demo in &demos {
+        for demo in &nested.demos {
             diagnostics.extend(demo.diagnostics.iter().cloned());
         }
         RenderResult {
@@ -175,7 +214,8 @@ impl SiteRegistry {
             props: effective_props,
             client_only,
             diagnostics,
-            demos,
+            demos: nested.demos,
+            markdown_intros: nested.markdown_intros,
         }
     }
 
@@ -183,6 +223,7 @@ impl SiteRegistry {
         &self,
         request: &RenderRequest,
         environment: &SiteEnvironment,
+        prepared_environment: &Result<PreparedEnvironment, SiteError>,
         prepared: Option<PreparedComponent>,
         children_html: String,
     ) -> Result<(String, String), SiteError> {
@@ -197,20 +238,25 @@ impl SiteRegistry {
                 },
                 || {
                     rustify_components::geometry::provide_geometry_styles(styles.clone());
-                    let environment_result = provide_environment(environment);
-                    let body = environment_result.and_then(|_| match prepared {
-                        Some(prepared) => Ok(match prepared.placeholder {
-                            Some(placeholder) => placeholder_view(placeholder),
-                            None => (prepared.render)(children_view(children_html)),
-                        }),
-                        None => match &request.target {
-                            RenderTarget::Demo { name } => self.demo_view(name),
-                            _ => Err(SiteError::new(
-                                "invalid_target",
-                                "expected a component or demo island",
-                            )),
-                        },
-                    });
+                    let body = prepared_environment
+                        .as_ref()
+                        .map_err(Clone::clone)
+                        .and_then(|environment| {
+                            environment.provide();
+                            match prepared {
+                                Some(prepared) => Ok(match prepared.placeholder {
+                                    Some(placeholder) => placeholder_view(placeholder),
+                                    None => (prepared.render)(children_view(children_html)),
+                                }),
+                                None => match &request.target {
+                                    RenderTarget::Demo { name } => self.demo_view(name),
+                                    _ => Err(SiteError::new(
+                                        "invalid_target",
+                                        "expected a component or demo island",
+                                    )),
+                                },
+                            }
+                        });
                     match body {
                         Ok(body) => body,
                         Err(error) => {
@@ -233,15 +279,20 @@ impl SiteRegistry {
         &self,
         request: &RenderRequest,
         environment: &SiteEnvironment,
+        prepared_environment: &Result<PreparedEnvironment, SiteError>,
         route: &str,
-        nested: Arc<Mutex<Vec<RenderedDemo>>>,
+        nested: Arc<Mutex<SurfaceOutputs>>,
         render: impl FnOnce(RenderContext) -> Result<AnyView, SiteError>,
     ) -> Result<(String, String), SiteError> {
         let sequence = Arc::new(AtomicUsize::new(0));
+        let markdown_sequence = Arc::clone(&sequence);
+        let markdown_output = Arc::clone(&nested);
         let registry = self.clone();
         let parent_key = request.key.clone();
+        let markdown_parent = parent_key.clone();
         let parent_seed = request.seed.clone();
         let demo_environment = environment.clone();
+        let demo_prepared_environment = prepared_environment.clone();
         let context = RenderContext::new(
             route.to_string(),
             environment,
@@ -249,7 +300,7 @@ impl SiteRegistry {
                 let index = sequence.fetch_add(1, Ordering::Relaxed);
                 let key = format!("{parent_key}-demo-{index}");
                 let seed = format!("{parent_seed}-demo-{index}");
-                let result = registry.render(
+                let result = registry.render_prepared(
                     &RenderRequest {
                         key: key.clone(),
                         seed: seed.clone(),
@@ -258,10 +309,12 @@ impl SiteRegistry {
                         },
                     },
                     &demo_environment,
+                    &demo_prepared_environment,
                 );
                 nested
                     .lock()
                     .unwrap_or_else(|poisoned| poisoned.into_inner())
+                    .demos
                     .push(RenderedDemo {
                         key: key.clone(),
                         seed,
@@ -272,11 +325,27 @@ impl SiteRegistry {
                     });
                 view! { <span data-rustify-demo-placeholder=key /> }.into_any()
             }),
+            Arc::new(move |path| {
+                let index = markdown_sequence.fetch_add(1, Ordering::Relaxed);
+                let key = format!("{markdown_parent}-markdown-{index}");
+                markdown_output
+                    .lock()
+                    .unwrap_or_else(|poisoned| poisoned.into_inner())
+                    .markdown_intros
+                    .push(MarkdownIntro {
+                        key: key.clone(),
+                        path: path.to_string(),
+                    });
+                view! { <span data-rustify-markdown-placeholder=key /> }.into_any()
+            }),
         );
         let styles = rustify_components::geometry::GeometryStyles::default();
         let html = generate(|| {
             rustify_ui::id::provide(&request.seed);
-            provide_environment(environment)?;
+            prepared_environment
+                .as_ref()
+                .map_err(Clone::clone)?
+                .provide();
             rustify_components::geometry::provide_geometry_styles(styles.clone());
             Ok(render(context)?.to_html())
         })?;
@@ -458,5 +527,258 @@ impl SharedContext for ObservedContext {
     }
     fn get_incomplete_chunk(&self, id: &SerializedDataId) -> bool {
         self.inner.get_incomplete_chunk(id)
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::site::{Slot, ThemeInput};
+    use rustify_ui::{ResolvedTheme, Theme, ThemeDocument, ThemeMode};
+    use serde::{Deserialize, Serialize};
+    use serde_json::{json, Value};
+
+    type Snapshots = Arc<Mutex<Vec<Arc<ResolvedTheme>>>>;
+
+    #[derive(Clone)]
+    struct SurfaceMarker(&'static str);
+
+    fn snapshot(snapshots: &Snapshots) -> AnyView {
+        let theme = rustify_ui::use_resolved_theme().unwrap().get_untracked();
+        snapshots.lock().unwrap().push(Arc::clone(&theme));
+        view! {
+            <p data-batch-theme-mode=theme.mode.as_str()>{theme.fonts[0].family.clone()}</p>
+        }
+        .into_any()
+    }
+
+    fn themed(mode: ThemeMode) -> SiteEnvironment {
+        let mut document = ThemeDocument::from_legacy(Theme::light(), Theme::dark());
+        document
+            .styles
+            .light
+            .0
+            .insert("font-sans".into(), "Noto Sans".into());
+        document
+            .styles
+            .dark
+            .0
+            .insert("font-sans".into(), "Rustify WenKai".into());
+        SiteEnvironment {
+            theme: Some(ThemeInput { document, mode }),
+            ..SiteEnvironment::default()
+        }
+    }
+
+    fn item(key: &str, target: RenderTarget) -> RenderRequest {
+        RenderRequest {
+            key: key.to_owned(),
+            seed: format!("seed-{key}"),
+            target,
+        }
+    }
+
+    fn render_batch(
+        registry: &SiteRegistry,
+        environment: SiteEnvironment,
+        items: Vec<RenderRequest>,
+    ) -> Vec<RenderResult> {
+        let response = registry
+            .handle(HelperRequest {
+                protocol_version: PROTOCOL_VERSION,
+                generation: "theme-batch".into(),
+                operation: HelperOperation::Render { environment, items },
+            })
+            .unwrap();
+        let HelperResult::Render { items } = response.result else {
+            panic!("expected a render result");
+        };
+        items
+    }
+
+    #[test]
+    fn a_batch_resolves_both_modes_once_and_shares_snapshots_with_nested_demos() {
+        let snapshots = Snapshots::default();
+        let demo_snapshots = Arc::clone(&snapshots);
+        let component_snapshots = Arc::clone(&snapshots);
+        let page_snapshots = Arc::clone(&snapshots);
+        let slot_snapshots = Arc::clone(&snapshots);
+        let registry = SiteRegistry::new(json!({}))
+            .demo("Probe", move || {
+                assert!(use_context::<SurfaceMarker>().is_none());
+                snapshot(&demo_snapshots)
+            })
+            .component::<(), _, _>("Probe", move |_, _| {
+                assert!(use_context::<SurfaceMarker>().is_none());
+                snapshot(&component_snapshots)
+            })
+            .page("Page", move |context| {
+                provide_context(SurfaceMarker("page"));
+                let body = snapshot(&page_snapshots);
+                let first = context.demo("Probe");
+                let second = context.demo("Probe");
+                assert_eq!(use_context::<SurfaceMarker>().unwrap().0, "page");
+                view! { <section>{body}{first}{second}</section> }
+            })
+            .slot(Slot::Header, move |context| {
+                assert!(use_context::<SurfaceMarker>().is_none());
+                provide_context(SurfaceMarker("slot"));
+                let body = snapshot(&slot_snapshots);
+                let demo = context.demo("Probe");
+                assert_eq!(use_context::<SurfaceMarker>().unwrap().0, "slot");
+                view! { <header>{body}{demo}</header> }
+            });
+        for mode in [ThemeMode::Light, ThemeMode::Dark] {
+            snapshots.lock().unwrap().clear();
+            let before = rustify_ui::theme::resolution_count();
+            let results = render_batch(
+                &registry,
+                themed(mode),
+                vec![
+                    item(
+                        "demo",
+                        RenderTarget::Demo {
+                            name: "Probe".into(),
+                        },
+                    ),
+                    item(
+                        "component",
+                        RenderTarget::Component {
+                            name: "Probe".into(),
+                            props: Value::Null,
+                            children_html: String::new(),
+                        },
+                    ),
+                    item(
+                        "page",
+                        RenderTarget::Page {
+                            name: "Page".into(),
+                            route: "/".into(),
+                        },
+                    ),
+                    item(
+                        "slot",
+                        RenderTarget::Slot {
+                            slot: Slot::Header,
+                            route: "/".into(),
+                        },
+                    ),
+                ],
+            );
+            assert_eq!(rustify_ui::theme::resolution_count() - before, 2);
+            assert!(
+                results.iter().all(|result| result.diagnostics.is_empty()),
+                "{results:?}"
+            );
+            let mode_attribute = format!("data-batch-theme-mode=\"{}\"", mode.as_str());
+            for result in &results {
+                assert!(result.html.as_ref().unwrap().contains(&mode_attribute));
+                for demo in &result.demos {
+                    assert!(demo.diagnostics.is_empty());
+                    assert!(demo.html.as_ref().unwrap().contains(&mode_attribute));
+                }
+            }
+            assert_eq!(results[2].demos.len(), 2);
+            assert_eq!(results[3].demos.len(), 1);
+            let snapshots = snapshots.lock().unwrap();
+            assert_eq!(snapshots.len(), 7);
+            let first = &snapshots[0];
+            assert_eq!(first.mode, mode);
+            assert!(snapshots.iter().all(|theme| Arc::ptr_eq(first, theme)));
+        }
+    }
+
+    #[test]
+    fn direct_renders_prepare_each_request_and_do_not_cache_between_calls() {
+        let snapshots = Snapshots::default();
+        let observed = Arc::clone(&snapshots);
+        let registry = SiteRegistry::new(json!({})).demo("Probe", move || snapshot(&observed));
+        let request = item(
+            "direct",
+            RenderTarget::Demo {
+                name: "Probe".into(),
+            },
+        );
+        let before = rustify_ui::theme::resolution_count();
+        for mode in [ThemeMode::Light, ThemeMode::Dark] {
+            let result = registry.render(&request, &themed(mode));
+            assert!(result.diagnostics.is_empty(), "{result:?}");
+            assert!(result
+                .html
+                .unwrap()
+                .contains(&format!("data-batch-theme-mode=\"{}\"", mode.as_str())));
+        }
+        assert_eq!(rustify_ui::theme::resolution_count() - before, 4);
+        let snapshots = snapshots.lock().unwrap();
+        assert!(!Arc::ptr_eq(&snapshots[0], &snapshots[1]));
+    }
+
+    #[derive(Serialize, Deserialize)]
+    struct Props {
+        label: String,
+    }
+
+    #[test]
+    fn prepared_environment_errors_keep_component_props_precedence_and_result_fields() {
+        let registry = SiteRegistry::new(json!({
+            "components": [{"name":"Client", "client_only":{"class":"fixed", "message":"Browser required"}}]
+        }))
+        .component::<Props, _, _>("Client", |_, _| ())
+        .demo("Probe", || ());
+        let mut invalid_theme = themed(ThemeMode::Light);
+        invalid_theme
+            .theme
+            .as_mut()
+            .unwrap()
+            .document
+            .styles
+            .dark
+            .0
+            .insert("primary".into(), "invalid color".into());
+        let invalid_locale = SiteEnvironment {
+            lang: "unsupported".into(),
+            ..SiteEnvironment::default()
+        };
+        for (environment, expected) in [
+            (invalid_theme, "invalid_theme"),
+            (invalid_locale, "invalid_environment"),
+        ] {
+            let results = render_batch(
+                &registry,
+                environment,
+                vec![
+                    item(
+                        "bad-props",
+                        RenderTarget::Component {
+                            name: "Client".into(),
+                            props: json!({"label":3}),
+                            children_html: String::new(),
+                        },
+                    ),
+                    item(
+                        "valid-props",
+                        RenderTarget::Component {
+                            name: "Client".into(),
+                            props: json!({"label":"kept"}),
+                            children_html: String::new(),
+                        },
+                    ),
+                    item(
+                        "demo",
+                        RenderTarget::Demo {
+                            name: "Probe".into(),
+                        },
+                    ),
+                ],
+            );
+            assert_eq!(results[0].diagnostics[0].code, "invalid_props");
+            assert_eq!(results[1].diagnostics[0].code, expected);
+            assert_eq!(results[2].diagnostics[0].code, expected);
+            assert_eq!(results[1].props, Some(json!({"label":"kept"})));
+            assert!(results[1].client_only);
+            assert!(results
+                .iter()
+                .all(|result| result.html.is_none() && result.demos.is_empty()));
+        }
     }
 }

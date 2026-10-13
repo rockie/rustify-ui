@@ -1,0 +1,50 @@
+{
+  "scope": "actual Playwright Chromium desktop/narrow emulation; not physical phone or Safari; fresh review supplied to root",
+  "images": [
+    {
+      "file": "docs/validation/docs-ssg-p2/m4/ui-batch-r1/first-building-desktop-dark.png",
+      "sha256": "90e32d38cab7a010c80d491956aa24b8300c557383f176e7ce44147c26814553",
+      "bytes": 34794
+    },
+    {
+      "file": "docs/validation/docs-ssg-p2/m4/ui-batch-r1/first-building-desktop-light.png",
+      "sha256": "eb6a1a8abfc6c7aa04daaf3efb25d638880ac75cc3dd317047a3830fac513082",
+      "bytes": 34767
+    },
+    {
+      "file": "docs/validation/docs-ssg-p2/m4/ui-batch-r1/first-building-narrow-light.png",
+      "sha256": "eadace0cc1642c94b0078517fd01c784fbfec16b37a16f21c0768f04487896df",
+      "bytes": 28852
+    },
+    {
+      "file": "docs/validation/docs-ssg-p2/m4/ui-batch-r1/rust-building-desktop-dark.png",
+      "sha256": "4b08ea6f308f1e903eafd0e91d29f1583e8cf4a3cda696dbb39b2b6fc4faf8af",
+      "bytes": 96396
+    },
+    {
+      "file": "docs/validation/docs-ssg-p2/m4/ui-batch-r1/rust-building-desktop-light.png",
+      "sha256": "af1222f2498882e914cf74723b39cf2a3499dcc4b3e8c1b10344055d9134f66a",
+      "bytes": 92090
+    },
+    {
+      "file": "docs/validation/docs-ssg-p2/m4/ui-batch-r1/rust-building-narrow-light.png",
+      "sha256": "447f9c60896405684c4636f0461ceb3297afd84fc89c25b0fe0e2992e00f2637",
+      "bytes": 40444
+    },
+    {
+      "file": "docs/validation/docs-ssg-p2/m4/ui-batch-r1/rust-error-desktop-dark.png",
+      "sha256": "123fc4e6e3677eb5724a6f258768e91ab396206c62067eba187fccebe3536665",
+      "bytes": 155603
+    },
+    {
+      "file": "docs/validation/docs-ssg-p2/m4/ui-batch-r1/rust-error-desktop-light.png",
+      "sha256": "07fa126d5e471e4cf103402685b3e9ed818ceb8d1260d105ca1d41a31ed93fc8",
+      "bytes": 152891
+    },
+    {
+      "file": "docs/validation/docs-ssg-p2/m4/ui-batch-r1/rust-error-narrow-light.png",
+      "sha256": "3ff799ff567b7341553c735076ddd8f52bbcadf3d3b17614d59ce994aac0dbde",
+      "bytes": 65815
+    }
+  ]
+}

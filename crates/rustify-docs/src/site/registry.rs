@@ -198,6 +198,7 @@ pub struct RenderContext {
     pub lang: String,
     pub base: String,
     render_demo: DemoRenderer,
+    render_markdown_intro: DemoRenderer,
 }
 
 impl RenderContext {
@@ -206,12 +207,14 @@ impl RenderContext {
         route: String,
         environment: &SiteEnvironment,
         render_demo: DemoRenderer,
+        render_markdown_intro: DemoRenderer,
     ) -> Self {
         Self {
             route,
             lang: environment.lang.clone(),
             base: environment.base.clone(),
             render_demo,
+            render_markdown_intro,
         }
     }
 
@@ -219,6 +222,13 @@ impl RenderContext {
     /// The host bridge collects its result for the pipeline's common wrapper.
     pub fn demo(&self, name: &str) -> AnyView {
         (self.render_demo)(name)
+    }
+
+    /// Renders the original Markdown between its leading H1 and first H2.
+    /// `path` is project-relative; links retain their source-file meaning.
+    /// The source remains a build input and is not compiled into browser wasm.
+    pub fn markdown_intro(&self, path: &str) -> AnyView {
+        (self.render_markdown_intro)(path)
     }
 }
 
@@ -239,15 +249,60 @@ pub(crate) fn placeholder_view(placeholder: Placeholder) -> AnyView {
 #[derive(Clone)]
 pub(crate) struct PreparedEnvironment {
     locale: rustify_ui::Locale,
-    theme: Option<Arc<rustify_ui::ResolvedTheme>>,
+    theme: Option<PreparedTheme>,
+}
+
+#[derive(Clone)]
+struct PreparedTheme {
+    initial: rustify_ui::ThemeMode,
+    light: Arc<rustify_ui::ResolvedTheme>,
+    dark: Arc<rustify_ui::ResolvedTheme>,
 }
 
 impl PreparedEnvironment {
+    #[cfg(any(feature = "site-ssr", test))]
     pub(crate) fn provide(&self) {
         rustify_ui::provide_locale(self.locale);
         if let Some(theme) = &self.theme {
-            rustify_ui::provide_static_theme(Arc::clone(theme));
+            rustify_ui::provide_static_theme(theme.resolved(theme.initial));
         }
+    }
+
+    #[cfg(any(test, all(feature = "hydrate", target_arch = "wasm32")))]
+    pub(crate) fn provide_reactive(&self) -> Option<RwSignal<Arc<rustify_ui::ResolvedTheme>>> {
+        rustify_ui::provide_locale(self.locale);
+        self.theme.as_ref().map(|theme| {
+            let current = RwSignal::new(theme.resolved(theme.initial));
+            rustify_ui::provide_static_theme(current);
+            current
+        })
+    }
+
+    #[cfg(any(test, all(feature = "hydrate", target_arch = "wasm32")))]
+    pub(crate) fn resolved(
+        &self,
+        mode: rustify_ui::ThemeMode,
+    ) -> Option<Arc<rustify_ui::ResolvedTheme>> {
+        self.theme.as_ref().map(|theme| theme.resolved(mode))
+    }
+}
+
+impl PreparedTheme {
+    fn resolved(&self, mode: rustify_ui::ThemeMode) -> Arc<rustify_ui::ResolvedTheme> {
+        Arc::clone(match mode {
+            rustify_ui::ThemeMode::Light => &self.light,
+            rustify_ui::ThemeMode::Dark => &self.dark,
+        })
+    }
+}
+
+/// Mirrors the static selectors: only explicit system mode consults the OS.
+#[cfg(any(test, all(feature = "hydrate", target_arch = "wasm32")))]
+pub(crate) fn document_mode(attribute: Option<&str>, prefers_dark: bool) -> rustify_ui::ThemeMode {
+    match attribute {
+        Some("dark") => rustify_ui::ThemeMode::Dark,
+        Some("system") if prefers_dark => rustify_ui::ThemeMode::Dark,
+        _ => rustify_ui::ThemeMode::Light,
     }
 }
 
@@ -261,13 +316,17 @@ pub(crate) fn prepare_environment(
         )
     })?;
     let theme = if let Some(theme) = &environment.theme {
-        let resolved = rustify_ui::resolve(
-            &theme.document,
-            theme.mode,
-            &rustify_ui::ResolveContext::default(),
-        )
-        .map_err(|error| SiteError::new("invalid_theme", error.to_string()))?;
-        Some(Arc::new(resolved))
+        let context = rustify_ui::theme::font_context(16., false);
+        let resolve = |mode| {
+            rustify_ui::resolve(&theme.document, mode, &context)
+                .map(Arc::new)
+                .map_err(|error| SiteError::new("invalid_theme", error.to_string()))
+        };
+        Some(PreparedTheme {
+            initial: theme.mode,
+            light: resolve(rustify_ui::ThemeMode::Light)?,
+            dark: resolve(rustify_ui::ThemeMode::Dark)?,
+        })
     } else {
         None
     };
@@ -278,4 +337,146 @@ pub(crate) fn prepare_environment(
 pub(crate) fn provide_environment(environment: &SiteEnvironment) -> Result<(), SiteError> {
     prepare_environment(environment)?.provide();
     Ok(())
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::site::ThemeInput;
+    use rustify_ui::{Theme, ThemeDocument, ThemeMode};
+
+    fn themed(mode: ThemeMode) -> SiteEnvironment {
+        let mut document = ThemeDocument::from_legacy(Theme::light(), Theme::dark());
+        document
+            .styles
+            .light
+            .0
+            .insert("font-sans".into(), "Noto Sans".into());
+        document
+            .styles
+            .dark
+            .0
+            .insert("font-sans".into(), "Rustify WenKai".into());
+        document
+            .styles
+            .light
+            .0
+            .insert("primary".into(), "#102030".into());
+        document
+            .styles
+            .dark
+            .0
+            .insert("primary".into(), "#fedcba".into());
+        SiteEnvironment {
+            theme: Some(ThemeInput { document, mode }),
+            ..SiteEnvironment::default()
+        }
+    }
+
+    #[test]
+    fn both_modes_use_the_same_offline_font_context_as_static_css() {
+        let environment = prepare_environment(&themed(ThemeMode::Light)).unwrap();
+        let light = environment.resolved(ThemeMode::Light).unwrap();
+        let dark = environment.resolved(ThemeMode::Dark).unwrap();
+        assert_eq!(light.fonts[0].family, "Noto Sans");
+        assert_eq!(
+            light.fonts[0].resource_path.as_deref(),
+            Some("makepad_widgets/resources/NotoSans-Regular.ttf")
+        );
+        assert_eq!(dark.fonts[0].family, "Rustify WenKai");
+        assert_eq!(
+            dark.fonts[0].resource_path.as_deref(),
+            Some("makepad_widgets/resources/LXGWWenKaiRegular.ttf")
+        );
+        assert_ne!(light.colors["primary"], dark.colors["primary"]);
+        assert!(Arc::ptr_eq(
+            &light,
+            &environment.resolved(ThemeMode::Light).unwrap()
+        ));
+        assert!(Arc::ptr_eq(
+            &dark,
+            &environment.resolved(ThemeMode::Dark).unwrap()
+        ));
+    }
+
+    #[test]
+    fn static_binding_and_reactive_initial_value_follow_the_serialized_ssr_mode() {
+        for mode in [ThemeMode::Light, ThemeMode::Dark] {
+            let environment = prepare_environment(&themed(mode)).unwrap();
+            let owner = Owner::new();
+            owner.with(|| {
+                environment.provide();
+                let static_theme = rustify_ui::use_resolved_theme().unwrap().get_untracked();
+                assert_eq!(static_theme.mode, mode);
+                let current = environment.provide_reactive().unwrap();
+                assert!(Arc::ptr_eq(&static_theme, &current.get_untracked()));
+                assert_eq!(current.get_untracked().mode, mode);
+            });
+            owner.cleanup();
+        }
+    }
+
+    #[test]
+    fn reactive_binding_is_shared_with_descendant_owners_and_survives_their_cleanup() {
+        let environment = prepare_environment(&themed(ThemeMode::Light)).unwrap();
+        let owner = Owner::new();
+        owner.with(|| {
+            let current = environment.provide_reactive().unwrap();
+            let descendant = Owner::new();
+            let inherited = descendant.with(|| rustify_ui::use_resolved_theme().unwrap());
+            assert_eq!(inherited.get_untracked().mode, ThemeMode::Light);
+            current.set(environment.resolved(ThemeMode::Dark).unwrap());
+            assert_eq!(inherited.get_untracked().mode, ThemeMode::Dark);
+            assert_eq!(inherited.get_untracked().fonts[0].family, "Rustify WenKai");
+            descendant.cleanup();
+            assert_eq!(current.get_untracked().mode, ThemeMode::Dark);
+        });
+        owner.cleanup();
+    }
+
+    #[test]
+    fn no_theme_keeps_the_legacy_context_absent() {
+        let environment = prepare_environment(&SiteEnvironment::default()).unwrap();
+        let owner = Owner::new();
+        owner.with(|| {
+            environment.provide();
+            assert!(rustify_ui::use_resolved_theme().is_none());
+            assert!(environment.provide_reactive().is_none());
+            assert!(rustify_ui::use_resolved_theme().is_none());
+        });
+        owner.cleanup();
+    }
+
+    #[test]
+    fn an_invalid_inactive_mode_is_rejected_before_hydration() {
+        let mut environment = themed(ThemeMode::Light);
+        environment
+            .theme
+            .as_mut()
+            .unwrap()
+            .document
+            .styles
+            .dark
+            .0
+            .insert("primary".into(), "invalid color".into());
+        let error = prepare_environment(&environment).err().unwrap();
+        assert_eq!(error.code, "invalid_theme");
+        assert!(error.message.contains("styles.dark.primary"));
+    }
+
+    #[test]
+    fn document_mode_matches_explicit_and_system_css_selectors() {
+        for (attribute, prefers_dark, expected) in [
+            (Some("light"), false, ThemeMode::Light),
+            (Some("light"), true, ThemeMode::Light),
+            (Some("dark"), false, ThemeMode::Dark),
+            (Some("dark"), true, ThemeMode::Dark),
+            (Some("system"), false, ThemeMode::Light),
+            (Some("system"), true, ThemeMode::Dark),
+            (None, true, ThemeMode::Light),
+            (Some("unknown"), true, ThemeMode::Light),
+        ] {
+            assert_eq!(document_mode(attribute, prefers_dark), expected);
+        }
+    }
 }

@@ -20,6 +20,7 @@ use crate::highlight::{Highlighter, GRAMMAR_VERSION};
 use crate::labels;
 use crate::markdown::{self, Fragment, IncludeFiles, RefKind, WRITER_VERSION};
 use crate::shell::{NavGroup, NavItem};
+use crate::site::Slot;
 
 /// A located problem, in the shape `check --format json` prints.
 #[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord)]
@@ -66,6 +67,13 @@ impl Diagnostic {
             ..Self::general(severity, rule, message)
         }
     }
+
+    fn rendered(file: &str, issue: Issue) -> Self {
+        Self {
+            suggestion: issue.suggestion,
+            ..Self::in_file(file, issue.severity, issue.rule, issue.message)
+        }
+    }
 }
 
 /// Whether drafts are part of the site being analysed.
@@ -87,6 +95,8 @@ pub struct Project {
     pub config_file: String,
     pub config: Config,
     pub config_text: String,
+    /// The configuration's original read, including its symbolic-link target.
+    pub inputs: InputReceipts,
 }
 
 impl Project {
@@ -106,7 +116,12 @@ impl Project {
             .file_name()
             .map_or_else(|| config::FILE_NAME.into(), |name| name.to_string_lossy());
         let name = name.as_ref();
-        let text = std::fs::read_to_string(path).map_err(|error| {
+        let read = || -> std::io::Result<(PathBuf, String)> {
+            let real = std::fs::canonicalize(path)?;
+            let text = std::fs::read_to_string(&real)?;
+            Ok((real, text))
+        };
+        let (real, text) = read().map_err(|error| {
             vec![Diagnostic::in_file(
                 name,
                 Severity::Error,
@@ -114,6 +129,8 @@ impl Project {
                 format!("cannot read {name}: {error}"),
             )]
         })?;
+        let mut inputs = InputReceipts::default();
+        inputs.record(name, real, Some(Arc::from(text.as_bytes())), false);
         let locate = |issues: Vec<Issue>| -> Vec<Diagnostic> {
             issues
                 .into_iter()
@@ -127,6 +144,7 @@ impl Project {
                     config_file: name.to_owned(),
                     config,
                     config_text: text.clone(),
+                    inputs,
                 },
                 locate(warnings),
             )),
@@ -157,15 +175,94 @@ pub fn is_private(path: &str) -> bool {
 }
 
 /// The project's inputs, read once: Markdown by content-relative path, and
-/// every other file in the content and asset directories.
+/// other files discovered in content when selection is recursive, the assets,
+/// and the explicitly configured theme document.
 #[derive(Clone, Debug, Default)]
 pub struct Snapshot {
     pub markdown: BTreeMap<String, Arc<str>>,
-    /// Project-relative path to bytes, for the files a page may reference.
+    /// Project-relative bytes; the theme document is input only, not a resource.
     pub files: BTreeMap<String, Arc<[u8]>>,
     /// Where the symbolic links in those directories really lead, relative
     /// to the project: what `dev` watches besides the directories.
     pub linked: BTreeSet<String>,
+    /// Exact original reads; separate from the files eligible for publication.
+    pub inputs: InputReceipts,
+}
+
+/// Original reads and existence checks used by one rendering round.
+#[derive(Clone, Debug, Default, PartialEq, Eq)]
+pub struct InputReceipts {
+    files: BTreeMap<String, InputRead>,
+    changed: BTreeSet<String>,
+}
+
+#[derive(Clone, Debug, PartialEq, Eq)]
+struct InputRead {
+    real: PathBuf,
+    bytes: Option<Arc<[u8]>>,
+    directory: bool,
+}
+
+impl InputReceipts {
+    /// Combines original reads without replacing the first bytes or binding.
+    #[doc(hidden)]
+    pub fn extend(&mut self, other: Self) {
+        for (alias, input) in other.files {
+            self.record(&alias, input.real, input.bytes, input.directory);
+        }
+        self.changed.extend(other.changed);
+    }
+
+    /// Actual byte dependencies, retaining their alias and original real path.
+    #[doc(hidden)]
+    pub fn byte_paths(&self) -> impl Iterator<Item = (&str, &Path)> {
+        self.files.iter().filter_map(|(alias, read)| {
+            read.bytes
+                .is_some()
+                .then_some((alias.as_str(), read.real.as_path()))
+        })
+    }
+
+    /// Existence dependencies; the last value says whether the target is a directory.
+    #[doc(hidden)]
+    pub fn existence_paths(&self) -> impl Iterator<Item = (&str, &Path, bool)> {
+        self.files.iter().filter_map(|(alias, read)| {
+            read.bytes
+                .is_none()
+                .then_some((alias.as_str(), read.real.as_path(), read.directory))
+        })
+    }
+
+    fn record(&mut self, alias: &str, real: PathBuf, bytes: Option<Arc<[u8]>>, directory: bool) {
+        match self.files.entry(alias.to_owned()) {
+            std::collections::btree_map::Entry::Vacant(entry) => {
+                entry.insert(InputRead {
+                    real,
+                    bytes,
+                    directory,
+                });
+            }
+            std::collections::btree_map::Entry::Occupied(mut entry) => {
+                let first = entry.get_mut();
+                if first.real != real || first.directory != directory {
+                    self.changed.insert(alias.to_owned());
+                }
+                if let Some(bytes) = bytes {
+                    match &first.bytes {
+                        Some(original) if original != &bytes => {
+                            self.changed.insert(alias.to_owned());
+                        }
+                        None => first.bytes = Some(bytes),
+                        _ => {}
+                    }
+                }
+            }
+        }
+    }
+
+    fn bytes(&self, alias: &str) -> Option<Arc<[u8]>> {
+        self.files.get(alias)?.bytes.clone()
+    }
 }
 
 /// Why a file the site names may not be read.
@@ -176,6 +273,8 @@ enum Refusal {
     Outside,
     /// It, or what a link to it leads to, is a private file.
     Private,
+    /// A configuration input, not a publishable resource.
+    ThemeDocument,
 }
 
 /// The project's root as the file system resolves it, symbolic links and
@@ -223,19 +322,51 @@ fn watched_source(root: &Path, path: &Path) -> Option<String> {
     None
 }
 
+fn theme_paths(project: &Project, root: &Path) -> BTreeSet<String> {
+    let mut paths = BTreeSet::new();
+    if let Some((path, _)) = &project.config.theme_document {
+        paths.insert(path.clone());
+        paths.extend(watched_source(root, &project.root.join(path)));
+    }
+    paths
+}
+
+fn matches_theme(project: &Project, root: &Path, theme: &BTreeSet<String>, path: &str) -> bool {
+    theme.contains(path)
+        || (!theme.is_empty()
+            && watched_source(root, &project.root.join(path))
+                .is_some_and(|real| theme.contains(&real)))
+}
+
+/// Whether a file is the configured theme document, including symbolic aliases.
+/// The JSON is a build input and must not be copied as a public asset.
+pub fn is_theme_document(project: &Project, path: &str) -> bool {
+    if project.config.theme_document.is_none() {
+        return false;
+    }
+    let root = real_root(project);
+    matches_theme(project, &root, &theme_paths(project, &root), path)
+}
+
 /// The bytes of the project file `path` (project-relative) names, read
 /// only when neither the name nor what it really is says it is private and
 /// it stays inside the project.
-fn read_source(project: &Project, root: &Path, path: &str) -> Result<Vec<u8>, Refusal> {
+fn read_source(
+    project: &Project,
+    root: &Path,
+    path: &str,
+    inputs: &mut InputReceipts,
+) -> Result<Arc<[u8]>, Refusal> {
     if is_private(path) {
         return Err(Refusal::Private);
     }
-    let full = project.root.join(path);
-    real_source(root, &full)?;
-    match std::fs::metadata(&full) {
-        Ok(meta) if meta.is_file() => std::fs::read(&full).map_err(|_| Refusal::Missing),
-        _ => Err(Refusal::Missing),
+    let real = root.join(real_source(root, &project.root.join(path))?);
+    if !std::fs::metadata(&real).is_ok_and(|meta| meta.is_file()) {
+        return Err(Refusal::Missing);
     }
+    let bytes: Arc<[u8]> = Arc::from(std::fs::read(&real).map_err(|_| Refusal::Missing)?);
+    inputs.record(path, real, Some(Arc::clone(&bytes)), false);
+    Ok(bytes)
 }
 
 impl Refusal {
@@ -260,6 +391,12 @@ impl Refusal {
                 format!("{what} is a private file, which is never published"),
             )
             .suggest("reference a file that holds only what the site may show"),
+            Self::ThemeDocument => locate(
+                "theme-document-resource",
+                format!(
+                    "{what} is the theme configuration input and cannot be published as a resource"
+                ),
+            ),
         }
     }
 
@@ -267,7 +404,7 @@ impl Refusal {
     /// somewhere refused.
     fn walk_problem(self, file: &str, what: &str) -> Option<Diagnostic> {
         match self {
-            Self::Missing => None,
+            Self::Missing | Self::ThemeDocument => None,
             Self::Outside => Some(Diagnostic::in_file(
                 file,
                 Severity::Error,
@@ -290,6 +427,7 @@ fn walk(
     root: &Path,
     out: &mut Vec<(String, PathBuf)>,
     linked: &mut BTreeSet<String>,
+    inputs: &mut InputReceipts,
     problems: &mut Vec<Diagnostic>,
 ) {
     let Ok(entries) = std::fs::read_dir(dir) else {
@@ -329,22 +467,71 @@ fn walk(
             continue;
         };
         if meta.is_dir() {
-            walk(&path, &child, root, out, linked, problems);
+            if let Ok(real) = real_source(root, &path) {
+                inputs.record(&child, root.join(real), None, true);
+            }
+            walk(&path, &child, root, out, linked, inputs, problems);
         } else if meta.is_file() {
             out.push((child, path));
         }
     }
 }
 
-/// Reads the content and asset directories.
+/// Reads the content and asset directories and the configured theme document.
 pub fn snapshot(project: &Project) -> (Snapshot, Vec<Diagnostic>) {
     let mut snapshot = Snapshot::default();
     let mut problems = Vec::new();
     let config = &project.config;
     let root = real_root(project);
-    for dir in [&config.content_dir, &config.assets_dir] {
+    let theme = theme_paths(project, &root);
+    for (dir, is_content) in [(&config.content_dir, true), (&config.assets_dir, false)] {
         // The directory itself, or one on its path, may be a link too.
         let full = project.root.join(dir);
+        if is_content {
+            if let Some(selected) = &config.content_include {
+                // Retain the directory identity without walking its descendants.
+                if let Ok(real) = real_source(&root, &full) {
+                    let real = root.join(real);
+                    if let Ok(metadata) = std::fs::metadata(&real) {
+                        snapshot.inputs.record(dir, real, None, metadata.is_dir());
+                    }
+                }
+                for (file, span) in selected {
+                    let relative = format!("{dir}/{file}");
+                    if let Some(real) = watched_source(&root, &project.root.join(&relative))
+                        .filter(|real| real != &relative)
+                    {
+                        snapshot.linked.insert(real);
+                    }
+                    match read_source(project, &root, &relative, &mut snapshot.inputs) {
+                        Ok(bytes) if matches_theme(project, &root, &theme, &relative) => {
+                            snapshot.files.insert(relative, bytes);
+                        }
+                        Ok(bytes) => match std::str::from_utf8(&bytes) {
+                            Ok(text) => {
+                                snapshot.markdown.insert(file.clone(), Arc::from(text));
+                            }
+                            Err(_) => problems.push(Diagnostic::in_file(
+                                &relative,
+                                Severity::Error,
+                                "not-utf8",
+                                "Markdown must be UTF-8",
+                            )),
+                        },
+                        Err(refusal) => problems.push(Diagnostic::located(
+                            &project.config_file,
+                            &project.config_text,
+                            refusal.issue(
+                                &|rule, message| Issue::error(span.clone(), rule, message),
+                                &format!("content.include `{file}`"),
+                                "content-include-missing",
+                            ),
+                        )),
+                    }
+                }
+                continue;
+            }
+        }
         if std::fs::symlink_metadata(&full).is_err() {
             continue;
         }
@@ -352,7 +539,9 @@ pub fn snapshot(project: &Project) -> (Snapshot, Vec<Diagnostic>) {
             snapshot.linked.insert(target);
         }
         match real_source(&root, &full) {
-            Ok(_) => {}
+            Ok(real) => {
+                snapshot.inputs.record(dir, root.join(real), None, true);
+            }
             Err(refusal) => {
                 problems.extend(refusal.walk_problem(dir, "directory"));
                 continue;
@@ -365,10 +554,11 @@ pub fn snapshot(project: &Project) -> (Snapshot, Vec<Diagnostic>) {
             &root,
             &mut files,
             &mut snapshot.linked,
+            &mut snapshot.inputs,
             &mut problems,
         );
-        for (relative, path) in files {
-            let Ok(bytes) = std::fs::read(&path) else {
+        for (relative, _) in files {
+            let Ok(bytes) = read_source(project, &root, &relative, &mut snapshot.inputs) else {
                 problems.push(Diagnostic::in_file(
                     &relative,
                     Severity::Error,
@@ -377,12 +567,20 @@ pub fn snapshot(project: &Project) -> (Snapshot, Vec<Diagnostic>) {
                 ));
                 continue;
             };
+            if matches_theme(project, &root, &theme, &relative) {
+                snapshot.files.insert(relative, bytes);
+                continue;
+            }
             let content_relative = relative
                 .strip_prefix(&format!("{}/", config.content_dir))
                 .map(str::to_owned);
             match content_relative {
-                Some(path) if path.ends_with(".md") && dir == &config.content_dir => {
-                    match String::from_utf8(bytes) {
+                Some(path)
+                    if path.ends_with(".md")
+                        && dir == &config.content_dir
+                        && (is_content || config.content_include.is_none()) =>
+                {
+                    match std::str::from_utf8(&bytes) {
                         Ok(text) => {
                             snapshot.markdown.insert(path, Arc::from(text));
                         }
@@ -395,12 +593,113 @@ pub fn snapshot(project: &Project) -> (Snapshot, Vec<Diagnostic>) {
                     }
                 }
                 _ => {
-                    snapshot.files.insert(relative, Arc::from(bytes));
+                    snapshot.files.insert(relative, bytes);
                 }
             }
         }
     }
+    if let Some((path, span)) = &config.theme_document {
+        if let Some(real) =
+            watched_source(&root, &project.root.join(path)).filter(|real| real != path)
+        {
+            snapshot.linked.insert(real);
+        }
+        if !snapshot.files.contains_key(path) {
+            match read_source(project, &root, path, &mut snapshot.inputs) {
+                Ok(bytes) => {
+                    snapshot.files.insert(path.clone(), bytes);
+                }
+                Err(refusal) => problems.push(Diagnostic::located(
+                    &project.config_file,
+                    &project.config_text,
+                    refusal.issue(
+                        &|rule, message| Issue::error(span.clone(), rule, message),
+                        &format!("theme.document `{path}`"),
+                        "theme-document-missing",
+                    ),
+                )),
+            }
+        }
+    }
     (snapshot, problems)
+}
+
+/// Rechecks the files read for this rendering round before serving its output.
+pub fn validate_inputs(
+    project: &Project,
+    before: &Snapshot,
+    analysis: &Analysis,
+) -> Vec<Diagnostic> {
+    let (after, problems) = snapshot(project);
+    let mut changed = BTreeSet::new();
+    if !problems.is_empty()
+        || after.markdown != before.markdown
+        || after.files != before.files
+        || after.linked != before.linked
+    {
+        changed.insert(project.config.content_dir.clone());
+    }
+    if !project.inputs.files.contains_key(&project.config_file)
+        && !std::fs::read(project.root.join(&project.config_file))
+            .is_ok_and(|bytes| bytes == project.config_text.as_bytes())
+    {
+        changed.insert(project.config_file.clone());
+    }
+    let mut targets = BTreeMap::new();
+    let mut reads = BTreeMap::<PathBuf, Option<Arc<[u8]>>>::new();
+    for (alias, current) in &after.inputs.files {
+        targets.insert(
+            alias.clone(),
+            Some((
+                current.real.clone(),
+                current.directory,
+                current.bytes.is_some(),
+            )),
+        );
+        if let Some(bytes) = &current.bytes {
+            reads
+                .entry(current.real.clone())
+                .or_insert_with(|| Some(Arc::clone(bytes)));
+        }
+    }
+    for inputs in [&project.inputs, &before.inputs, &analysis.inputs] {
+        changed.extend(inputs.changed.iter().cloned());
+        for (alias, original) in &inputs.files {
+            let target = targets.entry(alias.clone()).or_insert_with(|| {
+                let real = std::fs::canonicalize(project.root.join(alias)).ok()?;
+                let metadata = std::fs::metadata(&real).ok()?;
+                Some((real, metadata.is_dir(), metadata.is_file()))
+            });
+            let Some((real, directory, file)) = target.as_ref() else {
+                changed.insert(alias.clone());
+                continue;
+            };
+            if real != &original.real || directory != &original.directory {
+                changed.insert(alias.clone());
+                continue;
+            }
+            if let Some(bytes) = &original.bytes {
+                if !file {
+                    changed.insert(alias.clone());
+                    continue;
+                }
+                let current = reads
+                    .entry(real.clone())
+                    .or_insert_with(|| std::fs::read(real).ok().map(Arc::from));
+                if current.as_ref() != Some(bytes) {
+                    changed.insert(alias.clone());
+                }
+            }
+        }
+    }
+    changed.into_iter().map(|path| {
+        Diagnostic::in_file(
+            &path,
+            Severity::Error,
+            "render-generation-changed",
+            "An input changed after the original rendering read; discard this generation and rebuild from current inputs",
+        )
+    }).collect()
 }
 
 /// Everything a command reads besides the configuration: the files, and the
@@ -468,6 +767,14 @@ impl FragmentKey {
         }
         Self(hash.finalize().into())
     }
+
+    fn html(html: &str) -> Self {
+        let mut hash = Sha256::new();
+        hash.update(b"rendered-html\0");
+        hash.update(WRITER_VERSION.to_le_bytes());
+        hash.update(html.as_bytes());
+        Self(hash.finalize().into())
+    }
 }
 
 /// Fragments by key. Entries an analysis no longer uses are dropped, so the
@@ -487,6 +794,23 @@ impl FragmentCache {
 
     pub fn is_empty(&self) -> bool {
         self.entries.is_empty()
+    }
+
+    fn html(
+        &mut self,
+        html: &str,
+        live: &mut std::collections::HashSet<FragmentKey>,
+    ) -> Arc<Fragment> {
+        let key = FragmentKey::html(html);
+        live.insert(key);
+        if let Some(fragment) = self.entries.get(&key) {
+            self.hits += 1;
+            return fragment.clone();
+        }
+        self.misses += 1;
+        let fragment = Arc::new(markdown::render_html(html));
+        self.entries.insert(key, fragment.clone());
+        fragment
     }
 }
 
@@ -516,10 +840,46 @@ pub struct SrcsetCandidate {
     pub descriptor: String,
 }
 
+/// Whether the page came from a content file or a registered Rust renderer.
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub enum PageOrigin {
+    Markdown,
+    Registered(String),
+}
+
+/// A registered page's metadata and the HTML its renderer produced.
+#[derive(Clone, Debug)]
+pub struct RegisteredPage {
+    pub name: String,
+    pub route: String,
+    pub title: String,
+    pub description: Option<String>,
+    pub html: String,
+    /// Project-relative Rust source, for diagnostics without invented spans.
+    pub file: String,
+}
+
+/// Rendered additions to the Markdown site. Slot keys are canonical routes;
+/// `/404/` names the generated not-found page rather than a registered page.
+#[derive(Clone, Debug, Default)]
+pub struct Surfaces {
+    pub pages: Vec<RegisteredPage>,
+    pub slots: BTreeMap<String, BTreeMap<Slot, String>>,
+    /// Complete source candidates, including classes not present in initial HTML.
+    pub candidates: BTreeSet<String>,
+}
+
+#[derive(Clone, Debug)]
+pub struct AnalysedFragment {
+    pub fragment: Arc<Fragment>,
+    pub targets: Vec<Target>,
+}
+
 /// One page of the site.
 #[derive(Clone, Debug)]
 pub struct Page {
-    /// Content-relative, like `guide/setup.md`.
+    pub origin: PageOrigin,
+    /// Content-relative for Markdown; the canonical route for registered pages.
     pub path: String,
     /// Project-relative, like `content/guide/setup.md`.
     pub file: String,
@@ -539,9 +899,10 @@ pub struct Page {
 /// The analysed site.
 pub struct Analysis {
     pub mode: Mode,
-    /// Every page, drafts included, in path order.
+    /// Markdown pages in path order, then registered pages in declaration order.
     pub pages: Vec<Page>,
     pub routes: BTreeMap<String, usize>,
+    pub slots: BTreeMap<String, BTreeMap<Slot, AnalysedFragment>>,
     pub nav: Vec<NavGroup>,
     /// Where each of the configuration's `nav.top` and `nav.social` links
     /// points, in their order.
@@ -549,9 +910,9 @@ pub struct Analysis {
     pub social: Vec<Target>,
     /// Project-relative files the pages reference, to be published.
     pub resources: BTreeSet<String>,
-    /// The bytes of the resources outside the content and asset
-    /// directories, read once, when they were found to be the project's to
-    /// publish.
+    /// URL values from source candidates, resolved without changing selectors.
+    pub candidate_urls: BTreeMap<String, Target>,
+    /// Resource bytes absent from the directory snapshot, read once when referenced.
     pub outside: BTreeMap<String, Arc<[u8]>>,
     /// Resource and include aliases and their real project-relative
     /// dependencies, found or not: what else `dev` watches.
@@ -559,6 +920,8 @@ pub struct Analysis {
     /// Project-relative files the pages include source from, read or not:
     /// what else `dev` watches.
     pub includes: BTreeSet<String>,
+    /// Original reads beyond the directory snapshot, including include-only files.
+    pub inputs: InputReceipts,
     pub diagnostics: Vec<Diagnostic>,
 }
 
@@ -586,16 +949,19 @@ impl Analysis {
 }
 
 /// Reads an include's file, if it is one the project may expose.
-fn read_include(project: &Project, root: &Path, path: &str) -> Result<String, String> {
-    let bytes = read_source(project, root, path).map_err(|refusal| {
+fn read_include(sources: &mut Sources, path: &str) -> Result<String, String> {
+    let bytes = sources.read(path).map_err(|refusal| {
         match refusal {
             Refusal::Missing => "the file does not exist",
             Refusal::Outside => "the file is outside the project",
             Refusal::Private => "this file is private and is never included",
+            Refusal::ThemeDocument => "the file is the site's theme configuration input",
         }
         .to_owned()
     })?;
-    String::from_utf8(bytes).map_err(|_| "the file is not readable UTF-8 text".into())
+    std::str::from_utf8(&bytes)
+        .map(str::to_owned)
+        .map_err(|_| "the file is not readable UTF-8 text".into())
 }
 
 /// The files analysis reads besides the snapshot: those outside the content
@@ -605,7 +971,9 @@ struct Sources<'a> {
     project: &'a Project,
     snapshot: &'a Snapshot,
     root: PathBuf,
+    theme: BTreeSet<String>,
     outside: BTreeMap<String, Arc<[u8]>>,
+    inputs: InputReceipts,
     /// Every project file a resource reference named, found or not.
     named: BTreeSet<String>,
 }
@@ -626,12 +994,69 @@ impl Sources<'_> {
         if is_private(path) {
             return Err(Refusal::Private);
         }
+        if self.theme_file(path) {
+            return Err(Refusal::ThemeDocument);
+        }
         if self.snapshot.files.contains_key(path) || self.outside.contains_key(path) {
             return Ok(());
         }
-        let bytes = read_source(self.project, &self.root, path)?;
-        self.outside.insert(path.to_owned(), Arc::from(bytes));
+        let bytes = self.read(path)?;
+        self.outside.insert(path.to_owned(), bytes);
         Ok(())
+    }
+
+    fn read(&mut self, path: &str) -> Result<Arc<[u8]>, Refusal> {
+        if is_private(path) {
+            return Err(Refusal::Private);
+        }
+        // A fragment cache hit still belongs to this round's original read.
+        // Reuse bytes from the snapshot or the first read of a shared include.
+        if let Some(bytes) = self
+            .snapshot
+            .inputs
+            .bytes(path)
+            .or_else(|| self.snapshot.files.get(path).cloned())
+            .or_else(|| self.inputs.bytes(path))
+        {
+            return Ok(bytes);
+        }
+        read_source(self.project, &self.root, path, &mut self.inputs)
+    }
+
+    fn exists(&mut self, path: &str) -> Result<(), Refusal> {
+        self.track(path);
+        if is_private(path) {
+            return Err(Refusal::Private);
+        }
+        let real = self
+            .root
+            .join(real_source(&self.root, &self.project.root.join(path))?);
+        let metadata = std::fs::metadata(&real).map_err(|_| Refusal::Missing)?;
+        self.inputs.record(path, real, None, metadata.is_dir());
+        Ok(())
+    }
+
+    fn theme_file(&self, path: &str) -> bool {
+        matches_theme(self.project, &self.root, &self.theme, path)
+    }
+
+    fn refuse_theme(
+        &self,
+        target: Target,
+        found: &mut Vec<Issue>,
+        issue: &dyn Fn(&'static str, String) -> Issue,
+    ) -> Target {
+        if let Target::Resource(path) = &target {
+            if self.theme_file(path) {
+                found.push(Refusal::ThemeDocument.issue(
+                    issue,
+                    &format!("`{path}`"),
+                    "broken-link",
+                ));
+                return Target::Keep;
+            }
+        }
+        target
     }
 }
 
@@ -643,7 +1068,7 @@ fn split_fragment(url: &str) -> (&str, Option<&str>) {
     }
 }
 
-fn has_scheme(url: &str) -> bool {
+pub(crate) fn has_scheme(url: &str) -> bool {
     match url.split_once(':') {
         Some((scheme, _)) => {
             !scheme.is_empty()
@@ -661,7 +1086,7 @@ fn has_scheme(url: &str) -> bool {
 
 /// Joins a relative URL path onto a directory, both `/`-separated and
 /// relative; `None` when it climbs out of the root.
-fn join(dir: &str, relative: &str) -> Option<String> {
+pub(crate) fn join(dir: &str, relative: &str) -> Option<String> {
     let mut parts: Vec<&str> = dir.split('/').filter(|part| !part.is_empty()).collect();
     for part in relative.split('/') {
         match part {
@@ -675,7 +1100,7 @@ fn join(dir: &str, relative: &str) -> Option<String> {
     Some(parts.join("/"))
 }
 
-fn percent_decode(text: &str) -> String {
+pub(crate) fn percent_decode(text: &str) -> String {
     let bytes = text.as_bytes();
     let mut out = Vec::with_capacity(bytes.len());
     let mut i = 0;
@@ -704,17 +1129,44 @@ pub fn analyze(
     highlighter: &Highlighter,
     workers: usize,
 ) -> Analysis {
+    analyze_with_surfaces(
+        project,
+        snapshot,
+        mode,
+        cache,
+        highlighter,
+        workers,
+        &Surfaces::default(),
+    )
+}
+
+/// Analyses Markdown and registered HTML in the same content graph.
+pub fn analyze_with_surfaces(
+    project: &Project,
+    snapshot: &Snapshot,
+    mode: Mode,
+    cache: &mut FragmentCache,
+    highlighter: &Highlighter,
+    workers: usize,
+    surfaces: &Surfaces,
+) -> Analysis {
     let config = &project.config;
     let content_dir = &config.content_dir;
     let mut diagnostics = Vec::new();
     let file_of = |path: &str| format!("{content_dir}/{path}");
+    let root = real_root(project);
     let mut sources = Sources {
         project,
         snapshot,
-        root: real_root(project),
+        theme: theme_paths(project, &root),
+        root,
         outside: BTreeMap::new(),
+        inputs: InputReceipts::default(),
         named: BTreeSet::new(),
     };
+    if let Some((path, _)) = &config.theme_document {
+        sources.track(path);
+    }
 
     // Pages: frontmatter, route, includes.
     struct Draft {
@@ -793,7 +1245,7 @@ pub fn analyze(
         let mut includes = IncludeFiles::default();
         for include in markdown::include_paths(body) {
             sources.track(&include);
-            let read = read_include(project, &sources.root, &include);
+            let read = read_include(&mut sources, &include);
             included.insert(include.clone());
             includes.0.insert(include, read);
         }
@@ -837,9 +1289,8 @@ pub fn analyze(
     for (i, fragment) in missing.into_iter().zip(rendered) {
         cache.entries.insert(drafts[i].key, fragment);
     }
-    let live: std::collections::HashSet<FragmentKey> =
+    let mut live: std::collections::HashSet<FragmentKey> =
         drafts.iter().map(|draft| draft.key).collect();
-    cache.entries.retain(|key, _| live.contains(key));
 
     let mut pages: Vec<Page> = Vec::with_capacity(drafts.len());
     for draft in drafts {
@@ -963,6 +1414,7 @@ pub fn analyze(
             }
         }
         pages.push(Page {
+            origin: PageOrigin::Markdown,
             route: route_for(&draft.path),
             file,
             path: draft.path,
@@ -971,6 +1423,108 @@ pub fn analyze(
             lang: draft.lang,
             draft: draft.front.draft,
             front: draft.front,
+            fragment,
+            targets: Vec::new(),
+            action_targets: Vec::new(),
+        });
+    }
+
+    let mut routes: BTreeMap<String, usize> = pages
+        .iter()
+        .enumerate()
+        .map(|(i, page)| (page.route.clone(), i))
+        .collect();
+    for registered in &surfaces.pages {
+        let route = &registered.route;
+        if config::normalize_base(route).as_ref() != Ok(route) {
+            diagnostics.push(Diagnostic::in_file(
+                &registered.file,
+                Severity::Error,
+                "invalid-route",
+                format!("registered route `{route}` needs a canonical path like `/custom/`, without query or fragment"),
+            ));
+            continue;
+        }
+        let output = crate::generation::page_path(route);
+        let first = route
+            .trim_matches('/')
+            .split('/')
+            .next()
+            .unwrap_or_default();
+        if route == "/404/"
+            || is_private(route)
+            || crate::generation::SITE_FILES.contains(&first)
+            || crate::generation::GENERATED_PREFIXES
+                .iter()
+                .any(|prefix| output.starts_with(prefix))
+        {
+            diagnostics.push(Diagnostic::in_file(
+                &registered.file,
+                Severity::Error,
+                "reserved-route",
+                format!("registered route `{route}` is reserved for generated or private output"),
+            ));
+            continue;
+        }
+        if let Some(&other) = routes.get(route) {
+            diagnostics.push(Diagnostic::in_file(
+                &registered.file,
+                Severity::Error,
+                "route-conflict",
+                format!(
+                    "registered page `{}` and `{}` both become {route}",
+                    registered.name, pages[other].file
+                ),
+            ));
+            continue;
+        }
+        let fragment = cache.html(&registered.html, &mut live);
+        diagnostics.extend(
+            fragment
+                .issues
+                .iter()
+                .cloned()
+                .map(|issue| Diagnostic::rendered(&registered.file, issue)),
+        );
+        if fragment.h1_count > 1 {
+            diagnostics.push(Diagnostic::in_file(
+                &registered.file,
+                Severity::Error,
+                "multiple-h1",
+                "a page has one top-level heading; the registered HTML contains more than one",
+            ));
+        }
+        let mut previous = 1;
+        for heading in &fragment.headings {
+            if heading.level > previous + 1 {
+                diagnostics.push(Diagnostic::in_file(
+                    &registered.file,
+                    Severity::Warning,
+                    "heading-skip",
+                    format!(
+                        "this level-{} heading follows a level-{previous} one",
+                        heading.level
+                    ),
+                ));
+            }
+            previous = heading.level;
+        }
+        routes.insert(route.clone(), pages.len());
+        pages.push(Page {
+            origin: PageOrigin::Registered(registered.name.clone()),
+            path: route.clone(),
+            file: registered.file.clone(),
+            route: route.clone(),
+            front: Front {
+                title: Some(registered.title.clone()),
+                description: registered.description.clone(),
+                lang: Some(config.site.lang.clone()),
+                ..Front::default()
+            },
+            title: registered.title.clone(),
+            description: registered.description.clone(),
+            lang: config.site.lang.clone(),
+            draft: false,
             fragment,
             targets: Vec::new(),
             action_targets: Vec::new(),
@@ -1005,16 +1559,64 @@ pub fn analyze(
                 .with_suggestion(suggestion),
         );
     }
-    let routes: BTreeMap<String, usize> = pages
-        .iter()
-        .enumerate()
-        .map(|(i, page)| (page.route.clone(), i))
-        .collect();
     let by_path: HashMap<String, usize> = pages
         .iter()
         .enumerate()
+        .filter(|(_, page)| page.origin == PageOrigin::Markdown)
         .map(|(i, page)| (page.path.clone(), i))
         .collect();
+
+    let slot_file = config
+        .rust
+        .as_ref()
+        .map_or(project.config_file.as_str(), |rust| rust.registry.as_str());
+    let mut slots = BTreeMap::new();
+    for (route, rendered) in &surfaces.slots {
+        if route != "/404/" && !routes.contains_key(route) {
+            diagnostics.push(Diagnostic::in_file(
+                slot_file,
+                Severity::Error,
+                "slot-route",
+                format!("slots name `{route}`, which is not a page route"),
+            ));
+            continue;
+        }
+        let mut analysed = BTreeMap::new();
+        for (&slot, html) in rendered {
+            let fragment = cache.html(html, &mut live);
+            diagnostics.extend(
+                fragment
+                    .issues
+                    .iter()
+                    .cloned()
+                    .map(|issue| Diagnostic::rendered(slot_file, issue)),
+            );
+            analysed.insert(
+                slot,
+                AnalysedFragment {
+                    fragment,
+                    targets: Vec::new(),
+                },
+            );
+        }
+        slots.insert(route.clone(), analysed);
+    }
+    cache.entries.retain(|key, _| live.contains(key));
+    let mut anchors: BTreeMap<String, BTreeSet<String>> = pages
+        .iter()
+        .map(|page| {
+            (
+                page.route.clone(),
+                page.fragment.anchors.iter().cloned().collect(),
+            )
+        })
+        .collect();
+    for (route, rendered) in &slots {
+        let known = anchors.entry(route.clone()).or_default();
+        for slot in rendered.values() {
+            known.extend(slot.fragment.anchors.iter().cloned());
+        }
+    }
 
     // Code groups: one name, one set of tabs, across the site.
     let mut groups: BTreeMap<&str, (BTreeSet<&str>, &str)> = BTreeMap::new();
@@ -1048,95 +1650,71 @@ pub fn analyze(
     let page_count = pages.len();
     for i in 0..page_count {
         let page = &pages[i];
-        let text = snapshot.markdown[&page.path].clone();
-        let dir = page.path.rsplit_once('/').map_or("", |(dir, _)| dir);
-        let mut targets = Vec::with_capacity(page.fragment.references.len());
-        let mut found = Vec::new();
-        for reference in &page.fragment.references {
-            let issue = |rule: &'static str, message: String| {
-                Issue::error(reference.span.clone(), rule, message)
-            };
-            let url = reference.destination.trim();
-            let target = match reference.kind {
-                RefKind::ClassImage if url.starts_with('#') => {
-                    let anchor = percent_decode(&url[1..]);
-                    if !page.fragment.anchors.contains(&anchor) {
-                        found.push(issue(
-                            "broken-anchor",
-                            format!("{} has no id `{url}`", page.file),
-                        ));
-                    }
-                    Target::Keep
-                }
-                RefKind::Link => resolve_link(
-                    project,
-                    snapshot,
-                    &pages,
-                    &by_path,
-                    &routes,
-                    Some(i),
-                    dir,
-                    url,
-                    mode,
-                    &mut found,
-                    &issue,
-                ),
-                RefKind::Image | RefKind::Media | RefKind::Srcset | RefKind::ClassImage => {
-                    let image = reference.kind != RefKind::Media;
-                    resolve_resource(
+        let graph = LinkGraph {
+            project,
+            snapshot,
+            pages: &pages,
+            by_path: &by_path,
+            routes: &routes,
+            anchors: &anchors,
+            mode,
+        };
+        let rendered = page.origin != PageOrigin::Markdown;
+        let dir = if rendered {
+            ""
+        } else {
+            page.path.rsplit_once('/').map_or("", |(dir, _)| dir)
+        };
+        let (targets, mut found) = resolve_references(
+            &graph,
+            &mut sources,
+            &page.route,
+            dir,
+            rendered,
+            &page.fragment,
+        );
+        collect_resources(&targets, &mut resources);
+        // A home page's actions are links too, written in its frontmatter.
+        let mut action_targets = Vec::with_capacity(page.front.actions.len());
+        match &page.origin {
+            PageOrigin::Markdown => {
+                let text = &snapshot.markdown[&page.path];
+                let yaml = frontmatter::split(text)
+                    .ok()
+                    .flatten()
+                    .map_or(0..0, |split| split.yaml);
+                let mut cursor = yaml.start;
+                for action in &page.front.actions {
+                    let link = action.link.trim();
+                    let at = text[cursor..yaml.end]
+                        .find(link)
+                        .map_or(yaml.start, |at| cursor + at);
+                    cursor = cursor.max(at + link.len()).min(yaml.end);
+                    let issue = |rule: &'static str, message: String| {
+                        Issue::error(at..at + link.len(), rule, message)
+                    };
+                    let target = resolve_link(
+                        &graph,
                         &mut sources,
+                        Some(&page.route),
                         dir,
-                        url,
-                        image,
-                        reference.kind == RefKind::Srcset,
+                        link,
                         &mut found,
                         &issue,
-                    )
+                    );
+                    action_targets.push(sources.refuse_theme(target, &mut found, &issue));
                 }
-            };
-            match &target {
-                Target::Resource(path) => {
-                    resources.insert(path.clone());
-                }
-                Target::Srcset(candidates) => {
-                    resources.extend(candidates.iter().filter_map(|c| c.file.clone()));
-                }
-                _ => {}
+                diagnostics.extend(
+                    found
+                        .into_iter()
+                        .map(|issue| Diagnostic::located(&page.file, text, issue)),
+                );
             }
-            targets.push(target);
-        }
-        // A home page's actions are links too, written in its frontmatter.
-        let yaml = frontmatter::split(&text)
-            .ok()
-            .flatten()
-            .map_or(0..0, |split| split.yaml);
-        let mut cursor = yaml.start;
-        let mut action_targets = Vec::with_capacity(page.front.actions.len());
-        for action in &page.front.actions {
-            let link = action.link.trim();
-            let at = text[cursor..yaml.end]
-                .find(link)
-                .map_or(yaml.start, |at| cursor + at);
-            cursor = cursor.max(at + link.len()).min(yaml.end);
-            let issue = |rule: &'static str, message: String| {
-                Issue::error(at..at + link.len(), rule, message)
-            };
-            action_targets.push(resolve_link(
-                project,
-                snapshot,
-                &pages,
-                &by_path,
-                &routes,
-                Some(i),
-                dir,
-                link,
-                mode,
-                &mut found,
-                &issue,
-            ));
-        }
-        for issue in found {
-            diagnostics.push(Diagnostic::located(&pages[i].file, &text, issue));
+            PageOrigin::Registered(_) => diagnostics.extend(
+                found
+                    .into_iter()
+                    .map(|issue| Diagnostic::rendered(&page.file, issue)),
+            ),
         }
         // A file only an action names is published all the same.
         for target in &action_targets {
@@ -1148,6 +1726,29 @@ pub fn analyze(
         pages[i].action_targets = action_targets;
     }
 
+    let graph = LinkGraph {
+        project,
+        snapshot,
+        pages: &pages,
+        by_path: &by_path,
+        routes: &routes,
+        anchors: &anchors,
+        mode,
+    };
+    for (route, rendered) in &mut slots {
+        for slot in rendered.values_mut() {
+            let (targets, found) =
+                resolve_references(&graph, &mut sources, route, "", true, &slot.fragment);
+            collect_resources(&targets, &mut resources);
+            diagnostics.extend(
+                found
+                    .into_iter()
+                    .map(|issue| Diagnostic::rendered(slot_file, issue)),
+            );
+            slot.targets = targets;
+        }
+    }
+
     // The configuration's header links resolve from the content root.
     let mut config_links = |links: &[config::NavLink]| -> Vec<Target> {
         let mut found = Vec::new();
@@ -1157,19 +1758,16 @@ pub fn analyze(
                 let issue = |rule: &'static str, message: String| {
                     Issue::error(link.span.clone(), rule, message)
                 };
-                resolve_link(
-                    project,
-                    snapshot,
-                    &pages,
-                    &by_path,
-                    &routes,
+                let target = resolve_link(
+                    &graph,
+                    &mut sources,
                     None,
                     "",
                     link.link.trim(),
-                    mode,
                     &mut found,
                     &issue,
-                )
+                );
+                sources.refuse_theme(target, &mut found, &issue)
             })
             .collect();
         for issue in found {
@@ -1189,8 +1787,56 @@ pub fn analyze(
         }
     }
 
+    // Source candidates also style states which initial HTML does not contain.
+    // Resolve their URL values once; their original selectors stay intact.
+    let mut candidate_urls = BTreeMap::new();
+    for candidate in &surfaces.candidates {
+        for (url, span) in crate::html_check::class_urls(candidate) {
+            if candidate_urls.contains_key(&url) {
+                continue;
+            }
+            let mut found = Vec::new();
+            let issue = |rule: &'static str, message: String| {
+                Issue::error(
+                    span.clone(),
+                    rule,
+                    format!("source candidate `{candidate}`: {message}"),
+                )
+            };
+            let target = if url.starts_with('#') {
+                // A source literal has no owning document until it is emitted.
+                Target::Keep
+            } else {
+                resolve_resource(
+                    &mut sources,
+                    "",
+                    true,
+                    &url,
+                    true,
+                    false,
+                    &mut found,
+                    &issue,
+                )
+            };
+            collect_resources(std::slice::from_ref(&target), &mut resources);
+            diagnostics.extend(found.into_iter().map(|issue| Diagnostic {
+                suggestion: issue.suggestion,
+                ..Diagnostic::general(issue.severity, issue.rule, issue.message)
+            }));
+            candidate_urls.insert(url, target);
+        }
+    }
+
     // Navigation.
-    let nav = navigation(project, snapshot, &pages, mode, &by_path, &mut diagnostics);
+    let nav = navigation(
+        project,
+        snapshot,
+        &pages,
+        mode,
+        &by_path,
+        &routes,
+        &mut diagnostics,
+    );
 
     // The logo, the link-preview image and the brand colours.
     let logos = config.logo.iter().flat_map(|logo| {
@@ -1242,7 +1888,7 @@ pub fn analyze(
         let Some(output) = path.strip_prefix(&assets_prefix) else {
             continue;
         };
-        if is_private(path) {
+        if is_private(path) || sources.theme_file(path) {
             continue;
         }
         let taken = page_files.contains(output)
@@ -1301,31 +1947,359 @@ pub fn analyze(
         mode,
         pages,
         routes,
+        slots,
         nav,
         top,
         social,
         resources,
+        candidate_urls,
         outside: sources.outside,
         referenced: sources.named,
         includes: included,
+        inputs: sources.inputs,
         diagnostics,
     }
 }
 
-#[allow(clippy::too_many_arguments)]
-fn resolve_link(
+#[doc(hidden)]
+pub struct MarkdownIntroContent {
+    pub html: String,
+    pub inputs: InputReceipts,
+    pub referenced: BTreeSet<String>,
+    pub diagnostics: Vec<Diagnostic>,
+}
+
+/// Renders the original H1-to-first-H2 introduction through the shared writer.
+/// The fragment's links are resolved at its source, before the enclosing page.
+#[doc(hidden)]
+pub fn markdown_intro(
     project: &Project,
     snapshot: &Snapshot,
-    pages: &[Page],
-    by_path: &HashMap<String, usize>,
-    routes: &BTreeMap<String, usize>,
-    from: Option<usize>,
-    dir: &str,
+    analysis: &Analysis,
+    path: &str,
+    highlighter: &Highlighter,
+) -> Result<MarkdownIntroContent, Vec<Diagnostic>> {
+    let path = config::relative_path(path).map_err(|message| {
+        vec![Diagnostic::general(
+            Severity::Error,
+            "markdown-intro",
+            message,
+        )]
+    })?;
+    let root = real_root(project);
+    let mut sources = Sources {
+        project,
+        snapshot,
+        theme: theme_paths(project, &root),
+        root,
+        outside: BTreeMap::new(),
+        inputs: InputReceipts::default(),
+        named: BTreeSet::new(),
+    };
+    sources.track(&path);
+    if sources.theme_file(&path) {
+        return Err(vec![Diagnostic::in_file(
+            &path,
+            Severity::Error,
+            "markdown-intro",
+            "the theme document is not reading content",
+        )]);
+    }
+    let text = read_include(&mut sources, &path).map_err(|message| {
+        vec![Diagnostic::in_file(
+            &path,
+            Severity::Error,
+            "markdown-intro",
+            message,
+        )]
+    })?;
+    let range = markdown::intro_range(&text)
+        .map_err(|issue| vec![Diagnostic::located(&path, &text, issue)])?;
+    let body = &text[range.clone()];
+    let mut includes = IncludeFiles::default();
+    for include in markdown::include_paths(body) {
+        sources.track(&include);
+        includes
+            .0
+            .insert(include.clone(), read_include(&mut sources, &include));
+    }
+    let (labels, foreign) = labels::for_lang(&project.config.site.lang);
+    let fragment = markdown::render(
+        body,
+        range.start,
+        &markdown::Context {
+            highlighter,
+            labels,
+            foreign,
+            includes: &includes,
+        },
+    );
+    let by_path = analysis
+        .pages
+        .iter()
+        .enumerate()
+        .filter(|(_, page)| page.origin == PageOrigin::Markdown)
+        .map(|(index, page)| (page.path.clone(), index))
+        .collect();
+    let anchors = analysis
+        .pages
+        .iter()
+        .map(|page| {
+            (
+                page.route.clone(),
+                page.fragment.anchors.iter().cloned().collect(),
+            )
+        })
+        .collect();
+    let graph = LinkGraph {
+        project,
+        snapshot,
+        pages: &analysis.pages,
+        by_path: &by_path,
+        routes: &analysis.routes,
+        anchors: &anchors,
+        mode: analysis.mode,
+    };
+    let source_dir = path.rsplit_once('/').map_or("", |(dir, _)| dir);
+    let mut found = fragment.issues.clone();
+    let mut targets = Vec::with_capacity(fragment.references.len());
+    for reference in &fragment.references {
+        let issue = |rule: &'static str, message: String| {
+            Issue::error(reference.span.clone(), rule, message)
+        };
+        let url = reference.destination.trim();
+        let target = match reference.kind {
+            RefKind::Link => {
+                resolve_source_link(&graph, &mut sources, &path, url, &mut found, &issue)
+            }
+            RefKind::Image | RefKind::Media | RefKind::Srcset | RefKind::ClassImage => {
+                resolve_resource(
+                    &mut sources,
+                    source_dir,
+                    true,
+                    url,
+                    reference.kind != RefKind::Media,
+                    reference.kind == RefKind::Srcset,
+                    &mut found,
+                    &issue,
+                )
+            }
+        };
+        targets.push(sources.refuse_theme(target, &mut found, &issue));
+    }
+    Ok(MarkdownIntroContent {
+        html: crate::generation::source_fragment(project, analysis, &fragment, &targets),
+        inputs: sources.inputs,
+        referenced: sources.named,
+        diagnostics: found
+            .into_iter()
+            .map(|issue| Diagnostic::located(&path, &text, issue))
+            .collect(),
+    })
+}
+
+fn resolve_source_link(
+    graph: &LinkGraph,
+    sources: &mut Sources,
+    source: &str,
     url: &str,
-    mode: Mode,
     found: &mut Vec<Issue>,
     issue: &dyn Fn(&'static str, String) -> Issue,
 ) -> Target {
+    if url.is_empty() || has_scheme(url) || url.starts_with('/') {
+        return resolve_link(graph, sources, None, "", url, found, issue);
+    }
+    let (path, fragment) = split_fragment(url);
+    let fragment = fragment.map(percent_decode);
+    let dir = source.rsplit_once('/').map_or("", |(dir, _)| dir);
+    let file = if path.is_empty() {
+        Some(source.to_string())
+    } else {
+        join(
+            dir,
+            &percent_decode(path.split('?').next().unwrap_or_default()),
+        )
+    };
+    let Some(file) = file else {
+        found.push(issue("broken-link", format!("`{path}` leaves the project")));
+        return Target::Keep;
+    };
+    if let Some(page) = file
+        .strip_prefix(&format!("{}/", graph.project.config.content_dir))
+        .and_then(|path| graph.by_path.get(path))
+        .map(|&index| &graph.pages[index])
+    {
+        let mut route = page.route.clone();
+        if let Some(fragment) = &fragment {
+            route.push('#');
+            route.push_str(&crate::escape::encode_fragment(fragment));
+        }
+        return resolve_link(graph, sources, None, "", &route, found, issue);
+    }
+    repository_link(
+        graph.project,
+        sources,
+        &file,
+        fragment.as_deref(),
+        found,
+        issue,
+    )
+}
+
+struct LinkGraph<'a> {
+    project: &'a Project,
+    snapshot: &'a Snapshot,
+    pages: &'a [Page],
+    by_path: &'a HashMap<String, usize>,
+    routes: &'a BTreeMap<String, usize>,
+    anchors: &'a BTreeMap<String, BTreeSet<String>>,
+    mode: Mode,
+}
+
+fn collect_resources(targets: &[Target], resources: &mut BTreeSet<String>) {
+    for target in targets {
+        match target {
+            Target::Resource(path) => {
+                resources.insert(path.clone());
+            }
+            Target::Srcset(candidates) => {
+                resources.extend(candidates.iter().filter_map(|c| c.file.clone()))
+            }
+            _ => {}
+        }
+    }
+}
+
+fn resolve_references(
+    graph: &LinkGraph,
+    sources: &mut Sources,
+    route: &str,
+    dir: &str,
+    rendered: bool,
+    fragment: &Fragment,
+) -> (Vec<Target>, Vec<Issue>) {
+    let mut targets = Vec::with_capacity(fragment.references.len());
+    let mut found = Vec::new();
+    for reference in &fragment.references {
+        let issue = |rule: &'static str, message: String| {
+            Issue::error(reference.span.clone(), rule, message)
+        };
+        let url = reference.destination.trim();
+        let target = match reference.kind {
+            RefKind::ClassImage | RefKind::Image
+                if url.starts_with('#') && (rendered || reference.kind == RefKind::ClassImage) =>
+            {
+                let anchor = percent_decode(&url[1..]);
+                if !graph
+                    .anchors
+                    .get(route)
+                    .is_some_and(|known| known.contains(&anchor))
+                {
+                    found.push(issue("broken-anchor", format!("{route} has no id `{url}`")));
+                }
+                Target::Keep
+            }
+            RefKind::Link if rendered => {
+                resolve_html_link(graph, sources, route, url, &mut found, &issue)
+            }
+            RefKind::Link => {
+                resolve_link(graph, sources, Some(route), dir, url, &mut found, &issue)
+            }
+            RefKind::Image | RefKind::Media | RefKind::Srcset | RefKind::ClassImage => {
+                resolve_resource(
+                    sources,
+                    dir,
+                    rendered,
+                    url,
+                    reference.kind != RefKind::Media,
+                    reference.kind == RefKind::Srcset,
+                    &mut found,
+                    &issue,
+                )
+            }
+        };
+        targets.push(sources.refuse_theme(target, &mut found, &issue));
+    }
+    (targets, found)
+}
+
+/// Removes only an exact configured deployment prefix from a browser URL.
+fn without_base<'a>(path: &'a str, base: &str) -> &'a str {
+    if base != "/" && path.starts_with(base) {
+        &path[base.len() - 1..]
+    } else {
+        path
+    }
+}
+
+fn resolve_html_link(
+    graph: &LinkGraph,
+    sources: &mut Sources,
+    from: &str,
+    url: &str,
+    found: &mut Vec<Issue>,
+    issue: &dyn Fn(&'static str, String) -> Issue,
+) -> Target {
+    if url.is_empty() || has_scheme(url) || url.starts_with('/') || url.starts_with('#') {
+        return resolve_link(graph, sources, Some(from), "", url, found, issue);
+    }
+    let (path, fragment) = split_fragment(url);
+    let decoded = percent_decode(path.split('?').next().unwrap_or_default());
+    let Some(file) = join("", &decoded) else {
+        found.push(issue("broken-link", format!("`{path}` leaves the project")));
+        return Target::Keep;
+    };
+    if excluded_markdown(graph.project, &file) {
+        let fragment = fragment.map(percent_decode);
+        return repository_link(
+            graph.project,
+            sources,
+            &file,
+            fragment.as_deref(),
+            found,
+            issue,
+        );
+    }
+    let route = format!("/{file}/");
+    let target = graph.routes.get(&route).copied().or_else(|| {
+        file.strip_prefix(&format!("{}/", graph.project.config.content_dir))
+            .and_then(|path| graph.by_path.get(path).copied())
+    });
+    if let Some(target) = target {
+        let mut url = graph.pages[target].route.clone();
+        if let Some(fragment) = fragment {
+            url.push('#');
+            url.push_str(fragment);
+        }
+        return resolve_link(graph, sources, Some(from), "", &url, found, issue);
+    }
+    match sources.get(&file) {
+        Ok(()) => Target::Resource(file),
+        Err(refusal) => {
+            found.push(refusal.issue(issue, &format!("`{path}`"), "broken-link"));
+            Target::Keep
+        }
+    }
+}
+
+fn resolve_link(
+    graph: &LinkGraph,
+    sources: &mut Sources,
+    from: Option<&str>,
+    dir: &str,
+    url: &str,
+    found: &mut Vec<Issue>,
+    issue: &dyn Fn(&'static str, String) -> Issue,
+) -> Target {
+    let LinkGraph {
+        project,
+        snapshot,
+        pages,
+        by_path,
+        routes,
+        anchors,
+        mode,
+    } = graph;
     if url.is_empty() {
         found.push(issue("empty-link", "this link has no destination".into()));
         return Target::Keep;
@@ -1342,20 +2316,26 @@ fn resolve_link(
     }
     let (path, fragment) = split_fragment(url);
     let fragment = fragment.map(percent_decode);
-    let check_anchor = |page: usize, found: &mut Vec<Issue>| {
+    let check_anchor = |route: &str, found: &mut Vec<Issue>| {
         if let Some(anchor) = fragment.as_deref().filter(|anchor| !anchor.is_empty()) {
-            let fragment = &pages[page].fragment;
-            let known = fragment.anchors.iter().any(|id| id == anchor);
+            let known = anchors
+                .get(route)
+                .is_some_and(|known| known.contains(anchor));
             if !known {
+                let file = routes.get(route).map_or(route, |&i| pages[i].file.as_str());
                 found.push(
-                    issue("broken-anchor", format!("{} has no heading `#{anchor}`", pages[page].file))
+                    issue("broken-anchor", format!("{file} has no heading `#{anchor}`"))
                         .suggest("link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"),
                 );
             }
         }
     };
     let to_page = |target: usize, found: &mut Vec<Issue>| -> Target {
-        if pages[target].draft && !from.is_some_and(|from| pages[from].draft) {
+        if pages[target].draft
+            && !from
+                .and_then(|route| routes.get(route))
+                .is_some_and(|&i| pages[i].draft)
+        {
             let message = format!("{} is a draft and is not published", pages[target].file);
             match mode {
                 Mode::Production => found.push(issue("draft-link", message)),
@@ -1368,7 +2348,7 @@ fn resolve_link(
                 }),
             }
         }
-        check_anchor(target, found);
+        check_anchor(&pages[target].route, found);
         Target::Page {
             page: target,
             anchor: fragment.clone(),
@@ -1386,7 +2366,7 @@ fn resolve_link(
     }
     // URL separators are syntax before decoding: `%3F` belongs to a name.
     let decoded = percent_decode(path.split('?').next().unwrap_or_default());
-    if let Some(absolute) = decoded.strip_prefix('/') {
+    if let Some(absolute) = without_base(&decoded, &project.config.site.base).strip_prefix('/') {
         // A site route, or a file in the asset directory.
         let route = if absolute.is_empty() || absolute.ends_with('/') {
             format!("/{absolute}")
@@ -1420,6 +2400,38 @@ fn resolve_link(
                 return match by_path.get(markdown.as_str()) {
                     Some(&target) => to_page(target, found),
                     None => {
+                        let file = format!("{}/{markdown}", project.config.content_dir);
+                        if joined.ends_with(".md") && excluded_markdown(project, &file) {
+                            return repository_link(
+                                project,
+                                sources,
+                                &file,
+                                fragment.as_deref(),
+                                found,
+                                issue,
+                            );
+                        }
+                        let route = if joined.is_empty() {
+                            "/".into()
+                        } else {
+                            format!("/{joined}/")
+                        };
+                        if let Some(&target) = routes
+                            .get(&route)
+                            .filter(|&&i| matches!(pages[i].origin, PageOrigin::Registered(_)))
+                        {
+                            return to_page(target, found);
+                        }
+                        if excluded_markdown(project, &file) {
+                            return repository_link(
+                                project,
+                                sources,
+                                &file,
+                                fragment.as_deref(),
+                                found,
+                                issue,
+                            );
+                        }
                         found.push(issue(
                             "broken-link",
                             format!(
@@ -1435,6 +2447,15 @@ fn resolve_link(
             if snapshot.files.contains_key(&file) && !is_private(&file) {
                 return Target::Resource(file);
             }
+            if project.config.content_include.is_some() {
+                return match sources.get(&file) {
+                    Ok(()) => Target::Resource(file),
+                    Err(refusal) => {
+                        found.push(refusal.issue(issue, &format!("`{file}`"), "broken-link"));
+                        Target::Keep
+                    }
+                };
+            }
             found.push(issue("broken-link", format!("there is no file `{file}`")));
             Target::Keep
         }
@@ -1445,7 +2466,7 @@ fn resolve_link(
                 found.push(issue("broken-link", format!("`{path}` leaves the project")));
                 return Target::Keep;
             };
-            if !project.root.join(&file).exists() || is_private(&file) {
+            if sources.exists(&file).is_err() {
                 found.push(issue("broken-link", format!("there is no file `{file}`")));
                 return Target::Keep;
             }
@@ -1480,9 +2501,69 @@ fn resolve_link(
     }
 }
 
+fn excluded_markdown(project: &Project, file: &str) -> bool {
+    let Some(selected) = &project.config.content_include else {
+        return false;
+    };
+    let Some(relative) = file.strip_prefix(&format!("{}/", project.config.content_dir)) else {
+        return false;
+    };
+    relative.ends_with(".md") && !selected.iter().any(|(file, _)| file == relative)
+}
+
+/// Resolves a normalized project-relative repository file without reading its body.
+fn repository_link(
+    project: &Project,
+    sources: &mut Sources,
+    file: &str,
+    fragment: Option<&str>,
+    found: &mut Vec<Issue>,
+    issue: &dyn Fn(&'static str, String) -> Issue,
+) -> Target {
+    if let Err(refusal) = sources.exists(file) {
+        found.push(refusal.issue(issue, &format!("`{file}`"), "broken-link"));
+        return Target::Keep;
+    }
+    let Some(repo) = &project.config.repo else {
+        found.push(
+            issue(
+                "repo-link",
+                format!(
+                    "`{file}` is not a published page and the site has no [repo] to link it to"
+                ),
+            )
+            .suggest("add [repo] url and ref to rustify-docs.toml, or link to a published page"),
+        );
+        return Target::Keep;
+    };
+    let in_repo = if repo.path.is_empty() {
+        file.to_owned()
+    } else {
+        format!("{}/{file}", repo.path)
+    };
+    let kind = if sources
+        .inputs
+        .files
+        .get(file)
+        .is_some_and(|read| read.directory)
+    {
+        "tree"
+    } else {
+        "blob"
+    };
+    let mut url = format!("{}/{kind}/{}/{in_repo}", repo.url, repo.reference);
+    if let Some(fragment) = fragment {
+        url.push('#');
+        url.push_str(fragment);
+    }
+    Target::Repository(url)
+}
+
+#[allow(clippy::too_many_arguments)]
 fn resolve_resource(
     sources: &mut Sources,
     dir: &str,
+    rendered: bool,
     url: &str,
     image: bool,
     srcset: bool,
@@ -1518,9 +2599,11 @@ fn resolve_resource(
         let (path, _) = split_fragment(&candidate);
         let path = percent_decode(path.split('?').next().unwrap_or(""));
         let config = &sources.project.config;
+        let path = without_base(&path, &config.site.base);
         let file = match path.strip_prefix('/') {
             Some(absolute) => Some(format!("{}/{absolute}", config.assets_dir)),
-            None => join(&format!("{}/{dir}", config.content_dir), &path),
+            None if rendered => join(dir, path),
+            None => join(&format!("{}/{dir}", config.content_dir), path),
         };
         let refusal = match &file {
             Some(file) => sources.get(file).err(),
@@ -1570,11 +2653,16 @@ fn navigation(
     pages: &[Page],
     mode: Mode,
     by_path: &HashMap<String, usize>,
+    routes: &BTreeMap<String, usize>,
     diagnostics: &mut Vec<Diagnostic>,
 ) -> Vec<NavGroup> {
     let config = &project.config;
     let shown = |page: &Page| mode == Mode::Dev || !page.draft;
-    let listable = |page: &Page| shown(page) && page.front.layout != Layout::Home;
+    let listable = |page: &Page| {
+        shown(page)
+            && page.front.layout != Layout::Home
+            && (page.origin == PageOrigin::Markdown || page.route != "/")
+    };
     fn chosen(page: &Page) -> Option<&str> {
         page.front.sidebar.group.as_deref()
     }
@@ -1629,6 +2717,9 @@ fn navigation(
     // With groups configured, `sidebar.group` names one of them.
     let known = |label: &str| config.nav.groups.iter().any(|group| group.label == label);
     for page in pages {
+        if page.origin != PageOrigin::Markdown {
+            continue;
+        }
         let Some(label) = chosen(page).filter(|label| !known(label)) else {
             continue;
         };
@@ -1660,18 +2751,27 @@ fn navigation(
             .suggest(format!("use one of: {}", names.join(", "))),
         ));
     }
-    // A group's `items` is an explicit list; a page in one is not moved.
+    // Explicit file and route lists keep their pages in the declared group.
     let explicit: BTreeSet<usize> = config
         .nav
         .groups
         .iter()
         .filter_map(|group| match &group.source {
-            GroupSource::Items(list) => Some(list),
+            GroupSource::Items(list) => Some((list, false)),
+            GroupSource::Routes(list) => Some((list, true)),
             GroupSource::Dir { .. } => None,
         })
-        .flatten()
-        .filter_map(|(path, _)| by_path.get(path.as_str()).copied())
+        .flat_map(|(list, registered)| {
+            list.iter().filter_map(move |(path, _)| {
+                if registered {
+                    routes.get(path).copied()
+                } else {
+                    by_path.get(path).copied()
+                }
+            })
+        })
         .collect();
+    let mut selected_routes = BTreeSet::new();
     for group in &config.nav.groups {
         let joins = |i: usize| {
             listable(&pages[i])
@@ -1690,7 +2790,9 @@ fn navigation(
                         let page = &pages[i];
                         let moved =
                             chosen(page).is_some_and(|label| label != group.label && known(label));
-                        joins(i) || (page.path.starts_with(&prefix) && listable(page) && !moved)
+                        page.origin == PageOrigin::Markdown
+                            && (joins(i)
+                                || (page.path.starts_with(&prefix) && listable(page) && !moved))
                     })
                     .collect();
                 if found.is_empty() {
@@ -1727,6 +2829,34 @@ fn navigation(
                     }
                 }
                 found.extend(ranked((0..pages.len()).filter(|&i| joins(i)).collect()));
+                found
+            }
+            GroupSource::Routes(list) => {
+                let mut found = Vec::new();
+                for (route, span) in list {
+                    let problem = if !selected_routes.insert(route) {
+                        Some((
+                            "nav-duplicate-route",
+                            format!("nav.routes lists `{route}` more than once"),
+                        ))
+                    } else {
+                        match routes.get(route) {
+                            Some(&i) if pages[i].origin == PageOrigin::Markdown => Some(("nav-route-origin", format!("nav.routes lists `{route}`, which is a Markdown page; use dir or items"))),
+                            Some(&i) => {
+                                if listable(&pages[i]) { found.push(i); }
+                                None
+                            }
+                            None => Some(("nav-missing-page", format!("nav.routes lists `{route}`, which is not a registered page"))),
+                        }
+                    };
+                    if let Some((rule, message)) = problem {
+                        diagnostics.push(Diagnostic::located(
+                            &project.config_file,
+                            &project.config_text,
+                            Issue::error(span.clone(), rule, message),
+                        ));
+                    }
+                }
                 found
             }
         };
@@ -1782,17 +2912,26 @@ pub(crate) mod tests {
         }
 
         pub(crate) fn analyze(&self, mode: Mode) -> (Project, Snapshot, Analysis) {
+            self.analyze_with_surfaces(mode, &Surfaces::default())
+        }
+
+        fn analyze_with_surfaces(
+            &self,
+            mode: Mode,
+            surfaces: &Surfaces,
+        ) -> (Project, Snapshot, Analysis) {
             let (project, mut warnings) =
                 Project::load(&self.root).unwrap_or_else(|errors| panic!("{errors:#?}"));
             let (snapshot, problems) = snapshot(&project);
             warnings.extend(problems);
-            let mut analysis = analyze(
+            let mut analysis = analyze_with_surfaces(
                 &project,
                 &snapshot,
                 mode,
                 &mut FragmentCache::default(),
                 &Highlighter::new(),
                 2,
+                surfaces,
             );
             analysis.diagnostics.extend(warnings);
             (project, snapshot, analysis)
@@ -1807,6 +2946,241 @@ pub(crate) mod tests {
 
     pub(crate) const CONFIG: &str =
         "schema_version = 1\n[site]\nname = \"Docs\"\nurl = \"https://example.com/\"\n";
+
+    #[test]
+    fn render_guard_checks_the_original_outside_resource_read() {
+        let fixture = Fixture::new(&[
+            ("rustify-docs.toml", CONFIG),
+            (
+                "content/index.md",
+                "# Home\n\n![External](../images/sample.svg)\n",
+            ),
+            ("images/sample.svg", "<svg>old</svg>"),
+        ]);
+        let (project, before, analysis) = fixture.analyze(Mode::Dev);
+        assert!(analysis.outside.contains_key("images/sample.svg"));
+        assert!(validate_inputs(&project, &before, &analysis).is_empty());
+        std::fs::write(fixture.root.join("images/sample.svg"), "<svg>new</svg>").unwrap();
+        let (after, _) = snapshot(&project);
+        assert_eq!(
+            before.files, after.files,
+            "the directory snapshot misses this resource"
+        );
+        let problems = validate_inputs(&project, &before, &analysis);
+        assert!(problems
+            .iter()
+            .any(|problem| problem.rule == "render-generation-changed"));
+    }
+
+    #[test]
+    fn render_guard_checks_include_only_bytes_from_the_original_analysis() {
+        let fixture = Fixture::new(&[
+            ("rustify-docs.toml", CONFIG),
+            (
+                "content/index.md",
+                "# Home\n\n<!-- rustify:include path=\"extras/snippet.txt\" -->\n",
+            ),
+            ("extras/snippet.txt", "original include\r\n"),
+        ]);
+        let (project, before, analysis) = fixture.analyze(Mode::Dev);
+        assert!(analysis.includes.contains("extras/snippet.txt"));
+        assert!(!analysis.outside.contains_key("extras/snippet.txt"));
+        assert!(analysis.pages[0].fragment.html.contains("original include"));
+        assert!(validate_inputs(&project, &before, &analysis).is_empty());
+        std::fs::write(fixture.root.join("extras/snippet.txt"), "new include\r\n").unwrap();
+        assert!(validate_inputs(&project, &before, &analysis)
+            .iter()
+            .any(|problem| problem.rule == "render-generation-changed"));
+    }
+
+    #[test]
+    fn render_guard_checks_configuration_even_for_content_only_projects() {
+        let fixture = Fixture::new(&[
+            ("rustify-docs.toml", CONFIG),
+            ("content/index.md", "# Home\n"),
+        ]);
+        let (project, before, analysis) = fixture.analyze(Mode::Dev);
+        assert!(project.config.rust.is_none());
+        std::fs::write(
+            fixture.root.join("rustify-docs.toml"),
+            CONFIG.replace("Docs", "New name"),
+        )
+        .unwrap();
+        assert!(validate_inputs(&project, &before, &analysis)
+            .iter()
+            .any(|problem| problem.rule == "render-generation-changed"));
+    }
+
+    #[cfg(unix)]
+    #[test]
+    fn render_guard_detects_swapped_symlink_targets_even_when_snapshot_sets_match() {
+        let fixture = Fixture::new(&[
+            ("rustify-docs.toml", CONFIG),
+            (
+                "content/index.md",
+                "# Home\n\n![First](/first.svg) ![Second](/second.svg)\n",
+            ),
+            ("images/a.svg", "<svg/>"),
+            ("images/b.svg", "<svg/>"),
+        ]);
+        std::fs::create_dir_all(fixture.root.join("static")).unwrap();
+        let first = fixture.root.join("static/first.svg");
+        let second = fixture.root.join("static/second.svg");
+        std::os::unix::fs::symlink("../images/a.svg", &first).unwrap();
+        std::os::unix::fs::symlink("../images/b.svg", &second).unwrap();
+        let (project, before, analysis) = fixture.analyze(Mode::Dev);
+        assert!(validate_inputs(&project, &before, &analysis).is_empty());
+        std::fs::remove_file(&first).unwrap();
+        std::fs::remove_file(&second).unwrap();
+        std::os::unix::fs::symlink("../images/b.svg", &first).unwrap();
+        std::os::unix::fs::symlink("../images/a.svg", &second).unwrap();
+        let (after, _) = snapshot(&project);
+        assert_eq!(before.files, after.files);
+        assert_eq!(before.linked, after.linked);
+        assert!(validate_inputs(&project, &before, &analysis)
+            .iter()
+            .any(|problem| problem.rule == "render-generation-changed"));
+    }
+
+    #[test]
+    fn render_guard_keeps_repository_links_as_existence_only_inputs() {
+        let configuration =
+            format!("{CONFIG}\n[repo]\nurl = \"https://github.com/owner/repo\"\nref = \"main\"\n");
+        let fixture = Fixture::new(&[
+            ("rustify-docs.toml", &configuration),
+            (
+                "content/index.md",
+                "# Home\n\n[Unselected source](../unselected/notes.md)\n",
+            ),
+            ("unselected/notes.md", "excluded original body"),
+        ]);
+        // Even invalid UTF-8 must remain a valid repository link: no body is read.
+        std::fs::write(fixture.root.join("unselected/notes.md"), [0xff, 0xfe]).unwrap();
+        let (project, before, analysis) = fixture.analyze(Mode::Dev);
+        assert!(errors(&analysis).is_empty(), "{:#?}", analysis.diagnostics);
+        assert!(analysis.inputs.files["unselected/notes.md"].bytes.is_none());
+        assert!(!analysis.outside.contains_key("unselected/notes.md"));
+        assert!(!analysis.resources.contains("unselected/notes.md"));
+        assert!(!analysis.pages[0]
+            .fragment
+            .html
+            .contains("excluded original body"));
+        assert!(validate_inputs(&project, &before, &analysis).is_empty());
+        std::fs::write(fixture.root.join("unselected/notes.md"), [0xfd]).unwrap();
+        assert!(validate_inputs(&project, &before, &analysis).is_empty());
+        std::fs::remove_file(fixture.root.join("unselected/notes.md")).unwrap();
+        assert!(validate_inputs(&project, &before, &analysis)
+            .iter()
+            .any(|problem| problem.rule == "render-generation-changed"));
+    }
+
+    #[test]
+    fn render_guard_binds_a_fragment_cache_hit_to_this_rounds_include_read() {
+        let fixture = Fixture::new(&[
+            ("rustify-docs.toml", CONFIG),
+            (
+                "content/index.md",
+                "# Home\n\n<!-- rustify:include path=\"extras/snippet.txt\" -->\n",
+            ),
+            ("extras/snippet.txt", "cached original\r\n"),
+        ]);
+        let (project, _) = Project::load(&fixture.root).unwrap();
+        let (before, _) = snapshot(&project);
+        let highlighter = Highlighter::new();
+        let mut cache = FragmentCache::default();
+        analyze(&project, &before, Mode::Dev, &mut cache, &highlighter, 1);
+        let hits = cache.hits;
+        let analysis = analyze(&project, &before, Mode::Dev, &mut cache, &highlighter, 1);
+        assert!(cache.hits > hits);
+        assert_eq!(
+            analysis.inputs.files["extras/snippet.txt"].bytes.as_deref(),
+            Some(b"cached original\r\n".as_slice())
+        );
+        std::fs::write(fixture.root.join("extras/snippet.txt"), "new original\r\n").unwrap();
+        assert!(analysis.pages[0].fragment.html.contains("cached original"));
+        assert!(validate_inputs(&project, &before, &analysis)
+            .iter()
+            .any(|problem| problem.rule == "render-generation-changed"));
+    }
+
+    #[test]
+    fn render_guard_uses_snapshot_bytes_when_an_include_is_already_captured() {
+        let fixture = Fixture::new(&[
+            ("rustify-docs.toml", CONFIG),
+            (
+                "content/index.md",
+                "# Home\n\n<!-- rustify:include path=\"static/example.txt\" -->\n",
+            ),
+            ("static/example.txt", "snapshot original"),
+        ]);
+        let (project, _) = Project::load(&fixture.root).unwrap();
+        let (before, _) = snapshot(&project);
+        std::fs::write(fixture.root.join("static/example.txt"), "later content").unwrap();
+        let analysis = analyze(
+            &project,
+            &before,
+            Mode::Dev,
+            &mut FragmentCache::default(),
+            &Highlighter::new(),
+            1,
+        );
+        assert!(analysis.pages[0]
+            .fragment
+            .html
+            .contains("snapshot original"));
+        assert!(!analysis.pages[0].fragment.html.contains("later content"));
+        assert!(validate_inputs(&project, &before, &analysis)
+            .iter()
+            .any(|problem| problem.rule == "render-generation-changed"));
+    }
+
+    #[cfg(unix)]
+    #[test]
+    fn render_guard_detects_config_link_retargeting_with_identical_bytes() {
+        let fixture = Fixture::new(&[
+            ("first.toml", CONFIG),
+            ("second.toml", CONFIG),
+            ("content/index.md", "# Home\n"),
+        ]);
+        let configuration = fixture.root.join("rustify-docs.toml");
+        std::os::unix::fs::symlink("first.toml", &configuration).unwrap();
+        let (project, before, analysis) = fixture.analyze(Mode::Dev);
+        std::fs::remove_file(&configuration).unwrap();
+        std::os::unix::fs::symlink("second.toml", &configuration).unwrap();
+        assert!(validate_inputs(&project, &before, &analysis)
+            .iter()
+            .any(
+                |problem| problem.file.as_deref() == Some("rustify-docs.toml")
+                    && problem.rule == "render-generation-changed"
+            ));
+    }
+
+    #[cfg(unix)]
+    #[test]
+    fn render_guard_detects_empty_directory_links_even_when_target_sets_match() {
+        let fixture = Fixture::new(&[
+            ("rustify-docs.toml", CONFIG),
+            ("content/index.md", "# Home\n"),
+        ]);
+        for directory in ["static", "empty-a", "empty-b"] {
+            std::fs::create_dir_all(fixture.root.join(directory)).unwrap();
+        }
+        let first = fixture.root.join("static/first");
+        let second = fixture.root.join("static/second");
+        std::os::unix::fs::symlink("../empty-a", &first).unwrap();
+        std::os::unix::fs::symlink("../empty-b", &second).unwrap();
+        let (project, before, analysis) = fixture.analyze(Mode::Dev);
+        std::fs::remove_file(&first).unwrap();
+        std::fs::remove_file(&second).unwrap();
+        std::os::unix::fs::symlink("../empty-b", &first).unwrap();
+        std::os::unix::fs::symlink("../empty-a", &second).unwrap();
+        let (after, _) = snapshot(&project);
+        assert_eq!(before.files, after.files);
+        assert_eq!(before.linked, after.linked);
+        assert!(validate_inputs(&project, &before, &analysis)
+            .iter()
+            .any(|problem| problem.rule == "render-generation-changed"));
+    }
 
     fn found(analysis: &Analysis) -> Vec<(String, String, usize)> {
         analysis
@@ -1838,6 +3212,506 @@ pub(crate) mod tests {
     }
 
     const FRONT: &str = "---\ndescription: d\n---\n";
+
+    fn registered(name: &str, route: &str, html: &str) -> RegisteredPage {
+        RegisteredPage {
+            name: name.into(),
+            route: route.into(),
+            title: name.into(),
+            description: None,
+            html: html.into(),
+            file: "src/pages.rs".into(),
+        }
+    }
+
+    #[test]
+    fn source_candidate_urls_resolve_without_changing_the_original_class() {
+        let fixture = Fixture::new(&[
+            ("rustify-docs.toml", CONFIG),
+            ("static/custom.svg", "<svg/>"),
+        ]);
+        let candidate = "bg-[url(static/custom.svg)]";
+        let html = format!("<div class='{candidate}'>Custom</div>");
+        let surfaces = Surfaces {
+            pages: vec![registered("Custom", "/custom/", &html)],
+            candidates: BTreeSet::from([candidate.into()]),
+            ..Surfaces::default()
+        };
+        let (_, _, analysis) = fixture.analyze_with_surfaces(Mode::Production, &surfaces);
+        assert_eq!(analysis.errors(), 0, "{:?}", analysis.diagnostics);
+        assert_eq!(
+            analysis.candidate_urls.get("static/custom.svg"),
+            Some(&Target::Resource("static/custom.svg".into()))
+        );
+        assert_eq!(analysis.pages[0].fragment.html, html);
+        assert_eq!(surfaces.candidates, BTreeSet::from([candidate.into()]));
+    }
+
+    #[test]
+    fn source_candidate_hidden_images_enter_the_resource_graph_without_hidden_dom() {
+        let fixture = Fixture::new(&[
+            ("rustify-docs.toml", CONFIG),
+            ("media/hidden.svg", "<svg/>"),
+        ]);
+        let surfaces = Surfaces {
+            pages: vec![registered("Home", "/", "<h1>Home</h1>")],
+            candidates: BTreeSet::from([
+                "hover:bg-[url(media/hidden.svg)]".into(),
+                "mask-[url(#future-id)]".into(),
+                "bg-[url(data:image/png;base64,AA)]".into(),
+                "before:content-['url(no-fetch.svg)']".into(),
+            ]),
+            ..Surfaces::default()
+        };
+        let (_, _, analysis) = fixture.analyze_with_surfaces(Mode::Production, &surfaces);
+        assert_eq!(analysis.errors(), 0, "{:?}", analysis.diagnostics);
+        assert_eq!(
+            analysis.candidate_urls,
+            BTreeMap::from([
+                (
+                    "media/hidden.svg".into(),
+                    Target::Resource("media/hidden.svg".into())
+                ),
+                ("#future-id".into(), Target::Keep),
+                ("data:image/png;base64,AA".into(), Target::Keep),
+            ])
+        );
+        assert_eq!(
+            analysis.resources,
+            BTreeSet::from(["media/hidden.svg".into()])
+        );
+        assert_eq!(analysis.outside["media/hidden.svg"].as_ref(), b"<svg/>");
+        assert!(analysis.referenced.contains("media/hidden.svg"));
+        assert!(!analysis.referenced.contains("no-fetch.svg"));
+        assert_eq!(analysis.pages[0].fragment.html, "<h1>Home</h1>");
+        assert!(analysis.pages[0].fragment.references.is_empty());
+    }
+
+    #[test]
+    fn source_candidate_missing_private_and_remote_images_have_general_diagnostics() {
+        let fixture = Fixture::new(&[("rustify-docs.toml", CONFIG), (".env", "secret")]);
+        let surfaces = Surfaces {
+            pages: vec![registered("Home", "/", "<h1>Home</h1>")],
+            candidates: BTreeSet::from([
+                "bg-[url(media/missing.svg)]".into(),
+                "bg-[url(.env)]".into(),
+                "bg-[url(https://cdn.example/remote.svg)]".into(),
+            ]),
+            ..Surfaces::default()
+        };
+        let (_, _, analysis) = fixture.analyze_with_surfaces(Mode::Production, &surfaces);
+        assert_eq!(analysis.errors(), 3, "{:?}", analysis.diagnostics);
+        for (candidate, rule) in [
+            ("bg-[url(media/missing.svg)]", "missing-image"),
+            ("bg-[url(.env)]", "private-file"),
+            (
+                "bg-[url(https://cdn.example/remote.svg)]",
+                "cross-origin-resource",
+            ),
+        ] {
+            let diagnostic = analysis
+                .diagnostics
+                .iter()
+                .find(|d| d.rule == rule)
+                .unwrap();
+            assert!(diagnostic.message.contains(candidate), "{diagnostic:?}");
+            assert_eq!(
+                (&diagnostic.file, diagnostic.line, diagnostic.column),
+                (&None, None, None)
+            );
+        }
+        assert!(analysis.resources.is_empty());
+        assert!(!analysis.outside.contains_key(".env"));
+    }
+
+    #[test]
+    fn source_candidate_theme_document_is_refused_even_when_not_in_the_initial_view() {
+        let config = format!("{CONFIG}[theme]\ndocument='theme.json'\n");
+        let fixture = Fixture::new(&[("rustify-docs.toml", &config), ("theme.json", "{}")]);
+        let candidate = "bg-[url(theme.json)]";
+        let surfaces = Surfaces {
+            pages: vec![registered("Home", "/", "<h1>Home</h1>")],
+            candidates: BTreeSet::from([candidate.into()]),
+            ..Surfaces::default()
+        };
+        let (_, _, analysis) = fixture.analyze_with_surfaces(Mode::Production, &surfaces);
+        let diagnostic = analysis
+            .diagnostics
+            .iter()
+            .find(|d| d.rule == "theme-document-resource")
+            .unwrap_or_else(|| panic!("{:?}", analysis.diagnostics));
+        assert!(diagnostic.message.contains(candidate));
+        assert_eq!(
+            (&diagnostic.file, diagnostic.line, diagnostic.column),
+            (&None, None, None)
+        );
+        assert!(!analysis.resources.contains("theme.json"));
+        assert!(!analysis.outside.contains_key("theme.json"));
+    }
+
+    #[test]
+    fn registered_surfaces_can_form_a_site_without_markdown_or_description() {
+        let fixture = Fixture::new(&[("rustify-docs.toml", CONFIG)]);
+        let html = "<!><h1 id=\"home\">Rendered Home</h1><template id=\"holder\"><h1 id=\"ghost\">Hidden</h1></template>";
+        let surfaces = Surfaces {
+            pages: vec![registered("Home", "/", html)],
+            ..Surfaces::default()
+        };
+        let (_, _, analysis) = fixture.analyze_with_surfaces(Mode::Production, &surfaces);
+        assert_eq!(analysis.errors(), 0, "{:?}", analysis.diagnostics);
+        assert_eq!(analysis.warnings(), 0, "{:?}", analysis.diagnostics);
+        let page = &analysis.pages[analysis.routes["/"]];
+        assert_eq!(page.origin, PageOrigin::Registered("Home".into()));
+        assert_eq!(
+            (&page.path, &page.file, &page.title),
+            (&"/".into(), &"src/pages.rs".into(), &"Home".into())
+        );
+        assert_eq!(page.front.layout, Layout::Doc);
+        assert_eq!(page.description, None);
+        assert_eq!(page.fragment.html, html);
+        assert_eq!(page.fragment.anchors, ["home", "holder"]);
+        assert_eq!(page.fragment.h1_count, 1);
+        assert!(analysis.nav.is_empty());
+    }
+
+    #[test]
+    fn registered_surfaces_share_routes_slot_anchors_and_resources_with_markdown() {
+        let config = "schema_version=1\n[site]\nname='Docs'\nbase='/docs/'\nurl='https://example.com/docs/'\n";
+        let fixture = Fixture::new(&[
+            ("rustify-docs.toml", config),
+            ("content/index.md", "---\ndescription: d\n---\n# Home\n\n[Custom](/custom/#custom) [Footer](/docs/custom/#footer) [Relative](custom/#custom)\n"),
+            ("content/guide.md", "---\ndescription: d\n---\n# Guide\n\n## Section\n"),
+            ("static/logo.svg", "<svg/>"),
+            ("downloads/spec.pdf", "pdf"),
+        ]);
+        let surfaces = Surfaces {
+            pages: vec![registered("Custom", "/custom/", "<!><h1 id='custom'>Custom</h1><a href='/docs/guide/#section'>Guide</a><a href='#footer'>Footer</a><img alt='' src='/docs/logo.svg'><a href='downloads/spec.pdf'>PDF</a>")],
+            slots: BTreeMap::from([("/custom/".into(), BTreeMap::from([(Slot::Footer, "<footer id='footer'><a href='#custom'>Top</a><img alt='' src='static/logo.svg'></footer>".into())]))]),
+            ..Surfaces::default()
+        };
+        let (_, _, analysis) = fixture.analyze_with_surfaces(Mode::Production, &surfaces);
+        assert_eq!(analysis.errors(), 0, "{:?}", analysis.diagnostics);
+        let custom = analysis.routes["/custom/"];
+        let guide = analysis.routes["/guide/"];
+        assert_eq!(
+            analysis.pages[analysis.routes["/"]].targets,
+            [
+                Target::Page {
+                    page: custom,
+                    anchor: Some("custom".into())
+                },
+                Target::Page {
+                    page: custom,
+                    anchor: Some("footer".into())
+                },
+                Target::Page {
+                    page: custom,
+                    anchor: Some("custom".into())
+                },
+            ]
+        );
+        assert_eq!(
+            analysis.pages[custom].targets,
+            [
+                Target::Page {
+                    page: guide,
+                    anchor: Some("section".into())
+                },
+                Target::Keep,
+                Target::Resource("static/logo.svg".into()),
+                Target::Resource("downloads/spec.pdf".into()),
+            ]
+        );
+        assert_eq!(
+            analysis.slots["/custom/"][&Slot::Footer].targets,
+            [Target::Keep, Target::Resource("static/logo.svg".into())]
+        );
+        assert_eq!(
+            analysis.resources,
+            BTreeSet::from(["downloads/spec.pdf".into(), "static/logo.svg".into()])
+        );
+        assert!(analysis.referenced.contains("downloads/spec.pdf"));
+        assert!(analysis.pages[custom].fragment.html.starts_with("<!>"));
+    }
+
+    #[test]
+    fn registered_surfaces_reject_duplicate_invalid_and_reserved_routes() {
+        for (route, rule) in [
+            ("/", "route-conflict"),
+            ("/guide/", "route-conflict"),
+            ("/404/", "reserved-route"),
+            ("/robots.txt/", "reserved-route"),
+            ("/assets/files/generated/", "reserved-route"),
+            ("/.rustify-docs/cache/", "reserved-route"),
+            ("/../custom/", "invalid-route"),
+            ("/custom?x/", "invalid-route"),
+            ("/custom", "invalid-route"),
+        ] {
+            let fixture = Fixture::new(&[
+                ("rustify-docs.toml", CONFIG),
+                ("content/index.md", &format!("{FRONT}# Home\n")),
+                ("content/guide.md", &format!("{FRONT}# Guide\n")),
+            ]);
+            let surfaces = Surfaces {
+                pages: vec![registered("Custom", route, "<h1>Custom</h1>")],
+                ..Surfaces::default()
+            };
+            let (_, _, analysis) = fixture.analyze_with_surfaces(Mode::Production, &surfaces);
+            assert!(
+                analysis.diagnostics.iter().any(|d| d.rule == rule),
+                "{route}: {:?}",
+                analysis.diagnostics
+            );
+        }
+        let fixture = Fixture::new(&[("rustify-docs.toml", CONFIG)]);
+        let surfaces = Surfaces {
+            pages: vec![
+                registered("First", "/custom/", ""),
+                registered("Second", "/custom/", ""),
+            ],
+            ..Surfaces::default()
+        };
+        let (_, _, analysis) = fixture.analyze_with_surfaces(Mode::Production, &surfaces);
+        assert!(analysis
+            .diagnostics
+            .iter()
+            .any(|d| d.rule == "route-conflict"));
+    }
+
+    #[test]
+    fn registered_surfaces_routes_navigation_keeps_declared_order() {
+        let config = format!("{CONFIG}[[nav.groups]]\nlabel='Custom'\nroutes=['/b/', '/a/']\n[[nav.groups]]\nlabel='Guides'\ndir=''\n");
+        let fixture = Fixture::new(&[
+            ("rustify-docs.toml", &config),
+            ("content/guide.md", &format!("{FRONT}# Guide\n")),
+        ]);
+        let surfaces = Surfaces {
+            pages: vec![registered("A", "/a/", ""), registered("B", "/b/", "")],
+            ..Surfaces::default()
+        };
+        let (_, _, analysis) = fixture.analyze_with_surfaces(Mode::Production, &surfaces);
+        assert_eq!(analysis.errors(), 0, "{:?}", analysis.diagnostics);
+        let routes: Vec<Vec<&str>> = analysis
+            .nav
+            .iter()
+            .map(|group| group.items.iter().map(|item| item.route.as_str()).collect())
+            .collect();
+        assert_eq!(routes, [vec!["/b/", "/a/"], vec!["/guide/"]]);
+        assert_eq!(analysis.nav[0].items[0].title, "B");
+    }
+
+    #[test]
+    fn registered_surfaces_routes_navigation_rejects_unknown_duplicates_and_markdown() {
+        for (routes, rule) in [
+            ("['/missing/']", "nav-missing-page"),
+            ("['/custom/', '/custom/']", "nav-duplicate-route"),
+            ("['/guide/']", "nav-route-origin"),
+        ] {
+            let config = format!("{CONFIG}[[nav.groups]]\nlabel='Custom'\nroutes={routes}\n");
+            let fixture = Fixture::new(&[
+                ("rustify-docs.toml", &config),
+                ("content/guide.md", &format!("{FRONT}# Guide\n")),
+            ]);
+            let surfaces = Surfaces {
+                pages: vec![registered("Custom", "/custom/", "")],
+                ..Surfaces::default()
+            };
+            let (_, _, analysis) = fixture.analyze_with_surfaces(Mode::Production, &surfaces);
+            let diagnostic = analysis
+                .diagnostics
+                .iter()
+                .find(|d| d.rule == rule)
+                .unwrap_or_else(|| panic!("{routes}: {:?}", analysis.diagnostics));
+            assert_eq!(diagnostic.file.as_deref(), Some("rustify-docs.toml"));
+            assert_eq!(diagnostic.line, Some(7));
+        }
+    }
+
+    #[test]
+    fn registered_surfaces_keep_raw_policy_and_private_resource_checks() {
+        let fixture = Fixture::new(&[("rustify-docs.toml", CONFIG), (".env", "secret")]);
+        let surfaces = Surfaces { pages: vec![registered("Unsafe", "/unsafe/", "<h1>Unsafe</h1><script>alert(1)</script><div style='color:red' onclick='x()'></div><img alt='' src='https://cdn.example/x.svg'><img alt='' src='.env'>")], ..Surfaces::default() };
+        let (_, _, analysis) = fixture.analyze_with_surfaces(Mode::Production, &surfaces);
+        for rule in [
+            "inline-script",
+            "inline-style",
+            "event-handler",
+            "cross-origin-resource",
+            "private-file",
+        ] {
+            let diagnostic = analysis
+                .diagnostics
+                .iter()
+                .find(|d| d.rule == rule)
+                .unwrap_or_else(|| panic!("{rule}: {:?}", analysis.diagnostics));
+            assert_eq!(diagnostic.file.as_deref(), Some("src/pages.rs"));
+            assert_eq!((diagnostic.line, diagnostic.column), (None, None));
+        }
+        assert!(!analysis.resources.contains(".env"));
+    }
+
+    #[test]
+    fn registered_surfaces_slots_check_routes_but_keep_not_found_content() {
+        let fixture = Fixture::new(&[("rustify-docs.toml", CONFIG)]);
+        let surfaces = Surfaces {
+            pages: vec![registered("Home", "/", "<h1 id='home'>Home</h1>")],
+            slots: BTreeMap::from([
+                (
+                    "/404/".into(),
+                    BTreeMap::from([(
+                        Slot::NotFound,
+                        "<div id='lost'><a href='#lost'>Lost</a><a href='/#home'>Home</a></div>"
+                            .into(),
+                    )]),
+                ),
+                (
+                    "/missing/".into(),
+                    BTreeMap::from([(Slot::Footer, "<p>Missing</p>".into())]),
+                ),
+            ]),
+            ..Surfaces::default()
+        };
+        let (_, _, analysis) = fixture.analyze_with_surfaces(Mode::Production, &surfaces);
+        assert_eq!(analysis.errors(), 1, "{:?}", analysis.diagnostics);
+        assert!(analysis.diagnostics.iter().any(|d| d.rule == "slot-route"));
+        assert!(!analysis.routes.contains_key("/404/"));
+        assert_eq!(
+            analysis.slots["/404/"][&Slot::NotFound].fragment.anchors,
+            ["lost"]
+        );
+        assert_eq!(
+            analysis.slots["/404/"][&Slot::NotFound].targets,
+            [
+                Target::Keep,
+                Target::Page {
+                    page: analysis.routes["/"],
+                    anchor: Some("home".into())
+                }
+            ]
+        );
+    }
+
+    #[test]
+    fn registered_surfaces_reuse_raw_cache_but_recheck_page_and_slot_relationships() {
+        let fixture = Fixture::new(&[("rustify-docs.toml", CONFIG)]);
+        let (project, _) = Project::load(&fixture.root).unwrap();
+        let (snapshot, _) = snapshot(&project);
+        let mut cache = FragmentCache::default();
+        let highlighter = Highlighter::new();
+        let mut surfaces = Surfaces {
+            pages: vec![registered(
+                "Custom",
+                "/custom/",
+                "<h1 id='title'>Title</h1><a href='#footer'>Footer</a>",
+            )],
+            slots: BTreeMap::from([(
+                "/custom/".into(),
+                BTreeMap::from([(Slot::Footer, "<div id='footer'>Footer</div>".into())]),
+            )]),
+            ..Surfaces::default()
+        };
+        let first = analyze_with_surfaces(
+            &project,
+            &snapshot,
+            Mode::Production,
+            &mut cache,
+            &highlighter,
+            1,
+            &surfaces,
+        );
+        assert_eq!(first.errors(), 0, "{:?}", first.diagnostics);
+        let second = analyze_with_surfaces(
+            &project,
+            &snapshot,
+            Mode::Production,
+            &mut cache,
+            &highlighter,
+            1,
+            &surfaces,
+        );
+        assert!(Arc::ptr_eq(
+            &first.pages[0].fragment,
+            &second.pages[0].fragment
+        ));
+        assert_eq!((cache.hits, cache.misses, cache.len()), (2, 2, 2));
+        surfaces.slots.clear();
+        let third = analyze_with_surfaces(
+            &project,
+            &snapshot,
+            Mode::Production,
+            &mut cache,
+            &highlighter,
+            1,
+            &surfaces,
+        );
+        assert!(third.diagnostics.iter().any(|d| d.rule == "broken-anchor"));
+        assert_eq!(cache.len(), 1);
+    }
+
+    #[test]
+    fn registered_surfaces_svg_uses_resolve_as_document_anchors() {
+        let fixture = Fixture::new(&[("rustify-docs.toml", CONFIG)]);
+        let surfaces = Surfaces {
+            pages: vec![registered(
+                "Icons",
+                "/icons/",
+                "<svg><symbol id='icon'><path d='M0 0'/></symbol><use href='#icon'/></svg>",
+            )],
+            ..Surfaces::default()
+        };
+        let (_, _, analysis) = fixture.analyze_with_surfaces(Mode::Production, &surfaces);
+        assert_eq!(analysis.errors(), 0, "{:?}", analysis.diagnostics);
+        assert_eq!(analysis.pages[0].targets, [Target::Keep]);
+        assert!(analysis.resources.is_empty());
+    }
+
+    #[test]
+    fn theme_document_snapshot_reads_only_the_configured_file_and_tracks_it() {
+        let config = format!("{CONFIG}[theme]\ndocument='themes/document.md'\n");
+        let fixture = Fixture::new(&[
+            ("rustify-docs.toml", &config),
+            ("content/index.md", &format!("{FRONT}# Home\n")),
+            ("themes/document.md", "{}"),
+            ("themes/other.md", "unrelated"),
+        ]);
+        let (_, snapshot, analysis) = fixture.analyze(Mode::Production);
+        assert_eq!(
+            snapshot
+                .files
+                .get("themes/document.md")
+                .map(|bytes| bytes.as_ref()),
+            Some(b"{}".as_slice())
+        );
+        assert_eq!(snapshot.markdown.len(), 1);
+        assert!(!snapshot.files.contains_key("themes/other.md"));
+        assert!(analysis.referenced.contains("themes/document.md"));
+        assert!(!analysis.resources.contains("themes/document.md"));
+        assert_eq!(analysis.errors(), 0, "{:?}", analysis.diagnostics);
+    }
+
+    #[test]
+    fn theme_document_cannot_be_published_as_an_image_or_download() {
+        let config = format!("{CONFIG}[theme]\ndocument='static/theme.json'\n");
+        let fixture = Fixture::new(&[
+            ("rustify-docs.toml", &config),
+            (
+                "content/index.md",
+                &format!("{FRONT}# Home\n\n![Theme](/theme.json) [Download](/theme.json)\n"),
+            ),
+            ("static/theme.json", "{}"),
+        ]);
+        let (_, _, analysis) = fixture.analyze(Mode::Production);
+        let refused: Vec<_> = analysis
+            .diagnostics
+            .iter()
+            .filter(|d| d.rule == "theme-document-resource")
+            .collect();
+        assert_eq!(refused.len(), 2, "{:?}", analysis.diagnostics);
+        assert!(refused
+            .iter()
+            .all(|d| d.file.as_deref() == Some("content/index.md") && d.line == Some(6)));
+        assert!(!analysis.resources.contains("static/theme.json"));
+    }
 
     #[test]
     fn routes_and_their_conflicts() {

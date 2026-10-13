@@ -1,0 +1,83 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-docs v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-docs)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 5.02s
+     Running tests/generate.rs (target/debug/deps/generate-de191426b58e2517)
+
+running 16 tests
+test all_default_pages_have_a_site_footer_without_optional_metadata_or_links ... ok
+test every_page_has_unique_metadata_and_the_site_files_list_what_may_be_indexed ... ok
+test gfm_alerts_tables_tasks_footnotes_and_code_render_without_inline_style ... ok
+test css_resource_decoding_and_entity_spans_survive_generation ... ok
+test a_generation_cannot_load_an_absent_file_under_its_assets_prefix ... ok
+test header_links_are_on_every_page_and_mark_the_guide ... ok
+test files_keep_their_fragment_and_a_class_loads_its_image_from_the_site ... ok
+test highlighting_and_code_text_stay_out_of_the_stylesheet ... ok
+test links_anchors_images_and_repository_files_resolve_under_the_base ... ok
+test an_island_marker_in_readable_text_does_not_load_the_island_runtime ... ok
+test the_not_found_page_works_from_any_depth ... ok
+test the_fixture_generates_without_a_problem_and_byte_for_byte_again ... ok
+test drafts_render_marked_in_dev_and_nowhere_in_production ... ok
+test home_merge_ends_at_a_close_tag_and_escapes_the_transferred_id ... ok
+test merged_home_headings_keep_their_automatic_and_explicit_targets ... ok
+test local_metadata_and_header_links_keep_their_conditions_beside_the_site_footer ... ok
+
+test result: ok. 16 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 5.92s
+
+     Running tests/registered_generation.rs (target/debug/deps/registered_generation-239eef530cf49654)
+
+running 12 tests
+test analyzed_svg_use_rejects_an_absent_target_before_generation ... ok
+test a_theme_document_inside_static_is_input_only_and_never_published ... ok
+test a_hidden_only_source_image_candidate_hashes_its_url_without_renaming_the_selector ... ok
+test final_document_rejects_an_id_discarded_by_body_attribute_merging ... ok
+test final_tree_ignores_template_and_textarea_ghosts_but_keeps_foreign_integration_links ... ok
+test markdown_only_repeated_titles_keep_the_existing_disambiguation ... ok
+test seven_slots_keep_live_ids_and_references_in_the_final_documents ... ok
+test registered_document_titles_cannot_collide_with_markdown_or_its_qualified_title ... ok
+test island_and_font_assets_cannot_publish_a_parent_file_and_child_path ... ok
+test hidden_candidate_urls_keep_query_fragments_quoted_escapes_and_arbitrary_spaces ... ok
+test slot_ids_cannot_duplicate_framework_or_body_ids ... ok
+test output_file_and_directory_segments_cannot_overlap_across_origins ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.36s
+
+     Running tests/site_metadata.rs (target/debug/deps/site_metadata-158db3cd0dfaf964)
+
+running 1 test
+test native_macro_and_cold_file_reader_have_identical_manifest_identity ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/site_registry.rs (target/debug/deps/site_registry-55db77555d57d605)
+
+running 19 tests
+test helper_rejects_wrong_protocol_and_duplicate_batch_identity ... ok
+test a_page_collects_the_same_scoped_demo_renderer_without_a_second_shell ... ok
+test an_actual_open_dialog_reports_an_unsupported_initial_state ... ok
+test a_nested_demo_does_not_release_the_parent_resource_suppression ... ok
+test a_real_suspense_resource_fallback_is_not_mistaken_for_supported_static_data ... ok
+test static_builtin_dispatch_uses_the_same_generated_props ... ok
+test an_actual_initial_toast_reports_an_unsupported_initial_state ... ok
+test a_default_expression_is_executed_once_per_missing_property ... ok
+test batch_protocol_echoes_generation_and_each_key ... ok
+test invalid_generated_props_include_the_structured_field_path ... ok
+test invalid_surface_demo_names_fail_the_parent_render ... ok
+test server_generation_never_polls_an_author_async_request ... ok
+test a_real_resource_registers_cross_target_data_and_is_rejected ... ok
+test an_explicit_client_only_component_does_not_construct_its_host_view ... ok
+test generated_props_apply_defaults_once_and_echo_effective_values ... ok
+test invalid_nested_props_include_the_field_and_array_path ... ok
+test a_real_error_boundary_registers_cross_target_errors_and_is_rejected ... ok
+test generated_props_reject_unknown_fields_and_wrong_types ... ok
+test compiled_description_contains_normalized_parser_data_and_locked_resources ... ok
+
+test result: ok. 19 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+mbx[cache]: 0 hits, 0 misses, 1 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: 1.7 TiB logical of target/ belonged to checkouts that no longer exist. neither does it.

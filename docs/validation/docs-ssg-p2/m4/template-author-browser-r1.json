@@ -1,0 +1,206 @@
+{
+  "scope": "actual installed local Rtest/Ctest template; not GitHub install or human UAT",
+  "state": {
+    "scope": "actual Git installed local Rtest/Ctest rehearsal; public GitHub install remains M6/M7",
+    "work": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-p2-m4-pair-kha3t0qz/author-trial-gys6td1u",
+    "site": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-p2-m4-pair-kha3t0qz/author-trial-gys6td1u/M4 author docs",
+    "installed_bin": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-p2-m4-pair-kha3t0qz/installed/bin/rustify-docs",
+    "library_revision": "23bb0d88fe61ff96b9e1e3b93de69266b9fa6483",
+    "cli_revision": "733201474914cf40a934729bef23f7ae6017bab7",
+    "version": "0.1.7",
+    "files": [
+      ".gitignore",
+      "Cargo.lock",
+      "Cargo.toml",
+      "README.md",
+      "content/guide/getting-started.md",
+      "content/guide/writing-demos.md",
+      "content/index.md",
+      "rustify-docs.toml",
+      "src/bin/docs-render.rs",
+      "src/demos.rs",
+      "src/lib.rs"
+    ],
+    "package": "m4-author-docs",
+    "lib": "site_docs",
+    "lock_sha256": "b4bc7bdbb94aee3f1f2d204391e10bb85bbe14d17d3fb557dfe7f42f21e1dbb6",
+    "root_record_only_renamed": true,
+    "initial_source_sha256": "8b720362ecfe80c198ff1ba056bfbb71019e7483b5ee343542f8f461e4709110",
+    "commands": [
+      [
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-p2-m4-pair-kha3t0qz/installed/bin/rustify-docs",
+        "new",
+        "M4 author docs",
+        "--template",
+        "components"
+      ]
+    ]
+  },
+  "steps": [
+    {
+      "name": "unmodified template original SSR node/ID survival",
+      "identity": [
+        {
+          "sameRoot": true,
+          "total": 19,
+          "retained": 19,
+          "ids": true
+        },
+        {
+          "sameRoot": true,
+          "total": 14,
+          "retained": 14,
+          "ids": true
+        }
+      ]
+    },
+    {
+      "name": "unmodified two counters independent input/source",
+      "passed": true
+    },
+    {
+      "name": "README function→registration→fence→real new handler",
+      "passed": true
+    },
+    {
+      "name": "README custom page/context two independent demos/footer/nav",
+      "passed": true
+    },
+    {
+      "name": "authored README check offline",
+      "passed": true,
+      "elapsed_ms": 828
+    },
+    {
+      "name": "authored README build offline",
+      "passed": true,
+      "elapsed_ms": 8340
+    }
+  ],
+  "requests": [
+    "http://127.0.0.1:52381/",
+    "http://127.0.0.1:52381/assets/site.cc20ae6fd7.css",
+    "http://127.0.0.1:52381/assets/mode.5e2c2584b0.js",
+    "http://127.0.0.1:52381/assets/site.2529a0d647.js",
+    "http://127.0.0.1:52381/assets/islands/94ca390fb11a1888b29332f8810fd24365988ff3d23d50d50759c14ba10612d5/islands.js",
+    "http://127.0.0.1:52381/assets/islands/94ca390fb11a1888b29332f8810fd24365988ff3d23d50d50759c14ba10612d5/dom-loader.js",
+    "http://127.0.0.1:52381/assets/islands/94ca390fb11a1888b29332f8810fd24365988ff3d23d50d50759c14ba10612d5/app_bg.wasm",
+    "http://127.0.0.1:52381/assets/islands/94ca390fb11a1888b29332f8810fd24365988ff3d23d50d50759c14ba10612d5/app.js",
+    "http://127.0.0.1:52381/assets/islands/94ca390fb11a1888b29332f8810fd24365988ff3d23d50d50759c14ba10612d5/snippets/rustify-ui-4db2f10f10788f4c/web/dom-runtime.js",
+    "http://127.0.0.1:52391/",
+    "http://127.0.0.1:52391/assets/site.c6e8e4fd45.css",
+    "http://127.0.0.1:52391/__rustify-docs/dev.css",
+    "http://127.0.0.1:52391/assets/mode.5e2c2584b0.js",
+    "http://127.0.0.1:52391/assets/site.2529a0d647.js",
+    "http://127.0.0.1:52391/__rustify-docs/dev.js?session=8e84-18de2687d6867e98&good=0",
+    "http://127.0.0.1:52391/__rustify-docs/events?path=%2F&good=0&session=8e84-18de2687d6867e98",
+    "http://127.0.0.1:52391/",
+    "http://127.0.0.1:52391/assets/site.cc20ae6fd7.css",
+    "http://127.0.0.1:52391/__rustify-docs/dev.css",
+    "http://127.0.0.1:52391/assets/mode.5e2c2584b0.js",
+    "http://127.0.0.1:52391/assets/site.2529a0d647.js",
+    "http://127.0.0.1:52391/__rustify-docs/dev.js?session=8e84-18de2687d6867e98&good=1",
+    "http://127.0.0.1:52391/assets/islands/82242e176487887fb306d07b9ba7b7761a9287b5fe817c0a32adf365b814016d/islands.js",
+    "http://127.0.0.1:52391/__rustify-docs/events?path=%2F&good=1&session=8e84-18de2687d6867e98",
+    "http://127.0.0.1:52391/assets/islands/82242e176487887fb306d07b9ba7b7761a9287b5fe817c0a32adf365b814016d/dom-loader.js",
+    "http://127.0.0.1:52391/assets/islands/82242e176487887fb306d07b9ba7b7761a9287b5fe817c0a32adf365b814016d/app_bg.wasm",
+    "http://127.0.0.1:52391/assets/islands/82242e176487887fb306d07b9ba7b7761a9287b5fe817c0a32adf365b814016d/app.js",
+    "http://127.0.0.1:52391/assets/islands/82242e176487887fb306d07b9ba7b7761a9287b5fe817c0a32adf365b814016d/snippets/rustify-ui-4db2f10f10788f4c/web/dom-runtime.js",
+    "http://127.0.0.1:52391/",
+    "http://127.0.0.1:52391/assets/site.cc20ae6fd7.css",
+    "http://127.0.0.1:52391/__rustify-docs/dev.css",
+    "http://127.0.0.1:52391/assets/mode.5e2c2584b0.js",
+    "http://127.0.0.1:52391/assets/site.2529a0d647.js",
+    "http://127.0.0.1:52391/__rustify-docs/dev.js?session=8e84-18de2687d6867e98&good=2",
+    "http://127.0.0.1:52391/assets/islands/0c7c2bdc2862751e954d47244df5da8fb55289eca5c75aff860ffa06b00eff4a/islands.js",
+    "http://127.0.0.1:52391/__rustify-docs/events?path=%2F&good=2&session=8e84-18de2687d6867e98",
+    "http://127.0.0.1:52391/assets/islands/0c7c2bdc2862751e954d47244df5da8fb55289eca5c75aff860ffa06b00eff4a/dom-loader.js",
+    "http://127.0.0.1:52391/assets/islands/0c7c2bdc2862751e954d47244df5da8fb55289eca5c75aff860ffa06b00eff4a/app_bg.wasm",
+    "http://127.0.0.1:52391/assets/islands/0c7c2bdc2862751e954d47244df5da8fb55289eca5c75aff860ffa06b00eff4a/app.js",
+    "http://127.0.0.1:52391/assets/islands/0c7c2bdc2862751e954d47244df5da8fb55289eca5c75aff860ffa06b00eff4a/snippets/rustify-ui-4db2f10f10788f4c/web/dom-runtime.js",
+    "http://127.0.0.1:52391/examples/",
+    "http://127.0.0.1:52391/assets/site.cc20ae6fd7.css",
+    "http://127.0.0.1:52391/__rustify-docs/dev.css",
+    "http://127.0.0.1:52391/assets/mode.5e2c2584b0.js",
+    "http://127.0.0.1:52391/assets/site.2529a0d647.js",
+    "http://127.0.0.1:52391/__rustify-docs/dev.js?session=8e84-18de2687d6867e98&good=2",
+    "http://127.0.0.1:52391/assets/islands/0c7c2bdc2862751e954d47244df5da8fb55289eca5c75aff860ffa06b00eff4a/islands.js",
+    "http://127.0.0.1:52391/__rustify-docs/events?path=%2Fexamples%2F&good=2&session=8e84-18de2687d6867e98",
+    "http://127.0.0.1:52391/assets/islands/0c7c2bdc2862751e954d47244df5da8fb55289eca5c75aff860ffa06b00eff4a/dom-loader.js",
+    "http://127.0.0.1:52391/assets/islands/0c7c2bdc2862751e954d47244df5da8fb55289eca5c75aff860ffa06b00eff4a/app_bg.wasm",
+    "http://127.0.0.1:52391/assets/islands/0c7c2bdc2862751e954d47244df5da8fb55289eca5c75aff860ffa06b00eff4a/app.js",
+    "http://127.0.0.1:52391/assets/islands/0c7c2bdc2862751e954d47244df5da8fb55289eca5c75aff860ffa06b00eff4a/snippets/rustify-ui-4db2f10f10788f4c/web/dom-runtime.js"
+  ],
+  "errors": [],
+  "expectedStreamClosures": [
+    "http://127.0.0.1:52391/__rustify-docs/events?path=%2F&good=0&session=8e84-18de2687d6867e98 net::ERR_ABORTED",
+    "http://127.0.0.1:52391/__rustify-docs/events?path=%2F&good=1&session=8e84-18de2687d6867e98 net::ERR_ABORTED"
+  ],
+  "csp": [],
+  "resources": [
+    {
+      "url": "http://127.0.0.1:52381/assets/islands/94ca390fb11a1888b29332f8810fd24365988ff3d23d50d50759c14ba10612d5/app_bg.wasm",
+      "status": 200,
+      "mime": "application/wasm"
+    },
+    {
+      "url": "http://127.0.0.1:52381/assets/islands/94ca390fb11a1888b29332f8810fd24365988ff3d23d50d50759c14ba10612d5/app.js",
+      "status": 200,
+      "mime": "text/javascript; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:52391/assets/islands/82242e176487887fb306d07b9ba7b7761a9287b5fe817c0a32adf365b814016d/app_bg.wasm",
+      "status": 200,
+      "mime": "application/wasm"
+    },
+    {
+      "url": "http://127.0.0.1:52391/assets/islands/82242e176487887fb306d07b9ba7b7761a9287b5fe817c0a32adf365b814016d/app.js",
+      "status": 200,
+      "mime": "text/javascript; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:52391/assets/islands/0c7c2bdc2862751e954d47244df5da8fb55289eca5c75aff860ffa06b00eff4a/app_bg.wasm",
+      "status": 200,
+      "mime": "application/wasm"
+    },
+    {
+      "url": "http://127.0.0.1:52391/assets/islands/0c7c2bdc2862751e954d47244df5da8fb55289eca5c75aff860ffa06b00eff4a/app.js",
+      "status": 200,
+      "mime": "text/javascript; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:52391/assets/islands/0c7c2bdc2862751e954d47244df5da8fb55289eca5c75aff860ffa06b00eff4a/app_bg.wasm",
+      "status": 200,
+      "mime": "application/wasm"
+    },
+    {
+      "url": "http://127.0.0.1:52391/assets/islands/0c7c2bdc2862751e954d47244df5da8fb55289eca5c75aff860ffa06b00eff4a/app.js",
+      "status": 200,
+      "mime": "text/javascript; charset=utf-8"
+    }
+  ],
+  "sources": [
+    {
+      "url": "http://127.0.0.1:52381/",
+      "groups": 1,
+      "file_sha256": "8b720362ecfe80c198ff1ba056bfbb71019e7483b5ee343542f8f461e4709110"
+    },
+    {
+      "url": "http://127.0.0.1:52391/",
+      "groups": 1,
+      "file_sha256": "8b720362ecfe80c198ff1ba056bfbb71019e7483b5ee343542f8f461e4709110"
+    },
+    {
+      "url": "http://127.0.0.1:52391/",
+      "groups": 2,
+      "file_sha256": "ebc0c930eadf415942b9e8e13d1de27d58e24646e9a59233fd2680828703fff7"
+    },
+    {
+      "url": "http://127.0.0.1:52391/examples/",
+      "groups": 2,
+      "file_sha256": "ebc0c930eadf415942b9e8e13d1de27d58e24646e9a59233fd2680828703fff7"
+    }
+  ],
+  "chromium": "153.0.8010.12",
+  "passed": true
+}

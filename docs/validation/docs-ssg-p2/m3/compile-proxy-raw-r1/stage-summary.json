@@ -1,0 +1,44 @@
+[
+  {
+    "sample": 0,
+    "native_post_compile_ms": 1685,
+    "compile_to_paint_ms": 2304.5,
+    "valid": true,
+    "wasm_bytes": 22465759
+  },
+  {
+    "sample": 1,
+    "native_post_compile_ms": 1874,
+    "compile_to_paint_ms": 2381.39990234375,
+    "valid": true,
+    "wasm_bytes": 22465759
+  },
+  {
+    "sample": 2,
+    "native_post_compile_ms": 1706,
+    "compile_to_paint_ms": 2209.7998046875,
+    "valid": true,
+    "wasm_bytes": 22465759
+  },
+  {
+    "sample": 3,
+    "native_post_compile_ms": 1869,
+    "compile_to_paint_ms": 2385.599853515625,
+    "valid": true,
+    "wasm_bytes": 22465759
+  },
+  {
+    "sample": 4,
+    "native_post_compile_ms": 1858,
+    "compile_to_paint_ms": 2369.400146484375,
+    "valid": true,
+    "wasm_bytes": 22465759
+  },
+  {
+    "sample": 5,
+    "native_post_compile_ms": 1691,
+    "compile_to_paint_ms": 2198.89990234375,
+    "valid": true,
+    "wasm_bytes": 22465759
+  }
+]

@@ -1,0 +1,56 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-components v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-components)
+   Compiling rustify-docs v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-docs)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 6.96s
+     Running unittests src/lib.rs (target/debug/deps/rustify_docs-a0443a60ac2534b1)
+
+running 13 tests
+test config::tests::languages ... ok
+test config::tests::unknown_keys_are_errors_with_a_location ... ok
+test config::tests::schema_version_must_be_one ... ok
+test config::tests::defaults ... ok
+test config::tests::static_theme_and_registered_navigation_are_known_configuration ... FAILED
+test config::tests::theme_document_rejects_conflicting_primary_and_unsafe_paths ... FAILED
+test config::tests::registered_navigation_requires_one_source_and_canonical_routes ... FAILED
+test config::tests::component_sites_accept_explicit_rust_inputs ... ok
+test config::tests::rust_inputs_cannot_escape_or_be_replaced_by_output ... ok
+test config::tests::base_and_url_normalize_together ... ok
+test config::tests::nav_groups_need_one_source ... ok
+test config::tests::output_may_not_overlap_inputs ... ok
+test config::tests::brand_colours_and_logo ... ok
+
+failures:
+
+---- config::tests::static_theme_and_registered_navigation_are_known_configuration stdout ----
+
+thread 'config::tests::static_theme_and_registered_navigation_are_known_configuration' (39131576) panicked at crates/rustify-docs/src/config.rs:728:9:
+unknown field `routes`, expected one of `label`, `dir`, `items`, `scope`
+
+---- config::tests::theme_document_rejects_conflicting_primary_and_unsafe_paths stdout ----
+
+thread 'config::tests::theme_document_rejects_conflicting_primary_and_unsafe_paths' (39131577) panicked at crates/rustify-docs/src/config.rs:738:9:
+assertion failed: errors.iter().any(|issue| issue.rule == "config-theme")
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- config::tests::registered_navigation_requires_one_source_and_canonical_routes stdout ----
+
+thread 'config::tests::registered_navigation_requires_one_source_and_canonical_routes' (39131573) panicked at crates/rustify-docs/src/config.rs:750:13:
+assertion failed: parse(&text).unwrap_err().iter().any(|issue| issue.rule == "config-nav")
+
+
+failures:
+    config::tests::registered_navigation_requires_one_source_and_canonical_routes
+    config::tests::static_theme_and_registered_navigation_are_known_configuration
+    config::tests::theme_document_rejects_conflicting_primary_and_unsafe_paths
+
+test result: FAILED. 10 passed; 3 failed; 0 ignored; 0 measured; 136 filtered out; finished in 0.01s
+
+error: test failed, to rerun pass `-p rustify-docs --lib`
+mbx[cache]: 0 hits, 0 misses, 2 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: disposed of 2.2 TiB logical without being asked. that is rather the point.

@@ -47,7 +47,7 @@ pub fn options() -> Options {
 
 /// A version for everything above that decides a fragment's bytes; part of
 /// the fragment cache key.
-pub const WRITER_VERSION: u32 = 10;
+pub const WRITER_VERSION: u32 = 11;
 
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct Heading {
@@ -207,6 +207,87 @@ pub fn render(source: &str, offset: usize, context: &Context) -> Fragment {
         writer.event(event, span);
     }
     writer.finish()
+}
+
+pub(crate) fn intro_range(source: &str) -> Result<Range<usize>, Issue> {
+    let mut start = None;
+    for (event, span) in Parser::new_ext(source, options()).into_offset_iter() {
+        match event {
+            Event::End(TagEnd::Heading(HeadingLevel::H1)) if start.is_none() => {
+                start = Some(span.end);
+            }
+            Event::Start(Tag::Heading {
+                level: HeadingLevel::H2,
+                ..
+            }) => {
+                return start.map(|start| start..span.start).ok_or_else(|| {
+                    Issue::error(
+                        0..0,
+                        "markdown-intro",
+                        "the introduction needs a leading H1",
+                    )
+                });
+            }
+            _ => {}
+        }
+    }
+    start.map(|start| start..source.len()).ok_or_else(|| {
+        Issue::error(
+            0..0,
+            "markdown-intro",
+            "the introduction needs a leading H1",
+        )
+    })
+}
+
+/// Collects a rendered HTML surface without interpreting it as Markdown or
+/// changing its bytes. IDs, headings and URLs follow the emitted document tree.
+pub fn render_html(html: &str) -> Fragment {
+    let semantics = html_check::semantics(
+        html,
+        &[html_check::HeadingSource {
+            html: 0..html.len(),
+            span: 0..html.len(),
+            raw: true,
+            explicit: true,
+        }],
+    );
+    let (issues, slots) = html_check::scan_document(html, &semantics.stored_tags);
+    let mut fragment = Fragment {
+        html: html.into(),
+        h1_count: semantics.headings.iter().filter(|h| h.level == 1).count(),
+        title: semantics
+            .headings
+            .iter()
+            .find(|h| h.level == 1)
+            .map(|h| h.text.clone()),
+        anchors: semantics.anchors,
+        headings: semantics.headings,
+        leading_h1: semantics.leading_h1,
+        issues,
+        ..Fragment::default()
+    };
+    for slot in slots {
+        if !html_check::in_document(&slot.span, &semantics.tags) {
+            continue;
+        }
+        fragment.slots.push(Slot {
+            html: slot.span.clone(),
+            reference: fragment.references.len(),
+        });
+        fragment.references.push(Reference {
+            destination: slot.value,
+            span: slot.span,
+            kind: match slot.role {
+                UrlRole::Link => RefKind::Link,
+                UrlRole::Resource { image: true } => RefKind::Image,
+                UrlRole::Resource { image: false } => RefKind::Media,
+                UrlRole::Srcset => RefKind::Srcset,
+                UrlRole::ClassImage => RefKind::ClassImage,
+            },
+        });
+    }
+    fragment
 }
 
 /// Uses the existing code panels, raw copy templates and accessible tabs for
@@ -1352,6 +1433,32 @@ impl<'a> Writer<'a> {
             .iter()
             .find(|heading| heading.level == 1)
             .map(|heading| heading.text.clone());
+        let mut hidden = std::collections::BTreeSet::new();
+        buffer.slots.retain(|slot| {
+            let live = html_check::in_document(&slot.html, &semantics.tags);
+            if !live {
+                hidden.insert(slot.reference);
+            }
+            live
+        });
+        for slot in &buffer.slots {
+            hidden.remove(&slot.reference);
+        }
+        if !hidden.is_empty() {
+            let mut indices = vec![0; self.out.references.len()];
+            let mut next = 0;
+            let mut old = 0;
+            self.out.references.retain(|_| {
+                let keep = !hidden.contains(&old);
+                indices[old] = next;
+                next += usize::from(keep);
+                old += 1;
+                keep
+            });
+            for slot in &mut buffer.slots {
+                slot.reference = indices[slot.reference];
+            }
+        }
         self.out.slots = buffer.slots;
         self.out
     }
@@ -1489,6 +1596,64 @@ mod tests {
 
     fn rules(fragment: &Fragment) -> Vec<&'static str> {
         fragment.issues.iter().map(|issue| issue.rule).collect()
+    }
+
+    #[test]
+    fn rendered_html_keeps_markers_templates_and_literal_markdown() {
+        let html = "<!><h1 id='title'>Title &amp; text</h1><p>**literal**</p><template id='source'><a href='hidden/'>Stored source</a><h1 id='ghost'>Hidden</h1></template><a href='visible/?a&amp;b#title'>Visible</a>";
+        let fragment = render_html(html);
+        assert_eq!(fragment.html, html);
+        assert_eq!(fragment.title.as_deref(), Some("Title & text"));
+        assert_eq!(fragment.anchors, ["title", "source"]);
+        assert_eq!(fragment.h1_count, 1);
+        assert_eq!(
+            fragment
+                .references
+                .iter()
+                .map(|r| r.destination.as_str())
+                .collect::<Vec<_>>(),
+            ["visible/?a&b#title"]
+        );
+        assert_eq!(
+            &html[fragment.slots[0].html.clone()],
+            "visible/?a&amp;b#title"
+        );
+    }
+
+    #[test]
+    fn rendered_html_urls_follow_foreign_title_and_raw_text_contexts() {
+        let html = "<svg><title><a href='visible/'>Visible</a></title></svg><textarea><a href='hidden/' onclick='text'>Text</a></textarea><template><a href='stored/'>Stored</a></template>";
+        let fragment = render_html(html);
+        assert!(fragment.issues.is_empty(), "{:?}", fragment.issues);
+        assert_eq!(
+            fragment
+                .references
+                .iter()
+                .map(|r| r.destination.as_str())
+                .collect::<Vec<_>>(),
+            ["visible/"]
+        );
+        assert_eq!(
+            render_html("<template><script>x()</script></template>").issues[0].rule,
+            "inline-script"
+        );
+    }
+
+    #[test]
+    fn markdown_references_inside_inline_templates_are_not_published() {
+        let fragment =
+            md("Before <template>[Hidden](missing.md)</template> [Visible](visible.md).\n");
+        assert!(fragment.html.contains("href=\"missing.md\""));
+        assert_eq!(
+            fragment
+                .references
+                .iter()
+                .map(|r| r.destination.as_str())
+                .collect::<Vec<_>>(),
+            ["visible.md"]
+        );
+        assert_eq!(fragment.slots.len(), 1);
+        assert_eq!(fragment.slots[0].reference, 0);
     }
 
     /// The HTML with every slot replaced by `[n]`, its reference index.

@@ -3,6 +3,7 @@
 use rustify_docs::SiteRegistry;
 
 mod catalog;
+pub mod custom;
 pub mod demos;
 
 pub fn site() -> SiteRegistry {
@@ -19,6 +20,20 @@ pub fn site() -> SiteRegistry {
             AsyncAfterAttachDemo => crate::demos::async_after_attach_demo,
             FailureDemo => crate::demos::failure_demo,
             CatalogProxy => crate::demos::catalog_proxy,
+            ThemeProbeDemo => crate::custom::theme_probe_demo,
+        }
+        pages {
+            CustomPage { route: "/custom/", title: "Custom page", description: "A registered page with shared demos, layout slots and an imported theme." } => crate::custom::custom_page,
+            PlainPage { route: "/plain/", title: "Static custom page" } => crate::custom::plain_page,
+        }
+        slots {
+            header => crate::custom::header,
+            footer => crate::custom::footer,
+            sidebar_top => crate::custom::sidebar_top,
+            sidebar_bottom => crate::custom::sidebar_bottom,
+            before_content => crate::custom::before_content,
+            after_content => crate::custom::after_content,
+            not_found => crate::custom::not_found,
         }
     }
 }

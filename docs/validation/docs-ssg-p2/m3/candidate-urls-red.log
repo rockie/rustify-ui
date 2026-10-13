@@ -1,0 +1,58 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-docs v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-docs)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 10.76s
+     Running unittests src/lib.rs (target/debug/deps/rustify_docs-a0443a60ac2534b1)
+
+running 4 tests
+test content::tests::source_candidate_missing_private_and_remote_images_have_general_diagnostics ... FAILED
+test content::tests::source_candidate_theme_document_is_refused_even_when_not_in_the_initial_view ... FAILED
+test content::tests::source_candidate_hidden_images_enter_the_resource_graph_without_hidden_dom ... FAILED
+test content::tests::source_candidate_urls_resolve_without_changing_the_original_class ... FAILED
+
+failures:
+
+---- content::tests::source_candidate_missing_private_and_remote_images_have_general_diagnostics stdout ----
+
+thread 'content::tests::source_candidate_missing_private_and_remote_images_have_general_diagnostics' (39535372) panicked at crates/rustify-docs/src/content.rs:2462:9:
+assertion `left == right` failed: []
+  left: 0
+ right: 3
+
+---- content::tests::source_candidate_theme_document_is_refused_even_when_not_in_the_initial_view stdout ----
+
+thread 'content::tests::source_candidate_theme_document_is_refused_even_when_not_in_the_initial_view' (39535373) panicked at crates/rustify-docs/src/content.rs:2501:32:
+[]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- content::tests::source_candidate_hidden_images_enter_the_resource_graph_without_hidden_dom stdout ----
+
+thread 'content::tests::source_candidate_hidden_images_enter_the_resource_graph_without_hidden_dom' (39535371) panicked at crates/rustify-docs/src/content.rs:2427:9:
+assertion `left == right` failed
+  left: {}
+ right: {"#future-id": Keep, "data:image/png;base64,AA": Keep, "media/hidden.svg": Resource("media/hidden.svg")}
+
+---- content::tests::source_candidate_urls_resolve_without_changing_the_original_class stdout ----
+
+thread 'content::tests::source_candidate_urls_resolve_without_changing_the_original_class' (39535374) panicked at crates/rustify-docs/src/content.rs:2401:9:
+assertion `left == right` failed
+  left: None
+ right: Some(Resource("static/custom.svg"))
+
+
+failures:
+    content::tests::source_candidate_hidden_images_enter_the_resource_graph_without_hidden_dom
+    content::tests::source_candidate_missing_private_and_remote_images_have_general_diagnostics
+    content::tests::source_candidate_theme_document_is_refused_even_when_not_in_the_initial_view
+    content::tests::source_candidate_urls_resolve_without_changing_the_original_class
+
+test result: FAILED. 0 passed; 4 failed; 0 ignored; 0 measured; 177 filtered out; finished in 0.06s
+
+error: test failed, to rerun pass `-p rustify-docs --lib`
+mbx[cache]: 0 hits, 0 misses, 1 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: lent the same 120.0 GiB to every checkout at once. none of them has checked.

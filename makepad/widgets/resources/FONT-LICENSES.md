@@ -6,16 +6,22 @@ Fonts bundled in `makepad/widgets/resources` and shipped with every web build. M
 |---|---|---|---|
 | LXGWWenKaiRegular.ttf | Rustify WenKai (Chinese) | Copyright 2021-2024 LXGW; Copyright 2020 The Klee Project Authors. Modified by Rustify: removes the overflowing format-4 cmap, preserves the complete format-12 mapping and every glyph/metric table, recalculates checksums, and renames the primary family. The filename is kept for existing resource references. | SIL OFL 1.1; see scripts/repair-theme-font.py and sources.lock.json |
 | LXGWWenKaiBold.ttf | LXGW WenKai (Chinese) | Copyright 2021-2024 LXGW, with Reserved Font Names 霞鹜, 霞鶩, 落霞孤鹜, 落霞孤鶩 and LXGW; derived from Klee (Copyright 2020 The Klee Project Authors) | SIL OFL 1.1 |
-| NotoColorEmoji.ttf | Noto Color Emoji | Copyright 2013 Google LLC | SIL OFL 1.1 |
+| NotoColorEmoji.ttf | Noto Color Emoji | Copyright 2022 Google Inc. in the bundled face; original project notice Copyright 2013 Google LLC is also retained | SIL OFL 1.1 |
 | NotoSans-Regular.ttf | Noto Sans | Copyright 2012 Google Inc. All Rights Reserved. | SIL OFL 1.1 |
-| NotoSerif-Regular.ttf | Noto Serif | Copyright 2018 The Noto Project Authors; imported from notofonts/noto-fonts at ffebf8c1ee449e544955a7e813c54f9b73848eac | SIL OFL 1.1; original notice in LICENSE-NOTO-SERIF.txt |
-| IBMPlexSans-Text.ttf, IBMPlexSans-SemiBold.ttf, IBMPlexSans-Italic.ttf, IBMPlexSans-BoldItalic.ttf | IBM Plex Sans | Copyright © 2017 IBM Corp. with Reserved Font Name "Plex" | SIL OFL 1.1 |
+| NotoSerif-Regular.ttf | Noto Serif | Copyright 2015-2021 Google LLC in the bundled face; imported project notice Copyright 2018 The Noto Project Authors; imported from notofonts/noto-fonts at ffebf8c1ee449e544955a7e813c54f9b73848eac | SIL OFL 1.1; original notice in LICENSE-NOTO-SERIF.txt |
+| IBMPlexSans-Text.ttf, IBMPlexSans-SemiBold.ttf, IBMPlexSans-Italic.ttf, IBMPlexSans-BoldItalic.ttf | IBM Plex Sans | Copyright © 2017 IBM Corp. with Reserved Font Name "Plex"; bundled Text face metadata also records Copyright 2018 IBM Corp. | SIL OFL 1.1 |
 | jetbrains_mono_variable.ttf | JetBrains Mono | Copyright 2020 The JetBrains Mono Project Authors | SIL OFL 1.1 |
-| LiberationMono-Regular.ttf | Liberation Mono | Digitized data copyright (c) 2010 Google Corporation with Reserved Font Arimo, Tinos and Cousine; Copyright (c) 2012 Red Hat, Inc. with Reserved Font Name Liberation | SIL OFL 1.1 |
+| LiberationMono-Regular.ttf | Liberation Mono, Version 1.04 | Digitized data © 2007 Ascender Corporation. All rights reserved. | GPL v2 with Liberation font embedding and physical-product exceptions; see the Liberation section below |
 | fa-solid-900.ttf | Font Awesome Free (Solid) | Fonticons, Inc. (https://fontawesome.com) | SIL OFL 1.1 (font files) |
 | NewCMMath-Regular.otf | New Computer Modern Math | Copyright 2019-2024 Antonis Tsolomitis | GUST Font License 1.0 |
 
-The OFL text below is the license as distributed by the font projects (identical across them apart from the copyright header). The GUST Font License follows it.
+The OFL text below applies to the OFL faces in the table. The GUST Font License follows it. The bundled Liberation face uses the older license described below.
+
+## Liberation Mono 1.04
+
+The bundled file is byte-identical to `LiberationMono-Regular.ttf` in the official [Liberation 1.04.93.devel release](https://releases.pagure.org/liberation-fonts/liberation-fonts-1.04.93.devel.tar.gz). Its SHA-256 is `3e396ddd3d1c7d3dca1fb16dd64802b32f295f856ac10c0c1f2ab1c738196045`. This older face uses GPL v2 with the release's font exceptions; the newer Liberation 2.x OFL notice does not describe these bytes.
+
+The complete release license and GPL text are preserved in [LiberationMono-Regular.license.txt](../../../crates/rustify-docs-cli/assets/fonts/LiberationMono-Regular.license.txt). The corresponding preferred source and build scripts are preserved in [liberation-fonts-1.04.93.devel.src.tar.gz](../../../crates/rustify-docs-cli/assets/fonts/liberation-fonts-1.04.93.devel.src.tar.gz), received from the [official source release](https://releases.pagure.org/liberation-fonts/liberation-fonts-1.04.93.devel.src.tar.gz). Static documentation themes that reference this face publish its notice and source archive beside the font.
 
 ## SIL Open Font License 1.1
 

@@ -1,0 +1,50 @@
+[
+  {
+    "sample": 0,
+    "valid": true,
+    "native_post_compile_ms": 1178,
+    "native_whole_round_ms": 42603,
+    "host_ms": 176,
+    "wasm_ms": 168
+  },
+  {
+    "sample": 1,
+    "valid": true,
+    "native_post_compile_ms": 1211,
+    "native_whole_round_ms": 28698,
+    "host_ms": 19119,
+    "wasm_ms": 8135
+  },
+  {
+    "sample": 2,
+    "valid": true,
+    "native_post_compile_ms": 1181,
+    "native_whole_round_ms": 28755,
+    "host_ms": 18934,
+    "wasm_ms": 8404
+  },
+  {
+    "sample": 3,
+    "valid": true,
+    "native_post_compile_ms": 1233,
+    "native_whole_round_ms": 28589,
+    "host_ms": 18528,
+    "wasm_ms": 8599
+  },
+  {
+    "sample": 4,
+    "valid": true,
+    "native_post_compile_ms": 1109,
+    "native_whole_round_ms": 32809,
+    "host_ms": 22356,
+    "wasm_ms": 9063
+  },
+  {
+    "sample": 5,
+    "valid": true,
+    "native_post_compile_ms": 1215,
+    "native_whole_round_ms": 31655,
+    "host_ms": 20248,
+    "wasm_ms": 9954
+  }
+]

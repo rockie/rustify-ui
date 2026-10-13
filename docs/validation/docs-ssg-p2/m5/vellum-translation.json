@@ -1,0 +1,12 @@
+{
+  "original_sha256": "bf56b0399419bc78e37ad7a73129ce78baf7628a69ad5779b8ad4c8ea799f267",
+  "translated_sha256": "bc20cd8e6dad25fc16ca98a683e171c0a232a98a5b559c5c38235f450db652d0",
+  "same_link_destinations": true,
+  "same_fenced_commands": true,
+  "remaining_chinese_characters": 0,
+  "numeric_tokens_missing": [],
+  "scope": "translation of original recorded facts; original behavior evidence not rerun",
+  "numeric_token_method": "all explicit digit sequences, including decimal/comma separators and optional percent; no Unicode word-boundary assumptions",
+  "doc_checker_result": "exit1: preserved historical test-results paths unavailable in checkout, plus existing utility example filename; Markdown link destinations and fenced commands unchanged",
+  "missing_markdown_link_targets": []
+}

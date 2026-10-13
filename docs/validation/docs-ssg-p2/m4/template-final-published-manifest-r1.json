@@ -1,0 +1,89 @@
+{
+  "schema_version": 1,
+  "mode": "production",
+  "base": "/",
+  "cli_version": "0.1.7",
+  "build_id": "c75fecb9970b57c9",
+  "files": [
+    {
+      "path": ".nojekyll",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "404.html",
+      "sha256": "5f2846200bce02e3ea024a6c529b6e740ba2763627b9f07a3676e120460f7d8f",
+      "bytes": 4443
+    },
+    {
+      "path": "assets/islands/300a1d531396d8e5f4410305078bb76301d4ad1297f45d84c34f6f675d572c20/app.js",
+      "sha256": "05d7ac6d205d6f4c89e0616e7edc5ed4c8d2de4c9f6f9e7fc2eeb4ceb7a35596",
+      "bytes": 49564
+    },
+    {
+      "path": "assets/islands/300a1d531396d8e5f4410305078bb76301d4ad1297f45d84c34f6f675d572c20/app_bg.wasm",
+      "sha256": "c63c67c60115db5808f5496ee5a373ffa26fb7e16333f68505196d479952ff33",
+      "bytes": 1367044
+    },
+    {
+      "path": "assets/islands/300a1d531396d8e5f4410305078bb76301d4ad1297f45d84c34f6f675d572c20/dom-loader.js",
+      "sha256": "72c911771f7102b184c18b3f311186c94496a4efd47b9d25e46284d8ad2f5dd1",
+      "bytes": 11686
+    },
+    {
+      "path": "assets/islands/300a1d531396d8e5f4410305078bb76301d4ad1297f45d84c34f6f675d572c20/dom-runtime.css",
+      "sha256": "7597abd6960f0ed1ce5b365356e5b2c422bf79117a39e0a8575aa447cd350f41",
+      "bytes": 796
+    },
+    {
+      "path": "assets/islands/300a1d531396d8e5f4410305078bb76301d4ad1297f45d84c34f6f675d572c20/islands.js",
+      "sha256": "ecc0183124465813a93fae273b21263b166b75814d4334c388f1b6f1e0cb9801",
+      "bytes": 2275
+    },
+    {
+      "path": "assets/islands/300a1d531396d8e5f4410305078bb76301d4ad1297f45d84c34f6f675d572c20/snippets/rustify-ui-4db2f10f10788f4c/web/dom-runtime.js",
+      "sha256": "d3f6018d391b65cfaf609fe1a17d9e47e221c51087a956b9fcd0bc6d11076343",
+      "bytes": 7096
+    },
+    {
+      "path": "assets/mode.5e2c2584b0.js",
+      "sha256": "5e2c2584b0eccb6b7631ffa0f0e110e7316d5f60d532a806bef18f1e017c57cf",
+      "bytes": 6697
+    },
+    {
+      "path": "assets/site.2529a0d647.js",
+      "sha256": "2529a0d647cd2b645277e1dc98c9396c87421748f2bc42488d3031c6db6e203a",
+      "bytes": 13629
+    },
+    {
+      "path": "assets/site.cc20ae6fd7.css",
+      "sha256": "cc20ae6fd75fbe534b2237a18185e50be3e6a93fc63246842a0f80058bbf1131",
+      "bytes": 62088
+    },
+    {
+      "path": "examples/index.html",
+      "sha256": "1d1c6d45d3a7c07c8eea24db2938ab01a0a1914aab2851a4b48b3b16fdb0a589",
+      "bytes": 101589
+    },
+    {
+      "path": "guide/getting-started/index.html",
+      "sha256": "86e92b7b53a4cce0280079a74b6f4f5c95caab6e8a7e35549b1788bcb78d41e7",
+      "bytes": 11197
+    },
+    {
+      "path": "guide/writing-demos/index.html",
+      "sha256": "04183d0cb418263fdf65d72c232c14ccbcacb66f01d93dbd4e4817580338e2e9",
+      "bytes": 15354
+    },
+    {
+      "path": "index.html",
+      "sha256": "ca72efb8acbee833e178c14bfec35290511300df4c81c16b0acbc9cf07b93840",
+      "bytes": 102906
+    },
+    {
+      "path": "robots.txt",
+      "sha256": "16ceb5ee3e0dc13aa9adf31a3ebbe45a1d965b8c2b9f72eaf84e5911e140ed95",
+      "bytes": 23
+    }
+  ]
+}

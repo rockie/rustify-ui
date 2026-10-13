@@ -38,13 +38,18 @@ fn project() -> Temp {
     let temp = Temp::new("components");
     let from = fixture("components");
     // Copy only author inputs. The fixture's hidden target/cache can be huge.
-    for directory in ["src", "content"] {
+    for directory in ["src", "content", "static"] {
         copy_tree(
             &from.join(directory),
             &temp.path(&format!("site/{directory}")),
         );
     }
-    for file in ["Cargo.toml", "Cargo.lock", "rustify-docs.toml"] {
+    for file in [
+        "Cargo.toml",
+        "Cargo.lock",
+        "rustify-docs.toml",
+        "theme.json",
+    ] {
         fs::copy(from.join(file), temp.path(&format!("site/{file}"))).unwrap();
     }
     let root = fs::canonicalize(Path::new(env!("CARGO_MANIFEST_DIR")).join("../..")).unwrap();
@@ -61,7 +66,59 @@ fn project() -> Temp {
         manifest = manifest.replacen(&old, &format!("path = {quoted}"), 1);
     }
     temp.write("site/Cargo.toml", &manifest);
+    pair_component_project(&temp.path("site"));
     temp
+}
+
+#[test]
+fn pair_helper_preserves_manifest_bytes_and_refuses_mismatched_generated_pairs() {
+    let repository = Path::new(env!("CARGO_MANIFEST_DIR")).join("../..");
+    let output = Command::new("python3")
+        .args([
+            "-c",
+            r#"
+from pathlib import Path
+import runpy, sys, tomllib
+root = Path(sys.argv[1])
+helpers = runpy.run_path(str(root / 'scripts/docs-pages-prepare.py'))
+cli = root / 'crates/rustify-docs-cli'
+original = (root / 'tests/docs-ssg/fixtures/components/Cargo.toml').read_bytes()
+package = tomllib.loads(original.decode())['package']['name']
+embedded = (cli / 'assets/components-Cargo.lock').read_bytes()
+packages = tomllib.loads(embedded.decode())['package']
+source = next(p['source'] for p in packages if p['name'] == 'rustify-docs')
+revision = source.rsplit('#', 1)[1]
+generated = (cli / 'templates/components/Cargo.toml.in').read_bytes()
+generated = generated.replace(b'{{package}}', package.encode()).replace(b'{{framework-revision}}', revision.encode())
+lock = embedded.replace(b'name = "docs-site"\nversion = "0.1.0"\n',
+                        f'name = "{package}"\nversion = "0.1.0"\n'.encode(), 1)
+project = helpers['project_bytes']
+projected = project(original, generated, lock, revision)
+restored = projected
+for name in helpers['FRAMEWORKS']:
+    old = next(line for line in original.splitlines(keepends=True) if line.startswith(f'{name} = '.encode()))
+    new = next(line for line in generated.splitlines(keepends=True) if line.startswith(f'{name} = '.encode()))
+    restored = restored.replace(new, old, 1)
+assert restored == original, 'lib, profiles and every other original byte must survive'
+for bad_manifest, bad_lock, label in (
+    (generated.replace(revision.encode(), b'0' * 40, 1), lock, 'dependency revision'),
+    (generated, lock.replace(source.encode(), source.replace(revision, '0' * 40).encode(), 1), 'lock revision'),
+    (generated, lock.replace(f'name = "{package}"\n'.encode(), b'name = "wrong-author"\n', 1), 'root package'),
+    (generated, lock.replace(b'name = "wasm-bindgen"\nversion = "0.2.128"', b'name = "wasm-bindgen"\nversion = "0.2.127"', 1), 'binding version'),
+):
+    try:
+        project(original, bad_manifest, bad_lock, revision)
+    except ValueError:
+        pass
+    else:
+        raise AssertionError(f'{label} mismatch must refuse projection')
+print('pair projection: exact manifest roundtrip and four identity refusals passed')
+"#,
+        ])
+        .arg(repository)
+        .output()
+        .unwrap();
+    succeeded(&output);
 }
 
 fn source_version(original: &str, initial: i32, marker: &str) -> (String, String) {
@@ -245,6 +302,120 @@ fn both_targets_failed(temp: &Temp) {
     }
 }
 
+#[cfg(unix)]
+fn overlapping_describe(temp: &Temp, lock: &[u8], good: &BTreeMap<String, Vec<u8>>) {
+    use std::os::unix::fs::PermissionsExt;
+    let barrier = temp.path("helper-barrier");
+    fs::create_dir_all(&barrier).unwrap();
+    // The helper and wasm compiler must each arrive before either continues.
+    // A synchronous describe after wasm would time out at this barrier.
+    temp.write(
+        "site/src/bin/docs-render.rs",
+        r#"fn main() {
+    let barrier = std::env::var_os("RUSTIFY_HELPER_BARRIER").map(std::path::PathBuf::from);
+    if let Some(directory) = &barrier {
+        let started = std::time::Instant::now();
+        while !directory.join("wasm-started").exists() {
+            assert!(started.elapsed().as_secs() < 15, "wasm did not reach helper barrier");
+            std::thread::sleep(std::time::Duration::from_millis(10));
+        }
+        std::fs::write(directory.join("helper-started"), b"started").unwrap();
+        std::thread::sleep(std::time::Duration::from_millis(100));
+    }
+    let result = rustify_docs::serve_site(docs_components_fixture::site());
+    if let Some(directory) = &barrier {
+        std::fs::write(directory.join("helper-finished"), b"finished").unwrap();
+    }
+    if let Err(error) = result {
+        eprintln!("{error}");
+        std::process::exit(1);
+    }
+}
+"#,
+    );
+    let compiler = temp.path("cargo-barrier");
+    fs::write(
+        &compiler,
+        r#"#!/bin/sh
+if [ "$1" = build ]; then
+    case " $* " in
+        *" --target wasm32-unknown-unknown "*)
+            printf '%s\n' wasm-start >> "$RUSTIFY_HELPER_BARRIER/order"
+            touch "$RUSTIFY_HELPER_BARRIER/wasm-started"
+            rounds=0
+            while [ ! -f "$RUSTIFY_HELPER_BARRIER/helper-started" ]; do
+                rounds=$((rounds + 1))
+                [ "$rounds" -lt 150 ] || exit 76
+                sleep 0.1
+            done
+            [ ! -f "$RUSTIFY_HELPER_BARRIER/fail-wasm" ] || exit 77
+            mbx "$@"
+            status=$?
+            printf '%s\n' wasm-end >> "$RUSTIFY_HELPER_BARRIER/order"
+            exit "$status"
+            ;;
+        *)
+            printf '%s\n' host-start >> "$RUSTIFY_HELPER_BARRIER/order"
+            mbx "$@"
+            status=$?
+            printf '%s\n' host-end >> "$RUSTIFY_HELPER_BARRIER/order"
+            exit "$status"
+            ;;
+    esac
+fi
+exec mbx "$@"
+"#,
+    )
+    .unwrap();
+    fs::set_permissions(&compiler, fs::Permissions::from_mode(0o755)).unwrap();
+    let run = |failed: bool| {
+        let output = Command::new(BIN)
+            .current_dir(temp.path("site"))
+            .args(["build", "--format", "json"])
+            .env("RUSTIFY_DOCS_CARGO", &compiler)
+            .env("RUSTIFY_HELPER_BARRIER", &barrier)
+            .output()
+            .unwrap();
+        let report: Value = serde_json::from_slice(&output.stdout).unwrap();
+        assert_eq!(
+            output.status.code(),
+            Some(i32::from(failed)),
+            "{}",
+            diagnostics(&report)
+        );
+        assert!(
+            barrier.join("helper-finished").exists(),
+            "the describe worker must be joined before CLI exit"
+        );
+        assert_eq!(fs::read(temp.path("site/Cargo.lock")).unwrap(), lock);
+        report
+    };
+    let report = run(false);
+    assert_eq!(report["success"], true);
+    let order = fs::read_to_string(barrier.join("order")).unwrap();
+    assert_eq!(order, "host-start\nhost-end\nwasm-start\nwasm-end\n");
+    let overlapped = tree(&temp.path("site/dist"));
+    for (path, bytes) in good.iter().filter(|(path, _)| path.starts_with("assets/")) {
+        assert_eq!(
+            overlapped.get(path),
+            Some(bytes),
+            "helper preparation preserves reader resource `{path}`"
+        );
+    }
+    for file in ["helper-started", "helper-finished", "wasm-started", "order"] {
+        fs::remove_file(barrier.join(file)).unwrap();
+    }
+    fs::write(barrier.join("fail-wasm"), b"fail").unwrap();
+    let report = run(true);
+    assert_eq!(report["success"], false);
+    assert!(diagnostics(&report).contains("wasm Cargo build failed"));
+    assert_eq!(
+        tree(&temp.path("site/dist")),
+        overlapped,
+        "wasm failure cannot publish the worker's partial result"
+    );
+}
+
 fn published_source(
     files: &BTreeMap<String, Vec<u8>>,
     file: &str,
@@ -426,4 +597,6 @@ fn real_component_builds_report_independent_errors_preserve_good_bytes_and_recov
         recovered,
         "the same complete input writes the same complete bytes"
     );
+    #[cfg(unix)]
+    overlapping_describe(&temp, &lock, &recovered);
 }

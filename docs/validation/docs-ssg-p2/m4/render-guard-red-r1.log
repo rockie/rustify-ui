@@ -1,0 +1,59 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-components v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-components)
+   Compiling rustify-docs v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-docs)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 11.18s
+     Running unittests src/lib.rs (target/debug/deps/rustify_docs-a0443a60ac2534b1)
+
+running 4 tests
+test content::tests::render_guard_checks_configuration_even_for_content_only_projects ... FAILED
+test content::tests::render_guard_checks_include_only_bytes_from_the_original_analysis ... FAILED
+test content::tests::render_guard_checks_the_original_outside_resource_read ... FAILED
+test content::tests::render_guard_detects_swapped_symlink_targets_even_when_snapshot_sets_match ... FAILED
+
+failures:
+
+---- content::tests::render_guard_checks_configuration_even_for_content_only_projects stdout ----
+
+thread 'content::tests::render_guard_checks_configuration_even_for_content_only_projects' (40386579) panicked at crates/rustify-docs/src/content.rs:2465:9:
+assertion failed: validate_inputs(&project, &before,
+            &analysis).iter().any(|problem|
+        problem.rule == "render-generation-changed")
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- content::tests::render_guard_checks_include_only_bytes_from_the_original_analysis stdout ----
+
+thread 'content::tests::render_guard_checks_include_only_bytes_from_the_original_analysis' (40386582) panicked at crates/rustify-docs/src/content.rs:2447:9:
+assertion failed: validate_inputs(&project, &before,
+            &analysis).iter().any(|problem|
+        problem.rule == "render-generation-changed")
+
+---- content::tests::render_guard_checks_the_original_outside_resource_read stdout ----
+
+thread 'content::tests::render_guard_checks_the_original_outside_resource_read' (40386583) panicked at crates/rustify-docs/src/content.rs:2426:9:
+assertion failed: problems.iter().any(|problem| problem.rule == "render-generation-changed")
+
+---- content::tests::render_guard_detects_swapped_symlink_targets_even_when_snapshot_sets_match stdout ----
+
+thread 'content::tests::render_guard_detects_swapped_symlink_targets_even_when_snapshot_sets_match' (40386584) panicked at crates/rustify-docs/src/content.rs:2496:9:
+assertion failed: validate_inputs(&project, &before,
+            &analysis).iter().any(|problem|
+        problem.rule == "render-generation-changed")
+
+
+failures:
+    content::tests::render_guard_checks_configuration_even_for_content_only_projects
+    content::tests::render_guard_checks_include_only_bytes_from_the_original_analysis
+    content::tests::render_guard_checks_the_original_outside_resource_read
+    content::tests::render_guard_detects_swapped_symlink_targets_even_when_snapshot_sets_match
+
+test result: FAILED. 0 passed; 4 failed; 0 ignored; 0 measured; 181 filtered out; finished in 0.13s
+
+error: test failed, to rerun pass `-p rustify-docs --lib`
+mbx[cache]: 0 hits, 0 misses, 7 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: 57328 compilations. rustc did each once; mbx did the rest of the showing up.

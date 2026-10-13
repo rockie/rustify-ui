@@ -1,0 +1,34 @@
+[
+  {
+    "key": "island-f271cfadea-0",
+    "nodes": 19,
+    "html": "<div data-rustify-scope=\"island-f271cfadea-0\" data-rustify-seed=\"island-f271cfadea-0\" data-rustify-ssr=\"1\" data-rustify-base=\"/rustify-ui/\" tabindex=\"-1\"><div data-rustify-content=\"\"><div data-counter=\"\" class=\"min-h-24 space-y-3\"><p>Shared initial props</p><div class=\"flex flex-wrap items-center gap-3\"><button type=\"button\" data-name=\"Button\" data-testid=\"counter-increment\" class=\"inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:border-destructive bg-primary text-primary-foreground hover:bg-primary/90 h-9 px-4 py-2\">Increment</button><output data-testid=\"counter-value\">2</output><input type=\"text\" id=\"rui-island-f271cfadea-0-field-1\" data-name=\"TextField\" data-testid=\"counter-input\" aria-label=\"Counter value\" value=\"2\" class=\"flex h-9 w-full min-w-0 rounded-md border border-border bg-input text-foreground px-3 py-1 text-sm transition-colors outline-none placeholder:text-muted-foreground focus-visible:ring-ring/50 focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 read-only:bg-muted aria-invalid:border-destructive aria-invalid:ring-destructive/40\"></div><span data-rustify-children=\"\" class=\"contents\"><p>The same <strong>safe child Markdown</strong> appears in each instance.</p>\n</span></div></div><div data-rustify-overlay=\"\"></div></div>",
+    "values": [
+      "2"
+    ]
+  },
+  {
+    "key": "island-f271cfadea-1",
+    "nodes": 19,
+    "html": "<div data-rustify-scope=\"island-f271cfadea-1\" data-rustify-seed=\"island-f271cfadea-1\" data-rustify-ssr=\"1\" data-rustify-base=\"/rustify-ui/\" tabindex=\"-1\"><div data-rustify-content=\"\"><div data-counter=\"\" class=\"min-h-24 space-y-3\"><p>Shared initial props</p><div class=\"flex flex-wrap items-center gap-3\"><button type=\"button\" data-name=\"Button\" data-testid=\"counter-increment\" class=\"inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:border-destructive bg-primary text-primary-foreground hover:bg-primary/90 h-9 px-4 py-2\">Increment</button><output data-testid=\"counter-value\">2</output><input type=\"text\" id=\"rui-island-f271cfadea-1-field-1\" data-name=\"TextField\" data-testid=\"counter-input\" aria-label=\"Counter value\" value=\"2\" class=\"flex h-9 w-full min-w-0 rounded-md border border-border bg-input text-foreground px-3 py-1 text-sm transition-colors outline-none placeholder:text-muted-foreground focus-visible:ring-ring/50 focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 read-only:bg-muted aria-invalid:border-destructive aria-invalid:ring-destructive/40\"></div><span data-rustify-children=\"\" class=\"contents\"><p>The same <strong>safe child Markdown</strong> appears in each instance.</p>\n</span></div></div><div data-rustify-overlay=\"\"></div></div>",
+    "values": [
+      "2"
+    ]
+  },
+  {
+    "key": "island-f271cfadea-2",
+    "nodes": 19,
+    "html": "<div data-rustify-scope=\"island-f271cfadea-2\" data-rustify-seed=\"island-f271cfadea-2\" data-rustify-ssr=\"1\" data-rustify-base=\"/rustify-ui/\" tabindex=\"-1\"><div data-rustify-content=\"\"><div data-counter=\"\" class=\"min-h-24 space-y-3\"><p>Shared initial props</p><div class=\"flex flex-wrap items-center gap-3\"><button type=\"button\" data-name=\"Button\" data-testid=\"counter-increment\" class=\"inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:border-destructive bg-primary text-primary-foreground hover:bg-primary/90 h-9 px-4 py-2\">Increment</button><output data-testid=\"counter-value\">2</output><input type=\"text\" id=\"rui-island-f271cfadea-2-field-1\" data-name=\"TextField\" data-testid=\"counter-input\" aria-label=\"Counter value\" value=\"2\" class=\"flex h-9 w-full min-w-0 rounded-md border border-border bg-input text-foreground px-3 py-1 text-sm transition-colors outline-none placeholder:text-muted-foreground focus-visible:ring-ring/50 focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 read-only:bg-muted aria-invalid:border-destructive aria-invalid:ring-destructive/40\"></div><span data-rustify-children=\"\" class=\"contents\"><p>The same <strong>safe child Markdown</strong> appears in each instance.</p>\n</span></div></div><div data-rustify-overlay=\"\"></div></div>",
+    "values": [
+      "2"
+    ]
+  },
+  {
+    "key": "island-f271cfadea-3",
+    "nodes": 14,
+    "html": "<div data-rustify-scope=\"island-f271cfadea-3\" data-rustify-seed=\"island-f271cfadea-3\" data-rustify-ssr=\"1\" data-rustify-base=\"/rustify-ui/\" tabindex=\"-1\"><div data-rustify-content=\"\"><div data-counter=\"\" class=\"min-h-24 space-y-3\"><p>Résumé — a real registered counter</p><div class=\"flex flex-wrap items-center gap-3\"><button type=\"button\" data-name=\"Button\" data-testid=\"counter-increment\" class=\"inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:border-destructive bg-primary text-primary-foreground hover:bg-primary/90 h-9 px-4 py-2\">Increment</button><output data-testid=\"counter-value\">7</output><input type=\"text\" id=\"rui-island-f271cfadea-3-field-1\" data-name=\"TextField\" data-testid=\"counter-input\" aria-label=\"Counter value\" value=\"7\" class=\"flex h-9 w-full min-w-0 rounded-md border border-border bg-input text-foreground px-3 py-1 text-sm transition-colors outline-none placeholder:text-muted-foreground focus-visible:ring-ring/50 focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 read-only:bg-muted aria-invalid:border-destructive aria-invalid:ring-destructive/40\"></div><p>This child is part of the same view on both targets.</p></div></div><div data-rustify-overlay=\"\"></div></div>",
+    "values": [
+      "7"
+    ]
+  }
+]

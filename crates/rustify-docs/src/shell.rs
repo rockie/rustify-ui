@@ -8,10 +8,33 @@
 
 use leptos::prelude::*;
 use leptos::tachys::html::attribute::custom::CustomAttribute;
+use std::collections::{BTreeMap, BTreeSet};
 
 use crate::escape::escape_html_into;
 use crate::labels::{self, Labels};
 use crate::markdown::Heading;
+use crate::site::Slot;
+
+/// Registered layout content for one final browser document.
+pub type LayoutSlots = BTreeMap<Slot, String>;
+
+fn slot_marker(slot: Slot) -> &'static str {
+    match slot {
+        Slot::Header => "<!--rustify-docs:slot:header-->",
+        Slot::Footer => "<!--rustify-docs:slot:footer-->",
+        Slot::SidebarTop => "<!--rustify-docs:slot:sidebar-top-->",
+        Slot::SidebarBottom => "<!--rustify-docs:slot:sidebar-bottom-->",
+        Slot::BeforeContent => "<!--rustify-docs:slot:before-content-->",
+        Slot::AfterContent => "<!--rustify-docs:slot:after-content-->",
+        Slot::NotFound => "<!--rustify-docs:slot:not-found-->",
+    }
+}
+
+fn slot_view(slot: Slot, slots: &LayoutSlots) -> Option<impl IntoView> {
+    slots.contains_key(&slot).then(|| {
+        view! { <div class="rd-layout-slot" inner_html=slot_marker(slot)></div> }
+    })
+}
 
 /// The strict policy every page is served under, as a header. The `meta`
 /// copy in each page omits `frame-ancestors`, which only a header can carry.
@@ -172,6 +195,8 @@ pub struct Page<'a> {
 /// What a home page shows above its own Markdown.
 #[derive(Clone, Debug, Default)]
 pub struct Home<'a> {
+    /// A registered root renderer supplies the complete home composition.
+    pub custom: bool,
     /// The existing anchor of the leading author H1 merged into the hero.
     pub heading_id: Option<&'a str>,
     pub tagline: Option<&'a str>,
@@ -185,6 +210,11 @@ pub struct Home<'a> {
 /// heading and a way home. Its links and files are root-relative under the
 /// base, so it works from any depth.
 pub fn render_not_found(site: &Site) -> String {
+    render_not_found_with_slots(site, &LayoutSlots::new())
+}
+
+/// Renders a not-found page with the same overrides as ordinary pages.
+pub fn render_not_found_with_slots(site: &Site, slots: &LayoutSlots) -> String {
     let (labels, _) = labels::for_lang(&site.lang);
     let mut article = String::from("<p>");
     crate::escape::escape_html_into(&mut article, labels.not_found_body);
@@ -194,7 +224,10 @@ pub fn render_not_found(site: &Site) -> String {
     crate::escape::escape_html_into(&mut article, labels.back_home);
     article.push_str("</a></p>\n");
     let document_title = format!("{} | {}", labels.not_found_title, site.name);
-    render_page(
+    let article = slots
+        .get(&Slot::NotFound)
+        .map_or(article.as_str(), String::as_str);
+    render_page_with_slots(
         site,
         &Page {
             route: "/404/",
@@ -203,7 +236,7 @@ pub fn render_not_found(site: &Site) -> String {
             description: Some(labels.not_found_body),
             lang: &site.lang,
             draft: false,
-            article: &article,
+            article,
             headings: &[],
             article_has_h1: false,
             toc_levels: (2, 3),
@@ -213,6 +246,7 @@ pub fn render_not_found(site: &Site) -> String {
             },
             home: None,
         },
+        slots,
     )
 }
 
@@ -220,18 +254,28 @@ pub fn render_not_found(site: &Site) -> String {
 /// shell with one heading saying so. The problems themselves are listed by
 /// the panel the page loads.
 pub fn render_dev_shell(site: &Site) -> String {
+    render_dev_shell_with_status(site, false)
+}
+
+/// The same static shell while the first build is still running.
+pub fn render_dev_shell_with_status(site: &Site, building: bool) -> String {
     let (labels, _) = labels::for_lang(&site.lang);
+    let (title, body) = if building {
+        (labels.dev.building_title, labels.dev.building_body)
+    } else {
+        (labels.dev.shell_title, labels.dev.shell_body)
+    };
     let mut article = String::from("<p>");
-    crate::escape::escape_html_into(&mut article, labels.dev.shell_body);
+    crate::escape::escape_html_into(&mut article, body);
     article.push_str("</p>\n");
-    let document_title = format!("{} | {}", labels.dev.shell_title, site.name);
+    let document_title = format!("{} | {}", title, site.name);
     render_page(
         site,
         &Page {
             route: DEV_PREFIX,
             document_title: &document_title,
-            title: labels.dev.shell_title,
-            description: Some(labels.dev.shell_body),
+            title,
+            description: Some(body),
             lang: &site.lang,
             draft: false,
             article: &article,
@@ -254,25 +298,71 @@ const ARTICLE: &str = "<!--rustify-docs:article-->";
 
 /// Renders `page` as a complete document.
 pub fn render_page(site: &Site, page: &Page) -> String {
+    render_page_with_slots(site, page, &LayoutSlots::new())
+}
+
+/// Inserts registered content after the framework shell's marker cleanup.
+pub fn render_page_with_slots(site: &Site, page: &Page, slots: &LayoutSlots) -> String {
     let owner = Owner::new();
-    let shell = owner.with(|| page_view(site, page).to_html());
+    let shell = owner.with(|| page_view(site, page, slots).to_html());
     drop(owner);
     // `<!>` is a hydration marker between dynamic pieces. Nothing hydrates a
     // static page, and author text cannot produce one here: the renderer
     // escapes every `<` it writes as text.
     let shell = shell.replace("<!>", "");
-    let (before, after) = shell
-        .split_once(ARTICLE)
-        .expect("the shell has an article placeholder");
+    let mut replacements = vec![(ARTICLE, page.article)];
+    replacements.extend(
+        slots
+            .iter()
+            .map(|(slot, html)| (slot_marker(*slot), html.as_str())),
+    );
+    // Locate every marker before inserting author content. Neither literal
+    // comments in code samples nor another slot can become replacement input.
+    let mut ranges: Vec<_> = replacements
+        .iter()
+        .flat_map(|(marker, html)| {
+            shell
+                .match_indices(*marker)
+                .map(move |(start, _)| (start, start + marker.len(), *html))
+        })
+        .collect();
+    ranges.sort_by_key(|(start, _, _)| *start);
     let mut document = String::with_capacity(16 + shell.len() + page.article.len());
     document.push_str("<!doctype html>");
-    document.push_str(before);
-    document.push_str(page.article);
-    document.push_str(after);
+    let mut at = 0;
+    for (start, end, html) in ranges {
+        document.push_str(&shell[at..start]);
+        document.push_str(html);
+        at = end;
+    }
+    document.push_str(&shell[at..]);
     document
 }
 
-fn page_view(site: &Site, page: &Page) -> impl IntoView {
+fn main_id(page: &Page, slots: &LayoutSlots) -> String {
+    let mut occupied: BTreeSet<String> = crate::html_check::ids(page.article).into_iter().collect();
+    for (slot, html) in slots {
+        // NotFound is already the article; home layouts have no sidebar.
+        if *slot == Slot::NotFound
+            || (page.home.is_some() && matches!(slot, Slot::SidebarTop | Slot::SidebarBottom))
+        {
+            continue;
+        }
+        occupied.extend(crate::html_check::ids(html));
+    }
+    if let Some(id) = page.home.as_ref().and_then(|home| home.heading_id) {
+        occupied.insert(id.to_owned());
+    }
+    let mut id = "content".to_owned();
+    let mut suffix = 0;
+    while occupied.contains(&id) {
+        suffix += 1;
+        id = format!("content-{suffix}");
+    }
+    id
+}
+
+fn page_view(site: &Site, page: &Page, slots: &LayoutSlots) -> impl IntoView {
     let (labels, foreign) = labels::for_lang(page.lang);
     let ui_lang = foreign.then_some(labels.lang);
     let document_title = page.document_title.to_owned();
@@ -292,9 +382,10 @@ fn page_view(site: &Site, page: &Page) -> impl IntoView {
                 && heading.level <= page.toc_levels.1
         })
         .collect();
+    let main_id = main_id(page, slots);
     let body = match &page.home {
-        Some(home) => home_layout(page, home, labels, ui_lang).into_any(),
-        None => doc_layout(site, page, &toc, labels, ui_lang).into_any(),
+        Some(home) => home_layout(page, home, labels, ui_lang, slots, &main_id).into_any(),
+        None => doc_layout(site, page, &toc, labels, ui_lang, slots, &main_id).into_any(),
     };
     view! {
         <html lang=page.lang.to_owned() data-rustify-scope="" data-theme="system" data-rd-base=site.base.clone()>
@@ -329,18 +420,22 @@ fn page_view(site: &Site, page: &Page) -> impl IntoView {
             </head>
             <body class="min-h-screen bg-background text-foreground antialiased">
                 <a
-                    href="#content"
+                    href=format!("#{main_id}")
                     class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus:rounded-md focus:bg-background focus:px-3 focus:py-2"
                     lang=ui_lang
                 >
                     {labels.skip_to_content}
                 </a>
-                {header(site, page.route, labels, ui_lang)}
+                {header(site, page.route, labels, ui_lang, slots)}
                 {body}
                 <footer class="rd-site-footer mx-auto max-w-[76rem] px-4 md:px-6">
-                    <nav aria-label=labels.footer_links lang=ui_lang>
-                        <a href=site.url("/")>{labels.back_home}</a>
-                    </nav>
+                    {if slots.contains_key(&Slot::Footer) {
+                        view! { <div inner_html=slot_marker(Slot::Footer)></div> }.into_any()
+                    } else {
+                        view! { <nav aria-label=labels.footer_links lang=ui_lang>
+                            <a href=site.url("/")>{labels.back_home}</a>
+                        </nav> }.into_any()
+                    }}
                 </footer>
                 <p
                     id="rd-status"
@@ -364,21 +459,25 @@ fn doc_layout(
     toc: &[&Heading],
     labels: &'static Labels,
     ui_lang: Option<&'static str>,
+    slots: &LayoutSlots,
+    main_id: &str,
 ) -> impl IntoView {
     let (previous, next) = site.neighbours(page.route);
     // The article's one H1 is the content's own when it has one.
     let heading = (!page.article_has_h1).then(|| page.title.to_owned());
     view! {
         <div class="rd-layout mx-auto grid max-w-[76rem] gap-x-10 px-4 md:px-6">
-            {sidebar(site, page.route, labels, ui_lang)}
+            {sidebar(site, page.route, labels, ui_lang, slots)}
             {table_of_contents(toc, labels, ui_lang)}
-            <main id="content" class="rd-main min-w-0 py-8 md:py-12">
+            <main id=main_id.to_owned() class="rd-main min-w-0 py-8 md:py-12">
                 <div class="rd-column">
                     {page.draft.then(|| view! {
                         <p class="rd-draft" lang=ui_lang>{labels.draft}</p>
                     })}
                     {heading.map(|title| view! { <h1 class="rd-title">{title}</h1> })}
+                    {slot_view(Slot::BeforeContent, slots)}
                     <article class="rd-prose" inner_html=ARTICLE></article>
+                    {slot_view(Slot::AfterContent, slots)}
                     {page_footer(page.meta, labels, ui_lang)}
                     {pager(site, previous, next, labels, ui_lang)}
                 </div>
@@ -394,7 +493,19 @@ fn home_layout(
     home: &Home,
     labels: &'static Labels,
     ui_lang: Option<&'static str>,
+    slots: &LayoutSlots,
+    main_id: &str,
 ) -> impl IntoView {
+    if home.custom {
+        return view! {
+            <main id=main_id.to_owned() class="rd-home mx-auto max-w-[76rem] px-4 md:px-6">
+                {slot_view(Slot::BeforeContent, slots)}
+                {(!page.article_has_h1).then(|| view! { <h1 class="rd-home-title">{page.title.to_owned()}</h1> })}
+                <div inner_html=ARTICLE></div>
+                {slot_view(Slot::AfterContent, slots)}
+            </main>
+        }.into_any();
+    }
     let actions = home
         .actions
         .iter()
@@ -431,16 +542,18 @@ fn home_layout(
         view! { <ul class="rd-features" data-columns=columns>{items}</ul> }
     });
     view! {
-        <main id="content" class="rd-home mx-auto max-w-[76rem] px-4 md:px-6">
+        <main id=main_id.to_owned() class="rd-home mx-auto max-w-[76rem] px-4 md:px-6">
             <div class="rd-hero">
                 <h1 class="rd-home-title" id=home.heading_id.map(str::to_owned)>{page.title.to_owned()}</h1>
                 {home.tagline.map(|tagline| view! { <p class="rd-tagline">{tagline.to_owned()}</p> })}
                 {(!home.actions.is_empty()).then(|| view! { <nav class="rd-actions" aria-label=labels.start_reading lang=ui_lang>{actions}</nav> })}
             </div>
             {features}
+            {slot_view(Slot::BeforeContent, slots)}
             <article class="rd-prose rd-home-prose" inner_html=ARTICLE></article>
+            {slot_view(Slot::AfterContent, slots)}
         </main>
-    }
+    }.into_any()
 }
 
 /// An Open Graph `<meta property=… content=…>`; `property` is not an
@@ -494,6 +607,7 @@ fn header(
     route: &str,
     labels: &'static Labels,
     ui_lang: Option<&'static str>,
+    slots: &LayoutSlots,
 ) -> impl IntoView {
     let at_home = route == "/";
     let name = site.name.clone();
@@ -521,7 +635,11 @@ fn header(
     view! {
         <header class="sticky top-0 z-40 border-b border-secondary bg-background">
             <div class="mx-auto flex h-14 max-w-[76rem] items-center gap-4 px-4 md:px-6">
-                <a href=site.url("/") class="rd-brand" aria-current=at_home.then_some("page")>{logo}<span>{name}</span></a>
+                {if slots.contains_key(&Slot::Header) {
+                    view! { <div class="rd-brand" inner_html=slot_marker(Slot::Header)></div> }.into_any()
+                } else {
+                    view! { <a href=site.url("/") class="rd-brand" aria-current=at_home.then_some("page")>{logo}<span>{name}</span></a> }.into_any()
+                }}
                 {links}
                 <div class="rd-mode-switch" data-rd-mode-switch="" hidden="" role="group" aria-label=labels.theme lang=ui_lang>
                     {mode_button("system", labels.theme_system)}
@@ -583,15 +701,18 @@ fn sidebar(
     route: &str,
     labels: &'static Labels,
     ui_lang: Option<&'static str>,
+    slots: &LayoutSlots,
 ) -> impl IntoView {
     let entries = sidebar_entries(site, route, labels);
     view! {
         <div class="rd-sidebar">
+            {slot_view(Slot::SidebarTop, slots)}
             <nav class="rd-nav rd-sidebar-wide" aria-label=labels.menu lang=ui_lang inner_html=entries.clone()></nav>
             <details class="rd-sidebar-narrow">
                 <summary lang=ui_lang>{labels.menu}</summary>
                 <nav class="rd-nav" aria-label=labels.menu lang=ui_lang inner_html=entries></nav>
             </details>
+            {slot_view(Slot::SidebarBottom, slots)}
         </div>
     }
 }
@@ -762,6 +883,130 @@ mod tests {
                 home: None,
             },
         )
+    }
+
+    fn render_slots(article: &str, slots: &LayoutSlots) -> String {
+        let mut site = site();
+        site.top.push(HeaderLink {
+            label: "Examples".into(),
+            url: site.url("/next/"),
+            route: Some("/next/".into()),
+            external: false,
+        });
+        render_page_with_slots(
+            &site,
+            &Page {
+                route: "/setup/",
+                document_title: "Setup | Docs",
+                title: "Setup",
+                description: None,
+                lang: "en",
+                draft: false,
+                article,
+                headings: &[],
+                article_has_h1: false,
+                toc_levels: (2, 3),
+                meta: Meta::default(),
+                home: None,
+            },
+            slots,
+        )
+    }
+
+    #[test]
+    fn layout_slots_are_inserted_once_after_shell_cleanup() {
+        let slots = LayoutSlots::from([
+            (
+                Slot::Header,
+                "<a id=\"custom-brand\" href=\"/rustify-ui/\">Custom</a>".into(),
+            ),
+            (
+                Slot::Footer,
+                "<p id=\"custom-footer\">Footer<!>end</p>".into(),
+            ),
+            (
+                Slot::SidebarTop,
+                "<div id=\"sidebar-island\"><!>Island</div>".into(),
+            ),
+            (
+                Slot::SidebarBottom,
+                "<p id=\"sidebar-bottom\">More</p>".into(),
+            ),
+            (Slot::BeforeContent, "<p id=\"before\">Intro</p>".into()),
+            (Slot::AfterContent, "<p id=\"after\">After</p>".into()),
+        ]);
+        let html = render_slots("<p id=\"body\">Body<!>end</p>", &slots);
+        for id in [
+            "custom-brand",
+            "custom-footer",
+            "sidebar-island",
+            "sidebar-bottom",
+            "before",
+            "after",
+            "body",
+        ] {
+            assert_eq!(
+                html.matches(&format!("id=\"{id}\"")).count(),
+                1,
+                "{id}: {html}"
+            );
+        }
+        assert!(html.contains("Footer<!>end"));
+        assert!(html.contains("Body<!>end"));
+        assert!(html.contains("<!>Island"));
+        assert!(html.contains("data-rd-mode=\"system\""));
+        assert!(html.contains("data-rd-mode=\"dark\""));
+        assert!(html.contains("Examples</a>"));
+        assert!(html.contains("Content-Security-Policy"));
+    }
+
+    #[test]
+    fn author_slot_markers_cannot_trigger_another_slot_replacement() {
+        let slots = LayoutSlots::from([
+            (
+                Slot::BeforeContent,
+                "<div><!--rustify-docs:slot:footer--></div>".into(),
+            ),
+            (Slot::Footer, "<p id=\"real-footer\">Only one</p>".into()),
+        ]);
+        let html = render_slots("<!--rustify-docs:slot:footer--><p>Body</p>", &slots);
+        assert_eq!(html.matches("id=\"real-footer\"").count(), 1);
+        assert_eq!(html.matches(slot_marker(Slot::Footer)).count(), 2);
+    }
+
+    #[test]
+    fn not_found_body_and_shared_layout_use_the_same_slots() {
+        let slots = LayoutSlots::from([
+            (
+                Slot::NotFound,
+                "<p id=\"custom-error\">Custom error<!>body</p>".into(),
+            ),
+            (Slot::Header, "<p id=\"error-header\">Header</p>".into()),
+            (Slot::Footer, "<p id=\"error-footer\">Footer</p>".into()),
+            (
+                Slot::SidebarTop,
+                "<p id=\"error-sidebar\">Sidebar</p>".into(),
+            ),
+            (
+                Slot::BeforeContent,
+                "<p id=\"error-before\">Before</p>".into(),
+            ),
+            (Slot::AfterContent, "<p id=\"error-after\">After</p>".into()),
+        ]);
+        let html = render_not_found_with_slots(&site(), &slots);
+        for id in [
+            "custom-error",
+            "error-header",
+            "error-footer",
+            "error-sidebar",
+            "error-before",
+            "error-after",
+        ] {
+            assert_eq!(html.matches(&format!("id=\"{id}\"")).count(), 1);
+        }
+        assert!(html.contains("Custom error<!>body"));
+        assert!(html.contains("<h1 class=\"rd-title\">Page not found</h1>"));
+        assert!(html.contains("name=\"robots\" content=\"noindex\""));
     }
 
     #[test]

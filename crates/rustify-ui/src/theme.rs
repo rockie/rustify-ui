@@ -18,8 +18,8 @@ mod resolve;
 #[cfg(all(target_arch = "wasm32", feature = "gpu"))]
 pub use fonts::gpu_font_family;
 pub use fonts::{
-    dom_font_stack, font_context, FontSlot, ThemeFont, FONT_FACES, FONT_FALLBACKS,
-    FONT_GLYPH_FALLBACKS, THEME_FONTS,
+    dom_font_stack, font_context, FontResourceDigest, FontSlot, ThemeFont, FONT_FACES,
+    FONT_FALLBACKS, FONT_GLYPH_FALLBACKS, FONT_RESOURCE_DIGESTS, THEME_FONTS,
 };
 pub(crate) mod provider;
 pub use color::{

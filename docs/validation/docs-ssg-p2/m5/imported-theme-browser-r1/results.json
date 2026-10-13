@@ -1,0 +1,385 @@
+{
+  "config": {
+    "argv": [
+      "/Users/rockie/.nvm/versions/node/v26.1.0/bin/node",
+      "/Users/rockie/Documents/gh-rockie/rustify-ui/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "playwright.docs.config.ts",
+      "--project=components-subpath",
+      "tests/docs-ssg/custom.spec.ts",
+      "--grep",
+      "live mode changes",
+      "--reporter=list,json",
+      "--output",
+      "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/imported-theme-browser-r1/artifacts"
+    ],
+    "configFile": "/Users/rockie/Documents/gh-rockie/rustify-ui/playwright.docs.config.ts",
+    "rootDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": {},
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/imported-theme-browser-r1/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "dom-only",
+        "name": "dom-only",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [
+          "dom-only/hydration.spec.ts"
+        ],
+        "testMatch": [
+          "dom-only/**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/imported-theme-browser-r1/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "dom-hydrate",
+        "name": "dom-hydrate",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "dom-only/hydration.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/imported-theme-browser-r1/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "docs-root",
+        "name": "docs-root",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [
+          "docs-ssg/dev*.spec.ts",
+          "docs-ssg/islands.spec.ts",
+          "docs-ssg/custom.spec.ts",
+          "docs-ssg/official.spec.ts"
+        ],
+        "testMatch": [
+          "docs-ssg/**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/imported-theme-browser-r1/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "docs-subpath",
+        "name": "docs-subpath",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [
+          "docs-ssg/dev*.spec.ts",
+          "docs-ssg/islands.spec.ts",
+          "docs-ssg/custom.spec.ts",
+          "docs-ssg/official.spec.ts"
+        ],
+        "testMatch": [
+          "docs-ssg/**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/imported-theme-browser-r1/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "docs-meta",
+        "name": "docs-meta",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [
+          "docs-ssg/dev*.spec.ts",
+          "docs-ssg/islands.spec.ts",
+          "docs-ssg/custom.spec.ts",
+          "docs-ssg/official.spec.ts"
+        ],
+        "testMatch": [
+          "docs-ssg/**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/imported-theme-browser-r1/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "components-root",
+        "name": "components-root",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/islands.spec.ts",
+          "docs-ssg/custom.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/imported-theme-browser-r1/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "components-subpath",
+        "name": "components-subpath",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/islands.spec.ts",
+          "docs-ssg/custom.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/imported-theme-browser-r1/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "components-meta",
+        "name": "components-meta",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/islands.spec.ts",
+          "docs-ssg/custom.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/imported-theme-browser-r1/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "official-root",
+        "name": "official-root",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/official.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/imported-theme-browser-r1/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "official-subpath",
+        "name": "official-subpath",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/official.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/imported-theme-browser-r1/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "official-meta",
+        "name": "official-meta",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/official.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/imported-theme-browser-r1/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "components-webkit",
+        "name": "components-webkit",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/islands.spec.ts",
+          "docs-ssg/custom.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/imported-theme-browser-r1/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "docs-firefox",
+        "name": "docs-firefox",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [
+          "docs-ssg/dev*.spec.ts",
+          "docs-ssg/islands.spec.ts",
+          "docs-ssg/custom.spec.ts",
+          "docs-ssg/official.spec.ts"
+        ],
+        "testMatch": [
+          "docs-ssg/**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/imported-theme-browser-r1/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "docs-webkit",
+        "name": "docs-webkit",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [
+          "docs-ssg/dev*.spec.ts",
+          "docs-ssg/islands.spec.ts",
+          "docs-ssg/custom.spec.ts",
+          "docs-ssg/official.spec.ts"
+        ],
+        "testMatch": [
+          "docs-ssg/**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/imported-theme-browser-r1/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "docs-dev",
+        "name": "docs-dev",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/dev*.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "docs-ssg/custom.spec.ts",
+      "file": "docs-ssg/custom.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "live mode changes reach the theme context and real floating controls, including Rust-only classes",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "components-subpath",
+              "projectName": "components-subpath",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1444,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-13T19:24:57.587Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "custom-browser-audit.json",
+                      "contentType": "application/json",
+                      "body": "ewogICJyZXF1ZXN0cyI6IFsKICAgICJodHRwOi8vMTI3LjAuMC4xOjQxOTYvcnVzdGlmeS11aS9jdXN0b20vIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQxOTYvcnVzdGlmeS11aS9hc3NldHMvc2l0ZS4xYjZkZjhlNjU1LmNzcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MTk2L3J1c3RpZnktdWkvYXNzZXRzL21vZGUuNWUyYzI1ODRiMC5qcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MTk2L3J1c3RpZnktdWkvYXNzZXRzL3NpdGUuMjUyOWEwZDY0Ny5qcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MTk2L3J1c3RpZnktdWkvYXNzZXRzL2ZpbGVzL2N1c3RvbS42MmZlN2ZhZmZkLnN2ZyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MTk2L3J1c3RpZnktdWkvYXNzZXRzL2lzbGFuZHMvNGI2ZWZlMmFhN2ZkYzNkMTVmZDk1N2ZmNDg4Yzk3MmJlZGFhZGNmM2UyY2Q4YzYwZjA2NjJiNGZlMGEzNWRjMi9pc2xhbmRzLmpzIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQxOTYvcnVzdGlmeS11aS9hc3NldHMvZm9udHMvMzcxOTI0ZTc0ODBkM2QwMTgwN2ZkYzFiZDMwNDQyZDBhNjY1MWU2YjVlYTU0NjQ4MmY1ODgzZDYxM2NmMDQxOS50dGYiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDE5Ni9ydXN0aWZ5LXVpL2Fzc2V0cy9mb250cy82NjJhMTk2ZDU4ZjExODNiZjJkNzc0MjhiNmQ1MjgzZmUzZjQ1MTYxYWIwMjFiZWE0MDM2YmM5OGU1Y2FjMDE2LnR0ZiIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MTk2L3J1c3RpZnktdWkvYXNzZXRzL2ZvbnRzL2M4ZjY2OWNlYjJjOWM2MGNjZjU1MTk4YjMwNWUwOGE5OTdmZmNhNzlhMzhjYzdlZWI1NTFlNjQzY2JlNjY1MDUudHRmIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQxOTYvcnVzdGlmeS11aS9hc3NldHMvZm9udHMvMWQ0YjJmMDA4YWM3ZTAyNzgwYzE5ODAxZDRiMDRkZDQ1MzhlNDAyMTU5NDNjYzhhZDM3NGRiYThlYzIyNzhjMC50dGYiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDE5Ni9ydXN0aWZ5LXVpL2Fzc2V0cy9pc2xhbmRzLzRiNmVmZTJhYTdmZGMzZDE1ZmQ5NTdmZjQ4OGM5NzJiZWRhYWRjZjNlMmNkOGM2MGYwNjYyYjRmZTBhMzVkYzIvZG9tLWxvYWRlci5qcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MTk2L3J1c3RpZnktdWkvYXNzZXRzL2lzbGFuZHMvNGI2ZWZlMmFhN2ZkYzNkMTVmZDk1N2ZmNDg4Yzk3MmJlZGFhZGNmM2UyY2Q4YzYwZjA2NjJiNGZlMGEzNWRjMi9hcHBfYmcud2FzbSIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MTk2L3J1c3RpZnktdWkvYXNzZXRzL2lzbGFuZHMvNGI2ZWZlMmFhN2ZkYzNkMTVmZDk1N2ZmNDg4Yzk3MmJlZGFhZGNmM2UyY2Q4YzYwZjA2NjJiNGZlMGEzNWRjMi9hcHAuanMiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDE5Ni9ydXN0aWZ5LXVpL2Fzc2V0cy9mb250cy8zOWVlM2M1ODdlMTBlODk2NjliOWZmMzI3MDMyNjFkMTBkNWY5YzRkZDVhZDE0N2I2YjVhMWM1MjAwNTkxODE3LnR0ZiIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MTk2L3J1c3RpZnktdWkvYXNzZXRzL2lzbGFuZHMvNGI2ZWZlMmFhN2ZkYzNkMTVmZDk1N2ZmNDg4Yzk3MmJlZGFhZGNmM2UyY2Q4YzYwZjA2NjJiNGZlMGEzNWRjMi9zbmlwcGV0cy9ydXN0aWZ5LXVpLTRkYjJmMTBmMTA3ODhmNGMvd2ViL2RvbS1ydW50aW1lLmpzIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQxOTYvcnVzdGlmeS11aS9hc3NldHMvZmlsZXMvZnV0dXJlLmRiYzcxM2M0ZDYuc3ZnIgogIF0sCiAgImVycm9ycyI6IFtdLAogICJleHBlY3RlZENvbnNvbGUiOiBbXSwKICAiZm9udHMiOiBbCiAgICB7CiAgICAgICJ1cmwiOiAiaHR0cDovLzEyNy4wLjAuMTo0MTk2L3J1c3RpZnktdWkvYXNzZXRzL2ZvbnRzLzM3MTkyNGU3NDgwZDNkMDE4MDdmZGMxYmQzMDQ0MmQwYTY2NTFlNmI1ZWE1NDY0ODJmNTg4M2Q2MTNjZjA0MTkudHRmIiwKICAgICAgIm1pbWUiOiAiZm9udC90dGYiLAogICAgICAic2hhMjU2IjogIjM3MTkyNGU3NDgwZDNkMDE4MDdmZGMxYmQzMDQ0MmQwYTY2NTFlNmI1ZWE1NDY0ODJmNTg4M2Q2MTNjZjA0MTkiLAogICAgICAiYnl0ZXMiOiAyMDE2NDQKICAgIH0sCiAgICB7CiAgICAgICJ1cmwiOiAiaHR0cDovLzEyNy4wLjAuMTo0MTk2L3J1c3RpZnktdWkvYXNzZXRzL2ZvbnRzLzY2MmExOTZkNThmMTE4M2JmMmQ3NzQyOGI2ZDUyODNmZTNmNDUxNjFhYjAyMWJlYTQwMzZiYzk4ZTVjYWMwMTYudHRmIiwKICAgICAgIm1pbWUiOiAiZm9udC90dGYiLAogICAgICAic2hhMjU2IjogIjY2MmExOTZkNThmMTE4M2JmMmQ3NzQyOGI2ZDUyODNmZTNmNDUxNjFhYjAyMWJlYTQwMzZiYzk4ZTVjYWMwMTYiLAogICAgICAiYnl0ZXMiOiAzMDMxNDQKICAgIH0sCiAgICB7CiAgICAgICJ1cmwiOiAiaHR0cDovLzEyNy4wLjAuMTo0MTk2L3J1c3RpZnktdWkvYXNzZXRzL2ZvbnRzL2M4ZjY2OWNlYjJjOWM2MGNjZjU1MTk4YjMwNWUwOGE5OTdmZmNhNzlhMzhjYzdlZWI1NTFlNjQzY2JlNjY1MDUudHRmIiwKICAgICAgIm1pbWUiOiAiZm9udC90dGYiLAogICAgICAic2hhMjU2IjogImM4ZjY2OWNlYjJjOWM2MGNjZjU1MTk4YjMwNWUwOGE5OTdmZmNhNzlhMzhjYzdlZWI1NTFlNjQzY2JlNjY1MDUiLAogICAgICAiYnl0ZXMiOiA2MTYxOTYKICAgIH0sCiAgICB7CiAgICAgICJ1cmwiOiAiaHR0cDovLzEyNy4wLjAuMTo0MTk2L3J1c3RpZnktdWkvYXNzZXRzL2ZvbnRzLzFkNGIyZjAwOGFjN2UwMjc4MGMxOTgwMWQ0YjA0ZGQ0NTM4ZTQwMjE1OTQzY2M4YWQzNzRkYmE4ZWMyMjc4YzAudHRmIiwKICAgICAgIm1pbWUiOiAiZm9udC90dGYiLAogICAgICAic2hhMjU2IjogIjFkNGIyZjAwOGFjN2UwMjc4MGMxOTgwMWQ0YjA0ZGQ0NTM4ZTQwMjE1OTQzY2M4YWQzNzRkYmE4ZWMyMjc4YzAiLAogICAgICAiYnl0ZXMiOiAxOTAwMjI4MAogICAgfSwKICAgIHsKICAgICAgInVybCI6ICJodHRwOi8vMTI3LjAuMC4xOjQxOTYvcnVzdGlmeS11aS9hc3NldHMvZm9udHMvMzllZTNjNTg3ZTEwZTg5NjY5YjlmZjMyNzAzMjYxZDEwZDVmOWM0ZGQ1YWQxNDdiNmI1YTFjNTIwMDU5MTgxNy50dGYiLAogICAgICAibWltZSI6ICJmb250L3R0ZiIsCiAgICAgICJzaGEyNTYiOiAiMzllZTNjNTg3ZTEwZTg5NjY5YjlmZjMyNzAzMjYxZDEwZDVmOWM0ZGQ1YWQxNDdiNmI1YTFjNTIwMDU5MTgxNyIsCiAgICAgICJieXRlcyI6IDEwNjQzODUyCiAgICB9CiAgXSwKICAiY3NwIjogW10KfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "99b869e948e1d781d528-e3519eb4227c5248fd37",
+          "file": "docs-ssg/custom.spec.ts",
+          "line": 302,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-13T19:23:20.004Z",
+    "duration": 99185.99,
+    "expected": 1,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

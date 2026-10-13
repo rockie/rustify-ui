@@ -1,0 +1,10 @@
+{
+  "binary": "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-cli/rustify-docs",
+  "sha256": "0284d0206ed01174fb2c359d4fdf2d6a76a57bf68584c3a5595efe59048cdd61",
+  "bytes": 57814512,
+  "modified_utc": "2026-10-13T16:47:14.970993+00:00",
+  "build_info": "rustify-docs 0.1.7\npanic: unwind\ngrammars: syntect-5.3.0+two-face-0.5.2+bat-0.26.1+fancy\nsource: 2d6b0a73ad887769c0bad209acabd47382659df5\n",
+  "contains_stale_message": true,
+  "optimized_profile_evidence": "cli-build-r2.log",
+  "scope": "workspace path fixture; not installed Rtest/Ctest template"
+}

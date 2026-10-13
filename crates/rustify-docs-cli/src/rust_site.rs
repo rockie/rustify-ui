@@ -67,6 +67,30 @@ pub(super) struct BuildTimings {
     pub wasm: CompileTiming,
 }
 
+#[derive(Clone, Debug, Default)]
+pub(super) struct WatchPlan {
+    pub rust_dirs: BTreeSet<PathBuf>,
+    pub build_dirs: BTreeSet<PathBuf>,
+    pub files: BTreeSet<PathBuf>,
+    pub ignored: Vec<PathBuf>,
+}
+
+pub(super) enum Progress {
+    Watch(WatchPlan),
+    Host,
+    Wasm,
+    Render {
+        reused: bool,
+    },
+    Compiled {
+        generation: Option<String>,
+        timings: BuildTimings,
+    },
+}
+
+pub(super) type Observer<'a> = &'a (dyn Fn(Progress) + Sync);
+
+#[derive(Clone)]
 pub(super) struct Prepared {
     pub manifest: Manifest,
     pub generation: String,
@@ -80,9 +104,60 @@ pub(super) struct Prepared {
     project_root: PathBuf,
     inputs: InputLayout,
     snapshot: InputSnapshot,
+    compile_snapshot: InputSnapshot,
+    rust: rustify_docs::config::RustConfig,
 }
 
 impl Prepared {
+    /// Reuse only a proven compiled pair, then bind it to this round's reads.
+    pub(super) fn reuse(&self, project: &Project) -> Result<Option<Self>, String> {
+        if project.config.rust.as_ref() != Some(&self.rust)
+            || fs::canonicalize(&project.root).ok().as_ref() != Some(&self.project_root)
+            || std::env::var_os("RUSTIFY_DOCS_CARGO")
+                .filter(|value| !value.is_empty())
+                .unwrap_or_else(|| OsString::from("cargo"))
+                != OsString::from(&self.timings.host.compiler)
+        {
+            return Ok(None);
+        }
+        let mut inputs = self.inputs.clone();
+        for path in &inputs.render_files {
+            if !inputs.compile_files.contains(path) {
+                inputs.explicit.remove(path);
+            }
+        }
+        inputs.render_files = BTreeSet::from([self.project_root.join(&project.config_file)]);
+        if let Some((path, _)) = &project.config.theme_document {
+            inputs.render_files.insert(self.project_root.join(path));
+        }
+        inputs.explicit.extend(inputs.render_files.iter().cloned());
+        let out = self.project_root.join(&project.config.out_dir);
+        if !inputs.excluded.contains(&out) {
+            inputs.excluded.push(out);
+        }
+        let snapshot = inputs.capture()?;
+        if inputs.compiled(&snapshot).digest != self.compile_snapshot.digest {
+            return Ok(None);
+        }
+        let mut reused = self.clone();
+        // This identity belongs to the compiled Rust/source pair. A content
+        // save gets a fresh receipt without changing unrelated island markup.
+        reused.inputs = inputs;
+        reused.snapshot = snapshot;
+        Ok(Some(reused))
+    }
+
+    pub(super) fn watch_plan(&self) -> WatchPlan {
+        self.inputs.watch_plan()
+    }
+
+    pub(super) fn matches_input(&self, relative: &str, bytes: &[u8]) -> bool {
+        fs::canonicalize(self.project_root.join(relative))
+            .ok()
+            .and_then(|path| self.snapshot.files.get(&path))
+            .is_some_and(|captured| captured.as_ref() == bytes)
+    }
+
     pub(super) fn render(
         &self,
         environment: SiteEnvironment,
@@ -139,10 +214,11 @@ impl Prepared {
     }
 }
 
-pub(super) fn prepare_checked(
+pub(super) fn prepare_checked_with(
     project: &Project,
     mode: BuildMode,
     preflight: impl FnOnce(&Manifest) -> Vec<Diagnostic>,
+    observer: Observer<'_>,
 ) -> (Option<Prepared>, Vec<Diagnostic>) {
     let Some(rust) = &project.config.rust else {
         return (None, Vec::new());
@@ -160,6 +236,39 @@ pub(super) fn prepare_checked(
             )
         }
     };
+    let mut initial_watch = WatchPlan {
+        rust_dirs: BTreeSet::from([project_root
+            .join(&rust.manifest)
+            .parent()
+            .unwrap_or(&project_root)
+            .to_path_buf()]),
+        files: BTreeSet::from([
+            project_root.join(&rust.manifest),
+            project_root.join(&rust.registry),
+        ]),
+        ignored: vec![
+            project_root.join(&project.config.out_dir),
+            project_root.join(".rustify-docs"),
+        ],
+        ..Default::default()
+    };
+    if let Ok(text) = fs::read_to_string(project_root.join(&rust.manifest)) {
+        if let Ok(value) = toml::from_str::<toml::Value>(&text) {
+            let manifest_root = project_root
+                .join(&rust.manifest)
+                .parent()
+                .unwrap_or(&project_root)
+                .to_path_buf();
+            declared_dependency_paths(&value, &manifest_root, &mut initial_watch.rust_dirs);
+        }
+    }
+    initial_watch.files.extend(
+        initial_watch
+            .rust_dirs
+            .iter()
+            .map(|root| root.join("Cargo.toml")),
+    );
+    observer(Progress::Watch(initial_watch));
     let manifest_path = match project_path(&project_root, &rust.manifest) {
         Ok(path) => path,
         Err(error) => {
@@ -267,9 +376,11 @@ pub(super) fn prepare_checked(
         _ => (BTreeMap::new(), BTreeMap::new()),
     };
     inputs.explicit.extend(source_files.keys().cloned());
+    inputs.compile_files.extend(source_files.keys().cloned());
+    observer(Progress::Watch(inputs.watch_plan()));
     if let Some(snapshot) = &mut snapshot {
         snapshot.files.extend(source_files);
-        snapshot.digest = inputs.digest(&snapshot.files, &snapshot.environment);
+        snapshot.digest = inputs.digest(&snapshot.files, &snapshot.environment, &snapshot.bindings);
         match fs::canonicalize(project_root.join(&project.config_file)) {
             Ok(config) => match snapshot.files.get(&config) {
                 Some(bytes) if bytes.as_ref() == project.config_text.as_bytes() => {}
@@ -294,6 +405,7 @@ pub(super) fn prepare_checked(
     // Both targets contribute diagnostics even when the independent cold
     // registry or source checks have already failed.
     let (host_profile, wasm_profile) = mode.profiles();
+    observer(Progress::Host);
     let host = cargo_build(
         &compiler,
         &manifest_path,
@@ -303,20 +415,74 @@ pub(super) fn prepare_checked(
         false,
         metadata.as_ref(),
     );
-    let wasm = cargo_build(
-        &compiler,
-        &manifest_path,
-        &target,
-        &project_root,
-        wasm_profile,
-        true,
-        metadata.as_ref(),
-    );
+    // The immutable host artifact can describe itself while Cargo builds the
+    // wasm target. Both compilers remain serial; nothing from this worker is
+    // used until both builds and the captured-input checks have succeeded.
+    let (wasm, description) = std::thread::scope(|scope| {
+        let description = match (&host.artifact, &snapshot) {
+            (Some(artifact), Some(snapshot))
+                if host.timing.success
+                    && !diagnostics
+                        .iter()
+                        .chain(&host.diagnostics)
+                        .any(|diagnostic| diagnostic.severity == Severity::Error) =>
+            {
+                Some(
+                    std::thread::Builder::new()
+                        .name("rustify-docs-describe".into())
+                        .spawn_scoped(scope, || -> Result<_, String> {
+                            let helper = immutable_helper(&cache, artifact)?;
+                            let response = invoke_helper(
+                                &helper,
+                                &project_root,
+                                &HelperRequest {
+                                    protocol_version: PROTOCOL_VERSION,
+                                    generation: snapshot.digest.clone(),
+                                    operation: HelperOperation::Describe,
+                                },
+                            )?;
+                            let HelperResult::Describe { description } = response.result else {
+                                return Err(
+                                    "helper returned render data for a describe request".into()
+                                );
+                            };
+                            Ok((helper, description))
+                        }),
+                )
+            }
+            _ => None,
+        };
+        observer(Progress::Wasm);
+        let wasm = cargo_build(
+            &compiler,
+            &manifest_path,
+            &target,
+            &project_root,
+            wasm_profile,
+            true,
+            metadata.as_ref(),
+        );
+        let description = description.map(|worker| {
+            worker
+                .map_err(|error| format!("cannot prepare docs-render on a thread: {error}"))?
+                .join()
+                .map_err(|_| "docs-render preparation thread failed".to_string())?
+        });
+        (wasm, description)
+    });
+    observer(Progress::Compiled {
+        generation: snapshot.as_ref().map(|snapshot| snapshot.digest.clone()),
+        timings: BuildTimings {
+            host: host.timing.clone(),
+            wasm: wasm.timing.clone(),
+        },
+    });
     diagnostics.extend(host.diagnostics);
     diagnostics.extend(wasm.diagnostics);
     if let Err(error) = inputs.discover_build_inputs() {
         diagnostics.push(failure("rust-inputs", error));
     }
+    observer(Progress::Watch(inputs.watch_plan()));
     if let Some(snapshot) = &snapshot {
         match inputs.capture() {
             Ok(after) if after.digest == snapshot.digest => {}
@@ -330,13 +496,9 @@ pub(super) fn prepare_checked(
     {
         return (None, diagnostics);
     }
-    let (Some(declaration), Some(metadata), Some(snapshot), Some(helper), Some(wasm_path)) = (
-        declaration,
-        metadata,
-        snapshot,
-        host.artifact,
-        wasm.artifact,
-    ) else {
+    let (Some(declaration), Some(metadata), Some(snapshot), Some(description), Some(wasm_path)) =
+        (declaration, metadata, snapshot, description, wasm.artifact)
+    else {
         diagnostics.push(failure(
             "rust-artifact",
             "Cargo succeeded without the expected docs-render executable and cdylib wasm artifacts",
@@ -345,19 +507,7 @@ pub(super) fn prepare_checked(
     };
     let generation = snapshot.digest.clone();
     let result = (|| -> Result<Prepared, String> {
-        let helper = immutable_helper(&cache, &helper)?;
-        let response = invoke_helper(
-            &helper,
-            &project_root,
-            &HelperRequest {
-                protocol_version: PROTOCOL_VERSION,
-                generation: generation.clone(),
-                operation: HelperOperation::Describe,
-            },
-        )?;
-        let HelperResult::Describe { description } = response.result else {
-            return Err("helper returned render data for a describe request".to_string());
-        };
+        let (helper, description) = description?;
         let manifest = declaration.manifest();
         let runtime = validate_description(&description, &manifest, &metadata.framework_release)?;
         let mut candidates: BTreeSet<String> =
@@ -396,6 +546,7 @@ pub(super) fn prepare_checked(
             .into_iter()
             .map(|(path, bytes)| (format!("{asset_prefix}{path}"), bytes))
             .collect();
+        let compile_snapshot = inputs.compiled(&snapshot);
         Ok(Prepared {
             manifest,
             generation,
@@ -412,6 +563,8 @@ pub(super) fn prepare_checked(
             project_root,
             inputs,
             snapshot,
+            compile_snapshot,
+            rust: rust.clone(),
         })
     })();
     match result {
@@ -640,6 +793,38 @@ fn demo_sources(
         }
     }
     (sources, resolver.captured_files())
+}
+
+/// Keep recovery watches even when metadata cannot load a missing dependency.
+fn declared_dependency_paths(value: &toml::Value, root: &Path, paths: &mut BTreeSet<PathBuf>) {
+    if let Some(table) = value.as_table() {
+        for (key, value) in table {
+            if matches!(
+                key.as_str(),
+                "dependencies" | "build-dependencies" | "dev-dependencies"
+            ) {
+                if let Some(dependencies) = value.as_table() {
+                    for dependency in dependencies.values() {
+                        if let Some(path) = dependency.get("path").and_then(toml::Value::as_str) {
+                            let mut normalized = PathBuf::new();
+                            for component in root.join(path).components() {
+                                match component {
+                                    Component::ParentDir => {
+                                        normalized.pop();
+                                    }
+                                    Component::CurDir => {}
+                                    component => normalized.push(component.as_os_str()),
+                                }
+                            }
+                            paths.insert(normalized);
+                        }
+                    }
+                }
+            } else if value.is_table() {
+                declared_dependency_paths(value, root, paths);
+            }
+        }
+    }
 }
 
 fn cargo_metadata(
@@ -1228,6 +1413,11 @@ fn validate_render_keys(
         );
     }
     for result in results {
+        for intro in &result.markdown_intros {
+            if intro.key.is_empty() || !received.insert(intro.key.as_str()) {
+                return Err("docs-render returned an empty or duplicate Markdown introduction key; discard the entire generation".to_string());
+            }
+        }
         for demo in &result.demos {
             if demo.key.is_empty()
                 || demo.seed.is_empty()
@@ -1258,6 +1448,17 @@ fn validate_description(
         || description.island_protocol != PROTOCOL_VERSION
     {
         return Err(format!("compiled framework release or runtime/island protocol does not match Cargo metadata. {PAIR_ADVICE}"));
+    }
+    let fonts: Vec<_> = crate::theme::font_catalog()
+        .iter()
+        .map(|font| rustify_docs::site::FontResource {
+            family: font.family.to_owned(),
+            resource_path: font.resource_path.to_owned(),
+            sha256: font.sha256.to_owned(),
+        })
+        .collect();
+    if description.fonts != fonts {
+        return Err(format!("compiled SDK font catalogue does not match this CLI's bundled font identities. {PAIR_ADVICE}"));
     }
     let mut resources = BTreeMap::new();
     for resource in &description.resources {
@@ -1348,6 +1549,7 @@ fn manifest_mismatch(cold: &Value, compiled: &Value, path: &str) -> Option<Strin
     }
 }
 
+#[derive(Clone)]
 struct InputLayout {
     roots: BTreeSet<PathBuf>,
     explicit: BTreeSet<PathBuf>,
@@ -1358,12 +1560,18 @@ struct InputLayout {
     package_roots: BTreeMap<String, PathBuf>,
     immutable_roots: Vec<PathBuf>,
     build_env: BTreeSet<String>,
+    render_files: BTreeSet<PathBuf>,
+    compile_files: BTreeSet<PathBuf>,
+    compile_dirs: BTreeSet<PathBuf>,
+    default_compile_dirs: BTreeSet<PathBuf>,
 }
 
+#[derive(Clone)]
 struct InputSnapshot {
     files: BTreeMap<PathBuf, Arc<[u8]>>,
     environment: BTreeMap<String, Option<OsString>>,
     digest: String,
+    bindings: BTreeMap<PathBuf, PathBuf>,
 }
 
 impl InputLayout {
@@ -1383,8 +1591,7 @@ impl InputLayout {
         if let Some(metadata) = metadata {
             roots.extend(metadata.local_roots.iter().cloned());
         }
-        let mut explicit =
-            BTreeSet::from([manifest.to_path_buf(), root.join(&project.config_file)]);
+        let mut explicit = BTreeSet::from([manifest.to_path_buf()]);
         for package in &roots {
             for parent in package.ancestors() {
                 for name in [
@@ -1405,6 +1612,12 @@ impl InputLayout {
         if let Some(rust) = &project.config.rust {
             explicit.insert(root.join(&rust.registry));
         }
+        let compile_files = explicit.clone();
+        let mut render_files = BTreeSet::from([root.join(&project.config_file)]);
+        if let Some((document, _)) = &project.config.theme_document {
+            render_files.insert(root.join(document));
+        }
+        explicit.extend(render_files.iter().cloned());
         let flags: Vec<_> = [
             "RUSTFLAGS",
             "CARGO_ENCODED_RUSTFLAGS",
@@ -1459,7 +1672,20 @@ impl InputLayout {
             profiles: (mode.profiles().0.to_string(), mode.profiles().1.to_string()),
             package_roots,
             immutable_roots,
-            build_env: BTreeSet::new(),
+            build_env: [
+                "RUSTFLAGS",
+                "CARGO_ENCODED_RUSTFLAGS",
+                "RUSTC",
+                "RUSTC_WRAPPER",
+                "RUSTC_WORKSPACE_WRAPPER",
+            ]
+            .into_iter()
+            .map(str::to_owned)
+            .collect(),
+            render_files,
+            compile_files,
+            compile_dirs: BTreeSet::new(),
+            default_compile_dirs: BTreeSet::new(),
         };
         inputs.discover_build_inputs()?;
         Ok(inputs)
@@ -1468,11 +1694,12 @@ impl InputLayout {
     fn capture(&self) -> Result<InputSnapshot, String> {
         let mut files = BTreeMap::new();
         let mut visited = BTreeSet::new();
+        let mut bindings = BTreeMap::new();
         for root in &self.roots {
-            self.read_tree(root, &mut files, &mut visited)?;
+            self.read_tree(root, &mut files, &mut visited, &mut bindings)?;
         }
         for path in &self.explicit {
-            self.read_file(path, &mut files)?;
+            self.read_file(path, &mut files, &mut bindings)?;
         }
         let environment = self
             .build_env
@@ -1480,9 +1707,10 @@ impl InputLayout {
             .map(|key| (key.clone(), std::env::var_os(key)))
             .collect();
         Ok(InputSnapshot {
-            digest: self.digest(&files, &environment),
+            digest: self.digest(&files, &environment, &bindings),
             files,
             environment,
+            bindings,
         })
     }
 
@@ -1490,6 +1718,7 @@ impl InputLayout {
         &self,
         files: &BTreeMap<PathBuf, Arc<[u8]>>,
         environment: &BTreeMap<String, Option<OsString>>,
+        bindings: &BTreeMap<PathBuf, PathBuf>,
     ) -> String {
         let mut hash = Sha256::new();
         hash.update(self.context.as_bytes());
@@ -1511,10 +1740,75 @@ impl InputLayout {
             }
             hash.update([0]);
         }
+        for (alias, real) in bindings {
+            hash.update(alias.to_string_lossy().as_bytes());
+            hash.update([0]);
+            hash.update(real.to_string_lossy().as_bytes());
+            hash.update([0]);
+        }
         format!("{:x}", hash.finalize())
     }
 
+    fn compiled(&self, snapshot: &InputSnapshot) -> InputSnapshot {
+        let explicit: BTreeSet<_> = self
+            .compile_files
+            .iter()
+            .filter_map(|path| fs::canonicalize(path).ok())
+            .collect();
+        let directories: Vec<_> = self
+            .compile_dirs
+            .union(&self.default_compile_dirs)
+            .filter_map(|path| fs::canonicalize(path).ok())
+            .collect();
+        let files: BTreeMap<_, _> = snapshot
+            .files
+            .iter()
+            .filter(|(path, _)| {
+                path.extension().is_some_and(|extension| extension == "rs")
+                    || explicit.contains(*path)
+                    || directories
+                        .iter()
+                        .any(|directory| path.starts_with(directory))
+            })
+            .map(|(path, bytes)| (path.clone(), bytes.clone()))
+            .collect();
+        let compiled_paths: BTreeSet<_> = files
+            .keys()
+            .flat_map(|path| path.ancestors().map(Path::to_path_buf))
+            .collect();
+        let bindings = snapshot
+            .bindings
+            .iter()
+            .filter(|(alias, real)| {
+                alias.extension().is_some_and(|extension| extension == "rs")
+                    || self.compile_files.contains(*alias)
+                    || compiled_paths.contains(*real)
+            })
+            .map(|(alias, real)| (alias.clone(), real.clone()))
+            .collect();
+        InputSnapshot {
+            digest: self.digest(&files, &snapshot.environment, &bindings),
+            files,
+            environment: snapshot.environment.clone(),
+            bindings,
+        }
+    }
+
+    fn watch_plan(&self) -> WatchPlan {
+        WatchPlan {
+            rust_dirs: self.roots.clone(),
+            build_dirs: self
+                .compile_dirs
+                .union(&self.default_compile_dirs)
+                .cloned()
+                .collect(),
+            files: self.compile_files.clone(),
+            ignored: self.excluded.clone(),
+        }
+    }
+
     fn discover_build_inputs(&mut self) -> Result<(), String> {
+        self.default_compile_dirs.clear();
         let profiles = [
             self.target.join(&self.profiles.0),
             self.target
@@ -1530,6 +1824,14 @@ impl InputLayout {
                         continue;
                     }
                     let text = fs::read_to_string(path).map_err(|error| error.to_string())?;
+                    for line in text.lines() {
+                        if let Some(dependency) = line.strip_prefix("# env-dep:") {
+                            let key = dependency
+                                .split_once('=')
+                                .map_or(dependency, |(key, _)| key);
+                            self.build_env.insert(key.to_string());
+                        }
+                    }
                     for dependency in dep_info_paths(&text) {
                         let path = PathBuf::from(dependency);
                         if path.is_absolute() {
@@ -1561,6 +1863,11 @@ impl InputLayout {
                     continue;
                 }
                 let text = fs::read_to_string(output).map_err(|error| error.to_string())?;
+                if !text.lines().any(|line| {
+                    line.starts_with("cargo:rerun-if-") || line.starts_with("cargo::rerun-if-")
+                }) {
+                    self.default_compile_dirs.insert(root.clone());
+                }
                 for line in text.lines() {
                     if let Some(path) = line
                         .strip_prefix("cargo:rerun-if-changed=")
@@ -1595,8 +1902,10 @@ impl InputLayout {
             return;
         }
         if path.is_dir() {
+            self.compile_dirs.insert(path.clone());
             self.roots.insert(path);
         } else {
+            self.compile_files.insert(path.clone());
             self.explicit.insert(path);
         }
     }
@@ -1606,9 +1915,11 @@ impl InputLayout {
         root: &Path,
         files: &mut BTreeMap<PathBuf, Arc<[u8]>>,
         visited: &mut BTreeSet<PathBuf>,
+        bindings: &mut BTreeMap<PathBuf, PathBuf>,
     ) -> Result<(), String> {
         let canonical = fs::canonicalize(root)
             .map_err(|error| format!("Rust input directory is unreadable: {error}"))?;
+        bindings.insert(root.to_path_buf(), canonical.clone());
         if self
             .excluded
             .iter()
@@ -1639,9 +1950,9 @@ impl InputLayout {
             }
             let kind = entry.file_type().map_err(|error| error.to_string())?;
             if kind.is_dir() || (kind.is_symlink() && path.is_dir()) {
-                self.read_tree(&path, files, visited)?;
+                self.read_tree(&path, files, visited, bindings)?;
             } else if kind.is_file() || kind.is_symlink() {
-                self.read_file(&path, files)?;
+                self.read_file(&path, files, bindings)?;
             }
         }
         Ok(())
@@ -1651,9 +1962,11 @@ impl InputLayout {
         &self,
         path: &Path,
         files: &mut BTreeMap<PathBuf, Arc<[u8]>>,
+        bindings: &mut BTreeMap<PathBuf, PathBuf>,
     ) -> Result<(), String> {
         let canonical = fs::canonicalize(path)
             .map_err(|error| format!("Rust build input is unreadable: {error}"))?;
+        bindings.insert(path.to_path_buf(), canonical.clone());
         if files.contains_key(&canonical) {
             return Ok(());
         }
@@ -1978,6 +2291,14 @@ mod tests {
             framework_release: "rustify-docs@0.1.0".to_string(),
             runtime_protocol: 1,
             island_protocol: PROTOCOL_VERSION,
+            fonts: crate::theme::font_catalog()
+                .iter()
+                .map(|font| rustify_docs::site::FontResource {
+                    family: font.family.to_owned(),
+                    resource_path: font.resource_path.to_owned(),
+                    sha256: font.sha256.to_owned(),
+                })
+                .collect(),
             resources: RUNTIME_ASSETS
                 .iter()
                 .map(|path| {
@@ -2122,6 +2443,7 @@ mod tests {
             client_only: false,
             diagnostics: Vec::new(),
             demos: Vec::new(),
+            markdown_intros: Vec::new(),
         };
         assert!(validate_render_keys(&requests, &[result("second"), result("first")]).is_ok());
         for results in [
@@ -2151,6 +2473,7 @@ mod tests {
             client_only: false,
             diagnostics: Vec::new(),
             demos: Vec::new(),
+            markdown_intros: Vec::new(),
         };
         assert!(validate_render_keys(&requests, &[result.clone()]).is_err());
         result.html = Some(String::new());
@@ -2180,6 +2503,7 @@ mod tests {
             props: None,
             client_only: false,
             diagnostics: Vec::new(),
+            markdown_intros: Vec::new(),
             demos: vec![rustify_docs::site::RenderedDemo {
                 key: "nested".to_string(),
                 seed: "nested-seed".to_string(),
@@ -2380,6 +2704,10 @@ mod tests {
             package_roots: BTreeMap::new(),
             immutable_roots: Vec::new(),
             build_env: BTreeSet::new(),
+            render_files: BTreeSet::new(),
+            compile_files: BTreeSet::new(),
+            compile_dirs: BTreeSet::new(),
+            default_compile_dirs: BTreeSet::new(),
         };
         let first = layout.capture().unwrap();
         fs::write(cache.join("artifact"), "private output").unwrap();
@@ -2396,6 +2724,48 @@ mod tests {
         );
         assert!(diagnostic.message.contains("1 file inputs"));
         assert!(!diagnostic.message.contains("private output"));
+
+        // Render-only reads change the round receipt, not the compiled pair.
+        fs::write(fixture.0.join("page.md"), "first page").unwrap();
+        fs::write(fixture.0.join("theme.json"), "first theme").unwrap();
+        let first = layout.capture().unwrap();
+        let compiled = layout.compiled(&first).digest;
+        fs::write(fixture.0.join("page.md"), "second page").unwrap();
+        fs::write(fixture.0.join("theme.json"), "second theme").unwrap();
+        let after = layout.capture().unwrap();
+        assert_ne!(after.digest, first.digest);
+        assert_eq!(layout.compiled(&after).digest, compiled);
+
+        // The same Markdown file is a compile input when Rust includes it.
+        let mut dual = layout.clone();
+        dual.compile_files.insert(fixture.0.join("page.md"));
+        let compiled = dual.compiled(&after).digest;
+        fs::write(fixture.0.join("page.md"), "third page").unwrap();
+        assert_ne!(dual.compiled(&dual.capture().unwrap()).digest, compiled);
+
+        // A build script with no rerun-if instructions keeps the whole package.
+        let mut all = layout.clone();
+        all.default_compile_dirs.insert(fixture.0.clone());
+        let compiled = all.compiled(&all.capture().unwrap()).digest;
+        fs::write(fixture.0.join("theme.json"), "third theme").unwrap();
+        assert_ne!(all.compiled(&all.capture().unwrap()).digest, compiled);
+
+        #[cfg(unix)]
+        {
+            use std::os::unix::fs::symlink;
+            fs::write(fixture.0.join("a.rs"), "first module").unwrap();
+            fs::write(fixture.0.join("b.rs"), "second module").unwrap();
+            let alias = fixture.0.join("module.rs");
+            symlink("a.rs", &alias).unwrap();
+            let before = layout.compiled(&layout.capture().unwrap()).digest;
+            fs::remove_file(&alias).unwrap();
+            symlink("b.rs", &alias).unwrap();
+            assert_ne!(
+                layout.compiled(&layout.capture().unwrap()).digest,
+                before,
+                "all real modules exist in both trees, but the compiled alias binding changed"
+            );
+        }
     }
 
     #[test]
@@ -2409,11 +2779,13 @@ mod tests {
             })
             .collect();
         let before = InputSnapshot {
+            bindings: BTreeMap::new(),
             files: files.clone(),
             environment: BTreeMap::from([("AUTHOR_FLAG".to_string(), None)]),
             digest: "old".to_string(),
         };
         let mut after = InputSnapshot {
+            bindings: BTreeMap::new(),
             files: files
                 .into_keys()
                 .map(|path| (path, Arc::<[u8]>::from(b"new".as_slice())))

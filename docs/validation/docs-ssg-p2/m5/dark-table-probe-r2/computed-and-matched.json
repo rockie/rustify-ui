@@ -1,0 +1,2761 @@
+{
+  "artifact": "target/docs-ssg/http/official/subpath/dist",
+  "url": "http://127.0.0.1:56471/rustify-ui/",
+  "preview_pid": 74110,
+  "nodes": [
+    {
+      "selector": "[data-rd-island-controls] [role=\"grid\"]",
+      "raw": {
+        "text": "ComponentGroupButtonActionsText fieldInputData tableCollectionsDialogOverlays",
+        "ancestors": [
+          {
+            "tag": "DIV",
+            "attrs": [
+              [
+                "data-name",
+                "DataTable"
+              ],
+              [
+                "data-testid",
+                ""
+              ],
+              [
+                "role",
+                "grid"
+              ],
+              [
+                "aria-label",
+                "Example components"
+              ],
+              [
+                "aria-rowcount",
+                "5"
+              ],
+              [
+                "aria-colcount",
+                "2"
+              ],
+              [
+                "class",
+                "relative flex flex-col min-h-0 border border-border rounded-md bg-background text-sm outline-none focus-visible:ring-ring/50 focus-visible:ring-[3px] h-48 w-full"
+              ]
+            ],
+            "color": "rgb(249, 250, 251)",
+            "background": "rgb(249, 250, 251)",
+            "foreground": "#1d2939",
+            "background_token": "#f9fafb",
+            "card": "#fff",
+            "card_foreground": ""
+          },
+          {
+            "tag": "DIV",
+            "attrs": [
+              [
+                "class",
+                "min-w-0 space-y-4"
+              ]
+            ],
+            "color": "rgb(249, 250, 251)",
+            "background": "rgba(0, 0, 0, 0)",
+            "foreground": "#1d2939",
+            "background_token": "#f9fafb",
+            "card": "#fff",
+            "card_foreground": ""
+          },
+          {
+            "tag": "DIV",
+            "attrs": [
+              [
+                "data-rustify-content",
+                ""
+              ]
+            ],
+            "color": "rgb(249, 250, 251)",
+            "background": "rgba(0, 0, 0, 0)",
+            "foreground": "#1d2939",
+            "background_token": "#f9fafb",
+            "card": "#fff",
+            "card_foreground": ""
+          },
+          {
+            "tag": "DIV",
+            "attrs": [
+              [
+                "data-rustify-scope",
+                "surface-0187f8615d-page-DataTable-demo-0"
+              ],
+              [
+                "data-rustify-seed",
+                "surface-0187f8615d-page-DataTable-demo-0"
+              ],
+              [
+                "data-rustify-ssr",
+                "1"
+              ],
+              [
+                "data-rustify-base",
+                "/rustify-ui/"
+              ],
+              [
+                "tabindex",
+                "-1"
+              ],
+              [
+                "data-rustify-mounted",
+                "surface-0187f8615d-page-DataTable-demo-0"
+              ],
+              [
+                "data-rustify-geometry-scope",
+                "rustify-geometry-1"
+              ]
+            ],
+            "color": "rgb(249, 250, 251)",
+            "background": "rgba(0, 0, 0, 0)",
+            "foreground": "#1d2939",
+            "background_token": "#f9fafb",
+            "card": "#fff",
+            "card_foreground": ""
+          },
+          {
+            "tag": "FIELDSET",
+            "attrs": [
+              [
+                "class",
+                "rd-demo-canvas"
+              ],
+              [
+                "data-rd-island-controls",
+                ""
+              ],
+              [
+                "aria-labelledby",
+                "rd-demo-label-surface-0187f8615d-page-DataTable-demo-0"
+              ],
+              [
+                "aria-busy",
+                "false"
+              ]
+            ],
+            "color": "rgb(249, 250, 251)",
+            "background": "rgba(0, 0, 0, 0)",
+            "foreground": "#f9fafb",
+            "background_token": "#0c111d",
+            "card": "#101828",
+            "card_foreground": ""
+          },
+          {
+            "tag": "SECTION",
+            "attrs": [
+              [
+                "class",
+                "rd-demo"
+              ],
+              [
+                "data-rustify-island",
+                "surface-0187f8615d-page-DataTable-demo-0"
+              ],
+              [
+                "data-rustify-island-metadata",
+                "{\"protocol_version\":1,\"key\":\"surface-0187f8615d-page-DataTable-demo-0\",\"seed\":\"surface-0187f8615d-page-DataTable-demo-0\",\"target\":{\"type\":\"demo\",\"name\":\"DataTableDemo\"},\"environment\":{\"base\":\"/rustify-ui/\",\"lang\":\"en\",\"theme\":null}}"
+              ],
+              [
+                "data-rd-island-state",
+                "ready"
+              ]
+            ],
+            "color": "rgb(249, 250, 251)",
+            "background": "rgba(0, 0, 0, 0)",
+            "foreground": "#f9fafb",
+            "background_token": "#0c111d",
+            "card": "#101828",
+            "card_foreground": ""
+          },
+          {
+            "tag": "DIV",
+            "attrs": [
+              [
+                "data-component-category",
+                "data table"
+              ]
+            ],
+            "color": "rgb(249, 250, 251)",
+            "background": "rgba(0, 0, 0, 0)",
+            "foreground": "#f9fafb",
+            "background_token": "#0c111d",
+            "card": "#101828",
+            "card_foreground": ""
+          },
+          {
+            "tag": "ARTICLE",
+            "attrs": [
+              [
+                "class",
+                "rd-prose"
+              ]
+            ],
+            "color": "rgb(249, 250, 251)",
+            "background": "rgba(0, 0, 0, 0)",
+            "foreground": "#f9fafb",
+            "background_token": "#0c111d",
+            "card": "#101828",
+            "card_foreground": ""
+          },
+          {
+            "tag": "DIV",
+            "attrs": [
+              [
+                "class",
+                "rd-column"
+              ]
+            ],
+            "color": "rgb(249, 250, 251)",
+            "background": "rgba(0, 0, 0, 0)",
+            "foreground": "#f9fafb",
+            "background_token": "#0c111d",
+            "card": "#101828",
+            "card_foreground": ""
+          },
+          {
+            "tag": "MAIN",
+            "attrs": [
+              [
+                "id",
+                "content"
+              ],
+              [
+                "class",
+                "rd-main min-w-0 py-8 md:py-12"
+              ]
+            ],
+            "color": "rgb(249, 250, 251)",
+            "background": "rgba(0, 0, 0, 0)",
+            "foreground": "#f9fafb",
+            "background_token": "#0c111d",
+            "card": "#101828",
+            "card_foreground": ""
+          },
+          {
+            "tag": "DIV",
+            "attrs": [
+              [
+                "class",
+                "rd-layout mx-auto grid max-w-[76rem] gap-x-10 px-4 md:px-6"
+              ]
+            ],
+            "color": "rgb(249, 250, 251)",
+            "background": "rgba(0, 0, 0, 0)",
+            "foreground": "#f9fafb",
+            "background_token": "#0c111d",
+            "card": "#101828",
+            "card_foreground": ""
+          },
+          {
+            "tag": "BODY",
+            "attrs": [
+              [
+                "class",
+                "min-h-screen bg-background text-foreground antialiased"
+              ]
+            ],
+            "color": "rgb(249, 250, 251)",
+            "background": "rgb(12, 17, 29)",
+            "foreground": "#f9fafb",
+            "background_token": "#0c111d",
+            "card": "#101828",
+            "card_foreground": ""
+          },
+          {
+            "tag": "HTML",
+            "attrs": [
+              [
+                "lang",
+                "en"
+              ],
+              [
+                "data-rustify-scope",
+                ""
+              ],
+              [
+                "data-theme",
+                "dark"
+              ],
+              [
+                "data-rd-base",
+                "/rustify-ui/"
+              ]
+            ],
+            "color": "rgb(255, 255, 255)",
+            "background": "rgba(0, 0, 0, 0)",
+            "foreground": "#f9fafb",
+            "background_token": "#0c111d",
+            "card": "#101828",
+            "card_foreground": ""
+          }
+        ]
+      },
+      "matched": [
+        {
+          "selector": ".bg-background",
+          "origin": "regular",
+          "styleSheetId": "style-sheet-74115-1",
+          "layers": [
+            {
+              "text": "utilities",
+              "range": {
+                "startLine": 0,
+                "startColumn": 25361,
+                "endLine": 0,
+                "endColumn": 25370
+              },
+              "styleSheetId": "style-sheet-74115-1"
+            }
+          ],
+          "matching": [
+            {
+              "name": "background-color",
+              "value": "var(--background)",
+              "implicit": false,
+              "text": "background-color:var(--background)",
+              "disabled": false,
+              "range": {
+                "startLine": 0,
+                "startColumn": 33906,
+                "endLine": 0,
+                "endColumn": 33940
+              }
+            },
+            {
+              "name": "background-color",
+              "value": "var(--background)"
+            }
+          ]
+        }
+      ],
+      "inherited": [
+        {
+          "rules": [
+            {
+              "selector": "[data-rustify-scope]",
+              "origin": "regular",
+              "styleSheetId": "style-sheet-74115-1",
+              "layers": [],
+              "matching": [
+                {
+                  "name": "--background",
+                  "value": "#f9fafb",
+                  "implicit": false,
+                  "text": "--background:#f9fafb;",
+                  "disabled": false,
+                  "range": {
+                    "startLine": 0,
+                    "startColumn": 60153,
+                    "endLine": 0,
+                    "endColumn": 60174
+                  }
+                },
+                {
+                  "name": "--foreground",
+                  "value": "#1d2939",
+                  "implicit": false,
+                  "text": "--foreground:#1d2939;",
+                  "disabled": false,
+                  "range": {
+                    "startLine": 0,
+                    "startColumn": 60174,
+                    "endLine": 0,
+                    "endColumn": 60195
+                  }
+                },
+                {
+                  "name": "--card",
+                  "value": "#fff",
+                  "implicit": false,
+                  "text": "--card:#fff;",
+                  "disabled": false,
+                  "range": {
+                    "startLine": 0,
+                    "startColumn": 60427,
+                    "endLine": 0,
+                    "endColumn": 60439
+                  }
+                },
+                {
+                  "name": "--background",
+                  "value": "#f9fafb"
+                },
+                {
+                  "name": "--foreground",
+                  "value": "#1d2939"
+                },
+                {
+                  "name": "--card",
+                  "value": "#fff"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "rules": [
+            {
+              "selector": ".bg-background",
+              "origin": "regular",
+              "styleSheetId": "style-sheet-74115-1",
+              "layers": [
+                {
+                  "text": "utilities",
+                  "range": {
+                    "startLine": 0,
+                    "startColumn": 25361,
+                    "endLine": 0,
+                    "endColumn": 25370
+                  },
+                  "styleSheetId": "style-sheet-74115-1"
+                }
+              ],
+              "matching": [
+                {
+                  "name": "background-color",
+                  "value": "var(--background)",
+                  "implicit": false,
+                  "text": "background-color:var(--background)",
+                  "disabled": false,
+                  "range": {
+                    "startLine": 0,
+                    "startColumn": 33906,
+                    "endLine": 0,
+                    "endColumn": 33940
+                  }
+                },
+                {
+                  "name": "background-color",
+                  "value": "var(--background)"
+                }
+              ]
+            },
+            {
+              "selector": ".text-foreground",
+              "origin": "regular",
+              "styleSheetId": "style-sheet-74115-1",
+              "layers": [
+                {
+                  "text": "utilities",
+                  "range": {
+                    "startLine": 0,
+                    "startColumn": 25361,
+                    "endLine": 0,
+                    "endColumn": 25370
+                  },
+                  "styleSheetId": "style-sheet-74115-1"
+                }
+              ],
+              "matching": [
+                {
+                  "name": "color",
+                  "value": "var(--foreground)",
+                  "implicit": false,
+                  "text": "color:var(--foreground)",
+                  "disabled": false,
+                  "range": {
+                    "startLine": 0,
+                    "startColumn": 36852,
+                    "endLine": 0,
+                    "endColumn": 36875
+                  }
+                },
+                {
+                  "name": "color",
+                  "value": "var(--foreground)"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "rules": [
+            {
+              "selector": "[data-rustify-scope]",
+              "origin": "regular",
+              "styleSheetId": "style-sheet-74115-1",
+              "layers": [],
+              "matching": [
+                {
+                  "name": "--background",
+                  "value": "#f9fafb",
+                  "implicit": false,
+                  "text": "--background:#f9fafb;",
+                  "disabled": false,
+                  "range": {
+                    "startLine": 0,
+                    "startColumn": 60153,
+                    "endLine": 0,
+                    "endColumn": 60174
+                  }
+                },
+                {
+                  "name": "--foreground",
+                  "value": "#1d2939",
+                  "implicit": false,
+                  "text": "--foreground:#1d2939;",
+                  "disabled": false,
+                  "range": {
+                    "startLine": 0,
+                    "startColumn": 60174,
+                    "endLine": 0,
+                    "endColumn": 60195
+                  }
+                },
+                {
+                  "name": "--card",
+                  "value": "#fff",
+                  "implicit": false,
+                  "text": "--card:#fff;",
+                  "disabled": false,
+                  "range": {
+                    "startLine": 0,
+                    "startColumn": 60427,
+                    "endLine": 0,
+                    "endColumn": 60439
+                  }
+                },
+                {
+                  "name": "--background",
+                  "value": "#f9fafb"
+                },
+                {
+                  "name": "--foreground",
+                  "value": "#1d2939"
+                },
+                {
+                  "name": "--card",
+                  "value": "#fff"
+                }
+              ]
+            },
+            {
+              "selector": ":root[data-rustify-scope]",
+              "origin": "regular",
+              "styleSheetId": "style-sheet-74115-1",
+              "layers": [],
+              "matching": [
+                {
+                  "name": "--background",
+                  "value": "#f9fafb",
+                  "implicit": false,
+                  "text": "--background:#f9fafb;",
+                  "disabled": false,
+                  "range": {
+                    "startLine": 0,
+                    "startColumn": 64745,
+                    "endLine": 0,
+                    "endColumn": 64766
+                  }
+                },
+                {
+                  "name": "--foreground",
+                  "value": "#1d2939",
+                  "implicit": false,
+                  "text": "--foreground:#1d2939;",
+                  "disabled": false,
+                  "range": {
+                    "startLine": 0,
+                    "startColumn": 64766,
+                    "endLine": 0,
+                    "endColumn": 64787
+                  }
+                },
+                {
+                  "name": "--card",
+                  "value": "#fff",
+                  "implicit": false,
+                  "text": "--card:#fff;",
+                  "disabled": false,
+                  "range": {
+                    "startLine": 0,
+                    "startColumn": 65019,
+                    "endLine": 0,
+                    "endColumn": 65031
+                  }
+                },
+                {
+                  "name": "--background",
+                  "value": "#f9fafb"
+                },
+                {
+                  "name": "--foreground",
+                  "value": "#1d2939"
+                },
+                {
+                  "name": "--card",
+                  "value": "#fff"
+                }
+              ]
+            },
+            {
+              "selector": ":root[data-rustify-scope][data-theme=\"dark\"]",
+              "origin": "regular",
+              "styleSheetId": "style-sheet-74115-1",
+              "layers": [],
+              "matching": [
+                {
+                  "name": "--background",
+                  "value": "#0c111d",
+                  "implicit": false,
+                  "text": "--background:#0c111d;",
+                  "disabled": false,
+                  "range": {
+                    "startLine": 0,
+                    "startColumn": 65815,
+                    "endLine": 0,
+                    "endColumn": 65836
+                  }
+                },
+                {
+                  "name": "--foreground",
+                  "value": "#f9fafb",
+                  "implicit": false,
+                  "text": "--foreground:#f9fafb;",
+                  "disabled": false,
+                  "range": {
+                    "startLine": 0,
+                    "startColumn": 65836,
+                    "endLine": 0,
+                    "endColumn": 65857
+                  }
+                },
+                {
+                  "name": "--card",
+                  "value": "#101828",
+                  "implicit": false,
+                  "text": "--card:#101828;",
+                  "disabled": false,
+                  "range": {
+                    "startLine": 0,
+                    "startColumn": 66095,
+                    "endLine": 0,
+                    "endColumn": 66110
+                  }
+                },
+                {
+                  "name": "--background",
+                  "value": "#0c111d"
+                },
+                {
+                  "name": "--foreground",
+                  "value": "#f9fafb"
+                },
+                {
+                  "name": "--card",
+                  "value": "#101828"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "selector": "[data-rd-island-controls] [role=\"gridcell\"]",
+      "raw": {
+        "text": "Button",
+        "ancestors": [
+          {
+            "tag": "DIV",
+            "attrs": [
+              [
+                "role",
+                "gridcell"
+              ],
+              [
+                "aria-colindex",
+                "1"
+              ],
+              [
+                "tabindex",
+                "0"
+              ],
+              [
+                "class",
+                "absolute shrink-0 truncate px-2 outline-none focus-visible:ring-ring/50 focus-visible:ring-2 focus-visible:ring-inset rui-surface-0187f8615d-page-DataTable-demo-0-geometry-2 rui-surface-0187f8615d-page-DataTable-demo-0-table-geometry-5-row-0-cell-0"
+              ]
+            ],
+            "color": "rgb(249, 250, 251)",
+            "background": "rgba(0, 0, 0, 0)",
+            "foreground": "#1d2939",
+            "background_token": "#f9fafb",
+            "card": "#fff",
+            "card_foreground": ""
+          },
+          {
+            "tag": "DIV",
+            "attrs": [
+              [
+                "role",
+                "row"
+              ],
+              [
+                "data-testid",
+                "table-row-0"
+              ],
+              [
+                "data-row-id",
+                "0"
+              ],
+              [
+                "aria-rowindex",
+                "2"
+              ],
+              [
+                "aria-selected",
+                "false"
+              ],
+              [
+                "class",
+                "absolute left-0 flex w-full items-center border-b border-border/50 aria-selected:bg-accent rui-surface-0187f8615d-page-DataTable-demo-0-geometry-3 rui-surface-0187f8615d-page-DataTable-demo-0-table-geometry-5-row-0"
+              ]
+            ],
+            "color": "rgb(249, 250, 251)",
+            "background": "rgba(0, 0, 0, 0)",
+            "foreground": "#1d2939",
+            "background_token": "#f9fafb",
+            "card": "#fff",
+            "card_foreground": ""
+          },
+          {
+            "tag": "DIV",
+            "attrs": [
+              [
+                "role",
+                "rowgroup"
+              ]
+            ],
+            "color": "rgb(249, 250, 251)",
+            "background": "rgba(0, 0, 0, 0)",
+            "foreground": "#1d2939",
+            "background_token": "#f9fafb",
+            "card": "#fff",
+            "card_foreground": ""
+          },
+          {
+            "tag": "DIV",
+            "attrs": [
+              [
+                "role",
+                "presentation"
+              ],
+              [
+                "class",
+                "relative rui-surface-0187f8615d-page-DataTable-demo-0-geometry-4"
+              ]
+            ],
+            "color": "rgb(249, 250, 251)",
+            "background": "rgba(0, 0, 0, 0)",
+            "foreground": "#1d2939",
+            "background_token": "#f9fafb",
+            "card": "#fff",
+            "card_foreground": ""
+          },
+          {
+            "tag": "DIV",
+            "attrs": [
+              [
+                "data-testid",
+                "table-scroller"
+              ],
+              [
+                "role",
+                "presentation"
+              ],
+              [
+                "class",
+                "relative flex-1 min-h-0 overflow-auto"
+              ]
+            ],
+            "color": "rgb(249, 250, 251)",
+            "background": "rgba(0, 0, 0, 0)",
+            "foreground": "#1d2939",
+            "background_token": "#f9fafb",
+            "card": "#fff",
+            "card_foreground": ""
+          },
+          {
+            "tag": "DIV",
+            "attrs": [
+              [
+                "data-name",
+                "DataTable"
+              ],
+              [
+                "data-testid",
+                ""
+              ],
+              [
+                "role",
+                "grid"
+              ],
+              [
+                "aria-label",
+                "Example components"
+              ],
+              [
+                "aria-rowcount",
+                "5"
+              ],
+              [
+                "aria-colcount",
+                "2"
+              ],
+              [
+                "class",
+                "relative flex flex-col min-h-0 border border-border rounded-md bg-background text-sm outline-none focus-visible:ring-ring/50 focus-visible:ring-[3px] h-48 w-full"
+              ]
+            ],
+            "color": "rgb(249, 250, 251)",
+            "background": "rgb(249, 250, 251)",
+            "foreground": "#1d2939",
+            "background_token": "#f9fafb",
+            "card": "#fff",
+            "card_foreground": ""
+          },
+          {
+            "tag": "DIV",
+            "attrs": [
+              [
+                "class",
+                "min-w-0 space-y-4"
+              ]
+            ],
+            "color": "rgb(249, 250, 251)",
+            "background": "rgba(0, 0, 0, 0)",
+            "foreground": "#1d2939",
+            "background_token": "#f9fafb",
+            "card": "#fff",
+            "card_foreground": ""
+          },
+          {
+            "tag": "DIV",
+            "attrs": [
+              [
+                "data-rustify-content",
+                ""
+              ]
+            ],
+            "color": "rgb(249, 250, 251)",
+            "background": "rgba(0, 0, 0, 0)",
+            "foreground": "#1d2939",
+            "background_token": "#f9fafb",
+            "card": "#fff",
+            "card_foreground": ""
+          },
+          {
+            "tag": "DIV",
+            "attrs": [
+              [
+                "data-rustify-scope",
+                "surface-0187f8615d-page-DataTable-demo-0"
+              ],
+              [
+                "data-rustify-seed",
+                "surface-0187f8615d-page-DataTable-demo-0"
+              ],
+              [
+                "data-rustify-ssr",
+                "1"
+              ],
+              [
+                "data-rustify-base",
+                "/rustify-ui/"
+              ],
+              [
+                "tabindex",
+                "-1"
+              ],
+              [
+                "data-rustify-mounted",
+                "surface-0187f8615d-page-DataTable-demo-0"
+              ],
+              [
+                "data-rustify-geometry-scope",
+                "rustify-geometry-1"
+              ]
+            ],
+            "color": "rgb(249, 250, 251)",
+            "background": "rgba(0, 0, 0, 0)",
+            "foreground": "#1d2939",
+            "background_token": "#f9fafb",
+            "card": "#fff",
+            "card_foreground": ""
+          },
+          {
+            "tag": "FIELDSET",
+            "attrs": [
+              [
+                "class",
+                "rd-demo-canvas"
+              ],
+              [
+                "data-rd-island-controls",
+                ""
+              ],
+              [
+                "aria-labelledby",
+                "rd-demo-label-surface-0187f8615d-page-DataTable-demo-0"
+              ],
+              [
+                "aria-busy",
+                "false"
+              ]
+            ],
+            "color": "rgb(249, 250, 251)",
+            "background": "rgba(0, 0, 0, 0)",
+            "foreground": "#f9fafb",
+            "background_token": "#0c111d",
+            "card": "#101828",
+            "card_foreground": ""
+          },
+          {
+            "tag": "SECTION",
+            "attrs": [
+              [
+                "class",
+                "rd-demo"
+              ],
+              [
+                "data-rustify-island",
+                "surface-0187f8615d-page-DataTable-demo-0"
+              ],
+              [
+                "data-rustify-island-metadata",
+                "{\"protocol_version\":1,\"key\":\"surface-0187f8615d-page-DataTable-demo-0\",\"seed\":\"surface-0187f8615d-page-DataTable-demo-0\",\"target\":{\"type\":\"demo\",\"name\":\"DataTableDemo\"},\"environment\":{\"base\":\"/rustify-ui/\",\"lang\":\"en\",\"theme\":null}}"
+              ],
+              [
+                "data-rd-island-state",
+                "ready"
+              ]
+            ],
+            "color": "rgb(249, 250, 251)",
+            "background": "rgba(0, 0, 0, 0)",
+            "foreground": "#f9fafb",
+            "background_token": "#0c111d",
+            "card": "#101828",
+            "card_foreground": ""
+          },
+          {
+            "tag": "DIV",
+            "attrs": [
+              [
+                "data-component-category",
+                "data table"
+              ]
+            ],
+            "color": "rgb(249, 250, 251)",
+            "background": "rgba(0, 0, 0, 0)",
+            "foreground": "#f9fafb",
+            "background_token": "#0c111d",
+            "card": "#101828",
+            "card_foreground": ""
+          },
+          {
+            "tag": "ARTICLE",
+            "attrs": [
+              [
+                "class",
+                "rd-prose"
+              ]
+            ],
+            "color": "rgb(249, 250, 251)",
+            "background": "rgba(0, 0, 0, 0)",
+            "foreground": "#f9fafb",
+            "background_token": "#0c111d",
+            "card": "#101828",
+            "card_foreground": ""
+          },
+          {
+            "tag": "DIV",
+            "attrs": [
+              [
+                "class",
+                "rd-column"
+              ]
+            ],
+            "color": "rgb(249, 250, 251)",
+            "background": "rgba(0, 0, 0, 0)",
+            "foreground": "#f9fafb",
+            "background_token": "#0c111d",
+            "card": "#101828",
+            "card_foreground": ""
+          },
+          {
+            "tag": "MAIN",
+            "attrs": [
+              [
+                "id",
+                "content"
+              ],
+              [
+                "class",
+                "rd-main min-w-0 py-8 md:py-12"
+              ]
+            ],
+            "color": "rgb(249, 250, 251)",
+            "background": "rgba(0, 0, 0, 0)",
+            "foreground": "#f9fafb",
+            "background_token": "#0c111d",
+            "card": "#101828",
+            "card_foreground": ""
+          },
+          {
+            "tag": "DIV",
+            "attrs": [
+              [
+                "class",
+                "rd-layout mx-auto grid max-w-[76rem] gap-x-10 px-4 md:px-6"
+              ]
+            ],
+            "color": "rgb(249, 250, 251)",
+            "background": "rgba(0, 0, 0, 0)",
+            "foreground": "#f9fafb",
+            "background_token": "#0c111d",
+            "card": "#101828",
+            "card_foreground": ""
+          },
+          {
+            "tag": "BODY",
+            "attrs": [
+              [
+                "class",
+                "min-h-screen bg-background text-foreground antialiased"
+              ]
+            ],
+            "color": "rgb(249, 250, 251)",
+            "background": "rgb(12, 17, 29)",
+            "foreground": "#f9fafb",
+            "background_token": "#0c111d",
+            "card": "#101828",
+            "card_foreground": ""
+          },
+          {
+            "tag": "HTML",
+            "attrs": [
+              [
+                "lang",
+                "en"
+              ],
+              [
+                "data-rustify-scope",
+                ""
+              ],
+              [
+                "data-theme",
+                "dark"
+              ],
+              [
+                "data-rd-base",
+                "/rustify-ui/"
+              ]
+            ],
+            "color": "rgb(255, 255, 255)",
+            "background": "rgba(0, 0, 0, 0)",
+            "foreground": "#f9fafb",
+            "background_token": "#0c111d",
+            "card": "#101828",
+            "card_foreground": ""
+          }
+        ]
+      },
+      "matched": [],
+      "inherited": [
+        {
+          "rules": [
+            {
+              "selector": ".bg-background",
+              "origin": "regular",
+              "styleSheetId": "style-sheet-74115-1",
+              "layers": [
+                {
+                  "text": "utilities",
+                  "range": {
+                    "startLine": 0,
+                    "startColumn": 25361,
+                    "endLine": 0,
+                    "endColumn": 25370
+                  },
+                  "styleSheetId": "style-sheet-74115-1"
+                }
+              ],
+              "matching": [
+                {
+                  "name": "background-color",
+                  "value": "var(--background)",
+                  "implicit": false,
+                  "text": "background-color:var(--background)",
+                  "disabled": false,
+                  "range": {
+                    "startLine": 0,
+                    "startColumn": 33906,
+                    "endLine": 0,
+                    "endColumn": 33940
+                  }
+                },
+                {
+                  "name": "background-color",
+                  "value": "var(--background)"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "rules": [
+            {
+              "selector": "[data-rustify-scope]",
+              "origin": "regular",
+              "styleSheetId": "style-sheet-74115-1",
+              "layers": [],
+              "matching": [
+                {
+                  "name": "--background",
+                  "value": "#f9fafb",
+                  "implicit": false,
+                  "text": "--background:#f9fafb;",
+                  "disabled": false,
+                  "range": {
+                    "startLine": 0,
+                    "startColumn": 60153,
+                    "endLine": 0,
+                    "endColumn": 60174
+                  }
+                },
+                {
+                  "name": "--foreground",
+                  "value": "#1d2939",
+                  "implicit": false,
+                  "text": "--foreground:#1d2939;",
+                  "disabled": false,
+                  "range": {
+                    "startLine": 0,
+                    "startColumn": 60174,
+                    "endLine": 0,
+                    "endColumn": 60195
+                  }
+                },
+                {
+                  "name": "--card",
+                  "value": "#fff",
+                  "implicit": false,
+                  "text": "--card:#fff;",
+                  "disabled": false,
+                  "range": {
+                    "startLine": 0,
+                    "startColumn": 60427,
+                    "endLine": 0,
+                    "endColumn": 60439
+                  }
+                },
+                {
+                  "name": "--background",
+                  "value": "#f9fafb"
+                },
+                {
+                  "name": "--foreground",
+                  "value": "#1d2939"
+                },
+                {
+                  "name": "--card",
+                  "value": "#fff"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "rules": [
+            {
+              "selector": ".bg-background",
+              "origin": "regular",
+              "styleSheetId": "style-sheet-74115-1",
+              "layers": [
+                {
+                  "text": "utilities",
+                  "range": {
+                    "startLine": 0,
+                    "startColumn": 25361,
+                    "endLine": 0,
+                    "endColumn": 25370
+                  },
+                  "styleSheetId": "style-sheet-74115-1"
+                }
+              ],
+              "matching": [
+                {
+                  "name": "background-color",
+                  "value": "var(--background)",
+                  "implicit": false,
+                  "text": "background-color:var(--background)",
+                  "disabled": false,
+                  "range": {
+                    "startLine": 0,
+                    "startColumn": 33906,
+                    "endLine": 0,
+                    "endColumn": 33940
+                  }
+                },
+                {
+                  "name": "background-color",
+                  "value": "var(--background)"
+                }
+              ]
+            },
+            {
+              "selector": ".text-foreground",
+              "origin": "regular",
+              "styleSheetId": "style-sheet-74115-1",
+              "layers": [
+                {
+                  "text": "utilities",
+                  "range": {
+                    "startLine": 0,
+                    "startColumn": 25361,
+                    "endLine": 0,
+                    "endColumn": 25370
+                  },
+                  "styleSheetId": "style-sheet-74115-1"
+                }
+              ],
+              "matching": [
+                {
+                  "name": "color",
+                  "value": "var(--foreground)",
+                  "implicit": false,
+                  "text": "color:var(--foreground)",
+                  "disabled": false,
+                  "range": {
+                    "startLine": 0,
+                    "startColumn": 36852,
+                    "endLine": 0,
+                    "endColumn": 36875
+                  }
+                },
+                {
+                  "name": "color",
+                  "value": "var(--foreground)"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "rules": [
+            {
+              "selector": "[data-rustify-scope]",
+              "origin": "regular",
+              "styleSheetId": "style-sheet-74115-1",
+              "layers": [],
+              "matching": [
+                {
+                  "name": "--background",
+                  "value": "#f9fafb",
+                  "implicit": false,
+                  "text": "--background:#f9fafb;",
+                  "disabled": false,
+                  "range": {
+                    "startLine": 0,
+                    "startColumn": 60153,
+                    "endLine": 0,
+                    "endColumn": 60174
+                  }
+                },
+                {
+                  "name": "--foreground",
+                  "value": "#1d2939",
+                  "implicit": false,
+                  "text": "--foreground:#1d2939;",
+                  "disabled": false,
+                  "range": {
+                    "startLine": 0,
+                    "startColumn": 60174,
+                    "endLine": 0,
+                    "endColumn": 60195
+                  }
+                },
+                {
+                  "name": "--card",
+                  "value": "#fff",
+                  "implicit": false,
+                  "text": "--card:#fff;",
+                  "disabled": false,
+                  "range": {
+                    "startLine": 0,
+                    "startColumn": 60427,
+                    "endLine": 0,
+                    "endColumn": 60439
+                  }
+                },
+                {
+                  "name": "--background",
+                  "value": "#f9fafb"
+                },
+                {
+                  "name": "--foreground",
+                  "value": "#1d2939"
+                },
+                {
+                  "name": "--card",
+                  "value": "#fff"
+                }
+              ]
+            },
+            {
+              "selector": ":root[data-rustify-scope]",
+              "origin": "regular",
+              "styleSheetId": "style-sheet-74115-1",
+              "layers": [],
+              "matching": [
+                {
+                  "name": "--background",
+                  "value": "#f9fafb",
+                  "implicit": false,
+                  "text": "--background:#f9fafb;",
+                  "disabled": false,
+                  "range": {
+                    "startLine": 0,
+                    "startColumn": 64745,
+                    "endLine": 0,
+                    "endColumn": 64766
+                  }
+                },
+                {
+                  "name": "--foreground",
+                  "value": "#1d2939",
+                  "implicit": false,
+                  "text": "--foreground:#1d2939;",
+                  "disabled": false,
+                  "range": {
+                    "startLine": 0,
+                    "startColumn": 64766,
+                    "endLine": 0,
+                    "endColumn": 64787
+                  }
+                },
+                {
+                  "name": "--card",
+                  "value": "#fff",
+                  "implicit": false,
+                  "text": "--card:#fff;",
+                  "disabled": false,
+                  "range": {
+                    "startLine": 0,
+                    "startColumn": 65019,
+                    "endLine": 0,
+                    "endColumn": 65031
+                  }
+                },
+                {
+                  "name": "--background",
+                  "value": "#f9fafb"
+                },
+                {
+                  "name": "--foreground",
+                  "value": "#1d2939"
+                },
+                {
+                  "name": "--card",
+                  "value": "#fff"
+                }
+              ]
+            },
+            {
+              "selector": ":root[data-rustify-scope][data-theme=\"dark\"]",
+              "origin": "regular",
+              "styleSheetId": "style-sheet-74115-1",
+              "layers": [],
+              "matching": [
+                {
+                  "name": "--background",
+                  "value": "#0c111d",
+                  "implicit": false,
+                  "text": "--background:#0c111d;",
+                  "disabled": false,
+                  "range": {
+                    "startLine": 0,
+                    "startColumn": 65815,
+                    "endLine": 0,
+                    "endColumn": 65836
+                  }
+                },
+                {
+                  "name": "--foreground",
+                  "value": "#f9fafb",
+                  "implicit": false,
+                  "text": "--foreground:#f9fafb;",
+                  "disabled": false,
+                  "range": {
+                    "startLine": 0,
+                    "startColumn": 65836,
+                    "endLine": 0,
+                    "endColumn": 65857
+                  }
+                },
+                {
+                  "name": "--card",
+                  "value": "#101828",
+                  "implicit": false,
+                  "text": "--card:#101828;",
+                  "disabled": false,
+                  "range": {
+                    "startLine": 0,
+                    "startColumn": 66095,
+                    "endLine": 0,
+                    "endColumn": 66110
+                  }
+                },
+                {
+                  "name": "--background",
+                  "value": "#0c111d"
+                },
+                {
+                  "name": "--foreground",
+                  "value": "#f9fafb"
+                },
+                {
+                  "name": "--card",
+                  "value": "#101828"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "selector": ".rd-prose th",
+      "raw": {
+        "text": "Capability",
+        "ancestors": [
+          {
+            "tag": "TH",
+            "attrs": [
+              [
+                "scope",
+                "col"
+              ]
+            ],
+            "color": "rgb(249, 250, 251)",
+            "background": "rgb(22, 27, 38)",
+            "foreground": "#f9fafb",
+            "background_token": "#0c111d",
+            "card": "#101828",
+            "card_foreground": ""
+          },
+          {
+            "tag": "TR",
+            "attrs": [],
+            "color": "rgb(249, 250, 251)",
+            "background": "rgba(0, 0, 0, 0)",
+            "foreground": "#f9fafb",
+            "background_token": "#0c111d",
+            "card": "#101828",
+            "card_foreground": ""
+          },
+          {
+            "tag": "THEAD",
+            "attrs": [],
+            "color": "rgb(249, 250, 251)",
+            "background": "rgba(0, 0, 0, 0)",
+            "foreground": "#f9fafb",
+            "background_token": "#0c111d",
+            "card": "#101828",
+            "card_foreground": ""
+          },
+          {
+            "tag": "TABLE",
+            "attrs": [],
+            "color": "rgb(249, 250, 251)",
+            "background": "rgba(0, 0, 0, 0)",
+            "foreground": "#f9fafb",
+            "background_token": "#0c111d",
+            "card": "#101828",
+            "card_foreground": ""
+          },
+          {
+            "tag": "DIV",
+            "attrs": [
+              [
+                "role",
+                "region"
+              ],
+              [
+                "aria-label",
+                "Component capabilities"
+              ],
+              [
+                "tabindex",
+                "0"
+              ],
+              [
+                "class",
+                "rd-table"
+              ]
+            ],
+            "color": "rgb(249, 250, 251)",
+            "background": "rgba(0, 0, 0, 0)",
+            "foreground": "#f9fafb",
+            "background_token": "#0c111d",
+            "card": "#101828",
+            "card_foreground": ""
+          },
+          {
+            "tag": "DIV",
+            "attrs": [
+              [
+                "data-component-category",
+                "data table"
+              ]
+            ],
+            "color": "rgb(249, 250, 251)",
+            "background": "rgba(0, 0, 0, 0)",
+            "foreground": "#f9fafb",
+            "background_token": "#0c111d",
+            "card": "#101828",
+            "card_foreground": ""
+          },
+          {
+            "tag": "ARTICLE",
+            "attrs": [
+              [
+                "class",
+                "rd-prose"
+              ]
+            ],
+            "color": "rgb(249, 250, 251)",
+            "background": "rgba(0, 0, 0, 0)",
+            "foreground": "#f9fafb",
+            "background_token": "#0c111d",
+            "card": "#101828",
+            "card_foreground": ""
+          },
+          {
+            "tag": "DIV",
+            "attrs": [
+              [
+                "class",
+                "rd-column"
+              ]
+            ],
+            "color": "rgb(249, 250, 251)",
+            "background": "rgba(0, 0, 0, 0)",
+            "foreground": "#f9fafb",
+            "background_token": "#0c111d",
+            "card": "#101828",
+            "card_foreground": ""
+          },
+          {
+            "tag": "MAIN",
+            "attrs": [
+              [
+                "id",
+                "content"
+              ],
+              [
+                "class",
+                "rd-main min-w-0 py-8 md:py-12"
+              ]
+            ],
+            "color": "rgb(249, 250, 251)",
+            "background": "rgba(0, 0, 0, 0)",
+            "foreground": "#f9fafb",
+            "background_token": "#0c111d",
+            "card": "#101828",
+            "card_foreground": ""
+          },
+          {
+            "tag": "DIV",
+            "attrs": [
+              [
+                "class",
+                "rd-layout mx-auto grid max-w-[76rem] gap-x-10 px-4 md:px-6"
+              ]
+            ],
+            "color": "rgb(249, 250, 251)",
+            "background": "rgba(0, 0, 0, 0)",
+            "foreground": "#f9fafb",
+            "background_token": "#0c111d",
+            "card": "#101828",
+            "card_foreground": ""
+          },
+          {
+            "tag": "BODY",
+            "attrs": [
+              [
+                "class",
+                "min-h-screen bg-background text-foreground antialiased"
+              ]
+            ],
+            "color": "rgb(249, 250, 251)",
+            "background": "rgb(12, 17, 29)",
+            "foreground": "#f9fafb",
+            "background_token": "#0c111d",
+            "card": "#101828",
+            "card_foreground": ""
+          },
+          {
+            "tag": "HTML",
+            "attrs": [
+              [
+                "lang",
+                "en"
+              ],
+              [
+                "data-rustify-scope",
+                ""
+              ],
+              [
+                "data-theme",
+                "dark"
+              ],
+              [
+                "data-rd-base",
+                "/rustify-ui/"
+              ]
+            ],
+            "color": "rgb(255, 255, 255)",
+            "background": "rgba(0, 0, 0, 0)",
+            "foreground": "#f9fafb",
+            "background_token": "#0c111d",
+            "card": "#101828",
+            "card_foreground": ""
+          }
+        ]
+      },
+      "matched": [
+        {
+          "selector": ".rd-table th",
+          "origin": "regular",
+          "styleSheetId": "style-sheet-74115-1",
+          "layers": [
+            {
+              "text": "components",
+              "range": {
+                "startLine": 0,
+                "startColumn": 6267,
+                "endLine": 0,
+                "endColumn": 6277
+              },
+              "styleSheetId": "style-sheet-74115-1"
+            }
+          ],
+          "matching": [
+            {
+              "name": "background",
+              "value": "var(--rd-code-bg)",
+              "implicit": false,
+              "text": "background:var(--rd-code-bg);",
+              "disabled": false,
+              "range": {
+                "startLine": 0,
+                "startColumn": 13900,
+                "endLine": 0,
+                "endColumn": 13929
+              }
+            },
+            {
+              "name": "background-color",
+              "value": ""
+            }
+          ]
+        }
+      ],
+      "inherited": [
+        {
+          "rules": [
+            {
+              "selector": ".bg-background",
+              "origin": "regular",
+              "styleSheetId": "style-sheet-74115-1",
+              "layers": [
+                {
+                  "text": "utilities",
+                  "range": {
+                    "startLine": 0,
+                    "startColumn": 25361,
+                    "endLine": 0,
+                    "endColumn": 25370
+                  },
+                  "styleSheetId": "style-sheet-74115-1"
+                }
+              ],
+              "matching": [
+                {
+                  "name": "background-color",
+                  "value": "var(--background)",
+                  "implicit": false,
+                  "text": "background-color:var(--background)",
+                  "disabled": false,
+                  "range": {
+                    "startLine": 0,
+                    "startColumn": 33906,
+                    "endLine": 0,
+                    "endColumn": 33940
+                  }
+                },
+                {
+                  "name": "background-color",
+                  "value": "var(--background)"
+                }
+              ]
+            },
+            {
+              "selector": ".text-foreground",
+              "origin": "regular",
+              "styleSheetId": "style-sheet-74115-1",
+              "layers": [
+                {
+                  "text": "utilities",
+                  "range": {
+                    "startLine": 0,
+                    "startColumn": 25361,
+                    "endLine": 0,
+                    "endColumn": 25370
+                  },
+                  "styleSheetId": "style-sheet-74115-1"
+                }
+              ],
+              "matching": [
+                {
+                  "name": "color",
+                  "value": "var(--foreground)",
+                  "implicit": false,
+                  "text": "color:var(--foreground)",
+                  "disabled": false,
+                  "range": {
+                    "startLine": 0,
+                    "startColumn": 36852,
+                    "endLine": 0,
+                    "endColumn": 36875
+                  }
+                },
+                {
+                  "name": "color",
+                  "value": "var(--foreground)"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "rules": [
+            {
+              "selector": "[data-rustify-scope]",
+              "origin": "regular",
+              "styleSheetId": "style-sheet-74115-1",
+              "layers": [],
+              "matching": [
+                {
+                  "name": "--background",
+                  "value": "#f9fafb",
+                  "implicit": false,
+                  "text": "--background:#f9fafb;",
+                  "disabled": false,
+                  "range": {
+                    "startLine": 0,
+                    "startColumn": 60153,
+                    "endLine": 0,
+                    "endColumn": 60174
+                  }
+                },
+                {
+                  "name": "--foreground",
+                  "value": "#1d2939",
+                  "implicit": false,
+                  "text": "--foreground:#1d2939;",
+                  "disabled": false,
+                  "range": {
+                    "startLine": 0,
+                    "startColumn": 60174,
+                    "endLine": 0,
+                    "endColumn": 60195
+                  }
+                },
+                {
+                  "name": "--card",
+                  "value": "#fff",
+                  "implicit": false,
+                  "text": "--card:#fff;",
+                  "disabled": false,
+                  "range": {
+                    "startLine": 0,
+                    "startColumn": 60427,
+                    "endLine": 0,
+                    "endColumn": 60439
+                  }
+                },
+                {
+                  "name": "--background",
+                  "value": "#f9fafb"
+                },
+                {
+                  "name": "--foreground",
+                  "value": "#1d2939"
+                },
+                {
+                  "name": "--card",
+                  "value": "#fff"
+                }
+              ]
+            },
+            {
+              "selector": ":root[data-rustify-scope]",
+              "origin": "regular",
+              "styleSheetId": "style-sheet-74115-1",
+              "layers": [],
+              "matching": [
+                {
+                  "name": "--background",
+                  "value": "#f9fafb",
+                  "implicit": false,
+                  "text": "--background:#f9fafb;",
+                  "disabled": false,
+                  "range": {
+                    "startLine": 0,
+                    "startColumn": 64745,
+                    "endLine": 0,
+                    "endColumn": 64766
+                  }
+                },
+                {
+                  "name": "--foreground",
+                  "value": "#1d2939",
+                  "implicit": false,
+                  "text": "--foreground:#1d2939;",
+                  "disabled": false,
+                  "range": {
+                    "startLine": 0,
+                    "startColumn": 64766,
+                    "endLine": 0,
+                    "endColumn": 64787
+                  }
+                },
+                {
+                  "name": "--card",
+                  "value": "#fff",
+                  "implicit": false,
+                  "text": "--card:#fff;",
+                  "disabled": false,
+                  "range": {
+                    "startLine": 0,
+                    "startColumn": 65019,
+                    "endLine": 0,
+                    "endColumn": 65031
+                  }
+                },
+                {
+                  "name": "--background",
+                  "value": "#f9fafb"
+                },
+                {
+                  "name": "--foreground",
+                  "value": "#1d2939"
+                },
+                {
+                  "name": "--card",
+                  "value": "#fff"
+                }
+              ]
+            },
+            {
+              "selector": ":root[data-rustify-scope][data-theme=\"dark\"]",
+              "origin": "regular",
+              "styleSheetId": "style-sheet-74115-1",
+              "layers": [],
+              "matching": [
+                {
+                  "name": "--background",
+                  "value": "#0c111d",
+                  "implicit": false,
+                  "text": "--background:#0c111d;",
+                  "disabled": false,
+                  "range": {
+                    "startLine": 0,
+                    "startColumn": 65815,
+                    "endLine": 0,
+                    "endColumn": 65836
+                  }
+                },
+                {
+                  "name": "--foreground",
+                  "value": "#f9fafb",
+                  "implicit": false,
+                  "text": "--foreground:#f9fafb;",
+                  "disabled": false,
+                  "range": {
+                    "startLine": 0,
+                    "startColumn": 65836,
+                    "endLine": 0,
+                    "endColumn": 65857
+                  }
+                },
+                {
+                  "name": "--card",
+                  "value": "#101828",
+                  "implicit": false,
+                  "text": "--card:#101828;",
+                  "disabled": false,
+                  "range": {
+                    "startLine": 0,
+                    "startColumn": 66095,
+                    "endLine": 0,
+                    "endColumn": 66110
+                  }
+                },
+                {
+                  "name": "--background",
+                  "value": "#0c111d"
+                },
+                {
+                  "name": "--foreground",
+                  "value": "#f9fafb"
+                },
+                {
+                  "name": "--card",
+                  "value": "#101828"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "selector": ".rd-prose td",
+      "raw": {
+        "text": "yes",
+        "ancestors": [
+          {
+            "tag": "TD",
+            "attrs": [],
+            "color": "rgb(249, 250, 251)",
+            "background": "rgba(0, 0, 0, 0)",
+            "foreground": "#f9fafb",
+            "background_token": "#0c111d",
+            "card": "#101828",
+            "card_foreground": ""
+          },
+          {
+            "tag": "TR",
+            "attrs": [],
+            "color": "rgb(249, 250, 251)",
+            "background": "rgba(0, 0, 0, 0)",
+            "foreground": "#f9fafb",
+            "background_token": "#0c111d",
+            "card": "#101828",
+            "card_foreground": ""
+          },
+          {
+            "tag": "TBODY",
+            "attrs": [],
+            "color": "rgb(249, 250, 251)",
+            "background": "rgba(0, 0, 0, 0)",
+            "foreground": "#f9fafb",
+            "background_token": "#0c111d",
+            "card": "#101828",
+            "card_foreground": ""
+          },
+          {
+            "tag": "TABLE",
+            "attrs": [],
+            "color": "rgb(249, 250, 251)",
+            "background": "rgba(0, 0, 0, 0)",
+            "foreground": "#f9fafb",
+            "background_token": "#0c111d",
+            "card": "#101828",
+            "card_foreground": ""
+          },
+          {
+            "tag": "DIV",
+            "attrs": [
+              [
+                "role",
+                "region"
+              ],
+              [
+                "aria-label",
+                "Component capabilities"
+              ],
+              [
+                "tabindex",
+                "0"
+              ],
+              [
+                "class",
+                "rd-table"
+              ]
+            ],
+            "color": "rgb(249, 250, 251)",
+            "background": "rgba(0, 0, 0, 0)",
+            "foreground": "#f9fafb",
+            "background_token": "#0c111d",
+            "card": "#101828",
+            "card_foreground": ""
+          },
+          {
+            "tag": "DIV",
+            "attrs": [
+              [
+                "data-component-category",
+                "data table"
+              ]
+            ],
+            "color": "rgb(249, 250, 251)",
+            "background": "rgba(0, 0, 0, 0)",
+            "foreground": "#f9fafb",
+            "background_token": "#0c111d",
+            "card": "#101828",
+            "card_foreground": ""
+          },
+          {
+            "tag": "ARTICLE",
+            "attrs": [
+              [
+                "class",
+                "rd-prose"
+              ]
+            ],
+            "color": "rgb(249, 250, 251)",
+            "background": "rgba(0, 0, 0, 0)",
+            "foreground": "#f9fafb",
+            "background_token": "#0c111d",
+            "card": "#101828",
+            "card_foreground": ""
+          },
+          {
+            "tag": "DIV",
+            "attrs": [
+              [
+                "class",
+                "rd-column"
+              ]
+            ],
+            "color": "rgb(249, 250, 251)",
+            "background": "rgba(0, 0, 0, 0)",
+            "foreground": "#f9fafb",
+            "background_token": "#0c111d",
+            "card": "#101828",
+            "card_foreground": ""
+          },
+          {
+            "tag": "MAIN",
+            "attrs": [
+              [
+                "id",
+                "content"
+              ],
+              [
+                "class",
+                "rd-main min-w-0 py-8 md:py-12"
+              ]
+            ],
+            "color": "rgb(249, 250, 251)",
+            "background": "rgba(0, 0, 0, 0)",
+            "foreground": "#f9fafb",
+            "background_token": "#0c111d",
+            "card": "#101828",
+            "card_foreground": ""
+          },
+          {
+            "tag": "DIV",
+            "attrs": [
+              [
+                "class",
+                "rd-layout mx-auto grid max-w-[76rem] gap-x-10 px-4 md:px-6"
+              ]
+            ],
+            "color": "rgb(249, 250, 251)",
+            "background": "rgba(0, 0, 0, 0)",
+            "foreground": "#f9fafb",
+            "background_token": "#0c111d",
+            "card": "#101828",
+            "card_foreground": ""
+          },
+          {
+            "tag": "BODY",
+            "attrs": [
+              [
+                "class",
+                "min-h-screen bg-background text-foreground antialiased"
+              ]
+            ],
+            "color": "rgb(249, 250, 251)",
+            "background": "rgb(12, 17, 29)",
+            "foreground": "#f9fafb",
+            "background_token": "#0c111d",
+            "card": "#101828",
+            "card_foreground": ""
+          },
+          {
+            "tag": "HTML",
+            "attrs": [
+              [
+                "lang",
+                "en"
+              ],
+              [
+                "data-rustify-scope",
+                ""
+              ],
+              [
+                "data-theme",
+                "dark"
+              ],
+              [
+                "data-rd-base",
+                "/rustify-ui/"
+              ]
+            ],
+            "color": "rgb(255, 255, 255)",
+            "background": "rgba(0, 0, 0, 0)",
+            "foreground": "#f9fafb",
+            "background_token": "#0c111d",
+            "card": "#101828",
+            "card_foreground": ""
+          }
+        ]
+      },
+      "matched": [],
+      "inherited": [
+        {
+          "rules": [
+            {
+              "selector": ".bg-background",
+              "origin": "regular",
+              "styleSheetId": "style-sheet-74115-1",
+              "layers": [
+                {
+                  "text": "utilities",
+                  "range": {
+                    "startLine": 0,
+                    "startColumn": 25361,
+                    "endLine": 0,
+                    "endColumn": 25370
+                  },
+                  "styleSheetId": "style-sheet-74115-1"
+                }
+              ],
+              "matching": [
+                {
+                  "name": "background-color",
+                  "value": "var(--background)",
+                  "implicit": false,
+                  "text": "background-color:var(--background)",
+                  "disabled": false,
+                  "range": {
+                    "startLine": 0,
+                    "startColumn": 33906,
+                    "endLine": 0,
+                    "endColumn": 33940
+                  }
+                },
+                {
+                  "name": "background-color",
+                  "value": "var(--background)"
+                }
+              ]
+            },
+            {
+              "selector": ".text-foreground",
+              "origin": "regular",
+              "styleSheetId": "style-sheet-74115-1",
+              "layers": [
+                {
+                  "text": "utilities",
+                  "range": {
+                    "startLine": 0,
+                    "startColumn": 25361,
+                    "endLine": 0,
+                    "endColumn": 25370
+                  },
+                  "styleSheetId": "style-sheet-74115-1"
+                }
+              ],
+              "matching": [
+                {
+                  "name": "color",
+                  "value": "var(--foreground)",
+                  "implicit": false,
+                  "text": "color:var(--foreground)",
+                  "disabled": false,
+                  "range": {
+                    "startLine": 0,
+                    "startColumn": 36852,
+                    "endLine": 0,
+                    "endColumn": 36875
+                  }
+                },
+                {
+                  "name": "color",
+                  "value": "var(--foreground)"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "rules": [
+            {
+              "selector": "[data-rustify-scope]",
+              "origin": "regular",
+              "styleSheetId": "style-sheet-74115-1",
+              "layers": [],
+              "matching": [
+                {
+                  "name": "--background",
+                  "value": "#f9fafb",
+                  "implicit": false,
+                  "text": "--background:#f9fafb;",
+                  "disabled": false,
+                  "range": {
+                    "startLine": 0,
+                    "startColumn": 60153,
+                    "endLine": 0,
+                    "endColumn": 60174
+                  }
+                },
+                {
+                  "name": "--foreground",
+                  "value": "#1d2939",
+                  "implicit": false,
+                  "text": "--foreground:#1d2939;",
+                  "disabled": false,
+                  "range": {
+                    "startLine": 0,
+                    "startColumn": 60174,
+                    "endLine": 0,
+                    "endColumn": 60195
+                  }
+                },
+                {
+                  "name": "--card",
+                  "value": "#fff",
+                  "implicit": false,
+                  "text": "--card:#fff;",
+                  "disabled": false,
+                  "range": {
+                    "startLine": 0,
+                    "startColumn": 60427,
+                    "endLine": 0,
+                    "endColumn": 60439
+                  }
+                },
+                {
+                  "name": "--background",
+                  "value": "#f9fafb"
+                },
+                {
+                  "name": "--foreground",
+                  "value": "#1d2939"
+                },
+                {
+                  "name": "--card",
+                  "value": "#fff"
+                }
+              ]
+            },
+            {
+              "selector": ":root[data-rustify-scope]",
+              "origin": "regular",
+              "styleSheetId": "style-sheet-74115-1",
+              "layers": [],
+              "matching": [
+                {
+                  "name": "--background",
+                  "value": "#f9fafb",
+                  "implicit": false,
+                  "text": "--background:#f9fafb;",
+                  "disabled": false,
+                  "range": {
+                    "startLine": 0,
+                    "startColumn": 64745,
+                    "endLine": 0,
+                    "endColumn": 64766
+                  }
+                },
+                {
+                  "name": "--foreground",
+                  "value": "#1d2939",
+                  "implicit": false,
+                  "text": "--foreground:#1d2939;",
+                  "disabled": false,
+                  "range": {
+                    "startLine": 0,
+                    "startColumn": 64766,
+                    "endLine": 0,
+                    "endColumn": 64787
+                  }
+                },
+                {
+                  "name": "--card",
+                  "value": "#fff",
+                  "implicit": false,
+                  "text": "--card:#fff;",
+                  "disabled": false,
+                  "range": {
+                    "startLine": 0,
+                    "startColumn": 65019,
+                    "endLine": 0,
+                    "endColumn": 65031
+                  }
+                },
+                {
+                  "name": "--background",
+                  "value": "#f9fafb"
+                },
+                {
+                  "name": "--foreground",
+                  "value": "#1d2939"
+                },
+                {
+                  "name": "--card",
+                  "value": "#fff"
+                }
+              ]
+            },
+            {
+              "selector": ":root[data-rustify-scope][data-theme=\"dark\"]",
+              "origin": "regular",
+              "styleSheetId": "style-sheet-74115-1",
+              "layers": [],
+              "matching": [
+                {
+                  "name": "--background",
+                  "value": "#0c111d",
+                  "implicit": false,
+                  "text": "--background:#0c111d;",
+                  "disabled": false,
+                  "range": {
+                    "startLine": 0,
+                    "startColumn": 65815,
+                    "endLine": 0,
+                    "endColumn": 65836
+                  }
+                },
+                {
+                  "name": "--foreground",
+                  "value": "#f9fafb",
+                  "implicit": false,
+                  "text": "--foreground:#f9fafb;",
+                  "disabled": false,
+                  "range": {
+                    "startLine": 0,
+                    "startColumn": 65836,
+                    "endLine": 0,
+                    "endColumn": 65857
+                  }
+                },
+                {
+                  "name": "--card",
+                  "value": "#101828",
+                  "implicit": false,
+                  "text": "--card:#101828;",
+                  "disabled": false,
+                  "range": {
+                    "startLine": 0,
+                    "startColumn": 66095,
+                    "endLine": 0,
+                    "endColumn": 66110
+                  }
+                },
+                {
+                  "name": "--background",
+                  "value": "#0c111d"
+                },
+                {
+                  "name": "--foreground",
+                  "value": "#f9fafb"
+                },
+                {
+                  "name": "--card",
+                  "value": "#101828"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "selector": ".rd-prose",
+      "raw": {
+        "text": "how many rows, which columns, a callback per cell and a callback per row identity; it holds no data, so a sorted, filtered or edited view is the same table asked different questionsExample\nComponentGroupButtonActionsText fieldInputData tableCollectionsDialogOverlaysSelected: NoneActivated: None\nInteractive exampleLoading interactive example…This example could not start. Reload the page to try again.Reload page<span>Enable JavaScript to interact</span>\nsite/src/demos/collections.rs\n\nFunctionFull fileCopy\n\nFunctionCopy\n/// A virtual table receives its data, row identities and selection from outside.\npub fn data_table_demo() -> impl IntoView {\n    let entries = [\n        [\"Button\", \"Actions\"],\n        [\"Text field\", \"Input\"],\n        [\"Data table\", \"Collections\"],\n        [\"Dialog\", \"Overlays\"],\n    ];\n    let selected = RwSignal::new(Selection::new());\n    let activated = RwSignal::new(None::<usize>);\n    let focus = RwSignal::new(Cell { row: 0, column: 0 });\n    let goto = RwSignal::new(None);\n    view! {\n        <div class=\"min-w-0 space-y-4\">\n            <DataTable rows=entries.len() columns=vec![Column::new(\"name\", \"Component\"), Column::new(\"group\", \"Group\")]\n                cell=Arc::new(move |row, column| entries[row][column].to_string())\n                row_id=Arc::new(|row| row as u32) selected=selected goto=goto focus=focus\n                on_select=move |row| { selected.update(|selected| { selected.toggle(row as u32); }); }\n                on_activate=move |row| activated.set(Some(row))\n                initial_viewport=(360.0, 128.0) row_height=32.0 column_width=180.0\n                aria_label=\"Example components\" class=\"h-48 w-full\" />\n            <p class=\"text-sm break-words\">\"Selected: \"<output data-demo-state=\"\">{move || selected.with(|selection| {\n                if selection.is_empty() {\n                    \"None\".to_string()\n                } else {\n                    selection.ids().map(|row| entries[row as usize][0]).collect::<Vec<_>>().join(\", \")\n                }\n            })}</output></p>\n            <p class=\"text-sm\">\"Activated: \"<output>{move || activated.get().map_or(\"None\", |row| entries[row][0])}</output></p>\n        </div>\n    }\n}\n\n\n\n\nFull fileCopy\nuse std::collections::BTreeSet;\nuse std::sync::Arc;\n\nuse leptos::prelude::*;\nuse rustify_components::data_table::Cell;\nuse rustify_components::{\n    Button, ButtonVariant, Column, DataTable, ScrollArea, Tab, TabPanel, Tabs, Tree, TreeNode,\n};\nuse rustify_ui::Selection;\n\n/// Tabs retain their panels while the active value belongs to the application.\npub fn tabs_demo() -> impl IntoView {\n    let active = RwSignal::new(\"overview\".to_string());\n    view! {\n        <div class=\"space-y-4\">\n            <Tabs active=active on_activate=move |value| active.set(value) aria_label=\"Example panels\"\n                tabs=vec![Tab::new(\"overview\", \"Overview\"), Tab::new(\"details\", \"Details\")]>\n                <TabPanel value=\"overview\"><p>\"The first panel is visible initially.\"</p></TabPanel>\n                <TabPanel value=\"details\"><p>\"Each panel keeps its place and state in the document.\"</p></TabPanel>\n            </Tabs>\n            <p class=\"text-sm\">\"Active panel: \"<output data-demo-state=\"\">{move || active.get()}</output></p>\n        </div>\n    }\n}\n\n/// A bounded scroll area stays keyboard reachable as its content grows.\npub fn scroll_area_demo() -> impl IntoView {\n    let count = RwSignal::new(8_usize);\n    view! {\n        <div class=\"space-y-4\">\n            <ScrollArea aria_label=\"Example items\" class=\"h-40 rounded-md border border-border p-3\">\n                <ol class=\"space-y-3\">\n                    <For each=move || 0..count.get() key=|item| *item let:item>\n                        <li>{format!(\"Item {}\", item + 1)}</li>\n                    </For>\n                </ol>\n            </ScrollArea>\n            <Button variant=ButtonVariant::Outline on_click=move || count.update(|count| *count += 1)>\n                \"Add item\"\n            </Button>\n            <p class=\"text-sm\">\"Items: \"<output data-demo-state=\"\">{move || count.get()}</output></p>\n        </div>\n    }\n}\n\n/// A virtual table receives its data, row identities and selection from outside.\npub fn data_table_demo() -> impl IntoView {\n    let entries = [\n        [\"Button\", \"Actions\"],\n        [\"Text field\", \"Input\"],\n        [\"Data table\", \"Collections\"],\n        [\"Dialog\", \"Overlays\"],\n    ];\n    let selected = RwSignal::new(Selection::new());\n    let activated = RwSignal::new(None::<usize>);\n    let focus = RwSignal::new(Cell { row: 0, column: 0 });\n    let goto = RwSignal::new(None);\n    view! {\n        <div class=\"min-w-0 space-y-4\">\n            <DataTable rows=entries.len() columns=vec![Column::new(\"name\", \"Component\"), Column::new(\"group\", \"Group\")]\n                cell=Arc::new(move |row, column| entries[row][column].to_string())\n                row_id=Arc::new(|row| row as u32) selected=selected goto=goto focus=focus\n                on_select=move |row| { selected.update(|selected| { selected.toggle(row as u32); }); }\n                on_activate=move |row| activated.set(Some(row))\n                initial_viewport=(360.0, 128.0) row_height=32.0 column_width=180.0\n                aria_label=\"Example components\" class=\"h-48 w-full\" />\n            <p class=\"text-sm break-words\">\"Selected: \"<output data-demo-state=\"\">{move || selected.with(|selection| {\n                if selection.is_empty() {\n                    \"None\".to_string()\n                } else {\n                    selection.ids().map(|row| entries[row as usize][0]).collect::<Vec<_>>().join(\", \")\n                }\n            })}</output></p>\n            <p class=\"text-sm\">\"Activated: \"<output>{move || activated.get().map_or(\"None\", |row| entries[row][0])}</output></p>\n        </div>\n    }\n}\n\n/// A two-level tree shares expansion and selection with the application.\npub fn tree_demo() -> impl IntoView {\n    let expanded = RwSignal::new(BTreeSet::from([\"components\".to_string()]));\n    let selected = RwSignal::new(None::<String>);\n    view! {\n        <div class=\"space-y-4\">\n            <Tree expanded=expanded selected=selected on_select=move |value| selected.set(Some(value))\n                aria_label=\"Example documentation tree\"\n                nodes=vec![\n                    TreeNode::new(\"components\", \"Components\").with(vec![\n                        TreeNode::new(\"button\", \"Button\"),\n                        TreeNode::new(\"text-field\", \"Text field\"),\n                    ]),\n                    TreeNode::new(\"guides\", \"Guides\").with(vec![\n                        TreeNode::new(\"quickstart\", \"Quick start\"),\n                        TreeNode::new(\"themes\", \"Themes\"),\n                    ]),\n                ] />\n            <p class=\"text-sm\">\"Selected: \"<output data-demo-state=\"\">{move || selected.get().unwrap_or_else(|| \"None\".to_string())}</output></p>\n            <p class=\"text-sm\">\"Expanded: \"<output>{move || expanded.with(|groups| {\n                if groups.is_empty() { \"None\".to_string() } else { groups.iter().cloned().collect::<Vec<_>>().join(\", \") }\n            })}</output></p>\n        </div>\n    }\n}\n\n\n\n\n\n\nCapabilitiesCapabilitySupportDetailspropertiesyeshow many rows, which columns, a callback per cell and a callback per row identity; it holds no data, so a sorted, filtered or edited view is the same table asked different questionsactionsyesselect a row, open a row, and ask to be shown a row; scrolling is the browser'sthemeyesborder, muted header and the accent a selected row is drawn ininputyespointer, the arrows, PageUp/PageDown, Home/End and Ctrl+Home/End, Space to select and Enter or F2 to openaccessibilityyesrole=grid with aria-rowcount over every row, not only the drawn ones; each row carries its real aria-rowindex and its business id, and one cell at a time takes the tab stopenvironmentpartialmacOS Chrome, strict CSP; no region draws a table - the GPU half of this load is the selection strip beside it - and the row elements are a pool, so a reader meets the rows on screen plus the overscan and reaches the rest by scrollingGPU integrationGPU drawing support: no. This documentation example uses the DOM component. See the component catalogue example for the available DOM and GPU presentations.",
+        "ancestors": [
+          {
+            "tag": "ARTICLE",
+            "attrs": [
+              [
+                "class",
+                "rd-prose"
+              ]
+            ],
+            "color": "rgb(249, 250, 251)",
+            "background": "rgba(0, 0, 0, 0)",
+            "foreground": "#f9fafb",
+            "background_token": "#0c111d",
+            "card": "#101828",
+            "card_foreground": ""
+          },
+          {
+            "tag": "DIV",
+            "attrs": [
+              [
+                "class",
+                "rd-column"
+              ]
+            ],
+            "color": "rgb(249, 250, 251)",
+            "background": "rgba(0, 0, 0, 0)",
+            "foreground": "#f9fafb",
+            "background_token": "#0c111d",
+            "card": "#101828",
+            "card_foreground": ""
+          },
+          {
+            "tag": "MAIN",
+            "attrs": [
+              [
+                "id",
+                "content"
+              ],
+              [
+                "class",
+                "rd-main min-w-0 py-8 md:py-12"
+              ]
+            ],
+            "color": "rgb(249, 250, 251)",
+            "background": "rgba(0, 0, 0, 0)",
+            "foreground": "#f9fafb",
+            "background_token": "#0c111d",
+            "card": "#101828",
+            "card_foreground": ""
+          },
+          {
+            "tag": "DIV",
+            "attrs": [
+              [
+                "class",
+                "rd-layout mx-auto grid max-w-[76rem] gap-x-10 px-4 md:px-6"
+              ]
+            ],
+            "color": "rgb(249, 250, 251)",
+            "background": "rgba(0, 0, 0, 0)",
+            "foreground": "#f9fafb",
+            "background_token": "#0c111d",
+            "card": "#101828",
+            "card_foreground": ""
+          },
+          {
+            "tag": "BODY",
+            "attrs": [
+              [
+                "class",
+                "min-h-screen bg-background text-foreground antialiased"
+              ]
+            ],
+            "color": "rgb(249, 250, 251)",
+            "background": "rgb(12, 17, 29)",
+            "foreground": "#f9fafb",
+            "background_token": "#0c111d",
+            "card": "#101828",
+            "card_foreground": ""
+          },
+          {
+            "tag": "HTML",
+            "attrs": [
+              [
+                "lang",
+                "en"
+              ],
+              [
+                "data-rustify-scope",
+                ""
+              ],
+              [
+                "data-theme",
+                "dark"
+              ],
+              [
+                "data-rd-base",
+                "/rustify-ui/"
+              ]
+            ],
+            "color": "rgb(255, 255, 255)",
+            "background": "rgba(0, 0, 0, 0)",
+            "foreground": "#f9fafb",
+            "background_token": "#0c111d",
+            "card": "#101828",
+            "card_foreground": ""
+          }
+        ]
+      },
+      "matched": [],
+      "inherited": [
+        {
+          "rules": [
+            {
+              "selector": ".bg-background",
+              "origin": "regular",
+              "styleSheetId": "style-sheet-74115-1",
+              "layers": [
+                {
+                  "text": "utilities",
+                  "range": {
+                    "startLine": 0,
+                    "startColumn": 25361,
+                    "endLine": 0,
+                    "endColumn": 25370
+                  },
+                  "styleSheetId": "style-sheet-74115-1"
+                }
+              ],
+              "matching": [
+                {
+                  "name": "background-color",
+                  "value": "var(--background)",
+                  "implicit": false,
+                  "text": "background-color:var(--background)",
+                  "disabled": false,
+                  "range": {
+                    "startLine": 0,
+                    "startColumn": 33906,
+                    "endLine": 0,
+                    "endColumn": 33940
+                  }
+                },
+                {
+                  "name": "background-color",
+                  "value": "var(--background)"
+                }
+              ]
+            },
+            {
+              "selector": ".text-foreground",
+              "origin": "regular",
+              "styleSheetId": "style-sheet-74115-1",
+              "layers": [
+                {
+                  "text": "utilities",
+                  "range": {
+                    "startLine": 0,
+                    "startColumn": 25361,
+                    "endLine": 0,
+                    "endColumn": 25370
+                  },
+                  "styleSheetId": "style-sheet-74115-1"
+                }
+              ],
+              "matching": [
+                {
+                  "name": "color",
+                  "value": "var(--foreground)",
+                  "implicit": false,
+                  "text": "color:var(--foreground)",
+                  "disabled": false,
+                  "range": {
+                    "startLine": 0,
+                    "startColumn": 36852,
+                    "endLine": 0,
+                    "endColumn": 36875
+                  }
+                },
+                {
+                  "name": "color",
+                  "value": "var(--foreground)"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "rules": [
+            {
+              "selector": "[data-rustify-scope]",
+              "origin": "regular",
+              "styleSheetId": "style-sheet-74115-1",
+              "layers": [],
+              "matching": [
+                {
+                  "name": "--background",
+                  "value": "#f9fafb",
+                  "implicit": false,
+                  "text": "--background:#f9fafb;",
+                  "disabled": false,
+                  "range": {
+                    "startLine": 0,
+                    "startColumn": 60153,
+                    "endLine": 0,
+                    "endColumn": 60174
+                  }
+                },
+                {
+                  "name": "--foreground",
+                  "value": "#1d2939",
+                  "implicit": false,
+                  "text": "--foreground:#1d2939;",
+                  "disabled": false,
+                  "range": {
+                    "startLine": 0,
+                    "startColumn": 60174,
+                    "endLine": 0,
+                    "endColumn": 60195
+                  }
+                },
+                {
+                  "name": "--card",
+                  "value": "#fff",
+                  "implicit": false,
+                  "text": "--card:#fff;",
+                  "disabled": false,
+                  "range": {
+                    "startLine": 0,
+                    "startColumn": 60427,
+                    "endLine": 0,
+                    "endColumn": 60439
+                  }
+                },
+                {
+                  "name": "--background",
+                  "value": "#f9fafb"
+                },
+                {
+                  "name": "--foreground",
+                  "value": "#1d2939"
+                },
+                {
+                  "name": "--card",
+                  "value": "#fff"
+                }
+              ]
+            },
+            {
+              "selector": ":root[data-rustify-scope]",
+              "origin": "regular",
+              "styleSheetId": "style-sheet-74115-1",
+              "layers": [],
+              "matching": [
+                {
+                  "name": "--background",
+                  "value": "#f9fafb",
+                  "implicit": false,
+                  "text": "--background:#f9fafb;",
+                  "disabled": false,
+                  "range": {
+                    "startLine": 0,
+                    "startColumn": 64745,
+                    "endLine": 0,
+                    "endColumn": 64766
+                  }
+                },
+                {
+                  "name": "--foreground",
+                  "value": "#1d2939",
+                  "implicit": false,
+                  "text": "--foreground:#1d2939;",
+                  "disabled": false,
+                  "range": {
+                    "startLine": 0,
+                    "startColumn": 64766,
+                    "endLine": 0,
+                    "endColumn": 64787
+                  }
+                },
+                {
+                  "name": "--card",
+                  "value": "#fff",
+                  "implicit": false,
+                  "text": "--card:#fff;",
+                  "disabled": false,
+                  "range": {
+                    "startLine": 0,
+                    "startColumn": 65019,
+                    "endLine": 0,
+                    "endColumn": 65031
+                  }
+                },
+                {
+                  "name": "--background",
+                  "value": "#f9fafb"
+                },
+                {
+                  "name": "--foreground",
+                  "value": "#1d2939"
+                },
+                {
+                  "name": "--card",
+                  "value": "#fff"
+                }
+              ]
+            },
+            {
+              "selector": ":root[data-rustify-scope][data-theme=\"dark\"]",
+              "origin": "regular",
+              "styleSheetId": "style-sheet-74115-1",
+              "layers": [],
+              "matching": [
+                {
+                  "name": "--background",
+                  "value": "#0c111d",
+                  "implicit": false,
+                  "text": "--background:#0c111d;",
+                  "disabled": false,
+                  "range": {
+                    "startLine": 0,
+                    "startColumn": 65815,
+                    "endLine": 0,
+                    "endColumn": 65836
+                  }
+                },
+                {
+                  "name": "--foreground",
+                  "value": "#f9fafb",
+                  "implicit": false,
+                  "text": "--foreground:#f9fafb;",
+                  "disabled": false,
+                  "range": {
+                    "startLine": 0,
+                    "startColumn": 65836,
+                    "endLine": 0,
+                    "endColumn": 65857
+                  }
+                },
+                {
+                  "name": "--card",
+                  "value": "#101828",
+                  "implicit": false,
+                  "text": "--card:#101828;",
+                  "disabled": false,
+                  "range": {
+                    "startLine": 0,
+                    "startColumn": 66095,
+                    "endLine": 0,
+                    "endColumn": 66110
+                  }
+                },
+                {
+                  "name": "--background",
+                  "value": "#0c111d"
+                },
+                {
+                  "name": "--foreground",
+                  "value": "#f9fafb"
+                },
+                {
+                  "name": "--card",
+                  "value": "#101828"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "chromium": "153.0.8010.12"
+}

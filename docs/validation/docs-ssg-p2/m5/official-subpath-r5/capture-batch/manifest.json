@@ -1,0 +1,53 @@
+{
+  "project": "official-subpath",
+  "binary": "rustify-docs0.1.9",
+  "chromium": "153.0.8010.12",
+  "scope": "one unified correction confirmation; desktop light/dark and375px emulation, no physical device/Safari claim",
+  "files": [
+    {
+      "path": "docs/validation/docs-ssg-p2/m5/official-subpath-r5/capture-batch/official-home-desktop-light.png",
+      "bytes": 129374,
+      "sha256": "15d355d9023063878a57b508889d3b5f19306c6e3c03ece79611db32ab92815b"
+    },
+    {
+      "path": "docs/validation/docs-ssg-p2/m5/official-subpath-r5/capture-batch/official-home-desktop-dark.png",
+      "bytes": 128514,
+      "sha256": "34269f242711eff5d4554b8c80f1bdf400ffaf8cdc6c64af44e27d3d7c883db6"
+    },
+    {
+      "path": "docs/validation/docs-ssg-p2/m5/official-subpath-r5/capture-batch/official-home-narrow-light.png",
+      "bytes": 53359,
+      "sha256": "d09c092f899ed370420d51afad7ebb51e3679d10ff12f48c6f8d074c7807b7d3"
+    },
+    {
+      "path": "docs/validation/docs-ssg-p2/m5/official-subpath-r5/capture-batch/official-category-desktop-light.png",
+      "bytes": 102753,
+      "sha256": "4d9c965ee0e281d193f4b9c7266799b4c298af5fab4e19ea34926cbabf264b25"
+    },
+    {
+      "path": "docs/validation/docs-ssg-p2/m5/official-subpath-r5/capture-batch/official-category-desktop-dark.png",
+      "bytes": 102551,
+      "sha256": "e38b7f683e6cfd9eac469e57e79a6b747cccae74d5c3365d8686fa8b5865392e"
+    },
+    {
+      "path": "docs/validation/docs-ssg-p2/m5/official-subpath-r5/capture-batch/official-category-narrow-light.png",
+      "bytes": 42029,
+      "sha256": "5fedc51ed15b7ba8e5176f860857822d19363b5412edfddc8c0c866b6f8331ec"
+    },
+    {
+      "path": "docs/validation/docs-ssg-p2/m5/official-subpath-r5/capture-batch/official-guide-desktop-light.png",
+      "bytes": 198597,
+      "sha256": "9f587e19c7e7caca9496606e962674aee02f1e0ce0050ba824a930de3e66f11d"
+    },
+    {
+      "path": "docs/validation/docs-ssg-p2/m5/official-subpath-r5/capture-batch/official-guide-desktop-dark.png",
+      "bytes": 199594,
+      "sha256": "d872f1bc56c2669a9b6296b4d90ea8e6a49afc29a72e324ef95fd3b66ab88832"
+    },
+    {
+      "path": "docs/validation/docs-ssg-p2/m5/official-subpath-r5/capture-batch/official-guide-narrow-light.png",
+      "bytes": 70846,
+      "sha256": "f8f39840cf90bcd97bc0462d1e20fe5a8db323ec687b8a1e5480341ed1729b78"
+    }
+  ]
+}

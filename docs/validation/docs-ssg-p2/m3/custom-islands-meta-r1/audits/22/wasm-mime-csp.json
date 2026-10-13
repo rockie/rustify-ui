@@ -1,0 +1,8 @@
+{
+  "project": "components-meta",
+  "url": "http://127.0.0.1:4197/rustify-ui/assets/islands/465008016dabb818aeee6f6c88af31e07af719ea76a73cb45e17e5bb9a8342d3/app_bg.wasm",
+  "mime": "application/wasm",
+  "documentCsp": null,
+  "wasmCsp": null,
+  "meta": "default-src 'none'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; media-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'"
+}

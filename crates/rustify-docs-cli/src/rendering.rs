@@ -1,46 +1,172 @@
 //! Connects one compiled Rust generation to the existing content pipeline.
 
 use crate::rust_site::{self, BuildMode, CompileTiming, Prepared};
-use rustify_docs::content::{Analysis, Diagnostic, Page, Project, Snapshot};
+use rustify_docs::content::{
+    self, Analysis, Diagnostic, FragmentCache, Page, Project, RegisteredPage, Snapshot, Surfaces,
+};
 use rustify_docs::diagnostic::{LineIndex, Severity};
 use rustify_docs::embed::Kind;
 use rustify_docs::generation::{self, Extensions};
 use rustify_docs::highlight::Highlighter;
 use rustify_docs::markdown::Embed;
 use rustify_docs::site::{
-    IslandMetadata, RenderRequest, RenderTarget, SiteEnvironment, PROTOCOL_VERSION,
+    IslandMetadata, RenderRequest, RenderTarget, SiteEnvironment, Slot, ThemeInput,
+    PROTOCOL_VERSION,
 };
 use rustify_docs_syntax::Manifest;
 use serde_json::{json, Value};
 use std::collections::{BTreeMap, BTreeSet};
 
+pub(super) struct Build {
+    pub analysis: Analysis,
+    pub extensions: Extensions,
+    pub diagnostics: Vec<Diagnostic>,
+    pub info: Value,
+    pub guard: Option<Prepared>,
+    pub theme: Option<crate::theme::PreparedTheme>,
+}
+
 pub(super) fn build(
     project: &Project,
     snapshot: &Snapshot,
-    analysis: &Analysis,
+    analysis: Analysis,
+    cache: &mut FragmentCache,
     highlighter: &Highlighter,
     mode: BuildMode,
-) -> (Extensions, Vec<Diagnostic>, Value, Option<Prepared>) {
-    let (prepared, mut diagnostics) = rust_site::prepare_checked(project, mode, |manifest| {
-        preflight(project, snapshot, analysis, Some(manifest))
-    });
-    if project.config.rust.is_none() {
-        diagnostics.extend(preflight(project, snapshot, analysis, None));
-    }
-    let Some(prepared) = prepared else {
-        return (Extensions::default(), diagnostics, Value::Null, None);
+) -> Build {
+    build_cached(
+        project,
+        snapshot,
+        analysis,
+        cache,
+        highlighter,
+        mode,
+        None,
+        &|_| {},
+    )
+}
+
+#[allow(clippy::too_many_arguments)]
+pub(super) fn build_cached(
+    project: &Project,
+    snapshot: &Snapshot,
+    mut analysis: Analysis,
+    cache: &mut FragmentCache,
+    highlighter: &Highlighter,
+    mode: BuildMode,
+    cached: Option<&Prepared>,
+    observer: rust_site::Observer<'_>,
+) -> Build {
+    let (theme, mut diagnostics) = crate::theme::prepare(project);
+    let mut manifest = Manifest::default();
+    let reused = cached.and_then(|cached| cached.reuse(project).ok().flatten());
+    let is_reused = reused.is_some();
+    let (prepared, problems) = match reused {
+        Some(prepared) => {
+            manifest = prepared.manifest.clone();
+            observer(rust_site::Progress::Watch(prepared.watch_plan()));
+            let problems = preflight(project, snapshot, &analysis, Some(&manifest));
+            (Some(prepared), problems)
+        }
+        None => rust_site::prepare_checked_with(
+            project,
+            mode,
+            |declaration| {
+                manifest = declaration.clone();
+                preflight(project, snapshot, &analysis, Some(declaration))
+            },
+            observer,
+        ),
     };
+    diagnostics.extend(problems);
+    if project.config.rust.is_none() {
+        diagnostics.extend(preflight(project, snapshot, &analysis, None));
+    }
+    let mut extensions = Extensions::default();
+    if let Some(theme) = &theme {
+        diagnostics.extend(crate::theme::validate_snapshot(project, snapshot, theme));
+        extensions.files.extend(theme.files.clone());
+        extensions.theme_utilities.clone_from(&theme.utilities);
+        extensions.theme_css.clone_from(&theme.css);
+    }
+    let mut surfaces = declared_pages(project, &manifest);
+    let Some(prepared) = prepared else {
+        if !manifest.pages.is_empty() {
+            analysis = content::analyze_with_surfaces(
+                project,
+                snapshot,
+                analysis.mode,
+                cache,
+                highlighter,
+                generation::default_workers(),
+                &surfaces,
+            );
+        }
+        return Build {
+            analysis,
+            extensions,
+            diagnostics,
+            info: Value::Null,
+            guard: None,
+            theme,
+        };
+    };
+    if let Some(theme) = &theme {
+        if !prepared.matches_input(&theme.input_path, &theme.input_bytes) {
+            diagnostics.push(Diagnostic::in_file(
+                &theme.input_path,
+                Severity::Error,
+                "rust-generation-changed",
+                "theme.document differs from the compiled generation's input snapshot",
+            ));
+        }
+    }
     let info = json!({
         "generation":prepared.generation,"framework_release":prepared.framework_release,
         "host":timing(&prepared.timings.host),"wasm":timing(&prepared.timings.wasm),
+        "reused":is_reused,
     });
-    let mut extensions = Extensions {
-        articles: generation::resolved_articles(project, snapshot, analysis),
-        files: prepared.resources.clone(),
-        candidates: prepared.candidates.iter().cloned().collect(),
-        island_script: Some(format!("{}islands.js", prepared.asset_prefix)),
-        ..Default::default()
+    observer(rust_site::Progress::Render { reused: is_reused });
+    extensions.files.extend(prepared.resources.clone());
+    extensions
+        .candidates
+        .extend(prepared.candidates.iter().cloned());
+    surfaces
+        .candidates
+        .extend(prepared.candidates.iter().cloned());
+    extensions.island_script = Some(format!("{}islands.js", prepared.asset_prefix));
+    let environment = SiteEnvironment {
+        base: project.config.site.base.clone(),
+        lang: project.config.site.lang.clone(),
+        theme: theme.as_ref().map(|theme| ThemeInput {
+            document: theme.document.clone(),
+            mode: rustify_ui::ThemeMode::Light,
+        }),
     };
+    let surface_render = render_surfaces(
+        project,
+        &analysis,
+        &prepared,
+        &environment,
+        &mut surfaces,
+        &mut extensions,
+        (snapshot, highlighter),
+    );
+    diagnostics.extend(surface_render.diagnostics);
+    if !manifest.pages.is_empty() || !manifest.slots.is_empty() || !surfaces.candidates.is_empty() {
+        analysis = content::analyze_with_surfaces(
+            project,
+            snapshot,
+            analysis.mode,
+            cache,
+            highlighter,
+            generation::default_workers(),
+            &surfaces,
+        );
+    }
+    analysis.inputs.extend(surface_render.inputs);
+    analysis.referenced.extend(surface_render.referenced);
+    extensions.articles = generation::resolved_articles(project, snapshot, &analysis);
     if let Some(css) = prepared
         .resources
         .get(&format!("{}dom-runtime.css", prepared.asset_prefix))
@@ -89,16 +215,22 @@ pub(super) fn build(
             });
         }
     }
-    let environment = SiteEnvironment {
-        base: project.config.site.base.clone(),
-        lang: project.config.site.lang.clone(),
-        theme: None,
-    };
-    let rendered = match prepared.render(environment.clone(), requests.clone()) {
+    let rendered = match if requests.is_empty() {
+        Ok(Vec::new())
+    } else {
+        prepared.render(environment.clone(), requests.clone())
+    } {
         Ok(results) => results,
         Err(problems) => {
             diagnostics.extend(problems);
-            return (extensions, diagnostics, info, Some(prepared));
+            return Build {
+                analysis,
+                extensions,
+                diagnostics,
+                info,
+                guard: Some(prepared),
+                theme,
+            };
         }
     };
     let mut by_key: BTreeMap<_, _> = rendered
@@ -174,10 +306,258 @@ pub(super) fn build(
             )),
         }
     }
-    (extensions, diagnostics, info, Some(prepared))
+    Build {
+        analysis,
+        extensions,
+        diagnostics,
+        info,
+        guard: Some(prepared),
+        theme,
+    }
 }
 
-fn timing(timing: &CompileTiming) -> Value {
+fn declared_pages(project: &Project, manifest: &Manifest) -> Surfaces {
+    let file = project
+        .config
+        .rust
+        .as_ref()
+        .map(|rust| rust.registry.as_str())
+        .unwrap_or_default();
+    Surfaces {
+        pages: manifest
+            .pages
+            .iter()
+            .map(|page| RegisteredPage {
+                name: page.name.clone(),
+                route: page.route.clone(),
+                title: page.title.clone(),
+                description: page.description.clone(),
+                html: String::new(),
+                file: file.to_owned(),
+            })
+            .collect(),
+        ..Default::default()
+    }
+}
+
+#[derive(Default)]
+struct SurfaceRender {
+    diagnostics: Vec<Diagnostic>,
+    inputs: content::InputReceipts,
+    referenced: BTreeSet<String>,
+}
+
+fn render_surfaces(
+    project: &Project,
+    analysis: &Analysis,
+    prepared: &Prepared,
+    environment: &SiteEnvironment,
+    surfaces: &mut Surfaces,
+    extensions: &mut Extensions,
+    content_read: (&Snapshot, &Highlighter),
+) -> SurfaceRender {
+    let (snapshot, highlighter) = content_read;
+    let mut requests = Vec::new();
+    for page in &surfaces.pages {
+        let key = format!(
+            "surface-{}-page-{}",
+            generation::fingerprint(page.route.as_bytes()),
+            page.name
+        );
+        requests.push(RenderRequest {
+            seed: key.clone(),
+            key,
+            target: RenderTarget::Page {
+                name: page.name.clone(),
+                route: page.route.clone(),
+            },
+        });
+    }
+    let routes: BTreeSet<_> = analysis
+        .published()
+        .map(|page| page.route.as_str())
+        .chain(surfaces.pages.iter().map(|page| page.route.as_str()))
+        .chain(["/404/"])
+        .collect();
+    for route in routes {
+        for slot in &prepared.manifest.slots {
+            if slot.slot == rustify_docs_syntax::Slot::NotFound && route != "/404/" {
+                continue;
+            }
+            let key = format!(
+                "surface-{}-slot-{}",
+                generation::fingerprint(route.as_bytes()),
+                slot.slot.key()
+            );
+            requests.push(RenderRequest {
+                seed: key.clone(),
+                key,
+                target: RenderTarget::Slot {
+                    slot: site_slot(slot.slot),
+                    route: route.to_owned(),
+                },
+            });
+        }
+    }
+    if requests.is_empty() {
+        return SurfaceRender::default();
+    }
+    let results = match prepared.render(environment.clone(), requests.clone()) {
+        Ok(results) => results,
+        Err(problems) => {
+            return SurfaceRender {
+                diagnostics: problems,
+                ..SurfaceRender::default()
+            }
+        }
+    };
+    let mut results: BTreeMap<_, _> = results
+        .into_iter()
+        .map(|result| (result.key.clone(), result))
+        .collect();
+    let mut diagnostics = Vec::new();
+    let mut source_inputs = content::InputReceipts::default();
+    let mut source_referenced = BTreeSet::new();
+    let file = &project
+        .config
+        .rust
+        .as_ref()
+        .expect("a Rust project")
+        .registry;
+    for request in requests {
+        let result = results
+            .remove(&request.key)
+            .expect("a validated render key");
+        let route = match &request.target {
+            RenderTarget::Page { route, .. } | RenderTarget::Slot { route, .. } => route,
+            _ => unreachable!(),
+        };
+        for error in result.diagnostics {
+            diagnostics.push(Diagnostic::in_file(
+                file,
+                Severity::Error,
+                &error.code,
+                format!("{route}: {}", error.message),
+            ));
+        }
+        let Some(mut html) = result.html else {
+            continue;
+        };
+        extensions.css.push_str(&result.geometry_css);
+        for intro in result.markdown_intros {
+            source_referenced.insert(intro.path.clone());
+            let marker = format!(
+                "<span data-rustify-markdown-placeholder=\"{}\"></span>",
+                intro.key
+            );
+            if html.matches(&marker).count() != 1 {
+                diagnostics.push(Diagnostic::in_file(
+                    file,
+                    Severity::Error,
+                    "markdown-intro-marker",
+                    format!(
+                        "{route}: the Markdown introduction placeholder is missing or duplicated"
+                    ),
+                ));
+                continue;
+            }
+            match content::markdown_intro(project, snapshot, analysis, &intro.path, highlighter) {
+                Ok(intro) => {
+                    source_inputs.extend(intro.inputs);
+                    source_referenced.extend(intro.referenced);
+                    diagnostics.extend(intro.diagnostics);
+                    html = html.replacen(&marker, &intro.html, 1);
+                }
+                Err(problems) => diagnostics.extend(problems),
+            }
+        }
+        for demo in result.demos {
+            let Some(demo_html) = demo.html else {
+                continue;
+            };
+            let metadata = IslandMetadata {
+                protocol_version: PROTOCOL_VERSION,
+                key: demo.key.clone(),
+                seed: demo.seed,
+                target: RenderTarget::Demo {
+                    name: demo.name.clone(),
+                },
+                environment: environment.clone(),
+            };
+            let source =
+                prepared
+                    .sources
+                    .get(&demo.name)
+                    .map(|source| rustify_docs::demo::Source {
+                        path: &source.path,
+                        function: &source.function,
+                        file: &source.file,
+                    });
+            let (labels, foreign) = rustify_docs::labels::for_lang(&environment.lang);
+            let block = rustify_docs::demo::render(
+                &demo_html,
+                &metadata,
+                source,
+                highlighter,
+                labels,
+                foreign,
+                false,
+            );
+            let marker = format!(
+                "<span data-rustify-demo-placeholder=\"{}\"></span>",
+                demo.key
+            );
+            if html.matches(&marker).count() != 1 {
+                diagnostics.push(Diagnostic::in_file(
+                    file,
+                    Severity::Error,
+                    "embed-marker",
+                    format!(
+                        "{route}: the nested demo placeholder `{}` is missing or duplicated",
+                        demo.key
+                    ),
+                ));
+                continue;
+            }
+            html = html.replacen(&marker, &block, 1);
+            extensions.island_routes.insert(route.clone());
+            extensions.css.push_str(&demo.geometry_css);
+        }
+        match request.target {
+            RenderTarget::Page { name, .. } => {
+                surfaces
+                    .pages
+                    .iter_mut()
+                    .find(|page| page.name == name)
+                    .expect("a declared page")
+                    .html = html;
+            }
+            RenderTarget::Slot { slot, route } => {
+                surfaces.slots.entry(route).or_default().insert(slot, html);
+            }
+            _ => unreachable!(),
+        }
+    }
+    SurfaceRender {
+        diagnostics,
+        inputs: source_inputs,
+        referenced: source_referenced,
+    }
+}
+
+fn site_slot(slot: rustify_docs_syntax::Slot) -> Slot {
+    match slot {
+        rustify_docs_syntax::Slot::Header => Slot::Header,
+        rustify_docs_syntax::Slot::Footer => Slot::Footer,
+        rustify_docs_syntax::Slot::SidebarTop => Slot::SidebarTop,
+        rustify_docs_syntax::Slot::SidebarBottom => Slot::SidebarBottom,
+        rustify_docs_syntax::Slot::BeforeContent => Slot::BeforeContent,
+        rustify_docs_syntax::Slot::AfterContent => Slot::AfterContent,
+        rustify_docs_syntax::Slot::NotFound => Slot::NotFound,
+    }
+}
+
+pub(super) fn timing(timing: &CompileTiming) -> Value {
     json!({"elapsed_ms":timing.elapsed_ms,"completed_at_ms":timing.completed_at_ms,
         "fresh_artifacts":timing.fresh_artifacts,"compiled_artifacts":timing.compiled_artifacts,
         "profile":timing.profile,"target":timing.target,"compiler":timing.compiler,

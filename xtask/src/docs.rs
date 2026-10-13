@@ -834,6 +834,35 @@ fn check_site_graph(label: &str, mode: &str, lines: &[String]) -> Result<(), Str
     Ok(())
 }
 
+/// Adapt an explicit test consumer with the real under-test CLI's pair.
+pub(super) fn pair_project(
+    root: &Path,
+    manifest: &Path,
+    out: Option<&Path>,
+) -> Result<serde_json::Value, String> {
+    let cli = std::env::var_os("RUSTIFY_DOCS_BIN")
+        .map(PathBuf::from)
+        .unwrap_or_else(|| root.join("target/docs-cli/rustify-docs"));
+    if !cli.is_file() {
+        return Err("build the under-test CLI with `mbx build --locked --profile docs-cli -p rustify-docs-cli`, or set RUSTIFY_DOCS_BIN to that real binary".into());
+    }
+    let mut command = Command::new("python3");
+    command
+        .arg(root.join("scripts/docs-pages-prepare.py"))
+        .arg("--project")
+        .arg(manifest)
+        .arg("--cli")
+        .arg(cli);
+    if let Some(out) = out {
+        command.arg("--out").arg(out);
+    }
+    let output = command.output().map_err(|error| error.to_string())?;
+    if !output.status.success() {
+        return Err(String::from_utf8_lossy(&output.stderr).into_owned());
+    }
+    serde_json::from_slice(&output.stdout).map_err(|error| error.to_string())
+}
+
 /// Exercise the author CLI's public build entry, so the checked glue, wasm,
 /// runtime and snippets are the same complete group an author publishes.
 fn check_component_site(root: &Path) -> Result<(), String> {
@@ -843,23 +872,40 @@ fn check_component_site(root: &Path) -> Result<(), String> {
         let lines = feature_graph(&mut mbx(), &manifest, "docs-components-fixture", Some(mode))?;
         check_site_graph(&format!("components fixture/{mode}"), mode, &lines)?;
     }
-    let output = root.join("target/docs-ssg/features/components");
     run(
         mbx()
             .current_dir(root)
-            .env("RUSTIFY_DOCS_CARGO", "mbx")
-            .env("RUSTUP_AUTO_INSTALL", "0")
+            .env("CARGO_TARGET_DIR", root.join("target"))
             .args([
-                "run",
+                "build",
                 "--locked",
                 "--package",
                 "rustify-docs-cli",
-                "--bin",
-                "rustify-docs",
-                "--",
-                "build",
-                "--config",
-            ])
+                "--profile",
+                "docs-cli",
+            ]),
+        "under-test CLI for the component consumer",
+    )?;
+    let author = root.join("target/docs-ssg/features/components-author");
+    if author.exists() {
+        std::fs::remove_dir_all(&author).map_err(|error| error.to_string())?;
+    }
+    let pair = pair_project(root, &manifest, Some(&author))?;
+    let fixture = Path::new(
+        pair["project"]
+            .as_str()
+            .ok_or("pair helper omitted project")?,
+    );
+    let cli = std::env::var_os("RUSTIFY_DOCS_BIN")
+        .map(PathBuf::from)
+        .unwrap_or_else(|| root.join("target/docs-cli/rustify-docs"));
+    let output = root.join("target/docs-ssg/features/components");
+    run(
+        Command::new(cli)
+            .current_dir(root)
+            .env("RUSTIFY_DOCS_CARGO", "mbx")
+            .env("RUSTUP_AUTO_INSTALL", "0")
+            .args(["build", "--config"])
             .arg(fixture.join("rustify-docs.toml"))
             .arg("--out")
             .arg(&output),

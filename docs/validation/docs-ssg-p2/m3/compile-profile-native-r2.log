@@ -1,0 +1,22 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+    Finished `docs-cli` profile [optimized] target(s) in 0.49s
+     Running unittests src/main.rs (target/docs-cli/deps/rustify_docs-6632717838e0553c)
+
+running 1 test
+compile proxy work: /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-docs-cli/target/docs-ssg/compile-profile-m3-r2
+mbx[progress]: 15s elapsed; 0 hits, 0 misses, 0 bypassed, 0 not looked up; ~0s compiler work saved
+mbx[progress]: 30s elapsed; 0 hits, 0 misses, 0 bypassed, 0 not looked up; ~0s compiler work saved
+mbx[progress]: 45s elapsed; 0 hits, 0 misses, 0 bypassed, 0 not looked up; ~0s compiler work saved
+mbx[progress]: 1m elapsed; 0 hits, 0 misses, 0 bypassed, 0 not looked up; ~0s compiler work saved
+test compile_proxy::compile_to_islands_proxy has been running for over 60 seconds
+error: test failed, to rerun pass `-p rustify-docs-cli --bin rustify-docs`
+
+Caused by:
+  process didn't exit successfully: `/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-cli/deps/rustify_docs-6632717838e0553c 'compile_proxy::compile_to_islands_proxy' --ignored --exact --nocapture` (signal: 15, SIGTERM: termination signal)
+mbx[gc]: evicted 2081 objects and 95 action results (449.8 MiB logical); 90.0 GiB logical remain

@@ -1,0 +1,54 @@
+schema_version = 1
+
+[site]
+name = "Rustify UI"
+description = "An experimental Rust SDK with DOM components and optional GPU regions."
+lang = "en"
+url = "https://rockie.github.io/rustify-ui/"
+base = "/rustify-ui/"
+
+[content]
+dir = "docs"
+include = [
+    "quickstart.md", "architecture.md", "navigation.md", "workspace.md",
+    "forms.md", "i18n.md", "data.md", "themes.md", "utility.md",
+    "compatibility.md", "components.md", "vellum.md",
+]
+
+[assets]
+dir = "site/static"
+
+[build]
+out = "site/dist"
+
+[rust]
+manifest = "site/Cargo.toml"
+registry = "site/src/lib.rs"
+
+[repo]
+url = "https://github.com/rockie/rustify-ui"
+ref = "main"
+edit_url = "https://github.com/rockie/rustify-ui/edit/main"
+
+[[nav.groups]]
+label = "Guides"
+items = [
+    "quickstart.md", "architecture.md", "navigation.md", "workspace.md",
+    "forms.md", "i18n.md", "data.md", "themes.md", "utility.md",
+    "compatibility.md", "components.md", "vellum.md",
+]
+
+[[nav.groups]]
+label = "Components"
+routes = [
+    "/components/button/", "/components/label/", "/components/link/", "/components/icon/",
+    "/components/text-field/", "/components/text-area/", "/components/checkbox/", "/components/radio/",
+    "/components/switch/", "/components/select/", "/components/slider/", "/components/progress/",
+    "/components/loading/", "/components/tooltip/", "/components/menu/", "/components/dialog/",
+    "/components/tabs/", "/components/scroll-area/", "/components/data-table/", "/components/tree/",
+    "/components/toast/", "/components/number-field/", "/components/color-field/", "/components/toggle-group/",
+]
+
+[[nav.top]]
+label = "GitHub"
+link = "https://github.com/rockie/rustify-ui"

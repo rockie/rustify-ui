@@ -18,7 +18,9 @@ Supported on macOS. Linux and Windows are not verified.
 ## Install and maintain the CLI
 
 This section records the verified P1 content-site release. The Rust examples
-below use the CLI built from the current repository checkout.
+below use the current repository checkout's CLI, version **0.1.10**. Its public
+CLI/framework pair and component-template installation recipe are not yet
+frozen; the pinned P1 install below is for content sites.
 
 The CLI is distributed from git, with its dependencies locked and the
 workspace's `docs-cli` profile, which unwinds so that `dev` can recover from a
@@ -77,13 +79,14 @@ that metadata reports `source: unknown` and gives the pinned 0.1.3 recipe.
 
 | Command | What it does |
 | --- | --- |
-| `rustify-docs new <dir> [--template content]` | Creates a site (a home page, two guide pages, `static/`, a README and a `.gitignore`) in a new or empty directory. |
-| `rustify-docs dev [--port <n>]` | Serves a content site from memory while you write, drafts included, and updates the open pages on every save. It writes nothing. |
-| `rustify-docs check [--format text\|json] [--deny-warnings] [--external-links]` | Reports the site's problems without publishing output. Content-only checks write no file and make no network request unless `--external-links` is given; configured Rust projects also run Cargo. |
+| `rustify-docs new <dir> [--template content\|components]` | Creates a content site (home page, two guides, `static/`, README and `.gitignore`) or a paired Rust component project in a new or empty directory. |
+| `rustify-docs dev [--port <n>]` | Serves the site from memory while you write, drafts included, and updates open pages on save. Rust sites may write private compilation caches; source and published output stay unchanged. |
+| `rustify-docs check [--format text\|json] [--deny-warnings] [--external-links]` | Reports problems without changing source, configuration or published output. Content-only checks compile no site Rust; configured Rust projects run both Cargo targets and may write private compilation caches. |
 | `rustify-docs build [--base <path>] [--out <dir>] [--format text\|json] [--deny-warnings]` | Checks the site the same way, then writes it to `build.out` (default `dist/`). |
 | `rustify-docs preview [--dir <dir>] [--base <path>] [--port <n>] [--host <address>]` | Serves a production build the way a static host would, without rebuilding it. |
 
-Every command takes `--config <path>` for a `rustify-docs.toml` elsewhere
+`dev`, `check`, `build` and `preview` take `--config <path>` for a
+`rustify-docs.toml` elsewhere
 than the working directory, or a configuration file of another name: that
 file is the one read (and, in `dev`, watched), its directory is the
 project, and its problems are reported under its name. `--out` and `--dir` are relative to the working
@@ -91,14 +94,17 @@ directory, as paths on a command line are; paths inside `rustify-docs.toml`
 are relative to the project. `--base` builds for another base path than
 `site.base` (it must still match `site.url`'s path).
 
-`new` and `dev` first check that `rustc --version` runs (a content site
-compiles nothing, but sites with components of their own will); without it
-they stop before writing, watching or listening. `new` then refuses a
-directory that is not empty, and writes the site into a temporary sibling
-that it renames into place only when every file is written: a failure
-leaves nothing behind. `new` and content-only builds never run Cargo.
-Rust projects use the `check`/`build` workflow below; component template
-generation and Rust source watching in `dev` are later work.
+`new` and `dev` first check that `rustc --version` runs. A components
+template or a configured Rust site also needs the active compiler's
+`wasm32-unknown-unknown` standard library. Missing tools stop the command
+before writing, watching or listening; the error gives the applicable
+`rustup` command. `new` then refuses a directory that is not empty and writes
+the complete project into a temporary sibling, renaming it into place only
+after every file is written. Failure removes the temporary project and
+preserves a pre-existing empty target. `new` and content-only builds never
+run Cargo; the first Rust `check`, `build` or `dev` may fetch locked
+dependencies. `check --external-links` is the explicit content-link network
+check; without it, content-only checks make no network request.
 
 `check --external-links` also requests every link to another site (in
 pages, home page actions, `nav.top` and `nav.social`): each address once
@@ -143,7 +149,8 @@ or that another build or a preview holds: rules `output`, `output-busy`):
 A build's `summary` also has `files`, `bytes`, `largest` (the five largest
 pages, `path` and `bytes`), `out` and `milliseconds`.
 
-`file` is relative to the project root; `line` and `column` count from 1
+For content diagnostics, `file` is relative to the project root; `line` and
+`column` count from 1
 (columns in characters). A problem with no position in a file has `null`
 there, and `suggestion` is `null` when there is nothing more specific to say
 than the message. Diagnostics are sorted by file, line, column, severity and
@@ -153,6 +160,12 @@ Content errors such as an invalid `lang`, a second H1 or a skipped heading
 level point to the YAML value or heading in the original file and include
 a repair. `check`, `build` and `dev` report the same location and advice.
 An I/O or output-lock failure has no invented source position.
+
+Rust compiler diagnostics keep the original compiler message, primary
+source span and help/notes. Files inside the project use relative paths;
+a dependency outside it keeps the compiler's path. The CLI compiles the
+original project rather than a relocated copy, so file, line and column
+refer to the source being edited.
 
 ## Project layout
 
@@ -204,6 +217,7 @@ image = "static/card.png"             # optional link-preview image (PNG, JPEG, 
 
 [content]
 dir = "content"                       # default
+# include = ["index.md", "guide/setup.md"]   # optional exact Markdown selection
 [assets]
 dir = "static"                        # default
 [build]
@@ -227,6 +241,11 @@ scope = "/"                           # optional route prefix the group is shown
 [[nav.groups]]
 label = "Reference"
 items = ["reference/api.md"]          # or an explicit list of content paths
+
+# With registered Rust pages, use a separate group:
+# [[nav.groups]]
+# label = "Examples"
+# routes = ["/examples/"]             # registered routes, without site.base
 
 [[nav.top]]                           # header links; also nav.social
 label = "GitHub"
@@ -254,6 +273,70 @@ Without `[[nav.groups]]` the sidebar lists every page in one group named
 after the site, plus one group per `sidebar.group` a page names. With groups,
 a page none of them lists is a warning (`not-in-nav`); a group's `items`
 naming a page that does not exist is an error.
+
+A group chooses exactly one of `dir`, `items` or `routes`. `routes` lists
+registered Rust pages in the declared order, using canonical addresses such
+as `/examples/` without the deployment base, query or fragment. A duplicate
+route, an unknown route or a Markdown page listed there is an error; use
+`dir` or `items` for Markdown pages.
+
+### Select Markdown sources
+
+Without `content.include`, the content directory keeps its recursive
+discovery. Set an explicit list when only particular Markdown files belong
+to the published site:
+
+```toml
+[content]
+dir = "docs"
+include = ["quickstart.md", "components.md"]
+```
+
+Each entry is relative to `content.dir`, so these name `docs/quickstart.md`
+and `docs/components.md`. Entries must be literal `.md` files: glob patterns,
+paths outside the content directory, private paths, duplicates and other
+extensions are errors at the configuration entry. A missing or unsafe
+selected file is also a located error. `include = []` selects zero Markdown
+pages; it does not restore recursive discovery. A project with registered
+pages can use that empty selection; without any page to publish, the normal
+`no-pages` error still applies.
+
+The selection is made before file bytes or frontmatter are read. Unselected
+Markdown and unreferenced files under the content directory are not scanned
+or published. Selected pages can still reference images and downloads:
+those files are read through the normal resource graph, tracked as inputs
+and published at their fingerprinted paths. The independent `assets.dir`
+keeps its usual whole-directory publishing rules.
+
+`nav` chooses wayfinding, while `content.include` chooses source pages. Keep
+Markdown `items` within the selection and use `routes` for registered pages;
+sidebar omission and `draft` do not substitute for the source selection.
+The repository's [site configuration](../rustify-docs.toml) demonstrates
+this with twelve selected guides and separate registered component routes.
+
+### Import a theme document
+
+To use an exported Theme Studio JSON document, replace `theme.primary` with:
+
+```toml
+[theme]
+document = "theme.json"
+```
+
+`theme.document` and `theme.primary` cannot be set together. The document is
+UTF-8 JSON up to 256 KiB, relative to the project root, and is a build input.
+Keep it outside `assets.dir` and do not link it as a download. The CLI validates
+both modes and applies the same resolved semantic colours, typography,
+spacing and radius to the page and its island scopes. System mode follows
+the reader's preference; islands do not store separate mode choices.
+
+Referenced fonts and glyph fallbacks come from the CLI's bundled bytes and
+licenses, with font files published as `assets/fonts/<digest>.ttf`. No font is
+downloaded from another origin. Unknown theme tokens or font fallbacks keep
+their diagnostics; missing packaged font bytes or licenses stop the build.
+Without `theme.document`, the default reading theme uses system fonts and
+adds no font assets. See [themes](themes.md) for the document format and
+font selection.
 
 ## Frontmatter
 
@@ -347,8 +430,22 @@ same class names GitHub uses. They render the same on GitHub.
 | `../../src/example.rs` | A file in the repository outside the content: the link becomes `<repo.url>/blob/<ref>/<path>` (`tree` for a directory). Without `[repo]` this is an error (`repo-link`). |
 | `https://…`, `mailto:…` | Left as written. Links to other sites get `rel="noopener"`. |
 
-Every page link and anchor is checked, so a published site has none that
+Links to published pages and their anchors are checked, so a site has none that
 leads nowhere. `javascript:`, `vbscript:` and `data:` links are errors.
+
+When `content.include` explicitly excludes an existing non-private
+Markdown file, a link to that file becomes a repository URL using `[repo]`.
+This applies to Markdown links and raw HTML `<a>` links. Its fragment is
+kept for the repository; the excluded body and its headings are not read or
+published, and no local page is created for it. Without `[repo]`, the link
+is a located `repo-link` error. A missing, private or escaping target remains
+an error even when `[repo]` is configured.
+
+Those repository links depend on the target's existence and original path
+binding. Editing the excluded body does not invalidate the page's rendering
+inputs; deleting the target or retargeting its symbolic link does. An
+explicit source include or Markdown introduction is different: it reads
+the requested source and therefore tracks its bytes.
 
 Write links as relative `.md` paths when the file should also work on GitHub:
 there, `setup.md#install` opens the file at that heading. A `/guide/setup/`
@@ -485,7 +582,47 @@ to a draft is an error in `check` and `build`, and a warning in `dev`.
 
 ## Rust components and demos
 
-The current manual project is the
+### Create a component project
+
+The components template requires an installed CLI with a traceable source
+revision, an explicit paired framework revision and its embedded dependency
+lock. A development checkout without that frozen pair refuses generation;
+it does not write an unlocked project or choose a framework revision for
+the author. The public pair for this checkout's 0.1.10 is still being
+prepared; the verified P1 installation above does not provide this template.
+
+With a published paired CLI and stable Rust available, install the browser
+target if needed, then create the project:
+
+```sh
+rustup target add wasm32-unknown-unknown
+rustify-docs new my-docs --template components
+cd my-docs
+rustify-docs check
+rustify-docs dev
+```
+
+The template supplies a props-driven counter, a registered source demo, a
+home page and two guides, its README, `Cargo.toml`, `Cargo.lock` and the
+native/browser entries. The site display name keeps the directory name.
+The Cargo package name lowercases ASCII letters, joins runs of spaces,
+non-ASCII characters and other separators with `-`, and removes leading and
+trailing separators: `My Docs` becomes `my-docs`. An empty result becomes
+`docs-site`; a name starting with a digit gets `docs-` prefixed. That name
+also replaces the lockfile's root package name. The library stays
+`site_docs`, so a directory name that is a Rust keyword does not change the
+entry-point imports.
+
+Commit the supplied manifest and lock. Creation itself compiles nothing;
+the first `check`, `build` or `dev` compiles two targets and may download
+dependencies. Later Rust saves reuse Cargo's compilation outputs, and
+Markdown-only saves reuse the compiled renderer and wasm. The CLI includes
+wasm-bindgen support; authors need no separate wasm-pack, wasm-bindgen CLI,
+Node, Tailwind command or GPU toolchain.
+
+### Register components and demos
+
+A working manual project is the
 [component fixture](../tests/docs-ssg/fixtures/components/). Its
 [Cargo manifest](../tests/docs-ssg/fixtures/components/Cargo.toml) defines an
 independent workspace, locked dependencies, a `docs-render` host binary and
@@ -529,7 +666,7 @@ trusted Rust. YAML supplies data, never Rust expressions. The adapter receives
 the decoded props and checked child Markdown as a view. The
 [host entry](../tests/docs-ssg/fixtures/components/src/bin/docs-render.rs)
 calls `serve_site(site())`; the
-[wasm entry](../tests/docs-ssg/fixtures/components/src/lib.rs#L26) exports
+[wasm entry](../tests/docs-ssg/fixtures/components/src/lib.rs) exports
 `docs_hydrate` and calls `hydrate_site(site())`.
 
 Embed a component or reference a registered demo in a complete fence:
@@ -560,6 +697,15 @@ the original source, including Unicode and line endings, from the same files
 compiled for this build. Anonymous demo closures and generated or external
 functions cannot provide that source identity.
 
+To add a demo, write its function in a declared project module, register
+that path in the existing `demos` block, then add a `rustify-demo` fence with
+the registered name. With `dev` running, save the source and Markdown to
+rebuild. Do not paste a second copy of the function into the page: the CLI
+captures the function slice and containing file before compilation and
+checks their generation before publishing. A `rustify:include` directive
+instead displays a non-interactive source excerpt without registering a
+demo.
+
 Run the working fixture with the current checkout's CLI, from the repository
 root; its lockfile and required wasm target must be available:
 
@@ -571,7 +717,8 @@ RUSTIFY_DOCS_CARGO=mbx target/docs-cli/rustify-docs build --config tests/docs-ss
 
 Rust checks build both targets with `--locked` and may populate Cargo and
 `.rustify-docs` caches. Cargo may need to fetch dependencies on the first run.
-Keep the fixture's host/wasm profiles when adapting it. The CLI checks the
+They leave author source, configuration, the dependency lock and any
+existing output unchanged. The CLI checks the
 cold declaration against the compiled registry, batches static rendering and
 keeps the matching wasm, generated glue and SDK runtime assets together.
 Ordinary pages still contain no islands and request no wasm.
@@ -590,6 +737,148 @@ fieldset disables input. Loading keeps the canvas locked. Successful
 attachment enables it; a startup or later wasm failure restores every island
 in that instance to its initial view and retains the source and shell.
 Reload the page to retry.
+
+### Compilation profiles and version pairing
+
+Keep the template's four profiles when adapting a Rust project:
+
+| Command | Native `docs-render` | Browser library |
+| --- | --- | --- |
+| `check`, `dev` | `docs-host`: inherits dev, unwind, incremental, opt-level 1, debug 0, no LTO | `docs-wasm`: inherits dev, abort, incremental, opt-level 1, debug 0, no LTO |
+| `build` | `docs-host-release`: inherits release, unwind, debug 0, thin LTO | `release`: abort, debug 0, thin LTO, one codegen unit |
+
+The CLI compiles the native binary with `--no-default-features --features ssr`,
+then the library for `wasm32-unknown-unknown` with
+`--no-default-features --features hydrate`. Both use `--locked`. The CLI
+itself uses the separate `docs-cli` unwind profile, which lets `dev` survive
+a failed generation; that does not change the browser's abort requirement.
+
+The generated project pins `rustify-docs`, `rustify-ui` and
+`rustify-components` to one framework git revision. The CLI has its own
+source revision and explicitly records the framework revision it accepts;
+these revisions can differ. Its source identity, expected framework, helper
+protocol, runtime assets and `wasm-bindgen = "=0.2.128"` must agree. A
+mismatched or missing pair is rejected before rendering. Local framework
+paths are accepted only for the development CLI's exact repository fixture,
+not as a substitute for the published pair.
+
+Before an upgrade, retain the CLI installation revision, `Cargo.toml`,
+`Cargo.lock` and the complete successful output. Select a published pair,
+install its CLI using that release's recorded recipe, update all three
+framework dependencies together and explicitly regenerate the dependency
+lock as part of the upgrade. Run `check` and `build`, then restart `dev` to
+discard the previous compiled generation. Ordinary authoring commands do
+not update the dependency lock for you.
+
+To roll back, reinstall the retained CLI revision and restore its matching
+manifest and lock. Restore the complete prior output with its manifest,
+wasm, glue, scripts and fonts. Combining files from different builds can
+pair new source with old executable code.
+
+### Custom pages and layout slots
+
+Custom pages register a canonical route, title, optional description and a
+static function in the same `site!` declaration:
+
+```rust
+pages {
+    ExamplesPage { route: "/examples/", title: "Examples", description: "Two counters with shared source." } => crate::demos::examples_page,
+}
+slots {
+    footer => crate::demos::footer,
+}
+```
+
+The template's counter demo can be reused from those functions:
+
+```rust
+pub fn examples_page(context: rustify_docs::site::RenderContext) -> impl IntoView {
+    let first = context.demo("CounterDemo");
+    let second = context.demo("CounterDemo");
+    view! {
+        <section>
+            <h2 id="paired-counters">"Two independent counters"</h2>
+            {first}
+            {second}
+        </section>
+    }
+}
+
+pub fn footer(context: rustify_docs::site::RenderContext) -> impl IntoView {
+    view! { <p><a href=context.base>"Home"</a></p> }
+}
+```
+
+As in the template's
+[src/demos.rs](../crates/rustify-docs-cli/templates/components/src/demos.rs), these functions need
+`use leptos::prelude::*;`. `RenderContext` provides `route`, `lang` and
+`base`; each `demo(name)` call uses the same island and source wrapper as a
+fence, with independent IDs and state. `route` omits the deployment base.
+Use `base` when constructing links to other registered routes. The page is
+written as `/examples/index.html` and uses the normal shell, navigation and
+theme; it is not rendered by an application server for each request.
+
+Routes and document titles are checked across Markdown and registered
+pages. A page without an explicit description remains browsable. Custom
+headings, links, images, classes and explicit demos enter the same final
+document checks as Markdown content; a custom function does not bypass the
+CSP or resource graph.
+
+The seven slots accept functions with the same `RenderContext`:
+
+| Slot | Replaces or inserts |
+| --- | --- |
+| `header` | The brand area; framework navigation and mode controls remain |
+| `footer` | The footer content, including on the 404 page |
+| `sidebar_top`, `sidebar_bottom` | Content before or after sidebar navigation |
+| `before_content`, `after_content` | Content before or after the article |
+| `not_found` | The generated 404 body; the surrounding shell remains |
+
+Unspecified slots keep their defaults. A slot can call `context.demo`, so a
+demo in an unconditional shared slot can make every page an island page.
+Keep shared reading content static or restrict the demo by `context.route`.
+Add registered pages to a sidebar group with `routes`, for example:
+
+```toml
+[[nav.groups]]
+label = "Examples"
+routes = ["/examples/"]
+```
+
+### Reuse a Markdown introduction
+
+A page or slot can request the source introduction through its
+`RenderContext`:
+
+```rust
+let introduction = context.markdown_intro("README.md");
+```
+
+Place that returned view in the page, as the repository's
+[home function](../site/src/pages.rs) does. The path is relative to the
+project root, not `content.dir`. The CLI reads the UTF-8 Markdown after its
+H1 and before its first H2, omitting both headings; without a later H2, it
+uses the remainder after H1. A source with no Markdown H1, or an H2 before
+that H1, is an error. The fragment uses the same Markdown writer,
+highlighting, HTML policy and resource checks as ordinary content, with
+diagnostics retaining their original source offsets.
+
+Links keep the source file's meaning. In a root README, a link to a selected
+guide becomes the guide's site route, while a link to another README section
+or an unpublished file uses `[repo]`. A README's `#quick-start` therefore
+still targets the repository README, rather than an unrelated heading on
+the enclosing home page. Images resolve from the source file's directory;
+code include directives keep their existing project-relative `path`
+contract. These explicit reads enter the shared dependency/resource checks.
+
+The Markdown file is a build input: changes rerender the introduction
+without compiling its prose into browser wasm, and the `.md` file is not
+published as a standalone asset. A registered root page supplies its own
+complete home composition around the fragment. The repository's
+[registration](../site/src/lib.rs) and home function provide the H1,
+positioning sentence, Quick start / Components actions and feature list,
+while keeping the normal shell and slot behavior. No copied README prose
+is needed in Rust or in a second Markdown page.
 
 ### Static builtins
 
@@ -685,18 +974,49 @@ the `.rustify-docs/` beside it.
 
 ## Writing with `dev`
 
-This section describes content-site authoring. `dev` builds the site once,
-then serves it from memory on the loopback
+`dev` serves both content and Rust sites from memory on the loopback
 interface: at `dev.port` (default `4188`; the system picks another port when
 that one is taken, and `dev` says which), or at `--port`, which must be free
-(`--port 0` lets the system pick). It prints the address and keeps running
-until stopped.
+(`--port 0` lets the system pick). It installs the watcher and prints the
+address before the first build starts, then keeps running until stopped.
+Open that address during compilation: before any successful generation,
+the page says **Building your site** and updates when ready. A first Rust
+build compiles the native renderer and browser module and can take longer
+while dependencies are fetched and compiled.
 
-- **Every save is a new build.** It watches `rustify-docs.toml`, the content
-  and asset directories and every file a page includes, and never the
-  output. Saves that arrive together, or while a build runs, make one build
-  afterwards; the last save always shows. Each build reads all of its inputs
+- **Saves of selected inputs rebuild.** It watches `rustify-docs.toml`, the
+  asset directory, theme documents and actual source/resource dependencies.
+  Without `content.include`, content discovery remains recursive. With an
+  explicit selection, it tracks the selected Markdown files and their
+  actual byte dependencies, including introductions, images and downloads,
+  without watching the whole content tree. Unselected Markdown and
+  unreferenced files do not rebuild the site when their bodies change; for
+  this repository's selection, that includes unreferenced validation files.
+  Repository-only targets are tracked by existence and path binding:
+  deletion, symbolic-link retargeting, replacement of an ancestor directory
+  or restoration of a missing dependency triggers a new build. An excluded
+  file explicitly used by an introduction or source include is a byte
+  dependency and does rebuild. Rust sites also watch their registry,
+  source, manifest, lock, local path dependencies and discovered build-script
+  inputs. Output, `target/`,
+  `.git/` and CLI private work areas are excluded. Saves that arrive
+  together, or while a build runs, make one build afterwards; the last save
+  always shows. Each build reads all of its inputs
   again, so nothing is missed when the system drops change events.
+- **Compilation is reused when its inputs match.** A Markdown, ordinary
+  configuration, theme or referenced-asset save reruns analysis and the
+  precompiled renderer without invoking Cargo again when Rust source,
+  manifests, lock, build inputs and compiler settings are unchanged.
+  Rust changes rebuild the two targets serially with their development
+  profiles, reusing Cargo's incremental outputs. The terminal reports
+  native compilation, browser compilation and page rendering separately.
+  The dev event stream records the generation, each target's result and
+  completion time in epoch milliseconds; completion of compilation is
+  distinct from a complete new page being served.
+- **Building retains the last successful version.** Once one exists, the
+  page remains visible with the **Building** state and current phase in the
+  problem panel. Its HTML, displayed Rust source, wasm and glue stay
+  together until a complete new generation succeeds.
 - **Only the pages a build changed reload**, and they come back to where you
   were reading (and to the code tabs you chose). A paragraph reloads its own
   page; an included file or an image, the pages that use it; the
@@ -711,6 +1031,13 @@ until stopped.
 - **While nothing has built** (the first build failed), every address shows
   a page saying so, with the panel; it becomes the site at the first build
   that succeeds.
+- **Saves during compilation cannot publish a mixed generation.** Rust
+  source and demo slices are captured before compilation and checked again
+  before rendering and committing. Content, includes and the imported
+  theme are bound to the reads used for that render too. If those inputs
+  change during a round, the candidate is discarded and the latest inputs
+  are rebuilt. A failed or unreadable input leaves the last successful
+  version in service and remains watched for recovery.
 - **A failure inside `rustify-docs`** (a panic) is one more problem in the
   panel: the session goes on, and the next build starts afresh. This needs
   the command installed with `--profile docs-cli`; a build that aborts on a
@@ -718,9 +1045,12 @@ until stopped.
 - **Drafts are shown**, marked "Draft" in the page and in the sidebar, and a
   page linking to one gets a warning (in `check` and `build` it is an
   error).
-- **Nothing is written.** `dev` writes no file in the project or the output
-  directory and takes no lock on the output, so `rustify-docs build` can run
-  beside it. Pages served by `dev` load its panel script from
+- **Source and published output are unchanged.** Content sites compile no
+  Rust; Rust sites may write Cargo and `.rustify-docs` private compilation
+  caches. `dev` does not rewrite source, configuration, `Cargo.lock` or the
+  production output, and takes no lock on that output, so
+  `rustify-docs build` can run beside it. Pages served by `dev` load its
+  panel script from
   `/__rustify-docs/`, which a production build never contains.
 - Pages show the last-updated dates the repository had when `dev` started.
 
@@ -862,13 +1192,17 @@ Errors stop a build; warnings do not, unless `--deny-warnings` is given.
 | `invalid_props`, `embed-props` | error | Props that do not match the generated component or builtin types |
 | `unsupported_initial_data`, `unsupported_initial_state` | error | An initial view needing shared asynchronous data/errors or an open floating layer/toast region |
 | `rust-*` | error | Rust project, registry, source, compilation, framework pairing, helper or generation validation failures |
+| `content-include`, `content-include-missing` | error | An invalid Markdown source selection or a selected file that cannot be read safely; the diagnostic points to its configuration entry |
+| `markdown-intro`, `markdown-intro-marker` | error | An unsafe/unreadable introduction source, missing H1, or a missing/duplicated introduction placeholder in a registered view |
 | `include`, `include-path`, `include-missing`, `include-region`, `include-inline` | error | An include directive that cannot be followed |
-| `nav-missing-page` | error | A nav group listing a page that does not exist |
+| `nav-missing-page`, `nav-duplicate-route`, `nav-route-origin` | error | A nav group listing an absent page; registered-route navigation repeating a route or naming a Markdown page |
 | `nav-unknown-group` | error | A page's `sidebar.group` naming no configured group |
 | `nav-empty` | warning | A `dir` group with no pages |
 | `not-in-nav` | warning | A published page no nav group lists |
 | `logo-missing` | error | `theme.logo` naming a file that does not exist |
 | `brand-contrast` | warning | A primary colour below 4.5:1 for links or button labels |
+| `theme-document`, `theme-font-resource`, `theme-document-resource` | error | An invalid imported theme, missing bundled font resources, or a theme document being published as an asset |
+| `theme-token` | warning | An unknown imported token or resolved font fallback |
 | `symlink-outside`, `unreadable`, `not-utf8` | error | An input that cannot be read safely |
 | `private-file` | error | A link, image, logo or preview image that is, or leads to, a private file |
 | `no-pages` | error | Nothing to publish: no content directory, no page, or only drafts |
@@ -881,4 +1215,6 @@ Errors stop a build; warnings do not, unless `--deny-warnings` is given.
 | `write` | error | The output could not be written; the previous output is kept |
 | `output`, `output-busy` | error | An output the build may not replace, or one another build or a preview holds |
 
-`check` never changes a file to fix a problem.
+`check` never rewrites source or configuration to fix a problem and never
+generates or replaces published output. Rust checks may write private
+compilation caches; both targets use the existing dependency lock.

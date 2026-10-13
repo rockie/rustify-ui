@@ -1,0 +1,7 @@
+compile/0: valid, dev compiler end to paint+input 2304.5 ms
+compile/1: valid, dev compiler end to paint+input 2381.39990234375 ms
+compile/2: valid, dev compiler end to paint+input 2209.7998046875 ms
+compile/3: valid, dev compiler end to paint+input 2385.599853515625 ms
+compile/4: valid, dev compiler end to paint+input 2369.400146484375 ms
+compile/5: valid, dev compiler end to paint+input 2198.89990234375 ms
+compile proxy: failed, median 2369.400146484375 ms

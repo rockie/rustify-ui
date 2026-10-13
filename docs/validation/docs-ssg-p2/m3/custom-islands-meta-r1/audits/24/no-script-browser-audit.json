@@ -1,0 +1,21 @@
+{
+  "requests": [
+    "http://127.0.0.1:4197/rustify-ui/counter/",
+    "http://127.0.0.1:4197/rustify-ui/assets/site.b3c499257f.css",
+    "http://127.0.0.1:4197/rustify-ui/assets/fonts/371924e7480d3d01807fdc1bd30442d0a6651e6b5ea546482f5883d613cf0419.ttf",
+    "http://127.0.0.1:4197/rustify-ui/assets/fonts/662a196d58f1183bf2d77428b6d5283fe3f45161ab021bea4036bc98e5cac016.ttf",
+    "http://127.0.0.1:4197/rustify-ui/client-only/",
+    "http://127.0.0.1:4197/rustify-ui/assets/site.b3c499257f.css",
+    "http://127.0.0.1:4197/rustify-ui/assets/fonts/371924e7480d3d01807fdc1bd30442d0a6651e6b5ea546482f5883d613cf0419.ttf",
+    "http://127.0.0.1:4197/rustify-ui/proxy/",
+    "http://127.0.0.1:4197/rustify-ui/assets/site.b3c499257f.css",
+    "http://127.0.0.1:4197/rustify-ui/assets/fonts/371924e7480d3d01807fdc1bd30442d0a6651e6b5ea546482f5883d613cf0419.ttf",
+    "http://127.0.0.1:4197/rustify-ui/assets/fonts/662a196d58f1183bf2d77428b6d5283fe3f45161ab021bea4036bc98e5cac016.ttf",
+    "http://127.0.0.1:4197/rustify-ui/assets/fonts/1d4b2f008ac7e02780c19801d4b04dd4538e40215943cc8ad374dba8ec2278c0.ttf",
+    "http://127.0.0.1:4197/rustify-ui/assets/fonts/39ee3c587e10e89669b9ff32703261d10d5f9c4dd5ad147b6b5a1c5200591817.ttf"
+  ],
+  "failures": [],
+  "responses": [],
+  "console": [],
+  "pageErrors": []
+}

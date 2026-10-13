@@ -28,3 +28,14 @@ FIRST VIEWPORT: Bottom-right panel ~420 px wide, max 60 % viewport height: heade
 FORM: Corner errata panel with dismiss-to-marker, chosen by the user over a top banner. Seed: user-pinned-docs-ssg-p1-dev.
 
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
+
+## P2 M4 extension, before implementation
+
+Purpose and states follow DOCS-SSG-P2 §5.4 and §6. Keep the existing corner diagnostics composition, neutral palette, typography and dismiss choice. The new job is to distinguish a save being compiled from a failed save, while preserving the last successful page and its controls.
+
+- First build: bind and print the address before compiling. Serve a static shell with a plain “Building your site” heading, current host/wasm/render stage and a sentence explaining that the first dependency build takes longer. It uses DOM text and the existing external dev script; no spinner, percentage estimate or island dependency.
+- Incremental build: keep the entire last good page visible. A compact neutral marker says “Building · showing the last good version”, with the current stage available in the existing panel. A previous error remains readable while the next save is building; it clears only after a successful replacement.
+- Failure: retain the current file grouping, error counts and original Rust file:line:column. Preserve line breaks in compiler messages and help text, allow long paths to wrap, and keep the panel/list scrollable at 320px. No editor-opening links or extra actions are introduced.
+- Success and reconnect: clear the building status, reload only affected pages using the existing scroll restoration, and resynchronise state on reconnect. Live announcements are per stage/result and never move reading focus. Completion timestamps are measurement evidence, not product copy.
+
+Validation will cover first build, building over last good, multiline Rust failure and recovery, long paths, dark/light, keyboard and narrow viewport. Capture the complete local implementation once, apply any material review findings in one batch, and confirm once. This brief is preparation; it does not record browser acceptance.

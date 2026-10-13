@@ -172,6 +172,13 @@ fn mode_tokens(theme: rustify_ui::Theme, primary: &str, code_background: &str) -
 /// The token rules: light on the document root, dark when the page says
 /// dark, and dark when it follows a system that is.
 pub fn tokens_css(brand: &Brand) -> String {
+    // An island is another SDK scope. Its light fallback must not reset the
+    // document's active palette; an imported projection can still override it.
+    let inherited: String = rustify_ui::Theme::light()
+        .properties()
+        .into_iter()
+        .map(|(name, _)| format!("{name}:inherit;"))
+        .collect();
     let light = mode_tokens(
         rustify_ui::Theme::light(),
         &brand.primary_light,
@@ -185,7 +192,8 @@ pub fn tokens_css(brand: &Brand) -> String {
     format!(
         ":root[data-rustify-scope]{{{light}color-scheme:light;}}\n\
          :root[data-rustify-scope][data-theme=\"dark\"]{{{dark}color-scheme:dark;}}\n\
-         @media (prefers-color-scheme: dark){{:root[data-rustify-scope][data-theme=\"system\"]{{{dark}color-scheme:dark;}}}}\n"
+         @media (prefers-color-scheme: dark){{:root[data-rustify-scope][data-theme=\"system\"]{{{dark}color-scheme:dark;}}}}\n\
+         :root[data-rustify-scope] [data-rustify-scope]{{{inherited}}}\n"
     )
 }
 
@@ -235,12 +243,21 @@ fn assets() -> Result<Vec<Stylesheet>, StyleError> {
 /// Compiles the utilities `candidates` name, with the fixed layers, into
 /// unminified CSS.
 pub fn compile_utilities(candidates: &BTreeSet<String>) -> Result<String, StyleError> {
+    compile_utilities_with_theme(candidates, "")
+}
+
+fn compile_utilities_with_theme(
+    candidates: &BTreeSet<String>,
+    theme: &str,
+) -> Result<String, StyleError> {
     let options = CompileOptions {
         base: Some("/rustify-docs".into()),
         from: None,
         ..CompileOptions::default()
     };
-    let mut compiler = compile(&input(), options, assets()?, limits())
+    let mut source = input();
+    source.push_str(theme);
+    let mut compiler = compile(&source, options, assets()?, limits())
         .map_err(|error| StyleError::Compile(error.to_string()))?;
     compiler.set_license_banner(false);
     let candidates: Vec<String> = candidates.iter().cloned().collect();
@@ -384,9 +401,21 @@ pub(crate) fn url_ranges(css: &str, arbitrary: bool) -> Vec<(String, Range<usize
 /// The site's stylesheet: utilities for `candidates`, the brand's tokens and
 /// the highlighting palette, minified.
 pub fn site_css(candidates: &BTreeSet<String>, brand: &Brand) -> Result<String, StyleError> {
-    let mut css = compile_utilities(candidates)?;
+    site_css_with_theme(candidates, brand, "", "")
+}
+
+/// Uses optional validated theme mappings during compilation and projects
+/// their variables after the incumbent defaults.
+pub fn site_css_with_theme(
+    candidates: &BTreeSet<String>,
+    brand: &Brand,
+    mappings: &str,
+    projection: &str,
+) -> Result<String, StyleError> {
+    let mut css = compile_utilities_with_theme(candidates, mappings)?;
     css.push_str(&tokens_css(brand));
     css.push_str(&highlight::theme_css(DARK_ROOT, SYSTEM_ROOT));
+    css.push_str(projection);
     minify(&css)
 }
 

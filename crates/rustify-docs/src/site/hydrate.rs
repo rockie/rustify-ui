@@ -1,12 +1,14 @@
 use super::registry::{
-    children_view, placeholder_view, prepare_environment, PreparedComponent, ViewFactory,
+    children_view, document_mode, placeholder_view, prepare_environment, PreparedComponent,
+    PreparedEnvironment, ViewFactory,
 };
 use super::{IslandMetadata, RenderTarget, SiteError, SiteRegistry, PROTOCOL_VERSION};
 use leptos::prelude::*;
-use leptos::wasm_bindgen::JsCast;
-use leptos::web_sys::HtmlElement;
+use leptos::wasm_bindgen::{closure::Closure, JsCast, JsValue};
+use leptos::web_sys::{js_sys, HtmlElement, MutationObserver, MutationObserverInit};
 use std::cell::RefCell;
 use std::collections::BTreeSet;
+use std::rc::Rc;
 
 thread_local! {
     static APPS: RefCell<Vec<rustify_ui::AppHandle>> = const { RefCell::new(Vec::new()) };
@@ -17,7 +19,83 @@ struct Attachment {
     metadata: IslandMetadata,
     prepared: Option<PreparedComponent>,
     demo: Option<ViewFactory>,
-    environment: super::registry::PreparedEnvironment,
+    environment: PreparedEnvironment,
+}
+
+type ThemeSync = Rc<dyn Fn()>;
+
+struct ThemeWatcher {
+    observer: MutationObserver,
+    _callback: Closure<dyn FnMut()>,
+    _abort: rustify_ui::AbortRelease,
+    _media_listener: rustify_ui::Listener,
+}
+
+impl Drop for ThemeWatcher {
+    fn drop(&mut self) {
+        self.observer.disconnect();
+    }
+}
+
+/// Sets only the reactive context. The site's stylesheet already owns its CSS.
+fn provide_browser_environment(environment: PreparedEnvironment) -> Option<ThemeSync> {
+    let current = environment.provide_reactive()?;
+    let root = document()
+        .document_element()
+        .expect("an island's document root exists");
+    let media = window()
+        .match_media("(prefers-color-scheme: dark)")
+        .unwrap_or_else(|error| leptos::wasm_bindgen::throw_val(error))
+        .expect("the browser supports color-scheme media queries");
+    let root_for_sync = root.clone();
+    let media_for_sync = media.clone();
+    let sync: ThemeSync = Rc::new(move || {
+        let Some(active) = current.try_get_untracked() else {
+            return;
+        };
+        let mode = document_mode(
+            root_for_sync.get_attribute("data-theme").as_deref(),
+            media_for_sync.matches(),
+        );
+        if active.mode != mode {
+            if let Some(next) = environment.resolved(mode) {
+                let _ = current.try_set(next);
+            }
+        }
+    });
+    let attribute_sync = Rc::clone(&sync);
+    let callback = Closure::<dyn FnMut()>::new(move || attribute_sync());
+    let observer = MutationObserver::new(callback.as_ref().unchecked_ref())
+        .unwrap_or_else(|error| leptos::wasm_bindgen::throw_val(error));
+    // A fatal cannot call Rust cleanups. Bind the native method so aborting
+    // disconnects the observer without re-entering this wasm instance.
+    let disconnect = js_sys::Reflect::get(observer.as_ref(), &JsValue::from_str("disconnect"))
+        .unwrap_or_else(|error| leptos::wasm_bindgen::throw_val(error))
+        .unchecked_into::<js_sys::Function>()
+        .bind0(observer.as_ref())
+        .unchecked_into::<js_sys::Function>();
+    let abort = rustify_ui::release_on_abort(disconnect);
+    let options = MutationObserverInit::new();
+    options.set_attributes(true);
+    options.set_attribute_filter(&js_sys::Array::of1(&JsValue::from_str("data-theme")));
+    observer
+        .observe_with_options(&root, &options)
+        .unwrap_or_else(|error| leptos::wasm_bindgen::throw_val(error));
+    let media_sync = Rc::clone(&sync);
+    let media_listener = rustify_ui::listen(
+        media.unchecked_ref(),
+        "change",
+        Default::default(),
+        move |_| media_sync(),
+    );
+    let watcher = StoredValue::new_local(ThemeWatcher {
+        observer,
+        _callback: callback,
+        _abort: abort,
+        _media_listener: media_listener,
+    });
+    on_cleanup(move || watcher.dispose());
+    Some(sync)
 }
 
 /// Attaches the same registered views and retains all scope lifecycle handles.
@@ -86,6 +164,7 @@ pub fn hydrate_site(registry: SiteRegistry) -> Result<(), SiteError> {
     }
 
     let mut apps = Vec::new();
+    let initial_syncs = Rc::new(RefCell::new(Vec::<ThemeSync>::new()));
     for attachment in attachments {
         let Attachment {
             root,
@@ -110,8 +189,11 @@ pub fn hydrate_site(registry: SiteRegistry) -> Result<(), SiteError> {
                     SiteError::new("invalid_island", "client-only placeholder is missing")
                 })?;
             let placeholder_environment = environment.clone();
+            let placeholder_syncs = Rc::clone(&initial_syncs);
             let handle = rustify_ui::hydrate(root.clone(), config, move || {
-                placeholder_environment.provide();
+                if let Some(sync) = provide_browser_environment(placeholder_environment) {
+                    placeholder_syncs.borrow_mut().push(sync);
+                }
                 rustify_components::geometry::provide_geometry_styles(Default::default());
                 placeholder_view(placeholder)
             })
@@ -135,6 +217,7 @@ pub fn hydrate_site(registry: SiteRegistry) -> Result<(), SiteError> {
                 SiteError::new("invalid_island", "client-only renderer is missing")
             })?;
             let seed = format!("{}-client", metadata.seed);
+            let client_syncs = Rc::clone(&initial_syncs);
             let handle = rustify_ui::mount(
                 host,
                 rustify_ui::MountConfig {
@@ -144,7 +227,9 @@ pub fn hydrate_site(registry: SiteRegistry) -> Result<(), SiteError> {
                 },
                 move || {
                     rustify_ui::id::provide(&seed);
-                    environment.provide();
+                    if let Some(sync) = provide_browser_environment(environment) {
+                        client_syncs.borrow_mut().push(sync);
+                    }
                     rustify_components::geometry::provide_geometry_styles(Default::default());
                     (prepared.render)(children_view(children))
                 },
@@ -168,8 +253,11 @@ pub fn hydrate_site(registry: SiteRegistry) -> Result<(), SiteError> {
                     ))
                 }
             };
+            let body_syncs = Rc::clone(&initial_syncs);
             let handle = rustify_ui::hydrate(root, config, move || {
-                environment.provide();
+                if let Some(sync) = provide_browser_environment(environment) {
+                    body_syncs.borrow_mut().push(sync);
+                }
                 rustify_components::geometry::provide_geometry_styles(Default::default());
                 body()
             })
@@ -178,5 +266,11 @@ pub fn hydrate_site(registry: SiteRegistry) -> Result<(), SiteError> {
         }
     }
     APPS.with_borrow_mut(|retained| retained.extend(apps));
+    // Every view first took over with its serialized SSR mode. Only a fully
+    // successful attachment batch schedules the site's current mode; SDK
+    // tasks stop on fatal abort, and disposed signals are ignored by sync.
+    for sync in initial_syncs.take() {
+        rustify_ui::defer(move || sync());
+    }
     Ok(())
 }

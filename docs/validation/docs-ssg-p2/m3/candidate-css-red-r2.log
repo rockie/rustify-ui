@@ -1,0 +1,38 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-docs v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-docs)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 5.33s
+     Running tests/registered_generation.rs (target/debug/deps/registered_generation-239eef530cf49654)
+
+running 2 tests
+test a_hidden_only_source_image_candidate_hashes_its_url_without_renaming_the_selector ... FAILED
+test hidden_candidate_urls_keep_query_fragments_quoted_escapes_and_arbitrary_spaces ... FAILED
+
+failures:
+
+---- a_hidden_only_source_image_candidate_hashes_its_url_without_renaming_the_selector stdout ----
+
+thread 'a_hidden_only_source_image_candidate_hashes_its_url_without_renaming_the_selector' (39560761) panicked at crates/rustify-docs/tests/registered_generation.rs:405:63:
+called `Result::unwrap()` on an `Err` value: [Diagnostic { file: None, line: None, column: None, severity: Error, rule: "output-check", message: "the generated stylesheet loads `static/hidden.svg`, which is not a file the site publishes", suggestion: None }]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- hidden_candidate_urls_keep_query_fragments_quoted_escapes_and_arbitrary_spaces stdout ----
+
+thread 'hidden_candidate_urls_keep_query_fragments_quoted_escapes_and_arbitrary_spaces' (39560762) panicked at crates/rustify-docs/tests/registered_generation.rs:443:67:
+called `Result::unwrap()` on an `Err` value: [Diagnostic { file: None, line: None, column: None, severity: Error, rule: "output-check", message: "the generated stylesheet loads `static/hidden_figure.svg?size=2#shape`, which is not a file the site publishes", suggestion: None }]
+
+
+failures:
+    a_hidden_only_source_image_candidate_hashes_its_url_without_renaming_the_selector
+    hidden_candidate_urls_keep_query_fragments_quoted_escapes_and_arbitrary_spaces
+
+test result: FAILED. 0 passed; 2 failed; 0 ignored; 0 measured; 10 filtered out; finished in 0.16s
+
+error: test failed, to rerun pass `-p rustify-docs --test registered_generation`
+mbx[cache]: 0 hits, 0 misses, 1 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: escorted 1.7 TiB logical of ownerless outputs off the premises.

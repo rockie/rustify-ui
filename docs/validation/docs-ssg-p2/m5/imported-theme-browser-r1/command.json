@@ -1,0 +1,17 @@
+{
+  "command": [
+    "npx",
+    "playwright",
+    "test",
+    "-c",
+    "playwright.docs.config.ts",
+    "--project=components-subpath",
+    "tests/docs-ssg/custom.spec.ts",
+    "--grep",
+    "live mode changes",
+    "--reporter=list,json",
+    "--output",
+    "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m5/imported-theme-browser-r1/artifacts"
+  ],
+  "binary": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-cli/rustify-docs"
+}

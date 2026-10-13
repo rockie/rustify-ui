@@ -1,0 +1,8 @@
+[
+  {
+    "key": "island-9624b4fdbc-0",
+    "nodes": 8,
+    "html": "<div data-rustify-scope=\"island-9624b4fdbc-0\" data-rustify-seed=\"island-9624b4fdbc-0\" data-rustify-ssr=\"1\" data-rustify-base=\"/rustify-ui/\" tabindex=\"-1\"><div data-rustify-content=\"\"><div data-async-after-attach=\"\" class=\"space-y-3\"><button type=\"button\" data-name=\"Button\" data-testid=\"async-start\" class=\"inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:border-destructive bg-primary text-primary-foreground hover:bg-primary/90 h-9 px-4 py-2\">Load browser data</button><output data-testid=\"async-result\">Not loaded</output></div></div><div data-rustify-overlay=\"\"></div></div>",
+    "values": []
+  }
+]

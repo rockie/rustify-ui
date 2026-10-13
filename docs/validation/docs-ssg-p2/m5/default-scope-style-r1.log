@@ -1,0 +1,62 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-docs v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-docs)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 8.30s
+     Running unittests src/lib.rs (target/debug/deps/rustify_docs-a0443a60ac2534b1)
+
+running 9 tests
+test style::tests::the_sdk_layer_loses_its_source_and_gains_the_document_dark_variant ... ok
+test style::tests::default_reading_theme_values ... ok
+test style::tests::brand_tokens_set_ring_and_foreground ... ok
+test style::tests::css_url_tokens_skip_strings_comments_and_escaped_selectors ... ok
+test style::tests::alert_titles_keep_contrast_on_the_muted_background ... ok
+test style::tests::only_the_candidates_become_utilities ... ok
+test style::tests::dark_utilities_follow_both_dark_roots ... ok
+test style::tests::the_site_stylesheet_is_minified_and_carries_tokens_and_palette ... ok
+test style::tests::the_urls_a_stylesheet_loads ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 181 filtered out; finished in 0.13s
+
+     Running tests/content_include.rs (target/debug/deps/content_include-52d29f035692fa93)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 14 filtered out; finished in 0.00s
+
+     Running tests/generate.rs (target/debug/deps/generate-de191426b58e2517)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 16 filtered out; finished in 0.00s
+
+     Running tests/markdown_intro.rs (target/debug/deps/markdown_intro-99283fb56b3c7927)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 6 filtered out; finished in 0.00s
+
+     Running tests/registered_generation.rs (target/debug/deps/registered_generation-239eef530cf49654)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 12 filtered out; finished in 0.00s
+
+     Running tests/site_metadata.rs (target/debug/deps/site_metadata-158db3cd0dfaf964)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 1 filtered out; finished in 0.00s
+
+     Running tests/site_registry.rs (target/debug/deps/site_registry-55db77555d57d605)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 19 filtered out; finished in 0.00s
+
+mbx[cache]: 0 hits, 0 misses, 8 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: 141.5 GiB of outputs exist once and appear everywhere. do not tell the checkouts.

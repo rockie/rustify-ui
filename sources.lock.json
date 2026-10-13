@@ -1832,6 +1832,55 @@
         "crates/rustify-docs/assets/tailwindcss/preflight.css": "fa2d5ae43ae561061b7ce348b89636dbdc6cd71ab5992d4e1cdd046d0b4f28f9",
         "crates/rustify-docs/assets/tailwindcss/theme.css": "5d1f0002f98471fa59bc53ec2bd2488ff3e4661d965f7fa665408218d63187cb"
       }
+    },
+    {
+      "name": "docs-static-fonts",
+      "version": "p2-1",
+      "origin": "Same bytes as makepad/widgets/resources: six SDK FONT_FACES plus existing glyph fallbacks, deduplicated to seven faces.",
+      "license": "SIL OFL 1.1 for six faces; GPL v2 with Liberation font exceptions for LiberationMono-Regular.ttf version 1.04. Complete notices accompany each CLI face.",
+      "import_rule": "Copy existing repository font bytes verbatim into the CLI neutral assets/fonts directory. Keep Rustify WenKai repair and name notices. No Makepad crate dependency.",
+      "liberation_release": {
+        "binary_url": "https://releases.pagure.org/liberation-fonts/liberation-fonts-1.04.93.devel.tar.gz",
+        "binary_sha256": "21ef0ebaa50acc10954da8061cc120fd8b6d5d639ebbfcdeb0d9d6445816705a",
+        "binary_bytes": 1014291,
+        "font_sha256": "3e396ddd3d1c7d3dca1fb16dd64802b32f295f856ac10c0c1f2ab1c738196045",
+        "source_url": "https://releases.pagure.org/liberation-fonts/liberation-fonts-1.04.93.devel.src.tar.gz",
+        "source_sha256": "fe3ea5f7a2d3bdea8b8f0d82cdc6c07d14ace67c6e06d7aa33b83fd9e640adae",
+        "source_bytes": 2255959,
+        "source_members": {
+          "liberation-fonts-1.04.93.devel/License.txt": {
+            "bytes": 4009,
+            "sha256": "696c8257e24fbc158549191ab3e0ef2c5edc4582a3c3f0dd096e1efd281195bf"
+          },
+          "liberation-fonts-1.04.93.devel/COPYING": {
+            "bytes": 17992,
+            "sha256": "32b1062f7da84967e7019d01ab805935caa7ab7321a7ced0e30ebe75e5df1670"
+          },
+          "liberation-fonts-1.04.93.devel/src/LiberationMono-Regular.sfd": {
+            "bytes": 722684,
+            "sha256": "6a87039544b012ba755ff0813aef7ff549f429c4406fd5b929e51eebc86d6c63"
+          }
+        },
+        "binary_evidence": "ssr_geometry read the official binary archive in memory; exact font equality and license member hashes were verified. The binary archive is not retained locally.",
+        "source_rule": "Preferred SFD source plus original build scripts is retained. Publish the archive and full license beside this face only when a theme references Liberation Mono."
+      },
+      "files": {
+        "crates/rustify-docs-cli/assets/fonts/IBMPlexSans-Text.license.txt": "0fa99e8a7c7392c94b9eea694d28b7715003de459fb41bb95153a590ae7a67f6",
+        "crates/rustify-docs-cli/assets/fonts/IBMPlexSans-Text.ttf": "8c358c56c56f76a28cecb8ca10734c1c9cafa01a752dc8364b9ef7de412437dc",
+        "crates/rustify-docs-cli/assets/fonts/LXGWWenKaiRegular.license.txt": "d59ad209cbb29bd79dbedaef76431018ee128fa087ae88773b25aab9b7002118",
+        "crates/rustify-docs-cli/assets/fonts/LXGWWenKaiRegular.ttf": "1d4b2f008ac7e02780c19801d4b04dd4538e40215943cc8ad374dba8ec2278c0",
+        "crates/rustify-docs-cli/assets/fonts/LiberationMono-Regular.license.txt": "54e5e39728ee318f21c608e9aced2fc4e4ce9451fcb69fde883f01f25dd9f9b1",
+        "crates/rustify-docs-cli/assets/fonts/LiberationMono-Regular.ttf": "3e396ddd3d1c7d3dca1fb16dd64802b32f295f856ac10c0c1f2ab1c738196045",
+        "crates/rustify-docs-cli/assets/fonts/NotoColorEmoji.license.txt": "971c32060f2c7ab26bad5e8f711bf3a1f40fcbe53544d47f19be736953967c18",
+        "crates/rustify-docs-cli/assets/fonts/NotoColorEmoji.ttf": "39ee3c587e10e89669b9ff32703261d10d5f9c4dd5ad147b6b5a1c5200591817",
+        "crates/rustify-docs-cli/assets/fonts/NotoSans-Regular.license.txt": "c0dd7d045d607484510ea4b519c52149b6418df18272af4ef334ba21061dde84",
+        "crates/rustify-docs-cli/assets/fonts/NotoSans-Regular.ttf": "371924e7480d3d01807fdc1bd30442d0a6651e6b5ea546482f5883d613cf0419",
+        "crates/rustify-docs-cli/assets/fonts/NotoSerif-Regular.license.txt": "78b65256447a458a1a76ba1482a97d59f33e8fb1af2acdd7a2a6d7f2da56aae5",
+        "crates/rustify-docs-cli/assets/fonts/NotoSerif-Regular.ttf": "c8f669ceb2c9c60ccf55198b305e08a997ffca79a38cc7eeb551e643cbe66505",
+        "crates/rustify-docs-cli/assets/fonts/jetbrains_mono_variable.license.txt": "459e5eaa18989db141b7992f92dab272e92bc08d88a411ab2bbe8e7f57cffb54",
+        "crates/rustify-docs-cli/assets/fonts/jetbrains_mono_variable.ttf": "662a196d58f1183bf2d77428b6d5283fe3f45161ab021bea4036bc98e5cac016",
+        "crates/rustify-docs-cli/assets/fonts/liberation-fonts-1.04.93.devel.src.tar.gz": "fe3ea5f7a2d3bdea8b8f0d82cdc6c07d14ace67c6e06d7aa33b83fd9e640adae"
+      }
     }
   ],
   "rust_ui": {

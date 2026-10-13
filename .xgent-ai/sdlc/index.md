@@ -22,7 +22,7 @@
 - [DOCS-SSG PRD](status/prd/8917bbeb-7add-4826-95ee-5cdf6bdff735.md)：文档规范状态prd-ready，已批准矩阵/测量合同待同步；P1原计划已8/9，四项交付遗漏、真机及M9缺证见[覆盖报告](status/review/5b279eaf-0dc1-4c8f-a54a-672cc942633f.md)。P2–P4终验保留，未写SPMS。
 - [DOCS-SSG-P1](status/plan/526c88c7-a4b3-4ea9-9193-371420b66d1d.md)：9/9完成；固定安装1b81de2（CLI0.1.4）、最终交付945398c、回填be2cf15。本地115+远端34浏览器、219 Docs Rust、1091 CSR/GPU工作区及模式矩阵/真实安装升级回滚通过；GitHub同SHA安装/SDK/源预览完成。独立gaps2/2，D-04最新版Chrome及两手机延期、P4完整矩阵保留。下一步由用户以review-code评审原计划。
 
-- [DOCS-SSG-P2](status/plan/c0c94e42-32f2-4636-ae52-f3df76d4a463.md)：v2 **Ready**；[原计划评审](status/review/46921cbc-95cf-405a-aa5b-6d4c932b6d7f.md)的25项已完成文档修订/复核（review-applied），原Blocked结论保留，未独立复审；实施2/7、M1/M2已完成，release代理371.9ms/位移0、开发档增量中位1944.6ms，配对/错配、meta24与阶段检查/设计通过。SSG、R/C、CLI字体、vellum译英、Firefox延期P4已定；实现5632d13与计划68720df已提交，继续M3，后续复测狭窄时延余量，M6真人/真机缺口保留。
+- [DOCS-SSG-P2](status/plan/c0c94e42-32f2-4636-ae52-f3df76d4a463.md): v2 **Ready**; history retained. Implementation5/7, M1-M5 complete. [M6](../../docs/validation/docs-ssg-p2/M6.md) empty-R corpus6/CLI72/components2/dev3 and strict clippy/fmt/sources/CSS/catalog pass; next actual R/C freeze and paired/concentrated gates. Users/phones remain gaps; no push/publication.
 ## 初始化范围与验证边界
 
 - 初始化观察：2026-10-07T10:37:52+11:00，协议 v3 / 状态模型 v2。

@@ -1,0 +1,78 @@
+{
+  "scope": "same actual compiled glue/wasm bytes across final production and root/subpath/meta artifacts; HTML base URLs intentionally differ",
+  "artifacts": [
+    {
+      "directory": "site/dist",
+      "base": "/rustify-ui/",
+      "build_id": "aa807b7d63c1f714",
+      "cli": "0.1.9",
+      "assets": [
+        {
+          "name": "app_bg.wasm",
+          "sha256": "0fd51ad6f74202e7a79e7cd7ca39ffe6358143fc1f3cec5ee6ce9497d007a1b6",
+          "bytes": 9753120
+        },
+        {
+          "name": "app.js",
+          "sha256": "3c9a35642f65ab615a26860f6d121ebf6eb79a739cf1af0829373fd468cfb15a",
+          "bytes": 61177
+        }
+      ]
+    },
+    {
+      "directory": "target/docs-ssg/http/official/root/dist",
+      "base": "/",
+      "build_id": "d60c617b974b0bbc",
+      "cli": "0.1.9",
+      "assets": [
+        {
+          "name": "app_bg.wasm",
+          "sha256": "0fd51ad6f74202e7a79e7cd7ca39ffe6358143fc1f3cec5ee6ce9497d007a1b6",
+          "bytes": 9753120
+        },
+        {
+          "name": "app.js",
+          "sha256": "3c9a35642f65ab615a26860f6d121ebf6eb79a739cf1af0829373fd468cfb15a",
+          "bytes": 61177
+        }
+      ]
+    },
+    {
+      "directory": "target/docs-ssg/http/official/subpath/dist",
+      "base": "/rustify-ui/",
+      "build_id": "aa807b7d63c1f714",
+      "cli": "0.1.9",
+      "assets": [
+        {
+          "name": "app_bg.wasm",
+          "sha256": "0fd51ad6f74202e7a79e7cd7ca39ffe6358143fc1f3cec5ee6ce9497d007a1b6",
+          "bytes": 9753120
+        },
+        {
+          "name": "app.js",
+          "sha256": "3c9a35642f65ab615a26860f6d121ebf6eb79a739cf1af0829373fd468cfb15a",
+          "bytes": 61177
+        }
+      ]
+    },
+    {
+      "directory": "target/docs-ssg/http/official/meta/dist",
+      "base": "/rustify-ui/",
+      "build_id": "aa807b7d63c1f714",
+      "cli": "0.1.9",
+      "assets": [
+        {
+          "name": "app_bg.wasm",
+          "sha256": "0fd51ad6f74202e7a79e7cd7ca39ffe6358143fc1f3cec5ee6ce9497d007a1b6",
+          "bytes": 9753120
+        },
+        {
+          "name": "app.js",
+          "sha256": "3c9a35642f65ab615a26860f6d121ebf6eb79a739cf1af0829373fd468cfb15a",
+          "bytes": 61177
+        }
+      ]
+    }
+  ],
+  "passed": true
+}

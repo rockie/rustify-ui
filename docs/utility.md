@@ -73,7 +73,7 @@ positive `Limits`: `input_bytes`, `asset_bytes`, `candidate_count`, `ast_depth`,
 `css_bytes`, `queued_bytes` and `cache_bytes`. JSON encoding also counts toward
 the queue limit. The SDK estimates owned report/candidate storage and includes
 queued and in-flight inputs in its cache budget. These estimates are not browser
-allocator measurements. See [protocol.rs](../crates/rustify-style/src/protocol.rs:96)
+allocator measurements. See [protocol.rs](../crates/rustify-style/src/protocol.rs#L112)
 and [state.rs](../crates/rustify-ui/src/utility/state.rs).
 
 Async compilation methods return `Outcome`, a
