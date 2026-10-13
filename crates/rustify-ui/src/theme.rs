@@ -21,7 +21,6 @@ pub use fonts::{
     dom_font_stack, font_context, FontSlot, ThemeFont, FONT_FACES, FONT_FALLBACKS,
     FONT_GLYPH_FALLBACKS, THEME_FONTS,
 };
-#[cfg(target_arch = "wasm32")]
 pub(crate) mod provider;
 pub use color::{
     composite_over, contrast_ratio, format_color, hsla_to_rgba, parse_color, rgba_to_hsla,
@@ -32,8 +31,9 @@ pub use document::{
     COMMON_TOKENS, VALUE_TOKENS,
 };
 pub use metrics::{css_px_to_points, parse_font_stack, parse_length, LengthRule};
+pub use provider::{provide_static_theme, use_resolved_theme};
 #[cfg(target_arch = "wasm32")]
-pub use provider::{use_resolved_theme, ThemeBoundary, ThemeScope};
+pub use provider::{ThemeBoundary, ThemeScope};
 pub use resolve::{
     resolution_count, resolve, FontFace, ResolveContext, ResolvedFont, ResolvedTheme, ShadowLayer,
     ThemeDiagnostic,

@@ -1,0 +1,185 @@
+[
+  {
+    "step": "first",
+    "errors": [],
+    "marker": "rustify-geometry-1",
+    "sheets": 1,
+    "tint": [
+      {
+        "id": "default-colour-swatch",
+        "cls": "size-9 shrink-0 rounded-md border border-border rui-geometry-4",
+        "color": "rgb(21, 112, 239)"
+      },
+      {
+        "id": "default-tint-swatch",
+        "cls": "size-9 shrink-0 rounded-md border border-border rui-geometry-6",
+        "color": "rgba(18, 183, 106, 0.5)"
+      },
+      {
+        "id": "disabled-colour-swatch",
+        "cls": "size-9 shrink-0 rounded-md border border-border rui-geometry-8",
+        "color": "rgb(21, 112, 239)"
+      },
+      {
+        "id": "read-only-colour-swatch",
+        "cls": "size-9 shrink-0 rounded-md border border-border rui-geometry-10",
+        "color": "rgb(21, 112, 239)"
+      },
+      {
+        "id": "invalid-colour-swatch",
+        "cls": "size-9 shrink-0 rounded-md border border-border rui-geometry-12",
+        "color": "rgb(21, 112, 239)"
+      }
+    ],
+    "rules": [
+      {
+        "text": "[data-rustify-geometry-scope=\"rustify-geometry-1\"] .rui-geometry-4 { background-color: rgb(21, 112, 239); }",
+        "matches": 1
+      },
+      {
+        "text": "[data-rustify-geometry-scope=\"rustify-geometry-1\"] .rui-geometry-6 { background-color: rgba(18, 183, 106, 0.5); }",
+        "matches": 1
+      },
+      {
+        "text": "[data-rustify-geometry-scope=\"rustify-geometry-1\"] .rui-geometry-8 { background-color: rgb(21, 112, 239); }",
+        "matches": 1
+      },
+      {
+        "text": "[data-rustify-geometry-scope=\"rustify-geometry-1\"] .rui-geometry-10 { background-color: rgb(21, 112, 239); }",
+        "matches": 1
+      },
+      {
+        "text": "[data-rustify-geometry-scope=\"rustify-geometry-1\"] .rui-geometry-12 { background-color: rgb(21, 112, 239); }",
+        "matches": 1
+      }
+    ]
+  },
+  {
+    "step": "rgb-commit",
+    "errors": [],
+    "marker": "rustify-geometry-1",
+    "sheets": 1,
+    "tint": [
+      {
+        "id": "default-colour-swatch",
+        "cls": "size-9 shrink-0 rounded-md border border-border rui-geometry-4",
+        "color": "rgb(170, 187, 204)"
+      },
+      {
+        "id": "default-tint-swatch",
+        "cls": "size-9 shrink-0 rounded-md border border-border rui-geometry-6",
+        "color": "rgba(18, 183, 106, 0.5)"
+      },
+      {
+        "id": "disabled-colour-swatch",
+        "cls": "size-9 shrink-0 rounded-md border border-border rui-geometry-8",
+        "color": "rgb(170, 187, 204)"
+      },
+      {
+        "id": "read-only-colour-swatch",
+        "cls": "size-9 shrink-0 rounded-md border border-border rui-geometry-10",
+        "color": "rgb(170, 187, 204)"
+      },
+      {
+        "id": "invalid-colour-swatch",
+        "cls": "size-9 shrink-0 rounded-md border border-border rui-geometry-12",
+        "color": "rgb(170, 187, 204)"
+      }
+    ],
+    "rules": [
+      {
+        "text": "[data-rustify-geometry-scope=\"rustify-geometry-1\"] .rui-geometry-4 { background-color: rgb(170, 187, 204); }",
+        "matches": 1
+      },
+      {
+        "text": "[data-rustify-geometry-scope=\"rustify-geometry-1\"] .rui-geometry-6 { background-color: rgba(18, 183, 106, 0.5); }",
+        "matches": 1
+      },
+      {
+        "text": "[data-rustify-geometry-scope=\"rustify-geometry-1\"] .rui-geometry-8 { background-color: rgb(170, 187, 204); }",
+        "matches": 1
+      },
+      {
+        "text": "[data-rustify-geometry-scope=\"rustify-geometry-1\"] .rui-geometry-10 { background-color: rgb(170, 187, 204); }",
+        "matches": 1
+      },
+      {
+        "text": "[data-rustify-geometry-scope=\"rustify-geometry-1\"] .rui-geometry-12 { background-color: rgb(170, 187, 204); }",
+        "matches": 1
+      }
+    ]
+  },
+  {
+    "step": "reset-closed",
+    "errors": [],
+    "sheets": 0,
+    "tint": [],
+    "rules": []
+  },
+  {
+    "step": "reset-reopened",
+    "errors": [],
+    "sheets": 0,
+    "tint": [
+      {
+        "id": "default-colour-swatch",
+        "cls": "size-9 shrink-0 rounded-md border border-border rui-geometry-14",
+        "color": "rgba(0, 0, 0, 0)"
+      },
+      {
+        "id": "default-tint-swatch",
+        "cls": "size-9 shrink-0 rounded-md border border-border rui-geometry-16",
+        "color": "rgba(0, 0, 0, 0)"
+      },
+      {
+        "id": "disabled-colour-swatch",
+        "cls": "size-9 shrink-0 rounded-md border border-border rui-geometry-18",
+        "color": "rgba(0, 0, 0, 0)"
+      },
+      {
+        "id": "read-only-colour-swatch",
+        "cls": "size-9 shrink-0 rounded-md border border-border rui-geometry-20",
+        "color": "rgba(0, 0, 0, 0)"
+      },
+      {
+        "id": "invalid-colour-swatch",
+        "cls": "size-9 shrink-0 rounded-md border border-border rui-geometry-22",
+        "color": "rgba(0, 0, 0, 0)"
+      }
+    ],
+    "rules": []
+  },
+  {
+    "step": "opacity-edit",
+    "errors": [],
+    "sheets": 0,
+    "tint": [
+      {
+        "id": "default-colour-swatch",
+        "cls": "size-9 shrink-0 rounded-md border border-border rui-geometry-14",
+        "color": "rgba(0, 0, 0, 0)"
+      },
+      {
+        "id": "default-tint-swatch",
+        "cls": "size-9 shrink-0 rounded-md border border-border rui-geometry-16",
+        "color": "rgba(0, 0, 0, 0)"
+      },
+      {
+        "id": "disabled-colour-swatch",
+        "cls": "size-9 shrink-0 rounded-md border border-border rui-geometry-18",
+        "color": "rgba(0, 0, 0, 0)"
+      },
+      {
+        "id": "read-only-colour-swatch",
+        "cls": "size-9 shrink-0 rounded-md border border-border rui-geometry-20",
+        "color": "rgba(0, 0, 0, 0)"
+      },
+      {
+        "id": "invalid-colour-swatch",
+        "cls": "size-9 shrink-0 rounded-md border border-border rui-geometry-22",
+        "color": "rgba(0, 0, 0, 0)"
+      }
+    ],
+    "rules": []
+  }
+]

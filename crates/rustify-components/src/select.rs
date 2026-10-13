@@ -116,6 +116,7 @@ pub fn Select(
     // The keyboard moves into the list when it opens: the list carries the
     // focus and `aria-activedescendant` says which option is current, which is
     // the arrangement a combobox is read with.
+    #[cfg(target_arch = "wasm32")]
     Effect::new(move || {
         if !open.get() {
             return;
@@ -183,6 +184,7 @@ pub fn Select(
                 let described_by = described_by.get();
                 (!described_by.is_empty()).then_some(described_by)
             }
+            disabled=move || disabled.get()
             prop:disabled=move || disabled.get()
             on:click=move |_| {
                 if !disabled.get_untracked() {
@@ -208,9 +210,12 @@ pub fn Select(
         <Show when=move || open.get() fallback=|| ()>
             <Layer
                 fit=true
-                anchor=Signal::derive(move || match trigger.get() {
-                    Some(element) => Anchor::element(&element.into()),
-                    None => Anchor::Centred,
+                anchor=Signal::derive(move || {
+                    #[cfg(target_arch = "wasm32")]
+                    if let Some(element) = trigger.get() {
+                        return Anchor::element(&element.into());
+                    }
+                    Anchor::Centred
                 })
                 on_close=move || set_open(false)
                 class="rui-select-layer"
@@ -266,5 +271,35 @@ pub fn Select(
                 </ul>
             </Layer>
         </Show>
+    }
+}
+
+#[cfg(all(test, feature = "ssr", not(target_arch = "wasm32")))]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn host_rendering_preserves_a_disabled_select_trigger() {
+        let owner = Owner::new();
+        let html = owner.with(|| {
+            view! {
+                <Select
+                    value="second"
+                    options=vec![
+                        SelectOption::new("first", "First"),
+                        SelectOption::new("second", "Second"),
+                    ]
+                    on_change=|_| {}
+                    open=false
+                    on_open_change=|_| {}
+                    disabled=true
+                />
+            }
+            .to_html()
+        });
+        assert!(
+            html.contains(" disabled ") || html.contains(" disabled>"),
+            "{html}"
+        );
     }
 }

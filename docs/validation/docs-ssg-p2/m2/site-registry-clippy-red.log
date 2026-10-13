@@ -1,0 +1,45 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling leptos_macro v0.8.19
+   Compiling zmij v1.0.23
+   Compiling itoa v1.0.18
+   Compiling rustify-docs-syntax v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-docs-syntax)
+    Checking rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+    Checking leptos v0.8.22
+   Compiling serde_json v1.0.151
+   Compiling rustify-docs-macros v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-docs-macros)
+error: this expression creates a reference which is immediately dereferenced by the compiler
+  --> crates/rustify-docs-macros/src/expand.rs:16:13
+   |
+16 |             &component.name.to_string().trim_start_matches("r#"),
+   |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: change this to: `component.name.to_string().trim_start_matches("r#")`
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#needless_borrow
+   = note: `-D clippy::needless-borrow` implied by `-D warnings`
+   = help: to override `-D warnings` add `#[allow(clippy::needless_borrow)]`
+
+error: this expression creates a reference which is immediately dereferenced by the compiler
+  --> crates/rustify-docs-macros/src/expand.rs:46:13
+   |
+46 |             &demo.name.to_string().trim_start_matches("r#"),
+   |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: change this to: `demo.name.to_string().trim_start_matches("r#")`
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#needless_borrow
+
+error: this expression creates a reference which is immediately dereferenced by the compiler
+  --> crates/rustify-docs-macros/src/expand.rs:56:13
+   |
+56 |             &page.name.to_string().trim_start_matches("r#"),
+   |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: change this to: `page.name.to_string().trim_start_matches("r#")`
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#needless_borrow
+
+error: could not compile `rustify-docs-macros` (lib) due to 3 previous errors
+warning: build failed, waiting for other jobs to finish...
+mbx[cache]: 2 hits, 1 misses, 5 not looked up; 0 B downloaded, 0 B uploaded, 6.8 MiB stored locally
+mbx[savings]: 6h 29m of rustc's calendar cleared across 6938 builds.

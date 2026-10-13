@@ -13,6 +13,51 @@ const CONTENT_ATTRIBUTE: &str = "data-rustify-content";
 /// this scope and nothing else live here.
 const OVERLAY_ATTRIBUTE: &str = "data-rustify-overlay";
 
+#[cfg(feature = "hydrate")]
+const HYDRATED_ATTRIBUTE: &str = "data-rustify-mounted";
+
+/// Generates the roots and deterministic identity that `hydrate` takes over.
+/// The caller supplies the same initial view and scope configuration on both
+/// targets. Browser-only work begins after hydration.
+#[cfg(feature = "ssr")]
+pub fn ssr_scope<F, N>(config: MountConfig, view: F) -> impl IntoView
+where
+    F: FnOnce() -> N,
+    N: IntoView,
+{
+    let owner = Owner::new();
+    let nodes = owner.with(|| {
+        let scope = scope_name(&config);
+        crate::id::provide(&scope);
+        crate::provide_locale(crate::Locale::English);
+        provide_context(ActionSink::new());
+        #[cfg(not(target_arch = "wasm32"))]
+        provide_context(ScopeRoots(std::marker::PhantomData, config.base.clone()));
+        view! {
+            <div
+                data-rustify-scope=scope.clone()
+                data-rustify-seed=scope
+                data-rustify-ssr="1"
+                data-rustify-base=config.base
+                tabindex="-1"
+            >
+                <div data-rustify-content="">{view()}</div>
+                <div data-rustify-overlay=""></div>
+            </div>
+        }
+    });
+    leptos::tachys::reactive_graph::OwnedView::new_with_owner(nodes, owner)
+}
+
+#[cfg(any(feature = "ssr", all(feature = "hydrate", target_arch = "wasm32")))]
+fn scope_name(config: &MountConfig) -> String {
+    if config.scope.is_empty() {
+        "default".to_string()
+    } else {
+        config.scope.clone()
+    }
+}
+
 #[derive(Clone, Debug, Default)]
 pub struct MountConfig {
     /// Human readable scope name used in diagnostics and DOM attributes.
@@ -171,6 +216,123 @@ where
     })
 }
 
+/// Takes over a generated scope without replacing its content nodes.
+/// Refusals leave its DOM untouched. The runtime must be booted first and the
+/// external startup script must initialize Leptos' empty hydration globals.
+#[cfg(all(feature = "hydrate", target_arch = "wasm32"))]
+pub fn hydrate<F, N>(
+    container: HtmlElement,
+    config: MountConfig,
+    view: F,
+) -> Result<AppHandle, UiError>
+where
+    F: FnOnce() -> N + 'static,
+    N: IntoView,
+    N::State: 'static,
+{
+    let scope = scope_name(&config);
+    let refuse = |error: UiError, detail| {
+        if let Some(kind) = error.kind() {
+            record(note(kind, detail).in_scope(scope.clone()));
+        }
+        error
+    };
+    if !crate::runtime::booted() {
+        return Err(refuse(
+            UiError::RuntimeNotStarted,
+            "hydrate was called before the runtime was started",
+        ));
+    }
+    if !container.is_connected() {
+        return Err(refuse(
+            UiError::InvalidContainer,
+            "the hydration container is not in the document",
+        ));
+    }
+    if container.has_attribute(HYDRATED_ATTRIBUTE) {
+        return Err(refuse(
+            UiError::OccupiedContainer,
+            "another scope already owns the hydration container",
+        ));
+    }
+    let content = container.first_element_child();
+    let overlay = content
+        .as_ref()
+        .and_then(|element| element.next_element_sibling());
+    let valid_roots = content.as_ref().is_some_and(|element| {
+        element.tag_name() == "DIV" && element.has_attribute(CONTENT_ATTRIBUTE)
+    }) && overlay.as_ref().is_some_and(|element| {
+        element.tag_name() == "DIV"
+            && element.has_attribute(OVERLAY_ATTRIBUTE)
+            && element.next_element_sibling().is_none()
+            && !element.has_child_nodes()
+    });
+    if container.tag_name() != "DIV"
+        || container.get_attribute("data-rustify-ssr").as_deref() != Some("1")
+        || !valid_roots
+    {
+        return Err(refuse(
+            UiError::InvalidHydrationRoot,
+            "the generated content and overlay roots are missing or invalid",
+        ));
+    }
+    if container.get_attribute(MOUNTED_ATTRIBUTE).as_deref() != Some(scope.as_str())
+        || container.get_attribute("data-rustify-seed").as_deref() != Some(scope.as_str())
+        || container.get_attribute("data-rustify-base").as_deref() != Some(config.base.as_str())
+    {
+        return Err(refuse(
+            UiError::HydrationIdentityMismatch,
+            "the generated scope, seed or base does not match the hydration request",
+        ));
+    }
+    let url_owner = if config.url_owner {
+        Some(crate::router::claim_url(&scope).ok_or_else(|| {
+            refuse(
+                UiError::UrlOwnerConflict,
+                "another scope on this page already owns the URL",
+            )
+        })?)
+    } else {
+        None
+    };
+    // The structure was checked without touching the DOM, so these options are
+    // now known to contain the two roots.
+    let content = content.ok_or(UiError::InvalidHydrationRoot)?;
+    let overlay = overlay.ok_or(UiError::InvalidHydrationRoot)?;
+    container
+        .set_attribute(HYDRATED_ATTRIBUTE, &scope)
+        .map_err(|_| UiError::InvalidContainer)?;
+    let target = content.clone().unchecked_into::<HtmlElement>();
+    let roots = vec![content.clone(), overlay.clone()];
+    let root_container = container.clone();
+    let root_claim = url_owner.clone();
+    let unmount = leptos::mount::hydrate_from(target, move || {
+        // hydrate_from creates a fresh root Owner; it cannot inherit contexts
+        // established around this call.
+        crate::id::provide(&scope);
+        crate::provide_locale(crate::Locale::English);
+        provide_context(ActionSink::new());
+        provide_context(ScopeRoots(
+            send_wrapper::SendWrapper::new(root_container.clone()),
+            config.base.clone(),
+        ));
+        provide_context(crate::overlay::OverlayStack::new(
+            &root_container,
+            &content,
+            &overlay,
+        ));
+        crate::router::provide_router(&root_container, root_claim, &config.base);
+        view()
+    });
+    Ok(AppHandle {
+        container,
+        url_owner,
+        roots,
+        owner: None,
+        unmount: Some(Box::new(unmount)),
+    })
+}
+
 /// Adds one of the scope's own roots to the container.
 fn child(container: &HtmlElement, attribute: &str) -> Result<leptos::web_sys::Element, UiError> {
     let element = leptos::prelude::document()
@@ -201,6 +363,8 @@ impl AppHandle {
                 let _ = self.container.remove_child(&root);
             }
             let _ = self.container.remove_attribute(MOUNTED_ATTRIBUTE);
+            #[cfg(feature = "hydrate")]
+            let _ = self.container.remove_attribute(HYDRATED_ATTRIBUTE);
             let _ = self.container.remove_attribute("tabindex");
         }
     }

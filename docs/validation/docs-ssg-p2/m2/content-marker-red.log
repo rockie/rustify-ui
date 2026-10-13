@@ -1,0 +1,32 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-docs v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-docs)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 7.81s
+     Running tests/generate.rs (target/debug/deps/generate-de191426b58e2517)
+
+running 1 test
+test an_island_marker_in_readable_text_does_not_load_the_island_runtime ... FAILED
+
+failures:
+
+---- an_island_marker_in_readable_text_does_not_load_the_island_runtime stdout ----
+
+thread 'an_island_marker_in_readable_text_does_not_load_the_island_runtime' (38115431) panicked at crates/rustify-docs/tests/generate.rs:97:5:
+assertion failed: !text(&generation.files,
+            "guide/index.html").contains("data-rd-islands-module")
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    an_island_marker_in_readable_text_does_not_load_the_island_runtime
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 15 filtered out; finished in 0.46s
+
+error: test failed, to rerun pass `-p rustify-docs --test generate`
+mbx[cache]: 0 hits, 0 misses, 2 not looked up; 0 B downloaded, 0 B uploaded, 192.2 MiB stored locally
+mbx[savings]: the running total stands at 6h 29m across 6984 builds. nobody is counting except the box.

@@ -1,0 +1,755 @@
+{
+  "diffs": [
+    {
+      "a": "before",
+      "b": "immediate",
+      "parts": [
+        {
+          "i": 0,
+          "leftCount": 288,
+          "rightCount": 288,
+          "differences": []
+        },
+        {
+          "i": 1,
+          "leftCount": 1,
+          "rightCount": 1,
+          "differences": []
+        }
+      ]
+    },
+    {
+      "a": "before",
+      "b": "settled",
+      "parts": [
+        {
+          "i": 0,
+          "leftCount": 288,
+          "rightCount": 288,
+          "differences": []
+        },
+        {
+          "i": 1,
+          "leftCount": 1,
+          "rightCount": 4,
+          "differences": [
+            {
+              "j": 1,
+              "right": {
+                "type": 1,
+                "name": "DIV",
+                "text": null,
+                "attrs": []
+              }
+            },
+            {
+              "j": 2,
+              "right": {
+                "type": 1,
+                "name": "DIV",
+                "text": null,
+                "attrs": [
+                  [
+                    "aria-live",
+                    "polite"
+                  ],
+                  [
+                    "class",
+                    "fixed bottom-4 end-4 z-50 flex max-w-sm flex-col items-end gap-2"
+                  ],
+                  [
+                    "data-testid",
+                    "catalog-a-toaster"
+                  ],
+                  [
+                    "role",
+                    "status"
+                  ]
+                ]
+              }
+            },
+            {
+              "j": 3,
+              "right": {
+                "type": 8,
+                "name": "#comment",
+                "text": "",
+                "attrs": null
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "a": "immediate",
+      "b": "csrImmediate",
+      "parts": [
+        {
+          "i": 0,
+          "leftCount": 288,
+          "rightCount": 297,
+          "differences": [
+            {
+              "j": 32,
+              "left": {
+                "type": 1,
+                "name": "SECTION",
+                "text": null,
+                "attrs": [
+                  [
+                    "class",
+                    "harness-card"
+                  ],
+                  [
+                    "data-category",
+                    "text field"
+                  ]
+                ]
+              },
+              "right": {
+                "type": 8,
+                "name": "#comment",
+                "text": "",
+                "attrs": null
+              }
+            },
+            {
+              "j": 33,
+              "left": {
+                "type": 1,
+                "name": "H3",
+                "text": null,
+                "attrs": []
+              },
+              "right": {
+                "type": 1,
+                "name": "SECTION",
+                "text": null,
+                "attrs": [
+                  [
+                    "class",
+                    "harness-card"
+                  ],
+                  [
+                    "data-category",
+                    "text field"
+                  ]
+                ]
+              }
+            },
+            {
+              "j": 34,
+              "left": {
+                "type": 3,
+                "name": "#text",
+                "text": "Text field",
+                "attrs": null
+              },
+              "right": {
+                "type": 1,
+                "name": "H3",
+                "text": null,
+                "attrs": []
+              }
+            },
+            {
+              "j": 35,
+              "left": {
+                "type": 1,
+                "name": "INPUT",
+                "text": null,
+                "attrs": [
+                  [
+                    "aria-describedby",
+                    "catalog-a-description"
+                  ],
+                  [
+                    "aria-label",
+                    "Editable text"
+                  ],
+                  [
+                    "class",
+                    "flex h-9 w-full min-w-0 rounded-md border border-border bg-input text-foreground px-3 py-1 text-sm transition-colors outline-none placeholder:text-muted-foreground focus-visible:ring-ring/50 focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 read-only:bg-muted aria-invalid:border-destructive aria-invalid:ring-destructive/40"
+                  ],
+                  [
+                    "data-name",
+                    "TextField"
+                  ],
+                  [
+                    "data-testid",
+                    "catalog-a-text"
+                  ],
+                  [
+                    "id",
+                    "rui-catalog-a-field-1"
+                  ],
+                  [
+                    "type",
+                    "text"
+                  ],
+                  [
+                    "value",
+                    "Résumé <&>"
+                  ]
+                ]
+              },
+              "right": {
+                "type": 3,
+                "name": "#text",
+                "text": "Text field",
+                "attrs": null
+              }
+            },
+            {
+              "j": 36,
+              "left": {
+                "type": 1,
+                "name": "INPUT",
+                "text": null,
+                "attrs": [
+                  [
+                    "aria-label",
+                    "Read only text"
+                  ],
+                  [
+                    "aria-readonly",
+                    "true"
+                  ],
+                  [
+                    "class",
+                    "flex h-9 w-full min-w-0 rounded-md border border-border bg-input text-foreground px-3 py-1 text-sm transition-colors outline-none placeholder:text-muted-foreground focus-visible:ring-ring/50 focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 read-only:bg-muted aria-invalid:border-destructive aria-invalid:ring-destructive/40"
+                  ],
+                  [
+                    "data-name",
+                    "TextField"
+                  ],
+                  [
+                    "data-testid",
+                    "catalog-a-text-readonly"
+                  ],
+                  [
+                    "disabled",
+                    ""
+                  ],
+                  [
+                    "id",
+                    "rui-catalog-a-field-2"
+                  ],
+                  [
+                    "readonly",
+                    ""
+                  ],
+                  [
+                    "type",
+                    "text"
+                  ],
+                  [
+                    "value",
+                    "Read only"
+                  ]
+                ]
+              },
+              "right": {
+                "type": 1,
+                "name": "INPUT",
+                "text": null,
+                "attrs": [
+                  [
+                    "aria-describedby",
+                    "catalog-a-description"
+                  ],
+                  [
+                    "aria-label",
+                    "Editable text"
+                  ],
+                  [
+                    "class",
+                    "flex h-9 w-full min-w-0 rounded-md border border-border bg-input text-foreground px-3 py-1 text-sm transition-colors outline-none placeholder:text-muted-foreground focus-visible:ring-ring/50 focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 read-only:bg-muted aria-invalid:border-destructive aria-invalid:ring-destructive/40"
+                  ],
+                  [
+                    "data-name",
+                    "TextField"
+                  ],
+                  [
+                    "data-testid",
+                    "catalog-a-text"
+                  ],
+                  [
+                    "id",
+                    "rui-catalog-a-field-1"
+                  ],
+                  [
+                    "type",
+                    "text"
+                  ],
+                  [
+                    "value",
+                    "Résumé <&>"
+                  ]
+                ]
+              }
+            },
+            {
+              "j": 37,
+              "left": {
+                "type": 1,
+                "name": "SECTION",
+                "text": null,
+                "attrs": [
+                  [
+                    "class",
+                    "harness-card"
+                  ],
+                  [
+                    "data-category",
+                    "text area"
+                  ]
+                ]
+              },
+              "right": {
+                "type": 1,
+                "name": "INPUT",
+                "text": null,
+                "attrs": [
+                  [
+                    "aria-label",
+                    "Read only text"
+                  ],
+                  [
+                    "aria-readonly",
+                    "true"
+                  ],
+                  [
+                    "class",
+                    "flex h-9 w-full min-w-0 rounded-md border border-border bg-input text-foreground px-3 py-1 text-sm transition-colors outline-none placeholder:text-muted-foreground focus-visible:ring-ring/50 focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 read-only:bg-muted aria-invalid:border-destructive aria-invalid:ring-destructive/40"
+                  ],
+                  [
+                    "data-name",
+                    "TextField"
+                  ],
+                  [
+                    "data-testid",
+                    "catalog-a-text-readonly"
+                  ],
+                  [
+                    "disabled",
+                    ""
+                  ],
+                  [
+                    "id",
+                    "rui-catalog-a-field-2"
+                  ],
+                  [
+                    "readonly",
+                    ""
+                  ],
+                  [
+                    "type",
+                    "text"
+                  ],
+                  [
+                    "value",
+                    "Read only"
+                  ]
+                ]
+              }
+            },
+            {
+              "j": 38,
+              "left": {
+                "type": 1,
+                "name": "H3",
+                "text": null,
+                "attrs": []
+              },
+              "right": {
+                "type": 1,
+                "name": "SECTION",
+                "text": null,
+                "attrs": [
+                  [
+                    "class",
+                    "harness-card"
+                  ],
+                  [
+                    "data-category",
+                    "text area"
+                  ]
+                ]
+              }
+            },
+            {
+              "j": 39,
+              "left": {
+                "type": 3,
+                "name": "#text",
+                "text": "Text area",
+                "attrs": null
+              },
+              "right": {
+                "type": 1,
+                "name": "H3",
+                "text": null,
+                "attrs": []
+              }
+            }
+          ]
+        },
+        {
+          "i": 1,
+          "leftCount": 1,
+          "rightCount": 1,
+          "differences": []
+        }
+      ]
+    },
+    {
+      "a": "settled",
+      "b": "csrSettled",
+      "parts": [
+        {
+          "i": 0,
+          "leftCount": 288,
+          "rightCount": 297,
+          "differences": [
+            {
+              "j": 32,
+              "left": {
+                "type": 1,
+                "name": "SECTION",
+                "text": null,
+                "attrs": [
+                  [
+                    "class",
+                    "harness-card"
+                  ],
+                  [
+                    "data-category",
+                    "text field"
+                  ]
+                ]
+              },
+              "right": {
+                "type": 8,
+                "name": "#comment",
+                "text": "",
+                "attrs": null
+              }
+            },
+            {
+              "j": 33,
+              "left": {
+                "type": 1,
+                "name": "H3",
+                "text": null,
+                "attrs": []
+              },
+              "right": {
+                "type": 1,
+                "name": "SECTION",
+                "text": null,
+                "attrs": [
+                  [
+                    "class",
+                    "harness-card"
+                  ],
+                  [
+                    "data-category",
+                    "text field"
+                  ]
+                ]
+              }
+            },
+            {
+              "j": 34,
+              "left": {
+                "type": 3,
+                "name": "#text",
+                "text": "Text field",
+                "attrs": null
+              },
+              "right": {
+                "type": 1,
+                "name": "H3",
+                "text": null,
+                "attrs": []
+              }
+            },
+            {
+              "j": 35,
+              "left": {
+                "type": 1,
+                "name": "INPUT",
+                "text": null,
+                "attrs": [
+                  [
+                    "aria-describedby",
+                    "catalog-a-description"
+                  ],
+                  [
+                    "aria-label",
+                    "Editable text"
+                  ],
+                  [
+                    "class",
+                    "flex h-9 w-full min-w-0 rounded-md border border-border bg-input text-foreground px-3 py-1 text-sm transition-colors outline-none placeholder:text-muted-foreground focus-visible:ring-ring/50 focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 read-only:bg-muted aria-invalid:border-destructive aria-invalid:ring-destructive/40"
+                  ],
+                  [
+                    "data-name",
+                    "TextField"
+                  ],
+                  [
+                    "data-testid",
+                    "catalog-a-text"
+                  ],
+                  [
+                    "id",
+                    "rui-catalog-a-field-1"
+                  ],
+                  [
+                    "type",
+                    "text"
+                  ],
+                  [
+                    "value",
+                    "Résumé <&>"
+                  ]
+                ]
+              },
+              "right": {
+                "type": 3,
+                "name": "#text",
+                "text": "Text field",
+                "attrs": null
+              }
+            },
+            {
+              "j": 36,
+              "left": {
+                "type": 1,
+                "name": "INPUT",
+                "text": null,
+                "attrs": [
+                  [
+                    "aria-label",
+                    "Read only text"
+                  ],
+                  [
+                    "aria-readonly",
+                    "true"
+                  ],
+                  [
+                    "class",
+                    "flex h-9 w-full min-w-0 rounded-md border border-border bg-input text-foreground px-3 py-1 text-sm transition-colors outline-none placeholder:text-muted-foreground focus-visible:ring-ring/50 focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 read-only:bg-muted aria-invalid:border-destructive aria-invalid:ring-destructive/40"
+                  ],
+                  [
+                    "data-name",
+                    "TextField"
+                  ],
+                  [
+                    "data-testid",
+                    "catalog-a-text-readonly"
+                  ],
+                  [
+                    "disabled",
+                    ""
+                  ],
+                  [
+                    "id",
+                    "rui-catalog-a-field-2"
+                  ],
+                  [
+                    "readonly",
+                    ""
+                  ],
+                  [
+                    "type",
+                    "text"
+                  ],
+                  [
+                    "value",
+                    "Read only"
+                  ]
+                ]
+              },
+              "right": {
+                "type": 1,
+                "name": "INPUT",
+                "text": null,
+                "attrs": [
+                  [
+                    "aria-describedby",
+                    "catalog-a-description"
+                  ],
+                  [
+                    "aria-label",
+                    "Editable text"
+                  ],
+                  [
+                    "class",
+                    "flex h-9 w-full min-w-0 rounded-md border border-border bg-input text-foreground px-3 py-1 text-sm transition-colors outline-none placeholder:text-muted-foreground focus-visible:ring-ring/50 focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 read-only:bg-muted aria-invalid:border-destructive aria-invalid:ring-destructive/40"
+                  ],
+                  [
+                    "data-name",
+                    "TextField"
+                  ],
+                  [
+                    "data-testid",
+                    "catalog-a-text"
+                  ],
+                  [
+                    "id",
+                    "rui-catalog-a-field-1"
+                  ],
+                  [
+                    "type",
+                    "text"
+                  ],
+                  [
+                    "value",
+                    "Résumé <&>"
+                  ]
+                ]
+              }
+            },
+            {
+              "j": 37,
+              "left": {
+                "type": 1,
+                "name": "SECTION",
+                "text": null,
+                "attrs": [
+                  [
+                    "class",
+                    "harness-card"
+                  ],
+                  [
+                    "data-category",
+                    "text area"
+                  ]
+                ]
+              },
+              "right": {
+                "type": 1,
+                "name": "INPUT",
+                "text": null,
+                "attrs": [
+                  [
+                    "aria-label",
+                    "Read only text"
+                  ],
+                  [
+                    "aria-readonly",
+                    "true"
+                  ],
+                  [
+                    "class",
+                    "flex h-9 w-full min-w-0 rounded-md border border-border bg-input text-foreground px-3 py-1 text-sm transition-colors outline-none placeholder:text-muted-foreground focus-visible:ring-ring/50 focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 read-only:bg-muted aria-invalid:border-destructive aria-invalid:ring-destructive/40"
+                  ],
+                  [
+                    "data-name",
+                    "TextField"
+                  ],
+                  [
+                    "data-testid",
+                    "catalog-a-text-readonly"
+                  ],
+                  [
+                    "disabled",
+                    ""
+                  ],
+                  [
+                    "id",
+                    "rui-catalog-a-field-2"
+                  ],
+                  [
+                    "readonly",
+                    ""
+                  ],
+                  [
+                    "type",
+                    "text"
+                  ],
+                  [
+                    "value",
+                    "Read only"
+                  ]
+                ]
+              }
+            },
+            {
+              "j": 38,
+              "left": {
+                "type": 1,
+                "name": "H3",
+                "text": null,
+                "attrs": []
+              },
+              "right": {
+                "type": 1,
+                "name": "SECTION",
+                "text": null,
+                "attrs": [
+                  [
+                    "class",
+                    "harness-card"
+                  ],
+                  [
+                    "data-category",
+                    "text area"
+                  ]
+                ]
+              }
+            },
+            {
+              "j": 39,
+              "left": {
+                "type": 3,
+                "name": "#text",
+                "text": "Text area",
+                "attrs": null
+              },
+              "right": {
+                "type": 1,
+                "name": "H3",
+                "text": null,
+                "attrs": []
+              }
+            }
+          ]
+        },
+        {
+          "i": 1,
+          "leftCount": 4,
+          "rightCount": 4,
+          "differences": []
+        }
+      ]
+    }
+  ],
+  "geometry": {
+    "expected": "rgba(26, 43, 60, 0.5)",
+    "instances": [
+      2,
+      3
+    ],
+    "first": {
+      "aria": "36",
+      "ratio": 33.99794884169884,
+      "transition": "0.15s"
+    },
+    "later": {
+      "aria": "36",
+      "ratio": 35.99782818532818,
+      "transition": "0.15s"
+    }
+  },
+  "identity": {
+    "root": true,
+    "nodes": 290,
+    "retained": 290,
+    "ids": true
+  },
+  "browser": "153.0.8010.12"
+}

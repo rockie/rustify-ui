@@ -1,0 +1,52 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-docs v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-docs)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 5.21s
+     Running unittests src/lib.rs (target/debug/deps/rustify_docs-c07f75201679b285)
+
+running 4 tests
+test embed::tests::component_data_and_children_keep_source_locations ... FAILED
+test embed::tests::demos_take_only_a_registered_name ... FAILED
+test embed::tests::malformed_data_is_located_and_never_becomes_rust ... FAILED
+test embed::tests::repeated_yaml_keys_are_errors_at_any_depth ... FAILED
+
+failures:
+
+---- embed::tests::component_data_and_children_keep_source_locations stdout ----
+
+thread 'embed::tests::component_data_and_children_keep_source_locations' (37312557) panicked at crates/rustify-docs/src/embed.rs:36:71:
+called `Result::unwrap()` on an `Err` value: Issue { span: 10..130, severity: Error, rule: "embed-payload", message: "component declarations are not parsed yet", suggestion: None }
+
+---- embed::tests::demos_take_only_a_registered_name stdout ----
+
+thread 'embed::tests::demos_take_only_a_registered_name' (37312558) panicked at crates/rustify-docs/src/embed.rs:58:66:
+called `Result::unwrap()` on an `Err` value: Issue { span: 0..18, severity: Error, rule: "embed-payload", message: "component declarations are not parsed yet", suggestion: None }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- embed::tests::malformed_data_is_located_and_never_becomes_rust stdout ----
+
+thread 'embed::tests::malformed_data_is_located_and_never_becomes_rust' (37312559) panicked at crates/rustify-docs/src/embed.rs:73:9:
+assertion failed: issue.span.start >= 20
+
+---- embed::tests::repeated_yaml_keys_are_errors_at_any_depth stdout ----
+
+thread 'embed::tests::repeated_yaml_keys_are_errors_at_any_depth' (37312560) panicked at crates/rustify-docs/src/embed.rs:51:13:
+Issue { span: 0..26, severity: Error, rule: "embed-payload", message: "component declarations are not parsed yet", suggestion: None }
+
+
+failures:
+    embed::tests::component_data_and_children_keep_source_locations
+    embed::tests::demos_take_only_a_registered_name
+    embed::tests::malformed_data_is_located_and_never_becomes_rust
+    embed::tests::repeated_yaml_keys_are_errors_at_any_depth
+
+test result: FAILED. 0 passed; 4 failed; 0 ignored; 0 measured; 129 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p rustify-docs --lib`
+mbx[cache]: 0 hits, 0 misses, 3 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: 116.1 GiB shared among checkouts that each believe they are an only child.

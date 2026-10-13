@@ -191,6 +191,7 @@ pub fn ToggleGroup(
                             tabindex=move || {
                                 if stop.get().as_deref() == Some(stopping.as_str()) { "0" } else { "-1" }
                             }
+                            disabled=move || off || disabled.get()
                             prop:disabled=move || off || disabled.get()
                             on:focus=move |_| last.set(Some(focused.clone()))
                             on:click=move |_| {

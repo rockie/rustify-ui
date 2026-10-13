@@ -8,6 +8,7 @@
 | 115914b2-cc1d-4b61-a62a-243b74b783aa | [Theme Studio 界面终审](../../../../.impeccable/review/finish-review.md) | [115914b2](115914b2-cc1d-4b61-a62a-243b74b783aa.md) | 活动 |
 | 1996cbdf-4d81-4ba7-abac-d31ad78019a5 | [DOCS-SSG-P1 代码评审 R4](../../../../docs/plan/DOCS-SSG-P1.code-review.r4.md) | [1996cbdf](1996cbdf-4d81-4ba7-abac-d31ad78019a5.md) | 活动 |
 | 4a0edc00-c638-4313-af24-7726f88bc321 | [DOCS-SSG PRD 完整评审](../../../../docs/PRD-DOCS-SSG.review.md) | [4a0edc00](4a0edc00-c638-4313-af24-7726f88bc321.md) | 活动 |
+| 46921cbc-95cf-405a-aa5b-6d4c932b6d7f | [DOCS-SSG-P2 完整计划评审](../../../../docs/plan/DOCS-SSG-P2.review.md) | [对象](46921cbc-95cf-405a-aa5b-6d4c932b6d7f.md) | 活动 |
 | 53350840-75ac-44ea-82e1-3b8072575e78 | [DOCS-SSG-P1 代码评审 R5](../../../../docs/plan/DOCS-SSG-P1.code-review.r5.md) | [53350840](53350840-75ac-44ea-82e1-3b8072575e78.md) | 活动 |
 | 5539f718-6df5-42fc-aeec-f8c35dd42147 | [DOCS-SSG-P1-gaps 完整计划评审](../../../../docs/plan/DOCS-SSG-P1-gaps.review.md) | [5539f718](5539f718-6df5-42fc-aeec-f8c35dd42147.md) | 活动 |
 | 5b279eaf-0dc1-4c8f-a54a-672cc942633f | [DOCS-SSG-P1 PRD交付差异核查](../../../../docs/plan/DOCS-SSG-P1.prd-dev-gaps.md) | [对象](5b279eaf-0dc1-4c8f-a54a-672cc942633f.md) | 活动 |

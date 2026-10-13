@@ -15,7 +15,7 @@ const HEADER_BUTTON: &str = "w-full truncate bg-transparent border-0 p-0 text-le
 const SCROLLER: &str = "relative flex-1 min-h-0 overflow-auto";
 const ROW: &str =
     "absolute left-0 flex w-full items-center border-b border-border/50 aria-selected:bg-accent";
-const CELL: &str = "shrink-0 truncate px-2 outline-none focus-visible:ring-ring/50 focus-visible:ring-2 focus-visible:ring-inset";
+const CELL: &str = "absolute shrink-0 truncate px-2 outline-none focus-visible:ring-ring/50 focus-visible:ring-2 focus-visible:ring-inset";
 
 /// One column of the table.
 #[derive(Clone, Debug, PartialEq, Eq)]
@@ -80,10 +80,16 @@ pub fn DataTable(
     on_sort: Option<Arc<dyn Fn(usize) + Send + Sync>>,
     #[prop(optional)] row_height: Option<f64>,
     #[prop(optional)] column_width: Option<f64>,
+    /// The width and height used for the deterministic initial window, before
+    /// the browser can measure. Defaults to ten columns and sixty rows; after
+    /// mounting or hydration, the real viewport controls the pool as usual.
+    #[prop(optional)]
+    initial_viewport: Option<(f64, f64)>,
     #[prop(optional, into)] aria_label: String,
     #[prop(optional, into)] class: String,
     #[prop(optional, into)] test_id: String,
 ) -> impl IntoView {
+    crate::geometry::ensure_context();
     let row_height = row_height.unwrap_or(24.0);
     let column_width = column_width.unwrap_or(120.0);
     let grid = NodeRef::<Div>::new();
@@ -94,9 +100,10 @@ pub fn DataTable(
     // application owns because it jumps to rows; nothing outside asks for a
     // column, so this one is the table's own.
     let goto_column = RwSignal::new(None::<usize>);
-    // Measured rather than assumed: the pool is as big as the viewport, and
-    // the viewport is whatever the application's layout gave it.
-    let viewport = RwSignal::new((0.0f64, 0.0f64));
+    // This same initial window is available to host and browser rendering.
+    // Measurement runs after the initial nodes have been mounted or adopted.
+    let viewport =
+        RwSignal::new(initial_viewport.unwrap_or((column_width * 10.0, row_height * 60.0)));
     let on_select = Arc::new(on_select);
     let on_activate = Arc::new(on_activate);
 
@@ -164,6 +171,7 @@ pub fn DataTable(
             }
         }
     };
+    #[cfg(target_arch = "wasm32")]
     Effect::new(move || {
         let Some(element) = scroller.get() else {
             return;
@@ -364,6 +372,26 @@ pub fn DataTable(
             .filter_map(|index| all.get(index).cloned().map(|column| (index, column)))
             .collect::<Vec<_>>()
     };
+    let header_geometry = crate::geometry::geometry_class(move || {
+        let offset = visible_columns.get().start as f64 * column_width - scroll_left.get();
+        format!("transform:translateX({offset}px);")
+    });
+    let column_geometry =
+        crate::geometry::geometry_class(move || format!("width:{column_width}px;"));
+    let header_column_geometry = column_geometry.clone();
+    let row_height_geometry =
+        crate::geometry::geometry_class(move || format!("height:{row_height}px;"));
+    let spacer_geometry = crate::geometry::geometry_class(move || {
+        format!(
+            "height:{}px;width:{}px;",
+            rows.get() as f64 * row_height,
+            columns.get().len() as f64 * column_width,
+        )
+    });
+    // Nested For views do not create their row and cell Owners in the same
+    // order on host and browser. Name their rules from the stable pool slots
+    // rather than consuming the scope's ID sequence inside either loop.
+    let table_geometry = crate::id::next("table-geometry");
 
     view! {
         <div
@@ -382,23 +410,19 @@ pub fn DataTable(
                 <div
                     role="row"
                     aria-rowindex="1"
-                    class="flex"
+                    class=format!("flex {header_geometry}")
                     // The header sits outside the scroller, so it is moved by
                     // hand: where its first drawn column starts, less how far
                     // the body has been scrolled. Anything else puts a heading
                     // over the wrong column the moment the table scrolls
                     // sideways.
-                    style:transform=move || {
-                        let offset =
-                            visible_columns.get().start as f64 * column_width - scroll_left.get();
-                        format!("translateX({offset}px)")
-                    }
                 >
                     <For each=header_columns key=|(index, _)| *index let:entry>
                         {
                             let (index, column) = entry;
                             let name = headings.clone();
                             let on_sort = on_sort.clone();
+                            let geometry = header_column_geometry.clone();
                             let sortable = on_sort.is_some();
                             let order = move || {
                                 match sorted.and_then(|sorted| sorted.get()) {
@@ -413,11 +437,10 @@ pub fn DataTable(
                             view! {
                                 <div
                                     role="columnheader"
-                                    class=HEADER_CELL
+                                    class=format!("{HEADER_CELL} {geometry}")
                                     data-testid=format!("{name}-column-{index}")
                                     aria-colindex=(index + 1).to_string()
                                     aria-sort=order
-                                    style:width=format!("{column_width}px")
                                 >
                                     {match on_sort.clone() {
                                         Some(sort) => {
@@ -449,9 +472,7 @@ pub fn DataTable(
             >
                 <div
                     role="presentation"
-                    style:position="relative"
-                    style:height=move || format!("{}px", rows.get() as f64 * row_height)
-                    style:width=move || format!("{}px", columns.get().len() as f64 * column_width)
+                    class=format!("relative {spacer_geometry}")
                 >
                     <div role="rowgroup">
                         <For each=pool key=|slot| *slot let:slot>
@@ -461,6 +482,9 @@ pub fn DataTable(
                                 let row_id = row_id.clone();
                                 let select = on_select.clone();
                                 let activate = on_activate.clone();
+                                let column_geometry = column_geometry.clone();
+                                let table_geometry = table_geometry.clone();
+                                let row_slot = slot;
                                 let row = Memo::new(move |_| visible_rows.get().start + slot);
                                 let within = Memo::new(move |_| row.get() < rows.get());
                                 let id = Memo::new(move |_| {
@@ -470,19 +494,22 @@ pub fn DataTable(
                                     within.get() && selected.get().contains(id.get())
                                 });
                                 let cells = move || (0..visible_columns.get().len()).collect::<Vec<_>>();
+                                let row_geometry = crate::geometry::geometry_class_named(
+                                    format!("{table_geometry}-row-{row_slot}"),
+                                    move || {
+                                        format!("transform:translateY({}px);", row.get() as f64 * row_height)
+                                    },
+                                );
+                                let row_height_geometry = row_height_geometry.clone();
                                 view! {
                                     <div
                                         role="row"
-                                        class=ROW
+                                        class=format!("{ROW} {row_height_geometry} {row_geometry}")
                                         class=("hidden", move || !within.get())
                                         data-testid=format!("{name}-row-{slot}")
                                         data-row-id=move || id.get().to_string()
                                         aria-rowindex=move || (row.get() + 2).to_string()
                                         aria-selected=move || chosen.get().to_string()
-                                        style:height=format!("{row_height}px")
-                                        style:transform=move || {
-                                            format!("translateY({}px)", row.get() as f64 * row_height)
-                                        }
                                         on:click=move |_: MouseEvent| {
                                             if within.get_untracked() {
                                                 select(row.get_untracked());
@@ -507,24 +534,26 @@ pub fn DataTable(
                                                     let at = focus.get();
                                                     at.row == row.get() && at.column == column.get()
                                                 });
+                                                let width_geometry = column_geometry.clone();
+                                                let cell_geometry = crate::geometry::geometry_class_named(
+                                                    format!("{table_geometry}-row-{row_slot}-cell-{slot}"),
+                                                    move || {
+                                                        format!(
+                                                            "transform:translateX({}px);",
+                                                            column.get() as f64 * column_width,
+                                                        )
+                                                    },
+                                                );
                                                 view! {
                                                     <div
                                                         role="gridcell"
-                                                        class=CELL
+                                                        class=format!("{CELL} {width_geometry} {cell_geometry}")
                                                         class=("hidden", move || !here.get())
                                                         aria-colindex=move || {
                                                             (column.get() + 1).to_string()
                                                         }
                                                         tabindex=move || {
                                                             if focused.get() { "0" } else { "-1" }
-                                                        }
-                                                        style:position="absolute"
-                                                        style:width=format!("{column_width}px")
-                                                        style:transform=move || {
-                                                            format!(
-                                                                "translateX({}px)",
-                                                                column.get() as f64 * column_width,
-                                                            )
                                                         }
                                                     >
                                                         {move || {
@@ -584,5 +613,75 @@ fn test_id_of(test_id: &str) -> String {
         "table".to_string()
     } else {
         test_id.to_string()
+    }
+}
+
+#[cfg(all(test, feature = "ssr", not(target_arch = "wasm32")))]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn host_table_has_cells_and_fractional_geometry_before_measurement() {
+        let owner = Owner::new();
+        let styles = crate::geometry::GeometryStyles::default();
+        let html = owner.with(|| {
+            rustify_ui::id::provide("table-test");
+            crate::geometry::provide_geometry_styles(styles.clone());
+            view! {
+                <DataTable
+                    rows=4usize
+                    columns=vec![Column::new("a", "A"), Column::new("b", "B"), Column::new("c", "C")]
+                    cell=Arc::new(|row, column| format!("cell-{row}-{column}"))
+                    row_id=Arc::new(|row| row as u32 + 10)
+                    selected=Selection::new()
+                    goto=RwSignal::new(None)
+                    focus=RwSignal::new(Cell::default())
+                    on_select=|_| {}
+                    on_activate=|_| {}
+                    row_height=31.5
+                    column_width=137.25
+                />
+            }
+            .to_html()
+        });
+        assert!(html.contains("cell-3-2"), "{html}");
+        assert_eq!(html.matches("role=\"gridcell\"").count(), 12, "{html}");
+        assert!(!html.contains(" style="), "{html}");
+        let css = styles.css();
+        assert!(css.contains("width:137.25px;"), "{css}");
+        assert!(css.contains("height:31.5px;"), "{css}");
+        assert!(css.contains("height:126px;width:411.75px;"), "{css}");
+        assert!(
+            css.contains("-row-3{transform:translateY(94.5px);"),
+            "{css}"
+        );
+        assert!(
+            css.contains("-row-3-cell-2{transform:translateX(274.5px);"),
+            "{css}"
+        );
+    }
+
+    #[test]
+    fn host_large_table_uses_the_declared_initial_window() {
+        let owner = Owner::new();
+        let html = owner.with(|| {
+            view! {
+                <DataTable
+                    rows=100_000usize
+                    columns=vec![Column::new("a", "A")]
+                    cell=Arc::new(|row, _| row.to_string())
+                    row_id=Arc::new(|row| row as u32)
+                    selected=Selection::new()
+                    goto=RwSignal::new(None)
+                    focus=RwSignal::new(Cell::default())
+                    on_select=|_| {}
+                    on_activate=|_| {}
+                    initial_viewport=(120.0, 96.0)
+                />
+            }
+            .to_html()
+        });
+        assert_eq!(html.matches("data-row-id=").count(), 25, "{html}");
+        assert!(html.contains("aria-rowcount=\"100001\""), "{html}");
     }
 }

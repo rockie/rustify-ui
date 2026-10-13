@@ -6,41 +6,71 @@ license.workspace = true
 publish.workspace = true
 description = "Rustify Docs: Markdown content rendered on the host into a static documentation site"
 
+[features]
+default = ["pipeline"]
+pipeline = [
+    "site-ssr", "dep:rustify-style", "rustify-style/compiler", "rustify-style/scanner",
+    "dep:pulldown-cmark", "dep:syntect", "dep:two-face", "dep:lightningcss",
+    "dep:cssparser", "dep:unicode-normalization", "dep:html5gum",
+    "dep:html5ever", "dep:dom_query", "dep:serde_yaml_ng", "dep:toml",
+]
+site-ssr = ["leptos/ssr", "rustify-ui/ssr", "rustify-components/ssr", "dep:sha2", "dep:hydration_context", "dep:any_spawner", "dep:serde_path_to_error"]
+hydrate = ["leptos/hydrate", "rustify-ui/hydrate", "rustify-components/hydrate"]
+
 [dependencies]
-# Host rendering only. The SDK and the components are asked for `ssr` and
-# nothing else, so this crate's graph never carries the browser's effects,
-# the DOM runtime or a GPU region.
-leptos = { workspace = true, features = ["ssr"] }
-rustify-ui = { path = "../rustify-ui", default-features = false, features = ["ssr"] }
-rustify-components = { path = "../rustify-components", default-features = false, features = ["ssr"] }
-# The Tailwind 4.1.13 compiler port, given explicit candidates; no scanner.
-rustify-style = { path = "../rustify-style", default-features = false, features = ["compiler"] }
+leptos = { workspace = true }
+rustify-ui = { path = "../rustify-ui", default-features = false }
+rustify-components = { path = "../rustify-components", default-features = false }
+rustify-docs-macros = { path = "../rustify-docs-macros" }
+# The content pipeline runs only on the CLI host; helpers and islands carry
+# the same registry and view without Markdown, highlighting or CSS compilers.
+rustify-style = { path = "../rustify-style", default-features = false, optional = true }
+hydration_context = { version = "=0.3.2", optional = true }
+any_spawner = { version = "=0.3.0", optional = true }
+serde_path_to_error = { version = "=0.1.20", optional = true }
 # Parsing with source offsets; the HTML writer is this crate's own.
-pulldown-cmark = { version = "0.13.4", default-features = false, features = ["html"] }
+pulldown-cmark = { version = "0.13.4", default-features = false, features = ["html"], optional = true }
 # Highlighting into class names at build time, with the pure-Rust regex
 # engine. two-face carries the grammars syntect's own set lacks (TOML,
 # TypeScript), precompiled for that engine.
-syntect = { version = "5.3.0", default-features = false, features = ["parsing", "regex-fancy", "dump-load"] }
-two-face = { version = "0.5.2", default-features = false, features = ["syntect-fancy"] }
+syntect = { version = "5.3.0", default-features = false, features = ["parsing", "regex-fancy", "dump-load"], optional = true }
+two-face = { version = "0.5.2", default-features = false, features = ["syntect-fancy"], optional = true }
 # Minification and lowering of the compiled CSS, in process.
-lightningcss = { version = "1.0.0-alpha.72", default-features = false }
+lightningcss = { version = "1.0.0-alpha.72", default-features = false, optional = true }
 # The CSS tokenizer already used by Lightning CSS; resource checks share
 # its string, comment, escape and URL semantics.
-cssparser = "0.37.0"
-sha2 = "0.10.9"
-unicode-normalization = "0.1.25"
+cssparser = { version = "0.37.0", optional = true }
+sha2 = { version = "0.10.9", optional = true }
+unicode-normalization = { version = "0.1.25", optional = true }
 # Author HTML is checked as a browser tokenizes it (WHATWG), with spans.
-html5gum = "0.8.4"
+html5gum = { version = "0.8.4", optional = true }
 # Document IDs need tree construction: namespaces and template fragments
 # cannot be determined by counting tokenizer tags.
-html5ever = "0.39.0"
-dom_query = { version = "0.28.0", default-features = false }
+html5ever = { version = "0.39.0", optional = true }
+dom_query = { version = "0.28.0", default-features = false, optional = true }
 # Frontmatter and the site configuration, with locations for diagnostics.
 serde = { version = "1", features = ["derive"] }
 # A production output's manifest.
 serde_json = "1"
-serde_yaml_ng = "0.10.0"
-toml = "1.1"
+serde_yaml_ng = { version = "0.10.0", optional = true }
+toml = { version = "1.1", optional = true }
 
 [dev-dependencies]
 flate2 = "1.1.9"
+rustify-docs-syntax = { path = "../rustify-docs-syntax" }
+
+[[test]]
+name = "generate"
+required-features = ["pipeline"]
+
+[[test]]
+name = "site_registry"
+required-features = ["site-ssr"]
+
+[[test]]
+name = "site_metadata"
+required-features = ["site-ssr"]
+
+[[example]]
+name = "b_poc"
+required-features = ["pipeline"]

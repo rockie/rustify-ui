@@ -1,0 +1,33 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+    Finished `docs-cli` profile [optimized] target(s) in 0.91s
+     Running unittests src/main.rs (target/docs-cli/deps/rustify_docs-29bac16293355487)
+
+running 1 test
+compile proxy work: /Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/compile-proxy-r2
+mbx[progress]: 15s elapsed; 0 hits, 0 misses, 0 bypassed, 0 not looked up; ~0s compiler work saved
+mbx[progress]: 30s elapsed; 0 hits, 0 misses, 0 bypassed, 0 not looked up; ~0s compiler work saved
+mbx[progress]: 45s elapsed; 0 hits, 0 misses, 0 bypassed, 0 not looked up; ~0s compiler work saved
+mbx[progress]: 1m elapsed; 0 hits, 0 misses, 0 bypassed, 0 not looked up; ~0s compiler work saved
+test compile_proxy::compile_to_islands_proxy has been running for over 60 seconds
+compile proxy/0: native=true, browser=true, compile-end=1791888341066
+mbx[progress]: 1m 15s elapsed; 0 hits, 0 misses, 0 bypassed, 0 not looked up; ~0s compiler work saved
+mbx[progress]: 1m 30s elapsed; 0 hits, 0 misses, 0 bypassed, 0 not looked up; ~0s compiler work saved
+compile proxy/1: native=true, browser=true, compile-end=1791888365754
+mbx[progress]: 1m 45s elapsed; 0 hits, 0 misses, 0 bypassed, 0 not looked up; ~0s compiler work saved
+compile proxy/2: native=true, browser=true, compile-end=1791888390382
+mbx[progress]: 2m elapsed; 0 hits, 0 misses, 0 bypassed, 0 not looked up; ~0s compiler work saved
+compile proxy/3: native=true, browser=true, compile-end=1791888414787
+compile proxy/4: native=true, browser=true, compile-end=1791888439680
+mbx[progress]: 3m elapsed; 0 hits, 0 misses, 0 bypassed, 0 not looked up; ~0s compiler work saved
+compile proxy/5: native=true, browser=true, compile-end=1791888464971
+test compile_proxy::compile_to_islands_proxy ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 50 filtered out; finished in 191.00s
+
+mbx[savings]: 119.5 GiB of outputs, one copy, several very confident checkouts.

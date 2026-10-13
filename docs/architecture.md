@@ -41,7 +41,7 @@ flowchart TD
 
 | Path | Responsibility |
 | --- | --- |
-| `crates/rustify-ui` | Public SDK. Features: `csr` (default; the browser runtime), `ssr` (rendering on a host, built on its own) and `gpu` (Makepad regions, off by default). `runtime` (the neutral host binding every instance starts with, and the DOM loader and stylesheet as constants), `mount` / `AppHandle` (container checks, owner cleanup before DOM unmount), with `gpu` the `GpuRegion` component (canvas node, region lifecycle, props projection, cleanup), `UiError`, the layer stack (`overlay`), native text sessions (`text`), the theme table and its local overrides (`theme`), asynchronous state and tickets (`task`), the DOM component subset (`components`), the GPU halves of the controls that have one on both sides (`gpu`), and the capability catalogue (`catalog`). |
+| `crates/rustify-ui` | Public SDK. Features: `csr` (default; the browser runtime), `ssr` (rendering on a host, built on its own), `hydrate` (taking over generated DOM, with default features disabled) and `gpu` (Makepad regions, off by default). `runtime` (the neutral host binding every instance starts with, and the DOM loader and stylesheet as constants), `mount` / `AppHandle` (container checks, owner cleanup before DOM unmount), with `gpu` the `GpuRegion` component (canvas node, region lifecycle, props projection, cleanup), `UiError`, the layer stack (`overlay`), native text sessions (`text`), the theme table and its local overrides (`theme`), asynchronous state and tickets (`task`), the DOM component subset (`components`), the GPU halves of the controls that have one on both sides (`gpu`), and the capability catalogue (`catalog`). |
 | `crates/rustify-components` | DOM components for applications: the two class-string macros forked from Rust/UI (`clx!`, `variants!`), the merge rule they share, the current-path seam a link marks itself current from, and under `css/` the SDK's Tailwind layer (`sdk.css`), the input that compiles it on its own and the committed product (`rustify.css`). |
 | `crates/rustify-style` | Pure Rust class tooling without DOM or Makepad: the `cn` merge engine and the `class_variants!` generator components use (default feature), the Oxide-derived scanner (`scanner`, `scanner-fs`), and the Tailwind 4.1.13 compiler with its renderer programs (`compiler`). |
 | `crates/rustify-style-wasm` | The single-threaded WASM facade: the cn JS API and the compiler Worker session. `build-web` packages it as the `utility/` Worker product. |
@@ -82,8 +82,52 @@ flowchart TD
 - **Theme.** One table of tokens per scope, written onto the scope's own root through the CSSOM (never a `style` attribute, so a strict `style-src` needs no exception) and handed to regions as props. `ThemeOverride` changes part of it for one area: it writes the properties the patch names onto its own element and removes the ones it stops naming, so everything else inherits and the override can be turned off.
 - **Styles.** The component classes are unprefixed Tailwind v4 utilities, the same ones an application writes, and a caller's `class` is merged with a component's through `tw_merge`, so it replaces the component's class of the same kind in the same state. This replaces P2's isolation, where a `rui:` prefix kept the SDK's classes apart from a host page's. Three things still keep the SDK off the host's markup: the stylesheet has no preflight and no bare element selector; `dark:` means a scope whose theme is dark (`[data-rustify-scope][data-theme="dark"]`), not a `.dark` ancestor; and the tokens are written only to a scope root - even Tailwind's spacing unit, which shares the name `--spacing`, is compiled into the utilities rather than written to `:root`. What is given up is two Tailwind builds on one page: a host with its own build imports `css/sdk.css` into it rather than also linking `rustify.css`, whose utilities have the same names. A page with no Tailwind links `rustify.css`; an application with its own input gets one stylesheet with both sets of classes.
 - **A lost GPU context.** The host prevents the loss from being permanent and stops pumping into the dead context; the region publishes `Lost`, is torn down, and is built again on `webglcontextrestored` with the application's current projection applied before the first draw. Nothing the application holds was ever in the region, so nothing is recovered - it is projected.
-- **Diagnostics.** One bounded record per runtime, in `diagnostics`: eighteen registered failure classes each with a next step, a count and a byte ceiling, and a `dropped` counter every report leads with. Entry details are `&'static str`, so a user's text has no path into a log.
+- **Diagnostics.** One bounded record per runtime, in `diagnostics`: twenty registered failure classes each with a next step, a count and a byte ceiling, and a `dropped` counter every report leads with. Entry details are `&'static str`, so a user's text has no path into a log.
 - **Message bridge.** The web backend's message list is one Rust function (`web_bridge_js_sources`). The build extracts the generated JS from the wasm with `wasmi` and ships it as an ES module with the fingerprint the wasm also exports; the loader compares both before driving the module. No runtime code generation exists in the shipped JS.
+
+## Static scopes and hydration
+
+The static-scope API is implemented in the working tree on `main`, based on
+`785f51ad9fdcb69e624a0c8f85d91e3541d58e90` (2026-10-13). The documentation
+pipeline uses it to generate HTML during a build; readers receive static files.
+
+`ssr_scope(MountConfig, view)` creates a scope with one content root, one empty
+overlay root and an explicit server-rendered marker. The scope name seeds an
+independent ID sequence. `hydrate(container, MountConfig, view)` requires the
+same scope, base and deterministic initial view, and preserves the existing
+content nodes. Build the host with `ssr` and the browser with `hydrate` in
+separate Cargo invocations; enabling `csr` and `hydrate` together is rejected.
+See [mount.rs](../crates/rustify-ui/src/mount.rs) and
+[id.rs](../crates/rustify-ui/src/id.rs).
+
+Boot the DOM runtime before hydration. An external startup script must initialize
+Leptos' empty `__RESOLVED_RESOURCES`, `__INCOMPLETE_CHUNKS` and
+`__SERIALIZED_ERRORS` arrays. The hydration view closure establishes the SDK
+roots, action sink, embedded router, overlay stack, ID allocator and initial
+locale; author contexts belong inside that closure because Leptos creates a
+new root Owner. Use `provide_static_theme` when the matching theme CSS has
+already been generated; it publishes the snapshot without rewriting DOM styles
+([provider.rs](../crates/rustify-ui/src/theme/provider.rs)). Start asynchronous
+browser work after attachment. Floating demonstrations generate closed triggers;
+Leptos portals create their overlay content in the browser.
+
+A runtime occupation marker is separate from the server-rendered marker.
+`InvalidHydrationRoot` reports missing or malformed generated roots;
+`HydrationIdentityMismatch` reports a different scope, seed or base. These
+refusals leave the original DOM intact. Duplicate attachment uses
+`OccupiedContainer`; attachment before boot uses `RuntimeNotStarted`. Normal
+`AppHandle::dispose` cleans the owning root and removes its DOM. A trapped
+instance requires JavaScript to restore its static snapshot; it cannot run Rust
+cleanup ([diagnostics.rs](../crates/rustify-ui/src/diagnostics.rs)).
+
+Components that need initial geometry collect external rules through
+`provide_geometry_styles(GeometryStyles)`; the build writes `styles.css()` to an
+external stylesheet. Browser updates use a scope-owned constructed stylesheet,
+with independent selectors across wasm instances. DataTable names its visible
+row and cell rules by stable pool slots, so different construction order cannot
+change which rule a node uses. No geometry rule is emitted as a `style`
+attribute ([geometry.rs](../crates/rustify-components/src/geometry.rs),
+[DataTable](../crates/rustify-components/src/data_table/view.rs)).
 
 ## Versioned themes
 
@@ -97,13 +141,13 @@ The document and snapshot contracts are in
 [`PreviewProps`](../examples/theme-studio/src/preview_region.rs#L43) carries
 an `Arc<ResolvedTheme>` alongside its application state.
 
-[`ThemeScope`](../crates/rustify-ui/src/theme/provider.rs#L77) claims the mount
+[`ThemeScope`](../crates/rustify-ui/src/theme/provider.rs#L89) claims the mount
 root, projects the snapshot through CSSOM and restores prior values on cleanup.
-[`ThemeBoundary`](../crates/rustify-ui/src/theme/provider.rs#L114) re-resolves
+[`ThemeBoundary`](../crates/rustify-ui/src/theme/provider.rs#L128) re-resolves
 local patches without changing mode; clearing a patch restores inheritance.
 An overlay captures the effective theme signal at its creation point and
 updates its layer from that signal
-([`overlay.rs`](../crates/rustify-ui/src/overlay.rs#L679)).
+([`overlay.rs`](../crates/rustify-ui/src/overlay.rs#L721)).
 
 Applications opt into the document's geometry, fonts and shadows by importing
 [theme-v4.css](../crates/rustify-components/css/theme-v4.css#L1) after

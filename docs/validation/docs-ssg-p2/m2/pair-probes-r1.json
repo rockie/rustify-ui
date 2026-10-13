@@ -1,0 +1,32 @@
+[
+  {
+    "name": "pair-wrong-cli-r1",
+    "exit": 1,
+    "rules": [
+      "rust-framework-pair"
+    ],
+    "lock_unchanged": true,
+    "last_good_unchanged": true
+  },
+  {
+    "name": "pair-wrong-framework-r1",
+    "exit": 1,
+    "rules": [
+      "rust-framework-pair"
+    ],
+    "lock_unchanged": true,
+    "last_good_unchanged": true
+  },
+  {
+    "name": "pair-wrong-bindgen-r1",
+    "exit": 1,
+    "rules": [
+      "rust-cargo",
+      "rust-cargo",
+      "rust-metadata"
+    ],
+    "lock_unchanged": true,
+    "last_good_unchanged": true,
+    "note": "author 0.2.129 conflicts with locked framework 0.2.128; Cargo resolution rejects before helper/bindgen"
+  }
+]

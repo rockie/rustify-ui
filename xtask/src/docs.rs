@@ -294,7 +294,26 @@ fn is_makepad(name: &str) -> bool {
 /// Every package in `manifest`'s graph of normal and build dependencies, for
 /// every target platform, as `name version (source)` lines.
 fn graph(cargo: &mut Command, manifest: &Path, package: &str) -> Result<Vec<String>, String> {
-    let output = cargo
+    dependency_graph(cargo, manifest, package, None, "{p}")
+}
+
+fn feature_graph(
+    cargo: &mut Command,
+    manifest: &Path,
+    package: &str,
+    mode: Option<&str>,
+) -> Result<Vec<String>, String> {
+    dependency_graph(cargo, manifest, package, mode, "{p}\t{f}")
+}
+
+fn dependency_graph(
+    cargo: &mut Command,
+    manifest: &Path,
+    package: &str,
+    mode: Option<&str>,
+    format: &str,
+) -> Result<Vec<String>, String> {
+    cargo
         .args([
             "tree",
             "--locked",
@@ -305,11 +324,17 @@ fn graph(cargo: &mut Command, manifest: &Path, package: &str) -> Result<Vec<Stri
             "--prefix",
             "none",
             "--no-dedupe",
+            "--format",
+            format,
             "--package",
             package,
             "--manifest-path",
         ])
-        .arg(manifest)
+        .arg(manifest);
+    if let Some(mode) = mode {
+        cargo.args(["--no-default-features", "--features", mode]);
+    }
+    let output = cargo
         .output()
         .map_err(|error| format!("cargo tree: {error}"))?;
     if !output.status.success() {
@@ -431,6 +456,10 @@ fn wasm_import_modules(bytes: &[u8]) -> Result<BTreeSet<String>, String> {
 /// import in the glue, or a wasm import from anywhere but the glue and the
 /// SDK's own snippet.
 fn check_product(output: &Path) -> Result<(), String> {
+    check_product_at(output, &output.join("pkg"))
+}
+
+fn check_product_at(output: &Path, bindings: &Path) -> Result<(), String> {
     let mut files = Vec::new();
     let mut stack = vec![output.to_path_buf()];
     while let Some(dir) = stack.pop() {
@@ -460,8 +489,8 @@ fn check_product(output: &Path) -> Result<(), String> {
     if !foreign.is_empty() {
         return Err(format!("the product has Makepad files: {foreign:?}"));
     }
-    let glue = std::fs::read_to_string(output.join("pkg/app.js"))
-        .map_err(|error| format!("pkg/app.js: {error}"))?;
+    let glue = std::fs::read_to_string(bindings.join("app.js"))
+        .map_err(|error| format!("app.js: {error}"))?;
     for line in glue
         .lines()
         .filter(|line| line.trim_start().starts_with("import "))
@@ -472,8 +501,8 @@ fn check_product(output: &Path) -> Result<(), String> {
             ));
         }
     }
-    let wasm = std::fs::read(output.join("pkg/app_bg.wasm"))
-        .map_err(|error| format!("pkg/app_bg.wasm: {error}"))?;
+    let wasm = std::fs::read(bindings.join("app_bg.wasm"))
+        .map_err(|error| format!("app_bg.wasm: {error}"))?;
     let modules = wasm_import_modules(&wasm)?;
     println!("  wasm imports from: {modules:?}");
     let unexpected: Vec<&String> = modules
@@ -494,6 +523,19 @@ fn check_product(output: &Path) -> Result<(), String> {
         .any(|file| file.ends_with("web/dom-runtime.js"))
     {
         return Err("the product has no SDK runtime snippet".into());
+    }
+    for file in files.iter().filter(|file| file.ends_with(".js")) {
+        let text = std::fs::read_to_string(output.join(file)).map_err(|error| error.to_string())?;
+        for line in text.lines().filter(|line| {
+            line.trim_start().starts_with("import ")
+                || line.contains(" from ")
+                || line.contains("import(")
+                || line.contains("import (")
+        }) {
+            if line.to_ascii_lowercase().contains("makepad") {
+                return Err(format!("the product imports Makepad in {file}: {line}"));
+            }
+        }
     }
     Ok(())
 }
@@ -638,9 +680,37 @@ const TOOL_PACKAGES: &[&str] = &[
 const BROWSER_FEATURES: &[(&str, &[&str])] = &[
     ("leptos", &["csr", "hydrate"]),
     ("reactive_graph", &["effects"]),
-    ("rustify-ui", &["csr", "gpu"]),
-    ("rustify-components", &["csr", "gpu"]),
+    ("rustify-ui", &["csr", "hydrate", "gpu"]),
+    ("rustify-components", &["csr", "hydrate", "gpu"]),
+    ("rustify-docs", &["hydrate"]),
 ];
+
+fn check_feature_rules(
+    label: &str,
+    lines: &[String],
+    rules: &[(&str, &[&str])],
+) -> Result<(), String> {
+    for (crate_name, forbidden) in rules {
+        for line in lines
+            .iter()
+            .filter(|line| line.split_whitespace().next() == Some(*crate_name))
+        {
+            let features: BTreeSet<&str> = line
+                .split_once('\t')
+                .map_or("", |(_, features)| features)
+                .split(',')
+                .collect();
+            let on: Vec<&&str> = forbidden
+                .iter()
+                .filter(|feature| features.contains(**feature))
+                .collect();
+            if !on.is_empty() {
+                return Err(format!("{label}: {crate_name} has {on:?} on: {line}"));
+            }
+        }
+    }
+    Ok(())
+}
 
 /// The docs library and the CLI, each on its own: no Makepad, no `-sys`
 /// package outside the allowlist, no build tool, and no browser rendering
@@ -678,58 +748,153 @@ fn check_docs_graphs(root: &Path) -> Result<(), String> {
                 "{package} pulls in {tools:?}, which need a tool or library beside Rust"
             ));
         }
-        let output = mbx()
-            .args([
-                "tree",
-                "--locked",
-                "--edges",
-                "normal,build",
-                "--target",
-                "all",
-                "--prefix",
-                "none",
-                "--no-dedupe",
-                "--format",
-                "{p} {f}",
-                "--package",
-                package,
-                "--manifest-path",
-            ])
-            .arg(&manifest)
-            .output()
-            .map_err(|error| format!("cargo tree: {error}"))?;
-        if !output.status.success() {
-            return Err(format!(
-                "cargo tree: {}",
-                String::from_utf8_lossy(&output.stderr)
-            ));
-        }
-        let text = String::from_utf8_lossy(&output.stdout);
-        for (crate_name, forbidden) in BROWSER_FEATURES {
-            for line in text
-                .lines()
-                .filter(|line| line.split_whitespace().next() == Some(*crate_name))
-            {
-                let features: BTreeSet<&str> = line
-                    .split_whitespace()
-                    .last()
-                    .unwrap_or("")
-                    .split(',')
-                    .collect();
-                let on: Vec<&&str> = forbidden
-                    .iter()
-                    .filter(|feature| features.contains(**feature))
-                    .collect();
-                if !on.is_empty() {
-                    return Err(format!("{package}: {crate_name} has {on:?} on: {line}"));
-                }
-            }
-        }
+        check_feature_rules(
+            package,
+            &feature_graph(&mut mbx(), &manifest, package, None)?,
+            BROWSER_FEATURES,
+        )?;
         println!(
             "  no csr, hydrate, effects or gpu feature; {} -sys package(s), no build tool",
             sys.len()
         );
     }
+    Ok(())
+}
+
+const SITE_PIPELINE_PACKAGES: &[&str] = &[
+    "pulldown-cmark",
+    "syntect",
+    "two-face",
+    "lightningcss",
+    "cssparser",
+    "html5gum",
+    "html5ever",
+    "dom_query",
+    "serde_yaml_ng",
+    "classification-macros",
+    "fast-glob",
+    "bexpand",
+];
+
+const SITE_PIPELINE_FEATURES: &[(&str, &[&str])] = &[
+    ("rustify-docs", &["pipeline"]),
+    ("rustify-style", &["compiler", "scanner", "scanner-fs"]),
+    ("rustify-ui", &["gpu"]),
+    ("rustify-components", &["gpu"]),
+];
+
+fn check_site_graph(label: &str, mode: &str, lines: &[String]) -> Result<(), String> {
+    let packages: BTreeSet<String> = lines
+        .iter()
+        .map(|line| {
+            line.split_once('\t')
+                .map_or(line.as_str(), |(package, _)| package)
+                .to_string()
+        })
+        .collect();
+    check_graph(label, &packages.into_iter().collect::<Vec<_>>())?;
+    let names: BTreeSet<&str> = lines
+        .iter()
+        .filter_map(|line| line.split_whitespace().next())
+        .collect();
+    let private: Vec<&&str> = SITE_PIPELINE_PACKAGES
+        .iter()
+        .filter(|name| names.contains(**name))
+        .collect();
+    if !private.is_empty() {
+        return Err(format!(
+            "{label} carries private content pipeline packages: {private:?}"
+        ));
+    }
+    check_feature_rules(label, lines, SITE_PIPELINE_FEATURES)?;
+    if mode == "ssr" {
+        check_feature_rules(label, lines, BROWSER_FEATURES)?;
+    } else {
+        check_feature_rules(
+            label,
+            lines,
+            &[
+                ("leptos", &["csr", "ssr"]),
+                ("rustify-ui", &["csr", "ssr"]),
+                ("rustify-components", &["csr", "ssr"]),
+                ("rustify-docs", &["site-ssr"]),
+            ],
+        )?;
+    }
+    let docs_mode = if mode == "ssr" { "site-ssr" } else { "hydrate" };
+    if !lines.iter().any(|line| {
+        line.split_whitespace().next() == Some("rustify-docs")
+            && line.split_once('\t').is_some_and(|(_, features)| {
+                features.split(',').any(|feature| feature == docs_mode)
+            })
+    }) {
+        return Err(format!("{label} did not enable rustify-docs/{docs_mode}"));
+    }
+    println!("  isolated {mode}; no private Markdown/highlighting/CSS compiler/scanner pipeline");
+    Ok(())
+}
+
+/// Exercise the author CLI's public build entry, so the checked glue, wasm,
+/// runtime and snippets are the same complete group an author publishes.
+fn check_component_site(root: &Path) -> Result<(), String> {
+    let fixture = root.join("tests/docs-ssg/fixtures/components");
+    let manifest = fixture.join("Cargo.toml");
+    for mode in ["ssr", "hydrate"] {
+        let lines = feature_graph(&mut mbx(), &manifest, "docs-components-fixture", Some(mode))?;
+        check_site_graph(&format!("components fixture/{mode}"), mode, &lines)?;
+    }
+    let output = root.join("target/docs-ssg/features/components");
+    run(
+        mbx()
+            .current_dir(root)
+            .env("RUSTIFY_DOCS_CARGO", "mbx")
+            .env("RUSTUP_AUTO_INSTALL", "0")
+            .args([
+                "run",
+                "--locked",
+                "--package",
+                "rustify-docs-cli",
+                "--bin",
+                "rustify-docs",
+                "--",
+                "build",
+                "--config",
+            ])
+            .arg(fixture.join("rustify-docs.toml"))
+            .arg("--out")
+            .arg(&output),
+        "components fixture public CLI build",
+    )?;
+    let groups = output.join("assets/islands");
+    let mut checked = 0;
+    for entry in
+        std::fs::read_dir(&groups).map_err(|error| format!("{}: {error}", groups.display()))?
+    {
+        let group = entry.map_err(|error| error.to_string())?.path();
+        if !group.is_dir() {
+            return Err("island assets must be complete resource-group directories".to_string());
+        }
+        for required in [
+            "app.js",
+            "app_bg.wasm",
+            "dom-loader.js",
+            "dom-runtime.css",
+            "islands.js",
+        ] {
+            if !group.join(required).is_file() {
+                return Err(format!("the island resource group is missing {required}"));
+            }
+        }
+        check_product_at(&group, &group)?;
+        checked += 1;
+    }
+    if checked == 0 {
+        return Err("the component fixture published no island resource group".to_string());
+    }
+    println!(
+        "component site: {checked} complete island resource group(s) at {}",
+        output.display()
+    );
     Ok(())
 }
 
@@ -746,8 +911,105 @@ fn features() -> Result<(), String> {
     check_gpu_switch(mbx, &fixture)?;
     check_library_copies(&root)?;
     check_docs_graphs(&root)?;
+    build_hydration(&root)?;
+    check_component_site(&root)?;
     println!(
         "features: the default build is DOM only; the product is {}",
+        output.display()
+    );
+    Ok(())
+}
+
+/// Compiles the same independent view in each rendering mode. The host
+/// writes static roots; each browser target has its own feature graph and
+/// bindgen output so a CSR union cannot stand in for hydration.
+fn build_hydration(root: &Path) -> Result<(), String> {
+    let manifest = root.join("tests/dom-only/hydration/Cargo.toml");
+    let output = root.join("target/dom/hydration");
+    let target = |mode: &str| root.join(format!("target/dom-hydration-{mode}"));
+    let command = |mode: &str| {
+        let mut command = Command::new("mbx");
+        command.env("CARGO_TARGET_DIR", target(mode));
+        command
+    };
+    for mode in ["ssr", "hydrate", "csr"] {
+        let mut cargo = command(mode);
+        let graph_output = cargo
+            .args([
+                "tree",
+                "--locked",
+                "--edges",
+                "normal,build",
+                "--target",
+                "all",
+                "--prefix",
+                "none",
+                "--no-dedupe",
+                "--package",
+                "hydration-harness",
+                "--manifest-path",
+            ])
+            .arg(&manifest)
+            .args(["--no-default-features", "--features", mode])
+            .output()
+            .map_err(|error| format!("hydration graph: {error}"))?;
+        if !graph_output.status.success() {
+            return Err(format!(
+                "hydration {mode} graph: {}",
+                String::from_utf8_lossy(&graph_output.stderr)
+            ));
+        }
+        let lines = String::from_utf8_lossy(&graph_output.stdout)
+            .lines()
+            .map(str::to_string)
+            .collect::<Vec<_>>();
+        check_graph(&format!("hydration-harness/{mode}"), &lines)?;
+    }
+    run(
+        command("ssr")
+            .args(["run", "--locked", "--quiet", "--manifest-path"])
+            .arg(&manifest)
+            .args([
+                "--no-default-features",
+                "--features",
+                "ssr",
+                "--bin",
+                "export-hydration-assets",
+                "--",
+            ])
+            .arg(&output),
+        "hydration host generation",
+    )?;
+    for mode in ["hydrate", "csr"] {
+        run(
+            command(mode)
+                .args(["build", "--locked", "--release", "--manifest-path"])
+                .arg(&manifest)
+                .args([
+                    "--no-default-features",
+                    "--features",
+                    mode,
+                    "--lib",
+                    "--target",
+                    "wasm32-unknown-unknown",
+                ])
+                .env("RUSTFLAGS", wasm_rustflags()),
+            &format!("hydration {mode} wasm build"),
+        )?;
+        let wasm = target(mode).join("wasm32-unknown-unknown/release/hydration_harness.wasm");
+        let product = output.join(mode);
+        assemble(
+            manifest
+                .parent()
+                .ok_or("hydration manifest has no directory")?,
+            &wasm,
+            &product,
+            |_| Ok(()),
+        )?;
+        check_product(&product)?;
+    }
+    println!(
+        "hydration: host, hydrate and independent CSR at {}",
         output.display()
     );
     Ok(())
@@ -1633,6 +1895,81 @@ mod tests {
             "smallvec v1.13.2 (/repo/makepad/libs/smallvec)".to_string(),
         ];
         assert!(check_graph("probe", &lines).is_ok());
+    }
+
+    fn site_graph(mode: &str) -> Vec<String> {
+        let docs = if mode == "ssr" { "site-ssr" } else { "hydrate" };
+        vec![
+            format!("rustify-docs v0.1.0 (/project with spaces/docs)\t{docs}"),
+            format!("rustify-ui v0.1.0\t{mode}"),
+            format!("rustify-components v0.1.0\t{mode}"),
+            format!("leptos v0.8.22\t{mode}"),
+            "toml v1.1.0\tparse".to_string(),
+            "rustify-style v0.1.0\tcn,protocol".to_string(),
+        ]
+    }
+
+    #[test]
+    fn site_graph_allows_leptos_configuration_and_runtime_class_merging() {
+        assert!(check_site_graph("host", "ssr", &site_graph("ssr")).is_ok());
+        assert!(check_site_graph("browser", "hydrate", &site_graph("hydrate")).is_ok());
+    }
+
+    #[test]
+    fn site_graph_rejects_the_private_pipeline_in_either_rendering_mode() {
+        for mode in ["ssr", "hydrate"] {
+            for poison in [
+                "syntect v5.3.0\tparsing",
+                "rustify-docs v0.1.0\tpipeline",
+                "rustify-style v0.1.0\tcn,scanner",
+                "makepad-widgets v1.0.0\tdefault",
+            ] {
+                let mut lines = site_graph(mode);
+                lines.push(poison.to_string());
+                assert!(check_site_graph(mode, mode, &lines).is_err(), "{poison}");
+            }
+        }
+    }
+
+    #[test]
+    fn host_site_graph_rejects_browser_and_effect_features_on_dependencies() {
+        for poison in [
+            "rustify-ui v0.1.0\thydrate",
+            "rustify-components v0.1.0\tcsr",
+            "reactive_graph v0.2.13\teffects",
+            "rustify-ui v0.1.0\tgpu",
+        ] {
+            let mut lines = site_graph("ssr");
+            lines.push(poison.to_string());
+            assert!(check_site_graph("host", "ssr", &lines).is_err(), "{poison}");
+        }
+    }
+
+    #[test]
+    fn an_island_group_refuses_a_makepad_import_inside_its_runtime_snippet() {
+        let directory = std::env::temp_dir().join(format!(
+            "rustify-island-product-{}-{}",
+            std::process::id(),
+            std::time::SystemTime::now()
+                .duration_since(std::time::UNIX_EPOCH)
+                .unwrap()
+                .as_nanos()
+        ));
+        let snippet = directory.join("snippets/rustify-ui-fixture/web/dom-runtime.js");
+        std::fs::create_dir_all(snippet.parent().unwrap()).unwrap();
+        std::fs::write(&snippet, "export function create_dom_host() {}\n").unwrap();
+        std::fs::write(
+            directory.join("app.js"),
+            "import { create_dom_host } from './snippets/rustify-ui-fixture/web/dom-runtime.js';\n",
+        )
+        .unwrap();
+        std::fs::write(directory.join("app_bg.wasm"), b"\0asm\x01\0\0\0").unwrap();
+        let accepted = check_product_at(&directory, &directory);
+        std::fs::write(&snippet, "import { draw } from 'makepad-runtime';\n").unwrap();
+        let rejected = check_product_at(&directory, &directory);
+        std::fs::remove_dir_all(directory).unwrap();
+        assert!(accepted.is_ok(), "{accepted:?}");
+        assert!(rejected.is_err());
     }
 
     #[test]

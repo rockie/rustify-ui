@@ -1,11 +1,12 @@
 # Rustify Docs
 
 Rustify Docs turns a directory of Markdown into a static documentation site.
-Every page is complete HTML before any script runs; code is highlighted at
-build time into classes; the reader's browser downloads no wasm. The
-`rustify-docs` command (package `rustify-docs-cli`) reads the content, checks
-it and writes the site. It does not compile a site's Rust, because a content
-site has none.
+Every page has its initial HTML before any script runs; code is highlighted
+at build time into classes. A default content site has no Rust project and
+downloads no wasm. A configured Rust project can add components and demos:
+`check` and `build` compile their shared views for static generation and
+browser attachment, and only pages with interactive islands load wasm. The
+`rustify-docs` command (package `rustify-docs-cli`) checks and writes the site.
 
 This page is the reference for what an author writes: the project layout,
 `rustify-docs.toml`, frontmatter, the Markdown the site understands and the
@@ -15,6 +16,9 @@ GitHub; where the two differ, the section says so.
 Supported on macOS. Linux and Windows are not verified.
 
 ## Install and maintain the CLI
+
+This section records the verified P1 content-site release. The Rust examples
+below use the CLI built from the current repository checkout.
 
 The CLI is distributed from git, with its dependencies locked and the
 workspace's `docs-cli` profile, which unwinds so that `dev` can recover from a
@@ -41,8 +45,9 @@ rustify-docs dev
 ```
 
 Stop `dev`, then run `rustify-docs build` and `rustify-docs preview` to test
-the production output. No site compilation or network request is needed by
-`new`, `build` or the default `check` after the CLI is installed.
+the production output. For content-only sites, no site compilation or
+network request is needed by `new`, `build` or the default `check` after the
+CLI is installed.
 
 Reinstall or upgrade to this pinned version with `--force`:
 
@@ -73,8 +78,8 @@ that metadata reports `source: unknown` and gives the pinned 0.1.3 recipe.
 | Command | What it does |
 | --- | --- |
 | `rustify-docs new <dir> [--template content]` | Creates a site (a home page, two guide pages, `static/`, a README and a `.gitignore`) in a new or empty directory. |
-| `rustify-docs dev [--port <n>]` | Serves the site from memory while you write, drafts included, and updates the open pages on every save. It writes nothing. |
-| `rustify-docs check [--format text\|json] [--deny-warnings] [--external-links]` | Reads the whole site and reports every problem at once. It writes no file and, unless `--external-links` is given, makes no network request. |
+| `rustify-docs dev [--port <n>]` | Serves a content site from memory while you write, drafts included, and updates the open pages on every save. It writes nothing. |
+| `rustify-docs check [--format text\|json] [--deny-warnings] [--external-links]` | Reports the site's problems without publishing output. Content-only checks write no file and make no network request unless `--external-links` is given; configured Rust projects also run Cargo. |
 | `rustify-docs build [--base <path>] [--out <dir>] [--format text\|json] [--deny-warnings]` | Checks the site the same way, then writes it to `build.out` (default `dist/`). |
 | `rustify-docs preview [--dir <dir>] [--base <path>] [--port <n>] [--host <address>]` | Serves a production build the way a static host would, without rebuilding it. |
 
@@ -91,7 +96,9 @@ compiles nothing, but sites with components of their own will); without it
 they stop before writing, watching or listening. `new` then refuses a
 directory that is not empty, and writes the site into a temporary sibling
 that it renames into place only when every file is written: a failure
-leaves nothing behind. `new` and `build` never run Cargo or a compiler.
+leaves nothing behind. `new` and content-only builds never run Cargo.
+Rust projects use the `check`/`build` workflow below; component template
+generation and Rust source watching in `dev` are later work.
 
 `check --external-links` also requests every link to another site (in
 pages, home page actions, `nav.top` and `nav.social`): each address once
@@ -476,6 +483,132 @@ A page with `draft: true` is shown, marked "Draft", while you write
 (`dev`), and is not part of a production build. A published page that links
 to a draft is an error in `check` and `build`, and a warning in `dev`.
 
+## Rust components and demos
+
+The current manual project is the
+[component fixture](../tests/docs-ssg/fixtures/components/). Its
+[Cargo manifest](../tests/docs-ssg/fixtures/components/Cargo.toml) defines an
+independent workspace, locked dependencies, a `docs-render` host binary and
+a `cdylib`. Defaults are disabled: `ssr` forwards to
+`rustify-docs/site-ssr`, and `hydrate` to `rustify-docs/hydrate`, with the
+same features forwarded to directly used SDK, components and Leptos crates.
+The wasm dependency is pinned to `wasm-bindgen = "=0.2.128"`.
+
+The site's optional Rust configuration names files inside the project:
+
+```toml
+[rust]
+manifest = "Cargo.toml"
+registry = "src/lib.rs"
+```
+
+The registry file contains one `site!` declaration. This excerpt uses the
+fixture's [counter view](../tests/docs-ssg/fixtures/components/src/demos.rs#L4)
+and [demo function](../tests/docs-ssg/fixtures/components/src/demos.rs#L27):
+
+```rust
+pub mod demos;
+
+pub fn site() -> rustify_docs::SiteRegistry {
+    rustify_docs::site! {
+        components {
+            Counter { initial: i32 = 2, label: String = "Counter".to_string() } =>
+                |props, children| demos::counter(props.initial, props.label, children),
+            #[client_only(class = "min-h-48", message = "This counter starts in the browser.")]
+            BrowserCounter { initial: i32 = 2, label: String = "Browser counter".to_string() } =>
+                |props, children| demos::counter(props.initial, props.label, children),
+        }
+        demos { CounterDemo => crate::demos::counter_demo, }
+    }
+}
+```
+
+Names are unique Rust identifiers. Component fields generate typed serde
+props with unknown fields rejected; `= expression` supplies a default in
+trusted Rust. YAML supplies data, never Rust expressions. The adapter receives
+the decoded props and checked child Markdown as a view. The
+[host entry](../tests/docs-ssg/fixtures/components/src/bin/docs-render.rs)
+calls `serve_site(site())`; the
+[wasm entry](../tests/docs-ssg/fixtures/components/src/lib.rs#L26) exports
+`docs_hydrate` and calls `hydrate_site(site())`.
+
+Embed a component or reference a registered demo in a complete fence:
+
+````markdown
+```rustify-component
+name: Counter
+props:
+  initial: 2
+  label: Shared initial props
+children: |
+  The same **safe child Markdown** appears in each instance.
+```
+
+```rustify-demo
+name: CounterDemo
+```
+````
+
+Props are optional when their defaults suffice; empty children are valid.
+Missing required fields, wrong types, unknown fields and duplicate YAML keys
+are errors. Children use the existing Markdown, link and HTML checks and
+cannot contain another interactive island. Keep those blocks adjacent.
+
+A demo directly references a site-local function with a
+`crate::module::function` path. Its Function and Full file tabs show and copy
+the original source, including Unicode and line endings, from the same files
+compiled for this build. Anonymous demo closures and generated or external
+functions cannot provide that source identity.
+
+Run the working fixture with the current checkout's CLI, from the repository
+root; its lockfile and required wasm target must be available:
+
+```sh
+mbx build --locked -p rustify-docs-cli --profile docs-cli
+RUSTIFY_DOCS_CARGO=mbx target/docs-cli/rustify-docs check --config tests/docs-ssg/fixtures/components/rustify-docs.toml
+RUSTIFY_DOCS_CARGO=mbx target/docs-cli/rustify-docs build --config tests/docs-ssg/fixtures/components/rustify-docs.toml --out target/docs-ssg/components-manual
+```
+
+Rust checks build both targets with `--locked` and may populate Cargo and
+`.rustify-docs` caches. Cargo may need to fetch dependencies on the first run.
+Keep the fixture's host/wasm profiles when adapting it. The CLI checks the
+cold declaration against the compiled registry, batches static rendering and
+keeps the matching wasm, generated glue and SDK runtime assets together.
+Ordinary pages still contain no islands and request no wasm.
+
+Initial rendering is synchronous and deterministic. Initial
+`Resource`/`Suspense`/`Transition`/`ErrorBoundary` work that needs shared
+resource data, errors or incomplete chunks is rejected. Start that work after
+attachment, as the fixture's
+[asynchronous action](../tests/docs-ssg/fixtures/components/src/demos.rs#L35)
+does. Floating layers must start closed and toast regions empty. A
+`client_only` declaration instead publishes its sized placeholder and message;
+the browser creates its body after attachment. It supplies no SSR body.
+
+Without JavaScript, the SSR view and source remain readable and the outer
+fieldset disables input. Loading keeps the canvas locked. Successful
+attachment enables it; a startup or later wasm failure restores every island
+in that instance to its initial view and retains the source and shell.
+Reload the page to retry.
+
+### Static builtins
+
+`rustify-component` also accepts three builtins without an author Rust project
+or an interactive island. Their props are fixed:
+
+| Name | Props |
+| --- | --- |
+| `Tabs` | `tabs`: a list of objects with string `label` and `content` fields. |
+| `CardGrid` | `cards`: a list of objects with string `title`, `link` and `description`; `columns`: 1, 2 or 3, default 2. |
+| `Steps` | `items`: a list of objects with string `title` and `description` fields. |
+
+These text fields are plain text; rich Markdown belongs in `children`.
+Card links use the normal page/link graph. Tabs show every panel without
+JavaScript; the theme script adds independent tab controls. The
+[builtin fixture page](../tests/docs-ssg/fixtures/components/content/builtins.md)
+shows two tab groups, cards, steps and rich children. It loads no wasm even
+inside the configured Rust project.
+
 ## What a build writes
 
 ```text
@@ -516,7 +649,10 @@ dist/
 
 The manifest records `schema_version`, `mode` (always `production`), `base`,
 `cli_version`, a `build_id` and every other file with its SHA-256 and size.
-It holds no time, machine path or environment value.
+It holds no time, machine path or environment value. Pages with islands also
+reference a fingerprinted `assets/islands/<hash>/` group containing their
+wasm, glue, snippets and locked SDK runtime assets. Rust source is displayed
+inside the demo's HTML; standalone Rust source files are not published.
 
 ### How a build replaces its output
 
@@ -549,7 +685,8 @@ the `.rustify-docs/` beside it.
 
 ## Writing with `dev`
 
-`dev` builds the site once, then serves it from memory on the loopback
+This section describes content-site authoring. `dev` builds the site once,
+then serves it from memory on the loopback
 interface: at `dev.port` (default `4188`; the system picks another port when
 that one is taken, and `dev` says which), or at `--port`, which must be free
 (`--port 0` lets the system pick). It prints the address and keeps running
@@ -604,7 +741,8 @@ Any static host serves the output as it is, provided it:
   addresses answered by their `index.html` (and a directory named without
   its slash redirected to it);
 - answers an address with nothing behind it with status 404 and `404.html`;
-- sends files with their types (`.css`, `.js`, `.svg`, `.json`).
+- sends files with their types (`.css`, `.js`, `.svg`, `.json`), including
+  `application/wasm` for `.wasm` on island pages.
 
 The site's content security policy is in every page as a `<meta>` element.
 A host that can set response headers should also send it as the
@@ -620,8 +758,9 @@ default-src 'none'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self'; img-
 
 ## The default theme
 
-Every page is complete before any script runs: the navigation, the table of
-contents and every code tab are there to read and follow. The theme's two
+Every page's reading content is complete before any script runs: the
+navigation, the table of contents and every code tab are there to read and
+follow. The theme's two
 small scripts (one in `<head>`, one deferred) add what needs a script, and
 a failure in either hides nothing.
 
@@ -673,8 +812,8 @@ a failure in either hides nothing.
 
 P1 checks require the latest stable Google Chrome and real macOS Safari,
 plus an iPhone/Safari and an Android/Chrome, with actual versions recorded.
-Firefox's real-browser and Playwright-engine checks are deferred for P1;
-their resumption phase is still undecided. P4 retains the full browser matrix.
+Firefox's real-browser and Playwright-engine checks remain deferred through
+P2; P4 retains the full browser matrix.
 Engine emulation and narrow screenshots supplement device checks.
 
 Performance uses the frozen Playwright Chromium `153.0.8010.12`, separately
@@ -718,6 +857,11 @@ Errors stop a build; warnings do not, unless `--deny-warnings` is given.
 | `missing-alt` | warning | An image without alt text |
 | `code-fence-info`, `code-highlight-range` | error | A fence info string that cannot be read; marked lines outside the block |
 | `code-group`, `code-group-conflict` | error | A malformed code group; one group name with different tabs |
+| `embed-payload`, `embed-nested` | error | Invalid or duplicate YAML fields; an interactive island inside component children |
+| `unregistered-component`, `unregistered-demo`, `unknown-property`, `reserved-component` | error | A name or field absent from the registry; a registration using a builtin name |
+| `invalid_props`, `embed-props` | error | Props that do not match the generated component or builtin types |
+| `unsupported_initial_data`, `unsupported_initial_state` | error | An initial view needing shared asynchronous data/errors or an open floating layer/toast region |
+| `rust-*` | error | Rust project, registry, source, compilation, framework pairing, helper or generation validation failures |
 | `include`, `include-path`, `include-missing`, `include-region`, `include-inline` | error | An include directive that cannot be followed |
 | `nav-missing-page` | error | A nav group listing a page that does not exist |
 | `nav-unknown-group` | error | A page's `sidebar.group` naming no configured group |

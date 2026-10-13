@@ -1,0 +1,252 @@
+{
+  "baseline-docs": [
+    "test result: ok. 127 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 35.50s",
+    "test result: ok. 15 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.58s",
+    "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s"
+  ],
+  "baseline-cli": [
+    "test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+    "test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 5.08s",
+    "test result: ok. 15 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.16s",
+    "test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.89s",
+    "test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.15s",
+    "test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 13.75s",
+    "test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.72s",
+    "test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.22s"
+  ],
+  "sdk-ssr": [
+    "test result: ok. 227 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s",
+    "test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+    "test result: ok. 0 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.00s"
+  ],
+  "components-ssr": [
+    "test result: ok. 111 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s",
+    "test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s",
+    "test result: ok. 0 passed; 0 failed; 2 ignored; 0 measured; 0 filtered out; finished in 0.00s"
+  ],
+  "modes": [
+    {
+      "name": "sdk-default-test",
+      "command": [
+        "mbx",
+        "test",
+        "--locked",
+        "-p",
+        "rustify-ui",
+        "--lib"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "sdk-default-clippy",
+      "command": [
+        "mbx",
+        "clippy",
+        "--locked",
+        "-p",
+        "rustify-ui",
+        "--all-targets",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "sdk-gpu-test",
+      "command": [
+        "mbx",
+        "test",
+        "--locked",
+        "-p",
+        "rustify-ui",
+        "--lib",
+        "--features",
+        "gpu"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "sdk-gpu-clippy",
+      "command": [
+        "mbx",
+        "clippy",
+        "--locked",
+        "-p",
+        "rustify-ui",
+        "--all-targets",
+        "--features",
+        "gpu",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "sdk-ssr-test",
+      "command": [
+        "mbx",
+        "test",
+        "--locked",
+        "-p",
+        "rustify-ui",
+        "--lib",
+        "--no-default-features",
+        "--features",
+        "ssr"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "sdk-ssr-clippy",
+      "command": [
+        "mbx",
+        "clippy",
+        "--locked",
+        "-p",
+        "rustify-ui",
+        "--all-targets",
+        "--no-default-features",
+        "--features",
+        "ssr",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "components-default-test",
+      "command": [
+        "mbx",
+        "test",
+        "--locked",
+        "-p",
+        "rustify-components",
+        "--lib"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "components-default-clippy",
+      "command": [
+        "mbx",
+        "clippy",
+        "--locked",
+        "-p",
+        "rustify-components",
+        "--all-targets",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "components-gpu-test",
+      "command": [
+        "mbx",
+        "test",
+        "--locked",
+        "-p",
+        "rustify-components",
+        "--lib",
+        "--features",
+        "gpu"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "components-gpu-clippy",
+      "command": [
+        "mbx",
+        "clippy",
+        "--locked",
+        "-p",
+        "rustify-components",
+        "--all-targets",
+        "--features",
+        "gpu",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "components-ssr-test",
+      "command": [
+        "mbx",
+        "test",
+        "--locked",
+        "-p",
+        "rustify-components",
+        "--lib",
+        "--no-default-features",
+        "--features",
+        "ssr"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "components-ssr-clippy",
+      "command": [
+        "mbx",
+        "clippy",
+        "--locked",
+        "-p",
+        "rustify-components",
+        "--all-targets",
+        "--no-default-features",
+        "--features",
+        "ssr",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "fmt",
+      "command": [
+        "cargo",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "sources",
+      "command": [
+        "mbx",
+        "xtask",
+        "sources",
+        "verify"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "catalog",
+      "command": [
+        "mbx",
+        "xtask",
+        "catalog",
+        "--write",
+        "docs/components.md",
+        "--check"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "browser": {
+    "startTime": "2026-10-13T03:41:13.620Z",
+    "duration": 14753.885,
+    "expected": 10,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

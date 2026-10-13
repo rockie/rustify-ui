@@ -1,0 +1,45 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling xtask v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/xtask)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 3.20s
+     Running unittests src/main.rs (target/debug/deps/xtask-abd35e9efaf03cef)
+
+running 6 tests
+test css::tests::the_first_differing_line_is_reported_with_both_sides ... ok
+test css::tests::a_long_line_is_cut_around_where_it_differs ... ok
+test css::tests::a_line_only_one_side_has_is_reported_against_the_end_of_file ... ok
+test css::tests::complete_static_candidates_include_hidden_sdk_and_component_branches ... FAILED
+test css::tests::excluded_trees_and_generated_css_are_not_read_or_rescanned ... ok
+test css::tests::published_candidates_match_the_sdk_sources ... FAILED
+
+failures:
+
+---- css::tests::complete_static_candidates_include_hidden_sdk_and_component_branches stdout ----
+
+thread 'css::tests::complete_static_candidates_include_hidden_sdk_and_component_branches' (37379013) panicked at xtask/src/css.rs:289:13:
+missing pointer-events-none
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- css::tests::published_candidates_match_the_sdk_sources stdout ----
+
+thread 'css::tests::published_candidates_match_the_sdk_sources' (37379015) panicked at xtask/src/css.rs:340:13:
+/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-components/css/candidates.json is not what the input produces; run `mbx xtask css` and commit the result (3 bytes committed, 53653 bytes generated)
+first difference, line 1:
+  committed: []
+  generated: [
+
+
+failures:
+    css::tests::complete_static_candidates_include_hidden_sdk_and_component_branches
+    css::tests::published_candidates_match_the_sdk_sources
+
+test result: FAILED. 4 passed; 2 failed; 0 ignored; 0 measured; 41 filtered out; finished in 0.15s
+
+error: test failed, to rerun pass `-p xtask --bin xtask`
+mbx[cache]: 0 hits, 0 misses, 1 not looked up; 0 B downloaded, 0 B uploaded, 9.7 MiB stored locally
+mbx[savings]: 51642 compilations on file. the box remembers.

@@ -124,12 +124,11 @@ impl<T: Clone> Session<T> {
     }
 }
 
-#[cfg(target_arch = "wasm32")]
 pub use dom::Draft;
 
-#[cfg(target_arch = "wasm32")]
 mod dom {
     use super::{Request, Session};
+    #[cfg(target_arch = "wasm32")]
     use crate::overlay::{use_overlay, EditSession, OverlayStack};
     use leptos::ev::{Event, FocusEvent, KeyboardEvent};
     use leptos::prelude::*;
@@ -147,6 +146,7 @@ mod dom {
         cancel: Option<Arc<dyn Fn() + Send + Sync>>,
         /// The scope's layer stack, which a touched draft registers with so
         /// that Escape reverts the draft before it closes a layer around it.
+        #[cfg(target_arch = "wasm32")]
         stack: Option<OverlayStack>,
     }
 
@@ -206,6 +206,7 @@ mod dom {
                     preview: None,
                     commit: None,
                     cancel: None,
+                    #[cfg(target_arch = "wasm32")]
                     stack: use_overlay(),
                 }),
             };
@@ -358,25 +359,31 @@ mod dom {
         /// scope's: the scope hears it first and would close the layer the
         /// field sits in, leaving the edit neither committed nor taken back.
         fn join_stack(&self) {
-            let this = *self;
-            let stack = self.hooks.with_value(|hooks| hooks.stack.clone());
-            if let Some(stack) = stack {
-                stack.begin_edit(EditSession {
-                    // Not followed: the values a draft is for - numbers,
-                    // colours - are not typed through an input method.
-                    composing: Arc::new(|| false),
-                    cancel: Arc::new(move || this.revert()),
-                });
+            #[cfg(target_arch = "wasm32")]
+            {
+                let this = *self;
+                let stack = self.hooks.with_value(|hooks| hooks.stack.clone());
+                if let Some(stack) = stack {
+                    stack.begin_edit(EditSession {
+                        // Not followed: the values a draft is for - numbers,
+                        // colours - are not typed through an input method.
+                        composing: Arc::new(|| false),
+                        cancel: Arc::new(move || this.revert()),
+                    });
+                }
             }
         }
 
         fn leave_stack(&self) {
-            let stack = self
-                .hooks
-                .try_with_value(|hooks| hooks.stack.clone())
-                .flatten();
-            if let Some(stack) = stack {
-                stack.end_edit();
+            #[cfg(target_arch = "wasm32")]
+            {
+                let stack = self
+                    .hooks
+                    .try_with_value(|hooks| hooks.stack.clone())
+                    .flatten();
+                if let Some(stack) = stack {
+                    stack.end_edit();
+                }
             }
         }
 

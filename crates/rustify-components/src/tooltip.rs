@@ -7,7 +7,6 @@
 //! belongs to points at it.
 
 use leptos::prelude::*;
-use leptos::web_sys::Element;
 use rustify_ui::{Anchor, Layer};
 
 const CONTENT: &str =
@@ -33,32 +32,16 @@ pub fn Tooltip(
     let trigger = NodeRef::<leptos::html::Span>::new();
     let on_open_change = std::sync::Arc::new(on_open_change);
 
-    // The described element is the caller's control, not our wrapper: a
-    // wrapper carrying `aria-describedby` describes the wrapper, which no
-    // reader announces. `Some` while the tooltip is showing and gone
-    // afterwards, so a control does not point at a description that is not
-    // on the page.
-    Effect::new({
-        let id = described_by;
-        move || {
-            let showing = open.get();
-            let Some(wrapper) = trigger.get() else {
-                return;
-            };
-            let described: Element = wrapper
-                .first_element_child()
-                .unwrap_or_else(|| (*wrapper).clone().into());
-            if showing {
-                let _ = described.set_attribute("aria-describedby", &id);
-            } else {
-                let _ = described.remove_attribute("aria-describedby");
-            }
-        }
-    });
+    let children = children().add_any_attr(leptos::attr::aria_describedby(move || {
+        open.get().then(|| described_by.clone())
+    }));
 
-    let anchor = Signal::derive(move || match trigger.get() {
-        Some(element) => Anchor::element(&element.into()),
-        None => Anchor::Centred,
+    let anchor = Signal::derive(move || {
+        #[cfg(target_arch = "wasm32")]
+        if let Some(element) = trigger.get() {
+            return Anchor::element(&element.into());
+        }
+        Anchor::Centred
     });
     let close = {
         let on_open_change = on_open_change.clone();
@@ -92,7 +75,7 @@ pub fn Tooltip(
                 move |_| on_open_change(false)
             }
         >
-            {children()}
+            {children}
         </span>
         <Show when=move || open.get() fallback=|| ()>
             <Layer anchor=anchor on_close=close.clone() class="rui-tooltip-layer">

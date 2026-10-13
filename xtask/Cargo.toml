@@ -9,7 +9,7 @@ publish.workspace = true
 # The capability document is printed from the table the components are
 # declared in, so the command that writes it has to be able to read that table.
 rustify-components = { path = "../crates/rustify-components" }
-rustify-style = { path = "../crates/rustify-style", default-features = false, features = ["compiler"] }
+rustify-style = { path = "../crates/rustify-style", default-features = false, features = ["compiler", "scanner"] }
 serde = { version = "1", features = ["derive"] }
 serde_json = { version = "1", features = ["preserve_order"] }
 sha2 = "0.10"

@@ -14,7 +14,8 @@
 use rustify_ui::Shortcut;
 
 #[cfg(target_arch = "wasm32")]
-pub use dom::{anchor_at, Menu};
+pub use dom::anchor_at;
+pub use dom::Menu;
 
 /// What a row of a menu is.
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
@@ -133,13 +134,15 @@ fn blocks(items: &[MenuItem]) -> Vec<Block> {
     blocks
 }
 
-#[cfg(target_arch = "wasm32")]
 mod dom {
     use super::{blocks, Block, MenuItem};
     use leptos::ev::KeyboardEvent;
     use leptos::prelude::*;
+    #[cfg(target_arch = "wasm32")]
     use leptos::web_sys::Element;
-    use rustify_ui::{Anchor, Layer, LocalRect};
+    #[cfg(target_arch = "wasm32")]
+    use rustify_ui::LocalRect;
+    use rustify_ui::{Anchor, Layer};
 
     // `m-0` and `list-none` because nothing resets a list for us: the scope
     // leaves the host page's defaults alone, and a list's are an em of margin
@@ -157,6 +160,7 @@ mod dom {
     /// element when anything around it scrolls.
     ///
     /// `client_x` and `client_y` are the event's own, in the viewport.
+    #[cfg(target_arch = "wasm32")]
     pub fn anchor_at(element: &Element, client_x: f64, client_y: f64) -> Anchor {
         let bounds = element.get_bounding_client_rect();
         Anchor::region(
@@ -199,6 +203,7 @@ mod dom {
 
         // The keyboard lands in the menu, not behind it: a menu is not modal,
         // so the stack does not move focus for it.
+        #[cfg(target_arch = "wasm32")]
         Effect::new(move || {
             if !open.get() || list.get().is_none() {
                 return;

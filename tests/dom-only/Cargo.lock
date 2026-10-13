@@ -1531,6 +1531,7 @@ dependencies = [
 name = "rustify-components"
 version = "0.1.0"
 dependencies = [
+ "js-sys",
  "leptos",
  "paste",
  "rustify-style",

@@ -1,0 +1,34 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-docs-macros v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-docs-macros)
+   Compiling rustify-docs v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-docs)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 7.03s
+     Running unittests src/lib.rs (target/debug/deps/rustify_docs-ca13b64dc678a13e)
+
+running 1 test
+test markdown::tests::component_fences_render_children_through_the_same_writer ... FAILED
+
+failures:
+
+---- markdown::tests::component_fences_render_children_through_the_same_writer stdout ----
+
+thread 'markdown::tests::component_fences_render_children_through_the_same_writer' (37498073) panicked at crates/rustify-docs/src/markdown.rs:1497:9:
+assertion `left == right` failed
+  left: 0
+ right: 2
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    markdown::tests::component_fences_render_children_through_the_same_writer
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 134 filtered out; finished in 0.05s
+
+error: test failed, to rerun pass `-p rustify-docs --lib`
+mbx[cache]: 0 hits, 2 misses, 1 incremental; 0 B downloaded, 0 B uploaded, 13.4 KiB stored locally
+mbx[savings]: 51650 compilations, each compiled once and served warm ever since

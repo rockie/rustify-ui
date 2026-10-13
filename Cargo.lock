@@ -2412,6 +2412,7 @@ dependencies = [
 name = "rustify-components"
 version = "0.1.0"
 dependencies = [
+ "js-sys",
  "leptos",
  "paste",
  "rustify-style",
@@ -2424,19 +2425,24 @@ dependencies = [
 name = "rustify-docs"
 version = "0.1.0"
 dependencies = [
+ "any_spawner",
  "cssparser",
  "dom_query",
  "flate2",
  "html5ever",
  "html5gum",
+ "hydration_context",
  "leptos",
  "lightningcss",
  "pulldown-cmark 0.13.4",
  "rustify-components",
+ "rustify-docs-macros",
+ "rustify-docs-syntax",
  "rustify-style",
  "rustify-ui",
  "serde",
  "serde_json",
+ "serde_path_to_error",
  "serde_yaml_ng",
  "sha2",
  "syntect",
@@ -2447,15 +2453,42 @@ dependencies = [
 
 [[package]]
 name = "rustify-docs-cli"
-version = "0.1.4"
+version = "0.1.5"
 dependencies = [
+ "dom_query",
  "kqueue",
  "kqueue-sys",
  "notify",
+ "proc-macro2",
  "rustify-docs",
+ "rustify-docs-syntax",
+ "rustify-style",
  "serde_json",
  "sha2",
+ "syn 2.0.119",
  "ureq",
+ "wasm-bindgen-cli-support",
+]
+
+[[package]]
+name = "rustify-docs-macros"
+version = "0.1.0"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "rustify-docs-syntax",
+ "serde_json",
+ "syn 2.0.119",
+]
+
+[[package]]
+name = "rustify-docs-syntax"
+version = "0.1.0"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "serde",
+ "syn 2.0.119",
 ]
 
 [[package]]
@@ -2694,6 +2727,17 @@ dependencies = [
  "serde",
  "serde_core",
  "zmij",
+]
+
+[[package]]
+name = "serde_path_to_error"
+version = "0.1.20"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "10a9ff822e371bb5403e391ecd83e182e0e77ba7f6fe0160b795797109d1b457"
+dependencies = [
+ "itoa",
+ "serde",
+ "serde_core",
 ]
 
 [[package]]

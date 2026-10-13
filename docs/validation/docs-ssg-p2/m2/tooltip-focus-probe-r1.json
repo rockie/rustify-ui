@@ -1,0 +1,18 @@
+{
+  "open": {
+    "active": "<button type=\"button\" data-testid=\"rui-island-cf4d2b57dd-0-catalog-1-tooltip-trigger\" aria-describedby=\"rui-island-cf4d2b57dd-0-tooltip-11\">Hover for help</button>",
+    "tooltips": 1
+  },
+  "blur": {
+    "active": "<button type=\"button\" data-testid=\"rui-island-cf4d2b57dd-0-catalog-1-tooltip-trigger\" aria-describedby=\"rui-island-cf4d2b57dd-0-tooltip-11\">Hover for help</button>",
+    "tooltips": 1
+  },
+  "focusOther": {
+    "active": "<button type=\"button\" data-testid=\"rui-island-cf4d2b57dd-0-catalog-1-menu-trigger\">Open menu</button>",
+    "tooltips": 0
+  },
+  "escape": {
+    "active": "<button type=\"button\" data-testid=\"rui-island-cf4d2b57dd-0-catalog-1-tooltip-trigger\">Hover for help</button>",
+    "tooltips": 0
+  }
+}

@@ -9,6 +9,7 @@ description = "DOM components for the Rustify UI SDK, forked from Rust/UI and re
 [features]
 default = ["csr"]
 csr = ["rustify-ui/csr", "leptos/csr"]
+hydrate = ["rustify-ui/hydrate", "leptos/hydrate"]
 ssr = ["rustify-ui/ssr", "leptos/ssr"]
 # A convenience for an application that also draws GPU regions; the
 # components themselves draw none.
@@ -23,6 +24,7 @@ rustify-ui = { path = "../rustify-ui", default-features = false }
 # decides what a class list means, not the library that merges it.
 rustify-style = { path = "../rustify-style" }
 paste = "1"
+js-sys.workspace = true
 # The drop zone reads a `DragEvent`'s file list, and the picker its input's.
 # Everything else these components touch, Leptos already enables.
 web-sys = { workspace = true, features = [
@@ -38,6 +40,10 @@ web-sys = { workspace = true, features = [
     # accessors exist on two types with different signatures.
     "Element",
     "FocusOptions",
+    "CssStyleSheet",
+    "CssStyleRule",
+    "CssRuleList",
+    "StyleSheet",
 ] }
 
 [dev-dependencies]

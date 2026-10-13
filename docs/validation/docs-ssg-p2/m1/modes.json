@@ -1,0 +1,217 @@
+[
+  {
+    "name": "sdk-default-test",
+    "command": [
+      "mbx",
+      "test",
+      "--locked",
+      "-p",
+      "rustify-ui",
+      "--lib"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "sdk-default-clippy",
+    "command": [
+      "mbx",
+      "clippy",
+      "--locked",
+      "-p",
+      "rustify-ui",
+      "--all-targets",
+      "--",
+      "-D",
+      "warnings"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "sdk-gpu-test",
+    "command": [
+      "mbx",
+      "test",
+      "--locked",
+      "-p",
+      "rustify-ui",
+      "--lib",
+      "--features",
+      "gpu"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "sdk-gpu-clippy",
+    "command": [
+      "mbx",
+      "clippy",
+      "--locked",
+      "-p",
+      "rustify-ui",
+      "--all-targets",
+      "--features",
+      "gpu",
+      "--",
+      "-D",
+      "warnings"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "sdk-ssr-test",
+    "command": [
+      "mbx",
+      "test",
+      "--locked",
+      "-p",
+      "rustify-ui",
+      "--lib",
+      "--no-default-features",
+      "--features",
+      "ssr"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "sdk-ssr-clippy",
+    "command": [
+      "mbx",
+      "clippy",
+      "--locked",
+      "-p",
+      "rustify-ui",
+      "--all-targets",
+      "--no-default-features",
+      "--features",
+      "ssr",
+      "--",
+      "-D",
+      "warnings"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "components-default-test",
+    "command": [
+      "mbx",
+      "test",
+      "--locked",
+      "-p",
+      "rustify-components",
+      "--lib"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "components-default-clippy",
+    "command": [
+      "mbx",
+      "clippy",
+      "--locked",
+      "-p",
+      "rustify-components",
+      "--all-targets",
+      "--",
+      "-D",
+      "warnings"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "components-gpu-test",
+    "command": [
+      "mbx",
+      "test",
+      "--locked",
+      "-p",
+      "rustify-components",
+      "--lib",
+      "--features",
+      "gpu"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "components-gpu-clippy",
+    "command": [
+      "mbx",
+      "clippy",
+      "--locked",
+      "-p",
+      "rustify-components",
+      "--all-targets",
+      "--features",
+      "gpu",
+      "--",
+      "-D",
+      "warnings"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "components-ssr-test",
+    "command": [
+      "mbx",
+      "test",
+      "--locked",
+      "-p",
+      "rustify-components",
+      "--lib",
+      "--no-default-features",
+      "--features",
+      "ssr"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "components-ssr-clippy",
+    "command": [
+      "mbx",
+      "clippy",
+      "--locked",
+      "-p",
+      "rustify-components",
+      "--all-targets",
+      "--no-default-features",
+      "--features",
+      "ssr",
+      "--",
+      "-D",
+      "warnings"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "fmt",
+    "command": [
+      "cargo",
+      "fmt",
+      "--all",
+      "--",
+      "--check"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "sources",
+    "command": [
+      "mbx",
+      "xtask",
+      "sources",
+      "verify"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "catalog",
+    "command": [
+      "mbx",
+      "xtask",
+      "catalog",
+      "--write",
+      "docs/components.md",
+      "--check"
+    ],
+    "exit_code": 0
+  }
+]

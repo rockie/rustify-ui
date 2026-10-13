@@ -62,6 +62,42 @@ fn contains(haystack: &str, needle: &str) {
 }
 
 #[test]
+fn an_island_marker_in_readable_text_does_not_load_the_island_runtime() {
+    let (project, snapshot) = load();
+    let analysis = content::analyze(
+        &project,
+        &snapshot,
+        Mode::Production,
+        &mut FragmentCache::default(),
+        &Highlighter::new(),
+        1,
+    );
+    let extensions = generation::Extensions {
+        articles: BTreeMap::from([(
+            "/guide/".to_owned(),
+            "<p>Attribute syntax: <code>data-rustify-island=&quot;example&quot;</code></p>"
+                .to_owned(),
+        )]),
+        files: BTreeMap::from([(
+            "assets/islands/example/islands.js".to_owned(),
+            Arc::<[u8]>::from(b"export {};".as_slice()),
+        )]),
+        island_script: Some("assets/islands/example/islands.js".to_owned()),
+        ..Default::default()
+    };
+    let generation = generation::generate_extended(
+        &project,
+        &snapshot,
+        &analysis,
+        &Default::default(),
+        1,
+        &extensions,
+    )
+    .unwrap();
+    assert!(!text(&generation.files, "guide/index.html").contains("data-rd-islands-module"));
+}
+
+#[test]
 fn the_fixture_generates_without_a_problem_and_byte_for_byte_again() {
     let (project, snapshot) = load();
     let (analysis, first) = build(&project, &snapshot, Mode::Production, 4);

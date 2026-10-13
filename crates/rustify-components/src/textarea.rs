@@ -27,6 +27,19 @@ pub fn TextArea(
     };
     let aria_label = (!aria_label.is_empty()).then_some(aria_label);
     let placeholder = (!placeholder.is_empty()).then_some(placeholder);
+    let initial = value.get_untracked();
+    let initial_html = initial
+        .replace('&', "&amp;")
+        .replace('<', "&lt;")
+        .replace('>', "&gt;")
+        .replace('\r', "&#13;");
+    // A document parser consumes the first LF after a textarea's start tag.
+    #[cfg(feature = "ssr")]
+    let initial_html = if initial.starts_with('\n') {
+        format!("\n{initial_html}")
+    } else {
+        initial_html
+    };
     let node = NodeRef::<leptos::html::Textarea>::new();
     // Whether an input method is composing in this field right now.
     let composing = StoredValue::new(false);
@@ -58,6 +71,9 @@ pub fn TextArea(
                 (!described_by.is_empty()).then_some(described_by)
             }
             aria-readonly=move || read_only.get().then_some("true")
+            inner_html=initial_html
+            disabled=move || disabled.get()
+            readonly=move || read_only.get()
             prop:value=move || value.get()
             prop:disabled=move || disabled.get()
             prop:readOnly=move || read_only.get()

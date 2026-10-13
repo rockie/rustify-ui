@@ -211,6 +211,59 @@
     }
   });
 
+  // Static content tabs own only their nearest builtin. Nested code groups
+  // and other static tab sets retain their own input and panel selection.
+  var staticSequence = 0;
+  document.querySelectorAll("[data-rd-static-tabs]").forEach(function (group) {
+    var owned = function (selector) {
+      return Array.prototype.filter.call(group.querySelectorAll(selector), function (node) {
+        return node.closest("[data-rd-static-tabs]") === group;
+      });
+    };
+    var bar = owned("[data-rd-static-tabbar]")[0];
+    var tabs = owned("[data-rd-static-tab]");
+    var panels = owned("[data-rd-static-panel]");
+    if (!bar || !tabs.length || tabs.length !== panels.length) return;
+    var byIndex = new Map();
+    panels.forEach(function (panel) { byIndex.set(panel.getAttribute("data-rd-static-panel"), panel); });
+    var paired = tabs.map(function (tab) { return byIndex.get(tab.getAttribute("data-rd-static-tab")); });
+    if (paired.some(function (panel) { return !panel; })) return;
+
+    function select(index, focus) {
+      tabs.forEach(function (tab, at) {
+        var active = at === index;
+        tab.setAttribute("aria-selected", String(active));
+        tab.tabIndex = active ? 0 : -1;
+        paired[at].hidden = !active;
+      });
+      if (focus) tabs[index].focus();
+    }
+
+    bar.setAttribute("role", "tablist");
+    tabs.forEach(function (tab, index) {
+      staticSequence += 1;
+      tab.id = "rd-static-tab-" + staticSequence;
+      paired[index].id = "rd-static-panel-" + staticSequence;
+      tab.setAttribute("role", "tab");
+      tab.setAttribute("aria-controls", paired[index].id);
+      paired[index].setAttribute("role", "tabpanel");
+      paired[index].setAttribute("aria-labelledby", tab.id);
+      paired[index].tabIndex = 0;
+      tab.addEventListener("click", function () { select(index, false); });
+    });
+    bar.addEventListener("keydown", function (event) {
+      var index = tabs.indexOf(document.activeElement);
+      if (index < 0) return;
+      var next = { ArrowRight: index + 1, ArrowLeft: index - 1, Home: 0, End: tabs.length - 1 }[event.key];
+      if (next === undefined) return;
+      event.preventDefault();
+      select((next + tabs.length) % tabs.length, true);
+    });
+    group.setAttribute("data-rd-static-enhanced", "");
+    bar.hidden = false;
+    select(0, false);
+  });
+
   // The table of contents marks the section the reader is in: the last
   // heading above the line under the header, the first one before any has
   // reached it, and the last one once the page can scroll no further. Both

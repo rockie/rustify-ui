@@ -9,17 +9,12 @@
 //! the whole tree; the arrows move within it; right opens a closed group and
 //! steps into an open one, left closes an open one and steps out of a child.
 
-#[cfg(target_arch = "wasm32")]
 use leptos::ev::KeyboardEvent;
-#[cfg(target_arch = "wasm32")]
 use leptos::prelude::*;
 use std::collections::BTreeSet;
-#[cfg(target_arch = "wasm32")]
 use std::sync::Arc;
 
-#[cfg(target_arch = "wasm32")]
 const TREE: &str = "flex flex-col gap-0.5 overflow-auto p-1 text-sm outline-none";
-#[cfg(target_arch = "wasm32")]
 const ITEM: &str = "flex w-full items-center gap-1 rounded px-2 py-1 text-left cursor-pointer select-none outline-none hover:bg-accent/50 focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-selected:bg-accent";
 
 /// One group. A group with children is a level the arrows can open.
@@ -138,7 +133,6 @@ pub fn command(key: &str, at: &str, rows: &[Row]) -> Option<Move> {
     }
 }
 
-#[cfg(target_arch = "wasm32")]
 #[component]
 pub fn Tree(
     #[prop(into)] nodes: Signal<Vec<TreeNode>>,
@@ -153,6 +147,7 @@ pub fn Tree(
     #[prop(optional, into)] class: String,
     #[prop(optional, into)] test_id: String,
 ) -> impl IntoView {
+    crate::geometry::ensure_context();
     let name = if test_id.is_empty() {
         "tree".to_string()
     } else {
@@ -171,10 +166,8 @@ pub fn Tree(
         }
         rows.first().map(|row| row.key.clone()).unwrap_or_default()
     });
-    let item_id = {
-        let name = name.clone();
-        move |key: &str| format!("{name}-item-{key}")
-    };
+    let item_prefix = crate::id::next("tree");
+    let item_id = { move |key: &str| format!("{item_prefix}-item-{key}") };
     let on_keydown = {
         let on_select = on_select.clone();
         let item_id = item_id.clone();
@@ -231,11 +224,14 @@ pub fn Tree(
                     let expandable = row.expandable;
                     let toggle_key = key.clone();
                     let select_key = key.clone();
+                    let geometry = crate::geometry::geometry_class(move || {
+                        format!("padding-left:{}px;", 8 + row.depth * 16)
+                    });
                     view! {
                         <div
                             role="treeitem"
                             id=item_id(&key)
-                            class=ITEM
+                            class=format!("{ITEM} {geometry}")
                             data-testid=format!("{}-{}", name.clone(), key)
                             {leptos::tachys::html::attribute::custom::custom_attribute(
                                 "aria-level",
@@ -244,7 +240,6 @@ pub fn Tree(
                             aria-expanded=move || expandable.then(|| open.get().to_string())
                             aria-selected=move || chosen.get().to_string()
                             tabindex=move || if tabbable.get() { "0" } else { "-1" }
-                            style:padding-left=format!("{}px", 8 + row.depth * 16)
                             on:click=move |_| {
                                 focused.set(select_key.clone());
                                 if expandable {
@@ -380,5 +375,32 @@ mod tests {
             assert_eq!(command(key, "g0", &shown), None, "{key}");
         }
         assert_eq!(command("ArrowDown", "g0", &[]), None);
+    }
+
+    #[cfg(all(feature = "ssr", not(target_arch = "wasm32")))]
+    #[test]
+    fn host_tree_renders_open_children_with_external_indentation() {
+        let owner = Owner::new();
+        let styles = crate::geometry::GeometryStyles::default();
+        let html = owner.with(|| {
+            rustify_ui::id::provide("tree-test");
+            crate::geometry::provide_geometry_styles(styles.clone());
+            view! {
+                <Tree
+                    nodes=groups()
+                    expanded=RwSignal::new(open(&["g0"]))
+                    selected=Some("g0-1".to_string())
+                    on_select=|_| {}
+                />
+            }
+            .to_html()
+        });
+        assert!(html.contains("group 1.1"), "{html}");
+        assert!(html.contains("aria-level=\"2\""), "{html}");
+        assert!(!html.contains("group 2.1"), "{html}");
+        assert!(!html.contains(" style="), "{html}");
+        let css = styles.css();
+        assert!(css.contains("padding-left:8px;"), "{css}");
+        assert!(css.contains("padding-left:24px;"), "{css}");
     }
 }

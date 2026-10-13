@@ -13,6 +13,9 @@ use std::cell::Cell;
 /// running, which is what lets a test name one and a screenshot diff stay
 /// still.
 pub fn next(prefix: &str) -> String {
+    if let Some(id) = rustify_ui::id::next(prefix) {
+        return id;
+    }
     thread_local! {
         static NEXT: Cell<u64> = const { Cell::new(1) };
     }

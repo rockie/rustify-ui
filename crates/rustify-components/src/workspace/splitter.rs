@@ -85,6 +85,7 @@ pub fn Splitter(
     divider_label: String,
     #[prop(optional, into)] test_id: String,
 ) -> impl IntoView {
+    crate::geometry::ensure_context();
     let step = step.unwrap_or(16.0);
     let mins = StoredValue::new(mins);
     let on_resize = StoredValue::new(on_resize);
@@ -117,9 +118,10 @@ pub fn Splitter(
 
     // The view macro parses an attribute value as an expression, and a
     // turbofish inside one is not one of them.
+    let positions = Memo::new(move |_| offsets(&sizes.get()));
     let dividers = move || {
-        let sizes = sizes.get();
-        offsets(&sizes)
+        positions
+            .get()
             .into_iter()
             .enumerate()
             .collect::<Vec<(usize, f64)>>()
@@ -133,10 +135,14 @@ pub fn Splitter(
         >
             <For each=dividers key=|(index, _)| *index let:divider>
                 {
-                    let (index, at) = divider;
+                    let (index, _) = divider;
+                    let geometry = crate::geometry::geometry_class(move || {
+                        let at = positions.with(|positions| positions.get(index).copied().unwrap_or(0.0));
+                        format!("left:{at}px;")
+                    });
                     view! {
                         <div
-                            class="pointer-events-auto absolute top-0 bottom-0 -ml-1 w-2 cursor-col-resize bg-border outline-none focus-visible:ring-ring/50 focus-visible:ring-[3px]"
+                            class=format!("pointer-events-auto absolute top-0 bottom-0 -ml-1 w-2 cursor-col-resize bg-border outline-none focus-visible:ring-ring/50 focus-visible:ring-[3px] {geometry}")
                             data-name="SplitterDivider"
                             data-testid=format!("divider-{index}")
                             role="separator"
@@ -148,7 +154,6 @@ pub fn Splitter(
                             aria-valuenow=move || {
                                 sizes.get().get(index).copied().unwrap_or(0.0).round() as i64
                             }
-                            style:left=format!("{at}px")
                             on:pointerdown=move |event: PointerEvent| {
                                 // The divider keeps the pointer, so a drag that
                                 // moves faster than the divider does not stop
@@ -267,5 +272,31 @@ mod tests {
             [100.0, 200.0, 100.0]
         );
         assert!(initial(&[], 500.0).is_empty());
+    }
+
+    #[cfg(all(feature = "ssr", not(target_arch = "wasm32")))]
+    #[test]
+    fn host_dividers_keep_geometry_out_of_style_attributes() {
+        use leptos::prelude::*;
+
+        let owner = Owner::new();
+        let styles = crate::geometry::GeometryStyles::default();
+        let html = owner.with(|| {
+            rustify_ui::id::provide("splitter-test");
+            crate::geometry::provide_geometry_styles(styles.clone());
+            view! {
+                <super::Splitter
+                    sizes=vec![120.0, 180.0, 240.0]
+                    mins=vec![100.0, 100.0, 100.0]
+                    on_resize=|_| {}
+                />
+            }
+            .to_html()
+        });
+        assert!(!html.contains(" style="), "{html}");
+        assert!(html.contains("aria-valuenow=\"120\""), "{html}");
+        let css = styles.css();
+        assert!(css.contains("left:120px;"), "{css}");
+        assert!(css.contains("left:300px;"), "{css}");
     }
 }

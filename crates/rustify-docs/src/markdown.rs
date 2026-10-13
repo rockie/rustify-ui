@@ -47,7 +47,7 @@ pub fn options() -> Options {
 
 /// A version for everything above that decides a fragment's bytes; part of
 /// the fragment cache key.
-pub const WRITER_VERSION: u32 = 9;
+pub const WRITER_VERSION: u32 = 10;
 
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct Heading {
@@ -110,6 +110,24 @@ pub struct CodeGroup {
     pub span: Range<usize>,
 }
 
+/// A declaration awaiting the registered renderer. Its markers survive URL
+/// resolution so the helper receives the same checked, resolved children.
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct Embed {
+    pub declaration: crate::embed::Declaration,
+    pub index: usize,
+}
+
+impl Embed {
+    pub fn start_marker(&self) -> String {
+        format!("<!--rd-embed:{}:start-->", self.index)
+    }
+
+    pub fn end_marker(&self) -> String {
+        format!("<!--rd-embed:{}:end-->", self.index)
+    }
+}
+
 /// A rendered Markdown document.
 #[derive(Clone, Debug, Default, PartialEq, Eq)]
 pub struct Fragment {
@@ -133,6 +151,7 @@ pub struct Fragment {
     pub autolinks: Vec<String>,
     pub code_blocks: Vec<CodeBlock>,
     pub code_groups: Vec<CodeGroup>,
+    pub embeds: Vec<Embed>,
     /// The project-relative files `rustify:include` read.
     pub includes: Vec<String>,
     pub issues: Vec<Issue>,
@@ -190,6 +209,32 @@ pub fn render(source: &str, offset: usize, context: &Context) -> Fragment {
     writer.finish()
 }
 
+/// Uses the existing code panels, raw copy templates and accessible tabs for
+/// a compiled demo's function and full-file source.
+pub fn code_group_html(blocks: &[(&str, &str)], name: &str, context: &Context) -> String {
+    let mut writer = Writer::new(context);
+    writer.group = Some(GroupCapture {
+        name: name.to_owned(),
+        start: 0,
+        labels: Vec::new(),
+        span: 0..0,
+        stray: false,
+    });
+    for (label, source) in blocks {
+        writer.code_block(BlockSpec {
+            text: (*source).to_owned(),
+            tag: Some("rust".into()),
+            title: Some((*label).to_owned()),
+            linenos: false,
+            highlight: Vec::new(),
+            span: 0..0,
+        });
+    }
+    let group = writer.group.take().expect("the source code group");
+    writer.close_group(group, 0..0);
+    writer.finish().html
+}
+
 /// HTML being written, and the slots in it.
 #[derive(Default)]
 struct Buffer {
@@ -244,6 +289,7 @@ struct CodeCapture {
     kind: CodeBlockKind<'static>,
     text: String,
     span: Range<usize>,
+    payload_start: Option<usize>,
 }
 
 struct ImageCapture {
@@ -429,7 +475,10 @@ impl<'a> Writer<'a> {
     fn event(&mut self, event: Event, span: Range<usize>) {
         if let Some(code) = &mut self.code {
             match event {
-                Event::Text(text) => code.text.push_str(&text),
+                Event::Text(text) => {
+                    code.payload_start.get_or_insert(span.start);
+                    code.text.push_str(&text);
+                }
                 Event::End(TagEnd::CodeBlock) => {
                     let code = self.code.take().expect("an open code block");
                     self.fenced_block(code);
@@ -709,6 +758,7 @@ impl<'a> Writer<'a> {
                     kind: kind.into_static(),
                     text: String::new(),
                     span,
+                    payload_start: None,
                 });
             }
             Tag::HtmlBlock => {}
@@ -986,6 +1036,15 @@ impl<'a> Writer<'a> {
             CodeBlockKind::Fenced(info) => info.to_string(),
             CodeBlockKind::Indented => String::new(),
         };
+        let kind = match info.trim() {
+            "rustify-component" => Some(crate::embed::Kind::Component),
+            "rustify-demo" => Some(crate::embed::Kind::Demo),
+            _ => None,
+        };
+        if let Some(kind) = kind {
+            self.embedded_block(kind, code);
+            return;
+        }
         let fence = match parse_info(&info) {
             Ok(fence) => fence,
             Err(message) => {
@@ -1005,6 +1064,79 @@ impl<'a> Writer<'a> {
             highlight: fence.highlight,
             span: code.span,
         });
+    }
+
+    fn embedded_block(&mut self, kind: crate::embed::Kind, code: CodeCapture) {
+        self.block_in_group();
+        let declaration = match crate::embed::parse(
+            kind,
+            &code.text,
+            code.payload_start.unwrap_or(code.span.start),
+            code.span.clone(),
+        ) {
+            Ok(declaration) => declaration,
+            Err(issue) => {
+                self.out.issues.push(issue);
+                return;
+            }
+        };
+        let events: Vec<_> = TextMergeWithOffset::new(
+            Parser::new_ext(&declaration.children, options()).into_offset_iter(),
+        )
+        .collect();
+        if events.iter().any(|(event, _)| matches!(event,
+            Event::Start(Tag::CodeBlock(CodeBlockKind::Fenced(info)))
+                if matches!(info.split_whitespace().next(), Some("rustify-component" | "rustify-demo")))) {
+            self.out.issues.push(Issue::error(code.span, "embed-nested", "component children cannot contain another interactive island")
+                .suggest("move the nested component or demo into an adjacent fence"));
+            return;
+        }
+        self.buffers.push(Buffer::default());
+        // Reuse the current writer: headings, references, URL slots, HTML
+        // checks and classes remain part of the one document graph.
+        for (event, _) in events {
+            self.event(event, declaration.span.clone());
+        }
+        let children = self.buffers.pop().expect("the component child buffer");
+        if kind == crate::embed::Kind::Component && crate::builtins::is_builtin(&declaration.name) {
+            match crate::builtins::render(
+                &declaration.name,
+                declaration.props.clone(),
+                children.html.clone(),
+            ) {
+                Ok(html) if children.html.is_empty() => self.html(&html, declaration.span, false),
+                Ok(html) => {
+                    if html.matches(&children.html).count() != 1 {
+                        self.out.issues.push(Issue::error(
+                            declaration.span,
+                            "embed-render",
+                            "a builtin must preserve its checked children exactly once",
+                        ));
+                        return;
+                    }
+                    let (before, after) = html
+                        .split_once(&children.html)
+                        .expect("the preserved children");
+                    self.html(before, declaration.span.clone(), false);
+                    self.buf().append(children);
+                    self.html(after, declaration.span, false);
+                }
+                Err(error) => self.out.issues.push(Issue::error(
+                    declaration.span,
+                    "embed-props",
+                    error.message,
+                )),
+            }
+        } else {
+            let embed = Embed {
+                declaration,
+                index: self.out.embeds.len(),
+            };
+            self.push(&embed.start_marker());
+            self.buf().append(children);
+            self.push(&embed.end_marker());
+            self.out.embeds.push(embed);
+        }
     }
 
     fn include(&mut self, directive: Directive, span: Range<usize>) {
@@ -1139,7 +1271,11 @@ impl<'a> Writer<'a> {
             html.push_str("</span>\n");
         }
         html.push_str("</code></pre>\n<template class=\"rd-code-raw\">");
-        escape_html_into(&mut html, &block.text);
+        // HTML parsing normalizes literal CR, but a source copy must preserve
+        // its exact CRLF/CR bytes, independently of highlighted display lines.
+        let mut raw = String::new();
+        escape_html_into(&mut raw, &block.text);
+        html.push_str(&raw.replace('\r', "&#13;"));
         html.push_str("</template>\n</figure>\n");
         self.push(&html);
         self.out.code_blocks.push(CodeBlock {
@@ -1468,6 +1604,62 @@ mod tests {
             "<p class=\"markdown-alert-title\">{}提示</p>",
             crate::icons::alert("tip")
         )));
+    }
+
+    #[test]
+    fn component_fences_render_children_through_the_same_writer() {
+        let source = "## Repeated\n\n```rustify-component\nname: Counter\nprops:\n  initial: 2\nchildren: |\n  ## Repeated\n\n  [Guide](guide.md#setup) and **strong**.\n```\n\n```rustify-demo\nname: CounterDemo\n```\n";
+        let page = md(source);
+        assert!(page.issues.is_empty(), "{:?}", page.issues);
+        assert_eq!(page.embeds.len(), 2);
+        assert_eq!(page.embeds[0].declaration.name, "Counter");
+        assert_eq!(page.embeds[0].declaration.props["initial"], 2);
+        assert_eq!(page.embeds[1].declaration.kind, crate::embed::Kind::Demo);
+        assert!(page.html.contains(&page.embeds[0].start_marker()));
+        assert!(page.html.contains("<strong>strong</strong>"));
+        assert_eq!(
+            page.headings
+                .iter()
+                .map(|heading| heading.id.as_str())
+                .collect::<Vec<_>>(),
+            ["repeated", "repeated-1"]
+        );
+        assert_eq!(page.references[0].destination, "guide.md#setup");
+        assert_eq!(&page.html[page.slots[0].html.clone()], "guide.md#setup");
+        assert!(page.code_blocks.is_empty());
+    }
+
+    #[test]
+    fn embedded_children_cannot_nest_islands_or_skip_the_html_policy() {
+        let nested = "```rustify-component\nname: Counter\nchildren: |\n  ```rustify-demo\n  name: CounterDemo\n  ```\n```\n";
+        assert!(rules(&md(nested)).contains(&"embed-nested"));
+        let unsafe_child = "```rustify-component\nname: Counter\nchildren: '<img src=\"javascript:evil()\" onerror=\"evil()\">'\n```\n";
+        assert!(!md(unsafe_child).issues.is_empty());
+        let malformed =
+            "```rustify-component\nname: Counter\nprops: {initial: 1, initial: 2}\n```\n";
+        assert!(rules(&md(malformed)).contains(&"embed-payload"));
+    }
+
+    #[test]
+    fn builtin_cards_and_child_links_share_the_content_graph_without_islands() {
+        let page = md("```rustify-component\nname: CardGrid\nprops:\n  cards:\n    - title: Guide\n      link: guide.md\n      description: Install the library.\nchildren: '[Details](guide.md#setup)'\n```\n");
+        assert!(page.issues.is_empty(), "{:?}", page.issues);
+        assert!(page.embeds.is_empty());
+        assert_eq!(
+            page.references
+                .iter()
+                .map(|reference| reference.destination.as_str())
+                .collect::<Vec<_>>(),
+            ["guide.md#setup", "guide.md"]
+        );
+        for slot in &page.slots {
+            assert_eq!(
+                page.html[slot.html.clone()],
+                page.references[slot.reference].destination
+            );
+        }
+        assert!(page.html.contains("Install the library."));
+        assert!(!page.html.contains("data-rustify-island"));
     }
 
     #[test]

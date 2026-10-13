@@ -1,0 +1,19 @@
+npm notice run rustify-ui-browser-tests@0.1.0 npx
+npm notice run 'playwright' test -c playwright.docs.config.ts --project=dom-hydrate hydration.spec.ts
+
+Running 10 tests using 1 worker
+
+(node:59733) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 [dom-hydrate] › tests/dom-only/hydration.spec.ts:295:5 › static catalog remains useful without JavaScript (396ms)
+  ✓   2 [dom-hydrate] › tests/dom-only/hydration.spec.ts:322:5 › all catalog nodes, IDs, ARIA and geometry survive and match independent CSR (1.0s)
+  ✓   3 [dom-hydrate] › tests/dom-only/hydration.spec.ts:365:5 › the same component inputs produce the same public state in hydrate and CSR (2.8s)
+  ✓   4 [dom-hydrate] › tests/dom-only/hydration.spec.ts:391:5 › duplicate, malformed, detached and mismatched roots are refused without mutation (246ms)
+  ✓   5 [dom-hydrate] › tests/dom-only/hydration.spec.ts:418:5 › hydrate before runtime startup preserves all static nodes (123ms)
+  ✓   6 [dom-hydrate] › tests/dom-only/hydration.spec.ts:429:5 › structural comparison detects a deliberate wrong HTML element (303ms)
+  ✓   7 [dom-hydrate] › tests/dom-only/hydration.spec.ts:456:5 › asynchronous browser work starts after deterministic attachment (359ms)
+  ✓   8 [dom-hydrate] › tests/dom-only/hydration.spec.ts:477:5 › disposing one hydrated scope releases its Owner and keeps peers interactive (277ms)
+  ✓   9 [dom-hydrate] › tests/dom-only/hydration.spec.ts:497:5 › independent CSR runtimes isolate identical geometry classes and their cleanup (1.3s)
+  ✓  10 [dom-hydrate] › tests/dom-only/hydration.spec.ts:561:5 › a trap aborts shared listeners, tasks and overlays and restores static scopes (348ms)
+
+  10 passed (14.8s)

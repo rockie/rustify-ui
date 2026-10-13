@@ -1,0 +1,28 @@
+{
+  "build_success": true,
+  "summary": {
+    "pages": 7,
+    "files": 22,
+    "bytes": 11939265
+  },
+  "old_group": "ef97e8aee0b50168818187fc4a0b2fb70ee31b73cf32f318063e31d4319f70f6",
+  "final_group": "ef97e8aee0b50168818187fc4a0b2fb70ee31b73cf32f318063e31d4319f70f6",
+  "reader_resource_bytes_identical": true,
+  "old_resources": {
+    "app_bg.wasm": "de3eab063c1a59810bc631012cffa6da6cd21475866050b708110008fd91328e",
+    "dom-runtime.css": "7597abd6960f0ed1ce5b365356e5b2c422bf79117a39e0a8575aa447cd350f41",
+    "islands.js": "ecc0183124465813a93fae273b21263b166b75814d4334c388f1b6f1e0cb9801",
+    "dom-loader.js": "72c911771f7102b184c18b3f311186c94496a4efd47b9d25e46284d8ad2f5dd1",
+    "app.js": "13de4c6e86c014b0c8d71464f0640d88546d0866484c4170398022788fe7f4c4",
+    "snippets/rustify-ui-4db2f10f10788f4c/web/dom-runtime.js": "d3f6018d391b65cfaf609fe1a17d9e47e221c51087a956b9fcd0bc6d11076343"
+  },
+  "final_resources": {
+    "app_bg.wasm": "de3eab063c1a59810bc631012cffa6da6cd21475866050b708110008fd91328e",
+    "dom-runtime.css": "7597abd6960f0ed1ce5b365356e5b2c422bf79117a39e0a8575aa447cd350f41",
+    "islands.js": "ecc0183124465813a93fae273b21263b166b75814d4334c388f1b6f1e0cb9801",
+    "dom-loader.js": "72c911771f7102b184c18b3f311186c94496a4efd47b9d25e46284d8ad2f5dd1",
+    "app.js": "13de4c6e86c014b0c8d71464f0640d88546d0866484c4170398022788fe7f4c4",
+    "snippets/rustify-ui-4db2f10f10788f4c/web/dom-runtime.js": "d3f6018d391b65cfaf609fe1a17d9e47e221c51087a956b9fcd0bc6d11076343"
+  },
+  "default_css_bytes_identical": true
+}

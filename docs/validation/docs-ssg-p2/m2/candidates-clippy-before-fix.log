@@ -1,0 +1,53 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+    Checking aho-corasick v1.1.5
+    Checking gloo-utils v0.2.0
+    Checking tachys v0.2.19
+    Checking nom v8.0.0
+    Checking arrayvec v0.7.8
+   Compiling classification-macros v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style/upstream/classification-macros)
+    Checking gloo-net v0.6.0
+    Checking fast-glob v0.4.5
+    Checking regex-automata v0.4.18
+    Checking server_fn v0.8.13
+    Checking nom-language v0.1.0
+    Checking bexpand v1.3.0
+    Checking regex v1.13.1
+    Checking bstr v1.13.1
+    Checking leptos_config v0.8.10
+    Checking globset v0.4.20
+    Checking rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+    Checking leptos_dom v0.8.8
+    Checking leptos_server v0.8.8
+    Checking leptos v0.8.22
+    Checking rustify-ui v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui)
+    Checking rustify-components v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-components)
+    Checking xtask v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/xtask)
+error: this expression creates a reference which is immediately dereferenced by the compiler
+   --> xtask/src/css.rs:159:48
+    |
+159 |     if let Some(difference) = first_difference(&committed, &generated) {
+    |                                                ^^^^^^^^^^ help: change this to: `committed`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#needless_borrow
+    = note: `-D clippy::needless-borrow` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::needless_borrow)]`
+
+error: this expression creates a reference which is immediately dereferenced by the compiler
+   --> xtask/src/css.rs:159:60
+    |
+159 |     if let Some(difference) = first_difference(&committed, &generated) {
+    |                                                            ^^^^^^^^^^ help: change this to: `generated`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#needless_borrow
+
+error: could not compile `xtask` (bin "xtask") due to 2 previous errors
+warning: build failed, waiting for other jobs to finish...
+error: could not compile `xtask` (bin "xtask" test) due to 2 previous errors
+mbx[cache]: 0 hits, 1 misses, 23 not looked up; 0 B downloaded, 0 B uploaded, 37.1 MiB stored locally
+mbx[savings]: 2.1 TiB logical of old files removed to date. the broom sends its regards.

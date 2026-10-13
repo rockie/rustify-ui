@@ -1,0 +1,54 @@
+[
+  {
+    "feature": "site-ssr",
+    "exit": 0,
+    "elapsed_ms": 22879.43,
+    "fresh_artifacts": 0,
+    "compiled_artifacts": 263,
+    "flags": [
+      "mbx",
+      "build",
+      "--locked",
+      "--manifest-path",
+      "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-p2-pair-f8q96yfa/feature-comparison/site-ssr/Cargo.toml",
+      "--target-dir",
+      "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-p2-pair-f8q96yfa/feature-comparison/site-ssr/target",
+      "--profile",
+      "docs-host",
+      "--no-default-features",
+      "--features",
+      "ssr",
+      "--bin",
+      "docs-render",
+      "--message-format",
+      "json"
+    ],
+    "conditions": "new Cargo target per feature; existing shared mbx compiler cache, offline, serial; native helper source otherwise identical"
+  },
+  {
+    "feature": "pipeline",
+    "exit": 0,
+    "elapsed_ms": 42680.83,
+    "fresh_artifacts": 0,
+    "compiled_artifacts": 353,
+    "flags": [
+      "mbx",
+      "build",
+      "--locked",
+      "--manifest-path",
+      "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-p2-pair-f8q96yfa/feature-comparison/pipeline/Cargo.toml",
+      "--target-dir",
+      "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-p2-pair-f8q96yfa/feature-comparison/pipeline/target",
+      "--profile",
+      "docs-host",
+      "--no-default-features",
+      "--features",
+      "ssr",
+      "--bin",
+      "docs-render",
+      "--message-format",
+      "json"
+    ],
+    "conditions": "new Cargo target per feature; existing shared mbx compiler cache, offline, serial; native helper source otherwise identical"
+  }
+]

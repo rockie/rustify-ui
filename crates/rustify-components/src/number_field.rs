@@ -53,10 +53,8 @@ pub fn stepped(from: f64, delta: f64) -> f64 {
     ((from + delta) * scale).round() / scale
 }
 
-#[cfg(target_arch = "wasm32")]
 pub use dom::NumberField;
 
-#[cfg(target_arch = "wasm32")]
 mod dom {
     use super::{format_number, parse_number, stepped};
     use leptos::ev::KeyboardEvent;
@@ -170,6 +168,9 @@ mod dom {
                 prop:value=draft.text()
                 prop:disabled=move || disabled.get()
                 prop:readOnly=move || read_only.get()
+                value=draft.text()
+                disabled=move || disabled.get()
+                readonly=move || read_only.get()
                 on:focus=draft.on_focus()
                 on:blur=draft.on_blur()
                 on:keydown=on_keydown
@@ -220,5 +221,36 @@ mod tests {
         assert_eq!(stepped(100.0, 50.0), 150.0);
         // Nothing is clamped here: that is the application's.
         assert_eq!(stepped(0.0, -1.0), -1.0);
+    }
+
+    #[cfg(all(feature = "ssr", not(target_arch = "wasm32")))]
+    #[test]
+    fn host_number_field_renders_the_controlled_value_and_native_flags() {
+        use leptos::prelude::*;
+
+        let owner = Owner::new();
+        let html = owner.with(|| {
+            view! {
+                <super::NumberField
+                    value=-12.5
+                    min=-20.0
+                    max=10.0
+                    disabled=true
+                    read_only=true
+                    on_change=|_| {}
+                />
+            }
+            .to_html()
+        });
+        assert!(html.contains("value=\"-12.5\""), "{html}");
+        assert!(html.contains("aria-valuenow=\"-12.5\""), "{html}");
+        assert!(
+            html.contains(" disabled ") || html.contains(" disabled>"),
+            "{html}"
+        );
+        assert!(
+            html.contains(" readonly ") || html.contains(" readonly>"),
+            "{html}"
+        );
     }
 }

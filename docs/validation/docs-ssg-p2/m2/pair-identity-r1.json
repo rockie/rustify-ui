@@ -1,0 +1,50 @@
+{
+  "workspace": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-p2-pair-f8q96yfa",
+  "repo": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-p2-pair-f8q96yfa/repo",
+  "git": "file:///private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-p2-pair-f8q96yfa/repo",
+  "library_revision": "3536bcd97fb159268a441556310e0988c0ef4e7a",
+  "scope": "temporary M2 Rtest/Ctest; no publication or main worktree commits",
+  "cli_revision": "9e51cf1dfb65c863d1d569ffb033d359a8f44bad",
+  "lock_sha256": "55d272bfc8399b819e566866f5435feb297ec0570453dccc1ced074963f50bf7",
+  "package_versions_identical": true,
+  "check_exit": 0,
+  "lock_unchanged_after_check": true,
+  "only_pair_metadata_changed": [
+    "crates/rustify-docs-cli/assets/framework-revision.txt"
+  ],
+  "library_files_unchanged": 172,
+  "installed_build_info": "rustify-docs 0.1.5\npanic: unwind\ngrammars: syntect-5.3.0+two-face-0.5.2+bat-0.26.1+fancy\nsource: 9e51cf1dfb65c863d1d569ffb033d359a8f44bad\n",
+  "build_exit": 0,
+  "lock_unchanged_after_build": true,
+  "dist_file_count": 22,
+  "resource_group": "assets/islands/16a4017da4e22dcb42eb2518d1b86e40b6609d757c47c55ecf4163e9b461d175",
+  "complete_runtime_and_snippets": true,
+  "imports_resolved": [
+    "./snippets/rustify-ui-4db2f10f10788f4c/web/dom-runtime.js"
+  ],
+  "published_paths_private_free": true,
+  "dist_sha256": {
+    "index.html": "10f3d91ef60d2232903790556cce8c5537bc5d375dd0b58924d1626a1593bbea",
+    "404.html": "04e43fe4ac03ce048ce34b5352c9873f3127a8ea7f734c884b4740585f018ca6",
+    ".nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sitemap.xml": "db7dc0ddfb7f59748d4b53595b6bdc35f30bb176debf0759d09a5696fbbf6da3",
+    "robots.txt": "5b50d9c2a9022d66f08fadd3b8c226190ab4230a1af9e6041f5627e0e543b6c6",
+    "rustify-docs-manifest.json": "3a526ac643e0b85a466399a77d06539c0ae5311f59bb094633fb8c46acddb489",
+    "proxy/index.html": "3c3055bd559a31a1ac7b4ecc924c06ce5000acdec97b81f4846359e4f2edbb77",
+    "async/index.html": "1ac8f33930fc333cf53bc0de85115190237d99bc7c1e242d21d96ad25aa84498",
+    "builtins/index.html": "a44d5996ec816d8089e468be37f50a5f375b00820511e9d30f7cef5532f7d874",
+    "failure/index.html": "8affa8900b8ae2479d390321025a8652f70663e01bcfded9a0ad3d4c2bd1d3d8",
+    "client-only/index.html": "c68c4b1aa0c470850a76b76bb415babc1ab1b0baf5fd94e3a9693413e8585351",
+    "counter/index.html": "a253e7bc13d82656dfd673bbaf7ce64b9014a58a6aafca3f44232166baa36114",
+    "assets/site.2529a0d647.js": "2529a0d647cd2b645277e1dc98c9396c87421748f2bc42488d3031c6db6e203a",
+    "assets/site.e3294a0030.css": "e3294a0030511ad0ad3f7e6dee3b5b4571206ec2d29318f58aa9f5caf946c09d",
+    "assets/share.9f8be38eaf.png": "9f8be38eafa7450a22835777de9ff300878deff236dd54fa9a91e00e206be673",
+    "assets/mode.5e2c2584b0.js": "5e2c2584b0eccb6b7631ffa0f0e110e7316d5f60d532a806bef18f1e017c57cf",
+    "assets/islands/16a4017da4e22dcb42eb2518d1b86e40b6609d757c47c55ecf4163e9b461d175/app_bg.wasm": "26b28ce0ffba9b24b7855167607e0e35c6549d758b593bb17099fc6c620361a5",
+    "assets/islands/16a4017da4e22dcb42eb2518d1b86e40b6609d757c47c55ecf4163e9b461d175/dom-runtime.css": "7597abd6960f0ed1ce5b365356e5b2c422bf79117a39e0a8575aa447cd350f41",
+    "assets/islands/16a4017da4e22dcb42eb2518d1b86e40b6609d757c47c55ecf4163e9b461d175/islands.js": "ecc0183124465813a93fae273b21263b166b75814d4334c388f1b6f1e0cb9801",
+    "assets/islands/16a4017da4e22dcb42eb2518d1b86e40b6609d757c47c55ecf4163e9b461d175/dom-loader.js": "72c911771f7102b184c18b3f311186c94496a4efd47b9d25e46284d8ad2f5dd1",
+    "assets/islands/16a4017da4e22dcb42eb2518d1b86e40b6609d757c47c55ecf4163e9b461d175/app.js": "13de4c6e86c014b0c8d71464f0640d88546d0866484c4170398022788fe7f4c4",
+    "assets/islands/16a4017da4e22dcb42eb2518d1b86e40b6609d757c47c55ecf4163e9b461d175/snippets/rustify-ui-4db2f10f10788f4c/web/dom-runtime.js": "d3f6018d391b65cfaf609fe1a17d9e47e221c51087a956b9fcd0bc6d11076343"
+  }
+}

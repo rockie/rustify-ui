@@ -121,6 +121,7 @@ pub fn CommandPalette(
     // Opening starts clean, and the keyboard starts in the search box: a
     // palette that opens on the last thing somebody typed is a palette that
     // runs the wrong command.
+    #[cfg(target_arch = "wasm32")]
     Effect::new(move || {
         if !open.get() {
             return;
@@ -205,6 +206,7 @@ pub fn CommandPalette(
                         aria-controls=move || format!("{}-list", group.get_value())
                         aria-activedescendant=move || command_id(&active.get())
                         placeholder=move || placeholder.get_value()
+                        value=move || query.get()
                         prop:value=move || query.get()
                         on:input:target=move |event| query.set(event.target().value())
                     />

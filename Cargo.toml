@@ -5,6 +5,8 @@ members = [
     "crates/rustify-style-wasm",
     "crates/rustify-components",
     "crates/rustify-docs",
+    "crates/rustify-docs-macros",
+    "crates/rustify-docs-syntax",
     "crates/rustify-docs-cli",
     "crates/rustify-ui",
     "crates/rustify-makepad",

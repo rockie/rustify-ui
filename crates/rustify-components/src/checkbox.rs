@@ -62,6 +62,8 @@ pub fn Checkbox(
                     let described_by = described_by.get();
                     (!described_by.is_empty()).then_some(described_by)
                 }
+                checked=move || checked.get()
+                disabled=move || disabled.get()
                 prop:checked=move || checked.get()
                 prop:disabled=move || disabled.get()
                 on:change:target=move |ev| {

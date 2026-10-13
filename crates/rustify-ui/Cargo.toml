@@ -11,6 +11,7 @@ default = ["csr"]
 # Client-side rendering in the browser: the DOM runtime, its host and every
 # browser module.
 csr = ["leptos/csr"]
+hydrate = ["leptos/hydrate"]
 # Rendering on a host into HTML. Built on its own, never together with csr.
 ssr = ["leptos/ssr"]
 # Makepad GPU regions. Off by default: a DOM application links no Makepad.

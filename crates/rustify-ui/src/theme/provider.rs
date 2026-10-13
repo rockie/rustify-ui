@@ -1,6 +1,10 @@
-use super::{ResolvedTheme, ThemeValuePatch};
+use super::ResolvedTheme;
+#[cfg(target_arch = "wasm32")]
+use super::ThemeValuePatch;
+#[cfg(target_arch = "wasm32")]
 use crate::mount::ScopeRoots;
 use leptos::prelude::*;
+#[cfg(target_arch = "wasm32")]
 use std::sync::atomic::{AtomicU64, Ordering};
 use std::sync::Arc;
 
@@ -12,7 +16,14 @@ pub fn use_resolved_theme() -> Option<Signal<Arc<ResolvedTheme>>> {
     use_context::<EffectiveTheme>().map(|theme| theme.0)
 }
 
+/// Provides a snapshot whose CSS was already generated with the page.
+/// Unlike ThemeScope, this binding never rewrites the scope's DOM or styles.
+pub fn provide_static_theme(resolved: impl Into<Signal<Arc<ResolvedTheme>>>) {
+    provide_context(EffectiveTheme(resolved.into()));
+}
+
 /// Claims the scope root and restores the values it replaced when disposed.
+#[cfg(target_arch = "wasm32")]
 pub(crate) fn claim_root(
     roots: Option<&ScopeRoots>,
     properties: impl IntoIterator<Item = String>,
@@ -73,6 +84,7 @@ pub(crate) fn claim_root(
 /// Writes the complete DOM projection of an application's resolved snapshot.
 /// Load `theme-v4.css` in the application's Tailwind build to select the new
 /// geometry, typography and shadow semantics.
+#[cfg(target_arch = "wasm32")]
 #[component]
 pub fn ThemeScope(#[prop(into)] resolved: Signal<Arc<ResolvedTheme>>) -> impl IntoView {
     let roots = use_context::<ScopeRoots>();
@@ -93,6 +105,7 @@ pub fn ThemeScope(#[prop(into)] resolved: Signal<Arc<ResolvedTheme>>) -> impl In
     ()
 }
 
+#[cfg(target_arch = "wasm32")]
 pub(crate) fn write_snapshot(
     element: &leptos::web_sys::HtmlElement,
     snapshot: &ResolvedTheme,
@@ -110,6 +123,7 @@ pub(crate) fn write_snapshot(
 /// Applies a sparse, validated patch and recomputes dependent runtime values.
 /// An empty patch removes the local projection and resumes DOM inheritance.
 /// Invalid patches leave the outer theme in force and record a diagnostic.
+#[cfg(target_arch = "wasm32")]
 #[component]
 pub fn ThemeBoundary(
     #[prop(into)] patch: Signal<ThemeValuePatch>,

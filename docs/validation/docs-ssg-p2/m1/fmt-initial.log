@@ -1,0 +1,560 @@
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-components/src/lib.rs:15:
+ pub mod color_field;
+ pub mod data_table;
+ mod dom;
+[31m-pub mod geometry;
+(B[m pub mod drop_zone;
+ pub mod file_picker;
+ pub mod form;
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-components/src/lib.rs:22:
+[32m+pub mod geometry;
+(B[m pub mod icon;
+ pub mod id;
+ pub mod input;
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-components/src/lib.rs:54:
+ pub use data_table::{Column, DataTable};
+ pub use drop_zone::DropZone;
+ pub use file_picker::FilePicker;
+[31m-pub use geometry::{provide_geometry_styles, GeometryStyles};
+(B[m pub use form::{provide_form, use_form, Field, FieldBinding, Form, FormStatus, SubmitButton};
+[32m+pub use geometry::{provide_geometry_styles, GeometryStyles};
+(B[m pub use icon::{Glyph, Icon};
+ pub use input::{TextField, TextKind};
+ pub use label::Label;
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-components/src/lib.rs:78:
+ pub use workspace::{PanelTab, PanelTabs, Splitter};
+ 
+ pub use dialog::Dialog;
+[31m-pub use menu::Menu;
+(B[m #[cfg(target_arch = "wasm32")]
+ pub use menu::anchor_at;
+[32m+pub use menu::Menu;
+(B[m pub use select::{Select, SelectOption};
+ pub use tooltip::Tooltip;
+ 
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui/src/diagnostics.rs:39:
+             Self::InvalidContainer => f.write_str("container is missing or not connected"),
+             Self::OccupiedContainer => f.write_str("container is already mounted"),
+             Self::InvalidHydrationRoot => f.write_str("the generated hydration roots are invalid"),
+[31m-            Self::HydrationIdentityMismatch => f.write_str("the generated scope identity does not match"),
+(B[m[32m+            Self::HydrationIdentityMismatch => {
+(B[m[32m+                f.write_str("the generated scope identity does not match")
+(B[m[32m+            }
+(B[m             Self::GpuUnavailable => f.write_str("no WebGL2 context for the region canvas"),
+             Self::NotFound => f.write_str("no object with that identity"),
+             Self::Disposed => f.write_str("that object has been deleted"),
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui/src/diagnostics.rs:204:
+         match self {
+             Self::InvalidContainer => "give mount an element that is in the document",
+             Self::OccupiedContainer => "dispose the scope that owns the container, or use another",
+[31m-            Self::InvalidHydrationRoot => "generate the content and overlay roots with ssr_scope before hydration",
+(B[m[31m-            Self::HydrationIdentityMismatch => "use the same scope, seed and base for static generation and hydration",
+(B[m[32m+            Self::InvalidHydrationRoot => {
+(B[m[32m+                "generate the content and overlay roots with ssr_scope before hydration"
+(B[m[32m+            }
+(B[m[32m+            Self::HydrationIdentityMismatch => {
+(B[m[32m+                "use the same scope, seed and base for static generation and hydration"
+(B[m[32m+            }
+(B[m             Self::UnsupportedCapability => "do it from the host page; a region cannot",
+             Self::AssetLoadFailed => "check the asset is deployed beside the build, then retry",
+             Self::BuildContractMismatch => "deploy the JS, the wasm and the bridge from one build",
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui/src/draft.rs:361:
+         fn join_stack(&self) {
+             #[cfg(target_arch = "wasm32")]
+             {
+[31m-            let this = *self;
+(B[m[31m-            let stack = self.hooks.with_value(|hooks| hooks.stack.clone());
+(B[m[31m-            if let Some(stack) = stack {
+(B[m[31m-                stack.begin_edit(EditSession {
+(B[m[31m-                    // Not followed: the values a draft is for - numbers,
+(B[m[31m-                    // colours - are not typed through an input method.
+(B[m[31m-                    composing: Arc::new(|| false),
+(B[m[31m-                    cancel: Arc::new(move || this.revert()),
+(B[m[31m-                });
+(B[m[32m+                let this = *self;
+(B[m[32m+                let stack = self.hooks.with_value(|hooks| hooks.stack.clone());
+(B[m[32m+                if let Some(stack) = stack {
+(B[m[32m+                    stack.begin_edit(EditSession {
+(B[m[32m+                        // Not followed: the values a draft is for - numbers,
+(B[m[32m+                        // colours - are not typed through an input method.
+(B[m[32m+                        composing: Arc::new(|| false),
+(B[m[32m+                        cancel: Arc::new(move || this.revert()),
+(B[m[32m+                    });
+(B[m[32m+                }
+(B[m             }
+[31m-            }
+(B[m         }
+ 
+         fn leave_stack(&self) {
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui/src/draft.rs:378:
+             #[cfg(target_arch = "wasm32")]
+             {
+[31m-            let stack = self
+(B[m[31m-                .hooks
+(B[m[31m-                .try_with_value(|hooks| hooks.stack.clone())
+(B[m[31m-                .flatten();
+(B[m[31m-            if let Some(stack) = stack {
+(B[m[31m-                stack.end_edit();
+(B[m[31m-            }
+(B[m[32m+                let stack = self
+(B[m[32m+                    .hooks
+(B[m[32m+                    .try_with_value(|hooks| hooks.stack.clone())
+(B[m[32m+                    .flatten();
+(B[m[32m+                if let Some(stack) = stack {
+(B[m[32m+                    stack.end_edit();
+(B[m[32m+                }
+(B[m             }
+         }
+ 
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui/src/i18n.rs:254:
+     }
+ }
+ 
+[31m-pub use browser::{provide_locale, use_locale, LocaleHandle};
+(B[m #[cfg(target_arch = "wasm32")]
+ pub use browser::{browser_languages, format_date, format_number};
+[32m+pub use browser::{provide_locale, use_locale, LocaleHandle};
+(B[m 
+ mod browser {
+     use super::{Locale, Message};
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui/src/lib.rs:5:
+ //! are the `gpu` feature.
+ 
+ #[cfg(all(feature = "csr", feature = "hydrate"))]
+[31m-compile_error!("csr and hydrate are separate rendering modes; disable default features for hydrate");
+(B[m[32m+compile_error!(
+(B[m[32m+    "csr and hydrate are separate rendering modes; disable default features for hydrate"
+(B[m[32m+);
+(B[m 
+ pub mod binding;
+ pub mod clipboard;
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui/src/lib.rs:51:
+ pub use form::{FormState, Generation, Submit};
+ pub use i18n::{Direction, Locale, Message};
+ pub use job::{Budget, Ended, Job, Step};
+[31m-pub use mount::{mount, AppHandle, MountConfig, ScopeRoots};
+(B[m #[cfg(all(feature = "hydrate", target_arch = "wasm32"))]
+ pub use mount::hydrate;
+ #[cfg(feature = "ssr")]
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui/src/lib.rs:58:
+ pub use mount::ssr_scope;
+[32m+pub use mount::{mount, AppHandle, MountConfig, ScopeRoots};
+(B[m pub use overlay::{LayerId, LocalRect};
+ #[cfg(feature = "gpu")]
+ pub use region::{GpuRegion, RegionState};
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui/src/lib.rs:89:
+ pub use listeners::{
+     instance_failed, listen, release_on_abort, AbortRelease, ListenOptions, Listener,
+ };
+[31m-pub use overlay::{Anchor, Layer};
+(B[m #[cfg(target_arch = "wasm32")]
+ pub use overlay::{use_overlay, OverlayStack};
+[32m+pub use overlay::{Anchor, Layer};
+(B[m #[cfg(target_arch = "wasm32")]
+ pub use router::{
+     navigate, provide_routes, use_location, use_params, use_route, Link, NavigationGuard,
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui/src/lib.rs:105:
+ #[cfg(target_arch = "wasm32")]
+ pub use text::TextEdit;
+ pub use theme::{
+[31m-    provide_static_theme, use_resolved_theme,
+(B[m[31m-    resolve, FontFace, ResolveContext, ResolvedTheme, Theme, ThemeDocument, ThemeError, ThemeMode,
+(B[m[31m-    ThemePatch, ThemeStyles, ThemeValuePatch, ThemeValues,
+(B[m[32m+    provide_static_theme, resolve, use_resolved_theme, FontFace, ResolveContext, ResolvedTheme,
+(B[m[32m+    Theme, ThemeDocument, ThemeError, ThemeMode, ThemePatch, ThemeStyles, ThemeValuePatch,
+(B[m[32m+    ThemeValues,
+(B[m };
+ #[cfg(target_arch = "wasm32")]
+ pub use theme::{
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui/src/lib.rs:114:
+[31m-    use_theme, use_theme_values, ThemeBoundary, ThemeOverride, ThemeScope,
+(B[m[31m-    ThemedScope,
+(B[m[32m+    use_theme, use_theme_values, ThemeBoundary, ThemeOverride, ThemeScope, ThemedScope,
+(B[m };
+ pub use toast::{provide_toasts, use_toasts, ToastHandle, ToastRegion};
+ 
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui/src/mount.rs:27:
+ {
+     let owner = Owner::new();
+     let nodes = owner.with(|| {
+[31m-    let scope = scope_name(&config);
+(B[m[31m-    crate::id::provide(&scope);
+(B[m[31m-    crate::provide_locale(crate::Locale::English);
+(B[m[31m-    provide_context(ActionSink::new());
+(B[m[31m-    #[cfg(not(target_arch = "wasm32"))]
+(B[m[31m-    provide_context(ScopeRoots(std::marker::PhantomData, config.base.clone()));
+(B[m[31m-    view! {
+(B[m[31m-        <div
+(B[m[31m-            data-rustify-scope=scope.clone()
+(B[m[31m-            data-rustify-seed=scope
+(B[m[31m-            data-rustify-ssr="1"
+(B[m[31m-            data-rustify-base=config.base
+(B[m[31m-            tabindex="-1"
+(B[m[31m-        >
+(B[m[31m-            <div data-rustify-content="">{view()}</div>
+(B[m[31m-            <div data-rustify-overlay=""></div>
+(B[m[31m-        </div>
+(B[m[31m-    }
+(B[m[32m+        let scope = scope_name(&config);
+(B[m[32m+        crate::id::provide(&scope);
+(B[m[32m+        crate::provide_locale(crate::Locale::English);
+(B[m[32m+        provide_context(ActionSink::new());
+(B[m[32m+        #[cfg(not(target_arch = "wasm32"))]
+(B[m[32m+        provide_context(ScopeRoots(std::marker::PhantomData, config.base.clone()));
+(B[m[32m+        view! {
+(B[m[32m+            <div
+(B[m[32m+                data-rustify-scope=scope.clone()
+(B[m[32m+                data-rustify-seed=scope
+(B[m[32m+                data-rustify-ssr="1"
+(B[m[32m+                data-rustify-base=config.base
+(B[m[32m+                tabindex="-1"
+(B[m[32m+            >
+(B[m[32m+                <div data-rustify-content="">{view()}</div>
+(B[m[32m+                <div data-rustify-overlay=""></div>
+(B[m[32m+            </div>
+(B[m[32m+        }
+(B[m     });
+     leptos::tachys::reactive_graph::OwnedView::new_with_owner(nodes, owner)
+ }
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui/src/mount.rs:238:
+         error
+     };
+     if !crate::runtime::booted() {
+[31m-        return Err(refuse(UiError::RuntimeNotStarted, "hydrate was called before the runtime was started"));
+(B[m[32m+        return Err(refuse(
+(B[m[32m+            UiError::RuntimeNotStarted,
+(B[m[32m+            "hydrate was called before the runtime was started",
+(B[m[32m+        ));
+(B[m     }
+     if !container.is_connected() {
+[31m-        return Err(refuse(UiError::InvalidContainer, "the hydration container is not in the document"));
+(B[m[32m+        return Err(refuse(
+(B[m[32m+            UiError::InvalidContainer,
+(B[m[32m+            "the hydration container is not in the document",
+(B[m[32m+        ));
+(B[m     }
+     if container.has_attribute(HYDRATED_ATTRIBUTE) {
+[31m-        return Err(refuse(UiError::OccupiedContainer, "another scope already owns the hydration container"));
+(B[m[32m+        return Err(refuse(
+(B[m[32m+            UiError::OccupiedContainer,
+(B[m[32m+            "another scope already owns the hydration container",
+(B[m[32m+        ));
+(B[m     }
+     let content = container.first_element_child();
+[31m-    let overlay = content.as_ref().and_then(|element| element.next_element_sibling());
+(B[m[32m+    let overlay = content
+(B[m[32m+        .as_ref()
+(B[m[32m+        .and_then(|element| element.next_element_sibling());
+(B[m     let valid_roots = content.as_ref().is_some_and(|element| {
+         element.tag_name() == "DIV" && element.has_attribute(CONTENT_ATTRIBUTE)
+     }) && overlay.as_ref().is_some_and(|element| {
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui/src/mount.rs:260:
+         || container.get_attribute("data-rustify-ssr").as_deref() != Some("1")
+         || !valid_roots
+     {
+[31m-        return Err(refuse(UiError::InvalidHydrationRoot, "the generated content and overlay roots are missing or invalid"));
+(B[m[32m+        return Err(refuse(
+(B[m[32m+            UiError::InvalidHydrationRoot,
+(B[m[32m+            "the generated content and overlay roots are missing or invalid",
+(B[m[32m+        ));
+(B[m     }
+     if container.get_attribute(MOUNTED_ATTRIBUTE).as_deref() != Some(scope.as_str())
+         || container.get_attribute("data-rustify-seed").as_deref() != Some(scope.as_str())
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui/src/mount.rs:267:
+         || container.get_attribute("data-rustify-base").as_deref() != Some(config.base.as_str())
+     {
+[31m-        return Err(refuse(UiError::HydrationIdentityMismatch, "the generated scope, seed or base does not match the hydration request"));
+(B[m[32m+        return Err(refuse(
+(B[m[32m+            UiError::HydrationIdentityMismatch,
+(B[m[32m+            "the generated scope, seed or base does not match the hydration request",
+(B[m[32m+        ));
+(B[m     }
+     let url_owner = if config.url_owner {
+         Some(crate::router::claim_url(&scope).ok_or_else(|| {
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui/src/mount.rs:273:
+[31m-            refuse(UiError::UrlOwnerConflict, "another scope on this page already owns the URL")
+(B[m[32m+            refuse(
+(B[m[32m+                UiError::UrlOwnerConflict,
+(B[m[32m+                "another scope on this page already owns the URL",
+(B[m[32m+            )
+(B[m         })?)
+     } else {
+         None
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui/src/mount.rs:279:
+     // now known to contain the two roots.
+     let content = content.ok_or(UiError::InvalidHydrationRoot)?;
+     let overlay = overlay.ok_or(UiError::InvalidHydrationRoot)?;
+[31m-    container.set_attribute(HYDRATED_ATTRIBUTE, &scope).map_err(|_| UiError::InvalidContainer)?;
+(B[m[32m+    container
+(B[m[32m+        .set_attribute(HYDRATED_ATTRIBUTE, &scope)
+(B[m[32m+        .map_err(|_| UiError::InvalidContainer)?;
+(B[m     let target = content.clone().unchecked_into::<HtmlElement>();
+     let roots = vec![content.clone(), overlay.clone()];
+     let root_container = container.clone();
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui/src/mount.rs:290:
+         crate::id::provide(&scope);
+         crate::provide_locale(crate::Locale::English);
+         provide_context(ActionSink::new());
+[31m-        provide_context(ScopeRoots(send_wrapper::SendWrapper::new(root_container.clone()), config.base.clone()));
+(B[m[31m-        provide_context(crate::overlay::OverlayStack::new(&root_container, &content, &overlay));
+(B[m[32m+        provide_context(ScopeRoots(
+(B[m[32m+            send_wrapper::SendWrapper::new(root_container.clone()),
+(B[m[32m+            config.base.clone(),
+(B[m[32m+        ));
+(B[m[32m+        provide_context(crate::overlay::OverlayStack::new(
+(B[m[32m+            &root_container,
+(B[m[32m+            &content,
+(B[m[32m+            &overlay,
+(B[m[32m+        ));
+(B[m         crate::router::provide_router(&root_container, root_claim, &config.base);
+         view()
+     });
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui/src/overlay.rs:145:
+         #[prop(optional, into)] test_id: String,
+         children: ChildrenFn,
+     ) -> impl IntoView {
+[31m-        let _ = (modal, anchor, fit, on_close, labelled_by, described_by, class, test_id, children);
+(B[m[32m+        let _ = (
+(B[m[32m+            modal,
+(B[m[32m+            anchor,
+(B[m[32m+            fit,
+(B[m[32m+            on_close,
+(B[m[32m+            labelled_by,
+(B[m[32m+            described_by,
+(B[m[32m+            class,
+(B[m[32m+            test_id,
+(B[m[32m+            children,
+(B[m[32m+        );
+(B[m     }
+ }
+ 
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui/src/theme.rs:31:
+     COMMON_TOKENS, VALUE_TOKENS,
+ };
+ pub use metrics::{css_px_to_points, parse_font_stack, parse_length, LengthRule};
+[32m+pub use provider::{provide_static_theme, use_resolved_theme};
+(B[m #[cfg(target_arch = "wasm32")]
+ pub use provider::{ThemeBoundary, ThemeScope};
+[31m-pub use provider::{provide_static_theme, use_resolved_theme};
+(B[m pub use resolve::{
+     resolution_count, resolve, FontFace, ResolveContext, ResolvedFont, ResolvedTheme, ShadowLayer,
+     ThemeDiagnostic,
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui/src/toast.rs:247:
+         }
+         #[cfg(target_arch = "wasm32")]
+         {
+[31m-        let toasts = use_toasts();
+(B[m[31m-        let locale = use_locale();
+(B[m[31m-        let dismiss_id = format!("{test_id}-dismiss");
+(B[m[31m-        use_overlay().map(|stack| {
+(B[m[31m-            let root = stack.overlay_root();
+(B[m[31m-            view! {
+(B[m[31m-                <Portal mount=root>
+(B[m[31m-                    <div
+(B[m[31m-                        class=move || class.get()
+(B[m[31m-                        data-testid=test_id.clone()
+(B[m[31m-                        role="status"
+(B[m[31m-                        aria-live="polite"
+(B[m[31m-                    >
+(B[m[31m-                        {
+(B[m[31m-                            let dismiss_id = dismiss_id.clone();
+(B[m[31m-                            move || {
+(B[m[31m-                                toasts
+(B[m[31m-                                    .current()
+(B[m[31m-                                    .map(|toast| match render {
+(B[m[31m-                                        Some(render) => render.run(toast),
+(B[m[31m-                                        None => {
+(B[m[31m-                                            let seq = toast.seq;
+(B[m[31m-                                            view! {
+(B[m[31m-                                                <div
+(B[m[31m-                                                    class="rustify-toast"
+(B[m[31m-                                                    data-tone=toast.tone.key()
+(B[m[31m-                                                >
+(B[m[31m-                                                    <span>{toast.message}</span>
+(B[m[31m-                                                    <button
+(B[m[31m-                                                        type="button"
+(B[m[31m-                                                        data-testid=dismiss_id.clone()
+(B[m[31m-                                                        aria-label=move || {
+(B[m[31m-                                                            locale.text(Message::Dismiss)
+(B[m[31m-                                                        }
+(B[m[31m-                                                        on:click=move |_| toasts.dismiss(seq)
+(B[m[32m+            let toasts = use_toasts();
+(B[m[32m+            let locale = use_locale();
+(B[m[32m+            let dismiss_id = format!("{test_id}-dismiss");
+(B[m[32m+            use_overlay().map(|stack| {
+(B[m[32m+                let root = stack.overlay_root();
+(B[m[32m+                view! {
+(B[m[32m+                    <Portal mount=root>
+(B[m[32m+                        <div
+(B[m[32m+                            class=move || class.get()
+(B[m[32m+                            data-testid=test_id.clone()
+(B[m[32m+                            role="status"
+(B[m[32m+                            aria-live="polite"
+(B[m[32m+                        >
+(B[m[32m+                            {
+(B[m[32m+                                let dismiss_id = dismiss_id.clone();
+(B[m[32m+                                move || {
+(B[m[32m+                                    toasts
+(B[m[32m+                                        .current()
+(B[m[32m+                                        .map(|toast| match render {
+(B[m[32m+                                            Some(render) => render.run(toast),
+(B[m[32m+                                            None => {
+(B[m[32m+                                                let seq = toast.seq;
+(B[m[32m+                                                view! {
+(B[m[32m+                                                    <div
+(B[m[32m+                                                        class="rustify-toast"
+(B[m[32m+                                                        data-tone=toast.tone.key()
+(B[m                                                     >
+[31m-                                                        "\u{d7}"
+(B[m[31m-                                                    </button>
+(B[m[31m-                                                </div>
+(B[m[32m+                                                        <span>{toast.message}</span>
+(B[m[32m+                                                        <button
+(B[m[32m+                                                            type="button"
+(B[m[32m+                                                            data-testid=dismiss_id.clone()
+(B[m[32m+                                                            aria-label=move || {
+(B[m[32m+                                                                locale.text(Message::Dismiss)
+(B[m[32m+                                                            }
+(B[m[32m+                                                            on:click=move |_| toasts.dismiss(seq)
+(B[m[32m+                                                        >
+(B[m[32m+                                                            "\u{d7}"
+(B[m[32m+                                                        </button>
+(B[m[32m+                                                    </div>
+(B[m[32m+                                                }
+(B[m[32m+                                                    .into_any()
+(B[m                                             }
+[31m-                                                .into_any()
+(B[m[31m-                                        }
+(B[m[31m-                                    })
+(B[m[32m+                                        })
+(B[m[32m+                                }
+(B[m                             }
+[31m-                        }
+(B[m[31m-                    </div>
+(B[m[31m-                </Portal>
+(B[m[31m-            }
+(B[m[31m-        })
+(B[m[32m+                        </div>
+(B[m[32m+                    </Portal>
+(B[m[32m+                }
+(B[m[32m+            })
+(B[m         }
+     }
+ }
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui/tests/ssr_scope.rs:32:
+ fn scopes_render_the_same_ids_and_explicit_roots_on_every_build() {
+     let first = render("counter-a");
+     assert_eq!(first, render("counter-a"));
+[31m-    assert!(first.contains("data-rustify-scope=\"counter-a\""), "{first}");
+(B[m[32m+    assert!(
+(B[m[32m+        first.contains("data-rustify-scope=\"counter-a\""),
+(B[m[32m+        "{first}"
+(B[m[32m+    );
+(B[m     assert!(first.contains("data-rustify-seed=\"counter-a\""), "{first}");
+     assert!(first.contains("data-rustify-ssr=\"1\""), "{first}");
+     assert!(first.contains("data-rustify-content"), "{first}");
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui/tests/ssr_scope.rs:58:
+     Owner::new().with(|| {
+         let make = |scope: &str| {
+             ssr_scope(
+[31m-                MountConfig { scope: scope.to_string(), ..MountConfig::default() },
+(B[m[32m+                MountConfig {
+(B[m[32m+                    scope: scope.to_string(),
+(B[m[32m+                    ..MountConfig::default()
+(B[m[32m+                },
+(B[m                 || view! { <span>{move || rustify_ui::id::next("late").expect("scope id")}</span> },
+             )
+         };
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/xtask/src/docs.rs:769:
+     for mode in ["ssr", "hydrate", "csr"] {
+         let mut cargo = command(mode);
+         let graph_output = cargo
+[31m-            .args(["tree", "--locked", "--edges", "normal,build", "--target", "all", "--prefix", "none", "--no-dedupe", "--package", "hydration-harness", "--manifest-path"])
+(B[m[32m+            .args([
+(B[m[32m+                "tree",
+(B[m[32m+                "--locked",
+(B[m[32m+                "--edges",
+(B[m[32m+                "normal,build",
+(B[m[32m+                "--target",
+(B[m[32m+                "all",
+(B[m[32m+                "--prefix",
+(B[m[32m+                "none",
+(B[m[32m+                "--no-dedupe",
+(B[m[32m+                "--package",
+(B[m[32m+                "hydration-harness",
+(B[m[32m+                "--manifest-path",
+(B[m[32m+            ])
+(B[m             .arg(&manifest)
+             .args(["--no-default-features", "--features", mode])
+             .output()
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/xtask/src/docs.rs:776:
+             .map_err(|error| format!("hydration graph: {error}"))?;
+         if !graph_output.status.success() {
+[31m-            return Err(format!("hydration {mode} graph: {}", String::from_utf8_lossy(&graph_output.stderr)));
+(B[m[32m+            return Err(format!(
+(B[m[32m+                "hydration {mode} graph: {}",
+(B[m[32m+                String::from_utf8_lossy(&graph_output.stderr)
+(B[m[32m+            ));
+(B[m         }
+[31m-        let lines = String::from_utf8_lossy(&graph_output.stdout).lines().map(str::to_string).collect::<Vec<_>>();
+(B[m[32m+        let lines = String::from_utf8_lossy(&graph_output.stdout)
+(B[m[32m+            .lines()
+(B[m[32m+            .map(str::to_string)
+(B[m[32m+            .collect::<Vec<_>>();
+(B[m         check_graph(&format!("hydration-harness/{mode}"), &lines)?;
+     }
+     run(
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/xtask/src/docs.rs:784:
+         command("ssr")
+             .args(["run", "--locked", "--quiet", "--manifest-path"])
+             .arg(&manifest)
+[31m-            .args(["--no-default-features", "--features", "ssr", "--bin", "export-hydration-assets", "--"])
+(B[m[32m+            .args([
+(B[m[32m+                "--no-default-features",
+(B[m[32m+                "--features",
+(B[m[32m+                "ssr",
+(B[m[32m+                "--bin",
+(B[m[32m+                "export-hydration-assets",
+(B[m[32m+                "--",
+(B[m[32m+            ])
+(B[m             .arg(&output),
+         "hydration host generation",
+     )?;
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/xtask/src/docs.rs:793:
+             command(mode)
+                 .args(["build", "--locked", "--release", "--manifest-path"])
+                 .arg(&manifest)
+[31m-                .args(["--no-default-features", "--features", mode, "--lib", "--target", "wasm32-unknown-unknown"])
+(B[m[32m+                .args([
+(B[m[32m+                    "--no-default-features",
+(B[m[32m+                    "--features",
+(B[m[32m+                    mode,
+(B[m[32m+                    "--lib",
+(B[m[32m+                    "--target",
+(B[m[32m+                    "wasm32-unknown-unknown",
+(B[m[32m+                ])
+(B[m                 .env("RUSTFLAGS", wasm_rustflags()),
+             &format!("hydration {mode} wasm build"),
+         )?;
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/xtask/src/docs.rs:800:
+         let wasm = target(mode).join("wasm32-unknown-unknown/release/hydration_harness.wasm");
+         let product = output.join(mode);
+[31m-        assemble(manifest.parent().ok_or("hydration manifest has no directory")?, &wasm, &product, |_| Ok(()))?;
+(B[m[32m+        assemble(
+(B[m[32m+            manifest
+(B[m[32m+                .parent()
+(B[m[32m+                .ok_or("hydration manifest has no directory")?,
+(B[m[32m+            &wasm,
+(B[m[32m+            &product,
+(B[m[32m+            |_| Ok(()),
+(B[m[32m+        )?;
+(B[m         check_product(&product)?;
+     }
+[31m-    println!("hydration: host, hydrate and independent CSR at {}", output.display());
+(B[m[32m+    println!(
+(B[m[32m+        "hydration: host, hydrate and independent CSR at {}",
+(B[m[32m+        output.display()
+(B[m[32m+    );
+(B[m     Ok(())
+ }
+ 

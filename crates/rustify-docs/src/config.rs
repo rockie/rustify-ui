@@ -35,6 +35,14 @@ struct RawConfig {
     nav: RawNav,
     #[serde(default)]
     dev: RawDev,
+    rust: Option<RawRust>,
+}
+
+#[derive(Deserialize)]
+#[serde(deny_unknown_fields)]
+struct RawRust {
+    manifest: Spanned<String>,
+    registry: Spanned<String>,
 }
 
 #[derive(Deserialize)]
@@ -138,6 +146,14 @@ pub struct Config {
     pub logo: Option<Logo>,
     pub nav: Nav,
     pub dev_port: u16,
+    pub rust: Option<RustConfig>,
+}
+
+/// A component site's Cargo project and single `site!` declaration source.
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct RustConfig {
+    pub manifest: String,
+    pub registry: String,
 }
 
 #[derive(Clone, Debug, PartialEq, Eq)]
@@ -346,6 +362,11 @@ pub fn parse(text: &str) -> Result<(Config, Vec<Issue>), Vec<Issue>> {
     let (content_dir, _) = path(raw.content.dir, "content", "content.dir");
     let (assets_dir, _) = path(raw.assets.dir, "static", "assets.dir");
     let (out_dir, out_span) = path(raw.build.out, "dist", "build.out");
+    let rust = raw.rust.map(|rust| {
+        let (manifest, _) = path(Some(rust.manifest), "site/Cargo.toml", "rust.manifest");
+        let (registry, _) = path(Some(rust.registry), "site/src/lib.rs", "rust.registry");
+        RustConfig { manifest, registry }
+    });
     let inside = |inner: &str, outer: &str| {
         outer.is_empty() || inner == outer || inner.starts_with(&format!("{outer}/"))
     };
@@ -355,6 +376,20 @@ pub fn parse(text: &str) -> Result<(Config, Vec<Issue>), Vec<Issue>> {
                 error(out_span.clone(), "config-out", format!("build.out `{out_dir}` overlaps {name} `{input}`; a build replaces its output whole"))
                     .suggest("put the output in a directory of its own, like `dist`"),
             );
+        }
+    }
+    if let Some(rust) = &rust {
+        for (input, name) in [
+            (&rust.manifest, "rust.manifest"),
+            (&rust.registry, "rust.registry"),
+        ] {
+            if inside(input, &out_dir) {
+                errors.push(error(
+                    out_span.clone(),
+                    "config-out",
+                    format!("build.out `{out_dir}` would replace {name} `{input}`"),
+                ));
+            }
         }
     }
     if out_dir.is_empty() {
@@ -626,6 +661,7 @@ pub fn parse(text: &str) -> Result<(Config, Vec<Issue>), Vec<Issue>> {
             logo,
             nav,
             dev_port: raw.dev.port.unwrap_or(DEFAULT_DEV_PORT),
+            rust,
         },
         warnings,
     ))
@@ -666,6 +702,43 @@ mod tests {
             errors[0].message
         );
         assert_eq!(&text[errors[0].span.clone()], "colour");
+    }
+
+    #[test]
+    fn component_sites_accept_explicit_rust_inputs() {
+        let text = format!(
+            "{MINIMAL}[rust]\nmanifest = \"site/Cargo.toml\"\nregistry = \"site/src/lib.rs\"\n"
+        );
+        let (config, _) = parse(&text).unwrap();
+        assert_eq!(
+            config.rust,
+            Some(RustConfig {
+                manifest: "site/Cargo.toml".into(),
+                registry: "site/src/lib.rs".into(),
+            })
+        );
+    }
+
+    #[test]
+    fn rust_inputs_cannot_escape_or_be_replaced_by_output() {
+        let text = format!(
+            "{MINIMAL}[rust]\nmanifest = \"../Cargo.toml\"\nregistry = \"../src/lib.rs\"\n"
+        );
+        let errors = parse(&text).unwrap_err();
+        assert_eq!(
+            errors
+                .iter()
+                .filter(|issue| issue.rule == "config-path")
+                .count(),
+            2
+        );
+        let text = format!(
+            "{MINIMAL}[rust]\nmanifest = \"dist/Cargo.toml\"\nregistry = \"dist/src/lib.rs\"\n"
+        );
+        assert!(parse(&text)
+            .unwrap_err()
+            .iter()
+            .any(|issue| issue.rule == "config-out"));
     }
 
     #[test]

@@ -106,6 +106,8 @@ pub fn RadioGroup(
                                     name=name
                                     class=INPUT
                                     data-testid=test_id
+                                    checked=move || checked.get()
+                                    disabled=move || disabled.get() || option_disabled
                                     prop:checked=move || checked.get()
                                     prop:disabled=move || disabled.get() || option_disabled
                                     on:change=move |_| {

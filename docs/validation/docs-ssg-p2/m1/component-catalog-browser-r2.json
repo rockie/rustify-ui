@@ -1,0 +1,3083 @@
+{
+  "config": {
+    "argv": [
+      "/Users/rockie/.nvm/versions/node/v26.1.0/bin/node",
+      "/Users/rockie/Documents/gh-rockie/rustify-ui/node_modules/.bin/playwright",
+      "test",
+      "--project=component-catalog",
+      "p2-catalog.spec.ts",
+      "p2-theme.spec.ts",
+      "p2-i18n.spec.ts",
+      "p2-semantics.spec.ts",
+      "catalog-inputs.spec.ts",
+      "p2-reflow.spec.ts",
+      "p2-a11y.spec.ts",
+      "theme-compat.spec.ts"
+    ],
+    "configFile": "/Users/rockie/Documents/gh-rockie/rustify-ui/playwright.config.ts",
+    "rootDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": {},
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "utility-lab-scanner",
+        "name": "utility-lab-scanner",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "utility-scanner.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "utility-lab-scanner-deep",
+        "name": "utility-lab-scanner-deep",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "utility-scanner.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "utility-lab",
+        "name": "utility-lab",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "utility-runtime.spec.ts",
+          "utility-faults.spec.ts",
+          "utility-gpu.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "utility-lab-deep",
+        "name": "utility-lab-deep",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "utility-runtime.spec.ts",
+          "utility-gpu.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "utility-baseline",
+        "name": "utility-baseline",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "utility-baseline.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "fusion-basic",
+        "name": "fusion-basic",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "p3-restart.spec.ts",
+          "m1-probes.spec.ts",
+          "m2-runtime.spec.ts",
+          "m3-state.spec.ts",
+          "m4-geometry.spec.ts",
+          "m4-overlay.spec.ts",
+          "m6-mainpath.spec.ts",
+          "p2-navigation.spec.ts",
+          "p3-instances.spec.ts",
+          "p3-b0.spec.ts",
+          "p3-idle.spec.ts",
+          "p3-memory.spec.ts",
+          "p3-endurance.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "property-workbench",
+        "name": "property-workbench",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "p3-restart.spec.ts",
+          "m3-workbench.spec.ts",
+          "m5-text.spec.ts",
+          "m5-semantics.spec.ts",
+          "m6-theme.spec.ts",
+          "m6-async.spec.ts",
+          "m6-components.spec.ts",
+          "m7-recovery.spec.ts",
+          "m8-baseline.spec.ts",
+          "m8-network.spec.ts",
+          "m8-endurance.spec.ts",
+          "p2-form.spec.ts",
+          "p2-deeplink.spec.ts",
+          "p2-workspace.spec.ts",
+          "p2-drag.spec.ts",
+          "p2-clipboard-files.spec.ts",
+          "p2-zoom.spec.ts",
+          "p2-ime.spec.ts",
+          "p3-policy.spec.ts",
+          "p3-faults.spec.ts",
+          "p3-diagnostics.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "component-catalog",
+        "name": "component-catalog",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "p3-restart.spec.ts",
+          "p2-catalog.spec.ts",
+          "p2-theme.spec.ts",
+          "p2-semantics.spec.ts",
+          "p2-i18n.spec.ts",
+          "p2-reflow.spec.ts",
+          "p2-a11y.spec.ts",
+          "p3-policy.spec.ts",
+          "catalog-inputs.spec.ts",
+          "theme-compat.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "theme-studio",
+        "name": "theme-studio",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [
+          "theme-compat.spec.ts",
+          "theme-export-runtime.spec.ts"
+        ],
+        "testMatch": [
+          "theme-*.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "theme-studio-deep",
+        "name": "theme-studio-deep",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "theme-deployment.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "theme-export",
+        "name": "theme-export",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "theme-export-runtime.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "theme-export-deep",
+        "name": "theme-export-deep",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "theme-export-runtime.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "data-workbench",
+        "name": "data-workbench",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "p3-restart.spec.ts",
+          "p3-probes.spec.ts",
+          "p3-table.spec.ts",
+          "p3-jobs.spec.ts",
+          "p3-scene.spec.ts",
+          "p3-memory.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "budget-scene",
+        "name": "budget-scene",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "p3-budget-scene.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "workbench-deep",
+        "name": "workbench-deep",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "p2-deeplink.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "deployment",
+        "name": "deployment",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "m7-deployment.spec.ts"
+        ],
+        "timeout": 120000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/browser.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "catalog-inputs.spec.ts",
+      "file": "catalog-inputs.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "number field",
+          "file": "catalog-inputs.spec.ts",
+          "line": 63,
+          "column": 6,
+          "specs": [
+            {
+              "title": "a spinbutton that announces its bounds and the application's value",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "component-catalog",
+                  "projectName": "component-catalog",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 7907,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-13T04:34:36.394Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8446ccba481245a7b1c0-3dc7d82594af1720b128",
+              "file": "catalog-inputs.spec.ts",
+              "line": 67,
+              "column": 9
+            },
+            {
+              "title": "a focused draft is kept while the application refuses it, and leaving settles on what it holds",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "component-catalog",
+                  "projectName": "component-catalog",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 656,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-13T04:34:44.457Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8446ccba481245a7b1c0-7aa2d6b394c828d4464f",
+              "file": "catalog-inputs.spec.ts",
+              "line": 78,
+              "column": 9
+            },
+            {
+              "title": "text that is not a number yet is invalid, asks for nothing, and Enter puts the value back",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "component-catalog",
+                  "projectName": "component-catalog",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 645,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-13T04:34:45.119Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8446ccba481245a7b1c0-506b23d89027a851e4a7",
+              "file": "catalog-inputs.spec.ts",
+              "line": 100,
+              "column": 9
+            },
+            {
+              "title": "Escape drops the draft and asks for its previews back",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "component-catalog",
+                  "projectName": "component-catalog",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 627,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-13T04:34:45.770Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8446ccba481245a7b1c0-7a1690f270b5b8afca19",
+              "file": "catalog-inputs.spec.ts",
+              "line": 117,
+              "column": 9
+            },
+            {
+              "title": "an untouched field follows a change made elsewhere, and a touched one outlasts it",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "component-catalog",
+                  "projectName": "component-catalog",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 676,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-13T04:34:46.402Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8446ccba481245a7b1c0-0d2d1d3a36e516b8d2f9",
+              "file": "catalog-inputs.spec.ts",
+              "line": 134,
+              "column": 9
+            },
+            {
+              "title": "the arrows ask for a step from the application's value, and the application clamps",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "component-catalog",
+                  "projectName": "component-catalog",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 660,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-13T04:34:47.086Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8446ccba481245a7b1c0-f280e99347f0192ad74c",
+              "file": "catalog-inputs.spec.ts",
+              "line": 155,
+              "column": 9
+            },
+            {
+              "title": "disabled and read-only fields ask for nothing",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "component-catalog",
+                  "projectName": "component-catalog",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 630,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-13T04:34:47.751Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8446ccba481245a7b1c0-cab0160d674c15377e3c",
+              "file": "catalog-inputs.spec.ts",
+              "line": 190,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "colour field",
+          "file": "catalog-inputs.spec.ts",
+          "line": 207,
+          "column": 6,
+          "specs": [
+            {
+              "title": "#rgb and #rrggbb are colours, and the swatch paints what the application holds",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "component-catalog",
+                  "projectName": "component-catalog",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1028,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-13T04:34:48.386Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8446ccba481245a7b1c0-0386acb82778326bc818",
+              "file": "catalog-inputs.spec.ts",
+              "line": 212,
+              "column": 9
+            },
+            {
+              "title": "an opacity is a colour only where the field allows one",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "component-catalog",
+                  "projectName": "component-catalog",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1011,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-13T04:34:49.419Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8446ccba481245a7b1c0-158d792346542f9a26fa",
+              "file": "catalog-inputs.spec.ts",
+              "line": 235,
+              "column": 9
+            },
+            {
+              "title": "swatches keep following values after the example is reset and reopened",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "component-catalog",
+                  "projectName": "component-catalog",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1410,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-13T04:34:50.436Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8446ccba481245a7b1c0-3893b1ed963d1f017501",
+              "file": "catalog-inputs.spec.ts",
+              "line": 259,
+              "column": 9
+            },
+            {
+              "title": "a draft on its way to a colour is kept, Escape takes previews back, and an untouched field follows elsewhere",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "component-catalog",
+                  "projectName": "component-catalog",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 678,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-13T04:34:51.852Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8446ccba481245a7b1c0-22546a30c1f64425ec0b",
+              "file": "catalog-inputs.spec.ts",
+              "line": 277,
+              "column": 9
+            },
+            {
+              "title": "disabled and read-only fields ask for nothing",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "component-catalog",
+                  "projectName": "component-catalog",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 648,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-13T04:34:52.534Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8446ccba481245a7b1c0-c5bb5ff67ab2804101ce",
+              "file": "catalog-inputs.spec.ts",
+              "line": 299,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "toggle group",
+          "file": "catalog-inputs.spec.ts",
+          "line": 313,
+          "column": 6,
+          "specs": [
+            {
+              "title": "pressed is the application's: one at a time, and it keeps one pressed",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "component-catalog",
+                  "projectName": "component-catalog",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 687,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-13T04:34:53.191Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8446ccba481245a7b1c0-f02f7c72cec22d8c4ba3",
+              "file": "catalog-inputs.spec.ts",
+              "line": 314,
+              "column": 9
+            },
+            {
+              "title": "a group is one tab stop, and the arrows rove within it over what is disabled",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "component-catalog",
+                  "projectName": "component-catalog",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 663,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-13T04:34:53.883Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8446ccba481245a7b1c0-7baad5eb8ef0e238986d",
+              "file": "catalog-inputs.spec.ts",
+              "line": 333,
+              "column": 9
+            },
+            {
+              "title": "a disabled group presses nothing",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "component-catalog",
+                  "projectName": "component-catalog",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 616,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-13T04:34:54.551Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8446ccba481245a7b1c0-54f233bb4cbe00356a3e",
+              "file": "catalog-inputs.spec.ts",
+              "line": 378,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "toast",
+          "file": "catalog-inputs.spec.ts",
+          "line": 388,
+          "column": 6,
+          "specs": [
+            {
+              "title": "a message is shown in a polite status region, and a newer one replaces it",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "component-catalog",
+                  "projectName": "component-catalog",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1074,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-13T04:34:55.172Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8446ccba481245a7b1c0-3c42b7203e71f3f81df9",
+              "file": "catalog-inputs.spec.ts",
+              "line": 392,
+              "column": 9
+            },
+            {
+              "title": "a message goes on its own, a replaced one's timer leaves its successor, and dismiss takes it sooner",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "component-catalog",
+                  "projectName": "component-catalog",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3896,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-13T04:34:56.251Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8446ccba481245a7b1c0-5d9a5cfda25bbbd34892",
+              "file": "catalog-inputs.spec.ts",
+              "line": 418,
+              "column": 9
+            },
+            {
+              "title": "a message is not a layer: Escape leaves it, and a modal leaves it reachable",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "component-catalog",
+                  "projectName": "component-catalog",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 729,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-13T04:35:00.151Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8446ccba481245a7b1c0-60d18dbda18c1a687c85",
+              "file": "catalog-inputs.spec.ts",
+              "line": 447,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "menu: headings, separators, shortcuts, and staying in view",
+          "file": "catalog-inputs.spec.ts",
+          "line": 464,
+          "column": 6,
+          "specs": [
+            {
+              "title": "headings name the groups, a separator divides them, and the keyboard passes over both",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "component-catalog",
+                  "projectName": "component-catalog",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 693,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-13T04:35:00.886Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8446ccba481245a7b1c0-ddc6383218e44cd9c183",
+              "file": "catalog-inputs.spec.ts",
+              "line": 467,
+              "column": 9
+            },
+            {
+              "title": "a shortcut is shown beside its command, announced, and the page answers it",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "component-catalog",
+                  "projectName": "component-catalog",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 662,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-13T04:35:01.584Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8446ccba481245a7b1c0-ec52b75feb3d93287acd",
+              "file": "catalog-inputs.spec.ts",
+              "line": 497,
+              "column": 9
+            },
+            {
+              "title": "a context menu opens at the point, and stays inside the viewport near its corner",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "component-catalog",
+                  "projectName": "component-catalog",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 663,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-13T04:35:02.251Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8446ccba481245a7b1c0-de9466097ff7cf8c091d",
+              "file": "catalog-inputs.spec.ts",
+              "line": 514,
+              "column": 9
+            },
+            {
+              "title": "a menu with no room under its trigger opens over it",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "component-catalog",
+                  "projectName": "component-catalog",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 679,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-13T04:35:02.918Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8446ccba481245a7b1c0-eba6df5f838985412b2e",
+              "file": "catalog-inputs.spec.ts",
+              "line": 552,
+              "column": 9
+            },
+            {
+              "title": "the keyboard opens the context menu against the box it is in",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "component-catalog",
+                  "projectName": "component-catalog",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 644,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-13T04:35:03.602Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8446ccba481245a7b1c0-9079d224d13f029b046e",
+              "file": "catalog-inputs.spec.ts",
+              "line": 568,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "dialog: the title bar",
+          "file": "catalog-inputs.spec.ts",
+          "line": 584,
+          "column": 6,
+          "specs": [
+            {
+              "title": "the close button is named in the scope's language, and it and Escape make one request",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "component-catalog",
+                  "projectName": "component-catalog",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 811,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-13T04:35:04.252Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8446ccba481245a7b1c0-d9034849215085fd6ee8",
+              "file": "catalog-inputs.spec.ts",
+              "line": 585,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "light and dark",
+          "file": "catalog-inputs.spec.ts",
+          "line": 622,
+          "column": 6,
+          "specs": [
+            {
+              "title": "the new controls draw from the scope's tokens in both themes",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "component-catalog",
+                  "projectName": "component-catalog",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1229,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-13T04:35:05.068Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8446ccba481245a7b1c0-5190fe86639a7ae2e21b",
+              "file": "catalog-inputs.spec.ts",
+              "line": 623,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "p2-a11y.spec.ts",
+      "file": "p2-a11y.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "M8: the accessibility tree, and the way out of it",
+          "file": "p2-a11y.spec.ts",
+          "line": 42,
+          "column": 6,
+          "specs": [
+            {
+              "title": "every control a person can operate has something to call it",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "component-catalog",
+                  "projectName": "component-catalog",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 589,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-13T04:35:06.305Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8e2b690ec03d126e13b2-46aa7cb62e16f43af706",
+              "file": "p2-a11y.spec.ts",
+              "line": 43,
+              "column": 9
+            },
+            {
+              "title": "every category is a different thing to say",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "component-catalog",
+                  "projectName": "component-catalog",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 580,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-13T04:35:06.899Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8e2b690ec03d126e13b2-e459fb9f4bc67c0b0c43",
+              "file": "p2-a11y.spec.ts",
+              "line": 64,
+              "column": 9
+            },
+            {
+              "title": "tabbing forward from the top comes back round rather than sticking",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "component-catalog",
+                  "projectName": "component-catalog",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 631,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-13T04:35:07.484Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8e2b690ec03d126e13b2-d99391decc0114d2e91f",
+              "file": "p2-a11y.spec.ts",
+              "line": 73,
+              "column": 9
+            },
+            {
+              "title": "an open layer keeps the keyboard, and Escape gives it back",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "component-catalog",
+                  "projectName": "component-catalog",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 659,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-13T04:35:08.120Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8e2b690ec03d126e13b2-d13a2e9b2aac6558c782",
+              "file": "p2-a11y.spec.ts",
+              "line": 109,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "p2-catalog.spec.ts",
+      "file": "p2-catalog.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "M1 V1: the catalogue starts under the policy it will be deployed with",
+          "file": "p2-catalog.spec.ts",
+          "line": 32,
+          "column": 6,
+          "specs": [
+            {
+              "title": "boots with no policy violation and draws its region",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "component-catalog",
+                  "projectName": "component-catalog",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 8196,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-13T04:35:08.791Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b4082576e193f5d9883f-15288c25ee804259243c",
+              "file": "p2-catalog.spec.ts",
+              "line": 37,
+              "column": 9
+            },
+            {
+              "title": "the product contains no inline script, no inline style and no dynamic JS",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "component-catalog",
+                  "projectName": "component-catalog",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 17,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-13T04:35:16.995Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b4082576e193f5d9883f-f70260217103bc896eb3",
+              "file": "p2-catalog.spec.ts",
+              "line": 50,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "M1 V1: one theme, both halves",
+          "file": "p2-catalog.spec.ts",
+          "line": 66,
+          "column": 6,
+          "specs": [
+            {
+              "title": "a switch moves the panel and the region together, from either side",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "component-catalog",
+                  "projectName": "component-catalog",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1294,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-13T04:35:17.020Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b4082576e193f5d9883f-403c88057c42a7c71fa1",
+              "file": "p2-catalog.spec.ts",
+              "line": 67,
+              "column": 9
+            },
+            {
+              "title": "the host page keeps its own appearance",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "component-catalog",
+                  "projectName": "component-catalog",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1159,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-13T04:35:18.322Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b4082576e193f5d9883f-9f6eb485867c1c54ae75",
+              "file": "p2-catalog.spec.ts",
+              "line": 108,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "M1: the catalogue answers for every category",
+          "file": "p2-catalog.spec.ts",
+          "line": 125,
+          "column": 6,
+          "specs": [
+            {
+              "title": "every category has a page, and the status table has a row for each",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "component-catalog",
+                  "projectName": "component-catalog",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1344,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-13T04:35:19.487Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b4082576e193f5d9883f-36d233fbe46829c61b6e",
+              "file": "p2-catalog.spec.ts",
+              "line": 126,
+              "column": 9
+            },
+            {
+              "title": "a caller's class replaces the component's own class of the same kind",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "component-catalog",
+                  "projectName": "component-catalog",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1147,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-13T04:35:20.838Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b4082576e193f5d9883f-09ce115fac40f146551b",
+              "file": "p2-catalog.spec.ts",
+              "line": 145,
+              "column": 9
+            },
+            {
+              "title": "the language switch changes the words and nothing else",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "component-catalog",
+                  "projectName": "component-catalog",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1170,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-13T04:35:21.991Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b4082576e193f5d9883f-4bf91f91a4ac78e78f1b",
+              "file": "p2-catalog.spec.ts",
+              "line": 158,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "M1 V1: the host page's own controls are not ours",
+          "file": "p2-catalog.spec.ts",
+          "line": 174,
+          "column": 6,
+          "specs": [
+            {
+              "title": "they compute the same with our stylesheets as without them",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "component-catalog",
+                  "projectName": "component-catalog",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1175,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-13T04:35:23.169Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b4082576e193f5d9883f-339d95a708b23e5f9d42",
+              "file": "p2-catalog.spec.ts",
+              "line": 214,
+              "column": 9
+            },
+            {
+              "title": "a host `dark` class does not darken a scope, and two scopes keep their own themes",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "component-catalog",
+                  "projectName": "component-catalog",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 8628,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-13T04:35:24.349Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b4082576e193f5d9883f-7428b5a72c5e81ebc1cd",
+              "file": "p2-catalog.spec.ts",
+              "line": 244,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "M2 V2: a component per category",
+          "file": "p2-catalog.spec.ts",
+          "line": 280,
+          "column": 6,
+          "specs": [
+            {
+              "title": "every category shows a working example of itself",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "component-catalog",
+                  "projectName": "component-catalog",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1784,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-13T04:35:32.982Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b4082576e193f5d9883f-5f10f6aec7415b5b8ad1",
+              "file": "p2-catalog.spec.ts",
+              "line": 324,
+              "column": 9
+            },
+            {
+              "title": "a disabled control asks for nothing and a read-only one puts itself back",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "component-catalog",
+                  "projectName": "component-catalog",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 773,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-13T04:35:34.771Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b4082576e193f5d9883f-97541afb772766f3b8c2",
+              "file": "p2-catalog.spec.ts",
+              "line": 338,
+              "column": 9
+            },
+            {
+              "title": "a read-only field keeps the application's value, not the keystrokes",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "component-catalog",
+                  "projectName": "component-catalog",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 632,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-13T04:35:35.550Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b4082576e193f5d9883f-8dee9f714a69538c9fd9",
+              "file": "p2-catalog.spec.ts",
+              "line": 367,
+              "column": 9
+            },
+            {
+              "title": "one value, two halves: the region's control moves the DOM's",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "component-catalog",
+                  "projectName": "component-catalog",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 675,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-13T04:35:36.187Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b4082576e193f5d9883f-1fc14ab58fc35909141e",
+              "file": "p2-catalog.spec.ts",
+              "line": 400,
+              "column": 9
+            },
+            {
+              "title": "the state matrix shows one value in each of its states",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "component-catalog",
+                  "projectName": "component-catalog",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 645,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-13T04:35:36.867Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b4082576e193f5d9883f-f40573371ccc9789321a",
+              "file": "p2-catalog.spec.ts",
+              "line": 431,
+              "column": 9
+            },
+            {
+              "title": "five kinds of component make one interface",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "component-catalog",
+                  "projectName": "component-catalog",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 664,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-13T04:35:37.517Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b4082576e193f5d9883f-c633ca2f3642d0ff9a29",
+              "file": "p2-catalog.spec.ts",
+              "line": 447,
+              "column": 9
+            },
+            {
+              "title": "the region draws a control for every category it claims one for",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "component-catalog",
+                  "projectName": "component-catalog",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 950,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-13T04:35:38.186Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b4082576e193f5d9883f-794e1c59358f637cb763",
+              "file": "p2-catalog.spec.ts",
+              "line": 475,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "a reset is as good as a load",
+          "file": "p2-catalog.spec.ts",
+          "line": 513,
+          "column": 6,
+          "specs": [
+            {
+              "title": "the page after a reset is the page after a load",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 240000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "component-catalog",
+                  "projectName": "component-catalog",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 26503,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-13T04:35:39.141Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b4082576e193f5d9883f-b7c9c402a521eb212bb2",
+              "file": "p2-catalog.spec.ts",
+              "line": 537,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "p2-i18n.spec.ts",
+      "file": "p2-i18n.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "M7 V10: the SDK's own words follow the language",
+          "file": "p2-i18n.spec.ts",
+          "line": 50,
+          "column": 6,
+          "specs": [
+            {
+              "title": "every message the SDK ships is on the page, in both languages",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "component-catalog",
+                  "projectName": "component-catalog",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 5436,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-13T04:36:05.658Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "7bd04436887e3c0b5568-539d1b83d199f540dc1e",
+              "file": "p2-i18n.spec.ts",
+              "line": 53,
+              "column": 9
+            },
+            {
+              "title": "twenty switches leave the page saying the same thing it started with",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "component-catalog",
+                  "projectName": "component-catalog",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4574,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-13T04:36:11.102Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "7bd04436887e3c0b5568-70e4951849b04d7b1093",
+              "file": "p2-i18n.spec.ts",
+              "line": 75,
+              "column": 9
+            },
+            {
+              "title": "numbers and dates are the browser's, in the reader's language",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "component-catalog",
+                  "projectName": "component-catalog",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4525,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-13T04:36:15.684Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "7bd04436887e3c0b5568-8268984dc36e1dbaa8a4",
+              "file": "p2-i18n.spec.ts",
+              "line": 89,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "M7 V10: twenty texts, drawn twice",
+          "file": "p2-i18n.spec.ts",
+          "line": 111,
+          "column": 6,
+          "specs": [
+            {
+              "title": "the browser drew all twenty, and none of them is empty",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "component-catalog",
+                  "projectName": "component-catalog",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4493,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-13T04:36:20.216Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "7bd04436887e3c0b5568-854b6169a4653894bdc4",
+              "file": "p2-i18n.spec.ts",
+              "line": 114,
+              "column": 9
+            },
+            {
+              "title": "a right-to-left sample says so, rather than leaving it to be guessed",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "component-catalog",
+                  "projectName": "component-catalog",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4362,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-13T04:36:24.714Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "7bd04436887e3c0b5568-58902be9ee0e833d4fe8",
+              "file": "p2-i18n.spec.ts",
+              "line": 122,
+              "column": 9
+            },
+            {
+              "title": "every sample actually put marks on the screen",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "component-catalog",
+                  "projectName": "component-catalog",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4911,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-13T04:36:29.081Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "7bd04436887e3c0b5568-1261c99e7a2511a70bc4",
+              "file": "p2-i18n.spec.ts",
+              "line": 131,
+              "column": 9
+            },
+            {
+              "title": "the families the samples need are the ones the browser loaded",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "component-catalog",
+                  "projectName": "component-catalog",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4828,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-13T04:36:33.998Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "7bd04436887e3c0b5568-fcfdbbd84d32fa2dd130",
+              "file": "p2-i18n.spec.ts",
+              "line": 174,
+              "column": 9
+            },
+            {
+              "title": "the region drew all twenty as well",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "component-catalog",
+                  "projectName": "component-catalog",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4296,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-13T04:36:38.831Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "7bd04436887e3c0b5568-dcead2d00ab95704d65d",
+              "file": "p2-i18n.spec.ts",
+              "line": 194,
+              "column": 9
+            },
+            {
+              "title": "a font that never arrives costs glyphs, and says so",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "component-catalog",
+                  "projectName": "component-catalog",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4550,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-13T04:36:43.134Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "7bd04436887e3c0b5568-fe9ecb3a4bc271651127",
+              "file": "p2-i18n.spec.ts",
+              "line": 200,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "p2-reflow.spec.ts",
+      "file": "p2-reflow.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "M8: the catalogue reflows at 400%",
+          "file": "p2-reflow.spec.ts",
+          "line": 14,
+          "column": 6,
+          "specs": [
+            {
+              "title": "no two-dimensional scrolling at 320 CSS pixels",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "component-catalog",
+                  "projectName": "component-catalog",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 606,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-13T04:36:47.693Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "23dcce0364b51b8758db-9bdb52af305e1ecc010e",
+              "file": "p2-reflow.spec.ts",
+              "line": 15,
+              "column": 9
+            },
+            {
+              "title": "every category is still reachable, and the page still switches",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "component-catalog",
+                  "projectName": "component-catalog",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4809,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-13T04:36:48.304Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "23dcce0364b51b8758db-b25653a5d0d0b0afa874",
+              "file": "p2-reflow.spec.ts",
+              "line": 46,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "p2-semantics.spec.ts",
+      "file": "p2-semantics.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "M2 V4: name, role, value, state",
+          "file": "p2-semantics.spec.ts",
+          "line": 51,
+          "column": 6,
+          "specs": [
+            {
+              "title": "twenty-four things a reader can find by what they are and what they are called",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "component-catalog",
+                  "projectName": "component-catalog",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1422,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-13T04:36:53.123Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "5e62489c0867e7bfb740-297cc7301c0d0455e9bf",
+              "file": "p2-semantics.spec.ts",
+              "line": 52,
+              "column": 9
+            },
+            {
+              "title": "a control's value and state are in the tree, not only in the pixels",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "component-catalog",
+                  "projectName": "component-catalog",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 729,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-13T04:36:54.550Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "5e62489c0867e7bfb740-6a0aa2957e1f51690625",
+              "file": "p2-semantics.spec.ts",
+              "line": 62,
+              "column": 9
+            },
+            {
+              "title": "the arrows move within a tab strip and the strip is one tab stop",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "component-catalog",
+                  "projectName": "component-catalog",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 676,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-13T04:36:55.284Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "5e62489c0867e7bfb740-1ff7d5464f1c0aa0df07",
+              "file": "p2-semantics.spec.ts",
+              "line": 85,
+              "column": 9
+            },
+            {
+              "title": "a menu takes the keyboard, moves within itself, and gives it back",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "component-catalog",
+                  "projectName": "component-catalog",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 711,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-13T04:36:55.965Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "5e62489c0867e7bfb740-bed87137ba60c1cbb839",
+              "file": "p2-semantics.spec.ts",
+              "line": 109,
+              "column": 9
+            },
+            {
+              "title": "a modal dialog is named by its own title and hands focus back",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "component-catalog",
+                  "projectName": "component-catalog",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 662,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-13T04:36:56.682Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "5e62489c0867e7bfb740-e3460ac9894fdd795ce2",
+              "file": "p2-semantics.spec.ts",
+              "line": 140,
+              "column": 9
+            },
+            {
+              "title": "a listbox says which option is current and Enter chooses it",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "component-catalog",
+                  "projectName": "component-catalog",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 712,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-13T04:36:57.349Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "5e62489c0867e7bfb740-4d599c30b3a1b401f4e6",
+              "file": "p2-semantics.spec.ts",
+              "line": 155,
+              "column": 9
+            },
+            {
+              "title": "a tooltip describes the control it belongs to, on focus as well as hover",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "component-catalog",
+                  "projectName": "component-catalog",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 744,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-13T04:36:58.067Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "5e62489c0867e7bfb740-c472f2f263bd9d6b439f",
+              "file": "p2-semantics.spec.ts",
+              "line": 178,
+              "column": 9
+            },
+            {
+              "title": "thirty rounds of theme and size later, everything is still where it says",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "component-catalog",
+                  "projectName": "component-catalog",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1595,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-13T04:36:58.816Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "5e62489c0867e7bfb740-bc0c9511b1fcfe382e7a",
+              "file": "p2-semantics.spec.ts",
+              "line": 204,
+              "column": 9
+            },
+            {
+              "title": "something that is not there fails quickly rather than hanging",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "component-catalog",
+                  "projectName": "component-catalog",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 5578,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-13T04:37:00.416Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "5e62489c0867e7bfb740-711a09bbe1799fc65acf",
+              "file": "p2-semantics.spec.ts",
+              "line": 228,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "p2-theme.spec.ts",
+      "file": "p2-theme.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "M2 V3: a theme both halves adopt",
+          "file": "p2-theme.spec.ts",
+          "line": 51,
+          "column": 6,
+          "specs": [
+            {
+              "title": "every switch is in force two frames after the click",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "component-catalog",
+                  "projectName": "component-catalog",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 789,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-13T04:37:06.004Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "43f422ea906711c13789-03b1c0662040efbfcdc8",
+              "file": "p2-theme.spec.ts",
+              "line": 53,
+              "column": 9
+            },
+            {
+              "title": "the region's pixels move with the panel, not after it",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "component-catalog",
+                  "projectName": "component-catalog",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 810,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-13T04:37:06.800Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "43f422ea906711c13789-cacda43fddc2bd998957",
+              "file": "p2-theme.spec.ts",
+              "line": 75,
+              "column": 9
+            },
+            {
+              "title": "a control's four states are four different things to look at",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "component-catalog",
+                  "projectName": "component-catalog",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 675,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-13T04:37:07.618Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "43f422ea906711c13789-fdb9c519da9cabce8acd",
+              "file": "p2-theme.spec.ts",
+              "line": 93,
+              "column": 9
+            },
+            {
+              "title": "less motion is less motion, in the stylesheet and in the region",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "component-catalog",
+                  "projectName": "component-catalog",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 681,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-13T04:37:08.299Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "43f422ea906711c13789-9db51c9110ed81c48e7e",
+              "file": "p2-theme.spec.ts",
+              "line": 139,
+              "column": 9
+            },
+            {
+              "title": "the region's spinner turns, and stops when the scope asks it to",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "component-catalog",
+                  "projectName": "component-catalog",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 958,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-13T04:37:08.986Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "43f422ea906711c13789-811522cdda03a814a3c2",
+              "file": "p2-theme.spec.ts",
+              "line": 170,
+              "column": 9
+            },
+            {
+              "title": "the host page is not part of the scope's theme",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "component-catalog",
+                  "projectName": "component-catalog",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 615,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-13T04:37:09.950Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "43f422ea906711c13789-d4a3c0c47aabffb02340",
+              "file": "p2-theme.spec.ts",
+              "line": 204,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "theme-compat.spec.ts",
+      "file": "theme-compat.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "one Tailwind product retains legacy geometry and elevation beside v4",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "component-catalog",
+              "projectName": "component-catalog",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1554,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-13T04:37:10.574Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "93dc64bef8cbbd207ee8-6e65f0c3aca0f6f32213",
+          "file": "theme-compat.spec.ts",
+          "line": 6,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-13T04:34:34.300Z",
+    "duration": 158056.112,
+    "expected": 73,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

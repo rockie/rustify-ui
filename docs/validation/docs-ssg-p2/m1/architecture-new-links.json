@@ -1,0 +1,26 @@
+[
+  {
+    "target": "../crates/rustify-ui/src/mount.rs",
+    "exists": true
+  },
+  {
+    "target": "../crates/rustify-ui/src/id.rs",
+    "exists": true
+  },
+  {
+    "target": "../crates/rustify-ui/src/theme/provider.rs",
+    "exists": true
+  },
+  {
+    "target": "../crates/rustify-ui/src/diagnostics.rs",
+    "exists": true
+  },
+  {
+    "target": "../crates/rustify-components/src/geometry.rs",
+    "exists": true
+  },
+  {
+    "target": "../crates/rustify-components/src/data_table/view.rs",
+    "exists": true
+  }
+]

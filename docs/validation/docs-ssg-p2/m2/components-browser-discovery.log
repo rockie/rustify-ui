@@ -1,0 +1,24 @@
+npm notice run rustify-ui-browser-tests@0.1.0 npx
+npm notice run 'playwright' test -c playwright.docs.config.ts --project=components-subpath --list
+Listing tests:
+  [components-subpath] › docs-ssg/islands.spec.ts:242:1 › a page without interactive embeds loads no island JavaScript or wasm
+  [components-subpath] › docs-ssg/islands.spec.ts:250:1 › no script keeps real SSR views and both source panels readable with native controls disabled
+  [components-subpath] › docs-ssg/islands.spec.ts:288:1 › loading gates native and captured input while source controls remain usable
+  [components-subpath] › docs-ssg/islands.spec.ts:319:1 › attachment retains original SSR nodes and isolates three identical counters
+  [components-subpath] › docs-ssg/islands.spec.ts:340:1 › an asynchronous action starts after attachment with supported hydration globals
+  [components-subpath] › docs-ssg/islands.spec.ts:352:1 › client-only attachment preserves the placeholder and mounts typed props and child content
+  [components-subpath] › docs-ssg/islands.spec.ts:377:1 › static builtins need no script or wasm and retain every panel, native link and child block
+  [components-subpath] › docs-ssg/islands.spec.ts:423:1 › static tabs use unique ARIA mappings and keyboard state stays local to each peer
+  [components-subpath] › docs-ssg/islands.spec.ts:479:1 › a real callback trap restores every initial island and keeps source, navigation and reload alive
+  [components-subpath] › docs-ssg/islands.spec.ts:511:5 › islands.js load failure is terminal, preserves SSR and recovers only through Reload page
+  [components-subpath] › docs-ssg/islands.spec.ts:511:5 › app.js load failure is terminal, preserves SSR and recovers only through Reload page
+  [components-subpath] › docs-ssg/islands.spec.ts:511:5 › app_bg.wasm load failure is terminal, preserves SSR and recovers only through Reload page
+  [components-subpath] › docs-ssg/islands.spec.ts:535:1 › invalid hydration metadata releases the live native host and restores untouched SSR
+  [components-subpath] › docs-ssg/islands.spec.ts:553:1 › unsupported initial hydration globals refuse startup before wasm runs
+  [components-subpath] › docs-ssg/islands.spec.ts:568:1 › the startup deadline remains terminal when the real wasm completes late
+  [components-subpath] › docs-ssg/islands.spec.ts:593:1 › the release proxy attaches every real category, then opens floating controls with focus return
+  [components-subpath] › docs-ssg/islands.spec.ts:622:9 › 375px keeps loading, ready, failure and bounded source usable in light
+  [components-subpath] › docs-ssg/islands.spec.ts:622:9 › 200% reflow and text scaling keeps loading, ready, failure and bounded source usable in light
+  [components-subpath] › docs-ssg/islands.spec.ts:622:9 › 375px keeps loading, ready, failure and bounded source usable in dark
+  [components-subpath] › docs-ssg/islands.spec.ts:622:9 › 200% reflow and text scaling keeps loading, ready, failure and bounded source usable in dark
+Total: 20 tests in 1 file

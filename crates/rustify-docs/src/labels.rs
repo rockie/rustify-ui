@@ -46,6 +46,18 @@ pub struct Labels {
     pub task: &'static str,
     /// What `dev` adds while an author writes; `{n}` is a number.
     pub dev: DevLabels,
+    /// The interactive example's controls, outside its locked canvas.
+    pub demo: DemoLabels,
+}
+
+pub struct DemoLabels {
+    pub example: &'static str,
+    pub loading: &'static str,
+    pub failed: &'static str,
+    pub reload: &'static str,
+    pub no_script: &'static str,
+    pub function: &'static str,
+    pub full_file: &'static str,
 }
 
 /// The words of `dev`'s problem panel and of the page shown when nothing
@@ -122,6 +134,15 @@ pub const EN: Labels = Labels {
         shell_title: "The site does not build yet",
         shell_body: "Fix the problems listed and save: this page reloads by itself.",
     },
+    demo: DemoLabels {
+        example: "Interactive example",
+        loading: "Loading interactive example…",
+        failed: "This example could not start. Reload the page to try again.",
+        reload: "Reload page",
+        no_script: "Enable JavaScript to interact",
+        function: "Function",
+        full_file: "Full file",
+    },
 };
 
 pub const ZH: Labels = Labels {
@@ -172,6 +193,15 @@ pub const ZH: Labels = Labels {
         fixed: "问题已修复，页面为最新",
         shell_title: "站点暂时无法构建",
         shell_body: "修正列出的问题并保存，本页会自动刷新。",
+    },
+    demo: DemoLabels {
+        example: "交互示例",
+        loading: "正在加载交互示例…",
+        failed: "此示例暂时无法运行。重新加载页面后再试。",
+        reload: "重新加载页面",
+        no_script: "启用 JavaScript 后可操作此示例",
+        function: "函数",
+        full_file: "完整文件",
     },
 };
 

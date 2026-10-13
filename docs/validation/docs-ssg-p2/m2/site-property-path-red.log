@@ -1,0 +1,44 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling serde_path_to_error v0.1.20
+   Compiling rustify-docs v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-docs)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 4.45s
+     Running tests/site_registry.rs (target/debug/deps/site_registry-b1e3f4a38fa737f7)
+
+running 3 tests
+test invalid_generated_props_include_the_structured_field_path ... FAILED
+test invalid_nested_props_include_the_field_and_array_path ... FAILED
+test invalid_surface_demo_names_fail_the_parent_render ... ok
+
+failures:
+
+---- invalid_generated_props_include_the_structured_field_path stdout ----
+
+thread 'invalid_generated_props_include_the_structured_field_path' (37685679) panicked at crates/rustify-docs/tests/site_registry.rs:93:5:
+assertion `left == right` failed
+  left: None
+ right: Some("initial")
+
+---- invalid_nested_props_include_the_field_and_array_path stdout ----
+
+thread 'invalid_nested_props_include_the_field_and_array_path' (37685680) panicked at crates/rustify-docs/tests/site_registry.rs:122:5:
+assertion `left == right` failed
+  left: None
+ right: Some("groups[0].thresholds[1]")
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    invalid_generated_props_include_the_structured_field_path
+    invalid_nested_props_include_the_field_and_array_path
+
+test result: FAILED. 1 passed; 2 failed; 0 ignored; 0 measured; 16 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p rustify-docs --test site_registry`
+mbx[cache]: 1 hits, 0 misses, 2 not looked up; 0 B downloaded, 0 B uploaded, 27.5 MiB stored locally
+mbx[savings]: 2.1 TiB logical of old files removed while you were busy compiling other things.

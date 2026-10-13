@@ -1,0 +1,33 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-docs v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-docs)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 8.23s
+     Running tests/generate.rs (target/debug/deps/generate-de191426b58e2517)
+
+running 16 tests
+test all_default_pages_have_a_site_footer_without_optional_metadata_or_links ... ok
+test css_resource_decoding_and_entity_spans_survive_generation ... ok
+test links_anchors_images_and_repository_files_resolve_under_the_base ... ok
+test files_keep_their_fragment_and_a_class_loads_its_image_from_the_site ... ok
+test every_page_has_unique_metadata_and_the_site_files_list_what_may_be_indexed ... ok
+test a_generation_cannot_load_an_absent_file_under_its_assets_prefix ... ok
+test gfm_alerts_tables_tasks_footnotes_and_code_render_without_inline_style ... ok
+test highlighting_and_code_text_stay_out_of_the_stylesheet ... ok
+test header_links_are_on_every_page_and_mark_the_guide ... ok
+test an_island_marker_in_readable_text_does_not_load_the_island_runtime ... ok
+test the_not_found_page_works_from_any_depth ... ok
+test the_fixture_generates_without_a_problem_and_byte_for_byte_again ... ok
+test drafts_render_marked_in_dev_and_nowhere_in_production ... ok
+test home_merge_ends_at_a_close_tag_and_escapes_the_transferred_id ... ok
+test merged_home_headings_keep_their_automatic_and_explicit_targets ... ok
+test local_metadata_and_header_links_keep_their_conditions_beside_the_site_footer ... ok
+
+test result: ok. 16 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.76s
+
+mbx[cache]: 0 hits, 0 misses, 2 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: 51661 compilations retrieved with a straight face.

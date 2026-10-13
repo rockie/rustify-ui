@@ -1,0 +1,75 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling web-sys v0.3.105
+   Compiling gloo-utils v0.2.0
+   Compiling tachys v0.2.19
+   Compiling gloo-net v0.6.0
+   Compiling wasm-streams v0.5.0
+   Compiling server_fn v0.8.13
+   Compiling leptos_server v0.8.8
+   Compiling leptos_dom v0.8.8
+   Compiling leptos v0.8.22
+   Compiling rustify-ui v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui)
+   Compiling rustify-components v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-components)
+error[E0432]: unresolved imports `menu::anchor_at`, `menu::Menu`
+  --> crates/rustify-components/src/lib.rs:81:16
+   |
+81 | pub use menu::{anchor_at, Menu};
+   |                ^^^^^^^^^  ^^^^ no `Menu` in `menu`
+   |                |
+   |                no `anchor_at` in `menu`
+   |
+note: found an item that was configured out
+  --> crates/rustify-components/src/menu.rs:17:15
+   |
+16 | #[cfg(target_arch = "wasm32")]
+   |       ---------------------- the item is gated behind the `wasm32` feature
+17 | pub use dom::{anchor_at, Menu};
+   |               ^^^^^^^^^
+   = help: consider importing this variant instead:
+           crate::Category::Menu
+note: found an item that was configured out
+  --> crates/rustify-components/src/menu.rs:17:26
+   |
+16 | #[cfg(target_arch = "wasm32")]
+   |       ---------------------- the item is gated behind the `wasm32` feature
+17 | pub use dom::{anchor_at, Menu};
+   |                          ^^^^
+
+error[E0599]: no method named `container` found for reference `&ScopeRoots` in the current scope
+  --> crates/rustify-components/src/toast.rs:72:39
+   |
+72 |                         let _ = roots.container().focus();
+   |                                       ^^^^^^^^^ method not found in `&ScopeRoots`
+
+error[E0599]: no variant, associated function, or constant named `element` found for enum `Anchor` in the current scope
+   --> crates/rustify-components/src/select.rs:212:46
+    |
+212 |                     Some(element) => Anchor::element(&element.into()),
+    |                                              ^^^^^^^ variant, associated function, or constant not found in `Anchor`
+
+error[E0599]: no variant, associated function, or constant named `element` found for enum `Anchor` in the current scope
+  --> crates/rustify-components/src/tooltip.rs:60:34
+   |
+60 |         Some(element) => Anchor::element(&element.into()),
+   |                                  ^^^^^^^ variant, associated function, or constant not found in `Anchor`
+
+warning: unused variable: `element`
+   --> crates/rustify-components/src/data_table/view.rs:176:18
+    |
+176 |         let Some(element) = scroller.get() else {
+    |                  ^^^^^^^ help: if this is intentional, prefix it with an underscore: `_element`
+    |
+    = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
+
+Some errors have detailed explanations: E0432, E0599.
+For more information about an error, try `rustc --explain E0432`.
+warning: `rustify-components` (lib test) generated 1 warning
+error: could not compile `rustify-components` (lib test) due to 4 previous errors; 1 warning emitted
+mbx[cache]: 0 hits, 0 misses, 10 not looked up, 1 bypassed; 0 B downloaded, 0 B uploaded, 102.0 MiB stored locally
+mbx[savings]: the running total stands at 6h 24m across 6790 builds. nobody is counting except the box.

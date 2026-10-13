@@ -25,13 +25,24 @@ type Docs = keyof typeof docsPorts;
 const docsProjects = Object.keys(docsPorts) as Docs[];
 const docsUrl = (name: Docs) => `http://127.0.0.1:${docsPorts[name]}${docsBases[name]}`;
 
-type Server = "dom-only" | Docs;
+const componentsPorts = { "components-root": 4195, "components-subpath": 4196, "components-meta": 4197 } as const;
+type Components = keyof typeof componentsPorts;
+const componentsProjects = Object.keys(componentsPorts) as Components[];
+const componentsBase = (name: Components) => name === "components-root" ? "/" : "/rustify-ui/";
+const componentsUrl = (name: Components) => `http://127.0.0.1:${componentsPorts[name]}${componentsBase(name)}`;
+
+type Server = "dom-only" | "dom-hydrate" | Docs | Components;
 
 const serversOf: Record<string, Server[]> = {
     "dom-only": ["dom-only"],
+    "dom-hydrate": ["dom-hydrate"],
     "docs-root": ["docs-root"],
     "docs-subpath": ["docs-subpath"],
     "docs-meta": ["docs-meta"],
+    "components-root": ["components-root"],
+    "components-subpath": ["components-subpath"],
+    "components-meta": ["components-meta"],
+    "components-webkit": ["components-subpath"],
     // Early engine regressions only: Playwright's Firefox and WebKit builds
     // are not the stable Firefox or Safari a reader runs (plan §9.3).
     "docs-firefox": ["docs-subpath"],
@@ -81,24 +92,40 @@ export default defineConfig({
         {
             name: "dom-only",
             testMatch: ["dom-only/**/*.spec.ts"],
+            testIgnore: ["dom-only/hydration.spec.ts"],
             use: { baseURL: `http://127.0.0.1:${domOnlyPort}/` },
+        },
+        {
+            name: "dom-hydrate",
+            testMatch: ["dom-only/hydration.spec.ts"],
+            use: { baseURL: "http://127.0.0.1:4194/" },
         },
         ...docsProjects.map((name) => ({
             name,
             testMatch: ["docs-ssg/**/*.spec.ts"],
-            testIgnore: ["docs-ssg/dev*.spec.ts"],
+            testIgnore: ["docs-ssg/dev*.spec.ts", "docs-ssg/islands.spec.ts", "docs-ssg/custom.spec.ts", "docs-ssg/official.spec.ts"],
             use: { baseURL: docsUrl(name) },
         })),
+        ...componentsProjects.map((name) => ({
+            name,
+            testMatch: ["docs-ssg/islands.spec.ts", "docs-ssg/custom.spec.ts"],
+            use: { baseURL: componentsUrl(name) },
+        })),
+        {
+            name: "components-webkit",
+            testMatch: ["docs-ssg/islands.spec.ts", "docs-ssg/custom.spec.ts"],
+            use: { ...devices["Desktop Safari"], baseURL: componentsUrl("components-subpath"), launchOptions: {} },
+        },
         {
             name: "docs-firefox",
             testMatch: ["docs-ssg/**/*.spec.ts"],
-            testIgnore: ["docs-ssg/dev*.spec.ts"],
+            testIgnore: ["docs-ssg/dev*.spec.ts", "docs-ssg/islands.spec.ts", "docs-ssg/custom.spec.ts", "docs-ssg/official.spec.ts"],
             use: { ...devices["Desktop Firefox"], baseURL: docsUrl("docs-subpath"), launchOptions: {} },
         },
         {
             name: "docs-webkit",
             testMatch: ["docs-ssg/**/*.spec.ts"],
-            testIgnore: ["docs-ssg/dev*.spec.ts"],
+            testIgnore: ["docs-ssg/dev*.spec.ts", "docs-ssg/islands.spec.ts", "docs-ssg/custom.spec.ts", "docs-ssg/official.spec.ts"],
             use: { ...devices["Desktop Safari"], baseURL: docsUrl("docs-subpath"), launchOptions: {} },
         },
         {
@@ -109,9 +136,11 @@ export default defineConfig({
     webServer: (
         [
             ["dom-only", `${xtask} serve --dir ${domOnlyDir} --port ${domOnlyPort}`, `http://127.0.0.1:${domOnlyPort}/`],
+            ["dom-hydrate", `${xtask} serve --dir target/dom/hydration --port 4194`, "http://127.0.0.1:4194/"],
             ...docsProjects.map(
                 (name) => [name, `sh tests/docs-ssg/serve.sh ${docsVariants[name]} ${docsPorts[name]}`, docsUrl(name)] as const,
             ),
+            ...componentsProjects.map((name) => [name, `sh tests/docs-ssg/serve.sh components ${name === "components-root" ? "root" : name === "components-meta" ? "meta" : "subpath"} ${componentsPorts[name]}`, componentsUrl(name)] as const),
         ] as const
     )
         .filter(([server]) => wanted(server))

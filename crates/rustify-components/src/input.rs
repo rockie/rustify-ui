@@ -101,6 +101,9 @@ pub fn TextField(
                 (!described_by.is_empty()).then_some(described_by)
             }
             aria-readonly=move || read_only.get().then_some("true")
+            value=move || value.get()
+            disabled=move || disabled.get()
+            readonly=move || read_only.get()
             prop:value=move || value.get()
             prop:disabled=move || disabled.get()
             prop:readOnly=move || read_only.get()

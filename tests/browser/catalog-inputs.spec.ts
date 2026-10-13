@@ -256,6 +256,24 @@ test.describe("colour field", () => {
         ]);
     });
 
+    test("swatches keep following values after the example is reset and reopened", async ({ page }) => {
+        await open(page, "color-field");
+        await colour(page).fill("#ABC");
+        await page.keyboard.press("Enter");
+        await expect.poll(() => computed(page.getByTestId("default-colour-swatch"), "background-color"))
+            .toBe(rgb("#aabbcc"));
+
+        await page.evaluate(() => window.__component_catalog.reset());
+        await open(page, "color-field");
+        await expect.poll(() => computed(page.getByTestId("default-colour-swatch"), "background-color"))
+            .toBe(rgb("#1570ef"));
+        await tint(page).fill("#1f6feb80");
+        await page.keyboard.press("Tab");
+        expect(await snapshot(page)).toMatchObject({ colour: "#1570ef", tint: "#1f6feb80" });
+        await expect.poll(() => computed(page.getByTestId("default-tint-swatch"), "background-color"))
+            .toMatch(/^rgba\(31, 111, 235, 0\.5\d*\)$/);
+    });
+
     test("a draft on its way to a colour is kept, Escape takes previews back, and an untouched field follows elsewhere", async ({
         page,
     }) => {

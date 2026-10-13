@@ -52,6 +52,7 @@ pub fn FilePicker(
                 let accept = accept.get();
                 (!accept.is_empty()).then_some(accept)
             }
+            disabled=move || disabled.get()
             prop:disabled=move || disabled.get()
             on:change:target=move |event| {
                 let input = event.target();
@@ -60,5 +61,25 @@ pub fn FilePicker(
                 input.set_value("");
             }
         />
+    }
+}
+
+#[cfg(all(test, feature = "ssr", not(target_arch = "wasm32")))]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn host_rendering_preserves_a_disabled_file_input() {
+        let owner = Owner::new();
+        let html = owner.with(|| {
+            view! {
+                <FilePicker on_files=|_| {} accept=".json" aria_label="Import" disabled=true />
+            }
+            .to_html()
+        });
+        assert!(
+            html.contains(" disabled ") || html.contains(" disabled>"),
+            "{html}"
+        );
     }
 }

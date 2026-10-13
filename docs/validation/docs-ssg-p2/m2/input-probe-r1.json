@@ -1,0 +1,21 @@
+{
+  "scope": "rui-island-cf4d2b57dd-0-catalog-1",
+  "before": {
+    "number": "-3.25",
+    "result": "-3.25",
+    "color": "#1a2b3c80",
+    "swatch": {
+      "html": "<span data-name=\"ColorSwatch\" data-testid=\"rui-island-cf4d2b57dd-0-catalog-1-color-swatch\" aria-hidden=\"true\" class=\"size-9 shrink-0 rounded-md border border-border rui-island-cf4d2b57dd-0-geometry-23\"></span>",
+      "color": "rgba(26, 43, 60, 0.5)"
+    }
+  },
+  "after": {
+    "number": "6.75",
+    "result": "6.75",
+    "color": "#abc123ff",
+    "swatch": {
+      "html": "<span data-name=\"ColorSwatch\" data-testid=\"rui-island-cf4d2b57dd-0-catalog-1-color-swatch\" aria-hidden=\"true\" class=\"size-9 shrink-0 rounded-md border border-border rui-island-cf4d2b57dd-0-geometry-23\"></span>",
+      "color": "rgb(171, 193, 35)"
+    }
+  }
+}

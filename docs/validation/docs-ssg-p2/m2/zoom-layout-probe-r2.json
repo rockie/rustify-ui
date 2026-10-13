@@ -1,0 +1,183 @@
+{
+  "transitioning": [
+    {
+      "property": "opacity",
+      "duration": 150
+    },
+    {
+      "property": "column-gap",
+      "duration": 150
+    },
+    {
+      "property": "font-size",
+      "duration": 150
+    },
+    {
+      "property": "height",
+      "duration": 150
+    },
+    {
+      "property": "padding-bottom",
+      "duration": 150
+    },
+    {
+      "property": "padding-left",
+      "duration": 150
+    },
+    {
+      "property": "padding-right",
+      "duration": 150
+    },
+    {
+      "property": "padding-top",
+      "duration": 150
+    },
+    {
+      "property": "row-gap",
+      "duration": 150
+    },
+    {
+      "property": "background-color",
+      "duration": 150
+    },
+    {
+      "property": "opacity",
+      "duration": 150
+    },
+    {
+      "property": "column-gap",
+      "duration": 150
+    },
+    {
+      "property": "font-size",
+      "duration": 150
+    },
+    {
+      "property": "height",
+      "duration": 150
+    },
+    {
+      "property": "margin-bottom",
+      "duration": 150
+    },
+    {
+      "property": "padding-bottom",
+      "duration": 150
+    },
+    {
+      "property": "padding-left",
+      "duration": 150
+    },
+    {
+      "property": "padding-right",
+      "duration": 150
+    },
+    {
+      "property": "padding-top",
+      "duration": 150
+    },
+    {
+      "property": "row-gap",
+      "duration": 150
+    },
+    {
+      "property": "opacity",
+      "duration": 150
+    },
+    {
+      "property": "column-gap",
+      "duration": 150
+    },
+    {
+      "property": "font-size",
+      "duration": 150
+    },
+    {
+      "property": "height",
+      "duration": 150
+    },
+    {
+      "property": "padding-bottom",
+      "duration": 150
+    },
+    {
+      "property": "padding-left",
+      "duration": 150
+    },
+    {
+      "property": "padding-right",
+      "duration": 150
+    },
+    {
+      "property": "padding-top",
+      "duration": 150
+    },
+    {
+      "property": "row-gap",
+      "duration": 150
+    }
+  ],
+  "settledLoading": [
+    {
+      "key": "island-909443d1f3-0",
+      "canvas": 336,
+      "sourceY": null,
+      "buttons": [
+        {
+          "height": 72,
+          "font": "28px",
+          "transition": "0.15s"
+        }
+      ]
+    },
+    {
+      "key": "island-909443d1f3-1",
+      "canvas": 232,
+      "sourceY": 2232.96875,
+      "buttons": [
+        {
+          "height": 72,
+          "font": "28px",
+          "transition": "0.15s"
+        },
+        {
+          "height": 72,
+          "font": "28px",
+          "transition": "0.15s"
+        }
+      ]
+    }
+  ],
+  "ready": [
+    {
+      "key": "island-909443d1f3-0",
+      "canvas": 336,
+      "sourceY": null,
+      "buttons": [
+        {
+          "height": 72,
+          "font": "28px",
+          "transition": "0.15s"
+        }
+      ]
+    },
+    {
+      "key": "island-909443d1f3-1",
+      "canvas": 232,
+      "sourceY": 2232.96875,
+      "buttons": [
+        {
+          "height": 72,
+          "font": "28px",
+          "transition": "0.15s"
+        },
+        {
+          "height": 72,
+          "font": "28px",
+          "transition": "0.15s"
+        }
+      ]
+    }
+  ],
+  "equal": true
+}

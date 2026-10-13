@@ -1,0 +1,6 @@
+npm notice run rustify-ui-browser-tests@0.1.0 npx
+npm notice run 'playwright' test -c playwright.docs.config.ts --project=components-subpath islands.spec.ts
+[WebServer] error[base]: --base /rustify-ui/ does not match site.url https://example.com/docs/; change both together
+[WebServer] build failed: 1 error(s), 0 warning(s); first: --base /rustify-ui/ does not match site.url https://example.com/docs/; change both together; the output was not changed
+Error: Process from config.webServer was not able to start. Exit code: 1
+

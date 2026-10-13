@@ -1,0 +1,164 @@
+npm notice run rustify-ui-browser-tests@0.1.0 npx
+npm notice run 'playwright' test -c playwright.docs.config.ts --project=components-subpath islands.spec.ts
+[WebServer] building /Users/rockie/Documents/gh-rockie/rustify-ui/tests/docs-ssg/fixtures/components into /Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/http/components/subpath/dist
+[WebServer] warning[rust-compile]: warning: method `fallback_element` is never used
+[WebServer]    --> /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui/src/overlay.rs:349:23
+[WebServer]     |
+[WebServer] 284 |     impl OverlayStack {
+[WebServer]     |     ----------------- method in this implementation
+[WebServer] ...
+[WebServer] 349 |         pub(crate) fn fallback_element(&self) -> Element {
+[WebServer]     |                       ^^^^^^^^^^^^^^^^
+[WebServer]     |
+[WebServer]     = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+[WebServer] 
+[WebServer] 
+[WebServer]   --> /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui/src/overlay.rs:349:23
+[WebServer]   = help: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+[WebServer] warning[rust-compile]: warning: field `guest_click` is never read
+[WebServer]    --> /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui/src/router.rs:556:9
+[WebServer]     |
+[WebServer] 549 |     struct Router {
+[WebServer]     |            ------ field in this struct
+[WebServer] ...
+[WebServer] 556 |         guest_click: Option<SendWrapper<Rc<GuestClick>>>,
+[WebServer]     |         ^^^^^^^^^^^
+[WebServer]     |
+[WebServer]     = note: `Router` has a derived impl for the trait `Clone`, but this is intentionally ignored during dead code analysis
+[WebServer] 
+[WebServer] 
+[WebServer]   --> /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui/src/router.rs:556:9
+[WebServer]   = help: `Router` has a derived impl for the trait `Clone`, but this is intentionally ignored during dead code analysis
+[WebServer] warning[not-in-nav]: this page is in no navigation group, so readers can only reach it by a link
+[WebServer]   --> content/index.md
+[WebServer] build: 7 pages and 404.html in /Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/http/components/subpath/dist: 11660.6 KB in 22 files, 3 warning(s), 6123 ms
+[WebServer] largest pages:
+[WebServer]     114.4 KB  proxy/index.html
+[WebServer]      80.7 KB  failure/index.html
+[WebServer]      80.0 KB  counter/index.html
+[WebServer]      78.1 KB  async/index.html
+[WebServer]      10.9 KB  builtins/index.html
+[WebServer] serving /Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/http/components/subpath/dist (built by rustify-docs 0.1.5, build 508932734712195c) until stopped
+
+Running 20 tests using 1 worker
+
+(node:29478) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 [components-subpath] › tests/docs-ssg/islands.spec.ts:242:1 › a page without interactive embeds loads no island JavaScript or wasm (116ms)
+  ✘   2 [components-subpath] › tests/docs-ssg/islands.spec.ts:250:1 › no script keeps real SSR views and both source panels readable with native controls disabled (10.2s)
+(node:29655) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   3 [components-subpath] › tests/docs-ssg/islands.spec.ts:290:1 › loading gates native and captured input while source controls remain usable (578ms)
+  ✓   4 [components-subpath] › tests/docs-ssg/islands.spec.ts:321:1 › attachment retains original SSR nodes and isolates three identical counters (403ms)
+  ✓   5 [components-subpath] › tests/docs-ssg/islands.spec.ts:342:1 › an asynchronous action starts after attachment with supported hydration globals (333ms)
+  ✓   6 [components-subpath] › tests/docs-ssg/islands.spec.ts:354:1 › client-only attachment preserves the placeholder and mounts typed props and child content (288ms)
+  ✓   7 [components-subpath] › tests/docs-ssg/islands.spec.ts:383:1 › static builtins need no script or wasm and retain every panel, native link and child block (249ms)
+  ✓   8 [components-subpath] › tests/docs-ssg/islands.spec.ts:430:1 › static tabs use unique ARIA mappings and keyboard state stays local to each peer (496ms)
+  ✓   9 [components-subpath] › tests/docs-ssg/islands.spec.ts:486:1 › a real callback trap restores every initial island and keeps source, navigation and reload alive (925ms)
+  ✓  10 [components-subpath] › tests/docs-ssg/islands.spec.ts:518:5 › islands.js load failure is terminal, preserves SSR and recovers only through Reload page (504ms)
+  ✓  11 [components-subpath] › tests/docs-ssg/islands.spec.ts:518:5 › app.js load failure is terminal, preserves SSR and recovers only through Reload page (582ms)
+  ✓  12 [components-subpath] › tests/docs-ssg/islands.spec.ts:518:5 › app_bg.wasm load failure is terminal, preserves SSR and recovers only through Reload page (484ms)
+  ✓  13 [components-subpath] › tests/docs-ssg/islands.spec.ts:542:1 › invalid hydration metadata releases the live native host and restores untouched SSR (335ms)
+  ✓  14 [components-subpath] › tests/docs-ssg/islands.spec.ts:560:1 › unsupported initial hydration globals refuse startup before wasm runs (197ms)
+  ✓  15 [components-subpath] › tests/docs-ssg/islands.spec.ts:575:1 › the startup deadline remains terminal when the real wasm completes late (365ms)
+  ✓  16 [components-subpath] › tests/docs-ssg/islands.spec.ts:600:1 › the release proxy attaches every real category, then opens floating controls with focus return (3.8s)
+  ✓  17 [components-subpath] › tests/docs-ssg/islands.spec.ts:629:9 › 375px keeps loading, ready, failure and bounded source usable in light (543ms)
+  ✘  18 [components-subpath] › tests/docs-ssg/islands.spec.ts:629:9 › 200% reflow and text scaling keeps loading, ready, failure and bounded source usable in light (783ms)
+(node:29788) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  19 [components-subpath] › tests/docs-ssg/islands.spec.ts:629:9 › 375px keeps loading, ready, failure and bounded source usable in dark (573ms)
+  ✘  20 [components-subpath] › tests/docs-ssg/islands.spec.ts:629:9 › 200% reflow and text scaling keeps loading, ready, failure and bounded source usable in dark (815ms)
+
+
+  1) [components-subpath] › tests/docs-ssg/islands.spec.ts:250:1 › no script keeps real SSR views and both source panels readable with native controls disabled 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  locator('[data-rustify-island]').first().locator('noscript')
+    Expected: "Enable JavaScript to interact"
+    Received: ""
+    Timeout:  10000ms
+
+    Call log:
+      - Expect "toHaveText" locator('[data-rustify-island]').first().locator('noscript') with timeout 10000ms
+      - waiting for locator('[data-rustify-island]').first().locator('noscript')
+        24 × locator resolved to <noscript>…</noscript>
+           - unexpected value ""
+
+
+      263 |             await expect(island.getByTestId("counter-input")).toHaveValue(index === 3 ? "7" : "2");
+      264 |             await expect(island.getByTestId("counter-value")).toHaveText(index === 3 ? "7" : "2");
+    > 265 |             await expect(island.locator("noscript")).toHaveText("Enable JavaScript to interact");
+          |                                                      ^
+      266 |         }
+      267 |         await expect(page.locator(".rd-demo-source .rd-code")).toHaveCount(2);
+      268 |         await expect(page.locator(".rd-demo-source .rd-code-tabs")).toBeHidden();
+        at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/docs-ssg/islands.spec.ts:265:54
+
+    Error Context: test-results/docs/docs-ssg-islands-no-script-86085-th-native-controls-disabled-components-subpath/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/docs/docs-ssg-islands-no-script-86085-th-native-controls-disabled-components-subpath/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/docs/docs-ssg-islands-no-script-86085-th-native-controls-disabled-components-subpath/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [components-subpath] › tests/docs-ssg/islands.spec.ts:629:9 › 200% reflow and text scaling keeps loading, ready, failure and bounded source usable in light 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 144
+    Received: 208
+
+      667 |                 after: document.querySelector(`[data-rustify-island="${snapshot.key}"] [data-rd-island-status]`)!.getBoundingClientRect().height,
+      668 |             })));
+    > 669 |             for (const height of status) expect(height.after).toBe(height.before);
+          |                                                               ^
+      670 |             expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(0);
+      671 |             await expect(source.getByRole("tab", { name: "Full file", exact: true })).toBeEnabled();
+      672 |             await expect(islands(page).last().getByRole("button", { name: "Reload page", exact: true })).toBeInViewport();
+        at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/docs-ssg/islands.spec.ts:669:63
+
+    Error Context: test-results/docs/docs-ssg-islands-200-reflo-edee2-nded-source-usable-in-light-components-subpath/error-context.md
+
+    attachment #8: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/docs/docs-ssg-islands-200-reflo-edee2-nded-source-usable-in-light-components-subpath/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/docs/docs-ssg-islands-200-reflo-edee2-nded-source-usable-in-light-components-subpath/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [components-subpath] › tests/docs-ssg/islands.spec.ts:629:9 › 200% reflow and text scaling keeps loading, ready, failure and bounded source usable in dark 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 144
+    Received: 208
+
+      667 |                 after: document.querySelector(`[data-rustify-island="${snapshot.key}"] [data-rd-island-status]`)!.getBoundingClientRect().height,
+      668 |             })));
+    > 669 |             for (const height of status) expect(height.after).toBe(height.before);
+          |                                                               ^
+      670 |             expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(0);
+      671 |             await expect(source.getByRole("tab", { name: "Full file", exact: true })).toBeEnabled();
+      672 |             await expect(islands(page).last().getByRole("button", { name: "Reload page", exact: true })).toBeInViewport();
+        at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/docs-ssg/islands.spec.ts:669:63
+
+    Error Context: test-results/docs/docs-ssg-islands-200-reflo-8fe89-unded-source-usable-in-dark-components-subpath/error-context.md
+
+    attachment #8: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/docs/docs-ssg-islands-200-reflo-8fe89-unded-source-usable-in-dark-components-subpath/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/docs/docs-ssg-islands-200-reflo-8fe89-unded-source-usable-in-dark-components-subpath/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3 failed
+    [components-subpath] › tests/docs-ssg/islands.spec.ts:250:1 › no script keeps real SSR views and both source panels readable with native controls disabled 
+    [components-subpath] › tests/docs-ssg/islands.spec.ts:629:9 › 200% reflow and text scaling keeps loading, ready, failure and bounded source usable in light 
+    [components-subpath] › tests/docs-ssg/islands.spec.ts:629:9 › 200% reflow and text scaling keeps loading, ready, failure and bounded source usable in dark 
+  17 passed (31.9s)

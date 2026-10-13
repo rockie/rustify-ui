@@ -1,0 +1,29 @@
+npm notice run rustify-ui-browser-tests@0.1.0 npx
+npm notice run 'playwright' test --project=theme-studio theme-dom.spec.ts theme-startup.spec.ts theme-editor.spec.ts
+
+Running 20 tests using 1 worker
+
+(node:83495) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 [theme-studio] › tests/browser/theme-dom.spec.ts:14:7 › resolved DOM themes › scopes stay independent and the host keeps its own styles (5.9s)
+  ✓   2 [theme-studio] › tests/browser/theme-dom.spec.ts:32:7 › resolved DOM themes › utility unit and layout gap remain separate and caller classes override (838ms)
+  ✓   3 [theme-studio] › tests/browser/theme-dom.spec.ts:42:7 › resolved DOM themes › boundary projection and open overlay follow updates then restore inheritance (2.1s)
+  ✓   4 [theme-studio] › tests/browser/theme-dom.spec.ts:70:7 › resolved DOM themes › host rem is resolved and owner disposal leaves no runtime variables (5.3s)
+  ✓   5 [theme-studio] › tests/browser/theme-dom.spec.ts:84:7 › resolved DOM themes › invalid edit preserves last valid document and a no-shadow focus ring still renders (660ms)
+  ✓   6 [theme-studio] › tests/browser/theme-dom.spec.ts:97:5 › new runtime shadows honor caller color while empty layers keep rings transparent (826ms)
+  ✓   7 [theme-studio] › tests/browser/theme-editor.spec.ts:81:9 › theme editing through the workbench › an authored alpha color reaches DOM and a completed GPU draw, while no-op edits reuse the core snapshot (1.5s)
+  ✓   8 [theme-studio] › tests/browser/theme-editor.spec.ts:120:9 › theme editing through the workbench › notation and search preserve authors, and an incomplete color never replaces the effective theme (1.4s)
+  ✓   9 [theme-studio] › tests/browser/theme-editor.spec.ts:148:9 › theme editing through the workbench › all fourteen common fields synchronize both modes and field reset restores the author value (2.2s)
+  ✓  10 [theme-studio] › tests/browser/theme-editor.spec.ts:183:9 › theme editing through the workbench › incomplete shared parameter drafts stay local, and keyboard tabs expose the correct panel (1.0s)
+  ✓  11 [theme-studio] › tests/browser/theme-editor.spec.ts:208:9 › theme editing through the workbench › preset search and favorites preserve mode, and shared author differences survive until an explicit edit (1.6s)
+  ✓  12 [theme-studio] › tests/browser/theme-editor.spec.ts:252:9 › theme editing through the workbench › undo and redo restore documents without switching mode, and a new edit clears the redo branch (2.2s)
+  ✓  13 [theme-studio] › tests/browser/theme-editor.spec.ts:288:9 › theme editing through the workbench › a captured color drag and repeated keyboard updates each create one undo step, and Escape cancels (1.4s)
+  ✓  14 [theme-studio] › tests/browser/theme-editor.spec.ts:326:9 › theme editing through the workbench › batch HSL always uses its origin, commits once, and cancellation preserves the redo branch (1.4s)
+  ✓  15 [theme-studio] › tests/browser/theme-editor.spec.ts:366:9 › theme editing through the workbench › HSL invalid and identity drafts do not resolve, and current-mode adjustment keeps gray colors finite (1.4s)
+  ✓  16 [theme-studio] › tests/browser/theme-editor.spec.ts:397:9 › theme editing through the workbench › leaving the batch panel commits once and a reset-to-identity gesture preserves author strings (1.3s)
+  ✓  17 [theme-studio] › tests/browser/theme-editor.spec.ts:419:9 › theme editing through the workbench › diagnostics preserve wide-gamut and unknown font authors and report unknown translucent backing (1.3s)
+  ✓  18 [theme-studio] › tests/browser/theme-editor.spec.ts:441:9 › theme editing through the workbench › Inspector suppresses sample actions and chooses actual DOM, GPU and keyboard tokens (1.3s)
+  ✓  19 [theme-studio] › tests/browser/theme-editor.spec.ts:497:9 › theme editing through the workbench › editor resizing works with keyboard bounds and pointer capture without rebuilding the GPU region (1.3s)
+  ✓  20 [theme-studio] › tests/browser/theme-startup.spec.ts:3:5 › latest static product starts without a trap or CSP violation (4.9s)
+
+  20 passed (42.4s)

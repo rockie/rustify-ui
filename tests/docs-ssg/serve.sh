@@ -8,8 +8,15 @@
 # The CLI is the binary `--profile docs-cli` builds, as installed, rebuilt
 # here when its sources changed; RUSTIFY_DOCS_BIN points at another.
 set -eu
-variant=$1
-port=$2
+if [ "$#" -eq 2 ]; then
+  source=content
+  variant=$1
+  port=$2
+else
+  source=$1
+  variant=$2
+  port=$3
+fi
 root=$(cd "$(dirname "$0")/../.." && pwd)
 if [ -n "${RUSTIFY_DOCS_BIN:-}" ]; then
   bin=$RUSTIFY_DOCS_BIN
@@ -23,13 +30,29 @@ case $variant in
   subpath | meta) base=/rustify-ui/ ;;
   *) echo "serve.sh: unknown variant $variant" >&2; exit 2 ;;
 esac
-work=$root/target/docs-ssg/http/$variant
+work=$root/target/docs-ssg/http/$source/$variant
 rm -rf "$work"
 mkdir -p "$work"
-cp -R "$root/tests/docs-ssg/fixtures/content" "$work/site"
-perl -0pi -e "s#url = \"https://example.com/docs/\"\nbase = \"/docs/\"#url = \"https://docs.example.net$base\"\nbase = \"$base\"#" "$work/site/rustify-docs.toml"
-grep -q "base = \"$base\"" "$work/site/rustify-docs.toml"
-"$bin" build --config "$work/site/rustify-docs.toml" --out "$work/dist" >&2
+case $source in
+  content)
+    cp -R "$root/tests/docs-ssg/fixtures/content" "$work/site"
+    perl -0pi -e "s#url = \"https://example.com/docs/\"\nbase = \"/docs/\"#url = \"https://docs.example.net$base\"\nbase = \"$base\"#" "$work/site/rustify-docs.toml"
+    rg -q "base = \"$base\"" "$work/site/rustify-docs.toml"
+    "$bin" build --config "$work/site/rustify-docs.toml" --out "$work/dist" >&2
+    ;;
+  components)
+    fixture=$root/tests/docs-ssg/fixtures/components
+    # Keep the author package at its original path. Its relative Cargo
+    # dependencies and source excerpts must match the files compiled.
+    config=$(mktemp "$fixture/.rustify-docs-browser.XXXXXX")
+    trap 'rm -f "$config"' EXIT
+    perl -0pe "s#url = \"https://example.com/docs/\"\nbase = \"/docs/\"#url = \"https://docs.example.net$base\"\nbase = \"$base\"#" "$fixture/rustify-docs.toml" > "$config"
+    RUSTIFY_DOCS_CARGO=mbx "$bin" build --config "$config" --out "$work/dist" >&2
+    rm -f "$config"
+    trap - EXIT
+    ;;
+  *) echo "serve.sh: unknown source $source" >&2; exit 2 ;;
+esac
 if [ "$variant" = meta ]; then
   exec node "$root/tests/docs-ssg/static-host.mjs" "$work/dist" "$port" "$base"
 fi

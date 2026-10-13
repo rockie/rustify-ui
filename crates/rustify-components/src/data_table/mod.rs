@@ -11,11 +11,9 @@
 //! (`keys`).
 
 pub mod keys;
-#[cfg(target_arch = "wasm32")]
 mod view;
 pub mod window;
 
 pub use keys::{Cell, Command, Shape};
-#[cfg(target_arch = "wasm32")]
 pub use view::{CellText, Column, DataTable, RowId};
 pub use window::Range;

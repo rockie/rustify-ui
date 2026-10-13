@@ -1,0 +1,39 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling xtask v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/xtask)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 3.93s
+     Running unittests src/main.rs (target/debug/deps/xtask-abd35e9efaf03cef)
+
+running 6 tests
+test css::tests::a_line_only_one_side_has_is_reported_against_the_end_of_file ... ok
+test css::tests::the_first_differing_line_is_reported_with_both_sides ... ok
+test css::tests::a_long_line_is_cut_around_where_it_differs ... ok
+test css::tests::complete_static_candidates_include_hidden_sdk_and_component_branches ... ok
+test css::tests::excluded_trees_and_generated_css_are_not_read_or_rescanned ... ok
+test css::tests::published_candidates_match_the_sdk_sources ... FAILED
+
+failures:
+
+---- css::tests::published_candidates_match_the_sdk_sources stdout ----
+
+thread 'css::tests::published_candidates_match_the_sdk_sources' (37386172) panicked at xtask/src/css.rs:341:13:
+/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-components/css/candidates.json is not what the input produces; run `mbx xtask css` and commit the result (3 bytes committed, 53653 bytes generated)
+first difference, line 1:
+  committed: []
+  generated: [
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    css::tests::published_candidates_match_the_sdk_sources
+
+test result: FAILED. 5 passed; 1 failed; 0 ignored; 0 measured; 41 filtered out; finished in 0.13s
+
+error: test failed, to rerun pass `-p xtask --bin xtask`
+mbx[cache]: 0 hits, 0 misses, 1 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: 1.7 TiB logical of target/ had outlived its checkouts. it has been dealt with.

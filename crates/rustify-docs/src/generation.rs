@@ -131,6 +131,63 @@ pub struct Generation {
     pub candidates: usize,
 }
 
+/// Results and immutable assets from the site's registered Rust renderers.
+/// Content-only callers keep using [`generate`] and never need this value.
+#[derive(Default)]
+pub struct Extensions {
+    pub articles: BTreeMap<String, String>,
+    pub files: BTreeMap<String, Arc<[u8]>>,
+    pub candidates: BTreeSet<String>,
+    pub css: String,
+    /// A project-relative resource path, loaded only by pages with islands.
+    pub island_script: Option<String>,
+    /// Routes where registered views produced an interactive island.
+    pub island_routes: BTreeSet<String>,
+}
+
+/// Resolves Markdown child URLs before the one batch of Rust views runs.
+pub fn resolved_articles(
+    project: &Project,
+    snapshot: &Snapshot,
+    analysis: &Analysis,
+) -> BTreeMap<String, String> {
+    let site = Site {
+        name: project.config.site.name.clone(),
+        lang: project.config.site.lang.clone(),
+        base: project.config.site.base.clone(),
+        nav: Vec::new(),
+        top: Vec::new(),
+        social: Vec::new(),
+        assets: AssetUrls::default(),
+        logo: None,
+    };
+    let mut outputs = BTreeMap::new();
+    let mut sizes = BTreeMap::new();
+    for path in &analysis.resources {
+        if let Some(bytes) = snapshot
+            .files
+            .get(path)
+            .or_else(|| analysis.outside.get(path))
+        {
+            outputs.insert(path.clone(), resource_output(path, bytes));
+            if let Some(size) = crate::imagesize::size(bytes) {
+                sizes.insert(path.clone(), size);
+            }
+        }
+    }
+    analysis
+        .pages
+        .iter()
+        .enumerate()
+        .map(|(index, page)| {
+            (
+                page.route.clone(),
+                article(analysis, index, &site, &outputs, &sizes),
+            )
+        })
+        .collect()
+}
+
 /// Where a file the pages reference is published: under `assets/files/`,
 /// named by its name and its content, so it can be cached for good and a
 /// change to it renames it (and changes only the pages that reference it).
@@ -443,6 +500,25 @@ pub fn generate(
     dates: &Dates,
     workers: usize,
 ) -> Result<Generation, Vec<Diagnostic>> {
+    generate_extended(
+        project,
+        snapshot,
+        analysis,
+        dates,
+        workers,
+        &Extensions::default(),
+    )
+}
+
+/// Merges registered views into the ordinary shell and final policy checks.
+pub fn generate_extended(
+    project: &Project,
+    snapshot: &Snapshot,
+    analysis: &Analysis,
+    dates: &Dates,
+    workers: usize,
+    extensions: &Extensions,
+) -> Result<Generation, Vec<Diagnostic>> {
     let config = &project.config;
     let mode_path = format!("assets/mode.{}.js", fingerprint(MODE_SCRIPT.as_bytes()));
     let site_path = format!("assets/site.{}.js", fingerprint(SITE_SCRIPT.as_bytes()));
@@ -505,6 +581,16 @@ pub fn generate(
         outputs.insert(path.clone(), output.clone());
         files.insert(output, bytes);
     }
+    for (path, bytes) in &extensions.files {
+        if files.insert(path.clone(), bytes.clone()).is_some() {
+            return Err(vec![Diagnostic::in_file(
+                path,
+                Severity::Error,
+                "output-conflict",
+                "a framework asset would replace another published file",
+            )]);
+        }
+    }
     site.logo = config.logo.as_ref().and_then(|logo| {
         let url = |path: &String| {
             outputs
@@ -558,7 +644,11 @@ pub fn generate(
     let rendered: Vec<(String, String, BTreeSet<String>)> =
         parallel_map(&published, workers, |&i| {
             let page = &analysis.pages[i];
-            let mut article = article(analysis, i, &site, &outputs, &sizes);
+            let mut article = extensions
+                .articles
+                .get(&page.route)
+                .cloned()
+                .unwrap_or_else(|| article(analysis, i, &site, &outputs, &sizes));
             let home = (page.front.layout == Layout::Home).then(|| {
                 // The hero carries the page's one H1; a leading `# Title` in
                 // the Markdown is that title, not a second heading.
@@ -603,7 +693,7 @@ pub fn generate(
             let edit_url = edit_prefix
                 .as_ref()
                 .map(|prefix| format!("{prefix}{}", page.file));
-            let html = shell::render_page(
+            let mut html = shell::render_page(
                 &site,
                 &Page {
                     route: &page.route,
@@ -627,6 +717,15 @@ pub fn generate(
                     home,
                 },
             );
+            if extensions.island_routes.contains(&page.route) {
+                if let Some(script) = &extensions.island_script {
+                    let mut tag =
+                        String::from("<script type=\"module\" data-rd-islands-module src=\"");
+                    escape_url_into(&mut tag, &site.url(&format!("/{script}")));
+                    tag.push_str("\"></script>");
+                    html = html.replacen("</body>", &format!("{tag}</body>"), 1);
+                }
+            }
             let mut classes = BTreeSet::new();
             crate::classes::collect(&html, &mut classes);
             (page_path(&page.route), html, classes)
@@ -640,6 +739,7 @@ pub fn generate(
     for (_, _, classes) in &rendered {
         candidates.extend(classes.iter().cloned());
     }
+    candidates.extend(extensions.candidates.iter().cloned());
     let brand = match &config.primary {
         Some(primary) => Brand {
             primary_light: primary.light.clone(),
@@ -647,13 +747,14 @@ pub fn generate(
         },
         None => Brand::default(),
     };
-    let css = style::site_css(&candidates, &brand).map_err(|error| {
+    let mut css = style::site_css(&candidates, &brand).map_err(|error| {
         vec![Diagnostic::general(
             Severity::Error,
             "stylesheet",
             error.to_string(),
         )]
     })?;
+    css.push_str(&extensions.css);
     // Check the actual generation, rather than a path prefix that a
     // missing file could share. Document fragments were checked per page.
     let published_urls: BTreeSet<String> = files

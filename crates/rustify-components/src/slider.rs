@@ -57,6 +57,8 @@ pub fn Slider(
                 let described_by = described_by.get();
                 (!described_by.is_empty()).then_some(described_by)
             }
+            value=move || snap(value.get(), min, max, step).to_string()
+            disabled=move || disabled.get()
             prop:value=move || snap(value.get(), min, max, step).to_string()
             prop:disabled=move || disabled.get()
             on:input:target=move |ev| {

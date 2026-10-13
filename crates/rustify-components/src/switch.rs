@@ -43,6 +43,7 @@ pub fn Switch(
                 let described_by = described_by.get();
                 (!described_by.is_empty()).then_some(described_by)
             }
+            disabled=move || disabled.get()
             prop:disabled=move || disabled.get()
             on:click=move |_| {
                 if !disabled.get_untracked() && !read_only.get_untracked() {

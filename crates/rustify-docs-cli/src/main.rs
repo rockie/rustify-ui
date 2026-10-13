@@ -11,16 +11,22 @@ use rustify_docs::generation;
 use rustify_docs::highlight::Highlighter;
 use rustify_docs::publish::{self, Area, LockError, Manifest, Recovery};
 
+#[cfg(test)]
+mod compile_proxy;
 mod dev;
 mod links;
 mod new;
 mod preview;
+mod rendering;
 mod report;
+mod rust_site;
+mod rust_source;
 
 use report::{Format, Summary};
 
 const VERSION: &str = env!("CARGO_PKG_VERSION");
 const SOURCE_REVISION: &str = env!("RUSTIFY_DOCS_SOURCE_REVISION");
+const EXPECTED_FRAMEWORK_REV: &str = include_str!("../assets/framework-revision.txt");
 const PREVIOUS_REVISION: &str = "42757c627cb69456d241ba0de51b34f1ad85be3d";
 const PREVIOUS_VERSION: &str = "0.1.3";
 
@@ -312,13 +318,47 @@ fn load(config: &Path, base: Option<&str>) -> Result<(Project, Vec<Diagnostic>),
 /// sites are requested too, and how many addresses that was is returned.
 fn analyse(
     project: &Project,
-    mut diagnostics: Vec<Diagnostic>,
+    diagnostics: Vec<Diagnostic>,
     external_links: bool,
+    build_mode: rust_site::BuildMode,
 ) -> (
     Vec<Diagnostic>,
     Option<generation::Generation>,
     usize,
     Option<usize>,
+    serde_json::Value,
+    Option<rust_site::Prepared>,
+) {
+    let first = analyse_once(project, diagnostics.clone(), external_links, build_mode);
+    let errors: Vec<_> = first
+        .0
+        .iter()
+        .filter(|diagnostic| diagnostic.severity == Severity::Error)
+        .collect();
+    if !errors.is_empty()
+        && errors
+            .iter()
+            .all(|diagnostic| diagnostic.rule == "rust-generation-changed")
+        && std::fs::read_to_string(project.root.join(&project.config_file))
+            .is_ok_and(|text| text == project.config_text)
+    {
+        return analyse_once(project, diagnostics, external_links, build_mode);
+    }
+    first
+}
+
+fn analyse_once(
+    project: &Project,
+    mut diagnostics: Vec<Diagnostic>,
+    external_links: bool,
+    build_mode: rust_site::BuildMode,
+) -> (
+    Vec<Diagnostic>,
+    Option<generation::Generation>,
+    usize,
+    Option<usize>,
+    serde_json::Value,
+    Option<rust_site::Prepared>,
 ) {
     let (snapshot, dates, problems) = content::read_inputs(project);
     diagnostics.extend(problems);
@@ -334,15 +374,27 @@ fn analyse(
         workers,
     );
     let pages = analysis.published().count();
-    let ok = analysis.errors() == 0;
     diagnostics.extend(analysis.diagnostics.iter().cloned());
+    let (extensions, problems, rust_build, rust_guard) =
+        rendering::build(project, &snapshot, &analysis, &highlighter, build_mode);
+    diagnostics.extend(problems);
     let checked = external_links.then(|| {
         let (problems, checked) = links::check(project, &snapshot, &analysis, VERSION);
         diagnostics.extend(problems);
         checked
     });
-    let generation = if ok {
-        match generation::generate(project, &snapshot, &analysis, &dates, workers) {
+    let mut generation = if !diagnostics
+        .iter()
+        .any(|diagnostic| diagnostic.severity == Severity::Error)
+    {
+        match generation::generate_extended(
+            project,
+            &snapshot,
+            &analysis,
+            &dates,
+            workers,
+            &extensions,
+        ) {
             Ok(generation) => Some(generation),
             Err(problems) => {
                 diagnostics.extend(problems);
@@ -352,9 +404,22 @@ fn analyse(
     } else {
         None
     };
+    if let Some(guard) = &rust_guard {
+        if let Err(problems) = guard.validate_current() {
+            diagnostics.extend(problems);
+            generation = None;
+        }
+    }
     diagnostics.sort();
     diagnostics.dedup();
-    (diagnostics, generation, pages, checked)
+    (
+        diagnostics,
+        generation,
+        pages,
+        checked,
+        rust_build,
+        rust_guard,
+    )
 }
 
 fn check(args: &[String]) -> ExitCode {
@@ -399,9 +464,17 @@ fn check(args: &[String]) -> ExitCode {
     if format == Format::Text {
         eprintln!("checking {}", absolute(&project.root).display());
     }
-    let (diagnostics, _, pages, checked) = analyse(&project, diagnostics, external);
+    let (diagnostics, _, pages, checked, rust_build, _) = analyse(
+        &project,
+        diagnostics,
+        external,
+        rust_site::BuildMode::Development,
+    );
     let done = conclusion(pages, checked, &diagnostics);
     let mut extra = serde_json::json!({ "pages": pages });
+    if !rust_build.is_null() {
+        extra["rust_build"] = rust_build;
+    }
     if let Some(checked) = checked {
         extra["external_addresses"] = checked.into();
     }
@@ -523,7 +596,8 @@ fn build(args: &[String]) -> ExitCode {
             area.out.display()
         );
     }
-    let (diagnostics, generation, pages, _) = analyse(&project, diagnostics, false);
+    let (mut diagnostics, generation, pages, _, rust_build, rust_guard) =
+        analyse(&project, diagnostics, false, rust_site::BuildMode::Release);
     let blocked = Summary::of(&diagnostics, deny);
     let Some(mut generation) = generation.filter(|_| blocked.success()) else {
         let done = failed(&diagnostics);
@@ -535,6 +609,19 @@ fn build(args: &[String]) -> ExitCode {
             done,
         );
     };
+    if let Some(guard) = rust_guard {
+        if let Err(problems) = guard.validate_current() {
+            diagnostics.extend(problems);
+            let done = failed(&diagnostics);
+            return report(
+                &diagnostics,
+                format,
+                deny,
+                serde_json::json!({"pages":0}),
+                done,
+            );
+        }
+    }
     publish::add_manifest(&mut generation.files, &project.config.site.base, VERSION);
     let stop_at = std::env::var(FAULT_VARIABLE)
         .ok()
@@ -575,7 +662,7 @@ fn build(args: &[String]) -> ExitCode {
     largest.sort_by(|a, b| b.1.cmp(&a.1).then(a.0.cmp(b.0)));
     largest.truncate(5);
     let elapsed = started.elapsed().as_millis();
-    let extra = serde_json::json!({
+    let mut extra = serde_json::json!({
         "pages": pages,
         "files": generation.files.len(),
         "bytes": total,
@@ -583,6 +670,9 @@ fn build(args: &[String]) -> ExitCode {
         "out": area.out.display().to_string(),
         "milliseconds": elapsed,
     });
+    if !rust_build.is_null() {
+        extra["rust_build"] = rust_build;
+    }
     let files = generation.files.len();
     let out_text = area.out.display().to_string();
     report(&diagnostics, format, deny, extra, move |summary| {

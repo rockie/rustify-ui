@@ -1,0 +1,41 @@
+npm notice run rustify-ui-browser-tests@0.1.0 npx
+npm notice run 'playwright' test --project=component-catalog catalog-inputs.spec.ts --grep swatches keep following
+
+Running 1 test using 1 worker
+
+(node:6219) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 [component-catalog] › tests/browser/catalog-inputs.spec.ts:259:9 › colour field › swatches keep following values after the example is reset and reopened (23.6s)
+
+
+  1) [component-catalog] › tests/browser/catalog-inputs.spec.ts:259:9 › colour field › swatches keep following values after the example is reset and reopened 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "rgb(21, 112, 239)"
+    Received: "rgba(0, 0, 0, 0)"
+
+    Call Log:
+    - Timeout 15000ms exceeded while waiting on the predicate
+
+      267 |         await open(page, "color-field");
+      268 |         await expect.poll(() => computed(page.getByTestId("default-colour-swatch"), "background-color"))
+    > 269 |             .toBe(rgb("#1570ef"));
+          |              ^
+      270 |         await tint(page).fill("#1f6feb80");
+      271 |         await page.keyboard.press("Tab");
+      272 |         expect(await snapshot(page)).toMatchObject({ colour: "#1570ef", tint: "#1f6feb80" });
+        at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser/catalog-inputs.spec.ts:269:14
+
+    Error Context: test-results/catalog-inputs-colour-fiel-11403-ample-is-reset-and-reopened-component-catalog/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/catalog-inputs-colour-fiel-11403-ample-is-reset-and-reopened-component-catalog/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/catalog-inputs-colour-fiel-11403-ample-is-reset-and-reopened-component-catalog/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [component-catalog] › tests/browser/catalog-inputs.spec.ts:259:9 › colour field › swatches keep following values after the example is reset and reopened 

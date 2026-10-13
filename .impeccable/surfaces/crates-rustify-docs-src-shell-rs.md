@@ -2,7 +2,7 @@
 version: 1
 slug: "crates-rustify-docs-src-shell-rs"
 primary_target: "crates/rustify-docs/src/shell.rs"
-related_targets: ["crates/rustify-docs/assets/docs.css","crates/rustify-docs/assets/site.js","crates/rustify-docs/assets/mode.js","crates/rustify-docs/src/style.rs"]
+related_targets: ["crates/rustify-docs/assets/docs.css","crates/rustify-docs/assets/site.js","crates/rustify-docs/assets/mode.js","crates/rustify-docs/assets/islands.js","crates/rustify-docs/src/style.rs"]
 ---
 
 Mode: Read. Target: the Rustify Docs default theme — every page a `rustify-docs build` writes (home, content, 404) and its two small scripts. Scope is docs/plan/DOCS-SSG-P1.md §6 for P1; components, demos, search and language switching are later phases and must not appear as dead affordances.
@@ -28,3 +28,15 @@ FIRST VIEWPORT: Content page at 1280 px: 56 px header (logo + site name left, mo
 FORM: Approved three-tier reading layout from plan §6 (sidebar / article / TOC, collapsing to native details). Seed: user-pinned-docs-ssg-p1; no concept tournament because structure, density and mode were fixed by the plan and the user's answers.
 
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
+
+## P2 extension: a demo inside the article
+
+The approved P1 reading world stays in place. Under DOCS-SSG-P2 §6, a reader now compares a working DOM component with its exact Rust implementation. The demo remains a paragraph-sized piece of evidence within the article; the page, navigation and reading controls remain static HTML.
+
+Composition: one hairline-bounded region, a padded canvas first, a persistent status row directly beneath it, then the existing code-panel treatment. Keep the status row's minimum height through loading, ready and failure so attaching the component does not move the source. The canvas contains only the registered view; no decorative toolbar or duplicate product identity. Source controls use native buttons with visible focus and the existing understated active underline: “Function” and “Full file”, followed by “Copy code”. The file's project-relative path is quiet context, never a machine path. Source panels scroll internally, with a bounded height of 24rem and no page-level horizontal overflow; keyboard focus can reach the scroll area. Copy uses the existing raw-text template, exact line endings, an in-place result and a spoken confirmation.
+
+State contract: without scripts, native controls are disabled by their outer fieldset and “Enable JavaScript to interact” appears in noscript; the view and source remain in the accessible tree. With scripts, “Loading interactive example…” occupies the external status row and only the canvas is inert. Ready releases input without changing the canvas or status dimensions. Failure restores the initial view, states “This example could not start. Reload the page to try again.” and puts “Reload page” in that same row, outside the locked canvas. Notify failure once with role=alert; retain source tabs, copying, ordinary links and the shell. Client-only components have the author's fixed-size placeholder and explanation; no empty canvas is published. Empty source is an authoring error, while empty child content is valid.
+
+Ranges: three identical demos on one page, full files with Unicode, CRLF and long lines, closed floating controls that open later, 375px and 200% zoom, light/dark/system and reduced motion. Reuse semantic tokens for status and failure in both themes, with AA text and focus contrast. Loading feedback is text first; any spinner respects reduced motion. A failed wasm instance makes all its demo blocks visibly terminal and cannot become ready through a late callback.
+
+Acceptance: browser checks cover input, source switching/copying, no-script/loading/ready/failure/client-only, focus return from floating content, console/CSP and failed requests. Capture desktop and mobile together after implementation, perform a bounded finish review, and record the verdict at its tested scope. This extension specifies the new states; it does not claim they have been built or accepted.

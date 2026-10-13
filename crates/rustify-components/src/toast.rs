@@ -38,6 +38,7 @@ pub fn Toast(
 ) -> impl IntoView {
     let toasts = use_toasts();
     let locale = use_locale();
+    #[cfg(target_arch = "wasm32")]
     let roots = use_context::<rustify_ui::ScopeRoots>();
     let button = NodeRef::<leptos::html::Button>::new();
     let seq = toast.seq;
@@ -64,12 +65,15 @@ pub fn Toast(
                     // would fall to the page. It stays in the scope instead,
                     // where the overlay stack puts it when a layer closes
                     // with nothing to go back to.
-                    let holding = button.get_untracked().is_some_and(|button| {
-                        let button: &leptos::web_sys::Element = button.as_ref();
-                        document().active_element().as_ref() == Some(button)
-                    });
-                    if let (true, Some(roots)) = (holding, &roots) {
-                        let _ = roots.container().focus();
+                    #[cfg(target_arch = "wasm32")]
+                    {
+                        let holding = button.get_untracked().is_some_and(|button| {
+                            let button: &leptos::web_sys::Element = button.as_ref();
+                            document().active_element().as_ref() == Some(button)
+                        });
+                        if let (true, Some(roots)) = (holding, &roots) {
+                            let _ = roots.container().focus();
+                        }
                     }
                     toasts.dismiss(seq);
                 }

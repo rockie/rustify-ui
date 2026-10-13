@@ -1,0 +1,58 @@
+[package]
+name = "docs-components-fixture"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[workspace]
+resolver = "2"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[[bin]]
+name = "docs-render"
+path = "src/bin/docs-render.rs"
+required-features = ["ssr"]
+
+[features]
+default = []
+ssr = ["rustify-docs/site-ssr", "rustify-ui/ssr", "rustify-components/ssr", "leptos/ssr"]
+hydrate = ["rustify-docs/hydrate", "rustify-ui/hydrate", "rustify-components/hydrate", "leptos/hydrate"]
+
+[dependencies]
+leptos = { version = "=0.8.22", default-features = false }
+rustify-ui = { path = "../../../../crates/rustify-ui", default-features = false }
+rustify-components = { path = "../../../../crates/rustify-components", default-features = false }
+rustify-docs = { path = "../../../../crates/rustify-docs", default-features = false }
+
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+wasm-bindgen = "=0.2.128"
+
+[profile.docs-host]
+inherits = "dev"
+panic = "unwind"
+incremental = true
+debug = 0
+opt-level = 1
+lto = false
+
+[profile.docs-wasm]
+inherits = "dev"
+panic = "abort"
+incremental = true
+debug = 0
+opt-level = 1
+lto = false
+
+[profile.docs-host-release]
+inherits = "release"
+panic = "unwind"
+debug = 0
+lto = "thin"
+
+[profile.release]
+panic = "abort"
+debug = 0
+lto = "thin"
+codegen-units = 1

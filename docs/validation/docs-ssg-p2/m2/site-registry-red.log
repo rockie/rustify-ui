@@ -1,0 +1,30 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling leptos_macro v0.8.19
+   Compiling rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+   Compiling leptos v0.8.22
+   Compiling rustify-ui v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui)
+   Compiling rustify-components v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-components)
+   Compiling rustify-docs v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-docs)
+error: site! registry expansion is not implemented yet
+  --> crates/rustify-docs/tests/site_registry.rs:35:5
+   |
+35 | /     rustify_docs::site! {
+36 | |         components {
+37 | |             Counter { initial: i32 = 2, label: String = "Counter".to_string() } =>
+38 | |                 |props, children| counter(props.initial, props.label, children),
+...  |
+42 | |         slots { footer => footer, }
+43 | |     }
+   | |_____^
+   |
+   = note: this error originates in the macro `rustify_docs::site` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error: could not compile `rustify-docs` (test "site_registry") due to 1 previous error
+mbx[cache]: 0 hits, 0 misses, 7 not looked up; 0 B downloaded, 0 B uploaded, 84.6 MiB stored locally
+mbx[savings]: 6h 29m of compiling skipped across 6926 builds. rustc suspects nothing.

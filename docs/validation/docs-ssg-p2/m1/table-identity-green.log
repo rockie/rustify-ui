@@ -1,0 +1,19 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-ui v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui)
+   Compiling rustify-components v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-components)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 6.03s
+     Running unittests src/lib.rs (target/debug/deps/rustify_components-0001aa62c3a9a43c)
+
+running 1 test
+test data_table::view::tests::host_table_has_cells_and_fractional_geometry_before_measurement ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 110 filtered out; finished in 0.01s
+
+mbx[cache]: 0 hits, 0 misses, 2 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: 51421 compilations. rustc did each once; mbx did the rest of the showing up.

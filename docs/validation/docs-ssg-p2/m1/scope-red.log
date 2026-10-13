@@ -1,0 +1,31 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-ui v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui)
+error[E0432]: unresolved import `rustify_ui::ssr_scope`
+ --> crates/rustify-ui/tests/ssr_scope.rs:4:18
+  |
+4 | use rustify_ui::{ssr_scope, MountConfig, ScopeRoots};
+  |                  ^^^^^^^^^ no `ssr_scope` in the root
+
+error[E0433]: cannot find `id` in `rustify_ui`
+  --> crates/rustify-ui/tests/ssr_scope.rs:17:41
+   |
+17 |                 let first = rustify_ui::id::next("field").expect("scoped allocator");
+   |                                         ^^ could not find `id` in `rustify_ui`
+
+error[E0433]: cannot find `id` in `rustify_ui`
+  --> crates/rustify-ui/tests/ssr_scope.rs:18:42
+   |
+18 |                 let second = rustify_ui::id::next("field").expect("scoped allocator");
+   |                                          ^^ could not find `id` in `rustify_ui`
+
+Some errors have detailed explanations: E0432, E0433.
+For more information about an error, try `rustc --explain E0432`.
+error: could not compile `rustify-ui` (test "ssr_scope") due to 3 previous errors
+mbx[cache]: 0 hits, 0 misses, 1 not looked up; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: the running total stands at 6h 24m across 6787 builds. nobody is counting except the box.

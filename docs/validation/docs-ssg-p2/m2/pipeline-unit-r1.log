@@ -1,0 +1,35 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-docs v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-docs)
+error[E0382]: borrow of moved value: `item.label`
+   --> crates/rustify-docs/src/builtins.rs:72:96
+    |
+ 71 | /         view! {
+ 72 | |             <section class="rd-static-panel" data-rd-static-panel=index.to_string() aria-label=item.label.clone()>
+    | |                                                                                                ^^^^^^^^^^ value borrowed here after move
+ 73 | |                 <p class="rd-static-tab-title">{item.label}</p>
+ 74 | |                 <p class="rd-static-text">{item.content}</p>
+ 75 | |             </section>
+ 76 | |         }
+    | |_________- `item.label` moved due to this method call
+    |
+note: `leptos::prelude::IntoRender::into_render` takes ownership of the receiver `self`, which moves `item.label`
+   --> /Users/rockie/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tachys-0.2.19/src/view/mod.rs:537:20
+    |
+537 |     fn into_render(self) -> Self::Output;
+    |                    ^^^^
+    = note: move occurs because `item.label` has type `std::string::String`, which does not implement the `Copy` trait
+help: you can `clone` the value and consume it, but this might not be your desired behavior
+    |
+ 73 |                 <p class="rd-static-tab-title">{item.label.clone()}</p>
+    |                                                           ++++++++
+
+For more information about this error, try `rustc --explain E0382`.
+error: could not compile `rustify-docs` (lib test) due to 1 previous error
+mbx[cache]: 0 hits, 0 misses, 1 not looked up; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: 2.1 TiB logical tidied away. you may continue not thinking about it.

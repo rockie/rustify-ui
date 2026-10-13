@@ -1,0 +1,35 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-docs-cli v0.1.5 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-docs-cli)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.16s
+     Running tests/components.rs (target/debug/deps/components-871d7de2f5573088)
+
+running 1 test
+mbx[progress]: 15s elapsed; 0 hits, 0 misses, 0 bypassed, 1 not looked up; ~0s compiler work saved
+mbx[progress]: 30s elapsed; 0 hits, 0 misses, 0 bypassed, 1 not looked up; ~0s compiler work saved
+mbx[progress]: 45s elapsed; 0 hits, 0 misses, 0 bypassed, 1 not looked up; ~0s compiler work saved
+mbx[progress]: 1m elapsed; 0 hits, 0 misses, 0 bypassed, 1 not looked up; ~0s compiler work saved
+test real_component_builds_report_independent_errors_preserve_good_bytes_and_recover_one_generation has been running for over 60 seconds
+mbx[progress]: 1m 15s elapsed; 0 hits, 0 misses, 0 bypassed, 1 not looked up; ~0s compiler work saved
+mbx[progress]: 1m 30s elapsed; 0 hits, 0 misses, 0 bypassed, 1 not looked up; ~0s compiler work saved
+mbx[progress]: 1m 45s elapsed; 0 hits, 0 misses, 0 bypassed, 1 not looked up; ~0s compiler work saved
+mbx[progress]: 2m elapsed; 0 hits, 0 misses, 0 bypassed, 1 not looked up; ~0s compiler work saved
+components/A-good: success=true, errors=0, compiler={"generation":"5397dd3cb8abb18e17624b7af2f674932ef102f9247eecd11d35e131fa1ff05b","framework_release":"rustify-docs@0.1.0","host":{"elapsed_ms":210,"completed_at_ms":1791883278008,"fresh_artifacts":263,"compiled_artifacts":0,"profile":"docs-host-release","target":null,"compiler":"mbx","flags":["build","--locked","--message-format","json","--no-default-features","--profile","docs-host-release","--features","ssr","--manifest-path","/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-cli-components-13220-0/site/Cargo.toml","--target-dir","/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-cli-components-13220-0/site/.rustify-docs/target","--bin","docs-render"],"success":true},"wasm":{"elapsed_ms":185,"completed_at_ms":1791883278204,"fresh_artifacts":251,"compiled_artifacts":0,"profile":"release","target":"wasm32-unknown-unknown","compiler":"mbx","flags":["build","--locked","--message-format","json","--no-default-features","--profile","release","--features","hydrate","--manifest-path","/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-cli-components-13220-0/site/Cargo.toml","--target-dir","/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-cli-components-13220-0/site/.rustify-docs/target","--lib","--target","wasm32-unknown-unknown"],"success":true}}
+components/B-cold-and-rust-errors: success=false, errors=4, compiler=null
+mbx[progress]: 3m elapsed; 0 hits, 0 misses, 0 bypassed, 1 not looked up; ~0s compiler work saved
+components/C-props-and-yaml: success=false, errors=2, compiler=null
+mbx[progress]: 4m elapsed; 0 hits, 0 misses, 0 bypassed, 1 not looked up; ~0s compiler work saved
+mbx[progress]: 5m elapsed; 0 hits, 0 misses, 0 bypassed, 1 not looked up; ~0s compiler work saved
+components/D-repaired: success=true, errors=0, compiler={"generation":"c8e9d149bae66d11287c9fdafcb8f46ceaf056423964155f2f637bdfcd0027f2","framework_release":"rustify-docs@0.1.0","host":{"elapsed_ms":73217,"completed_at_ms":1791883435415,"fresh_artifacts":261,"compiled_artifacts":2,"profile":"docs-host-release","target":null,"compiler":"mbx","flags":["build","--locked","--message-format","json","--no-default-features","--profile","docs-host-release","--features","ssr","--manifest-path","/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-cli-components-13220-0/site/Cargo.toml","--target-dir","/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-cli-components-13220-0/site/.rustify-docs/target","--bin","docs-render"],"success":true},"wasm":{"elapsed_ms":17432,"completed_at_ms":1791883452866,"fresh_artifacts":250,"compiled_artifacts":1,"profile":"release","target":"wasm32-unknown-unknown","compiler":"mbx","flags":["build","--locked","--message-format","json","--no-default-features","--profile","release","--features","hydrate","--manifest-path","/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-cli-components-13220-0/site/Cargo.toml","--target-dir","/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-cli-components-13220-0/site/.rustify-docs/target","--lib","--target","wasm32-unknown-unknown"],"success":true}}
+components/E-unchanged: success=true, errors=0, compiler={"generation":"c8e9d149bae66d11287c9fdafcb8f46ceaf056423964155f2f637bdfcd0027f2","framework_release":"rustify-docs@0.1.0","host":{"elapsed_ms":186,"completed_at_ms":1791883463056,"fresh_artifacts":263,"compiled_artifacts":0,"profile":"docs-host-release","target":null,"compiler":"mbx","flags":["build","--locked","--message-format","json","--no-default-features","--profile","docs-host-release","--features","ssr","--manifest-path","/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-cli-components-13220-0/site/Cargo.toml","--target-dir","/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-cli-components-13220-0/site/.rustify-docs/target","--bin","docs-render"],"success":true},"wasm":{"elapsed_ms":174,"completed_at_ms":1791883463241,"fresh_artifacts":251,"compiled_artifacts":0,"profile":"release","target":"wasm32-unknown-unknown","compiler":"mbx","flags":["build","--locked","--message-format","json","--no-default-features","--profile","release","--features","hydrate","--manifest-path","/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-cli-components-13220-0/site/Cargo.toml","--target-dir","/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-cli-components-13220-0/site/.rustify-docs/target","--lib","--target","wasm32-unknown-unknown"],"success":true}}
+test real_component_builds_report_independent_errors_preserve_good_bytes_and_recover_one_generation ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 328.54s
+
+mbx[cache]: 0 hits, 0 misses, 1 not looked up; 0 B downloaded, 0 B uploaded, 5.0 MiB stored locally
+mbx[savings]: 51772 compilations old. not one compiled twice.

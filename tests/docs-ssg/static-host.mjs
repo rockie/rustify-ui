@@ -20,6 +20,11 @@ const types = {
     ".png": "image/png",
     ".xml": "application/xml",
     ".txt": "text/plain; charset=utf-8",
+    ".wasm": "application/wasm",
+    ".woff": "font/woff",
+    ".woff2": "font/woff2",
+    ".ttf": "font/ttf",
+    ".otf": "font/otf",
 };
 
 async function isFile(path) {

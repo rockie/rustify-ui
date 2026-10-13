@@ -1,0 +1,23 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling xtask v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/xtask)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.68s
+     Running unittests src/main.rs (target/debug/deps/xtask-abd35e9efaf03cef)
+
+running 6 tests
+test css::tests::a_line_only_one_side_has_is_reported_against_the_end_of_file ... ok
+test css::tests::a_long_line_is_cut_around_where_it_differs ... ok
+test css::tests::the_first_differing_line_is_reported_with_both_sides ... ok
+test css::tests::complete_static_candidates_include_hidden_sdk_and_component_branches ... ok
+test css::tests::excluded_trees_and_generated_css_are_not_read_or_rescanned ... ok
+test css::tests::published_candidates_match_the_sdk_sources ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 41 filtered out; finished in 0.14s
+
+mbx[cache]: 0 hits, 0 misses, 1 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: every checkout believes it owns 116.1 GiB of outputs. the disk keeps one copy and says nothing.

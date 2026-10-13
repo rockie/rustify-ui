@@ -1,0 +1,101 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling serde_json v1.0.151
+    Checking web-sys v0.3.105
+   Compiling crc32fast v1.5.2
+    Checking simd-adler32 v0.3.10
+    Checking adler2 v2.0.1
+   Compiling zmij v1.0.23
+    Checking ryu-js v1.0.3
+   Compiling memchr v2.8.3
+   Compiling rustify-docs-syntax v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-docs-syntax)
+    Checking miniz_oxide v0.9.1
+    Checking flate2 v1.1.10
+    Checking codee v0.3.5
+    Checking rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+   Compiling rustify-docs-macros v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-docs-macros)
+    Checking reactive_graph v0.2.15
+    Checking gloo-utils v0.2.0
+    Checking wasm-streams v0.5.0
+    Checking gloo-net v0.6.0
+    Checking server_fn v0.8.13
+    Checking reactive_stores v0.4.4
+    Checking tachys v0.2.19
+    Checking leptos_server v0.8.8
+    Checking leptos_dom v0.8.8
+    Checking leptos v0.8.22
+    Checking rustify-ui v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui)
+warning: method `fallback_element` is never used
+   --> crates/rustify-ui/src/overlay.rs:349:23
+    |
+284 |     impl OverlayStack {
+    |     ----------------- method in this implementation
+...
+349 |         pub(crate) fn fallback_element(&self) -> Element {
+    |                       ^^^^^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: field `guest_click` is never read
+   --> crates/rustify-ui/src/router.rs:556:9
+    |
+549 |     struct Router {
+    |            ------ field in this struct
+...
+556 |         guest_click: Option<SendWrapper<Rc<GuestClick>>>,
+    |         ^^^^^^^^^^^
+    |
+    = note: `Router` has a derived impl for the trait `Clone`, but this is intentionally ignored during dead code analysis
+
+warning: `rustify-ui` (lib) generated 2 warnings
+    Checking rustify-components v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-components)
+mbx[progress]: 15s elapsed; 1 hits, 5 misses, 0 bypassed, 25 not looked up; ~0s compiler work saved
+    Checking rustify-docs v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-docs)
+warning: field `props` is never read
+  --> crates/rustify-docs/src/site/registry.rs:19:9
+   |
+18 | pub(crate) struct PreparedComponent {
+   |                   ----------------- field in this struct
+19 |     pub props: Value,
+   |         ^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: methods `demo_view`, `surface_view`, and `slot_view` are never used
+   --> crates/rustify-docs/src/site/registry.rs:140:19
+    |
+ 34 | impl SiteRegistry {
+    | ----------------- methods in this implementation
+...
+140 |     pub(crate) fn demo_view(&self, name: &str) -> Result<AnyView, SiteError> {
+    |                   ^^^^^^^^^
+...
+155 |     pub(crate) fn surface_view(
+    |                   ^^^^^^^^^^^^
+...
+166 |     pub(crate) fn slot_view(
+    |                   ^^^^^^^^^
+
+warning: associated function `new` is never used
+   --> crates/rustify-docs/src/site/registry.rs:192:19
+    |
+191 | impl RenderContext {
+    | ------------------ associated function in this implementation
+192 |     pub(crate) fn new(
+    |                   ^^^
+
+warning: function `provide_environment` is never used
+   --> crates/rustify-docs/src/site/registry.rs:264:15
+    |
+264 | pub(crate) fn provide_environment(environment: &SiteEnvironment) -> Result<(), SiteError> {
+    |               ^^^^^^^^^^^^^^^^^^^
+
+warning: `rustify-docs` (lib) generated 4 warnings
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 17.03s
+mbx[cache]: 1 hits, 5 misses, 26 not looked up; 0 B downloaded, 0 B uploaded, 59.6 MiB stored locally
+mbx[savings]: the running total stands at 6h 29m across 6935 builds. nobody is counting except the box.

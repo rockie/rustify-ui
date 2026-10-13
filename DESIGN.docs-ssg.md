@@ -434,6 +434,22 @@ Note, tip, important, warning and caution:
   - Arrow keys, Home and End move between tabs.
   - A choice switches every group of the same name on the page and is remembered per base path.
 
+### DOM demos and static blocks (P2 M2)
+
+An executable example remains part of the article, using the existing panel radius, hairlines, semantic colours and code treatment. The page shell remains static HTML; this extension adds no visual world or token scale.
+
+The DOM canvas comes first, padded by 1rem, followed by an external status row and optional source. Without script, its outer fieldset disables native controls and a noscript explanation remains readable. Loading locks only the canvas; ready releases it without moving the status or source. Failure restores the original view and exposes an alert and Reload button in the external row. Ordinary navigation, source tabs and copying stay outside the island's input lock and failed instance. Client-only examples retain the author's fixed-size placeholder and browser explanation before attachment.
+
+**The Stable Recovery Footprint Rule.** The status grid reserves the intrinsic size of the complete recovery message and button in every state, including ready, using invisible, aria-hidden recovery items and a compact minimum (4.5rem). Allow wrapping and larger text to increase that footprint; 72px in the reviewed default-size captures is an observation, not a fixed height. Do not restore the removed 8rem mobile floor.
+
+Source uses the existing Function / Full file code-group controls and raw-text templates, with a quiet project-relative path. Copy preserves the original text and line endings. Both panels remain readable without script; with script, the visible source scrolls internally up to 24rem and remains keyboard-focusable.
+
+- **Static Tabs:** all labelled panels ship visible, with the control row hidden. The base script adds unique tab/panel ARIA pairings, a primary underline and local Left/Right/Home/End selection. Peer groups, nested code groups and appended child content retain their own state and content.
+- **CardGrid:** an ordinary list of native links and descriptions, separated by hairlines rather than decorative cards. It reflows to one column on narrow screens; the validated column setting permits one to three columns.
+- **Steps:** an ordered list with paragraph titles and descriptions. Primary-coloured native markers convey a real sequence. Cards, steps and their checked child content remain available without JavaScript.
+
+These static blocks create no island or wasm requirement. Sources: [demo.rs](crates/rustify-docs/src/demo.rs), [builtins.rs](crates/rustify-docs/src/builtins.rs), [docs.css](crates/rustify-docs/assets/docs.css), [mode.js](crates/rustify-docs/assets/mode.js) and [site.js](crates/rustify-docs/assets/site.js). The [M2 design synchronization record](docs/validation/docs-ssg-p2/m2/design-documentation.md) records the generated-artifact comparison, current captures, scoped finish verdict and verification limits; it does not establish full P2 or publication acceptance.
+
 ### Tables
 
 - A table scrolls inside its own panel: a hairline border with the panel radius.

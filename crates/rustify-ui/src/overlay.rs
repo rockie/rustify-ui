@@ -117,6 +117,52 @@ pub(crate) use dom::EditSession;
 #[cfg(target_arch = "wasm32")]
 pub use dom::{use_overlay, Anchor, Layer, OverlayStack};
 
+#[cfg(not(target_arch = "wasm32"))]
+pub use host::{Anchor, Layer};
+
+#[cfg(not(target_arch = "wasm32"))]
+mod host {
+    use leptos::prelude::*;
+
+    /// A closed floating component's deterministic initial anchor.
+    #[derive(Clone)]
+    pub enum Anchor {
+        Centred,
+    }
+
+    /// Like Leptos' Portal, a layer has no host DOM. Floating components
+    /// generate their triggers with the layer initially closed; opening and
+    /// positioning the layer belongs to the browser runtime.
+    #[component]
+    pub fn Layer(
+        #[prop(optional)] modal: bool,
+        #[prop(into)] anchor: Signal<Anchor>,
+        #[prop(optional)] fit: bool,
+        on_close: impl Fn() + Send + Sync + 'static,
+        #[prop(optional, into)] labelled_by: String,
+        #[prop(optional, into)] described_by: String,
+        #[prop(optional, into)] class: String,
+        #[prop(optional, into)] test_id: String,
+        children: ChildrenFn,
+    ) -> impl IntoView {
+        #[cfg(feature = "ssr")]
+        crate::StaticRenderIssues::record(
+            "floating content must start closed; open it after attachment or declare a fixed client-only placeholder",
+        );
+        let _ = (
+            modal,
+            anchor,
+            fit,
+            on_close,
+            labelled_by,
+            described_by,
+            class,
+            test_id,
+            children,
+        );
+    }
+}
+
 #[cfg(target_arch = "wasm32")]
 mod dom {
     use super::{wrap_tab, LayerId, LocalRect, TabFocus};

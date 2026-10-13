@@ -8,6 +8,10 @@ pub enum UiError {
     InvalidContainer,
     /// Another mount scope already owns the container.
     OccupiedContainer,
+    /// The generated scope is missing its expected content or overlay root.
+    InvalidHydrationRoot,
+    /// The generated scope's identity differs from the requested view's seed.
+    HydrationIdentityMismatch,
     /// The region's canvas could not provide a WebGL2 context. The DOM around
     /// the region keeps working.
     GpuUnavailable,
@@ -34,6 +38,10 @@ impl fmt::Display for UiError {
         match self {
             Self::InvalidContainer => f.write_str("container is missing or not connected"),
             Self::OccupiedContainer => f.write_str("container is already mounted"),
+            Self::InvalidHydrationRoot => f.write_str("the generated hydration roots are invalid"),
+            Self::HydrationIdentityMismatch => {
+                f.write_str("the generated scope identity does not match")
+            }
             Self::GpuUnavailable => f.write_str("no WebGL2 context for the region canvas"),
             Self::NotFound => f.write_str("no object with that identity"),
             Self::Disposed => f.write_str("that object has been deleted"),
@@ -55,6 +63,8 @@ impl std::error::Error for UiError {}
 pub enum ErrorKind {
     InvalidContainer,
     OccupiedContainer,
+    InvalidHydrationRoot,
+    HydrationIdentityMismatch,
     /// The application asked the region for something the embedded contract
     /// refuses: the document title, the URL, fullscreen, opening a link.
     UnsupportedCapability,
@@ -129,9 +139,11 @@ impl Severity {
 }
 
 impl ErrorKind {
-    pub const ALL: [ErrorKind; 18] = [
+    pub const ALL: [ErrorKind; 20] = [
         Self::InvalidContainer,
         Self::OccupiedContainer,
+        Self::InvalidHydrationRoot,
+        Self::HydrationIdentityMismatch,
         Self::UnsupportedCapability,
         Self::AssetLoadFailed,
         Self::BuildContractMismatch,
@@ -155,6 +167,8 @@ impl ErrorKind {
         match self {
             Self::InvalidContainer => "InvalidContainer",
             Self::OccupiedContainer => "OccupiedContainer",
+            Self::InvalidHydrationRoot => "InvalidHydrationRoot",
+            Self::HydrationIdentityMismatch => "HydrationIdentityMismatch",
             Self::UnsupportedCapability => "UnsupportedCapability",
             Self::AssetLoadFailed => "AssetLoadFailed",
             Self::BuildContractMismatch => "BuildContractMismatch",
@@ -192,6 +206,12 @@ impl ErrorKind {
         match self {
             Self::InvalidContainer => "give mount an element that is in the document",
             Self::OccupiedContainer => "dispose the scope that owns the container, or use another",
+            Self::InvalidHydrationRoot => {
+                "generate the content and overlay roots with ssr_scope before hydration"
+            }
+            Self::HydrationIdentityMismatch => {
+                "use the same scope, seed and base for static generation and hydration"
+            }
             Self::UnsupportedCapability => "do it from the host page; a region cannot",
             Self::AssetLoadFailed => "check the asset is deployed beside the build, then retry",
             Self::BuildContractMismatch => "deploy the JS, the wasm and the bridge from one build",
@@ -234,6 +254,8 @@ impl UiError {
         match self {
             Self::InvalidContainer => Some(ErrorKind::InvalidContainer),
             Self::OccupiedContainer => Some(ErrorKind::OccupiedContainer),
+            Self::InvalidHydrationRoot => Some(ErrorKind::InvalidHydrationRoot),
+            Self::HydrationIdentityMismatch => Some(ErrorKind::HydrationIdentityMismatch),
             Self::GpuUnavailable => Some(ErrorKind::GpuInitFailed),
             Self::Disposed => Some(ErrorKind::Disposed),
             Self::UrlOwnerConflict => Some(ErrorKind::UrlOwnerConflict),
@@ -730,13 +752,15 @@ mod tests {
 
     #[test]
     fn the_registered_kinds_are_all_there() {
-        assert_eq!(ErrorKind::ALL.len(), 18);
+        assert_eq!(ErrorKind::ALL.len(), 20);
         let names: Vec<&str> = ErrorKind::ALL.iter().map(|kind| kind.name()).collect();
         assert_eq!(
             names,
             [
                 "InvalidContainer",
                 "OccupiedContainer",
+                "InvalidHydrationRoot",
+                "HydrationIdentityMismatch",
                 "UnsupportedCapability",
                 "AssetLoadFailed",
                 "BuildContractMismatch",

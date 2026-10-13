@@ -255,14 +255,13 @@ impl Message {
 }
 
 #[cfg(target_arch = "wasm32")]
-pub use browser::{
-    browser_languages, format_date, format_number, provide_locale, use_locale, LocaleHandle,
-};
+pub use browser::{browser_languages, format_date, format_number};
+pub use browser::{provide_locale, use_locale, LocaleHandle};
 
-#[cfg(target_arch = "wasm32")]
 mod browser {
     use super::{Locale, Message};
     use leptos::prelude::*;
+    #[cfg(target_arch = "wasm32")]
     use leptos::wasm_bindgen::JsValue;
 
     /// The scope's language.
@@ -331,6 +330,7 @@ mod browser {
     ///
     /// The options have to be ones `Intl` accepts; an object it rejects throws
     /// out of here, exactly as an invalid argument does anywhere else.
+    #[cfg(target_arch = "wasm32")]
     pub fn format_number(locale: Locale, value: f64, options: &js_sys::Object) -> String {
         let locales = js_sys::Array::of1(&JsValue::from_str(locale.tag()));
         let format = js_sys::Intl::NumberFormat::new(&locales, options);
@@ -348,6 +348,7 @@ mod browser {
     /// `Intl.DateTimeFormat` options object from the application - for the
     /// same reason as above, and more so: whether a date needs its year is
     /// something only the screen it is on can say.
+    #[cfg(target_arch = "wasm32")]
     pub fn format_date(locale: Locale, millis: f64, options: &js_sys::Object) -> String {
         let locales = js_sys::Array::of1(&JsValue::from_str(locale.tag()));
         let date = js_sys::Date::new(&JsValue::from_f64(millis));
@@ -361,6 +362,7 @@ mod browser {
     }
 
     /// Every language tag the browser says its user prefers, in order.
+    #[cfg(target_arch = "wasm32")]
     pub fn browser_languages() -> Vec<String> {
         leptos::web_sys::window()
             .map(|window| window.navigator().languages())

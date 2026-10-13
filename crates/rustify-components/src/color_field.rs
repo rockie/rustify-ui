@@ -4,8 +4,8 @@
 //! is on its way to a colour without being one, and a field that put the
 //! application's value back after every keystroke would never let anyone type
 //! a colour at all. Beside the text is a swatch of the colour the application
-//! holds, painted through the CSS object model - a strict policy refuses a
-//! `style` attribute, and the value is not one a class could name.
+//! holds. Its initial colour is an external geometry rule, and browser
+//! updates change that rule through the CSS object model.
 
 /// The colour `text` spells, as lower-case `#rrggbb`, or `#rrggbbaa` when
 /// `alpha` allows an opacity.
@@ -30,10 +30,8 @@ pub fn parse_hex(text: &str, alpha: bool) -> Option<String> {
     }
 }
 
-#[cfg(target_arch = "wasm32")]
 pub use dom::ColorField;
 
-#[cfg(target_arch = "wasm32")]
 mod dom {
     use super::parse_hex;
     use leptos::prelude::*;
@@ -99,14 +97,17 @@ mod dom {
         let keydown = draft.on_keydown();
         let input = draft.on_input();
         let invalid_draft = draft.invalid();
+        let swatch = crate::geometry::geometry_class(move || {
+            let color = parse_hex(&value.get(), true).unwrap_or_else(|| "transparent".to_string());
+            format!("background-color:{color};")
+        });
         view! {
             <div class=crate::macros::reactive_merge(FIELD, &class) data-name="ColorField">
                 <span
-                    class=SWATCH
+                    class=format!("{SWATCH} {swatch}")
                     data-name="ColorSwatch"
                     data-testid=swatch_id
                     aria-hidden="true"
-                    style:background-color=move || value.get()
                 />
                 <input
                     type="text"
@@ -125,6 +126,9 @@ mod dom {
                     prop:value=draft.text()
                     prop:disabled=move || disabled.get()
                     prop:readOnly=move || read_only.get()
+                    value=draft.text()
+                    disabled=move || disabled.get()
+                    readonly=move || read_only.get()
                     on:focus=draft.on_focus()
                     on:blur=draft.on_blur()
                     on:keydown=move |event| {
@@ -181,5 +185,43 @@ mod tests {
             assert_eq!(parse_hex(text, true), None, "{text:?}");
             assert_eq!(parse_hex(text, false), None, "{text:?}");
         }
+    }
+
+    #[cfg(all(feature = "ssr", not(target_arch = "wasm32")))]
+    #[test]
+    fn host_color_field_renders_the_controlled_value_and_external_swatch() {
+        use leptos::prelude::*;
+
+        let owner = Owner::new();
+        let styles = crate::geometry::GeometryStyles::default();
+        let html = owner.with(|| {
+            rustify_ui::id::provide("color-test");
+            crate::geometry::provide_geometry_styles(styles.clone());
+            view! {
+                <super::ColorField
+                    value="#1a2b3c80".to_string()
+                    alpha=true
+                    disabled=true
+                    read_only=true
+                    on_change=|_| {}
+                />
+            }
+            .to_html()
+        });
+        assert!(html.contains("value=\"#1a2b3c80\""), "{html}");
+        assert!(
+            html.contains(" disabled ") || html.contains(" disabled>"),
+            "{html}"
+        );
+        assert!(
+            html.contains(" readonly ") || html.contains(" readonly>"),
+            "{html}"
+        );
+        assert!(!html.contains(" style="), "{html}");
+        assert!(
+            styles.css().contains("background-color:#1a2b3c80;"),
+            "{}",
+            styles.css()
+        );
     }
 }

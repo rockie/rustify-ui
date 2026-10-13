@@ -1,0 +1,28 @@
+schema_version = 1
+
+[site]
+name = "Component fixture"
+description = "Real registered DOM views, source and attachment states."
+lang = "en"
+url = "https://example.com/docs/"
+base = "/docs/"
+
+[repo]
+url = "https://github.com/example/components-fixture"
+ref = "main"
+
+[rust]
+manifest = "Cargo.toml"
+registry = "src/lib.rs"
+
+[[nav.groups]]
+label = "Examples"
+items = ["counter.md", "builtins.md", "async.md", "client-only.md", "failure.md", "proxy.md"]
+
+[[nav.top]]
+label = "Counters"
+link = "counter.md"
+
+[[nav.top]]
+label = "Catalog proxy"
+link = "proxy.md"

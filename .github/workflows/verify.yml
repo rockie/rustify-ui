@@ -54,6 +54,20 @@ jobs:
             mbx clippy --locked -p "$package" --all-targets -- -D warnings
           done
           mbx build --locked -p rustify-docs-cli --profile docs-cli
+      - name: Docs registry and isolated rendering modes
+        run: |
+          for package in rustify-docs-syntax rustify-docs-macros; do
+            mbx test --locked -p "$package"
+            mbx clippy --locked -p "$package" --all-targets -- -D warnings
+          done
+          mbx test --locked -p rustify-docs --no-default-features --features site-ssr
+          mbx clippy --locked -p rustify-docs --no-default-features --features site-ssr --all-targets -- -D warnings
+          for package in rustify-ui rustify-components rustify-docs; do
+            mbx check --locked -p "$package" --no-default-features --features hydrate --target wasm32-unknown-unknown
+          done
+          cargo fmt --manifest-path tests/dom-only/hydration/Cargo.toml --all -- --check
+          cargo fmt --manifest-path tests/docs-ssg/fixtures/components/Cargo.toml --all -- --check
+          mbx clippy --locked --manifest-path tests/docs-ssg/fixtures/components/Cargo.toml --no-default-features --features ssr --all-targets -- -D warnings
       - name: Independent theme consumer tests
         run: mbx test --locked --manifest-path tests/theme-export/Cargo.toml --workspace --bins
       - name: Makepad text layout and shaping checks
@@ -95,10 +109,40 @@ jobs:
         run: npm ci && npx playwright install --with-deps chromium
       - name: DOM-only browser checks
         run: npx playwright test -c playwright.docs.config.ts --project=dom-only
+      - name: Static DOM hydration and independent CSR comparison
+        run: npx playwright test -c playwright.docs.config.ts --project=dom-hydrate hydration.spec.ts
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: dom-only-results
+          path: test-results/docs
+          retention-days: 7
+
+  docs-components:
+    name: docs component islands
+    runs-on: macos-14
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Rust, mbx and Tailwind from mise.toml
+        uses: jdx/mise-action@v4
+      - uses: jdx/mr-boxington-action@v1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 26
+      - name: Compile the CLI and real author targets before browser startup
+        run: |
+          mbx build --locked -p rustify-docs-cli --profile docs-cli
+          RUSTIFY_DOCS_CARGO=mbx target/docs-cli/rustify-docs check --config tests/docs-ssg/fixtures/components/rustify-docs.toml --format json
+          RUSTIFY_DOCS_CARGO=mbx target/docs-cli/rustify-docs build --config tests/docs-ssg/fixtures/components/rustify-docs.toml
+      - name: Install pinned Playwright
+        run: npm ci && npx playwright install --with-deps chromium
+      - name: Component islands under a base
+        run: npx playwright test -c playwright.docs.config.ts --project=components-subpath islands.spec.ts
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: docs-components-results
           path: test-results/docs
           retention-days: 7
 

@@ -128,14 +128,18 @@ impl Toasts {
     }
 }
 
-#[cfg(target_arch = "wasm32")]
 pub use dom::{provide_toasts, use_toasts, ToastHandle, ToastRegion};
 
-#[cfg(target_arch = "wasm32")]
 mod dom {
+    #[cfg(target_arch = "wasm32")]
     use super::{Expiry, Toast, ToastOptions, Toasts};
+    #[cfg(not(target_arch = "wasm32"))]
+    use super::{Toast, ToastOptions, Toasts};
+    #[cfg(target_arch = "wasm32")]
     use crate::i18n::{use_locale, Message};
+    #[cfg(target_arch = "wasm32")]
     use crate::overlay::use_overlay;
+    #[cfg(target_arch = "wasm32")]
     use leptos::portal::Portal;
     use leptos::prelude::*;
 
@@ -165,6 +169,7 @@ mod dom {
             .expect("no toasts in scope; call provide_toasts in the scope root")
     }
 
+    #[cfg(target_arch = "wasm32")]
     fn now() -> f64 {
         window()
             .performance()
@@ -181,12 +186,17 @@ mod dom {
         /// letting it run.
         pub fn show(&self, message: impl Into<String>, options: ToastOptions) -> u64 {
             let message = message.into();
+            #[cfg(not(target_arch = "wasm32"))]
+            let at = 0.0;
+            #[cfg(target_arch = "wasm32")]
+            let at = now();
             let Some(seq) = self
                 .toasts
-                .try_update(|toasts| toasts.show(message, options, now()))
+                .try_update(|toasts| toasts.show(message, options, at))
             else {
                 return 0;
             };
+            #[cfg(target_arch = "wasm32")]
             self.hide_after(seq, f64::from(options.duration_ms));
             seq
         }
@@ -202,6 +212,7 @@ mod dom {
             self.toasts.with(|toasts| toasts.current().cloned())
         }
 
+        #[cfg(target_arch = "wasm32")]
         fn hide_after(self, seq: u64, wait: f64) {
             crate::runtime::defer_after(wait.ceil() as i32, move || {
                 let expiry = self.toasts.try_maybe_update(|toasts| {
@@ -230,55 +241,68 @@ mod dom {
         #[prop(optional, into)] class: Signal<String>,
         #[prop(optional, into)] test_id: String,
     ) -> impl IntoView {
-        let toasts = use_toasts();
-        let locale = use_locale();
-        let dismiss_id = format!("{test_id}-dismiss");
-        use_overlay().map(|stack| {
-            let root = stack.overlay_root();
-            view! {
-                <Portal mount=root>
-                    <div
-                        class=move || class.get()
-                        data-testid=test_id.clone()
-                        role="status"
-                        aria-live="polite"
-                    >
-                        {
-                            let dismiss_id = dismiss_id.clone();
-                            move || {
-                                toasts
-                                    .current()
-                                    .map(|toast| match render {
-                                        Some(render) => render.run(toast),
-                                        None => {
-                                            let seq = toast.seq;
-                                            view! {
-                                                <div
-                                                    class="rustify-toast"
-                                                    data-tone=toast.tone.key()
-                                                >
-                                                    <span>{toast.message}</span>
-                                                    <button
-                                                        type="button"
-                                                        data-testid=dismiss_id.clone()
-                                                        aria-label=move || {
-                                                            locale.text(Message::Dismiss)
-                                                        }
-                                                        on:click=move |_| toasts.dismiss(seq)
-                                                    >
-                                                        "\u{d7}"
-                                                    </button>
-                                                </div>
-                                            }
-                                                .into_any()
-                                        }
-                                    })
-                            }
-                        }
-                    </div>
-                </Portal>
+        #[cfg(not(target_arch = "wasm32"))]
+        {
+            #[cfg(feature = "ssr")]
+            if use_toasts().current().is_some() {
+                crate::StaticRenderIssues::record(
+                    "toasts must start empty; show a message after attachment or declare a fixed client-only placeholder",
+                );
             }
-        })
+            let _ = (render, class, test_id, use_toasts());
+        }
+        #[cfg(target_arch = "wasm32")]
+        {
+            let toasts = use_toasts();
+            let locale = use_locale();
+            let dismiss_id = format!("{test_id}-dismiss");
+            use_overlay().map(|stack| {
+                let root = stack.overlay_root();
+                view! {
+                    <Portal mount=root>
+                        <div
+                            class=move || class.get()
+                            data-testid=test_id.clone()
+                            role="status"
+                            aria-live="polite"
+                        >
+                            {
+                                let dismiss_id = dismiss_id.clone();
+                                move || {
+                                    toasts
+                                        .current()
+                                        .map(|toast| match render {
+                                            Some(render) => render.run(toast),
+                                            None => {
+                                                let seq = toast.seq;
+                                                view! {
+                                                    <div
+                                                        class="rustify-toast"
+                                                        data-tone=toast.tone.key()
+                                                    >
+                                                        <span>{toast.message}</span>
+                                                        <button
+                                                            type="button"
+                                                            data-testid=dismiss_id.clone()
+                                                            aria-label=move || {
+                                                                locale.text(Message::Dismiss)
+                                                            }
+                                                            on:click=move |_| toasts.dismiss(seq)
+                                                        >
+                                                            "\u{d7}"
+                                                        </button>
+                                                    </div>
+                                                }
+                                                    .into_any()
+                                            }
+                                        })
+                                }
+                            }
+                        </div>
+                    </Portal>
+                }
+            })
+        }
     }
 }
 

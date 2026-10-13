@@ -1,0 +1,886 @@
+{
+  "diffs": [
+    {
+      "a": "before",
+      "b": "immediate",
+      "parts": [
+        {
+          "i": 0,
+          "leftCount": 259,
+          "rightCount": 259,
+          "differences": []
+        },
+        {
+          "i": 1,
+          "leftCount": 1,
+          "rightCount": 1,
+          "differences": []
+        }
+      ]
+    },
+    {
+      "a": "before",
+      "b": "settled",
+      "parts": [
+        {
+          "i": 0,
+          "leftCount": 259,
+          "rightCount": 259,
+          "differences": []
+        },
+        {
+          "i": 1,
+          "leftCount": 1,
+          "rightCount": 3,
+          "differences": [
+            {
+              "j": 1,
+              "right": {
+                "type": 1,
+                "name": "DIV",
+                "text": null,
+                "attrs": []
+              }
+            },
+            {
+              "j": 2,
+              "right": {
+                "type": 1,
+                "name": "DIV",
+                "text": null,
+                "attrs": [
+                  [
+                    "aria-live",
+                    "polite"
+                  ],
+                  [
+                    "class",
+                    "fixed bottom-4 end-4 z-50 flex max-w-sm flex-col items-end gap-2"
+                  ],
+                  [
+                    "data-testid",
+                    "catalog-a-toaster"
+                  ],
+                  [
+                    "role",
+                    "status"
+                  ]
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "a": "immediate",
+      "b": "csrImmediate",
+      "parts": [
+        {
+          "i": 0,
+          "leftCount": 259,
+          "rightCount": 259,
+          "differences": [
+            {
+              "j": 40,
+              "left": {
+                "type": 3,
+                "name": "#text",
+                "text": "Résumé </textarea> & <line>\nCRLF\nCR\nlast",
+                "attrs": null
+              },
+              "right": {
+                "type": 3,
+                "name": "#text",
+                "text": "Résumé </textarea> & <line>\nCRLF\nCR\nlast<!---->",
+                "attrs": null
+              }
+            },
+            {
+              "j": 170,
+              "left": {
+                "type": 1,
+                "name": "DIV",
+                "text": null,
+                "attrs": [
+                  [
+                    "aria-colindex",
+                    "1"
+                  ],
+                  [
+                    "class",
+                    "absolute shrink-0 truncate px-2 outline-none focus-visible:ring-ring/50 focus-visible:ring-2 focus-visible:ring-inset rui-catalog-a-geometry-15 rui-catalog-a-geometry-30"
+                  ],
+                  [
+                    "role",
+                    "gridcell"
+                  ],
+                  [
+                    "tabindex",
+                    "-1"
+                  ]
+                ]
+              },
+              "right": {
+                "type": 1,
+                "name": "DIV",
+                "text": null,
+                "attrs": [
+                  [
+                    "aria-colindex",
+                    "1"
+                  ],
+                  [
+                    "class",
+                    "absolute shrink-0 truncate px-2 outline-none focus-visible:ring-ring/50 focus-visible:ring-2 focus-visible:ring-inset rui-catalog-a-geometry-15 rui-catalog-a-geometry-27"
+                  ],
+                  [
+                    "role",
+                    "gridcell"
+                  ],
+                  [
+                    "tabindex",
+                    "-1"
+                  ]
+                ]
+              }
+            },
+            {
+              "j": 172,
+              "left": {
+                "type": 1,
+                "name": "DIV",
+                "text": null,
+                "attrs": [
+                  [
+                    "aria-colindex",
+                    "2"
+                  ],
+                  [
+                    "class",
+                    "absolute shrink-0 truncate px-2 outline-none focus-visible:ring-ring/50 focus-visible:ring-2 focus-visible:ring-inset rui-catalog-a-geometry-15 rui-catalog-a-geometry-31"
+                  ],
+                  [
+                    "role",
+                    "gridcell"
+                  ],
+                  [
+                    "tabindex",
+                    "-1"
+                  ]
+                ]
+              },
+              "right": {
+                "type": 1,
+                "name": "DIV",
+                "text": null,
+                "attrs": [
+                  [
+                    "aria-colindex",
+                    "2"
+                  ],
+                  [
+                    "class",
+                    "absolute shrink-0 truncate px-2 outline-none focus-visible:ring-ring/50 focus-visible:ring-2 focus-visible:ring-inset rui-catalog-a-geometry-15 rui-catalog-a-geometry-28"
+                  ],
+                  [
+                    "role",
+                    "gridcell"
+                  ],
+                  [
+                    "tabindex",
+                    "-1"
+                  ]
+                ]
+              }
+            },
+            {
+              "j": 174,
+              "left": {
+                "type": 1,
+                "name": "DIV",
+                "text": null,
+                "attrs": [
+                  [
+                    "aria-colindex",
+                    "3"
+                  ],
+                  [
+                    "class",
+                    "absolute shrink-0 truncate px-2 outline-none focus-visible:ring-ring/50 focus-visible:ring-2 focus-visible:ring-inset rui-catalog-a-geometry-15 rui-catalog-a-geometry-32"
+                  ],
+                  [
+                    "role",
+                    "gridcell"
+                  ],
+                  [
+                    "tabindex",
+                    "-1"
+                  ]
+                ]
+              },
+              "right": {
+                "type": 1,
+                "name": "DIV",
+                "text": null,
+                "attrs": [
+                  [
+                    "aria-colindex",
+                    "3"
+                  ],
+                  [
+                    "class",
+                    "absolute shrink-0 truncate px-2 outline-none focus-visible:ring-ring/50 focus-visible:ring-2 focus-visible:ring-inset rui-catalog-a-geometry-15 rui-catalog-a-geometry-29"
+                  ],
+                  [
+                    "role",
+                    "gridcell"
+                  ],
+                  [
+                    "tabindex",
+                    "-1"
+                  ]
+                ]
+              }
+            },
+            {
+              "j": 176,
+              "left": {
+                "type": 1,
+                "name": "DIV",
+                "text": null,
+                "attrs": [
+                  [
+                    "aria-rowindex",
+                    "3"
+                  ],
+                  [
+                    "aria-selected",
+                    "true"
+                  ],
+                  [
+                    "class",
+                    "absolute left-0 flex w-full items-center border-b border-border/50 aria-selected:bg-accent rui-catalog-a-geometry-16 rui-catalog-a-geometry-27"
+                  ],
+                  [
+                    "data-row-id",
+                    "101"
+                  ],
+                  [
+                    "data-testid",
+                    "catalog-a-table-row-1"
+                  ],
+                  [
+                    "role",
+                    "row"
+                  ]
+                ]
+              },
+              "right": {
+                "type": 1,
+                "name": "DIV",
+                "text": null,
+                "attrs": [
+                  [
+                    "aria-rowindex",
+                    "3"
+                  ],
+                  [
+                    "aria-selected",
+                    "true"
+                  ],
+                  [
+                    "class",
+                    "absolute left-0 flex w-full items-center border-b border-border/50 aria-selected:bg-accent rui-catalog-a-geometry-16 rui-catalog-a-geometry-30"
+                  ],
+                  [
+                    "data-row-id",
+                    "101"
+                  ],
+                  [
+                    "data-testid",
+                    "catalog-a-table-row-1"
+                  ],
+                  [
+                    "role",
+                    "row"
+                  ]
+                ]
+              }
+            },
+            {
+              "j": 177,
+              "left": {
+                "type": 1,
+                "name": "DIV",
+                "text": null,
+                "attrs": [
+                  [
+                    "aria-colindex",
+                    "1"
+                  ],
+                  [
+                    "class",
+                    "absolute shrink-0 truncate px-2 outline-none focus-visible:ring-ring/50 focus-visible:ring-2 focus-visible:ring-inset rui-catalog-a-geometry-15 rui-catalog-a-geometry-33"
+                  ],
+                  [
+                    "role",
+                    "gridcell"
+                  ],
+                  [
+                    "tabindex",
+                    "-1"
+                  ]
+                ]
+              },
+              "right": {
+                "type": 1,
+                "name": "DIV",
+                "text": null,
+                "attrs": [
+                  [
+                    "aria-colindex",
+                    "1"
+                  ],
+                  [
+                    "class",
+                    "absolute shrink-0 truncate px-2 outline-none focus-visible:ring-ring/50 focus-visible:ring-2 focus-visible:ring-inset rui-catalog-a-geometry-15 rui-catalog-a-geometry-31"
+                  ],
+                  [
+                    "role",
+                    "gridcell"
+                  ],
+                  [
+                    "tabindex",
+                    "-1"
+                  ]
+                ]
+              }
+            },
+            {
+              "j": 179,
+              "left": {
+                "type": 1,
+                "name": "DIV",
+                "text": null,
+                "attrs": [
+                  [
+                    "aria-colindex",
+                    "2"
+                  ],
+                  [
+                    "class",
+                    "absolute shrink-0 truncate px-2 outline-none focus-visible:ring-ring/50 focus-visible:ring-2 focus-visible:ring-inset rui-catalog-a-geometry-15 rui-catalog-a-geometry-34"
+                  ],
+                  [
+                    "role",
+                    "gridcell"
+                  ],
+                  [
+                    "tabindex",
+                    "0"
+                  ]
+                ]
+              },
+              "right": {
+                "type": 1,
+                "name": "DIV",
+                "text": null,
+                "attrs": [
+                  [
+                    "aria-colindex",
+                    "2"
+                  ],
+                  [
+                    "class",
+                    "absolute shrink-0 truncate px-2 outline-none focus-visible:ring-ring/50 focus-visible:ring-2 focus-visible:ring-inset rui-catalog-a-geometry-15 rui-catalog-a-geometry-32"
+                  ],
+                  [
+                    "role",
+                    "gridcell"
+                  ],
+                  [
+                    "tabindex",
+                    "0"
+                  ]
+                ]
+              }
+            },
+            {
+              "j": 181,
+              "left": {
+                "type": 1,
+                "name": "DIV",
+                "text": null,
+                "attrs": [
+                  [
+                    "aria-colindex",
+                    "3"
+                  ],
+                  [
+                    "class",
+                    "absolute shrink-0 truncate px-2 outline-none focus-visible:ring-ring/50 focus-visible:ring-2 focus-visible:ring-inset rui-catalog-a-geometry-15 rui-catalog-a-geometry-35"
+                  ],
+                  [
+                    "role",
+                    "gridcell"
+                  ],
+                  [
+                    "tabindex",
+                    "-1"
+                  ]
+                ]
+              },
+              "right": {
+                "type": 1,
+                "name": "DIV",
+                "text": null,
+                "attrs": [
+                  [
+                    "aria-colindex",
+                    "3"
+                  ],
+                  [
+                    "class",
+                    "absolute shrink-0 truncate px-2 outline-none focus-visible:ring-ring/50 focus-visible:ring-2 focus-visible:ring-inset rui-catalog-a-geometry-15 rui-catalog-a-geometry-33"
+                  ],
+                  [
+                    "role",
+                    "gridcell"
+                  ],
+                  [
+                    "tabindex",
+                    "-1"
+                  ]
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "i": 1,
+          "leftCount": 1,
+          "rightCount": 1,
+          "differences": []
+        }
+      ]
+    },
+    {
+      "a": "settled",
+      "b": "csrSettled",
+      "parts": [
+        {
+          "i": 0,
+          "leftCount": 259,
+          "rightCount": 259,
+          "differences": [
+            {
+              "j": 40,
+              "left": {
+                "type": 3,
+                "name": "#text",
+                "text": "Résumé </textarea> & <line>\nCRLF\nCR\nlast",
+                "attrs": null
+              },
+              "right": {
+                "type": 3,
+                "name": "#text",
+                "text": "Résumé </textarea> & <line>\nCRLF\nCR\nlast<!---->",
+                "attrs": null
+              }
+            },
+            {
+              "j": 170,
+              "left": {
+                "type": 1,
+                "name": "DIV",
+                "text": null,
+                "attrs": [
+                  [
+                    "aria-colindex",
+                    "1"
+                  ],
+                  [
+                    "class",
+                    "absolute shrink-0 truncate px-2 outline-none focus-visible:ring-ring/50 focus-visible:ring-2 focus-visible:ring-inset rui-catalog-a-geometry-15 rui-catalog-a-geometry-30"
+                  ],
+                  [
+                    "role",
+                    "gridcell"
+                  ],
+                  [
+                    "tabindex",
+                    "-1"
+                  ]
+                ]
+              },
+              "right": {
+                "type": 1,
+                "name": "DIV",
+                "text": null,
+                "attrs": [
+                  [
+                    "aria-colindex",
+                    "1"
+                  ],
+                  [
+                    "class",
+                    "absolute shrink-0 truncate px-2 outline-none focus-visible:ring-ring/50 focus-visible:ring-2 focus-visible:ring-inset rui-catalog-a-geometry-15 rui-catalog-a-geometry-27"
+                  ],
+                  [
+                    "role",
+                    "gridcell"
+                  ],
+                  [
+                    "tabindex",
+                    "-1"
+                  ]
+                ]
+              }
+            },
+            {
+              "j": 172,
+              "left": {
+                "type": 1,
+                "name": "DIV",
+                "text": null,
+                "attrs": [
+                  [
+                    "aria-colindex",
+                    "2"
+                  ],
+                  [
+                    "class",
+                    "absolute shrink-0 truncate px-2 outline-none focus-visible:ring-ring/50 focus-visible:ring-2 focus-visible:ring-inset rui-catalog-a-geometry-15 rui-catalog-a-geometry-31"
+                  ],
+                  [
+                    "role",
+                    "gridcell"
+                  ],
+                  [
+                    "tabindex",
+                    "-1"
+                  ]
+                ]
+              },
+              "right": {
+                "type": 1,
+                "name": "DIV",
+                "text": null,
+                "attrs": [
+                  [
+                    "aria-colindex",
+                    "2"
+                  ],
+                  [
+                    "class",
+                    "absolute shrink-0 truncate px-2 outline-none focus-visible:ring-ring/50 focus-visible:ring-2 focus-visible:ring-inset rui-catalog-a-geometry-15 rui-catalog-a-geometry-28"
+                  ],
+                  [
+                    "role",
+                    "gridcell"
+                  ],
+                  [
+                    "tabindex",
+                    "-1"
+                  ]
+                ]
+              }
+            },
+            {
+              "j": 174,
+              "left": {
+                "type": 1,
+                "name": "DIV",
+                "text": null,
+                "attrs": [
+                  [
+                    "aria-colindex",
+                    "3"
+                  ],
+                  [
+                    "class",
+                    "absolute shrink-0 truncate px-2 outline-none focus-visible:ring-ring/50 focus-visible:ring-2 focus-visible:ring-inset rui-catalog-a-geometry-15 rui-catalog-a-geometry-32"
+                  ],
+                  [
+                    "role",
+                    "gridcell"
+                  ],
+                  [
+                    "tabindex",
+                    "-1"
+                  ]
+                ]
+              },
+              "right": {
+                "type": 1,
+                "name": "DIV",
+                "text": null,
+                "attrs": [
+                  [
+                    "aria-colindex",
+                    "3"
+                  ],
+                  [
+                    "class",
+                    "absolute shrink-0 truncate px-2 outline-none focus-visible:ring-ring/50 focus-visible:ring-2 focus-visible:ring-inset rui-catalog-a-geometry-15 rui-catalog-a-geometry-29"
+                  ],
+                  [
+                    "role",
+                    "gridcell"
+                  ],
+                  [
+                    "tabindex",
+                    "-1"
+                  ]
+                ]
+              }
+            },
+            {
+              "j": 176,
+              "left": {
+                "type": 1,
+                "name": "DIV",
+                "text": null,
+                "attrs": [
+                  [
+                    "aria-rowindex",
+                    "3"
+                  ],
+                  [
+                    "aria-selected",
+                    "true"
+                  ],
+                  [
+                    "class",
+                    "absolute left-0 flex w-full items-center border-b border-border/50 aria-selected:bg-accent rui-catalog-a-geometry-16 rui-catalog-a-geometry-27"
+                  ],
+                  [
+                    "data-row-id",
+                    "101"
+                  ],
+                  [
+                    "data-testid",
+                    "catalog-a-table-row-1"
+                  ],
+                  [
+                    "role",
+                    "row"
+                  ]
+                ]
+              },
+              "right": {
+                "type": 1,
+                "name": "DIV",
+                "text": null,
+                "attrs": [
+                  [
+                    "aria-rowindex",
+                    "3"
+                  ],
+                  [
+                    "aria-selected",
+                    "true"
+                  ],
+                  [
+                    "class",
+                    "absolute left-0 flex w-full items-center border-b border-border/50 aria-selected:bg-accent rui-catalog-a-geometry-16 rui-catalog-a-geometry-30"
+                  ],
+                  [
+                    "data-row-id",
+                    "101"
+                  ],
+                  [
+                    "data-testid",
+                    "catalog-a-table-row-1"
+                  ],
+                  [
+                    "role",
+                    "row"
+                  ]
+                ]
+              }
+            },
+            {
+              "j": 177,
+              "left": {
+                "type": 1,
+                "name": "DIV",
+                "text": null,
+                "attrs": [
+                  [
+                    "aria-colindex",
+                    "1"
+                  ],
+                  [
+                    "class",
+                    "absolute shrink-0 truncate px-2 outline-none focus-visible:ring-ring/50 focus-visible:ring-2 focus-visible:ring-inset rui-catalog-a-geometry-15 rui-catalog-a-geometry-33"
+                  ],
+                  [
+                    "role",
+                    "gridcell"
+                  ],
+                  [
+                    "tabindex",
+                    "-1"
+                  ]
+                ]
+              },
+              "right": {
+                "type": 1,
+                "name": "DIV",
+                "text": null,
+                "attrs": [
+                  [
+                    "aria-colindex",
+                    "1"
+                  ],
+                  [
+                    "class",
+                    "absolute shrink-0 truncate px-2 outline-none focus-visible:ring-ring/50 focus-visible:ring-2 focus-visible:ring-inset rui-catalog-a-geometry-15 rui-catalog-a-geometry-31"
+                  ],
+                  [
+                    "role",
+                    "gridcell"
+                  ],
+                  [
+                    "tabindex",
+                    "-1"
+                  ]
+                ]
+              }
+            },
+            {
+              "j": 179,
+              "left": {
+                "type": 1,
+                "name": "DIV",
+                "text": null,
+                "attrs": [
+                  [
+                    "aria-colindex",
+                    "2"
+                  ],
+                  [
+                    "class",
+                    "absolute shrink-0 truncate px-2 outline-none focus-visible:ring-ring/50 focus-visible:ring-2 focus-visible:ring-inset rui-catalog-a-geometry-15 rui-catalog-a-geometry-34"
+                  ],
+                  [
+                    "role",
+                    "gridcell"
+                  ],
+                  [
+                    "tabindex",
+                    "0"
+                  ]
+                ]
+              },
+              "right": {
+                "type": 1,
+                "name": "DIV",
+                "text": null,
+                "attrs": [
+                  [
+                    "aria-colindex",
+                    "2"
+                  ],
+                  [
+                    "class",
+                    "absolute shrink-0 truncate px-2 outline-none focus-visible:ring-ring/50 focus-visible:ring-2 focus-visible:ring-inset rui-catalog-a-geometry-15 rui-catalog-a-geometry-32"
+                  ],
+                  [
+                    "role",
+                    "gridcell"
+                  ],
+                  [
+                    "tabindex",
+                    "0"
+                  ]
+                ]
+              }
+            },
+            {
+              "j": 181,
+              "left": {
+                "type": 1,
+                "name": "DIV",
+                "text": null,
+                "attrs": [
+                  [
+                    "aria-colindex",
+                    "3"
+                  ],
+                  [
+                    "class",
+                    "absolute shrink-0 truncate px-2 outline-none focus-visible:ring-ring/50 focus-visible:ring-2 focus-visible:ring-inset rui-catalog-a-geometry-15 rui-catalog-a-geometry-35"
+                  ],
+                  [
+                    "role",
+                    "gridcell"
+                  ],
+                  [
+                    "tabindex",
+                    "-1"
+                  ]
+                ]
+              },
+              "right": {
+                "type": 1,
+                "name": "DIV",
+                "text": null,
+                "attrs": [
+                  [
+                    "aria-colindex",
+                    "3"
+                  ],
+                  [
+                    "class",
+                    "absolute shrink-0 truncate px-2 outline-none focus-visible:ring-ring/50 focus-visible:ring-2 focus-visible:ring-inset rui-catalog-a-geometry-15 rui-catalog-a-geometry-33"
+                  ],
+                  [
+                    "role",
+                    "gridcell"
+                  ],
+                  [
+                    "tabindex",
+                    "-1"
+                  ]
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "i": 1,
+          "leftCount": 3,
+          "rightCount": 3,
+          "differences": []
+        }
+      ]
+    }
+  ],
+  "geometry": {
+    "expected": "rgba(26, 43, 60, 0.5)",
+    "instances": [
+      2,
+      3
+    ],
+    "first": {
+      "aria": "36",
+      "ratio": 33.99794884169884,
+      "transition": "0.15s"
+    },
+    "later": {
+      "aria": "36",
+      "ratio": 35.99782818532818,
+      "transition": "0.15s"
+    }
+  },
+  "identity": {
+    "root": true,
+    "nodes": 290,
+    "retained": 290,
+    "ids": true
+  },
+  "browser": "153.0.8010.12"
+}

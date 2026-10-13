@@ -1,0 +1,52 @@
+npm notice run rustify-ui-browser-tests@0.1.0 npx
+npm notice run 'playwright' test -c playwright.docs.config.ts --project=components-subpath tests/docs-ssg/islands.spec.ts --grep SDK snippet|invalid wasm|glue init|native MIME
+[WebServer] building /Users/rockie/Documents/gh-rockie/rustify-ui/tests/docs-ssg/fixtures/components into /Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/http/components/subpath/dist
+[WebServer] warning[rust-compile]: warning: method `fallback_element` is never used
+[WebServer]    --> /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui/src/overlay.rs:349:23
+[WebServer]     |
+[WebServer] 284 |     impl OverlayStack {
+[WebServer]     |     ----------------- method in this implementation
+[WebServer] ...
+[WebServer] 349 |         pub(crate) fn fallback_element(&self) -> Element {
+[WebServer]     |                       ^^^^^^^^^^^^^^^^
+[WebServer]     |
+[WebServer]     = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+[WebServer] 
+[WebServer] 
+[WebServer]   --> /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui/src/overlay.rs:349:23
+[WebServer]   = help: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+[WebServer] warning[rust-compile]: warning: field `guest_click` is never read
+[WebServer]    --> /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui/src/router.rs:556:9
+[WebServer]     |
+[WebServer] 549 |     struct Router {
+[WebServer]     |            ------ field in this struct
+[WebServer] ...
+[WebServer] 556 |         guest_click: Option<SendWrapper<Rc<GuestClick>>>,
+[WebServer]     |         ^^^^^^^^^^^
+[WebServer]     |
+[WebServer]     = note: `Router` has a derived impl for the trait `Clone`, but this is intentionally ignored during dead code analysis
+[WebServer] 
+[WebServer] 
+[WebServer]   --> /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui/src/router.rs:556:9
+[WebServer]   = help: `Router` has a derived impl for the trait `Clone`, but this is intentionally ignored during dead code analysis
+[WebServer] warning[not-in-nav]: this page is in no navigation group, so readers can only reach it by a link
+[WebServer]   --> content/index.md
+[WebServer] build: 7 pages and 404.html in /Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/http/components/subpath/dist: 11661.1 KB in 22 files, 3 warning(s), 6551 ms
+[WebServer] largest pages:
+[WebServer]     114.5 KB  proxy/index.html
+[WebServer]      80.7 KB  failure/index.html
+[WebServer]      80.1 KB  counter/index.html
+[WebServer]      78.2 KB  async/index.html
+[WebServer]      10.9 KB  builtins/index.html
+[WebServer] serving /Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/http/components/subpath/dist (built by rustify-docs 0.1.5, build eb0630d32488043c) until stopped
+
+Running 4 tests using 1 worker
+
+(node:81725) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 [components-subpath] › tests/docs-ssg/islands.spec.ts:285:1 › successful island wasm has its native MIME type under the page's CSP (428ms)
+  ✓  2 [components-subpath] › tests/docs-ssg/islands.spec.ts:604:1 › an imported SDK snippet's real 404 restores SSR and leaves source, navigation and reload usable (995ms)
+  ✓  3 [components-subpath] › tests/docs-ssg/islands.spec.ts:627:1 › invalid wasm bytes in a successful HTTP response fail terminally before attachment (830ms)
+  ✓  4 [components-subpath] › tests/docs-ssg/islands.spec.ts:646:1 › a glue init exception after real wasm instantiation preserves SSR and recovers through reload (970ms)
+
+  4 passed (10.8s)

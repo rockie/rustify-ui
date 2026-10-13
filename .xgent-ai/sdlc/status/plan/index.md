@@ -11,6 +11,7 @@
 | 2b5473ac-f692-467b-8024-8fe191345859 | [P2 · WASM UI（封板）](../../../../docs/plan/P2-WASM-UI.md) | [2b5473ac](2b5473ac-f692-467b-8024-8fe191345859.md) | 归档（原文 Closed） |
 | 41817647-c138-4651-a076-a022339fd6bc | [P3 · WASM UI（封板）](../../../../docs/plan/P3-WASM-UI.md) | [41817647](41817647-c138-4651-a076-a022339fd6bc.md) | 归档（原文 Closed） |
 | 0222c547-cbeb-412a-8c3e-3399b943670e | [THEME-STUDIO](../../../../docs/plan/THEME-STUDIO.md) | [0222c547](0222c547-cbeb-412a-8c3e-3399b943670e.md) | 活动 |
+| c0c94e42-32f2-4636-ae52-f3df76d4a463 | [DOCS-SSG-P2](../../../../docs/plan/DOCS-SSG-P2.md) | [对象](c0c94e42-32f2-4636-ae52-f3df76d4a463.md) | 活动 |
 | fb86407f-8889-4844-99a0-a0e6a580a27f | [VELLUM](../../../../docs/plan/VELLUM.md) | [fb86407f](fb86407f-8889-4844-99a0-a0e6a580a27f.md) | 活动 |
 | be9305f5-b240-453b-bb54-5ff7d0ed7970 | [WASM-TAILWIND](../../../../docs/plan/WASM-TAILWIND.md) | [be9305f5](be9305f5-b240-453b-bb54-5ff7d0ed7970.md) | 活动 |
 

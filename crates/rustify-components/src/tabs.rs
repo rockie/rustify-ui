@@ -167,6 +167,7 @@ pub fn Tabs(
                                 aria-selected=move || selected.get().to_string()
                                 aria-controls=panel_id(&group, &value)
                                 tabindex=move || if selected.get() { "0" } else { "-1" }
+                                disabled=disabled
                                 prop:disabled=disabled
                                 on:click=move |_| {
                                     if !disabled {
