@@ -1,0 +1,134 @@
+{
+  "scope": "uncommitted C3 preparation only; public package URLs retained with process-local transport; no installed C3 claim",
+  "R3": "c562008291ef1b1826891944e0d81a5d61d775b8",
+  "cli_version": "0.1.13",
+  "identity": {
+    "scope": "prepared/uncommitted C3 binary only; source is actual build HEAD, not R3 or a final installed C3",
+    "version": "rustify-docs 0.1.13",
+    "build_info": "rustify-docs 0.1.13\npanic: unwind\ngrammars: syntect-5.3.0+two-face-0.5.2+bat-0.26.1+fancy\nsource: 580d14310a06fea0786cbc3a7d0c0f43d658ba68",
+    "source": "580d14310a06fea0786cbc3a7d0c0f43d658ba68",
+    "binary": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-cli/rustify-docs",
+    "binary_sha256": "b1005e9fa8a0cc5c1a8f5b43a2387a1dcb5e343b520634c059ccb522b7fc7a24",
+    "framework_revision": "c562008291ef1b1826891944e0d81a5d61d775b8"
+  },
+  "allowed_files": [
+    "crates/rustify-docs-cli/Cargo.toml",
+    "crates/rustify-docs-cli/assets/framework-revision.txt",
+    "crates/rustify-docs-cli/assets/components-Cargo.lock",
+    "Cargo.lock",
+    "docs/docs-ssg.md"
+  ],
+  "allowed_diff": "pair3-preparation-allowed-diff-r1.patch",
+  "packages": 193,
+  "third_party_records_all_unchanged": true,
+  "only_six_framework_sources_changed": [
+    "rustify-components",
+    "rustify-docs",
+    "rustify-docs-macros",
+    "rustify-docs-syntax",
+    "rustify-style",
+    "rustify-ui"
+  ],
+  "lock_sha256": "3582d2a1a44d9aee46b1f16aa1ab41caebb8f2a436c86bed6ad4890d600329a3",
+  "lock_bytes": 48590,
+  "offline_commands": "pair3-preparation-offline-commands-r1.json",
+  "checks": [
+    {
+      "name": "root-metadata",
+      "exit_code": 0
+    },
+    {
+      "name": "metadata-ssr",
+      "exit_code": 0
+    },
+    {
+      "name": "metadata-hydrate",
+      "exit_code": 0
+    },
+    {
+      "name": "check-ssr",
+      "exit_code": 0
+    },
+    {
+      "name": "check-hydrate",
+      "exit_code": 0
+    },
+    {
+      "name": "cli-build",
+      "exit_code": 0
+    }
+  ],
+  "actual_new": [
+    {
+      "command": [
+        "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-cli/rustify-docs",
+        "new",
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair3-preparation-4jszh7aa/actual-new/docs-site",
+        "--template",
+        "components"
+      ],
+      "exit_code": 0,
+      "root": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair3-preparation-4jszh7aa/actual-new/docs-site",
+      "package": "docs-site",
+      "files": 11,
+      "only_source_free_root_name_changed": true,
+      "lock_sha256": "3582d2a1a44d9aee46b1f16aa1ab41caebb8f2a436c86bed6ad4890d600329a3",
+      "readme_source": "580d14310a06fea0786cbc3a7d0c0f43d658ba68",
+      "readme_framework_R3": "c562008291ef1b1826891944e0d81a5d61d775b8",
+      "inputs_sha256": {
+        ".gitignore": "5f5e41eb0464af1566753b0b33c30b3ff6f0b6a344e09ad8be48b11c0333e467",
+        "Cargo.lock": "3582d2a1a44d9aee46b1f16aa1ab41caebb8f2a436c86bed6ad4890d600329a3",
+        "Cargo.toml": "82918859f62ab4ed965611a4c7462d932021913ec997646c7cc30efd47d23dcd",
+        "README.md": "99401bc20693a700ccc4676c1673304c48e57686ae13dfba7007cc9b1686a401",
+        "content/guide/getting-started.md": "e0c182b7bdc5c0230f9be283a42bf448cf62fadaa7c81d2082bf850b8c965fcd",
+        "content/guide/writing-demos.md": "e991cc76628d89096a90e205ebffe341c3883ff754f7a6cd8024f3e32b54e5de",
+        "content/index.md": "da87bfc2f9c8ac2f834990e0cd1d521b15c90bbe1a7738886bf45c927169888f",
+        "rustify-docs.toml": "f581d837267cbfce9a1aa54be086cbbeb8162615b99731e531563898f2b64d84",
+        "src/bin/docs-render.rs": "3abaa6437e5ddd6ad5a3223430c6ba53a28d117090f5be9d268951d77629a052",
+        "src/demos.rs": "8b720362ecfe80c198ff1ba056bfbb71019e7483b5ee343542f8f461e4709110",
+        "src/lib.rs": "2af073e77a2e98bcf6948e6216979393e7eebf5102b47e225bd033b34d571027"
+      }
+    },
+    {
+      "command": [
+        "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-cli/rustify-docs",
+        "new",
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair3-preparation-4jszh7aa/actual-new/Pair3 named root",
+        "--template",
+        "components"
+      ],
+      "exit_code": 0,
+      "root": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair3-preparation-4jszh7aa/actual-new/Pair3 named root",
+      "package": "pair3-named-root",
+      "files": 11,
+      "only_source_free_root_name_changed": true,
+      "lock_sha256": "e36fd7e40ded52e950d86efe25fe1bbc2606a4f5dfefd5cfffdfb3b8a382e009",
+      "readme_source": "580d14310a06fea0786cbc3a7d0c0f43d658ba68",
+      "readme_framework_R3": "c562008291ef1b1826891944e0d81a5d61d775b8",
+      "inputs_sha256": {
+        ".gitignore": "5f5e41eb0464af1566753b0b33c30b3ff6f0b6a344e09ad8be48b11c0333e467",
+        "Cargo.lock": "e36fd7e40ded52e950d86efe25fe1bbc2606a4f5dfefd5cfffdfb3b8a382e009",
+        "Cargo.toml": "e66560f84d5b6181d272cdb58b8698e30a87d530691059ed6dfba52cee03ce24",
+        "README.md": "8fad867a854f229731ddd6a09c739ec63b458a415e0471eb0554564585b282ba",
+        "content/guide/getting-started.md": "e0c182b7bdc5c0230f9be283a42bf448cf62fadaa7c81d2082bf850b8c965fcd",
+        "content/guide/writing-demos.md": "e991cc76628d89096a90e205ebffe341c3883ff754f7a6cd8024f3e32b54e5de",
+        "content/index.md": "df025bb702cf4e789e95cf179e5267f1742702cdb2a16d7cfe622af36ba7a539",
+        "rustify-docs.toml": "0895fe5d90d2dfb82cd17cd9a6d1bb6c41fb2efb538f0fd8f14cdad063237258",
+        "src/bin/docs-render.rs": "3abaa6437e5ddd6ad5a3223430c6ba53a28d117090f5be9d268951d77629a052",
+        "src/demos.rs": "8b720362ecfe80c198ff1ba056bfbb71019e7483b5ee343542f8f461e4709110",
+        "src/lib.rs": "2af073e77a2e98bcf6948e6216979393e7eebf5102b47e225bd033b34d571027"
+      }
+    }
+  ],
+  "all_non_release_product_and_observer_bytes_unchanged": true,
+  "observer_source_commit": "043840a18bd7298471073b235ab6be74eb31d2d3",
+  "all_six_user_source_sha256_unchanged": true,
+  "canonical_C2_state_unchanged": true,
+  "all_own_processes_closed": true,
+  "runtime_ownership_returned_to_Root": true,
+  "work": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair3-preparation-4jszh7aa",
+  "remaining": [
+    "Root review and actual C3 commit",
+    "actual fixed C3 Git install and final affected validation"
+  ]
+}

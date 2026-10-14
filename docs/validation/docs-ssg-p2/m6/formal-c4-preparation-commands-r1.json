@@ -1,0 +1,108 @@
+{
+  "candidate_C": "d301344eeb27e22907c59a10805ae0cebf8dee99",
+  "framework_R": "3fcc626a4039a43c5e045ccd546bab976db89a73",
+  "commands": [
+    {
+      "name": "content-first",
+      "command": [
+        "node",
+        "docs/validation/docs-ssg-p2/m6/measure-content-first.mjs"
+      ],
+      "cwd": "/Users/rockie/Documents/gh-rockie/rustify-ui",
+      "exit_code": 0,
+      "milliseconds": 715.778,
+      "stdout": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/content-first-c4-r1.stdout",
+      "stderr": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/content-first-c4-r1.log"
+    },
+    {
+      "name": "b-p2-corpus",
+      "command": [
+        "mbx",
+        "xtask",
+        "docs-corpus",
+        "--p2",
+        "--out",
+        "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/m6-b-p2-c4"
+      ],
+      "cwd": "/Users/rockie/Documents/gh-rockie/rustify-ui",
+      "exit_code": 0,
+      "milliseconds": 1773.593,
+      "stdout": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/b-p2-corpus-c4-r1.stdout",
+      "stderr": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/b-p2-corpus-c4-r1.log"
+    },
+    {
+      "name": "b-p2-check",
+      "command": [
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair4-installed-9pziu1hu/installed/bin/rustify-docs",
+        "check",
+        "--format",
+        "json"
+      ],
+      "cwd": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/m6-b-p2-c4",
+      "exit_code": 0,
+      "milliseconds": 33662.746,
+      "stdout": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/b-p2-check-c4-r1.stdout",
+      "stderr": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/b-p2-check-c4-r1.log"
+    },
+    {
+      "name": "b-p2-build",
+      "command": [
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair4-installed-9pziu1hu/installed/bin/rustify-docs",
+        "build",
+        "--format",
+        "json"
+      ],
+      "cwd": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/m6-b-p2-c4",
+      "exit_code": 0,
+      "milliseconds": 97414.497,
+      "stdout": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/b-p2-build-c4-r1.stdout",
+      "stderr": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/b-p2-build-c4-r1.log"
+    },
+    {
+      "name": "b-p1-corpus",
+      "command": [
+        "mbx",
+        "xtask",
+        "docs-corpus",
+        "--out",
+        "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/m6-b-p1-c4"
+      ],
+      "cwd": "/Users/rockie/Documents/gh-rockie/rustify-ui",
+      "exit_code": 0,
+      "milliseconds": 1144.192,
+      "stdout": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/b-p1-corpus-c4-r1.stdout",
+      "stderr": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/b-p1-corpus-c4-r1.log"
+    },
+    {
+      "name": "b-p1-check",
+      "command": [
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair4-installed-9pziu1hu/installed/bin/rustify-docs",
+        "check",
+        "--format",
+        "json"
+      ],
+      "cwd": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/m6-b-p1-c4",
+      "exit_code": 0,
+      "milliseconds": 867.203,
+      "stdout": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/b-p1-check-c4-r1.stdout",
+      "stderr": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/b-p1-check-c4-r1.log"
+    },
+    {
+      "name": "b-p1-build",
+      "command": [
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair4-installed-9pziu1hu/installed/bin/rustify-docs",
+        "build",
+        "--format",
+        "json"
+      ],
+      "cwd": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/m6-b-p1-c4",
+      "exit_code": 0,
+      "milliseconds": 971.785,
+      "stdout": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/b-p1-build-c4-r1.stdout",
+      "stderr": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/b-p1-build-c4-r1.log"
+    }
+  ],
+  "status": "passed",
+  "b_p2_dist": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/m6-b-p2-c4/dist",
+  "b_p1_dist": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/m6-b-p1-c4/dist"
+}

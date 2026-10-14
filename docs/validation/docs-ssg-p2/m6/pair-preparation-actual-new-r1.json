@@ -1,0 +1,36 @@
+[
+  {
+    "command": [
+      "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-cli/rustify-docs",
+      "new",
+      "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair-preparation-q08yp2lv/actual-new/docs-site",
+      "--template",
+      "components"
+    ],
+    "exit_code": 0,
+    "milliseconds": 114.4560546875,
+    "path": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair-preparation-q08yp2lv/actual-new/docs-site",
+    "package": "docs-site",
+    "file_count": 11,
+    "only_source_free_root_renamed": true,
+    "lock_sha256": "0dd43b63c0b2ed89d0dffbd732ee57e46caeb2669c1549f214c7a33bc8dde24a",
+    "cli_source_identity": "local preparation HEAD1b4b7e628661d1b02f21e6162268f022fe27a2aa; not final C"
+  },
+  {
+    "command": [
+      "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-cli/rustify-docs",
+      "new",
+      "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair-preparation-q08yp2lv/actual-new/M6 named root",
+      "--template",
+      "components"
+    ],
+    "exit_code": 0,
+    "milliseconds": 107.022705078125,
+    "path": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair-preparation-q08yp2lv/actual-new/M6 named root",
+    "package": "m6-named-root",
+    "file_count": 11,
+    "only_source_free_root_renamed": true,
+    "lock_sha256": "934bbd11f5b222fac0c92f8920d762cddd5434169f4583c36f04b0669acfadc0",
+    "cli_source_identity": "local preparation HEAD1b4b7e628661d1b02f21e6162268f022fe27a2aa; not final C"
+  }
+]

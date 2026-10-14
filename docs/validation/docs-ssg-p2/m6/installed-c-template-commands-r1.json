@@ -1,0 +1,236 @@
+[
+  {
+    "kind": "metadata",
+    "mode": "ssr",
+    "command": [
+      "cargo",
+      "metadata",
+      "--locked",
+      "--offline",
+      "--format-version",
+      "1",
+      "--manifest-path",
+      "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-installed-c-hv5ysh41/docs-site/Cargo.toml",
+      "--no-default-features",
+      "--features",
+      "ssr"
+    ],
+    "exit_code": 0,
+    "framework_names": [
+      "rustify-components",
+      "rustify-docs",
+      "rustify-docs-macros",
+      "rustify-docs-syntax",
+      "rustify-style",
+      "rustify-ui"
+    ],
+    "source": "git+https://github.com/rockie/rustify-ui?rev=676a55771ab77faf8c476a836025d62905a2d3e2#676a55771ab77faf8c476a836025d62905a2d3e2",
+    "no_makepad": true
+  },
+  {
+    "kind": "metadata",
+    "mode": "hydrate",
+    "command": [
+      "cargo",
+      "metadata",
+      "--locked",
+      "--offline",
+      "--format-version",
+      "1",
+      "--manifest-path",
+      "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-installed-c-hv5ysh41/docs-site/Cargo.toml",
+      "--no-default-features",
+      "--features",
+      "hydrate"
+    ],
+    "exit_code": 0,
+    "framework_names": [
+      "rustify-components",
+      "rustify-docs",
+      "rustify-docs-macros",
+      "rustify-docs-syntax",
+      "rustify-style",
+      "rustify-ui"
+    ],
+    "source": "git+https://github.com/rockie/rustify-ui?rev=676a55771ab77faf8c476a836025d62905a2d3e2#676a55771ab77faf8c476a836025d62905a2d3e2",
+    "no_makepad": true
+  },
+  {
+    "kind": "cli",
+    "command": [
+      "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-installed-c-hv5ysh41/installed/bin/rustify-docs",
+      "check",
+      "--config",
+      "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-installed-c-hv5ysh41/docs-site/rustify-docs.toml",
+      "--format",
+      "json"
+    ],
+    "exit_code": 0,
+    "milliseconds": 21300.764892578125,
+    "summary": {
+      "errors": 0,
+      "warnings": 3,
+      "pages": 3,
+      "rust_build": {
+        "generation": "b0385f17c593141358cddd3f9e4f1ca72fc9df9628aa190cec4575d9d54a7f4c",
+        "framework_release": "rustify-docs@0.1.0",
+        "host": {
+          "elapsed_ms": 277,
+          "completed_at_ms": 1791925850799,
+          "fresh_artifacts": 263,
+          "compiled_artifacts": 0,
+          "profile": "docs-host",
+          "target": null,
+          "compiler": "mbx",
+          "flags": [
+            "build",
+            "--locked",
+            "--message-format",
+            "json",
+            "--no-default-features",
+            "--profile",
+            "docs-host",
+            "--features",
+            "ssr",
+            "--manifest-path",
+            "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-installed-c-hv5ysh41/docs-site/Cargo.toml",
+            "--target-dir",
+            "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-installed-c-hv5ysh41/docs-site/.rustify-docs/target",
+            "--bin",
+            "docs-render"
+          ],
+          "success": true
+        },
+        "wasm": {
+          "elapsed_ms": 198,
+          "completed_at_ms": 1791925850999,
+          "fresh_artifacts": 251,
+          "compiled_artifacts": 0,
+          "profile": "docs-wasm",
+          "target": "wasm32-unknown-unknown",
+          "compiler": "mbx",
+          "flags": [
+            "build",
+            "--locked",
+            "--message-format",
+            "json",
+            "--no-default-features",
+            "--profile",
+            "docs-wasm",
+            "--features",
+            "hydrate",
+            "--manifest-path",
+            "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-installed-c-hv5ysh41/docs-site/Cargo.toml",
+            "--target-dir",
+            "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-installed-c-hv5ysh41/docs-site/.rustify-docs/target",
+            "--lib",
+            "--target",
+            "wasm32-unknown-unknown"
+          ],
+          "success": true
+        },
+        "reused": false
+      }
+    }
+  },
+  {
+    "kind": "cli",
+    "command": [
+      "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-installed-c-hv5ysh41/installed/bin/rustify-docs",
+      "build",
+      "--config",
+      "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-installed-c-hv5ysh41/docs-site/rustify-docs.toml",
+      "--format",
+      "json"
+    ],
+    "exit_code": 0,
+    "milliseconds": 32875.907958984375,
+    "summary": {
+      "errors": 0,
+      "warnings": 3,
+      "pages": 3,
+      "files": 16,
+      "bytes": 1533177,
+      "largest": [
+        {
+          "path": "index.html",
+          "bytes": 42149
+        },
+        {
+          "path": "guide/writing-demos/index.html",
+          "bytes": 15065
+        },
+        {
+          "path": "guide/getting-started/index.html",
+          "bytes": 11044
+        },
+        {
+          "path": "404.html",
+          "bytes": 4290
+        }
+      ],
+      "out": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-installed-c-hv5ysh41/docs-site/dist",
+      "milliseconds": 32867,
+      "rust_build": {
+        "generation": "32c3bcd994028bd5c78c6cfe694f2ecfee4b7ec11b984f7ad88a495e051187dc",
+        "framework_release": "rustify-docs@0.1.0",
+        "host": {
+          "elapsed_ms": 296,
+          "completed_at_ms": 1791925883676,
+          "fresh_artifacts": 263,
+          "compiled_artifacts": 0,
+          "profile": "docs-host-release",
+          "target": null,
+          "compiler": "mbx",
+          "flags": [
+            "build",
+            "--locked",
+            "--message-format",
+            "json",
+            "--no-default-features",
+            "--profile",
+            "docs-host-release",
+            "--features",
+            "ssr",
+            "--manifest-path",
+            "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-installed-c-hv5ysh41/docs-site/Cargo.toml",
+            "--target-dir",
+            "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-installed-c-hv5ysh41/docs-site/.rustify-docs/target",
+            "--bin",
+            "docs-render"
+          ],
+          "success": true
+        },
+        "wasm": {
+          "elapsed_ms": 209,
+          "completed_at_ms": 1791925883886,
+          "fresh_artifacts": 251,
+          "compiled_artifacts": 0,
+          "profile": "release",
+          "target": "wasm32-unknown-unknown",
+          "compiler": "mbx",
+          "flags": [
+            "build",
+            "--locked",
+            "--message-format",
+            "json",
+            "--no-default-features",
+            "--profile",
+            "release",
+            "--features",
+            "hydrate",
+            "--manifest-path",
+            "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-installed-c-hv5ysh41/docs-site/Cargo.toml",
+            "--target-dir",
+            "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-installed-c-hv5ysh41/docs-site/.rustify-docs/target",
+            "--lib",
+            "--target",
+            "wasm32-unknown-unknown"
+          ],
+          "success": true
+        },
+        "reused": false
+      }
+    }
+  }
+]

@@ -1,0 +1,36 @@
+[
+  {
+    "command": [
+      "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair3-installed-uvgj6yil/installed/bin/rustify-docs",
+      "new",
+      "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair3-installed-uvgj6yil/docs-site",
+      "--template",
+      "components"
+    ],
+    "exit_code": 0,
+    "root": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair3-installed-uvgj6yil/docs-site",
+    "files": 11,
+    "package": "docs-site",
+    "lock_sha256": "3582d2a1a44d9aee46b1f16aa1ab41caebb8f2a436c86bed6ad4890d600329a3",
+    "root_name_only": true,
+    "exact_frozen_templates": true,
+    "README_exact_C3_R3": true
+  },
+  {
+    "command": [
+      "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair3-installed-uvgj6yil/installed/bin/rustify-docs",
+      "new",
+      "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair3-installed-uvgj6yil/M6 pair3 named root",
+      "--template",
+      "components"
+    ],
+    "exit_code": 0,
+    "root": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair3-installed-uvgj6yil/M6 pair3 named root",
+    "files": 11,
+    "package": "m6-pair3-named-root",
+    "lock_sha256": "e86a583be05eccbdfd7aaabc4dbb08e29c4e4a78fbb15606cc7064d54feade96",
+    "root_name_only": true,
+    "exact_frozen_templates": true,
+    "README_exact_C3_R3": true
+  }
+]

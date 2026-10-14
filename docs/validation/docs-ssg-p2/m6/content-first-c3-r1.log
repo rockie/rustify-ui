@@ -1,0 +1,7 @@
+rustc 1.99.0 (b940084d7 2026-09-28)
+dev: pages show no last-updated date: not a git repository (or any of the parent directories): .git
+watching /private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-content-first-bN78gP/M6 content trial; drafts are shown, source and published output are unchanged, stop with Ctrl-C
+warning[missing-site-url]: site.url is not set, so pages have no canonical address or preview image and there is no sitemap
+  --> rustify-docs.toml
+  = help: add `url = "https://…"` under [site], the address the site is published at
+dev: revision 1: 4 page(s) changed, 1 warning(s), 26 ms

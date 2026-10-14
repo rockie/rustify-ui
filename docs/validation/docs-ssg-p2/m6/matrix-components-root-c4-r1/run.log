@@ -1,0 +1,60 @@
+npm notice run rustify-ui-browser-tests@0.1.0 npx
+npm notice run 'playwright' test -c docs/validation/docs-ssg-p2/m6/native-matrix.config.ts --project=components-root --workers=1 --retries=0 --output /Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/matrix-components-root-c4-r1/artifacts
+[WebServer] building /Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/http/components/root/site into /Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/http/components/root/dist
+[WebServer] warning[no-git-history]: pages show no last-updated date: not a git repository (or any of the parent directories): .git
+[WebServer]   = help: build inside a git repository with the content committed
+[WebServer] warning[not-in-nav]: this page is in no navigation group, so readers can only reach it by a link
+[WebServer]   --> content/index.md
+[WebServer] warning[theme-token]: radius: Light and dark have different author values; editing this common field applies to both
+[WebServer]   --> theme.json
+[WebServer] build: 9 pages and 404.html in /Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/http/components/root/dist: 42958.8 KB in 38 files, 3 warning(s), 98794 ms
+[WebServer] largest pages:
+[WebServer]     424.4 KB  custom/index.html
+[WebServer]     133.6 KB  proxy/index.html
+[WebServer]      99.3 KB  counter/index.html
+[WebServer]      90.9 KB  failure/index.html
+[WebServer]      83.8 KB  async/index.html
+[WebServer] serving /Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/http/components/root/dist (built by rustify-docs 0.1.14, build 0b417970b8e2e660) until stopped
+
+Running 36 tests using 1 worker
+
+(node:68933) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 [components-root] › tests/docs-ssg/custom.spec.ts:200:1 › registered routes keep declared titles, optional description and ordered ordinary navigation (3.8s)
+  ✓   2 [components-root] › tests/docs-ssg/custom.spec.ts:230:1 › all seven slots share canonical context across Markdown, custom pages and a deep static 404 (2.1s)
+  ✓   3 [components-root] › tests/docs-ssg/custom.spec.ts:254:1 › nested page and slot demos retain actual SSR nodes, source and distinct identities (3.3s)
+  ✓   4 [components-root] › tests/docs-ssg/custom.spec.ts:283:5 › light first frame uses the document theme with a light system before wasm (1.1s)
+  ✓   5 [components-root] › tests/docs-ssg/custom.spec.ts:283:5 › dark first frame uses the document theme with a dark system before wasm (1.1s)
+  ✓   6 [components-root] › tests/docs-ssg/custom.spec.ts:283:5 › system first frame uses the document theme with a light system before wasm (1.1s)
+  ✓   7 [components-root] › tests/docs-ssg/custom.spec.ts:283:5 › system first frame uses the document theme with a dark system before wasm (1.1s)
+  ✓   8 [components-root] › tests/docs-ssg/custom.spec.ts:302:1 › live mode changes reach the theme context and real floating controls, including Rust-only classes (1.5s)
+  ✓   9 [components-root] › tests/docs-ssg/custom.spec.ts:357:1 › the actual browser font responses match the CLI's packaged bytes and neutral digests (742ms)
+  ✓  10 [components-root] › tests/docs-ssg/custom.spec.ts:387:1 › custom images and CSS backgrounds enter the same published resource graph (732ms)
+  ✓  11 [components-root] › tests/docs-ssg/custom.spec.ts:402:1 › the plain custom page and its slots remain static and load no island resources (486ms)
+  ✓  12 [components-root] › tests/docs-ssg/custom.spec.ts:410:1 › no script preserves custom views, sources, navigation and theme at 375px and 200% reflow (3.4s)
+  ✓  13 [components-root] › tests/docs-ssg/islands.spec.ts:277:1 › a page without interactive embeds loads no island JavaScript or wasm (140ms)
+  ✓  14 [components-root] › tests/docs-ssg/islands.spec.ts:285:1 › successful island wasm has its native MIME type under the page's CSP (453ms)
+  ✓  15 [components-root] › tests/docs-ssg/islands.spec.ts:310:1 › no script keeps real SSR views and both source panels readable with native controls disabled (551ms)
+  ✓  16 [components-root] › tests/docs-ssg/islands.spec.ts:352:1 › loading gates native and captured input while source controls remain usable (598ms)
+  ✓  17 [components-root] › tests/docs-ssg/islands.spec.ts:383:1 › attachment retains original SSR nodes and isolates three identical counters (497ms)
+  ✓  18 [components-root] › tests/docs-ssg/islands.spec.ts:404:1 › an asynchronous action starts after attachment with supported hydration globals (361ms)
+  ✓  19 [components-root] › tests/docs-ssg/islands.spec.ts:416:1 › client-only attachment preserves the placeholder and mounts typed props and child content (376ms)
+  ✓  20 [components-root] › tests/docs-ssg/islands.spec.ts:445:1 › static builtins need no script or wasm and retain every panel, native link and child block (379ms)
+  ✓  21 [components-root] › tests/docs-ssg/islands.spec.ts:492:1 › static tabs use unique ARIA mappings and keyboard state stays local to each peer (591ms)
+  ✓  22 [components-root] › tests/docs-ssg/islands.spec.ts:548:1 › a real callback trap restores every initial island and keeps source, navigation and reload alive (972ms)
+  ✓  23 [components-root] › tests/docs-ssg/islands.spec.ts:580:5 › islands.js load failure is terminal, preserves SSR and recovers only through Reload page (662ms)
+  ✓  24 [components-root] › tests/docs-ssg/islands.spec.ts:580:5 › app.js load failure is terminal, preserves SSR and recovers only through Reload page (725ms)
+  ✓  25 [components-root] › tests/docs-ssg/islands.spec.ts:580:5 › app_bg.wasm load failure is terminal, preserves SSR and recovers only through Reload page (640ms)
+  ✓  26 [components-root] › tests/docs-ssg/islands.spec.ts:604:1 › an imported SDK snippet's real 404 restores SSR and leaves source, navigation and reload usable (963ms)
+  ✓  27 [components-root] › tests/docs-ssg/islands.spec.ts:627:1 › invalid wasm bytes in a successful HTTP response fail terminally before attachment (836ms)
+  ✓  28 [components-root] › tests/docs-ssg/islands.spec.ts:646:1 › a glue init exception after real wasm instantiation preserves SSR and recovers through reload (964ms)
+  ✓  29 [components-root] › tests/docs-ssg/islands.spec.ts:684:1 › invalid hydration metadata releases the live native host and restores untouched SSR (458ms)
+  ✓  30 [components-root] › tests/docs-ssg/islands.spec.ts:702:1 › unsupported initial hydration globals refuse startup before wasm runs (280ms)
+  ✓  31 [components-root] › tests/docs-ssg/islands.spec.ts:717:1 › the startup deadline remains terminal when the real wasm completes late (759ms)
+  ✓  32 [components-root] › tests/docs-ssg/islands.spec.ts:742:1 › the release proxy attaches every real category, then opens floating controls with focus return (4.0s)
+  ✓  33 [components-root] › tests/docs-ssg/islands.spec.ts:771:9 › 375px keeps loading, ready, failure and bounded source usable in light (725ms)
+  ✓  34 [components-root] › tests/docs-ssg/islands.spec.ts:771:9 › 200% reflow and text scaling keeps loading, ready, failure and bounded source usable in light (757ms)
+  ✓  35 [components-root] › tests/docs-ssg/islands.spec.ts:771:9 › 375px keeps loading, ready, failure and bounded source usable in dark (687ms)
+  ✓  36 [components-root] › tests/docs-ssg/islands.spec.ts:771:9 › 200% reflow and text scaling keeps loading, ready, failure and bounded source usable in dark (695ms)
+
+  36 passed (2.4m)

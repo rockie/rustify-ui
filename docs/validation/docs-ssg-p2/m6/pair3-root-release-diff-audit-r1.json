@@ -1,0 +1,19 @@
+{
+  "framework_R3": "c562008291ef1b1826891944e0d81a5d61d775b8",
+  "previous_R2": "0494f304f0f9f8b620affb7309df23db3cb2377c",
+  "packages": 193,
+  "only_changed_package_sources": [
+    "rustify-components",
+    "rustify-docs",
+    "rustify-docs-macros",
+    "rustify-docs-syntax",
+    "rustify-style",
+    "rustify-ui"
+  ],
+  "no_third_party_changes": true,
+  "embedded_lock_bytes": 48590,
+  "embedded_lock_sha256": "3582d2a1a44d9aee46b1f16aa1ab41caebb8f2a436c86bed6ad4890d600329a3",
+  "root_lock_cli_version_only": true,
+  "protected_user_files_unchanged": 6,
+  "runtime_run": false
+}

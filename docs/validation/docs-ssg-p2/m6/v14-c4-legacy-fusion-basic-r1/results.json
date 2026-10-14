@@ -1,0 +1,2610 @@
+{
+  "config": {
+    "argv": [
+      "/Users/rockie/.nvm/versions/node/v26.1.0/bin/node",
+      "/Users/rockie/Documents/gh-rockie/rustify-ui/node_modules/.bin/playwright",
+      "test",
+      "--project=fusion-basic",
+      "m1-probes.spec.ts",
+      "m2-runtime.spec.ts",
+      "m3-state.spec.ts",
+      "m4-geometry.spec.ts",
+      "m4-overlay.spec.ts",
+      "m6-mainpath.spec.ts",
+      "p2-navigation.spec.ts",
+      "p3-instances.spec.ts",
+      "--workers=1",
+      "--retries=0",
+      "--output",
+      "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c4-legacy-fusion-basic-r1/artifacts"
+    ],
+    "configFile": "/Users/rockie/Documents/gh-rockie/rustify-ui/playwright.config.ts",
+    "rootDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": {},
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c4-legacy-fusion-basic-r1/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "utility-lab-scanner",
+        "name": "utility-lab-scanner",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "utility-scanner.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c4-legacy-fusion-basic-r1/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "utility-lab-scanner-deep",
+        "name": "utility-lab-scanner-deep",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "utility-scanner.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c4-legacy-fusion-basic-r1/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "utility-lab",
+        "name": "utility-lab",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "utility-runtime.spec.ts",
+          "utility-faults.spec.ts",
+          "utility-gpu.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c4-legacy-fusion-basic-r1/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "utility-lab-deep",
+        "name": "utility-lab-deep",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "utility-runtime.spec.ts",
+          "utility-gpu.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c4-legacy-fusion-basic-r1/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "utility-baseline",
+        "name": "utility-baseline",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "utility-baseline.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c4-legacy-fusion-basic-r1/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "fusion-basic",
+        "name": "fusion-basic",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "p3-restart.spec.ts",
+          "m1-probes.spec.ts",
+          "m2-runtime.spec.ts",
+          "m3-state.spec.ts",
+          "m4-geometry.spec.ts",
+          "m4-overlay.spec.ts",
+          "m6-mainpath.spec.ts",
+          "p2-navigation.spec.ts",
+          "p3-instances.spec.ts",
+          "p3-b0.spec.ts",
+          "p3-idle.spec.ts",
+          "p3-memory.spec.ts",
+          "p3-endurance.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c4-legacy-fusion-basic-r1/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "property-workbench",
+        "name": "property-workbench",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "p3-restart.spec.ts",
+          "m3-workbench.spec.ts",
+          "m5-text.spec.ts",
+          "m5-semantics.spec.ts",
+          "m6-theme.spec.ts",
+          "m6-async.spec.ts",
+          "m6-components.spec.ts",
+          "m7-recovery.spec.ts",
+          "m8-baseline.spec.ts",
+          "m8-network.spec.ts",
+          "m8-endurance.spec.ts",
+          "p2-form.spec.ts",
+          "p2-deeplink.spec.ts",
+          "p2-workspace.spec.ts",
+          "p2-drag.spec.ts",
+          "p2-clipboard-files.spec.ts",
+          "p2-zoom.spec.ts",
+          "p2-ime.spec.ts",
+          "p3-policy.spec.ts",
+          "p3-faults.spec.ts",
+          "p3-diagnostics.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c4-legacy-fusion-basic-r1/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "component-catalog",
+        "name": "component-catalog",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "p3-restart.spec.ts",
+          "p2-catalog.spec.ts",
+          "p2-theme.spec.ts",
+          "p2-semantics.spec.ts",
+          "p2-i18n.spec.ts",
+          "p2-reflow.spec.ts",
+          "p2-a11y.spec.ts",
+          "p3-policy.spec.ts",
+          "catalog-inputs.spec.ts",
+          "theme-compat.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c4-legacy-fusion-basic-r1/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "theme-studio",
+        "name": "theme-studio",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [
+          "theme-compat.spec.ts",
+          "theme-export-runtime.spec.ts"
+        ],
+        "testMatch": [
+          "theme-*.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c4-legacy-fusion-basic-r1/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "theme-studio-deep",
+        "name": "theme-studio-deep",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "theme-deployment.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c4-legacy-fusion-basic-r1/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "theme-export",
+        "name": "theme-export",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "theme-export-runtime.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c4-legacy-fusion-basic-r1/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "theme-export-deep",
+        "name": "theme-export-deep",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "theme-export-runtime.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c4-legacy-fusion-basic-r1/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "data-workbench",
+        "name": "data-workbench",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "p3-restart.spec.ts",
+          "p3-probes.spec.ts",
+          "p3-table.spec.ts",
+          "p3-jobs.spec.ts",
+          "p3-scene.spec.ts",
+          "p3-memory.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c4-legacy-fusion-basic-r1/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "budget-scene",
+        "name": "budget-scene",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "p3-budget-scene.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c4-legacy-fusion-basic-r1/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "workbench-deep",
+        "name": "workbench-deep",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "p2-deeplink.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c4-legacy-fusion-basic-r1/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "deployment",
+        "name": "deployment",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "m7-deployment.spec.ts"
+        ],
+        "timeout": 120000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/browser.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "m1-probes.spec.ts",
+      "file": "m1-probes.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "M1 probe 1: Leptos CSR and Makepad in one wasm, no isolation",
+          "file": "m1-probes.spec.ts",
+          "line": 5,
+          "column": 6,
+          "specs": [
+            {
+              "title": "boots without cross-origin isolation and draws into the region",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 240000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "fusion-basic",
+                  "projectName": "fusion-basic",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3515,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T01:36:27.283Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8105f9350369495a7279-b1010b9c73c4868af03d",
+              "file": "m1-probes.spec.ts",
+              "line": 6,
+              "column": 9
+            },
+            {
+              "title": "a DOM button changes the GPU label",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "fusion-basic",
+                  "projectName": "fusion-basic",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1013,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T01:36:31.215Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8105f9350369495a7279-c245e129e0a197fd682f",
+              "file": "m1-probes.spec.ts",
+              "line": 19,
+              "column": 9
+            },
+            {
+              "title": "a GPU button changes the DOM count",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "fusion-basic",
+                  "projectName": "fusion-basic",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 899,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T01:36:32.247Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8105f9350369495a7279-ba6c270570aa32d1013b",
+              "file": "m1-probes.spec.ts",
+              "line": 30,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "M1 probe 2: two scopes, four regions, symmetric teardown",
+          "file": "m1-probes.spec.ts",
+          "line": 40,
+          "column": 6,
+          "specs": [
+            {
+              "title": "regions in different scopes do not share state",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "fusion-basic",
+                  "projectName": "fusion-basic",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1616,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T01:36:33.162Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8105f9350369495a7279-cd1894068b26836c0d78",
+              "file": "m1-probes.spec.ts",
+              "line": 45,
+              "column": 9
+            },
+            {
+              "title": "disposing one scope leaves the other usable and releases its regions",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "fusion-basic",
+                  "projectName": "fusion-basic",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1757,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T01:36:34.795Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8105f9350369495a7279-3afe02c4ad2f2d5824fa",
+              "file": "m1-probes.spec.ts",
+              "line": 62,
+              "column": 9
+            },
+            {
+              "title": "disposing right after mounting leaves no region and no late callback",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "fusion-basic",
+                  "projectName": "fusion-basic",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3204,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T01:36:36.571Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8105f9350369495a7279-df7d0fbaf3f45c88a81e",
+              "file": "m1-probes.spec.ts",
+              "line": 81,
+              "column": 9
+            },
+            {
+              "title": "mount and dispose repeat without leaking regions",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 600000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "fusion-basic",
+                  "projectName": "fusion-basic",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1454,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T01:36:39.793Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8105f9350369495a7279-4919fd493e8a2f7846dc",
+              "file": "m1-probes.spec.ts",
+              "line": 105,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "M1 probe 3: static message bridge under a strict CSP",
+          "file": "m1-probes.spec.ts",
+          "line": 139,
+          "column": 6,
+          "specs": [
+            {
+              "title": "no dynamic JS execution is needed and the bridge hash matches",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 240000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "fusion-basic",
+                  "projectName": "fusion-basic",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1276,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T01:36:41.262Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8105f9350369495a7279-1ebc8f0e1dd57a5106de",
+              "file": "m1-probes.spec.ts",
+              "line": 144,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "m2-runtime.spec.ts",
+      "file": "m2-runtime.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "M2 V1: mounting",
+          "file": "m2-runtime.spec.ts",
+          "line": 9,
+          "column": 6,
+          "specs": [
+            {
+              "title": "a missing container fails and leaves the running scopes alone",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "fusion-basic",
+                  "projectName": "fusion-basic",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 649,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T01:36:42.558Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "c43b91cb363eca44aca4-b3005a4c62b16b456063",
+              "file": "m2-runtime.spec.ts",
+              "line": 10,
+              "column": 9
+            },
+            {
+              "title": "mounting over a live scope fails and leaves that scope alone",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "fusion-basic",
+                  "projectName": "fusion-basic",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 686,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T01:36:43.227Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "c43b91cb363eca44aca4-95ac3a5a8777699ba6c4",
+              "file": "m2-runtime.spec.ts",
+              "line": 26,
+              "column": 9
+            },
+            {
+              "title": "a disposed handle is spent: the second dispose reports nothing to do",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "fusion-basic",
+                  "projectName": "fusion-basic",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 631,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T01:36:43.931Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "c43b91cb363eca44aca4-f2c976dca3b685c4b9f4",
+              "file": "m2-runtime.spec.ts",
+              "line": 45,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "M2: region state",
+          "file": "m2-runtime.spec.ts",
+          "line": 53,
+          "column": 6,
+          "specs": [
+            {
+              "title": "every live region reports itself ready",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "fusion-basic",
+                  "projectName": "fusion-basic",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1348,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T01:36:44.578Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "c43b91cb363eca44aca4-dfdc62ac86b1a0136443",
+              "file": "m2-runtime.spec.ts",
+              "line": 54,
+              "column": 9
+            },
+            {
+              "title": "a region denied a GPU context says so and keeps its DOM half working",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "fusion-basic",
+                  "projectName": "fusion-basic",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2684,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T01:36:45.943Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "c43b91cb363eca44aca4-47cfa7191b1c74e4c7ef",
+              "file": "m2-runtime.spec.ts",
+              "line": 69,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "M2 V3: teardown and host coexistence",
+          "file": "m2-runtime.spec.ts",
+          "line": 106,
+          "column": 6,
+          "specs": [
+            {
+              "title": "closing one scope leaves the other fully operable, DOM and GPU",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "fusion-basic",
+                  "projectName": "fusion-basic",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2265,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T01:36:48.645Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "c43b91cb363eca44aca4-d5eb2afb431ac328a0ef",
+              "file": "m2-runtime.spec.ts",
+              "line": 107,
+              "column": 9
+            },
+            {
+              "title": "events aimed at a disposed scope produce no callback and no error",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "fusion-basic",
+                  "projectName": "fusion-basic",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1875,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T01:36:50.928Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "c43b91cb363eca44aca4-f3d9c5a56f019bceaf3d",
+              "file": "m2-runtime.spec.ts",
+              "line": 126,
+              "column": 9
+            },
+            {
+              "title": "idle regions do not wake the runtime",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "fusion-basic",
+                  "projectName": "fusion-basic",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4582,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T01:36:52.819Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "c43b91cb363eca44aca4-4fdc4bb5a3230c9bf50f",
+              "file": "m2-runtime.spec.ts",
+              "line": 144,
+              "column": 9
+            },
+            {
+              "title": "an embedded region takes no page-level state",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "fusion-basic",
+                  "projectName": "fusion-basic",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 637,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T01:36:57.420Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "c43b91cb363eca44aca4-6529627a359d8be156f6",
+              "file": "m2-runtime.spec.ts",
+              "line": 153,
+              "column": 9
+            },
+            {
+              "title": "the host page keeps its link, scrolling and text selection",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "fusion-basic",
+                  "projectName": "fusion-basic",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 683,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T01:36:58.078Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "c43b91cb363eca44aca4-9e39a9cf54dcbe8eb51c",
+              "file": "m2-runtime.spec.ts",
+              "line": 176,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "M7 V8: what a trap in the shared module reaches",
+          "file": "m2-runtime.spec.ts",
+          "line": 270,
+          "column": 6,
+          "specs": [
+            {
+              "title": "every mount in the runtime is dead, and the page says which",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 240000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "fusion-basic",
+                  "projectName": "fusion-basic",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1288,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T01:36:58.778Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "c43b91cb363eca44aca4-06ef50b1c5dbf4ccbf6f",
+              "file": "m2-runtime.spec.ts",
+              "line": 275,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "m3-state.spec.ts",
+      "file": "m3-state.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "M3 V2: shared state and controlled GPU components",
+          "file": "m3-state.spec.ts",
+          "line": 5,
+          "column": 6,
+          "specs": [
+            {
+              "title": "interleaved DOM and GPU actions each land exactly once",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 360000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "fusion-basic",
+                  "projectName": "fusion-basic",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1528,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T01:37:00.083Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "64100b86406c9177f7c7-dbe7bc240dcc56525286",
+              "file": "m3-state.spec.ts",
+              "line": 6,
+              "column": 9
+            },
+            {
+              "title": "both regions of a scope show the current value, not a stale one",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "fusion-basic",
+                  "projectName": "fusion-basic",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1503,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T01:37:01.626Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "64100b86406c9177f7c7-f2359eca1ca7811f8af3",
+              "file": "m3-state.spec.ts",
+              "line": 27,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "the page a check starts on",
+          "file": "m3-state.spec.ts",
+          "line": 90,
+          "column": 6,
+          "specs": [
+            {
+              "title": "a reset puts back the page as it loads, and keeps its regions",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 420000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "fusion-basic",
+                  "projectName": "fusion-basic",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3700,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T01:37:03.147Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "64100b86406c9177f7c7-e49f01c854328d023451",
+              "file": "m3-state.spec.ts",
+              "line": 91,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "m4-geometry.spec.ts",
+      "file": "m4-geometry.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "M4 V4: one geometry for display and for hits, 1024x768 at 100%",
+          "file": "m4-geometry.spec.ts",
+          "line": 166,
+          "column": 10,
+          "specs": [
+            {
+              "title": "twenty anchors agree with the picture and with the pointer",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 300000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "fusion-basic",
+                  "projectName": "fusion-basic",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1440,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T01:37:06.871Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b6ea3ec4606f8af50106-bb14f6e8a4ea4e7eb56b",
+              "file": "m4-geometry.spec.ts",
+              "line": 169,
+              "column": 13
+            }
+          ]
+        },
+        {
+          "title": "M4 V4: one geometry for display and for hits, 1440x900 at 125%",
+          "file": "m4-geometry.spec.ts",
+          "line": 166,
+          "column": 10,
+          "specs": [
+            {
+              "title": "twenty anchors agree with the picture and with the pointer",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 420000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "fusion-basic",
+                  "projectName": "fusion-basic",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2063,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T01:37:08.326Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b6ea3ec4606f8af50106-5f09b239fd7b8b2aee87",
+              "file": "m4-geometry.spec.ts",
+              "line": 169,
+              "column": 13
+            }
+          ]
+        },
+        {
+          "title": "M4 V4: the region follows a change of resolution",
+          "file": "m4-geometry.spec.ts",
+          "line": 178,
+          "column": 6,
+          "specs": [
+            {
+              "title": "the backing store matches the device pixel ratio after zooming",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 300000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "fusion-basic",
+                  "projectName": "fusion-basic",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 980,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T01:37:10.404Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b6ea3ec4606f8af50106-37edac8dddfb5d7557d4",
+              "file": "m4-geometry.spec.ts",
+              "line": 179,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "M4 V4: the clip is the same for the picture and for the pointer",
+          "file": "m4-geometry.spec.ts",
+          "line": 227,
+          "column": 6,
+          "specs": [
+            {
+              "title": "a hundred rounds of resizing and scrolling keep the region inside its clip",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 600000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "fusion-basic",
+                  "projectName": "fusion-basic",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1552,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T01:37:11.407Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b6ea3ec4606f8af50106-005ed91d1b776df3df82",
+              "file": "m4-geometry.spec.ts",
+              "line": 228,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "M4 V4: a region with no area",
+          "file": "m4-geometry.spec.ts",
+          "line": 337,
+          "column": 6,
+          "specs": [
+            {
+              "title": "suspends, and comes back at the size it returns to",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 300000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "fusion-basic",
+                  "projectName": "fusion-basic",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1418,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T01:37:12.974Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b6ea3ec4606f8af50106-80de8b445b83bd349905",
+              "file": "m4-geometry.spec.ts",
+              "line": 338,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "m4-overlay.spec.ts",
+      "file": "m4-overlay.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "M4 V4 / R10: layers of one scope",
+          "file": "m4-overlay.spec.ts",
+          "line": 31,
+          "column": 6,
+          "specs": [
+            {
+              "title": "a menu opened from a GPU anchor sits on it, and stays on it while the page scrolls",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 300000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "fusion-basic",
+                  "projectName": "fusion-basic",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 963,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T01:37:14.412Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ece2d310676c33a4b600-f6c71420ec60aceab725",
+              "file": "m4-overlay.spec.ts",
+              "line": 32,
+              "column": 9
+            },
+            {
+              "title": "a modal over the region takes a hundred clicks and passes none of them down",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 300000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "fusion-basic",
+                  "projectName": "fusion-basic",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 787,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T01:37:15.387Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ece2d310676c33a4b600-fba861efe7dbe67876b2",
+              "file": "m4-overlay.spec.ts",
+              "line": 80,
+              "column": 9
+            },
+            {
+              "title": "escape closes one layer at a time and hands focus back to what opened it",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "fusion-basic",
+                  "projectName": "fusion-basic",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 796,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T01:37:16.191Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ece2d310676c33a4b600-e5636aec94ce9403fc57",
+              "file": "m4-overlay.spec.ts",
+              "line": 105,
+              "column": 9
+            },
+            {
+              "title": "an open layer owns escape, and the application gets it back afterwards",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "fusion-basic",
+                  "projectName": "fusion-basic",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 801,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T01:37:17.006Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ece2d310676c33a4b600-7e9d463a258d1837aa6a",
+              "file": "m4-overlay.spec.ts",
+              "line": 125,
+              "column": 9
+            },
+            {
+              "title": "a layer whose trigger is gone hands focus to the scope instead",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "fusion-basic",
+                  "projectName": "fusion-basic",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 720,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T01:37:17.822Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ece2d310676c33a4b600-539f8af18d2abfbee9f0",
+              "file": "m4-overlay.spec.ts",
+              "line": 151,
+              "column": 9
+            },
+            {
+              "title": "a layer that no longer holds focus does not take it back",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "fusion-basic",
+                  "projectName": "fusion-basic",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 735,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T01:37:18.557Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ece2d310676c33a4b600-311d623b5b91ea9eda16",
+              "file": "m4-overlay.spec.ts",
+              "line": 171,
+              "column": 9
+            },
+            {
+              "title": "a modal keeps the tab sequence inside itself, and gives it back after",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "fusion-basic",
+                  "projectName": "fusion-basic",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 834,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T01:37:19.306Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ece2d310676c33a4b600-ad7c51e6b8a50787d56b",
+              "file": "m4-overlay.spec.ts",
+              "line": 186,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "M4 V4: focus belongs to whoever had it",
+          "file": "m4-overlay.spec.ts",
+          "line": 214,
+          "column": 6,
+          "specs": [
+            {
+              "title": "mounting a scope and starting its region take no focus from the host page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "fusion-basic",
+                  "projectName": "fusion-basic",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1392,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T01:37:20.156Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ece2d310676c33a4b600-65d3c5e0d29e6601b58f",
+              "file": "m4-overlay.spec.ts",
+              "line": 215,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "M4 V4: twenty focus items",
+          "file": "m4-overlay.spec.ts",
+          "line": 241,
+          "column": 6,
+          "specs": [
+            {
+              "title": "tab and shift-tab walk them in order, skipping the disabled one",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 300000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "fusion-basic",
+                  "projectName": "fusion-basic",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 759,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T01:37:21.564Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ece2d310676c33a4b600-11c631a07e0b5a1a25ef",
+              "file": "m4-overlay.spec.ts",
+              "line": 242,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "m6-mainpath.spec.ts",
+      "file": "m6-mainpath.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "M6: select, edit, confirm",
+          "file": "m6-mainpath.spec.ts",
+          "line": 7,
+          "column": 6,
+          "specs": [
+            {
+              "title": "the main path from a pointer on the region to a committed value",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "fusion-basic",
+                  "projectName": "fusion-basic",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 805,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T01:37:22.342Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "5ce207c8e692155aa876-c7ab6d60347590bb6e88",
+              "file": "m6-mainpath.spec.ts",
+              "line": 8,
+              "column": 9
+            },
+            {
+              "title": "an abandoned edit changes nothing",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "fusion-basic",
+                  "projectName": "fusion-basic",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 816,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T01:37:23.160Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "5ce207c8e692155aa876-11888246c5c8f2a257b2",
+              "file": "m6-mainpath.spec.ts",
+              "line": 44,
+              "column": 9
+            },
+            {
+              "title": "a value the application refuses leaves the old one and says why",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "fusion-basic",
+                  "projectName": "fusion-basic",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 883,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T01:37:23.991Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "5ce207c8e692155aa876-2e983d16d188b184fd38",
+              "file": "m6-mainpath.spec.ts",
+              "line": 61,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "p2-navigation.spec.ts",
+      "file": "p2-navigation.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "M4 A-5: what the browser does with history, measured",
+          "file": "p2-navigation.spec.ts",
+          "line": 59,
+          "column": 6,
+          "specs": [
+            {
+              "title": "one go() crosses several entries, and reports the entry it landed on",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "fusion-basic",
+                  "projectName": "fusion-basic",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 650,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T01:37:24.895Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "87288faa08483dec4922-0f52184884c35acbf715",
+              "file": "p2-navigation.spec.ts",
+              "line": 64,
+              "column": 9
+            },
+            {
+              "title": "the way back is one go() of the difference, not several of one",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "fusion-basic",
+                  "projectName": "fusion-basic",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 633,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T01:37:25.557Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "87288faa08483dec4922-5fcc41684480f9ef64b7",
+              "file": "p2-navigation.spec.ts",
+              "line": 76,
+              "column": 9
+            },
+            {
+              "title": "the same URL twice is two entries, and the sequence number tells them apart",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "fusion-basic",
+                  "projectName": "fusion-basic",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 650,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T01:37:26.208Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "87288faa08483dec4922-c184853c16ce685d77e4",
+              "file": "p2-navigation.spec.ts",
+              "line": 95,
+              "column": 9
+            },
+            {
+              "title": "a back pressed during a recovery arrives after it, and is its own event",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "fusion-basic",
+                  "projectName": "fusion-basic",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 652,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T01:37:26.873Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "87288faa08483dec4922-f9f7fee0a8b483a0644a",
+              "file": "p2-navigation.spec.ts",
+              "line": 109,
+              "column": 9
+            },
+            {
+              "title": "an entry the router did not push has no sequence number",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "fusion-basic",
+                  "projectName": "fusion-basic",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 648,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T01:37:27.542Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "87288faa08483dec4922-8112af2c0711257e147c",
+              "file": "p2-navigation.spec.ts",
+              "line": 133,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "M4 V6: who owns the address bar",
+          "file": "p2-navigation.spec.ts",
+          "line": 171,
+          "column": 6,
+          "specs": [
+            {
+              "title": "only the owner's location is the page's, and both of them route",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "fusion-basic",
+                  "projectName": "fusion-basic",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 700,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T01:37:28.206Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "87288faa08483dec4922-9b5db83b8961e55b8102",
+              "file": "p2-navigation.spec.ts",
+              "line": 177,
+              "column": 9
+            },
+            {
+              "title": "a second scope asking to own the URL is refused and changes nothing",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "fusion-basic",
+                  "projectName": "fusion-basic",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 667,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T01:37:28.925Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "87288faa08483dec4922-7a242f23a44dc6253aff",
+              "file": "p2-navigation.spec.ts",
+              "line": 192,
+              "column": 9
+            },
+            {
+              "title": "twenty moves are twenty entries, and back walks them",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "fusion-basic",
+                  "projectName": "fusion-basic",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 749,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T01:37:29.609Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "87288faa08483dec4922-13e7ff12aa73ee039dc4",
+              "file": "p2-navigation.spec.ts",
+              "line": 211,
+              "column": 9
+            },
+            {
+              "title": "a guard refuses a move and puts the user back where they were",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "fusion-basic",
+                  "projectName": "fusion-basic",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 900,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T01:37:30.374Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "87288faa08483dec4922-762c51081302128c92d2",
+              "file": "p2-navigation.spec.ts",
+              "line": 247,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "M4 V6: a link the page owns",
+          "file": "p2-navigation.spec.ts",
+          "line": 278,
+          "column": 6,
+          "specs": [
+            {
+              "title": "the browser takes it, and the SDK does not",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "fusion-basic",
+                  "projectName": "fusion-basic",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 415,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T01:37:31.292Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "87288faa08483dec4922-28ce7850cf53d49a0214",
+              "file": "p2-navigation.spec.ts",
+              "line": 281,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "p3-instances.spec.ts",
+      "file": "p3-instances.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "M5 · one instance fails, the other does not",
+          "file": "p3-instances.spec.ts",
+          "line": 131,
+          "column": 6,
+          "specs": [
+            {
+              "title": "a trap through an export the page called reaches its own instance only",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "fusion-basic",
+                  "projectName": "fusion-basic",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1086,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T01:37:31.727Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "81699995bae4083e021a-53955fb7283ce13bd1be",
+              "file": "p3-instances.spec.ts",
+              "line": 137,
+              "column": 13
+            },
+            {
+              "title": "a trap through a DOM event handler reaches its own instance only",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "fusion-basic",
+                  "projectName": "fusion-basic",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1138,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T01:37:32.823Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "81699995bae4083e021a-55e4871139244d0db7e1",
+              "file": "p3-instances.spec.ts",
+              "line": 137,
+              "column": 13
+            },
+            {
+              "title": "a trap through a task the host was running reaches its own instance only",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "fusion-basic",
+                  "projectName": "fusion-basic",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1118,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T01:37:33.980Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "81699995bae4083e021a-00552a75543502abe1c5",
+              "file": "p3-instances.spec.ts",
+              "line": 137,
+              "column": 13
+            },
+            {
+              "title": "a trap through the page's own simulation reaches its own instance only",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "fusion-basic",
+                  "projectName": "fusion-basic",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1127,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T01:37:35.117Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "81699995bae4083e021a-93734e442036e1b2bf4b",
+              "file": "p3-instances.spec.ts",
+              "line": 137,
+              "column": 13
+            },
+            {
+              "title": "a dead instance's diagnostics are its own",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "fusion-basic",
+                  "projectName": "fusion-basic",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1091,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T01:37:36.261Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "81699995bae4083e021a-ae2ebbbe9f04bb6000ab",
+              "file": "p3-instances.spec.ts",
+              "line": 169,
+              "column": 9
+            },
+            {
+              "title": "two instances start under the release policy with nothing refused",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "fusion-basic",
+                  "projectName": "fusion-basic",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1090,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T01:37:37.369Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "81699995bae4083e021a-8789410bb3b0c887e42e",
+              "file": "p3-instances.spec.ts",
+              "line": 193,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "M5 · the address bar after its owner dies",
+          "file": "p3-instances.spec.ts",
+          "line": 206,
+          "column": 6,
+          "specs": [
+            {
+              "title": "a restarted instance owns the URL again and is the only one answering",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "fusion-basic",
+                  "projectName": "fusion-basic",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1794,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T01:37:38.475Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "81699995bae4083e021a-08e71de04aba3ba63983",
+              "file": "p3-instances.spec.ts",
+              "line": 211,
+              "column": 9
+            },
+            {
+              "title": "a second owner is refused and the first one is untouched",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "fusion-basic",
+                  "projectName": "fusion-basic",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 872,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T01:37:40.287Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "81699995bae4083e021a-a5391f87b219cfe90af7",
+              "file": "p3-instances.spec.ts",
+              "line": 300,
+              "column": 9
+            },
+            {
+              "title": "a slot may be restarted three times and then only reloading is left",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "fusion-basic",
+                  "projectName": "fusion-basic",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1385,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T01:37:41.177Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "81699995bae4083e021a-d9e8e14b3d0ddfea9ea5",
+              "file": "p3-instances.spec.ts",
+              "line": 326,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-14T01:36:26.119Z",
+    "duration": 76595.66,
+    "expected": 58,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

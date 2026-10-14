@@ -1,0 +1,18 @@
+{
+  "candidate_sha": "6721dc73db18421826c4abaf0823d51d8d6ceffb",
+  "framework_revision": "c562008291ef1b1826891944e0d81a5d61d775b8",
+  "cli_version": "0.1.13",
+  "exact_release_commit_files": [
+    "Cargo.lock",
+    "crates/rustify-docs-cli/Cargo.toml",
+    "crates/rustify-docs-cli/assets/components-Cargo.lock",
+    "crates/rustify-docs-cli/assets/framework-revision.txt",
+    "docs/docs-ssg.md"
+  ],
+  "embedded_lock_bytes": 48590,
+  "embedded_lock_sha256": "3582d2a1a44d9aee46b1f16aa1ab41caebb8f2a436c86bed6ad4890d600329a3",
+  "prepared_source_not_C3": "580d14310a06fea0786cbc3a7d0c0f43d658ba68",
+  "install_status": "pending",
+  "public_availability": "not verified",
+  "preparation_handoff": "docs/validation/docs-ssg-p2/m6/pair3-preparation-handoff-r1.json"
+}

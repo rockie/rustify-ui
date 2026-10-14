@@ -1,0 +1,26 @@
+{
+  "candidate_C": "c1061ced3deaa4e6669bc45eb3382306fa85c958",
+  "framework_R": "0494f304f0f9f8b620affb7309df23db3cb2377c",
+  "frozen_product_files_checked": 1817,
+  "all_frozen_product_bytes_unchanged": true,
+  "authorized_verification_only_sources": {
+    "crates/rustify-docs-cli/tests/dev.rs": {
+      "frozen_sha256": "e9a77737f37e87a0260e6a5c6c45e9d8e83d9ae431db9f51834ec4238b5bb6d9",
+      "verification_sha256": "4ff0fb90881bd322b5a61e2bf25e0e293f67f6f5da475c002aaaf2e563853a8b"
+    },
+    "crates/rustify-docs/tests/generate.rs": {
+      "frozen_sha256": "3be78ce8140c6dadfca76a298a7bb55c5db2387cc3b9e0aa41481626a0919769",
+      "verification_sha256": "52a36a734bf13672f5d2a632deecc521d9dbe90701e5b2cdc03ecb286a2acbbb"
+    }
+  },
+  "user_dirty_sources_sha256": {
+    ".xgent-ai/sdlc/events/plan/7c105838-be0d-4f3b-ae5c-9998b8f4cfdc/49cf6e56-1669-49f8-bf18-f9ba34055b2f.md": "2ad70a918150d5f6e6f97c4174450fd05916813406c3ae0c98b187331d0eb7f9",
+    ".xgent-ai/sdlc/events/plan/7c105838-be0d-4f3b-ae5c-9998b8f4cfdc/index.md": "d985f2134cc4ea01d880a96591ccb44ad4519d9abd31f4eb8b008fa2ea94ae87",
+    ".xgent-ai/sdlc/events/prd/8917bbeb-7add-4826-95ee-5cdf6bdff735/7ca79957-a261-428e-bcfc-77ba4fce871e.md": "cc30a93a1154babac6a784b40cdf6b7adfdd9dbbadfc339c7d4168771b735226",
+    ".xgent-ai/sdlc/events/prd/8917bbeb-7add-4826-95ee-5cdf6bdff735/index.md": "97589b745b6fc6ff445262e062994a65b62cddbb4e28471239614db08190d089",
+    ".xgent-ai/sdlc/status/plan/7c105838-be0d-4f3b-ae5c-9998b8f4cfdc.md": "cfe1077f78ec8c5b97419d532e70c84008705e15410c72137e298a8b6a5e2cc0",
+    ".xgent-ai/sdlc/status/prd/8917bbeb-7add-4826-95ee-5cdf6bdff735.md": "b889040715e7ba96e922fd98cf0a601b819ea14636a968a7313b91882b7caa83"
+  },
+  "all_six_user_source_bytes_unchanged": true,
+  "installed_binary_sha256_unchanged": true
+}

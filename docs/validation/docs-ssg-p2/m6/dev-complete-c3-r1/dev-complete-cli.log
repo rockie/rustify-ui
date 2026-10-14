@@ -1,0 +1,40 @@
+rustc 1.99.0 (b940084d7 2026-09-28)
+dev: pages show no last-updated date: not a git repository (or any of the parent directories): .git
+watching /private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-dev-meter-FqNmHA/site; drafts are shown, source and published output are unchanged, stop with Ctrl-C
+dev: host
+dev: wasm
+dev: inputs changed; discarding the candidate and rebuilding
+dev: render
+dev: host
+dev: wasm
+dev: render
+warning[not-in-nav]: this page is in no navigation group, so readers can only reach it by a link
+  --> content/index.md
+warning[theme-token]: radius: Light and dark have different author values; editing this common field applies to both
+  --> theme.json
+dev: revision 1: 10 page(s) changed, 2 warning(s), 1319 ms
+dev: render
+dev: host
+dev: wasm
+dev: render
+dev: revision 2: 6 page(s) changed, 2 warning(s), 24315 ms
+dev: render
+dev: host
+dev: wasm
+dev: render
+dev: revision 3: 6 page(s) changed, 2 warning(s), 24337 ms
+dev: render
+dev: host
+dev: wasm
+dev: render
+dev: revision 4: 6 page(s) changed, 2 warning(s), 24061 ms
+dev: render
+dev: host
+dev: wasm
+dev: render
+dev: revision 5: 6 page(s) changed, 2 warning(s), 24536 ms
+dev: render
+dev: host
+dev: wasm
+dev: render
+dev: revision 6: 6 page(s) changed, 2 warning(s), 24312 ms

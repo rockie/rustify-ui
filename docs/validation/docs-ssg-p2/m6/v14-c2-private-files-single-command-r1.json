@@ -1,0 +1,16 @@
+{
+  "command": [
+    "mbx",
+    "test",
+    "--locked",
+    "-p",
+    "rustify-docs-cli",
+    "--test",
+    "faults",
+    "private_files_and_links_out_of_the_project_never_ship",
+    "--",
+    "--exact"
+  ],
+  "exit_code": 101,
+  "milliseconds": 3190.989990234375
+}

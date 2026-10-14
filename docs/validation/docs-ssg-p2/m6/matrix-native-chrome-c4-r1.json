@@ -1,0 +1,312 @@
+{
+  "scope": "fixed installed C4 native Chrome concentrated matrix; installed155.0.8059.40 with latest-patch gap retained",
+  "C4": "d301344eeb27e22907c59a10805ae0cebf8dee99",
+  "R4": "3fcc626a4039a43c5e045ccd546bab976db89a73",
+  "binary_sha256": "5eae4e6bf727505a030fd67680c7c3a2c82bb6e195815a0d834b18cf4d737b71",
+  "chrome_executable": "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+  "config": "docs/validation/docs-ssg-p2/m6/native-matrix.config.ts",
+  "official_meta_port": 62294,
+  "external_4200_untouched": true,
+  "visual_reuse": "only one bounded official home batch excluded; existing accepted M5 visuals reused; all other functional assertions unchanged",
+  "projects": [
+    {
+      "project": "components-root",
+      "command": [
+        "npm",
+        "exec",
+        "--",
+        "playwright",
+        "test",
+        "-c",
+        "docs/validation/docs-ssg-p2/m6/native-matrix.config.ts",
+        "--project=components-root",
+        "--workers=1",
+        "--retries=0",
+        "--output",
+        "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/matrix-components-root-c4-r1/artifacts"
+      ],
+      "started_at_ms": 1791940644913.019,
+      "evidence": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/matrix-components-root-c4-r1",
+      "exit_code": 0,
+      "milliseconds": 143848.3720703125,
+      "stats": {
+        "startTime": "2026-10-14T01:17:25.812Z",
+        "duration": 142892.438,
+        "expected": 36,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      }
+    },
+    {
+      "project": "components-subpath",
+      "command": [
+        "npm",
+        "exec",
+        "--",
+        "playwright",
+        "test",
+        "-c",
+        "docs/validation/docs-ssg-p2/m6/native-matrix.config.ts",
+        "--project=components-subpath",
+        "--workers=1",
+        "--retries=0",
+        "--output",
+        "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/matrix-components-subpath-c4-r1/artifacts"
+      ],
+      "started_at_ms": 1791940789200.459,
+      "evidence": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/matrix-components-subpath-c4-r1",
+      "exit_code": 0,
+      "milliseconds": 144120.32885742188,
+      "stats": {
+        "startTime": "2026-10-14T01:19:50.093Z",
+        "duration": 143185.09399999998,
+        "expected": 36,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      }
+    },
+    {
+      "project": "components-meta",
+      "command": [
+        "npm",
+        "exec",
+        "--",
+        "playwright",
+        "test",
+        "-c",
+        "docs/validation/docs-ssg-p2/m6/native-matrix.config.ts",
+        "--project=components-meta",
+        "--workers=1",
+        "--retries=0",
+        "--output",
+        "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/matrix-components-meta-c4-r1/artifacts"
+      ],
+      "started_at_ms": 1791940933699.868,
+      "evidence": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/matrix-components-meta-c4-r1",
+      "exit_code": 0,
+      "milliseconds": 138935.11694335938,
+      "stats": {
+        "startTime": "2026-10-14T01:22:14.498Z",
+        "duration": 138097.159,
+        "expected": 36,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      }
+    },
+    {
+      "project": "official-root",
+      "command": [
+        "npm",
+        "exec",
+        "--",
+        "playwright",
+        "test",
+        "-c",
+        "docs/validation/docs-ssg-p2/m6/native-matrix.config.ts",
+        "--project=official-root",
+        "--workers=1",
+        "--retries=0",
+        "--output",
+        "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/matrix-official-root-c4-r1/artifacts",
+        "--grep-invert",
+        "one bounded official home"
+      ],
+      "started_at_ms": 1791941073004.707,
+      "evidence": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/matrix-official-root-c4-r1",
+      "exit_code": 0,
+      "milliseconds": 126971.05883789062,
+      "stats": {
+        "startTime": "2026-10-14T01:24:33.772Z",
+        "duration": 126179.329,
+        "expected": 46,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      }
+    },
+    {
+      "project": "official-subpath",
+      "command": [
+        "npm",
+        "exec",
+        "--",
+        "playwright",
+        "test",
+        "-c",
+        "docs/validation/docs-ssg-p2/m6/native-matrix.config.ts",
+        "--project=official-subpath",
+        "--workers=1",
+        "--retries=0",
+        "--output",
+        "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/matrix-official-subpath-c4-r1/artifacts",
+        "--grep-invert",
+        "one bounded official home"
+      ],
+      "started_at_ms": 1791941200346.365,
+      "evidence": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/matrix-official-subpath-c4-r1",
+      "exit_code": 0,
+      "milliseconds": 131120.09497070312,
+      "stats": {
+        "startTime": "2026-10-14T01:26:41.125Z",
+        "duration": 130274.313,
+        "expected": 46,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      }
+    },
+    {
+      "project": "official-meta",
+      "command": [
+        "npm",
+        "exec",
+        "--",
+        "playwright",
+        "test",
+        "-c",
+        "docs/validation/docs-ssg-p2/m6/native-matrix.config.ts",
+        "--project=official-meta",
+        "--workers=1",
+        "--retries=0",
+        "--output",
+        "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/matrix-official-meta-c4-r1/artifacts",
+        "--grep-invert",
+        "one bounded official home"
+      ],
+      "started_at_ms": 1791941331853.8828,
+      "evidence": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/matrix-official-meta-c4-r1",
+      "exit_code": 0,
+      "milliseconds": 128835.84106445312,
+      "stats": {
+        "startTime": "2026-10-14T01:28:52.638Z",
+        "duration": 128010.656,
+        "expected": 46,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      }
+    },
+    {
+      "project": "docs-root",
+      "command": [
+        "npm",
+        "exec",
+        "--",
+        "playwright",
+        "test",
+        "-c",
+        "docs/validation/docs-ssg-p2/m6/native-matrix.config.ts",
+        "--project=docs-root",
+        "--workers=1",
+        "--retries=0",
+        "--output",
+        "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/matrix-docs-root-c4-r1/artifacts"
+      ],
+      "started_at_ms": 1791941461107.475,
+      "evidence": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/matrix-docs-root-c4-r1",
+      "exit_code": 0,
+      "milliseconds": 21175.90283203125,
+      "stats": {
+        "startTime": "2026-10-14T01:31:01.899Z",
+        "duration": 20370.526,
+        "expected": 27,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      }
+    },
+    {
+      "project": "docs-subpath",
+      "command": [
+        "npm",
+        "exec",
+        "--",
+        "playwright",
+        "test",
+        "-c",
+        "docs/validation/docs-ssg-p2/m6/native-matrix.config.ts",
+        "--project=docs-subpath",
+        "--workers=1",
+        "--retries=0",
+        "--output",
+        "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/matrix-docs-subpath-c4-r1/artifacts"
+      ],
+      "started_at_ms": 1791941482516.6982,
+      "evidence": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/matrix-docs-subpath-c4-r1",
+      "exit_code": 0,
+      "milliseconds": 21071.279541015625,
+      "stats": {
+        "startTime": "2026-10-14T01:31:23.147Z",
+        "duration": 20395.092999999997,
+        "expected": 27,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      }
+    },
+    {
+      "project": "docs-meta",
+      "command": [
+        "npm",
+        "exec",
+        "--",
+        "playwright",
+        "test",
+        "-c",
+        "docs/validation/docs-ssg-p2/m6/native-matrix.config.ts",
+        "--project=docs-meta",
+        "--workers=1",
+        "--retries=0",
+        "--output",
+        "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/matrix-docs-meta-c4-r1/artifacts"
+      ],
+      "started_at_ms": 1791941503836.3872,
+      "evidence": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/matrix-docs-meta-c4-r1",
+      "exit_code": 0,
+      "milliseconds": 21393.890625,
+      "stats": {
+        "startTime": "2026-10-14T01:31:44.456Z",
+        "duration": 20717.817,
+        "expected": 27,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      }
+    },
+    {
+      "project": "docs-dev",
+      "command": [
+        "npm",
+        "exec",
+        "--",
+        "playwright",
+        "test",
+        "-c",
+        "docs/validation/docs-ssg-p2/m6/native-matrix.config.ts",
+        "--project=docs-dev",
+        "--workers=1",
+        "--retries=0",
+        "--output",
+        "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/matrix-docs-dev-c4-r1/artifacts"
+      ],
+      "started_at_ms": 1791941525333.182,
+      "evidence": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/matrix-docs-dev-c4-r1",
+      "exit_code": 0,
+      "milliseconds": 142444.79321289062,
+      "stats": {
+        "startTime": "2026-10-14T01:32:05.974Z",
+        "duration": 141733.451,
+        "expected": 24,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      }
+    }
+  ],
+  "remaining": [],
+  "active": null,
+  "all_ten_passed": true
+}

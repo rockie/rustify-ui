@@ -1,0 +1,337 @@
+{
+  "chromium": "153.0.8010.12",
+  "conditions": {
+    "viewport": {
+      "width": 375,
+      "height": 667
+    },
+    "cpu_slowdown": 4,
+    "network": {
+      "offline": false,
+      "latency": 150,
+      "downloadThroughput": 209715.2,
+      "uploadThroughput": 96000
+    },
+    "cache": "disabled; a fresh context per sample",
+    "samples": 5,
+    "settle_ms": 1500
+  },
+  "pages": [
+    {
+      "path": "/rustify-ui/",
+      "status": 200,
+      "lcp_ms": 732,
+      "cls": 0,
+      "fcp_ms": 732,
+      "lcp_element": "p",
+      "transfer_bytes": 93256,
+      "wasm_requests": 0,
+      "cross_origin_requests": 0,
+      "csp_violations": [],
+      "samples": [
+        {
+          "lcp": 808,
+          "cls": 0,
+          "fcp": 808,
+          "shifts": 0,
+          "navigation": {
+            "transfer": 6848,
+            "body": 6548,
+            "responseEnd": 193.59999990463257,
+            "domContentLoaded": 962.5999999046326,
+            "load": 966.5
+          }
+        },
+        {
+          "lcp": 736,
+          "cls": 0,
+          "fcp": 736,
+          "shifts": 0,
+          "navigation": {
+            "transfer": 6848,
+            "body": 6548,
+            "responseEnd": 188.10000002384186,
+            "domContentLoaded": 911.6000000238419,
+            "load": 912.3999999761581
+          }
+        },
+        {
+          "lcp": 732,
+          "cls": 0,
+          "fcp": 732,
+          "shifts": 0,
+          "navigation": {
+            "transfer": 6848,
+            "body": 6548,
+            "responseEnd": 194.29999995231628,
+            "domContentLoaded": 918.1999999284744,
+            "load": 919
+          }
+        },
+        {
+          "lcp": 716,
+          "cls": 0,
+          "fcp": 716,
+          "shifts": 0,
+          "navigation": {
+            "transfer": 6848,
+            "body": 6548,
+            "responseEnd": 185.89999997615814,
+            "domContentLoaded": 895.7999999523163,
+            "load": 897.1999999284744
+          }
+        },
+        {
+          "lcp": 716,
+          "cls": 0,
+          "fcp": 716,
+          "shifts": 0,
+          "navigation": {
+            "transfer": 6848,
+            "body": 6548,
+            "responseEnd": 185.29999995231628,
+            "domContentLoaded": 897.5,
+            "load": 899.1000000238419
+          }
+        }
+      ]
+    },
+    {
+      "path": "/rustify-ui/quickstart/",
+      "status": 200,
+      "lcp_ms": 1060,
+      "cls": 0,
+      "fcp_ms": 1060,
+      "lcp_element": "li",
+      "transfer_bytes": 207117,
+      "wasm_requests": 0,
+      "cross_origin_requests": 0,
+      "csp_violations": [],
+      "samples": [
+        {
+          "lcp": 1120,
+          "cls": 0,
+          "fcp": 1040,
+          "shifts": 0,
+          "navigation": {
+            "transfer": 120709,
+            "body": 120409,
+            "responseEnd": 1081.1999999284744,
+            "domContentLoaded": 1220.5,
+            "load": 1220.5
+          }
+        },
+        {
+          "lcp": 1056,
+          "cls": 0,
+          "fcp": 1056,
+          "shifts": 0,
+          "navigation": {
+            "transfer": 120709,
+            "body": 120409,
+            "responseEnd": 1080.8000000715256,
+            "domContentLoaded": 1208,
+            "load": 1208.1000000238419
+          }
+        },
+        {
+          "lcp": 1060,
+          "cls": 0,
+          "fcp": 1060,
+          "shifts": 0,
+          "navigation": {
+            "transfer": 120709,
+            "body": 120409,
+            "responseEnd": 1082.9000000953674,
+            "domContentLoaded": 1224.7000000476837,
+            "load": 1224.7000000476837
+          }
+        },
+        {
+          "lcp": 1060,
+          "cls": 0,
+          "fcp": 1060,
+          "shifts": 0,
+          "navigation": {
+            "transfer": 120709,
+            "body": 120409,
+            "responseEnd": 1088.7999999523163,
+            "domContentLoaded": 1225,
+            "load": 1225
+          }
+        },
+        {
+          "lcp": 1060,
+          "cls": 0,
+          "fcp": 1060,
+          "shifts": 0,
+          "navigation": {
+            "transfer": 120709,
+            "body": 120409,
+            "responseEnd": 1082.5,
+            "domContentLoaded": 1231,
+            "load": 1231.0999999046326
+          }
+        }
+      ]
+    },
+    {
+      "path": "/rustify-ui/vellum/",
+      "status": 200,
+      "lcp_ms": 884,
+      "cls": 0,
+      "fcp_ms": 884,
+      "lcp_element": "p",
+      "transfer_bytes": 148245,
+      "wasm_requests": 0,
+      "cross_origin_requests": 0,
+      "csp_violations": [],
+      "samples": [
+        {
+          "lcp": 896,
+          "cls": 0,
+          "fcp": 896,
+          "shifts": 0,
+          "navigation": {
+            "transfer": 61837,
+            "body": 61537,
+            "responseEnd": 615.6000000238419,
+            "domContentLoaded": 1043,
+            "load": 1043
+          }
+        },
+        {
+          "lcp": 888,
+          "cls": 0,
+          "fcp": 888,
+          "shifts": 0,
+          "navigation": {
+            "transfer": 61837,
+            "body": 61537,
+            "responseEnd": 615.3999999761581,
+            "domContentLoaded": 1044.6000000238419,
+            "load": 1044.6000000238419
+          }
+        },
+        {
+          "lcp": 876,
+          "cls": 0,
+          "fcp": 876,
+          "shifts": 0,
+          "navigation": {
+            "transfer": 61837,
+            "body": 61537,
+            "responseEnd": 610.5,
+            "domContentLoaded": 1038.8000000715256,
+            "load": 1038.9000000953674
+          }
+        },
+        {
+          "lcp": 884,
+          "cls": 0,
+          "fcp": 884,
+          "shifts": 0,
+          "navigation": {
+            "transfer": 61837,
+            "body": 61537,
+            "responseEnd": 616.6000000238419,
+            "domContentLoaded": 1043.6000000238419,
+            "load": 1043.7000000476837
+          }
+        },
+        {
+          "lcp": 884,
+          "cls": 0,
+          "fcp": 884,
+          "shifts": 0,
+          "navigation": {
+            "transfer": 61837,
+            "body": 61537,
+            "responseEnd": 615.6000000238419,
+            "domContentLoaded": 1043.5,
+            "load": 1043.6000000238419
+          }
+        }
+      ]
+    },
+    {
+      "path": "/rustify-ui/__m6_c3_missing__/deep/",
+      "status": 404,
+      "lcp_ms": 716,
+      "cls": 0,
+      "fcp_ms": 716,
+      "lcp_element": "h1",
+      "transfer_bytes": 95989,
+      "wasm_requests": 0,
+      "cross_origin_requests": 0,
+      "csp_violations": [],
+      "samples": [
+        {
+          "lcp": 716,
+          "cls": 0,
+          "fcp": 716,
+          "shifts": 0,
+          "navigation": {
+            "transfer": 9581,
+            "body": 9281,
+            "responseEnd": 206.89999997615814,
+            "domContentLoaded": 912.1999999284744,
+            "load": 913.0999999046326
+          }
+        },
+        {
+          "lcp": 708,
+          "cls": 0,
+          "fcp": 708,
+          "shifts": 0,
+          "navigation": {
+            "transfer": 9581,
+            "body": 9281,
+            "responseEnd": 202,
+            "domContentLoaded": 905,
+            "load": 906.5
+          }
+        },
+        {
+          "lcp": 716,
+          "cls": 0,
+          "fcp": 716,
+          "shifts": 0,
+          "navigation": {
+            "transfer": 9581,
+            "body": 9281,
+            "responseEnd": 202.39999997615814,
+            "domContentLoaded": 903.3000000715256,
+            "load": 904.8999999761581
+          }
+        },
+        {
+          "lcp": 720,
+          "cls": 0,
+          "fcp": 720,
+          "shifts": 0,
+          "navigation": {
+            "transfer": 9581,
+            "body": 9281,
+            "responseEnd": 207.29999995231628,
+            "domContentLoaded": 902.3999999761581,
+            "load": 903.5
+          }
+        },
+        {
+          "lcp": 712,
+          "cls": 0,
+          "fcp": 712,
+          "shifts": 0,
+          "navigation": {
+            "transfer": 9581,
+            "body": 9281,
+            "responseEnd": 201.39999997615814,
+            "domContentLoaded": 902.5,
+            "load": 904.2999999523163
+          }
+        }
+      ]
+    }
+  ]
+}

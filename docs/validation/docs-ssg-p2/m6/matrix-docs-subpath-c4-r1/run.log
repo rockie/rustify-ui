@@ -1,0 +1,57 @@
+npm notice run rustify-ui-browser-tests@0.1.0 npx
+npm notice run 'playwright' test -c docs/validation/docs-ssg-p2/m6/native-matrix.config.ts --project=docs-subpath --workers=1 --retries=0 --output /Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/matrix-docs-subpath-c4-r1/artifacts
+[WebServer] building /Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/http/content/subpath/site into /Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/http/content/subpath/dist
+[WebServer] warning[no-git-history]: pages show no last-updated date: not a git repository (or any of the parent directories): .git
+[WebServer]   = help: build inside a git repository with the content committed
+[WebServer] build: 4 pages and 404.html in /Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/http/content/subpath/dist: 112.9 KB in 20 files, 1 warning(s), 44 ms
+[WebServer] largest pages:
+[WebServer]      16.8 KB  guide/setup/index.html
+[WebServer]      11.0 KB  guide/index.html
+[WebServer]       9.0 KB  reference/api/index.html
+[WebServer]       5.4 KB  index.html
+[WebServer]       5.3 KB  404.html
+[WebServer] serving /Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/http/content/subpath/dist (built by rustify-docs 0.1.14, build dfa9aba420aa7109) until stopped
+
+Running 27 tests using 1 worker
+
+(node:90990) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+building /var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-home-1yODIM into /private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-home-1yODIM/dist
+warning[no-git-history]: pages show no last-updated date: not a git repository (or any of the parent directories): .git
+  = help: build inside a git repository with the content committed
+build: 5 pages and 404.html in /private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-home-1yODIM/dist: 88.6 KB in 14 files, 1 warning(s), 23 ms
+largest pages:
+      4.9 KB  guide/index.html
+      4.2 KB  404.html
+      4.2 KB  raw/index.html
+      4.2 KB  index.html
+      4.1 KB  explicit/index.html
+  ✓   1 [docs-subpath] › tests/docs-ssg/home.spec.ts:47:9 › home anchors and empty navigation work with script true (3.2s)
+  ✓   2 [docs-subpath] › tests/docs-ssg/home.spec.ts:47:9 › home anchors and empty navigation work with script false (2.9s)
+  ✓   3 [docs-subpath] › tests/docs-ssg/home.spec.ts:109:5 › the empty home and its footer pass accessibility checks in both modes (664ms)
+  ✓   4 [docs-subpath] › tests/docs-ssg/http.spec.ts:49:5 › every page links only to pages that load whole, under the base, from this origin (251ms)
+  ✓   5 [docs-subpath] › tests/docs-ssg/http.spec.ts:98:5 › an anchor link lands on its heading, Chinese ones included (222ms)
+  ✓   6 [docs-subpath] › tests/docs-ssg/http.spec.ts:105:5 › an address with nothing behind it is a real 404 that looks like the site, at any depth (273ms)
+  ✓   7 [docs-subpath] › tests/docs-ssg/http.spec.ts:121:5 › the policy arrives as a header where the host can send one, and in every page (143ms)
+  ✓   8 [docs-subpath] › tests/docs-ssg/http.spec.ts:141:5 › a directory without its slash is redirected, and nothing outside the base is served (6ms)
+  ✓   9 [docs-subpath] › tests/docs-ssg/theme.spec.ts:60:9 › colour mode › the first frame follows the system, and a stored choice before any paint (272ms)
+  ✓  10 [docs-subpath] › tests/docs-ssg/theme.spec.ts:85:9 › colour mode › the switch changes, marks and keeps the mode across pages (213ms)
+  ✓  11 [docs-subpath] › tests/docs-ssg/theme.spec.ts:100:9 › colour mode › refused storage leaves the system mode and a switch that still works (156ms)
+  ✓  12 [docs-subpath] › tests/docs-ssg/theme.spec.ts:125:9 › code › copy hands over the block's text exactly and says so (274ms)
+  ✓  13 [docs-subpath] › tests/docs-ssg/theme.spec.ts:138:9 › code › a refused clipboard says so and selects the code for copying by hand (255ms)
+  ✓  14 [docs-subpath] › tests/docs-ssg/theme.spec.ts:153:9 › code › a code group shows one tab, switches its namesakes and remembers across pages (224ms)
+  ✓  15 [docs-subpath] › tests/docs-ssg/theme.spec.ts:178:9 › code › highlighting spans stay inline, block scopes included (125ms)
+  ✓  16 [docs-subpath] › tests/docs-ssg/theme.spec.ts:189:9 › navigation › the sidebar marks the page, and the contents follow the reader to the last section (1.2s)
+  ✓  17 [docs-subpath] › tests/docs-ssg/theme.spec.ts:210:9 › navigation › on a phone the menu and the contents are panels that close on a link and on Escape (259ms)
+  ✓  18 [docs-subpath] › tests/docs-ssg/theme.spec.ts:228:9 › navigation › the columns follow the width, and nothing scrolls sideways down to 320 px or at 200 % (343ms)
+  ✓  19 [docs-subpath] › tests/docs-ssg/theme.spec.ts:251:9 › header links › are in the header from 768 px and in a row of their own below, marking the guide (690ms)
+  ✓  20 [docs-subpath] › tests/docs-ssg/theme.spec.ts:283:9 › unusual content › a heading id with % neither breaks the contents nor the narrow menus (1.3s)
+  ✓  21 [docs-subpath] › tests/docs-ssg/theme.spec.ts:310:9 › unusual content › an SVG symbol keeps its fragment, and a class's background loads from the site (160ms)
+  ✓  22 [docs-subpath] › tests/docs-ssg/theme.spec.ts:335:9 › without script › everything reads, every code tab is shown and nothing pretends to be a control (180ms)
+  ✓  23 [docs-subpath] › tests/docs-ssg/theme.spec.ts:357:9 › reading quality › one h1, landmarks and the page's language (239ms)
+  ✓  24 [docs-subpath] › tests/docs-ssg/theme.spec.ts:375:9 › reading quality › text, links, alerts and actions reach AA contrast in both modes (515ms)
+  ✓  25 [docs-subpath] › tests/docs-ssg/theme.spec.ts:407:9 › reading quality › focus is an opaque ring with a gap, and the logo shows in both modes (319ms)
+  ✓  26 [docs-subpath] › tests/docs-ssg/theme.spec.ts:430:9 › reading quality › axe finds no serious or critical WCAG A/AA violation, wide and narrow, in both modes (5.0s)
+  ✓  27 [docs-subpath] › tests/docs-ssg/theme.spec.ts:453:9 › reading quality › reduced motion turns smooth scrolling off (129ms)
+
+  27 passed (20.4s)

@@ -1,0 +1,7 @@
+{
+  "version": "rustify-docs 0.1.11",
+  "build_info": "rustify-docs 0.1.11\npanic: unwind\ngrammars: syntect-5.3.0+two-face-0.5.2+bat-0.26.1+fancy\nsource: 8e86626fce74ffc45085da6377ca9aa64312fe59",
+  "binary_sha256": "1a31f4c5903ef3f0a3bf0b621f2b095f4774db5d2f7e55c67b40ed4c1b2234a8",
+  "cargo_install_listing": "[v1]\n\"rustify-docs-cli 0.1.11 (git+https://github.com/rockie/rustify-ui?rev=8e86626fce74ffc45085da6377ca9aa64312fe59#8e86626fce74ffc45085da6377ca9aa64312fe59)\" = [\"rustify-docs\"]\n",
+  "expected_framework_from_C": "676a55771ab77faf8c476a836025d62905a2d3e2"
+}

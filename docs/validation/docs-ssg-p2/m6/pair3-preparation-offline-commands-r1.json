@@ -1,0 +1,122 @@
+[
+  {
+    "name": "root-metadata",
+    "command": [
+      "mbx",
+      "metadata",
+      "--locked",
+      "--offline",
+      "--format-version",
+      "1"
+    ],
+    "started_at_ms": 1791936317468.003,
+    "exit_code": 0,
+    "milliseconds": 305.301025390625
+  },
+  {
+    "name": "metadata-ssr",
+    "command": [
+      "cargo",
+      "metadata",
+      "--locked",
+      "--offline",
+      "--format-version",
+      "1",
+      "--manifest-path",
+      "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair3-preparation-4jszh7aa/docs-site/Cargo.toml",
+      "--no-default-features",
+      "--features",
+      "ssr"
+    ],
+    "started_at_ms": 1791936317977.4458,
+    "exit_code": 0,
+    "milliseconds": 183.190185546875,
+    "all_six_framework_sources_R3": true,
+    "no_makepad": true,
+    "wasm_bindgen": "0.2.128"
+  },
+  {
+    "name": "metadata-hydrate",
+    "command": [
+      "cargo",
+      "metadata",
+      "--locked",
+      "--offline",
+      "--format-version",
+      "1",
+      "--manifest-path",
+      "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair3-preparation-4jszh7aa/docs-site/Cargo.toml",
+      "--no-default-features",
+      "--features",
+      "hydrate"
+    ],
+    "started_at_ms": 1791936318234.145,
+    "exit_code": 0,
+    "milliseconds": 178.968017578125,
+    "all_six_framework_sources_R3": true,
+    "no_makepad": true,
+    "wasm_bindgen": "0.2.128"
+  },
+  {
+    "name": "check-ssr",
+    "command": [
+      "mbx",
+      "check",
+      "--locked",
+      "--offline",
+      "--profile",
+      "docs-host",
+      "--manifest-path",
+      "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair3-preparation-4jszh7aa/docs-site/Cargo.toml",
+      "--target-dir",
+      "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair3-preparation-4jszh7aa/target",
+      "--no-default-features",
+      "--features",
+      "ssr",
+      "--bin",
+      "docs-render"
+    ],
+    "started_at_ms": 1791936318487.0881,
+    "exit_code": 0,
+    "milliseconds": 11073.37890625
+  },
+  {
+    "name": "check-hydrate",
+    "command": [
+      "mbx",
+      "check",
+      "--locked",
+      "--offline",
+      "--profile",
+      "docs-wasm",
+      "--manifest-path",
+      "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair3-preparation-4jszh7aa/docs-site/Cargo.toml",
+      "--target-dir",
+      "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair3-preparation-4jszh7aa/target",
+      "--no-default-features",
+      "--features",
+      "hydrate",
+      "--lib",
+      "--target",
+      "wasm32-unknown-unknown"
+    ],
+    "started_at_ms": 1791936329645.7988,
+    "exit_code": 0,
+    "milliseconds": 5960.517333984375
+  },
+  {
+    "name": "cli-build",
+    "command": [
+      "mbx",
+      "build",
+      "--locked",
+      "--profile",
+      "docs-cli",
+      "-p",
+      "rustify-docs-cli"
+    ],
+    "started_at_ms": 1791936335688.085,
+    "exit_code": 0,
+    "milliseconds": 47707.949951171875
+  }
+]

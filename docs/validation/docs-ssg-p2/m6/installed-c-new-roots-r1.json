@@ -1,0 +1,58 @@
+[
+  {
+    "site": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-installed-c-hv5ysh41/docs-site",
+    "package": "docs-site",
+    "command": [
+      "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-installed-c-hv5ysh41/installed/bin/rustify-docs",
+      "new",
+      "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-installed-c-hv5ysh41/docs-site",
+      "--template",
+      "components"
+    ],
+    "exit_code": 0,
+    "files": [
+      ".gitignore",
+      "Cargo.lock",
+      "Cargo.toml",
+      "README.md",
+      "content/guide/getting-started.md",
+      "content/guide/writing-demos.md",
+      "content/index.md",
+      "rustify-docs.toml",
+      "src/bin/docs-render.rs",
+      "src/demos.rs",
+      "src/lib.rs"
+    ],
+    "only_source_free_root_renamed": true,
+    "readme_exact_C_R": true,
+    "lock_sha256": "0dd43b63c0b2ed89d0dffbd732ee57e46caeb2669c1549f214c7a33bc8dde24a"
+  },
+  {
+    "site": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-installed-c-hv5ysh41/M6 named root",
+    "package": "m6-named-root",
+    "command": [
+      "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-installed-c-hv5ysh41/installed/bin/rustify-docs",
+      "new",
+      "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-installed-c-hv5ysh41/M6 named root",
+      "--template",
+      "components"
+    ],
+    "exit_code": 0,
+    "files": [
+      ".gitignore",
+      "Cargo.lock",
+      "Cargo.toml",
+      "README.md",
+      "content/guide/getting-started.md",
+      "content/guide/writing-demos.md",
+      "content/index.md",
+      "rustify-docs.toml",
+      "src/bin/docs-render.rs",
+      "src/demos.rs",
+      "src/lib.rs"
+    ],
+    "only_source_free_root_renamed": true,
+    "readme_exact_C_R": true,
+    "lock_sha256": "934bbd11f5b222fac0c92f8920d762cddd5434169f4583c36f04b0669acfadc0"
+  }
+]

@@ -1,0 +1,17 @@
+{
+  "inputs": {
+    "Cargo.toml": "39c26b19123a2f664f337cc2bb85f1f102b95854661ef9cdc88b83630a705bdd",
+    "Cargo.lock": "0dd43b63c0b2ed89d0dffbd732ee57e46caeb2669c1549f214c7a33bc8dde24a",
+    "rustify-docs.toml": "f581d837267cbfce9a1aa54be086cbbeb8162615b99731e531563898f2b64d84",
+    "README.md": "82e7031ac160791d0377d25179e070c1b5f1c6a276785ac68ffeb00bb36d7d49",
+    ".gitignore": "5f5e41eb0464af1566753b0b33c30b3ff6f0b6a344e09ad8be48b11c0333e467",
+    "content/index.md": "da87bfc2f9c8ac2f834990e0cd1d521b15c90bbe1a7738886bf45c927169888f",
+    "src/lib.rs": "2af073e77a2e98bcf6948e6216979393e7eebf5102b47e225bd033b34d571027",
+    "src/demos.rs": "8b720362ecfe80c198ff1ba056bfbb71019e7483b5ee343542f8f461e4709110",
+    "content/guide/getting-started.md": "e0c182b7bdc5c0230f9be283a42bf448cf62fadaa7c81d2082bf850b8c965fcd",
+    "content/guide/writing-demos.md": "e991cc76628d89096a90e205ebffe341c3883ff754f7a6cd8024f3e32b54e5de",
+    "src/bin/docs-render.rs": "3abaa6437e5ddd6ad5a3223430c6ba53a28d117090f5be9d268951d77629a052"
+  },
+  "unchanged_after_check_build": true,
+  "lock_sha256": "0dd43b63c0b2ed89d0dffbd732ee57e46caeb2669c1549f214c7a33bc8dde24a"
+}

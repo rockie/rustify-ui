@@ -1,0 +1,52 @@
+[
+  {
+    "command": [
+      "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-cli/rustify-docs",
+      "new",
+      "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair2-preparation-czwynoju/actual-new/docs-site",
+      "--template",
+      "components"
+    ],
+    "exit_code": 0,
+    "package": "docs-site",
+    "files": 11,
+    "only_source_free_root_name_changed": true,
+    "lock_sha256": "c42635807affd79947f5afc581ef5a5af544d1a23bd4acc99ac25c10bde78f65",
+    "root_package": {
+      "name": "docs-site",
+      "version": "0.1.0",
+      "dependencies": [
+        "leptos",
+        "rustify-components",
+        "rustify-docs",
+        "rustify-ui",
+        "wasm-bindgen"
+      ]
+    }
+  },
+  {
+    "command": [
+      "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-cli/rustify-docs",
+      "new",
+      "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair2-preparation-czwynoju/actual-new/Pair2 named root",
+      "--template",
+      "components"
+    ],
+    "exit_code": 0,
+    "package": "pair2-named-root",
+    "files": 11,
+    "only_source_free_root_name_changed": true,
+    "lock_sha256": "b7b50242fbdf9c7983a7cacad9da400c6b11480f416e0b0b8aba620fc46b6e0d",
+    "root_package": {
+      "name": "pair2-named-root",
+      "version": "0.1.0",
+      "dependencies": [
+        "leptos",
+        "rustify-components",
+        "rustify-docs",
+        "rustify-ui",
+        "wasm-bindgen"
+      ]
+    }
+  }
+]

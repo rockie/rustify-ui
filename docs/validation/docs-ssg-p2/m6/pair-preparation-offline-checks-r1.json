@@ -1,0 +1,53 @@
+[
+  {
+    "mode": "ssr",
+    "profile": "docs-host",
+    "command": [
+      "mbx",
+      "check",
+      "--locked",
+      "--offline",
+      "--profile",
+      "docs-host",
+      "--no-default-features",
+      "--features",
+      "ssr",
+      "--manifest-path",
+      "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair-preparation-q08yp2lv/docs-site/Cargo.toml",
+      "--target-dir",
+      "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair-preparation-q08yp2lv/target",
+      "--bin",
+      "docs-render"
+    ],
+    "exit_code": 0,
+    "milliseconds": 13218.985107421875,
+    "lock_unchanged": true,
+    "lock_sha256": "0dd43b63c0b2ed89d0dffbd732ee57e46caeb2669c1549f214c7a33bc8dde24a"
+  },
+  {
+    "mode": "hydrate",
+    "profile": "docs-wasm",
+    "command": [
+      "mbx",
+      "check",
+      "--locked",
+      "--offline",
+      "--profile",
+      "docs-wasm",
+      "--no-default-features",
+      "--features",
+      "hydrate",
+      "--manifest-path",
+      "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair-preparation-q08yp2lv/docs-site/Cargo.toml",
+      "--target-dir",
+      "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair-preparation-q08yp2lv/target",
+      "--lib",
+      "--target",
+      "wasm32-unknown-unknown"
+    ],
+    "exit_code": 0,
+    "milliseconds": 6900.2548828125,
+    "lock_unchanged": true,
+    "lock_sha256": "0dd43b63c0b2ed89d0dffbd732ee57e46caeb2669c1549f214c7a33bc8dde24a"
+  }
+]

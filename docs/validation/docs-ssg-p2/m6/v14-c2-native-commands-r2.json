@@ -1,0 +1,239 @@
+{
+  "candidate_C": "c1061ced3deaa4e6669bc45eb3382306fa85c958",
+  "framework_R": "0494f304f0f9f8b620affb7309df23db3cb2377c",
+  "prior_passed_commands": "docs/validation/docs-ssg-p2/m6/v14-c2-native-commands-r1.json",
+  "prior_red_docs_test_preserved": true,
+  "allowed_verification_test_file": "crates/rustify-docs/tests/generate.rs",
+  "commands": [
+    {
+      "name": "generate-test-r2",
+      "command": [
+        "mbx",
+        "test",
+        "--locked",
+        "-p",
+        "rustify-docs",
+        "--test",
+        "generate"
+      ],
+      "cwd": "/Users/rockie/Documents/gh-rockie/rustify-ui",
+      "log": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c2-generate-test-r2.log",
+      "started_at_ms": 1791933885329.303,
+      "exit_code": 0,
+      "milliseconds": 8074.12890625,
+      "test_results": [
+        {
+          "status": "ok",
+          "passed": 17,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0
+        }
+      ],
+      "test_totals": {
+        "passed": 17,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered": 0
+      }
+    },
+    {
+      "name": "docs-test-r2",
+      "command": [
+        "mbx",
+        "test",
+        "--locked",
+        "-p",
+        "rustify-docs"
+      ],
+      "cwd": "/Users/rockie/Documents/gh-rockie/rustify-ui",
+      "log": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c2-docs-test-r2.log",
+      "started_at_ms": 1791933893504.0908,
+      "exit_code": 0,
+      "milliseconds": 45138.22998046875,
+      "test_results": [
+        {
+          "status": "ok",
+          "passed": 191,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0
+        },
+        {
+          "status": "ok",
+          "passed": 14,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0
+        },
+        {
+          "status": "ok",
+          "passed": 17,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0
+        },
+        {
+          "status": "ok",
+          "passed": 6,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0
+        },
+        {
+          "status": "ok",
+          "passed": 16,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0
+        },
+        {
+          "status": "ok",
+          "passed": 1,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0
+        },
+        {
+          "status": "ok",
+          "passed": 19,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0
+        },
+        {
+          "status": "ok",
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0
+        }
+      ],
+      "test_totals": {
+        "passed": 264,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered": 0
+      }
+    },
+    {
+      "name": "docs-clippy",
+      "command": [
+        "mbx",
+        "clippy",
+        "--locked",
+        "-p",
+        "rustify-docs",
+        "--all-targets",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "cwd": "/Users/rockie/Documents/gh-rockie/rustify-ui",
+      "log": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c2-docs-clippy-r1.log",
+      "started_at_ms": 1791933938741.5,
+      "exit_code": 0,
+      "milliseconds": 5848.2841796875,
+      "test_results": [],
+      "test_totals": {
+        "passed": 0,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered": 0
+      }
+    },
+    {
+      "name": "cli-test",
+      "command": [
+        "mbx",
+        "test",
+        "--locked",
+        "-p",
+        "rustify-docs-cli"
+      ],
+      "cwd": "/Users/rockie/Documents/gh-rockie/rustify-ui",
+      "log": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c2-cli-test-r1.log",
+      "started_at_ms": 1791933944697.639,
+      "exit_code": 101,
+      "milliseconds": 374701.06103515625,
+      "test_results": [
+        {
+          "status": "ok",
+          "passed": 72,
+          "failed": 0,
+          "ignored": 1,
+          "measured": 0,
+          "filtered": 0
+        },
+        {
+          "status": "ok",
+          "passed": 13,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0
+        },
+        {
+          "status": "ok",
+          "passed": 15,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0
+        },
+        {
+          "status": "ok",
+          "passed": 2,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0
+        },
+        {
+          "status": "FAILED",
+          "passed": 13,
+          "failed": 1,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0
+        }
+      ],
+      "test_totals": {
+        "passed": 115,
+        "failed": 1,
+        "ignored": 1,
+        "measured": 0,
+        "filtered": 0
+      }
+    }
+  ],
+  "remaining": [
+    "cli-clippy",
+    "cli-build",
+    "syntax-test",
+    "syntax-clippy",
+    "macros-test",
+    "macros-clippy",
+    "site-ssr-test",
+    "site-ssr-clippy",
+    "docs-hydrate-check",
+    "sources",
+    "css",
+    "catalog",
+    "features"
+  ],
+  "status": "failed",
+  "active": null
+}

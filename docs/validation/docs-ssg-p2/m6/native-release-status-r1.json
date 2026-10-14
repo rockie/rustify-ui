@@ -1,0 +1,21 @@
+{
+  "observed_at": "2026-10-13T21:50:40+00:00",
+  "scope": "release-channel cross-check only; browser walk-through independent and not claimed here",
+  "Chrome": {
+    "installed": "155.0.8059.40",
+    "official_general_stable_windows_mac": [
+      "155.0.8059.79",
+      "155.0.8059.80"
+    ],
+    "release_date": "2026-10-13",
+    "source": "https://chromereleases.googleblog.com/2026/10/",
+    "result": "installed build predates latest stable patch; latest-patch gate remains unverified; no tool install or system update performed"
+  },
+  "Safari": {
+    "installed": "27.0.1",
+    "official_Safari_release_family": "27",
+    "official_latest_macOS": "27.0.1",
+    "source": "https://support.apple.com/en-us/100100",
+    "result": "platform and Safari family match current release; exact Safari patch latestness not asserted solely from macOS version"
+  }
+}

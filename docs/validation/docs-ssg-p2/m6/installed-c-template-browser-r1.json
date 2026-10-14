@@ -1,0 +1,105 @@
+{
+  "scope": "one actual unmodified installed-C template browser path; no visual review, physical device, human or performance claim",
+  "candidate": "8e86626fce74ffc45085da6377ca9aa64312fe59",
+  "framework": "676a55771ab77faf8c476a836025d62905a2d3e2",
+  "errors": [],
+  "csp": [],
+  "failures": [],
+  "responses": [
+    {
+      "url": "http://127.0.0.1:62605/",
+      "status": 200,
+      "mime": "text/html; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:62605/assets/site.68d58b9384.css",
+      "status": 200,
+      "mime": "text/css; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:62605/assets/mode.5e2c2584b0.js",
+      "status": 200,
+      "mime": "text/javascript; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:62605/assets/islands/1fb5b135399ceb529a8edd2a58310308637e92d5d9414368cb92c0588f7f74ed/islands.js",
+      "status": 200,
+      "mime": "text/javascript; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:62605/assets/site.2529a0d647.js",
+      "status": 200,
+      "mime": "text/javascript; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:62605/assets/islands/1fb5b135399ceb529a8edd2a58310308637e92d5d9414368cb92c0588f7f74ed/dom-loader.js",
+      "status": 200,
+      "mime": "text/javascript; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:62605/assets/islands/1fb5b135399ceb529a8edd2a58310308637e92d5d9414368cb92c0588f7f74ed/app_bg.wasm",
+      "status": 200,
+      "mime": "application/wasm"
+    },
+    {
+      "url": "http://127.0.0.1:62605/assets/islands/1fb5b135399ceb529a8edd2a58310308637e92d5d9414368cb92c0588f7f74ed/app.js",
+      "status": 200,
+      "mime": "text/javascript; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:62605/assets/islands/1fb5b135399ceb529a8edd2a58310308637e92d5d9414368cb92c0588f7f74ed/snippets/rustify-ui-4db2f10f10788f4c/web/dom-runtime.js",
+      "status": 200,
+      "mime": "text/javascript; charset=utf-8"
+    }
+  ],
+  "preview": {
+    "pid": 93318,
+    "command": [
+      "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-installed-c-hv5ysh41/installed/bin/rustify-docs",
+      "preview",
+      "--dir",
+      "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-installed-c-hv5ysh41/docs-site/dist",
+      "--port",
+      "0"
+    ],
+    "url": "http://127.0.0.1:62605/"
+  },
+  "browser_version": "153.0.8010.12",
+  "browser_executable": "/Users/rockie/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing",
+  "before": [
+    {
+      "nodes": 19,
+      "ids": [
+        "rui-island-8a5edab282-0-field-1"
+      ]
+    },
+    {
+      "nodes": 14,
+      "ids": [
+        "rui-island-8a5edab282-1-field-1"
+      ]
+    }
+  ],
+  "after": [
+    {
+      "same_root": true,
+      "retained_nodes": 19,
+      "ids": [
+        "rui-island-8a5edab282-0-field-1"
+      ]
+    },
+    {
+      "same_root": true,
+      "retained_nodes": 14,
+      "ids": [
+        "rui-island-8a5edab282-1-field-1"
+      ]
+    }
+  ],
+  "final_values": [
+    "4",
+    "31"
+  ],
+  "source_exact": true,
+  "passed": true
+}

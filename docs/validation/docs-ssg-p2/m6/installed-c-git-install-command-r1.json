@@ -1,0 +1,20 @@
+{
+  "command": [
+    "mbx",
+    "install",
+    "--git",
+    "https://github.com/rockie/rustify-ui",
+    "--rev",
+    "8e86626fce74ffc45085da6377ca9aa64312fe59",
+    "--locked",
+    "--profile",
+    "docs-cli",
+    "--root",
+    "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-installed-c-hv5ysh41/installed",
+    "rustify-docs-cli"
+  ],
+  "scope": "real Git installation at fixed C; public Git source identities preserved; process-local transport remap only, not public GitHub availability verification",
+  "started_at_ms": 1791925643573.651,
+  "exit_code": 0,
+  "ended_at_ms": 1791925722492.8472
+}

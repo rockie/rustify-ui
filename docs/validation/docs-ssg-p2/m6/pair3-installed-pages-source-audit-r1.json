@@ -1,0 +1,11 @@
+{
+  "candidate_C": "6721dc73db18421826c4abaf0823d51d8d6ceffb",
+  "framework_R": "c562008291ef1b1826891944e0d81a5d61d775b8",
+  "only_tracked_changes": [
+    "site/Cargo.toml",
+    "site/Cargo.lock"
+  ],
+  "protected_files": 11397,
+  "all_receipt_inputs_unchanged_after_check_build": true,
+  "receipt": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair3-installed-uvgj6yil/official-c3/.rustify-docs/pages-prepare.json"
+}

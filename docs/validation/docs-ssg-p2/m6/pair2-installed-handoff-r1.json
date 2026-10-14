@@ -1,0 +1,72 @@
+{
+  "candidate_sha": "c1061ced3deaa4e6669bc45eb3382306fa85c958",
+  "framework_revision": "0494f304f0f9f8b620affb7309df23db3cb2377c",
+  "cli_version": "0.1.12",
+  "binary": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair2-installed-8j63t8o1/installed/bin/rustify-docs",
+  "binary_sha256": "88a255eafa51c7315d49b6cdc02f7f4e137d92a8fe8a50b5741b509827a3781e",
+  "panic": "unwind",
+  "install_exit_code": 0,
+  "new_roots": {
+    "files_each": 11,
+    "exact_frozen_template_bytes": true,
+    "readme_exact_C2_R2": true,
+    "only_source_free_lock_root_name_changes": true
+  },
+  "offline_template": {
+    "metadata_modes": [
+      "ssr",
+      "hydrate"
+    ],
+    "metadata_exit_codes": [
+      0,
+      0
+    ],
+    "check_exit_code": 0,
+    "build_exit_code": 0,
+    "pages": 3,
+    "files": 16,
+    "warnings": 3,
+    "all_11_input_bytes_unchanged": true,
+    "lock_sha256": "c42635807affd79947f5afc581ef5a5af544d1a23bd4acc99ac25c10bde78f65",
+    "head_data_icon_html": 4
+  },
+  "offline_official": {
+    "detached_C2": true,
+    "protected_files": 11397,
+    "only_two_manifests_projected": [
+      "site/Cargo.toml",
+      "site/Cargo.lock"
+    ],
+    "all_receipt_input_bytes_unchanged": true,
+    "check_exit_code": 0,
+    "build_exit_code": 0,
+    "pages": 37,
+    "files": 53,
+    "warnings": 12,
+    "head_data_icon_html": 38,
+    "dist": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair2-installed-8j63t8o1/official-c2/site/dist"
+  },
+  "graphs": {
+    "passed": 5,
+    "no_makepad_packages": true,
+    "no_opposite_mode": true,
+    "no_private_pipeline_in_author_SSR_hydrate": true,
+    "CLI_native_pipeline_expected": true,
+    "no_host_effects": true,
+    "evidence": "docs/validation/docs-ssg-p2/m6/pair2-installed-graphs-r2.json",
+    "observer_path_false_positive_preserved": "docs/validation/docs-ssg-p2/m6/pair2-installed-graph-observer-red-r1.json"
+  },
+  "unpaired_path_refusal": "real C1 gate reused with unchanged validator/source/lock evidence; no repeated C2 cold rebuild",
+  "old_C1_history": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/pair2-installed-c1-state-history-r1.json",
+  "canonical_runner_state": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/m6-installed-c.json",
+  "all_frozen_product_source_unchanged": true,
+  "own_running_processes": [],
+  "resource_ownership_returned_to_Root": true,
+  "not_run": [
+    "browser/favicon native UAT",
+    "public GitHub availability",
+    "formal performance",
+    "human or physical-device acceptance"
+  ],
+  "scope": "real Git installation at fixed C2; public Git source identities preserved; process-local transport remap only, not public GitHub availability verification"
+}

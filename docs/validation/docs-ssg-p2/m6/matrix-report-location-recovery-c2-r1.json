@@ -1,0 +1,15 @@
+{
+  "scope": "report collection failure after all36 tests passed; no product or test rerun",
+  "original_report": "docs/validation/docs-ssg-p2/m6/test-results/docs/results.json",
+  "sha256": "57777ecdc5f59b2d8e6465af107a4d620069700642f241452a8b017fae9cf683",
+  "recovered_report": "docs/validation/docs-ssg-p2/m6/matrix-components-root-c2-r2/results.json",
+  "stats": {
+    "startTime": "2026-10-13T22:25:37.478Z",
+    "duration": 141614.14800000002,
+    "expected": 36,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "config_before_reporter_fix_sha256": "d3b8fd3c8272d9df88b243c9b7a4a2d3849360425e771e9c6b6673455528d3ca"
+}

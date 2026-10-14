@@ -1,0 +1,85 @@
+{
+  "artifacts": {
+    "command": [
+      "mbx",
+      "xtask",
+      "docs-verify",
+      "--group",
+      "artifacts"
+    ],
+    "reused_members": {
+      "rustify-docs:generate": {
+        "status": "ok",
+        "passed": 17,
+        "failed": 0,
+        "ignored": 0,
+        "log": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c2-docs-test-r2.log"
+      },
+      "rustify-docs-cli:artifacts": {
+        "status": "ok",
+        "passed": 13,
+        "failed": 0,
+        "ignored": 0,
+        "log": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c2-cli-test-r1.log"
+      },
+      "rustify-docs-cli:new_build": {
+        "status": "ok",
+        "passed": 6,
+        "failed": 0,
+        "ignored": 0,
+        "log": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c2-cli-final-independent-tests-r1.log"
+      }
+    },
+    "passed": true,
+    "duplicate_group_process_not_started": true
+  },
+  "reliability": {
+    "command": [
+      "mbx",
+      "xtask",
+      "docs-verify",
+      "--group",
+      "reliability"
+    ],
+    "reused_members": {
+      "rustify-docs:lib": {
+        "status": "ok",
+        "passed": 191,
+        "failed": 0,
+        "ignored": 0,
+        "log": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c2-docs-test-r2.log"
+      },
+      "rustify-docs-cli:bin": {
+        "status": "ok",
+        "passed": 72,
+        "failed": 0,
+        "ignored": 1,
+        "log": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c2-cli-test-r1.log"
+      },
+      "rustify-docs-cli:reliability": {
+        "status": "ok",
+        "passed": 7,
+        "failed": 0,
+        "ignored": 0,
+        "log": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c2-cli-final-independent-tests-r1.log"
+      },
+      "rustify-docs-cli:faults": {
+        "status": "FAILED",
+        "passed": 8,
+        "failed": 1,
+        "ignored": 0,
+        "log": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c2-cli-remaining-tests-r1.log"
+      },
+      "rustify-docs-cli:external": {
+        "status": "ok",
+        "passed": 2,
+        "failed": 0,
+        "ignored": 0,
+        "log": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c2-cli-remaining-tests-r1.log"
+      }
+    },
+    "passed": false,
+    "reason": "stable render-generation-changed false diagnostic for unchanged originally invalid symlink snapshot; Root will fix product and refreeze",
+    "duplicate_group_process_not_started": true
+  }
+}

@@ -1,0 +1,5 @@
+./: LCP 720 ms, CLS 0.000, FCP 720 ms, 93161 bytes, wasm 0, cross-origin 0, CSP violations 0
+vellum/: LCP 884 ms, CLS 0.000, FCP 884 ms, 148150 bytes, wasm 0, cross-origin 0, CSP violations 0
+quickstart/: LCP 1076 ms, CLS 0.000, FCP 1076 ms, 207022 bytes, wasm 0, cross-origin 0, CSP violations 0
+404.html: LCP 716 ms, CLS 0.000, FCP 716 ms, 95894 bytes, wasm 0, cross-origin 0, CSP violations 0
+Chromium 153.0.8010.12

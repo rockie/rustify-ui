@@ -1,0 +1,47 @@
+rustify-docs 0.1.12
+Build a documentation site from Markdown.
+
+Usage: rustify-docs <command> [options]
+
+Commands:
+  new <dir> [--template content|components]
+                                   Create a site in a new or empty directory
+  check [--external-links]         Report problems without changing source or published output
+  build [--base <path>] [--out <dir>]
+                                   Write the production site (default: build.out)
+  preview [--dir <dir>] [--base <path>] [--port <n>] [--host <address>]
+                                   Serve a production build as a static host would
+  dev [--port <n>]                 Serve the site from memory and update open pages on save
+
+Options:
+  --config <path>        The site's rustify-docs.toml (default: ./rustify-docs.toml)
+  --format text|json     How check and build report (json: one object on stdout)
+  --deny-warnings        Fail on warnings as well as errors
+  --version              Print the version
+  --build-info           Print how this binary was built
+  -h, --help             Print this help
+
+Content sites work offline. Component sites need stable Rust and the
+wasm32-unknown-unknown target; after locked dependencies are cached,
+check and build work offline too. check may write private compilation
+caches and requests external links only with --external-links. preview listens on
+127.0.0.1:4189 unless told otherwise (the next free port if that one is
+taken; --port 0 lets the system choose). dev listens on 127.0.0.1 at
+dev.port (default 4188; likewise the next free port if taken), shows drafts
+and leaves source and published output unchanged (component sites use
+private compilation caches). Exit status: 0 on success, 1
+when the site has errors (or, with --deny-warnings, warnings) or a
+command fails, 2 for a usage error.
+
+Supported on macOS. Linux and Windows are not verified.
+
+Install rustify-docs 0.1.12 from c1061ced3deaa4e6669bc45eb3382306fa85c958:
+  cargo install --git https://github.com/rockie/rustify-ui --rev c1061ced3deaa4e6669bc45eb3382306fa85c958 --locked --profile docs-cli rustify-docs-cli
+  cargo install --list
+Reinstall or upgrade to that revision:
+  cargo install --git https://github.com/rockie/rustify-ui --rev c1061ced3deaa4e6669bc45eb3382306fa85c958 --locked --profile docs-cli rustify-docs-cli --force
+Roll back to rustify-docs 0.1.3:
+  cargo install --git https://github.com/rockie/rustify-ui --rev 42757c627cb69456d241ba0de51b34f1ad85be3d --locked --profile docs-cli --force rustify-docs-cli
+Verify --version, cargo install --list and a fresh build's
+manifest.cli_version after installing. Archive builds without git
+metadata use the previous pinned version for installation.

@@ -1,0 +1,195 @@
+{
+  "scope": "actual local R; public URLs retained, process-only read transport remap; no final C or public GitHub install claim",
+  "library_revision": "676a55771ab77faf8c476a836025d62905a2d3e2",
+  "cli_candidate": {
+    "scope": "uncommitted C-preparation binary; actual source HEAD is plan-record commit, not final CLI C",
+    "binary": "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-cli/rustify-docs",
+    "sha256": "9e26e772c8fecc716a2bae0a6f95bc499ce1835c5848791390f5f79e9506452c",
+    "version": "rustify-docs 0.1.11",
+    "build_info": "rustify-docs 0.1.11\npanic: unwind\ngrammars: syntect-5.3.0+two-face-0.5.2+bat-0.26.1+fancy\nsource: 1b4b7e628661d1b02f21e6162268f022fe27a2aa",
+    "expected_framework_revision": "676a55771ab77faf8c476a836025d62905a2d3e2"
+  },
+  "transport": {
+    "command": [
+      "cargo",
+      "generate-lockfile",
+      "--manifest-path",
+      "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair-preparation-q08yp2lv/docs-site/Cargo.toml"
+    ],
+    "cwd": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair-preparation-q08yp2lv/docs-site",
+    "transport_environment": {
+      "CARGO_NET_GIT_FETCH_WITH_CLI": "true",
+      "GIT_CONFIG_COUNT": "1",
+      "GIT_CONFIG_KEY_0": "url.file:///Users/rockie/Documents/gh-rockie/rustify-ui.insteadOf",
+      "GIT_CONFIG_VALUE_0": "https://github.com/rockie/rustify-ui"
+    },
+    "scope": "public Cargo source URL retained; only read transport resolves to actual local R",
+    "started_at_ms": 1791924694990.884,
+    "exit_code": 0,
+    "ended_at_ms": 1791924704326.3308
+  },
+  "lock_audit": {
+    "library_revision": "676a55771ab77faf8c476a836025d62905a2d3e2",
+    "packages": 193,
+    "framework_packages": {
+      "rustify-components": "git+https://github.com/rockie/rustify-ui?rev=676a55771ab77faf8c476a836025d62905a2d3e2#676a55771ab77faf8c476a836025d62905a2d3e2",
+      "rustify-docs": "git+https://github.com/rockie/rustify-ui?rev=676a55771ab77faf8c476a836025d62905a2d3e2#676a55771ab77faf8c476a836025d62905a2d3e2",
+      "rustify-docs-macros": "git+https://github.com/rockie/rustify-ui?rev=676a55771ab77faf8c476a836025d62905a2d3e2#676a55771ab77faf8c476a836025d62905a2d3e2",
+      "rustify-docs-syntax": "git+https://github.com/rockie/rustify-ui?rev=676a55771ab77faf8c476a836025d62905a2d3e2#676a55771ab77faf8c476a836025d62905a2d3e2",
+      "rustify-style": "git+https://github.com/rockie/rustify-ui?rev=676a55771ab77faf8c476a836025d62905a2d3e2#676a55771ab77faf8c476a836025d62905a2d3e2",
+      "rustify-ui": "git+https://github.com/rockie/rustify-ui?rev=676a55771ab77faf8c476a836025d62905a2d3e2#676a55771ab77faf8c476a836025d62905a2d3e2"
+    },
+    "wasm_bindgen": "0.2.128",
+    "source_free_root": "docs-site",
+    "lock_sha256": "0dd43b63c0b2ed89d0dffbd732ee57e46caeb2669c1549f214c7a33bc8dde24a",
+    "lock_bytes": 48590,
+    "manifest_sha256": "39c26b19123a2f664f337cc2bb85f1f102b95854661ef9cdc88b83630a705bdd",
+    "source_scope": "all framework package source identities use public URL + actual local R; transport-only remap",
+    "files_after_lock": [
+      ".gitignore",
+      "Cargo.lock",
+      "Cargo.toml",
+      "README.md",
+      "content/guide/getting-started.md",
+      "content/guide/writing-demos.md",
+      "content/index.md",
+      "rustify-docs.toml",
+      "src/bin/docs-render.rs",
+      "src/demos.rs",
+      "src/lib.rs"
+    ]
+  },
+  "offline_metadata": {
+    "modes": [
+      "ssr",
+      "hydrate"
+    ],
+    "exit_codes": [
+      0,
+      0
+    ],
+    "evidence": "pair-preparation-offline-metadata-r1.json"
+  },
+  "offline_checks": [
+    {
+      "mode": "ssr",
+      "profile": "docs-host",
+      "command": [
+        "mbx",
+        "check",
+        "--locked",
+        "--offline",
+        "--profile",
+        "docs-host",
+        "--no-default-features",
+        "--features",
+        "ssr",
+        "--manifest-path",
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair-preparation-q08yp2lv/docs-site/Cargo.toml",
+        "--target-dir",
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair-preparation-q08yp2lv/target",
+        "--bin",
+        "docs-render"
+      ],
+      "exit_code": 0,
+      "milliseconds": 13218.985107421875,
+      "lock_unchanged": true,
+      "lock_sha256": "0dd43b63c0b2ed89d0dffbd732ee57e46caeb2669c1549f214c7a33bc8dde24a"
+    },
+    {
+      "mode": "hydrate",
+      "profile": "docs-wasm",
+      "command": [
+        "mbx",
+        "check",
+        "--locked",
+        "--offline",
+        "--profile",
+        "docs-wasm",
+        "--no-default-features",
+        "--features",
+        "hydrate",
+        "--manifest-path",
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair-preparation-q08yp2lv/docs-site/Cargo.toml",
+        "--target-dir",
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair-preparation-q08yp2lv/target",
+        "--lib",
+        "--target",
+        "wasm32-unknown-unknown"
+      ],
+      "exit_code": 0,
+      "milliseconds": 6900.2548828125,
+      "lock_unchanged": true,
+      "lock_sha256": "0dd43b63c0b2ed89d0dffbd732ee57e46caeb2669c1549f214c7a33bc8dde24a"
+    }
+  ],
+  "actual_new": [
+    {
+      "command": [
+        "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-cli/rustify-docs",
+        "new",
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair-preparation-q08yp2lv/actual-new/docs-site",
+        "--template",
+        "components"
+      ],
+      "exit_code": 0,
+      "milliseconds": 114.4560546875,
+      "path": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair-preparation-q08yp2lv/actual-new/docs-site",
+      "package": "docs-site",
+      "file_count": 11,
+      "only_source_free_root_renamed": true,
+      "lock_sha256": "0dd43b63c0b2ed89d0dffbd732ee57e46caeb2669c1549f214c7a33bc8dde24a",
+      "cli_source_identity": "local preparation HEAD1b4b7e628661d1b02f21e6162268f022fe27a2aa; not final C"
+    },
+    {
+      "command": [
+        "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-cli/rustify-docs",
+        "new",
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair-preparation-q08yp2lv/actual-new/M6 named root",
+        "--template",
+        "components"
+      ],
+      "exit_code": 0,
+      "milliseconds": 107.022705078125,
+      "path": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair-preparation-q08yp2lv/actual-new/M6 named root",
+      "package": "m6-named-root",
+      "file_count": 11,
+      "only_source_free_root_renamed": true,
+      "lock_sha256": "934bbd11f5b222fac0c92f8920d762cddd5434169f4583c36f04b0669acfadc0",
+      "cli_source_identity": "local preparation HEAD1b4b7e628661d1b02f21e6162268f022fe27a2aa; not final C"
+    }
+  ],
+  "allowed_files": [
+    {
+      "path": "crates/rustify-docs-cli/Cargo.toml",
+      "sha256": "c6080719ebae8e8f8b694dba54def271a943f6c7d0efc81c82a425552cec7174"
+    },
+    {
+      "path": "crates/rustify-docs-cli/assets/framework-revision.txt",
+      "sha256": "cf79d892ffdc39f7f9df58d7ba256a50a6b46e3a3507dd82e411e79d55722f99"
+    },
+    {
+      "path": "crates/rustify-docs-cli/assets/components-Cargo.lock",
+      "sha256": "0dd43b63c0b2ed89d0dffbd732ee57e46caeb2669c1549f214c7a33bc8dde24a"
+    },
+    {
+      "path": "Cargo.lock",
+      "sha256": "5a00e7f6e7304e0b01538e1533753bdc361a7d70518e2cdd31ec287b0304a970"
+    },
+    {
+      "path": "docs/docs-ssg.md",
+      "sha256": "ab2f0234c06645736f1d654d6c11b4dc08472279055ec737f7f2697c97130d73"
+    }
+  ],
+  "allowed_diff": "pair-preparation-allowed-diff-r1.patch",
+  "immutable_source_unchanged_against_R": true,
+  "root_lock_diff": "only CLI version 0.1.10 to 0.1.11",
+  "template_lock_patches": "fresh generation resolves manyhow and manyhow-macros 0.14.0 to 0.14.1; no Major upgrade",
+  "remaining": [
+    "Root review and actual C commit",
+    "Git install using actual C identity",
+    "public Git availability and comprehensive frozen-pair acceptance"
+  ],
+  "ownership": "all own processes exited; no browser or port started; resource ownership returned to Root; unrelated prior PID97047 untouched",
+  "workspace": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair-preparation-q08yp2lv"
+}

@@ -1,0 +1,19 @@
+{
+  "command": [
+    "mbx",
+    "install",
+    "--git",
+    "https://github.com/rockie/rustify-ui",
+    "--rev",
+    "6721dc73db18421826c4abaf0823d51d8d6ceffb",
+    "--locked",
+    "--profile",
+    "docs-cli",
+    "--root",
+    "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair3-installed-uvgj6yil/installed",
+    "rustify-docs-cli"
+  ],
+  "exit_code": 0,
+  "milliseconds": 79294.35595703125,
+  "scope": "real fixed Git C3 installation; public package source identities retained; process-local local transport only, not public GitHub availability verification"
+}

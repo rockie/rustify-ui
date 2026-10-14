@@ -1,0 +1,14 @@
+{
+  "scope": "correct current C4 narrative; preserve original runtime reports and prior-candidate versions",
+  "observed_UAT_browser_version": "155.0.8059.41",
+  "source": "docs/validation/docs-ssg-p2/m6/uat-author-continuous-c4-r1/report.json",
+  "source_sha256": "31cc1bf52c969489f6a11d918d4244703dafa636c19e3a093494e072c8125ab9",
+  "matrix_scope_declared_version": "155.0.8059.40",
+  "matrix_per_spec_patch_not_collected": true,
+  "latest_patch_gate": "unverified",
+  "narrative_corrections": [
+    "docs/validation/docs-ssg-p2/M6.md C4 installed acceptance",
+    "docs/validation/docs-ssg-p2/M6.md C4 matrix acceptance"
+  ],
+  "historical_C2_and_C3_versions_unchanged": true
+}

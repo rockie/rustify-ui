@@ -1,0 +1,34 @@
+{
+  "scope": "actual canonical installed CLI content template new→painted homepage; unchanged M4 gate, no Rust site compiler",
+  "candidate_C": "d301344eeb27e22907c59a10805ae0cebf8dee99",
+  "framework_R": "3fcc626a4039a43c5e045ccd546bab976db89a73",
+  "installed_identity_input": {
+    "path": "target/docs-ssg/m6-installed-c.json",
+    "sha256": "40e89217e5398a9a0f0a62442ab4f279930b5342456891ab207821ec238fea64"
+  },
+  "binary_sha256": "5eae4e6bf727505a030fd67680c7c3a2c82bb6e195815a0d834b18cf4d737b71",
+  "source_identity": "rustify-docs 0.1.14\npanic: unwind\ngrammars: syntect-5.3.0+two-face-0.5.2+bat-0.26.1+fancy\nsource: d301344eeb27e22907c59a10805ae0cebf8dee99",
+  "work": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-content-first-emZbL6",
+  "site": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-content-first-emZbL6/M6 content trial",
+  "started_at_ms": 1791942429287,
+  "deadline_ms": 60000,
+  "requests": [
+    "http://127.0.0.1:64240/",
+    "http://127.0.0.1:64240/assets/site.868d5324be.css",
+    "http://127.0.0.1:64240/__rustify-docs/dev.css",
+    "http://127.0.0.1:64240/assets/mode.5e2c2584b0.js",
+    "http://127.0.0.1:64240/assets/site.2529a0d647.js",
+    "http://127.0.0.1:64240/__rustify-docs/dev.js?session=2ca5-18de42253bb1db38&good=1",
+    "http://127.0.0.1:64240/assets/files/logo.b7bfe6e0b6.svg",
+    "http://127.0.0.1:64240/__rustify-docs/events?path=%2F&good=1&session=2ca5-18de42253bb1db38"
+  ],
+  "errors": [],
+  "csp": [],
+  "created": "created /var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-content-first-emZbL6/M6 content trial\nnext:\n  cd /var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-content-first-emZbL6/M6 content trial\n  rustify-docs dev\n",
+  "url": "http://127.0.0.1:64240/",
+  "chromium": "153.0.8010.12",
+  "home_at_ms": 1791942429685,
+  "new_to_home_ms": 398,
+  "passed": true,
+  "compiler_calls": ""
+}

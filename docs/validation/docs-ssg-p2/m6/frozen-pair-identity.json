@@ -1,0 +1,16 @@
+{
+  "cli_candidate": "8e86626fce74ffc45085da6377ca9aa64312fe59",
+  "cli_version": "0.1.11",
+  "framework_revision": "676a55771ab77faf8c476a836025d62905a2d3e2",
+  "record_commit_between": "1b4b7e628661d1b02f21e6162268f022fe27a2aa",
+  "cli_commit_allowed_files": [
+    "Cargo.lock",
+    "crates/rustify-docs-cli/Cargo.toml",
+    "crates/rustify-docs-cli/assets/components-Cargo.lock",
+    "crates/rustify-docs-cli/assets/framework-revision.txt",
+    "docs/docs-ssg.md"
+  ],
+  "local_only": true,
+  "public_install_verified": false,
+  "template_lock_sha256": "0dd43b63c0b2ed89d0dffbd732ee57e46caeb2669c1549f214c7a33bc8dde24a"
+}

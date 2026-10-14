@@ -1,0 +1,14 @@
+{
+  "command": [
+    "/opt/homebrew/opt/python@3.12/libexec/bin/python3",
+    "/Users/rockie/Documents/gh-rockie/rustify-ui/scripts/docs-pages-prepare.py",
+    "--candidate-sha",
+    "c1061ced3deaa4e6669bc45eb3382306fa85c958",
+    "--cli",
+    "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair2-installed-8j63t8o1/installed/bin/rustify-docs",
+    "--out",
+    "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair2-installed-8j63t8o1/official-c2"
+  ],
+  "exit_code": 0,
+  "milliseconds": 6205.999755859375
+}

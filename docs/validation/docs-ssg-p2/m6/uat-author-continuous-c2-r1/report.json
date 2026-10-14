@@ -1,0 +1,1686 @@
+{
+  "scope": "automated continuous author path; real installed C/R, no original template edits, no human-user or performance claim",
+  "candidate": "c1061ced3deaa4e6669bc45eb3382306fa85c958",
+  "framework": "0494f304f0f9f8b620affb7309df23db3cb2377c",
+  "binary": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair2-installed-8j63t8o1/installed/bin/rustify-docs",
+  "work": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-continuous-author-BJhAml",
+  "site": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-continuous-author-BJhAml/author-docs",
+  "phases": [
+    {
+      "name": "unmodified template input and source",
+      "source_directory": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/uat-author-continuous-c2-r1/step-1-sources",
+      "state": {
+        "session": "eba0-18de36d1354ffb58",
+        "revision": 1,
+        "sequence": 9,
+        "building": false,
+        "phase": "render",
+        "compile": {
+          "generation": "7b67d3f220733c6998ad10b87f6d87b4bc05d301c3aa81988d2ce09040b3fa9d",
+          "completed_at_ms": 1791929988563,
+          "host": {
+            "elapsed_ms": 273,
+            "completed_at_ms": 1791929988364,
+            "fresh_artifacts": 263,
+            "compiled_artifacts": 0,
+            "profile": "docs-host",
+            "target": null,
+            "compiler": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-continuous-author-BJhAml/cargo-observe.cjs",
+            "flags": [
+              "build",
+              "--locked",
+              "--message-format",
+              "json",
+              "--no-default-features",
+              "--profile",
+              "docs-host",
+              "--features",
+              "ssr",
+              "--manifest-path",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-continuous-author-BJhAml/author-docs/Cargo.toml",
+              "--target-dir",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-continuous-author-BJhAml/author-docs/.rustify-docs/target",
+              "--bin",
+              "docs-render"
+            ],
+            "success": true
+          },
+          "wasm": {
+            "elapsed_ms": 198,
+            "completed_at_ms": 1791929988563,
+            "fresh_artifacts": 251,
+            "compiled_artifacts": 0,
+            "profile": "docs-wasm",
+            "target": "wasm32-unknown-unknown",
+            "compiler": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-continuous-author-BJhAml/cargo-observe.cjs",
+            "flags": [
+              "build",
+              "--locked",
+              "--message-format",
+              "json",
+              "--no-default-features",
+              "--profile",
+              "docs-wasm",
+              "--features",
+              "hydrate",
+              "--manifest-path",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-continuous-author-BJhAml/author-docs/Cargo.toml",
+              "--target-dir",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-continuous-author-BJhAml/author-docs/.rustify-docs/target",
+              "--lib",
+              "--target",
+              "wasm32-unknown-unknown"
+            ],
+            "success": true
+          }
+        },
+        "good": 1,
+        "ok": true,
+        "reload": true,
+        "errors": 0,
+        "warnings": 2,
+        "diagnostics": [
+          {
+            "severity": "warning",
+            "rule": "not-in-nav",
+            "file": "content/index.md",
+            "line": null,
+            "column": null,
+            "message": "this page is in no navigation group, so readers can only reach it by a link",
+            "suggestion": null
+          },
+          {
+            "severity": "warning",
+            "rule": "missing-site-url",
+            "file": "rustify-docs.toml",
+            "line": null,
+            "column": null,
+            "message": "site.url is not set, so pages have no canonical address or preview image and there is no sitemap",
+            "suggestion": "add `url = \"https://…\"` under [site], the address the site is published at"
+          }
+        ]
+      },
+      "original_trees": [
+        {
+          "nodes": 19,
+          "ids": [
+            "rui-island-8a5edab282-0-field-1"
+          ],
+          "sourceNodes": 0
+        },
+        {
+          "nodes": 14,
+          "ids": [
+            "rui-island-8a5edab282-1-field-1"
+          ],
+          "sourceNodes": 919
+        }
+      ],
+      "asset": {
+        "revision": 1,
+        "generation": "7b67d3f220733c6998ad10b87f6d87b4bc05d301c3aa81988d2ce09040b3fa9d",
+        "completed_at_ms": 1791929988563,
+        "module_url": "http://127.0.0.1:65242/assets/islands/74212044111c53b21e464c8a1252b45fa1f220bcdd0789332dd78d5fb5dc2b31/islands.js",
+        "wasm_url": "http://127.0.0.1:65242/assets/islands/74212044111c53b21e464c8a1252b45fa1f220bcdd0789332dd78d5fb5dc2b31/app_bg.wasm",
+        "actual_http_wasm_sha256": "fdb8d94f5e68450e0b632e569699afecff160c7acf90fdff9c3f02ef67de974b"
+      },
+      "source_sha256": "8b720362ecfe80c198ff1ba056bfbb71019e7483b5ee343542f8f461e4709110"
+    },
+    {
+      "name": "README function, registration and Markdown fence",
+      "source_directory": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/uat-author-continuous-c2-r1/step-2-sources",
+      "state": {
+        "session": "eba0-18de36d1354ffb58",
+        "revision": 2,
+        "sequence": 15,
+        "building": false,
+        "phase": "render",
+        "compile": {
+          "generation": "93b89359575dd9b4ed76be21ae43b8e6f602763f2adcdafa50ff144dca7fc2b8",
+          "completed_at_ms": 1791929995961,
+          "host": {
+            "elapsed_ms": 1724,
+            "completed_at_ms": 1791929995293,
+            "fresh_artifacts": 261,
+            "compiled_artifacts": 2,
+            "profile": "docs-host",
+            "target": null,
+            "compiler": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-continuous-author-BJhAml/cargo-observe.cjs",
+            "flags": [
+              "build",
+              "--locked",
+              "--message-format",
+              "json",
+              "--no-default-features",
+              "--profile",
+              "docs-host",
+              "--features",
+              "ssr",
+              "--manifest-path",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-continuous-author-BJhAml/author-docs/Cargo.toml",
+              "--target-dir",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-continuous-author-BJhAml/author-docs/.rustify-docs/target",
+              "--bin",
+              "docs-render"
+            ],
+            "success": true
+          },
+          "wasm": {
+            "elapsed_ms": 666,
+            "completed_at_ms": 1791929995961,
+            "fresh_artifacts": 250,
+            "compiled_artifacts": 1,
+            "profile": "docs-wasm",
+            "target": "wasm32-unknown-unknown",
+            "compiler": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-continuous-author-BJhAml/cargo-observe.cjs",
+            "flags": [
+              "build",
+              "--locked",
+              "--message-format",
+              "json",
+              "--no-default-features",
+              "--profile",
+              "docs-wasm",
+              "--features",
+              "hydrate",
+              "--manifest-path",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-continuous-author-BJhAml/author-docs/Cargo.toml",
+              "--target-dir",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-continuous-author-BJhAml/author-docs/.rustify-docs/target",
+              "--lib",
+              "--target",
+              "wasm32-unknown-unknown"
+            ],
+            "success": true
+          }
+        },
+        "good": 2,
+        "ok": true,
+        "reload": true,
+        "errors": 0,
+        "warnings": 2,
+        "diagnostics": [
+          {
+            "severity": "warning",
+            "rule": "not-in-nav",
+            "file": "content/index.md",
+            "line": null,
+            "column": null,
+            "message": "this page is in no navigation group, so readers can only reach it by a link",
+            "suggestion": null
+          },
+          {
+            "severity": "warning",
+            "rule": "missing-site-url",
+            "file": "rustify-docs.toml",
+            "line": null,
+            "column": null,
+            "message": "site.url is not set, so pages have no canonical address or preview image and there is no sitemap",
+            "suggestion": "add `url = \"https://…\"` under [site], the address the site is published at"
+          }
+        ]
+      },
+      "asset": {
+        "revision": 2,
+        "generation": "93b89359575dd9b4ed76be21ae43b8e6f602763f2adcdafa50ff144dca7fc2b8",
+        "completed_at_ms": 1791929995961,
+        "module_url": "http://127.0.0.1:65242/assets/islands/6d5ed8272e3ec0ac191af4e02c2f87fc8ae39c33fda97a12801b5e9e5745d3f6/islands.js",
+        "wasm_url": "http://127.0.0.1:65242/assets/islands/6d5ed8272e3ec0ac191af4e02c2f87fc8ae39c33fda97a12801b5e9e5745d3f6/app_bg.wasm",
+        "actual_http_wasm_sha256": "77e5cda8cfce6e3f257f5cef9e6676aade0185262a1a7824bf65acd171e83f77"
+      },
+      "source_sha256": "2a5d0c8ac3e01bf963aaaff082eef35aeb5382201a2b137b5ff734ccc1743e4a"
+    },
+    {
+      "name": "README registered page with independent demos",
+      "source_directory": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/uat-author-continuous-c2-r1/step-3-sources",
+      "state": {
+        "session": "eba0-18de36d1354ffb58",
+        "revision": 3,
+        "sequence": 21,
+        "building": false,
+        "phase": "render",
+        "compile": {
+          "generation": "dec6fbfe59fcc1b3482ec37ab1a1868bd1ad1109e2f4ee01d99b99927bb22b30",
+          "completed_at_ms": 1791929998770,
+          "host": {
+            "elapsed_ms": 1390,
+            "completed_at_ms": 1791929998079,
+            "fresh_artifacts": 261,
+            "compiled_artifacts": 2,
+            "profile": "docs-host",
+            "target": null,
+            "compiler": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-continuous-author-BJhAml/cargo-observe.cjs",
+            "flags": [
+              "build",
+              "--locked",
+              "--message-format",
+              "json",
+              "--no-default-features",
+              "--profile",
+              "docs-host",
+              "--features",
+              "ssr",
+              "--manifest-path",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-continuous-author-BJhAml/author-docs/Cargo.toml",
+              "--target-dir",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-continuous-author-BJhAml/author-docs/.rustify-docs/target",
+              "--bin",
+              "docs-render"
+            ],
+            "success": true
+          },
+          "wasm": {
+            "elapsed_ms": 689,
+            "completed_at_ms": 1791929998770,
+            "fresh_artifacts": 250,
+            "compiled_artifacts": 1,
+            "profile": "docs-wasm",
+            "target": "wasm32-unknown-unknown",
+            "compiler": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-continuous-author-BJhAml/cargo-observe.cjs",
+            "flags": [
+              "build",
+              "--locked",
+              "--message-format",
+              "json",
+              "--no-default-features",
+              "--profile",
+              "docs-wasm",
+              "--features",
+              "hydrate",
+              "--manifest-path",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-continuous-author-BJhAml/author-docs/Cargo.toml",
+              "--target-dir",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-continuous-author-BJhAml/author-docs/.rustify-docs/target",
+              "--lib",
+              "--target",
+              "wasm32-unknown-unknown"
+            ],
+            "success": true
+          }
+        },
+        "good": 3,
+        "ok": true,
+        "reload": true,
+        "errors": 0,
+        "warnings": 2,
+        "diagnostics": [
+          {
+            "severity": "warning",
+            "rule": "not-in-nav",
+            "file": "content/index.md",
+            "line": null,
+            "column": null,
+            "message": "this page is in no navigation group, so readers can only reach it by a link",
+            "suggestion": null
+          },
+          {
+            "severity": "warning",
+            "rule": "missing-site-url",
+            "file": "rustify-docs.toml",
+            "line": null,
+            "column": null,
+            "message": "site.url is not set, so pages have no canonical address or preview image and there is no sitemap",
+            "suggestion": "add `url = \"https://…\"` under [site], the address the site is published at"
+          }
+        ]
+      },
+      "asset": {
+        "revision": 3,
+        "generation": "dec6fbfe59fcc1b3482ec37ab1a1868bd1ad1109e2f4ee01d99b99927bb22b30",
+        "completed_at_ms": 1791929998770,
+        "module_url": "http://127.0.0.1:65242/assets/islands/68f0eb7e8dfe2885f0d4254a5c41cc46470beaa1c078b3f6312aa4526a4d1512/islands.js",
+        "wasm_url": "http://127.0.0.1:65242/assets/islands/68f0eb7e8dfe2885f0d4254a5c41cc46470beaa1c078b3f6312aa4526a4d1512/app_bg.wasm",
+        "actual_http_wasm_sha256": "7d859873641e0026e3d58b7051c38191b1a0146a9bb727cb79f7af62556a4722"
+      },
+      "source_sha256": "1da8652386ff5bd3bf594fca8400e082ecb6b0229540e2aaa3cca75e9211140b"
+    },
+    {
+      "name": "README shared footer including deep404",
+      "source_directory": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/uat-author-continuous-c2-r1/step-4-sources",
+      "state": {
+        "session": "eba0-18de36d1354ffb58",
+        "revision": 4,
+        "sequence": 27,
+        "building": false,
+        "phase": "render",
+        "compile": {
+          "generation": "232351f0a222ae19e9fcb30452de0269e0d9910493f66c97fbe81f02a06d5613",
+          "completed_at_ms": 1791930001876,
+          "host": {
+            "elapsed_ms": 1438,
+            "completed_at_ms": 1791930001181,
+            "fresh_artifacts": 261,
+            "compiled_artifacts": 2,
+            "profile": "docs-host",
+            "target": null,
+            "compiler": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-continuous-author-BJhAml/cargo-observe.cjs",
+            "flags": [
+              "build",
+              "--locked",
+              "--message-format",
+              "json",
+              "--no-default-features",
+              "--profile",
+              "docs-host",
+              "--features",
+              "ssr",
+              "--manifest-path",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-continuous-author-BJhAml/author-docs/Cargo.toml",
+              "--target-dir",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-continuous-author-BJhAml/author-docs/.rustify-docs/target",
+              "--bin",
+              "docs-render"
+            ],
+            "success": true
+          },
+          "wasm": {
+            "elapsed_ms": 693,
+            "completed_at_ms": 1791930001876,
+            "fresh_artifacts": 250,
+            "compiled_artifacts": 1,
+            "profile": "docs-wasm",
+            "target": "wasm32-unknown-unknown",
+            "compiler": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-continuous-author-BJhAml/cargo-observe.cjs",
+            "flags": [
+              "build",
+              "--locked",
+              "--message-format",
+              "json",
+              "--no-default-features",
+              "--profile",
+              "docs-wasm",
+              "--features",
+              "hydrate",
+              "--manifest-path",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-continuous-author-BJhAml/author-docs/Cargo.toml",
+              "--target-dir",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-continuous-author-BJhAml/author-docs/.rustify-docs/target",
+              "--lib",
+              "--target",
+              "wasm32-unknown-unknown"
+            ],
+            "success": true
+          }
+        },
+        "good": 4,
+        "ok": true,
+        "reload": true,
+        "errors": 0,
+        "warnings": 2,
+        "diagnostics": [
+          {
+            "severity": "warning",
+            "rule": "not-in-nav",
+            "file": "content/index.md",
+            "line": null,
+            "column": null,
+            "message": "this page is in no navigation group, so readers can only reach it by a link",
+            "suggestion": null
+          },
+          {
+            "severity": "warning",
+            "rule": "missing-site-url",
+            "file": "rustify-docs.toml",
+            "line": null,
+            "column": null,
+            "message": "site.url is not set, so pages have no canonical address or preview image and there is no sitemap",
+            "suggestion": "add `url = \"https://…\"` under [site], the address the site is published at"
+          }
+        ]
+      },
+      "source_sha256": "f152da698c057d2c02d9574c3b5cd4004d4746b75f309efded9ae62a0b4acd2f"
+    },
+    {
+      "name": "bad Rust retains same original interactive/source document and whole dist",
+      "source_directory": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/uat-author-continuous-c2-r1/step-5-sources",
+      "state": {
+        "session": "eba0-18de36d1354ffb58",
+        "revision": 5,
+        "sequence": 32,
+        "building": false,
+        "phase": "wasm",
+        "compile": {
+          "generation": "1af50261d557cc36feb661eb14474e1b88fed68801967f73b93a1e750e56d065",
+          "completed_at_ms": 1791930022707,
+          "host": {
+            "elapsed_ms": 563,
+            "completed_at_ms": 1791930022171,
+            "fresh_artifacts": 261,
+            "compiled_artifacts": 0,
+            "profile": "docs-host",
+            "target": null,
+            "compiler": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-continuous-author-BJhAml/cargo-observe.cjs",
+            "flags": [
+              "build",
+              "--locked",
+              "--message-format",
+              "json",
+              "--no-default-features",
+              "--profile",
+              "docs-host",
+              "--features",
+              "ssr",
+              "--manifest-path",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-continuous-author-BJhAml/author-docs/Cargo.toml",
+              "--target-dir",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-continuous-author-BJhAml/author-docs/.rustify-docs/target",
+              "--bin",
+              "docs-render"
+            ],
+            "success": false
+          },
+          "wasm": {
+            "elapsed_ms": 534,
+            "completed_at_ms": 1791930022707,
+            "fresh_artifacts": 250,
+            "compiled_artifacts": 0,
+            "profile": "docs-wasm",
+            "target": "wasm32-unknown-unknown",
+            "compiler": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-continuous-author-BJhAml/cargo-observe.cjs",
+            "flags": [
+              "build",
+              "--locked",
+              "--message-format",
+              "json",
+              "--no-default-features",
+              "--profile",
+              "docs-wasm",
+              "--features",
+              "hydrate",
+              "--manifest-path",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-continuous-author-BJhAml/author-docs/Cargo.toml",
+              "--target-dir",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-continuous-author-BJhAml/author-docs/.rustify-docs/target",
+              "--lib",
+              "--target",
+              "wasm32-unknown-unknown"
+            ],
+            "success": false
+          }
+        },
+        "good": 4,
+        "ok": false,
+        "reload": false,
+        "errors": 2,
+        "warnings": 2,
+        "diagnostics": [
+          {
+            "severity": "error",
+            "rule": "rust-compile",
+            "file": null,
+            "line": null,
+            "column": null,
+            "message": "For more information about this error, try `rustc --explain E0425`.\n",
+            "suggestion": null
+          },
+          {
+            "severity": "warning",
+            "rule": "not-in-nav",
+            "file": "content/index.md",
+            "line": null,
+            "column": null,
+            "message": "this page is in no navigation group, so readers can only reach it by a link",
+            "suggestion": null
+          },
+          {
+            "severity": "warning",
+            "rule": "missing-site-url",
+            "file": "rustify-docs.toml",
+            "line": null,
+            "column": null,
+            "message": "site.url is not set, so pages have no canonical address or preview image and there is no sitemap",
+            "suggestion": "add `url = \"https://…\"` under [site], the address the site is published at"
+          },
+          {
+            "severity": "error",
+            "rule": "rust-compile",
+            "file": "src/demos.rs",
+            "line": 5,
+            "column": 41,
+            "message": "error[E0425]: cannot find value `missing_author_step` in this scope\n --> src/demos.rs:5:41\n  |\n5 |     let value = RwSignal::new(initial + missing_author_step);\n  |                                         ^^^^^^^^^^^^^^^^^^^ not found in this scope\n\n",
+            "suggestion": null
+          }
+        ]
+      },
+      "diagnostics": [
+        {
+          "severity": "error",
+          "rule": "rust-compile",
+          "file": "src/demos.rs",
+          "line": 5,
+          "column": 41,
+          "message": "error[E0425]: cannot find value `missing_author_step` in this scope\n --> src/demos.rs:5:41\n  |\n5 |     let value = RwSignal::new(initial + missing_author_step);\n  |                                         ^^^^^^^^^^^^^^^^^^^ not found in this scope\n\n",
+          "suggestion": null
+        }
+      ],
+      "retained": [
+        {
+          "root": true,
+          "nodes": 14
+        },
+        {
+          "root": true,
+          "nodes": 14
+        }
+      ],
+      "dist_files": 17
+    },
+    {
+      "name": "repair publishes the matching complete new source and real wasm behavior",
+      "source_directory": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/uat-author-continuous-c2-r1/step-6-sources",
+      "state": {
+        "session": "eba0-18de36d1354ffb58",
+        "revision": 6,
+        "sequence": 38,
+        "building": false,
+        "phase": "render",
+        "compile": {
+          "generation": "6f5821fc83dbadc45dde8947254dd5ee0853b1fcf90be4f72e031d4856b99441",
+          "completed_at_ms": 1791930027525,
+          "host": {
+            "elapsed_ms": 1515,
+            "completed_at_ms": 1791930026702,
+            "fresh_artifacts": 261,
+            "compiled_artifacts": 2,
+            "profile": "docs-host",
+            "target": null,
+            "compiler": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-continuous-author-BJhAml/cargo-observe.cjs",
+            "flags": [
+              "build",
+              "--locked",
+              "--message-format",
+              "json",
+              "--no-default-features",
+              "--profile",
+              "docs-host",
+              "--features",
+              "ssr",
+              "--manifest-path",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-continuous-author-BJhAml/author-docs/Cargo.toml",
+              "--target-dir",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-continuous-author-BJhAml/author-docs/.rustify-docs/target",
+              "--bin",
+              "docs-render"
+            ],
+            "success": true
+          },
+          "wasm": {
+            "elapsed_ms": 821,
+            "completed_at_ms": 1791930027525,
+            "fresh_artifacts": 250,
+            "compiled_artifacts": 1,
+            "profile": "docs-wasm",
+            "target": "wasm32-unknown-unknown",
+            "compiler": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-continuous-author-BJhAml/cargo-observe.cjs",
+            "flags": [
+              "build",
+              "--locked",
+              "--message-format",
+              "json",
+              "--no-default-features",
+              "--profile",
+              "docs-wasm",
+              "--features",
+              "hydrate",
+              "--manifest-path",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-continuous-author-BJhAml/author-docs/Cargo.toml",
+              "--target-dir",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-continuous-author-BJhAml/author-docs/.rustify-docs/target",
+              "--lib",
+              "--target",
+              "wasm32-unknown-unknown"
+            ],
+            "success": true
+          }
+        },
+        "good": 6,
+        "ok": true,
+        "reload": true,
+        "errors": 0,
+        "warnings": 2,
+        "diagnostics": [
+          {
+            "severity": "warning",
+            "rule": "not-in-nav",
+            "file": "content/index.md",
+            "line": null,
+            "column": null,
+            "message": "this page is in no navigation group, so readers can only reach it by a link",
+            "suggestion": null
+          },
+          {
+            "severity": "warning",
+            "rule": "missing-site-url",
+            "file": "rustify-docs.toml",
+            "line": null,
+            "column": null,
+            "message": "site.url is not set, so pages have no canonical address or preview image and there is no sitemap",
+            "suggestion": "add `url = \"https://…\"` under [site], the address the site is published at"
+          }
+        ]
+      },
+      "asset": {
+        "revision": 6,
+        "generation": "6f5821fc83dbadc45dde8947254dd5ee0853b1fcf90be4f72e031d4856b99441",
+        "completed_at_ms": 1791930027525,
+        "module_url": "http://127.0.0.1:65242/assets/islands/d24cf687da1b97c3fb0141b7e57be82defdd7e95db9572aaa71556c86cd80869/islands.js",
+        "wasm_url": "http://127.0.0.1:65242/assets/islands/d24cf687da1b97c3fb0141b7e57be82defdd7e95db9572aaa71556c86cd80869/app_bg.wasm",
+        "actual_http_wasm_sha256": "6042a60bf797dd3a0767563f1f0c9a4eadbfdc3bc9014c59dcebdf827d7a5da1"
+      },
+      "source_sha256": "161a4cca70dc4dd29e4fdc9ae0fbedd8db4134b818e11d136a74d61c328cb87e"
+    },
+    {
+      "name": "final installed-C check/build and unchanged lock/README",
+      "source_directory": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/uat-author-continuous-c2-r1/step-7-sources",
+      "check": {
+        "errors": 0,
+        "warnings": 3,
+        "pages": 4,
+        "rust_build": {
+          "generation": "6f5821fc83dbadc45dde8947254dd5ee0853b1fcf90be4f72e031d4856b99441",
+          "framework_release": "rustify-docs@0.1.0",
+          "host": {
+            "elapsed_ms": 269,
+            "completed_at_ms": 1791930028814,
+            "fresh_artifacts": 263,
+            "compiled_artifacts": 0,
+            "profile": "docs-host",
+            "target": null,
+            "compiler": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-continuous-author-BJhAml/cargo-observe.cjs",
+            "flags": [
+              "build",
+              "--locked",
+              "--message-format",
+              "json",
+              "--no-default-features",
+              "--profile",
+              "docs-host",
+              "--features",
+              "ssr",
+              "--manifest-path",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-continuous-author-BJhAml/author-docs/Cargo.toml",
+              "--target-dir",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-continuous-author-BJhAml/author-docs/.rustify-docs/target",
+              "--bin",
+              "docs-render"
+            ],
+            "success": true
+          },
+          "wasm": {
+            "elapsed_ms": 214,
+            "completed_at_ms": 1791930029030,
+            "fresh_artifacts": 251,
+            "compiled_artifacts": 0,
+            "profile": "docs-wasm",
+            "target": "wasm32-unknown-unknown",
+            "compiler": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-continuous-author-BJhAml/cargo-observe.cjs",
+            "flags": [
+              "build",
+              "--locked",
+              "--message-format",
+              "json",
+              "--no-default-features",
+              "--profile",
+              "docs-wasm",
+              "--features",
+              "hydrate",
+              "--manifest-path",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-continuous-author-BJhAml/author-docs/Cargo.toml",
+              "--target-dir",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-continuous-author-BJhAml/author-docs/.rustify-docs/target",
+              "--lib",
+              "--target",
+              "wasm32-unknown-unknown"
+            ],
+            "success": true
+          },
+          "reused": false
+        }
+      },
+      "build": {
+        "errors": 0,
+        "warnings": 3,
+        "pages": 4,
+        "files": 17,
+        "bytes": 1760705,
+        "largest": [
+          {
+            "path": "index.html",
+            "bytes": 103042
+          },
+          {
+            "path": "examples/index.html",
+            "bytes": 101737
+          },
+          {
+            "path": "guide/writing-demos/index.html",
+            "bytes": 15440
+          },
+          {
+            "path": "guide/getting-started/index.html",
+            "bytes": 11283
+          },
+          {
+            "path": "404.html",
+            "bytes": 4529
+          }
+        ],
+        "out": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-continuous-author-BJhAml/author-docs/dist",
+        "milliseconds": 7773,
+        "rust_build": {
+          "generation": "d503232b192e60647f1c5dd139431611574e615e769096fb7274a6081cb04b2c",
+          "framework_release": "rustify-docs@0.1.0",
+          "host": {
+            "elapsed_ms": 5543,
+            "completed_at_ms": 1791930035103,
+            "fresh_artifacts": 261,
+            "compiled_artifacts": 2,
+            "profile": "docs-host-release",
+            "target": null,
+            "compiler": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-continuous-author-BJhAml/cargo-observe.cjs",
+            "flags": [
+              "build",
+              "--locked",
+              "--message-format",
+              "json",
+              "--no-default-features",
+              "--profile",
+              "docs-host-release",
+              "--features",
+              "ssr",
+              "--manifest-path",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-continuous-author-BJhAml/author-docs/Cargo.toml",
+              "--target-dir",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-continuous-author-BJhAml/author-docs/.rustify-docs/target",
+              "--bin",
+              "docs-render"
+            ],
+            "success": true
+          },
+          "wasm": {
+            "elapsed_ms": 1659,
+            "completed_at_ms": 1791930036764,
+            "fresh_artifacts": 250,
+            "compiled_artifacts": 1,
+            "profile": "release",
+            "target": "wasm32-unknown-unknown",
+            "compiler": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-continuous-author-BJhAml/cargo-observe.cjs",
+            "flags": [
+              "build",
+              "--locked",
+              "--message-format",
+              "json",
+              "--no-default-features",
+              "--profile",
+              "release",
+              "--features",
+              "hydrate",
+              "--manifest-path",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-continuous-author-BJhAml/author-docs/Cargo.toml",
+              "--target-dir",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-continuous-author-BJhAml/author-docs/.rustify-docs/target",
+              "--lib",
+              "--target",
+              "wasm32-unknown-unknown"
+            ],
+            "success": true
+          },
+          "reused": false
+        }
+      },
+      "lock_sha256": "277b0ccf92258f75e70df8e526cdab4b094970e2fd2d45ca7b7b73ad7bb7e0d0",
+      "final_dist": {
+        ".nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "404.html": "8d89a3d0ef6303f1540ebf809842b1d24803327fbf59716bc9fc5c8d18196f9e",
+        "assets/islands/9d246c5da2aff0358a62c5ac580033c85dcb7d2bf579ec2a9e6608148f01b837/app.js": "05d7ac6d205d6f4c89e0616e7edc5ed4c8d2de4c9f6f9e7fc2eeb4ceb7a35596",
+        "assets/islands/9d246c5da2aff0358a62c5ac580033c85dcb7d2bf579ec2a9e6608148f01b837/app_bg.wasm": "64767c160d9a6d10a8a98361839fa032255db87a173a2b97004220a2ce632999",
+        "assets/islands/9d246c5da2aff0358a62c5ac580033c85dcb7d2bf579ec2a9e6608148f01b837/dom-loader.js": "72c911771f7102b184c18b3f311186c94496a4efd47b9d25e46284d8ad2f5dd1",
+        "assets/islands/9d246c5da2aff0358a62c5ac580033c85dcb7d2bf579ec2a9e6608148f01b837/dom-runtime.css": "7597abd6960f0ed1ce5b365356e5b2c422bf79117a39e0a8575aa447cd350f41",
+        "assets/islands/9d246c5da2aff0358a62c5ac580033c85dcb7d2bf579ec2a9e6608148f01b837/islands.js": "ecc0183124465813a93fae273b21263b166b75814d4334c388f1b6f1e0cb9801",
+        "assets/islands/9d246c5da2aff0358a62c5ac580033c85dcb7d2bf579ec2a9e6608148f01b837/snippets/rustify-ui-4db2f10f10788f4c/web/dom-runtime.js": "d3f6018d391b65cfaf609fe1a17d9e47e221c51087a956b9fcd0bc6d11076343",
+        "assets/mode.5e2c2584b0.js": "5e2c2584b0eccb6b7631ffa0f0e110e7316d5f60d532a806bef18f1e017c57cf",
+        "assets/site.2529a0d647.js": "2529a0d647cd2b645277e1dc98c9396c87421748f2bc42488d3031c6db6e203a",
+        "assets/site.68d58b9384.css": "68d58b93848614ddce492e3d9720803201634077ea37de149b8fb31c16d0ad84",
+        "examples/index.html": "1f72dad911358eda1ffbded7fcd6bced2b1c698c0f5c23b8a78e813e555740bd",
+        "guide/getting-started/index.html": "2d8a83babf65d63ad001ba53bd7cf8b46f9e14752eb8a9ca09df549ff572cabf",
+        "guide/writing-demos/index.html": "98c71e5970cea944a48ae2bf4640e99ee71c874242c8f6524ea22e6ba9837e01",
+        "index.html": "97925c22d6061cfc1835a35a5840b50e3350ca1117c2018963be1ee4725e6a02",
+        "robots.txt": "16ceb5ee3e0dc13aa9adf31a3ebbe45a1d965b8c2b9f72eaf84e5911e140ed95",
+        "rustify-docs-manifest.json": "8e2ca1fc4b7c47678981566474b60638e718afdd1a03f2c0ab15001757fa20c0"
+      }
+    }
+  ],
+  "audit": {
+    "requests": [
+      "http://127.0.0.1:65242/",
+      "http://127.0.0.1:65242/assets/site.68d58b9384.css",
+      "http://127.0.0.1:65242/__rustify-docs/dev.css",
+      "http://127.0.0.1:65242/assets/mode.5e2c2584b0.js",
+      "http://127.0.0.1:65242/assets/site.2529a0d647.js",
+      "http://127.0.0.1:65242/__rustify-docs/dev.js?session=eba0-18de36d1354ffb58&good=1",
+      "http://127.0.0.1:65242/assets/islands/74212044111c53b21e464c8a1252b45fa1f220bcdd0789332dd78d5fb5dc2b31/islands.js",
+      "http://127.0.0.1:65242/assets/islands/74212044111c53b21e464c8a1252b45fa1f220bcdd0789332dd78d5fb5dc2b31/dom-loader.js",
+      "http://127.0.0.1:65242/__rustify-docs/events?path=%2F&good=1&session=eba0-18de36d1354ffb58",
+      "http://127.0.0.1:65242/assets/islands/74212044111c53b21e464c8a1252b45fa1f220bcdd0789332dd78d5fb5dc2b31/app_bg.wasm",
+      "http://127.0.0.1:65242/assets/islands/74212044111c53b21e464c8a1252b45fa1f220bcdd0789332dd78d5fb5dc2b31/app.js",
+      "http://127.0.0.1:65242/assets/islands/74212044111c53b21e464c8a1252b45fa1f220bcdd0789332dd78d5fb5dc2b31/snippets/rustify-ui-4db2f10f10788f4c/web/dom-runtime.js",
+      "http://127.0.0.1:65242/",
+      "http://127.0.0.1:65242/assets/site.68d58b9384.css",
+      "http://127.0.0.1:65242/__rustify-docs/dev.css",
+      "http://127.0.0.1:65242/assets/mode.5e2c2584b0.js",
+      "http://127.0.0.1:65242/assets/site.2529a0d647.js",
+      "http://127.0.0.1:65242/__rustify-docs/dev.js?session=eba0-18de36d1354ffb58&good=2",
+      "http://127.0.0.1:65242/assets/islands/6d5ed8272e3ec0ac191af4e02c2f87fc8ae39c33fda97a12801b5e9e5745d3f6/islands.js",
+      "http://127.0.0.1:65242/assets/islands/6d5ed8272e3ec0ac191af4e02c2f87fc8ae39c33fda97a12801b5e9e5745d3f6/dom-loader.js",
+      "http://127.0.0.1:65242/__rustify-docs/events?path=%2F&good=2&session=eba0-18de36d1354ffb58",
+      "http://127.0.0.1:65242/assets/islands/6d5ed8272e3ec0ac191af4e02c2f87fc8ae39c33fda97a12801b5e9e5745d3f6/app_bg.wasm",
+      "http://127.0.0.1:65242/assets/islands/6d5ed8272e3ec0ac191af4e02c2f87fc8ae39c33fda97a12801b5e9e5745d3f6/app.js",
+      "http://127.0.0.1:65242/assets/islands/6d5ed8272e3ec0ac191af4e02c2f87fc8ae39c33fda97a12801b5e9e5745d3f6/snippets/rustify-ui-4db2f10f10788f4c/web/dom-runtime.js",
+      "http://127.0.0.1:65242/",
+      "http://127.0.0.1:65242/assets/site.68d58b9384.css",
+      "http://127.0.0.1:65242/__rustify-docs/dev.css",
+      "http://127.0.0.1:65242/assets/mode.5e2c2584b0.js",
+      "http://127.0.0.1:65242/assets/site.2529a0d647.js",
+      "http://127.0.0.1:65242/__rustify-docs/dev.js?session=eba0-18de36d1354ffb58&good=3",
+      "http://127.0.0.1:65242/assets/islands/68f0eb7e8dfe2885f0d4254a5c41cc46470beaa1c078b3f6312aa4526a4d1512/islands.js",
+      "http://127.0.0.1:65242/assets/islands/68f0eb7e8dfe2885f0d4254a5c41cc46470beaa1c078b3f6312aa4526a4d1512/dom-loader.js",
+      "http://127.0.0.1:65242/__rustify-docs/events?path=%2F&good=3&session=eba0-18de36d1354ffb58",
+      "http://127.0.0.1:65242/assets/islands/68f0eb7e8dfe2885f0d4254a5c41cc46470beaa1c078b3f6312aa4526a4d1512/app_bg.wasm",
+      "http://127.0.0.1:65242/assets/islands/68f0eb7e8dfe2885f0d4254a5c41cc46470beaa1c078b3f6312aa4526a4d1512/app.js",
+      "http://127.0.0.1:65242/assets/islands/68f0eb7e8dfe2885f0d4254a5c41cc46470beaa1c078b3f6312aa4526a4d1512/snippets/rustify-ui-4db2f10f10788f4c/web/dom-runtime.js",
+      "http://127.0.0.1:65242/examples/",
+      "http://127.0.0.1:65242/assets/site.68d58b9384.css",
+      "http://127.0.0.1:65242/__rustify-docs/dev.css",
+      "http://127.0.0.1:65242/assets/mode.5e2c2584b0.js",
+      "http://127.0.0.1:65242/assets/site.2529a0d647.js",
+      "http://127.0.0.1:65242/__rustify-docs/dev.js?session=eba0-18de36d1354ffb58&good=3",
+      "http://127.0.0.1:65242/assets/islands/68f0eb7e8dfe2885f0d4254a5c41cc46470beaa1c078b3f6312aa4526a4d1512/islands.js",
+      "http://127.0.0.1:65242/assets/islands/68f0eb7e8dfe2885f0d4254a5c41cc46470beaa1c078b3f6312aa4526a4d1512/dom-loader.js",
+      "http://127.0.0.1:65242/__rustify-docs/events?path=%2Fexamples%2F&good=3&session=eba0-18de36d1354ffb58",
+      "http://127.0.0.1:65242/assets/islands/68f0eb7e8dfe2885f0d4254a5c41cc46470beaa1c078b3f6312aa4526a4d1512/app_bg.wasm",
+      "http://127.0.0.1:65242/assets/islands/68f0eb7e8dfe2885f0d4254a5c41cc46470beaa1c078b3f6312aa4526a4d1512/app.js",
+      "http://127.0.0.1:65242/assets/islands/68f0eb7e8dfe2885f0d4254a5c41cc46470beaa1c078b3f6312aa4526a4d1512/snippets/rustify-ui-4db2f10f10788f4c/web/dom-runtime.js",
+      "http://127.0.0.1:65242/examples/",
+      "http://127.0.0.1:65242/assets/site.68d58b9384.css",
+      "http://127.0.0.1:65242/__rustify-docs/dev.css",
+      "http://127.0.0.1:65242/assets/mode.5e2c2584b0.js",
+      "http://127.0.0.1:65242/assets/site.2529a0d647.js",
+      "http://127.0.0.1:65242/__rustify-docs/dev.js?session=eba0-18de36d1354ffb58&good=4",
+      "http://127.0.0.1:65242/assets/islands/48abbbd293aafdc65b6f71c96fea5b9e4eda85f0ea5dedee0575ab7bc36d3c57/islands.js",
+      "http://127.0.0.1:65242/__rustify-docs/events?path=%2Fexamples%2F&good=4&session=eba0-18de36d1354ffb58",
+      "http://127.0.0.1:65242/assets/islands/48abbbd293aafdc65b6f71c96fea5b9e4eda85f0ea5dedee0575ab7bc36d3c57/dom-loader.js",
+      "http://127.0.0.1:65242/assets/islands/48abbbd293aafdc65b6f71c96fea5b9e4eda85f0ea5dedee0575ab7bc36d3c57/app_bg.wasm",
+      "http://127.0.0.1:65242/assets/islands/48abbbd293aafdc65b6f71c96fea5b9e4eda85f0ea5dedee0575ab7bc36d3c57/app.js",
+      "http://127.0.0.1:65242/assets/islands/48abbbd293aafdc65b6f71c96fea5b9e4eda85f0ea5dedee0575ab7bc36d3c57/snippets/rustify-ui-4db2f10f10788f4c/web/dom-runtime.js",
+      "http://127.0.0.1:65242/not-present/deep/",
+      "http://127.0.0.1:65242/assets/site.68d58b9384.css",
+      "http://127.0.0.1:65242/__rustify-docs/dev.css",
+      "http://127.0.0.1:65242/assets/mode.5e2c2584b0.js",
+      "http://127.0.0.1:65242/assets/site.2529a0d647.js",
+      "http://127.0.0.1:65242/__rustify-docs/dev.js?session=eba0-18de36d1354ffb58&good=4",
+      "http://127.0.0.1:65242/__rustify-docs/events?path=%2Fnot-present%2Fdeep%2F&good=4&session=eba0-18de36d1354ffb58",
+      "http://127.0.0.1:65242/",
+      "http://127.0.0.1:65242/assets/site.68d58b9384.css",
+      "http://127.0.0.1:65242/__rustify-docs/dev.css",
+      "http://127.0.0.1:65242/assets/mode.5e2c2584b0.js",
+      "http://127.0.0.1:65242/assets/site.2529a0d647.js",
+      "http://127.0.0.1:65242/__rustify-docs/dev.js?session=eba0-18de36d1354ffb58&good=4",
+      "http://127.0.0.1:65242/assets/islands/48abbbd293aafdc65b6f71c96fea5b9e4eda85f0ea5dedee0575ab7bc36d3c57/islands.js",
+      "http://127.0.0.1:65242/__rustify-docs/events?path=%2F&good=4&session=eba0-18de36d1354ffb58",
+      "http://127.0.0.1:65242/assets/islands/48abbbd293aafdc65b6f71c96fea5b9e4eda85f0ea5dedee0575ab7bc36d3c57/dom-loader.js",
+      "http://127.0.0.1:65242/assets/islands/48abbbd293aafdc65b6f71c96fea5b9e4eda85f0ea5dedee0575ab7bc36d3c57/app_bg.wasm",
+      "http://127.0.0.1:65242/assets/islands/48abbbd293aafdc65b6f71c96fea5b9e4eda85f0ea5dedee0575ab7bc36d3c57/app.js",
+      "http://127.0.0.1:65242/assets/islands/48abbbd293aafdc65b6f71c96fea5b9e4eda85f0ea5dedee0575ab7bc36d3c57/snippets/rustify-ui-4db2f10f10788f4c/web/dom-runtime.js",
+      "http://127.0.0.1:65242/examples/",
+      "http://127.0.0.1:65242/assets/site.68d58b9384.css",
+      "http://127.0.0.1:65242/__rustify-docs/dev.css",
+      "http://127.0.0.1:65242/assets/mode.5e2c2584b0.js",
+      "http://127.0.0.1:65242/assets/site.2529a0d647.js",
+      "http://127.0.0.1:65242/__rustify-docs/dev.js?session=eba0-18de36d1354ffb58&good=4",
+      "http://127.0.0.1:65242/assets/islands/48abbbd293aafdc65b6f71c96fea5b9e4eda85f0ea5dedee0575ab7bc36d3c57/islands.js",
+      "http://127.0.0.1:65242/__rustify-docs/events?path=%2Fexamples%2F&good=4&session=eba0-18de36d1354ffb58",
+      "http://127.0.0.1:65242/assets/islands/48abbbd293aafdc65b6f71c96fea5b9e4eda85f0ea5dedee0575ab7bc36d3c57/dom-loader.js",
+      "http://127.0.0.1:65242/assets/islands/48abbbd293aafdc65b6f71c96fea5b9e4eda85f0ea5dedee0575ab7bc36d3c57/app_bg.wasm",
+      "http://127.0.0.1:65242/assets/islands/48abbbd293aafdc65b6f71c96fea5b9e4eda85f0ea5dedee0575ab7bc36d3c57/app.js",
+      "http://127.0.0.1:65242/assets/islands/48abbbd293aafdc65b6f71c96fea5b9e4eda85f0ea5dedee0575ab7bc36d3c57/snippets/rustify-ui-4db2f10f10788f4c/web/dom-runtime.js",
+      "http://127.0.0.1:65242/examples/",
+      "http://127.0.0.1:65242/assets/site.68d58b9384.css",
+      "http://127.0.0.1:65242/__rustify-docs/dev.css",
+      "http://127.0.0.1:65242/assets/mode.5e2c2584b0.js",
+      "http://127.0.0.1:65242/assets/site.2529a0d647.js",
+      "http://127.0.0.1:65242/__rustify-docs/dev.js?session=eba0-18de36d1354ffb58&good=6",
+      "http://127.0.0.1:65242/assets/islands/d24cf687da1b97c3fb0141b7e57be82defdd7e95db9572aaa71556c86cd80869/islands.js",
+      "http://127.0.0.1:65242/__rustify-docs/events?path=%2Fexamples%2F&good=6&session=eba0-18de36d1354ffb58",
+      "http://127.0.0.1:65242/assets/islands/d24cf687da1b97c3fb0141b7e57be82defdd7e95db9572aaa71556c86cd80869/dom-loader.js",
+      "http://127.0.0.1:65242/assets/islands/d24cf687da1b97c3fb0141b7e57be82defdd7e95db9572aaa71556c86cd80869/app_bg.wasm",
+      "http://127.0.0.1:65242/assets/islands/d24cf687da1b97c3fb0141b7e57be82defdd7e95db9572aaa71556c86cd80869/app.js",
+      "http://127.0.0.1:65242/assets/islands/d24cf687da1b97c3fb0141b7e57be82defdd7e95db9572aaa71556c86cd80869/snippets/rustify-ui-4db2f10f10788f4c/web/dom-runtime.js",
+      "http://127.0.0.1:65242/",
+      "http://127.0.0.1:65242/assets/site.68d58b9384.css",
+      "http://127.0.0.1:65242/__rustify-docs/dev.css",
+      "http://127.0.0.1:65242/assets/mode.5e2c2584b0.js",
+      "http://127.0.0.1:65242/assets/site.2529a0d647.js",
+      "http://127.0.0.1:65242/__rustify-docs/dev.js?session=eba0-18de36d1354ffb58&good=6",
+      "http://127.0.0.1:65242/assets/islands/d24cf687da1b97c3fb0141b7e57be82defdd7e95db9572aaa71556c86cd80869/islands.js",
+      "http://127.0.0.1:65242/__rustify-docs/events?path=%2F&good=6&session=eba0-18de36d1354ffb58",
+      "http://127.0.0.1:65242/assets/islands/d24cf687da1b97c3fb0141b7e57be82defdd7e95db9572aaa71556c86cd80869/dom-loader.js",
+      "http://127.0.0.1:65242/assets/islands/d24cf687da1b97c3fb0141b7e57be82defdd7e95db9572aaa71556c86cd80869/app_bg.wasm",
+      "http://127.0.0.1:65242/assets/islands/d24cf687da1b97c3fb0141b7e57be82defdd7e95db9572aaa71556c86cd80869/app.js",
+      "http://127.0.0.1:65242/assets/islands/d24cf687da1b97c3fb0141b7e57be82defdd7e95db9572aaa71556c86cd80869/snippets/rustify-ui-4db2f10f10788f4c/web/dom-runtime.js"
+    ],
+    "failures": [],
+    "expectedStreamClosures": [
+      "http://127.0.0.1:65242/__rustify-docs/events?path=%2F&good=1&session=eba0-18de36d1354ffb58 net::ERR_ABORTED",
+      "http://127.0.0.1:65242/__rustify-docs/events?path=%2F&good=2&session=eba0-18de36d1354ffb58 net::ERR_ABORTED",
+      "http://127.0.0.1:65242/__rustify-docs/events?path=%2Fexamples%2F&good=3&session=eba0-18de36d1354ffb58 net::ERR_ABORTED",
+      "http://127.0.0.1:65242/__rustify-docs/events?path=%2Fexamples%2F&good=4&session=eba0-18de36d1354ffb58 net::ERR_ABORTED"
+    ],
+    "responses": [
+      {
+        "url": "http://127.0.0.1:65242/",
+        "status": 200,
+        "mime": "text/html; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/assets/site.68d58b9384.css",
+        "status": 200,
+        "mime": "text/css; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/__rustify-docs/dev.css",
+        "status": 200,
+        "mime": "text/css; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/assets/mode.5e2c2584b0.js",
+        "status": 200,
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/assets/islands/74212044111c53b21e464c8a1252b45fa1f220bcdd0789332dd78d5fb5dc2b31/islands.js",
+        "status": 200,
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/assets/site.2529a0d647.js",
+        "status": 200,
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/__rustify-docs/dev.js?session=eba0-18de36d1354ffb58&good=1",
+        "status": 200,
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/assets/islands/74212044111c53b21e464c8a1252b45fa1f220bcdd0789332dd78d5fb5dc2b31/dom-loader.js",
+        "status": 200,
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/__rustify-docs/events?path=%2F&good=1&session=eba0-18de36d1354ffb58",
+        "status": 200,
+        "mime": "text/event-stream; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/assets/islands/74212044111c53b21e464c8a1252b45fa1f220bcdd0789332dd78d5fb5dc2b31/app_bg.wasm",
+        "status": 200,
+        "mime": "application/wasm"
+      },
+      {
+        "url": "http://127.0.0.1:65242/assets/islands/74212044111c53b21e464c8a1252b45fa1f220bcdd0789332dd78d5fb5dc2b31/app.js",
+        "status": 200,
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/assets/islands/74212044111c53b21e464c8a1252b45fa1f220bcdd0789332dd78d5fb5dc2b31/snippets/rustify-ui-4db2f10f10788f4c/web/dom-runtime.js",
+        "status": 200,
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/",
+        "status": 200,
+        "mime": "text/html; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/assets/site.68d58b9384.css",
+        "status": 200,
+        "mime": "text/css; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/__rustify-docs/dev.css",
+        "status": 200,
+        "mime": "text/css; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/assets/mode.5e2c2584b0.js",
+        "status": 200,
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/assets/site.2529a0d647.js",
+        "status": 200,
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/assets/islands/6d5ed8272e3ec0ac191af4e02c2f87fc8ae39c33fda97a12801b5e9e5745d3f6/islands.js",
+        "status": 200,
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/__rustify-docs/dev.js?session=eba0-18de36d1354ffb58&good=2",
+        "status": 200,
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/__rustify-docs/events?path=%2F&good=2&session=eba0-18de36d1354ffb58",
+        "status": 200,
+        "mime": "text/event-stream; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/assets/islands/6d5ed8272e3ec0ac191af4e02c2f87fc8ae39c33fda97a12801b5e9e5745d3f6/dom-loader.js",
+        "status": 200,
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/assets/islands/6d5ed8272e3ec0ac191af4e02c2f87fc8ae39c33fda97a12801b5e9e5745d3f6/app_bg.wasm",
+        "status": 200,
+        "mime": "application/wasm"
+      },
+      {
+        "url": "http://127.0.0.1:65242/assets/islands/6d5ed8272e3ec0ac191af4e02c2f87fc8ae39c33fda97a12801b5e9e5745d3f6/app.js",
+        "status": 200,
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/assets/islands/6d5ed8272e3ec0ac191af4e02c2f87fc8ae39c33fda97a12801b5e9e5745d3f6/snippets/rustify-ui-4db2f10f10788f4c/web/dom-runtime.js",
+        "status": 200,
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/",
+        "status": 200,
+        "mime": "text/html; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/assets/site.68d58b9384.css",
+        "status": 200,
+        "mime": "text/css; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/__rustify-docs/dev.css",
+        "status": 200,
+        "mime": "text/css; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/assets/mode.5e2c2584b0.js",
+        "status": 200,
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/assets/site.2529a0d647.js",
+        "status": 200,
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/assets/islands/68f0eb7e8dfe2885f0d4254a5c41cc46470beaa1c078b3f6312aa4526a4d1512/islands.js",
+        "status": 200,
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/__rustify-docs/dev.js?session=eba0-18de36d1354ffb58&good=3",
+        "status": 200,
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/assets/islands/68f0eb7e8dfe2885f0d4254a5c41cc46470beaa1c078b3f6312aa4526a4d1512/dom-loader.js",
+        "status": 200,
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/__rustify-docs/events?path=%2F&good=3&session=eba0-18de36d1354ffb58",
+        "status": 200,
+        "mime": "text/event-stream; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/assets/islands/68f0eb7e8dfe2885f0d4254a5c41cc46470beaa1c078b3f6312aa4526a4d1512/app_bg.wasm",
+        "status": 200,
+        "mime": "application/wasm"
+      },
+      {
+        "url": "http://127.0.0.1:65242/assets/islands/68f0eb7e8dfe2885f0d4254a5c41cc46470beaa1c078b3f6312aa4526a4d1512/app.js",
+        "status": 200,
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/assets/islands/68f0eb7e8dfe2885f0d4254a5c41cc46470beaa1c078b3f6312aa4526a4d1512/snippets/rustify-ui-4db2f10f10788f4c/web/dom-runtime.js",
+        "status": 200,
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/examples/",
+        "status": 200,
+        "mime": "text/html; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/assets/site.68d58b9384.css",
+        "status": 200,
+        "mime": "text/css; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/__rustify-docs/dev.css",
+        "status": 200,
+        "mime": "text/css; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/assets/mode.5e2c2584b0.js",
+        "status": 200,
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/assets/site.2529a0d647.js",
+        "status": 200,
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/assets/islands/68f0eb7e8dfe2885f0d4254a5c41cc46470beaa1c078b3f6312aa4526a4d1512/islands.js",
+        "status": 200,
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/__rustify-docs/dev.js?session=eba0-18de36d1354ffb58&good=3",
+        "status": 200,
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/__rustify-docs/events?path=%2Fexamples%2F&good=3&session=eba0-18de36d1354ffb58",
+        "status": 200,
+        "mime": "text/event-stream; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/assets/islands/68f0eb7e8dfe2885f0d4254a5c41cc46470beaa1c078b3f6312aa4526a4d1512/dom-loader.js",
+        "status": 200,
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/assets/islands/68f0eb7e8dfe2885f0d4254a5c41cc46470beaa1c078b3f6312aa4526a4d1512/app_bg.wasm",
+        "status": 200,
+        "mime": "application/wasm"
+      },
+      {
+        "url": "http://127.0.0.1:65242/assets/islands/68f0eb7e8dfe2885f0d4254a5c41cc46470beaa1c078b3f6312aa4526a4d1512/app.js",
+        "status": 200,
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/assets/islands/68f0eb7e8dfe2885f0d4254a5c41cc46470beaa1c078b3f6312aa4526a4d1512/snippets/rustify-ui-4db2f10f10788f4c/web/dom-runtime.js",
+        "status": 200,
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/examples/",
+        "status": 200,
+        "mime": "text/html; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/assets/site.68d58b9384.css",
+        "status": 200,
+        "mime": "text/css; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/__rustify-docs/dev.css",
+        "status": 200,
+        "mime": "text/css; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/assets/mode.5e2c2584b0.js",
+        "status": 200,
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/assets/site.2529a0d647.js",
+        "status": 200,
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/__rustify-docs/dev.js?session=eba0-18de36d1354ffb58&good=4",
+        "status": 200,
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/assets/islands/48abbbd293aafdc65b6f71c96fea5b9e4eda85f0ea5dedee0575ab7bc36d3c57/islands.js",
+        "status": 200,
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/__rustify-docs/events?path=%2Fexamples%2F&good=4&session=eba0-18de36d1354ffb58",
+        "status": 200,
+        "mime": "text/event-stream; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/assets/islands/48abbbd293aafdc65b6f71c96fea5b9e4eda85f0ea5dedee0575ab7bc36d3c57/dom-loader.js",
+        "status": 200,
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/assets/islands/48abbbd293aafdc65b6f71c96fea5b9e4eda85f0ea5dedee0575ab7bc36d3c57/app_bg.wasm",
+        "status": 200,
+        "mime": "application/wasm"
+      },
+      {
+        "url": "http://127.0.0.1:65242/assets/islands/48abbbd293aafdc65b6f71c96fea5b9e4eda85f0ea5dedee0575ab7bc36d3c57/app.js",
+        "status": 200,
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/assets/islands/48abbbd293aafdc65b6f71c96fea5b9e4eda85f0ea5dedee0575ab7bc36d3c57/snippets/rustify-ui-4db2f10f10788f4c/web/dom-runtime.js",
+        "status": 200,
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/not-present/deep/",
+        "status": 404,
+        "mime": "text/html; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/assets/site.68d58b9384.css",
+        "status": 200,
+        "mime": "text/css; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/__rustify-docs/dev.css",
+        "status": 200,
+        "mime": "text/css; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/assets/mode.5e2c2584b0.js",
+        "status": 200,
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/assets/site.2529a0d647.js",
+        "status": 200,
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/__rustify-docs/dev.js?session=eba0-18de36d1354ffb58&good=4",
+        "status": 200,
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/__rustify-docs/events?path=%2Fnot-present%2Fdeep%2F&good=4&session=eba0-18de36d1354ffb58",
+        "status": 200,
+        "mime": "text/event-stream; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/",
+        "status": 200,
+        "mime": "text/html; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/assets/site.68d58b9384.css",
+        "status": 200,
+        "mime": "text/css; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/__rustify-docs/dev.css",
+        "status": 200,
+        "mime": "text/css; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/assets/mode.5e2c2584b0.js",
+        "status": 200,
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/assets/site.2529a0d647.js",
+        "status": 200,
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/__rustify-docs/dev.js?session=eba0-18de36d1354ffb58&good=4",
+        "status": 200,
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/assets/islands/48abbbd293aafdc65b6f71c96fea5b9e4eda85f0ea5dedee0575ab7bc36d3c57/islands.js",
+        "status": 200,
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/__rustify-docs/events?path=%2F&good=4&session=eba0-18de36d1354ffb58",
+        "status": 200,
+        "mime": "text/event-stream; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/assets/islands/48abbbd293aafdc65b6f71c96fea5b9e4eda85f0ea5dedee0575ab7bc36d3c57/dom-loader.js",
+        "status": 200,
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/assets/islands/48abbbd293aafdc65b6f71c96fea5b9e4eda85f0ea5dedee0575ab7bc36d3c57/app_bg.wasm",
+        "status": 200,
+        "mime": "application/wasm"
+      },
+      {
+        "url": "http://127.0.0.1:65242/assets/islands/48abbbd293aafdc65b6f71c96fea5b9e4eda85f0ea5dedee0575ab7bc36d3c57/app.js",
+        "status": 200,
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/assets/islands/48abbbd293aafdc65b6f71c96fea5b9e4eda85f0ea5dedee0575ab7bc36d3c57/snippets/rustify-ui-4db2f10f10788f4c/web/dom-runtime.js",
+        "status": 200,
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/examples/",
+        "status": 200,
+        "mime": "text/html; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/assets/site.68d58b9384.css",
+        "status": 200,
+        "mime": "text/css; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/__rustify-docs/dev.css",
+        "status": 200,
+        "mime": "text/css; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/assets/mode.5e2c2584b0.js",
+        "status": 200,
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/assets/site.2529a0d647.js",
+        "status": 200,
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/__rustify-docs/dev.js?session=eba0-18de36d1354ffb58&good=4",
+        "status": 200,
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/assets/islands/48abbbd293aafdc65b6f71c96fea5b9e4eda85f0ea5dedee0575ab7bc36d3c57/islands.js",
+        "status": 200,
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/__rustify-docs/events?path=%2Fexamples%2F&good=4&session=eba0-18de36d1354ffb58",
+        "status": 200,
+        "mime": "text/event-stream; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/assets/islands/48abbbd293aafdc65b6f71c96fea5b9e4eda85f0ea5dedee0575ab7bc36d3c57/dom-loader.js",
+        "status": 200,
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/assets/islands/48abbbd293aafdc65b6f71c96fea5b9e4eda85f0ea5dedee0575ab7bc36d3c57/app_bg.wasm",
+        "status": 200,
+        "mime": "application/wasm"
+      },
+      {
+        "url": "http://127.0.0.1:65242/assets/islands/48abbbd293aafdc65b6f71c96fea5b9e4eda85f0ea5dedee0575ab7bc36d3c57/app.js",
+        "status": 200,
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/assets/islands/48abbbd293aafdc65b6f71c96fea5b9e4eda85f0ea5dedee0575ab7bc36d3c57/snippets/rustify-ui-4db2f10f10788f4c/web/dom-runtime.js",
+        "status": 200,
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/examples/",
+        "status": 200,
+        "mime": "text/html; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/assets/site.68d58b9384.css",
+        "status": 200,
+        "mime": "text/css; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/__rustify-docs/dev.css",
+        "status": 200,
+        "mime": "text/css; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/assets/mode.5e2c2584b0.js",
+        "status": 200,
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/assets/site.2529a0d647.js",
+        "status": 200,
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/__rustify-docs/dev.js?session=eba0-18de36d1354ffb58&good=6",
+        "status": 200,
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/assets/islands/d24cf687da1b97c3fb0141b7e57be82defdd7e95db9572aaa71556c86cd80869/islands.js",
+        "status": 200,
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/__rustify-docs/events?path=%2Fexamples%2F&good=6&session=eba0-18de36d1354ffb58",
+        "status": 200,
+        "mime": "text/event-stream; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/assets/islands/d24cf687da1b97c3fb0141b7e57be82defdd7e95db9572aaa71556c86cd80869/dom-loader.js",
+        "status": 200,
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/assets/islands/d24cf687da1b97c3fb0141b7e57be82defdd7e95db9572aaa71556c86cd80869/app_bg.wasm",
+        "status": 200,
+        "mime": "application/wasm"
+      },
+      {
+        "url": "http://127.0.0.1:65242/assets/islands/d24cf687da1b97c3fb0141b7e57be82defdd7e95db9572aaa71556c86cd80869/app.js",
+        "status": 200,
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/assets/islands/d24cf687da1b97c3fb0141b7e57be82defdd7e95db9572aaa71556c86cd80869/snippets/rustify-ui-4db2f10f10788f4c/web/dom-runtime.js",
+        "status": 200,
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/",
+        "status": 200,
+        "mime": "text/html; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/assets/site.68d58b9384.css",
+        "status": 200,
+        "mime": "text/css; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/__rustify-docs/dev.css",
+        "status": 200,
+        "mime": "text/css; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/assets/mode.5e2c2584b0.js",
+        "status": 200,
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/assets/site.2529a0d647.js",
+        "status": 200,
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/__rustify-docs/dev.js?session=eba0-18de36d1354ffb58&good=6",
+        "status": 200,
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/assets/islands/d24cf687da1b97c3fb0141b7e57be82defdd7e95db9572aaa71556c86cd80869/islands.js",
+        "status": 200,
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/__rustify-docs/events?path=%2F&good=6&session=eba0-18de36d1354ffb58",
+        "status": 200,
+        "mime": "text/event-stream; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/assets/islands/d24cf687da1b97c3fb0141b7e57be82defdd7e95db9572aaa71556c86cd80869/dom-loader.js",
+        "status": 200,
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/assets/islands/d24cf687da1b97c3fb0141b7e57be82defdd7e95db9572aaa71556c86cd80869/app_bg.wasm",
+        "status": 200,
+        "mime": "application/wasm"
+      },
+      {
+        "url": "http://127.0.0.1:65242/assets/islands/d24cf687da1b97c3fb0141b7e57be82defdd7e95db9572aaa71556c86cd80869/app.js",
+        "status": 200,
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "url": "http://127.0.0.1:65242/assets/islands/d24cf687da1b97c3fb0141b7e57be82defdd7e95db9572aaa71556c86cd80869/snippets/rustify-ui-4db2f10f10788f4c/web/dom-runtime.js",
+        "status": 200,
+        "mime": "text/javascript; charset=utf-8"
+      }
+    ],
+    "console": [],
+    "consoleEvents": [
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "url": "http://127.0.0.1:65242/not-present/deep/",
+        "time_ms": 1791930002292
+      }
+    ],
+    "expectedConsole404": [
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "url": "http://127.0.0.1:65242/not-present/deep/",
+        "time_ms": 1791930002292
+      }
+    ],
+    "pageErrors": [],
+    "csp": [],
+    "expected404": [
+      "http://127.0.0.1:65242/not-present/deep/"
+    ],
+    "expected404Windows": [
+      {
+        "url": "http://127.0.0.1:65242/not-present/deep/",
+        "started_at_ms": 1791930002286,
+        "ended_at_ms": 1791930002300
+      }
+    ]
+  },
+  "commands": [
+    {
+      "command": [
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair2-installed-8j63t8o1/installed/bin/rustify-docs",
+        "--build-info"
+      ],
+      "cwd": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-continuous-author-BJhAml/author-docs",
+      "exit_code": 0,
+      "stdout": "identity.stdout",
+      "stderr": "identity.stderr"
+    },
+    {
+      "command": [
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair2-installed-8j63t8o1/installed/bin/rustify-docs",
+        "new",
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-continuous-author-BJhAml/author-docs",
+        "--template",
+        "components"
+      ],
+      "cwd": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-continuous-author-BJhAml/author-docs",
+      "exit_code": 0,
+      "stdout": "new.stdout",
+      "stderr": "new.stderr"
+    },
+    {
+      "command": [
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair2-installed-8j63t8o1/installed/bin/rustify-docs",
+        "build",
+        "--format",
+        "json"
+      ],
+      "cwd": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-continuous-author-BJhAml/author-docs",
+      "exit_code": 0,
+      "stdout": "last-good-build.stdout",
+      "stderr": "last-good-build.stderr"
+    },
+    {
+      "command": [
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair2-installed-8j63t8o1/installed/bin/rustify-docs",
+        "check",
+        "--format",
+        "json"
+      ],
+      "cwd": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-continuous-author-BJhAml/author-docs",
+      "exit_code": 1,
+      "stdout": "failed-check.stdout",
+      "stderr": "failed-check.stderr"
+    },
+    {
+      "command": [
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair2-installed-8j63t8o1/installed/bin/rustify-docs",
+        "build",
+        "--format",
+        "json"
+      ],
+      "cwd": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-continuous-author-BJhAml/author-docs",
+      "exit_code": 1,
+      "stdout": "failed-build.stdout",
+      "stderr": "failed-build.stderr"
+    },
+    {
+      "command": [
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair2-installed-8j63t8o1/installed/bin/rustify-docs",
+        "check",
+        "--format",
+        "json"
+      ],
+      "cwd": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-continuous-author-BJhAml/author-docs",
+      "exit_code": 0,
+      "stdout": "final-check.stdout",
+      "stderr": "final-check.stderr"
+    },
+    {
+      "command": [
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair2-installed-8j63t8o1/installed/bin/rustify-docs",
+        "build",
+        "--format",
+        "json"
+      ],
+      "cwd": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-continuous-author-BJhAml/author-docs",
+      "exit_code": 0,
+      "stdout": "final-build.stdout",
+      "stderr": "final-build.stderr"
+    }
+  ],
+  "dev": {
+    "pid": 60320,
+    "url": "http://127.0.0.1:65242/",
+    "command": [
+      "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair2-installed-8j63t8o1/installed/bin/rustify-docs",
+      "dev",
+      "--port",
+      "0"
+    ]
+  },
+  "browser": {
+    "version": "155.0.8059.40",
+    "executable": "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+  },
+  "passed": true,
+  "all_own_processes_stopped": true
+}

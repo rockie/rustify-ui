@@ -22,7 +22,7 @@
 - [DOCS-SSG PRD](status/prd/8917bbeb-7add-4826-95ee-5cdf6bdff735.md)：文档规范状态prd-ready，已批准矩阵/测量合同待同步；P1原计划已8/9，四项交付遗漏、真机及M9缺证见[覆盖报告](status/review/5b279eaf-0dc1-4c8f-a54a-672cc942633f.md)。P2–P4终验保留，未写SPMS。
 - [DOCS-SSG-P1](status/plan/526c88c7-a4b3-4ea9-9193-371420b66d1d.md)：9/9完成；固定安装1b81de2（CLI0.1.4）、最终交付945398c、回填be2cf15。本地115+远端34浏览器、219 Docs Rust、1091 CSR/GPU工作区及模式矩阵/真实安装升级回滚通过；GitHub同SHA安装/SDK/源预览完成。独立gaps2/2，D-04最新版Chrome及两手机延期、P4完整矩阵保留。下一步由用户以review-code评审原计划。
 
-- [DOCS-SSG-P2](status/plan/c0c94e42-32f2-4636-ae52-f3df76d4a463.md): v2 **Ready**; history retained. Implementation5/7, M1-M5 complete. [M6](../../docs/validation/docs-ssg-p2/M6.md) empty-R corpus6/CLI72/components2/dev3 and strict clippy/fmt/sources/CSS/catalog pass; next actual R/C freeze and paired/concentrated gates. Users/phones remain gaps; no push/publication.
+- [DOCS-SSG-P2](status/plan/c0c94e42-32f2-4636-ae52-f3df76d4a463.md): v2 Ready; implementation5/7, M6 external acceptance blocked. [M6](../../docs/validation/docs-ssg-p2/M6.md) fixed C4 local technical/native/browser/legacy/performance verified; real users/phones/latest desktop/public Git and Pages exits remain open. No own runtime.
 ## 初始化范围与验证边界
 
 - 初始化观察：2026-10-07T10:37:52+11:00，协议 v3 / 状态模型 v2。

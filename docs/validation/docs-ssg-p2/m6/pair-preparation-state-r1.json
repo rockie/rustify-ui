@@ -1,0 +1,42 @@
+{
+  "scope": "real local R; public GitHub URL in manifest/lock; process-local Git read transport only, no public GitHub installation claim; CLI C not committed yet",
+  "repo": "/Users/rockie/Documents/gh-rockie/rustify-ui",
+  "library_revision": "676a55771ab77faf8c476a836025d62905a2d3e2",
+  "head_during_preparation": "1b4b7e628661d1b02f21e6162268f022fe27a2aa",
+  "work": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair-preparation-q08yp2lv",
+  "site": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair-preparation-q08yp2lv/docs-site",
+  "files_before": [
+    {
+      "path": "crates/rustify-docs-cli/Cargo.toml",
+      "sha256": "7c4e8eb2cd8260ce9c3532c946f89b1b73800595f0958b38e921bc188fccfa6b"
+    },
+    {
+      "path": "crates/rustify-docs-cli/assets/framework-revision.txt",
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "path": "crates/rustify-docs-cli/assets/components-Cargo.lock",
+      "sha256": "7fc59f990eadf9889b44dbffae07665a7a5633c43eb3312c975676f5e2aac578"
+    },
+    {
+      "path": "Cargo.lock",
+      "sha256": "ce62c4e45b392359ab3a9ef3e5685c7a9157e9fc9bef6735459a62e7c560868f"
+    },
+    {
+      "path": "docs/docs-ssg.md",
+      "sha256": "039e7267c2d3584bc52969f1f0787e8b3e73f203cc4e6d0a080905105fa2fd1f"
+    }
+  ],
+  "template_files": [
+    ".gitignore",
+    "Cargo.toml",
+    "README.md",
+    "content/guide/getting-started.md",
+    "content/guide/writing-demos.md",
+    "content/index.md",
+    "rustify-docs.toml",
+    "src/bin/docs-render.rs",
+    "src/demos.rs",
+    "src/lib.rs"
+  ]
+}

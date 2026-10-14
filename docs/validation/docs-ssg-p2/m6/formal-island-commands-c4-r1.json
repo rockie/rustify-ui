@@ -1,0 +1,48 @@
+{
+  "candidate_C": "d301344eeb27e22907c59a10805ae0cebf8dee99",
+  "framework_R": "3fcc626a4039a43c5e045ccd546bab976db89a73",
+  "commands": [
+    {
+      "name": "a-official",
+      "command": [
+        "node",
+        "docs/validation/docs-ssg-p2/m6/measure-official-islands.mjs",
+        "--origin",
+        "http://127.0.0.1:65257/rustify-ui/",
+        "--samples",
+        "5",
+        "--out",
+        "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/formal-a-official-islands-c4-r1.json"
+      ],
+      "dist": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair4-installed-9pziu1hu/official-c4/site/dist",
+      "preview_url": "http://127.0.0.1:65257/rustify-ui/",
+      "exit_code": 0,
+      "seconds": 35.04,
+      "report": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/formal-a-official-islands-c4-r1.json",
+      "log": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/formal-a-official-islands-c4-r1.log"
+    },
+    {
+      "name": "b-largest",
+      "command": [
+        "node",
+        "tests/docs-ssg/harness/measure-islands.mjs",
+        "--origin",
+        "http://127.0.0.1:50125/",
+        "--samples",
+        "5",
+        "--out",
+        "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/formal-b-largest-islands-c4-r1.json",
+        "--page",
+        "/p2/quickstart/",
+        "--page",
+        "/p2/vellum/"
+      ],
+      "dist": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/m6-b-p2-c4/dist",
+      "preview_url": "http://127.0.0.1:50125/",
+      "exit_code": 0,
+      "seconds": 6.619,
+      "report": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/formal-b-largest-islands-c4-r1.json",
+      "log": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/formal-b-largest-islands-c4-r1.log"
+    }
+  ]
+}

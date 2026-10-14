@@ -1,0 +1,62 @@
+{
+  "candidate_C": "6721dc73db18421826c4abaf0823d51d8d6ceffb",
+  "framework_R": "c562008291ef1b1826891944e0d81a5d61d775b8",
+  "commands": [
+    {
+      "name": "a-official",
+      "command": [
+        "node",
+        "docs/validation/docs-ssg-p2/m6/measure-official-islands.mjs",
+        "--origin",
+        "http://127.0.0.1:61255/rustify-ui/",
+        "--samples",
+        "5",
+        "--out",
+        "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/formal-a-official-islands-c3-r1.json"
+      ],
+      "preview_command": [
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair3-installed-uvgj6yil/installed/bin/rustify-docs",
+        "preview",
+        "--dir",
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair3-installed-uvgj6yil/official-c3/site/dist",
+        "--port",
+        "0"
+      ],
+      "url": "http://127.0.0.1:61255/rustify-ui/",
+      "exit_code": 0,
+      "seconds": 34.989,
+      "report": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/formal-a-official-islands-c3-r1.json",
+      "log": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/formal-a-official-islands-c3-r1.log"
+    },
+    {
+      "name": "b-largest",
+      "command": [
+        "node",
+        "tests/docs-ssg/harness/measure-islands.mjs",
+        "--origin",
+        "http://127.0.0.1:62496/",
+        "--samples",
+        "5",
+        "--out",
+        "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/formal-b-largest-islands-c3-r1.json",
+        "--page",
+        "/p2/quickstart/",
+        "--page",
+        "/p2/vellum/"
+      ],
+      "preview_command": [
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair3-installed-uvgj6yil/installed/bin/rustify-docs",
+        "preview",
+        "--dir",
+        "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/m6-b-p2-c3/dist",
+        "--port",
+        "0"
+      ],
+      "url": "http://127.0.0.1:62496/",
+      "exit_code": 0,
+      "seconds": 6.672,
+      "report": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/formal-b-largest-islands-c3-r1.json",
+      "log": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/formal-b-largest-islands-c3-r1.log"
+    }
+  ]
+}

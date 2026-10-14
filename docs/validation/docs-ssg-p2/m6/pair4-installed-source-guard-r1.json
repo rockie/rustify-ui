@@ -1,0 +1,18 @@
+{
+  "C4": "d301344eeb27e22907c59a10805ae0cebf8dee99",
+  "R4": "3fcc626a4039a43c5e045ccd546bab976db89a73",
+  "frozen_product_diff_zero": true,
+  "all_template_and_receipt_inputs_unchanged": true,
+  "user_dirty_sources_sha256": {
+    ".xgent-ai/sdlc/events/plan/7c105838-be0d-4f3b-ae5c-9998b8f4cfdc/49cf6e56-1669-49f8-bf18-f9ba34055b2f.md": "2ad70a918150d5f6e6f97c4174450fd05916813406c3ae0c98b187331d0eb7f9",
+    ".xgent-ai/sdlc/events/plan/7c105838-be0d-4f3b-ae5c-9998b8f4cfdc/index.md": "d985f2134cc4ea01d880a96591ccb44ad4519d9abd31f4eb8b008fa2ea94ae87",
+    ".xgent-ai/sdlc/events/prd/8917bbeb-7add-4826-95ee-5cdf6bdff735/7ca79957-a261-428e-bcfc-77ba4fce871e.md": "cc30a93a1154babac6a784b40cdf6b7adfdd9dbbadfc339c7d4168771b735226",
+    ".xgent-ai/sdlc/events/prd/8917bbeb-7add-4826-95ee-5cdf6bdff735/index.md": "97589b745b6fc6ff445262e062994a65b62cddbb4e28471239614db08190d089",
+    ".xgent-ai/sdlc/status/plan/7c105838-be0d-4f3b-ae5c-9998b8f4cfdc.md": "cfe1077f78ec8c5b97419d532e70c84008705e15410c72137e298a8b6a5e2cc0",
+    ".xgent-ai/sdlc/status/prd/8917bbeb-7add-4826-95ee-5cdf6bdff735.md": "b889040715e7ba96e922fd98cf0a601b819ea14636a968a7313b91882b7caa83"
+  },
+  "all_six_user_source_sha256_unchanged": true,
+  "B500_and_harness_unchanged": true,
+  "binary_sha256": "5eae4e6bf727505a030fd67680c7c3a2c82bb6e195815a0d834b18cf4d737b71",
+  "C3_history": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/pair4-installed-c3-state-history-r1.json"
+}

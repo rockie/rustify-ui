@@ -1,0 +1,65 @@
+{
+  "command": [
+    "mbx",
+    "test",
+    "--locked",
+    "-p",
+    "rustify-docs-cli",
+    "--test",
+    "new_build",
+    "--test",
+    "new_components",
+    "--test",
+    "reliability",
+    "--test",
+    "rust_dev"
+  ],
+  "candidate_C": "c1061ced3deaa4e6669bc45eb3382306fa85c958",
+  "framework_R": "0494f304f0f9f8b620affb7309df23db3cb2377c",
+  "log": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c2-cli-final-independent-tests-r1.log",
+  "started_at_ms": 1791935619222.923,
+  "scope": "independent remaining CLI targets; stable faults product failure remains open",
+  "exit_code": 0,
+  "milliseconds": 168252.53881835938,
+  "test_results": [
+    {
+      "status": "ok",
+      "passed": 6,
+      "failed": 0,
+      "ignored": 0,
+      "measured": 0,
+      "filtered": 0
+    },
+    {
+      "status": "ok",
+      "passed": 5,
+      "failed": 0,
+      "ignored": 0,
+      "measured": 0,
+      "filtered": 0
+    },
+    {
+      "status": "ok",
+      "passed": 7,
+      "failed": 0,
+      "ignored": 0,
+      "measured": 0,
+      "filtered": 0
+    },
+    {
+      "status": "ok",
+      "passed": 3,
+      "failed": 0,
+      "ignored": 0,
+      "measured": 0,
+      "filtered": 0
+    }
+  ],
+  "test_totals": {
+    "passed": 21,
+    "failed": 0,
+    "ignored": 0,
+    "measured": 0,
+    "filtered": 0
+  }
+}

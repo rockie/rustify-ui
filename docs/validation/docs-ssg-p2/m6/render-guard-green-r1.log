@@ -1,0 +1,42 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-docs v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-docs)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.30s
+     Running unittests src/lib.rs (target/debug/deps/rustify_docs-a0443a60ac2534b1)
+
+running 10 tests
+test content::tests::render_guard_detects_config_link_retargeting_with_identical_bytes ... ok
+test content::tests::render_guard_uses_snapshot_bytes_when_an_include_is_already_captured ... ok
+test content::tests::render_guard_binds_a_fragment_cache_hit_to_this_rounds_include_read ... ok
+test content::tests::render_guard_checks_configuration_even_for_content_only_projects ... ok
+test content::tests::render_guard_checks_include_only_bytes_from_the_original_analysis ... ok
+test content::tests::render_guard_checks_the_original_outside_resource_read ... ok
+test content::tests::render_guard_keeps_repository_links_as_existence_only_inputs ... ok
+test content::tests::render_guard_detects_empty_directory_links_even_when_target_sets_match ... ok
+test content::tests::render_guard_detects_swapped_symlink_targets_even_when_snapshot_sets_match ... ok
+test content::tests::render_guard_distinguishes_existing_scan_errors_from_changed_inputs ... FAILED
+
+failures:
+
+---- content::tests::render_guard_distinguishes_existing_scan_errors_from_changed_inputs stdout ----
+
+thread 'content::tests::render_guard_distinguishes_existing_scan_errors_from_changed_inputs' (42243742) panicked at crates/rustify-docs/src/content.rs:2977:9:
+assertion `left == right` failed
+  left: 1
+ right: 0
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    content::tests::render_guard_distinguishes_existing_scan_errors_from_changed_inputs
+
+test result: FAILED. 9 passed; 1 failed; 0 ignored; 0 measured; 182 filtered out; finished in 0.09s
+
+error: test failed, to rerun pass `-p rustify-docs --lib`
+mbx[cache]: 0 hits, 0 misses, 1 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: 86196 compilations served. ask rustc how many it remembers doing.

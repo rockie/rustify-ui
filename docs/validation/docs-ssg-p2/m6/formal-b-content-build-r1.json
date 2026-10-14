@@ -1,0 +1,243 @@
+{
+  "scope": "unchanged P1 B500 pure content; installed C; no Rust consumer; serial fresh full-content builds, no concurrent compilation or browser performance",
+  "candidate_C": "8e86626fce74ffc45085da6377ca9aa64312fe59",
+  "framework_R": "676a55771ab77faf8c476a836025d62905a2d3e2",
+  "profile_sha256": "7c090aa2064f0c843164f70c7488ea9f3514c7f43bf96ece66de6dae06e306d5",
+  "author_inputs_unchanged": true,
+  "author_input_count": 503,
+  "samples": [
+    {
+      "sample": 1,
+      "exit": 0,
+      "wall_ms": 2252.537584048696,
+      "command": [
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-installed-c-hv5ysh41/installed/bin/rustify-docs",
+        "build",
+        "--config",
+        "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/m5-b-p1-r1/rustify-docs.toml",
+        "--format",
+        "json"
+      ],
+      "summary": {
+        "errors": 0,
+        "warnings": 1,
+        "pages": 500,
+        "files": 511,
+        "bytes": 34932270,
+        "largest": [
+          {
+            "path": "zh/g04/page-024/index.html",
+            "bytes": 128458
+          },
+          {
+            "path": "zh/g04/page-012/index.html",
+            "bytes": 128443
+          },
+          {
+            "path": "zh/g06/page-022/index.html",
+            "bytes": 128443
+          },
+          {
+            "path": "zh/g07/page-021/index.html",
+            "bytes": 128443
+          },
+          {
+            "path": "zh/g01/page-003/index.html",
+            "bytes": 128431
+          }
+        ],
+        "out": "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/m5-b-p1-r1/dist",
+        "milliseconds": 2235
+      },
+      "stdout": "formal-b-content-build-r1-1.json",
+      "stderr": "formal-b-content-build-r1-1.log"
+    },
+    {
+      "sample": 2,
+      "exit": 0,
+      "wall_ms": 2288.717249990441,
+      "command": [
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-installed-c-hv5ysh41/installed/bin/rustify-docs",
+        "build",
+        "--config",
+        "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/m5-b-p1-r1/rustify-docs.toml",
+        "--format",
+        "json"
+      ],
+      "summary": {
+        "errors": 0,
+        "warnings": 1,
+        "pages": 500,
+        "files": 511,
+        "bytes": 34932270,
+        "largest": [
+          {
+            "path": "zh/g04/page-024/index.html",
+            "bytes": 128458
+          },
+          {
+            "path": "zh/g04/page-012/index.html",
+            "bytes": 128443
+          },
+          {
+            "path": "zh/g06/page-022/index.html",
+            "bytes": 128443
+          },
+          {
+            "path": "zh/g07/page-021/index.html",
+            "bytes": 128443
+          },
+          {
+            "path": "zh/g01/page-003/index.html",
+            "bytes": 128431
+          }
+        ],
+        "out": "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/m5-b-p1-r1/dist",
+        "milliseconds": 2231
+      },
+      "stdout": "formal-b-content-build-r1-2.json",
+      "stderr": "formal-b-content-build-r1-2.log"
+    },
+    {
+      "sample": 3,
+      "exit": 0,
+      "wall_ms": 2309.9816670874134,
+      "command": [
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-installed-c-hv5ysh41/installed/bin/rustify-docs",
+        "build",
+        "--config",
+        "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/m5-b-p1-r1/rustify-docs.toml",
+        "--format",
+        "json"
+      ],
+      "summary": {
+        "errors": 0,
+        "warnings": 1,
+        "pages": 500,
+        "files": 511,
+        "bytes": 34932270,
+        "largest": [
+          {
+            "path": "zh/g04/page-024/index.html",
+            "bytes": 128458
+          },
+          {
+            "path": "zh/g04/page-012/index.html",
+            "bytes": 128443
+          },
+          {
+            "path": "zh/g06/page-022/index.html",
+            "bytes": 128443
+          },
+          {
+            "path": "zh/g07/page-021/index.html",
+            "bytes": 128443
+          },
+          {
+            "path": "zh/g01/page-003/index.html",
+            "bytes": 128431
+          }
+        ],
+        "out": "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/m5-b-p1-r1/dist",
+        "milliseconds": 2268
+      },
+      "stdout": "formal-b-content-build-r1-3.json",
+      "stderr": "formal-b-content-build-r1-3.log"
+    },
+    {
+      "sample": 4,
+      "exit": 0,
+      "wall_ms": 2444.278958020732,
+      "command": [
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-installed-c-hv5ysh41/installed/bin/rustify-docs",
+        "build",
+        "--config",
+        "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/m5-b-p1-r1/rustify-docs.toml",
+        "--format",
+        "json"
+      ],
+      "summary": {
+        "errors": 0,
+        "warnings": 1,
+        "pages": 500,
+        "files": 511,
+        "bytes": 34932270,
+        "largest": [
+          {
+            "path": "zh/g04/page-024/index.html",
+            "bytes": 128458
+          },
+          {
+            "path": "zh/g04/page-012/index.html",
+            "bytes": 128443
+          },
+          {
+            "path": "zh/g06/page-022/index.html",
+            "bytes": 128443
+          },
+          {
+            "path": "zh/g07/page-021/index.html",
+            "bytes": 128443
+          },
+          {
+            "path": "zh/g01/page-003/index.html",
+            "bytes": 128431
+          }
+        ],
+        "out": "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/m5-b-p1-r1/dist",
+        "milliseconds": 2405
+      },
+      "stdout": "formal-b-content-build-r1-4.json",
+      "stderr": "formal-b-content-build-r1-4.log"
+    },
+    {
+      "sample": 5,
+      "exit": 0,
+      "wall_ms": 2275.0761250499636,
+      "command": [
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-installed-c-hv5ysh41/installed/bin/rustify-docs",
+        "build",
+        "--config",
+        "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/m5-b-p1-r1/rustify-docs.toml",
+        "--format",
+        "json"
+      ],
+      "summary": {
+        "errors": 0,
+        "warnings": 1,
+        "pages": 500,
+        "files": 511,
+        "bytes": 34932270,
+        "largest": [
+          {
+            "path": "zh/g04/page-024/index.html",
+            "bytes": 128458
+          },
+          {
+            "path": "zh/g04/page-012/index.html",
+            "bytes": 128443
+          },
+          {
+            "path": "zh/g06/page-022/index.html",
+            "bytes": 128443
+          },
+          {
+            "path": "zh/g07/page-021/index.html",
+            "bytes": 128443
+          },
+          {
+            "path": "zh/g01/page-003/index.html",
+            "bytes": 128431
+          }
+        ],
+        "out": "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/m5-b-p1-r1/dist",
+        "milliseconds": 2251
+      },
+      "stdout": "formal-b-content-build-r1-5.json",
+      "stderr": "formal-b-content-build-r1-5.log"
+    }
+  ],
+  "build_median_ms": 2288.717249990441,
+  "budget_ms": 20000,
+  "passed": true
+}

@@ -1,0 +1,185 @@
+{
+  "scope": "A content/home/404 reader load only; C4 artifact+preview/CSP/meter unchanged; does not cover C4 islands/dev/build timing",
+  "candidate_C3": "6721dc73db18421826c4abaf0823d51d8d6ceffb",
+  "candidate_C4": "d301344eeb27e22907c59a10805ae0cebf8dee99",
+  "reused_measurement": "docs/validation/docs-ssg-p2/m6/a_official-content-load-c3-r1.json",
+  "all_14_static_pages_identical_first_load_files": [
+    {
+      "page": "404.html",
+      "route": "/rustify-ui/404.html",
+      "all_declared_first_load_files_identical": true,
+      "files_sha256": {
+        "404.html": "a3b7658b225e2550c42e6734e754c9fd5e42e7355f3ab5c4569e47bd4a8b1847",
+        "assets/mode.5e2c2584b0.js": "5e2c2584b0eccb6b7631ffa0f0e110e7316d5f60d532a806bef18f1e017c57cf",
+        "assets/site.2529a0d647.js": "2529a0d647cd2b645277e1dc98c9396c87421748f2bc42488d3031c6db6e203a",
+        "assets/site.a412d899bf.css": "a412d899bfdad26361db1b05e1e8effb1bb219c81fa18bd5c67cb0e2f9335e56"
+      }
+    },
+    {
+      "page": "architecture/index.html",
+      "route": "/rustify-ui/architecture/",
+      "all_declared_first_load_files_identical": true,
+      "files_sha256": {
+        "architecture/index.html": "582b25a42aba5710b86ce412d617706e9a5e8a6bd4013d1f3a76587e1e140a42",
+        "assets/mode.5e2c2584b0.js": "5e2c2584b0eccb6b7631ffa0f0e110e7316d5f60d532a806bef18f1e017c57cf",
+        "assets/site.2529a0d647.js": "2529a0d647cd2b645277e1dc98c9396c87421748f2bc42488d3031c6db6e203a",
+        "assets/site.a412d899bf.css": "a412d899bfdad26361db1b05e1e8effb1bb219c81fa18bd5c67cb0e2f9335e56"
+      }
+    },
+    {
+      "page": "compatibility/index.html",
+      "route": "/rustify-ui/compatibility/",
+      "all_declared_first_load_files_identical": true,
+      "files_sha256": {
+        "compatibility/index.html": "5c1845b79f95cd50af91affae3146b94790e18de187fa895bbafd2fac767cecd",
+        "assets/mode.5e2c2584b0.js": "5e2c2584b0eccb6b7631ffa0f0e110e7316d5f60d532a806bef18f1e017c57cf",
+        "assets/site.2529a0d647.js": "2529a0d647cd2b645277e1dc98c9396c87421748f2bc42488d3031c6db6e203a",
+        "assets/site.a412d899bf.css": "a412d899bfdad26361db1b05e1e8effb1bb219c81fa18bd5c67cb0e2f9335e56"
+      }
+    },
+    {
+      "page": "components/index.html",
+      "route": "/rustify-ui/components/",
+      "all_declared_first_load_files_identical": true,
+      "files_sha256": {
+        "components/index.html": "48f0f00e9cbd3a4ba97dd291c5b7676b46a95990b0b0f7245f4ffbcdda029488",
+        "assets/mode.5e2c2584b0.js": "5e2c2584b0eccb6b7631ffa0f0e110e7316d5f60d532a806bef18f1e017c57cf",
+        "assets/site.2529a0d647.js": "2529a0d647cd2b645277e1dc98c9396c87421748f2bc42488d3031c6db6e203a",
+        "assets/site.a412d899bf.css": "a412d899bfdad26361db1b05e1e8effb1bb219c81fa18bd5c67cb0e2f9335e56"
+      }
+    },
+    {
+      "page": "data/index.html",
+      "route": "/rustify-ui/data/",
+      "all_declared_first_load_files_identical": true,
+      "files_sha256": {
+        "data/index.html": "a14ffe90dfedde3f7ecb81ac34028b04e3f5fd70aa6f78464ffa0b9aab863a1f",
+        "assets/mode.5e2c2584b0.js": "5e2c2584b0eccb6b7631ffa0f0e110e7316d5f60d532a806bef18f1e017c57cf",
+        "assets/site.2529a0d647.js": "2529a0d647cd2b645277e1dc98c9396c87421748f2bc42488d3031c6db6e203a",
+        "assets/site.a412d899bf.css": "a412d899bfdad26361db1b05e1e8effb1bb219c81fa18bd5c67cb0e2f9335e56"
+      }
+    },
+    {
+      "page": "forms/index.html",
+      "route": "/rustify-ui/forms/",
+      "all_declared_first_load_files_identical": true,
+      "files_sha256": {
+        "forms/index.html": "137c268c12c792f18be3696d628bf25d6f557f50c74824afcf7058762c461214",
+        "assets/mode.5e2c2584b0.js": "5e2c2584b0eccb6b7631ffa0f0e110e7316d5f60d532a806bef18f1e017c57cf",
+        "assets/site.2529a0d647.js": "2529a0d647cd2b645277e1dc98c9396c87421748f2bc42488d3031c6db6e203a",
+        "assets/site.a412d899bf.css": "a412d899bfdad26361db1b05e1e8effb1bb219c81fa18bd5c67cb0e2f9335e56"
+      }
+    },
+    {
+      "page": "i18n/index.html",
+      "route": "/rustify-ui/i18n/",
+      "all_declared_first_load_files_identical": true,
+      "files_sha256": {
+        "i18n/index.html": "d9b79e6e3ce9f7e797a2ddfc75b20a2bb4055cb01f37f6a3cf8d57855c09f13d",
+        "assets/mode.5e2c2584b0.js": "5e2c2584b0eccb6b7631ffa0f0e110e7316d5f60d532a806bef18f1e017c57cf",
+        "assets/site.2529a0d647.js": "2529a0d647cd2b645277e1dc98c9396c87421748f2bc42488d3031c6db6e203a",
+        "assets/site.a412d899bf.css": "a412d899bfdad26361db1b05e1e8effb1bb219c81fa18bd5c67cb0e2f9335e56"
+      }
+    },
+    {
+      "page": "index.html",
+      "route": "/rustify-ui/",
+      "all_declared_first_load_files_identical": true,
+      "files_sha256": {
+        "index.html": "3d5b245793266a9171922a6051abec61d091257d21d21aa394930f5d7a307310",
+        "assets/mode.5e2c2584b0.js": "5e2c2584b0eccb6b7631ffa0f0e110e7316d5f60d532a806bef18f1e017c57cf",
+        "assets/site.2529a0d647.js": "2529a0d647cd2b645277e1dc98c9396c87421748f2bc42488d3031c6db6e203a",
+        "assets/site.a412d899bf.css": "a412d899bfdad26361db1b05e1e8effb1bb219c81fa18bd5c67cb0e2f9335e56"
+      }
+    },
+    {
+      "page": "navigation/index.html",
+      "route": "/rustify-ui/navigation/",
+      "all_declared_first_load_files_identical": true,
+      "files_sha256": {
+        "navigation/index.html": "b2e420583b994f15cd5d2d0a40b1b41f718165023df4ec264569d2061d8306fd",
+        "assets/mode.5e2c2584b0.js": "5e2c2584b0eccb6b7631ffa0f0e110e7316d5f60d532a806bef18f1e017c57cf",
+        "assets/site.2529a0d647.js": "2529a0d647cd2b645277e1dc98c9396c87421748f2bc42488d3031c6db6e203a",
+        "assets/site.a412d899bf.css": "a412d899bfdad26361db1b05e1e8effb1bb219c81fa18bd5c67cb0e2f9335e56"
+      }
+    },
+    {
+      "page": "quickstart/index.html",
+      "route": "/rustify-ui/quickstart/",
+      "all_declared_first_load_files_identical": true,
+      "files_sha256": {
+        "quickstart/index.html": "a2dda0b284fa5bc2281e81b730e1038e857e9ee4102b7ca00aa85e06bb63a174",
+        "assets/mode.5e2c2584b0.js": "5e2c2584b0eccb6b7631ffa0f0e110e7316d5f60d532a806bef18f1e017c57cf",
+        "assets/site.2529a0d647.js": "2529a0d647cd2b645277e1dc98c9396c87421748f2bc42488d3031c6db6e203a",
+        "assets/site.a412d899bf.css": "a412d899bfdad26361db1b05e1e8effb1bb219c81fa18bd5c67cb0e2f9335e56"
+      }
+    },
+    {
+      "page": "themes/index.html",
+      "route": "/rustify-ui/themes/",
+      "all_declared_first_load_files_identical": true,
+      "files_sha256": {
+        "themes/index.html": "153a65e5b0fe94a9d4050050e3c4033b9efc35bf9fbf978aa7052ae8840c3a80",
+        "assets/mode.5e2c2584b0.js": "5e2c2584b0eccb6b7631ffa0f0e110e7316d5f60d532a806bef18f1e017c57cf",
+        "assets/site.2529a0d647.js": "2529a0d647cd2b645277e1dc98c9396c87421748f2bc42488d3031c6db6e203a",
+        "assets/site.a412d899bf.css": "a412d899bfdad26361db1b05e1e8effb1bb219c81fa18bd5c67cb0e2f9335e56"
+      }
+    },
+    {
+      "page": "utility/index.html",
+      "route": "/rustify-ui/utility/",
+      "all_declared_first_load_files_identical": true,
+      "files_sha256": {
+        "utility/index.html": "732092901ebe58f2b8df8bebaf6e8f7409f6d4a09d45bf9a6caec686a22b76e5",
+        "assets/mode.5e2c2584b0.js": "5e2c2584b0eccb6b7631ffa0f0e110e7316d5f60d532a806bef18f1e017c57cf",
+        "assets/site.2529a0d647.js": "2529a0d647cd2b645277e1dc98c9396c87421748f2bc42488d3031c6db6e203a",
+        "assets/site.a412d899bf.css": "a412d899bfdad26361db1b05e1e8effb1bb219c81fa18bd5c67cb0e2f9335e56"
+      }
+    },
+    {
+      "page": "vellum/index.html",
+      "route": "/rustify-ui/vellum/",
+      "all_declared_first_load_files_identical": true,
+      "files_sha256": {
+        "vellum/index.html": "bb59c77abd855b633bf9ae7249fdb1a5a6dddd6b337f797b6f551e483049059e",
+        "assets/mode.5e2c2584b0.js": "5e2c2584b0eccb6b7631ffa0f0e110e7316d5f60d532a806bef18f1e017c57cf",
+        "assets/site.2529a0d647.js": "2529a0d647cd2b645277e1dc98c9396c87421748f2bc42488d3031c6db6e203a",
+        "assets/site.a412d899bf.css": "a412d899bfdad26361db1b05e1e8effb1bb219c81fa18bd5c67cb0e2f9335e56"
+      }
+    },
+    {
+      "page": "workspace/index.html",
+      "route": "/rustify-ui/workspace/",
+      "all_declared_first_load_files_identical": true,
+      "files_sha256": {
+        "workspace/index.html": "a933288d5a9ac9773eef0316c0377ab4bca6d8270d601b3a734c4acddab50171",
+        "assets/mode.5e2c2584b0.js": "5e2c2584b0eccb6b7631ffa0f0e110e7316d5f60d532a806bef18f1e017c57cf",
+        "assets/site.2529a0d647.js": "2529a0d647cd2b645277e1dc98c9396c87421748f2bc42488d3031c6db6e203a",
+        "assets/site.a412d899bf.css": "a412d899bfdad26361db1b05e1e8effb1bb219c81fa18bd5c67cb0e2f9335e56"
+      }
+    }
+  ],
+  "unchanged_source_inputs": [
+    {
+      "path": "crates/rustify-docs-cli/src/preview.rs",
+      "unchanged_sha256": "97ceb2ae6841af209ed9c61ae3679ff89e47b76fac8cd06527a94cf70fcc26f4"
+    },
+    {
+      "path": "crates/rustify-docs-cli/src/main.rs",
+      "unchanged_sha256": "bcbaefd0086c39042c11c070cf3eed71056a6816ff191cfda617ebfa817567b1"
+    },
+    {
+      "path": "crates/rustify-docs/src/shell.rs",
+      "unchanged_sha256": "328a5195402bdb3b992399cad2a97c3239b32b8235169fa27c61eaa9c17a971a"
+    },
+    {
+      "path": "tests/docs-ssg/harness/measure-load.mjs",
+      "unchanged_sha256": "a411faaff9ad3840927a4365968fc56607e07896205ac1f2b66d2e79b10fdca8"
+    },
+    {
+      "path": "tests/docs-ssg/harness/perf-observer.js",
+      "unchanged_sha256": "e22e870a7940d6637f199a40939fd99295a4c7d6ccf9bfe1fc563515fab6d44e"
+    }
+  ],
+  "formal_island_results_require_C4_rerun": true
+}

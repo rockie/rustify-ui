@@ -1,0 +1,114 @@
+[
+  {
+    "mode": "ssr",
+    "command": [
+      "cargo",
+      "metadata",
+      "--locked",
+      "--offline",
+      "--format-version",
+      "1",
+      "--no-default-features",
+      "--features",
+      "ssr",
+      "--manifest-path",
+      "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair-preparation-q08yp2lv/docs-site/Cargo.toml"
+    ],
+    "exit_code": 0,
+    "milliseconds": 171.005859375,
+    "framework_packages": [
+      {
+        "name": "rustify-components",
+        "source": "git+https://github.com/rockie/rustify-ui?rev=676a55771ab77faf8c476a836025d62905a2d3e2#676a55771ab77faf8c476a836025d62905a2d3e2",
+        "manifest_path": "/Users/rockie/.cargo/git/checkouts/rustify-ui-8cabc2f0e62e69f4/676a557/crates/rustify-components/Cargo.toml"
+      },
+      {
+        "name": "rustify-docs",
+        "source": "git+https://github.com/rockie/rustify-ui?rev=676a55771ab77faf8c476a836025d62905a2d3e2#676a55771ab77faf8c476a836025d62905a2d3e2",
+        "manifest_path": "/Users/rockie/.cargo/git/checkouts/rustify-ui-8cabc2f0e62e69f4/676a557/crates/rustify-docs/Cargo.toml"
+      },
+      {
+        "name": "rustify-docs-macros",
+        "source": "git+https://github.com/rockie/rustify-ui?rev=676a55771ab77faf8c476a836025d62905a2d3e2#676a55771ab77faf8c476a836025d62905a2d3e2",
+        "manifest_path": "/Users/rockie/.cargo/git/checkouts/rustify-ui-8cabc2f0e62e69f4/676a557/crates/rustify-docs-macros/Cargo.toml"
+      },
+      {
+        "name": "rustify-docs-syntax",
+        "source": "git+https://github.com/rockie/rustify-ui?rev=676a55771ab77faf8c476a836025d62905a2d3e2#676a55771ab77faf8c476a836025d62905a2d3e2",
+        "manifest_path": "/Users/rockie/.cargo/git/checkouts/rustify-ui-8cabc2f0e62e69f4/676a557/crates/rustify-docs-syntax/Cargo.toml"
+      },
+      {
+        "name": "rustify-style",
+        "source": "git+https://github.com/rockie/rustify-ui?rev=676a55771ab77faf8c476a836025d62905a2d3e2#676a55771ab77faf8c476a836025d62905a2d3e2",
+        "manifest_path": "/Users/rockie/.cargo/git/checkouts/rustify-ui-8cabc2f0e62e69f4/676a557/crates/rustify-style/Cargo.toml"
+      },
+      {
+        "name": "rustify-ui",
+        "source": "git+https://github.com/rockie/rustify-ui?rev=676a55771ab77faf8c476a836025d62905a2d3e2#676a55771ab77faf8c476a836025d62905a2d3e2",
+        "manifest_path": "/Users/rockie/.cargo/git/checkouts/rustify-ui-8cabc2f0e62e69f4/676a557/crates/rustify-ui/Cargo.toml"
+      }
+    ],
+    "root": {
+      "name": "docs-site",
+      "source": null
+    },
+    "lock_sha256": "0dd43b63c0b2ed89d0dffbd732ee57e46caeb2669c1549f214c7a33bc8dde24a",
+    "no_makepad": true
+  },
+  {
+    "mode": "hydrate",
+    "command": [
+      "cargo",
+      "metadata",
+      "--locked",
+      "--offline",
+      "--format-version",
+      "1",
+      "--no-default-features",
+      "--features",
+      "hydrate",
+      "--manifest-path",
+      "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair-preparation-q08yp2lv/docs-site/Cargo.toml"
+    ],
+    "exit_code": 0,
+    "milliseconds": 162.4140625,
+    "framework_packages": [
+      {
+        "name": "rustify-components",
+        "source": "git+https://github.com/rockie/rustify-ui?rev=676a55771ab77faf8c476a836025d62905a2d3e2#676a55771ab77faf8c476a836025d62905a2d3e2",
+        "manifest_path": "/Users/rockie/.cargo/git/checkouts/rustify-ui-8cabc2f0e62e69f4/676a557/crates/rustify-components/Cargo.toml"
+      },
+      {
+        "name": "rustify-docs",
+        "source": "git+https://github.com/rockie/rustify-ui?rev=676a55771ab77faf8c476a836025d62905a2d3e2#676a55771ab77faf8c476a836025d62905a2d3e2",
+        "manifest_path": "/Users/rockie/.cargo/git/checkouts/rustify-ui-8cabc2f0e62e69f4/676a557/crates/rustify-docs/Cargo.toml"
+      },
+      {
+        "name": "rustify-docs-macros",
+        "source": "git+https://github.com/rockie/rustify-ui?rev=676a55771ab77faf8c476a836025d62905a2d3e2#676a55771ab77faf8c476a836025d62905a2d3e2",
+        "manifest_path": "/Users/rockie/.cargo/git/checkouts/rustify-ui-8cabc2f0e62e69f4/676a557/crates/rustify-docs-macros/Cargo.toml"
+      },
+      {
+        "name": "rustify-docs-syntax",
+        "source": "git+https://github.com/rockie/rustify-ui?rev=676a55771ab77faf8c476a836025d62905a2d3e2#676a55771ab77faf8c476a836025d62905a2d3e2",
+        "manifest_path": "/Users/rockie/.cargo/git/checkouts/rustify-ui-8cabc2f0e62e69f4/676a557/crates/rustify-docs-syntax/Cargo.toml"
+      },
+      {
+        "name": "rustify-style",
+        "source": "git+https://github.com/rockie/rustify-ui?rev=676a55771ab77faf8c476a836025d62905a2d3e2#676a55771ab77faf8c476a836025d62905a2d3e2",
+        "manifest_path": "/Users/rockie/.cargo/git/checkouts/rustify-ui-8cabc2f0e62e69f4/676a557/crates/rustify-style/Cargo.toml"
+      },
+      {
+        "name": "rustify-ui",
+        "source": "git+https://github.com/rockie/rustify-ui?rev=676a55771ab77faf8c476a836025d62905a2d3e2#676a55771ab77faf8c476a836025d62905a2d3e2",
+        "manifest_path": "/Users/rockie/.cargo/git/checkouts/rustify-ui-8cabc2f0e62e69f4/676a557/crates/rustify-ui/Cargo.toml"
+      }
+    ],
+    "root": {
+      "name": "docs-site",
+      "source": null
+    },
+    "lock_sha256": "0dd43b63c0b2ed89d0dffbd732ee57e46caeb2669c1549f214c7a33bc8dde24a",
+    "no_makepad": true
+  }
+]

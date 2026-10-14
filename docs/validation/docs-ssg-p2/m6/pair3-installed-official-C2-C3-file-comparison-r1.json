@@ -1,0 +1,452 @@
+{
+  "scope": "offline complete-file SHA comparison only; not a C3 Chrome revalidation claim",
+  "C2_dist": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair2-installed-8j63t8o1/official-c2/site/dist",
+  "C3_dist": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair3-installed-uvgj6yil/official-c3/site/dist",
+  "all_C2_file_sha256": {
+    "index.html": "3d5b245793266a9171922a6051abec61d091257d21d21aa394930f5d7a307310",
+    "404.html": "a3b7658b225e2550c42e6734e754c9fd5e42e7355f3ab5c4569e47bd4a8b1847",
+    ".nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sitemap.xml": "aa88e063ddd2f69362475901dfe50cfa4d99911f93725ebaa50027ca608c9fa0",
+    "robots.txt": "7d180e0cdfc5af37d4faa5068de03ec8f95288ad45018f031b6754f8d9c934c8",
+    "rustify-docs-manifest.json": "b869199768d722bfaa9d210553b9d6e9e66efa83ae57aeee099e84a784537954",
+    "compatibility/index.html": "5c1845b79f95cd50af91affae3146b94790e18de187fa895bbafd2fac767cecd",
+    "forms/index.html": "137c268c12c792f18be3696d628bf25d6f557f50c74824afcf7058762c461214",
+    "workspace/index.html": "a933288d5a9ac9773eef0316c0377ab4bca6d8270d601b3a734c4acddab50171",
+    "navigation/index.html": "b2e420583b994f15cd5d2d0a40b1b41f718165023df4ec264569d2061d8306fd",
+    "quickstart/index.html": "a2dda0b284fa5bc2281e81b730e1038e857e9ee4102b7ca00aa85e06bb63a174",
+    "components/index.html": "48f0f00e9cbd3a4ba97dd291c5b7676b46a95990b0b0f7245f4ffbcdda029488",
+    "architecture/index.html": "582b25a42aba5710b86ce412d617706e9a5e8a6bd4013d1f3a76587e1e140a42",
+    "i18n/index.html": "d9b79e6e3ce9f7e797a2ddfc75b20a2bb4055cb01f37f6a3cf8d57855c09f13d",
+    "data/index.html": "a14ffe90dfedde3f7ecb81ac34028b04e3f5fd70aa6f78464ffa0b9aab863a1f",
+    "assets/site.2529a0d647.js": "2529a0d647cd2b645277e1dc98c9396c87421748f2bc42488d3031c6db6e203a",
+    "assets/site.a412d899bf.css": "a412d899bfdad26361db1b05e1e8effb1bb219c81fa18bd5c67cb0e2f9335e56",
+    "assets/share.9f8be38eaf.png": "9f8be38eafa7450a22835777de9ff300878deff236dd54fa9a91e00e206be673",
+    "assets/mode.5e2c2584b0.js": "5e2c2584b0eccb6b7631ffa0f0e110e7316d5f60d532a806bef18f1e017c57cf",
+    "themes/index.html": "153a65e5b0fe94a9d4050050e3c4033b9efc35bf9fbf978aa7052ae8840c3a80",
+    "vellum/index.html": "bb59c77abd855b633bf9ae7249fdb1a5a6dddd6b337f797b6f551e483049059e",
+    "utility/index.html": "732092901ebe58f2b8df8bebaf6e8f7409f6d4a09d45bf9a6caec686a22b76e5",
+    "components/tabs/index.html": "7bc4fa6014ac7887da33a1f1bcf2d9778b340f2a9b2551f8946fb61d7ff4d87e",
+    "components/tree/index.html": "d92ece2880257260950e4515749f34262e3d88bcf1f4bfe4923dbd434f643754",
+    "components/tooltip/index.html": "a281abff938175083043dfcc639d034ff600a980161161fed982780de619a059",
+    "components/radio/index.html": "d8b52ca0361a23daec93a2d9283513345cae0717d48d680e1d743699845a1476",
+    "components/loading/index.html": "61077912529291441ef66c6b758e6bde7f4565904b95a37be9e6ed42e650c0b6",
+    "components/progress/index.html": "22d6cf04ff01bf38501998a0d2fdaf9446e37f574ae8d62532097b002b090867",
+    "components/toast/index.html": "88acbb1ec110b331269b345eccf8449b0e2b269e10b490f58dcda8e819ff82d2",
+    "components/number-field/index.html": "4b9db6c2dc66f872a05cb736a406d27e30e75512143464d536318a5e794fb221",
+    "components/text-area/index.html": "0de26d2ed3fd105bf4c8b8ddc288a8f61140de11b64bf90f3f9c3953ccca2602",
+    "components/checkbox/index.html": "bd584b4cc788624c9e560d082d9b6638bc2b2081677c535817d65d87a3da9d18",
+    "components/label/index.html": "ad4ccb388c503701000eeeeefb17da106f61d65deb13160892b2f8577d120616",
+    "components/slider/index.html": "4bea8e6b2458416a8f4f8b8b83e9aa0ea356a402c5145b4c4057d918743a8b72",
+    "components/toggle-group/index.html": "3e989d0d54928fd798edf2eeb1ae48337511b81b30b8bafb4bc2ec54e0ee8985",
+    "components/dialog/index.html": "8ed5465cf5e8771e1957b8e350a25b73bf77d22a832135fa2d381a8e67f7eafa",
+    "components/button/index.html": "6a94238c3973e16aea3676cab6a5762ba615598fcd1db56f5ba0ca0fe2c01a02",
+    "components/link/index.html": "5956b52eacb521121e6910a5193184f6f2fae5ad7309b32c01ef42506a756543",
+    "components/scroll-area/index.html": "6c977d07c772ba3969e14f21a81b8e66ac933573fba1d0ecbf59c9154cceaa9d",
+    "components/menu/index.html": "394af859180b45a50ff0c53f9842e4ce532d9318e8edd51a16bd39819e30672d",
+    "components/switch/index.html": "6f013fdaa47fe4b44d37654875137c57b88af2bae5e83a4a73ea99d3a6d5f8a6",
+    "components/color-field/index.html": "97ce30542ef9360e2b83172001d95ab95626b0f9450360ae93e0beead8cf9f5e",
+    "components/text-field/index.html": "950aa5e81d580db8f384087181bf2f312744eac783ececbeb8fc05dfa2631cb8",
+    "components/select/index.html": "998381f8b830a910c0652d3aa16bcd2fbaf4f329decd666e1c8a861068fb2d24",
+    "components/icon/index.html": "372ab26c829aa81155ad1e412b91aa59ae27584e033322850d5474aa474ca4d3",
+    "components/data-table/index.html": "f101b0e7a700984daee38587add1b3565440696ad42f8ba422de0d329d2e52ee",
+    "assets/files/theme-document.schema.d97f50ae4a.json": "d97f50ae4a55502a3d2c1f8fa11999c469c84b7f138152f20868106ca22207ac",
+    "assets/islands/16238bfff7f917931cdd2e95d33b9cb6a917e5cd41dfb869aed897e4cd07bccb/app_bg.wasm": "7d730d20a2d187b6a1265c589d9ff4c8f738b413a49a3b4a3ed7c81288b8345e",
+    "assets/islands/16238bfff7f917931cdd2e95d33b9cb6a917e5cd41dfb869aed897e4cd07bccb/dom-runtime.css": "7597abd6960f0ed1ce5b365356e5b2c422bf79117a39e0a8575aa447cd350f41",
+    "assets/islands/16238bfff7f917931cdd2e95d33b9cb6a917e5cd41dfb869aed897e4cd07bccb/islands.js": "ecc0183124465813a93fae273b21263b166b75814d4334c388f1b6f1e0cb9801",
+    "assets/islands/16238bfff7f917931cdd2e95d33b9cb6a917e5cd41dfb869aed897e4cd07bccb/dom-loader.js": "72c911771f7102b184c18b3f311186c94496a4efd47b9d25e46284d8ad2f5dd1",
+    "assets/islands/16238bfff7f917931cdd2e95d33b9cb6a917e5cd41dfb869aed897e4cd07bccb/app.js": "3c9a35642f65ab615a26860f6d121ebf6eb79a739cf1af0829373fd468cfb15a",
+    "assets/islands/16238bfff7f917931cdd2e95d33b9cb6a917e5cd41dfb869aed897e4cd07bccb/snippets/rustify-ui-4db2f10f10788f4c/web/dom-runtime.js": "d3f6018d391b65cfaf609fe1a17d9e47e221c51087a956b9fcd0bc6d11076343"
+  },
+  "all_C3_file_sha256": {
+    "index.html": "3d5b245793266a9171922a6051abec61d091257d21d21aa394930f5d7a307310",
+    "404.html": "a3b7658b225e2550c42e6734e754c9fd5e42e7355f3ab5c4569e47bd4a8b1847",
+    ".nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sitemap.xml": "aa88e063ddd2f69362475901dfe50cfa4d99911f93725ebaa50027ca608c9fa0",
+    "robots.txt": "7d180e0cdfc5af37d4faa5068de03ec8f95288ad45018f031b6754f8d9c934c8",
+    "rustify-docs-manifest.json": "944013f2a7f3864e7c5a55007b1c95c170dbb94ff89b72567642426400698781",
+    "compatibility/index.html": "5c1845b79f95cd50af91affae3146b94790e18de187fa895bbafd2fac767cecd",
+    "forms/index.html": "137c268c12c792f18be3696d628bf25d6f557f50c74824afcf7058762c461214",
+    "workspace/index.html": "a933288d5a9ac9773eef0316c0377ab4bca6d8270d601b3a734c4acddab50171",
+    "navigation/index.html": "b2e420583b994f15cd5d2d0a40b1b41f718165023df4ec264569d2061d8306fd",
+    "quickstart/index.html": "a2dda0b284fa5bc2281e81b730e1038e857e9ee4102b7ca00aa85e06bb63a174",
+    "components/index.html": "48f0f00e9cbd3a4ba97dd291c5b7676b46a95990b0b0f7245f4ffbcdda029488",
+    "architecture/index.html": "582b25a42aba5710b86ce412d617706e9a5e8a6bd4013d1f3a76587e1e140a42",
+    "i18n/index.html": "d9b79e6e3ce9f7e797a2ddfc75b20a2bb4055cb01f37f6a3cf8d57855c09f13d",
+    "data/index.html": "a14ffe90dfedde3f7ecb81ac34028b04e3f5fd70aa6f78464ffa0b9aab863a1f",
+    "assets/site.2529a0d647.js": "2529a0d647cd2b645277e1dc98c9396c87421748f2bc42488d3031c6db6e203a",
+    "assets/site.a412d899bf.css": "a412d899bfdad26361db1b05e1e8effb1bb219c81fa18bd5c67cb0e2f9335e56",
+    "assets/share.9f8be38eaf.png": "9f8be38eafa7450a22835777de9ff300878deff236dd54fa9a91e00e206be673",
+    "assets/mode.5e2c2584b0.js": "5e2c2584b0eccb6b7631ffa0f0e110e7316d5f60d532a806bef18f1e017c57cf",
+    "themes/index.html": "153a65e5b0fe94a9d4050050e3c4033b9efc35bf9fbf978aa7052ae8840c3a80",
+    "vellum/index.html": "bb59c77abd855b633bf9ae7249fdb1a5a6dddd6b337f797b6f551e483049059e",
+    "utility/index.html": "732092901ebe58f2b8df8bebaf6e8f7409f6d4a09d45bf9a6caec686a22b76e5",
+    "components/tabs/index.html": "c0efbc832c7d2b60fb9c772359141d6804c81f61ee5e423126ce142178782700",
+    "components/tree/index.html": "7ca641f26f13af8b192c35be7ec943f728fa3790c32aa296cf70363fed7e1ff7",
+    "components/tooltip/index.html": "cd3196a9ad0d14e59e27c2cbd934fd81c1567411abcb954bd2f63db732d8cfdd",
+    "components/radio/index.html": "200c31aa229fef7f3f9cfb314bc01bca54716440ee6461dea59205602e373e23",
+    "components/loading/index.html": "5e9bdb5e24fc7bd00a51c7277d687c49d75b453b58ef46749c2911120581a916",
+    "components/progress/index.html": "97e40dacecd0a3cca373fb68b99e1344c7b9c8bc33a7949c727b458c3777a433",
+    "components/toast/index.html": "7c29baf4f6481ccaf3c6dcfe6f5dac002382fab4f148043289e906c0210affd0",
+    "components/number-field/index.html": "7f5efb33c1d479f30f7d0b4733ef004c98bc4e236ab9f70fa2747fa9e22caccf",
+    "components/text-area/index.html": "ce996acf54316a8e51fa011c1518902b548568dc68b97d359c674f52c319563a",
+    "components/checkbox/index.html": "59f89f9beec667d6f59ae785feaad523770e92c6ca7dde454640e9e0fe6e7dbf",
+    "components/label/index.html": "76c268d10ea39a521c07e70e7e75ed741f891fe2d661ca182773ba2073f50fa8",
+    "components/slider/index.html": "9b6fbc740ac3201248622f004df75729e2019c1a587f2a20b2ffeac4f8199bd5",
+    "components/toggle-group/index.html": "2734d76ed181bc5a576e74ad997067a2012f009c73a9218a7209569d36dd4952",
+    "components/dialog/index.html": "d519489b98b637b545fb4a83b1e99a5ea699d3b003da936e1ce78ae8dbe81289",
+    "components/button/index.html": "74530264318902c6247095a9b9d5f6e02a2131e23d588d89c933d03e215b2b79",
+    "components/link/index.html": "71994effe42b47905f5a0aac1fbd72b4a7be1716cc279e88a1d9cd0dd7b2b5e9",
+    "components/scroll-area/index.html": "e5e25c29143a397c260bca5c1aa36ec528cccac64b58d54ab1b13186993513f3",
+    "components/menu/index.html": "9de64f0c61665673be4a907fa5a6ae7dc3f3c07803381ca7bad69c306e70073b",
+    "components/switch/index.html": "f2a0b0d47c850f8ec3bb30d25ce263fc7f2fb4582b7f696342d72317f75db167",
+    "components/color-field/index.html": "6e9e4c3f0b4bbb788ecbf09ceb582155da0ec8be3f37ff1f565f2fc08926756c",
+    "components/text-field/index.html": "03127949d0d938cc29a2c8f19a7fe9725576aa0481b77fb9059d6e4a19eb7907",
+    "components/select/index.html": "c48cb2aa3c37b10bb5a32a2971c0407f82bbdb8d83322cbd6405a8a5469709ce",
+    "components/icon/index.html": "4a44040274102842e3ecf85e5afb5b855f0ae4d8ff970071d7074fe46fb7758f",
+    "components/data-table/index.html": "30472e9893857102dd8adae41a9f46a5ea0cdc2a81551ec79a53f737c1ce9f34",
+    "assets/files/theme-document.schema.d97f50ae4a.json": "d97f50ae4a55502a3d2c1f8fa11999c469c84b7f138152f20868106ca22207ac",
+    "assets/islands/9f60228d4ae0af572e5e3fea98cc762578bf13da8367755345be5f997f6ea780/app_bg.wasm": "a5ad3c5ff142a8068dbe01c752b37ffe27766804a725f893ef5bb2373d8f5e4d",
+    "assets/islands/9f60228d4ae0af572e5e3fea98cc762578bf13da8367755345be5f997f6ea780/dom-runtime.css": "7597abd6960f0ed1ce5b365356e5b2c422bf79117a39e0a8575aa447cd350f41",
+    "assets/islands/9f60228d4ae0af572e5e3fea98cc762578bf13da8367755345be5f997f6ea780/islands.js": "ecc0183124465813a93fae273b21263b166b75814d4334c388f1b6f1e0cb9801",
+    "assets/islands/9f60228d4ae0af572e5e3fea98cc762578bf13da8367755345be5f997f6ea780/dom-loader.js": "72c911771f7102b184c18b3f311186c94496a4efd47b9d25e46284d8ad2f5dd1",
+    "assets/islands/9f60228d4ae0af572e5e3fea98cc762578bf13da8367755345be5f997f6ea780/app.js": "3c9a35642f65ab615a26860f6d121ebf6eb79a739cf1af0829373fd468cfb15a",
+    "assets/islands/9f60228d4ae0af572e5e3fea98cc762578bf13da8367755345be5f997f6ea780/snippets/rustify-ui-4db2f10f10788f4c/web/dom-runtime.js": "d3f6018d391b65cfaf609fe1a17d9e47e221c51087a956b9fcd0bc6d11076343"
+  },
+  "unchanged": [
+    ".nojekyll",
+    "404.html",
+    "architecture/index.html",
+    "assets/files/theme-document.schema.d97f50ae4a.json",
+    "assets/mode.5e2c2584b0.js",
+    "assets/share.9f8be38eaf.png",
+    "assets/site.2529a0d647.js",
+    "assets/site.a412d899bf.css",
+    "compatibility/index.html",
+    "components/index.html",
+    "data/index.html",
+    "forms/index.html",
+    "i18n/index.html",
+    "index.html",
+    "navigation/index.html",
+    "quickstart/index.html",
+    "robots.txt",
+    "sitemap.xml",
+    "themes/index.html",
+    "utility/index.html",
+    "vellum/index.html",
+    "workspace/index.html"
+  ],
+  "changed_same_paths": [
+    "components/button/index.html",
+    "components/checkbox/index.html",
+    "components/color-field/index.html",
+    "components/data-table/index.html",
+    "components/dialog/index.html",
+    "components/icon/index.html",
+    "components/label/index.html",
+    "components/link/index.html",
+    "components/loading/index.html",
+    "components/menu/index.html",
+    "components/number-field/index.html",
+    "components/progress/index.html",
+    "components/radio/index.html",
+    "components/scroll-area/index.html",
+    "components/select/index.html",
+    "components/slider/index.html",
+    "components/switch/index.html",
+    "components/tabs/index.html",
+    "components/text-area/index.html",
+    "components/text-field/index.html",
+    "components/toast/index.html",
+    "components/toggle-group/index.html",
+    "components/tooltip/index.html",
+    "components/tree/index.html",
+    "rustify-docs-manifest.json"
+  ],
+  "added": [
+    "assets/islands/9f60228d4ae0af572e5e3fea98cc762578bf13da8367755345be5f997f6ea780/app.js",
+    "assets/islands/9f60228d4ae0af572e5e3fea98cc762578bf13da8367755345be5f997f6ea780/app_bg.wasm",
+    "assets/islands/9f60228d4ae0af572e5e3fea98cc762578bf13da8367755345be5f997f6ea780/dom-loader.js",
+    "assets/islands/9f60228d4ae0af572e5e3fea98cc762578bf13da8367755345be5f997f6ea780/dom-runtime.css",
+    "assets/islands/9f60228d4ae0af572e5e3fea98cc762578bf13da8367755345be5f997f6ea780/islands.js",
+    "assets/islands/9f60228d4ae0af572e5e3fea98cc762578bf13da8367755345be5f997f6ea780/snippets/rustify-ui-4db2f10f10788f4c/web/dom-runtime.js"
+  ],
+  "removed": [
+    "assets/islands/16238bfff7f917931cdd2e95d33b9cb6a917e5cd41dfb869aed897e4cd07bccb/app.js",
+    "assets/islands/16238bfff7f917931cdd2e95d33b9cb6a917e5cd41dfb869aed897e4cd07bccb/app_bg.wasm",
+    "assets/islands/16238bfff7f917931cdd2e95d33b9cb6a917e5cd41dfb869aed897e4cd07bccb/dom-loader.js",
+    "assets/islands/16238bfff7f917931cdd2e95d33b9cb6a917e5cd41dfb869aed897e4cd07bccb/dom-runtime.css",
+    "assets/islands/16238bfff7f917931cdd2e95d33b9cb6a917e5cd41dfb869aed897e4cd07bccb/islands.js",
+    "assets/islands/16238bfff7f917931cdd2e95d33b9cb6a917e5cd41dfb869aed897e4cd07bccb/snippets/rustify-ui-4db2f10f10788f4c/web/dom-runtime.js"
+  ],
+  "manifest_identity_changes": {
+    "cli_version": {
+      "C2": "0.1.12",
+      "C3": "0.1.13"
+    },
+    "build_id": {
+      "C2": "565696bee832f630",
+      "C3": "7694589058b7cbf0"
+    }
+  },
+  "HTML_changes": [
+    {
+      "path": "components/button/index.html",
+      "C2_sha256": "6a94238c3973e16aea3676cab6a5762ba615598fcd1db56f5ba0ca0fe2c01a02",
+      "C3_sha256": "74530264318902c6247095a9b9d5f6e02a2131e23d588d89c933d03e215b2b79",
+      "C2_contains_CLI_0_1_12": false,
+      "C3_contains_CLI_0_1_13": false,
+      "C2_contains_R2": false,
+      "C3_contains_R3": false
+    },
+    {
+      "path": "components/checkbox/index.html",
+      "C2_sha256": "bd584b4cc788624c9e560d082d9b6638bc2b2081677c535817d65d87a3da9d18",
+      "C3_sha256": "59f89f9beec667d6f59ae785feaad523770e92c6ca7dde454640e9e0fe6e7dbf",
+      "C2_contains_CLI_0_1_12": false,
+      "C3_contains_CLI_0_1_13": false,
+      "C2_contains_R2": false,
+      "C3_contains_R3": false
+    },
+    {
+      "path": "components/color-field/index.html",
+      "C2_sha256": "97ce30542ef9360e2b83172001d95ab95626b0f9450360ae93e0beead8cf9f5e",
+      "C3_sha256": "6e9e4c3f0b4bbb788ecbf09ceb582155da0ec8be3f37ff1f565f2fc08926756c",
+      "C2_contains_CLI_0_1_12": false,
+      "C3_contains_CLI_0_1_13": false,
+      "C2_contains_R2": false,
+      "C3_contains_R3": false
+    },
+    {
+      "path": "components/data-table/index.html",
+      "C2_sha256": "f101b0e7a700984daee38587add1b3565440696ad42f8ba422de0d329d2e52ee",
+      "C3_sha256": "30472e9893857102dd8adae41a9f46a5ea0cdc2a81551ec79a53f737c1ce9f34",
+      "C2_contains_CLI_0_1_12": false,
+      "C3_contains_CLI_0_1_13": false,
+      "C2_contains_R2": false,
+      "C3_contains_R3": false
+    },
+    {
+      "path": "components/dialog/index.html",
+      "C2_sha256": "8ed5465cf5e8771e1957b8e350a25b73bf77d22a832135fa2d381a8e67f7eafa",
+      "C3_sha256": "d519489b98b637b545fb4a83b1e99a5ea699d3b003da936e1ce78ae8dbe81289",
+      "C2_contains_CLI_0_1_12": false,
+      "C3_contains_CLI_0_1_13": false,
+      "C2_contains_R2": false,
+      "C3_contains_R3": false
+    },
+    {
+      "path": "components/icon/index.html",
+      "C2_sha256": "372ab26c829aa81155ad1e412b91aa59ae27584e033322850d5474aa474ca4d3",
+      "C3_sha256": "4a44040274102842e3ecf85e5afb5b855f0ae4d8ff970071d7074fe46fb7758f",
+      "C2_contains_CLI_0_1_12": false,
+      "C3_contains_CLI_0_1_13": false,
+      "C2_contains_R2": false,
+      "C3_contains_R3": false
+    },
+    {
+      "path": "components/label/index.html",
+      "C2_sha256": "ad4ccb388c503701000eeeeefb17da106f61d65deb13160892b2f8577d120616",
+      "C3_sha256": "76c268d10ea39a521c07e70e7e75ed741f891fe2d661ca182773ba2073f50fa8",
+      "C2_contains_CLI_0_1_12": false,
+      "C3_contains_CLI_0_1_13": false,
+      "C2_contains_R2": false,
+      "C3_contains_R3": false
+    },
+    {
+      "path": "components/link/index.html",
+      "C2_sha256": "5956b52eacb521121e6910a5193184f6f2fae5ad7309b32c01ef42506a756543",
+      "C3_sha256": "71994effe42b47905f5a0aac1fbd72b4a7be1716cc279e88a1d9cd0dd7b2b5e9",
+      "C2_contains_CLI_0_1_12": false,
+      "C3_contains_CLI_0_1_13": false,
+      "C2_contains_R2": false,
+      "C3_contains_R3": false
+    },
+    {
+      "path": "components/loading/index.html",
+      "C2_sha256": "61077912529291441ef66c6b758e6bde7f4565904b95a37be9e6ed42e650c0b6",
+      "C3_sha256": "5e9bdb5e24fc7bd00a51c7277d687c49d75b453b58ef46749c2911120581a916",
+      "C2_contains_CLI_0_1_12": false,
+      "C3_contains_CLI_0_1_13": false,
+      "C2_contains_R2": false,
+      "C3_contains_R3": false
+    },
+    {
+      "path": "components/menu/index.html",
+      "C2_sha256": "394af859180b45a50ff0c53f9842e4ce532d9318e8edd51a16bd39819e30672d",
+      "C3_sha256": "9de64f0c61665673be4a907fa5a6ae7dc3f3c07803381ca7bad69c306e70073b",
+      "C2_contains_CLI_0_1_12": false,
+      "C3_contains_CLI_0_1_13": false,
+      "C2_contains_R2": false,
+      "C3_contains_R3": false
+    },
+    {
+      "path": "components/number-field/index.html",
+      "C2_sha256": "4b9db6c2dc66f872a05cb736a406d27e30e75512143464d536318a5e794fb221",
+      "C3_sha256": "7f5efb33c1d479f30f7d0b4733ef004c98bc4e236ab9f70fa2747fa9e22caccf",
+      "C2_contains_CLI_0_1_12": false,
+      "C3_contains_CLI_0_1_13": false,
+      "C2_contains_R2": false,
+      "C3_contains_R3": false
+    },
+    {
+      "path": "components/progress/index.html",
+      "C2_sha256": "22d6cf04ff01bf38501998a0d2fdaf9446e37f574ae8d62532097b002b090867",
+      "C3_sha256": "97e40dacecd0a3cca373fb68b99e1344c7b9c8bc33a7949c727b458c3777a433",
+      "C2_contains_CLI_0_1_12": false,
+      "C3_contains_CLI_0_1_13": false,
+      "C2_contains_R2": false,
+      "C3_contains_R3": false
+    },
+    {
+      "path": "components/radio/index.html",
+      "C2_sha256": "d8b52ca0361a23daec93a2d9283513345cae0717d48d680e1d743699845a1476",
+      "C3_sha256": "200c31aa229fef7f3f9cfb314bc01bca54716440ee6461dea59205602e373e23",
+      "C2_contains_CLI_0_1_12": false,
+      "C3_contains_CLI_0_1_13": false,
+      "C2_contains_R2": false,
+      "C3_contains_R3": false
+    },
+    {
+      "path": "components/scroll-area/index.html",
+      "C2_sha256": "6c977d07c772ba3969e14f21a81b8e66ac933573fba1d0ecbf59c9154cceaa9d",
+      "C3_sha256": "e5e25c29143a397c260bca5c1aa36ec528cccac64b58d54ab1b13186993513f3",
+      "C2_contains_CLI_0_1_12": false,
+      "C3_contains_CLI_0_1_13": false,
+      "C2_contains_R2": false,
+      "C3_contains_R3": false
+    },
+    {
+      "path": "components/select/index.html",
+      "C2_sha256": "998381f8b830a910c0652d3aa16bcd2fbaf4f329decd666e1c8a861068fb2d24",
+      "C3_sha256": "c48cb2aa3c37b10bb5a32a2971c0407f82bbdb8d83322cbd6405a8a5469709ce",
+      "C2_contains_CLI_0_1_12": false,
+      "C3_contains_CLI_0_1_13": false,
+      "C2_contains_R2": false,
+      "C3_contains_R3": false
+    },
+    {
+      "path": "components/slider/index.html",
+      "C2_sha256": "4bea8e6b2458416a8f4f8b8b83e9aa0ea356a402c5145b4c4057d918743a8b72",
+      "C3_sha256": "9b6fbc740ac3201248622f004df75729e2019c1a587f2a20b2ffeac4f8199bd5",
+      "C2_contains_CLI_0_1_12": false,
+      "C3_contains_CLI_0_1_13": false,
+      "C2_contains_R2": false,
+      "C3_contains_R3": false
+    },
+    {
+      "path": "components/switch/index.html",
+      "C2_sha256": "6f013fdaa47fe4b44d37654875137c57b88af2bae5e83a4a73ea99d3a6d5f8a6",
+      "C3_sha256": "f2a0b0d47c850f8ec3bb30d25ce263fc7f2fb4582b7f696342d72317f75db167",
+      "C2_contains_CLI_0_1_12": false,
+      "C3_contains_CLI_0_1_13": false,
+      "C2_contains_R2": false,
+      "C3_contains_R3": false
+    },
+    {
+      "path": "components/tabs/index.html",
+      "C2_sha256": "7bc4fa6014ac7887da33a1f1bcf2d9778b340f2a9b2551f8946fb61d7ff4d87e",
+      "C3_sha256": "c0efbc832c7d2b60fb9c772359141d6804c81f61ee5e423126ce142178782700",
+      "C2_contains_CLI_0_1_12": false,
+      "C3_contains_CLI_0_1_13": false,
+      "C2_contains_R2": false,
+      "C3_contains_R3": false
+    },
+    {
+      "path": "components/text-area/index.html",
+      "C2_sha256": "0de26d2ed3fd105bf4c8b8ddc288a8f61140de11b64bf90f3f9c3953ccca2602",
+      "C3_sha256": "ce996acf54316a8e51fa011c1518902b548568dc68b97d359c674f52c319563a",
+      "C2_contains_CLI_0_1_12": false,
+      "C3_contains_CLI_0_1_13": false,
+      "C2_contains_R2": false,
+      "C3_contains_R3": false
+    },
+    {
+      "path": "components/text-field/index.html",
+      "C2_sha256": "950aa5e81d580db8f384087181bf2f312744eac783ececbeb8fc05dfa2631cb8",
+      "C3_sha256": "03127949d0d938cc29a2c8f19a7fe9725576aa0481b77fb9059d6e4a19eb7907",
+      "C2_contains_CLI_0_1_12": false,
+      "C3_contains_CLI_0_1_13": false,
+      "C2_contains_R2": false,
+      "C3_contains_R3": false
+    },
+    {
+      "path": "components/toast/index.html",
+      "C2_sha256": "88acbb1ec110b331269b345eccf8449b0e2b269e10b490f58dcda8e819ff82d2",
+      "C3_sha256": "7c29baf4f6481ccaf3c6dcfe6f5dac002382fab4f148043289e906c0210affd0",
+      "C2_contains_CLI_0_1_12": false,
+      "C3_contains_CLI_0_1_13": false,
+      "C2_contains_R2": false,
+      "C3_contains_R3": false
+    },
+    {
+      "path": "components/toggle-group/index.html",
+      "C2_sha256": "3e989d0d54928fd798edf2eeb1ae48337511b81b30b8bafb4bc2ec54e0ee8985",
+      "C3_sha256": "2734d76ed181bc5a576e74ad997067a2012f009c73a9218a7209569d36dd4952",
+      "C2_contains_CLI_0_1_12": false,
+      "C3_contains_CLI_0_1_13": false,
+      "C2_contains_R2": false,
+      "C3_contains_R3": false
+    },
+    {
+      "path": "components/tooltip/index.html",
+      "C2_sha256": "a281abff938175083043dfcc639d034ff600a980161161fed982780de619a059",
+      "C3_sha256": "cd3196a9ad0d14e59e27c2cbd934fd81c1567411abcb954bd2f63db732d8cfdd",
+      "C2_contains_CLI_0_1_12": false,
+      "C3_contains_CLI_0_1_13": false,
+      "C2_contains_R2": false,
+      "C3_contains_R3": false
+    },
+    {
+      "path": "components/tree/index.html",
+      "C2_sha256": "d92ece2880257260950e4515749f34262e3d88bcf1f4bfe4923dbd434f643754",
+      "C3_sha256": "7ca641f26f13af8b192c35be7ec943f728fa3790c32aa296cf70363fed7e1ff7",
+      "C2_contains_CLI_0_1_12": false,
+      "C3_contains_CLI_0_1_13": false,
+      "C2_contains_R2": false,
+      "C3_contains_R3": false
+    }
+  ],
+  "unchanged_asset_files": [
+    "assets/files/theme-document.schema.d97f50ae4a.json",
+    "assets/mode.5e2c2584b0.js",
+    "assets/share.9f8be38eaf.png",
+    "assets/site.2529a0d647.js",
+    "assets/site.a412d899bf.css"
+  ],
+  "changed_asset_files": [],
+  "added_asset_files": [
+    "assets/islands/9f60228d4ae0af572e5e3fea98cc762578bf13da8367755345be5f997f6ea780/app.js",
+    "assets/islands/9f60228d4ae0af572e5e3fea98cc762578bf13da8367755345be5f997f6ea780/app_bg.wasm",
+    "assets/islands/9f60228d4ae0af572e5e3fea98cc762578bf13da8367755345be5f997f6ea780/dom-loader.js",
+    "assets/islands/9f60228d4ae0af572e5e3fea98cc762578bf13da8367755345be5f997f6ea780/dom-runtime.css",
+    "assets/islands/9f60228d4ae0af572e5e3fea98cc762578bf13da8367755345be5f997f6ea780/islands.js",
+    "assets/islands/9f60228d4ae0af572e5e3fea98cc762578bf13da8367755345be5f997f6ea780/snippets/rustify-ui-4db2f10f10788f4c/web/dom-runtime.js"
+  ],
+  "removed_asset_files": [
+    "assets/islands/16238bfff7f917931cdd2e95d33b9cb6a917e5cd41dfb869aed897e4cd07bccb/app.js",
+    "assets/islands/16238bfff7f917931cdd2e95d33b9cb6a917e5cd41dfb869aed897e4cd07bccb/app_bg.wasm",
+    "assets/islands/16238bfff7f917931cdd2e95d33b9cb6a917e5cd41dfb869aed897e4cd07bccb/dom-loader.js",
+    "assets/islands/16238bfff7f917931cdd2e95d33b9cb6a917e5cd41dfb869aed897e4cd07bccb/dom-runtime.css",
+    "assets/islands/16238bfff7f917931cdd2e95d33b9cb6a917e5cd41dfb869aed897e4cd07bccb/islands.js",
+    "assets/islands/16238bfff7f917931cdd2e95d33b9cb6a917e5cd41dfb869aed897e4cd07bccb/snippets/rustify-ui-4db2f10f10788f4c/web/dom-runtime.js"
+  ],
+  "new_assets_content_matches_old": {
+    "assets/islands/9f60228d4ae0af572e5e3fea98cc762578bf13da8367755345be5f997f6ea780/app_bg.wasm": [],
+    "assets/islands/9f60228d4ae0af572e5e3fea98cc762578bf13da8367755345be5f997f6ea780/dom-runtime.css": [
+      "assets/islands/16238bfff7f917931cdd2e95d33b9cb6a917e5cd41dfb869aed897e4cd07bccb/dom-runtime.css"
+    ],
+    "assets/islands/9f60228d4ae0af572e5e3fea98cc762578bf13da8367755345be5f997f6ea780/islands.js": [
+      "assets/islands/16238bfff7f917931cdd2e95d33b9cb6a917e5cd41dfb869aed897e4cd07bccb/islands.js"
+    ],
+    "assets/islands/9f60228d4ae0af572e5e3fea98cc762578bf13da8367755345be5f997f6ea780/dom-loader.js": [
+      "assets/islands/16238bfff7f917931cdd2e95d33b9cb6a917e5cd41dfb869aed897e4cd07bccb/dom-loader.js"
+    ],
+    "assets/islands/9f60228d4ae0af572e5e3fea98cc762578bf13da8367755345be5f997f6ea780/app.js": [
+      "assets/islands/16238bfff7f917931cdd2e95d33b9cb6a917e5cd41dfb869aed897e4cd07bccb/app.js"
+    ],
+    "assets/islands/9f60228d4ae0af572e5e3fea98cc762578bf13da8367755345be5f997f6ea780/snippets/rustify-ui-4db2f10f10788f4c/web/dom-runtime.js": [
+      "assets/islands/16238bfff7f917931cdd2e95d33b9cb6a917e5cd41dfb869aed897e4cd07bccb/snippets/rustify-ui-4db2f10f10788f4c/web/dom-runtime.js"
+    ]
+  }
+}

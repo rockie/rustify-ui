@@ -1,0 +1,20 @@
+{
+  "scope": "R2 public source URL identity with process-local local read transport; CLI C2 still pending; retained all existing third-party lock records",
+  "repo": "/Users/rockie/Documents/gh-rockie/rustify-ui",
+  "library_revision": "0494f304f0f9f8b620affb7309df23db3cb2377c",
+  "work": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair2-preparation-czwynoju",
+  "site": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair2-preparation-czwynoju/docs-site",
+  "head_during_preparation": "0494f304f0f9f8b620affb7309df23db3cb2377c",
+  "allowed_before": {
+    "crates/rustify-docs-cli/Cargo.toml": "c6080719ebae8e8f8b694dba54def271a943f6c7d0efc81c82a425552cec7174",
+    "crates/rustify-docs-cli/assets/framework-revision.txt": "cf79d892ffdc39f7f9df58d7ba256a50a6b46e3a3507dd82e411e79d55722f99",
+    "crates/rustify-docs-cli/assets/components-Cargo.lock": "0dd43b63c0b2ed89d0dffbd732ee57e46caeb2669c1549f214c7a33bc8dde24a",
+    "Cargo.lock": "5a00e7f6e7304e0b01538e1533753bdc361a7d70518e2cdd31ec287b0304a970",
+    "docs/docs-ssg.md": "c6820bac2c64434a655a9c381a9bb769753ec2be7ba7317bd42cbf5205acf7c4"
+  },
+  "old_installed_c_state_sha256": "ee4c9887769edc41fc11e514f363b3fb3b6fd8c84a31eaffaa4faf022bbac242",
+  "lock_sha256": "c42635807affd79947f5afc581ef5a5af544d1a23bd4acc99ac25c10bde78f65",
+  "lock_bytes": 48590,
+  "package_count": 193,
+  "third_party_records_unchanged": true
+}

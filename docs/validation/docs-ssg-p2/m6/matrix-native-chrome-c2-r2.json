@@ -1,0 +1,241 @@
+{
+  "scope": "fixed installed C2 native Chrome concentrated matrix; installed155.0.8059.40, latest patch gap separate",
+  "C": "c1061ced3deaa4e6669bc45eb3382306fa85c958",
+  "R": "0494f304f0f9f8b620affb7309df23db3cb2377c",
+  "binary_sha256": "88a255eafa51c7315d49b6cdc02f7f4e137d92a8fe8a50b5741b509827a3781e",
+  "chrome_executable": "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+  "config": "docs/validation/docs-ssg-p2/m6/native-matrix.config.ts",
+  "official_meta_port": 53107,
+  "occupied_4200_listener_untouched": true,
+  "visual_reuse": "official bounded image review omitted; visual sources unchanged, existing accepted review retained; functional viewport/theme cases run",
+  "report_collection_recovery": "matrix-report-location-recovery-c2-r1.json",
+  "projects": [
+    {
+      "project": "components-root",
+      "command": [
+        "npx",
+        "playwright",
+        "test",
+        "-c",
+        "docs/validation/docs-ssg-p2/m6/native-matrix.config.ts",
+        "--project=components-root"
+      ],
+      "exit": 0,
+      "elapsed_ms": 141614.14800000002,
+      "stats": {
+        "startTime": "2026-10-13T22:25:37.478Z",
+        "duration": 141614.14800000002,
+        "expected": 36,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "evidence": "matrix-components-root-c2-r2"
+    },
+    {
+      "project": "components-subpath",
+      "command": [
+        "npx",
+        "playwright",
+        "test",
+        "-c",
+        "docs/validation/docs-ssg-p2/m6/native-matrix.config.ts",
+        "--project=components-subpath"
+      ],
+      "exit": 0,
+      "elapsed_ms": 142707.93425000738,
+      "stats": {
+        "startTime": "2026-10-13T22:30:08.725Z",
+        "duration": 142056.09399999998,
+        "expected": 36,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "evidence": "matrix-components-subpath-c2-r2"
+    },
+    {
+      "project": "components-meta",
+      "command": [
+        "npx",
+        "playwright",
+        "test",
+        "-c",
+        "docs/validation/docs-ssg-p2/m6/native-matrix.config.ts",
+        "--project=components-meta"
+      ],
+      "exit": 0,
+      "elapsed_ms": 140406.0217080405,
+      "stats": {
+        "startTime": "2026-10-13T22:32:32.479Z",
+        "duration": 139740.123,
+        "expected": 36,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "evidence": "matrix-components-meta-c2-r2"
+    },
+    {
+      "project": "official-root",
+      "command": [
+        "npx",
+        "playwright",
+        "test",
+        "-c",
+        "docs/validation/docs-ssg-p2/m6/native-matrix.config.ts",
+        "--project=official-root",
+        "--grep-invert",
+        "one bounded official home"
+      ],
+      "exit": 0,
+      "elapsed_ms": 124882.65866704751,
+      "stats": {
+        "startTime": "2026-10-13T22:34:53.892Z",
+        "duration": 124198.73400000001,
+        "expected": 46,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "evidence": "matrix-official-root-c2-r2"
+    },
+    {
+      "project": "official-subpath",
+      "command": [
+        "npx",
+        "playwright",
+        "test",
+        "-c",
+        "docs/validation/docs-ssg-p2/m6/native-matrix.config.ts",
+        "--project=official-subpath",
+        "--grep-invert",
+        "one bounded official home"
+      ],
+      "exit": 0,
+      "elapsed_ms": 129915.38545896765,
+      "stats": {
+        "startTime": "2026-10-13T22:36:59.923Z",
+        "duration": 129152.027,
+        "expected": 46,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "evidence": "matrix-official-subpath-c2-r2"
+    },
+    {
+      "project": "official-meta",
+      "command": [
+        "npx",
+        "playwright",
+        "test",
+        "-c",
+        "docs/validation/docs-ssg-p2/m6/native-matrix.config.ts",
+        "--project=official-meta",
+        "--grep-invert",
+        "one bounded official home"
+      ],
+      "exit": 0,
+      "elapsed_ms": 124831.98500005528,
+      "stats": {
+        "startTime": "2026-10-13T22:39:10.766Z",
+        "duration": 124168.32100000001,
+        "expected": 46,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "evidence": "matrix-official-meta-c2-r2"
+    },
+    {
+      "project": "docs-root",
+      "command": [
+        "npx",
+        "playwright",
+        "test",
+        "-c",
+        "docs/validation/docs-ssg-p2/m6/native-matrix.config.ts",
+        "--project=docs-root"
+      ],
+      "exit": 0,
+      "elapsed_ms": 21170.34687497653,
+      "stats": {
+        "startTime": "2026-10-13T22:41:16.619Z",
+        "duration": 20514.009,
+        "expected": 27,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "evidence": "matrix-docs-root-c2-r2"
+    },
+    {
+      "project": "docs-subpath",
+      "command": [
+        "npx",
+        "playwright",
+        "test",
+        "-c",
+        "docs/validation/docs-ssg-p2/m6/native-matrix.config.ts",
+        "--project=docs-subpath"
+      ],
+      "exit": 0,
+      "elapsed_ms": 21104.067540960386,
+      "stats": {
+        "startTime": "2026-10-13T22:41:38.695Z",
+        "duration": 20419.811999999998,
+        "expected": 27,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "evidence": "matrix-docs-subpath-c2-r2"
+    },
+    {
+      "project": "docs-meta",
+      "command": [
+        "npx",
+        "playwright",
+        "test",
+        "-c",
+        "docs/validation/docs-ssg-p2/m6/native-matrix.config.ts",
+        "--project=docs-meta"
+      ],
+      "exit": 0,
+      "elapsed_ms": 21279.540374991484,
+      "stats": {
+        "startTime": "2026-10-13T22:42:00.903Z",
+        "duration": 20623.233,
+        "expected": 27,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "evidence": "matrix-docs-meta-c2-r2"
+    },
+    {
+      "project": "docs-dev",
+      "command": [
+        "npx",
+        "playwright",
+        "test",
+        "-c",
+        "docs/validation/docs-ssg-p2/m6/native-matrix.config.ts",
+        "--project=docs-dev"
+      ],
+      "exit": 1,
+      "elapsed_ms": 178512.6199160004,
+      "stats": {
+        "startTime": "2026-10-13T22:42:23.095Z",
+        "duration": 177847.514,
+        "expected": 15,
+        "skipped": 0,
+        "unexpected": 9,
+        "flaky": 0
+      },
+      "evidence": "matrix-docs-dev-c2-r2"
+    }
+  ],
+  "passed": false
+}

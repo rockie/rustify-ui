@@ -1,0 +1,28 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.29s
+     Running tests/dev.rs (target/debug/deps/dev-2dfd022e76609119)
+
+running 1 test
+test a_first_build_that_fails_shows_the_problems_until_one_builds ... FAILED
+
+failures:
+
+---- a_first_build_that_fails_shows_the_problems_until_one_builds stdout ----
+
+thread 'a_first_build_that_fails_shows_the_problems_until_one_builds' (42183910) panicked at crates/rustify-docs-cli/tests/dev.rs:351:5:
+data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22/%3E
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    a_first_build_that_fails_shows_the_problems_until_one_builds
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 13 filtered out; finished in 2.80s
+
+error: test failed, to rerun pass `-p rustify-docs-cli --test dev`

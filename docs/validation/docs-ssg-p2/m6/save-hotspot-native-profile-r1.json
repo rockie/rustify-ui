@@ -1,0 +1,69 @@
+{
+  "scope": "own C3 native dev sampled during warm body rebuilds; no browser and no formal latency claim",
+  "binary": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair3-installed-uvgj6yil/installed/bin/rustify-docs",
+  "source": "6721dc73db18421826c4abaf0823d51d8d6ceffb",
+  "pid": 25246,
+  "cwd": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-save-hotspot-profile-xedhkohv/site",
+  "work": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-save-hotspot-profile-xedhkohv",
+  "samples": [
+    {
+      "index": 0,
+      "native_write_to_terminal_ms": 1945.7325419643894,
+      "revision": 2
+    },
+    {
+      "index": 1,
+      "native_write_to_terminal_ms": 1943.4110829606652,
+      "revision": 3
+    },
+    {
+      "index": 2,
+      "native_write_to_terminal_ms": 2339.2502500209957,
+      "revision": 4
+    },
+    {
+      "index": 3,
+      "native_write_to_terminal_ms": 2434.847875032574,
+      "revision": 5
+    },
+    {
+      "index": 4,
+      "native_write_to_terminal_ms": 2536.4688750123605,
+      "revision": 6
+    },
+    {
+      "index": 5,
+      "native_write_to_terminal_ms": 2373.9261659793556,
+      "revision": 7
+    },
+    {
+      "index": 6,
+      "native_write_to_terminal_ms": 2374.764082953334,
+      "revision": 8
+    },
+    {
+      "index": 7,
+      "native_write_to_terminal_ms": 2008.5943329613656,
+      "revision": 9
+    },
+    {
+      "index": 8,
+      "native_write_to_terminal_ms": 1987.5420000171289,
+      "revision": 10
+    }
+  ],
+  "url": "http://127.0.0.1:52375/",
+  "sample_command": [
+    "/usr/bin/sample",
+    "25246",
+    "12",
+    "1",
+    "-file",
+    "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/save-hotspot-c3-sample-r1.txt"
+  ],
+  "sample_exit_code": 0,
+  "native_dev_log": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/save-hotspot-native-dev-r1.log",
+  "passed_all_native_saves": true,
+  "own_processes_stopped": true,
+  "dev_exit_code": -15
+}

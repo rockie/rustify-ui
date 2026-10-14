@@ -1,0 +1,291 @@
+[
+  {
+    "consumer": "template",
+    "mode": "ssr",
+    "command": [
+      "mbx",
+      "tree",
+      "--locked",
+      "--offline",
+      "--manifest-path",
+      "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair2-installed-8j63t8o1/docs-site/Cargo.toml",
+      "--package",
+      "docs-site",
+      "--edges",
+      "normal,build",
+      "--target",
+      "all",
+      "--prefix",
+      "none",
+      "--no-dedupe",
+      "--format",
+      "{p}\t{f}",
+      "--no-default-features",
+      "--features",
+      "ssr"
+    ],
+    "exit_code": 0,
+    "milliseconds": 302.468017578125,
+    "packages": 192,
+    "no_makepad": true,
+    "no_opposite_mode": true,
+    "no_host_effects": true,
+    "no_private_pipeline": true,
+    "sdk_features": {
+      "rustify-docs": [
+        "site-ssr"
+      ],
+      "rustify-ui": [
+        "ssr"
+      ],
+      "rustify-components": [
+        "ssr"
+      ],
+      "rustify-style": [
+        "cn",
+        "default"
+      ],
+      "leptos": [
+        "hydration",
+        "ssr"
+      ],
+      "tachys": [
+        "default",
+        "oco",
+        "reactive_graph",
+        "reactive_stores",
+        "ssr",
+        "testing"
+      ],
+      "reactive_graph": [
+        "hydration",
+        "serde"
+      ]
+    },
+    "package_records": 192
+  },
+  {
+    "consumer": "template",
+    "mode": "hydrate",
+    "command": [
+      "mbx",
+      "tree",
+      "--locked",
+      "--offline",
+      "--manifest-path",
+      "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair2-installed-8j63t8o1/docs-site/Cargo.toml",
+      "--package",
+      "docs-site",
+      "--edges",
+      "normal,build",
+      "--target",
+      "all",
+      "--prefix",
+      "none",
+      "--no-dedupe",
+      "--format",
+      "{p}\t{f}",
+      "--no-default-features",
+      "--features",
+      "hydrate"
+    ],
+    "exit_code": 0,
+    "milliseconds": 280.802978515625,
+    "packages": 190,
+    "no_makepad": true,
+    "no_opposite_mode": true,
+    "no_host_effects": false,
+    "no_private_pipeline": true,
+    "sdk_features": {
+      "rustify-docs": [
+        "hydrate"
+      ],
+      "rustify-ui": [
+        "hydrate"
+      ],
+      "rustify-components": [
+        "hydrate"
+      ],
+      "rustify-style": [
+        "cn",
+        "default"
+      ],
+      "leptos": [
+        "hydrate",
+        "hydration"
+      ],
+      "tachys": [
+        "default",
+        "hydrate",
+        "oco",
+        "reactive_graph",
+        "reactive_stores",
+        "testing"
+      ],
+      "reactive_graph": [
+        "effects",
+        "hydration",
+        "serde"
+      ]
+    },
+    "package_records": 190
+  },
+  {
+    "consumer": "official",
+    "mode": "ssr",
+    "command": [
+      "mbx",
+      "tree",
+      "--locked",
+      "--offline",
+      "--manifest-path",
+      "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair2-installed-8j63t8o1/official-c2/site/Cargo.toml",
+      "--package",
+      "rustify-official-site",
+      "--edges",
+      "normal,build",
+      "--target",
+      "all",
+      "--prefix",
+      "none",
+      "--no-dedupe",
+      "--format",
+      "{p}\t{f}",
+      "--no-default-features",
+      "--features",
+      "ssr"
+    ],
+    "exit_code": 0,
+    "milliseconds": 276.9609375,
+    "packages": 192,
+    "no_makepad": true,
+    "no_opposite_mode": true,
+    "no_host_effects": true,
+    "no_private_pipeline": true,
+    "sdk_features": {
+      "rustify-docs": [
+        "site-ssr"
+      ],
+      "rustify-ui": [
+        "ssr"
+      ],
+      "rustify-components": [
+        "ssr"
+      ],
+      "rustify-style": [
+        "cn",
+        "default"
+      ],
+      "leptos": [
+        "hydration",
+        "ssr"
+      ],
+      "tachys": [
+        "default",
+        "oco",
+        "reactive_graph",
+        "reactive_stores",
+        "ssr",
+        "testing"
+      ],
+      "reactive_graph": [
+        "hydration",
+        "serde"
+      ]
+    },
+    "package_records": 192
+  },
+  {
+    "consumer": "official",
+    "mode": "hydrate",
+    "command": [
+      "mbx",
+      "tree",
+      "--locked",
+      "--offline",
+      "--manifest-path",
+      "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair2-installed-8j63t8o1/official-c2/site/Cargo.toml",
+      "--package",
+      "rustify-official-site",
+      "--edges",
+      "normal,build",
+      "--target",
+      "all",
+      "--prefix",
+      "none",
+      "--no-dedupe",
+      "--format",
+      "{p}\t{f}",
+      "--no-default-features",
+      "--features",
+      "hydrate"
+    ],
+    "exit_code": 0,
+    "milliseconds": 277.736083984375,
+    "packages": 190,
+    "no_makepad": true,
+    "no_opposite_mode": true,
+    "no_host_effects": false,
+    "no_private_pipeline": true,
+    "sdk_features": {
+      "rustify-docs": [
+        "hydrate"
+      ],
+      "rustify-ui": [
+        "hydrate"
+      ],
+      "rustify-components": [
+        "hydrate"
+      ],
+      "rustify-style": [
+        "cn",
+        "default"
+      ],
+      "leptos": [
+        "hydrate",
+        "hydration"
+      ],
+      "tachys": [
+        "default",
+        "hydrate",
+        "oco",
+        "reactive_graph",
+        "reactive_stores",
+        "testing"
+      ],
+      "reactive_graph": [
+        "effects",
+        "hydration",
+        "serde"
+      ]
+    },
+    "package_records": 190
+  },
+  {
+    "consumer": "cli",
+    "mode": "ssr",
+    "command": [
+      "mbx",
+      "tree",
+      "--locked",
+      "--offline",
+      "--manifest-path",
+      "/Users/rockie/.cargo/git/checkouts/rustify-ui-8cabc2f0e62e69f4/c1061ce/Cargo.toml",
+      "--package",
+      "rustify-docs-cli",
+      "--edges",
+      "normal,build",
+      "--target",
+      "all",
+      "--prefix",
+      "none",
+      "--no-dedupe",
+      "--format",
+      "{p}\t{f}"
+    ],
+    "exit_code": 0,
+    "milliseconds": 320.177001953125,
+    "package_records": null,
+    "packages": 337
+  }
+]

@@ -1,0 +1,23 @@
+{
+  "C": "c1061ced3deaa4e6669bc45eb3382306fa85c958",
+  "R": "0494f304f0f9f8b620affb7309df23db3cb2377c",
+  "command": [
+    "npx",
+    "playwright",
+    "test",
+    "-c",
+    "playwright.docs.config.ts",
+    "--project=docs-dev",
+    "dev.spec.ts"
+  ],
+  "exit": 0,
+  "stats": {
+    "startTime": "2026-10-13T23:06:25.237Z",
+    "duration": 14306.823999999999,
+    "expected": 21,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "scope": "all21 P1 dev cases after terminal-state/SSE observation fix; assertions unchanged; original9 failures retained"
+}

@@ -1,0 +1,155 @@
+# M6 · 固定候选与完整出口
+
+计划：[DOCS-SSG-P2](../../plan/DOCS-SSG-P2.md) · 更新：2026-10-14T09:38:29+08:00 · 状态：进行中；R4/CLI0.1.14 C4固定安装、B500保存1s、连续UAT7及nativeChrome351通过，限定旧示例回归进行中。其余受影响正式性能与外部出口仍待验。以下R1–R3/C1–C3为对应历史，验收不重绑。呈现路径继续静态DOM/明确交互岛。
+
+| 检查 / 覆盖 | 实际结果 | 证据 |
+| --- | --- | --- |
+| 安全 / 依赖 / 发布源 | Docs十二源码及调用链、CLI/主题/argv/输入守卫/手动Pages配置未确认可利用漏洞；890文本高置信凭证扫描0命中。cargo-deny检查344依赖，漏洞条目0，因3条既有unmaintained返回1，未冒作绿 | [Docs审计](m6/security-docs-r1.md)、[CLI审计与官方advisory链接](m6/security-cli-r1.md)、[扫描](m6/secret-scan-r1.json)、[原依赖输出](m6/dependency-advisories-r1.jsonl) |
+| 严格R/C消费者适配 | 原path fixture会被非空expectedR拒绝，生产门保持不变。统一helper从CLI source C的真实Git资产读R，new(C)核三Git依赖和source-free root lock；仅临时消费者2份Cargo文件投影。Native、dev browser/serve、CI/features、B P2/ignored proxy接入；空R保持path/lock，默认B500语义不改 | scripts/docs-pages-prepare.py；相关support/serve/verify/xtask改动，静态AST/纯投影与4拒绝例/shell/YAML/Node/rustfmt/diff已查，真实C尚未验 |
+| 当前空R开发回归 | docs_corpus6/6、CLI72通过+1ignored；components2/2（纯投影+真实完整生成链），Rust dev3/3（外部path读/删/恢复、building/content复用/失败、build-generated include/连续保存最新代）通过 | [语料](m6/adapter-corpus-empty-r1.log)、[CLI](m6/adapter-cli-empty-r1.log)、[components2](m6/adapter-components-empty-r1.log)。Root session3786已正常完成，全部自有测试进程退出；资源仍Root独占 |
+| 实际桌面供给 | 原生Chrome155.0.8059.40/Safari27.0.1已从应用清单读到。Safari原生MCP initialize/tools-list通过，并创建/关闭唯一自有about:blank tab；未读现有用户tabs/内容、未改设置。仅供给证明，不计UI通过 | [本机清单](m6/environment-r1.json)、[MCP能力](m6/safari-mcp-capabilities-r1.json)、[自有空白页](m6/safari-native-availability-r1.json) |
+
+候选准备保留真实Git C的detached worktree历史；仅官方site/Cargo.toml三依赖行及配对lock不同，其余tracked源逐文件核hash。Pages workflow只workflow_dispatch完整C、Mac固定Git安装/同run完整artifact和依赖deploy；enablement=false，无push自动部署。尚未执行Pages/GitHub外部写。
+
+本机已存在Python3.12.13（/opt/homebrew/bin/python3.12）；默认python3为3.9.6。仅后续验证进程PATH优先既有3.12，CI显式setup-python3.12，未安装工具或修改系统。公共CLI作者不依赖该仓库测试工具。
+
+冻结前源门：CLI/xtask all-targets严格clippy、root fmt、sources verify、CSS no drift（28814bytes/3783 candidates）、catalog24行no drift全部通过，原日志见[CLI clippy](m6/adapter-cli-clippy-r1.log)、[xtask clippy](m6/adapter-xtask-clippy-r1.log)、[fmt](m6/adapter-root-fmt-r1.log)、[sources](m6/freeze-sources-r1.log)、[CSS](m6/freeze-css-r1.log)、[catalog](m6/freeze-catalog-r1.log)。现有六份用户P1-gaps/PRD文件指纹与冻结前清单一致，未纳入本次暂存范围。
+
+未完成：按计划先提交库R，再仅以CLI发布身份/版本/模板锁/文档形成C，并用真实固定C禁网配对检查/未改模板/官方和B消费者验证。随后同候选V-5/V-9连贯UAT、V-10/V-11/V-12/V-14集中出口与最大页五次正式测量。未有公开候选或推送/发布授权；用户无法安排5位首次用户及实体手机，继续保留M6未验收缺口。Firefox按已确认范围留P4。
+
+库R冻结提交：`676a55771ab77faf8c476a836025d62905a2d3e2`，覆盖M3–M5实现/验收及M6消费者准备；原M1/M2提交归属保留。仅本地提交，六份用户既有状态文件未改/未纳入。阶段提交记录见[来源清单](m6/library-r-identity.json)。当前Cargo/build/browser/ports由hydration_harness独占，Root只维护计划与状态；下一步接收C0.1.11、公共GitHub URL/完整R锁、实际locked offline两目标结果，Root审查允许差异后提交C。
+
+C预提交准备已验：CLI0.1.11固定R676a5577；真实193包公共URL lock为48590bytes/SHA0dd43b63c0b2ed89d0dffbd732ee57e46caeb2669c1549f214c7a33bc8dde24a，6个框架包同GitHub+完整R、bindgen0.2.128、无Makepad。两目标完整locked offline metadata及docs-host/docs-wasm check均0，锁不变；实际new的docs-site/M6 named root均11文件，后一锁仅替换一个source-free根包。原证据：[handoff](m6/pair-preparation-handoff-r1.json)、[锁audit](m6/pair-preparation-lock-audit-r1.json)、[离线checks](m6/pair-preparation-offline-checks-r1.json)、[命名锁](m6/pair-preparation-actual-new-r1.json)。模板锁新生成仅manyhow/manyhow-macros0.14.0→0.14.1两patch，无Major变更；root lock仅CLI版本改动。生成/fetch仅进程Git insteadOf替换读取transport，产品manifest/lock仍公共URL，未改global git config。预提交binary source为计划提交1b4b7e6，不冒作最终C，必须提交后固定Git C重装。
+
+Root已接受资源交还，所有准备进程退出。允许C产品diff仅五文件：CLI Cargo.toml/framework-revision.txt/components-Cargo.lock、Root Cargo.lock、docs/docs-ssg.md；Root修正文案为由installed --build-info报告自身C，避免提交后仍写CLI commit pending。对R全部SDK/docs库/CLI功能src/模板源码/source README/site的diff0；真实C提交后再做固定安装/配对全门。
+
+真实CLI C提交：`8e86626fce74ffc45085da6377ca9aa64312fe59`（0.1.11），R固定`676a55771ab77faf8c476a836025d62905a2d3e2`。C这一次提交恰好五个允许产品文件，库/运行/CLI功能src/模板源均未改；两者之间仅有计划记录提交1b4b7e6。当前固定C Git安装使用公共URL及真实完整C、仅进程transport读取本仓，不修改已冻产品，仍不计作GitHub公开可获取安装。执行由hydration_harness独占，结果尚未预填；Root待交还后继续集中出口。
+
+固定C安装及最小配对门已接受：[handoff](m6/installed-c-handoff-r1.json)，来源/二进制/env与消费者路径保存在本机target/docs-ssg/m6-installed-c.json（后续必须使用其installed binary，不使用准备版或HEAD）。真实Git安装保持public URL与完整C，进程local read remap仍不作为GitHub公开安装证明。installed binary SHA1a31f4c5903ef3f0a3bf0b621f2b095f4774db5d2f7e55c67b40ed4c1b2234a8，0.1.11/panicunwind/source严格完整C。
+
+| 固定C检查 | 实际结果 | 原证据 |
+| --- | --- | --- |
+| 两root未改模板/README与锁 | 各11文件，README精确C/R，new锁原字节或仅source-free root名变；两mode完整offline metadata/真实CLI check-build0，template3页16文件、3既有warnings，全部11输入/锁不变 | [身份](m6/installed-c-identity-r1.json)、[new](m6/installed-c-new-roots-r1.json)、[check](m6/installed-c-template-check-r1.json)、[build](m6/installed-c-template-build-r1.json)、[输入](m6/installed-c-template-inputs-r1.json) |
+| 原path反例/旧产物 | exit1/rust-framework-pair，38个旧真实产品文件字节与源码未变，无helper cache/bindgen输出；Cargo metadata/作者目标构建调用仍如原审计所列，不说未调Cargo | [原失败](m6/installed-c-path-rejection-r1.json)、[不变式与实际compiler调用](m6/installed-c-path-rejection-audit-r1.json) |
+| 真实C官方消费者 | detached C保留history，严格仅site/Cargo.toml+lock投影，11397 protected tracked文件原SHA保持；实际official check/build37页0错误/12 missing-description warnings，完整源/锁再次核不变 | [check](m6/installed-c-official-check-r1.json)、[build](m6/installed-c-official-build-r1.json)、[完整命令](m6/installed-c-official-commands-r1.json) |
+| 隔离目标图 | template与official各SSR188/Hydrate186，CLI310；normal+build/all-target图验证无GPU/Makepad及按mode相反/私有pipeline依赖，原锁不变 | [真实图](m6/installed-c-graphs-r1.json) |
+| 未改模板功能 | 原19+14 nodes/ID全部保留，2/7分别经真实输入变4/31，Function/Full file源码原字节，console/CSP/失败请求0 | [DOM/browser](m6/installed-c-template-browser-r1.json)。该功能probe与独立official build尾段有重叠，按报告节奏更正仅作功能证据，不作严格串行正式性能；未新增视觉批 |
+
+自有准备/安装/目标图/浏览器进程均已退出，资源归Root；未知旧97047保留。下一步同installed C集中V-5/V-9连续UAT/V-10/V-11/V-12/V-14、原生Chrome/Safari与实际A/B最大页五样本，源/CLI版本/lock/模板/README不再改变。官方A正式测量runner已写在[m6 runner](m6/measure-official-islands.mjs)，静态24/24覆盖通过，尚未实际运行/预算通过。first-user runbook已填真实C/R，生成README最终摘要/公开渠道及真人仍待补齐；用户无法安排两手机/5用户，缺口不算通过。无推送/Pages/线上或M6完成声明。
+
+### 正式岛测量检查点
+
+本次仍为固定R676a5577/C8e86626f，installed binary不变，DOM静态页与明确交互岛路径；Root串行拥有Cargo/browser/ports。以下更新接续上文历史准备记录，不改变候选或M6进行中状态。
+
+| 检查 / 覆盖 | 实际结果 | 证据 |
+| --- | --- | --- |
+| A官方24类 / 五次冷缓存实际输入 | 23类原r1各5/5；Radio原两轮验收选择器误用native value/label htmlFor，产品为包裹label并在RadioItem上存data-value。仅修验证选择器、保持native Space和状态/disabled断言，r3为5/5；同环境同产品，其余探针与预算不变，全部24类中位≤226.2ms、原始节点保留/水合位移0 | [合并依据/全24结果](m6/formal-island-timing-summary-r1.json)、[原24类含失败](m6/formal-a-islands-r1.json)、[Radio第二轮失败](m6/formal-a-radio-r2.json)、[Radio修正五次](m6/formal-a-radio-r3.json) |
+| B P2增量 / 最大gzip与raw演示页 | 原P1 profile未变；512页check/build均0错误/1warning，含首次Rust release编译96397ms，不当作20s纯内容门。p2/vellum与p2/quickstart各5/5，中位352.3/356.2ms，节点保留/水合位移0；资源闭包完整选择依据待核 | [B输入/候选](m6/formal-b-candidates-r1.json)、[check](m6/formal-b-check-r1.json)、[build](m6/formal-b-build-r1.json)、[实际五次](m6/formal-b-islands-r1.json) |
+| P1 B500纯内容构建回归 | 使用同installed C，500页/511files，全部输入不变、5次完整生成均0，中位2288.7ms≤20s；不含Rust消费或并发浏览器计时 | [五次原命令与结果](m6/formal-b-content-build-r1.json) |
+
+未完成：资源最大页清单/内容LCP-CLS-0wasm-100KB、内容保存与new、dev编译完成到新画面、同一工程连续UAT、components/official三入口集中矩阵和原生桌面/受影响回归。用户已确认5位真人与两类实体手机无法安排，保留验收缺口；未推送/公开GitHub安装/Pages上线，不计M6完成。
+
+### 原生图标失败与第二次候选冻结
+
+连续作者r1/r2均完成原模板、README演示/定制页/footer、坏Rust同树/源码/17文件dist保留、check/build非零及修复恢复，最终仍失败，不作UAT通过。r1缺console URL，r2完整观察定位唯一非预期错误为原生Chrome自动请求`/favicon.ico`404；预期deep404单独匹配，Page响应日志未捕捉该浏览器图标请求。[r1原报告](m6/uat-author-continuous-r1/report.json)、[r2含URL原报告](m6/uat-author-continuous-r2/report.json)保留，未放宽favicon过滤。
+
+最小修复仅crates/rustify-docs/src/shell.rs/html_check.rs：head声明空data SVG图标，继续现有img-src data策略，generated rel=icon按image分类；外部图标及data样式表仍拒绝。两个窄回归先红，Docs191全部通过、strict clippy和root fmt通过；开发CLI生成纯内容站在原生Chrome155.0.8059.40零console/HTTP/pageerror，图标为声明data URL。证据：[icon分类红](m6/favicon-data-icon-red-r1.log)、[shell红](m6/favicon-shell-red-r1.log)、[Docs绿](m6/favicon-docs-green-r1.log)、[clippy](m6/favicon-clippy-r1.log)、[fmt最终](m6/favicon-fmt-r3.log)、[实际native](m6/favicon-native-development-r1.json)。该development CLI只证明修复，不冒作新固定C的组件验收。
+
+真实新库R2=`0494f304f0f9f8b620affb7309df23db3cb2377c`，只提交两必要产品文件，六用户既有dirty指纹不变。CLI将patch到0.1.12并配对R2；hydration_harness当前独占Cargo/build/browser/ports，准备允许五文件及193包锁（不升级第三方），Root审查后提交新C并固定Git安装。C1/R1正式岛/内容结果和资源闭包均保留为历史，HTML与候选已变，受影响门须按新C重跑。
+
+C1内容历史五样本：A首页/最大raw quickstart/最大gzip vellum/404，LCP720/1076/884/716ms、CLS0、0wasm/foreign/CSP；B最大gzip中英文LCP796/820ms，其余最大raw/home/404尚未测，不扩大覆盖。[A原测量](m6/formal-a-content-load-r1.json)、[B原测量](m6/formal-b-content-load-r1.json)。最新Chrome稳定补丁155.0.8059.79/.80（2026-10-13官方发布）高于本机.40，保留最新补丁复验项，不自动更新系统；[官方对照](m6/native-release-status-r1.json)。真机/真人及公开渠道/Pages缺口仍保留，M6不计完成。
+
+第二次真实CLI C2冻结：`c1061ced3deaa4e6669bc45eb3382306fa85c958`（0.1.12）配对库R2`0494f304f0f9f8b620affb7309df23db3cb2377c`。本次恰好五允许产品文件；193包锁仅六框架Git source改为完整R2，全部第三方records不变，锁SHA`c42635807affd79947f5afc581ef5a5af544d1a23bd4acc99ac25c10bde78f65`；offline SSR/hydrate完整metadata/check均0，实际new两root各11文件，source-free root名外的lock不变。[配对准备handoff](m6/pair2-preparation-handoff-r1.json)、[实际identity](m6/frozen-pair2-identity.json)。prepared binary source为R2而非真实C2，不能用于最终C2验收。hydration_harness已接续固定public URL+完整C2 Git安装门，保持仅进程local remap读取，不计public GitHub可获取；新安装/模板/官方/图结果尚未预填。旧C1证据保留，新C2固定安装后再由Root关闭受影响技术门。
+
+### C2固定安装与连续作者路径接受
+
+Root已接受[installed handoff](m6/pair2-installed-handoff-r1.json)：CLI0.1.12/source精确C2，binary SHA88a255eafa51c7315d49b6cdc02f7f4e137d92a8fe8a50b5741b509827a3781e。两new root各11输入/锁不变，模板offline check/build0（3页/16文件）；detached官方0错误/12既有missing-description warnings（37页/53文件），11397 protected源及投影输入全部不变。五组隔离图通过；首观察器误把既有bitflags/smallvec vendor路径当禁用库，原红保留，修正按package name验证，[图最终](m6/pair2-installed-graphs-r2.json)。未配对path runtime拒绝按原validator/source/lock无差异证据复用。canonical state现指C2，旧C1 state原位保存。进程全部交还Root。
+
+[完整连续UAT C2](m6/uat-author-continuous-c2-r1/report.json)七阶段通过：原样模板真实输入与函数/全文件源→仅从生成README提取的新演示与围栏→注册定制页/独立counter→footer含deep404→坏Rust保留同一document/root/全部nodes/IDs/source及17个旧dist文件、check/build均非零且诊断原作者行列→修复新初值21经真实点击得22→final check/build0及lock/README/manifest不变。唯一同一dev/session与真实compiler生命周期、SSE及HTTP wasm SHA保留；console/pageerror/CSP/异常请求0，预期deep404明确归属。nativeChrome155.0.8059.40中favicon问题已修复；该UAT不替代五真人或正式性能。
+
+C2 [生成README/help与摘要](m6/first-user-runbook.md)已更新，C1原字节保留为历史；公开渠道与真人表仍空。Safari自有tab的[evaluate/Inspector实际schema](m6/safari-owned-schema-probe-c2-r1.json)已确认且tab关闭，尚不算完整Safari验收；[新A声明资源清单](m6/formal-resource-selection-c2-a-r1.json)52文件/38页验证，B尚待新构建。
+
+集中矩阵components-root36/36通过；reporter相对路径在验证wrapper位置解析导致汇总脚本收集失败，实际原JSON及trace已恢复，未重跑/丢样本。[恢复证据](m6/matrix-report-location-recovery-c2-r1.json)。后续wrapper只把JSON输出改为明确根路径。4200被外部Bun90039占用，未操作该服务，official-meta从OS分配验证端口，其他配置/端口沿仓入口。[端口原证据](m6/matrix-ports-preflight-c2-r1.json)。正在继续其余project，整体矩阵未预填通过。
+
+### Chrome集中矩阵接受与Safari环境诊断
+
+固定C2/R2原生Chrome155.0.8059.40：[351distinct汇总](m6/matrix-native-chrome-c2-accepted-r1.json)。components-root/subpath/meta各36，official三入口各46，P1 content三入口各27；docs-dev最终24：原未改Rust dev2/生成UAT1保留，P1 dev21在修正观察器后全过。旧原docs-dev15pass/9fail保留：[原24报告](m6/matrix-docs-dev-c2-r2/results.json)、[新21报告](m6/matrix-dev-p1-c2-r3/results.json)。旧P1 harness把advertised地址当首轮构建完成，过早写坏内容造成无last-good/inline region，并在building阶段断言500；另把正常导航的exact事件流ERR_ABORTED当失败。只改tests/docs-ssg/dev.spec.ts等待实际SSE revision>0且building=false（初始错误也可终态）及精确事件流关闭归属；268原断言表达式未改，无固定sleep、产品未改，不需要新R/C。
+
+[Safari header首轮38页](m6/native-safari-header-c2-r1.json)全部原件保留，0/38，不计验收。14静态页误将exact声明data图标当foreign网络，24岛来自真实mode30s startup deadline，HTTP wasm200/applicationwasm。单页[真实启动诊断](m6/safari-startup-diagnostic-c2-r1.json)12 snapshots显示hidden/无focus、rAF始终1，wasm14ms完成且mounted seed已在，但双rAF不继续；单纯Safari activate无效。[定向owned URL前台窗口尝试](m6/safari-owned-foreground-c2-r1.json)已选择自有URL并恢复窗口状态，之后仍hidden/loading；没有读出用户其他tabs内容，没有改rAF、visibility或产品期限。SafariWebDriver既有binary的[原能力probe](m6/safari-webdriver-capability-c2-r1.json)解析过早，后以[raw HTTP确认](m6/safari-webdriver-capability-c2-r2.json)status ready=true，但创建own session10s超时；未执行--enable/修改设置，不声称已建会话或原生交互通过。MCP自有tabs全部关闭。
+
+首轮原生Safari的普通首页链接/light主题/375px无overflow/原生details Enter小项有实际通过证据，但不覆盖整体；dark grid因岛未attach仍浅色，320请求实测336（窗口约束），均保留未通过。meta入口未运行。验证runner已严格只单列exact声明+head href+200/imageSVG的inline图标，并在hidden时直接拒绝环境、逐页保存/首败停止；原HTTP(s)同源规则及30s产品期限保持。已异步询问用户可见Safari/最新Chrome155.0.8059.79/.80环境渠道，待答；没有把既有手机/真人无法安排决定扩展为桌面豁免。
+
+当前所有Cargo/build/browser/ports已独占交hydration_harness执行V14源码/分包/features/artifacts/reliability第一批，Root仅维护记录，不启动runtime。C2正式A/B、dev/content性能和旧DOM/GPU示例回归尚未执行，M6仍进行中/5of7；公开Git可获取、Pages、真人/真机及原生桌面完整门均未关闭。
+
+
+### V14集中源门与稳定扫描诊断修复
+
+C2原始native批已结束并交还Root，未启动旧示例：[handoff](m6/v14-c2-handoff-r1.json)。workspace1193通过/12ignored、Docs264、parser30、site-ssr29及独立clippy/build/check/static/features通过；CLI完整集合分段汇总147通过/1失败/1ignored，不宣称完整包exit0。[artifacts/reliability复用映射](m6/v14-c2-group-reuse-r1.json)保留：artifacts已通过，reliability因稳定faults失败未关闭。两处图标相关旧验证仅改tests/generate.rs和CLI tests/dev.rs，保留真实stylesheet200、HTTP资源检查和精确声明data图标边界；红绿及sourceSHA见原批记录。
+
+剩余faults联合与单例均失败：[联合红](m6/v14-c2-cli-remaining-tests-r1.log)、[单例红](m6/v14-c2-private-files-single-r1.log)。Root亲读content.rs验证：复扫的任何problem均追加render-generation-changed，即使同一symlink-outside从未变化。产品修复只在Snapshot保留初次扫描diagnostics，复扫比较问题是否变化，其余原始bytes/alias/config/link收据守卫不变；初次错误仍阻止构建发布。
+
+新增窄回归先[红](m6/render-guard-existing-error-red-r1.log)，首次绿尝试发现测试fixture缺description，原[失败](m6/render-guard-green-r1.log)与[具体诊断](m6/render-guard-fixture-diagnostic-r1.log)保留；补fixture正文后，10个render_guard全部通过、faults9/9通过、Docs265通过、两包all-target严格clippy及root fmt通过。[命令/结果](m6/render-guard-commands-r2.json)、[guard](m6/render-guard-green-r2.log)、[faults](m6/render-guard-faults-green-r1.log)、[Docs](m6/render-guard-docs-green-r1.log)、[clippy](m6/render-guard-clippy-r1.log)、[fmt](m6/render-guard-fmt-r1.log)。回归证明稳定invalid仍有symlink-outside错误，而新增/移除错误及原有真实输入变化仍拒绝；未放宽faults断言。
+
+产品修复目前dirty于C2，不能沿用C2作新候选通过。下一步只提交必要库修复形成R3，再仅更新CLI patch/完整R配对锁/安装文档形成C3并固定Git安装；旧C2的安装/UAT/351Chrome证据原位保留，按实际差异核定复用，受影响门重跑。正式性能与旧示例尚未运行；原生桌面可见/最新补丁、5真人/两手机、公开渠道与Pages仍缺口。当前资源归Root，六份用户既有文件SHA保持，M6仍进行中5/7。
+
+
+R3已真实本地提交：`c562008291ef1b1826891944e0d81a5d61d775b8`，仅content.rs必要修复及回归；三个验证观察修正另以`043840a18bd7298471073b235ab6be74eb31d2d3`提交，确保最终待发布Git来源包含已验测试，不作为新产品候选。[测试来源](m6/validation-observer-commit-r1.json)。hydration_harness独占C3预提交准备：版本0.1.13、完整R3与193包锁仅六框架source变化，受限五产品文件；实际prepared身份不冒作C3。Root只做台账/源码静态核对，不运行runtime。
+
+
+Root已接受[C3准备handoff](m6/pair3-preparation-handoff-r1.json)并核[五文件diff及锁](m6/pair3-root-release-diff-audit-r1.json)：0.1.13配对完整R3；48590bytes/SHA3582d2a1a44d9aee46b1f16aa1ab41caebb8f2a436c86bed6ad4890d600329a3、193包，六framework source变化、全部第三方records保持。root及两mode locked offline metadata、两check与prepared CLI build均0；actual new两root各11文件，根锁无source仅包名替换外完全一致。准备二进制source实际580d14310a06fea0786cbc3a7d0c0f43d658ba68，不冒作C3。所有自有进程退出，Root接收后按五文件限制提交。
+
+
+第三次真实CLI冻结C3=`6721dc73db18421826c4abaf0823d51d8d6ceffb`（0.1.13）配对R3=`c562008291ef1b1826891944e0d81a5d61d775b8`：[固定身份](m6/frozen-pair3-identity.json)。发布提交恰好五允许产品文件；仅库扫描错误判断有已验产品变化，三tests-only修正已进入来源。hydration_harness接续固定C3 Git安装/模板/official/隔离图，canonical安装状态在交接前仍为旧C2，最终C3验收尚未预填；将保存C2原state并离线比较新旧资源闭包，复用由Root按实际差异审查。资源仍由该agent独占，未启动正式性能/旧示例/外部写。
+
+
+### C3固定安装接受及正式性能检查点
+
+Root已接受[实际C3安装handoff](m6/pair3-installed-handoff-r1.json)：0.1.13/source精确C3/panic unwind，binary SHA cffa6316dcd462e5aec2effdde349c665d02bd436d1c454064a98324a301b80d；模板two-mode locked offline/check/build及actualnew两root11输入/README/锁不变；detached官方37页check/build0，11397受保护源及仅两manifest投影保持；[五隔离图](m6/pair3-installed-graphs-r1.json)通过。canonical现指C3，C2完整state原位保留。仅进程localGit读取，尚不计公共GitHub安装。[新旧官方完整SHA比较](m6/pair3-installed-official-C2-C3-file-comparison-r1.json)24HTML/manifest改变，wasm字节不同，五搬迁boot/glue/runtime资产内容一致，因此不复用C2岛浏览器/正式计时结论。
+
+Root独占串行执行同installed C3正式V12，冻结Chromium153.0.8010.12。最大页按[完整A/B资源清单](m6/formal-resource-selection-c3-r1.json)选择；A全部24类各五冷样本通过，中位最大225.9ms；B P2最大raw quickstart/gzip vellum各五样本，中位355.5/368ms，原始node/identity与水合位移0。[A原测量](m6/formal-a-official-islands-c3-r1.json)、[B原测量](m6/formal-b-largest-islands-c3-r1.json)、[实际命令](m6/formal-island-commands-c3-r1.json)。B增量512页不覆盖原P1纯500页，profile语义保留，各build/check原始命令在[准备记录](m6/formal-c3-preparation-commands-r1.json)。
+
+内容页面的Slow4G/CPU4x/375px各五冷样本：首页、按语言最大raw/gzip及真实deep404全部通过。A4页LCP中位732/1060/884/716ms；B P2六页1128/1284/1080/1288/1104/820ms；B P1六页788/788/796/804/816/576ms；均CLS0、0wasm/foreign/CSP。资源清单静态内容最大gzip36348bytes≤100KB，Python gzip实现与Node样本各自记录，不宣称两压缩实现字节相同。[A原测量](m6/a_official-content-load-c3-r1.json)、[B增量原测量](m6/b_p2-content-load-c3-r1.json)、[B500原测量](m6/b_p1-content-load-c3-r1.json)、[条件/选择/检查](m6/formal-content-load-commands-c3-r1.json)。
+
+实际content new→H1→两RAF为331ms、0wasm且compiler调用空，≤60s；[原证据](m6/content-first-c3-r1.json)。实际Rust dev连续五次同源保存、两目标compile epoch→新源码/实际wasm/输入paint中位1187.4ms≤2s，位移0且时钟检查通过、own进程全部退出：[五样本原报告](m6/dev-complete-c3-r1/dev-complete-performance.json)。纯B500五次完整build中位2357.8ms≤20s，全部输入SHA不变：[构建原报告](m6/formal-b-p1-builds-c3-r1.json)。
+
+内容保存性能门失败，未放宽预算/删样本：[原测量](m6/formal-b-p1-saves-c3-r1.json)、[原日志](m6/formal-b-p1-saves-c3-r1.log)。未改measure-save对同B500/page：body/config/static五样本中位2101/2088.2/2102.2ms，short20中位2097.4ms/max3719.9ms，超过≤1000ms；dev实际render尾段约1999–2030ms。当前交hydration_harness独占15min有界根因调查：同C2小量对照和自有进程采样，不改产品/锁/版本/测量门。Root只读及记录，新的C3连续UAT/集中浏览器与旧DOM/GPU回归尚未执行。M6继续5/7，外部真人/手机/桌面/公开渠道/Pages缺口仍保留。
+
+
+### B500终页校验热点与开发版性能修复
+
+[有界调查handoff](m6/save-hotspot-handoff-r1.json)已交还Root；[同C2小量对照](m6/save-hotspot-c2-control-r1.json)和[同C3小量对照](m6/save-hotspot-c3-control-r1.json)均失败，body/config/static约2s，证明开销早于R3。[原12s采样](m6/save-hotspot-c3-sample-r1.txt)、[修正计数摘要r2](m6/save-hotspot-sample-summary-r2.json)限定build线程7809个采样：final_documents inclusive7059（90.4%），ids2953/check_rendered3928；这些为重叠的采样栈比例，不当作可加CPU百分比或并行worker总量。旧摘要r1保留且被r2接续。Root亲读generation629/1156、html_check156/531，终页ID与URL确实各串行构完整HTML树。
+
+最小产品改动仅generation.rs/html_check.rs：用同一semantics结果取得anchors及真实文档URL，现有parallel_map/workers并行收集，随后按原顺序检查全部namespace/重复ID/跨页fragment；原policy和template/foreign tree合同不变，没有新增cache或config。开发版源码/二进制指纹及patch在[来源](m6/save-hotspot-fix-development-source-r1.json)，不是fixed C3验收。Docs265通过、fmt/两包all-target严格clippy/CLI docs-cli build通过：[Docs](m6/save-hotspot-docs-first-check-r1.log)、[检查](m6/save-hotspot-development-checks-r1.json)。
+
+相同B500/page、原harness、frozen153、five样本及short20：[修复开发版原报告](m6/formal-b-p1-saves-development-fix-r1.json)。body/config/static中位728.6/721.1/713.8ms（fixedC3原红2101/2088.2/2102.2ms）；short20中位709.4ms/max888.4ms，全门通过，预算仍1000ms。native dev尾段render602–626ms。六用户SHA保持。先提交必要库R4，再patch CLI/模板锁配对形成C4并固定安装；必须验新候选，不能将dirty开发版结果写作旧C3出口完成。C3其余性能通过与原红都保留，最终UAT/浏览器/旧示例及外部缺口继续未闭。
+
+
+性能库R4已真实本地提交`3fcc626a4039a43c5e045ccd546bab976db89a73`，仅上述两必要源码文件；提交说明包含真实before/after数字及检查。hydration_harness独占准备C4/0.1.14配对完整R4，仅五允许release文件/六framework source、193包第三方不变。当前canonical installed仍C3历史，新的固定候选与1s正式出口尚未预填；prepared身份必须如实记录。
+
+
+Root已接受[C4准备handoff](m6/pair4-preparation-handoff-r1.json)，审查五允许文件及193包锁仅六framework sources：锁48590bytes/SHA35239657b1ee9d9ea286fce58857ebcb5de9efee5c15d2e1c7702bf8e3d4a5d8，第三方记录完全不变。root/two-mode完整locked offline metadata、两check、prepared build均0，actualnew两root11文件/根包名以外锁不变。prepared source实际055a701f4fc63b78312c8f28ae2d450b278c9e66，不计最终C4。全部own进程退出，Root接续仅五文件提交。
+
+第四次真实CLI冻结C4=`d301344eeb27e22907c59a10805ae0cebf8dee99`（0.1.14），R4=`3fcc626a4039a43c5e045ccd546bab976db89a73`：[固定身份](m6/frozen-pair4-identity.json)。恰好五允许发布文件，193包锁仅六Git源。hydration_harness独占固定C4安装/模板/official/图及未改measure-save five/short20复验，canonical交接前仍旧C3。不得把开发版绿写作C4绿；旧C3正式结果、content save红及C2/C3对照原位保存。最终候选UAT/矩阵/旧示例、其余受影响性能与外部桌面/真人/真机/公共来源/Pages仍未完成。
+
+
+计划定义回写纠正：Root发现进度更新器全文件匹配M6，误覆盖§10定义行；已从实际C2 Git原文恢复M6定义并核M1–M7七行完全一致。后续只改「实施进度」章节，不全局匹配。错误发生的5份原历史snapshot保留原字节，明确其§10不用于验收要求，列表及before/after SHA见[纠正记录](m6/plan-definition-repair-r1.json)；canonical当前定义已恢复，验收要求与退出门未改变。
+
+
+### 固定C4安装与原B500保存门接受
+
+Root已接受[实际C4 handoff](m6/pair4-installed-handoff-r1.json)：0.1.14/source精确d301344e/panic unwind，binary SHA5eae4e6bf727505a030fd67680c7c3a2c82bb6e195815a0d834b18cf4d737b71。模板两mode/check/build0、两actualnew root各11输入/锁/README不变；detached官方37页/check/build0、11397protected文件与仅两manifest投影保持；五隔离图通过。canonical已指C4，C3完整state保留。[全文件比较](m6/pair4-installed-official-C3-C4-file-comparison-r1.json)记录24岛HTML/manifest变化和资源组搬迁，不泛称C3岛验收复用。仍为process-localGit读取，不计公共GitHub可获取验证。
+
+同实际installed C4、原B500/page、未改measure-save、frozen153与原1000ms：body/config/static五样本中位737.4/717.6/734.9ms，short20中位716ms/max875ms，全部通过。[正式原报告](m6/formal-b-p1-saves-c4-r1.json)、[命令/来源及harness/input不变](m6/formal-b-p1-saves-c4-command-r1.json)。fixedC3原红2101/2088.2/2102.2ms与开发版绿均原位保留；本次关闭的是C4这项保存预算门，不是整个V12/M6。
+
+[首次用户材料](m6/first-user-runbook.md)已从实际C4new工程README与实际help原字节更新，[摘要](m6/first-user-materials-c4-r1.json)与当前C4/R4一致；C2及C1原README/help均保存，5真人记录仍空、公开渠道待提供。没有把材料准备当作V13通过。
+
+运行资源已重新独占交hydration_harness执行同C4连续作者UAT、nativeChrome10project及计划限定旧DOM/GPU和dom-only/hydrate回归。原生Chrome采用既有本机通道；启动声明为155.0.8059.40，后续UAT实际browser.version为155.0.8059.41（见版本纠正记录），latestpatch/Safari可见环境尚缺；该队列不预填结果，Root只records/runbook。剩余同C4受影响正式性能及外部真人/手机/桌面/公共来源/Pages仍未关闭；5/7保持。
+
+
+### C4连续作者及Chrome集中矩阵接受
+
+[actual C4连续UAT](m6/uat-author-continuous-c4-r1/report.json)全部七阶段通过，同一真实dev/session：未改模板→新demo/围栏→注册定制页→footer含404→坏Rust保留document/root/nodes/IDs/source/旧dist且check/build非零→修复新结果→final check/build及锁/README/manifest不变；own进程退出。
+
+[native C4集中汇总](m6/matrix-native-chrome-c4-r1.json)十项目351/351、0skipped/flaky/retries：components三入口各36，official三入口各46，P1content三入口各27，docs-dev24。各项目matrix-*-c4-r1目录保存实际原JSON/log/trace；未改测试/原断言，官方仅按既定合同排除一次九图批（复用M5既有视觉结论）。原生Chrome155矩阵通过；启动scope沿用.40，UAT实际browser.version为155.0.8059.41。未逐spec记录patch，不据启动声明认证全矩阵patch或latest，Safari可见环境仍缺。
+
+A14个纯静态页及首载依赖C3/C4全SHA一致，preview/main/CSP shell与load meter源码也相同：[静态加载复用依据](m6/formal-a-static-load-c3-c4-reuse-audit-r1.json)，仅复用A内容/home/404读取指标；不覆盖C4岛/编译/dev生成。B与其余同C4正式性能仍按实际输出及变化复核，不泛称V12完成。hydration_harness继续独占五旧DOM/GPU release builds+明确regression specs、随后dom-only/hydrate，尚未预填旧示例结果。M6仍进行中5/7，真人/真机/最新桌面/公开来源及Pages门保留。

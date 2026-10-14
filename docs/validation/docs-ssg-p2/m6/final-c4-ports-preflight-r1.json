@@ -1,0 +1,82 @@
+[
+  {
+    "port": 4173,
+    "occupied": false,
+    "listeners": ""
+  },
+  {
+    "port": 4174,
+    "occupied": false,
+    "listeners": ""
+  },
+  {
+    "port": 4176,
+    "occupied": false,
+    "listeners": ""
+  },
+  {
+    "port": 4178,
+    "occupied": false,
+    "listeners": ""
+  },
+  {
+    "port": 4181,
+    "occupied": false,
+    "listeners": ""
+  },
+  {
+    "port": 4190,
+    "occupied": false,
+    "listeners": ""
+  },
+  {
+    "port": 4191,
+    "occupied": false,
+    "listeners": ""
+  },
+  {
+    "port": 4192,
+    "occupied": false,
+    "listeners": ""
+  },
+  {
+    "port": 4193,
+    "occupied": false,
+    "listeners": ""
+  },
+  {
+    "port": 4194,
+    "occupied": false,
+    "listeners": ""
+  },
+  {
+    "port": 4195,
+    "occupied": false,
+    "listeners": ""
+  },
+  {
+    "port": 4196,
+    "occupied": false,
+    "listeners": ""
+  },
+  {
+    "port": 4197,
+    "occupied": false,
+    "listeners": ""
+  },
+  {
+    "port": 4198,
+    "occupied": false,
+    "listeners": ""
+  },
+  {
+    "port": 4199,
+    "occupied": false,
+    "listeners": ""
+  },
+  {
+    "port": 4200,
+    "occupied": true,
+    "listeners": "COMMAND   PID   USER   FD   TYPE             DEVICE SIZE/OFF NODE NAME\nbun     90039 rockie  767u  IPv6 0xbb27c2ab81f2ca7b      0t0  TCP *:4200 (LISTEN)"
+  }
+]

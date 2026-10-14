@@ -1,0 +1,60 @@
+rustc 1.99.0 (b940084d7 2026-09-28)
+dev: pages show no last-updated date: not a git repository (or any of the parent directories): .git
+watching /private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-continuous-author-BJhAml/author-docs; drafts are shown, source and published output are unchanged, stop with Ctrl-C
+dev: host
+dev: wasm
+dev: inputs changed; discarding the candidate and rebuilding
+dev: render
+dev: host
+dev: wasm
+dev: render
+warning[not-in-nav]: this page is in no navigation group, so readers can only reach it by a link
+  --> content/index.md
+warning[missing-site-url]: site.url is not set, so pages have no canonical address or preview image and there is no sitemap
+  --> rustify-docs.toml
+  = help: add `url = "https://…"` under [site], the address the site is published at
+dev: revision 1: 4 page(s) changed, 2 warning(s), 945 ms
+dev: render
+dev: host
+dev: wasm
+dev: render
+dev: revision 2: 1 page(s) changed, 2 warning(s), 2866 ms
+dev: render
+dev: host
+dev: wasm
+dev: render
+dev: revision 3: 5 page(s) changed, 2 warning(s), 2618 ms
+dev: render
+dev: host
+dev: wasm
+dev: render
+dev: revision 4: 5 page(s) changed, 2 warning(s), 2660 ms
+dev: render
+dev: host
+dev: wasm
+error[rust-compile]: For more information about this error, try `rustc --explain E0425`.
+
+warning[not-in-nav]: this page is in no navigation group, so readers can only reach it by a link
+  --> content/index.md
+warning[missing-site-url]: site.url is not set, so pages have no canonical address or preview image and there is no sitemap
+  --> rustify-docs.toml
+  = help: add `url = "https://…"` under [site], the address the site is published at
+error[rust-compile]: error[E0425]: cannot find value `missing_author_step` in this scope
+ --> src/demos.rs:5:41
+  |
+5 |     let value = RwSignal::new(initial + missing_author_step);
+  |                                         ^^^^^^^^^^^^^^^^^^^ not found in this scope
+
+
+  --> src/demos.rs:5:41
+dev: revision 5 failed: 2 error(s), 2 warning(s), 1446 ms; still serving revision 4
+dev: render
+dev: host
+dev: wasm
+dev: render
+warning[not-in-nav]: this page is in no navigation group, so readers can only reach it by a link
+  --> content/index.md
+warning[missing-site-url]: site.url is not set, so pages have no canonical address or preview image and there is no sitemap
+  --> rustify-docs.toml
+  = help: add `url = "https://…"` under [site], the address the site is published at
+dev: revision 6: 2 page(s) changed, 2 warning(s), 2842 ms

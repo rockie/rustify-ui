@@ -1,0 +1,14 @@
+{
+  "command": [
+    "cargo",
+    "fetch",
+    "--locked",
+    "--manifest-path",
+    "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair-preparation-q08yp2lv/docs-site/Cargo.toml"
+  ],
+  "cwd": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair-preparation-q08yp2lv/docs-site",
+  "scope": "populate package caches for complete public-URL lock before explicit offline checks",
+  "started_at_ms": 1791924799822.414,
+  "exit_code": 0,
+  "ended_at_ms": 1791924800434.656
+}

@@ -1,0 +1,99 @@
+{
+  "candidate_C": "c1061ced3deaa4e6669bc45eb3382306fa85c958",
+  "framework_R": "0494f304f0f9f8b620affb7309df23db3cb2377c",
+  "scope": "single observer green plus every CLI integration target not reached by the preserved full package run",
+  "commands": [
+    {
+      "name": "cli-dev-css-green",
+      "command": [
+        "mbx",
+        "test",
+        "--locked",
+        "-p",
+        "rustify-docs-cli",
+        "--test",
+        "dev",
+        "a_first_build_that_fails_shows_the_problems_until_one_builds",
+        "--",
+        "--exact"
+      ],
+      "cwd": "/Users/rockie/Documents/gh-rockie/rustify-ui",
+      "log": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c2-cli-dev-css-green-r1.log",
+      "started_at_ms": 1791935263696.5298,
+      "exit_code": 0,
+      "milliseconds": 3748.5712890625,
+      "test_results": [
+        {
+          "status": "ok",
+          "passed": 1,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 13
+        }
+      ],
+      "test_totals": {
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered": 13
+      }
+    },
+    {
+      "name": "cli-remaining-tests",
+      "command": [
+        "mbx",
+        "test",
+        "--locked",
+        "-p",
+        "rustify-docs-cli",
+        "--test",
+        "external",
+        "--test",
+        "faults",
+        "--test",
+        "new_build",
+        "--test",
+        "new_components",
+        "--test",
+        "reliability",
+        "--test",
+        "rust_dev"
+      ],
+      "cwd": "/Users/rockie/Documents/gh-rockie/rustify-ui",
+      "log": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c2-cli-remaining-tests-r1.log",
+      "started_at_ms": 1791935267522.472,
+      "exit_code": 101,
+      "milliseconds": 15837.59619140625,
+      "test_results": [
+        {
+          "status": "ok",
+          "passed": 2,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0
+        },
+        {
+          "status": "FAILED",
+          "passed": 8,
+          "failed": 1,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0
+        }
+      ],
+      "test_totals": {
+        "passed": 10,
+        "failed": 1,
+        "ignored": 0,
+        "measured": 0,
+        "filtered": 0
+      }
+    }
+  ],
+  "remaining": [],
+  "status": "failed",
+  "active": null
+}

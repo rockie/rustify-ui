@@ -1,0 +1,28 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling zmij v1.0.23
+   Compiling syn v2.0.119
+   Compiling serde v1.0.229
+   Compiling serde_json v1.0.151
+   Compiling rustify-docs-syntax v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-docs-syntax)
+   Compiling rustify-docs-macros v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-docs-macros)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.28s
+     Running unittests src/lib.rs (target/debug/deps/rustify_docs_macros-cc19b80213b752b0)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests rustify_docs_macros
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+mbx[cache]: 0 hits, 0 misses, 6 not looked up, 2 bypassed; 0 B downloaded, 0 B uploaded, 20.6 MiB stored locally
+mbx[savings]: 173.7 GiB shared among checkouts that each believe they are an only child.

@@ -1,0 +1,95 @@
+{
+  "scope": "Final C4 native closeout only; actual CLI package test, both-package strict all-target clippy and root fmt; no workspace/GPU/browser replay",
+  "C4": "d301344eeb27e22907c59a10805ae0cebf8dee99",
+  "R4": "3fcc626a4039a43c5e045ccd546bab976db89a73",
+  "actual_head": "670eab4cc8b378835a644cb0627f01c90fac2c19",
+  "commands": [
+    {
+      "name": "cli-test",
+      "command": [
+        "mbx",
+        "test",
+        "--locked",
+        "-p",
+        "rustify-docs-cli"
+      ],
+      "cwd": "/Users/rockie/Documents/gh-rockie/rustify-ui",
+      "log": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c4-cli-test-r1.log",
+      "source_guard": "v14-c4-native-sources-before-r1.json",
+      "environment": {
+        "CARGO_NET_OFFLINE": "true",
+        "process_transport": {
+          "CARGO_NET_GIT_FETCH_WITH_CLI": "true",
+          "GIT_CONFIG_COUNT": "1",
+          "GIT_CONFIG_KEY_0": "url.file:///Users/rockie/Documents/gh-rockie/rustify-ui.insteadOf",
+          "GIT_CONFIG_VALUE_0": "https://github.com/rockie/rustify-ui"
+        },
+        "path_prepend": "/opt/homebrew/opt/python@3.12/libexec/bin"
+      },
+      "pid": 23260,
+      "exit_code": 0,
+      "milliseconds": 556607.32
+    },
+    {
+      "name": "docs-cli-clippy",
+      "command": [
+        "mbx",
+        "clippy",
+        "--locked",
+        "-p",
+        "rustify-docs",
+        "-p",
+        "rustify-docs-cli",
+        "--all-targets",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "cwd": "/Users/rockie/Documents/gh-rockie/rustify-ui",
+      "log": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c4-docs-cli-clippy-r1.log",
+      "source_guard": "v14-c4-native-sources-before-r1.json",
+      "environment": {
+        "CARGO_NET_OFFLINE": "true",
+        "process_transport": {
+          "CARGO_NET_GIT_FETCH_WITH_CLI": "true",
+          "GIT_CONFIG_COUNT": "1",
+          "GIT_CONFIG_KEY_0": "url.file:///Users/rockie/Documents/gh-rockie/rustify-ui.insteadOf",
+          "GIT_CONFIG_VALUE_0": "https://github.com/rockie/rustify-ui"
+        },
+        "path_prepend": "/opt/homebrew/opt/python@3.12/libexec/bin"
+      },
+      "pid": 39991,
+      "exit_code": 0,
+      "milliseconds": 7447.801
+    },
+    {
+      "name": "root-fmt",
+      "command": [
+        "cargo",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "cwd": "/Users/rockie/Documents/gh-rockie/rustify-ui",
+      "log": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c4-root-fmt-r1.log",
+      "source_guard": "v14-c4-native-sources-before-r1.json",
+      "environment": {
+        "CARGO_NET_OFFLINE": "true",
+        "process_transport": {
+          "CARGO_NET_GIT_FETCH_WITH_CLI": "true",
+          "GIT_CONFIG_COUNT": "1",
+          "GIT_CONFIG_KEY_0": "url.file:///Users/rockie/Documents/gh-rockie/rustify-ui.insteadOf",
+          "GIT_CONFIG_VALUE_0": "https://github.com/rockie/rustify-ui"
+        },
+        "path_prepend": "/opt/homebrew/opt/python@3.12/libexec/bin"
+      },
+      "pid": 40168,
+      "exit_code": 0,
+      "milliseconds": 1468.127
+    }
+  ],
+  "active": null,
+  "all_passed": true,
+  "elapsed_seconds": 566.444
+}

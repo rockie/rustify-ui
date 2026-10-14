@@ -1,0 +1,176 @@
+{
+  "scope": "one owned native Safari tab; observed MCP output schemas only",
+  "C": "c1061ced3deaa4e6669bc45eb3382306fa85c958",
+  "R": "0494f304f0f9f8b620affb7309df23db3cb2377c",
+  "records": [
+    {
+      "name": "create_tab",
+      "args": {
+        "url": "http://127.0.0.1:49746/rustify-ui/"
+      },
+      "result": {
+        "content": [
+          {
+            "text": "{\"handle\": \"page-DD70685F-A7DB-4EFB-BCB1-1F59AB1D76C5\"}",
+            "type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "name": "switch_tab",
+      "args": {
+        "handle": "page-DD70685F-A7DB-4EFB-BCB1-1F59AB1D76C5"
+      },
+      "result": {
+        "content": [
+          {
+            "text": "Switched to tab page-DD70685F-A7DB-4EFB-BCB1-1F59AB1D76C5",
+            "type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "name": "evaluate_javascript",
+      "args": {
+        "expression": "return \"__PROBE__\"+JSON.stringify({title:document.title,lang:document.documentElement.lang,icon:document.querySelector(\"link[rel=icon]\")?.href,ua:navigator.userAgent});"
+      },
+      "result": {
+        "content": [
+          {
+            "text": "\"__PROBE__{\\\"title\\\":\\\"Rustify UI\\\",\\\"lang\\\":\\\"en\\\",\\\"icon\\\":\\\"data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22/%3E\\\",\\\"ua\\\":\\\"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.0.1 Safari/605.1.15\\\"}\"",
+            "type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "name": "list_network_requests",
+      "args": {
+        "tab_handle": "page-DD70685F-A7DB-4EFB-BCB1-1F59AB1D76C5",
+        "clear": true
+      },
+      "result": {
+        "content": [
+          {
+            "text": "{\"count\":0,\"requests\":[]}",
+            "type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "name": "browser_console_messages",
+      "args": {
+        "tab_handle": "page-DD70685F-A7DB-4EFB-BCB1-1F59AB1D76C5",
+        "clear": true,
+        "level_filter": [
+          "error"
+        ],
+        "limit": 100
+      },
+      "result": {
+        "content": [
+          {
+            "text": "[]",
+            "type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "name": "navigate_to_url",
+      "args": {
+        "tab_uuid": "page-DD70685F-A7DB-4EFB-BCB1-1F59AB1D76C5",
+        "url": "http://127.0.0.1:49746/rustify-ui/components/button/"
+      },
+      "result": {
+        "content": [
+          {
+            "text": "{\"format\":\"textTree\",\"content\":\"root scrollPosition=(0,0) contentSize=[1024×2061]\\n\\t'Skip to content'\\n\\toverlay\\n\\t\\tlink uid=159 url=:49746\\/rustify-ui 'Rustify UI'\\n\\t\\tnavigation label='Site links'\\n\\t\\t\\tlist\\n\\t\\t\\t\\tlink uid=160 url=github.com\\/rockie\\/rustify-ui\\n\\t\\tlabel=Theme\\n\\t\\t\\tbutton uid=161 'System'\\n\\t\\t\\tbutton uid=162 'Light'\\n\\t\\t\\tbutton uid=163 'Dark'\\n\\tscrollable uid=164 label=Menu scrollPosition=(0,0) contentSize=[240×1284]\\n\\t\\tsection\\n\\t\\t\\t'Guides'\\n\\t\\t\\tlist\\n\\t\\t\\t\\tlink uid=165 url=:49746\\/rustify-ui\\/quickstart 'Quick start'\\n\\t\\t\\t\\tlink uid=166 url=:49746\\/rustify-ui\\/architecture\\n\\t\\t\\t\\tlink uid=167 url=:49746\\/rustify-ui\\/navigation\\n\\t\\t\\t\\tlink uid=168 url=:49746\\/rustify-ui\\/workspace\\n\\t\\t\\t\\tlink uid=169 url=:49746\\/rustify-ui\\/forms\\n\\t\\t\\t\\tlink uid=170 url=:49746\\/rustify-ui\\/i18n 'Languages, formatting and text'\\n\\t\\t\\t\\tlink uid=171 url=:49746\\/rustify-ui\\/data 'Data larger than the screen'\\n\\t\\t\\t\\tlink uid=172 url=:49746\\/rustify-ui\\/themes 'Theme documents'\\n\\t\\t\\t\\tlink uid=173 url=:49746\\/rustify-ui\\/utility 'Runtime utilities'\\n\\t\\t\\t\\tlink uid=174 url=:49746\\/rustify-ui\\/compatibility 'Compatibility and capability boundaries (P1 research preview)'\\n\\t\\t\\t\\tlink uid=175 url=:49746\\/rustify-ui\\/components 'Component catalogue'\\n\\t\\t\\t\\tlink uid=176 url=:49746\\/rustify-ui\\/vellum 'Vellum example and framework capabilities'\\n\\t\\tsection\\n\\t\\t\\t'Components'\\n\\t\\t\\tlist\\n\\t\\t\\t\\tlink uid=177 'Button'\\n\\t\\t\\t\\tlink uid=178 url=:49746\\/rustify-ui\\/components\\/label\\n\\t\\t\\t\\tlink uid=179 url=:49746\\/rustify-ui\\/components\\/link\\n\\t'On this page'\\n\\t'Button'\\n\\tarticle\\n\\t\\t'label as children, variant, size, disabled; a disabled button leaves the tab order and calls…'\\n\\t\\t'Example'\\n\\t\\tsection\\n\\t\\t\\tlabelledby='Interactive example'\\n\\t\\t\\t\\tbutton uid=180 'Increment'\\n\\t\\t\\t\\tbutton uid=181 'Reset'\\n\\t\\t\\t\\tbutton uid=182 'Unavailable'\\n\\t\\t\\t\\t'Count: 0'\\n\\t\\t\\trole=status\\n\\t\\t\\t\\t'Interactive example'\\n\\t\\t\\t\\t'Loading interactive example…'\\n\\t\\t\\t'site\\/src\\/demos\\/basics.rs'\\n\\t\\t\\trole=tablist\\n\\t\\t\\t\\tbutton uid=183 role=tab selected=true 'Function'\\n\\t\\t\\t\\tbutton uid=184 role=tab 'Full file'\\n\\t\\t\\tbutton uid=185 'Copy'\\n\\t\\t\\trole=tabpanel labelledby=Function\\n\\t\\t\\t\\tscrollable uid=186 scrollPosition=(0,0) contentSize=[906×490]\",\"url\":\"http:\\/\\/127.0.0.1:49746\\/rustify-ui\\/components\\/button\\/\",\"title\":\"Button | Rustify UI\"}",
+            "type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "name": "evaluate_javascript",
+      "args": {
+        "expression": "return \"__PROBE__\"+JSON.stringify({state:document.querySelector(\"[data-rd-island-state]\")?.getAttribute(\"data-rd-island-state\"),output:document.querySelector(\"[data-demo-state]\")?.textContent});"
+      },
+      "result": {
+        "content": [
+          {
+            "text": "\"__PROBE__{\\\"state\\\":\\\"loading\\\",\\\"output\\\":\\\"0\\\"}\"",
+            "type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "name": "list_network_requests",
+      "args": {
+        "tab_handle": "page-DD70685F-A7DB-4EFB-BCB1-1F59AB1D76C5",
+        "clear": false
+      },
+      "result": {
+        "content": [
+          {
+            "text": "{\"count\":10,\"requests\":[{\"duration_ms\":0,\"initiator\":{\"type\":\"other\"},\"method\":\"GET\",\"mime_type\":\"text/html\",\"request_id\":\"0.172\",\"response_size_bytes\":113492,\"started_at_iso8601\":\"2026-10-13T22:22:09.230Z\",\"status\":200,\"url\":\"http://127.0.0.1:49746/rustify-ui/components/button/\"},{\"duration_ms\":0,\"initiator\":{\"type\":\"parser\",\"url\":\"http://127.0.0.1:49746/rustify-ui/components/button/\"},\"method\":\"GET\",\"mime_type\":\"text/css\",\"request_id\":\"0.176\",\"response_size_bytes\":65182,\"started_at_iso8601\":\"2026-10-13T22:22:09.238Z\",\"status\":200,\"url\":\"http://127.0.0.1:49746/rustify-ui/assets/site.a412d899bf.css\"},{\"duration_ms\":0,\"initiator\":{\"type\":\"parser\",\"url\":\"http://127.0.0.1:49746/rustify-ui/components/button/\"},\"method\":\"GET\",\"mime_type\":\"text/javascript\",\"request_id\":\"0.177\",\"response_size_bytes\":6697,\"started_at_iso8601\":\"2026-10-13T22:22:09.238Z\",\"status\":200,\"url\":\"http://127.0.0.1:49746/rustify-ui/assets/mode.5e2c2584b0.js\"},{\"duration_ms\":0,\"initiator\":{\"type\":\"parser\",\"url\":\"http://127.0.0.1:49746/rustify-ui/components/button/\"},\"method\":\"GET\",\"mime_type\":\"text/javascript\",\"request_id\":\"0.178\",\"response_size_bytes\":13629,\"started_at_iso8601\":\"2026-10-13T22:22:09.238Z\",\"status\":200,\"url\":\"http://127.0.0.1:49746/rustify-ui/assets/site.2529a0d647.js\"},{\"duration_ms\":0,\"initiator\":{\"type\":\"parser\",\"url\":\"http://127.0.0.1:49746/rustify-ui/components/button/\"},\"method\":\"GET\",\"mime_type\":\"text/javascript\",\"request_id\":\"0.179\",\"response_size_bytes\":2275,\"started_at_iso8601\":\"2026-10-13T22:22:09.238Z\",\"status\":200,\"url\":\"http://127.0.0.1:49746/rustify-ui/assets/islands/16238bfff7f917931cdd2e95d33b9cb6a917e5cd41dfb869aed897e4cd07bccb/islands.js\"},{\"duration_ms\":0,\"initiator\":{\"type\":\"parser\",\"url\":\"http://127.0.0.1:49746/rustify-ui/components/button/\"},\"method\":\"GET\",\"mime_type\":\"text/javascript\",\"request_id\":\"0.735\",\"response_size_bytes\":11686,\"started_at_iso8601\":\"2026-10-13T22:22:09.266Z\",\"status\":200,\"url\":\"http://127.0.0.1:49746/rustify-ui/assets/islands/16238bfff7f917931cdd2e95d33b9cb6a917e5cd41dfb869aed897e4cd07bccb/dom-loader.js\"},{\"duration_ms\":0,\"initiator\":{\"type\":\"script\"},\"method\":\"GET\",\"mime_type\":\"application/wasm\",\"request_id\":\"0.737\",\"response_size_bytes\":9753547,\"started_at_iso8601\":\"2026-10-13T22:22:09.270Z\",\"status\":200,\"url\":\"http://127.0.0.1:49746/rustify-ui/assets/islands/16238bfff7f917931cdd2e95d33b9cb6a917e5cd41dfb869aed897e4cd07bccb/app_bg.wasm\"},{\"duration_ms\":0,\"initiator\":{\"type\":\"other\"},\"method\":\"GET\",\"mime_type\":\"image/svg+xml\",\"request_id\":\"0.741\",\"response_size_bytes\":0,\"started_at_iso8601\":\"2026-10-13T22:22:09.291Z\",\"status\":200,\"url\":\"data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22/%3E\"},{\"duration_ms\":0,\"initiator\":{\"type\":\"script\"},\"method\":\"GET\",\"mime_type\":\"text/javascript\",\"request_id\":\"0.739\",\"response_size_bytes\":61177,\"started_at_iso8601\":\"2026-10-13T22:22:09.288Z\",\"status\":200,\"url\":\"http://127.0.0.1:49746/rustify-ui/assets/islands/16238bfff7f917931cdd2e95d33b9cb6a917e5cd41dfb869aed897e4cd07bccb/app.js\"},{\"duration_ms\":0,\"initiator\":{\"type\":\"other\"},\"method\":\"GET\",\"mime_type\":\"text/javascript\",\"request_id\":\"0.744\",\"response_size_bytes\":7096,\"started_at_iso8601\":\"2026-10-13T22:22:09.292Z\",\"status\":200,\"url\":\"http://127.0.0.1:49746/rustify-ui/assets/islands/16238bfff7f917931cdd2e95d33b9cb6a917e5cd41dfb869aed897e4cd07bccb/snippets/rustify-ui-4db2f10f10788f4c/web/dom-runtime.js\"}]}",
+            "type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "name": "get_network_request",
+      "args": {
+        "request_id": "0.737"
+      },
+      "result": {
+        "content": [
+          {
+            "text": "{\"request\":{\"duration_ms\":0,\"initiator\":{\"type\":\"script\"},\"method\":\"GET\",\"mime_type\":\"application/wasm\",\"request_headers\":{\"Accept\":\"*/*\",\"Referer\":\"http://127.0.0.1:49746/rustify-ui/components/button/\",\"Sec-Fetch-Dest\":\"empty\",\"Sec-Fetch-Mode\":\"cors\",\"Sec-Fetch-Site\":\"same-origin\",\"User-Agent\":\"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.0.1 Safari/605.1.15\"},\"request_id\":\"0.737\",\"response_body_fetch_failed\":\"binary\",\"response_body_size_bytes\":9753547,\"response_headers\":{\"Cache-Control\":\"no-cache\",\"Connection\":\"close\",\"Content-Length\":\"9753547\",\"Content-Security-Policy\":\"default-src 'none'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; media-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'\",\"Content-Type\":\"application/wasm\",\"X-Content-Type-Options\":\"nosniff\"},\"response_mime_type\":\"application/wasm\",\"started_at_iso8601\":\"2026-10-13T22:22:09.270Z\",\"status\":200,\"timing\":{\"connect_ms\":0.16659032553434372,\"content_download_ms\":0,\"dns_ms\":0.08335337042808533,\"ssl_ms\":0,\"ttfb_ms\":4854.535567574203},\"url\":\"http://127.0.0.1:49746/rustify-ui/assets/islands/16238bfff7f917931cdd2e95d33b9cb6a917e5cd41dfb869aed897e4cd07bccb/app_bg.wasm\"}}",
+            "type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "name": "browser_console_messages",
+      "args": {
+        "tab_handle": "page-DD70685F-A7DB-4EFB-BCB1-1F59AB1D76C5",
+        "clear": true,
+        "level_filter": [
+          "error"
+        ],
+        "limit": 100
+      },
+      "result": {
+        "content": [
+          {
+            "text": "[]",
+            "type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "name": "close_tab",
+      "args": {
+        "handle": "page-DD70685F-A7DB-4EFB-BCB1-1F59AB1D76C5"
+      },
+      "result": {
+        "content": [
+          {
+            "text": "Closed tab page-DD70685F-A7DB-4EFB-BCB1-1F59AB1D76C5",
+            "type": "text"
+          }
+        ]
+      }
+    }
+  ],
+  "passed": true,
+  "owned_tab_closed": true
+}

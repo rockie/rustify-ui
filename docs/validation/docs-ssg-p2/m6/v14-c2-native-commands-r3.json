@@ -1,0 +1,421 @@
+{
+  "candidate_C": "c1061ced3deaa4e6669bc45eb3382306fa85c958",
+  "framework_R": "0494f304f0f9f8b620affb7309df23db3cb2377c",
+  "scope": "authorized independent remainder while native dev CSS-selector test correction remains pending",
+  "prior_red_preserved": "v14-c2-cli-test-r1.log",
+  "commands": [
+    {
+      "name": "cli-clippy",
+      "command": [
+        "mbx",
+        "clippy",
+        "--locked",
+        "-p",
+        "rustify-docs-cli",
+        "--all-targets",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "cwd": "/Users/rockie/Documents/gh-rockie/rustify-ui",
+      "log": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c2-cli-clippy-r1.log",
+      "started_at_ms": 1791934759732.5352,
+      "exit_code": 0,
+      "milliseconds": 3458.221923828125,
+      "test_results": [],
+      "test_totals": {
+        "passed": 0,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered": 0
+      }
+    },
+    {
+      "name": "cli-build",
+      "command": [
+        "mbx",
+        "build",
+        "--locked",
+        "-p",
+        "rustify-docs-cli",
+        "--profile",
+        "docs-cli"
+      ],
+      "cwd": "/Users/rockie/Documents/gh-rockie/rustify-ui",
+      "log": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c2-cli-build-r1.log",
+      "started_at_ms": 1791934763276.9438,
+      "exit_code": 0,
+      "milliseconds": 27297.43310546875,
+      "test_results": [],
+      "test_totals": {
+        "passed": 0,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered": 0
+      }
+    },
+    {
+      "name": "syntax-test",
+      "command": [
+        "mbx",
+        "test",
+        "--locked",
+        "-p",
+        "rustify-docs-syntax"
+      ],
+      "cwd": "/Users/rockie/Documents/gh-rockie/rustify-ui",
+      "log": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c2-syntax-test-r1.log",
+      "started_at_ms": 1791934790794.504,
+      "exit_code": 0,
+      "milliseconds": 1509.858154296875,
+      "test_results": [
+        {
+          "status": "ok",
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0
+        },
+        {
+          "status": "ok",
+          "passed": 29,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0
+        },
+        {
+          "status": "ok",
+          "passed": 1,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0
+        }
+      ],
+      "test_totals": {
+        "passed": 30,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered": 0
+      }
+    },
+    {
+      "name": "syntax-clippy",
+      "command": [
+        "mbx",
+        "clippy",
+        "--locked",
+        "-p",
+        "rustify-docs-syntax",
+        "--all-targets",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "cwd": "/Users/rockie/Documents/gh-rockie/rustify-ui",
+      "log": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c2-syntax-clippy-r1.log",
+      "started_at_ms": 1791934792416.9978,
+      "exit_code": 0,
+      "milliseconds": 1218.417236328125,
+      "test_results": [],
+      "test_totals": {
+        "passed": 0,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered": 0
+      }
+    },
+    {
+      "name": "macros-test",
+      "command": [
+        "mbx",
+        "test",
+        "--locked",
+        "-p",
+        "rustify-docs-macros"
+      ],
+      "cwd": "/Users/rockie/Documents/gh-rockie/rustify-ui",
+      "log": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c2-macros-test-r1.log",
+      "started_at_ms": 1791934793712.0828,
+      "exit_code": 0,
+      "milliseconds": 2156.780029296875,
+      "test_results": [
+        {
+          "status": "ok",
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0
+        },
+        {
+          "status": "ok",
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0
+        }
+      ],
+      "test_totals": {
+        "passed": 0,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered": 0
+      }
+    },
+    {
+      "name": "macros-clippy",
+      "command": [
+        "mbx",
+        "clippy",
+        "--locked",
+        "-p",
+        "rustify-docs-macros",
+        "--all-targets",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "cwd": "/Users/rockie/Documents/gh-rockie/rustify-ui",
+      "log": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c2-macros-clippy-r1.log",
+      "started_at_ms": 1791934795947.9412,
+      "exit_code": 0,
+      "milliseconds": 631.283935546875,
+      "test_results": [],
+      "test_totals": {
+        "passed": 0,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered": 0
+      }
+    },
+    {
+      "name": "site-ssr-test",
+      "command": [
+        "mbx",
+        "test",
+        "--locked",
+        "-p",
+        "rustify-docs",
+        "--no-default-features",
+        "--features",
+        "site-ssr"
+      ],
+      "cwd": "/Users/rockie/Documents/gh-rockie/rustify-ui",
+      "log": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c2-site-ssr-test-r1.log",
+      "started_at_ms": 1791934796656.212,
+      "exit_code": 0,
+      "milliseconds": 2288.4248046875,
+      "test_results": [
+        {
+          "status": "ok",
+          "passed": 9,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0
+        },
+        {
+          "status": "ok",
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0
+        },
+        {
+          "status": "ok",
+          "passed": 1,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0
+        },
+        {
+          "status": "ok",
+          "passed": 19,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0
+        },
+        {
+          "status": "ok",
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0
+        }
+      ],
+      "test_totals": {
+        "passed": 29,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered": 0
+      }
+    },
+    {
+      "name": "site-ssr-clippy",
+      "command": [
+        "mbx",
+        "clippy",
+        "--locked",
+        "-p",
+        "rustify-docs",
+        "--no-default-features",
+        "--features",
+        "site-ssr",
+        "--all-targets",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "cwd": "/Users/rockie/Documents/gh-rockie/rustify-ui",
+      "log": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c2-site-ssr-clippy-r1.log",
+      "started_at_ms": 1791934799024.16,
+      "exit_code": 0,
+      "milliseconds": 2562.536865234375,
+      "test_results": [],
+      "test_totals": {
+        "passed": 0,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered": 0
+      }
+    },
+    {
+      "name": "docs-hydrate-check",
+      "command": [
+        "mbx",
+        "check",
+        "--locked",
+        "-p",
+        "rustify-docs",
+        "--no-default-features",
+        "--features",
+        "hydrate",
+        "--target",
+        "wasm32-unknown-unknown"
+      ],
+      "cwd": "/Users/rockie/Documents/gh-rockie/rustify-ui",
+      "log": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c2-docs-hydrate-check-r1.log",
+      "started_at_ms": 1791934801675.932,
+      "exit_code": 0,
+      "milliseconds": 5916.7900390625,
+      "test_results": [],
+      "test_totals": {
+        "passed": 0,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered": 0
+      }
+    },
+    {
+      "name": "sources",
+      "command": [
+        "mbx",
+        "xtask",
+        "sources",
+        "verify"
+      ],
+      "cwd": "/Users/rockie/Documents/gh-rockie/rustify-ui",
+      "log": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c2-sources-r1.log",
+      "started_at_ms": 1791934807669.27,
+      "exit_code": 0,
+      "milliseconds": 14509.494140625,
+      "test_results": [],
+      "test_totals": {
+        "passed": 0,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered": 0
+      }
+    },
+    {
+      "name": "css",
+      "command": [
+        "mbx",
+        "xtask",
+        "css",
+        "--check"
+      ],
+      "cwd": "/Users/rockie/Documents/gh-rockie/rustify-ui",
+      "log": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c2-css-r1.log",
+      "started_at_ms": 1791934822255.4163,
+      "exit_code": 0,
+      "milliseconds": 1377.2626953125,
+      "test_results": [],
+      "test_totals": {
+        "passed": 0,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered": 0
+      }
+    },
+    {
+      "name": "catalog",
+      "command": [
+        "mbx",
+        "xtask",
+        "catalog",
+        "--write",
+        "docs/components.md",
+        "--check"
+      ],
+      "cwd": "/Users/rockie/Documents/gh-rockie/rustify-ui",
+      "log": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c2-catalog-r1.log",
+      "started_at_ms": 1791934823712.4102,
+      "exit_code": 0,
+      "milliseconds": 600.932861328125,
+      "test_results": [],
+      "test_totals": {
+        "passed": 0,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered": 0
+      }
+    },
+    {
+      "name": "features",
+      "command": [
+        "mbx",
+        "xtask",
+        "docs-verify",
+        "--group",
+        "features"
+      ],
+      "cwd": "/Users/rockie/Documents/gh-rockie/rustify-ui",
+      "log": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c2-features-r1.log",
+      "started_at_ms": 1791934824419.99,
+      "exit_code": 0,
+      "milliseconds": 133788.11303710938,
+      "test_results": [],
+      "test_totals": {
+        "passed": 0,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered": 0
+      }
+    }
+  ],
+  "remaining": [],
+  "status": "passed",
+  "active": null
+}

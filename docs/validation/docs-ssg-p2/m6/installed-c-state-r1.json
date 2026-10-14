@@ -1,0 +1,16 @@
+{
+  "scope": "real Git installation at fixed C; public Git source identities preserved; process-local transport remap only, not public GitHub availability verification",
+  "repo": "/Users/rockie/Documents/gh-rockie/rustify-ui",
+  "candidate_sha": "8e86626fce74ffc45085da6377ca9aa64312fe59",
+  "framework_revision": "676a55771ab77faf8c476a836025d62905a2d3e2",
+  "work": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-installed-c-hv5ysh41",
+  "installroot": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-installed-c-hv5ysh41/installed",
+  "binary": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-installed-c-hv5ysh41/installed/bin/rustify-docs",
+  "transport_environment": {
+    "CARGO_NET_GIT_FETCH_WITH_CLI": "true",
+    "GIT_CONFIG_COUNT": "1",
+    "GIT_CONFIG_KEY_0": "url.file:///Users/rockie/Documents/gh-rockie/rustify-ui.insteadOf",
+    "GIT_CONFIG_VALUE_0": "https://github.com/rockie/rustify-ui"
+  },
+  "process_path_prepend": "/opt/homebrew/opt/python@3.12/libexec/bin"
+}

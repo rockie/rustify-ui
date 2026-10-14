@@ -1,0 +1,26 @@
+{
+  "name": "cli-test",
+  "command": [
+    "mbx",
+    "test",
+    "--locked",
+    "-p",
+    "rustify-docs-cli"
+  ],
+  "cwd": "/Users/rockie/Documents/gh-rockie/rustify-ui",
+  "log": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c4-cli-test-r1.log",
+  "source_guard": "v14-c4-native-sources-before-r1.json",
+  "environment": {
+    "CARGO_NET_OFFLINE": "true",
+    "process_transport": {
+      "CARGO_NET_GIT_FETCH_WITH_CLI": "true",
+      "GIT_CONFIG_COUNT": "1",
+      "GIT_CONFIG_KEY_0": "url.file:///Users/rockie/Documents/gh-rockie/rustify-ui.insteadOf",
+      "GIT_CONFIG_VALUE_0": "https://github.com/rockie/rustify-ui"
+    },
+    "path_prepend": "/opt/homebrew/opt/python@3.12/libexec/bin"
+  },
+  "pid": 23260,
+  "exit_code": 0,
+  "milliseconds": 556607.32
+}

@@ -1,0 +1,11 @@
+{
+  "command": [
+    "node",
+    "docs/validation/docs-ssg-p2/m6/uat-author-continuous.mjs",
+    "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/uat-author-continuous-c4-r1"
+  ],
+  "exit_code": 0,
+  "milliseconds": 64931.781982421875,
+  "C4": "d301344eeb27e22907c59a10805ae0cebf8dee99",
+  "expected_native_chrome": "155.0.8059.40, latest patch unavailable gap retained"
+}

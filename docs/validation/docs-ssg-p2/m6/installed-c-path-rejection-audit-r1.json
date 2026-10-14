@@ -1,0 +1,68 @@
+{
+  "command": [
+    "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-installed-c-hv5ysh41/installed/bin/rustify-docs",
+    "build",
+    "--config",
+    "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-installed-c-hv5ysh41/legacy-path-fixture/rustify-docs.toml",
+    "--format",
+    "json"
+  ],
+  "exit_code": 1,
+  "expected_rule": "rust-framework-pair",
+  "milliseconds": 100749.203125,
+  "old_actual_product_files": 38,
+  "old_actual_product_byte_hashes_unchanged": true,
+  "source_inputs_unchanged": true,
+  "no_helper_cache": true,
+  "no_bindgen_output": true,
+  "compiler_commands": [
+    [
+      "metadata",
+      "--locked",
+      "--format-version",
+      "1",
+      "--no-default-features",
+      "--features",
+      "ssr",
+      "--manifest-path",
+      "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-installed-c-hv5ysh41/legacy-path-fixture/Cargo.toml",
+      "--offline"
+    ],
+    [
+      "build",
+      "--locked",
+      "--message-format",
+      "json",
+      "--no-default-features",
+      "--profile",
+      "docs-host-release",
+      "--features",
+      "ssr",
+      "--manifest-path",
+      "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-installed-c-hv5ysh41/legacy-path-fixture/Cargo.toml",
+      "--target-dir",
+      "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-installed-c-hv5ysh41/legacy-path-fixture/.rustify-docs/target",
+      "--bin",
+      "docs-render"
+    ],
+    [
+      "build",
+      "--locked",
+      "--message-format",
+      "json",
+      "--no-default-features",
+      "--profile",
+      "release",
+      "--features",
+      "hydrate",
+      "--manifest-path",
+      "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-installed-c-hv5ysh41/legacy-path-fixture/Cargo.toml",
+      "--target-dir",
+      "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-installed-c-hv5ysh41/legacy-path-fixture/.rustify-docs/target",
+      "--lib",
+      "--target",
+      "wasm32-unknown-unknown"
+    ]
+  ],
+  "scope": "expected refusal at fixed C for same unprojected local-path consumer; existing real product preserved"
+}

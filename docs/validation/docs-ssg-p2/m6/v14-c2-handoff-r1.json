@@ -1,0 +1,166 @@
+{
+  "candidate_C": "c1061ced3deaa4e6669bc45eb3382306fa85c958",
+  "framework_R": "0494f304f0f9f8b620affb7309df23db3cb2377c",
+  "status": "native batch completed with one stable product failure; no native green declaration",
+  "workspace_tests": {
+    "passed": 1193,
+    "ignored": 12,
+    "exit_code": 0
+  },
+  "docs_pipeline_tests": {
+    "passed": 264,
+    "failed": 0,
+    "exit_code": 0,
+    "red": "v14-c2-docs-test-r1.log",
+    "green": "v14-c2-docs-test-r2.log"
+  },
+  "cli_complete_test_set_across_original_and_remaining_targets": {
+    "passed": 147,
+    "failed": 1,
+    "ignored": 1,
+    "targets": {
+      "bin:rustify-docs": {
+        "status": "ok",
+        "passed": 72,
+        "failed": 0,
+        "ignored": 1,
+        "log": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c2-cli-test-r1.log"
+      },
+      "artifacts": {
+        "status": "ok",
+        "passed": 13,
+        "failed": 0,
+        "ignored": 0,
+        "log": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c2-cli-test-r1.log"
+      },
+      "check": {
+        "status": "ok",
+        "passed": 15,
+        "failed": 0,
+        "ignored": 0,
+        "log": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c2-cli-test-r1.log"
+      },
+      "components": {
+        "status": "ok",
+        "passed": 2,
+        "failed": 0,
+        "ignored": 0,
+        "log": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c2-cli-test-r1.log"
+      },
+      "dev": {
+        "status": "ok across preserved 13 passes + corrected single-case pass",
+        "passed": 14,
+        "failed": 0,
+        "ignored": 0,
+        "log": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c2-cli-test-r1.log",
+        "observer_single_case_fixed": {
+          "log": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c2-cli-dev-css-green-r1.log",
+          "passed": 1
+        }
+      },
+      "external": {
+        "status": "ok",
+        "passed": 2,
+        "failed": 0,
+        "ignored": 0,
+        "log": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c2-cli-remaining-tests-r1.log"
+      },
+      "faults": {
+        "status": "FAILED",
+        "passed": 8,
+        "failed": 1,
+        "ignored": 0,
+        "log": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c2-cli-remaining-tests-r1.log"
+      },
+      "new_build": {
+        "status": "ok",
+        "passed": 6,
+        "failed": 0,
+        "ignored": 0,
+        "log": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c2-cli-final-independent-tests-r1.log"
+      },
+      "new_components": {
+        "status": "ok",
+        "passed": 5,
+        "failed": 0,
+        "ignored": 0,
+        "log": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c2-cli-final-independent-tests-r1.log"
+      },
+      "reliability": {
+        "status": "ok",
+        "passed": 7,
+        "failed": 0,
+        "ignored": 0,
+        "log": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c2-cli-final-independent-tests-r1.log"
+      },
+      "rust_dev": {
+        "status": "ok",
+        "passed": 3,
+        "failed": 0,
+        "ignored": 0,
+        "log": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c2-cli-final-independent-tests-r1.log"
+      }
+    },
+    "combined_package_exit_not_claimed": true
+  },
+  "syntax_tests": {
+    "passed": 30,
+    "exit_code": 0
+  },
+  "macro_direct_tests": {
+    "passed": 0,
+    "exit_code": 0,
+    "actual_macro_behavior_covered_by_docs_site_registry_and_metadata": true
+  },
+  "site_ssr_tests": {
+    "passed": 29,
+    "exit_code": 0
+  },
+  "strict_clippy_passed": [
+    "workspace except docs/cli",
+    "docs pipeline",
+    "CLI",
+    "syntax",
+    "macros",
+    "docs site-ssr"
+  ],
+  "build_check_passed": [
+    "CLI docs-cli build",
+    "docs hydrate wasm32 check"
+  ],
+  "static_passed": [
+    "root fmt",
+    "sources verify",
+    "css --check",
+    "catalog --check"
+  ],
+  "features_group": {
+    "exit_code": 0,
+    "log": "v14-c2-features-r1.log"
+  },
+  "artifacts_group": "passed through explicit same-test-log mapping, no duplicate execution",
+  "reliability_group": "failed through same-test-log mapping, stable faults case reproduced alone",
+  "group_mapping": "v14-c2-group-reuse-r1.json",
+  "source_guard": "v14-c2-source-guard-after-r2.json",
+  "test_only_diff": "v14-c2-test-only-diff-r2.patch",
+  "failure": {
+    "test": "private_files_and_links_out_of_the_project_never_ship",
+    "assertion": "faults.rs:388",
+    "joint_log": "v14-c2-cli-remaining-tests-r1.log",
+    "single_log": "v14-c2-private-files-single-r1.log",
+    "actual_rules": [
+      "render-generation-changed:content",
+      "symlink-outside:static/outside.txt"
+    ],
+    "cause": "content::validate_inputs treats any repeated snapshot problem as changed, even when the same problem existed before and no input changed",
+    "product_edit_by_this_agent": false
+  },
+  "legacy_browser_projects": "not started; deferred to final R3/C3 per Root instruction",
+  "owned_processes_stopped": true,
+  "runtime_ownership_returned_to_Root": true,
+  "notes": [
+    "Preserved original generation and native dev stylesheet observer failures; both narrowly corrected in test-only files.",
+    "No product/runtime/template/version/lock/source asset changes.",
+    "No browser, commit, push, formal performance or unrelated project run."
+  ]
+}

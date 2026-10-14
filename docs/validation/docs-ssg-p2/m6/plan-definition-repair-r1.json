@@ -1,0 +1,19 @@
+{
+  "scope": "canonical plan correction; preserve immutable historical snapshots as originally observed",
+  "original_source_commit": "c1061ced3deaa4e6669bc45eb3382306fa85c958",
+  "source_anchor": "section10 milestone definitions M1-M7",
+  "before_sha256": "a33fb45f7f32552567006fddfebf3e607f8cc704e684e3ac716caa795eac5fa7",
+  "before_snapshot": "docs/validation/docs-ssg-p2/m6/plan-definition-repair-before-r1.md",
+  "after_sha256": "063d5f9473a893f5cbe4ea3c82ecdab09236f044de96d3c16b55481204cd6672",
+  "all_seven_definitions_exact_original": true,
+  "cause": "progress updater matched both M6 tables globally",
+  "future_update_boundary": "only section 实施进度 before section0",
+  "historical_checkpoint_limitation": "snapshots after initial R3 progress updater preserve the erroneous M6 definition; do not use their section10 for acceptance requirements",
+  "historical_snapshots_with_invalid_M6_definition": [
+    "docs/validation/docs-ssg-p2/m6/plan-before-c3-formal-acceptance.md",
+    "docs/validation/docs-ssg-p2/m6/plan-before-c3-freeze.md",
+    "docs/validation/docs-ssg-p2/m6/plan-before-c4-freeze.md",
+    "docs/validation/docs-ssg-p2/m6/plan-before-r4-perf-fix.md",
+    "docs/validation/docs-ssg-p2/m6/plan-definition-repair-before-r1.md"
+  ]
+}

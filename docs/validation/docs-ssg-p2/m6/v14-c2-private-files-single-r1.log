@@ -1,0 +1,30 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.33s
+     Running tests/faults.rs (target/debug/deps/faults-c4c73a26c33c2d48)
+
+running 1 test
+test private_files_and_links_out_of_the_project_never_ship ... FAILED
+
+failures:
+
+---- private_files_and_links_out_of_the_project_never_ship stdout ----
+
+thread 'private_files_and_links_out_of_the_project_never_ship' (42199822) panicked at crates/rustify-docs-cli/tests/faults.rs:388:5:
+assertion `left == right` failed
+  left: [("render-generation-changed", "content"), ("symlink-outside", "static/outside.txt")]
+ right: [("symlink-outside", "static/outside.txt")]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    private_files_and_links_out_of_the_project_never_ship
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 8 filtered out; finished in 2.60s
+
+error: test failed, to rerun pass `-p rustify-docs-cli --test faults`

@@ -1,0 +1,19 @@
+{
+  "command": [
+    "cargo",
+    "generate-lockfile",
+    "--manifest-path",
+    "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair-preparation-q08yp2lv/docs-site/Cargo.toml"
+  ],
+  "cwd": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair-preparation-q08yp2lv/docs-site",
+  "transport_environment": {
+    "CARGO_NET_GIT_FETCH_WITH_CLI": "true",
+    "GIT_CONFIG_COUNT": "1",
+    "GIT_CONFIG_KEY_0": "url.file:///Users/rockie/Documents/gh-rockie/rustify-ui.insteadOf",
+    "GIT_CONFIG_VALUE_0": "https://github.com/rockie/rustify-ui"
+  },
+  "scope": "public Cargo source URL retained; only read transport resolves to actual local R",
+  "started_at_ms": 1791924694990.884,
+  "exit_code": 0,
+  "ended_at_ms": 1791924704326.3308
+}

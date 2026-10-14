@@ -1,0 +1,9 @@
+{
+  "scope": "prepared/uncommitted C3 binary only; source is actual build HEAD, not R3 or a final installed C3",
+  "version": "rustify-docs 0.1.13",
+  "build_info": "rustify-docs 0.1.13\npanic: unwind\ngrammars: syntect-5.3.0+two-face-0.5.2+bat-0.26.1+fancy\nsource: 580d14310a06fea0786cbc3a7d0c0f43d658ba68",
+  "source": "580d14310a06fea0786cbc3a7d0c0f43d658ba68",
+  "binary": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-cli/rustify-docs",
+  "binary_sha256": "b1005e9fa8a0cc5c1a8f5b43a2387a1dcb5e343b520634c059ccb522b7fc7a24",
+  "framework_revision": "c562008291ef1b1826891944e0d81a5d61d775b8"
+}

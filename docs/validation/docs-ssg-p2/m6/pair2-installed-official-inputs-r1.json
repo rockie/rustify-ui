@@ -1,0 +1,13 @@
+{
+  "candidate": "c1061ced3deaa4e6669bc45eb3382306fa85c958",
+  "framework": "0494f304f0f9f8b620affb7309df23db3cb2377c",
+  "protected_files": 11397,
+  "all_receipt_inputs_unchanged_after_check_build": true,
+  "only_two_tracked_files_changed": [
+    "site/Cargo.lock",
+    "site/Cargo.toml"
+  ],
+  "lock_sha256": "35788e431cabe18bdcc941ccf16d1e2233df89858360727bf2b987f351d2ee1a",
+  "html_heads_with_data_icon": 38,
+  "dist": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair2-installed-8j63t8o1/official-c2/site/dist"
+}

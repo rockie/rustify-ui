@@ -1,0 +1,100 @@
+{
+  "scope": "C2 preparation only, R2 local read transport with public package URLs; actual C2 commit/install still pending",
+  "R2": "0494f304f0f9f8b620affb7309df23db3cb2377c",
+  "cli_version": "0.1.12",
+  "identity": {
+    "scope": "local uncommitted C2 preparation binary; actual source identity is not final C2",
+    "version": "rustify-docs 0.1.12",
+    "build_info": "rustify-docs 0.1.12\npanic: unwind\ngrammars: syntect-5.3.0+two-face-0.5.2+bat-0.26.1+fancy\nsource: 0494f304f0f9f8b620affb7309df23db3cb2377c",
+    "binary": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-cli/rustify-docs",
+    "binary_sha256": "a8ca3d0d70012883a89f3e7a9039d64929cea72a5ff36ea90e9065374d8e88c0",
+    "framework_revision": "0494f304f0f9f8b620affb7309df23db3cb2377c"
+  },
+  "allowed_files": [
+    "crates/rustify-docs-cli/Cargo.toml",
+    "crates/rustify-docs-cli/assets/framework-revision.txt",
+    "crates/rustify-docs-cli/assets/components-Cargo.lock",
+    "Cargo.lock",
+    "docs/docs-ssg.md"
+  ],
+  "allowed_diff": "pair2-preparation-allowed-diff-r1.patch",
+  "packages": 193,
+  "third_party_records_all_unchanged": true,
+  "only_six_framework_sources_changed": true,
+  "lock_sha256": "c42635807affd79947f5afc581ef5a5af544d1a23bd4acc99ac25c10bde78f65",
+  "lock_bytes": 48590,
+  "offline_commands": "pair2-preparation-offline-commands-r1.json",
+  "checks": [
+    {
+      "mode": "ssr",
+      "exit_code": 0
+    },
+    {
+      "mode": "hydrate",
+      "exit_code": 0
+    }
+  ],
+  "actual_new": [
+    {
+      "command": [
+        "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-cli/rustify-docs",
+        "new",
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair2-preparation-czwynoju/actual-new/docs-site",
+        "--template",
+        "components"
+      ],
+      "exit_code": 0,
+      "package": "docs-site",
+      "files": 11,
+      "only_source_free_root_name_changed": true,
+      "lock_sha256": "c42635807affd79947f5afc581ef5a5af544d1a23bd4acc99ac25c10bde78f65",
+      "root_package": {
+        "name": "docs-site",
+        "version": "0.1.0",
+        "dependencies": [
+          "leptos",
+          "rustify-components",
+          "rustify-docs",
+          "rustify-ui",
+          "wasm-bindgen"
+        ]
+      }
+    },
+    {
+      "command": [
+        "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-cli/rustify-docs",
+        "new",
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair2-preparation-czwynoju/actual-new/Pair2 named root",
+        "--template",
+        "components"
+      ],
+      "exit_code": 0,
+      "package": "pair2-named-root",
+      "files": 11,
+      "only_source_free_root_name_changed": true,
+      "lock_sha256": "b7b50242fbdf9c7983a7cacad9da400c6b11480f416e0b0b8aba620fc46b6e0d",
+      "root_package": {
+        "name": "pair2-named-root",
+        "version": "0.1.0",
+        "dependencies": [
+          "leptos",
+          "rustify-components",
+          "rustify-docs",
+          "rustify-ui",
+          "wasm-bindgen"
+        ]
+      }
+    }
+  ],
+  "immutable_source_equals_R2": true,
+  "old_C1_state_unchanged": true,
+  "existing_user_dirty_cases_untouched": true,
+  "root_lock_diff": "only CLI0.1.11->0.1.12",
+  "all_own_processes_closed": true,
+  "resource_handoff_to_root": true,
+  "work": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair2-preparation-czwynoju",
+  "remaining": [
+    "Root review and C2 commit",
+    "actual fixed-C2 Git install and affected complete gates"
+  ]
+}

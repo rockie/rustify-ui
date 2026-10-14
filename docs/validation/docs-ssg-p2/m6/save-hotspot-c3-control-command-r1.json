@@ -1,0 +1,21 @@
+{
+  "command": [
+    "node",
+    "tests/docs-ssg/harness/measure-save.mjs",
+    "--bin",
+    "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair3-installed-uvgj6yil/installed/bin/rustify-docs",
+    "--site",
+    "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/m6-b-p1-c3",
+    "--page",
+    "/en/g07/page-018/",
+    "--samples",
+    "3",
+    "--short",
+    "3",
+    "--out",
+    "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/save-hotspot-c3-control-r1.json"
+  ],
+  "exit_code": 1,
+  "milliseconds": 38269.541748046875,
+  "scope": "small diagnostic comparison, unchanged 1000ms harness budget; not formal V12"
+}

@@ -1,0 +1,49 @@
+[
+  {
+    "name": "fmt",
+    "command": [
+      "cargo",
+      "fmt",
+      "--all",
+      "--",
+      "--check"
+    ],
+    "log": "docs/validation/docs-ssg-p2/m6/save-hotspot-development-fmt-r1.log",
+    "exit_code": 0,
+    "seconds": 1.499
+  },
+  {
+    "name": "clippy",
+    "command": [
+      "mbx",
+      "clippy",
+      "--locked",
+      "-p",
+      "rustify-docs",
+      "-p",
+      "rustify-docs-cli",
+      "--all-targets",
+      "--",
+      "-D",
+      "warnings"
+    ],
+    "log": "docs/validation/docs-ssg-p2/m6/save-hotspot-development-clippy-r1.log",
+    "exit_code": 0,
+    "seconds": 7.148
+  },
+  {
+    "name": "build",
+    "command": [
+      "mbx",
+      "build",
+      "--locked",
+      "-p",
+      "rustify-docs-cli",
+      "--profile",
+      "docs-cli"
+    ],
+    "log": "docs/validation/docs-ssg-p2/m6/save-hotspot-development-build-r1.log",
+    "exit_code": 0,
+    "seconds": 48.448
+  }
+]

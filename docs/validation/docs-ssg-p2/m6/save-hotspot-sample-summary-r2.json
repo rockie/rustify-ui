@@ -1,0 +1,61 @@
+{
+  "scope": "12s sample; exact owning-crate function symbols, main rustify-docs-build thread only for percentage denominator; inclusive phases overlap and are not additive CPU percentages",
+  "build_thread_samples": 7809,
+  "metrics": {
+    "generate_extended": {
+      "all_threads_inclusive": 7580,
+      "build_thread_inclusive": 7580,
+      "build_thread_exclusive": 0,
+      "build_thread_inclusive_pct": 97.07
+    },
+    "final_documents": {
+      "all_threads_inclusive": 7059,
+      "build_thread_inclusive": 7059,
+      "build_thread_exclusive": 27,
+      "build_thread_inclusive_pct": 90.4
+    },
+    "ids": {
+      "all_threads_inclusive": 8204,
+      "build_thread_inclusive": 2953,
+      "build_thread_exclusive": 0,
+      "build_thread_inclusive_pct": 37.82
+    },
+    "check_rendered": {
+      "all_threads_inclusive": 3928,
+      "build_thread_inclusive": 3928,
+      "build_thread_exclusive": 5,
+      "build_thread_inclusive_pct": 50.3
+    },
+    "check_document": {
+      "all_threads_inclusive": 1432,
+      "build_thread_inclusive": 0,
+      "build_thread_exclusive": 0,
+      "build_thread_inclusive_pct": 0.0
+    },
+    "semantics": {
+      "all_threads_inclusive": 11090,
+      "build_thread_inclusive": 5845,
+      "build_thread_exclusive": 58,
+      "build_thread_inclusive_pct": 74.85
+    },
+    "site_css_with_theme": {
+      "all_threads_inclusive": 35,
+      "build_thread_inclusive": 35,
+      "build_thread_exclusive": 0,
+      "build_thread_inclusive_pct": 0.45
+    },
+    "validate_inputs": {
+      "all_threads_inclusive": 69,
+      "build_thread_inclusive": 69,
+      "build_thread_exclusive": 0,
+      "build_thread_inclusive_pct": 0.88
+    },
+    "classes_collect": {
+      "all_threads_inclusive": 181,
+      "build_thread_inclusive": 0,
+      "build_thread_exclusive": 0,
+      "build_thread_inclusive_pct": 0.0
+    }
+  },
+  "raw_sample": "save-hotspot-c3-sample-r1.txt"
+}

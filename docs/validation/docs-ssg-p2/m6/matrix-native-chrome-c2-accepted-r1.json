@@ -1,0 +1,246 @@
+{
+  "C": "c1061ced3deaa4e6669bc45eb3382306fa85c958",
+  "R": "0494f304f0f9f8b620affb7309df23db3cb2377c",
+  "browser": "native installed Chrome155.0.8059.40; latest stable patch unverified",
+  "scope": "all ten concentrated Chrome projects; 351 distinct expected cases; accepted visual finish reused, functional viewport states exercised",
+  "projects": [
+    {
+      "project": "components-root",
+      "command": [
+        "npx",
+        "playwright",
+        "test",
+        "-c",
+        "docs/validation/docs-ssg-p2/m6/native-matrix.config.ts",
+        "--project=components-root"
+      ],
+      "exit": 0,
+      "elapsed_ms": 141614.14800000002,
+      "stats": {
+        "startTime": "2026-10-13T22:25:37.478Z",
+        "duration": 141614.14800000002,
+        "expected": 36,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "evidence": "matrix-components-root-c2-r2"
+    },
+    {
+      "project": "components-subpath",
+      "command": [
+        "npx",
+        "playwright",
+        "test",
+        "-c",
+        "docs/validation/docs-ssg-p2/m6/native-matrix.config.ts",
+        "--project=components-subpath"
+      ],
+      "exit": 0,
+      "elapsed_ms": 142707.93425000738,
+      "stats": {
+        "startTime": "2026-10-13T22:30:08.725Z",
+        "duration": 142056.09399999998,
+        "expected": 36,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "evidence": "matrix-components-subpath-c2-r2"
+    },
+    {
+      "project": "components-meta",
+      "command": [
+        "npx",
+        "playwright",
+        "test",
+        "-c",
+        "docs/validation/docs-ssg-p2/m6/native-matrix.config.ts",
+        "--project=components-meta"
+      ],
+      "exit": 0,
+      "elapsed_ms": 140406.0217080405,
+      "stats": {
+        "startTime": "2026-10-13T22:32:32.479Z",
+        "duration": 139740.123,
+        "expected": 36,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "evidence": "matrix-components-meta-c2-r2"
+    },
+    {
+      "project": "official-root",
+      "command": [
+        "npx",
+        "playwright",
+        "test",
+        "-c",
+        "docs/validation/docs-ssg-p2/m6/native-matrix.config.ts",
+        "--project=official-root",
+        "--grep-invert",
+        "one bounded official home"
+      ],
+      "exit": 0,
+      "elapsed_ms": 124882.65866704751,
+      "stats": {
+        "startTime": "2026-10-13T22:34:53.892Z",
+        "duration": 124198.73400000001,
+        "expected": 46,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "evidence": "matrix-official-root-c2-r2"
+    },
+    {
+      "project": "official-subpath",
+      "command": [
+        "npx",
+        "playwright",
+        "test",
+        "-c",
+        "docs/validation/docs-ssg-p2/m6/native-matrix.config.ts",
+        "--project=official-subpath",
+        "--grep-invert",
+        "one bounded official home"
+      ],
+      "exit": 0,
+      "elapsed_ms": 129915.38545896765,
+      "stats": {
+        "startTime": "2026-10-13T22:36:59.923Z",
+        "duration": 129152.027,
+        "expected": 46,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "evidence": "matrix-official-subpath-c2-r2"
+    },
+    {
+      "project": "official-meta",
+      "command": [
+        "npx",
+        "playwright",
+        "test",
+        "-c",
+        "docs/validation/docs-ssg-p2/m6/native-matrix.config.ts",
+        "--project=official-meta",
+        "--grep-invert",
+        "one bounded official home"
+      ],
+      "exit": 0,
+      "elapsed_ms": 124831.98500005528,
+      "stats": {
+        "startTime": "2026-10-13T22:39:10.766Z",
+        "duration": 124168.32100000001,
+        "expected": 46,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "evidence": "matrix-official-meta-c2-r2"
+    },
+    {
+      "project": "docs-root",
+      "command": [
+        "npx",
+        "playwright",
+        "test",
+        "-c",
+        "docs/validation/docs-ssg-p2/m6/native-matrix.config.ts",
+        "--project=docs-root"
+      ],
+      "exit": 0,
+      "elapsed_ms": 21170.34687497653,
+      "stats": {
+        "startTime": "2026-10-13T22:41:16.619Z",
+        "duration": 20514.009,
+        "expected": 27,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "evidence": "matrix-docs-root-c2-r2"
+    },
+    {
+      "project": "docs-subpath",
+      "command": [
+        "npx",
+        "playwright",
+        "test",
+        "-c",
+        "docs/validation/docs-ssg-p2/m6/native-matrix.config.ts",
+        "--project=docs-subpath"
+      ],
+      "exit": 0,
+      "elapsed_ms": 21104.067540960386,
+      "stats": {
+        "startTime": "2026-10-13T22:41:38.695Z",
+        "duration": 20419.811999999998,
+        "expected": 27,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "evidence": "matrix-docs-subpath-c2-r2"
+    },
+    {
+      "project": "docs-meta",
+      "command": [
+        "npx",
+        "playwright",
+        "test",
+        "-c",
+        "docs/validation/docs-ssg-p2/m6/native-matrix.config.ts",
+        "--project=docs-meta"
+      ],
+      "exit": 0,
+      "elapsed_ms": 21279.540374991484,
+      "stats": {
+        "startTime": "2026-10-13T22:42:00.903Z",
+        "duration": 20623.233,
+        "expected": 27,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "evidence": "matrix-docs-meta-c2-r2"
+    },
+    {
+      "project": "docs-dev",
+      "passed": true,
+      "expected": 24,
+      "same_source_unaffected_retained": [
+        {
+          "file": "docs-ssg/dev-components.spec.ts",
+          "title": "the address and first building shell precede the actual compilation, then content saves reuse its pair",
+          "line": 371
+        },
+        {
+          "file": "docs-ssg/dev-components.spec.ts",
+          "title": "Rust saves keep the original interactive document until a complete new pair, and diagnostics recover at its scroll position",
+          "line": 452
+        },
+        {
+          "file": "docs-ssg/dev-uat.spec.ts",
+          "title": "UAT-1 and UAT-2: new, dev, three pages within a minute; then saves, a mistake and its fix in one session",
+          "line": 89
+        }
+      ],
+      "retained_source": "matrix-docs-dev-c2-r2/results.json",
+      "new_source": "matrix-dev-p1-c2-r3/results.json",
+      "harness_change": "await real first terminal SSE state; classify exact events ERR_ABORTED separately; all268 old assertions retained",
+      "failed_source_preserved": "matrix-docs-dev-c2-r2/results.json"
+    }
+  ],
+  "passed": true,
+  "distinct_passed": 351,
+  "config_isolation": "native-matrix.config.ts changes only validation reporter paths and official-meta port; occupied Bun4200 untouched",
+  "sha256": {
+    "docs/validation/docs-ssg-p2/m6/matrix-docs-dev-c2-r2/results.json": "840ade2070e0784122d34a43a279d4d2ca446be4cbaa584b30ebea5336f90699",
+    "docs/validation/docs-ssg-p2/m6/matrix-dev-p1-c2-r3/results.json": "b727cebb1dfc7b7048aa9910bfbc545d2ed5799d6c87e4e00f36d3a21549479f",
+    "tests/docs-ssg/dev.spec.ts": "c9f1c7c237be5bc426f72782294bde1987223505b5a395cc98680eb0bac620d1"
+  }
+}

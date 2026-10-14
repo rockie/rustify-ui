@@ -1,0 +1,40 @@
+npm notice run rustify-ui-browser-tests@0.1.0 npx
+npm notice run 'playwright' test -c docs/validation/docs-ssg-p2/m6/native-matrix.config.ts --project=components-meta --list
+Listing tests:
+  [components-meta] › docs-ssg/custom.spec.ts:200:1 › registered routes keep declared titles, optional description and ordered ordinary navigation
+  [components-meta] › docs-ssg/custom.spec.ts:230:1 › all seven slots share canonical context across Markdown, custom pages and a deep static 404
+  [components-meta] › docs-ssg/custom.spec.ts:254:1 › nested page and slot demos retain actual SSR nodes, source and distinct identities
+  [components-meta] › docs-ssg/custom.spec.ts:283:5 › light first frame uses the document theme with a light system before wasm
+  [components-meta] › docs-ssg/custom.spec.ts:283:5 › dark first frame uses the document theme with a dark system before wasm
+  [components-meta] › docs-ssg/custom.spec.ts:283:5 › system first frame uses the document theme with a light system before wasm
+  [components-meta] › docs-ssg/custom.spec.ts:283:5 › system first frame uses the document theme with a dark system before wasm
+  [components-meta] › docs-ssg/custom.spec.ts:302:1 › live mode changes reach the theme context and real floating controls, including Rust-only classes
+  [components-meta] › docs-ssg/custom.spec.ts:357:1 › the actual browser font responses match the CLI's packaged bytes and neutral digests
+  [components-meta] › docs-ssg/custom.spec.ts:387:1 › custom images and CSS backgrounds enter the same published resource graph
+  [components-meta] › docs-ssg/custom.spec.ts:402:1 › the plain custom page and its slots remain static and load no island resources
+  [components-meta] › docs-ssg/custom.spec.ts:410:1 › no script preserves custom views, sources, navigation and theme at 375px and 200% reflow
+  [components-meta] › docs-ssg/islands.spec.ts:277:1 › a page without interactive embeds loads no island JavaScript or wasm
+  [components-meta] › docs-ssg/islands.spec.ts:285:1 › successful island wasm has its native MIME type under the page's CSP
+  [components-meta] › docs-ssg/islands.spec.ts:310:1 › no script keeps real SSR views and both source panels readable with native controls disabled
+  [components-meta] › docs-ssg/islands.spec.ts:352:1 › loading gates native and captured input while source controls remain usable
+  [components-meta] › docs-ssg/islands.spec.ts:383:1 › attachment retains original SSR nodes and isolates three identical counters
+  [components-meta] › docs-ssg/islands.spec.ts:404:1 › an asynchronous action starts after attachment with supported hydration globals
+  [components-meta] › docs-ssg/islands.spec.ts:416:1 › client-only attachment preserves the placeholder and mounts typed props and child content
+  [components-meta] › docs-ssg/islands.spec.ts:445:1 › static builtins need no script or wasm and retain every panel, native link and child block
+  [components-meta] › docs-ssg/islands.spec.ts:492:1 › static tabs use unique ARIA mappings and keyboard state stays local to each peer
+  [components-meta] › docs-ssg/islands.spec.ts:548:1 › a real callback trap restores every initial island and keeps source, navigation and reload alive
+  [components-meta] › docs-ssg/islands.spec.ts:580:5 › islands.js load failure is terminal, preserves SSR and recovers only through Reload page
+  [components-meta] › docs-ssg/islands.spec.ts:580:5 › app.js load failure is terminal, preserves SSR and recovers only through Reload page
+  [components-meta] › docs-ssg/islands.spec.ts:580:5 › app_bg.wasm load failure is terminal, preserves SSR and recovers only through Reload page
+  [components-meta] › docs-ssg/islands.spec.ts:604:1 › an imported SDK snippet's real 404 restores SSR and leaves source, navigation and reload usable
+  [components-meta] › docs-ssg/islands.spec.ts:627:1 › invalid wasm bytes in a successful HTTP response fail terminally before attachment
+  [components-meta] › docs-ssg/islands.spec.ts:646:1 › a glue init exception after real wasm instantiation preserves SSR and recovers through reload
+  [components-meta] › docs-ssg/islands.spec.ts:684:1 › invalid hydration metadata releases the live native host and restores untouched SSR
+  [components-meta] › docs-ssg/islands.spec.ts:702:1 › unsupported initial hydration globals refuse startup before wasm runs
+  [components-meta] › docs-ssg/islands.spec.ts:717:1 › the startup deadline remains terminal when the real wasm completes late
+  [components-meta] › docs-ssg/islands.spec.ts:742:1 › the release proxy attaches every real category, then opens floating controls with focus return
+  [components-meta] › docs-ssg/islands.spec.ts:771:9 › 375px keeps loading, ready, failure and bounded source usable in light
+  [components-meta] › docs-ssg/islands.spec.ts:771:9 › 200% reflow and text scaling keeps loading, ready, failure and bounded source usable in light
+  [components-meta] › docs-ssg/islands.spec.ts:771:9 › 375px keeps loading, ready, failure and bounded source usable in dark
+  [components-meta] › docs-ssg/islands.spec.ts:771:9 › 200% reflow and text scaling keeps loading, ready, failure and bounded source usable in dark
+Total: 36 tests in 2 files

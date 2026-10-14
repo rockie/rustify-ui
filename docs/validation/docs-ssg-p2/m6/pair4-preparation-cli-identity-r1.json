@@ -1,0 +1,9 @@
+{
+  "scope": "prepared uncommitted binary, not final/installed C4",
+  "version": "rustify-docs 0.1.14",
+  "build_info": "rustify-docs 0.1.14\npanic: unwind\ngrammars: syntect-5.3.0+two-face-0.5.2+bat-0.26.1+fancy\nsource: 055a701f4fc63b78312c8f28ae2d450b278c9e66",
+  "actual_source": "055a701f4fc63b78312c8f28ae2d450b278c9e66",
+  "binary": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-cli/rustify-docs",
+  "binary_sha256": "501f5f688b3dbbc5890a6730bd0ad208fd773be8f380d39a795b6a4bfa5be014",
+  "framework_R4": "3fcc626a4039a43c5e045ccd546bab976db89a73"
+}

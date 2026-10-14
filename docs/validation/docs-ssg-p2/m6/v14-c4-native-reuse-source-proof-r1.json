@@ -1,0 +1,62 @@
+{
+  "C4": "d301344eeb27e22907c59a10805ae0cebf8dee99",
+  "R4": "3fcc626a4039a43c5e045ccd546bab976db89a73",
+  "R4_to_C4_docs_changed_files": [],
+  "R4_development_fix_source_sha_matches": {
+    "crates/rustify-docs/src/generation.rs": {
+      "recorded": "da1ed3870ac27499579a43bd9df57e4d48c42f08d24218e17c6f7e535b3ece81",
+      "current": "da1ed3870ac27499579a43bd9df57e4d48c42f08d24218e17c6f7e535b3ece81",
+      "equal": true
+    },
+    "crates/rustify-docs/src/html_check.rs": {
+      "recorded": "05669030c412abc22b766931d668dba9e07eff2a0d94783ce2cb41aec1239312",
+      "current": "05669030c412abc22b766931d668dba9e07eff2a0d94783ce2cb41aec1239312",
+      "equal": true
+    }
+  },
+  "R4_to_C4_root_lock_diff": "diff --git a/Cargo.lock b/Cargo.lock\nindex a3e3c0b9..42656255 100644\n--- a/Cargo.lock\n+++ b/Cargo.lock\n@@ -2454,7 +2454,7 @@ dependencies = [\n \n [[package]]\n name = \"rustify-docs-cli\"\n-version = \"0.1.13\"\n+version = \"0.1.14\"\n dependencies = [\n  \"dom_query\",\n  \"kqueue\",",
+  "C2_to_C4_SDK_harness_xtask_source_delta": {
+    "crates/rustify-ui": [],
+    "crates/rustify-components": [],
+    "tests/dom-only": [],
+    "xtask/src/docs.rs": []
+  },
+  "C2_to_C4_docs_delta": [
+    "crates/rustify-docs/src/content.rs",
+    "crates/rustify-docs/src/generation.rs",
+    "crates/rustify-docs/src/html_check.rs",
+    "crates/rustify-docs/tests/generate.rs"
+  ],
+  "pipeline_only_modules": [
+    "content",
+    "generation",
+    "html_check"
+  ],
+  "pipeline_cfg_evidence": "crates/rustify-docs/src/lib.rs each changed runtime module has #[cfg(feature = \"pipeline\")]",
+  "Docs_source_reuse": {
+    "log": "save-hotspot-docs-first-check-r1.log",
+    "passed": 265,
+    "lib": 192,
+    "generate": 17,
+    "note": "Existing R4 developer package test evidence, not a newly executed C4 Docs package command; source patch SHA and Git R4\u2192C4 Docs bytes are unchanged. Root Cargo.lock changes only rustify-docs-cli version0.1.13\u21920.1.14; Docs dependency records unchanged."
+  },
+  "feature_reuse": {
+    "old_actual_command": [
+      "mbx",
+      "xtask",
+      "docs-verify",
+      "--group",
+      "features"
+    ],
+    "old_log": "v14-c2-features-r1.log",
+    "old_exit_code": 0,
+    "old_command_receipt": "v14-c2-native-commands-r3.json",
+    "source_stable_SDK_consumer_GPU_switch_library_copies_hydration": true,
+    "current_C4_docs_graph_evidence": "pair4-installed-graphs-r1.json",
+    "current_C4_graph_count": 5,
+    "new_C4_actual_browser_evidence": "v14-c4-legacy-summary-r1.json",
+    "new_C4_dom_only_passed": 12,
+    "new_C4_dom_hydrate_passed": 10,
+    "note": "No new full features wrapper process is claimed. Native-only Docs content/generation/html_check changes are excluded from independent site-ssr/hydrate modes; their C4 isolated package-name graphs were actually regenerated. SDK/harness products source is byte-identical and both direct DOM browser projects passed again on C4."
+  }
+}

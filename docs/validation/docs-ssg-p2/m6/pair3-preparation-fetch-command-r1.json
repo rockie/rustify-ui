@@ -1,0 +1,12 @@
+{
+  "command": [
+    "cargo",
+    "fetch",
+    "--locked",
+    "--manifest-path",
+    "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair3-preparation-4jszh7aa/docs-site/Cargo.toml"
+  ],
+  "exit_code": 0,
+  "milliseconds": 6042.04150390625,
+  "scope": "uncommitted C3 preparation only; public package URLs retained with process-local transport; no installed C3 claim"
+}

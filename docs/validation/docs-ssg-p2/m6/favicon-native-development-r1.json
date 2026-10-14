@@ -1,0 +1,72 @@
+{
+  "scope": "development CLI content shell regression; not frozen pair acceptance",
+  "bin": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-cli/rustify-docs",
+  "work": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-favicon-native-7XOrUj",
+  "commands": [
+    {
+      "args": [
+        "--build-info"
+      ],
+      "exit": 0,
+      "stdout": "rustify-docs 0.1.11\npanic: unwind\ngrammars: syntect-5.3.0+two-face-0.5.2+bat-0.26.1+fancy\nsource: f0db736e9b47ce1c7d38a5a013a1767026c17c91\n",
+      "stderr": ""
+    },
+    {
+      "args": [
+        "new",
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-favicon-native-7XOrUj/content-site",
+        "--template",
+        "content"
+      ],
+      "exit": 0,
+      "stdout": "created /var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-favicon-native-7XOrUj/content-site\nnext:\n  cd /var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-favicon-native-7XOrUj/content-site\n  rustify-docs dev\n",
+      "stderr": "rustc 1.99.0 (b940084d7 2026-09-28)\n"
+    },
+    {
+      "args": [
+        "build",
+        "--config",
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-favicon-native-7XOrUj/content-site/rustify-docs.toml",
+        "--format",
+        "json"
+      ],
+      "exit": 0,
+      "stdout": "{\"schema_version\":1,\"success\":true,\"diagnostics\":[{\"severity\":\"warning\",\"rule\":\"no-git-history\",\"file\":null,\"line\":null,\"column\":null,\"message\":\"pages show no last-updated date: not a git repository (or any of the parent directories): .git\",\"suggestion\":\"build inside a git repository with the content committed\"},{\"severity\":\"warning\",\"rule\":\"missing-site-url\",\"file\":\"rustify-docs.toml\",\"line\":null,\"column\":null,\"message\":\"site.url is not set, so pages have no canonical address or preview image and there is no sitemap\",\"suggestion\":\"add `url = \\\"https://…\\\"` under [site], the address the site is published at\"}],\"summary\":{\"errors\":0,\"warnings\":2,\"pages\":3,\"files\":12,\"bytes\":83675,\"largest\":[{\"path\":\"guide/getting-started/index.html\",\"bytes\":8220},{\"path\":\"guide/writing-pages/index.html\",\"bytes\":5957},{\"path\":\"index.html\",\"bytes\":4539},{\"path\":\"404.html\",\"bytes\":4488}],\"out\":\"/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-favicon-native-7XOrUj/content-site/dist\",\"milliseconds\":41}}\n",
+      "stderr": ""
+    }
+  ],
+  "requests": [
+    "http://127.0.0.1:58557/",
+    "http://127.0.0.1:58557/assets/site.868d5324be.css",
+    "http://127.0.0.1:58557/assets/mode.5e2c2584b0.js",
+    "http://127.0.0.1:58557/assets/site.2529a0d647.js",
+    "http://127.0.0.1:58557/assets/files/logo.b7bfe6e0b6.svg"
+  ],
+  "responses": [
+    {
+      "url": "http://127.0.0.1:58557/",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:58557/assets/site.868d5324be.css",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:58557/assets/mode.5e2c2584b0.js",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:58557/assets/files/logo.b7bfe6e0b6.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:58557/assets/site.2529a0d647.js",
+      "status": 200
+    }
+  ],
+  "console": [],
+  "pageErrors": [],
+  "chrome": "155.0.8059.40",
+  "icon": "data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22/%3E",
+  "passed": true
+}

@@ -1,0 +1,24 @@
+{
+  "inputs": {
+    ".gitignore": "5f5e41eb0464af1566753b0b33c30b3ff6f0b6a344e09ad8be48b11c0333e467",
+    "Cargo.lock": "c42635807affd79947f5afc581ef5a5af544d1a23bd4acc99ac25c10bde78f65",
+    "Cargo.toml": "1741dae7723695bafe470bfa68cfecd35e27de2899adfbe056648b7a2b5db75a",
+    "README.md": "31681cf05a4aff0af27979832253a801a918ff7406c0de81d80eeeb2de386977",
+    "content/guide/getting-started.md": "e0c182b7bdc5c0230f9be283a42bf448cf62fadaa7c81d2082bf850b8c965fcd",
+    "content/guide/writing-demos.md": "e991cc76628d89096a90e205ebffe341c3883ff754f7a6cd8024f3e32b54e5de",
+    "content/index.md": "da87bfc2f9c8ac2f834990e0cd1d521b15c90bbe1a7738886bf45c927169888f",
+    "rustify-docs.toml": "f581d837267cbfce9a1aa54be086cbbeb8162615b99731e531563898f2b64d84",
+    "src/bin/docs-render.rs": "3abaa6437e5ddd6ad5a3223430c6ba53a28d117090f5be9d268951d77629a052",
+    "src/demos.rs": "8b720362ecfe80c198ff1ba056bfbb71019e7483b5ee343542f8f461e4709110",
+    "src/lib.rs": "2af073e77a2e98bcf6948e6216979393e7eebf5102b47e225bd033b34d571027"
+  },
+  "unchanged_after_metadata_check_build": true,
+  "lock_sha256": "c42635807affd79947f5afc581ef5a5af544d1a23bd4acc99ac25c10bde78f65",
+  "head_icons": {
+    "index.html": "data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22/%3E",
+    "404.html": "data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22/%3E",
+    "guide/writing-demos/index.html": "data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22/%3E",
+    "guide/getting-started/index.html": "data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22/%3E"
+  },
+  "native_favicon_browser_validation": "deferred to Root continuous UAT; no browser run in this preparation"
+}

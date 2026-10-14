@@ -1,0 +1,226 @@
+{
+  "candidate_C": "6721dc73db18421826c4abaf0823d51d8d6ceffb",
+  "framework_R": "c562008291ef1b1826891944e0d81a5d61d775b8",
+  "commands": [
+    {
+      "site": "A_official",
+      "command": [
+        "node",
+        "tests/docs-ssg/harness/measure-load.mjs",
+        "--origin",
+        "http://127.0.0.1:63054/rustify-ui/",
+        "--samples",
+        "5",
+        "--out",
+        "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/a_official-content-load-c3-r1.json",
+        "--page",
+        "/rustify-ui/",
+        "--page",
+        "/rustify-ui/quickstart/",
+        "--page",
+        "/rustify-ui/vellum/",
+        "--page",
+        "/rustify-ui/__m6_c3_missing__/deep/"
+      ],
+      "dist": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair3-installed-uvgj6yil/official-c3/site/dist",
+      "preview_url": "http://127.0.0.1:63054/rustify-ui/",
+      "exit_code": 0,
+      "seconds": 51.899,
+      "checks": [
+        {
+          "path": "/rustify-ui/",
+          "passed": true,
+          "lcp_ms": 732,
+          "cls": 0,
+          "wasm_requests": 0,
+          "status": 200
+        },
+        {
+          "path": "/rustify-ui/quickstart/",
+          "passed": true,
+          "lcp_ms": 1060,
+          "cls": 0,
+          "wasm_requests": 0,
+          "status": 200
+        },
+        {
+          "path": "/rustify-ui/vellum/",
+          "passed": true,
+          "lcp_ms": 884,
+          "cls": 0,
+          "wasm_requests": 0,
+          "status": 200
+        },
+        {
+          "path": "/rustify-ui/__m6_c3_missing__/deep/",
+          "passed": true,
+          "lcp_ms": 716,
+          "cls": 0,
+          "wasm_requests": 0,
+          "status": 404
+        }
+      ],
+      "all_passed": true
+    },
+    {
+      "site": "B_P2",
+      "command": [
+        "node",
+        "tests/docs-ssg/harness/measure-load.mjs",
+        "--origin",
+        "http://127.0.0.1:63382/",
+        "--samples",
+        "5",
+        "--out",
+        "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/b_p2-content-load-c3-r1.json",
+        "--page",
+        "/",
+        "--page",
+        "/en/g07/page-018/",
+        "--page",
+        "/en/g07/page-017/",
+        "--page",
+        "/zh/g04/page-024/",
+        "--page",
+        "/zh/g10/page-005/",
+        "--page",
+        "/__m6_c3_missing__/deep/"
+      ],
+      "dist": "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/m6-b-p2-c3/dist",
+      "preview_url": "http://127.0.0.1:63382/",
+      "exit_code": 0,
+      "seconds": 85.235,
+      "checks": [
+        {
+          "path": "/",
+          "passed": true,
+          "lcp_ms": 1128,
+          "cls": 0,
+          "wasm_requests": 0,
+          "status": 200
+        },
+        {
+          "path": "/en/g07/page-018/",
+          "passed": true,
+          "lcp_ms": 1284,
+          "cls": 0,
+          "wasm_requests": 0,
+          "status": 200
+        },
+        {
+          "path": "/en/g07/page-017/",
+          "passed": true,
+          "lcp_ms": 1080,
+          "cls": 0,
+          "wasm_requests": 0,
+          "status": 200
+        },
+        {
+          "path": "/zh/g04/page-024/",
+          "passed": true,
+          "lcp_ms": 1288,
+          "cls": 0,
+          "wasm_requests": 0,
+          "status": 200
+        },
+        {
+          "path": "/zh/g10/page-005/",
+          "passed": true,
+          "lcp_ms": 1104,
+          "cls": 0,
+          "wasm_requests": 0,
+          "status": 200
+        },
+        {
+          "path": "/__m6_c3_missing__/deep/",
+          "passed": true,
+          "lcp_ms": 820,
+          "cls": 0,
+          "wasm_requests": 0,
+          "status": 404
+        }
+      ],
+      "all_passed": true
+    },
+    {
+      "site": "B_P1",
+      "command": [
+        "node",
+        "tests/docs-ssg/harness/measure-load.mjs",
+        "--origin",
+        "http://127.0.0.1:63893/",
+        "--samples",
+        "5",
+        "--out",
+        "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/b_p1-content-load-c3-r1.json",
+        "--page",
+        "/",
+        "--page",
+        "/en/g07/page-018/",
+        "--page",
+        "/en/g07/page-017/",
+        "--page",
+        "/zh/g04/page-024/",
+        "--page",
+        "/zh/g10/page-005/",
+        "--page",
+        "/__m6_c3_missing__/deep/"
+      ],
+      "dist": "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/m6-b-p1-c3/dist",
+      "preview_url": "http://127.0.0.1:63893/",
+      "exit_code": 0,
+      "seconds": 75.955,
+      "checks": [
+        {
+          "path": "/",
+          "passed": true,
+          "lcp_ms": 788,
+          "cls": 0,
+          "wasm_requests": 0,
+          "status": 200
+        },
+        {
+          "path": "/en/g07/page-018/",
+          "passed": true,
+          "lcp_ms": 788,
+          "cls": 0,
+          "wasm_requests": 0,
+          "status": 200
+        },
+        {
+          "path": "/en/g07/page-017/",
+          "passed": true,
+          "lcp_ms": 796,
+          "cls": 0,
+          "wasm_requests": 0,
+          "status": 200
+        },
+        {
+          "path": "/zh/g04/page-024/",
+          "passed": true,
+          "lcp_ms": 804,
+          "cls": 0,
+          "wasm_requests": 0,
+          "status": 200
+        },
+        {
+          "path": "/zh/g10/page-005/",
+          "passed": true,
+          "lcp_ms": 816,
+          "cls": 0,
+          "wasm_requests": 0,
+          "status": 200
+        },
+        {
+          "path": "/__m6_c3_missing__/deep/",
+          "passed": true,
+          "lcp_ms": 576,
+          "cls": 0,
+          "wasm_requests": 0,
+          "status": 404
+        }
+      ],
+      "all_passed": true
+    }
+  ]
+}

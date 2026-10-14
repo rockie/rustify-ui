@@ -1,0 +1,65 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.30s
+     Running tests/new_build.rs (target/debug/deps/new_build-46400ffae6af9d74)
+
+running 6 tests
+test without_rust_new_stops_before_writing_anything ... ok
+test help_and_generated_readme_pin_the_same_installable_source ... ok
+test new_writes_into_an_empty_directory_and_never_into_a_full_one ... ok
+test a_failed_first_build_leaves_no_output ... ok
+test a_built_site_leaves_the_repository_clean_and_dated ... ok
+test a_new_site_builds_and_nothing_is_compiled ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.97s
+
+     Running tests/new_components.rs (target/debug/deps/new_components-7b0c5543fce01496)
+
+running 5 tests
+test components_without_rust_stop_before_checking_the_directory ... ok
+test components_require_wasm_std_from_the_active_compiler_before_directory_checks ... ok
+test components_never_write_into_a_nonempty_directory ... ok
+test components_toolchain_check_handles_an_unsupported_target_query ... ok
+test components_ship_a_complete_paired_lock_or_refuse_without_writing ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.30s
+
+     Running tests/reliability.rs (target/debug/deps/reliability-1f46d7ec5dce2efa)
+
+running 7 tests
+test an_output_never_replaces_the_project_or_a_stranger ... ok
+test a_successful_build_reports_its_size_and_largest_pages ... ok
+test a_refused_output_is_reported_in_json_as_well ... ok
+test a_site_left_without_pages_fails_and_keeps_what_was_published ... ok
+test the_same_input_builds_the_same_bytes ... ok
+test a_failed_build_keeps_the_previous_output_and_reports_why ... ok
+test one_output_has_one_writer_and_previews_need_a_finished_production_build ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.46s
+
+     Running tests/rust_dev.rs (target/debug/deps/rust_dev-4649e1450fe75ee1)
+
+running 3 tests
+mbx[progress]: 15s elapsed; 0 hits, 0 misses, 0 bypassed, 0 not looked up; ~0s compiler work saved
+mbx[progress]: 30s elapsed; 0 hits, 0 misses, 0 bypassed, 0 not looked up; ~0s compiler work saved
+mbx[progress]: 45s elapsed; 0 hits, 0 misses, 0 bypassed, 0 not looked up; ~0s compiler work saved
+mbx[progress]: 1m elapsed; 0 hits, 0 misses, 0 bypassed, 0 not looked up; ~0s compiler work saved
+test an_external_path_dependency_is_read_watched_and_restored_after_deletion has been running for over 60 seconds
+test build_generated_includes_and_saves_during_compile_publish_only_the_latest_complete_view has been running for over 60 seconds
+test real_rust_dev_serves_before_compile_reuses_content_and_preserves_failed_generations has been running for over 60 seconds
+mbx[progress]: 1m 15s elapsed; 0 hits, 0 misses, 0 bypassed, 0 not looked up; ~0s compiler work saved
+mbx[progress]: 1m 30s elapsed; 0 hits, 0 misses, 0 bypassed, 0 not looked up; ~0s compiler work saved
+mbx[progress]: 1m 45s elapsed; 0 hits, 0 misses, 0 bypassed, 0 not looked up; ~0s compiler work saved
+mbx[progress]: 2m elapsed; 0 hits, 0 misses, 0 bypassed, 0 not looked up; ~0s compiler work saved
+test real_rust_dev_serves_before_compile_reuses_content_and_preserves_failed_generations ... ok
+test an_external_path_dependency_is_read_watched_and_restored_after_deletion ... ok
+test build_generated_includes_and_saves_during_compile_publish_only_the_latest_complete_view ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 161.69s
+
+mbx[savings]: 2.2 TiB logical of old files removed while you were busy compiling other things.

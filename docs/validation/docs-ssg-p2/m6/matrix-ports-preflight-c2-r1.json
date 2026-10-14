@@ -1,0 +1,10 @@
+{
+  "failed_before_matrix": true,
+  "port": 4200,
+  "observed_listener": {
+    "command": "bun",
+    "pid": 90039
+  },
+  "existing_listener_untouched": true,
+  "resolution": "allocate an OS-chosen port for official-meta only; validation config imports unchanged repository config"
+}

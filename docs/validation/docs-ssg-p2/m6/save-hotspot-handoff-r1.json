@@ -1,0 +1,149 @@
+{
+  "scope": "bounded diagnosis only; no product/harness/budget changes or fix implemented",
+  "controls": {
+    "c2": {
+      "scope": "small diagnostic samples3/short3; unchanged1000ms budget, not full formalV12",
+      "exit_code": 1,
+      "kinds": {
+        "body": {
+          "median_ms": 2079.2,
+          "max_ms": 2080.1
+        },
+        "config": {
+          "median_ms": 2049.5,
+          "max_ms": 2071.7
+        },
+        "static": {
+          "median_ms": 2059.5,
+          "max_ms": 3618.7
+        }
+      },
+      "short": {
+        "saves": 3,
+        "seen": 3,
+        "median_ms": 2147.5,
+        "max_ms": 3560.4,
+        "latencies_ms": [
+          3560.4,
+          2029.2,
+          2147.5
+        ]
+      },
+      "raw": "save-hotspot-c2-control-r1.json"
+    },
+    "c3": {
+      "scope": "small diagnostic samples3/short3; unchanged1000ms budget, not full formalV12",
+      "exit_code": 1,
+      "kinds": {
+        "body": {
+          "median_ms": 2003.6,
+          "max_ms": 2121.1
+        },
+        "config": {
+          "median_ms": 2017.2,
+          "max_ms": 2042
+        },
+        "static": {
+          "median_ms": 2055.4,
+          "max_ms": 3500.3
+        }
+      },
+      "short": {
+        "saves": 3,
+        "seen": 3,
+        "median_ms": 2058.7,
+        "max_ms": 3490.1,
+        "latencies_ms": [
+          3490.1,
+          2048.4,
+          2058.7
+        ]
+      },
+      "raw": "save-hotspot-c3-control-r1.json"
+    }
+  },
+  "finding": "The ~2s rebuild exists in C2 and C3; the native generation final_documents serial document checks dominate build-thread observations. ids and check_rendered separately construct semantics for every published document.",
+  "sample_summary": {
+    "scope": "12s sample; exact owning-crate function symbols, main rustify-docs-build thread only for percentage denominator; inclusive phases overlap and are not additive CPU percentages",
+    "build_thread_samples": 7809,
+    "metrics": {
+      "generate_extended": {
+        "all_threads_inclusive": 7580,
+        "build_thread_inclusive": 7580,
+        "build_thread_exclusive": 0,
+        "build_thread_inclusive_pct": 97.07
+      },
+      "final_documents": {
+        "all_threads_inclusive": 7059,
+        "build_thread_inclusive": 7059,
+        "build_thread_exclusive": 27,
+        "build_thread_inclusive_pct": 90.4
+      },
+      "ids": {
+        "all_threads_inclusive": 8204,
+        "build_thread_inclusive": 2953,
+        "build_thread_exclusive": 0,
+        "build_thread_inclusive_pct": 37.82
+      },
+      "check_rendered": {
+        "all_threads_inclusive": 3928,
+        "build_thread_inclusive": 3928,
+        "build_thread_exclusive": 5,
+        "build_thread_inclusive_pct": 50.3
+      },
+      "check_document": {
+        "all_threads_inclusive": 1432,
+        "build_thread_inclusive": 0,
+        "build_thread_exclusive": 0,
+        "build_thread_inclusive_pct": 0.0
+      },
+      "semantics": {
+        "all_threads_inclusive": 11090,
+        "build_thread_inclusive": 5845,
+        "build_thread_exclusive": 58,
+        "build_thread_inclusive_pct": 74.85
+      },
+      "site_css_with_theme": {
+        "all_threads_inclusive": 35,
+        "build_thread_inclusive": 35,
+        "build_thread_exclusive": 0,
+        "build_thread_inclusive_pct": 0.45
+      },
+      "validate_inputs": {
+        "all_threads_inclusive": 69,
+        "build_thread_inclusive": 69,
+        "build_thread_exclusive": 0,
+        "build_thread_inclusive_pct": 0.88
+      },
+      "classes_collect": {
+        "all_threads_inclusive": 181,
+        "build_thread_inclusive": 0,
+        "build_thread_exclusive": 0,
+        "build_thread_inclusive_pct": 0.0
+      }
+    },
+    "raw_sample": "save-hotspot-c3-sample-r1.txt"
+  },
+  "source_locations": {
+    "dev_build": "crates/rustify-docs-cli/src/dev.rs:488",
+    "serial_final_documents": "crates/rustify-docs/src/generation.rs:629",
+    "call_after_all_page_output": "crates/rustify-docs/src/generation.rs:1156",
+    "ids_reparses": "crates/rustify-docs/src/html_check.rs:156",
+    "check_rendered_reparses": "crates/rustify-docs/src/html_check.rs:531"
+  },
+  "minimal_direction_for_Root": "Use one semantics extraction per document for anchors and live URL slots, parallelize independent documents with existing workers, then deterministically check duplicate IDs and cross-document references. Preserve all safety/namespace/template/foreign-tree checks; no HTML cache/config change proposed.",
+  "caveats": [
+    "sample adds overhead; native profile2327-2498ms is not formal performance",
+    "inclusive sample fractions overlap",
+    "C2/C3 diagnostic sample sets are3+3, not replacements for formal5+20",
+    "No fix or new frozen candidate and no budget change"
+  ],
+  "guards": {
+    "all_original_B500_source_bytes_unchanged": true,
+    "measurement_harness_sha256_unchanged": true,
+    "frozen_product_diff_zero": true,
+    "all_six_user_state_sha256_unchanged": true
+  },
+  "all_self_started_dev_browser_sample_processes_closed": true,
+  "runtime_ownership_returned_to_Root": true
+}

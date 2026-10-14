@@ -1,0 +1,104 @@
+diff --git a/crates/rustify-docs/tests/generate.rs b/crates/rustify-docs/tests/generate.rs
+index 47f74be9..ae06cdae 100644
+--- a/crates/rustify-docs/tests/generate.rs
++++ b/crates/rustify-docs/tests/generate.rs
+@@ -61,6 +61,61 @@ fn contains(haystack: &str, needle: &str) {
+     );
+ }
+ 
++const DATA_ICON: &str = "data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22/%3E";
++
++fn page_urls(html: &str) -> Vec<(String, bool)> {
++    let dom = dom_query::Document::from(html);
++    let mut urls = Vec::new();
++    for node in dom.select("[href], [src]").nodes() {
++        for attribute in ["href", "src"] {
++            if let Some(value) = node.attr(attribute) {
++                let declared_icon = attribute == "href"
++                    && node.is("head > link[rel=icon]")
++                    && value.as_ref() == DATA_ICON;
++                urls.push((value.to_string(), declared_icon));
++            }
++        }
++    }
++    urls
++}
++
++fn rooted_url(value: &str, declared_icon: bool) -> bool {
++    declared_icon
++        || value.starts_with("/docs/")
++        || value.starts_with('#')
++        || value.starts_with("https://")
++}
++
++fn plain_http_url(value: &str) -> bool {
++    value
++        .trim_ascii()
++        .split_once(':')
++        .is_some_and(|(scheme, _)| scheme.eq_ignore_ascii_case("http"))
++}
++
++#[test]
++fn url_checks_allow_only_the_declared_head_icon_and_reject_http_resources() {
++    let icon = format!("<head><link rel=\"icon\" href=\"{DATA_ICON}\"></head>");
++    let urls = page_urls(&icon);
++    assert_eq!(urls.len(), 1);
++    assert!(rooted_url(&urls[0].0, urls[0].1));
++    assert!(!plain_http_url(&urls[0].0));
++
++    for html in [
++        format!("<body><a href=\"{DATA_ICON}\">Data navigation</a></body>"),
++        format!("<head><link rel=\"stylesheet\" href=\"{DATA_ICON}\"></head>"),
++        "<head><link rel=\"icon\" href=\"data:image/svg+xml,%3Csvg/%3E\"></head>".to_owned(),
++    ] {
++        let urls = page_urls(&html);
++        assert_eq!(urls.len(), 1);
++        assert!(!rooted_url(&urls[0].0, urls[0].1), "{html}");
++    }
++    let urls = page_urls("<img src=\"http://example.test/image.svg\">");
++    assert_eq!(urls.len(), 1);
++    assert!(!rooted_url(&urls[0].0, urls[0].1));
++    assert!(plain_http_url(&urls[0].0));
++}
++
+ #[test]
+ fn an_island_marker_in_readable_text_does_not_load_the_island_runtime() {
+     let (project, snapshot) = load();
+@@ -390,20 +445,9 @@ fn the_not_found_page_works_from_any_depth() {
+     contains(&html, r#"<meta name="robots" content="noindex">"#);
+     assert!(!html.contains("rel=\"canonical\""));
+     contains(&html, r#"<a href="/docs/">Back to the home page</a>"#);
+-    // Every link and file is root-relative under the base.
+-    for attribute in ["href=\"", "src=\""] {
+-        for value in html
+-            .split(attribute)
+-            .skip(1)
+-            .map(|rest| rest.split('"').next().unwrap())
+-        {
+-            assert!(
+-                value.starts_with("/docs/")
+-                    || value.starts_with('#')
+-                    || value.starts_with("https://"),
+-                "{attribute}{value}"
+-            );
+-        }
++    // Every link and file is rooted under the base, except the declared data icon.
++    for (value, declared_icon) in page_urls(&html) {
++        assert!(rooted_url(&value, declared_icon), "{value}");
+     }
+ }
+ 
+@@ -700,7 +744,12 @@ fn gfm_alerts_tables_tasks_footnotes_and_code_render_without_inline_style() {
+         assert!(!html.contains(" style="), "{path} has an inline style");
+         assert!(!html.contains("<style"), "{path} has a style element");
+         assert!(!html.contains("<script>"), "{path} has an inline script");
+-        assert!(!html.contains("http://"), "{path} loads over plain HTTP");
++        for (value, _) in page_urls(html) {
++            assert!(
++                !plain_http_url(&value),
++                "{path} loads {value} over plain HTTP"
++            );
++        }
+     }
+ }
+ 

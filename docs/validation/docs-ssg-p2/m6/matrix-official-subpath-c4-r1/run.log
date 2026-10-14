@@ -1,0 +1,101 @@
+npm notice run rustify-ui-browser-tests@0.1.0 npx
+npm notice run 'playwright' test -c docs/validation/docs-ssg-p2/m6/native-matrix.config.ts --project=official-subpath --workers=1 --retries=0 --output /Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/matrix-official-subpath-c4-r1/artifacts --grep-invert one bounded official home
+[WebServer] {"candidate_sha": "d301344eeb27e22907c59a10805ae0cebf8dee99", "framework_revision": "3fcc626a4039a43c5e045ccd546bab976db89a73", "protected_files": 11397, "receipt": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/http/official/subpath/site/.rustify-docs/pages-prepare.json"}
+[WebServer] building /Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/http/official/subpath/site into /Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/http/official/subpath/dist
+[WebServer] warning[missing-description]: no `description:`; the first paragraph is used
+[WebServer]   --> docs/architecture.md
+[WebServer]   = help: add `description:` to the frontmatter
+[WebServer] warning[missing-description]: no `description:`; the first paragraph is used
+[WebServer]   --> docs/compatibility.md
+[WebServer]   = help: add `description:` to the frontmatter
+[WebServer] warning[missing-description]: no `description:`; the first paragraph is used
+[WebServer]   --> docs/components.md
+[WebServer]   = help: add `description:` to the frontmatter
+[WebServer] warning[missing-description]: no `description:`; the first paragraph is used
+[WebServer]   --> docs/data.md
+[WebServer]   = help: add `description:` to the frontmatter
+[WebServer] warning[missing-description]: no `description:`; the first paragraph is used
+[WebServer]   --> docs/forms.md
+[WebServer]   = help: add `description:` to the frontmatter
+[WebServer] warning[missing-description]: no `description:`; the first paragraph is used
+[WebServer]   --> docs/i18n.md
+[WebServer]   = help: add `description:` to the frontmatter
+[WebServer] warning[missing-description]: no `description:`; the first paragraph is used
+[WebServer]   --> docs/navigation.md
+[WebServer]   = help: add `description:` to the frontmatter
+[WebServer] warning[missing-description]: no `description:`; the first paragraph is used
+[WebServer]   --> docs/quickstart.md
+[WebServer]   = help: add `description:` to the frontmatter
+[WebServer] warning[missing-description]: no `description:`; the first paragraph is used
+[WebServer]   --> docs/themes.md
+[WebServer]   = help: add `description:` to the frontmatter
+[WebServer] warning[missing-description]: no `description:`; the first paragraph is used
+[WebServer]   --> docs/utility.md
+[WebServer]   = help: add `description:` to the frontmatter
+[WebServer] warning[missing-description]: no `description:`; the first paragraph is used
+[WebServer]   --> docs/vellum.md
+[WebServer]   = help: add `description:` to the frontmatter
+[WebServer] warning[missing-description]: no `description:`; the first paragraph is used
+[WebServer]   --> docs/workspace.md
+[WebServer]   = help: add `description:` to the frontmatter
+[WebServer] build: 37 pages and 404.html in /Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/http/official/subpath/dist: 13214.1 KB in 53 files, 12 warning(s), 99425 ms
+[WebServer] largest pages:
+[WebServer]     168.5 KB  components/data-table/index.html
+[WebServer]     156.3 KB  components/tree/index.html
+[WebServer]     141.7 KB  components/menu/index.html
+[WebServer]     140.5 KB  components/scroll-area/index.html
+[WebServer]     140.2 KB  components/tabs/index.html
+[WebServer] serving /Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/http/official/subpath/dist (built by rustify-docs 0.1.14, build 65ccb4835d9086d7) until stopped
+
+Running 46 tests using 1 worker
+
+(node:85878) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 [official-subpath] › tests/docs-ssg/official.spec.ts:200:1 › home has one English title, the original README introduction and two first-viewport ordinary actions (384ms)
+  ✓   2 [official-subpath] › tests/docs-ssg/official.spec.ts:217:1 › the ordinary sidebar contains the exact twelve guides and CATALOG pages in configured order (335ms)
+  ✓   3 [official-subpath] › tests/docs-ssg/official.spec.ts:226:29 › guide quickstart/ is English, reachable and requests no wasm (182ms)
+  ✓   4 [official-subpath] › tests/docs-ssg/official.spec.ts:226:29 › guide architecture/ is English, reachable and requests no wasm (172ms)
+  ✓   5 [official-subpath] › tests/docs-ssg/official.spec.ts:226:29 › guide navigation/ is English, reachable and requests no wasm (162ms)
+  ✓   6 [official-subpath] › tests/docs-ssg/official.spec.ts:226:29 › guide workspace/ is English, reachable and requests no wasm (163ms)
+  ✓   7 [official-subpath] › tests/docs-ssg/official.spec.ts:226:29 › guide forms/ is English, reachable and requests no wasm (165ms)
+  ✓   8 [official-subpath] › tests/docs-ssg/official.spec.ts:226:29 › guide i18n/ is English, reachable and requests no wasm (145ms)
+  ✓   9 [official-subpath] › tests/docs-ssg/official.spec.ts:226:29 › guide data/ is English, reachable and requests no wasm (150ms)
+  ✓  10 [official-subpath] › tests/docs-ssg/official.spec.ts:226:29 › guide themes/ is English, reachable and requests no wasm (156ms)
+  ✓  11 [official-subpath] › tests/docs-ssg/official.spec.ts:226:29 › guide utility/ is English, reachable and requests no wasm (146ms)
+  ✓  12 [official-subpath] › tests/docs-ssg/official.spec.ts:226:29 › guide compatibility/ is English, reachable and requests no wasm (148ms)
+  ✓  13 [official-subpath] › tests/docs-ssg/official.spec.ts:226:29 › guide components/ is English, reachable and requests no wasm (154ms)
+  ✓  14 [official-subpath] › tests/docs-ssg/official.spec.ts:226:29 › guide vellum/ is English, reachable and requests no wasm (149ms)
+  ✓  15 [official-subpath] › tests/docs-ssg/official.spec.ts:232:33 › CATALOG button uses its actual function, source and live control (397ms)
+  ✓  16 [official-subpath] › tests/docs-ssg/official.spec.ts:232:33 › CATALOG label uses its actual function, source and live control (438ms)
+  ✓  17 [official-subpath] › tests/docs-ssg/official.spec.ts:232:33 › CATALOG link uses its actual function, source and live control (1.9s)
+  ✓  18 [official-subpath] › tests/docs-ssg/official.spec.ts:232:33 › CATALOG icon uses its actual function, source and live control (414ms)
+  ✓  19 [official-subpath] › tests/docs-ssg/official.spec.ts:232:33 › CATALOG text field uses its actual function, source and live control (364ms)
+  ✓  20 [official-subpath] › tests/docs-ssg/official.spec.ts:232:33 › CATALOG text area uses its actual function, source and live control (377ms)
+  ✓  21 [official-subpath] › tests/docs-ssg/official.spec.ts:232:33 › CATALOG checkbox uses its actual function, source and live control (379ms)
+  ✓  22 [official-subpath] › tests/docs-ssg/official.spec.ts:232:33 › CATALOG radio uses its actual function, source and live control (367ms)
+  ✓  23 [official-subpath] › tests/docs-ssg/official.spec.ts:232:33 › CATALOG switch uses its actual function, source and live control (368ms)
+  ✓  24 [official-subpath] › tests/docs-ssg/official.spec.ts:232:33 › CATALOG select uses its actual function, source and live control (474ms)
+  ✓  25 [official-subpath] › tests/docs-ssg/official.spec.ts:232:33 › CATALOG slider uses its actual function, source and live control (382ms)
+  ✓  26 [official-subpath] › tests/docs-ssg/official.spec.ts:232:33 › CATALOG progress uses its actual function, source and live control (388ms)
+  ✓  27 [official-subpath] › tests/docs-ssg/official.spec.ts:232:33 › CATALOG loading uses its actual function, source and live control (405ms)
+  ✓  28 [official-subpath] › tests/docs-ssg/official.spec.ts:232:33 › CATALOG tooltip uses its actual function, source and live control (420ms)
+  ✓  29 [official-subpath] › tests/docs-ssg/official.spec.ts:232:33 › CATALOG menu uses its actual function, source and live control (479ms)
+  ✓  30 [official-subpath] › tests/docs-ssg/official.spec.ts:232:33 › CATALOG dialog uses its actual function, source and live control (510ms)
+  ✓  31 [official-subpath] › tests/docs-ssg/official.spec.ts:232:33 › CATALOG tabs uses its actual function, source and live control (394ms)
+  ✓  32 [official-subpath] › tests/docs-ssg/official.spec.ts:232:33 › CATALOG scroll area uses its actual function, source and live control (567ms)
+  ✓  33 [official-subpath] › tests/docs-ssg/official.spec.ts:232:33 › CATALOG data table uses its actual function, source and live control (427ms)
+  ✓  34 [official-subpath] › tests/docs-ssg/official.spec.ts:232:33 › CATALOG tree uses its actual function, source and live control (424ms)
+  ✓  35 [official-subpath] › tests/docs-ssg/official.spec.ts:232:33 › CATALOG toast uses its actual function, source and live control (434ms)
+  ✓  36 [official-subpath] › tests/docs-ssg/official.spec.ts:232:33 › CATALOG number field uses its actual function, source and live control (375ms)
+  ✓  37 [official-subpath] › tests/docs-ssg/official.spec.ts:232:33 › CATALOG color field uses its actual function, source and live control (577ms)
+  ✓  38 [official-subpath] › tests/docs-ssg/official.spec.ts:232:33 › CATALOG toggle group uses its actual function, source and live control (380ms)
+  ✓  39 [official-subpath] › tests/docs-ssg/official.spec.ts:244:1 › without script every official demo keeps its source and native disabled initial view (2.5s)
+  ✓  40 [official-subpath] › tests/docs-ssg/official.spec.ts:259:64 › the light first frame and mode controls persist across static and island pages (640ms)
+  ✓  41 [official-subpath] › tests/docs-ssg/official.spec.ts:259:64 › the dark first frame and mode controls persist across static and island pages (618ms)
+  ✓  42 [official-subpath] › tests/docs-ssg/official.spec.ts:259:64 › the system first frame and mode controls persist across static and island pages (637ms)
+  ✓  43 [official-subpath] › tests/docs-ssg/official.spec.ts:280:195 › 375px retains reading controls, ordered narrow navigation and bounded long source (657ms)
+  ✓  44 [official-subpath] › tests/docs-ssg/official.spec.ts:280:195 › 320px retains reading controls, ordered narrow navigation and bounded long source (644ms)
+  ✓  45 [official-subpath] › tests/docs-ssg/official.spec.ts:280:195 › 200% layout and text emulation retains reading controls, ordered narrow navigation and bounded long source (839ms)
+  ✓  46 [official-subpath] › tests/docs-ssg/official.spec.ts:301:1 › deep not-found retains same-base ordinary navigation (196ms)
+
+  46 passed (2.2m)

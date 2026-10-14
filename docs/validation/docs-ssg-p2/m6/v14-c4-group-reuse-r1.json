@@ -1,0 +1,175 @@
+{
+  "scope": "Exact group target mapping, not a new execution of either xtask wrapper",
+  "definition": "xtask/src/docs.rs verify + docs_tests",
+  "definition_sha256": "ded190e0df627c6fcc5a83f4af3e920d3c378bb979994c6965628342454d72a2",
+  "source_and_lock_equivalence": "v14-c4-native-reuse-source-proof-r1.json",
+  "actual_CLI_command_receipt": "v14-c4-cli-test-command-r1.json (written after full command finishes)",
+  "groups": {
+    "artifacts": {
+      "wrapper_not_executed": [
+        "mbx",
+        "xtask",
+        "docs-verify",
+        "--group",
+        "artifacts"
+      ],
+      "members": [
+        {
+          "contract_command": [
+            "mbx",
+            "test",
+            "--locked",
+            "-p",
+            "rustify-docs",
+            "--test",
+            "generate"
+          ],
+          "status": "ok",
+          "passed": 17,
+          "failed": 0,
+          "ignored": 0,
+          "log": "save-hotspot-docs-first-check-r1.log",
+          "coverage": "reused existing R4 source-identical Docs test"
+        },
+        {
+          "contract_command": [
+            "mbx",
+            "test",
+            "--locked",
+            "-p",
+            "rustify-docs-cli",
+            "--test",
+            "artifacts"
+          ],
+          "status": "ok",
+          "passed": 13,
+          "failed": 0,
+          "ignored": 0,
+          "log": "v14-c4-cli-test-r1.log",
+          "coverage": "actually rerun in current C4-source full CLI package test"
+        },
+        {
+          "contract_command": [
+            "mbx",
+            "test",
+            "--locked",
+            "-p",
+            "rustify-docs-cli",
+            "--test",
+            "new_build"
+          ],
+          "status": "ok",
+          "passed": 6,
+          "failed": 0,
+          "ignored": 0,
+          "log": "v14-c4-cli-test-r1.log",
+          "coverage": "actually rerun in current C4-source full CLI package test"
+        }
+      ],
+      "all_members_passed": true,
+      "passed_target_cases": 36,
+      "ignored_target_cases": 0,
+      "duplicate_group_process_not_started": true
+    },
+    "reliability": {
+      "wrapper_not_executed": [
+        "mbx",
+        "xtask",
+        "docs-verify",
+        "--group",
+        "reliability"
+      ],
+      "members": [
+        {
+          "contract_command": [
+            "mbx",
+            "test",
+            "--locked",
+            "-p",
+            "rustify-docs",
+            "--lib"
+          ],
+          "status": "ok",
+          "passed": 192,
+          "failed": 0,
+          "ignored": 0,
+          "log": "save-hotspot-docs-first-check-r1.log",
+          "coverage": "reused existing R4 source-identical Docs test"
+        },
+        {
+          "contract_command": [
+            "mbx",
+            "test",
+            "--locked",
+            "-p",
+            "rustify-docs-cli",
+            "--bin",
+            "rustify-docs"
+          ],
+          "status": "ok",
+          "passed": 72,
+          "failed": 0,
+          "ignored": 1,
+          "log": "v14-c4-cli-test-r1.log",
+          "coverage": "actually rerun in current C4-source full CLI package test"
+        },
+        {
+          "contract_command": [
+            "mbx",
+            "test",
+            "--locked",
+            "-p",
+            "rustify-docs-cli",
+            "--test",
+            "reliability"
+          ],
+          "status": "ok",
+          "passed": 7,
+          "failed": 0,
+          "ignored": 0,
+          "log": "v14-c4-cli-test-r1.log",
+          "coverage": "actually rerun in current C4-source full CLI package test"
+        },
+        {
+          "contract_command": [
+            "mbx",
+            "test",
+            "--locked",
+            "-p",
+            "rustify-docs-cli",
+            "--test",
+            "faults"
+          ],
+          "status": "ok",
+          "passed": 9,
+          "failed": 0,
+          "ignored": 0,
+          "log": "v14-c4-cli-test-r1.log",
+          "coverage": "actually rerun in current C4-source full CLI package test"
+        },
+        {
+          "contract_command": [
+            "mbx",
+            "test",
+            "--locked",
+            "-p",
+            "rustify-docs-cli",
+            "--test",
+            "external"
+          ],
+          "status": "ok",
+          "passed": 2,
+          "failed": 0,
+          "ignored": 0,
+          "log": "v14-c4-cli-test-r1.log",
+          "coverage": "actually rerun in current C4-source full CLI package test"
+        }
+      ],
+      "all_members_passed": true,
+      "passed_target_cases": 282,
+      "ignored_target_cases": 1,
+      "duplicate_group_process_not_started": true
+    }
+  },
+  "ignored_note": "The unchanged CLI compile_proxy::compile_to_islands_proxy remains ignored: requires matching compile-islands Chromium sampler and static host; not claimed as passed."
+}

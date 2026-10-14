@@ -1,0 +1,70 @@
+{
+  "scope": "12s /usr/bin/sample on warm C3 native dev; inclusive values overlap and are samples, not additive CPU percentages; build-thread denominator excludes idle main/event/fsevents threads",
+  "build_thread_samples": 7809,
+  "metrics": {
+    "generate_extended": {
+      "inclusive_samples": 7580,
+      "exclusive_samples": 0,
+      "call_tree_nodes": 30,
+      "fraction_of_build_thread_samples_pct": 97.07
+    },
+    "final_documents": {
+      "inclusive_samples": 7059,
+      "exclusive_samples": 27,
+      "call_tree_nodes": 59,
+      "fraction_of_build_thread_samples_pct": 90.4
+    },
+    "html_check::ids": {
+      "inclusive_samples": 8204,
+      "exclusive_samples": 0,
+      "call_tree_nodes": 84,
+      "fraction_of_build_thread_samples_pct": 105.06
+    },
+    "html_check::check_rendered": {
+      "inclusive_samples": 3928,
+      "exclusive_samples": 5,
+      "call_tree_nodes": 15,
+      "fraction_of_build_thread_samples_pct": 50.3
+    },
+    "html_check::check_document": {
+      "inclusive_samples": 1432,
+      "exclusive_samples": 43,
+      "call_tree_nodes": 359,
+      "fraction_of_build_thread_samples_pct": 18.34
+    },
+    "html_check::semantics": {
+      "inclusive_samples": 11090,
+      "exclusive_samples": 92,
+      "call_tree_nodes": 497,
+      "fraction_of_build_thread_samples_pct": 142.02
+    },
+    "style::site_css_with_theme": {
+      "inclusive_samples": 35,
+      "exclusive_samples": 0,
+      "call_tree_nodes": 15,
+      "fraction_of_build_thread_samples_pct": 0.45
+    },
+    "content::validate_inputs": {
+      "inclusive_samples": 69,
+      "exclusive_samples": 0,
+      "call_tree_nodes": 10,
+      "fraction_of_build_thread_samples_pct": 0.88
+    },
+    "content::analyze": {
+      "inclusive_samples": 0,
+      "exclusive_samples": 0,
+      "call_tree_nodes": 0,
+      "fraction_of_build_thread_samples_pct": 0.0
+    },
+    "classes::collect": {
+      "inclusive_samples": 181,
+      "exclusive_samples": 112,
+      "call_tree_nodes": 120,
+      "fraction_of_build_thread_samples_pct": 2.32
+    }
+  },
+  "source_profile": "save-hotspot-c3-sample-r1.txt",
+  "own_processes_stopped": true,
+  "status": "superseded: all-thread ids/semantics counts were divided by build-thread denominator; use r2 build-only percentages",
+  "corrected_summary": "save-hotspot-sample-summary-r2.json"
+}

@@ -1,0 +1,344 @@
+{
+  "scope": "complete all-target normal/build dependency graphs; observer r2 uses the unchanged raw r1 command output",
+  "existing_workspace_vendor_patches_are_general_libraries": [
+    "bitflags",
+    "smallvec"
+  ],
+  "graphs": [
+    {
+      "consumer": "template",
+      "mode": "ssr",
+      "command": [
+        "mbx",
+        "tree",
+        "--locked",
+        "--offline",
+        "--manifest-path",
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair2-installed-8j63t8o1/docs-site/Cargo.toml",
+        "--package",
+        "docs-site",
+        "--edges",
+        "normal,build",
+        "--target",
+        "all",
+        "--prefix",
+        "none",
+        "--no-dedupe",
+        "--format",
+        "{p}\t{f}",
+        "--no-default-features",
+        "--features",
+        "ssr"
+      ],
+      "exit_code": 0,
+      "raw_log": "docs/validation/docs-ssg-p2/m6/pair2-installed-graph-template-ssr-r1.log",
+      "raw_log_sha256": "198bfdb622c5dd9d52a0f9cdb3daca8547b3cc8d5d7d0b564c247d988618e807",
+      "unique_package_names": 188,
+      "no_makepad_packages": true,
+      "no_opposite_mode": true,
+      "no_host_effects": true,
+      "no_private_pipeline": true,
+      "native_pipeline_expected": false,
+      "sdk_features": {
+        "rustify-docs": [
+          "site-ssr"
+        ],
+        "rustify-ui": [
+          "ssr"
+        ],
+        "rustify-components": [
+          "ssr"
+        ],
+        "rustify-style": [
+          "cn",
+          "default"
+        ],
+        "leptos": [
+          "hydration",
+          "ssr"
+        ],
+        "tachys": [
+          "default",
+          "oco",
+          "reactive_graph",
+          "reactive_stores",
+          "ssr",
+          "testing"
+        ],
+        "reactive_graph": [
+          "hydration",
+          "serde"
+        ]
+      }
+    },
+    {
+      "consumer": "template",
+      "mode": "hydrate",
+      "command": [
+        "mbx",
+        "tree",
+        "--locked",
+        "--offline",
+        "--manifest-path",
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair2-installed-8j63t8o1/docs-site/Cargo.toml",
+        "--package",
+        "docs-site",
+        "--edges",
+        "normal,build",
+        "--target",
+        "all",
+        "--prefix",
+        "none",
+        "--no-dedupe",
+        "--format",
+        "{p}\t{f}",
+        "--no-default-features",
+        "--features",
+        "hydrate"
+      ],
+      "exit_code": 0,
+      "raw_log": "docs/validation/docs-ssg-p2/m6/pair2-installed-graph-template-hydrate-r1.log",
+      "raw_log_sha256": "45c21ba88c7d63263dba661842aebb532e468d196d6484df30da84a883d93534",
+      "unique_package_names": 186,
+      "no_makepad_packages": true,
+      "no_opposite_mode": true,
+      "no_host_effects": null,
+      "no_private_pipeline": true,
+      "native_pipeline_expected": false,
+      "sdk_features": {
+        "rustify-docs": [
+          "hydrate"
+        ],
+        "rustify-ui": [
+          "hydrate"
+        ],
+        "rustify-components": [
+          "hydrate"
+        ],
+        "rustify-style": [
+          "cn",
+          "default"
+        ],
+        "leptos": [
+          "hydrate",
+          "hydration"
+        ],
+        "tachys": [
+          "default",
+          "hydrate",
+          "oco",
+          "reactive_graph",
+          "reactive_stores",
+          "testing"
+        ],
+        "reactive_graph": [
+          "effects",
+          "hydration",
+          "serde"
+        ]
+      }
+    },
+    {
+      "consumer": "official",
+      "mode": "ssr",
+      "command": [
+        "mbx",
+        "tree",
+        "--locked",
+        "--offline",
+        "--manifest-path",
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair2-installed-8j63t8o1/official-c2/site/Cargo.toml",
+        "--package",
+        "rustify-official-site",
+        "--edges",
+        "normal,build",
+        "--target",
+        "all",
+        "--prefix",
+        "none",
+        "--no-dedupe",
+        "--format",
+        "{p}\t{f}",
+        "--no-default-features",
+        "--features",
+        "ssr"
+      ],
+      "exit_code": 0,
+      "raw_log": "docs/validation/docs-ssg-p2/m6/pair2-installed-graph-official-ssr-r1.log",
+      "raw_log_sha256": "ae92031664dd8c3e588584025302abe848e5c2435367d2d9cb43297ef518b7e7",
+      "unique_package_names": 188,
+      "no_makepad_packages": true,
+      "no_opposite_mode": true,
+      "no_host_effects": true,
+      "no_private_pipeline": true,
+      "native_pipeline_expected": false,
+      "sdk_features": {
+        "rustify-docs": [
+          "site-ssr"
+        ],
+        "rustify-ui": [
+          "ssr"
+        ],
+        "rustify-components": [
+          "ssr"
+        ],
+        "rustify-style": [
+          "cn",
+          "default"
+        ],
+        "leptos": [
+          "hydration",
+          "ssr"
+        ],
+        "tachys": [
+          "default",
+          "oco",
+          "reactive_graph",
+          "reactive_stores",
+          "ssr",
+          "testing"
+        ],
+        "reactive_graph": [
+          "hydration",
+          "serde"
+        ]
+      }
+    },
+    {
+      "consumer": "official",
+      "mode": "hydrate",
+      "command": [
+        "mbx",
+        "tree",
+        "--locked",
+        "--offline",
+        "--manifest-path",
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair2-installed-8j63t8o1/official-c2/site/Cargo.toml",
+        "--package",
+        "rustify-official-site",
+        "--edges",
+        "normal,build",
+        "--target",
+        "all",
+        "--prefix",
+        "none",
+        "--no-dedupe",
+        "--format",
+        "{p}\t{f}",
+        "--no-default-features",
+        "--features",
+        "hydrate"
+      ],
+      "exit_code": 0,
+      "raw_log": "docs/validation/docs-ssg-p2/m6/pair2-installed-graph-official-hydrate-r1.log",
+      "raw_log_sha256": "b8fe831622535ff8ee5fa4c1ed0d475bdb78d87d7bb8b857af2498fa6e8624b3",
+      "unique_package_names": 186,
+      "no_makepad_packages": true,
+      "no_opposite_mode": true,
+      "no_host_effects": null,
+      "no_private_pipeline": true,
+      "native_pipeline_expected": false,
+      "sdk_features": {
+        "rustify-docs": [
+          "hydrate"
+        ],
+        "rustify-ui": [
+          "hydrate"
+        ],
+        "rustify-components": [
+          "hydrate"
+        ],
+        "rustify-style": [
+          "cn",
+          "default"
+        ],
+        "leptos": [
+          "hydrate",
+          "hydration"
+        ],
+        "tachys": [
+          "default",
+          "hydrate",
+          "oco",
+          "reactive_graph",
+          "reactive_stores",
+          "testing"
+        ],
+        "reactive_graph": [
+          "effects",
+          "hydration",
+          "serde"
+        ]
+      }
+    },
+    {
+      "consumer": "cli",
+      "mode": "ssr",
+      "command": [
+        "mbx",
+        "tree",
+        "--locked",
+        "--offline",
+        "--manifest-path",
+        "/Users/rockie/.cargo/git/checkouts/rustify-ui-8cabc2f0e62e69f4/c1061ce/Cargo.toml",
+        "--package",
+        "rustify-docs-cli",
+        "--edges",
+        "normal,build",
+        "--target",
+        "all",
+        "--prefix",
+        "none",
+        "--no-dedupe",
+        "--format",
+        "{p}\t{f}"
+      ],
+      "exit_code": 0,
+      "raw_log": "docs/validation/docs-ssg-p2/m6/pair2-installed-graph-cli-r1.log",
+      "raw_log_sha256": "12e7cc22f7c89621cfea4c973b16bb9fc71584ecbab467bd52cd881727b93376",
+      "unique_package_names": 310,
+      "no_makepad_packages": true,
+      "no_opposite_mode": true,
+      "no_host_effects": true,
+      "no_private_pipeline": null,
+      "native_pipeline_expected": true,
+      "sdk_features": {
+        "rustify-docs": [
+          "default",
+          "pipeline",
+          "site-ssr"
+        ],
+        "rustify-ui": [
+          "ssr"
+        ],
+        "rustify-components": [
+          "ssr"
+        ],
+        "rustify-style": [
+          "cn",
+          "compiler",
+          "default",
+          "protocol",
+          "scanner"
+        ],
+        "leptos": [
+          "hydration",
+          "ssr"
+        ],
+        "tachys": [
+          "default",
+          "oco",
+          "reactive_graph",
+          "reactive_stores",
+          "ssr",
+          "testing"
+        ],
+        "reactive_graph": [
+          "hydration",
+          "serde"
+        ]
+      }
+    }
+  ],
+  "passed": true
+}

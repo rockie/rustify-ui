@@ -1,0 +1,32 @@
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-docs/src/html_check.rs:750:
+                                     | "manifest"
+                             )
+                         });
+[31m-                        if let Some(href) =
+(B[m[31m-                            attribute("href")
+(B[m[31m-                                .filter(|href| loads && is_cross_origin(href, rel == "icon"))
+(B[m[32m+                        if let Some(href) = attribute("href")
+(B[m[32m+                            .filter(|href| loads && is_cross_origin(href, rel == "icon"))
+(B[m                         {
+                             problems
+                                 .push(format!("a <link rel=\"{rel}\"> to another origin: {href}"));
+Diff in /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-docs/src/html_check.rs:1157:
+ 
+     #[test]
+     fn a_data_icon_stays_local_without_allowing_data_stylesheets_or_remote_icons() {
+[31m-        assert!(check_document("<link rel=\"icon\" href=\"data:image/svg+xml,%3Csvg/%3E\">").is_empty());
+(B[m[31m-        assert!(!check_document("<link rel=\"stylesheet\" href=\"data:text/css,body{}\">").is_empty());
+(B[m[31m-        assert!(!check_document("<link rel=\"icon\" href=\"https://other.example/icon.svg\">").is_empty());
+(B[m[32m+        assert!(
+(B[m[32m+            check_document("<link rel=\"icon\" href=\"data:image/svg+xml,%3Csvg/%3E\">").is_empty()
+(B[m[32m+        );
+(B[m[32m+        assert!(
+(B[m[32m+            !check_document("<link rel=\"stylesheet\" href=\"data:text/css,body{}\">").is_empty()
+(B[m[32m+        );
+(B[m[32m+        assert!(
+(B[m[32m+            !check_document("<link rel=\"icon\" href=\"https://other.example/icon.svg\">")
+(B[m[32m+                .is_empty()
+(B[m[32m+        );
+(B[m     }
+ 
+     #[test]

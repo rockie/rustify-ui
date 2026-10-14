@@ -1,0 +1,12 @@
+{
+  "candidate": "8e86626fce74ffc45085da6377ca9aa64312fe59",
+  "framework": "676a55771ab77faf8c476a836025d62905a2d3e2",
+  "protected_files": 11397,
+  "only_two_cargo_files_changed": [
+    "site/Cargo.lock",
+    "site/Cargo.toml"
+  ],
+  "all_tracked_original_source_bytes_preserved": true,
+  "manifest": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-installed-c-hv5ysh41/official-c/site/Cargo.toml",
+  "receipt": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-installed-c-hv5ysh41/official-c/.rustify-docs/pages-prepare.json"
+}

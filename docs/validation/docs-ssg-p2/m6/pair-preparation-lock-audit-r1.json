@@ -1,0 +1,31 @@
+{
+  "library_revision": "676a55771ab77faf8c476a836025d62905a2d3e2",
+  "packages": 193,
+  "framework_packages": {
+    "rustify-components": "git+https://github.com/rockie/rustify-ui?rev=676a55771ab77faf8c476a836025d62905a2d3e2#676a55771ab77faf8c476a836025d62905a2d3e2",
+    "rustify-docs": "git+https://github.com/rockie/rustify-ui?rev=676a55771ab77faf8c476a836025d62905a2d3e2#676a55771ab77faf8c476a836025d62905a2d3e2",
+    "rustify-docs-macros": "git+https://github.com/rockie/rustify-ui?rev=676a55771ab77faf8c476a836025d62905a2d3e2#676a55771ab77faf8c476a836025d62905a2d3e2",
+    "rustify-docs-syntax": "git+https://github.com/rockie/rustify-ui?rev=676a55771ab77faf8c476a836025d62905a2d3e2#676a55771ab77faf8c476a836025d62905a2d3e2",
+    "rustify-style": "git+https://github.com/rockie/rustify-ui?rev=676a55771ab77faf8c476a836025d62905a2d3e2#676a55771ab77faf8c476a836025d62905a2d3e2",
+    "rustify-ui": "git+https://github.com/rockie/rustify-ui?rev=676a55771ab77faf8c476a836025d62905a2d3e2#676a55771ab77faf8c476a836025d62905a2d3e2"
+  },
+  "wasm_bindgen": "0.2.128",
+  "source_free_root": "docs-site",
+  "lock_sha256": "0dd43b63c0b2ed89d0dffbd732ee57e46caeb2669c1549f214c7a33bc8dde24a",
+  "lock_bytes": 48590,
+  "manifest_sha256": "39c26b19123a2f664f337cc2bb85f1f102b95854661ef9cdc88b83630a705bdd",
+  "source_scope": "all framework package source identities use public URL + actual local R; transport-only remap",
+  "files_after_lock": [
+    ".gitignore",
+    "Cargo.lock",
+    "Cargo.toml",
+    "README.md",
+    "content/guide/getting-started.md",
+    "content/guide/writing-demos.md",
+    "content/index.md",
+    "rustify-docs.toml",
+    "src/bin/docs-render.rs",
+    "src/demos.rs",
+    "src/lib.rs"
+  ]
+}

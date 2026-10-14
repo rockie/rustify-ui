@@ -1,0 +1,14 @@
+{
+  "file": "crates/rustify-docs/tests/generate.rs",
+  "original_frozen_sha256": "3be78ce8140c6dadfca76a298a7bb55c5db2387cc3b9e0aa41481626a0919769",
+  "verification_sha256": "52a36a734bf13672f5d2a632deecc521d9dbe90701e5b2cdc03ecb286a2acbbb",
+  "authorization": "Root verification-only correction after two real generate failures; no product/runtime/template/version/lock change",
+  "positive": "exact declared head link[rel=icon] data SVG URI",
+  "negative": [
+    "same data URI on ordinary navigation",
+    "same data URI on stylesheet",
+    "different data URI on icon",
+    "actual http image source"
+  ],
+  "http_scope": "URI scheme of parsed href/src attributes; SVG xmlns inside a data payload is not a request"
+}

@@ -1,0 +1,21 @@
+{
+  "scope": "native Safari W3C startup with raw HTTP evidence, no enable/settings changes, only own session",
+  "records": [
+    {
+      "method": "GET",
+      "path": "/status",
+      "status": 200,
+      "headers": {
+        "Server": "safaridriver [22625.1.29.11.28]",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 13 Oct 2026 23:09:15 GMT",
+        "Accept-Ranges": "bytes",
+        "Content-Length": "37",
+        "Cache-Control": "no-cache",
+        "Connection": "close"
+      },
+      "body": "{\"value\":{\"message\":\"\",\"ready\":true}}"
+    }
+  ],
+  "failure": "timed out"
+}

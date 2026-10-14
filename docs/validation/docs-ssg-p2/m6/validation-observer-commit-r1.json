@@ -1,0 +1,15 @@
+{
+  "commit": "043840a18bd7298471073b235ab6be74eb31d2d3",
+  "framework_R3": "c562008291ef1b1826891944e0d81a5d61d775b8",
+  "scope": "three tests-only corrections; frozen runtime/library/template sources unchanged",
+  "files_sha256": {
+    "crates/rustify-docs-cli/tests/dev.rs": "4ff0fb90881bd322b5a61e2bf25e0e293f67f6f5da475c002aaaf2e563853a8b",
+    "crates/rustify-docs/tests/generate.rs": "52a36a734bf13672f5d2a632deecc521d9dbe90701e5b2cdc03ecb286a2acbbb",
+    "tests/docs-ssg/dev.spec.ts": "c9f1c7c237be5bc426f72782294bde1987223505b5a395cc98680eb0bac620d1"
+  },
+  "evidence": [
+    "docs/validation/docs-ssg-p2/m6/v14-c2-handoff-r1.json",
+    "docs/validation/docs-ssg-p2/m6/matrix-native-chrome-c2-accepted-r1.json"
+  ],
+  "not_a_product_candidate": true
+}

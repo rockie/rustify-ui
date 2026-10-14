@@ -1,0 +1,236 @@
+{
+  "manifest": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-installed-c-hv5ysh41/official-c/site/dist/rustify-docs-manifest.json",
+  "candidate_C": "8e86626fce74ffc45085da6377ca9aa64312fe59",
+  "all_file_sha_verified": true,
+  "html": [
+    {
+      "path": "404.html",
+      "bytes": 9186,
+      "gzip9": 2050,
+      "island": false
+    },
+    {
+      "path": "architecture/index.html",
+      "bytes": 49597,
+      "gzip9": 15356,
+      "island": false
+    },
+    {
+      "path": "compatibility/index.html",
+      "bytes": 39620,
+      "gzip9": 12516,
+      "island": false
+    },
+    {
+      "path": "components/button/index.html",
+      "bytes": 113397,
+      "gzip9": 8167,
+      "island": false
+    },
+    {
+      "path": "components/checkbox/index.html",
+      "bytes": 125521,
+      "gzip9": 8501,
+      "island": false
+    },
+    {
+      "path": "components/color-field/index.html",
+      "bytes": 99202,
+      "gzip9": 8004,
+      "island": false
+    },
+    {
+      "path": "components/data-table/index.html",
+      "bytes": 172411,
+      "gzip9": 12338,
+      "island": false
+    },
+    {
+      "path": "components/dialog/index.html",
+      "bytes": 132573,
+      "gzip9": 9812,
+      "island": false
+    },
+    {
+      "path": "components/icon/index.html",
+      "bytes": 113007,
+      "gzip9": 8453,
+      "island": false
+    },
+    {
+      "path": "components/index.html",
+      "bytes": 34342,
+      "gzip9": 8867,
+      "island": false
+    },
+    {
+      "path": "components/label/index.html",
+      "bytes": 108759,
+      "gzip9": 8043,
+      "island": false
+    },
+    {
+      "path": "components/link/index.html",
+      "bytes": 114134,
+      "gzip9": 8612,
+      "island": false
+    },
+    {
+      "path": "components/loading/index.html",
+      "bytes": 111137,
+      "gzip9": 8356,
+      "island": false
+    },
+    {
+      "path": "components/menu/index.html",
+      "bytes": 144958,
+      "gzip9": 10598,
+      "island": false
+    },
+    {
+      "path": "components/number-field/index.html",
+      "bytes": 100035,
+      "gzip9": 8094,
+      "island": false
+    },
+    {
+      "path": "components/progress/index.html",
+      "bytes": 131860,
+      "gzip9": 9535,
+      "island": false
+    },
+    {
+      "path": "components/radio/index.html",
+      "bytes": 128259,
+      "gzip9": 8629,
+      "island": false
+    },
+    {
+      "path": "components/scroll-area/index.html",
+      "bytes": 143819,
+      "gzip9": 10354,
+      "island": false
+    },
+    {
+      "path": "components/select/index.html",
+      "bytes": 132040,
+      "gzip9": 8949,
+      "island": false
+    },
+    {
+      "path": "components/slider/index.html",
+      "bytes": 124828,
+      "gzip9": 8433,
+      "island": false
+    },
+    {
+      "path": "components/switch/index.html",
+      "bytes": 124944,
+      "gzip9": 8408,
+      "island": false
+    },
+    {
+      "path": "components/tabs/index.html",
+      "bytes": 143427,
+      "gzip9": 10172,
+      "island": false
+    },
+    {
+      "path": "components/text-area/index.html",
+      "bytes": 96377,
+      "gzip9": 7487,
+      "island": false
+    },
+    {
+      "path": "components/text-field/index.html",
+      "bytes": 98544,
+      "gzip9": 7717,
+      "island": false
+    },
+    {
+      "path": "components/toast/index.html",
+      "bytes": 129980,
+      "gzip9": 9782,
+      "island": false
+    },
+    {
+      "path": "components/toggle-group/index.html",
+      "bytes": 132327,
+      "gzip9": 9018,
+      "island": false
+    },
+    {
+      "path": "components/tooltip/index.html",
+      "bytes": 126213,
+      "gzip9": 9348,
+      "island": false
+    },
+    {
+      "path": "components/tree/index.html",
+      "bytes": 159957,
+      "gzip9": 11382,
+      "island": false
+    },
+    {
+      "path": "data/index.html",
+      "bytes": 40792,
+      "gzip9": 9355,
+      "island": false
+    },
+    {
+      "path": "forms/index.html",
+      "bytes": 23383,
+      "gzip9": 5399,
+      "island": false
+    },
+    {
+      "path": "i18n/index.html",
+      "bytes": 26048,
+      "gzip9": 5472,
+      "island": false
+    },
+    {
+      "path": "index.html",
+      "bytes": 6453,
+      "gzip9": 2260,
+      "island": false
+    },
+    {
+      "path": "navigation/index.html",
+      "bytes": 23520,
+      "gzip9": 5919,
+      "island": false
+    },
+    {
+      "path": "quickstart/index.html",
+      "bytes": 120314,
+      "gzip9": 16394,
+      "island": false
+    },
+    {
+      "path": "themes/index.html",
+      "bytes": 85861,
+      "gzip9": 14321,
+      "island": false
+    },
+    {
+      "path": "utility/index.html",
+      "bytes": 31046,
+      "gzip9": 7807,
+      "island": false
+    },
+    {
+      "path": "vellum/index.html",
+      "bytes": 61442,
+      "gzip9": 16799,
+      "island": false
+    },
+    {
+      "path": "workspace/index.html",
+      "bytes": 24592,
+      "gzip9": 6482,
+      "island": false
+    }
+  ],
+  "scope": "HTML preliminary ranking; complete resource closure selection follows"
+}

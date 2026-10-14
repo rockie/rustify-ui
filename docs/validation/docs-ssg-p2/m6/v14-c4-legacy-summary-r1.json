@@ -1,0 +1,310 @@
+{
+  "scope": "M6 final C4 limited old DOM/GPU regression, native Chrome and regression tier; not GPU performance/endurance",
+  "C4": "d301344eeb27e22907c59a10805ae0cebf8dee99",
+  "R4": "3fcc626a4039a43c5e045ccd546bab976db89a73",
+  "groups": [
+    {
+      "project": "fusion-basic",
+      "evidence": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c4-legacy-fusion-basic-r1",
+      "build": {
+        "command": [
+          "mbx",
+          "xtask",
+          "build-web",
+          "--example",
+          "fusion-basic",
+          "--release"
+        ],
+        "exit_code": 0,
+        "milliseconds": 31734.443115234375,
+        "log": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c4-legacy-fusion-basic-r1/build.log"
+      },
+      "browser": {
+        "command": [
+          "npm",
+          "exec",
+          "--",
+          "playwright",
+          "test",
+          "--project=fusion-basic",
+          "m1-probes.spec.ts",
+          "m2-runtime.spec.ts",
+          "m3-state.spec.ts",
+          "m4-geometry.spec.ts",
+          "m4-overlay.spec.ts",
+          "m6-mainpath.spec.ts",
+          "p2-navigation.spec.ts",
+          "p3-instances.spec.ts",
+          "--workers=1",
+          "--retries=0",
+          "--output",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c4-legacy-fusion-basic-r1/artifacts"
+        ],
+        "exit_code": 0,
+        "milliseconds": 77443.27001953125,
+        "log": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c4-legacy-fusion-basic-r1/run.log"
+      },
+      "stats": {
+        "startTime": "2026-10-14T01:36:26.119Z",
+        "duration": 76595.66,
+        "expected": 58,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      }
+    },
+    {
+      "project": "component-catalog",
+      "evidence": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c4-legacy-component-catalog-r1",
+      "build": {
+        "command": [
+          "mbx",
+          "xtask",
+          "build-web",
+          "--example",
+          "component-catalog",
+          "--release"
+        ],
+        "exit_code": 0,
+        "milliseconds": 44114.88671875,
+        "log": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c4-legacy-component-catalog-r1/build.log"
+      },
+      "browser": {
+        "command": [
+          "npm",
+          "exec",
+          "--",
+          "playwright",
+          "test",
+          "--project=component-catalog",
+          "p2-catalog.spec.ts",
+          "p2-theme.spec.ts",
+          "p2-i18n.spec.ts",
+          "p2-semantics.spec.ts",
+          "catalog-inputs.spec.ts",
+          "p2-reflow.spec.ts",
+          "p2-a11y.spec.ts",
+          "theme-compat.spec.ts",
+          "--workers=1",
+          "--retries=0",
+          "--output",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c4-legacy-component-catalog-r1/artifacts"
+        ],
+        "exit_code": 0,
+        "milliseconds": 78532.7080078125,
+        "log": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c4-legacy-component-catalog-r1/run.log"
+      },
+      "stats": {
+        "startTime": "2026-10-14T01:38:28.169Z",
+        "duration": 77752.99799999999,
+        "expected": 73,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      }
+    },
+    {
+      "project": "theme-studio",
+      "evidence": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c4-legacy-theme-studio-r1",
+      "build": {
+        "command": [
+          "mbx",
+          "xtask",
+          "build-web",
+          "--example",
+          "theme-studio",
+          "--release"
+        ],
+        "exit_code": 0,
+        "milliseconds": 68273.69189453125,
+        "log": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c4-legacy-theme-studio-r1/build.log"
+      },
+      "browser": {
+        "command": [
+          "npm",
+          "exec",
+          "--",
+          "playwright",
+          "test",
+          "--project=theme-studio",
+          "theme-dom.spec.ts",
+          "theme-startup.spec.ts",
+          "theme-editor.spec.ts",
+          "--workers=1",
+          "--retries=0",
+          "--output",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c4-legacy-theme-studio-r1/artifacts"
+        ],
+        "exit_code": 0,
+        "milliseconds": 28384.57080078125,
+        "log": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c4-legacy-theme-studio-r1/run.log"
+      },
+      "stats": {
+        "startTime": "2026-10-14T01:40:55.604Z",
+        "duration": 27594.402,
+        "expected": 20,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      }
+    },
+    {
+      "project": "property-workbench",
+      "evidence": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c4-legacy-property-workbench-r1",
+      "build": {
+        "command": [
+          "mbx",
+          "xtask",
+          "build-web",
+          "--example",
+          "property-workbench",
+          "--release"
+        ],
+        "exit_code": 0,
+        "milliseconds": 34220.19482421875,
+        "log": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c4-legacy-property-workbench-r1/build.log"
+      },
+      "browser": {
+        "command": [
+          "npm",
+          "exec",
+          "--",
+          "playwright",
+          "test",
+          "--project=property-workbench",
+          "m3-workbench.spec.ts",
+          "m5-text.spec.ts",
+          "m5-semantics.spec.ts",
+          "m6-theme.spec.ts",
+          "m6-components.spec.ts",
+          "p2-form.spec.ts",
+          "p2-workspace.spec.ts",
+          "--workers=1",
+          "--retries=0",
+          "--output",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c4-legacy-property-workbench-r1/artifacts"
+        ],
+        "exit_code": 0,
+        "milliseconds": 82561.205078125,
+        "log": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c4-legacy-property-workbench-r1/run.log"
+      },
+      "stats": {
+        "startTime": "2026-10-14T01:41:58.740Z",
+        "duration": 81799.318,
+        "expected": 72,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      }
+    },
+    {
+      "project": "data-workbench",
+      "evidence": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c4-legacy-data-workbench-r1",
+      "build": {
+        "command": [
+          "mbx",
+          "xtask",
+          "build-web",
+          "--example",
+          "data-workbench",
+          "--release"
+        ],
+        "exit_code": 0,
+        "milliseconds": 30628.52490234375,
+        "log": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c4-legacy-data-workbench-r1/build.log"
+      },
+      "browser": {
+        "command": [
+          "npm",
+          "exec",
+          "--",
+          "playwright",
+          "test",
+          "--project=data-workbench",
+          "p3-table.spec.ts",
+          "--workers=1",
+          "--retries=0",
+          "--output",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c4-legacy-data-workbench-r1/artifacts"
+        ],
+        "exit_code": 0,
+        "milliseconds": 36353.8623046875,
+        "log": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c4-legacy-data-workbench-r1/run.log"
+      },
+      "stats": {
+        "startTime": "2026-10-14T01:43:52.529Z",
+        "duration": 35535.022,
+        "expected": 20,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      }
+    },
+    {
+      "project": "dom-only",
+      "evidence": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c4-legacy-dom-only-r1",
+      "browser": {
+        "command": [
+          "npm",
+          "exec",
+          "--",
+          "playwright",
+          "test",
+          "-c",
+          "playwright.docs.config.ts",
+          "--project=dom-only",
+          "--workers=1",
+          "--retries=0",
+          "--output",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c4-legacy-dom-only-r1/artifacts"
+        ],
+        "exit_code": 0,
+        "milliseconds": 9537.950927734375,
+        "log": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c4-legacy-dom-only-r1/run.log"
+      },
+      "stats": {
+        "startTime": "2026-10-14T01:44:29.262Z",
+        "duration": 8690.628,
+        "expected": 12,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      }
+    },
+    {
+      "project": "dom-hydrate",
+      "evidence": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c4-legacy-dom-hydrate-r1",
+      "browser": {
+        "command": [
+          "npm",
+          "exec",
+          "--",
+          "playwright",
+          "test",
+          "-c",
+          "playwright.docs.config.ts",
+          "--project=dom-hydrate",
+          "hydration.spec.ts",
+          "--workers=1",
+          "--retries=0",
+          "--output",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c4-legacy-dom-hydrate-r1/artifacts"
+        ],
+        "exit_code": 0,
+        "milliseconds": 10242.334716796875,
+        "log": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/v14-c4-legacy-dom-hydrate-r1/run.log"
+      },
+      "stats": {
+        "startTime": "2026-10-14T01:44:38.837Z",
+        "duration": 9586.442,
+        "expected": 10,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      }
+    }
+  ],
+  "remaining": [],
+  "active": null,
+  "all_seven_passed": true
+}

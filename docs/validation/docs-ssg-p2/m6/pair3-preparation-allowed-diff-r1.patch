@@ -1,0 +1,117 @@
+diff --git a/Cargo.lock b/Cargo.lock
+index 25c32ee0..a3e3c0b9 100644
+--- a/Cargo.lock
++++ b/Cargo.lock
+@@ -2454,7 +2454,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "rustify-docs-cli"
+-version = "0.1.12"
++version = "0.1.13"
+ dependencies = [
+  "dom_query",
+  "kqueue",
+diff --git a/crates/rustify-docs-cli/Cargo.toml b/crates/rustify-docs-cli/Cargo.toml
+index 7ae52c89..099e1b4f 100644
+--- a/crates/rustify-docs-cli/Cargo.toml
++++ b/crates/rustify-docs-cli/Cargo.toml
+@@ -3,7 +3,7 @@ name = "rustify-docs-cli"
+ # Its own version, not the workspace's: it changes whenever the binary's
+ # sources, embedded assets or resolved dependencies change, and both
+ # `--version` and a production manifest's `cli_version` report it.
+-version = "0.1.12"
++version = "0.1.13"
+ edition.workspace = true
+ license.workspace = true
+ publish.workspace = true
+diff --git a/crates/rustify-docs-cli/assets/components-Cargo.lock b/crates/rustify-docs-cli/assets/components-Cargo.lock
+index 75a688bc..9af034e2 100644
+--- a/crates/rustify-docs-cli/assets/components-Cargo.lock
++++ b/crates/rustify-docs-cli/assets/components-Cargo.lock
+@@ -1188,7 +1188,7 @@ dependencies = [
+ [[package]]
+ name = "rustify-components"
+ version = "0.1.0"
+-source = "git+https://github.com/rockie/rustify-ui?rev=0494f304f0f9f8b620affb7309df23db3cb2377c#0494f304f0f9f8b620affb7309df23db3cb2377c"
++source = "git+https://github.com/rockie/rustify-ui?rev=c562008291ef1b1826891944e0d81a5d61d775b8#c562008291ef1b1826891944e0d81a5d61d775b8"
+ dependencies = [
+  "js-sys",
+  "leptos",
+@@ -1201,7 +1201,7 @@ dependencies = [
+ [[package]]
+ name = "rustify-docs"
+ version = "0.1.0"
+-source = "git+https://github.com/rockie/rustify-ui?rev=0494f304f0f9f8b620affb7309df23db3cb2377c#0494f304f0f9f8b620affb7309df23db3cb2377c"
++source = "git+https://github.com/rockie/rustify-ui?rev=c562008291ef1b1826891944e0d81a5d61d775b8#c562008291ef1b1826891944e0d81a5d61d775b8"
+ dependencies = [
+  "any_spawner",
+  "hydration_context",
+@@ -1219,7 +1219,7 @@ dependencies = [
+ [[package]]
+ name = "rustify-docs-macros"
+ version = "0.1.0"
+-source = "git+https://github.com/rockie/rustify-ui?rev=0494f304f0f9f8b620affb7309df23db3cb2377c#0494f304f0f9f8b620affb7309df23db3cb2377c"
++source = "git+https://github.com/rockie/rustify-ui?rev=c562008291ef1b1826891944e0d81a5d61d775b8#c562008291ef1b1826891944e0d81a5d61d775b8"
+ dependencies = [
+  "proc-macro2",
+  "quote",
+@@ -1231,7 +1231,7 @@ dependencies = [
+ [[package]]
+ name = "rustify-docs-syntax"
+ version = "0.1.0"
+-source = "git+https://github.com/rockie/rustify-ui?rev=0494f304f0f9f8b620affb7309df23db3cb2377c#0494f304f0f9f8b620affb7309df23db3cb2377c"
++source = "git+https://github.com/rockie/rustify-ui?rev=c562008291ef1b1826891944e0d81a5d61d775b8#c562008291ef1b1826891944e0d81a5d61d775b8"
+ dependencies = [
+  "proc-macro2",
+  "quote",
+@@ -1242,7 +1242,7 @@ dependencies = [
+ [[package]]
+ name = "rustify-style"
+ version = "0.1.0"
+-source = "git+https://github.com/rockie/rustify-ui?rev=0494f304f0f9f8b620affb7309df23db3cb2377c#0494f304f0f9f8b620affb7309df23db3cb2377c"
++source = "git+https://github.com/rockie/rustify-ui?rev=c562008291ef1b1826891944e0d81a5d61d775b8#c562008291ef1b1826891944e0d81a5d61d775b8"
+ dependencies = [
+  "flate2",
+  "regex",
+@@ -1254,7 +1254,7 @@ dependencies = [
+ [[package]]
+ name = "rustify-ui"
+ version = "0.1.0"
+-source = "git+https://github.com/rockie/rustify-ui?rev=0494f304f0f9f8b620affb7309df23db3cb2377c#0494f304f0f9f8b620affb7309df23db3cb2377c"
++source = "git+https://github.com/rockie/rustify-ui?rev=c562008291ef1b1826891944e0d81a5d61d775b8#c562008291ef1b1826891944e0d81a5d61d775b8"
+ dependencies = [
+  "js-sys",
+  "leptos",
+diff --git a/crates/rustify-docs-cli/assets/framework-revision.txt b/crates/rustify-docs-cli/assets/framework-revision.txt
+index 95494f4c..a657eb4e 100644
+--- a/crates/rustify-docs-cli/assets/framework-revision.txt
++++ b/crates/rustify-docs-cli/assets/framework-revision.txt
+@@ -1 +1 @@
+-0494f304f0f9f8b620affb7309df23db3cb2377c
++c562008291ef1b1826891944e0d81a5d61d775b8
+diff --git a/docs/docs-ssg.md b/docs/docs-ssg.md
+index 43b40f1b..f3414e7c 100644
+--- a/docs/docs-ssg.md
++++ b/docs/docs-ssg.md
+@@ -18,8 +18,8 @@ Supported on macOS. Linux and Windows are not verified.
+ ## Install and maintain the CLI
+ 
+ This section records the verified P1 content-site release. The Rust examples
+-below use the current repository checkout's CLI candidate, version **0.1.12**,
+-paired with library revision `0494f304f0f9f8b620affb7309df23db3cb2377c`.
++below use the current repository checkout's CLI candidate, version **0.1.13**,
++paired with library revision `c562008291ef1b1826891944e0d81a5d61d775b8`.
+ The library revision is committed locally; public availability is pending.
+ The installed candidate reports its exact CLI source commit with
+ `rustify-docs --build-info`. The pinned P1 install below is for content sites.
+@@ -590,8 +590,8 @@ The components template requires an installed CLI with a traceable source
+ revision, an explicit paired framework revision and its embedded dependency
+ lock. A development checkout without that frozen pair refuses generation;
+ it does not write an unlocked project or choose a framework revision for
+-the author. This checkout's 0.1.12 candidate pins library revision
+-`0494f304f0f9f8b620affb7309df23db3cb2377c` and embeds its generated dependency
++the author. This checkout's 0.1.13 candidate pins library revision
++`c562008291ef1b1826891944e0d81a5d61d775b8` and embeds its generated dependency
+ lock. Public Git availability is still being prepared; the installed CLI's
+ `--build-info` identifies its paired C commit. The verified P1 installation
+ above does not provide this template.

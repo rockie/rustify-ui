@@ -1,0 +1,12 @@
+{
+  "scope": "dirty development binary, not installed/frozen C3 acceptance",
+  "head": "21fda3c37d5c7dc8eaada1bb63515735ade7ec81",
+  "build_info": "rustify-docs 0.1.13\npanic: unwind\ngrammars: syntect-5.3.0+two-face-0.5.2+bat-0.26.1+fancy\nsource: 21fda3c37d5c7dc8eaada1bb63515735ade7ec81",
+  "binary": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-cli/rustify-docs",
+  "binary_sha256": "6aa2d22365da4a5187c67136257408b6cf0c8d8c138741b6558e0a2485f46556",
+  "source_sha256": {
+    "crates/rustify-docs/src/generation.rs": "da1ed3870ac27499579a43bd9df57e4d48c42f08d24218e17c6f7e535b3ece81",
+    "crates/rustify-docs/src/html_check.rs": "05669030c412abc22b766931d668dba9e07eff2a0d94783ce2cb41aec1239312"
+  },
+  "diff": "save-hotspot-fix-development-r1.patch"
+}

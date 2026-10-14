@@ -1,0 +1,17 @@
+{
+  "scope": "reuse of real C1 negative gate; no repeated cold C2 runtime gate",
+  "previous_evidence": "docs/validation/docs-ssg-p2/m6/installed-c-path-rejection-audit-r1.json",
+  "previous_exit_code": 1,
+  "expected_rule": "rust-framework-pair",
+  "unchanged_code_and_fixture_files_sha256": {
+    "crates/rustify-docs-cli/src/rust_site.rs": "03776481298efe5690afd9aac27887075fc0048704e14fbda3f3e6d1c8653cfa",
+    "tests/docs-ssg/fixtures/components/Cargo.toml": "1549c0dbde6ae23e44f3f81e327fab075dea4d2ae1746610d8b8a2cce2422027",
+    "tests/docs-ssg/fixtures/components/Cargo.lock": "ba3df35545aff9fc21e81d26b9011a7821af53c6f36e5aa92bb57881e60f15b9"
+  },
+  "all_cli_source_and_fixture_Rust_source_unchanged_between_C1_C2": true,
+  "private_C1_fixture_lock_still_matches_frozen_bytes": true,
+  "three_framework_packages_are_path_sources": true,
+  "C1_and_C2_expected_revisions_are_nonempty": true,
+  "reason": "The identical validate_framework implementation rejects source=None whenever the paired expected revision is nonempty, independently of which nonempty R is paired. C1 and C2 both have explicit full revisions.",
+  "no_C2_path_fixture_rebuild_performed": true
+}

@@ -1,0 +1,26 @@
+{
+  "R3": "c562008291ef1b1826891944e0d81a5d61d775b8",
+  "all_non_release_product_and_observer_bytes_unchanged": true,
+  "protected_files": 1815,
+  "observer_sources_sha256": {
+    "crates/rustify-docs-cli/tests/dev.rs": "4ff0fb90881bd322b5a61e2bf25e0e293f67f6f5da475c002aaaf2e563853a8b",
+    "crates/rustify-docs/tests/generate.rs": "52a36a734bf13672f5d2a632deecc521d9dbe90701e5b2cdc03ecb286a2acbbb",
+    "tests/docs-ssg/dev.spec.ts": "c9f1c7c237be5bc426f72782294bde1987223505b5a395cc98680eb0bac620d1"
+  },
+  "user_dirty_sources_sha256": {
+    ".xgent-ai/sdlc/events/plan/7c105838-be0d-4f3b-ae5c-9998b8f4cfdc/49cf6e56-1669-49f8-bf18-f9ba34055b2f.md": "2ad70a918150d5f6e6f97c4174450fd05916813406c3ae0c98b187331d0eb7f9",
+    ".xgent-ai/sdlc/events/plan/7c105838-be0d-4f3b-ae5c-9998b8f4cfdc/index.md": "d985f2134cc4ea01d880a96591ccb44ad4519d9abd31f4eb8b008fa2ea94ae87",
+    ".xgent-ai/sdlc/events/prd/8917bbeb-7add-4826-95ee-5cdf6bdff735/7ca79957-a261-428e-bcfc-77ba4fce871e.md": "cc30a93a1154babac6a784b40cdf6b7adfdd9dbbadfc339c7d4168771b735226",
+    ".xgent-ai/sdlc/events/prd/8917bbeb-7add-4826-95ee-5cdf6bdff735/index.md": "97589b745b6fc6ff445262e062994a65b62cddbb4e28471239614db08190d089",
+    ".xgent-ai/sdlc/status/plan/7c105838-be0d-4f3b-ae5c-9998b8f4cfdc.md": "cfe1077f78ec8c5b97419d532e70c84008705e15410c72137e298a8b6a5e2cc0",
+    ".xgent-ai/sdlc/status/prd/8917bbeb-7add-4826-95ee-5cdf6bdff735.md": "b889040715e7ba96e922fd98cf0a601b819ea14636a968a7313b91882b7caa83"
+  },
+  "allowed_release_files": [
+    "crates/rustify-docs-cli/Cargo.toml",
+    "crates/rustify-docs-cli/assets/framework-revision.txt",
+    "crates/rustify-docs-cli/assets/components-Cargo.lock",
+    "Cargo.lock",
+    "docs/docs-ssg.md"
+  ],
+  "canonical_C2_state_unchanged": true
+}

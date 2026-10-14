@@ -1,0 +1,128 @@
+[
+  {
+    "name": "fetch",
+    "command": [
+      "cargo",
+      "fetch",
+      "--locked",
+      "--manifest-path",
+      "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair4-preparation-eml_75a4/docs-site/Cargo.toml"
+    ],
+    "exit_code": 0,
+    "milliseconds": 6111.4140625
+  },
+  {
+    "name": "root-metadata",
+    "command": [
+      "mbx",
+      "metadata",
+      "--locked",
+      "--offline",
+      "--format-version",
+      "1"
+    ],
+    "exit_code": 0,
+    "milliseconds": 287.066162109375
+  },
+  {
+    "name": "metadata-ssr",
+    "command": [
+      "cargo",
+      "metadata",
+      "--locked",
+      "--offline",
+      "--format-version",
+      "1",
+      "--manifest-path",
+      "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair4-preparation-eml_75a4/docs-site/Cargo.toml",
+      "--no-default-features",
+      "--features",
+      "ssr"
+    ],
+    "exit_code": 0,
+    "milliseconds": 189.78173828125,
+    "all_six_sources_R4": true,
+    "no_makepad": true,
+    "wasm_bindgen": "0.2.128"
+  },
+  {
+    "name": "metadata-hydrate",
+    "command": [
+      "cargo",
+      "metadata",
+      "--locked",
+      "--offline",
+      "--format-version",
+      "1",
+      "--manifest-path",
+      "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair4-preparation-eml_75a4/docs-site/Cargo.toml",
+      "--no-default-features",
+      "--features",
+      "hydrate"
+    ],
+    "exit_code": 0,
+    "milliseconds": 177.254150390625,
+    "all_six_sources_R4": true,
+    "no_makepad": true,
+    "wasm_bindgen": "0.2.128"
+  },
+  {
+    "name": "check-ssr",
+    "command": [
+      "mbx",
+      "check",
+      "--locked",
+      "--offline",
+      "--profile",
+      "docs-host",
+      "--manifest-path",
+      "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair4-preparation-eml_75a4/docs-site/Cargo.toml",
+      "--target-dir",
+      "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair4-preparation-eml_75a4/target",
+      "--no-default-features",
+      "--features",
+      "ssr",
+      "--bin",
+      "docs-render"
+    ],
+    "exit_code": 0,
+    "milliseconds": 11227.05517578125
+  },
+  {
+    "name": "check-hydrate",
+    "command": [
+      "mbx",
+      "check",
+      "--locked",
+      "--offline",
+      "--profile",
+      "docs-wasm",
+      "--manifest-path",
+      "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair4-preparation-eml_75a4/docs-site/Cargo.toml",
+      "--target-dir",
+      "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair4-preparation-eml_75a4/target",
+      "--no-default-features",
+      "--features",
+      "hydrate",
+      "--lib",
+      "--target",
+      "wasm32-unknown-unknown"
+    ],
+    "exit_code": 0,
+    "milliseconds": 5657.426025390625
+  },
+  {
+    "name": "cli-build",
+    "command": [
+      "mbx",
+      "build",
+      "--locked",
+      "--profile",
+      "docs-cli",
+      "-p",
+      "rustify-docs-cli"
+    ],
+    "exit_code": 0,
+    "milliseconds": 26291.0107421875
+  }
+]

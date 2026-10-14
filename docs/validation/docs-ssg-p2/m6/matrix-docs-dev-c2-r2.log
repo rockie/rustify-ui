@@ -1,0 +1,344 @@
+npm notice run rustify-ui-browser-tests@0.1.0 npx
+npm notice run 'playwright' test -c docs/validation/docs-ssg-p2/m6/native-matrix.config.ts --project=docs-dev
+
+Running 24 tests using 1 worker
+
+(node:98435) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 [docs-dev] › tests/docs-ssg/dev-components.spec.ts:371:5 › the address and first building shell precede the actual compilation, then content saves reuse its pair (37.7s)
+  ✓   2 [docs-dev] › tests/docs-ssg/dev-components.spec.ts:452:5 › Rust saves keep the original interactive document until a complete new pair, and diagnostics recover at its scroll position (1.4m)
+rustc 1.99.0 (b940084d7 2026-09-28)
+  ✓   3 [docs-dev] › tests/docs-ssg/dev-uat.spec.ts:89:5 › UAT-1 and UAT-2: new, dev, three pages within a minute; then saves, a mistake and its fix in one session (3.2s)
+  ✘   4 [docs-dev] › tests/docs-ssg/dev.spec.ts:146:5 › semantic diagnostics locate the source, preserve the home, and clear on repair (10.2s)
+(node:5884) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+rustc 1.99.0 (b940084d7 2026-09-28)
+  ✓   5 [docs-dev] › tests/docs-ssg/dev.spec.ts:170:5 › a new site is readable at once: the home page and its two pages (444ms)
+  ✓   6 [docs-dev] › tests/docs-ssg/dev.spec.ts:205:5 › a save reloads the page it changed in place and leaves the others (1.8s)
+  ✓   7 [docs-dev] › tests/docs-ssg/dev.spec.ts:233:5 › a real symlink target save refreshes its image and survives deletion and recovery (529ms)
+  ✓   8 [docs-dev] › tests/docs-ssg/dev.spec.ts:273:9 › a snapshot attachment in content/manual.pdf recovers when only its target is restored (427ms)
+  ✓   9 [docs-dev] › tests/docs-ssg/dev.spec.ts:273:9 › a snapshot attachment in static/manual.pdf recovers when only its target is restored (429ms)
+  ✓  10 [docs-dev] › tests/docs-ssg/dev.spec.ts:306:5 › arbitrary CSS resources keep numeric entity delimiters and compiler URL decoding (276ms)
+  ✓  11 [docs-dev] › tests/docs-ssg/dev.spec.ts:345:5 › template contents are rejected as anchors while their holder and ordinary IDs navigate (391ms)
+  ✘  12 [docs-dev] › tests/docs-ssg/dev.spec.ts:375:9 › body anchors at / navigate on the same and other pages and recover from ghost links (486ms)
+(node:6296) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  13 [docs-dev] › tests/docs-ssg/dev.spec.ts:375:9 › body anchors at /docs/ navigate on the same and other pages and recover from ghost links (531ms)
+  ✘  14 [docs-dev] › tests/docs-ssg/dev.spec.ts:414:9 › self-closing SVG template preserves document anchors and cross-page navigation (328ms)
+(node:6401) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  15 [docs-dev] › tests/docs-ssg/dev.spec.ts:414:9 › paired SVG template preserves document anchors and cross-page navigation (420ms)
+(node:6460) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  16 [docs-dev] › tests/docs-ssg/dev.spec.ts:414:9 › SVG inside an HTML template preserves document anchors and cross-page navigation (419ms)
+(node:6521) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  17 [docs-dev] › tests/docs-ssg/dev.spec.ts:440:5 › HTML templates at foreign integration points recover from ghost links (437ms)
+  ✓  18 [docs-dev] › tests/docs-ssg/dev.spec.ts:471:5 › a failed build keeps the page readable under a panel that hides to a marker and clears on the fix (699ms)
+  ✘  19 [docs-dev] › tests/docs-ssg/dev.spec.ts:521:5 › while nothing has built, every page says so, and becomes the site once it builds (191ms)
+(node:6673) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  20 [docs-dev] › tests/docs-ssg/dev.spec.ts:541:5 › a restarted dev brings an open page up to date (1.2s)
+  ✘  21 [docs-dev] › tests/docs-ssg/dev.spec.ts:552:5 › a panic in a build is one more problem, and the next build is served (10.2s)
+(node:6915) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  22 [docs-dev] › tests/docs-ssg/dev.spec.ts:568:5 › the panel speaks the page's language (10.3s)
+(node:7070) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  23 [docs-dev] › tests/docs-ssg/dev.spec.ts:578:5 › on a phone the panel is a sheet along the bottom and nothing scrolls sideways (522ms)
+  ✘  24 [docs-dev] › tests/docs-ssg/dev.spec.ts:600:5 › axe finds no serious or critical problem with the panel open or hidden, in both modes (10.2s)
+
+
+  1) [docs-dev] › tests/docs-ssg/dev.spec.ts:146:5 › semantic diagnostics locate the source, preserve the home, and clear on repair 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('dialog')
+    Expected: visible
+    Timeout: 10000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('dialog') with timeout 10000ms
+      - waiting for getByRole('dialog')
+
+
+      157 |         site.write("content/index.md", source);
+      158 |         const panel = page.getByRole("dialog");
+    > 159 |         await expect(panel).toBeVisible();
+          |                             ^
+      160 |         await expect(panel).toContainText(rule);
+      161 |         await expect(panel.locator(".rd-dev-location")).toHaveText(location);
+      162 |         await expect(panel.locator(".rd-dev-suggestion")).not.toBeEmpty();
+        at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/docs-ssg/dev.spec.ts:159:29
+
+    Error Context: test-results/docs/docs-ssg-dev-semantic-diag-55e5e-he-home-and-clear-on-repair-docs-dev/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/docs/docs-ssg-dev-semantic-diag-55e5e-he-home-and-clear-on-repair-docs-dev/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/docs/docs-ssg-dev-semantic-diag-55e5e-he-home-and-clear-on-repair-docs-dev/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [docs-dev] › tests/docs-ssg/dev.spec.ts:375:9 › body anchors at / navigate on the same and other pages and recover from ghost links 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 3
+
+    - Array []
+    + Array [
+    +   "http://127.0.0.1:64345/__rustify-docs/events?path=%2F&good=0&session=186e-18de383068994950: net::ERR_ABORTED",
+    + ]
+
+      402 |         site.write("content/index.md", body);
+      403 |         await expect(page.getByRole("dialog", { name: /errors ·/ })).toHaveCount(0);
+    > 404 |         expect(errors).toEqual([]);
+          |                        ^
+      405 |         await test.info().attach("body-anchors.png", { body: await page.screenshot(), contentType: "image/png" });
+      406 |     });
+      407 | }
+        at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/docs-ssg/dev.spec.ts:404:24
+
+    Error Context: test-results/docs/docs-ssg-dev-body-anchors--8dddf-nd-recover-from-ghost-links-docs-dev/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/docs/docs-ssg-dev-body-anchors--8dddf-nd-recover-from-ghost-links-docs-dev/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/docs/docs-ssg-dev-body-anchors--8dddf-nd-recover-from-ghost-links-docs-dev/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [docs-dev] › tests/docs-ssg/dev.spec.ts:414:9 › self-closing SVG template preserves document anchors and cross-page navigation 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 3
+
+    - Array []
+    + Array [
+    +   "http://127.0.0.1:64424/__rustify-docs/events?path=%2Fdocs%2F&good=0&session=18d9-18de3830bd0f3058: net::ERR_ABORTED",
+    + ]
+
+      433 |         await expect(page).toHaveURL(new RegExp(`/other/#${ids[0]}$`));
+      434 |         expect(await page.locator(`[id="${ids[0]}"]`).count()).toBe(1);
+    > 435 |         expect(errors).toEqual([]);
+          |                        ^
+      436 |         await test.info().attach("foreign-anchors.png", { body: await page.screenshot(), contentType: "image/png" });
+      437 |     });
+      438 | }
+        at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/docs-ssg/dev.spec.ts:435:24
+
+    Error Context: test-results/docs/docs-ssg-dev-self-closing--11c14-s-and-cross-page-navigation-docs-dev/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/docs/docs-ssg-dev-self-closing--11c14-s-and-cross-page-navigation-docs-dev/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/docs/docs-ssg-dev-self-closing--11c14-s-and-cross-page-navigation-docs-dev/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [docs-dev] › tests/docs-ssg/dev.spec.ts:414:9 › paired SVG template preserves document anchors and cross-page navigation 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 3
+
+    - Array []
+    + Array [
+    +   "http://127.0.0.1:64471/__rustify-docs/events?path=%2Fdocs%2F&good=0&session=1913-18de3830ec5f7688: net::ERR_ABORTED",
+    + ]
+
+      433 |         await expect(page).toHaveURL(new RegExp(`/other/#${ids[0]}$`));
+      434 |         expect(await page.locator(`[id="${ids[0]}"]`).count()).toBe(1);
+    > 435 |         expect(errors).toEqual([]);
+          |                        ^
+      436 |         await test.info().attach("foreign-anchors.png", { body: await page.screenshot(), contentType: "image/png" });
+      437 |     });
+      438 | }
+        at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/docs-ssg/dev.spec.ts:435:24
+
+    Error Context: test-results/docs/docs-ssg-dev-paired-SVG-te-918b2-s-and-cross-page-navigation-docs-dev/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/docs/docs-ssg-dev-paired-SVG-te-918b2-s-and-cross-page-navigation-docs-dev/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/docs/docs-ssg-dev-paired-SVG-te-918b2-s-and-cross-page-navigation-docs-dev/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5) [docs-dev] › tests/docs-ssg/dev.spec.ts:414:9 › SVG inside an HTML template preserves document anchors and cross-page navigation 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 3
+
+    - Array []
+    + Array [
+    +   "http://127.0.0.1:64524/__rustify-docs/events?path=%2Fdocs%2F&good=0&session=1950-18de38311fd4e110: net::ERR_ABORTED",
+    + ]
+
+      433 |         await expect(page).toHaveURL(new RegExp(`/other/#${ids[0]}$`));
+      434 |         expect(await page.locator(`[id="${ids[0]}"]`).count()).toBe(1);
+    > 435 |         expect(errors).toEqual([]);
+          |                        ^
+      436 |         await test.info().attach("foreign-anchors.png", { body: await page.screenshot(), contentType: "image/png" });
+      437 |     });
+      438 | }
+        at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/docs-ssg/dev.spec.ts:435:24
+
+    Error Context: test-results/docs/docs-ssg-dev-SVG-inside-an-b1eb3-s-and-cross-page-navigation-docs-dev/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/docs/docs-ssg-dev-SVG-inside-an-b1eb3-s-and-cross-page-navigation-docs-dev/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/docs/docs-ssg-dev-SVG-inside-an-b1eb3-s-and-cross-page-navigation-docs-dev/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  6) [docs-dev] › tests/docs-ssg/dev.spec.ts:521:5 › while nothing has built, every page says so, and becomes the site once it builds 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 500
+    Received: 200
+
+      523 |     const server = await dev();
+      524 |     const response = await page.goto(`${server.url}guide/setup/`);
+    > 525 |     expect(response?.status()).toBe(500);
+          |                                ^
+      526 |     await expect(page.getByRole("heading", { level: 1 })).toHaveText("The site does not build yet");
+      527 |     // The problems are the page: listed in its column, with nothing to hide them.
+      528 |     const list = page.getByRole("region", { name: "1 error · nothing has built yet" });
+        at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/docs-ssg/dev.spec.ts:525:32
+
+    Error Context: test-results/docs/docs-ssg-dev-while-nothing-d446a-mes-the-site-once-it-builds-docs-dev/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/docs/docs-ssg-dev-while-nothing-d446a-mes-the-site-once-it-builds-docs-dev/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/docs/docs-ssg-dev-while-nothing-d446a-mes-the-site-once-it-builds-docs-dev/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  7) [docs-dev] › tests/docs-ssg/dev.spec.ts:552:5 › a panic in a build is one more problem, and the next build is served 
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByRole('dialog', { name: '1 error · showing the last good version' })
+    Expected substring: "internal"
+    Timeout: 10000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toContainText" getByRole('dialog', { name: '1 error · showing the last good version' }) with timeout 10000ms
+      - waiting for getByRole('dialog', { name: '1 error · showing the last good version' })
+
+
+      556 |     site.edit("content/guide/setup.md", "Once installed,", "PANIC-HERE Once installed,");
+      557 |     const panel = page.getByRole("dialog", { name: "1 error · showing the last good version" });
+    > 558 |     await expect(panel).toContainText("internal");
+          |                         ^
+      559 |     await expect(panel).toContainText("stopped inside rustify-docs");
+      560 |     await expect(panel.locator(".rd-dev-suggestion")).toContainText("save again");
+      561 |     expect(await kept(page)).toBe(true);
+        at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/docs-ssg/dev.spec.ts:558:25
+
+    Error Context: test-results/docs/docs-ssg-dev-a-panic-in-a--0c8f0-nd-the-next-build-is-served-docs-dev/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/docs/docs-ssg-dev-a-panic-in-a--0c8f0-nd-the-next-build-is-served-docs-dev/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/docs/docs-ssg-dev-a-panic-in-a--0c8f0-nd-the-next-build-is-served-docs-dev/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  8) [docs-dev] › tests/docs-ssg/dev.spec.ts:568:5 › the panel speaks the page's language ──────────
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('dialog', { name: '1 个错误 · 显示上一个可用版本' })
+    Expected: visible
+    Timeout: 10000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('dialog', { name: '1 个错误 · 显示上一个可用版本' }) with timeout 10000ms
+      - waiting for getByRole('dialog', { name: '1 个错误 · 显示上一个可用版本' })
+
+
+      571 |     site.edit("content/reference/api.md", "返回[指南](../guide/index.md)。", `返回[指南](../guide/index.md)。${BROKEN}`);
+      572 |     const panel = page.getByRole("dialog", { name: "1 个错误 · 显示上一个可用版本" });
+    > 573 |     await expect(panel).toBeVisible();
+          |                         ^
+      574 |     await expect(page.locator(".rd-dev")).toHaveAttribute("lang", "zh-CN");
+      575 |     await expect(panel.getByRole("button", { name: "收起问题" })).toBeVisible();
+      576 | });
+        at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/docs-ssg/dev.spec.ts:573:25
+
+    Error Context: test-results/docs/docs-ssg-dev-the-panel-speaks-the-page-s-language-docs-dev/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/docs/docs-ssg-dev-the-panel-speaks-the-page-s-language-docs-dev/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/docs/docs-ssg-dev-the-panel-speaks-the-page-s-language-docs-dev/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  9) [docs-dev] › tests/docs-ssg/dev.spec.ts:600:5 › axe finds no serious or critical problem with the panel open or hidden, in both modes 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('dialog')
+    Expected: visible
+    Timeout: 10000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('dialog') with timeout 10000ms
+      - waiting for getByRole('dialog')
+
+
+      607 |         await page.goto(`${server.url}guide/setup/`);
+      608 |         const panel = page.getByRole("dialog");
+    > 609 |         await expect(panel).toBeVisible();
+          |                             ^
+      610 |         for (const state of ["open", "hidden"]) {
+      611 |             if (state === "hidden") await panel.getByRole("button").click();
+      612 |             // Colours are measured once the panel's entrance has finished.
+        at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/docs-ssg/dev.spec.ts:609:29
+
+    Error Context: test-results/docs/docs-ssg-dev-axe-finds-no--e225f-pen-or-hidden-in-both-modes-docs-dev/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/docs/docs-ssg-dev-axe-finds-no--e225f-pen-or-hidden-in-both-modes-docs-dev/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/docs/docs-ssg-dev-axe-finds-no--e225f-pen-or-hidden-in-both-modes-docs-dev/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  9 failed
+    [docs-dev] › tests/docs-ssg/dev.spec.ts:146:5 › semantic diagnostics locate the source, preserve the home, and clear on repair 
+    [docs-dev] › tests/docs-ssg/dev.spec.ts:375:9 › body anchors at / navigate on the same and other pages and recover from ghost links 
+    [docs-dev] › tests/docs-ssg/dev.spec.ts:414:9 › self-closing SVG template preserves document anchors and cross-page navigation 
+    [docs-dev] › tests/docs-ssg/dev.spec.ts:414:9 › paired SVG template preserves document anchors and cross-page navigation 
+    [docs-dev] › tests/docs-ssg/dev.spec.ts:414:9 › SVG inside an HTML template preserves document anchors and cross-page navigation 
+    [docs-dev] › tests/docs-ssg/dev.spec.ts:521:5 › while nothing has built, every page says so, and becomes the site once it builds 
+    [docs-dev] › tests/docs-ssg/dev.spec.ts:552:5 › a panic in a build is one more problem, and the next build is served 
+    [docs-dev] › tests/docs-ssg/dev.spec.ts:568:5 › the panel speaks the page's language ───────────
+    [docs-dev] › tests/docs-ssg/dev.spec.ts:600:5 › axe finds no serious or critical problem with the panel open or hidden, in both modes 
+  15 passed (3.0m)
