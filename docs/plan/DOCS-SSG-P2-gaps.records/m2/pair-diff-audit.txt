@@ -1,0 +1,20 @@
+## git diff --name-only HEAD (tracked, excluding the user's pre-existing .xgent-ai ledger and fixture log changes)
+Cargo.lock
+crates/rustify-docs-cli/Cargo.toml
+crates/rustify-docs-cli/assets/components-Cargo.lock
+crates/rustify-docs-cli/assets/framework-revision.txt
+docs/docs-ssg.md
+
+## git diff --name-only cc5fded38a0cfb24ee8f132bb70f19a80adb6ecc (working tree vs R)
+Cargo.lock
+crates/rustify-docs-cli/Cargo.toml
+crates/rustify-docs-cli/assets/components-Cargo.lock
+crates/rustify-docs-cli/assets/framework-revision.txt
+docs/docs-ssg.md
+docs/plan/DOCS-SSG-P2-gaps.md
+
+## commits after R
+51dbaee6 docs(plan): register P2-gaps M1 library revision R
+
+## library/runtime/source/template paths changed since R
+(end)

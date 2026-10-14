@@ -1,0 +1,14 @@
+checking /private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps-installed.VV1r7t/acceptance/author-site/.
+warning[no-git-history]: pages show no last-updated date: not a git repository (or any of the parent directories): .git
+  = help: build inside a git repository with the content committed
+warning[not-in-nav]: this page is in no navigation group, so readers can only reach it by a link
+  --> content/gaps.md
+error[invalid_props]: invalid type: string "错误", expected i32
+  --> content/gaps.md:11:22
+  = help: Write `initial: 0` for declared type `i32` (default expression `2`). Reported props path: `initial`.
+warning[not-in-nav]: this page is in no navigation group, so readers can only reach it by a link
+  --> content/index.md
+warning[missing-site-url]: site.url is not set, so pages have no canonical address or preview image and there is no sitemap
+  --> rustify-docs.toml
+  = help: add `url = "https://…"` under [site], the address the site is published at
+check: 4 pages, 1 error(s), 4 warning(s); first: invalid type: string "错误", expected i32 (content/gaps.md:11:22)

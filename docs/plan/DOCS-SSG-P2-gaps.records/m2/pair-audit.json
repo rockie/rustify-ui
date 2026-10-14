@@ -1,0 +1,178 @@
+{
+  "R": "cc5fded38a0cfb24ee8f132bb70f19a80adb6ecc",
+  "previous_R": "7930fd9a978563e76468fef69d14f444159c47b5",
+  "checks": {
+    "template_lock": {
+      "packages": 193,
+      "framework_sources_moved": [
+        "rustify-components",
+        "rustify-docs",
+        "rustify-docs-macros",
+        "rustify-docs-syntax",
+        "rustify-style",
+        "rustify-ui"
+      ],
+      "third_party_unchanged": 187,
+      "bytes": 48590,
+      "sha256": "77ced08284c9e26a6e5fc649fb1711c47047e2d18b276e93e4e22fb748bc2e6f"
+    },
+    "root_lock": {
+      "cli": [
+        "0.1.15",
+        "0.1.16"
+      ],
+      "other_packages_unchanged": 428
+    },
+    "template_project": {
+      "graphs": {
+        "host": {
+          "packages": 189,
+          "makepad": [],
+          "framework_sources": {
+            "rustify-components": "git+https://github.com/rockie/rustify-ui?rev=cc5fded38a0cfb24ee8f132bb70f19a80adb6ecc#cc5fded38a0cfb24ee8f132bb70f19a80adb6ecc",
+            "rustify-docs": "git+https://github.com/rockie/rustify-ui?rev=cc5fded38a0cfb24ee8f132bb70f19a80adb6ecc#cc5fded38a0cfb24ee8f132bb70f19a80adb6ecc",
+            "rustify-docs-macros": "git+https://github.com/rockie/rustify-ui?rev=cc5fded38a0cfb24ee8f132bb70f19a80adb6ecc#cc5fded38a0cfb24ee8f132bb70f19a80adb6ecc",
+            "rustify-docs-syntax": "git+https://github.com/rockie/rustify-ui?rev=cc5fded38a0cfb24ee8f132bb70f19a80adb6ecc#cc5fded38a0cfb24ee8f132bb70f19a80adb6ecc",
+            "rustify-style": "git+https://github.com/rockie/rustify-ui?rev=cc5fded38a0cfb24ee8f132bb70f19a80adb6ecc#cc5fded38a0cfb24ee8f132bb70f19a80adb6ecc",
+            "rustify-ui": "git+https://github.com/rockie/rustify-ui?rev=cc5fded38a0cfb24ee8f132bb70f19a80adb6ecc#cc5fded38a0cfb24ee8f132bb70f19a80adb6ecc"
+          }
+        },
+        "wasm": {
+          "packages": 180,
+          "makepad": [],
+          "framework_sources": {
+            "rustify-components": "git+https://github.com/rockie/rustify-ui?rev=cc5fded38a0cfb24ee8f132bb70f19a80adb6ecc#cc5fded38a0cfb24ee8f132bb70f19a80adb6ecc",
+            "rustify-docs": "git+https://github.com/rockie/rustify-ui?rev=cc5fded38a0cfb24ee8f132bb70f19a80adb6ecc#cc5fded38a0cfb24ee8f132bb70f19a80adb6ecc",
+            "rustify-docs-macros": "git+https://github.com/rockie/rustify-ui?rev=cc5fded38a0cfb24ee8f132bb70f19a80adb6ecc#cc5fded38a0cfb24ee8f132bb70f19a80adb6ecc",
+            "rustify-docs-syntax": "git+https://github.com/rockie/rustify-ui?rev=cc5fded38a0cfb24ee8f132bb70f19a80adb6ecc#cc5fded38a0cfb24ee8f132bb70f19a80adb6ecc",
+            "rustify-style": "git+https://github.com/rockie/rustify-ui?rev=cc5fded38a0cfb24ee8f132bb70f19a80adb6ecc#cc5fded38a0cfb24ee8f132bb70f19a80adb6ecc",
+            "rustify-ui": "git+https://github.com/rockie/rustify-ui?rev=cc5fded38a0cfb24ee8f132bb70f19a80adb6ecc#cc5fded38a0cfb24ee8f132bb70f19a80adb6ecc"
+          }
+        }
+      },
+      "lock_unchanged": true,
+      "root_package": "docs-site",
+      "lock_sha256": "77ced08284c9e26a6e5fc649fb1711c47047e2d18b276e93e4e22fb748bc2e6f"
+    }
+  },
+  "commands": [
+    {
+      "name": "build-info",
+      "command": [
+        "/private/tmp/claude-501/-Users-rockie-Documents-gh-rockie-rustify-ui/dcd5c8d1-f35e-4995-8d89-17df4dd0874c/scratchpad/m2/prepared-rustify-docs",
+        "--build-info"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "new",
+      "command": [
+        "/private/tmp/claude-501/-Users-rockie-Documents-gh-rockie-rustify-ui/dcd5c8d1-f35e-4995-8d89-17df4dd0874c/scratchpad/m2/prepared-rustify-docs",
+        "new",
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps-pair.VnUZPM/docs-site",
+        "--template",
+        "components"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "fetch",
+      "command": [
+        "cargo",
+        "fetch",
+        "--locked",
+        "--manifest-path",
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps-pair.VnUZPM/docs-site/Cargo.toml"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "host-metadata",
+      "command": [
+        "mbx",
+        "metadata",
+        "--locked",
+        "--offline",
+        "--format-version",
+        "1",
+        "--manifest-path",
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps-pair.VnUZPM/docs-site/Cargo.toml",
+        "--no-default-features",
+        "--features",
+        "ssr"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "wasm-metadata",
+      "command": [
+        "mbx",
+        "metadata",
+        "--locked",
+        "--offline",
+        "--format-version",
+        "1",
+        "--manifest-path",
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps-pair.VnUZPM/docs-site/Cargo.toml",
+        "--no-default-features",
+        "--features",
+        "hydrate",
+        "--filter-platform",
+        "wasm32-unknown-unknown"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "host-check",
+      "command": [
+        "mbx",
+        "check",
+        "--locked",
+        "--offline",
+        "--manifest-path",
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps-pair.VnUZPM/docs-site/Cargo.toml",
+        "--no-default-features",
+        "--features",
+        "ssr",
+        "--profile",
+        "docs-host",
+        "--bin",
+        "docs-render"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "wasm-check",
+      "command": [
+        "mbx",
+        "check",
+        "--locked",
+        "--offline",
+        "--manifest-path",
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps-pair.VnUZPM/docs-site/Cargo.toml",
+        "--no-default-features",
+        "--features",
+        "hydrate",
+        "--profile",
+        "docs-wasm",
+        "--lib",
+        "--target",
+        "wasm32-unknown-unknown"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "update-workspace",
+      "command": [
+        "cargo",
+        "update",
+        "--workspace",
+        "--offline",
+        "--manifest-path",
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps-pair.VnUZPM/docs-site/Cargo.toml"
+      ],
+      "exit": 0
+    }
+  ],
+  "passed": true
+}

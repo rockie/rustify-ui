@@ -1,0 +1,26 @@
+checking /private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps-installed.VV1r7t/acceptance/author-site/.
+warning[no-git-history]: pages show no last-updated date: not a git repository (or any of the parent directories): .git
+  = help: build inside a git repository with the content committed
+warning[not-in-nav]: this page is in no navigation group, so readers can only reach it by a link
+  --> content/gaps.md
+error[unregistered-component]: component `MissingWidget` is not registered; add it to site! and configure [rust]
+  --> content/gaps.md:7:1
+  = help: Use a component from `CardGrid`, `Counter`, `Steps`, `Tabs`; for an author component, enable `[rust]` and register its name in `site!`.
+error[unknown-property]: component `Counter` has no property `unexpected`
+  --> content/gaps.md:14:3
+  = help: Use one of `initial` (`i32`; default expression `2`), `label` (`String`; default expression `"Counter".to_string()`) for `Counter`; rename or remove `unexpected`.
+error[unregistered-demo]: demo `MissingDemo` is not registered in site!
+  --> content/gaps.md:17:1
+  = help: Use a demo from `CounterDemo`; register demos in `site!`.
+error[embed-props]: missing field `items`
+  --> content/gaps.md:21:1
+  = help: Add or correct `props` using the declared fields `items` (`Vec<StepSpec>`; required); see https://github.com/rockie/rustify-ui/blob/main/docs/docs-ssg.md#static-builtins for its object fields.
+error[embed-payload]: props: duplicate entry with key "initial" at line 2 column 8
+  --> content/gaps.md:27:8
+  = help: Keep each YAML mapping key once; remove or rename the duplicate key.
+warning[not-in-nav]: this page is in no navigation group, so readers can only reach it by a link
+  --> content/index.md
+warning[missing-site-url]: site.url is not set, so pages have no canonical address or preview image and there is no sitemap
+  --> rustify-docs.toml
+  = help: add `url = "https://…"` under [site], the address the site is published at
+check: 4 pages, 5 error(s), 4 warning(s); first: component `MissingWidget` is not registered; add it to site! and configure [rust] (content/gaps.md:7:1)

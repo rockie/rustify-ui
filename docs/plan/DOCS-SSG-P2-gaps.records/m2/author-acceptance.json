@@ -1,0 +1,196 @@
+{
+  "cli": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps-installed.VV1r7t/bin/rustify-docs",
+  "R": "cc5fded38a0cfb24ee8f132bb70f19a80adb6ecc",
+  "steps": [
+    {
+      "name": "build-info",
+      "command": [
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps-installed.VV1r7t/bin/rustify-docs",
+        "--build-info"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "new",
+      "command": [
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps-installed.VV1r7t/bin/rustify-docs",
+        "new",
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps-installed.VV1r7t/acceptance/author-site",
+        "--template",
+        "components"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "fetch",
+      "command": [
+        "cargo",
+        "fetch",
+        "--locked"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "host-metadata",
+      "command": [
+        "mbx",
+        "metadata",
+        "--locked",
+        "--offline",
+        "--format-version",
+        "1",
+        "--no-default-features",
+        "--features",
+        "ssr"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "wasm-metadata",
+      "command": [
+        "mbx",
+        "metadata",
+        "--locked",
+        "--offline",
+        "--format-version",
+        "1",
+        "--no-default-features",
+        "--features",
+        "hydrate",
+        "--filter-platform",
+        "wasm32-unknown-unknown"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "check-1",
+      "exit": 0
+    },
+    {
+      "name": "build-good",
+      "command": [
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps-installed.VV1r7t/bin/rustify-docs",
+        "build",
+        "--format",
+        "json"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "build-cold",
+      "command": [
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps-installed.VV1r7t/bin/rustify-docs",
+        "build",
+        "--format",
+        "json"
+      ],
+      "exit": 1
+    },
+    {
+      "name": "check-cold",
+      "command": [
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps-installed.VV1r7t/bin/rustify-docs",
+        "check",
+        "--format",
+        "json"
+      ],
+      "exit": 1
+    },
+    {
+      "name": "check-cold-text",
+      "command": [
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps-installed.VV1r7t/bin/rustify-docs",
+        "check"
+      ],
+      "exit": 1
+    },
+    {
+      "name": "build-typed",
+      "command": [
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps-installed.VV1r7t/bin/rustify-docs",
+        "build",
+        "--format",
+        "json"
+      ],
+      "exit": 1
+    },
+    {
+      "name": "check-typed",
+      "command": [
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps-installed.VV1r7t/bin/rustify-docs",
+        "check",
+        "--format",
+        "json"
+      ],
+      "exit": 1
+    },
+    {
+      "name": "check-typed-text",
+      "command": [
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps-installed.VV1r7t/bin/rustify-docs",
+        "check"
+      ],
+      "exit": 1
+    }
+  ],
+  "pins": [
+    "rustify-docs = { git = \"https://github.com/rockie/rustify-ui\", rev = \"cc5fded38a0cfb24ee8f132bb70f19a80adb6ecc\", default-features = false }",
+    "rustify-ui = { git = \"https://github.com/rockie/rustify-ui\", rev = \"cc5fded38a0cfb24ee8f132bb70f19a80adb6ecc\", default-features = false }",
+    "rustify-components = { git = \"https://github.com/rockie/rustify-ui\", rev = \"cc5fded38a0cfb24ee8f132bb70f19a80adb6ecc\", default-features = false }"
+  ],
+  "lock_sha256": "5964800c6f20a17175c753402f12ef19c5fea8ada7df56358fed1949c897863c",
+  "graphs": {
+    "host": {
+      "packages": 189,
+      "makepad": 0,
+      "framework_source": [
+        "git+https://github.com/rockie/rustify-ui?rev=cc5fded38a0cfb24ee8f132bb70f19a80adb6ecc#cc5fded38a0cfb24ee8f132bb70f19a80adb6ecc"
+      ]
+    },
+    "wasm": {
+      "packages": 180,
+      "makepad": 0,
+      "framework_source": [
+        "git+https://github.com/rockie/rustify-ui?rev=cc5fded38a0cfb24ee8f132bb70f19a80adb6ecc#cc5fded38a0cfb24ee8f132bb70f19a80adb6ecc"
+      ]
+    }
+  },
+  "good": {
+    "pages": 3,
+    "files": 16
+  },
+  "cases": {
+    "cold": {
+      "refusals": 5,
+      "dist_unchanged": true,
+      "check_equals_build": true
+    },
+    "typed": {
+      "refusals": 1,
+      "dist_unchanged": true,
+      "check_equals_build": true
+    }
+  },
+  "dev": {
+    "url": "http://127.0.0.1:50315/",
+    "first_revision": 1,
+    "failed_revision": 2,
+    "fixed_revision": 3,
+    "repair": [
+      [
+        "invalid_props",
+        11,
+        22,
+        "Write `initial: 0` for declared type `i32` (default expression `2`). Reported props path: `initial`."
+      ]
+    ],
+    "last_good_served": true
+  },
+  "inputs_unchanged": {
+    "Cargo.toml": true,
+    "Cargo.lock": true,
+    "src/lib.rs": true,
+    "src/demos.rs": true
+  },
+  "passed": true
+}
