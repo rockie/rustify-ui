@@ -341,13 +341,11 @@ fn a_first_build_that_fails_shows_the_problems_until_one_builds() {
     }
     // Its stylesheet and scripts are served.
     let (_, html) = get_text(&dev.url);
-    let css = html
-        .split("href=\"")
-        .nth(1)
-        .unwrap()
-        .split('"')
-        .next()
-        .unwrap();
+    let dom = dom_query::Document::from(html.as_str());
+    let css = dom
+        .select("head link[rel=stylesheet]")
+        .attr("href")
+        .expect("the head contains a stylesheet");
     assert!(css.contains("/assets/site."), "{css}");
     assert_eq!(get(&format!("{}{css}", dev.origin())).0, 200);
 

@@ -107,18 +107,66 @@ async function freePort(): Promise<number> {
 
 let site: Site;
 const running: Dev[] = [];
+const initialStates: unknown[] = [];
+const expectedStreamClosures: string[] = [];
+
+/// The address precedes the first build; these tests need its terminal result.
+async function firstResult(url: string): Promise<void> {
+    const events = new URL("/__rustify-docs/events", url);
+    events.searchParams.set("path", new URL(url).pathname);
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 10_000);
+    try {
+        const response = await fetch(events, { signal: controller.signal });
+        if (response.status !== 200 || !response.body) throw new Error(`dev SSE returned ${response.status}`);
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder();
+        let pending = "";
+        while (true) {
+            const { value, done } = await reader.read();
+            if (done) throw new Error("dev SSE closed before the first build result");
+            pending += decoder.decode(value, { stream: true });
+            let end: number;
+            while ((end = pending.indexOf("\n\n")) !== -1) {
+                const message = pending.slice(0, end);
+                pending = pending.slice(end + 2);
+                if (!message.startsWith("event: state\ndata: ")) continue;
+                const state = JSON.parse(message.slice("event: state\ndata: ".length));
+                initialStates.push({ url, state });
+                if (state.revision > 0 && state.building === false) return;
+            }
+        }
+    } finally {
+        clearTimeout(timeout);
+        controller.abort();
+    }
+}
+
+function watchRequestFailures(page: Page, errors: string[]): void {
+    page.on("requestfailed", (request) => {
+        const error = request.failure()?.errorText;
+        const message = `${request.url()}: ${error}`;
+        if (new URL(request.url()).pathname === "/__rustify-docs/events" && error === "net::ERR_ABORTED") expectedStreamClosures.push(message);
+        else errors.push(message);
+    });
+}
 
 async function dev(args?: string[], env?: Record<string, string>): Promise<Dev> {
     const started = await Dev.start(site, args, env);
     running.push(started);
+    await firstResult(started.url);
     return started;
 }
 
 test.beforeEach(() => {
     site = new Site();
+    initialStates.length = 0;
+    expectedStreamClosures.length = 0;
 });
 
 test.afterEach(async () => {
+    await test.info().attach("dev-initial-states.json", { body: JSON.stringify(initialStates, null, 2), contentType: "application/json" });
+    await test.info().attach("dev-expected-stream-closures.json", { body: JSON.stringify(expectedStreamClosures, null, 2), contentType: "application/json" });
     while (running.length) await running.pop()!.stop();
     site.remove();
 });
@@ -181,6 +229,7 @@ test("a new site is readable at once: the home page and its two pages", async ({
         child.on("exit", (code) => reject(new Error(`dev exited ${code}`)));
     });
     try {
+        await firstResult(url);
         await page.goto(url);
         await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
         await page.locator(".rd-action-primary").click();
@@ -382,7 +431,7 @@ for (const base of ["/", "/docs/"]) {
         const errors: string[] = [];
         page.on("pageerror", (error) => errors.push(error.message));
         page.on("console", (message) => { if (message.type() === "error") errors.push(message.text()); });
-        page.on("requestfailed", (request) => errors.push(`${request.url()}: ${request.failure()?.errorText}`));
+        watchRequestFailures(page, errors);
         const server = await dev();
         await page.goto(server.url);
         await expect(page.getByRole("heading", { name: "Body anchor", exact: true })).toBeVisible();
@@ -419,7 +468,7 @@ for (const [name, markup, ids] of [
         const errors: string[] = [];
         page.on("pageerror", (error) => errors.push(error.message));
         page.on("console", (message) => { if (message.type() === "error") errors.push(message.text()); });
-        page.on("requestfailed", (request) => errors.push(`${request.url()}: ${request.failure()?.errorText}`));
+        watchRequestFailures(page, errors);
         const server = await dev();
         await page.goto(server.url);
         await expect(page.getByRole("heading", { name: "Visible", exact: true })).toBeVisible();
